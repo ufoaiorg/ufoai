@@ -212,19 +212,19 @@ void XYWnd::DropClipPoint (int pointx, int pointy)
 
 	Vector3 mid;
 	Select_GetMid(mid);
-	GlobalClipPoints()->setViewType(getViewType());
-	int nDim = (GlobalClipPoints()->getViewType() == YZ) ? 0 : ((GlobalClipPoints()->getViewType() == XZ) ? 1 : 2);
+	GlobalClipper().setViewType(getViewType());
+	int nDim = (GlobalClipper().getViewType() == YZ) ? 0 : ((GlobalClipper().getViewType() == XZ) ? 1 : 2);
 	point[nDim] = mid[nDim];
 	vector3_snap(point, GetGridSize());
-	GlobalClipPoints()->newClipPoint(point);
+	GlobalClipper().newClipPoint(point);
 }
 
 void XYWnd::Clipper_OnLButtonDown (int x, int y)
 {
 	Vector3 mousePosition = g_vector3_identity;
 	convertXYToWorld(x, y, mousePosition);
-	ClipPoint* foundClipPoint = GlobalClipPoints()->find(mousePosition, m_viewType, m_fScale);
-	GlobalClipPoints()->setMovingClip(foundClipPoint);
+	ClipPoint* foundClipPoint = GlobalClipper().find(mousePosition, m_viewType, m_fScale);
+	GlobalClipper().setMovingClip(foundClipPoint);
 	if (foundClipPoint == NULL) {
 		DropClipPoint(x, y);
 	}
@@ -232,16 +232,16 @@ void XYWnd::Clipper_OnLButtonDown (int x, int y)
 
 void XYWnd::Clipper_OnLButtonUp (int x, int y)
 {
-	GlobalClipPoints()->setMovingClip(NULL);
+	GlobalClipper().setMovingClip(NULL);
 }
 
 void XYWnd::Clipper_OnMouseMoved (int x, int y)
 {
-	ClipPoint* movingClip = GlobalClipPoints()->getMovingClip();
+	ClipPoint* movingClip = GlobalClipper().getMovingClip();
 	if (movingClip != NULL) {
 		convertXYToWorld(x, y, movingClip->_coords);
 		snapToGrid(movingClip->_coords);
-		GlobalClipPoints()->update();
+		GlobalClipper().update();
 		ClipperChangeNotify();
 	}
 }
@@ -250,7 +250,7 @@ void XYWnd::Clipper_Crosshair_OnMouseMoved (int x, int y)
 {
 	Vector3 mousePosition = g_vector3_identity;
 	convertXYToWorld(x, y, mousePosition);
-	if (GlobalClipPoints()->clipMode() && GlobalClipPoints()->find(mousePosition, m_viewType, m_fScale) != 0) {
+	if (GlobalClipper().clipMode() && GlobalClipper().find(mousePosition, m_viewType, m_fScale) != 0) {
 		GdkCursor *cursor = gdk_cursor_new(GDK_CROSSHAIR);
 		gdk_window_set_cursor(m_gl_widget->window, cursor);
 		gdk_cursor_unref(cursor);
@@ -728,7 +728,7 @@ void XYWnd::mouseDown (int x, int y, GdkEventButton* event)
 
 	if (GlobalEventMapper().stateMatchesXYViewEvent(ui::xySelect, event)) {
 		// There are two possibilites for the "select" click: Clip or Select
-		if (GlobalClipPoints()->clipMode()) {
+		if (GlobalClipper().clipMode()) {
 			Clipper_OnLButtonDown(x, y);
 			return; // Prevent the call from being passed to the windowobserver
 		}
@@ -757,7 +757,7 @@ void XYWnd::mouseMoved (int x, int y, const unsigned int& state)
 
 	if (GlobalEventMapper().stateMatchesXYViewEvent(ui::xySelect, state)) {
 		// Check, if we have a clip point operation running
-		if (GlobalClipPoints()->clipMode() && GlobalClipPoints()->getMovingClip() != 0) {
+		if (GlobalClipper().clipMode() && GlobalClipper().getMovingClip() != 0) {
 			Clipper_OnMouseMoved(x, y);
 			return; // Prevent the call from being passed to the windowobserver
 		}
@@ -804,7 +804,7 @@ void XYWnd::mouseUp (int x, int y, GdkEventButton* event)
 		return; // Prevent the call from being passed to the windowobserver
 	}
 
-	if (GlobalClipPoints()->clipMode() && GlobalEventMapper().stateMatchesXYViewEvent(ui::xySelect, event)) {
+	if (GlobalClipper().clipMode() && GlobalEventMapper().stateMatchesXYViewEvent(ui::xySelect, event)) {
 		// End the clip operation
 		Clipper_OnLButtonUp(x, y);
 		return; // Prevent the call from being passed to the windowobserver
@@ -1605,8 +1605,8 @@ void XYWnd::draw ()
 		glEnd();
 	}
 
-	if (GlobalClipPoints()->clipMode()) {
-		GlobalClipPoints()->draw(m_fScale);
+	if (GlobalClipper().clipMode()) {
+		GlobalClipper().draw(m_fScale);
 	}
 
 	// reset modelview

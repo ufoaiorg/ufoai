@@ -23,6 +23,7 @@
 #define INCLUDED_CSG_H
 
 #include <string>
+#include "iclipper.h"
 
 void CSG_MakeHollow (void);
 void CSG_Subtract (void);
@@ -37,10 +38,6 @@ typedef BasicVector3<float> Vector3;
 class Plane3;
 
 void Scene_BrushSetClipPlane (scene::Graph& graph, const Plane3& plane);
-enum EBrushSplit
-{
-	eFront, eBack, eFrontAndBack
-};
 void Scene_BrushSplitByPlane (scene::Graph& graph, const Vector3& p0, const Vector3& p1, const Vector3& p2,
 		const std::string& shader, EBrushSplit split);
 

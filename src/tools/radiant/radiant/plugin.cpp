@@ -54,6 +54,7 @@
 #include "iump.h"
 #include "iufoscript.h"
 #include "imap.h"
+#include "iclipper.h"
 #include "namespace.h"
 #include "commands.h"
 #include "isound.h"
@@ -194,7 +195,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalUndoModuleRef,
 		public GlobalScripLibModuleRef,
 		public GlobalNamespaceModuleRef,
-		public GlobalFilterModuleRef
+		public GlobalFilterModuleRef,
+		public GlobalClipperModuleRef
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;

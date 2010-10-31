@@ -1,7 +1,7 @@
 #ifndef XYWND_H_
 #define XYWND_H_
 
-#include "../clipper/GlobalClipPoints.h"
+#include "../clipper/Clipper.h"
 
 #include "gdk/gdkevents.h"
 #include "gtk/gtkwidget.h"

@@ -1078,13 +1078,14 @@ typedef ReferenceCaller1<TextureBrowser, const IntImportCallback&, TextureUnifor
 		TextureUniformSizeExportCaller;
 
 void TextureBrowser::constructPage(PreferenceGroup& group) {
-	PreferencesPage page(group.createPage(_("Texture Browser"), _("Texture Browser Preferences")));
+	PreferencesPage* page = group.createPage(_("Texture Browser"), _("Texture Browser Preferences"));
+	PrefPage*p = reinterpret_cast<PrefPage*>(page);
 	const char* texture_scale[] = { "10%", "25%", "50%", "100%", "200%" };
-	page.appendCombo(_("Texture thumbnail scale"), STRING_ARRAY_RANGE(texture_scale),
+	p->appendCombo(_("Texture thumbnail scale"), STRING_ARRAY_RANGE(texture_scale),
 			IntImportCallback(TextureScaleImportCaller(*this)), IntExportCallback(
 					TextureScaleExportCaller(*this)));
-	page.appendEntry(_("Mousewheel Increment"), GlobalTextureBrowser().m_mouseWheelScrollIncrement);
-	page.appendEntry(_("Uniform texture thumbnail size (pixels)"), IntImportCallback(
+	p->appendEntry(_("Mousewheel Increment"), GlobalTextureBrowser().m_mouseWheelScrollIncrement);
+	p->appendEntry(_("Uniform texture thumbnail size (pixels)"), IntImportCallback(
 			TextureUniformSizeImportCaller(*this)), IntExportCallback(
 			TextureUniformSizeExportCaller(*this)));
 }

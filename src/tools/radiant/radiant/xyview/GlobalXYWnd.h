@@ -1,7 +1,7 @@
 #ifndef GLOBALXYWND_H_
 #define GLOBALXYWND_H_
 
-#include "../clipper/GlobalClipPoints.h"
+#include "../clipper/Clipper.h"
 #include <list>
 #include "XYWnd.h"
 

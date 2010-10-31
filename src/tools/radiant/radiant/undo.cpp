@@ -423,15 +423,15 @@ void UndoLevelsExport (const RadiantUndoSystem& self, const IntImportCallback& i
 }
 typedef ConstReferenceCaller1<RadiantUndoSystem, const IntImportCallback&, UndoLevelsExport> UndoLevelsExportCaller;
 
-void Undo_constructPreferences (RadiantUndoSystem& undo, PreferencesPage& page)
+void Undo_constructPreferences (RadiantUndoSystem& undo, PrefPage* page)
 {
-	page.appendSpinner(_("Undo Queue Size"), 64, 0, 1024, IntImportCallback(UndoLevelsImportCaller(undo)),
+	page->appendSpinner(_("Undo Queue Size"), 64, 0, 1024, IntImportCallback(UndoLevelsImportCaller(undo)),
 			IntExportCallback(UndoLevelsExportCaller(undo)));
 }
 void Undo_constructPage (RadiantUndoSystem& undo, PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Undo"), _("Undo Queue Settings")));
-	Undo_constructPreferences(undo, page);
+	PreferencesPage* page = group.createPage(_("Undo"), _("Undo Queue Settings"));
+	Undo_constructPreferences(undo, reinterpret_cast<PrefPage*>(page));
 }
 void Undo_registerPreferencesPage (RadiantUndoSystem& undo)
 {

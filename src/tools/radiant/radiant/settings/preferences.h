@@ -26,16 +26,17 @@
 #include "../dialog.h"
 #include <list>
 #include <map>
+#include "preferencesystem.h"
 #include "iregistry.h"
 
 void Widget_connectToggleDependency (GtkWidget* self, GtkWidget* toggleButton);
 
-class PreferencesPage
+class PrefPage : public PreferencesPage
 {
 		Dialog& m_dialog;
 		GtkWidget* m_vbox;
 	public:
-		PreferencesPage (Dialog& dialog, GtkWidget* vbox) :
+		PrefPage (Dialog& dialog, GtkWidget* vbox) :
 			m_dialog(dialog), m_vbox(vbox)
 		{
 		}
@@ -56,9 +57,15 @@ class PreferencesPage
 			return m_dialog.addCheckBox(m_vbox, name, flag, registryKey);
 		}
 
+		/* greebo: Appends an entry field with <name> as caption which is connected to the given registryKey
+		 */
+		GtkWidget* appendEntry(const std::string& name, const std::string& registryKey) {
+			return m_dialog.addEntry(m_vbox, name, registryKey);
+		}
+
 		/* greebo: greebo: This adds a horizontal slider to the internally referenced VBox and connects
 		 * it to the given registryKey. */
-		void appendSlider (const std::string& name, const std::string& registryKey, gboolean draw_value, double value,
+		void appendSlider (const std::string& name, const std::string& registryKey, bool draw_value, double value,
 				double lower, double upper, double step_increment, double page_increment, double page_size)
 		{
 			m_dialog.addSlider(m_vbox, name, registryKey, draw_value, value, lower, upper, step_increment,
@@ -158,17 +165,7 @@ class PreferencesPage
 		}
 };
 
-typedef Callback1<PreferencesPage&> PreferencesPageCallback;
-
-class PreferenceGroup
-{
-	public:
-		virtual ~PreferenceGroup ()
-		{
-		}
-		virtual PreferencesPage createPage (const std::string& treeName, const std::string& frameName) = 0;
-};
-
+typedef Callback1<PrefPage*> PreferencesPageCallback;
 typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;
 
 void PreferencesDialog_addInterfacePreferences (const PreferencesPageCallback& callback);
@@ -255,8 +252,6 @@ extern CGameDescription *g_pGameDescription;
 typedef struct _GtkWidget GtkWidget;
 class PrefsDlg;
 
-class PreferencesPage;
-
 class StringOutputStream;
 
 /*!
@@ -303,15 +298,6 @@ class CGameDialog: public Dialog
 		 */
 		GtkWindow* BuildDialog ();
 
-		/*!
-		 construction of the dialog frame
-		 this is the part to be re-used in prefs dialog
-		 for the standalone dialog, we include this in a modal box
-		 for prefs, we hook the frame in the main notebook
-		 build the frame on-demand (only once)
-		 */
-		void CreateGlobalFrame (PreferencesPage& page);
-
 	private:
 
 		/*!
@@ -325,10 +311,14 @@ class CGameDialog: public Dialog
  */
 extern CGameDialog g_GamesDialog;
 
-class texdef_t;
+class PreferenceTreeGroup;
 
 class PrefsDlg: public Dialog
 {
+		typedef std::list<PreferenceConstructor*> PreferenceConstructorList;
+		// The list of all the constructors that have to be called on dialog construction
+		PreferenceConstructorList _constructors;
+
 	public:
 
 		GtkWidget *m_notebook;
@@ -343,11 +333,18 @@ class PrefsDlg: public Dialog
 		/*! Utility function for swapping notebook pages for tree list selections */
 		void showPrefPage (GtkWidget* prefpage);
 
+		// Add the given preference constructor to the internal list
+		void addConstructor(PreferenceConstructor* constructor);
+
 	protected:
 
 		/*! Dialog API */
 		GtkWindow* BuildDialog ();
 		void PostModal (EMessageBoxReturn code);
+
+	private:
+		// greebo: calls the constructors to add the preference elements
+		void callConstructors(PreferenceTreeGroup& preferenceGroup);
 };
 
 extern PrefsDlg g_Preferences;

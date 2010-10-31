@@ -220,10 +220,11 @@ namespace routing
 
 	void Pathfinding_constructPage (PreferenceGroup& group)
 	{
-		PreferencesPage page(group.createPage(_("Pathfinding"), _("Pathfinding Settings")));
-		page.appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (),
+		PreferencesPage* page = group.createPage(_("Pathfinding"), _("Pathfinding Settings"));
+		PrefPage *p = reinterpret_cast<PrefPage*>(page);
+		p->appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (),
 				BoolExportCaller(showAllLowerLevels));
-		page.appendCheckBox("", _("Show in 2D views"), FreeCaller1<bool, setShowIn2D> (),
+		p->appendCheckBox("", _("Show in 2D views"), FreeCaller1<bool, setShowIn2D> (),
 				BoolExportCaller(showIn2D));
 	}
 

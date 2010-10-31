@@ -63,7 +63,7 @@ class DialogEntryRow
 		GtkEntry* m_entry;
 };
 
-DialogEntryRow DialogEntryRow_new (const char* name)
+DialogEntryRow DialogEntryRow_new (const std::string& name)
 {
 	GtkWidget* alignment = gtk_alignment_new(0.0, 0.5, 0.0, 0.0);
 	gtk_widget_show(alignment);
@@ -706,6 +706,19 @@ void Dialog::addRadioIcons (GtkWidget* vbox, const char* name, StringArrayRange 
 void Dialog::addRadioIcons (GtkWidget* vbox, const char* name, int& data, StringArrayRange icons)
 {
 	addRadioIcons(vbox, name, icons, IntImportCaller(data), IntExportCaller(data));
+}
+
+// greebo: add an entry box connected to the given registryKey
+GtkWidget* Dialog::addEntry (GtkWidget* vbox, const std::string& name, const std::string& registryKey)
+{
+	// Create a new row containing an input field
+	DialogEntryRow row(DialogEntryRow_new(name));
+
+	// Connect the registry key to the newly created input field
+	_registryConnector.connectGtkObject(GTK_OBJECT(row.m_entry), registryKey);
+
+	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
+	return row.m_row;
 }
 
 GtkWidget* Dialog::addIntEntry (GtkWidget* vbox, const char* name, const IntImportCallback& importViewer,

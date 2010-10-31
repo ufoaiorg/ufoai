@@ -61,16 +61,16 @@ void Face_exportSnapPlanes (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, Face_exportSnapPlanes> FaceExportSnapPlanesCaller;
 
-void Brush_constructPreferences (PreferencesPage& page)
+void Brush_constructPreferences (PrefPage* page)
 {
-	page.appendCheckBox("", _("Snap planes to integer grid"), FaceImportSnapPlanesCaller(), FaceExportSnapPlanesCaller());
-	page.appendEntry(_("Default texture scale"), g_texdef_default_scale);
-	page.appendCheckBox("", _("Always use nodraw for new brushes"), g_brush_always_nodraw);
+	page->appendCheckBox("", _("Snap planes to integer grid"), FaceImportSnapPlanesCaller(), FaceExportSnapPlanesCaller());
+	page->appendEntry(_("Default texture scale"), g_texdef_default_scale);
+	page->appendCheckBox("", _("Always use nodraw for new brushes"), g_brush_always_nodraw);
 }
 void Brush_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Brush"), _("Brush Settings")));
-	Brush_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Brush"), _("Brush Settings"));
+	Brush_constructPreferences(reinterpret_cast<PrefPage*>(page));
 }
 void Brush_registerPreferencesPage ()
 {

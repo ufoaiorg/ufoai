@@ -28,6 +28,7 @@
 #define __QERPLUGIN_H__
 
 #include "generic/constant.h"
+#include "iclipper.h"
 #include "gtkutil/accelerator.h"
 #include <string>
 
@@ -79,16 +80,11 @@ class ModuleObserver;
 #include "signal/signalfwd.h"
 #include "windowobserver.h"
 #include "math/Vector3.h"
+#include "math/Plane3.h"
 
 typedef struct _GdkEventButton GdkEventButton;
 typedef SignalHandler3<int, int, GdkEventButton*> MouseEventHandler;
 typedef SignalFwd<MouseEventHandler>::handler_id_type MouseEventHandlerId;
-
-// Possible types of the orthogonal view window
-enum EViewType
-{
-	YZ = 0, XZ = 1, XY = 2
-};
 
 typedef struct _GtkWindow GtkWindow;
 

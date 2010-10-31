@@ -61,7 +61,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
 	$(RADIANT_BASE)/radiant/clipper/ClipPoint.cpp \
-	$(RADIANT_BASE)/radiant/clipper/GlobalClipPoints.cpp \
+	$(RADIANT_BASE)/radiant/clipper/Clipper.cpp \
 	\
 	$(RADIANT_BASE)/radiant/render/OpenGLRenderSystem.cpp \
 	$(RADIANT_BASE)/radiant/render/OpenGLModule.cpp \

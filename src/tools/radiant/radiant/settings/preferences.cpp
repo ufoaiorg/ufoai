@@ -44,22 +44,22 @@
 #include "../qe3.h"
 #include <string>
 
-void Interface_constructPreferences (PreferencesPage& page)
+void Interface_constructPreferences (PrefPage* page)
 {
-	page.appendCheckBox(_("Console"), _("Enable logfile"), g_Console_enableLogfile);
-	page.appendCheckBox("", _("Load last map on open"), g_bLoadLastMap);
+	page->appendCheckBox(_("Console"), _("Enable logfile"), g_Console_enableLogfile);
+	page->appendCheckBox("", _("Load last map on open"), g_bLoadLastMap);
 }
 
-static void Mouse_constructPreferences (PreferencesPage& page)
+static void Mouse_constructPreferences (PrefPage* page)
 {
 	const char* buttons[] = { _("2 button"), _("3 button") };
-	page.appendRadio(_("Mouse Type"), g_glwindow_globals.m_nMouseType, STRING_ARRAY_RANGE(buttons));
+	page->appendRadio(_("Mouse Type"), g_glwindow_globals.m_nMouseType, STRING_ARRAY_RANGE(buttons));
 }
 
 void Mouse_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Mouse"), _("Mouse Preferences")));
-	Mouse_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Mouse"), _("Mouse Preferences"));
+	Mouse_constructPreferences(reinterpret_cast<PrefPage*>(page));
 }
 
 static void Mouse_registerPreferencesPage ()
@@ -261,7 +261,7 @@ inline void PreferenceGroupCallbacks_pushBack (PreferenceGroupCallbacks& callbac
 
 typedef std::list<PreferencesPageCallback> PreferencesPageCallbacks;
 
-inline void PreferencesPageCallbacks_constructPage (const PreferencesPageCallbacks& callbacks, PreferencesPage& page)
+inline void PreferencesPageCallbacks_constructPage (const PreferencesPageCallbacks& callbacks, PrefPage* page)
 {
 	for (PreferencesPageCallbacks::const_iterator i = callbacks.begin(); i != callbacks.end(); ++i) {
 		(*i)(page);
@@ -361,22 +361,47 @@ class PreferenceTreeGroup: public PreferenceGroup
 		GtkWidget* m_notebook;
 		GtkTreeStore* m_store;
 		GtkTreeIter m_group;
+		typedef std::list<PrefPage> PrefPageList;
+		PrefPageList _prefPages;
 	public:
 		PreferenceTreeGroup (Dialog& dialog, GtkWidget* notebook, GtkTreeStore* store, GtkTreeIter group) :
 			m_dialog(dialog), m_notebook(notebook), m_store(store), m_group(group)
 		{
 		}
-		PreferencesPage createPage (const std::string& treeName, const std::string& frameName)
+		PrefPage* createPage (const std::string& treeName, const std::string& frameName)
 		{
 			GtkWidget* page = PreferencePages_addPage(m_notebook, frameName);
 			PreferenceTree_appendPage(m_store, &m_group, treeName, page);
-			return PreferencesPage(m_dialog, getVBox(page));
+
+			_prefPages.push_back(PrefPage(m_dialog, getVBox(page)));
+			PrefPageList::iterator i = _prefPages.end();
+
+			// Return the last item in the list, except the case there is none
+			if (i != _prefPages.begin()) {
+				i--;
+				PrefPage* pagePtr = &(*i);
+				return pagePtr;
+			}
+			return NULL;
 		}
 };
 
+void PrefsDlg::addConstructor(PreferenceConstructor* constructor) {
+	_constructors.push_back(constructor);
+}
+
+void PrefsDlg::callConstructors(PreferenceTreeGroup& preferenceGroup) {
+	for (PreferenceConstructorList::iterator i = _constructors.begin(); i != _constructors.end(); i++) {
+		PreferenceConstructor* constructor = *i;
+		if (constructor != NULL) {
+			constructor->constructPreferencePage(preferenceGroup);
+		}
+	}
+}
+
 GtkWindow* PrefsDlg::BuildDialog ()
 {
-	PreferencesDialog_addInterfacePreferences(FreeCaller1<PreferencesPage&, Interface_constructPreferences> ());
+	PreferencesDialog_addInterfacePreferences(FreeCaller1<PrefPage*, Interface_constructPreferences> ());
 	Mouse_registerPreferencesPage();
 	// Construct the main dialog window. Set a vertical default size as the
 	// size_request is too small.
@@ -458,8 +483,8 @@ GtkWindow* PrefsDlg::BuildDialog ()
 						{
 							GtkWidget* interfacePage = PreferencePages_addPage(m_notebook, _("Interface Preferences"));
 							{
-								PreferencesPage preferencesPage(*this, getVBox(interfacePage));
-								PreferencesPageCallbacks_constructPage(g_interfacePreferences, preferencesPage);
+								PrefPage preferencesPage(*this, getVBox(interfacePage));
+								PreferencesPageCallbacks_constructPage(g_interfacePreferences, &preferencesPage);
 							}
 
 							GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Interface"), interfacePage);
@@ -471,8 +496,8 @@ GtkWindow* PrefsDlg::BuildDialog ()
 						{
 							GtkWidget* settings = PreferencePages_addPage(m_notebook, _("General Settings"));
 							{
-								PreferencesPage preferencesPage(*this, getVBox(settings));
-								PreferencesPageCallbacks_constructPage(g_settingsPreferences, preferencesPage);
+								PrefPage preferencesPage(*this, getVBox(settings));
+								PreferencesPageCallbacks_constructPage(g_settingsPreferences, &preferencesPage);
 							}
 
 							GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Settings"), settings);

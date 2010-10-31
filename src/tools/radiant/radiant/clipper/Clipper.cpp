@@ -1,4 +1,4 @@
-#include "GlobalClipPoints.h"
+#include "Clipper.h"
 
 #include "radiant_i18n.h"
 #include "iscenegraph.h"
@@ -10,56 +10,79 @@
 #include "../brush/csg/csg.h"
 #include "../sidebar/texturebrowser.h"
 
-ClipPointManager::ClipPointManager () :
+namespace {
+const std::string RKEY_CLIPPER_CAULK_SHADER = "user/ui/clipper/caulkTexture";
+const std::string RKEY_CLIPPER_USE_CAULK = "user/ui/clipper/useCaulk";
+}
+
+BrushClipper::BrushClipper () :
 	_movingClip(NULL), _switch(true), _useCaulk(false), _caulkShader("textures/tex_common/nodraw")
 {
-	GlobalPreferenceSystem().registerPreference("ClipNoDraw", BoolImportStringCaller(_useCaulk),
-			BoolExportStringCaller(_useCaulk));
+	GlobalRegistry().addKeyObserver(this, RKEY_CLIPPER_USE_CAULK);
+	GlobalRegistry().addKeyObserver(this, RKEY_CLIPPER_CAULK_SHADER);
+
+	// greebo: Register this class in the preference system so that the
+	// constructPreferencePage() gets called.
+	GlobalPreferenceSystem().addConstructor(this);
 }
 
-void ClipPointManager::constructPreferences (PreferencesPage& page)
+// Update the internally stored variables on registry key change
+void BrushClipper::keyChanged ()
 {
-	page.appendCheckBox("", _("Clipper tool uses nodraw"), _useCaulk);
+	_caulkShader = GlobalRegistry().get(RKEY_CLIPPER_CAULK_SHADER);
+	_useCaulk = (GlobalRegistry().get(RKEY_CLIPPER_USE_CAULK) == "1");
 }
 
-void ClipPointManager::constructPreferencePage (PreferenceGroup& group)
+void BrushClipper::constructPreferencePage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Clipper", _("Clipper Tool Settings")));
-	constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Clipper"), _("Clipper Tool Settings"));
+
+	page->appendCheckBox("", _("Clipper tool uses caulk"), RKEY_CLIPPER_USE_CAULK);
+	page->appendEntry(_("Caulk shader name"), RKEY_CLIPPER_CAULK_SHADER);
 }
 
-void ClipPointManager::registerPreferencesPage ()
+void BrushClipper::registerPreferencesPage ()
 {
 	PreferencesDialog_addSettingsPage(PreferencePageConstructor(*this));
 }
 
-EViewType ClipPointManager::getViewType () const
+EViewType BrushClipper::getViewType () const
 {
 	return _viewType;
 }
 
-void ClipPointManager::setViewType (EViewType viewType)
+void BrushClipper::setViewType (EViewType viewType)
 {
 	_viewType = viewType;
 }
 
-ClipPoint* ClipPointManager::getMovingClip ()
+ClipPoint* BrushClipper::getMovingClip ()
 {
 	return _movingClip;
 }
 
-void ClipPointManager::setMovingClip (ClipPoint* clipPoint)
+Vector3& BrushClipper::getMovingClipCoords() {
+	// Check for NULL pointers, one never knows
+	if (_movingClip != NULL) {
+		return _movingClip->_coords;
+	}
+
+	// Return at least anything, i.e. the coordinates of the first clip point
+	return _clipPoints[0]._coords;
+}
+
+void BrushClipper::setMovingClip (ClipPoint* clipPoint)
 {
 	_movingClip = clipPoint;
 }
 
-const std::string ClipPointManager::getShader () const
+const std::string BrushClipper::getShader () const
 {
 	return (_useCaulk) ? _caulkShader : GlobalTextureBrowser().getSelectedShader();
 }
 
 // greebo: Cycles through the three possible clip points and returns the nearest to point (for selectiontest)
-ClipPoint* ClipPointManager::find (const Vector3& point, EViewType viewtype, float scale)
+ClipPoint* BrushClipper::find (const Vector3& point, EViewType viewtype, float scale)
 {
 	double bestDistance = FLT_MAX;
 
@@ -73,12 +96,12 @@ ClipPoint* ClipPointManager::find (const Vector3& point, EViewType viewtype, flo
 }
 
 // Returns true if at least two clip points are set
-bool ClipPointManager::valid () const
+bool BrushClipper::valid () const
 {
 	return _clipPoints[0].isSet() && _clipPoints[1].isSet();
 }
 
-void ClipPointManager::draw (float scale)
+void BrushClipper::draw (float scale)
 {
 	// Draw clip points
 	for (unsigned int i = 0; i < NUM_CLIP_POINTS; i++) {
@@ -87,7 +110,7 @@ void ClipPointManager::draw (float scale)
 	}
 }
 
-void ClipPointManager::getPlanePoints (Vector3 planepts[3], const AABB& bounds) const
+void BrushClipper::getPlanePoints (Vector3 planepts[3], const AABB& bounds) const
 {
 	ASSERT_MESSAGE(valid(), "clipper points not initialised");
 
@@ -120,7 +143,7 @@ void ClipPointManager::getPlanePoints (Vector3 planepts[3], const AABB& bounds) 
 	}
 }
 
-void ClipPointManager::update ()
+void BrushClipper::update ()
 {
 	Vector3 planepts[3];
 	if (!valid()) {
@@ -139,21 +162,21 @@ void ClipPointManager::update ()
 	ClipperChangeNotify();
 }
 
-void ClipPointManager::flipClip ()
+void BrushClipper::flipClip ()
 {
 	_switch = !_switch;
 	update();
 	ClipperChangeNotify();
 }
 
-void ClipPointManager::reset ()
+void BrushClipper::reset ()
 {
 	for (unsigned int i = 0; i < NUM_CLIP_POINTS; i++) {
 		_clipPoints[i].reset();
 	}
 }
 
-void ClipPointManager::clip ()
+void BrushClipper::clip ()
 {
 	if (clipMode() && valid()) {
 		Vector3 planepts[3];
@@ -169,7 +192,7 @@ void ClipPointManager::clip ()
 	}
 }
 
-void ClipPointManager::splitClip ()
+void BrushClipper::splitClip ()
 {
 	if (clipMode() && valid()) {
 		Vector3 planepts[3];
@@ -184,12 +207,12 @@ void ClipPointManager::splitClip ()
 	}
 }
 
-bool ClipPointManager::clipMode () const
+bool BrushClipper::clipMode () const
 {
 	return GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eClip;
 }
 
-void ClipPointManager::onClipMode (bool enabled)
+void BrushClipper::onClipMode (bool enabled)
 {
 	// Revert all clip points to <0,0,0> values
 	reset();
@@ -203,7 +226,7 @@ void ClipPointManager::onClipMode (bool enabled)
 	ClipperChangeNotify();
 }
 
-void ClipPointManager::newClipPoint (const Vector3& point)
+void BrushClipper::newClipPoint (const Vector3& point)
 {
 	if (_clipPoints[0].isSet() == false) {
 		_clipPoints[0]._coords = point;
@@ -225,11 +248,23 @@ void ClipPointManager::newClipPoint (const Vector3& point)
 	ClipperChangeNotify();
 }
 
-// --------------------------------------------------------------------------------------
+/* BrushClipper dependencies class.
+ */
 
-// Accessor function for the clip points interface
-ClipPointManager* GlobalClipPoints ()
+class BrushClipperDependencies: public GlobalRegistryModuleRef,
+		public GlobalRadiantModuleRef,
+		public GlobalPreferenceSystemModuleRef,
+		public GlobalSelectionModuleRef,
+		public GlobalSceneGraphModuleRef
 {
-	static ClipPointManager _clipPointManager;
-	return &_clipPointManager;
-}
+};
+
+/* Required code to register the module with the ModuleServer.
+ */
+
+#include "modulesystem/singletonmodule.h"
+
+typedef SingletonModule<BrushClipper, BrushClipperDependencies> BrushClipperModule;
+
+typedef Static<BrushClipperModule> StaticBrushClipperSystemModule;
+StaticRegisterModule staticRegisterBrushClipperSystem(StaticBrushClipperSystemModule::instance());

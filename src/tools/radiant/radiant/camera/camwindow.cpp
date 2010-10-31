@@ -87,18 +87,18 @@ void GlobalCamera_Benchmark ()
 	GlobalCamera().benchmark();
 }
 
-void Camera_constructPreferences (PreferencesPage& page)
+void Camera_constructPreferences (PreferencesPage* page)
 {
 	// Add the sliders for the movement and angle speed and connect them to the observer
-	page.appendSlider(_("Movement Speed (game units)"), RKEY_MOVEMENT_SPEED, TRUE, 100, 50, 300, 1, 10, 10);
-	page.appendSlider(_("Rotation Speed"), RKEY_ROTATION_SPEED, TRUE, 3, 1, 180, 1, 10, 10);
+	page->appendSlider(_("Movement Speed (game units)"), RKEY_MOVEMENT_SPEED, TRUE, 100, 50, 300, 1, 10, 10);
+	page->appendSlider(_("Rotation Speed"), RKEY_ROTATION_SPEED, TRUE, 3, 1, 180, 1, 10, 10);
 
 	// Add the checkboxes and connect them with the registry key and the according observer
-	page.appendCheckBox("", _("Discrete movement (non-freelook mode)"), RKEY_DISCRETE_MOVEMENT);
-	page.appendCheckBox("", _("Enable far-clip plane (hides distant objects)"), RKEY_ENABLE_FARCLIP);
+	page->appendCheckBox("", _("Discrete movement (non-freelook mode)"), RKEY_DISCRETE_MOVEMENT);
+	page->appendCheckBox("", _("Enable far-clip plane (hides distant objects)"), RKEY_ENABLE_FARCLIP);
 
 	// Add the "inverse mouse vertical axis in free-look mode" preference
-	page.appendCheckBox("", _("Invert mouse vertical axis (freelook mode)"), RKEY_INVERT_MOUSE_VERTICAL_AXIS);
+	page->appendCheckBox("", _("Invert mouse vertical axis (freelook mode)"), RKEY_INVERT_MOUSE_VERTICAL_AXIS);
 
 	// Create the string list containing the render mode captions
 	std::list<std::string> renderModeDescriptions;
@@ -106,12 +106,12 @@ void Camera_constructPreferences (PreferencesPage& page)
 	renderModeDescriptions.push_back(_("Flatshade"));
 	renderModeDescriptions.push_back(_("Textured"));
 
-	page.appendCombo("Render Mode", RKEY_DRAWMODE, renderModeDescriptions);
+	page->appendCombo("Render Mode", RKEY_DRAWMODE, renderModeDescriptions);
 }
 
 void Camera_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Camera"), _("Camera View Preferences")));
+	PreferencesPage* page = group.createPage(_("Camera"), _("Camera View Preferences"));
 	Camera_constructPreferences(page);
 }
 void Camera_registerPreferencesPage ()

@@ -154,18 +154,18 @@ void QE_CheckAutoSave (void)
 	}
 }
 
-static void Autosave_constructPreferences (PreferencesPage& page)
+static void Autosave_constructPreferences (PrefPage* page)
 {
-	GtkWidget* autosave_enabled = page.appendCheckBox(_("Autosave"), _("Enable Autosave"), g_AutoSave_Enabled);
-	GtkWidget* autosave_frequency = page.appendSpinner(_("Autosave Frequency (minutes)"), m_AutoSave_Frequency, 1, 1,
+	GtkWidget* autosave_enabled = page->appendCheckBox(_("Autosave"), _("Enable Autosave"), g_AutoSave_Enabled);
+	GtkWidget* autosave_frequency = page->appendSpinner(_("Autosave Frequency (minutes)"), m_AutoSave_Frequency, 1, 1,
 			60);
 	Widget_connectToggleDependency(autosave_frequency, autosave_enabled);
-	page.appendCheckBox("", _("Save Snapshots"), g_SnapShots_Enabled);
+	page->appendCheckBox("", _("Save Snapshots"), g_SnapShots_Enabled);
 }
 void Autosave_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Autosave"), _("Autosave Preferences")));
-	Autosave_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Autosave"), _("Autosave Preferences"));
+	Autosave_constructPreferences(reinterpret_cast<PrefPage*>(page));
 }
 void Autosave_registerPreferencesPage ()
 {

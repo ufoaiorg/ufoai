@@ -78,7 +78,7 @@
 #include "XYWnd.h"
 #include "GlobalXYWnd.h"
 #include "../clipper/ClipPoint.h"
-#include "../clipper/GlobalClipPoints.h"
+#include "../clipper/Clipper.h"
 
 xywindow_globals_t g_xywindow_globals;
 xywindow_globals_private_t g_xywindow_globals_private;
@@ -347,16 +347,16 @@ void XYWnd_registerShortcuts ()
 	command_connect_accelerator("ToggleCrosshairs");
 }
 
-void Orthographic_constructPreferences (PreferencesPage& page)
+void Orthographic_constructPreferences (PrefPage* page)
 {
-	page.appendCheckBox("", _("Solid selection boxes"), g_xywindow_globals.m_bNoStipple);
-	page.appendCheckBox("", _("Chase mouse during drags"), g_xywindow_globals_private.m_bChaseMouse);
-	page.appendCheckBox("", _("Update views on camera move"), g_xywindow_globals_private.m_bCamXYUpdate);
+	page->appendCheckBox("", _("Solid selection boxes"), g_xywindow_globals.m_bNoStipple);
+	page->appendCheckBox("", _("Chase mouse during drags"), g_xywindow_globals_private.m_bChaseMouse);
+	page->appendCheckBox("", _("Update views on camera move"), g_xywindow_globals_private.m_bCamXYUpdate);
 }
 void Orthographic_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Orthographic"), _("Orthographic View Preferences")));
-	Orthographic_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Orthographic"), _("Orthographic View Preferences"));
+	Orthographic_constructPreferences(reinterpret_cast<PrefPage*>(page));
 }
 void Orthographic_registerPreferencesPage ()
 {
@@ -418,7 +418,6 @@ void XYWindow_Construct ()
 			g_xywindow_globals_private.show_axis), BoolExportStringCaller(g_xywindow_globals_private.show_axis));
 
 	Orthographic_registerPreferencesPage();
-	GlobalClipPoints()->registerPreferencesPage();
 
 	XYWnd::captureStates();
 

@@ -1194,15 +1194,11 @@ void SelectedFaces_pasteTexture (void)
 	g_SelectedFaceInstances.foreach(FaceInstance_pasteTexture);
 }
 
-static void SurfaceInspector_constructPreferences (PreferencesPage& page)
-{
-	page.appendCheckBox("", _("Surface Inspector Increments Match Grid"), g_si_globals.m_bSnapTToGrid);
-}
-
 void SurfaceInspector_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Surface Inspector"), _("Surface Inspector Preferences")));
-	SurfaceInspector_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Surface Inspector"), _("Surface Inspector Preferences"));
+	PrefPage*p = reinterpret_cast<PrefPage*>(page);
+	p->appendCheckBox("", _("Surface Inspector Increments Match Grid"), g_si_globals.m_bSnapTToGrid);
 }
 
 static void SurfaceInspector_registerPreferencesPage (void)

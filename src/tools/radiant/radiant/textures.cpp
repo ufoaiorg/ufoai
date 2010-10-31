@@ -627,14 +627,14 @@ void TextureModeExport (ETexturesMode& self, const IntImportCallback& importer)
 }
 typedef ReferenceCaller1<ETexturesMode, const IntImportCallback&, TextureModeExport> TextureModeExportCaller;
 
-void Textures_constructPreferences (PreferencesPage& page)
+void Textures_constructPreferences (PrefPage* page)
 {
 	{
 		const char* percentages[] = { N_("12.5%"), N_("25%"), N_("50%"), N_("100%") };
-		page.appendRadio(_("Texture Quality"), STRING_ARRAY_RANGE(percentages), LatchedIntImportCaller(
+		page->appendRadio(_("Texture Quality"), STRING_ARRAY_RANGE(percentages), LatchedIntImportCaller(
 				g_Textures_textureQuality), IntExportCaller(g_Textures_textureQuality.m_latched));
 	}
-	page.appendSpinner(_("Texture Gamma"), 1.0, 0.0, 1.0, FloatImportCallback(TextureGammaImportCaller(
+	page->appendSpinner(_("Texture Gamma"), 1.0, 0.0, 1.0, FloatImportCallback(TextureGammaImportCaller(
 			g_texture_globals.fGamma)), FloatExportCallback(FloatExportCaller(g_texture_globals.fGamma)));
 	{
 		const char* texture_mode[] = {
@@ -645,7 +645,7 @@ void Textures_constructPreferences (PreferencesPage& page)
 				N_("Bilinear Mipmap"),
 				N_("Trilinear"),
 				N_("Anisotropy") };
-		page.appendCombo(_("Texture Render Mode"), STRING_ARRAY_RANGE(texture_mode), IntImportCallback(
+		page->appendCombo(_("Texture Render Mode"), STRING_ARRAY_RANGE(texture_mode), IntImportCallback(
 				TextureModeImportCaller(g_texture_mode)), IntExportCallback(TextureModeExportCaller(g_texture_mode)));
 	}
 	{
@@ -664,15 +664,15 @@ void Textures_constructPreferences (PreferencesPage& page)
 								: STRING_ARRAY_RANGE(compression_opengl)
 								: (g_texture_globals.m_bS3CompressionSupported) ? STRING_ARRAY_RANGE(compression_s3tc)
 										: STRING_ARRAY_RANGE(compression_none));
-		page.appendCombo(_("Hardware Texture Compression"), compression, TextureCompressionImportCaller(
+		page->appendCombo(_("Hardware Texture Compression"), compression, TextureCompressionImportCaller(
 				g_texture_globals.m_nTextureCompressionFormat), IntExportCaller(
 				reinterpret_cast<int&> (g_texture_globals.m_nTextureCompressionFormat)));
 	}
 }
 void Textures_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Textures"), _("Texture Settings")));
-	Textures_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Textures"), _("Texture Settings"));
+	Textures_constructPreferences(reinterpret_cast<PrefPage*>(page));
 }
 void Textures_registerPreferencesPage ()
 {

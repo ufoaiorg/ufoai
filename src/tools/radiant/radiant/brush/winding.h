@@ -27,6 +27,7 @@
 
 #include <vector>
 
+#include "iclipper.h"
 #include "irender.h"
 #include "igl.h"
 #include "selectable.h"
@@ -57,11 +58,6 @@ inline indexremap_t indexremap_for_projectionaxis (const ProjectionAxis axis)
 		return indexremap_t(0, 1, 2);
 	}
 }
-
-enum PlaneClassification
-{
-	ePlaneFront = 0, ePlaneBack = 1, ePlaneOn = 2
-};
 
 #define MAX_POINTS_ON_WINDING 64
 const std::size_t c_brush_maxFaces = 1024;
@@ -252,24 +248,6 @@ inline bool Edge_isDegenerate (const Vector3& x, const Vector3& y)
 
 void Winding_Clip (const FixedWinding& winding, const Plane3& plane, const Plane3& clipPlane, std::size_t adjacent,
 		FixedWinding& clipped);
-
-struct BrushSplitType
-{
-		BrushSplitType ()
-		{
-			counts[0] = 0;
-			counts[1] = 0;
-			counts[2] = 0;
-		}
-		BrushSplitType& operator+= (const BrushSplitType& other)
-		{
-			counts[0] += other.counts[0];
-			counts[1] += other.counts[1];
-			counts[2] += other.counts[2];
-			return *this;
-		}
-		std::size_t counts[3];
-};
 
 BrushSplitType Winding_ClassifyPlane (const Winding& w, const Plane3& plane);
 

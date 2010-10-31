@@ -504,19 +504,19 @@ void ForceLightRadiiExport (EntityCreator& self, const BoolImportCallback& impor
 }
 typedef ReferenceCaller1<EntityCreator, const BoolImportCallback&, ForceLightRadiiExport> ForceLightRadiiExportCaller;
 
-void Entity_constructPreferences (PreferencesPage& page)
+void Entity_constructPreferences (PrefPage* page)
 {
-	page.appendCheckBox(_("Show"), _("Light Radii"), LightRadiiImportCaller(GlobalEntityCreator()),
+	page->appendCheckBox(_("Show"), _("Light Radii"), LightRadiiImportCaller(GlobalEntityCreator()),
 			LightRadiiExportCaller(GlobalEntityCreator()));
-	page.appendCheckBox(_("Force"), _("Force Light Radii"), ForceLightRadiiImportCaller(GlobalEntityCreator()),
+	page->appendCheckBox(_("Force"), _("Force Light Radii"), ForceLightRadiiImportCaller(GlobalEntityCreator()),
 			ForceLightRadiiExportCaller(GlobalEntityCreator()));
 }
 void Entity_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Entities"), _("Entity Display Preferences")));
-	Entity_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Entities"), _("Entity Display Preferences"));
+	Entity_constructPreferences(reinterpret_cast<PrefPage*>(page));
 }
-void Entity_registerPreferencesPage ()
+void Entity_registerPrefPage ()
 {
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Entity_constructPage> ());
 }
@@ -615,7 +615,7 @@ void Entity_Construct ()
 	typedef FreeCaller1<const Selectable&, Entity_ColorPickerSelectionChanged> EntityColorPickerSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(EntityColorPickerSelectionChangedCaller());
 
-	Entity_registerPreferencesPage();
+	Entity_registerPrefPage();
 }
 
 void Entity_Destroy ()

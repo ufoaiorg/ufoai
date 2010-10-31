@@ -114,7 +114,7 @@
 #include "ui/Icons.h"
 #include "pathfinding.h"
 #include "model.h"
-#include "clipper/GlobalClipPoints.h"
+#include "clipper/Clipper.h"
 #include "camera/CamWnd.h"
 #include "camera/GlobalCamera.h"
 #include "xyview/GlobalXYWnd.h"
@@ -314,16 +314,16 @@ void EnginePathImport (std::string& self, const char* value)
 }
 typedef ReferenceCaller1<std::string, const char*, EnginePathImport> EnginePathImportCaller;
 
-void Paths_constructPreferences (PreferencesPage& page)
+void Paths_constructPreferences (PrefPage* page)
 {
-	page.appendPathEntry(_("Engine Path"), true, StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
+	page->appendPathEntry(_("Engine Path"), true, StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
 			StringExportCallback(StringExportCaller(g_strEnginePath)));
-	page.appendPathEntry(_("Compiler Binary"), g_strCompilerBinaryWithPath, false);
+	page->appendPathEntry(_("Compiler Binary"), g_strCompilerBinaryWithPath, false);
 }
 void Paths_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Paths"), _("Path Settings")));
-	Paths_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Paths"), _("Path Settings"));
+	Paths_constructPreferences(reinterpret_cast<PrefPage*>(page));
 }
 
 void Paths_registerPreferencesPage (void)
@@ -342,8 +342,8 @@ class PathsDialog: public Dialog
 			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));
 
 			{
-				PreferencesPage preferencesPage(*this, GTK_WIDGET(vbox2));
-				Paths_constructPreferences(preferencesPage);
+				PrefPage preferencesPage(*this, GTK_WIDGET(vbox2));
+				Paths_constructPreferences(&preferencesPage);
 			}
 
 			return create_simple_modal_dialog_window(_("Engine Path Not Found"), m_modal, GTK_WIDGET(frame));
@@ -1027,7 +1027,7 @@ void DragMode (void)
 		g_currentToolMode = DragMode;
 		g_currentToolModeSupportsComponentEditing = true;
 
-		GlobalClipPoints()->onClipMode(false);
+		GlobalClipper().onClipMode(false);
 
 		Sys_Status(c_ResizeMode_status);
 		GlobalSelectionSystem().SetManipulatorMode(SelectionSystem::eDrag);
@@ -1046,7 +1046,7 @@ void TranslateMode (void)
 		g_currentToolMode = TranslateMode;
 		g_currentToolModeSupportsComponentEditing = true;
 
-		GlobalClipPoints()->onClipMode(false);
+		GlobalClipper().onClipMode(false);
 
 		Sys_Status(c_TranslateMode_status);
 		GlobalSelectionSystem().SetManipulatorMode(SelectionSystem::eTranslate);
@@ -1065,7 +1065,7 @@ void RotateMode (void)
 		g_currentToolMode = RotateMode;
 		g_currentToolModeSupportsComponentEditing = true;
 
-		GlobalClipPoints()->onClipMode(false);
+		GlobalClipper().onClipMode(false);
 
 		Sys_Status(c_RotateMode_status);
 		GlobalSelectionSystem().SetManipulatorMode(SelectionSystem::eRotate);
@@ -1084,7 +1084,7 @@ void ScaleMode (void)
 		g_currentToolMode = ScaleMode;
 		g_currentToolModeSupportsComponentEditing = true;
 
-		GlobalClipPoints()->onClipMode(false);
+		GlobalClipper().onClipMode(false);
 
 		Sys_Status(c_ScaleMode_status);
 		GlobalSelectionSystem().SetManipulatorMode(SelectionSystem::eScale);
@@ -1105,7 +1105,7 @@ void ClipperMode (void)
 
 		SelectionSystem_DefaultMode();
 
-		GlobalClipPoints()->onClipMode(true);
+		GlobalClipper().onClipMode(true);
 
 		Sys_Status(c_ClipperMode_status);
 		GlobalSelectionSystem().SetManipulatorMode(SelectionSystem::eClip);
@@ -2387,23 +2387,23 @@ void GlobalGL_sharedContextDestroyed (void)
 	QGL_sharedContextDestroyed(GlobalOpenGL());
 }
 
-void Layout_constructPreferences (PreferencesPage& page)
+void Layout_constructPreferences (PrefPage* page)
 {
 	{
 		const char* layouts[] = { ui::icons::ICON_WINDOW_REGULAR.c_str(), ui::icons::ICON_WINDOW_SPLIT.c_str() };
-		page.appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(
+		page->appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(
 				g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
 	}
-	page.appendCheckBox("", _("Detachable Menus"), LatchedBoolImportCaller(g_Layout_enableDetachableMenus),
+	page->appendCheckBox("", _("Detachable Menus"), LatchedBoolImportCaller(g_Layout_enableDetachableMenus),
 			BoolExportCaller(g_Layout_enableDetachableMenus.m_latched));
-	page.appendCheckBox("", _("Plugin Toolbar"), LatchedBoolImportCaller(g_Layout_enablePluginToolbar),
+	page->appendCheckBox("", _("Plugin Toolbar"), LatchedBoolImportCaller(g_Layout_enablePluginToolbar),
 			BoolExportCaller(g_Layout_enablePluginToolbar.m_latched));
 }
 
 void Layout_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage(_("Layout"), _("Layout Preferences")));
-	Layout_constructPreferences(page);
+	PreferencesPage* page = group.createPage(_("Layout"), _("Layout Preferences"));
+	Layout_constructPreferences(reinterpret_cast<PrefPage*>(page));
 }
 
 void Layout_registerPreferencesPage (void)

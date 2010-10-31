@@ -10,7 +10,20 @@ namespace {
 const unsigned int NUM_CLIP_POINTS = 3;
 }
 
-class ClipPointManager {
+class BrushClipper: public Clipper, public RegistryKeyObserver, public PreferenceConstructor
+{
+	public:
+		// Radiant Module stuff
+		typedef Clipper Type;
+		STRING_CONSTANT(Name, "*");
+
+		// Return the static instance
+		Clipper* getTable ()
+		{
+			return this;
+		}
+
+	private:
 		// Hold the currently active xy view type
 		EViewType _viewType;
 
@@ -30,67 +43,63 @@ class ClipPointManager {
 
 	public:
 		// Constructor
-		ClipPointManager();
+		BrushClipper ();
 
 		// The RegistryKeyObserver implementation, gets called when the observed keys change
-		void keyChanged();
+		void keyChanged ();
 
-		EViewType getViewType() const;
-		void setViewType(EViewType viewType);
+		EViewType getViewType () const;
+		void setViewType (EViewType viewType);
 
-		ClipPoint* getMovingClip();
-		void setMovingClip(ClipPoint* clipPoint);
+		ClipPoint* getMovingClip ();
+		Vector3& getMovingClipCoords ();
+		void setMovingClip (ClipPoint* clipPoint);
 
 		// greebo: Cycles through the three possible clip points and returns the nearest to point (for selectiontest)
 		// @returns: NULL, if no suitable point could be found
-		ClipPoint* find(const Vector3& point, EViewType viewtype, float scale);
+		ClipPoint* find (const Vector3& point, EViewType viewtype, float scale);
 
 		// Draws the set clip points, the <scale> argument is needed for drawing the number id of the clip point
-		void draw(float scale);
+		void draw (float scale);
 
 		// Returns true if at least two clip points are set
-		bool valid() const;
+		bool valid () const;
 
-		bool clipMode() const;
+		bool clipMode () const;
 
-		void getPlanePoints(Vector3 planepts[3], const AABB& bounds) const;
+		void getPlanePoints (Vector3 planepts[3], const AABB& bounds) const;
 
 		// Resets all clip points to zero and their "set" property to false
-		void reset();
+		void reset ();
 
-		void update();
+		void update ();
 
 		// Returns the shader name of the texture that gets applied to the surfaces created by the clip operation
-		const std::string getShader() const;
+		const std::string getShader () const;
 
 		// Switches between front and back clip mode
-		void flipClip();
+		void flipClip ();
 
 		// Clips the selected brushes using the current clip point selection
-		void clip();
+		void clip ();
 
-		void splitClip();
+		void splitClip ();
 
 		// This gets called when the clip mode gets activated/deactivated
-		void onClipMode(bool enabled);
+		void onClipMode (bool enabled);
 
 		// Adds the given clip point coordinates
-		void newClipPoint(const Vector3& point);
+		void newClipPoint (const Vector3& point);
 
 		// Adds the preferences settings to the preference dialog
-		void registerPreferencesPage();
+		void registerPreferencesPage ();
 
 	private:
 
-		// Construct the actual preference pages/settings
-		void constructPreferences(PreferencesPage& page);
-
 		// The method that is passed to the preference system
-		void constructPreferencePage(PreferenceGroup& group);
-		typedef MemberCaller1<ClipPointManager, PreferenceGroup&,
-				&ClipPointManager::constructPreferencePage> PreferencePageConstructor;
+		void constructPreferencePage (PreferenceGroup& group);
+		typedef MemberCaller1<BrushClipper, PreferenceGroup&, &BrushClipper::constructPreferencePage>
+				PreferencePageConstructor;
 };
-
-ClipPointManager* GlobalClipPoints();
 
 #endif /*GLOBALCLIPPOINTS_H_*/
