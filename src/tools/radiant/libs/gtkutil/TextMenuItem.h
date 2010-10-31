@@ -33,6 +33,24 @@ namespace gtkutil
 			}
 	};
 
+	// greebo: Same as above, just adds a menu item with mnemonic
+	class TextMenuItemMnemonic: public TextMenuItem
+	{
+		public:
+
+			// Constructor
+			TextMenuItemMnemonic (const std::string& text) :
+				TextMenuItem(text)
+			{
+			}
+
+			// Operator cast to GtkWidget* for packing into a menu
+			virtual operator GtkWidget* ()
+			{
+				GtkWidget* menuItem = gtk_menu_item_new_with_mnemonic(_label.c_str());
+				return menuItem;
+			}
+	};
 }
 
 #endif /*TEXTMENUITEM_H_*/
