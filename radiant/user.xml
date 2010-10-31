@@ -22,6 +22,7 @@
 			<movementSpeed value="100" />
 			<rotationSpeed value="3" />
 			<cubicScale value="13" />
+			<drawMode value="2" />
 		</camera>
 
 		<ModelSelector>
