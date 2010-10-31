@@ -63,7 +63,8 @@ namespace ui
 		gtk_window_set_default_size(GTK_WINDOW(_widget), gint(w * 0.75), gint(h * 0.8));
 
 		// Create the model preview widget
-		gint glSize = gint(h * 0.4);
+		float previewHeightFactor = GlobalRegistry().getFloat("user/ui/ModelSelector/previewSizeFactor");
+		gint glSize = gint(h * previewHeightFactor);
 		_modelPreview.setSize(glSize);
 
 		// Signals
