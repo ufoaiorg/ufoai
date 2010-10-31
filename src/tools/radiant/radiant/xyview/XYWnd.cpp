@@ -1579,7 +1579,7 @@ void XYWnd::draw ()
 	glDisable(GL_COLOR_MATERIAL);
 
 	// greebo: Check, if the brush/patch size info should be displayed (if there are any items selected)
-	if (GlobalRegistry().get("user/ui/showSizeInfo") == "1" && GlobalSelectionSystem().countSelected() != 0) {
+	if (GlobalRegistry().get(RKEY_SHOW_SIZE_INFO) == "1" && GlobalSelectionSystem().countSelected() != 0) {
 		Vector3 min, max;
 		Select_GetBounds(min, max);
 		drawSizeInfo(nDim1, nDim2, min, max);

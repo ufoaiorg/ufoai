@@ -14,6 +14,7 @@ const std::string RKEY_CHASE_MOUSE = "user/ui/xyview/chaseMouse";
 const std::string RKEY_CAMERA_XY_UPDATE = "user/ui/xyview/camXYUpdate";
 const std::string RKEY_SHOW_CROSSHAIRS = "user/ui/xyview/showCrossHairs";
 const std::string RKEY_SHOW_GRID = "user/ui/xyview/showGrid";
+const std::string RKEY_SHOW_SIZE_INFO = "user/ui/xyview/showSizeInfo";
 
 typedef std::list<XYWnd*> XYWndList;
 }
@@ -33,6 +34,8 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 		bool _showCrossHairs;
 
 		bool _showGrid;
+
+		bool _showSizeInfo;
 
 	public:
 
