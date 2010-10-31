@@ -1,62 +1,85 @@
 #ifndef GLOBALXYWND_H_
 #define GLOBALXYWND_H_
 
-#include "../clipper/Clipper.h"
 #include <list>
+
+#include "iclipper.h"
+#include "iregistry.h"
+#include "preferencesystem.h"
+
 #include "XYWnd.h"
 
-	namespace {
-		typedef std::list<XYWnd*> XYWndList;
-	}
+namespace {
+const std::string RKEY_CHASE_MOUSE = "user/ui/xyview/chaseMouse";
+const std::string RKEY_CAMERA_XY_UPDATE = "user/ui/xyview/camXYUpdate";
 
-class XYWndManager
+typedef std::list<XYWnd*> XYWndList;
+}
+
+class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 {
-	// The list containing the pointers to all the allocated views
-	XYWndList _XYViews;
+		// The list containing the pointers to all the allocated views
+		XYWndList _XYViews;
 
-	XYWnd* _activeXY;
+		XYWnd* _activeXY;
 
-public:
+		// True, if the view is moved when the mouse cursor exceeds the view window borders
+		bool _chaseMouse;
 
-	// Constructor
-	XYWndManager();
+		bool _camXYUpdate;
 
-	// Destructor, calls destroy to free all remaining views
-	~XYWndManager();
+	public:
 
-	// Passes a queueDraw() call to each allocated view
-	void updateAllViews();
+		// Constructor
+		XYWndManager ();
 
-	// Free all the allocated views from the heap
-	void destroy();
+		// Destructor, calls destroy to free all remaining views
+		~XYWndManager ();
 
-	XYWnd* getActiveXY() const;
-	void setActiveXY(XYWnd* wnd);
+		// The callback that gets called on registry key changes
+		void keyChanged ();
 
-	// Sets the origin of all available views
-	void setOrigin(const Vector3& origin);
+		// Returns the state of the xy view preferences
+		bool chaseMouse () const;
+		bool camXYUpdate () const;
 
-	// Sets the scale of all available views
-	void setScale(float scale);
+		// Passes a queueDraw() call to each allocated view
+		void updateAllViews ();
 
-	// Positions the view of all available views / the active view
-	void positionAllViews(const Vector3& origin);
-	void positionView(const Vector3& origin);
+		// Free all the allocated views from the heap
+		void destroy ();
 
-	// Returns the view type of the currently active view
-	EViewType getActiveViewType() const;
-	void setActiveViewType(EViewType viewType);
+		XYWnd* getActiveXY () const;
+		void setActiveXY (XYWnd* wnd);
 
-	// Retrieves the pointer to the first view matching the given view type
-	// @returns: NULL if no matching window could be found, the according pointer otherwise
-	XYWnd* getView(EViewType viewType);
+		// Sets the origin of all available views
+		void setOrigin (const Vector3& origin);
 
-	// Allocates a new XY view on the heap and returns its pointer
-	XYWnd* createXY();
+		// Sets the scale of all available views
+		void setScale (float scale);
 
+		// Positions the view of all available views / the active view
+		void positionAllViews (const Vector3& origin);
+		void positionView (const Vector3& origin);
+
+		// Returns the view type of the currently active view
+		EViewType getActiveViewType () const;
+		void setActiveViewType (EViewType viewType);
+
+		void toggleActiveView ();
+
+		// Retrieves the pointer to the first view matching the given view type
+		// @returns: NULL if no matching window could be found, the according pointer otherwise
+		XYWnd* getView (EViewType viewType);
+
+		// Allocates a new XY view on the heap and returns its pointer
+		XYWnd* createXY ();
+
+		// Construct the orthoview preference page and add it to the given group
+		void constructPreferencePage (PreferenceGroup& group);
 }; // class XYWndManager
 
 // Use this method to access the global XYWnd manager class
-XYWndManager& GlobalXYWnd();
+XYWndManager& GlobalXYWnd ();
 
 #endif /*GLOBALXYWND_H_*/

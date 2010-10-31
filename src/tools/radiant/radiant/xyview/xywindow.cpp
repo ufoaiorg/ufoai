@@ -80,7 +80,6 @@
 #include "../clipper/ClipPoint.h"
 #include "../clipper/Clipper.h"
 
-xywindow_globals_t g_xywindow_globals;
 xywindow_globals_private_t g_xywindow_globals_private;
 
 // =============================================================================
@@ -347,22 +346,6 @@ void XYWnd_registerShortcuts ()
 	command_connect_accelerator("ToggleCrosshairs");
 }
 
-void Orthographic_constructPreferences (PrefPage* page)
-{
-	page->appendCheckBox("", _("Solid selection boxes"), g_xywindow_globals.m_bNoStipple);
-	page->appendCheckBox("", _("Chase mouse during drags"), g_xywindow_globals_private.m_bChaseMouse);
-	page->appendCheckBox("", _("Update views on camera move"), g_xywindow_globals_private.m_bCamXYUpdate);
-}
-void Orthographic_constructPage (PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Orthographic"), _("Orthographic View Preferences"));
-	Orthographic_constructPreferences(reinterpret_cast<PrefPage*>(page));
-}
-void Orthographic_registerPreferencesPage ()
-{
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Orthographic_constructPage> ());
-}
-
 #include "preferencesystem.h"
 #include "stringio.h"
 
@@ -399,13 +382,6 @@ void XYWindow_Construct ()
 			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
 	// register preference settings
-	GlobalPreferenceSystem().registerPreference("ChaseMouse", BoolImportStringCaller(
-			g_xywindow_globals_private.m_bChaseMouse), BoolExportStringCaller(g_xywindow_globals_private.m_bChaseMouse));
-	GlobalPreferenceSystem().registerPreference("NoStipple", BoolImportStringCaller(g_xywindow_globals.m_bNoStipple),
-			BoolExportStringCaller(g_xywindow_globals.m_bNoStipple));
-	GlobalPreferenceSystem().registerPreference("CamXYUpdate", BoolImportStringCaller(
-			g_xywindow_globals_private.m_bCamXYUpdate), BoolExportStringCaller(
-			g_xywindow_globals_private.m_bCamXYUpdate));
 	GlobalPreferenceSystem().registerPreference("ShowWorkzone", BoolImportStringCaller(
 			g_xywindow_globals_private.d_show_work), BoolExportStringCaller(g_xywindow_globals_private.d_show_work));
 
@@ -416,8 +392,6 @@ void XYWindow_Construct ()
 			g_xywindow_globals_private.show_outline), BoolExportStringCaller(g_xywindow_globals_private.show_outline));
 	GlobalPreferenceSystem().registerPreference("SI_ShowAxis", BoolImportStringCaller(
 			g_xywindow_globals_private.show_axis), BoolExportStringCaller(g_xywindow_globals_private.show_axis));
-
-	Orthographic_registerPreferencesPage();
 
 	XYWnd::captureStates();
 

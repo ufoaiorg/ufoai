@@ -30,6 +30,7 @@
 
 #include "GlobalXYWnd.h"
 #include "XYRenderer.h"
+#include "../camera/CameraSettings.h"
 #include "../image.h"
 #include "xywindow.h"
 
@@ -287,7 +288,7 @@ void XYWnd::orientCamera (int x, int y, CamWnd& camwnd)
 // Callback that gets invoked on camera move
 void XYWnd::cameraMoved ()
 {
-	if (g_xywindow_globals_private.m_bCamXYUpdate) {
+	if (GlobalXYWnd().camXYUpdate()) {
 		queueDraw();
 	}
 }
@@ -405,7 +406,7 @@ bool XYWnd::chaseMouseMotion (int pointx, int pointy, const unsigned int& state)
 
 	// greebo: The mouse chase is only active when the according global is set to true and if we
 	// are in the right state
-	if (g_xywindow_globals_private.m_bChaseMouse && isAllowedEvent) {
+	if (GlobalXYWnd().chaseMouse() && isAllowedEvent) {
 		const int epsilon = 16;
 
 		// Calculate the X delta
@@ -537,7 +538,7 @@ gboolean XYWnd::callbackExpose (GtkWidget* widget, GdkEventExpose* event, XYWnd*
 
 void XYWnd::CameraMoved ()
 {
-	if (g_xywindow_globals_private.m_bCamXYUpdate) {
+	if (GlobalXYWnd().camXYUpdate()) {
 		queueDraw();
 	}
 }
@@ -1546,7 +1547,7 @@ void XYWnd::draw ()
 	glLoadMatrixf(m_modelview);
 
 	unsigned int globalstate = RENDER_COLOURARRAY | RENDER_COLOURWRITE;
-	if (!g_xywindow_globals.m_bNoStipple) {
+	if (!getCameraSettings()->solidSelectionBoxes()) {
 		globalstate |= RENDER_LINESTIPPLE;
 	}
 

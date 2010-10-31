@@ -4,6 +4,7 @@
 #include <string>
 #include "iregistry.h"
 #include "gtkutil/widget.h"
+#include "preferencesystem.h"
 
 namespace {
 const int MAX_CUBIC_SCALE = 23;
@@ -27,7 +28,7 @@ enum CameraDrawMode
  * from a RegistryKeyObserver, it can be connected to the according registry keys
  * and gets notified if any of the observed keys are changed.*/
 
-class CameraSettings: public RegistryKeyObserver
+class CameraSettings: public RegistryKeyObserver, public PreferenceConstructor
 {
 		bool _callbackActive;
 
@@ -77,6 +78,9 @@ class CameraSettings: public RegistryKeyObserver
 		void toggleFarClip ();
 		void setFarClip (bool farClipEnabled);
 		ToggleItem& farClipItem ();
+
+		// PreferenceConstructor implementation, adds the elements to the according preference page
+		void constructPreferencePage (PreferenceGroup& group);
 
 	private:
 		void importDrawMode (const int mode);

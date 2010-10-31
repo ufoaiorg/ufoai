@@ -1,15 +1,46 @@
 #include "GlobalXYWnd.h"
 
+#include "radiant_i18n.h"
+
 // Constructor
 XYWndManager::XYWndManager() :
 	_activeXY(NULL)
 {
+	// Connect self to the according registry keys
+	GlobalRegistry().addKeyObserver(this, RKEY_CHASE_MOUSE);
+	GlobalRegistry().addKeyObserver(this, RKEY_CAMERA_XY_UPDATE);
 
+	// Trigger loading the values of the observed registry keys
+	keyChanged();
+
+	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
+	GlobalPreferenceSystem().addConstructor(this);
 }
 
 // Destructor
 XYWndManager::~XYWndManager() {
 	destroy();
+}
+
+void XYWndManager::constructPreferencePage(PreferenceGroup& group) {
+	PreferencesPage* page(group.createPage(_("Orthographic"), _("Orthographic View Settings")));
+
+	page->appendCheckBox("", _("View chases mouse cursor during drags"), RKEY_CHASE_MOUSE);
+	page->appendCheckBox("", _("Update views on camera move"), RKEY_CAMERA_XY_UPDATE);
+}
+
+// Load/Reload the values from the registry
+void XYWndManager::keyChanged() {
+	_chaseMouse = (GlobalRegistry().get(RKEY_CHASE_MOUSE) == "1");
+	_camXYUpdate = (GlobalRegistry().get(RKEY_CAMERA_XY_UPDATE) == "1");
+}
+
+bool XYWndManager::chaseMouse() const {
+	return _chaseMouse;
+}
+
+bool XYWndManager::camXYUpdate() const {
+	return _camXYUpdate;
 }
 
 void XYWndManager::updateAllViews() {
@@ -90,6 +121,20 @@ EViewType XYWndManager::getActiveViewType() const {
 void XYWndManager::setActiveViewType(EViewType viewType) {
 	if (_activeXY != NULL) {
 		return _activeXY->setViewType(viewType);
+	}
+}
+
+void XYWndManager::toggleActiveView() {
+	if (_activeXY != NULL) {
+		if (_activeXY->getViewType() == XY) {
+			_activeXY->setViewType(XZ);
+		}
+		else if (_activeXY->getViewType() == XZ) {
+			_activeXY->setViewType(YZ);
+		}
+		else {
+			_activeXY->setViewType(XY);
+		}
 	}
 }
 
