@@ -356,7 +356,7 @@ static void UI_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
 static const value_t windowNodeProperties[] = {
 	/* @override image
 	 * Texture to use. The texture is a cut of 9 portions
-	 * (left, middle, right � top, middle, bottom). Between all this elements,
+	 * (left, middle, right x top, middle, bottom). Between all this elements,
 	 * we use a margin of 3 pixels (purple mark into the sample).
 	 * Graphically we see only a 1 pixel margin, because, for a problem of
 	 * lossy compression of texture it's not nice to have a pure transparent
