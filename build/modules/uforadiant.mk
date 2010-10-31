@@ -63,6 +63,12 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/clipper/ClipPoint.cpp \
 	$(RADIANT_BASE)/radiant/clipper/Clipper.cpp \
 	\
+	$(RADIANT_BASE)/radiant/eventmanager/Accelerator.cpp \
+	$(RADIANT_BASE)/radiant/eventmanager/Command.cpp \
+	$(RADIANT_BASE)/radiant/eventmanager/EventManager.cpp \
+	$(RADIANT_BASE)/radiant/eventmanager/Toggle.cpp \
+	$(RADIANT_BASE)/radiant/eventmanager/WidgetToggle.cpp \
+	\
 	$(RADIANT_BASE)/radiant/render/OpenGLRenderSystem.cpp \
 	$(RADIANT_BASE)/radiant/render/OpenGLModule.cpp \
 	\

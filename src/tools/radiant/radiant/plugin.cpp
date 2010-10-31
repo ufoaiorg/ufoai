@@ -59,6 +59,7 @@
 #include "commands.h"
 #include "isound.h"
 #include "ifilter.h"
+#include "ieventmanager.h"
 
 #include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
@@ -131,7 +132,7 @@ Vector3 XYWindow_windowToWorld (const WindowVector& position)
 class RadiantCoreAPI
 {
 		IRadiant m_radiantcore;
-	public:
+		public:
 		typedef IRadiant Type;
 		STRING_CONSTANT(Name, "*");
 
@@ -176,6 +177,7 @@ typedef Static<RadiantCoreModule> StaticRadiantCoreModule;
 StaticRegisterModule staticRegisterRadiantCore(StaticRadiantCoreModule::instance());
 
 class RadiantDependencies: public GlobalRadiantModuleRef,
+		public GlobalEventManagerModuleRef,
 		public GlobalFileSystemModuleRef,
 		public GlobalSoundManagerModuleRef,
 		public GlobalUMPSystemModuleRef,
@@ -271,6 +273,9 @@ class Radiant: public TypeSystemRef
 			Pathfinding_Construct();
 			UMP_Construct();
 			UFOScript_Construct();
+
+			// Load the shortcuts from the registry
+			GlobalEventManager().loadAccelerators();
 		}
 		~Radiant ()
 		{
