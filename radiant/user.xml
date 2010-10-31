@@ -95,8 +95,6 @@
 		</toolbar>
 
 		<toolbar name="edit" align="vertical">
-				<toggletoolbutton name="togglecubicclip" action="ToggleCubicClip" tooltip="Toggle Cubic Clipping" icon="view_cubicclipping.png" />
-			<separator/>
 				<toggletoolbutton name="translate" action="MouseTranslate" tooltip="Translate" icon="select_mousetranslate.png" />
 				<toggletoolbutton name="rotate" action="MouseRotate" tooltip="Rotate" icon="select_mouserotate.png" />
 				<toggletoolbutton name="scale" action="MouseScale" tooltip="Scale" icon="select_mousescale.png" />
