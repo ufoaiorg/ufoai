@@ -1142,7 +1142,8 @@ void XYWnd::drawGrid (void)
 	// show current work zone?
 	// the work zone is used to place dropped points and brushes
 	if (g_xywindow_globals_private.d_show_work) {
-		glColor3f(1.0f, 0.0f, 0.0f);
+		ui::ColourItem colourWorkzone = ColourSchemes().getColour("workzone");
+		glColor3fv(colourWorkzone);
 		glBegin(GL_LINES);
 		glVertex2f(xb, Select_getWorkZone().min[nDim2]);
 		glVertex2f(xe, Select_getWorkZone().min[nDim2]);
@@ -1264,7 +1265,8 @@ void XYWnd::drawCameraIcon (const Vector3& origin, const Vector3& angles)
 		a = degrees_to_radians(angles[CAMERA_PITCH]);
 	}
 
-	glColor3f(0.0, 0.0, 1.0);
+	ui::ColourItem colourCameraIcon = ColourSchemes().getColour("camera_icon");
+	glColor3fv(colourCameraIcon);
 	glBegin(GL_LINE_STRIP);
 	glVertex3f(x - box, y, 0);
 	glVertex3f(x, y + (box / 2), 0);

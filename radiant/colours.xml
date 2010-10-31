@@ -9,6 +9,7 @@
 		<colour name="grid_block" value="0 0 1" />
 		<colour name="default_brush" value="0 0 0" />
 		<colour name="camera_background" value="0.25 0.25 0.25" />
+		<colour name="camera_icon" value="0 0 1" />
 		<colour name="selected_brush" value="1 0 0" />
 		<colour name="selected_brush_camera" value="1 0 0" />
 		<colour name="clipper" value="0 0 1" />
@@ -16,6 +17,7 @@
 		<colour name="axis_x" value="1 0 0" />
 		<colour name="axis_y" value="0 1 0" />
 		<colour name="axis_z" value="0 0 1" />
+		<colour name="workzone" value="1 0 0" />
 		<colour name="brush_vertices" value="0 1 0" />
 		<colour name="xyview_crosshairs" value="0.2 0.9 0.2" />
 	</colourscheme>
@@ -28,6 +30,7 @@
 		<colour name="grid_block" value="0 0 1" />
 		<colour name="default_brush" value="0 0 0" />
 		<colour name="camera_background" value="0.25 0.25 0.25" />
+		<colour name="camera_icon" value="0 0 1" />
 		<colour name="selected_brush" value="1 0 0" />
 		<colour name="selected_brush_camera" value="1 0 0" />
 		<colour name="clipper" value="0 0 1" />
@@ -35,6 +38,7 @@
 		<colour name="axis_x" value="1 0 0" />
 		<colour name="axis_y" value="0 1 0" />
 		<colour name="axis_z" value="0 0 1" />
+		<colour name="workzone" value="1 0 0" />
 		<colour name="brush_vertices" value="0 1 0" />
 		<colour name="xyview_crosshairs" value="0.2 0.9 0.2" />
 	</colourscheme>
@@ -47,6 +51,7 @@
 		<colour name="grid_block" value="0 0 1" />
 		<colour name="default_brush" value="1 1 1" />
 		<colour name="camera_background" value="0.25 0.25 0.25" />
+		<colour name="camera_icon" value="0 0 1" />
 		<colour name="selected_brush" value="1 0 0" />
 		<colour name="selected_brush_camera" value="1 0 0" />
 		<colour name="clipper" value="0 0 1" />
@@ -54,6 +59,7 @@
 		<colour name="axis_x" value="1 0 0" />
 		<colour name="axis_y" value="0 1 0" />
 		<colour name="axis_z" value="0 0 1" />
+		<colour name="workzone" value="1 0 0" />
 		<colour name="brush_vertices" value="0 1 0" />
 		<colour name="xyview_crosshairs" value="0.2 0.9 0.2" />
 	</colourscheme>
@@ -67,6 +73,7 @@
 		<colour name="grid_block" value="1 1 1" />
 		<colour name="default_brush" value="0 0 0" />
 		<colour name="camera_background" value="0.25 0.25 0.25" />
+		<colour name="camera_icon" value="0 0 1" />
 		<colour name="selected_brush" value="1 0 0" />
 		<colour name="selected_brush_camera" value="1 0 0" />
 		<colour name="clipper" value="0 0 1" />
@@ -74,6 +81,7 @@
 		<colour name="axis_x" value="1 0 0" />
 		<colour name="axis_y" value="0 1 0" />
 		<colour name="axis_z" value="0 0 1" />
+		<colour name="workzone" value="1 0 0" />
 		<colour name="brush_vertices" value="0 1 0" />
 		<colour name="xyview_crosshairs" value="0.2 0.9 0.2" />
 	</colourscheme>
@@ -89,7 +97,9 @@
 		<grid_text value="Grid Text" />
 		<grid_block value="Grid Block" />
 		<default_brush value="Default Brush" />
+		<camera_icon value="Camera Icon" />
 		<camera_background value="Camera Background" />
+		<workzone value="Workzone" />
 		<selected_brush value="Selected Brush" />
 		<selected_brush_camera value="Selected Brush (Camera)" />
 		<clipper value="Clipper" />

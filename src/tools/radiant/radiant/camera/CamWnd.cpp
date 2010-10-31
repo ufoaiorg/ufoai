@@ -577,7 +577,6 @@ void CamWnd::Cam_Draw() {
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_DEPTH_TEST);
-	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1);
 
 	// draw the crosshair
