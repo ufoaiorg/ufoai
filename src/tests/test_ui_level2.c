@@ -207,6 +207,14 @@ static void testSetters (void)
 }
 
 /**
+ * @brief test cvars
+ */
+static void testCvars(void)
+{
+	UFO_ExecuteTestWindow("test_cvar");
+}
+
+/**
  * @brief test components
  */
 static void testComponents (void)
@@ -261,6 +269,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testFunctions) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testSetters) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testCvars) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testComponents) == NULL)
 		return CU_get_error();

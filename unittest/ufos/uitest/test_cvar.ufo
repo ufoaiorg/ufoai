@@ -1,0 +1,128 @@
+/**
+ * @brief Unittest for actions
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_cvar"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_cvar
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest cvar"
+		bgcolor		"0 0 0 1"
+	}
+
+	string commonTitle {
+		pos		"20 40"
+		string	"cvar"
+	}
+
+	string testCommon1 {
+		pos		"20 60"
+		string	"t1"
+	}
+
+	string testCommon2 {
+		pos		"20 80"
+		string	"t2"
+	}
+
+	string testCommon3 {
+		pos		"20 100"
+		string	"t3"
+	}
+
+	string testCommon4 {
+		pos		"20 120"
+		string	"t4"
+	}
+
+	string testCommon5 {
+		pos		"20 140"
+		string	"t5"
+	}
+
+	string testCommon6 {
+		pos		"20 160"
+		string	"t6"
+	}
+
+	string testCommon7 {
+		pos		"20 180"
+		string	"t7"
+	}
+
+	string testCommon8 {
+		pos		"20 200"
+		string	"t8"
+	}
+
+	string testCommon9 {
+		pos		"20 220"
+		string	"t9"
+		invis	true
+	}
+
+	bar barTest
+	{
+		pos			"65 10"
+		size		"4 46"
+		color		".2187 .73 .23 1"
+		current		*cvar:test_current
+		max			*cvar:test_max
+		disabled	true
+	}
+
+	//
+	// Common tests
+	//
+
+	func cvarOrFloat {
+		*cvar:test_current = 10
+		*cvar:test_max = 20
+
+		// default cvar value
+		if ( *cvar:test_current == 10 ) { *node:root.testCommon1@color = "0 1 0 1" }
+		else { *node:root.testCommon1@color = "1 0 0 1" }
+		if ( *cvar:test_max == 20 ) { *node:root.testCommon2@color = "0 1 0 1" }
+		else { *node:root.testCommon2@color = "1 0 0 1" }
+
+		// default property value
+		if ( *node:root.barTest@current == 10 ) { *node:root.testCommon3@color = "0 1 0 1" }
+		else { *node:root.testCommon3@color = "1 0 0 1" }
+		if ( *node:root.barTest@max == 20 ) { *node:root.testCommon4@color = "0 1 0 1" }
+		else { *node:root.testCommon4@color = "1 0 0 1" }
+
+		// set property with a value (from a cvar)...
+		*cvar:test_current2 = 110
+		*node:root.barTest@current = ( *cvar:test_current2 )
+		if ( *node:root.barTest@current == 110 ) { *node:root.testCommon5@color = "0 1 0 1" }
+		else { *node:root.testCommon5@color = "1 0 0 1" }
+		// then, if the cvar change, the property do not change
+		*cvar:test_current2 = 111
+		if ( *node:root.barTest@current == 110 ) { *node:root.testCommon6@color = "0 1 0 1" }
+		else { *node:root.testCommon6@color = "1 0 0 1" }
+
+		// link property to a cvar
+		*node:root.barTest@current = "*cvar:test_current2"
+		if ( *node:root.barTest@current == 111 ) { *node:root.testCommon7@color = "0 1 0 1" }
+		else { *node:root.testCommon7@color = "1 0 0 1" }
+		// then, if the cvar change, the property also change
+		*cvar:test_current2 = 112
+		if ( *node:root.barTest@current == 112 ) { *node:root.testCommon8@color = "0 1 0 1" }
+		else { *node:root.testCommon8@color = "1 0 0 1" }
+
+		// clean up
+		delete *cvar:test_current
+		delete *cvar:test_max
+		delete *cvar:test_current2
+	}
+
+	func onInit {
+		call *node:root.cvarOrFloat
+	}
+
+}
