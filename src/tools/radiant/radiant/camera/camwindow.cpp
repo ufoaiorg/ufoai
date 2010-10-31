@@ -77,11 +77,6 @@ camwindow_globals_t g_camwindow_globals;
 // =============================================================================
 // CamWnd class
 
-void CamWnd_registerShortcuts ()
-{
-	toggle_add_accelerator("ToggleCubicClip");
-}
-
 void GlobalCamera_Benchmark ()
 {
 	GlobalCamera().benchmark();
@@ -95,53 +90,7 @@ void GlobalCamera_Benchmark ()
 /// \brief Initialisation for things that have the same lifespan as this module.
 void CamWnd_Construct ()
 {
-	GlobalCommands_insert("CenterView", MemberCaller<GlobalCameraManager, &GlobalCameraManager::resetCameraAngles> (
-			GlobalCamera()), Accelerator(GDK_End));
-	GlobalToggles_insert("ToggleCubicClip", MemberCaller<CameraSettings, &CameraSettings::toggleFarClip> (
-			*getCameraSettings()), ToggleItem::AddCallbackCaller(getCameraSettings()->farClipItem()), Accelerator('\\',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("CubicClipZoomIn", MemberCaller<GlobalCameraManager, &GlobalCameraManager::cubicScaleIn> (
-			GlobalCamera()), Accelerator('[', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("CubicClipZoomOut", MemberCaller<GlobalCameraManager, &GlobalCameraManager::cubicScaleOut> (
-			GlobalCamera()), Accelerator(']', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("UpFloor", MemberCaller<GlobalCameraManager, &GlobalCameraManager::changeFloorUp> (
-			GlobalCamera()), Accelerator(GDK_Prior));
-	GlobalCommands_insert("DownFloor", MemberCaller<GlobalCameraManager, &GlobalCameraManager::changeFloorDown> (
-			GlobalCamera()), Accelerator(GDK_Prior));
-	GlobalToggles_insert("ToggleCamera", ToggleShown::ToggleCaller(GlobalCamera().getToggleShown()),
-			ToggleItem::AddCallbackCaller(GlobalCamera().getToggleShown().m_item), Accelerator('C',
-					(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-	GlobalCommands_insert("LookThroughSelected", MemberCaller<GlobalCameraManager,
-			&GlobalCameraManager::lookThroughSelected> (GlobalCamera()));
-	GlobalCommands_insert("LookThroughCamera", MemberCaller<GlobalCameraManager,
-			&GlobalCameraManager::lookThroughCamera> (GlobalCamera()));
-
-	// Insert movement commands
-	GlobalCommands_insert("CameraForward",
-			MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveForwardDiscrete> (GlobalCamera()), Accelerator(
-					GDK_Up));
-	GlobalCommands_insert("CameraBack", MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveBackDiscrete> (
-			GlobalCamera()), Accelerator(GDK_Down));
-	GlobalCommands_insert("CameraLeft", MemberCaller<GlobalCameraManager, &GlobalCameraManager::rotateLeftDiscrete> (
-			GlobalCamera()), Accelerator(GDK_Left));
-	GlobalCommands_insert("CameraRight", MemberCaller<GlobalCameraManager, &GlobalCameraManager::rotateRightDiscrete> (
-			GlobalCamera()), Accelerator(GDK_Right));
-	GlobalCommands_insert("CameraStrafeRight", MemberCaller<GlobalCameraManager,
-			&GlobalCameraManager::moveRightDiscrete> (GlobalCamera()), Accelerator(GDK_period));
-	GlobalCommands_insert("CameraStrafeLeft",
-			MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveLeftDiscrete> (GlobalCamera()), Accelerator(
-					GDK_comma));
-	GlobalCommands_insert("CameraUp", MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveUpDiscrete> (
-			GlobalCamera()), Accelerator('D'));
-	GlobalCommands_insert("CameraDown", MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveDownDiscrete> (
-			GlobalCamera()), Accelerator('C'));
-	GlobalCommands_insert("CameraAngleUp", MemberCaller<GlobalCameraManager, &GlobalCameraManager::pitchUpDiscrete> (
-			GlobalCamera()), Accelerator('A'));
-	GlobalCommands_insert("CameraAngleDown",
-			MemberCaller<GlobalCameraManager, &GlobalCameraManager::pitchDownDiscrete> (GlobalCamera()), Accelerator(
-					'Z'));
-
-	CamWnd::captureStates();
+	GlobalCamera().construct();
 }
 void CamWnd_Destroy ()
 {

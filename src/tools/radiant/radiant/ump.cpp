@@ -28,6 +28,7 @@
 #include "radiant_i18n.h"
 
 #include "iradiant.h"
+#include "ieventmanager.h"
 #include "AutoPtr.h"
 #include "modulesystem.h"
 #include "modulesystem/moduleregistry.h"
@@ -152,7 +153,7 @@ void EditUMPDefinition ()
 
 void UMP_Construct ()
 {
-	GlobalRadiant().commandInsert("EditUMPDefinition", FreeCaller<EditUMPDefinition> (), accelerator_null());
+	GlobalEventManager().addCommand("EditUMPDefinition", FreeCaller<EditUMPDefinition> ());
 	GlobalUMPSystem()->init();
 }
 

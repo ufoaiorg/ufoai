@@ -34,6 +34,7 @@
 #include "../brush/TexDef.h"
 #include "iundo.h"
 #include "iselection.h"
+#include "ieventmanager.h"
 
 #include "signal/isignal.h"
 #include "generic/object.h"
@@ -49,7 +50,7 @@
 #include "../map/map.h"
 #include "../select.h"
 #include "../brush/brushmanip.h"
-#include "../brush/brushmodule.h"
+#include "../brush/BrushModule.h"
 #include "../settings/preferences.h"
 #include "../brush/TexDef.h"
 #include "../brush/TextureProjection.h"
@@ -342,8 +343,8 @@ static void DoSnapTToGrid (float hscale, float vscale)
 void SurfaceInspector_GridChange (void)
 {
 	if (g_si_globals.m_bSnapTToGrid) {
-		const float scale = Texdef_getDefaultTextureScale();
-		DoSnapTToGrid(scale, scale);
+		float defaultScale = GlobalRegistry().getFloat("user/ui/textures/defaultTextureScale");
+		DoSnapTToGrid(defaultScale, defaultScale);
 	}
 }
 
@@ -1208,11 +1209,10 @@ static void SurfaceInspector_registerPreferencesPage (void)
 
 static void SurfaceInspector_registerCommands (void)
 {
-	GlobalRadiant().commandInsert("FitTexture", FreeCaller<SurfaceInspector_FitTexture> (), Accelerator('B',
-			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalEventManager().addCommand("FitTexture", FreeCaller<SurfaceInspector_FitTexture>());
 
-	GlobalCommands_insert("FaceCopyTexture", FreeCaller<SelectedFaces_copyTexture> ());
-	GlobalCommands_insert("FacePasteTexture", FreeCaller<SelectedFaces_pasteTexture> ());
+	GlobalEventManager().addCommand("FaceCopyTexture", FreeCaller<SelectedFaces_copyTexture>());
+	GlobalEventManager().addCommand("FacePasteTexture", FreeCaller<SelectedFaces_pasteTexture>());
 }
 
 #include "preferencesystem.h"

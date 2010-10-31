@@ -67,6 +67,10 @@ class XYWnd: public CameraObserver
 
 		GtkWindow* _parent;
 
+		// The maximum/minimum values of a coordinate
+		float _minWorldCoord;
+		float _maxWorldCoord;
+
 	public:
 		// Constructor, this allocates the GL widget
 		XYWnd ();
@@ -103,9 +107,6 @@ class XYWnd: public CameraObserver
 		void drawBlockGrid ();
 		void drawAxis ();
 		void drawGrid ();
-		void drawBackground ();
-		void loadBackgroundImage (const std::string& name);
-		void disableBackground ();
 
 		void NewBrushDrag_Begin (int x, int y);
 		void NewBrushDrag (int x, int y);
@@ -163,9 +164,6 @@ class XYWnd: public CameraObserver
 		int m_nWidth;
 		int m_nHeight;
 
-		// background image stuff
-		qtexture_t *m_tex;
-		bool m_backgroundActivated;
 		float m_alpha; // vertex alpha
 		float m_xmin, m_ymin, m_xmax, m_ymax;
 	private:

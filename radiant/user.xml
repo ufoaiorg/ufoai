@@ -34,6 +34,10 @@
 			<caulkTexture value="textures/common/nodraw" />
 		</clipper>
 
+		<textures>
+			<defaultTextureScale value="0.5" />
+		</textures>
+
 		<xyview>
 			<showGrid value="1" />
 			<chaseMouse value="1" />

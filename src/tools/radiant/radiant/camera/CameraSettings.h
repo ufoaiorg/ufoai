@@ -3,7 +3,6 @@
 
 #include <string>
 #include "iregistry.h"
-#include "gtkutil/widget.h"
 #include "preferencesystem.h"
 
 namespace {
@@ -44,13 +43,6 @@ class CameraSettings: public RegistryKeyObserver, public PreferenceConstructor
 		bool _farClipEnabled;
 		bool _solidSelectionBoxes;
 
-		void farClipExport (const BoolImportCallback& importCallback);
-
-		// Callback and callers for the ToggleItem stuff (farClipPlane)
-		MemberCaller1<CameraSettings, const BoolImportCallback&, &CameraSettings::farClipExport> _farClipCaller;
-		BoolExportCallback _farClipCallBack;
-		ToggleItem _farClipItem;
-
 	public:
 		CameraSettings ();
 
@@ -77,7 +69,6 @@ class CameraSettings: public RegistryKeyObserver, public PreferenceConstructor
 		// Enables/disables the cubic clipping
 		void toggleFarClip ();
 		void setFarClip (bool farClipEnabled);
-		ToggleItem& farClipItem ();
 
 		// PreferenceConstructor implementation, adds the elements to the according preference page
 		void constructPreferencePage (PreferenceGroup& group);

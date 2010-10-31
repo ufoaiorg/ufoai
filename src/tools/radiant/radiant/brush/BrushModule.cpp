@@ -19,7 +19,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "brushmodule.h"
+#include "BrushModule.h"
 #include "radiant_i18n.h"
 
 #include "iradiant.h"
@@ -40,15 +40,17 @@
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 
-float g_texdef_default_scale;
-
-float Texdef_getDefaultTextureScale ()
-{
-	return g_texdef_default_scale;
-}
-
 bool g_brush_always_nodraw = false;
 
+BrushModuleClass::BrushModuleClass():_textureLockEnabled(GlobalRegistry().get(RKEY_ENABLE_TEXTURE_LOCK) == "1")
+{
+	GlobalRegistry().addKeyObserver(this, RKEY_ENABLE_TEXTURE_LOCK);
+
+	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
+	GlobalPreferenceSystem().addConstructor(this);
+}
+
+#if 0
 void Face_importSnapPlanes (bool value)
 {
 	Face::m_quantise = value ? quantiseInteger : quantiseFloating;
@@ -60,46 +62,39 @@ void Face_exportSnapPlanes (const BoolImportCallback& importer)
 	importer(Face::m_quantise == quantiseInteger);
 }
 typedef FreeCaller1<const BoolImportCallback&, Face_exportSnapPlanes> FaceExportSnapPlanesCaller;
+#endif
 
-void Brush_constructPreferences (PrefPage* page)
-{
-	page->appendCheckBox("", _("Snap planes to integer grid"), FaceImportSnapPlanesCaller(), FaceExportSnapPlanesCaller());
-	page->appendEntry(_("Default texture scale"), g_texdef_default_scale);
-	page->appendCheckBox("", _("Always use nodraw for new brushes"), g_brush_always_nodraw);
-}
-void Brush_constructPage (PreferenceGroup& group)
+void BrushModuleClass::constructPreferencePage (PreferenceGroup& group)
 {
 	PreferencesPage* page = group.createPage(_("Brush"), _("Brush Settings"));
-	Brush_constructPreferences(reinterpret_cast<PrefPage*>(page));
-}
-void Brush_registerPreferencesPage ()
-{
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Brush_constructPage> ());
+	// Add the default texture scale preference and connect it to the according registryKey
+	// Note: this should be moved somewhere else, I think
+	page->appendEntry(_("Default texture scale"), "user/ui/textures/defaultTextureScale");
+
+	// The checkbox to enable/disable the texture lock option
+	page->appendCheckBox("", _("Enable Texture Lock"), "user/ui/brush/textureLock");
+
+	//page->appendCheckBox("", _("Snap planes to integer grid"), FaceImportSnapPlanesCaller(),
+	//		FaceExportSnapPlanesCaller());
+	//page->appendCheckBox("", _("Always use nodraw for new brushes"), g_brush_always_nodraw);
 }
 
-void Brush_Construct ()
+void BrushModuleClass::construct ()
 {
 	Brush_registerCommands();
-	Brush_registerPreferencesPage();
 
 	BrushClipPlane::constructStatic();
 	BrushInstance::constructStatic();
 	Brush::constructStatic();
 
-	Brush::m_maxWorldCoord = g_MaxWorldCoord;
+	Brush::m_maxWorldCoord = GlobalRegistry().getFloat("game/defaults/maxWorldCoord");
 	BrushInstance::m_counter = &g_brushCount;
 
-	g_texdef_default_scale = 0.25f;
-
-	GlobalPreferenceSystem().registerPreference("TextureLock", BoolImportStringCaller(g_brush_texturelock_enabled),
-			BoolExportStringCaller(g_brush_texturelock_enabled));
-	GlobalPreferenceSystem().registerPreference("BrushSnapPlanes", makeBoolStringImportCallback(
-			FaceImportSnapPlanesCaller()), makeBoolStringExportCallback(FaceExportSnapPlanesCaller()));
-	GlobalPreferenceSystem().registerPreference("TexdefDefaultScale", FloatImportStringCaller(g_texdef_default_scale),
-			FloatExportStringCaller(g_texdef_default_scale));
+//	GlobalPreferenceSystem().registerPreference("BrushSnapPlanes", makeBoolStringImportCallback(
+//			FaceImportSnapPlanesCaller()), makeBoolStringExportCallback(FaceExportSnapPlanesCaller()));
 }
 
-void Brush_Destroy ()
+void BrushModuleClass::destroy ()
 {
 	Brush::m_maxWorldCoord = 0;
 	BrushInstance::m_counter = 0;
@@ -109,7 +104,7 @@ void Brush_Destroy ()
 	BrushClipPlane::destroyStatic();
 }
 
-void Brush_clipperColourChanged ()
+void BrushModuleClass::clipperColourChanged ()
 {
 	BrushClipPlane::destroyStatic();
 	BrushClipPlane::constructStatic();
@@ -131,31 +126,46 @@ void BrushFaceData_fromFace (const BrushFaceDataCallback& callback, Face& face)
 typedef ConstReferenceCaller1<BrushFaceDataCallback, Face&, BrushFaceData_fromFace> BrushFaceDataFromFaceCaller;
 typedef Callback1<Face&> FaceCallback;
 
-class UFOBrushCreator: public BrushCreator
+scene::Node& BrushModuleClass::createBrush ()
 {
-	public:
-		scene::Node& createBrush ()
-		{
-			return (new BrushNode)->node();
-		}
-		void Brush_forEachFace (scene::Node& brush, const BrushFaceDataCallback& callback)
-		{
-			::Brush_forEachFace(*Node_getBrush(brush), FaceCallback(BrushFaceDataFromFaceCaller(callback)));
-		}
-		bool Brush_addFace (scene::Node& brush, const _QERFaceData& faceData)
-		{
-			Node_getBrush(brush)->undoSave();
-			return Node_getBrush(brush)->addPlane(faceData.m_p0, faceData.m_p1, faceData.m_p2, faceData.m_shader,
-					TextureProjection(faceData.m_texdef))
-					!= 0;
-		}
-};
-
-UFOBrushCreator g_UFOBrushCreator;
-
-BrushCreator& GetBrushCreator ()
+	return (new BrushNode)->node();
+}
+void BrushModuleClass::Brush_forEachFace (scene::Node& brush, const BrushFaceDataCallback& callback)
 {
-	return g_UFOBrushCreator;
+	::Brush_forEachFace(*Node_getBrush(brush), FaceCallback(BrushFaceDataFromFaceCaller(callback)));
+}
+bool BrushModuleClass::Brush_addFace (scene::Node& brush, const _QERFaceData& faceData)
+{
+	Node_getBrush(brush)->undoSave();
+	return Node_getBrush(brush)->addPlane(faceData.m_p0, faceData.m_p1, faceData.m_p2, faceData.m_shader,
+			TextureProjection(faceData.m_texdef)) != 0;
+}
+
+void BrushModuleClass::keyChanged() {
+	_textureLockEnabled = (GlobalRegistry().get(RKEY_ENABLE_TEXTURE_LOCK) == "1");
+}
+
+bool BrushModuleClass::textureLockEnabled() const {
+	return _textureLockEnabled;
+}
+
+void BrushModuleClass::setTextureLock(bool enabled) {
+	// Write the value to the registry, the keyChanged() method is triggered automatically
+	GlobalRegistry().set(RKEY_ENABLE_TEXTURE_LOCK, enabled ? "1" : "0");
+}
+
+void BrushModuleClass::toggleTextureLock() {
+	setTextureLock(!textureLockEnabled());
+
+//	if (g_pParentWnd != 0) {
+//		g_pParentWnd->setGridStatus();
+//	}
+}
+
+BrushModuleClass* GlobalBrush ()
+{
+	static BrushModuleClass _brushModule;
+	return &_brushModule;
 }
 
 #include "modulesystem/singletonmodule.h"
@@ -176,18 +186,17 @@ class BrushUFOAPI: public TypeSystemRef
 		BrushCreator* m_brushufo;
 	public:
 		typedef BrushCreator Type;
-		STRING_CONSTANT(Name, "ufo")
-		;
+		STRING_CONSTANT(Name, "ufo");
 
 		BrushUFOAPI ()
 		{
-			Brush_Construct();
+			GlobalBrush()->construct();
 
-			m_brushufo = &GetBrushCreator();
+			m_brushufo = GlobalBrush();
 		}
 		~BrushUFOAPI ()
 		{
-			Brush_Destroy();
+			GlobalBrush()->destroy();
 		}
 		BrushCreator* getTable ()
 		{
@@ -197,4 +206,4 @@ class BrushUFOAPI: public TypeSystemRef
 
 typedef SingletonModule<BrushUFOAPI, BrushDependencies> BrushUFOModule;
 typedef Static<BrushUFOModule> StaticBrushUFOModule;
-StaticRegisterModule staticRegisterBrushUFO (StaticBrushUFOModule::instance ());
+StaticRegisterModule staticRegisterBrushUFO(StaticBrushUFOModule::instance());

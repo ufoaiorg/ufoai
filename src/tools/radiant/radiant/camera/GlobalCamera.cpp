@@ -1,11 +1,87 @@
 #include "GlobalCamera.h"
 
+#include "Camera.h"
+#include "CameraSettings.h"
+
+#include "ieventmanager.h"
 #include "iselection.h"
 
 // Constructor
 GlobalCameraManager::GlobalCameraManager () :
 	_camWnd(NULL), _cameraModel(NULL), _cameraShown(true)
 {
+}
+
+void GlobalCameraManager::construct ()
+{
+	GlobalEventManager().addCommand("CenterView", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::resetCameraAngles> (*this));
+	GlobalEventManager().addToggle("ToggleCubicClip", MemberCaller<CameraSettings, &CameraSettings::toggleFarClip> (
+			*getCameraSettings()));
+
+	// Set the default status of the cubic clip
+	GlobalEventManager().setToggled("ToggleCubicClip", getCameraSettings()->farClipEnabled());
+
+	GlobalEventManager().addCommand("CubicClipZoomIn", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::cubicScaleIn> (*this));
+	GlobalEventManager().addCommand("CubicClipZoomOut", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::cubicScaleOut> (*this));
+	GlobalEventManager().addCommand("UpFloor", MemberCaller<GlobalCameraManager, &GlobalCameraManager::changeFloorUp> (
+			*this));
+
+	GlobalEventManager().addCommand("DownFloor", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::changeFloorDown> (*this));
+
+	GlobalEventManager().addWidgetToggle("ToggleCamera");
+	GlobalEventManager().setToggled("ToggleCamera", true);
+
+	GlobalEventManager().addCommand("LookThroughSelected", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::lookThroughSelected> (*this));
+	GlobalEventManager().addCommand("LookThroughCamera", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::lookThroughCamera> (*this));
+
+	// Insert movement commands
+	GlobalEventManager().addCommand("CameraForward", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::moveForwardDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraBack", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::moveBackDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraLeft", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::rotateLeftDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraRight", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::rotateRightDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraStrafeRight", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::moveRightDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraStrafeLeft", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::moveLeftDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraUp",
+			MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveUpDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraDown", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::moveDownDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraAngleUp", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::pitchUpDiscrete> (*this));
+	GlobalEventManager().addCommand("CameraAngleDown", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::pitchDownDiscrete> (*this));
+
+	GlobalEventManager().addKeyEvent("CameraFreeMoveForward", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveForwardKeyUp> (*this), MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveForwardKeyDown> (*this));
+	GlobalEventManager().addKeyEvent("CameraFreeMoveBack", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveBackKeyUp> (*this), MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveBackKeyDown> (*this));
+	GlobalEventManager().addKeyEvent("CameraFreeMoveLeft", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveLeftKeyUp> (*this), MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveLeftKeyDown> (*this));
+	GlobalEventManager().addKeyEvent("CameraFreeMoveRight", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveRightKeyUp> (*this), MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveRightKeyDown> (*this));
+	GlobalEventManager().addKeyEvent("CameraFreeMoveUp", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveUpKeyUp> (*this), MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveUpKeyDown> (*this));
+	GlobalEventManager().addKeyEvent("CameraFreeMoveDown", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveDownKeyUp> (*this), MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::freelookMoveDownKeyDown> (*this));
+
+	CamWnd::captureStates();
 }
 
 // Creates a new CamWnd class on the heap and returns the according pointer
@@ -90,21 +166,14 @@ void GlobalCameraManager::update ()
 
 void GlobalCameraManager::setParent (CamWnd* camwnd, GtkWindow* parent)
 {
-	camwnd->m_parent = parent;
+	camwnd->setParent(parent);
 
-	// Connect the ToggleShown class to the parent
-	_cameraShown.connect(GTK_WIDGET(camwnd->m_parent));
-}
+	IEvent* event = GlobalEventManager().findEvent("ToggleCamera");
 
-void GlobalCameraManager::toggleCamera ()
-{
-	// pass the call to the ToggleShown class
-	_cameraShown.toggle();
-}
-
-ToggleShown& GlobalCameraManager::getToggleShown ()
-{
-	return _cameraShown;
+	if (event != NULL) {
+		event->connectWidget(GTK_WIDGET(camwnd->getParent()));
+		event->updateWidgets();
+	}
 }
 
 void GlobalCameraManager::changeFloorUp ()
@@ -150,6 +219,66 @@ void GlobalCameraManager::cubicScaleOut ()
 }
 
 // --------------- Keyboard movement methods ------------------------------------------
+
+void GlobalCameraManager::freelookMoveForwardKeyUp ()
+{
+	_camWnd->getCamera().clearMovementFlags(MOVE_FORWARD);
+}
+
+void GlobalCameraManager::freelookMoveForwardKeyDown ()
+{
+	_camWnd->getCamera().setMovementFlags(MOVE_FORWARD);
+}
+
+void GlobalCameraManager::freelookMoveBackKeyUp ()
+{
+	_camWnd->getCamera().clearMovementFlags(MOVE_BACK);
+}
+
+void GlobalCameraManager::freelookMoveBackKeyDown ()
+{
+	_camWnd->getCamera().setMovementFlags(MOVE_BACK);
+}
+
+void GlobalCameraManager::freelookMoveLeftKeyUp ()
+{
+	_camWnd->getCamera().clearMovementFlags(MOVE_STRAFELEFT);
+}
+
+void GlobalCameraManager::freelookMoveLeftKeyDown ()
+{
+	_camWnd->getCamera().setMovementFlags(MOVE_STRAFELEFT);
+}
+
+void GlobalCameraManager::freelookMoveRightKeyUp ()
+{
+	_camWnd->getCamera().clearMovementFlags(MOVE_STRAFERIGHT);
+}
+
+void GlobalCameraManager::freelookMoveRightKeyDown ()
+{
+	_camWnd->getCamera().setMovementFlags(MOVE_STRAFERIGHT);
+}
+
+void GlobalCameraManager::freelookMoveUpKeyUp ()
+{
+	_camWnd->getCamera().clearMovementFlags(MOVE_UP);
+}
+
+void GlobalCameraManager::freelookMoveUpKeyDown ()
+{
+	_camWnd->getCamera().setMovementFlags(MOVE_UP);
+}
+
+void GlobalCameraManager::freelookMoveDownKeyUp ()
+{
+	_camWnd->getCamera().clearMovementFlags(MOVE_DOWN);
+}
+
+void GlobalCameraManager::freelookMoveDownKeyDown ()
+{
+	_camWnd->getCamera().setMovementFlags(MOVE_DOWN);
+}
 
 void GlobalCameraManager::moveForwardDiscrete ()
 {

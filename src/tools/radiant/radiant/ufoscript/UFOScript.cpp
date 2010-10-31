@@ -1,5 +1,6 @@
 #include "iufoscript.h"
 #include "iradiant.h"
+#include "ieventmanager.h"
 #include "modulesystem.h"
 #include "modulesystem/moduleregistry.h"
 #include "modulesystem/singletonmodule.h"
@@ -119,8 +120,8 @@ void EditMapDefinition ()
 
 void UFOScript_Construct ()
 {
-	GlobalRadiant().commandInsert("EditTerrainDefinition", FreeCaller<EditTerrainDefinition> (), accelerator_null());
-	GlobalRadiant().commandInsert("EditMapDefinition", FreeCaller<EditMapDefinition> (), accelerator_null());
+	GlobalEventManager().addCommand("EditTerrainDefinition", FreeCaller<EditTerrainDefinition> ());
+	GlobalEventManager().addCommand("EditMapDefinition", FreeCaller<EditMapDefinition> ());
 	GlobalUFOScriptSystem()->init();
 }
 

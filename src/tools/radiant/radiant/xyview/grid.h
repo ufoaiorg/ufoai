@@ -33,8 +33,6 @@ void Grid_registerCommands();
 typedef struct _GtkMenu GtkMenu;
 void Grid_constructMenu(GtkMenu* menu);
 
-void Grid_registerShortcuts();
-
 void Grid_Construct();
 void Grid_Destroy();
 

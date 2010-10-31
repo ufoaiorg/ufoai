@@ -21,8 +21,11 @@
 
 #include "shared.h"
 #include "radiant_i18n.h"
+#include "iclipper.h"
+#include "ieventmanager.h"
 
 #include "brushmanip.h"
+#include "BrushModule.h"
 
 #include "gtkutil/widget.h"
 #include "gtkutil/menu.h"
@@ -35,8 +38,6 @@
 #include "../xyview/xywindow.h"
 #include "../settings/preferences.h"
 #include "../mainframe.h"
-
-#include "../clipper/Clipper.h"
 
 #include "construct/Prism.h"
 #include "construct/Cone.h"
@@ -711,82 +712,62 @@ void Texdef_ToggleMoveLock ()
 
 void Brush_registerCommands ()
 {
-	GlobalToggles_insert("TogTexLock", FreeCaller<Texdef_ToggleMoveLock> (), ToggleItem::AddCallbackCaller(
-			g_texdef_movelock_item), Accelerator('T', (GdkModifierType) GDK_SHIFT_MASK));
+	GlobalEventManager().addRegistryToggle("TogTexLock", RKEY_ENABLE_TEXTURE_LOCK);
 
-	GlobalCommands_insert("BrushPrism", BrushPrefab::SetCaller(g_brushprism));
-	GlobalCommands_insert("BrushCone", BrushPrefab::SetCaller(g_brushcone));
-	GlobalCommands_insert("BrushSphere", BrushPrefab::SetCaller(g_brushsphere));
-	GlobalCommands_insert("BrushRock", BrushPrefab::SetCaller(g_brushrock));
-	GlobalCommands_insert("BrushTerrain", BrushPrefab::SetCaller(g_brushterrain));
+	GlobalEventManager().addCommand("BrushPrism", BrushPrefab::SetCaller(g_brushprism));
+	GlobalEventManager().addCommand("BrushCone", BrushPrefab::SetCaller(g_brushcone));
+	GlobalEventManager().addCommand("BrushSphere", BrushPrefab::SetCaller(g_brushsphere));
+	GlobalEventManager().addCommand("BrushRock", BrushPrefab::SetCaller(g_brushrock));
+	GlobalEventManager().addCommand("BrushTerrain", BrushPrefab::SetCaller(g_brushterrain));
 
-	GlobalRadiant().commandInsert("Brush3Sided", BrushMakeSided::SetCaller(g_brushmakesided3), Accelerator('3',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Brush4Sided", BrushMakeSided::SetCaller(g_brushmakesided4), Accelerator('4',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Brush5Sided", BrushMakeSided::SetCaller(g_brushmakesided5), Accelerator('5',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Brush6Sided", BrushMakeSided::SetCaller(g_brushmakesided6), Accelerator('6',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Brush7Sided", BrushMakeSided::SetCaller(g_brushmakesided7), Accelerator('7',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Brush8Sided", BrushMakeSided::SetCaller(g_brushmakesided8), Accelerator('8',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Brush9Sided", BrushMakeSided::SetCaller(g_brushmakesided9), Accelerator('9',
-			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalEventManager().addCommand("Brush3Sided", BrushMakeSided::SetCaller(g_brushmakesided3));
+	GlobalEventManager().addCommand("Brush4Sided", BrushMakeSided::SetCaller(g_brushmakesided4));
+	GlobalEventManager().addCommand("Brush5Sided", BrushMakeSided::SetCaller(g_brushmakesided5));
+	GlobalEventManager().addCommand("Brush6Sided", BrushMakeSided::SetCaller(g_brushmakesided6));
+	GlobalEventManager().addCommand("Brush7Sided", BrushMakeSided::SetCaller(g_brushmakesided7));
+	GlobalEventManager().addCommand("Brush8Sided", BrushMakeSided::SetCaller(g_brushmakesided8));
+	GlobalEventManager().addCommand("Brush9Sided", BrushMakeSided::SetCaller(g_brushmakesided9));
 
-	GlobalRadiant().commandInsert("ClipSelected", FreeCaller<ClipSelected> (), Accelerator(GDK_Return));
-	GlobalRadiant().commandInsert("SplitSelected", FreeCaller<SplitSelected> (), Accelerator(GDK_Return,
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("FlipClip", FreeCaller<FlipClipper> (), Accelerator(GDK_Return,
-			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalEventManager().addCommand("ClipSelected", FreeCaller<ClipSelected>());
+	GlobalEventManager().addCommand("SplitSelected", FreeCaller<SplitSelected>());
+	GlobalEventManager().addCommand("FlipClip", FreeCaller<FlipClipper>());
 
-	GlobalRadiant().commandInsert("MakeDetail", FreeCaller<Select_MakeDetail> (), Accelerator('M',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("MakeStructural", FreeCaller<Select_MakeStructural> (), Accelerator('S',
-			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	GlobalEventManager().addCommand("MakeDetail", FreeCaller<Select_MakeDetail>());
+	GlobalEventManager().addCommand("MakeStructural", FreeCaller<Select_MakeStructural>());
 }
 
 void Brush_constructMenu (GtkMenu* menu)
 {
-	create_menu_item_with_mnemonic(menu, _("Cone..."), "BrushCone");
-	create_menu_item_with_mnemonic(menu, _("Prism..."), "BrushPrism");
-	create_menu_item_with_mnemonic(menu, _("Sphere..."), "BrushSphere");
-	create_menu_item_with_mnemonic(menu, _("Rock..."), "BrushRock");
-	create_menu_item_with_mnemonic(menu, _("Terrain..."), "BrushTerrain");
-	menu_separator(menu);
+	createMenuItemWithMnemonic(menu, _("Cone..."), "BrushCone");
+	createMenuItemWithMnemonic(menu, _("Prism..."), "BrushPrism");
+	createMenuItemWithMnemonic(menu, _("Sphere..."), "BrushSphere");
+	createMenuItemWithMnemonic(menu, _("Rock..."), "BrushRock");
+	createMenuItemWithMnemonic(menu, _("Terrain..."), "BrushTerrain");
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, C_("Constructive Solid Geometry", "CSG"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, _("Make Hollow"), "CSGHollow");
-		create_menu_item_with_mnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract"), "CSGSubtract");
-		create_menu_item_with_mnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge"), "CSGMerge");
+		createMenuItemWithMnemonic(menu_in_menu, _("Make Hollow"), "CSGHollow");
+		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract"), "CSGSubtract");
+		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge"), "CSGMerge");
 	}
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Clipper"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
 
-		create_menu_item_with_mnemonic(menu_in_menu, _("Clip selection"), "ClipSelected");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Split selection"), "SplitSelected");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Flip Clip orientation"), "FlipClip");
+		createMenuItemWithMnemonic(menu_in_menu, _("Clip selection"), "ClipSelected");
+		createMenuItemWithMnemonic(menu_in_menu, _("Split selection"), "SplitSelected");
+		createMenuItemWithMnemonic(menu_in_menu, _("Flip Clip orientation"), "FlipClip");
 	}
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("Make detail"), "MakeDetail");
-	create_menu_item_with_mnemonic(menu, _("Make structural"), "MakeStructural");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("Make detail"), "MakeDetail");
+	createMenuItemWithMnemonic(menu, _("Make structural"), "MakeStructural");
 
-	create_check_menu_item_with_mnemonic(menu, _("Texture Lock"), "TogTexLock");
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("Copy Face Texture"), "FaceCopyTexture");
-	create_menu_item_with_mnemonic(menu, _("Paste Face Texture"), "FacePasteTexture");
-
-	command_connect_accelerator("Brush3Sided");
-	command_connect_accelerator("Brush4Sided");
-	command_connect_accelerator("Brush5Sided");
-	command_connect_accelerator("Brush6Sided");
-	command_connect_accelerator("Brush7Sided");
-	command_connect_accelerator("Brush8Sided");
-	command_connect_accelerator("Brush9Sided");
+	createCheckMenuItemWithMnemonic(menu, _("Texture Lock"), "TogTexLock");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("Copy Face Texture"), "FaceCopyTexture");
+	createMenuItemWithMnemonic(menu, _("Paste Face Texture"), "FacePasteTexture");
 }

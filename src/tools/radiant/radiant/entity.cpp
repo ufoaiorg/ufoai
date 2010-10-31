@@ -33,6 +33,7 @@
 #include "imodel.h"
 #include "ifilesystem.h"
 #include "iundo.h"
+#include "ieventmanager.h"
 #include "editable.h"
 
 #include "eclasslib.h"
@@ -531,13 +532,16 @@ namespace
 
 void Entity_constructMenu (GtkMenu* menu)
 {
-	g_menuItemRegroup = create_menu_item_with_mnemonic(menu, _("_Regroup"), "GroupSelection");
+	g_menuItemRegroup = createMenuItemWithMnemonic(menu, _("_Ungroup"), "UngroupSelection");
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemRegroup), FALSE);
-	g_menuItemUngroup = create_menu_item_with_mnemonic(menu, _("_Ungroup"), "UngroupSelection");
+
+	g_menuItemRegroup = createMenuItemWithMnemonic(menu, _("_Regroup"), "GroupSelection");
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemUngroup), FALSE);
-	g_menuItemConnectSelection = create_menu_item_with_mnemonic(menu, _("_Connect"), "ConnectSelection");
+
+	g_menuItemConnectSelection = createMenuItemWithMnemonic(menu, _("_Connect"), "ConnectSelection");
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemConnectSelection), FALSE);
-	g_menuItemSelectColor = create_menu_item_with_mnemonic(menu, _("_Select Color..."), "EntityColor");
+
+	g_menuItemSelectColor = createMenuItemWithMnemonic(menu, _("_Select Color..."), "EntityColor");
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemSelectColor), FALSE);
 }
 
@@ -603,11 +607,10 @@ void Entity_ColorPickerSelectionChanged (const Selectable& selectable)
 
 void Entity_Construct ()
 {
-	GlobalCommands_insert("EntityColor", FreeCaller<Entity_setColour> (), Accelerator('K'));
-	GlobalCommands_insert("ConnectSelection", FreeCaller<Entity_connectSelected> (), Accelerator('K',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("GroupSelection", FreeCaller<Entity_groupSelected> ());
-	GlobalCommands_insert("UngroupSelection", FreeCaller<Entity_ungroupSelected> ());
+	GlobalEventManager().addCommand("EntityColor", FreeCaller<Entity_setColour> ());
+	GlobalEventManager().addCommand("ConnectSelection", FreeCaller<Entity_connectSelected> ());
+	GlobalEventManager().addCommand("GroupSelection", FreeCaller<Entity_groupSelected> ());
+	GlobalEventManager().addCommand("UngroupSelection", FreeCaller<Entity_ungroupSelected> ());
 
 	GlobalPreferenceSystem().registerPreference("SI_Colors5", Vector3ImportStringCaller(g_entity_globals.color_entity),
 			Vector3ExportStringCaller(g_entity_globals.color_entity));

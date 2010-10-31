@@ -18,6 +18,7 @@
 #include "radiant_i18n.h"
 #include "../commands.h"
 #include "gtkutil/widget.h"
+#include "ieventmanager.h"
 
 static void Sidebar_constructPrefabs (GtkWidget *notebook)
 {
@@ -218,15 +219,12 @@ GtkWidget *Sidebar_construct (void)
 
 	gtk_widget_show_all(vbox);
 
-	GlobalRadiant().commandInsert("ToggleSidebar", FreeCaller<ToggleSidebar> (), Accelerator('B'));
-	GlobalRadiant().commandInsert("ToggleSurfaceInspector", FreeCaller<ToggleSurfaceInspector> (), Accelerator('S',
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("ToggleEntityInspector", FreeCaller<ToggleEntityInspector> (), Accelerator('E',
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("TogglePrefabs", FreeCaller<TogglePrefabs> (), Accelerator('P',
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("ToggleTextureBrowser", FreeCaller<ToggleTextureBrowser> (), Accelerator('T'));
-	GlobalRadiant().commandInsert("ToggleParticleBrowser", FreeCaller<ToggleTextureBrowser> (), Accelerator('P'));
+	GlobalEventManager().addCommand("ToggleSidebar", FreeCaller<ToggleSidebar> ());
+	GlobalEventManager().addCommand("ToggleSurfaceInspector", FreeCaller<ToggleSurfaceInspector> ());
+	GlobalEventManager().addCommand("ToggleEntityInspector", FreeCaller<ToggleEntityInspector> ());
+	GlobalEventManager().addCommand("TogglePrefabs", FreeCaller<TogglePrefabs> ());
+	GlobalEventManager().addCommand("ToggleTextureBrowser", FreeCaller<ToggleTextureBrowser> ());
+	GlobalEventManager().addCommand("ToggleParticleBrowser", FreeCaller<ToggleTextureBrowser> ());
 
 	return vbox;
 }

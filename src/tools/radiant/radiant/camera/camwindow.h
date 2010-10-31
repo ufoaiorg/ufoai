@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 typedef struct _GtkMenu GtkMenu;
 typedef struct _GtkToolbar GtkToolbar;
 void CamWnd_constructToolbar(GtkToolbar* toolbar);
-void CamWnd_registerShortcuts();
 
 void GlobalCamera_Benchmark();
 

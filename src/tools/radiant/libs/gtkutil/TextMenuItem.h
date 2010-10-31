@@ -13,14 +13,15 @@ namespace gtkutil
 
 	class TextMenuItem
 	{
+		protected:
 			// The text label
-			GtkWidget* _label;
+			const std::string _label;
 
 		public:
 
 			// Constructor
 			TextMenuItem (const std::string& text) :
-				_label(gtk_label_new(text.c_str()))
+				_label(text)
 			{
 			}
 
@@ -28,7 +29,6 @@ namespace gtkutil
 			operator GtkWidget* ()
 			{
 				GtkWidget* menuItem = gtk_menu_item_new();
-				gtk_container_add(GTK_CONTAINER(menuItem), _label);
 				return menuItem;
 			}
 	};

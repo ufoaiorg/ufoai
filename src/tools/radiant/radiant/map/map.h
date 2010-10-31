@@ -100,10 +100,6 @@ typedef BasicVector3<float> Vector3;
 
 extern Vector3 region_mins, region_maxs;
 
-// used to be #defines, multiple engine support suggests we should go towards dynamic
-extern float g_MaxWorldCoord;
-extern float g_MinWorldCoord;
-
 void Map_Reload (void);
 bool Map_LoadFile (const std::string& filename);
 bool Map_SaveFile (const std::string& filename);

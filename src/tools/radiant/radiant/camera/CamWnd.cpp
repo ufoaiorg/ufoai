@@ -1,6 +1,7 @@
 #include "CamWnd.h"
 
 #include "iscenegraph.h"
+#include "ieventmanager.h"
 
 #include "gdk/gdkkeysyms.h"
 
@@ -33,8 +34,8 @@ class FloorHeightWalker : public scene::Graph::Walker
 public:
 	FloorHeightWalker(float current, float& bestUp, float& bestDown) :
 			m_current(current), m_bestUp(bestUp), m_bestDown(bestDown) {
-		bestUp = g_MaxWorldCoord;
-		bestDown = -g_MaxWorldCoord;
+		bestUp = GlobalRegistry().getFloat("game/defaults/maxWorldCoord");
+		bestDown = -GlobalRegistry().getFloat("game/defaults/maxWorldCoord");
 	}
 
 	bool pre(const scene::Path& path, scene::Instance& instance) const {
@@ -84,99 +85,6 @@ gboolean camera_expose(GtkWidget* widget, GdkEventExpose* event, gpointer data) 
 	reinterpret_cast<CamWnd*>(data)->draw();
 	return FALSE;
 }
-
-void Camera_MoveForward_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_FORWARD);
-}
-
-void Camera_MoveForward_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_FORWARD);
-}
-
-void Camera_MoveBack_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_BACK);
-}
-
-void Camera_MoveBack_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_BACK);
-}
-
-void Camera_MoveLeft_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_STRAFELEFT);
-}
-
-void Camera_MoveLeft_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_STRAFELEFT);
-}
-
-void Camera_MoveRight_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_STRAFERIGHT);
-}
-
-void Camera_MoveRight_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_STRAFERIGHT);
-}
-
-void Camera_MoveUp_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_UP);
-}
-
-void Camera_MoveUp_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_UP);
-}
-
-void Camera_MoveDown_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_DOWN);
-}
-
-void Camera_MoveDown_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_DOWN);
-}
-
-void Camera_RotateLeft_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_ROTLEFT);
-}
-
-void Camera_RotateLeft_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_ROTLEFT);
-}
-
-void Camera_RotateRight_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_ROTRIGHT);
-}
-
-void Camera_RotateRight_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_ROTRIGHT);
-}
-
-void Camera_PitchUp_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_PITCHUP);
-}
-
-void Camera_PitchUp_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_PITCHUP);
-}
-
-void Camera_PitchDown_KeyDown(Camera& camera) {
-	camera.setMovementFlags(MOVE_PITCHDOWN);
-}
-
-void Camera_PitchDown_KeyUp(Camera& camera) {
-	camera.clearMovementFlags(MOVE_PITCHDOWN);
-}
-
-typedef ReferenceCaller<Camera, &Camera_MoveForward_KeyDown> FreeMoveCameraMoveForwardKeyDownCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveForward_KeyUp> FreeMoveCameraMoveForwardKeyUpCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveBack_KeyDown> FreeMoveCameraMoveBackKeyDownCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveBack_KeyUp> FreeMoveCameraMoveBackKeyUpCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveLeft_KeyDown> FreeMoveCameraMoveLeftKeyDownCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveLeft_KeyUp> FreeMoveCameraMoveLeftKeyUpCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveRight_KeyDown> FreeMoveCameraMoveRightKeyDownCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveRight_KeyUp> FreeMoveCameraMoveRightKeyUpCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveUp_KeyDown> FreeMoveCameraMoveUpKeyDownCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveUp_KeyUp> FreeMoveCameraMoveUpKeyUpCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveDown_KeyDown> FreeMoveCameraMoveDownKeyDownCaller;
-typedef ReferenceCaller<Camera, &Camera_MoveDown_KeyUp> FreeMoveCameraMoveDownKeyUpCaller;
 
 void Camera_motionDelta(int x, int y, unsigned int state, void* data) {
 	Camera* cam = reinterpret_cast<Camera*>(data);
@@ -254,7 +162,7 @@ gboolean enable_freelook_button_press(GtkWidget* widget, GdkEventButton* event, 
 	if (event->type == GDK_BUTTON_PRESS) {
 
 		if (GlobalEventMapper().stateMatchesCameraViewEvent(ui::camEnableFreeLookMode, event)) {
-			camwnd->EnableFreeMove();
+			camwnd->enableFreeMove();
 			return TRUE;
 		}
 	}
@@ -264,7 +172,7 @@ gboolean enable_freelook_button_press(GtkWidget* widget, GdkEventButton* event, 
 gboolean disable_freelook_button_press(GtkWidget* widget, GdkEventButton* event, CamWnd* camwnd) {
 	if (event->type == GDK_BUTTON_PRESS) {
 		if (GlobalEventMapper().stateMatchesCameraViewEvent(ui::camDisableFreeLookMode, event)) {
-			camwnd->DisableFreeMove();
+			camwnd->disableFreeMove();
 			return TRUE;
 		}
 	}
@@ -306,8 +214,11 @@ CamWnd::CamWnd() :
 
 	Map_addValidCallback(g_map, DeferredDrawOnMapValidChangedCaller(m_deferredDraw));
 
-	registerCommands();
+	// Deactivate all commands, just to make sure
+	disableDiscreteMoveEvents();
+	disableFreeMoveEvents();
 
+	// Now add the handlers for the non-freelook mode, the events are activated by this
 	addHandlersMove();
 
 	g_signal_connect(G_OBJECT(m_gl_widget), "scroll_event", G_CALLBACK(wheelmove_scroll), this);
@@ -315,93 +226,9 @@ CamWnd::CamWnd() :
 	AddSceneChangeCallback(CamWndUpdate(*this));
 
 	PressedButtons_connect(g_pressedButtons, m_gl_widget);
+
+	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
 }
-
-void CamWnd::registerCommands() {
-	GlobalKeyEvents_insert("CameraForward", Accelerator(GDK_Up),
-	                       ReferenceCaller<Camera, Camera_MoveForward_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_MoveForward_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraBack", Accelerator(GDK_Down),
-	                       ReferenceCaller<Camera, Camera_MoveBack_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_MoveBack_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraLeft", Accelerator(GDK_Left),
-	                       ReferenceCaller<Camera, Camera_RotateLeft_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_RotateLeft_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraRight", Accelerator(GDK_Right),
-	                       ReferenceCaller<Camera, Camera_RotateRight_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_RotateRight_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraStrafeRight", Accelerator(GDK_period),
-	                       ReferenceCaller<Camera, Camera_MoveRight_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_MoveRight_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraStrafeLeft", Accelerator(GDK_comma),
-	                       ReferenceCaller<Camera, Camera_MoveLeft_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_MoveLeft_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraUp", Accelerator('D'),
-	                       ReferenceCaller<Camera, Camera_MoveUp_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_MoveUp_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraDown", Accelerator('C'),
-	                       ReferenceCaller<Camera, Camera_MoveDown_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_MoveDown_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraAngleDown", Accelerator('A'),
-	                       ReferenceCaller<Camera, Camera_PitchDown_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_PitchDown_KeyUp>(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraAngleUp", Accelerator('Z'),
-	                       ReferenceCaller<Camera, Camera_PitchUp_KeyDown>(getCamera()),
-	                       ReferenceCaller<Camera, Camera_PitchUp_KeyUp>(getCamera())
-	                      );
-
-	GlobalKeyEvents_insert("CameraFreeMoveForward", Accelerator(GDK_Up),
-	                       FreeMoveCameraMoveForwardKeyDownCaller(getCamera()),
-	                       FreeMoveCameraMoveForwardKeyUpCaller(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraFreeMoveBack", Accelerator(GDK_Down),
-	                       FreeMoveCameraMoveBackKeyDownCaller(getCamera()),
-	                       FreeMoveCameraMoveBackKeyUpCaller(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraFreeMoveLeft", Accelerator(GDK_Left),
-	                       FreeMoveCameraMoveLeftKeyDownCaller(getCamera()),
-	                       FreeMoveCameraMoveLeftKeyUpCaller(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraFreeMoveRight", Accelerator(GDK_Right),
-	                       FreeMoveCameraMoveRightKeyDownCaller(getCamera()),
-	                       FreeMoveCameraMoveRightKeyUpCaller(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraFreeMoveUp", Accelerator('D'),
-	                       FreeMoveCameraMoveUpKeyDownCaller(getCamera()),
-	                       FreeMoveCameraMoveUpKeyUpCaller(getCamera())
-	                      );
-	GlobalKeyEvents_insert("CameraFreeMoveDown", Accelerator('C'),
-	                       FreeMoveCameraMoveDownKeyDownCaller(getCamera()),
-	                       FreeMoveCameraMoveDownKeyUpCaller(getCamera())
-	                      );
-
-	GlobalShortcuts_insert("CameraForward", Accelerator(GDK_Up));
-	GlobalShortcuts_insert("CameraBack", Accelerator(GDK_Down));
-	GlobalShortcuts_insert("CameraLeft", Accelerator(GDK_Left));
-	GlobalShortcuts_insert("CameraRight", Accelerator(GDK_Right));
-	GlobalShortcuts_insert("CameraStrafeRight", Accelerator(GDK_period));
-	GlobalShortcuts_insert("CameraStrafeLeft", Accelerator(GDK_comma));
-
-	GlobalShortcuts_insert("CameraUp", Accelerator('D'));
-	GlobalShortcuts_insert("CameraDown", Accelerator('C'));
-	GlobalShortcuts_insert("CameraAngleUp", Accelerator('A'));
-	GlobalShortcuts_insert("CameraAngleDown", Accelerator('Z'));
-
-	GlobalShortcuts_insert("CameraFreeMoveForward", Accelerator(GDK_Up));
-	GlobalShortcuts_insert("CameraFreeMoveBack", Accelerator(GDK_Down));
-	GlobalShortcuts_insert("CameraFreeMoveLeft", Accelerator(GDK_Left));
-	GlobalShortcuts_insert("CameraFreeMoveRight", Accelerator(GDK_Right));
-}
-
 
 void CamWnd::BenchMark ()
 {
@@ -424,11 +251,11 @@ void CamWnd::changeFloor(bool up) {
 	float bestDown;
 	GlobalSceneGraph().traverse(FloorHeightWalker(current, bestUp, bestDown));
 
-	if (up && bestUp != g_MaxWorldCoord) {
+	if (up && bestUp != GlobalRegistry().getFloat("game/defaults/maxWorldCoord")) {
 		current = bestUp;
 	}
 
-	if (!up && bestDown != -g_MaxWorldCoord) {
+	if (!up && bestDown != -GlobalRegistry().getFloat("game/defaults/maxWorldCoord")) {
 		current = bestDown;
 	}
 
@@ -442,20 +269,23 @@ void CamWnd::changeFloor(bool up) {
 // NOTE TTimo if there's an OS-level focus out of the application
 //   then we can release the camera cursor grab
 static gboolean camwindow_freemove_focusout(GtkWidget* widget, GdkEventFocus* event, gpointer data) {
-	reinterpret_cast<CamWnd*>(data)->DisableFreeMove();
+	reinterpret_cast<CamWnd*>(data)->disableFreeMove();
 	return FALSE;
 }
 
-void CamWnd::EnableFreeMove() {
-
-	//globalOutputStream() << "EnableFreeMove\n";
-
+void CamWnd::enableFreeMove() {
 	ASSERT_MESSAGE(!m_bFreeMove, "EnableFreeMove: free-move was already enabled");
 	m_bFreeMove = true;
 	getCamera().clearMovementFlags(MOVE_ALL);
 
 	removeHandlersMove();
-	addHandlersFreeMove();
+
+	m_selection_button_press_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(selection_button_press_freemove), m_window_observer);
+	m_selection_button_release_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_release_event", G_CALLBACK(selection_button_release_freemove), m_window_observer);
+	m_selection_motion_handler = g_signal_connect(G_OBJECT(m_gl_widget), "motion_notify_event", G_CALLBACK(selection_motion_freemove), m_window_observer);
+	m_freelook_button_press_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(disable_freelook_button_press), this);
+
+	enableFreeMoveEvents();
 
 	gtk_window_set_focus(m_parent, m_gl_widget);
 	m_freemove_handle_focusout = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(camwindow_freemove_focusout), this);
@@ -464,14 +294,18 @@ void CamWnd::EnableFreeMove() {
 	update();
 }
 
-void CamWnd::DisableFreeMove() {
-	//globalOutputStream() << "DisableFreeMove\n";
-
+void CamWnd::disableFreeMove() {
 	ASSERT_MESSAGE(m_bFreeMove, "DisableFreeMove: free-move was not enabled");
 	m_bFreeMove = false;
 	getCamera().clearMovementFlags(MOVE_ALL);
 
-	removeHandlersFreeMove();
+	disableFreeMoveEvents();
+
+	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_selection_button_press_handler);
+	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_selection_button_release_handler);
+	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_selection_motion_handler);
+	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_freelook_button_press_handler);
+
 	addHandlersMove();
 
 	m_freezePointer.unfreeze_pointer(m_parent);
@@ -620,7 +454,7 @@ void CamWnd::draw() {
 
 CamWnd::~CamWnd() {
 	if (m_bFreeMove) {
-		DisableFreeMove();
+		disableFreeMove();
 	}
 
 	removeHandlersMove();
@@ -635,6 +469,50 @@ CamWnd::~CamWnd() {
 
 // ----------------------------------------------------------
 
+void CamWnd::enableFreeMoveEvents() {
+	GlobalEventManager().enableEvent("CameraFreeMoveForward");
+	GlobalEventManager().enableEvent("CameraFreeMoveBack");
+	GlobalEventManager().enableEvent("CameraFreeMoveLeft");
+	GlobalEventManager().enableEvent("CameraFreeMoveRight");
+	GlobalEventManager().enableEvent("CameraFreeMoveUp");
+	GlobalEventManager().enableEvent("CameraFreeMoveDown");
+}
+
+void CamWnd::disableFreeMoveEvents() {
+	GlobalEventManager().disableEvent("CameraFreeMoveForward");
+	GlobalEventManager().disableEvent("CameraFreeMoveBack");
+	GlobalEventManager().disableEvent("CameraFreeMoveLeft");
+	GlobalEventManager().disableEvent("CameraFreeMoveRight");
+	GlobalEventManager().disableEvent("CameraFreeMoveUp");
+	GlobalEventManager().disableEvent("CameraFreeMoveDown");
+}
+
+void CamWnd::enableDiscreteMoveEvents() {
+	GlobalEventManager().enableEvent("CameraForward");
+	GlobalEventManager().enableEvent("CameraBack");
+	GlobalEventManager().enableEvent("CameraLeft");
+	GlobalEventManager().enableEvent("CameraRight");
+	GlobalEventManager().enableEvent("CameraStrafeRight");
+	GlobalEventManager().enableEvent("CameraStrafeLeft");
+	GlobalEventManager().enableEvent("CameraUp");
+	GlobalEventManager().enableEvent("CameraDown");
+	GlobalEventManager().enableEvent("CameraAngleUp");
+	GlobalEventManager().enableEvent("CameraAngleDown");
+}
+
+void CamWnd::disableDiscreteMoveEvents() {
+	GlobalEventManager().disableEvent("CameraForward");
+	GlobalEventManager().disableEvent("CameraBack");
+	GlobalEventManager().disableEvent("CameraLeft");
+	GlobalEventManager().disableEvent("CameraRight");
+	GlobalEventManager().disableEvent("CameraStrafeRight");
+	GlobalEventManager().disableEvent("CameraStrafeLeft");
+	GlobalEventManager().disableEvent("CameraUp");
+	GlobalEventManager().disableEvent("CameraDown");
+	GlobalEventManager().disableEvent("CameraAngleUp");
+	GlobalEventManager().disableEvent("CameraAngleDown");
+}
+
 void CamWnd::addHandlersMove() {
 	m_selection_button_press_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(selection_button_press), m_window_observer);
 	m_selection_button_release_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_release_event", G_CALLBACK(selection_button_release), m_window_observer);
@@ -642,13 +520,13 @@ void CamWnd::addHandlersMove() {
 
 	m_freelook_button_press_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(enable_freelook_button_press), this);
 
+	// Enable either the free-look movement commands or the discrete ones, depending on the selection
 	if (getCameraSettings()->discreteMovement()) {
-		moveDiscreteEnable();
+		enableDiscreteMoveEvents();
 	} else {
-		moveEnable();
+		enableFreeMoveEvents();
 	}
 }
-
 
 void CamWnd::removeHandlersMove() {
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_selection_button_press_handler);
@@ -657,93 +535,12 @@ void CamWnd::removeHandlersMove() {
 
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_freelook_button_press_handler);
 
+	// Disable either the free-look movement commands or the discrete ones, depending on the selection
 	if (getCameraSettings()->discreteMovement()) {
-		moveDiscreteDisable();
+		disableDiscreteMoveEvents();
 	} else {
-		moveDisable();
+		disableFreeMoveEvents();
 	}
-}
-
-void CamWnd::moveDiscreteEnable() {
-	command_connect_accelerator("CameraForward");
-	command_connect_accelerator("CameraBack");
-	command_connect_accelerator("CameraLeft");
-	command_connect_accelerator("CameraRight");
-	command_connect_accelerator("CameraStrafeRight");
-	command_connect_accelerator("CameraStrafeLeft");
-	command_connect_accelerator("CameraUp");
-	command_connect_accelerator("CameraDown");
-	command_connect_accelerator("CameraAngleUp");
-	command_connect_accelerator("CameraAngleDown");
-}
-
-void CamWnd::moveDiscreteDisable() {
-	command_disconnect_accelerator("CameraForward");
-	command_disconnect_accelerator("CameraBack");
-	command_disconnect_accelerator("CameraLeft");
-	command_disconnect_accelerator("CameraRight");
-	command_disconnect_accelerator("CameraStrafeRight");
-	command_disconnect_accelerator("CameraStrafeLeft");
-	command_disconnect_accelerator("CameraUp");
-	command_disconnect_accelerator("CameraDown");
-	command_disconnect_accelerator("CameraAngleUp");
-	command_disconnect_accelerator("CameraAngleDown");
-}
-
-void CamWnd::addHandlersFreeMove() {
-	m_selection_button_press_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(selection_button_press_freemove), m_window_observer);
-	m_selection_button_release_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_release_event", G_CALLBACK(selection_button_release_freemove), m_window_observer);
-	m_selection_motion_handler = g_signal_connect(G_OBJECT(m_gl_widget), "motion_notify_event", G_CALLBACK(selection_motion_freemove), m_window_observer);
-
-	m_freelook_button_press_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(disable_freelook_button_press), this);
-
-	KeyEvent_connect("CameraFreeMoveForward");
-	KeyEvent_connect("CameraFreeMoveBack");
-	KeyEvent_connect("CameraFreeMoveLeft");
-	KeyEvent_connect("CameraFreeMoveRight");
-	KeyEvent_connect("CameraFreeMoveUp");
-	KeyEvent_connect("CameraFreeMoveDown");
-}
-
-void CamWnd::removeHandlersFreeMove() {
-	KeyEvent_disconnect("CameraFreeMoveForward");
-	KeyEvent_disconnect("CameraFreeMoveBack");
-	KeyEvent_disconnect("CameraFreeMoveLeft");
-	KeyEvent_disconnect("CameraFreeMoveRight");
-	KeyEvent_disconnect("CameraFreeMoveUp");
-	KeyEvent_disconnect("CameraFreeMoveDown");
-
-	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_selection_button_press_handler);
-	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_selection_button_release_handler);
-	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_selection_motion_handler);
-
-	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_freelook_button_press_handler);
-}
-
-void CamWnd::moveEnable() {
-	KeyEvent_connect("CameraForward");
-	KeyEvent_connect("CameraBack");
-	KeyEvent_connect("CameraLeft");
-	KeyEvent_connect("CameraRight");
-	KeyEvent_connect("CameraStrafeRight");
-	KeyEvent_connect("CameraStrafeLeft");
-	KeyEvent_connect("CameraUp");
-	KeyEvent_connect("CameraDown");
-	KeyEvent_connect("CameraAngleUp");
-	KeyEvent_connect("CameraAngleDown");
-}
-
-void CamWnd::moveDisable() {
-	KeyEvent_disconnect("CameraForward");
-	KeyEvent_disconnect("CameraBack");
-	KeyEvent_disconnect("CameraLeft");
-	KeyEvent_disconnect("CameraRight");
-	KeyEvent_disconnect("CameraStrafeRight");
-	KeyEvent_disconnect("CameraStrafeLeft");
-	KeyEvent_disconnect("CameraUp");
-	KeyEvent_disconnect("CameraDown");
-	KeyEvent_disconnect("CameraAngleUp");
-	KeyEvent_disconnect("CameraAngleDown");
 }
 
 void CamWnd::update() {
@@ -765,13 +562,10 @@ void CamWnd::releaseStates() {
 }
 
 void CamWnd::queueDraw() {
-	//ASSERT_MESSAGE(!m_drawing, "CamWnd::queue_draw(): called while draw is already in progress");
-
 	if (m_drawing) {
 		return;
 	}
 
-	//globalOutputStream() << "queue... ";
 	m_deferredDraw.draw();
 }
 
@@ -812,6 +606,10 @@ CameraView* CamWnd::getCameraView() {
 GtkWidget* CamWnd::getWidget()
 {
 	return m_gl_widget;
+}
+
+void CamWnd::setParent(GtkWindow* parent) {
+	m_parent = parent;
 }
 
 GtkWindow* CamWnd::getParent() {

@@ -31,6 +31,7 @@
 #include "debugging/debugging.h"
 
 #include "ishadersystem.h"
+#include "ieventmanager.h"
 
 #include "gtkutil/window.h"
 #include "stream/stringstream.h"
@@ -251,7 +252,7 @@ void FindTextureDialog_selectTexture (const std::string& name)
 
 void FindTextureDialog_Construct ()
 {
-	GlobalCommands_insert("FindReplaceTextures", FindTextureDialog::ShowCaller());
+	GlobalEventManager().addCommand("FindReplaceTextures", FindTextureDialog::ShowCaller());
 }
 
 void FindTextureDialog_Destroy ()

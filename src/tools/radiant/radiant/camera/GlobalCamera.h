@@ -34,6 +34,8 @@ class GlobalCameraManager
 		// Constructor
 		GlobalCameraManager ();
 
+		void construct();
+
 		// Creates a new CamWnd class and returns the according pointer
 		CamWnd* newCamWnd ();
 
@@ -46,12 +48,6 @@ class GlobalCameraManager
 		// Retrieves/Sets the pointer to the current CamWnd
 		CamWnd* getCamWnd ();
 		void setCamWnd (CamWnd* camWnd);
-
-		// Shows/hides the currently active camera window
-		void toggleCamera ();
-
-		// Return the ToggleShown class (needed to connect the GlobalToggle command)
-		ToggleShown& getToggleShown ();
 
 		// Resets the camera angles of the currently active Camera
 		void resetCameraAngles ();
@@ -91,6 +87,25 @@ class GlobalCameraManager
 		void rotateRightDiscrete ();
 		void pitchUpDiscrete ();
 		void pitchDownDiscrete ();
+
+	private:
+		void freelookMoveForwardKeyUp();
+		void freelookMoveForwardKeyDown();
+
+		void freelookMoveBackKeyUp();
+		void freelookMoveBackKeyDown();
+
+		void freelookMoveLeftKeyUp();
+		void freelookMoveLeftKeyDown();
+
+		void freelookMoveRightKeyUp();
+		void freelookMoveRightKeyDown();
+
+		void freelookMoveUpKeyUp();
+		void freelookMoveUpKeyDown();
+
+		void freelookMoveDownKeyUp();
+		void freelookMoveDownKeyDown();
 
 }; // class GlobalCameraManager
 

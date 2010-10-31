@@ -135,7 +135,7 @@ public:
 			return cmd;
 		}
 		else {
-			globalOutputStream() << "EventManager: Warning: Event " << name.c_str() << " already registered!\n";
+			globalOutputStream() << "EventManager: Warning: Event " << name << " already registered!\n";
 			return foundEvent;
 		}
 	}
@@ -155,7 +155,7 @@ public:
 			return keyevent;
 		}
 		else {
-			globalOutputStream() << "EventManager: Warning: Event " << name.c_str() << " already registered!\n";
+			globalOutputStream() << "EventManager: Warning: Event " << name << " already registered!\n";
 			return foundEvent;
 		}
 	}
@@ -175,7 +175,7 @@ public:
 			return widgetToggle;
 		}
 		else {
-			globalOutputStream() << "EventManager: Warning: Event " << name.c_str() << " already registered!\n";
+			globalOutputStream() << "EventManager: Warning: Event " << name << " already registered!\n";
 			return foundEvent;
 		}
 	}
@@ -195,7 +195,7 @@ public:
 			return registryToggle;
 		}
 		else {
-			globalOutputStream() << "EventManager: Warning: Event " << name.c_str() << " already registered!\n";
+			globalOutputStream() << "EventManager: Warning: Event " << name << " already registered!\n";
 			return foundEvent;
 		}
 	}
@@ -215,7 +215,7 @@ public:
 			return toggle;
 		}
 		else {
-			globalOutputStream() << "EventManager: Warning: Event " << name.c_str() << " already registered!\n";
+			globalOutputStream() << "EventManager: Warning: Event " << name << " already registered!\n";
 			return foundEvent;
 		}
 	}
@@ -241,7 +241,7 @@ public:
 			}
 			else {
 				// Command NOT found
-				globalOutputStream() << "EventManager: Unable to lookup command: " << command.c_str() << "\n";
+				globalOutputStream() << "EventManager: Unable to lookup command: " << command << "\n";
 			}
 		}
 	}
@@ -469,7 +469,7 @@ private:
 		guint returnValue = gdk_keyval_to_upper(gdk_keyval_from_name(keyStr.c_str()));
 
 		if (returnValue == GDK_VoidSymbol) {
-			globalOutputStream() << "EventManager: Warning: Could not recognise key " << keyStr.c_str() << "\n";
+			globalOutputStream() << "EventManager: Warning: Could not recognise key " << keyStr << "\n";
 		}
 
 		return returnValue;

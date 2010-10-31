@@ -21,6 +21,7 @@
 
 #include "grid.h"
 #include "radiant_i18n.h"
+#include "ieventmanager.h"
 
 #include <math.h>
 #include <vector>
@@ -177,8 +178,8 @@ void GridNext ()
 
 void Grid_registerCommands ()
 {
-	GlobalRadiant().commandInsert("GridDown", FreeCaller<GridPrev> (), Accelerator('['));
-	GlobalRadiant().commandInsert("GridUp", FreeCaller<GridNext> (), Accelerator(']'));
+	GlobalEventManager().addCommand("GridDown", FreeCaller<GridPrev>());
+	GlobalEventManager().addCommand("GridUp", FreeCaller<GridNext>());
 
 	GlobalToggles_insert("SetGrid0.125", GridMenuItem::SetCaller(g_gridMenu0125), ToggleItem::AddCallbackCaller(
 			g_gridMenu0125.m_item));
@@ -220,13 +221,6 @@ void Grid_constructMenu (GtkMenu* menu)
 	create_check_menu_item_with_mnemonic(menu, _("Grid64"), "SetGrid64");
 	create_check_menu_item_with_mnemonic(menu, _("Grid128"), "SetGrid128");
 	create_check_menu_item_with_mnemonic(menu, _("Grid256"), "SetGrid256");
-}
-
-void Grid_registerShortcuts ()
-{
-	command_connect_accelerator("ToggleGrid");
-	command_connect_accelerator("GridDown");
-	command_connect_accelerator("GridUp");
 }
 
 static void Grid_constructPreferences (PrefPage* page)

@@ -42,6 +42,11 @@
   cont28="detail"
   surfaceinspector_enable_value="light"
 >
+	<defaults>
+		<maxWorldCoord value="65536" />
+		<minWorldCoord value="-65536" />
+	</defaults>
+
 	<filtersystem>
 		<filter name="World geometry">
 			<filterCriterion type="entityclass" match="worldspawn" action="hide" />

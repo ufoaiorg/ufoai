@@ -28,6 +28,7 @@
 #include "radiant_i18n.h"
 
 #include "iradiant.h"
+#include "ieventmanager.h"
 #include "iump.h"
 #include "gtkmisc.h"
 #include "iselection.h"
@@ -568,12 +569,10 @@ void MaterialSystem::incrementActiveMaterialsIterator ()
 }
 
 void MaterialSystem::construct () {
-	GlobalRadiant().commandInsert("GenerateMaterialFromTexture", MemberCaller<MaterialSystem,
-			&MaterialSystem::generateMaterialFromTexture> (*this), Accelerator('M'));
-	command_connect_accelerator("GenerateMaterialFromTexture");
-
-	GlobalRadiant().commandInsert("ShowMaterialDefinition", MemberCaller<MaterialSystem,
-			&MaterialSystem::showMaterialDefinition> (*this), accelerator_null());
+	GlobalEventManager().addCommand("GenerateMaterialFromTexture", MemberCaller<MaterialSystem,
+			&MaterialSystem::generateMaterialFromTexture> (*this));
+	GlobalEventManager().addCommand("ShowMaterialDefinition", MemberCaller<MaterialSystem,
+			&MaterialSystem::showMaterialDefinition> (*this));
 }
 
 

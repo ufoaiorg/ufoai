@@ -102,7 +102,6 @@ struct IRadiant
 		const std::string& (*getAppPath) ();
 		const std::string& (*getSettingsPath) ();
 		const std::string& (*getMapsPath) ();
-		void (*commandInsert) (const std::string& name, const Callback& callback, const Accelerator& accelerator);
 
 		const std::string (*getGamePath) ();
 		/**

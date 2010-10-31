@@ -8,6 +8,7 @@
 #include "ientity.h"
 #include "ibrush.h"
 #include "iimage.h"
+#include "ieventmanager.h"
 
 #include "gtkutil/accelerator.h"
 #include "gtkutil/glwidget.h"
@@ -63,8 +64,10 @@ inline float normalised_to_world (float normalised, float world_origin, float no
 
 XYWnd::XYWnd () :
 	_glWidget(false), m_gl_widget(static_cast<GtkWidget*> (_glWidget)), m_deferredDraw(WidgetQueueDrawCaller(
-			*m_gl_widget)), m_deferred_motion(callbackMouseMotion, this), _parent(0), m_window_observer(
-			NewWindowObserver()), m_XORRectangle(m_gl_widget), _chaseMouseHandler(0)
+			*m_gl_widget)), m_deferred_motion(callbackMouseMotion, this), _parent(0), _minWorldCoord(
+			GlobalRegistry().getFloat("game/defaults/minWorldCoord")), _maxWorldCoord(GlobalRegistry().getFloat(
+			"game/defaults/maxWorldCoord")), m_window_observer(NewWindowObserver()), m_XORRectangle(m_gl_widget),
+			_chaseMouseHandler(0)
 {
 	m_bActive = false;
 	m_buttonstate = 0;
@@ -86,7 +89,6 @@ XYWnd::XYWnd () :
 	m_fScale = 1;
 	m_viewType = XY;
 
-	m_backgroundActivated = false;
 	m_alpha = 1.0f;
 	m_xmin = 0.0f;
 	m_ymin = 0.0f;
@@ -130,6 +132,8 @@ XYWnd::XYWnd () :
 	GlobalCamera().addCameraObserver(this);
 
 	PressedButtons_connect(g_pressedButtons, m_gl_widget);
+
+	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
 }
 
 XYWnd::~XYWnd (void)
@@ -157,11 +161,13 @@ void XYWnd::releaseStates (void)
 	GlobalShaderCache().release("$XY_OVERLAY");
 }
 
-void XYWnd::setParent(GtkWindow* parent) {
+void XYWnd::setParent (GtkWindow* parent)
+{
 	_parent = parent;
 }
 
-GtkWindow* XYWnd::getParent() const {
+GtkWindow* XYWnd::getParent () const
+{
 	return _parent;
 }
 
@@ -345,7 +351,7 @@ void XYWnd::zoomIn ()
  */
 void XYWnd::zoomOut ()
 {
-	float min_scale = MIN(getWidth(), getHeight()) / (1.1f * (g_MaxWorldCoord - g_MinWorldCoord));
+	float min_scale = MIN(getWidth(), getHeight()) / (1.1f * (_maxWorldCoord - _minWorldCoord));
 	float scale = getScale() * 4.0f / 5.0f;
 	if (scale < min_scale) {
 		if (getScale() != min_scale) {
@@ -550,7 +556,6 @@ inline const std::string NewBrushDragGetTexture (void)
 	return selectedTexture;
 }
 
-
 /** @brief Left mouse button was clicked without any selection active */
 void XYWnd::NewBrushDrag (int x, int y)
 {
@@ -634,8 +639,7 @@ void XYWnd::beginMove (void)
 		endMove();
 	}
 	_moveStarted = true;
-	_freezePointer.freeze_pointer(_parent != 0 ? _parent : GlobalRadiant().getMainWindow(), callbackMoveDelta,
-			this);
+	_freezePointer.freeze_pointer(_parent != 0 ? _parent : GlobalRadiant().getMainWindow(), callbackMoveDelta, this);
 	m_move_focusOut
 			= g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(callbackMoveFocusOut), this);
 }
@@ -660,8 +664,7 @@ void XYWnd::beginZoom (void)
 	}
 	_zoomStarted = true;
 	_dragZoom = 0;
-	_freezePointer.freeze_pointer(_parent != 0 ? _parent : GlobalRadiant().getMainWindow(), zoomDelta,
-			this);
+	_freezePointer.freeze_pointer(_parent != 0 ? _parent : GlobalRadiant().getMainWindow(), zoomDelta, this);
 	m_zoom_focusOut = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(onFocusOut), this);
 }
 
@@ -867,63 +870,6 @@ void XYWnd::snapToGrid (Vector3& point)
 	}
 }
 
-/**
- * @todo Use @code m_image = GlobalTexturesCache().capture(name) @endcode
- */
-void XYWnd::loadBackgroundImage (const std::string& name)
-{
-	std::string relative = GlobalFileSystem().getRelative(name);
-	if (relative == name)
-		g_warning("Could not extract the relative path, using full path instead\n");
-
-	std::string fileNameWithoutExt = os::stripExtension(relative);
-	Image *image = QERApp_LoadImage(0, fileNameWithoutExt);
-	if (!image) {
-		g_warning("Could not load texture %s\n", fileNameWithoutExt.c_str());
-		return;
-	}
-
-	XYWnd *xy = GlobalXYWnd().getActiveXY();
-	xy->m_tex = (qtexture_t*) malloc(sizeof(qtexture_t));
-	LoadTextureRGBA(xy->m_tex, image->getRGBAPixels(), image->getWidth(),
-			image->getHeight());
-	g_message("Loaded background texture %s\n", relative.c_str());
-	xy->m_backgroundActivated = true;
-
-	int m_ix, m_iy;
-	switch (xy->getViewType()) {
-	default:
-	case XY:
-		m_ix = 0;
-		m_iy = 1;
-		break;
-	case XZ:
-		m_ix = 0;
-		m_iy = 2;
-		break;
-	case YZ:
-		m_ix = 1;
-		m_iy = 2;
-		break;
-	}
-
-	Vector3 min, max;
-	Select_GetBounds(min, max);
-	xy->m_xmin = min[m_ix];
-	xy->m_ymin = min[m_iy];
-	xy->m_xmax = max[m_ix];
-	xy->m_ymax = max[m_iy];
-}
-
-void XYWnd::disableBackground (void)
-{
-	XYWnd *xy = GlobalXYWnd().getActiveXY();
-	xy->m_backgroundActivated = false;
-	if (xy->m_tex)
-		free(xy->m_tex);
-	xy->m_tex = NULL;
-}
-
 void XYWnd::drawAxis (void)
 {
 	if (g_xywindow_globals_private.show_axis) {
@@ -966,41 +912,6 @@ void XYWnd::drawAxis (void)
 		glRasterPos2f(-10 / m_fScale, 28 / m_fScale);
 		GlobalOpenGL().drawChar(g_AxisName[nDim2]);
 	}
-}
-
-void XYWnd::drawBackground (void)
-{
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
-
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-	glPolygonMode(GL_FRONT, GL_FILL);
-
-	glBindTexture(GL_TEXTURE_2D, m_tex->texture_number);
-	glBegin(GL_QUADS);
-
-	glColor4f(1.0, 1.0, 1.0, m_alpha);
-	glTexCoord2f(0.0, 1.0);
-	glVertex2f(m_xmin, m_ymin);
-
-	glTexCoord2f(1.0, 1.0);
-	glVertex2f(m_xmax, m_ymin);
-
-	glTexCoord2f(1.0, 0.0);
-	glVertex2f(m_xmax, m_ymax);
-
-	glTexCoord2f(0.0, 0.0);
-	glVertex2f(m_xmin, m_ymax);
-
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glPopAttrib();
 }
 
 void XYWnd::drawGrid (void)
@@ -1422,7 +1333,7 @@ void XYWnd::updateProjection ()
 
 	m_projection[0] = 1.0f / static_cast<float> (m_nWidth / 2);
 	m_projection[5] = 1.0f / static_cast<float> (m_nHeight / 2);
-	m_projection[10] = 1.0f / (g_MaxWorldCoord * m_fScale);
+	m_projection[10] = 1.0f / (_maxWorldCoord * m_fScale);
 
 	m_projection[12] = 0.0f;
 	m_projection[13] = 0.0f;
@@ -1457,7 +1368,7 @@ void XYWnd::updateModelview ()
 	// translation
 	m_modelview[12] = -m_vOrigin[nDim1] * m_fScale;
 	m_modelview[13] = -m_vOrigin[nDim2] * m_fScale;
-	m_modelview[14] = g_MaxWorldCoord * m_fScale;
+	m_modelview[14] = _maxWorldCoord * m_fScale;
 
 	// axis base
 	switch (m_viewType) {
@@ -1538,8 +1449,6 @@ void XYWnd::draw ()
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_DEPTH_TEST);
 
-	if (m_backgroundActivated)
-		drawBackground();
 	drawGrid();
 
 	if (g_xywindow_globals_private.show_blocks)
@@ -1590,20 +1499,20 @@ void XYWnd::draw ()
 		glColor4f(colour[0], colour[1], colour[2], 0.8f);
 		glBegin(GL_LINES);
 		if (m_viewType == XY) {
-			glVertex2f(2.0f * g_MinWorldCoord, m_mousePosition[1]);
-			glVertex2f(2.0f * g_MaxWorldCoord, m_mousePosition[1]);
-			glVertex2f(m_mousePosition[0], 2.0f * g_MinWorldCoord);
-			glVertex2f(m_mousePosition[0], 2.0f * g_MaxWorldCoord);
+			glVertex2f(2.0f * _minWorldCoord, m_mousePosition[1]);
+			glVertex2f(2.0f * _maxWorldCoord, m_mousePosition[1]);
+			glVertex2f(m_mousePosition[0], 2.0f * _minWorldCoord);
+			glVertex2f(m_mousePosition[0], 2.0f * _maxWorldCoord);
 		} else if (m_viewType == YZ) {
-			glVertex3f(m_mousePosition[0], 2.0f * g_MinWorldCoord, m_mousePosition[2]);
-			glVertex3f(m_mousePosition[0], 2.0f * g_MaxWorldCoord, m_mousePosition[2]);
-			glVertex3f(m_mousePosition[0], m_mousePosition[1], 2.0f * g_MinWorldCoord);
-			glVertex3f(m_mousePosition[0], m_mousePosition[1], 2.0f * g_MaxWorldCoord);
+			glVertex3f(m_mousePosition[0], 2.0f * _minWorldCoord, m_mousePosition[2]);
+			glVertex3f(m_mousePosition[0], 2.0f * _maxWorldCoord, m_mousePosition[2]);
+			glVertex3f(m_mousePosition[0], m_mousePosition[1], 2.0f * _minWorldCoord);
+			glVertex3f(m_mousePosition[0], m_mousePosition[1], 2.0f * _maxWorldCoord);
 		} else {
-			glVertex3f(2.0f * g_MinWorldCoord, m_mousePosition[1], m_mousePosition[2]);
-			glVertex3f(2.0f * g_MaxWorldCoord, m_mousePosition[1], m_mousePosition[2]);
-			glVertex3f(m_mousePosition[0], m_mousePosition[1], 2.0f * g_MinWorldCoord);
-			glVertex3f(m_mousePosition[0], m_mousePosition[1], 2.0f * g_MaxWorldCoord);
+			glVertex3f(2.0f * _minWorldCoord, m_mousePosition[1], m_mousePosition[2]);
+			glVertex3f(2.0f * _maxWorldCoord, m_mousePosition[1], m_mousePosition[2]);
+			glVertex3f(m_mousePosition[0], m_mousePosition[1], 2.0f * _minWorldCoord);
+			glVertex3f(m_mousePosition[0], m_mousePosition[1], 2.0f * _maxWorldCoord);
 		}
 		glEnd();
 	}

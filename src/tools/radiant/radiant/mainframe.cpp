@@ -49,6 +49,7 @@
 #include "ientity.h"
 #include "ishadersystem.h"
 #include "igl.h"
+#include "ieventmanager.h"
 #include "moduleobserver.h"
 #include "server.h"
 
@@ -77,7 +78,7 @@
 
 #include "map/autosave.h"
 #include "brush/brushmanip.h"
-#include "brush/brushmodule.h"
+#include "brush/BrushModule.h"
 #include "camera/camwindow.h"
 #include "brush/csg/csg.h"
 #include "commands.h"
@@ -489,7 +490,7 @@ void populateRegistry ()
 		GlobalRegistry().importFromFile(base, "");
 
 		// Try to load the default colour schemes
-		if (file_exists(colours.c_str())) {
+		if (file_exists(colours)) {
 			GlobalRegistry().importFromFile(colours, "user/ui");
 		}
 		else {
@@ -497,7 +498,7 @@ void populateRegistry ()
 		}
 
 		// Try to load the default input definitions
-		if (file_exists(input.c_str())) {
+		if (file_exists(input)) {
 			GlobalRegistry().importFromFile(input, "user/ui");
 		} else {
 			gtkutil::errorDialog(_("Could not find default input definitions:\n") + input);
@@ -518,7 +519,7 @@ void populateRegistry ()
 	}
 
 	const std::string userColoursFile = SettingsPath_get() + "colours.xml";
-	if (file_exists(userColoursFile.c_str())) {
+	if (file_exists(userColoursFile)) {
 		GlobalRegistry().importFromFile(userColoursFile, "user/ui");
 	}
 
@@ -545,6 +546,8 @@ void Radiant_Initialise (void)
 	g_gameModeObservers.realise();
 	g_gameNameObservers.realise();
 
+	// Save the current event set to the Registry and export it
+	GlobalEventManager().saveEventListToRegistry();
 }
 
 void Radiant_Shutdown (void)
@@ -701,26 +704,11 @@ bool FaceMode (void)
 			== SelectionSystem::eFace;
 }
 
-typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<EdgeMode>::apply> EdgeModeApplyCaller;
-EdgeModeApplyCaller g_edgeMode_button_caller;
-BoolExportCallback g_edgeMode_button_callback(g_edgeMode_button_caller);
-ToggleItem g_edgeMode_button(g_edgeMode_button_callback);
-
-typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<VertexMode>::apply> VertexModeApplyCaller;
-VertexModeApplyCaller g_vertexMode_button_caller;
-BoolExportCallback g_vertexMode_button_callback(g_vertexMode_button_caller);
-ToggleItem g_vertexMode_button(g_vertexMode_button_callback);
-
-typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<FaceMode>::apply> FaceModeApplyCaller;
-FaceModeApplyCaller g_faceMode_button_caller;
-BoolExportCallback g_faceMode_button_callback(g_faceMode_button_caller);
-ToggleItem g_faceMode_button(g_faceMode_button_callback);
-
 void ComponentModeChanged (void)
 {
-	g_edgeMode_button.update();
-	g_vertexMode_button.update();
-	g_faceMode_button.update();
+	GlobalEventManager().setToggled("DragVertices", VertexMode());
+	GlobalEventManager().setToggled("DragEdges", EdgeMode());
+	GlobalEventManager().setToggled("DragFaces", FaceMode());
 }
 
 void ComponentMode_SelectionChanged (const Selectable& selectable)
@@ -731,14 +719,8 @@ void ComponentMode_SelectionChanged (const Selectable& selectable)
 	}
 }
 
-void SelectEdgeMode (void)
+void ToggleEdgeMode()
 {
-#if 0
-	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
-		GlobalSelectionSystem().Select(false);
-	}
-#endif
-
 	if (EdgeMode()) {
 		SelectionSystem_DefaultMode();
 	} else if (GlobalSelectionSystem().countSelected() != 0) {
@@ -755,17 +737,11 @@ void SelectEdgeMode (void)
 	ModeChangeNotify();
 }
 
-void SelectVertexMode (void)
+void ToggleVertexMode()
 {
-#if 0
-	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
-		GlobalSelectionSystem().Select(false);
-	}
-#endif
-
 	if (VertexMode()) {
 		SelectionSystem_DefaultMode();
-	} else if (GlobalSelectionSystem().countSelected() != 0) {
+	} else if(GlobalSelectionSystem().countSelected() != 0) {
 		if (!g_currentToolModeSupportsComponentEditing) {
 			g_defaultToolMode();
 		}
@@ -779,14 +755,8 @@ void SelectVertexMode (void)
 	ModeChangeNotify();
 }
 
-void SelectFaceMode (void)
+void ToggleFaceMode()
 {
-#if 0
-	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
-		GlobalSelectionSystem().Select(false);
-	}
-#endif
-
 	if (FaceMode()) {
 		SelectionSystem_DefaultMode();
 	} else if (GlobalSelectionSystem().countSelected() != 0) {
@@ -954,67 +924,12 @@ void Selection_NudgeRight (void)
 	NudgeSelection(eNudgeRight, GetGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
-void TranslateToolExport (const BoolImportCallback& importCallback)
-{
-	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eTranslate);
-}
-
-void RotateToolExport (const BoolImportCallback& importCallback)
-{
-	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eRotate);
-}
-
-void ScaleToolExport (const BoolImportCallback& importCallback)
-{
-	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eScale);
-}
-
-void DragToolExport (const BoolImportCallback& importCallback)
-{
-	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eDrag);
-}
-
-void ClipperToolExport (const BoolImportCallback& importCallback)
-{
-	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eClip);
-}
-
-void ShowSizeInfoExport (const BoolImportCallback& importCallback)
-{
-	importCallback(GlobalRegistry().get("user/ui/showSizeInfo") == "1");
-}
-
-FreeCaller1<const BoolImportCallback&, TranslateToolExport> g_translatemode_button_caller;
-BoolExportCallback g_translatemode_button_callback(g_translatemode_button_caller);
-ToggleItem g_translatemode_button(g_translatemode_button_callback);
-
-FreeCaller1<const BoolImportCallback&, RotateToolExport> g_rotatemode_button_caller;
-BoolExportCallback g_rotatemode_button_callback(g_rotatemode_button_caller);
-ToggleItem g_rotatemode_button(g_rotatemode_button_callback);
-
-FreeCaller1<const BoolImportCallback&, ScaleToolExport> g_scalemode_button_caller;
-BoolExportCallback g_scalemode_button_callback(g_scalemode_button_caller);
-ToggleItem g_scalemode_button(g_scalemode_button_callback);
-
-FreeCaller1<const BoolImportCallback&, DragToolExport> g_dragmode_button_caller;
-BoolExportCallback g_dragmode_button_callback(g_dragmode_button_caller);
-ToggleItem g_dragmode_button(g_dragmode_button_callback);
-
-FreeCaller1<const BoolImportCallback&, ClipperToolExport> g_clipper_button_caller;
-BoolExportCallback g_clipper_button_callback(g_clipper_button_caller);
-ToggleItem g_clipper_button(g_clipper_button_callback);
-
-FreeCaller1<const BoolImportCallback&, ShowSizeInfoExport> g_showSizeInfoCaller;
-BoolExportCallback g_showSizeInfoCallback(g_showSizeInfoCaller);
-ToggleItem g_showSizeInfoButton(g_showSizeInfoCallback);
-
-void ToolChanged (void)
-{
-	g_translatemode_button.update();
-	g_rotatemode_button.update();
-	g_scalemode_button.update();
-	g_dragmode_button.update();
-	g_clipper_button.update();
+void ToolChanged() {
+	GlobalEventManager().setToggled("ToggleClipper", GlobalClipper().clipMode());
+	GlobalEventManager().setToggled("MouseTranslate", GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eTranslate);
+	GlobalEventManager().setToggled("MouseRotate", GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eRotate);
+	GlobalEventManager().setToggled("MouseScale", GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eScale);
+	GlobalEventManager().setToggled("MouseDrag", GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eDrag);
 }
 
 static const char* const c_ResizeMode_status = "QE4 Drag Tool";
@@ -1467,21 +1382,21 @@ static GtkMenuItem* create_file_menu (MainFrame *mainFrame)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, _("_New Map"), "NewMap");
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("_Open..."), "OpenMap");
-	create_menu_item_with_mnemonic(menu, _("_Import..."), "ImportMap");
-	mainFrame->SetSaveMenuItem(create_menu_item_with_mnemonic(menu, _("_Save"), "SaveMap"));
-	create_menu_item_with_mnemonic(menu, _("Save _as..."), "SaveMapAs");
-	create_menu_item_with_mnemonic(menu, _("Save s_elected..."), "SaveSelected");
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("Save re_gion..."), "SaveRegion");
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("_Refresh models"), "RefreshReferences");
-	menu_separator(menu);
+	createMenuItemWithMnemonic(menu, _("_New Map"), "NewMap");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("_Open..."), "OpenMap");
+	createMenuItemWithMnemonic(menu, _("_Import..."), "ImportMap");
+	mainFrame->SetSaveMenuItem(createMenuItemWithMnemonic(menu, _("_Save"), "SaveMap"));
+	createMenuItemWithMnemonic(menu, _("Save _as..."), "SaveMapAs");
+	createMenuItemWithMnemonic(menu, _("Save s_elected..."), "SaveSelected");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("Save re_gion..."), "SaveRegion");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("_Refresh models"), "RefreshReferences");
+	createSeparatorMenuItem(menu);
 	MRU_constructMenu(menu);
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("E_xit"), "Exit");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("E_xit"), "Exit");
 
 	return file_menu_item;
 }
@@ -1493,39 +1408,39 @@ static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(edit_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
-	mainFrame->SetUndoMenuItem(create_menu_item_with_mnemonic(menu, _("_Undo"), "Undo"));
-	mainFrame->SetRedoMenuItem(create_menu_item_with_mnemonic(menu, _("_Redo"), "Redo"));
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("_Copy"), "Copy");
-	create_menu_item_with_mnemonic(menu, _("_Paste"), "Paste");
-	create_menu_item_with_mnemonic(menu, _("P_aste To Camera"), "PasteToCamera");
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("_Duplicate"), "CloneSelection");
-	create_menu_item_with_mnemonic(menu, _("D_elete"), "DeleteSelection");
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("Pa_rent"), "ParentSelection");
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("C_lear Selection"), "UnSelectSelection");
-	create_menu_item_with_mnemonic(menu, _("_Invert Selection"), "InvertSelection");
+	mainFrame->SetUndoMenuItem(createMenuItemWithMnemonic(menu, _("_Undo"), "Undo"));
+	mainFrame->SetRedoMenuItem(createMenuItemWithMnemonic(menu, _("_Redo"), "Redo"));
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("_Copy"), "Copy");
+	createMenuItemWithMnemonic(menu, _("_Paste"), "Paste");
+	createMenuItemWithMnemonic(menu, _("P_aste To Camera"), "PasteToCamera");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("_Duplicate"), "CloneSelection");
+	createMenuItemWithMnemonic(menu, _("D_elete"), "DeleteSelection");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("Pa_rent"), "ParentSelection");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("C_lear Selection"), "UnSelectSelection");
+	createMenuItemWithMnemonic(menu, _("_Invert Selection"), "InvertSelection");
 
 	GtkMenu* convert_menu = create_sub_menu_with_mnemonic(menu, _("E_xpand Selection"));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(convert_menu);
-	create_menu_item_with_mnemonic(convert_menu, _("Select i_nside"), "SelectInside");
-	create_menu_item_with_mnemonic(convert_menu, _("Select _touching"), "SelectTouching");
-	create_menu_item_with_mnemonic(convert_menu, _("To Whole _Entities"), "ExpandSelectionToEntities");
-	create_menu_item_with_mnemonic(convert_menu, _("Select all of _same type"), "SelectAllOfType");
+	createMenuItemWithMnemonic(convert_menu, _("Select i_nside"), "SelectInside");
+	createMenuItemWithMnemonic(convert_menu, _("Select _touching"), "SelectTouching");
+	createMenuItemWithMnemonic(convert_menu, _("To Whole _Entities"), "ExpandSelectionToEntities");
+	createMenuItemWithMnemonic(convert_menu, _("Select all of _same type"), "SelectAllOfType");
 
-	create_menu_item_with_mnemonic(convert_menu, _("Select all Faces of same te_xture"), "SelectAllFacesOfTex");
+	createMenuItemWithMnemonic(convert_menu, _("Select all Faces of same te_xture"), "SelectAllFacesOfTex");
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 
-	create_menu_item_with_mnemonic(menu, _("Export Selected Brushes to _OBJ"), "BrushExportOBJ");
+	createMenuItemWithMnemonic(menu, _("Export Selected Brushes to _OBJ"), "BrushExportOBJ");
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 
-	create_menu_item_with_mnemonic(menu, _("Shortcuts list"), FreeCaller<DoCommandListDlg> ());
-	create_menu_item_with_mnemonic(menu, _("Pre_ferences..."), "Preferences");
+	createMenuItemWithMnemonic(menu, _("Shortcuts list"), "ShowCommandList");
+	createMenuItemWithMnemonic(menu, _("Pre_ferences..."), "Preferences");
 
 	return edit_menu_item;
 }
@@ -1538,89 +1453,87 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, _("Toggle Sidebar"), "ToggleSidebar");
-	create_menu_item_with_mnemonic(menu, _("Toggle EntityInspector"), "ToggleEntityInspector");
-	create_menu_item_with_mnemonic(menu, _("Toggle SurfaceInspector"), "ToggleSurfaceInspector");
-	create_menu_item_with_mnemonic(menu, _("Toggle Prefabs"), "TogglePrefabs");
+	createMenuItemWithMnemonic(menu, _("Toggle Sidebar"), "ToggleSidebar");
+	createMenuItemWithMnemonic(menu, _("Toggle EntityInspector"), "ToggleEntityInspector");
+	createMenuItemWithMnemonic(menu, _("Toggle SurfaceInspector"), "ToggleSurfaceInspector");
+	createMenuItemWithMnemonic(menu, _("Toggle Prefabs"), "TogglePrefabs");
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* camera_menu = create_sub_menu_with_mnemonic(menu, _("Camera"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(camera_menu);
-		create_menu_item_with_mnemonic(camera_menu, _("_Center"), "CenterView");
-		create_menu_item_with_mnemonic(camera_menu, _("_Up Floor"), "UpFloor");
-		create_menu_item_with_mnemonic(camera_menu, _("_Down Floor"), "DownFloor");
-		menu_separator(camera_menu);
-		create_menu_item_with_mnemonic(camera_menu, _("Far Clip Plane In"), "CubicClipZoomIn");
-		create_menu_item_with_mnemonic(camera_menu, _("Far Clip Plane Out"), "CubicClipZoomOut");
-		menu_separator(camera_menu);
-		create_menu_item_with_mnemonic(camera_menu, _("Look Through Selected"), "LookThroughSelected");
-		create_menu_item_with_mnemonic(camera_menu, _("Look Through Camera"), "LookThroughCamera");
+		createMenuItemWithMnemonic(camera_menu, _("_Center"), "CenterView");
+		createMenuItemWithMnemonic(camera_menu, _("_Up Floor"), "UpFloor");
+		createMenuItemWithMnemonic(camera_menu, _("_Down Floor"), "DownFloor");
+		createSeparatorMenuItem(camera_menu);
+		createMenuItemWithMnemonic(camera_menu, _("Far Clip Plane In"), "CubicClipZoomIn");
+		createMenuItemWithMnemonic(camera_menu, _("Far Clip Plane Out"), "CubicClipZoomOut");
+		createSeparatorMenuItem(camera_menu);
+		createMenuItemWithMnemonic(camera_menu, _("Look Through Selected"), "LookThroughSelected");
+		createMenuItemWithMnemonic(camera_menu, _("Look Through Camera"), "LookThroughCamera");
 	}
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* orthographic_menu = create_sub_menu_with_mnemonic(menu, _("Orthographic"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(orthographic_menu);
 		if (style == MainFrame::eRegular) {
-			create_menu_item_with_mnemonic(orthographic_menu, _("_Next (XY, YZ, YZ)"), "NextView");
-			create_menu_item_with_mnemonic(orthographic_menu, _("XY (Top)"), "ViewTop");
-			create_menu_item_with_mnemonic(orthographic_menu, _("XZ (Side)"), "ViewSide");
-			create_menu_item_with_mnemonic(orthographic_menu, _("YZ (Front)"), "ViewFront");
-			menu_separator(orthographic_menu);
+			createMenuItemWithMnemonic(orthographic_menu, _("_Next (XY, YZ, YZ)"), "NextView");
+			createMenuItemWithMnemonic(orthographic_menu, _("XY (Top)"), "ViewTop");
+			createMenuItemWithMnemonic(orthographic_menu, _("XZ (Side)"), "ViewSide");
+			createMenuItemWithMnemonic(orthographic_menu, _("YZ (Front)"), "ViewFront");
+			createSeparatorMenuItem(orthographic_menu);
 		}
 
-		create_menu_item_with_mnemonic(orthographic_menu, _("_XY 100%"), "Zoom100");
-		create_menu_item_with_mnemonic(orthographic_menu, _("XY Zoom _In"), "ZoomIn");
-		create_menu_item_with_mnemonic(orthographic_menu, _("XY Zoom _Out"), "ZoomOut");
+		createMenuItemWithMnemonic(orthographic_menu, _("_XY 100%"), "Zoom100");
+		createMenuItemWithMnemonic(orthographic_menu, _("XY Zoom _In"), "ZoomIn");
+		createMenuItemWithMnemonic(orthographic_menu, _("XY Zoom _Out"), "ZoomOut");
 	}
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Show"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, _("Toggle Grid"), "ToggleGrid");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Toggle Crosshairs"), "ToggleCrosshairs");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show _Angles"), "ShowAngles");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show _Names"), "ShowNames");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Blocks"), "ShowBlocks");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show C_oordinates"), "ShowCoordinates");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Window Outline"), "ShowWindowOutline");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Axes"), "ShowAxes");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Workzone"), "ShowWorkzone");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Size Info"), "ToggleShowSizeInfo");
+		createMenuItemWithMnemonic(menu_in_menu, _("Toggle Grid"), "ToggleGrid");
+		createMenuItemWithMnemonic(menu_in_menu, _("Toggle Crosshairs"), "ToggleCrosshairs");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show _Angles"), "ShowAngles");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show _Names"), "ShowNames");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Blocks"), "ShowBlocks");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show C_oordinates"), "ShowCoordinates");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Window Outline"), "ShowWindowOutline");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Axes"), "ShowAxes");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Workzone"), "ShowWorkzone");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Size Info"), "ToggleShowSizeInfo");
 	}
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Hide/Show"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, _("Hide Selected"), "HideSelected");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Show Hidden"), "ShowHidden");
+		createMenuItemWithMnemonic(menu_in_menu, _("Hide Selected"), "HideSelected");
+		createMenuItemWithMnemonic(menu_in_menu, _("Show Hidden"), "ShowHidden");
 	}
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Region"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, _("_Off"), "RegionOff");
-		create_menu_item_with_mnemonic(menu_in_menu, _("_Set XY"), "RegionSetXY");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Set _Brush"), "RegionSetBrush");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Set Se_lected Brushes"), "RegionSetSelection");
+		createMenuItemWithMnemonic(menu_in_menu, _("_Off"), "RegionOff");
+		createMenuItemWithMnemonic(menu_in_menu, _("_Set XY"), "RegionSetXY");
+		createMenuItemWithMnemonic(menu_in_menu, _("Set _Brush"), "RegionSetBrush");
+		createMenuItemWithMnemonic(menu_in_menu, _("Set Se_lected Brushes"), "RegionSetSelection");
 	}
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu *menuInMenu = create_sub_menu_with_mnemonic(menu, _("_Pathfinding"));
 		Pathfinding_ConstructMenu(menuInMenu);
 	}
-
-	command_connect_accelerator("CenterXYViews");
 
 	return view_menu_item;
 }
@@ -1637,41 +1550,41 @@ static GtkMenuItem* create_selection_menu (void)
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Components"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("_Edges"), "DragEdges");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("_Vertices"), "DragVertices");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("_Faces"), "DragFaces");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Edges"), "DragEdges");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Vertices"), "DragVertices");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Faces"), "DragFaces");
 	}
 
-	menu_separator(menu);
+	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Nudge"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, _("Nudge Left"), "SelectNudgeLeft");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Nudge Right"), "SelectNudgeRight");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Nudge Up"), "SelectNudgeUp");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Nudge Down"), "SelectNudgeDown");
+		createMenuItemWithMnemonic(menu_in_menu, _("Nudge Left"), "SelectNudgeLeft");
+		createMenuItemWithMnemonic(menu_in_menu, _("Nudge Right"), "SelectNudgeRight");
+		createMenuItemWithMnemonic(menu_in_menu, _("Nudge Up"), "SelectNudgeUp");
+		createMenuItemWithMnemonic(menu_in_menu, _("Nudge Down"), "SelectNudgeDown");
 	}
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Rotate"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, _("Rotate X"), "RotateSelectionX");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Rotate Y"), "RotateSelectionY");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Rotate Z"), "RotateSelectionZ");
+		createMenuItemWithMnemonic(menu_in_menu, _("Rotate X"), "RotateSelectionX");
+		createMenuItemWithMnemonic(menu_in_menu, _("Rotate Y"), "RotateSelectionY");
+		createMenuItemWithMnemonic(menu_in_menu, _("Rotate Z"), "RotateSelectionZ");
 	}
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Flip"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, _("Flip _X"), "MirrorSelectionX");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Flip _Y"), "MirrorSelectionY");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Flip _Z"), "MirrorSelectionZ");
+		createMenuItemWithMnemonic(menu_in_menu, _("Flip _X"), "MirrorSelectionX");
+		createMenuItemWithMnemonic(menu_in_menu, _("Flip _Y"), "MirrorSelectionY");
+		createMenuItemWithMnemonic(menu_in_menu, _("Flip _Z"), "MirrorSelectionZ");
 	}
 
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("Arbitrary rotation..."), "ArbitraryRotation");
-	create_menu_item_with_mnemonic(menu, _("Arbitrary scale..."), "ArbitraryScale");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("Arbitrary rotation..."), "ArbitraryRotation");
+	createMenuItemWithMnemonic(menu, _("Arbitrary scale..."), "ArbitraryScale");
 
 	return selection_menu_item;
 }
@@ -1706,10 +1619,11 @@ static GtkMenuItem* create_misc_menu (void)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, _("Find brush..."), "FindBrush");
-	create_menu_item_with_mnemonic(menu, _("_Background select"), FreeCaller<WXY_BackgroundSelect> ());
-	create_menu_item_with_mnemonic(menu, _("_Benchmark"), FreeCaller<GlobalCamera_Benchmark>());
-	create_menu_item_with_mnemonic(menu, _("Colour Scheme Editor"), "EditColourScheme");
+	createMenuItemWithMnemonic(menu, _("Find brush..."), "FindBrush");
+#if 0
+	createMenuItemWithMnemonic(menu, _("_Benchmark"), FreeCaller<GlobalCamera_Benchmark>());
+#endif
+	createMenuItemWithMnemonic(menu, _("Colour Scheme Editor"), "EditColourScheme");
 
 	return misc_menu_item;
 }
@@ -1726,11 +1640,11 @@ static GtkMenuItem* create_map_menu (void)
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Compile"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, _("Check for errors"), "ToolsCheckErrors");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Compile the map"), "ToolsCompile");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Generate materials"), "ToolsGenerateMaterials");
+		createMenuItemWithMnemonic(menu_in_menu, _("Check for errors"), "ToolsCheckErrors");
+		createMenuItemWithMnemonic(menu_in_menu, _("Compile the map"), "ToolsCompile");
+		createMenuItemWithMnemonic(menu_in_menu, _("Generate materials"), "ToolsGenerateMaterials");
 	}
-	create_menu_item_with_mnemonic(menu, _("Edit UMP"), "EditUMPDefinition");
+	createMenuItemWithMnemonic(menu, _("Edit UMP"), "EditUMPDefinition");
 	{
 		GtkMenuItem* menuItem = new_sub_menu_item_with_mnemonic(_("RMA tiles"));
 		container_add_widget(GTK_CONTAINER(menu), GTK_WIDGET(menuItem));
@@ -1739,9 +1653,9 @@ static GtkMenuItem* create_map_menu (void)
 			menu_tearoff(menu_in_menu);
 		UMP_constructMenu(menuItem, menu_in_menu);
 	}
-	create_menu_item_with_mnemonic(menu, _("Edit material"), "ShowMaterialDefinition");
-	create_menu_item_with_mnemonic(menu, _("Edit terrain definition"), "EditTerrainDefinition");
-	create_menu_item_with_mnemonic(menu, _("Edit map definition"), "EditMapDefinition");
+	createMenuItemWithMnemonic(menu, _("Edit material"), "ShowMaterialDefinition");
+	createMenuItemWithMnemonic(menu, _("Edit terrain definition"), "EditTerrainDefinition");
+	createMenuItemWithMnemonic(menu, _("Edit map definition"), "EditMapDefinition");
 	return map_menu_item;
 }
 
@@ -1753,10 +1667,10 @@ static GtkMenuItem* create_tools_menu (void)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, _("Find/replace texture"), "FindReplaceTextures");
-	create_check_menu_item_with_mnemonic(menu, _("Play Sounds"), "PlaySounds");
-	create_menu_item_with_mnemonic(menu, _("One level up"), "ObjectsUp");
-	create_menu_item_with_mnemonic(menu, _("One level down"), "ObjectsDown");
+	createMenuItemWithMnemonic(menu, _("Find/replace texture"), "FindReplaceTextures");
+	createCheckMenuItemWithMnemonic(menu, _("Play Sounds"), "PlaySounds");
+	createMenuItemWithMnemonic(menu, _("One level up"), "ObjectsUp");
+	createMenuItemWithMnemonic(menu, _("One level down"), "ObjectsDown");
 
 	return tools_menu_item;
 }
@@ -1795,10 +1709,10 @@ static GtkMenuItem* create_help_menu (void)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, _("Manual"), "OpenManual");
+	createMenuItemWithMnemonic(menu, _("Manual"), "OpenManual");
 
-	create_menu_item_with_mnemonic(menu, _("Bug report"), FreeCaller<OpenBugReportURL> ());
-	create_menu_item_with_mnemonic(menu, _("_About"), FreeCaller<DoAbout> ());
+	createMenuItemWithMnemonic(menu, _("Bug report"), "BugReport");
+	createMenuItemWithMnemonic(menu, _("_About"), "About");
 
 	return help_menu_item;
 }
@@ -1827,67 +1741,6 @@ static GtkMenuBar* create_main_menu (MainFrame *mainframe)
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_help_menu()));
 
 	return menu_bar;
-}
-
-static void Manipulators_registerShortcuts (void)
-{
-	toggle_add_accelerator("MouseRotate");
-	toggle_add_accelerator("MouseTranslate");
-	toggle_add_accelerator("MouseScale");
-	toggle_add_accelerator("MouseDrag");
-	toggle_add_accelerator("ToggleClipper");
-}
-
-static void TexdefNudge_registerShortcuts (void)
-{
-	command_connect_accelerator("TexRotateClock");
-	command_connect_accelerator("TexRotateCounter");
-	command_connect_accelerator("TexScaleUp");
-	command_connect_accelerator("TexScaleDown");
-	command_connect_accelerator("TexScaleLeft");
-	command_connect_accelerator("TexScaleRight");
-	command_connect_accelerator("TexShiftUp");
-	command_connect_accelerator("TexShiftDown");
-	command_connect_accelerator("TexShiftLeft");
-	command_connect_accelerator("TexShiftRight");
-}
-
-static void SelectNudge_registerShortcuts (void)
-{
-	command_connect_accelerator("MoveSelectionDOWN");
-	command_connect_accelerator("MoveSelectionUP");
-	//command_connect_accelerator("SelectNudgeLeft");
-	//command_connect_accelerator("SelectNudgeRight");
-	//command_connect_accelerator("SelectNudgeUp");
-	//command_connect_accelerator("SelectNudgeDown");
-}
-
-static void SnapToGrid_registerShortcuts (void)
-{
-	command_connect_accelerator("SnapToGrid");
-}
-
-static void SelectByType_registerShortcuts (void)
-{
-	command_connect_accelerator("SelectAllOfType");
-}
-
-static void SurfaceInspector_registerShortcuts (void)
-{
-	command_connect_accelerator("FitTexture");
-}
-
-void register_shortcuts (void)
-{
-	Grid_registerShortcuts();
-	XYWnd_registerShortcuts();
-	CamWnd_registerShortcuts();
-	Manipulators_registerShortcuts();
-	SurfaceInspector_registerShortcuts();
-	TexdefNudge_registerShortcuts();
-	SelectNudge_registerShortcuts();
-	SnapToGrid_registerShortcuts();
-	SelectByType_registerShortcuts();
 }
 
 static GtkWidget* create_main_statusbar (GtkWidget *pStatusLabel[c_count_status])
@@ -2058,11 +1911,12 @@ void MainFrame::Create (void)
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 	gtk_widget_show(vbox);
 
-	global_accel_connect_window(window);
+	//global_accel_connect_window(window);
+	PressedButtons_connect(g_pressedButtons, GTK_WIDGET(window));
+	GlobalEventManager().connect(GTK_OBJECT(window));
+	GlobalEventManager().connectAccelGroup(GTK_WINDOW(window));
 
 	m_nCurrentStyle = (EViewStyle) g_Layout_viewStyle.m_value;
-
-	register_shortcuts();
 
 	GtkMenuBar* main_menu = create_main_menu(this);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu), FALSE, FALSE, 0);
@@ -2420,131 +2274,103 @@ void EditColourScheme() {
 
 void MainFrame_Construct (void)
 {
-	GlobalRadiant().commandInsert("OpenManual", FreeCaller<OpenHelpURL> (), Accelerator(GDK_F1));
+	GlobalEventManager().addCommand("OpenManual", FreeCaller<OpenHelpURL> ());
+	GlobalEventManager().addCommand("ShowCommandList", FreeCaller<DoCommandListDlg> ());
 
-	GlobalCommands_insert("NewMap", FreeCaller<NewMap> ());
-	GlobalRadiant().commandInsert("OpenMap", FreeCaller<OpenMap> (), Accelerator('O',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("ImportMap", FreeCaller<ImportMap> ());
-	GlobalRadiant().commandInsert("SaveMap", FreeCaller<SaveMap> (), Accelerator('S',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("SaveMapAs", FreeCaller<SaveMapAs> ());
-	GlobalCommands_insert("SaveSelected", FreeCaller<ExportMap> ());
-	GlobalCommands_insert("SaveRegion", FreeCaller<SaveRegion> ());
-	GlobalCommands_insert("RefreshReferences", FreeCaller<RefreshReferences> ());
-	GlobalCommands_insert("Exit", FreeCaller<Exit> ());
+	GlobalEventManager().addCommand("NewMap", FreeCaller<NewMap> ());
+	GlobalEventManager().addCommand("OpenMap", FreeCaller<OpenMap> ());
+	GlobalEventManager().addCommand("ImportMap", FreeCaller<ImportMap> ());
+	GlobalEventManager().addCommand("SaveMap", FreeCaller<SaveMap> ());
+	GlobalEventManager().addCommand("SaveMapAs", FreeCaller<SaveMapAs> ());
+	GlobalEventManager().addCommand("SaveSelected", FreeCaller<ExportMap> ());
+	GlobalEventManager().addCommand("SaveRegion", FreeCaller<SaveRegion> ());
+	GlobalEventManager().addCommand("RefreshReferences", FreeCaller<RefreshReferences> ());
+	GlobalEventManager().addCommand("Exit", FreeCaller<Exit> ());
 
-	GlobalRadiant().commandInsert("Undo", FreeCaller<Undo> (), Accelerator('Z', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Redo", FreeCaller<Redo> (), Accelerator('Y', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Copy", FreeCaller<Copy> (), Accelerator('C', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("Paste", FreeCaller<Paste> (), Accelerator('V', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("PasteToCamera", FreeCaller<PasteToCamera> (), Accelerator('V',
-			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalRadiant().commandInsert("CloneSelection", FreeCaller<Selection_Clone> (), Accelerator(GDK_space));
-	GlobalRadiant().commandInsert("DeleteSelection", FreeCaller<deleteSelection> (), Accelerator(GDK_BackSpace));
-	GlobalCommands_insert("ParentSelection", FreeCaller<Scene_parentSelected> ());
-	GlobalRadiant().commandInsert("UnSelectSelection", FreeCaller<Selection_Deselect> (), Accelerator(GDK_Escape));
-	GlobalRadiant().commandInsert("InvertSelection", FreeCaller<Select_Invert> (), Accelerator('I'));
-	GlobalCommands_insert("SelectInside", FreeCaller<Select_Inside> ());
-	GlobalCommands_insert("SelectTouching", FreeCaller<Select_Touching> ());
-	GlobalRadiant().commandInsert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> (),
-			Accelerator('E', (GdkModifierType) (GDK_MOD1_MASK | GDK_CONTROL_MASK)));
-	GlobalCommands_insert("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
+	GlobalEventManager().addCommand("Undo", FreeCaller<Undo> ());
+	GlobalEventManager().addCommand("Redo", FreeCaller<Redo> ());
+	GlobalEventManager().addCommand("Copy", FreeCaller<Copy> ());
+	GlobalEventManager().addCommand("Paste", FreeCaller<Paste> ());
+	GlobalEventManager().addCommand("PasteToCamera", FreeCaller<PasteToCamera> ());
+	GlobalEventManager().addCommand("CloneSelection", FreeCaller<Selection_Clone> ());
+	GlobalEventManager().addCommand("DeleteSelection", FreeCaller<deleteSelection> ());
+	GlobalEventManager().addCommand("ParentSelection", FreeCaller<Scene_parentSelected> ());
+	GlobalEventManager().addCommand("UnSelectSelection", FreeCaller<Selection_Deselect> ());
+	GlobalEventManager().addCommand("InvertSelection", FreeCaller<Select_Invert> ());
+	GlobalEventManager().addCommand("SelectInside", FreeCaller<Select_Inside> ());
+	GlobalEventManager().addCommand("SelectTouching", FreeCaller<Select_Touching> ());
+	GlobalEventManager().addCommand("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> ());
+	GlobalEventManager().addCommand("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 
-	GlobalRadiant().commandInsert("ShowHidden", FreeCaller<Select_ShowAllHidden> (), Accelerator('H',
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("HideSelected", FreeCaller<HideSelected> (), Accelerator('H'));
+	GlobalEventManager().addCommand("ShowHidden", FreeCaller<Select_ShowAllHidden> ());
+	GlobalEventManager().addCommand("HideSelected", FreeCaller<HideSelected> ());
 
-	GlobalToggles_insert("DragVertices", FreeCaller<SelectVertexMode> (), ToggleItem::AddCallbackCaller(
-			g_vertexMode_button), Accelerator('V'));
-	GlobalToggles_insert("DragEdges", FreeCaller<SelectEdgeMode> (), ToggleItem::AddCallbackCaller(g_edgeMode_button),
-			Accelerator('E'));
-	GlobalToggles_insert("DragFaces", FreeCaller<SelectFaceMode> (), ToggleItem::AddCallbackCaller(g_faceMode_button),
-			Accelerator('F'));
+	GlobalEventManager().addToggle("DragVertices", FreeCaller<ToggleVertexMode> ());
+	GlobalEventManager().addToggle("DragEdges", FreeCaller<ToggleEdgeMode> ());
+	GlobalEventManager().addToggle("DragFaces", FreeCaller<ToggleFaceMode> ());
 
-	GlobalCommands_insert("MirrorSelectionX", FreeCaller<Selection_Flipx> ());
-	GlobalCommands_insert("RotateSelectionX", FreeCaller<Selection_Rotatex> ());
-	GlobalCommands_insert("MirrorSelectionY", FreeCaller<Selection_Flipy> ());
-	GlobalCommands_insert("RotateSelectionY", FreeCaller<Selection_Rotatey> ());
-	GlobalCommands_insert("MirrorSelectionZ", FreeCaller<Selection_Flipz> ());
-	GlobalCommands_insert("RotateSelectionZ", FreeCaller<Selection_Rotatez> ());
+	GlobalEventManager().addCommand("MirrorSelectionX", FreeCaller<Selection_Flipx> ());
+	GlobalEventManager().addCommand("RotateSelectionX", FreeCaller<Selection_Rotatex> ());
+	GlobalEventManager().addCommand("MirrorSelectionY", FreeCaller<Selection_Flipy> ());
+	GlobalEventManager().addCommand("RotateSelectionY", FreeCaller<Selection_Rotatey> ());
+	GlobalEventManager().addCommand("MirrorSelectionZ", FreeCaller<Selection_Flipz> ());
+	GlobalEventManager().addCommand("RotateSelectionZ", FreeCaller<Selection_Rotatez> ());
 
-	GlobalCommands_insert("ArbitraryRotation", FreeCaller<DoRotateDlg> ());
-	GlobalCommands_insert("ArbitraryScale", FreeCaller<DoScaleDlg> ());
+	GlobalEventManager().addCommand("ArbitraryRotation", FreeCaller<DoRotateDlg> ());
+	GlobalEventManager().addCommand("ArbitraryScale", FreeCaller<DoScaleDlg> ());
 
-	GlobalCommands_insert("FindBrush", FreeCaller<FindBrushOrEntity> ());
+	GlobalEventManager().addCommand("FindBrush", FreeCaller<FindBrushOrEntity> ());
 
-	GlobalCommands_insert("ToolsCheckErrors", FreeCaller<ToolsCheckErrors> ());
-	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile> ());
-	GlobalCommands_insert("ToolsGenerateMaterials", FreeCaller<ToolsGenerateMaterials> ());
-	GlobalToggles_insert("PlaySounds", FreeCaller<GlobalSoundManager_switchPlaybackEnabledFlag> (),
-			ToggleItem::AddCallbackCaller(g_soundPlaybackEnabled_button), accelerator_null());
+	GlobalEventManager().addCommand("ToolsCheckErrors", FreeCaller<ToolsCheckErrors> ());
+	GlobalEventManager().addCommand("ToolsCompile", FreeCaller<ToolsCompile> ());
+	GlobalEventManager().addCommand("ToolsGenerateMaterials", FreeCaller<ToolsGenerateMaterials> ());
+	GlobalEventManager().addToggle("PlaySounds", FreeCaller<GlobalSoundManager_switchPlaybackEnabledFlag> ());
 
-	GlobalToggles_insert("ToggleShowSizeInfo", FreeCaller<ToggleShowSizeInfo> (), ToggleItem::AddCallbackCaller(
-			g_showSizeInfoButton));
+	GlobalEventManager().addToggle("ToggleShowSizeInfo", FreeCaller<ToggleShowSizeInfo> ());
 
-	GlobalToggles_insert("ToggleClipper", FreeCaller<ClipperMode> (), ToggleItem::AddCallbackCaller(g_clipper_button),
-			Accelerator('X'));
+	GlobalEventManager().addToggle("ToggleClipper", FreeCaller<ClipperMode> ());
 
-	GlobalToggles_insert("MouseTranslate", FreeCaller<TranslateMode> (), ToggleItem::AddCallbackCaller(
-			g_translatemode_button), Accelerator('W'));
-	GlobalToggles_insert("MouseRotate", FreeCaller<RotateMode> (), ToggleItem::AddCallbackCaller(g_rotatemode_button),
-			Accelerator('R'));
-	GlobalToggles_insert("MouseScale", FreeCaller<ScaleMode> (), ToggleItem::AddCallbackCaller(g_scalemode_button));
-	GlobalToggles_insert("MouseDrag", FreeCaller<DragMode> (), ToggleItem::AddCallbackCaller(g_dragmode_button),
-			Accelerator('Q'));
+	GlobalEventManager().addToggle("MouseTranslate", FreeCaller<TranslateMode> ());
+	GlobalEventManager().addToggle("MouseRotate", FreeCaller<RotateMode> ());
+	GlobalEventManager().addToggle("MouseScale", FreeCaller<ScaleMode> ());
+	GlobalEventManager().addToggle("MouseDrag", FreeCaller<DragMode> ());
 
-	GlobalRadiant().commandInsert("CSGSubtract", FreeCaller<CSG_Subtract> (), Accelerator('U',
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("CSGMerge", FreeCaller<CSG_Merge> (), Accelerator('U',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("CSGHollow", FreeCaller<CSG_MakeHollow> ());
+	GlobalEventManager().addCommand("CSGSubtract", FreeCaller<CSG_Subtract> ());
+	GlobalEventManager().addCommand("CSGMerge", FreeCaller<CSG_Merge> ());
+	GlobalEventManager().addCommand("CSGHollow", FreeCaller<CSG_MakeHollow> ());
 
 	Grid_registerCommands();
 
-	GlobalRadiant().commandInsert("SnapToGrid", FreeCaller<Selection_SnapToGrid> (), Accelerator('G',
-			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalEventManager().addCommand("SnapToGrid", FreeCaller<Selection_SnapToGrid> ());
 
-	GlobalRadiant().commandInsert("SelectAllOfType", FreeCaller<Select_AllOfType> (), Accelerator('A',
-			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalEventManager().addCommand("SelectAllOfType", FreeCaller<Select_AllOfType> ());
 
-	GlobalCommands_insert("SelectAllFacesOfTex", FreeCaller<Select_AllFacesWithTexture> ());
+	GlobalEventManager().addCommand("SelectAllFacesOfTex", FreeCaller<Select_AllFacesWithTexture> ());
 
-	GlobalRadiant().commandInsert("TexRotateClock", FreeCaller<Texdef_RotateClockwise> (), Accelerator(GDK_Next,
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("TexRotateCounter", FreeCaller<Texdef_RotateAntiClockwise> (), Accelerator(GDK_Prior,
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("TexScaleUp", FreeCaller<Texdef_ScaleUp> (), Accelerator(GDK_Up,
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("TexScaleDown", FreeCaller<Texdef_ScaleDown> (), Accelerator(GDK_Down,
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("TexScaleLeft", FreeCaller<Texdef_ScaleLeft> (), Accelerator(GDK_Left,
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("TexScaleRight", FreeCaller<Texdef_ScaleRight> (), Accelerator(GDK_Right,
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("TexShiftUp", FreeCaller<Texdef_ShiftUp> (), Accelerator(GDK_Up,
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("TexShiftDown", FreeCaller<Texdef_ShiftDown> (), Accelerator(GDK_Down,
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("TexShiftLeft", FreeCaller<Texdef_ShiftLeft> (), Accelerator(GDK_Left,
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("TexShiftRight", FreeCaller<Texdef_ShiftRight> (), Accelerator(GDK_Right,
-			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalEventManager().addCommand("TexRotateClock", FreeCaller<Texdef_RotateClockwise> ());
+	GlobalEventManager().addCommand("TexRotateCounter", FreeCaller<Texdef_RotateAntiClockwise> ());
+	GlobalEventManager().addCommand("TexScaleUp", FreeCaller<Texdef_ScaleUp> ());
+	GlobalEventManager().addCommand("TexScaleDown", FreeCaller<Texdef_ScaleDown> ());
+	GlobalEventManager().addCommand("TexScaleLeft", FreeCaller<Texdef_ScaleLeft> ());
+	GlobalEventManager().addCommand("TexScaleRight", FreeCaller<Texdef_ScaleRight> ());
+	GlobalEventManager().addCommand("TexShiftUp", FreeCaller<Texdef_ShiftUp> ());
+	GlobalEventManager().addCommand("TexShiftDown", FreeCaller<Texdef_ShiftDown> ());
+	GlobalEventManager().addCommand("TexShiftLeft", FreeCaller<Texdef_ShiftLeft> ());
+	GlobalEventManager().addCommand("TexShiftRight", FreeCaller<Texdef_ShiftRight> ());
 
-	GlobalRadiant().commandInsert("MoveSelectionDOWN", FreeCaller<Selection_MoveDown> (), Accelerator(GDK_KP_Subtract));
-	GlobalRadiant().commandInsert("MoveSelectionUP", FreeCaller<Selection_MoveUp> (), Accelerator(GDK_KP_Add));
+	GlobalEventManager().addCommand("MoveSelectionDOWN", FreeCaller<Selection_MoveDown> ());
+	GlobalEventManager().addCommand("MoveSelectionUP", FreeCaller<Selection_MoveUp> ());
 
-	GlobalRadiant().commandInsert("SelectNudgeLeft", FreeCaller<Selection_NudgeLeft> (), Accelerator(GDK_Left,
-			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalRadiant().commandInsert("SelectNudgeRight", FreeCaller<Selection_NudgeRight> (), Accelerator(GDK_Right,
-			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalRadiant().commandInsert("SelectNudgeUp", FreeCaller<Selection_NudgeUp> (), Accelerator(GDK_Up,
-			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalRadiant().commandInsert("SelectNudgeDown", FreeCaller<Selection_NudgeDown> (), Accelerator(GDK_Down,
-			(GdkModifierType) GDK_MOD1_MASK));
-	GlobalCommands_insert("EditColourScheme", FreeCaller<EditColourScheme>());
+	GlobalEventManager().addCommand("SelectNudgeLeft", FreeCaller<Selection_NudgeLeft> ());
+	GlobalEventManager().addCommand("SelectNudgeRight", FreeCaller<Selection_NudgeRight> ());
+	GlobalEventManager().addCommand("SelectNudgeUp", FreeCaller<Selection_NudgeUp> ());
+	GlobalEventManager().addCommand("SelectNudgeDown", FreeCaller<Selection_NudgeDown> ());
+	GlobalEventManager().addCommand("EditColourScheme", FreeCaller<EditColourScheme>());
 
-	GlobalCommands_insert("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
+	GlobalEventManager().addCommand("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
+
+	GlobalEventManager().addCommand("About", FreeCaller<DoAbout>());
+	GlobalEventManager().addCommand("BugReport", FreeCaller<OpenBugReportURL> ());
 
 	XYShow_registerCommands();
 	LevelFilters_registerCommands();

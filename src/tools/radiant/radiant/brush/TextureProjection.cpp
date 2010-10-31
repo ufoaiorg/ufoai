@@ -1,5 +1,5 @@
 #include "TextureProjection.h"
-#include "brushmodule.h"
+#include "BrushModule.h"
 #include "winding.h"
 #include "math/aabb.h"
 
@@ -14,7 +14,7 @@ TextureProjection::TextureProjection (const TexDef& texdef) :
 
 void TextureProjection::constructDefault ()
 {
-	float scale = Texdef_getDefaultTextureScale();
+	float scale = GlobalRegistry().getFloat("user/ui/textures/defaultTextureScale");
 
 	m_texdef._scale[0] = scale;
 	m_texdef._scale[1] = scale;

@@ -3,7 +3,7 @@
 #include "../../plugin.h"
 #include "iregistry.h"
 #include "../../mainframe.h"
-#include "../../brush/brushmodule.h"
+#include "../../brush/BrushModule.h"
 #include "iscenegraph.h"
 #include "radiant_i18n.h"
 
@@ -303,7 +303,7 @@ void ColourSchemeEditor::updateWindows() {
 	// Call the update, so all colours can be previewed
 	XY_UpdateAllWindows();
 	GlobalCamera_UpdateWindow();
-	Brush_clipperColourChanged();
+	GlobalBrush()->clipperColourChanged();
 	SceneChangeNotify();
 }
 

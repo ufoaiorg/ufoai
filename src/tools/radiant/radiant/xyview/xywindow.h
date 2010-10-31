@@ -40,15 +40,8 @@
 #include "XYWnd.h"
 #include "iradiant.h"
 
-typedef struct _GtkWindow GtkWindow;
-void XY_Top_Shown_Construct (GtkWindow* parent);
-void YZ_Side_Shown_Construct (GtkWindow* parent);
-void XZ_Front_Shown_Construct (GtkWindow* parent);
-
 void XYWindow_Construct ();
 void XYWindow_Destroy ();
-void WXY_BackgroundSelect ();
 void XYShow_registerCommands ();
-void XYWnd_registerShortcuts ();
 
 #endif

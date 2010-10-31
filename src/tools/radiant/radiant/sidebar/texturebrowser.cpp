@@ -35,6 +35,7 @@
 #include "igl.h"
 #include "iarchive.h"
 #include "moduleobserver.h"
+#include "ieventmanager.h"
 
 #include <set>
 #include <string>
@@ -863,11 +864,11 @@ GtkMenuItem* TextureBrowser::constructViewMenu(GtkMenu* menu) {
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_check_menu_item_with_mnemonic(menu, _("Hide Invalid"), "ShowInvalid");
+	createMenuItemWithMnemonic(menu, _("Hide Invalid"), "ShowInvalid");
 
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("Show All"), "ShowAllTextures");
-	create_check_menu_item_with_mnemonic(menu, _("Show shaders"), "ToggleShowShaders");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("Show All"), "ShowAllTextures");
+	createCheckMenuItemWithMnemonic(menu, _("Show shaders"), "ToggleShowShaders");
 
 	return textures_menu_item;
 }
@@ -1094,7 +1095,7 @@ void TextureBrowser::constructPage(PreferenceGroup& group) {
 #include "stringio.h"
 
 void TextureBrowser_Construct(void) {
-	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders> ());
+	GlobalEventManager().addCommand("RefreshShaders", FreeCaller<RefreshShaders> ());
 	GlobalToggles_insert("ShowInUse", MemberCaller<TextureBrowser,
 			&TextureBrowser::toggleHideUnused> (GlobalTextureBrowser()),
 			ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_hideunused_item), Accelerator(
@@ -1102,10 +1103,9 @@ void TextureBrowser_Construct(void) {
 	GlobalToggles_insert("ShowInvalid", MemberCaller<TextureBrowser,
 			&TextureBrowser::toggleHideInvalid> (GlobalTextureBrowser()),
 			ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_hideinvalid_item));
-	GlobalRadiant().commandInsert("ShowAllTextures", MemberCaller<TextureBrowser,
-			&TextureBrowser::showAll> (GlobalTextureBrowser()), Accelerator('A',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("ToggleBackground", FreeCaller<WXY_BackgroundSelect> ());
+	GlobalEventManager().addCommand("ShowAllTextures", MemberCaller<TextureBrowser, &TextureBrowser::showAll> (
+			GlobalTextureBrowser()));
+
 	GlobalToggles_insert("ToggleShowShaders", MemberCaller<TextureBrowser,
 			&TextureBrowser::toggleShowShaders> (GlobalTextureBrowser()),
 			ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_showshaders_item));

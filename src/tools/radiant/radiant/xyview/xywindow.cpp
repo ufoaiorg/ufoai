@@ -52,6 +52,9 @@
 #include "../renderer.h"
 #include "moduleobserver.h"
 
+#include "iclipper.h"
+#include "ieventmanager.h"
+
 #include "gtkutil/menu.h"
 #include "gtkutil/container.h"
 #include "gtkutil/widget.h"
@@ -77,32 +80,8 @@
 #include "../plugin.h"
 #include "XYWnd.h"
 #include "GlobalXYWnd.h"
-#include "../clipper/ClipPoint.h"
-#include "../clipper/Clipper.h"
 
 xywindow_globals_private_t g_xywindow_globals_private;
-
-// =============================================================================
-// variables
-
-void WXY_BackgroundSelect (void)
-{
-	bool brushesSelected = map::countSelectedBrushes() != 0;
-	if (!brushesSelected) {
-		gtk_MessageBox(0, _("You have to select some brushes to get the bounding box for.\n"), _("No selection"),
-				eMB_OK, eMB_ICONERROR);
-		return;
-	}
-
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Background Image"), true, false);
-	std::string filename = fileChooser.display();
-	XYWnd *xy = GlobalXYWnd().getActiveXY();
-	if (xy) {
-		xy->disableBackground();
-		if (!filename.empty())
-			xy->loadBackgroundImage(filename);
-	}
-}
 
 /*
  ============================================================================
@@ -293,11 +272,6 @@ void XYShow_registerCommands ()
 	GlobalToggles_insert("ShowWorkzone", ShowWorkzoneToggleCaller(), ToggleItem::AddCallbackCaller(g_show_workzone));
 }
 
-void XYWnd_registerShortcuts ()
-{
-	command_connect_accelerator("ToggleCrosshairs");
-}
-
 #include "preferencesystem.h"
 #include "stringio.h"
 
@@ -316,25 +290,21 @@ typedef ConstReferenceCaller1<ToggleShown, const BoolImportCallback&, ToggleShow
 void XYWindow_Construct ()
 {
 	// eRegular
-	GlobalRadiant().commandInsert("NextView", FreeCaller<toggleActiveOrthoView> (), Accelerator(GDK_Tab,
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("ViewTop", FreeCaller<XY_Top> ());
-	GlobalCommands_insert("ViewSide", FreeCaller<XY_Side> ());
-	GlobalCommands_insert("ViewFront", FreeCaller<XY_Front> ());
+	GlobalEventManager().addCommand("NextView", FreeCaller<toggleActiveOrthoView> ());
+	GlobalEventManager().addCommand("ViewTop", FreeCaller<XY_Top> ());
+	GlobalEventManager().addCommand("ViewSide", FreeCaller<XY_Side> ());
+	GlobalEventManager().addCommand("ViewFront", FreeCaller<XY_Front> ());
 
 	// general commands
-	GlobalRadiant().commandInsert("ToggleCrosshairs", MemberCaller<XYWndManager, &XYWndManager::toggleCrossHairs> (
-			GlobalXYWnd()), Accelerator('X', (GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("ToggleGrid", MemberCaller<XYWndManager, &XYWndManager::toggleGrid> (
-			GlobalXYWnd()), Accelerator('0'));
+	GlobalEventManager().addCommand("ToggleCrosshairs", MemberCaller<XYWndManager, &XYWndManager::toggleCrossHairs> (
+			GlobalXYWnd()));
+	GlobalEventManager().addCommand("ToggleGrid", MemberCaller<XYWndManager, &XYWndManager::toggleGrid> (
+			GlobalXYWnd()));
 
-	GlobalRadiant().commandInsert("ZoomIn", MemberCaller<XYWndManager, &XYWndManager::zoomIn> (GlobalXYWnd()),
-			Accelerator(GDK_Delete));
-	GlobalRadiant().commandInsert("ZoomOut", MemberCaller<XYWndManager, &XYWndManager::zoomOut> (GlobalXYWnd()),
-			Accelerator(GDK_Insert));
-	GlobalCommands_insert("Zoom100", MemberCaller<XYWndManager, &XYWndManager::zoomOut> (GlobalXYWnd()));
-	GlobalRadiant().commandInsert("CenterXYViews", FreeCaller<XY_CenterViews> (), Accelerator(GDK_Tab,
-			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	GlobalEventManager().addCommand("ZoomIn", MemberCaller<XYWndManager, &XYWndManager::zoomIn> (GlobalXYWnd()));
+	GlobalEventManager().addCommand("ZoomOut", MemberCaller<XYWndManager, &XYWndManager::zoomOut> (GlobalXYWnd()));
+	GlobalEventManager().addCommand("Zoom100", MemberCaller<XYWndManager, &XYWndManager::zoomOut> (GlobalXYWnd()));
+	GlobalEventManager().addCommand("CenterXYViews", FreeCaller<XY_CenterViews> ());
 
 	// register preference settings
 	GlobalPreferenceSystem().registerPreference("ShowWorkzone", BoolImportStringCaller(

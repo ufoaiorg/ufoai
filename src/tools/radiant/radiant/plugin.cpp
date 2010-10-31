@@ -143,7 +143,6 @@ class RadiantCoreAPI
 			m_radiantcore.getAppPath = &AppPath_get;
 			m_radiantcore.getSettingsPath = &SettingsPath_get;
 			m_radiantcore.getMapsPath = &getMapsPath;
-			m_radiantcore.commandInsert = &GlobalCommands_insert;
 
 			m_radiantcore.getGamePath = &gamepath_get;
 

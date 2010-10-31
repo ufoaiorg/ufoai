@@ -25,6 +25,8 @@ class CamWnd
 		static Shader* m_state_select2;
 		FreezePointer m_freezePointer;
 
+		bool m_drawing;
+
 	public:
 		gtkutil::GLWidget _glWidget;
 		GtkWidget* m_gl_widget;
@@ -46,10 +48,6 @@ class CamWnd
 
 		CamWnd ();
 		~CamWnd ();
-
-		void registerCommands ();
-
-		bool m_drawing;
 
 		const Vector3& getCameraOrigin () const;
 		void setCameraOrigin (const Vector3& origin);
@@ -75,27 +73,25 @@ class CamWnd
 		void changeFloor (bool up);
 
 		GtkWidget* getWidget ();
+		void setParent(GtkWindow* parent);
 		GtkWindow* getParent ();
 
-		void EnableFreeMove ();
-		void DisableFreeMove ();
+		void enableFreeMove ();
+		void disableFreeMove ();
 
 		bool m_bFreeMove;
 
 		CameraView* getCameraView ();
 
+		// Enables/disables the (ordinary) camera movement (non-freelook)
 		void addHandlersMove ();
-
-		void addHandlersFreeMove ();
-
 		void removeHandlersMove ();
-		void removeHandlersFreeMove ();
 
-		void moveEnable ();
-		void moveDiscreteEnable ();
+		void enableDiscreteMoveEvents();
+		void enableFreeMoveEvents();
 
-		void moveDisable ();
-		void moveDiscreteDisable ();
+		void disableDiscreteMoveEvents();
+		void disableFreeMoveEvents();
 
 	private:
 		void Cam_Draw ();
