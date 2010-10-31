@@ -2,6 +2,7 @@
  * @file ui_parse.c
  * @todo remove all "token" param from function and use Com_UnParseLastToken
  * @todo reduce use of uiGlobal (create global functions to add/get/... entities)
+ * @todo remove Com_EParseValue and use Com_ParseValue
  */
 
 /*
@@ -60,7 +61,7 @@ static const value_t uiModelProperties[] = {
 /** @brief reserved token preventing calling a node with it
  * @todo Use dichotomic search
  */
-static const char *reserved_tokens[] = {
+static const char *reservedTokens[] = {
 	"this",
 	"parent",
 	"root",
@@ -77,7 +78,7 @@ static const char *reserved_tokens[] = {
 
 static qboolean UI_TokenIsReserved (const char *name)
 {
-	const char **token = reserved_tokens;
+	const char **token = reservedTokens;
 	while (*token) {
 		if (!strcmp(*token, name))
 			return qtrue;
