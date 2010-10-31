@@ -8,7 +8,7 @@
 import os, os.path, sys
 
 # path where exists ufo binary
-UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
+UFOAI_ROOT = os.path.realpath(os.path.dirname(__file__) + '/../../..')
 
 dir = UFOAI_ROOT + '/src/client/ui/node'
 
