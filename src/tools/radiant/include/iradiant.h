@@ -118,8 +118,6 @@ struct IRadiant
 		void (*detachGameToolsPathObserver) (ModuleObserver& observer);
 		void (*attachEnginePathObserver) (ModuleObserver& observer);
 		void (*detachEnginePathObserver) (ModuleObserver& observer);
-		void (*attachGameNameObserver) (ModuleObserver& observer);
-		void (*detachGameNameObserver) (ModuleObserver& observer);
 		void (*attachGameModeObserver) (ModuleObserver& observer);
 		void (*detachGameModeObserver) (ModuleObserver& observer);
 

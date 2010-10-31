@@ -33,6 +33,7 @@ class ModuleRegisterable
 		{
 		}
 		virtual void selfRegister () = 0;
+		virtual const std::string& getName() const = 0;
 };
 
 class ModuleRegistryList
@@ -48,6 +49,16 @@ class ModuleRegistryList
 		{
 			for (RegisterableModules::const_iterator i = m_modules.begin(); i != m_modules.end(); ++i) {
 				(*i)->selfRegister();
+			}
+		}
+		void registerModule (const std::string& name)
+		{
+			for (RegisterableModules::iterator i = m_modules.begin(); i != m_modules.end(); ++i) {
+				if ((*i)->getName() == name) {
+					(*i)->selfRegister();
+					m_modules.erase(i);
+					break;
+				}
 			}
 		}
 };

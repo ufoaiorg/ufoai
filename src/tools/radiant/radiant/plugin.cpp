@@ -144,8 +144,6 @@ class RadiantCoreAPI
 			m_radiantcore.getSettingsPath = &SettingsPath_get;
 			m_radiantcore.getMapsPath = &getMapsPath;
 
-			m_radiantcore.getGamePath = &gamepath_get;
-
 			m_radiantcore.getMapName = &getMapName;
 			m_radiantcore.getMapWorldEntity = getMapWorldEntity;
 			m_radiantcore.getGridSize = GetGridSize;
@@ -157,8 +155,6 @@ class RadiantCoreAPI
 			m_radiantcore.detachGameToolsPathObserver = Radiant_detachGameToolsPathObserver;
 			m_radiantcore.attachEnginePathObserver = Radiant_attachEnginePathObserver;
 			m_radiantcore.detachEnginePathObserver = Radiant_detachEnginePathObserver;
-			m_radiantcore.attachGameNameObserver = Radiant_attachGameNameObserver;
-			m_radiantcore.detachGameNameObserver = Radiant_detachGameNameObserver;
 			m_radiantcore.attachGameModeObserver = Radiant_attachGameModeObserver;
 			m_radiantcore.detachGameModeObserver = Radiant_detachGameModeObserver;
 
@@ -326,9 +322,6 @@ bool Radiant_Construct (ModuleServer& server)
 	g_RadiantDependencies = new RadiantDependencies();
 
 	g_RadiantInitialised = !server.getError();
-
-	// Load the ColourSchemes from the registry
-	ColourSchemes().loadColourSchemes();
 
 	if (g_RadiantInitialised) {
 		g_Radiant = new Radiant;

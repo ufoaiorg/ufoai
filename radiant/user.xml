@@ -71,7 +71,6 @@
 				<toggletoolbutton name="dragfaces" action="DragFaces" tooltip="Select Faces" icon="modify_faces.png" />
 			<separator/>
 				<toolbutton name="refreshmodels" action="RefreshReferences" tooltip="Refresh Models" icon="refresh_models.png" />
-				<toolbutton name="background" action="ToggleBackground" tooltip="Background image" icon="background.png" />
 			<separator/>
 				<toolbutton name="generatematerial" action="GenerateMaterialFromTexture" tooltip="Create material entries for selected faces" icon="material_generate.png" />
 			<separator/>

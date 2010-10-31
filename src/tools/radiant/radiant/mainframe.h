@@ -280,11 +280,6 @@ void ClipperChangeNotify ();
 void DefaultMode ();
 
 const std::string& basegame_get ();
-const std::string& gamename_get ();
-const std::string gamepath_get ();
-void gamename_set (const std::string& gamename);
-void Radiant_attachGameNameObserver (ModuleObserver& observer);
-void Radiant_detachGameNameObserver (ModuleObserver& observer);
 void Radiant_attachGameModeObserver (ModuleObserver& observer);
 void Radiant_detachGameModeObserver (ModuleObserver& observer);
 
@@ -301,5 +296,6 @@ void MainFrame_Destroy ();
 
 void hide_splash ();
 void show_splash ();
+void populateRegistry ();
 
 #endif

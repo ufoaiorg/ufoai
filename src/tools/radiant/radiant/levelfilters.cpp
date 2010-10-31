@@ -27,6 +27,7 @@
 #include "brush/TexDef.h"
 #include "ibrush.h"
 #include "ientity.h"
+#include "ieventmanager.h"
 #include "iscenegraph.h"
 
 // believe me, i'm sorry
@@ -258,12 +259,12 @@ void filter_level8 (void)
  */
 void LevelFilters_registerCommands (void)
 {
-	GlobalCommands_insert("FilterLevel1", FreeCaller<filter_level1> ());
-	GlobalCommands_insert("FilterLevel2", FreeCaller<filter_level2> ());
-	GlobalCommands_insert("FilterLevel3", FreeCaller<filter_level3> ());
-	GlobalCommands_insert("FilterLevel4", FreeCaller<filter_level4> ());
-	GlobalCommands_insert("FilterLevel5", FreeCaller<filter_level5> ());
-	GlobalCommands_insert("FilterLevel6", FreeCaller<filter_level6> ());
-	GlobalCommands_insert("FilterLevel7", FreeCaller<filter_level7> ());
-	GlobalCommands_insert("FilterLevel8", FreeCaller<filter_level8> ());
+	GlobalEventManager().addCommand("FilterLevel1", FreeCaller<filter_level1> ());
+	GlobalEventManager().addCommand("FilterLevel2", FreeCaller<filter_level2> ());
+	GlobalEventManager().addCommand("FilterLevel3", FreeCaller<filter_level3> ());
+	GlobalEventManager().addCommand("FilterLevel4", FreeCaller<filter_level4> ());
+	GlobalEventManager().addCommand("FilterLevel5", FreeCaller<filter_level5> ());
+	GlobalEventManager().addCommand("FilterLevel6", FreeCaller<filter_level6> ());
+	GlobalEventManager().addCommand("FilterLevel7", FreeCaller<filter_level7> ());
+	GlobalEventManager().addCommand("FilterLevel8", FreeCaller<filter_level8> ());
 }

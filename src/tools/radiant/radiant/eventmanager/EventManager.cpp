@@ -281,9 +281,10 @@ public:
 			globalOutputStream() << "EventManager: Shortcuts found in Registry: " << shortcutList.size() << "\n";
 			for (unsigned int i = 0; i < shortcutList.size(); i++) {
 				const std::string key = shortcutList[i].getAttributeValue("key");
+				const std::string command = shortcutList[i].getAttributeValue("command");
 
 				// Try to lookup the command
-				IEvent* event = findEvent(shortcutList[i].getAttributeValue("command"));
+				IEvent* event = findEvent(command);
 
 				// Check if valid key / command definitions were found
 				if (key != "" && event != NULL) {
@@ -299,7 +300,8 @@ public:
 					}
 				}
 				else {
-					globalOutputStream() << "EventManager: Warning: Cannot load shortcut definition (key/command invalid).\n";
+					globalOutputStream() << "EventManager: Warning: Cannot load shortcut definition for key " << key
+							<< " and command " << command << ".\n";
 				}
 			}
 		}

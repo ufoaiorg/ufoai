@@ -502,9 +502,9 @@ int main (int argc, char* argv[])
 		g_GamesDialog.m_bForceLogConsole = false;
 	}
 
-	global_accel_init();
-
 	Radiant_Initialise();
+
+	global_accel_init();
 
 	user_shortcuts_init();
 

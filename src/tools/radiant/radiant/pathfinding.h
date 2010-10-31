@@ -21,10 +21,6 @@
 #if !defined(INCLUDED_PATHFINDING_H)
 #define INCLUDED_PATHFINDING_H
 
-namespace routing
-{
-	void ShowPathfinding (void);
-}
 void Pathfinding_Construct (void);
 void Pathfinding_Destroy (void);
 typedef struct _GtkMenu GtkMenu;

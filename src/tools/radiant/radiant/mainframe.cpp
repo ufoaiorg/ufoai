@@ -364,38 +364,12 @@ void EnginePath_verify (void)
 
 namespace
 {
-	std::string g_gamename;
-	ModuleObservers g_gameNameObservers;
 	ModuleObservers g_gameModeObservers;
-}
-
-void Radiant_attachGameNameObserver (ModuleObserver& observer)
-{
-	g_gameNameObservers.attach(observer);
-}
-
-void Radiant_detachGameNameObserver (ModuleObserver& observer)
-{
-	g_gameNameObservers.detach(observer);
 }
 
 const std::string& basegame_get (void)
 {
 	return g_pGameDescription->getRequiredKeyValue("basegame");
-}
-
-const std::string gamepath_get (void)
-{
-	return g_strEnginePath + g_gamename + "/";
-}
-
-void gamename_set (const std::string& gamename)
-{
-	if (gamename != g_gamename) {
-		g_gameNameObservers.unrealise();
-		g_gamename = gamename;
-		g_gameNameObservers.realise();
-	}
 }
 
 void Radiant_attachGameModeObserver (ModuleObserver& observer)
@@ -538,11 +512,15 @@ void Radiant_Initialise (void)
 	Radiant_loadModulesFromRoot(AppPath_get());
 
 	// Initialise and instantiate the registry
+	StaticModuleRegistryList().instance().registerModule("registry");
 	GlobalModuleServer::instance().set(GlobalModuleServer_get());
 	GlobalRegistryModuleRef registryRef;
 
 	// Try to load all the XML files into the registry
 	populateRegistry();
+
+	// Load the ColourSchemes from the registry
+	ColourSchemes().loadColourSchemes();
 
 	Preferences_Load();
 
@@ -551,7 +529,6 @@ void Radiant_Initialise (void)
 
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
-	g_gameNameObservers.realise();
 
 	// Save the current event set to the Registry and export it
 	GlobalEventManager().saveEventListToRegistry();
@@ -570,7 +547,6 @@ void Radiant_Shutdown (void)
 	// Save the whole /uforadiant/user tree to user.xml so that the current settings are preserved
 	GlobalRegistry().exportToFile("user", SettingsPath_get() + "user.xml");
 
-	g_gameNameObservers.unrealise();
 	g_gameModeObservers.unrealise();
 	g_gameToolsPathObservers.unrealise();
 
@@ -1893,6 +1869,8 @@ void MainFrame::Create (void)
 
 	GlobalWindowObservers_connectTopLevel(window);
 
+	gtk_window_set_transient_for(splash_screen, window);
+
 #if !defined(WIN32)
 	{
 		GdkPixbuf* pixbuf = gtkutil::getLocalPixbuf(ui::icons::ICON);
@@ -1902,8 +1880,6 @@ void MainFrame::Create (void)
 		}
 	}
 #endif
-
-	GtkWidget *notebook = Sidebar_construct();
 
 	gtk_widget_add_events(GTK_WIDGET(window), GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_FOCUS_CHANGE_MASK);
 	g_signal_connect(G_OBJECT(window), "delete_event", G_CALLBACK(mainframe_delete), this);
@@ -1954,36 +1930,13 @@ void MainFrame::Create (void)
 	gtk_widget_show(GTK_WIDGET(main_toolbar_v));
 
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
-#ifdef DEBUG
-	gint width, height,posx,posy;
-	int stateBackup = g_layout_globals.nState;
-	g_message("recorded window state: %i\n",g_layout_globals.nState);
-#endif
 	if ((g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
-#ifdef DEBUG
-		g_message("trying to maximize, recorded size was %ix%i@%ix%iy (not used)\n",g_layout_globals.m_position.w,g_layout_globals.m_position.h,g_layout_globals.m_position.x,g_layout_globals.m_position.y);
-#endif
 		/* set stored position and default height/width, otherwise problems with extended screens */
 		g_layout_globals.m_position.h = 800;
 		g_layout_globals.m_position.w = 600;
-#ifdef DEBUG
-		gtk_window_get_size(window, &width,&height);
-		gtk_window_get_position(window,&posx,&posy);
-		g_message("actual size: %ix%i@%ix%iy; setting size + position\n",width,height,posx,posy);
-#endif
 		window_set_position(window, g_layout_globals.m_position);
-#ifdef DEBUG
-		gtk_window_get_size(window, &width,&height);
-		gtk_window_get_position(window,&posx,&posy);
-		g_message("size after set: %ix%i@%ix%iy; maximize now\n",width,height,posx,posy);
-#endif
 		/* maximize will be done when window is shown */
 		gtk_window_maximize(window);
-#ifdef DEBUG
-		gtk_window_get_size(window, &width,&height);
-		gtk_window_get_position(window,&posx,&posy);
-		g_message("size after maximize call: %ix%i@%ix%iy;could be that this is same as previous\n",width,height,posx,posy);
-#endif
 	} else {
 		window_set_position(window, g_layout_globals.m_position);
 	}
@@ -1994,20 +1947,6 @@ void MainFrame::Create (void)
 
 	// The default XYView pointer
 	XYWnd* xyWnd;
-
-#ifdef DEBUG
-	gtk_window_get_size(window, &width,&height);
-	gtk_window_get_position(window,&posx,&posy);
-	int state = gdk_window_get_state(GTK_WIDGET(window)->window);
-	g_message("size after show: %ix%i@%ix%iy state %i;\n",width,height,posx,posy,state);
-	if (state != stateBackup)
-	if (stateBackup & GDK_WINDOW_STATE_MAXIMIZED) {
-		gtk_window_maximize(window);
-		g_message("another try to maximize\n");
-	}
-	state = gdk_window_get_state(GTK_WIDGET(window)->window);
-	g_message("state after retry maximize: %i;\n",state);
-#endif
 
 	GtkWidget* mainHBox = gtk_hbox_new(0, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), mainHBox, TRUE, TRUE, 0);
@@ -2114,8 +2053,6 @@ void MainFrame::Create (void)
 		gtkutil::errorDialog(_("Invalid layout type set - remove your radiant config files and retry"));
 	}
 
-	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);
-
 	// greebo: In any layout, there is at least the XY view present, make it active
 	GlobalXYWnd().setActiveXY(xyWnd);
 
@@ -2138,6 +2075,9 @@ void MainFrame::Create (void)
 
 	gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoMenuItem()), false);
 	//gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoButton()), false);
+
+	GtkWidget *notebook = Sidebar_construct();
+	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);
 
 	EverySecondTimer_enable();
 

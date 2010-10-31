@@ -47,7 +47,8 @@ public:
 			std::string modifierStr = "";
 
 			if (accelerator != NULL) {
-				keyStr = gdk_keyval_name(accelerator->getKey());
+				unsigned int keyVal = accelerator->getKey();
+				keyStr = (keyVal != 0) ? gdk_keyval_name(keyVal) : "";;
 				modifierStr = _eventManager->getModifierStr(accelerator->getModifiers());
 			}
 

@@ -96,9 +96,17 @@ class SingletonModule: public APIConstructor, public Module, public ModuleRegist
 			ASSERT_MESSAGE(m_refcount == 0, "module still referenced at shutdown");
 		}
 
+		const std::string& getName() const {
+			return typename Type::Name();
+		}
+
+		int getVersion() const {
+			return typename Type::Version();
+		}
+
 		void selfRegister ()
 		{
-			globalModuleServer().registerModule(typename Type::Name(), typename Type::Version(),
+			globalModuleServer().registerModule(getName(), getVersion(),
 					APIConstructor::getName(), *this);
 		}
 

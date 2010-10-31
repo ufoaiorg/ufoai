@@ -40,226 +40,160 @@
 #include "gtkutil/widget.h"
 #include "gtkmisc.h"
 #include "ui/Icons.h"
+#include "ieventmanager.h"
 
-static GtkCheckMenuItem *menuItemShowIn2D;
-static GtkCheckMenuItem *menuItemShowLowerLevels;
+static GtkMenuItem *menuItemShowIn2D;
+static GtkMenuItem *menuItemShowLowerLevels;
 
-namespace routing
+namespace routing {
+
+namespace {
+const std::string RKEY_PATHFINDING_SHOW_ALL_LOWER = "user/ui/pathfinding/showAllLowerLevels";
+const std::string RKEY_PATHFINDING_SHOW_IN_2D = "user/ui/pathfinding/showIn2D";
+const std::string RKEY_PATHFINDING_SHOW = "user/ui/pathfinding/show";
+}
+
+class Pathfinding: public PreferenceConstructor, public RegistryKeyObserver
 {
-	bool showAllLowerLevels;
-	bool showIn2D;
+	private:
+		bool _showPathfinding;
+		bool _showIn2D;
+		Routing *_routingRender;
+		bool _showAllLowerLevels;
 
-	class Pathfinding
-	{
-		private:
-			bool _showPathfinding;
-			bool _showIn2D;
-			Routing *_routingRender;
-			bool _showAllLowerLevels;
+	public:
 
-		public:
+		Pathfinding () :
+			_showPathfinding(GlobalRegistry().get(RKEY_PATHFINDING_SHOW) == "1"), _showIn2D(GlobalRegistry().get(
+					RKEY_PATHFINDING_SHOW_IN_2D) == "1"), _routingRender(0), _showAllLowerLevels(GlobalRegistry().get(
+					RKEY_PATHFINDING_SHOW_ALL_LOWER) == "1")
+		{
+			_routingRender = new Routing();
+			GlobalShaderCache().attachRenderable(*_routingRender);
 
-			Pathfinding () :
-				_showPathfinding(false), _showIn2D(false), _routingRender(0), _showAllLowerLevels(true)
-			{
-				_routingRender = new Routing();
-				GlobalShaderCache().attachRenderable(*_routingRender);
+			GlobalRegistry().addKeyObserver(this, RKEY_PATHFINDING_SHOW_ALL_LOWER);
+			GlobalRegistry().addKeyObserver(this, RKEY_PATHFINDING_SHOW_IN_2D);
+			GlobalRegistry().addKeyObserver(this, RKEY_PATHFINDING_SHOW);
+
+			GlobalPreferenceSystem().addConstructor(this);
+		}
+
+		// Update the internally stored variables on registry key change
+		void keyChanged ()
+		{
+			_showPathfinding = (GlobalRegistry().get(RKEY_PATHFINDING_SHOW) == "1");
+			_showAllLowerLevels = (GlobalRegistry().get(RKEY_PATHFINDING_SHOW_ALL_LOWER) == "1");
+			_showIn2D = (GlobalRegistry().get(RKEY_PATHFINDING_SHOW_IN_2D) == "1");
+
+			_routingRender->setShowPathfinding(_showPathfinding);
+			_routingRender->setShowAllLowerLevels(_showAllLowerLevels);
+			_routingRender->setShowIn2D(_showIn2D);
+
+			GlobalEventManager().setToggled("ShowPathfinding", _showPathfinding);
+			GlobalEventManager().setToggled("ShowPathfindingLowerLevels", _showAllLowerLevels);
+			GlobalEventManager().setToggled("ShowPathfindingIn2D", _showIn2D);
+
+			showPathfinding();
+		}
+
+		~Pathfinding ()
+		{
+			GlobalShaderCache().detachRenderable(*_routingRender);
+			delete _routingRender;
+		}
+		/**
+		 * @brief callback function for map changes to update routing data.
+		 */
+		void onMapValidChanged (void)
+		{
+			if (Map_Valid(g_map) && _showPathfinding) {
+				_showPathfinding = false;
+				showPathfinding();
 			}
+		}
 
-			~Pathfinding ()
-			{
-				GlobalShaderCache().detachRenderable(*_routingRender);
-				delete _routingRender;
+		void setShowAllLowerLevels (bool showAllLowerLevels)
+		{
+			GlobalRegistry().set(RKEY_PATHFINDING_SHOW_ALL_LOWER, showAllLowerLevels ? "1" : "0");
+		}
+
+		void setShowIn2D (bool showIn2D)
+		{
+			GlobalRegistry().set(RKEY_PATHFINDING_SHOW_IN_2D, showIn2D ? "1" : "0");
+		}
+
+		void setShow (bool show)
+		{
+			GlobalRegistry().set(RKEY_PATHFINDING_SHOW, show ? "1" : "0");
+		}
+
+		void toggleShowPathfindingIn2D ()
+		{
+			setShowIn2D(!_showIn2D);
+		}
+
+		void toggleShowLowerLevelsForPathfinding ()
+		{
+			setShowAllLowerLevels(!_showAllLowerLevels);
+		}
+
+		void showPathfinding ()
+		{
+			if (_showPathfinding) {
+				//update current pathfinding data on every activation
+				const std::string& mapName = GlobalRadiant().getMapName();
+				const std::string baseName = os::stripExtension(mapName);
+				const std::string bspName = baseName + ".bsp";
+				_routingRender->updateRouting(GlobalFileSystem().getRelative(bspName));
 			}
-			/**
-			 * @brief callback function for map changes to update routing data.
-			 */
-			void onMapValidChanged (void)
-			{
-				if (Map_Valid(g_map) && _showPathfinding) {
-					_showPathfinding = false;
-					ShowPathfinding();
-				}
-			}
+			SceneChangeNotify();
+		}
 
-			void setShowAllLowerLevels (bool showAllLowerLevels)
-			{
-				_showAllLowerLevels = showAllLowerLevels;
-				_routingRender->setShowAllLowerLevels(_showAllLowerLevels);
-			}
+		/**
+		 * @todo Maybe also use the ufo2map output directly
+		 * @sa ToolsCompile
+		 */
+		void toggleShowPathfinding ()
+		{
+			setShow(!_showPathfinding);
+		}
 
-			void setShowIn2D (bool showIn2D)
-			{
-				_showIn2D = showIn2D;
-				_routingRender->setShowIn2D(_showIn2D);
-			}
+		void constructPreferencePage (PreferenceGroup& group)
+		{
+			PreferencesPage* page = group.createPage(_("Pathfinding"), _("Pathfinding Settings"));
+			PrefPage *p = reinterpret_cast<PrefPage*> (page);
+			p->appendCheckBox("", _("Show pathfinding information"), RKEY_PATHFINDING_SHOW);
+			p->appendCheckBox("", _("Show all lower levels"), RKEY_PATHFINDING_SHOW_ALL_LOWER);
+			p->appendCheckBox("", _("Show in 2D views"), RKEY_PATHFINDING_SHOW_IN_2D);
+		}
+};
 
-			/**
-			 * @todo Maybe also use the ufo2map output directly
-			 * @sa ToolsCompile
-			 */
-			bool show (void)
-			{
-				if (!Map_Unnamed(g_map))
-					_showPathfinding ^= true;
-				else
-					_showPathfinding = false;
+Pathfinding *pathfinding;
+bool showPathfinding;
+bool showAllLowerLevels;
+bool showIn2D;
 
-				_routingRender->setShowPathfinding(_showPathfinding);
-				_routingRender->setShowAllLowerLevels(_showAllLowerLevels);
-
-				if (_showPathfinding) {
-					//update current pathfinding data on every activation
-					const std::string& mapName = GlobalRadiant().getMapName();
-					const std::string baseName = os::stripExtension(mapName);
-					const std::string bspName = baseName + ".bsp";
-					_routingRender->updateRouting(GlobalFileSystem().getRelative(bspName));
-				}
-				SceneChangeNotify();
-
-				return _showPathfinding;
-			}
-	};
-
-	Pathfinding *pathfinding;
-	bool showPathfinding;
-
-	bool IsPathfindingViewEnabled ()
-	{
-		return showPathfinding;
-	}
-
-	bool IsPathfindingIn2DViewEnabled ()
-	{
-		return showIn2D;
-	}
-
-	bool IsPathfindingShowLowerLevelsEnabled ()
-	{
-		return showAllLowerLevels;
-	}
-
-	/*!  Toggle menu callback definitions  */
-	typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<routing::IsPathfindingViewEnabled>::apply>
-			ShowPathfindingEnabledApplyCaller;
-	ShowPathfindingEnabledApplyCaller g_showPathfindingEnabled_button_caller;
-	BoolExportCallback g_showPathfindingEnabled_button_callback(g_showPathfindingEnabled_button_caller);
-
-	ToggleItem g_showPathfindingEnabled_button(g_showPathfindingEnabled_button_callback);
-
-	typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<routing::IsPathfindingIn2DViewEnabled>::apply>
-			ShowPathfindingIn2DEnabledApplyCaller;
-	ShowPathfindingIn2DEnabledApplyCaller g_showPathfindingIn2DEnabled_button_caller;
-	BoolExportCallback g_showPathfindingIn2DEnabled_button_callback(g_showPathfindingIn2DEnabled_button_caller);
-
-	ToggleItem g_showPathfindingIn2DEnabled_button(g_showPathfindingIn2DEnabled_button_callback);
-
-	typedef FreeCaller1<const BoolImportCallback&,
-			&BoolFunctionExport<routing::IsPathfindingShowLowerLevelsEnabled>::apply>
-			ShowLowerLevelsForPathfindingEnabledApplyCaller;
-	ShowLowerLevelsForPathfindingEnabledApplyCaller g_showLowerLevelsForPathfindingEnabled_button_caller;
-	BoolExportCallback g_showLowerLevelsForPathfindingEnabled_button_callback(
-			g_showLowerLevelsForPathfindingEnabled_button_caller);
-	ToggleItem g_showLowerLevelsForPathfindingEnabled_button(g_showLowerLevelsForPathfindingEnabled_button_callback);
-
-	/**
-	 * @todo Maybe also use the ufo2map output directly
-	 * @sa ToolsCompile
-	 */
-	void ShowPathfinding ()
-	{
-		showPathfinding = pathfinding->show();
-		g_showPathfindingEnabled_button.update();
-		gtk_widget_set_sensitive(GTK_WIDGET(menuItemShowIn2D), showPathfinding);
-		gtk_widget_set_sensitive(GTK_WIDGET(menuItemShowLowerLevels), showPathfinding);
-	}
-
-	void ShowPathfindingIn2D ()
-	{
-		if (showPathfinding)
-			showIn2D ^= true;
-		else
-			showIn2D = false;
-		pathfinding->setShowIn2D(showIn2D);
-		g_showPathfindingIn2DEnabled_button.update();
-		SceneChangeNotify();
-	}
-
-	void ShowLowerLevelsForPathfinding ()
-	{
-		if (showPathfinding)
-			showAllLowerLevels ^= true;
-		else
-			showAllLowerLevels = false;
-		pathfinding->setShowAllLowerLevels(showAllLowerLevels);
-		g_showLowerLevelsForPathfindingEnabled_button.update();
-		SceneChangeNotify();
-	}
-
-	/**
-	 * @brief callback function for map changes to update routing data.
-	 */
-	void Pathfinding_onMapValidChanged ()
-	{
-		pathfinding->onMapValidChanged();
-	}
-
-	void setShowAllLowerLevels (bool value)
-	{
-		showAllLowerLevels = value;
-		pathfinding->setShowAllLowerLevels(showAllLowerLevels);
-		SceneChangeNotify();
-	}
-
-	void setShowIn2D (bool value)
-	{
-		showIn2D = value;
-		pathfinding->setShowIn2D(showIn2D);
-		SceneChangeNotify();
-	}
-
-	void Pathfinding_constructPage (PreferenceGroup& group)
-	{
-		PreferencesPage* page = group.createPage(_("Pathfinding"), _("Pathfinding Settings"));
-		PrefPage *p = reinterpret_cast<PrefPage*>(page);
-		p->appendCheckBox("", _("Show all lower levels"), FreeCaller1<bool, setShowAllLowerLevels> (),
-				BoolExportCaller(showAllLowerLevels));
-		p->appendCheckBox("", _("Show in 2D views"), FreeCaller1<bool, setShowIn2D> (),
-				BoolExportCaller(showIn2D));
-	}
-
-	void Pathfinding_registerPreferences (void)
-	{
-		bool actualShowLowerLevels = showAllLowerLevels;
-		bool actualShowIn2D = showIn2D;
-		GlobalPreferenceSystem().registerPreference("PathfindingShowLowerLevels", BoolImportStringCaller(
-				showAllLowerLevels), BoolExportStringCaller(showAllLowerLevels));
-		GlobalPreferenceSystem().registerPreference("PathfindingShowIn2D", BoolImportStringCaller(showIn2D),
-				BoolExportStringCaller(showIn2D));
-		if (actualShowIn2D != showIn2D)
-			setShowIn2D(showIn2D);
-		if (actualShowLowerLevels != showAllLowerLevels)
-			setShowAllLowerLevels(showAllLowerLevels);
-
-		PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Pathfinding_constructPage> ());
-	}
+/**
+ * @brief callback function for map changes to update routing data.
+ */
+void Pathfinding_onMapValidChanged ()
+{
+	pathfinding->onMapValidChanged();
+}
 }
 
 void Pathfinding_Construct (void)
 {
 	routing::pathfinding = new routing::Pathfinding();
 
-	GlobalToggles_insert("ShowPathfinding", FreeCaller<routing::ShowPathfinding> (), ToggleItem::AddCallbackCaller(
-			routing::g_showPathfindingEnabled_button), accelerator_null());
-	GlobalToggles_insert("ShowPathfindingIn2D", FreeCaller<routing::ShowPathfindingIn2D> (),
-			ToggleItem::AddCallbackCaller(routing::g_showPathfindingIn2DEnabled_button), accelerator_null());
-	GlobalToggles_insert("ShowPathfindingLowerLevels", FreeCaller<routing::ShowLowerLevelsForPathfinding> (),
-			ToggleItem::AddCallbackCaller(routing::g_showLowerLevelsForPathfindingEnabled_button), accelerator_null());
+	GlobalEventManager().addToggle("ShowPathfinding", MemberCaller<routing::Pathfinding,
+			&routing::Pathfinding::toggleShowPathfinding> (*routing::pathfinding));
+	GlobalEventManager().addToggle("ShowPathfindingIn2D", MemberCaller<routing::Pathfinding,
+			&routing::Pathfinding::toggleShowPathfindingIn2D> (*routing::pathfinding));
+	GlobalEventManager().addToggle("ShowPathfindingLowerLevels", MemberCaller<routing::Pathfinding,
+			&routing::Pathfinding::toggleShowLowerLevelsForPathfinding> (*routing::pathfinding));
 
-	/** @todo listener also should activate/deactivate "show pathfinding" menu entry if no appropriate data is available */
 	Map_addValidCallback(g_map, SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));
-
-	routing::Pathfinding_registerPreferences();
 }
 
 void Pathfinding_Destroy (void)
@@ -269,11 +203,8 @@ void Pathfinding_Destroy (void)
 
 void Pathfinding_ConstructMenu (GtkMenu* menu)
 {
-	create_check_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
-	menuItemShowIn2D = create_check_menu_item_with_mnemonic(menu, _("Show in 2D views"), "ShowPathfindingIn2D");
-	menuItemShowLowerLevels = create_check_menu_item_with_mnemonic(menu, _("Show all lower levels"),
+	createCheckMenuItemWithMnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
+	menuItemShowIn2D = createCheckMenuItemWithMnemonic(menu, _("Show in 2D views"), "ShowPathfindingIn2D");
+	menuItemShowLowerLevels = createCheckMenuItemWithMnemonic(menu, _("Show all lower levels"),
 			"ShowPathfindingLowerLevels");
-	//disabled items by default, enabled via show pathfinding
-	gtk_widget_set_sensitive(GTK_WIDGET(menuItemShowIn2D), false);
-	gtk_widget_set_sensitive(GTK_WIDGET(menuItemShowLowerLevels), false);
 }

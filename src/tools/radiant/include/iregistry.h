@@ -85,6 +85,7 @@ template<typename Type>
 class GlobalModuleRef;
 typedef GlobalModuleRef<Registry> GlobalRegistryModuleRef;
 
+
 // This is the accessor for the registry
 inline Registry& GlobalRegistry() {
 	return GlobalRegistryModule::getTable();

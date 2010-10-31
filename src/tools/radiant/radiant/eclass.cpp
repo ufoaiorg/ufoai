@@ -267,11 +267,9 @@ class EclassManagerAPI
 
 			GlobalRadiant().attachGameToolsPathObserver(g_EntityClassUFO);
 			GlobalRadiant().attachGameModeObserver(g_EntityClassUFO);
-			GlobalRadiant().attachGameNameObserver(g_EntityClassUFO);
 		}
 		~EclassManagerAPI ()
 		{
-			GlobalRadiant().detachGameNameObserver(g_EntityClassUFO);
 			GlobalRadiant().detachGameModeObserver(g_EntityClassUFO);
 			GlobalRadiant().detachGameToolsPathObserver(g_EntityClassUFO);
 
