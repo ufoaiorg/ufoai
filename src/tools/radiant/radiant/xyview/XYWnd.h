@@ -244,8 +244,6 @@ class XYWnd: public CameraObserver
 		void EntityCreate_MouseMove (int x, int y);
 		void EntityCreate_MouseUp (int x, int y);
 
-		void focus ();
-
 		EViewType getViewType ();
 		void setScale (float f);
 		float getScale () const;

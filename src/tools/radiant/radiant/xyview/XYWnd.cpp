@@ -300,13 +300,6 @@ gboolean XYWnd::xywnd_chasemouse (gpointer data)
 	return TRUE;
 }
 
-void XYWnd::focus ()
-{
-	Vector3 position;
-	getFocusPosition(position);
-	positionView(position);
-}
-
 void XYWnd::NewBrushDrag_Begin (int x, int y)
 {
 	m_NewBrushDrag = 0;
