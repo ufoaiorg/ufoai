@@ -537,6 +537,13 @@ void Radiant_Initialise (void)
 	// Load the Radiant plugins
 	Radiant_loadModulesFromRoot(AppPath_get());
 
+	// Initialise and instantiate the registry
+	GlobalModuleServer::instance().set(GlobalModuleServer_get());
+	GlobalRegistryModuleRef registryRef;
+
+	// Try to load all the XML files into the registry
+	populateRegistry();
+
 	Preferences_Load();
 
 	// Load the other modules

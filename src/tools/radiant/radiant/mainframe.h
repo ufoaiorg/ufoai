@@ -301,6 +301,5 @@ void MainFrame_Destroy ();
 
 void hide_splash ();
 void show_splash ();
-void populateRegistry ();
 
 #endif

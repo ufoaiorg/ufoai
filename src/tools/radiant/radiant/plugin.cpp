@@ -327,9 +327,6 @@ bool Radiant_Construct (ModuleServer& server)
 
 	g_RadiantInitialised = !server.getError();
 
-	// Try to load all the XML files into the registry
-	populateRegistry();
-
 	// Load the ColourSchemes from the registry
 	ColourSchemes().loadColourSchemes();
 
