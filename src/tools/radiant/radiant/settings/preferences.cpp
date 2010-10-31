@@ -503,6 +503,9 @@ GtkWindow* PrefsDlg::BuildDialog ()
 							GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Settings"), settings);
 							PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
 
+							// greebo: Invoke the registered constructors to do their stuff
+							callConstructors(preferenceGroup);
+
 							PreferenceGroupCallbacks_constructGroup(g_settingsCallbacks, preferenceGroup);
 						}
 					}
