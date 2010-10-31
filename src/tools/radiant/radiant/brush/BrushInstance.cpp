@@ -174,6 +174,8 @@ void BrushInstance::invertSelected ()
 				i->invertSelected();
 			}
 			break;
+		default:
+			break;
 		}
 	}
 }
