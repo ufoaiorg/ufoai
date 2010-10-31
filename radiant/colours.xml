@@ -17,6 +17,7 @@
 		<colour name="axis_y" value="0 1 0" />
 		<colour name="axis_z" value="0 0 1" />
 		<colour name="brush_vertices" value="0 1 0" />
+		<colour name="xyview_crosshairs" value="0.2 0.9 0.2" />
 	</colourscheme>
 	<colourscheme name="QE3Radiant Original">
 		<colour name="texture_background" value="0.25 0.25 0.25" />
@@ -35,6 +36,7 @@
 		<colour name="axis_y" value="0 1 0" />
 		<colour name="axis_z" value="0 0 1" />
 		<colour name="brush_vertices" value="0 1 0" />
+		<colour name="xyview_crosshairs" value="0.2 0.9 0.2" />
 	</colourscheme>
 	<colourscheme name="Black &amp; Green">
 		<colour name="texture_background" value="0.25 0.25 0.25" />
@@ -53,6 +55,7 @@
 		<colour name="axis_y" value="0 1 0" />
 		<colour name="axis_z" value="0 0 1" />
 		<colour name="brush_vertices" value="0 1 0" />
+		<colour name="xyview_crosshairs" value="0.2 0.9 0.2" />
 	</colourscheme>
 	<!--  the last one is the default -->
 	<colourscheme name="UFORadiant Default" readonly="1">
@@ -72,6 +75,7 @@
 		<colour name="axis_y" value="0 1 0" />
 		<colour name="axis_z" value="0 0 1" />
 		<colour name="brush_vertices" value="0 1 0" />
+		<colour name="xyview_crosshairs" value="0.2 0.9 0.2" />
 	</colourscheme>
 
 	<descriptions>
@@ -91,5 +95,6 @@
 		<clipper value="Clipper" />
 		<active_view_name value="Active View Name" />
 		<brush_vertices value="Brush Vertices" />
+		<xyview_crosshairs value="XYView Crosshairs" />
 	</descriptions>
 </colourschemes>

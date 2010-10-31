@@ -35,9 +35,11 @@
 		</clipper>
 
 		<xyview>
+			<showGrid value="1" />
 			<chaseMouse value="1" />
 			<camXYUpdate value="1" />
 			<solidSelectionBoxes value="1" />
+			<showCrossHairs value="0" />
 		</xyview>
 
 		<toolbar name="view" align="horizontal">

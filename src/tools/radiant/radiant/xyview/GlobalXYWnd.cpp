@@ -9,6 +9,8 @@ XYWndManager::XYWndManager() :
 	// Connect self to the according registry keys
 	GlobalRegistry().addKeyObserver(this, RKEY_CHASE_MOUSE);
 	GlobalRegistry().addKeyObserver(this, RKEY_CAMERA_XY_UPDATE);
+	GlobalRegistry().addKeyObserver(this, RKEY_SHOW_CROSSHAIRS);
+	GlobalRegistry().addKeyObserver(this, RKEY_SHOW_GRID);
 
 	// Trigger loading the values of the observed registry keys
 	keyChanged();
@@ -27,12 +29,16 @@ void XYWndManager::constructPreferencePage(PreferenceGroup& group) {
 
 	page->appendCheckBox("", _("View chases mouse cursor during drags"), RKEY_CHASE_MOUSE);
 	page->appendCheckBox("", _("Update views on camera move"), RKEY_CAMERA_XY_UPDATE);
+	page->appendCheckBox("", _("Show Crosshairs"), RKEY_SHOW_CROSSHAIRS);
+	page->appendCheckBox("", _("Show Grid"), RKEY_SHOW_GRID);
 }
 
 // Load/Reload the values from the registry
 void XYWndManager::keyChanged() {
 	_chaseMouse = (GlobalRegistry().get(RKEY_CHASE_MOUSE) == "1");
 	_camXYUpdate = (GlobalRegistry().get(RKEY_CAMERA_XY_UPDATE) == "1");
+	_showCrossHairs = (GlobalRegistry().get(RKEY_SHOW_CROSSHAIRS) == "1");
+	_showGrid = (GlobalRegistry().get(RKEY_SHOW_GRID) == "1");
 }
 
 bool XYWndManager::chaseMouse() const {
@@ -43,6 +49,26 @@ bool XYWndManager::camXYUpdate() const {
 	return _camXYUpdate;
 }
 
+bool XYWndManager::showCrossHairs() const {
+	return _showCrossHairs;
+}
+
+void XYWndManager::toggleCrossHairs() {
+	// Invert the registry value, the _showCrossHairs bool is updated automatically as this class observes the key
+	GlobalRegistry().set(RKEY_SHOW_CROSSHAIRS, _showCrossHairs ? "0" : "1");
+	updateAllViews();
+}
+
+bool XYWndManager::showGrid() const {
+	return _showGrid;
+}
+
+void XYWndManager::toggleGrid() {
+	// Invert the registry value, the _showCrossHairs bool is updated automatically as this class observes the key
+	GlobalRegistry().set(RKEY_SHOW_GRID, _showGrid ? "0" : "1");
+	updateAllViews();
+}
+
 void XYWndManager::updateAllViews() {
 	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
 		XYWnd* xyview = *i;
@@ -50,6 +76,22 @@ void XYWndManager::updateAllViews() {
 		// Pass the call
 		xyview->queueDraw();
 	}
+}
+
+void XYWndManager::zoomIn() {
+	if (_activeXY != NULL) {
+		_activeXY->zoomIn();
+	}
+}
+
+void XYWndManager::zoomOut() {
+	if (_activeXY != NULL) {
+		_activeXY->zoomOut();
+	}
+}
+
+void XYWndManager::resetZoom() {
+	GlobalXYWnd().setScale(1);
 }
 
 // Free the allocated XYViews from the heap

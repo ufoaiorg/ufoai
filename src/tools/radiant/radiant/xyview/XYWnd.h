@@ -26,8 +26,6 @@ const int XYWND_MINSIZE_Y = 200;
 
 struct xywindow_globals_private_t
 {
-		bool d_showgrid;
-
 		// these are in the View > Show menu with Show coordinates
 		bool show_names;
 		bool show_coordinates;
@@ -42,8 +40,6 @@ struct xywindow_globals_private_t
 
 
 		xywindow_globals_private_t () :
-			d_showgrid(true),
-
 			show_names(true), show_coordinates(true), show_angles(true), show_outline(false), show_axis(true),
 
 			d_show_work(false),

@@ -85,8 +85,6 @@ xywindow_globals_private_t g_xywindow_globals_private;
 // =============================================================================
 // variables
 
-bool g_bCrossHairs = false;
-
 void WXY_BackgroundSelect (void)
 {
 	bool brushesSelected = map::countSelectedBrushes() != 0;
@@ -169,52 +167,6 @@ void XY_CenterViews ()
 {
 	// Re-position all available views
 	GlobalXYWnd().positionAllViews(getFocusPosition());
-}
-
-/**
- * @brief Zooms all active views to 100%
- */
-void XY_Zoom100 ()
-{
-	GlobalXYWnd().setScale(1);
-}
-
-/**
- * @brief Zooms the current active view in
- */
-void XY_ZoomIn ()
-{
-	XYWnd* xywnd = GlobalXYWnd().getActiveXY();
-	if (xywnd != NULL) {
-		xywnd->zoomIn();
-	}
-}
-
-/**
- * @brief Zooms the current active view out
- * @note the zoom out factor is 4/5, we could think about customizing it
- * we don't go below a zoom factor corresponding to 10% of the max world size
- * (this has to be computed against the window size)
- */
-void XY_ZoomOut ()
-{
-	XYWnd* xywnd = GlobalXYWnd().getActiveXY();
-
-	if (xywnd != NULL) {
-		xywnd->zoomOut();
-	}
-}
-
-void ToggleShowCrosshair ()
-{
-	g_bCrossHairs ^= 1;
-	GlobalXYWnd().updateAllViews();
-}
-
-void ToggleShowGrid ()
-{
-	g_xywindow_globals_private.d_showgrid = !g_xywindow_globals_private.d_showgrid;
-	GlobalXYWnd().updateAllViews();
 }
 
 void ShowNamesToggle ()
@@ -371,13 +323,16 @@ void XYWindow_Construct ()
 	GlobalCommands_insert("ViewFront", FreeCaller<XY_Front> ());
 
 	// general commands
-	GlobalRadiant().commandInsert("ToggleCrosshairs", FreeCaller<ToggleShowCrosshair> (), Accelerator('X',
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("ToggleGrid", FreeCaller<ToggleShowGrid> (), Accelerator('0'));
+	GlobalRadiant().commandInsert("ToggleCrosshairs", MemberCaller<XYWndManager, &XYWndManager::toggleCrossHairs> (
+			GlobalXYWnd()), Accelerator('X', (GdkModifierType) GDK_SHIFT_MASK));
+	GlobalRadiant().commandInsert("ToggleGrid", MemberCaller<XYWndManager, &XYWndManager::toggleGrid> (
+			GlobalXYWnd()), Accelerator('0'));
 
-	GlobalRadiant().commandInsert("ZoomIn", FreeCaller<XY_ZoomIn> (), Accelerator(GDK_Delete));
-	GlobalRadiant().commandInsert("ZoomOut", FreeCaller<XY_ZoomOut> (), Accelerator(GDK_Insert));
-	GlobalCommands_insert("Zoom100", FreeCaller<XY_Zoom100> ());
+	GlobalRadiant().commandInsert("ZoomIn", MemberCaller<XYWndManager, &XYWndManager::zoomIn> (GlobalXYWnd()),
+			Accelerator(GDK_Delete));
+	GlobalRadiant().commandInsert("ZoomOut", MemberCaller<XYWndManager, &XYWndManager::zoomOut> (GlobalXYWnd()),
+			Accelerator(GDK_Insert));
+	GlobalCommands_insert("Zoom100", MemberCaller<XYWndManager, &XYWndManager::zoomOut> (GlobalXYWnd()));
 	GlobalRadiant().commandInsert("CenterXYViews", FreeCaller<XY_CenterViews> (), Accelerator(GDK_Tab,
 			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
