@@ -114,7 +114,7 @@ void WXY_BackgroundSelect (void)
  * If something is selected the center of the selection is taken as new origin, otherwise the camera
  * position is considered to be the new origin of the toggled orthoview.
 */
-Vector3 getFocusPosition() {
+inline Vector3 getFocusPosition() {
 	Vector3 position(0,0,0);
 
 	if (GlobalSelectionSystem().countSelected() != 0) {

@@ -40,16 +40,6 @@
 #include "XYWnd.h"
 #include "iradiant.h"
 
-class Shader;
-namespace scene
-{
-	class Node;
-}
-typedef struct _GtkWindow GtkWindow;
-typedef struct _GtkMenu GtkMenu;
-
-void getFocusPosition (Vector3& position);
-
 typedef struct _GtkWindow GtkWindow;
 void XY_Top_Shown_Construct (GtkWindow* parent);
 void YZ_Side_Shown_Construct (GtkWindow* parent);
