@@ -10,7 +10,7 @@ import os, os.path, sys
 # path where exists ufo binary
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
 
-dir = UFOAI_ROOT + '/src/client/menu/node'
+dir = UFOAI_ROOT + '/src/client/ui/node'
 
 class Element:
 	def __init__(self, name, type):
@@ -187,7 +187,7 @@ class ExtractNodeBehaviour:
 	def extractRegistrationFunctions(self, filedata):
 		result = []
 
-		register = filedata.split("\nvoid MN_Register")
+		register = filedata.split("\nvoid UI_Register")
 		register.pop(0)
 
 		for body in register:
