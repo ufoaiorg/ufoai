@@ -346,8 +346,13 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 	/* pre compute value if possible */
 	if (value->type == EA_VALUE_STRING) {
 		const char* string = value->d.terminal.d1.constString;
-		/* @todo here we must catch error in a better way, and using cvar for error code to create unittest automations */
-		UI_InitRawActionValue(value, node, property, string);
+		if ((property->type & V_UI_MASK) == V_UI_CVAR && !strncmp(string, "*cvar:", 6)) {
+			void *mem = ((byte *) node + property->ofs);
+			*(char**) mem = string;
+		} else {
+			/** @todo here we must catch error in a better way, and using cvar for error code to create unittest automations */
+			UI_InitRawActionValue(value, node, property, string);
+		}
 	}
 
 	/* decode RAW value */
