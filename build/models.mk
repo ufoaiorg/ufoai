@@ -10,14 +10,14 @@ MODELS_DPM := $(shell find $(MODELDIR) -name "*.dpm")
 
 # smoothing normals and tangents
 define get-smooth-value
-    $(if $(filter $(dir $(1)), models/aircraft),  0.7, \
-    $(if $(filter $(dir $(1)), models/aliens),    0.3, \
-    $(if $(filter $(dir $(1)), models/animals),   0.0, \
-    $(if $(filter $(dir $(1)), models/civilians), -0.5, \
-    $(if $(filter $(dir $(1)), models/objects),   0.2, \
-    $(if $(filter $(dir $(1)), models/soldiers),  -0.3, \
-    $(if $(filter $(dir $(1)), models/weapons),   0.6, \
-    0.5)))))))
+   $(if $(findstring /models/aircraft/,$(1)),  0.7, \
+   $(if $(findstring /models/aliens/,$(1)),    0.3, \
+   $(if $(findstring /models/animals/,$(1)),   0.0, \
+   $(if $(findstring /models/civilians/,$(1)),-0.5, \
+   $(if $(findstring /models/objects/,$(1)),   0.2, \
+   $(if $(findstring /models/soldiers/,$(1)), -0.3, \
+   $(if $(findstring /models/weapons/,$(1)),   0.6, \
+   0.5)))))))
 endef
 
 MDXS_MD2 := $(MODELS_MD2:.md2=.mdx)
