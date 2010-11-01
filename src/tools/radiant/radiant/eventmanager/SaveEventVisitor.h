@@ -49,7 +49,7 @@ public:
 			if (accelerator != NULL) {
 				unsigned int keyVal = accelerator->getKey();
 				keyStr = (keyVal != 0) ? gdk_keyval_name(keyVal) : "";;
-				modifierStr = _eventManager->getModifierStr(accelerator->getModifiers());
+				modifierStr = _eventManager->getModifierStr(accelerator->getModifiers(), false);
 			}
 
 			// Create a new child under the _shortcutsNode

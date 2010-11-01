@@ -19,27 +19,27 @@ class DialogWindow: public TransientWindow
 		DialogWindow (const std::string& title, GtkWindow* parent) :
 			TransientWindow(title, parent)
 		{
-			gtk_window_set_modal(GTK_WINDOW(_window), TRUE);
-			gtk_window_set_position(GTK_WINDOW(_window), GTK_WIN_POS_CENTER_ON_PARENT);
+			gtk_window_set_modal(GTK_WINDOW(getWindow()), TRUE);
+			gtk_window_set_position(GTK_WINDOW(getWindow()), GTK_WIN_POS_CENTER_ON_PARENT);
 
 			// Be sure that everything is properly destroyed upon window closure
-			g_signal_connect(G_OBJECT(_window), "delete-event", G_CALLBACK(onDelete), this);
+			g_signal_connect(G_OBJECT(getWindow()), "delete-event", G_CALLBACK(onDelete), this);
 		}
 
 		virtual void populateWindow () = 0;
 
 		virtual void setWindowSize (const unsigned int width, const unsigned int height)
 		{
-			gtk_window_set_default_size(GTK_WINDOW(_window), width, height);
-			gtk_window_set_position(GTK_WINDOW(_window), GTK_WIN_POS_CENTER_ON_PARENT);
+			gtk_window_set_default_size(GTK_WINDOW(getWindow()), width, height);
+			gtk_window_set_position(GTK_WINDOW(getWindow()), GTK_WIN_POS_CENTER_ON_PARENT);
 		}
 
 		virtual void destroy ()
 		{
 			// Hide and destroy the window widget (and all its children)
-			if (GTK_IS_WIDGET(_window)) {
-				gtk_widget_hide(GTK_WIDGET(_window));
-				gtk_widget_destroy(GTK_WIDGET(_window));
+			if (GTK_IS_WIDGET(getWindow())) {
+				gtk_widget_hide(GTK_WIDGET(getWindow()));
+				gtk_widget_destroy(GTK_WIDGET(getWindow()));
 			}
 
 			delete this;

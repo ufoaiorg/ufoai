@@ -368,22 +368,52 @@ public:
 	}
 
 	// Returns a bit field with the according modifier flags set
-	std::string getModifierStr(const unsigned int& modifierFlags) {
+	std::string getModifierStr(const unsigned int& modifierFlags, bool forMenu = false) {
 		std::string returnValue = "";
 
+		const std::string controlStr = (forMenu) ? "Ctrl" : "CONTROL";
+		const std::string shiftStr = (forMenu) ? "Shift" : "SHIFT";
+		const std::string altStr = (forMenu) ? "Alt" : "ALT";
+		const std::string connector = (forMenu) ? "-" : "+";
+
 		if ((modifierFlags & (1 << getModifierBitIndex("CONTROL"))) != 0) {
-			returnValue += (returnValue != "") ? "+" : "";
-			returnValue += "CONTROL";
+			returnValue += (returnValue != "") ? connector : "";
+			returnValue += controlStr;
 		}
 
 		if ((modifierFlags & (1 << getModifierBitIndex("SHIFT"))) != 0) {
-			returnValue += (returnValue != "") ? "+" : "";
-			returnValue += "SHIFT";
+			returnValue += (returnValue != "") ? connector : "";
+			returnValue += shiftStr;
 		}
 
 		if ((modifierFlags & (1 << getModifierBitIndex("ALT"))) != 0) {
-			returnValue += (returnValue != "") ? "+" : "";
-			returnValue += "ALT";
+			returnValue += (returnValue != "") ? connector : "";
+			returnValue += altStr;
+		}
+
+		return returnValue;
+	}
+
+	std::string getAcceleratorStr(const IEvent* event, bool forMenu) {
+		std::string returnValue = "";
+
+		IAccelerator* accelerator = findAccelerator(event);
+
+		if (accelerator == NULL)
+			return "";
+
+		unsigned int keyVal = accelerator->getKey();
+		const std::string keyStr = (keyVal != 0) ? gdk_keyval_name(keyVal) : "";
+
+		if (keyStr != "") {
+			// Return a modifier string for a menu
+			const std::string modifierStr = getModifierStr(accelerator->getModifiers(), forMenu);
+
+			const std::string connector = (forMenu) ? "-" : "+";
+
+			returnValue = modifierStr;
+			returnValue += (modifierStr != "") ? connector : "";
+			returnValue += keyStr;
 		}
 
 		return returnValue;

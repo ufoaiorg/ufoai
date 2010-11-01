@@ -108,7 +108,9 @@ public:
 	// Visit each event with the given class
 	virtual void foreachEvent(IEventVisitor* eventVisitor) = 0;
 
-	virtual std::string getModifierStr(const unsigned int& modifierFlags) = 0;
+	virtual std::string getModifierStr(const unsigned int& modifierFlags, bool forMenu) = 0;
+
+	virtual std::string getAcceleratorStr(const IEvent* event, bool forMenu) = 0;
 };
 
 // Module definitions

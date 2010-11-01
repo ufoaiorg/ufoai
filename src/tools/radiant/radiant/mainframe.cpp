@@ -118,6 +118,7 @@
 #include "xyview/GlobalXYWnd.h"
 #include "ui/colourscheme/ColourSchemeEditor.h"
 #include "ui/colourscheme/ColourSchemeManager.h"
+#include "ui/commandlist/CommandList.h"
 
 struct LayoutGlobals
 {
@@ -1412,6 +1413,7 @@ static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 
 	createSeparatorMenuItem(menu);
 
+	createMenuItemWithMnemonic(menu, _("Shortcuts list"), "ShowCommandList");
 	createMenuItemWithMnemonic(menu, _("Pre_ferences..."), "Preferences");
 
 	return edit_menu_item;
@@ -2267,6 +2269,7 @@ void MainFrame_Construct (void)
 
 	GlobalEventManager().addCommand("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
 
+	GlobalEventManager().addCommand("ShowCommandList", FreeCaller<ShowCommandListDialog>());
 	GlobalEventManager().addCommand("About", FreeCaller<DoAbout>());
 	GlobalEventManager().addCommand("BugReport", FreeCaller<OpenBugReportURL> ());
 
