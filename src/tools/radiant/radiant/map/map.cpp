@@ -1555,7 +1555,7 @@ void SaveRegion (void)
 {
 	const std::string filename = ui::selectMapFile(_("Export Region"), false);
 	if (!filename.empty()) {
-		Map_SaveRegion(filename.c_str());
+		Map_SaveRegion(filename);
 	}
 }
 

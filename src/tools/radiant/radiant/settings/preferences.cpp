@@ -41,13 +41,11 @@
 #include "../console.h"
 #include "../mainframe.h"
 #include "../qe3.h"
-#include "../map/map.h" // g_bLoadLastMap
 #include <string>
 
 void Interface_constructPreferences (PrefPage* page)
 {
 	page->appendCheckBox(_("Console"), _("Enable logfile"), g_Console_enableLogfile);
-	page->appendCheckBox("", _("Load last map on open"), g_bLoadLastMap);
 }
 
 static void Mouse_constructPreferences (PrefPage* page)

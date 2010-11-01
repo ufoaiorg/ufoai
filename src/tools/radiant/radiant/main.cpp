@@ -82,6 +82,7 @@
 #include "environment.h"
 #include "referencecache.h"
 #include "stacktrace.h"
+#include "ui/mru/MRU.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -494,8 +495,8 @@ int main (int argc, char* argv[])
 
 	hide_splash();
 
-	if (g_bLoadLastMap && !g_strLastMap.empty()) {
-		Map_LoadFile(g_strLastMap);
+	if (GlobalMRU().loadLastMap() && GlobalMRU().getLastMapName() != "") {
+		 Map_LoadFile(GlobalMRU().getLastMapName());
 	} else if (argc == 2) {
 		if (file_readable(argv[1]))
 			Map_LoadFile(argv[1]);
@@ -513,10 +514,6 @@ int main (int argc, char* argv[])
 	gtk_main();
 
 	Map_Free();
-
-	if (!Map_Unnamed(g_map)) {
-		g_strLastMap = GlobalRadiant().getMapName();
-	}
 
 	delete g_pParentWnd;
 

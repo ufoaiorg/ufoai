@@ -111,7 +111,7 @@ void Map_Free ();
 
 void Map_RegionOff ();
 
-bool Map_SaveRegion (const char* filename);
+bool Map_SaveRegion (const std::string& filename);
 
 class TextInputStream;
 class TextOutputStream;
@@ -146,9 +146,6 @@ bool Map_ImportFile (const std::string& filename);
 void Map_Traverse (scene::Node& root, const scene::Traversable::Walker& walker);
 
 void SelectBrush (int entitynum, int brushnum, int select);
-
-extern std::string g_strLastMap;
-extern bool g_bLoadLastMap;
 
 void Map_Construct ();
 void Map_Destroy ();
