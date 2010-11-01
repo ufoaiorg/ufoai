@@ -289,6 +289,7 @@ class Radiant: public TypeSystemRef
 			Autosave_Destroy();
 			Entity_Destroy();
 			CamWnd_Destroy();
+			GlobalXYWnd().destroy();
 			SurfaceInspector_Destroy();
 			MainFrame_Destroy();
 			EntityList_Destroy();

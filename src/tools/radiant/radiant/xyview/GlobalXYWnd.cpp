@@ -9,19 +9,9 @@
 #include "radiant_i18n.h"
 #include "../commands.h"
 
-void ToggleShown_importBool(ToggleShown& self, bool value) {
-	self.set(value);
-}
-typedef ReferenceCaller1<ToggleShown, bool, ToggleShown_importBool> ToggleShownImportBoolCaller;
-
-void ToggleShown_exportBool(const ToggleShown& self, const BoolImportCallback& importer) {
-	importer(self.active());
-}
-typedef ConstReferenceCaller1<ToggleShown, const BoolImportCallback&, ToggleShown_exportBool> ToggleShownExportBoolCaller;
-
 // Constructor
 XYWndManager::XYWndManager() :
-	_activeXY(NULL), _globalParentWindow(NULL), _xyTopShown(true), _yzSideShown(false), _xzFrontShown(false)
+	_activeXY(NULL), _globalParentWindow(NULL)
 {
 	// Connect self to the according registry keys
 	GlobalRegistry().addKeyObserver(this, RKEY_CHASE_MOUSE);
@@ -54,41 +44,25 @@ XYWndManager::~XYWndManager() {
 }
 
 void XYWndManager::construct() {
-	GlobalToggles_insert("ToggleView", ToggleShown::ToggleCaller(_xyTopShown), ToggleItem::AddCallbackCaller(_xyTopShown.m_item));
-	GlobalToggles_insert("ToggleSideView", ToggleShown::ToggleCaller(_yzSideShown), ToggleItem::AddCallbackCaller(_yzSideShown.m_item));
-	GlobalToggles_insert("ToggleFrontView", ToggleShown::ToggleCaller(_xzFrontShown), ToggleItem::AddCallbackCaller(_xzFrontShown.m_item));
-
-	GlobalPreferenceSystem().registerPreference("XZVIS", makeBoolStringImportCallback(ToggleShownImportBoolCaller(_xzFrontShown)), makeBoolStringExportCallback(ToggleShownExportBoolCaller(_xzFrontShown)));
-	GlobalPreferenceSystem().registerPreference("YZVIS", makeBoolStringImportCallback(ToggleShownImportBoolCaller(_yzSideShown)), makeBoolStringExportCallback(ToggleShownExportBoolCaller(_yzSideShown)));
-
 	XYWnd::captureStates();
 }
 
 // Free the allocated XYViews from the heap
-void XYWndManager::destroy() {
-	XYWnd::releaseStates();
-
+void XYWndManager::destroyViews() {
 	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
 		// Free the view from the heap
 		XYWnd* xyView = *i;
+
 		delete xyView;
 	}
 	// Discard the whole list
 	_XYViews.clear();
 }
 
-void XYWndManager::xyTopShownConstruct(GtkWindow* parent) {
-	_xyTopShown.connect(GTK_WIDGET(parent));
+// Release the shader states
+void XYWndManager::destroy() {
+	XYWnd::releaseStates();
 }
-
-void XYWndManager::yzSideShownConstruct(GtkWindow* parent) {
-	_yzSideShown.connect(GTK_WIDGET(parent));
-}
-
-void XYWndManager::xzFrontShownConstruct(GtkWindow* parent) {
-	_xzFrontShown.connect(GTK_WIDGET(parent));
-}
-
 
 void XYWndManager::registerCommands() {
 	GlobalEventManager().addCommand("NewOrthoView", MemberCaller<XYWndManager, &XYWndManager::createNewOrthoView> (
@@ -351,6 +325,11 @@ XYWnd* XYWndManager::createXY() {
 	// Add it to the internal list and return the pointer
 	_XYViews.push_back(newWnd);
 
+	// Tag the new view as active, if there is no active view yet
+	if (_activeXY == NULL) {
+		_activeXY = newWnd;
+	}
+
 	return newWnd;
 }
 
@@ -398,16 +377,13 @@ gboolean XYWndManager::onDeleteOrthoView(GtkWidget *widget, GdkEvent *event, gpo
 	return false;
 }
 
-void XYWndManager::createNewOrthoView() {
+void XYWndManager::createOrthoView(EViewType viewType) {
 
-	// Allocate a new XYWindow (TODO: Migrate this to boost::shared_ptr)
-	XYWnd* newWnd = new XYWnd();
-
-	// Add the pointer to the internal list
-	_XYViews.push_back(newWnd);
+	// Allocate a new XYWindow
+	XYWnd* newWnd = createXY();
 
 	// Add the new XYView GL widget to a framed window
-	GtkWidget* window = gtkutil::FramedTransientWidget(XYWnd::getViewTypeTitle(XY), _globalParentWindow,
+	GtkWidget* window = gtkutil::FramedTransientWidget(XYWnd::getViewTypeTitle(viewType), _globalParentWindow,
 			newWnd->getWidget());
 
 	// Connect the destroyed signal to the callback of this class
@@ -416,7 +392,12 @@ void XYWndManager::createNewOrthoView() {
 	newWnd->setParent(GTK_WINDOW(window));
 
 	// Set the viewtype (and with it the window title)
-	newWnd->setViewType(XY);
+	newWnd->setViewType(viewType);
+}
+
+// Shortcut method for connecting to a GlobalEventManager command
+void XYWndManager::createNewOrthoView() {
+	createOrthoView(XY);
 }
 
 /* greebo: This function determines the point currently being "looked" at, it is used for toggling the ortho views

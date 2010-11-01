@@ -6,7 +6,6 @@
 #include "iclipper.h"
 #include "iregistry.h"
 #include "preferencesystem.h"
-#include "gtkutil/widget.h"
 
 #include "XYWnd.h"
 
@@ -54,10 +53,6 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 
 		GtkWindow* _globalParentWindow;
 
-		ToggleShown _xyTopShown;
-		ToggleShown _yzSideShown;
-		ToggleShown _xzFrontShown;
-
 	public:
 
 		// Constructor
@@ -95,6 +90,9 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 		// Free all the allocated views from the heap
 		void destroy ();
 
+		// Release the shader states
+		void destroyViews ();
+
 		XYWnd* getActiveXY () const;
 		void setActiveXY (XYWnd* wnd);
 
@@ -105,10 +103,6 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 		void splitViewFocus(); // Re-position all available views
 		void zoom100(); // Sets the scale of all windows to 1
 		void focusActiveView(); // sets the focus of the active view
-
-		void xyTopShownConstruct(GtkWindow* parent);
-		void yzSideShownConstruct(GtkWindow* parent);
-		void xzFrontShownConstruct(GtkWindow* parent);
 
 		// Sets the origin of all available views
 		void setOrigin (const Vector3& origin);
@@ -132,6 +126,9 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 
 		// Allocates a new XY view on the heap and returns its pointer
 		XYWnd* createXY ();
+
+		// Creates a new floating XY View transient to the global parent window
+		void createOrthoView(EViewType viewType);
 
 		// Creates a new orthoview
 		void createNewOrthoView();

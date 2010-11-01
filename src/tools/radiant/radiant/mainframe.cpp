@@ -2106,7 +2106,7 @@ void MainFrame::Shutdown (void)
 
 	GlobalUndoSystem().trackerDetach(m_saveStateTracker);
 
-	GlobalXYWnd().destroy();
+	GlobalXYWnd().destroyViews();
 
 	GlobalCamera().deleteCamWnd(m_pCamWnd);
 	m_pCamWnd = 0;

@@ -19,6 +19,8 @@ void WidgetToggle::connectWidget(GtkWidget* widget) {
 		// No special widget, add it to the list
 		_widgets.push_back(widget);
 	}
+
+	updateWidgets();
 }
 
 void WidgetToggle::updateWidgets() {
@@ -37,13 +39,13 @@ void WidgetToggle::updateWidgets() {
 // Show all the connected widgets
 void WidgetToggle::showWidgets() {
 	for (unsigned int i = 0; i < _widgets.size(); i++) {
-		gtk_widget_show_all(_widgets[i]);
+		gtk_widget_show(_widgets[i]);
 	}
 }
 
 // Hide all the connected widgets
 void WidgetToggle::hideWidgets() {
 	for (unsigned int i = 0; i < _widgets.size(); i++) {
-		gtk_widget_hide_all(_widgets[i]);
+		gtk_widget_hide(_widgets[i]);
 	}
 }

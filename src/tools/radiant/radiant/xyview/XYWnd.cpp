@@ -137,6 +137,9 @@ XYWnd::XYWnd () :
 
 XYWnd::~XYWnd (void)
 {
+	// greebo: Remove <self> as CameraObserver to the CamWindow.
+	GlobalCamera().removeCameraObserver(this);
+
 	GlobalEventManager().disconnect(GTK_OBJECT(m_gl_widget));
 
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_sizeHandler);
