@@ -830,10 +830,8 @@ static const value_t properties[] = {
 	/* Filter items by a category. */
 	{"filter", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, filterEquipType),  MEMBER_SIZEOF(baseInventoryExtraData_t, filterEquipType)},
 
-	/* Position of the vertical view (into the full number of elements the node contain)
-	 * @todo Rename it viewpos (like scrollable node)
-	 */
-	{"scrollpos", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(baseInventoryExtraData_t, scrollY.viewPos)},
+	/* Position of the vertical view (into the full number of elements the node contain) */
+	{"viewpos", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(baseInventoryExtraData_t, scrollY.viewPos)},
 	/* Size of the vertical view (proportional to the number of elements the node can display without moving) */
 	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(baseInventoryExtraData_t, scrollY.viewSize)},
 	/* Full vertical size (proportional to the number of elements the node contain) */

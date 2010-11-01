@@ -256,8 +256,8 @@ window equipment extends objectinfo
 			*node:root.equip@filter = FILTER_S_ARMOUR
 			*node:root.equip_ammo@filter = FILTER_S_ARMOUR
 		}
-		*node:root.equip@scrollpos = 0
-		*node:root.equip_ammo@scrollpos = 0
+		*node:root.equip@viewpos = 0
+		*node:root.equip_ammo@viewpos = 0
 	}
 
 	tab equip_type
@@ -650,7 +650,7 @@ window equipment extends objectinfo
 		displayunavailableitem	true
 		columns					1
 		onViewChange {
-			*node:root.equip_scroll@current = <scrollpos>
+			*node:root.equip_scroll@current = <viewpos>
 			*node:root.equip_scroll@viewsize = <viewsize>
 			*node:root.equip_scroll@fullsize = <fullsize>
 		}
@@ -663,7 +663,7 @@ window equipment extends objectinfo
 		displayammo		true
 		columns			2
 		onViewChange {
-			*node:root.equip_ammo_scroll@current = <scrollpos>
+			*node:root.equip_ammo_scroll@current = <viewpos>
 			*node:root.equip_ammo_scroll@viewsize = <viewsize>
 			*node:root.equip_ammo_scroll@fullsize = <fullsize>
 		}
@@ -675,7 +675,7 @@ window equipment extends objectinfo
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*node:root.equip@scrollpos = <current>
+			*node:root.equip@viewpos = <current>
 		}
 	}
 
@@ -684,7 +684,7 @@ window equipment extends objectinfo
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*node:root.equip_ammo@scrollpos = <current>
+			*node:root.equip_ammo@viewpos = <current>
 		}
 	}
 
