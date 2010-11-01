@@ -100,12 +100,12 @@ void TextureBrowser_showShadersExport(const BoolImportCallback& importer);
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport>
 		TextureBrowserShowShadersExport;
 
-TextureBrowser::TextureBrowser() :
-	_glWidget(false), m_texture_scroll(0), m_showshaders_item(
-			TextureBrowserShowShadersExport()), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
-			TextureBrowser_scrollChanged, this), m_mouseWheelScrollIncrement(64), m_textureScale(50), m_showShaders(
-			true), m_hideUnused(GlobalRegistry().get(RKEY_TEXTURES_HIDE_UNUSED) == "1"), m_hideInvalid(GlobalRegistry().get(RKEY_TEXTURES_HIDE_INVALID) == "1"),
-			m_rmbSelected(false), m_resizeTextures(true), m_uniformTextureSize(128)
+TextureBrowser::TextureBrowser () :
+	_glWidget(false), m_texture_scroll(0), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
+			TextureBrowser_scrollChanged, this), m_mouseWheelScrollIncrement(64), m_textureScale(50), m_hideUnused(
+			GlobalRegistry().get(RKEY_TEXTURES_HIDE_UNUSED) == "1"), m_hideInvalid(GlobalRegistry().get(
+			RKEY_TEXTURES_HIDE_INVALID) == "1"), m_rmbSelected(false), m_resizeTextures(true),
+			m_uniformTextureSize(128)
 {
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_UNUSED);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_INVALID);
@@ -189,9 +189,6 @@ void TextureBrowser::getNextTexturePosition(TextureLayout& layout, const qtextur
 // if texture_showinuse jump over non in-use textures
 bool TextureBrowser::isTextureShown(const IShader* shader) const {
 	if (!shader_equal_prefix(shader->getName(), GlobalTexturePrefix_get()))
-		return false;
-
-	if (!m_showShaders && !shader->IsDefault())
 		return false;
 
 	if (m_hideUnused && !shader->IsInUse())
@@ -376,28 +373,6 @@ void TextureBrowser::showDirectory(const std::string& directory) {
 	GlobalRegistry().set(RKEY_TEXTURES_HIDE_UNUSED, "0");
 	GlobalRegistry().set(RKEY_TEXTURES_HIDE_INVALID, "0");
 }
-
-static bool TextureBrowser_hideUnused(void);
-
-void TextureBrowser_hideUnusedExport(const BoolImportCallback& importer) {
-	importer(TextureBrowser_hideUnused());
-}
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideUnusedExport>
-		TextureBrowserHideUnusedExport;
-
-static bool TextureBrowser_hideInvalid(void);
-
-void TextureBrowser_hideInvalidExport(const BoolImportCallback& importer) {
-	importer(TextureBrowser_hideInvalid());
-}
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideInvalidExport>
-		TextureBrowserHideInvalidExport;
-
-void TextureBrowser_showShadersExport(const BoolImportCallback& importer) {
-	importer(GlobalTextureBrowser().m_showShaders);
-}
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport>
-		TextureBrowserShowShadersExport;
 
 void TextureBrowser::showStartupShaders() {
 	showDirectory("tex_common/");
@@ -769,14 +744,6 @@ gboolean TextureBrowser::onExpose(GtkWidget* widget, GdkEventExpose* event,
 	return FALSE;
 }
 
-static bool TextureBrowser_hideUnused(void) {
-	return GlobalTextureBrowser().m_hideUnused;
-}
-
-static bool TextureBrowser_hideInvalid(void) {
-	return GlobalTextureBrowser().m_hideInvalid;
-}
-
 namespace {
 struct TextureFunctor {
 		typedef const std::string& first_argument_type;
@@ -837,11 +804,10 @@ GtkMenuItem* TextureBrowser::constructViewMenu(GtkMenu* menu) {
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	createMenuItemWithMnemonic(menu, _("Hide Invalid"), "ShowInvalid");
+	createCheckMenuItemWithMnemonic(menu, _("Hide Invalid"), "ShowInvalid");
 
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("Show All"), "ShowAllTextures");
-	createCheckMenuItemWithMnemonic(menu, _("Show shaders"), "ToggleShowShaders");
 
 	return textures_menu_item;
 }
@@ -973,12 +939,6 @@ GtkWidget* TextureBrowser::getWidget() {
 	return vbox;
 }
 
-void TextureBrowser::toggleShowShaders() {
-	m_showShaders ^= 1;
-	m_showshaders_item.update();
-	queueDraw();
-}
-
 void TextureBrowser::showAll(void) {
 	currentDirectory = "";
 	heightChanged();
@@ -1075,10 +1035,6 @@ void TextureBrowser_Construct(void) {
 	GlobalEventManager().addCommand("ShowAllTextures", MemberCaller<TextureBrowser, &TextureBrowser::showAll> (
 			GlobalTextureBrowser()));
 
-	GlobalToggles_insert("ToggleShowShaders", MemberCaller<TextureBrowser,
-			&TextureBrowser::toggleShowShaders> (GlobalTextureBrowser()),
-			ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_showshaders_item));
-
 	GlobalPreferenceSystem().registerPreference("TextureScale", makeSizeStringImportCallback(
 			MemberCaller1<TextureBrowser, std::size_t, &TextureBrowser::setScale> (
 					GlobalTextureBrowser())), SizeExportStringCaller(
@@ -1086,9 +1042,6 @@ void TextureBrowser_Construct(void) {
 	GlobalPreferenceSystem().registerPreference("TextureUniformSize", IntImportStringCaller(
 			GlobalTextureBrowser().m_uniformTextureSize), IntExportStringCaller(
 			GlobalTextureBrowser().m_uniformTextureSize));
-	GlobalPreferenceSystem().registerPreference("ShowShaders", BoolImportStringCaller(
-			GlobalTextureBrowser().m_showShaders), BoolExportStringCaller(
-			GlobalTextureBrowser().m_showShaders));
 	GlobalPreferenceSystem().registerPreference("WheelMouseInc", SizeImportStringCaller(
 			GlobalTextureBrowser().m_mouseWheelScrollIncrement), SizeExportStringCaller(
 			GlobalTextureBrowser().m_mouseWheelScrollIncrement));

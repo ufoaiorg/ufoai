@@ -117,8 +117,6 @@ class TextureBrowser: public RegistryKeyObserver {
 		GtkWidget* m_scr_win_tree;
 		GtkWidget* m_scr_win_tags;
 
-		ToggleItem m_showshaders_item;
-
 		bool m_heightChanged;
 		bool m_originInvalid;
 
