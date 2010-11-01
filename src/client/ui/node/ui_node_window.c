@@ -1,6 +1,6 @@
 /**
  * @file ui_node_window.c
- * @todo move it as an inheritance of panel bahaviour?
+ * @todo move it as an inheritance of panel behaviour?
  */
 
 /*
