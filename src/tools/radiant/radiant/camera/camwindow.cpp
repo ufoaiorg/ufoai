@@ -32,6 +32,7 @@
 
 #include "ientity.h"
 #include "iscenegraph.h"
+#include "ieventmanager.h"
 #include "irender.h"
 #include "igl.h"
 #include "cullable.h"
@@ -56,7 +57,6 @@
 #include "../ui/Icons.h"
 #include "../render/RenderStatistics.h"
 #include "CamRenderer.h"
-#include "../ui/eventmapper/EventMapper.h"
 
 #include "GlobalCamera.h"
 #include "Camera.h"

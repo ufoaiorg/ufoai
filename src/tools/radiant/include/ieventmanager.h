@@ -5,6 +5,8 @@
 #include <map>
 #include <string>
 
+#include "iselection.h"
+
 #include "generic/constant.h"
 #include "generic/callbackfwd.h"
 
@@ -12,6 +14,45 @@
 typedef struct _GtkObject GtkObject;
 typedef struct _GtkWindow GtkWindow;
 typedef struct _GtkWidget GtkWidget;
+typedef struct _GdkEventButton GdkEventButton;
+
+/* greebo: Below are the actual events that are "read" by the views/observers to
+ * interpret the mouseclicks. */
+
+namespace ui {
+
+	// The possible modes when in "component manipulation mode"
+	enum XYViewEvent {
+		xyNothing,		// unrecognised event
+		xyMoveView,		// drag the view around
+		xySelect,		// selection / clip
+		xyZoom,			// drag-zoom operator
+		xyCameraMove,	// the button used to drag the camera around
+		xyCameraAngle,	// the button used to change camera angle
+		xyNewBrushDrag	// used to create new brushes
+	};
+
+	// These are the buttons for the camera view
+	enum CamViewEvent {
+		camNothing,				// nothing special, event can be passed to the windowobservers
+		camEnableFreeLookMode,	// used to enable the free look mode in the camera view
+		camDisableFreeLookMode	// used to disable the free look mode in the camera view
+	};
+
+	// If the click is passed to the windowobservers, these are the possibilites
+	enum ObserverEvent {
+		obsNothing,		// any uninterpreted/unsupported combination
+		obsManipulate,	// manipulate an object by drag or click
+		obsSelect,		// selection toggle
+		obsToggle,		// selection toggle
+		obsToggleFace,	// selection toggle (face)
+		obsReplace,		// replace/cycle selection through possible candidates
+		obsReplaceFace,	// replace/cycle selection through possible face candidates
+		obsCopyTexture,	// copy texture from object
+		obsPasteTexture	// paste texture to object (projected)
+	};
+} // namespace ui
+
 
 class IEvent
 {
@@ -31,6 +72,37 @@ public:
 
 	// Exports the current state to the widgets
 	virtual void updateWidgets() = 0;
+};
+
+/* greebo: The mouse event manager provides methods to interpret mouse clicks.
+ */
+class IMouseEvents {
+public:
+	// Return the ObserverEvent type for a given GdkEventButton
+	virtual ui::CamViewEvent getCameraViewEvent(GdkEventButton* event) = 0;
+
+	// Return the ObserverEvent type for a given GdkEventButton
+	virtual ui::ObserverEvent getObserverEvent(GdkEventButton* event) = 0;
+	virtual ui::ObserverEvent getObserverEvent(const unsigned int& state) = 0;
+
+	// Return the current XYView event for a GdkEventMotion state or an GdkEventButton
+	virtual ui::XYViewEvent getXYViewEvent(GdkEventButton* event) = 0;
+	virtual ui::XYViewEvent getXYViewEvent(const unsigned int& state) = 0;
+
+	virtual bool stateMatchesXYViewEvent(const ui::XYViewEvent& xyViewEvent, GdkEventButton* event) = 0;
+	virtual bool stateMatchesXYViewEvent(const ui::XYViewEvent& xyViewEvent, const unsigned int& state) = 0;
+
+	virtual bool stateMatchesObserverEvent(const ui::ObserverEvent& observerEvent, GdkEventButton* event) = 0;
+
+	virtual bool stateMatchesCameraViewEvent(const ui::CamViewEvent& camViewEvent, GdkEventButton* event) = 0;
+
+	virtual std::string printXYViewEvent(const ui::XYViewEvent& xyViewEvent) = 0;
+	virtual std::string printObserverEvent(const ui::ObserverEvent& observerEvent) = 0;
+
+	virtual float getCameraStrafeSpeed() = 0;
+	virtual float getCameraForwardStrafeFactor() = 0;
+	virtual bool strafeActive(unsigned int& state) = 0;
+	virtual bool strafeForwardActive(unsigned int& state) = 0;
 };
 
 class IAccelerator
@@ -60,6 +132,7 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "EventManager");
 
+
 	/* Create an accelerator using the given arguments and add it to the list
 	 *
 	 * @key: The symbolic name of the key, e.g. "A", "Esc"
@@ -68,6 +141,19 @@ public:
 	 * @returns: the pointer to the newly created accelerator object */
 	virtual IAccelerator* addAccelerator(const std::string& key, const std::string& modifierStr) = 0;
 	virtual IAccelerator* findAccelerator(const IEvent* event) = 0;
+
+	/* greebo: This is to avoid cyclic dependencies, because the eventmanager depends
+	 * on the selectionsystem, the selectionsystem on the gridmodule, the gridmodule on
+	 * the eventmanager, and there we have our cycle. Call this before any mouse events
+	 * have to be interpreted!
+	 */
+	virtual void connectSelectionSystem(SelectionSystem* selectionSystem) = 0;
+
+	/* greebo: Returns the mouse event "manager" providing a separate interface for
+	 * handling mouse events. I moved this into a separate interface to keep
+	 * the IEventManager interface cleaner.
+	 */
+	virtual IMouseEvents& MouseEvents() = 0;
 
 	// Creates a new command that calls the given callback when invoked
 	virtual IEvent* addCommand(const std::string& name, const Callback& callback) = 0;

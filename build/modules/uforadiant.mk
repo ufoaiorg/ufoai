@@ -65,6 +65,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/eventmanager/Accelerator.cpp \
 	$(RADIANT_BASE)/radiant/eventmanager/Command.cpp \
 	$(RADIANT_BASE)/radiant/eventmanager/EventManager.cpp \
+	$(RADIANT_BASE)/radiant/eventmanager/Modifiers.cpp \
+	$(RADIANT_BASE)/radiant/eventmanager/MouseEvents.cpp \
 	$(RADIANT_BASE)/radiant/eventmanager/Toggle.cpp \
 	$(RADIANT_BASE)/radiant/eventmanager/WidgetToggle.cpp \
 	\
@@ -172,8 +174,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/common/SoundPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/ToolbarCreator.cpp \
-	\
-	$(RADIANT_BASE)/radiant/ui/eventmapper/EventMapper.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/commandlist/CommandList.cpp \
 	\

@@ -45,8 +45,7 @@
 #include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"
 #include "gtkutil/menu.h"
-#include "gtkutil/TextMenuItem.h"
-#include "gtkutil/TextMenuItemToggle.h"
+#include "gtkutil/MenuItemAccelerator.h"
 #include "gtkutil/SeparatorMenuItem.h"
 #include "gtkutil/IConv.h"
 
@@ -57,16 +56,22 @@
  */
 GtkMenuItem* createMenuItemWithMnemonic (GtkMenu* menu, const std::string& caption, const std::string& commandName)
 {
-	GtkWidget* menuItem = gtkutil::TextMenuItemMnemonic(caption);
-
-	gtk_widget_show_all(GTK_WIDGET(menuItem));
-
-	// Add the menu item to the container
-	gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(menuItem));
+	GtkWidget* menuItem = NULL;
 
 	IEvent* event = GlobalEventManager().findEvent(commandName);
 
 	if (event != NULL) {
+		// Retrieve an acclerator string formatted for a menu
+		const std::string accelText = GlobalEventManager().getAcceleratorStr(event, true);
+
+		// Create a new menuitem
+		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, NULL, false);
+
+		gtk_widget_show_all(GTK_WIDGET(menuItem));
+
+		// Add the menu item to the container
+		gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(menuItem));
+
 		event->connectWidget(GTK_WIDGET(menuItem));
 	} else {
 		globalErrorStream() << "gtkutil::createMenuItem failed to lookup command " << commandName << "\n";
@@ -79,17 +84,21 @@ GtkMenuItem* createMenuItemWithMnemonic (GtkMenu* menu, const std::string& capti
  */
 GtkMenuItem* createCheckMenuItemWithMnemonic (GtkMenu* menu, const std::string& caption, const std::string& commandName)
 {
-
-	GtkWidget* menuItem = gtkutil::TextMenuItemToggle(caption);
-
-	gtk_widget_show_all(GTK_WIDGET(menuItem));
-
-	// Add the menu item to the container
-	gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(menuItem));
+	GtkWidget* menuItem = NULL;
 
 	IEvent* event = GlobalEventManager().findEvent(commandName);
 
 	if (event != NULL) {
+		// Retrieve an acclerator string formatted for a menu
+		const std::string accelText = GlobalEventManager().getAcceleratorStr(event, true);
+
+		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, NULL, true);
+
+		gtk_widget_show_all(GTK_WIDGET(menuItem));
+
+		// Add the menu item to the container
+		gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(menuItem));
+
 		event->connectWidget(GTK_WIDGET(menuItem));
 	} else {
 		globalErrorStream() << "gtkutil::createMenuItem failed to lookup command " << commandName << "\n";

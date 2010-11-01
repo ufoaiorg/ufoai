@@ -1,4 +1,4 @@
-#include "../ui/eventmapper/EventMapper.h"
+#include "ieventmanager.h"
 #include "RadiantWindowObserver.h"
 
 // mouse callback instances
@@ -38,9 +38,8 @@ void RadiantWindowObserver::onSizeChanged (int width, int height)
 // Handles the mouseDown event, basically determines which action should be performed (select or manipulate)
 void RadiantWindowObserver::onMouseDown (const WindowVector& position, GdkEventButton* event)
 {
-
 	// Retrieve the according ObserverEvent for the GdkEventButton
-	ui::ObserverEvent observerEvent = GlobalEventMapper().getObserverEvent(event);
+	ui::ObserverEvent observerEvent = GlobalEventManager().MouseEvents().getObserverEvent(event);
 
 	// Check if the user wants to copy/paste a texture
 	if (observerEvent == ui::obsCopyTexture || observerEvent == ui::obsPasteTexture) {
@@ -52,11 +51,11 @@ void RadiantWindowObserver::onMouseDown (const WindowVector& position, GdkEventB
 		ConstructSelectionTest(scissored, SelectionBoxForPoint(&devicePosition[0], &_selectObserver._epsilon[0]));
 		SelectionVolume volume(scissored);
 
-		// If the apply texture modifier is held (standard: Ctrl-Shift)
+		// If the apply texture modifier is held
 		if (observerEvent == ui::obsPasteTexture) {
 			Scene_applyClosestTexture(volume);
 		}
-		// If the copy texture modifier is held (standard: Alt-Ctrl)
+		// If the copy texture modifier is held
 		else if (observerEvent == ui::obsCopyTexture) {
 			Scene_copyClosestTexture(volume);
 		}
@@ -116,7 +115,7 @@ void RadiantWindowObserver::onMouseMotion (const WindowVector& position, const u
 void RadiantWindowObserver::onMouseUp (const WindowVector& position, GdkEventButton* event)
 {
 	// Retrieve the according ObserverEvent for the GdkEventButton
-	ui::ObserverEvent observerEvent = GlobalEventMapper().getObserverEvent(event);
+	ui::ObserverEvent observerEvent = GlobalEventManager().MouseEvents().getObserverEvent(event);
 
 	// Only react, if the "select" or "manipulate" is held, ignore this otherwise
 	bool reactToEvent = (observerEvent == ui::obsManipulate || observerEvent == ui::obsSelect || observerEvent
