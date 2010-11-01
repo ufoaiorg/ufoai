@@ -27,6 +27,7 @@
 #include "ientity.h"
 #include "iselection.h"
 #include "iundo.h"
+#include "igrid.h"
 
 #include <vector>
 
@@ -44,7 +45,6 @@
 #include "sidebar/sidebar.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
-#include "xyview/grid.h"
 #include "map/map.h"
 #include "selection/SceneWalkers.h"
 
@@ -810,12 +810,12 @@ void Selection_NudgeZ (float amount)
 
 void Selection_MoveDown (void)
 {
-	Selection_NudgeZ(-GetGridSize());
+	Selection_NudgeZ(-GlobalGrid().getGridSize());
 }
 
 void Selection_MoveUp (void)
 {
-	Selection_NudgeZ(GetGridSize());
+	Selection_NudgeZ(GlobalGrid().getGridSize());
 }
 
 void SceneSelectionChange (const Selectable& selectable)

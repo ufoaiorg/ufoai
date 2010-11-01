@@ -34,6 +34,10 @@
 			<caulkTexture value="textures/common/nodraw" />
 		</clipper>
 
+		<grid>
+			<defaultGridPower value="3" />
+		</grid>
+
 		<textures>
 			<defaultTextureScale value="0.5" />
 		</textures>

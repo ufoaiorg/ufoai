@@ -60,6 +60,7 @@
 #include "isound.h"
 #include "ifilter.h"
 #include "ieventmanager.h"
+#include "igrid.h"
 
 #include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
@@ -79,7 +80,6 @@
 #include "plugintoolbar.h"
 #include "dialogs/findtextures.h"
 #include "referencecache/nullmodel.h"
-#include "xyview/grid.h"
 #include "xyview/GlobalXYWnd.h"
 #include "camera/GlobalCamera.h"
 #include "material.h"
@@ -145,7 +145,6 @@ class RadiantCoreAPI
 
 			m_radiantcore.getMapName = &getMapName;
 			m_radiantcore.getMapWorldEntity = getMapWorldEntity;
-			m_radiantcore.getGridSize = GetGridSize;
 
 			m_radiantcore.getGameDescriptionKeyValue = &GameDescription_getKeyValue;
 			m_radiantcore.getRequiredGameDescriptionKeyValue = &GameDescription_getRequiredKeyValue;
@@ -192,7 +191,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalScripLibModuleRef,
 		public GlobalNamespaceModuleRef,
 		public GlobalFilterModuleRef,
-		public GlobalClipperModuleRef
+		public GlobalClipperModuleRef,
+		public GlobalGridModuleRef
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;
@@ -241,7 +241,6 @@ class Radiant: public TypeSystemRef
 			Selection_Construct();
 			HomePaths_Construct();
 			VFS_Construct();
-			Grid_Construct();
 			MRU_Construct();
 			GLWindow_Construct();
 			Map_Construct();
@@ -297,7 +296,6 @@ class Radiant: public TypeSystemRef
 			Map_Destroy();
 			GLWindow_Destroy();
 			MRU_Destroy();
-			Grid_Destroy();
 			VFS_Destroy();
 			HomePaths_Destroy();
 			Selection_Destroy();

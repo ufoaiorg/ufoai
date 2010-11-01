@@ -27,6 +27,7 @@
 
 #include "iselection.h"
 #include "iscenegraph.h"
+#include "igrid.h"
 #include "igl.h"
 #include "selection/RadiantSelectionSystem.h"
 
@@ -82,7 +83,8 @@ class SelectionAPI : public TypeSystemRef {
 
 class SelectionDependencies: public GlobalSceneGraphModuleRef,
 		public GlobalShaderCacheModuleRef,
-		public GlobalOpenGLModuleRef
+		public GlobalOpenGLModuleRef,
+		public GlobalGridModuleRef
 {
 };
 

@@ -4,7 +4,7 @@
 #include "math/Vector3.h"
 #include "math/matrix.h"
 #include "math/quaternion.h"
-#include "../xyview/grid.h"
+#include "igrid.h"
 #include "render.h"
 #include "TransformationVisitors.h"
 

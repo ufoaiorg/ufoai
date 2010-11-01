@@ -87,7 +87,6 @@
 #include "sidebar/sidebar.h"
 #include "filters.h"
 #include "dialogs/findtextures.h"
-#include "xyview/grid.h"
 #include "brushexport/BrushExportOBJ.h"
 #include "dialogs/about.h"
 #include "dialogs/findbrush.h"
@@ -638,7 +637,7 @@ void PasteToCamera (void)
 	// Work out the delta
 	Vector3 mid;
 	Select_GetMid(mid);
-	Vector3 delta = vector3_snapped(camwnd.getCameraOrigin(), GetGridSize()) - mid;
+	Vector3 delta = vector3_snapped(camwnd.getCameraOrigin(), GlobalGrid().getGridSize()) - mid;
 
 	// Move to camera
 	GlobalSelectionSystem().translateSelected(delta);
@@ -858,8 +857,8 @@ void Selection_Clone (void)
 
 		Scene_Clone_Selected(GlobalSceneGraph());
 
-		//NudgeSelection(eNudgeRight, GetGridSize(), GlobalXYWnd().getCurrentViewType());
-		//NudgeSelection(eNudgeDown, GetGridSize(), GlobalXYWnd().getCurrentViewType());
+		//NudgeSelection(eNudgeRight, GlobalGrid().getGridSize(), GlobalXYWnd().getCurrentViewType());
+		//NudgeSelection(eNudgeDown, GlobalGrid().getGridSize(), GlobalXYWnd().getCurrentViewType());
 	}
 }
 
@@ -885,25 +884,25 @@ void Selection_Deselect (void)
 void Selection_NudgeUp (void)
 {
 	UndoableCommand undo("nudgeSelectedUp");
-	NudgeSelection(eNudgeUp, GetGridSize(), GlobalXYWnd().getActiveViewType());
+	NudgeSelection(eNudgeUp, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
 void Selection_NudgeDown (void)
 {
 	UndoableCommand undo("nudgeSelectedDown");
-	NudgeSelection(eNudgeDown, GetGridSize(), GlobalXYWnd().getActiveViewType());
+	NudgeSelection(eNudgeDown, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
 void Selection_NudgeLeft (void)
 {
 	UndoableCommand undo("nudgeSelectedLeft");
-	NudgeSelection(eNudgeLeft, GetGridSize(), GlobalXYWnd().getActiveViewType());
+	NudgeSelection(eNudgeLeft, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
 void Selection_NudgeRight (void)
 {
 	UndoableCommand undo("nudgeSelectedRight");
-	NudgeSelection(eNudgeRight, GetGridSize(), GlobalXYWnd().getActiveViewType());
+	NudgeSelection(eNudgeRight, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
 void ToolChanged() {
@@ -1155,13 +1154,13 @@ void Scene_SnapToGrid_Component_Selected (scene::Graph& graph, float snap)
 void Selection_SnapToGrid (void)
 {
 	StringOutputStream command;
-	command << "snapSelected -grid " << GetGridSize();
+	command << "snapSelected -grid " << GlobalGrid().getGridSize();
 	UndoableCommand undo(command.toString());
 
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
-		Scene_SnapToGrid_Component_Selected(GlobalSceneGraph(), GetGridSize());
+		Scene_SnapToGrid_Component_Selected(GlobalSceneGraph(), GlobalGrid().getGridSize());
 	} else {
-		Scene_SnapToGrid_Selected(GlobalSceneGraph(), GetGridSize());
+		Scene_SnapToGrid_Selected(GlobalSceneGraph(), GlobalGrid().getGridSize());
 	}
 }
 
@@ -1579,7 +1578,18 @@ static GtkMenuItem* create_grid_menu (void)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	Grid_constructMenu(menu);
+	createCheckMenuItemWithMnemonic(menu, "Grid0.125", "SetGrid0.125");
+	createCheckMenuItemWithMnemonic(menu, "Grid0.25", "SetGrid0.25");
+	createCheckMenuItemWithMnemonic(menu, "Grid0.5", "SetGrid0.5");
+	createCheckMenuItemWithMnemonic(menu, "Grid1", "SetGrid1");
+	createCheckMenuItemWithMnemonic(menu, "Grid2", "SetGrid2");
+	createCheckMenuItemWithMnemonic(menu, "Grid4", "SetGrid4");
+	createCheckMenuItemWithMnemonic(menu, "Grid8", "SetGrid8");
+	createCheckMenuItemWithMnemonic(menu, "Grid16", "SetGrid16");
+	createCheckMenuItemWithMnemonic(menu, "Grid32", "SetGrid32");
+	createCheckMenuItemWithMnemonic(menu, "Grid64", "SetGrid64");
+	createCheckMenuItemWithMnemonic(menu, "Grid128", "SetGrid128");
+	createCheckMenuItemWithMnemonic(menu, "Grid256", "SetGrid256");
 
 	return grid_menu_item;
 }
@@ -2061,7 +2071,7 @@ void MainFrame::Create (void)
 	PreferencesDialog_constructWindow(window);
 	FindTextureDialog_constructWindow(window);
 
-	AddGridChangeCallback(ReferenceCaller<MainFrame, XY_UpdateAllWindows> (*this));
+	GlobalGrid().addGridChangeCallback(ReferenceCaller<MainFrame, XY_UpdateAllWindows>(*this));
 
 	g_defaultToolMode = DragMode;
 	g_defaultToolMode();
@@ -2287,8 +2297,6 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("CSGSubtract", FreeCaller<CSG_Subtract> ());
 	GlobalEventManager().addCommand("CSGMerge", FreeCaller<CSG_Merge> ());
 	GlobalEventManager().addCommand("CSGHollow", FreeCaller<CSG_MakeHollow> ());
-
-	Grid_registerCommands();
 
 	GlobalEventManager().addCommand("SnapToGrid", FreeCaller<Selection_SnapToGrid> ());
 

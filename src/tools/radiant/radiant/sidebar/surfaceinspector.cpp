@@ -35,6 +35,7 @@
 #include "iundo.h"
 #include "iselection.h"
 #include "ieventmanager.h"
+#include "igrid.h"
 
 #include "signal/isignal.h"
 #include "generic/object.h"
@@ -59,7 +60,6 @@
 #include "../brush/brush.h"
 #include "../commands.h"
 #include "stream/stringstream.h"
-#include "../xyview/grid.h"
 #include "../textureentry.h"
 
 inline void spin_button_set_step (GtkSpinButton* spin, gfloat step)
@@ -155,7 +155,7 @@ class SurfaceInspector
 		{
 			m_fitVertical = 1;
 			m_fitHorizontal = 1;
-			AddGridChangeCallback(FreeCaller<SurfaceInspector_GridChange> ());
+			GlobalGrid().addGridChangeCallback(FreeCaller<SurfaceInspector_GridChange> ());
 			m_valueInconsistent = false;
 		}
 
@@ -334,8 +334,9 @@ si_globals_t g_si_globals;
  */
 static void DoSnapTToGrid (float hscale, float vscale)
 {
-	g_si_globals.shift[0] = static_cast<float> (float_to_integer(static_cast<float> (GetGridSize()) / hscale));
-	g_si_globals.shift[1] = static_cast<float> (float_to_integer(static_cast<float> (GetGridSize()) / vscale));
+	const float gridSize = GlobalGrid().getGridSize();
+	g_si_globals.shift[0] = static_cast<float> (float_to_integer(gridSize / hscale));
+	g_si_globals.shift[1] = static_cast<float> (float_to_integer(gridSize / vscale));
 	SurfaceInspector_queueDraw();
 }
 

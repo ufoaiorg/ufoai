@@ -109,7 +109,6 @@ struct IRadiant
 		 */
 		const std::string (*getMapName) ();
 		scene::Node& (*getMapWorldEntity) ();
-		float (*getGridSize) ();
 
 		const std::string& (*getGameDescriptionKeyValue) (const std::string& key);
 		const std::string& (*getRequiredGameDescriptionKeyValue) (const std::string& key);

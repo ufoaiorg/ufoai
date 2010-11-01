@@ -28,7 +28,7 @@
 #include "../../map/map.h"
 #include "../brushmanip.h"
 #include "../BrushNode.h"
-#include "../../xyview/grid.h"
+#include "igrid.h"
 
 typedef std::vector<Brush*> brush_vector_t;
 
@@ -136,7 +136,7 @@ class BrushDeleteSelected: public scene::Graph::Walker
 
 static void Scene_BrushMakeHollow_Selected (scene::Graph& graph)
 {
-	GlobalSceneGraph().traverse(BrushHollowSelectedWalker(GetGridSize()));
+	GlobalSceneGraph().traverse(BrushHollowSelectedWalker(GlobalGrid().getGridSize()));
 	GlobalSceneGraph().traverse(BrushDeleteSelected());
 }
 

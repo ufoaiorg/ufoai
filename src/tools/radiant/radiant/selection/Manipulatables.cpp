@@ -64,7 +64,7 @@ void TranslateAxis::Transform (const Matrix4& manip2object, const Matrix4& devic
 	current = m_axis * distance_for_axis(m_start, current, m_axis);
 
 	translation_local2object(current, current, manip2object);
-	vector3_snap(current, GetGridSize());
+	vector3_snap(current, GlobalGrid().getGridSize());
 
 	m_translatable.translate(current);
 }
@@ -83,7 +83,7 @@ void TranslateFree::Transform (const Matrix4& manip2object, const Matrix4& devic
 	current = current - m_start;
 
 	translation_local2object(current, current, manip2object);
-	vector3_snap(current, GetGridSize());
+	vector3_snap(current, GlobalGrid().getGridSize());
 
 	m_translatable.translate(current);
 }
@@ -102,9 +102,9 @@ void ScaleAxis::Transform (const Matrix4& manip2object, const Matrix4& device2ma
 	Vector3 delta = current - m_start;
 
 	translation_local2object(delta, delta, manip2object);
-	vector3_snap(delta, GetGridSize());
+	vector3_snap(delta, GlobalGrid().getGridSize());
 
-	Vector3 start(vector3_snapped(m_start, GetGridSize()));
+	Vector3 start(vector3_snapped(m_start, GlobalGrid().getGridSize()));
 	Vector3 scale(start[0] == 0 ? 1 : 1 + delta[0] / start[0], start[1] == 0 ? 1 : 1 + delta[1] / start[1], start[2]
 			== 0 ? 1 : 1 + delta[2] / start[2]);
 	m_scalable.scale(scale);
@@ -124,9 +124,9 @@ void ScaleFree::Transform (const Matrix4& manip2object, const Matrix4& device2ma
 	Vector3 delta = current - m_start;
 
 	translation_local2object(delta, delta, manip2object);
-	vector3_snap(delta, GetGridSize());
+	vector3_snap(delta, GlobalGrid().getGridSize());
 
-	Vector3 start(vector3_snapped(m_start, GetGridSize()));
+	Vector3 start(vector3_snapped(m_start, GlobalGrid().getGridSize()));
 	Vector3 scale(start[0] == 0 ? 1 : 1 + delta[0] / start[0], start[1] == 0 ? 1 : 1 + delta[1] / start[1], start[2]
 			== 0 ? 1 : 1 + delta[2] / start[2]);
 	m_scalable.scale(scale);
