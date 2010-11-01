@@ -25,8 +25,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_BASEINVENTORY_H
 #define CLIENT_UI_UI_NODE_BASEINVENTORY_H
 
+#include "ui_node_container.h"
+
 /* prototypes */
 struct uiBehaviour_s;
+
+/*
+typedef struct baseInventoryExtraData_s {
+	containerExtraData_t super;
+} baseInventoryExtraData_t;
+*/
 
 void UI_RegisterBaseInventoryNode(struct uiBehaviour_s *behaviour);
 

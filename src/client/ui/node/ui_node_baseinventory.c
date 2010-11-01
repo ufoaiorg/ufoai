@@ -1,14 +1,9 @@
 /**
  * @file ui_node_baseinventory.c
- * @brief The container node refer to 3 different nodes merged into a singler one. Both
- * can drag and drop solider items from a container to another one. The first container
- * is a soldier slot. For example, the left arm, the bag pack... The second is the base
- * item list. And the last it a floor container used into the battlescape. The node name
- * itself is used to know the container role.
- * @todo Move container role outside of the node name
- * @todo Link soldier container with a soldier
+ * @brief "Base inventory" is one of the container nodes. It allow to see and
+ * drag and drop soldier items from a base to soldier equipments.
+ * @todo extend it with aircraft equipment
  * @todo Link base container with a base
- * @todo Link floor container with a map/cell...
  */
 
 /*
@@ -51,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../battlescape/cl_actor.h"
 #include "../../cl_inventory.h"
 
+/* #define EXTRADATA_TYPE baseInventoryExtraData_t */
 #define EXTRADATA_TYPE containerExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -816,6 +812,39 @@ static void UI_BaseInventoryNodeInit (uiNode_t *node)
 	assert(!CL_BattlescapeRunning());
 }
 
+
+static const value_t properties[] = {
+	/* Display/hide weapons. */
+	{"displayweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayWeapon)},
+	/* Display/hide ammo. */
+	{"displayammo", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmo),  MEMBER_SIZEOF(containerExtraData_t, displayAmmo)},
+	/* Display/hide out of stock items. */
+	{"displayunavailableitem", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableItem),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableItem)},
+	/* Sort the list to display in stock items on top of the list. */
+	{"displayavailableontop", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAvailableOnTop),  MEMBER_SIZEOF(containerExtraData_t, displayAvailableOnTop)},
+	/* Display/hide ammo near weapons. */
+	{"displayammoofweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayAmmoOfWeapon)},
+	/* Display/hide out of stock ammo near weapons. <code>displayammoofweapon</code> must be activated first. */
+	{"displayunavailableammoofweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableAmmoOfWeapon)},
+	/* Custom the number of column we must use to display items. */
+	{"columns", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, columns),  MEMBER_SIZEOF(containerExtraData_t, columns)},
+	/* Filter items by a category. */
+	{"filter", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, filterEquipType),  MEMBER_SIZEOF(containerExtraData_t, filterEquipType)},
+
+	/* Position of the vertical view (into the full number of elements the node contain)
+	 * @todo Rename it viewpos (like scrollable node)
+	 */
+	{"scrollpos", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollCur),  MEMBER_SIZEOF(containerExtraData_t, scrollCur)},
+	/* Size of the vertical view (proportional to the number of elements the node can display without moving) */
+	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollNum),  MEMBER_SIZEOF(containerExtraData_t, scrollNum)},
+	/* Full vertical size (proportional to the number of elements the node contain) */
+	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollTotalNum),  MEMBER_SIZEOF(containerExtraData_t, scrollTotalNum)},
+	/* Called when one of the properties viewpos/viewsize/fullsize change */
+	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(containerExtraData_t, onViewChange), MEMBER_SIZEOF(containerExtraData_t, onViewChange)},
+
+	{NULL, V_NULL, 0, 0}
+};
+
 void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "baseinventory";
@@ -829,6 +858,8 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->init = UI_BaseInventoryNodeInit;
 	behaviour->loading = UI_BaseInventoryNodeLoading;
 	behaviour->loaded = UI_BaseInventoryNodeLoaded;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->properties = properties;
 
 	behaviour->dndEnter = UI_BaseInventoryNodeDNDEnter;
 	behaviour->dndMove = UI_BaseInventoryNodeDNDMove;
