@@ -27,7 +27,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
-	$(RADIANT_BASE)/radiant/lastused.cpp \
 	$(RADIANT_BASE)/radiant/material.cpp \
 	$(RADIANT_BASE)/radiant/ump.cpp \
 	$(RADIANT_BASE)/radiant/particles.cpp \
@@ -174,6 +173,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/common/SoundPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/ToolbarCreator.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/mru/MRU.cpp \
+	$(RADIANT_BASE)/radiant/ui/mru/MRUMenuItem.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/commandlist/CommandList.cpp \
 	\

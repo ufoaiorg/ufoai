@@ -71,7 +71,7 @@
 #include "sidebar/sidebar.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
-#include "lastused.h"
+#include "ui/mru/MRU.h"
 #include "entity.h"
 #include "select.h"
 #include "settings/preferences.h"
@@ -240,7 +240,6 @@ class Radiant: public TypeSystemRef
 			Selection_Construct();
 			HomePaths_Construct();
 			VFS_Construct();
-			MRU_Construct();
 			GLWindow_Construct();
 			Map_Construct();
 			EntityList_Construct();
@@ -294,7 +293,6 @@ class Radiant: public TypeSystemRef
 			sidebar::MapInfo_Destroy();
 			Map_Destroy();
 			GLWindow_Destroy();
-			MRU_Destroy();
 			VFS_Destroy();
 			HomePaths_Destroy();
 			Selection_Destroy();

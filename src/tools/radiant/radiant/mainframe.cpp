@@ -93,7 +93,6 @@
 #include "pathfinding.h"
 #include "gtkmisc.h"
 #include "map/map.h"
-#include "lastused.h"
 #include "ump.h"
 #include "plugin.h"
 #include "plugin/PluginManager.h"
@@ -119,6 +118,7 @@
 #include "ui/colourscheme/ColourSchemeEditor.h"
 #include "ui/colourscheme/ColourSchemeManager.h"
 #include "ui/commandlist/CommandList.h"
+#include "ui/mru/MRU.h"
 
 struct LayoutGlobals
 {
@@ -527,10 +527,15 @@ void Radiant_Initialise (void)
 
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
+
+	// Initialise the most recently used files list
+	GlobalMRU().loadRecentFiles();
 }
 
 void Radiant_Shutdown (void)
 {
+	GlobalMRU().saveRecentFiles();
+
 	// Export the colour schemes and remove them from the registry
 	GlobalRegistry().exportToFile("user/ui/colourschemes", SettingsPath_get() + "colours.xml");
 	GlobalRegistry().deleteXPath("user/ui/colourschemes");
@@ -1372,7 +1377,7 @@ static GtkMenuItem* create_file_menu (MainFrame *mainFrame)
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("_Refresh models"), "RefreshReferences");
 	createSeparatorMenuItem(menu);
-	MRU_constructMenu(menu);
+	GlobalMRU().constructMenu(menu);
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("E_xit"), "Exit");
 

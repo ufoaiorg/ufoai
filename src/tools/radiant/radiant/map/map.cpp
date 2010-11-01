@@ -73,7 +73,7 @@
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 #include "../referencecache.h"
-#include "../lastused.h"
+#include "../ui/mru/MRU.h"
 #include "autosave.h"
 #include "../brush/brush.h"
 #include "../brush/BrushNode.h"
@@ -885,7 +885,7 @@ void Map_Traverse_Region (scene::Node& root, const scene::Traversable::Walker& w
 	}
 }
 
-bool Map_SaveRegion (const char *filename)
+bool Map_SaveRegion (const std::string& filename)
 {
 	const bool success = MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(),
 			Map_Traverse_Region, filename);
@@ -893,7 +893,7 @@ bool Map_SaveRegion (const char *filename)
 	return success;
 }
 
-void Map_RenameAbsolute (const char* absolute)
+void Map_RenameAbsolute (const std::string& absolute)
 {
 	Resource* resource = GlobalReferenceCache().capture(absolute);
 	NodeSmartReference clone(NewMapRoot(GlobalFileSystem().getRelative(absolute)));
@@ -905,7 +905,7 @@ void Map_RenameAbsolute (const char* absolute)
 	}
 
 	g_map.m_resource->detach(g_map);
-	GlobalReferenceCache().release(g_map.m_name.c_str());
+	GlobalReferenceCache().release(g_map.m_name);
 
 	g_map.m_resource = resource;
 
@@ -915,9 +915,9 @@ void Map_RenameAbsolute (const char* absolute)
 	g_map.m_resource->attach(g_map);
 }
 
-void Map_Rename (const char* filename)
+void Map_Rename (const std::string& filename)
 {
-	if (!string_equal(g_map.m_name.c_str(), filename)) {
+	if (g_map.m_name != filename) {
 		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
 
 		Map_RenameAbsolute(filename);
@@ -1502,7 +1502,7 @@ bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilena
 		Map_RegionOff();
 		Map_Free();
 		if (Map_LoadFile(filename)) {
-			MRU_AddFile(filename);
+			GlobalMRU().insert(filename);
 			return true;
 		}
 	}
@@ -1522,7 +1522,7 @@ bool Map_SaveAs (void)
 {
 	const std::string filename = ui::selectMapFile(_("Save Map"), false);
 	if (!filename.empty()) {
-		MRU_AddFile(filename);
+		GlobalMRU().insert(filename);
 		Map_Rename(filename.c_str());
 		return Map_Save();
 	}
@@ -1836,9 +1836,6 @@ MapModuleObserver g_MapModuleObserver;
 
 #include "preferencesystem.h"
 
-std::string g_strLastMap;
-bool g_bLoadLastMap = false;
-
 void Map_Construct (void)
 {
 	GlobalEventManager().addCommand("ObjectsUp", FreeCaller<ObjectsUp> ());
@@ -1847,11 +1844,6 @@ void Map_Construct (void)
 	GlobalEventManager().addCommand("RegionSetXY", FreeCaller<RegionXY> ());
 	GlobalEventManager().addCommand("RegionSetBrush", FreeCaller<RegionBrush> ());
 	GlobalEventManager().addCommand("RegionSetSelection", FreeCaller<RegionSelected> ());
-
-	GlobalPreferenceSystem().registerPreference("LastMap", StringImportStringCaller(g_strLastMap),
-			StringExportStringCaller(g_strLastMap));
-	GlobalPreferenceSystem().registerPreference("LoadLastMap", BoolImportStringCaller(g_bLoadLastMap),
-			BoolExportStringCaller(g_bLoadLastMap));
 
 	GlobalEntityClassManager().attach(g_MapEntityClasses);
 	Radiant_attachHomePathsObserver(g_MapModuleObserver);
