@@ -39,7 +39,6 @@ XYWndManager::XYWndManager() :
 
 // Destructor
 XYWndManager::~XYWndManager() {
-	destroy();
 }
 
 void XYWndManager::construct() {
