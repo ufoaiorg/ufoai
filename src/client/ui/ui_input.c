@@ -630,6 +630,8 @@ static void UI_MiddleClick (int x, int y)
  */
 void UI_MouseWheel (qboolean down, int x, int y)
 {
+	uiNode_t *node;
+
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->mouseWheel)
@@ -637,17 +639,27 @@ void UI_MouseWheel (qboolean down, int x, int y)
 		return;
 	}
 
-	if (hoveredNode) {
-		if (hoveredNode->behaviour->mouseWheel) {
-			hoveredNode->behaviour->mouseWheel(hoveredNode, down, x, y);
+	node = hoveredNode;
+
+	while (node) {
+		if (node->behaviour->mouseWheel) {
+			node->behaviour->mouseWheel(node, down, x, y);
+			break;
 		} else {
-			if (hoveredNode->onWheelUp && !down)
-				UI_ExecuteEventActions(hoveredNode, hoveredNode->onWheelUp);
-			if (hoveredNode->onWheelDown && down)
-				UI_ExecuteEventActions(hoveredNode, hoveredNode->onWheelDown);
-			else
-				UI_ExecuteEventActions(hoveredNode, hoveredNode->onWheel);
+			if (node->onWheelUp && !down) {
+				UI_ExecuteEventActions(node, node->onWheelUp);
+				break;
+			}
+			if (node->onWheelDown && down) {
+				UI_ExecuteEventActions(node, node->onWheelDown);
+				break;
+			}
+			if (node->onWheel) {
+				UI_ExecuteEventActions(node, node->onWheel);
+				break;
+			}
 		}
+		node = node->parent;
 	}
 }
 
