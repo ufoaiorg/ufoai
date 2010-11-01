@@ -12,16 +12,20 @@ define FIND
 $(shell find $(BASE_DIR)/$(1) -type f -print)
 endef
 
-define ZIP
-$(shell ([ -x "$$(which 7z 2> /dev/null)" ] && echo "7z u -tzip -mx=9") || ([ -x "$$(which 7za 2> /dev/null)" ] && echo "7za u -tzip -mx=9") || ([ -x "$$(which zip 2> /dev/null)" ] && echo "zip -u9"))
+define ZIP #dont use 7zip it will ignore recursion on a recursive search for files on linux and Mingw
+$(shell ([ -x "$$(which zip 2> /dev/null)" ] && echo "zip -u9"))
 endef
 
-%.pk3:
-ifeq (7z,$(findstring 7z,$(call ZIP)))
-	$(Q)cd $(BASE_DIR); $(call ZIP) $(filter -r,$(call $@)) $(notdir $@) $(filter-out -r,$(call $@))
-else
-	$(Q)cd $(BASE_DIR); $(call ZIP) $(filter -r,$(call $@)) $(notdir $@) . -i $(subst *,\*,$(filter-out -r,$(call $@)))
-endif
+%.pk3 : # zip return code 12: zip has nothing to do, bad for a "make pk3 -B"
+	$(Q)cd $(BASE_DIR) ; $(call ZIP) $(filter -r,$(call $@)) $(notdir $@) . $(strip $(if $(findstring -r,$(firstword $(call $@))),$(subst *,\*,$(subst -r,-i,$(call $@))),$(call $@))) || [ $$? -eq 12 ] && exit 0
+
+
+
+
+
+
+
+
 
 define $(BASE_DIR)/0pics.pk3
 	-r pics/*.jpg pics/*.tga pics/*.png
@@ -40,7 +44,7 @@ define $(BASE_DIR)/0snd.pk3
 endef
 
 define $(BASE_DIR)/0music.pk3
-	-r music/*.ogg
+	music/*.ogg
 endef
 
 define $(BASE_DIR)/0maps.pk3
@@ -52,11 +56,11 @@ define $(BASE_DIR)/0videos.pk3
 endef
 
 define $(BASE_DIR)/0media.pk3
-	-r media/*.ttf
+	media/*.ttf
 endef
 
 define $(BASE_DIR)/0shaders.pk3
-	-r shaders/*.glsl
+	shaders/*.glsl
 endef
 
 define $(BASE_DIR)/0ufos.pk3
@@ -64,9 +68,9 @@ define $(BASE_DIR)/0ufos.pk3
 endef
 
 define $(BASE_DIR)/0materials.pk3
-	-r materials/*.mat
+	materials/*.mat
 endef
 
 define $(BASE_DIR)/0base.pk3
-	-r *.cfg mapcycle.txt irc_motd.txt ai/*.lua
+	*.cfg mapcycle.txt irc_motd.txt ai/*.lua
 endef
