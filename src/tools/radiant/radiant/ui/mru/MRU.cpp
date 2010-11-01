@@ -35,7 +35,7 @@ MRU::MRU() :
 		const std::string commandName = std::string("MRUOpen") + string::toString(i);
 
 		// Connect the command to the last inserted menuItem
-		IEventPtr event = GlobalEventManager().addCommand(commandName,
+		IEvent* event = GlobalEventManager().addCommand(commandName,
 					MemberCaller<MRUMenuItem, &MRUMenuItem::activate>(item));
 
 		if (event != NULL) {

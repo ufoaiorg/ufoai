@@ -58,7 +58,7 @@ void MRUMenuItem::setLabel(const std::string& label) {
 	_label = label;
 
 	// Add the number prefix to the widget label
-	const std::string widgetLabel = intToStr(_index) + " - " + _label;
+	const std::string widgetLabel = string::toString(_index) + " - " + _label;
 
 	// Retrieve the widget's label and set the text
 	GtkLabel* labelWidget = GTK_LABEL(gtk_bin_get_child(GTK_BIN(_menuItem)));
