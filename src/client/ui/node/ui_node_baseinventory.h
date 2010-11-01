@@ -30,11 +30,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototypes */
 struct uiBehaviour_s;
 
-/*
 typedef struct baseInventoryExtraData_s {
 	containerExtraData_t super;
+
+	int filterEquipType;	/**< A filter */
+
+	int columns;
+	qboolean displayWeapon;
+	qboolean displayAmmo;
+	qboolean displayUnavailableItem;
+	qboolean displayAmmoOfWeapon;
+	qboolean displayUnavailableAmmoOfWeapon;
+	qboolean displayAvailableOnTop;
+
 } baseInventoryExtraData_t;
-*/
+
+/**
+ * @note super must be at 0 else inherited function will crash.
+ */
+CASSERT(offsetof(baseInventoryExtraData_t, super) == 0);
 
 void UI_RegisterBaseInventoryNode(struct uiBehaviour_s *behaviour);
 

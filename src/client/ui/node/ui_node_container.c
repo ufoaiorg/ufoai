@@ -910,7 +910,6 @@ static void UI_ContainerNodeWheel (uiNode_t *node, qboolean down, int x, int y)
 static void UI_ContainerNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).container = NULL;
-	EXTRADATA(node).columns = 1;
 	node->color[3] = 1.0;
 }
 
@@ -1038,10 +1037,8 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 			invList_t *fItem;
 			const invDef_t *targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);
-			/** @todo Is filterEquipType needed here?, we can use anyway INVSH_SearchInInventory if we disable dragInfoFromX/Y when we start DND */
 			if (UI_IsScrollContainerNode(source)) {
-				const int equipType = EXTRADATA(source).filterEquipType;
-				fItem = UI_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
+				fItem = UI_ContainerNodeGetExistingItem(source, dragItem->t, MAX_FILTERTYPES);
 			} else
 				fItem = INVSH_SearchInInventory(ui_inventory, sourceContainer, dragInfoFromX, dragInfoFromY);
 			assert(fItem);

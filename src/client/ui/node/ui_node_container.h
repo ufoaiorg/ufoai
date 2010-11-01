@@ -53,16 +53,7 @@ typedef struct containerExtraData_s {
 	struct uiAction_s *onSelect;	/**< call when we select an item */
 
 	/* for scrolled container */
-
-	int filterEquipType;	/**< A filter */
-
-	int columns;
-	qboolean displayWeapon;
-	qboolean displayAmmo;
-	qboolean displayUnavailableItem;
-	qboolean displayAmmoOfWeapon;
-	qboolean displayUnavailableAmmoOfWeapon;
-	qboolean displayAvailableOnTop;
+	/** @todo Is it only for baseinventory node? */
 
 	int scrollCur;			/**< Index of first item that is displayed. */
 	int scrollNum;			/**< Number of items that are displayed. */

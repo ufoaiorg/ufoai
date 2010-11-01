@@ -46,8 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../battlescape/cl_actor.h"
 #include "../../cl_inventory.h"
 
-/* #define EXTRADATA_TYPE baseInventoryExtraData_t */
-#define EXTRADATA_TYPE containerExtraData_t
+#define EXTRADATA_TYPE baseInventoryExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
@@ -76,7 +75,7 @@ static const invList_t *dragInfoIC;
  */
 static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
+	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, NONE, NONE, item, filterType);
 }
 
 /**
@@ -201,8 +200,8 @@ static void UI_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
  */
 static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
 {
-	if (EXTRADATA(node).onViewChange) {
-		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	if (EXTRADATA(node).super.onViewChange) {
+		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
 }
 
@@ -263,7 +262,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
  */
 static void UI_BaseInventoryNodeLoaded (uiNode_t* const node)
 {
-	EXTRADATA(node).container = INVSH_GetInventoryDefinitionByID("equip");
+	EXTRADATA(node).super.container = INVSH_GetInventoryDefinitionByID("equip");
 }
 
 static const vec3_t scale = {3.5, 3.5, 3.5};
@@ -305,7 +304,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 		invList_t *icItem = iterator.itemFound;
 
 		/* skip items over and bellow the node view */
-		if (outOfNode || currentHeight < EXTRADATA(node).scrollCur) {
+		if (outOfNode || currentHeight < EXTRADATA(node).super.scrollCur) {
 			int height;
 			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
@@ -313,7 +312,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 			if (height > rowHeight)
 				rowHeight = height;
 
-			if (outOfNode || currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
+			if (outOfNode || currentHeight + rowHeight < EXTRADATA(node).super.scrollCur) {
 				if (col == EXTRADATA(node).columns - 1) {
 					currentHeight += rowHeight;
 					rowHeight = 0;
@@ -325,7 +324,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += currentHeight - EXTRADATA(node).scrollCur;
+		pos[1] += currentHeight - EXTRADATA(node).super.scrollCur;
 		pos[2] = 0;
 
 		if (highlightType) {
@@ -412,7 +411,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 		if (col == EXTRADATA(node).columns - 1) {
 			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
+			if (currentHeight - EXTRADATA(node).super.scrollCur >= node->size[1])
 				outOfNode = qtrue;
 		}
 
@@ -452,17 +451,17 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, objDef_t *highlightType)
 #endif
 
 	/* Update display of scroll buttons if something changed. */
-	if (visibleHeight != EXTRADATA(node).scrollNum || needHeight != EXTRADATA(node).scrollTotalNum) {
-		EXTRADATA(node).scrollTotalNum = needHeight;
-		EXTRADATA(node).scrollNum = visibleHeight;
+	if (visibleHeight != EXTRADATA(node).super.scrollNum || needHeight != EXTRADATA(node).super.scrollTotalNum) {
+		EXTRADATA(node).super.scrollTotalNum = needHeight;
+		EXTRADATA(node).super.scrollNum = visibleHeight;
 		updateScroll = qtrue;
 	}
-	if (EXTRADATA(node).scrollCur > needHeight - visibleHeight) {
-		EXTRADATA(node).scrollCur = needHeight - visibleHeight;
+	if (EXTRADATA(node).super.scrollCur > needHeight - visibleHeight) {
+		EXTRADATA(node).super.scrollCur = needHeight - visibleHeight;
 		updateScroll = qtrue;
 	}
-	if (EXTRADATA(node).scrollCur < 0) {
-		EXTRADATA(node).scrollCur = 0;
+	if (EXTRADATA(node).super.scrollCur < 0) {
+		EXTRADATA(node).super.scrollCur = 0;
 		updateScroll = qtrue;
 	}
 
@@ -477,7 +476,7 @@ static void UI_BaseInventoryNodeDraw (uiNode_t *node)
 {
 	objDef_t *highlightType = NULL;
 
-	if (!EXTRADATA(node).container)
+	if (!EXTRADATA(node).super.container)
 		return;
 	if (!ui_inventory)
 		return;
@@ -527,7 +526,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 		int height;
 
 		/* skip items over and bellow the node view */
-		if (outOfNode || currentHeight < EXTRADATACONST(node).scrollCur) {
+		if (outOfNode || currentHeight < EXTRADATACONST(node).super.scrollCur) {
 			int outHeight;
 			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &outHeight, NULL, NULL);
@@ -535,7 +534,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 			if (outHeight > rowHeight)
 				rowHeight = outHeight;
 
-			if (outOfNode || currentHeight + rowHeight < EXTRADATACONST(node).scrollCur) {
+			if (outOfNode || currentHeight + rowHeight < EXTRADATACONST(node).super.scrollCur) {
 				if (col == EXTRADATACONST(node).columns - 1) {
 					currentHeight += rowHeight;
 					rowHeight = 0;
@@ -547,7 +546,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += currentHeight - EXTRADATACONST(node).scrollCur;
+		pos[1] += currentHeight - EXTRADATACONST(node).super.scrollCur;
 
 		/* check item */
 		if (mouseY < pos[1])
@@ -611,7 +610,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 		if (col == EXTRADATACONST(node).columns - 1) {
 			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (currentHeight - EXTRADATACONST(node).scrollCur >= node->size[1])
+			if (currentHeight - EXTRADATACONST(node).super.scrollCur >= node->size[1])
 				return NULL;
 		}
 
@@ -678,7 +677,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	if (sel < 0)
 		return;
 
-	assert(EXTRADATA(node).container);
+	assert(EXTRADATA(node).super.container);
 
 	ic = UI_BaseInventoryNodeGetItem(node, mouseX, mouseY, &fromX, &fromY);
 	Com_DPrintf(DEBUG_CLIENT, "UI_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
@@ -716,9 +715,9 @@ static void UI_BaseInventoryNodeMouseDown (uiNode_t *node, int x, int y, int but
 			oldMouseX = x;
 			oldMouseY = y;
 			UI_SetMouseCapture(node);
-			EXTRADATA(node).lastSelectedId = dragInfoIC->item.t->idx;
-			if (EXTRADATA(node).onSelect) {
-				UI_ExecuteEventActions(node, EXTRADATA(node).onSelect);
+			EXTRADATA(node).super.lastSelectedId = dragInfoIC->item.t->idx;
+			if (EXTRADATA(node).super.onSelect) {
+				UI_ExecuteEventActions(node, EXTRADATA(node).super.onSelect);
 			}
 		}
 		break;
@@ -751,18 +750,18 @@ static void UI_BaseInventoryNodeWheel (uiNode_t *node, qboolean down, int x, int
 {
 	const int delta = 20;
 	if (down) {
-		const int lenght = EXTRADATA(node).scrollTotalNum - EXTRADATA(node).scrollNum;
-		if (EXTRADATA(node).scrollCur < lenght) {
-			EXTRADATA(node).scrollCur += delta;
-			if (EXTRADATA(node).scrollCur > lenght)
-				EXTRADATA(node).scrollCur = lenght;
+		const int lenght = EXTRADATA(node).super.scrollTotalNum - EXTRADATA(node).super.scrollNum;
+		if (EXTRADATA(node).super.scrollCur < lenght) {
+			EXTRADATA(node).super.scrollCur += delta;
+			if (EXTRADATA(node).super.scrollCur > lenght)
+				EXTRADATA(node).super.scrollCur = lenght;
 			UI_BaseInventoryNodeUpdateScroll(node);
 		}
 	} else {
-		if (EXTRADATA(node).scrollCur > 0) {
-			EXTRADATA(node).scrollCur -= delta;
-			if (EXTRADATA(node).scrollCur < 0)
-				EXTRADATA(node).scrollCur = 0;
+		if (EXTRADATA(node).super.scrollCur > 0) {
+			EXTRADATA(node).super.scrollCur -= delta;
+			if (EXTRADATA(node).super.scrollCur < 0)
+				EXTRADATA(node).super.scrollCur = 0;
 			UI_BaseInventoryNodeUpdateScroll(node);
 		}
 	}
@@ -770,7 +769,7 @@ static void UI_BaseInventoryNodeWheel (uiNode_t *node, qboolean down, int x, int
 
 static void UI_BaseInventoryNodeLoading (uiNode_t *node)
 {
-	EXTRADATA(node).container = NULL;
+	EXTRADATA(node).super.container = NULL;
 	EXTRADATA(node).columns = 1;
 	node->color[3] = 1.0;
 }
@@ -781,7 +780,7 @@ static void UI_BaseInventoryNodeLoading (uiNode_t *node)
 static qboolean UI_BaseInventoryNodeDNDEnter (uiNode_t *target)
 {
 	/* The node is invalide */
-	if (EXTRADATA(target).container == NULL)
+	if (EXTRADATA(target).super.container == NULL)
 		return qfalse;
 	/* accept items only, if we have a container */
 	return UI_DNDGetType() == DND_ITEM && UI_DNDGetSourceNode() != target;
@@ -815,21 +814,21 @@ static void UI_BaseInventoryNodeInit (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Display/hide weapons. */
-	{"displayweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayWeapon)},
+	{"displayweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, displayWeapon),  MEMBER_SIZEOF(baseInventoryExtraData_t, displayWeapon)},
 	/* Display/hide ammo. */
-	{"displayammo", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmo),  MEMBER_SIZEOF(containerExtraData_t, displayAmmo)},
+	{"displayammo", V_BOOL, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, displayAmmo),  MEMBER_SIZEOF(baseInventoryExtraData_t, displayAmmo)},
 	/* Display/hide out of stock items. */
-	{"displayunavailableitem", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableItem),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableItem)},
+	{"displayunavailableitem", V_BOOL, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, displayUnavailableItem),  MEMBER_SIZEOF(baseInventoryExtraData_t, displayUnavailableItem)},
 	/* Sort the list to display in stock items on top of the list. */
-	{"displayavailableontop", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAvailableOnTop),  MEMBER_SIZEOF(containerExtraData_t, displayAvailableOnTop)},
+	{"displayavailableontop", V_BOOL, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, displayAvailableOnTop),  MEMBER_SIZEOF(baseInventoryExtraData_t, displayAvailableOnTop)},
 	/* Display/hide ammo near weapons. */
-	{"displayammoofweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayAmmoOfWeapon)},
+	{"displayammoofweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, displayAmmoOfWeapon),  MEMBER_SIZEOF(baseInventoryExtraData_t, displayAmmoOfWeapon)},
 	/* Display/hide out of stock ammo near weapons. <code>displayammoofweapon</code> must be activated first. */
-	{"displayunavailableammoofweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableAmmoOfWeapon)},
+	{"displayunavailableammoofweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(baseInventoryExtraData_t, displayUnavailableAmmoOfWeapon)},
 	/* Custom the number of column we must use to display items. */
-	{"columns", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, columns),  MEMBER_SIZEOF(containerExtraData_t, columns)},
+	{"columns", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, columns),  MEMBER_SIZEOF(baseInventoryExtraData_t, columns)},
 	/* Filter items by a category. */
-	{"filter", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, filterEquipType),  MEMBER_SIZEOF(containerExtraData_t, filterEquipType)},
+	{"filter", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, filterEquipType),  MEMBER_SIZEOF(baseInventoryExtraData_t, filterEquipType)},
 
 	/* Position of the vertical view (into the full number of elements the node contain)
 	 * @todo Rename it viewpos (like scrollable node)
