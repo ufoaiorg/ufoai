@@ -41,44 +41,14 @@
 #include "../../../shared/parse.h"
 #include "../../../shared/entitiesdef.h"
 
+#include "string/string.h"
+#include <stdlib.h>
+#include "eclasslib.h"
+
 static const std::string EClass_GetFilename (void)
 {
 	return "ufos/entities.ufo";
 }
-
-static void Eclass_ScanFile (EntityClassCollector& collector, const std::string& filename);
-
-#include "modulesystem/singletonmodule.h"
-
-class EntityClassDefDependencies: public GlobalShaderCacheModuleRef, public GlobalScripLibModuleRef
-{
-};
-
-class EclassDefAPI
-{
-		EntityClassScanner m_eclassdef;
-	public:
-		typedef EntityClassScanner Type;
-		STRING_CONSTANT(Name, "def");
-
-		EclassDefAPI ()
-		{
-			m_eclassdef.scanFile = &Eclass_ScanFile;
-			m_eclassdef.getFilename = &EClass_GetFilename;
-		}
-		EntityClassScanner* getTable ()
-		{
-			return &m_eclassdef;
-		}
-};
-
-typedef SingletonModule<EclassDefAPI, EntityClassDefDependencies> EclassDefModule;
-typedef Static<EclassDefModule> StaticEclassDefModule;
-StaticRegisterModule staticRegisterEclassDef(StaticEclassDefModule::instance());
-
-#include "string/string.h"
-#include <stdlib.h>
-#include "eclasslib.h"
 
 static void Eclass_ParseFlags (EntityClass *e, const char **text)
 {
@@ -218,3 +188,31 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const std::string&
 	}
 	free(entities);
 }
+
+#include "modulesystem/singletonmodule.h"
+
+class EntityClassDefDependencies: public GlobalShaderCacheModuleRef, public GlobalScripLibModuleRef
+{
+};
+
+class EclassDefAPI
+{
+		EntityClassScanner m_eclassdef;
+	public:
+		typedef EntityClassScanner Type;
+		STRING_CONSTANT(Name, "def");
+
+		EclassDefAPI ()
+		{
+			m_eclassdef.scanFile = &Eclass_ScanFile;
+			m_eclassdef.getFilename = &EClass_GetFilename;
+		}
+		EntityClassScanner* getTable ()
+		{
+			return &m_eclassdef;
+		}
+};
+
+typedef SingletonModule<EclassDefAPI, EntityClassDefDependencies> EclassDefModule;
+typedef Static<EclassDefModule> StaticEclassDefModule;
+StaticRegisterModule staticRegisterEclassDef(StaticEclassDefModule::instance());
