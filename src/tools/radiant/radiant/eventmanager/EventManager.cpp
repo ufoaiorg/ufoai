@@ -69,8 +69,10 @@ public:
 		loadModifierDefinitions();
 	}
 
-	// Destructor, free all allocated objects
+	// Destructor, free all allocated objects and un-reference the GTK accelerator group
 	~EventManager() {
+		g_object_unref(_accelGroup);
+
 		// Remove all accelerators from the heap
 		for (AcceleratorList::iterator i = _accelerators.begin(); i != _accelerators.end(); i++) {
 			Accelerator* accelerator = (*i);

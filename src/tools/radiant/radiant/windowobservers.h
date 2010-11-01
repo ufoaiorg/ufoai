@@ -28,6 +28,7 @@
 
 class WindowObserver;
 void GlobalWindowObservers_add (WindowObserver* observer);
+void GlobalWindowObservers_remove(WindowObserver* observer);
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
 void GlobalWindowObservers_connectWidget (GtkWidget* widget);

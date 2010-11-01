@@ -130,7 +130,7 @@ XYWnd::XYWnd () :
 	AddSceneChangeCallback(MemberCaller<XYWnd, &XYWnd::queueDraw> (*this));
 	GlobalCamera().addCameraObserver(this);
 
-	PressedButtons_connect(g_pressedButtons, m_gl_widget);
+	//PressedButtons_connect(g_pressedButtons, m_gl_widget);
 
 	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
 }
@@ -147,6 +147,10 @@ XYWnd::~XYWnd (void)
 
 	gtk_widget_hide(m_gl_widget);
 
+	// greebo: Unregister the allocated window observer from the global list, before destroying it
+	GlobalWindowObservers_remove(m_window_observer);
+
+    // This deletes the RadiantWindowObserver from the heap
 	delete m_window_observer;
 }
 
@@ -1500,7 +1504,7 @@ void XYWnd::draw ()
 	glDisable(GL_COLOR_MATERIAL);
 
 	// greebo: Check, if the brush/patch size info should be displayed (if there are any items selected)
-	if (GlobalRegistry().get(RKEY_SHOW_SIZE_INFO) == "1" && GlobalSelectionSystem().countSelected() != 0) {
+	if (GlobalXYWnd().showSizeInfo() && GlobalSelectionSystem().countSelected() != 0) {
 		Vector3 min, max;
 		Select_GetBounds(min, max);
 		drawSizeInfo(nDim1, nDim2, min, max);

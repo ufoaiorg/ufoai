@@ -163,6 +163,10 @@ bool XYWndManager::showGrid() const {
 	return _showGrid;
 }
 
+bool XYWndManager::showSizeInfo() const {
+	return _showSizeInfo;
+}
+
 void XYWndManager::updateAllViews() {
 	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
 		XYWnd* xyview = *i;
@@ -349,6 +353,10 @@ void XYWndManager::destroyOrthoView(XYWnd* xyWnd) {
 				// Retrieve the parent from the view (for later destruction)
 				GtkWindow* parent = xyWnd->getParent();
 				GtkWidget* glWidget = xyWnd->getWidget();
+
+				if (_activeXY == xyWnd) {
+					_activeXY = NULL;
+				}
 
 				// Destroy the window
 				delete xyWnd;
