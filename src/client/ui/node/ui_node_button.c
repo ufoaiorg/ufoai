@@ -2,7 +2,6 @@
  * @file ui_node_button.c
  * @brief <code>button</code> is a node to define a button with a random size. It is skinned
  * with a special image template (see the <code>image</code> property).
- * @todo add an icon if possible.
  * @todo implement clicked button when its possible.
  * @todo allow auto size (use the size need looking string, problem when we change language)
  */
