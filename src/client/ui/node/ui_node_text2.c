@@ -1,6 +1,7 @@
 /**
  * @file ui_node_text2.c
- * @todo add getter/setter to cleanup access to extradata from cl_*.c files (check "u.text2.")
+ * Node to display article of text. The node pre-parsed the "brute" text into a
+ * data structure. The rendering code only paint the data structure, without any parsing.
  */
 
 /*
