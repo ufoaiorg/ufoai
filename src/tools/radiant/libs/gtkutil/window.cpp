@@ -24,7 +24,6 @@
 #include <gtk/gtkscrolledwindow.h>
 
 #include "pointer.h"
-#include "accelerator.h"
 
 // Re-show a child window when the main window is restored. It is necessary to
 // call gtk_window_move() after showing the window, since with some Linux

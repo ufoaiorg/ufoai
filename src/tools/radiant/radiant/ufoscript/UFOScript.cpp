@@ -7,6 +7,7 @@
 #include "os/path.h"
 #include "terrain/Terrain.h"
 #include "mapdef/MapDef.h"
+#include "generic/callback.h"
 
 #include <string>
 #include <set>

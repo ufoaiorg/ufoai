@@ -35,30 +35,8 @@ typedef struct _GtkCheckMenuItem GtkCheckMenuItem;
 typedef struct _GtkRadioMenuItem GtkRadioMenuItem;
 typedef struct _GtkTearoffMenuItem GtkTearoffMenuItem;
 
-void menu_add_item (GtkMenu* menu, GtkMenuItem* item);
-void menu_remove_item (GtkMenu* menu, GtkMenuItem* item);
-GtkMenuItem* menu_separator (GtkMenu* menu);
-GtkTearoffMenuItem* menu_tearoff (GtkMenu* menu);
 GtkMenuItem* new_sub_menu_item_with_mnemonic (const std::string& mnemonic);
 GtkMenu* create_sub_menu_with_mnemonic (GtkMenuBar* bar, const std::string& mnemonic);
 GtkMenu* create_sub_menu_with_mnemonic (GtkMenu* parent, const std::string& mnemonic);
-GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const Callback& callback,
-		const std::string& icon = "");
-GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
-		const Callback& callback, const std::string& icon);
-GtkRadioMenuItem* create_radio_menu_item_with_mnemonic (GtkMenu* menu, GSList** group, const std::string& mnemonic,
-		const Callback& callback, const std::string& icon);
-
-class Command;
-GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic, const Command& command,
-		const std::string& icon = "");
-class Toggle;
-GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
-		const Toggle& toggle, const std::string& icon);
-
-typedef struct _GtkCheckMenuItem GtkCheckMenuItem;
-void check_menu_item_set_active_no_signal (GtkCheckMenuItem* item, gboolean active);
-typedef struct _GtkRadioMenuItem GtkRadioMenuItem;
-void radio_menu_item_set_active_no_signal (GtkRadioMenuItem* item, gboolean active);
 
 #endif

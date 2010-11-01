@@ -7,7 +7,6 @@
 #include "../select.h"
 #include "../mainframe.h"
 #include "radiant_i18n.h"
-#include "../commands.h"
 
 // Constructor
 XYWndManager::XYWndManager() :

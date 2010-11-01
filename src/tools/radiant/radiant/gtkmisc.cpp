@@ -48,55 +48,10 @@
 #include "gtkutil/TextMenuItem.h"
 #include "gtkutil/TextMenuItemToggle.h"
 #include "gtkutil/SeparatorMenuItem.h"
-#include "commands.h"
 #include "gtkutil/IConv.h"
 
 // =============================================================================
 // Misc stuff
-
-void command_connect_accelerator (const std::string& name)
-{
-	const Command& command = GlobalCommands_find(name);
-	GlobalShortcuts_register(name, 1);
-	global_accel_group_connect(command.m_accelerator, command.m_callback);
-}
-
-void command_disconnect_accelerator (const std::string& name)
-{
-	const Command& command = GlobalCommands_find(name);
-	global_accel_group_disconnect(command.m_accelerator, command.m_callback);
-}
-
-void toggle_add_accelerator (const std::string& name)
-{
-	const Toggle& toggle = GlobalToggles_find(name);
-	GlobalShortcuts_register(name, 2);
-	global_accel_group_connect(toggle.m_command.m_accelerator, toggle.m_command.m_callback);
-}
-
-void toggle_remove_accelerator (const std::string& name)
-{
-	const Toggle& toggle = GlobalToggles_find(name);
-	global_accel_group_disconnect(toggle.m_command.m_accelerator, toggle.m_command.m_callback);
-}
-
-GtkCheckMenuItem* create_check_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
-		const std::string& commandName, const std::string& icon)
-{
-	GlobalShortcuts_register(commandName, 2);
-	const Toggle& toggle = GlobalToggles_find(commandName);
-	global_accel_group_connect(toggle.m_command.m_accelerator, toggle.m_command.m_callback);
-	return create_check_menu_item_with_mnemonic(menu, mnemonic, toggle, icon);
-}
-
-GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& mnemonic,
-		const std::string& commandName, const std::string& icon)
-{
-	GlobalShortcuts_register(commandName, 1);
-	const Command& command = GlobalCommands_find(commandName);
-	global_accel_group_connect(command.m_accelerator, command.m_callback);
-	return create_menu_item_with_mnemonic(menu, mnemonic, command, icon);
-}
 
 /* greebo: Create a menu item under the given <menu> and connect it to the given <command> name
  */
@@ -114,7 +69,7 @@ GtkMenuItem* createMenuItemWithMnemonic (GtkMenu* menu, const std::string& capti
 	if (event != NULL) {
 		event->connectWidget(GTK_WIDGET(menuItem));
 	} else {
-		globalErrorStream() << "gtkutil::createMenuItem failed to lookup command " << commandName.c_str() << "\n";
+		globalErrorStream() << "gtkutil::createMenuItem failed to lookup command " << commandName << "\n";
 	}
 
 	return GTK_MENU_ITEM(menuItem);
@@ -137,7 +92,7 @@ GtkMenuItem* createCheckMenuItemWithMnemonic (GtkMenu* menu, const std::string& 
 	if (event != NULL) {
 		event->connectWidget(GTK_WIDGET(menuItem));
 	} else {
-		globalErrorStream() << "gtkutil::createMenuItem failed to lookup command " << commandName.c_str() << "\n";
+		globalErrorStream() << "gtkutil::createMenuItem failed to lookup command " << commandName << "\n";
 	}
 
 	return GTK_MENU_ITEM(menuItem);

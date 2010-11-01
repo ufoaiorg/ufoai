@@ -59,8 +59,6 @@ static void PlugInMenu_Add (GtkMenu* plugin_menu, IPlugin* pPlugIn)
 	std::size_t nCount = pPlugIn->getCommandCount();
 	if (nCount > 0) {
 		GtkWidget *menu = gtk_menu_new();
-		if (g_Layout_enableDetachableMenus.m_value)
-			menu_tearoff(GTK_MENU(menu));
 		while (nCount > 0) {
 			const char *menuText = pPlugIn->getCommandTitle(--nCount);
 			const char *menuCommand = pPlugIn->getCommand(nCount);
@@ -150,9 +148,6 @@ GtkMenuItem* create_plugins_menu ()
 	// Plugins menu
 	GtkMenuItem* plugins_menu_item = new_sub_menu_item_with_mnemonic(_("_Plugins"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(plugins_menu_item));
-	if (g_Layout_enableDetachableMenus.m_value) {
-		menu_tearoff(menu);
-	}
 
 	g_plugins_menu = menu;
 

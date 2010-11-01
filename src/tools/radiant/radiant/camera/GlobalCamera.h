@@ -67,7 +67,6 @@ class GlobalCameraManager
 		void lookThroughSelected ();
 		void lookThroughCamera ();
 
-		void benchmark ();
 		void update ();
 
 		// Add a "CameraMoved" callback to the signal member

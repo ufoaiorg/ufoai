@@ -74,7 +74,6 @@
 #include "../settings/preferences.h"
 #include "../referencecache.h"
 #include "../lastused.h"
-#include "../commands.h"
 #include "autosave.h"
 #include "../brush/brush.h"
 #include "../brush/BrushNode.h"

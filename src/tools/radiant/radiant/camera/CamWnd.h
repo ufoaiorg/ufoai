@@ -68,8 +68,6 @@ class CamWnd
 
 		Camera& getCamera ();
 
-		void BenchMark ();
-
 		void changeFloor (bool up);
 
 		GtkWidget* getWidget ();

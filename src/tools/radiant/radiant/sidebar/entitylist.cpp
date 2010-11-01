@@ -39,7 +39,6 @@
 #include "gtkutil/widget.h"
 #include "gtkutil/window.h"
 #include "gtkutil/idledraw.h"
-#include "gtkutil/accelerator.h"
 #include "gtkutil/TreeModel.h"
 #include "gtkutil/closure.h"
 

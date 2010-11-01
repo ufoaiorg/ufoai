@@ -253,7 +253,6 @@ void filter_level8 (void)
 	filter_level(CONTENTS_LEVEL_8);
 }
 
-#include "commands.h"
 /**
  * @brief register commands for level filtering
  */

@@ -79,7 +79,6 @@
 #include "../mainframe.h"
 #include "../dialogs/findtextures.h"
 #include "sidebar.h"
-#include "../commands.h"
 
 namespace {
 	const std::string RKEY_TEXTURES_HIDE_UNUSED = "user/ui/textures/browser/hideUnused";
@@ -801,9 +800,6 @@ void TextureBrowser::constructTreeView() {
 GtkMenuItem* TextureBrowser::constructViewMenu(GtkMenu* menu) {
 	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic(_("_View"));
 
-	if (g_Layout_enableDetachableMenus.m_value)
-		menu_tearoff(menu);
-
 	createCheckMenuItemWithMnemonic(menu, _("Hide Invalid"), "ShowInvalid");
 
 	createSeparatorMenuItem(menu);
@@ -820,9 +816,6 @@ void TextureBrowser::onActivateDirectoryChange(GtkMenuItem* item, TextureBrowser
 
 GtkMenuItem* TextureBrowser::constructDirectoriesMenu(GtkMenu* menu) {
 	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic(_("_Directories"));
-
-	if (g_Layout_enableDetachableMenus.m_value)
-		menu_tearoff(menu);
 
 	constructTreeView();
 

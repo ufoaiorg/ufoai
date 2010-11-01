@@ -35,7 +35,6 @@
 #include "modulesystem/singletonmodule.h"
 #include "ui/umpeditor/UMPEditor.h"
 #include "map/map.h"
-#include "commands.h"
 #include "generic/callback.h"
 #include "ump/UMPFile.h"
 #include "ump/UMPTile.h"

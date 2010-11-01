@@ -16,7 +16,6 @@
 
 #include "sidebar.h"
 #include "radiant_i18n.h"
-#include "../commands.h"
 #include "gtkutil/widget.h"
 #include "ieventmanager.h"
 

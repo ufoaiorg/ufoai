@@ -52,7 +52,6 @@
 #include "settings/preferences.h"
 #include "iradiant.h"
 #include "qe3.h"
-#include "commands.h"
 #include "ui/lightdialog/LightDialog.h"
 #include "dialogs/particle.h"
 #include "ui/modelselector/ModelSelector.h"

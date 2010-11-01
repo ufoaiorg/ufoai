@@ -14,7 +14,6 @@ $(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GL
 
 $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
-	$(RADIANT_BASE)/radiant/commands.cpp \
 	$(RADIANT_BASE)/radiant/console.cpp \
 	$(RADIANT_BASE)/radiant/dialog.cpp \
 	$(RADIANT_BASE)/radiant/eclass.cpp \
@@ -203,7 +202,6 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/xmlregistry/XMLRegistry.cpp \
 	\
-	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/clipboard.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/cursor.cpp \

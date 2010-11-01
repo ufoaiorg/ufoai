@@ -219,7 +219,6 @@ extern GLWindowGlobals g_glwindow_globals;
 template<typename Value>
 class LatchedValue;
 typedef LatchedValue<bool> LatchedBool;
-extern LatchedBool g_Layout_enableDetachableMenus;
 
 void deleteSelection ();
 

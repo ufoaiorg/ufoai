@@ -25,7 +25,6 @@
 #include <iostream>
 #include <time.h>
 
-#include "gtkutil/accelerator.h"
 #include "gtkutil/messagebox.h"
 #include "gtkutil/container.h"
 #include "gtkutil/menu.h"
@@ -97,8 +96,6 @@ static void console_clear ()
 
 static void console_populate_popup (GtkTextView* textview, GtkMenu* menu, gpointer user_data)
 {
-	menu_separator(menu);
-
 	GtkWidget* item = gtk_menu_item_new_with_label("Clear");
 	g_signal_connect(G_OBJECT (item), "activate", G_CALLBACK(console_clear), 0);
 	gtk_widget_show(item);

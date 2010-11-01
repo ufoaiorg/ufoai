@@ -33,7 +33,6 @@
 #include "gtkutil/menu.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
-#include "commands.h"
 #include "settings/preferences.h"
 #include "iregistry.h"
 #include "iscenegraph.h"

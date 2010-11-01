@@ -35,7 +35,6 @@
 #include "stringio.h"
 #include "settings/preferences.h"
 #include "preferencesystem.h"
-#include "commands.h"
 #include "radiant_i18n.h"
 #include "gtkutil/widget.h"
 #include "gtkmisc.h"

@@ -9,7 +9,6 @@
 #include "gtkutil/widget.h"
 #include "gtkutil/GLWidgetSentry.h"
 
-#include "../commands.h"
 #include "../windowobservers.h"
 #include "../plugin.h"
 #include "../mainframe.h"
@@ -224,25 +223,8 @@ CamWnd::CamWnd() :
 
 	AddSceneChangeCallback(CamWndUpdate(*this));
 
-	PressedButtons_connect(g_pressedButtons, m_gl_widget);
-
 	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
 }
-
-void CamWnd::BenchMark ()
-{
-	const double dStart = clock() / 1000.0;
-	for (int i = 0; i < 100; i++) {
-		Vector3 angles;
-		angles[CAMERA_ROLL] = 0;
-		angles[CAMERA_PITCH] = 0;
-		angles[CAMERA_YAW] = static_cast<float> (i * (360.0 / 100.0));
-		setCameraAngles(angles);
-	}
-	const double dEnd = clock() / 1000.0;
-	globalOutputStream() << FloatFormat(dEnd - dStart, 5, 2) << " seconds\n";
-}
-
 
 void CamWnd::changeFloor(bool up) {
 	float current = m_Camera.origin[2] - 48;

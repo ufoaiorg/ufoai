@@ -50,7 +50,6 @@
 #include "../ui/modelselector/ModelSelector.h"
 #include "../ui/common/SoundChooser.h"
 
-#include "gtkutil/accelerator.h"
 #include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"
 #include "gtkutil/messagebox.h"

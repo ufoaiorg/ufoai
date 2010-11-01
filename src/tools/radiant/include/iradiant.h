@@ -29,7 +29,6 @@
 
 #include "generic/constant.h"
 #include "iclipper.h"
-#include "gtkutil/accelerator.h"
 #include <string>
 
 // ========================================

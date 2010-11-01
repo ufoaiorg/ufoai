@@ -11,7 +11,6 @@
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
 
-#include "../../commands.h"
 #include "gtkutil/pointer.h"
 #include "gtkutil/image.h"
 #include "gtkutil/button.h"

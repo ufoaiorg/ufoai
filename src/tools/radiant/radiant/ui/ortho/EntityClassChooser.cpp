@@ -4,6 +4,7 @@
 #include "iradiant.h"
 #include "eclasslib.h"
 #include "gtkutil/dialog.h"
+#include <gdk/gdkkeysyms.h>
 
 #include "../../entity.h" // Entity_createFromSelection()
 namespace ui

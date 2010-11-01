@@ -154,11 +154,6 @@ void GlobalCameraManager::lookThroughSelected ()
 	}
 }
 
-void GlobalCameraManager::benchmark ()
-{
-	_camWnd->BenchMark();
-}
-
 void GlobalCameraManager::update ()
 {
 	_camWnd->update();

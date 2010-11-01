@@ -58,7 +58,6 @@
 #include "../mainframe.h"
 #include "../dialog.h"
 #include "../brush/brush.h"
-#include "../commands.h"
 #include "stream/stringstream.h"
 #include "../textureentry.h"
 

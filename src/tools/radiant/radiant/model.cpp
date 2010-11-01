@@ -46,7 +46,6 @@ typedef unsigned char byte;
 #include "stream/stringstream.h"
 #include "typesystem.h"
 
-#include "commands.h"
 #include "gtkutil/widget.h"
 #include "picomodel/model.h"
 
@@ -96,10 +95,10 @@ ToggleItem g_showModelBB_button(g_showModelBB_button_callback);
 
 void Model_RegisterToggles (void)
 {
-	GlobalToggles_insert("ToggleShowModelBoundingBox", FreeCaller<pico_toggleShowModelBoundingBoxes> (),
-			ToggleItem::AddCallbackCaller(g_showModelBB_button), Accelerator('B'));
-	GlobalToggles_insert("ToggleShowModelNormals", FreeCaller<pico_toggleShowModelNormals> (),
-			ToggleItem::AddCallbackCaller(g_showModelNormals_button), Accelerator('N'));
+//	GlobalToggles_insert("ToggleShowModelBoundingBox", FreeCaller<pico_toggleShowModelBoundingBoxes> (),
+//			ToggleItem::AddCallbackCaller(g_showModelBB_button), Accelerator('B'));
+//	GlobalToggles_insert("ToggleShowModelNormals", FreeCaller<pico_toggleShowModelNormals> (),
+//			ToggleItem::AddCallbackCaller(g_showModelNormals_button), Accelerator('N'));
 }
 
 static void PicoPrintFunc (int level, const char *str)

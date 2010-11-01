@@ -33,7 +33,6 @@
 #include "BrushNode.h"
 #include "../map/map.h"
 #include "../sidebar/sidebar.h"
-#include "../commands.h"
 #include "../dialog.h"
 #include "../settings/preferences.h"
 #include "../mainframe.h"
@@ -745,8 +744,6 @@ void Brush_constructMenu (GtkMenu* menu)
 	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, C_("Constructive Solid Geometry", "CSG"));
-		if (g_Layout_enableDetachableMenus.m_value)
-			menu_tearoff(menu_in_menu);
 		createMenuItemWithMnemonic(menu_in_menu, _("Make Hollow"), "CSGHollow");
 		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract"), "CSGSubtract");
 		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge"), "CSGMerge");
@@ -754,9 +751,6 @@ void Brush_constructMenu (GtkMenu* menu)
 	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Clipper"));
-		if (g_Layout_enableDetachableMenus.m_value)
-			menu_tearoff(menu_in_menu);
-
 		createMenuItemWithMnemonic(menu_in_menu, _("Clip selection"), "ClipSelected");
 		createMenuItemWithMnemonic(menu_in_menu, _("Split selection"), "SplitSelected");
 		createMenuItemWithMnemonic(menu_in_menu, _("Flip Clip orientation"), "FlipClip");

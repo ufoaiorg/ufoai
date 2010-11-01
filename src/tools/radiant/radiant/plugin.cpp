@@ -56,7 +56,6 @@
 #include "imap.h"
 #include "iclipper.h"
 #include "namespace.h"
-#include "commands.h"
 #include "isound.h"
 #include "ifilter.h"
 #include "ieventmanager.h"

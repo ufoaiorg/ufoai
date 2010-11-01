@@ -9,6 +9,7 @@
 #include "gtkutil/image.h"
 #include "gtkutil/MultiMonitor.h"
 #include "gtkutil/VFSTreePopulator.h"
+#include "generic/callback.h"
 #include "../Icons.h"
 #include <gtk/gtk.h>
 #include "radiant_i18n.h"

@@ -78,7 +78,6 @@
 #include "sidebar/sidebar.h"
 #include "map/map.h"
 #include "mainframe.h"
-#include "commands.h"
 #include "settings/preferences.h"
 #include "environment.h"
 #include "referencecache.h"
@@ -411,19 +410,6 @@ static void remove_local_pid (void)
 	file_remove(g_pidGameFile);
 }
 
-static void user_shortcuts_init (void)
-{
-	LoadCommandMap(SettingsPath_get());
-	SaveCommandMap(SettingsPath_get());
-}
-
-void user_shortcuts_save ()
-{
-	std::string path = SettingsPath_get() + g_pGameDescription->mGameFile + '/';
-	SaveCommandMap(path);
-}
-
-
 void show_splash();
 void hide_splash();
 
@@ -504,10 +490,6 @@ int main (int argc, char* argv[])
 
 	Radiant_Initialise();
 
-	global_accel_init();
-
-	user_shortcuts_init();
-
 	g_pParentWnd = new MainFrame();
 
 	hide_splash();
@@ -537,10 +519,6 @@ int main (int argc, char* argv[])
 	}
 
 	delete g_pParentWnd;
-
-	user_shortcuts_save();
-
-	global_accel_destroy();
 
 	Radiant_Shutdown();
 

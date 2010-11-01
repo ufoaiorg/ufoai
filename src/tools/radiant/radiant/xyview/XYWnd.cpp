@@ -10,7 +10,6 @@
 #include "iimage.h"
 #include "ieventmanager.h"
 
-#include "gtkutil/accelerator.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/GLWidgetSentry.h"
 
