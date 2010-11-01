@@ -19,14 +19,6 @@ endef
 %.pk3 : # zip return code 12: zip has nothing to do, bad for a "make pk3 -B"
 	$(Q)cd $(BASE_DIR) ; $(call ZIP) $(filter -r,$(call $@)) $(notdir $@) . $(strip $(if $(findstring -r,$(firstword $(call $@))),$(subst *,\*,$(subst -r,-i,$(call $@))),$(call $@))) || [ $$? -eq 12 ] && exit 0
 
-
-
-
-
-
-
-
-
 define $(BASE_DIR)/0pics.pk3
 	-r pics/*.jpg pics/*.tga pics/*.png
 endef
