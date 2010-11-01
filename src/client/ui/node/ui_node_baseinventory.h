@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_BASEINVENTORY_H
 
 #include "ui_node_container.h"
+#include "ui_node_abstractscrollable.h"
 
 /* prototypes */
 struct uiBehaviour_s;
@@ -42,6 +43,11 @@ typedef struct baseInventoryExtraData_s {
 	qboolean displayAmmoOfWeapon;
 	qboolean displayUnavailableAmmoOfWeapon;
 	qboolean displayAvailableOnTop;
+
+	/* scroll status */
+	uiScroll_t scrollY;
+	/* scroll callback when the status change */
+	struct uiAction_s *onViewChange;
 
 } baseInventoryExtraData_t;
 

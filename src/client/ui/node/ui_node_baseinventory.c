@@ -200,8 +200,8 @@ static void UI_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
  */
 static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
 {
-	if (EXTRADATA(node).super.onViewChange) {
-		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+	if (EXTRADATA(node).onViewChange) {
+		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 	}
 }
 
@@ -304,7 +304,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 		invList_t *icItem = iterator.itemFound;
 
 		/* skip items over and bellow the node view */
-		if (outOfNode || currentHeight < EXTRADATA(node).super.scrollCur) {
+		if (outOfNode || currentHeight < EXTRADATA(node).scrollY.viewPos) {
 			int height;
 			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
@@ -312,7 +312,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 			if (height > rowHeight)
 				rowHeight = height;
 
-			if (outOfNode || currentHeight + rowHeight < EXTRADATA(node).super.scrollCur) {
+			if (outOfNode || currentHeight + rowHeight < EXTRADATA(node).scrollY.viewPos) {
 				if (col == EXTRADATA(node).columns - 1) {
 					currentHeight += rowHeight;
 					rowHeight = 0;
@@ -324,7 +324,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += currentHeight - EXTRADATA(node).super.scrollCur;
+		pos[1] += currentHeight - EXTRADATA(node).scrollY.viewPos;
 		pos[2] = 0;
 
 		if (highlightType) {
@@ -411,7 +411,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 		if (col == EXTRADATA(node).columns - 1) {
 			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (currentHeight - EXTRADATA(node).super.scrollCur >= node->size[1])
+			if (currentHeight - EXTRADATA(node).scrollY.viewPos >= node->size[1])
 				outOfNode = qtrue;
 		}
 
@@ -451,17 +451,17 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, objDef_t *highlightType)
 #endif
 
 	/* Update display of scroll buttons if something changed. */
-	if (visibleHeight != EXTRADATA(node).super.scrollNum || needHeight != EXTRADATA(node).super.scrollTotalNum) {
-		EXTRADATA(node).super.scrollTotalNum = needHeight;
-		EXTRADATA(node).super.scrollNum = visibleHeight;
+	if (visibleHeight != EXTRADATA(node).scrollY.viewSize || needHeight != EXTRADATA(node).scrollY.fullSize) {
+		EXTRADATA(node).scrollY.fullSize = needHeight;
+		EXTRADATA(node).scrollY.viewSize = visibleHeight;
 		updateScroll = qtrue;
 	}
-	if (EXTRADATA(node).super.scrollCur > needHeight - visibleHeight) {
-		EXTRADATA(node).super.scrollCur = needHeight - visibleHeight;
+	if (EXTRADATA(node).scrollY.viewPos > needHeight - visibleHeight) {
+		EXTRADATA(node).scrollY.viewPos = needHeight - visibleHeight;
 		updateScroll = qtrue;
 	}
-	if (EXTRADATA(node).super.scrollCur < 0) {
-		EXTRADATA(node).super.scrollCur = 0;
+	if (EXTRADATA(node).scrollY.viewPos < 0) {
+		EXTRADATA(node).scrollY.viewPos = 0;
 		updateScroll = qtrue;
 	}
 
@@ -526,7 +526,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 		int height;
 
 		/* skip items over and bellow the node view */
-		if (outOfNode || currentHeight < EXTRADATACONST(node).super.scrollCur) {
+		if (outOfNode || currentHeight < EXTRADATACONST(node).scrollY.viewPos) {
 			int outHeight;
 			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &outHeight, NULL, NULL);
@@ -534,7 +534,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 			if (outHeight > rowHeight)
 				rowHeight = outHeight;
 
-			if (outOfNode || currentHeight + rowHeight < EXTRADATACONST(node).super.scrollCur) {
+			if (outOfNode || currentHeight + rowHeight < EXTRADATACONST(node).scrollY.viewPos) {
 				if (col == EXTRADATACONST(node).columns - 1) {
 					currentHeight += rowHeight;
 					rowHeight = 0;
@@ -546,7 +546,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += currentHeight - EXTRADATACONST(node).super.scrollCur;
+		pos[1] += currentHeight - EXTRADATACONST(node).scrollY.viewPos;
 
 		/* check item */
 		if (mouseY < pos[1])
@@ -610,7 +610,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 		if (col == EXTRADATACONST(node).columns - 1) {
 			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (currentHeight - EXTRADATACONST(node).super.scrollCur >= node->size[1])
+			if (currentHeight - EXTRADATACONST(node).scrollY.viewPos >= node->size[1])
 				return NULL;
 		}
 
@@ -750,18 +750,18 @@ static void UI_BaseInventoryNodeWheel (uiNode_t *node, qboolean down, int x, int
 {
 	const int delta = 20;
 	if (down) {
-		const int lenght = EXTRADATA(node).super.scrollTotalNum - EXTRADATA(node).super.scrollNum;
-		if (EXTRADATA(node).super.scrollCur < lenght) {
-			EXTRADATA(node).super.scrollCur += delta;
-			if (EXTRADATA(node).super.scrollCur > lenght)
-				EXTRADATA(node).super.scrollCur = lenght;
+		const int lenght = EXTRADATA(node).scrollY.fullSize - EXTRADATA(node).scrollY.viewSize;
+		if (EXTRADATA(node).scrollY.viewPos < lenght) {
+			EXTRADATA(node).scrollY.viewPos += delta;
+			if (EXTRADATA(node).scrollY.viewPos > lenght)
+				EXTRADATA(node).scrollY.viewPos = lenght;
 			UI_BaseInventoryNodeUpdateScroll(node);
 		}
 	} else {
-		if (EXTRADATA(node).super.scrollCur > 0) {
-			EXTRADATA(node).super.scrollCur -= delta;
-			if (EXTRADATA(node).super.scrollCur < 0)
-				EXTRADATA(node).super.scrollCur = 0;
+		if (EXTRADATA(node).scrollY.viewPos > 0) {
+			EXTRADATA(node).scrollY.viewPos -= delta;
+			if (EXTRADATA(node).scrollY.viewPos < 0)
+				EXTRADATA(node).scrollY.viewPos = 0;
 			UI_BaseInventoryNodeUpdateScroll(node);
 		}
 	}
@@ -833,13 +833,13 @@ static const value_t properties[] = {
 	/* Position of the vertical view (into the full number of elements the node contain)
 	 * @todo Rename it viewpos (like scrollable node)
 	 */
-	{"scrollpos", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollCur),  MEMBER_SIZEOF(containerExtraData_t, scrollCur)},
+	{"scrollpos", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(baseInventoryExtraData_t, scrollY.viewPos)},
 	/* Size of the vertical view (proportional to the number of elements the node can display without moving) */
-	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollNum),  MEMBER_SIZEOF(containerExtraData_t, scrollNum)},
+	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(baseInventoryExtraData_t, scrollY.viewSize)},
 	/* Full vertical size (proportional to the number of elements the node contain) */
-	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollTotalNum),  MEMBER_SIZEOF(containerExtraData_t, scrollTotalNum)},
+	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, scrollY.fullSize),  MEMBER_SIZEOF(baseInventoryExtraData_t, scrollY.fullSize)},
 	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(containerExtraData_t, onViewChange), MEMBER_SIZEOF(containerExtraData_t, onViewChange)},
+	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, onViewChange), MEMBER_SIZEOF(baseInventoryExtraData_t, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

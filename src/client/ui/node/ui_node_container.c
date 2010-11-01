@@ -95,17 +95,6 @@ static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_
 	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
 }
 
-/**
- * @brief Update display of scroll buttons.
- * @param[in] node Context node
- */
-static void UI_ContainerNodeUpdateScroll (uiNode_t* node)
-{
-	if (EXTRADATA(node).onViewChange) {
-		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
-	}
-}
-
 static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
 {
 	return EXTRADATACONST(node).container && EXTRADATACONST(node).container->scroll;
@@ -821,10 +810,6 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	if (!ic)
 		return;
 	UI_ContainerNodeAutoPlaceItem(node, ic);
-
-	/* Update display of scroll buttons. */
-	if (UI_IsScrollContainerNode(node))
-		UI_ContainerNodeUpdateScroll(node);
 }
 
 static int oldMouseX = 0;
@@ -882,28 +867,6 @@ static void UI_ContainerNodeMouseUp (uiNode_t *node, int x, int y, int button)
 	}
 	if (UI_DNDIsDragging()) {
 		UI_DNDDrop();
-	}
-}
-static void UI_ContainerNodeWheel (uiNode_t *node, qboolean down, int x, int y)
-{
-	if (UI_IsScrollContainerNode(node)) {
-		const int delta = 20;
-		if (down) {
-			const int lenght = EXTRADATA(node).scrollTotalNum - EXTRADATA(node).scrollNum;
-			if (EXTRADATA(node).scrollCur < lenght) {
-				EXTRADATA(node).scrollCur += delta;
-				if (EXTRADATA(node).scrollCur > lenght)
-					EXTRADATA(node).scrollCur = lenght;
-				UI_ContainerNodeUpdateScroll(node);
-			}
-		} else {
-			if (EXTRADATA(node).scrollCur > 0) {
-				EXTRADATA(node).scrollCur -= delta;
-				if (EXTRADATA(node).scrollCur < 0)
-					EXTRADATA(node).scrollCur = 0;
-				UI_ContainerNodeUpdateScroll(node);
-			}
-		}
 	}
 }
 
@@ -1091,7 +1054,6 @@ void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 	behaviour->dndFinished = UI_ContainerNodeDNDFinished;
 	behaviour->dndMove = UI_ContainerNodeDNDMove;
 	behaviour->dndLeave = UI_ContainerNodeDNDLeave;
-	behaviour->mouseWheel = UI_ContainerNodeWheel;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

@@ -51,14 +51,6 @@ typedef struct containerExtraData_s {
 
 	int lastSelectedId;		/**< id oject the object type selected */
 	struct uiAction_s *onSelect;	/**< call when we select an item */
-
-	/* for scrolled container */
-	/** @todo Is it only for baseinventory node? */
-
-	int scrollCur;			/**< Index of first item that is displayed. */
-	int scrollNum;			/**< Number of items that are displayed. */
-	int scrollTotalNum;		/**< Total number of displayable items. */
-	struct uiAction_s *onViewChange;	/**< called when view change (scrollCur, scrollNum, scrollTotalNum) */
 } containerExtraData_t;
 
 
