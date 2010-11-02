@@ -83,6 +83,7 @@
 #include "referencecache.h"
 #include "stacktrace.h"
 #include "ui/mru/MRU.h"
+#include "ui/splash/Splash.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -411,9 +412,6 @@ static void remove_local_pid (void)
 	file_remove(g_pidGameFile);
 }
 
-void show_splash();
-void hide_splash();
-
 int main (int argc, char* argv[])
 {
 	streams_init();
@@ -468,7 +466,7 @@ int main (int argc, char* argv[])
 
 	paths_init();
 
-	show_splash();
+	ui::Splash::Instance().show();
 
 	create_global_pid();
 
@@ -493,7 +491,7 @@ int main (int argc, char* argv[])
 
 	g_pParentWnd = new MainFrame();
 
-	hide_splash();
+	ui::Splash::Instance().hide();
 
 	if (GlobalMRU().loadLastMap() && GlobalMRU().getLastMapName() != "") {
 		 Map_LoadFile(GlobalMRU().getLastMapName());

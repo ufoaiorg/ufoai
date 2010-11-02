@@ -177,6 +177,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/mru/MRU.cpp \
 	$(RADIANT_BASE)/radiant/ui/mru/MRUMenuItem.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/splash/Splash.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/commandlist/CommandList.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/menu/FiltersMenu.cpp \
