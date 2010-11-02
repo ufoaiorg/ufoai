@@ -5,6 +5,11 @@
 
 namespace ui {
 
+/* greebo: The CommandListPopulator is an Event visitor class that cycles
+ * through all the registered events and stores the name and the associated
+ * shortcut representation into the given GtkListStore widget.
+ */
+
 class CommandListPopulator: public IEventVisitor
 {
 		// The list store the items should be added to

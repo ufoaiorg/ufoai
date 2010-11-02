@@ -2,11 +2,6 @@
 
 #include "gtk/gtk.h"
 
-#include <gtk/gtkdialog.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkentry.h>
-#include <gtk/gtkstock.h>
-
 #include "gtkutil/messagebox.h"
 #include "gtkutil/ScrolledFrame.h"
 #include "gtkutil/TextButton.h"
@@ -14,7 +9,10 @@
 #include "gtkutil/TreeModel.h"
 
 #include "../../mainframe.h"
+
 #include "CommandListPopulator.h"
+#include "ShortcutChooser.h"
+
 #include "radiant_i18n.h"
 
 namespace ui {
@@ -27,8 +25,7 @@ const std::string CMDLISTDLG_WINDOW_TITLE = _("Shortcut List");
 }
 
 CommandListDialog::CommandListDialog () :
-		gtkutil::BlockingTransientWindow(CMDLISTDLG_WINDOW_TITLE, MainFrame_getWindow()),
-		_keyval(0), _state(0)
+		gtkutil::BlockingTransientWindow(CMDLISTDLG_WINDOW_TITLE, MainFrame_getWindow())
 {
 	// Set the default border width in accordance to the HIG
 	gtk_container_set_border_width(GTK_CONTAINER(getWindow()), 12);
@@ -117,107 +114,6 @@ void CommandListDialog::populateWindow ()
 	}
 }
 
-bool CommandListDialog::shortcutDialog(const std::string& title, const std::string& label) {
-	GtkWidget* dialog;
-	GtkWidget* labelWidget;
-	GtkWidget* entryWidget;
-
-	dialog = gtk_dialog_new_with_buttons(title.c_str(), GTK_WINDOW(getWindow()), GTK_DIALOG_DESTROY_WITH_PARENT,
-			GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, NULL);
-
-	labelWidget = gtk_label_new(NULL);
-	gtk_label_set_markup(GTK_LABEL(labelWidget), label.c_str());
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), labelWidget);
-
-	entryWidget = gtk_entry_new();
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), entryWidget);
-
-	// The widget to display the status text
-	_statusWidget = gtk_label_new(NULL);
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), _statusWidget);
-	gtk_label_set_justify(GTK_LABEL(_statusWidget), GTK_JUSTIFY_LEFT);
-
-	// Connect the key events to the custom callback to override the default handler
-	g_signal_connect(G_OBJECT(entryWidget), "key-press-event", G_CALLBACK(onShortcutKeyPress), this);
-
-	gtk_widget_show_all(dialog);
-	gint response = gtk_dialog_run(GTK_DIALOG(dialog));
-
-	gtk_widget_destroy(dialog);
-
-	return (response == GTK_RESPONSE_OK);
-}
-
-gboolean CommandListDialog::onShortcutKeyPress(GtkWidget* widget, GdkEventKey* event, CommandListDialog* self) {
-	std::string statusText("");
-
-	gtk_entry_set_text(GTK_ENTRY(widget), GlobalEventManager().getGDKEventStr(event).c_str());
-
-	// Store this key/modifier combination for later use
-	self->_keyval = event->keyval;
-	self->_state = event->state;
-
-	IEvent* foundEvent = GlobalEventManager().findEvent(event);
-	if (foundEvent != NULL) {
-		statusText = "Note: This is already assigned to: <b>";
-		statusText += GlobalEventManager().getEventName(foundEvent) + "</b>";
-	}
-
-	gtk_label_set_markup(GTK_LABEL(self->_statusWidget), statusText.c_str());
-
-	return true;
-}
-
-void CommandListDialog::retrieveShortcut(const std::string& commandName) {
-	// The shortcutDialog returns TRUE, if the user clicked on OK
-	if (shortcutDialog(_("Enter new Shortcut"), std::string("<b>") + commandName + "</b>")) {
-		if (_keyval != 0) {
-			IEvent* event = GlobalEventManager().findEvent(commandName);
-
-			// Construct an eventkey structure to be passed to the EventManager query
-			GdkEventKey eventKey;
-
-			eventKey.keyval = _keyval;
-			eventKey.state = _state;
-
-			IEvent* foundEvent = GlobalEventManager().findEvent(&eventKey);
-
-			// There is already a command connected to this shortcut, ask the user
-			if (foundEvent != NULL) {
-				const std::string foundEventName = GlobalEventManager().getEventName(foundEvent);
-				std::string message("The specified shortcut is already assigned to <b>");
-				message += foundEventName + "</b>\nOverwrite the current setting and assign this shortcut to <b>";
-				message += commandName + "</b> instead?";
-
-				EMessageBoxReturn result = gtk_MessageBox(GTK_WIDGET(getWindow()), message, _("Overwrite existing shortcut?"), eMB_YESNO, eMB_ICONQUESTION);
-				if (result == eIDYES) {
-					// Disconnect both the found command and the new command
-					GlobalEventManager().disconnectAccelerator(foundEventName);
-					GlobalEventManager().disconnectAccelerator(commandName);
-
-					// Create a new accelerator and connect it to the selected command
-					IAccelerator* accel = GlobalEventManager().addAccelerator(&eventKey);
-					GlobalEventManager().connectAccelerator(accel, commandName);
-				}
-			}
-			else {
-				GlobalEventManager().disconnectAccelerator(commandName);
-
-				// Create a new accelerator and connect it to the selected command
-				IAccelerator* accel = GlobalEventManager().addAccelerator(&eventKey);
-				GlobalEventManager().connectAccelerator(accel, commandName);
-			}
-		}
-		else {
-			// No key is specified, disconnect the command
-			GlobalEventManager().disconnectAccelerator(commandName);
-		}
-
-		// Update the list
-		reloadList();
-	}
-}
-
 std::string CommandListDialog::getSelectedCommand() {
 	GtkTreeIter iter;
 	GtkTreeModel* model;
@@ -239,7 +135,13 @@ std::string CommandListDialog::getSelectedCommand() {
 }
 
 void CommandListDialog::assignShortcut() {
-	retrieveShortcut(getSelectedCommand());
+	// Instantiate the helper class
+	ShortcutChooser chooser(getWindow());
+
+	if (chooser.retrieveShortcut(getSelectedCommand())) {
+		// The chooser returned TRUE, update the list
+		reloadList();
+	}
 }
 
 void CommandListDialog::callbackAssign(GtkWidget* widget, CommandListDialog* self) {
