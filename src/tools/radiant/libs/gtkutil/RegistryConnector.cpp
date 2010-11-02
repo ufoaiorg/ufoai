@@ -5,6 +5,9 @@
 #include "gtk/gtktogglebutton.h"
 #include "gtk/gtkcombobox.h"
 #include "gtk/gtkentry.h"
+#include "gtk/gtkspinbutton.h"
+#include "gtk/gtkrange.h"
+#include "gtk/gtkscale.h"
 
 namespace gtkutil {
 
@@ -32,6 +35,12 @@ void RegistryConnector::importKey (GtkObject* obj, const std::string& registryKe
 	} else if (GTK_IS_ENTRY(obj)) {
 		// Set the content of the input field to the registryKey
 		gtk_entry_set_text(GTK_ENTRY(obj), GlobalRegistry().get(registryKey).c_str());
+	} else if (GTK_IS_SPIN_BUTTON(obj)) {
+		// Set the content of the input field to the registryKey
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(obj), GlobalRegistry().getFloat(registryKey));
+	} else if (GTK_IS_SCALE(obj)) {
+		// Set the content of the input field to the registryKey
+		gtk_range_set_value(GTK_RANGE(obj), GlobalRegistry().getFloat(registryKey));
 	} else {
 		std::cout << "RegistryConnector::importKey failed to identify GTKObject for key " << registryKey << "\n";
 	}
@@ -52,6 +61,12 @@ void RegistryConnector::exportKey (GtkObject* obj, const std::string& registryKe
 	} else if (GTK_IS_ENTRY(obj)) {
 		// Get the content of the input field and write it to the registry
 		GlobalRegistry().set(registryKey, gtk_entry_get_text(GTK_ENTRY(obj)));
+	} else if (GTK_IS_SPIN_BUTTON(obj)) {
+		// Set the content of the input field to the registryKey
+		GlobalRegistry().setFloat(registryKey, gtk_spin_button_get_value(GTK_SPIN_BUTTON(obj)));
+	} else if (GTK_IS_SCALE(obj)) {
+		// Set the content of the input field to the registryKey
+		GlobalRegistry().setFloat(registryKey, gtk_range_get_value(GTK_RANGE(obj)));
 	} else {
 		std::cout << "RegistryConnector::exportKey failed to identify GTKObject for key " << registryKey << "\n";
 	}
