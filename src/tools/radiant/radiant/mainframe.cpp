@@ -1446,9 +1446,9 @@ static GtkMenuItem* create_selection_menu (void)
 
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Components"));
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Edges"), "DragEdges");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Vertices"), "DragVertices");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Faces"), "DragFaces");
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Edges"), "DragEdges", ui::icons::ICON_MODIFY_EDGES);
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Vertices"), "DragVertices", ui::icons::ICON_MODIFY_VERTICES);
+		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Faces"), "DragFaces", ui::icons::ICON_MODIFY_FACES);
 	}
 
 	createSeparatorMenuItem(menu);
@@ -1461,15 +1461,15 @@ static GtkMenuItem* create_selection_menu (void)
 	}
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Rotate"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Rotate X"), "RotateSelectionX");
-		createMenuItemWithMnemonic(menu_in_menu, _("Rotate Y"), "RotateSelectionY");
-		createMenuItemWithMnemonic(menu_in_menu, _("Rotate Z"), "RotateSelectionZ");
+		createMenuItemWithMnemonic(menu_in_menu, _("Rotate X"), "RotateSelectionX", ui::icons::ICON_BRUSH_ROTATEX);
+		createMenuItemWithMnemonic(menu_in_menu, _("Rotate Y"), "RotateSelectionY", ui::icons::ICON_BRUSH_ROTATEY);
+		createMenuItemWithMnemonic(menu_in_menu, _("Rotate Z"), "RotateSelectionZ", ui::icons::ICON_BRUSH_ROTATEZ);
 	}
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Flip"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Flip _X"), "MirrorSelectionX");
-		createMenuItemWithMnemonic(menu_in_menu, _("Flip _Y"), "MirrorSelectionY");
-		createMenuItemWithMnemonic(menu_in_menu, _("Flip _Z"), "MirrorSelectionZ");
+		createMenuItemWithMnemonic(menu_in_menu, _("Flip _X"), "MirrorSelectionX", ui::icons::ICON_BRUSH_FLIPX);
+		createMenuItemWithMnemonic(menu_in_menu, _("Flip _Y"), "MirrorSelectionY", ui::icons::ICON_BRUSH_FLIPY);
+		createMenuItemWithMnemonic(menu_in_menu, _("Flip _Z"), "MirrorSelectionZ", ui::icons::ICON_BRUSH_FLIPZ);
 	}
 
 	createSeparatorMenuItem(menu);
@@ -1485,6 +1485,9 @@ static GtkMenuItem* create_grid_menu (void)
 	GtkMenuItem* grid_menu_item = new_sub_menu_item_with_mnemonic(_("_Grid"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(grid_menu_item));
 
+	createCheckMenuItemWithMnemonic(menu, _("Snap selected to grid"), "SnapToGrid", ui::icons::ICON_GRID_SNAP);
+
+	createSeparatorMenuItem(menu);
 	createCheckMenuItemWithMnemonic(menu, "Grid0.125", "SetGrid0.125");
 	createCheckMenuItemWithMnemonic(menu, "Grid0.25", "SetGrid0.25");
 	createCheckMenuItemWithMnemonic(menu, "Grid0.5", "SetGrid0.5");
@@ -1508,17 +1511,6 @@ void CallBrushExportOBJ ()
 	} else {
 		gtkutil::errorDialog(_("No Brushes Selected!"));
 	}
-}
-
-static GtkMenuItem* create_misc_menu (void)
-{
-	// Misc menu
-	GtkMenuItem* misc_menu_item = new_sub_menu_item_with_mnemonic(_("M_isc"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(misc_menu_item));
-
-	createMenuItemWithMnemonic(menu, _("Find brush..."), "FindBrush");
-
-	return misc_menu_item;
 }
 
 static GtkMenuItem* create_map_menu (void)
@@ -1552,10 +1544,11 @@ static GtkMenuItem* create_tools_menu (void)
 	GtkMenuItem* tools_menu_item = new_sub_menu_item_with_mnemonic(_("Tools"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(tools_menu_item));
 
-	createMenuItemWithMnemonic(menu, _("Find/replace texture"), "FindReplaceTextures");
-	createCheckMenuItemWithMnemonic(menu, _("Play Sounds"), "PlaySounds");
-	createMenuItemWithMnemonic(menu, _("One level up"), "ObjectsUp");
-	createMenuItemWithMnemonic(menu, _("One level down"), "ObjectsDown");
+	createMenuItemWithMnemonic(menu, _("Find/replace texture"), "FindReplaceTextures", ui::icons::ICON_FIND_AND_REPLACE);
+	createCheckMenuItemWithMnemonic(menu, _("Play Sounds"), "PlaySounds", ui::icons::ICON_SOUND);
+	createMenuItemWithMnemonic(menu, _("One level up"), "ObjectsUp", ui::icons::ICON_UP);
+	createMenuItemWithMnemonic(menu, _("One level down"), "ObjectsDown", ui::icons::ICON_DOWN);
+	createMenuItemWithMnemonic(menu, _("Find brush..."), "FindBrush");
 
 	return tools_menu_item;
 }
@@ -1588,7 +1581,7 @@ static GtkMenuItem* create_help_menu (void)
 	GtkMenuItem* help_menu_item = new_sub_menu_item_with_mnemonic(_("_Help"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(help_menu_item));
 
-	createMenuItemWithMnemonic(menu, _("Manual"), "OpenManual");
+	createMenuItemWithMnemonic(menu, _("Manual"), "OpenManual", ui::icons::ICON_HELP);
 
 	createMenuItemWithMnemonic(menu, _("Bug report"), "BugReport");
 	createMenuItemWithMnemonic(menu, _("_About"), "About");
@@ -1611,7 +1604,6 @@ static GtkMenuBar* create_main_menu (MainFrame *mainframe)
 
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_selection_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_grid_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_misc_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_map_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_tools_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_entity_menu()));

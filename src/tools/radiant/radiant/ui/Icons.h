@@ -24,6 +24,13 @@ namespace ui
 			static const std::string ICON_LEVEL7 = "ufoai_level7.png";
 			static const std::string ICON_LEVEL8 = "ufoai_level8.png";
 
+			static const std::string ICON_HELP = "helpicon.png";
+
+			static const std::string ICON_GRID_TOGGLE = "grid_toggle.png";
+			static const std::string ICON_GRID_UP = "grid_up.png";
+			static const std::string ICON_GRID_DOWN = "grid_down.png";
+			static const std::string ICON_GRID_SNAP = "grid_snap.png";
+
 			static const std::string ICON_BRUSH_FLIPX = "brush_flipx.png";
 			static const std::string ICON_BRUSH_ROTATEX = "brush_rotatex.png";
 			static const std::string ICON_BRUSH_FLIPY = "brush_flipy.png";
@@ -75,6 +82,9 @@ namespace ui
 			static const std::string ICON_SOUND = "icon_sound.png";
 			static const std::string ICON_ADD_SOUND = "icon_sound.png";
 
+			static const std::string ICON_UP = "arrow_up.png";
+			static const std::string ICON_DOWN = "arrow_down.png";
+
 			static const std::string ICON_COLOR = "editcolour16.png";
 
 			static const std::string ICON_ADD_LIGHT = "cmenu_add_light.png";
@@ -84,6 +94,8 @@ namespace ui
 			static const std::string ICON_FIT_TEXTURE = "cmenu_fit_texture.png";
 			static const std::string ICON_GENERATE_MATERIALS = "cmenu_generate_materials.png";
 			static const std::string ICON_GENERATE_TERRAIN = "cmenu_generate_terrain.png";
+
+			static const std::string ICON_FIND_AND_REPLACE = "texwindow_findandreplace.png";
 
 			static const std::string ICON_LOGO = "logo.png";
 
