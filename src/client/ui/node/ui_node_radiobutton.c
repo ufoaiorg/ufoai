@@ -88,6 +88,10 @@ static void UI_RadioButtonNodeDraw (uiNode_t *node)
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
 
+	if (EXTRADATA(node).background) {
+		UI_DrawSpriteInBox(EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+	}
+
 	if (EXTRADATA(node).icon) {
 		UI_DrawIconInBox(EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
@@ -142,6 +146,8 @@ static const value_t properties[] = {
 	{"cvar", V_UI_CVAR, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 	/* Icon used to display the node */
 	{"icon", V_UI_ICONREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+	/* Sprite used to display the background */
+	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
 
 	{NULL, V_NULL, 0, 0}
 };

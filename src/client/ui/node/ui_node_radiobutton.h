@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct radioButtonExtraData_s {
 	void* cvar;
 	float value;
+	struct uiSprite_s *background;
 	struct uiSprite_s *icon;	/**< Link to an icon */
 } radioButtonExtraData_t;
 
