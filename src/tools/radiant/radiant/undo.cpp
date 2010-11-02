@@ -39,12 +39,26 @@
 
 #include "timer.h"
 
+namespace undo {
+
 namespace {
 const std::string RKEY_UNDO_QUEUE_SIZE = "user/ui/undo/queueSize";
 }
 
 class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public RegistryKeyObserver
 {
+	public:
+		// Radiant Module stuff
+		typedef UndoSystem Type;
+		STRING_CONSTANT(Name, "*");
+
+		// Return the static instance
+		UndoSystem* getTable() {
+			return this;
+		}
+
+	private:
+
 		static const std::size_t MAX_UNDO_LEVELS = 1024;
 
 		// The undo and redo stacks
@@ -267,31 +281,20 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 				i->second.setStack(stack);
 			}
 		}
-};
+}; // class RadiantUndoSystem
 
-class UndoSystemDependencies: public GlobalRegistryModuleRef, GlobalPreferenceSystemModuleRef
+} // namespace undo
+
+class RadiantUndoSystemDependencies: public GlobalRegistryModuleRef, GlobalPreferenceSystemModuleRef
 {
 };
 
-class UndoSystemAPI
-{
-		RadiantUndoSystem _undosystem;
-	public:
-		typedef UndoSystem Type;
-		STRING_CONSTANT(Name, "*");
-
-		UndoSystemAPI ()
-		{
-		}
-		UndoSystem* getTable ()
-		{
-			return &_undosystem;
-		}
-};
+/* Required code to register the module with the ModuleServer.
+ */
 
 #include "modulesystem/singletonmodule.h"
 #include "modulesystem/moduleregistry.h"
 
-typedef SingletonModule<UndoSystemAPI, UndoSystemDependencies> UndoSystemModule;
-typedef Static<UndoSystemModule> StaticUndoSystemModule;
-StaticRegisterModule staticRegisterUndoSystem(StaticUndoSystemModule::instance());
+typedef SingletonModule<undo::RadiantUndoSystem, RadiantUndoSystemDependencies> RadiantUndoSystemModule;
+typedef Static<RadiantUndoSystemModule> StaticRadiantUndoSystemModule;
+StaticRegisterModule staticRegisterRadiantUndoSystem(StaticRadiantUndoSystemModule::instance());
