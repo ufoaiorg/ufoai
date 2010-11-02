@@ -510,8 +510,8 @@ void Radiant_Initialise (void)
 	Radiant_loadModulesFromRoot(AppPath_get());
 
 	// Initialise and instantiate the registry
-	StaticModuleRegistryList().instance().registerModule("registry");
 	GlobalModuleServer::instance().set(GlobalModuleServer_get());
+	StaticModuleRegistryList().instance().registerModule("registry");
 	GlobalRegistryModuleRef registryRef;
 
 	// Try to load all the XML files into the registry
