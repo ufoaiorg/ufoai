@@ -31,6 +31,7 @@ namespace {
 	const std::string RKEY_OVERLAY_TRANSLATIONY = "user/ui/xyview/overlay/translationY";
 	const std::string RKEY_OVERLAY_PROPORTIONAL = "user/ui/xyview/overlay/proportional";
 	const std::string RKEY_OVERLAY_SCALE_WITH_XY = "user/ui/xyview/overlay/scaleWithOrthoView";
+	const std::string RKEY_OVERLAY_PAN_WITH_XY = "user/ui/xyview/overlay/panWithOrthoView";
 
 	const float MIN_SCALE = 0.001f;
 	const float MAX_SCALE = 20.0f;
@@ -68,6 +69,9 @@ private:
 	// TRUE, if the image should be rescaled along with the orthoview scale
 	bool _scaleWithXYView;
 
+	// TRUE, if the image should be panned along
+	bool _panWithXYView;
+
 	// Set to TRUE, if the image should be displayed proportionally.
 	bool _keepProportions;
 
@@ -89,6 +93,7 @@ public:
 		_transparency(GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSPARENCY)),
 		_scale(GlobalRegistry().getFloat(RKEY_OVERLAY_SCALE)),
 		_scaleWithXYView(GlobalRegistry().get(RKEY_OVERLAY_SCALE_WITH_XY) == "1"),
+		_panWithXYView(GlobalRegistry().get(RKEY_OVERLAY_PAN_WITH_XY) == "1"),
 		_keepProportions(GlobalRegistry().get(RKEY_OVERLAY_PROPORTIONAL) == "1"),
 		_translationX(GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSLATIONX)),
 		_translationY(GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSLATIONY)),
@@ -104,6 +109,7 @@ public:
 		GlobalRegistry().addKeyObserver(this, RKEY_OVERLAY_TRANSLATIONY);
 		GlobalRegistry().addKeyObserver(this, RKEY_OVERLAY_PROPORTIONAL);
 		GlobalRegistry().addKeyObserver(this, RKEY_OVERLAY_SCALE_WITH_XY);
+		GlobalRegistry().addKeyObserver(this, RKEY_OVERLAY_PAN_WITH_XY);
 
 		// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
 		GlobalPreferenceSystem().addConstructor(this);
@@ -176,7 +182,8 @@ public:
 	void keyChanged() {
 		show(GlobalRegistry().get(RKEY_OVERLAY_VISIBLE) == "1");
 		_keepProportions = (GlobalRegistry().get(RKEY_OVERLAY_PROPORTIONAL) == "1");
-		_scaleWithXYView = (GlobalRegistry().get(RKEY_OVERLAY_SCALE_WITH_XY) == "1"),
+		_scaleWithXYView = (GlobalRegistry().get(RKEY_OVERLAY_SCALE_WITH_XY) == "1");
+		_panWithXYView = (GlobalRegistry().get(RKEY_OVERLAY_PAN_WITH_XY) == "1");
 		setImage(GlobalRegistry().get(RKEY_OVERLAY_IMAGE));
 		setTransparency(GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSPARENCY));
 		setImageScale(GlobalRegistry().getFloat(RKEY_OVERLAY_SCALE));
@@ -196,6 +203,7 @@ public:
 		page->appendSlider(_("Image Scale"), RKEY_OVERLAY_SCALE, true, 1.0f, MIN_SCALE, MAX_SCALE, 0.05f, 0.20f, 0.0f);
 		page->appendCheckBox("", _("Keep Proportions"), RKEY_OVERLAY_PROPORTIONAL);
 		page->appendCheckBox("", _("Scale Image together with Orthoview"), RKEY_OVERLAY_SCALE_WITH_XY);
+		page->appendCheckBox("", _("Pan image with viewport"), RKEY_OVERLAY_PAN_WITH_XY);
 	}
 
 	void draw(float xbegin, float xend, float ybegin, float yend, float xyviewscale) {
@@ -237,8 +245,10 @@ public:
 		// Calculate the (virtual) window center
 		Vector3 windowOrigin((xend + xbegin)/2, (yend + ybegin)/2, 0);
 
-		windowUpperLeft -= windowOrigin;
-		windowLowerRight -= windowOrigin;
+		if (!_panWithXYView) {
+			windowUpperLeft -= windowOrigin;
+			windowLowerRight -= windowOrigin;
+		}
 
 		// The translation vector
 		Vector3 translation(_translationX * (xend - xbegin), _translationY * (yend - ybegin), 0);
