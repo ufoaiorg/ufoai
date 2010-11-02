@@ -26,10 +26,7 @@
 #if !defined(INCLUDED_SERVER_H)
 #define INCLUDED_SERVER_H
 
-#include <string>
-
 class ModuleServer;
 ModuleServer& GlobalModuleServer_get ();
-void GlobalModuleServer_loadModule (const std::string& filename);
 
 #endif

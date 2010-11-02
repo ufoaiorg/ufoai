@@ -77,7 +77,6 @@
 #include "select.h"
 #include "settings/preferences.h"
 #include "map/autosave.h"
-#include "plugintoolbar.h"
 #include "dialogs/findtextures.h"
 #include "referencecache/nullmodel.h"
 #include "xyview/GlobalXYWnd.h"
@@ -155,9 +154,6 @@ class RadiantCoreAPI
 			m_radiantcore.detachEnginePathObserver = Radiant_detachEnginePathObserver;
 			m_radiantcore.attachGameModeObserver = Radiant_attachGameModeObserver;
 			m_radiantcore.detachGameModeObserver = Radiant_detachGameModeObserver;
-
-			m_radiantcore.m_pfnMessageBox = &gtk_MessageBox;
-			m_radiantcore.m_pfnFileDialog = &file_dialog;
 		}
 		IRadiant* getTable ()
 		{

@@ -35,8 +35,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/parse.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
-	$(RADIANT_BASE)/radiant/pluginmenu.cpp \
-	$(RADIANT_BASE)/radiant/plugintoolbar.cpp \
 	$(RADIANT_BASE)/radiant/settings/preferences.cpp \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
 	$(RADIANT_BASE)/radiant/referencecache.cpp \

@@ -54,18 +54,6 @@ enum EMessageBoxReturn
 	eIDOK, eIDCANCEL, eIDYES, eIDNO
 };
 
-// simple Message Box, see above for the 'type' flags
-
-typedef EMessageBoxReturn (* PFN_QERAPP_MESSAGEBOX) (GtkWidget *parent, const std::string& text,
-		const std::string& caption, EMessageBoxType type, EMessageBoxIcon icon);
-
-// file and directory selection functions return null if the user hits cancel
-// - 'title' is the dialog title (can be null)
-// - 'path' is used to set the initial directory (can be null)
-// - 'pattern': the first pattern is for the win32 mode, then comes the Gtk pattern list, see Radiant source for samples
-typedef const char* (* PFN_QERAPP_FILEDIALOG) (GtkWidget *parent, bool open, const std::string& title,
-		const std::string& path, const std::string& pattern);
-
 // ========================================
 
 // Forward declarations
@@ -118,10 +106,6 @@ struct IRadiant
 		void (*detachEnginePathObserver) (ModuleObserver& observer);
 		void (*attachGameModeObserver) (ModuleObserver& observer);
 		void (*detachGameModeObserver) (ModuleObserver& observer);
-
-		// GTK+ functions
-		PFN_QERAPP_MESSAGEBOX m_pfnMessageBox;
-		PFN_QERAPP_FILEDIALOG m_pfnFileDialog;
 };
 
 // IRadiant Module Definitions

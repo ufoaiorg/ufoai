@@ -96,8 +96,6 @@
 #include "ump.h"
 #include "plugin.h"
 #include "plugin/PluginManager.h"
-#include "pluginmenu.h"
-#include "plugintoolbar.h"
 #include "settings/preferences.h"
 #include "qe3.h"
 #include "render/OpenGLRenderSystem.h"
@@ -380,65 +378,6 @@ void Radiant_detachGameModeObserver (ModuleObserver& observer)
 	g_gameModeObservers.detach(observer);
 }
 
-#include "os/dir.h"
-
-/** Module loader functor class. This class is used to traverse a directory and
- * load each module into the GlobalModuleServer.
- */
-class ModuleLoader
-{
-		// The path of the directory we are in
-		const std::string _path;
-
-		// The filename extension which indicates a module (platform-specific)
-		const std::string _ext;
-
-	public:
-		ModuleLoader (const std::string& path) :
-			_path(path),
-#if defined(WIN32)
-					_ext("dll")
-#elif defined (__APPLE__)
-					_ext("dylib")
-#elif defined(__linux__) || defined (__FreeBSD__)
-					_ext("so")
-#endif
-
-		{
-		}
-		void operator() (const std::string& name) const
-		{
-			if (os::getExtension(name) == _ext) {
-				std::string fullname = _path + name;
-				g_message("Found '%s'\n", fullname.c_str());
-				GlobalModuleServer_loadModule(fullname);
-			}
-		}
-};
-
-/** Load modules from a specified directory.
- *
- * @param path
- * The directory path to load from.
- */
-void Radiant_loadModules (const std::string& path)
-{
-	ModuleLoader loader(path);
-	Directory_forEach(path, loader);
-}
-
-/** Load all of the modules in the DarkRadiant install directory.
- * Plugins are loaded from plugins/.
- *
- * @param directory
- * The root directory to search.
- */
-void Radiant_loadModulesFromRoot (const std::string& directory)
-{
-	const std::string g_pluginsDir = "plugins/";
-	Radiant_loadModules(directory + g_pluginsDir);
-}
-
 ModuleObservers g_gameToolsPathObservers;
 
 void Radiant_attachGameToolsPathObserver (ModuleObserver& observer)
@@ -504,9 +443,6 @@ void populateRegistry ()
 // This is called from main() to start up the Radiant stuff.
 void Radiant_Initialise (void)
 {
-	// Load the Radiant plugins
-	Radiant_loadModulesFromRoot(AppPath_get());
-
 	// Initialise and instantiate the registry
 	GlobalModuleServer::instance().set(GlobalModuleServer_get());
 	StaticModuleRegistryList().instance().registerModule("registry");
@@ -1353,7 +1289,6 @@ void ClipperChangeNotify (void)
 }
 
 static LatchedInt g_Layout_viewStyle(MainFrame::eSplit, _("Window Layout"));
-static LatchedBool g_Layout_enablePluginToolbar(true, _("Plugin Toolbar"));
 
 static GtkMenuItem* create_file_menu (MainFrame *mainFrame)
 {
@@ -1680,7 +1615,6 @@ static GtkMenuBar* create_main_menu (MainFrame *mainframe)
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_tools_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_entity_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_brush_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_plugins_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_help_menu()));
 
 	return menu_bar;
@@ -1835,12 +1769,6 @@ void MainFrame::Create (void)
 
 	// Pack it into the main window
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(generalToolbar), FALSE, FALSE, 0);
-
-	GtkToolbar* plugin_toolbar = create_plugin_toolbar();
-	if (!g_Layout_enablePluginToolbar.m_value) {
-		gtk_widget_hide(GTK_WIDGET(plugin_toolbar));
-	}
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(plugin_toolbar), FALSE, FALSE, 0);
 
 	GtkWidget* main_statusbar = create_main_statusbar(m_pStatusLabel);
 	gtk_box_pack_end(GTK_BOX(vbox), main_statusbar, FALSE, TRUE, 2);
@@ -2111,13 +2039,9 @@ void GlobalGL_sharedContextDestroyed (void)
 
 void Layout_constructPreferences (PrefPage* page)
 {
-	{
-		const char* layouts[] = { ui::icons::ICON_WINDOW_REGULAR.c_str(), ui::icons::ICON_WINDOW_SPLIT.c_str() };
-		page->appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(
-				g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
-	}
-	page->appendCheckBox("", _("Plugin Toolbar"), LatchedBoolImportCaller(g_Layout_enablePluginToolbar),
-			BoolExportCaller(g_Layout_enablePluginToolbar.m_latched));
+	const char* layouts[] = { ui::icons::ICON_WINDOW_REGULAR.c_str(), ui::icons::ICON_WINDOW_SPLIT.c_str() };
+	page->appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(
+			g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
 }
 
 void Layout_constructPage (PreferenceGroup& group)
@@ -2242,8 +2166,6 @@ void MainFrame_Construct (void)
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
 
-	GlobalPreferenceSystem().registerPreference("PluginToolBar", BoolImportStringCaller(
-			g_Layout_enablePluginToolbar.m_latched), BoolExportStringCaller(g_Layout_enablePluginToolbar.m_latched));
 	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle.m_latched),
 			IntExportStringCaller(g_Layout_viewStyle.m_latched));
 	GlobalPreferenceSystem().registerPreference("XYHeight", IntImportStringCaller(g_layout_globals.nXYHeight),
@@ -2285,7 +2207,6 @@ void MainFrame_Construct (void)
 			StringExportStringCaller(g_strCompilerBinaryWithPath));
 
 	g_Layout_viewStyle.useLatched();
-	g_Layout_enablePluginToolbar.useLatched();
 
 	Layout_registerPreferencesPage();
 	Paths_registerPreferencesPage();
