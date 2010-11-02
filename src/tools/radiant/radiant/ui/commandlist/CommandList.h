@@ -5,18 +5,11 @@
 #include <iostream>
 #include "gtk/gtkwidget.h"
 #include "gtk/gtkliststore.h"
-#include "gtkutil/window/DialogWindow.h"
-
-namespace {
-const int CMDLISTDLG_DEFAULT_SIZE_X = 350;
-const int CMDLISTDLG_DEFAULT_SIZE_Y = 400;
-
-const std::string CMDLISTDLG_WINDOW_TITLE = "Shortcut List";
-}
+#include "gtkutil/window/BlockingTransientWindow.h"
 
 namespace ui {
 
-class CommandListDialog: public gtkutil::DialogWindow
+class CommandListDialog: public gtkutil::BlockingTransientWindow
 {
 		// The list store containing the list of ColourSchemes
 		GtkListStore* _listStore;
