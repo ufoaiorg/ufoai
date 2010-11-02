@@ -504,8 +504,6 @@ void populateRegistry ()
 // This is called from main() to start up the Radiant stuff.
 void Radiant_Initialise (void)
 {
-	GlobalModuleServer_Initialise();
-
 	// Load the Radiant plugins
 	Radiant_loadModulesFromRoot(AppPath_get());
 
@@ -560,8 +558,6 @@ void Radiant_Shutdown (void)
 	}
 
 	Radiant_Destroy();
-
-	GlobalModuleServer_Shutdown();
 }
 
 void Exit (void)

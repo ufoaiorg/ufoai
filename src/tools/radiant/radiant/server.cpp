@@ -271,11 +271,3 @@ void GlobalModuleServer_loadModule (const std::string& filename)
 {
 	g_libraries.registerLibrary(filename, g_server);
 }
-
-void GlobalModuleServer_Initialise ()
-{
-}
-
-void GlobalModuleServer_Shutdown ()
-{
-}
