@@ -241,7 +241,7 @@ class Libraries
 				delete *i;
 			}
 		}
-		void registerLibrary (const std::string& filename, ModuleServer& server)
+		void registerLibrary (const std::string& filename)
 		{
 			DynamicLibraryModule* library = new DynamicLibraryModule(filename);
 
@@ -249,7 +249,7 @@ class Libraries
 				delete library;
 			} else {
 				m_libraries.push_back(library);
-				library->registerModules(server);
+				library->registerModules(GlobalModuleServer_get());
 			}
 		}
 
@@ -259,15 +259,14 @@ class Libraries
 		}
 };
 
-Libraries g_libraries;
-RadiantModuleServer g_server;
-
 ModuleServer& GlobalModuleServer_get ()
 {
-	return g_server;
+	static RadiantModuleServer _server;
+	return _server;
 }
 
 void GlobalModuleServer_loadModule (const std::string& filename)
 {
-	g_libraries.registerLibrary(filename, g_server);
+	static Libraries _libraries;
+	_libraries.registerLibrary(filename);
 }
