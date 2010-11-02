@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_font.h"
 #include "../ui_data.h"
-#include "../ui_icon.h"
+#include "../ui_sprite.h"
 #include "../ui_render.h"
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
@@ -47,8 +47,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int COLLAPSEBUTTON_WIDTH = 20;		/**< Size used for the collapse button */
 static const int DEPTH_WIDTH = 25;				/**< Width between each depth level */
 
-static uiIcon_t *systemCollapse;
-static uiIcon_t *systemExpand;
+static uiSprite_t *systemCollapse;
+static uiSprite_t *systemExpand;
 
 /**
  * @brief Update the scroll according to the number
@@ -184,16 +184,16 @@ static void UI_OptionTreeNodeDraw (uiNode_t *node)
 
 		R_Color(NULL);
 		if (option->firstChild) {
-			uiIcon_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
-			UI_DrawIconInBox(icon, ICON_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
+			uiSprite_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
+			UI_DrawIconInBox(icon, SPRITE_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
 
 		if (OPTIONEXTRADATA(option).icon) {
-			uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
+			uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 			if (option->disabled)
-				iconStatus = ICON_STATUS_DISABLED;
+				iconStatus = SPRITE_STATUS_DISABLED;
 			UI_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}

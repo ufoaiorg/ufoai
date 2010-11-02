@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_model.h"
 #include "ui_actions.h"
 #include "ui_nodes.h"
-#include "ui_icon.h"
+#include "ui_sprite.h"
 #include "ui_input.h"
 #include "ui_expression.h"
 #include "ui_data.h"
@@ -85,8 +85,8 @@ typedef struct uiGlobal_s {
 	uiExcludeRect_t excludeRect[UI_MAX_EXLUDERECTS];
 	int numExcludeRect;
 
-	uiIcon_t icons[UI_MAX_ICONS];
-	int numIcons;
+	uiSprite_t sprites[UI_MAX_SPRITES];
+	int numSprites;
 
 	uiKeyBinding_t keyBindings[UI_MAX_KEYBINDING];
 	int numKeyBindings;

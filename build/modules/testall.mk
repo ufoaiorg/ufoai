@@ -181,7 +181,7 @@ $(TARGET)_SRCS      = \
 	client/ui/ui_draw.c \
 	client/ui/ui_expression.c \
 	client/ui/ui_font.c \
-	client/ui/ui_icon.c \
+	client/ui/ui_sprite.c \
 	client/ui/ui_input.c \
 	client/ui/ui_main.c \
 	client/ui/ui_nodes.c \

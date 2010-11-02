@@ -40,7 +40,7 @@ typedef struct optionExtraData_s {
 	char label[MAX_VAR];	/**< text for the select box */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 
-	struct uiIcon_s *icon;	/**< Link to an icon */
+	struct uiSprite_s *icon;	/**< Link to an icon */
 
 	/* status */
 	qboolean collapsed;		/**< If true, child are not displayed */

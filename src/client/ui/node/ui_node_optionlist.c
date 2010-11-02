@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_actions.h"
 #include "../ui_font.h"
-#include "../ui_icon.h"
+#include "../ui_sprite.h"
 #include "../ui_render.h"
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
@@ -128,9 +128,9 @@ static void UI_OptionListNodeDraw (uiNode_t *node)
 		}
 
 		if (OPTIONEXTRADATA(option).icon) {
-			uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
+			uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 			if (option->disabled)
-				iconStatus = ICON_STATUS_DISABLED;
+				iconStatus = SPRITE_STATUS_DISABLED;
 			R_Color(NULL);
 			UI_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;

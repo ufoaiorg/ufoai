@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_parse.h"
 #include "../ui_render.h"
-#include "../ui_icon.h"
+#include "../ui_sprite.h"
 #include "ui_node_text.h"
 #include "ui_node_messagelist.h"
 #include "ui_node_abstractnode.h"
@@ -66,7 +66,7 @@ static char *lastDate;
  * @todo do not hard code icons
  * @todo cache icon result
  */
-static uiIcon_t *UI_MessageGetIcon (const message_t *message)
+static uiSprite_t *UI_MessageGetIcon (const message_t *message)
 {
 	const char* iconName;
 
@@ -152,10 +152,10 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 
 	/* identify the begin of a message with a mark */
 	if (lines2 >= 0) {
-		const uiIcon_t *icon;
+		const uiSprite_t *icon;
 		icon = UI_MessageGetIcon(message);
 		R_Color(NULL);
-		UI_DrawIconInBox(icon, ICON_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
+		UI_DrawIconInBox(icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */

@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* prototype */
 struct linkedList_s;
-struct uiIcon_s;
 
 /** @brief linked into ui_global.sharedData - defined in UI scripts via dataID property */
 typedef enum {

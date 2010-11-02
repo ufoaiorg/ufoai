@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/scripts.h"
 
 /* prototype */
-struct uiIcon_s;
+struct uiSprite_s;
 struct value_s;
 struct nodeKeyBinding_s;
 struct uiCallContext_s;

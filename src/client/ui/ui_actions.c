@@ -348,7 +348,7 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 		const char* string = value->d.terminal.d1.constString;
 		if ((property->type & V_UI_MASK) == V_UI_CVAR && !strncmp(string, "*cvar:", 6)) {
 			void *mem = ((byte *) node + property->ofs);
-			*(char**) mem = string;
+			*(void**) mem = value->d.terminal.d1.data;
 		} else {
 			/** @todo here we must catch error in a better way, and using cvar for error code to create unittest automations */
 			UI_InitRawActionValue(value, node, property, string);

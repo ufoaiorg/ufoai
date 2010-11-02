@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_font.h"
 #include "../ui_render.h"
-#include "../ui_icon.h"
+#include "../ui_sprite.h"
 #include "ui_node_button.h"
 #include "ui_node_custombutton.h"
 #include "ui_node_abstractnode.h"
@@ -75,7 +75,7 @@ static void UI_ButtonNodeDraw (uiNode_t *node)
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int iconPadding = 0;
-	uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
+	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 	const char *font = UI_GetFontFromNode(node);
 
 	if (!node->onClick || node->disabled) {
@@ -83,12 +83,12 @@ static void UI_ButtonNodeDraw (uiNode_t *node)
 		textColor = disabledColor;
 		texX = TILE_SIZE;
 		texY = TILE_SIZE;
-		iconStatus = ICON_STATUS_DISABLED;
+		iconStatus = SPRITE_STATUS_DISABLED;
 	} else if (node->state) {
 		textColor = node->selectedColor;
 		texX = TILE_SIZE;
 		texY = 0;
-		iconStatus = ICON_STATUS_HOVER;
+		iconStatus = SPRITE_STATUS_HOVER;
 	} else {
 		textColor = node->color;
 		texX = 0;

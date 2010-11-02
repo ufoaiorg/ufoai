@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_font.h"
 #include "../ui_input.h"
-#include "../ui_icon.h"
+#include "../ui_sprite.h"
 #include "../ui_render.h"
 #include "../ui_tooltip.h"
 #include "ui_node_tab.h"
@@ -256,9 +256,9 @@ static void UI_TabNodeDraw (uiNode_t *node)
 
 		textPos = currentX;
 		if (drawIcon) {
-			uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
+			uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 			if (status == UI_TAB_DISABLED) {
-				iconStatus = ICON_STATUS_DISABLED;
+				iconStatus = SPRITE_STATUS_DISABLED;
 			}
 			UI_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
 			textPos += OPTIONEXTRADATA(option).icon->size[0];

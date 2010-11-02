@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_data.h"
 #include "ui_internal.h"
 #include "ui_actions.h"
-#include "ui_icon.h"
+#include "ui_sprite.h"
 #include "ui_components.h"
 #include "node/ui_node_window.h"
 #include "node/ui_node_selectbox.h"
@@ -250,7 +250,7 @@ qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 	}
 
 	if (property->type == V_UI_ICONREF) {
-		uiIcon_t* icon = UI_GetIconByName(string);
+		uiSprite_t* icon = UI_GetIconByName(string);
 		if (icon == NULL) {
 			Com_Printf("UI_ParseSetAction: icon '%s' not found (%s)\n", string, UI_GetPath(node));
 			return qfalse;
@@ -811,7 +811,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 
 		case V_UI_ICONREF:
 			{
-				uiIcon_t** icon = (uiIcon_t**) valuePtr;
+				uiSprite_t** icon = (uiSprite_t**) valuePtr;
 				*token = Com_EParse(text, errhead, objectName);
 				if (!*text)
 					return qfalse;
@@ -1209,7 +1209,7 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 
 qboolean UI_ParseIcon (const char *name, const char **text)
 {
-	uiIcon_t *icon;
+	uiSprite_t *icon;
 	const char *token;
 
 	/* search for icons with same name */
@@ -1231,7 +1231,7 @@ qboolean UI_ParseIcon (const char *name, const char **text)
 		if (token[0] == '}')
 			break;
 
-		property = UI_FindPropertyByName(ui_iconProperties, token);
+		property = UI_FindPropertyByName(ui_spriteProperties, token);
 		if (!property) {
 			Com_Printf("UI_ParseIcon: unknown options property: '%s' - ignore it\n", token);
 			return qfalse;

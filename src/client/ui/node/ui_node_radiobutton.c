@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_actions.h"
-#include "../ui_icon.h"
+#include "../ui_sprite.h"
 #include "../ui_parse.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
@@ -59,23 +59,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void UI_RadioButtonNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
-	uiIconStatus_t iconStatus;
+	uiSpriteStatus_t iconStatus;
 	const float current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	int texY;
 	const char *image;
 
 	if (disabled) {
-		iconStatus = ICON_STATUS_DISABLED;
+		iconStatus = SPRITE_STATUS_DISABLED;
 		texY = UI_4STATUS_TEX_HEIGHT * 2;
 	} else if (current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON) {
-		iconStatus = ICON_STATUS_CLICKED;
+		iconStatus = SPRITE_STATUS_CLICKED;
 		texY = UI_4STATUS_TEX_HEIGHT * 3;
 	} else if (node->state) {
-		iconStatus = ICON_STATUS_HOVER;
+		iconStatus = SPRITE_STATUS_HOVER;
 		texY = UI_4STATUS_TEX_HEIGHT;
 	} else {
-		iconStatus = ICON_STATUS_NORMAL;
+		iconStatus = SPRITE_STATUS_NORMAL;
 		texY = 0;
 	}
 

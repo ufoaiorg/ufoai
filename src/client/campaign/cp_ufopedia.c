@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_shared.h"
 #include "../cl_inventory.h"
 #include "../ui/ui_main.h"
-#include "../ui/ui_icon.h"
+#include "../ui/ui_sprite.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
