@@ -423,9 +423,10 @@ int main (int argc, char* argv[])
 
 	if (GlobalMRU().loadLastMap() && GlobalMRU().getLastMapName() != "") {
 		 Map_LoadFile(GlobalMRU().getLastMapName());
-	} else if (argc == 2) {
-		if (file_readable(argv[1]))
-			Map_LoadFile(argv[1]);
+	} else if (Environment::Instance().getArgc() == 2) {
+		const std::string mapname = Environment::Instance().getArgv(1);
+		if (file_readable(mapname))
+			Map_LoadFile(mapname);
 		else
 			Map_New();
 	} else {

@@ -35,9 +35,16 @@ class Environment
 	std::string _settingsPath;
 	std::string _bitmapsPath;
 
+	int _argc;
+	char** _argv;
+
 public:
 	// Call this with the arguments from main()
 	void init(int argc, char* argv[]);
+
+	int getArgc() const;
+
+	std::string getArgv(unsigned int index) const;
 
 	/** greebo: Get the application/home paths
 	 */

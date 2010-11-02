@@ -67,9 +67,6 @@ void Environment::init(int argc, char* argv[])
 	initPaths();
 }
 
-int g_argc;
-char** g_argv;
-
 void Environment::initArgs(int argc, char* argv[]) {
 	int i, j, k;
 
@@ -86,8 +83,18 @@ void Environment::initArgs(int argc, char* argv[]) {
 		}
 	}
 
-	g_argc = argc;
-	g_argv = argv;
+	_argc = argc;
+	_argv = argv;
+}
+
+int Environment::getArgc() const {
+	return _argc;
+}
+
+std::string Environment::getArgv(unsigned int index) const {
+	if (index < _argc)
+		return std::string(_argv[index]);
+	return "";
 }
 
 std::string Environment::getHomePath() {
