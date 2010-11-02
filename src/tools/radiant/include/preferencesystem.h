@@ -58,6 +58,16 @@ public:
 	/* greebo: Appends an entry field with <name> as caption which is connected to the given registryKey
 	 */
 	virtual GtkWidget* appendEntry(const std::string& name, const std::string& registryKey) = 0;
+
+	/* greebo: Appends an entry field with spinner buttons which retrieves its value from the given
+	 * RegistryKey. The lower and upper values have to be passed as well.
+	 */
+	virtual GtkWidget* appendSpinner (const std::string& name, const std::string& registryKey, double lower,
+			double upper, int fraction) = 0;
+
+	// greebo: Adds a PathEntry to choose files or directories (depending on the given boolean)
+	virtual GtkWidget* appendPathEntry (const std::string& name, const std::string& registryKey,
+			bool browseDirectories) = 0;
 };
 
 /* greebo: A PreferenceGroup consists of several PreferencePages and provides a method to add one of these. */
