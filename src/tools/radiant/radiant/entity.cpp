@@ -56,6 +56,7 @@
 #include "dialogs/particle.h"
 #include "ui/modelselector/ModelSelector.h"
 #include "ui/common/SoundChooser.h"
+#include "ui/Icons.h"
 
 struct entity_globals_t
 {
@@ -537,10 +538,10 @@ void Entity_constructMenu (GtkMenu* menu)
 	g_menuItemRegroup = createMenuItemWithMnemonic(menu, _("_Regroup"), "GroupSelection");
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemUngroup), FALSE);
 
-	g_menuItemConnectSelection = createMenuItemWithMnemonic(menu, _("_Connect"), "ConnectSelection");
+	g_menuItemConnectSelection = createMenuItemWithMnemonic(menu, _("_Connect"), "ConnectSelection", ui::icons::ICON_CONNECT_ENTITIES);
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemConnectSelection), FALSE);
 
-	g_menuItemSelectColor = createMenuItemWithMnemonic(menu, _("_Select Color..."), "EntityColor");
+	g_menuItemSelectColor = createMenuItemWithMnemonic(menu, _("_Select Color..."), "EntityColor", ui::icons::ICON_COLOR);
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemSelectColor), FALSE);
 }
 

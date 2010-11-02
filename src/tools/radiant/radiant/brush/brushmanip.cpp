@@ -36,6 +36,7 @@
 #include "../dialog.h"
 #include "../settings/preferences.h"
 #include "../mainframe.h"
+#include "../ui/Icons.h"
 
 #include "construct/Prism.h"
 #include "construct/Cone.h"
@@ -744,9 +745,9 @@ void Brush_constructMenu (GtkMenu* menu)
 	createSeparatorMenuItem(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, C_("Constructive Solid Geometry", "CSG"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Make Hollow"), "CSGHollow");
-		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract"), "CSGSubtract");
-		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge"), "CSGMerge");
+		createMenuItemWithMnemonic(menu_in_menu, _("Make Hollow"), "CSGHollow", ui::icons::ICON_CSG_MAKE_HOLLOW);
+		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract"), "CSGSubtract", ui::icons::ICON_CSG_SUBTRACT);
+		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge"), "CSGMerge", ui::icons::ICON_CSG_MERGE);
 	}
 	createSeparatorMenuItem(menu);
 	{
@@ -759,7 +760,7 @@ void Brush_constructMenu (GtkMenu* menu)
 	createMenuItemWithMnemonic(menu, _("Make detail"), "MakeDetail");
 	createMenuItemWithMnemonic(menu, _("Make structural"), "MakeStructural");
 
-	createCheckMenuItemWithMnemonic(menu, _("Texture Lock"), "TogTexLock");
+	createCheckMenuItemWithMnemonic(menu, _("Texture Lock"), "TogTexLock", ui::icons::ICON_TEXTURE_LOCK);
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("Copy Face Texture"), "FaceCopyTexture");
 	createMenuItemWithMnemonic(menu, _("Paste Face Texture"), "FacePasteTexture");

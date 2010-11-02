@@ -75,6 +75,8 @@ namespace ui
 			static const std::string ICON_SOUND = "icon_sound.png";
 			static const std::string ICON_ADD_SOUND = "icon_sound.png";
 
+			static const std::string ICON_COLOR = "editcolour16.png";
+
 			static const std::string ICON_ADD_LIGHT = "cmenu_add_light.png";
 			static const std::string ICON_ADD_MODEL = "cmenu_add_model.png";
 			static const std::string ICON_ADD_ENTITY = "cmenu_add_entity.png";
@@ -89,12 +91,6 @@ namespace ui
 			static const std::string ICON_WINDOW_SPLIT = "window_split.png";
 
 			static const std::string ICON_MODEL_SHOWNORMALS = "model_normals.png";
-
-#if 0
-		// unused images
-		static const std::string ICON_ = "selection_selectpartialtall.png";
-		static const std::string ICON_VIEW_FORCE_LIGHT = "view_forcelight.png";
-#endif
 		}
 	}
 }

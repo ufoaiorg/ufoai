@@ -1298,9 +1298,9 @@ static GtkMenuItem* create_file_menu (MainFrame *mainFrame)
 
 	createMenuItemWithMnemonic(menu, _("_New Map"), "NewMap");
 	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("_Open..."), "OpenMap");
+	createMenuItemWithMnemonic(menu, _("_Open..."), "OpenMap", ui::icons::ICON_OPEN);
 	createMenuItemWithMnemonic(menu, _("_Import..."), "ImportMap");
-	mainFrame->SetSaveMenuItem(createMenuItemWithMnemonic(menu, _("_Save"), "SaveMap"));
+	mainFrame->SetSaveMenuItem(createMenuItemWithMnemonic(menu, _("_Save"), "SaveMap", ui::icons::ICON_SAVE));
 	createMenuItemWithMnemonic(menu, _("Save _as..."), "SaveMapAs");
 	createMenuItemWithMnemonic(menu, _("Save s_elected..."), "SaveSelected");
 	createSeparatorMenuItem(menu);
@@ -1320,36 +1320,37 @@ static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 	// Edit menu
 	GtkMenuItem* edit_menu_item = new_sub_menu_item_with_mnemonic(_("_Edit"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(edit_menu_item));
-	mainFrame->SetUndoMenuItem(createMenuItemWithMnemonic(menu, _("_Undo"), "Undo"));
-	mainFrame->SetRedoMenuItem(createMenuItemWithMnemonic(menu, _("_Redo"), "Redo"));
+	mainFrame->SetUndoMenuItem(createMenuItemWithMnemonic(menu, _("_Undo"), "Undo", ui::icons::ICON_UNDO));
+	mainFrame->SetRedoMenuItem(createMenuItemWithMnemonic(menu, _("_Redo"), "Redo", ui::icons::ICON_REDO));
+
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("_Copy"), "Copy");
 	createMenuItemWithMnemonic(menu, _("_Paste"), "Paste");
 	createMenuItemWithMnemonic(menu, _("P_aste To Camera"), "PasteToCamera");
+
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("_Duplicate"), "CloneSelection");
 	createMenuItemWithMnemonic(menu, _("D_elete"), "DeleteSelection");
+
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("Pa_rent"), "ParentSelection");
+
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("C_lear Selection"), "UnSelectSelection");
 	createMenuItemWithMnemonic(menu, _("_Invert Selection"), "InvertSelection");
 
-	GtkMenu* convert_menu = create_sub_menu_with_mnemonic(menu, _("E_xpand Selection"));
-	createMenuItemWithMnemonic(convert_menu, _("Select i_nside"), "SelectInside");
-	createMenuItemWithMnemonic(convert_menu, _("Select _touching"), "SelectTouching");
-	createMenuItemWithMnemonic(convert_menu, _("To Whole _Entities"), "ExpandSelectionToEntities");
-	createMenuItemWithMnemonic(convert_menu, _("Select all of _same type"), "SelectAllOfType");
-
-	createMenuItemWithMnemonic(convert_menu, _("Select all Faces of same te_xture"), "SelectAllFacesOfTex");
+	createSeparatorMenuItem(menu);
+	createMenuItemWithMnemonic(menu, _("Select i_nside"), "SelectInside", ui::icons::ICON_SELECT_INSIDE);
+	createMenuItemWithMnemonic(menu, _("Select _touching"), "SelectTouching", ui::icons::ICON_SELECT_TOUCHING);
+	createMenuItemWithMnemonic(menu, _("To Whole _Entities"), "ExpandSelectionToEntities", ui::icons::ICON_SELECT_ENTITIES);
+	createMenuItemWithMnemonic(menu, _("Select all of _same type"), "SelectAllOfType", ui::icons::ICON_SELECT_COMPLETE);
+	createMenuItemWithMnemonic(menu, _("Select all Faces of same te_xture"), "SelectAllFacesOfTex", ui::icons::ICON_SELECT_SAME_TEXTURE);
 
 	createSeparatorMenuItem(menu);
-
 	createMenuItemWithMnemonic(menu, _("Export Selected Brushes to _OBJ"), "BrushExportOBJ");
 
 	createSeparatorMenuItem(menu);
-
-	createMenuItemWithMnemonic(menu, _("Colour Scheme Editor"), "EditColourScheme", "editcolour16.png");
+	createMenuItemWithMnemonic(menu, _("Colour Scheme Editor"), "EditColourScheme", ui::icons::ICON_COLOR);
 	createMenuItemWithMnemonic(menu, _("Shortcuts list"), "ShowCommandList");
 	createMenuItemWithMnemonic(menu, _("Pre_ferences..."), "Preferences");
 
