@@ -29,6 +29,7 @@ struct qtexture_t;
 
 class LoadImageCallback
 {
+		// The type of a load function
 		typedef Image* (*LoadFunc) (void* environment, const std::string& name);
 	public:
 		void* m_environment;
@@ -72,7 +73,7 @@ class TexturesCache
 		virtual ~TexturesCache ()
 		{
 		}
-		//virtual LoadImageCallback defaultLoader () const = 0;
+		// Loads an image by using the default loader and returns the pointer
 		virtual Image* loadImage (const std::string& name) = 0;
 		virtual qtexture_t* capture (const std::string& name) = 0;
 		virtual qtexture_t* capture (const LoadImageCallback& loader, const std::string& name) = 0;

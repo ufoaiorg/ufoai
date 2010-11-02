@@ -183,6 +183,8 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/ui/menu/FiltersMenu.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/overlay/Overlay.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/materialeditor/MaterialEditor.cpp \

@@ -31,6 +31,61 @@ class ImageDependencies: public GlobalFileSystemModuleRef
 
 typedef unsigned char byte;
 
+/* greebo: This loads a file from the disk using GDKPixbuf routines.
+ *
+ * The image is loaded and its alpha channel is set uniformly to 1, the
+ * according Image class is instantiated and the pointer is returned.
+ *
+ * Note: returns NULL if the file could not be loaded.
+ */
+
+static Image* LoadImageGDK(ArchiveFile& file) {
+
+	// Allocate a new GdkPixBuf and create an alpha-channel with alpha=1.0
+	GdkPixbuf* rawPixbuf = gdk_pixbuf_new_from_file(file.getName().c_str(), NULL);
+
+	// Only create an alpha channel if the other rawPixbuf could be loaded
+	GdkPixbuf* img = (rawPixbuf != NULL) ? gdk_pixbuf_add_alpha(rawPixbuf, TRUE, 255, 0, 255) : NULL;
+
+	if (img != NULL) {
+		// Allocate a new image
+		RGBAImage* image = new RGBAImage(gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img));
+
+		// Initialise the source buffer pointers
+		guchar* gdkStart = gdk_pixbuf_get_pixels(img);
+		int rowstride = gdk_pixbuf_get_rowstride(img);
+		int numChannels = gdk_pixbuf_get_n_channels(img);
+
+		// Set the target buffer pointer to the first RGBAPixel
+		RGBAPixel* targetPixel = image->pixels;
+
+		// Now do an unelegant cycle over all the pixels and move them into the target
+		for (unsigned int y = 0; y < image->height; y++) {
+			for (unsigned int x = 0; x < image->width; x++) {
+				guchar* gdkPixel = gdkStart + y*rowstride + x*numChannels;
+
+				// Copy the values from the GdkPixel
+				targetPixel->red = gdkPixel[0];
+				targetPixel->green = gdkPixel[1];
+				targetPixel->blue = gdkPixel[2];
+				targetPixel->alpha = gdkPixel[3];
+
+				// Increase the pointer
+				targetPixel++;
+			}
+		}
+
+		// Free the GdkPixbufs from the memory
+		g_object_unref(G_OBJECT(img));
+		g_object_unref(G_OBJECT(rawPixbuf));
+
+		return image;
+	}
+
+	// No image could be loaded, return NULL
+	return NULL;
+}
+
 static Image* LoadImage (ArchiveFile& file, const char *extension)
 {
 	RGBAImage* image = (RGBAImage *) 0;
@@ -71,24 +126,16 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 	return image;
 }
 
-static Image* LoadJPG (ArchiveFile& file)
-{
-	return LoadImage(file, "jpeg");
-}
-
-static Image* LoadTGA (ArchiveFile& file)
-{
-	return LoadImage(file, "tga");
-}
-
-static Image* LoadPNG (ArchiveFile& file)
-{
-	return LoadImage(file, "png");
-}
-
 class ImageTGAAPI
 {
+	private:
 		_QERPlugImageTable m_imagetga;
+
+		static Image* LoadTGA (ArchiveFile& file)
+		{
+			return LoadImage(file, "tga");
+		}
+
 	public:
 		typedef _QERPlugImageTable Type;
 		STRING_CONSTANT(Name, "tga");
@@ -102,14 +149,18 @@ class ImageTGAAPI
 			return &m_imagetga;
 		}
 };
-
 typedef SingletonModule<ImageTGAAPI> ImageTGAModule;
-
 typedef Static<ImageTGAModule> StaticImageTGAModule;
 
 class ImageJPGAPI
 {
+	private:
 		_QERPlugImageTable m_imagejpg;
+
+		static Image* LoadJPG (ArchiveFile& file)
+		{
+			return LoadImage(file, "jpeg");
+		}
 	public:
 		typedef _QERPlugImageTable Type;
 		STRING_CONSTANT(Name, "jpg");
@@ -123,14 +174,18 @@ class ImageJPGAPI
 			return &m_imagejpg;
 		}
 };
-
 typedef SingletonModule<ImageJPGAPI, ImageDependencies> ImageJPGModule;
-
 typedef Static<ImageJPGModule> StaticImageJPGModule;
 
 class ImagePNGAPI
 {
+	private:
 		_QERPlugImageTable m_imagepng;
+
+		static Image* LoadPNG (ArchiveFile& file)
+		{
+			return LoadImage(file, "png");
+		}
 	public:
 		typedef _QERPlugImageTable Type;
 		STRING_CONSTANT(Name, "png");
@@ -144,11 +199,31 @@ class ImagePNGAPI
 			return &m_imagepng;
 		}
 };
-
 typedef SingletonModule<ImagePNGAPI> ImagePNGModule;
-
 typedef Static<ImagePNGModule> StaticImagePNGModule;
+
+class ImageGDKAPI
+{
+	private:
+		_QERPlugImageTable m_imagegdk;
+
+	public:
+		typedef _QERPlugImageTable Type;
+		STRING_CONSTANT(Name, "GDK");
+
+		ImageGDKAPI ()
+		{
+			m_imagegdk.loadImage = LoadImageGDK;
+		}
+		_QERPlugImageTable* getTable ()
+		{
+			return &m_imagegdk;
+		}
+};
+typedef SingletonModule<ImageGDKAPI> ImageGDKModule;
+typedef Static<ImageGDKModule> StaticImageGDKModule;
 
 StaticRegisterModule staticRegisterImageJPG(StaticImageJPGModule::instance());
 StaticRegisterModule staticRegisterImageTGA(StaticImageTGAModule::instance());
 StaticRegisterModule staticRegisterImagePNG(StaticImagePNGModule::instance());
+StaticRegisterModule staticRegisterImageGDK(StaticImageGDKModule::instance());

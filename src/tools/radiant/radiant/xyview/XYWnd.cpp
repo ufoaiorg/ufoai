@@ -9,6 +9,7 @@
 #include "ibrush.h"
 #include "iimage.h"
 #include "ieventmanager.h"
+#include "ioverlay.h"
 
 #include "gtkutil/glwidget.h"
 #include "gtkutil/GLWidgetSentry.h"
@@ -1460,6 +1461,10 @@ void XYWnd::draw ()
 	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
 	const int nDim2 = (m_viewType == XY) ? 1 : 2;
 	glTranslatef(-m_vOrigin[nDim1], -m_vOrigin[nDim2], 0);
+
+	// Call the image overlay draw method with the window coordinates
+	Vector4 windowCoords = getWindowCoordinates();
+	GlobalOverlay().draw(windowCoords[0], windowCoords[1], windowCoords[2], windowCoords[3], m_fScale);
 
 	glDisable(GL_LINE_STIPPLE);
 	glLineWidth(1);

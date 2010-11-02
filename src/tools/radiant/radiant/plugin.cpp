@@ -60,6 +60,7 @@
 #include "ifilter.h"
 #include "ieventmanager.h"
 #include "igrid.h"
+#include "ioverlay.h"
 
 #include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
@@ -191,7 +192,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalNamespaceModuleRef,
 		public GlobalFilterModuleRef,
 		public GlobalClipperModuleRef,
-		public GlobalGridModuleRef
+		public GlobalGridModuleRef,
+		public GlobalOverlayModuleRef
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;
