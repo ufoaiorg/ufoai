@@ -126,6 +126,8 @@ class RadiantCoreAPI
 			m_radiantcore.getMapName = &getMapName;
 			m_radiantcore.getMapWorldEntity = getMapWorldEntity;
 
+			m_radiantcore.setStatusText = Sys_Status;
+
 			m_radiantcore.getRequiredGameDescriptionKeyValue = &GameDescription_getRequiredKeyValue;
 
 			m_radiantcore.attachGameToolsPathObserver = Radiant_attachGameToolsPathObserver;

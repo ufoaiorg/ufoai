@@ -222,6 +222,7 @@ typedef LatchedValue<bool> LatchedBool;
 
 void deleteSelection ();
 
+// Set the text to be displayed in the status bar
 void Sys_Status (const std::string& status);
 
 void ScreenUpdates_Disable (const std::string& message, const std::string& title);

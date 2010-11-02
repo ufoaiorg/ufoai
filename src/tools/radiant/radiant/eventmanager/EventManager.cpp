@@ -2,6 +2,8 @@
 
 #include "iregistry.h"
 #include "iselection.h"
+#include "iradiant.h"
+
 #include <iostream>
 
 #include "gdk/gdkevents.h"
@@ -371,7 +373,7 @@ public:
 		}
 	}
 
-	// Catches the keypress/keyrelease events from the given GtkObject
+	// Catches the key/mouse press/release events from the given GtkObject
 	void connect(GtkObject* object)	{
 		// Create and store the handler into the map
 		gulong handlerId = g_signal_connect(G_OBJECT(object), "key_press_event", G_CALLBACK(onKeyPress), this);
@@ -526,6 +528,23 @@ private:
 		return findAccelerator(keyval, _modifiers.getKeyboardFlags(event->state));
 	}
 
+	void updateStatusText(GdkEventKey* event, bool keyPress) {
+		// Make a copy of the given event key
+		GdkEventKey eventKey = *event;
+
+		// Sometimes the ALT modifier is not set, so this is a workaround for this
+		if (eventKey.keyval == GDK_Alt_L || eventKey.keyval == GDK_Alt_R) {
+			if (keyPress) {
+				eventKey.state |= GDK_MOD1_MASK;
+			}
+			else {
+				eventKey.state &= ~GDK_MOD1_MASK;
+			}
+		}
+
+		_mouseEvents.updateStatusText(&eventKey);
+	}
+
 	// The GTK keypress callback
 	static gboolean onKeyPress(GtkWindow* window, GdkEventKey* event, gpointer data) {
 		// Convert the passed pointer onto a KeyEventManager pointer
@@ -535,7 +554,6 @@ private:
 		AcceleratorList accelList = self->findAccelerator(event);
 
 		if (accelList.size() > 0) {
-
 			// Pass the execute() call to all found accelerators
 			for (unsigned int i = 0; i < accelList.size(); i++) {
 				Accelerator* accelerator = dynamic_cast<Accelerator*>(accelList[i]);
@@ -548,6 +566,8 @@ private:
 
 			return true;
 		}
+
+		self->updateStatusText(event, true);
 
 		return false;
 	}
@@ -574,6 +594,8 @@ private:
 
 			return true;
 		}
+
+		self->updateStatusText(event, false);
 
 		return false;
 	}
@@ -618,6 +640,7 @@ private:
 /* EventManager dependencies class.
  */
 class EventManagerDependencies :
+	public GlobalRadiantModuleRef,
 	public GlobalRegistryModuleRef
 {
 };

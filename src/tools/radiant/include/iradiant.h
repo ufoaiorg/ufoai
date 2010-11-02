@@ -90,6 +90,8 @@ struct IRadiant
 		const std::string& (*getSettingsPath) ();
 		const std::string& (*getMapsPath) ();
 
+		void (*setStatusText)(const std::string& statusText);
+
 		const std::string (*getGamePath) ();
 		/**
 		 * @return The full path to the current loaded map
