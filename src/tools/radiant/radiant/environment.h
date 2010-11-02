@@ -24,8 +24,39 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <string>
 
-void environment_init(void);
-const std::string& environment_get_home_path(void);
-const std::string& environment_get_app_path(void);
+/** greebo: A base class initialised right at the startup holding
+ * 			information about the home and application paths.
+ */
+class Environment
+{
+	// The app + home paths
+	std::string _appPath;
+	std::string _homePath;
+	std::string _settingsPath;
+	std::string _bitmapsPath;
+
+public:
+	// Call this with the arguments from main()
+	void init(int argc, char* argv[]);
+
+	/** greebo: Get the application/home paths
+	 */
+	std::string getHomePath();
+	std::string getAppPath();
+	std::string getSettingsPath();
+	std::string getBitmapsPath();
+
+	// Contains the static instance
+	static Environment& Instance();
+
+private:
+	std::string getHomeDir ();
+
+	// Sets up the bitmap path and settings path
+	void initPaths();
+
+	// Initialises the arguments
+	void initArgs(int argc, char* argv[]);
+};
 
 #endif

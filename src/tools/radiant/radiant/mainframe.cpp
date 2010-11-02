@@ -120,6 +120,7 @@
 #include "ui/commandlist/CommandList.h"
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
+#include "environment.h"
 
 struct LayoutGlobals
 {
@@ -296,16 +297,14 @@ const std::string& CompilerBinaryWithPath_get (void)
 
 // App Path
 
-std::string g_strAppPath; ///< holds the full path of the executable
-
 const std::string& AppPath_get (void)
 {
-	return g_strAppPath;
+	return Environment::Instance().getAppPath();
 }
 
 const std::string& SettingsPath_get (void)
 {
-	return environment_get_home_path();
+	return Environment::Instance().getSettingsPath();
 }
 
 void EnginePathImport (std::string& self, const char* value)

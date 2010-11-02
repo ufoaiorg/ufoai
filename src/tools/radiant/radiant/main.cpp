@@ -73,7 +73,6 @@
 #include "stream/textfilestream.h"
 
 #include "gtkutil/messagebox.h"
-#include "gtkutil/image.h"
 #include "console.h"
 #include "sidebar/sidebar.h"
 #include "map/map.h"
@@ -296,12 +295,6 @@ static void streams_init (void)
 	GlobalWarningStream::instance().setOutputStream(getSysPrintWarningStream());
 }
 
-static void paths_init (void)
-{
-	g_strAppPath = environment_get_app_path();
-	BitmapsPath_set(g_strAppPath + "bitmaps/");
-}
-
 /**
  * @brief now the secondary game dependant .pid file
  */
@@ -404,9 +397,8 @@ int main (int argc, char* argv[])
 
 	GlobalDebugMessageHandler::instance().setHandler(GlobalPopupDebugMessageHandler::instance());
 
-	environment_init();
-
-	paths_init();
+	// Retrieve the application path and such
+	Environment::Instance().init(argc, argv);
 
 	ui::Splash::Instance().show();
 

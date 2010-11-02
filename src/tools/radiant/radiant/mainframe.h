@@ -260,9 +260,7 @@ const std::string& QERApp_GetGamePath ();
 extern std::string g_strCompilerBinaryWithPath;
 const std::string& CompilerBinaryWithPath_get ();
 
-extern std::string g_strAppPath;
 const std::string& AppPath_get ();
-
 const std::string& SettingsPath_get ();
 
 void Radiant_Initialise ();
@@ -292,9 +290,5 @@ void Radiant_detachHomePathsObserver (ModuleObserver& observer);
 
 void MainFrame_Construct ();
 void MainFrame_Destroy ();
-
-void hide_splash ();
-void show_splash ();
-void populateRegistry ();
 
 #endif
