@@ -32,7 +32,7 @@
 #if !defined (INCLUDED_OS_PATH_H)
 #define INCLUDED_OS_PATH_H
 
-#include <string>
+#include "string/string.h"
 #include <cstring>
 
 /** General utility functions for OS-related tasks
@@ -243,10 +243,13 @@ class MatchFileExtension
 class DirectoryCleaned
 {
 	public:
-		const std::string m_path;
-		DirectoryCleaned (const std::string& path) :
-			m_path(string::replaceAll(path, "\\", "/") + "/")
+		std::string m_path;
+		DirectoryCleaned (const std::string& path)
 		{
+			if (string::endsWith(path, "/"))
+				m_path = path;
+			else
+				m_path = path + "/";
 		}
 
 		operator const std::string&() const
