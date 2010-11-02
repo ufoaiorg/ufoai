@@ -15,7 +15,7 @@ typedef struct _GtkMenu GtkMenu;
 /* greebo: MRU stands for "Most Recently Used" (maps) and this is what
  * this class is handling.
  *
- * To keep track of the recent filenames the class is using a boost::multi_index
+ * To keep track of the recent filenames the class is using a list
  * container with n elements. The subclass MRUList is providing the interface
  * and iterators for inserting and manipulating the list.
  */

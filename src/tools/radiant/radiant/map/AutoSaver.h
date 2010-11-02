@@ -1,30 +1,74 @@
-/*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+#ifndef AUTOSAVER_H_
+#define AUTOSAVER_H_
 
-This file is part of GtkRadiant.
+#include <string>
+#include "iregistry.h"
+#include "preferencesystem.h"
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+#include "gtkutil/Timer.h"
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+/* greebo: The AutoMapSaver class lets itself being called in distinct intervals
+ * and saves the map files either to snapshots or to a single yyyy.autosave.map file.
+ */
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+namespace map {
 
-#if !defined(INCLUDED_AUTOSAVE_H)
-#define INCLUDED_AUTOSAVE_H
+class AutoMapSaver :
+	public RegistryKeyObserver,
+	public PreferenceConstructor
+{
+	// TRUE, if autosaving is enabled
+	bool _enabled;
 
-void AutoSave_clear();
-void QE_CheckAutoSave(void);
+	// TRUE, if the autosaver generates snapshots
+	bool _snapshotsEnabled;
 
-void Autosave_Construct();
+	// The autosave interval stored in seconds
+	unsigned long _interval;
 
-#endif
+	// The timer object that triggers the callback
+	gtkutil::Timer _timer;
+
+	std::size_t _changes;
+
+public:
+	// Constructor
+	AutoMapSaver();
+
+	// Initialises the preferences and the registrykeyobserver
+	void init();
+
+	~AutoMapSaver();
+
+	// Starts/stops the autosave "countdown"
+	void startTimer();
+	void stopTimer();
+
+	// Clears the _changes member variable that indicates how many changes have been made
+	void clearChanges();
+
+	// The RegistryKeyObserver implementation - gets called upon key change
+	void keyChanged();
+
+	// PreferenceConstructor implementation, adds the elements to the according preference page
+	void constructPreferencePage(PreferenceGroup& group);
+
+private:
+	// This performs is called to check if the map is valid/changed/should be saved
+	// and calls the save routines accordingly.
+	void checkSave();
+
+	// Saves a snapshot of the currently active map (only named maps)
+	void saveSnapshot();
+
+	// This gets called by GTK when the interval time is over
+	static gboolean onIntervalReached(gpointer data);
+
+}; // class AutoMapSaver
+
+// The accessor function for the static AutoSaver instance
+AutoMapSaver& AutoSaver();
+
+} // namespace map
+
+#endif /*AUTOSAVER_H_*/

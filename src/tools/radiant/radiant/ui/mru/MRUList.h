@@ -5,7 +5,7 @@
 #include <list>
 
 /* greebo: The MRUList maintains the list of filenames in a FIFO-style
- * boost::multi_index_container of length _numMaxItems.
+ * list container of length _numMaxItems.
  *
  * Construct it with the maximum number of strings this list can hold.
  *

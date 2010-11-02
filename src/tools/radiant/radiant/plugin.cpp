@@ -229,7 +229,7 @@ class Radiant: public TypeSystemRef
 			Material_Construct();
 			TextureBrowser_Construct();
 			Entity_Construct();
-			Autosave_Construct();
+			map::AutoSaver().init();
 			EntityInspector_Construct();
 			FindTextureDialog_Construct();
 			NullModel_Construct();

@@ -1101,39 +1101,6 @@ void Selection_SnapToGrid (void)
 	}
 }
 
-/**
- * @brief Timer function that is called every second
- */
-static gint qe_every_second (gpointer data)
-{
-	GdkModifierType mask;
-
-	gdk_window_get_pointer(0, 0, 0, &mask);
-
-	if ((mask & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) == 0) {
-		QE_CheckAutoSave();
-	}
-
-	return TRUE;
-}
-
-static guint s_qe_every_second_id = 0;
-
-void EverySecondTimer_enable (void)
-{
-	if (s_qe_every_second_id == 0) {
-		s_qe_every_second_id = gtk_timeout_add(1000, qe_every_second, 0);
-	}
-}
-
-static void EverySecondTimer_disable (void)
-{
-	if (s_qe_every_second_id != 0) {
-		gtk_timeout_remove(s_qe_every_second_id);
-		s_qe_every_second_id = 0;
-	}
-}
-
 static gint window_realize_remove_decoration (GtkWidget* widget, gpointer data)
 {
 	gdk_window_set_decorations(widget->window, (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MENU | GDK_DECOR_MINIMIZE
@@ -1217,7 +1184,7 @@ void ScreenUpdates_process (void)
 void ScreenUpdates_Disable (const std::string& message, const std::string& title)
 {
 	if (g_wait_stack.empty()) {
-		EverySecondTimer_disable();
+		map::AutoSaver().stopTimer();
 
 		process_gui();
 
@@ -1242,7 +1209,7 @@ void ScreenUpdates_Enable (void)
 	ASSERT_MESSAGE(!ScreenUpdates_Enabled(), "screen updates already enabled");
 	g_wait_stack.pop_back();
 	if (g_wait_stack.empty()) {
-		EverySecondTimer_enable();
+		map::AutoSaver().startTimer();
 		gtk_grab_remove(GTK_WIDGET(g_wait.m_window));
 		destroy_floating_window(g_wait.m_window);
 		g_wait.m_window = 0;
@@ -1918,7 +1885,8 @@ void MainFrame::Create (void)
 	GtkWidget *notebook = Sidebar_construct();
 	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);
 
-	EverySecondTimer_enable();
+	// Start the autosave timer so that it can periodically check the map for changes
+	map::AutoSaver().startTimer();
 }
 
 void MainFrame::SaveWindowInfo (void)
@@ -1937,7 +1905,7 @@ void MainFrame::SaveWindowInfo (void)
 
 void MainFrame::Shutdown (void)
 {
-	EverySecondTimer_disable();
+	map::AutoSaver().stopTimer();
 
 	GlobalUndoSystem().trackerDetach(m_saveStateTracker);
 

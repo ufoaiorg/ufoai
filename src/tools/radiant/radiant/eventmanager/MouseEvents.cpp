@@ -7,7 +7,7 @@
 #include "string/string.h"
 
 namespace {
-// Needed for boost::algorithm::split
+// Needed for string::splitBy
 typedef std::vector<std::string> StringParts;
 
 const float DEFAULT_STRAFE_SPEED = 0.65f;

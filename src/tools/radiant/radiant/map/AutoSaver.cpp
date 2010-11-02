@@ -1,188 +1,250 @@
-/**
- * @file autosave.cpp
- * @brief Handles the autosave mechanism and the affected preference handling
- */
-
-/*
- Copyright (C) 1999-2006 Id Software, Inc. and contributors.
- For a list of contributors, see the accompanying CONTRIBUTORS file.
-
- This file is part of GtkRadiant.
-
- GtkRadiant is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- GtkRadiant is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with GtkRadiant; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
-
 #include "AutoSaver.h"
-#include "radiant_i18n.h"
+
+#include <iostream>
+#include "mapfile.h"
+#include "iscenegraph.h"
+
+#include "gdk/gdkwindow.h"
 
 #include "os/file.h"
-#include "os/path.h"
-#include "stream/stringstream.h"
-#include "gtkutil/dialog.h"
-#include "scenelib.h"
-#include "mapfile.h"
-
+#include "string/string.h"
 #include "map.h"
-#include "iradiant.h"
 #include "../mainframe.h"
 #include "../qe3.h"
-#include "../settings/preferences.h"
+#include "os/path.h"
 
-static inline bool DoesFileExist (const std::string& name, std::size_t& size)
-{
-	if (file_exists(name)) {
-		size += file_size(name);
-		return true;
-	}
-	return false;
+#include "radiant_i18n.h"
+
+namespace map {
+
+namespace {
+	const std::string RKEY_AUTOSAVE_ENABLED = "user/ui/map/autoSaveEnabled";
+	const std::string RKEY_AUTOSAVE_INTERVAL = "user/ui/map/autoSaveInterval";
+	const std::string RKEY_AUTOSAVE_SNAPSHOTS_ENABLED = "user/ui/map/autoSaveSnapshots";
+	const std::string RKEY_AUTOSAVE_SNAPSHOTS_FOLDER = "user/ui/map/snapshotFolder";
+	const std::string RKEY_AUTOSAVE_MAX_SNAPSHOT_FOLDER_SIZE = "user/ui/map/maxSnapshotFolderSize";
 }
 
-static void Map_Snapshot ()
+AutoMapSaver::AutoMapSaver() :
+	_enabled(GlobalRegistry().get(RKEY_AUTOSAVE_ENABLED) == "1"),
+	_snapshotsEnabled(GlobalRegistry().get(RKEY_AUTOSAVE_SNAPSHOTS_ENABLED) == "1"),
+	_interval(GlobalRegistry().getInt(RKEY_AUTOSAVE_INTERVAL) * 60),
+	_timer(_interval * 1000, onIntervalReached, this),
+	_changes(0)
 {
+	GlobalRegistry().addKeyObserver(this, RKEY_AUTOSAVE_INTERVAL);
+	GlobalRegistry().addKeyObserver(this, RKEY_AUTOSAVE_SNAPSHOTS_ENABLED);
+	GlobalRegistry().addKeyObserver(this, RKEY_AUTOSAVE_ENABLED);
+}
+
+AutoMapSaver::~AutoMapSaver() {
+	stopTimer();
+}
+
+void AutoMapSaver::keyChanged() {
+	// Stop the current timer
+	stopTimer();
+
+	_enabled = (GlobalRegistry().get(RKEY_AUTOSAVE_ENABLED) == "1");
+	_snapshotsEnabled = (GlobalRegistry().get(RKEY_AUTOSAVE_SNAPSHOTS_ENABLED) == "1");
+	_interval = GlobalRegistry().getInt(RKEY_AUTOSAVE_INTERVAL) * 60;
+
+	// Update the internal timer
+	_timer.setTimeout(_interval * 1000);
+
+	// Start the timer with the new interval
+	if (_enabled) {
+		startTimer();
+	}
+}
+
+void AutoMapSaver::init() {
+	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
+	GlobalPreferenceSystem().addConstructor(this);
+}
+
+void AutoMapSaver::clearChanges() {
+	_changes = 0;
+}
+
+void AutoMapSaver::startTimer() {
+	_timer.enable();
+}
+
+void AutoMapSaver::stopTimer() {
+	_timer.disable();
+}
+
+void AutoMapSaver::saveSnapshot() {
+	// Original GtkRadiant comments:
 	// we need to do the following
 	// 1. make sure the snapshot directory exists (create it if it doesn't)
 	// 2. find out what the lastest save is based on number
 	// 3. inc that and save the map
-	const std::string& path = GlobalRadiant().getMapName();
-	std::string name = os::getFilenameFromPath(path);
-	std::string extension = os::getExtension(path);
-	std::string snapshotsDir = os::stripFilename(path) + "/snapshots";
 
-	if (file_exists(snapshotsDir) || g_mkdir(snapshotsDir.c_str(), 0775)) {
-		std::size_t lSize = 0;
-		std::string strNewPath = snapshotsDir + '/' + name;
+	unsigned int maxSnapshotFolderSize =
+		GlobalRegistry().getInt(RKEY_AUTOSAVE_MAX_SNAPSHOT_FOLDER_SIZE);
 
-		for (int nCount = 0;; ++nCount) {
-			// The original map's filename is "<path>/<name>.<ext>"
-			// The snapshot's filename will be "<path>/snapshots/<name>.<count>.<ext>"
-			std::string snapshotFilename = strNewPath + '.' + string::toString(nCount) + "." + extension;
+	// Sanity check in case there is something weird going on in the registry
+	if (maxSnapshotFolderSize == 0) {
+		maxSnapshotFolderSize = 100;
+	}
 
-			if (!DoesFileExist(snapshotFilename, lSize)) {
-				// save in the next available slot
-				Map_SaveFile(snapshotFilename);
+	const std::string& mapName = GlobalRadiant().getMapName();
+	std::string name = os::getFilenameFromPath(mapName);
+	std::string extension = os::getExtension(mapName);
 
-				if (lSize > 50 * 1024 * 1024) { // total size of saves > 50 mb
-					gtkutil::infoDialog(std::string(
-									_("The snapshot files in %s total more than 50 megabytes. You might consider cleaning up.\n"))
-									+ snapshotsDir);
-				}
+	// Append the the snapshot folder to the path
+	std::string snapshotPath = os::stripFilename(mapName) + "/" + GlobalRegistry().get(RKEY_AUTOSAVE_SNAPSHOTS_FOLDER);
+
+	// Check if the folder exists and create it if necessary
+	if (file_exists(snapshotPath) || g_mkdir_with_parents(snapshotPath.c_str(), 0755)) {
+		// Reset the size counter of the snapshots folder
+		unsigned int folderSize = 0;
+
+		// This holds the target path of the snapshot
+		std::string filename;
+
+		for (int nCount = 0; nCount < 5000; nCount++) {
+
+			// Construct the base name without numbered extension
+			filename = snapshotPath + mapName;
+
+			std::cout << filename << "\n";
+			// Now append the number and the map extension to the map name
+			filename += ".";
+			filename += string::toString(nCount);
+			filename += ".map";
+
+			if (file_exists(filename)) {
+				// Add to the folder size
+				folderSize += file_size(filename);
+			}
+			else {
+				// We've found an unused filename, break the loop
 				break;
 			}
 		}
-	} else {
-		gtkutil::errorDialog(std::string(_("Snapshot save failed.. unable to create directory\n")) + snapshotsDir);
+
+		globalOutputStream() << "Autosaving snapshot to " << filename << "\n";
+
+		// save in the next available slot
+		Map_SaveFile(filename);
+
+		// Display a warning, if the folder size exceeds the limit
+		if (folderSize > maxSnapshotFolderSize * 1024 * 1024) {
+			globalOutputStream() << "AutoSaver: The snapshot files in " << snapshotPath;
+			globalOutputStream() << " total more than " << maxSnapshotFolderSize;
+			globalOutputStream() << " MB. You might consider cleaning up.\n";
+		}
+	}
+	else {
+		globalErrorStream() << "Snapshot save failed.. unable to create directory";
+		globalErrorStream() << snapshotPath << "\n";
 	}
 }
 
-static bool g_AutoSave_Enabled = true;
-static int m_AutoSave_Frequency = 5;
-static bool g_SnapShots_Enabled = false;
+void AutoMapSaver::checkSave() {
 
-namespace
-{
-	time_t s_start = 0;
-	std::size_t s_changes = 0;
-}
+	// Check if the user is currently pressing a mouse button
+	GdkModifierType mask;
+	gdk_window_get_pointer(0, 0, 0, &mask);
 
-void AutoSave_clear ()
-{
-	s_changes = 0;
-}
+	const unsigned int anyButton = (
+		GDK_BUTTON1_MASK | GDK_BUTTON2_MASK |
+		GDK_BUTTON3_MASK | GDK_BUTTON4_MASK |
+		GDK_BUTTON5_MASK
+	);
 
-static inline scene::Node& Map_Node ()
-{
-	return GlobalSceneGraph().root();
-}
+	// Don't start the save if the user is holding a mouse button
+	if ((mask & anyButton) != 0) {
+		return;
+	}
 
-/**
- * @brief If five minutes have passed since making a change
- * and the map hasn't been saved, save it out.
- */
-void QE_CheckAutoSave (void)
-{
 	if (!Map_Valid(g_map) || !ScreenUpdates_Enabled()) {
 		return;
 	}
 
-	time_t now;
-	time(&now);
-
-	if (s_start == 0 || s_changes == Node_getMapFile(Map_Node())->changes()) {
-		s_start = now;
+	// Check, if changes have been made since the last autosave
+	if (_changes == Node_getMapFile(GlobalSceneGraph().root())->changes()) {
+		return;
 	}
 
-	if ((now - s_start) > (60 * m_AutoSave_Frequency)) {
-		s_start = now;
-		s_changes = Node_getMapFile(Map_Node())->changes();
+	_changes = Node_getMapFile(GlobalSceneGraph().root())->changes();
 
-		if (g_AutoSave_Enabled) {
-			const std::string& strMsg = g_SnapShots_Enabled ? _("Autosaving snapshot...") : _("Autosaving...");
-			Sys_Status(strMsg);
+	// Stop the timer before saving
+	stopTimer();
 
-			// only snapshot if not working on a default map
-			if (g_SnapShots_Enabled && !Map_Unnamed(g_map)) {
-				Map_Snapshot();
-			} else {
-				if (Map_Unnamed(g_map)) {
-					std::string autosave = g_qeglobals.m_userGamePath + "maps/";
-					g_mkdir(autosave.c_str(), 0775);
-					autosave += "autosave.map";
-					Map_SaveFile(autosave);
-				} else {
-					const std::string& name = GlobalRadiant().getMapName();
-					const std::string extension = os::getExtension(name);
-					const std::string baseName = os::stripExtension(name);
-					const std::string autosave = baseName + ".autosave." + extension;
-					Map_SaveFile(autosave);
-				}
+	if (_enabled) {
+		// only snapshot if not working on an unnamed map
+		if (_snapshotsEnabled && !Map_Unnamed(g_map)) {
+			saveSnapshot();
+		}
+		else {
+			if (Map_Unnamed(g_map)) {
+				// Generate an autosave filename
+				std::string autoSaveFilename = GlobalRadiant().getMapsPath();
+
+				// Try to create the map folder, in case there doesn't exist one
+				g_mkdir_with_parents(autoSaveFilename.c_str(), 755);
+
+				// Append the "autosave.map" to the filename
+				autoSaveFilename += "autosave.map";
+
+				globalOutputStream() << "Autosaving unnamed map to " << autoSaveFilename << "\n";
+
+				// Invoke the save call
+				Map_SaveFile(autoSaveFilename);
 			}
-		} else {
-			g_message("Autosave skipped...\n");
+			else {
+				// Construct the new extension (e.g. ".autosave.map")
+				std::string newExtension = ".autosave.map";
+
+				// create the new autosave filename by changing the extension
+				std::string autoSaveFilename = os::stripExtension(GlobalRadiant().getMapName());
+				autoSaveFilename += newExtension;
+
+				globalOutputStream() << "Autosaving map to " << autoSaveFilename << "\n";
+
+				// Invoke the save call
+				Map_SaveFile(autoSaveFilename);
+			}
 		}
 	}
+	else {
+		globalOutputStream() << "Autosave skipped.....\n";
+	}
+
+	// Re-start the timer after saving has finished
+	startTimer();
 }
 
-static void Autosave_constructPreferences (PrefPage* page)
-{
-	GtkWidget* autosave_enabled = page->appendCheckBox(_("Autosave"), _("Enable Autosave"), g_AutoSave_Enabled);
-	GtkWidget* autosave_frequency = page->appendSpinner(_("Autosave Frequency (minutes)"), m_AutoSave_Frequency, 1, 1,
-			60);
-	Widget_connectToggleDependency(autosave_frequency, autosave_enabled);
-	page->appendCheckBox("", _("Save Snapshots"), g_SnapShots_Enabled);
-}
-void Autosave_constructPage (PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Autosave"), _("Autosave Preferences"));
-	Autosave_constructPreferences(reinterpret_cast<PrefPage*>(page));
-}
-void Autosave_registerPreferencesPage ()
-{
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Autosave_constructPage> ());
+void AutoMapSaver::constructPreferencePage(PreferenceGroup& group) {
+	// Add a page to the given group
+	PreferencesPage* page(group.createPage(_("Autosave"), _("Autosave Preferences")));
+
+	// Add the checkboxes and connect them with the registry key and the according observer
+	page->appendCheckBox("", _("Enable Autosave"), RKEY_AUTOSAVE_ENABLED);
+	page->appendSlider(_("Autosave Interval (in minutes)"), RKEY_AUTOSAVE_INTERVAL, TRUE, 5, 1, 61, 1, 1, 1);
+
+	page->appendCheckBox("", _("Save Snapshots"), RKEY_AUTOSAVE_SNAPSHOTS_ENABLED);
+	page->appendEntry(_("Snapshot folder (relative to map folder)"), RKEY_AUTOSAVE_SNAPSHOTS_FOLDER);
+	page->appendEntry(_("Max Snapshot Folder size (MB)"), RKEY_AUTOSAVE_MAX_SNAPSHOT_FOLDER_SIZE);
 }
 
-#include "preferencesystem.h"
-#include "stringio.h"
+gboolean AutoMapSaver::onIntervalReached(gpointer data) {
+	// Cast the passed pointer onto a self-pointer
+	AutoMapSaver* self = reinterpret_cast<AutoMapSaver*>(data);
 
-void Autosave_Construct ()
-{
-	GlobalPreferenceSystem().registerPreference("Autosave", BoolImportStringCaller(g_AutoSave_Enabled),
-			BoolExportStringCaller(g_AutoSave_Enabled));
-	GlobalPreferenceSystem().registerPreference("AutosaveMinutes", IntImportStringCaller(m_AutoSave_Frequency),
-			IntExportStringCaller(m_AutoSave_Frequency));
-	GlobalPreferenceSystem().registerPreference("Snapshots", BoolImportStringCaller(g_SnapShots_Enabled),
-			BoolExportStringCaller(g_SnapShots_Enabled));
+	self->checkSave();
 
-	Autosave_registerPreferencesPage();
+	// Return true, so that the timer gets called again
+	return true;
 }
+
+AutoMapSaver& AutoSaver() {
+	static AutoMapSaver _autoSaver;
+	return _autoSaver;
+}
+
+} // namespace map

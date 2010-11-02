@@ -274,7 +274,7 @@ class XMLRegistry: public Registry
 			return string::toInt(valueStr);
 		}
 
-		// Sets a registry key value to the given integer. The value is converted via boost libraries first.
+		// Sets a registry key value to the given integer.
 		void setInt (const std::string& key, const int& value) {
 			// Try to convert the int into a string
 			std::string valueStr = string::toString(value);

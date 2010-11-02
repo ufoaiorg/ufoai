@@ -16,7 +16,7 @@ class Modifiers
 	// The association of "SHIFT" to its bit index
 	typedef std::map<const std::string, unsigned int> ModifierBitIndexMap;
 
-	// Needed for boost::algorithm::split
+	// Needed for string::splitBy
 	typedef std::vector<std::string> StringParts;
 
 	// The list of all modifier bit indices

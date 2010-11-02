@@ -188,7 +188,7 @@ class Map: public ModuleObserver
 
 				GlobalSceneGraph().insert_root(*m_resource->getNode());
 
-				AutoSave_clear();
+				map::AutoSaver().clearChanges();
 
 				Map_SetValid(g_map, true);
 			}

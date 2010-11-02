@@ -28,7 +28,7 @@ bool XMLFilter::isVisible(const std::string& item, const std::string& name) cons
 			const int flags = string::toInt(name);
 			visible = !(flags & ruleIter->contentflags);
 		} else {
-			// If we have a rule for this item, use boost's regex to match the query name
+			// If we have a rule for this item, use the wildcard matcher to match the query name
 			// against the "match" parameter
 			if (string::matchesWildcard(name, ruleIter->match)) {
 				// Overwrite the visible flag with the value from the rule.
