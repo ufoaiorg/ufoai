@@ -2511,19 +2511,28 @@ base/pics/base/teamroom.png | GNU General Public License 2.0 or later | Martin G
 base/pics/base/workshop1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop2.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/buttons/big_blue.png | GNU General Public License 2.0 or later
+base/pics/buttons/big_blue2.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_blue_disabled.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_red.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_red_disabled.png | GNU General Public License 2.0 or later
 base/pics/buttons/blue1.png | GNU General Public License 2.0 or later
 base/pics/buttons/blue1_disabled.png | GNU General Public License 2.0 or later
+base/pics/buttons/blue2-1.png | GNU General Public License 2.0 or later
+base/pics/buttons/blue2-1_disabled.png | GNU General Public License 2.0 or later
 base/pics/buttons/blue2.png | GNU General Public License 2.0 or later
 base/pics/buttons/blue2_disabled.png | GNU General Public License 2.0 or later
 base/pics/buttons/blue3.png | GNU General Public License 2.0 or later
 base/pics/buttons/blue3_disabled.png | GNU General Public License 2.0 or later
+base/pics/buttons/blue_left.png | GNU General Public License 2.0 or later
+base/pics/buttons/blue_left_disabled.png | GNU General Public License 2.0 or later
+base/pics/buttons/blue_right.png | GNU General Public License 2.0 or later
+base/pics/buttons/blue_right_disabled.png | GNU General Public License 2.0 or later
 base/pics/buttons/large_blue.png | GNU General Public License 2.0 or later
+base/pics/buttons/large_blue2.png | GNU General Public License 2.0 or later
 base/pics/buttons/large_blue_disabled.png | GNU General Public License 2.0 or later
 base/pics/buttons/small_blue.png | GNU General Public License 2.0 or later
 base/pics/buttons/small_blue_disabled.png | GNU General Public License 2.0 or later
+base/pics/buttons/tall_blue.png | GNU General Public License 2.0 or later
 base/pics/conchars.png | GNU General Public License 2.0 or later
 base/pics/cursors/cursor1.png | GNU General Public License 2.0 or later
 base/pics/cursors/ducked.png | GNU General Public License 2.0 or later
@@ -2615,6 +2624,12 @@ base/pics/hud/phys_ekg.png | GNU General Public License 2.0
 base/pics/hud/phys_mor.png | GNU General Public License 2.0
 base/pics/hud/popup_cursor.png | GNU General Public License 2.0 or later
 base/pics/hud/weapon_box.png | GNU General Public License 2.0 or later
+base/pics/icons/aircraft_return.png | GNU General Public License 2.0 or later
+base/pics/icons/aircraft_return_disabled.png | GNU General Public License 2.0 or later
+base/pics/icons/aircraft_return_hovered.png | GNU General Public License 2.0 or later
+base/pics/icons/aircraft_send.png | GNU General Public License 2.0 or later
+base/pics/icons/aircraft_send_disabled.png | GNU General Public License 2.0 or later
+base/pics/icons/aircraft_send_hovered.png | GNU General Public License 2.0 or later
 base/pics/icons/alien_kill.png | GNU General Public License 2.0 or later | Martin Gerhardy | Icons by Gerd Heisse
 base/pics/icons/alien_surgery.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/alien_unused.png | GNU General Public License 2.0 | Gerd Heisse
@@ -3375,7 +3390,6 @@ base/pics/ui/button_geoscape.png | GNU General Public License 2.0 or later | bay
 base/pics/ui/button_green_big.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_green_small.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_green_verysmall.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/button_pack1.png | GNU General Public License 2.0 or later
 base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later |  | Source: Based on original menu artwork by SparX and Rasta
 base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo | Source: Based on original menu artwork by SparX and Rasta

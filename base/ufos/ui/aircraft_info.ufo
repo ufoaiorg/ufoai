@@ -47,7 +47,7 @@ window aircraft extends iaircraft
 	custombutton aircraft_return
 	{
 		pos			"726 510"
-		image		"ui/button_pack1"
+		icon		"aircraft_return"
 		size		"16 16"
 	}
 
