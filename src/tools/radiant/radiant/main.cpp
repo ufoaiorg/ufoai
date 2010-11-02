@@ -302,70 +302,12 @@ static void paths_init (void)
 	BitmapsPath_set(g_strAppPath + "bitmaps/");
 }
 
-static void remove_global_pid (void)
-{
-	std::string g_pidFile = SettingsPath_get() + "radiant.pid";
-
-	// close the primary
-	if (!file_remove(g_pidFile)) {
-		gtk_MessageBox(0, "WARNING: Could not delete global pid at " + g_pidFile, _("UFORadiant"), eMB_OK,
-				eMB_ICONERROR);
-	}
-}
-
-static void create_global_pid (void)
-{
-	/*!
-	 the global prefs loading / game selection dialog might fail for any reason we don't know about
-	 we need to catch when it happens, to cleanup the stateful prefs which might be killing it
-	 and to turn on console logging for lookup of the problem
-	 this is the first part of the two step .pid system
-	 */
-	//! the global .pid file (only for global part of the startup)
-	std::string g_pidFile = SettingsPath_get() + "radiant.pid";
-
-	FILE *pid;
-	pid = fopen(g_pidFile.c_str(), "r");
-	if (pid != 0) {
-		fclose(pid);
-
-		remove_global_pid();
-
-		// in debug, never prompt to clean registry, turn console logging auto after a failed start
-#if !defined(DEBUG)
-		std::string startupFailure = _("Radiant failed to start properly the last time it was run.\n"
-				"The failure may be related to current global preferences.\n"
-				"Do you want to reset global preferences to defaults?");
-
-		if (gtk_MessageBox(0, startupFailure, _("Radiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
-			g_GamesDialog.Reset();
-		}
-
-		std::string msg = "Logging console output to " + SettingsPath_get()
-				+ "radiant.log\nRefer to the log if Radiant fails to start again.";
-
-		gtk_MessageBox(0, msg, _("Radiant - Console Log"), eMB_OK);
-#endif
-
-		// set without saving, the class is not in a coherent state yet
-		// just do the value change and call to start logging, CGamesDialog will pickup when relevant
-		g_GamesDialog.m_bForceLogConsole = true;
-		Sys_LogFile(true);
-	}
-
-	// create a primary .pid for global init run
-	pid = fopen(g_pidFile.c_str(), "w");
-	if (pid)
-		fclose(pid);
-}
-
 /**
  * @brief now the secondary game dependant .pid file
  */
 static void create_local_pid (void)
 {
-	//! the game-specific .pid file
-	std::string g_pidGameFile = SettingsPath_get() + "/radiant-game.pid";
+	std::string g_pidGameFile = SettingsPath_get() + "/radiant.pid";
 
 	FILE *pid = fopen(g_pidGameFile.c_str(), "r");
 	if (pid != 0) {
@@ -408,7 +350,7 @@ static void create_local_pid (void)
  */
 static void remove_local_pid (void)
 {
-	std::string g_pidGameFile = SettingsPath_get() + "/radiant-game.pid";
+	std::string g_pidGameFile = SettingsPath_get() + "/radiant.pid";
 	file_remove(g_pidGameFile);
 }
 
@@ -468,11 +410,7 @@ int main (int argc, char* argv[])
 
 	ui::Splash::Instance().show();
 
-	create_global_pid();
-
 	g_GamesDialog.Init();
-
-	remove_global_pid();
 
 	create_local_pid();
 
