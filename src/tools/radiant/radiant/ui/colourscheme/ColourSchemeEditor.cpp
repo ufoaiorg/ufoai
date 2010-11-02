@@ -9,7 +9,6 @@
 
 namespace ui {
 
-
 	// Constants
 	namespace {
 		const int EDITOR_DEFAULT_SIZE_X = 650;
@@ -370,7 +369,7 @@ std::string ColourSchemeEditor::inputDialog(const std::string& title, const std:
 void ColourSchemeEditor::copyScheme() {
 	GtkTreeIter iter;
 	std::string name = getSelectedScheme();
-	std::string newName = inputDialog("Copy Colour Scheme", "Enter a name for the new scheme:");
+	std::string newName = inputDialog(_("Copy Colour Scheme"), _("Enter a name for the new scheme:"));
 
 	if (newName != "") {
 		// Copy the scheme
