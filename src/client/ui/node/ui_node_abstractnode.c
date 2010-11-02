@@ -354,6 +354,8 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
 		*(const uiAction_t**) mem = (const uiAction_t*) rawValue;
 	} else if (property->type == V_UI_ICONREF) {
 		*(const uiSprite_t**) mem = (const uiSprite_t*) rawValue;
+	} else if (property->type == V_UI_SPRITEREF) {
+		*(const uiSprite_t**) mem = (const uiSprite_t*) rawValue;
 	} else {
 		Com_Error(ERR_FATAL, "UI_NodeSetPropertyFromRAW: Property type '%d' unsupported", property->type);
 	}

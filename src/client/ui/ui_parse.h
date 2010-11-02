@@ -52,8 +52,9 @@ qboolean UI_InitRawActionValue(struct uiAction_s* action, struct uiNode_s *node,
 #define	V_UI_ACTION			(V_UI + 0)		/**< Identify an action type into the value_t structure */
 #define V_UI_EXCLUDERECT	(V_UI + 1)		/**< Identify a special attribute, use special parse function */
 #define V_UI_ICONREF		(V_UI + 2)		/**< Identify a special attribute, use special parse function */
-#define V_UI_IF				(V_UI + 3)		/**< Identify a special attribute, use special parse function */
-#define V_UI_DATAID			(V_UI + 4)
+#define V_UI_SPRITEREF		(V_UI + 3)		/**< Identify a special attribute, use special parse function */
+#define V_UI_IF				(V_UI + 4)		/**< Identify a special attribute, use special parse function */
+#define V_UI_DATAID			(V_UI + 5)
 #define V_UI_CVAR			(V_UI + 0x0100) /**< Property is a CVAR string (mix this flag with base type, see bellow) */
 #define V_UI_REF			(V_UI + 0x0200) /**< Property is a ref into a value (mix this flag with base type, see bellow) */
 #define V_UI_NODEMETHOD		(V_UI + 0x0400) /**< Property is a function */

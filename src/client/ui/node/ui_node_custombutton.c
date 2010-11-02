@@ -95,6 +95,10 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
 
+	if (EXTRADATA(node).background) {
+		UI_DrawSpriteInBox(EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+	}
+
 	if (EXTRADATA(node).super.icon) {
 		UI_DrawIconInBox(EXTRADATA(node).super.icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
@@ -113,6 +117,9 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 static const value_t properties[] = {
 	/* Skin position. Define the top-left position of the skin we will used from the image. Y should not be bigger than 64. To compute the high corner we use the node size. */
 	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(customButtonExtraData_t, texl), MEMBER_SIZEOF(customButtonExtraData_t, texl)},
+	/* Sprite used to display the background */
+	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
+
 	{NULL, V_NULL, 0, 0}
 };
 

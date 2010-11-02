@@ -28,10 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "ui_node_button.h"
 
+/* prototype */
+struct uiSprite_s;
+
 void UI_RegisterCustomButtonNode(uiBehaviour_t *behaviour);
 
 typedef struct customButtonExtraData_s {
 	buttonExtraData_t super;
+	struct uiSprite_s *background;
 	vec2_t texl;				/**< upper left texture coordinates */
 } customButtonExtraData_t;
 

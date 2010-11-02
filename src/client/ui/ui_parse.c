@@ -259,6 +259,16 @@ qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 		action->d.terminal.d1.data = icon;
 		action->d.terminal.d2.integer = property->type;
 		return qtrue;
+	} else if (property->type == V_UI_SPRITEREF) {
+			uiSprite_t* sprite = UI_GetSpriteByName(string);
+			if (sprite == NULL) {
+				Com_Printf("UI_ParseSetAction: sprite '%s' not found (%s)\n", string, UI_GetPath(node));
+				return qfalse;
+			}
+			action->type = EA_VALUE_RAW;
+			action->d.terminal.d1.data = sprite;
+			action->d.terminal.d2.integer = property->type;
+			return qtrue;
 	} else {
 		const int baseType = property->type & V_UI_MASK;
 		if (baseType != 0 && baseType != V_UI_CVAR) {
@@ -819,6 +829,20 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 				*icon = UI_GetIconByName(*token);
 				if (*icon == NULL) {
 					Com_Printf("UI_ParseProperty: icon '%s' not found (object %s)\n", *token, objectName);
+				}
+			}
+			break;
+
+		case V_UI_SPRITEREF:
+			{
+				uiSprite_t** sprite = (uiSprite_t**) valuePtr;
+				*token = Com_EParse(text, errhead, objectName);
+				if (!*text)
+					return qfalse;
+
+				*sprite = UI_GetSpriteByName(*token);
+				if (*sprite == NULL) {
+					Com_Printf("UI_ParseProperty: sprite '%s' not found (object %s)\n", *token, objectName);
 				}
 			}
 			break;
