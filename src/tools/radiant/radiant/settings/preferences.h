@@ -327,9 +327,6 @@ class PrefsDlg: public Dialog
 		{
 		}
 
-		// initialize the above paths
-		void Init ();
-
 		/*! Utility function for swapping notebook pages for tree list selections */
 		void showPrefPage (GtkWidget* prefpage);
 

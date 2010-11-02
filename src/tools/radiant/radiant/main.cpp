@@ -474,8 +474,6 @@ int main (int argc, char* argv[])
 
 	remove_global_pid();
 
-	g_Preferences.Init(); // must occur before create_local_pid() to allow preferences to be reset
-
 	create_local_pid();
 
 	// in a very particular post-.pid startup

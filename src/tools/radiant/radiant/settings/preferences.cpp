@@ -603,10 +603,6 @@ void Preferences_Reset (void)
 	file_remove(filename);
 }
 
-void PrefsDlg::Init (void)
-{
-}
-
 void PrefsDlg::PostModal (EMessageBoxReturn code)
 {
 	if (code == eIDOK) {
