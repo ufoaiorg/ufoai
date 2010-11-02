@@ -7,8 +7,6 @@
 #include "generic/referencecounted.h"
 #include "../plugin.h"
 
-extern bool g_brush_texturelock_enabled;
-
 /// \brief Returns true if 'self' takes priority when building brush b-rep.
 inline bool plane3_inside (const Plane3& self, const Plane3& other)
 {

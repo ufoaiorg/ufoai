@@ -2,12 +2,12 @@
 
 #include "ifilter.h"
 #include "renderable.h"
+#include "BrushModule.h"
 
 #include "shaderlib.h"
 #include "winding.h"
 #include "cullable.h"
 
-extern bool g_brush_texturelock_enabled;
 void Brush_textureChanged();
 
 Face::Face (FaceObserver* observer) :
@@ -136,7 +136,7 @@ void Face::render (Renderer& renderer, const Matrix4& localToWorld) const
 
 void Face::transform (const Matrix4& matrix, bool mirror)
 {
-	if (g_brush_texturelock_enabled) {
+	if (GlobalBrush()->textureLockEnabled()) {
 		m_texdefTransformed.transformLocked(m_shader.width(), m_shader.height(), m_plane.plane3(), matrix);
 	}
 

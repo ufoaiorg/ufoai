@@ -698,17 +698,6 @@ void FlipClipper ()
 	GlobalClipper().flipClip();
 }
 
-Callback g_texture_lock_status_changed;
-BoolExportCaller g_texdef_movelock_caller(g_brush_texturelock_enabled);
-ToggleItem g_texdef_movelock_item(g_texdef_movelock_caller);
-
-void Texdef_ToggleMoveLock ()
-{
-	g_brush_texturelock_enabled = !g_brush_texturelock_enabled;
-	g_texdef_movelock_item.update();
-	g_texture_lock_status_changed();
-}
-
 void Brush_registerCommands ()
 {
 	GlobalEventManager().addRegistryToggle("TogTexLock", RKEY_ENABLE_TEXTURE_LOCK);

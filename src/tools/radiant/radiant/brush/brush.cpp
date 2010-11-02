@@ -22,7 +22,6 @@
 #include "brush.h"
 
 QuantiseFunc Face::m_quantise;
-bool g_brush_texturelock_enabled = false;
 
 double Brush::m_maxWorldCoord = 0;
 Shader* Brush::m_state_point;

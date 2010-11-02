@@ -20,8 +20,6 @@ const double GRID_MIN = 0.125;
 
 typedef double (*QuantiseFunc) (double f);
 
-extern bool g_brush_texturelock_enabled;
-
 class FaceObserver
 {
 	public:
