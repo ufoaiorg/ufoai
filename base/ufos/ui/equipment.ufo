@@ -5,7 +5,7 @@
 component radiobutton buttonActorEquip
 {
 	size	"27 35"
-	image	"ui/button_background2"
+	background	"buttons/blue2-1"
 	cvar	*cvar:selected_actor
 	onChange { cmd "actor_select_equip <value>;" }
 	tooltip	"_Equip this soldier"

@@ -1005,7 +1005,7 @@ window multiplayer_wait extends levelbuttons
 			tooltip	"_Level 1"
 			pos		"6 293"
 			size	"27 35"
-			image	"ui/button_background2"
+			background	"buttons/blue2-1"
 			value	0
 			cvar	*cvar:cl_worldlevel
 			icon	number_1
@@ -1016,7 +1016,7 @@ window multiplayer_wait extends levelbuttons
 			tooltip	"_Level 2"
 			pos		"6 253"
 			size	"27 35"
-			image	"ui/button_background2"
+			background	"buttons/blue2-1"
 			value	1
 			cvar	*cvar:cl_worldlevel
 			icon	number_2
@@ -1027,7 +1027,7 @@ window multiplayer_wait extends levelbuttons
 			tooltip	"_Level 3"
 			pos		"6 213"
 			size	"27 35"
-			image	"ui/button_background2"
+			background	"buttons/blue2-1"
 			value	2
 			cvar	*cvar:cl_worldlevel
 			icon	number_3
@@ -1038,7 +1038,7 @@ window multiplayer_wait extends levelbuttons
 			tooltip	"_Level 4"
 			pos		"6 173"
 			size	"27 35"
-			image	"ui/button_background2"
+			background	"buttons/blue2-1"
 			value	3
 			cvar	*cvar:cl_worldlevel
 			icon	number_4
@@ -1049,7 +1049,7 @@ window multiplayer_wait extends levelbuttons
 			tooltip	"_Level 5"
 			pos		"6 133"
 			size	"27 35"
-			image	"ui/button_background2"
+			background	"buttons/blue2-1"
 			value	4
 			cvar	*cvar:cl_worldlevel
 			icon	number_5
@@ -1060,7 +1060,7 @@ window multiplayer_wait extends levelbuttons
 			tooltip	"_Level 6"
 			pos		"6 93"
 			size	"27 35"
-			image	"ui/button_background2"
+			background	"buttons/blue2-1"
 			value	5
 			cvar	*cvar:cl_worldlevel
 			icon	number_6
@@ -1071,7 +1071,7 @@ window multiplayer_wait extends levelbuttons
 			tooltip	"_Level 7"
 			pos		"6 53"
 			size	"27 35"
-			image	"ui/button_background2"
+			background	"buttons/blue2-1"
 			value	6
 			cvar	*cvar:cl_worldlevel
 			icon	number_7
@@ -1082,7 +1082,7 @@ window multiplayer_wait extends levelbuttons
 			tooltip	"_Level 8"
 			pos		"6 13"
 			size	"27 35"
-			image	"ui/button_background2"
+			background	"buttons/blue2-1"
 			value	7
 			cvar	*cvar:cl_worldlevel
 			icon	number_8
