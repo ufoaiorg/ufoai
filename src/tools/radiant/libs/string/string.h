@@ -386,6 +386,18 @@ namespace string
 	{
 		return WildcardMatcher::matches(str, wildcard);
 	}
+
+	inline bool endsWith (const std::string& str, const std::string& end)
+	{
+		const std::size_t strLength = str.length();
+		const std::size_t endLength = end.length();
+		if (strLength >= endLength) {
+			const std::size_t index = strLength - endLength;
+			return str.compare(index, endLength, end) == 0;
+		} else {
+			return false;
+		}
+	}
 }
 
 #endif
