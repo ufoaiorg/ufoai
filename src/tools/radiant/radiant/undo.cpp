@@ -23,11 +23,10 @@
 
 #include "radiant_i18n.h"
 #include "iundo.h"
+#include "iregistry.h"
 #include "preferencesystem.h"
 #include "string/string.h"
-#include "generic/callback.h"
 #include "settings/preferences.h"
-#include "stringio.h"
 
 #include "undo/SnapShot.h"
 #include "undo/Operation.h"
@@ -40,7 +39,11 @@
 
 #include "timer.h"
 
-class RadiantUndoSystem: public UndoSystem
+namespace {
+const std::string RKEY_UNDO_QUEUE_SIZE = "user/ui/undo/queueSize";
+}
+
+class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public RegistryKeyObserver
 {
 		static const std::size_t MAX_UNDO_LEVELS = 1024;
 
@@ -56,20 +59,35 @@ class RadiantUndoSystem: public UndoSystem
 		typedef std::set<UndoTracker*> Trackers;
 		Trackers _trackers;
 	public:
+
+		// Constructor
 		RadiantUndoSystem () :
-			_undoLevels(64)
+			_undoLevels(GlobalRegistry().getInt(RKEY_UNDO_QUEUE_SIZE))
 		{
+			// Add self to the key observers to get notified on change
+			GlobalRegistry().addKeyObserver(this, RKEY_UNDO_QUEUE_SIZE);
+
+			// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
+			GlobalPreferenceSystem().addConstructor(this);
 		}
+
 		~RadiantUndoSystem ()
 		{
 			clear();
 		}
+
+		// Gets called as soon as the observed registry keys get changed
+		void keyChanged() {
+			_undoLevels = GlobalRegistry().getInt(RKEY_UNDO_QUEUE_SIZE);
+		}
+
 		UndoObserver* observer (Undoable* undoable)
 		{
 			ASSERT_NOTNULL(undoable);
 
 			return &_undoables[undoable];
 		}
+
 		void release (Undoable* undoable)
 		{
 			ASSERT_NOTNULL(undoable);
@@ -236,6 +254,12 @@ class RadiantUndoSystem: public UndoSystem
 			}
 		}
 
+		// Gets called by the PreferenceSystem as request to create the according settings page
+		void constructPreferencePage(PreferenceGroup& group) {
+			PreferencesPage* page(group.createPage(_("Undo"), _("Undo Queue Settings")));
+			page->appendSpinner(_("Undo Queue Size"), RKEY_UNDO_QUEUE_SIZE, 0, 1024, 1);
+		}
+
 	private:
 		// Assigns the given stack to all of the Undoables listed in the map
 		void mark_undoables(undo::UndoStack* stack) {
@@ -245,70 +269,23 @@ class RadiantUndoSystem: public UndoSystem
 		}
 };
 
-void UndoLevels_importString (RadiantUndoSystem& undo, const char* value)
-{
-	int levels;
-	Int_importString(levels, value);
-	undo.setLevels(levels);
-}
-typedef ReferenceCaller1<RadiantUndoSystem, const char*, UndoLevels_importString> UndoLevelsImportStringCaller;
-void UndoLevels_exportString (const RadiantUndoSystem& undo, const StringImportCallback& importer)
-{
-	Int_exportString(static_cast<int> (undo.getLevels()), importer);
-}
-typedef ConstReferenceCaller1<RadiantUndoSystem, const StringImportCallback&, UndoLevels_exportString>
-		UndoLevelsExportStringCaller;
-
-#include "generic/callback.h"
-
-void UndoLevelsImport (RadiantUndoSystem& self, int value)
-{
-	self.setLevels(value);
-}
-typedef ReferenceCaller1<RadiantUndoSystem, int, UndoLevelsImport> UndoLevelsImportCaller;
-void UndoLevelsExport (const RadiantUndoSystem& self, const IntImportCallback& importCallback)
-{
-	importCallback(static_cast<int> (self.getLevels()));
-}
-typedef ConstReferenceCaller1<RadiantUndoSystem, const IntImportCallback&, UndoLevelsExport> UndoLevelsExportCaller;
-
-void Undo_constructPreferences (RadiantUndoSystem& undo, PrefPage* page)
-{
-	page->appendSpinner(_("Undo Queue Size"), 64, 0, 1024, IntImportCallback(UndoLevelsImportCaller(undo)),
-			IntExportCallback(UndoLevelsExportCaller(undo)));
-}
-void Undo_constructPage (RadiantUndoSystem& undo, PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Undo"), _("Undo Queue Settings"));
-	Undo_constructPreferences(undo, reinterpret_cast<PrefPage*>(page));
-}
-void Undo_registerPreferencesPage (RadiantUndoSystem& undo)
-{
-	PreferencesDialog_addSettingsPage(ReferenceCaller1<RadiantUndoSystem, PreferenceGroup&, Undo_constructPage> (undo));
-}
-
-class UndoSystemDependencies: public GlobalPreferenceSystemModuleRef
+class UndoSystemDependencies: public GlobalRegistryModuleRef, GlobalPreferenceSystemModuleRef
 {
 };
 
 class UndoSystemAPI
 {
-		RadiantUndoSystem m_undosystem;
+		RadiantUndoSystem _undosystem;
 	public:
 		typedef UndoSystem Type;
 		STRING_CONSTANT(Name, "*");
 
 		UndoSystemAPI ()
 		{
-			GlobalPreferenceSystem().registerPreference("UndoLevels", makeIntStringImportCallback(
-					UndoLevelsImportCaller(m_undosystem)), makeIntStringExportCallback(UndoLevelsExportCaller(
-					m_undosystem)));
-
-			Undo_registerPreferencesPage(m_undosystem);
 		}
 		UndoSystem* getTable ()
 		{
-			return &m_undosystem;
+			return &_undosystem;
 		}
 };
 

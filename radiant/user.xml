@@ -37,6 +37,10 @@
 			<caulkTexture value="textures/common/nodraw" />
 		</clipper>
 
+		<undo>
+			<queueSize value="64" />
+		</undo>
+
 		<grid>
 			<defaultGridPower value="3" />
 		</grid>
