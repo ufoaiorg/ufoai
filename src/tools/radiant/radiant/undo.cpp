@@ -29,6 +29,11 @@
 #include "settings/preferences.h"
 #include "stringio.h"
 
+#include "undo/SnapShot.h"
+#include "undo/Operation.h"
+#include "undo/Stack.h"
+#include "undo/StackFiller.h"
+
 #include <list>
 #include <map>
 #include <set>
@@ -37,207 +42,22 @@
 
 class RadiantUndoSystem: public UndoSystem
 {
-		INTEGER_CONSTANT(MAX_UNDO_LEVELS, 1024);
+		static const std::size_t MAX_UNDO_LEVELS = 1024;
 
-		class Snapshot
-		{
-				class StateApplicator
-				{
-					public:
-						Undoable* m_undoable;
-					private:
-						UndoMemento* m_data;
-					public:
+		// The undo and redo stacks
+		undo::UndoStack _undoStack;
+		undo::UndoStack _redoStack;
 
-						StateApplicator (Undoable* undoable, UndoMemento* data) :
-							m_undoable(undoable), m_data(data)
-						{
-						}
-						void restore ()
-						{
-							m_undoable->importState(m_data);
-						}
-						void release ()
-						{
-							delete m_data;
-						}
-				};
+		typedef std::map<Undoable*, undo::UndoStackFiller> UndoablesMap;
+		UndoablesMap _undoables;
 
-				typedef std::list<StateApplicator> states_t;
-				states_t m_states;
-
-			public:
-				~Snapshot ()
-				{
-					for (states_t::iterator i = m_states.begin(); i != m_states.end(); ++i) {
-						(*i).release();
-					}
-				}
-
-				bool empty () const
-				{
-					return m_states.empty();
-				}
-				std::size_t size () const
-				{
-					return m_states.size();
-				}
-				void save (Undoable* undoable)
-				{
-					m_states.push_front(StateApplicator(undoable, undoable->exportState()));
-				}
-				void restore ()
-				{
-					for (states_t::iterator i = m_states.begin(); i != m_states.end(); ++i) {
-						(*i).restore();
-					}
-				}
-		};
-
-		struct Operation
-		{
-				Snapshot m_snapshot;
-				std::string m_command;
-
-				Operation (const std::string& command) :
-					m_command(command)
-				{
-				}
-		};
-
-		class UndoStack
-		{
-				//! Note: using std::list instead of vector/deque, to avoid copying of undos
-				typedef std::list<Operation*> Operations;
-
-				Operations m_stack;
-				Operation* m_pending;
-
-			public:
-				UndoStack () :
-					m_pending(0)
-				{
-				}
-				~UndoStack ()
-				{
-					clear();
-				}
-				bool empty () const
-				{
-					return m_stack.empty();
-				}
-				std::size_t size () const
-				{
-					return m_stack.size();
-				}
-				Operation* back ()
-				{
-					return m_stack.back();
-				}
-				const Operation* back () const
-				{
-					return m_stack.back();
-				}
-				Operation* front ()
-				{
-					return m_stack.front();
-				}
-				const Operation* front () const
-				{
-					return m_stack.front();
-				}
-				void pop_front ()
-				{
-					delete m_stack.front();
-					m_stack.pop_front();
-				}
-				void pop_back ()
-				{
-					delete m_stack.back();
-					m_stack.pop_back();
-				}
-				void clear ()
-				{
-					if (!m_stack.empty()) {
-						for (Operations::iterator i = m_stack.begin(); i != m_stack.end(); ++i) {
-							delete *i;
-						}
-						m_stack.clear();
-					}
-				}
-				void start (const std::string& command)
-				{
-					if (m_pending != 0) {
-						delete m_pending;
-					}
-					m_pending = new Operation(command);
-				}
-				bool finish (const std::string& command)
-				{
-					if (m_pending != 0) {
-						delete m_pending;
-						m_pending = 0;
-						return false;
-					} else {
-						ASSERT_MESSAGE(!m_stack.empty(), "undo stack empty");
-						m_stack.back()->m_command = command;
-						return true;
-					}
-				}
-				void save (Undoable* undoable)
-				{
-					if (m_pending != 0) {
-						m_stack.push_back(m_pending);
-						m_pending = 0;
-					}
-					back()->m_snapshot.save(undoable);
-				}
-		};
-
-		UndoStack m_undo_stack;
-		UndoStack m_redo_stack;
-
-		class UndoStackFiller: public UndoObserver
-		{
-				UndoStack* m_stack;
-			public:
-
-				UndoStackFiller () :
-					m_stack(0)
-				{
-				}
-				void save (Undoable* undoable)
-				{
-					ASSERT_NOTNULL(undoable);
-
-					if (m_stack != 0) {
-						m_stack->save(undoable);
-						m_stack = 0;
-					}
-				}
-				void setStack (UndoStack* stack)
-				{
-					m_stack = stack;
-				}
-		};
-
-		typedef std::map<Undoable*, UndoStackFiller> undoables_t;
-		undoables_t m_undoables;
-
-		void mark_undoables (UndoStack* stack)
-		{
-			for (undoables_t::iterator i = m_undoables.begin(); i != m_undoables.end(); ++i) {
-				(*i).second.setStack(stack);
-			}
-		}
-
-		std::size_t m_undo_levels;
+		std::size_t _undoLevels;
 
 		typedef std::set<UndoTracker*> Trackers;
-		Trackers m_trackers;
+		Trackers _trackers;
 	public:
 		RadiantUndoSystem () :
-			m_undo_levels(64)
+			_undoLevels(64)
 		{
 		}
 		~RadiantUndoSystem ()
@@ -248,150 +68,179 @@ class RadiantUndoSystem: public UndoSystem
 		{
 			ASSERT_NOTNULL(undoable);
 
-			return &m_undoables[undoable];
+			return &_undoables[undoable];
 		}
 		void release (Undoable* undoable)
 		{
 			ASSERT_NOTNULL(undoable);
 
-			m_undoables.erase(undoable);
+			_undoables.erase(undoable);
 		}
+
+		// Sets the size of the undoStack
 		void setLevels (std::size_t levels)
 		{
-			if (levels > (std::size_t) MAX_UNDO_LEVELS()) {
-				levels = (std::size_t) MAX_UNDO_LEVELS();
+			if (levels > MAX_UNDO_LEVELS) {
+				levels = MAX_UNDO_LEVELS;
 			}
 
-			while (m_undo_stack.size() > levels) {
-				m_undo_stack.pop_front();
+			while (_undoStack.size() > levels) {
+				_undoStack.pop_front();
 			}
-			m_undo_levels = levels;
+			_undoLevels = levels;
 		}
+
 		std::size_t getLevels () const
 		{
-			return m_undo_levels;
+			return _undoLevels;
 		}
+
 		std::size_t size () const
 		{
-			return m_undo_stack.size();
+			return _undoStack.size();
 		}
+
 		void startUndo ()
 		{
-			m_undo_stack.start("unnamedCommand");
-			mark_undoables(&m_undo_stack);
+			_undoStack.start("unnamedCommand");
+			mark_undoables(&_undoStack);
 		}
+
 		bool finishUndo (const std::string& command)
 		{
-			bool changed = m_undo_stack.finish(command);
+			bool changed = _undoStack.finish(command);
 			mark_undoables(0);
 			return changed;
 		}
+
 		void startRedo ()
 		{
-			m_redo_stack.start("unnamedCommand");
-			mark_undoables(&m_redo_stack);
+			_redoStack.start("unnamedCommand");
+			mark_undoables(&_redoStack);
 		}
+
 		bool finishRedo (const std::string& command)
 		{
-			bool changed = m_redo_stack.finish(command);
+			bool changed = _redoStack.finish(command);
 			mark_undoables(0);
 			return changed;
 		}
+
 		void start ()
 		{
-			m_redo_stack.clear();
-			if (m_undo_stack.size() == m_undo_levels) {
-				m_undo_stack.pop_front();
+			_redoStack.clear();
+			if (_undoStack.size() == _undoLevels) {
+				_undoStack.pop_front();
 			}
 			startUndo();
 			trackersBegin();
 		}
+
 		void finish (const std::string& command)
 		{
 			if (finishUndo(command)) {
 				globalOutputStream() << command << "\n";
 			}
 		}
+
 		void undo ()
 		{
-			if (m_undo_stack.empty()) {
+			if (_undoStack.empty()) {
 				globalOutputStream() << "Undo: no undo available\n";
 			} else {
-				Operation* operation = m_undo_stack.back();
-				globalOutputStream() << "Undo: " << operation->m_command << "\n";
+				undo::Operation* operation = _undoStack.back();
+				globalOutputStream() << "Undo: " << operation->_command << "\n";
 
 				startRedo();
 				trackersUndo();
-				operation->m_snapshot.restore();
-				finishRedo(operation->m_command);
-				m_undo_stack.pop_back();
+				operation->_snapshot.restore();
+				finishRedo(operation->_command);
+				_undoStack.pop_back();
 			}
 		}
+
 		void redo ()
 		{
-			if (m_redo_stack.empty()) {
+			if (_redoStack.empty()) {
 				globalOutputStream() << "Redo: no redo available\n";
 			} else {
-				Operation* operation = m_redo_stack.back();
-				globalOutputStream() << "Redo: " << operation->m_command << "\n";
+				undo::Operation* operation = _redoStack.back();
+				globalOutputStream() << "Redo: " << operation->_command << "\n";
 
 				startUndo();
 				trackersRedo();
-				operation->m_snapshot.restore();
-				finishUndo(operation->m_command);
-				m_redo_stack.pop_back();
+				operation->_snapshot.restore();
+				finishUndo(operation->_command);
+				_redoStack.pop_back();
 			}
 		}
+
 		void clear ()
 		{
 			mark_undoables(0);
-			m_undo_stack.clear();
-			m_redo_stack.clear();
+			_undoStack.clear();
+			_redoStack.clear();
 			trackersClear();
 		}
+
 		void clearRedo ()
 		{
-			m_redo_stack.clear();
+			_redoStack.clear();
 			trackersClearRedo();
 		}
+
 		void trackerAttach (UndoTracker& tracker)
 		{
-			ASSERT_MESSAGE(m_trackers.find(&tracker) == m_trackers.end(), "undo tracker already attached");
-			m_trackers.insert(&tracker);
+			ASSERT_MESSAGE(_trackers.find(&tracker) == _trackers.end(), "undo tracker already attached");
+			_trackers.insert(&tracker);
 		}
+
 		void trackerDetach (UndoTracker& tracker)
 		{
-			ASSERT_MESSAGE(m_trackers.find(&tracker) != m_trackers.end(), "undo tracker cannot be detached");
-			m_trackers.erase(&tracker);
+			ASSERT_MESSAGE(_trackers.find(&tracker) != _trackers.end(), "undo tracker cannot be detached");
+			_trackers.erase(&tracker);
 		}
+
 		void trackersClear () const
 		{
-			for (Trackers::const_iterator i = m_trackers.begin(); i != m_trackers.end(); ++i) {
+			for (Trackers::const_iterator i = _trackers.begin(); i != _trackers.end(); ++i) {
 				(*i)->clear();
 			}
 		}
+
 		void trackersClearRedo () const
 		{
-			for (Trackers::const_iterator i = m_trackers.begin(); i != m_trackers.end(); ++i) {
+			for (Trackers::const_iterator i = _trackers.begin(); i != _trackers.end(); ++i) {
 				(*i)->clearRedo();
 			}
 		}
+
 		void trackersBegin () const
 		{
-			for (Trackers::const_iterator i = m_trackers.begin(); i != m_trackers.end(); ++i) {
+			for (Trackers::const_iterator i = _trackers.begin(); i != _trackers.end(); ++i) {
 				(*i)->begin();
 			}
 		}
+
 		void trackersUndo () const
 		{
-			for (Trackers::const_iterator i = m_trackers.begin(); i != m_trackers.end(); ++i) {
+			for (Trackers::const_iterator i = _trackers.begin(); i != _trackers.end(); ++i) {
 				(*i)->undo();
 			}
 		}
+
 		void trackersRedo () const
 		{
-			for (Trackers::const_iterator i = m_trackers.begin(); i != m_trackers.end(); ++i) {
+			for (Trackers::const_iterator i = _trackers.begin(); i != _trackers.end(); ++i) {
 				(*i)->redo();
+			}
+		}
+
+	private:
+		// Assigns the given stack to all of the Undoables listed in the map
+		void mark_undoables(undo::UndoStack* stack) {
+			for (UndoablesMap::iterator i = _undoables.begin(); i != _undoables.end(); ++i) {
+				i->second.setStack(stack);
 			}
 		}
 };
