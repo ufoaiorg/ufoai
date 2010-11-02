@@ -97,7 +97,6 @@ struct IRadiant
 		const std::string (*getMapName) ();
 		scene::Node& (*getMapWorldEntity) ();
 
-		const std::string& (*getGameDescriptionKeyValue) (const std::string& key);
 		const std::string& (*getRequiredGameDescriptionKeyValue) (const std::string& key);
 
 		void (*attachGameToolsPathObserver) (ModuleObserver& observer);

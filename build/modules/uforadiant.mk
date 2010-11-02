@@ -86,7 +86,7 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/map/parse.cpp \
 	$(RADIANT_BASE)/radiant/map/write.cpp \
-	$(RADIANT_BASE)/radiant/map/autosave.cpp \
+	$(RADIANT_BASE)/radiant/map/AutoSaver.cpp \
 	$(RADIANT_BASE)/radiant/map/map.cpp \
 	$(RADIANT_BASE)/radiant/map/MapFileChooserPreview.cpp \
 	$(RADIANT_BASE)/radiant/map/mapmodule.cpp \
@@ -221,14 +221,14 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/menu.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/messagebox.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/paned.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/timer.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/MenuItemAccelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/RegistryConnector.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/SourceView.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/TreeModel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TextPanel.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/Timer.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/TreeModel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/VFSTreePopulator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/menu/PopupMenu.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window/PersistentTransientWindow.cpp \

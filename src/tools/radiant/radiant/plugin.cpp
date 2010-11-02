@@ -76,7 +76,7 @@
 #include "entity.h"
 #include "select.h"
 #include "settings/preferences.h"
-#include "map/autosave.h"
+#include "map/AutoSaver.h"
 #include "dialogs/findtextures.h"
 #include "referencecache/nullmodel.h"
 #include "xyview/GlobalXYWnd.h"
@@ -93,11 +93,6 @@
 
 #include "generic/callback.h"
 
-const std::string& GameDescription_getKeyValue (const std::string& key)
-{
-	return g_pGameDescription->getKeyValue(key);
-}
-
 const std::string& GameDescription_getRequiredKeyValue (const std::string& key)
 {
 	return g_pGameDescription->getRequiredKeyValue(key);
@@ -111,20 +106,6 @@ const std::string getMapName ()
 scene::Node& getMapWorldEntity ()
 {
 	return Map_FindOrInsertWorldspawn(g_map);
-}
-
-EViewType XYWindow_getViewType ()
-{
-	return GlobalXYWnd().getActiveViewType();
-}
-
-Vector3 XYWindow_windowToWorld (const WindowVector& position)
-{
-	Vector3 result = g_vector3_identity;
-	XYWnd* xyWnd = GlobalXYWnd().getActiveXY();
-	if (xyWnd != NULL)
-		xyWnd->convertXYToWorld(static_cast<int>(position.x()), static_cast<int>(position.y()), result);
-	return result;
 }
 
 class RadiantCoreAPI
@@ -145,7 +126,6 @@ class RadiantCoreAPI
 			m_radiantcore.getMapName = &getMapName;
 			m_radiantcore.getMapWorldEntity = getMapWorldEntity;
 
-			m_radiantcore.getGameDescriptionKeyValue = &GameDescription_getKeyValue;
 			m_radiantcore.getRequiredGameDescriptionKeyValue = &GameDescription_getRequiredKeyValue;
 
 			m_radiantcore.attachGameToolsPathObserver = Radiant_attachGameToolsPathObserver;
@@ -281,7 +261,6 @@ class Radiant: public TypeSystemRef
 			NullModel_Destroy();
 			FindTextureDialog_Destroy();
 			EntityInspector_Destroy();
-			Autosave_Destroy();
 			Entity_Destroy();
 			CamWnd_Destroy();
 			GlobalXYWnd().destroy();

@@ -76,7 +76,7 @@
 #include "gtkutil/dialog.h"
 #include "gtkutil/IconTextMenuToggle.h"
 
-#include "map/autosave.h"
+#include "map/AutoSaver.h"
 #include "brush/brushmanip.h"
 #include "brush/BrushModule.h"
 #include "camera/camwindow.h"
@@ -1259,15 +1259,10 @@ void GlobalCamera_UpdateWindow (void)
 	}
 }
 
-void XY_UpdateAllWindows (MainFrame& mainframe)
-{
-	GlobalXYWnd().updateAllViews();
-}
-
 void XY_UpdateAllWindows (void)
 {
 	if (g_pParentWnd != 0) {
-		XY_UpdateAllWindows(*g_pParentWnd);
+		GlobalXYWnd().updateAllViews();
 	}
 }
 
@@ -1903,7 +1898,7 @@ void MainFrame::Create (void)
 	PreferencesDialog_constructWindow(window);
 	FindTextureDialog_constructWindow(window);
 
-	GlobalGrid().addGridChangeCallback(ReferenceCaller<MainFrame, XY_UpdateAllWindows>(*this));
+	GlobalGrid().addGridChangeCallback(FreeCaller<XY_UpdateAllWindows>());
 
 	g_defaultToolMode = DragMode;
 	g_defaultToolMode();

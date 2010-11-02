@@ -1,4 +1,4 @@
-#include "timer.h"
+#include "Timer.h"
 
 namespace gtkutil
 {

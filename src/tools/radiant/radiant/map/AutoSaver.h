@@ -26,6 +26,5 @@ void AutoSave_clear();
 void QE_CheckAutoSave(void);
 
 void Autosave_Construct();
-void Autosave_Destroy();
 
 #endif

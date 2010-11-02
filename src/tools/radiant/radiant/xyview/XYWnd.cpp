@@ -403,7 +403,8 @@ void XYWnd::zoomDelta (int x, int y, unsigned int state, void* data)
 }
 
 /* greebo: This gets repeatedly called during a mouse chase operation.
- * The call is triggered by a timer, that gets start in XYWnd::chaseMouseMotion();
+ * The method is making use of a timer to determine the amount of time that has
+ * passed since the chaseMouse has been started
  */
 void XYWnd::chaseMouse (void)
 {
@@ -411,7 +412,7 @@ void XYWnd::chaseMouse (void)
 	scroll(float_to_integer(multiplier * m_chasemouse_delta_x), float_to_integer(multiplier * -m_chasemouse_delta_y));
 
 	mouseMoved(m_chasemouse_current_x, m_chasemouse_current_y, _event->state);
-	// greebo: Restart the timer, so that it can trigger again
+	// greebo: Restart the timer
 	_chaseMouseTimer.start();
 }
 
@@ -459,6 +460,10 @@ bool XYWnd::chaseMouseMotion (int pointx, int pointy, const unsigned int& state)
 			// Start the timer, if there isn't one connected already
 			if (_chaseMouseHandler == 0) {
 				_chaseMouseTimer.start();
+
+				// Add the chase mouse handler to the idle callbacks, so it gets called as
+				// soon as there is nothing more important to do. The callback queries the timer
+				// and takes the according window movement actions
 				_chaseMouseHandler = g_idle_add(xywnd_chasemouse, this);
 			}
 

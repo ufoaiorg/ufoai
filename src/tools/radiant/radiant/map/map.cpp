@@ -74,7 +74,7 @@
 #include "../settings/preferences.h"
 #include "../referencecache.h"
 #include "../ui/mru/MRU.h"
-#include "autosave.h"
+#include "AutoSaver.h"
 #include "../brush/brush.h"
 #include "../brush/BrushNode.h"
 #include "../ump.h"

@@ -24,7 +24,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "autosave.h"
+#include "AutoSaver.h"
 #include "radiant_i18n.h"
 
 #include "os/file.h"
@@ -185,8 +185,4 @@ void Autosave_Construct ()
 			BoolExportStringCaller(g_SnapShots_Enabled));
 
 	Autosave_registerPreferencesPage();
-}
-
-void Autosave_Destroy ()
-{
 }

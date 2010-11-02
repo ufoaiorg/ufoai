@@ -3,7 +3,7 @@
 
 #include <string>
 #include "OpenAL.h"
-#include "gtkutil/timer.h"
+#include "gtkutil/Timer.h"
 
 class ArchiveFile;
 
