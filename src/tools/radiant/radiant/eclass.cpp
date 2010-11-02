@@ -166,7 +166,7 @@ class EntityClassUFO: public ModuleObserver
 		ModuleObservers m_observers;
 	public:
 		EntityClassUFO () :
-			m_unrealised(4)
+			m_unrealised(3)
 		{
 		}
 		void realise ()
