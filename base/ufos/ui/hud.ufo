@@ -518,10 +518,9 @@ window hud extends ahud
 		custombutton bt_nextround
 		{
 			tooltip	"_Finish round"
-			image	"ui/button_background"
+			background	"buttons/large_blue"
 			pos		"142 10"
 			size	"64 37"
-			texl	"192 0"
 			icon	return
 			onClick	{ cmd "nextround;" }
 		}

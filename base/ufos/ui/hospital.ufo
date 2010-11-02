@@ -92,8 +92,7 @@ window hospital
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	"ui/button_background"
-		texl	"1 1"
+		background	"buttons/big_blue"
 		pos		"950 20"
 		size	"59 55"
 		icon	"return"

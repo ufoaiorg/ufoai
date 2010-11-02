@@ -98,33 +98,30 @@ window research
 	custombutton bt_start
 	{
 		tooltip		"_Start research"
-		image		"ui/button_background"
+		background	"buttons/big_blue"
 		icon		research_start
 		pos			"725 674"
 		size		"59 55"
-		texl		"1 1"
 		onClick		{ cmd "mn_start_research;" }
 	}
 
 	custombutton bt_stop
 	{
 		tooltip		"_Stop research"
-		image		"ui/button_background"
+		background	"buttons/big_blue"
 		icon		research_stop
 		pos			"795 674"
 		size		"59 55"
-		texl		"1 1"
 		onClick		{ cmd "mn_stop_research;" }
 	}
 
 	custombutton bt_pedia
 	{
 		tooltip		"_Show research proposal"
-		image		"ui/button_background"
+		background	"buttons/big_blue"
 		icon		mail
 		pos			"865 674"
 		size		"59 55"
-		texl		"1 1"
 		onClick		{ cmd "mn_show_ufopedia;" }
 	}
 

@@ -695,9 +695,9 @@ window equipment extends objectinfo
 	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	"ui/button_background"
-		texl	"192 0"	size "64 37"
+		background	"buttons/large_blue"
 		pos		"940 720"
+		size	"64 37"
 		icon return
 		onClick	{ cmd "ui_pop;" }
 	}

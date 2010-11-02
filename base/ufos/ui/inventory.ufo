@@ -152,8 +152,8 @@ window inventory
 
 	custombutton bt_exit
 	{
-		image	"ui/button_background"
-		texl	"192 0"	size "64 37"
+		background	"buttons/large_blue"
+		size "64 37"
 		pos		"428 458"
 		icon return
 		onClick	{ call *node:root.hideinventory }

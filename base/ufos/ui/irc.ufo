@@ -41,8 +41,7 @@ window irc
 	custombutton button_exit
 	{
 		tooltip		"_Close menu but stay connected"
-		image		"ui/button_background"
-		texl		"192 0"
+		background	"buttons/large_blue"
 		pos			"950 720"
 		size		"64 37"
 		icon		return

@@ -18,9 +18,8 @@ window stats
 
 	custombutton button_exit
 	{
-		image		"ui/button_background"
+		background	"buttons/large_blue"
 		pos			"950 720"
-		texl		"192 0"
 		size		"64 37"
 		icon		return
 		onClick		{ cmd "ui_pop;" }
@@ -198,8 +197,7 @@ window nations
 
 	custombutton button_exit
 	{
-		image		"ui/button_background"
-		texl		"192 0"
+		background	"buttons/large_blue"
 		pos			"950 720"
 		size		"64 37"
 		icon		return

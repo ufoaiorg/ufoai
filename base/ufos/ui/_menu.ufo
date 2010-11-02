@@ -135,10 +135,9 @@ component panel cmpDefBaseHeader {
 	custombutton bt_back
 	{
 		tooltip		"_Back to baseview"
-		image		"ui/button_background"
+		background	"buttons/big_blue"
 		pos			"950 20"
 		size		"59 55"
-		texl		"1 1"
 		icon		"return"
 		onClick		{ cmd "ui_pop;" }
 	}

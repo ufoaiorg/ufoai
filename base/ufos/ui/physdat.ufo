@@ -196,7 +196,7 @@ window physdata
 
 	custombutton button_exit
 	{
-		image		"ui/button_background"
+		background	"buttons/large_blue"
 		pos			"428 458"
 		size		"64 37"
 		icon		return

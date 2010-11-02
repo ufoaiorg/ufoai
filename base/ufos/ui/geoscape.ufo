@@ -550,22 +550,20 @@ window geoscape
 		custombutton bt_mapcenter
 		{
 			tooltip		"_Center objects on the map"
-			image		"ui/button_background"
+			background	"buttons/blue3"
 			icon		"geo_center"
 			pos			"145 520"
 			size		"28 25"
-			texl		"193 38"
 			onClick		{ cmd "map_center;" }
 		}
 
 		custombutton bt_menu
 		{
 			tooltip		"_Go to Options"
-			image		"ui/button_background"
+			background	"buttons/blue3"
 			icon		"geo_option"
 			pos			"190 520"
 			size		"28 25"
-			texl		"193 38"
 			onClick		{ cmd "ui_pop;" }
 		}
 
