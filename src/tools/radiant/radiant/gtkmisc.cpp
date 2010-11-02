@@ -44,6 +44,7 @@
 
 #include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"
+#include "gtkutil/image.h"
 #include "gtkutil/menu.h"
 #include "gtkutil/MenuItemAccelerator.h"
 #include "gtkutil/SeparatorMenuItem.h"
@@ -54,7 +55,7 @@
 
 /* greebo: Create a menu item under the given <menu> and connect it to the given <command> name
  */
-GtkMenuItem* createMenuItemWithMnemonic (GtkMenu* menu, const std::string& caption, const std::string& commandName)
+GtkMenuItem* createMenuItemWithMnemonic (GtkMenu* menu, const std::string& caption, const std::string& commandName, const std::string& iconName)
 {
 	GtkWidget* menuItem = NULL;
 
@@ -65,7 +66,7 @@ GtkMenuItem* createMenuItemWithMnemonic (GtkMenu* menu, const std::string& capti
 		const std::string accelText = GlobalEventManager().getAcceleratorStr(event, true);
 
 		// Create a new menuitem
-		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, NULL, false);
+		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, gtkutil::getLocalPixbuf(iconName), false);
 
 		gtk_widget_show_all(GTK_WIDGET(menuItem));
 
@@ -82,7 +83,7 @@ GtkMenuItem* createMenuItemWithMnemonic (GtkMenu* menu, const std::string& capti
 
 /* greebo: Create a check menuitem under the given <menu> and connect it to the given <command> name
  */
-GtkMenuItem* createCheckMenuItemWithMnemonic (GtkMenu* menu, const std::string& caption, const std::string& commandName)
+GtkMenuItem* createCheckMenuItemWithMnemonic (GtkMenu* menu, const std::string& caption, const std::string& commandName, const std::string& iconName)
 {
 	GtkWidget* menuItem = NULL;
 
@@ -92,7 +93,7 @@ GtkMenuItem* createCheckMenuItemWithMnemonic (GtkMenu* menu, const std::string& 
 		// Retrieve an acclerator string formatted for a menu
 		const std::string accelText = GlobalEventManager().getAcceleratorStr(event, true);
 
-		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, NULL, true);
+		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, gtkutil::getLocalPixbuf(iconName), true);
 
 		gtk_widget_show_all(GTK_WIDGET(menuItem));
 

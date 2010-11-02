@@ -62,11 +62,17 @@ namespace gtkutil
 	// Return a GdkPixbuf from a local image
 	GdkPixbuf* getLocalPixbuf (const std::string& fileName)
 	{
+		if (fileName.empty())
+			return NULL;
+
 		return gdk_pixbuf_new_from_file(std::string(g_bitmapsPath + fileName).c_str(), NULL);
 	}
 
 	GdkPixbuf* getLocalPixbufWithMask (const std::string& fileName)
 	{
+		if (fileName.empty())
+			return NULL;
+
 		std::string fullFileName(g_bitmapsPath + fileName);
 		return pixbuf_new_from_file_with_mask(fullFileName.c_str());
 	}
