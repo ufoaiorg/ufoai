@@ -13,6 +13,7 @@
 #include "gtkutil/xorrectangle.h"
 #include "../timer.h"
 #include "iradiant.h"
+#include "math/Vector4.h"
 
 #include "../map/map.h"
 #include "../camera/CameraObserver.h"
@@ -190,7 +191,7 @@ class XYWnd: public CameraObserver
 
 		static gboolean xywnd_chasemouse (gpointer data);
 		static void zoomDelta (int x, int y, unsigned int state, void* data);
-
+		Vector4 getWindowCoordinates();
 	public:
 		void EntityCreate_MouseDown (int x, int y);
 		void EntityCreate_MouseMove (int x, int y);
