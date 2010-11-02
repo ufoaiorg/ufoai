@@ -142,6 +142,19 @@ public:
 		return returnValue;
 	}
 
+	IAccelerator* addAccelerator(GdkEventKey* event) {
+		// Create a new accelerator with the given arguments
+		Accelerator* accelerator = new Accelerator(event->keyval, _modifiers.getKeyboardFlags(event->state));
+
+		// Add a new Accelerator to the list
+		_accelerators.push_back(accelerator);
+
+		// return the reference to the last accelerator in the list
+		AcceleratorList::reverse_iterator i = _accelerators.rbegin();
+
+		return (*i);
+	}
+
 	IEvent* findEvent(const std::string& name) {
 		// Try to lookup the command
 		EventMap::iterator i = _events.find(name);
@@ -155,6 +168,35 @@ public:
 			return NULL;
 		}
 	}
+
+	IEvent* findEvent(GdkEventKey* event) {
+		// Retrieve the accelerators for this eventkey
+		AcceleratorList accelList = findAccelerator(event);
+
+		// Did we find any matching accelerators?
+		if (accelList.size() > 0) {
+			// Take the first found accelerator
+			Accelerator* accel = *accelList.begin();
+
+			return accel->getEvent();
+		}
+		else {
+			// No accelerators found
+			return NULL;
+		}
+	}
+
+	std::string getEventName(IEvent* event) {
+		// Try to lookup the given eventptr
+		for (EventMap::iterator i = _events.begin(); i != _events.end(); i++) {
+			if (i->second == event) {
+				return i->first;
+			}
+		}
+
+		return "";
+	}
+
 
 	// Add the given command to the internal list
 	IEvent* addCommand(const std::string& name, const Callback& callback) {
@@ -290,6 +332,26 @@ public:
 				// Command NOT found
 				globalOutputStream() << "EventManager: Unable to lookup command: " << command << "\n";
 			}
+		}
+	}
+
+	void disconnectAccelerator(const std::string& command) {
+		IEvent* event = findEvent(command);
+
+		if (event != NULL) {
+			// Cycle through the accelerators and check for matches
+			for (AcceleratorList::iterator i = _accelerators.begin(); i != _accelerators.end(); i++) {
+				if ((*i)->match(event)) {
+					// Connect the accelerator to the empty event (disable the accelerator)
+					(*i)->connectEvent(NULL);
+					(*i)->setKey(0);
+					(*i)->setModifiers(0);
+				}
+			}
+		}
+		else {
+			// Command NOT found
+			globalOutputStream() << "EventManager: Unable to disconnect command: " << command.c_str() << "\n";
 		}
 	}
 
@@ -522,6 +584,32 @@ private:
 		if (returnValue == GDK_VoidSymbol) {
 			globalOutputStream() << "EventManager: Warning: Could not recognise key " << keyStr << "\n";
 		}
+
+		return returnValue;
+	}
+
+	bool isModifier(GdkEventKey* event) {
+		return (event->keyval == GDK_Control_L || event->keyval == GDK_Control_R ||
+				event->keyval == GDK_Shift_L || event->keyval == GDK_Shift_R ||
+				event->keyval == GDK_Alt_L || event->keyval == GDK_Alt_R ||
+				event->keyval == GDK_Meta_L || event->keyval == GDK_Meta_R);
+	}
+
+	std::string getGDKEventStr(GdkEventKey* event) {
+		std::string returnValue("");
+
+		// Don't react on modifiers only (no actual key like A, 2, U, etc.)
+		if (isModifier(event)) {
+			return returnValue;
+		}
+
+		// Convert the GDKEvent state into modifier flags
+		const unsigned int modifierFlags = _modifiers.getKeyboardFlags(event->state);
+
+		// Construct the complete string
+		returnValue += _modifiers.getModifierStr(modifierFlags, true);
+		returnValue += (returnValue != "") ? "-" : "";
+		returnValue += gdk_keyval_name(gdk_keyval_to_upper(event->keyval));
 
 		return returnValue;
 	}

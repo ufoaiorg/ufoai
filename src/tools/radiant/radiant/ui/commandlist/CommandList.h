@@ -14,6 +14,16 @@ class CommandListDialog: public gtkutil::BlockingTransientWindow
 		// The list store containing the list of ColourSchemes
 		GtkListStore* _listStore;
 
+		// The treeview containing the above liststore
+		GtkWidget* _treeView;
+
+		// The label to hold the status text of the shortcut chooser
+		GtkWidget* _statusWidget;
+
+		// Working variables to store the new key/modifier from the user input
+		unsigned int _keyval;
+		unsigned int _state;
+
 	public:
 		// Constructor
 		CommandListDialog ();
@@ -22,8 +32,32 @@ class CommandListDialog: public gtkutil::BlockingTransientWindow
 		virtual void populateWindow ();
 
 	private:
-		// The callback for the GTK delete-event
+		// Handles the assignment of a new shortcut to the selected row
+		void assignShortcut();
+
+		// Removes all items from the treeview and reloads the list
+		void reloadList();
+
+		// Gets the currently selected event name
+		std::string getSelectedCommand();
+
+		// Asks the user to enter a new shortcut
+		void retrieveShortcut(const std::string& commandName);
+
+		// Create the actual dialog and return a string with the result (TODO: Move into helper class)
+		bool shortcutDialog(const std::string& title, const std::string& label);
+
+		// The callback for the buttons
 		static void callbackClose (GtkWidget* widget, CommandListDialog* self);
+		static void callbackClear(GtkWidget* widget, CommandListDialog* self);
+		static void callbackAssign(GtkWidget* widget, CommandListDialog* self);
+
+		// The callback to catch the double click on a treeview row
+		static gboolean callbackViewButtonPress(GtkWidget* widget, GdkEventButton* event, CommandListDialog* self);
+
+		// The callback for catching the keypress events in the shortcut entry field
+		static gboolean onShortcutKeyPress(GtkWidget* widget, GdkEventKey* event, CommandListDialog* self);
+		static gboolean onShortcutKeyRelease(GtkWidget* widget, GdkEventKey* event, CommandListDialog* self);
 
 }; // class CommandListDialog
 
