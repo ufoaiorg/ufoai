@@ -1349,6 +1349,7 @@ static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 
 	createSeparatorMenuItem(menu);
 
+	createMenuItemWithMnemonic(menu, _("Colour Scheme Editor"), "EditColourScheme", "editcolour16.png");
 	createMenuItemWithMnemonic(menu, _("Shortcuts list"), "ShowCommandList");
 	createMenuItemWithMnemonic(menu, _("Pre_ferences..."), "Preferences");
 
@@ -1515,7 +1516,6 @@ static GtkMenuItem* create_misc_menu (void)
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(misc_menu_item));
 
 	createMenuItemWithMnemonic(menu, _("Find brush..."), "FindBrush");
-	createMenuItemWithMnemonic(menu, _("Colour Scheme Editor"), "EditColourScheme");
 
 	return misc_menu_item;
 }
