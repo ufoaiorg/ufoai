@@ -71,6 +71,26 @@ window test_cvar
 		string	"t10"
 	}
 
+	string testCommon11 {
+		pos		"20 240"
+		string	"t10"
+	}
+
+	string testCommon12 {
+		pos		"20 240"
+		string	"t10"
+	}
+
+	string testCommon13 {
+		pos		"20 240"
+		string	"t10"
+	}
+
+	string testCommon14 {
+		pos		"20 240"
+		string	"t10"
+	}
+
 	bar barTest
 	{
 		pos			"65 10"
@@ -79,6 +99,18 @@ window test_cvar
 		current		*cvar:test_current
 		max			*cvar:test_max
 		disabled	true
+	}
+
+	radiobutton radioTest {
+		cvar		*cvar:test
+	}
+
+	func radioTestSetCvar {
+		*node:root.radioTest@cvar = <1>
+	}
+
+	func radioTestSetCvar2 {
+		*node:root.radioTest@cvar = param1
 	}
 
 	//
@@ -130,10 +162,34 @@ window test_cvar
 		if ( *node:root.barTest@current == 112 ) { *node:root.testCommon10@color = "0 1 0 1" }
 		else { *node:root.testCommon10@color = "1 0 0 1" }
 
+		*cvar:test = 301
+		*cvar:test2 = 302
+		*cvar:test3 = 303
+		*cvar:test4 = 304
+
+		// check cvar from property
+		if ( *node:root.radioTest@cvar == 301 ) { *node:root.testCommon11@color = "0 1 0 1" }
+		else { *node:root.testCommon11@color = "1 0 0 1" }
+		*node:root.radioTest@cvar = "*cvar:test2"
+		if ( *node:root.radioTest@cvar == 302 ) { *node:root.testCommon12@color = "0 1 0 1" }
+		else { *node:root.testCommon12@color = "1 0 0 1" }
+
+		// link property to a cvar through param
+		call *node:root.radioTestSetCvar("*cvar:test3")
+		if ( *node:root.radioTest@cvar == 303 ) { *node:root.testCommon13@color = "0 1 0 1" }
+		else { *node:root.testCommon13@color = "1 0 0 1" }
+		call *node:root.radioTestSetCvar("*cvar:test4")
+		if ( *node:root.radioTest@cvar == 304 ) { *node:root.testCommon14@color = "0 1 0 1" }
+		else { *node:root.testCommon14@color = "1 0 0 1" }
+
 		// clean up
 		delete *cvar:test_current
 		delete *cvar:test_max
 		delete *cvar:test_current2
+		delete *cvar:test
+		delete *cvar:test2
+		delete *cvar:test3
+		delete *cvar:test4
 	}
 
 	func onInit {
