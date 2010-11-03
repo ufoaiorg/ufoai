@@ -398,6 +398,16 @@ namespace string
 			return false;
 		}
 	}
+
+	/**
+	 * Returns a new string that has all the spaces from the given string removed.
+	 */
+	inline std::string eraseAllSpaces (const std::string& str)
+	{
+		std::string tmp(str);
+		tmp.erase(std::remove(tmp.begin(), tmp.end(), ' '), tmp.end());
+		return tmp;
+	}
 }
 
 #endif
