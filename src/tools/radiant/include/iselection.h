@@ -123,6 +123,8 @@ class SelectionSystem
 		class Observer
 		{
 			public:
+				virtual ~Observer () {
+				}
 				virtual void selectionChanged () = 0;
 		};
 

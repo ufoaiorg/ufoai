@@ -19,7 +19,7 @@
 
 // This is needed to correctly connect the ToggleButton to Radiant's callbacks
 // The "handler" object data was set in CreateToolItem
-void toggleButtonSetActiveNoSignal(GtkToggleToolButton* button, gboolean active)
+inline void toggleButtonSetActiveNoSignal(GtkToggleToolButton* button, gboolean active)
 {
   guint handler_id = gpointer_to_int(g_object_get_data(G_OBJECT(button), "handler"));
   g_signal_handler_block(G_OBJECT(button), handler_id);

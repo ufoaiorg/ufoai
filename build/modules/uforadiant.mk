@@ -137,6 +137,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/RadiantWindowObserver.cpp \
 	$(RADIANT_BASE)/radiant/selection/SelectionTest.cpp \
 	$(RADIANT_BASE)/radiant/selection/TransformationVisitors.cpp \
+	$(RADIANT_BASE)/radiant/selection/algorithm/Transformation.cpp \
 	\
 	$(RADIANT_BASE)/radiant/plugin/PluginManager.cpp \
 	$(RADIANT_BASE)/radiant/plugin/PluginSlots.cpp \
@@ -156,6 +157,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/transform/TransformDialog.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/colourscheme/ColourScheme.cpp \
 	$(RADIANT_BASE)/radiant/ui/colourscheme/ColourSchemeManager.cpp \
@@ -230,6 +233,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/Timer.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TreeModel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/VFSTreePopulator.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/WindowPosition.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/menu/PopupMenu.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window/PersistentTransientWindow.cpp \
 	\

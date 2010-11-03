@@ -57,19 +57,6 @@ namespace gtkutil
 
 				return getMonitor(monitorNum);
 			}
-
-			static void printMonitorInfo ()
-			{
-				globalOutputStream() << "Default screen has " << getNumMonitors() << " monitors.\n";
-
-				// detect multiple monitors
-				for (int j = 0; j < getNumMonitors(); j++) {
-					GdkRectangle geom = getMonitor(j);
-
-					globalOutputStream() << "Monitor " << j << " geometry: " << geom.width << "x" << geom.height
-							<< " at " << geom.x << ", " << geom.y << "\n";
-				}
-			}
 	};
 
 } // namespace gtkutil

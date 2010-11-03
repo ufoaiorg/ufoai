@@ -30,11 +30,6 @@
 #include "image.h"
 #include "pointer.h"
 
-void clicked_closure_callback (GtkWidget* widget, gpointer data)
-{
-	(*reinterpret_cast<Callback*> (data))();
-}
-
 void button_connect_callback (GtkButton* button, const Callback& callback)
 {
 	g_signal_connect_swapped(G_OBJECT(button), "clicked", G_CALLBACK(callback.getThunk()), callback.getEnvironment());
@@ -62,16 +57,7 @@ void toggle_button_set_active_no_signal (GtkToggleButton* button, gboolean activ
 	g_signal_handler_unblock(G_OBJECT(button), handler_id);
 }
 
-void radio_button_print_state (GtkRadioButton* button)
-{
-	globalOutputStream() << "toggle button: ";
-	for (GSList* radio = gtk_radio_button_group(button); radio != 0; radio = g_slist_next(radio)) {
-		globalOutputStream() << gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON (radio->data));
-	}
-	globalOutputStream() << "\n";
-}
-
-GtkToggleButton* radio_button_get_nth (GtkRadioButton* radio, int index)
+inline GtkToggleButton* radio_button_get_nth (GtkRadioButton* radio, int index)
 {
 	GSList *group = gtk_radio_button_group(radio);
 	return GTK_TOGGLE_BUTTON(g_slist_nth_data(group, g_slist_length(group) - index - 1));
@@ -79,9 +65,7 @@ GtkToggleButton* radio_button_get_nth (GtkRadioButton* radio, int index)
 
 void radio_button_set_active (GtkRadioButton* radio, int index)
 {
-	//radio_button_print_state(radio);
 	gtk_toggle_button_set_active(radio_button_get_nth(radio, index), TRUE);
-	//radio_button_print_state(radio);
 }
 
 void radio_button_set_active_no_signal (GtkRadioButton* radio, int index)
@@ -102,7 +86,6 @@ void radio_button_set_active_no_signal (GtkRadioButton* radio, int index)
 
 int radio_button_get_active (GtkRadioButton* radio)
 {
-	//radio_button_print_state(radio);
 	GSList *group = gtk_radio_button_group(radio);
 	int index = g_slist_length(group) - 1;
 	for (; group != 0; group = g_slist_next(group)) {

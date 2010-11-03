@@ -116,6 +116,7 @@
 #include "ui/colourscheme/ColourSchemeEditor.h"
 #include "ui/colourscheme/ColourSchemeManager.h"
 #include "ui/commandlist/CommandList.h"
+#include "ui/transform/TransformDialog.h"
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
 #include "environment.h"
@@ -1435,8 +1436,7 @@ static GtkMenuItem* create_selection_menu (void)
 	}
 
 	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Arbitrary rotation..."), "ArbitraryRotation");
-	createMenuItemWithMnemonic(menu, _("Arbitrary scale..."), "ArbitraryScale");
+	createMenuItemWithMnemonic(menu, _("Transform"), "TransformDialog");
 
 	return selection_menu_item;
 }
@@ -1916,6 +1916,9 @@ void MainFrame::Shutdown (void)
 
 	PreferencesDialog_destroyWindow();
 	FindTextureDialog_destroyWindow();
+
+	 // Stop the AutoSaver class from being called
+	map::AutoSaver().stopTimer();
 }
 
 /**
@@ -2061,8 +2064,7 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("MirrorSelectionZ", FreeCaller<Selection_Flipz> ());
 	GlobalEventManager().addCommand("RotateSelectionZ", FreeCaller<Selection_Rotatez> ());
 
-	GlobalEventManager().addCommand("ArbitraryRotation", FreeCaller<DoRotateDlg> ());
-	GlobalEventManager().addCommand("ArbitraryScale", FreeCaller<DoScaleDlg> ());
+	GlobalEventManager().addCommand("TransformDialog", FreeCaller<ui::TransformDialog::toggle>());
 
 	GlobalEventManager().addCommand("FindBrush", FreeCaller<FindBrushOrEntity> ());
 

@@ -49,9 +49,6 @@ void Selection_MoveUp ();
 void Select_AllOfType ();
 void Select_AllFacesWithTexture (void);
 
-void DoRotateDlg ();
-void DoScaleDlg ();
-
 void Select_SetShader (const char* shader);
 
 class TextureProjection;
