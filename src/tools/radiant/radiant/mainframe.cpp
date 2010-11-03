@@ -48,6 +48,7 @@
 #include "editable.h"
 #include "ientity.h"
 #include "ishadersystem.h"
+#include "iuimanager.h"
 #include "igl.h"
 #include "ieventmanager.h"
 #include "moduleobserver.h"

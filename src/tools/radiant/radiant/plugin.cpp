@@ -62,6 +62,7 @@
 #include "igrid.h"
 #include "iufoscript.h"
 #include "ioverlay.h"
+#include "iuimanager.h"
 
 #include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
@@ -149,6 +150,7 @@ StaticRegisterModule staticRegisterRadiantCore(StaticRadiantCoreModule::instance
 
 class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalEventManagerModuleRef,
+		public GlobalUIManagerModuleRef,
 		public GlobalFileSystemModuleRef,
 		public GlobalSoundManagerModuleRef,
 		public GlobalUMPSystemModuleRef,
