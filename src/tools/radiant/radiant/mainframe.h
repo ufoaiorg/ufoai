@@ -197,7 +197,6 @@ void Radiant_detachGameToolsPathObserver (ModuleObserver& observer);
 
 void EnginePath_verify ();
 const std::string& EnginePath_get ();
-const std::string& QERApp_GetGamePath ();
 
 extern std::string g_strCompilerBinaryWithPath;
 const std::string& CompilerBinaryWithPath_get ();
@@ -215,8 +214,6 @@ void XY_UpdateAllWindows ();
 void UpdateAllWindows ();
 
 void ClipperChangeNotify ();
-
-void DefaultMode ();
 
 const std::string& basegame_get ();
 void Radiant_attachGameModeObserver (ModuleObserver& observer);
