@@ -1447,7 +1447,7 @@ static GtkMenuItem* create_grid_menu (void)
 	GtkMenuItem* grid_menu_item = new_sub_menu_item_with_mnemonic(_("_Grid"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(grid_menu_item));
 
-	createCheckMenuItemWithMnemonic(menu, _("Snap selected to grid"), "SnapToGrid", ui::icons::ICON_GRID_SNAP);
+	createMenuItemWithMnemonic(menu, _("Snap selected to grid"), "SnapToGrid", ui::icons::ICON_GRID_SNAP);
 
 	createSeparatorMenuItem(menu);
 	createCheckMenuItemWithMnemonic(menu, "Grid0.125", "SetGrid0.125");
