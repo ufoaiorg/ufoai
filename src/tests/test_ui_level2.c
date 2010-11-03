@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_ui_level2.h"
 #include "../client/ui/ui_nodes.h"
 #include "../client/ui/ui_main.h"
+#include "../client/renderer/r_state.h" /* R_SelectTexture */
 
 /**
  * The suite initialization function.
@@ -37,6 +38,7 @@ static int UFO_InitSuiteUILevel2 (void)
 {
 	TEST_Init();
 	UI_Init();
+	R_SelectTexture(&texunit_diffuse);
 	return 0;
 }
 

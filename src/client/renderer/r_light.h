@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct entity_s;
 
-#include "r_entity.h"
-
 /* cap on number of light sources that can be in a scene; feel free
  * to increase if necessary, but be aware that doing so will increase
  * the time it takes for each entity to sort the light list at each

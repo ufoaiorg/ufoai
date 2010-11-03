@@ -72,6 +72,8 @@ typedef struct gltexunit_s {
 
 #define default_program		NULL
 
+struct mAliasMesh_s;
+
 typedef struct {
 	qboolean fullscreen;
 
@@ -168,16 +170,16 @@ void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableColorArray(qboolean enable);
 qboolean R_EnableLighting(r_program_t *program, qboolean enable);
-void R_EnableBumpmap(const image_t *normalmap, qboolean enable);
+void R_EnableBumpmap(const struct image_s *normalmap, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
 void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
-void R_EnableGlowMap(const image_t *image, qboolean enable);
-void R_EnableDynamicLights(const entity_t *ent, qboolean enable);
-void R_EnableSpecularMap(const image_t *image, qboolean enable);
-void R_EnableRoughnessMap(const image_t *image, qboolean enable);
-void R_EnableAnimation(const mAliasMesh_t *mesh, float backlerp, qboolean enable);
+void R_EnableGlowMap(const struct image_s *image, qboolean enable);
+void R_EnableDynamicLights(const struct entity_s *ent, qboolean enable);
+void R_EnableSpecularMap(const struct image_s *image, qboolean enable);
+void R_EnableRoughnessMap(const struct image_s *image, qboolean enable);
+void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, qboolean enable);
 
 #endif
