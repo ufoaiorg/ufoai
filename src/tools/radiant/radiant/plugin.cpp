@@ -93,17 +93,17 @@
 
 #include "generic/callback.h"
 
-const std::string& GameDescription_getRequiredKeyValue (const std::string& key)
+inline const std::string& GameDescription_getRequiredKeyValue (const std::string& key)
 {
 	return g_pGameDescription->getRequiredKeyValue(key);
 }
 
-const std::string getMapName ()
+inline const std::string getMapName ()
 {
 	return Map_Name(g_map);
 }
 
-scene::Node& getMapWorldEntity ()
+inline scene::Node& getMapWorldEntity ()
 {
 	return Map_FindOrInsertWorldspawn(g_map);
 }
