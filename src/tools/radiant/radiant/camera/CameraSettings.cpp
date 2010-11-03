@@ -3,7 +3,6 @@
 #include "ieventmanager.h"
 
 #include "GlobalCamera.h"
-#include "camwindow.h"
 #include "CamWnd.h"
 #include "string/string.h"
 #include <iostream>

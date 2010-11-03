@@ -265,7 +265,7 @@ class Radiant: public TypeSystemRef
 			FindTextureDialog_Destroy();
 			EntityInspector_Destroy();
 			Entity_Destroy();
-			CamWnd_Destroy();
+			GlobalCamera().destroy();
 			GlobalXYWnd().destroy();
 			SurfaceInspector_Destroy();
 			MainFrame_Destroy();

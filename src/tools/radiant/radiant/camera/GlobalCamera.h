@@ -76,6 +76,8 @@ class GlobalCameraManager
 		// Notify the attached "CameraMoved" callbacks
 		void movedNotify ();
 
+		void destroy ();
+
 		// Movement commands (the calls are passed on to the Camera class)
 		void moveForwardDiscrete ();
 		void moveBackDiscrete ();

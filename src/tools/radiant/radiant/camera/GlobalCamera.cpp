@@ -340,6 +340,11 @@ void GlobalCameraManager::pitchDownDiscrete ()
 	_camWnd->getCamera().pitchDownDiscrete();
 }
 
+void GlobalCameraManager::destroy ()
+{
+	CamWnd::releaseStates();
+}
+
 // ------------------------------------------------------------------------------------
 
 // The accessor function to the GlobalCameraManager instance

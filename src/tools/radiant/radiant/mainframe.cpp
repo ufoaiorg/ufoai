@@ -80,7 +80,6 @@
 #include "map/AutoSaver.h"
 #include "brush/brushmanip.h"
 #include "brush/BrushModule.h"
-#include "camera/camwindow.h"
 #include "brush/csg/csg.h"
 #include "console.h"
 #include "entity.h"
