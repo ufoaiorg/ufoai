@@ -28,7 +28,6 @@
 #include "BrushModule.h"
 
 #include "gtkutil/widget.h"
-#include "gtkutil/menu.h"
 #include "../gtkmisc.h"
 #include "BrushNode.h"
 #include "../map/map.h"
@@ -722,35 +721,4 @@ void Brush_registerCommands ()
 
 	GlobalEventManager().addCommand("MakeDetail", FreeCaller<Select_MakeDetail>());
 	GlobalEventManager().addCommand("MakeStructural", FreeCaller<Select_MakeStructural>());
-}
-
-void Brush_constructMenu (GtkMenu* menu)
-{
-	createMenuItemWithMnemonic(menu, _("Cone..."), "BrushCone");
-	createMenuItemWithMnemonic(menu, _("Prism..."), "BrushPrism");
-	createMenuItemWithMnemonic(menu, _("Sphere..."), "BrushSphere");
-	createMenuItemWithMnemonic(menu, _("Rock..."), "BrushRock");
-	createMenuItemWithMnemonic(menu, _("Terrain..."), "BrushTerrain");
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, C_("Constructive Solid Geometry", "CSG"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Make Hollow"), "CSGHollow", ui::icons::ICON_CSG_MAKE_HOLLOW);
-		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract"), "CSGSubtract", ui::icons::ICON_CSG_SUBTRACT);
-		createMenuItemWithMnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge"), "CSGMerge", ui::icons::ICON_CSG_MERGE);
-	}
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Clipper"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Clip selection"), "ClipSelected");
-		createMenuItemWithMnemonic(menu_in_menu, _("Split selection"), "SplitSelected");
-		createMenuItemWithMnemonic(menu_in_menu, _("Flip Clip orientation"), "FlipClip");
-	}
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Make detail"), "MakeDetail");
-	createMenuItemWithMnemonic(menu, _("Make structural"), "MakeStructural");
-
-	createCheckMenuItemWithMnemonic(menu, _("Texture Lock"), "TogTexLock", ui::icons::ICON_TEXTURE_LOCK);
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Copy Face Texture"), "FaceCopyTexture");
-	createMenuItemWithMnemonic(menu, _("Paste Face Texture"), "FacePasteTexture");
 }

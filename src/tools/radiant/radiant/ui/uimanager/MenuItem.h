@@ -2,9 +2,19 @@
 #define MENUITEM_H_
 
 #include "xmlutil/Node.h"
+#include "iuimanager.h"
 #include <vector>
 
 typedef struct _GtkWidget GtkWidget;
+
+/** greebo: This is a representation of a general menu item/element.
+ *
+ * The possible menuitem types are defined in iuimanager.h.
+ * Each menu item can have a list of sub-menuitems (this applies to the
+ * types eMenuBar and eFolder).
+ *
+ * Use the MenuManager class to access these menuitems.
+ */
 
 namespace ui {
 
@@ -13,17 +23,6 @@ typedef std::vector<MenuItem*> MenuItemList;
 
 class MenuItem
 {
-public:
-	enum eType {
-		eNothing,
-		eRoot,
-		eMenuBar,
-		eFolder,
-		eItem,
-		eSeparator,
-		eMRU
-	};
-
 private:
 	// The parent of this MenuItem
 	MenuItem* _parent;
@@ -46,7 +45,7 @@ private:
 	// The children of this MenuItem
 	MenuItemList _children;
 
-	eType _type;
+	eMenuItemType _type;
 
 	// Stays false until the widgets are actually created.
 	bool _constructed;
@@ -67,7 +66,7 @@ public:
 	bool isRoot() const;
 
 	// Returns the pointer to the parent (is NULL for the root item)
-	MenuItem* getParent() const;
+	MenuItem* parent() const;
 	void setParent(MenuItem* parent);
 
 	/** greebo: Adds the given menuitem to the list of children.
@@ -77,7 +76,8 @@ public:
 	void addChild(MenuItem* newChild);
 
 	// Returns the type of this item node
-	eType getType() const;
+	eMenuItemType getType() const;
+	void setType(eMenuItemType type);
 
 	// Gets/sets the caption of this item
 	void setCaption(const std::string& caption);
@@ -94,6 +94,10 @@ public:
 
 	// Sets the event of this item by defining the event name
 	void setEvent(const std::string& eventName);
+
+	/** greebo: Tries to find the GtkMenu position index of the given child.
+	 */
+	int getMenuPosition(MenuItem* child);
 
 	// Use this to get the according Gtk menu widget out of this item.
 	operator GtkWidget* ();

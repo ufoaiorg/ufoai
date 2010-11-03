@@ -21,16 +21,18 @@
 
 #include "ifilter.h"
 #include "scenelib.h"
+#include "ieventmanager.h"
 #include "iregistry.h"
 #include "iscenegraph.h"
 
 #include "XMLFilter.h"
 
+#include "generic/callback.h"
+
 #include <list>
 #include <set>
 
 #include "gtkutil/widget.h"
-#include "gtkutil/menu.h"
 #include "../gtkmisc.h"
 #include "../mainframe.h"
 #include "../settings/preferences.h"
@@ -68,7 +70,11 @@ private:
 	typedef std::map<std::string, bool> StringFlagCache;
 	StringFlagCache _visibilityCache;
 
-private:
+public:
+	// Constructor
+	BasicFilterSystem() :
+		_initialised(false)
+	{}
 
 	// Initialise the filter system. This must be done after the main
 	// Radiant module, hence cannot be done in the constructor.
@@ -101,15 +107,19 @@ private:
 
 			// Add this XMLFilter to the list of available filters
 			_availableFilters.insert(FilterTable::value_type(filterName, filter));
+
+			// Get a reference
+			filters::XMLFilter& inserted = _availableFilters.find(filterName)->second;
+
+			// Add the according toggle command to the eventmanager
+			GlobalEventManager().addToggle(
+				filter.getEventName(),
+				MemberCaller<filters::XMLFilter, &filters::XMLFilter::toggle>(inserted)
+			);
 		}
+
+		_initialised = true;
 	}
-
-public:
-
-	// Constructor
-	BasicFilterSystem()
-	: _initialised(false)
-	{}
 
 	// Filter system visit function
 	void forEachFilter(IFilterVisitor& visitor) {
@@ -124,6 +134,21 @@ public:
 		{
 			visitor.visit(iter->first);
 		}
+	}
+
+	std::string getFilterEventName(const std::string& filter) {
+		FilterTable::iterator f = _availableFilters.find(filter);
+
+		if (f != _availableFilters.end()) {
+			return f->second.getEventName();
+		}
+		else {
+			return "";
+		}
+	}
+
+	bool getFilterState(const std::string& filter) {
+		return (_activeFilters.find(filter) != _activeFilters.end());
 	}
 
 	// Set the state of a filter
@@ -187,6 +212,14 @@ public:
 #include "modulesystem/singletonmodule.h"
 #include "modulesystem/moduleregistry.h"
 
-typedef SingletonModule<BasicFilterSystem> FilterModule;
+/* Filter dependencies class.
+ */
+class FilterSystemDependencies: public GlobalRadiantModuleRef,
+	public GlobalSceneGraphModuleRef,
+	public GlobalRegistryModuleRef,
+	public GlobalEventManagerModuleRef
+{};
+
+typedef SingletonModule<BasicFilterSystem, FilterSystemDependencies> FilterModule;
 typedef Static<FilterModule> StaticFilterModule;
 StaticRegisterModule staticRegisterFilter(StaticFilterModule::instance());

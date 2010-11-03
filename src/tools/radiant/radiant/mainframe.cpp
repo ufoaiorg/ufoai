@@ -71,7 +71,6 @@
 #include "gtkutil/glfont.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/image.h"
-#include "gtkutil/menu.h"
 #include "gtkutil/paned.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/dialog.h"
@@ -119,6 +118,7 @@
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
 #include "environment.h"
+#include "gtkutil/menu.h"
 
 struct LayoutGlobals
 {
@@ -475,6 +475,9 @@ void Radiant_Initialise (void)
 
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
+
+	// Construct the MRU commands and menu structure
+	GlobalMRU().constructMenu();
 
 	// Initialise the most recently used files list
 	GlobalMRU().loadRecentFiles();
@@ -1266,218 +1269,6 @@ void ClipperChangeNotify (void)
 
 static LatchedInt g_Layout_viewStyle(MainFrame::eSplit, _("Window Layout"));
 
-static GtkMenuItem* create_file_menu (MainFrame *mainFrame)
-{
-	// File menu
-	GtkMenuItem* file_menu_item = new_sub_menu_item_with_mnemonic(_("_File"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(file_menu_item));
-
-	createMenuItemWithMnemonic(menu, _("_New Map"), "NewMap");
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("_Open..."), "OpenMap", ui::icons::ICON_OPEN);
-	createMenuItemWithMnemonic(menu, _("_Import..."), "ImportMap");
-	mainFrame->SetSaveMenuItem(createMenuItemWithMnemonic(menu, _("_Save"), "SaveMap", ui::icons::ICON_SAVE));
-	createMenuItemWithMnemonic(menu, _("Save _as..."), "SaveMapAs");
-	createMenuItemWithMnemonic(menu, _("Save s_elected..."), "SaveSelected");
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Save re_gion..."), "SaveRegion");
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("_Refresh models"), "RefreshReferences");
-	createSeparatorMenuItem(menu);
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("E_xit"), "Exit");
-
-	return file_menu_item;
-}
-
-static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
-{
-	// Edit menu
-	GtkMenuItem* edit_menu_item = new_sub_menu_item_with_mnemonic(_("_Edit"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(edit_menu_item));
-	mainFrame->SetUndoMenuItem(createMenuItemWithMnemonic(menu, _("_Undo"), "Undo", ui::icons::ICON_UNDO));
-	mainFrame->SetRedoMenuItem(createMenuItemWithMnemonic(menu, _("_Redo"), "Redo", ui::icons::ICON_REDO));
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("_Copy"), "Copy");
-	createMenuItemWithMnemonic(menu, _("_Paste"), "Paste");
-	createMenuItemWithMnemonic(menu, _("P_aste To Camera"), "PasteToCamera");
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("_Duplicate"), "CloneSelection");
-	createMenuItemWithMnemonic(menu, _("D_elete"), "DeleteSelection");
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Pa_rent"), "ParentSelection");
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("C_lear Selection"), "UnSelectSelection");
-	createMenuItemWithMnemonic(menu, _("_Invert Selection"), "InvertSelection");
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Select i_nside"), "SelectInside", ui::icons::ICON_SELECT_INSIDE);
-	createMenuItemWithMnemonic(menu, _("Select _touching"), "SelectTouching", ui::icons::ICON_SELECT_TOUCHING);
-	createMenuItemWithMnemonic(menu, _("To Whole _Entities"), "ExpandSelectionToEntities", ui::icons::ICON_SELECT_ENTITIES);
-	createMenuItemWithMnemonic(menu, _("Select all of _same type"), "SelectAllOfType", ui::icons::ICON_SELECT_COMPLETE);
-	createMenuItemWithMnemonic(menu, _("Select all Faces of same te_xture"), "SelectAllFacesOfTex", ui::icons::ICON_SELECT_SAME_TEXTURE);
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Export Selected Brushes to _OBJ"), "BrushExportOBJ");
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Colour Scheme Editor"), "EditColourScheme", ui::icons::ICON_COLOR);
-	createMenuItemWithMnemonic(menu, _("Shortcuts list"), "ShowCommandList");
-	createMenuItemWithMnemonic(menu, _("Pre_ferences..."), "Preferences");
-
-	return edit_menu_item;
-}
-
-static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
-{
-	// View menu
-	GtkMenuItem* view_menu_item = new_sub_menu_item_with_mnemonic(_("Vie_w"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(view_menu_item));
-
-	createMenuItemWithMnemonic(menu, _("Toggle Sidebar"), "ToggleSidebar");
-	createMenuItemWithMnemonic(menu, _("Toggle EntityInspector"), "ToggleEntityInspector");
-	createMenuItemWithMnemonic(menu, _("Toggle SurfaceInspector"), "ToggleSurfaceInspector");
-	createMenuItemWithMnemonic(menu, _("Toggle Prefabs"), "TogglePrefabs");
-
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu* camera_menu = create_sub_menu_with_mnemonic(menu, _("Camera"));
-		createMenuItemWithMnemonic(camera_menu, _("_Center"), "CenterView");
-		createMenuItemWithMnemonic(camera_menu, _("_Up Floor"), "UpFloor");
-		createMenuItemWithMnemonic(camera_menu, _("_Down Floor"), "DownFloor");
-		createSeparatorMenuItem(camera_menu);
-		createMenuItemWithMnemonic(camera_menu, _("Far Clip Plane In"), "CubicClipZoomIn");
-		createMenuItemWithMnemonic(camera_menu, _("Far Clip Plane Out"), "CubicClipZoomOut");
-		createSeparatorMenuItem(camera_menu);
-		createMenuItemWithMnemonic(camera_menu, _("Look Through Selected"), "LookThroughSelected");
-		createMenuItemWithMnemonic(camera_menu, _("Look Through Camera"), "LookThroughCamera");
-	}
-
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu* orthographic_menu = create_sub_menu_with_mnemonic(menu, _("Orthographic"));
-		if (style == MainFrame::eRegular) {
-			createMenuItemWithMnemonic(orthographic_menu, _("_Next (XY, YZ, YZ)"), "NextView");
-			createMenuItemWithMnemonic(orthographic_menu, _("XY (Top)"), "ViewTop");
-			createMenuItemWithMnemonic(orthographic_menu, _("XZ (Side)"), "ViewSide");
-			createMenuItemWithMnemonic(orthographic_menu, _("YZ (Front)"), "ViewFront");
-			createSeparatorMenuItem(orthographic_menu);
-		}
-
-		createMenuItemWithMnemonic(orthographic_menu, _("_XY 100%"), "Zoom100");
-		createMenuItemWithMnemonic(orthographic_menu, _("XY Zoom _In"), "ZoomIn");
-		createMenuItemWithMnemonic(orthographic_menu, _("XY Zoom _Out"), "ZoomOut");
-	}
-
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Show"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Toggle Grid"), "ToggleGrid");
-		createMenuItemWithMnemonic(menu_in_menu, _("Toggle Crosshairs"), "ToggleCrosshairs");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show _Angles"), "ShowAngles");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show _Names"), "ShowNames");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Blocks"), "ShowBlocks");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show C_oordinates"), "ShowCoordinates");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Window Outline"), "ShowWindowOutline");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Axes"), "ShowAxes");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Workzone"), "ShowWorkzone");
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("Show Size Info"), "ToggleShowSizeInfo");
-	}
-
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Hide/Show"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Hide Selected"), "HideSelected");
-		createMenuItemWithMnemonic(menu_in_menu, _("Show Hidden"), "ShowHidden");
-	}
-
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Region"));
-		createMenuItemWithMnemonic(menu_in_menu, _("_Off"), "RegionOff");
-		createMenuItemWithMnemonic(menu_in_menu, _("_Set XY"), "RegionSetXY");
-		createMenuItemWithMnemonic(menu_in_menu, _("Set _Brush"), "RegionSetBrush");
-		createMenuItemWithMnemonic(menu_in_menu, _("Set Se_lected Brushes"), "RegionSetSelection");
-	}
-
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu *menuInMenu = create_sub_menu_with_mnemonic(menu, _("_Pathfinding"));
-		Pathfinding_ConstructMenu(menuInMenu);
-	}
-
-	return view_menu_item;
-}
-
-static GtkMenuItem* create_selection_menu (void)
-{
-	// Selection menu
-	GtkMenuItem* selection_menu_item = new_sub_menu_item_with_mnemonic(_("M_odify"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(selection_menu_item));
-
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Components"));
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Edges"), "DragEdges", ui::icons::ICON_MODIFY_EDGES);
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Vertices"), "DragVertices", ui::icons::ICON_MODIFY_VERTICES);
-		createCheckMenuItemWithMnemonic(menu_in_menu, _("_Faces"), "DragFaces", ui::icons::ICON_MODIFY_FACES);
-	}
-
-	createSeparatorMenuItem(menu);
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Nudge"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Nudge Left"), "SelectNudgeLeft");
-		createMenuItemWithMnemonic(menu_in_menu, _("Nudge Right"), "SelectNudgeRight");
-		createMenuItemWithMnemonic(menu_in_menu, _("Nudge Up"), "SelectNudgeUp");
-		createMenuItemWithMnemonic(menu_in_menu, _("Nudge Down"), "SelectNudgeDown");
-	}
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Rotate"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Rotate X"), "RotateSelectionX", ui::icons::ICON_BRUSH_ROTATEX);
-		createMenuItemWithMnemonic(menu_in_menu, _("Rotate Y"), "RotateSelectionY", ui::icons::ICON_BRUSH_ROTATEY);
-		createMenuItemWithMnemonic(menu_in_menu, _("Rotate Z"), "RotateSelectionZ", ui::icons::ICON_BRUSH_ROTATEZ);
-	}
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Flip"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Flip _X"), "MirrorSelectionX", ui::icons::ICON_BRUSH_FLIPX);
-		createMenuItemWithMnemonic(menu_in_menu, _("Flip _Y"), "MirrorSelectionY", ui::icons::ICON_BRUSH_FLIPY);
-		createMenuItemWithMnemonic(menu_in_menu, _("Flip _Z"), "MirrorSelectionZ", ui::icons::ICON_BRUSH_FLIPZ);
-	}
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Transform"), "TransformDialog");
-
-	return selection_menu_item;
-}
-
-static GtkMenuItem* create_grid_menu (void)
-{
-	// Grid menu
-	GtkMenuItem* grid_menu_item = new_sub_menu_item_with_mnemonic(_("_Grid"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(grid_menu_item));
-
-	createMenuItemWithMnemonic(menu, _("Snap selected to grid"), "SnapToGrid", ui::icons::ICON_GRID_SNAP);
-
-	createSeparatorMenuItem(menu);
-	createCheckMenuItemWithMnemonic(menu, "Grid0.125", "SetGrid0.125");
-	createCheckMenuItemWithMnemonic(menu, "Grid0.25", "SetGrid0.25");
-	createCheckMenuItemWithMnemonic(menu, "Grid0.5", "SetGrid0.5");
-	createCheckMenuItemWithMnemonic(menu, "Grid1", "SetGrid1");
-	createCheckMenuItemWithMnemonic(menu, "Grid2", "SetGrid2");
-	createCheckMenuItemWithMnemonic(menu, "Grid4", "SetGrid4");
-	createCheckMenuItemWithMnemonic(menu, "Grid8", "SetGrid8");
-	createCheckMenuItemWithMnemonic(menu, "Grid16", "SetGrid16");
-	createCheckMenuItemWithMnemonic(menu, "Grid32", "SetGrid32");
-	createCheckMenuItemWithMnemonic(menu, "Grid64", "SetGrid64");
-	createCheckMenuItemWithMnemonic(menu, "Grid128", "SetGrid128");
-	createCheckMenuItemWithMnemonic(menu, "Grid256", "SetGrid256");
-
-	return grid_menu_item;
-}
-
 void CallBrushExportOBJ ()
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
@@ -1487,6 +1278,7 @@ void CallBrushExportOBJ ()
 	}
 }
 
+// TODO: Convert this to the xml menu definition
 static GtkMenuItem* create_map_menu (void)
 {
 	// Map menu
@@ -1494,73 +1286,13 @@ static GtkMenuItem* create_map_menu (void)
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(map_menu_item));
 
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Compile"));
-		createMenuItemWithMnemonic(menu_in_menu, _("Check for errors"), "ToolsCheckErrors");
-		createMenuItemWithMnemonic(menu_in_menu, _("Compile the map"), "ToolsCompile");
-		createMenuItemWithMnemonic(menu_in_menu, _("Generate materials"), "ToolsGenerateMaterials");
-	}
-	createMenuItemWithMnemonic(menu, _("Edit UMP"), "EditUMPDefinition");
-	{
 		GtkMenuItem* menuItem = new_sub_menu_item_with_mnemonic(_("RMA tiles"));
 		container_add_widget(GTK_CONTAINER(menu), GTK_WIDGET(menuItem));
 		GtkMenu* menu_in_menu = GTK_MENU(gtk_menu_item_get_submenu(menuItem));
 		UMP_constructMenu(menuItem, menu_in_menu);
 	}
-	createMenuItemWithMnemonic(menu, _("Edit material"), "ShowMaterialDefinition");
-	createMenuItemWithMnemonic(menu, _("Edit terrain definition"), "EditTerrainDefinition");
-	createMenuItemWithMnemonic(menu, _("Edit map definition"), "EditMapDefinition");
+
 	return map_menu_item;
-}
-
-static GtkMenuItem* create_tools_menu (void)
-{
-	// Tools menu
-	GtkMenuItem* tools_menu_item = new_sub_menu_item_with_mnemonic(_("Tools"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(tools_menu_item));
-
-	createMenuItemWithMnemonic(menu, _("Find/replace texture"), "FindReplaceTextures", ui::icons::ICON_FIND_AND_REPLACE);
-	createCheckMenuItemWithMnemonic(menu, _("Play Sounds"), "PlaySounds", ui::icons::ICON_SOUND);
-	createMenuItemWithMnemonic(menu, _("One level up"), "ObjectsUp", ui::icons::ICON_UP);
-	createMenuItemWithMnemonic(menu, _("One level down"), "ObjectsDown", ui::icons::ICON_DOWN);
-	createMenuItemWithMnemonic(menu, _("Find brush..."), "FindBrush");
-
-	return tools_menu_item;
-}
-
-static GtkMenuItem* create_entity_menu (void)
-{
-	// Brush menu
-	GtkMenuItem* entity_menu_item = new_sub_menu_item_with_mnemonic(_("E_ntity"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(entity_menu_item));
-
-	Entity_constructMenu(menu);
-
-	return entity_menu_item;
-}
-
-static GtkMenuItem* create_brush_menu (void)
-{
-	// Brush menu
-	GtkMenuItem* brush_menu_item = new_sub_menu_item_with_mnemonic(_("B_rush"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(brush_menu_item));
-
-	Brush_constructMenu(menu);
-
-	return brush_menu_item;
-}
-
-static GtkMenuItem* create_help_menu (void)
-{
-	// Help menu
-	GtkMenuItem* help_menu_item = new_sub_menu_item_with_mnemonic(_("_Help"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(help_menu_item));
-
-	createMenuItemWithMnemonic(menu, _("Manual"), "OpenManual", ui::icons::ICON_HELP);
-
-	createMenuItemWithMnemonic(menu, _("Bug report"), "BugReport");
-	createMenuItemWithMnemonic(menu, _("_About"), "About");
-
-	return help_menu_item;
 }
 
 static GtkMenuBar* create_main_menu (MainFrame *mainframe)
@@ -1568,21 +1300,7 @@ static GtkMenuBar* create_main_menu (MainFrame *mainframe)
 	GtkMenuBar* menu_bar = GTK_MENU_BAR(gtk_menu_bar_new());
 	gtk_widget_show(GTK_WIDGET(menu_bar));
 
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_file_menu(mainframe)));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_edit_menu(mainframe)));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_view_menu(mainframe->CurrentStyle())));
-
-	// Filters menu
-	ui::FiltersMenu filtersMenu;
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu_bar), filtersMenu);
-
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_selection_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_grid_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_map_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_tools_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_entity_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_brush_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_help_menu()));
 
 	return menu_bar;
 }
@@ -1725,11 +1443,14 @@ void MainFrame::Create (void)
 
 	m_nCurrentStyle = (EViewStyle) g_Layout_viewStyle.m_value;
 
-	GtkMenuBar* main_menu = create_main_menu(this);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu), FALSE, FALSE, 0);
+	GtkMenuBar* main_menu1 = create_main_menu(this);
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu1), FALSE, FALSE, 0);
+
+	// Create the Filter menu entries
+	ui::FiltersMenu::addItems();
 
 	// Retrieve the "main" menubar from the UIManager
-	GtkMenuBar* mainMenu = GTK_MENU_BAR(GlobalUIManager().getMenu("main"));
+	GtkMenuBar* mainMenu = GTK_MENU_BAR(GlobalUIManager().getMenuManager()->get("main"));
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(mainMenu), false, false, 0);
 
 	// Instantiate the ToolbarCreator and retrieve the standard toolbar widget
@@ -1889,14 +1610,6 @@ void MainFrame::Create (void)
 
 	/* enable button state tracker, set default states for begin */
 	GlobalUndoSystem().trackerAttach(m_saveStateTracker);
-	gtk_widget_set_sensitive(GTK_WIDGET(this->GetSaveMenuItem()), false);
-	//gtk_widget_set_sensitive(GTK_WIDGET(this->GetSaveButton()), false);
-
-	gtk_widget_set_sensitive(GTK_WIDGET(this->GetUndoMenuItem()), false);
-	//gtk_widget_set_sensitive(GTK_WIDGET(this->GetUndoButton()), false);
-
-	gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoMenuItem()), false);
-	//gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoButton()), false);
 
 	GtkWidget *notebook = Sidebar_construct();
 	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);
@@ -2039,6 +1752,9 @@ void EditColourScheme() {
 
 void MainFrame_Construct (void)
 {
+	// Tell the FilterSystem to register its commands
+	GlobalFilterSystem().initialise();
+
 	GlobalEventManager().addCommand("OpenManual", FreeCaller<OpenHelpURL> ());
 
 	GlobalEventManager().addCommand("NewMap", FreeCaller<NewMap> ());
@@ -2215,22 +1931,6 @@ void GLWindow_Destroy (void)
  */
 void UndoSaveStateTracker::UpdateSensitiveStates (void)
 {
-	/* security, should not occur as tracker is attached while creation */
-	if (g_pParentWnd == 0)
-		return;
-
-	const bool saveEnabled = m_savedStep < 0 || (m_undoSteps != static_cast<unsigned int> (m_savedStep));
-	const bool undoEnabled = m_undoSteps > 0;
-	const bool redoEnabled = m_redoSteps > 0;
-
-	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetSaveMenuItem()), saveEnabled);
-	//gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetSaveButton()), saveEnabled);
-
-	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetUndoMenuItem()), undoEnabled);
-	//gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetUndoButton()), undoEnabled);
-
-	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoMenuItem()), redoEnabled);
-	//gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoButton()), redoEnabled);
 }
 
 /**

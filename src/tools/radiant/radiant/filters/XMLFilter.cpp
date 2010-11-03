@@ -1,10 +1,20 @@
+#include "ifilter.h"
+
 #include "XMLFilter.h"
 #include "string/string.h"
 
 namespace filters {
 
-// Test visibility of an item against all rules
+XMLFilter::XMLFilter(const std::string& name) :
+	_name(name)
+{
+	// Construct the eventname out of the filtername (strip the spaces and add "Filter" prefix)
+	_eventName = _name;
+	_eventName = string::eraseAllSpaces(_eventName);
+	_eventName = "Filter" + _eventName;
+}
 
+// Test visibility of an item against all rules
 bool XMLFilter::isVisible(const std::string& item, const std::string& name) const {
 
 	// Iterate over the rules in this filter, checking if each one is a rule for
@@ -39,6 +49,18 @@ bool XMLFilter::isVisible(const std::string& item, const std::string& name) cons
 
 	// Pass back the current visibility value
 	return visible;
+}
+
+// The command target
+void XMLFilter::toggle() {
+	// Allocate a reference, otherwise the call to GlobalFilterSystem() will crash
+	GlobalFilterModuleRef ref;
+	bool currentState = GlobalFilterSystem().getFilterState(_name);
+	GlobalFilterSystem().setFilterState(_name, !currentState);
+}
+
+std::string XMLFilter::getEventName() const {
+	return _eventName;
 }
 
 } // namespace filters

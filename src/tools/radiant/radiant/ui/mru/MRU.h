@@ -11,7 +11,6 @@
 
 // Forward declaration
 typedef struct _GtkWidget GtkWidget;
-typedef std::vector<GtkWidget*> WidgetList;
 
 /* greebo: MRU stands for "Most Recently Used" (maps) and this is what
  * this class is handling.
@@ -77,8 +76,8 @@ public:
 	// The callback for registry key changes
 	void keyChanged();
 
-	// Add the widgets to the given list
-	WidgetList getMenuWidgets();
+	// Add the menu items to the GlobalUIManager
+	void constructMenu();
 
 	// Construct the orthoview preference page and add it to the given group
 	void constructPreferencePage(PreferenceGroup& group);

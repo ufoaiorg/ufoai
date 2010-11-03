@@ -81,12 +81,8 @@ void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const std::s
 void Scene_BrushFitTexture_Selected (scene::Graph& graph, float s_repeat, float t_repeat);
 void Scene_BrushFitTexture_Component_Selected (scene::Graph& graph, float s_repeat, float t_repeat);
 
-typedef struct _GtkMenu GtkMenu;
-void Brush_constructMenu (GtkMenu* menu);
-
 extern Callback g_texture_lock_status_changed;
 
-void BrushFilters_construct ();
 void Brush_registerCommands ();
 
 #endif

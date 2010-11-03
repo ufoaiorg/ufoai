@@ -27,7 +27,6 @@
 
 #include "gtkutil/messagebox.h"
 #include "gtkutil/container.h"
-#include "gtkutil/menu.h"
 #include "gtkutil/nonmodal.h"
 #include "stream/stringstream.h"
 #include "convert.h"

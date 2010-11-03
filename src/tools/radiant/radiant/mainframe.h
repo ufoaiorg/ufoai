@@ -25,7 +25,6 @@
 #include "gtkutil/window.h"
 #include "gtkutil/idledraw.h"
 #include "gtkutil/widget.h"
-#include "gtkutil/menu.h"
 #include "gtkutil/button.h"
 #include "string/string.h"
 #include "iundo.h"
@@ -113,10 +112,6 @@ class MainFrame
 		GtkButton *m_toolBtnUndo;
 		GtkButton *m_toolBtnRedo;
 
-		GtkMenuItem *m_menuSave;
-		GtkMenuItem *m_menuUndo;
-		GtkMenuItem *m_menuRedo;
-
 		UndoSaveStateTracker m_saveStateTracker;
 
 	public:
@@ -134,60 +129,6 @@ class MainFrame
 		EViewStyle CurrentStyle ()
 		{
 			return m_nCurrentStyle;
-		}
-
-		void SetSaveButton (GtkButton *saveBtn)
-		{
-			m_toolBtnSave = saveBtn;
-		}
-		GtkButton* GetSaveButton ()
-		{
-			return m_toolBtnSave;
-		}
-
-		void SetUndoButton (GtkButton *undoBtn)
-		{
-			m_toolBtnUndo = undoBtn;
-		}
-		GtkButton* GetUndoButton ()
-		{
-			return m_toolBtnUndo;
-		}
-
-		void SetRedoButton (GtkButton *redoBtn)
-		{
-			m_toolBtnRedo = redoBtn;
-		}
-		GtkButton* GetRedoButton ()
-		{
-			return m_toolBtnRedo;
-		}
-
-		void SetSaveMenuItem (GtkMenuItem *saveMenuItem)
-		{
-			m_menuSave = saveMenuItem;
-		}
-		GtkMenuItem* GetSaveMenuItem ()
-		{
-			return m_menuSave;
-		}
-
-		void SetUndoMenuItem (GtkMenuItem *undoMenuItem)
-		{
-			m_menuUndo = undoMenuItem;
-		}
-		GtkMenuItem* GetUndoMenuItem ()
-		{
-			return m_menuUndo;
-		}
-
-		void SetRedoMenuItem (GtkMenuItem *redoMenuItem)
-		{
-			m_menuRedo = redoMenuItem;
-		}
-		GtkMenuItem* GetRedoMenuItem ()
-		{
-			return m_menuRedo;
 		}
 
 		void SaveComplete (void);
