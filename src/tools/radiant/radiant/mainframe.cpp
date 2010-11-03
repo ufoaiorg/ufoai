@@ -84,7 +84,6 @@
 #include "console.h"
 #include "entity.h"
 #include "sidebar/sidebar.h"
-#include "filters.h"
 #include "dialogs/findtextures.h"
 #include "brushexport/BrushExportOBJ.h"
 #include "dialogs/about.h"

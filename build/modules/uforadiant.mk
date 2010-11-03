@@ -23,7 +23,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/environment.cpp \
 	$(RADIANT_BASE)/radiant/exec.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
-	$(RADIANT_BASE)/radiant/filters.cpp \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
@@ -207,6 +206,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/lightdialog/LightDialog.cpp \
 	\
 	$(RADIANT_BASE)/radiant/filters/XMLFilter.cpp \
+	$(RADIANT_BASE)/radiant/filters/filters.cpp \
 	\
 	$(RADIANT_BASE)/radiant/pathfinding/Routing.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLumpLoader.cpp \

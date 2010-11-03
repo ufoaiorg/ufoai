@@ -19,25 +19,23 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "filters.h"
-#include "radiant_i18n.h"
-
 #include "ifilter.h"
-
 #include "scenelib.h"
+#include "iregistry.h"
+#include "iscenegraph.h"
+
+#include "XMLFilter.h"
 
 #include <list>
 #include <set>
 
 #include "gtkutil/widget.h"
 #include "gtkutil/menu.h"
-#include "gtkmisc.h"
-#include "mainframe.h"
-#include "settings/preferences.h"
-#include "iregistry.h"
-#include "iscenegraph.h"
+#include "../gtkmisc.h"
+#include "../mainframe.h"
+#include "../settings/preferences.h"
 
-#include "filters/XMLFilter.h"
+#include "radiant_i18n.h"
 
 /** FilterSystem implementation class.
  */
