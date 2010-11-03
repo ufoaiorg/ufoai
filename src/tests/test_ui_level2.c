@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Basic.h"
 #include "test_shared.h"
 #include "test_ui_level2.h"
-#include "../client/cl_video.h"
+#include "../client/cl_video.h" /* vid_imagePool */
 #include "../client/ui/ui_nodes.h"
 #include "../client/ui/ui_main.h"
 #include "../client/renderer/r_state.h" /* R_SelectTexture */
