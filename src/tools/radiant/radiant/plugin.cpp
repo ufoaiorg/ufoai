@@ -60,6 +60,7 @@
 #include "ifilter.h"
 #include "ieventmanager.h"
 #include "igrid.h"
+#include "iufoscript.h"
 #include "ioverlay.h"
 
 #include "gtkutil/image.h"
@@ -83,7 +84,6 @@
 #include "camera/GlobalCamera.h"
 #include "material.h"
 #include "ump.h"
-#include "ufoscript/UFOScript.h"
 #include "particles.h"
 #include "pathfinding.h"
 #include "model.h"
@@ -243,14 +243,13 @@ class Radiant: public TypeSystemRef
 			Particles_Construct();
 			Pathfinding_Construct();
 			UMP_Construct();
-			UFOScript_Construct();
+			GlobalUFOScriptSystem()->init();
 
 			// Load the shortcuts from the registry
 			GlobalEventManager().loadAccelerators();
 		}
 		~Radiant ()
 		{
-			UFOScript_Destroy();
 			UMP_Destroy();
 			Pathfinding_Destroy();
 			Particles_Destroy();

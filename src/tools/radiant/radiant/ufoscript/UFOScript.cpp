@@ -76,6 +76,9 @@ const std::string UFOScriptSystem::getUFOScriptDir () const
 
 void UFOScriptSystem::init ()
 {
+	GlobalEventManager().addCommand("EditTerrainDefinition", MemberCaller<UFOScriptSystem, &UFOScriptSystem::editTerrainDefinition> (*this));
+	GlobalEventManager().addCommand("EditMapDefinition", MemberCaller<UFOScriptSystem, &UFOScriptSystem::editMapDefinition> (*this));
+
 	UFOScriptCollector collector(_ufoFiles);
 }
 
@@ -108,24 +111,3 @@ class UFOScriptSystemAPI
 typedef SingletonModule<UFOScriptSystemAPI> UFOScriptSystemModule;
 typedef Static<UFOScriptSystemModule> StaticUFOScriptSystemModule;
 StaticRegisterModule staticRegisterUFOScript(StaticUFOScriptSystemModule::instance());
-
-void EditTerrainDefinition ()
-{
-	GlobalUFOScriptSystem()->editTerrainDefinition();
-}
-
-void EditMapDefinition ()
-{
-	GlobalUFOScriptSystem()->editMapDefinition();
-}
-
-void UFOScript_Construct ()
-{
-	GlobalEventManager().addCommand("EditTerrainDefinition", FreeCaller<EditTerrainDefinition> ());
-	GlobalEventManager().addCommand("EditMapDefinition", FreeCaller<EditMapDefinition> ());
-	GlobalUFOScriptSystem()->init();
-}
-
-void UFOScript_Destroy ()
-{
-}
