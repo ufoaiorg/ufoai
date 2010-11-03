@@ -30,7 +30,7 @@ inline void matrix4_assign_rotation(Matrix4& matrix, const Matrix4& other) {
 	matrix[10] = other[10];
 }
 
-void matrix4_assign_rotation_for_pivot(Matrix4& matrix, scene::Instance& instance) {
+inline void matrix4_assign_rotation_for_pivot(Matrix4& matrix, scene::Instance& instance) {
 	Editable* editable = Node_getEditable(instance.path().top());
 	// If the instance is editable, take the localpivot point into account, otherwise just apply the rotation
 	if (editable != 0) {
