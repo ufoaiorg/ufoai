@@ -846,19 +846,6 @@ void Selection_Destroy (void)
 #include <gtk/gtklabel.h>
 #include <gdk/gdkkeysyms.h>
 
-inline Quaternion quaternion_for_euler_xyz_degrees (const Vector3& eulerXYZ)
-{
-	const double cx = cos(degrees_to_radians(eulerXYZ[0] * 0.5));
-	const double sx = sin(degrees_to_radians(eulerXYZ[0] * 0.5));
-	const double cy = cos(degrees_to_radians(eulerXYZ[1] * 0.5));
-	const double sy = sin(degrees_to_radians(eulerXYZ[1] * 0.5));
-	const double cz = cos(degrees_to_radians(eulerXYZ[2] * 0.5));
-	const double sz = sin(degrees_to_radians(eulerXYZ[2] * 0.5));
-
-	return Quaternion(cz * cy * sx - sz * sy * cx, cz * sy * cx + sz * cy * sx, sz * cy * cx - cz * sy * sx, cz * cy
-			* cx + sz * sy * sx);
-}
-
 struct RotateDialog
 {
 		GtkSpinButton* x;
@@ -866,6 +853,8 @@ struct RotateDialog
 		GtkSpinButton* z;
 		GtkWindow *window;
 };
+
+#include "math/quaternion.h"
 
 static gboolean rotatedlg_apply (GtkWidget *widget, RotateDialog* rotateDialog)
 {
