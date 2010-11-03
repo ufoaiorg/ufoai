@@ -293,11 +293,6 @@
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 }
-// entity 33
-{
-"classname" "trigger_rescue"
-"team" "1"
-}
 // entity 34
 {
 "classname" "info_alien_start"
