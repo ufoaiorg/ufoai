@@ -1,10 +1,26 @@
 #include "UIManager.h"
 
+#include "iregistry.h"
 #include "ieventmanager.h"
-#include <boost/shared_ptr.hpp>
 
 namespace ui {
 
+UIManager::UIManager() {
+}
+
+UIManager::~UIManager() {
+}
+
+GtkWidget* UIManager::getMenu(const std::string& name) {
+	return _menuManager.getMenu(name);
+}
+
+void UIManager::addMenuItem(const std::string& menuPath,
+							const std::string& caption,
+							const std::string& eventName)
+{
+	 _menuManager.add(menuPath, caption, eventName);
+}
 
 } // namespace ui
 
@@ -14,14 +30,14 @@ namespace ui {
 #include "modulesystem/moduleregistry.h"
 
 class UIManagerDependencies :
-	public GlobalEventManagerModuleRef
+	public GlobalEventManagerModuleRef,
+	public GlobalRegistryModuleRef
 {};
 
 
 class UIManagerAPI
 {
-	typedef boost::shared_ptr<ui::UIManager> UIManagerPtr;
-	UIManagerPtr _uiManager;
+	ui::UIManager* _uiManager;
 
 public:
 	typedef IUIManager Type;
@@ -30,11 +46,15 @@ public:
 	// Constructor
 	UIManagerAPI() {
 		// allocate a new UIManager instance on the heap (shared_ptr)
-		_uiManager = UIManagerPtr(new ui::UIManager);
+		_uiManager = new ui::UIManager;
 	}
 
 	IUIManager* getTable() {
-		return _uiManager.get();
+		return _uiManager;
+	}
+
+	~UIManagerAPI() {
+		delete _uiManager;
 	}
 };
 

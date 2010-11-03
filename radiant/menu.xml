@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<menu name="main">
+	<subMenu name="file" caption="_File">
+		<menuItem name="new" caption="_New Map" command="NewMap" />
+		<menuSeparator />
+		<menuItem name="open" caption="_Open" command="OpenMap" />
+		<menuItem name="import" caption="_Import" command="ImportMap" />
+		<menuItem name="save" caption="_Save" command="SaveMap" />
+		<menuItem name="saveas" caption="Save _as..." command="SaveMapAs" />
+		<menuItem name="saveselected" caption="_Save selected..." command="SaveSelected" />
+		<menuSeparator />
+		<menuItem name="saveregion" caption="Save _Region..." command="SaveRegion" />
+	</subMenu>
+</menu>

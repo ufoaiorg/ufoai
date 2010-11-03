@@ -5,12 +5,14 @@
 #include <gtk/gtklabel.h>
 #include <gtk/gtkimage.h>
 
+#include "gtkutil/image.h"
+
 namespace gtkutil
 {
 
 	TextMenuItemAccelerator::TextMenuItemAccelerator (const std::string& label, const std::string& accelLabel,
-			GdkPixbuf* icon, bool isToggle) :
-		_labelText(label), _label(NULL), _accelLabelText(accelLabel), _accel(NULL), _icon(icon), _iconImage(NULL),
+			const std::string& iconName, bool isToggle) :
+		_labelText(label), _label(NULL), _accelLabelText(accelLabel), _accel(NULL), _iconName(iconName),
 				_isToggle(isToggle)
 	{
 	}
@@ -18,7 +20,6 @@ namespace gtkutil
 	// Operator cast to GtkWidget* for packing into a menu
 	TextMenuItemAccelerator::operator GtkWidget* ()
 	{
-
 		// Create the menu item, with or without a toggle
 		GtkWidget* menuItem;
 		if (_isToggle)
@@ -31,9 +32,8 @@ namespace gtkutil
 		GtkWidget* hbx = gtk_hbox_new(FALSE, 4);
 
 		// Try to pack in icon ONLY if it is valid
-		if (_icon != NULL) {
-			_iconImage = gtk_image_new_from_pixbuf(_icon);
-			gtk_box_pack_start(GTK_BOX(hbx), _iconImage, FALSE, FALSE, 0);
+		if (!_iconName.empty()) {
+			gtk_box_pack_start(GTK_BOX(hbx), gtkutil::getImage(_iconName), FALSE, FALSE, 0);
 		}
 
 		_label = gtk_label_new_with_mnemonic(_labelText.c_str());
@@ -62,14 +62,6 @@ namespace gtkutil
 		if (_accel != NULL) {
 			_accelLabelText = newAccel;
 			gtk_label_set_markup_with_mnemonic(GTK_LABEL(_accel), newAccel.c_str());
-		}
-	}
-
-	void TextMenuItemAccelerator::setIcon (GdkPixbuf* icon)
-	{
-		if (icon != NULL && _iconImage != NULL) {
-			_icon = icon;
-			gtk_image_set_from_pixbuf(GTK_IMAGE(_iconImage), _icon);
 		}
 	}
 

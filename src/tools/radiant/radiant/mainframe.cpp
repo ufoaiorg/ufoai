@@ -398,6 +398,7 @@ void populateRegistry ()
 	const std::string base = AppPath_get() + "user.xml";
 	const std::string input = AppPath_get() + "input.xml";
 	const std::string colours = AppPath_get() + "colours.xml";
+	const std::string menu = AppPath_get() + "menu.xml";
 
 	if (file_exists(base)) {
 		GlobalRegistry().importFromFile(base, "");
@@ -408,6 +409,14 @@ void populateRegistry ()
 		}
 		else {
 			gtkutil::errorDialog(_("Could not find default colour schemes:\n") + colours);
+		}
+
+		// Try to load the menu definitions
+		if (file_exists(menu)) {
+			GlobalRegistry().importFromFile(menu, "user/ui");
+		}
+		else {
+			gtkutil::errorDialog(_("Could not find menu definition:\n") + menu);
 		}
 
 		// Try to load the default input definitions
@@ -439,6 +448,11 @@ void populateRegistry ()
 	const std::string userInputFile = SettingsPath_get() + "input.xml";
 	if (file_exists(userInputFile)) {
 		GlobalRegistry().importFromFile(userInputFile, "user/ui");
+	}
+
+	const std::string menuFile = SettingsPath_get() + "menu.xml";
+	if (file_exists(userInputFile)) {
+		GlobalRegistry().importFromFile(menuFile, "user/ui");
 	}
 }
 
@@ -1272,7 +1286,6 @@ static GtkMenuItem* create_file_menu (MainFrame *mainFrame)
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("_Refresh models"), "RefreshReferences");
 	createSeparatorMenuItem(menu);
-	GlobalMRU().constructMenu(menu);
 	createSeparatorMenuItem(menu);
 	createMenuItemWithMnemonic(menu, _("E_xit"), "Exit");
 
@@ -1716,6 +1729,10 @@ void MainFrame::Create (void)
 
 	GtkMenuBar* main_menu = create_main_menu(this);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu), FALSE, FALSE, 0);
+
+	// Retrieve the "main" menubar from the UIManager
+	GtkMenuBar* mainMenu = GTK_MENU_BAR(GlobalUIManager().getMenu("main"));
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(mainMenu), false, false, 0);
 
 	// Instantiate the ToolbarCreator and retrieve the standard toolbar widget
 	ui::ToolbarCreator toolbarCreator;

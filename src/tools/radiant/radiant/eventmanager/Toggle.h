@@ -50,6 +50,9 @@ public:
 	// Returns true if the internal state is true
 	bool isToggled() const;
 
+	// Returns true for this and all derived classes
+	virtual bool isToggle() const;
+
 	// Connect a Widget (e.g. GtkToggleToolButton or GtkCheckMenuItem to this Toggle)
 	virtual void connectWidget(GtkWidget* widget);
 

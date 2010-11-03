@@ -3,17 +3,31 @@
 
 #include "iuimanager.h"
 
-#include <iostream>
+#include "MenuManager.h"
 
 namespace ui {
 
 class UIManager :
 	public IUIManager
 {
-public:
-	void addMenuItem(const std::string& menuPath, const std::string& commandName) {
+	// Local helper class taking care of the menu
+	MenuManager _menuManager;
 
-	}
+public:
+
+	UIManager();
+
+	~UIManager();
+
+	/** greebo: Retrieves the menu bar with the given name.
+	 */
+	GtkWidget* getMenu(const std::string& name);
+
+	/** greebo: Adds the given menuitem as child to the given path.
+	 * 			<caption> is used as display string (can contain a mnemonic).
+	 */
+	void addMenuItem(const std::string& menuPath, const std::string& caption,
+								 const std::string& eventName);
 }; // class UIManager
 
 } // namespace ui

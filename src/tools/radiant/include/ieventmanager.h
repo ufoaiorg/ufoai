@@ -65,6 +65,10 @@ public:
 	// Returns true if this event could be toggled (returns false if the event is not a Toggle).
 	virtual bool setToggled(const bool toggled) = 0;
 
+	/** greebo: Returns true if the event is a Toggle (or a subtype of a Toggle)
+	 */
+	virtual bool isToggle() const = 0;
+
 	// Enables/disables this event
 	virtual void setEnabled(const bool enabled) = 0;
 

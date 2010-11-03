@@ -187,6 +187,8 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/ui/overlay/Overlay.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/uimanager/MenuManager.cpp \
+	$(RADIANT_BASE)/radiant/ui/uimanager/MenuItem.cpp \
 	$(RADIANT_BASE)/radiant/ui/uimanager/UIManager.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \

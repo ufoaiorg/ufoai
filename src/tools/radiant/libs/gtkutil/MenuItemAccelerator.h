@@ -21,10 +21,8 @@ namespace gtkutil
 			// The corresponding widget
 			GtkWidget* _accel;
 
-			// The icon pixbuf
-			GdkPixbuf* _icon;
-			// The corresponding image widget
-			GtkWidget* _iconImage;
+			// The icon
+			std::string _iconName;
 
 			// Flag to indicate this is a toggle menu item
 			bool _isToggle;
@@ -35,7 +33,7 @@ namespace gtkutil
 			 * Construct a menu item with the given label, accelerator and icon. The
 			 * icon may be the empty string if no icon is required.
 			 */
-			TextMenuItemAccelerator (const std::string& label, const std::string& accelLabel, GdkPixbuf* icon,
+			TextMenuItemAccelerator (const std::string& label, const std::string& accelLabel, const std::string& icon,
 					bool isToggle);
 
 			// destructor
@@ -51,10 +49,6 @@ namespace gtkutil
 			// Changes the accelerator text of this menutem
 			// (This works AFTER the class has been cast onto a GtkWidget*)
 			void setAccelerator (const std::string& newAccel);
-
-			// Change the icon
-			// (This works AFTER the class has been cast onto a GtkWidget*)
-			void setIcon (GdkPixbuf* icon);
 
 			// Change the icon
 			// (This works BEFORE the class has been cast onto a GtkWidget*)

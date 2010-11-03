@@ -66,7 +66,7 @@ GtkMenuItem* createMenuItemWithMnemonic (GtkMenu* menu, const std::string& capti
 		const std::string accelText = GlobalEventManager().getAcceleratorStr(event, true);
 
 		// Create a new menuitem
-		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, gtkutil::getLocalPixbuf(iconName), false);
+		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, iconName, false);
 
 		gtk_widget_show_all(GTK_WIDGET(menuItem));
 
@@ -93,7 +93,7 @@ GtkMenuItem* createCheckMenuItemWithMnemonic (GtkMenu* menu, const std::string& 
 		// Retrieve an acclerator string formatted for a menu
 		const std::string accelText = GlobalEventManager().getAcceleratorStr(event, true);
 
-		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, gtkutil::getLocalPixbuf(iconName), true);
+		menuItem = gtkutil::TextMenuItemAccelerator(caption, accelText, iconName, true);
 
 		gtk_widget_show_all(GTK_WIDGET(menuItem));
 
