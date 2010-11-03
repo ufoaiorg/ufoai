@@ -96,6 +96,16 @@ window test_cvar
 		string	"t10"
 	}
 
+	string testCommon16 {
+		pos		"20 240"
+		string	"t10"
+	}
+
+	string testCommon17 {
+		pos		"20 240"
+		string	"t10"
+	}
+
 	bar barTest
 	{
 		pos			"65 10"
@@ -172,6 +182,7 @@ window test_cvar
 		*cvar:test3 = 303
 		*cvar:test4 = 304
 		*cvar:test5 = "305"
+		*cvar:test6 = 306
 
 		// check cvar from property
 		if ( *node:root.radioTest@cvar == 301 ) { *node:root.testCommon11@color = "0 1 0 1" }
@@ -191,6 +202,16 @@ window test_cvar
 		if ( *node:root.radioTest@cvar == 304 ) { *node:root.testCommon14@color = "0 1 0 1" }
 		else { *node:root.testCommon14@color = "1 0 0 1" }
 
+		// test cvar property from the node itself
+		*node:root.radioTest@cvar = "*cvar:test6"
+		*node:root.radioTest@onClick = {
+			if ( "_<cvar>_" eq "_306_" ) { *node:root.testCommon16@color = "0 1 0 1" }
+			else { *node:root.testCommon16@color = "1 0 0 1" }
+			if ( <cvar> == 306 ) { *node:root.testCommon17@color = "0 1 0 1" }
+			else { *node:root.testCommon17@color = "1 0 0 1" }
+		}
+		call *node:root.radioTest@onClick
+
 		// clean up
 		delete *cvar:test_current
 		delete *cvar:test_max
@@ -200,6 +221,7 @@ window test_cvar
 		delete *cvar:test3
 		delete *cvar:test4
 		delete *cvar:test5
+		delete *cvar:test6
 	}
 
 	func onInit {
