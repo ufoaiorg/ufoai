@@ -638,10 +638,6 @@ static qboolean R_InitExtensions (void)
 	GLenum err;
 	int tmpInteger;
 
-	/* multitexture */
-	qglActiveTexture = NULL;
-	qglClientActiveTexture = NULL;
-
 	/* vertex buffer */
 	qglGenBuffers = NULL;
 	qglDeleteBuffers = NULL;
@@ -698,12 +694,6 @@ static qboolean R_InitExtensions (void)
 	qglGetFramebufferAttachmentParameterivEXT = NULL;
 	qglGenerateMipmapEXT = NULL;
 	qglDrawBuffers = NULL;
-
-	/* multitexture */
-	if (strstr(r_config.extensionsString, "GL_ARB_multitexture")) {
-		qglActiveTexture = (ActiveTexture_t)R_GetProcAddress("glActiveTexture");
-		qglClientActiveTexture = (ClientActiveTexture_t)R_GetProcAddress("glClientActiveTexture");
-	}
 
 	if (strstr(r_config.extensionsString, "GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
@@ -926,15 +916,11 @@ static qboolean R_InitExtensions (void)
 		Q_strncpyz(r_config.lodDir, "low", sizeof(r_config.lodDir));
 	}
 
-	/* multitexture is the only one we absolutely need */
-	if (!qglActiveTexture || !qglClientActiveTexture)
-		return qfalse;
-
 	return qtrue;
 }
 
 /**
- * @brief We need at least opengl version 1.2.1
+ * @brief We need at least opengl version 1.3
  */
 static inline void R_EnforceVersion (void)
 {
@@ -945,20 +931,10 @@ static inline void R_EnforceVersion (void)
 	if (maj > 1)
 		return;
 
-	if (maj < 1)
-		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.versionString);
-
-	if (min > 2)
+	if (min >= 3)
 		return;
 
-	if (min < 2)
-		Com_Error(ERR_FATAL, "OpenGL Version %s is less than 1.2.1", r_config.versionString);
-
-	if (rel > 1)
-		return;
-
-	if (rel < 1)
-		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.versionString);
+	Com_Error(ERR_FATAL, "OpenGL Version %s is less than 1.3", r_config.versionString);
 }
 
 /**
