@@ -40,8 +40,17 @@
 /** FilterSystem implementation class.
  */
 class BasicFilterSystem
-: public FilterSystem
+	: public FilterSystem
 {
+public:
+	typedef FilterSystem Type;
+	STRING_CONSTANT(Name, "*");
+
+	FilterSystem* getTable ()
+	{
+		return this;
+	}
+
 private:
 
 	// Flag to indicate initialisation status
@@ -175,29 +184,9 @@ public:
 };
 
 #include "preferencesystem.h"
-#include "stringio.h"
 #include "modulesystem/singletonmodule.h"
 #include "modulesystem/moduleregistry.h"
 
-class FilterAPI
-{
-		BasicFilterSystem m_filter;
-	public:
-		typedef FilterSystem Type;
-		STRING_CONSTANT(Name, "*");
-
-		FilterAPI ()
-		{
-		}
-		~FilterAPI ()
-		{
-		}
-		FilterSystem* getTable ()
-		{
-			return &m_filter;
-		}
-};
-
-typedef SingletonModule<FilterAPI> FilterModule;
+typedef SingletonModule<BasicFilterSystem> FilterModule;
 typedef Static<FilterModule> StaticFilterModule;
 StaticRegisterModule staticRegisterFilter(StaticFilterModule::instance());
