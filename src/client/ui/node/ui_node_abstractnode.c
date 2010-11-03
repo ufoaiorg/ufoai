@@ -461,6 +461,7 @@ const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 			}
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
+		case V_UI_CVAR:
 			return UI_GetReferenceString(node, *(const char*const*)b);
 		}
 		break;
@@ -486,14 +487,16 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 
 	if (property->type == V_FLOAT) {
 		return *(const float*) b;
-	} else if (property->type == V_CVAR_OR_FLOAT) {
+	} else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
 		b = *(const byte* const*) b;
 		if (!strncmp((const char*)b, "*cvar", 5)) {
 			const char* cvarName = (const char*)b + 6;
 			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
 			return cvar->value;
-		} else {
+		} else if (property->type == V_CVAR_OR_FLOAT) {
 			return *(const float*) b;
+		} else if (property->type == V_CVAR_OR_STRING) {
+			return atof((const char*)b);
 		}
 	} else if (property->type == V_INT) {
 		return *(const int*) b;
