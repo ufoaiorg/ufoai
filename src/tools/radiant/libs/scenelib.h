@@ -663,6 +663,10 @@ namespace scene
 				return m_path;
 			}
 
+			bool visible() const {
+				return m_path.top().get().visible();
+			}
+
 			void* cast (TypeId typeId) const
 			{
 				return m_casts.cast(typeId, m_instance);
