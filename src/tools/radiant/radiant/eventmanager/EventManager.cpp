@@ -6,10 +6,12 @@
 
 #include <iostream>
 
-#include "gdk/gdkevents.h"
-#include "gdk/gdkkeysyms.h"
-#include "gtk/gtkwindow.h"
-#include "gtk/gtkaccelgroup.h"
+#include <gdk/gdkevents.h>
+#include <gdk/gdkkeysyms.h>
+#include <gtk/gtkwindow.h>
+#include <gtk/gtkaccelgroup.h>
+#include <gtk/gtkeditable.h>
+#include <gtk/gtktextview.h>
 
 #include "xmlutil/Node.h"
 
@@ -40,7 +42,12 @@ class EventManager :
 	// The list of all allocated Accelerators
 	typedef std::vector<Accelerator*> AcceleratorList;
 
+	// The list of connect (top-level) windows, whose keypress events are immediately processed
 	HandlerMap _handlers;
+
+	// The list of connected dialog window handlers, whose keypress events are
+	// processed AFTER the dialog window's default keyboard handler.
+	HandlerMap _dialogWindows;
 
 	// The list containing all registered accelerator objects
 	AcceleratorList _accelerators;
@@ -176,7 +183,7 @@ public:
 		AcceleratorList accelList = findAccelerator(event);
 
 		// Did we find any matching accelerators?
-		if (accelList.size() > 0) {
+		if (!accelList.empty()) {
 			// Take the first found accelerator
 			Accelerator* accel = *accelList.begin();
 
@@ -395,6 +402,46 @@ public:
 		}
 	}
 
+	/* greebo: This connects an dialog window to the event handler. This means the following:
+	 *
+	 * An incoming key-press event reaches the static method onDialogKeyPress which
+	 * passes the key event to the connect dialog FIRST, before the key event has a
+	 * chance to be processed by the standard shortcut processor. IF the dialog window
+	 * standard handler returns TRUE, that is. If the gtk_window_propagate_key_event()
+	 * function returns FALSE, the window couldn't find a use for this specific key event
+	 * and the event can be passed safely to the onKeyPress() method.
+	 *
+	 * This way it is ensured that the dialog window can handle, say, text entries without
+	 * firing global shortcuts all the time.
+	 */
+	void connectDialogWindow(GtkWindow* window) {
+		gulong handlerId = g_signal_connect(G_OBJECT(window), "key-press-event",
+											G_CALLBACK(onDialogKeyPress), this);
+
+		_dialogWindows[handlerId] = GTK_OBJECT(window);
+
+		handlerId = g_signal_connect(G_OBJECT(window), "key-release-event",
+									 G_CALLBACK(onDialogKeyRelease), this);
+
+		_dialogWindows[handlerId] = GTK_OBJECT(window);
+	}
+
+	void disconnectDialogWindow(GtkWindow* window) {
+		GtkObject* object = GTK_OBJECT(window);
+
+		for (HandlerMap::iterator i = _dialogWindows.begin(); i != _dialogWindows.end(); ) {
+			// If the object pointer matches the one stored in the list, remove the handler id
+			if (i->second == object) {
+				g_signal_handler_disconnect(G_OBJECT(i->second), i->first);
+				// Be sure to increment the iterator with a postfix ++, so that the "old" iterator is passed
+				_dialogWindows.erase(i++);
+			}
+			else {
+				i++;
+			}
+		}
+	}
+
 	void connectAccelGroup(GtkWindow* window) {
 		gtk_window_add_accel_group(window, _accelGroup);
 	}
@@ -410,7 +457,7 @@ public:
 		// Find all accelerators
 		xml::NodeList shortcutList = GlobalRegistry().findXPath("user/ui/input/shortcuts//shortcut");
 
-		if (shortcutList.size() > 0) {
+		if (!shortcutList.empty()) {
 			globalOutputStream() << "EventManager: Shortcuts found in Registry: " << shortcutList.size() << "\n";
 			for (unsigned int i = 0; i < shortcutList.size(); i++) {
 				const std::string key = shortcutList[i].getAttributeValue("key");
@@ -546,14 +593,31 @@ private:
 	}
 
 	// The GTK keypress callback
-	static gboolean onKeyPress(GtkWindow* window, GdkEventKey* event, gpointer data) {
+	static gboolean onKeyPress(GtkWidget* widget, GdkEventKey* event, gpointer data) {
 		// Convert the passed pointer onto a KeyEventManager pointer
 		EventManager* self = reinterpret_cast<EventManager*>(data);
+
+		if (!GTK_IS_WIDGET(widget))
+			return FALSE;
+
+		if (GTK_IS_WINDOW(widget)) {
+			// Pass the key event to the connected window and see if it can process it (returns TRUE)
+			gboolean keyProcessed = gtk_window_propagate_key_event(GTK_WINDOW(widget), event);
+
+			// Get the focus widget, is it an editable widget?
+			GtkWidget* focus = gtk_window_get_focus(GTK_WINDOW(widget));
+			bool isEditableWidget = GTK_IS_EDITABLE(focus) || GTK_IS_TEXT_VIEW(focus);
+
+			// Never propagate keystrokes if editable widgets are focused
+			if ((isEditableWidget && event->keyval != GDK_Escape) || keyProcessed) {
+				return keyProcessed;
+			}
+		}
 
 		// Try to find a matching accelerator
 		AcceleratorList accelList = self->findAccelerator(event);
 
-		if (accelList.size() > 0) {
+		if (!accelList.empty()) {
 			// Pass the execute() call to all found accelerators
 			for (unsigned int i = 0; i < accelList.size(); i++) {
 				Accelerator* accelerator = dynamic_cast<Accelerator*>(accelList[i]);
@@ -573,14 +637,31 @@ private:
 	}
 
 	// The GTK keypress callback
-	static gboolean onKeyRelease(GtkWindow* window, GdkEventKey* event, gpointer data) {
+	static gboolean onKeyRelease(GtkWidget* widget, GdkEventKey* event, gpointer data) {
 		// Convert the passed pointer onto a KeyEventManager pointer
 		EventManager* self = reinterpret_cast<EventManager*>(data);
+
+		if (!GTK_IS_WIDGET(widget))
+			return FALSE;
+
+		if (GTK_IS_WINDOW(widget)) {
+			// Pass the key event to the connected window and see if it can process it (returns TRUE)
+			gboolean keyProcessed = gtk_window_propagate_key_event(GTK_WINDOW(widget), event);
+
+			// Get the focus widget, is it an editable widget?
+			GtkWidget* focus = gtk_window_get_focus(GTK_WINDOW(widget));
+			bool isEditableWidget = GTK_IS_EDITABLE(focus) || GTK_IS_TEXT_VIEW(focus);
+
+			// Never propagate keystrokes if editable widgets are focused
+			if ((isEditableWidget && event->keyval != GDK_Escape) || keyProcessed) {
+				return keyProcessed;
+			}
+		}
 
 		// Try to find a matching accelerator
 		AcceleratorList accelList = self->findAccelerator(event);
 
-		if (accelList.size() > 0) {
+		if (!accelList.empty()) {
 
 			// Pass the execute() call to all found accelerators
 			for (unsigned int i = 0; i < accelList.size(); i++) {
@@ -598,6 +679,53 @@ private:
 		self->updateStatusText(event, false);
 
 		return false;
+	}
+
+	// The GTK keypress callback
+	static gboolean onDialogKeyPress(GtkWindow* window, GdkEventKey* event, EventManager* self) {
+		// Pass the key event to the connected dialog window and see if it can process it (returns TRUE)
+		gboolean keyProcessed = gtk_window_propagate_key_event(window, event);
+
+		// Get the focus widget, is it an editable widget?
+		GtkWidget* focus = gtk_window_get_focus(window);
+		bool isEditableWidget = GTK_IS_EDITABLE(focus) || GTK_IS_TEXT_VIEW(focus);
+
+		// never pass onKeyPress event to the accelerator manager if an editable widget is focused
+		// the only exception is the ESC key
+		if (isEditableWidget && event->keyval != GDK_Escape) {
+			return keyProcessed;
+		}
+
+		if (!keyProcessed) {
+			// The dialog window returned FALSE, pass the key on to the default onKeyPress handler
+			self->onKeyPress(GTK_WIDGET(window), event, self);
+		}
+
+		// If we return true here, the dialog window could process the key, and the GTK callback chain is stopped
+		return keyProcessed;
+	}
+
+	// The GTK keyrelease callback
+	static gboolean onDialogKeyRelease(GtkWindow* window, GdkEventKey* event, EventManager* self) {
+		// Pass the key event to the connected dialog window and see if it can process it (returns TRUE)
+		gboolean keyProcessed = gtk_window_propagate_key_event(window, event);
+
+		// Get the focus widget, is it an editable widget?
+		GtkWidget* focus = gtk_window_get_focus(window);
+		bool isEditableWidget = GTK_IS_EDITABLE(focus) || GTK_IS_TEXT_VIEW(focus);
+
+		if (isEditableWidget && event->keyval != GDK_Escape) {
+			// never pass onKeyPress event to the accelerator manager if an editable widget is focused
+			return keyProcessed;
+		}
+
+		if (!keyProcessed) {
+			// The dialog window returned FALSE, pass the key on to the default onKeyPress handler
+			self->onKeyRelease(GTK_WIDGET(window), event, self);
+		}
+
+		// If we return true here, the dialog window could process the key, and the GTK callback chain is stopped
+		return keyProcessed;
 	}
 
 	guint getGDKCode(const std::string& keyStr) {

@@ -130,8 +130,6 @@ XYWnd::XYWnd () :
 	AddSceneChangeCallback(MemberCaller<XYWnd, &XYWnd::queueDraw> (*this));
 	GlobalCamera().addCameraObserver(this);
 
-	//PressedButtons_connect(g_pressedButtons, m_gl_widget);
-
 	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
 }
 

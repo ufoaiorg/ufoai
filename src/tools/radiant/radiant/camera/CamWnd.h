@@ -93,6 +93,18 @@ class CamWnd
 
 	private:
 		void Cam_Draw ();
+
+		static gboolean selection_button_press_freemove(GtkWidget* widget, GdkEventButton* event, WindowObserver* observer);
+		static gboolean selection_button_release_freemove(GtkWidget* widget, GdkEventButton* event, WindowObserver* observer);
+		static gboolean selection_motion_freemove(GtkWidget *widget, GdkEventMotion *event, WindowObserver* observer);
+		static gboolean wheelmove_scroll(GtkWidget* widget, GdkEventScroll* event, CamWnd* camwnd);
+		static gboolean selection_button_press(GtkWidget* widget, GdkEventButton* event, WindowObserver* observer);
+		static gboolean selection_button_release(GtkWidget* widget, GdkEventButton* event, WindowObserver* observer);
+		static gboolean enable_freelook_button_press(GtkWidget* widget, GdkEventButton* event, CamWnd* camwnd);
+		static gboolean disable_freelook_button_press(GtkWidget* widget, GdkEventButton* event, CamWnd* camwnd);
+
+		static gboolean camera_size_allocate(GtkWidget* widget, GtkAllocation* allocation, CamWnd* camwnd);
+		static gboolean camera_expose(GtkWidget* widget, GdkEventExpose* event, gpointer data);
 };
 
 typedef MemberCaller<CamWnd, &CamWnd::queueDraw> CamWndQueueDraw;
