@@ -65,20 +65,50 @@ class TexturesCacheObserver
 		virtual void realise () = 0;
 };
 
+enum ETexturesMode
+{
+	eTextures_NEAREST = 0,
+	eTextures_NEAREST_MIPMAP_NEAREST = 1,
+	eTextures_NEAREST_MIPMAP_LINEAR = 2,
+	eTextures_LINEAR = 3,
+	eTextures_LINEAR_MIPMAP_NEAREST = 4,
+	eTextures_LINEAR_MIPMAP_LINEAR = 5,
+	eTextures_MAX_ANISOTROPY = 6
+};
+
+/* greebo: A TextureModeObserver gets notified if the
+ * texture mode gets changed.
+ */
+class TextureModeObserver
+{
+	public:
+		virtual void textureModeChanged() = 0;
+};
+
 class TexturesCache
 {
 	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "textures");
+
 		virtual ~TexturesCache ()
 		{
 		}
+
 		// Loads an image by using the default loader and returns the pointer
 		virtual Image* loadImage (const std::string& name) = 0;
+
+		// Capture the named image texture and return the associated qtexture_t
+		// struct.
 		virtual qtexture_t* capture (const std::string& name) = 0;
+
+		// Capture the named image texture using the provided image loader.
 		virtual qtexture_t* capture (const LoadImageCallback& loader, const std::string& name) = 0;
+
 		virtual void release (qtexture_t* texture) = 0;
+
 		virtual void attach (TexturesCacheObserver& observer) = 0;
+
 		virtual void detach (TexturesCacheObserver& observer) = 0;
 };
 

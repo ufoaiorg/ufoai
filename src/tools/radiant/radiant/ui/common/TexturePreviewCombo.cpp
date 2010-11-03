@@ -105,7 +105,6 @@ namespace ui
 
 		// Get a reference to the selected shader
 		IShader* shader = GlobalShaderSystem().getShaderForName(self->_texName);
-		shader->DecRef();
 
 		// Bind the texture from the shader
 		qtexture_t* tex = shader->getTexture();
@@ -135,5 +134,7 @@ namespace ui
 		glTexCoord2i(0, 0);
 		glVertex2f(0.5 - hfWidth, 0.5 + hfHeight);
 		glEnd();
+
+		shader->DecRef();
 	}
 }

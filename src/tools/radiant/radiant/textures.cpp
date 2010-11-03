@@ -40,17 +40,6 @@
 #include "texmanip.h"
 #include "settings/preferences.h"
 
-enum ETexturesMode
-{
-	eTextures_NEAREST = 0,
-	eTextures_NEAREST_MIPMAP_NEAREST = 1,
-	eTextures_NEAREST_MIPMAP_LINEAR = 2,
-	eTextures_LINEAR = 3,
-	eTextures_LINEAR_MIPMAP_NEAREST = 4,
-	eTextures_LINEAR_MIPMAP_LINEAR = 5,
-	eTextures_MAX_ANISOTROPY = 6
-};
-
 enum TextureCompressionFormat
 {
 	TEXTURECOMPRESSION_NONE = 0,
