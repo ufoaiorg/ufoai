@@ -38,6 +38,8 @@ static int UFO_InitSuiteGame (void)
 	TEST_Init();
 	/* we need the teamdefs for spawning ai actors */
 	Com_ParseScripts(qtrue);
+
+	sv_genericPool = Mem_CreatePool("server-gametest");
 	return 0;
 }
 
@@ -81,6 +83,8 @@ static void testShooting (void)
 {
 	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		/* the other tests didn't call the server shutdown function to clean up */
+		memset(&sv, 0, sizeof(sv));
 		SV_Map(qtrue, mapName, NULL);
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
