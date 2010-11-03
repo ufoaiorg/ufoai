@@ -29,17 +29,6 @@
 #include "generic/callback.h"
 #include "widget.h"
 
-inline gboolean window_focus_in_clear_focus_widget (GtkWidget* widget, GdkEventKey* event, gpointer data)
-{
-	gtk_window_set_focus(GTK_WINDOW(widget), NULL);
-	return FALSE;
-}
-
-inline guint window_connect_focus_in_clear_focus_widget (GtkWindow* window)
-{
-	return g_signal_connect(G_OBJECT(window), "focus_in_event", G_CALLBACK(window_focus_in_clear_focus_widget), NULL);
-}
-
 unsigned int connect_floating (GtkWindow* main_window, GtkWindow* floating);
 GtkWindow* create_floating_window (const std::string& title, GtkWindow* parent);
 void destroy_floating_window (GtkWindow* window);
