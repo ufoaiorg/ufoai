@@ -38,7 +38,7 @@ class ColourSchemeEditor
 	private:
 		// private helper functions
 		void 		populateTree();
-        void 		createTreeView();
+		void 		createTreeView();
 		GtkWidget* 	constructWindow();
 		GtkWidget* 	constructButtons();
 		GtkWidget* 	constructTreeviewButtons();
