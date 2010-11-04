@@ -29,47 +29,7 @@
 
 #include "iump.h"
 
-typedef struct _GtkMenu GtkMenu;
-typedef struct _GtkMenuItem GtkMenuItem;
-
-void UMP_constructMenu (GtkMenuItem* menuItem, GtkMenu* menu);
-
 void UMP_Construct ();
 void UMP_Destroy ();
-
-namespace map
-{
-	namespace ump
-	{
-
-		/**
-		 * class is responsible for updating rma sub menu according to actual opened file
-		 */
-		class UMPMenuCreator
-		{
-			private:
-				GtkMenuItem *_menuItem;
-				GtkMenu *_menu;
-
-			public:
-				void updateMenu (void);
-
-				void setMenuEntry (GtkMenuItem* menuItem, GtkMenu *menu)
-				{
-					_menuItem = menuItem;
-					_menu = menu;
-				}
-				/**
-				 * Return the singleton instance
-				 * @return the instance
-				 */
-				static UMPMenuCreator* getInstance (void)
-				{
-					static UMPMenuCreator _instance;
-					return &_instance;
-				}
-		};
-	}
-}
 
 #endif

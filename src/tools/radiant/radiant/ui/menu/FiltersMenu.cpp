@@ -31,7 +31,7 @@ void FiltersMenu::addItems() {
 
 			std::string eventName = GlobalFilterSystem().getFilterEventName(filterName);
 
-			// Create the toplevel menu item
+			// Create the filter menu item
 			menuManager->add(MENU_PATH, filterName,
 						ui::menuItem, filterName,
 						MENU_ICON, eventName);

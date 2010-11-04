@@ -34,67 +34,49 @@
 #include <set>
 #include "ifilesystem.h"
 
-class UMPSystem
+class IUMPSystem
 {
-	private:
-
-		std::set<std::string> _umpFiles;
-		typedef std::set<std::string>::iterator UMPFilesIterator;
-
 	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "ump");
 
-		virtual ~UMPSystem ()
+		virtual ~IUMPSystem ()
 		{
 		}
 
-		/**
-		 * Constructor
-		 */
-		UMPSystem ();
-
-		void editUMPDefinition ();
+		virtual void editUMPDefinition () = 0;
 
 		/**
 		 * @return The ump filename for the given map
 		 */
-		const std::string getUMPFilename (const std::string& map);
+		virtual std::string getUMPFilename (const std::string& map) = 0;
 
-		void init ();
+		virtual void init () = 0;
 
 		/**
 		 * @return A vector with ump filesnames
 		 */
-		const std::set<std::string> getFiles () const
-		{
-			return _umpFiles;
-		}
+		virtual const std::set<std::string> getFiles () const = 0;
 
 };
+#include "modulesystem.h"
 
 class UMPSystemDependencies: public GlobalFileSystemModuleRef
 {
 };
 
-// This is needed to be registered as a Radiant dependency
 template<typename Type>
 class GlobalModule;
-typedef GlobalModule<UMPSystem> GlobalUMPSystemModule;
+typedef GlobalModule<IUMPSystem, UMPSystemDependencies> GlobalUMPSystemModule;
 
 // A reference to the call above.
 template<typename Type>
 class GlobalModuleRef;
-typedef GlobalModuleRef<UMPSystem> GlobalUMPSystemModuleRef;
+typedef GlobalModuleRef<IUMPSystem> GlobalUMPSystemModuleRef;
 
-// Accessor method
-inline UMPSystem * GlobalUMPSystem ()
-{
-	Module * umpSystem = globalModuleServer().findModule(UMPSystem::Name_CONSTANT_::evaluate(),
-			UMPSystem::Version_CONSTANT_::evaluate(), "*");
-	ASSERT_MESSAGE(umpSystem,
-			"Couldn't retrieve GlobalUMPSystem, is not registered and/or initialized.");
-	return (UMPSystem *) umpSystem->getTable(); // findModule returns the pointer to the valid value, DO NOT DELETE!
+// This is the accessor for the event manager
+inline IUMPSystem& GlobalUMPSystem() {
+	return GlobalUMPSystemModule::getTable();
 }
 
 #endif  /* IUMP_H */

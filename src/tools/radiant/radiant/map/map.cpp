@@ -79,6 +79,7 @@
 #include "../brush/BrushNode.h"
 #include "../ump.h"
 #include "string/string.h"
+#include "../ui/menu/UMPMenu.h"
 
 #include "MapFileChooserPreview.h"
 
@@ -683,7 +684,7 @@ bool Map_LoadFile (const std::string& filename)
 	g_currentMap = &g_map;
 
 	sidebar::MapInfo::getInstance().update();
-	map::ump::UMPMenuCreator::getInstance()->updateMenu();
+	ui::UMPMenu::addItems();
 	return true;
 }
 

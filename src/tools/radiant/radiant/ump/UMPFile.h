@@ -19,7 +19,7 @@ namespace map
 				{
 				}
 
-				virtual void visit (const UMPTile& tile) = 0;
+				virtual void visit (const UMPTile& tile) const = 0;
 		};
 
 		/**

@@ -38,6 +38,7 @@
 
 #include "ui/common/ToolbarCreator.h"
 #include "ui/menu/FiltersMenu.h"
+#include "ui/menu/UMPMenu.h"
 
 #include "ifilesystem.h"
 #include "iundo.h"
@@ -1291,33 +1292,6 @@ void CallBrushExportOBJ ()
 	}
 }
 
-// TODO: Convert this to the xml menu definition
-static GtkMenuItem* create_map_menu (void)
-{
-	// Map menu
-	GtkMenuItem* map_menu_item = new_sub_menu_item_with_mnemonic(_("Map"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(map_menu_item));
-
-	{
-		GtkMenuItem* menuItem = new_sub_menu_item_with_mnemonic(_("RMA tiles"));
-		container_add_widget(GTK_CONTAINER(menu), GTK_WIDGET(menuItem));
-		GtkMenu* menu_in_menu = GTK_MENU(gtk_menu_item_get_submenu(menuItem));
-		UMP_constructMenu(menuItem, menu_in_menu);
-	}
-
-	return map_menu_item;
-}
-
-static GtkMenuBar* create_main_menu (MainFrame *mainframe)
-{
-	GtkMenuBar* menu_bar = GTK_MENU_BAR(gtk_menu_bar_new());
-	gtk_widget_show(GTK_WIDGET(menu_bar));
-
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_map_menu()));
-
-	return menu_bar;
-}
-
 static GtkWidget* create_main_statusbar (GtkWidget *pStatusLabel[c_count_status])
 {
 	GtkTable* table = GTK_TABLE(gtk_table_new(1, c_count_status + 1, FALSE));
@@ -1455,9 +1429,6 @@ void MainFrame::Create (void)
 	GlobalEventManager().connectAccelGroup(GTK_WINDOW(window));
 
 	m_nCurrentStyle = (EViewStyle) g_Layout_viewStyle.m_value;
-
-	GtkMenuBar* main_menu1 = create_main_menu(this);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu1), FALSE, FALSE, 0);
 
 	// Create the Filter menu entries
 	ui::FiltersMenu::addItems();

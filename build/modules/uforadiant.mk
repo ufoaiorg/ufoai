@@ -182,6 +182,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/commandlist/ShortcutChooser.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/menu/FiltersMenu.cpp \
+	$(RADIANT_BASE)/radiant/ui/menu/UMPMenu.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/overlay/Overlay.cpp \
 	\

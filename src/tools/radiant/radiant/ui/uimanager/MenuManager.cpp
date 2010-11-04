@@ -111,8 +111,6 @@ GtkWidget* MenuManager::add(const std::string& insertPath,
 		//GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(_menu));
 		gtk_menu_shell_append(GTK_MENU_SHELL(parent), *newItem);
 
-		// TODO: Store the pointer to free it in the destructor
-
 		return *newItem;
 	}
 	else {
@@ -155,8 +153,6 @@ GtkWidget* MenuManager::insert(const std::string& insertPath,
 				GtkWidget* subMenu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(parentWidget));
 				gtk_menu_shell_insert(GTK_MENU_SHELL(subMenu), *newItem, position);
 			}
-
-			// TODO: Store the pointer to free it in the destructor
 
 			return *newItem;
 		}
