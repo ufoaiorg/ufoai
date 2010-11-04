@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_timer.h"
 #include "ui_font.h"
 #include "ui_sound.h"
+#include "ui_bindscript.h"
 
 #include "../client.h"
 
@@ -229,6 +230,8 @@ void UI_Shutdown (void)
 	if (ui_global.adata == NULL)
 		return;
 
+	UI_ShutdownBindScript();
+
 	confunc = UI_GetNodeBehaviour("confunc");
 
 	/* remove all confunc commands */
@@ -280,6 +283,7 @@ void UI_Init (void)
 	ui_debug = Cvar_Get("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
 
+
 	/* reset global UI structures */
 	memset(&ui_global, 0, sizeof(ui_global));
 
@@ -310,4 +314,5 @@ void UI_Init (void)
 	UI_InitWindows();
 	UI_InitDraw();
 	UI_InitActions();
+	UI_InitBindScript();
 }
