@@ -234,7 +234,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/paned.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/MenuItemAccelerator.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/ModalProgressDialog.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/RegistryConnector.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/SourceView.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TextPanel.cpp \
