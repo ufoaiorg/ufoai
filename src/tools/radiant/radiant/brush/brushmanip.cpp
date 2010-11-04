@@ -102,6 +102,27 @@ void Scene_BrushSetTexdef_Component_Selected (scene::Graph& graph, const Texture
 	SceneChangeNotify();
 }
 
+class FaceTextureFlipper
+{
+	const Vector3& _flipAxis;
+public:
+	FaceTextureFlipper(const Vector3& flipAxis) :
+		_flipAxis(flipAxis)
+	{}
+
+	void operator()(Face& face) const {
+		face.flipTexture(_flipAxis);
+	}
+};
+
+void Scene_BrushFlipTexture_Selected(const Vector3& flipAxis) {
+	Scene_ForEachSelectedBrush_ForEachFace(GlobalSceneGraph(), FaceTextureFlipper(flipAxis));
+}
+
+void Scene_BrushFlipTexture_Component_Selected(const Vector3& flipAxis) {
+	Scene_ForEachSelectedBrushFace(FaceTextureFlipper(flipAxis));
+}
+
 class FaceSetFlags
 {
 		const ContentsFlagsValue& m_projection;

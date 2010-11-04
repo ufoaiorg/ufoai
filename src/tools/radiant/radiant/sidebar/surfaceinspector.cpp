@@ -1194,6 +1194,14 @@ void SelectedFaces_pasteTexture (void)
 	g_SelectedFaceInstances.foreach(FaceInstance_pasteTexture);
 }
 
+void FlipTextureX() {
+	Select_FlipTexture(Vector3(1,0,0));
+}
+
+void FlipTextureY() {
+	Select_FlipTexture(Vector3(0,1,0));
+}
+
 void SurfaceInspector_constructPage (PreferenceGroup& group)
 {
 	PreferencesPage* page = group.createPage(_("Surface Inspector"), _("Surface Inspector Preferences"));
@@ -1212,6 +1220,9 @@ static void SurfaceInspector_registerCommands (void)
 
 	GlobalEventManager().addCommand("FaceCopyTexture", FreeCaller<SelectedFaces_copyTexture>());
 	GlobalEventManager().addCommand("FacePasteTexture", FreeCaller<SelectedFaces_pasteTexture>());
+
+	GlobalEventManager().addCommand("FlipTextureX", FreeCaller<FlipTextureX>());
+	GlobalEventManager().addCommand("FlipTextureY", FreeCaller<FlipTextureY>());
 }
 
 #include "preferencesystem.h"

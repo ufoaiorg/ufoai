@@ -38,9 +38,15 @@ namespace ui
 			 */
 			void checkGenerateTerrain ();
 
+			/** Enables or disables the "flip texture" option
+			 */
+			void checkFlipTexture ();
+
 			// GTK widgets that are context dependent
 			GtkWidget* _connectEntities;
 			GtkWidget* _fitTexture;
+			GtkWidget* _flipTextureX;
+			GtkWidget* _flipTextureY;
 			GtkWidget* _generateMaterials;
 			GtkWidget* _generateTerrain;
 
@@ -60,6 +66,8 @@ namespace ui
 			static void callbackConnectEntities (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackFitTexture (GtkMenuItem* item, OrthoContextMenu* self);
 			static void callbackAddSound (GtkMenuItem* item, OrthoContextMenu* self);
+			static void callbackFlipXTexture (GtkMenuItem* item, OrthoContextMenu* self);
+			static void callbackFlipYTexture (GtkMenuItem* item, OrthoContextMenu* self);
 
 		public:
 

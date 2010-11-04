@@ -26,6 +26,7 @@
 #include <string>
 #include "generic/callbackfwd.h"
 #include "brush.h"
+#include "math/Vector3.h"
 
 enum EBrushPrefab
 {
@@ -80,6 +81,8 @@ void Scene_BrushSelectByShader_Component (scene::Graph& graph, const std::string
 void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const std::string& shader);
 void Scene_BrushFitTexture_Selected (scene::Graph& graph, float s_repeat, float t_repeat);
 void Scene_BrushFitTexture_Component_Selected (scene::Graph& graph, float s_repeat, float t_repeat);
+void Scene_BrushFlipTexture_Selected(const Vector3& flipAxis);
+void Scene_BrushFlipTexture_Component_Selected(const Vector3& flipAxis);
 
 extern Callback g_texture_lock_status_changed;
 

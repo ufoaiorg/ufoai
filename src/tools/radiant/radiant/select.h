@@ -61,6 +61,8 @@ void Select_RotateTexture (float amt);
 void Select_ScaleTexture (float x, float y);
 void Select_ShiftTexture (float x, float y);
 void Select_FitTexture (float horizontal = 1, float vertical = 1);
+void Select_FlipTexture(const Vector3& flipAxis);
+
 void FindReplaceTextures (const std::string& pFind, const std::string& pReplace, bool bSelected);
 
 void HideSelected ();

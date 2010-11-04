@@ -29,6 +29,9 @@ void SurfaceInspector_Construct ();
 void SurfaceInspector_Destroy ();
 void SurfaceInspector_FitTexture (void);
 
+void FlipTextureX();
+void FlipTextureY();
+
 void SelectedFaces_copyTexture ();
 void SelectedFaces_pasteTexture ();
 

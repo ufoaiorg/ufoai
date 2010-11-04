@@ -52,6 +52,8 @@ namespace ui
 		_fitTexture = gtkutil::IconTextMenuItem(ui::icons::ICON_FIT_TEXTURE, FIT_TEXTURE_TEXT);
 		_generateMaterials = gtkutil::IconTextMenuItem(ui::icons::ICON_GENERATE_MATERIALS, GENERATE_MATERIALS_TEXT);
 		_generateTerrain = gtkutil::IconTextMenuItem(ui::icons::ICON_GENERATE_TERRAIN, GENERATE_TERRAIN_TEXT);
+		_flipTextureX = gtkutil::IconTextMenuItem(ui::icons::ICON_BRUSH_FLIPX, _("Flip Texture (x-Axis)"));
+		_flipTextureY = gtkutil::IconTextMenuItem(ui::icons::ICON_BRUSH_FLIPY, _("Flip Texture (y-Axis)"));
 
 		g_signal_connect(G_OBJECT(addEntity), "activate", G_CALLBACK(callbackAddEntity), this);
 		g_signal_connect(G_OBJECT(addLight), "activate", G_CALLBACK(callbackAddLight), this);
@@ -61,6 +63,8 @@ namespace ui
 		g_signal_connect(G_OBJECT(_fitTexture), "activate", G_CALLBACK(callbackFitTexture), this);
 		g_signal_connect(G_OBJECT(_generateMaterials), "activate", G_CALLBACK(callbackGenerateMaterials), this);
 		g_signal_connect(G_OBJECT(_generateTerrain), "activate", G_CALLBACK(callbackGenerateTerrain), this);
+		g_signal_connect(G_OBJECT(_flipTextureX), "activate", G_CALLBACK(callbackFlipXTexture), this);
+		g_signal_connect(G_OBJECT(_flipTextureY), "activate", G_CALLBACK(callbackFlipYTexture), this);
 
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), addModel);
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), addLight);
@@ -71,6 +75,8 @@ namespace ui
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _fitTexture);
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _generateMaterials);
 		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _generateTerrain);
+		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _flipTextureX);
+		gtk_menu_shell_append(GTK_MENU_SHELL(_widget), _flipTextureY);
 
 		gtk_widget_show_all(_widget);
 	}
@@ -83,6 +89,7 @@ namespace ui
 		checkFitTexture();
 		checkGenerateMaterial();
 		checkGenerateTerrain();
+		checkFlipTexture();
 		gtk_menu_popup(GTK_MENU(_widget), NULL, NULL, NULL, NULL, 1, GDK_CURRENT_TIME);
 	}
 
@@ -126,6 +133,17 @@ namespace ui
 		}
 	}
 
+	void OrthoContextMenu::checkFlipTexture ()
+	{
+		if (GlobalSelectionSystem().areFacesSelected() || GlobalSelectionSystem().countSelected() > 0) {
+			gtk_widget_set_sensitive(_flipTextureX, TRUE);
+			gtk_widget_set_sensitive(_flipTextureY, TRUE);
+		} else {
+			gtk_widget_set_sensitive(_flipTextureX, FALSE);
+			gtk_widget_set_sensitive(_flipTextureY, FALSE);
+		}
+	}
+
 	/* GTK CALLBACKS */
 
 	void OrthoContextMenu::callbackGenerateTerrain (GtkMenuItem* item, OrthoContextMenu* self)
@@ -146,6 +164,16 @@ namespace ui
 	void OrthoContextMenu::callbackFitTexture (GtkMenuItem* item, OrthoContextMenu* self)
 	{
 		SurfaceInspector_FitTexture();
+	}
+
+	void OrthoContextMenu::callbackFlipXTexture (GtkMenuItem* item, OrthoContextMenu* self)
+	{
+		FlipTextureX();
+	}
+
+	void OrthoContextMenu::callbackFlipYTexture (GtkMenuItem* item, OrthoContextMenu* self)
+	{
+		FlipTextureY();
 	}
 
 	void OrthoContextMenu::callbackAddEntity (GtkMenuItem* item, OrthoContextMenu* self)

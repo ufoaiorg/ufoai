@@ -93,6 +93,22 @@ void TextureProjection::fitTexture (std::size_t width, std::size_t height, const
 	m_texdef.normalise((float) width, (float) height);
 }
 
+void TextureProjection::flipTexture(const Vector3& flipAxis) {
+	// Check for x flip (x-component not zero)
+	if (flipAxis[0] != 0) {
+		// Invert the x scale and rotate 180 degree
+		m_texdef._scale[0] *= -1;
+		m_texdef._rotate -= 180;
+	}
+
+	// Check for y flip (y-component not zero)
+	if (flipAxis[1] != 0) {
+		// Invert the y scale and rotate 180 degree
+		m_texdef._scale[1] *= -1;
+		m_texdef._rotate -= 180;
+	}
+}
+
 void TextureProjection::transformLocked (std::size_t width, std::size_t height, const Plane3& plane,
 		const Matrix4& identity2transformed)
 {
