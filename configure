@@ -184,6 +184,7 @@ usage() {
 	echo " --prefix=                prefix for directories"
 	echo
 	echo " --disable-*              specify which target should not get build"
+	echo " --enable-*               specify which target should get build"
 	for i in $(ls build/modules/*.mk); do
 		echo "  * $(basename $i .mk)"
 	done
@@ -208,11 +209,18 @@ get_option_disable() {
 	echo `echo $@ | cut -c 11-`
 }
 
+get_option_enable() {
+	echo `echo $@ | cut -c 10-`
+}
+
 get_modules() {
 	for i in $(ls build/modules/*.mk); do
 		echo $(basename $i .mk)
 	done
 }
+
+# uforadiant is disabled by default
+set_var "uforadiant_DISABLE" "yes"
 
 while [ $# -gt 0 ]; do
 	case "$1" in
@@ -265,6 +273,10 @@ while [ $# -gt 0 ]; do
 	--disable-*)
 		OPTION=$(get_option_disable $1)
 		set_var "${OPTION}_DISABLE" "yes"
+		;;
+	--enable-*)
+		OPTION=$(get_option_enable $1)
+		set_var "${OPTION}_DISABLE" ""
 		;;
 	*)
 		echo "invalid option $1"
