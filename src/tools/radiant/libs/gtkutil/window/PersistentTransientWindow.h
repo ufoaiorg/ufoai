@@ -3,8 +3,8 @@
 
 #include "TransientWindow.h"
 
-#include "gtk/gtkwindow.h"
-#include "gtk/gtkwidget.h"
+#include <gtk/gtkwindow.h>
+#include <gtk/gtkwidget.h>
 
 #include <string>
 #include <stdexcept>

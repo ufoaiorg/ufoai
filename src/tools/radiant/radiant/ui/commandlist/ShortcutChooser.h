@@ -4,7 +4,7 @@
 #include <string>
 #include "ieventmanager.h"
 
-#include "gtk/gtkwidget.h"
+#include <gtk/gtkwidget.h>
 
 typedef struct _GdkEventKey GdkEventKey;
 

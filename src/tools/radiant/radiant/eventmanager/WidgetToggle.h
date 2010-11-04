@@ -5,7 +5,7 @@
 #include "Toggle.h"
 
 #include <vector>
-#include "gtk/gtkwidget.h"
+#include <gtk/gtkwidget.h>
 
 /* greebo: A WidgetToggle can be connected to one or more widgets and shows/hides them
  * upon toggle (e.g. like the Camera Window).

@@ -39,8 +39,8 @@
 
 #include "os/path.h"
 
-#include "gtk/gtkmenuitem.h"
-#include "gtk/gtkmenu.h"
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtkmenu.h>
 
 #include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"

@@ -3,7 +3,7 @@
 
 #include "ieventmanager.h"
 
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
 
 #include "xmlutil/Node.h"
 

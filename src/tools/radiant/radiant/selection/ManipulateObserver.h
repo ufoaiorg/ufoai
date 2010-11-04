@@ -3,7 +3,7 @@
 
 #include "Device.h"
 #include "RadiantSelectionSystem.h"
-#include "gdk/gdkevents.h"
+#include <gdk/gdkevents.h>
 
 /* greebo: This is the class handling the manipulate-related mouse operations, it basically just
  * passes all the mouse clicks back to the SelectionSystem. The callbacks are invoked from

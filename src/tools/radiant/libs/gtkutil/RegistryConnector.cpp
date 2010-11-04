@@ -2,12 +2,12 @@
 
 #include "iregistry.h"
 #include <iostream>
-#include "gtk/gtktogglebutton.h"
-#include "gtk/gtkcombobox.h"
-#include "gtk/gtkentry.h"
-#include "gtk/gtkspinbutton.h"
-#include "gtk/gtkrange.h"
-#include "gtk/gtkscale.h"
+#include <gtk/gtktogglebutton.h>
+#include <gtk/gtkcombobox.h>
+#include <gtk/gtkentry.h>
+#include <gtk/gtkspinbutton.h>
+#include <gtk/gtkrange.h>
+#include <gtk/gtkscale.h>
 
 namespace gtkutil {
 

@@ -7,7 +7,7 @@
 #include <string>
 #include <map>
 #include "xmlutil/Node.h"
-#include "gdk/gdkevents.h"
+#include <gdk/gdkevents.h>
 
 #include "Modifiers.h"
 

@@ -1,9 +1,9 @@
 #include "MRUMenuItem.h"
 
-#include "gtk/gtkbin.h"
-#include "gtk/gtkmenuitem.h"
-#include "gtk/gtklabel.h"
-#include "gtk/gtkwidget.h"
+#include <gtk/gtkbin.h>
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtklabel.h>
+#include <gtk/gtkwidget.h>
 #include "string/string.h"
 
 #include "MRU.h"

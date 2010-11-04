@@ -1,6 +1,6 @@
 #include "CommandList.h"
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
 
 #include "gtkutil/messagebox.h"
 #include "gtkutil/ScrolledFrame.h"

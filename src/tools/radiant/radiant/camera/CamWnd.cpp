@@ -3,7 +3,7 @@
 #include "iscenegraph.h"
 #include "ieventmanager.h"
 
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
 
 #include "gtkutil/glwidget.h"
 #include "gtkutil/widget.h"

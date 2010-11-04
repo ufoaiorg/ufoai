@@ -4,7 +4,7 @@
 #include "mapfile.h"
 #include "iscenegraph.h"
 
-#include "gdk/gdkwindow.h"
+#include <gdk/gdkwindow.h>
 
 #include "os/file.h"
 #include "string/string.h"

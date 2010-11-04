@@ -3,8 +3,8 @@
 
 #include <string>
 #include <iostream>
-#include "gtk/gtkwidget.h"
-#include "gtk/gtkliststore.h"
+#include <gtk/gtkwidget.h>
+#include <gtk/gtkliststore.h>
 #include "gtkutil/window/BlockingTransientWindow.h"
 
 namespace ui {

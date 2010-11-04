@@ -4,9 +4,9 @@
 #include "ieventmanager.h"
 #include "generic/callback.h"
 
-#include "gtk/gtkmenuitem.h"
-#include "gtk/gtktoolbutton.h"
-#include "gdk/gdk.h"
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtktoolbutton.h>
+#include <gdk/gdk.h>
 
 #include "Event.h"
 
