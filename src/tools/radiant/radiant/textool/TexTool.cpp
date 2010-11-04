@@ -174,6 +174,8 @@ TexTool& TexTool::Instance() {
 
 void TexTool::update() {
 	std::string selectedShader = selection::algorithm::getShaderFromSelection();
+	if (selectedShader.empty())
+		return;
 	_shader = GlobalShaderSystem().getShaderForName(selectedShader);
 	if (_shader != NULL)
 		_shader->DecRef();
@@ -184,41 +186,35 @@ void TexTool::rescanSelection() {
 
 	// Clear the list to remove all the previously allocated items
 	_items.clear();
-	std::string name = _shader->getName();
+	std::string name = _shader != NULL ? _shader->getName() : "";
 	// Does the selection use one single shader?
 	if (name != "") {
 		if (_selectionInfo.brushCount > 0) {
-			// TODO: mattn
-#if 0
 			BrushPtrVector brushList = selection::algorithm::getSelectedBrushes();
 
 			for (std::size_t i = 0; i < brushList.size(); i++) {
 				// Allocate a new BrushItem on the heap (shared_ptr)
-				selection::textool::TexToolItemPtr brushItem(
+				selection::textool::TexToolItem* brushItem(
 					new selection::textool::BrushItem(*brushList[i])
 				);
 
 				// Add it to the list
 				_items.push_back(brushItem);
 			}
-#endif
 		}
 
-		// TODO: mattn
-#if 0
 		// Get the single selected faces
 		FacePtrVector faceList = selection::algorithm::getSelectedFaces();
 
 		for (std::size_t i = 0; i < faceList.size(); i++) {
 			// Allocate a new FaceItem on the heap (shared_ptr)
-			selection::textool::TexToolItemPtr faceItem(
+			selection::textool::TexToolItem* faceItem(
 				new selection::textool::FaceItem(*faceList[i])
 			);
 
 			// Add it to the list
 			_items.push_back(faceItem);
 		}
-#endif
 	}
 	recalculateVisibleTexSpace();
 }

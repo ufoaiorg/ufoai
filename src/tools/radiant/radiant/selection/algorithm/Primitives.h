@@ -3,8 +3,13 @@
 
 #include <string>
 #include <stdexcept>
+#include <vector>
 
 class Face;
+class Brush;
+
+typedef std::vector<Brush*> BrushPtrVector;
+typedef std::vector<Face*> FacePtrVector;
 
 namespace selection {
 
@@ -26,6 +31,20 @@ namespace selection {
 	/** greebo: Returns the number of the selected face instances.
 	 */
 	int selectedFaceCount();
+
+	/** greebo: Retrieves a list of selected Brushes, populated
+	 * by a scene walker.
+	 *
+	 * @returns: the vector with the selected brush pointers.
+	 */
+	BrushPtrVector getSelectedBrushes();
+
+	/** greebo: Retrieves a list of selected Faces (those selected
+	 * 			with Ctrl-Shift-LMB by default).
+	 *
+	 * @returns: the vector with the selected face pointers.
+	 */
+	FacePtrVector getSelectedFaces();
 
 	/** greebo: Retrieves the reference to the last selected face.
 	 *
