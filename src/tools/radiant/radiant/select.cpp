@@ -526,6 +526,8 @@ void Select_RotateTexture (float amt)
 }
 
 void Select_FlipTexture(const Vector3& flipAxis) {
+	UndoableCommand undo("flipTexture");
+
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		// Flip the texture of all the brushes (selected as a whole)
 		Scene_BrushFlipTexture_Selected(flipAxis);
