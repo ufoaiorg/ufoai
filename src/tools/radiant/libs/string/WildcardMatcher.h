@@ -173,7 +173,7 @@ class WildcardMatcher
 			return glob_matches(_pattern.c_str(), _text.c_str());
 		}
 
-		WildcardMatcher (const std::string& text, const std::string pattern) :
+		WildcardMatcher (const std::string& text, const std::string& pattern) :
 			_text(text), _pattern(pattern)
 		{
 		}

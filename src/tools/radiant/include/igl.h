@@ -67,7 +67,7 @@ struct OpenGLBinding
 		int m_fontHeight;
 
 		/// \brief Renders \p string at the current raster-position of the current context.
-		void drawString (const std::string string) const
+		void drawString (const std::string& string) const
 		{
 			glListBase(m_font);
 			glCallLists(GLsizei(string.length()), GL_UNSIGNED_BYTE, reinterpret_cast<const GLubyte*> (string.c_str()));
