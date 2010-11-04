@@ -120,6 +120,7 @@
 #include "ui/splash/Splash.h"
 #include "environment.h"
 #include "gtkutil/menu.h"
+#include "textool/TexTool.h"
 
 struct LayoutGlobals
 {
@@ -1619,8 +1620,7 @@ void MainFrame::SaveWindowInfo (void)
 void MainFrame::Shutdown (void)
 {
 	map::AutoSaver().stopTimer();
-	// TODO mattn
-	//ui::TexTool::Instance().shutdown();
+	ui::TexTool::Instance().shutdown();
 
 	GlobalUndoSystem().trackerDetach(m_saveStateTracker);
 
@@ -1838,6 +1838,8 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("ShowCommandList", FreeCaller<ShowCommandListDialog>());
 	GlobalEventManager().addCommand("About", FreeCaller<DoAbout>());
 	GlobalEventManager().addCommand("BugReport", FreeCaller<OpenBugReportURL> ());
+
+	ui::TexTool::registerCommands();
 
 	LevelFilters_registerCommands();
 	Model_RegisterToggles();

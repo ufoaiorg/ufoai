@@ -161,7 +161,7 @@ class Face: public OpenGLRenderable, public Undoable, public FaceShaderObserver
 
 		void FitTexture (float s_repeat, float t_repeat);
 
-		void flipTexture(const Vector3& flipAxis);
+		void flipTexture(unsigned int flipAxis);
 
 		void EmitTextureCoordinates ();
 

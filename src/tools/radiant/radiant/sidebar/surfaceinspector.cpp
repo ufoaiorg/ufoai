@@ -1196,11 +1196,11 @@ void SelectedFaces_pasteTexture (void)
 }
 
 void FlipTextureX() {
-	Select_FlipTexture(Vector3(1,0,0));
+	Select_FlipTexture(0);
 }
 
 void FlipTextureY() {
-	Select_FlipTexture(Vector3(0,1,0));
+	Select_FlipTexture(1);
 }
 
 void ToggleTexTool() {

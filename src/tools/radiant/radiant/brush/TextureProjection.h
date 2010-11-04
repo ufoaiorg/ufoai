@@ -43,13 +43,9 @@ class TextureProjection
 
 		/** greebo: Mirrors the texture around the given axis.
 		 *
-		 * @parameter: If the first component (x-component) of the vector is not 0, the texture is flipped
-		 * around the x-axis. Same goes for the y-component (a value unequal to 0 flips it around y).
-		 * The z-component is ignored.
-		 *
-		 * @flipAxis: Pass <1,0,0> to flipX, <0,1,0> to flipY (haven't tested what happens, if <1,1,0> is passed.
+		 * @flipAxis: 0 = flip x, 1 = flip y
 		 */
-		void flipTexture(const Vector3& flipAxis);
+		void flipTexture(unsigned int flipAxis);
 
 		void transformLocked (std::size_t width, std::size_t height, const Plane3& plane,
 				const Matrix4& identity2transformed);

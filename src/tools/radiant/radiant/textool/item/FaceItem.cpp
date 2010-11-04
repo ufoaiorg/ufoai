@@ -109,14 +109,11 @@ void FaceItem::snapSelectedToGrid(float grid) {
 	}
 }
 
-// TODO: mattn
-#if 0
-void FaceItem::flipSelected(const int& axis) {
+void FaceItem::flipSelected(unsigned int axis) {
 	if (_selected) {
 		_sourceFace.flipTexture(axis);
 	}
 }
-#endif
 
 	} // namespace TexTool
 } // namespace selection

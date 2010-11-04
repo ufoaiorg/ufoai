@@ -530,7 +530,7 @@ void Select_RotateTexture (float amt)
 	Scene_BrushRotateTexdef_Component_Selected(GlobalSceneGraph(), amt);
 }
 
-void Select_FlipTexture(const Vector3& flipAxis) {
+void Select_FlipTexture(unsigned int flipAxis) {
 	UndoableCommand undo("flipTexture");
 
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {

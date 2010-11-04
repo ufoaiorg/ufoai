@@ -81,8 +81,8 @@ class FaceTexdef: public FaceShaderObserver
 			m_projection.fitTexture(m_shader.width(), m_shader.height(), normal, winding, s_repeat, t_repeat);
 		}
 
-		void flipTexture(const Vector3& flipAxis) {
-			m_projection.flipTexture(flipAxis);
+		void flipTexture(unsigned int axis) {
+			m_projection.flipTexture(axis);
 		}
 
 		void emitTextureCoordinates (Winding& winding, const Vector3& normal, const Matrix4& localToWorld)

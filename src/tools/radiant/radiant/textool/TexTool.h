@@ -130,6 +130,10 @@ public:
 	 */
 	void keyChanged();
 
+	/** greebo: Registers the commands in the EventManager
+	 */
+	static void registerCommands();
+
 private:
 	/* TransientWindow callbacks */
 	virtual void _preHide();
@@ -231,6 +235,15 @@ private:
 
 	// The static keyboard callback to catch the ESC key
 	static gboolean onKeyPress(GtkWindow* window, GdkEventKey* event, TexTool* self);
+
+	/** greebo: Static command targets
+	 */
+	static void texToolGridUp();
+	static void texToolGridDown();
+	static void texToolSnapToGrid();
+	static void texToolMergeItems();
+	static void texToolFlipS();
+	static void texToolFlipT();
 }; // class TexTool
 
 } // namespace ui
