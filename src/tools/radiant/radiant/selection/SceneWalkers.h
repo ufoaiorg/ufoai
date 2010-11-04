@@ -6,6 +6,7 @@
 #include "scenelib.h"
 #include "selectable.h"
 #include "eclasslib.h"
+#include "../brush/BrushNode.h"
 
 // -------------- Helper functions -------------------------------------
 
@@ -55,6 +56,28 @@ public:
 		ComponentSelectionTestable* componentSelectionTestable = Instance_getComponentSelectionTestable(instance);
 		if (componentSelectionTestable) {
 			componentSelectionTestable->setSelectedComponents(_select, _mode);
+		}
+		return true;
+	}
+};
+
+// Traverses through the scenegraph and removes degenerated brushes from the selected.
+class RemoveDegenerateBrushWalker :
+	public scene::Graph::Walker
+{
+public:
+	bool pre(const scene::Path& path, scene::Instance& instance) const {
+		TransformNode* transformNode = Node_getTransformNode(path.top());
+		if (transformNode != 0) {
+			Brush* brush = Node_getBrush(path.top());
+			if (brush != NULL) {
+				if (!brush->hasContributingFaces()) {
+					// Remove the degenerate brush
+					Path_deleteTop(path);
+					globalErrorStream() << "Warning: removed degenerate brush!\n";
+					return false;
+				}
+			}
 		}
 		return true;
 	}

@@ -668,6 +668,9 @@ void RadiantSelectionSystem::endMove() {
 		}
 	}
 
+	// Remove all degenerated brushes from the scene graph (should emit a warning)
+	GlobalSceneGraph().traverse(RemoveDegenerateBrushWalker());
+
 	_pivotMoving = false;
 	pivotChanged();
 
@@ -695,7 +698,7 @@ void RadiantSelectionSystem::endMove() {
 		}
 
 		// Finish the undo move
-		GlobalUndoSystem().finish(command.c_str());
+		GlobalUndoSystem().finish(command.toString());
 	}
 }
 
