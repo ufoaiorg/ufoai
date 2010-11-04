@@ -613,26 +613,6 @@ scene::Node& Node_Clone (scene::Node& node)
 	return clone;
 }
 
-/**
- * Class to measure time until the scope of the object is left.
- */
-class ScopeTimer
-{
-		Timer m_timer;
-		const char* m_message;
-	public:
-		ScopeTimer (const char* message) :
-			m_message(message)
-		{
-			m_timer.start();
-		}
-		~ScopeTimer (void)
-		{
-			double elapsed_time = m_timer.elapsed_msec() / 1000.f;
-			g_message("%s timer: %f second(s) elapsed\n", m_message, elapsed_time);
-		}
-};
-
 static void Map_StartPosition (void)
 {
 	Entity* entity = Scene_FindPlayerStart();
@@ -900,10 +880,7 @@ void Map_RenameAbsolute (const std::string& absolute)
 	NodeSmartReference clone(NewMapRoot(GlobalFileSystem().getRelative(absolute)));
 	resource->setNode(clone.get_pointer());
 
-	{
-		//ScopeTimer timer("clone subgraph");
-		Node_getTraversable(GlobalSceneGraph().root())->traverse(CloneAll(clone));
-	}
+	Node_getTraversable(GlobalSceneGraph().root())->traverse(CloneAll(clone));
 
 	g_map.m_resource->detach(g_map);
 	GlobalReferenceCache().release(g_map.m_name);
@@ -931,7 +908,6 @@ void Map_Rename (const std::string& filename)
 
 bool Map_Save (void)
 {
-	ScopeTimer timer("map save");
 	SaveReferences();
 	// notify about complete save process
 	g_pParentWnd->SaveComplete();
@@ -966,7 +942,6 @@ void Map_New (void)
  REGION
  ===========================================================
  */
-static bool region_active;
 
 // greebo: this has to be moved into some class and the values should be loaded from the registry
 // I'll leave it hardcoded for now
@@ -1054,8 +1029,6 @@ void Scene_Exclude_Region (bool exclude)
  */
 void Map_RegionOff (void)
 {
-	region_active = false;
-
 	float maxWorldCoord = GlobalRegistry().getFloat("game/defaults/maxWorldCoord");
 	float minWorldCoord = GlobalRegistry().getFloat("game/defaults/minWorldCoord");
 
@@ -1071,8 +1044,6 @@ void Map_RegionOff (void)
 
 void Map_ApplyRegion (void)
 {
-	region_active = true;
-
 	Scene_Exclude_Region(false);
 }
 
@@ -1081,7 +1052,6 @@ void Map_RegionSelectedBrushes (void)
 	Map_RegionOff();
 
 	if (GlobalSelectionSystem().countSelected() != 0 && GlobalSelectionSystem().Mode() == SelectionSystem::ePrimitive) {
-		region_active = true;
 		Select_GetBounds(region_mins, region_maxs);
 
 		Scene_Exclude_Selected(false);

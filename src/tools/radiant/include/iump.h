@@ -27,12 +27,10 @@
 #ifndef IUMP_H
 #define IUMP_H
 
-#include "modulesystem.h"
-#include "modulesystem/moduleregistry.h"
 #include "generic/constant.h"
+
 #include <string>
 #include <set>
-#include "ifilesystem.h"
 
 class IUMPSystem
 {
@@ -61,13 +59,9 @@ class IUMPSystem
 };
 #include "modulesystem.h"
 
-class UMPSystemDependencies: public GlobalFileSystemModuleRef
-{
-};
-
 template<typename Type>
 class GlobalModule;
-typedef GlobalModule<IUMPSystem, UMPSystemDependencies> GlobalUMPSystemModule;
+typedef GlobalModule<IUMPSystem> GlobalUMPSystemModule;
 
 // A reference to the call above.
 template<typename Type>

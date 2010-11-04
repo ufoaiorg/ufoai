@@ -27,15 +27,11 @@
 #include "ump.h"
 #include "radiant_i18n.h"
 
+#include "ifilesystem.h"
 #include "iradiant.h"
 #include "ieventmanager.h"
-#include "AutoPtr.h"
-#include "modulesystem.h"
-#include "modulesystem/moduleregistry.h"
-#include "modulesystem/singletonmodule.h"
+
 #include "ui/umpeditor/UMPEditor.h"
-#include "map/map.h"
-#include "generic/callback.h"
 #include "ump/UMPFile.h"
 #include "ump/UMPTile.h"
 #include "gtkutil/dialog.h"
@@ -70,6 +66,16 @@ namespace
 	};
 }
 class UMPSystem : public IUMPSystem {
+	public:
+		// Radiant Module stuff
+		typedef IUMPSystem Type;
+		STRING_CONSTANT(Name, "*");
+
+		// Return the static instance
+		IUMPSystem* getTable() {
+			return this;
+		}
+
 	private:
 
 		std::set<std::string> _umpFiles;
@@ -138,3 +144,18 @@ void UMP_Construct ()
 void UMP_Destroy ()
 {
 }
+
+/* Required code to register the module with the ModuleServer.
+ */
+#include "modulesystem/singletonmodule.h"
+
+/* UMP dependencies class.
+ */
+class UMPSystemDependencies: public GlobalFileSystemModuleRef
+{
+};
+
+typedef SingletonModule<UMPSystem, UMPSystemDependencies> UMPModule;
+
+typedef Static<UMPModule> StaticUMPSystemModule;
+StaticRegisterModule staticRegisterUMPSystem(StaticUMPSystemModule::instance());

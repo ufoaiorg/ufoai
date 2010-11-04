@@ -5,6 +5,7 @@
 #include "iuimanager.h"
 #include "iump.h"
 #include "iradiant.h"
+#include "ifilesystem.h"
 
 #include "string/string.h"
 #include "os/path.h"
