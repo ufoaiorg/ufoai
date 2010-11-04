@@ -21,16 +21,17 @@ MODE=
 CROSS=
 CC=
 CXX=
+USE_CCACHE=
 STATIC=
 W2K=
 
-HOST_OS=$(uname | sed -e s/_.*// | tr '[:upper:]' '[:lower:]')
+HOST_OS=`uname | sed -e s/_.*// | tr '[:upper:]' '[:lower:]'`
 TARGET_OS=${HOST_OS}
 
 if [ "${HOST_OS}" = "sunos" ] || [ "${HOST_OS}" = "darwin" ]; then
-	TARGET_ARCH=$(uname -p | sed -e s/i.86/i386/)
+	TARGET_ARCH=`uname -p | sed -e s/i.86/i386/`
 else
-	TARGET_ARCH=$(uname -m | sed -e s/i.86/i386/)
+	TARGET_ARCH=`uname -m | sed -e s/i.86/i386/`
 fi
 
 add_line_to_makefile_local() {
@@ -38,8 +39,13 @@ add_line_to_makefile_local() {
 '"$1"
 }
 
+error() {
+	echo $@
+	exit 1
+}
+
 add_to_makefile_local_quote() {
-	VALUE=$(get_var $1)
+	VALUE=`get_var $1`
 	if [ -n "$VALUE" ]; then
 		add_line_to_makefile_local "$1 ?= \"$VALUE\""
 		[ -n "$2" ] && echo $2
@@ -51,7 +57,7 @@ add_to_makefile_local_quote() {
 }
 
 add_to_makefile_local() {
-	VALUE=$(get_var $1)
+	VALUE=`get_var $1`
 	if [ -n "$VALUE" ]; then
 		add_line_to_makefile_local "$1 ?= $VALUE"
 		[ -n "$2" ] && echo $2
@@ -68,7 +74,7 @@ add_line_to_config_h() {
 }
 
 add_to_config_h_quote() {
-	VALUE=$(get_var $1)
+	VALUE=`get_var $1`
 	if [ -n "$VALUE" ] && [ "$VALUE" != "no" ]; then
 		add_line_to_config_h "#define $1 \"$VALUE\""
 		[ -n "$2" ] && echo $2
@@ -80,7 +86,7 @@ add_to_config_h_quote() {
 }
 
 add_to_config_h() {
-	VALUE=$(get_var $1)
+	VALUE=`get_var $1`
 	if [ -n "$VALUE" ] && [ "$VALUE" != "no" ]; then
 		add_line_to_config_h "#define $1 $VALUE"
 		[ -n "$2" ] && echo $2
@@ -111,9 +117,9 @@ makefile_local() {
 	add_to_makefile_local TARGET_OS "Compile for ${TARGET_OS}"
 	add_to_makefile_local TARGET_ARCH "Compile for ${TARGET_ARCH}"
 	add_to_makefile_local MODE "Compile in ${MODE} mode"
-	add_to_makefile_local CC "Found cc ${CC}"
-	add_to_makefile_local CXX "Found cxx ${CXX}"
-	add_to_makefile_local CROSS "Using tools prefix ${CROSS}"
+	add_to_makefile_local_quote CC "Found cc ${CC}"
+	add_to_makefile_local_quote CXX "Found cxx ${CXX}"
+	add_to_makefile_local_quote CROSS "Using tools prefix ${CROSS}"
 	add_to_makefile_local_quote PKGBINDIR "Using bindir ${PKGBINDIR}"
 	add_to_makefile_local_quote PKGDATADIR "Using datadir ${PKGDATADIR}"
 	add_to_makefile_local_quote PKGLIBDIR "Using libdir ${PKGLIBDIR}"
@@ -121,9 +127,9 @@ makefile_local() {
 	add_to_makefile_local_quote PREFIX "Using prefix ${PREFIX}"
 
 	echo "Build modules:"
-	for i in $(get_modules); do
+	for i in `get_modules`; do
 		add_to_makefile_local ${i}_DISABLE
-		if [ "$(get_var ${i}_DISABLE)" = "yes" ]; then
+		if [ "`get_var ${i}_DISABLE`" = "yes" ]; then
 			echo "Disable $i"
 		else
 			echo "Build $i"
@@ -137,10 +143,10 @@ check_header_cc() {
 
 check_header() {
 	HEADER=$1
-	HAVE=HAVE_$(echo ${HEADER%.*} | sed 's,/,_,g' | tr '[a-z]' '[A-Z]')_H
-	VALUE=$(get_var $HAVE)
+	HAVE=HAVE_`echo ${HEADER%.*} | sed 's,/,_,g' | tr '[a-z]' '[A-Z]'`_H
+	VALUE=`get_var $HAVE`
 	if [ "$VALUE" != "no" ]; then
-		set_var $HAVE $(check_header_cc $1)
+		set_var $HAVE `check_header_cc $1`
 		add_to_config_h $HAVE "Found $1" "Could not find $1" $2
 		add_to_makefile_local $HAVE
 	else
@@ -165,6 +171,7 @@ check_compiler() {
 usage() {
 	echo "Usage: $0"
 	echo " --help                   show this help message"
+	echo " --enable-ccache          use ccache for building"
 	echo " --enable-hardlinkedgame  hard link the server game code"
 	echo " --enable-paranoid        compile in paranoid mode with extra checks"
 	echo " --enable-profiling       activates profiling"
@@ -176,8 +183,8 @@ usage() {
 	echo " --disable-signals        disable the use of a signal handler"
 	echo
 	echo " --target-os=             specify the target os"
-	for i in $(ls build/platforms/*.mk); do
-		echo "  * $(basename $i .mk)"
+	for i in build/platforms/*.mk; do
+		echo "  * `basename $i .mk`"
 	done
 	echo
 	echo " --bindir=                path for the ufoai binaries"
@@ -189,19 +196,19 @@ usage() {
 	echo " --disable-*              specify which target should not get build"
 	echo " --enable-*               specify which target should get build"
 	echo " --enable-only-*          disable every other target"
-	for i in $(ls build/modules/*.mk); do
-		echo "  * $(basename $i .mk)"
+	for i in build/modules/*.mk; do
+		echo "  * `basename $i .mk`"
 	done
 	exit 1
 }
 
 set_var() {
-	VAR=$(echo ${1} | sed 's/-/_/g')
+	VAR=`echo ${1} | sed 's/-/_/g'`
 	eval ${VAR}='${2}'
 }
 
 get_var() {
-	VAR=$(echo ${1} | sed 's/-/_/g')
+	VAR=`echo ${1} | sed 's/-/_/g'`
 	eval echo "\${${VAR}}"
 }
 
@@ -222,10 +229,63 @@ get_option_enable_only() {
 }
 
 get_modules() {
-	for i in $(ls build/modules/*.mk); do
-		echo $(basename $i .mk)
+	for i in build/modules/*.mk; do
+		echo `basename $i .mk`
 	done
 }
+
+check_path_characters() {
+	# Find out where configure is (in what dir)
+	ROOT_DIR="`dirname $0`"
+	# For MSYS/MinGW we want to know the FULL path. This as that path is generated
+	# once you call an outside binary. Having the same path for the rest is needed
+	# for dependency checking.
+	# pwd -W returns said FULL path, but doesn't exist on others so fall back.
+	ROOT_DIR="`cd $ROOT_DIR && (pwd -W 2>/dev/null || pwd 2>/dev/null)`"
+
+	if [ -n "`echo $ROOT_DIR | grep '[^-_A-Za-z0-9\/\\\.:]'`" ]; then
+		echo "WARNING: The path contains a non-alphanumeric character that might cause"
+		echo "         failures in subsequent build stages. Any failures with the build"
+		echo "         will most likely be caused by this."
+	fi
+}
+
+check_ccache() {
+	if [ "$USE_CCACHE" = "yes" ]; then
+		ccache --help > /dev/null 2>&1
+		if [ $? -eq 0 ]; then
+			echo "Use ccache"
+			CC="ccache $CC"
+			CXX="ccache $CXX"
+		else
+			echo "Could not find ccache in your path"
+		fi
+	fi
+}
+
+check_target_os() {
+	FOUND=0
+	for i in build/platforms/*.mk; do
+		if [ `basename $i .mk` = $1 ]; then
+			FOUND=1
+		fi
+	done
+
+	[ $FOUND -eq 1 ] || echo "invalid target-os given: $1" && exit 1
+}
+
+check_module() {
+	FOUND=0
+	for i in `get_modules`; do
+		if [ $i = $1 ]; then
+			FOUND=1
+		fi
+	done
+
+	[ $FOUND -eq 1 ] || error "invalid module given: $1"
+}
+
+check_path_characters
 
 # uforadiant is disabled by default
 set_var "uforadiant_DISABLE" "yes"
@@ -234,6 +294,9 @@ while [ $# -gt 0 ]; do
 	case "$1" in
 	--help|-h)
 		usage
+		;;
+	--enable-ccache)
+		USE_CCACHE="yes"
 		;;
 	--enable-release)
 		MODE=release
@@ -264,30 +327,33 @@ while [ $# -gt 0 ]; do
 		HAVE_EXECINFO_H=no
 		;;
 	--prefix=*)
-		PREFIX=$(get_option $1)
+		PREFIX=`get_option $1`
 		;;
 	--datadir=*)
-		PKGDATADIR=$(get_option $1)
+		PKGDATADIR=`get_option $1`
 		;;
 	--libdir=*)
-		PKGLIBDIR=$(get_option $1)
+		PKGLIBDIR=`get_option $1`
 		;;
 	--localedir=*)
-		LOCALEDIR=$(get_option $1)
+		LOCALEDIR=`get_option $1`
 		;;
 	--bindir=*)
-		PKGBINDIR=$(get_option $1)
+		PKGBINDIR=`get_option $1`
 		;;
 	--target-os=*)
-		TARGET_OS=$(get_option $1)
+		TARGET_OS=`get_option $1`
+		check_target_os $TARGET_OS
 		;;
 	--disable-*)
-		OPTION=$(get_option_disable $1)
+		OPTION=`get_option_disable $1`
+		check_module $OPTION
 		set_var "${OPTION}_DISABLE" "yes"
 		;;
 	--enable-only-*)
-		OPTION=$(get_option_enable_only $1)
-		for i in $(get_modules); do
+		OPTION=`get_option_enable_only $1`
+		check_module $OPTION
+		for i in `get_modules`; do
 			if [ "$i" = "$OPTION" ]; then
 				set_var "${i}_DISABLE" ""
 			else
@@ -296,7 +362,8 @@ while [ $# -gt 0 ]; do
 		done
 		;;
 	--enable-*)
-		OPTION=$(get_option_enable $1)
+		OPTION=`get_option_enable $1`
+		check_module $OPTION
 		set_var "${OPTION}_DISABLE" ""
 		;;
 	*)
@@ -321,6 +388,7 @@ PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin}
 PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib}
 
 check_compiler
+check_ccache
 makefile_local
 config_h
 check_headers
