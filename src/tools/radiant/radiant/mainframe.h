@@ -201,8 +201,8 @@ const std::string& EnginePath_get ();
 extern std::string g_strCompilerBinaryWithPath;
 const std::string& CompilerBinaryWithPath_get ();
 
-const std::string& AppPath_get ();
-const std::string& SettingsPath_get ();
+const std::string AppPath_get ();
+const std::string SettingsPath_get ();
 
 void Radiant_Initialise ();
 void Radiant_Shutdown ();

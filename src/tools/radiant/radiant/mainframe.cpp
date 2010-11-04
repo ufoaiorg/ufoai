@@ -295,12 +295,12 @@ const std::string& CompilerBinaryWithPath_get (void)
 
 // App Path
 
-const std::string& AppPath_get (void)
+const std::string AppPath_get (void)
 {
 	return Environment::Instance().getAppPath();
 }
 
-const std::string& SettingsPath_get (void)
+const std::string SettingsPath_get (void)
 {
 	return Environment::Instance().getSettingsPath();
 }

@@ -86,8 +86,8 @@ struct IRadiant
 		 */
 		GtkWindow* (*getMainWindow) ();
 		const std::string& (*getEnginePath) ();
-		const std::string& (*getAppPath) ();
-		const std::string& (*getSettingsPath) ();
+		const std::string (*getAppPath) ();
+		const std::string (*getSettingsPath) ();
 		const std::string& (*getMapsPath) ();
 
 		void (*setStatusText)(const std::string& statusText);
