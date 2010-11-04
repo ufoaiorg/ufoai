@@ -33,7 +33,7 @@ struct uiAction_s;
 struct uiBehaviour_s;
 struct uiKeyBinding_s;
 
-extern const struct uiBehaviour_s const *ui_windowBehaviour;
+extern const struct uiBehaviour_s *ui_windowBehaviour;
 
 #define INDEXEDCHILD_HASH_SIZE 32
 
