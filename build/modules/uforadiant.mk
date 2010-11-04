@@ -135,6 +135,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/RadiantWindowObserver.cpp \
 	$(RADIANT_BASE)/radiant/selection/SelectionTest.cpp \
 	$(RADIANT_BASE)/radiant/selection/TransformationVisitors.cpp \
+	$(RADIANT_BASE)/radiant/selection/algorithm/Primitives.cpp \
+	$(RADIANT_BASE)/radiant/selection/algorithm/Shader.cpp \
 	$(RADIANT_BASE)/radiant/selection/algorithm/Transformation.cpp \
 	\
 	$(RADIANT_BASE)/radiant/plugin/PluginManager.cpp \

@@ -2,6 +2,7 @@
 #define BRUSHVISIT_H_
 
 #include "iselection.h"
+#include "BrushInstance.h"
 
 template<typename Functor>
 class BrushSelectedVisitor: public SelectionSystem::Visitor
