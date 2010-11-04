@@ -10,6 +10,7 @@ DEBUG=1
 UNIVERSAL=
 HARD_LINKED_GAME=
 PARANOID=
+PROFILING=
 PREFIX=/usr/local
 PKGDATADIR=
 PKGBINDIR=
@@ -102,6 +103,7 @@ config_h() {
 
 makefile_local() {
 	add_to_makefile_local DEBUG
+	add_to_makefile_local PROFILING "Enable profiling"
 	add_to_makefile_local STATIC "Enable static linking"
 	add_to_makefile_local W2K "Enable Windows 2000 compatibility"
 	add_to_makefile_local HARD_LINKED_GAME
@@ -165,6 +167,7 @@ usage() {
 	echo " --help                   show this help message"
 	echo " --enable-hardlinkedgame  hard link the server game code"
 	echo " --enable-paranoid        compile in paranoid mode with extra checks"
+	echo " --enable-profiling       activates profiling"
 	echo " --enable-release         build with optimizations"
 	echo " --enable-static          enable static linking"
 	echo " --enable-universal       enable universal build"
@@ -247,6 +250,9 @@ while [ $# -gt 0 ]; do
 		;;
 	--enable-paranoid)
 		PARANOID=1
+		;;
+	--enable-profiling)
+		PROFILING=1
 		;;
 	--enable-w2k)
 		W2K=1
