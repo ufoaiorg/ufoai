@@ -11,6 +11,7 @@
 #include "Selectors.h"
 #include "SelectionTest.h"
 #include "SceneWalkers.h"
+#include "../brush/BrushInstance.h"
 #include "igrid.h"
 
 // Initialise the shader pointer
@@ -57,6 +58,10 @@ RadiantSelectionSystem::RadiantSelectionSystem() :
 
 	// Pass a reference to self to the global event manager
 	GlobalEventManager().connectSelectionSystem(this);
+}
+
+const SelectionInfo& RadiantSelectionSystem::getSelectionInfo() {
+	return _selectionInfo;
 }
 
 void RadiantSelectionSystem::addObserver(Observer* observer) {
@@ -197,6 +202,15 @@ bool RadiantSelectionSystem::areFacesSelected () const
 
 // This is called if the selection changes, so that the local list of selected instances can be updated
 void RadiantSelectionSystem::onSelectedChanged(scene::Instance& instance, const Selectable& selectable) {
+	_selectionInfo.totalCount += (selectable.isSelected()) ? +1 : -1;
+
+	if (Instance_getBrush(instance) != NULL) {
+		_selectionInfo.brushCount += (selectable.isSelected()) ? +1 : -1;
+	}
+	else {
+		_selectionInfo.entityCount += (selectable.isSelected()) ? +1 : -1;
+	}
+
 	// If the selectable is selected, add it to the local selection list, otherwise remove it
 	if (selectable.isSelected()) {
 		_selection.append(instance);
@@ -214,11 +228,13 @@ void RadiantSelectionSystem::onSelectedChanged(scene::Instance& instance, const 
 // greebo: This should be called "onComponentSelectionChanged", as it is a similar function of the above one
 // Updates the internal list of component instances if the component selection gets changed
 void RadiantSelectionSystem::onComponentSelection(scene::Instance& instance, const Selectable& selectable) {
+	_selectionInfo.totalCount += (selectable.isSelected()) ? +1 : -1;
+
 	// If the instance got selected, add it to the list, otherwise remove it
 	if (selectable.isSelected()) {
 		_componentSelection.append(instance);
 	}
-    else {
+	else {
 		_componentSelection.erase(instance);
 	}
 
