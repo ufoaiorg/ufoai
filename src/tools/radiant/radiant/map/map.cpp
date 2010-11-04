@@ -1131,7 +1131,7 @@ bool Map_SaveFile (const std::string& filename)
 /**
  * @brief Saves selected world brushes and whole entities with partial/full selections
  */
-bool Map_SaveSelected (const char* filename)
+bool Map_SaveSelected (const std::string& filename)
 {
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse_Selected, filename);
 }
@@ -1518,7 +1518,7 @@ void ExportMap (void)
 {
 	const std::string filename = ui::selectMapFile(_("Export Selection"), false);
 	if (!filename.empty()) {
-		Map_SaveSelected(filename.c_str());
+		Map_SaveSelected(filename);
 	}
 }
 

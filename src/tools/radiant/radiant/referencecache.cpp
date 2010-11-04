@@ -43,6 +43,7 @@ ModelModules& ReferenceAPI_getModelModules ();
 #include "ireference.h"
 #include "ientity.h"
 #include "iradiant.h"
+#include "itextstream.h"
 
 #include <list>
 
@@ -77,7 +78,7 @@ static bool MapResource_loadFile (const MapFormat& format, scene::Node& root, co
 		format.readGraph(root, file, *g_entityCreator);
 		return true;
 	} else {
-		g_warning("Open file '%s' failed\n", filename.c_str());
+		globalErrorStream() << "ERROR: Could not load file: " << filename << "\n";
 		return false;
 	}
 }
@@ -90,7 +91,7 @@ static NodeSmartReference MapResource_load (const MapFormat& format, const std::
 	if (g_path_is_absolute(fullpath.c_str())) {
 		MapResource_loadFile(format, root, fullpath);
 	} else {
-		g_warning("map path is not fully qualified: '%s'\n", fullpath.c_str());
+		globalErrorStream() << "ERROR: map path is not fully qualified: " << fullpath << "\n";
 	}
 
 	return root;
@@ -109,7 +110,7 @@ bool MapResource_saveFile (const MapFormat& format, scene::Node& root, GraphTrav
 		return true;
 	}
 
-	g_message("Open file '%s' for write failed...\n", filename.c_str());
+	globalErrorStream() << "ERROR: open file for writing failed: " << filename << "\n";
 	return false;
 }
 
@@ -122,7 +123,7 @@ static bool file_saveBackup (const std::string& path)
 				&& file_move(path, backup); // rename current to backup
 	}
 
-	g_warning("map path is not writeable: '%s'\n", path.c_str());
+	globalErrorStream() << "ERROR: map path is not writeable: " << path << "\n";
 	return false;
 }
 
@@ -140,14 +141,14 @@ bool MapResource_save (const MapFormat& format, scene::Node& root, const std::st
 		// Save a backup if possible. This is done by renaming the original,
 		// which won't work if the existing map is currently open by another process
 		// in the background.
-		if (file_exists(fullpath.c_str()) && !file_saveBackup(fullpath.c_str())) {
-			g_warning("WARNING: could not rename '%s' to backup.\n", fullpath.c_str());
+		if (file_exists(fullpath) && !file_saveBackup(fullpath)) {
+			globalErrorStream() << "ERROR: could not rename: " << fullpath << " to backup." << "\n";
 		}
 
 		// Save the actual file
 		return MapResource_saveFile(format, root, Map_Traverse, fullpath);
 	} else {
-		g_warning("map path is not fully qualified: '%s'\n", fullpath.c_str());
+		globalErrorStream() << "ERROR: map path is not fully qualified: " << fullpath << "\n";
 		return false;
 	}
 }
@@ -188,14 +189,14 @@ ModelLoader* ModelLoader_forType (const std::string& type)
 		if (table != 0) {
 			return table;
 		} else {
-			g_warning("ERROR: Model type incorrectly registered: '%s'\n", moduleName.c_str());
+			globalErrorStream() << "ERROR:  Model type incorrectly registered: " << moduleName << "\n";
 			return &g_NullModelLoader;
 		}
 	}
 	return 0;
 }
 
-static NodeSmartReference ModelResource_load (ModelLoader* loader, const char* name)
+static NodeSmartReference ModelResource_load (ModelLoader* loader, const std::string& name)
 {
 	NodeSmartReference model(g_nullModel);
 
@@ -204,7 +205,7 @@ static NodeSmartReference ModelResource_load (ModelLoader* loader, const char* n
 		if (file) {
 			model = loader->loadModel(*file);
 		} else {
-			g_warning("Model load failed: '%s'\n", name);
+			globalErrorStream() << "Model load failed: " << name << "\n";
 		}
 	}
 
@@ -262,7 +263,7 @@ typedef HashTable<ModelKey, NodeSmartReference, ModelKeyHash, ModelKeyEqual> Mod
 static ModelCache g_modelCache;
 static bool g_modelCache_enabled = true;
 
-static ModelCache::iterator ModelCache_find (const char* path, const char* name)
+static ModelCache::iterator ModelCache_find (const std::string& path, const std::string& name)
 {
 	if (g_modelCache_enabled) {
 		return g_modelCache.find(ModelKey(path, name));
@@ -270,7 +271,7 @@ static ModelCache::iterator ModelCache_find (const char* path, const char* name)
 	return g_modelCache.end();
 }
 
-static ModelCache::iterator ModelCache_insert (const char* path, const char* name, scene::Node& node)
+static ModelCache::iterator ModelCache_insert (const std::string& path, const std::string& name, scene::Node& node)
 {
 	if (g_modelCache_enabled) {
 		return g_modelCache.insert(ModelKey(path, name), NodeSmartReference(node));
@@ -278,7 +279,7 @@ static ModelCache::iterator ModelCache_insert (const char* path, const char* nam
 	return g_modelCache.insert(ModelKey("", ""), g_nullModel);
 }
 
-void ModelCache_flush (const char* path, const char* name)
+void ModelCache_flush (const std::string& path, const std::string& name)
 {
 	ModelCache::iterator i = g_modelCache.find(ModelKey(path, name));
 	if (i != g_modelCache.end()) {
@@ -294,24 +295,26 @@ void ModelCache_clear ()
 	g_modelCache_enabled = true;
 }
 
-NodeSmartReference Model_load (ModelLoader* loader, const char* path, const char* name, const char* type)
+NodeSmartReference Model_load (ModelLoader* loader, const std::string& path, const std::string& name, const std::string& type)
 {
 	if (loader != 0) {
 		return ModelResource_load(loader, name);
 	} else {
-		const std::string moduleName = findModuleName(&GlobalFiletypes(), std::string(MapFormat::Name()), type);
-		if (!moduleName.empty()) {
-			const MapFormat* format = ReferenceAPI_getMapModules().findModule(moduleName);
-			if (format != 0) {
-				return MapResource_load(*format, path, name);
-			} else {
-				g_warning("ERROR: Map type incorrectly registered: '%s'\n", moduleName.c_str());
-				return g_nullModel;
-			}
+		// Get a loader module name for this type, if possible. If none is
+		// found, try again with the "map" type, since we might be loading a
+		// map with a different extension
+		std::string moduleName = findModuleName(&GlobalFiletypes(), MapFormat::Name(), type);
+
+		// Empty, try again with "map" type
+		if (moduleName.empty()) {
+			moduleName = findModuleName(&GlobalFiletypes(), MapFormat::Name(), "map");
+		}
+
+		const MapFormat* format = ReferenceAPI_getMapModules().findModule(moduleName);
+		if (format != 0) {
+			return MapResource_load(*format, path, name);
 		} else {
-			if (!string_empty(type)) {
-				g_warning("Model type not supported: '%s'\n", name);
-			}
+			globalErrorStream() << "ERROR: Map type incorrectly registered: " << moduleName << "\n";
 			return g_nullModel;
 		}
 	}
@@ -341,7 +344,7 @@ struct ModelResource: public Resource
 		std::size_t m_unrealised;
 
 		ModelResource (const std::string& name) :
-			m_model(g_nullModel), m_originalName(name), m_type(os::getExtension(name.c_str())), m_loader(0),
+			m_model(g_nullModel), m_originalName(name), m_type(os::getExtension(name)), m_loader(0),
 					m_modified(0), m_unrealised(1)
 		{
 			m_loader = ModelLoader_forType(m_type);
@@ -355,7 +358,7 @@ struct ModelResource: public Resource
 			if (realised()) {
 				unrealise();
 			}
-			ASSERT_MESSAGE(!realised(), "ModelResource::~ModelResource: resource reference still realised: " << makeQuoted(m_name));
+			ASSERT_MESSAGE(!realised(), "ModelResource::~ModelResource: resource reference still realised: " << m_name);
 		}
 		// NOT COPYABLE
 		ModelResource (const ModelResource&);
@@ -375,15 +378,14 @@ struct ModelResource: public Resource
 		{
 			if (g_modelCache_enabled) {
 				// cache lookup
-				ModelCache::iterator i = ModelCache_find(m_path.c_str(), m_name.c_str());
+				ModelCache::iterator i = ModelCache_find(m_path, m_name);
 				if (i == g_modelCache.end()) {
-					i = ModelCache_insert(m_path.c_str(), m_name.c_str(), Model_load(m_loader, m_path.c_str(),
-							m_name.c_str(), m_type.c_str()));
+					i = ModelCache_insert(m_path, m_name, Model_load(m_loader, m_path, m_name, m_type));
 				}
 
 				setModel((*i).value);
 			} else {
-				setModel(Model_load(m_loader, m_path.c_str(), m_name.c_str(), m_type.c_str()));
+				setModel(Model_load(m_loader, m_path, m_name, m_type));
 			}
 		}
 
@@ -406,8 +408,7 @@ struct ModelResource: public Resource
 		bool save ()
 		{
 			if (!mapSaved()) {
-				const std::string moduleName = findModuleName(GetFileTypeRegistry(), std::string(MapFormat::Name()),
-						m_type);
+				const std::string moduleName = findModuleName(GetFileTypeRegistry(), MapFormat::Name(), m_type);
 				if (!moduleName.empty()) {
 					const MapFormat* format = ReferenceAPI_getMapModules().findModule(moduleName);
 					if (format != 0 && MapResource_save(*format, m_model.get(), m_path, m_name)) {
@@ -421,7 +422,7 @@ struct ModelResource: public Resource
 		void flush ()
 		{
 			if (realised()) {
-				ModelCache_flush(m_path.c_str(), m_name.c_str());
+				ModelCache_flush(m_path, m_name);
 			}
 		}
 		scene::Node* getNode ()
@@ -430,7 +431,7 @@ struct ModelResource: public Resource
 		}
 		void setNode (scene::Node* node)
 		{
-			ModelCache::iterator i = ModelCache_find(m_path.c_str(), m_name.c_str());
+			ModelCache::iterator i = ModelCache_find(m_path, m_name);
 			if (i != g_modelCache.end()) {
 				(*i).value = NodeSmartReference(*node);
 			}
