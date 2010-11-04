@@ -40,7 +40,8 @@ enum ProjectionAxis
 struct qtexture_t
 {
 		qtexture_t (const LoadImageCallback& load, const std::string& name) :
-			load(load), name(name)
+			load(load), name(name), width(0), height(0), texture_number(0),
+			color(0.0, 0.0, 0.0), surfaceFlags(0), contentFlags(0), value(0)
 		{
 		}
 		const LoadImageCallback& load;

@@ -260,7 +260,7 @@ std::size_t Winding_FindAdjacent (const Winding& winding, std::size_t face)
 	return c_brush_maxFaces;
 }
 
-std::size_t Winding_Opposite (const Winding& winding, const std::size_t index, const std::size_t other)
+std::size_t Winding_Opposite (const Winding& winding, const std::size_t& index, const std::size_t& other)
 {
 	ASSERT_MESSAGE(index < winding.numpoints && other < winding.numpoints, "Winding_Opposite: index out of range");
 
