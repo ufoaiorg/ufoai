@@ -25,8 +25,8 @@
 #include "item/BrushItem.h"
 #include "item/FaceItem.h"
 
-//#include "selection/algorithm/Primitives.h"
-//#include "selection/algorithm/Shader.h"
+#include "../selection/algorithm/Primitives.h"
+#include "../selection/algorithm/Shader.h"
 
 namespace ui {
 
@@ -173,8 +173,7 @@ TexTool& TexTool::Instance() {
 }
 
 void TexTool::update() {
-	// TODO: mattn
-	std::string selectedShader = "textures/tex_common/nodraw"; //selection::algorithm::getShaderFromSelection();
+	std::string selectedShader = selection::algorithm::getShaderFromSelection();
 	_shader = GlobalShaderSystem().getShaderForName(selectedShader);
 	if (_shader != NULL)
 		_shader->DecRef();
@@ -185,11 +184,12 @@ void TexTool::rescanSelection() {
 
 	// Clear the list to remove all the previously allocated items
 	_items.clear();
-	// TODO: mattn
-#if 0
+	std::string name = _shader->getName();
 	// Does the selection use one single shader?
-	if (_shader->getName() != "") {
+	if (name != "") {
 		if (_selectionInfo.brushCount > 0) {
+			// TODO: mattn
+#if 0
 			BrushPtrVector brushList = selection::algorithm::getSelectedBrushes();
 
 			for (std::size_t i = 0; i < brushList.size(); i++) {
@@ -201,8 +201,11 @@ void TexTool::rescanSelection() {
 				// Add it to the list
 				_items.push_back(brushItem);
 			}
+#endif
 		}
 
+		// TODO: mattn
+#if 0
 		// Get the single selected faces
 		FacePtrVector faceList = selection::algorithm::getSelectedFaces();
 
@@ -215,8 +218,8 @@ void TexTool::rescanSelection() {
 			// Add it to the list
 			_items.push_back(faceItem);
 		}
-	}
 #endif
+	}
 	recalculateVisibleTexSpace();
 }
 
