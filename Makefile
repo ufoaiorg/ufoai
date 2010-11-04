@@ -53,6 +53,7 @@ clean: $(addprefix clean-,$(TARGETS))
 .PHONY: distclean
 distclean: clean
 	$(Q)rm -f config.h Makefile.local
+	$(Q)rm -rf $(BUILDDIR)
 
 .PHONY: install
 install: install-pre $(addprefix install-,$(TARGETS))
