@@ -115,6 +115,7 @@
 
 		<menuSeparator />
 
+		<menuItem name="texturetool" caption="TextureTool" command="TextureTool" />
 		<menuItem name="colours" caption="Colours..." command="EditColourScheme" icon="editcolour16.png" />
 		<menuItem name="backgroundimage" caption="Background Image..." command="OverlayDialog" icon="bgimage16.png" />
 	</subMenu>

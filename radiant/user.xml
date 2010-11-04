@@ -166,5 +166,13 @@
 			<separator/>
 				<toggletoolbutton name="texturelock" action="TogTexLock" tooltip="Texture Lock" icon="texture_lock.png" />
 		</toolbar>
+
+		<toolbar name="textool" align="horizontal">
+			<toolbutton name="griddown" action="TexToolGridDown" tooltip="Decrease Grid Size" icon="grid_down.png"/>
+			<toolbutton name="gridup" action="TexToolGridUp" tooltip="Increase Grid Size" icon="grid_up.png"/>
+			<toolbutton name="gridsnap" action="TexToolSnapToGrid" tooltip="Snap to Grid" icon="grid_snap.png"/>
+			<toggletoolbutton name="usegrid" action="TexToolToggleGrid" tooltip="Toggle Grid" icon="grid_toggle.png"/>
+			<separator/>
+		</toolbar>
 	</ui>
 </user>

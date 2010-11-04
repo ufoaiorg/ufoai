@@ -1648,6 +1648,8 @@ void MainFrame::SaveWindowInfo (void)
 void MainFrame::Shutdown (void)
 {
 	map::AutoSaver().stopTimer();
+	// TODO mattn
+	//ui::TexTool::Instance().shutdown();
 
 	GlobalUndoSystem().trackerDetach(m_saveStateTracker);
 

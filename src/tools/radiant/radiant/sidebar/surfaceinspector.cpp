@@ -60,6 +60,7 @@
 #include "../brush/brush.h"
 #include "stream/stringstream.h"
 #include "../textureentry.h"
+#include "../textool/TexTool.h"
 
 inline void spin_button_set_step (GtkSpinButton* spin, gfloat step)
 {
@@ -1202,6 +1203,11 @@ void FlipTextureY() {
 	Select_FlipTexture(Vector3(0,1,0));
 }
 
+void ToggleTexTool() {
+	// Call the toggle() method of the static instance
+	ui::TexTool::Instance().toggle();
+}
+
 void SurfaceInspector_constructPage (PreferenceGroup& group)
 {
 	PreferencesPage* page = group.createPage(_("Surface Inspector"), _("Surface Inspector Preferences"));
@@ -1217,6 +1223,7 @@ static void SurfaceInspector_registerPreferencesPage (void)
 static void SurfaceInspector_registerCommands (void)
 {
 	GlobalEventManager().addCommand("FitTexture", FreeCaller<SurfaceInspector_FitTexture>());
+	GlobalEventManager().addCommand("TextureTool", FreeCaller<ToggleTexTool>());
 
 	GlobalEventManager().addCommand("FaceCopyTexture", FreeCaller<SelectedFaces_copyTexture>());
 	GlobalEventManager().addCommand("FacePasteTexture", FreeCaller<SelectedFaces_pasteTexture>());

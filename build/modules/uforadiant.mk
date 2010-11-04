@@ -208,6 +208,11 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/filters/XMLFilter.cpp \
 	$(RADIANT_BASE)/radiant/filters/filters.cpp \
 	\
+	$(RADIANT_BASE)/radiant/textool/TexTool.cpp \
+	$(RADIANT_BASE)/radiant/textool/TexToolItem.cpp \
+	$(RADIANT_BASE)/radiant/textool/item/BrushItem.cpp \
+	$(RADIANT_BASE)/radiant/textool/item/FaceItem.cpp \
+	\
 	$(RADIANT_BASE)/radiant/pathfinding/Routing.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLumpLoader.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLump.cpp \
