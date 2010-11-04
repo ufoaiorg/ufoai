@@ -74,16 +74,15 @@ class UMPTileToMenuItemVisitor: public map::ump::UMPTileVisitor
  */
 void UMPMenu::addItems()
 {
+	IMenuManager* menuManager = GlobalUIManager().getMenuManager();
+	menuManager->remove(MENU_PATH);
+
 	std::string umpFilename = GlobalUMPSystem().getUMPFilename(GlobalRadiant().getMapName());
 	if (umpFilename.empty())
 		return;
 	map::ump::UMPFile file = map::ump::UMPFile(umpFilename);
 	if (!file.load())
 		return;
-
-	IMenuManager* menuManager = GlobalUIManager().getMenuManager();
-
-	menuManager->remove(MENU_PATH);
 
 	// Create the sub menu item in the map menu
 	menuManager->add(MENU_MAP_PATH, MENU_UMP_NAME, ui::menuFolder, _("RMA tiles"), MENU_ICON, "");
