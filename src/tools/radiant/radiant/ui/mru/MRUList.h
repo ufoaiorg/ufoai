@@ -36,15 +36,9 @@ public:
 	{}
 
 	void insert(const std::string& filename) {
+		_list.remove(filename);
 		_list.push_front(filename);
-#if 0
-		std::pair<iterator, bool> p = _list.push_front(filename);
 
-		if (!p.second) {                     /* duplicate item */
-			_list.relocate(_list.begin(), p.first); /* put in front */
-		}
-		else
-#endif
 		if (_list.size()>_numMaxItems) {  /* keep the length <= _numMaxItems */
 			_list.pop_back();
 		}
