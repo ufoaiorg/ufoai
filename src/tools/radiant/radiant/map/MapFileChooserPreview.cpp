@@ -24,7 +24,7 @@ namespace map
 	MapFileChooserPreview::~MapFileChooserPreview ()
 	{
 		if (_mapResource)
-			GlobalReferenceCache().release(_mapName.c_str());
+			GlobalReferenceCache().release(_mapName);
 	}
 
 	GtkWidget* MapFileChooserPreview::getPreviewWidget ()
@@ -42,7 +42,7 @@ namespace map
 			gtkutil::FileChooser& fileChooser)
 	{
 		if (_mapResource)
-			GlobalReferenceCache().release(_mapName.c_str());
+			GlobalReferenceCache().release(_mapName);
 
 		// Attempt to load file
 		setMapName(newFileName);
@@ -57,7 +57,7 @@ namespace map
 	bool MapFileChooserPreview::setMapName (const std::string& name)
 	{
 		_mapName = name;
-		_mapResource = GlobalReferenceCache().capture(_mapName.c_str());
+		_mapResource = GlobalReferenceCache().capture(_mapName);
 
 		if (_mapResource == NULL || !_mapResource->load()) {
 			// NULLify the preview map root on failure

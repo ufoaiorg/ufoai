@@ -40,9 +40,9 @@ class RadiantFileTypeRegistry: public IFileTypeRegistry
 					m_moduleName(moduleName), m_name(other.name), m_pattern(other.pattern)
 				{
 				}
-				const char* getModuleName () const
+				const std::string& getModuleName () const
 				{
-					return m_moduleName.c_str();
+					return m_moduleName;
 				}
 				filetype_t getType () const
 				{

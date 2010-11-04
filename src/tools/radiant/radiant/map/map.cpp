@@ -291,7 +291,7 @@ void Map_SetWorldspawn (Map& map, scene::Node* node)
 void Map_Free (void)
 {
 	g_map.m_resource->detach(g_map);
-	GlobalReferenceCache().release(g_map.m_name.c_str());
+	GlobalReferenceCache().release(g_map.m_name);
 	g_map.m_resource = 0;
 
 	FlushReferences();
@@ -926,7 +926,7 @@ void Map_New (void)
 	Map_UpdateTitle(g_map);
 
 	{
-		g_map.m_resource = GlobalReferenceCache().capture(g_map.m_name.c_str());
+		g_map.m_resource = GlobalReferenceCache().capture(g_map.m_name);
 		g_map.m_resource->attach(g_map);
 
 		SceneChangeNotify();
@@ -1098,7 +1098,7 @@ bool Map_ImportFile (const std::string& filename)
 {
 	bool success = false;
 	{
-		Resource* resource = GlobalReferenceCache().capture(filename.c_str());
+		Resource* resource = GlobalReferenceCache().capture(filename);
 		resource->refresh(); /* avoid loading old version if map has changed on disk since last import */
 		if (resource->load()) {
 			NodeSmartReference clone(NewMapRoot(""));
@@ -1109,7 +1109,7 @@ bool Map_ImportFile (const std::string& filename)
 			MergeMap(clone);
 			success = true;
 		}
-		GlobalReferenceCache().release(filename.c_str());
+		GlobalReferenceCache().release(filename);
 	}
 
 	SceneChangeNotify();
@@ -1494,7 +1494,7 @@ bool Map_SaveAs (void)
 	const std::string filename = ui::selectMapFile(_("Save Map"), false);
 	if (!filename.empty()) {
 		GlobalMRU().insert(filename);
-		Map_Rename(filename.c_str());
+		Map_Rename(filename);
 		return Map_Save();
 	}
 	return false;
