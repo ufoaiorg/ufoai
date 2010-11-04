@@ -654,6 +654,19 @@ void ComponentMode_SelectionChanged (const Selectable& selectable)
 	}
 }
 
+void ToggleEntityMode ()
+{
+	if (GlobalSelectionSystem().Mode() == SelectionSystem::eEntity) {
+		SelectionSystem_DefaultMode();
+	} else {
+		GlobalSelectionSystem().SetMode(SelectionSystem::eEntity);
+		GlobalSelectionSystem().SetComponentMode(SelectionSystem::eDefault);
+	}
+	ComponentModeChanged();
+
+	ModeChangeNotify();
+}
+
 void ToggleEdgeMode()
 {
 	if (EdgeMode()) {
@@ -1788,6 +1801,9 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addToggle("DragVertices", FreeCaller<ToggleVertexMode> ());
 	GlobalEventManager().addToggle("DragEdges", FreeCaller<ToggleEdgeMode> ());
 	GlobalEventManager().addToggle("DragFaces", FreeCaller<ToggleFaceMode> ());
+	GlobalEventManager().addToggle("DragEntities", FreeCaller<ToggleEntityMode>());
+
+	GlobalEventManager().setToggled("DragEntities", false);
 
 	GlobalEventManager().addCommand("MirrorSelectionX", FreeCaller<Selection_Flipx> ());
 	GlobalEventManager().addCommand("RotateSelectionX", FreeCaller<Selection_Rotatex> ());

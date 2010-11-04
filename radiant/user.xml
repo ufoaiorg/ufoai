@@ -120,6 +120,7 @@
 				<toggletoolbutton name="dragvertices" action="DragVertices" tooltip="Select Vertices" icon="modify_vertices.png" />
 				<toggletoolbutton name="dragedges" action="DragEdges" tooltip="Select Edges" icon="modify_edges.png" />
 				<toggletoolbutton name="dragfaces" action="DragFaces" tooltip="Select Faces" icon="modify_faces.png" />
+				<toggletoolbutton name="dragentities" action="DragEntities" tooltip="Select Entities" icon="select_entities.png"/>
 			<separator/>
 				<toolbutton name="refreshmodels" action="RefreshReferences" tooltip="Refresh Models" icon="refresh_models.png" />
 			<separator/>
