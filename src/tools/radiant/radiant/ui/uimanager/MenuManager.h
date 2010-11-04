@@ -84,6 +84,17 @@ public:
 					const std::string& caption,
 					const std::string& icon,
 					const std::string& eventName);
+
+	/**
+	* Removes an entire menu subtree.
+	*/
+	void remove(const std::string& path);
+
+	/**
+	 * Clears all references to GtkWidgets etc.
+	 */
+	void clear();
+
 private:
 	/** greebo: Loads all the menu items from the registry, called upon construction.
 	 */

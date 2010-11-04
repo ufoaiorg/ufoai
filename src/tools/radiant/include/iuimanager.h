@@ -73,6 +73,11 @@ public:
 							const std::string& caption,
 							const std::string& icon,
 							const std::string& eventName) = 0;
+
+	/**
+	 * Removes an entire menu subtree.
+	 */
+	virtual void remove(const std::string& path) = 0;
 };
 
 

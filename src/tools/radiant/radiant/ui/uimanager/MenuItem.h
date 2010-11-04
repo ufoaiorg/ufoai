@@ -75,6 +75,11 @@ public:
 	 */
 	void addChild(MenuItem* newChild);
 
+	/**
+	 * Removes the given child from this menu item.
+	 */
+	void removeChild(const MenuItem* child);
+
 	// Returns the type of this item node
 	eMenuItemType getType() const;
 	void setType(eMenuItemType type);

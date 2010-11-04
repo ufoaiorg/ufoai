@@ -26,6 +26,10 @@ MenuManager::MenuManager() : _root(new MenuItem(NULL))
 MenuManager::~MenuManager() {
 }
 
+void MenuManager::clear() {
+	_root = NULL;
+}
+
 void MenuManager::loadFromRegistry() {
 	xml::NodeList menuNodes = GlobalRegistry().findXPath(RKEY_MENU_ROOT);
 
@@ -165,6 +169,45 @@ GtkWidget* MenuManager::insert(const std::string& insertPath,
 	else {
 		globalErrorStream() << "MenuManager: Could not find insertPath: " << insertPath << "\n";
 		return NULL;
+	}
+}
+
+void MenuManager::remove(const std::string& path)
+{
+	// Sanity check for empty menu
+	if (_root == NULL)
+		return;
+
+	MenuItem* item = _root->find(path);
+
+	if (item == NULL)
+		return; // nothing to do
+
+	MenuItem* parent = item->parent();
+
+	if (parent == NULL)
+		return; // no parent ?
+
+	// Get the parent Gtk::Widget*
+	GtkWidget* parentWidget = *parent;
+
+	// Remove the found item from the parent menu item
+	parent->removeChild(item);
+
+	GtkMenuShell* shell = NULL;
+
+	if (parent->getType() == menuBar) {
+		// The parent is a menubar, it's a menushell in the first place
+		shell = GTK_MENU_SHELL(parentWidget);
+	}
+	else if (parent->getType() == menuFolder) {
+		// The parent is a submenu (=menuitem), try to retrieve the menushell first
+		shell = GTK_MENU_SHELL(gtk_menu_item_get_submenu(GTK_MENU_ITEM(parentWidget)));
+	}
+
+	if (shell != NULL) {
+		// Cast the item onto a GtkWidget to remove it from the parent container
+		gtk_container_remove(GTK_CONTAINER(shell), static_cast<GtkWidget*>(*item));
 	}
 }
 

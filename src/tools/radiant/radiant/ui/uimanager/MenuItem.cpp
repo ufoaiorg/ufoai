@@ -92,6 +92,16 @@ void MenuItem::addChild(MenuItem* newChild) {
 	_children.push_back(newChild);
 }
 
+void MenuItem::removeChild(const MenuItem* child)
+{
+	for (MenuItemList::iterator i = _children.begin(); i != _children.end(); ++i) {
+		if (*i == child) {
+			_children.erase(i);
+			return;
+		}
+	}
+}
+
 std::string MenuItem::getEvent() const {
 	return _event;
 }
