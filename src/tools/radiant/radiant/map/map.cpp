@@ -661,7 +661,7 @@ bool Map_LoadFile (const std::string& filename)
 	Map_UpdateTitle(g_map);
 
 	{
-		g_map.m_resource = GlobalReferenceCache().capture(g_map.m_name.c_str());
+		g_map.m_resource = GlobalReferenceCache().capture(g_map.m_name);
 		g_map.m_resource->attach(g_map);
 
 		scene::Traversable* traversible = Node_getTraversable(GlobalSceneGraph().root());
