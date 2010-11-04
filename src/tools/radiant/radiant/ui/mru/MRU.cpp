@@ -14,6 +14,15 @@
 
 namespace ui {
 
+namespace {
+	const std::string RKEY_MAP_ROOT = "user/ui/map";
+	const std::string RKEY_MAP_MRUS = RKEY_MAP_ROOT + "/MRU";
+	const std::string RKEY_MRU_LENGTH = RKEY_MAP_ROOT + "/numMRU";
+	const std::string RKEY_LOAD_LAST_MAP = RKEY_MAP_ROOT + "/loadLastMap";
+
+	const std::string RECENT_FILES_CAPTION = _("Recently used Maps");
+}
+
 MRU::MRU() :
 	_numMaxFiles(GlobalRegistry().getInt(RKEY_MRU_LENGTH)),
 	_loadLastMap(GlobalRegistry().get(RKEY_LOAD_LAST_MAP) == "1"),

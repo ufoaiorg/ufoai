@@ -4,7 +4,6 @@
 #include <vector>
 #include "iregistry.h"
 #include "preferencesystem.h"
-#include "radiant_i18n.h"
 
 #include "MRUMenuItem.h"
 #include "MRUList.h"
@@ -20,15 +19,6 @@ typedef struct _GtkWidget GtkWidget;
  * and iterators for inserting and manipulating the list.
  */
 namespace ui {
-
-	namespace {
-		const std::string RKEY_MAP_ROOT = "user/ui/map";
-		const std::string RKEY_MAP_MRUS = RKEY_MAP_ROOT + "/MRU";
-		const std::string RKEY_MRU_LENGTH = RKEY_MAP_ROOT + "/numMRU";
-		const std::string RKEY_LOAD_LAST_MAP = RKEY_MAP_ROOT + "/loadLastMap";
-
-		const std::string RECENT_FILES_CAPTION = _("Recently used Maps");
-	}
 
 class MRU :
 	public RegistryKeyObserver,
