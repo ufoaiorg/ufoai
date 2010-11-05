@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_internal.h"
 #include "ui_actions.h"
 #include "ui_sprite.h"
+#include "ui_bindscript.h"
 #include "ui_components.h"
 #include "node/ui_node_window.h"
 #include "node/ui_node_selectbox.h"
@@ -911,6 +912,49 @@ static qboolean UI_ParseFunction (uiNode_t * node, const char **text, const char
 }
 
 /**
+ * @todo speed up that shit
+ */
+static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char **token)
+{
+	const char *errhead = "UI_ParseScript: unexpected end of file (in event)";
+	char buffer[4*1024] = "\0";
+	int count = 1;
+
+	*token = Com_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
+	if ((*token)[0] != '{') {
+		Com_Printf("UI_ParseScript: '{' exprected but '%s' found.\n", *token);
+		return qfalse;
+	}
+
+	while (qtrue) {
+		*token = Com_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+
+		if ((*token)[0] == '{') {
+			count++;
+		} else if ((*token)[0] == '}') {
+			count--;
+			if (count == 0)
+				break;
+		}
+		/** @todo this is incredibly slow way, only for fast prototyping */
+		strncat(buffer, " ", sizeof(buffer));
+		strncat(buffer, *token, sizeof(buffer));
+	}
+
+	*token = Com_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
+
+	/** @todo this should return a parsing status */
+	UI_ParseActionScript(node, buffer);
+	return qtrue;
+}
+
+/**
  * @sa UI_ParseNodeProperties
  * @brief parse all sequencial properties into a block
  * @note allow to use an extra block
@@ -1025,6 +1069,17 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 
 			/* and then read all nodes */
 			while ((*token)[0] != '}') {
+
+				if (!strcmp("script", *token)) {
+					result = UI_ParseScript(node, text, token);
+					if (!result) {
+						Com_Printf("UI_ParseNodeBody: node with bad body ignored (node \"%s\")\n", UI_GetPath(node));
+						ui_global.numNodes--;
+						return qfalse;
+					}
+					continue;
+				}
+
 				uiNode_t *newNode = UI_ParseNode(node, text, token, errhead);
 				if (!newNode)
 					return qfalse;

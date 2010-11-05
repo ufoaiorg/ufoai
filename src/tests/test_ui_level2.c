@@ -248,6 +248,11 @@ static void testRuntimeError (void)
 	UFO_ExecuteTestWindow("test_runtimeerror");
 }
 
+static void testAngelScript (void)
+{
+	UFO_ExecuteTestWindow("test_angelscript");
+}
+
 /**
  * @brief test if we can parse all samples
  */
@@ -286,6 +291,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testRuntimeError) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testSamples) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testAngelScript) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

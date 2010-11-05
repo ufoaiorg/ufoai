@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct uiNode_s;
 
-void UI_ParseActionScript(struct uiNode_s node, const char *script);
+void UI_ParseActionScript(struct uiNode_s *node, const char *script);
 void UI_InitBindScript(void);
 void UI_ShutdownBindScript(void);
 

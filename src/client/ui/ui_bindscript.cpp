@@ -30,19 +30,22 @@ extern "C" {
 
 #include "../client.h"
 
-void UI_ParseActionScript(uiNode_t node, const char *script) {
+void UI_ParseActionScript (uiNode_t *node, const char *script)
+{
 
 
 }
 
-void UI_InitBindScript (void) {
+void UI_InitBindScript (void)
+{
 
 
 }
 
-void UI_ShutdownBindScript (void) {
+void UI_ShutdownBindScript (void)
+{
 
 
 }
 
-}
+}/* extern "C" */

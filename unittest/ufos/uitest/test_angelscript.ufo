@@ -1,0 +1,38 @@
+/**
+ * @brief Unittest for actions
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_cvar"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_angelscript
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest cvar"
+		bgcolor		"0 0 0 1"
+	}
+
+	button buttonTest
+	{
+		{
+			pos			"10 10"
+			size		"50 50"
+			color		".2187 .73 .23 1"
+		}
+
+		script {
+			fooo
+			foooo
+			foo
+			foooo
+			foo
+		}
+	}
+
+	func onInit {
+	}
+
+}
