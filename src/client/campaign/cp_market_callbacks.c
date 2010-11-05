@@ -651,13 +651,13 @@ static void BS_SellAircraft_f (void)
 
 	if (buyCat == FILTER_AIRCRAFT) {
 		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
-		if (!aircraftTemplate)
-			return;
-
 		qboolean aircraftOutNote = qfalse;
 		qboolean teamNote = qfalse;
 		qboolean found = qfalse;
 		aircraft_t *aircraft;
+
+		if (!aircraftTemplate)
+			return;
 
 		aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
