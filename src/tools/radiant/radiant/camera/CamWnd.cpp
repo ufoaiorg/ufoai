@@ -2,6 +2,7 @@
 
 #include "iscenegraph.h"
 #include "ieventmanager.h"
+#include "iclipper.h"
 
 #include <gdk/gdkkeysyms.h>
 
@@ -367,6 +368,21 @@ void CamWnd::Cam_Draw() {
 		Scene_Render(renderer, m_view);
 
 		renderer.render(m_Camera.modelview, m_Camera.projection);
+	}
+
+	// greebo: Draw the clipper's points (skipping the depth-test)
+	{
+		glDisable(GL_DEPTH_TEST);
+
+		glColor4f(1, 1, 1, 1);
+
+		glPointSize(5);
+
+		if (GlobalClipper().clipMode()) {
+			GlobalClipper().draw(1.0f);
+		}
+
+		glPointSize(1);
 	}
 
 	// prepare for 2d stuff
