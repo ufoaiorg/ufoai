@@ -545,62 +545,6 @@ void Entity_constructMenu (GtkMenu* menu)
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemSelectColor), FALSE);
 }
 
-/**
- * @brief callback evaluates current selection to decide which entity menu items should be sensitive
- */
-void Entity_MenuStateReevaluate (void)
-{
-	const int selected = GlobalSelectionSystem().countSelected();
-	bool enableSelectColor = false;
-	bool enableConnect = false;
-	bool enableGroup = false;
-	if (selected > 0) {
-		if (selected == 2) {
-			enableConnect = true;
-		}
-		/** @todo should group/ungroup really be available for single selection?*/
-		enableGroup = true;
-		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
-		Entity* entity = Node_getEntity(path.top());
-		if (entity != 0) {
-			if (entity->getEntityClass().getAttribute("_color")) {
-				enableSelectColor = true;
-			}
-		}
-	}
-	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemSelectColor), enableSelectColor);
-	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemConnectSelection), enableConnect);
-	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemRegroup), enableGroup);
-	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemUngroup), enableGroup);
-}
-
-/**
- * @brief Class instance for asynchronous menu state update after selection change
- */
-class EntityMenuDraw
-{
-		IdleDraw m_idleDraw;
-	public:
-		EntityMenuDraw () :
-			m_idleDraw(FreeCaller<Entity_MenuStateReevaluate> ())
-		{
-		}
-		void queueDraw (void)
-		{
-			m_idleDraw.queueDraw();
-		}
-};
-static EntityMenuDraw g_EntityMenuDraw;
-
-/**
- * @brief Selection changed callback used to reevaluate menu state based on current selection.
- * @param selectable unused
- */
-void Entity_ColorPickerSelectionChanged (const Selectable& selectable)
-{
-	g_EntityMenuDraw.queueDraw();
-}
-
 #include "preferencesystem.h"
 #include "stringio.h"
 #include "signal/isignal.h"
@@ -614,9 +558,6 @@ void Entity_Construct ()
 
 	GlobalPreferenceSystem().registerPreference("SI_Colors5", Vector3ImportStringCaller(g_entity_globals.color_entity),
 			Vector3ExportStringCaller(g_entity_globals.color_entity));
-
-	typedef FreeCaller1<const Selectable&, Entity_ColorPickerSelectionChanged> EntityColorPickerSelectionChangedCaller;
-	GlobalSelectionSystem().addSelectionChangeCallback(EntityColorPickerSelectionChangedCaller());
 
 	Entity_registerPrefPage();
 }
