@@ -35,6 +35,10 @@ class TextureProjection
 		 */
 		Matrix4 getTransform (float width, float height) const;
 
+		void shift(float s, float t);
+		void scale(float s, float t);
+		void rotate(float angle);
+
 		// Normalise projection for a given texture width and height.
 		void normalise (float width, float height);
 

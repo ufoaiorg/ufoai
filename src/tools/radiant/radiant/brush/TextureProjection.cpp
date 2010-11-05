@@ -46,6 +46,18 @@ Matrix4 TextureProjection::getTransform (float width, float height) const
 	return m_texdef.getTransform(width, height);
 }
 
+void TextureProjection::shift(float s, float t) {
+	m_texdef.shift(s, t);
+}
+
+void TextureProjection::scale(float s, float t) {
+	m_texdef.scale(s, t);
+}
+
+void TextureProjection::rotate(float angle) {
+	m_texdef.rotate(angle);
+}
+
 // Normalise projection for a given texture width and height.
 void TextureProjection::normalise (float width, float height)
 {
