@@ -227,7 +227,7 @@ void TexTool::flipSelected(int axis) {
 	if (countSelected() > 0) {
 		beginOperation();
 
-		for (unsigned int i = 0; i < _items.size(); i++) {
+		for (std::size_t i = 0; i < _items.size(); i++) {
 			_items[i]->flipSelected(axis);
 		}
 
@@ -240,7 +240,7 @@ void TexTool::mergeSelectedItems() {
 	if (countSelected() > 0) {
 		AABB selExtents;
 
-		for (unsigned int i = 0; i < _items.size(); i++) {
+		for (std::size_t i = 0; i < _items.size(); i++) {
 			selExtents.includeAABB(_items[i]->getSelectedExtents());
 		}
 
@@ -252,7 +252,7 @@ void TexTool::mergeSelectedItems() {
 				selExtents.origin[1]
 			);
 
-			for (unsigned int i = 0; i < _items.size(); i++) {
+			for (std::size_t i = 0; i < _items.size(); i++) {
 				_items[i]->moveSelectedTo(centroid);
 			}
 
@@ -267,7 +267,7 @@ void TexTool::snapToGrid() {
 	if (_gridActive) {
 		beginOperation();
 
-		for (unsigned int i = 0; i < _items.size(); i++) {
+		for (std::size_t i = 0; i < _items.size(); i++) {
 			_items[i]->snapSelectedToGrid(_grid);
 		}
 
@@ -331,7 +331,7 @@ void TexTool::draw() {
 AABB& TexTool::getExtents() {
 	_selAABB = AABB();
 
-	for (unsigned int i = 0; i < _items.size(); i++) {
+	for (std::size_t i = 0; i < _items.size(); i++) {
 		// Expand the selection AABB by the extents of the item
 		_selAABB.includeAABB(_items[i]->getExtents());
 	}
@@ -363,7 +363,7 @@ Vector2 TexTool::getTextureCoords(const double& x, const double& y) {
 
 void TexTool::drawUVCoords() {
 	// Cycle through the items and tell them to render themselves
-	for (unsigned int i = 0; i < _items.size(); i++) {
+	for (std::size_t i = 0; i < _items.size(); i++) {
 		_items[i]->render();
 	}
 }
@@ -374,7 +374,7 @@ selection::textool::TexToolItemVec
 	selection::textool::TexToolItemVec selectables;
 
 	// Cycle through all the toplevel items and test them for selectability
-	for (unsigned int i = 0; i < _items.size(); i++) {
+	for (std::size_t i = 0; i < _items.size(); i++) {
 		if (_items[i]->testSelect(rectangle)) {
 			selectables.push_back(_items[i]);
 		}
@@ -382,7 +382,7 @@ selection::textool::TexToolItemVec
 
 	// Cycle through all the items and ask them to deliver the list of child selectables
 	// residing within the test rectangle
-	for (unsigned int i = 0; i < _items.size(); i++) {
+	for (std::size_t i = 0; i < _items.size(); i++) {
 		// Get the list from each item
 		selection::textool::TexToolItemVec found =
 			_items[i]->getSelectableChilds(rectangle);
@@ -415,13 +415,13 @@ void TexTool::beginOperation() {
 	GlobalUndoSystem().start();
 
 	// Tell all the items to save their memento
-	for (unsigned int i = 0; i < _items.size(); i++) {
+	for (std::size_t i = 0; i < _items.size(); i++) {
 		_items[i]->beginTransformation();
 	}
 }
 
 void TexTool::endOperation(const std::string& commandName) {
-	for (unsigned int i = 0; i < _items.size(); i++) {
+	for (std::size_t i = 0; i < _items.size(); i++) {
 		_items[i]->endTransformation();
 	}
 	GlobalUndoSystem().finish(commandName);
@@ -473,7 +473,7 @@ void TexTool::doMouseUp(const Vector2& coords, GdkEventButton* event) {
 		}
 
 		// Toggle the selection
-		for (unsigned int i = 0; i < selectables.size(); i++) {
+		for (std::size_t i = 0; i < selectables.size(); i++) {
 			selectables[i]->toggle();
 		}
 	}
@@ -513,7 +513,7 @@ void TexTool::doMouseMove(const Vector2& coords, GdkEventMotion* event) {
 			// Transform the selected
 			// The transformSelected() call is propagated down the entire tree
 			// of available items (e.g. PatchItem > PatchVertexItems)
-			for (unsigned int i = 0; i < _items.size(); i++) {
+			for (std::size_t i = 0; i < _items.size(); i++) {
 				_items[i]->transformSelected(transform);
 			}
 
@@ -563,7 +563,7 @@ void TexTool::doMouseDown(const Vector2& coords, GdkEventButton* event) {
 }
 
 void TexTool::foreachItem(selection::textool::ItemVisitor& visitor) {
-	for (unsigned int i = 0; i < _items.size(); i++) {
+	for (std::size_t i = 0; i < _items.size(); i++) {
 		// Visit the class
 		visitor.visit(_items[i]);
 
