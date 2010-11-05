@@ -11,6 +11,7 @@
 
 class FaceTexdef: public FaceShaderObserver
 {
+	private:
 		// not copyable
 		FaceTexdef (const FaceTexdef& other);
 		// not assignable
@@ -34,72 +35,30 @@ class FaceTexdef: public FaceShaderObserver
 
 		FaceShader& m_shader;
 		TextureProjection m_projection;
-		bool m_projectionInitialised;
-		bool m_scaleApplied;
 
-		FaceTexdef (FaceShader& shader, const TextureProjection& projection, bool projectionInitialised = true) :
-			m_shader(shader), m_projection(projection), m_projectionInitialised(projectionInitialised), m_scaleApplied(
-					false)
-		{
-			m_shader.attach(*this);
-		}
-		~FaceTexdef ()
-		{
-			m_shader.detach(*this);
-		}
+		FaceTexdef (FaceShader& shader, const TextureProjection& projection, bool projectionInitialised = true);
+		~FaceTexdef ();
 
-		void realiseShader ()
-		{
-		}
-		void unrealiseShader ()
-		{
-		}
+		void realiseShader ();
+		void unrealiseShader ();
 
-		void setTexdef (const TextureProjection& projection)
-		{
-			m_projection.m_texdef = projection.m_texdef;
-		}
+		void setTexdef (const TextureProjection& projection);
 
-		void shift (float s, float t)
-		{
-			ASSERT_MESSAGE(m_projection.m_texdef.isSane(), "FaceTexdef::shift: bad texdef");
-			m_projection.m_texdef.shift(s, t);
-		}
+		void shift (float s, float t);
 
-		void scale (float s, float t)
-		{
-			m_projection.m_texdef.scale(s, t);
-		}
+		void scale (float s, float t);
 
-		void rotate (float angle)
-		{
-			m_projection.m_texdef.rotate(angle);
-		}
+		void rotate (float angle);
 
-		void fit (const Vector3& normal, const Winding& winding, float s_repeat, float t_repeat)
-		{
-			m_projection.fitTexture(m_shader.width(), m_shader.height(), normal, winding, s_repeat, t_repeat);
-		}
+		void fit (const Vector3& normal, const Winding& winding, float s_repeat, float t_repeat);
 
-		void flipTexture(unsigned int axis) {
-			m_projection.flipTexture(axis);
-		}
+		void flipTexture(unsigned int axis);
 
-		void emitTextureCoordinates (Winding& winding, const Vector3& normal, const Matrix4& localToWorld)
-		{
-			m_projection.emitTextureCoordinates(m_shader.width(), m_shader.height(), winding, normal,
-					localToWorld);
-		}
+		void emitTextureCoordinates (Winding& winding, const Vector3& normal, const Matrix4& localToWorld);
 
-		void transform (const Plane3& plane, const Matrix4& matrix)
-		{
-			m_projection.transformLocked(m_shader.width(), m_shader.height(), plane, matrix);
-		}
+		void transform (const Plane3& plane, const Matrix4& matrix);
 
-		TextureProjection normalised () const
-		{
-			return TextureProjection(m_projection.m_texdef);
-		}
+		TextureProjection normalised () const;
 }; // class FaceTexDef
 
 #endif /*FACETEXDEF_H_*/
