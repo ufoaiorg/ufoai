@@ -131,6 +131,9 @@ void FaceItem::snapSelectedToGrid(float grid) {
 		// Do the transformation
 		transform(matrix);
 	}
+
+	// Let the base class call the method on our children
+	TexToolItem::snapSelectedToGrid(grid);
 }
 
 void FaceItem::flipSelected(unsigned int axis) {
