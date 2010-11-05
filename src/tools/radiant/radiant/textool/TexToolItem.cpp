@@ -21,7 +21,7 @@ void TexToolItem::foreachItem(ItemVisitor& visitor) {
 	}
 }
 
-TexToolItemVec TexToolItem::getSelectableChilds(const Rectangle& rectangle) {
+TexToolItemVec TexToolItem::getSelectableChildren(const Rectangle& rectangle) {
 	TexToolItemVec returnVector;
 
 	for (unsigned int i = 0; i < _children.size(); i++) {
