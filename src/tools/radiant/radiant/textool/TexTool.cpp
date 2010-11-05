@@ -97,7 +97,7 @@ void TexTool::populateWindow() {
 	g_signal_connect(G_OBJECT(_glWidget), "button-press-event", G_CALLBACK(onMouseDown), this);
 	g_signal_connect(G_OBJECT(_glWidget), "button-release-event", G_CALLBACK(onMouseUp), this);
 	g_signal_connect(G_OBJECT(_glWidget), "motion-notify-event", G_CALLBACK(onMouseMotion), this);
-	g_signal_connect(G_OBJECT(_glWidget), "key_press_event", G_CALLBACK(onKeyPress), this);
+	g_signal_connect(G_OBJECT(_glWidget), "key-press-event", G_CALLBACK(onKeyPress), this);
 	g_signal_connect(G_OBJECT(_glWidget), "scroll_event", G_CALLBACK(onMouseScroll), this);
 
 	// Make the GL widget accept the global shortcuts
@@ -541,8 +541,7 @@ void TexTool::doMouseDown(const Vector2& coords, GdkEventButton* event) {
 
 	if (observerEvent == ui::obsManipulate) {
 		// Get the list of selectables of this point
-		selection::textool::TexToolItemVec selectables;
-		selectables = getSelectables(coords);
+		selection::textool::TexToolItemVec selectables = getSelectables(coords);
 
 		// Any selectables under the mouse pointer?
 		if (selectables.size() > 0) {
@@ -907,5 +906,6 @@ void TexTool::registerCommands() {
 	GlobalEventManager().addCommand("TexToolFlipT", FreeCaller<TexTool::texToolFlipT>());
 
 	GlobalEventManager().addRegistryToggle("TexToolToggleGrid", RKEY_GRID_STATE);
+	GlobalEventManager().addRegistryToggle("TexToolToggleFaceVertexScalePivot", RKEY_FACE_VERTEX_SCALE_PIVOT_IS_CENTROID);
 }
 } // namespace ui

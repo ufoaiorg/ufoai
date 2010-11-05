@@ -1,5 +1,7 @@
 #include "FaceItem.h"
 
+#include "FaceVertexItem.h"
+
 #include "math/FloatTools.h"
 #include "../../brush/Face.h"
 #include "../../brush/winding.h"
@@ -10,7 +12,14 @@ namespace selection {
 FaceItem::FaceItem(Face& sourceFace) :
 	_sourceFace(sourceFace),
 	_winding(sourceFace.getWinding())
-{}
+{
+	// Allocate a vertex item for each winding vertex
+	for (Winding::iterator i = _winding.begin(); i != _winding.end(); ++i)
+	{
+		TexToolItem* faceVertexItem = new FaceVertexItem(_sourceFace, *i, *this);
+		_children.push_back(faceVertexItem);
+	}
+}
 
 AABB FaceItem::getExtents() {
 	AABB returnValue;
@@ -45,15 +54,18 @@ void FaceItem::render() {
 
 	glPointSize(5);
 	glBegin(GL_POINTS);
-	for (Winding::iterator i = _winding.begin(); i != _winding.end(); i++) {
+	/*for (Winding::iterator i = _winding.begin(); i != _winding.end(); i++) {
 		glVertex2f(i->texcoord[0], i->texcoord[1]);
-	}
+	}*/
 
 	glColor3f(1, 1, 1);
 	Vector2 centroid = getCentroid();
 	glVertex2f(centroid[0], centroid[1]);
 
 	glEnd();
+
+	// Now invoke the default render method (calls render() on all children)
+	TexToolItem::render();
 }
 
 void FaceItem::transform(const Matrix4& matrix) {
@@ -85,8 +97,20 @@ Vector2 FaceItem::getCentroid() const {
 }
 
 bool FaceItem::testSelect(const Rectangle& rectangle) {
-	// Check if the centroid is within the rectangle
-	return rectangle.contains(getCentroid());
+	Vector2 texCentroid;
+
+	for (Winding::const_iterator i = _winding.begin(); i != _winding.end(); ++i) {
+		/*if (rectangle.contains(i->texcoord))
+			return true;*/
+
+		// Otherwise, just continue summing up the texcoords for the centroid check
+		texCentroid += i->texcoord;
+	}
+
+	// Take the average value of all the winding texcoords to retrieve the centroid
+	texCentroid /= _winding.size();
+
+	return rectangle.contains(texCentroid);
 }
 
 void FaceItem::snapSelectedToGrid(float grid) {

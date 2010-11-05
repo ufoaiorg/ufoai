@@ -10,7 +10,7 @@ namespace selection {
 class BrushItem :
 	public TexToolItem
 {
-	// The patch this control is referring to
+	// The brush this control is referring to
 	Brush& _sourceBrush;
 
 public:

@@ -153,6 +153,15 @@ class AABB
 
 			return valid;
 		}
+
+		/** Get the extents of this AABB.
+		 *
+		 * @returns
+		 * A const reference to a Vector3 containing the AABB's extents.
+		 */
+		const Vector3& getExtents() const {
+			return extents;
+		}
 };
 
 const float c_aabb_max = FLT_MAX;

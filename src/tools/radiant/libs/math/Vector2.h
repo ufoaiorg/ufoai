@@ -59,13 +59,21 @@ class BasicVector2
 			return m_elements[1];
 		}
 
-		Element& operator[] (std::size_t i)
+		/**
+		 * Operator cast to const Element*.
+		 */
+		operator const Element* () const
 		{
-			return m_elements[i];
+			return m_elements;
 		}
-		const Element& operator[] (std::size_t i) const
+
+		/**
+		 * Operator cast to Element*. Also provides operator[] due to the inbuilt
+		 * operation on a pointer type.
+		 */
+		operator Element* ()
 		{
-			return m_elements[i];
+			return m_elements;
 		}
 
 		Element* data ()

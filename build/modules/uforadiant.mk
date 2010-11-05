@@ -215,6 +215,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/textool/TexToolItem.cpp \
 	$(RADIANT_BASE)/radiant/textool/item/BrushItem.cpp \
 	$(RADIANT_BASE)/radiant/textool/item/FaceItem.cpp \
+	$(RADIANT_BASE)/radiant/textool/item/FaceVertexItem.cpp \
 	\
 	$(RADIANT_BASE)/radiant/pathfinding/Routing.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLumpLoader.cpp \

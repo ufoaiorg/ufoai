@@ -18,6 +18,12 @@ class Patch;
 
 namespace ui {
 
+namespace
+{
+	const std::string RKEY_TEXTOOL_ROOT = "user/ui/textures/texTool/";
+	const std::string RKEY_FACE_VERTEX_SCALE_PIVOT_IS_CENTROID = RKEY_TEXTOOL_ROOT + "faceVertexScalePivotIsCentroid";
+}
+
 class TexTool :
 	public gtkutil::PersistentTransientWindow,
 	public RegistryKeyObserver,
