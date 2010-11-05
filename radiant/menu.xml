@@ -47,8 +47,6 @@
 	<subMenu name="view" caption="_View">
 		<menuItem name="newxyview" caption="New XY view" command="NewOrthoView" />
 		<menuItem name="sidebar" caption="Toggle Sidebar" command="ToggleSidebar" />
-		<menuItem name="entityInspector" caption="Entity Inspector" command="ToggleEntityInspector" />
-		<menuItem name="surfaceInspector" caption="_Surface Inspector" command="SurfaceInspector" />
 
 		<menuSeparator />
 
@@ -59,9 +57,6 @@
 			<menuSeparator />
 			<menuItem name="cameraPlaneIn" caption="Far Clip Plane In" command="CubicClipZoomIn" />
 			<menuItem name="cameraPlaneOut" caption="Far Clip Plane Out" command="CubicClipZoomOut" />
-			<menuSeparator />
-			<menuItem name="cameraNextLeak" caption="Next leak spot" command="NextLeakSpot" />
-			<menuItem name="cameraPreviousLeak" caption="Previous leak spot" command="PrevLeakSpot" />
 			<menuSeparator />
 			<menuItem name="lookThroughSelected" caption="Look through selected" command="LookThroughSelected" />
 			<menuItem name="lookThroughCamera" caption="Look through camera" command="LookThroughCamera" />
@@ -117,7 +112,6 @@
 
 		<menuItem name="texturetool" caption="TextureTool" command="TextureTool" />
 		<menuItem name="colours" caption="Colours..." command="EditColourScheme" icon="editcolour16.png" />
-		<menuItem name="backgroundimage" caption="Background Image..." command="OverlayDialog" icon="bgimage16.png" />
 	</subMenu>
 
 	<subMenu name="modify" caption="_Modify">
