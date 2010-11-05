@@ -5,7 +5,7 @@
 #include "CameraSettings.h"
 
 Camera::Camera (View* view, const Callback& update) :
-	width(0), height(0), timing(false), origin(0, 0, 0), angles(0, 0, 0), color(0, 0, 0), movementflags(0),
+	origin(0, 0, 0), angles(0, 0, 0), width(0), height(0), timing(false), color(0, 0, 0), movementflags(0),
 			m_keymove_handler(0), fieldOfView(75.0f), m_mouseMove(motionDelta, this), m_view(view), m_update(update)
 {
 }
