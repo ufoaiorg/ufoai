@@ -802,7 +802,7 @@ void SurfaceInspector::Update (void)
 {
 	const std::string& name = SurfaceInspector_GetSelectedShader();
 
-	if (shader_is_texture(name.c_str())) {
+	if (shader_is_texture(name)) {
 		gtk_entry_set_text(m_texture, shader_get_textureName(name).c_str());
 	} else {
 		gtk_entry_set_text(m_texture, "");
@@ -907,7 +907,7 @@ void SurfaceInspector::ApplyShader (void)
 
 	// TTimo: detect and refuse invalid texture names (at least the ones with spaces)
 	if (!texdef_name_valid(name)) {
-		globalErrorStream() << "invalid texture name '" << name.c_str() << "'\n";
+		globalErrorStream() << "invalid texture name '" << name << "'\n";
 		SurfaceInspector_queueDraw();
 		return;
 	}
