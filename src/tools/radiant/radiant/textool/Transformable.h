@@ -12,6 +12,8 @@ class Transformable :
 	public Selectable
 {
 public:
+	virtual ~Transformable() {}
+
 	/** greebo: This transforms the object using the given transformation matrix.
 	 *
 	 * @transform: A 4x4 transformation matrix with the z-relevant transformation
