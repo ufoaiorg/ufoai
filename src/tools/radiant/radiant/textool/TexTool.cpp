@@ -548,7 +548,7 @@ void TexTool::doMouseDown(const Vector2& coords, GdkEventButton* event) {
 		selection::textool::TexToolItemVec selectables = getSelectables(coords);
 
 		// Any selectables under the mouse pointer?
-		if (selectables.size() > 0) {
+		if (!selectables.empty()) {
 			// Activate the manipulator mode
 			_manipulatorMode = true;
 			_manipulateRectangle.topLeft = coords;
