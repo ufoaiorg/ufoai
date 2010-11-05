@@ -1200,10 +1200,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_font.h" />
-		<Unit filename="..\..\src\client\ui\ui_icon.c">
+		<Unit filename="..\..\src\client\ui\ui_sprite.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\ui\ui_icon.h" />
+		<Unit filename="..\..\src\client\ui\ui_sprite.h" />
 		<Unit filename="..\..\src\client\ui\ui_input.c">
 			<Option compilerVar="CC" />
 		</Unit>

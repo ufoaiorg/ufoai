@@ -865,7 +865,7 @@
 		<Unit filename="..\..\src\client\ui\ui_font.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\ui\ui_icon.c">
+		<Unit filename="..\..\src\client\ui\ui_sprite.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_input.c">
