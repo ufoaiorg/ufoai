@@ -29,13 +29,14 @@ const unsigned int MOVE_ALL = MOVE_FORWARD | MOVE_BACK | MOVE_ROTRIGHT | MOVE_RO
 
 class Camera
 {
+	private:
+		Vector3 origin;
+		Vector3 angles;
+
 	public:
 		int width, height;
 
 		bool timing;
-
-		Vector3 origin;
-		Vector3 angles;
 
 		Vector3 color; // background
 

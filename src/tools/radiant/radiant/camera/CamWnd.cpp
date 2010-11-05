@@ -235,7 +235,7 @@ CamWnd::CamWnd() :
 }
 
 void CamWnd::changeFloor(bool up) {
-	float current = m_Camera.origin[2] - 48;
+	float current = m_Camera.getOrigin()[2] - 48;
 	float bestUp;
 	float bestDown;
 	GlobalSceneGraph().traverse(FloorHeightWalker(current, bestUp, bestDown));
@@ -248,9 +248,10 @@ void CamWnd::changeFloor(bool up) {
 		current = bestDown;
 	}
 
-	m_Camera.origin[2] = current + 48;
+	const Vector3& org = m_Camera.getOrigin();
+	m_Camera.setOrigin(Vector3(org[0], org[1], current + 48));
 
-	getCamera().updateModelview();
+	m_Camera.updateModelview();
 	update();
 	GlobalCamera().movedNotify();
 }
@@ -265,7 +266,7 @@ static gboolean camwindow_freemove_focusout(GtkWidget* widget, GdkEventFocus* ev
 void CamWnd::enableFreeMove() {
 	ASSERT_MESSAGE(!m_bFreeMove, "EnableFreeMove: free-move was already enabled");
 	m_bFreeMove = true;
-	getCamera().clearMovementFlags(MOVE_ALL);
+	m_Camera.clearMovementFlags(MOVE_ALL);
 
 	removeHandlersMove();
 
@@ -273,7 +274,6 @@ void CamWnd::enableFreeMove() {
 	m_selection_button_release_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_release_event", G_CALLBACK(selection_button_release_freemove), m_window_observer);
 	m_selection_motion_handler = g_signal_connect(G_OBJECT(m_gl_widget), "motion_notify_event", G_CALLBACK(selection_motion_freemove), m_window_observer);
 	m_freelook_button_press_handler = g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(disable_freelook_button_press), this);
-	//g_signal_connect(G_OBJECT(m_gl_widget), "scroll_event", G_CALLBACK(callbackMouseWheelScroll), this); // TODO:
 
 	enableFreeMoveEvents();
 
@@ -287,7 +287,7 @@ void CamWnd::enableFreeMove() {
 void CamWnd::disableFreeMove() {
 	ASSERT_MESSAGE(m_bFreeMove, "DisableFreeMove: free-move was not enabled");
 	m_bFreeMove = false;
-	getCamera().clearMovementFlags(MOVE_ALL);
+	m_Camera.clearMovementFlags(MOVE_ALL);
 
 	disableFreeMoveEvents();
 
@@ -575,32 +575,32 @@ void CamWnd::queueDraw() {
 }
 
 const Vector3& CamWnd::getCameraOrigin () const {
-	return m_Camera.origin;
+	return m_Camera.getOrigin();
 }
 
 void CamWnd::setCameraOrigin (const Vector3& origin) {
-	m_Camera.origin = origin;
+	m_Camera.setOrigin(origin);
 }
 
 const Vector3& CamWnd::getCameraAngles () const {
-	return m_Camera.angles;
+	return m_Camera.getAngles();
 }
 
 void CamWnd::setCameraAngles (const Vector3& angles) {
-	m_Camera.angles = angles;
+	m_Camera.setAngles(angles);
 }
 
 void CamWnd::cubicScaleIn ()
 {
 	getCameraSettings()->setCubicScale( getCameraSettings()->cubicScale() - 1 );
-	getCamera().updateProjection();
+	m_Camera.updateProjection();
 	update();
 }
 
 void CamWnd::cubicScaleOut ()
 {
 	getCameraSettings()->setCubicScale( getCameraSettings()->cubicScale() + 1 );
-	getCamera().updateProjection();
+	m_Camera.updateProjection();
 	update();
 }
 
