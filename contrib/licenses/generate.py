@@ -189,7 +189,7 @@ def plot(output, d, data, times, imagename):
         if lastelement[0] < lastrevision:
             data[i].append((lastelement[0] + 1, 0))
 
-    cmds+= 'set data style linespoints;\n'
+    cmds+= 'set style data linespoints;\n'
     cmds+= 'set output "%s/licenses/public_html%s/%s";\n' % (output, d, imagename)
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
     cmds+= 'set yrange [0 to %i];\n' % (int(ymax * 1.15))
