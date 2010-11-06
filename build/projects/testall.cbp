@@ -18,10 +18,6 @@
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-Wextra" />
-					<Add option="-Wall" />
-					<Add option="-D__GNUWIN32__" />
-					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
@@ -54,12 +50,8 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
-					<Add option="-Wextra" />
-					<Add option="-Wall" />
+					<Add option="-O0" />
 					<Add option="-pg" />
-					<Add option="-g" />
-					<Add option="-DWINVER=0x501" />
-					<Add option="-D__GNUWIN32__" />
 					<Add option="-DDEBUG" />
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
@@ -82,9 +74,25 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-DWINVER=0x501" />
 			<Add option="-ggdb" />
-			<Add option="-O0" />
+			<Add option="-Winline" />
+			<Add option="-Wcast-qual" />
+			<Add option="-Wcast-align" />
+			<Add option="-Wmissing-declarations" />
+			<Add option="-Wpointer-arith" />
+			<Add option="-Wno-long-long" />
+			<Add option="-pedantic" />
+			<Add option="-Wall" />
+			<Add option="-Wextra" />
+			<Add option="-Wno-sign-compare" />
+			<Add option="-Wno-unused-parameter" />
+			<Add option="-Wreturn-type" />
+			<Add option="-Wwrite-strings" />
+			<Add option="-std=c99" />
+			<Add option="-Wdeclaration-after-statement" />
+			<Add option="-DCOMPILE_UFO" />
 			<Add option="-DCOMPILE_UFO" />
 			<Add option="-DCOMPILE_UNITTESTS" />
 		</Compiler>
