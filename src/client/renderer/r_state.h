@@ -74,7 +74,7 @@ typedef struct gltexunit_s {
 
 struct mAliasMesh_s;
 
-typedef struct {
+typedef struct rstate_s {
 	qboolean fullscreen;
 
 	/* arrays */

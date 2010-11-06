@@ -34,6 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GL_NEXT_NORMAL_ARRAY -3
 #define GL_NEXT_TANGENT_ARRAY -4
 
+/* multitexture */
+void (APIENTRY *qglActiveTexture)(GLenum texture);
+void (APIENTRY *qglClientActiveTexture)(GLenum texture);
+
 /* vertex buffer objects */
 void (APIENTRY *qglGenBuffers)  (GLuint count, GLuint *id);
 void (APIENTRY *qglDeleteBuffers)  (GLuint count, GLuint *id);
@@ -91,6 +95,11 @@ void (APIENTRY *qglGetFramebufferAttachmentParameterivEXT) (GLenum, GLenum, GLen
 void (APIENTRY *qglGenerateMipmapEXT) (GLenum);
 void (APIENTRY *qglDrawBuffers) (GLsizei, const GLenum *);
 
+
+
+/* multitexture */
+typedef void (*ActiveTexture_t)(GLenum texture);
+typedef void (*ClientActiveTexture_t)(GLenum texture);
 
 /* vertex buffer objects */
 typedef void (*GenBuffers_t)  (GLuint count, GLuint *id);

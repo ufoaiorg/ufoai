@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cl_video.h" /* vid_imagePool */
 #include "../client/ui/ui_nodes.h"
 #include "../client/ui/ui_main.h"
-#include "../client/renderer/r_state.h" /* R_SelectTexture */
+#include "../client/renderer/r_state.h" /* r_state */
 
 /**
  * The suite initialization function.
@@ -42,7 +42,7 @@ static int UFO_InitSuiteUILevel2 (void)
 
 	vid_imagePool = Mem_CreatePool("Vid: Image system");
 
-	R_SelectTexture(&texunit_diffuse);
+	r_state.active_texunit = &texunit_diffuse;
 
 	return 0;
 }
