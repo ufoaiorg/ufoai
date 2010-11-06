@@ -1,12 +1,14 @@
 #include <winresrc.h>
 
-#ifndef PATH_RC_FILE
-#define PATH_RC_FILE "build/projects/"
+#ifdef FULL_PATH_RC_FILE
+# define PATH_MANIFEST_FILE "build/projects/ufo.exe.manifest"
+# define PATH_UFOICON_FILE "build/projects/ufo.ico"
+# define PATH_UFODEDICON_FILE "build/projects/ufoded.ico"
+#else
+# define PATH_MANIFEST_FILE "ufo.exe.manifest"
+# define PATH_UFOICON_FILE "ufo.ico"
+# define PATH_UFODEDICON_FILE "ufoded.ico"
 #endif
-
-#define PATH_MANIFEST_FILE PATH_RC_FILE "ufo.exe.manifest"
-#define PATH_UFOICON_FILE PATH_RC_FILE "ufo.ico"
-#define PATH_UFODEDICON_FILE PATH_RC_FILE "ufoded.ico"
 
 1 RT_MANIFEST DISCARDABLE PATH_MANIFEST_FILE
 101 ICON DISCARDABLE PATH_UFOICON_FILE
