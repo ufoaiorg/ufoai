@@ -8,12 +8,13 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../ufo2map" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufo2map" />
+				<Option output="..\..\ufo2map" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufo2map" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-ffloat-store" />
 					<Add option="-D__GNUWIN32__" />
@@ -25,19 +26,20 @@
 					<Add library="winmm" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="../../ufo2map" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufo2map" />
+				<Option output="..\..\ufo2map" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufo2map" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option parameters="maps/mine" />
-				<Option host_application="../../ufo2map" />
+				<Option host_application="..\..\ufo2map" />
 				<Compiler>
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-pg" />
 					<Add option="-g" />
@@ -51,38 +53,8 @@
 					<Add library="winmm" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
-			</Target>
-			<Target title="linux">
-				<Option platforms="Unix;" />
-				<Option output="../../ufo2map" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufo2map" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="`sdl-config --cflags`" />
-				</Compiler>
-				<Linker>
-					<Add option="`sdl-config --libs`" />
-				</Linker>
-			</Target>
-			<Target title="macosx">
-				<Option platforms="Mac;" />
-				<Option output="../../ufo2map" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufo2map" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add directory="/sw/include" />
-					<Add directory="/Library/Frameworks/SDL.framework/Versions/A/Headers" />
-				</Compiler>
-				<Linker>
-					<Add option="-framework SDL" />
-					<Add directory="/sw/lib" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
@@ -96,154 +68,151 @@
 			<Add library="jpeg" />
 			<Add library="png" />
 		</Linker>
-		<Unit filename="../../src/common/files.c">
+		<Unit filename="..\..\src\common\files.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/ioapi.c">
+		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/ioapi.h" />
-		<Unit filename="../../src/common/mem.c">
+		<Unit filename="..\..\src\common\ioapi.h" />
+		<Unit filename="..\..\src\common\list.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/mem.h" />
-		<Unit filename="../../src/common/routing.c">
+		<Unit filename="..\..\src\common\mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/routing.h" />
-		<Unit filename="../../src/common/tracing.c">
+		<Unit filename="..\..\src\common\mem.h" />
+		<Unit filename="..\..\src\common\routing.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/tracing.h" />
-		<Unit filename="../../src/common/unzip.c">
+		<Unit filename="..\..\src\common\routing.h" />
+		<Unit filename="..\..\src\common\tracing.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/unzip.h" />
-		<Unit filename="../../src/shared/threads.c">
+		<Unit filename="..\..\src\common\tracing.h" />
+		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/threads.h" />
-		<Unit filename="../../src/ports/unix/unix_main.c">
+		<Unit filename="..\..\src\common\unzip.h" />
+		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />
-			<Option target="linux" />
-			<Option target="macosx" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../../src/ports/windows/win_shared.c">
-			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
-		<Unit filename="../../src/shared/byte.c">
+		<Unit filename="..\..\src\ports\windows\win_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/byte.h" />
-		<Unit filename="../../src/common/list.c">
+		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/images.c">
+		<Unit filename="..\..\src\shared\byte.h" />
+		<Unit filename="..\..\src\shared\defines.h" />
+		<Unit filename="..\..\src\shared\entitiesdef.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/images.h" />
-		<Unit filename="../../src/shared/defines.h" />
-		<Unit filename="../../src/shared/entitiesdef.c">
+		<Unit filename="..\..\src\shared\entitiesdef.h" />
+		<Unit filename="..\..\src\shared\images.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/entitiesdef.h" />
-		<Unit filename="../../src/shared/mathlib.c">
+		<Unit filename="..\..\src\shared\images.h" />
+		<Unit filename="..\..\src\shared\mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/mathlib.h" />
-		<Unit filename="../../src/shared/parse.c">
+		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/parse.h" />
-		<Unit filename="../../src/shared/shared.c">
+		<Unit filename="..\..\src\shared\parse.h" />
+		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/shared.h" />
-		<Unit filename="../../src/shared/utf8.c">
+		<Unit filename="..\..\src\shared\shared.h" />
+		<Unit filename="..\..\src\shared\threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/utf8.h" />
-		<Unit filename="../../src/shared/typedefs.h" />
-		<Unit filename="../../src/tools/ufo2map/brushbsp.c">
+		<Unit filename="..\..\src\shared\threads.h" />
+		<Unit filename="..\..\src\shared\typedefs.h" />
+		<Unit filename="..\..\src\shared\utf8.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/bsp.c">
+		<Unit filename="..\..\src\shared\utf8.h" />
+		<Unit filename="..\..\src\tools\ufo2map\brushbsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/bsp.h" />
-		<Unit filename="../../src/tools/ufo2map/check/check.c">
+		<Unit filename="..\..\src\tools\ufo2map\bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/check/check.h" />
-		<Unit filename="../../src/tools/ufo2map/check/checkentities.c">
+		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
+		<Unit filename="..\..\src\tools\ufo2map\check\check.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/check/checkentities.h" />
-		<Unit filename="../../src/tools/ufo2map/check/checklib.c">
+		<Unit filename="..\..\src\tools\ufo2map\check\check.h" />
+		<Unit filename="..\..\src\tools\ufo2map\check\checkentities.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/check/checklib.h" />
-		<Unit filename="../../src/tools/ufo2map/common/aselib.c">
+		<Unit filename="..\..\src\tools\ufo2map\check\checkentities.h" />
+		<Unit filename="..\..\src\tools\ufo2map\check\checklib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/common/bspfile.c">
+		<Unit filename="..\..\src\tools\ufo2map\check\checklib.h" />
+		<Unit filename="..\..\src\tools\ufo2map\common\aselib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/common/polylib.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/common/polylib.h" />
-		<Unit filename="../../src/tools/ufo2map/common/scriplib.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\polylib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/common/scriplib.h" />
-		<Unit filename="../../src/tools/ufo2map/common/trace.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\polylib.h" />
+		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/csg.c">
+		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.h" />
+		<Unit filename="..\..\src\tools\ufo2map\common\trace.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/faces.c">
+		<Unit filename="..\..\src\tools\ufo2map\csg.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/levels.c">
+		<Unit filename="..\..\src\tools\ufo2map\faces.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/lighting.c">
+		<Unit filename="..\..\src\tools\ufo2map\levels.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/lighting.h" />
-		<Unit filename="../../src/tools/ufo2map/lightmap.c">
+		<Unit filename="..\..\src\tools\ufo2map\lighting.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/map.c">
+		<Unit filename="..\..\src\tools\ufo2map\lighting.h" />
+		<Unit filename="..\..\src\tools\ufo2map\lightmap.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/map.h" />
-		<Unit filename="../../src/tools/ufo2map/patches.c">
+		<Unit filename="..\..\src\tools\ufo2map\map.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/portals.c">
+		<Unit filename="..\..\src\tools\ufo2map\map.h" />
+		<Unit filename="..\..\src\tools\ufo2map\patches.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/routing.c">
+		<Unit filename="..\..\src\tools\ufo2map\portals.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/textures.c">
+		<Unit filename="..\..\src\tools\ufo2map\routing.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/threads.c">
+		<Unit filename="..\..\src\tools\ufo2map\textures.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/tree.c">
+		<Unit filename="..\..\src\tools\ufo2map\threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/ufo2map.c">
+		<Unit filename="..\..\src\tools\ufo2map\tree.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/writebsp.c">
+		<Unit filename="..\..\src\tools\ufo2map\ufo2map.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\writebsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

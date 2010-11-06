@@ -3,18 +3,18 @@
 	<Workspace title="Default workspace">
 		<Project filename="game.cbp" />
 		<Project filename="ufo2map.cbp" />
-		<Project filename="ufo.cbp" active="1">
-			<Depends filename="game.cbp" />
-			<Depends filename="ufo2map.cbp" />
-			<Depends filename="ufoded.cbp" />
-		</Project>
 		<Project filename="ufoded.cbp">
 			<Depends filename="game.cbp" />
 		</Project>
 		<Project filename="uforadiant.cbp">
 			<Depends filename="ufo2map.cbp" />
 		</Project>
-		<Project filename="testall.cbp" />
 		<Project filename="ufomodel.cbp" />
+		<Project filename="ufo.cbp" active="1">
+			<Depends filename="game.cbp" />
+			<Depends filename="ufo2map.cbp" />
+			<Depends filename="ufoded.cbp" />
+		</Project>
+		<Project filename="testall.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

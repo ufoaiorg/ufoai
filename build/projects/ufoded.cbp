@@ -14,6 +14,7 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
@@ -37,6 +38,7 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-pg" />
 					<Add option="-g" />
@@ -53,41 +55,6 @@
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
-			</Target>
-			<Target title="linux">
-				<Option platforms="Unix;" />
-				<Option output="..\..\ufoded" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\..\" />
-				<Option object_output=".objs\ufoded" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="`sdl-config --cflags`" />
-				</Compiler>
-				<Linker>
-					<Add option="`sdl-config --libs`" />
-					<Add library="GL" />
-				</Linker>
-			</Target>
-			<Target title="macosx">
-				<Option platforms="Mac;" />
-				<Option output="..\..\ufoded" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\..\" />
-				<Option object_output=".objs\ufoded" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add directory="\sw\include" />
-				</Compiler>
-				<Linker>
-					<Add option="-framework IOKit" />
-					<Add option="-framework,Cocoa" />
-					<Add option="-framework SDL" />
-					<Add option="-framework foundation" />
-					<Add library="z" />
-					<Add library="dl" />
-					<Add directory="\sw\lib" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
@@ -186,45 +153,35 @@
 		</Unit>
 		<Unit filename="..\..\src\ports\linux\linux_main.c">
 			<Option compilerVar="CC" />
-			<Option target="linux" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="..\..\src\ports\macosx\osx_main.m">
 			<Option compile="1" />
 			<Option link="1" />
-			<Option target="macosx" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_console.c">
 			<Option compilerVar="CC" />
-			<Option target="linux" />
-			<Option target="macosx" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />
-			<Option target="linux" />
-			<Option target="macosx" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_backtrace.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_console.c">
 			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_main.c">
 			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_shared.c">
 			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_ccmds.c">
 			<Option compilerVar="CC" />

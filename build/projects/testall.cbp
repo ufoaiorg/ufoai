@@ -18,6 +18,7 @@
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
@@ -53,6 +54,7 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-pg" />
 					<Add option="-g" />
@@ -77,65 +79,6 @@
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
-			</Target>
-			<Target title="linux">
-				<Option platforms="Unix;" />
-				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\..\" />
-				<Option object_output=".objs\client" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Option use_console_runner="0" />
-				<Option projectIncludeDirsRelation="1" />
-				<Option projectLibDirsRelation="1" />
-				<Compiler>
-					<Add option="-Wall" />
-					<Add option="-pg" />
-					<Add option="-g" />
-					<Add option="-DWINVER=0x501" />
-					<Add option="-D__GNUWIN32__" />
-					<Add option="-DDEBUG" />
-					<Add option="-DHAVE_VORBIS_CODEC_H" />
-					<Add option="-DHAVE_XVID_H" />
-					<Add option="-DHAVE_THEORA_THEORA_H" />
-				</Compiler>
-				<Linker>
-					<Add option="-pg -lgmon" />
-					<Add library="opengl32" />
-					<Add library="intl" />
-					<Add library="winmm" />
-					<Add library="ws2_32" />
-				</Linker>
-			</Target>
-			<Target title="macosx">
-				<Option platforms="Mac;" />
-				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\..\" />
-				<Option object_output=".objs\client" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Option use_console_runner="0" />
-				<Option projectIncludeDirsRelation="1" />
-				<Option projectLibDirsRelation="1" />
-				<Compiler>
-					<Add option="-DHAVE_VORBIS_CODEC_H" />
-					<Add option="-DHAVE_XVID_H" />
-					<Add option="-DHAVE_THEORA_THEORA_H" />
-					<Add directory="\sw\include" />
-					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
-				</Compiler>
-				<Linker>
-					<Add option="-framework OpenGL" />
-					<Add option="-framework SDL" />
-					<Add option="-framework SDL_ttf" />
-					<Add option="-framework SDL_mixer" />
-					<Add option="-framework SDL_image" />
-					<Add option="-framework IOKit" />
-					<Add option="-framework,Cocoa" />
-					<Add option="-framework foundation" />
-					<Add library="libintl" />
-					<Add directory="\sw\lib" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
@@ -865,9 +808,6 @@
 		<Unit filename="..\..\src\client\ui\ui_font.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\ui\ui_sprite.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_input.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -887,6 +827,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_sound.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\ui\ui_sprite.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_timer.c">
@@ -978,31 +921,23 @@
 		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_console.c">
 			<Option compilerVar="CC" />
-			<Option target="linux" />
-			<Option target="macosx" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />
-			<Option target="linux" />
-			<Option target="macosx" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_backtrace.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_console.c">
 			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_shared.c">
 			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_ccmds.c">
 			<Option compilerVar="CC" />
@@ -1062,6 +997,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_campaign.h" />
+		<Unit filename="..\..\src\tests\test_game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_game.h" />
 		<Unit filename="..\..\src\tests\test_generic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1085,10 +1024,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_shared.h" />
-		<Unit filename="..\..\src\tests\test_game.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tests\test_game.h" />
 		<Unit filename="..\..\src\tests\test_ui.c">
 			<Option compilerVar="CC" />
 		</Unit>
