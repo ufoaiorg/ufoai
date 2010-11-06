@@ -1498,12 +1498,12 @@ static void CL_DebugChangeCharacterStats_f (void)
 {
 	int j;
 	base_t *base = B_GetCurrentSelectedBase();
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	if (!base)
 		return;
 
-	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
+	EMPL_Foreach(EMPL_SOLDIER, employee) {
 		character_t *chr;
 
 		if (!E_IsInBase(employee, base))

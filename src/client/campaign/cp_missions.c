@@ -1213,7 +1213,6 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	aircraft_t *aircraft;
 	int numberOfSoldiers = 0; /* DEBUG */
 	employee_t *employee;
-	employee_t *lastEmployee;
 
 	if (mission->stage == STAGE_BASE_ATTACK) {
 		base = mission->data.base;
@@ -1237,17 +1236,13 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	/* update stats */
 	CL_UpdateCharacterStats(base, aircraft);
 
-	employee = NULL;
-	lastEmployee = NULL;
-	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
+	EMPL_Foreach(EMPL_SOLDIER, employee) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft))
 			numberOfSoldiers++;
 
 		/** @todo replace HP check with some CHRSH->IsDead() function */
-		if (E_IsInBase(employee, base) && (employee->chr.HP <= 0) && E_DeleteEmployee(employee))
-			employee = lastEmployee;
-		else
-			lastEmployee = employee;
+		if (E_IsInBase(employee, base) && (employee->chr.HP <= 0))
+			E_DeleteEmployee(employee);
 	}
 	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);
 

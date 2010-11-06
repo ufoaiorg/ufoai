@@ -207,8 +207,7 @@ void CL_CleanTempInventory (base_t* base)
 {
 	employee_t *employee;
 
-	employee = NULL;
-	while ((employee = E_GetNext(EMPL_SOLDIER, employee)) != NULL) {
+	EMPL_Foreach(EMPL_SOLDIER, employee) {
 		int k;
 		for (k = 0; k < csi.numIDs; k++) {
 			/* idFloor and idEquip are temp */
@@ -217,8 +216,7 @@ void CL_CleanTempInventory (base_t* base)
 		}
 	}
 
-	employee = NULL;
-	while ((employee = E_GetNext(EMPL_ROBOT, employee)) != NULL) {
+	EMPL_Foreach(EMPL_ROBOT, employee) {
 		int k;
 		for (k = 0; k < csi.numIDs; k++) {
 			/* idFloor and idEquip are temp */

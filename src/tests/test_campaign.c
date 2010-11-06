@@ -187,6 +187,31 @@ static void testEmployeeHandling (void)
 	}
 
 	{
+		int i;
+		const int amount = 3;
+		for (i = 0; i < amount; i++) {
+			employee_t *e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+			CU_ASSERT_PTR_NOT_NULL(e);
+		}
+		{
+			employee_t *e;
+			int cnt = 0;
+			EMPL_Foreach(EMPL_SOLDIER, e) {
+				cnt++;
+			}
+
+			CU_ASSERT_EQUAL(cnt, amount);
+
+			EMPL_Foreach(EMPL_SOLDIER, e) {
+				CU_ASSERT_TRUE(E_DeleteEmployee(e));
+			}
+
+			cnt = E_CountUnhired(EMPL_SOLDIER);
+			CU_ASSERT_EQUAL(cnt, 0)
+		}
+	}
+
+	{
 		employee_t *e = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
 		int cnt;
 		CU_ASSERT_PTR_NOT_NULL(e);

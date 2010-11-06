@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @endcode
  */
 
+#define EMPL_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], employee_t, var)
+
 /**
  * @brief The types of employees.
  */
@@ -63,10 +65,9 @@ typedef struct employee_s {
 
 void E_ResetEmployees(void);
 
-employee_t* E_GetNext(employeeType_t type, employee_t *lastEmployee);
 employee_t* E_GetNextFromBase(employeeType_t type, employee_t *lastEmployee, const base_t *base);
 employee_t* E_GetNextHired(employeeType_t type, employee_t *lastEmployee);
-employee_t* E_GetNextUnhired(employeeType_t type, employee_t *lastEmployee);
+employee_t* E_GetUnhired(employeeType_t type);
 
 int E_CountByType(employeeType_t type);
 
