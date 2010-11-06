@@ -287,3 +287,8 @@ mxmlSetTextf(mxml_node_t *node,		/* I - Node to set */
 
   return (0);
 }
+
+
+/*
+ * End of "$Id: mxml-set.c 270 2007-04-23 21:48:03Z mike $".
+ */
