@@ -130,8 +130,10 @@ static void HOS_HealAll_f (void)
 		return;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee = NULL;
-		while ((employee = E_GetNextFromBase(type, employee, base))) {
+		employee_t *employee;
+		E_Foreach(type, employee) {
+			if (!E_IsInBase(employee, base))
+				continue;
 			employee->chr.HP = employee->chr.maxHP;
 		}
 	}

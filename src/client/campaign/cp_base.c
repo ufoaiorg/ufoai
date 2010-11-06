@@ -2267,13 +2267,13 @@ static void B_BuildingList_f (void)
  */
 static void B_BaseList_f (void)
 {
-	int i, row, col, j;
+	int row, col, j;
 	base_t *base;
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
 		if (!base->founded) {
-			Com_Printf("Base idx %i not founded\n\n", i);
+			Com_Printf("Base idx %i not founded\n\n", base->idx);
 			continue;
 		}
 

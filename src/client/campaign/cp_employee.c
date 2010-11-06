@@ -35,18 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_employee.h"
 
 /**
- * @brief Iterates through employees
- * @param[in] type Employee type to look for
- * @param[in] lastEmployee Pointer of the employee to iterate from. call with NULL to get the first one.
- * @sa employeeType_t
- * @todo Remove this function, it's O(n^2) because it uses LIST_GetPointer
- */
-static employee_t* E_GetNext (employeeType_t type, employee_t *lastEmployee)
-{
-	return (employee_t*)LIST_GetNext(ccs.employees[type], (void*)lastEmployee);
-}
-
-/**
  * @brief Returns number of employees of a type
  * @param[in] type Employeetype to check
  */
