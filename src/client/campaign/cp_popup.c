@@ -529,7 +529,7 @@ static void CL_PopupInterceptRClick_f (void)
  */
 static void CL_PopupInterceptBaseClick_f (void)
 {
-	int num, installationIdx, i;
+	int num, i;
 	base_t* base;
 	installation_t *installation;
 	qboolean atLeastOneBase = qfalse;
@@ -558,6 +558,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	installation = NULL;
 	if (num >= 0) { /* don't try to find an installation if we already found the right base */
+		int installationIdx;
 		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
 			installation = INS_GetFoundedInstallationByIDX(installationIdx);
 			if (!installation)
