@@ -75,7 +75,6 @@
 			<Add option="-Wwrite-strings" />
 			<Add option="-std=c99" />
 			<Add option="-Wdeclaration-after-statement" />
-			<Add option="-DCOMPILE_UFO" />
 			<Add option="-DCOMPILE_MAP" />
 		</Compiler>
 		<Linker>

@@ -62,7 +62,6 @@
 			<Add option="-std=c99" />
 			<Add option="-Wdeclaration-after-statement" />
 			<Add option="-DCOMPILE_UFO" />
-			<Add option="-DCOMPILE_UFO" />
 		</Compiler>
 		<Unit filename="..\..\base\ai\alien.lua" />
 		<Unit filename="..\..\base\ai\civilian.lua" />

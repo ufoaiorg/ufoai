@@ -93,7 +93,6 @@
 			<Add option="-std=c99" />
 			<Add option="-Wdeclaration-after-statement" />
 			<Add option="-DCOMPILE_UFO" />
-			<Add option="-DCOMPILE_UFO" />
 			<Add option="-DCOMPILE_UNITTESTS" />
 		</Compiler>
 		<Linker>
