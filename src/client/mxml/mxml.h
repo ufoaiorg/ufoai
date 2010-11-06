@@ -301,8 +301,3 @@ extern mxml_type_t	mxml_real_cb(mxml_node_t *node);
 }
 #  endif /* __cplusplus */
 #endif /* !_mxml_h_ */
-
-
-/*
- * End of "$Id: mxml.h 385 2009-03-19 05:38:52Z mike $".
- */

@@ -455,8 +455,3 @@ _mxml_entity_cb(const char *name)	/* I - Entity name */
   else
     return (-1);
 }
-
-
-/*
- * End of "$Id: mxml-entity.c 385 2009-03-19 05:38:52Z mike $".
- */

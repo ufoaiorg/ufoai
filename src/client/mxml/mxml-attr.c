@@ -314,8 +314,3 @@ mxml_set_attr(mxml_node_t *node,	/* I - Element node */
 
   return (0);
 }
-
-
-/*
- * End of "$Id: mxml-attr.c 308 2007-09-15 20:04:56Z mike $".
- */

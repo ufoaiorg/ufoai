@@ -194,8 +194,3 @@ mxmlWalkPrev(mxml_node_t *node,		/* I - Current node */
   else
     return (NULL);
 }
-
-
-/*
- * End of "$Id: mxml-search.c 297 2007-09-09 07:16:52Z mike $".
- */

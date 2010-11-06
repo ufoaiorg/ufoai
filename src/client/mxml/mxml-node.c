@@ -773,8 +773,3 @@ mxml_new(mxml_node_t *parent,		/* I - Parent node */
 
   return (node);
 }
-
-
-/*
- * End of "$Id: mxml-node.c 363 2008-10-26 18:28:05Z mike $".
- */

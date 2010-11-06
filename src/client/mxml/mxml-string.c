@@ -455,8 +455,3 @@ _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
 
   return (buffer);
 }
-
-
-/*
- * End of "$Id: mxml-string.c 387 2009-04-18 17:05:52Z mike $".
- */
