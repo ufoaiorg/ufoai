@@ -166,6 +166,12 @@ check_compiler() {
 	# TODO Implement compiler check
 	CC=${CC:-gcc}
 	CXX=${CXX:-g++}
+
+	if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
+		CROSS="i686-pc-mingw32-"
+		# TODO Add a check for this
+		echo "Cross compiling, make sure that ${CROSS}${CC} is in your path"
+	fi
 }
 
 usage() {
@@ -401,14 +407,8 @@ while [ $# -gt 0 ]; do
 	shift
 done
 
-if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
-	CROSS="i686-pc-mingw32-"
-	TARGET_ARCH=i386
-	# TODO Add a check for this
-	echo "Cross compiling, make sure that ${CROSS}${CC} is in your path"
-fi
-
-[ "${TARGET_OS}" = "darwin" ] && ( USE_SIGNALS= )
+[ "${TARGET_OS}" = "mingw32" ] && TARGET_ARCH=i386
+[ "${TARGET_OS}" = "darwin" ] && USE_SIGNALS=
 
 PKGDATADIR=${PKGDATADIR:-${PREFIX}/games/ufoai}
 PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin}
