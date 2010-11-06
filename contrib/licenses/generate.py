@@ -510,7 +510,7 @@ class Analysis(object):
         self.writeGroups(output, "sources", self.contentBySource)
 
 def main():
-    global ABS_URL, THUMBNAIL, PLOT # config
+    global ABS_URL, THUMBNAIL, PLOT, PARSE_MAPS, PARSE_SCRIPTS
     from optparse import OptionParser
 
     parser = OptionParser()
