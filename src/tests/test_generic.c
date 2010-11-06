@@ -160,6 +160,43 @@ static void testLinkedList (void)
 	CU_ASSERT_EQUAL(LIST_Count(list), 0);
 }
 
+static void testLinkedListIterator (void)
+{
+	linkedList_t *list = NULL;
+	char *string;
+	int cnt;
+
+	LIST_AddString(&list, "test1");
+	LIST_AddString(&list, "test2");
+	LIST_AddString(&list, "test3");
+
+	cnt = 0;
+	LIST_Foreach(list, char, string) {
+		cnt++;
+	}
+
+	LIST_Delete(&list);
+
+	CU_ASSERT_EQUAL(cnt, 3);
+}
+
+static void testLinkedListIteratorRemove (void)
+{
+	linkedList_t *list = NULL;
+	char *string;
+
+	LIST_AddString(&list, "test1");
+	LIST_AddString(&list, "test2");
+	LIST_AddString(&list, "test3");
+
+	LIST_Foreach(list, char, string) {
+		Com_Printf("Found string: %s\n", string);
+		LIST_Remove(&list, string);
+	}
+
+	CU_ASSERT_TRUE(LIST_IsEmpty(list));
+}
+
 static void testLinkedListStringSort (void)
 {
 	linkedList_t *list = NULL;
@@ -169,6 +206,8 @@ static void testLinkedListStringSort (void)
 	LIST_AddStringSorted(&list, "test3");
 
 	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 0), "test1");
+
+	LIST_Delete(&list);
 }
 
 static void testFileSystemBuildLists (void)
@@ -328,6 +367,12 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedList) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testLinkedListIterator) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testLinkedListIteratorRemove) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == NULL)
