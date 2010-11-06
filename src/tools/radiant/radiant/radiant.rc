@@ -1,6 +1,13 @@
 #include <winresrc.h>
 
-101 ICON DISCARDABLE "build/projects/radiant.ico"
+
+#ifdef FULL_PATH_RC_FILE
+# define PATH_UFORADIANTICON_FILE "build/projects/radiant.ico"
+#else
+# define PATH_UFORADIANTICON_FILE "radiant.ico"
+#endif
+
+101 ICON DISCARDABLE PATH_UFORADIANTICON_FILE
 
 VS_VERSION_INFO VERSIONINFO
 FILEFLAGSMASK 0x17L
