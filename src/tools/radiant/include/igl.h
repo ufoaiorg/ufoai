@@ -41,6 +41,7 @@
 
 #define glActiveTexture GlobalOpenGL().m_glActiveTexture
 #define glClientActiveTexture GlobalOpenGL().m_glClientActiveTexture
+#define glBlendColor(r,g,b,a) if (GlobalOpenGL().ARB_imaging()) GlobalOpenGL().m_glBlendColor(r,g,b,a)
 
 /// \brief A module which wraps a runtime-binding of the standard OpenGL functions.
 /// Provides convenience functions for querying availabiliy of extensions, rendering text and error-checking.
@@ -96,6 +97,9 @@ struct OpenGLBinding
 		// GL_ARB_multitexture
 		void (QGL_DLLEXPORT *m_glActiveTexture) (GLenum texture);
 		void (QGL_DLLEXPORT *m_glClientActiveTexture) (GLenum texture);
+
+		// GL_ARB_imaging
+		void (QGL_DLLEXPORT *m_glBlendColor) (GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
 
 		bool support_ARB_multitexture;
 		bool ARB_multitexture ()
@@ -185,6 +189,13 @@ struct OpenGLBinding
 		bool ARB_shading_language_100 ()
 		{
 			return support_ARB_shading_language_100;
+		}
+
+		// ARB_imaging
+		bool support_ARB_imaging;
+		bool ARB_imaging ()
+		{
+			return support_ARB_imaging;
 		}
 };
 

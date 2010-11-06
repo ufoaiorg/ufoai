@@ -297,6 +297,8 @@ void QGL_sharedContextCreated (OpenGLBinding& table)
 	table.support_ARB_fragment_shader = QGL_ExtensionSupported("GL_ARB_fragment_shader");
 	table.support_ARB_shading_language_100 = QGL_ExtensionSupported("GL_ARB_shading_language_100");
 
+	table.support_ARB_imaging = QGL_constructExtensionFunc(table.m_glBlendColor, "glBlendColor");
+
 	if (QGL_ExtensionSupported("GL_EXT_texture_filter_anisotropic")) {
 		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &g_maxTextureAnisotropy);
 		g_message("Anisotropic filtering possible (max %ix)\n", g_maxTextureAnisotropy);
