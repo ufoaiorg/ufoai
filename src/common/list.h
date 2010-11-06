@@ -9,6 +9,8 @@ typedef struct linkedList_s {
 	qboolean ptr;	/**< don't call Mem_Free for data */
 } linkedList_t;
 
+#define LIST_Foreach(list, type, var) for (linkedList_t *l = list; (var = (l != NULL) ? (type*)l->data : NULL) != NULL; l = l->next)
+
 void LIST_AddString(linkedList_t** list, const char* data);
 void LIST_AddStringSorted(linkedList_t** listDest, const char* data);
 void LIST_AddPointer(linkedList_t** listDest, void* data);
