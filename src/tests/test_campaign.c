@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include "test_campaign.h"
 #include "../client/client.h"
-#include "../client/renderer/r_state.h"
+#include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
 #include "../client/campaign/cp_campaign.h"
 #include "../client/campaign/cp_map.h"
