@@ -94,10 +94,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\unzip.h" />
-		<Unit filename="..\..\src\ports\unix\unix_main.c">
-			<Option compilerVar="CC" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
