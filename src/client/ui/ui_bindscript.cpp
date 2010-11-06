@@ -112,20 +112,19 @@ extern "C" void UI_ExecuteScriptAction (uiAction_t *action, uiCallContext_t *con
 	if (r != asEXECUTION_FINISHED) {
 		// The execution didn't finish as we had planned. Determine why.
 		if (r == asEXECUTION_ABORTED) {
-			Com_Printf("The script was aborted before it could finish. Probably it timed out.");
+			Com_Printf("The script was aborted before it could finish. Probably it timed out.\n");
 		} else if (r == asEXECUTION_EXCEPTION) {
-			Com_Printf("The script ended with an exception.");
+			Com_Printf("The script ended with an exception.\n");
 
 			// Write some information about the script exception
 			/*
 			cout << "func: " << function->GetDeclaration() << endl;
 			cout << "modl: " << function->GetModuleName() << endl;
 			cout << "sect: " << function->GetScriptSectionName() << endl;
-			cout << "line: " << ctx->GetExceptionLineNumber() << endl;
-			cout << "desc: " << ctx->GetExceptionString() << endl;
 			*/
+			Com_Printf("Description: %s (line: %i)\n", ctx->GetExceptionString(), ctx->GetExceptionLineNumber());
 		} else {
-			Com_Printf("The script ended for some unforeseen reason (%i)", r);
+			Com_Printf("The script ended for some unforeseen reason (%i)\n", r);
 		}
 	}
 
@@ -161,7 +160,8 @@ static void CvarRef_Release(cvar_t *cvar) {
 	/** @todo count number of ref */
 }
 
-static uiNode_t *NodeRef_GetCvar(std::string name) {
+
+static uiNode_t *NodeRef_GetNode(std::string name) {
 	return UI_GetNodeByPath(name.c_str());
 }
 static void NodeRef_AddRef(uiNode_t *node) {
@@ -170,12 +170,41 @@ static void NodeRef_AddRef(uiNode_t *node) {
 static void NodeRef_Release(uiNode_t *node) {
 	/** @todo count number of ref */
 }
-static std::string NodeRef_GetPath(uiNode_t *node) {
+static std::string NodeRef_GetPath(const uiNode_t *node) {
 	return UI_GetPath(node);
 }
-static std::string NodeRef_GetName(uiNode_t *node) {
+static std::string NodeRef_GetName(const uiNode_t *node) {
 	return node->name;
 }
+static std::string NodeRef_GetType(const uiNode_t *node) {
+	return node->behaviour->name;
+}
+static uiNode_t *NodeRef_GetParent(uiNode_t *node) {
+	return node->parent;
+}
+static uiNode_t *NodeRef_GetFirstChild(uiNode_t *node) {
+	return node->firstChild;
+}
+static uiNode_t *NodeRef_GetNext(uiNode_t *node) {
+	return node->next;
+}
+static uiNode_t *NodeRef_GetWindow(uiNode_t *node) {
+	return node->root;
+}
+
+static void AssignNodeGeneric(asIScriptGeneric *gen) {
+	uiNode_t ** a = static_cast<uiNode_t **>(gen->GetArgObject(0));
+	uiNode_t ** self = static_cast<uiNode_t **>(gen->GetObject());
+	*self = *a;
+	gen->SetReturnAddress(self);
+}
+
+static void NodeEqualsGeneric(asIScriptGeneric * gen) {
+	uiNode_t *a = static_cast<uiNode_t*>(gen->GetObject());
+	uiNode_t **b = static_cast<uiNode_t**>(gen->GetArgAddress(0));
+	*(bool*)gen->GetAddressOfReturnLocation() = (a == *b);
+}
+
 
 static void MessageCallback(const asSMessageInfo *msg, void *param)
 {
@@ -226,13 +255,17 @@ extern "C" void UI_InitBindScript (void)
 
 	/* Node */
 
-	r = engine->RegisterObjectType("node", sizeof((uiNode_t*)NULL), asOBJ_REF);
+	r = engine->RegisterObjectType("node", 0, asOBJ_REF);
 	assert(r >= 0);
 	r = engine->RegisterObjectBehaviour("node", asBEHAVE_ADDREF, "void f()", asFUNCTION(NodeRef_AddRef), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
 	r = engine->RegisterObjectBehaviour("node", asBEHAVE_RELEASE, "void f()", asFUNCTION(NodeRef_Release), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
-	r = engine->RegisterGlobalFunction("node@ getNode(string)", asFUNCTION(NodeRef_GetCvar), asCALL_CDECL);
+	r = engine->RegisterObjectMethod("node", "node@ &opAssign(const node@ &in)", asFUNCTION(AssignNodeGeneric), asCALL_GENERIC);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod("node", "bool opEquals(const node@ &in) const", asFUNCTION(NodeEqualsGeneric), asCALL_GENERIC);
+	assert(r >= 0);
+	r = engine->RegisterGlobalFunction("node@ getNode(string)", asFUNCTION(NodeRef_GetNode), asCALL_CDECL);
 	assert(r >= 0);
 
 	const uiBehaviour_t *behaviour = UI_GetNodeBehaviour("abstractnode");
@@ -262,15 +295,24 @@ extern "C" void UI_InitBindScript (void)
 		property++;
 	}
 
-
+	r = engine->RegisterObjectMethod("node", "node@ get_firstChild()", asFUNCTION(NodeRef_GetFirstChild), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod("node", "node@ get_next()", asFUNCTION(NodeRef_GetNext), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod("node", "node@ get_parent()", asFUNCTION(NodeRef_GetParent), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod("node", "node@ get_window()", asFUNCTION(NodeRef_GetWindow), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod("node", "const string get_type()", asFUNCTION(NodeRef_GetType), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
 	r = engine->RegisterObjectMethod("node", "const string get_name()", asFUNCTION(NodeRef_GetName), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "void get_path(string)", asFUNCTION(NodeRef_GetPath), asCALL_CDECL_OBJFIRST);
+	r = engine->RegisterObjectMethod("node", "const void get_path(string)", asFUNCTION(NodeRef_GetPath), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
 
 	/* CVAR */
 
-	r = engine->RegisterObjectType("cvar", sizeof((cvar_t*)NULL), asOBJ_REF);
+	r = engine->RegisterObjectType("cvar", 0, asOBJ_REF);
 	assert(r >= 0);
 	r = engine->RegisterObjectBehaviour("cvar", asBEHAVE_ADDREF, "void f()", asFUNCTION(CvarRef_AddRef), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);

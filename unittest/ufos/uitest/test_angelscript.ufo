@@ -30,6 +30,36 @@ window test_angelscript
 		string	"t3"
 	}
 
+	string test4 {
+		pos		"200 80"
+		string	"t3"
+	}
+
+	string test5 {
+		pos		"200 80"
+		string	"t3"
+	}
+
+	string test6 {
+		pos		"200 80"
+		string	"t3"
+	}
+
+	string test7 {
+		pos		"200 80"
+		string	"t3"
+	}
+
+	string test8 {
+		pos		"200 80"
+		string	"t3"
+	}
+
+	string test9 {
+		pos		"200 80"
+		string	"t3"
+	}
+
 	button buttonTest
 	{
 		{
@@ -39,6 +69,24 @@ window test_angelscript
 		}
 
 		script {
+
+			void onClick() {
+				cvar@ b = getCvar("test_1");
+				int a = 0;
+				a++;
+				b.integer = a;
+				if (b.integer == 1) {
+					cvar@ c = getCvar("test_2");
+					c.integer = 2;
+				}
+				if (b.integer == 10) {
+					// ...
+				} else {
+					cvar@ c = getCvar("test_3");
+					c.string = "foobar";
+				}
+			}
+
 			void onRClick() {
 				node@ n = getNode("test_angelscript.buttonTest");
 				n.color.red = 0.5;
@@ -57,27 +105,56 @@ window test_angelscript
 				n.bordercolor = blue;
 			}
 
+			void onMClick() {
+				color red = "1 0 0";
+				color green = "0 1 0";
+				node@ n = getNode("test_angelscript.buttonTest");
 
-			void onClick() {
-				cvar@ b = getCvar("test_1");
-				int a = 0;
-				a++;
-				b.integer = a;
-				if (b.integer == 1) {
-					cvar@ c = getCvar("test_2");
-					c.integer = 2;
-				}
-				if (b.integer == 10) {
-					// ...
-				} else {
-					cvar@ c = getCvar("test_3");
-					c.string = "foobar";
-				}
+				node@ test_1 = getNode("test_angelscript.test4");
+				node@ test_2 = getNode("test_angelscript.test5");
+				bool b = (test_1 == test_2);
+
+//				this copy CRASH
+//				node@ test;
+//				test = getNode("test_angelscript.test4");
+
+				node@ test4 = getNode("test_angelscript.test4");
+				node@ window = n.window;
+				if (window.type == "window") test4.color = green;
+				else test4.color = red;
+
+				node@ test5 = getNode("test_angelscript.test5");
+				if (window.name == "test_angelscript") test5.color = green;
+				else test5.color = red;
+
+				node@ test6 = getNode("test_angelscript.test6");
+				node@ nothing = window.parent;
+				if (nothing == null) test6.color = green;
+				else test6.color = red;
+
+				node@ test7 = getNode("test_angelscript.test7");
+				node@ child = n.firstChild;
+				if (child == null) test7.color = green;
+				else test7.color = red;
+
+				node@ test8 = getNode("test_angelscript.test8");
+				node@ parent = n.parent;
+				if (parent == window) test8.color = green;
+				else test8.color = red;
+
+				node@ test9 = getNode("test_angelscript.test9");
+				node@ next = n.next;
+				if (next != null) test9.color = green;
+				else test9.color = red;
 			}
 		}
 	}
 
-	func testNode {
+	func testNodeNavigation {
+		call *node:root.buttonTest@onMClick
+	}
+
+	func testNodeProperties {
 		call *node:root.buttonTest@onRClick
 		cmd "echo <node:root.buttonTest@color> == 0.5 _ _ _"
 		cmd "echo <node:root.buttonTest@bgcolor> == red"
@@ -102,7 +179,8 @@ window test_angelscript
 
 	func onInit {
 		call *node:root.testCvar
-		call *node:root.testNode
+		call *node:root.testNodeProperties
+		call *node:root.testNodeNavigation
 	}
 
 }
