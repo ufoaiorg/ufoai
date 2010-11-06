@@ -243,10 +243,17 @@ check_path_characters() {
 	# pwd -W returns said FULL path, but doesn't exist on others so fall back.
 	ROOT_DIR="`cd $ROOT_DIR && (pwd -W 2>/dev/null || pwd 2>/dev/null)`"
 
-	if [ -n "`echo $ROOT_DIR | grep '[^-_A-Za-z0-9\/\\\.:]'`" ]; then
+	if [ -n "`echo \"$ROOT_DIR\" | grep '[^-\w\/\\\.:]~?'`" ]; then
 		echo "WARNING: The path contains a non-alphanumeric character that might cause"
 		echo "         failures in subsequent build stages. Any failures with the build"
 		echo "         will most likely be caused by this."
+		echo "         $ROOT_DIR"
+	fi
+	if [ -n "`echo \"$ROOT_DIR\" | grep '[\(\)]'`" ]; then
+		echo "ERROR: The path contains a square character that cause"
+		echo "       failures in subsequent build stages!!!"
+		echo "       $ROOT_DIR"
+		exit 1
 	fi
 }
 
@@ -264,25 +271,25 @@ check_ccache() {
 }
 
 check_target_os() {
-	FOUND=0
+	local FOUND=0
 	for i in build/platforms/*.mk; do
 		if [ `basename $i .mk` = $1 ]; then
 			FOUND=1
 		fi
 	done
 
-	[ $FOUND -eq 1 ] || echo "invalid target-os given: $1" && exit 1
+	[ $FOUND -eq 0 ] && echo "invalid target-os given: $1" && exit 1
 }
 
 check_module() {
-	FOUND=0
+	local FOUND=0
 	for i in `get_modules`; do
 		if [ $i = $1 ]; then
 			FOUND=1
 		fi
 	done
 
-	[ $FOUND -eq 1 ] || error "invalid module given: $1"
+	[ $FOUND -eq 0 ] && error "invalid module given: $1"
 }
 
 check_path_characters
@@ -298,33 +305,53 @@ while [ $# -gt 0 ]; do
 	--enable-ccache)
 		USE_CCACHE="yes"
 		;;
+	--disable-ccache)
+		;;
 	--enable-release)
 		MODE=release
 		DEBUG=
 		;;
+	--disable-release)
+		;;
 	--enable-static)
 		STATIC=1
+		;;
+	--disable-static)
 		;;
 	--enable-universal)
 		UNIVERSAL=1
 		;;
+	--disable-universal)
+		;;
 	--enable-hardlinkedgame)
 		HARD_LINKED_GAME=1
+		;;
+	--disable-hardlinkedgame)
 		;;
 	--enable-paranoid)
 		PARANOID=1
 		;;
+	--disable-paranoid)
+		;;
 	--enable-profiling)
 		PROFILING=1
+		;;
+	--disable-profiling)
 		;;
 	--enable-w2k)
 		W2K=1
 		;;
+	--disable-w2k)
+		;;
+	--enable-signals)
+		;;
 	--disable-signals)
-		USE_SIGNALS=
+		USE_SIGNALS=0
+		;;
+	--enable-execinfo)
+		HAVE_EXECINFO_H=yes
 		;;
 	--disable-execinfo)
-		HAVE_EXECINFO_H=no
 		;;
 	--prefix=*)
 		PREFIX=`get_option $1`
