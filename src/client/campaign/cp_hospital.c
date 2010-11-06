@@ -151,7 +151,7 @@ static void HOS_HurtAll_f (void)
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		employee_t *employee;
-		EMPL_Foreach(type, employee) {
+		E_Foreach(type, employee) {
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, base))
 				continue;

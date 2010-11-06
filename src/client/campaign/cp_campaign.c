@@ -1503,7 +1503,7 @@ static void CL_DebugChangeCharacterStats_f (void)
 	if (!base)
 		return;
 
-	EMPL_Foreach(EMPL_SOLDIER, employee) {
+	E_Foreach(EMPL_SOLDIER, employee) {
 		character_t *chr;
 
 		if (!E_IsInBase(employee, base))

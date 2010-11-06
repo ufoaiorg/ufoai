@@ -1236,7 +1236,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	/* update stats */
 	CL_UpdateCharacterStats(base, aircraft);
 
-	EMPL_Foreach(EMPL_SOLDIER, employee) {
+	E_Foreach(EMPL_SOLDIER, employee) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft))
 			numberOfSoldiers++;
 

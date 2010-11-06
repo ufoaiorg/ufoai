@@ -102,7 +102,7 @@ employee_t* E_GetUnhired (employeeType_t type)
 {
 	employee_t* employee;
 
-	EMPL_Foreach(type, employee) {
+	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
 			break;
 	}
@@ -311,7 +311,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
 	employee_t *employee;
 
-	EMPL_Foreach(EMPL_ROBOT, employee) {
+	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee)) {
 			/* If no type was given we return the first ugv we find. */
 			if (!ugvType || employee->ugv == ugvType)
@@ -327,7 +327,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
  * @param[in] base Which base the employee should be searched in. If NULL is given employees in all bases will be listed.
  * @param[in] type Which employee type to search for.
  * @param[out] hiredEmployees Linked list of hired employees in the base.
- * @return Number of hired employees in the base that are currently not on a transfer.
+ * @return Number of hired employees in the base that are currently not on a transfer. Or @c -1 in case of an error.
  */
 int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees)
 {
@@ -705,7 +705,7 @@ void E_DeleteAllEmployees (base_t* base)
 		employee_t *lastEmployee = NULL;
 		employee_t *employee = NULL;
 
-		EMPL_Foreach(type, employee) {
+		E_Foreach(type, employee) {
 			if ((base == NULL || E_IsInBase(employee, base)) && E_DeleteEmployee(employee))
 				employee = lastEmployee;
 			else
@@ -739,7 +739,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 		if (type == EMPL_ROBOT)
 			continue;
 
-		EMPL_Foreach(type, employee) {
+		E_Foreach(type, employee) {
 			if (E_IsInBase(employee, base))
 				E_DeleteEmployee(employee);
 
@@ -784,7 +784,7 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolea
 	idx = 0;
 	/* Fill the global data employee list with employees, evenly distributed
 	 * between nations in the happyNations list */
-	EMPL_Foreach(type, employee) {
+	E_Foreach(type, employee) {
 		/* we don't want to overwrite employees that have already been hired */
 		if (!E_IsHired(employee)) {
 			E_DeleteEmployee(employee);
@@ -928,7 +928,7 @@ int E_CountUnhired (employeeType_t type)
 	int count = 0;
 	employee_t *employee;
 
-	EMPL_Foreach(type, employee) {
+	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
 			count++;
 	}
@@ -945,7 +945,7 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 	int count = 0;
 	employee_t *employee;
 
-	EMPL_Foreach(EMPL_ROBOT, employee) {
+	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee) && employee->ugv == ugvType)
 			count++;
 	}
@@ -1065,7 +1065,7 @@ static void CL_DebugNewEmployees_f (void)
 employee_t* E_GetEmployeeByTypeFromChrUCN (employeeType_t type, int uniqueCharacterNumber)
 {
 	employee_t *employee = NULL;
-	EMPL_Foreach(type, employee) {
+	E_Foreach(type, employee) {
 		if (employee->chr.ucn == uniqueCharacterNumber)
 			return employee;
 	}
@@ -1110,7 +1110,7 @@ qboolean E_SaveXML (mxml_node_t *p)
 		employee_t *employee;
 
 		mxml_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
-		EMPL_Foreach(emplType, employee) {
+		E_Foreach(emplType, employee) {
 			mxml_node_t * chrNode;
 			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
 

@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @endcode
  */
 
-#define EMPL_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], employee_t, var)
+#define E_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], employee_t, var)
 
 /**
  * @brief The types of employees.

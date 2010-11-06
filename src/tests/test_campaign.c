@@ -196,13 +196,13 @@ static void testEmployeeHandling (void)
 		{
 			employee_t *e;
 			int cnt = 0;
-			EMPL_Foreach(EMPL_SOLDIER, e) {
+			E_Foreach(EMPL_SOLDIER, e) {
 				cnt++;
 			}
 
 			CU_ASSERT_EQUAL(cnt, amount);
 
-			EMPL_Foreach(EMPL_SOLDIER, e) {
+			E_Foreach(EMPL_SOLDIER, e) {
 				CU_ASSERT_TRUE(E_DeleteEmployee(e));
 			}
 

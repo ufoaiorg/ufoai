@@ -103,7 +103,7 @@ static void E_EmployeeListScroll_f (void)
 	employeeScrollPos = atoi(Cmd_Argv(1));
 	j = employeeScrollPos;
 
-	EMPL_Foreach(employeeCategory, employee) {
+	E_Foreach(employeeCategory, employee) {
 		/* don't show employees of other bases */
 		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;
@@ -173,7 +173,7 @@ static void E_EmployeeList_f (void)
 	UI_ResetData(TEXT_LIST);
 	employeeListName = NULL;
 
-	EMPL_Foreach(employeeCategory, employee) {
+	E_Foreach(employeeCategory, employee) {
 		/* don't show employees of other bases */
 		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;
