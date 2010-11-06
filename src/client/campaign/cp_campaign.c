@@ -1137,7 +1137,9 @@ void CL_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 	assert(aircraft);
 
 	/* only soldiers have stats and ranks, ugvs not */
-	while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, aircraft->homebase))) {
+	E_Foreach(EMPL_SOLDIER, employee) {
+		if (!E_IsInBase(employee, aircraft->homebase))
+			continue;
 		if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
 			character_t *chr = &employee->chr;
 

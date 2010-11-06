@@ -580,34 +580,27 @@ static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, link
 
 		for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
 			switch (emplType) {
-			case EMPL_SOLDIER: {
-				employee_t *employee = NULL;
-
-				while ((employee = E_GetNextFromBase(emplType, employee, srcbase))) {
-					const rank_t *rank;
-					char str[128];
-					/* Skip if already on transfer list. */
-					if (LIST_GetPointer(td.trEmployeesTmp[emplType], (void*) employee))
-						continue;
-
-					rank = CL_GetRankByIdx(employee->chr.score.rank);
-					Com_sprintf(str, sizeof(str), _("Soldier %s %s"), rank->shortname, employee->chr.name);
-
-					TR_AddListEntry(names, str, amounts, 1, transfers, -1);
-					cnt++;
-				}
-				break;
-			}
+			case EMPL_SOLDIER:
 			case EMPL_PILOT: {
-				employee_t *employee = NULL;
+				employee_t *employee;
 
-				while ((employee = E_GetNextFromBase(emplType, employee, srcbase))) {
+				E_Foreach(emplType, employee) {
 					char str[128];
+
+					if (!E_IsInBase(employee, srcbase))
+						continue;
+
 					/* Skip if already on transfer list. */
 					if (LIST_GetPointer(td.trEmployeesTmp[emplType], (void*) employee))
 						continue;
 
-					Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
+					if (emplType == EMPL_SOLDIER) {
+						const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
+						Com_sprintf(str, sizeof(str), "%s %s %s", E_GetEmployeeString(emplType), rank->shortname, employee->chr.name);
+					} else {
+						Com_sprintf(str, sizeof(str), "%s %s", E_GetEmployeeString(emplType), employee->chr.name);
+					}
+
 					TR_AddListEntry(names, str, amounts, 1, transfers, -1);
 					cnt++;
 				}
@@ -838,10 +831,15 @@ static int TR_GetTransferFactor (void)
 
 static qboolean TR_GetTransferEmployee (employeeType_t emplType, int *cnt, const base_t *base, int num)
 {
-	employee_t *employee = NULL;
-	while ((employee = E_GetNextFromBase(emplType, employee, base))) {
+	employee_t *employee;
+
+	E_Foreach(emplType, employee) {
+		if (!E_IsInBase(employee, base))
+			continue;
+
 		if (LIST_GetPointer(td.trEmployeesTmp[employee->type], (void*) employee))
 			continue;
+
 		if (*cnt == num) {
 			if (TR_CheckEmployee(employee, td.transferBase)) {
 				LIST_AddPointer(&td.trEmployeesTmp[employee->type], (void*) employee);
@@ -943,16 +941,21 @@ static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transfer
 		case EMPL_WORKER:
 			/* no employee in base or all employees already in the transfer list */
 			if (cnt == num) {
-				employee_t *employee = NULL;
-				while ((employee = E_GetNextFromBase(emplType, employee, base))) {
+				employee_t *employee;
+
+				E_Foreach(emplType, employee) {
+					if (!E_IsInBase(employee, base))
+						continue;
+
 					if (LIST_GetPointer(td.trEmployeesTmp[emplType], (void*) employee))	/* Already on transfer list. */
 						continue;
+
 					if (TR_CheckEmployee(employee, td.transferBase)) {
 						LIST_AddPointer(&td.trEmployeesTmp[emplType], (void*) employee);
 						break;
-					} else {
-						return;
 					}
+
+					return;
 				}
 			}
 			cnt++;

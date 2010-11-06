@@ -47,49 +47,12 @@ static employee_t* E_GetNext (employeeType_t type, employee_t *lastEmployee)
 }
 
 /**
- * @brief Iterates through employees on a base
- * @param[in] type Employee type to look for
- * @param[in] lastEmployee Pointer of the employee to iterate from. call with NULL to get the first one.
- * @param[in] base Pointer to the base where employee hired at
- * @sa employeeType_t
- * @todo Replace this with some sort of EMPL_Foreach
- */
-employee_t* E_GetNextFromBase (employeeType_t type, employee_t *lastEmployee, const base_t *base)
-{
-	employee_t* employee = lastEmployee;
-
-	while ((employee = E_GetNext(type, employee)) != NULL) {
-		if (E_IsInBase(employee, base))
-			break;
-	}
-	return employee;
-}
-
-/**
  * @brief Returns number of employees of a type
  * @param[in] type Employeetype to check
  */
 int E_CountByType (employeeType_t type)
 {
 	return LIST_Count(ccs.employees[type]);
-}
-
-/**
- * @brief Iterates through hired employees
- * @param[in] type Employee type to look for
- * @param[in] lastEmployee Pointer of the employee to iterate from. call with NULL to get the first one.
- * @sa employeeType_t
- * @todo Replace this with some sort of EMPL_Foreach
- */
-employee_t* E_GetNextHired (employeeType_t type, employee_t *lastEmployee)
-{
-	employee_t* employee = lastEmployee;
-
-	while ((employee = E_GetNext(type, employee)) != NULL) {
-		if (E_IsHired(employee))
-			break;
-	}
-	return employee;
 }
 
 /**
@@ -341,8 +304,9 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 
 	LIST_Delete(hiredEmployees);
 
-	employee = NULL;
-	while ((employee = E_GetNextHired(type, employee)) != NULL) {
+	E_Foreach(type, employee) {
+		if (!E_IsHired(employee))
+			continue;
 		if (!employee->transfer && (!base || E_IsInBase(employee, base))) {
 			LIST_AddPointer(hiredEmployees, employee);
 		}
@@ -414,9 +378,12 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
  */
 employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_t type)
 {
-	employee_t *employee = NULL;
+	employee_t *employee;
 
-	while ((employee = E_GetNextFromBase(type, employee, base)) != NULL) {
+	E_Foreach(type, employee) {
+		if (!E_IsInBase(employee, base))
+			continue;
+		//while ((employee = E_GetNextFromBase(type, employee, base)) != NULL) {
 		if (!E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
@@ -433,9 +400,11 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_
  */
 employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeType_t type)
 {
-	employee_t *employee = NULL;
+	employee_t *employee;
 
-	while ((employee = E_GetNextFromBase(type, employee, base)) != NULL) {
+	E_Foreach(type, employee) {
+		if (!E_IsInBase(employee, base))
+			continue;
 		if (E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
@@ -583,8 +552,9 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 
 	assert(type < MAX_EMPL);
 
-	employee = NULL;
-	while ((employee = E_GetNextFromBase(type, employee, base)) != NULL) {
+	E_Foreach(type, employee) {
+		if (!E_IsInBase(employee, base))
+			continue;
 		E_UnhireEmployee(employee);
 	}
 }
@@ -868,9 +838,11 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 int E_CountHired (const base_t* const base, employeeType_t type)
 {
 	int count = 0;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
-	while ((employee = E_GetNextHired(type, employee)) != NULL) {
+	E_Foreach(type, employee) {
+		if (!E_IsHired(employee))
+			continue;
 		if (!base || E_IsInBase(employee, base))
 			count++;
 	}
@@ -886,9 +858,11 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 {
 	int count = 0;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
-	while ((employee = E_GetNextHired(EMPL_ROBOT, employee)) != NULL) {
+	E_Foreach(EMPL_ROBOT, employee) {
+		if (!E_IsHired(employee))
+			continue;
 		if (employee->ugv == ugvType && (!base || E_IsInBase(employee, base)))
 			count++;
 	}
@@ -966,8 +940,10 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 		return 0;
 
 	count = 0;
-	employee = NULL;
-	while ((employee = E_GetNextFromBase(type, employee, base)) != NULL) {
+
+	E_Foreach(type, employee) {
+		if (!E_IsInBase(employee, base))
+			continue;
 		if (E_EmployeeIsUnassigned(employee))
 			count++;
 	}
@@ -1020,8 +996,8 @@ static void E_ListHired_f (void)
 	employeeType_t emplType;
 
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-		employee_t *employee = NULL;
-		while ((employee = E_GetNextHired(emplType, employee)) != NULL) {
+		employee_t *employee;
+		E_Foreach(emplType, employee) {
 			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->type), employee->chr.ucn,
 					employee->chr.name, employee->baseHired->name);
 			if (employee->type != emplType)

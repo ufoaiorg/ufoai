@@ -62,8 +62,10 @@ static void HOS_UpdateMenu (void)
 	UI_ExecuteConfunc("hospital_clear");
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
-		employee_t *employee = NULL;
-		while ((employee = E_GetNextFromBase(type, employee, base))) {
+		employee_t *employee;
+		E_Foreach(type, employee) {
+			if (!E_IsInBase(employee, base))
+				continue;
 			/* Don't show soldiers who are gone in mission */
 			if (E_IsAwayFromBase(employee))
 				continue;
@@ -181,8 +183,10 @@ static void HOS_ListClick_f (void)
 	num = atoi(Cmd_Argv(1)) + hospitalFirstEntry;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee = NULL;
-		while ((employee = E_GetNextFromBase(type, employee, base))) {
+		employee_t *employee;
+		E_Foreach(type, employee) {
+			if (!E_IsInBase(employee, base))
+				continue;
 			/* only those that need healing */
 			if (employee->chr.HP >= employee->chr.maxHP)
 				continue;

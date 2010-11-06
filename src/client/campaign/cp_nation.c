@@ -854,7 +854,6 @@ void NAT_HandleBudget (const campaign_t *campaign)
 	int totalIncome = 0;
 	int totalExpenditure = 0;
 	int initialCredits = ccs.credits;
-	employee_t *employee;
 	base_t *base;
 	const salary_t *salary = &campaign->salaries;
 
@@ -900,9 +899,11 @@ void NAT_HandleBudget (const campaign_t *campaign)
 	}
 
 	for (i = 0; i < MAX_EMPL; i++) {
-		employee = NULL;
+		employee_t *employee;
 		cost = 0;
-		while ((employee = E_GetNextHired(i, employee))) {
+		E_Foreach(i, employee) {
+			if (!E_IsHired(employee))
+				continue;
 			cost += CP_GetSalaryBaseEmployee(salary, employee->type)
 					+ employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, employee->type);
 		}

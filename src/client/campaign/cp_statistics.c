@@ -79,8 +79,10 @@ void CL_StatsUpdate_f (void)
 
 	/* costs */
 	for (i = 0; i < MAX_EMPL; i++) {
-		employee_t *employee = NULL;
-		while ((employee = E_GetNextHired(i, employee))) {
+		employee_t *employee;
+		E_Foreach(i, employee) {
+			if (!E_IsHired(employee))
+				continue;
 			costs += CP_GetSalaryBaseEmployee(salary, i) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, i);
 			hired[employee->type]++;
 		}

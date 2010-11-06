@@ -71,8 +71,10 @@ void HOS_HospitalRun (void)
 	int type;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee = NULL;
-		while ((employee = E_GetNextHired(type, employee))) {
+		employee_t *employee;
+		E_Foreach(type, employee) {
+			if (!E_IsHired(employee))
+				continue;
 			if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
 				HOS_HealCharacter(&(employee->chr), qtrue);
 			else
@@ -105,8 +107,10 @@ void HOS_HealAll (const base_t* const base)
 	assert(base);
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee = NULL;
-		while ((employee = E_GetNextFromBase(type, employee, base))) {
+		employee_t *employee;
+		E_Foreach(type, employee) {
+			if (!E_IsInBase(employee, base))
+				continue;
 			HOS_HealEmployee(employee);
 		}
 	}
