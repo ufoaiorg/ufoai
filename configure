@@ -346,12 +346,12 @@ while [ $# -gt 0 ]; do
 	--enable-signals)
 		;;
 	--disable-signals)
-		USE_SIGNALS=0
+		USE_SIGNALS=
 		;;
 	--enable-execinfo)
-		HAVE_EXECINFO_H=yes
 		;;
 	--disable-execinfo)
+		HAVE_EXECINFO_H=no
 		;;
 	--prefix=*)
 		PREFIX=`get_option $1`
