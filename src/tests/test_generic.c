@@ -172,12 +172,19 @@ static void testLinkedListIterator (void)
 
 	cnt = 0;
 	LIST_Foreach(list, char, string) {
+		CU_ASSERT_PTR_NOT_NULL(string);
 		cnt++;
 	}
 
 	LIST_Delete(&list);
 
 	CU_ASSERT_EQUAL(cnt, 3);
+
+	list = NULL;
+	LIST_Foreach(list, char, string) {
+		/* we should not be here, because the list is empty */
+		CU_ASSERT_TRUE(qfalse);
+	}
 }
 
 static void testLinkedListIteratorRemove (void)

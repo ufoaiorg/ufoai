@@ -70,6 +70,8 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
  * @brief Searches for the first occurrence of a given string
  * @return the linkedList_t pointer if the string is found, otherwise @c NULL
  * @note if data is @c NULL, the function returns @c NULL
+ * @note O(n)
+ * @note Only use this for small linked lists
  */
 linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 {
