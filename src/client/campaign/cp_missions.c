@@ -1209,8 +1209,6 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
  */
 void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, qboolean won)
 {
-	int civiliansKilled;
-	int aliensKilled;
 	base_t *base;
 	aircraft_t *aircraft;
 	int numberOfSoldiers = 0; /* DEBUG */
@@ -1230,8 +1228,6 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	/* add the looted goods to base storage and market */
 	base->storage = ccs.eMission;
 
-	civiliansKilled = ccs.civiliansKilled;
-	aliensKilled = ccs.aliensKilled;
 	CL_HandleNationData(campaign, won, mission, battleParameters->nation, &ccs.missionResults);
 	CP_CheckLostCondition(campaign);
 

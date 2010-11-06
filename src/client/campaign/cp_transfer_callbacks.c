@@ -930,12 +930,10 @@ static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transfer
 		return;
 
 	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
-		qboolean found = qfalse;
 		switch (emplType) {
 		case EMPL_SOLDIER:
 		case EMPL_PILOT:
-			if (TR_GetTransferEmployee(emplType, &cnt, base, num) || cnt == num)
-				found = qtrue;
+			TR_GetTransferEmployee(emplType, &cnt, base, num);
 			cnt++;
 			break;
 		case EMPL_ROBOT:
@@ -951,7 +949,6 @@ static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transfer
 						continue;
 					if (TR_CheckEmployee(employee, td.transferBase)) {
 						LIST_AddPointer(&td.trEmployeesTmp[emplType], (void*) employee);
-						found = qtrue;
 						break;
 					} else {
 						return;
