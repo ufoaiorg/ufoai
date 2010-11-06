@@ -25,6 +25,7 @@ import re
 import shutil
 from xml.dom.minidom import parseString
 import resources
+import tempfile
 
 # config
 ABS_URL = None
@@ -197,15 +198,21 @@ def plot(output, d, data, times, imagename):
     p = []
     for i in data:
         plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
-        p.append("'%s' title \"%s\" " % ('/tmp/' + hashlib.md5(i).hexdigest(), i))
-        open('/tmp/' + hashlib.md5(i).hexdigest(), 'w').write(plot_data)
+        f = tempfile.NamedTemporaryFile(delete=False)
+        f.write(plot_data)
+        f.close()
+        p.append("'%s' title \"%s\" " % (f.name, i))
 
     if len(p) == 0:
         return
 
     cmds+= ', '.join(p) + ';\n'
-    open('/tmp/cmds', 'w').write(cmds)
-    os.system('gnuplot /tmp/cmds')
+
+    f = tempfile.NamedTemporaryFile(delete=False)
+    f.write(cmds)
+    f.close()
+    os.system('gnuplot %s' % f.name)
+
     # raw_input('press return to continue')
 
 
@@ -539,9 +546,9 @@ def main():
         THUMBNAIL = options.thumbnail
     if options.plot != None:
         PLOT = options.plot
-    if not options.parse_maps:
+    if options.parse_maps != None:
         PARSE_MAPS = options.parse_maps
-    if not options.parse_scripts:
+    if options.parse_scripts != None:
         PARSE_SCRIPTS = options.parse_scripts
 
     # @note we use it nowhere, cause everything is relative
@@ -557,9 +564,10 @@ def main():
     print "-------------------------"
     print "Absolute URL:\t\t", ABS_URL
     print "Absolute output:\t", output_path
+    print "Temp directory:\t\t", tempfile.gettempdir()
     print "Generate thumbnails:\t", THUMBNAIL
     print "Generate plots:\t\t", PLOT
-    print "Parse maps:\t", PARSE_MAPS
+    print "Parse maps:\t\t", PARSE_MAPS
     print "Parse scripts:\t\t", PARSE_SCRIPTS
     print "-------------------------"
 
