@@ -469,6 +469,10 @@ CamWnd::~CamWnd() {
 
 	gtk_widget_unref(m_gl_widget);
 
+	// Disconnect self from EventManager\r
+	GlobalEventManager().disconnect(GTK_OBJECT(m_gl_widget));
+	GlobalEventManager().disconnect(GTK_OBJECT(m_parent));
+
 	delete m_window_observer;
 }
 
@@ -615,6 +619,7 @@ GtkWidget* CamWnd::getWidget()
 
 void CamWnd::setParent(GtkWindow* parent) {
 	m_parent = parent;
+	GlobalEventManager().connect(GTK_OBJECT(m_parent));
 }
 
 GtkWindow* CamWnd::getParent() {
