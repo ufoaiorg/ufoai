@@ -117,7 +117,6 @@ class UFOFaceTokenImporter
 				if (!importContentAndSurfaceFlags(m_face.getShader(), tokeniser))
 					return false;
 			}
-			m_face.getTexdef().m_scaleApplied = true;
 			return true;
 		}
 };
