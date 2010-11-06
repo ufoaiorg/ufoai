@@ -280,6 +280,7 @@ base_t *B_GetNext(base_t *lastBase);
 base_t* B_GetNextFounded(base_t *lastBase);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
+int B_GetCount(void);
 void B_SelectBase(const base_t *base);
 void B_UpdateBaseCount(void);
 int B_GetFoundedBaseCount(void);

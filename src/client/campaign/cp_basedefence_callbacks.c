@@ -476,9 +476,9 @@ static void BDEF_RemoveBattery_f (void)
 	}
 
 	/* Check that the baseIdx exists */
-	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
+	if (baseIdx < 0 || baseIdx >= B_GetCount()) {
 		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n",
-				baseIdx, ccs.numBases);
+				baseIdx, B_GetCount());
 		return;
 	}
 

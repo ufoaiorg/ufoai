@@ -48,15 +48,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
 /**
+ * @brief Returns the count of founded bases
+ */
+int B_GetCount (void)
+{
+	return ccs.numBases;
+}
+
+/**
  * @brief Iterates through founded base
  * @param[in] lastBase Pointer of the base to iterate from. call with NULL to get the first one.
  */
 base_t *B_GetNext (base_t *lastBase)
 {
-	base_t* endOfBases = &ccs.bases[ccs.numBases];
+	base_t* endOfBases = &ccs.bases[B_GetCount()];
 	base_t* base;
 
-	if (!ccs.numBases)
+	if (!B_GetCount())
 		return NULL;
 
 	if (!lastBase)
@@ -1313,7 +1321,7 @@ void B_UpdateBaseCount (void)
 {
 	/* this cvar is used for disabling the base build button on geoscape
 	 * if MAX_BASES was reached */
-	Cvar_SetValue("mn_base_count", ccs.numBases);
+	Cvar_SetValue("mn_base_count", B_GetCount());
 }
 
 /**
@@ -2034,7 +2042,7 @@ void B_SelectBase (const base_t *base)
 			return;
 		}
 
-		if (ccs.numBases < MAX_BASES) {
+		if (B_GetCount() < MAX_BASES) {
 			/* show radar overlay (if not already displayed) */
 			if (!MAP_IsRadarOverlayActivated())
 				MAP_SetOverlay("radar");
@@ -2223,20 +2231,23 @@ void B_BaseResetStatus (base_t* const base)
  */
 static void B_BuildingList_f (void)
 {
-	int baseIdx, j, k;
+	base_t *base;
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
+	base = NULL;
+	while ((base = B_GetNext(base)) != NULL) {
+		int j;
 
-		Com_Printf("\nBase id %i: %s\n", baseIdx, base->name);
-		for (j = 0; j < ccs.numBuildings[baseIdx]; j++) {
+		Com_Printf("\nBase id %i: %s\n", base->idx, base->name);
+		/** @todo building count should not depend on base->idx. base->idx will not be an array index! */
+		for (j = 0; j < ccs.numBuildings[base->idx]; j++) {
 			const building_t *building = B_GetBuildingByIDX(base->idx, j);
+			int k;
+
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id,
-				B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl), baseIdx);
+				B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl), base->idx);
 			Com_Printf("...image: %s\n", building->image);
 			Com_Printf(".....Status:\n");
+
 			for (k = 0; k < BASE_SIZE * BASE_SIZE; k++) {
 				if (k > 1 && k % BASE_SIZE == 0)
 					Com_Printf("\n");
@@ -2245,7 +2256,6 @@ static void B_BuildingList_f (void)
 					break;
 			}
 			Com_Printf("\n");
-			building++;
 		}
 	}
 }
@@ -2260,8 +2270,8 @@ static void B_BaseList_f (void)
 	int i, row, col, j;
 	base_t *base;
 
-	for (i = 0, base = ccs.bases; i < MAX_BASES; i++, base++) {
-		aircraft_t *aircraft = NULL;
+	base = NULL;
+	while ((base = B_GetNext(base)) != NULL) {
 		if (!base->founded) {
 			Com_Printf("Base idx %i not founded\n\n", i);
 			continue;
@@ -2280,12 +2290,10 @@ static void B_BaseList_f (void)
 		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  Cmd AMtr Entr Miss Lasr  Rdr Team\n");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
-			Com_Printf("Base aircraft-team %i\n", AIR_GetTeamSize(aircraft));
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
 		for (row = 0; row < BASE_SIZE; row++) {
-			if (row)
+			if (row > 0)
 				Com_Printf("\n");
 			for (col = 0; col < BASE_SIZE; col++)
 				Com_Printf("%2i (%3i: %3i)  ", (base->map[row][col].building ? base->map[row][col].building->idx : -1),
@@ -2352,7 +2360,7 @@ void B_BuildingOpenAfterClick (const building_t *building)
 			} else {
 				UI_PushWindow("buyaircraft", NULL);
 				/* transfer is only possible when there are at least two bases */
-				if (ccs.numBases > 1)
+				if (B_GetCount() > 1)
 					UI_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
 				else
 					UI_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
@@ -2391,7 +2399,7 @@ static void B_PrintCapacities_f (void)
 	}
 
 	i = atoi(Cmd_Argv(1));
-	if (i >= ccs.numBases) {
+	if (i >= B_GetCount()) {
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
@@ -2444,13 +2452,10 @@ static void B_BuildingConstructionFinished_f (void)
  */
 static void B_ResetAllStatusAndCapacities_f (void)
 {
-	int baseIdx;
+	base_t *base;
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-
+	base = NULL;
+	while ((base = B_GetNext(base)) != NULL) {
 		/* set buildingStatus[] and capacities.max values */
 		B_ResetAllStatusAndCapacities(base, qfalse);
 	}
@@ -2797,14 +2802,14 @@ qboolean B_SaveStorageXML (mxml_node_t *parent, const equipDef_t equip)
  */
 qboolean B_SaveXML (mxml_node_t *parent)
 {
-	int i;
 	mxml_node_t * bases;
+	base_t *b;
 
 	bases = mxml_AddNode(parent, SAVE_BASES_BASES);
-	for (i = 0; i < ccs.numBases; i++) {
+	b = NULL;
+	while ((b = B_GetNext(b)) != NULL) {
 		int k;
 		mxml_node_t * act_base, *node;
-		const base_t *b = B_GetBaseByIDX(i);
 		building_t *building;
 
 		if (!b->founded) {

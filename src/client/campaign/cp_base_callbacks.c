@@ -125,14 +125,15 @@ static void B_SelectBase_f (void)
  */
 static void B_NextBase_f (void)
 {
-	int baseID;
-	const base_t *base = B_GetCurrentSelectedBase();
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
-	baseID = (base->idx + 1) % ccs.numBases;
-	base = B_GetFoundedBaseByIDX(baseID);
+	base = B_GetNextFounded(base);
+	/* if it was the last base, select the first */
+	if (!base)
+		B_GetNextFounded(NULL);
 	if (base)
 		B_SelectBase(base);
 }
@@ -141,24 +142,33 @@ static void B_NextBase_f (void)
  * @brief Cycles to the previous base.
  * @sa B_NextBase
  * @sa B_SelectBase_f
+ * @todo This should not rely on base->idx!
  */
 static void B_PrevBase_f (void)
 {
-	int baseID;
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t *currentBase = B_GetCurrentSelectedBase();
+	const base_t *prevBase;
+	base_t *base;
 
-	if (!base)
+	if (!currentBase)
 		return;
 
-	baseID = base->idx;
-	if (baseID > 0)
-		baseID--;
-	else
-		baseID = ccs.numBases - 1;
+	prevBase = NULL;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		if (base == currentBase)
+			break;
+		prevBase = base;
+	}
+	/* if it was the first base, select the last */
+	if (!prevBase) {
+		while ((base = B_GetNextFounded(base)) != NULL) {
+			prevBase = base;
+		}
+	}
 
-	base = B_GetFoundedBaseByIDX(baseID);
-	if (base)
-		B_SelectBase(base);
+	if (prevBase)
+		B_SelectBase(prevBase);
 }
 
 /**
@@ -166,17 +176,19 @@ static void B_PrevBase_f (void)
  */
 static void B_SetBaseTitle_f (void)
 {
-	if (ccs.numBases < MAX_BASES) {
+	int baseCount = B_GetCount();
+
+	if (baseCount < MAX_BASES) {
 		char baseName[MAX_VAR];
 
-		if (ccs.numBases > 0) {
+		if (baseCount > 0) {
 			int j;
 			int i = 2;
 			do {
 				j = 0;
 				Com_sprintf(baseName, lengthof(baseName), _("Base #%i"), i);
-				while (j <= ccs.numBases && strcmp(baseName, ccs.bases[j++].name));
-			} while (i++ <= ccs.numBases && j <= ccs.numBases);
+				while (j <= baseCount && strcmp(baseName, ccs.bases[j++].name));
+			} while (i++ <= baseCount && j <= baseCount);
 		} else {
 			Q_strncpyz(baseName, _("Home"), lengthof(baseName));
 		}
@@ -807,7 +819,7 @@ void B_InitCallbacks (void)
 	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 	Cvar_Set("mn_base_cost", va(_("%i c"), ccs.curCampaign->basecost));
-	Cvar_SetValue("mn_base_count", ccs.numBases);
+	Cvar_SetValue("mn_base_count", B_GetCount());
 	Cvar_SetValue("mn_base_max", MAX_BASES);
 
 	Cmd_AddCommand("basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");

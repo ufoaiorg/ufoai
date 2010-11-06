@@ -1415,7 +1415,10 @@ static void TR_Init_f (void)
 	TR_InitBaseList();
 
 	/* Select first available base. */
-	td.transferBase = B_GetFoundedBaseByIDX((base->idx + 1) % ccs.numBases);
+	td.transferBase = B_GetNextFounded(base);
+	/* If this was the last base select the first */
+	if (!td.transferBase)
+		B_GetNextFounded(td.transferBase);
 	TR_TransferBaseSelect(base, td.transferBase);
 	/* Set up cvar used to display transferBase. */
 	if (td.transferBase) {

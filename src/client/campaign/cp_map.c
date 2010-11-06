@@ -199,7 +199,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	/* Execute action on element */
 	switch (multiSelect.selectType[selected]) {
 	case MULTISELECT_TYPE_BASE:	/* Select a base */
-		if (id >= ccs.numBases)
+		if (id >= B_GetCount())
 			break;
 		MAP_ResetAction();
 		B_SelectBase(B_GetFoundedBaseByIDX(id));
@@ -290,7 +290,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 
 			CL_GameTimeStop();
 
-			if (ccs.numBases < MAX_BASES) {
+			if (B_GetCount() < MAX_BASES) {
 				Cmd_ExecuteString("mn_set_base_title");
 				UI_PushWindow("popup_newbase", NULL);
 			}
@@ -1117,9 +1117,10 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	const int numMissions = CP_CountMissionOnGeoscape();
 	aircraft_t *ufo;
 	base_t *base;
+	int numBases = B_GetCount();
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
-	maxEventIdx = numMissions + ccs.numBases + ccs.numInstallations - 1;
+	maxEventIdx = numMissions + numBases + ccs.numInstallations - 1;
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft = NULL;
@@ -1162,7 +1163,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	counter += numMissions;
 
 	/* Cycle through bases */
-	if (centerOnEventIdx < ccs.numBases + counter) {
+	if (centerOnEventIdx < numBases + counter) {
 		base = NULL;
 		while ((base = B_GetNextFounded(base)) != NULL) {
 			if (counter == centerOnEventIdx) {
@@ -1172,7 +1173,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 			counter++;
 		}
 	}
-	counter += ccs.numBases;
+	counter += numBases;
 
 	/* Cycle through installations */
 	if (centerOnEventIdx < ccs.numInstallations + counter) {

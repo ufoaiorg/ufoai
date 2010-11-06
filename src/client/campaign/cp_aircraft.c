@@ -175,93 +175,106 @@ void AIR_UpdateHangarCapForAll (base_t *base)
  */
 void AIR_ListAircraft_f (void)
 {
-	int k, baseIdx;
+	base_t *base = NULL;
+	aircraft_t *aircraft;
 
-	if (Cmd_Argc() == 2)
-		baseIdx = atoi(Cmd_Argv(1));
+	if (Cmd_Argc() == 2) {
+		int baseIdx = atoi(Cmd_Argv(1));
+		base = B_GetFoundedBaseByIDX(baseIdx);
+	}
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		aircraft_t *aircraft;
-		if (!base)
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNext(aircraft)) != NULL) {
+		int k;
+		linkedList_t *l;
+
+		if (base && aircraft->homebase != base)
 			continue;
 
-		Com_Printf("Aircraft in %s: %i\n", base->name, AIR_BaseCountAircraft(base));
+		Com_Printf("Aircraft %s\n", aircraft->name);
+		Com_Printf("...idx global %i\n", aircraft->idx);
+		Com_Printf("...homebase: %s\n", aircraft->homebase ? aircraft->homebase->name : "NO HOMEBASE");
+		for (k = 0; k < aircraft->maxWeapons; k++) {
+			if (aircraft->weapons[k].item) {
+				Com_Printf("...weapon slot %i contains %s", k, aircraft->weapons[k].item->id);
 
-		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			linkedList_t *l;
-			Com_Printf("Aircraft %s\n", aircraft->name);
-			Com_Printf("...idx global %i\n", aircraft->idx);
-			Com_Printf("...homebase: %s\n", aircraft->homebase ? aircraft->homebase->name : "NO HOMEBASE");
-			for (k = 0; k < aircraft->maxWeapons; k++) {
-				if (aircraft->weapons[k].item) {
-					Com_Printf("...weapon slot %i contains %s", k, aircraft->weapons[k].item->id);
-					if (!aircraft->weapons[k].installationTime)
-						Com_Printf(" (functional)\n");
-					else if (aircraft->weapons[k].installationTime > 0)
-						Com_Printf(" (%i hours before installation is finished)\n",aircraft->weapons[k].installationTime);
-					else
-						Com_Printf(" (%i hours before removing is finished)\n",aircraft->weapons[k].installationTime);
-					if (aircraft->weapons[k].ammo)
-						if (aircraft->weapons[k].ammoLeft > 1)
-							Com_Printf("......this weapon is loaded with ammo %s\n", aircraft->weapons[k].ammo->id);
-						else
-							Com_Printf("......no more ammo (%s)\n", aircraft->weapons[k].ammo->id);
-					else
-						Com_Printf("......this weapon isn't loaded with ammo\n");
+				if (!aircraft->weapons[k].installationTime) {
+					Com_Printf(" (functional)\n");
+				} else if (aircraft->weapons[k].installationTime > 0) {
+					Com_Printf(" (%i hours before installation is finished)\n",aircraft->weapons[k].installationTime);
+				} else {
+					Com_Printf(" (%i hours before removing is finished)\n",aircraft->weapons[k].installationTime);
 				}
-				else
-					Com_Printf("...weapon slot %i is empty\n", k);
-			}
-			if (aircraft->shield.item) {
-				Com_Printf("...armour slot contains %s", aircraft->shield.item->id);
-				if (!aircraft->shield.installationTime)
-						Com_Printf(" (functional)\n");
-					else if (aircraft->shield.installationTime > 0)
-						Com_Printf(" (%i hours before installation is finished)\n",aircraft->shield.installationTime);
-					else
-						Com_Printf(" (%i hours before removing is finished)\n",aircraft->shield.installationTime);
-			} else
-				Com_Printf("...armour slot is empty\n");
-			for (k = 0; k < aircraft->maxElectronics; k++) {
-				if (aircraft->electronics[k].item) {
-					Com_Printf("...electronics slot %i contains %s", k, aircraft->electronics[k].item->id);
-					if (!aircraft->electronics[k].installationTime)
-						Com_Printf(" (functional)\n");
-					else if (aircraft->electronics[k].installationTime > 0)
-						Com_Printf(" (%i hours before installation is finished)\n",aircraft->electronics[k].installationTime);
-					else
-						Com_Printf(" (%i hours before removing is finished)\n",aircraft->electronics[k].installationTime);
+
+				if (aircraft->weapons[k].ammo) {
+					if (aircraft->weapons[k].ammoLeft > 1) {
+						Com_Printf("......this weapon is loaded with ammo %s\n", aircraft->weapons[k].ammo->id);
+					} else {
+						Com_Printf("......no more ammo (%s)\n", aircraft->weapons[k].ammo->id);
+					}
+				} else {
+					Com_Printf("......this weapon isn't loaded with ammo\n");
 				}
-				else
-					Com_Printf("...electronics slot %i is empty\n", k);
-			}
-			if (aircraft->pilot) {
-				Com_Printf("...pilot: ucn: %i name: %s\n", aircraft->pilot->chr.ucn, aircraft->pilot->chr.name);
 			} else {
-				Com_Printf("...no pilot assigned\n");
+				Com_Printf("...weapon slot %i is empty\n", k);
 			}
-			Com_Printf("...damage: %i\n", aircraft->damage);
-			Com_Printf("...stats: ");
-			for (k = 0; k < AIR_STATS_MAX; k++) {
-				if (k == AIR_STATS_WRANGE)
-					Com_Printf("%.2f ", aircraft->stats[k] / 1000.0f);
-				else
-					Com_Printf("%i ", aircraft->stats[k]);
+		}
+
+		if (aircraft->shield.item) {
+			Com_Printf("...armour slot contains %s", aircraft->shield.item->id);
+			if (!aircraft->shield.installationTime) {
+				Com_Printf(" (functional)\n");
+			} else if (aircraft->shield.installationTime > 0) {
+				Com_Printf(" (%i hours before installation is finished)\n",aircraft->shield.installationTime);
+			} else {
+				Com_Printf(" (%i hours before removing is finished)\n",aircraft->shield.installationTime);
 			}
-			Com_Printf("\n");
-			Com_Printf("...name %s\n", aircraft->id);
-			Com_Printf("...type %i\n", aircraft->type);
-			Com_Printf("...size %i\n", aircraft->maxTeamSize);
-			Com_Printf("...fuel %i\n", aircraft->fuel);
-			Com_Printf("...status %s\n", AIR_AircraftStatusToName(aircraft));
-			Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
-			Com_Printf("...team: (%i/%i)\n", LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
-			for (l = aircraft->acTeam; l != NULL; l = l->next) {
-				const employee_t const *employee = (const employee_t *)l->data;
-				Com_Printf(".........name: %s (ucn: %i)\n", employee->chr.name, employee->chr.ucn);
+		} else {
+			Com_Printf("...armour slot is empty\n");
+		}
+
+		for (k = 0; k < aircraft->maxElectronics; k++) {
+			if (aircraft->electronics[k].item) {
+				Com_Printf("...electronics slot %i contains %s", k, aircraft->electronics[k].item->id);
+
+				if (!aircraft->electronics[k].installationTime) {
+					Com_Printf(" (functional)\n");
+				} else if (aircraft->electronics[k].installationTime > 0) {
+					Com_Printf(" (%i hours before installation is finished)\n",aircraft->electronics[k].installationTime);
+				} else {
+					Com_Printf(" (%i hours before removing is finished)\n",aircraft->electronics[k].installationTime);
+				}
+			} else {
+				Com_Printf("...electronics slot %i is empty\n", k);
 			}
+		}
+
+		if (aircraft->pilot) {
+			Com_Printf("...pilot: ucn: %i name: %s\n", aircraft->pilot->chr.ucn, aircraft->pilot->chr.name);
+		} else {
+			Com_Printf("...no pilot assigned\n");
+		}
+
+		Com_Printf("...damage: %i\n", aircraft->damage);
+		Com_Printf("...stats: ");
+		for (k = 0; k < AIR_STATS_MAX; k++) {
+			if (k == AIR_STATS_WRANGE) {
+				Com_Printf("%.2f ", aircraft->stats[k] / 1000.0f);
+			} else {
+				Com_Printf("%i ", aircraft->stats[k]);
+			}
+		}
+		Com_Printf("\n");
+		Com_Printf("...name %s\n", aircraft->id);
+		Com_Printf("...type %i\n", aircraft->type);
+		Com_Printf("...size %i\n", aircraft->maxTeamSize);
+		Com_Printf("...fuel %i\n", aircraft->fuel);
+		Com_Printf("...status %s\n", AIR_AircraftStatusToName(aircraft));
+		Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
+		Com_Printf("...team: (%i/%i)\n", LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
+		for (l = aircraft->acTeam; l != NULL; l = l->next) {
+			const employee_t const *employee = (const employee_t *)l->data;
+			Com_Printf(".........name: %s (ucn: %i)\n", employee->chr.name, employee->chr.ucn);
 		}
 	}
 }
@@ -1763,17 +1776,12 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 #ifdef DEBUG
 void AIR_ListCraftIndexes_f (void)
 {
-	int i;
+	aircraft_t *aircraft;
 
-	Com_Printf("Base\tlocalIDX\t(Craftname)\n");
-	for (i = 0; i < ccs.numBases; i++) {
-		const base_t *base = B_GetBaseByIDX(i);
-		aircraft_t *aircraft;
-
-		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			Com_Printf("%i (%s)\t%i\t(%s)\n", i, base->name, aircraft->idx, aircraft->name);
-		}
+	Com_Printf("globalIDX\t(Craftname)\n");
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNext(aircraft)) != NULL) {
+		Com_Printf("%i\t(%s)\n", aircraft->idx, aircraft->name);
 	}
 }
 

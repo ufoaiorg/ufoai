@@ -1186,7 +1186,7 @@ static void CL_DebugAllItems_f (void)
 	}
 
 	i = atoi(Cmd_Argv(1));
-	if (i >= ccs.numBases) {
+	if (i >= B_GetCount()) {
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
@@ -1219,7 +1219,7 @@ static void CL_DebugShowItems_f (void)
 	}
 
 	i = atoi(Cmd_Argv(1));
-	if (i >= ccs.numBases) {
+	if (i >= B_GetCount()) {
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}

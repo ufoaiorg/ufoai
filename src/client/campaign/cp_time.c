@@ -101,7 +101,7 @@ qboolean CL_IsTimeStopped (void)
 static qboolean CL_AllowTimeScale (void)
 {
 	/* check the stats value - already build bases might have been destroyed
-	 * so the ccs.numBases values is pointless here */
+	 * so the B_GetCount() values is pointless here */
 	if (!ccs.campaignStats.basesBuilt)
 		return qfalse;
 
@@ -146,7 +146,7 @@ static void CL_SetGameTime (int gameLapseValue)
 		return;
 
 	/* check the stats value - already build bases might have been destroyed
-	 * so the ccs.numBases values is pointless here */
+	 * so the B_GetCount() values is pointless here */
 	if (!ccs.campaignStats.basesBuilt)
 		return;
 

@@ -57,7 +57,7 @@ void CL_StatsUpdate_f (void)
 	pos += (strlen(pos) + 1);
 	UI_RegisterText(TEXT_STATS_BASES, pos);
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
-			ccs.campaignStats.basesBuilt, ccs.numBases, ccs.campaignStats.basesAttacked),
+			ccs.campaignStats.basesBuilt, B_GetCount(), ccs.campaignStats.basesAttacked),
 
 	/* installations */
 	pos += (strlen(pos) + 1);
