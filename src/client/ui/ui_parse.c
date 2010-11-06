@@ -806,7 +806,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 
 	case V_UI:
 
-		switch (property->type) {
+		switch ((int)property->type) {
 		case V_UI_ACTION:
 			result = UI_ParseEventProperty((uiNode_t *)object, property, text, token, errhead);
 			if (!result)
