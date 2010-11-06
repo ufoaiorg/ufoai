@@ -336,7 +336,7 @@ static const value_t properties[] = {
 	 */
 	{"clickoutabort", V_BOOL, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
 	/* Call it when we abort the edition */
-	{"onabort", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
+	{"onAbort", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
 	/* Call it to force node edition */
 	{"edit", V_UI_NODEMETHOD, ((size_t) UI_TextEntryNodeFocus), 0},
 

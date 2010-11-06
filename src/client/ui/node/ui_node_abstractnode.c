@@ -834,25 +834,25 @@ static const value_t properties[] = {
 	{"visiblewhen", V_UI_IF, offsetof(uiNode_t, visibilityCondition), 0},
 
 	/* Called when the user click with left button into the node. */
-	{"onclick", V_UI_ACTION, offsetof(uiNode_t, onClick), MEMBER_SIZEOF(uiNode_t, onClick)},
+	{"onClick", V_UI_ACTION, offsetof(uiNode_t, onClick), MEMBER_SIZEOF(uiNode_t, onClick)},
 	/* Called when the user click with right button into the node. */
-	{"onrclick", V_UI_ACTION, offsetof(uiNode_t, onRightClick), MEMBER_SIZEOF(uiNode_t, onRightClick)},
+	{"onRClick", V_UI_ACTION, offsetof(uiNode_t, onRightClick), MEMBER_SIZEOF(uiNode_t, onRightClick)},
 	/* Called when the user click with middle button into the node. */
-	{"onmclick", V_UI_ACTION, offsetof(uiNode_t, onMiddleClick), MEMBER_SIZEOF(uiNode_t, onMiddleClick)},
+	{"onMClick", V_UI_ACTION, offsetof(uiNode_t, onMiddleClick), MEMBER_SIZEOF(uiNode_t, onMiddleClick)},
 	/* Called when the user use the mouse wheel over the node. */
-	{"onwheel", V_UI_ACTION, offsetof(uiNode_t, onWheel), MEMBER_SIZEOF(uiNode_t, onWheel)},
+	{"onWheel", V_UI_ACTION, offsetof(uiNode_t, onWheel), MEMBER_SIZEOF(uiNode_t, onWheel)},
 	/* Called when the user use the mouse wheel up over the node. */
-	{"onwheelup", V_UI_ACTION, offsetof(uiNode_t, onWheelUp), MEMBER_SIZEOF(uiNode_t, onWheelUp)},
+	{"onWheelUp", V_UI_ACTION, offsetof(uiNode_t, onWheelUp), MEMBER_SIZEOF(uiNode_t, onWheelUp)},
 	/* Called when the user use the mouse wheel down over the node. */
-	{"onwheeldown", V_UI_ACTION, offsetof(uiNode_t, onWheelDown), MEMBER_SIZEOF(uiNode_t, onWheelDown)},
+	{"onWheelDown", V_UI_ACTION, offsetof(uiNode_t, onWheelDown), MEMBER_SIZEOF(uiNode_t, onWheelDown)},
 	/* Called when the mouse enter over the node. */
-	{"onmouseenter", V_UI_ACTION, offsetof(uiNode_t, onMouseEnter), MEMBER_SIZEOF(uiNode_t, onMouseEnter)},
+	{"onMouseEnter", V_UI_ACTION, offsetof(uiNode_t, onMouseEnter), MEMBER_SIZEOF(uiNode_t, onMouseEnter)},
 	/* Called when the mouse go out of the node. */
-	{"onmouseleave", V_UI_ACTION, offsetof(uiNode_t, onMouseLeave), MEMBER_SIZEOF(uiNode_t, onMouseLeave)},
+	{"onMouseLeave", V_UI_ACTION, offsetof(uiNode_t, onMouseLeave), MEMBER_SIZEOF(uiNode_t, onMouseLeave)},
 	/* Called when the internal content of the nde change. Each behaviour use it how they need it.
 	 * @todo Move it where it is need.
 	 */
-	{"onchange", V_UI_ACTION, offsetof(uiNode_t, onChange), MEMBER_SIZEOF(uiNode_t, onChange)},
+	{"onChange", V_UI_ACTION, offsetof(uiNode_t, onChange), MEMBER_SIZEOF(uiNode_t, onChange)},
 
 	/* Special attribute only use into the node description to exclude part of the node (see also <code>ghost</code>). Rectangle position is relative to the node. */
 	{"excluderect", V_UI_EXCLUDERECT, 0, 0},

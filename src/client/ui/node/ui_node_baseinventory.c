@@ -837,7 +837,7 @@ static const value_t properties[] = {
 	/* Full vertical size (proportional to the number of elements the node contain) */
 	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, scrollY.fullSize),  MEMBER_SIZEOF(baseInventoryExtraData_t, scrollY.fullSize)},
 	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, onViewChange), MEMBER_SIZEOF(baseInventoryExtraData_t, onViewChange)},
+	{"onViewChange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(baseInventoryExtraData_t, onViewChange), MEMBER_SIZEOF(baseInventoryExtraData_t, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

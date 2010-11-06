@@ -171,7 +171,7 @@ static const value_t properties[] = {
 	/* full vertical size (proportional to the number of elements the node contain) */
 	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.fullSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.fullSize)},
 	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
+	{"onViewChange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
 
 	/* Call it to vertically scroll the document up */
 	{"pageup", V_UI_NODEMETHOD, ((size_t) UI_AbstractScrollableNodePageUp), 0},

@@ -1035,7 +1035,7 @@ static const value_t properties[] = {
 	/* Callback value set before calling onSelect. It is used to know the item selected */
 	{"lastselectedid", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, lastSelectedId),  MEMBER_SIZEOF(containerExtraData_t, lastSelectedId)},
 	/* Callback event called when the user select an item */
-	{"onselect", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(containerExtraData_t, onSelect),  MEMBER_SIZEOF(containerExtraData_t, onSelect)},
+	{"onSelect", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(containerExtraData_t, onSelect),  MEMBER_SIZEOF(containerExtraData_t, onSelect)},
 
 	{NULL, V_NULL, 0, 0}
 };

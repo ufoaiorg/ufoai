@@ -15,6 +15,21 @@ window test_angelscript
 		bgcolor		"0 0 0 1"
 	}
 
+	string test1 {
+		pos		"200 60"
+		string	"t1"
+	}
+
+	string test2 {
+		pos		"200 70"
+		string	"t2"
+	}
+
+	string test3 {
+		pos		"200 80"
+		string	"t3"
+	}
+
 	button buttonTest
 	{
 		{
@@ -24,15 +39,43 @@ window test_angelscript
 		}
 
 		script {
-			fooo
-			foooo
-			foo
-			foooo
-			foo
+			void onClick() {
+				cvar@ b = getCvar("test_1");
+				int a = 0;
+				a++;
+				b.integer = a;
+				if (b.integer == 1) {
+					cvar@ c = getCvar("test_2");
+					c.integer = 2;
+				}
+				if (b.integer == 10) {
+					// ...
+				} else {
+					cvar@ c = getCvar("test_3");
+					c.string = "foobar";
+				}
+			}
 		}
 	}
 
+	func testCvar {
+		*cvar:test_1 = "aaaa"
+		call *node:root.buttonTest@onClick
+
+		if ( *cvar:test_1 == 1 ) { *node:root.test1@color = "0 1 0 1" }
+		else { *node:root.test1@color = "1 0 0 1" }
+		if ( *cvar:test_2 == 2 ) { *node:root.test2@color = "0 1 0 1" }
+		else { *node:root.test2@color = "1 0 0 1" }
+		if ( *cvar:test_3 eq "foobar" ) { *node:root.test3@color = "0 1 0 1" }
+		else { *node:root.test3@color = "1 0 0 1" }
+
+		delete *cvar:test_1
+		delete *cvar:test_2
+		delete *cvar:test_3
+	}
+
 	func onInit {
+		call *node:root.testCvar
 	}
 
 }

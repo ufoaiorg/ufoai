@@ -25,9 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_BINDSCRIPT_H
 #define CLIENT_UI_UI_BINDSCRIPT_H
 
+struct uiAction_s;
+struct uiCallContext_s;
 struct uiNode_s;
 
 void UI_ParseActionScript(struct uiNode_s *node, const char *script);
+void UI_ExecuteScriptAction (struct uiAction_s *action, struct uiCallContext_s *context);
 void UI_InitBindScript(void);
 void UI_ShutdownBindScript(void);
 

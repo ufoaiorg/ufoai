@@ -303,6 +303,8 @@ $(TARGET)_SRCS      = \
 	common/angelscript/as_tokenizer.cpp \
 	common/angelscript/as_typeinfo.cpp \
 	common/angelscript/as_variablescope.cpp \
+	common/angelscript/addons/scriptbuilder.cpp \
+	common/angelscript/addons/scriptstdstring.cpp \
 	\
 	server/sv_ccmds.c \
 	server/sv_game.c \

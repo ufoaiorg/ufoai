@@ -96,7 +96,7 @@ static const value_t properties[] = {
 	{"cvar", V_UI_CVAR, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 
 	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
+	{"onViewChange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };

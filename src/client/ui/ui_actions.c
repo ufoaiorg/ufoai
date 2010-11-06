@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_parse.h"
 #include "ui_input.h"
 #include "ui_actions.h"
+#include "ui_bindscript.h"
 #include "node/ui_node_abstractnode.h"
 
 #include "../client.h"
@@ -556,6 +557,10 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context
 	case EA_CALL:
 	case EA_LISTENER:
 		UI_ExecuteCallAction(action, context);
+		break;
+
+	case EA_SCRIPT:
+		UI_ExecuteScriptAction(action, context);
 		break;
 
 	case EA_POPVARS:

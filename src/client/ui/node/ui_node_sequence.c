@@ -110,7 +110,7 @@ static const value_t properties[] = {
 	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
 
 	/** Called when the sequence end */
-	{"onend", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onEnd), MEMBER_SIZEOF(EXTRADATA_TYPE, onEnd)},
+	{"onEnd", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onEnd), MEMBER_SIZEOF(EXTRADATA_TYPE, onEnd)},
 
 	{NULL, V_NULL, 0, 0}
 };

@@ -390,11 +390,11 @@ static const value_t windowNodeProperties[] = {
 	{"timeout", V_INT,UI_EXTRADATA_OFFSETOF(windowExtraData_t, timeOut), MEMBER_SIZEOF(windowExtraData_t, timeOut)},
 
 	/* Called when the window is puched into the active window stack. */
-	{"oninit", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},
+	{"onInit", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},
 	/* Called when the window is removed from the active window stack. */
-	{"onclose", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onClose), MEMBER_SIZEOF(windowExtraData_t, onClose)},
+	{"onClose", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onClose), MEMBER_SIZEOF(windowExtraData_t, onClose)},
 	/* Called periodically. See <code>timeout</code>. */
-	{"onevent", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onTimeOut), MEMBER_SIZEOF(windowExtraData_t, onTimeOut)},
+	{"onEvent", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onTimeOut), MEMBER_SIZEOF(windowExtraData_t, onTimeOut)},
 
 	{NULL, V_NULL, 0, 0}
 };

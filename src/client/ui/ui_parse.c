@@ -920,18 +920,25 @@ static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char *
 	char buffer[4*1024] = "\0";
 	int count = 1;
 
+	Com_EnableFunctionScriptToken(qtrue);
+
 	*token = Com_EParse(text, errhead, node->name);
-	if (!*text)
+	if (!*text) {
+		Com_EnableFunctionScriptToken(qfalse);
 		return qfalse;
+	}
 	if ((*token)[0] != '{') {
 		Com_Printf("UI_ParseScript: '{' exprected but '%s' found.\n", *token);
+		Com_EnableFunctionScriptToken(qfalse);
 		return qfalse;
 	}
 
 	while (qtrue) {
 		*token = Com_EParse(text, errhead, node->name);
-		if (!*text)
+		if (!*text) {
+			Com_EnableFunctionScriptToken(qfalse);
 			return qfalse;
+		}
 
 		if ((*token)[0] == '{') {
 			count++;
@@ -942,15 +949,24 @@ static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char *
 		}
 		/** @todo this is incredibly slow way, only for fast prototyping */
 		strncat(buffer, " ", sizeof(buffer));
+		if (Com_ParsedTokenIsQuoted())
+			strncat(buffer, "\"", sizeof(buffer));
 		strncat(buffer, *token, sizeof(buffer));
+		if (Com_ParsedTokenIsQuoted())
+			strncat(buffer, "\"", sizeof(buffer));
 	}
 
 	*token = Com_EParse(text, errhead, node->name);
-	if (!*text)
+	if (!*text) {
+		Com_EnableFunctionScriptToken(qfalse);
 		return qfalse;
+	}
 
 	/** @todo this should return a parsing status */
 	UI_ParseActionScript(node, buffer);
+
+	Com_EnableFunctionScriptToken(qfalse);
+
 	return qtrue;
 }
 
