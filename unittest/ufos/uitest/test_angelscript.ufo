@@ -39,6 +39,25 @@ window test_angelscript
 		}
 
 		script {
+			void onRClick() {
+				node@ n = getNode("test_angelscript.buttonTest");
+				n.color.red = 0.5;
+				n.left = 23;
+				n.ghost = false;
+
+				color red;
+				red.red = 1;
+				red.green = 0;
+				red.blue = 0;
+				red.alpha = 1;
+				n.bgcolor = red;
+
+				color blue = "0 1 0";
+
+				n.bordercolor = blue;
+			}
+
+
 			void onClick() {
 				cvar@ b = getCvar("test_1");
 				int a = 0;
@@ -56,6 +75,13 @@ window test_angelscript
 				}
 			}
 		}
+	}
+
+	func testNode {
+		call *node:root.buttonTest@onRClick
+		cmd "echo <node:root.buttonTest@color> == 0.5 _ _ _"
+		cmd "echo <node:root.buttonTest@bgcolor> == red"
+		cmd "echo <node:root.buttonTest@bordercolor> == 0 1 0"
 	}
 
 	func testCvar {
@@ -76,6 +102,7 @@ window test_angelscript
 
 	func onInit {
 		call *node:root.testCvar
+		call *node:root.testNode
 	}
 
 }

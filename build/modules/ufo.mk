@@ -163,6 +163,7 @@ $(TARGET)_SRCS      = \
 	client/multiplayer/mp_team.c \
 	\
 	client/ui/ui_actions.c \
+	client/ui/ui_bindscript.cpp \
 	client/ui/ui_components.c \
 	client/ui/ui_data.c \
 	client/ui/ui_dragndrop.c \
@@ -260,6 +261,46 @@ $(TARGET)_SRCS      = \
 	common/scripts.c \
 	common/tracing.c \
 	common/routing.c \
+	\
+	common/angelscript/as_atomic.cpp \
+	common/angelscript/as_builder.cpp \
+	common/angelscript/as_bytecode.cpp \
+	common/angelscript/as_callfunc.cpp \
+	common/angelscript/as_callfunc_arm.cpp \
+	common/angelscript/as_callfunc_mips.cpp \
+	common/angelscript/as_callfunc_ppc_64.cpp \
+	common/angelscript/as_callfunc_ppc.cpp \
+	common/angelscript/as_callfunc_sh4.cpp \
+	common/angelscript/as_callfunc_x64_gcc.cpp \
+	common/angelscript/as_callfunc_x64_msvc.cpp \
+	common/angelscript/as_callfunc_x86.cpp \
+	common/angelscript/as_callfunc_xenon.cpp \
+	common/angelscript/as_compiler.cpp \
+	common/angelscript/as_configgroup.cpp \
+	common/angelscript/as_context.cpp \
+	common/angelscript/as_datatype.cpp \
+	common/angelscript/as_gc.cpp \
+	common/angelscript/as_generic.cpp \
+	common/angelscript/as_globalproperty.cpp \
+	common/angelscript/as_memory.cpp \
+	common/angelscript/as_module.cpp \
+	common/angelscript/as_objecttype.cpp \
+	common/angelscript/as_outputbuffer.cpp \
+	common/angelscript/as_parser.cpp \
+	common/angelscript/as_restore.cpp \
+	common/angelscript/as_scriptcode.cpp \
+	common/angelscript/as_scriptengine.cpp \
+	common/angelscript/as_scriptfunction.cpp \
+	common/angelscript/as_scriptnode.cpp \
+	common/angelscript/as_scriptobject.cpp \
+	common/angelscript/as_string.cpp \
+	common/angelscript/as_string_util.cpp \
+	common/angelscript/as_thread.cpp \
+	common/angelscript/as_tokenizer.cpp \
+	common/angelscript/as_typeinfo.cpp \
+	common/angelscript/as_variablescope.cpp \
+	common/angelscript/addons/scriptbuilder.cpp \
+	common/angelscript/addons/scriptstdstring.cpp \
 	\
 	server/sv_ccmds.c \
 	server/sv_game.c \

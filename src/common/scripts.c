@@ -678,8 +678,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		{
 			float* f = (float *) b;
 			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4) {
-				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal color statement '%s'", token);
-				return RESULT_ERROR;
+				if (sscanf(token, "%f %f %f", &f[0], &f[1], &f[2]) != 3) {
+					snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal color statement '%s'", token);
+					return RESULT_ERROR;
+				}
+				f[3] = 1;
 			}
 			*writtenBytes = 4 * sizeof(float);
 		}

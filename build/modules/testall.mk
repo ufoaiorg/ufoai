@@ -278,7 +278,15 @@ $(TARGET)_SRCS      = \
 	common/angelscript/as_builder.cpp \
 	common/angelscript/as_bytecode.cpp \
 	common/angelscript/as_callfunc.cpp \
+	common/angelscript/as_callfunc_arm.cpp \
+	common/angelscript/as_callfunc_mips.cpp \
+	common/angelscript/as_callfunc_ppc_64.cpp \
+	common/angelscript/as_callfunc_ppc.cpp \
+	common/angelscript/as_callfunc_sh4.cpp \
 	common/angelscript/as_callfunc_x64_gcc.cpp \
+	common/angelscript/as_callfunc_x64_msvc.cpp \
+	common/angelscript/as_callfunc_x86.cpp \
+	common/angelscript/as_callfunc_xenon.cpp \
 	common/angelscript/as_compiler.cpp \
 	common/angelscript/as_configgroup.cpp \
 	common/angelscript/as_context.cpp \
