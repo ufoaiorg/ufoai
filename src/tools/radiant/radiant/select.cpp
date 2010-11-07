@@ -543,33 +543,6 @@ void Select_FlipTexture(unsigned int flipAxis) {
 	SceneChangeNotify();
 }
 
-/**
- * @note TTimo modified to handle shader architecture:
- * expects shader names at input, comparison relies on shader names .. texture names no longer relevant
- */
-void FindReplaceTextures (const std::string& pFind, const std::string& pReplace, bool bSelected)
-{
-	if (!texdef_name_valid(pFind)) {
-		g_error("FindReplaceTextures: invalid texture name: '%s', aborted\n", pFind.c_str());
-		return;
-	}
-	if (!texdef_name_valid(pReplace)) {
-		g_error("FindReplaceTextures: invalid texture name: '%s', aborted\n", pReplace.c_str());
-		return;
-	}
-
-	UndoableCommand undo("textureFindReplace -find " + pFind + " -replace " + pReplace);
-
-	if (bSelected) {
-		if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-			Scene_BrushFindReplaceShader_Selected(GlobalSceneGraph(), pFind, pReplace);
-		}
-		Scene_BrushFindReplaceShader_Component_Selected(GlobalSceneGraph(), pFind, pReplace);
-	} else {
-		Scene_BrushFindReplaceShader(GlobalSceneGraph(), pFind, pReplace);
-	}
-}
-
 typedef std::vector<std::string> Classnames;
 
 class EntityFindByClassnameWalker: public scene::Graph::Walker

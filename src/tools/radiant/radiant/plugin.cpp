@@ -77,7 +77,6 @@
 #include "select.h"
 #include "settings/preferences.h"
 #include "map/AutoSaver.h"
-#include "dialogs/findtextures.h"
 #include "referencecache/nullmodel.h"
 #include "xyview/GlobalXYWnd.h"
 #include "camera/GlobalCamera.h"
@@ -222,7 +221,6 @@ class Radiant: public TypeSystemRef
 			Entity_Construct();
 			map::AutoSaver().init();
 			EntityInspector_Construct();
-			FindTextureDialog_Construct();
 			NullModel_Construct();
 			MapRoot_Construct();
 
@@ -249,7 +247,6 @@ class Radiant: public TypeSystemRef
 
 			MapRoot_Destroy();
 			NullModel_Destroy();
-			FindTextureDialog_Destroy();
 			EntityInspector_Destroy();
 			Entity_Destroy();
 			GlobalCamera().destroy();

@@ -510,8 +510,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\about.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findtextures.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findtextures.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\particle.cpp" />
@@ -748,6 +746,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\ModelPreview.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\RenderableAABB.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\RenderableAABB.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\ShaderChooser.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\ShaderChooser.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\ShaderSelector.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\ShaderSelector.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\SoundChooser.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\SoundChooser.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\SoundPreview.cpp" />
@@ -760,6 +762,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UFOScriptDefinitionView.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UMPDefinitionView.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UMPDefinitionView.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\findshader\FindShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\materialeditor\MaterialEditor.cpp" />

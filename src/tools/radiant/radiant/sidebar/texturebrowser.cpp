@@ -77,7 +77,6 @@
 #include "../qe3.h"
 #include "../gtkmisc.h"
 #include "../mainframe.h"
-#include "../dialogs/findtextures.h"
 #include "sidebar.h"
 
 namespace {
@@ -154,10 +153,6 @@ void TextureBrowser::setSelectedShader(const std::string& _shader) {
 		shader = "textures/tex_common/nodraw";
 	setStatusText(shader);
 	focus(shader);
-
-	if (FindTextureDialog_isOpen()) {
-		FindTextureDialog_selectTexture(shader);
-	}
 }
 
 void TextureBrowser::getNextTexturePosition(TextureLayout& layout, const qtexture_t* q, int *x,
@@ -450,7 +445,7 @@ void TextureBrowser::selectTextureAt(int mx, int my) {
 		setSelectedShader(shader->getName());
 		TextureClipboard_textureSelected();
 
-		if (!FindTextureDialog_isOpen() && !m_rmbSelected) {
+		if (!m_rmbSelected) {
 			UndoableCommand undo("textureNameSetSelected");
 			Select_SetShader(shader->getName());
 		}

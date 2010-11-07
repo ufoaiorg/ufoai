@@ -83,7 +83,7 @@
 #include "console.h"
 #include "entity.h"
 #include "sidebar/sidebar.h"
-#include "dialogs/findtextures.h"
+#include "ui/findshader/FindShader.h"
 #include "brushexport/BrushExportOBJ.h"
 #include "dialogs/about.h"
 #include "dialogs/findbrush.h"
@@ -1581,7 +1581,6 @@ void MainFrame::Create (void)
 	GlobalXYWnd().setActiveXY(xyWnd);
 
 	PreferencesDialog_constructWindow(window);
-	FindTextureDialog_constructWindow(window);
 
 	GlobalGrid().addGridChangeCallback(FreeCaller<XY_UpdateAllWindows>());
 
@@ -1626,7 +1625,6 @@ void MainFrame::Shutdown (void)
 	m_pCamWnd = 0;
 
 	PreferencesDialog_destroyWindow();
-	FindTextureDialog_destroyWindow();
 
 	 // Stop the AutoSaver class from being called
 	map::AutoSaver().stopTimer();
@@ -1831,6 +1829,7 @@ void MainFrame_Construct (void)
 
 	GlobalEventManager().addCommand("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
 
+	GlobalEventManager().addCommand("FindReplaceTextures", FreeCaller<ui::FindAndReplaceShader::showDialog>());
 	GlobalEventManager().addCommand("ShowCommandList", FreeCaller<ShowCommandListDialog>());
 	GlobalEventManager().addCommand("About", FreeCaller<DoAbout>());
 	GlobalEventManager().addCommand("BugReport", FreeCaller<OpenBugReportURL> ());

@@ -155,7 +155,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
-	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/transform/TransformDialog.cpp \
 	\
@@ -169,6 +168,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/common/UMPDefinitionView.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/UFOScriptDefinitionView.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/RenderableAABB.cpp \
+	$(RADIANT_BASE)/radiant/ui/common/ShaderChooser.cpp \
+	$(RADIANT_BASE)/radiant/ui/common/ShaderSelector.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/SoundChooser.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/SoundPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
@@ -178,6 +179,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/mru/MRUMenuItem.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/splash/Splash.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/findshader/FindShader.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/commandlist/CommandList.cpp \
 	$(RADIANT_BASE)/radiant/ui/commandlist/ShortcutChooser.cpp \

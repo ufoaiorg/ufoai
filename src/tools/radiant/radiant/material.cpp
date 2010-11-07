@@ -517,6 +517,9 @@ void MaterialSystem::loadMaterials ()
 
 IShader* MaterialSystem::getMaterialForName (const std::string& name)
 {
+	if (name.empty())
+		return (IShader*)0;
+
 	MaterialShaders::iterator i = _activeMaterialShaders.find(name);
 	if (i != _activeMaterialShaders.end()) {
 		return (*i).second;
