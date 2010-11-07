@@ -251,7 +251,7 @@ class EclassManagerAPI
 		EntityClassManager m_eclassmanager;
 	public:
 		typedef EntityClassManager Type;
-		STRING_CONSTANT(Name, "ufo");
+		STRING_CONSTANT(Name, "*");
 
 		EclassManagerAPI ()
 		{

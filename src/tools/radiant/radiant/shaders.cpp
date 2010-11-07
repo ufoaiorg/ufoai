@@ -43,7 +43,7 @@ class ShadersAPI
 		ShaderSystem* m_shaders;
 	public:
 		typedef ShaderSystem Type;
-		STRING_CONSTANT(Name, "ufo");
+		STRING_CONSTANT(Name, "*");
 
 		ShadersAPI (ShadersDependencies& dependencies)
 		{

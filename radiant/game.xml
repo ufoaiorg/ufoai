@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <game
   basegame="base"
-  texturetypes="tga jpg png"
-  modeltypes="md2 md3 ase obj"
   mapcompiler_param_compile="-extra"
   mapcompiler_param_fix="-v 1 -fix"
   mapcompiler_param_check="-v 1 -check"

@@ -710,7 +710,7 @@ class TexturesDependencies: public GlobalRadiantModuleRef,
 		ImageModulesRef m_image_modules;
 	public:
 		TexturesDependencies () :
-			m_image_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes"))
+			m_image_modules("*")
 		{
 		}
 		ImageModules& getImageModules ()
@@ -745,8 +745,3 @@ class TexturesAPI
 typedef SingletonModule<TexturesAPI, TexturesDependencies> TexturesModule;
 typedef Static<TexturesModule> StaticTexturesModule;
 StaticRegisterModule staticRegisterTextures(StaticTexturesModule::instance());
-
-ImageModules& Textures_getImageModules ()
-{
-	return StaticTexturesModule::instance().getDependencies().getImageModules();
-}

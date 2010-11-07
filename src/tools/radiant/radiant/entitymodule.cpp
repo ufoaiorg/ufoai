@@ -58,7 +58,7 @@ class EntityAPI: public TypeSystemRef
 		EntityCreator* m_entity;
 	public:
 		typedef EntityCreator Type;
-		STRING_CONSTANT(Name, "ufo");
+		STRING_CONSTANT(Name, "*");
 
 		EntityAPI ()
 		{

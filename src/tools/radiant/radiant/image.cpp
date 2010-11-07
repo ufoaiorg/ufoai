@@ -26,13 +26,13 @@
 #include "ifilesystem.h"
 #include "iarchive.h"
 #include "AutoPtr.h"
+#include "plugin.h"
 
 #include "generic/reference.h"
 #include "os/path.h"
 #include "stream/stringstream.h"
 
 typedef Modules<_QERPlugImageTable> ImageModules;
-ImageModules& Textures_getImageModules ();
 
 class LoadImageVisitor: public ImageModules::Visitor
 {
@@ -79,7 +79,7 @@ Image* QERApp_LoadImage (void* environment, const std::string& name)
 	LoadImageVisitor visitor(name, image);
 
 	// Cycle through all modules and tell them to visit the local class
-	Textures_getImageModules().foreachModule(visitor);
+	Radiant_getImageModules().foreachModule(visitor);
 
 	return image;
 }

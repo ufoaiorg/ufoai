@@ -708,7 +708,7 @@ class ReferenceDependencies: public GlobalRadiantModuleRef,
 		MapModulesRef m_map_modules;
 	public:
 		ReferenceDependencies () :
-			m_model_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("modeltypes")), m_map_modules("mapufo")
+			m_model_modules("*"), m_map_modules("*")
 		{
 		}
 		ModelModules& getModelModules ()

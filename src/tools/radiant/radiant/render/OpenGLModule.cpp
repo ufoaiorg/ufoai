@@ -72,7 +72,7 @@ class ShaderCacheDependencies: public GlobalShadersModuleRef,
 		public GlobalOpenGLStateLibraryModuleRef {
 	public:
 		ShaderCacheDependencies() :
-			GlobalShadersModuleRef("ufo") {
+			GlobalShadersModuleRef("*") {
 		}
 };
 

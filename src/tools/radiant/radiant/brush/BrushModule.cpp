@@ -159,7 +159,7 @@ class BrushUFOAPI: public TypeSystemRef
 		BrushCreator* m_brushufo;
 	public:
 		typedef BrushCreator Type;
-		STRING_CONSTANT(Name, "ufo");
+		STRING_CONSTANT(Name, "*");
 
 		BrushUFOAPI ()
 		{

@@ -47,7 +47,7 @@ class MapDependencies: public GlobalRadiantModuleRef,
 {
 	public:
 		MapDependencies () :
-			GlobalBrushModuleRef("ufo"), GlobalEntityClassManagerModuleRef("ufo")
+			GlobalBrushModuleRef("*"), GlobalEntityClassManagerModuleRef("*")
 		{
 		}
 };
@@ -56,7 +56,7 @@ class MapUFOAPI: public TypeSystemRef, public MapFormat, public PrimitiveParser
 {
 	public:
 		typedef MapFormat Type;
-		STRING_CONSTANT(Name, "mapufo");
+		STRING_CONSTANT(Name, "*");
 
 		MapUFOAPI ()
 		{

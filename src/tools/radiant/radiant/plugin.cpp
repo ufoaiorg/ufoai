@@ -179,10 +179,9 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 	public:
 		RadiantDependencies () :
 			GlobalSoundManagerModuleRef("*"), GlobalUMPSystemModuleRef("*"), GlobalUFOScriptSystemModuleRef("*"),
-					GlobalMaterialSystemModuleRef("*"), GlobalEntityModuleRef("ufo"), GlobalShadersModuleRef("ufo"),
-					GlobalBrushModuleRef("ufo"), GlobalEntityClassManagerModuleRef("ufo"), m_image_modules(
-							GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes")),
-					m_map_modules("mapufo")
+					GlobalMaterialSystemModuleRef("*"), GlobalEntityModuleRef("*"), GlobalShadersModuleRef("*"),
+					GlobalBrushModuleRef("*"), GlobalEntityClassManagerModuleRef("*"), m_image_modules("*"),
+					m_map_modules("*")
 		{
 		}
 
