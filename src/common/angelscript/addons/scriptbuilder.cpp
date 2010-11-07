@@ -131,7 +131,6 @@ int CScriptBuilder::LoadScriptSection(const char *filename)
 		engine->WriteMessage(filename, 0, 0, asMSGTYPE_ERROR, msg.c_str());
 		return -1;
 	}
-
 	// Determine size of the file
 	fseek(f, 0, SEEK_END);
 	int len = ftell(f);
@@ -650,7 +649,6 @@ static const char *GetCurrentDir(char *buf, size_t size)
     if (!apppath[0])
     {
         GetModuleFileName(NULL, apppath, MAX_PATH);
-
 
         int appLen = _tcslen(apppath);
 

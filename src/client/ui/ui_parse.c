@@ -894,23 +894,6 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 	return qtrue;
 }
 
-static qboolean UI_ParseFunction (uiNode_t * node, const char **text, const char **token)
-{
-	uiAction_t **action;
-	assert(node->behaviour->isFunction);
-
-	Com_EnableFunctionScriptToken(qtrue);
-
-	action = &node->onClick;
-	*action = UI_ParseActionList(node, text, token);
-	if (*action == NULL)
-		return qfalse;
-
-	Com_EnableFunctionScriptToken(qfalse);
-
-	return (*token)[0] == '}';
-}
-
 /**
  * @todo speed up that shit
  */
@@ -929,7 +912,6 @@ static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char *
 	}
 	if ((*token)[0] != '{') {
 		Com_Printf("UI_ParseScript: '{' exprected but '%s' found.\n", *token);
-		Com_EnableFunctionScriptToken(qfalse);
 		return qfalse;
 	}
 
@@ -968,6 +950,46 @@ static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char *
 	Com_EnableFunctionScriptToken(qfalse);
 
 	return qtrue;
+}
+
+static qboolean UI_ParseFunction (uiNode_t * node, const char **text, const char **token)
+{
+	const char *errhead = "UI_ParseFunction: unexpected end of file (node";
+	uiAction_t **action;
+	assert(node->behaviour->isFunction);
+
+	*token = Com_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
+
+	if (!strcmp(*token, "angelscript")) {
+		const int result = UI_ParseScript(node, text, token);
+		Com_UnParseLastToken();
+		return result;
+	}
+
+	Com_EnableFunctionScriptToken(qtrue);
+
+	if ((*token)[0] != '{') {
+		/* read the body block start */
+		*token = Com_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+		if ((*token)[0] != '{') {
+			Com_Printf("UI_ParseFunction: node doesn't have body, token '%s' read (node \"%s\")\n", *token, UI_GetPath(node));
+			ui_global.numNodes--;
+			return qfalse;
+		}
+	}
+
+	action = &node->onClick;
+	*action = UI_ParseActionList(node, text, token);
+	if (*action == NULL)
+		return qfalse;
+
+	Com_EnableFunctionScriptToken(qfalse);
+
+	return (*token)[0] == '}';
 }
 
 /**
@@ -1050,22 +1072,22 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 {
 	qboolean result = qtrue;
 
-	if ((*token)[0] != '{') {
-		/* read the body block start */
-		*token = Com_EParse(text, errhead, node->name);
-		if (!*text)
-			return qfalse;
-		if ((*token)[0] != '{') {
-			Com_Printf("UI_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, UI_GetPath(node));
-			ui_global.numNodes--;
-			return qfalse;
-		}
-	}
-
 	/* functions are a special case */
 	if (node->behaviour->isFunction) {
 		result = UI_ParseFunction(node, text, token);
 	} else {
+
+		if ((*token)[0] != '{') {
+			/* read the body block start */
+			*token = Com_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+			if ((*token)[0] != '{') {
+				Com_Printf("UI_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, UI_GetPath(node));
+				ui_global.numNodes--;
+				return qfalse;
+			}
+		}
 
 		/* check the content */
 		*token = Com_EParse(text, errhead, node->name);
@@ -1086,7 +1108,7 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 			/* and then read all nodes */
 			while ((*token)[0] != '}') {
 
-				if (!strcmp("script", *token)) {
+				if (!strcmp("angelscript", *token)) {
 					result = UI_ParseScript(node, text, token);
 					if (!result) {
 						Com_Printf("UI_ParseNodeBody: node with bad body ignored (node \"%s\")\n", UI_GetPath(node));
@@ -1127,7 +1149,7 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 	}
 
 	/* already check on UI_ParseNodeProperties */
-	assert((*token)[0] == '}');
+	/* assert((*token)[0] == '}'); */
 	return qtrue;
 }
 

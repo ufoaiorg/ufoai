@@ -60,7 +60,7 @@ window geoscape
 		size			"1024 768"
 		onRClick		{ cmd "mn_mapaction_reset;" }
 		align			LAYOUTALIGN_FILL
-		padding-right	256
+		paddingRight	256
 	}
 
 	confunc clean_geoscape_object {

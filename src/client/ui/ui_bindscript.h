@@ -30,7 +30,7 @@ struct uiCallContext_s;
 struct uiNode_s;
 
 void UI_ParseActionScript(struct uiNode_s *node, const char *script);
-void UI_ExecuteScriptAction (struct uiAction_s *action, struct uiCallContext_s *context);
+void UI_ExecuteScriptAction (const struct uiAction_s *action, struct uiCallContext_s *context);
 void UI_InitBindScript(void);
 void UI_ShutdownBindScript(void);
 

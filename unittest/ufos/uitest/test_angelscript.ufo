@@ -15,25 +15,10 @@ window test_angelscript
 		bgcolor		"0 0 0 1"
 	}
 
-	string test1 {
-		pos		"200 60"
-		string	"t1"
-	}
-
-	string test2 {
-		pos		"200 70"
-		string	"t2"
-	}
-
-	string test3 {
-		pos		"200 80"
-		string	"t3"
-	}
-
-	string test4 {
-		pos		"200 80"
-		string	"t3"
-	}
+	string test1 {	pos		"200 60" string	"t1" }
+	string test2 {	pos		"200 70" string	"t2" }
+	string test3 {	pos		"200 80" string	"t3" }
+	string test4 {	pos		"200 80" string	"t4" }
 
 	string test5 {
 		pos		"200 80"
@@ -60,6 +45,17 @@ window test_angelscript
 		string	"t3"
 	}
 
+	string test10 { pos "200 60" string "t10" }
+	string test11 { pos "200 60" string "t11" }
+	string test12 { pos "200 70" string "t12" }
+	string test13 { pos "200 80" string "t13" }
+	string test14 { pos "200 80" string "t14" }
+
+	string test15 { pos "200 80" string "t15" }
+	string test16 { pos "200 80" string "t16" }
+	string test17 { pos "200 80" string "t17" }
+	string test18 { pos "200 80" string "t18" }
+
 	button buttonTest
 	{
 		{
@@ -68,7 +64,7 @@ window test_angelscript
 			color		".2187 .73 .23 1"
 		}
 
-		script {
+		angelscript {
 
 			void onClick() {
 				cvar@ b = getCvar("test_1");
@@ -114,6 +110,8 @@ window test_angelscript
 				node@ test_2 = getNode("test_angelscript.test5");
 				bool b = (test_1 == test_2);
 
+
+				node@ test;
 //				this copy CRASH
 //				node@ test;
 //				test = getNode("test_angelscript.test4");
@@ -150,6 +148,53 @@ window test_angelscript
 		}
 	}
 
+	button buttonTest2
+	{
+		{
+			pos "0 0"
+			size "40 40"
+		}
+
+		angelscript {
+
+			// A global thisNode is shared
+			// it point to the current node
+			// this way do not allow concurrent execution
+
+			void onMClick() {
+				color red = "1 0 0";
+				color green = "0 1 0";
+
+				node@ test10 = getNode("test_angelscript.test10");
+				if (thisNode != null) test10.color = green;
+				else test10.color = red;
+
+				node@ test11 = getNode("test_angelscript.test11");
+				if (thisNode.name == "buttonTest2") test11.color = green;
+				else test11.color = red;
+
+				node@ test12 = getNode("test_angelscript.test12");
+				if (thisNode.window.name == "test_angelscript") test12.color = green;
+				else test12.color = red;
+
+				// edit this and see the result
+				thisNode.left = 10;
+				node@ sameNode = getNode("test_angelscript.buttonTest2");
+				node@ test13 = getNode("test_angelscript.test13");
+				if (sameNode.left == 10) test13.color = green;
+				else test13.color = red;
+
+				// edit same and see this
+				node@ sameNode2 = getNode("test_angelscript.buttonTest2");
+				sameNode2.top = 11;
+				node@ test14 = getNode("test_angelscript.test14");
+				if (thisNode.top == 11) test14.color = green;
+				else test13.color = red;
+			}
+
+		}
+	}
+
 	func testNodeNavigation {
 		call *node:root.buttonTest@onMClick
 	}
@@ -177,10 +222,45 @@ window test_angelscript
 		delete *cvar:test_3
 	}
 
+	func testNodeThis {
+		call *node:root.buttonTest2@onMClick
+	}
+
+	func testFunc angelscript {
+		color red = "1 0 0";
+		color green = "0 1 0";
+
+		// ok it work
+		node@ test15 = getNode("test_angelscript.test15");
+		test15.color = green;
+
+		// thisnode is the parent node of the func
+		node@ test16 = getNode("test_angelscript.test16");
+		if (thisNode.name == "test_angelscript") test16.color = green;
+		else test16.color = red;
+	}
+
+	confunc testConFunc angelscript {
+		color red = "1 0 0";
+		color green = "0 1 0";
+
+		// ok it work
+		node@ test17 = getNode("test_angelscript.test17");
+		test17.color = green;
+
+		// thisnode is the parent node of the func
+		node@ test18 = getNode("test_angelscript.test18");
+		if (thisNode.name == "test_angelscript") test18.color = green;
+		else test18.color = red;
+	}
+
 	func onInit {
 		call *node:root.testCvar
 		call *node:root.testNodeProperties
 		call *node:root.testNodeNavigation
+		call *node:root.testNodeThis
+		call *node:root.testFunc
+		call *node:root.testConFunc
 	}
 
 }

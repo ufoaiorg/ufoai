@@ -121,14 +121,14 @@ AS_API asIScriptContext *asGetActiveContext()
 	return tld->activeContexts[tld->activeContexts.GetLength()-1];
 }
 
-void asPushActiveContext(asIScriptContext *ctx)
+static void asPushActiveContext(asIScriptContext *ctx)
 {
 	asASSERT(threadManager);
 	asCThreadLocalData *tld = threadManager->GetLocalData();
 	tld->activeContexts.PushLast(ctx);
 }
 
-void asPopActiveContext(asIScriptContext *ctx)
+static void asPopActiveContext(asIScriptContext *ctx)
 {
 	asASSERT(threadManager);
 	asCThreadLocalData *tld = threadManager->GetLocalData();
