@@ -14,11 +14,6 @@
 
 typedef std::size_t faceIndex_t;
 
-inline double quantiseInteger (double f)
-{
-	return float_to_integer(f);
-}
-
 inline double quantiseFloating (double f)
 {
 	return float_snapped(f, 1.f / (1 << 16));

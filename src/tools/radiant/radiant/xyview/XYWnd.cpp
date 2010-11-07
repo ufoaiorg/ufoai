@@ -34,10 +34,6 @@
 #include "../camera/CameraSettings.h"
 #include "../image.h"
 
-void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
-
-extern bool g_brush_always_nodraw;
-
 inline float Betwixt (float f1, float f2)
 {
 	if (f1 > f2)
@@ -581,8 +577,8 @@ void XYWnd::CameraMoved ()
 inline const std::string NewBrushDragGetTexture (void)
 {
 	const std::string& selectedTexture = GlobalTextureBrowser().getSelectedShader();
-	if (g_brush_always_nodraw)
-		return "textures/tex_common/nodraw";
+	if (GlobalXYWnd().alwaysCaulkForNewBrushes())
+		return GlobalXYWnd().getCaulkTexture();
 	return selectedTexture;
 }
 

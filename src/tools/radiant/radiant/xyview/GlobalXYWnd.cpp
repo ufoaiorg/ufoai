@@ -26,6 +26,8 @@ XYWndManager::XYWndManager() :
 	GlobalRegistry().addKeyObserver(this, RKEY_SHOW_AXES);
 	GlobalRegistry().addKeyObserver(this, RKEY_SHOW_WORKZONE);
 	GlobalRegistry().addKeyObserver(this, RKEY_DEFAULT_BLOCKSIZE);
+	GlobalRegistry().addKeyObserver(this, RKEY_ALWAYS_CAULK_FOR_NEW_BRUSHES);
+	GlobalRegistry().addKeyObserver(this, RKEY_CAULK_TEXTURE);
 
 	// Trigger loading the values of the observed registry keys
 	keyChanged();
@@ -85,6 +87,7 @@ void XYWndManager::registerCommands() {
 	GlobalEventManager().addRegistryToggle("ShowWindowOutline", RKEY_SHOW_OUTLINE);
 	GlobalEventManager().addRegistryToggle("ShowAxes", RKEY_SHOW_AXES);
 	GlobalEventManager().addRegistryToggle("ShowWorkzone", RKEY_SHOW_WORKZONE);
+	GlobalEventManager().addRegistryToggle("ToggleAlwaysCaulk", RKEY_ALWAYS_CAULK_FOR_NEW_BRUSHES);
 }
 
 void XYWndManager::constructPreferencePage(PreferenceGroup& group) {
@@ -102,6 +105,7 @@ void XYWndManager::constructPreferencePage(PreferenceGroup& group) {
 	page->appendCheckBox("", _("Show Axes"), RKEY_SHOW_AXES);
 	page->appendCheckBox("", _("Show Window Outline"), RKEY_SHOW_OUTLINE);
 	page->appendCheckBox("", _("Show Workzone"), RKEY_SHOW_WORKZONE);
+	page->appendCheckBox("", _("Always caulk for new brushes"), RKEY_ALWAYS_CAULK_FOR_NEW_BRUSHES);
 }
 
 // Load/Reload the values from the registry
@@ -117,6 +121,8 @@ void XYWndManager::keyChanged() {
 	_showAxes = (GlobalRegistry().get(RKEY_SHOW_AXES) == "1");
 	_showWorkzone = (GlobalRegistry().get(RKEY_SHOW_WORKZONE) == "1");
 	_defaultBlockSize = (GlobalRegistry().getInt(RKEY_DEFAULT_BLOCKSIZE));
+	_alwaysCaulkForNewBrushes = (GlobalRegistry().get(RKEY_ALWAYS_CAULK_FOR_NEW_BRUSHES) == "1");
+	_caulkTexture = (GlobalRegistry().get(RKEY_CAULK_TEXTURE) == "1");
 
 	updateAllViews();
 }
@@ -163,6 +169,14 @@ bool XYWndManager::showGrid() const {
 
 bool XYWndManager::showSizeInfo() const {
 	return _showSizeInfo;
+}
+
+std::string XYWndManager::getCaulkTexture() const {
+	return _caulkTexture;
+}
+
+bool XYWndManager::alwaysCaulkForNewBrushes() const {
+	return _alwaysCaulkForNewBrushes;
 }
 
 void XYWndManager::updateAllViews() {

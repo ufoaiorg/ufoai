@@ -89,6 +89,8 @@
 			<showOutline value="0" />
 			<showAxes value="1" />
 			<showWorkzone value="0" />
+			<alwaysCaulkForNewBrushes value="1" />
+			<caulkTexture value="textures/tex_common/nodraw" />
 			<overlay>
 				<visible value="0" />
 				<transparency value="0.3" />

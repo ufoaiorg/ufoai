@@ -40,8 +40,6 @@
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 
-bool g_brush_always_nodraw = false;
-
 BrushModuleClass::BrushModuleClass():_textureLockEnabled(GlobalRegistry().get(RKEY_ENABLE_TEXTURE_LOCK) == "1")
 {
 	GlobalRegistry().addKeyObserver(this, RKEY_ENABLE_TEXTURE_LOCK);
@@ -49,20 +47,6 @@ BrushModuleClass::BrushModuleClass():_textureLockEnabled(GlobalRegistry().get(RK
 	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
 	GlobalPreferenceSystem().addConstructor(this);
 }
-
-#if 0
-void Face_importSnapPlanes (bool value)
-{
-	Face::m_quantise = value ? quantiseInteger : quantiseFloating;
-}
-typedef FreeCaller1<bool, Face_importSnapPlanes> FaceImportSnapPlanesCaller;
-
-void Face_exportSnapPlanes (const BoolImportCallback& importer)
-{
-	importer(Face::m_quantise == quantiseInteger);
-}
-typedef FreeCaller1<const BoolImportCallback&, Face_exportSnapPlanes> FaceExportSnapPlanesCaller;
-#endif
 
 void BrushModuleClass::constructPreferencePage (PreferenceGroup& group)
 {
@@ -73,10 +57,6 @@ void BrushModuleClass::constructPreferencePage (PreferenceGroup& group)
 
 	// The checkbox to enable/disable the texture lock option
 	page->appendCheckBox("", _("Enable Texture Lock"), "user/ui/brush/textureLock");
-
-	//page->appendCheckBox("", _("Snap planes to integer grid"), FaceImportSnapPlanesCaller(),
-	//		FaceExportSnapPlanesCaller());
-	//page->appendCheckBox("", _("Always use nodraw for new brushes"), g_brush_always_nodraw);
 }
 
 void BrushModuleClass::construct ()
@@ -89,9 +69,6 @@ void BrushModuleClass::construct ()
 
 	Brush::m_maxWorldCoord = GlobalRegistry().getFloat("game/defaults/maxWorldCoord");
 	BrushInstance::m_counter = &g_brushCount;
-
-//	GlobalPreferenceSystem().registerPreference("BrushSnapPlanes", makeBoolStringImportCallback(
-//			FaceImportSnapPlanesCaller()), makeBoolStringExportCallback(FaceExportSnapPlanesCaller()));
 }
 
 void BrushModuleClass::destroy ()
@@ -156,10 +133,6 @@ void BrushModuleClass::setTextureLock(bool enabled) {
 
 void BrushModuleClass::toggleTextureLock() {
 	setTextureLock(!textureLockEnabled());
-
-//	if (g_pParentWnd != 0) {
-//		g_pParentWnd->setGridStatus();
-//	}
 }
 
 BrushModuleClass* GlobalBrush ()

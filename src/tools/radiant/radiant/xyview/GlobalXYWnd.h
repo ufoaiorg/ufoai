@@ -23,6 +23,8 @@ const std::string RKEY_SHOW_OUTLINE = "user/ui/xyview/showOutline";
 const std::string RKEY_SHOW_AXES = "user/ui/xyview/showAxes";
 const std::string RKEY_SHOW_WORKZONE = "user/ui/xyview/showWorkzone";
 const std::string RKEY_DEFAULT_BLOCKSIZE = "user/ui/xyview/defaultBlockSize";
+const std::string RKEY_ALWAYS_CAULK_FOR_NEW_BRUSHES = "user/ui/xyview/alwaysCaulkForNewBrushes";
+const std::string RKEY_CAULK_TEXTURE = "user/ui/xyview/caulkTexture";
 
 typedef std::list<XYWnd*> XYWndList;
 }
@@ -48,6 +50,9 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 		bool _showOutline;
 		bool _showAxes;
 		bool _showWorkzone;
+		bool _alwaysCaulkForNewBrushes;
+
+		std::string _caulkTexture;
 
 		unsigned int _defaultBlockSize;
 
@@ -75,6 +80,9 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 		bool showAxes() const;
 		bool showWorkzone() const;
 		bool showSizeInfo() const;
+		bool alwaysCaulkForNewBrushes() const;
+
+		std::string getCaulkTexture() const;
 
 		unsigned int defaultBlockSize() const;
 
