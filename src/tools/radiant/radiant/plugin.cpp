@@ -203,7 +203,7 @@ class Radiant: public TypeSystemRef
 		{
 			Preferences_Init();
 
-			/** @todo Add soundtypes support into ufoai.game */
+			/** @todo Add soundtypes support into game.xml */
 			GlobalFiletypes().addType("sound", "wav", filetype_t("PCM sound files", "*.wav"));
 			GlobalFiletypes().addType("sound", "ogg", filetype_t("OGG sound files", "*.ogg"));
 

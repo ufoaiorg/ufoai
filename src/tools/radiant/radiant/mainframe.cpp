@@ -428,7 +428,7 @@ void populateRegistry ()
 	}
 
 	// Construct the filename and load it into the registry
-	const std::string filename = AppPath_get() + "games/ufoai.game";
+	const std::string filename = AppPath_get() + "game.xml";
 	GlobalRegistry().importFromFile(filename, "");
 
 	// Load user preferences, these overwrite any values that have defined before

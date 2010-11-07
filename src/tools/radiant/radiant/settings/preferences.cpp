@@ -93,7 +93,7 @@ CGameDescription::CGameDescription (xmlDocPtr pDoc, const std::string& gameFile)
 		pNode = pNode->next;
 
 	if (!pNode)
-		gtkutil::errorDialog(_("Didn't find 'game' node in ufoai.game file\n"));
+		gtkutil::errorDialog(_("Didn't find 'game' node in game.xml file\n"));
 
 	for (xmlAttrPtr attr = pNode->properties; attr != 0; attr = attr->next) {
 		m_gameDescription.insert(GameDescription::value_type(xmlAttr_getName(attr), xmlAttr_getValue(attr)));
@@ -173,7 +173,7 @@ void CGameDialog::Reset ()
  */
 void CGameDialog::Init ()
 {
-	std::string strGameFilename = AppPath_get() + "games/ufoai.game";
+	std::string strGameFilename = AppPath_get() + "game.xml";
 
 	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
 	if (pDoc) {
@@ -182,7 +182,7 @@ void CGameDialog::Init ()
 		//GlobalRegistry().importFromFile(strGameFilename, "");
 		xmlFreeDoc(pDoc);
 	} else {
-		gtkutil::errorDialog(_("XML parser failed ufoai.game"));
+		gtkutil::errorDialog(_("XML parser failed game.xml"));
 	}
 }
 
@@ -473,9 +473,7 @@ GtkWindow* PrefsDlg::BuildDialog ()
 					gtk_container_add(GTK_CONTAINER (sc_win), view);
 
 					{
-						/********************************************************************/
-						/* Add preference tree options                                      */
-						/********************************************************************/
+						// Add preference tree options
 						PreferencePages_addPage(m_notebook, _("Front Page"));
 
 						{

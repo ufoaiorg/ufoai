@@ -29,7 +29,7 @@ namespace scripts
 			return false;
 		}
 
-		TextFileInputStream file(GlobalRadiant().getAppPath() + "games/mapdef.template");
+		TextFileInputStream file(GlobalRadiant().getAppPath() + "mapdef.template");
 		if (!file.failed()) {
 			ui::UFOScriptEditor editor("ufos/maps.ufo", file.getString());
 			editor.show();
