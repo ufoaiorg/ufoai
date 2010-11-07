@@ -51,16 +51,16 @@ ModelModules& ReferenceAPI_getModelModules ();
 #include "container/hashfunc.h"
 #include "os/path.h"
 #include "stream/textfilestream.h"
-#include "referencecache/nullmodel.h"
+#include "nullmodel.h"
 #include "maplib.h"
 #include "stream/stringstream.h"
 #include "os/file.h"
 #include "moduleobserver.h"
 #include "moduleobservers.h"
 
-#include "mainframe.h"
-#include "map/map.h"
-#include "filetypes.h"
+#include "../mainframe.h"
+#include "../map/map.h"
+#include "../filetypes.h"
 
 static bool References_Saved ();
 

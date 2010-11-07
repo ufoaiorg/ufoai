@@ -4,7 +4,7 @@
 #include "gtkutil/GLWidgetSentry.h"
 #include "gtkutil/image.h"
 #include "os/path.h"
-#include "../../referencecache.h"
+#include "../../referencecache/referencecache.h"
 #include "math/aabb.h"
 #include "../Icons.h"
 

@@ -79,7 +79,7 @@
 #include "mainframe.h"
 #include "settings/preferences.h"
 #include "environment.h"
-#include "referencecache.h"
+#include "referencecache/referencecache.h"
 #include "stacktrace.h"
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"

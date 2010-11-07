@@ -100,7 +100,7 @@
 #include "textures.h"
 #include "url.h"
 #include "windowobservers.h"
-#include "referencecache.h"
+#include "referencecache/referencecache.h"
 #include "levelfilters.h"
 #include "sound/SoundManager.h"
 #include "ui/Icons.h"

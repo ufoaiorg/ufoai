@@ -72,7 +72,7 @@
 #include "../xyview/GlobalXYWnd.h"
 #include "../mainframe.h"
 #include "../settings/preferences.h"
-#include "../referencecache.h"
+#include "../referencecache/referencecache.h"
 #include "../ui/mru/MRU.h"
 #include "AutoSaver.h"
 #include "../brush/brush.h"

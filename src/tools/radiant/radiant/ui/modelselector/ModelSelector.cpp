@@ -7,7 +7,7 @@
 #include "ifilesystem.h"
 #include "iradiant.h"
 #include "iregistry.h"
-#include "../../referencecache.h"
+#include "../../referencecache/referencecache.h"
 #include "os/path.h"
 #include "../Icons.h"
 #include <cmath>

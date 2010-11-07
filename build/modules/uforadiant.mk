@@ -34,9 +34,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/parse.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
-	$(RADIANT_BASE)/radiant/settings/preferences.cpp \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
-	$(RADIANT_BASE)/radiant/referencecache.cpp \
 	$(RADIANT_BASE)/radiant/scenegraph.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/selection.cpp \
@@ -55,6 +53,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
+	$(RADIANT_BASE)/radiant/settings/preferences.cpp \
+	\
 	$(RADIANT_BASE)/radiant/clipper/ClipPoint.cpp \
 	$(RADIANT_BASE)/radiant/clipper/Clipper.cpp \
 	\
@@ -70,6 +70,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/render/OpenGLModule.cpp \
 	\
 	$(RADIANT_BASE)/radiant/referencecache/nullmodel.cpp \
+	$(RADIANT_BASE)/radiant/referencecache/referencecache.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ufoscript/UFOScript.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/common/Parser.cpp \
