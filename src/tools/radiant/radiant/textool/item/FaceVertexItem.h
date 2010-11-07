@@ -5,9 +5,6 @@
 #include "math/aabb.h"
 #include "../TexToolItem.h"
 
-
-namespace selection {
-
 namespace textool
 {
 
@@ -53,7 +50,5 @@ private:
 };
 
 } // namespace textool
-
-} // namespace selection
 
 #endif /* FACE_VERTEX_ITEM_H_ */

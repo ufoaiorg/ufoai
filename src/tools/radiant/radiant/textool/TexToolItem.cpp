@@ -1,7 +1,6 @@
 #include "TexToolItem.h"
 
-namespace selection {
-	namespace textool {
+namespace textool {
 
 void TexToolItem::addChild(TexToolItem* child) {
 	_children.push_back(child);
@@ -138,5 +137,4 @@ void TexToolItem::update() {
 	}
 }
 
-	} // namespace textool
-} // namespace selection
+} // namespace textool

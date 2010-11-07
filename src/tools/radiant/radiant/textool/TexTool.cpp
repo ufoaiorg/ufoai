@@ -197,8 +197,8 @@ void TexTool::rescanSelection() {
 
 			for (std::size_t i = 0; i < brushList.size(); i++) {
 				// Allocate a new BrushItem on the heap (shared_ptr)
-				selection::textool::TexToolItem* brushItem(
-					new selection::textool::BrushItem(*brushList[i])
+				textool::TexToolItem* brushItem(
+					new textool::BrushItem(*brushList[i])
 				);
 
 				// Add it to the list
@@ -211,8 +211,8 @@ void TexTool::rescanSelection() {
 
 		for (std::size_t i = 0; i < faceList.size(); i++) {
 			// Allocate a new FaceItem on the heap (shared_ptr)
-			selection::textool::TexToolItem* faceItem(
-				new selection::textool::FaceItem(*faceList[i])
+			textool::TexToolItem* faceItem(
+				new textool::FaceItem(*faceList[i])
 			);
 
 			// Add it to the list
@@ -286,7 +286,7 @@ int TexTool::countSelected() {
 	int selCount = 0;
 
 	// Create the visitor class and let it walk
-	selection::textool::SelectedCounter counter(selCount);
+	textool::SelectedCounter counter(selCount);
 	foreachItem(counter);
 
 	return selCount;
@@ -301,7 +301,7 @@ bool TexTool::setAllSelected(bool selected) {
 	}
 	else {
 		// Clear the selection using a visitor class
-		selection::textool::SetSelectedWalker visitor(selected);
+		textool::SetSelectedWalker visitor(selected);
 		foreachItem(visitor);
 
 		// Redraw to visualise the changes
@@ -372,10 +372,10 @@ void TexTool::drawUVCoords() {
 	}
 }
 
-selection::textool::TexToolItemVec
-	TexTool::getSelectables(const selection::Rectangle& rectangle)
+textool::TexToolItemVec
+	TexTool::getSelectables(const textool::Rectangle& rectangle)
 {
-	selection::textool::TexToolItemVec selectables;
+	textool::TexToolItemVec selectables;
 
 	// Cycle through all the toplevel items and test them for selectability
 	for (std::size_t i = 0; i < _items.size(); i++) {
@@ -388,7 +388,7 @@ selection::textool::TexToolItemVec
 	// residing within the test rectangle
 	for (std::size_t i = 0; i < _items.size(); i++) {
 		// Get the list from each item
-		selection::textool::TexToolItemVec found =
+		textool::TexToolItemVec found =
 			_items[i]->getSelectableChildren(rectangle);
 
 		// and append the vector to the existing vector
@@ -398,10 +398,10 @@ selection::textool::TexToolItemVec
 	return selectables;
 }
 
-selection::textool::TexToolItemVec TexTool::getSelectables(const Vector2& coords) {
+textool::TexToolItemVec TexTool::getSelectables(const Vector2& coords) {
 	// Construct a test rectangle with 2% of the width/height
 	// of the visible texture space
-	selection::Rectangle testRectangle;
+	textool::Rectangle testRectangle;
 
 	Vector3 extents = getVisibleTexSpace().extents * _zoomFactor;
 
@@ -465,7 +465,7 @@ void TexTool::doMouseUp(const Vector2& coords, GdkEventButton* event) {
 		// The minimim rectangle diameter for a rectangle test (3 % of visible texspace)
 		float minDist = _texSpaceAABB.extents[0] * _zoomFactor * 0.03;
 
-		selection::textool::TexToolItemVec selectables;
+		textool::TexToolItemVec selectables;
 
 		if ((coords - _selectionRectangle.topLeft).getLength() < minDist) {
 			// Perform a point selection test
@@ -545,7 +545,7 @@ void TexTool::doMouseDown(const Vector2& coords, GdkEventButton* event) {
 
 	if (observerEvent == ui::obsManipulate) {
 		// Get the list of selectables of this point
-		selection::textool::TexToolItemVec selectables = getSelectables(coords);
+		textool::TexToolItemVec selectables = getSelectables(coords);
 
 		// Any selectables under the mouse pointer?
 		if (!selectables.empty()) {
@@ -566,7 +566,7 @@ void TexTool::doMouseDown(const Vector2& coords, GdkEventButton* event) {
 	}
 }
 
-void TexTool::foreachItem(selection::textool::ItemVisitor& visitor) {
+void TexTool::foreachItem(textool::ItemVisitor& visitor) {
 	for (std::size_t i = 0; i < _items.size(); i++) {
 		// Visit the class
 		visitor.visit(_items[i]);
@@ -731,7 +731,7 @@ gboolean TexTool::onExpose(GtkWidget* widget, GdkEventExpose* event, TexTool* se
 
 	if (self->_dragRectangle) {
 		// Create a working reference to save typing
-		selection::Rectangle& rectangle = self->_selectionRectangle;
+		textool::Rectangle& rectangle = self->_selectionRectangle;
 
 		// Define the blend function for transparency
 		glEnable(GL_BLEND);

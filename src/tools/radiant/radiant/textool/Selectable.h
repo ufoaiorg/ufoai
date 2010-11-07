@@ -5,8 +5,7 @@
 #include "math/aabb.h"
 #include "Rectangle.h"
 
-namespace selection {
-	namespace textool {
+namespace textool {
 
 class Selectable
 {
@@ -60,7 +59,5 @@ public:
 }; // class Selectable
 
 } // namespace TexTool
-
-} // namespace selection
 
 #endif /*TEXTOOL_SELECTABLE_H_*/

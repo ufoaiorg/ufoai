@@ -2,8 +2,7 @@
 
 #include "FaceItem.h"
 
-namespace selection {
-	namespace textool {
+namespace textool {
 
 class FaceItemCreator :
 	public BrushVisitor
@@ -37,5 +36,4 @@ void BrushItem::beginTransformation() {
 	_sourceBrush.undoSave();
 }
 
-	} // namespace TexTool
-} // namespace selection
+} // namespace TexTool

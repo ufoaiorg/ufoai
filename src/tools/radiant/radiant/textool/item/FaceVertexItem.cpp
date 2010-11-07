@@ -5,8 +5,6 @@
 
 #include "FaceItem.h"
 
-namespace selection {
-
 namespace textool
 {
 
@@ -170,5 +168,3 @@ void FaceVertexItem::render()
 }
 
 } // namespace textool
-
-} // namespace selection
