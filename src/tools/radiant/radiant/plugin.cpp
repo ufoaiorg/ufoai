@@ -47,9 +47,7 @@
 #include "brush/TexDef.h"
 #include "ibrush.h"
 #include "iimage.h"
-#include "itoolbar.h"
 #include "iregistry.h"
-#include "iplugin.h"
 #include "imaterial.h"
 #include "iump.h"
 #include "iufoscript.h"
@@ -177,8 +175,6 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;
-		ToolbarModulesRef m_toolbar_modules;
-		PluginModulesRef m_plugin_modules;
 
 	public:
 		RadiantDependencies () :
@@ -186,7 +182,7 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 					GlobalMaterialSystemModuleRef("*"), GlobalEntityModuleRef("ufo"), GlobalShadersModuleRef("ufo"),
 					GlobalBrushModuleRef("ufo"), GlobalEntityClassManagerModuleRef("ufo"), m_image_modules(
 							GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes")),
-					m_map_modules("mapufo"), m_toolbar_modules("*"), m_plugin_modules("*")
+					m_map_modules("mapufo")
 		{
 		}
 
@@ -197,14 +193,6 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		MapModules& getMapModules ()
 		{
 			return m_map_modules.get();
-		}
-		ToolbarModules& getToolbarModules ()
-		{
-			return m_toolbar_modules.get();
-		}
-		PluginModules& getPluginModules ()
-		{
-			return m_plugin_modules.get();
 		}
 };
 
@@ -325,12 +313,4 @@ ImageModules& Radiant_getImageModules ()
 MapModules& Radiant_getMapModules ()
 {
 	return g_RadiantDependencies->getMapModules();
-}
-ToolbarModules& Radiant_getToolbarModules ()
-{
-	return g_RadiantDependencies->getToolbarModules();
-}
-PluginModules& Radiant_getPluginModules ()
-{
-	return g_RadiantDependencies->getPluginModules();
 }

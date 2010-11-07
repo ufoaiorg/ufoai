@@ -22,7 +22,6 @@
 #if !defined(INCLUDED_ICAMERA_H)
 #define INCLUDED_ICAMERA_H
 
-#include "iplugin.h"
 #include "math/Vector3.h"
 #include "scenelib.h"
 enum

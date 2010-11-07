@@ -44,7 +44,6 @@
 #include "iundo.h"
 #include "ifilter.h"
 #include "iradiant.h"
-#include "itoolbar.h"
 #include "iregistry.h"
 #include "editable.h"
 #include "ientity.h"
@@ -94,7 +93,6 @@
 #include "map/map.h"
 #include "ump.h"
 #include "plugin.h"
-#include "plugin/PluginManager.h"
 #include "settings/preferences.h"
 #include "qe3.h"
 #include "render/OpenGLRenderSystem.h"
@@ -1419,8 +1417,6 @@ void MainFrame::Create (void)
 	m_position_tracker.connect(window);
 
 	g_MainWindowActive.connect(window);
-
-	GetPlugInMgr().Init(GTK_WIDGET(window));
 
 	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(window), vbox);

@@ -151,7 +151,6 @@
 		<Unit filename="..\..\src\tools\radiant\include\imodel.h" />
 		<Unit filename="..\..\src\tools\radiant\include\ioverlay.h" />
 		<Unit filename="..\..\src\tools\radiant\include\iparticles.h" />
-		<Unit filename="..\..\src\tools\radiant\include\iplugin.h" />
 		<Unit filename="..\..\src\tools\radiant\include\iradiant.h" />
 		<Unit filename="..\..\src\tools\radiant\include\ireference.h" />
 		<Unit filename="..\..\src\tools\radiant\include\iregistry.h" />
@@ -166,7 +165,6 @@
 		<Unit filename="..\..\src\tools\radiant\include\itexdef.h" />
 		<Unit filename="..\..\src\tools\radiant\include\itextstream.h" />
 		<Unit filename="..\..\src\tools\radiant\include\itextures.h" />
-		<Unit filename="..\..\src\tools\radiant\include\itoolbar.h" />
 		<Unit filename="..\..\src\tools\radiant\include\iufoscript.h" />
 		<Unit filename="..\..\src\tools\radiant\include\iuimanager.h" />
 		<Unit filename="..\..\src\tools\radiant\include\iump.h" />
@@ -599,11 +597,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\RoutingRenderable.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\plugin.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\plugin.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\plugin\PluginManager.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\plugin\PluginManager.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\plugin\PluginSlots.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\plugin\PluginSlots.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\plugin\PluginsVisitor.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\qe3.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\qe3.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\radiant.rc">

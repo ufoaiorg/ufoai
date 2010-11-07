@@ -28,8 +28,6 @@
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
 
-#include "iplugin.h"
-
 // Needed for the split algorithm
 typedef std::vector<std::string> stringParts;
 

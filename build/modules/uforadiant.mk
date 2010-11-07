@@ -140,9 +140,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/algorithm/Shader.cpp \
 	$(RADIANT_BASE)/radiant/selection/algorithm/Transformation.cpp \
 	\
-	$(RADIANT_BASE)/radiant/plugin/PluginManager.cpp \
-	$(RADIANT_BASE)/radiant/plugin/PluginSlots.cpp \
-	\
 	$(RADIANT_BASE)/radiant/sidebar/sidebar.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entitylist.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector.cpp \
