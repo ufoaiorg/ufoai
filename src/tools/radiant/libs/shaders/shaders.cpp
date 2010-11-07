@@ -72,8 +72,6 @@
 #include "archivelib.h"
 #include "imagelib.h"
 
-static const std::string g_texturePrefix = "textures/";
-
 static Callback g_ActiveShadersChangedNotify;
 
 // Maps of names to corresponding GtkTreeIter* nodes, for both intermediate
@@ -580,8 +578,13 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver {
 	private:
 
 		shaders_t::iterator g_ActiveShadersIterator;
+		const std::string g_texturePrefix;
 
 	public:
+
+		UFOShaderSystem() : g_texturePrefix("textures/")
+		{
+		}
 
 		void realise() {
 			if (--g_shaders_unrealised == 0) {
