@@ -220,7 +220,7 @@ void ToolsCheckErrors (void)
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox(0, _("Nothing to check in this map\n"), _("Map compiling"), eMB_OK, eMB_ICONERROR);
+		gtkutil::errorDialog(_("Nothing to check in this map\n"));
 		return;
 	}
 
@@ -323,8 +323,7 @@ void ToolsCheckErrors (void)
 			g_message("No output for checking %s\n", fullname.c_str());
 		}
 	} else {
-		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Map compiling"), eMB_OK,
-				eMB_ICONERROR);
+		gtkutil::errorDialog(_("Could not find the mapcompiler check your path settings\n"));
 	}
 }
 
@@ -384,8 +383,7 @@ void ToolsGenerateMaterials (void)
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox(0, _("Nothing to generate materials from in this map\n"), _("Generate Materials"), eMB_OK,
-				eMB_ICONERROR);
+		gtkutil::errorDialog(_("Nothing to generate materials from in this map\n"));
 		return;
 	}
 
@@ -410,8 +408,7 @@ void ToolsGenerateMaterials (void)
 			GlobalMaterialSystem()->showMaterialDefinition();
 		}
 	} else {
-		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Generate Materials"),
-				eMB_OK, eMB_ICONERROR);
+		gtkutil::errorDialog(_("Could not find the mapcompiler check your path settings\n"));
 	}
 }
 
@@ -425,7 +422,7 @@ void ToolsCompile (void)
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox(0, _("Nothing to compile in this map\n"), _("Map compiling"), eMB_OK, eMB_ICONERROR);
+		gtkutil::errorDialog(_("Nothing to compile in this map\n"));
 		return;
 	}
 
@@ -447,7 +444,6 @@ void ToolsCompile (void)
 		g_warning("cnt: %i (%s)\n", cnt, fullname.c_str());
 		cnt = 0;
 	} else {
-		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Map compiling"), eMB_OK,
-				eMB_ICONERROR);
+		gtkutil::errorDialog(_("Could not find the mapcompiler check your path settings\n"));
 	}
 }
