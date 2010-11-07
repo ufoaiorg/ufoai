@@ -95,6 +95,7 @@ ToggleItem g_showModelBB_button(g_showModelBB_button_callback);
 
 void Model_RegisterToggles (void)
 {
+	/** @todo mattn - convert to XMLRegistry */
 //	GlobalToggles_insert("ToggleShowModelBoundingBox", FreeCaller<pico_toggleShowModelBoundingBoxes> (),
 //			ToggleItem::AddCallbackCaller(g_showModelBB_button), Accelerator('B'));
 //	GlobalToggles_insert("ToggleShowModelNormals", FreeCaller<pico_toggleShowModelNormals> (),
