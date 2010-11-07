@@ -58,6 +58,11 @@
 		<textures>
 			<defaultTextureScale value="0.5" />
 
+			<browser>
+				<hideUnused value="0" />
+				<hideInvalid value="1" />
+			</browser>
+
 			<texTool>
 				<gridActive value="1" />
 				<faceVertexScalePivotIsCentroid value="0" />
