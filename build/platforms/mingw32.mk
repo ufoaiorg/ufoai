@@ -32,4 +32,4 @@ ifdef HAVE_BFD_H
 endif
 ufo2map_LDFLAGS          += -lwinmm
 ufomodel_LDFLAGS         += -lwinmm
-uforadiant_LDFLAGS       += -lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0 -mwindows
+uforadiant_LDFLAGS       += -lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0 -mwindows -static-libgcc -static-libstdc++
