@@ -49,7 +49,7 @@
 
 		<clipper>
 			<useCaulk value="1" />
-			<caulkTexture value="textures/common/nodraw" />
+			<caulkTexture value="textures/tex_common/nodraw" />
 		</clipper>
 
 		<undo>
