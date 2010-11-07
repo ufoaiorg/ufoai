@@ -352,7 +352,7 @@ static void EntityClassList_selectEntityClass (EntityClass* eclass)
 
 static void EntityInspector_appendAttribute (const std::string& name, EntityAttribute& attribute)
 {
-	GtkTable* row = DialogRow_new(name.c_str(), attribute.getWidget());
+	GtkTable* row = DialogRow_new(name, attribute.getWidget());
 	DialogVBox_packRow(g_attributeBox, GTK_WIDGET(row));
 }
 
@@ -455,8 +455,7 @@ static void EntityInspector_setEntityClass (EntityClass *eclass)
 		GlobalEntityAttributes_clear();
 
 		for (EntityClassAttributes::const_iterator i = eclass->m_attributes.begin(); i != eclass->m_attributes.end(); ++i) {
-			EntityAttribute* attribute = GlobalEntityAttributeFactory::instance().create(i->second.m_type.c_str(),
-					i->first.c_str());
+			EntityAttribute* attribute = GlobalEntityAttributeFactory::instance().create(i->second.m_type, i->first);
 			if (attribute != 0) {
 				g_entityAttributes.push_back(attribute);
 				EntityInspector_appendAttribute(EntityClassAttributePair_getName(*i), *g_entityAttributes.back());
@@ -473,7 +472,7 @@ static void EntityInspector_setEntityClass (EntityClass *eclass)
 static void EntityInspector_updateSpawnflags (void)
 {
 	int i;
-	const int f = atoi(SelectedEntity_getValueForKey("spawnflags").c_str());
+	const int f = string::toInt(SelectedEntity_getValueForKey("spawnflags"));
 	for (i = 0; i < g_spawnflag_count; ++i) {
 		const int v = !!(f & (1 << spawn_table[i]));
 
@@ -531,37 +530,37 @@ static void EntityInspector_updateKeyValueList (void)
 	EntityInspector_checkAddNewKeys();
 }
 
-void EntityInspector_updateGuiElements (void)
-{
-	g_selectedKeyValues.clear();
-	Entity_GetKeyValues_Selected(g_selectedKeyValues);
-
-	{
-		std::string classname;
-		ClassKeyValues::iterator classFirstIter = g_selectedKeyValues.begin();
-		if (classFirstIter != g_selectedKeyValues.end())
-			classname = classFirstIter->first;
-		else
-			classname = "";
-		EntityInspector_setEntityClass(GlobalEntityClassManager().findOrInsert(classname, false));
-	}
-	EntityInspector_updateSpawnflags();
-
-	EntityInspector_updateKeyValueList();
-
-	for (EntityAttributes::const_iterator i = g_entityAttributes.begin(); i != g_entityAttributes.end(); ++i) {
-		(*i)->update();
-	}
-}
-
 // Entity Inspector redraw functor
 class EntityInspectorDraw
 {
+	private:
+		void updateGuiElements (void)
+		{
+			g_selectedKeyValues.clear();
+			Entity_GetKeyValues_Selected(g_selectedKeyValues);
+
+			{
+				std::string classname;
+				ClassKeyValues::iterator classFirstIter = g_selectedKeyValues.begin();
+				if (classFirstIter != g_selectedKeyValues.end())
+					classname = classFirstIter->first;
+				else
+					classname = "";
+				EntityInspector_setEntityClass(GlobalEntityClassManager().findOrInsert(classname, false));
+			}
+			EntityInspector_updateSpawnflags();
+
+			EntityInspector_updateKeyValueList();
+
+			for (EntityAttributes::const_iterator i = g_entityAttributes.begin(); i != g_entityAttributes.end(); ++i) {
+				(*i)->update();
+			}
+		}
 		IdleDraw m_idleDraw;
 	public:
 		// Constructor
 		EntityInspectorDraw () :
-			m_idleDraw(FreeCaller<EntityInspector_updateGuiElements> ())
+			m_idleDraw(MemberCaller<EntityInspectorDraw, &EntityInspectorDraw::updateGuiElements> (*this))
 		{
 		}
 		void queueDraw (void)
@@ -721,7 +720,6 @@ static gint EntityClassList_keypress (GtkWidget* widget, GdkEventKey* event, gpo
 static void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
 {
 	int f, i;
-	char sz[32];
 
 	f = 0;
 	for (i = 0; i < g_spawnflag_count; ++i) {
@@ -729,13 +727,11 @@ static void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
 		f |= v << spawn_table[i];
 	}
 
-	sprintf(sz, "%i", f);
-	const char* value = (f == 0) ? "" : sz;
+	std::string value = (f == 0) ? "" : string::toString(f);
 
 	{
-		StringOutputStream command;
-		command << "entitySetFlags -classname " << g_current_flags->name() << "-flags " << f;
-		UndoableCommand undo(command.c_str());
+		std::string command = "entitySetFlags -classname " + g_current_flags->name() + "-flags " + string::toString(f);
+		UndoableCommand undo(command);
 
 		Scene_EntitySetKeyValue_Selected(g_current_flags->name(), "spawnflags", value);
 	}
@@ -799,10 +795,10 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	//instead of updating key/values right now, try to get default value and edit it before setting final values
 	if (columnIndex == 0 && !keyConverted.empty()) {
 		if (valueConverted.empty())
-			valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.c_str());
+			valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.toString());
 		gtk_tree_store_set(GTK_TREE_STORE(model), &iter, KEYVALLIST_COLUMN_KEY, keyConverted.c_str(),
 				KEYVALLIST_COLUMN_VALUE, valueConverted.c_str(), KEYVALLIST_COLUMN_TOOLTIP,
-				EntityInspector_getTooltipForKey(keyConverted.c_str()), -1);
+				EntityInspector_getTooltipForKey(keyConverted.toString()), -1);
 		g_currentSelectedKey = keyConverted.toString();
 		GtkTreePath* currentPath = gtk_tree_model_get_path(model, &iter);
 		GtkTreeViewColumn *column = gtk_tree_view_get_column(view, KEYVALLIST_COLUMN_VALUE);
@@ -811,7 +807,6 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 		return;
 	}
 
-	g_message("change value for %s to %s\n", keyConverted.c_str(), valueConverted.c_str());
 	if (isClassname) {
 		std::string command = "entitySetClass -class " + classnameConverted.toString() + " -newclass "
 				+ valueConverted.toString();
@@ -929,7 +924,7 @@ static void EntityKeyValueList_keyEditingStarted (GtkCellRenderer *renderer, Gtk
 			return;
 		}
 		KeyValues possibleValues = (*it).second;
-		KeyValues::const_iterator keyIter = possibleValues.find(attrib->m_type.c_str());
+		KeyValues::const_iterator keyIter = possibleValues.find(attrib->m_type);
 		/* end means we don't have it actually in this map, so this is a valid new key*/
 		if (keyIter == possibleValues.end()) {
 			gtk_list_store_append(store, &storeIter);
@@ -993,12 +988,10 @@ static void EntityKeyValueList_valueEditingStarted (GtkCellRenderer *renderer, G
 		if (editing)
 			return;
 	}
-	if (g_currentSelectedKey.empty()) {
-		g_warning("leaving updateValueCombo... no g_currentSelectedKey");
+
+	if (g_currentSelectedKey.empty())
 		return;
-	}
-	const char *key = g_currentSelectedKey.c_str();
-	if (!strcmp(key, "classname")) {
+	if (g_currentSelectedKey == "classname") {
 		EntityKeyValueList_fillValueComboWithClassnames(renderer);
 		return;
 	}
@@ -1008,7 +1001,7 @@ static void EntityKeyValueList_valueEditingStarted (GtkCellRenderer *renderer, G
 		return;
 	}
 	KeyValues possibleValues = (*it).second;
-	KeyValues::const_iterator keyIter = possibleValues.find(key);
+	KeyValues::const_iterator keyIter = possibleValues.find(g_currentSelectedKey);
 	GtkListStore* store;
 	g_object_get(renderer, "model", &store, (char*) 0);
 	gtk_list_store_clear(store);
