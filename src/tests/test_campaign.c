@@ -153,15 +153,86 @@ static base_t* CreateBase (const char *name, const vec2_t pos)
 	const campaign_t *campaign = GetCampaign();
 	base_t *base = B_GetFirstUnfoundedBase();
 
-	CU_ASSERT_FALSE(base->founded);
-
 	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+
+	CU_ASSERT_FALSE(base->founded);
 
 	RS_InitTree(campaign, qfalse);
 	B_SetUpBase(campaign, base, pos, name);
 
 	return base;
+}
+
+static void testAircraftHandling (void)
+{
+	const vec2_t destination = { 10, 10 };
+	campaign_t *campaign;
+	base_t *base;
+	aircraft_t *aircraft;
+	aircraft_t *newAircraft;
+	aircraft_t *aircraftTemplate;
+	int firstIdx;
+	int initialCount;
+	int count;
+	int newFound;
+
+	ResetCampaignData();
+
+	campaign = GetCampaign();
+
+	base = CreateBase("unittestaircraft", destination);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+
+	/** @todo we should not assume that initial base has aircraft. It's a campaign parameter */
+	aircraft = AIR_GetNextFromBase(base, NULL);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
+
+	/* aircraft should have a template */
+	aircraftTemplate = aircraft->tpl;
+	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraftTemplate);
+
+	firstIdx = aircraft->idx;
+	initialCount = AIR_BaseCountAircraft(base);
+
+	/* test deletion (part 1) */
+	AIR_DeleteAircraft(aircraft);
+	count = AIR_BaseCountAircraft(base);
+	CU_ASSERT_EQUAL(count, initialCount - 1);
+
+	/* test addition (part 1) */
+	newAircraft = AIR_NewAircraft(base, aircraftTemplate);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(newAircraft);
+	count = AIR_BaseCountAircraft(base);
+	CU_ASSERT_EQUAL(count, initialCount);
+
+	/* new aircraft assigned to the right base */
+	CU_ASSERT_EQUAL(newAircraft->homebase, base);
+
+	newFound = 0;
+	AIR_Foreach(aircraft) {
+		/* test deletion (part 2) */
+		CU_ASSERT_NOT_EQUAL(firstIdx, aircraft->idx);
+		/* for test addition (part 2) */
+		if (aircraft->idx == newAircraft->idx)
+			newFound++;
+	}
+	/* test addition (part 2) */
+	CU_ASSERT_EQUAL(newFound, 1);
+
+	/* check if AIR_Foreach iterates through all aircraft */
+	AIR_Foreach(aircraft) {
+		AIR_DeleteAircraft(aircraft);
+	}
+	aircraft = AIR_GetNextFromBase(base, NULL);
+	CU_ASSERT_PTR_NULL_FATAL(aircraft);
+	count = AIR_BaseCountAircraft(base);
+	CU_ASSERT_EQUAL(count, 0);
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 static void testEmployeeHandling (void)
@@ -903,6 +974,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testBaseBuilding) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testAircraftHandling) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == NULL)
