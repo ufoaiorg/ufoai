@@ -32,8 +32,9 @@ inline bool char_is_ascii (char c)
 }
 
 /// \brief Returns true if \p string consists entirely of ASCII characters.
-inline bool string_is_ascii (const char* string)
+inline bool string_is_ascii (const std::string& str)
 {
+	const char* string = str.c_str();
 	while (*string != '\0') {
 		if (!char_is_ascii(*string++)) {
 			return false;

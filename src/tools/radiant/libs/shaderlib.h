@@ -56,10 +56,10 @@ class shader_less_t
 		}
 };
 
-inline bool shader_valid (const char* shader)
+inline bool shader_valid (const std::string& shader)
 {
-	return string_is_ascii(shader) && strchr(shader, ' ') == 0 && strchr(shader, '\n') == 0 && strchr(shader, '\r')
-			== 0 && strchr(shader, '\t') == 0 && strchr(shader, '\v') == 0 && strchr(shader, '\\') == 0;
+	return string_is_ascii(shader) && strchr(shader.c_str(), ' ') == 0 && strchr(shader.c_str(), '\n') == 0 && strchr(shader.c_str(), '\r')
+			== 0 && strchr(shader.c_str(), '\t') == 0 && strchr(shader.c_str(), '\v') == 0 && strchr(shader.c_str(), '\\') == 0;
 }
 
 inline const std::string& GlobalTexturePrefix_get ()
