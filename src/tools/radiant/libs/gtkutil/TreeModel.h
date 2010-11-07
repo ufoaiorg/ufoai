@@ -186,6 +186,19 @@ namespace gtkutil
 							forEach (GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, gpointer vpSelf);
 
 			}; // class SelectionFinder
+
+			/**
+			 * greebo: Tries to lookup the given string in the given column of the given view.
+			 * Returns TRUE if the lookup and the selection was successful, FALSE otherwise.
+			 */
+			static bool findAndSelectString(GtkTreeView* view, const std::string& needle, int column);
+
+			/**
+			 * greebo: Tries to lookup the given integer in the given column of the given view.
+			 * Returns TRUE if the lookup and the selection was successful, FALSE otherwise
+			 */
+			static bool findAndSelectInteger(GtkTreeView* view, int needle, int column);
+
 	};
 
 } // namespace gtkutil

@@ -31,6 +31,8 @@
 #include <cstring>
 #include <cctype>
 #include <algorithm>
+#include <cstdarg>
+#include <stdio.h>
 #include <glib.h>
 #include "WildcardMatcher.h"
 
@@ -376,6 +378,19 @@ namespace string
 	{
 		std::string::size_type pos = str.find_first_of(pattern, 0);
 		return str.substr(0, pos);
+	}
+
+	inline std::string format (const std::string &msg, ...)
+	{
+		va_list ap;
+		const std::size_t size = 1024;
+		char text[size];
+
+		va_start(ap, msg);
+		vsnprintf(text, size, msg.c_str(), ap);
+		va_end(ap);
+
+		return std::string(text);
 	}
 }
 
