@@ -34,12 +34,12 @@ inline bool shader_equal (const std::string& shader, const std::string& other)
 
 inline bool shader_equal_n (const std::string& shader, const std::string& other, std::size_t n)
 {
-	return string_equal_nocase_n(shader.c_str(), other.c_str(), n);
+	return string_equal_nocase_n(shader, other, n);
 }
 
 inline bool shader_less (const std::string& shader, const std::string& other)
 {
-	return string_less_nocase(shader.c_str(), other.c_str());
+	return string_less_nocase(shader, other);
 }
 
 inline bool shader_equal_prefix (const std::string& string, const std::string& prefix)
@@ -52,7 +52,7 @@ class shader_less_t
 	public:
 		bool operator() (const std::string& shader, const std::string& other) const
 		{
-			return shader_less(shader.c_str(), other.c_str());
+			return shader_less(shader, other);
 		}
 };
 
@@ -79,7 +79,7 @@ inline const std::string shader_get_textureName (const std::string& name)
 
 inline bool texdef_name_valid (const std::string& name)
 {
-	return shader_valid(name.c_str()) && shader_is_texture(name.c_str());
+	return shader_valid(name) && shader_is_texture(name);
 }
 
 #endif

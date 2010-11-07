@@ -295,11 +295,6 @@ inline void Eclass_Free (EntityClass* e)
 	delete e;
 }
 
-inline bool classname_equal (const std::string& classname, const std::string& other)
-{
-	return string_equal(classname, other);
-}
-
 inline EntityClass* EClass_Create (const std::string& name, const Vector3& colour, const std::string& comments)
 {
 	EntityClass *e = Eclass_Alloc();

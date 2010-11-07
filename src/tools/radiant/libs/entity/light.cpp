@@ -375,10 +375,8 @@ class RenderLightRadiiBox: public OpenGLRenderable
 				aabb_draw_wire(m_points);
 			}
 
-#if 1
 			//disable if you dont want lines going from the center of the light bbox to the corners
 			light_draw_box_lines(m_origin, m_points);
-#endif
 		}
 };
 
@@ -452,26 +450,6 @@ class LightShader
 		}
 };
 
-inline const BasicVector4<double>& plane3_to_vector4 (const Plane3& self)
-{
-	return reinterpret_cast<const BasicVector4<double>&> (self);
-}
-
-inline BasicVector4<double>& plane3_to_vector4 (Plane3& self)
-{
-	return reinterpret_cast<BasicVector4<double>&> (self);
-}
-
-inline Matrix4 matrix4_from_planes (const Plane3& left, const Plane3& right, const Plane3& bottom, const Plane3& top,
-		const Plane3& front, const Plane3& back)
-{
-	return Matrix4::byColumns((right.normal().x() - left.normal().x()) / 2, (top.normal().x() - bottom.normal().x()) / 2, (back.normal().x() - front.normal().x()) / 2, right.normal().x() - (right.normal().x() - left.normal().x())
-			/ 2, (right.normal().y() - left.normal().y()) / 2, (top.normal().y() - bottom.normal().y()) / 2, (back.normal().y() - front.normal().y()) / 2, right.normal().y() - (right.normal().y() - left.normal().y())
-			/ 2, (right.normal().z() - left.normal().z()) / 2, (top.normal().z() - bottom.normal().z()) / 2, (back.normal().z() - front.normal().z()) / 2, right.normal().z() - (right.normal().z() - left.normal().z())
-			/ 2, (right.dist() - left.dist()) / 2, (top.dist() - bottom.dist()) / 2, (back.dist() - front.dist()) / 2, right.dist() - (right.dist() - left.dist())
-			/ 2);
-}
-
 class Light: public OpenGLRenderable, public Cullable, public Bounded, public Editable, public Snappable
 {
 		EntityKeyValues m_entity;
@@ -534,22 +512,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			updateOrigin();
 		}
 		typedef MemberCaller<Light, &Light::originChanged> OriginChangedCaller;
-
-		void lightOriginChanged (const char* value)
-		{
-			originChanged();
-		}
-		typedef MemberCaller1<Light, const char*, &Light::lightOriginChanged> LightOriginChangedCaller;
-
-		void lightTargetChanged (const char* value)
-		{
-			m_useLightTarget = !string_empty(value);
-			if (m_useLightTarget) {
-				read_origin(m_lightTarget, value);
-			}
-			projectionChanged();
-		}
-		typedef MemberCaller1<Light, const char*, &Light::lightTargetChanged> LightTargetChangedCaller;
 
 	public:
 
@@ -658,7 +620,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			renderer.SetState(m_colour.state(), Renderer::eFullMaterials);
 			renderer.addRenderable(*this, localToWorld);
 
-			if ((g_forceLightRadii || (selected && g_lightRadii)) && string_empty(m_entity.getKeyValue("target"))) {
+			if ((g_forceLightRadii || (selected && g_lightRadii)) && m_entity.getKeyValue("target").empty()) {
 				if (renderer.getStyle() == Renderer::eFullMaterials) {
 					renderer.SetState(RenderLightRadiiFill::m_state, Renderer::eFullMaterials);
 					renderer.Highlight(Renderer::ePrimitive, false);

@@ -116,7 +116,7 @@ class TargetedEntity
 		void targetnameChanged (const std::string& name)
 		{
 			destroy();
-			m_targets = getTargetables(name.c_str());
+			m_targets = getTargetables(name);
 			construct();
 		}
 		typedef MemberCaller1<TargetedEntity, const std::string&, &TargetedEntity::targetnameChanged> TargetnameChangedCaller;
@@ -132,7 +132,7 @@ class TargetingEntity
 		}
 		void targetChanged (const std::string& target)
 		{
-			m_targets = getTargetables(target.c_str());
+			m_targets = getTargetables(target);
 		}
 		typedef MemberCaller1<TargetingEntity, const std::string&, &TargetingEntity::targetChanged> TargetChangedCaller;
 
@@ -210,7 +210,7 @@ class TargetKeys: public Entity::Observer
 		bool readTargetKey (const std::string& key, std::size_t& index)
 		{
 			/** @todo optimize string operation */
-			if (string_equal_n(key.c_str(), "target", 6)) {
+			if (string_equal_n(key, "target", 6)) {
 				index = 0;
 				if (string_empty(key.c_str() + 6) || string_parse_size(key.c_str() + 6, index)) {
 					return true;

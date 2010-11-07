@@ -45,13 +45,13 @@
 
 inline scene::Node& entity_for_eclass (EntityClass* eclass)
 {
-	if (classname_equal(eclass->name(), "misc_model")) {
+	if (eclass->name() == "misc_model") {
 		return New_MiscModel(eclass);
-	} else if (classname_equal(eclass->name(), "misc_sound")) {
+	} else if (eclass->name() == "misc_sound") {
 		return New_MiscSound(eclass);
-	} else if (classname_equal(eclass->name(), "misc_particle")) {
+	} else if (eclass->name() == "misc_particle") {
 		return New_MiscParticle(eclass);
-	} else if (classname_equal(eclass->name(), "light")) {
+	} else if (eclass->name() == "light") {
 		return New_Light(eclass);
 	} else if (!eclass->fixedsize) {
 		return New_Group(eclass);
@@ -158,9 +158,8 @@ class UFOEntityCreator: public EntityCreator
 				if (type.empty()) {
 					type = "t";
 				}
-				StringOutputStream key(64);
-				key << type << "1";
-				GlobalNamespace().makeUnique(key.c_str(), ConnectEntities::ConnectCaller(connector));
+				std::string key = type + "1";
+				GlobalNamespace().makeUnique(key, ConnectEntities::ConnectCaller(connector));
 			}
 
 			SceneChangeNotify();

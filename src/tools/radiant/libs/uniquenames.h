@@ -70,16 +70,13 @@ inline void name_write (char* buffer, name_t name)
 	name.second.write(buffer + name.first.length());
 }
 
-inline name_t name_read (const char* name)
+inline name_t name_read (const std::string& name)
 {
-	const char* end = name + strlen(name);
-	for (const char* p = end; end != name; --p) {
-		if (strrchr("1234567890", *p) == NULL)
-			break;
-		end = p;
-	}
-
-	return name_t(string::toString(string_clone_range(StringRange(name, end))), Postfix(end));
+	const std::string pattern = "1234567890";
+	std::string cut = string::cutAfterFirstMatch(name, pattern);
+	const std::size_t len = cut.length();
+	std::string post = name.substr(len, name.length() - len);
+	return name_t(cut, Postfix(post));
 }
 
 class PostFixes

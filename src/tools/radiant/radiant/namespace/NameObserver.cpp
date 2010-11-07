@@ -5,14 +5,14 @@
 void NameObserver::construct ()
 {
 	if (!empty()) {
-		m_names.insert(name_read(getName().c_str()));
+		m_names.insert(name_read(getName()));
 	}
 }
 
 void NameObserver::destroy (void)
 {
 	if (!empty()) {
-		m_names.erase(name_read(getName().c_str()));
+		m_names.erase(name_read(getName()));
 	}
 }
 

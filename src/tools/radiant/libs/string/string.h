@@ -140,27 +140,6 @@ inline void string_release (char* buffer, std::size_t length, Allocator& allocat
 	allocator.deallocate(buffer, length + 1);
 }
 
-/// \brief Returns a newly-allocated string which is a clone of \p other, using \p allocator.
-/// The returned buffer must be released with \c string_release using a matching \p allocator.
-template<typename Allocator>
-inline char* string_clone (const char* other, Allocator& allocator)
-{
-	char* copied = string_new(string_length(other), allocator);
-	std::strcpy(copied, other);
-	return copied;
-}
-
-/// \brief Returns a newly-allocated string which is a clone of [\p first, \p last), using \p allocator.
-/// The returned buffer must be released with \c string_release using a matching \p allocator.
-template<typename Allocator>
-inline char* string_clone_range (StringRange range, Allocator& allocator)
-{
-	std::size_t length = range.last - range.first;
-	char* copied = strncpy(string_new(length, allocator), range.first, length);
-	copied[length] = '\0';
-	return copied;
-}
-
 /// \brief Allocates a string buffer large enough to hold \p length characters.
 /// The returned buffer must be released with \c string_release.
 inline char* string_new (std::size_t length)
@@ -174,22 +153,6 @@ inline void string_release (char* string, std::size_t length)
 {
 	DefaultAllocator<char> allocator;
 	string_release(string, length, allocator);
-}
-
-/// \brief Returns a newly-allocated string which is a clone of \p other.
-/// The returned buffer must be released with \c string_release.
-inline char* string_clone (const char* other)
-{
-	DefaultAllocator<char> allocator;
-	return string_clone(other, allocator);
-}
-
-/// \brief Returns a newly-allocated string which is a clone of [\p first, \p last).
-/// The returned buffer must be released with \c string_release.
-inline char* string_clone_range (StringRange range)
-{
-	DefaultAllocator<char> allocator;
-	return string_clone_range(range, allocator);
 }
 
 typedef char* char_pointer;
@@ -407,6 +370,12 @@ namespace string
 		std::string tmp(str);
 		tmp.erase(std::remove(tmp.begin(), tmp.end(), ' '), tmp.end());
 		return tmp;
+	}
+
+	inline std::string cutAfterFirstMatch (const std::string& str, const std::string& pattern)
+	{
+		std::string::size_type pos = str.find_first_of(pattern, 0);
+		return str.substr(0, pos);
 	}
 }
 

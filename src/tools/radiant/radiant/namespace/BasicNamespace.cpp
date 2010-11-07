@@ -26,7 +26,7 @@ void BasicNamespace::detach (const NameCallback& setName, const NameCallbackCall
 void BasicNamespace::makeUnique (const std::string& name, const NameCallback& setName) const
 {
 	char buffer[1024];
-	name_write(buffer, m_uniqueNames.make_unique(name_read(name.c_str())));
+	name_write(buffer, m_uniqueNames.make_unique(name_read(name)));
 	setName(buffer);
 }
 
@@ -43,7 +43,7 @@ void BasicNamespace::mergeNames (const BasicNamespace& other) const
 	}
 
 	for (NameGroups::iterator i = groups.begin(); i != groups.end(); ++i) {
-		name_t uniqueName(uniqueNames.make_unique(name_read((*i).first.c_str())));
+		name_t uniqueName(uniqueNames.make_unique(name_read((*i).first)));
 		uniqueNames.insert(uniqueName);
 
 		char buffer[1024];
