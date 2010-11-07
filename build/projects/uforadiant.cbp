@@ -386,10 +386,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\pivot.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\profile\file.cpp" />
-		<Unit filename="..\..\src\tools\radiant\libs\profile\file.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\profile\profile.cpp" />
-		<Unit filename="..\..\src\tools\radiant\libs\profile\profile.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\render.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\scenelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\script\scripttokeniser.h" />

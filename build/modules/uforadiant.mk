@@ -247,8 +247,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/menu/PopupMenu.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window/PersistentTransientWindow.cpp \
 	\
-	$(RADIANT_BASE)/libs/profile/profile.cpp \
-	$(RADIANT_BASE)/libs/profile/file.cpp \
 	$(RADIANT_BASE)/libs/sound/SoundManager.cpp \
 	$(RADIANT_BASE)/libs/sound/SoundPlayer.cpp \
 	$(RADIANT_BASE)/libs/shaders/shaders.cpp \
