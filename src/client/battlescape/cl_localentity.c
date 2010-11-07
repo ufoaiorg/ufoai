@@ -575,6 +575,11 @@ void LE_DoEndPathMove (le_t *le)
 				le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength, le->team);
 
 	CL_ActorConditionalMoveCalc(le);
+	/* if the moving actor was not the selected one, */
+	/* recalc the pathing table for the selected one, too. */
+	if (!le->selected) {
+		CL_ActorConditionalMoveCalc(selActor);
+	}
 
 	/* link any floor container into the actor temp floor container */
 	floor = LE_Find(ET_ITEM, le->pos);
