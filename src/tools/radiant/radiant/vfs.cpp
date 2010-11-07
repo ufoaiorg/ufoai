@@ -526,7 +526,7 @@ class FileSystemDependencies: public GlobalRadiantModuleRef
 		ArchiveModulesRef m_archive_modules;
 	public:
 		FileSystemDependencies () :
-			m_archive_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("archivetypes"))
+			m_archive_modules("*")
 		{
 		}
 		ArchiveModules& getArchiveModules ()
