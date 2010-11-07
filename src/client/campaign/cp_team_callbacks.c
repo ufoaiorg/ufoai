@@ -195,7 +195,8 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 {
 	equipDef_t unused;
 	int p;
-	aircraft_t *aircraft, *aircraftInBase;
+	aircraft_t *aircraft;
+	aircraft_t *aircraftInBase;
 	base_t *base = B_GetCurrentSelectedBase();
 	size_t size;
 
@@ -231,9 +232,11 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/* clean up aircraft crew for upcoming mission */
 	CL_CleanTempInventory(aircraft->homebase);
 
-	aircraftInBase = NULL;
-	while ((aircraftInBase = AIR_GetNextFromBase(aircraft->homebase, aircraftInBase)) != NULL)
-		CL_CleanupAircraftCrew(aircraftInBase, &unused);
+	AIR_Foreach(aircraftInBase) {
+		/** @todo should we run this for crashed aircraft too? */
+		if (AIR_IsAircraftOfBase(aircraft, base))
+			CL_CleanupAircraftCrew(aircraftInBase, &unused);
+	}
 
 	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
 }

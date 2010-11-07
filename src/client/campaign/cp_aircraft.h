@@ -240,6 +240,9 @@ void AIR_ListAircraftSamples_f(void);
 void AIR_ListCraftIndexes_f(void);
 #endif
 
+#define AIR_IsAircraftOfBase(aircraft, base) ((aircraft)->homebase == (base) && (aircraft)->status != AIR_CRASHED)
+#define AIR_Foreach(var) LIST_Foreach(ccs.aircraft, aircraft_t, var)
+
 aircraft_t *AIR_Add(struct base_s *base, const aircraft_t *aircraftTemplate);
 qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 

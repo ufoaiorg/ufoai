@@ -845,6 +845,7 @@ static void NAT_NationList_f (void)
  * @note Called from CL_CampaignRun
  * @sa CL_CampaignRun
  * @sa B_CreateEmployee
+ * @todo This is very redundant with CL_StatsUpdate_f. Ivestigate and clean up.
  */
 void NAT_HandleBudget (const campaign_t *campaign)
 {
@@ -856,6 +857,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 	int initialCredits = ccs.credits;
 	base_t *base;
 	const salary_t *salary = &campaign->salaries;
+	aircraft_t *aircraft;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -913,12 +915,10 @@ void NAT_HandleBudget (const campaign_t *campaign)
 	}
 
 	cost = 0;
-	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
-		const salary_t *salary = &campaign->salaries;
-		aircraft_t *aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
-			cost += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
+	AIR_Foreach(aircraft) {
+		if (aircraft->status == AIR_CRASHED)
+			continue;
+		cost += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
 	}
 	totalExpenditure += cost;
 

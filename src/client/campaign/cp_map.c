@@ -270,7 +270,9 @@ static void MAP_MultiSelectExecuteAction_f (void)
  */
 void MAP_MapClick (uiNode_t* node, int x, int y)
 {
+	aircraft_t *aircraft;
 	aircraft_t *ufo;
+	base_t *base;
 	int i;
 	vec2_t pos;
 	const linkedList_t *list;
@@ -331,22 +333,17 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 				CP_MissionToTypeString(tempMission), _(tempMission->location));
 	}
 
+	/* Get selected aircraft which belong */
+	AIR_Foreach(aircraft) {
+		if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
+	}
+
 	/* Get selected bases */
-	for (i = 0; i < MAX_BASES && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
-		const base_t *base = B_GetFoundedBaseByIDX(i);
-		aircraft_t *aircraft;
-
-		if (!base)
-			continue;
-
+	base = NULL;
+	while ((base = B_GetNext(base)) != NULL && multiSelect.nbSelect < MULTISELECT_MAXSELECT) {
 		if (MAP_IsMapPositionSelected(node, base->pos, x, y))
-			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), base->name);
-
-		/* Get selected aircraft which belong to the base */
-		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
-			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, base->idx, _("Base"), base->name);
 	}
 
 	/* Get selected installations */
@@ -1115,6 +1112,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	int counter = 0;
 	int maxEventIdx;
 	const int numMissions = CP_CountMissionOnGeoscape();
+	aircraft_t *aircraft;
 	aircraft_t *ufo;
 	base_t *base;
 	int numBases = B_GetCount();
@@ -1193,18 +1191,14 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	counter += ccs.numInstallations;
 
 	/* Cycle through aircraft (only those present on geoscape) */
-	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
-		aircraft_t *aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			if (AIR_IsAircraftOnGeoscape(aircraft)) {
-				if (centerOnEventIdx == counter) {
-					MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
-					MAP_SelectAircraft(aircraft);
-					return;
-				}
-				counter++;
+	AIR_Foreach(aircraft) {
+		if (AIR_IsAircraftOnGeoscape(aircraft)) {
+			if (centerOnEventIdx == counter) {
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
+				MAP_SelectAircraft(aircraft);
+				return;
 			}
+			counter++;
 		}
 	}
 
@@ -1757,6 +1751,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	int x, y, i, installationIdx, idx;
 	const char* font;
 	aircraft_t *ufo;
+	aircraft_t *aircraft;
 	base_t *base;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
@@ -1794,17 +1789,13 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 
 	/* draw bases */
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
-		aircraft_t *aircraft;
-
+	while ((base = B_GetNextFounded(base)) != NULL)
 		MAP_DrawMapOneBase(node, base, oneUFOVisible, font);
 
-		/* draw all aircraft of base */
-		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			if (AIR_IsAircraftOnGeoscape(aircraft))
-				MAP_DrawMapOnePhalanxAircraft(node, aircraft, oneUFOVisible);
-		}
+	/* draw all aircraft */
+	AIR_Foreach(aircraft) {
+		if (AIR_IsAircraftOnGeoscape(aircraft))
+			MAP_DrawMapOnePhalanxAircraft(node, aircraft, oneUFOVisible);
 	}
 
 	/* draws ufos */

@@ -168,9 +168,8 @@ qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
 	qboolean found = qfalse;
 	aircraft_t *aircraft;
 
-	aircraft = NULL;
-	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-		if (AIR_GetPilot(aircraft) == pilot) {
+	AIR_Foreach(aircraft) {
+		if (AIR_IsAircraftOfBase(aircraft, base) && AIR_GetPilot(aircraft) == pilot) {
 			found = qtrue;
 			break;
 		}
@@ -403,6 +402,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 void AII_UpdateInstallationDelay (void)
 {
 	int j, k;
+	aircraft_t *aircraft;
 	base_t *base;
 
 	for (j = 0; j < MAX_INSTALLATIONS; j++) {
@@ -417,29 +417,25 @@ void AII_UpdateInstallationDelay (void)
 
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
-		aircraft_t *aircraft;
-
 		/* Update base */
 		for (k = 0; k < base->numBatteries; k++)
 			AII_UpdateOneInstallationDelay(base, NULL, NULL, &base->batteries[k].slot);
 		for (k = 0; k < base->numLasers; k++)
 			AII_UpdateOneInstallationDelay(base, NULL, NULL, &base->lasers[k].slot);
+	}
 
-		/* Update each aircraft */
-		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			if (AIR_IsAircraftInBase(aircraft)) {
-				/* Update electronics delay */
-				for (k = 0; k < aircraft->maxElectronics; k++)
-					AII_UpdateOneInstallationDelay(base, NULL, aircraft, aircraft->electronics + k);
-
+	/* Update each aircraft */
+	AIR_Foreach(aircraft) {
+		if (AIR_IsAircraftInBase(aircraft)) {
+			/* Update electronics delay */
+			for (k = 0; k < aircraft->maxElectronics; k++)
+				AII_UpdateOneInstallationDelay(aircraft->homebase, NULL, aircraft, aircraft->electronics + k);
 				/* Update weapons delay */
-				for (k = 0; k < aircraft->maxWeapons; k++)
-					AII_UpdateOneInstallationDelay(base, NULL, aircraft, aircraft->weapons + k);
+			for (k = 0; k < aircraft->maxWeapons; k++)
+				AII_UpdateOneInstallationDelay(aircraft->homebase, NULL, aircraft, aircraft->weapons + k);
 
-				/* Update shield delay */
-				AII_UpdateOneInstallationDelay(base, NULL, aircraft, &aircraft->shield);
-			}
+			/* Update shield delay */
+			AII_UpdateOneInstallationDelay(aircraft->homebase, NULL, aircraft, &aircraft->shield);
 		}
 	}
 }

@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_STATS_BUFFER 2048
 /**
  * @brief Shows the current stats from stats_t stats
+ * @todo This is very redundant with NAT_HandleBudget Ivestigate and clean up.
  */
 void CL_StatsUpdate_f (void)
 {
@@ -42,6 +43,7 @@ void CL_StatsUpdate_f (void)
 	base_t *base;
 	const campaign_t *campaign = ccs.curCampaign;
 	const salary_t *salary = &campaign->salaries;
+	aircraft_t *aircraft;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
@@ -102,12 +104,9 @@ void CL_StatsUpdate_f (void)
 	sum += costs;
 
 	costs = 0;
-
-	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
-		const salary_t *salary = &campaign->salaries;
-		aircraft_t *aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
+	AIR_Foreach(aircraft) {
+			if (aircraft->status == AIR_CRASHED)
+				continue;
 			costs += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
 	}
 	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));

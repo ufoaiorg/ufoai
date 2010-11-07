@@ -702,15 +702,19 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	linkedList_t *awayAircraft = NULL;
 	int numAwayAircraft;
 	int randomNum;
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 
 	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
 	if (B_FreeCapacity(base, capacity) >= 0)
 		return;
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
-	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+	AIR_Foreach(aircraft) {
 		const int aircraftSize = aircraft->size;
+
+		if (!AIR_IsAircraftOfBase(aircraft, base))
+			continue;
+
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
 			if (buildingType != B_SMALL_HANGAR)

@@ -390,8 +390,7 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
  */
 static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *ufo)
 {
-	base_t *base;
-	aircraft_t* phalanxAircraft;
+	aircraft_t *phalanxAircraft;
 	float distance = 999999.;
 
 	/* UFO never try to attack a PHALANX aircraft except if they came on earth in that aim */
@@ -413,27 +412,22 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 	}
 
 	ufo->status = AIR_TRANSIT;
-	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
-		/* check if the ufo can attack an aircraft */
-		phalanxAircraft = NULL;
-		while ((phalanxAircraft = AIR_GetNextFromBase(base, phalanxAircraft)) != NULL) {
-			/* check that aircraft is flying */
-			if (AIR_IsAircraftOnGeoscape(phalanxAircraft)) {
-				/* get the distance from ufo to aircraft */
-				const float dist = GetDistanceOnGlobe(ufo->pos, phalanxAircraft->pos);
-				/* check out of reach */
-				if (dist > MAX_DETECTING_RANGE)
-					continue;
-				/* choose the nearest target */
-				if (dist < distance) {
-					distance = dist;
-					if (UFO_SendPursuingAircraft(ufo, phalanxAircraft) && UFO_IsUFOSeenOnGeoscape(ufo)) {
-						/* stop time and notify */
-						MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse,
-								MSG_STANDARD, NULL);
-						/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
-					}
+	AIR_Foreach(phalanxAircraft) {
+		/* check that aircraft is flying */
+		if (AIR_IsAircraftOnGeoscape(phalanxAircraft)) {
+			/* get the distance from ufo to aircraft */
+			const float dist = GetDistanceOnGlobe(ufo->pos, phalanxAircraft->pos);
+			/* check out of reach */
+			if (dist > MAX_DETECTING_RANGE)
+				continue;
+			/* choose the nearest target */
+			if (dist < distance) {
+				distance = dist;
+				if (UFO_SendPursuingAircraft(ufo, phalanxAircraft) && UFO_IsUFOSeenOnGeoscape(ufo)) {
+					/* stop time and notify */
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse,
+						MSG_STANDARD, NULL);
+					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
 				}
 			}
 		}
@@ -749,6 +743,7 @@ qboolean UFO_CampaignCheckEvents (void)
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */
 		qboolean detected = qfalse;
+		aircraft_t *aircraft;
 		base_t *base;
 
 		/* don't update UFO status id UFO is landed or crashed */
@@ -758,10 +753,25 @@ qboolean UFO_CampaignCheckEvents (void)
 		/* note: We can't exit these loops as soon as we found the UFO detected
 		 * RADAR_CheckUFOSensored registers the UFO in every radars' detection list
 		 * which detect it */
+
+		/* Check if UFO is detected by an aircraft */
+		AIR_Foreach(aircraft) {
+			if (!AIR_IsAircraftOnGeoscape(aircraft))
+				continue;
+			/* maybe the ufo is already detected, don't reset it */
+			if (RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected)) {
+				const int distance = GetDistanceOnGlobe(aircraft->pos, ufo->pos);
+				detected = qtrue;
+				if (minDistance < 0 || minDistance > distance) {
+					minDistance = distance;
+					Q_strncpyz(detectedBy, aircraft->name, sizeof(detectedBy));
+				}
+			}
+		}
+
+		/* Check if UFO is detected by a base */
 		base = NULL;
 		while ((base = B_GetNextFounded(base)) != NULL) {
-			aircraft_t *aircraft;
-
 			if (!B_GetBuildingStatus(base, B_POWER))
 				continue;
 
@@ -775,23 +785,9 @@ qboolean UFO_CampaignCheckEvents (void)
 				}
 			}
 
-			/* Check if UFO is detected by an aircraft */
-			aircraft = NULL;
-			while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-				if (!AIR_IsAircraftOnGeoscape(aircraft))
-					continue;
-				/* maybe the ufo is already detected, don't reset it */
-				if (RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected)) {
-					const int distance = GetDistanceOnGlobe(aircraft->pos, ufo->pos);
-					detected = qtrue;
-					if (minDistance < 0 || minDistance > distance) {
-						minDistance = distance;
-						Q_strncpyz(detectedBy, aircraft->name, sizeof(detectedBy));
-					}
-				}
-			}
 		}
 
+		/* Check if UFO is detected by a radartower */
 		for (installationIdx = 0; installationIdx < ccs.numInstallations; installationIdx++) {
 			installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 			if (!installation)

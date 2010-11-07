@@ -87,11 +87,10 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 
 	base = employee->baseHired;
 
-	aircraft = NULL;
-	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
-		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsInAircraftTeam(aircraft, employee))
+	AIR_Foreach(aircraft) {
+		if (AIR_IsAircraftOfBase(aircraft, base) && !AIR_IsAircraftInBase(aircraft) && AIR_IsInAircraftTeam(aircraft, employee))
 			return qtrue;
-
+	}
 	return qfalse;
 }
 

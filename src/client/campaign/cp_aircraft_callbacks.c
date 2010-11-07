@@ -223,6 +223,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	UI_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
+	/** @todo This shouldn't exists. UI should use the global idx as reference */
 	/* compute the ID and... */
 	aircraftInBase = NULL;
 	id = 0;
@@ -248,9 +249,10 @@ static void AIR_AircraftUpdateList_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 	aircraft_t *aircraft;
 
-	aircraft = NULL;
-	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
-		LIST_AddString(&list, aircraft->name);
+	AIR_Foreach(aircraft) {
+		if (AIR_IsAircraftOfBase(aircraft, base))
+			LIST_AddString(&list, aircraft->name);
+	}
 
 	UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
 }
