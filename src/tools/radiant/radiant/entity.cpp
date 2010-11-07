@@ -72,11 +72,11 @@ entity_globals_t g_entity_globals;
 
 class EntitySetKeyValueSelected: public scene::Graph::Walker
 {
-		const char* m_classname;
-		const char* m_key;
-		const char* m_value;
+		const std::string& m_classname;
+		const std::string& m_key;
+		const std::string& m_value;
 	public:
-		EntitySetKeyValueSelected (const char* classname, const char* key, const char* value) :
+		EntitySetKeyValueSelected (const std::string& classname, const std::string& key, const std::string& value) :
 			m_classname(classname), m_key(key), m_value(value)
 		{
 		}
@@ -87,7 +87,7 @@ class EntitySetKeyValueSelected: public scene::Graph::Walker
 		void post (const scene::Path& path, scene::Instance& instance) const
 		{
 			Entity* entity = Node_getEntity(path.top());
-			if (entity != 0 && (!(strcmp(entity->getEntityClass().name(), m_classname))) && (instance.childSelected()
+			if (entity != 0 && entity->getEntityClass().name() == m_classname && (instance.childSelected()
 					|| Instance_getSelectable(instance)->isSelected())) {
 				entity->setKeyValue(m_key, m_value);
 			}
@@ -103,23 +103,23 @@ class EntityCopyingVisitor: public Entity::Visitor
 		{
 		}
 
-		void visit (const char* key, const char* value)
+		void visit (const std::string& key, const std::string& value)
 		{
-			if (!string_equal(key, "classname") && m_entity.getEntityClass().getAttribute(key) != NULL) {
+			if (key != "classname" && m_entity.getEntityClass().getAttribute(key) != NULL) {
 				m_entity.setKeyValue(key, value);
 			} else {
-				g_debug("EntityCopyingVisitor: skipping %s\n", key);
+				g_debug("EntityCopyingVisitor: skipping %s\n", key.c_str());
 			}
 		}
 };
 
 class EntitySetClassnameSelected: public scene::Graph::Walker
 {
-		const char* m_oldClassame;
-		const char* m_newClassname;
+		const std::string& m_oldClassame;
+		const std::string& m_newClassname;
 	public:
-		EntitySetClassnameSelected (const char* oldClassname, const char* newClassname) :
-			m_newClassname(newClassname)
+		EntitySetClassnameSelected (const std::string& oldClassname, const std::string& newClassname) :
+			m_oldClassame(oldClassname), m_newClassname(newClassname)
 		{
 		}
 		bool pre (const scene::Path& path, scene::Instance& instance) const
@@ -129,7 +129,7 @@ class EntitySetClassnameSelected: public scene::Graph::Walker
 		void post (const scene::Path& path, scene::Instance& instance) const
 		{
 			Entity* entity = Node_getEntity(path.top());
-			if (entity != 0 && (!strcmp(entity->getEntityClass().name(), m_oldClassame)) && (instance.childSelected()
+			if (entity != 0 && entity->getEntityClass().name() == m_oldClassame && (instance.childSelected()
 					|| Instance_getSelectable(instance)->isSelected())) {
 				NodeSmartReference node(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
 						m_newClassname, node_is_group(path.top()))));
@@ -150,12 +150,12 @@ class EntitySetClassnameSelected: public scene::Graph::Walker
 		}
 };
 
-void Scene_EntitySetKeyValue_Selected (const char* classname, const char* key, const char* value)
+void Scene_EntitySetKeyValue_Selected (const std::string& classname, const std::string& key, const std::string& value)
 {
 	GlobalSceneGraph().traverse(EntitySetKeyValueSelected(classname, key, value));
 }
 
-void Scene_EntitySetClassname_Selected (const char* oldClassname, const char* newClassname)
+void Scene_EntitySetClassname_Selected (const std::string& oldClassname, const std::string& newClassname)
 {
 	GlobalSceneGraph().traverse(EntitySetClassnameSelected(oldClassname, newClassname));
 }
@@ -456,8 +456,8 @@ void Entity_setColour ()
 		if (entity != 0) {
 			if (entity->getEntityClass().getAttribute("_color") == 0)
 				return;
-			const char* strColor = entity->getKeyValue("_color");
-			if (!string_empty(strColor)) {
+			const std::string strColor = entity->getKeyValue("_color");
+			if (!strColor.empty()) {
 				Vector3 rgb;
 				if (string_parse_vector3(strColor, rgb)) {
 					g_entity_globals.color_entity = rgb;
@@ -468,7 +468,7 @@ void Entity_setColour ()
 				sprintf(buffer, "%g %g %g", g_entity_globals.color_entity[0], g_entity_globals.color_entity[1],
 						g_entity_globals.color_entity[2]);
 
-				Scene_EntitySetKeyValue_Selected(entity->getEntityClass().name(), "_color", buffer);
+				Scene_EntitySetKeyValue_Selected(entity->getEntityClass().name(), "_color", std::string(buffer));
 			}
 		}
 	}

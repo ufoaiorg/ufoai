@@ -83,7 +83,7 @@ namespace ui
 				{
 					GtkTreeIter iter;
 					gtk_tree_store_append(_store, &iter, NULL);
-					gtk_tree_store_set(_store, &iter, 0, e->name(), -1);
+					gtk_tree_store_set(_store, &iter, 0, e->name().c_str(), -1);
 				}
 
 		} visitor(_treeStore);

@@ -33,12 +33,12 @@
 #include "generic/callback.h"
 #include "math/aabb.h"
 #include "undolib.h"
-#include "string/pooledstring.h"
 #include "generic/referencecounted.h"
 #include "scenelib.h"
 #include "container/container.h"
 #include "eclasslib.h"
 
+#include <vector>
 #include <list>
 #include <set>
 
@@ -290,12 +290,12 @@ class KeyValue: public EntityKeyValue
 		std::size_t m_refcount;
 		KeyObservers m_observers;
 		std::string m_string;
-		const char* m_empty;
+		const std::string& m_empty;
 		ObservedUndoableObject<std::string> m_undo;
 		static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
 	public:
 
-		KeyValue (const char* string, const char* empty) :
+		KeyValue (const std::string& string, const std::string& empty) :
 			m_refcount(0), m_string(string), m_empty(empty), m_undo(m_string, UndoImportCaller(*this))
 		{
 			notify();
@@ -339,11 +339,11 @@ class KeyValue: public EntityKeyValue
 			observer(m_empty);
 			m_observers.erase(observer);
 		}
-		const char* c_str () const
+		const std::string& c_str () const
 		{
 			if (m_string.empty())
 				return m_empty;
-			return m_string.c_str();
+			return m_string;
 		}
 		void assign (const std::string& other)
 		{
@@ -388,10 +388,13 @@ class EntityKeyValues: public Entity
 
 		EntityClass* m_eclass;
 
-		typedef Static<StringPool> KeyPool;
-		typedef PooledString<KeyPool> Key;
-		typedef SmartPointer<KeyValue> KeyValuePtr;
-		typedef UnsortedMap<Key, KeyValuePtr> KeyValues;
+		typedef KeyValue* KeyValuePtr;
+		// A key value pair using a dynamically allocated value
+		typedef std::pair<std::string, KeyValuePtr> KeyValuePair;
+
+		// The unsorted list of KeyValue pairs
+		typedef std::vector<KeyValuePair> KeyValues;
+
 		KeyValues m_keyValues;
 
 		typedef UnsortedSet<Observer*> Observers;
@@ -402,7 +405,7 @@ class EntityKeyValues: public Entity
 
 		bool m_observerMutex;
 
-		void notifyInsert (const char* key, Value& value)
+		void notifyInsert (const std::string& key, Value& value)
 		{
 			m_observerMutex = true;
 			for (Observers::iterator i = m_observers.begin(); i != m_observers.end(); ++i) {
@@ -410,7 +413,7 @@ class EntityKeyValues: public Entity
 			}
 			m_observerMutex = false;
 		}
-		void notifyErase (const char* key, Value& value)
+		void notifyErase (const std::string& key, Value& value)
 		{
 			m_observerMutex = true;
 			for (Observers::iterator i = m_observers.begin(); i != m_observers.end(); ++i) {
@@ -431,9 +434,9 @@ class EntityKeyValues: public Entity
 			}
 		}
 
-		void insert (const char* key, const KeyValuePtr& keyValue)
+		void insert (const std::string& key, const KeyValuePtr& keyValue)
 		{
-			KeyValues::iterator i = m_keyValues.insert(KeyValues::value_type(key, keyValue));
+			KeyValues::iterator i = m_keyValues.insert(m_keyValues.end(), KeyValues::value_type(key, keyValue));
 			notifyInsert(key, *(*i).second);
 
 			if (m_instanced) {
@@ -441,9 +444,9 @@ class EntityKeyValues: public Entity
 			}
 		}
 
-		void insert (const char* key, const char* value)
+		void insert (const std::string& key, const std::string& value)
 		{
-			KeyValues::iterator i = m_keyValues.find(key);
+			KeyValues::iterator i = find(key);
 			if (i != m_keyValues.end()) {
 				(*i).second->assign(value);
 			} else {
@@ -458,33 +461,41 @@ class EntityKeyValues: public Entity
 				(*i).second->instanceDetach(m_undo.map());
 			}
 
-			Key key((*i).first);
-			KeyValuePtr value((*i).second);
+			std::string key = i->first;
+			KeyValuePtr value = i->second;
 			m_keyValues.erase(i);
-			notifyErase(key.c_str(), *value);
+			notifyErase(key, *value);
 		}
 
-		void erase (const char* key)
+		void erase (const std::string& key)
 		{
-			KeyValues::iterator i = m_keyValues.find(key);
+			KeyValues::iterator i = find(key);
 			if (i != m_keyValues.end()) {
 				m_undo.save();
 				erase(i);
 			}
 		}
 
-		/**
-		 * @brief Searches the value for a given property key, returns 0 if not found.
-		 * @param key the property key to get the value for
-		 * @return the value for the given property or 0
-		 */
-		const char* getKeyValueOrNull (const std::string& key) const
+		KeyValues::const_iterator find (const std::string& key) const
 		{
-			KeyValues::const_iterator i = m_keyValues.find(key.c_str());
-			if (i != m_keyValues.end())
-				return (*i).second->c_str();
-			else
-				return (const char*) 0;
+			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); i++) {
+				if (i->first == key) {
+					return i;
+				}
+			}
+			// Not found
+			return m_keyValues.end();
+		}
+
+		KeyValues::iterator find (const std::string& key)
+		{
+			for (KeyValues::iterator i = m_keyValues.begin(); i != m_keyValues.end(); i++) {
+				if (i->first == key) {
+					return i;
+				}
+			}
+			// Not found
+			return m_keyValues.end();
 		}
 
 	public:
@@ -509,6 +520,12 @@ class EntityKeyValues: public Entity
 				// post-increment to allow current element to be removed safely
 				(*i++)->clear();
 			}
+
+			for (KeyValues::iterator i = m_keyValues.begin(); i != m_keyValues.end(); i++) {
+				delete i->second;
+			}
+			m_keyValues.clear();
+
 			ASSERT_MESSAGE(m_observers.empty(), "EntityKeyValues::~EntityKeyValues: observers still attached");
 		}
 
@@ -529,7 +546,7 @@ class EntityKeyValues: public Entity
 			}
 
 			for (KeyValues::const_iterator i = keyValues.begin(); i != keyValues.end(); ++i) {
-				insert((*i).first.c_str(), (*i).second);
+				insert(i->first, i->second);
 			}
 
 			m_entityKeyValueChanged();
@@ -605,9 +622,9 @@ class EntityKeyValues: public Entity
 		void setKeyValue (const std::string& key, const std::string& value)
 		{
 			if (value.empty()) {
-				erase(key.c_str());
+				erase(key);
 			} else {
-				insert(key.c_str(), value.c_str());
+				insert(key, value);
 			}
 			m_entityKeyValueChanged();
 		}
@@ -617,13 +634,18 @@ class EntityKeyValues: public Entity
 		 * @param[in] key The property key to get the value for
 		 * @return The value for the given property key or the default value
 		 */
-		const char* getKeyValue (const std::string& key) const
+		std::string getKeyValue (const std::string& key) const
 		{
-			const char* value = getKeyValueOrNull(key);
-			if (value)
-				return value;
-			else
+			// Lookup the key in the map
+			KeyValues::const_iterator i = find(key);
+
+			// If key is found, return it, otherwise lookup the default value on
+			// the entity class
+			if (i != m_keyValues.end()) {
+				return i->second->c_str();
+			} else {
 				return EntityClass_valueForKey(*m_eclass, key);
+			}
 		}
 
 		/**
@@ -633,9 +655,8 @@ class EntityKeyValues: public Entity
 		{
 			for (EntityClassAttributes::const_iterator i = m_eclass->m_attributes.begin(); i
 					!= m_eclass->m_attributes.end(); ++i) {
-				if (i->second.m_mandatory && getKeyValueOrNull(i->first) == 0) {
+				if (i->second.m_mandatory && find(i->first) == m_keyValues.end()) {
 					this->setKeyValue(i->first, m_eclass->getDefaultForAttribute(i->first));
-					g_debug("addMandatoryKeyValues: adding %s\n", i->first.c_str());
 				}
 			}
 		}

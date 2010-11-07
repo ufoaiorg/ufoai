@@ -122,7 +122,7 @@ void XYWndManager::keyChanged() {
 	_showWorkzone = (GlobalRegistry().get(RKEY_SHOW_WORKZONE) == "1");
 	_defaultBlockSize = (GlobalRegistry().getInt(RKEY_DEFAULT_BLOCKSIZE));
 	_alwaysCaulkForNewBrushes = (GlobalRegistry().get(RKEY_ALWAYS_CAULK_FOR_NEW_BRUSHES) == "1");
-	_caulkTexture = (GlobalRegistry().get(RKEY_CAULK_TEXTURE) == "1");
+	_caulkTexture = GlobalRegistry().get(RKEY_CAULK_TEXTURE);
 
 	updateAllViews();
 }

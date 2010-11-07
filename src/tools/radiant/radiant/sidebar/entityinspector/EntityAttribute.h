@@ -42,7 +42,7 @@ class EntityAttribute
 			std::string command = "entitySetKeyValue -classname \"" + classname + "\" -key \"" + key + "\" -value \"" + value
 					+ "\"";
 			UndoableCommand undo(command);
-			Scene_EntitySetKeyValue_Selected(classname.c_str(), key.c_str(), value.c_str());
+			Scene_EntitySetKeyValue_Selected(classname, key, value);
 		}
 
 		/**

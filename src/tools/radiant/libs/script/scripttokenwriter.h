@@ -37,16 +37,12 @@ public:
 	void nextLine() {
 		m_separator = '\n';
 	}
-	void writeToken(const char* token) {
-		ASSERT_MESSAGE(strchr(token, ' ') == 0, "token contains whitespace: ");
+	void writeToken(const std::string& token) {
+		ASSERT_MESSAGE(strchr(token.c_str(), ' ') == 0, "token contains whitespace: ");
 		writeSeparator();
 		m_ostream << token;
 	}
 	void writeString(const std::string& string) {
-		writeSeparator();
-		m_ostream << "\"" << string << "\"";
-	}
-	void writeString(const char* string) {
 		writeSeparator();
 		m_ostream << "\"" << string << "\"";
 	}

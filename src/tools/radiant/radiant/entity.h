@@ -46,8 +46,8 @@ class EntityCreationException: public std::runtime_error
 void Entity_createFromSelection (const std::string& name, const Vector3& origin);
 void Entity_connectSelected ();
 
-void Scene_EntitySetKeyValue_Selected (const char* classname, const char* key, const char* value);
-void Scene_EntitySetClassname_Selected (const char* classname, const char* newClassname);
+void Scene_EntitySetKeyValue_Selected (const std::string& classname, const std::string& key, const std::string& value);
+void Scene_EntitySetClassname_Selected (const std::string& classname, const std::string& newClassname);
 
 typedef struct _GtkWidget GtkWidget;
 char* misc_particle_dialog (GtkWidget* parent);

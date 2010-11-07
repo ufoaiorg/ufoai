@@ -46,7 +46,7 @@ void Entity_ExportTokens (const Entity& entity, TokenWriter& writer)
 			{
 			}
 
-			void visit (const char* key, const char* value)
+			void visit (const std::string& key, const std::string& value)
 			{
 				m_writer.writeString(key);
 				m_writer.writeString(value);

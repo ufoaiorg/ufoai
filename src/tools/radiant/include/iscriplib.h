@@ -52,8 +52,8 @@ class TokenWriter
 		{
 		}
 		virtual void nextLine () = 0;
-		virtual void writeToken (const char* token) = 0;
-		virtual void writeString (const char* string) = 0;
+		virtual void writeToken (const std::string& token) = 0;
+		virtual void writeString (const std::string& string) = 0;
 		virtual void writeInteger (int i) = 0;
 		virtual void writeUnsigned (std::size_t i) = 0;
 		virtual void writeFloat (double f) = 0;

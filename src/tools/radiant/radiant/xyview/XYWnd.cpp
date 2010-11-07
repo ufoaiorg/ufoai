@@ -1122,9 +1122,9 @@ void XYWnd::drawBlockGrid (void)
 		return;
 
 	int blockSize = GlobalXYWnd().defaultBlockSize();
-	const char *value = Node_getEntity(*Map_GetWorldspawn(g_map))->getKeyValue("_blocksize");
-	if (value[0] != '\0')
-		sscanf(value, "%i", &blockSize);
+	const std::string value = Node_getEntity(*Map_GetWorldspawn(g_map))->getKeyValue("_blocksize");
+	if (!value.empty())
+		blockSize = string::toInt(value);
 
 	float x, y, xb, xe, yb, ye;
 	float w, h;

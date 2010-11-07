@@ -161,7 +161,7 @@ class Group
 
 			if (GlobalRegistry().get("user/ui/xyview/showEntityNames") == "1") {
 				// don't draw the name for worldspawn
-				if (!strcmp(m_entity.getEntityClass().name(), "worldspawn"))
+				if (m_entity.getEntityClass().name() == "worldspawn")
 					return;
 
 				// place name in the middle of the "children cloud"

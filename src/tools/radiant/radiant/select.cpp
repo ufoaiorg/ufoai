@@ -570,7 +570,7 @@ void FindReplaceTextures (const std::string& pFind, const std::string& pReplace,
 	}
 }
 
-typedef std::vector<const char*> Classnames;
+typedef std::vector<std::string> Classnames;
 
 class EntityFindByClassnameWalker: public scene::Graph::Walker
 {
@@ -580,7 +580,7 @@ class EntityFindByClassnameWalker: public scene::Graph::Walker
 		bool classnames_match_entity (Entity &entity) const
 		{
 			for (Classnames::const_iterator i = m_classnames.begin(); i != m_classnames.end(); ++i) {
-				if (string_equal(entity.getKeyValue("classname"), *i)) {
+				if (entity.getKeyValue("classname") == *i) {
 					return true;
 				}
 			}
@@ -642,7 +642,6 @@ void Select_AllFacesWithTexture (void)
 	std::string name;
 	Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
 	if (!name.empty()) {
-		g_message("Searching all faces with texture '%s'\n", name.c_str());
 		GlobalSelectionSystem().setSelectedAllComponents(false);
 		Scene_BrushFacesSelectByShader_Component(GlobalSceneGraph(), name);
 	}

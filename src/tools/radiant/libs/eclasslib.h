@@ -133,21 +133,21 @@ class EntityClass
 
 		EntityClassAttributes m_attributes;
 
-		const char* name () const
+		const std::string& name () const
 		{
-			return m_name.c_str();
+			return m_name;
 		}
-		const char* comments () const
+		const std::string& comments () const
 		{
-			return m_comments.c_str();
+			return m_comments;
 		}
 		const std::string& modelpath () const
 		{
 			return m_modelpath;
 		}
-		const char* skin () const
+		const std::string& skin () const
 		{
-			return m_skin.c_str();
+			return m_skin;
 		}
 
 		/**
@@ -181,12 +181,12 @@ class EntityClass
 		}
 };
 
-inline const char* EntityClass_valueForKey (const EntityClass& entityClass, const std::string& key)
+inline std::string EntityClass_valueForKey (const EntityClass& entityClass, const std::string& key)
 {
 	for (EntityClassAttributes::const_iterator i = entityClass.m_attributes.begin(); i
 			!= entityClass.m_attributes.end(); ++i) {
 		if (key == (*i).first) {
-			return (*i).second.m_value.c_str();
+			return (*i).second.m_value;
 		}
 	}
 	return "";

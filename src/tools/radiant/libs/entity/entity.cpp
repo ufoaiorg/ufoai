@@ -147,15 +147,15 @@ class UFOEntityCreator: public EntityCreator
 			UndoableCommand undo("entityConnectSelected");
 
 			ConnectEntities connector(e1, e2);
-			const char* value = e2->getKeyValue("targetname");
-			if (string_empty(value)) {
+			std::string value = e2->getKeyValue("targetname");
+			if (value.empty()) {
 				value = e1->getKeyValue("target");
 			}
-			if (!string_empty(value)) {
+			if (!value.empty()) {
 				connector.connect(value);
 			} else {
-				const char* type = e2->getKeyValue("classname");
-				if (string_empty(type)) {
+				std::string type = e2->getKeyValue("classname");
+				if (type.empty()) {
 					type = "t";
 				}
 				StringOutputStream key(64);

@@ -163,17 +163,17 @@ class GetKeyValueVisitor: public Entity::Visitor
 		{
 		}
 
-		void visit (const char* key, const char* value)
+		void visit (const std::string& key, const std::string& value)
 		{
 			/* don't add classname property, as this will be in parent list */
-			if (!strcmp(key, "classname"))
+			if (key == "classname")
 				return;
 			KeyValues::iterator keyIter = m_keyvalues.find(key);
 			if (keyIter == m_keyvalues.end()) {
-				m_keyvalues.insert(KeyValues::value_type(std::string(key), Values()));
+				m_keyvalues.insert(KeyValues::value_type(key, Values()));
 				keyIter = m_keyvalues.find(key);
 			}
-			(*keyIter).second.push_back(Values::value_type(std::string(value)));
+			(*keyIter).second.push_back(Values::value_type(value));
 		}
 };
 
@@ -242,7 +242,7 @@ class EntityClassListStoreAppend: public EntityClassVisitor
 		{
 			GtkTreeIter iter;
 			gtk_list_store_append(store, &iter);
-			gtk_list_store_set(store, &iter, 0, e->name(), 1, e, -1);
+			gtk_list_store_set(store, &iter, 0, e->name().c_str(), 1, e, -1);
 		}
 };
 
@@ -269,7 +269,7 @@ static void SetComment (EntityClass* eclass)
 	g_current_comment = eclass;
 
 	GtkTextBuffer* buffer = gtk_text_view_get_buffer(g_entityClassComment);
-	gtk_text_buffer_set_text(buffer, eclass->comments(), -1);
+	gtk_text_buffer_set_text(buffer, eclass->comments().c_str(), -1);
 }
 
 /**
@@ -336,7 +336,7 @@ static void EntityClassList_selectEntityClass (EntityClass* eclass)
 			model, &iter)) {
 		char* text;
 		gtk_tree_model_get(model, &iter, 0, &text, -1);
-		if (!strcmp(text, eclass->name())) {
+		if (eclass->name() == std::string(text)) {
 			GtkTreeView* view = g_entityClassList;
 			GtkTreePath* path = gtk_tree_model_get_path(model, &iter);
 			gtk_tree_selection_select_path(gtk_tree_view_get_selection(view), path);
@@ -407,7 +407,7 @@ class EntityAttributeFactory
 		// Create an EntityAttribute from the given string classtype, with the given name
 		EntityAttribute* create (const std::string& type, const std::string& name)
 		{
-			const char* classname = g_current_attributes->name();
+			std::string classname = g_current_attributes->name();
 			Creators::iterator i = m_creators.find(type);
 			// If the StatelessAttributeCreator::create function is found for the
 			// type, invoke it to create a new EntityAttribute with the given name
@@ -512,7 +512,7 @@ static void EntityInspector_updateKeyValueList (void)
 		gtk_tree_store_append(store, &classTreeIter, NULL);
 		gtk_tree_store_set(store, &classTreeIter, KEYVALLIST_COLUMN_KEY, "classname", KEYVALLIST_COLUMN_VALUE,
 				classname.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_BOLD, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE,
-				KEYVALLIST_COLUMN_TOOLTIP, g_current_attributes->comments(), -1);
+				KEYVALLIST_COLUMN_TOOLTIP, g_current_attributes->comments().c_str(), -1);
 		KeyValues possibleValues = classIter->second;
 		for (KeyValues::iterator i = possibleValues.begin(); i != possibleValues.end(); ++i) {
 			GtkTreeIter iter;
@@ -523,7 +523,7 @@ static void EntityInspector_updateKeyValueList (void)
 			std::string value = *values.begin();
 			gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, key.c_str(), KEYVALLIST_COLUMN_VALUE,
 					value.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE,
-					KEYVALLIST_COLUMN_TOOLTIP, EntityInspector_getTooltipForKey(key.c_str()), -1);
+					KEYVALLIST_COLUMN_TOOLTIP, EntityInspector_getTooltipForKey(key), -1);
 		}
 	}
 	//set all elements expanded
@@ -650,7 +650,7 @@ static void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_dat
 	if (key != "classname") {
 		std::string command = "entityDeleteKey -classname \"" + classname + "\" -key \"" + key + "\"";
 		UndoableCommand undo(command);
-		Scene_EntitySetKeyValue_Selected(classname.c_str(), key.c_str(), "");
+		Scene_EntitySetKeyValue_Selected(classname, key, "");
 	}
 }
 
@@ -785,7 +785,7 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 
 	// if you change the classname to worldspawn you won't merge back in the structural
 	// brushes but create a parasite entity
-	if (isClassname && !strcmp(valueConverted.c_str(), "worldspawn")) {
+	if (isClassname && valueConverted.toString() == "worldspawn") {
 		gtkutil::errorDialog(_("Cannot change \"classname\" key back to worldspawn."));
 		return;
 	}
@@ -803,7 +803,7 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 		gtk_tree_store_set(GTK_TREE_STORE(model), &iter, KEYVALLIST_COLUMN_KEY, keyConverted.c_str(),
 				KEYVALLIST_COLUMN_VALUE, valueConverted.c_str(), KEYVALLIST_COLUMN_TOOLTIP,
 				EntityInspector_getTooltipForKey(keyConverted.c_str()), -1);
-		g_currentSelectedKey = std::string(keyConverted.c_str());
+		g_currentSelectedKey = keyConverted.toString();
 		GtkTreePath* currentPath = gtk_tree_model_get_path(model, &iter);
 		GtkTreeViewColumn *column = gtk_tree_view_get_column(view, KEYVALLIST_COLUMN_VALUE);
 		gtk_tree_view_set_cursor(view, currentPath, column, true);
@@ -813,15 +813,15 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 
 	g_message("change value for %s to %s\n", keyConverted.c_str(), valueConverted.c_str());
 	if (isClassname) {
-		std::string command = "entitySetClass -class " + std::string(classnameConverted.c_str()) + " -newclass "
-				+ std::string(valueConverted.c_str());
+		std::string command = "entitySetClass -class " + classnameConverted.toString() + " -newclass "
+				+ valueConverted.toString();
 		UndoableCommand undo(command);
-		Scene_EntitySetClassname_Selected(classnameConverted.c_str(), valueConverted.c_str());
+		Scene_EntitySetClassname_Selected(classnameConverted.toString(), valueConverted.toString());
 	} else {
-		std::string command = "entitySetKeyValue -classname \"" + std::string(classnameConverted.c_str()) + "\" -key \""
-				+ std::string(keyConverted.c_str()) + "\" -value \"" + std::string(valueConverted.c_str()) + "\"";
+		std::string command = "entitySetKeyValue -classname \"" + classnameConverted.toString() + "\" -key \""
+				+ keyConverted.toString() + "\" -value \"" + valueConverted.toString() + "\"";
 		UndoableCommand undo(command);
-		Scene_EntitySetKeyValue_Selected(classnameConverted.c_str(), keyConverted.c_str(), valueConverted.c_str());
+		Scene_EntitySetKeyValue_Selected(classnameConverted.toString(), keyConverted.toString(), valueConverted.toString());
 	}
 	gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 }
@@ -952,13 +952,13 @@ class EntityKeyValueComboListStoreAppend: public EntityClassVisitor
 		}
 		void visit (EntityClass* e)
 		{
-			if (!strcmp("worldspawn", e->name()))
+			if (e->name() == "worldspawn")
 				return; //don't add worldspawn
 			if (onlyFixedsize && !e->fixedsize)
 				return; //don't add non-fixedsize if we have no brush actually
 			GtkTreeIter iter;
 			gtk_list_store_append(store, &iter);
-			gtk_list_store_set(store, &iter, 0, e->name(), -1);
+			gtk_list_store_set(store, &iter, 0, e->name().c_str(), -1);
 		}
 };
 

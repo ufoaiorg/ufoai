@@ -56,7 +56,6 @@
 
 #include "AutoPtr.h"
 #include "debugging/debugging.h"
-#include "string/pooledstring.h"
 #include "math/FloatTools.h"
 #include "generic/callback.h"
 #include "generic/referencecounted.h"

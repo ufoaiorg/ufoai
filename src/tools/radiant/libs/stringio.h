@@ -67,11 +67,13 @@ inline bool string_parse_double (const char* string, double& f)
 
 // <float><space><float><space><float>
 template<typename Element>
-inline bool string_parse_vector3 (const char* string, BasicVector3<Element>& v)
+inline bool string_parse_vector3 (const std::string& str, BasicVector3<Element>& v)
 {
-	if (string_empty(string) || *string == ' ') {
+	if (str.empty() || str[0] == ' ') {
 		return false;
 	}
+
+	const char *string = str.c_str();
 	v[0] = float(buffer_parse_floating_literal(string));
 	if (*string++ != ' ') {
 		return false;
@@ -85,9 +87,11 @@ inline bool string_parse_vector3 (const char* string, BasicVector3<Element>& v)
 }
 
 template<typename Float>
-inline bool string_parse_vector (const char* string, Float* first, Float* last)
+inline bool string_parse_vector (const std::string& str, Float* first, Float* last)
 {
-	if (first != last && (string_empty(string) || *string == ' ')) {
+	const char *string = str.c_str();
+
+	if (first != last && (str.empty() || str[0] == ' ')) {
 		return false;
 	}
 	for (;;) {
@@ -102,21 +106,23 @@ inline bool string_parse_vector (const char* string, Float* first, Float* last)
 }
 
 // decimal signed integer
-inline bool string_parse_int (const char* string, int& i)
+inline bool string_parse_int (const std::string& str, int& i)
 {
-	if (string_empty(string)) {
+	if (str.empty()) {
 		return false;
 	}
+	const char *string = str.c_str();
 	i = buffer_parse_signed_decimal_integer_literal(string);
 	return string_empty(string);
 }
 
 // decimal unsigned integer
-inline bool string_parse_size (const char* string, std::size_t& i)
+inline bool string_parse_size (const std::string& str, std::size_t& i)
 {
-	if (string_empty(string)) {
+	if (str.empty()) {
 		return false;
 	}
+	const char *string = str.c_str();
 	i = buffer_parse_unsigned_decimal_integer_literal(string);
 	return string_empty(string);
 }

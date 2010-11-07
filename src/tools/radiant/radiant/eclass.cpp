@@ -41,7 +41,7 @@
 
 namespace
 {
-	typedef std::map<const char*, EntityClass*, RawStringLessNoCase> EntityClasses;
+	typedef std::map<std::string, EntityClass*, RawStringLessNoCase> EntityClasses;
 	EntityClasses g_entityClasses;
 	EntityClass *eclass_bad = 0;
 	typedef std::map<std::string, ListAttributeType> ListAttributeTypes;
@@ -152,7 +152,7 @@ EntityClass *Eclass_ForName (const std::string& name, bool has_brushes)
 	if (name.empty())
 		return eclass_bad;
 
-	EntityClasses::iterator i = g_entityClasses.find(name.c_str());
+	EntityClasses::iterator i = g_entityClasses.find(name);
 	if (i != g_entityClasses.end() && i->first == name)
 		return i->second;
 

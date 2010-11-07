@@ -38,7 +38,7 @@ class EntityKeyValue
 		virtual ~EntityKeyValue ()
 		{
 		}
-		virtual const char* c_str () const = 0;
+		virtual const std::string& c_str () const = 0;
 		virtual void assign (const std::string& other) = 0;
 		virtual void attach (const KeyObserver& observer) = 0;
 		virtual void detach (const KeyObserver& observer) = 0;
@@ -68,7 +68,7 @@ class Entity
 				virtual ~Visitor ()
 				{
 				}
-				virtual void visit (const char* key, const char* value) = 0;
+				virtual void visit (const std::string& key, const std::string& value) = 0;
 		};
 
 		virtual ~Entity ()
@@ -88,7 +88,7 @@ class Entity
 		 * @todo deprecate these
 		 */
 
-		virtual const char* getKeyValue (const std::string& key) const = 0;
+		virtual std::string getKeyValue (const std::string& key) const = 0;
 
 		virtual void addMandatoryKeyValues () = 0;
 		virtual bool isContainer () const = 0;

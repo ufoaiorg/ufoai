@@ -216,7 +216,7 @@ void testselect_entity_visible::post(const scene::Path& path, scene::Instance& i
 		// Get the Entity from this node
 		Entity* entity = Node_getEntity(path.top());
 		// Don't select the worldspawn entity
-		if (entity != NULL && strcmp(entity->getKeyValue("classname"), "worldspawn")) {
+		if (entity != NULL && entity->getKeyValue("classname") != "worldspawn") {
 			_selector.popSelectable();
 		}
 	}
