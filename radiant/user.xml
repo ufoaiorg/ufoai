@@ -42,11 +42,6 @@
 			<scaleZStep value="1.0" />
 		</transformDialog>
 
-		<texTool>
-			<gridActive value="1" />
-			<faceVertexScalePivotIsCentroid value="0" />
-		</texTool>
-
 		<clipper>
 			<useCaulk value="1" />
 			<caulkTexture value="textures/tex_common/nodraw" />
@@ -62,6 +57,11 @@
 
 		<textures>
 			<defaultTextureScale value="0.5" />
+
+			<texTool>
+				<gridActive value="1" />
+				<faceVertexScalePivotIsCentroid value="0" />
+			</texTool>
 		</textures>
 
 		<map>
