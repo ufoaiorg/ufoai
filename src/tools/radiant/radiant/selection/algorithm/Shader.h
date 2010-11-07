@@ -65,6 +65,17 @@ namespace selection {
 	void rotateTextureClock();
 	void rotateTextureCounter();
 
+	/** greebo: Replaces all <find> shaders with <replace>.
+	 *
+	 * @find/replace: the full shadernames ("textures/darkmod/bleh")
+	 * @selectedOnly: if TRUE, searches the current selection only.
+	 *
+	 * @returns: the number of replaced occurrences.
+	 */
+	int findAndReplaceShader(const std::string& find,
+							 const std::string& replace,
+							 bool selectedOnly);
+
 	} // namespace algorithm
 } // namespace selection
 

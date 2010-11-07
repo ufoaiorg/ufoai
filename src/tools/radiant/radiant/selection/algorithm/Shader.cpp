@@ -336,5 +336,67 @@ void rotateTextureCounter() {
 	rotateTexture(-fabs(GlobalRegistry().getFloat("user/ui/textures/surfaceInspector/rotStep")));
 }
 
+/** greebo: This replaces the shader of the visited face/patch with <replace>
+ * 			if the face is textured with <find> and increases the given <counter>.
+ */
+class ShaderReplacer :
+	public BrushInstanceVisitor
+{
+	const std::string _find;
+	const std::string _replace;
+	mutable int _counter;
+public:
+	ShaderReplacer(const std::string& find, const std::string& replace) :
+		_find(find),
+		_replace(replace),
+		_counter(0)
+	{}
+
+	int getReplacedCount() const {
+		return _counter;
+	}
+
+	void operator()(Face& face) const {
+		if (face.getShader().getShader() == _find) {
+			face.SetShader(_replace);
+			_counter++;
+		}
+	}
+
+	// BrushInstanceVisitor implementation
+	virtual void visit(FaceInstance& face) const {
+		if (face.getFace().getShader().getShader() == _find) {
+			face.getFace().SetShader(_replace);
+			_counter++;
+		}
+	}
+};
+
+int findAndReplaceShader(const std::string& find,
+	const std::string& replace, bool selectedOnly)
+{
+	std::string command("textureFindReplace");
+	command += "-find " + find + " -replace " + replace;
+	UndoableCommand undo(command);
+
+	// Construct a visitor class
+	ShaderReplacer replacer(find, replace);
+
+	if (selectedOnly) {
+		if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
+			// Find & replace all the brush shaders
+			Scene_ForEachSelectedBrush_ForEachFace(GlobalSceneGraph(), replacer);
+		}
+
+		// Search the single selected faces
+		Scene_ForEachSelectedBrushFace(replacer);
+	}
+	else {
+		Scene_ForEachBrush_ForEachFace(GlobalSceneGraph(), replacer);
+	}
+
+	return replacer.getReplacedCount();
+}
+
 	} // namespace algorithm
 } // namespace selection
