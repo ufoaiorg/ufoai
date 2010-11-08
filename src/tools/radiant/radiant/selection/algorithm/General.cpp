@@ -10,8 +10,10 @@
 
 #include "SelectionPolicies.h"
 #include "Shader.h"
+
 #include "../SceneWalkers.h"
 #include "../../select.h"
+#include "../../sidebar/texturebrowser.h"
 
 namespace selection {
 	namespace algorithm {
@@ -128,12 +130,12 @@ class SelectByBounds: public scene::Graph::Walker
 		}
 };
 
-void selectInside (void)
+void selectInside ()
 {
 	SelectByBounds<SelectionPolicy_Inside>::DoSelection();
 }
 
-void selectTouching (void)
+void selectTouching ()
 {
 	SelectByBounds<SelectionPolicy_Touching>::DoSelection(false);
 }
@@ -185,7 +187,7 @@ class DeleteSelected: public scene::Graph::Walker
 		}
 };
 
-void deleteSelection (void)
+void deleteSelection ()
 {
 	GlobalSceneGraph().traverse(DeleteSelected());
 	SceneChangeNotify();
@@ -235,9 +237,101 @@ class InvertSelectionWalker: public scene::Graph::Walker
 		}
 };
 
-void invertSelection (void)
+void invertSelection ()
 {
 	GlobalSceneGraph().traverse(InvertSelectionWalker(GlobalSelectionSystem().Mode()));
+}
+
+typedef std::vector<std::string> Classnames;
+
+class EntityFindByClassnameWalker: public scene::Graph::Walker
+{
+	private:
+		const Classnames& m_classnames;
+
+		bool classnames_match_entity (Entity &entity) const
+		{
+			for (Classnames::const_iterator i = m_classnames.begin(); i != m_classnames.end(); ++i) {
+				if (entity.getKeyValue("classname") == *i) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+	public:
+		EntityFindByClassnameWalker (const Classnames& classnames) :
+			m_classnames(classnames)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			Entity* entity = Node_getEntity(path.top());
+			if (entity != 0 && classnames_match_entity(*entity)) {
+				Instance_getSelectable(instance)->setSelected(true);
+			}
+			return true;
+		}
+};
+
+void Scene_EntitySelectByClassnames (scene::Graph& graph, const Classnames& classnames)
+{
+	graph.traverse(EntityFindByClassnameWalker(classnames));
+}
+
+class EntityGetSelectedClassnamesWalker: public scene::Graph::Walker
+{
+		Classnames& m_classnames;
+	public:
+		EntityGetSelectedClassnamesWalker (Classnames& classnames) :
+			m_classnames(classnames)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			Selectable* selectable = Instance_getSelectable(instance);
+			if (selectable != 0 && selectable->isSelected()) {
+				Entity* entity = Node_getEntity(path.top());
+				if (entity != 0) {
+					m_classnames.push_back(entity->getKeyValue("classname"));
+				}
+			}
+			return true;
+		}
+};
+
+void Scene_EntityGetClassnames (scene::Graph& graph, Classnames& classnames)
+{
+	graph.traverse(EntityGetSelectedClassnamesWalker(classnames));
+}
+
+void selectAllFacesWithTexture ()
+{
+	std::string name;
+	Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
+	if (!name.empty()) {
+		GlobalSelectionSystem().setSelectedAllComponents(false);
+		Scene_BrushFacesSelectByShader_Component(GlobalSceneGraph(), name);
+	}
+}
+
+void selectAllOfType ()
+{
+	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
+		if (GlobalSelectionSystem().ComponentMode() == SelectionSystem::eFace) {
+			GlobalSelectionSystem().setSelectedAllComponents(false);
+			Scene_BrushSelectByShader_Component(GlobalSceneGraph(), GlobalTextureBrowser().getSelectedShader());
+		}
+	} else {
+		Classnames classnames;
+		Scene_EntityGetClassnames(GlobalSceneGraph(), classnames);
+		GlobalSelectionSystem().setSelectedAll(false);
+		if (!classnames.empty()) {
+			Scene_EntitySelectByClassnames(GlobalSceneGraph(), classnames);
+		} else {
+			Scene_BrushSelectByShader(GlobalSceneGraph(), GlobalTextureBrowser().getSelectedShader());
+		}
+	}
 }
 
 	} // namespace algorithm

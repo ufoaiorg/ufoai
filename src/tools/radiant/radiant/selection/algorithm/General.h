@@ -12,6 +12,25 @@ namespace selection {
 	namespace algorithm {
 
 	/**
+	 * greebo: "Select All of Type" expands the selection to all items
+	 *         of similar type. The exact action depends on the current selection.
+	 *
+	 * For entities: all entities of the same classname as the selection are selected.
+	 *
+	 * For primitives: all items having the current shader (as selected in the texture
+	 *                 browser) are selected.
+	 *
+	 * For faces: all faces carrying the current shader (as selected in the texture
+	 *            browser) are selected.
+	 */
+	void selectAllOfType();
+
+	/**
+	 * Selects all faces with that are textured with the current selected texture
+	 */
+	void selectAllFacesWithTexture();
+
+	/**
 	 * greebo: Each selected item will be deselected and vice versa.
 	 */
 	void invertSelection();

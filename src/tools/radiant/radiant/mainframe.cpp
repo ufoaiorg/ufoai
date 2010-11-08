@@ -1804,9 +1804,9 @@ void MainFrame_Construct (void)
 
 	GlobalEventManager().addCommand("SnapToGrid", FreeCaller<Selection_SnapToGrid> ());
 
-	GlobalEventManager().addCommand("SelectAllOfType", FreeCaller<Select_AllOfType> ());
+	GlobalEventManager().addCommand("SelectAllOfType", FreeCaller<selection::algorithm::selectAllOfType> ());
 
-	GlobalEventManager().addCommand("SelectAllFacesOfTex", FreeCaller<Select_AllFacesWithTexture> ());
+	GlobalEventManager().addCommand("SelectAllFacesOfTex", FreeCaller<selection::algorithm::selectAllFacesWithTexture> ());
 
 	GlobalEventManager().addCommand("TexRotateClock", FreeCaller<Texdef_RotateClockwise> ());
 	GlobalEventManager().addCommand("TexRotateCounter", FreeCaller<Texdef_RotateAntiClockwise> ());
