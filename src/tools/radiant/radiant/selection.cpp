@@ -23,15 +23,12 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "selection.h"
-
 #include "iselection.h"
 #include "iscenegraph.h"
 #include "igrid.h"
 #include "igl.h"
 #include "selection/RadiantSelectionSystem.h"
 
-SignalHandlerId SelectionSystem_boundsChanged;
 
 // Module stuff
 
@@ -44,6 +41,7 @@ SignalHandlerId SelectionSystem_boundsChanged;
  */
 class SelectionAPI : public TypeSystemRef {
 	RadiantSelectionSystem* _selectionSystem;
+	SignalHandlerId _onBoundsChanged;
  public:
 	typedef SelectionSystem Type;
 	STRING_CONSTANT(Name, "*");
@@ -55,15 +53,14 @@ class SelectionAPI : public TypeSystemRef {
 		// allocate a new selection system instance on the heap
 		_selectionSystem = new RadiantSelectionSystem;
 
-		SelectionSystem_boundsChanged =
-			GlobalSceneGraph().addBoundsChangedCallback(MemberCaller<RadiantSelectionSystem, &RadiantSelectionSystem::onBoundsChanged>(*_selectionSystem));
+		_onBoundsChanged = GlobalSceneGraph().addBoundsChangedCallback(MemberCaller<RadiantSelectionSystem, &RadiantSelectionSystem::onBoundsChanged>(*_selectionSystem));
 
 		GlobalShaderCache().attachRenderable(*_selectionSystem);
 	}
 
 	~SelectionAPI() {
 		GlobalShaderCache().detachRenderable(*_selectionSystem);
-		GlobalSceneGraph().removeBoundsChangedCallback(SelectionSystem_boundsChanged);
+		GlobalSceneGraph().removeBoundsChangedCallback(_onBoundsChanged);
 
 		// release the selection system from memory
 		delete _selectionSystem;
