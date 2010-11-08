@@ -30,8 +30,6 @@ void Select_GetMid (Vector3& mid);
 
 void Selection_Deselect (void);
 
-void Scene_ExpandSelectionToEntities ();
-
 void Selection_Flipx ();
 void Selection_Flipy ();
 void Selection_Flipz ();

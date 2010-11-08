@@ -52,39 +52,6 @@ static WorkZone g_select_workzone;
 
 #include "selection/algorithm/SelectionPolicies.h"
 
-class ExpandSelectionToEntitiesWalker: public scene::Graph::Walker
-{
-		mutable std::size_t m_depth;
-	public:
-		ExpandSelectionToEntitiesWalker (void) :
-			m_depth(0)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			++m_depth;
-			if (m_depth == 2) { /* entity depth */
-				/* traverse and select children if any one is selected */
-				if (instance.childSelected())
-					Instance_setSelected(instance, true);
-				return Node_getEntity(path.top())->isContainer() && instance.childSelected();
-			} else if (m_depth == 3) { /* primitive depth */
-				Instance_setSelected(instance, true);
-				return false;
-			}
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance) const
-		{
-			--m_depth;
-		}
-};
-
-void Scene_ExpandSelectionToEntities (void)
-{
-	GlobalSceneGraph().traverse(ExpandSelectionToEntitiesWalker());
-}
-
 namespace {
 void Selection_UpdateWorkzone (void)
 {

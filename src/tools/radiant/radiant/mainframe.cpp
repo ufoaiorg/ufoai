@@ -120,6 +120,7 @@
 #include "gtkutil/menu.h"
 #include "textool/TexTool.h"
 #include "selection/algorithm/General.h"
+#include "selection/algorithm/Group.h"
 
 struct LayoutGlobals
 {
@@ -1761,7 +1762,7 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("SelectInside", FreeCaller<selection::algorithm::selectInside> ());
 	GlobalEventManager().addCommand("SelectTouching", FreeCaller<selection::algorithm::selectTouching> ());
 	GlobalEventManager().addCommand("SelectCompleteTall", FreeCaller<selection::algorithm::selectCompleteTall> ());
-	GlobalEventManager().addCommand("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> ());
+	GlobalEventManager().addCommand("ExpandSelectionToEntities", FreeCaller<selection::algorithm::expandSelectionToEntities> ());
 	GlobalEventManager().addCommand("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 
 	GlobalEventManager().addCommand("ShowHidden", FreeCaller<Select_ShowAllHidden> ());
