@@ -151,10 +151,13 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/sidebar/texturebrowser.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/ParticleBrowser.cpp \
 	\
-	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/about/AboutDialog.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/brush/QuerySidesDialog.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/transform/TransformDialog.cpp \
 	\

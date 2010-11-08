@@ -85,7 +85,7 @@
 #include "sidebar/sidebar.h"
 #include "ui/findshader/FindShader.h"
 #include "brushexport/BrushExportOBJ.h"
-#include "dialogs/about.h"
+#include "ui/about/AboutDialog.h"
 #include "dialogs/findbrush.h"
 #include "dialogs/maptools.h"
 #include "pathfinding.h"
@@ -1831,7 +1831,7 @@ void MainFrame_Construct (void)
 
 	GlobalEventManager().addCommand("FindReplaceTextures", FreeCaller<ui::FindAndReplaceShader::showDialog>());
 	GlobalEventManager().addCommand("ShowCommandList", FreeCaller<ShowCommandListDialog>());
-	GlobalEventManager().addCommand("About", FreeCaller<DoAbout>());
+	GlobalEventManager().addCommand("About", FreeCaller<ui::AboutDialog::showDialog>());
 	GlobalEventManager().addCommand("BugReport", FreeCaller<OpenBugReportURL> ());
 
 	ui::TexTool::registerCommands();

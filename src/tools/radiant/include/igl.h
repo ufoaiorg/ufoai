@@ -24,6 +24,7 @@
 
 #include <cstddef>
 #include <string.h>
+#include <math.h>
 #include "generic/constant.h"
 
 #ifdef __APPLE__

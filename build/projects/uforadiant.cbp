@@ -726,6 +726,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\terrain\Terrain.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\terrain\Terrain.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\Icons.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\about\AboutDialog.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\brush\QuerySidesDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\colourscheme\ColourScheme.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\colourscheme\ColourScheme.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\colourscheme\ColourSchemeEditor.cpp" />

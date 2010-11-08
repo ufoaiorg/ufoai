@@ -542,79 +542,29 @@ BrushMakeSided g_brushmakesided9(9);
 #include "scenelib.h"
 #include "../brush/brushmanip.h"
 #include "../sidebar/sidebar.h"
+#include "../ui/brush/QuerySidesDialog.h"
+
 class BrushPrefab
 {
 	private:
 		EBrushPrefab m_type;
-
-		static void DoSides (EBrushPrefab type)
-		{
-			ModalDialog dialog;
-			GtkEntry* sides_entry;
-
-			GtkWindow* window = create_dialog_window(GlobalRadiant().getMainWindow(), _("Arbitrary sides"),
-					G_CALLBACK(dialog_delete_callback), &dialog);
-
-			GtkAccelGroup* accel = gtk_accel_group_new();
-			gtk_window_add_accel_group(window, accel);
-
-			{
-				GtkHBox* hbox = create_dialog_hbox(4, 4);
-				gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(hbox));
-				{
-					GtkLabel* label = GTK_LABEL(gtk_label_new(_("Sides:")));
-					gtk_widget_show(GTK_WIDGET(label));
-					gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(label), FALSE, FALSE, 0);
-				}
-				{
-					GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-					gtk_widget_show(GTK_WIDGET(entry));
-					gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(entry), FALSE, FALSE, 0);
-					sides_entry = entry;
-					gtk_widget_grab_focus(GTK_WIDGET(entry));
-				}
-				{
-					GtkVBox* vbox = create_dialog_vbox(4);
-					gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), TRUE, TRUE, 0);
-					{
-						GtkButton* button = create_dialog_button(_("OK"), G_CALLBACK(dialog_button_ok), &dialog);
-						gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-						widget_make_default(GTK_WIDGET(button));
-						gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return,
-								(GdkModifierType) 0, (GtkAccelFlags) 0);
-					}
-					{
-						GtkButton* button =
-								create_dialog_button(_("Cancel"), G_CALLBACK(dialog_button_cancel), &dialog);
-						gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-						gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape,
-								(GdkModifierType) 0, (GtkAccelFlags) 0);
-					}
-				}
-			}
-
-			if (modal_dialog_show(window, dialog) == eIDOK) {
-				const char *str = gtk_entry_get_text(sides_entry);
-
-				Scene_BrushConstructPrefab(GlobalSceneGraph(), type, atoi(str), GlobalTextureBrowser().getSelectedShader(
-						));
-			}
-
-			gtk_widget_destroy(GTK_WIDGET(window));
-		}
 
 	public:
 		BrushPrefab (EBrushPrefab type) :
 			m_type(type)
 		{
 		}
+
 		void set ()
 		{
-			if (m_type == eBrushTerrain)
-				Scene_BrushConstructPrefab(GlobalSceneGraph(), m_type, 0, GlobalTextureBrowser().getSelectedShader(
-						));
-			else
-				DoSides(m_type);
+			int sides = 0;
+			if (m_type != eBrushTerrain) {
+				ui::QuerySidesDialog dialog(3, 9999);
+				sides = dialog.queryNumberOfSides();
+			}
+
+			if (sides != -1)
+				Scene_BrushConstructPrefab(GlobalSceneGraph(), m_type, sides, GlobalTextureBrowser().getSelectedShader());
 		}
 		typedef MemberCaller<BrushPrefab, &BrushPrefab::set> SetCaller;
 };
