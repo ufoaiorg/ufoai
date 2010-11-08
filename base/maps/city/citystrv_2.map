@@ -1,0 +1,79 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxlevel" "8"
+"ambient_day" "0.25 0.25 0.25"
+"ambient_night" "0.2 0.2 0.25"
+"angles_day" "-85 100"
+"angles_night" "-85 100"
+"color_day" "0.15 0.15 0.15"
+"color_night" "0.55 0.55 0.95"
+"light_day" "240"
+"light_night" "45"
+// brush 0
+{
+( 288 256 68 ) ( 288 0 68 ) ( 32 256 68 ) tex_streets/2ln 0 0 0 0.25 0.25 65024 0 0
+( 256 1024 320 ) ( 0 1024 320 ) ( 256 1024 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 256 256 320 ) ( 256 256 64 ) ( 256 0 320 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 0 0 64 ) ( 256 0 64 ) ( 0 256 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 0 0 64 ) ( 0 0 320 ) ( 256 0 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 0 0 64 ) ( 0 256 64 ) ( 0 0 320 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+}
+// brush 1
+{
+( -1024 32 64 ) ( -960 32 64 ) ( -1024 160 64 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
+( 36 704 104 ) ( 36 832 104 ) ( 92 832 104 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
+( 36 704 92 ) ( 92 704 92 ) ( 92 704 76 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
+( 96 512 160 ) ( 96 512 64 ) ( 96 416 160 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 94 800 92 ) ( 38 800 92 ) ( 38 800 76 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
+( 32 832 92 ) ( 32 704 92 ) ( 32 704 76 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+}
+// brush 2
+{
+( -626 768 74 ) ( -626 818 74 ) ( -646 818 74 ) tex_common/nodraw -0 6 0 0.5 0.5 0 128 0
+( -928 612 92 ) ( -812 612 92 ) ( -812 556 92 ) tex_common/nodraw -0 6 0 0.5 0.5 0 128 0
+( 36 711 92 ) ( 92 711 92 ) ( 92 711 76 ) tex_common/nodraw -0 0 0 0.5 0.5 0 128 0
+( 87 699 92 ) ( 87 827 92 ) ( 87 827 76 ) tex_common/nodraw 10 0 0 0.5 0.5 0 128 0
+( 94 795 92 ) ( 38 795 92 ) ( 38 795 76 ) tex_common/nodraw -0 0 0 0.5 0.5 0 128 0
+( 40 827 92 ) ( 40 699 92 ) ( 40 699 76 ) tex_common/nodraw 10 0 0 0.5 0.5 0 128 0
+( -728 711 88 ) ( -728 735 92 ) ( -600 711 88 ) tex_common/nodraw 40 11 0 1 1 0 128 0
+}
+// brush 3
+{
+( -750 568 90 ) ( -750 600 90 ) ( -752 600 90 ) tex_common/nodraw 8 0 0 0.5 0.5 0 128 0
+( 43 784 102 ) ( 86 784 102 ) ( 86 747 102 ) tex_common/nodraw 8 8 0 0.5 0.5 0 128 0
+( 43 747 102 ) ( 86 747 102 ) ( 86 739 90 ) tex_common/nodraw 8 0 0 0.5 0.5 0 128 0
+( 86 704 104 ) ( 86 808 104 ) ( 86 808 68 ) tex_common/nodraw 8 0 0 0.5 0.5 0 128 0
+( 86 784 102 ) ( 43 784 102 ) ( 86 796 90 ) tex_common/nodraw 8 8 0 0.5 0.5 0 128 0
+( 43 747 104 ) ( 43 643 104 ) ( 43 643 68 ) tex_common/nodraw 4 0 0 0.5 0.5 0 128 0
+}
+}
+// entity 1
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "100"
+"origin" "88 672 80"
+}
+// entity 2
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "100"
+"origin" "40 672 80"
+}
+// entity 3
+{
+"classname" "misc_model"
+"origin" "65 751 83"
+"model" "models/objects/cars/golf/car1t.md2"
+"spawnflags" "254"
+}
+// entity 4
+{
+"classname" "misc_model"
+"origin" "65 751 83"
+"model" "models/objects/cars/golf/car1.md2"
+"spawnflags" "254"
+}

@@ -20,4 +20,59 @@
 ( 0 0 64 ) ( 0 0 320 ) ( 256 0 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
 ( 0 0 64 ) ( 0 256 64 ) ( 0 0 320 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
 }
+// brush 1
+{
+( -768 -384 64 ) ( -704 -384 64 ) ( -768 -256 64 ) tex_common/actorclip 14 0 0 0.5 0.5 65536 0 0
+( -604 168 128 ) ( -580 168 128 ) ( -580 156 128 ) tex_common/actorclip 14 0 0 0.5 0.5 65536 0 0
+( 164 320 104 ) ( 224 320 104 ) ( 224 320 68 ) tex_common/actorclip 6 0 0 0.5 0.5 65536 0 0
+( 224 379 104 ) ( 224 483 104 ) ( 224 483 68 ) tex_common/actorclip 2 0 0 0.5 0.5 65536 0 0
+( 220 480 104 ) ( 160 480 104 ) ( 160 480 68 ) tex_common/actorclip 14 0 0 0.5 0.5 65536 0 0
+( 160 0 64 ) ( 160 96 64 ) ( 160 0 160 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+}
+// brush 2
+{
+( -566 116 80 ) ( -558 116 80 ) ( -558 124 80 ) tex_common/nodraw 14 4 0 0.5 0.5 0 128 0
+( -304 202 106 ) ( -304 200 106 ) ( -308 200 106 ) tex_common/nodraw 14 12 0 0.5 0.5 0 128 0
+( 163 321 104 ) ( 223 321 104 ) ( 223 321 68 ) tex_common/nodraw 14 0 0 0.5 0.5 0 128 0
+( 222 381 128 ) ( 222 485 128 ) ( 222 485 92 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 223 474 104 ) ( 163 474 104 ) ( 163 474 68 ) tex_common/nodraw 14 0 0 0.5 0.5 0 128 0
+( 163 422 128 ) ( 163 318 128 ) ( 163 318 92 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 3
+{
+( -294 202 106 ) ( -330 202 106 ) ( -330 182 106 ) tex_common/nodraw 14 6 0 0.5 0.5 0 128 0
+( 222 334 130 ) ( 163 334 130 ) ( 163 427 132 ) tex_common/nodraw 14 2 0 0.5 0.5 0 128 0
+( 163 334 130 ) ( 222 334 130 ) ( 222 322 106 ) tex_common/nodraw 14 0 0 0.5 0.5 0 128 0
+( 222 381 128 ) ( 222 485 128 ) ( 222 485 92 ) tex_common/nodraw 14 0 0 0.5 0.5 0 128 0
+( 163 471 106 ) ( 222 471 106 ) ( 222 427 132 ) tex_common/nodraw 14 10 0 0.5 0.5 0 128 0
+( 163 422 128 ) ( 163 318 128 ) ( 163 318 92 ) tex_common/nodraw 14 0 0 0.5 0.5 0 128 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "192 376 100"
+"model" "models/objects/cars/van/van1.md2"
+"spawnflags" "254"
+}
+// entity 2
+{
+"classname" "misc_model"
+"origin" "192 375 100"
+"model" "models/objects/cars/van/van1t.md2"
+"spawnflags" "254"
+}
+// entity 3
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "100"
+"origin" "216 544 96"
+}
+// entity 4
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "100"
+"origin" "168 544 96"
 }

@@ -164,8 +164,20 @@ tile +str_cross
 // ---------------------
 // Vertical Street Tiles
 
-	// Vertical street base tile (straight lines painted)
+	// Vertical street base tile (straight lines painted), Assets: truck
 	tile +strv_1
+	{
+		3 6
+		0		a		0
+		jk		a		jk
+		jk		a		jk
+		jk		a		jk
+		jk		a		jk
+		0		a		0
+	}
+
+	// Vertical street base tile (straight lines painted), Assets: small car
+	tile +strv_2
 	{
 		3 6
 		0		a		0
@@ -189,41 +201,28 @@ tile +str_cross
 		0		i		i		i		0
 	}
 
-	// Vertical street with rail line (borders intersection at top)
-	// Includes the big billboard machine
-	tile +strv_rail_top2a
-	{
-		5 3
-		0		i		i		i		0
-		j		+da		+d		+da		k
-		0		c		c		c		0
-	}
-
-	// Vertical street with rail line (borders intersection at top)
-	tile +strv_rail_top2b
-	{
-		5 3
-		0		i		i		i		0
-		j		+da		+d		+da		k
-		0		c		c		c		0
-	}
-
-	// Vertical street with rail line (borders intersection at bottom)
-	tile +strv_rail_btm2a
-	{
-		5 3
-		0		c		c		c		0
-		j		+ea		+e		+ea		k
-		0		i		i		i		0
-	}
-
-	// Vertical street with rail line (doesn't border intersection)
+	// Vertical street with rail line but no rail stop
 	tile +strv_rail_2a
 	{
-		5 3
-		0		cd		cd		cd		0
+		5 6
+		0		i		i		i		0
 		j		+ca		+c		+ca		k
-		0		ce		ce		ce		0
+		j		+ca		+c		+ca		k
+		j		+ca		+c		+ca		k
+		j		+ca		+c		+ca		k
+		0		i		i		i		0
+	}
+
+	// Vertical street with rail line but no rail stop
+	tile +strv_rail_2b
+	{
+		5 6
+		0		i		i		i		0
+		j		+ca		+c		+ca		k
+		j		+ca		+c		+ca		k
+		j		+ca		+c		+ca		k
+		j		+ca		+c		+ca		k
+		0		i		i		i		0
 	}
 
 // ---------------------
@@ -231,6 +230,20 @@ tile +str_cross
 
 	// Horizontal street with crosswalks on either end
 	tile +strh_1
+	{
+		6 3
+		0		jk		jk		jk		jk		0
+		l		+g		+f		+f		+h		l
+		0		jk		jk		jk		jk		0
+	}
+	tile +strh_2
+	{
+		6 3
+		0		jk		jk		jk		jk		0
+		l		+g		+f		+f		+h		l
+		0		jk		jk		jk		jk		0
+	}
+	tile +strh_3
 	{
 		6 3
 		0		jk		jk		jk		jk		0
@@ -317,7 +330,7 @@ assembly small
 	fix +str_cross "0 0"
 	fix +strv_1 "0 1"
 	fix +str_cross "0 5"
-	fix +strv_1 "0 6"
+	fix +strv_2 "0 6"
 	fix +str_cross "0 10"
 
 	// Bottom street
@@ -327,7 +340,7 @@ assembly small
 	fix +bldl_4x4_2a "1 1"
 
 	// Street between building tiles
-	fix +strh_1 "1 5"
+	fix +strh_2 "1 5"
 
 	// Right streets with rail/dropship going all the way up
 	fix +str_rail_cross "5 0"
@@ -340,7 +353,7 @@ assembly small
 	fix *rm_ufo +craft_ufo_scout "1 6"
 
 	// Top street
-	fix +strh_1 "1 10"
+	fix +strh_3 "1 10"
 }
 
 // The medium assembly will handle the harvester ufo
@@ -351,12 +364,12 @@ assembly medium
 	// Far left street with the top vertical streets cut out
 	// because the harvester uses them
 	fix +str_cross "0 0"
-	fix +strv_1 "0 1"
+	fix +strv_2 "0 1"
 	fix +str_cross "0 5"
 	fix +str_cross "0 10"
 
 	// Bottom street
-	fix +strh_1 "1 0"
+	fix +strh_3 "1 0"
 
 	// Parking garage
 	fix +bldl_4x4_2a "1 1"
@@ -368,7 +381,7 @@ assembly medium
 	fix +str_rail_cross "5 0"
 	fix *rm_drop +craft_drop_firebird "5 1"
 	fix +str_rail_cross "5 5"
-	fix +strv_rail_2a "5 6"
+	fix +strv_rail_2b "5 6"
 	fix +str_rail_cross "5 10"
 
 	// Park with harvester (takes up vertical street on left)
