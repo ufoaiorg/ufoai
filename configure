@@ -98,7 +98,6 @@ add_to_config_h() {
 }
 
 config_h() {
-	add_to_config_h DEBUG "Debug build"
 	add_to_config_h PARANOID "Enable paranoid build"
 	add_to_config_h HARD_LINKED_GAME "Enable hard linked game"
 	add_to_config_h USE_SIGNALS "Use signal handler"
@@ -108,7 +107,7 @@ config_h() {
 }
 
 makefile_local() {
-	add_to_makefile_local DEBUG
+	add_to_makefile_local DEBUG "Debug build"
 	add_to_makefile_local PROFILING "Enable profiling"
 	add_to_makefile_local STATIC "Enable static linking"
 	add_to_makefile_local W2K "Enable Windows 2000 compatibility"
