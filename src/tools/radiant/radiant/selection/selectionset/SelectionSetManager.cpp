@@ -98,6 +98,9 @@ void SelectionSetManager::deleteSelectionSet(const std::string& name)
 
 void SelectionSetManager::deleteAllSelectionSets()
 {
+	for (SelectionSets::iterator i = _selectionSets.begin(); i != _selectionSets.end(); ++i) {
+		delete i->second;
+	}
 	_selectionSets.clear();
 	notifyObservers();
 }
