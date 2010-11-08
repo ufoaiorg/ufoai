@@ -40,6 +40,7 @@
 #include "script/scripttokeniser.h"
 #include "../camera/CamWnd.h"
 #include "../material.h"
+#include "../selection/algorithm/General.h"
 
 namespace sidebar
 {
@@ -414,7 +415,7 @@ namespace sidebar
 
 				switch (self->_selectedSelectionStrategy) {
 				case PREFAB_SELECT_REPLACE:
-					Select_Delete();
+					selection::algorithm::deleteSelection();
 					break;
 				case PREFAB_SELECT_UNSELECT:
 					Selection_Deselect();

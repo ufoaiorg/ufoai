@@ -645,6 +645,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\Selectors.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\TransformationVisitors.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\TransformationVisitors.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\Entity.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\Entity.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\General.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\General.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\Primitives.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\Primitives.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\Shader.cpp" />

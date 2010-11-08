@@ -119,6 +119,7 @@
 #include "environment.h"
 #include "gtkutil/menu.h"
 #include "textool/TexTool.h"
+#include "selection/algorithm/General.h"
 
 struct LayoutGlobals
 {
@@ -535,7 +536,7 @@ void Redo (void)
 void deleteSelection (void)
 {
 	UndoableCommand undo("deleteSelected");
-	Select_Delete();
+	selection::algorithm::deleteSelection();
 }
 
 void Map_ExportSelected (TextOutputStream& ostream)
@@ -1756,9 +1757,9 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("DeleteSelection", FreeCaller<deleteSelection> ());
 	GlobalEventManager().addCommand("ParentSelection", FreeCaller<Scene_parentSelected> ());
 	GlobalEventManager().addCommand("UnSelectSelection", FreeCaller<Selection_Deselect> ());
-	GlobalEventManager().addCommand("InvertSelection", FreeCaller<Select_Invert> ());
-	GlobalEventManager().addCommand("SelectInside", FreeCaller<Select_Inside> ());
-	GlobalEventManager().addCommand("SelectTouching", FreeCaller<Select_Touching> ());
+	GlobalEventManager().addCommand("InvertSelection", FreeCaller<selection::algorithm::invertSelection> ());
+	GlobalEventManager().addCommand("SelectInside", FreeCaller<selection::algorithm::selectInside> ());
+	GlobalEventManager().addCommand("SelectTouching", FreeCaller<selection::algorithm::selectTouching> ());
 	GlobalEventManager().addCommand("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> ());
 	GlobalEventManager().addCommand("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 

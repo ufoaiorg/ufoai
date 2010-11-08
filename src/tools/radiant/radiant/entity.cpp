@@ -57,6 +57,7 @@
 #include "ui/modelselector/ModelSelector.h"
 #include "ui/common/SoundChooser.h"
 #include "ui/Icons.h"
+#include "selection/algorithm/General.h"
 
 struct entity_globals_t
 {
@@ -331,7 +332,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	entity->addMandatoryKeyValues();
 
 	if (entityClass->fixedsize || (isModel && !brushesSelected)) {
-		Select_Delete();
+		selection::algorithm::deleteSelection();
 
 		Transformable* transform = Instance_getTransformable(instance);
 		if (transform != 0) {
