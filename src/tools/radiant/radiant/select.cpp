@@ -169,7 +169,6 @@ void Select_FlipTexture(unsigned int flipAxis) {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		// Flip the texture of all the brushes (selected as a whole)
 		Scene_BrushFlipTexture_Selected(flipAxis);
-		//Scene_PatchScaleTexture_Selected(GlobalSceneGraph(), x, y);
 	}
 	// Now flip all the seperately selected faces
 	Scene_BrushFlipTexture_Component_Selected(flipAxis);
@@ -183,75 +182,6 @@ void Select_FitTexture (float horizontal, float vertical)
 	}
 	Scene_BrushFitTexture_Component_Selected(GlobalSceneGraph(), horizontal, vertical);
 
-	SceneChangeNotify();
-}
-
-inline void hide_node (scene::Node& node, bool hide)
-{
-	if (hide)
-		node.enable(scene::Node::eHidden);
-	else
-		node.disable(scene::Node::eHidden);
-}
-
-class HideSelectedWalker: public scene::Graph::Walker
-{
-		bool m_hide;
-	public:
-		HideSelectedWalker (bool hide) :
-			m_hide(hide)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			Selectable* selectable = Instance_getSelectable(instance);
-			if (selectable != 0 && selectable->isSelected()) {
-				hide_node(path.top(), m_hide);
-			}
-			return true;
-		}
-};
-
-void Scene_Hide_Selected (bool hide)
-{
-	GlobalSceneGraph().traverse(HideSelectedWalker(hide));
-}
-
-void Select_Hide (void)
-{
-	Scene_Hide_Selected(true);
-	SceneChangeNotify();
-}
-
-void HideSelected (void)
-{
-	Select_Hide();
-	GlobalSelectionSystem().setSelectedAll(false);
-}
-
-class HideAllWalker: public scene::Graph::Walker
-{
-		bool m_hide;
-	public:
-		HideAllWalker (bool hide) :
-			m_hide(hide)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			hide_node(path.top(), m_hide);
-			return true;
-		}
-};
-
-void Scene_Hide_All (bool hide)
-{
-	GlobalSceneGraph().traverse(HideAllWalker(hide));
-}
-
-void Select_ShowAllHidden (void)
-{
-	Scene_Hide_All(false);
 	SceneChangeNotify();
 }
 

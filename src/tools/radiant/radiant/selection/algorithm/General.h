@@ -31,6 +31,16 @@ namespace selection {
 	void selectAllFacesWithTexture();
 
 	/**
+	 * greebo: Hides all selected nodes in the scene.
+	 */
+	void hideSelected();
+
+	/**
+	 * greebo: Clears the hidden flag of all nodes in the scene.
+	 */
+	void showAllHidden();
+
+	/**
 	 * greebo: Each selected item will be deselected and vice versa.
 	 */
 	void invertSelection();

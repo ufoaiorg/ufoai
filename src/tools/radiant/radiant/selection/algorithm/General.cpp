@@ -198,6 +198,61 @@ void deleteSelection ()
 	SceneChangeNotify();
 }
 
+
+inline void hide_node (scene::Node& node, bool hide)
+{
+	if (hide)
+		node.enable(scene::Node::eHidden);
+	else
+		node.disable(scene::Node::eHidden);
+}
+
+class HideSelectedWalker: public scene::Graph::Walker
+{
+		bool m_hide;
+	public:
+		HideSelectedWalker (bool hide) :
+			m_hide(hide)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			Selectable* selectable = Instance_getSelectable(instance);
+			if (selectable != 0 && selectable->isSelected()) {
+				hide_node(path.top(), m_hide);
+			}
+			return true;
+		}
+};
+
+void hideSelected (void)
+{
+	GlobalSceneGraph().traverse(HideSelectedWalker(true));
+	SceneChangeNotify();
+	GlobalSelectionSystem().setSelectedAll(false);
+}
+
+class HideAllWalker: public scene::Graph::Walker
+{
+		bool m_hide;
+	public:
+		HideAllWalker (bool hide) :
+			m_hide(hide)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			hide_node(path.top(), m_hide);
+			return true;
+		}
+};
+
+void showAllHidden (void)
+{
+	GlobalSceneGraph().traverse(HideAllWalker(false));
+	SceneChangeNotify();
+}
+
 class InvertSelectionWalker: public scene::Graph::Walker
 {
 		SelectionSystem::EMode m_mode;
@@ -279,11 +334,6 @@ class EntityFindByClassnameWalker: public scene::Graph::Walker
 		}
 };
 
-void Scene_EntitySelectByClassnames (scene::Graph& graph, const Classnames& classnames)
-{
-	graph.traverse(EntityFindByClassnameWalker(classnames));
-}
-
 class EntityGetSelectedClassnamesWalker: public scene::Graph::Walker
 {
 		Classnames& m_classnames;
@@ -305,11 +355,6 @@ class EntityGetSelectedClassnamesWalker: public scene::Graph::Walker
 		}
 };
 
-void Scene_EntityGetClassnames (scene::Graph& graph, Classnames& classnames)
-{
-	graph.traverse(EntityGetSelectedClassnamesWalker(classnames));
-}
-
 void selectAllFacesWithTexture ()
 {
 	std::string name;
@@ -329,10 +374,10 @@ void selectAllOfType ()
 		}
 	} else {
 		Classnames classnames;
-		Scene_EntityGetClassnames(GlobalSceneGraph(), classnames);
+		GlobalSceneGraph().traverse(EntityGetSelectedClassnamesWalker(classnames));
 		GlobalSelectionSystem().setSelectedAll(false);
 		if (!classnames.empty()) {
-			Scene_EntitySelectByClassnames(GlobalSceneGraph(), classnames);
+			GlobalSceneGraph().traverse(EntityFindByClassnameWalker(classnames));
 		} else {
 			Scene_BrushSelectByShader(GlobalSceneGraph(), GlobalTextureBrowser().getSelectedShader());
 		}

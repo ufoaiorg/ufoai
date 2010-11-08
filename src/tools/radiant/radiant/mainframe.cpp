@@ -1763,8 +1763,8 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("ExpandSelectionToEntities", FreeCaller<selection::algorithm::expandSelectionToEntities> ());
 	GlobalEventManager().addCommand("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 
-	GlobalEventManager().addCommand("ShowHidden", FreeCaller<Select_ShowAllHidden> ());
-	GlobalEventManager().addCommand("HideSelected", FreeCaller<HideSelected> ());
+	GlobalEventManager().addCommand("ShowHidden", FreeCaller<selection::algorithm::showAllHidden> ());
+	GlobalEventManager().addCommand("HideSelected", FreeCaller<selection::algorithm::hideSelected> ());
 
 	GlobalEventManager().addToggle("DragVertices", FreeCaller<ToggleVertexMode> ());
 	GlobalEventManager().addToggle("DragEdges", FreeCaller<ToggleEdgeMode> ());

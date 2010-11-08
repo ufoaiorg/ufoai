@@ -37,8 +37,6 @@ void Selection_Rotatez ();
 void Selection_MoveDown ();
 void Selection_MoveUp ();
 
-void Select_AllFacesWithTexture (void);
-
 void Select_SetShader (const std::string& shader);
 
 class TextureProjection;
@@ -54,6 +52,5 @@ void Select_FitTexture (float horizontal = 1, float vertical = 1);
 void Select_FlipTexture(unsigned int flipAxis);
 
 void HideSelected ();
-void Select_ShowAllHidden ();
 
 #endif
