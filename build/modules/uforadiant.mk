@@ -143,6 +143,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/algorithm/Primitives.cpp \
 	$(RADIANT_BASE)/radiant/selection/algorithm/Shader.cpp \
 	$(RADIANT_BASE)/radiant/selection/algorithm/Transformation.cpp \
+	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSet.cpp \
+	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSetManager.cpp \
+	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSetToolmenu.cpp \
 	\
 	$(RADIANT_BASE)/radiant/sidebar/sidebar.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entitylist.cpp \

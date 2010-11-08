@@ -51,6 +51,7 @@
 #include "iuimanager.h"
 #include "igl.h"
 #include "ieventmanager.h"
+#include "iselectionset.h"
 #include "moduleobserver.h"
 #include "server.h"
 
@@ -1372,6 +1373,8 @@ void MainFrame::Create (void)
 
 	GtkToolbar* generalToolbar = toolbarCreator.getToolbar("view");
 	gtk_widget_show(GTK_WIDGET(generalToolbar));
+
+	GlobalSelectionSetManager().init(generalToolbar);
 
 	// Pack it into the main window
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(generalToolbar), FALSE, FALSE, 0);

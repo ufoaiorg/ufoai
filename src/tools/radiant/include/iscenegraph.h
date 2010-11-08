@@ -70,6 +70,13 @@ namespace scene
 	/** @brief A unique key to an instance of a node in the scene-graph. */
 	typedef Stack<NodeReference> Path;
 
+	class EraseObserver {
+		public:
+			virtual ~EraseObserver() {};
+
+			virtual void onErase(scene::Instance* instance) = 0;
+	};
+
 	/**
 	 * @brief A scene-graph - a Directed Acyclic Graph (DAG).
 	 *
@@ -103,6 +110,13 @@ namespace scene
 			virtual ~Graph ()
 			{
 			}
+
+			// will inform the observers if a instance was removed
+			virtual void notifyErase (scene::Instance* instance) = 0;
+			// register a new observer that is notified whenever an instance is removed from the graph
+			virtual void addEraseObserver(scene::EraseObserver *) = 0;
+			// unregister the given observers again
+			virtual void removeEraseObserver(scene::EraseObserver *) = 0;
 
 			/** @brief Returns the root-node of the graph. */
 			virtual Node& root () = 0;

@@ -657,6 +657,12 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\Shader.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\Transformation.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\algorithm\Transformation.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSet.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSet.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSetManager.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSetManager.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSetToolmenu.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSetToolmenu.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\server.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\server.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\preferencedictionary.h" />

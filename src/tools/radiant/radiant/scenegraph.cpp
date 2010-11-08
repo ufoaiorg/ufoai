@@ -79,11 +79,15 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 {
 		typedef std::map<PathConstReference, scene::Instance*> InstanceMap;
 
+		typedef std::vector<scene::EraseObserver*> EraseObservers;
+
 		InstanceMap m_instances;
 		scene::Instantiable::Observer* m_observer;
 		Signal0 m_boundsChanged;
 		scene::Path m_rootpath;
 		Signal0 m_sceneChangedCallbacks;
+
+		EraseObservers m_eraseObservers;
 
 		TypeIdMap<NODETYPEID_MAX> m_nodeTypeIds;
 		TypeIdMap<INSTANCETYPEID_MAX> m_instanceTypeIds;
@@ -102,6 +106,26 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 		void sceneChanged (void)
 		{
 			m_sceneChangedCallbacks();
+		}
+
+		void notifyErase (scene::Instance* instance)
+		{
+			for (EraseObservers::iterator i = m_eraseObservers.begin(); i != m_eraseObservers.end(); ++i) {
+				(*i)->onErase(instance);
+			}
+		}
+
+		void removeEraseObserver(scene::EraseObserver *observer) {
+			for (EraseObservers::iterator i = m_eraseObservers.begin(); i != m_eraseObservers.end(); ++i) {
+				if (*i == observer) {
+					m_eraseObservers.erase(i);
+					break;
+				}
+			}
+		}
+
+		void addEraseObserver(scene::EraseObserver *observer) {
+			m_eraseObservers.push_back(observer);
 		}
 
 		scene::Node& root (void)
@@ -172,6 +196,7 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 		}
 		void erase (scene::Instance* instance)
 		{
+			notifyErase(instance);
 			m_observer->erase(instance);
 
 			m_instances.erase(PathConstReference(instance->path()));
@@ -253,6 +278,7 @@ class SceneGraphObserver: public scene::Instantiable::Observer
 		}
 		void erase (scene::Instance* instance)
 		{
+			g_sceneGraph->notifyErase(instance);
 			g_sceneGraph->sceneChanged();
 			graph_tree_model_erase(g_tree_model, *instance);
 		}
