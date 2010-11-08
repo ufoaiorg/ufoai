@@ -376,6 +376,14 @@ void SurfaceInspector_FitTexture (void)
 	Select_FitTexture(getSurfaceInspector().m_fitHorizontal, getSurfaceInspector().m_fitVertical);
 }
 
+inline void Select_SetTexdef (const TextureProjection& projection)
+{
+	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
+		Scene_BrushSetTexdef_Selected(GlobalSceneGraph(), projection);
+	}
+	Scene_BrushSetTexdef_Component_Selected(GlobalSceneGraph(), projection);
+}
+
 static void OnBtnAxial (GtkWidget *widget, gpointer data)
 {
 	UndoableCommand undo("textureDefault");
@@ -913,7 +921,7 @@ void SurfaceInspector::ApplyShader (void)
 	}
 
 	UndoableCommand undo("textureNameSetSelected");
-	Select_SetShader(name.c_str());
+	Select_SetShader(name);
 }
 
 void SurfaceInspector::ApplyTexdef (void)
@@ -952,6 +960,17 @@ void SurfaceInspector::UpdateValueStatus (GtkWidget *widget, SurfaceInspector *i
 		/* we don't know whether there are other flags that enable value field, so check them all */
 		inspector->UpdateFlagButtons();
 	}
+}
+
+/**
+ * @todo Set contentflags for whole brush when we are in face selection mode
+ */
+inline void Select_SetFlags (const ContentsFlagsValue& flags)
+{
+	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
+		Scene_BrushSetFlags_Selected(GlobalSceneGraph(), flags);
+	}
+	Scene_BrushSetFlags_Component_Selected(GlobalSceneGraph(), flags);
 }
 
 /**

@@ -22,7 +22,6 @@
 #if !defined(INCLUDED_SELECT_H)
 #define INCLUDED_SELECT_H
 
-#include "math/Vector3.h"
 #include <string>
 
 void Selection_Deselect (void);
@@ -38,12 +37,6 @@ void Selection_MoveDown ();
 void Selection_MoveUp ();
 
 void Select_SetShader (const std::string& shader);
-
-class TextureProjection;
-void Select_SetTexdef (const TextureProjection& projection);
-
-class ContentsFlagsValue;
-void Select_SetFlags (const ContentsFlagsValue& flags);
 
 void Select_RotateTexture (float amt);
 void Select_ScaleTexture (float x, float y);

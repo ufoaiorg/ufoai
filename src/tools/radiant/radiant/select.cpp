@@ -58,86 +58,6 @@ void Select_SetShader (const std::string& shader)
 	Scene_BrushSetShader_Component_Selected(GlobalSceneGraph(), shader);
 }
 
-void Select_SetTexdef (const TextureProjection& projection)
-{
-	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		Scene_BrushSetTexdef_Selected(GlobalSceneGraph(), projection);
-	}
-	Scene_BrushSetTexdef_Component_Selected(GlobalSceneGraph(), projection);
-}
-
-/**
- * @todo Set contentflags for whole brush when we are in face selection mode
- */
-void Select_SetFlags (const ContentsFlagsValue& flags)
-{
-	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		Scene_BrushSetFlags_Selected(GlobalSceneGraph(), flags);
-	}
-	Scene_BrushSetFlags_Component_Selected(GlobalSceneGraph(), flags);
-}
-
-void Select_FlipAxis (int axis)
-{
-	Vector3 flip(1, 1, 1);
-	flip[axis] = -1;
-	GlobalSelectionSystem().scaleSelected(flip);
-}
-
-enum axis_t
-{
-	eAxisX = 0, eAxisY = 1, eAxisZ = 2
-};
-
-enum sign_t
-{
-	eSignPositive = 1, eSignNegative = -1
-};
-
-inline Quaternion quaternion_for_axis90 (axis_t axis, sign_t sign)
-{
-	switch (axis) {
-	case eAxisX:
-		if (sign == eSignPositive) {
-			return Quaternion(c_half_sqrt2f, 0, 0, c_half_sqrt2f);
-		} else {
-			return Quaternion(-c_half_sqrt2f, 0, 0, -c_half_sqrt2f);
-		}
-	case eAxisY:
-		if (sign == eSignPositive) {
-			return Quaternion(0, c_half_sqrt2f, 0, c_half_sqrt2f);
-		} else {
-			return Quaternion(0, -c_half_sqrt2f, 0, -c_half_sqrt2f);
-		}
-	default://case eAxisZ:
-		if (sign == eSignPositive) {
-			return Quaternion(0, 0, c_half_sqrt2f, c_half_sqrt2f);
-		} else {
-			return Quaternion(0, 0, -c_half_sqrt2f, -c_half_sqrt2f);
-		}
-	}
-}
-
-void Select_RotateAxis (int axis, float deg)
-{
-	if (fabs(deg) == 90.f) {
-		GlobalSelectionSystem().rotateSelected(quaternion_for_axis90((axis_t) axis, (deg > 0) ? eSignPositive
-				: eSignNegative));
-	} else {
-		switch (axis) {
-		case 0:
-			GlobalSelectionSystem().rotateSelected(quaternion_for_matrix4_rotation(matrix4_rotation_for_x_degrees(deg)));
-			break;
-		case 1:
-			GlobalSelectionSystem().rotateSelected(quaternion_for_matrix4_rotation(matrix4_rotation_for_y_degrees(deg)));
-			break;
-		case 2:
-			GlobalSelectionSystem().rotateSelected(quaternion_for_matrix4_rotation(matrix4_rotation_for_z_degrees(deg)));
-			break;
-		}
-	}
-}
-
 void Select_ShiftTexture (float x, float y)
 {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
@@ -184,6 +104,13 @@ void Select_FitTexture (float horizontal, float vertical)
 	SceneChangeNotify();
 }
 
+inline void Select_FlipAxis (int axis)
+{
+	Vector3 flip(1, 1, 1);
+	flip[axis] = -1;
+	GlobalSelectionSystem().scaleSelected(flip);
+}
+
 void Selection_Flipx (void)
 {
 	UndoableCommand undo("mirrorSelected -axis x");
@@ -200,6 +127,60 @@ void Selection_Flipz (void)
 {
 	UndoableCommand undo("mirrorSelected -axis z");
 	Select_FlipAxis(2);
+}
+
+enum axis_t
+{
+	eAxisX = 0, eAxisY = 1, eAxisZ = 2
+};
+
+enum sign_t
+{
+	eSignPositive = 1, eSignNegative = -1
+};
+
+inline Quaternion quaternion_for_axis90 (axis_t axis, sign_t sign)
+{
+	switch (axis) {
+	case eAxisX:
+		if (sign == eSignPositive) {
+			return Quaternion(c_half_sqrt2f, 0, 0, c_half_sqrt2f);
+		} else {
+			return Quaternion(-c_half_sqrt2f, 0, 0, -c_half_sqrt2f);
+		}
+	case eAxisY:
+		if (sign == eSignPositive) {
+			return Quaternion(0, c_half_sqrt2f, 0, c_half_sqrt2f);
+		} else {
+			return Quaternion(0, -c_half_sqrt2f, 0, -c_half_sqrt2f);
+		}
+	default://case eAxisZ:
+		if (sign == eSignPositive) {
+			return Quaternion(0, 0, c_half_sqrt2f, c_half_sqrt2f);
+		} else {
+			return Quaternion(0, 0, -c_half_sqrt2f, -c_half_sqrt2f);
+		}
+	}
+}
+
+inline void Select_RotateAxis (int axis, float deg)
+{
+	if (fabs(deg) == 90.f) {
+		GlobalSelectionSystem().rotateSelected(quaternion_for_axis90((axis_t) axis, (deg > 0) ? eSignPositive
+				: eSignNegative));
+	} else {
+		switch (axis) {
+		case 0:
+			GlobalSelectionSystem().rotateSelected(quaternion_for_matrix4_rotation(matrix4_rotation_for_x_degrees(deg)));
+			break;
+		case 1:
+			GlobalSelectionSystem().rotateSelected(quaternion_for_matrix4_rotation(matrix4_rotation_for_y_degrees(deg)));
+			break;
+		case 2:
+			GlobalSelectionSystem().rotateSelected(quaternion_for_matrix4_rotation(matrix4_rotation_for_z_degrees(deg)));
+			break;
+		}
+	}
 }
 
 void Selection_Rotatex (void)
