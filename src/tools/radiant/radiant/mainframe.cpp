@@ -920,7 +920,7 @@ void ClipperMode (void)
 	}
 }
 
-// greebo: This toggles the brush/patch size info display in the ortho views
+// greebo: This toggles the brush size info display in the ortho views
 void ToggleShowSizeInfo ()
 {
 	if (GlobalRegistry().get("user/ui/showSizeInfo") == "1") {

@@ -1518,7 +1518,7 @@ void XYWnd::draw ()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 
-	// greebo: Check, if the brush/patch size info should be displayed (if there are any items selected)
+	// greebo: Check, if the brush size info should be displayed (if there are any items selected)
 	if (GlobalXYWnd().showSizeInfo() && GlobalSelectionSystem().countSelected() != 0) {
 		AABB aabb = selection::algorithm::getCurrentSelectionBounds();
 		Vector3 min = aabb.getMins();

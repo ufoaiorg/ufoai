@@ -157,7 +157,7 @@ void parentSelection()
 	if (!curSelectionIsSuitableForReparent())
 	{
 		gtkutil::errorDialog(_("Cannot reparent primitives to entity. "
-						 "Please select at least one brush/patch and exactly one entity."
+						 "Please select at least one brush and exactly one entity."
 						 "(The entity has to be selected last.)"));
 		return;
 	}
