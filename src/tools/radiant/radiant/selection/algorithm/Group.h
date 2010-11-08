@@ -18,6 +18,18 @@ namespace selection {
 	 */
 	void expandSelectionToEntities();
 
+	/** greebo: This re-parents the selected primitives to an entity. The entity has to
+	 * 			be selected last. Emits an error message if the selection doesn't meet
+	 * 			the requirements
+	 */
+	void parentSelection();
+
+	/**
+	 * Tests the current selection and returns true if the selection is suitable
+	 * for reparenting the selected primitives to the (last) selected entity.
+	 */
+	bool curSelectionIsSuitableForReparent();
+
 	} // namespace algorithm
 } // namespace selection
 

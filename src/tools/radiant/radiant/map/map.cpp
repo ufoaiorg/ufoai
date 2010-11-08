@@ -1083,7 +1083,7 @@ void Map_RegionBounds (const AABB& bounds)
 	region_mins = bounds.origin - bounds.extents;
 	region_maxs = bounds.origin + bounds.extents;
 
-	deleteSelection();
+	selection::algorithm::deleteSelection();
 
 	Map_ApplyRegion();
 }
@@ -1291,98 +1291,6 @@ namespace map
 		return Map_Unnamed(g_map);
 	}
 } // namespace map
-
-enum ENodeType
-{
-	eNodeUnknown, eNodeMap, eNodeEntity, eNodePrimitive
-};
-
-static inline const char* nodetype_get_name (ENodeType type)
-{
-	if (type == eNodeMap)
-		return "map";
-	if (type == eNodeEntity)
-		return "entity";
-	if (type == eNodePrimitive)
-		return "primitive";
-	return "unknown";
-}
-
-static ENodeType node_get_nodetype (scene::Node& node)
-{
-	if (Node_isEntity(node)) {
-		return eNodeEntity;
-	}
-	if (Node_isPrimitive(node)) {
-		return eNodePrimitive;
-	}
-	return eNodeUnknown;
-}
-
-static bool contains_entity (scene::Node& node)
-{
-	return Node_getTraversable(node) != 0 && !Node_isBrush(node) && !Node_isEntity(node);
-}
-
-static bool contains_primitive (scene::Node& node)
-{
-	return Node_isEntity(node) && Node_getTraversable(node) != 0 && Node_getEntity(node)->isContainer();
-}
-
-static ENodeType node_get_contains (scene::Node& node)
-{
-	if (contains_entity(node)) {
-		return eNodeEntity;
-	}
-	if (contains_primitive(node)) {
-		return eNodePrimitive;
-	}
-	return eNodeUnknown;
-}
-
-static void Path_parent (const scene::Path& parent, const scene::Path& child)
-{
-	ENodeType contains = node_get_contains(parent.top());
-	ENodeType type = node_get_nodetype(child.top());
-
-	if (contains != eNodeUnknown && contains == type) {
-		NodeSmartReference node(child.top().get());
-		Path_deleteTop(child);
-		Node_getTraversable(parent.top())->insert(node);
-		SceneChangeNotify();
-	} else {
-		globalErrorStream() << "failed - " << nodetype_get_name(type) << " cannot be parented to "
-				<< nodetype_get_name(contains) << " container.\n";
-	}
-}
-
-void Scene_parentSelected (void)
-{
-	UndoableCommand undo("parentSelected");
-
-	if (GlobalSelectionSystem().countSelected() > 1) {
-		class ParentSelectedBrushesToEntityWalker: public SelectionSystem::Visitor
-		{
-				const scene::Path& m_parent;
-			public:
-				ParentSelectedBrushesToEntityWalker (const scene::Path& parent) :
-					m_parent(parent)
-				{
-				}
-				void visit (scene::Instance& instance) const
-				{
-					if (&m_parent != &instance.path()) {
-						Path_parent(m_parent, instance.path());
-					}
-				}
-		};
-
-		ParentSelectedBrushesToEntityWalker visitor(GlobalSelectionSystem().ultimateSelected().path());
-		GlobalSelectionSystem().foreachSelected(visitor);
-	} else {
-		g_warning("Failed - did not find two selected nodes.\n");
-	}
-}
 
 /**
  * @sa Map_Reload

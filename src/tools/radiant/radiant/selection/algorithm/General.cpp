@@ -117,7 +117,6 @@ class SelectByBounds: public scene::Graph::Walker
 
 				// delete selected objects
 				if (delete_bounds_src) { // see deleteSelection
-					UndoableCommand undo("deleteSelected");
 					deleteSelection();
 				}
 
@@ -194,6 +193,8 @@ class DeleteSelected: public scene::Graph::Walker
 
 void deleteSelection ()
 {
+	UndoableCommand undo("deleteSelected");
+
 	GlobalSceneGraph().traverse(DeleteSelected());
 	SceneChangeNotify();
 }

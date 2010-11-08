@@ -120,6 +120,7 @@
 #include "textool/TexTool.h"
 #include "selection/algorithm/General.h"
 #include "selection/algorithm/Group.h"
+#include "selection/algorithm/Transformation.h"
 
 struct LayoutGlobals
 {
@@ -533,12 +534,6 @@ void Redo (void)
 	SceneChangeNotify();
 }
 
-void deleteSelection (void)
-{
-	UndoableCommand undo("deleteSelected");
-	selection::algorithm::deleteSelection();
-}
-
 void Map_ExportSelected (TextOutputStream& ostream)
 {
 	Map_ExportSelected(ostream, Map_getFormat(g_map));
@@ -721,46 +716,6 @@ void ToggleFaceMode()
 	ModeChangeNotify();
 }
 
-class CloneSelected: public scene::Graph::Walker
-{
-	public:
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.size() == 1)
-				return true;
-
-			if (!path.top().get().isRoot()) {
-				Selectable* selectable = Instance_getSelectable(instance);
-				if (selectable != 0 && selectable->isSelected()) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.size() == 1)
-				return;
-
-			if (!path.top().get().isRoot()) {
-				Selectable* selectable = Instance_getSelectable(instance);
-				if (selectable != 0 && selectable->isSelected()) {
-					NodeSmartReference clone(Node_Clone(path.top()));
-					Map_gatherNamespaced(clone);
-					Node_getTraversable(path.parent().get())->insert(clone);
-				}
-			}
-		}
-};
-
-void Scene_Clone_Selected (scene::Graph& graph)
-{
-	graph.traverse(CloneSelected());
-
-	Map_mergeClonedNames();
-}
-
 enum ENudgeDirection
 {
 	eNudgeUp = 1, eNudgeDown = 3, eNudgeLeft = 0, eNudgeRight = 2
@@ -815,18 +770,6 @@ void NudgeSelection (ENudgeDirection direction, float fAmount, EViewType viewtyp
 	Vector3 view_direction(-axes.z);
 	Vector3 nudge(AxisBase_axisForDirection(axes, direction) * fAmount);
 	GlobalSelectionSystem().NudgeManipulator(nudge, view_direction);
-}
-
-void Selection_Clone (void)
-{
-	if (GlobalSelectionSystem().Mode() == SelectionSystem::ePrimitive) {
-		UndoableCommand undo("cloneSelected");
-
-		Scene_Clone_Selected(GlobalSceneGraph());
-
-		//NudgeSelection(eNudgeRight, GlobalGrid().getGridSize(), GlobalXYWnd().getCurrentViewType());
-		//NudgeSelection(eNudgeDown, GlobalGrid().getGridSize(), GlobalXYWnd().getCurrentViewType());
-	}
 }
 
 // called when the escape key is used (either on the main window or on an inspector)
@@ -1082,11 +1025,6 @@ class SnappableSnapToGridSelected: public scene::Graph::Walker
 		}
 };
 
-void Scene_SnapToGrid_Selected (scene::Graph& graph, float snap)
-{
-	graph.traverse(SnappableSnapToGridSelected(snap));
-}
-
 /* greebo: This is the visitor class to snap all components of a selected instance to the grid
  * While visiting all the instances, it checks if the instance derives from ComponentSnappable
  */
@@ -1113,11 +1051,6 @@ class ComponentSnappableSnapToGridSelected: public scene::Graph::Walker
 		}
 };
 
-void Scene_SnapToGrid_Component_Selected (scene::Graph& graph, float snap)
-{
-	graph.traverse(ComponentSnappableSnapToGridSelected(snap));
-}
-
 void Selection_SnapToGrid (void)
 {
 	StringOutputStream command;
@@ -1125,9 +1058,9 @@ void Selection_SnapToGrid (void)
 	UndoableCommand undo(command.toString());
 
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
-		Scene_SnapToGrid_Component_Selected(GlobalSceneGraph(), GlobalGrid().getGridSize());
+		GlobalSceneGraph().traverse(ComponentSnappableSnapToGridSelected(GlobalGrid().getGridSize()));
 	} else {
-		Scene_SnapToGrid_Selected(GlobalSceneGraph(), GlobalGrid().getGridSize());
+		GlobalSceneGraph().traverse(SnappableSnapToGridSelected(GlobalGrid().getGridSize()));
 	}
 }
 
@@ -1752,9 +1685,9 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("Copy", FreeCaller<Copy> ());
 	GlobalEventManager().addCommand("Paste", FreeCaller<Paste> ());
 	GlobalEventManager().addCommand("PasteToCamera", FreeCaller<PasteToCamera> ());
-	GlobalEventManager().addCommand("CloneSelection", FreeCaller<Selection_Clone> ());
-	GlobalEventManager().addCommand("DeleteSelection", FreeCaller<deleteSelection> ());
-	GlobalEventManager().addCommand("ParentSelection", FreeCaller<Scene_parentSelected> ());
+	GlobalEventManager().addCommand("CloneSelection", FreeCaller<selection::algorithm::cloneSelected> ());
+	GlobalEventManager().addCommand("DeleteSelection", FreeCaller<selection::algorithm::deleteSelection> ());
+	GlobalEventManager().addCommand("ParentSelection", FreeCaller<selection::algorithm::parentSelection> ());
 	GlobalEventManager().addCommand("UnSelectSelection", FreeCaller<Selection_Deselect> ());
 	GlobalEventManager().addCommand("InvertSelection", FreeCaller<selection::algorithm::invertSelection> ());
 	GlobalEventManager().addCommand("SelectInside", FreeCaller<selection::algorithm::selectInside> ());

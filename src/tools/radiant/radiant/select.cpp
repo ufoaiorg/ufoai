@@ -247,8 +247,3 @@ void Selection_MoveUp (void)
 {
 	Selection_NudgeZ(GlobalGrid().getGridSize());
 }
-
-void SceneSelectionChange (const Selectable& selectable)
-{
-	SceneChangeNotify();
-}
