@@ -34,6 +34,11 @@ ifeq ($(PROFILING),1)
   LDFLAGS += -pg
 endif
 
+ifeq ($(DEBUG),1)
+  CFLAGS  += -DDEBUG
+  CCFLAGS  += -DDEBUG
+endif
+
 CCFLAGS += $(CFLAGS)
 
 ifeq ($(W2K),1)
