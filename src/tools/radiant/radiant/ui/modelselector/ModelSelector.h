@@ -7,9 +7,12 @@
 #include "igl.h"
 #include "imodel.h"
 #include "../common/ModelPreview.h"
+#include <map>
 
 namespace ui
 {
+
+	typedef std::map<std::string, GtkTreeIter*> DirIterMap;
 
 	/** Data structure containing both a model and a skin name, to be returned from
 	 * the Model Selector.
@@ -54,6 +57,15 @@ namespace ui
 			std::string _lastModel;
 			int _lastSkin;
 
+			// Map between model directory names (e.g. "models/objects") and
+			// a GtkTreeIter pointing to the equivalent row in the TreeModel. Subsequent
+			// modelpaths with this directory will be added as children of this iter.
+
+			DirIterMap _dirIterMap;
+
+			// frees the DirIterMap
+			~ModelSelector ();
+
 		private:
 
 			// Private constructor, creates GTK widgets
@@ -73,6 +85,9 @@ namespace ui
 			// Update the info table with information from the currently-selected model
 			// update the displayed model.
 			void updateSelected ();
+
+			// loads only the given directory
+			void loadDirectory(const std::string& path);
 
 			// Return the value from the selected column, or an empty string if nothing selected
 			std::string getSelectedString (gint col);

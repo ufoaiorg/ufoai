@@ -14,7 +14,6 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <map>
 #include "gtkutil/ModalProgressDialog.h"
 #include "../../mainframe.h"
 
@@ -25,7 +24,7 @@ namespace ui
 	namespace
 	{
 		const char* MODELSELECTOR_TITLE = _("Choose model");
-		const char* MODELS_FOLDER = "models/";
+		const std::string MODELS_FOLDER = "models";
 		const char* MD2_EXTENSION = "md2";
 		const char* MD3_EXTENSION = "md3";
 		const char* OBJ_EXTENSION = "obj";
@@ -34,6 +33,7 @@ namespace ui
 		enum
 		{
 			NAME_COLUMN, // e.g. "chair1.md2"
+			DIRNAME_COLUMN, // e.g. models/objects/
 			FULLNAME_COLUMN, // e.g. "models/objects/chair1.md2"
 			SKIN_COLUMN, // e.e. "chair1_brown_wood", or "" for no skin
 			SKIN_INDEX,
@@ -46,7 +46,7 @@ namespace ui
 
 	ModelSelector::ModelSelector () :
 		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING,
-				G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_PIXBUF)), _infoStore(gtk_list_store_new(2,
+				G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_PIXBUF)), _infoStore(gtk_list_store_new(2,
 				G_TYPE_STRING, G_TYPE_STRING)), _lastModel(""), _lastSkin(-1)
 	{
 		// Window properties
@@ -111,33 +111,27 @@ namespace ui
 		{
 				typedef const std::string& first_argument_type;
 
-				// Tree store to populate
+				bool _scanForDirectory;
 
+				// Tree store to populate
 				GtkTreeStore* _store;
 
 				const gtkutil::ModalProgressDialog& _dialog;
 
-				// Map between model directory names (e.g. "models/objects") and
-				// a GtkTreeIter pointing to the equivalent row in the TreeModel. Subsequent
-				// modelpaths with this directory will be added as children of this iter.
+				// the path we are currently loading
+				const std::string _path;
 
-				typedef std::map<std::string, GtkTreeIter*> DirIterMap;
-				DirIterMap _dirIterMap;
+				DirIterMap& _dirIterMap;
 
 				// Constructor
 
-				ModelFileFunctor (GtkTreeStore* store, const gtkutil::ModalProgressDialog& dialog) :
-					_store(store), _dialog(dialog)
+				ModelFileFunctor (GtkTreeStore* store, const gtkutil::ModalProgressDialog& dialog, const std::string& path, DirIterMap& dirIterMap) :
+					_store(store), _dialog(dialog), _path(path), _dirIterMap(dirIterMap)
 				{
 				}
 
-				// Destructor. The GtkTreeIters are dynamically allocated so we must free them
-
-				~ModelFileFunctor ()
-				{
-					for (DirIterMap::iterator i = _dirIterMap.begin(); i != _dirIterMap.end(); ++i) {
-						gtk_tree_iter_free(i->second);
-					}
+				void setDirectory(bool scanForDirectory) {
+					_scanForDirectory  = scanForDirectory;
 				}
 
 				// Recursive function to add a given model path ("models/something/model.ext")
@@ -147,124 +141,134 @@ namespace ui
 				// the parent node is recursively calculated, and the node provided as an argument
 				// added as a child.
 
-				GtkTreeIter* addRecursive (const std::string& dirPath)
+				void addDirectory (const std::string& dirName, GtkTreeIter* parIter)
 				{
-					// We first try to lookup the directory name in the map. Return it
-					// if it exists, otherwise recursively obtain the parent of this directory name,
-					// and add this directory as a child in the tree model. We also add this
-					// directory to the map for future lookups.
+					std::string relativePath = DirectoryCleaned(_path + dirName);
 
-					DirIterMap::iterator iTemp = _dirIterMap.find(dirPath);
-					if (iTemp != _dirIterMap.end()) { // found in map
-						return iTemp->second;
-					} else {
-						// Perform the search for final "/" which identifies the parent
-						// of this directory, and call recursively. If there is no slash, we
-						// are looking at a toplevel directory in which case the parent is
-						// NULL.
-						size_t slashPos = dirPath.rfind("/");
-						GtkTreeIter* parIter = NULL;
+					// Add the fields to the treeview
+					GtkTreeIter iter;
+					gtk_tree_store_append(_store, &iter, parIter);
+					gtk_tree_store_set(_store, &iter, NAME_COLUMN, dirName.c_str(), DIRNAME_COLUMN,
+							relativePath.c_str(), FULLNAME_COLUMN, "", SKIN_COLUMN, "", IMAGE_COLUMN,
+							gtkutil::getLocalPixbuf(ui::icons::ICON_FOLDER), -1);
+					GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
 
-						if (slashPos != std::string::npos) {
-							parIter = addRecursive(dirPath.substr(0, slashPos));
-						}
+					// Now add a map entry that maps our directory name to the row we just
+					// added
+					_dirIterMap[relativePath] = dynIter;
+				}
 
-						/* Add this directory to the treemodel. For the displayed tree, we
-						 ** want the last component of the directory name, not the entire path
-						 ** at each node.
-						 */
-						std::stringstream nodeName;
-						nodeName << dirPath.substr(slashPos + 1);
+				void addModel (const std::string& fileName, GtkTreeIter* parIter)
+				{
+					// Decide which image to use, based on the file extension (or the folder
+					// image if there is no extension). Also, set a flag indicating that we
+					// have an actual model rather than a directory, so that the fullname
+					// tree column can be populated
 
-						// Decide which image to use, based on the file extension (or the folder
-						// image if there is no extension). Also, set a flag indicating that we
-						// have an actual model rather than a directory, so that the fullname
-						// tree column can be populated
+					std::string imgPath("");
 
-						std::string imgPath = ui::icons::ICON_FOLDER;
-						bool isModel = false;
-
-						if (os::getExtension(dirPath) == MD3_EXTENSION) {
-							imgPath = ui::icons::ICON_MD3;
-							isModel = true;
-						} else if (os::getExtension(dirPath) == MD2_EXTENSION) {
-							imgPath = ui::icons::ICON_MD2;
-							isModel = true;
-						} else if (os::getExtension(dirPath) == OBJ_EXTENSION) {
-							imgPath = ui::icons::ICON_OBJ;
-							isModel = true;
-						}
-
-						// Add the fields to the treeview
-
-						GtkTreeIter iter;
-						gtk_tree_store_append(_store, &iter, parIter);
-						gtk_tree_store_set(_store, &iter, NAME_COLUMN, nodeName.str().c_str(), FULLNAME_COLUMN,
-								(isModel ? (MODELS_FOLDER + dirPath).c_str() : ""), SKIN_COLUMN, "", IMAGE_COLUMN,
-								gtkutil::getLocalPixbuf(imgPath), -1);
-						GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
-
-						if (isModel) {
-							// Load the model
-							ModelLoader* loader = ModelLoader_forType(os::getExtension(dirPath));
-							if (loader != NULL) {
-								model::IModelPtr model = loader->loadModelFromPath(MODELS_FOLDER + dirPath);
-
-								// Update the text in the dialog
-								_dialog.setText(MODELS_FOLDER + dirPath);
-
-								// Get the list of skins for this model. The number of skins is appended
-								// to the model node name in brackets.
-								ModelSkinList skins = model->getSkinsForModel();
-								int numSk = skins.size();
-								if (numSk > 0) {
-									nodeName << " [" << numSk << (numSk == 1 ? " skin]" : " skins]");
-								}
-
-								// Determine if this model has any associated skins, and add them as
-								// children. We also set the fullpath column to the model name for each skin.
-								int index = 0;
-								for (ModelSkinList::iterator i = skins.begin(); i != skins.end(); ++i) {
-									GtkTreeIter skIter;
-									gtk_tree_store_append(_store, &skIter, &iter);
-									gtk_tree_store_set(_store, &skIter, NAME_COLUMN, i->c_str(), FULLNAME_COLUMN,
-											(MODELS_FOLDER + dirPath).c_str(), SKIN_COLUMN, i->c_str(), SKIN_INDEX,
-											index, IMAGE_COLUMN, gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN), -1);
-									index++;
-								}
-							}
-						}
-
-						// Now add a map entry that maps our directory name to the row we just
-						// added
-						_dirIterMap[dirPath] = dynIter;
-
-						// Return our new dynamic iter.
-						return dynIter;
+					if (os::getExtension(fileName) == MD3_EXTENSION) {
+						imgPath = ui::icons::ICON_MD3;
+					} else if (os::getExtension(fileName) == MD2_EXTENSION) {
+						imgPath = ui::icons::ICON_MD2;
+					} else if (os::getExtension(fileName) == OBJ_EXTENSION) {
+						imgPath = ui::icons::ICON_OBJ;
 					}
+
+					if (imgPath.empty())
+						return;
+
+					std::string relativePath = _path + fileName;
+
+					// check whether it's already loaded
+					DirIterMap::iterator iTemp = _dirIterMap.find(relativePath);
+					if (iTemp != _dirIterMap.end())
+						return;
+
+					// Add the fields to the treeview
+					GtkTreeIter iter;
+					gtk_tree_store_append(_store, &iter, parIter);
+					gtk_tree_store_set(_store, &iter, NAME_COLUMN, fileName.c_str(), DIRNAME_COLUMN,
+							"", FULLNAME_COLUMN, relativePath.c_str(), SKIN_COLUMN, "", IMAGE_COLUMN,
+							gtkutil::getLocalPixbuf(imgPath), -1);
+					GtkTreeIter* dynIter = gtk_tree_iter_copy(&iter); // get a heap-allocated iter
+
+					// Load the model
+					ModelLoader* loader = ModelLoader_forType(os::getExtension(fileName));
+					if (loader != NULL) {
+						model::IModelPtr model = loader->loadModelFromPath(relativePath);
+						if (model.get() != NULL) {
+							// Update the text in the dialog
+							_dialog.setText(relativePath);
+
+							// Get the list of skins for this model. The number of skins is appended
+							// to the model node name in brackets.
+							ModelSkinList skins = model->getSkinsForModel();
+
+							// Determine if this model has any associated skins, and add them as
+							// children. We also set the fullpath column to the model name for each skin.
+							int index = 0;
+							for (ModelSkinList::iterator i = skins.begin(); i != skins.end(); ++i) {
+								GtkTreeIter skIter;
+								gtk_tree_store_append(_store, &skIter, &iter);
+								gtk_tree_store_set(_store, &skIter, NAME_COLUMN, i->c_str(), DIRNAME_COLUMN, "", FULLNAME_COLUMN,
+										relativePath.c_str(), SKIN_COLUMN, i->c_str(), SKIN_INDEX,
+										index, IMAGE_COLUMN, gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN), -1);
+								index++;
+							}
+						} else {
+							globalWarningStream() << "Could not load model " << relativePath << "\n";
+						}
+					}
+
+					// Now add a map entry that maps our directory name to the row we just
+					// added
+					_dirIterMap[relativePath] = dynIter;
 				}
 
 				// Functor operator
 				void operator() (const std::string& file)
 				{
-					// Test the extension for supported model formats.
-					std::string ext = os::getExtension(file);
-					if (ext == MD2_EXTENSION || ext == MD3_EXTENSION || ext == OBJ_EXTENSION) {
-						addRecursive(file);
-					}
+					GtkTreeIter* parIter = NULL;
+					DirIterMap::iterator iTemp = _dirIterMap.find(_path);
+					if (iTemp != _dirIterMap.end())
+						parIter = iTemp->second;
+
+					if (_scanForDirectory)
+						addDirectory(file, parIter);
+					else
+						addModel(file, parIter);
 				}
 		};
+	}
+
+	// Destructor. The GtkTreeIters are dynamically allocated so we must free them
+	ModelSelector::~ModelSelector ()
+	{
+		for (DirIterMap::iterator i = _dirIterMap.begin(); i != _dirIterMap.end(); ++i) {
+			gtk_tree_iter_free(i->second);
+		}
+	}
+
+	void ModelSelector::loadDirectory(const std::string& path) {
+		if (path.empty())
+			return;
+
+		// Modal dialog window to display progress
+		gtkutil::ModalProgressDialog dialog(MainFrame_getWindow(), string::format(_("Loading models %s"), path.c_str()));
+
+		// Populate the treestore using the VFS callback functor
+		ModelFileFunctor functor(_treeStore, dialog, DirectoryCleaned(path), _dirIterMap);
+		functor.setDirectory(true);
+		GlobalFileSystem().forEachDirectory(path, makeCallback1(functor), 1);
+		functor.setDirectory(false);
+		GlobalFileSystem().forEachFile(path, "*", makeCallback1(functor), 1);
 	}
 
 	// Helper function to create the TreeView
 	GtkWidget* ModelSelector::createTreeView ()
 	{
-		// Modal dialog window to display progress
-		gtkutil::ModalProgressDialog dialog(MainFrame_getWindow(), _("Loading models"));
-
-		// Populate the treestore using the VFS callback functor
-		ModelFileFunctor functor(_treeStore, dialog);
-		GlobalFileSystem().forEachFile(MODELS_FOLDER, "*", makeCallback1(functor), 0);
+		loadDirectory(MODELS_FOLDER);
 
 		GtkTreeModel *model = gtk_tree_model_filter_new(GTK_TREE_MODEL(_treeStore), NULL);
 		GtkTreeModel *modelSorted = gtk_tree_model_sort_new_with_model(model);
@@ -450,6 +454,9 @@ namespace ui
 
 	void ModelSelector::callbackSelChanged (GtkWidget* widget, ModelSelector* self)
 	{
+		std::string mName = self->getSelectedString(DIRNAME_COLUMN);
+		self->loadDirectory(mName);
+
 		self->updateSelected();
 	}
 
