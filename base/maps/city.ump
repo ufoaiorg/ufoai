@@ -40,34 +40,37 @@ base city/city		// Prefix for each tile's .map file including path from /maps/
 // Firebird on street intersection with rail line
 tile +craft_drop_firebird
 {
-	5 5
+	5 6
 	0		i		i		i		0
 	j		+da		+d		+da		k
 	j		+ca		+c		+ca		k
 	j		+ca		+c		+ca		k
-	0		ce		ce		ce		0
+	j		+ea		+e		+ea		k
+	0		i		i		i		0
 }
 
 // Herakles pod on vertical street with rail line
 tile +craft_drop_herakles
 {
-	5 5
+	5 6
 	0		i		i		i		0
 	j		+da		+d		+da		k
 	j		+ca		+c		+ca		k
 	j		+ca		+c		+ca		k
-	0		ce		ce		ce		0
+	j		+ea		+e		+ea		k
+	0		i		i		i		0
 }
 
 // Raptor on vertical street with rail line
 tile +craft_drop_raptor
 {
-	5 5
+	5 6
 	0		i		i		i		0
 	j		+da		+d		+da		k
 	j		+ca		+c		+ca		k
 	j		+ca		+c		+ca		k
-	0		ce		ce		ce		0
+	j		+ea		+e		+ea		k
+	0		i		i		i		0
 }
 
 // ----
@@ -355,8 +358,7 @@ assembly small
 
 	// Right streets with rail/dropship going all the way up
 	fix +str_rail_cross "5 0"
-	fix +strv_rail_btm2a "5 1"
-	fix *rm_drop +craft_drop_firebird "5 2"
+	fix *rm_drop +craft_drop_firebird "5 1"
 	fix +str_rail_cross "5 5"
 	fix +strv_rail_btm2a "5 6"
 	fix +strv_rail_2a "5 7"
@@ -406,8 +408,7 @@ assembly medium
 
 	// Right streets with rail/dropship going all the way up
 	fix +str_rail_cross "5 0"
-	fix +strv_rail_btm2a "5 1"
-	fix *rm_drop +craft_drop_firebird "5 2"
+	fix *rm_drop +craft_drop_firebird "5 1"
 	fix +str_rail_cross "5 5"
 	fix +strv_rail_btm2a "5 6"
 	fix +strv_rail_2a "5 7"
