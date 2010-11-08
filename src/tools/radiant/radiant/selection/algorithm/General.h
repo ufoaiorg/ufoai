@@ -47,6 +47,7 @@ namespace selection {
 	 */
 	void selectInside();
 	void selectTouching();
+	void selectCompleteTall();
 
 	} // namespace algorithm
 } // namespace selection

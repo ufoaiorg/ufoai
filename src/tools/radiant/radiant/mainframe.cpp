@@ -1760,6 +1760,7 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("InvertSelection", FreeCaller<selection::algorithm::invertSelection> ());
 	GlobalEventManager().addCommand("SelectInside", FreeCaller<selection::algorithm::selectInside> ());
 	GlobalEventManager().addCommand("SelectTouching", FreeCaller<selection::algorithm::selectTouching> ());
+	GlobalEventManager().addCommand("SelectCompleteTall", FreeCaller<selection::algorithm::selectCompleteTall> ());
 	GlobalEventManager().addCommand("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> ());
 	GlobalEventManager().addCommand("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 

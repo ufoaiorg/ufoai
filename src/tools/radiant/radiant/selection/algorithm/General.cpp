@@ -84,7 +84,7 @@ class SelectByBounds: public scene::Graph::Walker
 
 			if (path.size() > 1 && !path.top().get().isRoot() && selectable != 0) {
 				for (Unsigned i = 0; i < m_count; ++i) {
-					if (policy.Evaluate(m_aabbs[i], instance)) {
+					if (policy.evaluate(m_aabbs[i], instance)) {
 						selectable->setSelected(true);
 					}
 				}
@@ -138,6 +138,11 @@ void selectInside ()
 void selectTouching ()
 {
 	SelectByBounds<SelectionPolicy_Touching>::DoSelection(false);
+}
+
+void selectCompleteTall()
+{
+	SelectByBounds<SelectionPolicy_Complete_Tall>::DoSelection();
 }
 
 class DeleteSelected: public scene::Graph::Walker

@@ -53,7 +53,7 @@ public:
 class SelectionPolicy_Touching
 {
 	public:
-		bool Evaluate (const AABB& box, scene::Instance& instance) const
+		bool evaluate (const AABB& box, scene::Instance& instance) const
 		{
 			const AABB& other(instance.worldAABB());
 			for (int i = 0; i < 3; ++i) {
@@ -71,7 +71,7 @@ class SelectionPolicy_Touching
 class SelectionPolicy_Inside
 {
 	public:
-		bool Evaluate (const AABB& box, scene::Instance& instance) const
+		bool evaluate (const AABB& box, scene::Instance& instance) const
 		{
 			const AABB& other(instance.worldAABB());
 			for (int i = 0; i < 3; ++i) {
