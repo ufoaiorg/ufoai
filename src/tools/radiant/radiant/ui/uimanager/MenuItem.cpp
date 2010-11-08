@@ -310,7 +310,7 @@ void MenuItem::construct() {
 		}
 		else {
 			// Create an empty, desensitised menuitem
-			_widget = gtkutil::TextMenuItemAccelerator(_caption, "", "", false);
+			_widget = gtkutil::TextMenuItemAccelerator(_caption, "", _icon, false);
 			gtk_widget_set_sensitive(_widget, false);
 		}
 	}
@@ -319,7 +319,7 @@ void MenuItem::construct() {
 	}
 
 	if (_widget != NULL) {
-		gtk_widget_show(_widget);
+		gtk_widget_show_all(_widget);
 	}
 
 	_constructed = true;
