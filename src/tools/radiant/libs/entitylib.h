@@ -290,7 +290,7 @@ class KeyValue: public EntityKeyValue
 		std::size_t m_refcount;
 		KeyObservers m_observers;
 		std::string m_string;
-		const std::string& m_empty;
+		const std::string m_empty;
 		ObservedUndoableObject<std::string> m_undo;
 		static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
 	public:
