@@ -332,14 +332,14 @@ class KeyValue: public EntityKeyValue
 
 		void attach (const KeyObserver& observer)
 		{
-			(*m_observers.insert(observer))(c_str());
+			(*m_observers.insert(observer))(get());
 		}
 		void detach (const KeyObserver& observer)
 		{
 			observer(m_empty);
 			m_observers.erase(observer);
 		}
-		const std::string& c_str () const
+		const std::string& get () const
 		{
 			if (m_string.empty())
 				return m_empty;
@@ -359,7 +359,7 @@ class KeyValue: public EntityKeyValue
 			m_entityKeyValueChanged();
 			KeyObservers::reverse_iterator i = m_observers.rbegin();
 			while (i != m_observers.rend()) {
-				(*i++)(c_str());
+				(*i++)(get());
 			}
 		}
 
@@ -511,7 +511,7 @@ class EntityKeyValues: public Entity
 					m_instanced(false), m_observerMutex(false), m_isContainer(other.m_isContainer)
 		{
 			for (KeyValues::const_iterator i = other.m_keyValues.begin(); i != other.m_keyValues.end(); ++i) {
-				insert((*i).first.c_str(), (*i).second->c_str());
+				insert((*i).first.c_str(), (*i).second->get());
 			}
 		}
 		~EntityKeyValues ()
@@ -612,7 +612,7 @@ class EntityKeyValues: public Entity
 		void forEachKeyValue (Visitor& visitor) const
 		{
 			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				visitor.visit((*i).first.c_str(), (*i).second->c_str());
+				visitor.visit((*i).first.c_str(), (*i).second->get());
 			}
 		}
 
@@ -642,7 +642,7 @@ class EntityKeyValues: public Entity
 			// If key is found, return it, otherwise lookup the default value on
 			// the entity class
 			if (i != m_keyValues.end()) {
-				return i->second->c_str();
+				return i->second->get();
 			} else {
 				return EntityClass_valueForKey(*m_eclass, key);
 			}

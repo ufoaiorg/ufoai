@@ -38,7 +38,7 @@ class EntityKeyValue
 		virtual ~EntityKeyValue ()
 		{
 		}
-		virtual const std::string& c_str () const = 0;
+		virtual const std::string& get () const = 0;
 		virtual void assign (const std::string& other) = 0;
 		virtual void attach (const KeyObserver& observer) = 0;
 		virtual void detach (const KeyObserver& observer) = 0;
