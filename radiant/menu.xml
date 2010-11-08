@@ -32,8 +32,9 @@
 		<menuSeparator />
 		<menuItem name="clearSelection" caption="C_lear Selection" command="UnSelectSelection" />
 		<menuItem name="invertSelection" caption="_Invert Selection" command="InvertSelection" />
-		<menuItem name="selectInside" caption="Select I_nside" command="SelectInside" />
-		<menuItem name="selectTouching" caption="Select _touching" command="SelectTouching" />
+		<menuItem name="selectCompleteTall" caption="Select complete t_all" command="SelectCompleteTall" icon="selection_selectcompletetall.png" />
+		<menuItem name="selectInside" caption="Select I_nside" command="SelectInside" icon="selection_selectinside.png" />
+		<menuItem name="selectTouching" caption="Select _touching" command="SelectTouching" icon="selection_selecttouching.png" />
 		<menuItem name="selectionEntities" caption="Expand selection to Whole _Entities" command="ExpandSelectionToEntities" />
 		<menuItem name="selectalloftype" caption="Select all of type" command="SelectAllOfType" icon="selection_selectcompletetall.png" />
 		<menuItem name="selectallfacetexture" caption="Select all Faces of same texture" command="SelectAllFacesOfTex" icon="selection_selectallsametex.png" />

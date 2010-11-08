@@ -123,6 +123,7 @@
 				<toolbutton name="zflip" action="MirrorSelectionZ" tooltip="z-axis Flip" icon="brush_flipz.png" />
 				<toolbutton name="zrotate" action="RotateSelectionZ" tooltip="z-axis Rotate" icon="brush_rotatez.png" />
 			<separator/>
+				<toolbutton name="selectcompletetall" action="SelectCompleteTall" tooltip="Select complete tall" icon="selection_selectcompletetall.png" />
 				<toolbutton name="selecttouching" action="SelectTouching" tooltip="Select touching" icon="selection_selecttouching.png" />
 				<toolbutton name="selectinside" action="SelectInside" tooltip="Select inside" icon="selection_selectinside.png" />
 				<toolbutton name="selectentity" action="ExpandSelectionToEntities" tooltip="Select whole entity" icon="selection_selectentities.png" />
