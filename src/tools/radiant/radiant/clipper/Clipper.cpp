@@ -16,7 +16,7 @@ const std::string RKEY_CLIPPER_USE_CAULK = "user/ui/clipper/useCaulk";
 }
 
 BrushClipper::BrushClipper () :
-	_movingClip(NULL), _switch(true), _useCaulk(false), _caulkShader("textures/tex_common/nodraw")
+	_movingClip(NULL), _switch(false), _useCaulk(false), _caulkShader("textures/tex_common/nodraw")
 {
 	GlobalRegistry().addKeyObserver(this, RKEY_CLIPPER_USE_CAULK);
 	GlobalRegistry().addKeyObserver(this, RKEY_CLIPPER_CAULK_SHADER);
@@ -184,7 +184,7 @@ void BrushClipper::clip ()
 		getPlanePoints(planepts, bounds);
 
 		Scene_BrushSplitByPlane(GlobalSceneGraph(), planepts[0], planepts[1], planepts[2], getShader(),
-				(!_switch) ? eFront : eBack);
+				(_switch) ? eFront : eBack);
 
 		reset();
 		update();
