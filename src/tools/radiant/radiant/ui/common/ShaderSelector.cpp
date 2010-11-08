@@ -15,7 +15,7 @@
 #include "iregistry.h"
 
 #include <gtk/gtk.h>
-#include <GL/glew.h>
+#include "igl.h"
 #include <vector>
 #include <string>
 #include <map>

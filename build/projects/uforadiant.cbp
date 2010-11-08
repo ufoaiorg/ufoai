@@ -596,10 +596,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\radiant.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\referencecache.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\referencecache.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\referencecache\nullmodel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\referencecache\nullmodel.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\referencecache\referencecache.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\referencecache\referencecache.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\LinearLightList.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\OpenGLModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\OpenGLRenderSystem.cpp" />
