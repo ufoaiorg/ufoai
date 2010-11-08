@@ -618,6 +618,9 @@ private:
 		AcceleratorList accelList = self->findAccelerator(event);
 
 		if (!accelList.empty()) {
+			// Release any modifiers
+			self->_modifiers.setState(0);
+
 			// Pass the execute() call to all found accelerators
 			for (unsigned int i = 0; i < accelList.size(); i++) {
 				Accelerator* accelerator = dynamic_cast<Accelerator*>(accelList[i]);
@@ -630,6 +633,8 @@ private:
 
 			return true;
 		}
+
+		self->_modifiers.updateState(event, true);
 
 		self->updateStatusText(event, true);
 
@@ -675,6 +680,8 @@ private:
 
 			return true;
 		}
+
+		self->_modifiers.updateState(event, false);
 
 		self->updateStatusText(event, false);
 
@@ -762,6 +769,10 @@ private:
 		returnValue += gdk_keyval_name(gdk_keyval_to_upper(event->keyval));
 
 		return returnValue;
+	}
+
+	unsigned int getModifierState() {
+		return _modifiers.getState();
 	}
 }; // class EventManager
 

@@ -177,13 +177,11 @@ void SelectionSetToolmenu::onSelectionChanged(GtkComboBox* comboBox,
 			return;
 
 		// The user can choose to DESELECT the set nodes when holding down shift
-#if 0
 		if ((GlobalEventManager().getModifierState() & GDK_SHIFT_MASK) != 0)
 		{
 			set->deselect();
 		}
 		else
-#endif
 		{
 			set->select();
 		}

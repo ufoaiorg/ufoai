@@ -226,6 +226,10 @@ public:
 	virtual std::string getGDKEventStr(GdkEventKey* event) = 0;
 
 	virtual std::string getAcceleratorStr(const IEvent* event, bool forMenu) = 0;
+
+	/** greebo: Returns the current keyboard eventkey state
+	 */
+	virtual unsigned int getModifierState() = 0;
 };
 
 // Module definitions
