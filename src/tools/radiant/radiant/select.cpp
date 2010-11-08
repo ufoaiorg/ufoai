@@ -116,7 +116,7 @@ void UpdateWorkzone_ForSelectionChanged (const Selectable& selectable)
 	}
 }
 
-void Select_SetShader (const char* shader)
+void Select_SetShader (const std::string& shader)
 {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushSetShader_Selected(GlobalSceneGraph(), shader);
@@ -179,30 +179,6 @@ enum sign_t
 {
 	eSignPositive = 1, eSignNegative = -1
 };
-
-inline Matrix4 matrix4_rotation_for_axis90 (axis_t axis, sign_t sign)
-{
-	switch (axis) {
-	case eAxisX:
-		if (sign == eSignPositive) {
-			return matrix4_rotation_for_sincos_x(1, 0);
-		} else {
-			return matrix4_rotation_for_sincos_x(-1, 0);
-		}
-	case eAxisY:
-		if (sign == eSignPositive) {
-			return matrix4_rotation_for_sincos_y(1, 0);
-		} else {
-			return matrix4_rotation_for_sincos_y(-1, 0);
-		}
-	default://case eAxisZ:
-		if (sign == eSignPositive) {
-			return matrix4_rotation_for_sincos_z(1, 0);
-		} else {
-			return matrix4_rotation_for_sincos_z(-1, 0);
-		}
-	}
-}
 
 inline Quaternion quaternion_for_axis90 (axis_t axis, sign_t sign)
 {

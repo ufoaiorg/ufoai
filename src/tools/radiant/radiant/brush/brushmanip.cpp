@@ -229,9 +229,9 @@ void Scene_BrushRotateTexdef_Component_Selected (scene::Graph& graph, float angl
 
 class FaceSetShader
 {
-		const char* m_name;
+		const std::string& m_name;
 	public:
-		FaceSetShader (const char* name) :
+		FaceSetShader (const std::string& name) :
 			m_name(name)
 		{
 		}
@@ -241,13 +241,13 @@ class FaceSetShader
 		}
 };
 
-void Scene_BrushSetShader_Selected (scene::Graph& graph, const char* name)
+void Scene_BrushSetShader_Selected (scene::Graph& graph, const std::string& name)
 {
 	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceSetShader(name));
 	SceneChangeNotify();
 }
 
-void Scene_BrushSetShader_Component_Selected (scene::Graph& graph, const char* name)
+void Scene_BrushSetShader_Component_Selected (scene::Graph& graph, const std::string& name)
 {
 	Scene_ForEachSelectedBrushFace(FaceSetShader(name));
 	SceneChangeNotify();

@@ -44,7 +44,7 @@ void Selection_MoveUp ();
 
 void Select_AllFacesWithTexture (void);
 
-void Select_SetShader (const char* shader);
+void Select_SetShader (const std::string& shader);
 
 class TextureProjection;
 void Select_SetTexdef (const TextureProjection& projection);
