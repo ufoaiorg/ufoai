@@ -5,6 +5,7 @@
 #include "gtkutil/FramedTransientWidget.h"
 #include "stringio.h"
 #include "../select.h"
+#include "../selection/algorithm/General.h"
 #include "../mainframe.h"
 #include "radiant_i18n.h"
 
@@ -428,7 +429,7 @@ Vector3 XYWndManager::getFocusPosition() {
 	Vector3 position(0,0,0);
 
 	if (GlobalSelectionSystem().countSelected() != 0) {
-		Select_GetMid(position);
+		position = selection::algorithm::getCurrentSelectionCenter();
 	}
 	else {
 		position = g_pParentWnd->GetCamWnd()->getCameraOrigin();

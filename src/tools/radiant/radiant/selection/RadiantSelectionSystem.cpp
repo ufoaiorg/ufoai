@@ -13,6 +13,7 @@
 #include "SceneWalkers.h"
 #include "../brush/BrushInstance.h"
 #include "igrid.h"
+#include "algorithm/General.h"
 
 // Initialise the shader pointer
 Shader* RadiantSelectionSystem::_state = 0;
@@ -45,7 +46,7 @@ inline void matrix4_assign_rotation_for_pivot(Matrix4& matrix, scene::Instance& 
 // --------- RadiantSelectionSystem Implementation ------------------------------------------
 
 RadiantSelectionSystem::RadiantSelectionSystem() :
-	_undoBegun(false), _mode(ePrimitive), _componentMode(eDefault), _countPrimitive(SelectionChangedCaller(*this)),
+	_requestWorkZoneRecalculation(true), _undoBegun(false), _mode(ePrimitive), _componentMode(eDefault), _countPrimitive(SelectionChangedCaller(*this)),
 			_countComponent(SelectionChangedCaller(*this)),
 			_translateManipulator(*this, 2, 64), // initialise the Manipulators with a pointer to self
 			_rotateManipulator(*this, 8, 64), _scaleManipulator(*this, 0, 64), _pivotChanged(false),
@@ -223,6 +224,11 @@ void RadiantSelectionSystem::onSelectedChanged(scene::Instance& instance, const 
 
 	// Check if the number of selected primitives in the list matches the value of the selection counter
 	ASSERT_MESSAGE(_selection.size() == _countPrimitive.size(), "selection-tracking error");
+
+	// Schedule an idle callback
+	requestIdleCallback();
+
+	_requestWorkZoneRecalculation = true;
 }
 
 // greebo: This should be called "onComponentSelectionChanged", as it is a similar function of the above one
@@ -242,6 +248,11 @@ void RadiantSelectionSystem::onComponentSelection(scene::Instance& instance, con
 
 	// Check if the number of selected components in the list matches the value of the selection counter
 	ASSERT_MESSAGE(_componentSelection.size() == _countComponent.size(), "selection-tracking error");
+
+	// Schedule an idle callback
+	requestIdleCallback();
+
+	_requestWorkZoneRecalculation = true;
 }
 
 // Returns the last instance in the list (if the list is not empty)
@@ -626,6 +637,10 @@ void RadiantSelectionSystem::MoveSelected(const View& view, const float device_p
 		// Get the manipulatable from the currently active manipulator (done by selection test)
 		// and call the Transform method (can be anything)
 		_manipulator->GetManipulatable()->Transform(_manip2pivotStart, device2manip, device_point[0], device_point[1]);
+
+		_requestWorkZoneRecalculation = true;
+
+		requestIdleCallback();
 	}
 }
 
@@ -670,6 +685,56 @@ void RadiantSelectionSystem::destroyStatic() {
 // This actually applies the transformation to the objects
 void RadiantSelectionSystem::freezeTransforms() {
 	GlobalSceneGraph().traverse(FreezeTransforms());
+
+	// The selection bounds have possibly changed, request an idle callback
+	_requestWorkZoneRecalculation = true;
+
+	requestIdleCallback();
+}
+
+
+void RadiantSelectionSystem::onGtkIdle()
+{
+	// System is idle, check for pending tasks
+
+	// Check if we should recalculate the workzone
+	if (_requestWorkZoneRecalculation)
+	{
+		_requestWorkZoneRecalculation = false;
+
+		// When no items are selected, leave a (valid) workzone alone to allow
+		// for creation of new elements within the bounds of a previous selection
+		if (_selectionInfo.totalCount > 0)
+		{
+			AABB bounds = selection::algorithm::getCurrentSelectionBounds();
+
+			if (bounds.isValid()) {
+				_workZone.max = bounds.getMaxs();
+				_workZone.min = bounds.getMins();
+			} else {
+				// A zero-sized workzone doesn't make much sense, set to default
+				_workZone.max = Vector3(64, 64, 64);
+				_workZone.min = Vector3(-64, -64, -64);
+			}
+		}
+	}
+}
+
+// greebo: Callback for the selectionSystem event: onBoundsChanged
+void RadiantSelectionSystem::onBoundsChanged() {
+	pivotChanged();
+
+	_requestWorkZoneRecalculation = true;
+	requestIdleCallback();
+}
+
+
+const selection::WorkZone& RadiantSelectionSystem::getWorkZone()
+{
+	// Flush any pending idle callbacks, we need the workzone now
+	flushIdleCallback();
+
+	return _workZone;
 }
 
 // End the move, this freezes the current transforms

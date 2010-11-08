@@ -205,7 +205,6 @@ class Radiant: public TypeSystemRef
 			GlobalFiletypes().addType("sound", "wav", filetype_t("PCM sound files", "*.wav"));
 			GlobalFiletypes().addType("sound", "ogg", filetype_t("OGG sound files", "*.ogg"));
 
-			Selection_Construct();
 			HomePaths_Construct();
 			VFS_Construct();
 			GLWindow_Construct();
@@ -259,7 +258,6 @@ class Radiant: public TypeSystemRef
 			GLWindow_Destroy();
 			VFS_Destroy();
 			HomePaths_Destroy();
-			Selection_Destroy();
 		}
 };
 

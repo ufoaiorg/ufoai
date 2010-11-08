@@ -80,6 +80,7 @@
 #include "../ump.h"
 #include "string/string.h"
 #include "../ui/menu/UMPMenu.h"
+#include "../selection/algorithm/General.h"
 
 #include "MapFileChooserPreview.h"
 
@@ -618,8 +619,7 @@ static void Map_StartPosition (void)
 	Entity* entity = Scene_FindPlayerStart();
 
 	if (entity) {
-		Vector3 origin;
-		string_parse_vector3(entity->getKeyValue("origin"), origin);
+		Vector3 origin(entity->getKeyValue("origin"));
 		FocusViews(origin, string::toFloat(entity->getKeyValue("angle")));
 	} else {
 		FocusViews(g_vector3_identity, 0);
@@ -1052,7 +1052,9 @@ void Map_RegionSelectedBrushes (void)
 	Map_RegionOff();
 
 	if (GlobalSelectionSystem().countSelected() != 0 && GlobalSelectionSystem().Mode() == SelectionSystem::ePrimitive) {
-		Select_GetBounds(region_mins, region_maxs);
+		AABB aabb = selection::algorithm::getCurrentSelectionBounds();
+		region_mins = aabb.getMins();
+		region_maxs = aabb.getMaxs();
 
 		Scene_Exclude_Selected(false);
 

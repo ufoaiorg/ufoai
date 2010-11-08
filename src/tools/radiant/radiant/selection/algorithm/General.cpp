@@ -339,5 +339,18 @@ void selectAllOfType ()
 	}
 }
 
+AABB getCurrentSelectionBounds()
+{
+	AABB bounds;
+	GlobalSceneGraph().traverse(BoundsSelected(bounds));
+	return bounds;
+}
+
+Vector3 getCurrentSelectionCenter ()
+{
+	AABB bounds = getCurrentSelectionBounds();
+	return vector3_snapped(bounds.origin);
+}
+
 	} // namespace algorithm
 } // namespace selection

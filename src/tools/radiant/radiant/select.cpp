@@ -47,41 +47,9 @@
 #include "mainframe.h"
 #include "map/map.h"
 #include "selection/SceneWalkers.h"
-
-static WorkZone g_select_workzone;
+#include "selection/algorithm/General.h"
 
 #include "selection/algorithm/SelectionPolicies.h"
-
-namespace {
-void Selection_UpdateWorkzone (void)
-{
-	if (GlobalSelectionSystem().countSelected() != 0) {
-		Select_GetBounds(g_select_workzone.min, g_select_workzone.max);
-	}
-}
-typedef FreeCaller<Selection_UpdateWorkzone> SelectionUpdateWorkzoneCaller;
-
-IdleDraw g_idleWorkzone = IdleDraw(SelectionUpdateWorkzoneCaller());
-}
-
-const WorkZone& Select_getWorkZone (void)
-{
-	g_idleWorkzone.flush();
-	return g_select_workzone;
-}
-
-void UpdateWorkzone_ForSelection (void)
-{
-	g_idleWorkzone.queueDraw();
-}
-
-// update the workzone to the current selection
-void UpdateWorkzone_ForSelectionChanged (const Selectable& selectable)
-{
-	if (selectable.isSelected()) {
-		UpdateWorkzone_ForSelection();
-	}
-}
 
 void Select_SetShader (const std::string& shader)
 {
@@ -108,26 +76,6 @@ void Select_SetFlags (const ContentsFlagsValue& flags)
 		Scene_BrushSetFlags_Selected(GlobalSceneGraph(), flags);
 	}
 	Scene_BrushSetFlags_Component_Selected(GlobalSceneGraph(), flags);
-}
-
-void Select_GetBounds (Vector3& mins, Vector3& maxs)
-{
-	AABB bounds;
-	GlobalSceneGraph().traverse(BoundsSelected(bounds));
-	if (bounds.isValid()) {
-		maxs = bounds.origin + bounds.extents;
-		mins = bounds.origin - bounds.extents;
-	} else {
-		maxs = Vector3(0,0,0);
-		mins = Vector3(0,0,0);
-	}
-}
-
-void Select_GetMid (Vector3& mid)
-{
-	AABB bounds;
-	GlobalSceneGraph().traverse(BoundsSelected(bounds));
-	mid = vector3_snapped(bounds.origin);
 }
 
 void Select_FlipAxis (int axis)
@@ -373,21 +321,4 @@ void Selection_MoveUp (void)
 void SceneSelectionChange (const Selectable& selectable)
 {
 	SceneChangeNotify();
-}
-
-SignalHandlerId Selection_boundsChanged;
-
-void Selection_Construct (void)
-{
-	typedef FreeCaller1<const Selectable&, SceneSelectionChange> SceneSelectionChangeCaller;
-	GlobalSelectionSystem().addSelectionChangeCallback(SceneSelectionChangeCaller());
-	typedef FreeCaller1<const Selectable&, UpdateWorkzone_ForSelectionChanged> UpdateWorkzoneForSelectionChangedCaller;
-	GlobalSelectionSystem().addSelectionChangeCallback(UpdateWorkzoneForSelectionChangedCaller());
-	typedef FreeCaller<UpdateWorkzone_ForSelection> UpdateWorkzoneForSelectionCaller;
-	Selection_boundsChanged = GlobalSceneGraph().addBoundsChangedCallback(UpdateWorkzoneForSelectionCaller());
-}
-
-void Selection_Destroy (void)
-{
-	GlobalSceneGraph().removeBoundsChangedCallback(Selection_boundsChanged);
 }

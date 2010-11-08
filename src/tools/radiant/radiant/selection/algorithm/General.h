@@ -49,6 +49,12 @@ namespace selection {
 	void selectTouching();
 	void selectCompleteTall();
 
+	// Returns the center point of the current selection (or <0,0,0> if nothing selected).
+	Vector3 getCurrentSelectionCenter();
+
+	// Returns the AABB of the current selection (invalid bounds if nothing is selected).
+	AABB getCurrentSelectionBounds();
+
 	} // namespace algorithm
 } // namespace selection
 

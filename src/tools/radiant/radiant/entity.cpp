@@ -58,18 +58,7 @@
 #include "ui/common/SoundChooser.h"
 #include "ui/Icons.h"
 #include "selection/algorithm/General.h"
-
-struct entity_globals_t
-{
-		Vector3 color_entity;
-
-		entity_globals_t () :
-			color_entity(0.0f, 0.0f, 0.0f)
-		{
-		}
-};
-
-entity_globals_t g_entity_globals;
+#include "selectionlib.h"
 
 class EntitySetKeyValueSelected: public scene::Graph::Walker
 {
@@ -316,7 +305,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	}
 	UndoableCommand undo("entityCreate -class " + name);
 
-	AABB workzone(AABB::createFromMinMax(Select_getWorkZone().min, Select_getWorkZone().max));
+	AABB workzone(AABB::createFromMinMax(GlobalSelectionSystem().getWorkZone().min, GlobalSelectionSystem().getWorkZone().max));
 
 	NodeSmartReference node(GlobalEntityCreator().createEntity(entityClass));
 
@@ -449,6 +438,18 @@ bool DoNormalisedColor (Vector3& color)
 	return true;
 }
 
+struct entity_globals_t
+{
+		Vector3 color_entity;
+
+		entity_globals_t () :
+			color_entity(0.0f, 0.0f, 0.0f)
+		{
+		}
+};
+
+entity_globals_t g_entity_globals;
+
 void Entity_setColour ()
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
@@ -459,17 +460,10 @@ void Entity_setColour ()
 				return;
 			const std::string strColor = entity->getKeyValue("_color");
 			if (!strColor.empty()) {
-				Vector3 rgb;
-				if (string_parse_vector3(strColor, rgb)) {
-					g_entity_globals.color_entity = rgb;
-				}
+				g_entity_globals.color_entity = Vector3(strColor);
 			}
 			if (DoNormalisedColor(g_entity_globals.color_entity)) {
-				char buffer[128];
-				sprintf(buffer, "%g %g %g", g_entity_globals.color_entity[0], g_entity_globals.color_entity[1],
-						g_entity_globals.color_entity[2]);
-
-				Scene_EntitySetKeyValue_Selected(entity->getEntityClass().name(), "_color", std::string(buffer));
+				Scene_EntitySetKeyValue_Selected(entity->getEntityClass().name(), "_color", g_entity_globals.color_entity.toString());
 			}
 		}
 	}

@@ -31,11 +31,6 @@
 #include "igl.h"
 #include "selection/RadiantSelectionSystem.h"
 
-// greebo: Callback for the selectionSystem event: onBoundsChanged
-void SelectionSystem_OnBoundsChanged() {
-  GlobalSelectionSystem().pivotChanged();
-}
-
 SignalHandlerId SelectionSystem_boundsChanged;
 
 // Module stuff
@@ -61,7 +56,7 @@ class SelectionAPI : public TypeSystemRef {
 		_selectionSystem = new RadiantSelectionSystem;
 
 		SelectionSystem_boundsChanged =
-			GlobalSceneGraph().addBoundsChangedCallback(FreeCaller<SelectionSystem_OnBoundsChanged>());
+			GlobalSceneGraph().addBoundsChangedCallback(MemberCaller<RadiantSelectionSystem, &RadiantSelectionSystem::onBoundsChanged>(*_selectionSystem));
 
 		GlobalShaderCache().attachRenderable(*_selectionSystem);
 	}

@@ -65,7 +65,7 @@ class AnglesAttribute: public EntityAttribute
 			const std::string& value = entityGetValueForKey(m_key);
 			if (value.length() > 0) {
 				DoubleVector3 pitch_yaw_roll;
-				if (!string_parse_vector3(value.c_str(), pitch_yaw_roll)) {
+				if (!string_parse_vector3(value, pitch_yaw_roll)) {
 					pitch_yaw_roll = DoubleVector3(0, 0, 0);
 				}
 

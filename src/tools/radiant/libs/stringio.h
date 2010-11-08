@@ -86,25 +86,6 @@ inline bool string_parse_vector3 (const std::string& str, BasicVector3<Element>&
 	return string_empty(string);
 }
 
-template<typename Float>
-inline bool string_parse_vector (const std::string& str, Float* first, Float* last)
-{
-	const char *string = str.c_str();
-
-	if (first != last && (str.empty() || str[0] == ' ')) {
-		return false;
-	}
-	for (;;) {
-		*first = float(buffer_parse_floating_literal(string));
-		if (++first == last) {
-			return string_empty(string);
-		}
-		if (*string++ != ' ') {
-			return false;
-		}
-	}
-}
-
 // decimal signed integer
 inline bool string_parse_int (const std::string& str, int& i)
 {
@@ -273,6 +254,7 @@ typedef ConstReferenceCaller1<float, const StringImportCallback&, Float_exportSt
 
 inline void Vector3_importString (Vector3& self, const char* string)
 {
+	//self(std::string(string));
 	if (!string_parse_vector3(string, self)) {
 		self = Vector3(0, 0, 0);
 	}

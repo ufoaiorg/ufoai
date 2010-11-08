@@ -70,6 +70,14 @@ class AABB
 			return origin;
 		}
 
+		const Vector3 getMins() const {
+			return origin - extents;
+		}
+
+		const Vector3 getMaxs() const {
+			return origin + extents;
+		}
+
 		/** Get the radius of the smallest sphere which encloses this
 		 * bounding box.
 		 */

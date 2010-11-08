@@ -36,7 +36,7 @@ inline void default_origin (Vector3& origin)
 }
 inline void read_origin (Vector3& origin, const std::string& value)
 {
-	if (!string_parse_vector3(value.c_str(), origin)) {
+	if (!string_parse_vector3(value, origin)) {
 		default_origin(origin);
 	}
 }

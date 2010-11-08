@@ -63,7 +63,6 @@
 #include "os/path.h"
 #include "os/file.h"
 #include "eclasslib.h"
-#include "moduleobservers.h"
 
 #include "gtkutil/clipboard.h"
 #include "gtkutil/container.h"
@@ -591,8 +590,7 @@ void PasteToCamera (void)
 	Selection_Paste();
 
 	// Work out the delta
-	Vector3 mid;
-	Select_GetMid(mid);
+	Vector3 mid = selection::algorithm::getCurrentSelectionCenter();
 	Vector3 delta = vector3_snapped(camwnd.getCameraOrigin(), GlobalGrid().getGridSize()) - mid;
 
 	// Move to camera

@@ -28,6 +28,7 @@
 #include "../windowobservers.h"
 #include "../camera/GlobalCamera.h"
 #include "../ui/ortho/OrthoContextMenu.h"
+#include "../selection/algorithm/General.h"
 
 #include "GlobalXYWnd.h"
 #include "XYRenderer.h"
@@ -232,8 +233,7 @@ void XYWnd::DropClipPoint (int pointx, int pointy)
 
 	convertXYToWorld(pointx, pointy, point);
 
-	Vector3 mid;
-	Select_GetMid(mid);
+	Vector3 mid = selection::algorithm::getCurrentSelectionCenter();
 	GlobalClipper().setViewType(getViewType());
 	int nDim = (GlobalClipper().getViewType() == YZ) ? 0 : ((GlobalClipper().getViewType() == XZ) ? 1 : 2);
 	point[nDim] = mid[nDim];
@@ -594,8 +594,8 @@ void XYWnd::NewBrushDrag (int x, int y)
 
 	const int nDim = (m_viewType == XY) ? 2 : (m_viewType == YZ) ? 0 : 1;
 
-	mins[nDim] = float_snapped(Select_getWorkZone().min[nDim], GlobalGrid().getGridSize());
-	maxs[nDim] = float_snapped(Select_getWorkZone().max[nDim], GlobalGrid().getGridSize());
+	mins[nDim] = float_snapped(GlobalSelectionSystem().getWorkZone().min[nDim], GlobalGrid().getGridSize());
+	maxs[nDim] = float_snapped(GlobalSelectionSystem().getWorkZone().max[nDim], GlobalGrid().getGridSize());
 
 	if (maxs[nDim] <= mins[nDim])
 		maxs[nDim] = mins[nDim] + GlobalGrid().getGridSize();
@@ -631,7 +631,7 @@ void XYWnd::mouseToPoint (int x, int y, Vector3& point)
 	snapToGrid(point);
 
 	const int nDim = (getViewType() == XY) ? 2 : (getViewType() == YZ) ? 0 : 1;
-	const float fWorkMid = float_mid(Select_getWorkZone().min[nDim], Select_getWorkZone().max[nDim]);
+	const float fWorkMid = float_mid(GlobalSelectionSystem().getWorkZone().min[nDim], GlobalSelectionSystem().getWorkZone().max[nDim]);
 	point[nDim] = float_snapped(fWorkMid, GlobalGrid().getGridSize());
 }
 
@@ -1104,14 +1104,15 @@ void XYWnd::drawGrid (void)
 		ui::ColourItem colourWorkzone = ColourSchemes().getColour("workzone");
 		glColor3fv(colourWorkzone);
 		glBegin(GL_LINES);
-		glVertex2f(xb, Select_getWorkZone().min[nDim2]);
-		glVertex2f(xe, Select_getWorkZone().min[nDim2]);
-		glVertex2f(xb, Select_getWorkZone().max[nDim2]);
-		glVertex2f(xe, Select_getWorkZone().max[nDim2]);
-		glVertex2f(Select_getWorkZone().min[nDim1], yb);
-		glVertex2f(Select_getWorkZone().min[nDim1], ye);
-		glVertex2f(Select_getWorkZone().max[nDim1], yb);
-		glVertex2f(Select_getWorkZone().max[nDim1], ye);
+		const selection::WorkZone& workZone = GlobalSelectionSystem().getWorkZone();
+		glVertex2f(xb, workZone.min[nDim2]);
+		glVertex2f(xe, workZone.min[nDim2]);
+		glVertex2f(xb, workZone.max[nDim2]);
+		glVertex2f(xe, workZone.max[nDim2]);
+		glVertex2f(workZone.min[nDim1], yb);
+		glVertex2f(workZone.min[nDim1], ye);
+		glVertex2f(workZone.max[nDim1], yb);
+		glVertex2f(workZone.max[nDim1], ye);
 		glEnd();
 	}
 }
@@ -1519,8 +1520,9 @@ void XYWnd::draw ()
 
 	// greebo: Check, if the brush/patch size info should be displayed (if there are any items selected)
 	if (GlobalXYWnd().showSizeInfo() && GlobalSelectionSystem().countSelected() != 0) {
-		Vector3 min, max;
-		Select_GetBounds(min, max);
+		AABB aabb = selection::algorithm::getCurrentSelectionBounds();
+		Vector3 min = aabb.getMins();
+		Vector3 max = aabb.getMaxs();
 		drawSizeInfo(nDim1, nDim2, min, max);
 	}
 

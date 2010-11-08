@@ -81,6 +81,7 @@ typedef Callback1<const Selectable&> SelectionChangeCallback;
 typedef SignalHandler1<const Selectable&> SelectionChangeHandler;
 
 class SelectionInfo;
+namespace selection { struct WorkZone; }
 
 class SelectionSystem
 {
@@ -211,6 +212,19 @@ class SelectionSystem
 
 		virtual void MoveSelected(const View& view, const float device_point[2]) = 0;
 		virtual void endMove() = 0;
+
+		/**
+		 * Returns the current "work zone", which is defined by the
+		 * currently selected elements. Each time a scene node is selected,
+		 * the workzone is adjusted to surround the current selection.
+		 * Deselecting nodes doesn't change the workzone.
+		 *
+		 * The result is used to determine the "third" component of operations
+		 * performed in the 2D views, like placing an entity.
+		 *
+		 * Note: the struct is defined in selectionlib.h.
+		 */
+		virtual const selection::WorkZone& getWorkZone() = 0;
 };
 
 #include "modulesystem.h"

@@ -65,7 +65,7 @@ class Vector3Attribute: public EntityAttribute
 			const std::string& value = entityGetValueForKey(m_key);
 			if (value.length() > 0) {
 				DoubleVector3 x_y_z;
-				if (!string_parse_vector3(value.c_str(), x_y_z)) {
+				if (!string_parse_vector3(value, x_y_z)) {
 					x_y_z = DoubleVector3(0, 0, 0);
 				}
 

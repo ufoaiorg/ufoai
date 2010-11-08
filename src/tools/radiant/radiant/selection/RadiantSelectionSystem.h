@@ -3,6 +3,7 @@
 
 #include "iselection.h"
 #include "math/matrix.h"
+#include "gtkutil/event/SingleIdleCallback.h"
 #include "signal/signal.h"
 #include "SelectionCounter.h"
 #include "Manipulators.h"
@@ -39,7 +40,8 @@ class RadiantSelectionSystem :
 	public Translatable,
 	public Rotatable,
 	public Scalable,
-	public Renderable
+	public Renderable,
+	protected gtkutil::SingleIdleCallback
 {
 	mutable Matrix4 _pivot2world;
 	Matrix4 _pivot2worldStart;
@@ -54,6 +56,8 @@ class RadiantSelectionSystem :
 public:
 	static Shader* _state;
 private:
+
+	selection::WorkZone _workZone;
 	SelectionInfo _selectionInfo;
 
 	EManipulatorMode _manipulatorMode;
@@ -61,6 +65,7 @@ private:
 	Manipulator* _manipulator;
 
 	// state
+	bool _requestWorkZoneRecalculation;
 	bool _undoBegun;
 	EMode _mode;
 	EComponentMode _componentMode;
@@ -170,6 +175,10 @@ public:
 	void endMove();
 	void freezeTransforms();
 
+	void onBoundsChanged();
+
+	const selection::WorkZone& getWorkZone();
+
 	void renderSolid(Renderer& renderer, const VolumeTest& volume) const;
 	void renderWireframe(Renderer& renderer, const VolumeTest& volume) const;
 
@@ -181,6 +190,10 @@ public:
 private:
 
 	void notifyObservers();
+
+protected:
+	// Called when GTK is idle to recalculate the workzone (if necessary)
+	virtual void onGtkIdle();
 };
 
 #endif /*RADIANTSELECTIONSYSTEM_H_*/
