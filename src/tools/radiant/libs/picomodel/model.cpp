@@ -52,8 +52,9 @@
 #include "os/path.h"
 #include "RenderablePicoSurface.h"
 #include "RenderablePicoModel.h"
+#include "SkinnedModel.h"
 
-class PicoModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public LightCullable
+class PicoModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public LightCullable, public SkinnedModel
 {
 		class TypeCasts
 		{
@@ -65,7 +66,7 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 					InstanceContainedCast<PicoModelInstance, Cullable>::install(m_casts);
 					InstanceStaticCast<PicoModelInstance, Renderable>::install(m_casts);
 					InstanceStaticCast<PicoModelInstance, SelectionTestable>::install(m_casts);
-					//InstanceStaticCast<PicoModelInstance, SkinnedModel>::install(m_casts);
+					InstanceStaticCast<PicoModelInstance, SkinnedModel>::install(m_casts);
 				}
 				InstanceTypeCastTable& get ()
 				{
@@ -121,6 +122,16 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 					i->render(renderer, localToWorld, (*k).second != 0 ? (*k).second : i->getShader());
 				}
 			}
+		}
+
+		// greebo: Updates the model's surface remaps. Pass the new skin name (can be empty).
+		void skinChanged (const std::string& newSkinName) {
+
+		}
+
+		// Returns the name of the currently active skin
+		std::string getSkin () const {
+			return "";
 		}
 
 		void renderSolid (Renderer& renderer, const VolumeTest& volume) const
