@@ -45,8 +45,7 @@ class OpenGLShader: public Shader {
 			}
 			m_passes.clear();
 		}
-		void addRenderable(const OpenGLRenderable& renderable, const Matrix4& modelview,
-				const LightList* lights) {
+		void addRenderable(const OpenGLRenderable& renderable, const Matrix4& modelview) {
 			for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
 				(*i)->addRenderable(renderable, modelview);
 			}

@@ -66,7 +66,7 @@ class EModel: public ModuleObserver
 		{
 			std::string cleaned = os::standardPath(value);
 			m_resource.detach(*this);
-			m_resource.setName(cleaned.c_str());
+			m_resource.setName(cleaned);
 			m_resource.attach(*this);
 			m_modelChanged();
 		}

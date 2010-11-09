@@ -64,66 +64,8 @@ template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
 
 class Shader;
-
-/**
- * \brief
- * Interface for a light source in the renderer.
- */
-class RendererLight
-{
-	public:
-		virtual ~RendererLight ()
-		{
-		}
-		virtual Shader* getShader () const = 0;
-		virtual const Vector3& colour () const = 0;
-};
-
-/**
- * \brief
- * Interface for an object which can test its intersection with a RendererLight.
- *
- * Objects which implement this interface define a testLight() function which
- * determines whether the given light intersects the object. They also provide
- * methods to allow the renderer to provide the list of lights which will be
- * illuminating the object, subsequent to the intersection test.
- *
- * \todo
- * This interface seems to exist because of the design decision that lit objects
- * should maintain a list of lights which illuminate them. This is a poor
- * design because this should be the responsibility of the renderer. When the
- * renderer is refactored to process the scene light-by-light this class will
- * not be necessary.
- */
-class LightCullable
-{
-	public:
-		virtual ~LightCullable ()
-		{
-		}
-		virtual void insertLight (const RendererLight& light)
-		{
-		}
-		virtual void clearLights ()
-		{
-		}
-};
-
 class Renderable;
 typedef Callback1<const Renderable&> RenderableCallback;
-
-typedef Callback1<const RendererLight&> RendererLightCallback;
-
-class LightList
-{
-	public:
-		virtual ~LightList ()
-		{
-		}
-		virtual void evaluateLights () const = 0;
-		virtual void lightsChanged () const = 0;
-		virtual void forEachLight (const RendererLightCallback& callback) const = 0;
-};
 
 const int c_attr_TexCoord0 = 1;
 const int c_attr_Tangent = 3;
@@ -175,8 +117,7 @@ class Shader
 		virtual ~Shader ()
 		{
 		}
-		virtual void addRenderable (const OpenGLRenderable& renderable, const Matrix4& modelview,
-				const LightList* lights = 0) = 0;
+		virtual void addRenderable (const OpenGLRenderable& renderable, const Matrix4& modelview) = 0;
 		virtual void incrementUsed () = 0;
 		virtual void decrementUsed () = 0;
 		virtual void attach (ModuleObserver& observer) = 0;
@@ -223,13 +164,6 @@ class ShaderCache
 
 		virtual void realise () = 0;
 		virtual void unrealise () = 0;
-
-		virtual const LightList& attach (LightCullable& cullable) = 0;
-		virtual void detach (LightCullable& cullable) = 0;
-		virtual void changed (LightCullable& cullable) = 0;
-		virtual void attach (RendererLight& light) = 0;
-		virtual void detach (RendererLight& light) = 0;
-		virtual void changed (RendererLight& light) = 0;
 
 		virtual void attachRenderable (const Renderable& renderable) = 0;
 		virtual void detachRenderable (const Renderable& renderable) = 0;

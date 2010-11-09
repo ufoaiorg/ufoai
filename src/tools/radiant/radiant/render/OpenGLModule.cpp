@@ -38,7 +38,6 @@
 
 #include "backend/OpenGLShader.h"
 #include "backend/OpenGLShaderPass.h"
-#include "LinearLightList.h"
 #include "backend/OpenGLStateLess.h"
 #include "backend/OpenGLStateMap.h"
 #include "backend/OpenGLShaderCache.h"

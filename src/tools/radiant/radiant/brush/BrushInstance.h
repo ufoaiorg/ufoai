@@ -29,8 +29,7 @@ class BrushInstance: public BrushObserver,
 		public ComponentSelectionTestable,
 		public ComponentEditable,
 		public ComponentSnappable,
-		public PlaneSelectable,
-		public LightCullable
+		public PlaneSelectable
 {
 		class TypeCasts
 		{
@@ -78,8 +77,6 @@ class BrushInstance: public BrushObserver,
 
 		static Shader* m_state_selpoint;
 
-		const LightList* m_lightList;
-
 		TransformModifier m_transform;
 
 		BrushInstance (const BrushInstance& other); // NOT COPYABLE
@@ -88,9 +85,6 @@ class BrushInstance: public BrushObserver,
 		static Counter* m_counter;
 
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
-
-		void lightsChanged ();
-		typedef MemberCaller<BrushInstance, &BrushInstance::lightsChanged> LightsChangedCaller;
 
 		STRING_CONSTANT(Name, "BrushInstance");
 

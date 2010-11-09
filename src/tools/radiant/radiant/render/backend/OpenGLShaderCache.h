@@ -3,7 +3,6 @@
 
 #include "irender.h"
 #include "OpenGLStateManager.h"
-#include "../LinearLightList.h"
 #include "container/cache.h"
 #include "container/hashfunc.h"
 
@@ -39,7 +38,7 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 	public:
 		OpenGLShaderCache() :
 			m_shaders(CreateOpenGLShader(this)), m_unrealised(3), // wait until shaders, gl-context and textures are realised before creating any render-states
-					m_lightsChanged(true), m_traverseRenderablesMutex(false) {
+					m_traverseRenderablesMutex(false) {
 		}
 		~OpenGLShaderCache() {
 			for (Shaders::iterator i = m_shaders.begin(); i != m_shaders.end(); ++i) {
@@ -165,49 +164,6 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 		bool realised() {
 			return m_unrealised == 0;
 		}
-
-		// light culling
-
-		render::RendererLights m_lights;
-		bool m_lightsChanged;
-		typedef std::map<LightCullable*, render::LinearLightList> LightLists;
-		LightLists m_lightLists;
-
-		const LightList& attach(LightCullable& cullable) {
-			return (*m_lightLists.insert(LightLists::value_type(&cullable, render::LinearLightList(
-					cullable, m_lights, EvaluateChangedCaller(*this)))).first).second;
-		}
-		void detach(LightCullable& cullable) {
-			m_lightLists.erase(&cullable);
-		}
-		void changed(LightCullable& cullable) {
-			LightLists::iterator i = m_lightLists.find(&cullable);
-			ASSERT_MESSAGE(i != m_lightLists.end(), "cullable not attached");
-			(*i).second.lightsChanged();
-		}
-		void attach(RendererLight& light) {
-			ASSERT_MESSAGE(m_lights.find(&light) == m_lights.end(), "light could not be attached");
-			m_lights.insert(&light);
-			changed(light);
-		}
-		void detach(RendererLight& light) {
-			ASSERT_MESSAGE(m_lights.find(&light) != m_lights.end(), "light could not be detached");
-			m_lights.erase(&light);
-			changed(light);
-		}
-		void changed(RendererLight& light) {
-			m_lightsChanged = true;
-		}
-		void evaluateChanged() {
-			if (m_lightsChanged) {
-				m_lightsChanged = false;
-				for (LightLists::iterator i = m_lightLists.begin(); i != m_lightLists.end(); ++i) {
-					(*i).second.lightsChanged();
-				}
-			}
-		}
-		typedef MemberCaller<OpenGLShaderCache, &OpenGLShaderCache::evaluateChanged>
-				EvaluateChangedCaller;
 
 		typedef std::set<const Renderable*> Renderables;
 		Renderables m_renderables;

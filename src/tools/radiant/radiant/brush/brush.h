@@ -43,7 +43,6 @@
 #include "Face.h"
 #include "SelectableComponents.h"
 #include "BrushClass.h"
-#include "VectorLightList.h"
 #include "FaceInstance.h"
 #include "BrushClipPlane.h"
 #include "EdgeInstance.h"

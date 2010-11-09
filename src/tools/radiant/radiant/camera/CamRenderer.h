@@ -8,12 +8,11 @@
 class CamRenderer: public Renderer {
   struct state_type
   {
-    state_type() : m_highlight(0), m_state(0), m_lights(0)
+    state_type() : m_highlight(0), m_state(0)
     {
     }
     unsigned int m_highlight;
     Shader* m_state;
-    const LightList* m_lights;
   };
 
   std::vector<state_type> m_state_stack;
@@ -61,22 +60,18 @@ public:
       ? m_state_stack.back().m_highlight |= mode
       : m_state_stack.back().m_highlight &= ~mode;
   }
-  void setLights(const LightList& lights)
-  {
-    m_state_stack.back().m_lights = &lights;
-  }
   void addRenderable(const OpenGLRenderable& renderable, const Matrix4& world)
   {
     if(m_state_stack.back().m_highlight & ePrimitive)
     {
-      m_state_select0->addRenderable(renderable, world, m_state_stack.back().m_lights);
+      m_state_select0->addRenderable(renderable, world);
     }
     if(m_state_stack.back().m_highlight & eFace)
     {
-      m_state_select1->addRenderable(renderable, world, m_state_stack.back().m_lights);
+      m_state_select1->addRenderable(renderable, world);
     }
 
-    m_state_stack.back().m_state->addRenderable(renderable, world, m_state_stack.back().m_lights);
+    m_state_stack.back().m_state->addRenderable(renderable, world);
   }
 
   void render(const Matrix4& modelview, const Matrix4& projection)

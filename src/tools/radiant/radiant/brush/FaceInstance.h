@@ -9,7 +9,6 @@
 #include "SelectableComponents.h"
 #include "VertexSelection.h"
 #include "Face.h"
-#include "VectorLightList.h"
 #include "selectionlib.h"
 
 typedef const Plane3* PlanePointer;
@@ -27,8 +26,6 @@ class FaceInstance
 		VertexSelection m_edgeSelection;
 
 	public:
-		mutable VectorLightList m_lights;
-
 		FaceInstance (Face& face, const SelectionChangeCallback& observer);
 		FaceInstance (const FaceInstance& other);
 		FaceInstance& operator= (const FaceInstance& other);

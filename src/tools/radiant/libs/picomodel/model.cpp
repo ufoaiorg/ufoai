@@ -29,7 +29,6 @@
 
 #include "picomodel.h"
 #include "RenderablePicoModel.h"
-#include "VectorLightList.h"
 
 #include "iarchive.h"
 #include "idatastream.h"
@@ -54,7 +53,7 @@
 #include "RenderablePicoModel.h"
 #include "SkinnedModel.h"
 
-class PicoModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public LightCullable, public SkinnedModel
+class PicoModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public SkinnedModel
 {
 		class TypeCasts
 		{

@@ -2,11 +2,6 @@
 
 #include "ifilter.h"
 
-void BrushInstance::lightsChanged ()
-{
-	m_lightList->lightsChanged();
-}
-
 BrushInstance::BrushInstance (const scene::Path& path, scene::Instance* parent, Brush& brush) :
 	Instance(path, parent, this, StaticTypeCasts::instance().get()), m_brush(brush), m_selectable(
 			SelectedChangedCaller(*this)), m_render_selected(GL_POINTS), m_render_faces_wireframe(
@@ -16,19 +11,9 @@ BrushInstance::BrushInstance (const scene::Path& path, scene::Instance* parent, 
 	m_brush.instanceAttach(Instance::path());
 	m_brush.attach(*this);
 	m_counter->increment();
-
-	m_lightList = &GlobalShaderCache().attach(*this);
-	m_brush.m_lightsChanged = LightsChangedCaller(*this); ///\todo Make this work with instancing.
-
-	Instance::setTransformChangedCallback(LightsChangedCaller(*this));
 }
 BrushInstance::~BrushInstance ()
 {
-	Instance::setTransformChangedCallback(Callback());
-
-	m_brush.m_lightsChanged = Callback();
-	GlobalShaderCache().detach(*this);
-
 	m_counter->decrement();
 	m_brush.detach(*this);
 	m_brush.instanceDetach(Instance::path());
@@ -275,10 +260,7 @@ void BrushInstance::renderSolid (Renderer& renderer, const VolumeTest& volume, c
 {
 	//renderCommon(renderer, volume);
 
-	m_lightList->evaluateLights();
-
 	for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-		renderer.setLights((*i).m_lights);
 		(*i).render(renderer, volume, localToWorld);
 	}
 

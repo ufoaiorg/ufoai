@@ -132,8 +132,6 @@ class Brush: public TransformNode,
 	public:
 		STRING_CONSTANT(Name, "Brush");
 
-		Callback m_lightsChanged;
-
 		// static data
 		static Shader* m_state_point;
 

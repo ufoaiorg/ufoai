@@ -125,7 +125,6 @@ void Brush::planeChanged ()
 {
 	m_planeChanged = true;
 	aabbChanged();
-	m_lightsChanged();
 }
 void Brush::shaderChanged ()
 {

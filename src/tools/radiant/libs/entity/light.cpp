@@ -719,8 +719,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 class LightInstance: public TargetableInstance,
 		public TransformModifier,
 		public Renderable,
-		public SelectionTestable,
-		public RendererLight
+		public SelectionTestable
 {
 		class TypeCasts
 		{
@@ -799,12 +798,6 @@ class LightInstance: public TargetableInstance,
 			m_contained.freezeTransform();
 		}
 		typedef MemberCaller<LightInstance, &LightInstance::applyTransform> ApplyTransformCaller;
-
-		void lightChanged ()
-		{
-			GlobalShaderCache().changed(*this);
-		}
-		typedef MemberCaller<LightInstance, &LightInstance::lightChanged> LightChangedCaller;
 
 		Shader* getShader () const
 		{

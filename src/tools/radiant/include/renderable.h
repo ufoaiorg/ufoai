@@ -26,7 +26,6 @@
 
 class Shader;
 class OpenGLRenderable;
-class LightList;
 class Matrix4;
 
 /** This is a proxy class used in the first (sorting) stage of rendering, which
@@ -69,9 +68,6 @@ class Renderer
 		virtual void SetState (Shader* state, EStyle mode) = 0;
 		virtual EStyle getStyle () const = 0;
 		virtual void Highlight (EHighlightMode mode, bool bEnable = true) = 0;
-		virtual void setLights (const LightList& lights)
-		{
-		}
 		virtual void addRenderable (const OpenGLRenderable& renderable, const Matrix4& world) = 0;
 };
 

@@ -13,11 +13,9 @@ class OpenGLShaderPass {
 		struct RenderTransform {
 				const Matrix4* m_transform;
 				const OpenGLRenderable *m_renderable;
-				const RendererLight* m_light;
 
-				RenderTransform(const OpenGLRenderable& renderable, const Matrix4& transform,
-						const RendererLight* light) :
-					m_transform(&transform), m_renderable(&renderable), m_light(light) {
+				RenderTransform(const OpenGLRenderable& renderable, const Matrix4& transform) :
+					m_transform(&transform), m_renderable(&renderable) {
 				}
 		};
 
@@ -33,9 +31,8 @@ class OpenGLShaderPass {
 		OpenGLShaderPass() :
 			_stats(render::RenderStatistics::Instance()) {
 		}
-		void addRenderable(const OpenGLRenderable& renderable, const Matrix4& modelview,
-				const RendererLight* light = 0) {
-			m_renderables.push_back(RenderTransform(renderable, modelview, light));
+		void addRenderable(const OpenGLRenderable& renderable, const Matrix4& modelview) {
+			m_renderables.push_back(RenderTransform(renderable, modelview));
 		}
 
 		OpenGLState& state() {
