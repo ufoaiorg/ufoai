@@ -121,6 +121,7 @@
 		<shortcut command="ViewTextures" key="T" />
 		<shortcut command="ToggleCrosshairs" key="X" modifiers="SHIFT" />
 		<shortcut command="ToggleGrid" key="0" />
+		<shortcut command="ToggleSidebar" key="B" />
 		<shortcut command="ToggleView" key="V" modifiers="SHIFT+CONTROL" />
 		<shortcut command="NextView" key="Tab" modifiers="CONTROL" />
 		<shortcut command="ZoomIn" key="Delete" />

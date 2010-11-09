@@ -120,7 +120,6 @@ namespace sidebar
 				{
 					const std::string fullpath = _path + "/" + name;
 					PrefabAdd(fullpath);
-					g_debug("file: %s\n", fullpath.c_str());
 				}
 		};
 
@@ -165,7 +164,6 @@ namespace sidebar
 						gtk_tree_store_append(_store, &subIter, _parentIter);
 						gtk_tree_store_set(_store, &subIter, PREFAB_NAME, name.c_str(), PREFAB_DESCRIPTION,
 								sectionDescription.c_str(), PREFAB_SHORTNAME, name.c_str(), -1);
-						g_debug("directory: %s\n", name.c_str());
 						std::string subPath = _subpath + "/" + name;
 						Directory_forEach(fullpath, LoadPrefabDirectoryFunctor(_path, subPath, &subIter, _store));
 						Directory_forEach(fullpath, MatchFileExtension<LoadPrefabFileFunctor> ("map", LoadPrefabFileFunctor(subPath,

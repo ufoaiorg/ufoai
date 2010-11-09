@@ -1328,6 +1328,9 @@ void MainFrame::Create (void)
 {
 	GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
 
+	// do this here, because the commands are needed
+	GtkWidget *sidebar = Sidebar_construct();
+
 	// Tell the XYManager which window the xyviews should be transient for
 	GlobalXYWnd().setGlobalParentWindow(window);
 
@@ -1527,8 +1530,7 @@ void MainFrame::Create (void)
 	/* enable button state tracker, set default states for begin */
 	GlobalUndoSystem().trackerAttach(m_saveStateTracker);
 
-	GtkWidget *notebook = Sidebar_construct();
-	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(sidebar), FALSE, FALSE, 0);
 
 	// Start the autosave timer so that it can periodically check the map for changes
 	map::AutoSaver().startTimer();
