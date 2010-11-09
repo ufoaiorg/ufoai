@@ -41,17 +41,17 @@ namespace model
 		}
 
 		std::stringstream polyCountStream;
-		const int polyCount = getPolyCountInt();
+		const int polyCount = getPolyCount();
 		polyCountStream << polyCount;
 		polyCountStr = polyCountStream.str();
 
 		std::stringstream surfaceCountStream;
-		const int surfaceCount = getSurfaceCountInt();
+		const int surfaceCount = getSurfaceCount();
 		surfaceCountStream << surfaceCount;
 		surfaceCountStr = surfaceCountStream.str();
 
 		std::stringstream vertexCountStream;
-		const int vertexCount = getVertexCountInt();
+		const int vertexCount = getVertexCount();
 		vertexCountStream << vertexCount;
 		vertexCountStr = vertexCountStream.str();
 	}
@@ -103,5 +103,35 @@ namespace model
 	const ModelSkinList& RenderablePicoModel::getSkinsForModel () const
 	{
 		return modelSkinList;
+	}
+
+	void RenderablePicoModel::render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld,
+			std::vector<Shader*> states) const
+	{
+		for (SurfaceList::const_iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {
+			if (i->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
+				i->render(renderer, localToWorld, states[i - _surfVec.begin()]);
+			}
+		}
+	}
+
+	// Perform selection test
+	void RenderablePicoModel::testSelect (Selector& selector, SelectionTest& test, const Matrix4& localToWorld)
+	{
+		// Perform a volume intersection (AABB) check on each surface. For those
+		// that intersect, call the surface's own testSelection method to perform
+		// a proper selection test.
+		for (SurfaceList::iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {
+			// Check volume intersection
+			if (test.getVolume().TestAABB(i->localAABB(), localToWorld) != VOLUME_OUTSIDE) {
+				// Volume intersection passed, delegate the selection test
+				i->testSelect(selector, test, localToWorld);
+			}
+		}
+	}
+
+	VolumeIntersectionValue RenderablePicoModel::intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const
+	{
+		return test.TestAABB(_localAABB, localToWorld);
 	}
 }

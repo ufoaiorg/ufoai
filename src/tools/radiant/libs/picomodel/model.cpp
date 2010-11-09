@@ -51,117 +51,7 @@
 #include "render.h"
 #include "os/path.h"
 #include "RenderablePicoSurface.h"
-
-class PicoModel: public Cullable, public Bounded
-{
-		typedef std::vector<model::RenderablePicoSurface*> surfaces_t;
-		surfaces_t m_surfaces;
-
-		AABB m_aabb_local;
-	public:
-		Callback m_lightsChanged;
-
-		PicoModel ()
-		{
-			constructNull();
-		}
-
-		/** Construct a PicoModel object from the provided picoModel_t struct and
-		* the given file extension.
-		*/
-		PicoModel(picoModel_t* model, const std::string& ext) {
-			CopyPicoModel(model, ext);
-		}
-
-		~PicoModel ()
-		{
-			for (surfaces_t::iterator i = m_surfaces.begin(); i != m_surfaces.end(); ++i)
-				delete *i;
-		}
-
-		typedef surfaces_t::const_iterator const_iterator;
-
-		const_iterator begin () const
-		{
-			return m_surfaces.begin();
-		}
-		const_iterator end () const
-		{
-			return m_surfaces.end();
-		}
-		std::size_t size () const
-		{
-			return m_surfaces.size();
-		}
-
-		VolumeIntersectionValue intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const
-		{
-			return test.TestAABB(m_aabb_local, localToWorld);
-		}
-
-		virtual const AABB& localAABB () const
-		{
-			return m_aabb_local;
-		}
-
-		void render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld,
-				std::vector<Shader*> states) const
-		{
-			for (surfaces_t::const_iterator i = m_surfaces.begin(); i != m_surfaces.end(); ++i) {
-				if ((*i)->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
-					(*i)->render(renderer, localToWorld, states[i - m_surfaces.begin()]);
-				}
-			}
-		}
-
-		void testSelect (Selector& selector, SelectionTest& test, const Matrix4& localToWorld)
-		{
-			for (surfaces_t::iterator i = m_surfaces.begin(); i != m_surfaces.end(); ++i) {
-				if ((*i)->intersectVolume(test.getVolume(), localToWorld) != VOLUME_OUTSIDE) {
-					(*i)->testSelect(selector, test, localToWorld);
-				}
-			}
-		}
-
-	private:
-
-		/** Copy a picoModel_t struct returned from the picomodel library into
-		 * the required C++ objects for a PicoModel object. The file extension
-		 * is used to determine whether the Doom 3 shader is chosen from the
-		 * material name (LWO objects) or the bitmap patch (ASE objects).
-		 */
-
-		void CopyPicoModel (picoModel_t* model, const std::string& fileExt)
-		{
-			m_aabb_local = AABB();
-
-			/* each surface on the model will become a new map drawsurface */
-			int numSurfaces = PicoGetModelNumSurfaces(model);
-			for (int s = 0; s < numSurfaces; ++s) {
-				/* get surface */
-				picoSurface_t* surface = PicoGetModelSurface(model, s);
-				if (surface == 0)
-					continue;
-
-				/* only handle triangle surfaces initially (fixme: support patches) */
-				if (PicoGetSurfaceType(surface) != PICO_TRIANGLES)
-					continue;
-
-				/* fix the surface's normals */
-				PicoFixSurfaceNormals(surface);
-
-				model::RenderablePicoSurface* picosurface = new model::RenderablePicoSurface(surface);
-				m_aabb_local.includeAABB(picosurface->localAABB());
-				m_surfaces.push_back(picosurface);
-			}
-		}
-		void constructNull ()
-		{
-			model::RenderablePicoSurface* picosurface = new model::RenderablePicoSurface(NULL);
-			m_aabb_local = picosurface->localAABB();
-			m_surfaces.push_back(picosurface);
-		}
-};
+#include "RenderablePicoModel.h"
 
 class PicoModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public LightCullable
 {
@@ -183,7 +73,7 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 				}
 		};
 
-		PicoModel& m_picomodel;
+		model::RenderablePicoModel& m_picomodel;
 
 		class Remap
 		{
@@ -212,9 +102,9 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 			return m_picomodel;
 		}
 
-		PicoModelInstance (const scene::Path& path, scene::Instance* parent, PicoModel& picomodel) :
+		PicoModelInstance (const scene::Path& path, scene::Instance* parent, model::RenderablePicoModel& picomodel) :
 			Instance(path, parent, this, StaticTypeCasts::instance().get()), m_picomodel(picomodel),
-					m_skins(m_picomodel.size())
+					m_skins(m_picomodel.getSurfaceCount())
 		{
 		}
 		~PicoModelInstance ()
@@ -224,10 +114,11 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 
 		void render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 		{
+			const model::SurfaceList& surfaceList = m_picomodel.getSurfaces();
 			SurfaceRemaps::const_iterator k = m_skins.begin();
-			for (PicoModel::const_iterator i = m_picomodel.begin(); i != m_picomodel.end(); ++i, ++k) {
-				if ((*i)->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
-					(*i)->render(renderer, localToWorld, (*k).second != 0 ? (*k).second : (*i)->getShader());
+			for (model::SurfaceList::const_iterator i = surfaceList.begin(); i != surfaceList.end(); ++i, ++k) {
+				if (i->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
+					i->render(renderer, localToWorld, (*k).second != 0 ? (*k).second : i->getShader());
 				}
 			}
 		}
@@ -263,7 +154,7 @@ class PicoModelNode: public scene::Node, public scene::Instantiable
 		};
 
 		InstanceSet m_instances;
-		PicoModel m_picomodel;
+		model::RenderablePicoModel m_picomodel;
 
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
@@ -273,7 +164,7 @@ class PicoModelNode: public scene::Node, public scene::Instantiable
 		 */
 		PicoModelNode (picoModel_t* model, const std::string& ext) :
 			scene::Node(this, StaticTypeCasts::instance().get()),
-			m_picomodel(model,ext) //pass extension down to the PicoModel
+			m_picomodel(model)
 		{
 		}
 
@@ -300,7 +191,7 @@ class PicoModelNode: public scene::Node, public scene::Instantiable
 		}
 };
 
-size_t picoInputStreamReam (void* inputStream, unsigned char* buffer, size_t length)
+inline size_t picoInputStreamReam (void* inputStream, unsigned char* buffer, size_t length)
 {
 	return reinterpret_cast<InputStream*> (inputStream)->read(buffer, length);
 }
@@ -321,8 +212,6 @@ scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
 	PicoFreeModel(model);
 	return modelNode->node();
 }
-
-#include "RenderablePicoModel.h"
 
 /* Load the provided file as a model object and return as an IModel
  * shared pointer.

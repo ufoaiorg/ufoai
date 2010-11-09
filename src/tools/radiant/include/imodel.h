@@ -61,17 +61,17 @@ namespace model
 			/** Return the number of material surfaces on this model. Each material
 			 * surface consists of a set of polygons sharing the same material.
 			 */
-			virtual const std::string& getSurfaceCount () const = 0;
+			virtual const std::string& getSurfaceCountStr () const = 0;
 
 			/** Return the number of vertices in this model, equal to the sum of the
 			 * vertex count from each surface.
 			 */
-			virtual const std::string& getVertexCount () const = 0;
+			virtual const std::string& getVertexCountStr () const = 0;
 
 			/** Return the number of triangles in this model, equal to the sum of the
 			 * triangle count from each surface.
 			 */
-			virtual const std::string& getPolyCount () const = 0;
+			virtual const std::string& getPolyCountStr () const = 0;
 
 			/**
 			 * @brief Return the skins associated with the given model.

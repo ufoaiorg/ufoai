@@ -433,12 +433,12 @@ namespace ui
 
 		gtk_list_store_append(_infoStore, &iter);
 		gtk_list_store_set(_infoStore, &iter, 0, _("Material surfaces"), 1,
-				_modelPreview.getModel()->getSurfaceCount().c_str(), -1);
+				_modelPreview.getModel()->getSurfaceCountStr().c_str(), -1);
 		gtk_list_store_append(_infoStore, &iter);
 		gtk_list_store_set(_infoStore, &iter, 0, _("Total vertices"), 1,
-				_modelPreview.getModel()->getVertexCount().c_str(), -1);
+				_modelPreview.getModel()->getVertexCountStr().c_str(), -1);
 		gtk_list_store_append(_infoStore, &iter);
-		gtk_list_store_set(_infoStore, &iter, 0, _("Total polys"), 1, _modelPreview.getModel()->getPolyCount().c_str(),
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total polys"), 1, _modelPreview.getModel()->getPolyCountStr().c_str(),
 				-1);
 	}
 
