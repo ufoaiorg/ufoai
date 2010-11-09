@@ -25,6 +25,8 @@ class Command :
 public:
 	Command(const Callback& callback);
 
+	virtual ~Command() {}
+
 	// Invoke the registered callback
 	virtual void execute();
 

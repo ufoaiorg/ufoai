@@ -28,6 +28,8 @@ public:
 		_keyDownCallback(keyDownCallback)
 	{}
 
+	virtual ~KeyEvent() {}
+
 	void keyDown() {
 		if (_enabled) {
 			// Execute the command on key down event

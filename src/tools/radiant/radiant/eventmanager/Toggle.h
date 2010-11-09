@@ -37,6 +37,8 @@ protected:
 public:
 	Toggle(const Callback& callback);
 
+	virtual ~Toggle() {}
+
 	// Set the toggled state to true/false, according to <toggled> and update
 	// any associated widgets or notify any callbacks.
 	virtual bool setToggled(const bool toggled);
