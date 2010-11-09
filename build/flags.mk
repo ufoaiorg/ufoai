@@ -37,6 +37,9 @@ endif
 ifeq ($(DEBUG),1)
   CFLAGS  += -DDEBUG
   CCFLAGS  += -DDEBUG
+else
+  CFLAGS  += -DNDEBUG
+  CCFLAGS  += -DNDEBUG
 endif
 
 CCFLAGS += $(CFLAGS)

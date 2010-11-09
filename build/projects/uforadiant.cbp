@@ -16,7 +16,7 @@
 				<Compiler>
 					<Add option="-Wno-non-virtual-dtor" />
 					<Add option="-mms-bitfields" />
-					<Add option="-DNODEBUG" />
+					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
