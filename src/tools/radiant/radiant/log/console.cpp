@@ -33,8 +33,8 @@
 #include "os/file.h"
 
 #include "version.h"
-#include "gtkmisc.h"
-#include "mainframe.h"
+#include "../gtkmisc.h"
+#include "../mainframe.h"
 
 // handle to the console log file
 namespace

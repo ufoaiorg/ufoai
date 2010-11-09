@@ -502,8 +502,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\ClipPoint.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\Clipper.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\Clipper.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\console.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\console.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\about.cpp" />
@@ -553,6 +551,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\image.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\image.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\imagemodules.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\log\console.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\log\console.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\main.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.h" />

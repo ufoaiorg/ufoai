@@ -14,7 +14,6 @@ $(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GL
 
 $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
-	$(RADIANT_BASE)/radiant/console.cpp \
 	$(RADIANT_BASE)/radiant/dialog.cpp \
 	$(RADIANT_BASE)/radiant/eclass.cpp \
 	$(RADIANT_BASE)/radiant/eclass_def.cpp \
@@ -49,6 +48,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/log/console.cpp \
 	\
 	$(RADIANT_BASE)/radiant/scenegraph/scenegraph.cpp \
 	$(RADIANT_BASE)/radiant/scenegraph/treemodel.cpp \

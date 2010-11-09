@@ -73,7 +73,7 @@
 #include "stream/textfilestream.h"
 
 #include "gtkutil/messagebox.h"
-#include "console.h"
+#include "log/console.h"
 #include "sidebar/sidebar.h"
 #include "map/map.h"
 #include "mainframe.h"

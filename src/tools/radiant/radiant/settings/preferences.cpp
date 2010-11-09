@@ -38,7 +38,7 @@
 #include "gtkutil/filechooser.h"
 #include "gtkutil/messagebox.h"
 
-#include "../console.h"
+#include "../log/console.h"
 #include "../mainframe.h"
 #include "../qe3.h"
 #include <string>

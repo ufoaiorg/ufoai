@@ -80,7 +80,7 @@
 #include "brush/brushmanip.h"
 #include "brush/BrushModule.h"
 #include "brush/csg/csg.h"
-#include "console.h"
+#include "log/console.h"
 #include "entity.h"
 #include "sidebar/sidebar.h"
 #include "ui/findshader/FindShader.h"
