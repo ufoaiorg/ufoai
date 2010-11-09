@@ -27,7 +27,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
 	$(RADIANT_BASE)/radiant/material.cpp \
 	$(RADIANT_BASE)/radiant/ump.cpp \
-	$(RADIANT_BASE)/radiant/particles.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
@@ -79,7 +78,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ufoscript/common/DataBlock.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/terrain/Terrain.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/mapdef/MapDef.cpp \
-	$(RADIANT_BASE)/radiant/ufoscript/particles/Particle.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ump/UMPFile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPTile.cpp \
@@ -156,11 +154,12 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/sidebar/MapInfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/JobInfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/texturebrowser.cpp \
-	$(RADIANT_BASE)/radiant/sidebar/ParticleBrowser.cpp \
+	\
+	$(RADIANT_BASE)/radiant/particles/ParticleParser.cpp \
+	$(RADIANT_BASE)/radiant/particles/ParticleSystem.cpp \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
-	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/about/AboutDialog.cpp \
 	\
@@ -212,8 +211,9 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/ui/umpeditor/UMPEditor.cpp \
 	\
-	$(RADIANT_BASE)/radiant/ui/particleeditor/ParticleEditor.cpp \
-	$(RADIANT_BASE)/radiant/ui/particleeditor/ParticlePreview.cpp \
+	$(RADIANT_BASE)/radiant/ui/particles/ParticleEditor.cpp \
+	$(RADIANT_BASE)/radiant/ui/particles/ParticlePreview.cpp \
+	$(RADIANT_BASE)/radiant/ui/particles/ParticleSelector.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/ortho/EntityClassChooser.cpp \
 	$(RADIANT_BASE)/radiant/ui/ortho/OrthoContextMenu.cpp \

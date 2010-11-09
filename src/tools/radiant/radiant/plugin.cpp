@@ -62,6 +62,7 @@
 #include "iufoscript.h"
 #include "ioverlay.h"
 #include "iuimanager.h"
+#include "iparticles.h"
 
 #include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
@@ -83,7 +84,6 @@
 #include "camera/GlobalCamera.h"
 #include "material.h"
 #include "ump.h"
-#include "particles.h"
 #include "pathfinding.h"
 #include "model.h"
 
@@ -172,7 +172,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalClipperModuleRef,
 		public GlobalGridModuleRef,
 		public GlobalOverlayModuleRef,
-		public GlobalSelectionSetManagerModuleRef
+		public GlobalSelectionSetManagerModuleRef,
+		public GlobalParticleModuleRef
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;
@@ -228,10 +229,10 @@ class Radiant: public TypeSystemRef
 			EnginePath_verify();
 			EnginePath_Realise();
 
-			Particles_Construct();
 			Pathfinding_Construct();
 			UMP_Construct();
 			GlobalUFOScriptSystem()->init();
+			GlobalParticleSystem().init();
 
 			// Load the shortcuts from the registry
 			GlobalEventManager().loadAccelerators();
@@ -240,7 +241,6 @@ class Radiant: public TypeSystemRef
 		{
 			UMP_Destroy();
 			Pathfinding_Destroy();
-			Particles_Destroy();
 			Material_Destroy();
 			TextureBrowser_Destroy();
 

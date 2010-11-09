@@ -53,7 +53,7 @@
 #include "iradiant.h"
 #include "qe3.h"
 #include "ui/lightdialog/LightDialog.h"
-#include "dialogs/particle.h"
+#include "ui/particles/ParticleSelector.h"
 #include "ui/modelselector/ModelSelector.h"
 #include "ui/common/SoundChooser.h"
 #include "ui/Icons.h"
@@ -381,11 +381,11 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 		else
 			revert = true;
 	} else if (isParticle) {
-		char* particle = misc_particle_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()));
-		if (particle != 0) {
+		ui::ParticleSelector pSelector;
+		std::string particle = pSelector.chooseParticle();
+		if (!particle.empty())
 			entity->setKeyValue("particle", particle);
-			free(particle);
-		} else
+		else
 			revert = true;
 	}
 
@@ -394,7 +394,6 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 
 void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 {
-
 	try {
 		bool revert = Entity_create(name, origin);
 		if (revert) {
@@ -467,13 +466,6 @@ void Entity_setColour ()
 			}
 		}
 	}
-}
-
-char* misc_particle_dialog (GtkWidget* parent)
-{
-	char* particle = NULL;
-	DoParticleDlg(&particle);
-	return particle;
 }
 
 void LightRadiiImport (EntityCreator& self, bool value)

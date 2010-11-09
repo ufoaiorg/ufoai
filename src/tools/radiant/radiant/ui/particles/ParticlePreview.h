@@ -6,7 +6,8 @@
 #include <gtk/gtk.h>
 #include <igl.h>
 #include <string>
-#include "../../ufoscript/particles/Particle.h"
+
+#include "iparticles.h"
 
 #include "gtkutil/glwidget.h"
 
@@ -30,7 +31,7 @@ namespace ui
 			// Current rotation matrix
 			Matrix4 _rotation;
 
-			scripts::IParticlePtr _particle;
+			IParticleDefinition* _particle;
 
 		private:
 
@@ -63,9 +64,9 @@ namespace ui
 			 */
 			void initialisePreview ();
 
-			void setParticle (scripts::IParticlePtr& particle);
+			void setParticle (IParticleDefinition* particle);
 
-			scripts::IParticlePtr getParticle ();
+			IParticleDefinition* getParticle ();
 
 			/** Operator cast to GtkWidget*, for packing into the parent window.
 			 */

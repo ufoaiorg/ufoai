@@ -28,6 +28,8 @@ namespace ui
 		GtkWidget* glWidget = _glWidget;
 		gtk_box_pack_start(GTK_BOX(vbx), glWidget, TRUE, TRUE, 0);
 
+		setSize(200);
+
 		// Connect up the signals
 		gtk_widget_set_events(glWidget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
@@ -38,7 +40,7 @@ namespace ui
 		// Pack into a frame and return
 		gtk_container_add(GTK_CONTAINER(_widget), vbx);
 
-		_particle = scripts::IParticlePtr();
+		_particle = NULL;
 	}
 
 	// free the loaded model
@@ -94,7 +96,7 @@ namespace ui
 
 	// Set the particle, this also resets the camera
 
-	void ParticlePreview::setParticle (scripts::IParticlePtr& particle)
+	void ParticlePreview::setParticle (IParticleDefinition* particle)
 	{
 		_particle = particle;
 		// Redraw
@@ -102,7 +104,7 @@ namespace ui
 		gtk_widget_queue_draw(glWidget);
 	}
 
-	scripts::IParticlePtr ParticlePreview::getParticle ()
+	IParticleDefinition* ParticlePreview::getParticle ()
 	{
 		return _particle;
 	}
@@ -128,7 +130,8 @@ namespace ui
 		// Render the actual model.
 		glEnable(GL_LIGHTING);
 
-		self->_particle->render();
+		// TODO: mattn - activate the rendering again
+		//self->_particle->render();
 	}
 
 	void ParticlePreview::callbackGLMotion (GtkWidget* widget, GdkEventMotion* ev, ParticlePreview* self)

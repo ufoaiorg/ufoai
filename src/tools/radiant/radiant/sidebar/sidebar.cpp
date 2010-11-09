@@ -139,36 +139,11 @@ static void Sidebar_constructTextureBrowser (GtkWidget *notebook)
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
-static void Sidebar_constructParticleBrowser (GtkWidget *notebook)
-{
-	GtkWidget *label = gtk_label_new(_("Particles"));
-	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
-
-	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
-	GtkWidget *pageParticleBrowser = ui::ParticleBrowser::getInstance().getWidget();
-	gtk_container_add(GTK_CONTAINER(vbox), pageParticleBrowser);
-
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
-
-	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
-}
-
 static GtkWidget *notebook;
 
 void ToggleSidebar (void)
 {
 	widget_toggle_visible(notebook);
-}
-
-void ToggleParticleBrowser (void)
-{
-	if (!widget_is_visible(GTK_WIDGET(notebook)))
-		widget_set_visible(GTK_WIDGET(notebook), TRUE);
-	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 4);
 }
 
 void ToggleTextureBrowser (void)
@@ -212,7 +187,6 @@ GtkWidget *Sidebar_construct (void)
 	Sidebar_constructSurfaces(notebook);
 	Sidebar_constructPrefabs(notebook);
 	Sidebar_constructTextureBrowser(notebook);
-	Sidebar_constructParticleBrowser(notebook);
 	Sidebar_constructMapInfo(notebook);
 	Sidebar_constructJobInfo(notebook);
 
@@ -223,7 +197,6 @@ GtkWidget *Sidebar_construct (void)
 	GlobalEventManager().addCommand("ToggleEntityInspector", FreeCaller<ToggleEntityInspector> ());
 	GlobalEventManager().addCommand("TogglePrefabs", FreeCaller<TogglePrefabs> ());
 	GlobalEventManager().addCommand("ToggleTextureBrowser", FreeCaller<ToggleTextureBrowser> ());
-	GlobalEventManager().addCommand("ToggleParticleBrowser", FreeCaller<ToggleTextureBrowser> ());
 
 	return vbox;
 }

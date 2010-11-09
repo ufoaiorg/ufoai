@@ -49,9 +49,6 @@ void Entity_connectSelected ();
 void Scene_EntitySetKeyValue_Selected (const std::string& classname, const std::string& key, const std::string& value);
 void Scene_EntitySetClassname_Selected (const std::string& classname, const std::string& newClassname);
 
-typedef struct _GtkWidget GtkWidget;
-char* misc_particle_dialog (GtkWidget* parent);
-
 typedef struct _GtkMenu GtkMenu;
 void Entity_constructMenu (GtkMenu* menu);
 

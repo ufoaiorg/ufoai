@@ -1,6 +1,8 @@
 #ifndef PARTICLEATTRIBUTE_H_
 #define PARTICLEATTRIBUTE_H_
 
+#include "../../ui/particles/ParticleSelector.h"
+
 class ParticleAttribute: public EntityAttribute
 {
 		std::string m_classname;
@@ -34,8 +36,9 @@ class ParticleAttribute: public EntityAttribute
 		typedef MemberCaller<ParticleAttribute, &ParticleAttribute::update> UpdateCaller;
 		void browse (const BrowsedPathEntry::SetPathCallback& setPath)
 		{
-			const char *filename = misc_particle_dialog(gtk_widget_get_toplevel(GTK_WIDGET(m_entry.m_entry.m_frame)));
-			if (filename != 0) {
+			ui::ParticleSelector pSelector;
+			std::string filename = pSelector.chooseParticle();
+			if (!filename.empty()) {
 				setPath(filename);
 				apply();
 			}

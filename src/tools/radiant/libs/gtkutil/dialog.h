@@ -70,8 +70,6 @@ typedef struct _GtkVBox GtkVBox;
 typedef struct _GtkHBox GtkHBox;
 typedef struct _GtkFrame GtkFrame;
 
-GtkWindow* create_fixedsize_modal_window (GtkWindow* parent, const std::string& title, int width, int height);
-
 GtkWindow* create_dialog_window (GtkWindow* parent, const std::string& title, GCallback func, gpointer data, int default_w =
 		-1, int default_h = -1);
 GtkTable* create_dialog_table (unsigned int rows, unsigned int columns, unsigned int row_spacing,

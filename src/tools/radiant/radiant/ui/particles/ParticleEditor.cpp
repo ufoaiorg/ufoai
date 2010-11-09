@@ -48,18 +48,18 @@ namespace ui
 	// write particle definition to string
 	std::string ParticleEditor::save ()
 	{
-		return _particlePreview.getParticle()->toString();
+		return "";
 	}
 
 	// Show the dialog and enter recursive main loop
 	void ParticleEditor::showAndBlock (const std::string& particleID)
 	{
-		scripts::IParticlePtr particle = scripts::loadParticle(particleID);
+		//scripts::IParticlePtr particle = GlobalParticleSystem().getParticle(particleID);
 
 		// Show the dialog
 		gtk_widget_show_all(_widget);
 		_particlePreview.initialisePreview(); // set up the preview
-		_particlePreview.setParticle(particle);
+		//_particlePreview.setParticle(particle);
 		gtk_main(); // recursive main loop. This will block until the dialog is closed in some way.
 	}
 

@@ -508,8 +508,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\particle.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\particle.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\eclass.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\eclass_def.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity.cpp" />
@@ -576,7 +574,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceAPI.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceAPI.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\parse.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\particles.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\Routing.cpp" />
@@ -589,6 +586,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\RoutingRenderable.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\plugin.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\plugin.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\particles\ParticleParser.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\particles\ParticleSystem.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\qe3.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\qe3.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\radiant.rc">
@@ -673,8 +672,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\JobInfo.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\MapInfo.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\MapInfo.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\ParticleBrowser.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\ParticleBrowser.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\PrefabSelector.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\PrefabSelector.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector.cpp" />
@@ -731,8 +728,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\common\ScriptValues.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\mapdef\MapDef.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\mapdef\MapDef.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\particles\Particle.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\particles\Particle.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\terrain\Terrain.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\terrain\Terrain.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\Icons.h" />

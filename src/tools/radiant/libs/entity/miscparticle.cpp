@@ -30,6 +30,7 @@
 #include "editable.h"
 
 #include "iregistry.h"
+#include "iparticles.h"
 
 #include "math/frustum.h"
 #include "selectionlib.h"
@@ -50,7 +51,6 @@
 #include "namekeys.h"
 #include "model.h"
 #include "entity.h"
-#include "particles.h"
 
 void MiscParticle_construct ()
 {
@@ -65,18 +65,20 @@ void MiscParticle_destroy ()
  */
 class RenderableParticleID: public OpenGLRenderable
 {
-		const ParticleDefinition &m_particle;
+		const IParticleDefinition* m_particle;
 		const Vector3 &m_origin;
 	public:
-		RenderableParticleID (const ParticleDefinition &particle, const Vector3 &origin) :
+		RenderableParticleID (const IParticleDefinition* particle, const Vector3 &origin) :
 			m_particle(particle), m_origin(origin)
 		{
 		}
 
 		void render (RenderStateFlags state) const
 		{
-			glRasterPos3fv(m_origin);
-			GlobalOpenGL().drawString(m_particle.getID().c_str());
+			if (m_particle != 0) {
+				glRasterPos3fv(m_origin);
+				GlobalOpenGL().drawString(m_particle->getName());
+			}
 		}
 };
 
@@ -85,9 +87,9 @@ class RenderableParticleID: public OpenGLRenderable
  */
 class RenderableParticle: public OpenGLRenderable
 {
-		const ParticleDefinition &m_particle;
+		const IParticleDefinition* m_particle;
 	public:
-		RenderableParticle (const ParticleDefinition &particle) :
+		RenderableParticle (const IParticleDefinition* particle) :
 			m_particle(particle)
 		{
 		}
@@ -114,7 +116,7 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 
 		NamedEntity m_named;
 		NameKeys m_nameKeys;
-		ParticleDefinition m_particle;
+		IParticleDefinition* m_particle;
 		mutable Vector3 m_id_origin;
 
 		// bounding box
@@ -129,13 +131,19 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		Callback m_transformChanged;
 		Callback m_evaluateTransform;
 
+		void particleChanged (const std::string& value)
+		{
+			m_particle = GlobalParticleSystem().getParticle(value);
+		}
+		typedef MemberCaller1<MiscParticle, const std::string&, &MiscParticle::particleChanged> ParticleChangedCaller;
+
 		void construct ()
 		{
 			read_aabb(m_aabb_local, m_entity.getEntityClass());
 
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
-			m_keyObservers.insert("particle", ParticleDefinition::ParticleChangedCaller(m_particle));
+			m_keyObservers.insert("particle", ParticleChangedCaller(*this));
 		}
 
 		void updateTransform ()
@@ -157,7 +165,7 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		MiscParticle (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
-					m_named(m_entity), m_nameKeys(m_entity), m_particle("unset"),
+					m_named(m_entity), m_nameKeys(m_entity), m_particle(NULL),
 					m_id_origin(g_vector3_identity), m_renderAABBSolid(m_aabb_local), m_renderParticle(m_particle),
 					m_renderParticleID(m_particle, m_id_origin), m_renderAABBWire(m_aabb_local), m_renderName(m_named,
 							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
@@ -168,7 +176,7 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		MiscParticle (const MiscParticle& other, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
-					m_named(m_entity), m_nameKeys(m_entity), m_particle("unset"), m_id_origin(
+					m_named(m_entity), m_nameKeys(m_entity), m_particle(NULL), m_id_origin(
 					g_vector3_identity), m_renderAABBSolid(m_aabb_local), m_renderParticle(m_particle),
 					m_renderParticleID(m_particle, m_id_origin), m_renderAABBWire(m_aabb_local), m_renderName(m_named,
 							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
@@ -232,7 +240,7 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		void renderSolid (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 		{
 			renderer.SetState(m_entity.getEntityClass().m_state_fill, Renderer::eFullMaterials);
-			if (!m_particle.getImage().empty())
+			if (m_particle == NULL || !m_particle->getImage().empty())
 				renderer.addRenderable(m_renderParticle, localToWorld);
 			else
 				renderer.addRenderable(m_renderAABBSolid, localToWorld);

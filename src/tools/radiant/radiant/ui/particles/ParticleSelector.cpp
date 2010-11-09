@@ -1,14 +1,13 @@
-#include "SoundChooser.h"
+#include "ParticleSelector.h"
 
 #include "iradiant.h"
-#include "isound.h"
+#include "iparticles.h"
 #include "gtkutil/IconTextColumn.h"
 #include "gtkutil/ScrolledFrame.h"
 #include "gtkutil/RightAlignment.h"
 #include "gtkutil/TreeModel.h"
 #include "gtkutil/image.h"
 #include "gtkutil/MultiMonitor.h"
-#include "gtkutil/VFSTreePopulator.h"
 #include "generic/callback.h"
 #include "../Icons.h"
 #include <gtk/gtk.h>
@@ -22,21 +21,19 @@ namespace ui
 		// Treestore enum
 		enum
 		{
-			DISPLAYNAME_COLUMN, FILENAME_COLUMN, IS_FOLDER_COLUMN, ICON_COLUMN, N_COLUMNS
+			DISPLAYNAME_COLUMN, FILENAME_COLUMN, ICON_COLUMN, N_COLUMNS
 		};
-
-		const std::string SOUNDS_FOLDER = "sound/";
 	}
 
 	// Constructor
-	SoundChooser::SoundChooser () :
-		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING,
-				G_TYPE_STRING, G_TYPE_BOOLEAN, GDK_TYPE_PIXBUF))
+	ParticleSelector::ParticleSelector () :
+		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _treeStore(gtk_tree_store_new(N_COLUMNS,
+				G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF))
 	{
 		// Set up the window
 		gtk_window_set_transient_for(GTK_WINDOW(_widget), GlobalRadiant().getMainWindow());
 		gtk_window_set_modal(GTK_WINDOW(_widget), TRUE);
-		gtk_window_set_title(GTK_WINDOW(_widget), _("Choose sound"));
+		gtk_window_set_title(GTK_WINDOW(_widget), _("Choose particle"));
 		gtk_window_set_position(GTK_WINDOW(_widget), GTK_WIN_POS_CENTER_ON_PARENT);
 		gtk_window_set_type_hint(GTK_WINDOW(_widget), GDK_WINDOW_TYPE_HINT_DIALOG);
 
@@ -64,50 +61,45 @@ namespace ui
 		/**
 		 * Visitor class to enumerate sound shaders and add them to the tree store.
 		 */
-		class SoundPopulator: public gtkutil::VFSTreePopulator, public gtkutil::VFSTreePopulator::Visitor
+		class ParticlePopulator : public IParticleSystem::Visitor
 		{
+			private:
+
+				GtkTreeStore* _treeStore;
+
 			public:
-				typedef const std::string& first_argument_type;
 
-				// Constructor
-				SoundPopulator (GtkTreeStore* treeStore) :
-					gtkutil::VFSTreePopulator(treeStore)
-				{
-				}
-
-				// Functor operator needed for the forEachFile() call
-				void operator() (const std::string& file)
-				{
-					std::string extension = os::getExtension(file);
-
-					if (extension == "wav" || extension == "ogg")
-						addPath(file);
+				ParticlePopulator(GtkTreeStore* treeStore) : _treeStore(treeStore) {
 				}
 
 				// Required visit function
-				void visit (GtkTreeStore* store, GtkTreeIter* iter, const std::string& path, bool isExplicit)
+				void visit (IParticleDefinition* particle) const
 				{
 					// Get the display name by stripping off everything before the last
 					// slash
-					std::string displayName = os::getFilenameFromPath(path);
+					std::string displayName = particle->getName();
+					std::string fileName = displayName; // TODO:
 
 					// Pixbuf depends on model type
-					GdkPixbuf* pixBuf = isExplicit ? gtkutil::getLocalPixbuf(ui::icons::ICON_SOUND)
-							: gtkutil::getLocalPixbuf(ui::icons::ICON_FOLDER);
+					GdkPixbuf* pixBuf = gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN);
+
+					// Append a node to the tree view for this child,
+					GtkTreeIter iter;
+					gtk_tree_store_append(_treeStore, &iter, NULL);
 
 					// Fill in the column values
-					gtk_tree_store_set(store, iter, DISPLAYNAME_COLUMN, displayName.c_str(), FILENAME_COLUMN,
-							path.c_str(), IS_FOLDER_COLUMN, isExplicit ? FALSE : TRUE, ICON_COLUMN, pixBuf, -1);
+					gtk_tree_store_set(_treeStore, &iter, DISPLAYNAME_COLUMN, displayName.c_str(), FILENAME_COLUMN,
+							fileName.c_str(), ICON_COLUMN, pixBuf, -1);
 				}
 		};
 	} // namespace
 
 	// Create the tree view
-	GtkWidget* SoundChooser::createTreeView ()
+	GtkWidget* ParticleSelector::createTreeView ()
 	{
 		// Tree view with single text icon column
 		GtkWidget* tv = gtk_tree_view_new_with_model(GTK_TREE_MODEL(_treeStore));
-		gtk_tree_view_append_column(GTK_TREE_VIEW(tv), gtkutil::IconTextColumn(_("Sound"), DISPLAYNAME_COLUMN,
+		gtk_tree_view_append_column(GTK_TREE_VIEW(tv), gtkutil::IconTextColumn(_("Particle"), DISPLAYNAME_COLUMN,
 				ICON_COLUMN, false));
 
 		_treeSelection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tv));
@@ -115,18 +107,14 @@ namespace ui
 				G_CALLBACK(_onSelectionChange), this);
 
 		// Visit all sound sound files and collect them for later insertion
-		SoundPopulator functor(_treeStore);
-		GlobalFileSystem().forEachFile(SOUNDS_FOLDER, "*", makeCallback1(functor), 0);
-
-		// Let the populator iterate over all collected elements
-		// and insert them in the treestore
-		functor.forEachNode(functor);
+		ParticlePopulator functor(_treeStore);
+		GlobalParticleSystem().foreachParticle(functor);
 
 		return gtkutil::ScrolledFrame(tv);
 	}
 
 	// Create buttons panel
-	GtkWidget* SoundChooser::createButtons ()
+	GtkWidget* ParticleSelector::createButtons ()
 	{
 		GtkWidget* hbx = gtk_hbox_new(TRUE, 6);
 
@@ -145,7 +133,7 @@ namespace ui
 	}
 
 	// Show and block
-	std::string SoundChooser::chooseSound ()
+	std::string ParticleSelector::chooseParticle ()
 	{
 		gtk_widget_show_all(_widget);
 		gtk_main();
@@ -155,7 +143,7 @@ namespace ui
 	/* GTK CALLBACKS */
 
 	// Delete dialog
-	gboolean SoundChooser::_onDelete (GtkWidget* w, GdkEvent* e, SoundChooser* self)
+	gboolean ParticleSelector::_onDelete (GtkWidget* w, GdkEvent* e, ParticleSelector* self)
 	{
 		self->_selectedSound = "";
 		gtk_main_quit();
@@ -163,7 +151,7 @@ namespace ui
 	}
 
 	// OK button
-	void SoundChooser::_onOK (GtkWidget* w, SoundChooser* self)
+	void ParticleSelector::_onOK (GtkWidget* w, ParticleSelector* self)
 	{
 		// Get the selection if valid, otherwise ""
 		self->_selectedSound = gtkutil::TreeModel::getSelectedString(self->_treeSelection, FILENAME_COLUMN);
@@ -173,7 +161,7 @@ namespace ui
 	}
 
 	// Cancel button
-	void SoundChooser::_onCancel (GtkWidget* w, SoundChooser* self)
+	void ParticleSelector::_onCancel (GtkWidget* w, ParticleSelector* self)
 	{
 		self->_selectedSound = "";
 		gtk_widget_destroy(self->_widget);
@@ -181,18 +169,10 @@ namespace ui
 	}
 
 	// Tree Selection Change
-	void SoundChooser::_onSelectionChange (GtkTreeSelection* selection, SoundChooser* self)
+	void ParticleSelector::_onSelectionChange (GtkTreeSelection* selection, ParticleSelector* self)
 	{
-		const bool isFolder = gtkutil::TreeModel::getSelectedBoolean(self->_treeSelection, IS_FOLDER_COLUMN);
-
-		if (isFolder) {
-			self->_preview.setSound("");
-			return;
-		}
-
-		std::string selectedSound = gtkutil::TreeModel::getSelectedString(self->_treeSelection, FILENAME_COLUMN);
-
-		// Notify the preview widget about the change
-		self->_preview.setSound(SOUNDS_FOLDER + selectedSound);
+		std::string selectedParticle = gtkutil::TreeModel::getSelectedString(self->_treeSelection, FILENAME_COLUMN);
+		IParticleDefinition* pDef = GlobalParticleSystem().getParticle(selectedParticle);
+		self->_preview.setParticle(pDef);
 	}
 }

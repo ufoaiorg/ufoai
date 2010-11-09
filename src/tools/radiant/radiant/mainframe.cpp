@@ -52,7 +52,7 @@
 #include "igl.h"
 #include "ieventmanager.h"
 #include "iselectionset.h"
-#include "moduleobserver.h"
+#include "moduleobservers.h"
 #include "server.h"
 
 #include <ctime>

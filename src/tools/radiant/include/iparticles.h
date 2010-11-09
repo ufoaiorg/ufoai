@@ -35,42 +35,72 @@ class IParticleDefinition
 		virtual ~IParticleDefinition ()
 		{
 		}
-		virtual std::string& getModel () const = 0;
+		virtual const std::string& getName () const = 0;
 
-		virtual std::string& getImage () const = 0;
+		virtual const std::string& getModel () const = 0;
 
-		virtual void render (int x, int y) const = 0;
+		virtual const std::string& getImage () const = 0;
 
 		virtual int getHeight () const = 0;
 
 		virtual int getWidth () const = 0;
 };
 
-typedef std::map<std::string, IParticleDefinition> ParticleDefinitionMap;
+typedef std::map<std::string, IParticleDefinition*> ParticleDefinitionMap;
 
-class ParticleSystem
+class IParticleSystem
 {
 	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "particles");
 
-		virtual ~ParticleSystem ()
+		virtual ~IParticleSystem ()
 		{
 		}
-		virtual ParticleDefinitionMap getParticleDefinitions () = 0;
+
+		/**
+		 * @brief
+		 * Visitor interface the for the particle system.
+		 *
+		 * This defines the Visitor interface which is used in the foreachParticle()
+		 * visit methods.
+		 */
+		class Visitor
+		{
+			public:
+				virtual ~Visitor ()
+				{
+				}
+
+				/**
+				 * @brief Called by the selection system for each visited node.
+				 */
+				virtual void visit (IParticleDefinition* particle) const = 0;
+		};
+
+		virtual void init() = 0;
+
+		/**
+		 * @brief Use the provided Visitor object to enumerate each registered particle
+		 */
+		virtual void foreachParticle (const Visitor& visitor) const = 0;
+
+		virtual ParticleDefinitionMap getParticleDefinitions () const = 0;
+
+		virtual IParticleDefinition* getParticle(const std::string& particleID) = 0;
 };
 
 #include "modulesystem.h"
 
 template<typename Type>
 class GlobalModule;
-typedef GlobalModule<ParticleSystem> GlobalParticleModule;
+typedef GlobalModule<IParticleSystem> GlobalParticleModule;
 
 template<typename Type>
 class GlobalModuleRef;
-typedef GlobalModuleRef<ParticleSystem> GlobalParticleModuleRef;
+typedef GlobalModuleRef<IParticleSystem> GlobalParticleModuleRef;
 
-inline ParticleSystem& GlobalParticleSystem ()
+inline IParticleSystem& GlobalParticleSystem ()
 {
 	return GlobalParticleModule::getTable();
 }

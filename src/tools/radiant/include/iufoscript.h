@@ -36,9 +36,13 @@
 
 class UFOScriptSystem
 {
+	public:
+
+		typedef std::set<std::string> UFOScriptFiles;
+
 	private:
 
-		std::set<std::string> _ufoFiles;
+		UFOScriptFiles _ufoFiles;
 
 	public:
 		INTEGER_CONSTANT(Version, 1);
@@ -67,7 +71,7 @@ class UFOScriptSystem
 		/**
 		 * @return A vector with ufo filesnames
 		 */
-		virtual const std::set<std::string>& getFiles () const
+		virtual const UFOScriptFiles getFiles () const
 		{
 			return _ufoFiles;
 		}
