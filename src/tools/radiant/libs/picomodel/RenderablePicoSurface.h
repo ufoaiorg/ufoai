@@ -4,8 +4,11 @@
 #include "picomodel.h"
 #include "irender.h"
 #include "render.h"
+#include "cullable.h"
+#include "selectable.h"
 #include <string>
 #include "math/aabb.h"
+#include "VolumeIntersectionValue.h"
 
 /* FORWARD DECLS */
 
@@ -15,7 +18,7 @@ namespace model
 	 * material. RenderablePicoSurface objects are composited into a RenderablePicoModel
 	 * object to create a renderable static mesh.
 	 */
-	class RenderablePicoSurface: public OpenGLRenderable
+	class RenderablePicoSurface: public OpenGLRenderable, public Cullable
 	{
 			// Name of the material this surface is using, both originally and after a skin
 			// remap.
@@ -59,6 +62,9 @@ namespace model
 			 */
 			void render (RenderStateFlags flags) const;
 
+			void render (Renderer& renderer, const Matrix4& localToWorld, Shader* state) const;
+			void render (Renderer& renderer, const Matrix4& localToWorld) const;
+
 			/** Return the vertex count for this surface
 			 */
 			int getVertexCount () const
@@ -87,6 +93,22 @@ namespace model
 				return _localAABB;
 			}
 
+			VolumeIntersectionValue intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const
+			{
+				return test.TestAABB(_localAABB, localToWorld);
+			}
+
+			void testSelect (Selector& selector, SelectionTest& test, const Matrix4& localToWorld)
+			{
+				test.BeginMesh(localToWorld);
+
+				SelectionIntersection best;
+				testSelect(test, best);
+				if (best.valid()) {
+					selector.addIntersection(best);
+				}
+			}
+
 			/** Apply the provided skin to this surface. If the skin has a remap for
 			 * this surface's material, it will be applied, otherwise no action will
 			 * occur.
@@ -95,6 +117,15 @@ namespace model
 			 * path of the skin to apply
 			 */
 			void applySkin (const std::string& skin);
+
+		private:
+
+			void testSelect (SelectionTest& test, SelectionIntersection& best)
+			{
+				test.TestTriangles(VertexPointer(VertexPointer::pointer(&_vertices.data()->vertex),
+						sizeof(ArbitraryMeshVertex)), IndexPointer(_indices.data(), IndexPointer::index_type(
+						_indices.size())), best);
+			}
 	};
 }
 

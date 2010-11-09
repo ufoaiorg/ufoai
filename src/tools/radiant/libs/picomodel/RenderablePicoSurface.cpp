@@ -1,4 +1,5 @@
 #include "RenderablePicoSurface.h"
+#include "renderable.h"
 
 namespace model
 {
@@ -64,6 +65,18 @@ namespace model
 		glVertexPointer(3, GL_FLOAT, sizeof(ArbitraryMeshVertex), &_vertices[0].vertex);
 		glTexCoordPointer(2, GL_FLOAT, sizeof(ArbitraryMeshVertex), &_vertices[0].texcoord);
 		glDrawElements(GL_TRIANGLES, _nIndices, GL_UNSIGNED_INT, &_indices[0]);
+	}
+
+	void RenderablePicoSurface::render (Renderer& renderer, const Matrix4& localToWorld, Shader* state) const
+	{
+		ASSERT_NOTNULL(state);
+		renderer.SetState(state, Renderer::eFullMaterials);
+		renderer.addRenderable(*this, localToWorld);
+	}
+
+	void RenderablePicoSurface::render (Renderer& renderer, const Matrix4& localToWorld) const
+	{
+		render(renderer, localToWorld, _shader);
 	}
 
 	// Apply a skin to this surface
