@@ -185,10 +185,6 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 
 		PicoModel& m_picomodel;
 
-		const LightList* m_lightList;
-		typedef Array<VectorLightList> SurfaceLightLists;
-		SurfaceLightLists m_surfaceLightLists;
-
 		class Remap
 		{
 			public:
@@ -207,8 +203,6 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		void* m_test;
-
 		Bounded& get (NullType<Bounded> )
 		{
 			return m_picomodel;
@@ -218,36 +212,21 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 			return m_picomodel;
 		}
 
-		void lightsChanged ()
-		{
-			m_lightList->lightsChanged();
-		}
-		typedef MemberCaller<PicoModelInstance, &PicoModelInstance::lightsChanged> LightsChangedCaller;
-
 		PicoModelInstance (const scene::Path& path, scene::Instance* parent, PicoModel& picomodel) :
 			Instance(path, parent, this, StaticTypeCasts::instance().get()), m_picomodel(picomodel),
-					m_surfaceLightLists(m_picomodel.size()), m_skins(m_picomodel.size())
+					m_skins(m_picomodel.size())
 		{
-			m_lightList = &GlobalShaderCache().attach(*this);
-			m_picomodel.m_lightsChanged = LightsChangedCaller(*this);
-
-			Instance::setTransformChangedCallback(LightsChangedCaller(*this));
 		}
 		~PicoModelInstance ()
 		{
-			Instance::setTransformChangedCallback(Callback());
-
-			m_picomodel.m_lightsChanged = Callback();
 			GlobalShaderCache().detach(*this);
 		}
 
 		void render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 		{
-			SurfaceLightLists::const_iterator j = m_surfaceLightLists.begin();
 			SurfaceRemaps::const_iterator k = m_skins.begin();
-			for (PicoModel::const_iterator i = m_picomodel.begin(); i != m_picomodel.end(); ++i, ++j, ++k) {
+			for (PicoModel::const_iterator i = m_picomodel.begin(); i != m_picomodel.end(); ++i, ++k) {
 				if ((*i)->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
-					renderer.setLights(*j);
 					(*i)->render(renderer, localToWorld, (*k).second != 0 ? (*k).second : (*i)->getShader());
 				}
 			}
@@ -255,8 +234,6 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 
 		void renderSolid (Renderer& renderer, const VolumeTest& volume) const
 		{
-			m_lightList->evaluateLights();
-
 			render(renderer, volume, Instance::localToWorld());
 		}
 		void renderWireframe (Renderer& renderer, const VolumeTest& volume) const
@@ -267,13 +244,6 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 		void testSelect (Selector& selector, SelectionTest& test)
 		{
 			m_picomodel.testSelect(selector, test, Instance::localToWorld());
-		}
-
-		void insertLight (const RendererLight& light)
-		{
-		}
-		void clearLights ()
-		{
 		}
 };
 
