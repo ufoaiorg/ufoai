@@ -265,12 +265,13 @@ void Map_SetModified (Map& map, bool modified)
 	}
 }
 
-/**
- * @sa Sys_SetTitle
- */
 void Map_UpdateTitle (const Map& map)
 {
-	Sys_SetTitle(map.m_name, Map_Modified(map));
+	std::string title = "UFORadiant " + map.m_name;
+	if (Map_Modified(map))
+		title += " *";
+
+	gtk_window_set_title(GlobalRadiant().getMainWindow(), title.c_str());
 }
 
 scene::Node* Map_GetWorldspawn (const Map& map)

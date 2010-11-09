@@ -27,7 +27,6 @@
 //
 // system functions
 //
-void Sys_SetTitle (const std::string& text, bool modified);
 
 void QE_InitVFS ();
 

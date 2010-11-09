@@ -33,13 +33,11 @@
 #include "qe3.h"
 
 #include "ifilesystem.h"
-#include "stream/stringstream.h"
 #include "scenelib.h"
 #include "gtkutil/messagebox.h"
 #include "map/map.h"
 #include "iradiant.h"
 #include "mainframe.h"
-#include "convert.h"
 #include "radiant_i18n.h"
 
 QEGlobals_t g_qeglobals;
@@ -112,17 +110,4 @@ bool ConfirmModified (const std::string& title)
 			return Map_Save();
 	}
 	return true;
-}
-
-/**
- * @brief Sets the window title for UFORadiant
- * @sa Map_UpdateTitle
- */
-void Sys_SetTitle (const std::string& text, bool modified)
-{
-	std::string title = "UFORadiant " + text;
-	if (modified)
-		title += " *";
-
-	gtk_window_set_title(GlobalRadiant().getMainWindow(), title.c_str());
 }
