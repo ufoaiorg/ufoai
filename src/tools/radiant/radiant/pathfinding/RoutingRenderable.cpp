@@ -5,7 +5,7 @@
 #include "entitylib.h"//for aabb_draw_solid
 #include "../../../shared/defines.h"
 
-#include "../levelfilters.h"
+#include "../filters/levelfilters.h"
 
 #define UNIT_SIZE_HALF (UNIT_SIZE/2)
 #define UNIT_SIZE_QUARTER (UNIT_SIZE/4)

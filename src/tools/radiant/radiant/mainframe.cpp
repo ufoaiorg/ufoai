@@ -101,7 +101,7 @@
 #include "url.h"
 #include "windowobservers.h"
 #include "referencecache/referencecache.h"
-#include "levelfilters.h"
+#include "filters/levelfilters.h"
 #include "sound/SoundManager.h"
 #include "ui/Icons.h"
 #include "pathfinding.h"

@@ -546,13 +546,13 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\XMLFilter.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\XMLFilterRule.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\filters.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filters\levelfilters.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filters\levelfilters.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\gtkmisc.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\gtkmisc.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\image.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\image.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\imagemodules.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\levelfilters.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\levelfilters.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\main.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.h" />
@@ -613,7 +613,9 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLStateManager.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLStateMap.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\renderer.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\scenegraph.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection.cpp" />
@@ -722,8 +724,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\textures.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\timer.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\timer.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\treemodel.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\treemodel.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\UFOScript.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\common\DataBlock.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\common\DataBlock.h" />

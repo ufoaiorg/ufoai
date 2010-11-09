@@ -35,7 +35,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
-	$(RADIANT_BASE)/radiant/scenegraph.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/selection.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
@@ -45,13 +44,14 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/texmanip.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
-	$(RADIANT_BASE)/radiant/treemodel.cpp \
 	$(RADIANT_BASE)/radiant/undo.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
-	$(RADIANT_BASE)/radiant/levelfilters.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/scenegraph/scenegraph.cpp \
+	$(RADIANT_BASE)/radiant/scenegraph/treemodel.cpp \
 	\
 	$(RADIANT_BASE)/radiant/settings/preferences.cpp \
 	\
@@ -219,8 +219,9 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/ui/lightdialog/LightDialog.cpp \
 	\
-	$(RADIANT_BASE)/radiant/filters/XMLFilter.cpp \
 	$(RADIANT_BASE)/radiant/filters/filters.cpp \
+	$(RADIANT_BASE)/radiant/filters/levelfilters.cpp \
+	$(RADIANT_BASE)/radiant/filters/XMLFilter.cpp \
 	\
 	$(RADIANT_BASE)/radiant/textool/TexTool.cpp \
 	$(RADIANT_BASE)/radiant/textool/TexToolItem.cpp \
