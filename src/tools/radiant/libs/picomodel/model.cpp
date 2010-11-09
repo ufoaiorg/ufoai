@@ -53,153 +53,101 @@
 #include "RenderablePicoModel.h"
 #include "SkinnedModel.h"
 
-class PicoModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public SkinnedModel
+#include "PicoModelNode.h"
+
+Bounded& PicoModelInstance::get (NullType<Bounded> )
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-					InstanceContainedCast<PicoModelInstance, Bounded>::install(m_casts);
-					InstanceContainedCast<PicoModelInstance, Cullable>::install(m_casts);
-					InstanceStaticCast<PicoModelInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<PicoModelInstance, SelectionTestable>::install(m_casts);
-					InstanceStaticCast<PicoModelInstance, SkinnedModel>::install(m_casts);
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
-		model::RenderablePicoModel& m_picomodel;
-
-		class Remap
-		{
-			public:
-				std::string first;
-				Shader* second;
-				Remap () :
-					second(0)
-				{
-				}
-		};
-		typedef Array<Remap> SurfaceRemaps;
-		SurfaceRemaps m_skins;
-
-		PicoModelInstance (const PicoModelInstance&);
-		PicoModelInstance operator= (const PicoModelInstance&);
-	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
-
-		Bounded& get (NullType<Bounded> )
-		{
-			return m_picomodel;
-		}
-		Cullable& get (NullType<Cullable> )
-		{
-			return m_picomodel;
-		}
-
-		PicoModelInstance (const scene::Path& path, scene::Instance* parent, model::RenderablePicoModel& picomodel) :
-			Instance(path, parent, this, StaticTypeCasts::instance().get()), m_picomodel(picomodel),
-					m_skins(m_picomodel.getSurfaceCount())
-		{
-		}
-		~PicoModelInstance ()
-		{
-			GlobalShaderCache().detach(*this);
-		}
-
-		void render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
-		{
-			const model::SurfaceList& surfaceList = m_picomodel.getSurfaces();
-			SurfaceRemaps::const_iterator k = m_skins.begin();
-			for (model::SurfaceList::const_iterator i = surfaceList.begin(); i != surfaceList.end(); ++i, ++k) {
-				if (i->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
-					i->render(renderer, localToWorld, (*k).second != 0 ? (*k).second : i->getShader());
-				}
-			}
-		}
-
-		// greebo: Updates the model's surface remaps. Pass the new skin name (can be empty).
-		void skinChanged (const std::string& newSkinName) {
-
-		}
-
-		// Returns the name of the currently active skin
-		std::string getSkin () const {
-			return "";
-		}
-
-		void renderSolid (Renderer& renderer, const VolumeTest& volume) const
-		{
-			render(renderer, volume, Instance::localToWorld());
-		}
-		void renderWireframe (Renderer& renderer, const VolumeTest& volume) const
-		{
-			renderSolid(renderer, volume);
-		}
-
-		void testSelect (Selector& selector, SelectionTest& test)
-		{
-			m_picomodel.testSelect(selector, test, Instance::localToWorld());
-		}
-};
-
-class PicoModelNode: public scene::Node, public scene::Instantiable
+	return m_picomodel;
+}
+Cullable& PicoModelInstance::get (NullType<Cullable> )
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
+	return m_picomodel;
+}
 
-		InstanceSet m_instances;
-		model::RenderablePicoModel m_picomodel;
+PicoModelInstance::PicoModelInstance (const scene::Path& path, scene::Instance* parent, model::RenderablePicoModel& picomodel) :
+	Instance(path, parent, this, StaticTypeCasts::instance().get()), m_picomodel(picomodel),
+			m_skins(m_picomodel.getSurfaceCount())
+{
+}
+PicoModelInstance::~PicoModelInstance ()
+{
+}
 
-	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
+void PicoModelInstance::render (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
+{
+	const model::SurfaceList& surfaceList = m_picomodel.getSurfaces();
+	SurfaceRemaps::const_iterator k = m_skins.begin();
+	for (model::SurfaceList::const_iterator i = surfaceList.begin(); i != surfaceList.end(); ++i, ++k) {
+		if (i->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
+			i->render(renderer, localToWorld, (*k).second != 0 ? (*k).second : i->getShader());
+		}
+	}
+}
 
-		/** Construct a PicoModelNode with the parsed picoModel_t struct and the
-		 * provided file extension.
-		 */
-		PicoModelNode (picoModel_t* model, const std::string& ext) :
-			scene::Node(this, StaticTypeCasts::instance().get()),
-			m_picomodel(model)
-		{
-		}
+// greebo: Updates the model's surface remaps. Pass the new skin name (can be empty).
+void PicoModelInstance::skinChanged (const std::string& newSkinName) {
+	if (newSkinName == _skin)
+		return;
 
-		scene::Node& node ()
-		{
-			return *this;
-		}
+	// The new skin name is stored locally
+	_skin = newSkinName;
+	m_picomodel.applySkin(_skin);
+}
 
-		scene::Instance* create (const scene::Path& path, scene::Instance* parent)
-		{
-			return new PicoModelInstance(path, parent, m_picomodel);
-		}
-		void forEachInstance (const scene::Instantiable::Visitor& visitor)
-		{
-			m_instances.forEachInstance(visitor);
-		}
-		void insert (scene::Instantiable::Observer* observer, const scene::Path& path, scene::Instance* instance)
-		{
-			m_instances.insert(observer, path, instance);
-		}
-		scene::Instance* erase (scene::Instantiable::Observer* observer, const scene::Path& path)
-		{
-			return m_instances.erase(observer, path);
-		}
-};
+// Returns the name of the currently active skin
+std::string PicoModelInstance::getSkin () const {
+	return _skin;
+}
+
+void PicoModelInstance::renderSolid (Renderer& renderer, const VolumeTest& volume) const
+{
+	render(renderer, volume, Instance::localToWorld());
+}
+void PicoModelInstance::renderWireframe (Renderer& renderer, const VolumeTest& volume) const
+{
+	renderSolid(renderer, volume);
+}
+
+void PicoModelInstance::testSelect (Selector& selector, SelectionTest& test)
+{
+	m_picomodel.testSelect(selector, test, Instance::localToWorld());
+}
+
+/** Construct a PicoModelNode with the parsed picoModel_t struct and the
+ * provided file extension.
+ */
+PicoModelNode::PicoModelNode (picoModel_t* model, const std::string& ext) :
+	scene::Node(this, StaticTypeCasts::instance().get()),
+	m_picomodel(model)
+{
+}
+
+scene::Node& PicoModelNode::node ()
+{
+	return *this;
+}
+
+scene::Instance* PicoModelNode::create (const scene::Path& path, scene::Instance* parent)
+{
+	return new PicoModelInstance(path, parent, m_picomodel);
+}
+void PicoModelNode::forEachInstance (const scene::Instantiable::Visitor& visitor)
+{
+	m_instances.forEachInstance(visitor);
+}
+void PicoModelNode::insert (scene::Instantiable::Observer* observer, const scene::Path& path, scene::Instance* instance)
+{
+	m_instances.insert(observer, path, instance);
+}
+scene::Instance* PicoModelNode::erase (scene::Instantiable::Observer* observer, const scene::Path& path)
+{
+	return m_instances.erase(observer, path);
+}
+
+void PicoModelNode::skinChanged (const std::string& newSkinName)
+{
+	m_picomodel.applySkin(newSkinName);
+}
 
 inline size_t picoInputStreamReam (void* inputStream, unsigned char* buffer, size_t length)
 {

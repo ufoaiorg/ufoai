@@ -43,6 +43,8 @@ namespace model
 			// The AABB containing this surface, in local object space.
 			AABB _localAABB;
 
+			picoSurface_t* _surf;
+
 		public:
 			/** Constructor. Accepts a picoSurface_t struct and the file extension to determine
 			 * how to assign materials.

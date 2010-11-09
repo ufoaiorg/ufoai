@@ -3,6 +3,7 @@
 #include "texturelib.h"
 #include "ifilter.h"
 
+#include "string/string.h"
 #include <sstream>
 
 namespace model
@@ -84,9 +85,25 @@ namespace model
 	// Apply the given skin to this model
 	void RenderablePicoModel::applySkin (const std::string& skin)
 	{
+		std::string name = "";
+
+		for (ModelSkinList::const_iterator i = modelSkinList.begin(); i != modelSkinList.end(); ++i) {
+			if (*i == skin) {
+				name = *i;
+				break;
+			}
+		}
+
+		if (name.empty()) {
+			int skinId = string::toInt(skin);
+			if (skinId < 0 || skinId >= modelSkinList.size())
+				return;
+			name = modelSkinList[skinId];
+		}
+
 		// Apply the skin to each surface
 		for (SurfaceList::iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {
-			i->applySkin(skin);
+			i->applySkin(name);
 		}
 	}
 

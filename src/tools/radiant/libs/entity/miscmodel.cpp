@@ -79,7 +79,7 @@ class MiscModel: public Snappable
 		{
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("model", SingletonModel::ModelChangedCaller(m_model));
-			//m_keyObservers.insert("skin", ModelSkinKey::SkinChangedCaller(m_skin));
+			m_keyObservers.insert("skin", SingletonModel::SkinChangedCaller(m_model));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 			m_keyObservers.insert("angle", AnglesKey::AngleChangedCaller(m_anglesKey));
 			m_keyObservers.insert("angles", AnglesKey::AnglesChangedCaller(m_anglesKey));

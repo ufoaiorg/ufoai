@@ -29,6 +29,8 @@
 #include "os/path.h"
 #include "moduleobserver.h"
 
+#include "picomodel/PicoModelNode.h"
+
 class EModel: public ModuleObserver
 {
 		ResourceReference m_resource;
@@ -62,6 +64,14 @@ class EModel: public ModuleObserver
 			}
 		}
 
+		void skinChanged (const std::string& skin)
+		{
+			PicoModelNode* modelNode = dynamic_cast<PicoModelNode*>(m_node);
+			if (modelNode != NULL) {
+				modelNode->skinChanged(skin);
+			}
+		}
+
 		void modelChanged (const std::string& value)
 		{
 			std::string cleaned = os::standardPath(value);
@@ -70,7 +80,6 @@ class EModel: public ModuleObserver
 			m_resource.attach(*this);
 			m_modelChanged();
 		}
-		typedef MemberCaller1<EModel, const std::string&, &EModel::modelChanged> ModelChangedCaller;
 
 		const std::string& getName () const
 		{
@@ -111,6 +120,13 @@ class SingletonModel
 			m_model.modelChanged(value);
 		}
 		typedef MemberCaller1<SingletonModel, const std::string&, &SingletonModel::modelChanged> ModelChangedCaller;
+
+		void skinChanged(const std::string& skin)
+		{
+			m_model.skinChanged(skin);
+		}
+		typedef MemberCaller1<SingletonModel, const std::string&, &SingletonModel::skinChanged> SkinChangedCaller;
+
 
 		scene::Node* getNode () const
 		{
