@@ -42,7 +42,7 @@
 #include "gtkutil/TreeModel.h"
 #include "gtkutil/closure.h"
 
-#include "../treemodel.h"
+#include "../scenegraph/treemodel.h"
 
 void RedrawEntityList ();
 typedef FreeCaller<RedrawEntityList> RedrawEntityListCaller;
