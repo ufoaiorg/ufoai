@@ -5,10 +5,10 @@ namespace model
 {
 	// Constructor. Copy the provided picoSurface_t structure into this object
 	RenderablePicoSurface::RenderablePicoSurface (picoSurface_t* surf) :
-		_originalShaderName(""), _mappedShaderName(""), _surf(surf)
+		_originalShaderName(""), _mappedShaderName("")
 	{
 		// Get the shader from the picomodel struct.
-		picoShader_t* shader = PicoGetSurfaceShader(_surf);
+		picoShader_t* shader = PicoGetSurfaceShader(surf);
 		if (shader != 0) {
 			_originalShaderName = PicoGetShaderName(shader);
 		}
@@ -20,8 +20,8 @@ namespace model
 
 		// Get the number of vertices and indices, and reserve capacity in our vectors in advance
 		// by populating them with empty structs.
-		const int nVerts = PicoGetSurfaceNumVertexes(_surf);
-		_nIndices = PicoGetSurfaceNumIndexes(_surf);
+		const int nVerts = PicoGetSurfaceNumVertexes(surf);
+		_nIndices = PicoGetSurfaceNumIndexes(surf);
 		_vertices.resize(nVerts);
 		_indices.resize(_nIndices);
 
@@ -31,8 +31,8 @@ namespace model
 			Vertex3f vertex(PicoGetSurfaceXYZ(surf, vNum));
 			_localAABB.includePoint(vertex);
 			_vertices[vNum].vertex = vertex;
-			_vertices[vNum].normal = Normal3f(PicoGetSurfaceNormal(_surf, vNum));
-			_vertices[vNum].texcoord = TexCoord2f(PicoGetSurfaceST(_surf, 0, vNum));
+			_vertices[vNum].normal = Normal3f(PicoGetSurfaceNormal(surf, vNum));
+			_vertices[vNum].texcoord = TexCoord2f(PicoGetSurfaceST(surf, 0, vNum));
 		}
 
 		// Stream in the index data
