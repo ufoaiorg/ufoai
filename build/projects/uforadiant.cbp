@@ -790,10 +790,12 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\ortho\OrthoContextMenu.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\ortho\OrthoContextMenu.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\overlay\Overlay.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\particleeditor\ParticleEditor.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\particleeditor\ParticleEditor.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\particleeditor\ParticlePreview.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\particleeditor\ParticlePreview.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\particles\ParticleEditor.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\particles\ParticleEditor.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\particles\ParticlePreview.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\particles\ParticlePreview.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\particles\ParticleSelector.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\particles\ParticleSelector.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\scripteditor\UFOScriptEditor.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\scripteditor\UFOScriptEditor.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\splash\Splash.cpp" />
