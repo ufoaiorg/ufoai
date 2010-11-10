@@ -330,6 +330,45 @@ window test_angelscript
 		getNode("test_angelscript.testWontCompile2").color = green;
 	}
 
+	string testCase0 { pos "200 80" string "set1" }
+	string testCase1 { pos "200 80" string "set1" }
+	string testCase2 { pos "200 80" string "set1" }
+	string testCase3 { pos "200 80" string "set1" }
+	string testCase4 { pos "200 80" string "set1" }
+
+	func testCase angelscript {
+		color red = "1 0 0";
+		color green = "0 1 0";
+
+		// ok it compile
+		node@ test0 = getNode("test_angelscript.testCase0");
+		test0.color = green;
+
+		// implicit
+		node@ case1 = thisNode;
+		node@ test1 = getNode("test_angelscript.testCase1");
+		if (case1 != null) test1.color = green;
+		else test1.color = red;
+
+		// explicit to super
+		node@ case2 = cast<node>(thisNode);
+		node@ test2 = getNode("test_angelscript.testCase2");
+		if (case2 != null) test2.color = green;
+		else test2.color = red;
+
+		// explicit to inherited
+		wgwindow@ case3 = cast<wgwindow>(case2);
+		node@ test3 = getNode("test_angelscript.testCase3");
+		if (case3 != null) test3.color = green;
+		else test3.color = red;
+
+		// not possible
+		wgcheckbox@ case4 = cast<wgcheckbox>(case2);
+		node@ test4 = getNode("test_angelscript.testCase4");
+		if (case4 == null) test4.color = green;
+		else test4.color = red;
+	}
+
 	// THIS IS NOT ANGELSCRIPT
 	func onInit {
 		call *node:root.testCvar
@@ -341,6 +380,7 @@ window test_angelscript
 		call *node:root.testNodeMethod
 		call *node:root.testBuggy1
 		call *node:root.testBuggy2
+		call *node:root.testCase
 	}
 
 }

@@ -3,7 +3,6 @@
  * @todo a way to execute functions/events
  * @todo a way to redefine functions/events
  * @todo a way to add/remove listener functions/events
- * @todo add better tests for node casting
  */
 
 /*
