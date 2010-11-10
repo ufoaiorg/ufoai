@@ -3,7 +3,6 @@
  * @todo a way to execute functions/events
  * @todo a way to redefine functions/events
  * @todo a way to add/remove listener functions/events
- * @todo a way to execute node methods with param (optional, but can be useful)
  * @todo add better tests for node casting
  */
 
@@ -261,10 +260,20 @@ static void Node_ExecuteMethod(asIScriptGeneric *gen)
 	uiCallContext_t context;
 	/** @todo fix random number of param */
 	context.paramNumber = 0;
+
 	context.params = NULL;
 	context.source = (uiNode_t*) gen->GetObject();
 	context.useCmdParam = qfalse;
+
+	for (int i = 0; i < gen->GetArgCount(); i++) {
+		std::string *value = static_cast<std::string*>(gen->GetArgObject(i));
+		LIST_AddString(&context.params, value->c_str());
+		context.paramNumber++;
+	}
+
 	func(context.source, &context);
+
+	LIST_Delete(&context.params);
 }
 
 static void Node_Cast(asIScriptGeneric *gen)
@@ -375,9 +384,22 @@ static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_
 				break;
 			case V_UI_NODEMETHOD:
 				{
+					asIScriptFunction *function;
 					r = engine->RegisterObjectMethod(va("%s", name), va("void %s()", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
 					assert( r >= 0 );
-					asIScriptFunction *function = engine->GetFunctionDescriptorById(r);
+					function = engine->GetFunctionDescriptorById(r);
+					function->SetUserData((void*)property->ofs);
+					r = engine->RegisterObjectMethod(va("%s", name), va("void %s(const string& in)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
+					assert( r >= 0 );
+					function = engine->GetFunctionDescriptorById(r);
+					function->SetUserData((void*)property->ofs);
+					r = engine->RegisterObjectMethod(va("%s", name), va("void %s(const string, const string)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
+					assert( r >= 0 );
+					function = engine->GetFunctionDescriptorById(r);
+					function->SetUserData((void*)property->ofs);
+					r = engine->RegisterObjectMethod(va("%s", name), va("void %s(const string& in, const string& in, const string& in)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
+					assert( r >= 0 );
+					function = engine->GetFunctionDescriptorById(r);
 					function->SetUserData((void*)property->ofs);
 				}
 				break;
@@ -404,7 +426,7 @@ static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_
 	assert(r >= 0);
 	r = engine->RegisterObjectMethod(name, va("const string get_name()"), asFUNCTION(Node_GetName), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
-	r = engine->RegisterObjectMethod(name, va("const void get_path(string)"), asFUNCTION(Node_GetPath), asCALL_CDECL_OBJFIRST);
+	r = engine->RegisterObjectMethod(name, va("const string get_path()"), asFUNCTION(Node_GetPath), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
 }
 

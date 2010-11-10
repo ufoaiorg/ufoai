@@ -56,9 +56,6 @@ window test_angelscript
 	string test17 { pos "200 80" string "t17" }
 	string test18 { pos "200 80" string "t18" }
 
-	string test19 { pos "200 80" string "t19" }
-	string test20 { pos "200 80" string "t20" }
-
 	button buttonTest
 	{
 		{
@@ -198,10 +195,12 @@ window test_angelscript
 		}
 	}
 
+	// THIS IS NOT ANGELSCRIPT
 	func testNodeNavigation {
 		call *node:root.buttonTest@onMClick
 	}
 
+	// THIS IS NOT ANGELSCRIPT
 	func testNodeProperties {
 		call *node:root.buttonTest@onRClick
 		cmd "echo <node:root.buttonTest@color> == 0.5 _ _ _"
@@ -209,6 +208,7 @@ window test_angelscript
 		cmd "echo <node:root.buttonTest@bordercolor> == 0 1 0"
 	}
 
+	// THIS IS NOT ANGELSCRIPT
 	func testCvar {
 		*cvar:test_1 = "aaaa"
 		call *node:root.buttonTest@onClick
@@ -225,6 +225,7 @@ window test_angelscript
 		delete *cvar:test_3
 	}
 
+	// THIS IS NOT ANGELSCRIPT
 	func testNodeThis {
 		call *node:root.buttonTest2@onMClick
 	}
@@ -257,6 +258,11 @@ window test_angelscript
 		else test18.color = red;
 	}
 
+	string testNodeMethod0 { pos "200 80" string "method0" }
+	string testNodeMethod1 { pos "200 80" string "method1" }
+	string testNodeMethod2 { pos "200 80" string "method2" }
+	string testNodeMethod3 { pos "200 80" string "method2" }
+
 	checkbox checkTest {
 		{
 			pos "0 0"
@@ -267,26 +273,54 @@ window test_angelscript
 			void onClick() {
 				color red = "1 0 0";
 				color green = "0 1 0";
+
+				// ok it compile
+				node@ test0 = getNode("test_angelscript.testNodeMethod0");
+				test0.color = green;
+
 				cvar@ value = getCvar("test_check");
 
 				thisNode.toggle();
-				node@ test19 = getNode("test_angelscript.test19");
-				if (value.integer == 0) test19.color = green;
-				else test19.color = red;
+				node@ test1 = getNode("test_angelscript.testNodeMethod1");
+				if (value.integer == 0) test1.color = green;
+				else test1.color = red;
 
 				thisNode.toggle();
-				node@ test20 = getNode("test_angelscript.test20");
-				if (value.integer == 1) test20.color = green;
-				else test20.color = red;
+				node@ test2 = getNode("test_angelscript.testNodeMethod2");
+				if (value.integer == 1) test2.color = green;
+				else test2.color = red;
+
+				thisNode.createChild("foo1", "checkbox");
+				node@ foo = getNode(thisNode.path + ".foo1");
+				node@ test3 = getNode("test_angelscript.testNodeMethod3");
+				if (foo != null) test3.color = green;
+				else test3.color = red;
+
+				thisNode.removeAllChild();
 			}
 		}
 	}
 
+	// THIS IS NOT ANGELSCRIPT
 	func testNodeMethod {
 		*cvar:test_check = 1
 		call *node:root.checkTest@onClick
 	}
 
+	string testSet1 { pos "200 80" string "set1" }
+
+	/** there is problem to assign that, i dont know why */
+	func testSetNode angelscript {
+		color green = "0 1 0";
+		node@ foo;
+		foo = thisNode;
+		foo = getNode(thisNode.path);
+		node@ foo2 = getNode(thisNode.path);
+		foo = foo2;
+		getNode(thisNode.path + ".testSet1").color = green;
+	}
+
+	// THIS IS NOT ANGELSCRIPT
 	func onInit {
 		call *node:root.testCvar
 		call *node:root.testNodeProperties
@@ -295,6 +329,7 @@ window test_angelscript
 		call *node:root.testFunc
 		call *node:root.testConFunc
 		call *node:root.testNodeMethod
+		call *node:root.testSetNode
 	}
 
 }

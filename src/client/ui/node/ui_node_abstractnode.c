@@ -858,10 +858,10 @@ static const value_t properties[] = {
 	{"excluderect", V_UI_EXCLUDERECT, 0, 0},
 
 	/* Remove all child from the node (only dynamic allocated nodes). */
-	{"removeallchild", V_UI_NODEMETHOD, ((size_t) UI_AbstractNodeCallRemovaAllChild), 0},
+	{"removeAllChild", V_UI_NODEMETHOD, ((size_t) UI_AbstractNodeCallRemovaAllChild), 0},
 
 	/* Create a new child with name and type. */
-	{"createchild", V_UI_NODEMETHOD, ((size_t) UI_AbstractNodeCallCreateChild), 0},
+	{"createChild", V_UI_NODEMETHOD, ((size_t) UI_AbstractNodeCallCreateChild), 0},
 
 	/* Delete the node and remove it from his parent. */
 	{"delete", V_UI_NODEMETHOD, ((size_t) UI_AbstractNodeCallDelete), 0},
