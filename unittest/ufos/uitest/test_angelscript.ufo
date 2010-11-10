@@ -110,12 +110,6 @@ window test_angelscript
 				node@ test_2 = getNode("test_angelscript.test5");
 				bool b = (test_1 == test_2);
 
-
-				node@ test;
-//				this copy CRASH
-//				node@ test;
-//				test = getNode("test_angelscript.test4");
-
 				node@ test4 = getNode("test_angelscript.test4");
 				node@ window = n.window;
 				if (window.type == "window") test4.color = green;
