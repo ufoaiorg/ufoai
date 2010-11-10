@@ -307,17 +307,27 @@ window test_angelscript
 		call *node:root.checkTest@onClick
 	}
 
-	string testSet1 { pos "200 80" string "set1" }
+	string testWontCompile1 { pos "200 80" string "set1" }
+	string testWontCompile2 { pos "200 80" string "set1" }
 
 	/** there is problem to assign that, i dont know why */
-	func testSetNode angelscript {
+	func testBuggy1 angelscript {
 		color green = "0 1 0";
 		node@ foo;
 		foo = thisNode;
 		foo = getNode(thisNode.path);
 		node@ foo2 = getNode(thisNode.path);
 		foo = foo2;
-		getNode(thisNode.path + ".testSet1").color = green;
+		// ok it compile... or not
+		getNode(thisNode.path + ".testWontCompile").color = green;
+	}
+	/** the same... with simple code */
+	func testBuggy2 angelscript {
+		color green = "0 1 0";
+		node@ foo;
+		foo = thisNode;
+		// ok it compile... or not
+		getNode("test_angelscript.testWontCompile2").color = green;
 	}
 
 	// THIS IS NOT ANGELSCRIPT
@@ -329,7 +339,8 @@ window test_angelscript
 		call *node:root.testFunc
 		call *node:root.testConFunc
 		call *node:root.testNodeMethod
-		call *node:root.testSetNode
+		call *node:root.testBuggy1
+		call *node:root.testBuggy2
 	}
 
 }
