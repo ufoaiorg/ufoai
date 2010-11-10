@@ -76,7 +76,8 @@ void WindowPosition::readPosition() {
 }
 
 void WindowPosition::fitToScreen(float xfraction, float yfraction) {
-	if (_window == NULL) return;
+	if (_window == NULL)
+		return;
 
 	GdkRectangle geom = MultiMonitor::getMonitorForWindow(_window);
 
