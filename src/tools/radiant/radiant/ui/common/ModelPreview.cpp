@@ -122,6 +122,8 @@ namespace ui
 		ModelLoader* loader = ModelLoader_forType(extension);
 		if (loader != NULL) {
 			_model = loader->loadModelFromPath(modelPath);
+			if (_model.get() == NULL)
+				return;
 		} else {
 			return;
 		}
