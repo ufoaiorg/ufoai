@@ -56,6 +56,9 @@ window test_angelscript
 	string test17 { pos "200 80" string "t17" }
 	string test18 { pos "200 80" string "t18" }
 
+	string test19 { pos "200 80" string "t19" }
+	string test20 { pos "200 80" string "t20" }
+
 	button buttonTest
 	{
 		{
@@ -254,6 +257,36 @@ window test_angelscript
 		else test18.color = red;
 	}
 
+	checkbox checkTest {
+		{
+			pos "0 0"
+			size "10 10"
+			current	*cvar:test_check
+		}
+		angelscript {
+			void onClick() {
+				color red = "1 0 0";
+				color green = "0 1 0";
+				cvar@ value = getCvar("test_check");
+
+				thisNode.toggle();
+				node@ test19 = getNode("test_angelscript.test19");
+				if (value.integer == 0) test19.color = green;
+				else test19.color = red;
+
+				thisNode.toggle();
+				node@ test20 = getNode("test_angelscript.test20");
+				if (value.integer == 1) test20.color = green;
+				else test20.color = red;
+			}
+		}
+	}
+
+	func testNodeMethod {
+		*cvar:test_check = 1
+		call *node:root.checkTest@onClick
+	}
+
 	func onInit {
 		call *node:root.testCvar
 		call *node:root.testNodeProperties
@@ -261,6 +294,7 @@ window test_angelscript
 		call *node:root.testNodeThis
 		call *node:root.testFunc
 		call *node:root.testConFunc
+		call *node:root.testNodeMethod
 	}
 
 }

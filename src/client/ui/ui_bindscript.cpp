@@ -1,10 +1,10 @@
 /**
  * @file ui_bindscript.cpp
- * @todo a way to cast nodes by reusing know inheritances
  * @todo a way to execute functions/events
  * @todo a way to redefine functions/events
  * @todo a way to add/remove listener functions/events
- * @todo a way to execute node methods (optional, but can be useful)
+ * @todo a way to execute node methods with param (optional, but can be useful)
+ * @todo add better tests for node casting
  */
 
 /*
@@ -70,9 +70,11 @@ extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
 	if( r < 0 ) return;
 
 	if (node->behaviour->isFunction) {
-		script = va("%s@ thisnode;\nvoid f() {\n%s\n}", UI_GetScriptTypeFromBehaviour(node->behaviour), script);
+		const char * castName = UI_GetScriptTypeFromBehaviour(node->parent->behaviour);
+		script = va("%s@ get_thisNode() { return cast<%s>(__ui_thisNode); }\nvoid f() {\n%s\n}", castName, castName, script);
 	} else {
-		script = va("%s@ thisnode;\n%s", UI_GetScriptTypeFromBehaviour(node->behaviour), script);
+		const char * castName = UI_GetScriptTypeFromBehaviour(node->behaviour);
+		script = va("%s@ get_thisNode() { return cast<%s>(__ui_thisNode); }\n%s", castName, castName, script);
 	}
 	r = builder.AddSectionFromMemory(script);
 	if( r < 0 ) return;
@@ -83,8 +85,9 @@ extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
 		return;
 	}
 
-	Com_Printf("UI_ParseActionScript: Script successfully built\n");
 	asIScriptModule *module = engine->GetModule(UI_GetPath(node));
+
+	Com_Printf("UI_ParseActionScript: Script successfully built\n");
 
 	/* link all node event to relative scripts */
 	const uiBehaviour_t *behaviour = node->behaviour;
@@ -126,11 +129,13 @@ extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
 	}
 }
 
+/**
+ * @todo fix thisNode to allow recursivity calls
+ */
 extern "C" void UI_ExecuteScriptAction (const uiAction_t *action, uiCallContext_t *context)
 {
 	uiNode_t *oldNode = thisNode;
 	int r;
-	asIScriptFunction *function = (asIScriptFunction*) action->d.terminal.d1.data;
 
 	asIScriptContext *ctx = engine->CreateContext();
 	if (ctx == NULL) {
@@ -138,6 +143,7 @@ extern "C" void UI_ExecuteScriptAction (const uiAction_t *action, uiCallContext_
 		return;
 	}
 
+	asIScriptFunction *function = (asIScriptFunction*) action->d.terminal.d1.data;
 	r = ctx->Prepare(function->GetId());
 	if (r < 0) {
 		Com_Printf("Failed to prepare the context.\n");
@@ -159,13 +165,7 @@ extern "C" void UI_ExecuteScriptAction (const uiAction_t *action, uiCallContext_
 			Com_Printf("The script was aborted before it could finish. Probably it timed out.\n");
 		} else if (r == asEXECUTION_EXCEPTION) {
 			Com_Printf("The script ended with an exception.\n");
-
-			// Write some information about the script exception
-			/*
-			cout << "func: " << function->GetDeclaration() << endl;
-			cout << "modl: " << function->GetModuleName() << endl;
-			cout << "sect: " << function->GetScriptSectionName() << endl;
-			 */
+			Com_Printf("func: %s ; %s ; %s\n", function->GetDeclaration(), function->GetModuleName(), function->GetScriptSectionName());
 			Com_Printf("Description: %s (line: %i)\n", ctx->GetExceptionString(), ctx->GetExceptionLineNumber());
 		} else {
 			Com_Printf("The script ended for some unforeseen reason (%i)\n", r);
@@ -231,38 +231,53 @@ static uiNode_t *Node_GetParent(uiNode_t *node) {
 static uiNode_t *Node_GetFirstChild(uiNode_t *node) {
 	return node->firstChild;
 }
-static uiNode_t *Node_GetNext(uiNode_t *node) {
+static uiNode_t *Node_GetNext(uiNode_t *node)
+{
 	return node->next;
 }
-static uiNode_t *Node_GetWindow(uiNode_t *node) {
+static uiNode_t *Node_GetWindow(uiNode_t *node)
+{
 	return node->root;
 }
 
-static void Node_OpAssignGeneric(asIScriptGeneric *gen) {
+static void Node_OpAssignGeneric(asIScriptGeneric *gen)
+{
 	uiNode_t ** a = static_cast<uiNode_t **>(gen->GetArgObject(0));
 	uiNode_t ** self = static_cast<uiNode_t **>(gen->GetObject());
 	*self = *a;
 	gen->SetReturnAddress(self);
 }
 
-static void Node_OpEqualsGeneric(asIScriptGeneric * gen) {
+static void Node_OpEqualsGeneric(asIScriptGeneric * gen)
+{
 	uiNode_t *a = static_cast<uiNode_t*>(gen->GetObject());
 	uiNode_t **b = static_cast<uiNode_t**>(gen->GetArgAddress(0));
 	*(bool*)gen->GetAddressOfReturnLocation() = (a == *b);
 }
 
-template<uiBehaviour_t *NEW>
-uiNode_t *Node_Cast(uiNode_t* a)
+static void Node_ExecuteMethod(asIScriptGeneric *gen)
 {
-	if (!a)
-		return NULL;
+	uiNodeMethod_t func = (uiNodeMethod_t) gen->GetFunctionUserData();
+	uiCallContext_t context;
+	/** @todo fix random number of param */
+	context.paramNumber = 0;
+	context.params = NULL;
+	context.source = (uiNode_t*) gen->GetObject();
+	context.useCmdParam = qfalse;
+	func(context.source, &context);
+}
 
-	if (!UI_NodeInstanceOfPointer(a, NEW))
-		return NULL;
+static void Node_Cast(asIScriptGeneric *gen)
+{
+	uiBehaviour_t* behaviour = (uiBehaviour_t*) gen->GetFunctionUserData();
+	uiNode_t *node = (uiNode_t*) gen->GetObject();
 
-	/** @todo Here we must count another AddRef */
+	if (!node || !UI_NodeInstanceOfPointer(node, behaviour)) {
+		gen->SetReturnAddress(NULL);
+		return;
+	}
 
-	return a;
+	gen->SetReturnAddress(node);
 }
 
 
@@ -293,6 +308,7 @@ static vec4_t &AssignStringToColor(vec4_t &color, const std::string &s)
 
 static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_t *localBehaviour)
 {
+	static char alreadyChecked[1024] = "|";
 	char name[64] = "";
 	int r;
 
@@ -306,9 +322,12 @@ static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_
 		return;
 	strncpy(name, tmpName, sizeof(name));
 
-	/** @todo remove it, it create warnings on logs */
-	if (engine->GetTypeIdByDecl(name) != asINVALID_TYPE)
+	/* check if we already compute the behaviour */
+	/** @todo speed up that shit, it is a very bad way to do it */
+	if (strstr(alreadyChecked, va("|%s|", name)) != NULL)
 		return;
+	strcat(alreadyChecked, name);
+	strcat(alreadyChecked, "|");
 
 	r = engine->RegisterObjectType(name, 0, asOBJ_REF);
 	assert(r >= 0);
@@ -320,16 +339,23 @@ static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_
 	for (const uiBehaviour_t *behaviour = localBehaviour; behaviour != NULL; behaviour = behaviour->super) {
 
 		if (localBehaviour != behaviour) {
-/*			const char* superName = UI_GetScriptTypeFromBehaviour(behaviour);
-			r = engine->RegisterObjectBehaviour(name, asBEHAVE_IMPLICIT_REF_CAST, va("%s@ f()", superName), asFUNCTION((Node_Cast<behaviour>)), asCALL_CDECL_OBJLAST);
+			asIScriptFunction *function;
+
+			const char* superName = UI_GetScriptTypeFromBehaviour(behaviour);
+			r = engine->RegisterObjectBehaviour(name, asBEHAVE_IMPLICIT_REF_CAST, va("%s@ f()", superName), asFUNCTION((Node_Cast)), asCALL_GENERIC);
 			assert(r >= 0);
-			r = engine->RegisterObjectBehaviour(superName, asBEHAVE_REF_CAST, va("%s@ f()", name), asFUNCTION((Node_Cast<localBehaviour>)), asCALL_CDECL_OBJLAST);
+			function = engine->GetFunctionDescriptorById(r);
+			function->SetUserData((void*)behaviour);
+
+			r = engine->RegisterObjectBehaviour(superName, asBEHAVE_REF_CAST, va("%s@ f()", name), asFUNCTION((Node_Cast)), asCALL_GENERIC);
 			assert(r >= 0);
-*/		}
+			function = engine->GetFunctionDescriptorById(r);
+			function->SetUserData((void*)localBehaviour);
+		}
 
 		const value_t *property = behaviour->properties;
 		while (property && property->string != NULL) {
-			switch (property->type) {
+			switch ((int)property->type) {
 			case V_BOOL:
 				/** @todo anbiguous, out bool type is bigger than 8bits; maybe we can't use prop here */
 				r = engine->RegisterObjectProperty(name, va("bool %s", property->string), property->ofs);
@@ -341,12 +367,19 @@ static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_
 				break;
 			case V_FLOAT:
 				r = engine->RegisterObjectProperty(name, va("float %s", property->string), property->ofs);
-				Com_Printf("--> %s", property->string);
 				assert( r >= 0 );
 				break;
 			case V_COLOR:
 				r = engine->RegisterObjectProperty(name, va("color %s", property->string), property->ofs);
 				assert( r >= 0 );
+				break;
+			case V_UI_NODEMETHOD:
+				{
+					r = engine->RegisterObjectMethod(va("%s", name), va("void %s()", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
+					assert( r >= 0 );
+					asIScriptFunction *function = engine->GetFunctionDescriptorById(r);
+					function->SetUserData((void*)property->ofs);
+				}
 				break;
 			default:
 				break;
@@ -354,6 +387,25 @@ static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_
 			property++;
 		}
 	}
+
+	r = engine->RegisterObjectMethod(name, va("%s@ &opAssign(const %s@ &in)", name, name), asFUNCTION(Node_OpAssignGeneric), asCALL_GENERIC);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod(name, va("bool opEquals(const %s@ &in) const", name), asFUNCTION(Node_OpEqualsGeneric), asCALL_GENERIC);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod(name, va("%s@ get_firstChild()", name), asFUNCTION(Node_GetFirstChild), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod(name, va("%s@ get_next()", name), asFUNCTION(Node_GetNext), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod(name, va("%s@ get_parent()", name), asFUNCTION(Node_GetParent), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod(name, va("%s@ get_window()", name), asFUNCTION(Node_GetWindow), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod(name, va("const string get_type()"), asFUNCTION(Node_GetType), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod(name, va("const string get_name()"), asFUNCTION(Node_GetName), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod(name, va("const void get_path(string)"), asFUNCTION(Node_GetPath), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
 }
 
 extern "C" void UI_InitBindScript (void)
@@ -385,25 +437,7 @@ extern "C" void UI_InitBindScript (void)
 		UI_RegisterNodeBehaviour(engine, behaviour);
 	}
 
-	r = engine->RegisterObjectMethod("node", "node@ &opAssign(const node@ &in)", asFUNCTION(Node_OpAssignGeneric), asCALL_GENERIC);
-	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "bool opEquals(const node@ &in) const", asFUNCTION(Node_OpEqualsGeneric), asCALL_GENERIC);
-	assert(r >= 0);
 	r = engine->RegisterGlobalFunction("node@ getNode(string)", asFUNCTION(Node_GetNode), asCALL_CDECL);
-	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "node@ get_firstChild()", asFUNCTION(Node_GetFirstChild), asCALL_CDECL_OBJFIRST);
-	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "node@ get_next()", asFUNCTION(Node_GetNext), asCALL_CDECL_OBJFIRST);
-	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "node@ get_parent()", asFUNCTION(Node_GetParent), asCALL_CDECL_OBJFIRST);
-	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "node@ get_window()", asFUNCTION(Node_GetWindow), asCALL_CDECL_OBJFIRST);
-	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "const string get_type()", asFUNCTION(Node_GetType), asCALL_CDECL_OBJFIRST);
-	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "const string get_name()", asFUNCTION(Node_GetName), asCALL_CDECL_OBJFIRST);
-	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "const void get_path(string)", asFUNCTION(Node_GetPath), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
 
 	/* CVAR */
@@ -430,7 +464,7 @@ extern "C" void UI_InitBindScript (void)
 	r = engine->RegisterObjectMethod("cvar", "void set_number(float)", asFUNCTION(CvarRef_SetNumber), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
 
-	r = engine->RegisterGlobalProperty("node@ thisNode", &thisNode);
+	r = engine->RegisterGlobalProperty("node@ __ui_thisNode", &thisNode);
 	assert( r >= 0 );
 }
 
