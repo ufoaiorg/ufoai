@@ -728,7 +728,7 @@ class ProximalVertex
 };
 
 typedef Array<SListNode> ProximalVertexArray;
-std::size_t ProximalVertexArray_index (const ProximalVertexArray& array, const ProximalVertex& vertex)
+inline std::size_t ProximalVertexArray_index (const ProximalVertexArray& array, const ProximalVertex& vertex)
 {
 	return vertex.m_vertices - array.data();
 }
