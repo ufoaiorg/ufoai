@@ -3259,9 +3259,9 @@ void AIR_Shutdown (void)
 {
 	aircraft_t *craft;
 
-	craft = NULL;
-	while ((craft = AIR_GetNext(craft)))
+	AIR_Foreach(craft) {
 		AIR_ResetAircraftTeam(craft);
+	}
 	LIST_Delete(&ccs.aircraft);
 
 	AIR_ShutdownCallbacks();
