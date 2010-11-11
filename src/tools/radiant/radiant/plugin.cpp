@@ -63,6 +63,7 @@
 #include "ioverlay.h"
 #include "iuimanager.h"
 #include "iparticles.h"
+#include "imapcompiler.h"
 
 #include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
@@ -166,7 +167,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalGridModuleRef,
 		public GlobalOverlayModuleRef,
 		public GlobalSelectionSetManagerModuleRef,
-		public GlobalParticleModuleRef
+		public GlobalParticleModuleRef,
+		public GlobalMapCompilerModuleRef
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;

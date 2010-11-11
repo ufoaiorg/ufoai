@@ -50,6 +50,7 @@
 #include "ishadersystem.h"
 #include "iuimanager.h"
 #include "igl.h"
+#include "imapcompiler.h"
 #include "ieventmanager.h"
 #include "iselectionset.h"
 #include "moduleobservers.h"
@@ -87,7 +88,7 @@
 #include "brushexport/BrushExportOBJ.h"
 #include "ui/about/AboutDialog.h"
 #include "dialogs/findbrush.h"
-#include "ui/maptools/maptools.h"
+#include "ui/maptools/ErrorCheckDialog.h"
 #include "pathfinding.h"
 #include "gtkmisc.h"
 #include "map/map.h"
@@ -287,15 +288,6 @@ void setEnginePath (const std::string& path)
 	}
 }
 
-// Compiler Path
-
-std::string g_strCompilerBinaryWithPath("");
-
-const std::string& CompilerBinaryWithPath_get (void)
-{
-	return g_strCompilerBinaryWithPath;
-}
-
 // App Path
 
 const std::string AppPath_get (void)
@@ -318,7 +310,6 @@ void Paths_constructPreferences (PrefPage* page)
 {
 	page->appendPathEntry(_("Engine Path"), true, StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
 			StringExportCallback(StringExportCaller(g_strEnginePath)));
-	page->appendPathEntry(_("Compiler Binary"), g_strCompilerBinaryWithPath, false);
 }
 void Paths_constructPage (PreferenceGroup& group)
 {
@@ -1668,6 +1659,36 @@ void EditColourScheme() {
 #include "preferencesystem.h"
 #include "stringio.h"
 
+class NullMapCompilerObserver : public ICompilerObserver {
+	void notify (const std::string &message) {
+	}
+};
+
+void ToolsCompile () {
+	const std::string mapName = GlobalRadiant().getMapName();
+	NullMapCompilerObserver observer;
+	GlobalMapCompiler().compileMap(mapName, observer);
+}
+
+void ToolsCheckErrors () {
+	if (!ConfirmModified(_("Check Map")))
+		return;
+
+	/* empty map? */
+	if (!g_brushCount.get()) {
+		gtkutil::errorDialog(_("Nothing to fix in this map\n"));
+		return;
+	}
+
+	ui::ErrorCheckDialog dialog;
+}
+
+void ToolsGenerateMaterials () {
+	const std::string mapName = GlobalRadiant().getMapName();
+	NullMapCompilerObserver observer;
+	GlobalMapCompiler().generateMaterial(mapName, observer);
+}
+
 void MainFrame_Construct (void)
 {
 	// Tell the FilterSystem to register its commands
@@ -1809,17 +1830,8 @@ void MainFrame_Construct (void)
 	g_strEnginePath = path.toString();
 #endif
 
-#ifdef BINDIR
-	StringOutputStream ufo2mapPath(256);
-	ufo2mapPath << DirectoryCleaned(BINDIR) << "ufo2map";
-	g_strCompilerBinaryWithPath = ufo2mapPath.toString();
-#endif
-
 	GlobalPreferenceSystem().registerPreference("EnginePath", StringImportStringCaller(g_strEnginePath),
 			StringExportStringCaller(g_strEnginePath));
-	GlobalPreferenceSystem().registerPreference("CompilerBinary",
-			StringImportStringCaller(g_strCompilerBinaryWithPath),
-			StringExportStringCaller(g_strCompilerBinaryWithPath));
 
 	g_Layout_viewStyle.useLatched();
 

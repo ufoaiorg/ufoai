@@ -86,6 +86,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/map/parse.cpp \
 	$(RADIANT_BASE)/radiant/map/write.cpp \
 	$(RADIANT_BASE)/radiant/map/AutoSaver.cpp \
+	$(RADIANT_BASE)/radiant/map/MapCompiler.cpp \
 	$(RADIANT_BASE)/radiant/map/map.cpp \
 	$(RADIANT_BASE)/radiant/map/MapFileChooserPreview.cpp \
 	$(RADIANT_BASE)/radiant/map/mapmodule.cpp \
@@ -160,7 +161,7 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
 	\
-	$(RADIANT_BASE)/radiant/ui/maptools/maptools.cpp \
+	$(RADIANT_BASE)/radiant/ui/maptools/ErrorCheckDialog.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/about/AboutDialog.cpp \
 	\

@@ -552,6 +552,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\AutoSaver.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\AutoSaver.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\map\MapCompiler.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\MapFileChooserPreview.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\MapFileChooserPreview.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\map.cpp" />
@@ -770,8 +771,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findshader\FindShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\maptools.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\maptools.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\ErrorCheckDialog.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\ErrorCheckDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\materialeditor\MaterialEditor.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\materialeditor\MaterialEditor.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\menu\FiltersMenu.cpp" />
