@@ -937,7 +937,7 @@ static int I_GetUsedSlots (inventoryInterface_t* self)
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t* csi, const inventoryImport_t *import)
+void INV_InitInventory (const char *name, inventoryInterface_t *interface, const csi_t* csi, const inventoryImport_t *import)
 {
 	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 

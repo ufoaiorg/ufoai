@@ -20,7 +20,7 @@ typedef struct inventoryInterface_s
 
 	item_t cacheItem;
 
-	csi_t* csi;
+	const csi_t* csi;
 
 	const char *name;
 
@@ -48,7 +48,7 @@ typedef struct inventoryInterface_s
 	int (*GetUsedSlots) (struct inventoryInterface_s* self);
 } inventoryInterface_t;
 
-void INV_InitInventory(const char *name, inventoryInterface_t *ii, csi_t* csi, const inventoryImport_t *iimport);
+void INV_InitInventory(const char *name, inventoryInterface_t *ii, const csi_t* csi, const inventoryImport_t *iimport);
 void INV_DestroyInventory(inventoryInterface_t *ii);
 
 #endif /* INVENTORY_H_ */
