@@ -681,8 +681,7 @@ static void LET_Projectile (le_t * le)
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
 		if (le->ref2 && le->ref2[0] != '\0') {
-			s_sample_t *sample = S_LoadSample(le->ref2);
-			S_PlaySample(impact, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
+			S_LoadAndPlaySample(le->ref2, impact, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 		}
 		if (le->ref3) {
 			/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
@@ -741,8 +740,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 			const float *dir = bytedirs[le->dir];
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
-					s_sample_t *sample = S_LoadSample(fd->hitBodySound);
-					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
+					S_LoadAndPlaySample(fd->hitBodySound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, dir, NULL);
@@ -757,8 +755,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 				}
 			} else {
 				if (fd->impactSound[0]) {
-					s_sample_t *sample = S_LoadSample(fd->impactSound);
-					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
+					S_LoadAndPlaySample(fd->impactSound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, dir, NULL);

@@ -61,7 +61,6 @@ void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* start the sound */
 	if (fd->fireSound[0] && !(flags & SF_BOUNCED)) {
-		s_sample_t *sample = S_LoadSample(fd->fireSound);
-		S_PlaySample(muzzle, sample, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT);
+		S_LoadAndPlaySample(fd->fireSound, muzzle, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT);
 	}
 }
