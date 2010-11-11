@@ -87,7 +87,7 @@
 #include "ui/findshader/FindShader.h"
 #include "brushexport/BrushExportOBJ.h"
 #include "ui/about/AboutDialog.h"
-#include "dialogs/findbrush.h"
+#include "ui/findbrush/findbrush.h"
 #include "ui/maptools/ErrorCheckDialog.h"
 #include "pathfinding.h"
 #include "gtkmisc.h"

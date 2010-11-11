@@ -504,8 +504,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\Clipper.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\eclass.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\eclass_def.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity.cpp" />
@@ -768,6 +766,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UFOScriptDefinitionView.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UMPDefinitionView.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UMPDefinitionView.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\findbrush\findbrush.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\findbrush\findbrush.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findshader\FindShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.h" />

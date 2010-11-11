@@ -159,7 +159,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/particles/ParticleParser.cpp \
 	$(RADIANT_BASE)/radiant/particles/ParticleSystem.cpp \
 	\
-	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
+	$(RADIANT_BASE)/radiant/ui/findbrush/findbrush.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/maptools/ErrorCheckDialog.cpp \
 	\
