@@ -4,107 +4,124 @@
  */
 
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
+#include "findbrush.h"
 #include "radiant_i18n.h"
-#include "iscenegraph.h"
 #include "iradiant.h"
-#include "scenelib.h"
-#include "gtkutil/dialog.h"
-#include "gtkutil/widget.h"
-#include <gdk/gdkkeysyms.h>
+#include "ieventmanager.h"
+
+#include "gtkutil/LeftAlignedLabel.h"
+#include "gtkutil/LeftAlignment.h"
+#include "string/string.h"
+
 #include "../../map/map.h"
 
-void FindBrushOrEntity (void)
+namespace ui {
+
+namespace {
+const int FINDDLG_DEFAULT_SIZE_X = 350;
+const int FINDDLG_DEFAULT_SIZE_Y = 100;
+}
+
+FindBrushDialog::FindBrushDialog () :
+	gtkutil::BlockingTransientWindow(_("Find Brush"), GlobalRadiant().getMainWindow())
 {
-	ModalDialog dialog;
-	GtkEntry* entity;
-	GtkEntry* brush;
+	gtk_window_set_default_size(GTK_WINDOW(getWindow()), FINDDLG_DEFAULT_SIZE_X, FINDDLG_DEFAULT_SIZE_Y);
+	gtk_container_set_border_width(GTK_CONTAINER(getWindow()), 12);
+	gtk_window_set_type_hint(GTK_WINDOW(getWindow()), GDK_WINDOW_TYPE_HINT_DIALOG);
 
-	GtkWindow* window = create_dialog_window(GlobalRadiant().getMainWindow(), _("Find Brush"), G_CALLBACK(dialog_delete_callback), &dialog);
+	// Create all the widgets
+	populateWindow();
 
-	GtkAccelGroup* accel = gtk_accel_group_new();
-	gtk_window_add_accel_group(window, accel);
+	// Propagate shortcuts to the main window
+	GlobalEventManager().connectDialogWindow(GTK_WINDOW(getWindow()));
 
-	{
-		GtkVBox* vbox = create_dialog_vbox(4, 4);
-		gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(vbox));
-		{
-			GtkTable* table = create_dialog_table(2, 2, 4, 4);
-			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(table), TRUE, TRUE, 0);
-			{
-				GtkWidget* label = gtk_label_new(_("Entity number"));
-				gtk_widget_show (label);
-				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-								(GtkAttachOptions) (0),
-								(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkWidget* label = gtk_label_new(_("Brush number"));
-				gtk_widget_show (label);
-				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-								(GtkAttachOptions) (0),
-								(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1,
-								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_grab_focus(GTK_WIDGET(entry));
-				entity = entry;
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2,
-								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
+	// Show the window and its children
+	show();
+}
 
-				brush = entry;
-			}
-		}
-		{
-			GtkHBox* hbox = create_dialog_hbox(4);
-			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), TRUE, TRUE, 0);
-			{
-				GtkButton* button = create_dialog_button(_("Find"), G_CALLBACK(dialog_button_ok), &dialog);
-				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-				widget_make_default(GTK_WIDGET(button));
-				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType)0, (GtkAccelFlags)0);
-			}
-			{
-				GtkButton* button = create_dialog_button(_("Close"), G_CALLBACK(dialog_button_cancel), &dialog);
-				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType)0, (GtkAccelFlags)0);
-			}
-		}
-	}
+FindBrushDialog::~FindBrushDialog ()
+{
+	// Propagate shortcuts to the main window
+	GlobalEventManager().disconnectDialogWindow(GTK_WINDOW(getWindow()));
+}
 
-	if (modal_dialog_show(window, dialog) == eIDOK) {
-		const char *entstr = gtk_entry_get_text(entity);
-		const char *brushstr = gtk_entry_get_text(brush);
-		SelectBrush(atoi(entstr), atoi(brushstr), true);
-	}
+void FindBrushDialog::populateWindow() {
+	GtkWidget* dialogVBox = gtk_vbox_new(FALSE, 6);
+	gtk_container_add(GTK_CONTAINER(getWindow()), dialogVBox);
 
-	gtk_widget_destroy(GTK_WIDGET(window));
+	GtkWidget* findHBox = gtk_hbox_new(FALSE, 0);
+	GtkWidget* replaceHBox = gtk_hbox_new(FALSE, 0);
+
+	// Pack these hboxes into an alignment so that they are indented
+	GtkWidget* alignment = gtkutil::LeftAlignment(GTK_WIDGET(findHBox), 18, 1.0);
+	GtkWidget* alignment2 = gtkutil::LeftAlignment(GTK_WIDGET(replaceHBox), 18, 1.0);
+
+	gtk_box_pack_start(GTK_BOX(dialogVBox), GTK_WIDGET(alignment), TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(dialogVBox), GTK_WIDGET(alignment2), TRUE, TRUE, 0);
+
+	// Create the labels and pack them in the hbox
+	GtkWidget* entityLabel = gtkutil::LeftAlignedLabel(_("Entity number"));
+	GtkWidget* brushLabel = gtkutil::LeftAlignedLabel(_("Brush number"));
+	gtk_widget_set_size_request(entityLabel, 140, -1);
+	gtk_widget_set_size_request(brushLabel, 140, -1);
+
+	gtk_box_pack_start(GTK_BOX(findHBox), entityLabel, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(replaceHBox), brushLabel, FALSE, FALSE, 0);
+
+	_entityEntry = gtk_entry_new();
+	_brushEntry = gtk_entry_new();
+
+	gtk_box_pack_start(GTK_BOX(findHBox), _entityEntry, TRUE, TRUE, 6);
+	gtk_box_pack_start(GTK_BOX(replaceHBox), _brushEntry, TRUE, TRUE, 6);
+
+	// Finally, add the buttons
+	gtk_box_pack_start(GTK_BOX(dialogVBox), createButtons(), FALSE, FALSE, 0);
+}
+
+GtkWidget* FindBrushDialog::createButtons() {
+	GtkWidget* hbox = gtk_hbox_new(FALSE, 6);
+
+	GtkWidget* findButton = gtk_button_new_from_stock(GTK_STOCK_FIND);
+	GtkWidget* closeButton = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+
+	g_signal_connect(G_OBJECT(findButton), "clicked", G_CALLBACK(onFind), this);
+	g_signal_connect(G_OBJECT(closeButton), "clicked", G_CALLBACK(onClose), this);
+
+	gtk_box_pack_end(GTK_BOX(hbox), closeButton, FALSE, FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(hbox), findButton, FALSE, FALSE, 0);
+
+	return hbox;
+}
+
+void FindBrushDialog::onFind(GtkWidget* widget, FindBrushDialog* self) {
+	int entityNum = string::toInt(gtk_entry_get_text(GTK_ENTRY(self->_entityEntry)));
+	int brushNum = string::toInt(gtk_entry_get_text(GTK_ENTRY(self->_brushEntry)));
+	SelectBrush(entityNum, brushNum, true);
+}
+
+void FindBrushDialog::onClose(GtkWidget* widget, FindBrushDialog* self) {
+	// Call the DialogWindow::destroy method and remove self from heap
+	self->destroy();
+}
+
 }

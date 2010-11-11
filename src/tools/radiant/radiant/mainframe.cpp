@@ -1689,6 +1689,10 @@ void ToolsGenerateMaterials () {
 	GlobalMapCompiler().generateMaterial(mapName, observer);
 }
 
+void FindBrushOrEntity() {
+	new ui::FindBrushDialog;
+}
+
 void MainFrame_Construct (void)
 {
 	// Tell the FilterSystem to register its commands
