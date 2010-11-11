@@ -151,19 +151,19 @@ vec_t Q_rint (const vec_t in)
  * starting at earth's center and ending at pos1 or pos2. (if you prefer distance,
  * this is also the distance on a globe of radius 180 / pi = 57)
  */
-float GetDistanceOnGlobe (const vec2_t pos1, const vec2_t pos2)
+double GetDistanceOnGlobe (const vec2_t pos1, const vec2_t pos2)
 {
 	/* convert into rad */
-	const float latitude1 = pos1[1] * torad;
-	const float latitude2 = pos2[1] * torad;
-	const float deltaLongitude = (pos1[0] - pos2[0]) * torad;
-	float distance;
+	const double latitude1 = pos1[1] * torad;
+	const double latitude2 = pos2[1] * torad;
+	const double deltaLongitude = (pos1[0] - pos2[0]) * torad;
+	double distance;
 
 	distance = cos(latitude1) * cos(latitude2) * cos(deltaLongitude) + sin(latitude1) * sin(latitude2);
 	distance = min(max(-1, distance), 1);
 	distance = acos(distance) * todeg;
 
-	assert(distance >= 0.0f);
+	assert(distance >= 0.0);
 	return distance;
 }
 

@@ -204,7 +204,7 @@ void VectorInverse(vec3_t v);
 void VectorMidpoint(const vec3_t point1, const vec3_t point2, vec3_t midpoint);
 int Q_log2(int val);
 
-float GetDistanceOnGlobe(const vec2_t pos1, const vec2_t pos2);
+double GetDistanceOnGlobe(const vec2_t pos1, const vec2_t pos2);
 
 void VectorCenterFromMinsMaxs(const vec3_t mins, const vec3_t maxs, vec3_t center);
 void VectorCalcMinsMaxs(const vec3_t center, const vec3_t size, vec3_t mins, vec3_t maxs);
