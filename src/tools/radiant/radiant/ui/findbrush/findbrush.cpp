@@ -33,64 +33,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <gdk/gdkkeysyms.h>
 #include "../../map/map.h"
 
-class BrushFindIndexWalker : public scene::Graph::Walker {
-	mutable const scene::Node* m_node;
-	std::size_t& m_count;
-public:
-	BrushFindIndexWalker(const scene::Node& node, std::size_t& count)
-			: m_node(&node), m_count(count) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (Node_isPrimitive(path.top())) {
-			if (m_node == path.top().get_pointer()) {
-				m_node = 0;
-			}
-			if (m_node) {
-				++m_count;
-			}
-		}
-		return true;
-	}
-};
-
-class EntityFindIndexWalker : public scene::Graph::Walker {
-	mutable const scene::Node* m_node;
-	std::size_t& m_count;
-public:
-	EntityFindIndexWalker(const scene::Node& node, std::size_t& count)
-			: m_node(&node), m_count(count) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (Node_isEntity(path.top())) {
-			if (m_node == path.top().get_pointer()) {
-				m_node = 0;
-			}
-			if (m_node) {
-				++m_count;
-			}
-		}
-		return true;
-	}
-};
-
-/**
- * @brief Get the brush and ent number of the last selected world item
- * @param[out] ent The amount of entities
- * @param[out] brush The amount of brushes
- */
-static void GetSelectionIndex (int *ent, int *brush) {
-	std::size_t count_brush = 0;
-	std::size_t count_entity = 0;
-	if (GlobalSelectionSystem().countSelected() != 0) {
-		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
-
-		GlobalSceneGraph().traverse(BrushFindIndexWalker(path.top(), count_brush));
-		GlobalSceneGraph().traverse(EntityFindIndexWalker(path.parent(), count_entity));
-	}
-	*brush = int(count_brush);
-	*ent = int(count_entity);
-}
-
 void FindBrushOrEntity (void)
 {
 	ModalDialog dialog;
@@ -157,16 +99,6 @@ void FindBrushOrEntity (void)
 			}
 		}
 	}
-
-	// Initialize dialog
-	char buf[16];
-	int ent, br;
-
-	GetSelectionIndex(&ent, &br);
-	sprintf(buf, "%i", ent);
-	gtk_entry_set_text(entity, buf);
-	sprintf(buf, "%i", br);
-	gtk_entry_set_text(brush, buf);
 
 	if (modal_dialog_show(window, dialog) == eIDOK) {
 		const char *entstr = gtk_entry_get_text(entity);
