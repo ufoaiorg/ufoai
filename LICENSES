@@ -6870,9 +6870,9 @@ contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.
 contrib/licenses/resources/grid.png | Public Domain
 contrib/scripts/compile_po.bat |  | Kostia "Kildor" Romanov
 contrib/scripts/update_potfiles_in.bat |  | Kostia "Kildor" Romanov
-radiant/bitmaps/grid_window.png |  GNU General Public License 2.0 or later | Nate Wright
-radiant/bitmaps/particle_map.png |  GNU General Public License 2.0 or later | Nate Wright
-radiant/bitmaps/particle_weapon.png |  GNU General Public License 2.0 or later | Nate Wright
+radiant/bitmaps/grid_window.png | GNU General Public License 2.0 or later | Nate Wright
+radiant/bitmaps/particle_map.png | GNU General Public License 2.0 or later | Nate Wright
+radiant/bitmaps/particle_weapon.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/texwindow_uniformsize.png |  | orbweaver (commiter in darkradiant repository) | http://darkradiant.svn.sourceforge.net/viewvc/darkradiant/trunk/darkradiant/install/bitmaps/texwindow_uniformsize.png?view=markup&pathrev=309
 radiant/prefabs/dropships/drop_firebird.map | GNU General Public License 2.0
 radiant/prefabs/household/bookshelf.jpg | GNU General Public License 2.0 | Nate Wright
