@@ -30,7 +30,7 @@
 #include "signal/isignal.h"
 #include "shaderlib.h"
 
-#include "sidebar/sidebar.h"
+#include "sidebar/texturebrowser.h"
 
 template<typename StringList>
 class EntryCompletion
