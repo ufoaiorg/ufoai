@@ -18,6 +18,9 @@
 
  */
 
+#ifndef WILDCARDMATCHER_H_
+#define WILDCARDMATCHER_H_
+
 #include <string>
 
 class WildcardMatcher
@@ -204,3 +207,5 @@ class WildcardMatcher
 			return matcher.matches();
 		}
 };
+
+#endif
