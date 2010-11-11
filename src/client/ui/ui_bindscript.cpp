@@ -245,24 +245,31 @@ typedef struct {
 	uiAction_t** actions;
 } uiEventHolder_t;
 
+static int eventTypeId;
+
 static void Node_GetEvent (asIScriptGeneric *gen)
 {
 	const int offset = (uintptr_t) gen->GetFunctionUserData();
-	uiEventHolder_t *holder = new uiEventHolder_t;
+	uiEventHolder_t *holder = (uiEventHolder_t*) engine->CreateScriptObject(eventTypeId);
 	holder->sanity = "uiEventHolder_t";
 	holder->node = static_cast<uiNode_t*>(gen->GetObject());
 	holder->actions = (uiAction_t **) ((uintptr_t)holder->node + offset);
 	gen->SetReturnAddress(holder);
 }
 
-static uiEventHolder_t* Event_Construct (void)
+static void Event_Construct (uiEventHolder_t* memory)
 {
-	return new uiEventHolder_t;
+	memset(memory, 0, sizeof(uiEventHolder_t));
+#if 0
+	memory = new uiEventHolder_t;
+#endif
 }
 
-static void Event_Destroy (uiEventHolder_t*holder)
+static void Event_Destroy (uiEventHolder_t* memory)
 {
-	delete holder;
+#if 0
+	delete memory;
+#endif
 }
 
 #if 0
@@ -531,6 +538,8 @@ extern "C" void UI_InitBindScript (void)
 
 	r = engine->RegisterObjectType("event", sizeof(uiEventHolder_t), asOBJ_VALUE);
 	assert(r >= 0);
+	eventTypeId = engine->GetTypeIdByDecl("event");
+
 #if 0
 	r = engine->RegisterObjectBehaviour("event", asBEHAVE_ADDREF, "void f()", asFUNCTION(Event_AddRef), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
