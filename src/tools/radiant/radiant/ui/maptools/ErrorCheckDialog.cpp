@@ -58,6 +58,11 @@ ErrorCheckDialog::~ErrorCheckDialog ()
 	GlobalEventManager().disconnectDialogWindow(GTK_WINDOW(getWindow()));
 }
 
+void ErrorCheckDialog::showDialog() {
+	// Just instantiate a new dialog, this enters a main loop
+	ErrorCheckDialog dialog;
+}
+
 // Create the buttons panel at bottom of dialog
 GtkWidget* ErrorCheckDialog::createButtons ()
 {

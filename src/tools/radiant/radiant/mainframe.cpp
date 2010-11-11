@@ -1652,7 +1652,7 @@ void ToolsCheckErrors () {
 		return;
 	}
 
-	ui::ErrorCheckDialog dialog;
+	ui::ErrorCheckDialog::showDialog();
 }
 
 void ToolsGenerateMaterials () {
