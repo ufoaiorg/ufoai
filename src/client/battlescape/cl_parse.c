@@ -159,7 +159,6 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
 	vec3_t origin;
 	char sound[MAX_QPATH];
-	s_sample_t *sample;
 
 	NET_ReadString(msg, sound, sizeof(sound));
 	NET_ReadPos(msg, origin);
@@ -179,12 +178,10 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 			i++;
 		}
 
-		sample = S_LoadSample(va("%s%02i", randomSound, (rand() % i) + 1));
-	} else {
-		sample = S_LoadSample(sound);
+		Com_sprintf(sound, sizeof(sound), "%s%02i", randomSound, (rand() % i) + 1);
 	}
 
-	S_PlaySample(origin, sample, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
+	S_LoadAndPlaySample(sound, origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
 }
 
 /**
