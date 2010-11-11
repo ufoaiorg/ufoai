@@ -13,6 +13,8 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "overlay");
 
+	virtual ~IOverlay() {}
+
 	virtual void show(bool shown) = 0;
 
 	// Draws the overlay image within the box <xbegin,ybegin> - <xend, yend>
