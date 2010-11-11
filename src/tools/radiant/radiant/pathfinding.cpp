@@ -41,9 +41,6 @@
 #include "ui/Icons.h"
 #include "ieventmanager.h"
 
-static GtkMenuItem *menuItemShowIn2D;
-static GtkMenuItem *menuItemShowLowerLevels;
-
 namespace routing {
 
 namespace {
