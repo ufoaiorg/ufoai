@@ -85,9 +85,6 @@ void cloneSelected() {
 	GlobalSceneGraph().traverse(CloneSelected());
 
 	Map_mergeClonedNames();
-
-	// Unselect the current selection
-	GlobalSelectionSystem().setSelectedAll(false);
 }
 
 	} // namespace algorithm
