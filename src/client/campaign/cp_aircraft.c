@@ -271,7 +271,7 @@ void AIR_ListAircraft_f (void)
 		Com_Printf("...type %i\n", aircraft->type);
 		Com_Printf("...size %i\n", aircraft->maxTeamSize);
 		Com_Printf("...fuel %i\n", aircraft->fuel);
-		Com_Printf("...status %s\n", AIR_AircraftStatusToName(aircraft));
+		Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
 		Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
 		Com_Printf("...team: (%i/%i)\n", LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
 		for (l = aircraft->acTeam; l != NULL; l = l->next) {
