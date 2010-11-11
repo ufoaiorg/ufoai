@@ -9,6 +9,7 @@
 #include "AutoPtr.h"
 #include "stream/textfilestream.h"
 #include "iarchive.h"
+#include "../../mainframe.h" /* basegame_get */
 
 namespace ui
 {
@@ -85,7 +86,7 @@ namespace ui
 	{
 		const std::string& content = _view.getContents();
 		const std::string& enginePath = GlobalRadiant().getEnginePath();
-		const std::string& baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
+		const std::string& baseGame = basegame_get();
 		std::string fullpath = enginePath + baseGame + "/" + std::string(_material);
 		TextFileOutputStream out(fullpath);
 		if (out.failed()) {
@@ -93,7 +94,7 @@ namespace ui
 			gtkutil::errorDialog(_("Error saving material file"));
 			return;
 		}
-		out << content.c_str();
+		out << content;
 	}
 
 } // namespace ui

@@ -92,11 +92,6 @@
 
 #include "generic/callback.h"
 
-inline const std::string& GameDescription_getRequiredKeyValue (const std::string& key)
-{
-	return g_pGameDescription->getRequiredKeyValue(key);
-}
-
 inline const std::string getMapName ()
 {
 	return Map_Name(g_map);
@@ -126,8 +121,6 @@ class RadiantCoreAPI
 			m_radiantcore.getMapWorldEntity = getMapWorldEntity;
 
 			m_radiantcore.setStatusText = Sys_Status;
-
-			m_radiantcore.getRequiredGameDescriptionKeyValue = &GameDescription_getRequiredKeyValue;
 
 			m_radiantcore.attachGameToolsPathObserver = Radiant_attachGameToolsPathObserver;
 			m_radiantcore.detachGameToolsPathObserver = Radiant_detachGameToolsPathObserver;

@@ -375,11 +375,13 @@ class BrushUndefined
 		STRING_CONSTANT(Name, "Brush");
 };
 
+// checks whether the given node reference is a brush node
 inline bool Node_isBrush (scene::Node& node)
 {
 	return NodeTypeCast<BrushUndefined>::cast(node) != 0;
 }
 
+// checks whether the given node reference is a primitive
 inline bool Node_isPrimitive (scene::Node& node)
 {
 	return Node_isBrush(node);
