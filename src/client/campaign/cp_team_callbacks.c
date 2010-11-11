@@ -233,8 +233,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	CL_CleanTempInventory(aircraft->homebase);
 
 	AIR_Foreach(aircraftInBase) {
-		/** @todo should we run this for crashed aircraft too? */
-		if (AIR_IsAircraftOfBase(aircraftInBase, base))
+		if (aircraftInBase->homebase == base)
 			CL_CleanupAircraftCrew(aircraftInBase, &unused);
 	}
 
