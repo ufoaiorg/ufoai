@@ -67,8 +67,9 @@ typedef struct production_s
 	int idx; /**< Self reference in the production list. Mainly used for moving/deleting them. */
 	productionData_t data; /**< The data behind this production (type and item pointer) */
 
+	int frame;			/**< the frame counter */
 	signed int amount;	/**< How much are we producing. */
-	float percentDone;		/**< Fraction of the item which is already produced.
+	double percentDone;		/**< Fraction of the item which is already produced.
 							 * 0 if production is not started, 1 if production is over */
 	qboolean spaceMessage;	/**< Used in No Free Space message adding. */
 	qboolean creditMessage;	/**< Used in No Credits message adding. */
@@ -117,7 +118,8 @@ void PR_UpdateProductionCap(struct base_s *base);
 void PR_UpdateRequiredItemsInBasestorage(struct base_s *base, int amount, const requirements_t const *reqs);
 int PR_RequirementsMet(int amount, const requirements_t const *reqs, struct base_s *base);
 
-int PR_GetRemainingHours(const struct base_s *base, const technology_t *tech, const struct storedUFO_s *const storedUFO, float percentDone);
+int PR_GetRemainingMinutes(const struct base_s *base, const production_t* prod, double percentDone);
+int PR_GetRemainingHours(const struct base_s *base, const production_t* prod, double percentDone);
 
 production_t *PR_QueueNew(struct base_s *base, const productionData_t *data, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);

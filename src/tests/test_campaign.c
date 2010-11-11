@@ -551,6 +551,7 @@ static void testProductionItem (void)
 	int old;
 	int i, n;
 	productionData_t data;
+	production_t *prod;
 
 	ResetCampaignData();
 
@@ -566,14 +567,15 @@ static void testProductionItem (void)
 
 	PR_SetData(&data, PRODUCTION_TYPE_ITEM, od);
 	old = base->storage.numItems[od->idx];
-	CU_ASSERT_PTR_NOT_NULL(PR_QueueNew(base, &data, 1));
+	prod = PR_QueueNew(base, &data, 1);
+	CU_ASSERT_PTR_NOT_NULL(prod);
 	tech = RS_GetTechForItem(od);
-	n = PR_GetRemainingHours(base, tech, NULL, 0.0);
+	n = PR_GetRemainingMinutes(base, prod, 0.0);
 	i = tech->produceTime;
-	CU_ASSERT_EQUAL(i, n);
-	n = n * MINUTES_PER_HOUR - 1;
-	for (i = 0; i < n; i++)
+	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(base, prod, 0.0));
+	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
+	}
 
 	CU_ASSERT_EQUAL(old, base->storage.numItems[od->idx]);
 	PR_ProductionRun();
@@ -637,12 +639,12 @@ static void testProductionAircraft (void)
 	prod = PR_QueueNew(base, &data, 1);
 	CU_ASSERT_PTR_NOT_NULL(prod);
 
-	n = PR_GetRemainingHours(base, aircraft->tech, NULL, 0.0);
+	n = PR_GetRemainingMinutes(base, prod, 0.0);
 	i = aircraft->tech->produceTime;
-	CU_ASSERT_EQUAL(i, n);
-	n = n * MINUTES_PER_HOUR - 1;
-	for (i = 0; i < n; i++)
+	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(base, prod, 0.0));
+	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
+	}
 
 	CU_ASSERT_EQUAL(old, base->capacities[CAP_AIRCRAFT_SMALL].cur);
 	PR_ProductionRun();
@@ -688,12 +690,12 @@ static void testDisassembly (void)
 	CU_ASSERT_PTR_NOT_NULL(prod);
 
 	old = base->capacities[CAP_ITEMS].cur;
-	n = PR_GetRemainingHours(base, NULL, storedUFO, 0.0);
+	n = PR_GetRemainingMinutes(base, prod, 0.0);
 	i = storedUFO->comp->time;
-	CU_ASSERT_EQUAL(i, n);
-	n = n * MINUTES_PER_HOUR - 1;
-	for (i = 0; i < n; i++)
+	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(base, prod, 0.0));
+	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
+	}
 
 	CU_ASSERT_EQUAL(old, base->capacities[CAP_ITEMS].cur);
 	PR_ProductionRun();

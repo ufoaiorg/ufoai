@@ -250,10 +250,10 @@ static void PR_RequirementsInfo (const base_t const *base, const requirements_t 
  * @brief Prints information about the selected item (no aircraft) in production.
  * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] od The attributes of the item being produced.
- * @param[in] percentDone How far this process has gotten yet. 0.0 - 1.0
+ * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo
  */
-static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const float percentDone)
+static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int remainingHours)
 {
 	static char productionInfo[512];
 
@@ -266,13 +266,11 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const
 		Cvar_Set("mn_item", "");
 	} else {
 		const technology_t *tech = RS_GetTechForItem(od);
-		/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-		const int time = PR_GetRemainingHours(base, tech, NULL, percentDone);
 
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
 		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 			sizeof(productionInfo));
-		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
+		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), remainingHours), sizeof(productionInfo));
 		Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
 		Cvar_Set("mn_item", od->id);
 
@@ -286,34 +284,30 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const
  * @brief Prints information about the selected disassembly task
  * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] ufo The UFO being disassembled.
- * @param[in] percentDone How far this process has gotten yet. 0.0 - 1.0
+ * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo
  */
-static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, float percentDone)
+static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
 {
 	static char productionInfo[512];
-	int time, i;
+	int i;
 
-	assert(base);
 	assert(ufo);
 	assert(ufo->ufoTemplate);
-	assert(ufo->ufoTemplate->tech);
-
-	time = PR_GetRemainingHours(base, ufo->ufoTemplate->tech, ufo, percentDone);
 
 	Com_sprintf(productionInfo, sizeof(productionInfo), "%s (%.0f%%) - %s\n", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->condition * 100, _("Disassembly"));
 	Q_strcat(productionInfo, va(_("Stored at: %s\n"), ufo->installation->name), sizeof(productionInfo));
-	Q_strcat(productionInfo, va(_("Disassembly time: %ih\n"), time), sizeof(productionInfo));
+	Q_strcat(productionInfo, va(_("Disassembly time: %ih\n"), remainingHours), sizeof(productionInfo));
 	Q_strcat(productionInfo, _("Components:\n"), sizeof(productionInfo));
 	/* Print components. */
 	for (i = 0; i < ufo->comp->numItemtypes; i++) {
 		const objDef_t *compOd = ufo->comp->items[i];
 		const int amount = (ufo->condition < 1 && ufo->comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? ufo->comp->itemAmount2[i] : round(ufo->comp->itemAmount[i] * ufo->condition);
 
-		assert(compOd);
 		if (amount == 0)
 			continue;
 
+		assert(compOd);
 		Q_strcat(productionInfo, va("  %s (%i)\n", _(compOd->name), amount), sizeof(productionInfo));
 	}
 	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
@@ -325,21 +319,17 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
  * @brief Prints information about the selected aircraft in production.
  * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] aircraftTemplate The aircraft to print the information for
- * @param[in] percentDone How far this process has gotten yet. 0.0 - 1.0
+ * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo
  */
-static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTemplate, float percentDone)
+static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTemplate, int remainingHours)
 {
 	static char productionInfo[512];
-	int time;
-	assert(aircraftTemplate);
-
-	time = PR_GetRemainingHours(base, aircraftTemplate->tech, NULL, percentDone);
 
 	Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftTemplate->name));
 	Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraftTemplate->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 		sizeof(productionInfo));
-	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
+	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), remainingHours), sizeof(productionInfo));
 	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", aircraftTemplate->id);
 	PR_RequirementsInfo(base, &aircraftTemplate->tech->requireForProduction);
@@ -357,15 +347,17 @@ static void PR_ProductionInfo (const base_t *base)
 {
 	if (selectedProduction) {
 		const production_t *prod = selectedProduction;
+		const int time = PR_GetRemainingHours(base, prod, PR_GetProgress(prod));
 		UI_ExecuteConfunc("prod_taskselected");
+
 		if (PR_IsAircraft(prod)) {
-			PR_AircraftInfo(base, prod->data.data.aircraft, PR_GetProgress(prod));
+			PR_AircraftInfo(base, prod->data.data.aircraft, time);
 			UI_ExecuteConfunc("amountsetter enable");
 		} else if (PR_IsItem(prod)) {
-			PR_ItemProductionInfo(base, prod->data.data.item, PR_GetProgress(prod));
+			PR_ItemProductionInfo(base, prod->data.data.item, time);
 			UI_ExecuteConfunc("amountsetter enable");
 		} else if (PR_IsDisassembly(prod)) {
-			PR_DisassemblyInfo(base, prod->data.data.ufo, PR_GetProgress(prod));
+			PR_DisassemblyInfo(prod->data.data.ufo, time);
 			UI_ExecuteConfunc("amountsetter disable");
 		} else {
 			Com_Error(ERR_DROP, "PR_ProductionInfo: Selected production is not item nor aircraft nor ufo.\n");
@@ -386,7 +378,7 @@ static void PR_ProductionInfo (const base_t *base)
 			} else if (PR_IsItemData(&selectedData)) {
 				PR_ItemProductionInfo(base, selectedData.data.item, 0.0);
 			} else if (PR_IsDisassemblyData(&selectedData)) {
-				PR_DisassemblyInfo(base, selectedData.data.ufo, 0.0);
+				PR_DisassemblyInfo(selectedData.data.ufo, 0.0);
 			}
 		}
 	}

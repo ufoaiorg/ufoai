@@ -45,47 +45,48 @@ static cvar_t* mn_production_workers;		/**< Amount of hired workers in base. */
 static cvar_t* mn_production_amount;	/**< Amount of the current production; if no production, an invalid value */
 
 /**
- * @brief Calculates the fraction (percentage) of production of an item in 1 hour.
+ * @brief Calculates the fraction (percentage) of production of an item in 1 minute.
  * @param[in] base Pointer to the base with given production.
  * @param[in] tech Pointer to the technology for given production.
  * @param[in] storedUFO Pointer to disassembled UFO.
  * @sa PR_ProductionRun
  * @sa PR_ItemProductionInfo
  * @sa PR_DisassemblyInfo
- * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 hour
+ * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 minute
  */
-static float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const storedUFO_t *const storedUFO)
+static double PR_CalculateProductionPercentPerMinute (const base_t *base, const production_t *prod)
 {
 	/* Check how many workers hired in this base. */
 	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
 	/* We will not use more workers than workspace capacity in this base. */
 	const signed int maxWorkers = min(allWorkers, base->capacities[CAP_WORKSPACE].max);
 	signed int timeDefault;
-	float distanceFactor;
+	double distanceFactor;
 
-	if (!storedUFO) {
+	if (PR_IsProduction(prod)) {
+		const technology_t *tech = PR_GetTech(&prod->data);
 		/* This is the default production time for PRODUCE_WORKERS workers. */
-		timeDefault = tech->produceTime;
+		timeDefault = tech->produceTime * MINUTES_PER_HOUR;
 		distanceFactor = 1.0;
 	} else {
-		assert(storedUFO->comp);
+		const storedUFO_t *storedUFO = prod->data.data.ufo;
 		/* This is the default disassemble time for PRODUCE_WORKERS workers. */
-		timeDefault = storedUFO->comp->time;
+		timeDefault = storedUFO->comp->time * MINUTES_PER_HOUR;
 		/* Production is 4 times longer when installation is on Antipodes
 		 * Penalty starts when distance is greater than 45 degrees */
-		distanceFactor = max(1.0f, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0f);
+		distanceFactor = max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
 	}
 	if (maxWorkers == PRODUCE_WORKERS) {
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
-		const float divisor = distanceFactor * timeDefault;
-		const float fraction = 1.0f / divisor;
-		return min(fraction, 1.0f);
+		const double divisor = distanceFactor * timeDefault;
+		const double fraction = 1.0 / divisor;
+		return min(fraction, 1.0);
 	} else {
-		const float divisor = PRODUCE_WORKERS * distanceFactor * timeDefault;
+		const double divisor = PRODUCE_WORKERS * distanceFactor * timeDefault;
 		/* Calculate the fraction of item produced for our amount of workers. */
-		const float fraction = maxWorkers / divisor;
+		const double fraction = maxWorkers / divisor;
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
-		return min(fraction, 1.0f);
+		return min(fraction, 1.0);
 	}
 }
 
@@ -93,12 +94,20 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
  * @brief Calculates the remaining hours for a technology
  * @param[in] percentDone 0.0 - 1.0
  */
-int PR_GetRemainingHours (const base_t *base, const technology_t *tech, const storedUFO_t *const storedUFO, float percentDone)
+int PR_GetRemainingMinutes (const base_t *base, const production_t *prod, double percentDone)
 {
-	const float prodPerHour = PR_CalculateProductionPercentDone(base, tech, storedUFO);
-	const float hours = (1.0f - percentDone) / prodPerHour;
-	const int hoursRounded = ceil(hours);
-	return hoursRounded;
+	const double prodPerMinute = PR_CalculateProductionPercentPerMinute(base, prod);
+	const double minutes = (1.0f - percentDone) / prodPerMinute;
+	return ceil(minutes);
+}
+
+/**
+ * @brief Calculates the remaining hours for a technology
+ * @param[in] percentDone 0.0 - 1.0
+ */
+int PR_GetRemainingHours (const base_t *base, const production_t *prod, double percentDone)
+{
+	return ceil(PR_GetRemainingMinutes(base, prod, percentDone) / (double)MINUTES_PER_HOUR);
 }
 
 /**
@@ -258,7 +267,7 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	prod->idx = queue->numItems;
 	prod->data = *data;
 	prod->amount = amount;
-	prod->percentDone = 0.0f;
+	prod->percentDone = 0.0;
 
 	tech = PR_GetTech(&prod->data);
 	if (!tech)
@@ -342,12 +351,12 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 /**
  * @brief Moves the given queue item in the given direction.
  * @param[in] queue Pointer to the queue.
- * @param[in] index
- * @param[in] dir
+ * @param[in] index The production item index in the queue
+ * @param[in] offset The offset relative to the given index where the item should be moved, too
  */
-void PR_QueueMove (production_queue_t *queue, int index, int dir)
+void PR_QueueMove (production_queue_t *queue, int index, int offset)
 {
-	const int newIndex = max(0, min(index + dir, queue->numItems - 1));
+	const int newIndex = max(0, min(index + offset, queue->numItems - 1));
 	int i;
 	production_t saved;
 
@@ -417,15 +426,9 @@ static void PR_EmptyQueue (base_t *base)
 /**
  * @brief moves the first production to the bottom of the list
  */
-static void PR_ProductionRollBottom_f (void)
+static void PR_ProductionRollBottom (base_t *base)
 {
-	production_queue_t *queue;
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	queue = PR_GetProductionForBase(base);
+	production_queue_t *queue = PR_GetProductionForBase(base);
 	if (queue->numItems < 2)
 		return;
 
@@ -530,7 +533,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 	}
 
 	if (!state)
-		PR_ProductionRollBottom_f();
+		PR_ProductionRollBottom(base);
 
 	return state;
 }
@@ -544,25 +547,15 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
  */
 static void PR_ProductionFrame (base_t* base, production_t *prod)
 {
-	technology_t *tech;
-	float fraction;
-
 	if (!PR_IsProduction(prod))
 		return;
 
-	tech = PR_GetTech(&prod->data);
-
-	if (!PR_CheckFrame(base, prod))
-		return;
-
-	fraction = PR_CalculateProductionPercentDone(base, tech, NULL) / MINUTES_PER_HOUR;
-	prod->percentDone += fraction;
-
-	if (prod->percentDone >= 1.0f) {
+	if (prod->percentDone >= 1.0) {
 		const char *name = PR_GetName(&prod->data);
 		technology_t *tech = PR_GetTech(&prod->data);
 
-		prod->percentDone = 0.0f;
+		prod->frame = 0;
+		prod->percentDone = 0.0;
 		prod->amount--;
 
 		if (PR_IsItem(prod)) {
@@ -593,24 +586,15 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
  */
 static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 {
-	storedUFO_t *ufo;
-	float fraction;
-
 	if (!PR_IsDisassembly(prod))
 		return;
 
-	ufo = prod->data.data.ufo;
-
-	if (!PR_CheckFrame(base, prod))
-		return;
-
-	fraction = PR_CalculateProductionPercentDone(base, NULL, ufo) / MINUTES_PER_HOUR;
-	prod->percentDone += fraction;
-
-	if (prod->percentDone >= 1.0f) {
+	if (prod->percentDone >= 1.0) {
+		storedUFO_t *ufo = prod->data.data.ufo;
 		base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse);
 
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."), UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
+				UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
 		MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
 
 		/* Removing UFO will remove the production too */
@@ -707,6 +691,7 @@ void PR_ProductionRun (void)
 	while ((base = B_GetNextFounded(base)) != NULL) {
 		production_t *prod;
 		production_queue_t *q = PR_GetProductionForBase(base);
+		int totalFrames;
 
 		/* not actually any active productions */
 		if (q->numItems <= 0)
@@ -717,6 +702,14 @@ void PR_ProductionRun (void)
 			continue;
 
 		prod = &q->items[0];
+		prod->frame++;
+
+		if (!PR_CheckFrame(base, prod))
+			return;
+
+		totalFrames = (1.0 / PR_CalculateProductionPercentPerMinute(base, prod)) + 1;
+
+		prod->percentDone = (prod->frame * 100.0 / totalFrames) / 100.0;
 
 		PR_ProductionFrame(base, prod);
 		PR_DisassemblingFrame(base, prod);
@@ -859,7 +852,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 
 			prod->idx = pq->numItems;
 			prod->amount = mxml_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
-			prod->percentDone = mxml_GetFloat(ssnode, SAVE_PRODUCE_PERCENTDONE, 0.0);
+			prod->percentDone = mxml_GetDouble(ssnode, SAVE_PRODUCE_PERCENTDONE, 0.0);
 
 			/* amount */
 			if (prod->amount <= 0) {
