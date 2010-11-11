@@ -81,7 +81,7 @@ namespace ui
 					std::string fileName = displayName; // TODO:
 
 					// Pixbuf depends on model type
-					GdkPixbuf* pixBuf = gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN);
+					GdkPixbuf* pixBuf = gtkutil::getLocalPixbuf(ui::icons::ICON_PARTICLE_MAP);
 
 					// Append a node to the tree view for this child,
 					GtkTreeIter iter;

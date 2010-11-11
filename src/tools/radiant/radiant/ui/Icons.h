@@ -102,6 +102,9 @@ namespace ui
 			static const std::string ICON_WINDOW_REGULAR = "window_regular.png";
 			static const std::string ICON_WINDOW_SPLIT = "window_split.png";
 
+			static const std::string ICON_PARTICLE_MAP = "particle_map.png";
+			static const std::string ICON_PARTICLE_WEAPON = "particle_weapon.png";
+
 			static const std::string ICON_MODEL_SHOWNORMALS = "model_normals.png";
 		}
 	}
