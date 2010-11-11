@@ -196,11 +196,3 @@ void Pathfinding_Destroy (void)
 {
 	delete routing::pathfinding;
 }
-
-void Pathfinding_ConstructMenu (GtkMenu* menu)
-{
-	createCheckMenuItemWithMnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
-	menuItemShowIn2D = createCheckMenuItemWithMnemonic(menu, _("Show in 2D views"), "ShowPathfindingIn2D");
-	menuItemShowLowerLevels = createCheckMenuItemWithMnemonic(menu, _("Show all lower levels"),
-			"ShowPathfindingLowerLevels");
-}

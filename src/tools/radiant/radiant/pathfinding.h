@@ -23,9 +23,5 @@
 
 void Pathfinding_Construct (void);
 void Pathfinding_Destroy (void);
-typedef struct _GtkMenu GtkMenu;
-void Pathfinding_ConstructMenu (GtkMenu* menu);
-typedef struct _GtkToolbar GtkToolbar;
-void Pathfinding_constructToolbar (GtkToolbar *toolbar);
 
 #endif
