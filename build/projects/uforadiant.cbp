@@ -506,8 +506,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\eclass.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\eclass_def.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity.cpp" />
@@ -772,6 +770,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findshader\FindShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\maptools.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\maptools.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\materialeditor\MaterialEditor.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\materialeditor\MaterialEditor.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\menu\FiltersMenu.cpp" />

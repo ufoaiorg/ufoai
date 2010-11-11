@@ -87,7 +87,7 @@
 #include "brushexport/BrushExportOBJ.h"
 #include "ui/about/AboutDialog.h"
 #include "dialogs/findbrush.h"
-#include "dialogs/maptools.h"
+#include "ui/maptools/maptools.h"
 #include "pathfinding.h"
 #include "gtkmisc.h"
 #include "map/map.h"
