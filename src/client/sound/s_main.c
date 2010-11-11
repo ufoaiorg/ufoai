@@ -294,3 +294,16 @@ void S_Shutdown (void)
 
 	s_env.initialized = qfalse;
 }
+
+/**
+ * @brief does what the name implies in just one fuction to avoid exposing s_sample_t
+ * @param s name of the sample
+ * @param origin where to play it
+ * @param attenuation how to reduce volume by distance
+ * @param volume well, the volume
+ */
+void S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, float volume)
+{
+	s_sample_t *sample = S_LoadSample(s);
+	S_PlaySample(origin, sample, attenuation, volume);
+}

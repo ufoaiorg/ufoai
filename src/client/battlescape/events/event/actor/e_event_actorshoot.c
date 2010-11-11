@@ -184,7 +184,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* start the sound */
 	if ((first || !fd->soundOnce) && fd->fireSound[0] && !(flags & SF_BOUNCED))
-		S_PlaySample(muzzle, S_LoadSample(fd->fireSound), fd->fireAttenuation, SND_VOLUME_WEAPONS);
+		S_LoadAndPlaySample(fd->fireSound, muzzle, fd->fireAttenuation, SND_VOLUME_WEAPONS);
 
 	if (fd->irgoggles)
 		refdef.rendererFlags |= RDF_IRGOGGLES;
