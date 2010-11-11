@@ -1113,8 +1113,8 @@ static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
 	/* Pack equipment. */
 	if (ent->chr.teamDef->weapons)
 		game.i.EquipActor(&game.i, &ent->chr.i, ed, ent->chr.teamDef);
-	else if (ent->chr.teamDef)
-		/* actor cannot handle equipment but no weapons */
+	else if (ent->chr.teamDef->onlyWeapon)
+		/* actor cannot handle weapons but a particular item */
 		game.i.EquipActorMelee(&game.i, &ent->chr.i, ent->chr.teamDef);
 	else
 		gi.DPrintf("AI_InitPlayer: actor with no equipment\n");
