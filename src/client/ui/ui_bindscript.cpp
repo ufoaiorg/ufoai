@@ -1,6 +1,5 @@
 /**
  * @file ui_bindscript.cpp
- * @todo a way to execute functions/events
  * @todo a way to redefine functions/events
  * @todo a way to add/remove listener functions/events
  */
@@ -205,6 +204,7 @@ static void CvarRef_Release(cvar_t *cvar) {
 }
 
 
+
 static uiNode_t *Node_GetNode(std::string name) {
 	return UI_GetNodeByPath(name.c_str());
 }
@@ -238,7 +238,74 @@ static uiNode_t *Node_GetWindow(uiNode_t *node)
 	return node->root;
 }
 
-static void Node_OpAssignGeneric(asIScriptGeneric *gen)
+typedef struct {
+	/** @todo remove me, useless */
+	const char *sanity;
+	uiNode_t* node;
+	uiAction_t** actions;
+} uiEventHolder_t;
+
+static void Node_GetEvent (asIScriptGeneric *gen)
+{
+	const int offset = (uintptr_t) gen->GetFunctionUserData();
+	uiEventHolder_t *holder = new uiEventHolder_t;
+	holder->sanity = "uiEventHolder_t";
+	holder->node = static_cast<uiNode_t*>(gen->GetObject());
+	holder->actions = (uiAction_t **) ((uintptr_t)holder->node + offset);
+	gen->SetReturnAddress(holder);
+}
+
+static uiEventHolder_t* Event_Construct (void)
+{
+	return new uiEventHolder_t;
+}
+
+static void Event_Destroy (uiEventHolder_t*holder)
+{
+	delete holder;
+}
+
+#if 0
+static void Event_AddRef (uiEventHolder_t*holder)
+{
+	Node_AddRef(holder->node);
+}
+
+static void Event_Release (uiEventHolder_t*holder)
+{
+	Node_Release(holder->node);
+}
+#endif
+
+#if 0
+static void Event_Add (uiEventHolder_t*holder)
+{
+}
+
+static void Event_Remove (uiEventHolder_t*holder)
+{
+}
+
+static void Event_Set (uiEventHolder_t*holder)
+{
+}
+#endif
+
+static void Node_Execute (uiNode_t &node)
+{
+	if (!node.behaviour->isFunction) {
+		Com_Printf("\"execute\" method is only available for confunc/func nodes");
+		return;
+	}
+	UI_ExecuteEventActions(&node, node.onClick);
+}
+
+static void Event_Execute (const uiEventHolder_t &holder)
+{
+	UI_ExecuteEventActions(holder.node, *(holder.actions));
+}
+
+static void Node_OpAssignGeneric (asIScriptGeneric *gen)
 {
 	uiNode_t ** a = static_cast<uiNode_t **>(gen->GetArgObject(0));
 	uiNode_t ** self = static_cast<uiNode_t **>(gen->GetObject());
@@ -381,22 +448,31 @@ static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_
 				r = engine->RegisterObjectProperty(name, va("color %s", property->string), property->ofs);
 				assert( r >= 0 );
 				break;
+			case V_UI_ACTION:
+				{
+					asIScriptFunction *function;
+					r = engine->RegisterObjectMethod(name, va("event &get_%s()", property->string), asFUNCTION(Node_GetEvent), asCALL_GENERIC);
+					assert( r >= 0 );
+					function = engine->GetFunctionDescriptorById(r);
+					function->SetUserData((void*)property->ofs);
+				}
+				break;
 			case V_UI_NODEMETHOD:
 				{
 					asIScriptFunction *function;
-					r = engine->RegisterObjectMethod(va("%s", name), va("void %s()", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
+					r = engine->RegisterObjectMethod(name, va("void %s()", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
 					assert( r >= 0 );
 					function = engine->GetFunctionDescriptorById(r);
 					function->SetUserData((void*)property->ofs);
-					r = engine->RegisterObjectMethod(va("%s", name), va("void %s(const string& in)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
+					r = engine->RegisterObjectMethod(name, va("void %s(const string& in)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
 					assert( r >= 0 );
 					function = engine->GetFunctionDescriptorById(r);
 					function->SetUserData((void*)property->ofs);
-					r = engine->RegisterObjectMethod(va("%s", name), va("void %s(const string, const string)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
+					r = engine->RegisterObjectMethod(name, va("void %s(const string, const string)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
 					assert( r >= 0 );
 					function = engine->GetFunctionDescriptorById(r);
 					function->SetUserData((void*)property->ofs);
-					r = engine->RegisterObjectMethod(va("%s", name), va("void %s(const string& in, const string& in, const string& in)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
+					r = engine->RegisterObjectMethod(name, va("void %s(const string& in, const string& in, const string& in)", property->string), asFUNCTION(Node_ExecuteMethod), asCALL_GENERIC);
 					assert( r >= 0 );
 					function = engine->GetFunctionDescriptorById(r);
 					function->SetUserData((void*)property->ofs);
@@ -436,7 +512,7 @@ extern "C" void UI_InitBindScript (void)
 	engine->SetMessageCallback(asFUNCTION(MessageCallback), 0, asCALL_CDECL);
 	RegisterStdString(engine);
 
-	/* color */
+	/* Color */
 
 	r = engine->RegisterObjectType("color", sizeof(vec4_t), asOBJ_VALUE | asOBJ_POD);
 	assert(r >= 0);
@@ -451,6 +527,33 @@ extern "C" void UI_InitBindScript (void)
 	r = engine->RegisterObjectMethod("color", "color &opAssign(const string &in)", asFUNCTION(AssignStringToColor), asCALL_CDECL_OBJFIRST);
 	assert( r >= 0 );
 
+	/* Event */
+
+	r = engine->RegisterObjectType("event", sizeof(uiEventHolder_t), asOBJ_VALUE);
+	assert(r >= 0);
+#if 0
+	r = engine->RegisterObjectBehaviour("event", asBEHAVE_ADDREF, "void f()", asFUNCTION(Event_AddRef), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectBehaviour("event", asBEHAVE_RELEASE, "void f()", asFUNCTION(Event_Release), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+#endif
+	r = engine->RegisterObjectBehaviour("event", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Event_Construct), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectBehaviour("event", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(Event_Destroy), asCALL_CDECL_OBJFIRST);
+	assert(r >= 0);
+	r = engine->RegisterObjectMethod("event", "void execute()", asFUNCTION(Event_Execute), asCALL_CDECL_OBJFIRST);
+	assert( r >= 0 );
+#if 0
+	/** @todo */
+	r = engine->RegisterObjectMethod("event", "void opAssign()", asFUNCTION(Event_Set), asCALL_CDECL_OBJFIRST);
+	assert( r >= 0 );
+	/** @todo */
+	r = engine->RegisterObjectMethod("event", "void opAddAssign()", asFUNCTION(Event_Add), asCALL_CDECL_OBJFIRST);
+	assert( r >= 0 );
+	/** @todo */
+	r = engine->RegisterObjectMethod("event", "void opSubAssign()", asFUNCTION(Event_Remove), asCALL_CDECL_OBJFIRST);
+	assert( r >= 0 );
+#endif
 	/* Node */
 
 	for (int i = 0; i < UI_GetNodeBehaviourCount(); i++) {
@@ -460,6 +563,8 @@ extern "C" void UI_InitBindScript (void)
 
 	r = engine->RegisterGlobalFunction("node@ getNode(string)", asFUNCTION(Node_GetNode), asCALL_CDECL);
 	assert(r >= 0);
+	r = engine->RegisterObjectMethod("node", "void execute()", asFUNCTION(Node_Execute), asCALL_CDECL_OBJFIRST);
+	assert( r >= 0 );
 
 	/* CVAR */
 

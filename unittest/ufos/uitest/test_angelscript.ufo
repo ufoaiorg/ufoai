@@ -363,6 +363,58 @@ window test_angelscript
 		else test4.color = red;
 	}
 
+	string testEventExecute0 { pos "200 80" string "eventexecute0" }
+	string testEventExecute1 { pos "200 80" string "eventexecute1" }
+	string testEventExecute2 { pos "200 80" string "eventexecute2" }
+	string testEventExecute3 { pos "200 80" string "eventexecute3" }
+	string testEventExecute4 { pos "200 80" string "eventexecute4" }
+
+	button buttonTest3 {
+		{
+			pos "0 0"
+			size "10 10"
+		}
+
+		// THIS IS NOT ANGELSCRIPT
+		func onMClick {
+			*node:root.testEventExecute1@color = "0 1 0"
+		}
+
+		angelscript {
+			void onClick() {
+				color green = "0 1 0";
+				node@ n = getNode("test_angelscript.testEventExecute2");
+				n.color = green;
+			}
+			void onRClick() {
+				color green = "0 1 0";
+				node@ n = getNode("test_angelscript.testEventExecute3");
+				n.color = green;
+			}
+		}
+
+		// THIS IS NOT ANGELSCRIPT
+		func a_function {
+			*node:root.testEventExecute4@color = "0 1 0"
+		}
+
+	}
+
+	func testEventExecute angelscript {
+		// ok, it compile
+		color green = "0 1 0";
+		node@ n = getNode("test_angelscript.testEventExecute0");
+		n.color = green;
+
+		node@ clickMe = getNode("test_angelscript.buttonTest3");
+		clickMe.onMClick.execute();
+		clickMe.onClick.execute();
+		clickMe.onRClick.execute();
+
+		node@ a_function = getNode("test_angelscript.buttonTest3.a_function");
+		a_function.execute();
+	}
+
 	// THIS IS NOT ANGELSCRIPT
 	func onInit {
 		call *node:root.testCvar
@@ -375,6 +427,7 @@ window test_angelscript
 		call *node:root.testBuggy1
 		call *node:root.testBuggy2
 		call *node:root.testCase
+		call *node:root.testEventExecute
 	}
 
 }
