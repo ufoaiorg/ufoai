@@ -78,6 +78,9 @@ class UMPSystem : public IUMPSystem {
 
 	private:
 
+		typedef std::map<std::string, std::string> UMPFileMap;
+		UMPFileMap _umpFileMap;
+
 		std::set<std::string> _umpFiles;
 		typedef std::set<std::string>::iterator UMPFilesIterator;
 
@@ -114,6 +117,11 @@ class UMPSystem : public IUMPSystem {
 		{
 			if (map.empty())
 				return "";
+
+			UMPFileMap::const_iterator i = _umpFileMap.find(map);
+			if (i != _umpFileMap.end())
+				return i->second;
+
 			for (UMPFilesIterator i = _umpFiles.begin(); i != _umpFiles.end(); i++) {
 				try {
 					map::ump::UMPFile umpFile(*i);
@@ -123,14 +131,17 @@ class UMPSystem : public IUMPSystem {
 					}
 
 					map::ump::UMPTile* tile = umpFile.getTileForMap(map);
-					if (tile)
+					if (tile) {
+						_umpFileMap[map] = *i;
 						return *i;
+					}
 				} catch (map::ump::UMPException& e) {
 					globalErrorStream() << e.getMessage() << "\n";
 					gtkutil::errorDialog(e.getMessage());
 				}
 			}
 			// not found in any ump file
+			_umpFileMap[map] = "";
 			return "";
 		}
 };
