@@ -168,9 +168,6 @@ class Pathfinding: public PreferenceConstructor, public RegistryKeyObserver
 };
 
 Pathfinding *pathfinding;
-bool showPathfinding;
-bool showAllLowerLevels;
-bool showIn2D;
 
 /**
  * @brief callback function for map changes to update routing data.
