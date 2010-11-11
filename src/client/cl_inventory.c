@@ -147,7 +147,9 @@ static void INV_InventoryList_f (void)
 	int i;
 
 	for (i = 0; i < csi.numODs; i++) {
+		int j;
 		objDef_t *od = INVSH_GetItemByIDX(i);
+
 		Com_Printf("Item: %s\n", od->id);
 		Com_Printf("... name          -> %s\n", od->name);
 		Com_Printf("... type          -> %s\n", od->type);
@@ -157,9 +159,9 @@ static void INV_InventoryList_f (void)
 		Com_Printf("... firetwohanded -> %i\n", od->fireTwoHanded);
 		Com_Printf("... thrown        -> %i\n", od->thrown);
 		Com_Printf("... usable for weapon (if type is ammo):\n");
-		for (i = 0; i < od->numWeapons; i++) {
-			if (od->weapons[i])
-				Com_Printf("    ... %s\n", od->weapons[i]->name);
+		for (j = 0; j < od->numWeapons; j++) {
+			if (od->weapons[j])
+				Com_Printf("    ... %s\n", od->weapons[j]->name);
 		}
 		Com_Printf("\n");
 	}
