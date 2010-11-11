@@ -18,8 +18,47 @@
 #include "radiant_i18n.h"
 #include "gtkutil/widget.h"
 #include "ieventmanager.h"
+#include "../log/console.h"
 
-static void Sidebar_constructPrefabs (GtkWidget *notebook)
+namespace ui {
+
+Sidebar::Sidebar ()
+{
+	_widget = gtk_vbox_new(FALSE, 0);
+
+	_notebook = gtk_notebook_new();
+	gtk_notebook_set_scrollable(GTK_NOTEBOOK(_notebook), TRUE);
+
+	/* if you change the order here - make sure to also change the toggle functions tab page indices */
+	constructEntityInspector();
+	constructSurfaceInspector();
+	constructPrefabBrowser();
+	constructTextureBrowser();
+	constructMapInfo();
+	constructJobInfo();
+
+	gtk_box_pack_start(GTK_BOX(_widget), GTK_WIDGET(_notebook), TRUE, TRUE, 0);
+	gtk_widget_show_all(_widget);
+
+	// console
+	GtkWidget* console_window = Console_constructWindow(GlobalRadiant().getMainWindow());
+	gtk_box_pack_end(GTK_BOX(_widget), GTK_WIDGET(console_window), FALSE, FALSE, 0);
+
+	GlobalEventManager().addCommand("ToggleSidebar", MemberCaller<Sidebar, &Sidebar::toggleSidebar> (*this));
+	GlobalEventManager().addCommand("ToggleSurfaceInspector", MemberCaller<Sidebar, &Sidebar::toggleSurfaceInspector> (
+			*this));
+	GlobalEventManager().addCommand("ToggleEntityInspector", MemberCaller<Sidebar, &Sidebar::toggleEntityInspector> (
+			*this));
+	GlobalEventManager().addCommand("TogglePrefabs", MemberCaller<Sidebar, &Sidebar::togglePrefabs> (*this));
+	GlobalEventManager().addCommand("ToggleTextureBrowser", MemberCaller<Sidebar, &Sidebar::toggleTextureBrowser> (
+			*this));
+}
+
+Sidebar::~Sidebar ()
+{
+}
+
+void Sidebar::constructPrefabBrowser ()
 {
 	// prefabs
 	GtkWidget *pagePrefabs = sidebar::PrefabSelector::ConstructNotebookTab();
@@ -38,10 +77,10 @@ static void Sidebar_constructPrefabs (GtkWidget *notebook)
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
 }
 
-static void Sidebar_constructEntities (GtkWidget *notebook)
+void Sidebar::constructEntityInspector ()
 {
 	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Entities"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -61,10 +100,10 @@ static void Sidebar_constructEntities (GtkWidget *notebook)
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
 }
 
-static void Sidebar_constructSurfaces (GtkWidget *notebook)
+void Sidebar::constructSurfaceInspector ()
 {
 	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Surfaces"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -80,10 +119,10 @@ static void Sidebar_constructSurfaces (GtkWidget *notebook)
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
 }
 
-static void Sidebar_constructMapInfo (GtkWidget *notebook)
+void Sidebar::constructMapInfo ()
 {
 	GtkWidget *label = gtk_label_new(_("Map Info"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -99,10 +138,10 @@ static void Sidebar_constructMapInfo (GtkWidget *notebook)
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
 }
 
-static void Sidebar_constructJobInfo (GtkWidget *notebook)
+void Sidebar::constructJobInfo ()
 {
 	GtkWidget *label = gtk_label_new(_("Job Info"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -118,10 +157,10 @@ static void Sidebar_constructJobInfo (GtkWidget *notebook)
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
 }
 
-static void Sidebar_constructTextureBrowser (GtkWidget *notebook)
+void Sidebar::constructTextureBrowser ()
 {
 	GtkWidget *label = gtk_label_new(_("Textures"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -136,67 +175,44 @@ static void Sidebar_constructTextureBrowser (GtkWidget *notebook)
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
 }
 
-static GtkWidget *notebook;
-
-void ToggleSidebar (void)
+void Sidebar::toggleSidebar ()
 {
-	widget_toggle_visible(notebook);
+	widget_toggle_visible(_widget);
 }
 
-void ToggleTextureBrowser (void)
+void Sidebar::toggleTextureBrowser ()
 {
-	if (!widget_is_visible(GTK_WIDGET(notebook)))
-		widget_set_visible(GTK_WIDGET(notebook), TRUE);
-	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 3);
+	if (!widget_is_visible(GTK_WIDGET(_widget)))
+		widget_set_visible(GTK_WIDGET(_widget), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(_notebook), 3);
 }
 
-void TogglePrefabs (void)
+void Sidebar::togglePrefabs ()
 {
-	if (!widget_is_visible(GTK_WIDGET(notebook)))
-		widget_set_visible(GTK_WIDGET(notebook), TRUE);
-	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
+	if (!widget_is_visible(GTK_WIDGET(_widget)))
+		widget_set_visible(GTK_WIDGET(_widget), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(_notebook), 2);
 }
 
-void ToggleSurfaceInspector (void)
+void Sidebar::toggleSurfaceInspector ()
 {
-	if (!widget_is_visible(GTK_WIDGET(notebook)))
-		widget_set_visible(GTK_WIDGET(notebook), TRUE);
-	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
+	if (!widget_is_visible(GTK_WIDGET(_widget)))
+		widget_set_visible(GTK_WIDGET(_widget), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(_notebook), 1);
 }
 
-void ToggleEntityInspector (void)
+void Sidebar::toggleEntityInspector ()
 {
-	if (!widget_is_visible(GTK_WIDGET(notebook)))
-		widget_set_visible(GTK_WIDGET(notebook), TRUE);
-	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
+	if (!widget_is_visible(GTK_WIDGET(_widget)))
+		widget_set_visible(GTK_WIDGET(_widget), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(_notebook), 0);
 }
 
-GtkWidget *Sidebar_construct (void)
+GtkWidget* Sidebar::getWidget ()
 {
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
-
-	notebook = gtk_notebook_new();
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(notebook), TRUE, TRUE, 0);
-	gtk_notebook_set_scrollable(GTK_NOTEBOOK(notebook), TRUE);
-
-	/* if you change the order here - make sure to also change the toggle functions tab page indices */
-	Sidebar_constructEntities(notebook);
-	Sidebar_constructSurfaces(notebook);
-	Sidebar_constructPrefabs(notebook);
-	Sidebar_constructTextureBrowser(notebook);
-	Sidebar_constructMapInfo(notebook);
-	Sidebar_constructJobInfo(notebook);
-
-	gtk_widget_show_all(vbox);
-
-	GlobalEventManager().addCommand("ToggleSidebar", FreeCaller<ToggleSidebar> ());
-	GlobalEventManager().addCommand("ToggleSurfaceInspector", FreeCaller<ToggleSurfaceInspector> ());
-	GlobalEventManager().addCommand("ToggleEntityInspector", FreeCaller<ToggleEntityInspector> ());
-	GlobalEventManager().addCommand("TogglePrefabs", FreeCaller<TogglePrefabs> ());
-	GlobalEventManager().addCommand("ToggleTextureBrowser", FreeCaller<ToggleTextureBrowser> ());
-
-	return vbox;
+	return _widget;
+}
 }

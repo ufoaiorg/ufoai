@@ -1320,7 +1320,8 @@ void MainFrame::Create (void)
 	GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
 
 	// do this here, because the commands are needed
-	GtkWidget *sidebar = Sidebar_construct();
+	_sidebar = new ui::Sidebar();
+	GtkWidget *sidebar = _sidebar->getWidget();
 
 	// Tell the XYManager which window the xyviews should be transient for
 	GlobalXYWnd().setGlobalParentWindow(window);
@@ -1412,20 +1413,10 @@ void MainFrame::Create (void)
 	// create edit windows according to user setable style
 	switch (CurrentStyle()) {
 	case eRegular: {
-		GtkWidget* vsplit = gtk_vpaned_new();
-		m_vSplit = vsplit;
-		gtk_box_pack_start(GTK_BOX(mainHBox), vsplit, TRUE, TRUE, 0);
-		gtk_widget_show(vsplit);
-
-		// console
-		GtkWidget* console_window = Console_constructWindow(window);
-		gtk_paned_pack2(GTK_PANED(vsplit), console_window, FALSE, TRUE);
-
 		{
 			GtkWidget* hsplit = gtk_hpaned_new();
 			gtk_widget_show(hsplit);
 			m_hSplit = hsplit;
-			gtk_paned_add1(GTK_PANED(vsplit), hsplit);
 
 			// Allocate a new OrthoView and set its ViewType to XY
 			xyWnd = GlobalXYWnd().createXY();
@@ -1453,24 +1444,13 @@ void MainFrame::Create (void)
 				GlobalCamera().setParent(m_pCamWnd, window);
 				GtkFrame* camera_window = create_framed_widget(m_pCamWnd->getWidget());
 				gtk_paned_add1(GTK_PANED(vsplit2), GTK_WIDGET(camera_window));
-
-				// textures
-				//GtkFrame* texture_window = create_framed_widget(TextureBrowser_constructNotebookTab(window,false));
-				//gtk_paned_add2(GTK_PANED(vsplit2), GTK_WIDGET(texture_window));
 			}
 		}
-		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
-		gtk_paned_set_position(GTK_PANED(m_hSplit), g_layout_globals.nXYWidth);
 		gtk_paned_set_position(GTK_PANED(m_vSplit2), g_layout_globals.nCamHeight);
 		break;
 	}
 
 	case eSplit: {
-		GtkWidget* vsplit = gtk_vpaned_new();
-		m_vSplit = vsplit;
-		gtk_box_pack_start(GTK_BOX(mainHBox), vsplit, TRUE, TRUE, 0);
-		gtk_widget_show(vsplit);
-
 		// camera
 		m_pCamWnd = GlobalCamera().newCamWnd();
 		GlobalCamera().setCamWnd(m_pCamWnd);
@@ -1492,14 +1472,7 @@ void MainFrame::Create (void)
 
 		// split view (4 views)
 		GtkHPaned* split = create_split_views(camera, yz, xy, xz);
-		gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
-
-		// console
-		GtkWidget* console_window = Console_constructWindow(window);
-		gtk_paned_pack2(GTK_PANED(m_vSplit), GTK_WIDGET(console_window), TRUE, TRUE);
-
-		// set height of the upper split view (seperates the 4 views and the console)
-		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
+		gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(split), TRUE, TRUE, 0);
 
 		break;
 	}
@@ -1531,10 +1504,7 @@ void MainFrame::SaveWindowInfo (void)
 {
 	if (CurrentStyle() == eRegular) {
 		g_layout_globals.nXYWidth = gtk_paned_get_position(GTK_PANED(m_hSplit));
-		g_layout_globals.nXYHeight = gtk_paned_get_position(GTK_PANED(m_vSplit));
 		g_layout_globals.nCamHeight = gtk_paned_get_position(GTK_PANED(m_vSplit2));
-	} else {
-		g_layout_globals.nXYHeight = gtk_paned_get_position(GTK_PANED(m_vSplit));
 	}
 
 	g_layout_globals.m_position = m_position_tracker.getPosition();
@@ -1554,6 +1524,8 @@ void MainFrame::Shutdown (void)
 	m_pCamWnd = 0;
 
 	PreferencesDialog_destroyWindow();
+
+	delete _sidebar;
 
 	 // Stop the AutoSaver class from being called
 	map::AutoSaver().stopTimer();

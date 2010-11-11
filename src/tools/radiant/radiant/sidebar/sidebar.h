@@ -25,6 +25,44 @@
 #include "JobInfo.h"
 #include "texturebrowser.h"
 
-GtkWidget *Sidebar_construct (void);
+namespace ui {
+
+class Sidebar
+{
+	private:
+
+		// the sidebar widget
+		GtkWidget *_widget;
+
+		// the notebook which is part of the sidebar widget
+		GtkWidget *_notebook;
+
+	public:
+		// constructs the whole sidebar
+		Sidebar ();
+
+		~Sidebar ();
+
+		// returns the sidebar widget
+		GtkWidget* getWidget ();
+
+	private:
+
+		// single notebook tabs
+		void constructTextureBrowser ();
+		void constructEntityInspector ();
+		void constructSurfaceInspector ();
+		void constructJobInfo ();
+		void constructMapInfo ();
+		void constructPrefabBrowser ();
+
+		void toggleSidebar (void);
+		void toggleTextureBrowser (void);
+		void togglePrefabs (void);
+		void toggleSurfaceInspector (void);
+		void toggleEntityInspector (void);
+};
+
+}
 
 #endif

@@ -36,6 +36,7 @@ class IToolbarButton;
 
 class XYWnd;
 class CamWnd;
+namespace ui { class Sidebar; }
 
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
@@ -95,9 +96,10 @@ class MainFrame
 		void SaveWindowInfo ();
 		void Shutdown ();
 
-		GtkWidget* m_vSplit;
 		GtkWidget* m_hSplit;
 		GtkWidget* m_vSplit2;
+
+		ui::Sidebar *_sidebar;
 
 		CamWnd* m_pCamWnd;
 
