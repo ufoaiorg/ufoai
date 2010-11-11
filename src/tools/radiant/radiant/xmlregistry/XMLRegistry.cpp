@@ -341,7 +341,7 @@ class XMLRegistry: public Registry
 				globalOutputStream() << "XMLRegistry: Critical: ImportNode could not be found.\n";
 			}
 
-			globalOutputStream() << "XMLRegistry: Importing XML file: " << importFilePath.c_str() << "\n";
+			globalOutputStream() << "XMLRegistry: Importing XML file: " << importFilePath << "\n";
 
 			// Load the file
 			xmlDocPtr pImportDoc = xmlParseFile(importFilePath.c_str());
