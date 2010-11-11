@@ -28,7 +28,7 @@
 #include "radiant_i18n.h"
 #include "maptools.h"
 #include "../sidebar/JobInfo.h"
-#include "../material.h"
+#include "imaterial.h"
 #include "../exec.h"
 #include "os/file.h"  // file_exists
 #include "scenelib.h" // g_brushCount

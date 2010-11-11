@@ -24,7 +24,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "material.h"
+#include "imaterial.h"
 #include "radiant_i18n.h"
 
 #include "iradiant.h"
@@ -604,12 +604,3 @@ class MaterialSystemAPI
 typedef SingletonModule<MaterialSystemAPI> MaterialSystemModule;
 typedef Static<MaterialSystemModule> StaticMaterialSystemModule;
 StaticRegisterModule staticRegisterMaterial(StaticMaterialSystemModule::instance());
-
-void Material_Construct ()
-{
-	GlobalMaterialSystem()->construct();
-}
-
-void Material_Destroy ()
-{
-}

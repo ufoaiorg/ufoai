@@ -82,7 +82,7 @@
 #include "referencecache/nullmodel.h"
 #include "xyview/GlobalXYWnd.h"
 #include "camera/GlobalCamera.h"
-#include "material.h"
+#include "imaterial.h"
 #include "ump.h"
 #include "pathfinding.h"
 #include "model.h"
@@ -218,7 +218,7 @@ class Radiant: public TypeSystemRef
 			SurfaceInspector_Construct();
 			GlobalCamera().construct();
 			GlobalXYWnd().construct();
-			Material_Construct();
+			GlobalMaterialSystem()->construct();
 			TextureBrowser_Construct();
 			Entity_Construct();
 			map::AutoSaver().init();
@@ -241,7 +241,6 @@ class Radiant: public TypeSystemRef
 		{
 			UMP_Destroy();
 			Pathfinding_Destroy();
-			Material_Destroy();
 			TextureBrowser_Destroy();
 
 			EnginePath_Unrealise();

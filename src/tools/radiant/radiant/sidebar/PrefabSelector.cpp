@@ -39,7 +39,7 @@
 #include "archivelib.h"
 #include "script/scripttokeniser.h"
 #include "../camera/CamWnd.h"
-#include "../material.h"
+#include "imaterial.h"
 #include "../selection/algorithm/General.h"
 
 namespace sidebar
