@@ -2,9 +2,9 @@
 #define FINDSHADER_H_
 
 #include <string>
-#include "gtk/gtkwidget.h"
-#include "gtk/gtkeditable.h"
-#include "gtk/gtkliststore.h"
+#include <gtk/gtkwidget.h>
+#include <gtk/gtkeditable.h>
+#include <gtk/gtkliststore.h>
 #include "gtkutil/window/BlockingTransientWindow.h"
 
 /* greebo: The dialog providing the Find & Replace shader functionality.
@@ -30,9 +30,6 @@ class FindAndReplaceShader :
 
 	// The counter "x shaders replaced."
 	GtkWidget* _counterLabel;
-
-	// The treeview containing the above liststore
-	GtkWidget* _treeView;
 
 public:
 	// Constructor
