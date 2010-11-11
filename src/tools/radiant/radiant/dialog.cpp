@@ -201,16 +201,6 @@ void SizeEntryExport (GtkEntry& widget, const SizeImportCallback& importCallback
 }
 typedef ImportExport<GtkEntry, std::size_t, SizeEntryImport, SizeEntryExport> SizeEntryImportExport;
 
-void FloatEntryImport (GtkEntry& widget, float value)
-{
-	entry_set_float(&widget, value);
-}
-void FloatEntryExport (GtkEntry& widget, const FloatImportCallback& importCallback)
-{
-	importCallback((float) atof(gtk_entry_get_text(&widget)));
-}
-typedef ImportExport<GtkEntry, float, FloatEntryImport, FloatEntryExport> FloatEntryImportExport;
-
 void FloatSpinnerImport (GtkSpinButton& widget, float value)
 {
 	gtk_spin_button_set_value(&widget, value);
@@ -399,12 +389,6 @@ void Dialog::AddSizeEntryData (GtkEntry& widget, const SizeImportCallback& impor
 	AddCustomData<SizeEntryImportExport> (m_data).apply(widget, importViewer, exportViewer);
 }
 
-void Dialog::AddFloatEntryData (GtkEntry& widget, const FloatImportCallback& importViewer,
-		const FloatExportCallback& exportViewer)
-{
-	AddCustomData<FloatEntryImportExport> (m_data).apply(widget, importViewer, exportViewer);
-}
-
 void Dialog::AddFloatSpinnerData (GtkSpinButton& widget, const FloatImportCallback& importViewer,
 		const FloatExportCallback& exportViewer)
 {
@@ -427,47 +411,6 @@ void Dialog::AddIntComboData (GtkComboBox& widget, const IntImportCallback& impo
 		const IntExportCallback& exportViewer)
 {
 	AddCustomData<IntComboImportExport> (m_data).apply(widget, importViewer, exportViewer);
-}
-
-void Dialog::AddDialogData (GtkToggleButton& widget, bool& data)
-{
-	AddData<BoolToggleImportExport, BoolImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkRadioButton& widget, int& data)
-{
-	AddData<IntRadioImportExport, IntImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkEntry& widget, std::string& data)
-{
-	AddData<TextEntryImportExport, StringImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkEntry& widget, int& data)
-{
-	AddData<IntEntryImportExport, IntImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkEntry& widget, std::size_t& data)
-{
-	AddData<SizeEntryImportExport, SizeImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkEntry& widget, float& data)
-{
-	AddData<FloatEntryImportExport, FloatImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkSpinButton& widget, float& data)
-{
-	AddData<FloatSpinnerImportExport, FloatImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkSpinButton& widget, int& data)
-{
-	AddData<IntSpinnerImportExport, IntImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkAdjustment& widget, int& data)
-{
-	AddData<IntAdjustmentImportExport, IntImportExport> (m_data).apply(widget, data);
-}
-void Dialog::AddDialogData (GtkComboBox& widget, int& data)
-{
-	AddData<IntComboImportExport, IntImportExport> (m_data).apply(widget, data);
 }
 
 void Dialog::exportData ()
@@ -756,15 +699,6 @@ GtkWidget* Dialog::addSizeEntry (GtkWidget* vbox, const char* name, const SizeIm
 	return row.m_row;
 }
 
-GtkWidget* Dialog::addFloatEntry (GtkWidget* vbox, const char* name, const FloatImportCallback& importViewer,
-		const FloatExportCallback& exportViewer)
-{
-	DialogEntryRow row(DialogEntryRow_new(name));
-	AddFloatEntryData(*row.m_entry, importViewer, exportViewer);
-	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
-	return row.m_row;
-}
-
 GtkWidget* Dialog::addPathEntry (GtkWidget* vbox, const char* name, bool browse_directory,
 		const StringImportCallback& importViewer, const StringExportCallback& exportViewer)
 {
@@ -799,21 +733,6 @@ GtkWidget* Dialog::addSpinner (GtkWidget* vbox, const std::string& name, const s
 
 	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
 	return row.m_row;
-}
-
-GtkWidget* Dialog::addSpinner (GtkWidget* vbox, const char* name, double value, double lower, double upper,
-		const IntImportCallback& importViewer, const IntExportCallback& exportViewer)
-{
-	DialogSpinnerRow row(DialogSpinnerRow_new(name, value, lower, upper, 1));
-	AddIntSpinnerData(*row.m_spin, importViewer, exportViewer);
-	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
-	return row.m_row;
-}
-
-GtkWidget* Dialog::addSpinner (GtkWidget* vbox, const char* name, int& data, double value, double lower, double upper)
-{
-	return addSpinner(vbox, name, value, lower, upper, IntImportCallback(IntImportCaller(data)), IntExportCallback(
-			IntExportCaller(data)));
 }
 
 GtkWidget* Dialog::addSpinner (GtkWidget* vbox, const char* name, double value, double lower, double upper,

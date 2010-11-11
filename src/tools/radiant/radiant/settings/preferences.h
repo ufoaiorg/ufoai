@@ -29,8 +29,6 @@
 #include "preferencesystem.h"
 #include "iregistry.h"
 
-void Widget_connectToggleDependency (GtkWidget* self, GtkWidget* toggleButton);
-
 class PrefPage : public PreferencesPage
 {
 		Dialog& m_dialog;
@@ -97,17 +95,6 @@ class PrefPage : public PreferencesPage
 		{
 			m_dialog.addCombo(m_vbox, name, values, importCallback, exportCallback);
 		}
-		void appendCombo (const char* name, int& data, StringArrayRange values)
-		{
-			m_dialog.addCombo(m_vbox, name, data, values);
-		}
-		void appendSlider (const char* name, int& data, gboolean draw_value, const char* low, const char* high,
-				double value, double lower, double upper, double step_increment, double page_increment,
-				double page_size)
-		{
-			m_dialog.addSlider(m_vbox, name, data, draw_value, low, high, value, lower, upper, step_increment,
-					page_increment, page_size);
-		}
 		void appendRadio (const char* name, StringArrayRange names, const IntImportCallback& importCallback,
 				const IntExportCallback& exportCallback)
 		{
@@ -122,34 +109,12 @@ class PrefPage : public PreferencesPage
 		{
 			m_dialog.addRadioIcons(m_vbox, name, icons, importCallback, exportCallback);
 		}
-		void appendRadioIcons (const char* name, int& data, StringArrayRange icons)
-		{
-			m_dialog.addRadioIcons(m_vbox, name, data, icons);
-		}
 		GtkWidget* appendEntry (const char* name, const IntImportCallback& importCallback,
 				const IntExportCallback& exportCallback)
 		{
 			return m_dialog.addIntEntry(m_vbox, name, importCallback, exportCallback);
 		}
-		GtkWidget* appendEntry (const char* name, int& data)
-		{
-			return m_dialog.addEntry(m_vbox, name, data);
-		}
-		GtkWidget* appendEntry (const char* name, const SizeImportCallback& importCallback,
-				const SizeExportCallback& exportCallback)
-		{
-			return m_dialog.addSizeEntry(m_vbox, name, importCallback, exportCallback);
-		}
 		GtkWidget* appendEntry (const char* name, std::size_t& data)
-		{
-			return m_dialog.addEntry(m_vbox, name, data);
-		}
-		GtkWidget* appendEntry (const char* name, const FloatImportCallback& importCallback,
-				const FloatExportCallback& exportCallback)
-		{
-			return m_dialog.addFloatEntry(m_vbox, name, importCallback, exportCallback);
-		}
-		GtkWidget* appendEntry (const char* name, float& data)
 		{
 			return m_dialog.addEntry(m_vbox, name, data);
 		}
@@ -157,19 +122,6 @@ class PrefPage : public PreferencesPage
 				const StringImportCallback& importCallback, const StringExportCallback& exportCallback)
 		{
 			return m_dialog.addPathEntry(m_vbox, name, browse_directory, importCallback, exportCallback);
-		}
-		GtkWidget* appendPathEntry (const char* name, std::string& data, bool directory)
-		{
-			return m_dialog.addPathEntry(m_vbox, name, data, directory);
-		}
-		GtkWidget* appendSpinner (const char* name, int& data, double value, double lower, double upper)
-		{
-			return m_dialog.addSpinner(m_vbox, name, data, value, lower, upper);
-		}
-		GtkWidget* appendSpinner (const char* name, double value, double lower, double upper,
-				const IntImportCallback& importCallback, const IntExportCallback& exportCallback)
-		{
-			return m_dialog.addSpinner(m_vbox, name, value, lower, upper, importCallback, exportCallback);
 		}
 		GtkWidget* appendSpinner (const char* name, double value, double lower, double upper,
 				const FloatImportCallback& importCallback, const FloatExportCallback& exportCallback)
@@ -181,7 +133,6 @@ class PrefPage : public PreferencesPage
 typedef Callback1<PrefPage*> PreferencesPageCallback;
 typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;
 
-void PreferencesDialog_addInterfacePreferences (const PreferencesPageCallback& callback);
 void PreferencesDialog_addInterfacePage (const PreferenceGroupCallback& callback);
 void PreferencesDialog_addSettingsPreferences (const PreferencesPageCallback& callback);
 void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback);

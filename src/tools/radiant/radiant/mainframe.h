@@ -202,8 +202,6 @@ const std::string SettingsPath_get ();
 void Radiant_Initialise ();
 void Radiant_Shutdown ();
 
-void SaveMapAs ();
-
 void GlobalCamera_UpdateWindow();
 void XY_UpdateAllWindows ();
 void UpdateAllWindows ();
