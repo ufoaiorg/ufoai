@@ -149,7 +149,7 @@ void ColourSchemeManager::loadColourSchemes() {
 	// Find all <scheme> nodes
 	xml::NodeList schemeNodes = GlobalRegistry().findXPath("user/ui/colourschemes/colourscheme");
 
-	if (schemeNodes.size()>0) {
+	if (!schemeNodes.empty()) {
 		// Cycle through all found scheme nodes
 		for (unsigned int i = 0; i < schemeNodes.size(); i++) {
 			schemeName = schemeNodes[i].getAttributeValue("name");
