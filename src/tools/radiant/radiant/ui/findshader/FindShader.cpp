@@ -81,7 +81,7 @@ void FindAndReplaceShader::populateWindow() {
 	_findEntry = gtk_entry_new();
 	_replaceEntry = gtk_entry_new();
 	g_signal_connect(G_OBJECT(_findEntry), "changed", G_CALLBACK(onFindChanged), this);
-	g_signal_connect(G_OBJECT(_findEntry), "changed", G_CALLBACK(onReplaceChanged), this);
+	g_signal_connect(G_OBJECT(_replaceEntry), "changed", G_CALLBACK(onReplaceChanged), this);
 
 	gtk_box_pack_start(GTK_BOX(findHBox), _findEntry, TRUE, TRUE, 6);
 	gtk_box_pack_start(GTK_BOX(replaceHBox), _replaceEntry, TRUE, TRUE, 6);

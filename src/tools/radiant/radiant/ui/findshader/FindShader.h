@@ -36,14 +36,14 @@ public:
 	FindAndReplaceShader();
 	~FindAndReplaceShader();
 
-	// This is called to initialise the dialog window / create the widgets
-	virtual void populateWindow();
-
 	/** greebo: Shows the dialog (allocates on heap, dialog self-destructs)
 	 */
 	static void showDialog();
 
 private:
+
+	// This is called to initialise the dialog window / create the widgets
+	void populateWindow();
 
 	/** greebo: As the name states, this runs the replace algorithm
 	 */
