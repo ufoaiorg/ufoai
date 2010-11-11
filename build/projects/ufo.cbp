@@ -922,6 +922,7 @@
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_thread.h" />
 		<Unit filename="..\..\src\client\renderer\r_warpsin.h" />
+		<Unit filename="..\..\src\client\sound\s_local.h" />
 		<Unit filename="..\..\src\client\sound\s_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
