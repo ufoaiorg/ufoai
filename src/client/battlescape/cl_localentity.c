@@ -493,9 +493,8 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 			CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
 	}
 	if (t->footStepSound) {
-		s_sample_t *sample = S_LoadSample(t->footStepSound);
 		Com_DPrintf(DEBUG_SOUND, "LE_PlaySoundFileAndParticleForSurface: volume %.2f\n", t->footStepVolume);
-		S_PlaySample(origin, sample, SOUND_ATTN_STATIC, t->footStepVolume);
+		S_LoadAndPlaySample(t->footStepSound, origin, SOUND_ATTN_STATIC, t->footStepVolume);
 	}
 }
 
