@@ -2001,10 +2001,8 @@ void CL_ActorPlaySound (const le_t *le, actorSound_t soundType)
 {
 	const char *actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 	if (actorSound) {
-		s_sample_t *sample = S_LoadSample(actorSound);
-		if (sample) {
+		if (S_LoadAndPlaySample(actorSound, le->origin, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT)) {
 			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
-			S_PlaySample(le->origin, sample, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT);
 		}
 	}
 }
