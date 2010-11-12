@@ -106,9 +106,6 @@ typedef struct client_static_s {
 	/** these models must only be loaded once */
 	struct model_s *modelPool[MAX_OBJDEFS];
 
-	/** this pool is reloaded on every sound system restart */
-	s_sample_t *soundPool[MAX_SOUNDIDS];
-
 	/* unique character id */
 	int nextUniqueCharacterNumber;
 

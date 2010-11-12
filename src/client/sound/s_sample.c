@@ -25,9 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "s_local.h"
 #include "s_sample.h"
+#include "s_main.h"		/* for s_sample_t */
 
 #define SAMPLE_HASH_SIZE 64
 static s_sample_t *sampleHash[SAMPLE_HASH_SIZE];
+
+/** this pool is reloaded on every sound system restart */
+s_sample_t *stdSoundPool[MAX_SOUNDIDS];
 
 /**
  * @brief Controls the repeat rate for the same sample.
@@ -184,7 +188,7 @@ void S_LoadSamples (void)
 	}
 
 	/* precache the sound pool */
-	cls.soundPool[SOUND_WATER_IN] = S_LoadSample("footsteps/water_in");
-	cls.soundPool[SOUND_WATER_OUT] = S_LoadSample("footsteps/water_out");
-	cls.soundPool[SOUND_WATER_MOVE] = S_LoadSample("footsteps/water_under");
+	stdSoundPool[SOUND_WATER_IN] = S_LoadSample("footsteps/water_in");
+	stdSoundPool[SOUND_WATER_OUT] = S_LoadSample("footsteps/water_out");
+	stdSoundPool[SOUND_WATER_MOVE] = S_LoadSample("footsteps/water_under");
 }

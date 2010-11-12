@@ -42,6 +42,9 @@ cvar_t *snd_distance_scale;
 static cvar_t *snd_init;
 static cvar_t *snd_rate;
 
+/* I know this decl shouldn't be here (Duke). Interim solution...*/
+extern s_sample_t *stdSoundPool[MAX_SOUNDIDS];
+
 static void S_Restart_f(void);
 
 /**
@@ -320,5 +323,5 @@ qboolean S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuati
  */
 void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float attenuation, float volume)
 {
-	S_PlaySample(origin, cls.soundPool[sId], attenuation, volume);
+	S_PlaySample(origin, stdSoundPool[sId], attenuation, volume);
 }
