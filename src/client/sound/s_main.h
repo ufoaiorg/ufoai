@@ -34,13 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_CHANNELS 64
 
 /** @brief These sounds are precached in S_LoadSamples */
-enum {
+typedef enum {
 	SOUND_WATER_IN,
 	SOUND_WATER_OUT,
 	SOUND_WATER_MOVE,
 
 	MAX_SOUNDIDS
-};
+} stdsound_t;
 
 typedef struct s_sample_s {
 	char *name;
@@ -78,6 +78,7 @@ void S_Init(void);
 void S_Shutdown(void);
 void S_Frame(void);
 void S_Stop(void);
+void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float atten, float volume);
 void S_PlaySample(const vec3_t origin, s_sample_t* sample, float atten, float volume);
 void S_StartLocalSample(const char *s, float volume);
 s_sample_t *S_LoadSample(const char *s);

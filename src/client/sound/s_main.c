@@ -307,3 +307,8 @@ void S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, 
 	s_sample_t *sample = S_LoadSample(s);
 	S_PlaySample(origin, sample, attenuation, volume);
 }
+
+void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float atten, float volume)
+{
+	S_PlaySample(origin, cls.soundPool[sId], atten, volume);
+}
