@@ -72,7 +72,7 @@ class BrushModuleClass: public RegistryKeyObserver, public BrushCreator, public 
 		void toggleTextureLock ();
 
 		// The callback for registry key changes
-		void keyChanged ();
+		void keyChanged (const std::string& changedKey, const std::string& newValue);
 
 	private:
 		// Adds the actual preference items to the given page

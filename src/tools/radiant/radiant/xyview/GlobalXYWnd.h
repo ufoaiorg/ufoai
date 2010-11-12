@@ -67,7 +67,7 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 		~XYWndManager ();
 
 		// The callback that gets called on registry key changes
-		void keyChanged ();
+		void keyChanged (const std::string& changedKey, const std::string& newValue);
 
 		// Returns the state of the xy view preferences
 		bool chaseMouse () const;

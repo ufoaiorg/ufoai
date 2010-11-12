@@ -237,7 +237,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLump.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingRenderable.cpp \
 	\
+	$(RADIANT_BASE)/radiant/xmlregistry/RegistryTree.cpp \
 	$(RADIANT_BASE)/radiant/xmlregistry/XMLRegistry.cpp \
+	$(RADIANT_BASE)/radiant/xmlregistry/XMLRegistryModule.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/clipboard.cpp \

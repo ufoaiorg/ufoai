@@ -386,70 +386,6 @@ void Radiant_detachGameToolsPathObserver (ModuleObserver& observer)
 	g_gameToolsPathObservers.detach(observer);
 }
 
-void populateRegistry ()
-{
-	// Load default values for darkradiant, located in the game directory
-	const std::string base = AppPath_get() + "user.xml";
-	const std::string input = AppPath_get() + "input.xml";
-	const std::string colours = AppPath_get() + "colours.xml";
-	const std::string menu = AppPath_get() + "menu.xml";
-
-	if (file_exists(base)) {
-		GlobalRegistry().importFromFile(base, "");
-
-		// Try to load the default colour schemes
-		if (file_exists(colours)) {
-			GlobalRegistry().importFromFile(colours, "user/ui");
-		}
-		else {
-			gtkutil::errorDialog(_("Could not find default colour schemes:\n") + colours);
-		}
-
-		// Try to load the menu definitions
-		if (file_exists(menu)) {
-			GlobalRegistry().importFromFile(menu, "user/ui");
-		}
-		else {
-			gtkutil::errorDialog(_("Could not find menu definition:\n") + menu);
-		}
-
-		// Try to load the default input definitions
-		if (file_exists(input)) {
-			GlobalRegistry().importFromFile(input, "user/ui");
-		} else {
-			gtkutil::errorDialog(_("Could not find default input definitions:\n") + input);
-		}
-	} else {
-		gtkutil::fatalErrorDialog(_("Could not find base registry:\n") + base);
-	}
-
-	// Construct the filename and load it into the registry
-	const std::string filename = AppPath_get() + "game.xml";
-	GlobalRegistry().importFromFile(filename, "");
-
-	// Load user preferences, these overwrite any values that have defined before
-	// The called method also checks for any upgrades that have to be performed
-	const std::string userSettingsFile = SettingsPath_get() + "user.xml";
-	if (file_exists(userSettingsFile)) {
-		GlobalRegistry().importFromFile(userSettingsFile, "");
-	}
-
-	const std::string userColoursFile = SettingsPath_get() + "colours.xml";
-	if (file_exists(userColoursFile)) {
-		GlobalRegistry().importFromFile(userColoursFile, "user/ui");
-	}
-
-	const std::string userInputFile = SettingsPath_get() + "input.xml";
-	if (file_exists(userInputFile)) {
-		GlobalRegistry().importFromFile(userInputFile, "user/ui");
-	}
-
-	const std::string menuFile = SettingsPath_get() + "menu.xml";
-	if (file_exists(userInputFile)) {
-		GlobalRegistry().importFromFile(menuFile, "user/ui");
-	}
-}
-
 // This is called from main() to start up the Radiant stuff.
 void Radiant_Initialise (void)
 {
@@ -459,7 +395,7 @@ void Radiant_Initialise (void)
 	GlobalRegistryModuleRef registryRef;
 
 	// Try to load all the XML files into the registry
-	populateRegistry();
+	GlobalRegistry().init(AppPath_get(), SettingsPath_get());
 
 	// Load the ColourSchemes from the registry
 	ColourSchemes().loadColourSchemes();

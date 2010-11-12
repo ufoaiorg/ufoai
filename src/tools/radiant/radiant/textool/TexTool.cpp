@@ -82,7 +82,7 @@ TexTool::TexTool() :
 	GlobalRegistry().addKeyObserver(this, RKEY_GRID_STATE);
 }
 
-void TexTool::keyChanged() {
+void TexTool::keyChanged(const std::string& changedKey, const std::string& newValue) {
 	_gridActive = GlobalRegistry().get(RKEY_GRID_STATE) == "1";
 	draw();
 }

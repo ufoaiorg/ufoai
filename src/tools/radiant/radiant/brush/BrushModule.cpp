@@ -118,7 +118,7 @@ bool BrushModuleClass::Brush_addFace (scene::Node& brush, const _QERFaceData& fa
 			TextureProjection(faceData.m_texdef)) != 0;
 }
 
-void BrushModuleClass::keyChanged() {
+void BrushModuleClass::keyChanged(const std::string& changedKey, const std::string& newValue) {
 	_textureLockEnabled = (GlobalRegistry().get(RKEY_ENABLE_TEXTURE_LOCK) == "1");
 }
 

@@ -205,7 +205,7 @@ class TextureBrowser: public RegistryKeyObserver {
 		void addActiveShadersChangedCallback(const SignalHandler& handler);
 		void constructPage(PreferenceGroup& group);
 
-		void keyChanged();
+		void keyChanged(const std::string& changedKey, const std::string& newValue);
 	private:
 		static gboolean onMouseMotion(GtkWidget *widget, GdkEventMotion *event,
 				TextureBrowser* textureBrowser);

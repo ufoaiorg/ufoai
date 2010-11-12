@@ -75,7 +75,7 @@ class Pathfinding: public PreferenceConstructor, public RegistryKeyObserver
 		}
 
 		// Update the internally stored variables on registry key change
-		void keyChanged ()
+		void keyChanged (const std::string& changedKey, const std::string& newValue)
 		{
 			_showPathfinding = (GlobalRegistry().get(RKEY_PATHFINDING_SHOW) == "1");
 			_showAllLowerLevels = (GlobalRegistry().get(RKEY_PATHFINDING_SHOW_ALL_LOWER) == "1");

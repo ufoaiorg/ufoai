@@ -27,7 +27,7 @@ BrushClipper::BrushClipper () :
 }
 
 // Update the internally stored variables on registry key change
-void BrushClipper::keyChanged ()
+void BrushClipper::keyChanged (const std::string& changedKey, const std::string& newValue)
 {
 	_caulkShader = GlobalRegistry().get(RKEY_CLIPPER_CAULK_SHADER);
 	_useCaulk = (GlobalRegistry().get(RKEY_CLIPPER_USE_CAULK) == "1");

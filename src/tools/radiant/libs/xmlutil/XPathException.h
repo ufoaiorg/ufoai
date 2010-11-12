@@ -4,16 +4,20 @@
 #include <stdexcept>
 #include <string>
 
-namespace xml {
+namespace xml
+{
 
 // Exception to indicate failure to process an XPath lookup.
 
-class XPathException: public std::runtime_error {
+class XPathException:
+    public std::runtime_error
+{
 public:
-	// Constructor. Must initialise the parent.
-	XPathException(const std::string& what) :
-		std::runtime_error(what) {
-	}
+
+    // Constructor. Must initialise the parent.
+    XPathException(const std::string& what):
+        std::runtime_error(what) {}
+
 };
 
 }

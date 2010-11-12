@@ -134,7 +134,7 @@ public:
 
 	/** greebo: RegistryKeyObserver implementation, gets called upon key change
 	 */
-	void keyChanged();
+	void keyChanged(const std::string& changedKey, const std::string& newValue);
 
 	/** greebo: Registers the commands in the EventManager
 	 */

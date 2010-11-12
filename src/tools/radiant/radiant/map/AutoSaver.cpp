@@ -41,7 +41,7 @@ AutoMapSaver::~AutoMapSaver() {
 	stopTimer();
 }
 
-void AutoMapSaver::keyChanged() {
+void AutoMapSaver::keyChanged(const std::string& changedKey, const std::string& newValue) {
 	// Stop the current timer
 	stopTimer();
 

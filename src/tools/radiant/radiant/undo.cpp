@@ -91,7 +91,7 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 		}
 
 		// Gets called as soon as the observed registry keys get changed
-		void keyChanged() {
+		void keyChanged(const std::string& changedKey, const std::string& newValue) {
 			_undoLevels = GlobalRegistry().getInt(RKEY_UNDO_QUEUE_SIZE);
 		}
 

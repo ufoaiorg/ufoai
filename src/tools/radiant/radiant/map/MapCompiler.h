@@ -36,7 +36,7 @@ class MapCompiler: public IMapCompiler, public RegistryKeyObserver, public Prefe
 
 		void generateMaterial (const std::string& mapName, ICompilerObserver& observer);
 
-		void keyChanged ();
+		void keyChanged (const std::string& changedKey, const std::string& newValue);
 
 		void constructPreferencePage (PreferenceGroup& group);
 

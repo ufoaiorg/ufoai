@@ -21,7 +21,7 @@ class CommandListPopulator: public IEventVisitor
 		{
 		}
 
-		void visit (const std::string& eventName, IEvent* event)
+		void visit (const std::string& eventName, const IEvent* event)
 		{
 			GtkTreeIter iter;
 

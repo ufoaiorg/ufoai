@@ -80,7 +80,7 @@ void CameraSettings::importDrawMode (const int mode)
 	}
 }
 
-void CameraSettings::keyChanged ()
+void CameraSettings::keyChanged (const std::string& changedKey, const std::string& newValue)
 {
 	// Check for iterative loops
 	if (_callbackActive) {

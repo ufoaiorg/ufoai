@@ -53,10 +53,10 @@ class GridManager: public IGridManager, public RegistryKeyObserver, public Prefe
 			//GlobalPreferenceSystem().addConstructor(this);
 
 			// Load the default value from the registry
-			keyChanged();
+			keyChanged("", "");
 		}
 
-		void keyChanged ()
+		void keyChanged (const std::string& changedKey, const std::string& newValue)
 		{
 			// Get the registry value
 			int registryValue = GlobalRegistry().getInt(RKEY_DEFAULT_GRID_SIZE);

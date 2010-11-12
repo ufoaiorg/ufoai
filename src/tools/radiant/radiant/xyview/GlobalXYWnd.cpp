@@ -31,7 +31,7 @@ XYWndManager::XYWndManager() :
 	GlobalRegistry().addKeyObserver(this, RKEY_CAULK_TEXTURE);
 
 	// Trigger loading the values of the observed registry keys
-	keyChanged();
+	keyChanged("", "");
 
 	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
 	GlobalPreferenceSystem().addConstructor(this);
@@ -110,7 +110,7 @@ void XYWndManager::constructPreferencePage(PreferenceGroup& group) {
 }
 
 // Load/Reload the values from the registry
-void XYWndManager::keyChanged() {
+void XYWndManager::keyChanged(const std::string& changedKey, const std::string& newValue) {
 	_chaseMouse = (GlobalRegistry().get(RKEY_CHASE_MOUSE) == "1");
 	_camXYUpdate = (GlobalRegistry().get(RKEY_CAMERA_XY_UPDATE) == "1");
 	_showCrossHairs = (GlobalRegistry().get(RKEY_SHOW_CROSSHAIRS) == "1");

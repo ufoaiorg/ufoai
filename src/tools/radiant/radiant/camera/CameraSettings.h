@@ -47,7 +47,7 @@ class CameraSettings: public RegistryKeyObserver, public PreferenceConstructor
 		CameraSettings ();
 
 		// The callback that gets called on registry key changes
-		void keyChanged ();
+		void keyChanged (const std::string& changedKey, const std::string& newValue);
 
 		int movementSpeed () const;
 		int angleSpeed () const;

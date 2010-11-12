@@ -116,7 +116,7 @@ TextureBrowser::TextureBrowser () :
 	setSelectedShader("");
 }
 
-void TextureBrowser::keyChanged()
+void TextureBrowser::keyChanged(const std::string& changedKey, const std::string& newValue)
 {
 	m_hideUnused = (GlobalRegistry().get(RKEY_TEXTURES_HIDE_UNUSED) == "1");
 	m_hideInvalid = (GlobalRegistry().get(RKEY_TEXTURES_HIDE_INVALID) == "1");

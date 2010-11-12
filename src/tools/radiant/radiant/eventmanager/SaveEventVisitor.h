@@ -22,13 +22,14 @@ class SaveEventVisitor :
 	const std::string _rootKey;
 
 	// The node containing all the <shortcut> tags
-	xmlNodePtr _shortcutsNode;
+	xml::Node _shortcutsNode;
 
 	IEventManager* _eventManager;
 
 public:
-	SaveEventVisitor(const std::string rootKey, IEventManager* eventManager) :
+	SaveEventVisitor(const std::string& rootKey, IEventManager* eventManager) :
 		_rootKey(rootKey),
+		_shortcutsNode(NULL),
 		_eventManager(eventManager)
 	{
 		// Remove any existing shortcut definitions
@@ -37,32 +38,27 @@ public:
 		_shortcutsNode = GlobalRegistry().createKey(_rootKey + "/shortcuts");
 	}
 
-	void visit(const std::string& eventName, IEvent* event) {
-		// Sanity check
-		if (event != NULL && eventName != "") {
+	void visit(const std::string& eventName, const IEvent* event) {
+		// Only export events with non-empty name
+		if (eventName != "") {
 			// Try to find an accelerator connected to this event
 			Accelerator* accelerator = dynamic_cast<Accelerator*>(_eventManager->findAccelerator(event));
 
-			std::string keyStr = "";
-			std::string modifierStr = "";
+			unsigned int keyVal = accelerator->getKey();
 
-			if (accelerator != NULL) {
-				unsigned int keyVal = accelerator->getKey();
-				keyStr = (keyVal != 0) ? gdk_keyval_name(keyVal) : "";;
-				modifierStr = _eventManager->getModifierStr(accelerator->getModifiers(), false);
-			}
+			const std::string keyStr = (keyVal != 0) ? gdk_keyval_name(keyVal) : "";
+			const std::string modifierStr = _eventManager->getModifierStr(accelerator->getModifiers());
 
 			// Create a new child under the _shortcutsNode
-			xmlNodePtr createdNodePtr = xmlNewChild(_shortcutsNode, NULL, xmlCharStrdup("shortcut"), NULL);
+			xml::Node createdNode = _shortcutsNode.createChild("shortcut");
 
 			// Convert it into an xml::Node and set the attributes
-			xml::Node(createdNodePtr).setAttributeValue("command", eventName);
-			xml::Node(createdNodePtr).setAttributeValue("key", keyStr);
-			xml::Node(createdNodePtr).setAttributeValue("modifiers", modifierStr);
+			createdNode.setAttributeValue("command", eventName);
+			createdNode.setAttributeValue("key", keyStr);
+			createdNode.setAttributeValue("modifiers", modifierStr);
 
-			// Add some whitespace to the node
-			xmlNodePtr whitespace = xmlNewText(xmlCharStrdup("\n\t"));
-			xmlAddSibling(createdNodePtr, whitespace);
+			// Add some whitespace to the node (nicer output formatting)
+			createdNode.addText("\n\t");
 		}
 	}
 

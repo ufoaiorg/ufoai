@@ -46,7 +46,7 @@ class BrushClipper: public Clipper, public RegistryKeyObserver, public Preferenc
 		BrushClipper ();
 
 		// The RegistryKeyObserver implementation, gets called when the observed keys change
-		void keyChanged ();
+		void keyChanged (const std::string& changedKey, const std::string& newValue);
 
 		EViewType getViewType () const;
 		void setViewType (EViewType viewType);

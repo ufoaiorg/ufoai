@@ -179,7 +179,7 @@ public:
 	}
 
 	// RegistryKeyObserver implementation, gets called upon key change
-	void keyChanged() {
+	void keyChanged(const std::string& changedKey, const std::string& newValue) {
 		show(GlobalRegistry().get(RKEY_OVERLAY_VISIBLE) == "1");
 		_keepProportions = (GlobalRegistry().get(RKEY_OVERLAY_PROPORTIONAL) == "1");
 		_scaleWithXYView = (GlobalRegistry().get(RKEY_OVERLAY_SCALE_WITH_XY) == "1");

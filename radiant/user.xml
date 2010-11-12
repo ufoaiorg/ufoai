@@ -63,7 +63,12 @@
 				<hideInvalid value="1" />
 			</browser>
 
+			<shaderChooser>
+				<window xPosition="200" yPosition="100" width="550" height="500" />
+			</shaderChooser>
+
 			<texTool>
+				<window xPosition="150" yPosition="200" width="280" height="242" />
 				<gridActive value="1" />
 				<faceVertexScalePivotIsCentroid value="0" />
 			</texTool>

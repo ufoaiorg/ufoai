@@ -30,7 +30,7 @@ MapCompiler::MapCompiler ()
 	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
 	GlobalPreferenceSystem().addConstructor(this);
 
-	keyChanged();
+	keyChanged("", "");
 }
 
 MapCompiler::~MapCompiler ()
@@ -126,7 +126,7 @@ void MapCompiler::generateMaterial (const std::string& mapName, ICompilerObserve
 }
 
 // RegistryKeyObserver implementation, gets called upon key change
-void MapCompiler::keyChanged ()
+void MapCompiler::keyChanged (const std::string& changedKey, const std::string& newValue)
 {
 	_errorCheckParameters = GlobalRegistry().get(RKEY_ERROR_CHECK_PARAMETERS);
 	_errorFixParameters = GlobalRegistry().get(RKEY_ERROR_FIX_PARAMETERS);

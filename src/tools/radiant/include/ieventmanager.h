@@ -128,7 +128,7 @@ public:
 // Event visitor class
 class IEventVisitor {
 public:
-	virtual void visit(const std::string& eventName, IEvent* event) = 0;
+	virtual void visit(const std::string& eventName, const IEvent* event) = 0;
 };
 
 class IEventManager
