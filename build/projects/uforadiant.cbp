@@ -834,7 +834,11 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\vfs.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\windowobservers.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\windowobservers.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\xmlregistry\RegistryTree.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\xmlregistry\RegistryTree.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\xmlregistry\XMLRegistry.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\xmlregistry\XMLRegistry.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\xmlregistry\XMLRegistryModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\xyview\GlobalXYWnd.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\xyview\GlobalXYWnd.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\xyview\XYRenderer.h" />
