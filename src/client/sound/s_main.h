@@ -71,8 +71,6 @@ typedef struct s_env_s {
 	qboolean initialized;
 } s_env_t;
 
-extern s_env_t s_env;
-
 #define SND_VOLUME_DEFAULT 1.0f
 #define SND_VOLUME_WEAPONS 1.0f
 
