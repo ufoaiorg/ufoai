@@ -25,10 +25,10 @@ sub said {
 		return "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805245";
 	} elsif ($message->{'body'} =~ /^\!patch\s*#?(\d+)/i) {
 		return "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805244";
+	} elsif ($message->{'body'} =~ /^\!r(?:ev)?\s*#?([0-9a-f]{6,40})/i) {
+		return "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commitdiff;h=$1";
 	} elsif ($message->{'body'} =~ /^\!r(?:ev)?\s*#?(\d{1,5})/i) {
 		return "http://sourceforge.net/apps/trac/ufoai/changeset/$1";
-	} elsif ($message->{'body'} =~ /^\!r(?:ev)?\s*#?([0-9a-f]{8,40})/i) {
-		return "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commitdiff;h=$1";
 	} elsif ($message->{'body'} =~ /^\!ticket\s*#?(\d+)/i) {
 		return "https://sourceforge.net/apps/trac/ufoai/ticket/$1";
 	} elsif ($message->{'body'} =~ /^\!faq\s*#?(\w*)?/i) {
