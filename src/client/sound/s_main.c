@@ -296,7 +296,7 @@ void S_Shutdown (void)
 }
 
 /**
- * @brief does what the name implies in just one fuction to avoid exposing s_sample_t
+ * @brief does what the name implies in just one function to avoid exposing s_sample_t
  * @param s name of the sample
  * @param origin where to play it
  * @param attenuation how to reduce volume by distance
@@ -308,7 +308,14 @@ void S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, 
 	S_PlaySample(origin, sample, attenuation, volume);
 }
 
-void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float atten, float volume)
+/**
+ * @brief plays one of the precached samples
+ * @param sId ID of the sample
+ * @param origin where to play it
+ * @param attenuation how to reduce volume by distance
+ * @param volume well, the volume
+ */
+void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float attenuation, float volume)
 {
-	S_PlaySample(origin, cls.soundPool[sId], atten, volume);
+	S_PlaySample(origin, cls.soundPool[sId], attenuation, volume);
 }
