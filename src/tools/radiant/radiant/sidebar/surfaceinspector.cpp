@@ -855,6 +855,9 @@ void SurfaceInspector::Update (void)
 	}
 
 	UpdateFlagButtons();
+
+	// Update the TexTool instance as well
+	ui::TexTool::Instance().draw();
 }
 
 /**
@@ -922,6 +925,9 @@ void SurfaceInspector::ApplyShader (void)
 
 	UndoableCommand undo("textureNameSetSelected");
 	Select_SetShader(name);
+
+	// Update the TexTool instance as well
+	ui::TexTool::Instance().draw();
 }
 
 void SurfaceInspector::ApplyTexdef (void)
@@ -938,6 +944,9 @@ void SurfaceInspector::ApplyTexdef (void)
 
 	UndoableCommand undo("textureProjectionSetSelected");
 	Select_SetTexdef(projection);
+
+	// Update the TexTool instance as well
+	ui::TexTool::Instance().draw();
 }
 
 void SurfaceInspector::ApplyFlags (void)
