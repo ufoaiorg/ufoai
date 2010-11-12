@@ -29,14 +29,109 @@ void SurfaceInspector_Construct ();
 void SurfaceInspector_Destroy ();
 void SurfaceInspector_FitTexture (void);
 
-void FlipTextureX();
-void FlipTextureY();
+void FlipTextureX ();
+void FlipTextureY ();
 
 void SelectedFaces_copyTexture ();
 void SelectedFaces_pasteTexture ();
 
 void Scene_applyClosestTexture (SelectionTest& test);
 void Scene_copyClosestTexture (SelectionTest& test);
+
+#include "gtkutil/nonmodal.h"
+#include "gtkutil/idledraw.h"
+#include "gtkutil/entry.h"
+
+class Increment
+{
+	private:
+		void spin_button_set_step (GtkSpinButton* spin, gfloat step)
+		{
+			GtkAdjustment* adjustment = gtk_spin_button_get_adjustment(spin);
+			adjustment->step_increment = step;
+			gtk_adjustment_changed(adjustment);
+		}
+
+		float& m_f;
+	public:
+		GtkSpinButton* m_spin;
+		GtkEntry* m_entry;
+		Increment (float& f) :
+			m_f(f), m_spin(0), m_entry(0)
+		{
+		}
+		void cancel (void)
+		{
+			entry_set_float(m_entry, m_f);
+		}
+		typedef MemberCaller<Increment, &Increment::cancel> CancelCaller;
+		void apply (void)
+		{
+			m_f = static_cast<float> (entry_get_float(m_entry));
+			spin_button_set_step(m_spin, m_f);
+		}
+		typedef MemberCaller<Increment, &Increment::apply> ApplyCaller;
+};
+
+class SurfaceInspector
+{
+		NonModalEntry m_textureEntry;
+		NonModalSpinner m_hshiftSpinner;
+		NonModalEntry m_hshiftEntry;
+		NonModalSpinner m_vshiftSpinner;
+		NonModalEntry m_vshiftEntry;
+		NonModalSpinner m_hscaleSpinner;
+		NonModalEntry m_hscaleEntry;
+		NonModalSpinner m_vscaleSpinner;
+		NonModalEntry m_vscaleEntry;
+		NonModalSpinner m_rotateSpinner;
+		NonModalEntry m_rotateEntry;
+
+		IdleDraw m_idleDraw;
+
+		GtkCheckButton* m_surfaceFlags[32];
+		GtkFrame* m_surfaceFlagsFrame;
+		GtkCheckButton* m_contentFlags[32];
+		GtkFrame* m_contentFlagsFrame;
+
+		NonModalEntry m_valueEntry;
+		GtkEntry* m_valueEntryWidget;
+		bool m_valueInconsistent; // inconsistent marker for valueEntryWidget
+
+		void UpdateFlagButtons ();
+		static void UpdateValueStatus (GtkWidget *widget, SurfaceInspector *inspector);
+
+		void gridChange ();
+
+	public:
+		GtkWidget* BuildNotebook ();
+
+		// Dialog Data
+		float m_fitHorizontal;
+		float m_fitVertical;
+
+		Increment m_hshiftIncrement;
+		Increment m_vshiftIncrement;
+		Increment m_hscaleIncrement;
+		Increment m_vscaleIncrement;
+		Increment m_rotateIncrement;
+		// TODO: Use gtkutil::TextPanel
+		GtkEntry* m_texture;
+
+		SurfaceInspector ();
+		void queueDraw (void);
+
+		void Update ();
+		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::Update> UpdateCaller;
+		void ApplyShader ();
+		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyShader> ApplyShaderCaller;
+		void ApplyTexdef ();
+		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyTexdef> ApplyTexdefCaller;
+		void ApplyFlags ();
+		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyFlags> ApplyFlagsCaller;
+
+		static void ApplyFlagsWithIndicator (GtkWidget *widget, SurfaceInspector *inspector);
+};
 
 // the increment we are using for the surface inspector (this is saved in the prefs)
 struct si_globals_t

@@ -62,119 +62,7 @@
 #include "../textureentry.h"
 #include "../textool/TexTool.h"
 
-inline void spin_button_set_step (GtkSpinButton* spin, gfloat step)
-{
-	GtkAdjustment* adjustment = gtk_spin_button_get_adjustment(spin);
-	adjustment->step_increment = step;
-	gtk_adjustment_changed(adjustment);
-}
-
-class Increment
-{
-		float& m_f;
-	public:
-		GtkSpinButton* m_spin;
-		GtkEntry* m_entry;
-		Increment (float& f) :
-			m_f(f), m_spin(0), m_entry(0)
-		{
-		}
-		void cancel (void)
-		{
-			entry_set_float(m_entry, m_f);
-		}
-		typedef MemberCaller<Increment, &Increment::cancel> CancelCaller;
-		void apply (void)
-		{
-			m_f = static_cast<float> (entry_get_float(m_entry));
-			spin_button_set_step(m_spin, m_f);
-		}
-		typedef MemberCaller<Increment, &Increment::apply> ApplyCaller;
-};
-
 void SurfaceInspector_GridChange ();
-
-class SurfaceInspector
-{
-		NonModalEntry m_textureEntry;
-		NonModalSpinner m_hshiftSpinner;
-		NonModalEntry m_hshiftEntry;
-		NonModalSpinner m_vshiftSpinner;
-		NonModalEntry m_vshiftEntry;
-		NonModalSpinner m_hscaleSpinner;
-		NonModalEntry m_hscaleEntry;
-		NonModalSpinner m_vscaleSpinner;
-		NonModalEntry m_vscaleEntry;
-		NonModalSpinner m_rotateSpinner;
-		NonModalEntry m_rotateEntry;
-
-		IdleDraw m_idleDraw;
-
-		GtkCheckButton* m_surfaceFlags[32];
-		GtkFrame* m_surfaceFlagsFrame;
-		GtkCheckButton* m_contentFlags[32];
-		GtkFrame* m_contentFlagsFrame;
-
-		NonModalEntry m_valueEntry;
-		GtkEntry* m_valueEntryWidget;
-		bool m_valueInconsistent; // inconsistent marker for valueEntryWidget
-
-		void UpdateFlagButtons ();
-		static void UpdateValueStatus (GtkWidget *widget, SurfaceInspector *inspector);
-
-	public:
-		GtkWidget* BuildNotebook ();
-
-		// Dialog Data
-		float m_fitHorizontal;
-		float m_fitVertical;
-
-		Increment m_hshiftIncrement;
-		Increment m_vshiftIncrement;
-		Increment m_hscaleIncrement;
-		Increment m_vscaleIncrement;
-		Increment m_rotateIncrement;
-		// TODO: Use gtkutil::TextPanel
-		GtkEntry* m_texture;
-
-		SurfaceInspector () :
-			m_textureEntry(ApplyShaderCaller(*this), UpdateCaller(*this)), m_hshiftSpinner(ApplyTexdefCaller(*this),
-					UpdateCaller(*this)), m_hshiftEntry(Increment::ApplyCaller(m_hshiftIncrement),
-					Increment::CancelCaller(m_hshiftIncrement)), m_vshiftSpinner(ApplyTexdefCaller(*this),
-					UpdateCaller(*this)), m_vshiftEntry(Increment::ApplyCaller(m_vshiftIncrement),
-					Increment::CancelCaller(m_vshiftIncrement)), m_hscaleSpinner(ApplyTexdefCaller(*this),
-					UpdateCaller(*this)), m_hscaleEntry(Increment::ApplyCaller(m_hscaleIncrement),
-					Increment::CancelCaller(m_hscaleIncrement)), m_vscaleSpinner(ApplyTexdefCaller(*this),
-					UpdateCaller(*this)), m_vscaleEntry(Increment::ApplyCaller(m_vscaleIncrement),
-					Increment::CancelCaller(m_vscaleIncrement)), m_rotateSpinner(ApplyTexdefCaller(*this),
-					UpdateCaller(*this)), m_rotateEntry(Increment::ApplyCaller(m_rotateIncrement),
-					Increment::CancelCaller(m_rotateIncrement)), m_idleDraw(UpdateCaller(*this)), m_valueEntry(
-					ApplyFlagsCaller(*this), UpdateCaller(*this)), m_hshiftIncrement(g_si_globals.shift[0]),
-					m_vshiftIncrement(g_si_globals.shift[1]), m_hscaleIncrement(g_si_globals.scale[0]),
-					m_vscaleIncrement(g_si_globals.scale[1]), m_rotateIncrement(g_si_globals.rotate)
-		{
-			m_fitVertical = 1;
-			m_fitHorizontal = 1;
-			GlobalGrid().addGridChangeCallback(FreeCaller<SurfaceInspector_GridChange> ());
-			m_valueInconsistent = false;
-		}
-
-		void queueDraw (void)
-		{
-			m_idleDraw.queueDraw();
-		}
-
-		void Update ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::Update> UpdateCaller;
-		void ApplyShader ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyShader> ApplyShaderCaller;
-		void ApplyTexdef ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyTexdef> ApplyTexdefCaller;
-		void ApplyFlags ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyFlags> ApplyFlagsCaller;
-
-		static void ApplyFlagsWithIndicator (GtkWidget *widget, SurfaceInspector *inspector);
-};
 
 namespace
 {
@@ -340,14 +228,6 @@ static void DoSnapTToGrid (float hscale, float vscale)
 	SurfaceInspector_queueDraw();
 }
 
-void SurfaceInspector_GridChange (void)
-{
-	if (g_si_globals.m_bSnapTToGrid) {
-		float defaultScale = GlobalRegistry().getFloat("user/ui/textures/defaultTextureScale");
-		DoSnapTToGrid(defaultScale, defaultScale);
-	}
-}
-
 /**
  * @brief make the shift increments match the grid settings
  * the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
@@ -426,6 +306,41 @@ static const std::string& getContentFlagName (std::size_t bit)
 static guint togglebutton_connect_toggled (GtkToggleButton* button, SurfaceInspector* environment)
 {
 	return g_signal_connect(G_OBJECT(button), "toggled", G_CALLBACK(SurfaceInspector::ApplyFlagsWithIndicator), environment);
+}
+
+SurfaceInspector::SurfaceInspector () :
+	m_textureEntry(ApplyShaderCaller(*this), UpdateCaller(*this)), m_hshiftSpinner(ApplyTexdefCaller(*this),
+			UpdateCaller(*this)), m_hshiftEntry(Increment::ApplyCaller(m_hshiftIncrement), Increment::CancelCaller(
+			m_hshiftIncrement)), m_vshiftSpinner(ApplyTexdefCaller(*this), UpdateCaller(*this)), m_vshiftEntry(
+			Increment::ApplyCaller(m_vshiftIncrement), Increment::CancelCaller(m_vshiftIncrement)), m_hscaleSpinner(
+			ApplyTexdefCaller(*this), UpdateCaller(*this)), m_hscaleEntry(Increment::ApplyCaller(m_hscaleIncrement),
+			Increment::CancelCaller(m_hscaleIncrement)),
+			m_vscaleSpinner(ApplyTexdefCaller(*this), UpdateCaller(*this)), m_vscaleEntry(Increment::ApplyCaller(
+					m_vscaleIncrement), Increment::CancelCaller(m_vscaleIncrement)), m_rotateSpinner(ApplyTexdefCaller(
+					*this), UpdateCaller(*this)), m_rotateEntry(Increment::ApplyCaller(m_rotateIncrement),
+					Increment::CancelCaller(m_rotateIncrement)), m_idleDraw(UpdateCaller(*this)), m_valueEntry(
+					ApplyFlagsCaller(*this), UpdateCaller(*this)), m_hshiftIncrement(g_si_globals.shift[0]),
+			m_vshiftIncrement(g_si_globals.shift[1]), m_hscaleIncrement(g_si_globals.scale[0]), m_vscaleIncrement(
+					g_si_globals.scale[1]), m_rotateIncrement(g_si_globals.rotate)
+{
+	m_fitVertical = 1;
+	m_fitHorizontal = 1;
+	GlobalGrid().addGridChangeCallback(MemberCaller<SurfaceInspector, &SurfaceInspector::gridChange> (*this));
+	m_valueInconsistent = false;
+}
+
+void SurfaceInspector::queueDraw (void)
+{
+	m_idleDraw.queueDraw();
+}
+
+
+void SurfaceInspector::gridChange (void)
+{
+	if (g_si_globals.m_bSnapTToGrid) {
+		float defaultScale = GlobalRegistry().getFloat("user/ui/textures/defaultTextureScale");
+		DoSnapTToGrid(defaultScale, defaultScale);
+	}
 }
 
 GtkWidget* SurfaceInspector::BuildNotebook (void)
