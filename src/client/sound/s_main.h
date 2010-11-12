@@ -82,6 +82,6 @@ void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float atten, flo
 void S_PlaySample(const vec3_t origin, s_sample_t* sample, float atten, float volume);
 void S_StartLocalSample(const char *s, float volume);
 s_sample_t *S_LoadSample(const char *s);
-void S_LoadAndPlaySample(const char *s, const vec3_t origin, float atten, float volume);
+qboolean S_LoadAndPlaySample(const char *s, const vec3_t origin, float atten, float volume);
 
 #endif

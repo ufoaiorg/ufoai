@@ -302,10 +302,13 @@ void S_Shutdown (void)
  * @param attenuation how to reduce volume by distance
  * @param volume well, the volume
  */
-void S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, float volume)
+qboolean S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, float volume)
 {
 	s_sample_t *sample = S_LoadSample(s);
+	if (!sample)
+		return qfalse;
 	S_PlaySample(origin, sample, attenuation, volume);
+	return qtrue;
 }
 
 /**
