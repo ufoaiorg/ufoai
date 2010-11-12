@@ -281,6 +281,43 @@ class XMLRegistry: public Registry
 			set(key, valueStr);
 		}
 
+		void setAttribute(const std::string& path,
+			const std::string& attrName, const std::string& attrValue)
+		{
+			// Add the toplevel node to the path if required
+			std::string fullKey = prepareKey(path);
+
+			// If the key doesn't exist, we have to create an empty one
+			if (!keyExists(fullKey)) {
+				createKey(fullKey);
+			}
+
+			// Try to find the node
+			xml::NodeList nodeList = findXPath(fullKey);
+
+			if (!nodeList.empty()) {
+				// Set the value
+				nodeList[0].setAttributeValue(attrName, attrValue);
+			}
+			else {
+				// If the key is still not found, something nasty has happened
+				globalOutputStream() << "XMLRegistry: Critical: Key " << fullKey << " not found (it really should be there)!\n";
+			}
+		}
+
+		std::string getAttribute(const std::string& path,
+											  const std::string& attrName)
+		{
+			// Pass the query to the findXPath method, which queries the user tree first
+			xml::NodeList nodeList = findXPath(path);
+
+			if (nodeList.empty())
+			{
+				return "";
+			}
+
+			return nodeList[0].getAttributeValue(attrName);
+		}
 
 		// Sets the value of a key from the registry,
 		// "/darkradiant" is automatically added if relative paths are used

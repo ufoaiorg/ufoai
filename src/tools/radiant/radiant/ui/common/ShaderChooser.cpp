@@ -46,6 +46,9 @@ ShaderChooser::ShaderChooser(ChooserClient* client, GtkWindow* parent, GtkWidget
 	gtk_box_pack_start(GTK_BOX(vbx), createButtons(), false, false, 0);
 	gtk_container_add(GTK_CONTAINER(getWindow()), vbx);
 
+	// Connect the window position tracker
+	_windowPosition.loadFromPath(RKEY_WINDOW_STATE);
+
 	_windowPosition.connect(GTK_WINDOW(getWindow()));
 	_windowPosition.applyPosition();
 
@@ -54,6 +57,7 @@ ShaderChooser::ShaderChooser(ChooserClient* client, GtkWindow* parent, GtkWidget
 }
 
 void ShaderChooser::shutdown() {
+	_windowPosition.saveToPath(RKEY_WINDOW_STATE);
 }
 
 // Construct the buttons

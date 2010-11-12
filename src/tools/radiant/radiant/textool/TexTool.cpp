@@ -70,6 +70,9 @@ TexTool::TexTool() :
 	// Connect the window position tracker
 	xml::NodeList windowStateList = GlobalRegistry().findXPath(RKEY_WINDOW_STATE);
 
+	// Connect the window position tracker
+	_windowPosition.loadFromPath(RKEY_WINDOW_STATE);
+
 	_windowPosition.connect(GTK_WINDOW(getWindow()));
 	_windowPosition.applyPosition();
 
@@ -161,6 +164,9 @@ void TexTool::gridDown() {
 void TexTool::shutdown() {
 	// De-register this as selectionsystem observer
 	GlobalSelectionSystem().removeObserver(this);
+
+	// Tell the position tracker to save the information
+	_windowPosition.saveToPath(RKEY_WINDOW_STATE);
 
 	// Delete all the current window states from the registry
 	GlobalRegistry().deleteXPath(RKEY_WINDOW_STATE);

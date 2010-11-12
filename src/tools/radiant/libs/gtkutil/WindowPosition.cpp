@@ -1,5 +1,6 @@
 #include "WindowPosition.h"
 
+#include "iregistry.h"
 #include "string/string.h"
 #include "MultiMonitor.h"
 
@@ -42,6 +43,23 @@ void WindowPosition::setPosition(int x, int y) {
 void WindowPosition::setSize(int width, int height) {
 	_size[0] = width;
 	_size[1] = height;
+}
+
+void WindowPosition::saveToPath(const std::string& path)
+{
+	GlobalRegistry().setAttribute(path, "xPosition", string::toString(_position[0]));
+	GlobalRegistry().setAttribute(path, "yPosition", string::toString(_position[1]));
+	GlobalRegistry().setAttribute(path, "width", string::toString(_size[0]));
+	GlobalRegistry().setAttribute(path, "height", string::toString(_size[1]));
+}
+
+void WindowPosition::loadFromPath(const std::string& path)
+{
+	_position[0] = string::toInt(GlobalRegistry().getAttribute(path, "xPosition"));
+	_position[1] = string::toInt(GlobalRegistry().getAttribute(path, "yPosition"));
+
+	_size[0] = string::toInt(GlobalRegistry().getAttribute(path, "width"));
+	_size[1] = string::toInt(GlobalRegistry().getAttribute(path, "height"));
 }
 
 // Applies the internally stored size/position info to the GtkWindow

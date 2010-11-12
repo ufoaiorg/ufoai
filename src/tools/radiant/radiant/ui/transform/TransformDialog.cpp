@@ -45,6 +45,7 @@ namespace ui {
 		const char* LABEL_STEP = _("Step:");
 
 		const std::string RKEY_ROOT = "user/ui/transformDialog/";
+		const std::string RKEY_WINDOW_STATE = RKEY_ROOT + "window";
 		const std::string RKEY_ROTX_STEP = RKEY_ROOT + "rotXStep";
 		const std::string RKEY_ROTY_STEP = RKEY_ROOT + "rotYStep";
 		const std::string RKEY_ROTZ_STEP = RKEY_ROOT + "rotZStep";
@@ -72,9 +73,11 @@ TransformDialog::TransformDialog() : gtkutil::PersistentTransientWindow(WINDOW_T
 	// Update the widget sensitivity
 	update();
 
+	// Connect the window position tracker
+	_windowPosition.loadFromPath(RKEY_WINDOW_STATE);
+
 	_windowPosition.connect(GTK_WINDOW(getWindow()));
 	_windowPosition.applyPosition();
-
 }
 
 TransformDialog& TransformDialog::Instance() {

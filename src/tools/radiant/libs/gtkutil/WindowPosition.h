@@ -41,6 +41,10 @@ public:
 	void setPosition(int x, int y);
 	void setSize(int width, int height);
 
+	// Loads/saves the window position to the given Registry path
+	void saveToPath(const std::string& path);
+	void loadFromPath(const std::string& path);
+
 	// Applies the internally stored size/position info to the GtkWindow
 	// The algorithm was adapted from original GtkRadiant code (window.h)
 	void applyPosition();
