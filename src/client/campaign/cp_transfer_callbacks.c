@@ -1421,7 +1421,9 @@ static void TR_Init_f (void)
 	td.transferBase = B_GetNextFounded(base);
 	/* If this was the last base select the first */
 	if (!td.transferBase)
-		B_GetNextFounded(td.transferBase);
+		td.transferBase = B_GetNextFounded(NULL);
+	if (!td.transferBase)
+		Com_Error(ERR_DROP, "No bases! Transfer needs at least two...");
 	TR_TransferBaseSelect(base, td.transferBase);
 	/* Set up cvar used to display transferBase. */
 	if (td.transferBase) {
