@@ -218,124 +218,130 @@ class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
 		Vector2 _scale;
 		float _rotate;
 
-		bool m_bSnapTToGrid;
+		bool _shutdown;
 
-		FaceTexture g_faceTextureClipboard;
+		bool _snapTToGrid;
 
-		std::string g_selectedShader;
-		TextureProjection g_selectedTexdef;
-		ContentsFlagsValue g_selectedFlags;
-		size_t g_selectedShaderSize[2];
+		FaceTexture _faceTextureClipboard;
 
-		NonModalEntry m_textureEntry;
-		NonModalSpinner m_hshiftSpinner;
-		NonModalEntry m_hshiftEntry;
-		NonModalSpinner m_vshiftSpinner;
-		NonModalEntry m_vshiftEntry;
-		NonModalSpinner m_hscaleSpinner;
-		NonModalEntry m_hscaleEntry;
-		NonModalSpinner m_vscaleSpinner;
-		NonModalEntry m_vscaleEntry;
-		NonModalSpinner m_rotateSpinner;
-		NonModalEntry m_rotateEntry;
+		std::string _selectedShader;
+		TextureProjection _selectedTexdef;
+		ContentsFlagsValue _selectedFlags;
+		size_t _selectedShaderSize[2];
 
-		IdleDraw m_idleDraw;
+		NonModalEntry _textureEntry;
+		NonModalSpinner _hshiftSpinner;
+		NonModalEntry _hshiftEntry;
+		NonModalSpinner _vshiftSpinner;
+		NonModalEntry _vshiftEntry;
+		NonModalSpinner _hscaleSpinner;
+		NonModalEntry _hscaleEntry;
+		NonModalSpinner _vscaleSpinner;
+		NonModalEntry _vscaleEntry;
+		NonModalSpinner _rotateSpinner;
+		NonModalEntry _rotateEntry;
 
-		GtkCheckButton* m_surfaceFlags[32];
-		GtkFrame* m_surfaceFlagsFrame;
-		GtkCheckButton* m_contentFlags[32];
-		GtkFrame* m_contentFlagsFrame;
+		IdleDraw _idleDraw;
 
-		bool s_texture_selection_dirty;
+		GtkCheckButton* _surfaceFlags[32];
+		GtkFrame* _surfaceFlagsFrame;
+		GtkCheckButton* _contentFlags[32];
+		GtkFrame* _contentFlagsFrame;
 
-		NonModalEntry m_valueEntry;
-		GtkEntry* m_valueEntryWidget;
-		bool m_valueInconsistent; // inconsistent marker for valueEntryWidget
+		bool _textureSelectionDirty;
+
+		NonModalEntry _valueEntry;
+		GtkEntry* _valueEntryWidget;
+		bool _valueInconsistent; // inconsistent marker for valueEntryWidget
 
 		// Dialog Data
-		float m_fitHorizontal;
-		float m_fitVertical;
+		float _fitHorizontal;
+		float _fitVertical;
 
-		Increment m_hshiftIncrement;
-		Increment m_vshiftIncrement;
-		Increment m_hscaleIncrement;
-		Increment m_vscaleIncrement;
-		Increment m_rotateIncrement;
+		Increment _hshiftIncrement;
+		Increment _vshiftIncrement;
+		Increment _hscaleIncrement;
+		Increment _vscaleIncrement;
+		Increment _rotateIncrement;
 		// TODO: Use gtkutil::TextPanel
-		GtkEntry* m_texture;
+		GtkEntry* _texture;
 
 	private:
 
 		void queueDraw (void);
 
-		void Update ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::Update> UpdateCaller;
-		void ApplyShader ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyShader> ApplyShaderCaller;
-		void ApplyTexdef ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyTexdef> ApplyTexdefCaller;
-		void ApplyFlags ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyFlags> ApplyFlagsCaller;
+		void update ();
+		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::update> UpdateCaller;
+		void applyShader ();
+		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::applyShader> ApplyShaderCaller;
+		void applyTexdef ();
+		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::applyTexdef> ApplyTexdefCaller;
+		void applyFlags ();
+		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::applyFlags> ApplyFlagsCaller;
 
-		void UpdateFlagButtons ();
-		static void UpdateValueStatus (GtkWidget *widget, SurfaceInspector *inspector);
+		void updateFlagButtons ();
 
 		void gridChange ();
 
-		void SetSelectedShader (const std::string& shader);
-		void SetSelectedTexdef (const TextureProjection& projection);
-		void SetSelectedFlags (const ContentsFlagsValue& flags);
+		void setSelectedShader (const std::string& shader);
+		const std::string& getSelectedShader (void);
 
-		void SetCurrent_FromSelected (void);
+		void setSelectedTexdef (const TextureProjection& projection);
+		const TextureProjection& getSelectedTexdef (void);
 
-		const std::string& GetSelectedShader (void);
-		const TextureProjection& GetSelectedTexdef (void);
-		const ContentsFlagsValue& GetSelectedFlags (void);
+		void setSelectedFlags (const ContentsFlagsValue& flags);
+		const ContentsFlagsValue& getSelectedFlags (void);
 
-		void Select_SetFlags (const ContentsFlagsValue& flags);
-		void Select_SetTexdef (const TextureProjection& projection);
+		// Fills the surface inspector with values of the current selected brush(es) or face(s)
+		void setValuesFromSelected (void);
 
-		void DoSnapTToGrid (float hscale, float vscale);
-
-		Texturable Scene_getClosestTexturable (scene::Graph& graph, SelectionTest& test);
-		bool Scene_getClosestTexture (scene::Graph& graph, SelectionTest& test, std::string& shader,
-				TextureProjection& projection, ContentsFlagsValue& flags);
-		void Scene_setClosestTexture (scene::Graph& graph, SelectionTest& test, const std::string& shader,
-				const TextureProjection& projection, const ContentsFlagsValue& flags);
-
-		static void FaceInstance_pasteTexture (FaceInstance& faceInstance);
+		void setFlagsForSelected (const ContentsFlagsValue& flags);
+		void setTexdefForSelected (const TextureProjection& projection);
 
 		const std::string& getContentFlagName (std::size_t bit) const;
 		const std::string& getSurfaceFlagName (std::size_t bit) const;
 
+		void doSnapTToGrid (float hscale, float vscale);
+
+		Texturable getClosestTexturable (scene::Graph& graph, SelectionTest& test);
+		bool getClosestTexture (scene::Graph& graph, SelectionTest& test, std::string& shader,
+				TextureProjection& projection, ContentsFlagsValue& flags);
+		void setClosestTexture (scene::Graph& graph, SelectionTest& test, const std::string& shader,
+				const TextureProjection& projection, const ContentsFlagsValue& flags);
+
+		static void applyClipboardTexture (FaceInstance& faceInstance);
+
 		guint togglebutton_connect_toggled (GtkToggleButton* button);
 
 		void updateSelection (void);
-		void SelectionChanged (const Selectable& selectable);
-		void ToggleTexTool ();
+		void selectionChanged (const Selectable& selectable);
+		void toggleTexTool ();
 
 		// Gtk callbacks
-		static void OnBtnMatchGrid (GtkWidget *widget, SurfaceInspector *inspector);
-		static void OnBtnAxial (GtkWidget *widget, SurfaceInspector *inspector);
-		static void OnBtnFaceFit (GtkWidget *widget, SurfaceInspector *inspector);
-		static void ApplyFlagsWithIndicator (GtkWidget *widget, SurfaceInspector *inspector);
+		static void onValueToggle (GtkWidget *widget, SurfaceInspector *inspector);
+		static void onMatchGridClick (GtkWidget *widget, SurfaceInspector *inspector);
+		static void onAxialClick (GtkWidget *widget, SurfaceInspector *inspector);
+		static void onFaceFitClick (GtkWidget *widget, SurfaceInspector *inspector);
+		static void onApplyFlagsToggle (GtkWidget *widget, SurfaceInspector *inspector);
 	public:
 		SurfaceInspector ();
 
-		GtkWidget* BuildNotebook ();
+		void shutdown (void);
+
+		GtkWidget* buildNotebook ();
 
 		void registerCommands (void);
 
-		void Scene_applyClosestTexture (SelectionTest& test);
-		void SelectedFaces_copyTexture (void);
-		void Scene_copyClosestTexture (SelectionTest& test);
-		void SelectedFaces_pasteTexture (void);
+		void copyTextureFromSelectedFaces (void);
+		void pasteTextureFromSelectedFaces (void);
+		void applyClosestTexture (SelectionTest& test);
+		void copyClosestTexture (SelectionTest& test);
 
-		void TextureClipboard_textureSelected ();
+		void resetTextureClipboard ();
 
-		void FitTexture ();
-		void FlipTextureX ();
-		void FlipTextureY ();
+		void fitTexture ();
+		void flipTextureX ();
+		void flipTextureY ();
 
 		float getRotate () const;
 		const Vector2& getScale () const;

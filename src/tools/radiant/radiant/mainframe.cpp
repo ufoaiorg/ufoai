@@ -420,19 +420,7 @@ void Radiant_Shutdown (void)
 {
 	GlobalMRU().saveRecentFiles();
 
-	// Export the colour schemes and remove them from the registry
-	GlobalRegistry().exportToFile("user/ui/colourschemes", SettingsPath_get() + "colours.xml");
-	GlobalRegistry().deleteXPath("user/ui/colourschemes");
-
-	// Save the current event set to the Registry and export it
-	GlobalEventManager().saveEventListToRegistry();
-
-	// Export the input definitions into the user's settings folder and remove them as well
-	GlobalRegistry().exportToFile("user/ui/input", SettingsPath_get() + "input.xml");
-	GlobalRegistry().deleteXPath("user/ui/input");
-
-	// Save the whole /uforadiant/user tree to user.xml so that the current settings are preserved
-	GlobalRegistry().exportToFile("user", SettingsPath_get() + "user.xml");
+	GlobalSurfaceInspector().shutdown();
 
 	g_gameModeObservers.unrealise();
 	g_gameToolsPathObservers.unrealise();
@@ -488,7 +476,7 @@ void Selection_Paste (void)
 void Copy (void)
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
-		GlobalSurfaceInspector().SelectedFaces_copyTexture();
+		GlobalSurfaceInspector().copyTextureFromSelectedFaces();
 	} else {
 		Selection_Copy();
 	}
@@ -497,7 +485,7 @@ void Copy (void)
 void Paste (void)
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
-		GlobalSurfaceInspector().SelectedFaces_pasteTexture();
+		GlobalSurfaceInspector().pasteTextureFromSelectedFaces();
 	} else {
 		UndoableCommand undo("paste");
 
