@@ -488,7 +488,7 @@ void Selection_Paste (void)
 void Copy (void)
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
-		SelectedFaces_copyTexture();
+		GlobalSurfaceInspector().SelectedFaces_copyTexture();
 	} else {
 		Selection_Copy();
 	}
@@ -497,7 +497,7 @@ void Copy (void)
 void Paste (void)
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
-		SelectedFaces_pasteTexture();
+		GlobalSurfaceInspector().SelectedFaces_pasteTexture();
 	} else {
 		UndoableCommand undo("paste");
 
@@ -872,12 +872,12 @@ void Texdef_Rotate (float angle)
 
 void Texdef_RotateClockwise (void)
 {
-	Texdef_Rotate(static_cast<float> (fabs(g_si_globals.rotate)));
+	Texdef_Rotate(static_cast<float> (fabs(GlobalSurfaceInspector().getRotate())));
 }
 
 void Texdef_RotateAntiClockwise (void)
 {
-	Texdef_Rotate(static_cast<float> (-fabs(g_si_globals.rotate)));
+	Texdef_Rotate(static_cast<float> (-fabs(GlobalSurfaceInspector().getRotate())));
 }
 
 void Texdef_Scale (float x, float y)
@@ -890,22 +890,22 @@ void Texdef_Scale (float x, float y)
 
 void Texdef_ScaleUp (void)
 {
-	Texdef_Scale(0, g_si_globals.scale[1]);
+	Texdef_Scale(0, GlobalSurfaceInspector().getScale()[1]);
 }
 
 void Texdef_ScaleDown (void)
 {
-	Texdef_Scale(0, -g_si_globals.scale[1]);
+	Texdef_Scale(0, -GlobalSurfaceInspector().getScale()[1]);
 }
 
 void Texdef_ScaleLeft (void)
 {
-	Texdef_Scale(-g_si_globals.scale[0], 0);
+	Texdef_Scale(-GlobalSurfaceInspector().getScale()[0], 0);
 }
 
 void Texdef_ScaleRight (void)
 {
-	Texdef_Scale(g_si_globals.scale[0], 0);
+	Texdef_Scale(GlobalSurfaceInspector().getScale()[0], 0);
 }
 
 void Texdef_Shift (float x, float y)
@@ -918,22 +918,22 @@ void Texdef_Shift (float x, float y)
 
 void Texdef_ShiftLeft (void)
 {
-	Texdef_Shift(-g_si_globals.shift[0], 0);
+	Texdef_Shift(-GlobalSurfaceInspector().getShift()[0], 0);
 }
 
 void Texdef_ShiftRight (void)
 {
-	Texdef_Shift(g_si_globals.shift[0], 0);
+	Texdef_Shift(GlobalSurfaceInspector().getShift()[0], 0);
 }
 
 void Texdef_ShiftUp (void)
 {
-	Texdef_Shift(0, g_si_globals.shift[1]);
+	Texdef_Shift(0, GlobalSurfaceInspector().getShift()[1]);
 }
 
 void Texdef_ShiftDown (void)
 {
-	Texdef_Shift(0, -g_si_globals.shift[1]);
+	Texdef_Shift(0, -GlobalSurfaceInspector().getShift()[1]);
 }
 
 class SnappableSnapToGridSelected: public scene::Graph::Walker

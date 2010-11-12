@@ -163,17 +163,17 @@ namespace ui
 
 	void OrthoContextMenu::callbackFitTexture (GtkMenuItem* item, OrthoContextMenu* self)
 	{
-		SurfaceInspector_FitTexture();
+		GlobalSurfaceInspector().FitTexture();
 	}
 
 	void OrthoContextMenu::callbackFlipXTexture (GtkMenuItem* item, OrthoContextMenu* self)
 	{
-		FlipTextureX();
+		GlobalSurfaceInspector().FlipTextureX();
 	}
 
 	void OrthoContextMenu::callbackFlipYTexture (GtkMenuItem* item, OrthoContextMenu* self)
 	{
-		FlipTextureY();
+		GlobalSurfaceInspector().FlipTextureY();
 	}
 
 	void OrthoContextMenu::callbackAddEntity (GtkMenuItem* item, OrthoContextMenu* self)

@@ -113,7 +113,7 @@ void Sidebar::constructSurfaceInspector ()
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	// surface inspector
-	GtkWidget *pageSurfaceInspector = SurfaceInspector_constructNotebookTab();
+	GtkWidget *pageSurfaceInspector = GlobalSurfaceInspector().BuildNotebook();
 	gtk_container_add(GTK_CONTAINER(vbox), pageSurfaceInspector);
 
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));

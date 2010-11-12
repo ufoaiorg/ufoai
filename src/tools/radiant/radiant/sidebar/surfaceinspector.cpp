@@ -62,70 +62,56 @@
 #include "../textureentry.h"
 #include "../textool/TexTool.h"
 
-void SurfaceInspector_GridChange ();
+namespace {
+const std::string RKEY_SNAP_TO_GRID = "user/ui/surfaceinspector/snapToGrid";
 
-namespace
-{
-	SurfaceInspector* g_SurfaceInspector;
+const char* surfaceflagNamesDefault[32] = { "surf1", "surf2", "surf3", "surf4", "surf5", "surf6", "surf7", "surf8",
+		"surf9", "surf10", "surf11", "surf12", "surf13", "surf14", "surf15", "surf16", "surf17", "surf18", "surf19",
+		"surf20", "surf21", "surf22", "surf23", "surf24", "surf25", "surf26", "surf27", "surf28", "surf29", "surf30",
+		"surf31", "surf32" };
 
-	inline SurfaceInspector& getSurfaceInspector (void)
-	{
-		ASSERT_NOTNULL(g_SurfaceInspector);
-		return *g_SurfaceInspector;
-	}
-}
-
-void SurfaceInspector_queueDraw (void)
-{
-	getSurfaceInspector().queueDraw();
-}
-
-namespace
-{
-	std::string g_selectedShader;
-	TextureProjection g_selectedTexdef;
-	ContentsFlagsValue g_selectedFlags;
-	size_t g_selectedShaderSize[2];
+const char* contentflagNamesDefault[32] = { "cont1", "cont2", "cont3", "cont4", "cont5", "cont6", "cont7", "cont8",
+		"cont9", "cont10", "cont11", "cont12", "cont13", "cont14", "cont15", "cont16", "cont17", "cont18", "cont19",
+		"cont20", "cont21", "cont22", "cont23", "cont24", "cont25", "cont26", "cont27", "cont28", "cont29", "cont30",
+		"cont31", "cont32" };
 }
 
 /**
- * @sa SurfaceInspector_GetSelectedShader
+ * @sa SurfaceInspector::GetSelectedShader
  */
-void SurfaceInspector_SetSelectedShader (const std::string& shader)
+void SurfaceInspector::SetSelectedShader (const std::string& shader)
 {
 	g_selectedShader = shader;
-	SurfaceInspector_queueDraw();
+	queueDraw();
 }
 
 /**
- * @sa SurfaceInspector_GetSelectedTexdef
+ * @sa SurfaceInspector::GetSelectedTexdef
  */
-void SurfaceInspector_SetSelectedTexdef (const TextureProjection& projection)
+void SurfaceInspector::SetSelectedTexdef (const TextureProjection& projection)
 {
 	g_selectedTexdef = projection;
-	SurfaceInspector_queueDraw();
+	queueDraw();
 }
 
 /**
- * @sa SurfaceInspector_GetSelectedFlags
+ * @sa SurfaceInspector::GetSelectedFlags
  */
-void SurfaceInspector_SetSelectedFlags (const ContentsFlagsValue& flags)
+void SurfaceInspector::SetSelectedFlags (const ContentsFlagsValue& flags)
 {
 	g_selectedFlags = flags;
-	SurfaceInspector_queueDraw();
+	queueDraw();
 }
 
-static bool s_texture_selection_dirty = false;
-
-void SurfaceInspector_updateSelection (void)
+void SurfaceInspector::updateSelection (void)
 {
 	s_texture_selection_dirty = true;
-	SurfaceInspector_queueDraw();
+	queueDraw();
 }
 
-void SurfaceInspector_SelectionChanged (const Selectable& selectable)
+void SurfaceInspector::SelectionChanged (const Selectable& selectable)
 {
-	SurfaceInspector_updateSelection();
+	SurfaceInspector::updateSelection();
 }
 
 /**
@@ -134,7 +120,7 @@ void SurfaceInspector_SelectionChanged (const Selectable& selectable)
  * @sa Scene_BrushGetFlags_Component_Selected
  * @sa Scene_BrushGetFlags_Selected
  */
-static void SurfaceInspector_SetCurrent_FromSelected (void)
+void SurfaceInspector::SetCurrent_FromSelected (void)
 {
 	if (s_texture_selection_dirty == true) {
 		s_texture_selection_dirty = false;
@@ -142,7 +128,7 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
 			TextureProjection projection;
 			Scene_BrushGetTexdef_Component_Selected(GlobalSceneGraph(), projection);
 
-			SurfaceInspector_SetSelectedTexdef(projection);
+			SetSelectedTexdef(projection);
 
 			Scene_BrushGetShaderSize_Component_Selected(GlobalSceneGraph(), g_selectedShaderSize[0],
 					g_selectedShaderSize[1]);
@@ -150,55 +136,55 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
 			std::string name;
 			Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
 			if (!name.empty())
-				SurfaceInspector_SetSelectedShader(name);
+				SetSelectedShader(name);
 
 			ContentsFlagsValue flags(0, 0, 0, false);
 			Scene_BrushGetFlags_Component_Selected(GlobalSceneGraph(), flags);
-			SurfaceInspector_SetSelectedFlags(flags);
+			SetSelectedFlags(flags);
 		} else {
 			TextureProjection projection;
 			Scene_BrushGetTexdef_Selected(GlobalSceneGraph(), projection);
-			SurfaceInspector_SetSelectedTexdef(projection);
+			SetSelectedTexdef(projection);
 
 			std::string name;
 			Scene_BrushGetShader_Selected(GlobalSceneGraph(), name);
 			if (!name.empty())
-				SurfaceInspector_SetSelectedShader(name);
+				SetSelectedShader(name);
 
 			ContentsFlagsValue flags(0, 0, 0, false);
 			Scene_BrushGetFlags_Selected(GlobalSceneGraph(), flags);
-			SurfaceInspector_SetSelectedFlags(flags);
+			SurfaceInspector::SetSelectedFlags(flags);
 		}
 	}
 }
 
 /**
  * @sa SurfaceInspector::Update
- * @sa SurfaceInspector_SetCurrent_FromSelected
+ * @sa SurfaceInspector::SetCurrent_FromSelected
  */
-static const std::string& SurfaceInspector_GetSelectedShader (void)
+const std::string& SurfaceInspector::GetSelectedShader (void)
 {
-	SurfaceInspector_SetCurrent_FromSelected();
+	SurfaceInspector::SetCurrent_FromSelected();
 	return g_selectedShader;
 }
 
 /**
  * @sa SurfaceInspector::Update
- * @sa SurfaceInspector_SetCurrent_FromSelected
+ * @sa SurfaceInspector::SetCurrent_FromSelected
  */
-static const TextureProjection& SurfaceInspector_GetSelectedTexdef (void)
+const TextureProjection& SurfaceInspector::GetSelectedTexdef (void)
 {
-	SurfaceInspector_SetCurrent_FromSelected();
+	SurfaceInspector::SetCurrent_FromSelected();
 	return g_selectedTexdef;
 }
 
 /**
  * @sa SurfaceInspector::Update
- * @sa SurfaceInspector_SetCurrent_FromSelected
+ * @sa SurfaceInspector::SetCurrent_FromSelected
  */
-static const ContentsFlagsValue& SurfaceInspector_GetSelectedFlags (void)
+const ContentsFlagsValue& SurfaceInspector::GetSelectedFlags (void)
 {
-	SurfaceInspector_SetCurrent_FromSelected();
+	SurfaceInspector::SetCurrent_FromSelected();
 	return g_selectedFlags;
 }
 
@@ -207,8 +193,6 @@ static const ContentsFlagsValue& SurfaceInspector_GetSelectedFlags (void)
  SURFACE INSPECTOR
  ===================================================
  */
-
-si_globals_t g_si_globals;
 
 /**
  * @brief make the shift increments match the grid settings
@@ -220,12 +204,12 @@ si_globals_t g_si_globals;
  * hscale and vscale are optional parameters, if they are zero they will be set to the default scale
  * @note the default scale is 0.5f (128 pixels cover 64 world units)
  */
-static void DoSnapTToGrid (float hscale, float vscale)
+void SurfaceInspector::DoSnapTToGrid (float hscale, float vscale)
 {
 	const float gridSize = GlobalGrid().getGridSize();
-	g_si_globals.shift[0] = static_cast<float> (float_to_integer(gridSize / hscale));
-	g_si_globals.shift[1] = static_cast<float> (float_to_integer(gridSize / vscale));
-	SurfaceInspector_queueDraw();
+	_shift[0] = static_cast<float> (float_to_integer(gridSize / hscale));
+	_shift[1] = static_cast<float> (float_to_integer(gridSize / vscale));
+	queueDraw();
 }
 
 /**
@@ -236,27 +220,27 @@ static void DoSnapTToGrid (float hscale, float vscale)
  * depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
  * @code increment * scale = gridsize @endcode
  */
-static void OnBtnMatchGrid (GtkWidget *widget, gpointer data)
+void SurfaceInspector::OnBtnMatchGrid (GtkWidget *widget, SurfaceInspector *inspector)
 {
 	float hscale, vscale;
-	hscale = static_cast<float> (gtk_spin_button_get_value_as_float(getSurfaceInspector().m_hscaleIncrement.m_spin));
-	vscale = static_cast<float> (gtk_spin_button_get_value_as_float(getSurfaceInspector().m_vscaleIncrement.m_spin));
+	hscale = static_cast<float> (gtk_spin_button_get_value_as_float(inspector->m_hscaleIncrement.m_spin));
+	vscale = static_cast<float> (gtk_spin_button_get_value_as_float(inspector->m_vscaleIncrement.m_spin));
 
 	if (hscale == 0.0f || vscale == 0.0f) {
 		globalErrorStream() << "ERROR: unexpected scale == 0.0f\n";
 		return;
 	}
 
-	DoSnapTToGrid(hscale, vscale);
+	inspector->DoSnapTToGrid(hscale, vscale);
 }
 
-void SurfaceInspector_FitTexture (void)
+void SurfaceInspector::FitTexture (void)
 {
 	UndoableCommand undo("textureAutoFit");
-	Select_FitTexture(getSurfaceInspector().m_fitHorizontal, getSurfaceInspector().m_fitVertical);
+	Select_FitTexture(m_fitHorizontal, m_fitVertical);
 }
 
-inline void Select_SetTexdef (const TextureProjection& projection)
+void SurfaceInspector::Select_SetTexdef (const TextureProjection& projection)
 {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushSetTexdef_Selected(GlobalSceneGraph(), projection);
@@ -264,48 +248,35 @@ inline void Select_SetTexdef (const TextureProjection& projection)
 	Scene_BrushSetTexdef_Component_Selected(GlobalSceneGraph(), projection);
 }
 
-static void OnBtnAxial (GtkWidget *widget, gpointer data)
+void SurfaceInspector::OnBtnAxial (GtkWidget *widget, SurfaceInspector *inspector)
 {
 	UndoableCommand undo("textureDefault");
 	TextureProjection projection;
 	projection.constructDefault();
 
-	Select_SetTexdef(projection);
+	inspector->Select_SetTexdef(projection);
 }
 
-static void OnBtnFaceFit (GtkWidget *widget, gpointer data)
+void SurfaceInspector::OnBtnFaceFit (GtkWidget *widget, SurfaceInspector *inspector)
 {
-	SurfaceInspector_FitTexture();
+	inspector->FitTexture();
 }
 
-static const char* surfaceflagNamesDefault[32] = { "surf1", "surf2", "surf3", "surf4", "surf5", "surf6", "surf7",
-		"surf8", "surf9", "surf10", "surf11", "surf12", "surf13", "surf14", "surf15", "surf16", "surf17", "surf18",
-		"surf19", "surf20", "surf21", "surf22", "surf23", "surf24", "surf25", "surf26", "surf27", "surf28", "surf29",
-		"surf30", "surf31", "surf32" };
-
-static const char* contentflagNamesDefault[32] = { "cont1", "cont2", "cont3", "cont4", "cont5", "cont6", "cont7",
-		"cont8", "cont9", "cont10", "cont11", "cont12", "cont13", "cont14", "cont15", "cont16", "cont17", "cont18",
-		"cont19", "cont20", "cont21", "cont22", "cont23", "cont24", "cont25", "cont26", "cont27", "cont28", "cont29",
-		"cont30", "cont31", "cont32" };
-
-static const std::string& getSurfaceFlagName (std::size_t bit)
+const std::string& SurfaceInspector::getSurfaceFlagName (std::size_t bit) const
 {
 	const std::string& value = g_pGameDescription->getKeyValue(surfaceflagNamesDefault[bit]);
 	return value;
 }
 
-static const std::string& getContentFlagName (std::size_t bit)
+const std::string& SurfaceInspector::getContentFlagName (std::size_t bit) const
 {
 	const std::string& value = g_pGameDescription->getKeyValue(contentflagNamesDefault[bit]);
 	return value;
 }
 
-// =============================================================================
-// SurfaceInspector class
-
-static guint togglebutton_connect_toggled (GtkToggleButton* button, SurfaceInspector* environment)
+guint SurfaceInspector::togglebutton_connect_toggled (GtkToggleButton* button)
 {
-	return g_signal_connect(G_OBJECT(button), "toggled", G_CALLBACK(SurfaceInspector::ApplyFlagsWithIndicator), environment);
+	return g_signal_connect(G_OBJECT(button), "toggled", G_CALLBACK(SurfaceInspector::ApplyFlagsWithIndicator), this);
 }
 
 SurfaceInspector::SurfaceInspector () :
@@ -319,14 +290,45 @@ SurfaceInspector::SurfaceInspector () :
 					m_vscaleIncrement), Increment::CancelCaller(m_vscaleIncrement)), m_rotateSpinner(ApplyTexdefCaller(
 					*this), UpdateCaller(*this)), m_rotateEntry(Increment::ApplyCaller(m_rotateIncrement),
 					Increment::CancelCaller(m_rotateIncrement)), m_idleDraw(UpdateCaller(*this)), m_valueEntry(
-					ApplyFlagsCaller(*this), UpdateCaller(*this)), m_hshiftIncrement(g_si_globals.shift[0]),
-			m_vshiftIncrement(g_si_globals.shift[1]), m_hscaleIncrement(g_si_globals.scale[0]), m_vscaleIncrement(
-					g_si_globals.scale[1]), m_rotateIncrement(g_si_globals.rotate)
+					ApplyFlagsCaller(*this), UpdateCaller(*this)), m_hshiftIncrement(_shift[0]), m_vshiftIncrement(
+					_shift[1]), m_hscaleIncrement(_scale[0]), m_vscaleIncrement(_scale[1]), m_rotateIncrement(_rotate)
 {
 	m_fitVertical = 1;
 	m_fitHorizontal = 1;
-	GlobalGrid().addGridChangeCallback(MemberCaller<SurfaceInspector, &SurfaceInspector::gridChange> (*this));
 	m_valueInconsistent = false;
+	s_texture_selection_dirty = false;
+
+	GlobalGrid().addGridChangeCallback(MemberCaller<SurfaceInspector, &SurfaceInspector::gridChange> (*this));
+	GlobalSelectionSystem().addSelectionChangeCallback(MemberCaller1<SurfaceInspector, const Selectable&,
+			&SurfaceInspector::SelectionChanged> (*this));
+	GlobalSceneGraph().addSceneChangedCallback(MemberCaller<SurfaceInspector, &SurfaceInspector::updateSelection> (
+			*this));
+	Brush_addTextureChangedCallback(MemberCaller<SurfaceInspector, &SurfaceInspector::updateSelection> (*this));
+
+	_shift[0] = 8.0f;
+	_shift[1] = 8.0f;
+	_scale[0] = 0.5f;
+	_scale[1] = 0.5f;
+	_rotate = 45.0f;
+
+	GlobalRegistry().addKeyObserver(this, RKEY_SNAP_TO_GRID);
+
+	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
+	GlobalPreferenceSystem().addConstructor(this);
+}
+
+float SurfaceInspector::getRotate () const
+{
+	return _rotate;
+}
+
+const Vector2& SurfaceInspector::getScale () const
+{
+	return _scale;
+}
+const Vector2& SurfaceInspector::getShift () const
+{
+	return _shift;
 }
 
 void SurfaceInspector::queueDraw (void)
@@ -334,10 +336,9 @@ void SurfaceInspector::queueDraw (void)
 	m_idleDraw.queueDraw();
 }
 
-
 void SurfaceInspector::gridChange (void)
 {
-	if (g_si_globals.m_bSnapTToGrid) {
+	if (m_bSnapTToGrid) {
 		float defaultScale = GlobalRegistry().getFloat("user/ui/textures/defaultTextureScale");
 		DoSnapTToGrid(defaultScale, defaultScale);
 	}
@@ -556,7 +557,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_widget_show(button);
 			gtk_table_attach(GTK_TABLE(table), button, 2, 4, 5, 6, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(OnBtnMatchGrid), 0);
+			g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(OnBtnMatchGrid), this);
 		}
 	}
 
@@ -577,7 +578,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 				gtk_table_attach(GTK_TABLE(table), button, 0, 1, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (0), 0, 0);
 				g_signal_connect(G_OBJECT(button), "clicked",
-						G_CALLBACK(OnBtnAxial), 0);
+						G_CALLBACK(OnBtnAxial), this);
 				widget_set_size(button, 60, 0);
 			}
 			{
@@ -586,13 +587,13 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 				gtk_table_attach(GTK_TABLE(table), button, 1, 2, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (0), 0, 0);
 				g_signal_connect(G_OBJECT(button), "clicked",
-						G_CALLBACK(OnBtnFaceFit), 0);
+						G_CALLBACK(OnBtnFaceFit), this);
 				widget_set_size(button, 60, 0);
 			}
 		}
 	}
 	{
-		const std::string& valueEnablingFields = g_pGameDescription->getKeyValue("surfaceinspector_enable_value");
+		const std::string& valueEnablingFields = g_pGameDescription->getKeyValue("SurfaceInspector::enable_value");
 		{
 			m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
 			gtk_widget_show(GTK_WIDGET (m_surfaceFlagsFrame));
@@ -621,13 +622,13 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 							guint handler_id = 0;
 							if (name.empty()) {
 								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
-								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check));
 							} else if (valueEnablingFields.find(name) != std::string::npos) {
 								g_object_set_data(G_OBJECT(check), "valueEnabler", gint_to_pointer(true));
 								handler_id = g_signal_connect(G_OBJECT(check), "toggled", G_CALLBACK(
 												SurfaceInspector::UpdateValueStatus), this);
 							} else {
-								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check));
 							}
 							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
 						}
@@ -664,13 +665,13 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 							guint handler_id = 0;
 							if (name.empty()) {
 								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
-								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check));
 							} else if (valueEnablingFields.find(name) != std::string::npos) {
 								g_object_set_data(G_OBJECT(check), "valueEnabler", gint_to_pointer(true));
 								handler_id = g_signal_connect(G_OBJECT(check), "toggled", G_CALLBACK(
 												SurfaceInspector::UpdateValueStatus), this);
 							} else {
-								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check));
 							}
 							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
 						}
@@ -702,7 +703,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 	return pageframe;
 }
 
-static void spin_button_set_value_no_signal (GtkSpinButton* spin, gdouble value)
+inline void spin_button_set_value_no_signal (GtkSpinButton* spin, gdouble value)
 {
 	guint handler_id = gpointer_to_int(g_object_get_data(G_OBJECT(spin), "handler"));
 	g_signal_handler_block(G_OBJECT(gtk_spin_button_get_adjustment(spin)), handler_id);
@@ -710,7 +711,7 @@ static void spin_button_set_value_no_signal (GtkSpinButton* spin, gdouble value)
 	g_signal_handler_unblock(G_OBJECT(gtk_spin_button_get_adjustment(spin)), handler_id);
 }
 
-static void spin_button_set_step_increment (GtkSpinButton* spin, gdouble value)
+inline void spin_button_set_step_increment (GtkSpinButton* spin, gdouble value)
 {
 	GtkAdjustment* adjust = gtk_spin_button_get_adjustment(spin);
 	adjust->step_increment = value;
@@ -719,11 +720,11 @@ static void spin_button_set_step_increment (GtkSpinButton* spin, gdouble value)
 /**
  * @brief Set the fields to the current texdef (i.e. map/texdef -> dialog widgets)
  * if faces selected (instead of brushes) -> will read this face texdef, else current texdef
- * @sa SurfaceInspector_GetSelectedFlags
+ * @sa SurfaceInspector::GetSelectedFlags
  */
 void SurfaceInspector::Update (void)
 {
-	const std::string& name = SurfaceInspector_GetSelectedShader();
+	const std::string& name = SurfaceInspector::GetSelectedShader();
 
 	if (shader_is_texture(name)) {
 		gtk_entry_set_text(m_texture, shader_get_textureName(name).c_str());
@@ -733,7 +734,7 @@ void SurfaceInspector::Update (void)
 
 	TexDef shiftScaleRotate;
 
-	shiftScaleRotate = SurfaceInspector_GetSelectedTexdef().m_texdef;
+	shiftScaleRotate = SurfaceInspector::GetSelectedTexdef().m_texdef;
 
 	// normalize again to hide the ridiculously high scale values that get created when using texlock
 	shiftScaleRotate._shift[0] = float_mod(shiftScaleRotate._shift[0], (float) g_selectedShaderSize[0]);
@@ -741,32 +742,32 @@ void SurfaceInspector::Update (void)
 
 	{
 		spin_button_set_value_no_signal(m_hshiftIncrement.m_spin, shiftScaleRotate._shift[0]);
-		spin_button_set_step_increment(m_hshiftIncrement.m_spin, g_si_globals.shift[0]);
-		entry_set_float(m_hshiftIncrement.m_entry, g_si_globals.shift[0]);
+		spin_button_set_step_increment(m_hshiftIncrement.m_spin, _shift[0]);
+		entry_set_float(m_hshiftIncrement.m_entry, _shift[0]);
 	}
 
 	{
 		spin_button_set_value_no_signal(m_vshiftIncrement.m_spin, shiftScaleRotate._shift[1]);
-		spin_button_set_step_increment(m_vshiftIncrement.m_spin, g_si_globals.shift[1]);
-		entry_set_float(m_vshiftIncrement.m_entry, g_si_globals.shift[1]);
+		spin_button_set_step_increment(m_vshiftIncrement.m_spin, _shift[1]);
+		entry_set_float(m_vshiftIncrement.m_entry, _shift[1]);
 	}
 
 	{
 		spin_button_set_value_no_signal(m_hscaleIncrement.m_spin, shiftScaleRotate._scale[0]);
-		spin_button_set_step_increment(m_hscaleIncrement.m_spin, g_si_globals.scale[0]);
-		entry_set_float(m_hscaleIncrement.m_entry, g_si_globals.scale[0]);
+		spin_button_set_step_increment(m_hscaleIncrement.m_spin, _scale[0]);
+		entry_set_float(m_hscaleIncrement.m_entry, _scale[0]);
 	}
 
 	{
 		spin_button_set_value_no_signal(m_vscaleIncrement.m_spin, shiftScaleRotate._scale[1]);
-		spin_button_set_step_increment(m_vscaleIncrement.m_spin, g_si_globals.scale[1]);
-		entry_set_float(m_vscaleIncrement.m_entry, g_si_globals.scale[1]);
+		spin_button_set_step_increment(m_vscaleIncrement.m_spin, _scale[1]);
+		entry_set_float(m_vscaleIncrement.m_entry, _scale[1]);
 	}
 
 	{
 		spin_button_set_value_no_signal(m_rotateIncrement.m_spin, shiftScaleRotate._rotate);
-		spin_button_set_step_increment(m_rotateIncrement.m_spin, g_si_globals.rotate);
-		entry_set_float(m_rotateIncrement.m_entry, g_si_globals.rotate);
+		spin_button_set_step_increment(m_rotateIncrement.m_spin, _rotate);
+		entry_set_float(m_rotateIncrement.m_entry, _rotate);
 	}
 
 	UpdateFlagButtons();
@@ -782,7 +783,7 @@ void SurfaceInspector::Update (void)
  */
 void SurfaceInspector::UpdateFlagButtons ()
 {
-	ContentsFlagsValue flags = SurfaceInspector_GetSelectedFlags();
+	ContentsFlagsValue flags = SurfaceInspector::GetSelectedFlags();
 	bool enableValueField = false;
 
 	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
@@ -834,7 +835,7 @@ void SurfaceInspector::ApplyShader (void)
 	// TTimo: detect and refuse invalid texture names (at least the ones with spaces)
 	if (!texdef_name_valid(name)) {
 		globalErrorStream() << "invalid texture name '" << name << "'\n";
-		SurfaceInspector_queueDraw();
+		SurfaceInspector::queueDraw();
 		return;
 	}
 
@@ -889,7 +890,7 @@ void SurfaceInspector::UpdateValueStatus (GtkWidget *widget, SurfaceInspector *i
 /**
  * @todo Set contentflags for whole brush when we are in face selection mode
  */
-inline void Select_SetFlags (const ContentsFlagsValue& flags)
+void SurfaceInspector::Select_SetFlags (const ContentsFlagsValue& flags)
 {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushSetFlags_Selected(GlobalSceneGraph(), flags);
@@ -942,117 +943,18 @@ void SurfaceInspector::ApplyFlagsWithIndicator (GtkWidget *activatedWidget, Surf
 	UndoableCommand undo("flagsSetSelected");
 	globalOutputStream() << "dirty: " << surfaceflagsDirty << "\n";
 	/* set flags to the selection */
-	Select_SetFlags(ContentsFlagsValue(surfaceflags, contentflags, value, true, surfaceflagsDirty, contentflagsDirty,
-			inspector->m_valueInconsistent));
+	inspector->Select_SetFlags(ContentsFlagsValue(surfaceflags, contentflags, value, true, surfaceflagsDirty,
+			contentflagsDirty, inspector->m_valueInconsistent));
 }
 
-void Face_getTexture (Face& face, std::string& shader, TextureProjection& projection, ContentsFlagsValue& flags)
-{
-	shader = face.GetShader();
-	face.GetTexdef(projection);
-	flags = face.getShader().m_flags;
-}
-typedef Function4<Face&, std::string&, TextureProjection&, ContentsFlagsValue&, void, Face_getTexture> FaceGetTexture;
-
-void Face_setTexture (Face& face, const std::string& shader, const TextureProjection& projection,
-		const ContentsFlagsValue& flags)
-{
-	face.SetShader(shader);
-	face.SetTexdef(projection);
-	face.SetFlags(flags);
-}
-typedef Function4<Face&, const std::string&, const TextureProjection&, const ContentsFlagsValue&, void, Face_setTexture>
-		FaceSetTexture;
-
-typedef Callback3<std::string&, TextureProjection&, ContentsFlagsValue&> GetTextureCallback;
-typedef Callback3<const std::string&, const TextureProjection&, const ContentsFlagsValue&> SetTextureCallback;
-
-struct Texturable
-{
-		GetTextureCallback getTexture;
-		SetTextureCallback setTexture;
-};
-
-static void Face_getClosest (Face& face, SelectionTest& test, SelectionIntersection& bestIntersection,
-		Texturable& texturable)
-{
-	SelectionIntersection intersection;
-	face.testSelect(test, intersection);
-	if (intersection.valid() && SelectionIntersection_closer(intersection, bestIntersection)) {
-		bestIntersection = intersection;
-		texturable.setTexture = makeCallback3(FaceSetTexture(), face);
-		texturable.getTexture = makeCallback3(FaceGetTexture(), face);
-	}
-}
-
-class OccludeSelector: public Selector
-{
-		SelectionIntersection& m_bestIntersection;
-		bool& m_occluded;
-	public:
-		OccludeSelector (SelectionIntersection& bestIntersection, bool& occluded) :
-			m_bestIntersection(bestIntersection), m_occluded(occluded)
-		{
-			m_occluded = false;
-		}
-		void pushSelectable (Selectable& selectable)
-		{
-		}
-		void popSelectable (void)
-		{
-		}
-		void addIntersection (const SelectionIntersection& intersection)
-		{
-			if (SelectionIntersection_closer(intersection, m_bestIntersection)) {
-				m_bestIntersection = intersection;
-				m_occluded = true;
-			}
-		}
-};
-
-class BrushGetClosestFaceVisibleWalker: public scene::Graph::Walker
-{
-		SelectionTest& m_test;
-		Texturable& m_texturable;
-		mutable SelectionIntersection m_bestIntersection;
-	public:
-		BrushGetClosestFaceVisibleWalker (SelectionTest& test, Texturable& texturable) :
-			m_test(test), m_texturable(texturable)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.top().get().visible()) {
-				BrushInstance* brush = Instance_getBrush(instance);
-				if (brush != 0) {
-					m_test.BeginMesh(brush->localToWorld());
-
-					for (Brush::const_iterator i = brush->getBrush().begin(); i != brush->getBrush().end(); ++i) {
-						Face_getClosest(*(*i), m_test, m_bestIntersection, m_texturable);
-					}
-				} else {
-					SelectionTestable* selectionTestable = Instance_getSelectionTestable(instance);
-					if (selectionTestable) {
-						bool occluded;
-						OccludeSelector selector(m_bestIntersection, occluded);
-						selectionTestable->testSelect(selector, m_test);
-						if (occluded)
-							m_texturable = Texturable();
-					}
-				}
-			}
-			return true;
-		}
-};
-
-Texturable Scene_getClosestTexturable (scene::Graph& graph, SelectionTest& test)
+Texturable SurfaceInspector::Scene_getClosestTexturable (scene::Graph& graph, SelectionTest& test)
 {
 	Texturable texturable;
 	graph.traverse(BrushGetClosestFaceVisibleWalker(test, texturable));
 	return texturable;
 }
 
-static bool Scene_getClosestTexture (scene::Graph& graph, SelectionTest& test, std::string& shader,
+bool SurfaceInspector::Scene_getClosestTexture (scene::Graph& graph, SelectionTest& test, std::string& shader,
 		TextureProjection& projection, ContentsFlagsValue& flags)
 {
 	Texturable texturable = Scene_getClosestTexturable(graph, test);
@@ -1063,7 +965,7 @@ static bool Scene_getClosestTexture (scene::Graph& graph, SelectionTest& test, s
 	return false;
 }
 
-static void Scene_setClosestTexture (scene::Graph& graph, SelectionTest& test, const std::string& shader,
+void SurfaceInspector::Scene_setClosestTexture (scene::Graph& graph, SelectionTest& test, const std::string& shader,
 		const TextureProjection& projection, const ContentsFlagsValue& flags)
 {
 	Texturable texturable = Scene_getClosestTexturable(graph, test);
@@ -1072,26 +974,13 @@ static void Scene_setClosestTexture (scene::Graph& graph, SelectionTest& test, c
 	}
 }
 
-class FaceTexture
-{
-	public:
-		TextureProjection m_projection;
-		ContentsFlagsValue m_flags;
-};
-
-FaceTexture g_faceTextureClipboard;
-
-void TextureClipboard_textureSelected ()
+void SurfaceInspector::TextureClipboard_textureSelected ()
 {
 	g_faceTextureClipboard.m_flags = ContentsFlagsValue(0, 0, 0, false);
 	g_faceTextureClipboard.m_projection.constructDefault();
 }
 
-class TextureBrowser;
-void TextureBrowser_SetSelectedShader (TextureBrowser& textureBrowser, const std::string& shader);
-const char* TextureBrowser_GetSelectedShader (TextureBrowser& textureBrowser);
-
-void Scene_copyClosestTexture (SelectionTest& test)
+void SurfaceInspector::Scene_copyClosestTexture (SelectionTest& test)
 {
 	std::string shader;
 	if (Scene_getClosestTexture(GlobalSceneGraph(), test, shader, g_faceTextureClipboard.m_projection,
@@ -1100,7 +989,7 @@ void Scene_copyClosestTexture (SelectionTest& test)
 	}
 }
 
-void Scene_applyClosestTexture (SelectionTest& test)
+void SurfaceInspector::Scene_applyClosestTexture (SelectionTest& test)
 {
 	UndoableCommand command("facePaintTexture");
 
@@ -1113,7 +1002,7 @@ void Scene_applyClosestTexture (SelectionTest& test)
 /**
  * @todo Don't change the levelflags here (content flags)
  */
-void SelectedFaces_copyTexture (void)
+void SurfaceInspector::SelectedFaces_copyTexture (void)
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
 		Face& face = g_SelectedFaceInstances.last().getFace();
@@ -1124,95 +1013,72 @@ void SelectedFaces_copyTexture (void)
 	}
 }
 
-static void FaceInstance_pasteTexture (FaceInstance& faceInstance)
+void SurfaceInspector::FaceInstance_pasteTexture (FaceInstance& faceInstance)
 {
-	faceInstance.getFace().SetTexdef(g_faceTextureClipboard.m_projection);
+	faceInstance.getFace().SetTexdef(GlobalSurfaceInspector().g_faceTextureClipboard.m_projection);
 	faceInstance.getFace().SetShader(GlobalTextureBrowser().getSelectedShader());
-	faceInstance.getFace().SetFlags(g_faceTextureClipboard.m_flags);
+	faceInstance.getFace().SetFlags(GlobalSurfaceInspector().g_faceTextureClipboard.m_flags);
 	SceneChangeNotify();
 }
 
-void SelectedFaces_pasteTexture (void)
+void SurfaceInspector::SelectedFaces_pasteTexture (void)
 {
 	UndoableCommand command("facePasteTexture");
 	g_SelectedFaceInstances.foreach(FaceInstance_pasteTexture);
 }
 
-void FlipTextureX() {
+void SurfaceInspector::FlipTextureX ()
+{
 	Select_FlipTexture(0);
 }
 
-void FlipTextureY() {
+void SurfaceInspector::FlipTextureY ()
+{
 	Select_FlipTexture(1);
 }
 
-void ToggleTexTool() {
+void SurfaceInspector::ToggleTexTool ()
+{
 	// Call the toggle() method of the static instance
 	ui::TexTool::Instance().toggle();
 }
 
-void SurfaceInspector_constructPage (PreferenceGroup& group)
+void SurfaceInspector::registerCommands (void)
 {
-	PreferencesPage* page = group.createPage(_("Surface Inspector"), _("Surface Inspector Preferences"));
-	PrefPage*p = reinterpret_cast<PrefPage*>(page);
-	p->appendCheckBox("", _("Surface Inspector Increments Match Grid"), g_si_globals.m_bSnapTToGrid);
+	GlobalEventManager().addCommand("FitTexture", MemberCaller<SurfaceInspector, &SurfaceInspector::FitTexture> (*this));
+	GlobalEventManager().addCommand("TextureTool", MemberCaller<SurfaceInspector, &SurfaceInspector::ToggleTexTool> (
+			*this));
+
+	GlobalEventManager().addCommand("FaceCopyTexture", MemberCaller<SurfaceInspector,
+			&SurfaceInspector::SelectedFaces_copyTexture> (*this));
+	GlobalEventManager().addCommand("FacePasteTexture", MemberCaller<SurfaceInspector,
+			&SurfaceInspector::SelectedFaces_pasteTexture> (*this));
+
+	GlobalEventManager().addCommand("FlipTextureX", MemberCaller<SurfaceInspector, &SurfaceInspector::FlipTextureX> (
+			*this));
+	GlobalEventManager().addCommand("FlipTextureY", MemberCaller<SurfaceInspector, &SurfaceInspector::FlipTextureY> (
+			*this));
 }
 
-static void SurfaceInspector_registerPreferencesPage (void)
+void SurfaceInspector::keyChanged (const std::string& changedKey, const std::string& newValue)
 {
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, SurfaceInspector_constructPage> ());
+	m_bSnapTToGrid = GlobalRegistry().getBool(RKEY_SNAP_TO_GRID);
 }
 
-static void SurfaceInspector_registerCommands (void)
+void SurfaceInspector::constructPreferencePage (PreferenceGroup& group)
 {
-	GlobalEventManager().addCommand("FitTexture", FreeCaller<SurfaceInspector_FitTexture>());
-	GlobalEventManager().addCommand("TextureTool", FreeCaller<ToggleTexTool>());
+	PreferencesPage* page(group.createPage(_("Surface Inspector"), _("Surface Inspector Preferences")));
 
-	GlobalEventManager().addCommand("FaceCopyTexture", FreeCaller<SelectedFaces_copyTexture>());
-	GlobalEventManager().addCommand("FacePasteTexture", FreeCaller<SelectedFaces_pasteTexture>());
-
-	GlobalEventManager().addCommand("FlipTextureX", FreeCaller<FlipTextureX>());
-	GlobalEventManager().addCommand("FlipTextureY", FreeCaller<FlipTextureY>());
+	page->appendCheckBox("", _("Surface Inspector Increments Match Grid"), RKEY_SNAP_TO_GRID);
 }
-
-#include "preferencesystem.h"
 
 void SurfaceInspector_Construct (void)
 {
-	g_SurfaceInspector = new SurfaceInspector;
+	GlobalSurfaceInspector().registerCommands();
 
-	SurfaceInspector_registerCommands();
-
-	TextureClipboard_textureSelected();
-
-	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Scale1", FloatImportStringCaller(
-			g_si_globals.scale[0]), FloatExportStringCaller(g_si_globals.scale[0]));
-	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Scale2", FloatImportStringCaller(
-			g_si_globals.scale[1]), FloatExportStringCaller(g_si_globals.scale[1]));
-	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Shift1", FloatImportStringCaller(
-			g_si_globals.shift[0]), FloatExportStringCaller(g_si_globals.shift[0]));
-	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Shift2", FloatImportStringCaller(
-			g_si_globals.shift[1]), FloatExportStringCaller(g_si_globals.shift[1]));
-	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Rotate",
-			FloatImportStringCaller(g_si_globals.rotate), FloatExportStringCaller(g_si_globals.rotate));
-	GlobalPreferenceSystem().registerPreference("SnapTToGrid", BoolImportStringCaller(g_si_globals.m_bSnapTToGrid),
-			BoolExportStringCaller(g_si_globals.m_bSnapTToGrid));
-
-	typedef FreeCaller1<const Selectable&, SurfaceInspector_SelectionChanged> SurfaceInspectorSelectionChangedCaller;
-	GlobalSelectionSystem().addSelectionChangeCallback(SurfaceInspectorSelectionChangedCaller());
-	GlobalSceneGraph().addSceneChangedCallback(FreeCaller<SurfaceInspector_updateSelection>());
-	typedef FreeCaller<SurfaceInspector_updateSelection> SurfaceInspectorUpdateSelectionCaller;
-	Brush_addTextureChangedCallback(SurfaceInspectorUpdateSelectionCaller());
-
-	SurfaceInspector_registerPreferencesPage();
+	GlobalSurfaceInspector().TextureClipboard_textureSelected();
 }
 
 void SurfaceInspector_Destroy (void)
 {
-	delete g_SurfaceInspector;
-}
-
-GtkWidget *SurfaceInspector_constructNotebookTab (void)
-{
-	return g_SurfaceInspector->BuildNotebook();
 }

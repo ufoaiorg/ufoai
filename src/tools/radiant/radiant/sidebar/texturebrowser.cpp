@@ -425,13 +425,12 @@ const IShader* TextureBrowser::getTextureAt(int mx, int my) {
 	return 0;
 }
 
-void TextureClipboard_textureSelected();
 
 void TextureBrowser::selectTextureAt(int mx, int my) {
 	const IShader* shader = getTextureAt(mx, my);
 	if (shader != 0) {
 		setSelectedShader(shader->getName());
-		TextureClipboard_textureSelected();
+		GlobalSurfaceInspector().TextureClipboard_textureSelected();
 
 		if (!m_rmbSelected) {
 			UndoableCommand undo("textureNameSetSelected");

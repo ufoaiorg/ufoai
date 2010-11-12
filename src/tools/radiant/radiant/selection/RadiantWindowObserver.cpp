@@ -53,11 +53,11 @@ void RadiantWindowObserver::onMouseDown (const WindowVector& position, GdkEventB
 
 		// If the apply texture modifier is held
 		if (observerEvent == ui::obsPasteTexture) {
-			Scene_applyClosestTexture(volume);
+			GlobalSurfaceInspector().Scene_applyClosestTexture(volume);
 		}
 		// If the copy texture modifier is held
 		else if (observerEvent == ui::obsCopyTexture) {
-			Scene_copyClosestTexture(volume);
+			GlobalSurfaceInspector().Scene_copyClosestTexture(volume);
 		}
 	}
 
