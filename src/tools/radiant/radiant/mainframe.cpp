@@ -78,6 +78,7 @@
 #include "gtkutil/IconTextMenuToggle.h"
 
 #include "map/AutoSaver.h"
+#include "map/MapCompileException.h"
 #include "brush/brushmanip.h"
 #include "brush/BrushModule.h"
 #include "brush/csg/csg.h"
@@ -1637,9 +1638,13 @@ class NullMapCompilerObserver : public ICompilerObserver {
 };
 
 void ToolsCompile () {
-	const std::string mapName = GlobalRadiant().getMapName();
-	NullMapCompilerObserver observer;
-	GlobalMapCompiler().compileMap(mapName, observer);
+	try {
+		const std::string mapName = GlobalRadiant().getMapName();
+		NullMapCompilerObserver observer;
+		GlobalMapCompiler().compileMap(mapName, observer);
+	} catch (MapCompileException& e) {
+		gtkutil::errorDialog(e.what());
+	}
 }
 
 void ToolsCheckErrors () {
@@ -1656,9 +1661,13 @@ void ToolsCheckErrors () {
 }
 
 void ToolsGenerateMaterials () {
-	const std::string mapName = GlobalRadiant().getMapName();
-	NullMapCompilerObserver observer;
-	GlobalMapCompiler().generateMaterial(mapName, observer);
+	try {
+		const std::string mapName = GlobalRadiant().getMapName();
+		NullMapCompilerObserver observer;
+		GlobalMapCompiler().generateMaterial(mapName, observer);
+	} catch (MapCompileException& e) {
+		gtkutil::errorDialog(e.what());
+	}
 }
 
 void FindBrushOrEntity() {
