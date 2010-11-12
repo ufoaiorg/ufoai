@@ -176,6 +176,8 @@ void TexTool::shutdown() {
 
 	GlobalEventManager().disconnect(GTK_OBJECT(_glWidget));
 	GlobalEventManager().disconnect(GTK_OBJECT(getWindow()));
+
+	destroy();
 }
 
 TexTool& TexTool::Instance() {
