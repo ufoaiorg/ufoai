@@ -256,7 +256,7 @@ static void EntityClassList_fill (void)
 
 static void EntityClassList_clear (void)
 {
-	if (g_entlist_store) {
+	if (GTK_IS_LIST_STORE(g_entlist_store)) {
 		gtk_list_store_clear(g_entlist_store);
 	}
 }
