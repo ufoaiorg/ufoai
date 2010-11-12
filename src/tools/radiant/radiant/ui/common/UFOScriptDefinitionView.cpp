@@ -83,7 +83,6 @@ namespace ui
 		const std::string& content = _view.getContents();
 		TextFileOutputStream out(GlobalRadiant().getGamePath() + _ufoFile);
 		if (out.failed()) {
-			g_message("Error saving file to '%s'.", _ufoFile.c_str());
 			gtkutil::errorDialog(_("Error saving ufo script file"));
 			return;
 		}

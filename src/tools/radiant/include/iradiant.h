@@ -75,36 +75,73 @@ typedef SignalFwd<MouseEventHandler>::handler_id_type MouseEventHandlerId;
 
 typedef struct _GtkWindow GtkWindow;
 
+/** greebo: An EventListener gets notified by the Radiant module
+ *          on global events like shutdown, startup and such.
+ *
+ *          EventListener classes must register themselves using
+ *          the GlobalRadiant().addEventListener() method in order
+ *          to get notified about the events.
+ *
+ * Note: Default implementations are empty, deriving classes are
+ *       supposed to pick the events they want to listen to.
+ */
+class RadiantEventListener {
+public:
+	/** Destructor
+	 */
+	virtual ~RadiantEventListener() {}
+
+	/** This gets called AFTER the MainFrame window has been constructed.
+	 */
+	virtual void onRadiantStartup() {}
+
+	/** Gets called when BEFORE the MainFrame window is destroyed.
+	 *  Note: After this call, the EventListeners are deregistered from the
+	 *        Radiant module, all the internally held shared_ptrs are cleared.
+	 */
+	virtual void onRadiantShutdown() {}
+};
+
 // the radiant core API
 // This contains pointers to all the core functions that should be available via GlobalRadiant()
 struct IRadiant
 {
-		INTEGER_CONSTANT(Version, 1);
-		STRING_CONSTANT(Name, "radiant");
+	INTEGER_CONSTANT(Version, 1);
+	STRING_CONSTANT(Name, "radiant");
 
-		/** Return the main application GtkWindow.
-		 */
-		GtkWindow* (*getMainWindow) ();
-		const std::string& (*getEnginePath) ();
-		const std::string (*getAppPath) ();
-		const std::string (*getSettingsPath) ();
-		const std::string& (*getMapsPath) ();
+	// Registers/de-registers an event listener class
+	virtual void addEventListener(RadiantEventListener* listener) = 0;
+	virtual void removeEventListener(RadiantEventListener* listener) = 0;
 
-		void (*setStatusText)(const std::string& statusText);
+	// Broadcasts a "shutdown" event to all the listeners, this also clears all listeners!
+	virtual void broadcastShutdownEvent() = 0;
 
-		const std::string (*getGamePath) ();
-		/**
-		 * @return The full path to the current loaded map
-		 */
-		const std::string (*getMapName) ();
-		scene::Node& (*getMapWorldEntity) ();
+	// Broadcasts a "startup" event to all the listeners
+	virtual void broadcastStartupEvent() = 0;
 
-		void (*attachGameToolsPathObserver) (ModuleObserver& observer);
-		void (*detachGameToolsPathObserver) (ModuleObserver& observer);
-		void (*attachEnginePathObserver) (ModuleObserver& observer);
-		void (*detachEnginePathObserver) (ModuleObserver& observer);
-		void (*attachGameModeObserver) (ModuleObserver& observer);
-		void (*detachGameModeObserver) (ModuleObserver& observer);
+	/** Return the main application GtkWindow.
+	 */
+	virtual GtkWindow* getMainWindow() = 0;
+	virtual const std::string& getEnginePath() = 0;
+	virtual const std::string getAppPath() = 0;
+	virtual const std::string getSettingsPath() = 0;
+	virtual const std::string& getMapsPath() = 0;
+
+	virtual void setStatusText (const std::string& statusText) = 0;
+
+	virtual const std::string getGamePath() = 0;
+	/**
+	 * @return The full path to the current loaded map
+	 */
+	virtual std::string getMapName() = 0;
+	virtual scene::Node& getMapWorldEntity() = 0;
+
+	virtual void attachGameToolsPathObserver (ModuleObserver& observer) = 0;
+	virtual void detachGameToolsPathObserver (ModuleObserver& observer) = 0;
+	virtual void attachEnginePathObserver (ModuleObserver& observer) = 0;
+	virtual void detachEnginePathObserver (ModuleObserver& observer) = 0;
+	virtual void attachGameModeObserver (ModuleObserver& observer) = 0;
+	virtual void detachGameModeObserver (ModuleObserver& observer) = 0;
 };
 
 // IRadiant Module Definitions

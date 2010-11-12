@@ -93,50 +93,118 @@
 
 #include "generic/callback.h"
 
-inline const std::string getMapName ()
-{
-	return Map_Name(g_map);
-}
+#include <set>
 
-inline scene::Node& getMapWorldEntity ()
+class RadiantModule : public IRadiant
 {
-	return Map_FindOrInsertWorldspawn(g_map);
-}
+	private:
 
-class RadiantCoreAPI
-{
-		IRadiant m_radiantcore;
-		public:
+		typedef std::set<RadiantEventListener*> EventListenerList;
+		EventListenerList _eventListeners;
+
+	public:
 		typedef IRadiant Type;
 		STRING_CONSTANT(Name, "*");
 
-		RadiantCoreAPI ()
-		{
-			m_radiantcore.getMainWindow = MainFrame_getWindow;
-			m_radiantcore.getEnginePath = &EnginePath_get;
-			m_radiantcore.getAppPath = &AppPath_get;
-			m_radiantcore.getSettingsPath = &SettingsPath_get;
-			m_radiantcore.getMapsPath = &getMapsPath;
-
-			m_radiantcore.getMapName = &getMapName;
-			m_radiantcore.getMapWorldEntity = getMapWorldEntity;
-
-			m_radiantcore.setStatusText = Sys_Status;
-
-			m_radiantcore.attachGameToolsPathObserver = Radiant_attachGameToolsPathObserver;
-			m_radiantcore.detachGameToolsPathObserver = Radiant_detachGameToolsPathObserver;
-			m_radiantcore.attachEnginePathObserver = Radiant_attachEnginePathObserver;
-			m_radiantcore.detachEnginePathObserver = Radiant_detachEnginePathObserver;
-			m_radiantcore.attachGameModeObserver = Radiant_attachGameModeObserver;
-			m_radiantcore.detachGameModeObserver = Radiant_detachGameModeObserver;
-		}
 		IRadiant* getTable ()
 		{
-			return &m_radiantcore;
+			return this;
+		}
+
+	public:
+
+		// Registers/de-registers an event listener class
+		void addEventListener(RadiantEventListener* listener) {
+			_eventListeners.insert(listener);
+		}
+
+		void removeEventListener(RadiantEventListener* listener) {
+			EventListenerList::iterator found = _eventListeners.find(listener);
+
+			if (found != _eventListeners.end()) {
+				_eventListeners.erase(found);
+			}
+		}
+
+		// Broadcasts a "shutdown" event to all the listeners, this also clears all listeners!
+		void broadcastShutdownEvent ()
+		{
+			for (EventListenerList::const_iterator i = _eventListeners.begin(); i != _eventListeners.end(); ++i) {
+				(*i)->onRadiantShutdown();
+			}
+
+			// This was the final radiant event, no need for keeping any pointers anymore
+			_eventListeners.clear();
+		}
+
+		// Broadcasts a "startup" event to all the listeners
+		void broadcastStartupEvent ()
+		{
+			for (EventListenerList::const_iterator i = _eventListeners.begin(); i != _eventListeners.end(); ++i) {
+				(*i)->onRadiantStartup();
+			}
+		}
+
+		/** Return the main application GtkWindow.
+		 */
+		GtkWindow* getMainWindow() {
+			return MainFrame_getWindow();
+		}
+
+		const std::string& getEnginePath() {
+			return EnginePath_get();
+		}
+		const std::string getAppPath() {
+			return AppPath_get();
+		}
+		const std::string getSettingsPath() {
+			return SettingsPath_get();
+		}
+		const std::string& getMapsPath() {
+			return Map_Name(g_map);
+		}
+		const std::string getGamePath() {
+			return basegame_get();
+		}
+
+
+		void setStatusText (const std::string& statusText) {
+			Sys_Status(statusText);
+		}
+
+		/**
+		 * @return The full path to the current loaded map
+		 */
+		std::string getMapName() {
+			return Map_Name(g_map);
+		}
+		scene::Node& getMapWorldEntity() {
+			return Map_FindOrInsertWorldspawn(g_map);
+		}
+
+		void attachGameToolsPathObserver (ModuleObserver& observer) {
+			Radiant_attachGameToolsPathObserver(observer);
+		}
+		void detachGameToolsPathObserver (ModuleObserver& observer) {
+			Radiant_detachGameToolsPathObserver(observer);
+		}
+
+		void attachEnginePathObserver (ModuleObserver& observer) {
+			Radiant_attachEnginePathObserver(observer);
+		}
+		void detachEnginePathObserver (ModuleObserver& observer) {
+			Radiant_detachEnginePathObserver(observer);
+		}
+
+		void attachGameModeObserver (ModuleObserver& observer) {
+			Radiant_attachGameModeObserver(observer);
+		}
+		void detachGameModeObserver (ModuleObserver& observer) {
+			Radiant_detachGameModeObserver(observer);
 		}
 };
 
-typedef SingletonModule<RadiantCoreAPI> RadiantCoreModule;
+typedef SingletonModule<RadiantModule> RadiantCoreModule;
 typedef Static<RadiantCoreModule> StaticRadiantCoreModule;
 StaticRegisterModule staticRegisterRadiantCore(StaticRadiantCoreModule::instance());
 

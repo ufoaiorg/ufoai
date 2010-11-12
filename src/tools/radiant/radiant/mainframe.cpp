@@ -1786,6 +1786,9 @@ void MainFrame_Construct (void)
 
 	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
 	GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
+
+	// Broadcast the startup event
+	GlobalRadiant().broadcastStartupEvent();
 }
 
 void MainFrame_Destroy (void)
@@ -1793,6 +1796,9 @@ void MainFrame_Destroy (void)
 	GlobalEntityCreator().setCounter(0);
 	g_entityCount.setCountChangedCallback(Callback());
 	g_brushCount.setCountChangedCallback(Callback());
+
+	// Broadcast shutdown event to RadiantListeners
+	GlobalRadiant().broadcastShutdownEvent();
 }
 
 void GLWindow_Construct (void)
