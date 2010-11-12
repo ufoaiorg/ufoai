@@ -684,6 +684,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 		aircraft->time = 0;
 		aircraft->point = 0;
 		aircraft->mission = NULL;
+		aircraft->aircraftTarget = NULL;
 	}
 }
 
