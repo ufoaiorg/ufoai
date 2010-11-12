@@ -28,45 +28,21 @@
 #include <gtk/gtk.h>
 #include "selectable.h"
 
-#include "gtkutil/nonmodal.h"
-#include "gtkutil/idledraw.h"
-#include "gtkutil/entry.h"
-
-#include "radiant_i18n.h"
-
-#include "debugging/debugging.h"
-
 #include "iscenegraph.h"
-#include "../brush/TexDef.h"
 #include "iundo.h"
 #include "iselection.h"
 #include "ieventmanager.h"
-#include "igrid.h"
 
 #include "signal/isignal.h"
-#include "generic/object.h"
-#include "texturelib.h"
-#include "shaderlib.h"
-#include "stringio.h"
 
 #include "gtkutil/idledraw.h"
 #include "gtkutil/entry.h"
 #include "gtkutil/nonmodal.h"
-#include "gtkutil/pointer.h"
-#include "gtkutil/button.h"
-#include "../map/map.h"
-#include "../select.h"
-#include "../brush/brushmanip.h"
-#include "../brush/BrushModule.h"
-#include "../settings/preferences.h"
+
+#include "../brush/ContentsFlagsValue.h"
+#include "../brush/FaceInstance.h"
 #include "../brush/TexDef.h"
 #include "../brush/TextureProjection.h"
-#include "../mainframe.h"
-#include "../dialog.h"
-#include "../brush/brush.h"
-#include "stream/stringstream.h"
-#include "../textureentry.h"
-#include "../textool/TexTool.h"
 
 class Increment
 {
