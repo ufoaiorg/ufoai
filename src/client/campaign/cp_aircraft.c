@@ -1823,7 +1823,7 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 	aircraft_t* aircraft;
 
 	AIR_Foreach(aircraft) {
-		if (aircraft->status == AIR_MISSION && aircraft->mission == mission)
+		if (aircraft->mission == mission)
 			AIR_AircraftReturnToBase(aircraft);
 	}
 }
