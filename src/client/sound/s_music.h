@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_SOUND_MUSIC_H
 #define CLIENT_SOUND_MUSIC_H
 
+#include "../../shared/ufotypes.h"	/* for qboolean & byte */
+
 /* 2 channels and a width of 2 bytes (short) */
 #define SAMPLE_SIZE 4
 #define MAX_RAW_SAMPLES 4096 * SAMPLE_SIZE

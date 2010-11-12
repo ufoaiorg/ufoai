@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "s_local.h"
 #include "s_sample.h"
+#include "s_local.h"
 #include "s_main.h"		/* for s_sample_t */
 
 #define SAMPLE_HASH_SIZE 64

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_SOUND_MAIN_H
 
 #include <SDL_mixer.h>
+#include "../../shared/mathlib.h"	/* for vec3_t */
 
 #define MAX_CHANNELS 64
 
