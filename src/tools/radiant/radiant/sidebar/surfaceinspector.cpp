@@ -62,6 +62,8 @@
 #include "../textureentry.h"
 #include "../textool/TexTool.h"
 
+#include "BrushGetClosestFaceVisible.h"
+
 namespace {
 const std::string RKEY_SNAP_TO_GRID = "user/ui/surfaceinspector/snapToGrid";
 
@@ -1054,13 +1056,4 @@ void SurfaceInspector::constructPreferencePage (PreferenceGroup& group)
 void SurfaceInspector::shutdown (void)
 {
 	_shutdown = true;
-}
-
-void SurfaceInspector_Construct (void)
-{
-	GlobalSurfaceInspector().registerCommands();
-}
-
-void SurfaceInspector_Destroy (void)
-{
 }

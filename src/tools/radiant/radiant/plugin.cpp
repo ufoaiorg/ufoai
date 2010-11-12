@@ -278,7 +278,7 @@ class Radiant: public TypeSystemRef
 			EntityList_Construct();
 			sidebar::MapInfo_Construct();
 			MainFrame_Construct();
-			SurfaceInspector_Construct();
+			GlobalSurfaceInspector().registerCommands();
 			GlobalCamera().construct();
 			GlobalXYWnd().construct();
 			GlobalMaterialSystem()->construct();
@@ -314,7 +314,6 @@ class Radiant: public TypeSystemRef
 			Entity_Destroy();
 			GlobalCamera().destroy();
 			GlobalXYWnd().destroy();
-			SurfaceInspector_Destroy();
 			MainFrame_Destroy();
 			EntityList_Destroy();
 			sidebar::MapInfo_Destroy();
