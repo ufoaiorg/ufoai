@@ -44,21 +44,23 @@ public:
 			// Try to find an accelerator connected to this event
 			Accelerator* accelerator = dynamic_cast<Accelerator*>(_eventManager->findAccelerator(event));
 
-			unsigned int keyVal = accelerator->getKey();
+			if (accelerator != NULL) {
+				unsigned int keyVal = accelerator->getKey();
 
-			const std::string keyStr = (keyVal != 0) ? gdk_keyval_name(keyVal) : "";
-			const std::string modifierStr = _eventManager->getModifierStr(accelerator->getModifiers());
+				const std::string keyStr = (keyVal != 0) ? gdk_keyval_name(keyVal) : "";
+				const std::string modifierStr = _eventManager->getModifierStr(accelerator->getModifiers());
 
-			// Create a new child under the _shortcutsNode
-			xml::Node createdNode = _shortcutsNode.createChild("shortcut");
+				// Create a new child under the _shortcutsNode
+				xml::Node createdNode = _shortcutsNode.createChild("shortcut");
 
-			// Convert it into an xml::Node and set the attributes
-			createdNode.setAttributeValue("command", eventName);
-			createdNode.setAttributeValue("key", keyStr);
-			createdNode.setAttributeValue("modifiers", modifierStr);
+				// Convert it into an xml::Node and set the attributes
+				createdNode.setAttributeValue("command", eventName);
+				createdNode.setAttributeValue("key", keyStr);
+				createdNode.setAttributeValue("modifiers", modifierStr);
 
-			// Add some whitespace to the node (nicer output formatting)
-			createdNode.addText("\n\t");
+				// Add some whitespace to the node (nicer output formatting)
+				createdNode.addText("\n\t");
+			}
 		}
 	}
 

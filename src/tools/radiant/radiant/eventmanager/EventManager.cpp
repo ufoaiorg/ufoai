@@ -497,6 +497,19 @@ public:
 		foreachEvent(&visitor);
 	}
 
+	void removeEvent(const std::string& eventName) {
+		// Try to lookup the command
+		EventMap::iterator i = _events.find(eventName);
+
+		if (i != _events.end()) {
+			// Remove all accelerators beforehand
+			disconnectAccelerator(eventName);
+
+			// Remove the event from the list
+			_events.erase(i);
+		}
+	}
+
 	void foreachEvent(IEventVisitor* eventVisitor) {
 		// Cycle through the event and pass them to the visitor class
 		for (EventMap::iterator i = _events.begin(); i != _events.end(); i++) {

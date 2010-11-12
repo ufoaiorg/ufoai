@@ -532,6 +532,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\exec.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filetypes.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filetypes.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filters\BasicFilterSystem.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\XMLFilter.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\XMLFilter.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\XMLFilterRule.h" />
@@ -766,6 +767,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UFOScriptDefinitionView.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UMPDefinitionView.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\common\UMPDefinitionView.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\filterdialog\FilterDialog.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\filterdialog\FilterEditor.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findbrush\findbrush.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findbrush\findbrush.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findshader\FindShader.cpp" />

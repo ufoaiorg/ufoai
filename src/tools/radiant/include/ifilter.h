@@ -23,7 +23,42 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_IFILTER_H
 
 #include "generic/constant.h"
+#include "string/string.h"
 #include <string>
+#include <vector>
+
+/**
+ * This structure defines a simple filtercriterion as used by the Filtersystem
+ */
+struct FilterRule {
+
+	// "texture", "entityclass", "surfaceflags" or "contentflags".
+	std::string type;
+
+	// the match expression regex
+	std::string match;
+
+	// true for action="show", false for action="hide"
+	bool show;
+
+	int surfaceflags;	// surfaceflags to match again
+
+	int contentflags;	// contentflags to match again
+
+	// Constructor
+	FilterRule(const std::string t, const std::string m, bool s) :
+		type(t),
+		match(m),
+		show(s)
+	{
+		if (t == "surfaceflags") {
+			surfaceflags = string::toInt(m);
+		} else if (t == "contentflags") {
+			contentflags = string::toInt(m);
+		}
+	}
+};
+typedef std::vector<FilterRule> FilterRules;
 
 /** Visitor interface for evaluating the available filters in the
  * FilterSystem.
@@ -41,10 +76,20 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "filters");
 
-	/** greebo: Loads the filter settings from the registry
-	 * 			and adds the commands to the EventManager.
-	 */
-	virtual void initialise() = 0;
+	virtual ~FilterSystem(){}
+
+	class Observer
+	{
+		public:
+			virtual ~Observer() {}
+
+			// Get notified when a filter is added or its enabled status changes
+			virtual void onFiltersChanged() const = 0;
+	};
+
+	// Adds and removes an observer which gets notified on filter status changes
+	virtual void addObserver(const Observer* observer) = 0;
+	virtual void removeObserver(const Observer* observer) = 0;
 
 	/** Visit the available filters, passing each filter's text
 	 * name to the visitor.
@@ -79,7 +124,7 @@ public:
 	 * active filters.
 	 *
 	 * @param item
-	 * The item to query - "texture", "entityclass", "surfaceflags" or "contentflags"
+	 * The item to query - "texture", "entityclass", "surfaceflags" or "contentflags".
 	 *
 	 * @param text
 	 * String name of the item to query.
@@ -90,7 +135,49 @@ public:
 	virtual bool isVisible(const std::string& item, const std::string& text) = 0;
 	virtual bool isVisible(const std::string& item, int flags) = 0;
 
-	virtual ~FilterSystem(){}
+	// =====  API for Filter management and editing =====
+
+	/**
+	 * greebo: Returns TRUE if the filter is read-only and can't be deleted.
+	 */
+	virtual bool filterIsReadOnly(const std::string& filter) = 0;
+
+	/**
+	 * greebo: Adds a new filter to the system with the given ruleset. The new filter
+	 * is not set to read-only.
+	 *
+	 * @returns: TRUE on success, FALSE if the filter name already exists.
+	 */
+	virtual bool addFilter(const std::string& filterName, const FilterRules& ruleSet) = 0;
+
+	/**
+	 * greebo: Removes the filter, returns TRUE on success.
+	 */
+	virtual bool removeFilter(const std::string& filter) = 0;
+
+	/**
+	 * greebo: Renames the specified filter. This also takes care of renaming the corresponding command in the
+	 * EventManager class.
+	 *
+	 * @returns: TRUE on success, FALSE if the filter hasn't been found or is read-only.
+	 */
+	virtual bool renameFilter(const std::string& oldFilterName, const std::string& newFilterName) = 0;
+
+	/**
+	 * greebo: Returns the ruleset of this filter, order is important.
+	 */
+	virtual FilterRules getRuleSet(const std::string& filter) = 0;
+
+	/**
+	 * greebo: Applies the given criteria set to the named filter, replacing the existing set.
+	 * This applies to non-read-only filters only.
+	 *
+	 * @returns: TRUE on success, FALSE if filter not found or read-only.
+	 */
+	virtual bool setFilterRules(const std::string& filter, const FilterRules& ruleSet) = 0;
+
+	virtual void init() = 0;
+	virtual void shutdown() = 0;
 };
 
 #include "modulesystem.h"

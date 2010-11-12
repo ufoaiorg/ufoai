@@ -955,24 +955,6 @@ class SelectChildren: public scene::Traversable::Walker
 		}
 };
 
-inline void Entity_setSelected (scene::Instance& entity, bool selected)
-{
-	scene::Node& node = entity.path().top();
-	if (node_is_group(node)) {
-		Node_getTraversable(node)->traverse(SelectChildren(entity.path()));
-	} else {
-		Instance_setSelected(entity, selected);
-	}
-}
-
-inline bool Entity_isSelected (scene::Instance& entity)
-{
-	if (node_is_group(entity.path().top())) {
-		return entity.childSelected();
-	}
-	return Instance_isSelected(entity);
-}
-
 class InstanceCounter
 {
 	public:

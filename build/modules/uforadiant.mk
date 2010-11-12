@@ -161,6 +161,9 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/ui/findbrush/findbrush.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/filterdialog/FilterDialog.cpp \
+	$(RADIANT_BASE)/radiant/ui/filterdialog/FilterEditor.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/maptools/ErrorCheckDialog.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/about/AboutDialog.cpp \
@@ -222,6 +225,7 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/ui/lightdialog/LightDialog.cpp \
 	\
+	$(RADIANT_BASE)/radiant/filters/BasicFilterSystem.cpp \
 	$(RADIANT_BASE)/radiant/filters/filters.cpp \
 	$(RADIANT_BASE)/radiant/filters/levelfilters.cpp \
 	$(RADIANT_BASE)/radiant/filters/XMLFilter.cpp \

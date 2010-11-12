@@ -117,6 +117,7 @@
 #include "ui/colourscheme/ColourSchemeManager.h"
 #include "ui/commandlist/CommandList.h"
 #include "ui/transform/TransformDialog.h"
+#include "ui/filterdialog/FilterDialog.h"
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
 #include "environment.h"
@@ -1295,7 +1296,7 @@ void MainFrame::Create (void)
 	m_nCurrentStyle = (EViewStyle) g_Layout_viewStyle.m_value;
 
 	// Create the Filter menu entries
-	ui::FiltersMenu::addItems();
+	ui::FiltersMenu::addItemsToMainMenu();
 
 	// Retrieve the "main" menubar from the UIManager
 	GtkMenuBar* mainMenu = GTK_MENU_BAR(GlobalUIManager().getMenuManager()->get("main"));
@@ -1632,7 +1633,7 @@ void FindBrushOrEntity() {
 void MainFrame_Construct (void)
 {
 	// Tell the FilterSystem to register its commands
-	GlobalFilterSystem().initialise();
+	GlobalFilterSystem().init();
 
 	GlobalEventManager().addCommand("OpenManual", FreeCaller<OpenHelpURL> ());
 
@@ -1729,6 +1730,7 @@ void MainFrame_Construct (void)
 
 	GlobalEventManager().addCommand("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
 
+	GlobalEventManager().addCommand("EditFiltersDialog", FreeCaller<ui::FilterDialog::showDialog>());
 	GlobalEventManager().addCommand("FindReplaceTextures", FreeCaller<ui::FindAndReplaceShader::showDialog>());
 	GlobalEventManager().addCommand("ShowCommandList", FreeCaller<ShowCommandListDialog>());
 	GlobalEventManager().addCommand("About", FreeCaller<ui::AboutDialog::showDialog>());

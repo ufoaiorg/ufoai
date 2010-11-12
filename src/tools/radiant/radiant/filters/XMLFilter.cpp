@@ -1,17 +1,14 @@
-#include "ifilter.h"
-
 #include "XMLFilter.h"
-#include "string/string.h"
+
+#include "ifilter.h"
 
 namespace filters {
 
-XMLFilter::XMLFilter(const std::string& name) :
-	_name(name)
+XMLFilter::XMLFilter(const std::string& name, bool readOnly) :
+	_name(name),
+	_readonly(readOnly)
 {
-	// Construct the eventname out of the filtername (strip the spaces and add "Filter" prefix)
-	_eventName = _name;
-	_eventName = string::eraseAllSpaces(_eventName);
-	_eventName = "Filter" + _eventName;
+	updateEventName();
 }
 
 // Test visibility of an item against all rules
@@ -23,7 +20,7 @@ bool XMLFilter::isVisible(const std::string& item, const std::string& name) cons
 
 	bool visible = true; // default if unmodified by rules
 
-	for (RuleList::const_iterator ruleIter = _rules.begin();
+	for (FilterRules::const_iterator ruleIter = _rules.begin();
 		 ruleIter != _rules.end();
 		 ++ruleIter)
 	{
@@ -52,15 +49,48 @@ bool XMLFilter::isVisible(const std::string& item, const std::string& name) cons
 }
 
 // The command target
-void XMLFilter::toggle() {
+void XMLFilter::toggle(bool newState)
+{
+	GlobalFilterSystem().setFilterState(_name, newState);
+}
+
+std::string XMLFilter::getEventName() const {
+	return _eventName;
+}
+
+void XMLFilter::setName(const std::string& newName) {
+	// Set the name ...
+	_name = newName;
+
+	// ...and update the event name
+	updateEventName();
+}
+
+void XMLFilter::onToggle ()
+{
 	// Allocate a reference, otherwise the call to GlobalFilterSystem() will crash
 	GlobalFilterModuleRef ref;
 	bool currentState = GlobalFilterSystem().getFilterState(_name);
 	GlobalFilterSystem().setFilterState(_name, !currentState);
 }
 
-std::string XMLFilter::getEventName() const {
-	return _eventName;
+bool XMLFilter::isReadOnly() const {
+	return _readonly;
+}
+
+FilterRules XMLFilter::getRuleSet() {
+	return _rules;
+}
+
+void XMLFilter::setRules(const FilterRules& rules) {
+	_rules = rules;
+}
+
+void XMLFilter::updateEventName() {
+	// Construct the eventname out of the filtername (strip the spaces and add "Filter" prefix)
+	_eventName = _name;
+	_eventName = string::eraseAllSpaces(_eventName);
+	_eventName = "Filter" + _eventName;
 }
 
 } // namespace filters
