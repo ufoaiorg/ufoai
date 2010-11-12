@@ -1842,12 +1842,10 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destro
 
 	/* Aircraft currently purchasing the specified ufo will be redirect to base */
 	AIR_Foreach(aircraft) {
-		if (aircraft->status == AIR_UFO) {
-			if (ufo == aircraft->aircraftTarget) {
-				AIR_AircraftReturnToBase(aircraft);
-			} else if (destroyed && (ufo < aircraft->aircraftTarget)) {
-				aircraft->aircraftTarget--;
-			}
+		if (ufo == aircraft->aircraftTarget) {
+			AIR_AircraftReturnToBase(aircraft);
+		} else if (destroyed && (ufo < aircraft->aircraftTarget)) {
+			aircraft->aircraftTarget--;
 		}
 	}
 
