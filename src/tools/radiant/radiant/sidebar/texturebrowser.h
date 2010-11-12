@@ -235,8 +235,6 @@ class TextureBrowser: public RegistryKeyObserver {
 };
 TextureBrowser& GlobalTextureBrowser();
 
-GtkWidget* TextureBrowser_constructNotebookTab();
-
 void TextureBrowser_Construct();
 void TextureBrowser_Destroy();
 

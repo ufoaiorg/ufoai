@@ -169,7 +169,7 @@ void Sidebar::constructTextureBrowser ()
 	// scrollable window settings
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
-	GtkWidget *pageTextureBrowser = TextureBrowser_constructNotebookTab();
+	GtkWidget *pageTextureBrowser = GlobalTextureBrowser().getWidget();
 	gtk_container_add(GTK_CONTAINER(vbox), pageTextureBrowser);
 
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));

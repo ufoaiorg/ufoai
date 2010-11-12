@@ -86,21 +86,9 @@ namespace {
 
 static void TextureBrowser_scrollChanged(void* data, gdouble value);
 
-void TextureBrowser_hideUnusedExport(const BoolImportCallback& importer);
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideUnusedExport>
-		TextureBrowserHideUnusedExport;
-
-void TextureBrowser_hideInvalidExport(const BoolImportCallback& importer);
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideInvalidExport>
-		TextureBrowserHideInvalidExport;
-
-void TextureBrowser_showShadersExport(const BoolImportCallback& importer);
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport>
-		TextureBrowserShowShadersExport;
-
 TextureBrowser::TextureBrowser () :
 	_glWidget(false), m_texture_scroll(0), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
-			TextureBrowser_scrollChanged, this), m_mouseWheelScrollIncrement(64), m_textureScale(50), m_hideUnused(
+			TextureBrowser_scrollChanged, this), m_textureScale(50), m_hideUnused(
 			GlobalRegistry().get(RKEY_TEXTURES_HIDE_UNUSED) == "1"), m_hideInvalid(GlobalRegistry().get(
 			RKEY_TEXTURES_HIDE_INVALID) == "1"), m_rmbSelected(false), m_resizeTextures(true),
 			m_uniformTextureSize(128)
@@ -635,9 +623,9 @@ void TextureBrowser::onMouseWheel(bool bUp) {
 	int originy = getOriginY();
 
 	if (bUp) {
-		originy += int(m_mouseWheelScrollIncrement);
+		originy += 64;
 	} else {
-		originy -= int(m_mouseWheelScrollIncrement);
+		originy -= 64;
 	}
 
 	setOriginY(originy);
@@ -827,10 +815,6 @@ GtkMenuItem* TextureBrowser::constructDirectoriesMenu(GtkMenu* menu) {
 	return textures_menu_item;
 }
 
-GtkWidget* TextureBrowser_constructNotebookTab() {
-	return GlobalTextureBrowser().getWidget();
-}
-
 GtkWidget* TextureBrowser::createMenuBar() {
 	GtkWidget* menu_bar = gtk_menu_bar_new();
 	GtkWidget* menu_view = gtk_menu_new();
@@ -1006,7 +990,6 @@ void TextureBrowser::constructPage(PreferenceGroup& group) {
 	p->appendCombo(_("Texture thumbnail scale"), STRING_ARRAY_RANGE(texture_scale),
 			IntImportCallback(TextureScaleImportCaller(*this)), IntExportCallback(
 					TextureScaleExportCaller(*this)));
-	p->appendEntry(_("Mousewheel Increment"), GlobalTextureBrowser().m_mouseWheelScrollIncrement);
 	p->appendEntry(_("Uniform texture thumbnail size (pixels)"), IntImportCallback(
 			TextureUniformSizeImportCaller(*this)), IntExportCallback(
 			TextureUniformSizeExportCaller(*this)));
@@ -1030,9 +1013,6 @@ void TextureBrowser_Construct(void) {
 	GlobalPreferenceSystem().registerPreference("TextureUniformSize", IntImportStringCaller(
 			GlobalTextureBrowser().m_uniformTextureSize), IntExportStringCaller(
 			GlobalTextureBrowser().m_uniformTextureSize));
-	GlobalPreferenceSystem().registerPreference("WheelMouseInc", SizeImportStringCaller(
-			GlobalTextureBrowser().m_mouseWheelScrollIncrement), SizeExportStringCaller(
-			GlobalTextureBrowser().m_mouseWheelScrollIncrement));
 
 	PreferencesDialog_addSettingsPage(MemberCaller1<TextureBrowser, PreferenceGroup&,
 			&TextureBrowser::constructPage> (GlobalTextureBrowser()));
