@@ -81,8 +81,10 @@ void WindowPosition::applyPosition() {
 			gtk_window_move(_window, _position[0], _position[1]);
 		}
 
-		gtk_window_set_default_size(_window, _size[0], _size[1]);
-		gtk_window_resize(_window, _size[0], _size[1]);
+		if (_size[0] > 0 && _size[1] > 0) {
+			gtk_window_set_default_size(_window, _size[0], _size[1]);
+			gtk_window_resize(_window, _size[0], _size[1]);
+		}
 	}
 }
 
