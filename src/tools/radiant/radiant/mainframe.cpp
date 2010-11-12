@@ -51,6 +51,7 @@
 #include "iuimanager.h"
 #include "igl.h"
 #include "imapcompiler.h"
+#include "imaterial.h"
 #include "ieventmanager.h"
 #include "iselectionset.h"
 #include "moduleobservers.h"
@@ -1638,6 +1639,14 @@ class NullMapCompilerObserver : public ICompilerObserver {
 };
 
 void ToolsCompile () {
+	if (!ConfirmModified(_("Compile Map")))
+		return;
+
+	/* empty map? */
+	if (!g_brushCount.get()) {
+		gtkutil::errorDialog(_("Nothing that could get compiled\n"));
+		return;
+	}
 	try {
 		const std::string mapName = GlobalRadiant().getMapName();
 		NullMapCompilerObserver observer;
@@ -1661,10 +1670,20 @@ void ToolsCheckErrors () {
 }
 
 void ToolsGenerateMaterials () {
+	if (!ConfirmModified(_("Generate Materials")))
+		return;
+
+	/* empty map? */
+	if (!g_brushCount.get()) {
+		gtkutil::errorDialog(_("Nothing to generate materials for\n"));
+		return;
+	}
+
 	try {
 		const std::string mapName = GlobalRadiant().getMapName();
 		NullMapCompilerObserver observer;
 		GlobalMapCompiler().generateMaterial(mapName, observer);
+		GlobalMaterialSystem()->showMaterialDefinition();
 	} catch (MapCompileException& e) {
 		gtkutil::errorDialog(e.what());
 	}

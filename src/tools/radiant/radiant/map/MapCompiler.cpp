@@ -2,7 +2,7 @@
 #include "MapCompileException.h"
 
 #include "iradiant.h"
-#include "imaterial.h"
+#include "ifilesystem.h"
 #include "radiant_i18n.h"
 #include "os/path.h"
 #include "gtkutil/dialog.h"
@@ -122,10 +122,7 @@ void MapCompiler::compileMap (const std::string& mapName, ICompilerObserver& obs
 
 void MapCompiler::generateMaterial (const std::string& mapName, ICompilerObserver& observer)
 {
-	int exitCode = run(mapName, _materialParameters, observer);
-	if (exitCode == 0) {
-		GlobalMaterialSystem()->showMaterialDefinition();
-	}
+	run(mapName, _materialParameters, observer);
 }
 
 // RegistryKeyObserver implementation, gets called upon key change
