@@ -16,6 +16,7 @@
 #include <gtk/gtk.h>
 
 #include "../../mainframe.h"
+#include "../../textureentry.h"
 
 namespace ui {
 
@@ -85,6 +86,9 @@ void FindAndReplaceShader::populateWindow() {
 
 	gtk_box_pack_start(GTK_BOX(findHBox), _findEntry, TRUE, TRUE, 6);
 	gtk_box_pack_start(GTK_BOX(replaceHBox), _replaceEntry, TRUE, TRUE, 6);
+
+	GlobalTextureEntryCompletion::instance().connect(GTK_ENTRY(_findEntry));
+	GlobalTextureEntryCompletion::instance().connect(GTK_ENTRY(_replaceEntry));
 
 	// Create the icon buttons to open the ShaderChooser and override the size request
 	_findSelectButton = gtkutil::IconTextButton("", gtkutil::getLocalPixbuf(FOLDER_ICON), false);
