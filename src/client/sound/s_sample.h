@@ -28,8 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_SOUND_SAMPLE_H
 #define CLIENT_SOUND_SAMPLE_H
 
+#include "s_main.h"		/* for s_sample_t */
+
 void S_SetSampleRepeatRate(int sampleRepeatRate);
 void S_LoadSamples(void);
 void S_FreeSamples(void);
+s_sample_t *S_GetSample (const int soundIdx);
 
 #endif

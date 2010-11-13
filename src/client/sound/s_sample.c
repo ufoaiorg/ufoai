@@ -30,6 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAMPLE_HASH_SIZE 64
 static s_sample_t *sampleHash[SAMPLE_HASH_SIZE];
 
+/* an index into the sampleHash to retrieve samples by an ID/number */
+#define SAMPLE_MAX_COUNT 1000
+static s_sample_t *sampleIndex[SAMPLE_MAX_COUNT];
+static int sampleIndexLast = 0;
+
 /** this pool is reloaded on every sound system restart */
 s_sample_t *stdSoundPool[MAX_SOUNDIDS];
 
@@ -133,7 +138,16 @@ s_sample_t *S_LoadSample (const char *soundFile)
 	sample->chunk = chunk;
 	sample->hashNext = sampleHash[hash];
 	sampleHash[hash] = sample;
+	sampleIndex[++sampleIndexLast] = sample;
 	return sample;
+}
+
+s_sample_t *S_GetSample (const int soundIdx)
+{
+	if (soundIdx > 0 && soundIdx <= sampleIndexLast)
+		return sampleIndex[soundIdx];
+	else
+		return NULL;
 }
 
 void S_FreeSamples (void)
