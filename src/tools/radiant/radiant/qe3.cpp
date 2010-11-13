@@ -104,7 +104,7 @@ bool ConfirmModified (const std::string& title)
 		return false;
 
 	if (result == eIDYES) {
-		if (Map_Unnamed(g_map))
+		if (map::isUnnamed())
 			return Map_SaveAs();
 		else
 			return Map_Save();

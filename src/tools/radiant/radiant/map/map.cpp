@@ -55,6 +55,7 @@
 #include "traverselib.h"
 #include "maplib.h"
 #include "eclasslib.h"
+#include "entitylib.h"
 #include "stream/textfilestream.h"
 #include "os/path.h"
 #include "stream/stringstream.h"
@@ -156,6 +157,12 @@ void Map_SetValid (Map& map, bool valid);
 void Map_UpdateTitle (const Map& map);
 void Map_SetWorldspawn (Map& map, scene::Node* node);
 
+inline bool Map_Unnamed (const Map& map)
+{
+	const std::string name = Map_Name(map);
+	return (name.empty() || name == "unnamed.map");
+}
+
 class Map: public ModuleObserver
 {
 	public:
@@ -230,12 +237,6 @@ void Map_SetValid (Map& map, bool valid)
 const std::string& Map_Name (const Map& map)
 {
 	return map.m_name;
-}
-
-bool Map_Unnamed (const Map& map)
-{
-	const std::string name = Map_Name(map);
-	return (name.empty() || name == "unnamed.map");
 }
 
 inline const MapFormat& MapFormat_forFile (const std::string& filename)
@@ -365,14 +366,6 @@ void FocusViews (const Vector3& point, float angle)
 
 	// Try to retrieve the XY view, if there exists one
 	GlobalXYWnd().setOrigin(point);
-}
-
-#include "stringio.h"
-
-inline bool node_is_worldspawn (scene::Node& node)
-{
-	Entity* entity = Node_getEntity(node);
-	return entity != 0 && string_equal(entity->getKeyValue("classname"), "worldspawn");
 }
 
 // use first worldspawn
@@ -1079,7 +1072,7 @@ void SaveMapAs (void)
 
 void SaveMap (void)
 {
-	if (Map_Unnamed(g_map)) {
+	if (map::isUnnamed()) {
 		SaveMapAs();
 	} else if (Map_Modified(g_map)) {
 		Map_Save();

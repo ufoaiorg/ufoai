@@ -2,6 +2,7 @@
 #define MERGE_H_
 
 #include "iscenegraph.h"
+#include "ientity.h"
 #include "scenelib.h"
 
 namespace map {

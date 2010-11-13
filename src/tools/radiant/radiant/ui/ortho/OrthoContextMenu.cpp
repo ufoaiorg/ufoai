@@ -105,10 +105,9 @@ namespace ui
 
 	void OrthoContextMenu::checkGenerateMaterial ()
 	{
-		const std::string& mapname = GlobalRadiant().getMapName();
 		const int countSelectedPrimitives = GlobalSelectionSystem().countSelected();
 		const int countSelectedComponents = GlobalSelectionSystem().countSelectedComponents();
-		if ((countSelectedPrimitives == 0 && countSelectedComponents == 0) || mapname.empty() || Map_Unnamed(g_map)) {
+		if ((countSelectedPrimitives == 0 && countSelectedComponents == 0) || map::isUnnamed()) {
 			gtk_widget_set_sensitive(_generateMaterials, FALSE);
 		} else {
 			gtk_widget_set_sensitive(_generateMaterials, TRUE);

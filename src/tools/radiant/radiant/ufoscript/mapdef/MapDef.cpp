@@ -67,8 +67,7 @@ namespace scripts
 
 	void MapDef::showMapDefinition ()
 	{
-		const std::string mapname = os::getFilenameFromPath(GlobalRadiant().getMapName());
-		if (mapname.empty() || Map_Unnamed(g_map)) {
+		if (map::isUnnamed()) {
 			gtkutil::infoDialog(_("Save your map before using this function"));
 			return;
 		}

@@ -365,8 +365,7 @@ void MaterialSystem::generateMaterialForFace (int contentFlags, int surfaceFlags
 bool MaterialSystem::isDefined(const std::string& texture, const std::string& content)
 {
 	const std::string textureDir = GlobalTexturePrefix_get();
-	const std::string& mapname = GlobalRadiant().getMapName();
-	if (texture == textureDir || mapname.empty() || Map_Unnamed(g_map))
+	if (texture == textureDir || map::isUnnamed())
 		return false;
 
 	std::string skippedTextureDirectory = texture.substr(textureDir.length());
@@ -380,9 +379,7 @@ bool MaterialSystem::isDefined(const std::string& texture, const std::string& co
 
 void MaterialSystem::generateMaterialFromTexture ()
 {
-	const std::string textureDir = GlobalTexturePrefix_get();
-	const std::string& mapname = GlobalRadiant().getMapName();
-	if (mapname.empty() || Map_Unnamed(g_map)) {
+	if (map::isUnnamed()) {
 		// save the map first
 		gtkutil::errorDialog(_("You have to save your map before material generation can work"));
 		return;
@@ -391,6 +388,8 @@ void MaterialSystem::generateMaterialFromTexture ()
 	loadMaterials();
 	if (!_materialLoaded)
 		return;
+
+	const std::string textureDir = GlobalTexturePrefix_get();
 
 	std::string append = "";
 	if (GlobalSelectionSystem().areFacesSelected()) {
@@ -508,7 +507,7 @@ void MaterialSystem::freeMaterials ()
 
 void MaterialSystem::loadMaterials ()
 {
-	if (Map_Unnamed(g_map))
+	if (map::isUnnamed())
 		return;
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(getMaterialFilename()));

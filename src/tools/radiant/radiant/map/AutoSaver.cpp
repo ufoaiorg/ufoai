@@ -177,11 +177,11 @@ void AutoMapSaver::checkSave() {
 
 	if (_enabled) {
 		// only snapshot if not working on an unnamed map
-		if (_snapshotsEnabled && !Map_Unnamed(g_map)) {
+		if (_snapshotsEnabled && !map::isUnnamed()) {
 			saveSnapshot();
 		}
 		else {
-			if (Map_Unnamed(g_map)) {
+			if (map::isUnnamed()) {
 				// Generate an autosave filename
 				std::string autoSaveFilename = GlobalRadiant().getMapsPath();
 

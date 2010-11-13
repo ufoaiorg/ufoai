@@ -83,7 +83,6 @@ typedef ReferenceCaller<DeferredDraw, DeferredDraw_onMapValidChanged> DeferredDr
 
 const std::string& Map_Name (const Map& map);
 const MapFormat& Map_getFormat (const Map& map);
-bool Map_Unnamed (const Map& map);
 
 namespace scene
 {

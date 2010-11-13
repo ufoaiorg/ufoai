@@ -42,6 +42,12 @@
 #include <list>
 #include <set>
 
+inline bool node_is_worldspawn (scene::Node& node)
+{
+	Entity* entity = Node_getEntity(node);
+	return entity != 0 && string_equal(entity->getKeyValue("classname"), "worldspawn");
+}
+
 inline void arrow_draw (const Vector3& origin, const Vector3& direction)
 {
 	Vector3 up(0, 0, 1);
