@@ -82,7 +82,7 @@
  * @param key key to retrieve value for
  * @return first value in value list or empty string
  */
-const std::string SelectedEntity_getValueForKey (const std::string& key)
+std::string SelectedEntity_getValueForKey (const std::string& key)
 {
 	ASSERT_MESSAGE(g_current_attributes != 0, "g_current_attributes is zero");
 	ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
@@ -142,7 +142,7 @@ namespace
 	int g_numNewKeys = 0;
 }
 
-static void GlobalEntityAttributes_clear (void)
+void GlobalEntityAttributes_clear (void)
 {
 	for (EntityAttributes::iterator i = g_entityAttributes.begin(); i != g_entityAttributes.end(); ++i) {
 		delete *i;
@@ -246,7 +246,7 @@ class EntityClassListStoreAppend: public EntityClassVisitor
 		}
 };
 
-static void EntityClassList_fill (void)
+void EntityClassList_fill (void)
 {
 	if (g_entlist_store) {
 		EntityClassListStoreAppend append(g_entlist_store);
@@ -254,14 +254,14 @@ static void EntityClassList_fill (void)
 	}
 }
 
-static void EntityClassList_clear (void)
+void EntityClassList_clear (void)
 {
 	if (GTK_IS_LIST_STORE(g_entlist_store)) {
 		gtk_list_store_clear(g_entlist_store);
 	}
 }
 
-static void SetComment (EntityClass* eclass)
+void SetComment (EntityClass* eclass)
 {
 	if (eclass == g_current_comment)
 		return;
@@ -278,7 +278,7 @@ static void SetComment (EntityClass* eclass)
  * @note This method hides all buttons, then updates as much as needed with new label and shows them.
  * @sa EntityInspector_updateSpawnflags
  */
-static void SurfaceFlags_setEntityClass (EntityClass* eclass)
+void SurfaceFlags_setEntityClass (EntityClass* eclass)
 {
 	if (eclass == g_current_flags)
 		return;
@@ -328,7 +328,7 @@ static void SurfaceFlags_setEntityClass (EntityClass* eclass)
 	}
 }
 
-static void EntityClassList_selectEntityClass (EntityClass* eclass)
+void EntityClassList_selectEntityClass (EntityClass* eclass)
 {
 	GtkTreeModel* model = GTK_TREE_MODEL(g_entlist_store);
 	GtkTreeIter iter;
@@ -350,7 +350,7 @@ static void EntityClassList_selectEntityClass (EntityClass* eclass)
 	}
 }
 
-static void EntityInspector_appendAttribute (const std::string& name, EntityAttribute& attribute)
+void EntityInspector_appendAttribute (const std::string& name, EntityAttribute& attribute)
 {
 	GtkTable* row = DialogRow_new(name, attribute.getWidget());
 	DialogVBox_packRow(g_attributeBox, GTK_WIDGET(row));
@@ -424,7 +424,7 @@ class EntityAttributeFactory
 
 typedef Static<EntityAttributeFactory> GlobalEntityAttributeFactory;
 
-static void EntityInspector_checkAddNewKeys (void)
+void EntityInspector_checkAddNewKeys (void)
 {
 	int count = 0;
 	const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
@@ -443,7 +443,7 @@ static void EntityInspector_checkAddNewKeys (void)
 	g_numNewKeys = count;
 }
 
-static void EntityInspector_setEntityClass (EntityClass *eclass)
+void EntityInspector_setEntityClass (EntityClass *eclass)
 {
 	EntityClassList_selectEntityClass(eclass);
 	SurfaceFlags_setEntityClass(eclass);
@@ -469,7 +469,7 @@ static void EntityInspector_setEntityClass (EntityClass *eclass)
  * @sa SurfaceFlags_setEntityClass
  * @sa EntityInspector_updateGuiElements
  */
-static void EntityInspector_updateSpawnflags (void)
+void EntityInspector_updateSpawnflags (void)
 {
 	int i;
 	const int f = string::toInt(SelectedEntity_getValueForKey("spawnflags"));
@@ -499,7 +499,7 @@ static const char* EntityInspector_getTooltipForKey (const std::string& key)
  * @brief This method updates key value list for current selected entities.
  * @sa EntityInspector_updateGuiElements
  */
-static void EntityInspector_updateKeyValueList (void)
+void EntityInspector_updateKeyValueList (void)
 {
 	GtkTreeStore* store = g_entprops_store;
 
@@ -584,7 +584,7 @@ void EntityInspector_selectionChanged (const Selectable&)
 /**
  * @brief Creates a new entity based on the currently selected brush and entity type.
  */
-static void EntityClassList_createEntity (void)
+void EntityClassList_createEntity (void)
 {
 	GtkTreeView* view = g_entityClassList;
 
@@ -602,7 +602,7 @@ static void EntityClassList_createEntity (void)
 	g_free(text);
 }
 
-static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
+void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 {
 	GtkTreeIter iter;
 	GtkTreeIter parent;
@@ -634,7 +634,7 @@ static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 	g_object_set(m_btnAddKey, "sensitive", FALSE, (const char*) 0);
 }
 
-static void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_data)
+void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_data)
 {
 	GtkTreeView *view = GTK_TREE_VIEW(user_data);
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
@@ -656,7 +656,7 @@ static void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_dat
 // =============================================================================
 // callbacks
 
-static void EntityClassList_selection_changed (GtkTreeSelection* selection, gpointer data)
+void EntityClassList_selection_changed (GtkTreeSelection* selection, gpointer data)
 {
 	EntityClass* eclass = (EntityClass*) gtkutil::TreeModel::getSelectedPointer(selection, 1);
 	if (eclass != 0)
@@ -717,7 +717,7 @@ static gint EntityClassList_keypress (GtkWidget* widget, GdkEventKey* event, gpo
 	return FALSE;
 }
 
-static void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
+void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
 {
 	int f, i;
 
@@ -737,7 +737,7 @@ static void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
 	}
 }
 
-static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newValue)
+void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newValue)
 {
 	char *key, *value, *classname, *oldvalue;
 	bool isClassname = false;
@@ -821,12 +821,12 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 }
 
-static void entityValueEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text, GtkTreeView *view)
+void entityValueEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text, GtkTreeView *view)
 {
 	entityKeyValueEdited(view, 1, new_text);
 }
 
-static void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text, GtkTreeView *view)
+void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text, GtkTreeView *view)
 {
 	entityKeyValueEdited(view, 0, new_text);
 }
@@ -836,7 +836,7 @@ static void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* 
  * @param renderer cell renderer used to edit
  * @param view treeview that is edited
  */
-static void entityKeyEditCanceled (GtkCellRendererText *renderer, GtkTreeView *view)
+void entityKeyEditCanceled (GtkCellRendererText *renderer, GtkTreeView *view)
 {
 	char *oldKey;
 
@@ -857,7 +857,7 @@ static void entityKeyEditCanceled (GtkCellRendererText *renderer, GtkTreeView *v
  * @brief Callback for selection changed in entity key value list used to enable/disable buttons
  * @param selection current selection
  */
-static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
+void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 {
 	if (gtk_tree_selection_count_selected_rows(selection) == 0) {
 		gtk_widget_set_sensitive(GTK_WIDGET(m_btnRemoveKey), FALSE);
@@ -905,7 +905,7 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
  * @param path unused
  * @param user_data unused
  */
-static void EntityKeyValueList_keyEditingStarted (GtkCellRenderer *renderer, GtkCellEditable *editable,
+void EntityKeyValueList_keyEditingStarted (GtkCellRenderer *renderer, GtkCellEditable *editable,
 		const gchar *path, gpointer *user_data)
 {
 	if (!g_current_attributes)
@@ -961,7 +961,7 @@ class EntityKeyValueComboListStoreAppend: public EntityClassVisitor
  * @brief Helper method fills all classnames into given renderer combo model.
  * @param renderer value combo renderer
  */
-static void EntityKeyValueList_fillValueComboWithClassnames (GtkCellRenderer *renderer)
+void EntityKeyValueList_fillValueComboWithClassnames (GtkCellRenderer *renderer)
 {
 	GtkListStore* store;
 	g_object_get(renderer, "model", &store, (char*) 0);
@@ -978,7 +978,7 @@ static void EntityKeyValueList_fillValueComboWithClassnames (GtkCellRenderer *re
  * @param path unused
  * @param user_data unused
  */
-static void EntityKeyValueList_valueEditingStarted (GtkCellRenderer *renderer, GtkCellEditable *editable,
+void EntityKeyValueList_valueEditingStarted (GtkCellRenderer *renderer, GtkCellEditable *editable,
 		const gchar *path, gpointer *user_data)
 {
 	// prevent update if already displaying anything
