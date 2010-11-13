@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "s_music.h"
 #include "s_local.h"
-#include "s_main.h"
 #include "../../shared/parse.h"
 #include "../../ports/system.h"
 
