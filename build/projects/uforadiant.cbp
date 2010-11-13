@@ -673,8 +673,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\MapInfo.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\PrefabSelector.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\PrefabSelector.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector\entityinspector.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector\entityinspector.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector\AngleAttribute.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector\AnglesAttribute.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entityinspector\BooleanAttribute.h" />
@@ -690,8 +690,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\entitylist.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\sidebar.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\sidebar.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\surfaceinspector.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\surfaceinspector.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\surfaceinspector\surfaceinspector.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\surfaceinspector\surfaceinspector.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\texturebrowser.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\texturebrowser.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound.cpp" />

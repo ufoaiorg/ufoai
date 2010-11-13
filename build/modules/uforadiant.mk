@@ -148,10 +148,12 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSetManager.cpp \
 	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSetToolmenu.cpp \
 	\
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/entityinspector.cpp \
+	\
+	$(RADIANT_BASE)/radiant/sidebar/surfaceinspector/surfaceinspector.cpp \
+	\
 	$(RADIANT_BASE)/radiant/sidebar/sidebar.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entitylist.cpp \
-	$(RADIANT_BASE)/radiant/sidebar/entityinspector.cpp \
-	$(RADIANT_BASE)/radiant/sidebar/surfaceinspector.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/PrefabSelector.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/MapInfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/JobInfo.cpp \

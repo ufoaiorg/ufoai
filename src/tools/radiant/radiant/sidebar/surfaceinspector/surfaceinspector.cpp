@@ -40,11 +40,11 @@
 
 #include "gtkutil/pointer.h"
 #include "gtkutil/button.h"
-#include "../select.h"
-#include "../brush/TexDef.h"
-#include "../brush/brushmanip.h"
-#include "../textureentry.h"
-#include "../textool/TexTool.h"
+#include "../../select.h"
+#include "../../brush/TexDef.h"
+#include "../../brush/brushmanip.h"
+#include "../../textureentry.h"
+#include "../../textool/TexTool.h"
 
 #include "BrushGetClosestFaceVisible.h"
 

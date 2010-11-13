@@ -3,7 +3,7 @@
 #include "gtkutil/IconTextMenuItem.h"
 
 #include "iselection.h"
-#include "../../sidebar/surfaceinspector.h" // SurfaceInspector_FitTexture()
+#include "../../sidebar/surfaceinspector/surfaceinspector.h" // SurfaceInspector_FitTexture()
 #include "../../entity.h" // Entity_createFromSelection(), Entity_connectSelected()
 #include "gtkutil/dialog.h"
 #include "../../map/map.h"

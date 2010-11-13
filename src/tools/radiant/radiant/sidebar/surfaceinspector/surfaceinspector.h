@@ -39,10 +39,10 @@
 #include "gtkutil/entry.h"
 #include "gtkutil/nonmodal.h"
 
-#include "../brush/ContentsFlagsValue.h"
-#include "../brush/FaceInstance.h"
-#include "../brush/TexDef.h"
-#include "../brush/TextureProjection.h"
+#include "../../brush/ContentsFlagsValue.h"
+#include "../../brush/FaceInstance.h"
+#include "../../brush/TexDef.h"
+#include "../../brush/TextureProjection.h"
 
 class Increment
 {

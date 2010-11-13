@@ -18,9 +18,9 @@
 #define INCLUDED_SIDEBAR_H
 
 #include "entitylist.h"
-#include "entityinspector.h"
+#include "entityinspector/entityinspector.h"
 #include "MapInfo.h"
-#include "surfaceinspector.h"
+#include "surfaceinspector/surfaceinspector.h"
 #include "PrefabSelector.h"
 #include "JobInfo.h"
 #include "texturebrowser.h"
