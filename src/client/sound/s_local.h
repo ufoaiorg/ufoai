@@ -30,9 +30,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../battlescape/cl_localentity.h"
+#include <SDL_mixer.h>
 
 /** @brief Supported sound file extensions */
 #define SAMPLE_TYPES { "ogg", "wav", NULL }
+
+typedef struct s_sample_s {
+	char *name;
+	int lastPlayed;		/**< used to determine whether this sample should be send to the mixer or skipped if played
+						 * too fast after each other */
+	Mix_Chunk* chunk;
+	struct s_sample_s* hashNext;	/**< next hash entry */
+	int index;			/** index in the array of samples */
+} s_sample_t;
+
+typedef struct s_channel_s {
+	vec3_t org;  /**< for temporary entities and other positioned sounds */
+	s_sample_t *sample;
+	float atten;
+	int count;
+} s_channel_t;
+
+/** @brief the sound environment */
+#define MAX_CHANNELS 64
+
+typedef struct s_env_s {
+	vec3_t right;  /* for stereo panning */
+
+	s_channel_t channels[MAX_CHANNELS];
+
+	int sampleRepeatRate;	/**< milliseconds that must have passed to replay the same sample again */
+	int rate;
+	int numChannels;
+	uint16_t format;
+
+	qboolean initialized;
+} s_env_t;
 
 extern cvar_t *snd_volume;
 extern cvar_t *snd_distance_scale;

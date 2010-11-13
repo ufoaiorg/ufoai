@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_local.h"
 #include "s_mix.h"
 #include "s_main.h"
+#include "s_sample.h"
 
 /**
  * @brief Searches a channel with no sample applied yet.
