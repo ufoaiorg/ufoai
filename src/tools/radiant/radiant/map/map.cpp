@@ -84,677 +84,14 @@
 #include "../selection/algorithm/General.h"
 
 #include "MapFileChooserPreview.h"
-
-#include "../namespace/BasicNamespace.h"
-
-
-WorldNode::WorldNode () :
-	m_node(0)
-{
-}
-void WorldNode::set (scene::Node* node)
-{
-	if (m_node != 0)
-		m_node->DecRef();
-	m_node = node;
-	if (m_node != 0)
-		m_node->IncRef();
-}
-scene::Node* WorldNode::get () const
-{
-	return m_node;
-}
-
-std::list<Namespaced*> g_cloned;
-
-inline Namespaced* Node_getNamespaced (scene::Node& node)
-{
-	return NodeTypeCast<Namespaced>::cast(node);
-}
-
-class GatherNamespaced: public scene::Traversable::Walker
-{
-	private:
-		void Node_gatherNamespaced (scene::Node& node) const
-		{
-			Namespaced* namespaced = Node_getNamespaced(node);
-			if (namespaced != 0) {
-				g_cloned.push_back(namespaced);
-			}
-		}
-	public:
-		bool pre (scene::Node& node) const
-		{
-			Node_gatherNamespaced(node);
-			return true;
-		}
-};
-
-void Map_gatherNamespaced (scene::Node& root)
-{
-	Node_traverseSubgraph(root, GatherNamespaced());
-}
-
-void Map_mergeClonedNames (void)
-{
-	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
-		(*i)->setNamespace(g_cloneNamespace);
-	}
-	g_cloneNamespace.mergeNames(g_defaultNamespace);
-	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
-		(*i)->setNamespace(g_defaultNamespace);
-	}
-
-	g_cloned.clear();
-}
-
-class Map;
-void Map_UpdateTitle (const Map& map);
-void Map_SetWorldspawn (Map& map, scene::Node* node);
-
-inline bool Map_Unnamed (const Map& map)
-{
-	const std::string name = Map_Name(map);
-	return (name.empty() || name == "unnamed.map");
-}
-Map::Map () :
-	m_resource(0), m_valid(false), m_modified_changed(Map_UpdateTitle)
-{
-}
-
-void Map::SetValid (bool valid)
-{
-	m_valid = valid;
-	m_mapValidCallbacks();
-}
-
-void Map::realise (void)
-{
-	if (m_resource != 0) {
-		if (Map_Unnamed(*this)) {
-			g_map.m_resource->setNode(NewMapRoot("").get_pointer());
-			MapFile* map = Node_getMapFile(*g_map.m_resource->getNode());
-			if (map != 0) {
-				map->save();
-			}
-		} else {
-			m_resource->load();
-		}
-
-		GlobalSceneGraph().insert_root(*m_resource->getNode());
-
-		map::AutoSaver().clearChanges();
-
-		SetValid(true);
-	}
-}
-void Map::unrealise (void)
-{
-	if (m_resource != 0) {
-		SetValid(false);
-		Map_SetWorldspawn(g_map, 0);
-
-		GlobalUndoSystem().clear();
-
-		GlobalSceneGraph().erase_root();
-	}
-}
-
-Map g_map;
-Map* g_currentMap = 0;
-
-void Map_addValidCallback (Map& map, const SignalHandler& handler)
-{
-	map.m_mapValidCallbacks.connectLast(handler);
-}
-
-bool Map_Valid (const Map& map)
-{
-	return map.m_valid;
-}
-
-const std::string& Map_Name (const Map& map)
-{
-	return map.m_name;
-}
-
-inline const MapFormat& MapFormat_forFile (const std::string& filename)
-{
-	const std::string moduleName = findModuleName(GetFileTypeRegistry(), std::string(MapFormat::Name()),
-			os::getExtension(filename));
-	MapFormat* format = Radiant_getMapModules().findModule(moduleName);
-	return *format;
-}
-
-const MapFormat& Map_getFormat (const Map& map)
-{
-	return MapFormat_forFile(Map_Name(map));
-}
-
-bool Map_Modified (const Map& map)
-{
-	return map.m_modified;
-}
-
-void Map_SetModified (Map& map, bool modified)
-{
-	if (map.m_modified ^ modified) {
-		map.m_modified = modified;
-
-		map.m_modified_changed(map);
-	}
-}
-
-void Map_UpdateTitle (const Map& map)
-{
-	std::string title = "UFORadiant " + map.m_name;
-	if (Map_Modified(map))
-		title += " *";
-
-	gtk_window_set_title(GlobalRadiant().getMainWindow(), title.c_str());
-}
-
-scene::Node* Map_GetWorldspawn (const Map& map)
-{
-	return map.m_world_node.get();
-}
-
-void Map_SetWorldspawn (Map& map, scene::Node* node)
-{
-	map.m_world_node.set(node);
-}
-
-// free all map elements, reinitialize the structures that depend on them
-void Map_Free (void)
-{
-	g_map.m_resource->detach(g_map);
-	GlobalReferenceCache().release(g_map.m_name);
-	g_map.m_resource = 0;
-
-	FlushReferences();
-
-	g_currentMap = 0;
-}
-
-Entity* Map_FindPlayerStart (void)
-{
-	// TODO: get this list from entities.ufo
-	typedef const char* StaticString;
-	StaticString strings[] = {
-			"info_alien_start",
-			"info_human_start",
-			"info_civilian_start",
-			"info_player_start" };
-	typedef const StaticString* StaticStringIterator;
-	for (StaticStringIterator i = strings, end = strings + (sizeof(strings) / sizeof(StaticString)); i != end; ++i) {
-		Entity* entity = Scene_FindEntityByClass(*i);
-		if (entity != 0) {
-			return entity;
-		}
-	}
-	return 0;
-}
-
-/**
- * @brief move the view to a given position
- * @todo Use at mapstart
- */
-void FocusViews (const Vector3& point, float angle)
-{
-	ASSERT_NOTNULL(g_pParentWnd);
-	CamWnd& camwnd = *g_pParentWnd->GetCamWnd();
-	camwnd.setCameraOrigin(point);
-	Vector3 angles(camwnd.getCameraAngles());
-
-	angles[CAMERA_YAW] = angle;
-	camwnd.setCameraAngles(angles);
-
-	// Try to retrieve the XY view, if there exists one
-	GlobalXYWnd().setOrigin(point);
-}
-
-// use first worldspawn
-class entity_updateworldspawn: public scene::Traversable::Walker
-{
-	public:
-		bool pre (scene::Node& node) const
-		{
-			if (node_is_worldspawn(node)) {
-				if (Map_GetWorldspawn(g_map) == 0) {
-					Map_SetWorldspawn(g_map, &node);
-				}
-			}
-			return false;
-		}
-};
-
-scene::Node* Map_FindWorldspawn (Map& map)
-{
-	Map_SetWorldspawn(map, 0);
-
-	Node_getTraversable(GlobalSceneGraph().root())->traverse(entity_updateworldspawn());
-
-	return Map_GetWorldspawn(map);
-}
-
-class CollectAllWalker: public scene::Traversable::Walker
-{
-		scene::Node& m_root;
-		UnsortedNodeSet& m_nodes;
-	public:
-		CollectAllWalker (scene::Node& root, UnsortedNodeSet& nodes) :
-			m_root(root), m_nodes(nodes)
-		{
-		}
-		bool pre (scene::Node& node) const
-		{
-			m_nodes.insert(NodeSmartReference(node));
-			Node_getTraversable(m_root)->erase(node);
-			return false;
-		}
-};
-
-void Node_insertChildFirst (scene::Node& parent, scene::Node& child)
-{
-	UnsortedNodeSet nodes;
-	Node_getTraversable(parent)->traverse(CollectAllWalker(parent, nodes));
-	Node_getTraversable(parent)->insert(child);
-
-	for (UnsortedNodeSet::iterator i = nodes.begin(); i != nodes.end(); ++i) {
-		Node_getTraversable(parent)->insert((*i));
-	}
-}
-
 #include "BasicContainer.h"
+#include "MoveLevelWalker.h"
+
+#include "algorithm/Traverse.h"
 #include "algorithm/Merge.h"
 #include "algorithm/Clone.h"
 
-void Map_ImportSelected (TextInputStream& in, const MapFormat& format)
-{
-	NodeSmartReference node((new map::BasicContainer)->node());
-	format.readGraph(node, in, GlobalEntityCreator());
-	Map_gatherNamespaced(node);
-	Map_mergeClonedNames();
-	map::MergeMap(node);
-}
-
-static void Map_StartPosition (void)
-{
-	Entity* entity = Map_FindPlayerStart();
-
-	if (entity) {
-		Vector3 origin(entity->getKeyValue("origin"));
-		FocusViews(origin, string::toFloat(entity->getKeyValue("angle")));
-	} else {
-		FocusViews(g_vector3_identity, 0);
-	}
-}
-
-/**
- * @brief Loads a map file
- * @param[in] filename The filename of the map to load
- * @note The file must be checked for existence and readability already.
- * If file is not a valid map, this will result in a new unnamed map and
- * returns false.
- * @return bool indicating whether file loading was successful
- */
-bool Map_LoadFile (const std::string& filename)
-{
-	g_message("Loading map from %s\n", filename.c_str());
-
-	g_map.m_name = filename;
-	Map_UpdateTitle(g_map);
-
-	{
-		g_map.m_resource = GlobalReferenceCache().capture(g_map.m_name);
-		g_map.m_resource->attach(g_map);
-
-		scene::Traversable* traversible = Node_getTraversable(GlobalSceneGraph().root());
-		if (traversible)
-			traversible->traverse(entity_updateworldspawn());
-		else {
-			gtkutil::errorDialog(_("Error during load of map."));
-			Map_Free();
-			Map_New();
-			return false;
-		}
-	}
-
-	g_message("LoadMapFile: %s\n", g_map.m_name.c_str());
-
-	// move the view to a start position
-	Map_StartPosition();
-
-	g_currentMap = &g_map;
-
-	sidebar::MapInfo::getInstance().update();
-	ui::UMPMenu::addItems();
-	return true;
-}
-
-void Map_Reload (void)
-{
-	if (map::isUnnamed())
-		return;
-
-	/* reload the map */
-	Map_RegionOff();
-	Map_Free();
-	Map_LoadFile(map::getMapName());
-}
-
-class Excluder
-{
-	public:
-		virtual ~Excluder ()
-		{
-		}
-		virtual bool excluded (scene::Node& node) const = 0;
-};
-
-class ExcludeWalker: public scene::Traversable::Walker
-{
-		const scene::Traversable::Walker& m_walker;
-		const Excluder* m_exclude;
-		mutable bool m_skip;
-	public:
-		ExcludeWalker (const scene::Traversable::Walker& walker, const Excluder& exclude) :
-			m_walker(walker), m_exclude(&exclude), m_skip(false)
-		{
-		}
-		bool pre (scene::Node& node) const
-		{
-			if (m_exclude->excluded(node) || node.isRoot()) {
-				m_skip = true;
-				return false;
-			} else {
-				m_walker.pre(node);
-			}
-			return true;
-		}
-		void post (scene::Node& node) const
-		{
-			if (m_skip) {
-				m_skip = false;
-			} else {
-				m_walker.post(node);
-			}
-		}
-};
-
-class SelectionExcluder: public Excluder
-{
-	public:
-		bool excluded (scene::Node& node) const
-		{
-			return !Node_selectedDescendant(node);
-		}
-};
-
-#include "algorithm/Traverse.h"
-
-void Map_ExportSelected (TextOutputStream& out, const MapFormat& format)
-{
-	format.writeGraph(GlobalSceneGraph().root(), map::Map_Traverse_Selected, out);
-}
-
-class RegionExcluder: public Excluder
-{
-	public:
-		bool excluded (scene::Node& node) const
-		{
-			return node.excluded();
-		}
-};
-
-void Map_Traverse_Region (scene::Node& root, const scene::Traversable::Walker& walker)
-{
-	scene::Traversable* traversable = Node_getTraversable(root);
-	if (traversable != 0) {
-		traversable->traverse(ExcludeWalker(walker, RegionExcluder()));
-	}
-}
-
-bool Map_SaveRegion (const std::string& filename)
-{
-	const bool success = MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(),
-			Map_Traverse_Region, filename);
-
-	return success;
-}
-
-void Map_RenameAbsolute (const std::string& absolute)
-{
-	Resource* resource = GlobalReferenceCache().capture(absolute);
-	NodeSmartReference clone(NewMapRoot(GlobalFileSystem().getRelative(absolute)));
-	resource->setNode(clone.get_pointer());
-
-	Node_getTraversable(GlobalSceneGraph().root())->traverse(map::CloneAll(clone));
-
-	g_map.m_resource->detach(g_map);
-	GlobalReferenceCache().release(g_map.m_name);
-
-	g_map.m_resource = resource;
-
-	g_map.m_name = absolute;
-	Map_UpdateTitle(g_map);
-
-	g_map.m_resource->attach(g_map);
-}
-
-void Map_Rename (const std::string& filename)
-{
-	if (g_map.m_name != filename) {
-		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
-
-		Map_RenameAbsolute(filename);
-
-		SceneChangeNotify();
-	} else {
-		SaveReferences();
-	}
-}
-
-bool Map_Save (void)
-{
-	SaveReferences();
-	// notify about complete save process
-	g_pParentWnd->SaveComplete();
-	return true; // assume success..
-}
-
-/*
- ===========
- Map_New
-
- ===========
- */
-void Map_New (void)
-{
-	g_map.m_name = "unnamed.map";
-	Map_UpdateTitle(g_map);
-
-	{
-		g_map.m_resource = GlobalReferenceCache().capture(g_map.m_name);
-		g_map.m_resource->attach(g_map);
-
-		SceneChangeNotify();
-	}
-
-	FocusViews(g_vector3_identity, 0);
-
-	g_currentMap = &g_map;
-}
-
-/*
- ===========================================================
- REGION
- ===========================================================
- */
-
-// greebo: this has to be moved into some class and the values should be loaded from the registry
-// I'll leave it hardcoded for now
-Vector3	region_mins(-65536, -65536, -65536);
-Vector3	region_maxs(65536, 65536, 65536);
-
-// old code:
-//Vector3	region_mins(g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
-//Vector3	region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
-
-#include "RegionWalkers.h"
-
-/**
- * @note Other filtering options may still be on
- */
-void Map_RegionOff (void)
-{
-	float maxWorldCoord = GlobalRegistry().getFloat("game/defaults/maxWorldCoord");
-	float minWorldCoord = GlobalRegistry().getFloat("game/defaults/minWorldCoord");
-
-	region_maxs[0] = maxWorldCoord - 64;
-	region_mins[0] = minWorldCoord + 64;
-	region_maxs[1] = maxWorldCoord - 64;
-	region_mins[1] = minWorldCoord + 64;
-	region_maxs[2] = maxWorldCoord - 64;
-	region_mins[2] = minWorldCoord + 64;
-
-	map::Scene_Exclude_All(false);
-}
-
-void Map_ApplyRegion (void)
-{
-	map::Scene_Exclude_Region(false);
-}
-
-void Map_RegionSelectedBrushes (void)
-{
-	Map_RegionOff();
-
-	if (GlobalSelectionSystem().countSelected() != 0 && GlobalSelectionSystem().Mode() == SelectionSystem::ePrimitive) {
-		AABB aabb = selection::algorithm::getCurrentSelectionBounds();
-		region_mins = aabb.getMins();
-		region_maxs = aabb.getMaxs();
-
-		map::Scene_Exclude_Selected(false);
-
-		GlobalSelectionSystem().setSelectedAll(false);
-	}
-}
-
-void Map_RegionXY (float x_min, float y_min, float x_max, float y_max)
-{
-	Map_RegionOff();
-
-	region_mins[0] = x_min;
-	region_maxs[0] = x_max;
-	region_mins[1] = y_min;
-	region_maxs[1] = y_max;
-	region_mins[2] = GlobalRegistry().getFloat("game/defaults/minWorldCoord") + 64;
-	region_maxs[2] = GlobalRegistry().getFloat("game/defaults/maxWorldCoord") - 64;
-
-	Map_ApplyRegion();
-}
-
-void Map_RegionBounds (const AABB& bounds)
-{
-	Map_RegionOff();
-
-	region_mins = bounds.origin - bounds.extents;
-	region_maxs = bounds.origin + bounds.extents;
-
-	selection::algorithm::deleteSelection();
-
-	Map_ApplyRegion();
-}
-
-void Map_RegionBrush (void)
-{
-	if (GlobalSelectionSystem().countSelected() != 0) {
-		scene::Instance& instance = GlobalSelectionSystem().ultimateSelected();
-		Map_RegionBounds(instance.worldAABB());
-	}
-}
-
-bool Map_ImportFile (const std::string& filename)
-{
-	bool success = false;
-	{
-		Resource* resource = GlobalReferenceCache().capture(filename);
-		resource->refresh(); /* avoid loading old version if map has changed on disk since last import */
-		if (resource->load()) {
-			NodeSmartReference clone(NewMapRoot(""));
-			Node_getTraversable(*resource->getNode())->traverse(map::CloneAll(clone));
-
-			Map_gatherNamespaced(clone);
-			Map_mergeClonedNames();
-			map::MergeMap(clone);
-			success = true;
-		}
-		GlobalReferenceCache().release(filename);
-	}
-
-	SceneChangeNotify();
-
-	return success;
-}
-
-bool Map_SaveFile (const std::string& filename)
-{
-	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
-	if (!MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), map::Map_Traverse, filename))
-		return false;
-
-	// TODO: Resave the material file with the (maybe) new name of the map file
-	// TODO: Update ump file with the maybe new name of the map file
-	return true;
-}
-
-/**
- * @brief Saves selected world brushes and whole entities with partial/full selections
- */
-bool Map_SaveSelected (const std::string& filename)
-{
-	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), map::Map_Traverse_Selected, filename);
-}
-
-class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker
-{
-		scene::Node& m_parent;
-	public:
-		ParentSelectedBrushesToEntityWalker (scene::Node& parent) :
-			m_parent(parent)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.top().get_pointer() != &m_parent && Node_isPrimitive(path.top())) {
-				Selectable* selectable = Instance_getSelectable(instance);
-				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
-					return false;
-				}
-			}
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.top().get_pointer() != &m_parent && Node_isPrimitive(path.top())) {
-				Selectable* selectable = Instance_getSelectable(instance);
-				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
-					scene::Node& parent = path.parent();
-					if (&parent != &m_parent) {
-						NodeSmartReference node(path.top().get());
-						Node_getTraversable(parent)->erase(node);
-						Node_getTraversable(m_parent)->insert(node);
-					}
-				}
-			}
-		}
-};
-
-void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent)
-{
-	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
-}
+#include "../namespace/BasicNamespace.h"
 
 namespace map
 {
@@ -764,7 +101,35 @@ namespace map
 
 		std::string g_mapsPath;
 
-		scene::Node& createWorldspawn (void)
+		class CollectAllWalker: public scene::Traversable::Walker
+		{
+				scene::Node& m_root;
+				UnsortedNodeSet& m_nodes;
+			public:
+				CollectAllWalker (scene::Node& root, UnsortedNodeSet& nodes) :
+					m_root(root), m_nodes(nodes)
+				{
+				}
+				bool pre (scene::Node& node) const
+				{
+					m_nodes.insert(NodeSmartReference(node));
+					Node_getTraversable(m_root)->erase(node);
+					return false;
+				}
+		};
+
+		void Node_insertChildFirst (scene::Node& parent, scene::Node& child)
+		{
+			UnsortedNodeSet nodes;
+			Node_getTraversable(parent)->traverse(CollectAllWalker(parent, nodes));
+			Node_getTraversable(parent)->insert(child);
+
+			for (UnsortedNodeSet::iterator i = nodes.begin(); i != nodes.end(); ++i) {
+				Node_getTraversable(parent)->insert((*i));
+			}
+		}
+
+		scene::Node& createWorldspawn ()
 		{
 			NodeSmartReference worldspawn(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
 					"worldspawn", true)));
@@ -875,20 +240,11 @@ namespace map
 		return count;
 	}
 
-	const std::string& getMapName() {
-		return Map_Name(g_map);
-	}
-
 	scene::Node& findOrInsertWorldspawn() {
-		if (Map_FindWorldspawn(g_map) == 0) {
-			Map_SetWorldspawn(g_map, &createWorldspawn());
+		if (GlobalMap().findWorldspawn() == 0) {
+			GlobalMap().setWorldspawn(&createWorldspawn());
 		}
-		return *Map_GetWorldspawn(g_map);
-	}
-
-	bool isUnnamed ()
-	{
-		return Map_Unnamed(g_map);
+		return *GlobalMap().getWorldspawn();
 	}
 
 	const std::string& getMapsPath ()
@@ -898,65 +254,672 @@ namespace map
 
 } // namespace map
 
-/**
- * @sa Map_Reload
- * @sa Map_New
- * @sa Map_Load
- */
-void NewMap (void)
+WorldNode::WorldNode () :
+	m_node(0)
 {
-	if (ConfirmModified(_("New Map"))) {
-		Map_RegionOff();
-		Map_Free();
-		Map_New();
-	}
 }
-namespace ui
+void WorldNode::set (scene::Node* node)
 {
+	if (m_node != 0)
+		m_node->DecRef();
+	m_node = node;
+	if (m_node != 0)
+		m_node->IncRef();
+}
+scene::Node* WorldNode::get () const
+{
+	return m_node;
+}
 
-	/* Display a GTK file chooser and select a map file to open or close. The last
-	 * path used is set as the default the next time the dialog is displayed.
-	 * Parameters:
-	 * title -- the title to display in the dialog
-	 * open -- true to open, false to save
-	 *
-	 */
-	const std::string selectMapFile (const std::string& title, bool open)
-	{
-		// Save the most recently-used path so that successive maps can be opened
-		// from the same directory.
-		static std::string lastPath = map::getMapsPath();
-		gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/
-		"map", "map");
-		/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
-		if (map::isUnnamed()) {
-			fileChooser.setCurrentPath(lastPath);
+std::list<Namespaced*> g_cloned;
+
+inline Namespaced* Node_getNamespaced (scene::Node& node)
+{
+	return NodeTypeCast<Namespaced>::cast(node);
+}
+
+class GatherNamespaced: public scene::Traversable::Walker
+{
+	private:
+		void Node_gatherNamespaced (scene::Node& node) const
+		{
+			Namespaced* namespaced = Node_getNamespaced(node);
+			if (namespaced != 0) {
+				g_cloned.push_back(namespaced);
+			}
+		}
+	public:
+		bool pre (scene::Node& node) const
+		{
+			Node_gatherNamespaced(node);
+			return true;
+		}
+};
+
+void Map_gatherNamespaced (scene::Node& root)
+{
+	Node_traverseSubgraph(root, GatherNamespaced());
+}
+
+void Map_mergeClonedNames ()
+{
+	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
+		(*i)->setNamespace(g_cloneNamespace);
+	}
+	g_cloneNamespace.mergeNames(g_defaultNamespace);
+	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
+		(*i)->setNamespace(g_defaultNamespace);
+	}
+
+	g_cloned.clear();
+}
+
+Map::Map () :
+	m_resource(0), m_valid(false)
+{
+}
+
+bool Map::isUnnamed ()
+{
+	const std::string name = getName();
+	return (name.empty() || name == "unnamed.map");
+}
+
+void Map::SetValid (bool valid)
+{
+	m_valid = valid;
+	m_mapValidCallbacks();
+}
+
+void Map::realise ()
+{
+	if (m_resource != 0) {
+		if (isUnnamed()) {
+			m_resource->setNode(NewMapRoot("").get_pointer());
+			MapFile* map = Node_getMapFile(*m_resource->getNode());
+			if (map != 0) {
+				map->save();
+			}
 		} else {
-			const std::string mapName = map::getMapName();
-			fileChooser.setCurrentPath(os::stripFilename(mapName));
+			m_resource->load();
 		}
 
-		// Instantiate a new preview object
-		// map::MapFileChooserPreview preview;
+		GlobalSceneGraph().insert_root(*m_resource->getNode());
 
-		// attach the preview object
-		// fileChooser.attachPreview(&preview);
+		map::AutoSaver().clearChanges();
 
-		const std::string filePath = fileChooser.display();
+		SetValid(true);
+	}
+}
 
-		// Update the lastPath static variable with the path to the last directory
-		// opened.
-		if (!filePath.empty())
-			lastPath = os::stripFilename(filePath);
+void Map::unrealise ()
+{
+	if (m_resource != 0) {
+		SetValid(false);
+		setWorldspawn(0);
 
-		return filePath;
+		GlobalUndoSystem().clear();
+
+		GlobalSceneGraph().erase_root();
+	}
+}
+
+void Map::addValidCallback (const SignalHandler& handler)
+{
+	m_mapValidCallbacks.connectLast(handler);
+}
+
+bool Map::isValid ()
+{
+	return m_valid;
+}
+
+const std::string& Map::getName () const
+{
+	return m_name;
+}
+
+inline const MapFormat& MapFormat_forFile (const std::string& filename)
+{
+	const std::string moduleName = findModuleName(GetFileTypeRegistry(), std::string(MapFormat::Name()),
+			os::getExtension(filename));
+	MapFormat* format = Radiant_getMapModules().findModule(moduleName);
+	return *format;
+}
+
+const MapFormat& Map::getFormat ()
+{
+	return MapFormat_forFile(getName());
+}
+
+bool Map::isModified ()
+{
+	return m_modified;
+}
+
+void Map::setModified (bool modified)
+{
+	if (m_modified ^ modified) {
+		m_modified = modified;
+
+		updateTitle();
+	}
+}
+
+void Map::updateTitle ()
+{
+	std::string title = "UFORadiant " + m_name;
+	if (isModified())
+		title += " *";
+
+	gtk_window_set_title(GlobalRadiant().getMainWindow(), title.c_str());
+}
+
+scene::Node* Map::getWorldspawn ()
+{
+	return m_world_node.get();
+}
+
+void Map::setWorldspawn (scene::Node* node)
+{
+	m_world_node.set(node);
+}
+
+// free all map elements, reinitialize the structures that depend on them
+void Map::free ()
+{
+	m_resource->detach(*this);
+	GlobalReferenceCache().release(m_name);
+	m_resource = 0;
+
+	FlushReferences();
+}
+
+Entity* Map::findPlayerStart ()
+{
+	// TODO: get this list from entities.ufo
+	typedef const char* StaticString;
+	StaticString strings[] = {
+			"info_alien_start",
+			"info_human_start",
+			"info_civilian_start",
+			"info_player_start" };
+	typedef const StaticString* StaticStringIterator;
+	for (StaticStringIterator i = strings, end = strings + (sizeof(strings) / sizeof(StaticString)); i != end; ++i) {
+		Entity* entity = Scene_FindEntityByClass(*i);
+		if (entity != 0) {
+			return entity;
+		}
+	}
+	return 0;
+}
+
+/**
+ * @brief move the view to a given position
+ * @todo Use at mapstart
+ */
+void Map::FocusViews (const Vector3& point, float angle)
+{
+	ASSERT_NOTNULL(g_pParentWnd);
+	CamWnd& camwnd = *g_pParentWnd->GetCamWnd();
+	camwnd.setCameraOrigin(point);
+	Vector3 angles(camwnd.getCameraAngles());
+
+	angles[CAMERA_YAW] = angle;
+	camwnd.setCameraAngles(angles);
+
+	// Try to retrieve the XY view, if there exists one
+	GlobalXYWnd().setOrigin(point);
+}
+
+// use first worldspawn
+class entity_updateworldspawn: public scene::Traversable::Walker
+{
+	public:
+		bool pre (scene::Node& node) const
+		{
+			if (node_is_worldspawn(node)) {
+				if (GlobalMap().getWorldspawn() == 0) {
+					GlobalMap().setWorldspawn(&node);
+				}
+			}
+			return false;
+		}
+};
+
+scene::Node* Map::findWorldspawn ()
+{
+	setWorldspawn(0);
+
+	Node_getTraversable(GlobalSceneGraph().root())->traverse(entity_updateworldspawn());
+
+	return getWorldspawn();
+}
+
+void Map::importSelected (TextInputStream& in)
+{
+	NodeSmartReference node((new map::BasicContainer)->node());
+	const MapFormat& format = getFormat();
+	format.readGraph(node, in, GlobalEntityCreator());
+	Map_gatherNamespaced(node);
+	Map_mergeClonedNames();
+	map::MergeMap(node);
+}
+
+void Map::focusOnStartPosition ()
+{
+	Entity* entity = findPlayerStart();
+	if (entity) {
+		Vector3 origin(entity->getKeyValue("origin"));
+		FocusViews(origin, string::toFloat(entity->getKeyValue("angle")));
+	} else {
+		FocusViews(g_vector3_identity, 0);
+	}
+}
+
+/**
+ * @brief Loads a map file
+ * @param[in] filename The filename of the map to load
+ * @note The file must be checked for existence and readability already.
+ * If file is not a valid map, this will result in a new unnamed map and
+ * returns false.
+ * @return bool indicating whether file loading was successful
+ */
+bool Map::loadFile (const std::string& filename)
+{
+	g_message("Loading map from %s\n", filename.c_str());
+
+	m_name = filename;
+	updateTitle();
+
+	{
+		m_resource = GlobalReferenceCache().capture(m_name);
+		m_resource->attach(*this);
+
+		scene::Traversable* traversible = Node_getTraversable(GlobalSceneGraph().root());
+		if (traversible)
+			traversible->traverse(entity_updateworldspawn());
+		else {
+			gtkutil::errorDialog(_("Error during load of map."));
+			free();
+			createNew();
+			return false;
+		}
 	}
 
-} //namespace ui
+	// move the view to a start position
+	focusOnStartPosition();
 
-void OpenMap (void)
+	sidebar::MapInfo::getInstance().update();
+	ui::UMPMenu::addItems();
+	return true;
+}
+
+void Map::reload ()
 {
-	Map_ChangeMap(_("Open Map"));
+	if (isUnnamed())
+		return;
+
+	/* reload the map */
+	regionOff();
+	free();
+	loadFile(getName());
+}
+
+class Excluder
+{
+	public:
+		virtual ~Excluder ()
+		{
+		}
+		virtual bool excluded (scene::Node& node) const = 0;
+};
+
+class ExcludeWalker: public scene::Traversable::Walker
+{
+		const scene::Traversable::Walker& m_walker;
+		const Excluder* m_exclude;
+		mutable bool m_skip;
+	public:
+		ExcludeWalker (const scene::Traversable::Walker& walker, const Excluder& exclude) :
+			m_walker(walker), m_exclude(&exclude), m_skip(false)
+		{
+		}
+		bool pre (scene::Node& node) const
+		{
+			if (m_exclude->excluded(node) || node.isRoot()) {
+				m_skip = true;
+				return false;
+			} else {
+				m_walker.pre(node);
+			}
+			return true;
+		}
+		void post (scene::Node& node) const
+		{
+			if (m_skip) {
+				m_skip = false;
+			} else {
+				m_walker.post(node);
+			}
+		}
+};
+
+class SelectionExcluder: public Excluder
+{
+	public:
+		bool excluded (scene::Node& node) const
+		{
+			return !Node_selectedDescendant(node);
+		}
+};
+
+void Map::exportSelected (TextOutputStream& out)
+{
+	const MapFormat& format = getFormat();
+	format.writeGraph(GlobalSceneGraph().root(), map::Map_Traverse_Selected, out);
+}
+
+class RegionExcluder: public Excluder
+{
+	public:
+		bool excluded (scene::Node& node) const
+		{
+			return node.excluded();
+		}
+};
+
+void Map::traverseRegion (scene::Node& root, const scene::Traversable::Walker& walker)
+{
+	scene::Traversable* traversable = Node_getTraversable(root);
+	if (traversable != 0) {
+		traversable->traverse(ExcludeWalker(walker, RegionExcluder()));
+	}
+}
+
+bool Map::saveRegion (const std::string& filename)
+{
+	const bool success = MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(),
+			traverseRegion, filename);
+
+	return success;
+}
+
+void Map::renameAbsolute (const std::string& absolute)
+{
+	Resource* resource = GlobalReferenceCache().capture(absolute);
+	NodeSmartReference clone(NewMapRoot(GlobalFileSystem().getRelative(absolute)));
+	resource->setNode(clone.get_pointer());
+
+	Node_getTraversable(GlobalSceneGraph().root())->traverse(map::CloneAll(clone));
+
+	m_resource->detach(*this);
+	GlobalReferenceCache().release(m_name);
+
+	m_resource = resource;
+
+	m_name = absolute;
+	updateTitle();
+
+	m_resource->attach(*this);
+}
+
+void Map::rename (const std::string& filename)
+{
+	if (m_name != filename) {
+		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
+
+		renameAbsolute(filename);
+
+		SceneChangeNotify();
+	} else {
+		SaveReferences();
+	}
+}
+
+bool Map::save ()
+{
+	SaveReferences();
+	// notify about complete save process
+	g_pParentWnd->SaveComplete();
+	return true; // assume success..
+}
+
+void Map::createNew ()
+{
+	m_name = "unnamed.map";
+	updateTitle();
+
+	{
+		m_resource = GlobalReferenceCache().capture(m_name);
+		m_resource->attach(*this);
+
+		SceneChangeNotify();
+	}
+
+	FocusViews(g_vector3_identity, 0);
+}
+
+/*
+ ===========================================================
+ REGION
+ ===========================================================
+ */
+
+// greebo: this has to be moved into some class and the values should be loaded from the registry
+// I'll leave it hardcoded for now
+Vector3	region_mins(-65536, -65536, -65536);
+Vector3	region_maxs(65536, 65536, 65536);
+
+// old code:
+//Vector3	region_mins(g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
+//Vector3	region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
+
+#include "RegionWalkers.h"
+
+/**
+ * @note Other filtering options may still be on
+ */
+void Map::regionOff ()
+{
+	float maxWorldCoord = GlobalRegistry().getFloat("game/defaults/maxWorldCoord");
+	float minWorldCoord = GlobalRegistry().getFloat("game/defaults/minWorldCoord");
+
+	region_maxs[0] = maxWorldCoord - 64;
+	region_mins[0] = minWorldCoord + 64;
+	region_maxs[1] = maxWorldCoord - 64;
+	region_mins[1] = minWorldCoord + 64;
+	region_maxs[2] = maxWorldCoord - 64;
+	region_mins[2] = minWorldCoord + 64;
+
+	map::Scene_Exclude_All(false);
+}
+
+void Map::applyRegion ()
+{
+	map::Scene_Exclude_Region(false);
+}
+
+void Map::regionSelectedBrushes ()
+{
+	regionOff();
+
+	if (GlobalSelectionSystem().countSelected() != 0 && GlobalSelectionSystem().Mode() == SelectionSystem::ePrimitive) {
+		AABB aabb = selection::algorithm::getCurrentSelectionBounds();
+		region_mins = aabb.getMins();
+		region_maxs = aabb.getMaxs();
+
+		map::Scene_Exclude_Selected(false);
+
+		GlobalSelectionSystem().setSelectedAll(false);
+	}
+}
+
+void Map::regionXY (float x_min, float y_min, float x_max, float y_max)
+{
+	regionOff();
+
+	region_mins[0] = x_min;
+	region_maxs[0] = x_max;
+	region_mins[1] = y_min;
+	region_maxs[1] = y_max;
+	region_mins[2] = GlobalRegistry().getFloat("game/defaults/minWorldCoord") + 64;
+	region_maxs[2] = GlobalRegistry().getFloat("game/defaults/maxWorldCoord") - 64;
+
+	applyRegion();
+}
+
+void Map::regionBounds (const AABB& bounds)
+{
+	regionOff();
+
+	region_mins = bounds.origin - bounds.extents;
+	region_maxs = bounds.origin + bounds.extents;
+
+	selection::algorithm::deleteSelection();
+
+	applyRegion();
+}
+
+void Map::regionBrush ()
+{
+	if (GlobalSelectionSystem().countSelected() != 0) {
+		scene::Instance& instance = GlobalSelectionSystem().ultimateSelected();
+		regionBounds(instance.worldAABB());
+	}
+}
+
+bool Map::importFile (const std::string& filename)
+{
+	bool success = false;
+	{
+		Resource* resource = GlobalReferenceCache().capture(filename);
+		resource->refresh(); /* avoid loading old version if map has changed on disk since last import */
+		if (resource->load()) {
+			NodeSmartReference clone(NewMapRoot(""));
+			Node_getTraversable(*resource->getNode())->traverse(map::CloneAll(clone));
+
+			Map_gatherNamespaced(clone);
+			Map_mergeClonedNames();
+			map::MergeMap(clone);
+			success = true;
+		}
+		GlobalReferenceCache().release(filename);
+	}
+
+	SceneChangeNotify();
+
+	return success;
+}
+
+bool Map::saveFile (const std::string& filename)
+{
+	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
+	if (!MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), map::Map_Traverse, filename))
+		return false;
+
+	// TODO: Resave the material file with the (maybe) new name of the map file
+	// TODO: Update ump file with the maybe new name of the map file
+	return true;
+}
+
+/**
+ * @brief Saves selected world brushes and whole entities with partial/full selections
+ */
+bool Map::saveSelected (const std::string& filename)
+{
+	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), map::Map_Traverse_Selected, filename);
+}
+
+class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker
+{
+		scene::Node& m_parent;
+	public:
+		ParentSelectedBrushesToEntityWalker (scene::Node& parent) :
+			m_parent(parent)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get_pointer() != &m_parent && Node_isPrimitive(path.top())) {
+				Selectable* selectable = Instance_getSelectable(instance);
+				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
+					return false;
+				}
+			}
+			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get_pointer() != &m_parent && Node_isPrimitive(path.top())) {
+				Selectable* selectable = Instance_getSelectable(instance);
+				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
+					scene::Node& parent = path.parent();
+					if (&parent != &m_parent) {
+						NodeSmartReference node(path.top().get());
+						Node_getTraversable(parent)->erase(node);
+						Node_getTraversable(m_parent)->insert(node);
+					}
+				}
+			}
+		}
+};
+
+void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent)
+{
+	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
+}
+
+void Map::NewMap ()
+{
+	if (ConfirmModified(_("New Map"))) {
+		GlobalMap().regionOff();
+		GlobalMap().free();
+		GlobalMap().createNew();
+	}
+}
+
+/* Display a GTK file chooser and select a map file to open or close. The last
+ * path used is set as the default the next time the dialog is displayed.
+ * Parameters:
+ * title -- the title to display in the dialog
+ * open -- true to open, false to save
+ *
+ */
+const std::string Map::selectMapFile (const std::string& title, bool open)
+{
+	// Save the most recently-used path so that successive maps can be opened
+	// from the same directory.
+	static std::string lastPath = map::getMapsPath();
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/
+	"map", "map");
+	/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
+	if (GlobalMap().isUnnamed()) {
+		fileChooser.setCurrentPath(lastPath);
+	} else {
+		const std::string mapName = GlobalMap().getName();
+		fileChooser.setCurrentPath(os::stripFilename(mapName));
+	}
+
+	// Instantiate a new preview object
+	// map::MapFileChooserPreview preview;
+
+	// attach the preview object
+	// fileChooser.attachPreview(&preview);
+
+	const std::string filePath = fileChooser.display();
+
+	// Update the lastPath static variable with the path to the last directory
+	// opened.
+	if (!filePath.empty())
+		lastPath = os::stripFilename(filePath);
+
+	return filePath;
+}
+
+void Map::OpenMap ()
+{
+	GlobalMap().changeMap(_("Open Map"));
 }
 
 /**
@@ -966,7 +929,7 @@ void OpenMap (void)
  * @param newFilename filename to load if known. If this is empty, load dialog is used.
  * @return @c true if map loading was successful
  */
-bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilename)
+bool Map::changeMap (const std::string &dialogTitle, const std::string& newFilename)
 {
 	if (!dialogTitle.empty())
 		if (!ConfirmModified(dialogTitle))
@@ -974,13 +937,13 @@ bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilena
 
 	std::string filename;
 	if (newFilename.empty())
-		filename = ui::selectMapFile(dialogTitle, true);
+		filename = selectMapFile(dialogTitle, true);
 	else
 		filename = newFilename;
 	if (!filename.empty()) {
-		Map_RegionOff();
-		Map_Free();
-		if (Map_LoadFile(filename)) {
+		regionOff();
+		free();
+		if (loadFile(filename)) {
 			GlobalMRU().insert(filename);
 			return true;
 		}
@@ -988,84 +951,84 @@ bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilena
 	return false;
 }
 
-void ImportMap (void)
+void Map::ImportMap ()
 {
-	const std::string filename = ui::selectMapFile(_("Import Map"), true);
+	const std::string filename = selectMapFile(_("Import Map"), true);
 	if (!filename.empty()) {
 		UndoableCommand undo("mapImport");
-		Map_ImportFile(filename);
+		GlobalMap().importFile(filename);
 	}
 }
 
-bool Map_SaveAs (void)
+bool Map::saveAsDialog ()
 {
-	const std::string filename = ui::selectMapFile(_("Save Map"), false);
+	const std::string filename = selectMapFile(_("Save Map"), false);
 	if (!filename.empty()) {
 		GlobalMRU().insert(filename);
-		Map_Rename(filename);
-		return Map_Save();
+		rename(filename);
+		return save();
 	}
 	return false;
 }
 
-void SaveMapAs (void)
+void Map::SaveMapAs ()
 {
-	Map_SaveAs();
+	GlobalMap().saveAsDialog();
 }
 
-void SaveMap (void)
+void Map::SaveMap ()
 {
-	if (map::isUnnamed()) {
+	if (GlobalMap().isUnnamed()) {
 		SaveMapAs();
-	} else if (Map_Modified(g_map)) {
-		Map_Save();
+	} else if (GlobalMap().isModified()) {
+		GlobalMap().save();
 	}
 }
 
-void ExportMap (void)
+void Map::ExportMap ()
 {
-	const std::string filename = ui::selectMapFile(_("Export Selection"), false);
+	const std::string filename = selectMapFile(_("Export Selection"), false);
 	if (!filename.empty()) {
-		Map_SaveSelected(filename);
+		GlobalMap().saveSelected(filename);
 	}
 }
 
-void SaveRegion (void)
+void Map::SaveRegion ()
 {
-	const std::string filename = ui::selectMapFile(_("Export Region"), false);
+	const std::string filename = selectMapFile(_("Export Region"), false);
 	if (!filename.empty()) {
-		Map_SaveRegion(filename);
+		GlobalMap().saveRegion(filename);
 	}
 }
 
-void RegionOff (void)
+void Map::RegionOff ()
 {
-	Map_RegionOff();
+	regionOff();
 	SceneChangeNotify();
 }
 
-void RegionXY (void)
+void Map::RegionXY ()
 {
 	XYWnd* xyWnd = GlobalXYWnd().getView(XY);
 	if (xyWnd != NULL) {
-		Map_RegionXY(xyWnd->getOrigin()[0] - 0.5f * xyWnd->getWidth() / xyWnd->getScale(), xyWnd->getOrigin()[1] - 0.5f
+		regionXY(xyWnd->getOrigin()[0] - 0.5f * xyWnd->getWidth() / xyWnd->getScale(), xyWnd->getOrigin()[1] - 0.5f
 				* xyWnd->getHeight() / xyWnd->getScale(), xyWnd->getOrigin()[0] + 0.5f * xyWnd->getWidth()
 				/ xyWnd->getScale(), xyWnd->getOrigin()[1] + 0.5f * xyWnd->getHeight() / xyWnd->getScale());
 	} else {
-		Map_RegionXY(0, 0, 0, 0);
+		regionXY(0, 0, 0, 0);
 	}
 	SceneChangeNotify();
 }
 
-void RegionBrush (void)
+void Map::RegionBrush ()
 {
-	Map_RegionBrush();
+	regionBrush();
 	SceneChangeNotify();
 }
 
-void RegionSelected (void)
+void Map::RegionSelected ()
 {
-	Map_RegionSelectedBrushes();
+	regionSelectedBrushes();
 	SceneChangeNotify();
 }
 
@@ -1105,7 +1068,7 @@ class EntityFindByIndexWalker: public scene::Traversable::Walker
 		}
 };
 
-static void Scene_FindEntityBrush (std::size_t entity, std::size_t brush, scene::Path& path)
+inline void Scene_FindEntityBrush (std::size_t entity, std::size_t brush, scene::Path& path)
 {
 	path.push(makeReference(GlobalSceneGraph().root()));
 	{
@@ -1119,7 +1082,7 @@ static void Scene_FindEntityBrush (std::size_t entity, std::size_t brush, scene:
 	}
 }
 
-static inline bool Node_hasChildren (scene::Node& node)
+inline bool Node_hasChildren (scene::Node& node)
 {
 	scene::Traversable* traversable = Node_getTraversable(node);
 	return traversable != 0 && !traversable->empty();
@@ -1148,6 +1111,28 @@ void SelectBrush (int entitynum, int brushnum, int select)
 	}
 }
 
+void Map::ObjectsDown ()
+{
+	if (GlobalSelectionSystem().countSelected() == 0) {
+		gtkutil::errorDialog(_("You have to select the objects that you want to change"));
+		return;
+	}
+	UndoableCommand undo("objectsDown");
+	GlobalSceneGraph().traverse(map::MoveLevelWalker(false));
+	SceneChangeNotify();
+}
+
+void Map::ObjectsUp ()
+{
+	if (GlobalSelectionSystem().countSelected() == 0) {
+		gtkutil::errorDialog(_("You have to select the objects that you want to change"));
+		return;
+	}
+	UndoableCommand undo("objectsUp");
+	GlobalSceneGraph().traverse(map::MoveLevelWalker(true));
+	SceneChangeNotify();
+}
+
 class MapEntityClasses: public ModuleObserver
 {
 		std::size_t m_unrealised;
@@ -1156,20 +1141,20 @@ class MapEntityClasses: public ModuleObserver
 			m_unrealised(1)
 		{
 		}
-		void realise (void)
+		void realise ()
 		{
 			if (--m_unrealised == 0) {
-				if (g_map.m_resource != 0) {
-					g_map.m_resource->realise();
+				if (GlobalMap().m_resource != 0) {
+					GlobalMap().m_resource->realise();
 				}
 			}
 		}
-		void unrealise (void)
+		void unrealise ()
 		{
 			if (++m_unrealised == 1) {
-				if (g_map.m_resource != 0) {
-					g_map.m_resource->flush();
-					g_map.m_resource->unrealise();
+				if (GlobalMap().m_resource != 0) {
+					GlobalMap().m_resource->flush();
+					GlobalMap().m_resource->unrealise();
 				}
 			}
 		}
@@ -1185,14 +1170,14 @@ class MapModuleObserver: public ModuleObserver
 			m_unrealised(1)
 		{
 		}
-		void realise (void)
+		void realise ()
 		{
 			if (--m_unrealised == 0) {
 				map::g_mapsPath = g_qeglobals.m_userGamePath + "maps/";
 				g_mkdir(map::g_mapsPath.c_str(), 0775);
 			}
 		}
-		void unrealise (void)
+		void unrealise ()
 		{
 			if (++m_unrealised == 1) {
 				map::g_mapsPath = "";
@@ -1200,49 +1185,35 @@ class MapModuleObserver: public ModuleObserver
 		}
 };
 
-#include "MoveLevelWalker.h"
-
-void ObjectsDown (void)
-{
-	if (GlobalSelectionSystem().countSelected() == 0) {
-		gtkutil::errorDialog(_("You have to select the objects that you want to change"));
-		return;
-	}
-	UndoableCommand undo("objectsDown");
-	GlobalSceneGraph().traverse(map::MoveLevelWalker(false));
-	SceneChangeNotify();
-}
-
-void ObjectsUp (void)
-{
-	if (GlobalSelectionSystem().countSelected() == 0) {
-		gtkutil::errorDialog(_("You have to select the objects that you want to change"));
-		return;
-	}
-	UndoableCommand undo("objectsUp");
-	GlobalSceneGraph().traverse(map::MoveLevelWalker(true));
-	SceneChangeNotify();
-}
-
 MapModuleObserver g_MapModuleObserver;
 
-#include "preferencesystem.h"
-
-void Map_Construct (void)
+void Map::Construct ()
 {
-	GlobalEventManager().addCommand("ObjectsUp", FreeCaller<ObjectsUp> ());
-	GlobalEventManager().addCommand("ObjectsDown", FreeCaller<ObjectsDown> ());
-	GlobalEventManager().addCommand("RegionOff", FreeCaller<RegionOff> ());
-	GlobalEventManager().addCommand("RegionSetXY", FreeCaller<RegionXY> ());
-	GlobalEventManager().addCommand("RegionSetBrush", FreeCaller<RegionBrush> ());
-	GlobalEventManager().addCommand("RegionSetSelection", FreeCaller<RegionSelected> ());
+	GlobalEventManager().addCommand("NewMap", MemberCaller<Map, &Map::NewMap> (*this));
+	GlobalEventManager().addCommand("OpenMap", MemberCaller<Map, &Map::OpenMap> (*this));
+	GlobalEventManager().addCommand("ImportMap", MemberCaller<Map, &Map::ImportMap> (*this));
+	GlobalEventManager().addCommand("SaveMap", MemberCaller<Map, &Map::SaveMap> (*this));
+	GlobalEventManager().addCommand("SaveMapAs", MemberCaller<Map, &Map::SaveMapAs> (*this));
+	GlobalEventManager().addCommand("SaveSelected", MemberCaller<Map, &Map::ExportMap> (*this));
+	GlobalEventManager().addCommand("SaveRegion", MemberCaller<Map, &Map::SaveRegion> (*this));
+	GlobalEventManager().addCommand("ObjectsUp", MemberCaller<Map, &Map::ObjectsUp> (*this));
+	GlobalEventManager().addCommand("ObjectsDown", MemberCaller<Map, &Map::ObjectsDown> (*this));
+	GlobalEventManager().addCommand("RegionOff", MemberCaller<Map, &Map::RegionOff> (*this));
+	GlobalEventManager().addCommand("RegionSetXY", MemberCaller<Map, &Map::RegionXY> (*this));
+	GlobalEventManager().addCommand("RegionSetBrush", MemberCaller<Map, &Map::RegionBrush> (*this));
+	GlobalEventManager().addCommand("RegionSetSelection", MemberCaller<Map, &Map::RegionSelected> (*this));
 
 	GlobalEntityClassManager().attach(g_MapEntityClasses);
 	Radiant_attachHomePathsObserver(g_MapModuleObserver);
 }
 
-void Map_Destroy (void)
+void Map::Destroy ()
 {
 	Radiant_detachHomePathsObserver(g_MapModuleObserver);
 	GlobalEntityClassManager().detach(g_MapEntityClasses);
+}
+
+Map& GlobalMap() {
+	static Map _map;
+	return _map;
 }

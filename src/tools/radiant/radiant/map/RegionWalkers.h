@@ -29,7 +29,7 @@ class ExcludeAllWalker: public scene::Graph::Walker
 		}
 };
 
-void Scene_Exclude_All (bool exclude)
+inline void Scene_Exclude_All (bool exclude)
 {
 	GlobalSceneGraph().traverse(ExcludeAllWalker(exclude));
 }
@@ -50,7 +50,7 @@ class ExcludeSelectedWalker: public scene::Graph::Walker
 		}
 };
 
-void Scene_Exclude_Selected (bool exclude)
+inline void Scene_Exclude_Selected (bool exclude)
 {
 	GlobalSceneGraph().traverse(ExcludeSelectedWalker(exclude));
 }
@@ -72,7 +72,7 @@ class ExcludeRegionedWalker: public scene::Graph::Walker
 		}
 };
 
-void Scene_Exclude_Region (bool exclude)
+inline void Scene_Exclude_Region (bool exclude)
 {
 	GlobalSceneGraph().traverse(ExcludeRegionedWalker(exclude));
 }

@@ -33,7 +33,7 @@ namespace ui {
  */
 void UMPMenu::_activate (GtkMenuItem* menuItem, gpointer name)
 {
-	Map_ChangeMap(_("Open Map"), g_quark_to_string(gpointer_to_int(name)));
+	GlobalMap().changeMap(_("Open Map"), g_quark_to_string(gpointer_to_int(name)));
 }
 
 /**
@@ -77,7 +77,7 @@ void UMPMenu::addItems()
 	IMenuManager* menuManager = GlobalUIManager().getMenuManager();
 	menuManager->remove(MENU_PATH);
 
-	std::string umpFilename = GlobalUMPSystem().getUMPFilename(map::getMapName());
+	std::string umpFilename = GlobalUMPSystem().getUMPFilename(GlobalMap().getName());
 	if (umpFilename.empty())
 		return;
 	map::ump::UMPFile file = map::ump::UMPFile(umpFilename);

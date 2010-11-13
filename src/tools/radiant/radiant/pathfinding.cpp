@@ -102,7 +102,7 @@ class Pathfinding: public PreferenceConstructor, public RegistryKeyObserver
 		 */
 		void onMapValidChanged (void)
 		{
-			if (Map_Valid(g_map) && _showPathfinding) {
+			if (GlobalMap().isValid() && _showPathfinding) {
 				_showPathfinding = false;
 				showPathfinding();
 			}
@@ -137,7 +137,7 @@ class Pathfinding: public PreferenceConstructor, public RegistryKeyObserver
 		{
 			if (_showPathfinding) {
 				//update current pathfinding data on every activation
-				const std::string& mapName = map::getMapName();
+				const std::string& mapName = GlobalMap().getName();
 				const std::string baseName = os::stripExtension(mapName);
 				const std::string bspName = baseName + ".bsp";
 				_routingRender->updateRouting(GlobalFileSystem().getRelative(bspName));
@@ -186,7 +186,7 @@ void Pathfinding_Construct (void)
 	GlobalEventManager().addToggle("ShowPathfindingLowerLevels", MemberCaller<routing::Pathfinding,
 			&routing::Pathfinding::toggleShowLowerLevelsForPathfinding> (*routing::pathfinding));
 
-	Map_addValidCallback(g_map, SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));
+	GlobalMap().addValidCallback(SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));
 }
 
 void Pathfinding_Destroy (void)

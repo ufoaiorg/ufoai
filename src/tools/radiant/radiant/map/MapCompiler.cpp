@@ -72,7 +72,7 @@ void MapCompiler::fixErrors (const std::string& mapName, ICompilerObserver& obse
 
 	if (exitCode == 0) {
 		// reload after fix
-		Map_Reload();
+		GlobalMap().reload();
 	}
 }
 

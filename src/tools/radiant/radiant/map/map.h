@@ -32,6 +32,8 @@
 #include "signal/signal.h"
 #include "moduleobserver.h"
 #include "ireference.h"
+#include "imap.h"
+#include "ientity.h"
 #include <string>
 
 class WorldNode
@@ -45,13 +47,45 @@ class WorldNode
 
 class Map: public ModuleObserver
 {
+	private:
+
+		void renameAbsolute (const std::string& absolute);
+		void focusOnStartPosition ();
+		Entity* findPlayerStart ();
+		void FocusViews (const Vector3& point, float angle);
+
+		const std::string selectMapFile (const std::string& title, bool open);
+
+		static void traverseRegion (scene::Node& root, const scene::Traversable::Walker& walker);
+
+		// command bindings
+		void ObjectsDown ();
+		void ObjectsUp ();
+		void RegionOff ();
+		void RegionSelected ();
+		void RegionXY ();
+		void RegionBrush ();
+		void NewMap ();
+		void OpenMap ();
+		void SaveMapAs ();
+		void SaveMap ();
+		void ExportMap ();
+		void SaveRegion ();
+		void ImportMap ();
+
+		// region functions
+		void applyRegion();
+		void regionBounds (const AABB& bounds);
+		void regionBrush ();
+		void regionXY (float x_min, float y_min, float x_max, float y_max);
+		void regionSelectedBrushes ();
+
 	public:
 		std::string m_name;
 		Resource* m_resource;
 		bool m_valid;
 
 		bool m_modified;
-		void (*m_modified_changed) (const Map&);
 
 		Signal0 m_mapValidCallbacks;
 
@@ -59,19 +93,53 @@ class Map: public ModuleObserver
 
 		Map ();
 
+		void Construct ();
+		void Destroy ();
+
+		bool loadFile (const std::string& filename);
+		void free (void);
+		bool importFile (const std::string& filename);
+		bool save ();
+		void reload ();
+		void createNew ();
+		bool saveFile (const std::string& filename);
+		bool saveSelected (const std::string& filename);
+		void rename (const std::string& filename);
+		bool saveAsDialog ();
+		bool saveRegion (const std::string& filename);
+		bool changeMap (const std::string& dialogTitle, const std::string& newFilename = "");
+
+		void regionOff ();
+
+		void exportSelected (TextOutputStream& out);
+		void importSelected (TextInputStream& in);
+
+		const MapFormat& getFormat ();
+
 		void SetValid (bool valid);
 
 		void realise (void);
 
 		void unrealise (void);
+
+		bool isValid ();
+
+		const std::string& getName () const;
+		void updateTitle ();
+
+		bool isUnnamed ();
+
+		void addValidCallback (const SignalHandler& handler);
+
+		scene::Node* getWorldspawn ();
+		void setWorldspawn (scene::Node* node);
+		scene::Node* findWorldspawn ();
+
+		bool isModified ();
+		void setModified (bool modified);
 };
 
-extern Map g_map;
-
-class MapFormat;
-
-void Map_addValidCallback (Map& map, const SignalHandler& handler);
-bool Map_Valid (const Map& map);
+Map& GlobalMap();
 
 class DeferredDraw
 {
@@ -107,7 +175,7 @@ class DeferredDraw
 
 inline void DeferredDraw_onMapValidChanged (DeferredDraw& self)
 {
-	if (Map_Valid(g_map)) {
+	if (GlobalMap().isValid()) {
 		self.flush();
 	} else {
 		self.defer();
@@ -115,71 +183,26 @@ inline void DeferredDraw_onMapValidChanged (DeferredDraw& self)
 }
 typedef ReferenceCaller<DeferredDraw, DeferredDraw_onMapValidChanged> DeferredDrawOnMapValidChangedCaller;
 
-const std::string& Map_Name (const Map& map);
-const MapFormat& Map_getFormat (const Map& map);
-
 namespace scene
 {
 	class Node;
 	class Graph;
 }
 
-scene::Node* Map_GetWorldspawn (const Map& map);
-scene::Node* Map_FindWorldspawn (Map& map);
-
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
 
 extern Vector3 region_mins, region_maxs;
 
-void Map_Reload (void);
-bool Map_LoadFile (const std::string& filename);
-bool Map_SaveFile (const std::string& filename);
-
-bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilename = "");
-
-void Map_New ();
-void Map_Free ();
-
-void Map_RegionOff ();
-
-bool Map_SaveRegion (const std::string& filename);
-
 class TextInputStream;
 class TextOutputStream;
 
-void Map_ImportSelected (TextInputStream& in, const MapFormat& format);
-void Map_ExportSelected (TextOutputStream& out, const MapFormat& format);
-
-bool Map_Modified (const Map& map);
-void Map_SetModified (Map& map, bool modified);
-
-bool Map_Save ();
-bool Map_SaveAs ();
-
 void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent);
-std::size_t Scene_countSelectedBrushes (scene::Graph& graph);
-
-void NewMap ();
-void OpenMap ();
-void ImportMap ();
-void SaveMapAs ();
-void SaveMap ();
-void ExportMap ();
-void SaveRegion ();
-bool Map_ImportFile (const std::string& filename);
-
-void Map_Traverse (scene::Node& root, const scene::Traversable::Walker& walker);
 
 void SelectBrush (int entitynum, int brushnum, int select);
 
-void Map_Construct ();
-void Map_Destroy ();
-
 void Map_gatherNamespaced (scene::Node& root);
 void Map_mergeClonedNames ();
-
-const std::string& getMapsPath ();
 
 namespace map
 {
@@ -199,15 +222,7 @@ namespace map
 
 	int countSelectedBrushes();
 
-	/**
-	 * @return @c true if the map is not yet saved, @c false otherwise
-	 */
-	bool isUnnamed ();
-
 	scene::Node& findOrInsertWorldspawn();
-
-	// returns the full path to the current loaded map
-	const std::string& getMapName();
 
 	const std::string& getMapsPath ();
 }

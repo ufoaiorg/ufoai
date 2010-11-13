@@ -67,7 +67,7 @@ static bool References_Saved ();
 
 void MapChanged ()
 {
-	Map_SetModified(g_map, !References_Saved());
+	GlobalMap().setModified(!References_Saved());
 }
 
 static EntityCreator* g_entityCreator = 0;

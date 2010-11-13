@@ -107,7 +107,7 @@ namespace ui
 	{
 		const int countSelectedPrimitives = GlobalSelectionSystem().countSelected();
 		const int countSelectedComponents = GlobalSelectionSystem().countSelectedComponents();
-		if ((countSelectedPrimitives == 0 && countSelectedComponents == 0) || map::isUnnamed()) {
+		if ((countSelectedPrimitives == 0 && countSelectedComponents == 0) || GlobalMap().isUnnamed()) {
 			gtk_widget_set_sensitive(_generateMaterials, FALSE);
 		} else {
 			gtk_widget_set_sensitive(_generateMaterials, TRUE);

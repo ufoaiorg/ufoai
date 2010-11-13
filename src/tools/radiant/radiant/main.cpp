@@ -422,15 +422,15 @@ int main (int argc, char* argv[])
 	ui::Splash::Instance().hide();
 
 	if (GlobalMRU().loadLastMap() && GlobalMRU().getLastMapName() != "") {
-		 Map_LoadFile(GlobalMRU().getLastMapName());
+		GlobalMap().loadFile(GlobalMRU().getLastMapName());
 	} else if (Environment::Instance().getArgc() == 2) {
 		const std::string mapname = Environment::Instance().getArgv(1);
 		if (file_readable(mapname))
-			Map_LoadFile(mapname);
+			GlobalMap().loadFile(mapname);
 		else
-			Map_New();
+			GlobalMap().createNew();
 	} else {
-		Map_New();
+		GlobalMap().createNew();
 	}
 
 	remove_local_pid();
@@ -440,7 +440,7 @@ int main (int argc, char* argv[])
 
 	gtk_main();
 
-	Map_Free();
+	GlobalMap().free();
 
 	delete g_pParentWnd;
 

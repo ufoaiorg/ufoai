@@ -39,9 +39,9 @@ class MapMergeEntities: public scene::Traversable::Walker
 		bool pre (scene::Node& node) const
 		{
 			if (node_is_worldspawn(node)) {
-				scene::Node* world_node = Map_FindWorldspawn(g_map);
+				scene::Node* world_node = GlobalMap().findWorldspawn();
 				if (world_node == 0) {
-					Map_SetWorldspawn(g_map, &node);
+					GlobalMap().setWorldspawn(&node);
 					Node_getTraversable(m_path.top().get())->insert(node);
 					m_path.push(makeReference(node));
 					Node_getTraversable(node)->traverse(SelectChildren(m_path));

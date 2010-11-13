@@ -120,7 +120,7 @@ XYWnd::XYWnd () :
 
 	g_signal_connect(G_OBJECT(m_gl_widget), "scroll_event", G_CALLBACK(callbackMouseWheelScroll), this);
 
-	Map_addValidCallback(g_map, DeferredDrawOnMapValidChangedCaller(m_deferredDraw));
+	GlobalMap().addValidCallback(DeferredDrawOnMapValidChangedCaller(m_deferredDraw));
 
 	updateProjection();
 	updateModelview();
@@ -560,7 +560,7 @@ gboolean XYWnd::callbackSizeAllocate (GtkWidget* widget, GtkAllocation* allocati
 gboolean XYWnd::callbackExpose (GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd)
 {
 	gtkutil::GLWidgetSentry sentry(xywnd->getWidget());
-	if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
+	if (GlobalMap().isValid() && ScreenUpdates_Enabled()) {
 		xywnd->draw();
 		xywnd->m_XORRectangle.set(rectangle_t());
 	}
@@ -615,7 +615,7 @@ void XYWnd::NewBrushDrag (int x, int y)
 		Node_getTraversable(map::findOrInsertWorldspawn())->insert(node);
 
 		scene::Path brushpath(makeReference(GlobalSceneGraph().root()));
-		brushpath.push(makeReference(*Map_GetWorldspawn(g_map)));
+		brushpath.push(makeReference(*GlobalMap().getWorldspawn()));
 		brushpath.push(makeReference(node.get()));
 		selectPath(brushpath, true);
 
@@ -1119,11 +1119,11 @@ void XYWnd::drawGrid (void)
 
 void XYWnd::drawBlockGrid (void)
 {
-	if (Map_FindWorldspawn(g_map) == 0)
+	if (GlobalMap().findWorldspawn() == 0)
 		return;
 
 	int blockSize = GlobalXYWnd().defaultBlockSize();
-	const std::string value = Node_getEntity(*Map_GetWorldspawn(g_map))->getKeyValue("_blocksize");
+	const std::string value = Node_getEntity(*GlobalMap().getWorldspawn())->getKeyValue("_blocksize");
 	if (!value.empty())
 		blockSize = string::toInt(value);
 

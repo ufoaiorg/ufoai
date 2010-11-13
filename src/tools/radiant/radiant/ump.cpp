@@ -88,7 +88,7 @@ class UMPSystem : public IUMPSystem {
 	public:
 
 		void editUMPDefinition () {
-			const std::string umpFileName = getUMPFilename(map::getMapName());
+			const std::string umpFileName = getUMPFilename(GlobalMap().getName());
 			if (umpFileName.empty()) {
 				gtkutil::infoDialog(_("Could not find the map in any ump file"));
 				return;

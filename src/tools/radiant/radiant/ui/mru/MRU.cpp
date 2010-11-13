@@ -87,11 +87,11 @@ void MRU::loadMap(const std::string& fileName) {
 	if (ConfirmModified(_("Open Map"))) {
 		if (file_readable(fileName)) {
 			// Shut down the current map
-			Map_RegionOff();
-			Map_Free();
+			GlobalMap().regionOff();
+			GlobalMap().free();
 
 			// Load the file
-			Map_LoadFile(fileName);
+			GlobalMap().loadFile(fileName);
 
 			// Update the MRU list with this file
 			insert(fileName);

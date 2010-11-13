@@ -50,7 +50,7 @@ QEGlobals_t g_qeglobals;
  */
 void QE_InitVFS (void)
 {
-	const std::string& basegame = basegame_get();
+	const std::string& basegame = GlobalRadiant().getGamePath();
 
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	// ~/.<gameprefix>/<fs_main>
@@ -93,7 +93,7 @@ void QE_entityCountChanged (void)
 
 bool ConfirmModified (const std::string& title)
 {
-	if (!Map_Modified(g_map))
+	if (!GlobalMap().isModified())
 		return true;
 
 	EMessageBoxReturn result = gtk_MessageBox(
@@ -104,10 +104,10 @@ bool ConfirmModified (const std::string& title)
 		return false;
 
 	if (result == eIDYES) {
-		if (map::isUnnamed())
-			return Map_SaveAs();
+		if (GlobalMap().isUnnamed())
+			return GlobalMap().saveAsDialog();
 		else
-			return Map_Save();
+			return GlobalMap().save();
 	}
 	return true;
 }

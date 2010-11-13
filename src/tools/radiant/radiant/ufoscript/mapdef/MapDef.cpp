@@ -50,7 +50,7 @@ namespace scripts
 
 	std::string MapDef::getMapDefID ()
 	{
-		const std::string mapname = os::getFilenameFromPath(map::getMapName());
+		const std::string mapname = os::getFilenameFromPath(GlobalMap().getName());
 		const std::string umpName = GlobalUMPSystem().getUMPFilename(mapname);
 		if (umpName.length() > 0)
 			return os::stripExtension(umpName);
@@ -67,7 +67,7 @@ namespace scripts
 
 	void MapDef::showMapDefinition ()
 	{
-		if (map::isUnnamed()) {
+		if (GlobalMap().isUnnamed()) {
 			gtkutil::infoDialog(_("Save your map before using this function"));
 			return;
 		}

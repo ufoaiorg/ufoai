@@ -455,12 +455,12 @@ void Redo (void)
 
 void Map_ExportSelected (TextOutputStream& ostream)
 {
-	Map_ExportSelected(ostream, Map_getFormat(g_map));
+	GlobalMap().exportSelected(ostream);
 }
 
 void Map_ImportSelected (TextInputStream& istream)
 {
-	Map_ImportSelected(istream, Map_getFormat(g_map));
+	GlobalMap().importSelected(istream);
 }
 
 void Selection_Copy (void)
@@ -1573,7 +1573,7 @@ void ToolsCompile () {
 		return;
 	}
 	try {
-		const std::string mapName = map::getMapName();
+		const std::string mapName = GlobalMap().getName();
 		NullMapCompilerObserver observer;
 		GlobalMapCompiler().compileMap(mapName, observer);
 	} catch (MapCompileException& e) {
@@ -1605,7 +1605,7 @@ void ToolsGenerateMaterials () {
 	}
 
 	try {
-		const std::string mapName = map::getMapName();
+		const std::string mapName = GlobalMap().getName();
 		NullMapCompilerObserver observer;
 		GlobalMapCompiler().generateMaterial(mapName, observer);
 		GlobalMaterialSystem()->showMaterialDefinition();
@@ -1625,13 +1625,6 @@ void MainFrame_Construct (void)
 
 	GlobalEventManager().addCommand("OpenManual", FreeCaller<OpenHelpURL> ());
 
-	GlobalEventManager().addCommand("NewMap", FreeCaller<NewMap> ());
-	GlobalEventManager().addCommand("OpenMap", FreeCaller<OpenMap> ());
-	GlobalEventManager().addCommand("ImportMap", FreeCaller<ImportMap> ());
-	GlobalEventManager().addCommand("SaveMap", FreeCaller<SaveMap> ());
-	GlobalEventManager().addCommand("SaveMapAs", FreeCaller<SaveMapAs> ());
-	GlobalEventManager().addCommand("SaveSelected", FreeCaller<ExportMap> ());
-	GlobalEventManager().addCommand("SaveRegion", FreeCaller<SaveRegion> ());
 	GlobalEventManager().addCommand("RefreshReferences", FreeCaller<RefreshReferences> ());
 	GlobalEventManager().addCommand("Exit", FreeCaller<Exit> ());
 

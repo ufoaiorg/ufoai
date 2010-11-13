@@ -90,7 +90,7 @@ void AutoMapSaver::saveSnapshot() {
 		maxSnapshotFolderSize = 100;
 	}
 
-	const std::string& mapName = map::getMapName();
+	const std::string& mapName = GlobalMap().getName();
 	std::string name = os::getFilenameFromPath(mapName);
 	std::string extension = os::getExtension(mapName);
 
@@ -129,7 +129,7 @@ void AutoMapSaver::saveSnapshot() {
 		globalOutputStream() << "Autosaving snapshot to " << filename << "\n";
 
 		// save in the next available slot
-		Map_SaveFile(filename);
+		GlobalMap().saveFile(filename);
 
 		// Display a warning, if the folder size exceeds the limit
 		if (folderSize > maxSnapshotFolderSize * 1024 * 1024) {
@@ -161,7 +161,7 @@ void AutoMapSaver::checkSave() {
 		return;
 	}
 
-	if (!Map_Valid(g_map) || !ScreenUpdates_Enabled()) {
+	if (!GlobalMap().isValid() || !ScreenUpdates_Enabled()) {
 		return;
 	}
 
@@ -177,11 +177,11 @@ void AutoMapSaver::checkSave() {
 
 	if (_enabled) {
 		// only snapshot if not working on an unnamed map
-		if (_snapshotsEnabled && !map::isUnnamed()) {
+		if (_snapshotsEnabled && !GlobalMap().isUnnamed()) {
 			saveSnapshot();
 		}
 		else {
-			if (map::isUnnamed()) {
+			if (GlobalMap().isUnnamed()) {
 				// Generate an autosave filename
 				std::string autoSaveFilename = map::getMapsPath();
 
@@ -194,20 +194,20 @@ void AutoMapSaver::checkSave() {
 				globalOutputStream() << "Autosaving unnamed map to " << autoSaveFilename << "\n";
 
 				// Invoke the save call
-				Map_SaveFile(autoSaveFilename);
+				GlobalMap().saveFile(autoSaveFilename);
 			}
 			else {
 				// Construct the new extension (e.g. ".autosave.map")
 				std::string newExtension = ".autosave.map";
 
 				// create the new autosave filename by changing the extension
-				std::string autoSaveFilename = os::stripExtension(map::getMapName());
+				std::string autoSaveFilename = os::stripExtension(GlobalMap().getName());
 				autoSaveFilename += newExtension;
 
 				globalOutputStream() << "Autosaving map to " << autoSaveFilename << "\n";
 
 				// Invoke the save call
-				Map_SaveFile(autoSaveFilename);
+				GlobalMap().saveFile(autoSaveFilename);
 			}
 		}
 	}

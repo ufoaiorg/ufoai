@@ -424,7 +424,7 @@ namespace sidebar
 				}
 
 				const std::string fileName = PrefabSelector::GetFullPath(text);
-				Map_ImportFile(fileName);
+				GlobalMap().importFile(fileName);
 				GlobalMaterialSystem()->importMaterialFile(os::stripExtension(fileName) + ".mat");
 				g_free(text);
 				gtk_widget_grab_focus(g_pParentWnd->GetCamWnd()->getWidget());

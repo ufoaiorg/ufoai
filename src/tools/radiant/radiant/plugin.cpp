@@ -260,7 +260,7 @@ class Radiant: public TypeSystemRef
 			HomePaths_Construct();
 			VFS_Construct();
 			GLWindow_Construct();
-			Map_Construct();
+			GlobalMap().Construct();
 			EntityList_Construct();
 			sidebar::MapInfo_Construct();
 			MainFrame_Construct();
@@ -303,7 +303,7 @@ class Radiant: public TypeSystemRef
 			MainFrame_Destroy();
 			EntityList_Destroy();
 			sidebar::MapInfo_Destroy();
-			Map_Destroy();
+			GlobalMap().Destroy();
 			GLWindow_Destroy();
 			VFS_Destroy();
 			HomePaths_Destroy();

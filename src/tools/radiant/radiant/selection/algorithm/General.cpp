@@ -173,7 +173,7 @@ class DeleteSelected: public scene::Graph::Walker
 
 				// delete empty entities
 				Entity* entity = Node_getEntity(path.top());
-				if (entity != 0 && path.top().get_pointer() != Map_FindWorldspawn(g_map) && Node_getTraversable(
+				if (entity != 0 && path.top().get_pointer() != GlobalMap().findWorldspawn() && Node_getTraversable(
 						path.top())->empty()) {
 					Path_deleteTop(path);
 				}
