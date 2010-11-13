@@ -60,6 +60,7 @@ ModelModules& ReferenceAPI_getModelModules ();
 
 #include "../mainframe.h"
 #include "../map/map.h"
+#include "../map/algorithm/Traverse.h"
 #include "../filetypes.h"
 
 static bool References_Saved ();
@@ -146,7 +147,7 @@ bool MapResource_save (const MapFormat& format, scene::Node& root, const std::st
 		}
 
 		// Save the actual file
-		return MapResource_saveFile(format, root, Map_Traverse, fullpath);
+		return MapResource_saveFile(format, root, map::Map_Traverse, fullpath);
 	} else {
 		globalErrorStream() << "ERROR: map path is not fully qualified: " << fullpath << "\n";
 		return false;

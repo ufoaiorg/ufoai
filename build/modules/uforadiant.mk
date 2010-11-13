@@ -83,6 +83,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ump/UMPTile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPAssembly.cpp \
 	\
+	$(RADIANT_BASE)/radiant/map/algorithm/Traverse.cpp \
 	$(RADIANT_BASE)/radiant/map/parse.cpp \
 	$(RADIANT_BASE)/radiant/map/write.cpp \
 	$(RADIANT_BASE)/radiant/map/AutoSaver.cpp \

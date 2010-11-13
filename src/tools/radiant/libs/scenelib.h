@@ -850,6 +850,63 @@ inline const Selectable* Instance_getSelectable (const scene::Instance& instance
 	return InstanceTypeCast<Selectable>::cast(instance);
 }
 
+class AnyInstanceSelected: public scene::Instantiable::Visitor
+{
+		bool& m_selected;
+	public:
+		AnyInstanceSelected (bool& selected) :
+			m_selected(selected)
+		{
+			m_selected = false;
+		}
+		void visit (scene::Instance& instance) const
+		{
+			Selectable* selectable = Instance_getSelectable(instance);
+			if (selectable != 0 && selectable->isSelected()) {
+				m_selected = true;
+			}
+		}
+};
+
+inline bool Node_instanceSelected (scene::Node& node)
+{
+	scene::Instantiable* instantiable = Node_getInstantiable(node);
+	bool selected;
+	instantiable->forEachInstance(AnyInstanceSelected(selected));
+	return selected;
+}
+
+class SelectedDescendantWalker: public scene::Traversable::Walker
+{
+		bool& m_selected;
+	public:
+		SelectedDescendantWalker (bool& selected) :
+			m_selected(selected)
+		{
+			m_selected = false;
+		}
+
+		bool pre (scene::Node& node) const
+		{
+			if (node.isRoot()) {
+				return false;
+			}
+
+			if (Node_instanceSelected(node)) {
+				m_selected = true;
+			}
+
+			return true;
+		}
+};
+
+inline bool Node_selectedDescendant (scene::Node& node)
+{
+	bool selected;
+	Node_traverseSubgraph(node, SelectedDescendantWalker(selected));
+	return selected;
+}
+
 template<typename Functor>
 inline void Scene_forEachChildSelectable (const Functor& functor, const scene::Path& path)
 {

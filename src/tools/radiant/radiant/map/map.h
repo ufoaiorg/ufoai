@@ -125,8 +125,6 @@ void Map_SetModified (Map& map, bool modified);
 bool Map_Save ();
 bool Map_SaveAs ();
 
-scene::Node& Node_Clone (scene::Node& node);
-
 void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent);
 std::size_t Scene_countSelectedBrushes (scene::Graph& graph);
 

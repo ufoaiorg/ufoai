@@ -549,6 +549,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\main.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\map\algorithm\Traverse.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\AutoSaver.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\AutoSaver.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\MapCompiler.cpp" />

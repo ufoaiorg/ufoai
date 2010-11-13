@@ -448,64 +448,7 @@ scene::Node& Map_FindOrInsertWorldspawn (Map& map)
 	return *Map_GetWorldspawn(map);
 }
 
-class MapMergeAll: public scene::Traversable::Walker
-{
-		mutable scene::Path m_path;
-	public:
-		MapMergeAll (const scene::Path& root) :
-			m_path(root)
-		{
-		}
-		bool pre (scene::Node& node) const
-		{
-			Node_getTraversable(m_path.top())->insert(node);
-			m_path.push(makeReference(node));
-			selectPath(m_path, true);
-			return false;
-		}
-		void post (scene::Node& node) const
-		{
-			m_path.pop();
-		}
-};
-
-class MapMergeEntities: public scene::Traversable::Walker
-{
-		mutable scene::Path m_path;
-	public:
-		MapMergeEntities (const scene::Path& root) :
-			m_path(root)
-		{
-		}
-		bool pre (scene::Node& node) const
-		{
-			if (node_is_worldspawn(node)) {
-				scene::Node* world_node = Map_FindWorldspawn(g_map);
-				if (world_node == 0) {
-					Map_SetWorldspawn(g_map, &node);
-					Node_getTraversable(m_path.top().get())->insert(node);
-					m_path.push(makeReference(node));
-					Node_getTraversable(node)->traverse(SelectChildren(m_path));
-				} else {
-					m_path.push(makeReference(*world_node));
-					Node_getTraversable(node)->traverse(MapMergeAll(m_path));
-				}
-			} else {
-				Node_getTraversable(m_path.top())->insert(node);
-				m_path.push(makeReference(node));
-				if (node_is_group(node)) {
-					Node_getTraversable(node)->traverse(SelectChildren(m_path));
-				} else {
-					selectPath(m_path, true);
-				}
-			}
-			return false;
-		}
-		void post (scene::Node& node) const
-		{
-			m_path.pop();
-		}
-};
+#include "algorithm/Merge.h"
 
 class BasicContainer: public scene::Node
 {
@@ -544,76 +487,16 @@ class BasicContainer: public scene::Node
 		}
 };
 
-/// Merges the map graph rooted at \p node into the global scene-graph.
-void MergeMap (scene::Node& node)
-{
-	Node_getTraversable(node)->traverse(MapMergeEntities(scene::Path(makeReference(GlobalSceneGraph().root()))));
-}
 void Map_ImportSelected (TextInputStream& in, const MapFormat& format)
 {
 	NodeSmartReference node((new BasicContainer)->node());
 	format.readGraph(node, in, GlobalEntityCreator());
 	Map_gatherNamespaced(node);
 	Map_mergeClonedNames();
-	MergeMap(node);
+	map::MergeMap(node);
 }
 
-inline scene::Cloneable* Node_getCloneable (scene::Node& node)
-{
-	return dynamic_cast<scene::Cloneable*> (&node);
-}
-
-inline scene::Node& node_clone (scene::Node& node)
-{
-	scene::Cloneable* cloneable = Node_getCloneable(node);
-	if (cloneable != 0) {
-		return cloneable->clone();
-	}
-
-	return (new scene::NullNode)->node();
-}
-
-class CloneAll: public scene::Traversable::Walker
-{
-		mutable scene::Path m_path;
-	public:
-		CloneAll (scene::Node& root) :
-			m_path(makeReference(root))
-		{
-		}
-		bool pre (scene::Node& node) const
-		{
-			if (node.isRoot()) {
-				return false;
-			}
-
-			m_path.push(makeReference(node_clone(node)));
-			m_path.top().get().IncRef();
-
-			return true;
-		}
-		void post (scene::Node& node) const
-		{
-			if (node.isRoot()) {
-				return;
-			}
-
-			Node_getTraversable(m_path.parent())->insert(m_path.top());
-
-			m_path.top().get().DecRef();
-			m_path.pop();
-		}
-};
-
-scene::Node& Node_Clone (scene::Node& node)
-{
-	scene::Node& clone = node_clone(node);
-	scene::Traversable* traversable = Node_getTraversable(node);
-	if (traversable != 0) {
-		traversable->traverse(CloneAll(clone));
-	}
-	return clone;
-}
+#include "algorithm/Clone.h"
 
 static void Map_StartPosition (void)
 {
@@ -719,63 +602,6 @@ class ExcludeWalker: public scene::Traversable::Walker
 		}
 };
 
-class AnyInstanceSelected: public scene::Instantiable::Visitor
-{
-		bool& m_selected;
-	public:
-		AnyInstanceSelected (bool& selected) :
-			m_selected(selected)
-		{
-			m_selected = false;
-		}
-		void visit (scene::Instance& instance) const
-		{
-			Selectable* selectable = Instance_getSelectable(instance);
-			if (selectable != 0 && selectable->isSelected()) {
-				m_selected = true;
-			}
-		}
-};
-
-inline bool Node_instanceSelected (scene::Node& node)
-{
-	scene::Instantiable* instantiable = Node_getInstantiable(node);
-	bool selected;
-	instantiable->forEachInstance(AnyInstanceSelected(selected));
-	return selected;
-}
-
-class SelectedDescendantWalker: public scene::Traversable::Walker
-{
-		bool& m_selected;
-	public:
-		SelectedDescendantWalker (bool& selected) :
-			m_selected(selected)
-		{
-			m_selected = false;
-		}
-
-		bool pre (scene::Node& node) const
-		{
-			if (node.isRoot()) {
-				return false;
-			}
-
-			if (Node_instanceSelected(node)) {
-				m_selected = true;
-			}
-
-			return true;
-		}
-};
-
-static bool Node_selectedDescendant (scene::Node& node)
-{
-	bool selected;
-	Node_traverseSubgraph(node, SelectedDescendantWalker(selected));
-	return selected;
-}
-
 class SelectionExcluder: public Excluder
 {
 	public:
@@ -785,68 +611,11 @@ class SelectionExcluder: public Excluder
 		}
 };
 
-class IncludeSelectedWalker: public scene::Traversable::Walker
-{
-		const scene::Traversable::Walker& m_walker;
-		mutable std::size_t m_selected;
-		mutable bool m_skip;
-
-		bool selectedParent () const
-		{
-			return m_selected != 0;
-		}
-	public:
-		IncludeSelectedWalker (const scene::Traversable::Walker& walker) :
-			m_walker(walker), m_selected(0), m_skip(false)
-		{
-		}
-		bool pre (scene::Node& node) const
-		{
-			// include node if:
-			// node is not a 'root' AND ( node is selected OR any child of node is selected OR any parent of node is selected )
-			if (!node.isRoot() && (Node_selectedDescendant(node) || selectedParent())) {
-				if (Node_instanceSelected(node)) {
-					++m_selected;
-				}
-				m_walker.pre(node);
-				return true;
-			} else {
-				m_skip = true;
-				return false;
-			}
-		}
-		void post (scene::Node& node) const
-		{
-			if (m_skip) {
-				m_skip = false;
-			} else {
-				if (Node_instanceSelected(node)) {
-					--m_selected;
-				}
-				m_walker.post(node);
-			}
-		}
-};
-
-void Map_Traverse_Selected (scene::Node& root, const scene::Traversable::Walker& walker)
-{
-	scene::Traversable* traversable = Node_getTraversable(root);
-	if (traversable != 0) {
-		traversable->traverse(IncludeSelectedWalker(walker));
-	}
-}
+#include "algorithm/Traverse.h"
 
 void Map_ExportSelected (TextOutputStream& out, const MapFormat& format)
 {
-	format.writeGraph(GlobalSceneGraph().root(), Map_Traverse_Selected, out);
-}
-
-void Map_Traverse (scene::Node& root, const scene::Traversable::Walker& walker)
-{
-	scene::Traversable* traversable = Node_getTraversable(root);
-	if (traversable != 0) {
-		traversable->traverse(walker);
-	}
+	format.writeGraph(GlobalSceneGraph().root(), map::Map_Traverse_Selected, out);
 }
 
 class RegionExcluder: public Excluder
@@ -880,7 +649,7 @@ void Map_RenameAbsolute (const std::string& absolute)
 	NodeSmartReference clone(NewMapRoot(GlobalFileSystem().getRelative(absolute)));
 	resource->setNode(clone.get_pointer());
 
-	Node_getTraversable(GlobalSceneGraph().root())->traverse(CloneAll(clone));
+	Node_getTraversable(GlobalSceneGraph().root())->traverse(map::CloneAll(clone));
 
 	g_map.m_resource->detach(g_map);
 	GlobalReferenceCache().release(g_map.m_name);
@@ -1034,11 +803,11 @@ bool Map_ImportFile (const std::string& filename)
 		resource->refresh(); /* avoid loading old version if map has changed on disk since last import */
 		if (resource->load()) {
 			NodeSmartReference clone(NewMapRoot(""));
-			Node_getTraversable(*resource->getNode())->traverse(CloneAll(clone));
+			Node_getTraversable(*resource->getNode())->traverse(map::CloneAll(clone));
 
 			Map_gatherNamespaced(clone);
 			Map_mergeClonedNames();
-			MergeMap(clone);
+			map::MergeMap(clone);
 			success = true;
 		}
 		GlobalReferenceCache().release(filename);
@@ -1052,7 +821,7 @@ bool Map_ImportFile (const std::string& filename)
 bool Map_SaveFile (const std::string& filename)
 {
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
-	if (!MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename))
+	if (!MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), map::Map_Traverse, filename))
 		return false;
 
 	// TODO: Resave the material file with the (maybe) new name of the map file
@@ -1065,7 +834,7 @@ bool Map_SaveFile (const std::string& filename)
  */
 bool Map_SaveSelected (const std::string& filename)
 {
-	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse_Selected, filename);
+	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), map::Map_Traverse_Selected, filename);
 }
 
 class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker

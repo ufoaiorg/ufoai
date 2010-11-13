@@ -9,6 +9,7 @@
 #include "gtkutil/dialog.h"
 #include "../../mainframe.h"
 #include "../../map/map.h"
+#include "../../map/algorithm/Clone.h"
 #include "radiant_i18n.h"
 
 namespace selection {
@@ -66,7 +67,7 @@ class CloneSelected: public scene::Graph::Walker
 			if (!path.top().get().isRoot()) {
 				Selectable* selectable = Instance_getSelectable(instance);
 				if (selectable != 0 && selectable->isSelected()) {
-					NodeSmartReference clone(Node_Clone(path.top()));
+					NodeSmartReference clone(map::Node_Clone(path.top()));
 					Map_gatherNamespaced(clone);
 					Node_getTraversable(path.parent().get())->insert(clone);
 				}

@@ -508,8 +508,7 @@ void MaterialSystem::freeMaterials ()
 
 void MaterialSystem::loadMaterials ()
 {
-	const std::string& mapname = GlobalRadiant().getMapName();
-	if (mapname.empty() || mapname == "unnamed.map")
+	if (Map_Unnamed(g_map))
 		return;
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(getMaterialFilename()));
