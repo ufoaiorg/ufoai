@@ -87,6 +87,24 @@
 
 #include "../namespace/BasicNamespace.h"
 
+
+WorldNode::WorldNode () :
+	m_node(0)
+{
+}
+void WorldNode::set (scene::Node* node)
+{
+	if (m_node != 0)
+		m_node->DecRef();
+	m_node = node;
+	if (m_node != 0)
+		m_node->IncRef();
+}
+scene::Node* WorldNode::get () const
+{
+	return m_node;
+}
+
 std::list<Namespaced*> g_cloned;
 
 inline Namespaced* Node_getNamespaced (scene::Node& node)
@@ -130,28 +148,6 @@ void Map_mergeClonedNames (void)
 	g_cloned.clear();
 }
 
-class WorldNode
-{
-		scene::Node* m_node;
-	public:
-		WorldNode () :
-			m_node(0)
-		{
-		}
-		void set (scene::Node* node)
-		{
-			if (m_node != 0)
-				m_node->DecRef();
-			m_node = node;
-			if (m_node != 0)
-				m_node->IncRef();
-		}
-		scene::Node* get () const
-		{
-			return m_node;
-		}
-};
-
 class Map;
 void Map_UpdateTitle (const Map& map);
 void Map_SetWorldspawn (Map& map, scene::Node* node);
@@ -161,64 +157,48 @@ inline bool Map_Unnamed (const Map& map)
 	const std::string name = Map_Name(map);
 	return (name.empty() || name == "unnamed.map");
 }
-
-class Map: public ModuleObserver
+Map::Map () :
+	m_resource(0), m_valid(false), m_modified_changed(Map_UpdateTitle)
 {
-	public:
-		std::string m_name;
-		Resource* m_resource;
-		bool m_valid;
+}
 
-		bool m_modified;
-		void (*m_modified_changed) (const Map&);
+void Map::SetValid (bool valid)
+{
+	m_valid = valid;
+	m_mapValidCallbacks();
+}
 
-		Signal0 m_mapValidCallbacks;
-
-		WorldNode m_world_node; // "classname" "worldspawn" !
-
-		Map () :
-			m_resource(0), m_valid(false), m_modified_changed(Map_UpdateTitle)
-		{
-		}
-
-		void SetValid (bool valid)
-		{
-			m_valid = valid;
-			m_mapValidCallbacks();
-		}
-
-		void realise (void)
-		{
-			if (m_resource != 0) {
-				if (Map_Unnamed(*this)) {
-					g_map.m_resource->setNode(NewMapRoot("").get_pointer());
-					MapFile* map = Node_getMapFile(*g_map.m_resource->getNode());
-					if (map != 0) {
-						map->save();
-					}
-				} else {
-					m_resource->load();
-				}
-
-				GlobalSceneGraph().insert_root(*m_resource->getNode());
-
-				map::AutoSaver().clearChanges();
-
-				SetValid(true);
+void Map::realise (void)
+{
+	if (m_resource != 0) {
+		if (Map_Unnamed(*this)) {
+			g_map.m_resource->setNode(NewMapRoot("").get_pointer());
+			MapFile* map = Node_getMapFile(*g_map.m_resource->getNode());
+			if (map != 0) {
+				map->save();
 			}
+		} else {
+			m_resource->load();
 		}
-		void unrealise (void)
-		{
-			if (m_resource != 0) {
-				SetValid(false);
-				Map_SetWorldspawn(g_map, 0);
 
-				GlobalUndoSystem().clear();
+		GlobalSceneGraph().insert_root(*m_resource->getNode());
 
-				GlobalSceneGraph().erase_root();
-			}
-		}
-};
+		map::AutoSaver().clearChanges();
+
+		SetValid(true);
+	}
+}
+void Map::unrealise (void)
+{
+	if (m_resource != 0) {
+		SetValid(false);
+		Map_SetWorldspawn(g_map, 0);
+
+		GlobalUndoSystem().clear();
+
+		GlobalSceneGraph().erase_root();
+	}
+}
 
 Map g_map;
 Map* g_currentMap = 0;

@@ -29,9 +29,43 @@
 #include "iscenegraph.h"
 #include "generic/callback.h"
 #include "signal/signalfwd.h"
+#include "signal/signal.h"
+#include "moduleobserver.h"
+#include "ireference.h"
 #include <string>
 
-class Map;
+class WorldNode
+{
+		scene::Node* m_node;
+	public:
+		WorldNode ();
+		void set (scene::Node* node);
+		scene::Node* get () const;
+};
+
+class Map: public ModuleObserver
+{
+	public:
+		std::string m_name;
+		Resource* m_resource;
+		bool m_valid;
+
+		bool m_modified;
+		void (*m_modified_changed) (const Map&);
+
+		Signal0 m_mapValidCallbacks;
+
+		WorldNode m_world_node; // "classname" "worldspawn" !
+
+		Map ();
+
+		void SetValid (bool valid);
+
+		void realise (void);
+
+		void unrealise (void);
+};
+
 extern Map g_map;
 
 class MapFormat;
