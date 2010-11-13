@@ -153,7 +153,6 @@ class WorldNode
 };
 
 class Map;
-void Map_SetValid (Map& map, bool valid);
 void Map_UpdateTitle (const Map& map);
 void Map_SetWorldspawn (Map& map, scene::Node* node);
 
@@ -182,6 +181,12 @@ class Map: public ModuleObserver
 		{
 		}
 
+		void SetValid (bool valid)
+		{
+			m_valid = valid;
+			m_mapValidCallbacks();
+		}
+
 		void realise (void)
 		{
 			if (m_resource != 0) {
@@ -199,13 +204,13 @@ class Map: public ModuleObserver
 
 				map::AutoSaver().clearChanges();
 
-				Map_SetValid(g_map, true);
+				SetValid(true);
 			}
 		}
 		void unrealise (void)
 		{
 			if (m_resource != 0) {
-				Map_SetValid(g_map, false);
+				SetValid(false);
 				Map_SetWorldspawn(g_map, 0);
 
 				GlobalUndoSystem().clear();
@@ -226,12 +231,6 @@ void Map_addValidCallback (Map& map, const SignalHandler& handler)
 bool Map_Valid (const Map& map)
 {
 	return map.m_valid;
-}
-
-void Map_SetValid (Map& map, bool valid)
-{
-	map.m_valid = valid;
-	map.m_mapValidCallbacks();
 }
 
 const std::string& Map_Name (const Map& map)
