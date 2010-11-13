@@ -303,10 +303,10 @@ void Map_Free (void)
 
 class EntityFindByClassname: public scene::Graph::Walker
 {
-		const char* m_name;
+		const std::string& m_name;
 		Entity*& m_entity;
 	public:
-		EntityFindByClassname (const char* name, Entity*& entity) :
+		EntityFindByClassname (const std::string& name, Entity*& entity) :
 			m_name(name), m_entity(entity)
 		{
 			m_entity = 0;
@@ -315,7 +315,7 @@ class EntityFindByClassname: public scene::Graph::Walker
 		{
 			if (m_entity == 0) {
 				Entity* entity = Node_getEntity(path.top());
-				if (entity != 0 && string_equal(m_name, entity->getKeyValue("classname"))) {
+				if (entity != 0 && m_name == entity->getKeyValue("classname")) {
 					m_entity = entity;
 				}
 			}
@@ -323,7 +323,7 @@ class EntityFindByClassname: public scene::Graph::Walker
 		}
 };
 
-Entity* Scene_FindEntityByClass (const char* name)
+Entity* Scene_FindEntityByClass (const std::string& name)
 {
 	Entity* entity;
 	GlobalSceneGraph().traverse(EntityFindByClassname(name, entity));
@@ -332,13 +332,13 @@ Entity* Scene_FindEntityByClass (const char* name)
 
 Entity *Scene_FindPlayerStart (void)
 {
+	// TODO: get this list from entities.ufo
 	typedef const char* StaticString;
 	StaticString strings[] = {
-			"info_player_start",
-			"info_human_deathmatch",
-			"team_civilian_start",
-			"info_alien_deathmatch",
-			"info_ugv_deathmatch", };
+			"info_alien_start",
+			"info_human_start",
+			"info_civilian_start",
+			"info_player_start" };
 	typedef const StaticString* StaticStringIterator;
 	for (StaticStringIterator i = strings, end = strings + (sizeof(strings) / sizeof(StaticString)); i != end; ++i) {
 		Entity* entity = Scene_FindEntityByClass(*i);
