@@ -26,6 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_local.h"
 #include "../../shared/parse.h"
 #include "../../ports/system.h"
+#include "../../common/filesys.h"	/* for MAX_QPATH */
+#include "../../common/common.h"	/* for many */
+#include "../client.h"	/* for cl_genericPool */
 
 enum {
 	MUSIC_MAIN,

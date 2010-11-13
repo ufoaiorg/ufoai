@@ -24,7 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "s_sample.h"
-#include "s_local.h"
+#include "s_main.h"		/* for MAX_SOUNDIDS */
+#include "../../common/filesys.h"	/* for MAX_QPATH */
+#include "../../common/common.h"	/* for many */
+#include "../client.h"	/* for cl_soundSysPool */
 
 #define SAMPLE_HASH_SIZE 64
 static s_sample_t *sampleHash[SAMPLE_HASH_SIZE];
