@@ -115,7 +115,7 @@ typedef struct le_s {
 	float rotationSpeed;
 
 	/** sound effects */
-	struct s_sample_s* sample;
+	int sampleIdx;
 	float attenuation;		/**< attenuation value for local entity sounds */
 	float volume;			/**< loop sound volume - 0.0f-1.0f */
 

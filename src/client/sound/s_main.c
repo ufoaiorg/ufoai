@@ -99,14 +99,15 @@ void S_Frame (void)
 		le = NULL;
 		while ((le = LE_GetNextInUse(le))) {
 			if (le->type == ET_SOUND) {
+				s_sample_t *sample = S_GetSample(le->sampleIdx);
 				int j;
 				for (j = 0; j < MAX_CHANNELS; j++) {
-					if (s_env.channels[j].sample == le->sample)
+					if (s_env.channels[j].sample == sample)
 						break;
 				}
 
 				if (j == MAX_CHANNELS)
-					S_LoopSample(le->origin, le->sample, le->volume, le->attenuation);
+					S_LoopSample(le->origin, sample, le->volume, le->attenuation);
 			}
 		}
 	}

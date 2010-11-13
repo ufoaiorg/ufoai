@@ -959,13 +959,13 @@ void LMT_Init (localModel_t* localModel)
 void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume, float attenuation)
 {
 	le_t* le;
-	s_sample_t* sample;
+	int sampleIdx;
 
 	if (strstr(sound, "sound/"))
 		sound += 6;
 
-	sample = S_LoadSample(sound);
-	if (!sample)
+	sampleIdx = S_LoadSampleIdx(sound);
+	if (!sampleIdx)
 		return;
 
 	le = LE_Add(0);
@@ -974,7 +974,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
 		return;
 	}
 	le->type = ET_SOUND;
-	le->sample = sample;
+	le->sampleIdx = sampleIdx;
 	VectorCopy(origin, le->origin);
 	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;
