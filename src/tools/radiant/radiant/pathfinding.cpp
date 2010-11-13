@@ -166,17 +166,11 @@ class Pathfinding: public PreferenceConstructor, public RegistryKeyObserver
 
 Pathfinding *pathfinding;
 
-/**
- * @brief callback function for map changes to update routing data.
- */
-void Pathfinding_onMapValidChanged ()
-{
-	pathfinding->onMapValidChanged();
-}
 }
 
 void Pathfinding_Construct (void)
 {
+	// TODO: convert into module (ipathfinding.h)
 	routing::pathfinding = new routing::Pathfinding();
 
 	GlobalEventManager().addToggle("ShowPathfinding", MemberCaller<routing::Pathfinding,
@@ -186,7 +180,8 @@ void Pathfinding_Construct (void)
 	GlobalEventManager().addToggle("ShowPathfindingLowerLevels", MemberCaller<routing::Pathfinding,
 			&routing::Pathfinding::toggleShowLowerLevelsForPathfinding> (*routing::pathfinding));
 
-	GlobalMap().addValidCallback(SignalHandler(FreeCaller<routing::Pathfinding_onMapValidChanged> ()));
+	GlobalMap().addValidCallback(SignalHandler(MemberCaller<routing::Pathfinding,
+			&routing::Pathfinding::onMapValidChanged> (*routing::pathfinding)));
 }
 
 void Pathfinding_Destroy (void)
