@@ -24,7 +24,149 @@
 
 #include <gtk/gtk.h>
 
-GtkWidget *EntityInspector_constructNotebookTab (void);
+#include "ientity.h"
+#include "ifilesystem.h"
+#include "imodel.h"
+#include "iscenegraph.h"
+#include "iselection.h"
+#include "iundo.h"
+
+#include <map>
+#include <set>
+
+#include "os/path.h"
+#include "eclasslib.h"
+#include "scenelib.h"
+#include "generic/callback.h"
+#include "os/file.h"
+#include "stream/stringstream.h"
+#include "moduleobserver.h"
+#include "convert.h"
+#include "stringio.h"
+#include "../../ui/modelselector/ModelSelector.h"
+#include "../../ui/common/SoundChooser.h"
+
+#include "gtkutil/dialog.h"
+#include "gtkutil/filechooser.h"
+#include "gtkutil/messagebox.h"
+#include "gtkutil/nonmodal.h"
+#include "gtkutil/button.h"
+#include "gtkutil/entry.h"
+#include "gtkutil/container.h"
+#include "gtkutil/TreeModel.h"
+
+#include "../../qe3.h"
+#include "../../gtkmisc.h"
+#include "../../entity.h"
+#include "../../mainframe.h"
+#include "../../textureentry.h"
+
+#include "EntityAttribute.h"
+#include "AngleAttribute.h"
+#include "AnglesAttribute.h"
+#include "BooleanAttribute.h"
+#include "DirectionAttribute.h"
+#include "ListAttribute.h"
+#include "ModelAttribute.h"
+#include "ParticleAttribute.h"
+#include "SoundAttribute.h"
+#include "StringAttribute.h"
+#include "Vector3Attribute.h"
+
+typedef std::vector<EntityAttribute*> EntityAttributes;
+
+class EntityInspector: public ModuleObserver
+{
+	private:
+		GtkButton *m_btnRemoveKey;
+		GtkButton *m_btnAddKey;
+		GtkTreeView *m_viewKeyValues;
+
+		GtkTreeView* g_entityClassList;
+		GtkTextView* g_entityClassComment;
+
+		GtkCheckButton* g_entitySpawnflagsCheck[MAX_FLAGS];
+
+		GtkListStore* g_entlist_store;
+		GtkTreeStore* g_entprops_store;
+		const EntityClass* g_current_flags;
+		const EntityClass* g_current_comment;
+
+		// the number of active spawnflags
+		int g_spawnflag_count;
+		// table: index, match spawnflag item to the spawnflag index (i.e. which bit)
+		int spawn_table[MAX_FLAGS];
+		// we change the layout depending on how many spawn flags we need to display
+		// the table is a 4x4 in which we need to put the comment box g_entityClassComment and the spawn flags..
+		GtkTable* g_spawnflagsTable;
+
+		GtkVBox* g_attributeBox;
+
+		int g_numNewKeys;
+
+		std::size_t m_unrealised;
+
+	private:
+
+		void GlobalEntityAttributes_clear ();
+		void EntityClassList_fill ();
+		void EntityClassList_clear ();
+		void SetComment (EntityClass* eclass);
+		void SurfaceFlags_setEntityClass (EntityClass* eclass);
+		void EntityClassList_selectEntityClass (EntityClass* eclass);
+
+		void appendAttribute (const std::string& name, EntityAttribute& attribute);
+
+		void checkAddNewKeys ();
+
+		const char* getTooltipForKey (const std::string& key);
+		static void keyValueChanged ();
+		void selectionChanged (const Selectable&);
+
+		void EntityClassList_createEntity ();
+
+		void EntityKeyValueList_fillValueComboWithClassnames (GtkCellRenderer *renderer);
+
+		void entityKeyValueEdited (int columnIndex, char *newValue);
+
+		// Gtk callbacks
+		static void addKeyValue (GtkButton *button, EntityInspector* entityInspector);
+		static void clearKeyValue (GtkButton * button, EntityInspector* entityInspector);
+		static void SpawnflagCheck_toggled (GtkWidget *widget, EntityInspector* entityInspector);
+		static void entityValueEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text,
+				EntityInspector *entityInspector);
+		static void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text,
+				EntityInspector *entityInspector);
+		static void entityKeyEditCanceled (GtkCellRendererText *renderer, EntityInspector *entityInspector);
+
+		static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection, EntityInspector* entityInspector);
+		static void EntityKeyValueList_keyEditingStarted (GtkCellRenderer *renderer, GtkCellEditable *editable,
+				const gchar *path, EntityInspector *entityInspector);
+		static void EntityKeyValueList_valueEditingStarted (GtkCellRenderer *renderer, GtkCellEditable *editable,
+				const gchar *path, EntityInspector* entityInspector);
+
+		static gint EntityClassList_keypress (GtkWidget* widget, GdkEventKey* event, EntityInspector* entityInspector);
+		static gint EntityClassList_button_press (GtkWidget *widget, GdkEventButton *event, EntityInspector* entityInspector);
+		static void EntityClassList_selection_changed (GtkTreeSelection* selection, EntityInspector* entityInspector);
+
+	public:
+		EntityAttributes g_entityAttributes;
+
+		EntityInspector ();
+
+		void realise (void);
+
+		void unrealise (void);
+
+		GtkWidget *constructNotebookTab ();
+
+		void updateKeyValueList ();
+		void updateSpawnflags ();
+		void setEntityClass (EntityClass *eclass);
+};
+
+EntityInspector& GlobalEntityInspector();
+
 void EntityInspector_Construct ();
 void EntityInspector_Destroy ();
 
