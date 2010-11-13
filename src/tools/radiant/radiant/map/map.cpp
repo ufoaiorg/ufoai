@@ -737,10 +737,9 @@ class AnyInstanceSelected: public scene::Instantiable::Visitor
 		}
 };
 
-bool Node_instanceSelected (scene::Node& node)
+inline bool Node_instanceSelected (scene::Node& node)
 {
 	scene::Instantiable* instantiable = Node_getInstantiable(node);
-	ASSERT_NOTNULL(instantiable);
 	bool selected;
 	instantiable->forEachInstance(AnyInstanceSelected(selected));
 	return selected;
@@ -953,7 +952,7 @@ Vector3	region_maxs(65536, 65536, 65536);
 //Vector3	region_mins(g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
 //Vector3	region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
 
-static inline void exclude_node (scene::Node& node, bool exclude)
+inline void exclude_node (scene::Node& node, bool exclude)
 {
 	if (exclude)
 		node.enable(scene::Node::eExcluded);
