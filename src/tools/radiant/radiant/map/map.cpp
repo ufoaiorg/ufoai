@@ -448,55 +448,18 @@ scene::Node& Map_FindOrInsertWorldspawn (Map& map)
 	return *Map_GetWorldspawn(map);
 }
 
+#include "BasicContainer.h"
 #include "algorithm/Merge.h"
-
-class BasicContainer: public scene::Node
-{
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts (void)
-				{
-					NodeContainedCast<BasicContainer, scene::Traversable>::install(m_casts);
-				}
-				NodeTypeCastTable& get (void)
-				{
-					return m_casts;
-				}
-		};
-
-		TraversableNodeSet m_traverse;
-	public:
-
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
-
-		scene::Traversable& get (NullType<scene::Traversable> )
-		{
-			return m_traverse;
-		}
-
-		BasicContainer () :
-			scene::Node(this, StaticTypeCasts::instance().get())
-		{
-		}
-
-		scene::Node& node (void)
-		{
-			return *this;
-		}
-};
+#include "algorithm/Clone.h"
 
 void Map_ImportSelected (TextInputStream& in, const MapFormat& format)
 {
-	NodeSmartReference node((new BasicContainer)->node());
+	NodeSmartReference node((new map::BasicContainer)->node());
 	format.readGraph(node, in, GlobalEntityCreator());
 	Map_gatherNamespaced(node);
 	Map_mergeClonedNames();
 	map::MergeMap(node);
 }
-
-#include "algorithm/Clone.h"
 
 static void Map_StartPosition (void)
 {
