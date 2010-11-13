@@ -92,7 +92,6 @@ namespace scene
 
 scene::Node* Map_GetWorldspawn (const Map& map);
 scene::Node* Map_FindWorldspawn (Map& map);
-scene::Node& Map_FindOrInsertWorldspawn ();
 
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;

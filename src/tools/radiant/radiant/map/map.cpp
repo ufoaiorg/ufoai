@@ -285,12 +285,7 @@ void Map_SetWorldspawn (Map& map, scene::Node* node)
 	map.m_world_node.set(node);
 }
 
-/*
- ================
- Map_Free
- free all map elements, reinitialize the structures that depend on them
- ================
- */
+// free all map elements, reinitialize the structures that depend on them
 void Map_Free (void)
 {
 	g_map.m_resource->detach(g_map);
@@ -302,7 +297,7 @@ void Map_Free (void)
 	g_currentMap = 0;
 }
 
-Entity *Scene_FindPlayerStart (void)
+Entity* Map_FindPlayerStart (void)
 {
 	// TODO: get this list from entities.ufo
 	typedef const char* StaticString;
@@ -391,27 +386,6 @@ void Node_insertChildFirst (scene::Node& parent, scene::Node& child)
 	}
 }
 
-scene::Node& createWorldspawn (void)
-{
-	NodeSmartReference worldspawn(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
-			"worldspawn", true)));
-	Node_insertChildFirst(GlobalSceneGraph().root(), worldspawn);
-	return worldspawn;
-}
-
-void Map_UpdateWorldspawn (Map& map)
-{
-	if (Map_FindWorldspawn(map) == 0) {
-		Map_SetWorldspawn(map, &createWorldspawn());
-	}
-}
-
-scene::Node& Map_FindOrInsertWorldspawn ()
-{
-	Map_UpdateWorldspawn(g_map);
-	return *Map_GetWorldspawn(g_map);
-}
-
 #include "BasicContainer.h"
 #include "algorithm/Merge.h"
 #include "algorithm/Clone.h"
@@ -427,7 +401,7 @@ void Map_ImportSelected (TextInputStream& in, const MapFormat& format)
 
 static void Map_StartPosition (void)
 {
-	Entity* entity = Scene_FindPlayerStart();
+	Entity* entity = Map_FindPlayerStart();
 
 	if (entity) {
 		Vector3 origin(entity->getKeyValue("origin"));
@@ -811,6 +785,14 @@ namespace map
 
 		std::string g_mapsPath;
 
+		scene::Node& createWorldspawn (void)
+		{
+			NodeSmartReference worldspawn(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
+					"worldspawn", true)));
+			Node_insertChildFirst(GlobalSceneGraph().root(), worldspawn);
+			return worldspawn;
+		}
+
 		/* Walker class to subtract a Vector3 origin from each selected brush
 		 * that it visits.
 		 */
@@ -919,7 +901,10 @@ namespace map
 	}
 
 	scene::Node& findOrInsertWorldspawn() {
-		return Map_FindOrInsertWorldspawn();
+		if (Map_FindWorldspawn(g_map) == 0) {
+			Map_SetWorldspawn(g_map, &createWorldspawn());
+		}
+		return *Map_GetWorldspawn(g_map);
 	}
 
 	bool isUnnamed ()
