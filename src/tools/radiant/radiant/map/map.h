@@ -36,6 +36,25 @@
 #include "ientity.h"
 #include <string>
 
+namespace map {
+/** Subtract the provided origin vector from all selected brushes. This is
+ * necessary when reparenting worldspawn brushes to an entity, since the entity's
+ * "origin" key will be added to all child brushes.
+ *
+ * @param origin
+ * Vector3 containing the new origin for the selected brushes.
+ */
+void selectedBrushesSubtractOrigin (const Vector3& origin);
+
+/** Count the number of selected brushes in the current map.
+ *
+ * @return The number of selected brushes.
+ */
+
+int countSelectedBrushes ();
+
+const std::string& getMapsPath ();
+
 class WorldNode
 {
 		scene::Node* m_node;
@@ -58,6 +77,8 @@ class Map: public ModuleObserver
 
 		static void traverseRegion (scene::Node& root, const scene::Traversable::Walker& walker);
 
+		void FindEntityBrush (std::size_t entity, std::size_t brush, scene::Path& path);
+
 		// command bindings
 		void ObjectsDown ();
 		void ObjectsUp ();
@@ -74,15 +95,15 @@ class Map: public ModuleObserver
 		void ImportMap ();
 
 		// region functions
-		void applyRegion();
+		void applyRegion ();
 		void regionBounds (const AABB& bounds);
 		void regionBrush ();
 		void regionXY (float x_min, float y_min, float x_max, float y_max);
 		void regionSelectedBrushes ();
 
-	public:
+	private:
+
 		std::string m_name;
-		Resource* m_resource;
 		bool m_valid;
 
 		bool m_modified;
@@ -91,7 +112,15 @@ class Map: public ModuleObserver
 
 		WorldNode m_world_node; // "classname" "worldspawn" !
 
+		Vector3 region_mins, region_maxs;
+
+	public:
+		Resource* m_resource;
+
 		Map ();
+
+		const Vector3& getRegionMins() const;
+		const Vector3& getRegionMaxs() const;
 
 		void Construct ();
 		void Destroy ();
@@ -109,6 +138,9 @@ class Map: public ModuleObserver
 		bool saveRegion (const std::string& filename);
 		bool changeMap (const std::string& dialogTitle, const std::string& newFilename = "");
 
+		void SelectBrush (int entitynum, int brushnum, int select);
+
+		scene::Node& findOrInsertWorldspawn ();
 		void regionOff ();
 
 		void exportSelected (TextOutputStream& out);
@@ -139,7 +171,9 @@ class Map: public ModuleObserver
 		void setModified (bool modified);
 };
 
-Map& GlobalMap();
+} // namespace
+
+map::Map& GlobalMap ();
 
 class DeferredDraw
 {
@@ -183,48 +217,14 @@ inline void DeferredDraw_onMapValidChanged (DeferredDraw& self)
 }
 typedef ReferenceCaller<DeferredDraw, DeferredDraw_onMapValidChanged> DeferredDrawOnMapValidChangedCaller;
 
-namespace scene
-{
-	class Node;
-	class Graph;
+namespace scene {
+class Node;
+class Graph;
 }
-
-template<typename Element> class BasicVector3;
-typedef BasicVector3<float> Vector3;
-
-extern Vector3 region_mins, region_maxs;
-
-class TextInputStream;
-class TextOutputStream;
 
 void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent);
 
-void SelectBrush (int entitynum, int brushnum, int select);
-
 void Map_gatherNamespaced (scene::Node& root);
 void Map_mergeClonedNames ();
-
-namespace map
-{
-	/** Subtract the provided origin vector from all selected brushes. This is
-	 * necessary when reparenting worldspawn brushes to an entity, since the entity's
-	 * "origin" key will be added to all child brushes.
-	 *
-	 * @param origin
-	 * Vector3 containing the new origin for the selected brushes.
-	 */
-	void selectedBrushesSubtractOrigin (const Vector3& origin);
-
-	/** Count the number of selected brushes in the current map.
-	 *
-	 * @return The number of selected brushes.
-	 */
-
-	int countSelectedBrushes();
-
-	scene::Node& findOrInsertWorldspawn();
-
-	const std::string& getMapsPath ();
-}
 
 #endif

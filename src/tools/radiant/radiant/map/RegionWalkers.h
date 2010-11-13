@@ -65,8 +65,8 @@ class ExcludeRegionedWalker: public scene::Graph::Walker
 		}
 		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
-			exclude_node(path.top(), !((aabb_intersects_aabb(instance.worldAABB(), AABB::createFromMinMax(region_mins,
-					region_maxs)) != 0) ^ m_exclude));
+			exclude_node(path.top(), !((aabb_intersects_aabb(instance.worldAABB(), AABB::createFromMinMax(
+					GlobalMap().getRegionMins(), GlobalMap().getRegionMaxs())) != 0) ^ m_exclude));
 
 			return true;
 		}

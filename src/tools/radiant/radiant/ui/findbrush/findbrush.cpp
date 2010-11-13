@@ -116,7 +116,7 @@ GtkWidget* FindBrushDialog::createButtons() {
 void FindBrushDialog::onFind(GtkWidget* widget, FindBrushDialog* self) {
 	int entityNum = string::toInt(gtk_entry_get_text(GTK_ENTRY(self->_entityEntry)));
 	int brushNum = string::toInt(gtk_entry_get_text(GTK_ENTRY(self->_brushEntry)));
-	SelectBrush(entityNum, brushNum, true);
+	GlobalMap().SelectBrush(entityNum, brushNum, true);
 }
 
 void FindBrushDialog::onClose(GtkWidget* widget, FindBrushDialog* self) {

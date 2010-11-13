@@ -151,7 +151,7 @@ void ErrorCheckDialog::callbackSelect (GtkTreeSelection* sel, ErrorCheckDialog* 
 			return;
 
 		// and now do the real selection
-		SelectBrush(entnum, brushnum, true);
+		GlobalMap().SelectBrush(entnum, brushnum, true);
 	}
 }
 

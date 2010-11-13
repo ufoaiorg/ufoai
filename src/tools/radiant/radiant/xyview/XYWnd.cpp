@@ -612,7 +612,7 @@ void XYWnd::NewBrushDrag (int x, int y)
 
 	if (m_NewBrushDrag == 0) {
 		NodeSmartReference node(GlobalBrushCreator().createBrush());
-		Node_getTraversable(map::findOrInsertWorldspawn())->insert(node);
+		Node_getTraversable(GlobalMap().findOrInsertWorldspawn())->insert(node);
 
 		scene::Path brushpath(makeReference(GlobalSceneGraph().root()));
 		brushpath.push(makeReference(*GlobalMap().getWorldspawn()));
@@ -957,20 +957,20 @@ Vector4 XYWnd::getWindowCoordinates() {
 	float h = (m_nHeight / 2 / m_fScale);
 
 	float xb = m_vOrigin[nDim1] - w;
-	if (xb < region_mins[nDim1])
-		xb = region_mins[nDim1];
+	if (xb < GlobalMap().getRegionMins()[nDim1])
+		xb = GlobalMap().getRegionMins()[nDim1];
 
 	float xe = m_vOrigin[nDim1] + w;
-	if (xe > region_maxs[nDim1])
-		xe = region_maxs[nDim1];
+	if (xe > GlobalMap().getRegionMaxs()[nDim1])
+		xe = GlobalMap().getRegionMaxs()[nDim1];
 
 	float yb = m_vOrigin[nDim2] - h;
-	if (yb < region_mins[nDim2])
-		yb = region_mins[nDim2];
+	if (yb < GlobalMap().getRegionMins()[nDim2])
+		yb = GlobalMap().getRegionMins()[nDim2];
 
 	float ye = m_vOrigin[nDim2] + h;
-	if (ye > region_maxs[nDim2])
-		ye = region_maxs[nDim2];
+	if (ye > GlobalMap().getRegionMaxs()[nDim2])
+		ye = GlobalMap().getRegionMaxs()[nDim2];
 
 	return Vector4(xb, xe, yb, ye);
 }

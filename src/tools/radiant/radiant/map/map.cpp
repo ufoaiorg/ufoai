@@ -26,8 +26,6 @@
 #include "map.h"
 #include "radiant_i18n.h"
 
-#include "debugging/debugging.h"
-
 #include "imap.h"
 #include "iselection.h"
 #include "iundo.h"
@@ -92,167 +90,165 @@
 #include "algorithm/Clone.h"
 
 #include "../namespace/BasicNamespace.h"
+#include "RegionWalkers.h"
 
-namespace map
+namespace map {
+
+namespace {
+
+std::string g_mapsPath;
+
+class CollectAllWalker: public scene::Traversable::Walker
 {
-
-	namespace
-	{
-
-		std::string g_mapsPath;
-
-		class CollectAllWalker: public scene::Traversable::Walker
+		scene::Node& m_root;
+		UnsortedNodeSet& m_nodes;
+	public:
+		CollectAllWalker (scene::Node& root, UnsortedNodeSet& nodes) :
+			m_root(root), m_nodes(nodes)
 		{
-				scene::Node& m_root;
-				UnsortedNodeSet& m_nodes;
-			public:
-				CollectAllWalker (scene::Node& root, UnsortedNodeSet& nodes) :
-					m_root(root), m_nodes(nodes)
-				{
-				}
-				bool pre (scene::Node& node) const
-				{
-					m_nodes.insert(NodeSmartReference(node));
-					Node_getTraversable(m_root)->erase(node);
+		}
+		bool pre (scene::Node& node) const
+		{
+			m_nodes.insert(NodeSmartReference(node));
+			Node_getTraversable(m_root)->erase(node);
+			return false;
+		}
+};
+
+void Node_insertChildFirst (scene::Node& parent, scene::Node& child)
+{
+	UnsortedNodeSet nodes;
+	Node_getTraversable(parent)->traverse(CollectAllWalker(parent, nodes));
+	Node_getTraversable(parent)->insert(child);
+
+	for (UnsortedNodeSet::iterator i = nodes.begin(); i != nodes.end(); ++i) {
+		Node_getTraversable(parent)->insert((*i));
+	}
+}
+
+scene::Node& createWorldspawn ()
+{
+	NodeSmartReference worldspawn(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
+			"worldspawn", true)));
+	Node_insertChildFirst(GlobalSceneGraph().root(), worldspawn);
+	return worldspawn;
+}
+
+/* Walker class to subtract a Vector3 origin from each selected brush
+ * that it visits.
+ */
+
+class BrushOriginSubtractor: public scene::Graph::Walker
+{
+		// The translation matrix from the vector3
+		Matrix4 _transMat;
+
+	public:
+
+		// Constructor
+		BrushOriginSubtractor (const Vector3& origin) :
+			_transMat(Matrix4::getTranslation(origin * (-1)))
+		{
+		}
+
+		// Pre visit function
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (Node_isPrimitive(path.top())) {
+				Selectable* selectable = Instance_getSelectable(instance);
+				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
 					return false;
 				}
-		};
-
-		void Node_insertChildFirst (scene::Node& parent, scene::Node& child)
-		{
-			UnsortedNodeSet nodes;
-			Node_getTraversable(parent)->traverse(CollectAllWalker(parent, nodes));
-			Node_getTraversable(parent)->insert(child);
-
-			for (UnsortedNodeSet::iterator i = nodes.begin(); i != nodes.end(); ++i) {
-				Node_getTraversable(parent)->insert((*i));
 			}
+			return true;
 		}
 
-		scene::Node& createWorldspawn ()
+		// Post visit function
+		void post (const scene::Path& path, scene::Instance& instance) const
 		{
-			NodeSmartReference worldspawn(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
-					"worldspawn", true)));
-			Node_insertChildFirst(GlobalSceneGraph().root(), worldspawn);
-			return worldspawn;
+			if (Node_isPrimitive(path.top())) {
+				Selectable* selectable = Instance_getSelectable(instance);
+				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
+					// Node is selected, check if it is a brush.
+					Brush* brush = Node_getBrush(path.top());
+					if (brush != 0) {
+						// We have a brush, apply the transformation
+						brush->transform(_transMat);
+						brush->freezeTransform();
+					}
+				}
+			}
+		} // post()
+
+}; // BrushOriginSubtractor
+
+
+/** Walker class to count the number of selected brushes in the current
+ * scene.
+ */
+
+class CountSelectedBrushes: public scene::Graph::Walker
+{
+		int& m_count;
+		mutable std::size_t m_depth;
+	public:
+		CountSelectedBrushes (int& count) :
+			m_count(count), m_depth(0)
+		{
+			m_count = 0;
 		}
-
-		/* Walker class to subtract a Vector3 origin from each selected brush
-		 * that it visits.
-		 */
-
-		class BrushOriginSubtractor: public scene::Graph::Walker
+		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
-				// The translation matrix from the vector3
-				Matrix4 _transMat;
-
-			public:
-
-				// Constructor
-				BrushOriginSubtractor (const Vector3& origin) :
-					_transMat(Matrix4::getTranslation(origin * (-1)))
-				{
-				}
-
-				// Pre visit function
-				bool pre (const scene::Path& path, scene::Instance& instance) const
-				{
-					if (Node_isPrimitive(path.top())) {
-						Selectable* selectable = Instance_getSelectable(instance);
-						if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
-							return false;
-						}
-					}
-					return true;
-				}
-
-				// Post visit function
-				void post (const scene::Path& path, scene::Instance& instance) const
-				{
-					if (Node_isPrimitive(path.top())) {
-						Selectable* selectable = Instance_getSelectable(instance);
-						if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
-							// Node is selected, check if it is a brush.
-							Brush* brush = Node_getBrush(path.top());
-							if (brush != 0) {
-								// We have a brush, apply the transformation
-								brush->transform(_transMat);
-								brush->freezeTransform();
-							}
-						}
-					}
-				} // post()
-
-		}; // BrushOriginSubtractor
-
-
-		/** Walker class to count the number of selected brushes in the current
-		 * scene.
-		 */
-
-		class CountSelectedBrushes: public scene::Graph::Walker
-		{
-				int& m_count;
-				mutable std::size_t m_depth;
-			public:
-				CountSelectedBrushes (int& count) :
-					m_count(count), m_depth(0)
-				{
-					m_count = 0;
-				}
-				bool pre (const scene::Path& path, scene::Instance& instance) const
-				{
-					if (++m_depth != 1 && path.top().get().isRoot()) {
-						return false;
-					}
-					Selectable* selectable = Instance_getSelectable(instance);
-					if (selectable != 0 && selectable->isSelected() && Node_isPrimitive(path.top())) {
-						++m_count;
-					}
-					return true;
-				}
-				void post (const scene::Path& path, scene::Instance& instance) const
-				{
-					--m_depth;
-				}
-		};
-
-	} // namespace
-
-	/* Subtract the given origin from all selected brushes in the map. Uses
-	 * a BrushOriginSubtractor walker class to subtract the origin from
-	 * each selected brush in the scene.
-	 */
-
-	void selectedBrushesSubtractOrigin (const Vector3& origin)
-	{
-		GlobalSceneGraph().traverse(BrushOriginSubtractor(origin));
-	}
-
-	/* Return the number of selected brushes in the map, using the
-	 * CountSelectedBrushes walker.
-	 */
-
-	int countSelectedBrushes ()
-	{
-		int count;
-		GlobalSceneGraph().traverse(CountSelectedBrushes(count));
-		return count;
-	}
-
-	scene::Node& findOrInsertWorldspawn() {
-		if (GlobalMap().findWorldspawn() == 0) {
-			GlobalMap().setWorldspawn(&createWorldspawn());
+			if (++m_depth != 1 && path.top().get().isRoot()) {
+				return false;
+			}
+			Selectable* selectable = Instance_getSelectable(instance);
+			if (selectable != 0 && selectable->isSelected() && Node_isPrimitive(path.top())) {
+				++m_count;
+			}
+			return true;
 		}
-		return *GlobalMap().getWorldspawn();
-	}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			--m_depth;
+		}
+};
 
-	const std::string& getMapsPath ()
-	{
-		return g_mapsPath;
-	}
+} // namespace
 
-} // namespace map
+/* Subtract the given origin from all selected brushes in the map. Uses
+ * a BrushOriginSubtractor walker class to subtract the origin from
+ * each selected brush in the scene.
+ */
+
+void selectedBrushesSubtractOrigin (const Vector3& origin)
+{
+	GlobalSceneGraph().traverse(BrushOriginSubtractor(origin));
+}
+
+/* Return the number of selected brushes in the map, using the
+ * CountSelectedBrushes walker.
+ */
+
+int countSelectedBrushes ()
+{
+	int count;
+	GlobalSceneGraph().traverse(CountSelectedBrushes(count));
+	return count;
+}
+
+scene::Node& Map::findOrInsertWorldspawn ()
+{
+	if (findWorldspawn() == 0) {
+		setWorldspawn(&createWorldspawn());
+	}
+	return *getWorldspawn();
+}
+
+const std::string& getMapsPath ()
+{
+	return g_mapsPath;
+}
 
 WorldNode::WorldNode () :
 	m_node(0)
@@ -271,52 +267,20 @@ scene::Node* WorldNode::get () const
 	return m_node;
 }
 
-std::list<Namespaced*> g_cloned;
-
-inline Namespaced* Node_getNamespaced (scene::Node& node)
-{
-	return NodeTypeCast<Namespaced>::cast(node);
-}
-
-class GatherNamespaced: public scene::Traversable::Walker
-{
-	private:
-		void Node_gatherNamespaced (scene::Node& node) const
-		{
-			Namespaced* namespaced = Node_getNamespaced(node);
-			if (namespaced != 0) {
-				g_cloned.push_back(namespaced);
-			}
-		}
-	public:
-		bool pre (scene::Node& node) const
-		{
-			Node_gatherNamespaced(node);
-			return true;
-		}
-};
-
-void Map_gatherNamespaced (scene::Node& root)
-{
-	Node_traverseSubgraph(root, GatherNamespaced());
-}
-
-void Map_mergeClonedNames ()
-{
-	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
-		(*i)->setNamespace(g_cloneNamespace);
-	}
-	g_cloneNamespace.mergeNames(g_defaultNamespace);
-	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
-		(*i)->setNamespace(g_defaultNamespace);
-	}
-
-	g_cloned.clear();
-}
-
 Map::Map () :
-	m_resource(0), m_valid(false)
+	m_name(""), m_valid(false), m_modified(false), region_mins(-65536, -65536, -65536),
+			region_maxs(65536, 65536, 65536), m_resource(0)
 {
+}
+
+const Vector3& Map::getRegionMins () const
+{
+	return region_mins;
+}
+
+const Vector3& Map::getRegionMaxs () const
+{
+	return region_maxs;
 }
 
 bool Map::isUnnamed ()
@@ -439,11 +403,7 @@ Entity* Map::findPlayerStart ()
 {
 	// TODO: get this list from entities.ufo
 	typedef const char* StaticString;
-	StaticString strings[] = {
-			"info_alien_start",
-			"info_human_start",
-			"info_civilian_start",
-			"info_player_start" };
+	StaticString strings[] = { "info_alien_start", "info_human_start", "info_civilian_start", "info_player_start" };
 	typedef const StaticString* StaticStringIterator;
 	for (StaticStringIterator i = strings, end = strings + (sizeof(strings) / sizeof(StaticString)); i != end; ++i) {
 		Entity* entity = Scene_FindEntityByClass(*i);
@@ -460,7 +420,6 @@ Entity* Map::findPlayerStart ()
  */
 void Map::FocusViews (const Vector3& point, float angle)
 {
-	ASSERT_NOTNULL(g_pParentWnd);
 	CamWnd& camwnd = *g_pParentWnd->GetCamWnd();
 	camwnd.setCameraOrigin(point);
 	Vector3 angles(camwnd.getCameraAngles());
@@ -639,8 +598,8 @@ void Map::traverseRegion (scene::Node& root, const scene::Traversable::Walker& w
 
 bool Map::saveRegion (const std::string& filename)
 {
-	const bool success = MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(),
-			traverseRegion, filename);
+	const bool success = MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), traverseRegion,
+			filename);
 
 	return success;
 }
@@ -699,23 +658,6 @@ void Map::createNew ()
 
 	FocusViews(g_vector3_identity, 0);
 }
-
-/*
- ===========================================================
- REGION
- ===========================================================
- */
-
-// greebo: this has to be moved into some class and the values should be loaded from the registry
-// I'll leave it hardcoded for now
-Vector3	region_mins(-65536, -65536, -65536);
-Vector3	region_maxs(65536, 65536, 65536);
-
-// old code:
-//Vector3	region_mins(g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
-//Vector3	region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
-
-#include "RegionWalkers.h"
 
 /**
  * @note Other filtering options may still be on
@@ -797,11 +739,11 @@ bool Map::importFile (const std::string& filename)
 		resource->refresh(); /* avoid loading old version if map has changed on disk since last import */
 		if (resource->load()) {
 			NodeSmartReference clone(NewMapRoot(""));
-			Node_getTraversable(*resource->getNode())->traverse(map::CloneAll(clone));
+			Node_getTraversable(*resource->getNode())->traverse(CloneAll(clone));
 
 			Map_gatherNamespaced(clone);
 			Map_mergeClonedNames();
-			map::MergeMap(clone);
+			MergeMap(clone);
 			success = true;
 		}
 		GlobalReferenceCache().release(filename);
@@ -815,7 +757,7 @@ bool Map::importFile (const std::string& filename)
 bool Map::saveFile (const std::string& filename)
 {
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
-	if (!MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), map::Map_Traverse, filename))
+	if (!MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename))
 		return false;
 
 	// TODO: Resave the material file with the (maybe) new name of the map file
@@ -828,46 +770,7 @@ bool Map::saveFile (const std::string& filename)
  */
 bool Map::saveSelected (const std::string& filename)
 {
-	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), map::Map_Traverse_Selected, filename);
-}
-
-class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker
-{
-		scene::Node& m_parent;
-	public:
-		ParentSelectedBrushesToEntityWalker (scene::Node& parent) :
-			m_parent(parent)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.top().get_pointer() != &m_parent && Node_isPrimitive(path.top())) {
-				Selectable* selectable = Instance_getSelectable(instance);
-				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
-					return false;
-				}
-			}
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.top().get_pointer() != &m_parent && Node_isPrimitive(path.top())) {
-				Selectable* selectable = Instance_getSelectable(instance);
-				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
-					scene::Node& parent = path.parent();
-					if (&parent != &m_parent) {
-						NodeSmartReference node(path.top().get());
-						Node_getTraversable(parent)->erase(node);
-						Node_getTraversable(m_parent)->insert(node);
-					}
-				}
-			}
-		}
-};
-
-void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent)
-{
-	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
+	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse_Selected, filename);
 }
 
 void Map::NewMap ()
@@ -890,7 +793,7 @@ const std::string Map::selectMapFile (const std::string& title, bool open)
 {
 	// Save the most recently-used path so that successive maps can be opened
 	// from the same directory.
-	static std::string lastPath = map::getMapsPath();
+	static std::string lastPath = getMapsPath();
 	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/
 	"map", "map");
 	/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
@@ -1068,7 +971,7 @@ class EntityFindByIndexWalker: public scene::Traversable::Walker
 		}
 };
 
-inline void Scene_FindEntityBrush (std::size_t entity, std::size_t brush, scene::Path& path)
+void Map::FindEntityBrush (std::size_t entity, std::size_t brush, scene::Path& path)
 {
 	path.push(makeReference(GlobalSceneGraph().root()));
 	{
@@ -1094,15 +997,13 @@ inline bool Node_hasChildren (scene::Node& node)
  * bmodels)
  * @param[in] brushnum The brush number to select
  */
-void SelectBrush (int entitynum, int brushnum, int select)
+void Map::SelectBrush (int entitynum, int brushnum, int select)
 {
 	scene::Path path;
-	Scene_FindEntityBrush(entitynum, brushnum, path);
+	FindEntityBrush(entitynum, brushnum, path);
 	if (path.size() == 3 || (path.size() == 2 && !Node_hasChildren(path.top()))) {
 		scene::Instance* instance = GlobalSceneGraph().find(path);
-		ASSERT_MESSAGE(instance != 0, "SelectBrush: path not found in scenegraph");
 		Selectable* selectable = Instance_getSelectable(*instance);
-		ASSERT_MESSAGE(selectable != 0, "SelectBrush: path not selectable");
 		selectable->setSelected(select);
 		XYWnd* xyView = GlobalXYWnd().getActiveXY();
 		if (xyView != NULL) {
@@ -1118,7 +1019,7 @@ void Map::ObjectsDown ()
 		return;
 	}
 	UndoableCommand undo("objectsDown");
-	GlobalSceneGraph().traverse(map::MoveLevelWalker(false));
+	GlobalSceneGraph().traverse(MoveLevelWalker(false));
 	SceneChangeNotify();
 }
 
@@ -1129,7 +1030,7 @@ void Map::ObjectsUp ()
 		return;
 	}
 	UndoableCommand undo("objectsUp");
-	GlobalSceneGraph().traverse(map::MoveLevelWalker(true));
+	GlobalSceneGraph().traverse(MoveLevelWalker(true));
 	SceneChangeNotify();
 }
 
@@ -1173,14 +1074,14 @@ class MapModuleObserver: public ModuleObserver
 		void realise ()
 		{
 			if (--m_unrealised == 0) {
-				map::g_mapsPath = g_qeglobals.m_userGamePath + "maps/";
-				g_mkdir(map::g_mapsPath.c_str(), 0775);
+				g_mapsPath = g_qeglobals.m_userGamePath + "maps/";
+				g_mkdir(g_mapsPath.c_str(), 0775);
 			}
 		}
 		void unrealise ()
 		{
 			if (++m_unrealised == 1) {
-				map::g_mapsPath = "";
+				g_mapsPath = "";
 			}
 		}
 };
@@ -1213,7 +1114,93 @@ void Map::Destroy ()
 	GlobalEntityClassManager().detach(g_MapEntityClasses);
 }
 
-Map& GlobalMap() {
-	static Map _map;
+} // namespace map
+
+
+class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker
+{
+		scene::Node& m_parent;
+	public:
+		ParentSelectedBrushesToEntityWalker (scene::Node& parent) :
+			m_parent(parent)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get_pointer() != &m_parent && Node_isPrimitive(path.top())) {
+				Selectable* selectable = Instance_getSelectable(instance);
+				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
+					return false;
+				}
+			}
+			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get_pointer() != &m_parent && Node_isPrimitive(path.top())) {
+				Selectable* selectable = Instance_getSelectable(instance);
+				if (selectable != 0 && selectable->isSelected() && path.size() > 1) {
+					scene::Node& parent = path.parent();
+					if (&parent != &m_parent) {
+						NodeSmartReference node(path.top().get());
+						Node_getTraversable(parent)->erase(node);
+						Node_getTraversable(m_parent)->insert(node);
+					}
+				}
+			}
+		}
+};
+
+void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent)
+{
+	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
+}
+
+std::list<Namespaced*> g_cloned;
+
+inline Namespaced* Node_getNamespaced (scene::Node& node)
+{
+	return NodeTypeCast<Namespaced>::cast(node);
+}
+
+class GatherNamespaced: public scene::Traversable::Walker
+{
+	private:
+		void Node_gatherNamespaced (scene::Node& node) const
+		{
+			Namespaced* namespaced = Node_getNamespaced(node);
+			if (namespaced != 0) {
+				g_cloned.push_back(namespaced);
+			}
+		}
+	public:
+		bool pre (scene::Node& node) const
+		{
+			Node_gatherNamespaced(node);
+			return true;
+		}
+};
+
+void Map_gatherNamespaced (scene::Node& root)
+{
+	Node_traverseSubgraph(root, GatherNamespaced());
+}
+
+void Map_mergeClonedNames ()
+{
+	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
+		(*i)->setNamespace(g_cloneNamespace);
+	}
+	g_cloneNamespace.mergeNames(g_defaultNamespace);
+	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
+		(*i)->setNamespace(g_defaultNamespace);
+	}
+
+	g_cloned.clear();
+}
+
+map::Map& GlobalMap ()
+{
+	static map::Map _map;
 	return _map;
 }
