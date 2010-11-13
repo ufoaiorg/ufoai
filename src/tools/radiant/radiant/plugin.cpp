@@ -160,26 +160,12 @@ class RadiantModule : public IRadiant
 		const std::string getSettingsPath() {
 			return SettingsPath_get();
 		}
-		const std::string& getMapsPath() {
-			return Map_Name(g_map);
-		}
 		const std::string getGamePath() {
 			return basegame_get();
 		}
 
-
 		void setStatusText (const std::string& statusText) {
 			Sys_Status(statusText);
-		}
-
-		/**
-		 * @return The full path to the current loaded map
-		 */
-		std::string getMapName() {
-			return Map_Name(g_map);
-		}
-		scene::Node& getMapWorldEntity() {
-			return Map_FindOrInsertWorldspawn(g_map);
 		}
 
 		void attachGameToolsPathObserver (ModuleObserver& observer) {

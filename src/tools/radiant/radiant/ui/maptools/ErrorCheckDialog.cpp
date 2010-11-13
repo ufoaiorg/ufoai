@@ -41,7 +41,7 @@ ErrorCheckDialog::ErrorCheckDialog () :
 	GlobalEventManager().connectDialogWindow(GTK_WINDOW(getWindow()));
 
 	try {
-		const std::string mapName = GlobalRadiant().getMapName();
+		const std::string mapName = map::getMapName();
 		CompilerObserver observer(_listStore);
 		GlobalMapCompiler().performCheck(mapName, observer);
 		// Show the window and its children
@@ -128,7 +128,7 @@ void ErrorCheckDialog::callbackFix (GtkWidget* widget, ErrorCheckDialog* self)
 	self->hide();
 
 	try {
-		const std::string mapName = GlobalRadiant().getMapName();
+		const std::string mapName = map::getMapName();
 		CheckDialogCompilerIgnoreObserver observer;
 		GlobalMapCompiler().fixErrors(mapName, observer);
 	} catch (MapCompileException& e) {

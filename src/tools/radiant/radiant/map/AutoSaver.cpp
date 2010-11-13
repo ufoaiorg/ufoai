@@ -90,7 +90,7 @@ void AutoMapSaver::saveSnapshot() {
 		maxSnapshotFolderSize = 100;
 	}
 
-	const std::string& mapName = GlobalRadiant().getMapName();
+	const std::string& mapName = map::getMapName();
 	std::string name = os::getFilenameFromPath(mapName);
 	std::string extension = os::getExtension(mapName);
 
@@ -183,7 +183,7 @@ void AutoMapSaver::checkSave() {
 		else {
 			if (map::isUnnamed()) {
 				// Generate an autosave filename
-				std::string autoSaveFilename = GlobalRadiant().getMapsPath();
+				std::string autoSaveFilename = map::getMapsPath();
 
 				// Try to create the map folder, in case there doesn't exist one
 				g_mkdir_with_parents(autoSaveFilename.c_str(), 755);
@@ -201,7 +201,7 @@ void AutoMapSaver::checkSave() {
 				std::string newExtension = ".autosave.map";
 
 				// create the new autosave filename by changing the extension
-				std::string autoSaveFilename = os::stripExtension(GlobalRadiant().getMapName());
+				std::string autoSaveFilename = os::stripExtension(map::getMapName());
 				autoSaveFilename += newExtension;
 
 				globalOutputStream() << "Autosaving map to " << autoSaveFilename << "\n";

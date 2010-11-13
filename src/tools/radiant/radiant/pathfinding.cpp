@@ -137,7 +137,7 @@ class Pathfinding: public PreferenceConstructor, public RegistryKeyObserver
 		{
 			if (_showPathfinding) {
 				//update current pathfinding data on every activation
-				const std::string& mapName = GlobalRadiant().getMapName();
+				const std::string& mapName = map::getMapName();
 				const std::string baseName = os::stripExtension(mapName);
 				const std::string bspName = baseName + ".bsp";
 				_routingRender->updateRouting(GlobalFileSystem().getRelative(bspName));

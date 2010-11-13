@@ -9,6 +9,7 @@
 #include "UMPException.h"
 #include "string/string.h"
 #include "os/path.h"
+#include "../map/map.h"
 
 namespace map
 {
@@ -55,7 +56,7 @@ namespace map
 
 		bool UMPFile::save ()
 		{
-			TextFileOutputStream file(GlobalRadiant().getMapsPath() + _fileName);
+			TextFileOutputStream file(map::getMapsPath() + _fileName);
 			if (!file.failed()) {
 				std::stringstream os;
 
@@ -131,7 +132,7 @@ namespace map
 
 		bool UMPFile::load ()
 		{
-			AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(GlobalRadiant().getMapsPath() + _fileName));
+			AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(map::getMapsPath() + _fileName));
 			if (file) {
 				AutoPtr<Tokeniser> reader(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
 				parse(*reader);

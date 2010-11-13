@@ -42,6 +42,35 @@
 #include <list>
 #include <set>
 
+class EntityFindByClassname: public scene::Graph::Walker
+{
+		const std::string& m_name;
+		Entity*& m_entity;
+	public:
+		EntityFindByClassname (const std::string& name, Entity*& entity) :
+			m_name(name), m_entity(entity)
+		{
+			m_entity = 0;
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (m_entity == 0) {
+				Entity* entity = Node_getEntity(path.top());
+				if (entity != 0 && m_name == entity->getKeyValue("classname")) {
+					m_entity = entity;
+				}
+			}
+			return true;
+		}
+};
+
+inline Entity* Scene_FindEntityByClass (const std::string& name)
+{
+	Entity* entity;
+	GlobalSceneGraph().traverse(EntityFindByClassname(name, entity));
+	return entity;
+}
+
 inline bool node_is_worldspawn (scene::Node& node)
 {
 	Entity* entity = Node_getEntity(node);

@@ -92,7 +92,7 @@ namespace scene
 
 scene::Node* Map_GetWorldspawn (const Map& map);
 scene::Node* Map_FindWorldspawn (Map& map);
-scene::Node& Map_FindOrInsertWorldspawn (Map& map);
+scene::Node& Map_FindOrInsertWorldspawn ();
 
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
@@ -170,6 +170,13 @@ namespace map
 	 * @return @c true if the map is not yet saved, @c false otherwise
 	 */
 	bool isUnnamed ();
+
+	scene::Node& findOrInsertWorldspawn();
+
+	// returns the full path to the current loaded map
+	const std::string& getMapName();
+
+	const std::string& getMapsPath ();
 }
 
 #endif

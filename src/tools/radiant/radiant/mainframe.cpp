@@ -1573,7 +1573,7 @@ void ToolsCompile () {
 		return;
 	}
 	try {
-		const std::string mapName = GlobalRadiant().getMapName();
+		const std::string mapName = map::getMapName();
 		NullMapCompilerObserver observer;
 		GlobalMapCompiler().compileMap(mapName, observer);
 	} catch (MapCompileException& e) {
@@ -1605,7 +1605,7 @@ void ToolsGenerateMaterials () {
 	}
 
 	try {
-		const std::string mapName = GlobalRadiant().getMapName();
+		const std::string mapName = map::getMapName();
 		NullMapCompilerObserver observer;
 		GlobalMapCompiler().generateMaterial(mapName, observer);
 		GlobalMaterialSystem()->showMaterialDefinition();

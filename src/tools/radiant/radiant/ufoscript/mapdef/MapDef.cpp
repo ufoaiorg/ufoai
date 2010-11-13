@@ -50,7 +50,7 @@ namespace scripts
 
 	std::string MapDef::getMapDefID ()
 	{
-		const std::string mapname = os::getFilenameFromPath(GlobalRadiant().getMapName());
+		const std::string mapname = os::getFilenameFromPath(map::getMapName());
 		const std::string umpName = GlobalUMPSystem().getUMPFilename(mapname);
 		if (umpName.length() > 0)
 			return os::stripExtension(umpName);

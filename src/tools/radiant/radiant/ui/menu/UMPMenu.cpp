@@ -77,7 +77,7 @@ void UMPMenu::addItems()
 	IMenuManager* menuManager = GlobalUIManager().getMenuManager();
 	menuManager->remove(MENU_PATH);
 
-	std::string umpFilename = GlobalUMPSystem().getUMPFilename(GlobalRadiant().getMapName());
+	std::string umpFilename = GlobalUMPSystem().getUMPFilename(map::getMapName());
 	if (umpFilename.empty())
 		return;
 	map::ump::UMPFile file = map::ump::UMPFile(umpFilename);

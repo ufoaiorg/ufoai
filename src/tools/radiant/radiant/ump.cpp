@@ -36,6 +36,7 @@
 #include "ump/UMPTile.h"
 #include "gtkutil/dialog.h"
 #include "os/path.h"
+#include "map/map.h"
 
 namespace
 {
@@ -87,12 +88,12 @@ class UMPSystem : public IUMPSystem {
 	public:
 
 		void editUMPDefinition () {
-			const std::string umpFileName = getUMPFilename(GlobalRadiant().getMapName());
+			const std::string umpFileName = getUMPFilename(map::getMapName());
 			if (umpFileName.empty()) {
 				gtkutil::infoDialog(_("Could not find the map in any ump file"));
 				return;
 			}
-			ui::UMPEditor editor(GlobalRadiant().getMapsPath() + umpFileName);
+			ui::UMPEditor editor(map::getMapsPath() + umpFileName);
 			editor.show();
 		}
 

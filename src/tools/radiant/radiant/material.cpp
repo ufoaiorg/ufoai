@@ -437,7 +437,7 @@ void MaterialSystem::importMaterialFile (const std::string& name)
 
 const std::string MaterialSystem::getMaterialFilename () const
 {
-	const std::string& mapname = GlobalRadiant().getMapName();
+	const std::string& mapname = map::getMapName();
 	const std::string umpname = GlobalUMPSystem().getUMPFilename(mapname);
 	std::string materialFilename;
 	if (umpname.empty())

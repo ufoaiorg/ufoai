@@ -125,16 +125,10 @@ struct IRadiant
 	virtual const std::string& getEnginePath() = 0;
 	virtual const std::string getAppPath() = 0;
 	virtual const std::string getSettingsPath() = 0;
-	virtual const std::string& getMapsPath() = 0;
 
 	virtual void setStatusText (const std::string& statusText) = 0;
 
 	virtual const std::string getGamePath() = 0;
-	/**
-	 * @return The full path to the current loaded map
-	 */
-	virtual std::string getMapName() = 0;
-	virtual scene::Node& getMapWorldEntity() = 0;
 
 	virtual void attachGameToolsPathObserver (ModuleObserver& observer) = 0;
 	virtual void detachGameToolsPathObserver (ModuleObserver& observer) = 0;

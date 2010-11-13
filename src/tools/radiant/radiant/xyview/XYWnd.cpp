@@ -612,7 +612,7 @@ void XYWnd::NewBrushDrag (int x, int y)
 
 	if (m_NewBrushDrag == 0) {
 		NodeSmartReference node(GlobalBrushCreator().createBrush());
-		Node_getTraversable(GlobalRadiant().getMapWorldEntity())->insert(node);
+		Node_getTraversable(map::findOrInsertWorldspawn())->insert(node);
 
 		scene::Path brushpath(makeReference(GlobalSceneGraph().root()));
 		brushpath.push(makeReference(*Map_GetWorldspawn(g_map)));

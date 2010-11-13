@@ -94,16 +94,16 @@ inline Namespaced* Node_getNamespaced (scene::Node& node)
 	return NodeTypeCast<Namespaced>::cast(node);
 }
 
-void Node_gatherNamespaced (scene::Node& node)
-{
-	Namespaced* namespaced = Node_getNamespaced(node);
-	if (namespaced != 0) {
-		g_cloned.push_back(namespaced);
-	}
-}
-
 class GatherNamespaced: public scene::Traversable::Walker
 {
+	private:
+		void Node_gatherNamespaced (scene::Node& node) const
+		{
+			Namespaced* namespaced = Node_getNamespaced(node);
+			if (namespaced != 0) {
+				g_cloned.push_back(namespaced);
+			}
+		}
 	public:
 		bool pre (scene::Node& node) const
 		{
@@ -302,35 +302,6 @@ void Map_Free (void)
 	g_currentMap = 0;
 }
 
-class EntityFindByClassname: public scene::Graph::Walker
-{
-		const std::string& m_name;
-		Entity*& m_entity;
-	public:
-		EntityFindByClassname (const std::string& name, Entity*& entity) :
-			m_name(name), m_entity(entity)
-		{
-			m_entity = 0;
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (m_entity == 0) {
-				Entity* entity = Node_getEntity(path.top());
-				if (entity != 0 && m_name == entity->getKeyValue("classname")) {
-					m_entity = entity;
-				}
-			}
-			return true;
-		}
-};
-
-Entity* Scene_FindEntityByClass (const std::string& name)
-{
-	Entity* entity;
-	GlobalSceneGraph().traverse(EntityFindByClassname(name, entity));
-	return entity;
-}
-
 Entity *Scene_FindPlayerStart (void)
 {
 	// TODO: get this list from entities.ufo
@@ -435,10 +406,10 @@ void Map_UpdateWorldspawn (Map& map)
 	}
 }
 
-scene::Node& Map_FindOrInsertWorldspawn (Map& map)
+scene::Node& Map_FindOrInsertWorldspawn ()
 {
-	Map_UpdateWorldspawn(map);
-	return *Map_GetWorldspawn(map);
+	Map_UpdateWorldspawn(g_map);
+	return *Map_GetWorldspawn(g_map);
 }
 
 #include "BasicContainer.h"
@@ -510,13 +481,13 @@ bool Map_LoadFile (const std::string& filename)
 
 void Map_Reload (void)
 {
-	if (GlobalRadiant().getMapName().empty())
+	if (map::isUnnamed())
 		return;
 
 	/* reload the map */
 	Map_RegionOff();
 	Map_Free();
-	Map_LoadFile(GlobalRadiant().getMapName());
+	Map_LoadFile(map::getMapName());
 }
 
 class Excluder
@@ -838,6 +809,8 @@ namespace map
 	namespace
 	{
 
+		std::string g_mapsPath;
+
 		/* Walker class to subtract a Vector3 origin from each selected brush
 		 * that it visits.
 		 */
@@ -941,10 +914,24 @@ namespace map
 		return count;
 	}
 
+	const std::string& getMapName() {
+		return Map_Name(g_map);
+	}
+
+	scene::Node& findOrInsertWorldspawn() {
+		return Map_FindOrInsertWorldspawn();
+	}
+
 	bool isUnnamed ()
 	{
 		return Map_Unnamed(g_map);
 	}
+
+	const std::string& getMapsPath ()
+	{
+		return g_mapsPath;
+	}
+
 } // namespace map
 
 /**
@@ -960,14 +947,6 @@ void NewMap (void)
 		Map_New();
 	}
 }
-
-static std::string g_mapsPath;
-
-const std::string& getMapsPath (void)
-{
-	return g_mapsPath;
-}
-
 namespace ui
 {
 
@@ -982,14 +961,14 @@ namespace ui
 	{
 		// Save the most recently-used path so that successive maps can be opened
 		// from the same directory.
-		static std::string lastPath = getMapsPath();
+		static std::string lastPath = map::getMapsPath();
 		gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/
 		"map", "map");
 		/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
 		if (map::isUnnamed()) {
 			fileChooser.setCurrentPath(lastPath);
 		} else {
-			const std::string mapName = GlobalRadiant().getMapName();
+			const std::string mapName = map::getMapName();
 			fileChooser.setCurrentPath(os::stripFilename(mapName));
 		}
 
@@ -1245,14 +1224,14 @@ class MapModuleObserver: public ModuleObserver
 		void realise (void)
 		{
 			if (--m_unrealised == 0) {
-				g_mapsPath = g_qeglobals.m_userGamePath + "maps/";
-				g_mkdir(g_mapsPath.c_str(), 0775);
+				map::g_mapsPath = g_qeglobals.m_userGamePath + "maps/";
+				g_mkdir(map::g_mapsPath.c_str(), 0775);
 			}
 		}
 		void unrealise (void)
 		{
 			if (++m_unrealised == 1) {
-				g_mapsPath = "";
+				map::g_mapsPath = "";
 			}
 		}
 };
