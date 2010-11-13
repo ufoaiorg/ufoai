@@ -952,77 +952,7 @@ Vector3	region_maxs(65536, 65536, 65536);
 //Vector3	region_mins(g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
 //Vector3	region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
 
-inline void exclude_node (scene::Node& node, bool exclude)
-{
-	if (exclude)
-		node.enable(scene::Node::eExcluded);
-	else
-		node.disable(scene::Node::eExcluded);
-}
-
-class ExcludeAllWalker: public scene::Graph::Walker
-{
-		bool m_exclude;
-	public:
-		ExcludeAllWalker (bool exclude) :
-			m_exclude(exclude)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			exclude_node(path.top(), m_exclude);
-
-			return true;
-		}
-};
-
-void Scene_Exclude_All (bool exclude)
-{
-	GlobalSceneGraph().traverse(ExcludeAllWalker(exclude));
-}
-
-class ExcludeSelectedWalker: public scene::Graph::Walker
-{
-		bool m_exclude;
-	public:
-		ExcludeSelectedWalker (bool exclude) :
-			m_exclude(exclude)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			exclude_node(path.top(), (instance.isSelected() || instance.childSelected() || instance.parentSelected())
-					== m_exclude);
-			return true;
-		}
-};
-
-void Scene_Exclude_Selected (bool exclude)
-{
-	GlobalSceneGraph().traverse(ExcludeSelectedWalker(exclude));
-}
-
-class ExcludeRegionedWalker: public scene::Graph::Walker
-{
-		bool m_exclude;
-	public:
-		ExcludeRegionedWalker (bool exclude) :
-			m_exclude(exclude)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			exclude_node(path.top(), !((aabb_intersects_aabb(instance.worldAABB(), AABB::createFromMinMax(region_mins,
-					region_maxs)) != 0) ^ m_exclude));
-
-			return true;
-		}
-};
-
-void Scene_Exclude_Region (bool exclude)
-{
-	GlobalSceneGraph().traverse(ExcludeRegionedWalker(exclude));
-}
+#include "RegionWalkers.h"
 
 /**
  * @note Other filtering options may still be on
@@ -1039,12 +969,12 @@ void Map_RegionOff (void)
 	region_maxs[2] = maxWorldCoord - 64;
 	region_mins[2] = minWorldCoord + 64;
 
-	Scene_Exclude_All(false);
+	map::Scene_Exclude_All(false);
 }
 
 void Map_ApplyRegion (void)
 {
-	Scene_Exclude_Region(false);
+	map::Scene_Exclude_Region(false);
 }
 
 void Map_RegionSelectedBrushes (void)
@@ -1056,7 +986,7 @@ void Map_RegionSelectedBrushes (void)
 		region_mins = aabb.getMins();
 		region_maxs = aabb.getMaxs();
 
-		Scene_Exclude_Selected(false);
+		map::Scene_Exclude_Selected(false);
 
 		GlobalSelectionSystem().setSelectedAll(false);
 	}
@@ -1602,94 +1532,7 @@ class MapModuleObserver: public ModuleObserver
 		}
 };
 
-class BrushMoveLevel
-{
-	private:
-
-		bool _up;
-
-	public:
-
-		BrushMoveLevel (bool up) :
-			_up(up)
-		{
-		}
-
-		void operator() (Face& face) const
-		{
-			ContentsFlagsValue flags;
-			face.GetFlags(flags);
-
-			int levels = (flags.m_contentFlags >> 8) & 255;
-			if (_up) {
-				levels <<= 1;
-				if (!levels)
-					levels = 1;
-			} else {
-				const int newLevel = levels >> 1;
-				if (newLevel != (newLevel & 255))
-					return;
-				levels >>= 1;
-			}
-
-			levels &= 255;
-			levels <<= 8;
-
-			flags.m_contentFlags &= levels;
-			flags.m_contentFlags |= levels;
-
-			face.SetFlags(flags);
-		}
-};
-
-class MoveLevelWalker: public scene::Graph::Walker
-{
-	private:
-
-		bool _up;
-
-	public:
-
-		MoveLevelWalker (bool up) :
-			_up(up)
-		{
-		}
-
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.top().get().visible()) {
-				if (Node_isBrush(path.top())) {
-					Brush* brush = Node_getBrush(path.top());
-					if (brush != 0) {
-						Brush_forEachFace(*brush, BrushMoveLevel(_up));
-					}
-				} else if (Node_isEntity(path.top())) {
-					Entity* entity = Node_getEntity(path.top());
-					if (entity != 0) {
-						std::string name = entity->getKeyValue("classname");
-						// TODO: get this info from entities.ufo
-						if (name == "func_rotating" || name == "func_door" || name == "func_breakable" || name
-								== "misc_item" || name == "misc_mission" || name == "misc_mission_alien" || name
-								== "misc_model" || name == "misc_sound" || name == "misc_particle") {
-							const std::string spawnflags = entity->getKeyValue("spawnflags");
-							if (!spawnflags.empty()) {
-								int levels = string::toInt(spawnflags) & 255;
-								if (_up) {
-									levels <<= 1;
-								} else {
-									levels >>= 1;
-								}
-								if (levels == 0)
-									levels = 1;
-								entity->setKeyValue("spawnflags", string::toString(levels & 255));
-							}
-						}
-					}
-				}
-			}
-			return true;
-		}
-};
+#include "MoveLevelWalker.h"
 
 void ObjectsDown (void)
 {
@@ -1698,7 +1541,7 @@ void ObjectsDown (void)
 		return;
 	}
 	UndoableCommand undo("objectsDown");
-	GlobalSceneGraph().traverse(MoveLevelWalker(false));
+	GlobalSceneGraph().traverse(map::MoveLevelWalker(false));
 	SceneChangeNotify();
 }
 
@@ -1709,7 +1552,7 @@ void ObjectsUp (void)
 		return;
 	}
 	UndoableCommand undo("objectsUp");
-	GlobalSceneGraph().traverse(MoveLevelWalker(true));
+	GlobalSceneGraph().traverse(map::MoveLevelWalker(true));
 	SceneChangeNotify();
 }
 
