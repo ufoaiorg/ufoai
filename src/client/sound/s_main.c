@@ -325,3 +325,13 @@ void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float attenuatio
 {
 	S_PlaySample(origin, stdSoundPool[sId], attenuation, volume);
 }
+
+/**
+ * @brief Loads and registers a sound file for later use
+ * @param[in] soundFile The name of the soundfile, relative to the sounds dir
+ */
+s_sample_t *S_LoadSample (const char *soundFile)
+{
+	int sampleIdx = S_LoadSampleIdx(soundFile);
+	return S_GetSample(sampleIdx);
+}

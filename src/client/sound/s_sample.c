@@ -52,7 +52,7 @@ void S_SetSampleRepeatRate (int sampleRepeatRate)
  * @param name The soundfile (relative to the sound dir and without extension)
  * @return @c NULL if not yet loaded
  */
-static s_sample_t *S_FindName (const char *name)
+static s_sample_t *S_FindByName (const char *name)
 {
 	s_sample_t *sample;
 	const unsigned hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
@@ -109,9 +109,10 @@ static Mix_Chunk* S_LoadSampleChunk (const char *sound)
 /**
  * @brief Loads and registers a sound file for later use
  * @param[in] soundFile The name of the soundfile, relative to the sounds dir
+ * @return The index of the loaded sample or 0
  * @sa S_LoadSound
  */
-s_sample_t *S_LoadSample (const char *soundFile)
+int S_LoadSampleIdx (const char *soundFile)
 {
 	Mix_Chunk *chunk;
 	s_sample_t *sample;
@@ -119,27 +120,28 @@ s_sample_t *S_LoadSample (const char *soundFile)
 	unsigned hash;
 
 	if (!s_env.initialized)
-		return NULL;
+		return 0;
 
 	Com_StripExtension(soundFile, name, sizeof(name));
 
-	sample = S_FindName(name);
+	sample = S_FindByName(name);
 	if (sample)
-		return sample;
+		return sample->index;
 
 	/* make sure the sound is loaded */
 	chunk = S_LoadSampleChunk(name);
 	if (!chunk)
-		return NULL;		/* couldn't load the sound's data */
+		return 0;		/* couldn't load the sound's data */
 
 	hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
 	sample = (s_sample_t *)Mem_PoolAlloc(sizeof(*sample), cl_soundSysPool, 0);
 	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sample->chunk = chunk;
 	sample->hashNext = sampleHash[hash];
+	sample->index = sampleIndexLast;
 	sampleHash[hash] = sample;
 	sampleIndex[++sampleIndexLast] = sample;
-	return sample;
+	return sample->index;
 }
 
 s_sample_t *S_GetSample (const int soundIdx)
