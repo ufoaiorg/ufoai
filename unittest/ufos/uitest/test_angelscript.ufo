@@ -415,6 +415,106 @@ window test_angelscript
 		a_function.execute();
 	}
 
+	string testListener1 { pos "200 80" string "listener1" }
+	string testListener2 { pos "200 80" string "listener2" color "0 1 0" }
+	string testListener3 { pos "200 80" string "listener3" }
+	string testListener1_func { pos "200 80" string "listener1_f" }
+	string testListener2_func { pos "200 80" string "listener2_f" color "0 1 0" }
+	string testListener3_func { pos "200 80" string "listener3_f" }
+
+	button buttonTest_listener {
+		{
+			pos "0 0"
+			size "10 10"
+		}
+
+		angelscript {
+			void listen_bad1() {
+				color red = "1 0 0";
+				node@ n = getNode("test_angelscript.testListener1");
+				n.color = red;
+			}
+			void listen1() {
+				color green = "0 1 0";
+				node@ n = getNode("test_angelscript.testListener1");
+				n.color = green;
+			}
+			void listen_bad2() {
+				color red = "1 0 0";
+				node@ n = getNode("test_angelscript.testListener2");
+				n.color = red;
+			}
+			void listen3() {
+				color green = "0 1 0";
+				node@ n = getNode("test_angelscript.testListener3");
+				n.color = green;
+			}
+
+			void onRClick() {
+				thisNode.onClick.set(@listen_bad1);
+				thisNode.onClick.set(@listen1);
+				thisNode.onClick.add(@listen_bad2);
+				thisNode.onClick.add(@listen3);
+				thisNode.onClick.remove(@listen_bad2);
+				thisNode.onClick.remove(@listen3);
+				thisNode.onClick.add(@listen3);
+				thisNode.onClick.execute();
+			}
+		}
+	}
+
+	button buttonTest_func_listener {
+		{
+			pos "0 0"
+			size "10 10"
+		}
+
+		func listen_bad1_func angelscript {
+			color red = "1 0 0";
+			node@ n = getNode("test_angelscript.testListener1_func");
+			n.color = red;
+		}
+		func listen1_func angelscript {
+			color green = "0 1 0";
+			node@ n = getNode("test_angelscript.testListener1_func");
+			n.color = green;
+		}
+		func listen_bad2_func angelscript {
+			color red = "1 0 0";
+			node@ n = getNode("test_angelscript.testListener2_func");
+			n.color = red;
+		}
+		func listen3_func angelscript {
+			color green = "0 1 0";
+			node@ n = getNode("test_angelscript.testListener3_func");
+			n.color = green;
+		}
+
+		angelscript {
+			void onRClick() {
+				node@ listen_bad1 = getNode("test_angelscript.buttonTest_func_listener.listen_bad1_func");
+				node@ listen_bad2 = getNode("test_angelscript.buttonTest_func_listener.listen_bad2_func");
+				node@ listen1 = getNode("test_angelscript.buttonTest_func_listener.listen1_func");
+				node@ listen3 = getNode("test_angelscript.buttonTest_func_listener.listen3_func");
+				thisNode.onClick.set(listen_bad1);
+				thisNode.onClick.set(listen1);
+				thisNode.onClick.add(listen_bad2);
+				thisNode.onClick.add(listen3);
+				thisNode.onClick.remove(listen_bad2);
+				thisNode.onClick.remove(listen3);
+				thisNode.onClick.add(listen3);
+				thisNode.onClick.execute();
+			}
+		}
+	}
+
+	func testListener angelscript {
+		node@ n = getNode("test_angelscript.buttonTest_listener");
+		n.onRClick.execute();
+		node@ n2 = getNode("test_angelscript.buttonTest_func_listener");
+		n2.onRClick.execute();
+	}
+
 	// THIS IS NOT ANGELSCRIPT
 	func onInit {
 		call *node:root.testCvar
@@ -428,6 +528,7 @@ window test_angelscript
 		call *node:root.testBuggy2
 		call *node:root.testCase
 		call *node:root.testEventExecute
+		call *node:root.testListener
 	}
 
 }

@@ -229,6 +229,8 @@ uiAction_t* UI_AllocStaticCommandAction(const char *command);
 void UI_InitActions(void);
 void UI_AddListener(struct uiNode_s *node, const value_t *property, const struct uiNode_s *functionNode);
 void UI_RemoveListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
+struct uiAction_s* UI_AllocListener(const struct uiNode_s *functionNode);
+void UI_DeleteListener (struct uiAction_s* functionNode);
 
 const char* UI_GetParam(const uiCallContext_t *context, int paramID);
 int UI_GetParamNumber(const uiCallContext_t *context);

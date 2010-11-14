@@ -761,6 +761,38 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 }
 
 /**
+ * @brief Allocate a structure to execute a function node.
+ * @param functionNode A function node
+ * @return An action
+ */
+uiAction_t* UI_AllocListener (const uiNode_t *functionNode)
+{
+	uiAction_t *action;
+	uiAction_t* value;
+	/* create the call action */
+	action = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), ui_sysPool, 0);
+	value = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), ui_sysPool, 0);
+	value->d.terminal.d1.constString = Mem_PoolStrDup(UI_GetPath(functionNode), ui_sysPool, 0);
+	value->next = NULL;
+	action->type = EA_LISTENER;
+	action->d.nonTerminal.left = value;
+	/** @todo It is a hack, we should remove that */
+	action->d.terminal.d2.constData = &functionNode->onClick;
+	action->next = NULL;
+	return action;
+}
+
+void UI_DeleteListener (uiAction_t* functionNode)
+{
+	uiAction_t* value;
+	assert(functionNode->type == EA_LISTENER);
+	value = functionNode->d.nonTerminal.left;
+	Mem_Free(value->d.terminal.d1.data);
+	Mem_Free(value);
+	Mem_Free(functionNode);
+}
+
+/**
  * @brief Add a callback of a function into a node event. There can be more than on listener.
  * @param[in,out] node The node to add the listener to.
  * @param[in] property The property of the node to add the listener to.
@@ -770,7 +802,6 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
 {
 	uiAction_t *lastAction;
 	uiAction_t *action;
-	uiAction_t *value;
 
 	if (node->dynamic) {
 		Com_Printf("UI_AddListener: '%s' is a dynamic node. We can't listen it.\n", UI_GetPath(node));
@@ -782,15 +813,7 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
 	}
 
 	/* create the call action */
-	action = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), ui_sysPool, 0);
-	value = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), ui_sysPool, 0);
-	value->d.terminal.d1.constString = Mem_PoolStrDup(UI_GetPath(functionNode), ui_sysPool, 0);
-	value->next = NULL;
-	action->type = EA_LISTENER;
-	action->d.nonTerminal.left = value;
-	/** @todo It is a hack, we should remove that */
-	action->d.terminal.d2.constData = &functionNode->onClick;
-	action->next = NULL;
+	action = UI_AllocListener(functionNode);
 
 	/* insert the action */
 	lastAction = *(uiAction_t**)((char*)node + property->ofs);
@@ -868,10 +891,7 @@ void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *funct
 			}
 		}
 		if (tmp) {
-			uiAction_t* value = tmp->d.nonTerminal.left;
-			Mem_Free(value->d.terminal.d1.data);
-			Mem_Free(value);
-			Mem_Free(tmp);
+			UI_DeleteListener(tmp);
 		}
 		else
 			Com_Printf("UI_RemoveListener_f: '%s' into '%s' not found.\n", Cmd_Argv(2), Cmd_Argv(1));
