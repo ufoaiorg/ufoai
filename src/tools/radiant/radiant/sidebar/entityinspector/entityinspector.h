@@ -78,31 +78,31 @@ typedef std::vector<EntityAttribute*> EntityAttributes;
 class EntityInspector: public ModuleObserver
 {
 	private:
-		GtkButton *m_btnRemoveKey;
-		GtkButton *m_btnAddKey;
-		GtkTreeView *m_viewKeyValues;
+		GtkButton *_removeKeyButton;
+		GtkButton *_addKeyButton;
+		GtkTreeView *_keyValuesTreeView;
 
-		GtkTreeView* g_entityClassList;
-		GtkTextView* g_entityClassComment;
+		GtkTreeView* _entityClassTreeView;
+		GtkTextView* _entityClassComment;
 
-		GtkCheckButton* g_entitySpawnflagsCheck[MAX_FLAGS];
+		GtkCheckButton* _entitySpawnflagsCheck[MAX_FLAGS];
 
-		GtkListStore* g_entlist_store;
-		GtkTreeStore* g_entprops_store;
-		const EntityClass* g_current_flags;
-		const EntityClass* g_current_comment;
+		GtkListStore* _entityListStore;
+		GtkTreeStore* _entityPropertiesTreeStore;
+		const EntityClass* _currentFlags;
+		const EntityClass* _currentComment;
 
 		// the number of active spawnflags
-		int g_spawnflag_count;
+		int _spawnflagCount;
 		// table: index, match spawnflag item to the spawnflag index (i.e. which bit)
-		int spawn_table[MAX_FLAGS];
+		int _spawnTable[MAX_FLAGS];
 		// we change the layout depending on how many spawn flags we need to display
 		// the table is a 4x4 in which we need to put the comment box g_entityClassComment and the spawn flags..
-		GtkTable* g_spawnflagsTable;
+		GtkTable* _spawnflagsTable;
 
-		GtkVBox* g_attributeBox;
+		GtkVBox* _attributeBox;
 
-		int g_numNewKeys;
+		int _numNewKeys;
 
 		std::size_t m_unrealised;
 
@@ -128,6 +128,7 @@ class EntityInspector: public ModuleObserver
 		void EntityKeyValueList_fillValueComboWithClassnames (GtkCellRenderer *renderer);
 
 		void entityKeyValueEdited (int columnIndex, char *newValue);
+		std::string SelectedEntity_getValueForKey (const std::string& key);
 
 		// Gtk callbacks
 		static void addKeyValue (GtkButton *button, EntityInspector* entityInspector);
@@ -150,7 +151,7 @@ class EntityInspector: public ModuleObserver
 		static void EntityClassList_selection_changed (GtkTreeSelection* selection, EntityInspector* entityInspector);
 
 	public:
-		EntityAttributes g_entityAttributes;
+		EntityAttributes _entityAttributes;
 
 		EntityInspector ();
 
