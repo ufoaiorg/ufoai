@@ -1,113 +1,57 @@
 #ifndef PROPERTYEDITOR_H_
 #define PROPERTYEDITOR_H_
 
-#include "ientity.h"
-
-#include <map>
+#include <gtk/gtkwidget.h>
 #include <string>
-#include "gtk/gtk.h"
+
+/* FORWARD DECLS */
+class Entity;
+namespace ui {
+class PropertyEditor;
+}
 
 namespace ui {
 
-/* PropertyEditor base class.
- *
- * This class defines the interface for PropertyEditor subclasses which are
- * responsible for presenting a GTK dialog for editing a particular property
- * on an Entity.
+/**
+ * PropertyEditor shared pointer type.
  */
+typedef PropertyEditor* PropertyEditorPtr;
 
+/**
+ * Abstract interface class for PropertyEditor widgets.
+ */
 class PropertyEditor
 {
-	public:
-
-		// Blank ctor for map registration
-		PropertyEditor ();
-
-		// Constructor
-		PropertyEditor (Entity* ent, const std::string& key, const std::string& type);
-
-		// Virtual destructor
-		virtual ~PropertyEditor ();
-
-		// Retrieve the GtkWidget for this PropertyEditor for inclusion into the
-		// EntityInspector dialog.
-		GtkWidget* getWidget ()
-		{
-			return _widget;
-		}
-
-		// Create a new PropertyEditor of the same type as the derived class (for
-		// virtual construction).
-		virtual PropertyEditor* createNew (Entity* entity, const std::string& key, const std::string& options) = 0;
-
-		// Update the contained widgets with the given key value. This function is
-		// always called from the parent PropertyEditor class.
-		virtual void setValue (const std::string&) = 0;
-
-		// Return the keyvalue as currently specified by the contained Gtk widgets.
-		// This function will be called from the parent PropertyEditor class.
-		virtual const std::string getValue () = 0;
-
-		// Non-virtual parent class function to obtain the current value of the key
-		// from the Entity itself, and invoke the child's setValue() function with
-		// the new value. This function exists so that the Gtk widgets can be updated
-		// immediately after construction, which would otherwise require a manual
-		// call to the callbackReset() GTK callback.
-		void refresh ();
-
-	private:
-		// methods
-
-		// Static callbacks for the Apply and Reset buttons. These will eventually
-		// invoke the corresponding virtual functions on the derived class.
-
-		static void callbackApply (GtkWidget*, PropertyEditor*);
-
-#ifdef PROPERTY_EDITOR_HAS_UNDO_BUTTON
-		static void callbackReset(GtkWidget*, PropertyEditor*);
-#endif
-
-		// Static callback for the Key Active checkbox, which enables or disables
-		// the central edit pane.
-		static void callbackActiveToggled (GtkWidget*, PropertyEditor*);
-
-	private:
-		// fields
-
-		// Main widget
-		GtkWidget* _widget;
-
-		// The Entity to edit
-		Entity* _entity;
-
-		// The key we are editing on this Entity
-		const std::string _key;
-
-		// The type of the key we are editing. This is passed up from the derived
-		// class constructor based on the type of the derived class.
-		const std::string _type;
-
-		// The Gtk box containing the apply/reset buttons which are common for all
-		// subclasses.
-		GtkWidget* _applyButtonHbox;
-
-		// The central GtkScrolledWindow where the actual editing takes place
-		GtkWidget* _editWindow;
+		// The quit callback handle
+		guint _quitHandle;
 
 	protected:
+		// The variable that should hold the main widget
+		GtkWidget* _widget;
 
-		// Accessor functions for subclasses.
+	public:
 
-		// Return the apply/reset button box.
-		GtkWidget* getApplyButtonHbox ();
+		/**
+		 * Return the GtkWidget which is packed into the EntityInspector to display
+		 * the PropertyEditor.
+		 */
+		virtual GtkWidget* getWidget ();
 
-		// Return the central edit window
-		GtkWidget* getEditWindow ();
-
-		// Get the key and the Entity
-		const std::string& getKey ();
-		Entity* getEntity ();
-
+		/**
+		 * Clone method for virtual construction. This method must create a new
+		 * PropertyEditor of the same type as the derive class which is implementing
+		 * the method.
+		 *
+		 * @param entity
+		 * The Entity to edit.
+		 *
+		 * @param key
+		 * The key name which this PropertyEditor is displaying.
+		 *
+		 * @param options
+		 * PropertyEditor-specific options string, from the .game file.
+		 */
+		virtual PropertyEditorPtr createNew (Entity* entity, const std::string& key, const std::string& options) = 0;
 };
 
 }

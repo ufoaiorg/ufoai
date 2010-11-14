@@ -79,7 +79,26 @@ static void Eclass_ParseAttribute (EntityClass *e, entityKeyDef_t *keydef)
 		value = keydef->defaultVal;
 	if (keydef->desc)
 		desc = keydef->desc;
-	EntityClassAttribute attribute = EntityClassAttribute(attributeName, _(attributeName.c_str()), mandatory, value, desc);
+	int typeFlag = keydef->flags & ED_KEY_TYPE;
+
+	std::string type = attributeName;
+
+	if (attributeName == "noise")
+		type = "sound";
+	else if (attributeName == "_color" || attributeName == "color")
+		type = "colour";
+	else if (typeFlag & ED_TYPE_FLOAT) {
+		if (keydef->vLen == 3)
+			type = "vector3";
+		else if (keydef->vLen == 1)
+			type = "float";
+	} else if (typeFlag & ED_TYPE_INT) {
+		// integer
+	} else if (typeFlag == 0 || (typeFlag & ED_TYPE_STRING)) {
+		// string
+	}
+
+	EntityClassAttribute attribute = EntityClassAttribute(type, _(attributeName.c_str()), mandatory, value, desc);
 	EntityClass_insertAttribute(*e, attributeName, attribute);
 }
 

@@ -150,13 +150,18 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/AddPropertyDialog.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/BooleanPropertyEditor.cpp \
-	$(RADIANT_BASE)/radiant/sidebar/entityinspector/ClassnamePropertyEditor.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/ColourPropertyEditor.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/EntityInspector.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/EntityPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/FloatPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/ModelPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/ParticlePropertyEditor.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/PropertyEditor.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/PropertyEditorFactory.cpp \
-	$(RADIANT_BASE)/radiant/sidebar/entityinspector/TextPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/SkinChooser.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/SkinPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/SoundPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/SpawnflagsPropertyEditor.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/Vector3PropertyEditor.cpp \
 	\
 	$(RADIANT_BASE)/radiant/sidebar/surfaceinspector/surfaceinspector.cpp \

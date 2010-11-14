@@ -109,6 +109,23 @@ inline const char* EntityClassAttributePair_getDescription (const EntityClassAtt
 	return EntityClassAttributePair_getName(attributePair);
 }
 
+/**
+ * Visitor class for EntityClassAttributes.
+ *
+ * \ingroup eclass
+ */
+struct EntityClassAttributeVisitor {
+	virtual ~EntityClassAttributeVisitor() {}
+
+	/**
+	 * Visit function.
+	 *
+	 * @param attr
+	 * The current EntityClassAttribute to visit.
+	 */
+	virtual void visit(const EntityClassAttribute&) = 0;
+};
+
 class EntityClass
 {
 	public:
@@ -151,6 +168,31 @@ class EntityClass
 		}
 
 		/**
+		 * Enumerate the EntityClassAttibutes in turn.
+		 *
+		 * @param visitor
+		 * An EntityClassAttributeVisitor instance.
+		 */
+		void forEachClassAttribute (EntityClassAttributeVisitor& visitor) const
+		{
+			for (EntityClassAttributes::const_iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
+				// Visit if it is a non-editor key or we are visiting all keys
+				visitor.visit(i->second);
+			}
+		}
+
+		bool isMandatory (const std::string& attributeName) const
+		{
+			for (EntityClassAttributes::const_iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
+				if (attributeName == i->first) {
+					const EntityClassAttribute& attr = i->second;
+					return attr.m_mandatory;
+				}
+			}
+			return false;
+		}
+
+		/**
 		 * @brief Get the attribute definition for a given attribute name
 		 * @param attributeName the attribute to retrieve
 		 * @return attribute or @c NULL
@@ -176,8 +218,7 @@ class EntityClass
 			//use value if it is set to something
 			if (attrib && attrib->m_value.length() > 0)
 				return attrib->m_value;
-			// TODO retrieve some default value from entity definition instead of that empty value
-			return "";
+			return "-";
 		}
 };
 

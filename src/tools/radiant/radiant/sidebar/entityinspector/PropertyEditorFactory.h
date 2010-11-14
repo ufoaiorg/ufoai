@@ -2,13 +2,12 @@
 #define PROPERTYEDITORFACTORY_H_
 
 #include "PropertyEditor.h"
-#include "ientity.h"
-
-#include "gtkutil/dialog.h"
 
 #include <map>
 #include <string>
-#include <iostream>
+
+/* FORWARD DECLS */
+class Entity;
 
 namespace ui {
 
@@ -20,18 +19,19 @@ namespace ui {
 
 class PropertyEditorFactory
 {
-
 		// Mapping from classnames to PropertyEditor child instances. The child
 		// instance's createNew() function will be used to create a new object of
 		// the correct type.
-		typedef std::map<const std::string, PropertyEditor*> PropertyEditorMap;
+		typedef std::map<std::string, PropertyEditorPtr> PropertyEditorMap;
 		static PropertyEditorMap _peMap;
 
 	public:
 
+		~PropertyEditorFactory();
+
 		// Create a new PropertyEditor with the provided classname to manage the
 		// given Entity object and key name.
-		static PropertyEditor* create (const std::string& className, Entity* entity, const std::string& key,
+		static PropertyEditorPtr create (const std::string& className, Entity* entity, const std::string& key,
 				const std::string& options);
 
 		// Register the classes
@@ -39,8 +39,7 @@ class PropertyEditorFactory
 
 		// Return the GdkPixbuf that corresponds to the provided PropertyEditor
 		// type.
-		static GdkPixbuf* getPixbufFor (std::string type);
-
+		static GdkPixbuf* getPixbufFor (const std::string& type);
 };
 
 }

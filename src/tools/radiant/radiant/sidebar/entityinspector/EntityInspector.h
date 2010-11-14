@@ -3,10 +3,14 @@
 
 #include "PropertyEditor.h"
 
+#include "iselection.h"
+#include "gtkutil/idledraw.h"
+
 #include <gtk/gtkliststore.h>
 #include <gtk/gtkwidget.h>
-
-#include "gtkutil/idledraw.h"
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtktogglebutton.h>
+#include <map>
 
 /* FORWARD DECLS */
 
@@ -35,7 +39,7 @@ typedef std::map<std::string, PropertyParms> PropertyParmMap;
  * contains a method to return the current instance.
  */
 
-class EntityInspector
+class EntityInspector: public SelectionSystem::Observer
 {
 	private:
 
@@ -62,11 +66,14 @@ class EntityInspector
 		GtkWidget* _delKeyMenuItem;
 
 		// Currently displayed PropertyEditor
-		PropertyEditor* _currentPropertyEditor;
+		PropertyEditorPtr _currentPropertyEditor;
 
 		// GtkUtil IdleDraw class. This allows redraw calls to be scheduled for
 		// when GTK is idle.
 		IdleDraw _idleDraw;
+
+		// The last selected key
+		std::string _lastKey;
 
 	private:
 
@@ -84,8 +91,7 @@ class EntityInspector
 
 		static void callbackTreeSelectionChanged (GtkWidget* widget, EntityInspector* self);
 
-		static void _onKeyEntryActivate (GtkWidget*, EntityInspector*);
-		static void _onValEntryActivate (GtkWidget*, EntityInspector*);
+		static void _onEntryActivate (GtkWidget*, EntityInspector*);
 		static void _onSetProperty (GtkWidget*, EntityInspector*);
 
 		static bool _onPopupMenu (GtkWidget*, GdkEventButton*, EntityInspector*);
@@ -128,14 +134,12 @@ class EntityInspector
 		// and a queueDraw request has been passed.
 		void callbackRedraw ();
 
-		// Static class function to instigate a redraw. This is passed as a pointer
-		// to the GlobalEntityCreator's setKeyValueChangedFunc function.
-		static void redrawInstance ();
+		// Callback used by the EntityCreator when a key value changes on an entity
+		static void keyValueChanged ();
 
-		// Function to call when the current Selection is changed by the selection
-		// system. Internally this function will just stimulate a redraw, but it
-		// must take a reference to the Selectable object.
-		static void selectionChanged (const Selectable&);
+		/** greebo: Gets called by the RadiantSelectionSystem upon selection change.
+		 */
+		void selectionChanged ();
 
 };
 

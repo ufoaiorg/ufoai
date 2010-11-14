@@ -6,6 +6,8 @@
 #include <gtk/gtktreestore.h>
 #include <gtk/gtktreeselection.h>
 
+#include "eclasslib.h"
+
 #include <string>
 
 namespace ui {
@@ -26,14 +28,21 @@ class AddPropertyDialog
 		GtkWidget* _treeView;
 		GtkTreeSelection* _selection;
 
+		// Text view for displaying usage info
+		GtkWidget* _usageTextView;
+
 		// The selected property
 		std::string _selectedProperty;
+
+		// EntityClass to query for def-defined custom keyvals
+		const EntityClass* _eclass;
 
 	private:
 
 		// Create GUI components
 		GtkWidget* createTreeView ();
 		GtkWidget* createButtonsPanel ();
+		GtkWidget* createUsagePanel ();
 
 		// Populate tree view with properties
 		void populateTreeView ();
@@ -45,27 +54,25 @@ class AddPropertyDialog
 		static void _onCancel (GtkWidget*, AddPropertyDialog*);
 		static void _onSelectionChanged (GtkWidget*, AddPropertyDialog*);
 
+		/* Private constructor creates the dialog widgets. Accepts an EntityClass
+		 * to use for populating class-specific keys.
+		 */
+		AddPropertyDialog (const EntityClass* eclass);
+
 	public:
 
-		/** Constructor creates the dialog widgets.
-		 */
-		AddPropertyDialog ();
-
-		/** Static method to display an AddPropertyDialog and return the
-		 * chosen property.
+		/**
+		 * Static method to display an AddPropertyDialog and return the chosen
+		 * property.
+		 *
+		 * @param eclass
+		 * The IEntityClass to be queried for custom properties (those defined in a
+		 * DEF file).
 		 *
 		 * @returns
 		 * String name of the chosen property (e.g. "light_radius").
 		 */
-		static std::string chooseProperty ();
-
-		/** Show this AddPropertyDialog and block in a gtk_main loop until
-		 * a selection is made.
-		 *
-		 * @returns
-		 * The string property that was selected.
-		 */
-		const std::string& showAndBlock ();
+		static std::string chooseProperty (const EntityClass* eclass);
 };
 
 }

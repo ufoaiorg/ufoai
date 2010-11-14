@@ -13,12 +13,24 @@ namespace ui {
 
 class Vector3PropertyEditor: public PropertyEditor
 {
-	private:
-
 		// The 3 component fields.
 		GtkWidget* _xValue;
 		GtkWidget* _yValue;
 		GtkWidget* _zValue;
+
+		// Entity to edit
+		Entity* _entity;
+
+		// Name of key
+		std::string _key;
+
+	private:
+
+		// Set the spinbox contents from the keyvalue
+		void setWidgetsFromKey (const std::string& value);
+
+		/* GTK CALLBACKS */
+		static void _onApply (GtkWidget*, Vector3PropertyEditor*);
 
 	public:
 
@@ -29,13 +41,10 @@ class Vector3PropertyEditor: public PropertyEditor
 		Vector3PropertyEditor ();
 
 		// Create a new TextPropertyEditor
-		virtual PropertyEditor* createNew (Entity* entity, const std::string& name, const std::string& options)
+		virtual PropertyEditorPtr createNew (Entity* entity, const std::string& name, const std::string& options)
 		{
-			return new Vector3PropertyEditor(entity, name);
+			return PropertyEditorPtr(new Vector3PropertyEditor(entity, name));
 		}
-
-		virtual void setValue (const std::string&);
-		virtual const std::string getValue ();
 
 };
 

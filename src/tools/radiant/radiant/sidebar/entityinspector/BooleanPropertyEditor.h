@@ -12,10 +12,11 @@ namespace ui {
 
 class BooleanPropertyEditor: public PropertyEditor
 {
-	private:
-
 		// The checkbox
 		GtkWidget* _checkBox;
+
+		// Entity to edit
+		Entity* _entity;
 
 	public:
 
@@ -25,16 +26,11 @@ class BooleanPropertyEditor: public PropertyEditor
 		// Construct a blank BooleanPropertyEditor for use in the PropertyEditorFactory
 		BooleanPropertyEditor ();
 
-		virtual ~BooleanPropertyEditor ();
-
 		// Create a new BooleanPropertyEditor
-		virtual PropertyEditor* createNew (Entity* entity, const std::string& name, const std::string& options)
+		virtual PropertyEditorPtr createNew (Entity* entity, const std::string& name, const std::string& options)
 		{
 			return new BooleanPropertyEditor(entity, name);
 		}
-
-		virtual void setValue (const std::string&);
-		virtual const std::string getValue ();
 };
 
 }
