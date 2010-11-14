@@ -38,16 +38,6 @@ EntityList::EntityList () :
 }
 
 namespace {
-inline Nameable* Node_getNameable (scene::Node& node)
-{
-	return dynamic_cast<Nameable*>(&node);
-}
-
-const std::string node_get_name (scene::Node& node)
-{
-	Nameable* nameable = Node_getNameable(node);
-	return (nameable != 0) ? nameable->name() : "node";
-}
 
 void cellDataFunc (GtkTreeViewColumn* column, GtkCellRenderer* renderer, GtkTreeModel* model, GtkTreeIter* iter,
 		gpointer data)
@@ -60,7 +50,7 @@ void cellDataFunc (GtkTreeViewColumn* column, GtkCellRenderer* renderer, GtkTree
 
 	if (node != NULL) {
 		gtk_cell_renderer_set_fixed_size(renderer, -1, -1);
-		std::string name = getNodeName(*node);
+		std::string name = node_get_name(*node);
 		g_object_set(G_OBJECT(renderer), "text", name.c_str(), "visible", TRUE, NULL);
 
 		GtkWidget* treeView = reinterpret_cast<GtkWidget*> (data);
