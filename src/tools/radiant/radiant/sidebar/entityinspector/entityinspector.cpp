@@ -46,8 +46,6 @@
 #include "convert.h"
 #include "stringio.h"
 #include "string/string.h"
-#include "../../ui/modelselector/ModelSelector.h"
-#include "../../ui/common/SoundChooser.h"
 
 #include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"
@@ -518,7 +516,8 @@ class EntityInspectorDraw
 
 			_entityInspector.updateKeyValueList();
 
-			for (EntityAttributes::const_iterator i = _entityInspector._entityAttributes.begin(); i != _entityInspector._entityAttributes.end(); ++i) {
+			for (EntityAttributes::const_iterator i = _entityInspector._entityAttributes.begin(); i
+					!= _entityInspector._entityAttributes.end(); ++i) {
 				(*i)->update();
 			}
 		}
@@ -527,7 +526,8 @@ class EntityInspectorDraw
 
 		// Constructor
 		EntityInspectorDraw (EntityInspector& entityInspector) :
-			m_idleDraw(MemberCaller<EntityInspectorDraw, &EntityInspectorDraw::updateGuiElements> (*this)), _entityInspector(entityInspector)
+			m_idleDraw(MemberCaller<EntityInspectorDraw, &EntityInspectorDraw::updateGuiElements> (*this)),
+					_entityInspector(entityInspector)
 		{
 		}
 		void queueDraw ()
@@ -807,7 +807,8 @@ void EntityInspector::entityKeyEditCanceled (GtkCellRendererText *renderer, Enti
  * @brief Callback for selection changed in entity key value list used to enable/disable buttons
  * @param selection current selection
  */
-void EntityInspector::EntityKeyValueList_selection_changed (GtkTreeSelection* selection, EntityInspector* entityInspector)
+void EntityInspector::EntityKeyValueList_selection_changed (GtkTreeSelection* selection,
+		EntityInspector* entityInspector)
 {
 	if (gtk_tree_selection_count_selected_rows(selection) == 0) {
 		gtk_widget_set_sensitive(GTK_WIDGET(entityInspector->_removeKeyButton), FALSE);
@@ -995,8 +996,8 @@ GtkWidget* EntityInspector::constructNotebookTab ()
 				GtkTreeView * view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
 				gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
 				gtk_tree_view_set_headers_visible(view, FALSE);
-				g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(EntityClassList_button_press), 0);
-				g_signal_connect(G_OBJECT(view), "key_press_event", G_CALLBACK(EntityClassList_keypress), 0);
+				g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(EntityClassList_button_press), this);
+				g_signal_connect(G_OBJECT(view), "key_press_event", G_CALLBACK(EntityClassList_keypress), this);
 
 				{
 					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
@@ -1007,7 +1008,7 @@ GtkWidget* EntityInspector::constructNotebookTab ()
 
 				{
 					GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
-					g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityClassList_selection_changed), 0);
+					g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityClassList_selection_changed), this);
 				}
 
 				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
@@ -1087,7 +1088,7 @@ GtkWidget* EntityInspector::constructNotebookTab ()
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, "has-entry", FALSE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), this);
 				g_signal_connect(G_OBJECT(renderer), "editing-canceled", G_CALLBACK(entityKeyEditCanceled),
-						(gpointer) view);
+						this);
 				g_signal_connect(G_OBJECT(renderer), "editing-started",
 						G_CALLBACK(EntityKeyValueList_keyEditingStarted), this);
 			}
@@ -1106,7 +1107,7 @@ GtkWidget* EntityInspector::constructNotebookTab ()
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), this);
 				g_signal_connect(G_OBJECT(renderer), "editing-started", G_CALLBACK(
-								EntityKeyValueList_valueEditingStarted), (gpointer) view);
+								EntityKeyValueList_valueEditingStarted), this);
 			}
 
 			{
@@ -1147,7 +1148,8 @@ GtkWidget* EntityInspector::constructNotebookTab ()
 
 	EntityClassList_fill();
 
-	GlobalSelectionSystem().addSelectionChangeCallback(MemberCaller1<EntityInspector, const Selectable&, &EntityInspector::selectionChanged>(*this));
+	GlobalSelectionSystem().addSelectionChangeCallback(MemberCaller1<EntityInspector, const Selectable&,
+			&EntityInspector::selectionChanged> (*this));
 	GlobalEntityCreator().setKeyValueChangedFunc(keyValueChanged);
 
 	return pageframe;
@@ -1170,7 +1172,8 @@ void EntityInspector::unrealise ()
 	}
 }
 
-EntityInspector& GlobalEntityInspector() {
+EntityInspector& GlobalEntityInspector ()
+{
 	static EntityInspector _entityInspector;
 	return _entityInspector;
 }

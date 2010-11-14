@@ -1,6 +1,7 @@
 #ifndef MODELATTRIBUTE_H_
 #define MODELATTRIBUTE_H_
 
+#include "../../ui/modelselector/ModelSelector.h"
 #include "gtkutil/IConv.h"
 
 class ModelAttribute: public EntityAttribute

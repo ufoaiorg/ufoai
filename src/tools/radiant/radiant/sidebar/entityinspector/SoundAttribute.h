@@ -1,6 +1,7 @@
 #ifndef SOUNDATTRIBUTE_H_
 #define SOUNDATTRIBUTE_H_
 
+#include "../../ui/common/SoundChooser.h"
 #include "gtkutil/IConv.h"
 
 class SoundAttribute: public EntityAttribute
