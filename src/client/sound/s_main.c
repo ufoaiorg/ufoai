@@ -336,3 +336,12 @@ s_sample_t *S_LoadSample (const char *soundFile)
 	int sampleIdx = S_LoadSampleIdx(soundFile);
 	return S_GetSample(sampleIdx);
 }
+
+/**
+ * @brief Controls the repeat rate for the same sample.
+ * @param[in] sampleRepeatRate milliseconds that must have passed to play the same sample again
+ */
+void S_SetSampleRepeatRate (int sampleRepeatRate)
+{
+	s_env.sampleRepeatRate = sampleRepeatRate;
+}

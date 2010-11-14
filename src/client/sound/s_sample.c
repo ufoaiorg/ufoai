@@ -41,15 +41,6 @@ static int sampleIndexLast = 0;
 s_sample_t *stdSoundPool[MAX_SOUNDIDS];
 
 /**
- * @brief Controls the repeat rate for the same sample.
- * @param[in] sampleRepeatRate milliseconds that must have passed to play the same sample again
- */
-void S_SetSampleRepeatRate (int sampleRepeatRate)
-{
-	s_env.sampleRepeatRate = sampleRepeatRate;
-}
-
-/**
  * @brief Searches the hash for a given sound file
  * @param name The soundfile (relative to the sound dir and without extension)
  * @return @c NULL if not yet loaded
