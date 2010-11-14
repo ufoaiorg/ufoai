@@ -42,4 +42,6 @@ namespace scene
 void graph_tree_model_insert (GraphTreeModel* model, const scene::Instance& instance);
 void graph_tree_model_erase (GraphTreeModel* model, const scene::Instance& instance);
 
+GraphTreeModel* scene_graph_get_tree_model (); // temp hack;
+
 #endif

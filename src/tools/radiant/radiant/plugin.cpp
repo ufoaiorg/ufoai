@@ -261,7 +261,6 @@ class Radiant: public TypeSystemRef
 			VFS_Construct();
 			GLWindow_Construct();
 			GlobalMap().Construct();
-			EntityList_Construct();
 			sidebar::MapInfo_Construct();
 			MainFrame_Construct();
 			GlobalSurfaceInspector().registerCommands();
@@ -299,7 +298,6 @@ class Radiant: public TypeSystemRef
 			GlobalCamera().destroy();
 			GlobalXYWnd().destroy();
 			MainFrame_Destroy();
-			EntityList_Destroy();
 			sidebar::MapInfo_Destroy();
 			GlobalMap().Destroy();
 			GLWindow_Destroy();

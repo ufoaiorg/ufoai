@@ -42,7 +42,7 @@
 #include "os/file.h"
 #include "stream/stringstream.h"
 #include "stringio.h"
-#include "sidebar/entitylist.h"
+#include "sidebar/entitylist/EntityList.h"
 
 #include "gtkutil/filechooser.h"
 #include "gtkutil/idledraw.h"

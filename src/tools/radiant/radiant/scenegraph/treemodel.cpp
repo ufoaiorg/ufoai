@@ -483,8 +483,6 @@ void node_detach_name_changed_callback (scene::Node& node, const NameCallback& c
 	}
 }
 
-GraphTreeModel* scene_graph_get_tree_model (); // temp hack
-
 void graph_tree_node_foreach_pre (GraphTreeNode::iterator root, const Callback1<GraphTreeNode::iterator>& callback)
 {
 	callback(root);

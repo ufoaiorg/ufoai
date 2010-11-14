@@ -71,7 +71,6 @@ class Map: public ModuleObserver
 		void renameAbsolute (const std::string& absolute);
 		void focusOnStartPosition ();
 		Entity* findPlayerStart ();
-		void FocusViews (const Vector3& point, float angle);
 
 		const std::string selectMapFile (const std::string& title, bool open);
 
@@ -166,6 +165,8 @@ class Map: public ModuleObserver
 		scene::Node* getWorldspawn ();
 		void setWorldspawn (scene::Node* node);
 		scene::Node* findWorldspawn ();
+
+		void FocusViews (const Vector3& point, float angle);
 
 		bool isModified ();
 		void setModified (bool modified);
