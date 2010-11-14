@@ -2,6 +2,7 @@
 #define PARTICLEATTRIBUTE_H_
 
 #include "../../ui/particles/ParticleSelector.h"
+#include "gtkutil/IConv.h"
 
 class ParticleAttribute: public EntityAttribute
 {
@@ -23,9 +24,8 @@ class ParticleAttribute: public EntityAttribute
 		}
 		void apply (void)
 		{
-			StringOutputStream value(64);
-			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			entitySetValue(m_classname, m_key, value.c_str());
+			std::string value = gtkutil::IConv::localeFromUTF8(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
+			entitySetValue(m_classname, m_key, value);
 		}
 		typedef MemberCaller<ParticleAttribute, &ParticleAttribute::apply> ApplyCaller;
 		void update (void)

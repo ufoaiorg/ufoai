@@ -1,6 +1,8 @@
 #ifndef MODELATTRIBUTE_H_
 #define MODELATTRIBUTE_H_
 
+#include "gtkutil/IConv.h"
+
 class ModelAttribute: public EntityAttribute
 {
 		std::string m_classname;
@@ -21,9 +23,8 @@ class ModelAttribute: public EntityAttribute
 		}
 		void apply (void)
 		{
-			StringOutputStream value(64);
-			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			entitySetValue(m_classname, m_key, value.c_str());
+			std::string value = gtkutil::IConv::localeFromUTF8(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
+			entitySetValue(m_classname, m_key, value);
 		}
 		typedef MemberCaller<ModelAttribute, &ModelAttribute::apply> ApplyCaller;
 		void update (void)

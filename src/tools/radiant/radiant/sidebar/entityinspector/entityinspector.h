@@ -119,7 +119,7 @@ class EntityInspector: public ModuleObserver
 
 		void checkAddNewKeys ();
 
-		const char* getTooltipForKey (const std::string& key);
+		std::string getTooltipForKey (const std::string& key);
 		static void keyValueChanged ();
 		void selectionChanged (const Selectable&);
 
@@ -127,7 +127,7 @@ class EntityInspector: public ModuleObserver
 
 		void EntityKeyValueList_fillValueComboWithClassnames (GtkCellRenderer *renderer);
 
-		void entityKeyValueEdited (int columnIndex, char *newValue);
+		void entityKeyValueEdited (bool isValueEdited, const std::string& newValue);
 		std::string SelectedEntity_getValueForKey (const std::string& key);
 
 		// Gtk callbacks

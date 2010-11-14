@@ -1,6 +1,8 @@
 #ifndef SOUNDATTRIBUTE_H_
 #define SOUNDATTRIBUTE_H_
 
+#include "gtkutil/IConv.h"
+
 class SoundAttribute: public EntityAttribute
 {
 		std::string m_classname;
@@ -21,9 +23,8 @@ class SoundAttribute: public EntityAttribute
 		}
 		void apply (void)
 		{
-			StringOutputStream value(64);
-			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			entitySetValue(m_classname, m_key, value.c_str());
+			std::string value = gtkutil::IConv::localeFromUTF8(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
+			entitySetValue(m_classname, m_key, value);
 		}
 		typedef MemberCaller<SoundAttribute, &SoundAttribute::apply> ApplyCaller;
 		void update (void)

@@ -217,8 +217,8 @@ class ConvertUTF8ToLocale
 {
 	public:
 		StringRange m_range;
-		ConvertUTF8ToLocale (const char* string) :
-			m_range(StringRange(string, string + strlen(string)))
+		ConvertUTF8ToLocale (const std::string& string) :
+			m_range(StringRange(string.c_str(), string.c_str() + string.length()))
 		{
 		}
 		ConvertUTF8ToLocale (const StringRange& range) :

@@ -57,6 +57,7 @@
 #include "gtkutil/entry.h"
 #include "gtkutil/container.h"
 #include "gtkutil/TreeModel.h"
+#include "gtkutil/IConv.h"
 
 #include "../../qe3.h"
 #include "../../gtkmisc.h"
@@ -422,7 +423,7 @@ void EntityInspector::setEntityClass (EntityClass *eclass)
 			EntityAttribute* attribute = GlobalEntityAttributeFactory::instance().create(i->second.m_type, i->first);
 			if (attribute != 0) {
 				_entityAttributes.push_back(attribute);
-				EntityInspector::appendAttribute(EntityClassAttributePair_getName(*i), *_entityAttributes.back());
+				appendAttribute(EntityClassAttributePair_getName(*i), *_entityAttributes.back());
 			}
 		}
 	}
@@ -430,8 +431,6 @@ void EntityInspector::setEntityClass (EntityClass *eclass)
 
 /**
  * @brief This method updates active state of spawnflag buttons based on current selected value
- * @sa SurfaceFlags_setEntityClass
- * @sa EntityInspector::updateGuiElements
  */
 void EntityInspector::updateSpawnflags ()
 {
@@ -449,18 +448,17 @@ void EntityInspector::updateSpawnflags ()
 	}
 }
 
-const char* EntityInspector::getTooltipForKey (const std::string& key)
+std::string EntityInspector::getTooltipForKey (const std::string& key)
 {
 	EntityClassAttribute *attrib = g_current_attributes->getAttribute(key);
 	if (attrib != NULL)
-		return attrib->m_description.c_str();
+		return attrib->m_description;
 	else
-		return NULL;
+		return "";
 }
 
 /**
  * @brief This method updates key value list for current selected entities.
- * @sa EntityInspector::updateGuiElements
  */
 void EntityInspector::updateKeyValueList ()
 {
@@ -484,12 +482,12 @@ void EntityInspector::updateKeyValueList ()
 			std::string value = *values.begin();
 			gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, key.c_str(), KEYVALLIST_COLUMN_VALUE,
 					value.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE,
-					KEYVALLIST_COLUMN_TOOLTIP, EntityInspector::getTooltipForKey(key), -1);
+					KEYVALLIST_COLUMN_TOOLTIP, getTooltipForKey(key).c_str(), -1);
 		}
 	}
 	//set all elements expanded
 	gtk_tree_view_expand_all(_keyValuesTreeView);
-	EntityInspector::checkAddNewKeys();
+	checkAddNewKeys();
 }
 
 // Entity Inspector redraw functor
@@ -694,51 +692,46 @@ void EntityInspector::SpawnflagCheck_toggled (GtkWidget *widget, EntityInspector
 	}
 }
 
-void EntityInspector::entityKeyValueEdited (int columnIndex, char *newValue)
+void EntityInspector::entityKeyValueEdited (bool isValueEdited, const std::string& newValue)
 {
-	char *key, *value, *classname, *oldvalue;
+	std::string key, value;
+	std::string classname, oldvalue;
 	bool isClassname = false;
 	GtkTreeModel* model;
 	GtkTreeIter iter, parent;
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(_keyValuesTreeView);
 
-	if (!newValue)
+	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE)
 		return;
 
-	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE) {
-		g_warning("No entity parameter selected to change the value for\n");
-		return;
-	}
-
-	if (columnIndex == 1) {
-		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &key, KEYVALLIST_COLUMN_VALUE, &oldvalue, -1);
+	if (isValueEdited) {
+		key = gtkutil::TreeModel::getString(model, &iter, KEYVALLIST_COLUMN_KEY);
+		oldvalue = gtkutil::TreeModel::getString(model, &iter, KEYVALLIST_COLUMN_VALUE);
 		value = newValue;
 	} else {
-		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &oldvalue, KEYVALLIST_COLUMN_VALUE, &value, -1);
+		oldvalue = gtkutil::TreeModel::getString(model, &iter, KEYVALLIST_COLUMN_KEY);
+		value = gtkutil::TreeModel::getString(model, &iter, KEYVALLIST_COLUMN_VALUE);
 		key = newValue;
 	}
-	if (std::string(oldvalue) == std::string(newValue)) {
-		g_debug("Old and new value are the same, aborting edit.");
+
+	if (oldvalue == newValue)
 		return;
-	}
+
 	if (gtk_tree_model_iter_parent(model, &parent, &iter) == FALSE) {
-		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_VALUE, &classname, -1);
+		classname = gtkutil::TreeModel::getString(model, &iter, KEYVALLIST_COLUMN_VALUE);
 		isClassname = true;
 	} else {
-		gtk_tree_model_get(model, &parent, KEYVALLIST_COLUMN_VALUE, &classname, -1);
+		classname = gtkutil::TreeModel::getString(model, &parent, KEYVALLIST_COLUMN_VALUE);
 	}
 
 	// Get current selection text
-	StringOutputStream keyConverted(64);
-	keyConverted << ConvertUTF8ToLocale(key);
-	StringOutputStream valueConverted(64);
-	valueConverted << ConvertUTF8ToLocale(value);
-	StringOutputStream classnameConverted(64);
-	classnameConverted << ConvertUTF8ToLocale(classname);
+	std::string keyConverted = gtkutil::IConv::localeFromUTF8(key);
+	std::string valueConverted = gtkutil::IConv::localeFromUTF8(value);
+	std::string classnameConverted = gtkutil::IConv::localeFromUTF8(classname);
 
 	// if you change the classname to worldspawn you won't merge back in the structural
 	// brushes but create a parasite entity
-	if (isClassname && valueConverted.toString() == "worldspawn") {
+	if (isClassname && valueConverted == "worldspawn") {
 		gtkutil::errorDialog(_("Cannot change \"classname\" key back to worldspawn."));
 		return;
 	}
@@ -750,13 +743,13 @@ void EntityInspector::entityKeyValueEdited (int columnIndex, char *newValue)
 	}
 
 	//instead of updating key/values right now, try to get default value and edit it before setting final values
-	if (columnIndex == 0 && !keyConverted.empty()) {
+	if (!isValueEdited && !keyConverted.empty()) {
 		if (valueConverted.empty())
-			valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.toString());
+			valueConverted = g_current_attributes->getDefaultForAttribute(keyConverted);
 		gtk_tree_store_set(GTK_TREE_STORE(model), &iter, KEYVALLIST_COLUMN_KEY, keyConverted.c_str(),
-				KEYVALLIST_COLUMN_VALUE, valueConverted.c_str(), KEYVALLIST_COLUMN_TOOLTIP,
-				EntityInspector::getTooltipForKey(keyConverted.toString()), -1);
-		g_currentSelectedKey = keyConverted.toString();
+				KEYVALLIST_COLUMN_VALUE, valueConverted.c_str(), KEYVALLIST_COLUMN_TOOLTIP, getTooltipForKey(
+						keyConverted).c_str(), -1);
+		g_currentSelectedKey = keyConverted;
 		GtkTreePath* currentPath = gtk_tree_model_get_path(model, &iter);
 		GtkTreeViewColumn *column = gtk_tree_view_get_column(_keyValuesTreeView, KEYVALLIST_COLUMN_VALUE);
 		gtk_tree_view_set_cursor(_keyValuesTreeView, currentPath, column, true);
@@ -765,16 +758,14 @@ void EntityInspector::entityKeyValueEdited (int columnIndex, char *newValue)
 	}
 
 	if (isClassname) {
-		std::string command = "entitySetClass -class " + classnameConverted.toString() + " -newclass "
-				+ valueConverted.toString();
+		std::string command = "entitySetClass -class " + classnameConverted + " -newclass " + valueConverted;
 		UndoableCommand undo(command);
-		Scene_EntitySetClassname_Selected(classnameConverted.toString(), valueConverted.toString());
+		Scene_EntitySetClassname_Selected(classnameConverted, valueConverted);
 	} else {
-		std::string command = "entitySetKeyValue -classname \"" + classnameConverted.toString() + "\" -key \""
-				+ keyConverted.toString() + "\" -value \"" + valueConverted.toString() + "\"";
+		std::string command = "entitySetKeyValue -classname \"" + classnameConverted + "\" -key \"" + keyConverted
+				+ "\" -value \"" + valueConverted + "\"";
 		UndoableCommand undo(command);
-		Scene_EntitySetKeyValue_Selected(classnameConverted.toString(), keyConverted.toString(),
-				valueConverted.toString());
+		Scene_EntitySetKeyValue_Selected(classnameConverted, keyConverted, valueConverted);
 	}
 	gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 }
@@ -782,13 +773,13 @@ void EntityInspector::entityKeyValueEdited (int columnIndex, char *newValue)
 void EntityInspector::entityValueEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text,
 		EntityInspector *entityInspector)
 {
-	entityInspector->entityKeyValueEdited(1, new_text);
+	entityInspector->entityKeyValueEdited(true, new_text);
 }
 
 void EntityInspector::entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text,
 		EntityInspector *entityInspector)
 {
-	entityInspector->entityKeyValueEdited(0, new_text);
+	entityInspector->entityKeyValueEdited(false, new_text);
 }
 
 /**
@@ -801,8 +792,7 @@ void EntityInspector::entityKeyEditCanceled (GtkCellRendererText *renderer, Enti
 	char *oldKey;
 
 	g_object_get(G_OBJECT(renderer), "text", &oldKey, (char*) 0);
-	StringOutputStream keyConverted(64);
-	keyConverted << ConvertUTF8ToLocale(oldKey);
+	std::string keyConverted = gtkutil::IConv::localeFromUTF8(oldKey);
 	if (keyConverted.empty()) {
 		GtkTreeModel* model;
 		GtkTreeIter iter;
@@ -1158,7 +1148,7 @@ GtkWidget* EntityInspector::constructNotebookTab ()
 	EntityClassList_fill();
 
 	GlobalSelectionSystem().addSelectionChangeCallback(MemberCaller1<EntityInspector, const Selectable&, &EntityInspector::selectionChanged>(*this));
-	GlobalEntityCreator().setKeyValueChangedFunc(EntityInspector::keyValueChanged);
+	GlobalEntityCreator().setKeyValueChangedFunc(keyValueChanged);
 
 	return pageframe;
 }
@@ -1204,5 +1194,5 @@ void EntityInspector::keyValueChanged ()
 
 void EntityInspector::selectionChanged (const Selectable&)
 {
-	EntityInspector::keyValueChanged();
+	keyValueChanged();
 }

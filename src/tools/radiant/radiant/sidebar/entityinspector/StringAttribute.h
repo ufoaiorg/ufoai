@@ -2,6 +2,7 @@
 #define STRINGATTRIBUTE_H_
 
 #include "gtkutil/widget.h"
+#include "gtkutil/IConv.h"
 
 /**
  * brief The StringAttribute is used for editing simple strink keyvals
@@ -36,9 +37,8 @@ class StringAttribute: public EntityAttribute
 
 		void apply (void)
 		{
-			StringOutputStream value(64);
-			value << ConvertUTF8ToLocale(gtk_entry_get_text(m_entry));
-			entitySetValue(m_classname, m_key, value.toString());
+			std::string value = gtkutil::IConv::localeFromUTF8(gtk_entry_get_text(getEntry()));
+			entitySetValue(m_classname, m_key, value);
 		}
 		typedef MemberCaller<StringAttribute, &StringAttribute::apply> ApplyCaller;
 
