@@ -87,6 +87,8 @@ static void Eclass_ParseAttribute (EntityClass *e, entityKeyDef_t *keydef)
 		type = "sound";
 	else if (attributeName == "_color" || attributeName == "color")
 		type = "colour";
+	else if (attributeName == "target")
+		type = "entity";
 	else if (typeFlag & ED_TYPE_FLOAT) {
 		if (keydef->vLen == 3)
 			type = "vector3";
