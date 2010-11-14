@@ -148,7 +148,16 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSetManager.cpp \
 	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSetToolmenu.cpp \
 	\
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/AddPropertyDialog.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/BooleanPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/ClassnamePropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/ColourPropertyEditor.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/EntityInspector.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/EntityPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/PropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/PropertyEditorFactory.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/TextPropertyEditor.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entityinspector/Vector3PropertyEditor.cpp \
 	\
 	$(RADIANT_BASE)/radiant/sidebar/surfaceinspector/surfaceinspector.cpp \
 	\

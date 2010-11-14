@@ -94,7 +94,7 @@ void Sidebar::constructEntityInspector ()
 	gtk_container_add(GTK_CONTAINER(vbox), pageEntityList);
 
 	// entity inspector
-	GtkWidget *pageEntityInspector = GlobalEntityInspector().constructNotebookTab();
+	GtkWidget *pageEntityInspector = EntityInspector::getInstance().getWidget();
 	gtk_container_add(GTK_CONTAINER(vbox), pageEntityInspector);
 
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));

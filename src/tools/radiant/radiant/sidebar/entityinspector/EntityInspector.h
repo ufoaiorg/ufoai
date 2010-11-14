@@ -1,175 +1,144 @@
-/*
- Copyright (C) 1999-2006 Id Software, Inc. and contributors.
- For a list of contributors, see the accompanying CONTRIBUTORS file.
+#ifndef ENTITYINSPECTOR_H_
+#define ENTITYINSPECTOR_H_
 
- This file is part of GtkRadiant.
+#include "PropertyEditor.h"
 
- GtkRadiant is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+#include <gtk/gtkliststore.h>
+#include <gtk/gtkwidget.h>
 
- GtkRadiant is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+#include "gtkutil/idledraw.h"
 
- You should have received a copy of the GNU General Public License
- along with GtkRadiant; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
+/* FORWARD DECLS */
 
-#if !defined(INCLUDED_ENTITYINSPECTOR_H)
-#define INCLUDED_ENTITYINSPECTOR_H
+class Entity;
+class Selectable;
 
-#include <gtk/gtk.h>
+namespace ui {
 
-#include "ientity.h"
-#include "ifilesystem.h"
-#include "imodel.h"
-#include "iscenegraph.h"
-#include "iselection.h"
-#include "iundo.h"
+namespace {
 
-#include <map>
-#include <set>
-
-#include "os/path.h"
-#include "eclasslib.h"
-#include "scenelib.h"
-#include "generic/callback.h"
-#include "os/file.h"
-#include "stream/stringstream.h"
-#include "moduleobserver.h"
-#include "convert.h"
-#include "stringio.h"
-#include "../../ui/modelselector/ModelSelector.h"
-#include "../../ui/common/SoundChooser.h"
-
-#include "gtkutil/dialog.h"
-#include "gtkutil/filechooser.h"
-#include "gtkutil/messagebox.h"
-#include "gtkutil/nonmodal.h"
-#include "gtkutil/button.h"
-#include "gtkutil/entry.h"
-#include "gtkutil/container.h"
-#include "gtkutil/TreeModel.h"
-
-#include "../../qe3.h"
-#include "../../gtkmisc.h"
-#include "../../entity.h"
-#include "../../mainframe.h"
-#include "../../textureentry.h"
-
-#include "EntityAttribute.h"
-#include "AngleAttribute.h"
-#include "AnglesAttribute.h"
-#include "BooleanAttribute.h"
-#include "DirectionAttribute.h"
-#include "ListAttribute.h"
-#include "ModelAttribute.h"
-#include "ParticleAttribute.h"
-#include "SoundAttribute.h"
-#include "StringAttribute.h"
-#include "Vector3Attribute.h"
-
-typedef std::vector<EntityAttribute*> EntityAttributes;
-
-class EntityInspector: public ModuleObserver
+// Data structure to store the type (vector3, text etc) and the options
+// string for a single property.
+struct PropertyParms
 {
-	private:
-		GtkButton *_removeKeyButton;
-		GtkButton *_addKeyButton;
-		GtkTreeView *_keyValuesTreeView;
-
-		GtkTreeView* _entityClassTreeView;
-		GtkTextView* _entityClassComment;
-
-		GtkCheckButton* _entitySpawnflagsCheck[MAX_FLAGS];
-
-		GtkListStore* _entityListStore;
-		GtkTreeStore* _entityPropertiesTreeStore;
-		const EntityClass* _currentFlags;
-		const EntityClass* _currentComment;
-
-		// the number of active spawnflags
-		int _spawnflagCount;
-		// table: index, match spawnflag item to the spawnflag index (i.e. which bit)
-		int _spawnTable[MAX_FLAGS];
-		// we change the layout depending on how many spawn flags we need to display
-		// the table is a 4x4 in which we need to put the comment box g_entityClassComment and the spawn flags..
-		GtkTable* _spawnflagsTable;
-
-		GtkVBox* _attributeBox;
-
-		int _numNewKeys;
-
-		std::string g_currentSelectedKey;
-
-		std::size_t m_unrealised;
-
-	private:
-
-		void GlobalEntityAttributes_clear ();
-		void EntityClassList_fill ();
-		void EntityClassList_clear ();
-		void SetComment (EntityClass* eclass);
-		void SurfaceFlags_setEntityClass (EntityClass* eclass);
-		void EntityClassList_selectEntityClass (EntityClass* eclass);
-
-		void appendAttribute (const std::string& name, EntityAttribute& attribute);
-
-		void checkAddNewKeys ();
-
-		std::string getTooltipForKey (const std::string& key);
-		void selectionChanged (const Selectable&);
-
-		void EntityClassList_createEntity ();
-
-		void EntityKeyValueList_fillValueComboWithClassnames (GtkCellRenderer *renderer);
-
-		void entityKeyValueEdited (bool isValueEdited, const std::string& newValue);
-		std::string SelectedEntity_getValueForKey (const std::string& key);
-
-		// Gtk callbacks
-		static void addKeyValue (GtkButton *button, EntityInspector* entityInspector);
-		static void clearKeyValue (GtkButton * button, EntityInspector* entityInspector);
-		static void SpawnflagCheck_toggled (GtkWidget *widget, EntityInspector* entityInspector);
-		static void entityValueEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text,
-				EntityInspector *entityInspector);
-		static void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text,
-				EntityInspector *entityInspector);
-		static void entityKeyEditCanceled (GtkCellRendererText *renderer, EntityInspector *entityInspector);
-
-		static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection, EntityInspector* entityInspector);
-		static void EntityKeyValueList_keyEditingStarted (GtkCellRenderer *renderer, GtkCellEditable *editable,
-				const gchar *path, EntityInspector *entityInspector);
-		static void EntityKeyValueList_valueEditingStarted (GtkCellRenderer *renderer, GtkCellEditable *editable,
-				const gchar *path, EntityInspector* entityInspector);
-
-		static gint EntityClassList_keypress (GtkWidget* widget, GdkEventKey* event, EntityInspector* entityInspector);
-		static gint EntityClassList_button_press (GtkWidget *widget, GdkEventButton *event, EntityInspector* entityInspector);
-		static void EntityClassList_selection_changed (GtkTreeSelection* selection, EntityInspector* entityInspector);
-
-	public:
-		EntityAttributes _entityAttributes;
-
-		EntityInspector ();
-
-		void realise (void);
-
-		void unrealise (void);
-
-		GtkWidget *constructNotebookTab ();
-
-		void updateKeyValueList ();
-		void updateSpawnflags ();
-		void setEntityClass (EntityClass *eclass);
+		std::string type;
+		std::string options;
 };
 
-EntityInspector& GlobalEntityInspector();
+// Map of property names to PropertyParms
+typedef std::map<std::string, PropertyParms> PropertyParmMap;
 
-void EntityInspector_Construct ();
-void EntityInspector_Destroy ();
+}
 
-#endif
+/* The EntityInspector class represents the GTK dialog for editing properties
+ * on the selected game entity. The class is implemented as a singleton and
+ * contains a method to return the current instance.
+ */
+
+class EntityInspector
+{
+	private:
+
+		// Currently selected entity
+		Entity* _selectedEntity;
+
+		// Main EntityInspector widget
+		GtkWidget* _widget;
+
+		// Frame to contain the Property Editor
+		GtkWidget* _editorFrame;
+
+		// Key list store and view
+		GtkListStore* _listStore;
+		GtkWidget* _treeView;
+
+		// Key and value edit boxes
+		GtkWidget* _keyEntry;
+		GtkWidget* _valEntry;
+
+		// Context menu main widget and items
+		GtkWidget* _contextMenu;
+		GtkWidget* _addKeyMenuItem;
+		GtkWidget* _delKeyMenuItem;
+
+		// Currently displayed PropertyEditor
+		PropertyEditor* _currentPropertyEditor;
+
+		// GtkUtil IdleDraw class. This allows redraw calls to be scheduled for
+		// when GTK is idle.
+		IdleDraw _idleDraw;
+
+	private:
+
+		// Utility functions to construct the Gtk components
+
+		GtkWidget* createDialogPane (); // bottom widget pane
+		GtkWidget* createTreeViewPane (); // tree view for selecting attributes
+		void createContextMenu ();
+
+		// Utility function to retrieve the string selection from the given column in the
+		// list store
+		std::string getListSelection (int col);
+
+		/* GTK CALLBACKS */
+
+		static void callbackTreeSelectionChanged (GtkWidget* widget, EntityInspector* self);
+
+		static void _onKeyEntryActivate (GtkWidget*, EntityInspector*);
+		static void _onValEntryActivate (GtkWidget*, EntityInspector*);
+		static void _onSetProperty (GtkWidget*, EntityInspector*);
+
+		static bool _onPopupMenu (GtkWidget*, GdkEventButton*, EntityInspector*);
+		static void _onDeleteProperty (GtkMenuItem*, EntityInspector*);
+		static void _onAddProperty (GtkMenuItem*, EntityInspector*);
+
+		// Routines to populate the TreeStore with the keyvals attached to the
+		// currently-selected object.
+		void refreshTreeModel ();
+
+		// Update the GTK components when a new selection is made in the tree view
+		void treeSelectionChanged ();
+
+		// Update the currently selected entity pointer. This function returns true
+		// if a single Entity is selected, and false if either a non-Entity or more
+		// than one object is selected.
+		bool updateSelectedEntity ();
+
+		// Set the keyval on the object from the entry and value textboxes
+		void setPropertyFromEntries ();
+
+		// Static map of property names to PropertyParms objects
+		const PropertyParmMap& getPropertyMap ();
+
+	public:
+
+		// Constructor
+		EntityInspector ();
+
+		// Return or create the singleton instance
+		static EntityInspector& getInstance ();
+
+		// Get the Gtk Widget for display in the main application
+		GtkWidget* getWidget ();
+
+		// Inform the IdleDraw to invoke a redraw when idle
+		void queueDraw ();
+
+		// Redraw the GUI elements. Called by the IdleDraw object when GTK is idle
+		// and a queueDraw request has been passed.
+		void callbackRedraw ();
+
+		// Static class function to instigate a redraw. This is passed as a pointer
+		// to the GlobalEntityCreator's setKeyValueChangedFunc function.
+		static void redrawInstance ();
+
+		// Function to call when the current Selection is changed by the selection
+		// system. Internally this function will just stimulate a redraw, but it
+		// must take a reference to the Selectable object.
+		static void selectionChanged (const Selectable&);
+
+};
+
+} // namespace ui
+
+#endif /*ENTITYINSPECTOR_H_*/

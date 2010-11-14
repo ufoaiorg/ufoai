@@ -271,7 +271,6 @@ class Radiant: public TypeSystemRef
 			TextureBrowser_Construct();
 			Entity_Construct();
 			map::AutoSaver().init();
-			EntityInspector_Construct();
 			NullModel_Construct();
 			MapRoot_Construct();
 
@@ -296,7 +295,6 @@ class Radiant: public TypeSystemRef
 
 			MapRoot_Destroy();
 			NullModel_Destroy();
-			EntityInspector_Destroy();
 			Entity_Destroy();
 			GlobalCamera().destroy();
 			GlobalXYWnd().destroy();
