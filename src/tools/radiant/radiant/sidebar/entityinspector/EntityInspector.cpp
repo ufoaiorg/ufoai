@@ -282,7 +282,7 @@ void EntityInspector::selectionChanged ()
 void EntityInspector::setPropertyFromEntries ()
 {
 	std::string key = gtk_entry_get_text(GTK_ENTRY(_keyEntry));
-	if (key.size() > 0) {
+	if (key.size() > 0 && key != "classname") {
 		std::string name = _selectedEntity->getKeyValue("name");
 		std::string model = _selectedEntity->getKeyValue("model");
 		bool isFuncType = (!name.empty() && name == model);
@@ -388,7 +388,6 @@ void EntityInspector::_onAddProperty (GtkMenuItem* item, EntityInspector* self)
 	// Choose a property, and add to entity with a default value
 	std::string property = AddPropertyDialog::chooseProperty(&ec);
 	if (!property.empty()) {
-
 		// Save last key, so that it will be automatically selected
 		self->_lastKey = property;
 

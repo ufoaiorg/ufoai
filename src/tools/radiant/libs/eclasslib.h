@@ -181,8 +181,15 @@ class EntityClass
 			}
 		}
 
+		/**
+		 * @brief Checks whether am attribute is mandatory for the entity.
+		 *
+		 * @note classname is always mandatory
+		 */
 		bool isMandatory (const std::string& attributeName) const
 		{
+			if (attributeName == "classname")
+				return true;
 			for (EntityClassAttributes::const_iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
 				if (attributeName == i->first) {
 					const EntityClassAttribute& attr = i->second;
