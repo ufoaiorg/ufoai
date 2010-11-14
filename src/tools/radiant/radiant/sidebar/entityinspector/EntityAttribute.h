@@ -11,7 +11,6 @@ namespace
 	ClassKeyValues g_selectedKeyValues; /**< all selected entities keyvalues */
 
 	const EntityClass* g_current_attributes = 0;
-	std::string g_currentSelectedKey;
 }
 
 /**

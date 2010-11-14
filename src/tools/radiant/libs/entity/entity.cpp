@@ -80,8 +80,6 @@ inline scene::Node& node_for_eclass (EntityClass* eclass)
 	return node;
 }
 
-EntityCreator::KeyValueChangedFunc EntityKeyValues::m_entityKeyValueChanged = 0;
-EntityCreator::KeyValueChangedFunc KeyValue::m_entityKeyValueChanged = 0;
 Counter* EntityKeyValues::m_counter = 0;
 
 bool g_lightRadii = false;
@@ -119,10 +117,6 @@ class UFOEntityCreator: public EntityCreator
 		scene::Node& createEntity (EntityClass* eclass)
 		{
 			return node_for_eclass(eclass);
-		}
-		void setKeyValueChangedFunc (KeyValueChangedFunc func)
-		{
-			EntityKeyValues::setKeyValueChangedFunc(func);
 		}
 		void setCounter (Counter* counter)
 		{

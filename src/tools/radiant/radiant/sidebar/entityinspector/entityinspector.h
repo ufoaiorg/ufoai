@@ -104,6 +104,8 @@ class EntityInspector: public ModuleObserver
 
 		int _numNewKeys;
 
+		std::string g_currentSelectedKey;
+
 		std::size_t m_unrealised;
 
 	private:
@@ -120,7 +122,6 @@ class EntityInspector: public ModuleObserver
 		void checkAddNewKeys ();
 
 		std::string getTooltipForKey (const std::string& key);
-		static void keyValueChanged ();
 		void selectionChanged (const Selectable&);
 
 		void EntityClassList_createEntity ();

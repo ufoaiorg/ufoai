@@ -141,26 +141,6 @@ class GetKeyValueVisitor: public Entity::Visitor
 };
 
 /**
- * @brief Adds all entities class attributes into the given map.
- *
- * @param entity entity to add into map
- * @param keyvalues list of key/values associated to their class names
- */
-void Entity_GetKeyValues (const Entity& entity, ClassKeyValues& keyvalues)
-{
-	std::string classname = entity.getEntityClass().m_name;
-	ClassKeyValues::iterator valuesIter = keyvalues.find(classname);
-	if (valuesIter == keyvalues.end()) {
-		keyvalues.insert(ClassKeyValues::value_type(classname, KeyValues()));
-		valuesIter = keyvalues.find(classname);
-	}
-
-	GetKeyValueVisitor visitor((*valuesIter).second);
-
-	entity.forEachKeyValue(visitor);
-}
-
-/**
  * @brief Adds all currently selected entities attribute values to the given map.
  *
  * @param keyvalues map of entitites key value pairs associated to their classnames
@@ -174,6 +154,27 @@ void Entity_GetKeyValues_Selected (ClassKeyValues& keyvalues)
 	{
 			ClassKeyValues& m_keyvalues;
 			mutable std::set<Entity*> m_visited;
+
+			/**
+			 * @brief Adds all entities class attributes into the given map.
+			 *
+			 * @param entity entity to add into map
+			 * @param keyvalues list of key/values associated to their class names
+			 */
+			void Entity_GetKeyValues (const Entity& entity) const
+			{
+				std::string classname = entity.getEntityClass().m_name;
+				ClassKeyValues::iterator valuesIter = m_keyvalues.find(classname);
+				if (valuesIter == m_keyvalues.end()) {
+					m_keyvalues.insert(ClassKeyValues::value_type(classname, KeyValues()));
+					valuesIter = m_keyvalues.find(classname);
+				}
+
+				GetKeyValueVisitor visitor((*valuesIter).second);
+
+				entity.forEachKeyValue(visitor);
+			}
+
 		public:
 			EntityGetKeyValues (ClassKeyValues& keyvalues) :
 				m_keyvalues(keyvalues)
@@ -186,7 +187,7 @@ void Entity_GetKeyValues_Selected (ClassKeyValues& keyvalues)
 					entity = Node_getEntity(instance.path().parent());
 				}
 				if (entity != 0 && m_visited.insert(entity).second) {
-					Entity_GetKeyValues(*entity, m_keyvalues);
+					Entity_GetKeyValues(*entity);
 				}
 			}
 	} visitor(keyvalues);
@@ -752,7 +753,7 @@ void EntityInspector::entityKeyValueEdited (bool isValueEdited, const std::strin
 		g_currentSelectedKey = keyConverted;
 		GtkTreePath* currentPath = gtk_tree_model_get_path(model, &iter);
 		GtkTreeViewColumn *column = gtk_tree_view_get_column(_keyValuesTreeView, KEYVALLIST_COLUMN_VALUE);
-		gtk_tree_view_set_cursor(_keyValuesTreeView, currentPath, column, true);
+		gtk_tree_view_set_cursor(_keyValuesTreeView, currentPath, column, TRUE);
 		gtk_tree_path_free(currentPath);
 		return;
 	}
@@ -836,7 +837,7 @@ void EntityInspector::EntityKeyValueList_selection_changed (GtkTreeSelection* se
 		}
 
 		if (attribKey.length() > 0)
-			g_currentSelectedKey = attribKey;
+			entityInspector->g_currentSelectedKey = attribKey;
 
 		if (removeAllowed) {
 			EntityClassAttribute *attribute = g_current_attributes->getAttribute(attribKey);
@@ -940,19 +941,19 @@ void EntityInspector::EntityKeyValueList_valueEditingStarted (GtkCellRenderer *r
 			return;
 	}
 
-	if (g_currentSelectedKey.empty())
+	if (entityInspector->g_currentSelectedKey.empty())
 		return;
-	if (g_currentSelectedKey == "classname") {
+
+	if (entityInspector->g_currentSelectedKey == "classname") {
 		entityInspector->EntityKeyValueList_fillValueComboWithClassnames(renderer);
 		return;
 	}
 	ClassKeyValues::iterator it = g_selectedKeyValues.find(g_current_attributes->m_name);
 	if (it == g_selectedKeyValues.end()) {
-		g_warning("leaving updateValueCombo... no class attributes");
 		return;
 	}
 	KeyValues possibleValues = (*it).second;
-	KeyValues::const_iterator keyIter = possibleValues.find(g_currentSelectedKey);
+	KeyValues::const_iterator keyIter = possibleValues.find(entityInspector->g_currentSelectedKey);
 	GtkListStore* store;
 	g_object_get(renderer, "model", &store, (char*) 0);
 	gtk_list_store_clear(store);
@@ -1150,7 +1151,6 @@ GtkWidget* EntityInspector::constructNotebookTab ()
 
 	GlobalSelectionSystem().addSelectionChangeCallback(MemberCaller1<EntityInspector, const Selectable&,
 			&EntityInspector::selectionChanged> (*this));
-	GlobalEntityCreator().setKeyValueChangedFunc(keyValueChanged);
 
 	return pageframe;
 }
@@ -1190,12 +1190,7 @@ void EntityInspector_Destroy ()
 
 EntityInspectorDraw g_EntityInspectorDraw(GlobalEntityInspector());
 
-void EntityInspector::keyValueChanged ()
-{
-	g_EntityInspectorDraw.queueDraw();
-}
-
 void EntityInspector::selectionChanged (const Selectable&)
 {
-	keyValueChanged();
+	g_EntityInspectorDraw.queueDraw();
 }

@@ -327,7 +327,6 @@ class KeyValue: public EntityKeyValue
 		std::string m_string;
 		const std::string m_empty;
 		ObservedUndoableObject<std::string> m_undo;
-		static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
 	public:
 
 		KeyValue (const std::string& string, const std::string& empty) :
@@ -338,11 +337,6 @@ class KeyValue: public EntityKeyValue
 		~KeyValue ()
 		{
 			ASSERT_MESSAGE(m_observers.empty(), "KeyValue::~KeyValue: observers still attached");
-		}
-
-		static void setKeyValueChangedFunc (EntityCreator::KeyValueChangedFunc func)
-		{
-			m_entityKeyValueChanged = func;
 		}
 
 		void IncRef ()
@@ -391,7 +385,6 @@ class KeyValue: public EntityKeyValue
 
 		void notify ()
 		{
-			m_entityKeyValueChanged();
 			KeyObservers::reverse_iterator i = m_observers.rbegin();
 			while (i != m_observers.rend()) {
 				(*i++)(get());
@@ -418,7 +411,6 @@ class EntityKeyValues: public Entity
 		typedef KeyValue Value;
 
 	private:
-		static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
 		static Counter* m_counter;
 
 		EntityClass* m_eclass;
@@ -564,11 +556,6 @@ class EntityKeyValues: public Entity
 			ASSERT_MESSAGE(m_observers.empty(), "EntityKeyValues::~EntityKeyValues: observers still attached");
 		}
 
-		static void setKeyValueChangedFunc (EntityCreator::KeyValueChangedFunc func)
-		{
-			m_entityKeyValueChanged = func;
-			KeyValue::setKeyValueChangedFunc(func);
-		}
 		static void setCounter (Counter* counter)
 		{
 			m_counter = counter;
@@ -583,8 +570,6 @@ class EntityKeyValues: public Entity
 			for (KeyValues::const_iterator i = keyValues.begin(); i != keyValues.end(); ++i) {
 				insert(i->first, i->second);
 			}
-
-			m_entityKeyValueChanged();
 		}
 		typedef MemberCaller1<EntityKeyValues, const KeyValues&, &EntityKeyValues::importState> UndoImportCaller;
 
@@ -661,7 +646,6 @@ class EntityKeyValues: public Entity
 			} else {
 				insert(key, value);
 			}
-			m_entityKeyValueChanged();
 		}
 
 		/**
