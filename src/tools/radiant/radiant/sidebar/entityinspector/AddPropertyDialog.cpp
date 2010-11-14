@@ -172,7 +172,6 @@ class CustomPropertyAdder: public EntityClassAttributeVisitor
 				g_free(escName);
 			}
 		}
-
 };
 
 } // namespace
@@ -194,6 +193,8 @@ void AddPropertyDialog::populateTreeView ()
 	// custom properties from it
 	CustomPropertyAdder a(_treeStore, &cnIter);
 	_eclass->forEachClassAttribute(a);
+
+	gtk_tree_view_expand_all(GTK_TREE_VIEW(_treeView));
 }
 
 // Static method to create and show an instance, and return the chosen
