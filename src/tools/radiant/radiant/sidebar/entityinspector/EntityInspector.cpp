@@ -504,7 +504,7 @@ void EntityInspector::refreshTreeModel ()
 				} else {
 					const EntityClassAttribute *attr = _eclass.getAttribute(key);
 					if (attr == NULL)
-						type = "";
+						type = key;
 					else
 						type = attr->m_type;
 				}
