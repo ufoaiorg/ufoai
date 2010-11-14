@@ -17,7 +17,7 @@
 #ifndef INCLUDED_SIDEBAR_H
 #define INCLUDED_SIDEBAR_H
 
-#include "entitylist.h"
+#include "entitylist/EntityList.h"
 #include "entityinspector/EntityInspector.h"
 #include "MapInfo.h"
 #include "surfaceinspector/surfaceinspector.h"

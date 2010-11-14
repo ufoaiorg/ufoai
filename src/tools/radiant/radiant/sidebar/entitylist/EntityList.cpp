@@ -24,7 +24,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "entitylist.h"
+#include "EntityList.h"
 #include "radiant_i18n.h"
 
 #include "iselection.h"
@@ -42,7 +42,7 @@
 #include "gtkutil/TreeModel.h"
 #include "gtkutil/closure.h"
 
-#include "../scenegraph/treemodel.h"
+#include "../../scenegraph/treemodel.h"
 
 void RedrawEntityList ();
 typedef FreeCaller<RedrawEntityList> RedrawEntityListCaller;
