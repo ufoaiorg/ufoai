@@ -1,4 +1,5 @@
 #! /bin/sh
+# Copy this file in .git/hooks
 set -e
 
 if ! AGAINST=$(git rev-parse --verify HEAD 2> /dev/null); then
