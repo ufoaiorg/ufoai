@@ -272,14 +272,6 @@ class MapRoot: public scene::Node,
 		}
 };
 
-inline void MapRoot_Construct ()
-{
-}
-
-inline void MapRoot_Destroy ()
-{
-}
-
 inline NodeSmartReference NewMapRoot (const std::string& name)
 {
 	return NodeSmartReference(*(new MapRoot(name)));

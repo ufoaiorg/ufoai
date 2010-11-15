@@ -271,7 +271,6 @@ class Radiant
 			Entity_Construct();
 			map::AutoSaver().init();
 			NullModel_Construct();
-			MapRoot_Construct();
 
 			EnginePath_verify();
 			EnginePath_Realise();
@@ -292,7 +291,6 @@ class Radiant
 
 			EnginePath_Unrealise();
 
-			MapRoot_Destroy();
 			NullModel_Destroy();
 			Entity_Destroy();
 			GlobalCamera().destroy();
