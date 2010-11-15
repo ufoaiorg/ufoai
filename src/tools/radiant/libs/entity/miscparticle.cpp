@@ -426,14 +426,9 @@ class MiscParticleNode: public scene::Node,
 		{
 		}
 
-		scene::Node& node ()
-		{
-			return *this;
-		}
-
 		scene::Node& clone () const
 		{
-			return (new MiscParticleNode(*this))->node();
+			return *(new MiscParticleNode(*this));
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)
@@ -466,5 +461,5 @@ class MiscParticleNode: public scene::Node,
 
 scene::Node& New_MiscParticle (EntityClass* eclass)
 {
-	return (new MiscParticleNode(eclass))->node();
+	return *(new MiscParticleNode(eclass));
 }

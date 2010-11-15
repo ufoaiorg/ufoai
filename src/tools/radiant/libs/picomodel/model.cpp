@@ -169,7 +169,7 @@ scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
 			file.size(), 0);
 	PicoModelNode* modelNode = new PicoModelNode(model, fExt);
 	PicoFreeModel(model);
-	return modelNode->node();
+	return *modelNode;
 }
 
 /* Load the provided file as a model object and return as an IModel

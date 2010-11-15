@@ -884,14 +884,9 @@ class LightNode: public scene::Node,
 			destroy();
 		}
 
-		scene::Node& node ()
-		{
-			return *this;
-		}
-
 		scene::Node& clone () const
 		{
-			return (new LightNode(*this))->node();
+			return *(new LightNode(*this));
 		}
 
 		void insertChild (scene::Node& child)
@@ -947,5 +942,5 @@ void Light_Destroy ()
 
 scene::Node& New_Light (EntityClass* eclass)
 {
-	return (new LightNode(eclass))->node();
+	return *(new LightNode(eclass));
 }

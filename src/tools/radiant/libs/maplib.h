@@ -222,10 +222,6 @@ class MapRoot: public scene::Node,
 			GlobalUndoSystem().trackerDetach(m_changeTracker);
 			m_traverse.detach(this);
 		}
-		scene::Node& node ()
-		{
-			return *this;
-		}
 
 		InstanceCounter m_instanceCounter;
 		void instanceAttach (const scene::Path& path)
@@ -253,7 +249,7 @@ class MapRoot: public scene::Node,
 
 		scene::Node& clone () const
 		{
-			return (new MapRoot(*this))->node();
+			return *(new MapRoot(*this));
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)
@@ -286,7 +282,7 @@ inline void MapRoot_Destroy ()
 
 inline NodeSmartReference NewMapRoot (const std::string& name)
 {
-	return NodeSmartReference((new MapRoot(name))->node());
+	return NodeSmartReference(*(new MapRoot(name)));
 }
 
 #endif

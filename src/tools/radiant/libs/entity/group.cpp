@@ -296,14 +296,9 @@ class GroupNode: public scene::Node,
 			destroy();
 		}
 
-		scene::Node& node ()
-		{
-			return *this;
-		}
-
 		scene::Node& clone () const
 		{
-			return (new GroupNode(*this))->node();
+			return *(new GroupNode(*this));
 		}
 
 		void insertChild (scene::Node& child)
@@ -349,5 +344,5 @@ class GroupNode: public scene::Node,
 
 scene::Node& New_Group (EntityClass* eclass)
 {
-	return (new GroupNode(eclass))->node();
+	return *(new GroupNode(eclass));
 }

@@ -94,15 +94,9 @@ class BrushNode: public scene::Node,
 			m_brush.snapto(snap);
 		}
 
-		// Returns the actual scene node
-		scene::Node& node ()
-		{
-			return *this;
-		}
-
 		scene::Node& clone () const
 		{
-			return (new BrushNode(*this))->node();
+			return *(new BrushNode(*this));
 		}
 		// Creates a new instance on the heap
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)

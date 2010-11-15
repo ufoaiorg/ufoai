@@ -172,19 +172,6 @@ namespace scene
 				return (m_state & eExcluded) != 0;
 			}
 	};
-
-	class NullNode: public Node
-	{
-		public:
-			NullNode ()
-			{
-			}
-
-			scene::Node& node ()
-			{
-				return *this;
-			}
-	};
 }
 
 inline scene::Instantiable* Node_getInstantiable (scene::Node& node)
@@ -228,7 +215,7 @@ inline bool operator!= (scene::Node& node, scene::Node& other)
 
 inline scene::Node& NewNullNode ()
 {
-	return (new scene::NullNode)->node();
+	return *(new scene::Node);
 }
 
 inline void Path_deleteTop (const scene::Path& path)

@@ -375,11 +375,6 @@ class EclassModelNode: public scene::Node,
 			destroy();
 		}
 
-		scene::Node& node ()
-		{
-			return *this;
-		}
-
 		void insertChild (scene::Node& child)
 		{
 			m_instances.insertChild(child);
@@ -391,7 +386,7 @@ class EclassModelNode: public scene::Node,
 
 		scene::Node& clone () const
 		{
-			return (new EclassModelNode(*this))->node();
+			return *(new EclassModelNode(*this));
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)
@@ -428,5 +423,5 @@ class EclassModelNode: public scene::Node,
 
 scene::Node& New_EclassModel (EntityClass* eclass)
 {
-	return (new EclassModelNode(eclass))->node();
+	return *(new EclassModelNode(eclass));
 }

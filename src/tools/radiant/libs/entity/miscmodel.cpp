@@ -391,14 +391,9 @@ class MiscModelNode: public scene::Node,
 			destroy();
 		}
 
-		scene::Node& node ()
-		{
-			return *this;
-		}
-
 		scene::Node& clone () const
 		{
-			return (new MiscModelNode(*this))->node();
+			return *(new MiscModelNode(*this));
 		}
 
 		void insertChild (scene::Node& child)
@@ -445,7 +440,7 @@ class MiscModelNode: public scene::Node,
 
 scene::Node& New_MiscModel (EntityClass* eclass)
 {
-	return (new MiscModelNode(eclass))->node();
+	return *(new MiscModelNode(eclass));
 }
 
 void MiscModel_construct ()

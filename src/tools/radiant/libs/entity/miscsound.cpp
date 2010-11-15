@@ -378,14 +378,9 @@ class MiscSoundNode: public scene::Node,
 		{
 		}
 
-		scene::Node& node ()
-		{
-			return *this;
-		}
-
 		scene::Node& clone () const
 		{
-			return (new MiscSoundNode(*this))->node();
+			return *(new MiscSoundNode(*this));
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)
@@ -418,7 +413,7 @@ class MiscSoundNode: public scene::Node,
 
 scene::Node& New_MiscSound (EntityClass* eclass)
 {
-	return (new MiscSoundNode(eclass))->node();
+	return *(new MiscSoundNode(eclass));
 }
 
 void MiscSound_construct ()

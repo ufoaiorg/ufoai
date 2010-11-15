@@ -379,14 +379,9 @@ class GenericEntityNode: public scene::Node,
 		{
 		}
 
-		scene::Node& node ()
-		{
-			return *this;
-		}
-
 		scene::Node& clone () const
 		{
-			return (new GenericEntityNode(*this))->node();
+			return *(new GenericEntityNode(*this));
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)
@@ -422,5 +417,5 @@ class GenericEntityNode: public scene::Node,
 
 scene::Node& New_GenericEntity (EntityClass* eclass)
 {
-	return (new GenericEntityNode(eclass))->node();
+	return *(new GenericEntityNode(eclass));
 }

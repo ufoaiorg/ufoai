@@ -18,7 +18,7 @@ inline scene::Node& node_clone (scene::Node& node)
 		return cloneable->clone();
 	}
 
-	return (new scene::NullNode)->node();
+	return *(new scene::Node);
 }
 
 class CloneAll: public scene::Traversable::Walker
