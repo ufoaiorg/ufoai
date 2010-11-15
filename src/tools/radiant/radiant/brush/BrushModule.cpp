@@ -154,7 +154,7 @@ class BrushDependencies: public GlobalRadiantModuleRef,
 {
 };
 
-class BrushUFOAPI: public TypeSystemRef
+class BrushUFOAPI
 {
 		BrushCreator* m_brushufo;
 	public:

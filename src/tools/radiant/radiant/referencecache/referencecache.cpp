@@ -722,7 +722,7 @@ class ReferenceDependencies: public GlobalRadiantModuleRef,
 		}
 };
 
-class ReferenceAPI: public TypeSystemRef
+class ReferenceAPI
 {
 		ReferenceCache* m_reference;
 	public:

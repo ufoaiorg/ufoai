@@ -40,7 +40,6 @@
 #include "generic/callback.h"
 #include "generic/reference.h"
 #include "container/stack.h"
-#include "typesystem.h"
 
 class Selector;
 class SelectionTest;
@@ -90,57 +89,6 @@ class ComponentSnappable
 		virtual void snapComponents (float snap) = 0;
 };
 
-typedef TypeCastTable<NODETYPEID_MAX> NodeTypeCastTable;
-
-template<typename Type>
-class NodeType: public StaticTypeSystemInitialiser
-{
-		TypeId m_typeId;
-	public:
-		typedef typename Type::Name Name;
-		NodeType () :
-			m_typeId(NODETYPEID_NONE)
-		{
-			StaticTypeSystemInitialiser::instance().addInitialiser(InitialiseCaller(*this));
-		}
-		void initialise ()
-		{
-			m_typeId = GlobalSceneGraph().getNodeTypeId(Name());
-		}
-		typedef MemberCaller<NodeType<Type> , &NodeType<Type>::initialise> InitialiseCaller;
-		TypeId getTypeId ()
-		{
-#if defined(DEBUG)
-			ASSERT_MESSAGE(m_typeId != NODETYPEID_NONE, "node-type " << makeQuoted(Name()) << " used before being initialised");
-#endif
-			return m_typeId;
-		}
-};
-
-template<typename Type>
-class StaticNodeType
-{
-	public:
-		enum unnamed0
-		{
-			SIZE = NODETYPEID_MAX
-		};
-		static TypeId getTypeId ()
-		{
-			return Static<NodeType<Type> >::instance().getTypeId();
-		}
-};
-
-template<typename Type, typename Contained>
-class NodeContainedCast: public CastInstaller<StaticNodeType<Contained> , ContainedCast<Type, Contained> >
-{
-};
-
-template<typename Type>
-class NodeIdentityCast: public CastInstaller<StaticNodeType<Type> , IdentityCast<Type> >
-{
-};
-
 namespace scene
 {
 	class Node
@@ -166,8 +114,6 @@ namespace scene
 		private:
 			unsigned int m_state;
 			std::size_t m_refcount;
-			void* m_node;
-			NodeTypeCastTable& m_casts;
 
 		public:
 			bool m_isRoot;
@@ -177,8 +123,8 @@ namespace scene
 				return m_isRoot;
 			}
 
-			Node (void* node, NodeTypeCastTable& casts) :
-				m_state(eVisible), m_refcount(0), m_node(node), m_casts(casts), m_isRoot(false)
+			Node () :
+				m_state(eVisible), m_refcount(0), m_isRoot(false)
 			{
 			}
 
@@ -209,11 +155,6 @@ namespace scene
 				return m_refcount;
 			}
 
-			void* cast (TypeId typeId) const
-			{
-				return m_casts.cast(typeId, m_node);
-			}
-
 			void enable (unsigned int state)
 			{
 				m_state |= state;
@@ -234,10 +175,8 @@ namespace scene
 
 	class NullNode: public Node
 	{
-			NodeTypeCastTable m_casts;
 		public:
-			NullNode () :
-				scene::Node(NULL, m_casts)
+			NullNode ()
 			{
 			}
 
@@ -247,20 +186,6 @@ namespace scene
 			}
 	};
 }
-
-template<typename Type>
-class NodeTypeCast
-{
-	public:
-		static Type* cast (scene::Node& node)
-		{
-			return static_cast<Type*> (node.cast(StaticNodeType<Type>::getTypeId()));
-		}
-		static const Type* cast (const scene::Node& node)
-		{
-			return static_cast<const Type*> (node.cast(StaticNodeType<Type>::getTypeId()));
-		}
-};
 
 inline scene::Instantiable* Node_getInstantiable (scene::Node& node)
 {
@@ -438,33 +363,6 @@ inline bool node_is_group (scene::Node& node)
 	}
 	return false;
 }
-
-typedef TypeCastTable<INSTANCETYPEID_MAX> InstanceTypeCastTable;
-
-template<typename Type>
-class InstanceType: public StaticTypeSystemInitialiser
-{
-		TypeId m_typeId;
-	public:
-		typedef typename Type::Name Name;
-		InstanceType () :
-			m_typeId(INSTANCETYPEID_NONE)
-		{
-			StaticTypeSystemInitialiser::instance().addInitialiser(InitialiseCaller(*this));
-		}
-		void initialise ()
-		{
-			m_typeId = GlobalSceneGraph().getInstanceTypeId(Name());
-		}
-		typedef MemberCaller<InstanceType<Type> , &InstanceType<Type>::initialise> InitialiseCaller;
-		TypeId getTypeId ()
-		{
-#if defined(DEBUG)
-			ASSERT_MESSAGE(m_typeId != INSTANCETYPEID_NONE, "instance-type " << makeQuoted(Name()) << " used before being initialised");
-#endif
-			return m_typeId;
-		}
-};
 
 inline Selectable* Instance_getSelectable (scene::Instance& instance);
 inline const Selectable* Instance_getSelectable (const scene::Instance& instance);

@@ -246,7 +246,7 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		}
 };
 
-class Radiant: public TypeSystemRef
+class Radiant
 {
 	public:
 		Radiant ()

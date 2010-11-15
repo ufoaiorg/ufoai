@@ -248,22 +248,9 @@ class EclassModel: public Snappable
 
 class EclassModelInstance: public TargetableInstance, public TransformModifier, public Renderable
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		EclassModel& m_contained;
+
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		STRING_CONSTANT(Name, "EclassModelInstance");
 
@@ -318,19 +305,6 @@ class EclassModelNode: public scene::Node,
 		public EntityNode,
 		public Namespaced
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		InstanceSet m_instances;
 		EclassModel m_contained;
 
@@ -344,7 +318,6 @@ class EclassModelNode: public scene::Node,
 		}
 
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Snappable implementation
 		void snapto(float snap) {
@@ -384,18 +357,16 @@ class EclassModelNode: public scene::Node,
 		}
 
 		EclassModelNode (EntityClass* eclass) :
-			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
-					InstanceSet::TransformChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<EclassModelInstance>::Caller(m_instances))
+			m_contained(eclass, *this, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+					EclassModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}
 		EclassModelNode (const EclassModelNode& other) :
-			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), Nameable(other), Snappable(other), TransformNode(other),
-					scene::Traversable(other), EntityNode(other), Namespaced(other), m_contained(other.m_contained, *this,
-							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
-									EclassModelInstance>::Caller(m_instances))
+			scene::Instantiable(other), scene::Cloneable(other), scene::Traversable::Observer(other), Nameable(other),
+					Snappable(other), TransformNode(other), scene::Traversable(other), EntityNode(other), Namespaced(
+							other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
+							m_instances), InstanceSetEvaluateTransform<EclassModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}

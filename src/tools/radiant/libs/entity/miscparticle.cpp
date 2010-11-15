@@ -308,24 +308,9 @@ class MiscParticleInstance: public TargetableInstance,
 		public Bounded,
 		public Cullable
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		MiscParticle& m_contained;
 		mutable AABB m_bounds;
 	public:
-
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Bounded implementation
 		const AABB& localAABB() const
@@ -396,24 +381,10 @@ class MiscParticleNode: public scene::Node,
 		public EntityNode,
 		public Namespaced
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		InstanceSet m_instances;
 		MiscParticle m_contained;
 
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Nameable implementation
 		std::string name () const
@@ -443,16 +414,15 @@ class MiscParticleNode: public scene::Node,
 		}
 
 		MiscParticleNode (EntityClass* eclass) :
-			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
-					InstanceSet::TransformChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances))
+			m_contained(eclass, *this, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+					MiscParticleInstance>::Caller(m_instances))
 		{
 		}
 		MiscParticleNode (const MiscParticleNode& other) :
-				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), Namespaced(other),
-					m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
-							InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances))
+				scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(other),
+					TransformNode(other), EntityNode(other), Namespaced(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+									MiscParticleInstance>::Caller(m_instances))
 		{
 		}
 

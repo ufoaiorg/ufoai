@@ -39,7 +39,7 @@
  * The constructor allocates a RadiantSelectionSystem instance on the heap
  * which is freed again by the destructor
  */
-class SelectionAPI : public TypeSystemRef {
+class SelectionAPI {
 	RadiantSelectionSystem* _selectionSystem;
 	SignalHandlerId _onBoundsChanged;
  public:

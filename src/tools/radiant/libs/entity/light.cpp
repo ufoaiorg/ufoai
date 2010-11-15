@@ -809,19 +809,6 @@ class LightNode: public scene::Node,
 		public EntityNode,
 		public Namespaced
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		InstanceSet m_instances;
 		Light m_contained;
 
@@ -832,7 +819,6 @@ class LightNode: public scene::Node,
 		{
 		}
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Editable implementation
 		const Matrix4& getLocalPivot() const {
@@ -878,19 +864,18 @@ class LightNode: public scene::Node,
 		}
 
 		LightNode (EntityClass* eclass) :
-			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
-					InstanceSet::TransformChangedCaller(m_instances), InstanceSet::BoundsChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
+			m_contained(eclass, *this, InstanceSet::TransformChangedCaller(m_instances),
+					InstanceSet::BoundsChangedCaller(m_instances), InstanceSetEvaluateTransform<LightInstance>::Caller(
+							m_instances))
 		{
 			construct();
 		}
 		LightNode (const LightNode& other) :
-			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), Nameable(other), Snappable(other), Editable(other),
-					TransformNode(other), scene::Traversable(other), EntityNode(other), Namespaced(other), m_contained(
-							other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
-							InstanceSet::BoundsChangedCaller(m_instances),
-							InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
+			scene::Instantiable(other), scene::Cloneable(other), scene::Traversable::Observer(other), Nameable(other),
+					Snappable(other), Editable(other), TransformNode(other), scene::Traversable(other), EntityNode(
+							other), Namespaced(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances), InstanceSet::BoundsChangedCaller(
+									m_instances), InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
 		{
 			construct();
 		}

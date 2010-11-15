@@ -10,23 +10,8 @@ namespace map {
  */
 class BasicContainer: public scene::Node, public scene::Traversable
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts (void)
-				{
-				}
-				NodeTypeCastTable& get (void)
-				{
-					return m_casts;
-				}
-		};
-
 		TraversableNodeSet m_traverse;
 	public:
-
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Traversable implementation
 		void insert(Node& node) {
@@ -46,8 +31,7 @@ class BasicContainer: public scene::Node, public scene::Traversable
 		}
 
 
-		BasicContainer () :
-			scene::Node(this, StaticTypeCasts::instance().get())
+		BasicContainer ()
 		{
 		}
 

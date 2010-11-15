@@ -53,7 +53,7 @@ typedef Reference<scene::Node> NodeReference;
 typedef std::size_t TypeId;
 
 const TypeId NODETYPEID_MAX = 64;
-const TypeId NODETYPEID_NONE = NODETYPEID_MAX;
+//const TypeId NODETYPEID_NONE = NODETYPEID_MAX;
 
 const TypeId INSTANCETYPEID_MAX = 64;
 const TypeId INSTANCETYPEID_NONE = INSTANCETYPEID_MAX;

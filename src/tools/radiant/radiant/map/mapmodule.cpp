@@ -52,7 +52,7 @@ class MapDependencies: public GlobalRadiantModuleRef,
 		}
 };
 
-class MapUFOAPI: public TypeSystemRef, public MapFormat, public PrimitiveParser
+class MapUFOAPI: public MapFormat, public PrimitiveParser
 {
 	public:
 		typedef MapFormat Type;

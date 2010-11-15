@@ -261,22 +261,8 @@ class MiscModel: public Snappable
 
 class MiscModelInstance: public TargetableInstance, public TransformModifier, public Renderable
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		MiscModel& m_contained;
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		STRING_CONSTANT(Name, "MiscModelInstance");
 
@@ -328,19 +314,6 @@ class MiscModelNode: public scene::Node,
 		public EntityNode,
 		public Namespaced
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		InstanceSet m_instances;
 		MiscModel m_contained;
 
@@ -354,7 +327,6 @@ class MiscModelNode: public scene::Node,
 		}
 
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Snappable implementation
 		void snapto (float snap)
@@ -401,18 +373,16 @@ class MiscModelNode: public scene::Node,
 		}
 
 		MiscModelNode (EntityClass* eclass) :
-			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
-					InstanceSet::TransformChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<MiscModelInstance>::Caller(m_instances))
+			m_contained(eclass, *this, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+					MiscModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}
 		MiscModelNode (const MiscModelNode& other) :
-			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), Nameable(other), Snappable(other), TransformNode(other),
-					scene::Traversable(other), EntityNode(other), Namespaced(other), m_contained(other.m_contained,
-							*this, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
-									MiscModelInstance>::Caller(m_instances))
+			scene::Instantiable(other), scene::Cloneable(other), scene::Traversable::Observer(other), Nameable(other),
+					Snappable(other), TransformNode(other), scene::Traversable(other), EntityNode(other), Namespaced(
+							other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
+							m_instances), InstanceSetEvaluateTransform<MiscModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}

@@ -91,23 +91,8 @@ class NullModel: public Bounded, public Cullable
 
 class NullModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public Bounded, public Cullable
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		NullModel& m_nullmodel;
 	public:
-
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		const AABB& localAABB() const
 		{
@@ -142,27 +127,11 @@ class NullModelInstance: public scene::Instance, public Renderable, public Selec
 
 class NullModelNode: public scene::Node, public scene::Instantiable
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		InstanceSet m_instances;
 		NullModel m_nullmodel;
 	public:
 
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
-
-		NullModelNode () :
-			scene::Node(this, StaticTypeCasts::instance().get())
+		NullModelNode ()
 		{
 			m_isRoot = true;
 		}

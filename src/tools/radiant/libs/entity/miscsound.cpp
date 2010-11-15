@@ -260,24 +260,9 @@ class MiscSoundInstance: public TargetableInstance,
 		public Bounded,
 		public Cullable
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		MiscSound& m_contained;
 		mutable AABB m_bounds;
 	public:
-
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Bounded implementation
 		const AABB& localAABB() const
@@ -348,24 +333,10 @@ class MiscSoundNode: public scene::Node,
 		public EntityNode,
 		public Namespaced
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		InstanceSet m_instances;
 		MiscSound m_contained;
 
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Nameable implementation
 		std::string name () const
@@ -395,16 +366,15 @@ class MiscSoundNode: public scene::Node,
 		}
 
 		MiscSoundNode (EntityClass* eclass) :
-			scene::Node(this, StaticTypeCasts::instance().get()), m_contained(eclass, *this,
-					InstanceSet::TransformChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<MiscSoundInstance>::Caller(m_instances))
+			m_contained(eclass, *this, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+					MiscSoundInstance>::Caller(m_instances))
 		{
 		}
 		MiscSoundNode (const MiscSoundNode& other) :
-				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), Namespaced(other),
-					m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
-							InstanceSetEvaluateTransform<MiscSoundInstance>::Caller(m_instances))
+				scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(other),
+					TransformNode(other), EntityNode(other), Namespaced(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+									MiscSoundInstance>::Caller(m_instances))
 		{
 		}
 

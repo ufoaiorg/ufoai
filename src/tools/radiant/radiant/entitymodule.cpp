@@ -33,7 +33,6 @@
 #include "preferencesystem.h"
 #include "iradiant.h"
 #include "namespace.h"
-#include "typesystem.h"
 #include "../libs/entity/entity.h"
 #include "itextures.h"
 #include "modulesystem/singletonmodule.h"
@@ -53,7 +52,7 @@ class EntityDependencies: public GlobalRadiantModuleRef,
 {
 };
 
-class EntityAPI: public TypeSystemRef
+class EntityAPI
 {
 		EntityCreator* m_entity;
 	public:

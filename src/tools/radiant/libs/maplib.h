@@ -155,19 +155,6 @@ class MapRoot: public scene::Node,
 		public MapFile,
 		public scene::Traversable
 {
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		IdentityTransform m_transform;
 		TraversableNodeSet m_traverse;
 		InstanceSet m_instances;
@@ -175,7 +162,6 @@ class MapRoot: public scene::Node,
 		NameableString m_name;
 		UndoFileChangeTracker m_changeTracker;
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// scene::Traversable Implementation
 		virtual void insert (Node& node)
@@ -223,7 +209,7 @@ class MapRoot: public scene::Node,
 		}
 
 		MapRoot (const std::string& name) :
-			scene::Node(this, StaticTypeCasts::instance().get()), m_name(name)
+			m_name(name)
 		{
 			m_isRoot = true;
 

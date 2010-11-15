@@ -119,7 +119,6 @@ void PicoModelInstance::testSelect (Selector& selector, SelectionTest& test)
  * provided file extension.
  */
 PicoModelNode::PicoModelNode (picoModel_t* model, const std::string& ext) :
-	scene::Node(this, StaticTypeCasts::instance().get()),
 	m_picomodel(model)
 {
 }

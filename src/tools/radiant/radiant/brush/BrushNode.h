@@ -37,19 +37,6 @@ class BrushNode: public scene::Node,
 		public MapExporter,
 		public IBrushNode
 {
-		// The typecast class (needed to cast this node onto other types)
-		class TypeCasts
-		{
-				NodeTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-				}
-				NodeTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
 
 		// The instances of this node
 		InstanceSet m_instances;
@@ -60,8 +47,6 @@ class BrushNode: public scene::Node,
 		BrushTokenExporter m_mapExporter;
 
 	public:
-
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Nameable implemenation
 		std::string name() const {
@@ -88,23 +73,17 @@ class BrushNode: public scene::Node,
 			return m_brush;
 		}
 
-		// greebo: Returns the casted types of this node
-		Brush& get (NullType<Brush> )
-		{
-			return m_brush;
-		}
 		// Constructor
 		BrushNode () :
-			scene::Node(this, StaticTypeCasts::instance().get()), m_brush(*this, InstanceSetEvaluateTransform<
-					BrushInstance>::Caller(m_instances), InstanceSet::BoundsChangedCaller(m_instances)), m_mapImporter(
-					m_brush), m_mapExporter(m_brush)
+			m_brush(*this, InstanceSetEvaluateTransform<BrushInstance>::Caller(m_instances),
+					InstanceSet::BoundsChangedCaller(m_instances)), m_mapImporter(m_brush), m_mapExporter(m_brush)
 		{
 		}
 		// Copy Constructor
 		BrushNode (const BrushNode& other) :
-			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					Nameable(other), Snappable(other), TransformNode(other), MapImporter(other), MapExporter(other),
-					m_brush(other.m_brush, *this, InstanceSetEvaluateTransform<BrushInstance>::Caller(m_instances),
+			scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(other),
+					TransformNode(other), MapImporter(other), MapExporter(other), m_brush(other.m_brush, *this,
+							InstanceSetEvaluateTransform<BrushInstance>::Caller(m_instances),
 							InstanceSet::BoundsChangedCaller(m_instances)), m_mapImporter(m_brush), m_mapExporter(
 							m_brush)
 		{
