@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "iscenegraph.h"
 #include "generic/callbackfwd.h"
 
+const std::size_t MAPFILE_MAX_CHANGES = std::numeric_limits<std::size_t>::max();
+
 class MapFile {
 public:
 	STRING_CONSTANT(Name, "MapFile");
