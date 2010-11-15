@@ -114,6 +114,10 @@ class SingletonModel
 		{
 			return m_traverse;
 		}
+		const scene::Traversable& getTraversable () const
+		{
+			return m_traverse;
+		}
 
 		void modelChanged (const std::string& value)
 		{

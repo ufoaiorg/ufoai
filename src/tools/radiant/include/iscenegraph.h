@@ -165,9 +165,9 @@ namespace scene
 					}
 
 					/** @brief Called when a node is added to the container. */
-					virtual void insert (Node& node) = 0;
+					virtual void insertChild (Node& node) = 0;
 					/** @brief Called when a node is removed from the container. */
-					virtual void erase (Node& node) = 0;
+					virtual void eraseChild (Node& node) = 0;
 			};
 
 			class Walker

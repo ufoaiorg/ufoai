@@ -8,7 +8,7 @@ namespace map {
 /**
  * greebo: This is a temporary container (node) used during map object import.
  */
-class BasicContainer: public scene::Node
+class BasicContainer: public scene::Node, public scene::Traversable
 {
 		class TypeCasts
 		{
@@ -16,7 +16,6 @@ class BasicContainer: public scene::Node
 			public:
 				TypeCasts (void)
 				{
-					NodeContainedCast<BasicContainer, scene::Traversable>::install(m_casts);
 				}
 				NodeTypeCastTable& get (void)
 				{
@@ -29,10 +28,23 @@ class BasicContainer: public scene::Node
 
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		scene::Traversable& get (NullType<scene::Traversable> )
-		{
-			return m_traverse;
+		// Traversable implementation
+		void insert(Node& node) {
+			m_traverse.insert(node);
 		}
+
+		void erase(Node& node) {
+			m_traverse.erase(node);
+		}
+
+		void traverse(const Walker& walker) {
+			m_traverse.traverse(walker);
+		}
+
+		bool empty() const {
+			return m_traverse.empty();
+		}
+
 
 		BasicContainer () :
 			scene::Node(this, StaticTypeCasts::instance().get())

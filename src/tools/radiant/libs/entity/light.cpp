@@ -887,13 +887,13 @@ class LightNode: public scene::Node,
 			return (new LightNode(*this))->node();
 		}
 
-		void insert (scene::Node& child)
+		void insertChild (scene::Node& child)
 		{
-			m_instances.insert(child);
+			m_instances.insertChild(child);
 		}
-		void erase (scene::Node& child)
+		void eraseChild (scene::Node& child)
 		{
-			m_instances.erase(child);
+			m_instances.eraseChild(child);
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)

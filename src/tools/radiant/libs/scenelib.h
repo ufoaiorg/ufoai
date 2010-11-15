@@ -267,7 +267,7 @@ inline scene::Instantiable* Node_getInstantiable (scene::Node& node)
 
 inline scene::Traversable* Node_getTraversable (scene::Node& node)
 {
-	return NodeTypeCast<scene::Traversable>::cast(node);
+	return dynamic_cast<scene::Traversable*>(&node);
 }
 
 inline void Node_traverseSubgraph (scene::Node& node, const scene::Traversable::Walker& walker)

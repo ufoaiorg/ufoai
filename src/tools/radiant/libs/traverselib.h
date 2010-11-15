@@ -50,12 +50,12 @@ class TraversableObserverInsertOutputIterator
 		}
 		TraversableObserverInsertOutputIterator& operator= (const NodeReference& node)
 		{
-			m_observer->insert(node);
+			m_observer->insertChild(node);
 			return *this;
 		}
 		TraversableObserverInsertOutputIterator& operator= (const NodeSmartReference& node)
 		{
-			m_observer->insert(node);
+			m_observer->insertChild(node);
 			return *this;
 		}
 		TraversableObserverInsertOutputIterator& operator* ()
@@ -89,12 +89,12 @@ class TraversableObserverEraseOutputIterator
 		}
 		TraversableObserverEraseOutputIterator& operator= (const NodeReference& node)
 		{
-			m_observer->erase(node);
+			m_observer->eraseChild(node);
 			return *this;
 		}
 		TraversableObserverEraseOutputIterator& operator= (const NodeSmartReference& node)
 		{
-			m_observer->erase(node);
+			m_observer->eraseChild(node);
 			return *this;
 		}
 		TraversableObserverEraseOutputIterator& operator* ()
@@ -143,7 +143,7 @@ class TraversableNodeSet: public scene::Traversable
 		{
 			if (m_observer) {
 				for (UnsortedNodeSet::iterator i = m_children.begin(); i != m_children.end(); ++i) {
-					m_observer->insert(*i);
+					m_observer->insertChild(*i);
 				}
 			}
 		}
@@ -151,7 +151,7 @@ class TraversableNodeSet: public scene::Traversable
 		{
 			if (m_observer) {
 				for (UnsortedNodeSet::iterator i = m_children.begin(); i != m_children.end(); ++i) {
-					m_observer->erase(*i);
+					m_observer->eraseChild(*i);
 				}
 			}
 		}
@@ -208,7 +208,7 @@ class TraversableNodeSet: public scene::Traversable
 			m_children.insert(NodeSmartReference(node));
 
 			if (m_observer) {
-				m_observer->insert(node);
+				m_observer->insertChild(node);
 			}
 		}
 		/// \brief \copydoc scene::Traversable::erase()
@@ -220,7 +220,7 @@ class TraversableNodeSet: public scene::Traversable
 			ASSERT_MESSAGE(m_children.find(NodeSmartReference(node)) != m_children.end(), "TraversableNodeSet::erase - failed to find element");
 
 			if (m_observer) {
-				m_observer->erase(node);
+				m_observer->eraseChild(node);
 			}
 
 			m_children.erase(NodeSmartReference(node));
@@ -277,14 +277,14 @@ class TraversableNode: public scene::Traversable
 			ASSERT_MESSAGE(m_observer == 0, "TraversableNode::attach - cannot attach observer");
 			m_observer = observer;
 			if (m_node != 0) {
-				m_observer->insert(*m_node);
+				m_observer->insertChild(*m_node);
 			}
 		}
 		void detach (Observer* observer)
 		{
 			ASSERT_MESSAGE(m_observer == observer, "TraversableNode::detach - cannot detach observer");
 			if (m_node != 0) {
-				m_observer->erase(*m_node);
+				m_observer->eraseChild(*m_node);
 			}
 			m_observer = 0;
 		}
@@ -298,7 +298,7 @@ class TraversableNode: public scene::Traversable
 			node.IncRef();
 
 			if (m_observer != 0) {
-				m_observer->insert(node);
+				m_observer->insertChild(node);
 			}
 		}
 		void erase (scene::Node& node)
@@ -306,7 +306,7 @@ class TraversableNode: public scene::Traversable
 			assert(m_node == &node);
 
 			if (m_observer != 0) {
-				m_observer->erase(node);
+				m_observer->eraseChild(node);
 			}
 
 			m_node = 0;
@@ -343,7 +343,7 @@ class TraversableObserverInsert
 		}
 		void operator() (scene::Traversable::Observer& observer) const
 		{
-			observer.insert(node);
+			observer.insertChild(node);
 		}
 };
 
@@ -357,7 +357,7 @@ class TraversableObserverErase
 		}
 		void operator() (scene::Traversable::Observer& observer) const
 		{
-			observer.erase(node);
+			observer.eraseChild(node);
 		}
 };
 
@@ -365,11 +365,11 @@ class TraversableObserverPairRelay: public ReferencePair<scene::Traversable::Obs
 		public scene::Traversable::Observer
 {
 	public:
-		void insert (scene::Node& node)
+		void insertChild (scene::Node& node)
 		{
 			forEach(TraversableObserverInsert(node));
 		}
-		void erase (scene::Node& node)
+		void eraseChild (scene::Node& node)
 		{
 			forEach(TraversableObserverErase(node));
 		}

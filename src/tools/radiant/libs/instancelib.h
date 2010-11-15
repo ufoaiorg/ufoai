@@ -112,14 +112,14 @@ class InstanceSet: public scene::Traversable::Observer
 		}
 
 		// traverse observer
-		void insert (scene::Node& child)
+		void insertChild (scene::Node& child)
 		{
 			for (iterator i = begin(); i != end(); ++i) {
 				Node_traverseSubgraph(child, InstanceSubgraphWalker((*i).first.first, (*i).first.second, (*i).second));
 				(*i).second->boundsChanged();
 			}
 		}
-		void erase (scene::Node& child)
+		void eraseChild (scene::Node& child)
 		{
 			for (iterator i = begin(); i != end(); ++i) {
 				Node_traverseSubgraph(child, UninstanceSubgraphWalker((*i).first.first, (*i).first.second));

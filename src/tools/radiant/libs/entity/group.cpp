@@ -125,6 +125,11 @@ class Group
 			return m_traverse;
 		}
 
+		const scene::Traversable& getTraversable() const
+		{
+			return m_traverse;
+		}
+
 		Namespaced& getNamespaced ()
 		{
 			return m_nameKeys;
@@ -217,7 +222,8 @@ class GroupNode: public scene::Node,
 		public scene::Traversable::Observer,
 		public Nameable,
 		public Snappable,
-		public TransformNode
+		public TransformNode,
+		public scene::Traversable
 {
 		class TypeCasts
 		{
@@ -225,7 +231,6 @@ class GroupNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<GroupNode, scene::Traversable>::install(m_casts);
 					NodeContainedCast<GroupNode, Entity>::install(m_casts);
 					NodeContainedCast<GroupNode, Namespaced>::install(m_casts);
 				}
@@ -261,11 +266,24 @@ class GroupNode: public scene::Node,
 			return m_contained.getTransformNode().localToParent();
 		}
 
-		// Typecast functions
-		scene::Traversable& get (NullType<scene::Traversable> )
-		{
-			return m_contained.getTraversable();
+		// Traversable implementation
+		void insert(Node& node) {
+			m_contained.getTraversable().insert(node);
 		}
+
+		void erase(Node& node) {
+			m_contained.getTraversable().erase(node);
+		}
+
+		void traverse(const Walker& walker) {
+			m_contained.getTraversable().traverse(walker);
+		}
+
+		bool empty() const {
+			return m_contained.getTraversable().empty();
+		}
+
+		// Typecast functions
 		Entity& get (NullType<Entity> )
 		{
 			return m_contained.getEntity();
@@ -303,13 +321,13 @@ class GroupNode: public scene::Node,
 			return (new GroupNode(*this))->node();
 		}
 
-		void insert (scene::Node& child)
+		void insertChild (scene::Node& child)
 		{
-			m_instances.insert(child);
+			m_instances.insertChild(child);
 		}
-		void erase (scene::Node& child)
+		void eraseChild (scene::Node& child)
 		{
-			m_instances.erase(child);
+			m_instances.eraseChild(child);
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)

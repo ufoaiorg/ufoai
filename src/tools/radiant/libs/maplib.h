@@ -152,7 +152,8 @@ class MapRoot: public scene::Node,
 		public scene::Traversable::Observer,
 		public Nameable,
 		public TransformNode,
-		public MapFile
+		public MapFile,
+		public scene::Traversable
 {
 		class TypeCasts
 		{
@@ -160,7 +161,6 @@ class MapRoot: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<MapRoot, scene::Traversable>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -177,9 +177,22 @@ class MapRoot: public scene::Node,
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		scene::Traversable& get (NullType<scene::Traversable> )
+		// scene::Traversable Implementation
+		virtual void insert (Node& node)
 		{
-			return m_traverse;
+			m_traverse.insert(node);
+		}
+		virtual void erase (Node& node)
+		{
+			m_traverse.erase(node);
+		}
+		virtual void traverse (const Walker& walker)
+		{
+			m_traverse.traverse(walker);
+		}
+		virtual bool empty () const
+		{
+			return m_traverse.empty();
 		}
 
 		// TransformNode implementation
@@ -242,13 +255,14 @@ class MapRoot: public scene::Node,
 			}
 		}
 
-		void insert (scene::Node& child)
+		// scene::Traversable::Observer implementation
+		void insertChild (scene::Node& child)
 		{
-			m_instances.insert(child);
+			m_instances.insertChild(child);
 		}
-		void erase (scene::Node& child)
+		void eraseChild (scene::Node& child)
 		{
-			m_instances.erase(child);
+			m_instances.eraseChild(child);
 		}
 
 		scene::Node& clone () const

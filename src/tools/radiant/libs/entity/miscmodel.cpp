@@ -120,9 +120,9 @@ class MiscModel: public Snappable
 				const Callback& evaluateTransform) :
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_anglesKey(
 					AnglesChangedCaller(*this)), m_angles(ANGLESKEY_IDENTITY), m_scaleKey(ScaleChangedCaller(*this)),
-					m_scale(SCALEKEY_IDENTITY), m_named(m_entity), m_nameKeys(m_entity),
-					m_renderName(m_named, g_vector3_identity), m_transformChanged(transformChanged),
-					m_evaluateTransform(evaluateTransform)
+					m_scale(SCALEKEY_IDENTITY), m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named,
+							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
+							evaluateTransform)
 		{
 			construct();
 		}
@@ -130,9 +130,9 @@ class MiscModel: public Snappable
 				const Callback& evaluateTransform) :
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
 					m_anglesKey(AnglesChangedCaller(*this)), m_angles(ANGLESKEY_IDENTITY), m_scaleKey(
-							ScaleChangedCaller(*this)), m_scale(SCALEKEY_IDENTITY), m_named(
-							m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
-					m_transformChanged(transformChanged), m_evaluateTransform(evaluateTransform)
+							ScaleChangedCaller(*this)), m_scale(SCALEKEY_IDENTITY), m_named(m_entity), m_nameKeys(
+							m_entity), m_renderName(m_named, g_vector3_identity), m_transformChanged(transformChanged),
+					m_evaluateTransform(evaluateTransform)
 		{
 			construct();
 		}
@@ -166,6 +166,11 @@ class MiscModel: public Snappable
 		{
 			return m_model.getTraversable();
 		}
+		const scene::Traversable& getTraversable () const
+		{
+			return m_model.getTraversable();
+		}
+
 		Namespaced& getNamespaced ()
 		{
 			return m_nameKeys;
@@ -276,9 +281,8 @@ class MiscModelInstance: public TargetableInstance, public TransformModifier, pu
 		STRING_CONSTANT(Name, "MiscModelInstance");
 
 		MiscModelInstance (const scene::Path& path, scene::Instance* parent, MiscModel& miscmodel) :
-			TargetableInstance(path, parent, miscmodel.getEntity(), *this),
-					TransformModifier(MiscModel::TransformChangedCaller(miscmodel), ApplyTransformCaller(*this)),
-					m_contained(miscmodel)
+			TargetableInstance(path, parent, miscmodel.getEntity(), *this), TransformModifier(
+					MiscModel::TransformChangedCaller(miscmodel), ApplyTransformCaller(*this)), m_contained(miscmodel)
 		{
 			m_contained.instanceAttach(Instance::path());
 			StaticRenderableConnectionLines::instance().attach(*this);
@@ -319,7 +323,8 @@ class MiscModelNode: public scene::Node,
 		public scene::Traversable::Observer,
 		public Nameable,
 		public Snappable,
-		public TransformNode
+		public TransformNode,
+		public scene::Traversable
 {
 		class TypeCasts
 		{
@@ -327,7 +332,6 @@ class MiscModelNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<MiscModelNode, scene::Traversable>::install(m_casts);
 					NodeContainedCast<MiscModelNode, Entity>::install(m_casts);
 					NodeContainedCast<MiscModelNode, Namespaced>::install(m_casts);
 				}
@@ -353,19 +357,38 @@ class MiscModelNode: public scene::Node,
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		// Snappable implementation
-		void snapto(float snap) {
+		void snapto (float snap)
+		{
 			m_contained.snapto(snap);
 		}
 
 		// TransformNode implementation
-		const Matrix4& localToParent() const {
+		const Matrix4& localToParent () const
+		{
 			return m_contained.getTransformNode().localToParent();
 		}
 
-		scene::Traversable& get (NullType<scene::Traversable> )
+		// Traversable implementation
+		void insert (Node& node)
 		{
-			return m_contained.getTraversable();
+			m_contained.getTraversable().insert(node);
 		}
+
+		void erase (Node& node)
+		{
+			m_contained.getTraversable().erase(node);
+		}
+
+		void traverse (const Walker& walker)
+		{
+			m_contained.getTraversable().traverse(walker);
+		}
+
+		bool empty () const
+		{
+			return m_contained.getTraversable().empty();
+		}
+
 		Entity& get (NullType<Entity> )
 		{
 			return m_contained.getEntity();
@@ -405,13 +428,13 @@ class MiscModelNode: public scene::Node,
 			return (new MiscModelNode(*this))->node();
 		}
 
-		void insert (scene::Node& child)
+		void insertChild (scene::Node& child)
 		{
-			m_instances.insert(child);
+			m_instances.insertChild(child);
 		}
-		void erase (scene::Node& child)
+		void eraseChild (scene::Node& child)
 		{
-			m_instances.erase(child);
+			m_instances.eraseChild(child);
 		}
 
 		scene::Instance* create (const scene::Path& path, scene::Instance* parent)
