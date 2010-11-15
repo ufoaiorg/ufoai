@@ -147,7 +147,12 @@ class UndoFileChangeTracker: public UndoTracker, public MapFile
 		}
 };
 
-class MapRoot: public scene::Node, public scene::Instantiable, public scene::Traversable::Observer
+class MapRoot: public scene::Node,
+		public scene::Instantiable,
+		public scene::Traversable::Observer,
+		public Nameable,
+		public TransformNode,
+		public MapFile
 {
 		class TypeCasts
 		{
@@ -156,8 +161,6 @@ class MapRoot: public scene::Node, public scene::Instantiable, public scene::Tra
 				TypeCasts ()
 				{
 					NodeContainedCast<MapRoot, scene::Traversable>::install(m_casts);
-					NodeContainedCast<MapRoot, TransformNode>::install(m_casts);
-					NodeContainedCast<MapRoot, MapFile>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -178,17 +181,32 @@ class MapRoot: public scene::Node, public scene::Instantiable, public scene::Tra
 		{
 			return m_traverse;
 		}
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_transform;
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_transform.localToParent();
 		}
-		Nameable& get (NullType<Nameable> )
-		{
-			return m_name;
+
+		// Nameable implementation
+		std::string name() const {
+			return m_name.name();
 		}
-		MapFile& get (NullType<MapFile> )
-		{
-			return m_changeTracker;
+
+		// MapFile implementation
+		virtual void save() {
+			m_changeTracker.save();
+		}
+		virtual bool saved() const {
+			return m_changeTracker.saved();
+		}
+		virtual void changed() {
+			m_changeTracker.changed();
+		}
+		virtual void setChangedCallback(const Callback& changed) {
+			m_changeTracker.setChangedCallback(changed);
+		}
+		virtual std::size_t changes() const {
+			return m_changeTracker.changes();
 		}
 
 		MapRoot (const std::string& name) :

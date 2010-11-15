@@ -324,7 +324,7 @@ class NullInstance: public scene::Instance
 {
 	public:
 		NullInstance () :
-			scene::Instance(scene::Path(makeReference(*g_null_node)), 0, 0, Static<InstanceTypeCastTable>::instance())
+			scene::Instance(scene::Path(makeReference(*g_null_node)), 0)
 		{
 		}
 };

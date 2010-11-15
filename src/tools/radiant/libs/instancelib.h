@@ -181,7 +181,10 @@ class InstanceEvaluateTransform
 		inline
 		void operator() (scene::Instance& instance) const
 		{
-			InstanceTypeCast<Type>::cast(instance)->evaluateTransform();
+			Type* t = dynamic_cast<Type*> (&instance);
+			if (t != NULL) {
+				t->evaluateTransform();
+			}
 		}
 };
 

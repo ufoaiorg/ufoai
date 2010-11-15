@@ -28,26 +28,13 @@
 #include "RenderablePicoModel.h"
 #include "SkinnedModel.h"
 
-class PicoModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public SkinnedModel
+class PicoModelInstance: public scene::Instance,
+		public Renderable,
+		public SelectionTestable,
+		public SkinnedModel,
+		public Bounded,
+		public Cullable
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-					InstanceContainedCast<PicoModelInstance, Bounded>::install(m_casts);
-					InstanceContainedCast<PicoModelInstance, Cullable>::install(m_casts);
-					InstanceStaticCast<PicoModelInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<PicoModelInstance, SelectionTestable>::install(m_casts);
-					InstanceStaticCast<PicoModelInstance, SkinnedModel>::install(m_casts);
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		model::RenderablePicoModel& m_picomodel;
 
 		class Remap
@@ -68,10 +55,12 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 		PicoModelInstance (const PicoModelInstance&);
 		PicoModelInstance operator= (const PicoModelInstance&);
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		Bounded& get (NullType<Bounded>);
-		Cullable& get (NullType<Cullable>);
+		// Bounded implementation
+		const AABB& localAABB () const;
+
+		// Cullable implementation
+		VolumeIntersectionValue intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const;
 
 		PicoModelInstance (const scene::Path& path, scene::Instance* parent, model::RenderablePicoModel& picomodel);
 		~PicoModelInstance ();
@@ -108,6 +97,7 @@ class PicoModelNode: public scene::Node, public scene::Instantiable
 		model::RenderablePicoModel m_picomodel;
 
 	public:
+
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
 		/** Construct a PicoModelNode with the parsed picoModel_t struct and the

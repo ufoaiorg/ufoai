@@ -104,6 +104,12 @@ class Group
 			}
 		}
 
+		void snapto (float snap) {
+			// TODO:mattn
+			//m_originKey.m_origin = origin_snapped(m_originKey.m_origin, snap);
+			//m_originKey.write(&_entity);
+		}
+
 		EntityKeyValues& getEntity ()
 		{
 			return m_entity;
@@ -132,6 +138,10 @@ class Group
 		const NamedEntity& getNameable () const
 		{
 			return m_named;
+		}
+
+		const TransformNode& getTransformNode() const {
+			return m_transform;
 		}
 
 		TransformNode& getTransformNode ()
@@ -174,28 +184,10 @@ class Group
 
 class GroupInstance: public TargetableInstance, public Renderable
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-					m_casts = TargetableInstance::StaticTypeCasts::instance().get();
-					InstanceStaticCast<GroupInstance, Renderable>::install(m_casts);
-				}
-
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		Group& m_contained;
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
-
 		GroupInstance (const scene::Path& path, scene::Instance* parent, Group& group) :
-			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), group.getEntity(), *this),
+			TargetableInstance(path, parent, group.getEntity(), *this),
 					m_contained(group)
 		{
 			m_contained.instanceAttach(Instance::path());
@@ -223,7 +215,9 @@ class GroupNode: public scene::Node,
 		public scene::Instantiable,
 		public scene::Cloneable,
 		public scene::Traversable::Observer,
-		public Nameable
+		public Nameable,
+		public Snappable,
+		public TransformNode
 {
 		class TypeCasts
 		{
@@ -232,7 +226,6 @@ class GroupNode: public scene::Node,
 				TypeCasts ()
 				{
 					NodeContainedCast<GroupNode, scene::Traversable>::install(m_casts);
-					NodeContainedCast<GroupNode, TransformNode>::install(m_casts);
 					NodeContainedCast<GroupNode, Entity>::install(m_casts);
 					NodeContainedCast<GroupNode, Namespaced>::install(m_casts);
 				}
@@ -258,13 +251,20 @@ class GroupNode: public scene::Node,
 
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
+		// Snappable implementation
+		void snapto(float snap) {
+			m_contained.snapto(snap);
+		}
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_contained.getTransformNode().localToParent();
+		}
+
+		// Typecast functions
 		scene::Traversable& get (NullType<scene::Traversable> )
 		{
 			return m_contained.getTraversable();
-		}
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_contained.getTransformNode();
 		}
 		Entity& get (NullType<Entity> )
 		{
@@ -283,7 +283,7 @@ class GroupNode: public scene::Node,
 		}
 		GroupNode (const GroupNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), Nameable(other), m_contained(other.m_contained, *this,
+					scene::Traversable::Observer(other), Nameable(other), Snappable(other), TransformNode(other), m_contained(other.m_contained, *this,
 							InstanceSet::TransformChangedCaller(m_instances))
 		{
 			construct();

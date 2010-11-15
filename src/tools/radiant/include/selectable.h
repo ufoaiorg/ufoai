@@ -296,7 +296,7 @@ class SelectionTestable
 
 inline SelectionTestable* Instance_getSelectionTestable (scene::Instance& instance)
 {
-	return dynamic_cast<SelectionTestable*> (&instance);
+	return dynamic_cast<SelectionTestable*>(&instance);
 }
 
 class Plane3;

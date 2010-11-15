@@ -55,17 +55,19 @@
 
 #include "PicoModelNode.h"
 
-Bounded& PicoModelInstance::get (NullType<Bounded> )
+const AABB& PicoModelInstance::localAABB() const
 {
-	return m_picomodel;
+	return m_picomodel.localAABB();
 }
-Cullable& PicoModelInstance::get (NullType<Cullable> )
+
+// Cullable implementation
+VolumeIntersectionValue PicoModelInstance::intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const
 {
-	return m_picomodel;
+	return m_picomodel.intersectVolume(test, localToWorld);
 }
 
 PicoModelInstance::PicoModelInstance (const scene::Path& path, scene::Instance* parent, model::RenderablePicoModel& picomodel) :
-	Instance(path, parent, this, StaticTypeCasts::instance().get()), m_picomodel(picomodel),
+	Instance(path, parent), m_picomodel(picomodel),
 			m_skins(m_picomodel.getSurfaceCount())
 {
 }

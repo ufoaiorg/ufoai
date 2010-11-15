@@ -89,7 +89,7 @@ class NullModel: public Bounded, public Cullable
 		}
 };
 
-class NullModelInstance: public scene::Instance, public Renderable, public SelectionTestable
+class NullModelInstance: public scene::Instance, public Renderable, public SelectionTestable, public Bounded, public Cullable
 {
 		class TypeCasts
 		{
@@ -97,10 +97,6 @@ class NullModelInstance: public scene::Instance, public Renderable, public Selec
 			public:
 				TypeCasts ()
 				{
-					InstanceContainedCast<NullModelInstance, Bounded>::install(m_casts);
-					InstanceContainedCast<NullModelInstance, Cullable>::install(m_casts);
-					InstanceStaticCast<NullModelInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<NullModelInstance, SelectionTestable>::install(m_casts);
 				}
 				InstanceTypeCastTable& get ()
 				{
@@ -113,17 +109,19 @@ class NullModelInstance: public scene::Instance, public Renderable, public Selec
 
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		Bounded& get (NullType<Bounded> )
+		const AABB& localAABB() const
 		{
-			return m_nullmodel;
+			return m_nullmodel.localAABB();
 		}
-		Cullable& get (NullType<Cullable> )
+
+		// Cullable implementation
+		VolumeIntersectionValue intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const
 		{
-			return m_nullmodel;
+			return m_nullmodel.intersectVolume(test, localToWorld);
 		}
 
 		NullModelInstance (const scene::Path& path, scene::Instance* parent, NullModel& nullmodel) :
-			Instance(path, parent, this, StaticTypeCasts::instance().get()), m_nullmodel(nullmodel)
+			Instance(path, parent), m_nullmodel(nullmodel)
 		{
 		}
 

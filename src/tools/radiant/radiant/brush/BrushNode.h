@@ -26,7 +26,14 @@
 #include "brush.h"
 #include "brushtokens.h"
 
-class BrushNode: public scene::Node, public scene::Instantiable, public scene::Cloneable
+class BrushNode: public scene::Node,
+		public scene::Instantiable,
+		public scene::Cloneable,
+		public Nameable,
+		public Snappable,
+		public TransformNode,
+		public MapImporter,
+		public MapExporter
 {
 		// The typecast class (needed to cast this node onto other types)
 		class TypeCasts
@@ -35,11 +42,7 @@ class BrushNode: public scene::Node, public scene::Instantiable, public scene::C
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<BrushNode, Snappable>::install(m_casts);
-					NodeContainedCast<BrushNode, TransformNode>::install(m_casts);
 					NodeContainedCast<BrushNode, Brush>::install(m_casts);
-					NodeContainedCast<BrushNode, MapImporter>::install(m_casts);
-					NodeContainedCast<BrushNode, MapExporter>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -59,28 +62,28 @@ class BrushNode: public scene::Node, public scene::Instantiable, public scene::C
 
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
+		// Nameable implemenation
+		std::string name() const {
+			return "Brush";
+		}
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_brush.localToParent();
+		}
+
+		// MapImporter implementation
+		bool importTokens(Tokeniser& tokeniser) {
+			return m_mapImporter.importTokens(tokeniser);
+		}
+
+		// MapExporter implementation
+		void exportTokens(TokenWriter& writer) const {
+			m_mapExporter.exportTokens(writer);
+		}
+
 		// greebo: Returns the casted types of this node
-		Snappable& get (NullType<Snappable> )
-		{
-			return m_brush;
-		}
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_brush;
-		}
 		Brush& get (NullType<Brush> )
-		{
-			return m_brush;
-		}
-		MapImporter& get (NullType<MapImporter> )
-		{
-			return m_mapImporter;
-		}
-		MapExporter& get (NullType<MapExporter> )
-		{
-			return m_mapExporter;
-		}
-		Nameable& get (NullType<Nameable> )
 		{
 			return m_brush;
 		}
@@ -94,10 +97,16 @@ class BrushNode: public scene::Node, public scene::Instantiable, public scene::C
 		// Copy Constructor
 		BrushNode (const BrushNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
+					Nameable(other), Snappable(other), TransformNode(other), MapImporter(other), MapExporter(other),
 					m_brush(other.m_brush, *this, InstanceSetEvaluateTransform<BrushInstance>::Caller(m_instances),
 							InstanceSet::BoundsChangedCaller(m_instances)), m_mapImporter(m_brush), m_mapExporter(
 							m_brush)
 		{
+		}
+
+		// Snappable implementation
+		void snapto(float snap) {
+			m_brush.snapto(snap);
 		}
 
 		// Returns the actual scene node

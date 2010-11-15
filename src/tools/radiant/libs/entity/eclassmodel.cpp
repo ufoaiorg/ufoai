@@ -176,6 +176,10 @@ class EclassModel: public Snappable
 		{
 			return m_transform;
 		}
+		const TransformNode& getTransformNode () const
+		{
+			return m_transform;
+		}
 
 		void attach (scene::Traversable::Observer* observer)
 		{
@@ -245,10 +249,6 @@ class EclassModelInstance: public TargetableInstance, public TransformModifier, 
 			public:
 				TypeCasts ()
 				{
-					m_casts = TargetableInstance::StaticTypeCasts::instance().get();
-					InstanceStaticCast<EclassModelInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<EclassModelInstance, Transformable>::install(m_casts);
-					InstanceIdentityCast<EclassModelInstance>::install(m_casts);
 				}
 				InstanceTypeCastTable& get ()
 				{
@@ -263,7 +263,7 @@ class EclassModelInstance: public TargetableInstance, public TransformModifier, 
 		STRING_CONSTANT(Name, "EclassModelInstance");
 
 		EclassModelInstance (const scene::Path& path, scene::Instance* parent, EclassModel& contained) :
-			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),
+			TargetableInstance(path, parent, contained.getEntity(), *this),
 					TransformModifier(EclassModel::TransformChangedCaller(contained), ApplyTransformCaller(*this)),
 					m_contained(contained)
 		{
@@ -306,7 +306,9 @@ class EclassModelNode: public scene::Node,
 		public scene::Instantiable,
 		public scene::Cloneable,
 		public scene::Traversable::Observer,
-		public Nameable
+		public Nameable,
+		public Snappable,
+		public TransformNode
 {
 		class TypeCasts
 		{
@@ -315,11 +317,8 @@ class EclassModelNode: public scene::Node,
 				TypeCasts ()
 				{
 					NodeContainedCast<EclassModelNode, scene::Traversable>::install(m_casts);
-					NodeContainedCast<EclassModelNode, Snappable>::install(m_casts);
-					NodeContainedCast<EclassModelNode, TransformNode>::install(m_casts);
 					NodeContainedCast<EclassModelNode, Entity>::install(m_casts);
 					NodeContainedCast<EclassModelNode, Namespaced>::install(m_casts);
-					//NodeContainedCast<EclassModelNode, ModelSkin>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -342,17 +341,19 @@ class EclassModelNode: public scene::Node,
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
+		// Snappable implementation
+		void snapto(float snap) {
+			m_contained.snapto(snap);
+		}
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_contained.getTransformNode().localToParent();
+		}
+
 		scene::Traversable& get (NullType<scene::Traversable> )
 		{
 			return m_contained.getTraversable();
-		}
-		Snappable& get (NullType<Snappable> )
-		{
-			return m_contained;
-		}
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_contained.getTransformNode();
 		}
 		Entity& get (NullType<Entity> )
 		{
@@ -372,7 +373,7 @@ class EclassModelNode: public scene::Node,
 		}
 		EclassModelNode (const EclassModelNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), Nameable(other), m_contained(other.m_contained, *this,
+					scene::Traversable::Observer(other), Nameable(other), Snappable(other), TransformNode(other), m_contained(other.m_contained, *this,
 							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
 									EclassModelInstance>::Caller(m_instances))
 		{

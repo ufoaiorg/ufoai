@@ -171,6 +171,10 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 		{
 			return m_transform;
 		}
+		const TransformNode& getTransformNode () const
+		{
+			return m_transform;
+		}
 
 		const AABB& localAABB () const
 		{
@@ -252,7 +256,9 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 class MiscSoundInstance: public TargetableInstance,
 		public TransformModifier,
 		public Renderable,
-		public SelectionTestable
+		public SelectionTestable,
+		public Bounded,
+		public Cullable
 {
 		class TypeCasts
 		{
@@ -260,13 +266,6 @@ class MiscSoundInstance: public TargetableInstance,
 			public:
 				TypeCasts ()
 				{
-					m_casts = TargetableInstance::StaticTypeCasts::instance().get();
-					InstanceContainedCast<MiscSoundInstance, Bounded>::install(m_casts);
-					InstanceContainedCast<MiscSoundInstance, Cullable>::install(m_casts);
-					InstanceStaticCast<MiscSoundInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<MiscSoundInstance, SelectionTestable>::install(m_casts);
-					InstanceStaticCast<MiscSoundInstance, Transformable>::install(m_casts);
-					InstanceIdentityCast<MiscSoundInstance>::install(m_casts);
 				}
 				InstanceTypeCastTable& get ()
 				{
@@ -280,19 +279,22 @@ class MiscSoundInstance: public TargetableInstance,
 
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		Bounded& get (NullType<Bounded> )
+		// Bounded implementation
+		const AABB& localAABB() const
 		{
-			return m_contained;
+			return m_contained.localAABB();
 		}
-		Cullable& get (NullType<Cullable> )
+
+		// Cullable implementation
+		VolumeIntersectionValue intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const
 		{
-			return m_contained;
+			return m_contained.intersectVolume(test, localToWorld);
 		}
 
 		STRING_CONSTANT(Name, "MiscSoundInstance");
 
 		MiscSoundInstance (const scene::Path& path, scene::Instance* parent, MiscSound& contained) :
-			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),
+			TargetableInstance(path, parent, contained.getEntity(), *this),
 					TransformModifier(MiscSound::TransformChangedCaller(contained), ApplyTransformCaller(*this)),
 					m_contained(contained)
 		{
@@ -337,7 +339,7 @@ class MiscSoundInstance: public TargetableInstance,
 		typedef MemberCaller<MiscSoundInstance, &MiscSoundInstance::applyTransform> ApplyTransformCaller;
 };
 
-class MiscSoundNode: public scene::Node, public scene::Instantiable, public scene::Cloneable, public Nameable
+class MiscSoundNode: public scene::Node, public scene::Instantiable, public scene::Cloneable, public Nameable, public Snappable, public TransformNode
 {
 		class TypeCasts
 		{
@@ -345,8 +347,6 @@ class MiscSoundNode: public scene::Node, public scene::Instantiable, public scen
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<MiscSoundNode, Snappable>::install(m_casts);
-					NodeContainedCast<MiscSoundNode, TransformNode>::install(m_casts);
 					NodeContainedCast<MiscSoundNode, Entity>::install(m_casts);
 					NodeContainedCast<MiscSoundNode, Namespaced>::install(m_casts);
 				}
@@ -362,14 +362,16 @@ class MiscSoundNode: public scene::Node, public scene::Instantiable, public scen
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		Snappable& get (NullType<Snappable> )
-		{
-			return m_contained;
+		// Snappable implementation
+		void snapto(float snap) {
+			m_contained.snapto(snap);
 		}
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_contained.getTransformNode();
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_contained.getTransformNode().localToParent();
 		}
+
 		Entity& get (NullType<Entity> )
 		{
 			return m_contained.getEntity();
@@ -386,9 +388,10 @@ class MiscSoundNode: public scene::Node, public scene::Instantiable, public scen
 		{
 		}
 		MiscSoundNode (const MiscSoundNode& other) :
-				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other), Nameable(other), m_contained(
-					other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<MiscSoundInstance>::Caller(m_instances))
+				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
+					Nameable(other), Snappable(other), TransformNode(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+									MiscSoundInstance>::Caller(m_instances))
 		{
 		}
 

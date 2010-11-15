@@ -37,7 +37,7 @@ class CExportFormatWavefront: public BrushVisitor
 
 		void visit (scene::Instance& instance)
 		{
-			BrushInstance* bptr = InstanceTypeCast<BrushInstance>::cast(instance);
+			BrushInstance* bptr = dynamic_cast<BrushInstance*>(&instance);
 			if (bptr) {
 				Brush& brush(bptr->getBrush());
 				m_file << "\ng " << brush.name() << exported << "\n";

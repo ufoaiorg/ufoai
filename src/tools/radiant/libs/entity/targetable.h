@@ -318,9 +318,8 @@ class TargetableInstance: public SelectableInstance, public Targetable, public E
 		RenderableTargetingEntities m_renderable;
 	public:
 
-		TargetableInstance (const scene::Path& path, scene::Instance* parent, void* instance,
-				InstanceTypeCastTable& casts, EntityKeyValues& entity, Targetable& targetable) :
-			SelectableInstance(path, parent, instance, casts), m_entity(entity), m_targeted(targetable), m_renderable(
+		TargetableInstance (const scene::Path& path, scene::Instance* parent, EntityKeyValues& entity, Targetable& targetable) :
+			SelectableInstance(path, parent), m_entity(entity), m_targeted(targetable), m_renderable(
 					m_targeting.get())
 		{
 			m_entity.attach(*this);

@@ -45,7 +45,7 @@ class Editable
 
 inline Editable* Node_getEditable (scene::Node& node)
 {
-	return dynamic_cast<Editable*> (&node);
+	return dynamic_cast<Editable*>(&node);
 }
 
 class Snappable

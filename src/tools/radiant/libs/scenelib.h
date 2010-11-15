@@ -283,7 +283,7 @@ inline void Node_traverseSubgraph (scene::Node& node, const scene::Traversable::
 
 inline TransformNode* Node_getTransformNode (scene::Node& node)
 {
-	return NodeTypeCast<TransformNode>::cast(node);
+	return dynamic_cast<TransformNode*>(&node);
 }
 
 inline bool operator< (scene::Node& node, scene::Node& other)
@@ -468,35 +468,6 @@ class InstanceType: public StaticTypeSystemInitialiser
 		}
 };
 
-template<typename Type>
-class StaticInstanceType
-{
-	public:
-		enum unnamed0
-		{
-			SIZE = INSTANCETYPEID_MAX
-		};
-		static TypeId getTypeId ()
-		{
-			return Static<InstanceType<Type> >::instance().getTypeId();
-		}
-};
-
-template<typename Type, typename Base>
-class InstanceStaticCast: public CastInstaller<StaticInstanceType<Base> , StaticCast<Type, Base> >
-{
-};
-
-template<typename Type, typename Contained>
-class InstanceContainedCast: public CastInstaller<StaticInstanceType<Contained> , ContainedCast<Type, Contained> >
-{
-};
-
-template<typename Type>
-class InstanceIdentityCast: public CastInstaller<StaticInstanceType<Type> , IdentityCast<Type> >
-{
-};
-
 inline Selectable* Instance_getSelectable (scene::Instance& instance);
 inline const Selectable* Instance_getSelectable (const scene::Instance& instance);
 
@@ -574,8 +545,6 @@ namespace scene
 
 			Path m_path;
 			Instance* m_parent;
-			void* m_instance;
-			InstanceTypeCastTable& m_casts;
 
 			mutable Matrix4 m_local2world;
 			mutable AABB m_bounds;
@@ -647,8 +616,8 @@ namespace scene
 			Instance& operator= (const scene::Instance& other);
 		public:
 
-			Instance (const scene::Path& path, Instance* parent, void* instance, InstanceTypeCastTable& casts) :
-				m_path(path), m_parent(parent), m_instance(instance), m_casts(casts),
+			Instance (const scene::Path& path, Instance* parent) :
+				m_path(path), m_parent(parent),
 						m_local2world(Matrix4::getIdentity()), m_transformChanged(true), m_transformMutex(false),
 						m_boundsChanged(true), m_boundsMutex(false), m_childBoundsChanged(true), m_childBoundsMutex(
 								false), m_isSelectedChanged(true), m_childSelectedChanged(true),
@@ -667,11 +636,6 @@ namespace scene
 
 			bool visible() const {
 				return m_path.top().get().visible();
-			}
-
-			void* cast (TypeId typeId) const
-			{
-				return m_casts.cast(typeId, m_instance);
 			}
 
 			const Matrix4& localToWorld () const
@@ -771,20 +735,6 @@ namespace scene
 	};
 }
 
-template<typename Type>
-class InstanceTypeCast
-{
-	public:
-		static Type* cast (scene::Instance& instance)
-		{
-			return static_cast<Type*> (instance.cast(StaticInstanceType<Type>::getTypeId()));
-		}
-		static const Type* cast (const scene::Instance& instance)
-		{
-			return static_cast<const Type*> (instance.cast(StaticInstanceType<Type>::getTypeId()));
-		}
-};
-
 template<typename Functor>
 class InstanceWalker: public scene::Graph::Walker
 {
@@ -834,8 +784,8 @@ class InstanceApply: public Functor
 		}
 		void operator() (scene::Instance& instance) const
 		{
-			Type* result = InstanceTypeCast<Type>::cast(instance);
-			if (result != 0) {
+			Type* result = dynamic_cast<Type*>(&instance);
+			if (result != NULL) {
 				Functor::operator()(*result);
 			}
 		}
@@ -843,11 +793,11 @@ class InstanceApply: public Functor
 
 inline Selectable* Instance_getSelectable (scene::Instance& instance)
 {
-	return InstanceTypeCast<Selectable>::cast(instance);
+	return dynamic_cast<Selectable*>(&instance);
 }
 inline const Selectable* Instance_getSelectable (const scene::Instance& instance)
 {
-	return InstanceTypeCast<Selectable>::cast(instance);
+	return dynamic_cast<const Selectable*>(&instance);
 }
 
 class AnyInstanceSelected: public scene::Instantiable::Visitor
@@ -929,35 +879,35 @@ class SelectableSetSelected
 
 inline Bounded* Instance_getBounded (scene::Instance& instance)
 {
-	return InstanceTypeCast<Bounded>::cast(instance);
+	return dynamic_cast<Bounded*>(&instance);
 }
 inline const Bounded* Instance_getBounded (const scene::Instance& instance)
 {
-	return InstanceTypeCast<Bounded>::cast(instance);
+	return dynamic_cast<const Bounded*>(&instance);
 }
 
 inline Transformable* Instance_getTransformable (scene::Instance& instance)
 {
-	return InstanceTypeCast<Transformable>::cast(instance);
+	return dynamic_cast<Transformable*>(&instance);
 }
 inline const Transformable* Instance_getTransformable (const scene::Instance& instance)
 {
-	return InstanceTypeCast<Transformable>::cast(instance);
+	return dynamic_cast<const Transformable*>(&instance);
 }
 
 inline ComponentSelectionTestable* Instance_getComponentSelectionTestable (scene::Instance& instance)
 {
-	return InstanceTypeCast<ComponentSelectionTestable>::cast(instance);
+	return dynamic_cast<ComponentSelectionTestable*>(&instance);
 }
 
 inline ComponentEditable* Instance_getComponentEditable (scene::Instance& instance)
 {
-	return InstanceTypeCast<ComponentEditable>::cast(instance);
+	return dynamic_cast<ComponentEditable*>(&instance);
 }
 
 inline ComponentSnappable* Instance_getComponentSnappable (scene::Instance& instance)
 {
-	return InstanceTypeCast<ComponentSnappable>::cast(instance);
+	return dynamic_cast<ComponentSnappable*>(&instance);
 }
 
 inline void Instance_setSelected (scene::Instance& instance, bool selected)

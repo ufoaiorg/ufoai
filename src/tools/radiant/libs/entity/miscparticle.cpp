@@ -226,6 +226,10 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		{
 			return m_transform;
 		}
+		const TransformNode& getTransformNode () const
+		{
+			return m_transform;
+		}
 
 		const AABB& localAABB () const
 		{
@@ -300,7 +304,9 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 class MiscParticleInstance: public TargetableInstance,
 		public TransformModifier,
 		public Renderable,
-		public SelectionTestable
+		public SelectionTestable,
+		public Bounded,
+		public Cullable
 {
 		class TypeCasts
 		{
@@ -308,13 +314,6 @@ class MiscParticleInstance: public TargetableInstance,
 			public:
 				TypeCasts ()
 				{
-					m_casts = TargetableInstance::StaticTypeCasts::instance().get();
-					InstanceContainedCast<MiscParticleInstance, Bounded>::install(m_casts);
-					InstanceContainedCast<MiscParticleInstance, Cullable>::install(m_casts);
-					InstanceStaticCast<MiscParticleInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<MiscParticleInstance, SelectionTestable>::install(m_casts);
-					InstanceStaticCast<MiscParticleInstance, Transformable>::install(m_casts);
-					InstanceIdentityCast<MiscParticleInstance>::install(m_casts);
 				}
 				InstanceTypeCastTable& get ()
 				{
@@ -328,19 +327,22 @@ class MiscParticleInstance: public TargetableInstance,
 
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		Bounded& get (NullType<Bounded> )
+		// Bounded implementation
+		const AABB& localAABB() const
 		{
-			return m_contained;
+			return m_contained.localAABB();
 		}
-		Cullable& get (NullType<Cullable> )
+
+		// Cullable implementation
+		VolumeIntersectionValue intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const
 		{
-			return m_contained;
+			return m_contained.intersectVolume(test, localToWorld);
 		}
 
 		STRING_CONSTANT(Name, "MiscParticleInstance");
 
 		MiscParticleInstance (const scene::Path& path, scene::Instance* parent, MiscParticle& contained) :
-			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),
+			TargetableInstance(path, parent, contained.getEntity(), *this),
 					TransformModifier(MiscParticle::TransformChangedCaller(contained), ApplyTransformCaller(*this)),
 					m_contained(contained)
 		{
@@ -385,7 +387,7 @@ class MiscParticleInstance: public TargetableInstance,
 		typedef MemberCaller<MiscParticleInstance, &MiscParticleInstance::applyTransform> ApplyTransformCaller;
 };
 
-class MiscParticleNode: public scene::Node, public scene::Instantiable, public scene::Cloneable, public Nameable
+class MiscParticleNode: public scene::Node, public scene::Instantiable, public scene::Cloneable, public Nameable, public Snappable, public TransformNode
 {
 		class TypeCasts
 		{
@@ -393,8 +395,6 @@ class MiscParticleNode: public scene::Node, public scene::Instantiable, public s
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<MiscParticleNode, Snappable>::install(m_casts);
-					NodeContainedCast<MiscParticleNode, TransformNode>::install(m_casts);
 					NodeContainedCast<MiscParticleNode, Entity>::install(m_casts);
 					NodeContainedCast<MiscParticleNode, Namespaced>::install(m_casts);
 				}
@@ -410,14 +410,16 @@ class MiscParticleNode: public scene::Node, public scene::Instantiable, public s
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		Snappable& get (NullType<Snappable> )
-		{
-			return m_contained;
+		// Snappable implementation
+		void snapto(float snap) {
+			m_contained.snapto(snap);
 		}
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_contained.getTransformNode();
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_contained.getTransformNode().localToParent();
 		}
+
 		Entity& get (NullType<Entity> )
 		{
 			return m_contained.getEntity();
@@ -434,9 +436,10 @@ class MiscParticleNode: public scene::Node, public scene::Instantiable, public s
 		{
 		}
 		MiscParticleNode (const MiscParticleNode& other) :
-				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other), Nameable(other), m_contained(
-					other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
-					InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances))
+				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
+					Nameable(other), Snappable(other), TransformNode(other), m_contained(other.m_contained, *this,
+							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+									MiscParticleInstance>::Caller(m_instances))
 		{
 		}
 

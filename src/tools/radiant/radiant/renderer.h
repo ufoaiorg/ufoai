@@ -35,12 +35,12 @@
 
 inline Cullable* Instance_getCullable (scene::Instance& instance)
 {
-	return InstanceTypeCast<Cullable>::cast(instance);
+	return dynamic_cast<Cullable*>(&instance);
 }
 
 inline Renderable* Instance_getRenderable (scene::Instance& instance)
 {
-	return InstanceTypeCast<Renderable>::cast(instance);
+	return dynamic_cast<Renderable*>(&instance);
 }
 
 inline VolumeIntersectionValue Cullable_testVisible (scene::Instance& instance, const VolumeTest& volume,

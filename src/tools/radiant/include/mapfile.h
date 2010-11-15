@@ -42,7 +42,7 @@ public:
 #include "scenelib.h"
 
 inline MapFile* Node_getMapFile(scene::Node& node) {
-	return NodeTypeCast<MapFile>::cast(node);
+	return dynamic_cast<MapFile*>(&node);
 }
 
 template<typename Iterator>

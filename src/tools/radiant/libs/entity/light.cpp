@@ -585,7 +585,10 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		{
 			return m_transform;
 		}
-
+		const TransformNode& getTransformNode () const
+		{
+			return m_transform;
+		}
 		void attach (scene::Traversable::Observer* observer)
 		{
 			m_traverseObservers.attach(*observer);
@@ -719,40 +722,20 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 class LightInstance: public TargetableInstance,
 		public TransformModifier,
 		public Renderable,
-		public SelectionTestable
+		public SelectionTestable,
+		public Bounded
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-					m_casts = TargetableInstance::StaticTypeCasts::instance().get();
-					InstanceContainedCast<LightInstance, Bounded>::install(m_casts);
-					InstanceStaticCast<LightInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<LightInstance, SelectionTestable>::install(m_casts);
-					InstanceStaticCast<LightInstance, Transformable>::install(m_casts);
-					InstanceIdentityCast<LightInstance>::install(m_casts);
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		Light& m_contained;
 	public:
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
-
-		Bounded& get (NullType<Bounded> )
+		const AABB& localAABB() const
 		{
-			return m_contained;
+			return m_contained.localAABB();
 		}
 
 		STRING_CONSTANT(Name, "LightInstance");
 
 		LightInstance (const scene::Path& path, scene::Instance* parent, Light& contained) :
-			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),
+			TargetableInstance(path, parent, contained.getEntity(), *this),
 					TransformModifier(Light::TransformChangedCaller(contained), ApplyTransformCaller(*this)),
 					m_contained(contained)
 		{
@@ -813,7 +796,10 @@ class LightNode: public scene::Node,
 		public scene::Instantiable,
 		public scene::Cloneable,
 		public scene::Traversable::Observer,
-		public Nameable
+		public Nameable,
+		public Snappable,
+		public Editable,
+		public TransformNode
 {
 		class TypeCasts
 		{
@@ -821,9 +807,6 @@ class LightNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<LightNode, Editable>::install(m_casts);
-					NodeContainedCast<LightNode, Snappable>::install(m_casts);
-					NodeContainedCast<LightNode, TransformNode>::install(m_casts);
 					NodeContainedCast<LightNode, Entity>::install(m_casts);
 					NodeContainedCast<LightNode, Namespaced>::install(m_casts);
 				}
@@ -845,21 +828,24 @@ class LightNode: public scene::Node,
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
+		// Editable implementation
+		const Matrix4& getLocalPivot() const {
+			return m_contained.getLocalPivot();
+		}
+
+		// Snappable implementation
+		void snapto(float snap) {
+			m_contained.snapto(snap);
+		}
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_contained.getTransformNode().localToParent();
+		}
+
 		scene::Traversable& get (NullType<scene::Traversable> )
 		{
 			return m_contained.getTraversable();
-		}
-		Editable& get (NullType<Editable> )
-		{
-			return m_contained;
-		}
-		Snappable& get (NullType<Snappable> )
-		{
-			return m_contained;
-		}
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_contained.getTransformNode();
 		}
 		Entity& get (NullType<Entity> )
 		{
@@ -879,9 +865,10 @@ class LightNode: public scene::Node,
 		}
 		LightNode (const LightNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), Nameable(other), m_contained(other.m_contained, *this,
-							InstanceSet::TransformChangedCaller(m_instances), InstanceSet::BoundsChangedCaller(
-									m_instances), InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
+					scene::Traversable::Observer(other), Nameable(other), Snappable(other), Editable(other),
+					TransformNode(other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
+							m_instances), InstanceSet::BoundsChangedCaller(m_instances), InstanceSetEvaluateTransform<
+							LightInstance>::Caller(m_instances))
 		{
 			construct();
 		}

@@ -179,7 +179,10 @@ class GenericEntity: public Cullable, public Bounded, public Snappable
 		{
 			return m_transform;
 		}
-
+		const TransformNode& getTransformNode () const
+		{
+			return m_transform;
+		}
 		const AABB& localAABB () const
 		{
 			return m_aabb_local;
@@ -260,47 +263,30 @@ class GenericEntity: public Cullable, public Bounded, public Snappable
 class GenericEntityInstance: public TargetableInstance,
 		public TransformModifier,
 		public Renderable,
-		public SelectionTestable
+		public SelectionTestable,
+		public Bounded,
+		public Cullable
 {
-		class TypeCasts
-		{
-				InstanceTypeCastTable m_casts;
-			public:
-				TypeCasts ()
-				{
-					m_casts = TargetableInstance::StaticTypeCasts::instance().get();
-					InstanceContainedCast<GenericEntityInstance, Bounded>::install(m_casts);
-					InstanceContainedCast<GenericEntityInstance, Cullable>::install(m_casts);
-					InstanceStaticCast<GenericEntityInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<GenericEntityInstance, SelectionTestable>::install(m_casts);
-					InstanceStaticCast<GenericEntityInstance, Transformable>::install(m_casts);
-					InstanceIdentityCast<GenericEntityInstance>::install(m_casts);
-				}
-				InstanceTypeCastTable& get ()
-				{
-					return m_casts;
-				}
-		};
-
 		GenericEntity& m_contained;
 		mutable AABB m_bounds;
 	public:
 
-		typedef LazyStatic<TypeCasts> StaticTypeCasts;
-
-		Bounded& get (NullType<Bounded> )
+		// Bounded implementation
+		const AABB& localAABB() const
 		{
-			return m_contained;
+			return m_contained.localAABB();
 		}
-		Cullable& get (NullType<Cullable> )
+
+		// Cullable implementation
+		VolumeIntersectionValue intersectVolume (const VolumeTest& test, const Matrix4& localToWorld) const
 		{
-			return m_contained;
+			return m_contained.intersectVolume(test, localToWorld);
 		}
 
 		STRING_CONSTANT(Name, "GenericEntityInstance");
 
 		GenericEntityInstance (const scene::Path& path, scene::Instance* parent, GenericEntity& contained) :
-			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),
+			TargetableInstance(path, parent, contained.getEntity(), *this),
 					TransformModifier(GenericEntity::TransformChangedCaller(contained), ApplyTransformCaller(*this)),
 					m_contained(contained)
 		{
@@ -345,7 +331,7 @@ class GenericEntityInstance: public TargetableInstance,
 		typedef MemberCaller<GenericEntityInstance, &GenericEntityInstance::applyTransform> ApplyTransformCaller;
 };
 
-class GenericEntityNode: public scene::Node, public scene::Instantiable, public scene::Cloneable, public Nameable
+class GenericEntityNode: public scene::Node, public scene::Instantiable, public scene::Cloneable, public Nameable, public Snappable, public TransformNode
 {
 		class TypeCasts
 		{
@@ -353,8 +339,6 @@ class GenericEntityNode: public scene::Node, public scene::Instantiable, public 
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<GenericEntityNode, Snappable>::install(m_casts);
-					NodeContainedCast<GenericEntityNode, TransformNode>::install(m_casts);
 					NodeContainedCast<GenericEntityNode, Entity>::install(m_casts);
 					NodeContainedCast<GenericEntityNode, Namespaced>::install(m_casts);
 				}
@@ -370,10 +354,16 @@ class GenericEntityNode: public scene::Node, public scene::Instantiable, public 
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		Snappable& get (NullType<Snappable> )
-		{
-			return m_contained;
+		// Snappable implementation
+		void snapto(float snap) {
+			m_contained.snapto(snap);
 		}
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_contained.getTransformNode().localToParent();
+		}
+
 		TransformNode& get (NullType<TransformNode> )
 		{
 			return m_contained.getTransformNode();
@@ -395,7 +385,7 @@ class GenericEntityNode: public scene::Node, public scene::Instantiable, public 
 		}
 		GenericEntityNode (const GenericEntityNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					Nameable(other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
+					Nameable(other), Snappable(other), TransformNode(other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
 							m_instances), InstanceSetEvaluateTransform<GenericEntityInstance>::Caller(m_instances))
 		{
 		}

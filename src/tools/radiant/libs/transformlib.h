@@ -141,6 +141,7 @@ class TransformModifier: public Transformable
 					m_changed(changed), m_apply(apply), m_type(TRANSFORM_PRIMITIVE)
 		{
 		}
+
 		void setType (TransformModifierType type)
 		{
 			m_type = type;

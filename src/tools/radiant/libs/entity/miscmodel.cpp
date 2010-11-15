@@ -182,6 +182,10 @@ class MiscModel: public Snappable
 		{
 			return m_transform;
 		}
+		const TransformNode& getTransformNode () const
+		{
+			return m_transform;
+		}
 
 		void attach (scene::Traversable::Observer* observer)
 		{
@@ -258,10 +262,6 @@ class MiscModelInstance: public TargetableInstance, public TransformModifier, pu
 			public:
 				TypeCasts ()
 				{
-					m_casts = TargetableInstance::StaticTypeCasts::instance().get();
-					InstanceStaticCast<MiscModelInstance, Renderable>::install(m_casts);
-					InstanceStaticCast<MiscModelInstance, Transformable>::install(m_casts);
-					InstanceIdentityCast<MiscModelInstance>::install(m_casts);
 				}
 				InstanceTypeCastTable& get ()
 				{
@@ -276,7 +276,7 @@ class MiscModelInstance: public TargetableInstance, public TransformModifier, pu
 		STRING_CONSTANT(Name, "MiscModelInstance");
 
 		MiscModelInstance (const scene::Path& path, scene::Instance* parent, MiscModel& miscmodel) :
-			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), miscmodel.getEntity(), *this),
+			TargetableInstance(path, parent, miscmodel.getEntity(), *this),
 					TransformModifier(MiscModel::TransformChangedCaller(miscmodel), ApplyTransformCaller(*this)),
 					m_contained(miscmodel)
 		{
@@ -317,7 +317,9 @@ class MiscModelNode: public scene::Node,
 		public scene::Instantiable,
 		public scene::Cloneable,
 		public scene::Traversable::Observer,
-		public Nameable
+		public Nameable,
+		public Snappable,
+		public TransformNode
 {
 		class TypeCasts
 		{
@@ -326,8 +328,6 @@ class MiscModelNode: public scene::Node,
 				TypeCasts ()
 				{
 					NodeContainedCast<MiscModelNode, scene::Traversable>::install(m_casts);
-					NodeContainedCast<MiscModelNode, Snappable>::install(m_casts);
-					NodeContainedCast<MiscModelNode, TransformNode>::install(m_casts);
 					NodeContainedCast<MiscModelNode, Entity>::install(m_casts);
 					NodeContainedCast<MiscModelNode, Namespaced>::install(m_casts);
 				}
@@ -352,17 +352,19 @@ class MiscModelNode: public scene::Node,
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
+		// Snappable implementation
+		void snapto(float snap) {
+			m_contained.snapto(snap);
+		}
+
+		// TransformNode implementation
+		const Matrix4& localToParent() const {
+			return m_contained.getTransformNode().localToParent();
+		}
+
 		scene::Traversable& get (NullType<scene::Traversable> )
 		{
 			return m_contained.getTraversable();
-		}
-		Snappable& get (NullType<Snappable> )
-		{
-			return m_contained;
-		}
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_contained.getTransformNode();
 		}
 		Entity& get (NullType<Entity> )
 		{
@@ -382,9 +384,9 @@ class MiscModelNode: public scene::Node,
 		}
 		MiscModelNode (const MiscModelNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					scene::Traversable::Observer(other), Nameable(other), m_contained(other.m_contained, *this,
-							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
-									MiscModelInstance>::Caller(m_instances))
+					scene::Traversable::Observer(other), Nameable(other), Snappable(other), TransformNode(other),
+					m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
+							InstanceSetEvaluateTransform<MiscModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}
