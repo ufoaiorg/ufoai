@@ -69,7 +69,6 @@
 #include "gtkutil/messagebox.h"
 #include "gtkutil/filechooser.h"
 
-#include "maplib.h"
 #include "map/map.h"
 #include "qe3.h"
 #include "sidebar/sidebar.h"

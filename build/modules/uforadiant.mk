@@ -92,6 +92,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/map/map.cpp \
 	$(RADIANT_BASE)/radiant/map/MapFileChooserPreview.cpp \
 	$(RADIANT_BASE)/radiant/map/mapmodule.cpp \
+	$(RADIANT_BASE)/radiant/map/RootNode.cpp \
 	\
 	$(RADIANT_BASE)/radiant/namespace/NameObserver.cpp \
 	$(RADIANT_BASE)/radiant/namespace/Namespace.cpp \

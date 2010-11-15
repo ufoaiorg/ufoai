@@ -81,6 +81,7 @@
 #include "../ui/menu/UMPMenu.h"
 #include "../selection/algorithm/General.h"
 
+#include "RootNode.h"
 #include "MapFileChooserPreview.h"
 #include "BasicContainer.h"
 #include "MoveLevelWalker.h"

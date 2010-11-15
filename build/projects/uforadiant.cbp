@@ -560,6 +560,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\map\mapmodule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\parse.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\parse.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\map\RootNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\write.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\write.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\material.cpp" />
