@@ -27,6 +27,7 @@
 #define INCLUDED_SCENELIB_H
 
 #include "Bounded.h"
+#include "inode.h"
 #include "iscenegraph.h"
 #include "iselection.h"
 #include "ientity.h"
@@ -91,7 +92,7 @@ class ComponentSnappable
 
 namespace scene
 {
-	class Node
+	class Node : public INode
 	{
 		public:
 			enum unnamed0
@@ -118,7 +119,7 @@ namespace scene
 		public:
 			bool m_isRoot;
 
-			bool isRoot ()
+			bool isRoot () const
 			{
 				return m_isRoot;
 			}
@@ -163,11 +164,11 @@ namespace scene
 			{
 				m_state &= ~state;
 			}
-			bool visible ()
+			bool visible () const
 			{
 				return m_state == eVisible;
 			}
-			bool excluded ()
+			bool excluded () const
 			{
 				return (m_state & eExcluded) != 0;
 			}
