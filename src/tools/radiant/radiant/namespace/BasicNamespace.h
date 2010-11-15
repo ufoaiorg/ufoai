@@ -3,7 +3,7 @@
 
 #include "NameObserver.h"
 #include <map>
-#include "namespace.h"
+#include "inamespace.h"
 
 class BasicNamespace: public Namespace
 {

@@ -41,7 +41,7 @@
 #include "editable.h"
 #include "ifilesystem.h"
 #include "ieventmanager.h"
-#include "namespace.h"
+#include "inamespace.h"
 #include "moduleobserver.h"
 
 #include <set>

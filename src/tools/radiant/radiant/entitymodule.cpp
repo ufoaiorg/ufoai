@@ -32,7 +32,7 @@
 #include "iregistry.h"
 #include "preferencesystem.h"
 #include "iradiant.h"
-#include "namespace.h"
+#include "inamespace.h"
 #include "../libs/entity/entity.h"
 #include "itextures.h"
 #include "modulesystem/singletonmodule.h"

@@ -26,7 +26,7 @@
 #include <map>
 #include "generic/static.h"
 #include "entitylib.h"
-#include "namespace.h"
+#include "inamespace.h"
 
 static inline bool keyIsName (const std::string& key)
 {

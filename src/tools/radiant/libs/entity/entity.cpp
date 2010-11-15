@@ -23,7 +23,7 @@
 
 #include "ifilter.h"
 #include "selectable.h"
-#include "namespace.h"
+#include "inamespace.h"
 
 #include "scenelib.h"
 #include "entitylib.h"
