@@ -388,7 +388,7 @@ static void Node_OpEqualsGeneric(asIScriptGeneric * gen)
 
 static void Node_ExecuteMethod(asIScriptGeneric *gen)
 {
-	uiNodeMethod_t func = (uiNodeMethod_t) gen->GetFunctionUserData();
+	uiNodeMethod_t func = (uiNodeMethod_t) ((intptr_t) gen->GetFunctionUserData());
 	uiCallContext_t context;
 	/** @todo fix random number of param */
 	context.paramNumber = 0;
