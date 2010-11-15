@@ -337,7 +337,8 @@ class GenericEntityNode: public scene::Node,
 		public Nameable,
 		public Snappable,
 		public TransformNode,
-		public EntityNode
+		public EntityNode,
+		public Namespaced
 {
 		class TypeCasts
 		{
@@ -345,7 +346,6 @@ class GenericEntityNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<GenericEntityNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -374,9 +374,10 @@ class GenericEntityNode: public scene::Node,
 			return m_contained.getEntity();
 		}
 
-		Namespaced& get (NullType<Namespaced> )
+		// Namespaced implementation
+		void setNamespace(Namespace& space)
 		{
-			return m_contained.getNamespaced();
+			m_contained.getNamespaced().setNamespace(space);
 		}
 
 		GenericEntityNode (EntityClass* eclass) :
@@ -387,8 +388,8 @@ class GenericEntityNode: public scene::Node,
 		}
 		GenericEntityNode (const GenericEntityNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), m_contained(
-							other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
+					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), Namespaced(other),
+					m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
 							InstanceSetEvaluateTransform<GenericEntityInstance>::Caller(m_instances))
 		{
 		}

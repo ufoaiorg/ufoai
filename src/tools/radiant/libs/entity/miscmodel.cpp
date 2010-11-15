@@ -325,7 +325,8 @@ class MiscModelNode: public scene::Node,
 		public Snappable,
 		public TransformNode,
 		public scene::Traversable,
-		public EntityNode
+		public EntityNode,
+		public Namespaced
 {
 		class TypeCasts
 		{
@@ -333,7 +334,6 @@ class MiscModelNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<MiscModelNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -394,9 +394,10 @@ class MiscModelNode: public scene::Node,
 			return m_contained.getEntity();
 		}
 
-		Namespaced& get (NullType<Namespaced> )
+		// Namespaced implementation
+		void setNamespace(Namespace& space)
 		{
-			return m_contained.getNamespaced();
+			m_contained.getNamespaced().setNamespace(space);
 		}
 
 		MiscModelNode (EntityClass* eclass) :
@@ -409,8 +410,8 @@ class MiscModelNode: public scene::Node,
 		MiscModelNode (const MiscModelNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
 					scene::Traversable::Observer(other), Nameable(other), Snappable(other), TransformNode(other),
-					scene::Traversable(other), EntityNode(other), m_contained(other.m_contained, *this,
-							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
+					scene::Traversable(other), EntityNode(other), Namespaced(other), m_contained(other.m_contained,
+							*this, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
 									MiscModelInstance>::Caller(m_instances))
 		{
 			construct();

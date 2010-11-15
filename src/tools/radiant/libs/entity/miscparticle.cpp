@@ -393,7 +393,8 @@ class MiscParticleNode: public scene::Node,
 		public Nameable,
 		public Snappable,
 		public TransformNode,
-		public EntityNode
+		public EntityNode,
+		public Namespaced
 {
 		class TypeCasts
 		{
@@ -401,7 +402,6 @@ class MiscParticleNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<MiscParticleNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -436,9 +436,10 @@ class MiscParticleNode: public scene::Node,
 			return m_contained.getEntity();
 		}
 
-		Namespaced& get (NullType<Namespaced> )
+		// Namespaced implementation
+		void setNamespace(Namespace& space)
 		{
-			return m_contained.getNamespaced();
+			m_contained.getNamespaced().setNamespace(space);
 		}
 
 		MiscParticleNode (EntityClass* eclass) :
@@ -449,8 +450,8 @@ class MiscParticleNode: public scene::Node,
 		}
 		MiscParticleNode (const MiscParticleNode& other) :
 				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), m_contained(
-							other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
+					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), Namespaced(other),
+					m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
 							InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances))
 		{
 		}

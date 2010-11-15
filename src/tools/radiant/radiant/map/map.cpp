@@ -1160,7 +1160,7 @@ std::list<Namespaced*> g_cloned;
 
 inline Namespaced* Node_getNamespaced (scene::Node& node)
 {
-	return NodeTypeCast<Namespaced>::cast(node);
+	return dynamic_cast<Namespaced*>(&node);
 }
 
 class GatherNamespaced: public scene::Traversable::Walker

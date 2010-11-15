@@ -345,7 +345,8 @@ class MiscSoundNode: public scene::Node,
 		public Nameable,
 		public Snappable,
 		public TransformNode,
-		public EntityNode
+		public EntityNode,
+		public Namespaced
 {
 		class TypeCasts
 		{
@@ -353,7 +354,6 @@ class MiscSoundNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<MiscSoundNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -388,9 +388,10 @@ class MiscSoundNode: public scene::Node,
 			return m_contained.getEntity();
 		}
 
-		Namespaced& get (NullType<Namespaced> )
+		// Namespaced implementation
+		void setNamespace(Namespace& space)
 		{
-			return m_contained.getNamespaced();
+			m_contained.getNamespaced().setNamespace(space);
 		}
 
 		MiscSoundNode (EntityClass* eclass) :
@@ -401,8 +402,8 @@ class MiscSoundNode: public scene::Node,
 		}
 		MiscSoundNode (const MiscSoundNode& other) :
 				scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), m_contained(
-							other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
+					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), Namespaced(other),
+					m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
 							InstanceSetEvaluateTransform<MiscSoundInstance>::Caller(m_instances))
 		{
 		}

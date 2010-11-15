@@ -224,7 +224,8 @@ class GroupNode: public scene::Node,
 		public Snappable,
 		public TransformNode,
 		public scene::Traversable,
-		public EntityNode
+		public EntityNode,
+		public Namespaced
 {
 		class TypeCasts
 		{
@@ -232,7 +233,6 @@ class GroupNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<GroupNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -288,10 +288,9 @@ class GroupNode: public scene::Node,
 			return m_contained.getEntity();
 		}
 
-		// Typecast functions
-		Namespaced& get (NullType<Namespaced> )
-		{
-			return m_contained.getNamespaced();
+		// Namespaced implementation
+		void setNamespace(Namespace& space) {
+			m_contained.getNamespaced().setNamespace(space);
 		}
 
 		GroupNode (EntityClass* eclass) :
@@ -303,8 +302,8 @@ class GroupNode: public scene::Node,
 		GroupNode (const GroupNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
 					scene::Traversable::Observer(other), Nameable(other), Snappable(other), TransformNode(other),
-					scene::Traversable(other), EntityNode(other), m_contained(other.m_contained, *this,
-							InstanceSet::TransformChangedCaller(m_instances))
+					scene::Traversable(other), EntityNode(other), Namespaced(other), m_contained(other.m_contained,
+							*this, InstanceSet::TransformChangedCaller(m_instances))
 		{
 			construct();
 		}

@@ -64,7 +64,7 @@ inline scene::Node& entity_for_eclass (EntityClass* eclass)
 
 inline Namespaced* Node_getNamespaced (scene::Node& node)
 {
-	return NodeTypeCast<Namespaced>::cast(node);
+	return dynamic_cast<Namespaced*>(&node);
 }
 
 inline scene::Node& node_for_eclass (EntityClass* eclass)
