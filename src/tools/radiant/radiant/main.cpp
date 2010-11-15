@@ -84,6 +84,9 @@
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
 
+#include <gtk/gtk.h>
+#include <gtk/gtkgl.h>
+
 #ifdef WIN32
 #include <windows.h>
 #endif
@@ -368,6 +371,8 @@ int main (int argc, char* argv[])
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 
 	gtk_init(&argc, &argv);
+	gtk_gl_init(&argc, &argv);
+	gdk_gl_init(&argc, &argv);
 
 	/* reset some locale settings back to standard c
 	 * this is e.g. needed for parsing float values from textfiles */
