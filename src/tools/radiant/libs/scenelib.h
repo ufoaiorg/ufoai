@@ -865,6 +865,34 @@ class Counter
 		virtual void decrement () = 0;
 };
 
+// greebo: These tool methods have been moved from map.cpp, they might come in handy
+enum ENodeType
+{
+	eNodeUnknown, eNodeMap, eNodeEntity, eNodePrimitive
+};
+
+inline const char* nodetype_get_name (ENodeType type)
+{
+	if (type == eNodeMap)
+		return "map";
+	if (type == eNodeEntity)
+		return "entity";
+	if (type == eNodePrimitive)
+		return "primitive";
+	return "unknown";
+}
+
+inline ENodeType node_get_nodetype (scene::Node& node)
+{
+	if (Node_isEntity(node)) {
+		return eNodeEntity;
+	}
+	if (Node_isPrimitive(node)) {
+		return eNodePrimitive;
+	}
+	return eNodeUnknown;
+}
+
 #include "generic/callback.h"
 
 class SimpleCounter: public Counter

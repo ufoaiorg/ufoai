@@ -24,6 +24,7 @@
 
 #include "debugging/debugging.h"
 
+#include "nameable.h"
 #include "iscenegraph.h"
 
 #include "scenelib.h"
@@ -48,10 +49,22 @@ class InstanceSubgraphWalker: public scene::Traversable::Walker
 		bool pre (scene::Node& node) const
 		{
 			m_path.push(makeReference(node));
-			scene::Instance* instance = Node_getInstantiable(node)->create(m_path, m_parent.top());
-			m_observer->insert(instance);
-			Node_getInstantiable(node)->insert(m_observer, m_path, instance);
-			m_parent.push(instance);
+			// greebo: Check for an instantiable node (every node should be)
+			scene::Instantiable* instantiable = Node_getInstantiable(node);
+			if (instantiable != NULL) {
+				scene::Instance* instance = instantiable->create(m_path, m_parent.top());
+				m_observer->insert(instance);
+				instantiable->insert(m_observer, m_path, instance);
+				m_parent.push(instance);
+			}
+			else {
+				// Could not find instantiable, something bad has happened
+				std::cout << "InstanceSubgraphWalker::pre Node Type: " << nodetype_get_name(node_get_nodetype(node)) << "\n";
+				Nameable* nameable = dynamic_cast<Nameable*>(&node);
+				if (nameable != NULL) {
+					std::cout << "Could not cast node on instantiable: " << nameable->name() << "\n";
+				}
+			}
 			return true;
 		}
 		void post (scene::Node& node) const

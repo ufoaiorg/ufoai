@@ -53,33 +53,6 @@ class ParentSelectedBrushesToEntityWalker: public SelectionSystem::Visitor
 	private:
 		const scene::Path& m_parent;
 
-		enum ENodeType
-		{
-			eNodeUnknown, eNodeMap, eNodeEntity, eNodePrimitive
-		};
-
-		inline const char* nodetype_get_name (ENodeType type) const
-		{
-			if (type == eNodeMap)
-				return "map";
-			if (type == eNodeEntity)
-				return "entity";
-			if (type == eNodePrimitive)
-				return "primitive";
-			return "unknown";
-		}
-
-		ENodeType node_get_nodetype (scene::Node& node) const
-		{
-			if (Node_isEntity(node)) {
-				return eNodeEntity;
-			}
-			if (Node_isPrimitive(node)) {
-				return eNodePrimitive;
-			}
-			return eNodeUnknown;
-		}
-
 		bool contains_entity (scene::Node& node) const
 		{
 			return Node_getTraversable(node) != 0 && !Node_isBrush(node) && !Node_isEntity(node);
