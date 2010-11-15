@@ -70,6 +70,8 @@
 #include "gtkutil/filechooser.h"
 
 #include "map/map.h"
+#include "map/CounterManager.h"
+
 #include "qe3.h"
 #include "sidebar/sidebar.h"
 #include "gtkmisc.h"
@@ -100,6 +102,8 @@ class RadiantModule : public IRadiant
 
 		typedef std::set<RadiantEventListener*> EventListenerList;
 		EventListenerList _eventListeners;
+
+		map::CounterManager _counters;
 
 	public:
 		typedef IRadiant Type;
@@ -162,6 +166,15 @@ class RadiantModule : public IRadiant
 		const std::string getGamePath() {
 			return basegame_get();
 		}
+		const std::string getFullGamePath() {
+			return getEnginePath() + getGamePath() + "/";
+		}
+
+		virtual Counter& getCounter(CounterType counter) {
+			// Pass the call to the helper class
+			return _counters.get(counter);
+		}
+
 
 		void setStatusText (const std::string& statusText) {
 			Sys_Status(statusText);

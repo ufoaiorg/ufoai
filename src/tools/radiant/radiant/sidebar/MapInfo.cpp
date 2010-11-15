@@ -181,10 +181,10 @@ namespace sidebar
 
 		// Update the text in the info table
 		gtk_list_store_append(_infoStore, &iter);
-		gtk_list_store_set(_infoStore, &iter, 0, _("Total Brushes"), 1, g_brushCount.get(), -1);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total Brushes"), 1, GlobalRadiant().getCounter(counterBrushes).get(), -1);
 
 		gtk_list_store_append(_infoStore, &iter);
-		gtk_list_store_set(_infoStore, &iter, 0, _("Total Entities"), 1, g_entityCount.get(), -1);
+		gtk_list_store_set(_infoStore, &iter, 0, _("Total Entities"), 1, GlobalRadiant().getCounter(counterEntities).get(), -1);
 	}
 
 	void MapInfo_SelectionChanged (const Selectable& selectable)

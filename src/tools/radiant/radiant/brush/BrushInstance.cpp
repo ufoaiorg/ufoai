@@ -1,6 +1,7 @@
 #include "BrushInstance.h"
 
 #include "ifilter.h"
+#include "iradiant.h"
 
 BrushInstance::BrushInstance (const scene::Path& path, scene::Instance* parent, Brush& brush) :
 	Instance(path, parent), TransformModifier(Brush::TransformChangedCaller(
@@ -10,11 +11,11 @@ BrushInstance::BrushInstance (const scene::Path& path, scene::Instance* parent, 
 {
 	m_brush.instanceAttach(Instance::path());
 	m_brush.attach(*this);
-	m_counter->increment();
+	GlobalRadiant().getCounter(counterBrushes).increment();
 }
 BrushInstance::~BrushInstance ()
 {
-	m_counter->decrement();
+	GlobalRadiant().getCounter(counterBrushes).decrement();
 	m_brush.detach(*this);
 	m_brush.instanceDetach(Instance::path());
 }

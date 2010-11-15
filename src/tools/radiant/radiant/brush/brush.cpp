@@ -27,6 +27,5 @@ double Brush::m_maxWorldCoord = 0;
 Shader* Brush::m_state_point;
 Shader* BrushClipPlane::m_state = 0;
 Shader* BrushInstance::m_state_selpoint;
-Counter* BrushInstance::m_counter = 0;
 
 FaceInstanceSet g_SelectedFaceInstances;

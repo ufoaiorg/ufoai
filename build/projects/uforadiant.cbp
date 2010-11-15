@@ -616,7 +616,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\selection.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\BestPoint.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\BestPoint.h" />
@@ -640,6 +639,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\SelectObserver.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\SelectionBox.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\SelectionCounter.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\SelectionSystemModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\SelectionTest.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\SelectionTest.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\Selectors.h" />

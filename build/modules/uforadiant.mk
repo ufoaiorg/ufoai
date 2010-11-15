@@ -34,7 +34,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
-	$(RADIANT_BASE)/radiant/selection.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
 	$(RADIANT_BASE)/radiant/sound.cpp \
@@ -138,6 +137,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/Planes.cpp \
 	$(RADIANT_BASE)/radiant/selection/RadiantSelectionSystem.cpp \
 	$(RADIANT_BASE)/radiant/selection/RadiantWindowObserver.cpp \
+	$(RADIANT_BASE)/radiant/selection/SelectionSystemModule.cpp \
 	$(RADIANT_BASE)/radiant/selection/SelectionTest.cpp \
 	$(RADIANT_BASE)/radiant/selection/TransformationVisitors.cpp \
 	$(RADIANT_BASE)/radiant/selection/algorithm/Entity.cpp \

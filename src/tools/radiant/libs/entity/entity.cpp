@@ -80,8 +80,6 @@ inline scene::Node& node_for_eclass (EntityClass* eclass)
 	return node;
 }
 
-Counter* EntityKeyValues::m_counter = 0;
-
 bool g_lightRadii = false;
 bool g_forceLightRadii = false;
 
@@ -117,10 +115,6 @@ class UFOEntityCreator: public EntityCreator
 		scene::Node& createEntity (EntityClass* eclass)
 		{
 			return node_for_eclass(eclass);
-		}
-		void setCounter (Counter* counter)
-		{
-			EntityKeyValues::setCounter(counter);
 		}
 		void connectEntities (const scene::Path& path, const scene::Path& targetPath)
 		{

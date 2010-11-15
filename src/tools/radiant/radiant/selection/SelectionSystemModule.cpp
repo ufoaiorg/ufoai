@@ -27,8 +27,7 @@
 #include "iscenegraph.h"
 #include "igrid.h"
 #include "igl.h"
-#include "selection/RadiantSelectionSystem.h"
-
+#include "RadiantSelectionSystem.h"
 
 // Module stuff
 

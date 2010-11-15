@@ -870,6 +870,8 @@ class Counter
 		}
 		virtual void increment () = 0;
 		virtual void decrement () = 0;
+
+		virtual std::size_t get () const = 0;
 };
 
 // greebo: These tool methods have been moved from map.cpp, they might come in handy
@@ -901,31 +903,6 @@ inline ENodeType node_get_nodetype (scene::Node& node)
 }
 
 #include "generic/callback.h"
-
-class SimpleCounter: public Counter
-{
-		Callback m_countChanged;
-		std::size_t m_count;
-	public:
-		void setCountChangedCallback (const Callback& countChanged)
-		{
-			m_countChanged = countChanged;
-		}
-		void increment ()
-		{
-			++m_count;
-			m_countChanged();
-		}
-		void decrement ()
-		{
-			--m_count;
-			m_countChanged();
-		}
-		std::size_t get () const
-		{
-			return m_count;
-		}
-};
 
 template<typename Contained>
 class ConstReference;

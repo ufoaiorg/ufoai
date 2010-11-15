@@ -102,8 +102,16 @@ public:
 	virtual void onRadiantShutdown() {}
 };
 
-// the radiant core API
-// This contains pointers to all the core functions that should be available via GlobalRadiant()
+enum CounterType {
+	counterBrushes,
+	counterEntities
+};
+
+class Counter;
+
+/** greebo: This abstract class defines the interface to the core application.
+ * 			Use this to access methods from the main codebase in radiant/
+ */
 struct IRadiant
 {
 	INTEGER_CONSTANT(Version, 1);
@@ -126,9 +134,15 @@ struct IRadiant
 	virtual const std::string getAppPath() = 0;
 	virtual const std::string getSettingsPath() = 0;
 
+	// Returns the Counter object of the given type
+	virtual Counter& getCounter(CounterType counter) = 0;
+
+	/** greebo: Set the status text of the main window
+	 */
 	virtual void setStatusText (const std::string& statusText) = 0;
 
 	virtual const std::string getGamePath() = 0;
+	virtual const std::string getFullGamePath() = 0;
 
 	virtual void attachGameToolsPathObserver (ModuleObserver& observer) = 0;
 	virtual void detachGameToolsPathObserver (ModuleObserver& observer) = 0;

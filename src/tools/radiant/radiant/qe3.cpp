@@ -40,57 +40,6 @@
 #include "mainframe.h"
 #include "radiant_i18n.h"
 
-QEGlobals_t g_qeglobals;
-
-/**
- * VFS initialization
- * we will call GlobalFileSystem().initDirectory, giving the directories to look in (for files in pk3's and for standalone files)
- * we need to call in order, the mod ones first, then the base ones .. they will be searched in this order
- * *nix systems have a dual filesystem in ~/.ufoai, which is searched first .. so we need to add that too
- */
-void QE_InitVFS (void)
-{
-	const std::string& basegame = GlobalRadiant().getGamePath();
-
-#if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	// ~/.<gameprefix>/<fs_main>
-	const std::string& userRoot = g_qeglobals.m_userEnginePath;
-	GlobalFileSystem().initDirectory(userRoot + basegame + "/");
-#endif
-
-	// <fs_basepath>/<fs_main>
-	const std::string& globalRoot = EnginePath_get();
-	GlobalFileSystem().initDirectory(globalRoot + basegame + "/");
-}
-
-/**
- * @brief Updates statusbar with brush and entity count
- * @sa MainFrame::RedrawStatusText
- * @sa MainFrame::SetStatusText
- * @todo Let his also count the filtered brushes and entities - to be able to
- * use this counter for level optimizations
- */
-inline void QE_UpdateStatusBar (void)
-{
-	char buffer[128];
-	sprintf(buffer, _("Brushes: %d Entities: %d"), int(g_brushCount.get()), int(g_entityCount.get()));
-	g_pParentWnd->SetStatusText(g_pParentWnd->m_brushcount_status, buffer);
-}
-
-SimpleCounter g_brushCount;
-
-void QE_brushCountChanged (void)
-{
-	QE_UpdateStatusBar();
-}
-
-SimpleCounter g_entityCount;
-
-void QE_entityCountChanged (void)
-{
-	QE_UpdateStatusBar();
-}
-
 bool ConfirmModified (const std::string& title)
 {
 	if (!GlobalMap().isModified())

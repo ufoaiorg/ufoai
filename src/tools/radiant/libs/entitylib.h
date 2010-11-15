@@ -27,6 +27,7 @@
 
 #include "ientity.h"
 #include "irender.h"
+#include "iradiant.h"
 #include "igl.h"
 #include "selectable.h"
 
@@ -411,8 +412,6 @@ class EntityKeyValues: public Entity
 		typedef KeyValue Value;
 
 	private:
-		static Counter* m_counter;
-
 		EntityClass* m_eclass;
 
 		typedef KeyValue* KeyValuePtr;
@@ -556,11 +555,6 @@ class EntityKeyValues: public Entity
 			ASSERT_MESSAGE(m_observers.empty(), "EntityKeyValues::~EntityKeyValues: observers still attached");
 		}
 
-		static void setCounter (Counter* counter)
-		{
-			m_counter = counter;
-		}
-
 		void importState (const KeyValues& keyValues)
 		{
 			for (KeyValues::iterator i = m_keyValues.begin(); i != m_keyValues.end();) {
@@ -605,9 +599,7 @@ class EntityKeyValues: public Entity
 
 		void instanceAttach (MapFile* map)
 		{
-			if (m_counter != 0) {
-				m_counter->increment();
-			}
+			GlobalRadiant().getCounter(counterEntities).increment();
 
 			m_instanced = true;
 			forEachKeyValue_instanceAttach(map);
@@ -615,9 +607,7 @@ class EntityKeyValues: public Entity
 		}
 		void instanceDetach (MapFile* map)
 		{
-			if (m_counter != 0) {
-				m_counter->decrement();
-			}
+			GlobalRadiant().getCounter(counterEntities).decrement();
 
 			m_undo.instanceDetach(map);
 			forEachKeyValue_instanceDetach(map);

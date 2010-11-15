@@ -120,8 +120,6 @@ namespace scene
 	typedef Stack<NodeReference> Path;
 }
 
-class Counter;
-
 class EntityCreator
 {
 	public:
@@ -133,8 +131,6 @@ class EntityCreator
 		}
 
 		virtual scene::Node& createEntity (EntityClass* eclass) = 0;
-
-		virtual void setCounter (Counter* counter) = 0;
 
 		virtual void connectEntities (const scene::Path& e1, const scene::Path& e2) = 0;
 

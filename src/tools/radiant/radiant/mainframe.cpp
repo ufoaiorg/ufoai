@@ -160,7 +160,7 @@ class VFSModuleObserver: public ModuleObserver
 		void realise (void)
 		{
 			if (--m_unrealised == 0) {
-				QE_InitVFS();
+				GlobalFileSystem().initDirectory(GlobalRadiant().getFullGamePath());
 				GlobalFileSystem().initialise();
 			}
 		}
@@ -187,11 +187,7 @@ void VFS_Destroy (void)
 
 void HomePaths_Realise (void)
 {
-	g_qeglobals.m_userEnginePath = EnginePath_get();
-	g_qeglobals.m_userGamePath = g_qeglobals.m_userEnginePath + basegame_get() + "/";
-
-	ASSERT_MESSAGE(!g_qeglobals.m_userGamePath.empty(), "HomePaths_Realise: user-game-path is empty");
-	g_mkdir_with_parents(g_qeglobals.m_userGamePath.c_str(), 0775);
+	g_mkdir_with_parents(GlobalRadiant().getFullGamePath().c_str(), 0775);
 }
 
 ModuleObservers g_homePathObservers;
@@ -1568,7 +1564,7 @@ void ToolsCompile () {
 		return;
 
 	/* empty map? */
-	if (!g_brushCount.get()) {
+	if (!GlobalRadiant().getCounter(counterBrushes).get()) {
 		gtkutil::errorDialog(_("Nothing that could get compiled\n"));
 		return;
 	}
@@ -1586,7 +1582,7 @@ void ToolsCheckErrors () {
 		return;
 
 	/* empty map? */
-	if (!g_brushCount.get()) {
+	if (!GlobalRadiant().getCounter(counterBrushes).get()) {
 		gtkutil::errorDialog(_("Nothing to fix in this map\n"));
 		return;
 	}
@@ -1599,7 +1595,7 @@ void ToolsGenerateMaterials () {
 		return;
 
 	/* empty map? */
-	if (!g_brushCount.get()) {
+	if (!GlobalRadiant().getCounter(counterBrushes).get()) {
 		gtkutil::errorDialog(_("Nothing to generate materials for\n"));
 		return;
 	}
@@ -1761,10 +1757,6 @@ void MainFrame_Construct (void)
 	Layout_registerPreferencesPage();
 	Paths_registerPreferencesPage();
 
-	g_brushCount.setCountChangedCallback(FreeCaller<QE_brushCountChanged> ());
-	g_entityCount.setCountChangedCallback(FreeCaller<QE_entityCountChanged> ());
-	GlobalEntityCreator().setCounter(&g_entityCount);
-
 	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
 	GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
 
@@ -1774,10 +1766,6 @@ void MainFrame_Construct (void)
 
 void MainFrame_Destroy (void)
 {
-	GlobalEntityCreator().setCounter(0);
-	g_entityCount.setCountChangedCallback(Callback());
-	g_brushCount.setCountChangedCallback(Callback());
-
 	// Broadcast shutdown event to RadiantListeners
 	GlobalRadiant().broadcastShutdownEvent();
 }

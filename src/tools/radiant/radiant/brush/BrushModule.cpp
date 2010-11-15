@@ -68,13 +68,11 @@ void BrushModuleClass::construct ()
 	Brush::constructStatic();
 
 	Brush::m_maxWorldCoord = GlobalRegistry().getFloat("game/defaults/maxWorldCoord");
-	BrushInstance::m_counter = &g_brushCount;
 }
 
 void BrushModuleClass::destroy ()
 {
 	Brush::m_maxWorldCoord = 0;
-	BrushInstance::m_counter = 0;
 
 	Brush::destroyStatic();
 	BrushInstance::destroyStatic();

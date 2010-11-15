@@ -59,8 +59,6 @@ class BrushInstance: public BrushObserver,
 		BrushInstance (const BrushInstance& other); // NOT COPYABLE
 		BrushInstance& operator= (const BrushInstance& other); // NOT ASSIGNABLE
 	public:
-		static Counter* m_counter;
-
 		STRING_CONSTANT(Name, "BrushInstance");
 
 		BrushInstance (const scene::Path& path, scene::Instance* parent, Brush& brush);

@@ -51,7 +51,6 @@
 #include "selectionlib.h"
 #include "instancelib.h"
 #include "traverselib.h"
-#include "maplib.h"
 #include "eclasslib.h"
 #include "entitylib.h"
 #include "stream/textfilestream.h"
@@ -1075,7 +1074,7 @@ class MapModuleObserver: public ModuleObserver
 		void realise ()
 		{
 			if (--m_unrealised == 0) {
-				g_mapsPath = g_qeglobals.m_userGamePath + "maps/";
+				g_mapsPath = GlobalRadiant().getFullGamePath() + "maps/";
 				g_mkdir(g_mapsPath.c_str(), 0775);
 			}
 		}
