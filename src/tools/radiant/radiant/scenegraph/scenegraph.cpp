@@ -36,45 +36,6 @@
 #include "instancelib.h"
 #include "treemodel.h"
 
-class StringEqualPredicate
-{
-		const std::string& m_string;
-	public:
-		StringEqualPredicate (const std::string& string) :
-			m_string(string)
-		{
-		}
-		bool operator() (const std::string& other) const
-		{
-			return m_string == other;
-		}
-};
-
-template<std::size_t SIZE>
-class TypeIdMap
-{
-		typedef std::vector<std::string> TypeMap;
-		TypeMap m_typeNames;
-
-	public:
-		TypeIdMap ()
-		{
-		}
-		TypeId getTypeId (const std::string& name)
-		{
-			int pos = 0;
-			for	(TypeMap::const_iterator i = m_typeNames.begin(); i != m_typeNames.end();
-				++i) {
-				if (*i == name)
-					return pos;
-				++pos;
-			}
-
-			m_typeNames.push_back(name);
-			return pos;
-		}
-};
-
 class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 {
 		typedef std::map<PathConstReference, scene::Instance*> InstanceMap;
@@ -88,9 +49,6 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 		Signal0 m_sceneChangedCallbacks;
 
 		EraseObservers m_eraseObservers;
-
-		TypeIdMap<NODETYPEID_MAX> m_nodeTypeIds;
-		TypeIdMap<INSTANCETYPEID_MAX> m_instanceTypeIds;
 
 	public:
 
@@ -209,16 +167,6 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 		void removeBoundsChangedCallback (SignalHandlerId id)
 		{
 			m_boundsChanged.disconnect(id);
-		}
-
-		TypeId getNodeTypeId (const std::string& name)
-		{
-			return m_nodeTypeIds.getTypeId(name);
-		}
-
-		TypeId getInstanceTypeId (const std::string& name)
-		{
-			return m_instanceTypeIds.getTypeId(name);
 		}
 
 	private:
