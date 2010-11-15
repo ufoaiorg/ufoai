@@ -147,9 +147,18 @@ class UndoFileChangeTracker: public UndoTracker, public MapFile
 		}
 };
 
+/** greebo: This is the root node of the map, it gets inserted as
+ * 			the top node into the scenegraph. Each entity node is
+ * 			inserted as child node to this.
+ *
+ * Note:	Inserting a child node to this MapRoot automatically
+ * 			triggers an instantiation of this child node.
+ *
+ * 			The contained InstanceSet functions as Traversable::Observer
+ * 			and instantiates the node as soon as it gets notified about it.
+ */
 class MapRoot: public scene::Node,
 		public scene::Instantiable,
-		public scene::Traversable::Observer,
 		public Nameable,
 		public TransformNode,
 		public MapFile,
@@ -211,16 +220,24 @@ class MapRoot: public scene::Node,
 		MapRoot (const std::string& name) :
 			m_name(name)
 		{
+			// Apply root status to this node
 			setIsRoot(true);
 
+			// Attach the InstanceSet as scene::Traversable::Observer
+			// to the TraversableNodeset >> triggers instancing.
 			m_traverse.attach(this);
 
 			GlobalUndoSystem().trackerAttach(m_changeTracker);
 		}
 		~MapRoot ()
 		{
+			// Override the default release() method
 			GlobalUndoSystem().trackerDetach(m_changeTracker);
+
+			// Remove the observer InstanceSet from the TraversableNodeSet
 			m_traverse.detach(this);
+
+			Node::release();
 		}
 
 		InstanceCounter m_instanceCounter;
@@ -235,16 +252,6 @@ class MapRoot: public scene::Node,
 			if (--m_instanceCounter.m_count == 0) {
 				m_traverse.instanceDetach(path_find_mapfile(path.begin(), path.end()));
 			}
-		}
-
-		// scene::Traversable::Observer implementation
-		void insertChild (scene::Node& child)
-		{
-			m_instances.insertChild(child);
-		}
-		void eraseChild (scene::Node& child)
-		{
-			m_instances.eraseChild(child);
 		}
 
 		scene::Node& clone () const

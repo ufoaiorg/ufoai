@@ -41,7 +41,7 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 		void addSceneChangedCallback (const SignalHandler& handler);
 
 		// Triggers a call to all the connected Scene::Graph::Observers
-		void sceneChanged (void);
+		void sceneChanged ();
 
 		void notifyErase (scene::Instance* instance);
 
@@ -50,13 +50,13 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 		void addEraseObserver (scene::EraseObserver *observer);
 
 		// Root node accessor methods
-		scene::Node& root (void);
+		scene::Node& root ();
 		void insert_root (scene::Node& root);
-		void erase_root (void);
+		void erase_root ();
 
 		// greebo: Emits the "bounds changed" signal to all connected observers
 		// Note: these are the WorkZone and the SelectionSystem, AFAIK
-		void boundsChanged (void);
+		void boundsChanged ();
 
 		SignalHandlerId addBoundsChangedCallback (const SignalHandler& boundsChanged);
 		void removeBoundsChangedCallback (SignalHandlerId id);

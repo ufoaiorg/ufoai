@@ -54,7 +54,7 @@ void CompiledGraph::addSceneChangedCallback (const SignalHandler& handler)
 	m_sceneChangedCallbacks.connectLast(handler);
 }
 
-void CompiledGraph::sceneChanged (void)
+void CompiledGraph::sceneChanged ()
 {
 	m_sceneChangedCallbacks();
 }
@@ -81,7 +81,7 @@ void CompiledGraph::addEraseObserver (scene::EraseObserver *observer)
 	m_eraseObservers.push_back(observer);
 }
 
-scene::Node& CompiledGraph::root (void)
+scene::Node& CompiledGraph::root ()
 {
 	ASSERT_MESSAGE(!m_rootpath.empty(), "scenegraph root does not exist");
 	return m_rootpath.top();
@@ -97,7 +97,7 @@ void CompiledGraph::insert_root (scene::Node& root)
 
 	m_rootpath.push(makeReference(root));
 }
-void CompiledGraph::erase_root (void)
+void CompiledGraph::erase_root ()
 {
 	ASSERT_MESSAGE(!m_rootpath.empty(), "scenegraph root does not exist");
 
@@ -109,7 +109,7 @@ void CompiledGraph::erase_root (void)
 
 	root.DecRef();
 }
-void CompiledGraph::boundsChanged (void)
+void CompiledGraph::boundsChanged ()
 {
 	m_boundsChanged();
 }
