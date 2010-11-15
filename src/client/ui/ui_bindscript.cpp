@@ -42,6 +42,9 @@ extern "C" {
 static asIScriptEngine *engine;
 static uiNode_t *thisNode;
 
+static int eventTypeId;
+static int nodeTypeId;
+
 /**
  * @param behaviour
  * @return String inside @va() slot
@@ -201,36 +204,50 @@ static void CvarRef_Release(cvar_t *cvar) {
 	/** @todo count number of ref */
 }
 
-
-
-static uiNode_t *Node_GetNode(std::string name) {
-	return UI_GetNodeByPath(name.c_str());
+static uiNode_t **Node_GetNode(std::string name)
+{
+	/** @todo it must NOT be a global var, but i dont see a way to alloc holder in angelscript */
+	static uiNode_t *holder;
+	holder = UI_GetNodeByPath(name.c_str());
+	return &holder;
 }
-static void Node_AddRef(uiNode_t *node) {
+static void Node_AddRef(uiNode_t *node)
+{
 	/** @todo count number of ref */
 }
-static void Node_Release(uiNode_t *node) {
+static void Node_Release(uiNode_t *node)
+{
 	/** @todo count number of ref */
 }
-static std::string Node_GetPath(const uiNode_t *node) {
+static std::string Node_GetPath(const uiNode_t *node)
+{
 	return UI_GetPath(node);
 }
-static std::string Node_GetName(const uiNode_t *node) {
+static std::string Node_GetName(const uiNode_t *node)
+{
 	return node->name;
 }
-static std::string Node_GetType(const uiNode_t *node) {
+static std::string Node_GetType(const uiNode_t *node)
+{
 	return node->behaviour->name;
 }
-static uiNode_t *Node_GetParent(uiNode_t *node) {
+
+/** @todo must return a uiNode_t** to allow cascade uses on tmp node  */
+static uiNode_t *Node_GetParent(uiNode_t *node)
+{
 	return node->parent;
 }
-static uiNode_t *Node_GetFirstChild(uiNode_t *node) {
+/** @todo must return a uiNode_t** to allow cascade uses on tmp node  */
+static uiNode_t *Node_GetFirstChild(uiNode_t *node)
+{
 	return node->firstChild;
 }
+/** @todo must return a uiNode_t** to allow cascade uses on tmp node  */
 static uiNode_t *Node_GetNext(uiNode_t *node)
 {
 	return node->next;
 }
+/** @todo must return a uiNode_t** to allow cascade uses on tmp node */
 static uiNode_t *Node_GetWindow(uiNode_t *node)
 {
 	return node->root;
@@ -242,8 +259,6 @@ typedef struct {
 	uiNode_t* node;
 	uiAction_t** actions;
 } uiEventHolder_t;
-
-static int eventTypeId;
 
 static void Node_GetEvent (asIScriptGeneric *gen)
 {
@@ -604,16 +619,19 @@ extern "C" void UI_InitBindScript (void)
 
 	r = engine->RegisterObjectType("node", 0, asOBJ_REF);
 	assert(r >= 0);
-	r = engine->RegisterGlobalFunction("node@ getNode(string)", asFUNCTION(Node_GetNode), asCALL_CDECL);
+	r = engine->RegisterGlobalFunction("node@ &getNode(string)", asFUNCTION(Node_GetNode), asCALL_CDECL);
 	assert(r >= 0);
 	r = engine->RegisterObjectMethod("node", "void execute()", asFUNCTION(Node_Execute), asCALL_CDECL_OBJFIRST);
 	assert( r >= 0 );
+	nodeTypeId = engine->GetTypeIdByDecl("node");
+	assert( nodeTypeId >= 0 );
 
 	/* Event */
 
 	r = engine->RegisterObjectType("event", sizeof(uiEventHolder_t), asOBJ_VALUE);
 	assert(r >= 0);
 	eventTypeId = engine->GetTypeIdByDecl("event");
+	assert( eventTypeId >= 0 );
 
 	r = engine->RegisterObjectBehaviour("event", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Event_Construct), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);

@@ -303,10 +303,10 @@ window test_angelscript
 
 	string testAssign1 { pos "200 80" string "set1" }
 	string testAssign2 { pos "200 80" string "set2" }
-	string testWontCompile3 { pos "200 80" string "set3" }
+	string testAssign3 { pos "200 80" string "set3" }
 
 	/** there is problem to assign that, i dont know why */
-	func testBuggy1 angelscript {
+	func testAssignCompile1 angelscript {
 		color green = "0 1 0";
 		node@ foo;
 		@foo = thisNode;
@@ -318,7 +318,7 @@ window test_angelscript
 		test.color = green;
 	}
 	/** the same... with simple code */
-	func testBuggy2 angelscript {
+	func testAssignCompile2 angelscript {
 		color green = "0 1 0";
 		node@ foo;
 		@foo = thisNode;
@@ -326,13 +326,12 @@ window test_angelscript
 		node@ test = getNode("test_angelscript.testAssign2");
 		test.color = green;
 	}
-	/** the same... with simple code
-	 * @note Maybe, we can't acces to a node like that, that's a angelscript limitation, or a bad integration
+	/** assignation of node property without use of temporary var for node
 	 */
-	func testBuggy3 angelscript {
+	func testAssignCompile3 angelscript {
 		// ok it compile... or not
 		color green = "0 1 0";
-		getNode("test_angelscript.testWontCompile3").color = green;
+		getNode("test_angelscript.testAssign3").color = green;
 	}
 
 	string testCase0 { pos "200 80" string "set1" }
@@ -535,8 +534,9 @@ window test_angelscript
 		call *node:root.testFunc
 		call *node:root.testConFunc
 		call *node:root.testNodeMethod
-		call *node:root.testBuggy1
-		call *node:root.testBuggy2
+		call *node:root.testAssignCompile1
+		call *node:root.testAssignCompile2
+		call *node:root.testAssignCompile3
 		call *node:root.testCase
 		call *node:root.testEventExecute
 		call *node:root.testListener
