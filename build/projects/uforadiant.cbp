@@ -610,6 +610,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLStateMap.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\renderer.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\CompiledGraph.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\SceneGraphModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.cpp" />

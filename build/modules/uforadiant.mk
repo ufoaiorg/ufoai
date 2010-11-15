@@ -51,6 +51,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/log/console.cpp \
 	\
 	$(RADIANT_BASE)/radiant/scenegraph/CompiledGraph.cpp \
+	$(RADIANT_BASE)/radiant/scenegraph/SceneGraphModule.cpp \
 	$(RADIANT_BASE)/radiant/scenegraph/treemodel.cpp \
 	\
 	$(RADIANT_BASE)/radiant/settings/preferences.cpp \
