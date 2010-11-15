@@ -121,12 +121,12 @@ window test_angelscript
 
 				node@ test6 = getNode("test_angelscript.test6");
 				node@ nothing = window.parent;
-				if (nothing == null) test6.color = green;
+				if (nothing is null) test6.color = green;
 				else test6.color = red;
 
 				node@ test7 = getNode("test_angelscript.test7");
 				node@ child = n.firstChild;
-				if (child == null) test7.color = green;
+				if (child is null) test7.color = green;
 				else test7.color = red;
 
 				node@ test8 = getNode("test_angelscript.test8");
@@ -136,7 +136,7 @@ window test_angelscript
 
 				node@ test9 = getNode("test_angelscript.test9");
 				node@ next = n.next;
-				if (next != null) test9.color = green;
+				if (next !is null) test9.color = green;
 				else test9.color = red;
 			}
 		}
@@ -160,7 +160,7 @@ window test_angelscript
 				color green = "0 1 0";
 
 				node@ test10 = getNode("test_angelscript.test10");
-				if (thisNode != null) test10.color = green;
+				if (thisNode !is null) test10.color = green;
 				else test10.color = red;
 
 				node@ test11 = getNode("test_angelscript.test11");
@@ -287,7 +287,7 @@ window test_angelscript
 				thisNode.createChild("foo1", "checkbox");
 				node@ foo = getNode(thisNode.path + ".foo1");
 				node@ test3 = getNode("test_angelscript.testNodeMethod3");
-				if (foo != null) test3.color = green;
+				if (foo !is null) test3.color = green;
 				else test3.color = red;
 
 				thisNode.removeAllChild();
@@ -341,25 +341,25 @@ window test_angelscript
 		// implicit
 		node@ case1 = thisNode;
 		node@ test1 = getNode("test_angelscript.testCase1");
-		if (case1 != null) test1.color = green;
+		if (case1 !is null) test1.color = green;
 		else test1.color = red;
 
 		// explicit to super
 		node@ case2 = cast<node>(thisNode);
 		node@ test2 = getNode("test_angelscript.testCase2");
-		if (case2 != null) test2.color = green;
+		if (case2 !is null) test2.color = green;
 		else test2.color = red;
 
 		// explicit to inherited
 		wgwindow@ case3 = cast<wgwindow>(case2);
 		node@ test3 = getNode("test_angelscript.testCase3");
-		if (case3 != null) test3.color = green;
+		if (case3 !is null) test3.color = green;
 		else test3.color = red;
 
 		// not possible
 		wgcheckbox@ case4 = cast<wgcheckbox>(case2);
 		node@ test4 = getNode("test_angelscript.testCase4");
-		if (case4 == null) test4.color = green;
+		if (case4 is null) test4.color = green;
 		else test4.color = red;
 	}
 
