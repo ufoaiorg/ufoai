@@ -4,7 +4,7 @@
 
 BrushInstance::BrushInstance (const scene::Path& path, scene::Instance* parent, Brush& brush) :
 	Instance(path, parent), TransformModifier(Brush::TransformChangedCaller(
-			m_brush), ApplyTransformCaller(*this)), m_brush(brush), m_selectable(SelectedChangedCaller(*this)),
+			brush), ApplyTransformCaller(*this)), m_brush(brush), m_selectable(SelectedChangedCaller(*this)),
 			m_render_selected(GL_POINTS), m_render_faces_wireframe(m_faceCentroidPointsCulled, GL_POINTS),
 			m_viewChanged(false)
 {
