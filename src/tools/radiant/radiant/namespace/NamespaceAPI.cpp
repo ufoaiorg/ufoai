@@ -9,7 +9,7 @@ NamespaceAPI::NamespaceAPI (void)
 {
 	m_namespace = &g_defaultNamespace;
 }
-Namespace* NamespaceAPI::getTable (void)
+INamespace* NamespaceAPI::getTable (void)
 {
 	return m_namespace;
 }

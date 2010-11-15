@@ -7,14 +7,14 @@
 
 class NamespaceAPI
 {
-		Namespace* m_namespace;
+		INamespace* m_namespace;
 	public:
-		typedef Namespace Type;
+		typedef INamespace Type;
 		STRING_CONSTANT(Name, "*");
 
 		NamespaceAPI ();
 
-		Namespace* getTable ();
+		INamespace* getTable ();
 };
 
 #endif /* NAMESPACEAPI_H_ */

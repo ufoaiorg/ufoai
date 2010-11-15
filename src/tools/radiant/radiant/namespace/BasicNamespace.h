@@ -5,7 +5,7 @@
 #include <map>
 #include "inamespace.h"
 
-class BasicNamespace: public Namespace
+class BasicNamespace: public INamespace
 {
 		typedef std::map<NameCallback, NameObserver> Names;
 		Names m_names;

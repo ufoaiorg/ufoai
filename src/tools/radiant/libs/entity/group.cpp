@@ -274,7 +274,7 @@ class GroupNode: public scene::Node,
 		}
 
 		// Namespaced implementation
-		void setNamespace(Namespace& space) {
+		void setNamespace(INamespace& space) {
 			m_contained.getNamespaced().setNamespace(space);
 		}
 

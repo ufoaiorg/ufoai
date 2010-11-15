@@ -28,12 +28,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 typedef Callback1<const std::string&> NameCallback;
 typedef Callback1<const NameCallback&> NameCallbackCallback;
 
-class Namespace {
+class INamespace {
 public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "namespace");
 
-	virtual ~Namespace(){}
+	virtual ~INamespace(){}
 
 	virtual void attach(const NameCallback& setName, const NameCallbackCallback& attachObserver) = 0;
 	virtual void detach(const NameCallback& setName, const NameCallbackCallback& detachObserver) = 0;
@@ -46,20 +46,20 @@ public:
 
 	virtual ~Namespaced(){}
 
-	virtual void setNamespace(Namespace& space) = 0;
+	virtual void setNamespace(INamespace& space) = 0;
 };
 
 #include "modulesystem.h"
 
 template<typename Type>
 class GlobalModule;
-typedef GlobalModule<Namespace> GlobalNamespaceModule;
+typedef GlobalModule<INamespace> GlobalNamespaceModule;
 
 template<typename Type>
 class GlobalModuleRef;
-typedef GlobalModuleRef<Namespace> GlobalNamespaceModuleRef;
+typedef GlobalModuleRef<INamespace> GlobalNamespaceModuleRef;
 
-inline Namespace& GlobalNamespace() {
+inline INamespace& GlobalNamespace() {
 	return GlobalNamespaceModule::getTable();
 }
 #endif

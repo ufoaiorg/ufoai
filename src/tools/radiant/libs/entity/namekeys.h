@@ -39,7 +39,7 @@ typedef MemberCaller1<EntityKeyValue, const KeyObserver&, &EntityKeyValue::detac
 
 class NameKeys: public Entity::Observer, public Namespaced
 {
-		Namespace* m_namespace;
+		INamespace* m_namespace;
 		EntityKeyValues& m_entity;
 		NameKeys (const NameKeys& other);
 		NameKeys& operator= (const NameKeys& other);
@@ -81,7 +81,7 @@ class NameKeys: public Entity::Observer, public Namespaced
 		{
 			m_entity.detach(*this);
 		}
-		void setNamespace (Namespace& space)
+		void setNamespace (INamespace& space)
 		{
 			eraseAll();
 			m_namespace = &space;
