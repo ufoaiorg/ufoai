@@ -1,6 +1,6 @@
 #include "NamespaceAPI.h"
 
-#include "BasicNamespace.h"
+#include "Namespace.h"
 
 #include "modulesystem/moduleregistry.h"
 #include "modulesystem/singletonmodule.h"

@@ -566,8 +566,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\material.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\model.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\model.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\namespace\BasicNamespace.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\namespace\BasicNamespace.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\namespace\Namespace.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\namespace\Namespace.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NameObserver.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NameObserver.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceAPI.cpp" />

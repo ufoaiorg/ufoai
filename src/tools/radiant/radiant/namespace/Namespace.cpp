@@ -1,21 +1,16 @@
-#include "BasicNamespace.h"
+#include "Namespace.h"
 
 #include "debugging/debugging.h"
 #include <list>
 
-BasicNamespace::~BasicNamespace (void)
-{
-	ASSERT_MESSAGE(m_names.empty(), "namespace: names still registered at shutdown");
-}
-
-void BasicNamespace::attach (const NameCallback& setName, const NameCallbackCallback& attachObserver)
+void Namespace::attach (const NameCallback& setName, const NameCallbackCallback& attachObserver)
 {
 	std::pair<Names::iterator, bool> result = m_names.insert(Names::value_type(setName, m_uniqueNames));
 	ASSERT_MESSAGE(result.second, "cannot attach name");
 	attachObserver(NameObserver::NameChangedCaller((*result.first).second));
 }
 
-void BasicNamespace::detach (const NameCallback& setName, const NameCallbackCallback& detachObserver)
+void Namespace::detach (const NameCallback& setName, const NameCallbackCallback& detachObserver)
 {
 	Names::iterator i = m_names.find(setName);
 	ASSERT_MESSAGE(i != m_names.end(), "cannot detach name");
@@ -23,14 +18,14 @@ void BasicNamespace::detach (const NameCallback& setName, const NameCallbackCall
 	m_names.erase(i);
 }
 
-void BasicNamespace::makeUnique (const std::string& name, const NameCallback& setName) const
+void Namespace::makeUnique (const std::string& name, const NameCallback& setName) const
 {
 	char buffer[1024];
 	name_write(buffer, m_uniqueNames.make_unique(name_read(name)));
 	setName(buffer);
 }
 
-void BasicNamespace::mergeNames (const BasicNamespace& other) const
+void Namespace::mergeNames (const Namespace& other) const
 {
 	typedef std::list<NameCallback> SetNameCallbacks;
 	typedef std::map<std::string, SetNameCallbacks> NameGroups;
@@ -57,5 +52,5 @@ void BasicNamespace::mergeNames (const BasicNamespace& other) const
 	}
 }
 
-BasicNamespace g_defaultNamespace;
-BasicNamespace g_cloneNamespace;
+Namespace g_defaultNamespace;
+Namespace g_cloneNamespace;

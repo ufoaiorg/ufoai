@@ -89,7 +89,7 @@
 #include "algorithm/Merge.h"
 #include "algorithm/Clone.h"
 
-#include "../namespace/BasicNamespace.h"
+#include "../namespace/Namespace.h"
 #include "RegionWalkers.h"
 
 namespace map {
