@@ -1,5 +1,5 @@
-#ifndef NAMESPACEAPI_H_
-#define NAMESPACEAPI_H_
+#ifndef NAMESPACEMODULE_H_
+#define NAMESPACEMODULE_H_
 
 #include "inamespace.h"
 
@@ -7,12 +7,14 @@
 
 class NamespaceAPI
 {
-		INamespace* m_namespace;
+		INamespace* _namespace;
 	public:
 		typedef INamespace Type;
 		STRING_CONSTANT(Name, "*");
 
 		NamespaceAPI ();
+
+		~NamespaceAPI ();
 
 		INamespace* getTable ();
 };

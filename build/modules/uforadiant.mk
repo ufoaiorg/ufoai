@@ -95,7 +95,7 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/namespace/NameObserver.cpp \
 	$(RADIANT_BASE)/radiant/namespace/Namespace.cpp \
-	$(RADIANT_BASE)/radiant/namespace/NamespaceAPI.cpp \
+	$(RADIANT_BASE)/radiant/namespace/NamespaceModule.cpp \
 	\
 	$(RADIANT_BASE)/radiant/xyview/grid/Grid.cpp \
 	$(RADIANT_BASE)/radiant/xyview/GlobalXYWnd.cpp \

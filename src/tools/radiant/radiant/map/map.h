@@ -224,7 +224,4 @@ class Graph;
 
 void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent);
 
-void Map_gatherNamespaced (scene::Node& root);
-void Map_mergeClonedNames ();
-
 #endif

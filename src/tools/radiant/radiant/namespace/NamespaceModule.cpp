@@ -1,4 +1,4 @@
-#include "NamespaceAPI.h"
+#include "NamespaceModule.h"
 
 #include "Namespace.h"
 
@@ -7,11 +7,17 @@
 
 NamespaceAPI::NamespaceAPI (void)
 {
-	m_namespace = &g_defaultNamespace;
+	_namespace = new Namespace();
 }
+
+NamespaceAPI::~NamespaceAPI (void)
+{
+	delete _namespace;
+}
+
 INamespace* NamespaceAPI::getTable (void)
 {
-	return m_namespace;
+	return _namespace;
 }
 
 typedef SingletonModule<NamespaceAPI> NamespaceModule;

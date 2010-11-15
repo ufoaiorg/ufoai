@@ -570,8 +570,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\Namespace.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NameObserver.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NameObserver.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceAPI.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceAPI.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceModule.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceModule.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\parse.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding.h" />

@@ -460,8 +460,8 @@ void Map::importSelected (TextInputStream& in)
 	NodeSmartReference node((new map::BasicContainer)->node());
 	const MapFormat& format = getFormat();
 	format.readGraph(node, in, GlobalEntityCreator());
-	Map_gatherNamespaced(node);
-	Map_mergeClonedNames();
+	GlobalNamespace().gatherNamespaced(node);
+	GlobalNamespace().mergeClonedNames();
 	map::MergeMap(node);
 }
 
@@ -741,8 +741,8 @@ bool Map::importFile (const std::string& filename)
 			NodeSmartReference clone(NewMapRoot(""));
 			Node_getTraversable(*resource->getNode())->traverse(CloneAll(clone));
 
-			Map_gatherNamespaced(clone);
-			Map_mergeClonedNames();
+			GlobalNamespace().gatherNamespaced(clone);
+			GlobalNamespace().mergeClonedNames();
 			MergeMap(clone);
 			success = true;
 		}
@@ -1154,49 +1154,6 @@ class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker
 void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent)
 {
 	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
-}
-
-std::list<Namespaced*> g_cloned;
-
-inline Namespaced* Node_getNamespaced (scene::Node& node)
-{
-	return dynamic_cast<Namespaced*>(&node);
-}
-
-class GatherNamespaced: public scene::Traversable::Walker
-{
-	private:
-		void Node_gatherNamespaced (scene::Node& node) const
-		{
-			Namespaced* namespaced = Node_getNamespaced(node);
-			if (namespaced != 0) {
-				g_cloned.push_back(namespaced);
-			}
-		}
-	public:
-		bool pre (scene::Node& node) const
-		{
-			Node_gatherNamespaced(node);
-			return true;
-		}
-};
-
-void Map_gatherNamespaced (scene::Node& root)
-{
-	Node_traverseSubgraph(root, GatherNamespaced());
-}
-
-void Map_mergeClonedNames ()
-{
-	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
-		(*i)->setNamespace(g_cloneNamespace);
-	}
-	g_cloneNamespace.mergeNames(g_defaultNamespace);
-	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
-		(*i)->setNamespace(g_defaultNamespace);
-	}
-
-	g_cloned.clear();
 }
 
 map::Map& GlobalMap ()
