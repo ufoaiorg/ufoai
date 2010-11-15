@@ -41,32 +41,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef _WIN32
 #  define BUILDSTRING_OS "Win32"
-#  ifndef SHARED_EXT
-#    define SHARED_EXT "dll"
+#  ifndef SO_EXT
+#    define SO_EXT "dll"
 #  endif
 
 #elif defined __linux__
 #  define BUILDSTRING_OS "Linux"
-#  ifndef SHARED_EXT
-#    define SHARED_EXT "so"
+#  ifndef SO_EXT
+#    define SO_EXT "so"
 #  endif
 
 #elif defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 #  define BUILDSTRING_OS "FreeBSD"
-#  ifndef SHARED_EXT
-#    define SHARED_EXT "so"
+#  ifndef SO_EXT
+#    define SO_EXT "so"
 #  endif
 
 #elif defined __sun
 #  define BUILDSTRING_OS "Solaris"
-#  ifndef SHARED_EXT
-#    define SHARED_EXT "so"
+#  ifndef SO_EXT
+#    define SO_EXT "so"
 #  endif
 
 #elif defined (__APPLE__) || defined (MACOSX)
 #  define BUILDSTRING_OS "MacOSX"
-#  ifndef SHARED_EXT
-#    define SHARED_EXT "dylib"
+#  ifndef SO_EXT
+#    define SO_EXT "dylib"
 #  endif
 
 #else

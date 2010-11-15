@@ -440,10 +440,10 @@ static qboolean SV_LoadGame (const char *path)
 {
 	char name[MAX_OSPATH];
 
-	Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SHARED_EXT);
+	Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SO_EXT);
 	svs.gameLibrary = SDL_LoadObject(name);
 	if (!svs.gameLibrary) {
-		Com_sprintf(name, sizeof(name), "%s/game.%s", path, SHARED_EXT);
+		Com_sprintf(name, sizeof(name), "%s/game.%s", path, SO_EXT);
 		svs.gameLibrary = SDL_LoadObject(name);
 	}
 
@@ -471,7 +471,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 	if (svs.gameLibrary)
 		Com_Error(ERR_FATAL, "SV_GetGameAPI without SV_UnloadGame");
 
-	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
+	Com_Printf("------- Loading game.%s -------\n", SO_EXT);
 
 #ifdef PKGLIBDIR
 	SV_LoadGame(PKGLIBDIR);
