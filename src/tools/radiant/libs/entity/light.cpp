@@ -569,6 +569,11 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		{
 			return m_traverse;
 		}
+		const scene::Traversable& getTraversable () const
+		{
+			return m_traverse;
+		}
+
 		Namespaced& getNamespaced ()
 		{
 			return m_nameKeys;
@@ -799,7 +804,9 @@ class LightNode: public scene::Node,
 		public Nameable,
 		public Snappable,
 		public Editable,
-		public TransformNode
+		public TransformNode,
+		public scene::Traversable,
+		public EntityNode
 {
 		class TypeCasts
 		{
@@ -807,7 +814,6 @@ class LightNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<LightNode, Entity>::install(m_casts);
 					NodeContainedCast<LightNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
@@ -843,14 +849,28 @@ class LightNode: public scene::Node,
 			return m_contained.getTransformNode().localToParent();
 		}
 
-		scene::Traversable& get (NullType<scene::Traversable> )
-		{
-			return m_contained.getTraversable();
+		// Traversable implementation
+		void insert(Node& node) {
+			m_contained.getTraversable().insert(node);
 		}
-		Entity& get (NullType<Entity> )
-		{
+
+		void erase(Node& node) {
+			m_contained.getTraversable().erase(node);
+		}
+
+		void traverse(const Walker& walker) {
+			m_contained.getTraversable().traverse(walker);
+		}
+
+		bool empty() const {
+			return m_contained.getTraversable().empty();
+		}
+
+		// EntityNode implementation
+		Entity& getEntity() {
 			return m_contained.getEntity();
 		}
+
 		Namespaced& get (NullType<Namespaced> )
 		{
 			return m_contained.getNamespaced();
@@ -866,7 +886,7 @@ class LightNode: public scene::Node,
 		LightNode (const LightNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
 					scene::Traversable::Observer(other), Nameable(other), Snappable(other), Editable(other),
-					TransformNode(other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
+					TransformNode(other), scene::Traversable(other), EntityNode(other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
 							m_instances), InstanceSet::BoundsChangedCaller(m_instances), InstanceSetEvaluateTransform<
 							LightInstance>::Caller(m_instances))
 		{

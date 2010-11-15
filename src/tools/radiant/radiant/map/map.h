@@ -26,14 +26,13 @@
 #if !defined(INCLUDED_MAP_H)
 #define INCLUDED_MAP_H
 
-#include "iscenegraph.h"
+#include "scenelib.h"
 #include "generic/callback.h"
 #include "signal/signalfwd.h"
 #include "signal/signal.h"
 #include "moduleobserver.h"
 #include "ireference.h"
 #include "imap.h"
-#include "ientity.h"
 #include <string>
 
 namespace map {

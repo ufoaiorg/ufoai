@@ -23,7 +23,8 @@
 #define INCLUDED_BRUSHNODE_H
 
 #include "instancelib.h"
-#include "brush.h"
+#include "TexDef.h"
+#include "ibrush.h"
 #include "brushtokens.h"
 
 class BrushNode: public scene::Node,
@@ -33,7 +34,8 @@ class BrushNode: public scene::Node,
 		public Snappable,
 		public TransformNode,
 		public MapImporter,
-		public MapExporter
+		public MapExporter,
+		public IBrushNode
 {
 		// The typecast class (needed to cast this node onto other types)
 		class TypeCasts
@@ -42,7 +44,6 @@ class BrushNode: public scene::Node,
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<BrushNode, Brush>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
 				{
@@ -80,6 +81,11 @@ class BrushNode: public scene::Node,
 		// MapExporter implementation
 		void exportTokens(TokenWriter& writer) const {
 			m_mapExporter.exportTokens(writer);
+		}
+
+		// IBrushNode implementation
+		Brush& getBrush() {
+			return m_brush;
 		}
 
 		// greebo: Returns the casted types of this node
@@ -140,10 +146,15 @@ class BrushNode: public scene::Node,
 		}
 };
 
-// Casts the node onto a Brush and returns the pointer to it
+// Casts the node onto a BrushNode and returns the Brush pointer
 inline Brush* Node_getBrush (scene::Node& node)
 {
-	return NodeTypeCast<Brush>::cast(node);
+	IBrushNode* brushNode = dynamic_cast<IBrushNode*>(&node);
+	if (brushNode != NULL) {
+		return &brushNode->getBrush();
+	}
+	return NULL;
+
 }
 
 #endif

@@ -29,6 +29,22 @@
 
 #include "preferencesystem.h"
 
+class _QERFaceData
+{
+	public:
+		_QERFaceData () :
+			m_shader(""), contents(0), flags(0), value(0)
+		{
+		}
+		Vector3 m_p0;
+		Vector3 m_p1;
+		Vector3 m_p2;
+		TexDef m_texdef;
+		std::string m_shader;
+		int contents;
+		int flags;
+		int value;
+};
 
 // Some constants
 namespace {

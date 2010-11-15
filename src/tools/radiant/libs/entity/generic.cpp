@@ -331,7 +331,13 @@ class GenericEntityInstance: public TargetableInstance,
 		typedef MemberCaller<GenericEntityInstance, &GenericEntityInstance::applyTransform> ApplyTransformCaller;
 };
 
-class GenericEntityNode: public scene::Node, public scene::Instantiable, public scene::Cloneable, public Nameable, public Snappable, public TransformNode
+class GenericEntityNode: public scene::Node,
+		public scene::Instantiable,
+		public scene::Cloneable,
+		public Nameable,
+		public Snappable,
+		public TransformNode,
+		public EntityNode
 {
 		class TypeCasts
 		{
@@ -339,7 +345,6 @@ class GenericEntityNode: public scene::Node, public scene::Instantiable, public 
 			public:
 				TypeCasts ()
 				{
-					NodeContainedCast<GenericEntityNode, Entity>::install(m_casts);
 					NodeContainedCast<GenericEntityNode, Namespaced>::install(m_casts);
 				}
 				NodeTypeCastTable& get ()
@@ -364,14 +369,11 @@ class GenericEntityNode: public scene::Node, public scene::Instantiable, public 
 			return m_contained.getTransformNode().localToParent();
 		}
 
-		TransformNode& get (NullType<TransformNode> )
-		{
-			return m_contained.getTransformNode();
-		}
-		Entity& get (NullType<Entity> )
-		{
+		// EntityNode implementation
+		Entity& getEntity() {
 			return m_contained.getEntity();
 		}
+
 		Namespaced& get (NullType<Namespaced> )
 		{
 			return m_contained.getNamespaced();
@@ -385,8 +387,9 @@ class GenericEntityNode: public scene::Node, public scene::Instantiable, public 
 		}
 		GenericEntityNode (const GenericEntityNode& other) :
 			scene::Node(this, StaticTypeCasts::instance().get()), scene::Instantiable(other), scene::Cloneable(other),
-					Nameable(other), Snappable(other), TransformNode(other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
-							m_instances), InstanceSetEvaluateTransform<GenericEntityInstance>::Caller(m_instances))
+					Nameable(other), Snappable(other), TransformNode(other), EntityNode(other), m_contained(
+							other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
+							InstanceSetEvaluateTransform<GenericEntityInstance>::Caller(m_instances))
 		{
 		}
 

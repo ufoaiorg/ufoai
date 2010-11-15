@@ -26,7 +26,8 @@
 #include "generic/constant.h"
 
 #include "string/string.h"
-#include "scenelib.h"
+#include "generic/callbackfwd.h"
+#include <string>
 
 class EntityClass;
 
@@ -92,10 +93,15 @@ class Entity
 		virtual void detach (Observer& observer) = 0;
 };
 
-inline Entity* Node_getEntity (scene::Node& node)
+class EntityNode
 {
-	return NodeTypeCast<Entity>::cast(node);
-}
+public:
+	/** greebo: Temporary workaround for entity-containing nodes.
+	 * 			This is only used by Node_getEntity to retrieve the
+	 * 			contained entity from a node.
+	 */
+	virtual Entity& getEntity() = 0;
+};
 
 template<typename value_type>
 class Stack;

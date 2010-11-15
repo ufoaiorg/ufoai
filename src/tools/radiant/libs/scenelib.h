@@ -29,6 +29,8 @@
 #include "Bounded.h"
 #include "iscenegraph.h"
 #include "iselection.h"
+#include "ientity.h"
+#include "ibrush.h"
 
 #include <cstddef>
 #include <string.h>
@@ -332,15 +334,17 @@ inline void DeleteSubgraph (scene::Node& subgraph)
 	Node_getTraversable(subgraph)->traverse(delete_all(subgraph));
 }
 
-class EntityUndefined
-{
-	public:
-		STRING_CONSTANT(Name, "Entity");
-};
+inline Entity* Node_getEntity(scene::Node& node) {
+	EntityNode* entityNode = dynamic_cast<EntityNode*>(&node);
+	if (entityNode != NULL) {
+		return &entityNode->getEntity();
+	}
+	return NULL;
+}
 
 inline bool Node_isEntity (scene::Node& node)
 {
-	return NodeTypeCast<EntityUndefined>::cast(node) != 0;
+	return dynamic_cast<EntityNode*>(&node) != NULL;
 }
 
 template<typename Functor>
@@ -369,16 +373,10 @@ inline const Functor& Scene_forEachEntity (const Functor& functor)
 	return functor;
 }
 
-class BrushUndefined
-{
-	public:
-		STRING_CONSTANT(Name, "Brush");
-};
-
 // checks whether the given node reference is a brush node
 inline bool Node_isBrush (scene::Node& node)
 {
-	return NodeTypeCast<BrushUndefined>::cast(node) != 0;
+	return dynamic_cast<IBrushNode*>(&node) != NULL;
 }
 
 // checks whether the given node reference is a primitive
