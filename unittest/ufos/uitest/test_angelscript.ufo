@@ -301,27 +301,38 @@ window test_angelscript
 		call *node:root.checkTest@onClick
 	}
 
-	string testWontCompile1 { pos "200 80" string "set1" }
-	string testWontCompile2 { pos "200 80" string "set1" }
+	string testAssign1 { pos "200 80" string "set1" }
+	string testAssign2 { pos "200 80" string "set2" }
+	string testWontCompile3 { pos "200 80" string "set3" }
 
 	/** there is problem to assign that, i dont know why */
 	func testBuggy1 angelscript {
 		color green = "0 1 0";
 		node@ foo;
-		foo = thisNode;
-		foo = getNode(thisNode.path);
+		@foo = thisNode;
+		@foo = getNode(thisNode.path);
 		node@ foo2 = getNode(thisNode.path);
-		foo = foo2;
+		@foo = foo2;
 		// ok it compile... or not
-		getNode(thisNode.path + ".testWontCompile").color = green;
+		node@ test = getNode("test_angelscript.testAssign1");
+		test.color = green;
 	}
 	/** the same... with simple code */
 	func testBuggy2 angelscript {
 		color green = "0 1 0";
 		node@ foo;
-		foo = thisNode;
+		@foo = thisNode;
 		// ok it compile... or not
-		getNode("test_angelscript.testWontCompile2").color = green;
+		node@ test = getNode("test_angelscript.testAssign2");
+		test.color = green;
+	}
+	/** the same... with simple code
+	 * @note Maybe, we can't acces to a node like that, that's a angelscript limitation, or a bad integration
+	 */
+	func testBuggy3 angelscript {
+		// ok it compile... or not
+		color green = "0 1 0";
+		getNode("test_angelscript.testWontCompile3").color = green;
 	}
 
 	string testCase0 { pos "200 80" string "set1" }
