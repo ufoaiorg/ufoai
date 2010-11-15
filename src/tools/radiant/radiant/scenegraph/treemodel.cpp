@@ -37,7 +37,7 @@
 
 inline Nameable* Node_getNameable (scene::Node& node)
 {
-	return dynamic_cast<Nameable*>(&node);
+	return dynamic_cast<Nameable*> (&node);
 }
 
 const std::string node_get_name (scene::Node& node)
@@ -315,9 +315,8 @@ static gboolean graph_tree_model_iter_parent (GtkTreeModel *tree_model, GtkTreeI
 
 static GObjectClass *g_parent_class = 0;
 
-namespace
-{
-	scene::Node* g_null_node = 0;
+namespace {
+scene::Node* g_null_node = 0;
 }
 
 class NullInstance: public scene::Instance
@@ -329,9 +328,8 @@ class NullInstance: public scene::Instance
 		}
 };
 
-namespace
-{
-	NullInstance g_null_instance;
+namespace {
+NullInstance g_null_instance;
 }
 
 static void graph_tree_model_init (GraphTreeModel *graph_tree_model)

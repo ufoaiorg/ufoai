@@ -164,19 +164,19 @@ class MapRoot: public scene::Node,
 	public:
 
 		// scene::Traversable Implementation
-		virtual void insert (Node& node)
+		void insert (Node& node)
 		{
 			m_traverse.insert(node);
 		}
-		virtual void erase (Node& node)
+		void erase (Node& node)
 		{
 			m_traverse.erase(node);
 		}
-		virtual void traverse (const Walker& walker)
+		void traverse (const Walker& walker)
 		{
 			m_traverse.traverse(walker);
 		}
-		virtual bool empty () const
+		bool empty () const
 		{
 			return m_traverse.empty();
 		}
@@ -192,19 +192,19 @@ class MapRoot: public scene::Node,
 		}
 
 		// MapFile implementation
-		virtual void save() {
+		void save() {
 			m_changeTracker.save();
 		}
-		virtual bool saved() const {
+		bool saved() const {
 			return m_changeTracker.saved();
 		}
-		virtual void changed() {
+		void changed() {
 			m_changeTracker.changed();
 		}
-		virtual void setChangedCallback(const Callback& changed) {
+		void setChangedCallback(const Callback& changed) {
 			m_changeTracker.setChangedCallback(changed);
 		}
-		virtual std::size_t changes() const {
+		std::size_t changes() const {
 			return m_changeTracker.changes();
 		}
 
