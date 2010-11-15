@@ -23,187 +23,171 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "scenegraph.h"
+
 #include "debugging/debugging.h"
 
-#include <map>
 #include <set>
-#include <vector>
 #include <string>
 
-#include "string/string.h"
-#include "signal/signal.h"
 #include "scenelib.h"
 #include "instancelib.h"
 #include "treemodel.h"
 
-class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
+CompiledGraph::CompiledGraph (scene::Instantiable::Observer* observer) :
+	m_observer(observer)
 {
-		typedef std::map<PathConstReference, scene::Instance*> InstanceMap;
+}
 
-		typedef std::vector<scene::EraseObserver*> EraseObservers;
+void CompiledGraph::addSceneChangedCallback (const SignalHandler& handler)
+{
+	m_sceneChangedCallbacks.connectLast(handler);
+}
 
-		InstanceMap m_instances;
-		scene::Instantiable::Observer* m_observer;
-		Signal0 m_boundsChanged;
-		scene::Path m_rootpath;
-		Signal0 m_sceneChangedCallbacks;
+void CompiledGraph::sceneChanged (void)
+{
+	m_sceneChangedCallbacks();
+}
 
-		EraseObservers m_eraseObservers;
+void CompiledGraph::notifyErase (scene::Instance* instance)
+{
+	for (EraseObservers::iterator i = m_eraseObservers.begin(); i != m_eraseObservers.end(); ++i) {
+		(*i)->onErase(instance);
+	}
+}
 
-	public:
-
-		CompiledGraph (scene::Instantiable::Observer* observer) :
-			m_observer(observer)
-		{
+void CompiledGraph::removeEraseObserver (scene::EraseObserver *observer)
+{
+	for (EraseObservers::iterator i = m_eraseObservers.begin(); i != m_eraseObservers.end(); ++i) {
+		if (*i == observer) {
+			m_eraseObservers.erase(i);
+			break;
 		}
+	}
+}
 
-		void addSceneChangedCallback (const SignalHandler& handler)
-		{
-			m_sceneChangedCallbacks.connectLast(handler);
-		}
-		void sceneChanged (void)
-		{
-			m_sceneChangedCallbacks();
-		}
+void CompiledGraph::addEraseObserver (scene::EraseObserver *observer)
+{
+	m_eraseObservers.push_back(observer);
+}
 
-		void notifyErase (scene::Instance* instance)
-		{
-			for (EraseObservers::iterator i = m_eraseObservers.begin(); i != m_eraseObservers.end(); ++i) {
-				(*i)->onErase(instance);
-			}
-		}
+scene::Node& CompiledGraph::root (void)
+{
+	ASSERT_MESSAGE(!m_rootpath.empty(), "scenegraph root does not exist");
+	return m_rootpath.top();
+}
 
-		void removeEraseObserver(scene::EraseObserver *observer) {
-			for (EraseObservers::iterator i = m_eraseObservers.begin(); i != m_eraseObservers.end(); ++i) {
-				if (*i == observer) {
-					m_eraseObservers.erase(i);
-					break;
-				}
-			}
-		}
+void CompiledGraph::insert_root (scene::Node& root)
+{
+	ASSERT_MESSAGE(m_rootpath.empty(), "scenegraph root already exists");
 
-		void addEraseObserver(scene::EraseObserver *observer) {
-			m_eraseObservers.push_back(observer);
-		}
+	root.IncRef();
 
-		scene::Node& root (void)
-		{
-			ASSERT_MESSAGE(!m_rootpath.empty(), "scenegraph root does not exist");
-			return m_rootpath.top();
-		}
-		void insert_root (scene::Node& root)
-		{
-			ASSERT_MESSAGE(m_rootpath.empty(), "scenegraph root already exists");
+	Node_traverseSubgraph(root, InstanceSubgraphWalker(this, scene::Path(), 0));
 
-			root.IncRef();
+	m_rootpath.push(makeReference(root));
+}
+void CompiledGraph::erase_root (void)
+{
+	ASSERT_MESSAGE(!m_rootpath.empty(), "scenegraph root does not exist");
 
-			Node_traverseSubgraph(root, InstanceSubgraphWalker(this, scene::Path(), 0));
+	scene::Node & root = m_rootpath.top();
 
-			m_rootpath.push(makeReference(root));
-		}
-		void erase_root (void)
-		{
-			ASSERT_MESSAGE(!m_rootpath.empty(), "scenegraph root does not exist");
+	m_rootpath.pop();
 
-			scene::Node & root = m_rootpath.top();
+	Node_traverseSubgraph(root, UninstanceSubgraphWalker(this, scene::Path()));
 
-			m_rootpath.pop();
+	root.DecRef();
+}
+void CompiledGraph::boundsChanged (void)
+{
+	m_boundsChanged();
+}
 
-			Node_traverseSubgraph(root, UninstanceSubgraphWalker(this, scene::Path()));
+void CompiledGraph::traverse (const Walker& walker)
+{
+	traverse_subgraph(walker, m_instances.begin());
+}
 
-			root.DecRef();
-		}
-		void boundsChanged (void)
-		{
-			m_boundsChanged();
-		}
+void CompiledGraph::traverse_subgraph (const Walker& walker, const scene::Path& start)
+{
+	if (!m_instances.empty()) {
+		traverse_subgraph(walker, m_instances.find(PathConstReference(start)));
+	}
+}
 
-		void traverse (const Walker& walker)
-		{
-			traverse_subgraph(walker, m_instances.begin());
-		}
+scene::Instance* CompiledGraph::find (const scene::Path& path)
+{
+	InstanceMap::iterator i = m_instances.find(PathConstReference(path));
+	if (i == m_instances.end()) {
+		return 0;
+	}
+	return (*i).second;
+}
 
-		void traverse_subgraph (const Walker& walker, const scene::Path& start)
-		{
-			if (!m_instances.empty()) {
-				traverse_subgraph(walker, m_instances.find(PathConstReference(start)));
-			}
-		}
+scene::Instance* CompiledGraph::find (scene::Node& node)
+{
+	scene::Path path;
+	path.push(makeReference(node));
+	return find(path);
+}
 
-		scene::Instance* find (const scene::Path& path)
-		{
-			InstanceMap::iterator i = m_instances.find(PathConstReference(path));
-			if (i == m_instances.end()) {
-				return 0;
-			}
-			return (*i).second;
-		}
+void CompiledGraph::insert (scene::Instance* instance)
+{
+	m_instances.insert(InstanceMap::value_type(PathConstReference(instance->path()), instance));
 
-		scene::Instance* find (scene::Node& node)
-		{
-			scene::Path path;
-			path.push(makeReference(node));
-			return find(path);
-		}
+	m_observer->insert(instance);
+}
 
-		void insert (scene::Instance* instance)
-		{
-			m_instances.insert(InstanceMap::value_type(PathConstReference(instance->path()), instance));
+void CompiledGraph::erase (scene::Instance* instance)
+{
+	notifyErase(instance);
+	m_observer->erase(instance);
 
-			m_observer->insert(instance);
-		}
-		void erase (scene::Instance* instance)
-		{
-			notifyErase(instance);
-			m_observer->erase(instance);
+	m_instances.erase(PathConstReference(instance->path()));
+}
 
-			m_instances.erase(PathConstReference(instance->path()));
-		}
+SignalHandlerId CompiledGraph::addBoundsChangedCallback (const SignalHandler& boundsChanged)
+{
+	return m_boundsChanged.connectLast(boundsChanged);
+}
+void CompiledGraph::removeBoundsChangedCallback (SignalHandlerId id)
+{
+	m_boundsChanged.disconnect(id);
+}
 
-		SignalHandlerId addBoundsChangedCallback (const SignalHandler& boundsChanged)
-		{
-			return m_boundsChanged.connectLast(boundsChanged);
-		}
-		void removeBoundsChangedCallback (SignalHandlerId id)
-		{
-			m_boundsChanged.disconnect(id);
-		}
+bool CompiledGraph::pre (const Walker& walker, const InstanceMap::iterator& i)
+{
+	return walker.pre(i->first, *i->second);
+}
 
-	private:
+void CompiledGraph::post (const Walker& walker, const InstanceMap::iterator& i)
+{
+	walker.post(i->first, *i->second);
+}
 
-		bool pre (const Walker& walker, const InstanceMap::iterator& i)
-		{
-			return walker.pre(i->first, *i->second);
-		}
-
-		void post (const Walker& walker, const InstanceMap::iterator& i)
-		{
-			walker.post(i->first, *i->second);
-		}
-
-		void traverse_subgraph (const Walker& walker, InstanceMap::iterator i)
-		{
-			Stack<InstanceMap::iterator> stack;
-			if (i != m_instances.end()) {
-				const std::size_t startSize = (*i).first.get().size();
-				do {
-					if (i != m_instances.end() && stack.size() < ((*i).first.get().size() - startSize + 1)) {
-						stack.push(i);
+void CompiledGraph::traverse_subgraph (const Walker& walker, InstanceMap::iterator i)
+{
+	Stack<InstanceMap::iterator> stack;
+	if (i != m_instances.end()) {
+		const std::size_t startSize = (*i).first.get().size();
+		do {
+			if (i != m_instances.end() && stack.size() < ((*i).first.get().size() - startSize + 1)) {
+				stack.push(i);
+				++i;
+				if (!pre(walker, stack.top())) {
+					// skip subgraph
+					while (i != m_instances.end() && stack.size() < ((*i).first.get().size() - startSize + 1)) {
 						++i;
-						if (!pre(walker, stack.top())) {
-							// skip subgraph
-							while (i != m_instances.end() && stack.size() < ((*i).first.get().size() - startSize + 1)) {
-								++i;
-							}
-						}
-					} else {
-						post(walker, stack.top());
-						stack.pop();
 					}
-				} while (!stack.empty());
+				}
+			} else {
+				post(walker, stack.top());
+				stack.pop();
 			}
-		}
-};
+		} while (!stack.empty());
+	}
+}
 
 namespace
 {
