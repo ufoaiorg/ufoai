@@ -52,5 +52,6 @@ void S_StartLocalSample(const char *s, float volume);
 int S_LoadSampleIdx (const char *soundFile);
 qboolean S_LoadAndPlaySample(const char *s, const vec3_t origin, float atten, float volume);
 void S_SetSampleRepeatRate(int sampleRepeatRate);
+void S_LoadSamples(void);
 
 #endif

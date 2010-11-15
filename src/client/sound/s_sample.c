@@ -171,7 +171,7 @@ void S_FreeSamples (void)
  * @note Called at precache phase - only load these soundfiles once at startup or on sound restart
  * @sa S_Restart_f
  */
-void S_LoadSamples (void)
+void S_PrecacheSamples (void)
 {
 	int i, j, k;
 

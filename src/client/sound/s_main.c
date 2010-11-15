@@ -345,3 +345,10 @@ void S_SetSampleRepeatRate (int sampleRepeatRate)
 {
 	s_env.sampleRepeatRate = sampleRepeatRate;
 }
+/**
+ * @brief Wrapper for S_PrecacheSamples to avoid exposing it  via s_sample.h
+ */
+void S_LoadSamples (void)
+{
+	S_PrecacheSamples();
+}
