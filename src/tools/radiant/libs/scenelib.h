@@ -113,19 +113,25 @@ namespace scene
 			};
 
 		private:
-			unsigned int m_state;
-			std::size_t m_refcount;
+
+			unsigned int _state;
+			std::size_t _refcount;
+			bool _isRoot;
 
 		public:
-			bool m_isRoot;
 
 			bool isRoot () const
 			{
-				return m_isRoot;
+				return _isRoot;
+			}
+
+			void setIsRoot(bool isRoot)
+			{
+				_isRoot = isRoot;
 			}
 
 			Node () :
-				m_state(eVisible), m_refcount(0), m_isRoot(false)
+				_state(eVisible), _refcount(0), _isRoot(false)
 			{
 			}
 
@@ -141,36 +147,36 @@ namespace scene
 
 			void IncRef ()
 			{
-				ASSERT_MESSAGE(m_refcount < (1 << 24), "Node::decref: uninitialised refcount");
-				++m_refcount;
+				ASSERT_MESSAGE(_refcount < (1 << 24), "Node::decref: uninitialised refcount");
+				++_refcount;
 			}
 			void DecRef ()
 			{
-				ASSERT_MESSAGE(m_refcount < (1 << 24), "Node::decref: uninitialised refcount");
-				if (--m_refcount == 0) {
+				ASSERT_MESSAGE(_refcount < (1 << 24), "Node::decref: uninitialised refcount");
+				if (--_refcount == 0) {
 					release();
 				}
 			}
 			std::size_t getReferenceCount () const
 			{
-				return m_refcount;
+				return _refcount;
 			}
 
 			void enable (unsigned int state)
 			{
-				m_state |= state;
+				_state |= state;
 			}
 			void disable (unsigned int state)
 			{
-				m_state &= ~state;
+				_state &= ~state;
 			}
 			bool visible () const
 			{
-				return m_state == eVisible;
+				return _state == eVisible;
 			}
 			bool excluded () const
 			{
-				return (m_state & eExcluded) != 0;
+				return (_state & eExcluded) != 0;
 			}
 	};
 }

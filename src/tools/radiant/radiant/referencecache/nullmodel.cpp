@@ -133,7 +133,7 @@ class NullModelNode: public scene::Node, public scene::Instantiable
 
 		NullModelNode ()
 		{
-			m_isRoot = true;
+			setIsRoot(true);
 		}
 
 		scene::Node& node ()
@@ -162,11 +162,4 @@ class NullModelNode: public scene::Node, public scene::Instantiable
 NodeSmartReference NewNullModel ()
 {
 	return NodeSmartReference((new NullModelNode)->node());
-}
-
-void NullModel_Construct ()
-{
-}
-void NullModel_Destroy ()
-{
 }

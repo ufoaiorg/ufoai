@@ -210,7 +210,7 @@ static NodeSmartReference ModelResource_load (ModelLoader* loader, const std::st
 		}
 	}
 
-	model.get().m_isRoot = true;
+	model.get().setIsRoot(true);
 
 	return model;
 }

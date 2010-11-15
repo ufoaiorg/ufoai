@@ -548,7 +548,3 @@ void Entity_Construct ()
 
 	Entity_registerPrefPage();
 }
-
-void Entity_Destroy ()
-{
-}

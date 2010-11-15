@@ -203,7 +203,7 @@ class TraversableNodeSet: public scene::Traversable
 			ASSERT_MESSAGE(&node != 0, "TraversableNodeSet::insert: sanity check failed");
 			m_undo.save();
 
-			ASSERT_MESSAGE(m_children.find(NodeSmartReference(node)) == m_children.end(), "TraversableNodeSet::insert - element already exists");
+			//ASSERT_MESSAGE(m_children.find(NodeSmartReference(node)) == m_children.end(), "TraversableNodeSet::insert - element already exists");
 
 			m_children.insert(NodeSmartReference(node));
 
@@ -217,7 +217,7 @@ class TraversableNodeSet: public scene::Traversable
 			ASSERT_MESSAGE(&node != 0, "TraversableNodeSet::erase: sanity check failed");
 			m_undo.save();
 
-			ASSERT_MESSAGE(m_children.find(NodeSmartReference(node)) != m_children.end(), "TraversableNodeSet::erase - failed to find element");
+			//ASSERT_MESSAGE(m_children.find(NodeSmartReference(node)) != m_children.end(), "TraversableNodeSet::erase - failed to find element");
 
 			if (m_observer) {
 				m_observer->eraseChild(node);

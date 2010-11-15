@@ -270,7 +270,6 @@ class Radiant
 			TextureBrowser_Construct();
 			Entity_Construct();
 			map::AutoSaver().init();
-			NullModel_Construct();
 
 			EnginePath_verify();
 			EnginePath_Realise();
@@ -291,8 +290,6 @@ class Radiant
 
 			EnginePath_Unrealise();
 
-			NullModel_Destroy();
-			Entity_Destroy();
 			GlobalCamera().destroy();
 			GlobalXYWnd().destroy();
 			MainFrame_Destroy();

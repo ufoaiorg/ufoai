@@ -211,7 +211,7 @@ class MapRoot: public scene::Node,
 		MapRoot (const std::string& name) :
 			m_name(name)
 		{
-			m_isRoot = true;
+			setIsRoot(true);
 
 			m_traverse.attach(this);
 

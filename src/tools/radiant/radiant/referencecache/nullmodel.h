@@ -31,7 +31,4 @@ namespace scene
 typedef SmartReference<scene::Node, IncRefDecRefCounter<scene::Node> > NodeSmartReference;
 NodeSmartReference NewNullModel ();
 
-void NullModel_Construct ();
-void NullModel_Destroy ();
-
 #endif

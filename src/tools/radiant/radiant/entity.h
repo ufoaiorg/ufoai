@@ -53,6 +53,5 @@ typedef struct _GtkMenu GtkMenu;
 void Entity_constructMenu (GtkMenu* menu);
 
 void Entity_Construct ();
-void Entity_Destroy ();
 
 #endif
