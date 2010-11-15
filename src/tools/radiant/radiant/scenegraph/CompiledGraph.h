@@ -7,6 +7,8 @@
 #include "signal/signal.h"
 #include "scenelib.h"
 
+class GraphTreeModel;
+
 /** greebo: This is the actual implementation of the scene::Graph
  * 			defined in iscenegraph.h. This keeps track of all
  * 			the instances.
@@ -19,8 +21,6 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 
 		InstanceMap m_instances;
 
-		scene::Instantiable::Observer* m_observer;
-
 		Signal0 m_boundsChanged;
 
 		scene::Path m_rootpath;
@@ -29,9 +29,14 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 
 		EraseObservers m_eraseObservers;
 
+		// This is the associated graph tree model (used for the EntityList)
+		GraphTreeModel* _treeModel;
+
 	public:
 
-		CompiledGraph (scene::Instantiable::Observer* observer);
+		CompiledGraph ();
+
+		~CompiledGraph();
 
 		void addSceneChangedCallback (const SignalHandler& handler);
 
@@ -65,6 +70,8 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 		// scene::Instantiable::Observer implementation
 		void insert (scene::Instance* instance);
 		void erase (scene::Instance* instance);
+
+		GraphTreeModel* getTreeModel();
 
 	private:
 

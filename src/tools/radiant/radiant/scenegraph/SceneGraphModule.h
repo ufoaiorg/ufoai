@@ -4,11 +4,9 @@
 #include "generic/constant.h"
 #include "CompiledGraph.h"
 
-class GraphTreeModel;
-
 class SceneGraphAPI
 {
-		CompiledGraph* m_scenegraph;
+		CompiledGraph* _scenegraph;
 	public:
 		typedef scene::Graph Type;
 		STRING_CONSTANT(Name, "*");

@@ -34,9 +34,19 @@
 #include "instancelib.h"
 #include "treemodel.h"
 
-CompiledGraph::CompiledGraph (scene::Instantiable::Observer* observer) :
-	m_observer(observer)
+CompiledGraph::CompiledGraph () :
+	_treeModel(graph_tree_model_new())
 {
+}
+
+CompiledGraph::~CompiledGraph ()
+{
+	graph_tree_model_delete(_treeModel);
+}
+
+GraphTreeModel* CompiledGraph::getTreeModel ()
+{
+	return _treeModel;
 }
 
 void CompiledGraph::addSceneChangedCallback (const SignalHandler& handler)
@@ -136,13 +146,18 @@ void CompiledGraph::insert (scene::Instance* instance)
 {
 	m_instances.insert(InstanceMap::value_type(PathConstReference(instance->path()), instance));
 
-	m_observer->insert(instance);
+	// Notify the graph tree model about the change
+	sceneChanged();
+	graph_tree_model_insert(scene_graph_get_tree_model(), *instance);
 }
 
 void CompiledGraph::erase (scene::Instance* instance)
 {
 	notifyErase(instance);
-	m_observer->erase(instance);
+
+	// Notify the graph tree model about the change
+	sceneChanged();
+	graph_tree_model_erase(scene_graph_get_tree_model(), *instance);
 
 	m_instances.erase(PathConstReference(instance->path()));
 }
