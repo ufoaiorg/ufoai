@@ -1,6 +1,5 @@
 #include "EntityClassChooser.h"
 
-#include "ieclass.h"
 #include "iradiant.h"
 #include "eclasslib.h"
 #include "gtkutil/dialog.h"
@@ -123,6 +122,7 @@ namespace ui
 		// Create a GtkTextView
 		_usageTextView = gtk_text_view_new();
 		gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_usageTextView), GTK_WRAP_WORD);
+		gtk_text_view_set_editable(GTK_TEXT_VIEW(_usageTextView), FALSE);
 
 		// Pack into scrolled window and frame
 		GtkWidget* scroll = gtk_scrolled_window_new(NULL, NULL);
