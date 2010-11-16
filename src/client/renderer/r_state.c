@@ -549,16 +549,16 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 	if (!enable && r_state.glowmap_enabled == enable)
 		return;
 
+	if (image == NULL)
+		enable = qfalse;
+
 	r_state.glowmap_enabled = enable;
 
 	if (enable) {
 		if (!r_state.active_program)
 			R_UseProgram(r_state.simple_glow_program);
 
-		if (image == NULL)
-			R_ProgramParameter1f("GLOWSCALE", 0.0);
-		else
-			R_ProgramParameter1f("GLOWSCALE", 1.0);
+		R_ProgramParameter1f("GLOWSCALE", 1.0);
 
 		R_DrawBuffers(2);
 	} else {
