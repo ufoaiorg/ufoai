@@ -24,12 +24,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "cl_cinematic.h"
-#include "../client.h"
 #include "cl_cinematic_ogm.h"
 #include "cl_cinematic_roq.h"
 #include "../cl_console.h"
 #include "../sound/s_main.h"
 #include "../sound/s_music.h"
+/* trying to get rid of client.h ... */
+#include <string.h>		/* memset */
+/* #include "../cl_video.h" is not ready yet */
+#include "../client.h"
 
 void CIN_InitCinematic (cinematic_t *cin)
 {
