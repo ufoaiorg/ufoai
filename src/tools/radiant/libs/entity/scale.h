@@ -43,7 +43,7 @@ inline void read_scale (Vector3& scalevec, const char* value)
 		scalevec = Vector3(scale, scale, scale);
 	}
 }
-inline void read_scalevec (Vector3& scale, const char* value)
+inline void read_scalevec (Vector3& scale, const std::string& value)
 {
 	if (!string_parse_vector3(value, scale) || scale[0] == 0 || scale[1] == 0 || scale[2] == 0)
 		default_scale(scale);
@@ -78,7 +78,7 @@ class ScaleKey
 
 		void scaleChanged (const std::string& value)
 		{
-			read_scalevec(m_scale, value.c_str());
+			read_scalevec(m_scale, value);
 			m_scaleChanged();
 		}
 		typedef MemberCaller1<ScaleKey, const std::string&, &ScaleKey::scaleChanged> ScaleChangedCaller;

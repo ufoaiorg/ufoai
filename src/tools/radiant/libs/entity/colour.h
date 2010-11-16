@@ -33,7 +33,7 @@ inline void default_colour (Vector3& colour)
 {
 	colour = Vector3(1, 1, 1);
 }
-inline void read_colour (Vector3& colour, const char* value)
+inline void read_colour (Vector3& colour, const std::string& value)
 {
 	if (!string_parse_vector3(value, colour)) {
 		default_colour(colour);
@@ -78,7 +78,7 @@ class Colour
 		void colourChanged (const std::string& value)
 		{
 			release_state();
-			read_colour(m_colour, value.c_str());
+			read_colour(m_colour, value);
 			capture_state();
 
 			m_colourChanged();

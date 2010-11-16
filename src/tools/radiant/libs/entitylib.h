@@ -450,13 +450,13 @@ class EntityKeyValues: public Entity
 		void forEachKeyValue_notifyInsert ()
 		{
 			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				notifyInsert((*i).first.c_str(), *(*i).second);
+				notifyInsert((*i).first, *(*i).second);
 			}
 		}
 		void forEachKeyValue_notifyErase ()
 		{
 			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				notifyErase((*i).first.c_str(), *(*i).second);
+				notifyErase((*i).first, *(*i).second);
 			}
 		}
 
@@ -537,7 +537,7 @@ class EntityKeyValues: public Entity
 					m_instanced(false), m_observerMutex(false), m_isContainer(other.m_isContainer)
 		{
 			for (KeyValues::const_iterator i = other.m_keyValues.begin(); i != other.m_keyValues.end(); ++i) {
-				insert((*i).first.c_str(), (*i).second->get());
+				insert((*i).first, (*i).second->get());
 			}
 		}
 		~EntityKeyValues ()
@@ -572,7 +572,7 @@ class EntityKeyValues: public Entity
 			ASSERT_MESSAGE(!m_observerMutex, "observer cannot be attached during iteration");
 			m_observers.insert(&observer);
 			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				observer.insert((*i).first.c_str(), *(*i).second);
+				observer.insert((*i).first, *(*i).second);
 			}
 		}
 		void detach (Observer& observer)
@@ -580,7 +580,7 @@ class EntityKeyValues: public Entity
 			ASSERT_MESSAGE(!m_observerMutex, "observer cannot be detached during iteration");
 			m_observers.erase(&observer);
 			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				observer.erase((*i).first.c_str(), *(*i).second);
+				observer.erase((*i).first, *(*i).second);
 			}
 		}
 
@@ -622,7 +622,7 @@ class EntityKeyValues: public Entity
 		void forEachKeyValue (Visitor& visitor) const
 		{
 			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				visitor.visit((*i).first.c_str(), (*i).second->get());
+				visitor.visit((*i).first, (*i).second->get());
 			}
 		}
 

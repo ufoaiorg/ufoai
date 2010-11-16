@@ -274,7 +274,7 @@ void EnginePath_Unrealise (void)
 void setEnginePath (const std::string& path)
 {
 	StringOutputStream buffer(256);
-	buffer << DirectoryCleaned(path.c_str());
+	buffer << DirectoryCleaned(path);
 	if (g_strEnginePath != buffer.toString()) {
 		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Changing Engine Path"));
 

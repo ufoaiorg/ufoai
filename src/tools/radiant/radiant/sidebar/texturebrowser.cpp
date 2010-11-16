@@ -341,7 +341,7 @@ class LoadTexturesByTypeVisitor: public ImageModules::Visitor
 					if (texture_name_ignore(name))
 						return;
 
-					if (!shader_valid(name.c_str())) {
+					if (!shader_valid(name)) {
 						g_warning("Skipping invalid texture name: [%s]\n", name.c_str());
 						return;
 					}

@@ -186,7 +186,7 @@ class UFOFaceTokenExporter
 			if (shaderName.empty()) {
 				writer.writeToken("tex_common/nodraw");
 			} else {
-				writer.writeToken(shaderName.c_str());
+				writer.writeToken(shaderName);
 			}
 		}
 

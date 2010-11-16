@@ -455,7 +455,7 @@ class OpenGLShader: public Shader {
 				state.m_sort = OpenGLState::eSortFullbright;
 			}
 
-			//	m_shader->forEachLayer(ShaderLayerVisitor(*this));
+			m_shader->forEachLayer(ShaderLayerVisitor(*this));
 		}
 };
 

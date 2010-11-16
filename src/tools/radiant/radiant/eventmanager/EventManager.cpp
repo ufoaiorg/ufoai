@@ -360,7 +360,7 @@ public:
 		}
 		else {
 			// Command NOT found
-			globalOutputStream() << "EventManager: Unable to disconnect command: " << command.c_str() << "\n";
+			globalOutputStream() << "EventManager: Unable to disconnect command: " << command << "\n";
 		}
 	}
 

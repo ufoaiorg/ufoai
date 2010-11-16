@@ -42,7 +42,7 @@ ArchiveFile* ZipArchive::openFile (const std::string& name)
 		istream_read_zip_file_header(m_istream, file_header);
 
 		if (file_header.z_magic != zip_file_header_magic) {
-			globalErrorStream() << "error reading zip file " << m_name.c_str();
+			globalErrorStream() << "error reading zip file " << m_name;
 			return (ArchiveFile*) 0;
 		}
 
@@ -67,7 +67,7 @@ ArchiveTextFile* ZipArchive::openTextFile (const std::string& name)
 		istream_read_zip_file_header(m_istream, file_header);
 
 		if (file_header.z_magic != zip_file_header_magic) {
-			globalErrorStream() << "error reading zip file " << m_name.c_str();
+			globalErrorStream() << "error reading zip file " << m_name;
 			return (ArchiveTextFile*) 0;
 		}
 

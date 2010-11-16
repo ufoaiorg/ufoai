@@ -267,8 +267,8 @@ namespace sidebar
 #endif
 		}
 		/* fill prefab store with data */
-		Directory_forEach(fullpath.c_str(), LoadPrefabDirectoryFunctor(fullpath, "", NULL, _store));
-		Directory_forEach(fullpath.c_str(), MatchFileExtension<LoadPrefabFileFunctor> ("map", LoadPrefabFileFunctor("", NULL, _store)));
+		Directory_forEach(fullpath, LoadPrefabDirectoryFunctor(fullpath, "", NULL, _store));
+		Directory_forEach(fullpath, MatchFileExtension<LoadPrefabFileFunctor> ("map", LoadPrefabFileFunctor("", NULL, _store)));
 		gtk_tree_model_filter_refilter(GTK_TREE_MODEL_FILTER(_fileFiltered));
 		gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(_fileSorted), PREFAB_SHORTNAME, GTK_SORT_ASCENDING);
 	}

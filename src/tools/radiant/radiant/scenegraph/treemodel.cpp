@@ -531,7 +531,7 @@ void graph_tree_model_set_name (const scene::Instance& instance, const std::stri
 	GraphTreeNode* node((*oldNode).second);
 	parent->erase(oldNode);
 
-	GraphTreeNode::iterator newNode = parent->insert(GraphTreeNode::value_type(GraphTreeNode::key_type(name.c_str(),
+	GraphTreeNode::iterator newNode = parent->insert(GraphTreeNode::value_type(GraphTreeNode::key_type(name,
 			&instance.path().top().get()), node));
 	graph_tree_node_foreach_pre(newNode, ReferenceCaller1<GraphTreeModel, GraphTreeNode::iterator,
 			graph_tree_model_row_inserted> (*model));

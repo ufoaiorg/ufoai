@@ -281,7 +281,7 @@ inline void rotateTexture(const float& angle) {
 	std::string command("rotateTexture: ");
 	command += "angle=" + string::toString(angle);
 
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo(command);
 
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_ForEachSelectedBrush_ForEachFace(

@@ -86,7 +86,7 @@ namespace ui
 			gtkutil::errorDialog(_("Error saving ufo script file"));
 			return;
 		}
-		out << content.c_str();
+		out << content;
 	}
 
 } // namespace ui

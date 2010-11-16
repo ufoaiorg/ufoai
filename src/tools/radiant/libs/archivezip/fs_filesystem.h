@@ -44,9 +44,9 @@ inline unsigned int path_get_depth (const std::string& path)
 
 /// \brief Returns a pointer to the first character of the component of \p path following the first directory component.
 /// O(n)
-inline const char* path_remove_directory (const char* path)
+inline const char* path_remove_directory (const std::string& path)
 {
-	const char* first_separator = strchr(path, '/');
+	const char* first_separator = strchr(path.c_str(), '/');
 	if (first_separator != 0) {
 		return ++first_separator;
 	}
@@ -65,26 +65,22 @@ class GenericFileSystem
 				unsigned int m_depth;
 			public:
 				Path (const std::string& path) :
-					m_path(path), m_depth(path_get_depth(c_str()))
+					m_path(path), m_depth(path_get_depth(*this))
 				{
 				}
-				Path (const char* start, std::size_t length) :
+				Path (const std::string& start, std::size_t length) :
 					m_path(start, length), m_depth(path_get_depth(m_path))
 				{
 				}
 				bool operator< (const Path& other) const
 				{
-					return string_less_nocase(c_str(), other.c_str());
+					return string_less_nocase(*this, other);
 				}
 				unsigned int depth () const
 				{
 					return m_depth;
 				}
-				const char* c_str () const
-				{
-					return m_path.c_str();
-				}
-				const std::string& string () const
+				operator const std::string&() const
 				{
 					return m_path;
 				}
@@ -134,12 +130,12 @@ class GenericFileSystem
 		/// O(log n) on average.
 		entry_type& operator[] (const Path& path)
 		{
-			const char* start = path.c_str();
-			const char* end = path_remove_directory(path.c_str());
+			const std::string& start = path;
+			const char* end = path_remove_directory(path);
 
 			while (end[0] != '\0') {
 				// greebo: Take the substring from start to end
-				Path dir(start, end - start);
+				Path dir(start, end - start.c_str());
 
 				// And insert it as directory (NULL)
 				m_entries.insert(value_type(dir, Entry(NULL)));
@@ -183,8 +179,8 @@ class GenericFileSystem
 				}
 				if (skip_depth == 0) {
 					if (!i->second.is_directory()) {
-						visitor.file(i->first.c_str());
-					} else if (visitor.directory(i->first.c_str(), i->first.depth() - start_depth)) {
+						visitor.file(i->first);
+					} else if (visitor.directory(i->first, i->first.depth() - start_depth)) {
 						skip_depth = i->first.depth();
 					}
 				}

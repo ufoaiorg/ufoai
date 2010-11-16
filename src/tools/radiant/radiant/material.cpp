@@ -159,7 +159,7 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 				token = tokeniser.getToken();
 			} else if (token == "material") {
 				token = tokeniser.getToken();
-				// must be the same as _fileName
+				// must be the same as _fileName - but without the texture dir
 			}
 		}
 		token = tokeniser.getToken();

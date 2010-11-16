@@ -195,8 +195,8 @@ class ModelPicoAPI
 			m_modelLoader(module)
 		{
 			std::string filter = "*." + extension;
-			GlobalFiletypesModule::getTable().addType(Type::Name(), extension.c_str(), filetype_t(module->displayName,
-					filter.c_str()));
+			GlobalFiletypesModule::getTable().addType(Type::Name(), extension, filetype_t(module->displayName,
+					filter));
 
 			GlobalPreferenceSystem().registerPreference("ShowModelNormals", BoolImportStringCaller(g_showModelNormals),
 					BoolExportStringCaller(g_showModelNormals));

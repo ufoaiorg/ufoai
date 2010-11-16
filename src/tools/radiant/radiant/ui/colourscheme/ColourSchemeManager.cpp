@@ -50,7 +50,7 @@ void ColourSchemeManager::dump() {
 	globalOutputStream() << "\n";
 
 	for (ColourSchemeMap::iterator it = _colourSchemes.begin(); it != _colourSchemes.end(); it++) {
-		globalOutputStream() << "Dump: Schemename: " << it->first.c_str() << "\n";
+		globalOutputStream() << "Dump: Schemename: " << it->first << "\n";
 
 		// Retrieve the list with all the ColourItems of this scheme
 		ColourItemMap& colourMap = _colourSchemes[it->first].getColourMap();

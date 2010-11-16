@@ -197,7 +197,7 @@ bool ShaderTemplate::parseShaderParameters(Tokeniser& tokeniser, ShaderParameter
 		if (param == ")") {
 			break;
 		}
-		params.push_back(param.c_str());
+		params.push_back(param);
 		const std::string comma = tokeniser.getToken();
 		if (comma == ")") {
 			break;

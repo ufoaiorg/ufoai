@@ -48,7 +48,7 @@ typedef ReferencePair<FaceShaderObserver> FaceShaderObserverPair;
 
 inline void brush_check_shader (const std::string& name)
 {
-	if (!shader_valid(name.c_str())) {
+	if (!shader_valid(name)) {
 		globalErrorStream() << "brush face has invalid texture name: '" << name << "'\n";
 	}
 }
@@ -70,7 +70,7 @@ class FaceShader: public ModuleObserver
 
 				void exportState (FaceShader& faceShader) const
 				{
-					faceShader.setShader(m_shader.c_str());
+					faceShader.setShader(m_shader);
 					faceShader.setFlags(m_flags);
 				}
 		};
