@@ -199,13 +199,14 @@ class TextureBrowser: public RegistryKeyObserver {
 		void draw();
 		void onMouseWheel(bool bUp);
 		GtkWidget* getWidget();
-		void showAll(void);
 		void setUniformSize(int value);
 		void activeShadersChanged();
 		void addActiveShadersChangedCallback(const SignalHandler& handler);
 		void constructPage(PreferenceGroup& group);
 
 		void keyChanged(const std::string& changedKey, const std::string& newValue);
+
+		void registerCommands();
 	private:
 		static gboolean onMouseMotion(GtkWidget *widget, GdkEventMotion *event,
 				TextureBrowser* textureBrowser);
@@ -225,6 +226,10 @@ class TextureBrowser: public RegistryKeyObserver {
 		static gboolean onMouseScroll(GtkWidget* widget, GdkEventScroll* event,
 				TextureBrowser* textureBrowser);
 		static void onActivateDirectoryChange(GtkMenuItem* item, TextureBrowser* textureBrowser);
+
+		// commands
+		void refreshShaders();
+		void showAll(void);
 
 		GtkWidget* createMenuBar();
 		GtkWidget* createToolBar();
