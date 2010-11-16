@@ -19,23 +19,14 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "shared.h"
-#include "radiant_i18n.h"
-#include "iclipper.h"
+#include "brushmanip.h"
+
 #include "ieventmanager.h"
 
-#include "brushmanip.h"
 #include "BrushModule.h"
-
-#include "gtkutil/widget.h"
-#include "../gtkmisc.h"
 #include "BrushNode.h"
-#include "../map/map.h"
-#include "../sidebar/sidebar.h"
-#include "../dialog.h"
-#include "../settings/preferences.h"
-#include "../mainframe.h"
-#include "../ui/Icons.h"
+#include "../ui/brush/QuerySidesDialog.h"
+#include "../sidebar/texturebrowser.h"
 
 #include "construct/Prism.h"
 #include "construct/Cone.h"
@@ -267,7 +258,7 @@ class FaceSetDetail
 		}
 };
 
-void Scene_BrushSetDetail_Selected (scene::Graph& graph, bool detail)
+inline void Scene_BrushSetDetail_Selected (scene::Graph& graph, bool detail)
 {
 	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceSetDetail(detail));
 	SceneChangeNotify();
@@ -500,18 +491,6 @@ void Scene_BrushGetShader_Component_Selected (scene::Graph& graph, std::string& 
 	}
 }
 
-void Select_MakeDetail ()
-{
-	UndoableCommand undo("brushSetDetail");
-	Scene_BrushSetDetail_Selected(GlobalSceneGraph(), true);
-}
-
-void Select_MakeStructural ()
-{
-	UndoableCommand undo("brushClearDetail");
-	Scene_BrushSetDetail_Selected(GlobalSceneGraph(), false);
-}
-
 class BrushMakeSided
 {
 		std::size_t m_count;
@@ -535,14 +514,6 @@ BrushMakeSided g_brushmakesided6(6);
 BrushMakeSided g_brushmakesided7(7);
 BrushMakeSided g_brushmakesided8(8);
 BrushMakeSided g_brushmakesided9(9);
-
-#include "radiant_i18n.h"
-#include <gdk/gdkkeysyms.h>
-#include "gtkutil/dialog.h"
-#include "scenelib.h"
-#include "../brush/brushmanip.h"
-#include "../sidebar/sidebar.h"
-#include "../ui/brush/QuerySidesDialog.h"
 
 class BrushPrefab
 {
@@ -575,25 +546,16 @@ static BrushPrefab g_brushsphere(eBrushSphere);
 static BrushPrefab g_brushrock(eBrushRock);
 static BrushPrefab g_brushterrain(eBrushTerrain);
 
-void ClipSelected ()
+void Select_MakeDetail ()
 {
-	if (GlobalClipper().clipMode()) {
-		UndoableCommand undo("clipperClip");
-		GlobalClipper().clip();
-	}
+	UndoableCommand undo("brushSetDetail");
+	Scene_BrushSetDetail_Selected(GlobalSceneGraph(), true);
 }
 
-void SplitSelected ()
+void Select_MakeStructural ()
 {
-	if (GlobalClipper().clipMode()) {
-		UndoableCommand undo("clipperSplit");
-		GlobalClipper().splitClip();
-	}
-}
-
-void FlipClipper ()
-{
-	GlobalClipper().flipClip();
+	UndoableCommand undo("brushClearDetail");
+	Scene_BrushSetDetail_Selected(GlobalSceneGraph(), false);
 }
 
 void Brush_registerCommands ()
@@ -613,10 +575,6 @@ void Brush_registerCommands ()
 	GlobalEventManager().addCommand("Brush7Sided", BrushMakeSided::SetCaller(g_brushmakesided7));
 	GlobalEventManager().addCommand("Brush8Sided", BrushMakeSided::SetCaller(g_brushmakesided8));
 	GlobalEventManager().addCommand("Brush9Sided", BrushMakeSided::SetCaller(g_brushmakesided9));
-
-	GlobalEventManager().addCommand("ClipSelected", FreeCaller<ClipSelected>());
-	GlobalEventManager().addCommand("SplitSelected", FreeCaller<SplitSelected>());
-	GlobalEventManager().addCommand("FlipClip", FreeCaller<FlipClipper>());
 
 	GlobalEventManager().addCommand("MakeDetail", FreeCaller<Select_MakeDetail>());
 	GlobalEventManager().addCommand("MakeStructural", FreeCaller<Select_MakeStructural>());

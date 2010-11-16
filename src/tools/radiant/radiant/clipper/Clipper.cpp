@@ -2,6 +2,7 @@
 
 #include "radiant_i18n.h"
 #include "iscenegraph.h"
+#include "ieventmanager.h"
 #include "iselection.h"
 #include "preferencesystem.h"
 #include "stringio.h"
@@ -24,6 +25,10 @@ BrushClipper::BrushClipper () :
 	// greebo: Register this class in the preference system so that the
 	// constructPreferencePage() gets called.
 	GlobalPreferenceSystem().addConstructor(this);
+
+	GlobalEventManager().addCommand("FlipClip", MemberCaller<BrushClipper, &BrushClipper::flipClip>(*this));
+	GlobalEventManager().addCommand("ClipSelected", MemberCaller<BrushClipper, &BrushClipper::clip>(*this));
+	GlobalEventManager().addCommand("SplitSelected", MemberCaller<BrushClipper, &BrushClipper::splitClip>(*this));
 }
 
 // Update the internally stored variables on registry key change
@@ -179,6 +184,7 @@ void BrushClipper::reset ()
 void BrushClipper::clip ()
 {
 	if (clipMode() && valid()) {
+		UndoableCommand undo("clipperClip");
 		Vector3 planepts[3];
 		AABB bounds(Vector3(0, 0, 0), Vector3(64, 64, 64));
 		getPlanePoints(planepts, bounds);
@@ -195,6 +201,7 @@ void BrushClipper::clip ()
 void BrushClipper::splitClip ()
 {
 	if (clipMode() && valid()) {
+		UndoableCommand undo("clipperSplit");
 		Vector3 planepts[3];
 		AABB bounds(Vector3(0, 0, 0), Vector3(64, 64, 64));
 		getPlanePoints(planepts, bounds);
