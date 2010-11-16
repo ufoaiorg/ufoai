@@ -29,6 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_VID_H
 #define CLIENT_VID_H
 
+#include "../shared/ufotypes.h"	/* for qboolean */
+#include "../common/mem.h"		/* for memPool_t */
+#include "../common/cvar.h"		/* for cvar_t */
+
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
