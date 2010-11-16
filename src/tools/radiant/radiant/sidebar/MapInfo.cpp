@@ -27,7 +27,6 @@
 #include "MapInfo.h"
 #include "radiant_i18n.h"
 
-#include "../qe3.h"
 #include "iselection.h"
 #include "signal/isignal.h"
 #include "eclasslib.h"

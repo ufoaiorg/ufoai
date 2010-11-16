@@ -40,7 +40,7 @@
 
 #include "../log/console.h"
 #include "../mainframe.h"
-#include "../qe3.h"
+#include "../map/map.h"
 #include <string>
 
 void Interface_constructPreferences (PrefPage* page)

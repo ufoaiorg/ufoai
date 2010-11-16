@@ -60,12 +60,12 @@
 
 #include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"
+#include "gtkutil/messagebox.h"
 #include "../timer.h"
 #include "../select.h"
 #include "../plugin.h"
 #include "../filetypes.h"
 #include "../sidebar/MapInfo.h"
-#include "../qe3.h"
 #include "../camera/CamWnd.h"
 #include "../xyview/GlobalXYWnd.h"
 #include "../mainframe.h"
@@ -1116,6 +1116,26 @@ void Map::Destroy ()
 
 } // namespace map
 
+bool ConfirmModified (const std::string& title)
+{
+	if (!GlobalMap().isModified())
+		return true;
+
+	EMessageBoxReturn result = gtk_MessageBox(
+		GTK_WIDGET(GlobalRadiant().getMainWindow()),
+		_("The current map has changed since it was last saved.\nDo you want to save the current map before continuing?"),
+		title, eMB_YESNOCANCEL, eMB_ICONQUESTION);
+	if (result == eIDCANCEL)
+		return false;
+
+	if (result == eIDYES) {
+		if (GlobalMap().isUnnamed())
+			return GlobalMap().saveAsDialog();
+		else
+			return GlobalMap().save();
+	}
+	return true;
+}
 
 class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker
 {

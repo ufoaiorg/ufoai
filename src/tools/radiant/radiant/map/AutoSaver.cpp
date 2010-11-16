@@ -10,7 +10,6 @@
 #include "string/string.h"
 #include "map.h"
 #include "../mainframe.h"
-#include "../qe3.h"
 #include "os/path.h"
 
 #include "radiant_i18n.h"

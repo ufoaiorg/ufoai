@@ -51,7 +51,6 @@
 #include "map/map.h"
 #include "settings/preferences.h"
 #include "iradiant.h"
-#include "qe3.h"
 #include "ui/lightdialog/LightDialog.h"
 #include "ui/particles/ParticleSelector.h"
 #include "ui/modelselector/ModelSelector.h"

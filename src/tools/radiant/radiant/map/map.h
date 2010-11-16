@@ -175,6 +175,8 @@ class Map: public ModuleObserver
 
 map::Map& GlobalMap ();
 
+bool ConfirmModified (const std::string& title);
+
 class DeferredDraw
 {
 		Callback m_draw;

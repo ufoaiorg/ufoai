@@ -72,7 +72,6 @@
 #include "map/map.h"
 #include "map/CounterManager.h"
 
-#include "qe3.h"
 #include "sidebar/sidebar.h"
 #include "gtkmisc.h"
 #include "mainframe.h"

@@ -588,8 +588,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\plugin.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\particles\ParticleParser.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\particles\ParticleSystem.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\qe3.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\qe3.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\radiant.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>

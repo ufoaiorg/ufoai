@@ -32,7 +32,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/parse.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
-	$(RADIANT_BASE)/radiant/qe3.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \

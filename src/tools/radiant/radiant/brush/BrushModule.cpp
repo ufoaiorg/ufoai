@@ -35,7 +35,6 @@
 #include "stringio.h"
 
 #include "../map/map.h"
-#include "../qe3.h"
 #include "../dialog.h"
 #include "../mainframe.h"
 #include "../settings/preferences.h"

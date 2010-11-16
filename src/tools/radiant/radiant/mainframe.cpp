@@ -97,7 +97,6 @@
 #include "ump.h"
 #include "plugin.h"
 #include "settings/preferences.h"
-#include "qe3.h"
 #include "render/OpenGLRenderSystem.h"
 #include "select.h"
 #include "textures.h"

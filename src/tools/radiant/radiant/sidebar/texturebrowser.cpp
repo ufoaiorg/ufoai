@@ -75,7 +75,6 @@
 #include "../brush/TextureProjection.h"
 #include "../brush/brushmanip.h"
 #include "../plugin.h"
-#include "../qe3.h"
 #include "../gtkmisc.h"
 #include "../mainframe.h"
 #include "sidebar.h"

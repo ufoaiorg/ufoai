@@ -9,7 +9,6 @@
 #include "os/file.h"
 #include "radiant_i18n.h"
 
-#include "../../qe3.h"
 #include "../../map/map.h"
 
 namespace ui {
