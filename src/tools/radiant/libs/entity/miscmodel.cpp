@@ -442,10 +442,3 @@ scene::Node& New_MiscModel (EntityClass* eclass)
 {
 	return *(new MiscModelNode(eclass));
 }
-
-void MiscModel_construct ()
-{
-}
-void MiscModel_destroy ()
-{
-}

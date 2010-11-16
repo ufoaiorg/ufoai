@@ -153,10 +153,6 @@ void UMP_Construct ()
 	GlobalEventManager().addCommand("EditUMPDefinition", MemberCaller<IUMPSystem, &IUMPSystem::editUMPDefinition> (GlobalUMPSystem()));
 }
 
-void UMP_Destroy ()
-{
-}
-
 /* Required code to register the module with the ModuleServer.
  */
 #include "modulesystem/singletonmodule.h"

@@ -1775,10 +1775,6 @@ void GLWindow_Construct (void)
 			IntExportStringCaller(g_glwindow_globals.m_nMouseType));
 }
 
-void GLWindow_Destroy (void)
-{
-}
-
 /**
  * Updates the sensitivity of save, undo and redo buttons and menu items according to actual state.
  */

@@ -28,6 +28,8 @@
 
 #include "gtkutil/menu/PopupMenu.h"
 
+class Selectable;
+
 namespace sidebar
 {
 	class MapInfo
@@ -79,10 +81,11 @@ namespace sidebar
 			/** Updates the map info data
 			 */
 			void update ();
+
+			void selectionChanged (const Selectable& selectable);
 	};
 
 	void MapInfo_Construct ();
-	void MapInfo_Destroy ();
 }
 
 #endif

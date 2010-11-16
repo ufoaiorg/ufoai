@@ -156,7 +156,6 @@ struct GLWindowGlobals
 };
 
 void GLWindow_Construct ();
-void GLWindow_Destroy ();
 
 extern GLWindowGlobals g_glwindow_globals;
 template<typename Value>

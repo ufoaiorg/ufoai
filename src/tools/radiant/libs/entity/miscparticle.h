@@ -23,7 +23,5 @@
 #define INCLUDED_MISCPARTICLE_H
 
 scene::Node& New_MiscParticle (EntityClass* eclass);
-void MiscParticle_destroy ();
-void MiscParticle_construct ();
 
 #endif

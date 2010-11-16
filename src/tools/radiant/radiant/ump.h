@@ -30,6 +30,5 @@
 #include "iump.h"
 
 void UMP_Construct ();
-void UMP_Destroy ();
 
 #endif

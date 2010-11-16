@@ -159,7 +159,6 @@ namespace sidebar
 		return _instance;
 	}
 
-
 	void MapInfo::update ()
 	{
 		// Initialize fields
@@ -186,9 +185,9 @@ namespace sidebar
 		gtk_list_store_set(_infoStore, &iter, 0, _("Total Entities"), 1, GlobalRadiant().getCounter(counterEntities).get(), -1);
 	}
 
-	void MapInfo_SelectionChanged (const Selectable& selectable)
+	void MapInfo::selectionChanged (const Selectable& selectable)
 	{
-		sidebar::MapInfo::getInstance().update();
+		getInstance().update();
 	}
 
 	/**
@@ -196,14 +195,7 @@ namespace sidebar
 	 */
 	void MapInfo_Construct (void)
 	{
-		typedef FreeCaller1<const Selectable&, MapInfo_SelectionChanged> MapInfoSelectionChangedCaller;
-		GlobalSelectionSystem().addSelectionChangeCallback(MapInfoSelectionChangedCaller());
-	}
-
-	/**
-	 * @sa MapInfo_Construct
-	 */
-	void MapInfo_Destroy (void)
-	{
+		typedef MemberCaller1<MapInfo, const Selectable&, &MapInfo::selectionChanged> MapInfoSelectionChangedCaller;
+		GlobalSelectionSystem().addSelectionChangeCallback(MapInfoSelectionChangedCaller(MapInfo::getInstance()));
 	}
 }

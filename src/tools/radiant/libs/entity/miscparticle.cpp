@@ -52,14 +52,6 @@
 #include "model.h"
 #include "entity.h"
 
-void MiscParticle_construct ()
-{
-}
-
-void MiscParticle_destroy ()
-{
-}
-
 /**
  * @brief Render class for the grid windows
  */

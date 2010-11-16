@@ -148,7 +148,7 @@ void CompiledGraph::insert (scene::Instance* instance)
 
 	// Notify the graph tree model about the change
 	sceneChanged();
-	graph_tree_model_insert(scene_graph_get_tree_model(), *instance);
+	graph_tree_model_insert(_treeModel, *instance);
 }
 
 void CompiledGraph::erase (scene::Instance* instance)
@@ -157,7 +157,7 @@ void CompiledGraph::erase (scene::Instance* instance)
 
 	// Notify the graph tree model about the change
 	sceneChanged();
-	graph_tree_model_erase(scene_graph_get_tree_model(), *instance);
+	graph_tree_model_erase(_treeModel, *instance);
 
 	m_instances.erase(PathConstReference(instance->path()));
 }

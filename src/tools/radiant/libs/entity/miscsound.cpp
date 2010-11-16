@@ -415,11 +415,3 @@ scene::Node& New_MiscSound (EntityClass* eclass)
 {
 	return *(new MiscSoundNode(eclass));
 }
-
-void MiscSound_construct ()
-{
-}
-
-void MiscSound_destroy ()
-{
-}

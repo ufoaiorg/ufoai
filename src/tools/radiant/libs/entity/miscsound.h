@@ -20,7 +20,5 @@
 #define INCLUDED_MISCSOUND_H
 
 scene::Node& New_MiscSound (EntityClass* eclass);
-void MiscSound_construct ();
-void MiscSound_destroy ();
 
 #endif

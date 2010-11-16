@@ -186,9 +186,6 @@ void P_Entity_Construct ()
 	GlobalPreferenceSystem().registerPreference("ForceLightRadiuses", BoolImportStringCaller(g_forceLightRadii),
 			BoolExportStringCaller(g_forceLightRadii));
 
-	MiscModel_construct();
-	MiscSound_construct();
-	MiscParticle_construct();
 	Light_Construct();
 
 	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");
@@ -202,8 +199,5 @@ void P_Entity_Destroy ()
 
 	GlobalShaderCache().release("$PIVOT");
 
-	MiscParticle_destroy();
-	MiscSound_destroy();
-	MiscModel_destroy();
 	Light_Destroy();
 }

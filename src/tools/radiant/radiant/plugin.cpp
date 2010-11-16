@@ -295,7 +295,6 @@ class Radiant
 		}
 		~Radiant ()
 		{
-			UMP_Destroy();
 			Pathfinding_Destroy();
 			TextureBrowser_Destroy();
 
@@ -304,9 +303,7 @@ class Radiant
 			GlobalCamera().destroy();
 			GlobalXYWnd().destroy();
 			MainFrame_Destroy();
-			sidebar::MapInfo_Destroy();
 			GlobalMap().Destroy();
-			GLWindow_Destroy();
 			VFS_Destroy();
 			HomePaths_Destroy();
 		}
