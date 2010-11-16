@@ -68,8 +68,7 @@ define BUILD_RULE
 ifndef $(1)_DISABLE
 ifndef $(1)_IGNORE
 
-DEPENDENCIES = $($(1)_OBJS:.o=.d)
--include $(DEPENDENCIES)
+-include $($(1)_OBJS:.o=.d)
 
 # if the target filename differs:
 ifneq ($(1),$($(1)_FILE))
