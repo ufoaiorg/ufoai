@@ -127,7 +127,7 @@ class MaterialShader: public IShader {
 
 		std::size_t refcount();
 
-		BlendFactor parseBlendMode(const std::string token);
+		BlendFactor parseBlendMode(const std::string& token);
 		void parseMaterial(Tokeniser& tokenizer);
 
 		// get/set the qtexture_t* Radiant uses to represent this shader object

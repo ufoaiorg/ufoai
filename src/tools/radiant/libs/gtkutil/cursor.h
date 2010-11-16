@@ -130,7 +130,7 @@ class FreezePointer
 		void* m_data;
 	public:
 		FreezePointer () :
-			handle_motion(0), m_function(0), m_data(0)
+			handle_motion(0), recorded_x(0), recorded_y(0), m_function(0), m_data(0)
 		{
 		}
 		static gboolean motion_delta (GtkWidget *widget, GdkEventMotion *event, FreezePointer* self)

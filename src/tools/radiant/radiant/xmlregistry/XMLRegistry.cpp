@@ -233,7 +233,7 @@ void XMLRegistry::notifyKeyObservers(const std::string& changedKey, const std::s
 	}
 }
 
-void XMLRegistry::init(const std::string& basePath, const std::string settingsPath) {
+void XMLRegistry::init(const std::string& basePath, const std::string& settingsPath) {
 	_settingsPath = settingsPath;
 
 	try {

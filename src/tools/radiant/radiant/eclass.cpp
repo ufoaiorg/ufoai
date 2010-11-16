@@ -114,19 +114,6 @@ const ListAttributeType* EntityClass_findListType (const std::string& name)
 	return 0;
 }
 
-class EntityClassesLoadFile
-{
-		const EntityClassScanner& scanner;
-		const std::string& m_filename;
-	public:
-		EntityClassesLoadFile (const EntityClassScanner& scanner, const std::string& filename) :
-			scanner(scanner), m_filename(filename)
-		{
-			g_message("Load entity definition file from '%s'\n", m_filename.c_str());
-			scanner.scanFile(g_collector, m_filename);
-		}
-};
-
 void EntityClassUFO_Construct ()
 {
 	/** @todo remove this visitor - we only have one entity def parser */
@@ -139,15 +126,15 @@ void EntityClassUFO_Construct ()
 
 			void visit (const std::string& name, const EntityClassScanner& table) const
 			{
-				g_message("Try to load '%s'\n", table.getFilename().c_str());
-				EntityClassesLoadFile(table, table.getFilename());
+				g_message("Load entity definition file from '%s'\n", table.getFilename().c_str());
+				table.scanFile(g_collector, table.getFilename());
 			}
 	};
 
 	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor());
 }
 
-EntityClass *Eclass_ForName (const std::string& name, bool has_brushes)
+EntityClass* Eclass_ForName (const std::string& name, bool has_brushes)
 {
 	if (name.empty())
 		return eclass_bad;

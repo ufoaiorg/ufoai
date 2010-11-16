@@ -36,7 +36,7 @@ class RadiantFileTypeRegistry: public IFileTypeRegistry
 	private:
 		struct filetype_copy_t
 		{
-				filetype_copy_t (const std::string& moduleName, const filetype_t other) :
+				filetype_copy_t (const std::string& moduleName, const filetype_t& other) :
 					m_moduleName(moduleName), m_name(other.name), m_pattern(other.pattern)
 				{
 				}

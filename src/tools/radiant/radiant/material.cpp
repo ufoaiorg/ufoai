@@ -49,11 +49,8 @@
 #include "itextures.h"
 
 MaterialShader::MaterialShader (const std::string& fileName, const std::string& content) :
-	_refcount(0), _fileName(fileName)
+	_refcount(0), _fileName(fileName), _inUse(false), _isValid(false), _texture(0), _notfound(0)
 {
-	_texture = 0;
-	_notfound = 0;
-
 	StringInputStream inputStream(content);
 	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(inputStream));
 	parseMaterial(*tokeniser);
@@ -66,7 +63,7 @@ MaterialShader::~MaterialShader ()
 	unrealise();
 }
 
-BlendFactor MaterialShader::parseBlendMode (const std::string token)
+BlendFactor MaterialShader::parseBlendMode (const std::string& token)
 {
 	if (token == "GL_ONE")
 		return BLEND_ONE;

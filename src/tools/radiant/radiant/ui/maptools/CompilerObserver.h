@@ -57,7 +57,7 @@ class CompilerObserver: public ICompilerObserver
 			return string::toInt(message.substr(posBrush, posSplit - posBrush), -1);
 		}
 
-		std::string getErrorMessage (const std::string message)
+		std::string getErrorMessage (const std::string& message)
 		{
 			std::size_t pos = message.find(" - ");
 			if (pos == std::string::npos)

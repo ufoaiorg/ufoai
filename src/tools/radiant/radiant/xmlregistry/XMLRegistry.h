@@ -148,7 +148,7 @@ public:
 	// Removes an observer watching the <observedKey> from the internal list of observers.
 	void removeKeyObserver(RegistryKeyObserver* observer);
 
-	void init(const std::string& basePath, const std::string settingsPath);
+	void init(const std::string& basePath, const std::string& settingsPath);
 
 private:
 	// Cycles through the key observers and notifies the ones that observe the given <changedKey>

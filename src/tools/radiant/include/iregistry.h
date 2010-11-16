@@ -163,7 +163,7 @@ public:
 	 */
 	virtual void removeKeyObserver (RegistryKeyObserver* observer) = 0;
 
-	virtual void init(const std::string& basePath, const std::string settingsPath) = 0;
+	virtual void init(const std::string& basePath, const std::string& settingsPath) = 0;
 };
 
 // Module definitions
