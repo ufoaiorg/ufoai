@@ -26,7 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CINEMATIC_H
 #define CLIENT_CL_CINEMATIC_H
 
-#include "../client.h"
+#include "../../shared/ufotypes.h"	/* for qboolean */
+#include "../../common/filesys.h"	/* for MAX_QPATH */
 
 enum {
 	CINEMATIC_TYPE_ROQ,
@@ -36,7 +37,7 @@ enum {
 typedef struct cinematic_s {
 	char			name[MAX_QPATH];	/**< virtual filesystem path with file suffix */
 
-	qboolean		replay;	/**< autmatically replay in endless loop */
+	qboolean		replay;		/**< autmatically replay in endless loop */
 	int				x, y, w, h; /**< for drawing in the menu maybe */
 
 	qboolean		noSound;	/**< no sound while playing the cinematic */

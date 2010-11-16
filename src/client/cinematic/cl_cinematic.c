@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "cl_cinematic.h"
+#include "../client.h"
 #include "cl_cinematic_ogm.h"
 #include "cl_cinematic_roq.h"
 #include "../cl_console.h"

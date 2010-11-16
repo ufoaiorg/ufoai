@@ -9,6 +9,7 @@
 
 #include "cl_cinematic_ogm.h"
 #include "cl_cinematic.h"
+#include "../client.h"
 #include "../renderer/r_draw.h"
 #include "../sound/s_main.h"
 #include "../sound/s_music.h"
