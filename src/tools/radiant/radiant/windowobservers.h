@@ -34,18 +34,4 @@ typedef struct _GtkWindow GtkWindow;
 void GlobalWindowObservers_connectWidget (GtkWidget* widget);
 void GlobalWindowObservers_connectTopLevel (GtkWindow* window);
 
-/* greebo: This translates the modifier information from an GDKEvent event->state
- * into the constants defined in include/windowobserver.h */
-inline ModifierFlags modifiers_for_state (unsigned int state)
-{
-	ModifierFlags modifiers = c_modifierNone;
-	if (state & GDK_SHIFT_MASK)
-		modifiers |= c_modifierShift;
-	if (state & GDK_CONTROL_MASK)
-		modifiers |= c_modifierControl;
-	if (state & GDK_MOD1_MASK)
-		modifiers |= c_modifierAlt;
-	return modifiers;
-}
-
 #endif

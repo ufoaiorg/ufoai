@@ -29,31 +29,6 @@ inline const Functor& Scene_forEachSelectedBrush (const Functor& functor)
 	return functor;
 }
 
-template<typename Functor>
-class BrushVisibleSelectedVisitor: public SelectionSystem::Visitor
-{
-		const Functor& m_functor;
-	public:
-		BrushVisibleSelectedVisitor (const Functor& functor) :
-			m_functor(functor)
-		{
-		}
-		void visit (scene::Instance& instance) const
-		{
-			BrushInstance* brush = Instance_getBrush(instance);
-			if (brush != 0 && instance.path().top().get().visible()) {
-				m_functor(*brush);
-			}
-		}
-};
-
-template<typename Functor>
-inline const Functor& Scene_forEachVisibleSelectedBrush (const Functor& functor)
-{
-	GlobalSelectionSystem().foreachSelected(BrushVisibleSelectedVisitor<Functor> (functor));
-	return functor;
-}
-
 class BrushForEachFace
 {
 		const BrushInstanceVisitor& m_visitor;
@@ -163,34 +138,6 @@ class InstanceIfVisible: public Functor
 			}
 		}
 };
-
-template<typename Functor>
-class BrushVisibleWalker: public scene::Graph::Walker
-{
-		const Functor& m_functor;
-	public:
-		BrushVisibleWalker (const Functor& functor) :
-			m_functor(functor)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.top().get().visible()) {
-				BrushInstance* brush = Instance_getBrush(instance);
-				if (brush != 0) {
-					m_functor(*brush);
-				}
-			}
-			return true;
-		}
-};
-
-template<typename Functor>
-inline const Functor& Scene_forEachVisibleBrush (scene::Graph& graph, const Functor& functor)
-{
-	graph.traverse(BrushVisibleWalker<Functor> (functor));
-	return functor;
-}
 
 template<typename Functor>
 inline const Functor& Scene_ForEachBrush_ForEachFace (scene::Graph& graph, const Functor& functor)

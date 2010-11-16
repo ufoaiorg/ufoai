@@ -110,6 +110,20 @@ static void WindowObservers_UpdateModifiers (WindowObservers& observers, Modifie
 	WindowObservers_UpdateModifier(observers, modifiers, c_modifierControl);
 }
 
+/* greebo: This translates the modifier information from an GDKEvent event->state
+ * into the constants defined in include/windowobserver.h */
+inline ModifierFlags modifiers_for_state (unsigned int state)
+{
+	ModifierFlags modifiers = c_modifierNone;
+	if (state & GDK_SHIFT_MASK)
+		modifiers |= c_modifierShift;
+	if (state & GDK_CONTROL_MASK)
+		modifiers |= c_modifierControl;
+	if (state & GDK_MOD1_MASK)
+		modifiers |= c_modifierAlt;
+	return modifiers;
+}
+
 static gboolean modifiers_button_press (GtkWidget* widget, GdkEventButton* event, WindowObservers* observers)
 {
 	if (event->type == GDK_BUTTON_PRESS) {
@@ -133,11 +147,6 @@ static gboolean modifiers_motion (GtkWidget *widget, GdkEventMotion *event, Wind
 }
 
 WindowObservers g_window_observers;
-
-void GlobalWindowObservers_updateModifiers (ModifierFlags modifiers)
-{
-	WindowObservers_UpdateModifiers(g_window_observers, modifiers);
-}
 
 void GlobalWindowObservers_add (WindowObserver* observer)
 {
