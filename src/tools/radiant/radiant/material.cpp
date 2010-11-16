@@ -304,7 +304,7 @@ void MaterialShader::unrealise ()
 	}
 }
 
-MaterialSystem::MaterialSystem ()
+MaterialSystem::MaterialSystem () : _materialLoaded(false)
 {
 }
 
