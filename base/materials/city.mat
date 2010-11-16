@@ -116,8 +116,8 @@
 	material tex_misc/sign_parkbld
 	specular 2.0
 	hardness 2.0
-	bump 3.0
-	parallax 3.0
+	bump 1.0
+	parallax 1.0
 	glowscale 0.1
 }
 # Parking Garage Sign (animated side)
@@ -125,9 +125,9 @@
 	material tex_misc/sign_parkblda
 	specular 2.0
 	hardness 2.0
-	bump 3.0
-	parallax 3.0
-	glowscale 2.0
+	bump 1.0
+	parallax 1.0
+	glowscale 1.0
 	{
 		texture tex_misc/sign_parkblda0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
@@ -139,8 +139,8 @@
 # Vehicle Entrance Panel
 {
 	material tex_misc/vehentpan
-	specular 2.0
-	hardness 2.0
+	specular 4.0
+	hardness 4.0
 	{
 		texture tex_misc/vehentpan0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
@@ -205,57 +205,64 @@
 	material tex_buildings/wall_ind01
 	bump 2.0
 	parallax 2.0
+	specular 0.2
+	hardness 0.2
 }
 {
 	material tex_buildings/wall_ind01_cons
 	bump 2.0
 	parallax 2.0
+	specular 0.2
+	hardness 0.2
 }
 {
 	material tex_buildings/wall_ind01_pil
 	bump 2.0
 	parallax 2.0
+	specular 0.2
+	hardness 0.2
 }
 {
 	material tex_buildings/wall_ind02
 	bump 2.0
 	parallax 2.0
-	specular 2.0
+	specular 0.2
+	hardness 0.2
 }
 {
 	material tex_buildings/wall_ind03
 	bump 2.0
 	parallax 2.0
-	specular 2.0
-	hardness 2.0
+	specular 0.2
+	hardness 0.2
 }
 {
 	material tex_buildings/wall_ind03_flat
 	bump 2.0
 	parallax 2.0
-	specular 2.0
-	hardness 2.0
+	specular 0.2
+	hardness 0.2
 }
 {
 	material tex_buildings/wall_ind04
 	bump 2.0
 	parallax 2.0
-	specular 2.0
-	hardness 2.0
+	specular 0.2
+	hardness 0.2
 }
 {
 	material tex_buildings/wall_ind04_cons
 	bump 2.0
 	parallax 2.0
-	specular 2.0
-	hardness 2.0
+	specular 0.2
+	hardness 0.2
 }
 {
 	material tex_buildings/wall_ind04
 	bump 2.0
 	parallax 2.0
-	specular 0.5
-	hardness 0.5
+	specular 0.2
+	hardness 0.2
 }
 
 ###
