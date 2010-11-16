@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_SEQUENCE_H
 #define CLIENT_CL_SEQUENCE_H
 
+#include "../../shared/mathlib.h"	/* vec2_t */
+
 struct sequenceContext_s;
 
 #define pSequenceContext_t struct sequenceContext_s*
