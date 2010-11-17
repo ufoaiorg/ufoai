@@ -966,6 +966,7 @@ void TextureBrowser::refreshShaders ()
 {
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Shaders"));
 	GlobalShaderSystem().refresh();
+	showDirectory(currentDirectory);
 	UpdateAllWindows();
 }
 
