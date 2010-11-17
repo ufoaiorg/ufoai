@@ -6811,8 +6811,13 @@ base/textures/tex_ufo/ufo2_17.png | GNU General Public License 2.0 or later | "S
 base/textures/tex_ufo/ufo2_17_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_medic01.png | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_medic02.png | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/textures/tex_vehicles/car_e0.png | GNU General Public License 2.0 or later
-base/textures/tex_vehicles/car_e1.png | GNU General Public License 2.0 or later
+base/textures/tex_vehicles/car_a.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/car_c.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/car_d.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/car_e.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/car_e0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/car_e1.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/car_f.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/gabstap_c.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_c_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_d.png | GNU General Public License 2.0 or later | Martin Gerhardy
