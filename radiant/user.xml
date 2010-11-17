@@ -61,6 +61,8 @@
 			<browser>
 				<hideUnused value="0" />
 				<hideInvalid value="1" />
+				<uniformSize value="128" />
+				<thumbnailScale value="2" />
 			</browser>
 
 			<shaderChooser>

@@ -177,30 +177,6 @@ void TextEntryExport (GtkEntry& widget, const StringImportCallback& importCallba
 }
 typedef ImportExport<GtkEntry, const char*, TextEntryImport, TextEntryExport> TextEntryImportExport;
 
-void IntEntryImport (GtkEntry& widget, int value)
-{
-	entry_set_int(&widget, value);
-}
-void IntEntryExport (GtkEntry& widget, const IntImportCallback& importCallback)
-{
-	importCallback(atoi(gtk_entry_get_text(&widget)));
-}
-typedef ImportExport<GtkEntry, int, IntEntryImport, IntEntryExport> IntEntryImportExport;
-
-void SizeEntryImport (GtkEntry& widget, std::size_t value)
-{
-	entry_set_int(&widget, int(value));
-}
-void SizeEntryExport (GtkEntry& widget, const SizeImportCallback& importCallback)
-{
-	int value = atoi(gtk_entry_get_text(&widget));
-	if (value < 0) {
-		value = 0;
-	}
-	importCallback(value);
-}
-typedef ImportExport<GtkEntry, std::size_t, SizeEntryImport, SizeEntryExport> SizeEntryImportExport;
-
 void FloatSpinnerImport (GtkSpinButton& widget, float value)
 {
 	gtk_spin_button_set_value(&widget, value);
@@ -377,28 +353,10 @@ void Dialog::AddTextEntryData (GtkEntry& widget, const StringImportCallback& imp
 	AddCustomData<TextEntryImportExport> (m_data).apply(widget, importViewer, exportViewer);
 }
 
-void Dialog::AddIntEntryData (GtkEntry& widget, const IntImportCallback& importViewer,
-		const IntExportCallback& exportViewer)
-{
-	AddCustomData<IntEntryImportExport> (m_data).apply(widget, importViewer, exportViewer);
-}
-
-void Dialog::AddSizeEntryData (GtkEntry& widget, const SizeImportCallback& importViewer,
-		const SizeExportCallback& exportViewer)
-{
-	AddCustomData<SizeEntryImportExport> (m_data).apply(widget, importViewer, exportViewer);
-}
-
 void Dialog::AddFloatSpinnerData (GtkSpinButton& widget, const FloatImportCallback& importViewer,
 		const FloatExportCallback& exportViewer)
 {
 	AddCustomData<FloatSpinnerImportExport> (m_data).apply(widget, importViewer, exportViewer);
-}
-
-void Dialog::AddIntSpinnerData (GtkSpinButton& widget, const IntImportCallback& importViewer,
-		const IntExportCallback& exportViewer)
-{
-	AddCustomData<IntSpinnerImportExport> (m_data).apply(widget, importViewer, exportViewer);
 }
 
 void Dialog::AddIntAdjustmentData (GtkAdjustment& widget, const IntImportCallback& importViewer,
@@ -677,24 +635,6 @@ GtkWidget* Dialog::addEntry (GtkWidget* vbox, const std::string& name, const std
 	// Connect the registry key to the newly created input field
 	_registryConnector.connectGtkObject(GTK_OBJECT(row.m_entry), registryKey);
 
-	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
-	return row.m_row;
-}
-
-GtkWidget* Dialog::addIntEntry (GtkWidget* vbox, const char* name, const IntImportCallback& importViewer,
-		const IntExportCallback& exportViewer)
-{
-	DialogEntryRow row(DialogEntryRow_new(name));
-	AddIntEntryData(*row.m_entry, importViewer, exportViewer);
-	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
-	return row.m_row;
-}
-
-GtkWidget* Dialog::addSizeEntry (GtkWidget* vbox, const char* name, const SizeImportCallback& importViewer,
-		const SizeExportCallback& exportViewer)
-{
-	DialogEntryRow row(DialogEntryRow_new(name));
-	AddSizeEntryData(*row.m_entry, importViewer, exportViewer);
 	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
 	return row.m_row;
 }

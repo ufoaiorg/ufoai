@@ -99,11 +99,11 @@ class DeferredAdjustment {
 #include "../settings/preferences.h"
 #include "iregistry.h"
 
-class TextureBrowser: public RegistryKeyObserver {
+class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor {
 	private:
 		TextureGroups groups;
 
-	public:
+
 		int width, height;
 		int originy;
 		int m_nTotalHeight;
@@ -140,74 +140,51 @@ class TextureBrowser: public RegistryKeyObserver {
 		int m_uniformTextureSize;
 
 		std::string currentDirectory;
-
-		// Return the display width of a texture in the texture browser
-		int getTextureWidth(const qtexture_t* tex) {
-			int width;
-			if (!m_resizeTextures) {
-				// Don't use uniform size
-				width = (int) (tex->width * ((float) m_textureScale / 100));
-			} else if (tex->width >= tex->height) {
-				// Texture is square, or wider than it is tall
-				width = m_uniformTextureSize;
-			} else {
-				// Otherwise, preserve the texture's aspect ratio
-				width = (int) (m_uniformTextureSize * ((float) tex->width / tex->height));
-			}
-			return width;
-		}
-		// Return the display height of a texture in the texture browser
-		int getTextureHeight(const qtexture_t* tex) {
-			int height;
-			if (!m_resizeTextures) {
-				// Don't use uniform size
-				height = (int) (tex->height * ((float) m_textureScale / 100));
-			} else if (tex->height >= tex->width) {
-				// Texture is square, or taller than it is wide
-				height = m_uniformTextureSize;
-			} else {
-				// Otherwise, preserve the texture's aspect ratio
-				height = (int) (m_uniformTextureSize * ((float) tex->height / tex->width));
-			}
-			return height;
-		}
+	public:
 
 		TextureBrowser();
 
 		const std::string& getSelectedShader() const;
 		void setSelectedShader(const std::string& shader);
 		void showStartupShaders();
-		void toggleShowShaders();
+		void showDirectory(const std::string& directory);
+		GtkWidget* getWidget();
+		void activeShadersChanged();
+		void addActiveShadersChangedCallback(const SignalHandler& handler);
+		void constructPreferencePage(PreferenceGroup& group);
+
+		void keyChanged(const std::string& changedKey, const std::string& newValue);
+
+		void registerCommands();
+
+		void setOriginY(int originy);
+	private:
+
+		void focus(const std::string& name);
+		void selectTextureAt(int mx, int my);
+		void queueDraw();
+		bool isTextureShown(const IShader* shader) const;
 		void updateScroll();
 		int getFontHeight();
 		void setStatusText(const std::string& name);
-		void showDirectory(const std::string& directory);
-		void registerPreferencesPage(void);
-		void focus(const std::string& name);
-		void selectTextureAt(int mx, int my);
-		void setScale(std::size_t scale);
-		void queueDraw();
-		bool isTextureShown(const IShader* shader) const;
+
+		// Return the display width of a texture in the texture browser
+		int getTextureWidth(const qtexture_t* tex);
+		// Return the display height of a texture in the texture browser
+		int getTextureHeight(const qtexture_t* tex);
+
+		void textureScaleImport (int value);
+
 		void heightChanged();
 		void evaluateHeight();
 		int getTotalHeight();
 		void clampOriginY();
 		int getOriginY();
-		void setOriginY(int originy);
 		void getNextTexturePosition(TextureLayout& layout, const qtexture_t* q, int *x, int *y);
 		const IShader* getTextureAt(int mx, int my);
 		void draw();
 		void onMouseWheel(bool bUp);
-		GtkWidget* getWidget();
-		void setUniformSize(int value);
-		void activeShadersChanged();
-		void addActiveShadersChangedCallback(const SignalHandler& handler);
-		void constructPage(PreferenceGroup& group);
 
-		void keyChanged(const std::string& changedKey, const std::string& newValue);
-
-		void registerCommands();
-	private:
 		static gboolean onMouseMotion(GtkWidget *widget, GdkEventMotion *event,
 				TextureBrowser* textureBrowser);
 		static gboolean onButtonRelease(GtkWidget* widget, GdkEventButton* event,

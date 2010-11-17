@@ -109,15 +109,6 @@ class PrefPage : public PreferencesPage
 		{
 			m_dialog.addRadioIcons(m_vbox, name, icons, importCallback, exportCallback);
 		}
-		GtkWidget* appendEntry (const char* name, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback)
-		{
-			return m_dialog.addIntEntry(m_vbox, name, importCallback, exportCallback);
-		}
-		GtkWidget* appendEntry (const char* name, std::size_t& data)
-		{
-			return m_dialog.addEntry(m_vbox, name, data);
-		}
 		GtkWidget* appendPathEntry (const char* name, bool browse_directory,
 				const StringImportCallback& importCallback, const StringExportCallback& exportCallback)
 		{

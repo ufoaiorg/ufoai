@@ -81,6 +81,8 @@
 namespace {
 const std::string RKEY_TEXTURES_HIDE_UNUSED = "user/ui/textures/browser/hideUnused";
 const std::string RKEY_TEXTURES_HIDE_INVALID = "user/ui/textures/browser/hideInvalid";
+const std::string RKEY_TEXTURES_UNIFORM_SIZE = "user/ui/textures/browser/uniformSize";
+const std::string RKEY_TEXTURES_THUMBNAIL_SCALE = "user/ui/textures/browser/thumbnailScale";
 }
 
 static void TextureBrowser_scrollChanged (void* data, gdouble value);
@@ -93,19 +95,53 @@ TextureBrowser::TextureBrowser () :
 {
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_UNUSED);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_INVALID);
+	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_UNIFORM_SIZE);
+	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_THUMBNAIL_SCALE);
 
 	Textures_setModeChangedNotify(MemberCaller<TextureBrowser, &TextureBrowser::queueDraw> (*this));
 
 	GlobalShaderSystem().setActiveShadersChangedNotify(MemberCaller<TextureBrowser,
 			&TextureBrowser::activeShadersChanged> (*this));
 
+	GlobalPreferenceSystem().addConstructor(this);
+	keyChanged("", "");
 	setSelectedShader("");
+}
+
+void TextureBrowser::textureScaleImport (int value)
+{
+	int val;
+	switch (value) {
+	case 0:
+		val = 10;
+		break;
+	case 1:
+		val = 25;
+		break;
+	case 2:
+		val = 50;
+		break;
+	case 3:
+		val = 100;
+		break;
+	case 4:
+		val = 200;
+		break;
+	default:
+		return;
+	}
+	m_textureScale = val;
+
+	queueDraw();
 }
 
 void TextureBrowser::keyChanged (const std::string& changedKey, const std::string& newValue)
 {
-	m_hideUnused = (GlobalRegistry().get(RKEY_TEXTURES_HIDE_UNUSED) == "1");
-	m_hideInvalid = (GlobalRegistry().get(RKEY_TEXTURES_HIDE_INVALID) == "1");
+	m_hideUnused = GlobalRegistry().getBool(RKEY_TEXTURES_HIDE_UNUSED);
+	m_hideInvalid = GlobalRegistry().getBool(RKEY_TEXTURES_HIDE_INVALID);
+	m_uniformTextureSize = GlobalRegistry().getInt(RKEY_TEXTURES_UNIFORM_SIZE);
+
+	textureScaleImport(GlobalRegistry().getInt(RKEY_TEXTURES_THUMBNAIL_SCALE));
 
 	heightChanged();
 	m_originInvalid = true;
@@ -144,6 +180,37 @@ void TextureBrowser::setSelectedShader (const std::string& _shader)
 		shader = "textures/tex_common/nodraw";
 	setStatusText(shader);
 	focus(shader);
+}
+
+// Return the display width of a texture in the texture browser
+int TextureBrowser::getTextureWidth(const qtexture_t* tex) {
+	int width;
+	if (!m_resizeTextures) {
+		// Don't use uniform size
+		width = (int) (tex->width * ((float) m_textureScale / 100));
+	} else if (tex->width >= tex->height) {
+		// Texture is square, or wider than it is tall
+		width = m_uniformTextureSize;
+	} else {
+		// Otherwise, preserve the texture's aspect ratio
+		width = (int) (m_uniformTextureSize * ((float) tex->width / tex->height));
+	}
+	return width;
+}
+// Return the display height of a texture in the texture browser
+int TextureBrowser::getTextureHeight(const qtexture_t* tex) {
+	int height;
+	if (!m_resizeTextures) {
+		// Don't use uniform size
+		height = (int) (tex->height * ((float) m_textureScale / 100));
+	} else if (tex->height >= tex->width) {
+		// Texture is square, or taller than it is wide
+		height = m_uniformTextureSize;
+	} else {
+		// Otherwise, preserve the texture's aspect ratio
+		height = (int) (m_uniformTextureSize * ((float) tex->height / tex->width));
+	}
+	return height;
 }
 
 void TextureBrowser::getNextTexturePosition (TextureLayout& layout, const qtexture_t* q, int *x, int *y)
@@ -466,14 +533,6 @@ void TextureBrowser::selectTextureAt (int mx, int my)
 	}
 }
 
-/*
- ============================================================================
-
- DRAWING
-
- ============================================================================
- */
-
 /**
  * @brief relying on the shaders list to display the textures
  * we must query all qtexture_t* to manage and display through the IShaders interface
@@ -629,23 +688,10 @@ void TextureBrowser::draw ()
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void TextureBrowser::setUniformSize (int value)
-{
-	m_uniformTextureSize = value;
-	heightChanged();
-}
-
 void TextureBrowser::queueDraw ()
 {
 	GtkWidget *glWidget = _glWidget;
 	gtk_widget_queue_draw(glWidget);
-}
-
-void TextureBrowser::setScale (std::size_t scale)
-{
-	m_textureScale = scale;
-
-	queueDraw();
 }
 
 void TextureBrowser::onMouseWheel (bool bUp)
@@ -970,78 +1016,20 @@ void TextureBrowser::refreshShaders ()
 	UpdateAllWindows();
 }
 
-void TextureScaleImport (TextureBrowser& textureBrowser, int value)
-{
-	int val;
-	switch (value) {
-	case 0:
-		val = 10;
-		break;
-	case 1:
-		val = 25;
-		break;
-	case 2:
-		val = 50;
-		break;
-	case 3:
-		val = 100;
-		break;
-	case 4:
-		val = 200;
-		break;
-	default:
-		return;
-	}
-	textureBrowser.setScale(val);
-}
-typedef ReferenceCaller1<TextureBrowser, int, TextureScaleImport> TextureScaleImportCaller;
+void TextureBrowser::constructPreferencePage(PreferenceGroup& group) {
+	// Add a page to the given group
+	PreferencesPage* page(group.createPage(_("Texture Browser"), _("Texture Browser Preferences")));
 
-void TextureScaleExport (TextureBrowser& textureBrowser, const IntImportCallback& importer)
-{
-	switch (textureBrowser.m_textureScale) {
-	case 10:
-		importer(0);
-		break;
-	case 25:
-		importer(1);
-		break;
-	case 50:
-		importer(2);
-		break;
-	case 100:
-		importer(3);
-		break;
-	case 200:
-		importer(4);
-		break;
-	}
-}
-typedef ReferenceCaller1<TextureBrowser, const IntImportCallback&, TextureScaleExport> TextureScaleExportCaller;
+	// Create the string list containing the render mode captions
+	std::list<std::string> textureScaleDescriptions;
+	textureScaleDescriptions.push_back("10%");
+	textureScaleDescriptions.push_back("25%");
+	textureScaleDescriptions.push_back("50%");
+	textureScaleDescriptions.push_back("100%");
+	textureScaleDescriptions.push_back("200%");
 
-// Get the texture size preference from the prefs dialog
-void TextureUniformSizeImport (TextureBrowser& textureBrowser, int value)
-{
-	textureBrowser.setUniformSize(value);
-}
-typedef ReferenceCaller1<TextureBrowser, int, TextureUniformSizeImport> TextureUniformSizeImportCaller;
-
-// Set the value of the texture size preference widget in the prefs dialog
-void TextureUniformSizeExport (TextureBrowser& textureBrowser, const IntImportCallback& importer)
-{
-	importer(textureBrowser.m_uniformTextureSize);
-}
-typedef ReferenceCaller1<TextureBrowser, const IntImportCallback&, TextureUniformSizeExport>
-		TextureUniformSizeExportCaller;
-
-void TextureBrowser::constructPage (PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Texture Browser"), _("Texture Browser Preferences"));
-	PrefPage*p = reinterpret_cast<PrefPage*> (page);
-	const char* texture_scale[] = { "10%", "25%", "50%", "100%", "200%" };
-	p->appendCombo(_("Texture thumbnail scale"), STRING_ARRAY_RANGE(texture_scale), IntImportCallback(
-			TextureScaleImportCaller(*this)), IntExportCallback(TextureScaleExportCaller(*this)));
-	p->appendEntry(_("Uniform texture thumbnail size (pixels)"), IntImportCallback(
-			TextureUniformSizeImportCaller(*this)), IntExportCallback(TextureUniformSizeExportCaller(*this)));
+	page->appendCombo(_("Texture thumbnail scale"), RKEY_TEXTURES_THUMBNAIL_SCALE, textureScaleDescriptions);
+	page->appendEntry(_("Uniform texture thumbnail size (pixels)"), RKEY_TEXTURES_UNIFORM_SIZE);
 }
 
 void TextureBrowser::registerCommands ()
@@ -1060,16 +1048,6 @@ void TextureBrowser_Construct ()
 
 	GlobalEventManager().addRegistryToggle("ShowInUse", RKEY_TEXTURES_HIDE_UNUSED);
 	GlobalEventManager().addRegistryToggle("ShowInvalid", RKEY_TEXTURES_HIDE_INVALID);
-
-	GlobalPreferenceSystem().registerPreference("TextureScale", makeSizeStringImportCallback(MemberCaller1<
-			TextureBrowser, std::size_t, &TextureBrowser::setScale> (GlobalTextureBrowser())), SizeExportStringCaller(
-			GlobalTextureBrowser().m_textureScale));
-	GlobalPreferenceSystem().registerPreference("TextureUniformSize", IntImportStringCaller(
-			GlobalTextureBrowser().m_uniformTextureSize), IntExportStringCaller(
-			GlobalTextureBrowser().m_uniformTextureSize));
-
-	PreferencesDialog_addSettingsPage(MemberCaller1<TextureBrowser, PreferenceGroup&, &TextureBrowser::constructPage> (
-			GlobalTextureBrowser()));
 
 	GlobalShaderSystem().attach(g_ShadersObserver);
 }

@@ -187,14 +187,6 @@ class Dialog
 		void addRadioIcons (GtkWidget* vbox, const char* name, StringArrayRange icons,
 				const IntImportCallback& importCallback, const IntExportCallback& exportCallback);
 		void addRadioIcons (GtkWidget* vbox, const char* name, int& data, StringArrayRange icons);
-		GtkWidget* addIntEntry (GtkWidget* vbox, const char* name, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback);
-		GtkWidget* addSizeEntry (GtkWidget* vbox, const char* name, const SizeImportCallback& importCallback,
-				const SizeExportCallback& exportCallback);
-		GtkWidget* addEntry (GtkWidget* vbox, const char* name, std::size_t& data)
-		{
-			return addSizeEntry(vbox, name, SizeImportCaller(data), SizeExportCaller(data));
-		}
 		GtkWidget* addPathEntry (GtkWidget* vbox, const char* name, bool browse_directory,
 				const StringImportCallback& importCallback, const StringExportCallback& exportCallback);
 		GtkWidget* addPathEntry (GtkWidget* vbox, const char* name, std::string& data, bool directory);
@@ -209,14 +201,8 @@ class Dialog
 				const IntExportCallback& exportCallback);
 		void AddTextEntryData (GtkEntry& object, const StringImportCallback& importCallback,
 				const StringExportCallback& exportCallback);
-		void AddIntEntryData (GtkEntry& object, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback);
-		void AddSizeEntryData (GtkEntry& object, const SizeImportCallback& importCallback,
-				const SizeExportCallback& exportCallback);
 		void AddFloatSpinnerData (GtkSpinButton& object, const FloatImportCallback& importCallback,
 				const FloatExportCallback& exportCallback);
-		void AddIntSpinnerData (GtkSpinButton& object, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback);
 		void AddIntAdjustmentData (GtkAdjustment& object, const IntImportCallback& importCallback,
 				const IntExportCallback& exportCallback);
 		void AddIntComboData (GtkComboBox& object, const IntImportCallback& importCallback,
