@@ -123,12 +123,6 @@ class ImportExport
 		typedef ReferenceCaller1<Type, const Callback1<Other>&, Export> ExportCaller;
 };
 
-typedef ImportExport<bool, bool, BoolImport, BoolExport> BoolImportExport;
-typedef ImportExport<int, int, IntImport, IntExport> IntImportExport;
-typedef ImportExport<std::size_t, std::size_t, SizeImport, SizeExport> SizeImportExport;
-typedef ImportExport<float, float, FloatImport, FloatExport> FloatImportExport;
-typedef ImportExport<std::string, const char*, StringImport, StringExport> StringImportExport;
-
 void BoolToggleImport (GtkToggleButton& widget, bool value)
 {
 	gtk_toggle_button_set_active(&widget, value);
