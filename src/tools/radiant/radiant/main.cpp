@@ -74,7 +74,7 @@
 
 #include "gtkutil/messagebox.h"
 #include "log/console.h"
-#include "sidebar/sidebar.h"
+#include "sidebar/texturebrowser.h"
 #include "map/map.h"
 #include "mainframe.h"
 #include "settings/preferences.h"

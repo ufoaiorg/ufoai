@@ -2,6 +2,7 @@
 
 #include "gtkutil/glwidget.h"
 #include "gtkutil/GLWidgetSentry.h"
+#include "gtkutil/ScrolledFrame.h"
 
 #include "texturelib.h"
 #include "AutoPtr.h"
@@ -50,14 +51,9 @@ namespace ui
 		col = gtk_tree_view_column_new_with_attributes(_("Value"), rend, "text", 1, NULL);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(view), col);
 
-		GtkWidget* scroll = gtk_scrolled_window_new(NULL, NULL);
-		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-		gtk_container_add(GTK_CONTAINER(scroll), view);
+		GtkWidget *scroll = gtkutil::ScrolledFrame(view);
 
-		GtkWidget* attFrame = gtk_frame_new(NULL);
-		gtk_container_add(GTK_CONTAINER(attFrame), scroll);
-
-		gtk_box_pack_start(GTK_BOX(_widget), attFrame, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(_widget), scroll, TRUE, TRUE, 0);
 	}
 
 	// Update the selected texture

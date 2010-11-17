@@ -76,7 +76,7 @@
 #include "../plugin.h"
 #include "../gtkmisc.h"
 #include "../mainframe.h"
-#include "sidebar.h"
+#include "surfaceinspector/surfaceinspector.h"
 
 namespace {
 const std::string RKEY_TEXTURES_HIDE_UNUSED = "user/ui/textures/browser/hideUnused";

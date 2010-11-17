@@ -41,7 +41,6 @@
 #include "gtkutil/widget.h"
 #include "brush/brushmanip.h"
 #include "brush/brush.h"
-#include "sidebar/sidebar.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "map/map.h"

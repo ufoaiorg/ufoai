@@ -30,12 +30,11 @@ Sidebar::Sidebar ()
 	gtk_notebook_set_scrollable(GTK_NOTEBOOK(_notebook), TRUE);
 
 	/* if you change the order here - make sure to also change the toggle functions tab page indices */
-	constructEntityInspector();
-	constructSurfaceInspector();
-	constructPrefabBrowser();
 	constructTextureBrowser();
-	constructMapInfo();
-	constructJobInfo();
+	constructSurfaceInspector();
+	constructEntityInspector();
+	constructPrefabBrowser();
+	constructInfo();
 
 	gtk_box_pack_start(GTK_BOX(_widget), GTK_WIDGET(_notebook), TRUE, TRUE, 0);
 	gtk_widget_show_all(_widget);
@@ -58,6 +57,26 @@ Sidebar::~Sidebar ()
 {
 }
 
+void Sidebar::addWidget(const std::string& title, GtkWidget* widget)
+{
+	if (!widget)
+		return;
+
+	GtkWidget *label = gtk_label_new_with_mnemonic(title.c_str());
+	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+
+	// scrollable window settings
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+
+	gtk_container_add(GTK_CONTAINER(vbox), widget);
+
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
+
+	gtk_widget_show_all(swin);
+	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
+}
+
 void Sidebar::constructPrefabBrowser ()
 {
 	// prefabs
@@ -65,117 +84,45 @@ void Sidebar::constructPrefabBrowser ()
 	if (!pagePrefabs)
 		return;
 
-	GtkWidget *label = gtk_label_new_with_mnemonic(_("Prefabs"));
-	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
-
-	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
-	gtk_container_add(GTK_CONTAINER(vbox), pagePrefabs);
-
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
-
-	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
+	addWidget(_("Prefabs"), pagePrefabs);
 }
 
 void Sidebar::constructEntityInspector ()
 {
-	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Entities"));
-	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
-	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
-	// entity list
 	GtkWidget *pageEntityList = EntityList::Instance().getWidget();
-	gtk_container_add(GTK_CONTAINER(vbox), pageEntityList);
-
-	// entity inspector
 	GtkWidget *pageEntityInspector = EntityInspector::getInstance().getWidget();
+
+	gtk_container_add(GTK_CONTAINER(vbox), pageEntityList);
 	gtk_container_add(GTK_CONTAINER(vbox), pageEntityInspector);
 
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
-
-	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
+	addWidget(_("_Entities"), vbox);
 }
 
 void Sidebar::constructSurfaceInspector ()
 {
-	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Surfaces"));
-	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
-
-	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
-	// surface inspector
 	GtkWidget *pageSurfaceInspector = GlobalSurfaceInspector().buildNotebook();
-	gtk_container_add(GTK_CONTAINER(vbox), pageSurfaceInspector);
-
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
-
-	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
+	addWidget(_("_Surfaces"), pageSurfaceInspector);
 }
 
-void Sidebar::constructMapInfo ()
+void Sidebar::constructInfo ()
 {
-	GtkWidget *label = gtk_label_new(_("Map Info"));
-	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
-	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
-	// map info frame
 	GtkWidget *pageMapInfo = sidebar::MapInfo::getInstance().getWidget();
-	gtk_container_add(GTK_CONTAINER(vbox), pageMapInfo);
-
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
-
-	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
-}
-
-void Sidebar::constructJobInfo ()
-{
-	GtkWidget *label = gtk_label_new(_("Job Info"));
-	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
-
-	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
-	// job info frame
 	GtkWidget *pageJobInfo = sidebar::JobInfo::getInstance().getWidget();
+
+	gtk_container_add(GTK_CONTAINER(vbox), pageMapInfo);
 	gtk_container_add(GTK_CONTAINER(vbox), pageJobInfo);
 
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
-
-	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
+	addWidget(_("Info"), vbox);
 }
 
 void Sidebar::constructTextureBrowser ()
 {
-	GtkWidget *label = gtk_label_new(_("Textures"));
-	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
-
-	// scrollable window settings
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
 	GtkWidget *pageTextureBrowser = GlobalTextureBrowser().getWidget();
-	gtk_container_add(GTK_CONTAINER(vbox), pageTextureBrowser);
-
-	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
-
-	gtk_widget_show_all(swin);
-	gtk_notebook_append_page(GTK_NOTEBOOK(_notebook), swin, label);
+	addWidget(_("Textures"), pageTextureBrowser);
 }
 
 void Sidebar::toggleSidebar ()

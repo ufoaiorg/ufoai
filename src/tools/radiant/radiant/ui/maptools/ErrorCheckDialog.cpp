@@ -7,6 +7,7 @@
 #include "gtkutil/dialog.h"
 #include "gtkutil/TextColumn.h"
 #include "gtkutil/TreeModel.h"
+#include "gtkutil/ScrolledFrame.h"
 
 #include "imaterial.h"
 #include "../../map/map.h"
@@ -98,14 +99,7 @@ GtkWidget* ErrorCheckDialog::createTreeView ()
 
 	// Pack treeview into a scrolled window and frame, and return
 
-	GtkWidget* scrollWin = gtk_scrolled_window_new(NULL, NULL);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollWin), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_container_add(GTK_CONTAINER(scrollWin), _listView);
-
-	GtkWidget* fr = gtk_frame_new(NULL);
-	gtk_container_add(GTK_CONTAINER(fr), scrollWin);
-
-	return fr;
+	return gtkutil::ScrolledFrame(_listView);
 }
 
 void ErrorCheckDialog::populateWindow ()

@@ -48,12 +48,13 @@ class Sidebar
 
 	private:
 
+		void addWidget(const std::string& title, GtkWidget* widget);
+
 		// single notebook tabs
 		void constructTextureBrowser ();
 		void constructEntityInspector ();
 		void constructSurfaceInspector ();
-		void constructJobInfo ();
-		void constructMapInfo ();
+		void constructInfo ();
 		void constructPrefabBrowser ();
 
 		void toggleSidebar (void);

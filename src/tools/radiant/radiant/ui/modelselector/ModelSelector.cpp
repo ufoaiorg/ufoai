@@ -299,14 +299,7 @@ namespace ui
 
 		// Pack treeview into a scrolled window and frame, and return
 
-		GtkWidget* scrollWin = gtk_scrolled_window_new(NULL, NULL);
-		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollWin), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-		gtk_container_add(GTK_CONTAINER(scrollWin), treeView);
-
-		GtkWidget* fr = gtk_frame_new(NULL);
-		gtk_container_add(GTK_CONTAINER(fr), scrollWin);
-
-		return fr;
+		return gtkutil::ScrolledFrame(treeView);
 	}
 
 	// Create the buttons panel at bottom of dialog
@@ -355,10 +348,7 @@ namespace ui
 
 		GtkWidget* scroll = gtkutil::ScrolledFrame(infTreeView);
 
-		GtkWidget* frame = gtk_frame_new(NULL);
-		gtk_container_add(GTK_CONTAINER(frame), scroll);
-
-		gtk_box_pack_start(GTK_BOX(hbx), frame, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(hbx), scroll, TRUE, TRUE, 0);
 
 		// Return the HBox
 		return hbx;
