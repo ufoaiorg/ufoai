@@ -6387,6 +6387,7 @@ base/textures/tex_misc/toxic_clean.png | GNU General Public License 2.0 |  | Ope
 base/textures/tex_misc/toxic_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/trashbin001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/trashbin001_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/trashbin001_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vehentpan.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vehentpan0.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vehentpan1.png | GNU General Public License 2.0 or later | Nate Wright
@@ -6399,6 +6400,7 @@ base/textures/tex_misc/vehentpan7.png | GNU General Public License 2.0 or later 
 base/textures/tex_misc/vehentpan8.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vehentpan9.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vehentpan_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/vehentpan_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vendor_cart.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vendor_cart_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/verbot.png | GNU General Public License 2.0 or later | Martin Gerhardy
