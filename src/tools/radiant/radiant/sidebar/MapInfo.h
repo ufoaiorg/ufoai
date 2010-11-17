@@ -26,8 +26,6 @@
 #include <map>
 #include <string>
 
-#include "gtkutil/menu/PopupMenu.h"
-
 class Selectable;
 
 namespace sidebar
@@ -47,8 +45,6 @@ namespace sidebar
 			GtkListStore* _infoStore;
 
 			GtkWidget *_vboxEntityBreakdown;
-			// Context menu
-			gtkutil::PopupMenu _popupMenu;
 
 		private:
 

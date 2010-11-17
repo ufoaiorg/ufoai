@@ -17,13 +17,8 @@
 #ifndef INCLUDED_SIDEBAR_H
 #define INCLUDED_SIDEBAR_H
 
-#include "entitylist/EntityList.h"
-#include "entityinspector/EntityInspector.h"
-#include "MapInfo.h"
-#include "surfaceinspector/surfaceinspector.h"
-#include "PrefabSelector.h"
-#include "JobInfo.h"
-#include "texturebrowser.h"
+#include <gtk/gtk.h>
+#include <string>
 
 namespace ui {
 

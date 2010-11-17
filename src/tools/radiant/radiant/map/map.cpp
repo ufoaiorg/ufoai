@@ -42,7 +42,6 @@
 #include "ifilesystem.h"
 #include "ieventmanager.h"
 #include "inamespace.h"
-#include "moduleobserver.h"
 
 #include <set>
 
@@ -55,8 +54,6 @@
 #include "entitylib.h"
 #include "stream/textfilestream.h"
 #include "os/path.h"
-#include "stream/stringstream.h"
-#include "signal/signal.h"
 
 #include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"

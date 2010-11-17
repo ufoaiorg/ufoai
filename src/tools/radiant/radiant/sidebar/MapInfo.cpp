@@ -78,8 +78,7 @@ namespace sidebar
 	MapInfo::MapInfo () :
 		_widget(gtk_vbox_new(FALSE, 3)), _store(gtk_list_store_new(MAPINFO_COLUMNS, G_TYPE_STRING, G_TYPE_INT)), _view(
 				gtk_tree_view_new_with_model(GTK_TREE_MODEL(_store))), _infoStore(gtk_list_store_new(2, G_TYPE_STRING,
-				G_TYPE_INT)), _vboxEntityBreakdown(gtk_vbox_new(FALSE, 0)), _popupMenu(gtkutil::PopupMenu(
-				_vboxEntityBreakdown))
+				G_TYPE_INT)), _vboxEntityBreakdown(gtk_vbox_new(FALSE, 0))
 	{
 		gtk_box_pack_start(GTK_BOX(_widget), createEntityBreakdownTreeView(), TRUE, TRUE, 0);
 		gtk_box_pack_start(GTK_BOX(_widget), createInfoPanel(), FALSE, FALSE, 0);
@@ -105,13 +104,8 @@ namespace sidebar
 		col = gtk_tree_view_column_new_with_attributes(_("Value"), rend, "text", 1, NULL);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(infTreeView), col);
 
-		// Pack into scroll window and frame
-		GtkWidget* scroll = gtkutil::ScrolledFrame(infTreeView);
-		GtkWidget* frame = gtk_frame_new(NULL);
-		gtk_container_add(GTK_CONTAINER(frame), scroll);
-
-		// Return the frame
-		return frame;
+		// Pack into scroll window and return
+		return gtkutil::ScrolledFrame(infTreeView);
 	}
 
 	GtkWidget* MapInfo::createEntityBreakdownTreeView ()
@@ -136,21 +130,8 @@ namespace sidebar
 
 		gtk_container_add(GTK_CONTAINER(_vboxEntityBreakdown), gtkutil::ScrolledFrame(_view));
 
-		_popupMenu.addItem(gtkutil::IconTextMenuItem(ui::icons::ICON_FOLDER, _("Remove selected entities")),
-				MapInfo::removeEntity, this);
-
 		// Return the vertical box with the treeview included
 		return _vboxEntityBreakdown;
-	}
-
-	void MapInfo::removeEntity (gpointer data, gpointer userData)
-	{
-		MapInfo* mapInfo = (MapInfo*) userData;
-		GtkTreeView *view = GTK_TREE_VIEW(mapInfo->_view);
-		GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
-
-		std::string entityName = gtkutil::TreeModel::getSelectedString(selection, ENTITY_NAME);
-		/** @todo select all of these entities and delete them */
 	}
 
 	MapInfo& MapInfo::getInstance ()

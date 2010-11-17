@@ -88,6 +88,9 @@
 #include "pathfinding.h"
 #include "model.h"
 
+#include "sidebar/MapInfo.h"
+#include "sidebar/texturebrowser.h"
+
 #include "modulesystem/modulesmap.h"
 #include "modulesystem/singletonmodule.h"
 

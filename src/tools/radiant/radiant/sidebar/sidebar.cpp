@@ -20,6 +20,14 @@
 #include "ieventmanager.h"
 #include "../log/console.h"
 
+#include "entitylist/EntityList.h"
+#include "entityinspector/EntityInspector.h"
+#include "PrefabSelector.h"
+#include "surfaceinspector/surfaceinspector.h"
+#include "texturebrowser.h"
+#include "MapInfo.h"
+#include "JobInfo.h"
+
 namespace ui {
 
 Sidebar::Sidebar ()
