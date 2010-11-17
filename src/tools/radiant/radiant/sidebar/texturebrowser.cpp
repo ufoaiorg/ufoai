@@ -1020,7 +1020,7 @@ void TextureBrowser::constructPreferencePage(PreferenceGroup& group) {
 	// Add a page to the given group
 	PreferencesPage* page(group.createPage(_("Texture Browser"), _("Texture Browser Preferences")));
 
-	// Create the string list containing the render mode captions
+	// Create the string list containing the texture scale options
 	std::list<std::string> textureScaleDescriptions;
 	textureScaleDescriptions.push_back("10%");
 	textureScaleDescriptions.push_back("25%");
