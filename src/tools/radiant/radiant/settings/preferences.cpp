@@ -594,7 +594,7 @@ void PreferencesDialog_restartRequired (const std::string& staticName)
 
 void PreferencesDialog_showDialog ()
 {
-	if (ConfirmModified(_("Edit Preferences")) && g_Preferences.DoModal() == eIDOK) {
+	if (GlobalMap().askForSave(_("Edit Preferences")) && g_Preferences.DoModal() == eIDOK) {
 		if (!g_restart_required.empty()) {
 			std::string message = _("Preference changes require a restart:\n");
 			for (std::vector<std::string>::iterator i = g_restart_required.begin(); i != g_restart_required.end(); ++i) {

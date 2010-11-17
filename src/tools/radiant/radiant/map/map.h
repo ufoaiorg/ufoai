@@ -135,6 +135,7 @@ class Map: public ModuleObserver
 		bool saveAsDialog ();
 		bool saveRegion (const std::string& filename);
 		bool changeMap (const std::string& dialogTitle, const std::string& newFilename = "");
+		bool askForSave (const std::string& title);
 
 		void SelectBrush (int entitynum, int brushnum, int select);
 
@@ -174,50 +175,6 @@ class Map: public ModuleObserver
 } // namespace
 
 map::Map& GlobalMap ();
-
-bool ConfirmModified (const std::string& title);
-
-class DeferredDraw
-{
-		Callback m_draw;
-		bool m_defer;
-		bool m_deferred;
-	public:
-		DeferredDraw (const Callback& draw) :
-			m_draw(draw), m_defer(false), m_deferred(false)
-		{
-		}
-		void defer ()
-		{
-			m_defer = true;
-		}
-		void draw ()
-		{
-			if (m_defer) {
-				m_deferred = true;
-			} else {
-				m_draw();
-			}
-		}
-		void flush ()
-		{
-			if (m_defer && m_deferred) {
-				m_draw();
-			}
-			m_deferred = false;
-			m_defer = false;
-		}
-};
-
-inline void DeferredDraw_onMapValidChanged (DeferredDraw& self)
-{
-	if (GlobalMap().isValid()) {
-		self.flush();
-	} else {
-		self.defer();
-	}
-}
-typedef ReferenceCaller<DeferredDraw, DeferredDraw_onMapValidChanged> DeferredDrawOnMapValidChangedCaller;
 
 namespace scene {
 class Node;

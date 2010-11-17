@@ -772,10 +772,10 @@ bool Map::saveSelected (const std::string& filename)
 
 void Map::NewMap ()
 {
-	if (ConfirmModified(_("New Map"))) {
-		GlobalMap().regionOff();
-		GlobalMap().free();
-		GlobalMap().createNew();
+	if (askForSave(_("New Map"))) {
+		regionOff();
+		free();
+		createNew();
 	}
 }
 
@@ -794,10 +794,10 @@ const std::string Map::selectMapFile (const std::string& title, bool open)
 	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/
 	"map", "map");
 	/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
-	if (GlobalMap().isUnnamed()) {
+	if (isUnnamed()) {
 		fileChooser.setCurrentPath(lastPath);
 	} else {
-		const std::string mapName = GlobalMap().getName();
+		const std::string mapName = getName();
 		fileChooser.setCurrentPath(os::stripFilename(mapName));
 	}
 
@@ -819,7 +819,7 @@ const std::string Map::selectMapFile (const std::string& title, bool open)
 
 void Map::OpenMap ()
 {
-	GlobalMap().changeMap(_("Open Map"));
+	changeMap(_("Open Map"));
 }
 
 /**
@@ -832,7 +832,7 @@ void Map::OpenMap ()
 bool Map::changeMap (const std::string &dialogTitle, const std::string& newFilename)
 {
 	if (!dialogTitle.empty())
-		if (!ConfirmModified(dialogTitle))
+		if (!askForSave(dialogTitle))
 			return false;
 
 	std::string filename;
@@ -856,7 +856,7 @@ void Map::ImportMap ()
 	const std::string filename = selectMapFile(_("Import Map"), true);
 	if (!filename.empty()) {
 		UndoableCommand undo("mapImport");
-		GlobalMap().importFile(filename);
+		importFile(filename);
 	}
 }
 
@@ -873,15 +873,15 @@ bool Map::saveAsDialog ()
 
 void Map::SaveMapAs ()
 {
-	GlobalMap().saveAsDialog();
+	saveAsDialog();
 }
 
 void Map::SaveMap ()
 {
-	if (GlobalMap().isUnnamed()) {
+	if (isUnnamed()) {
 		SaveMapAs();
-	} else if (GlobalMap().isModified()) {
-		GlobalMap().save();
+	} else if (isModified()) {
+		save();
 	}
 }
 
@@ -889,7 +889,7 @@ void Map::ExportMap ()
 {
 	const std::string filename = selectMapFile(_("Export Selection"), false);
 	if (!filename.empty()) {
-		GlobalMap().saveSelected(filename);
+		saveSelected(filename);
 	}
 }
 
@@ -897,7 +897,7 @@ void Map::SaveRegion ()
 {
 	const std::string filename = selectMapFile(_("Export Region"), false);
 	if (!filename.empty()) {
-		GlobalMap().saveRegion(filename);
+		saveRegion(filename);
 	}
 }
 
@@ -1009,6 +1009,27 @@ void Map::SelectBrush (int entitynum, int brushnum, int select)
 	}
 }
 
+bool Map::askForSave (const std::string& title)
+{
+	if (!isModified())
+		return true;
+
+	EMessageBoxReturn result = gtk_MessageBox(
+		GTK_WIDGET(GlobalRadiant().getMainWindow()),
+		_("The current map has changed since it was last saved.\nDo you want to save the current map before continuing?"),
+		title, eMB_YESNOCANCEL, eMB_ICONQUESTION);
+	if (result == eIDCANCEL)
+		return false;
+
+	if (result == eIDYES) {
+		if (isUnnamed())
+			return saveAsDialog();
+		else
+			return save();
+	}
+	return true;
+}
+
 void Map::ObjectsDown ()
 {
 	if (GlobalSelectionSystem().countSelected() == 0) {
@@ -1112,27 +1133,6 @@ void Map::Destroy ()
 }
 
 } // namespace map
-
-bool ConfirmModified (const std::string& title)
-{
-	if (!GlobalMap().isModified())
-		return true;
-
-	EMessageBoxReturn result = gtk_MessageBox(
-		GTK_WIDGET(GlobalRadiant().getMainWindow()),
-		_("The current map has changed since it was last saved.\nDo you want to save the current map before continuing?"),
-		title, eMB_YESNOCANCEL, eMB_ICONQUESTION);
-	if (result == eIDCANCEL)
-		return false;
-
-	if (result == eIDYES) {
-		if (GlobalMap().isUnnamed())
-			return GlobalMap().saveAsDialog();
-		else
-			return GlobalMap().save();
-	}
-	return true;
-}
 
 class ParentSelectedBrushesToEntityWalker: public scene::Graph::Walker
 {

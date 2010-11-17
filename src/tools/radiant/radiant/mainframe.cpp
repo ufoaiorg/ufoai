@@ -431,7 +431,7 @@ void Radiant_Shutdown (void)
 
 void Exit (void)
 {
-	if (ConfirmModified(_("Exit Radiant"))) {
+	if (GlobalMap().askForSave(_("Exit Radiant"))) {
 		gtk_main_quit();
 	}
 }
@@ -1227,7 +1227,7 @@ MainFrame::~MainFrame (void)
 
 static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data)
 {
-	if (ConfirmModified("Exit Radiant")) {
+	if (GlobalMap().askForSave("Exit Radiant")) {
 		gtk_main_quit();
 	}
 
@@ -1559,7 +1559,7 @@ class NullMapCompilerObserver : public ICompilerObserver {
 };
 
 void ToolsCompile () {
-	if (!ConfirmModified(_("Compile Map")))
+	if (!GlobalMap().askForSave(_("Compile Map")))
 		return;
 
 	/* empty map? */
@@ -1577,7 +1577,7 @@ void ToolsCompile () {
 }
 
 void ToolsCheckErrors () {
-	if (!ConfirmModified(_("Check Map")))
+	if (!GlobalMap().askForSave(_("Check Map")))
 		return;
 
 	/* empty map? */
@@ -1590,7 +1590,7 @@ void ToolsCheckErrors () {
 }
 
 void ToolsGenerateMaterials () {
-	if (!ConfirmModified(_("Generate Materials")))
+	if (!GlobalMap().askForSave(_("Generate Materials")))
 		return;
 
 	/* empty map? */

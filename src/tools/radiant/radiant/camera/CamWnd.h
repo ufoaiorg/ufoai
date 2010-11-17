@@ -7,7 +7,7 @@
 #include "../selection/RadiantWindowObserver.h"
 #include "gtkutil/glwidget.h"
 
-#include "../map/map.h"
+#include "../map/DeferredDraw.h"
 
 const int CAMWND_MINSIZE_X = 240;
 const int CAMWND_MINSIZE_Y = 200;

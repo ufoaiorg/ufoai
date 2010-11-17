@@ -83,7 +83,7 @@ void MRU::saveRecentFiles() {
 }
 
 void MRU::loadMap(const std::string& fileName) {
-	if (ConfirmModified(_("Open Map"))) {
+	if (GlobalMap().askForSave(_("Open Map"))) {
 		if (file_readable(fileName)) {
 			// Shut down the current map
 			GlobalMap().regionOff();

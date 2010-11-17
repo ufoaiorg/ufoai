@@ -15,7 +15,7 @@
 #include "iradiant.h"
 #include "math/Vector4.h"
 
-#include "../map/map.h"
+#include "../map/DeferredDraw.h"
 #include "../camera/CameraObserver.h"
 #include "../camera/CamWnd.h"
 #include "../selection/RadiantWindowObserver.h"
