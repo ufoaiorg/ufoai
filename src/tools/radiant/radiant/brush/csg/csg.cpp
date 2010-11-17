@@ -149,103 +149,6 @@ void CSG_MakeHollow (void)
 	SceneChangeNotify();
 }
 
-template<typename Type>
-class RemoveReference
-{
-	public:
-		typedef Type type;
-};
-
-template<typename Type>
-class RemoveReference<Type&>
-{
-	public:
-		typedef Type type;
-};
-
-template<typename Functor>
-class Dereference
-{
-		const Functor& functor;
-	public:
-		typedef typename RemoveReference<typename Functor::first_argument_type>::type* first_argument_type;
-		typedef typename Functor::result_type result_type;
-		Dereference (const Functor& functor) :
-			functor(functor)
-		{
-		}
-		result_type operator() (first_argument_type firstArgument) const
-		{
-			return functor(*firstArgument);
-		}
-};
-
-template<typename Functor>
-inline Dereference<Functor> makeDereference (const Functor& functor)
-{
-	return Dereference<Functor> (functor);
-}
-
-typedef Face* FacePointer;
-const FacePointer c_nullFacePointer = 0;
-
-template<typename Predicate>
-Face* Brush_findIf (const Brush& brush, const Predicate& predicate)
-{
-	Brush::const_iterator i = std::find_if(brush.begin(), brush.end(), makeDereference(predicate));
-	return i == brush.end() ? c_nullFacePointer : *i; // uses c_nullFacePointer instead of 0 because otherwise gcc 4.1 attempts conversion to int
-}
-
-template<typename Caller>
-class BindArguments1
-{
-		typedef typename Caller::second_argument_type FirstBound;
-		FirstBound firstBound;
-	public:
-		typedef typename Caller::result_type result_type;
-		typedef typename Caller::first_argument_type first_argument_type;
-		BindArguments1 (FirstBound firstBound) :
-			firstBound(firstBound)
-		{
-		}
-		result_type operator() (first_argument_type firstArgument) const
-		{
-			return Caller::call(firstArgument, firstBound);
-		}
-};
-
-template<typename Caller>
-class BindArguments2
-{
-		typedef typename Caller::second_argument_type FirstBound;
-		typedef typename Caller::third_argument_type SecondBound;
-		FirstBound firstBound;
-		SecondBound secondBound;
-	public:
-		typedef typename Caller::result_type result_type;
-		typedef typename Caller::first_argument_type first_argument_type;
-		BindArguments2 (FirstBound firstBound, SecondBound secondBound) :
-			firstBound(firstBound), secondBound(secondBound)
-		{
-		}
-		result_type operator() (first_argument_type firstArgument) const
-		{
-			return Caller::call(firstArgument, firstBound, secondBound);
-		}
-};
-
-template<typename Caller, typename FirstBound, typename SecondBound>
-BindArguments2<Caller> bindArguments (const Caller& caller, FirstBound firstBound, SecondBound secondBound)
-{
-	return BindArguments2<Caller> (firstBound, secondBound);
-}
-
-inline bool Face_testPlane (const Face& face, const Plane3& plane, bool flipped)
-{
-	return face.contributes() && !Winding_TestPlane(face.getWinding(), plane, flipped);
-}
-typedef Function3<const Face&, const Plane3&, bool, bool, Face_testPlane> FaceTestPlane;
-
 static BrushSplitType Brush_classifyPlane (const Brush& brush, const Plane3& plane)
 {
 	brush.evaluateBRep();
@@ -477,11 +380,6 @@ void Scene_BrushSetClipPlane (scene::Graph& graph, const Plane3& plane)
 	graph.traverse(BrushInstanceSetClipPlane(plane));
 }
 
-/*
- =============
- CSG_Merge
- =============
- */
 static bool Brush_merge (Brush& brush, const brush_vector_t& in, bool onlyshape)
 {
 	// gather potential outer faces
