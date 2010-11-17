@@ -170,7 +170,6 @@ class SelectableInstance: public scene::Instance, public Selectable
 
 		void selectedChanged (const Selectable& selectable)
 		{
-			GlobalSelectionSystem().getObserver(SelectionSystem::ePrimitive)(selectable);
 			GlobalSelectionSystem().onSelectedChanged(*this, selectable);
 
 			Instance::selectedChanged();

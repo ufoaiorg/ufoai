@@ -46,8 +46,8 @@ inline void matrix4_assign_rotation_for_pivot(Matrix4& matrix, scene::Instance& 
 // --------- RadiantSelectionSystem Implementation ------------------------------------------
 
 RadiantSelectionSystem::RadiantSelectionSystem() :
-	_requestWorkZoneRecalculation(true), _undoBegun(false), _mode(ePrimitive), _componentMode(eDefault), _countPrimitive(SelectionChangedCaller(*this)),
-			_countComponent(SelectionChangedCaller(*this)),
+	_requestWorkZoneRecalculation(true), _undoBegun(false), _mode(ePrimitive), _componentMode(eDefault), _countPrimitive(0),
+			_countComponent(0),
 			_translateManipulator(*this, 2, 64), // initialise the Manipulators with a pointer to self
 			_rotateManipulator(*this, 8, 64), _scaleManipulator(*this, 0, 64), _pivotChanged(false),
 			_pivotMoving(false)
@@ -114,8 +114,8 @@ void RadiantSelectionSystem::Scene_TestSelect(Selector& selector, SelectionTest&
 /* greebo: This is true if nothing is selected (either in component mode or in primitive mode).
  */
 bool RadiantSelectionSystem::nothingSelected() const {
-    return (Mode() == eComponent && _countComponent.empty())
-      || (Mode() == ePrimitive && _countPrimitive.empty());
+    return (Mode() == eComponent && _countComponent == 0)
+      || (Mode() == ePrimitive && _countPrimitive == 0);
 }
 
 void RadiantSelectionSystem::pivotChanged() const  {
@@ -169,23 +169,14 @@ SelectionSystem::EManipulatorMode RadiantSelectionSystem::ManipulatorMode() cons
 	return _manipulatorMode;
 }
 
-SelectionChangeCallback RadiantSelectionSystem::getObserver(EMode mode) {
-	if (mode == ePrimitive) {
-		return makeCallback1(_countPrimitive);
-	}
-    else {
-		return makeCallback1(_countComponent);
-	}
-}
-
 // return the number of selected primitives
 std::size_t RadiantSelectionSystem::countSelected() const {
-	return _countPrimitive.size();
+	return _countPrimitive;
 }
 
 // return the number of selected components
 std::size_t RadiantSelectionSystem::countSelectedComponents() const {
-	return _countComponent.size();
+	return _countComponent;
 }
 
 std::size_t RadiantSelectionSystem::countSelectedFaces () const
@@ -203,17 +194,23 @@ bool RadiantSelectionSystem::areFacesSelected () const
 
 // This is called if the selection changes, so that the local list of selected instances can be updated
 void RadiantSelectionSystem::onSelectedChanged(scene::Instance& instance, const Selectable& selectable) {
-	_selectionInfo.totalCount += (selectable.isSelected()) ? +1 : -1;
+	// Cache the selection state
+	bool isSelected = selectable.isSelected();
+
+	_countPrimitive += (isSelected) ? +1 : -1;
+	_selectionChangedCallbacks(selectable); // legacy
+
+	_selectionInfo.totalCount += (isSelected) ? +1 : -1;
 
 	if (Instance_getBrush(instance) != NULL) {
-		_selectionInfo.brushCount += (selectable.isSelected()) ? +1 : -1;
+		_selectionInfo.brushCount += (isSelected) ? +1 : -1;
 	}
 	else {
-		_selectionInfo.entityCount += (selectable.isSelected()) ? +1 : -1;
+		_selectionInfo.entityCount += (isSelected) ? +1 : -1;
 	}
 
 	// If the selectable is selected, add it to the local selection list, otherwise remove it
-	if (selectable.isSelected()) {
+	if (isSelected) {
 		_selection.append(instance);
 	}
 	else {
@@ -223,7 +220,7 @@ void RadiantSelectionSystem::onSelectedChanged(scene::Instance& instance, const 
 	notifyObservers();
 
 	// Check if the number of selected primitives in the list matches the value of the selection counter
-	ASSERT_MESSAGE(_selection.size() == _countPrimitive.size(), "selection-tracking error");
+	ASSERT_MESSAGE(_selection.size() == _countPrimitive, "selection-tracking error");
 
 	// Schedule an idle callback
 	requestIdleCallback();
@@ -234,6 +231,9 @@ void RadiantSelectionSystem::onSelectedChanged(scene::Instance& instance, const 
 // greebo: This should be called "onComponentSelectionChanged", as it is a similar function of the above one
 // Updates the internal list of component instances if the component selection gets changed
 void RadiantSelectionSystem::onComponentSelection(scene::Instance& instance, const Selectable& selectable) {
+	_countComponent += (selectable.isSelected()) ? +1 : -1;
+	_selectionChangedCallbacks(selectable); // legacy
+
 	_selectionInfo.totalCount += (selectable.isSelected()) ? +1 : -1;
 
 	// If the instance got selected, add it to the list, otherwise remove it
@@ -247,7 +247,7 @@ void RadiantSelectionSystem::onComponentSelection(scene::Instance& instance, con
 	notifyObservers();
 
 	// Check if the number of selected components in the list matches the value of the selection counter
-	ASSERT_MESSAGE(_componentSelection.size() == _countComponent.size(), "selection-tracking error");
+	ASSERT_MESSAGE(_componentSelection.size() == _countComponent, "selection-tracking error");
 
 	// Schedule an idle callback
 	requestIdleCallback();
@@ -302,13 +302,6 @@ void RadiantSelectionSystem::foreachSelectedComponent(const Visitor& visitor) co
 // Add a "selection changed" callback
 void RadiantSelectionSystem::addSelectionChangeCallback(const SelectionChangeHandler& handler) {
 	_selectionChangedCallbacks.connectLast(handler);
-}
-
-// Call the "selection changed" callback with the selectable
-void RadiantSelectionSystem::selectionChanged(const Selectable& selectable) {
-	_selectionChangedCallbacks(selectable);
-	// Notify the registered SelectionSystem::Observer classes
-	notifyObservers();
 }
 
 // Start a move, the current pivot point is saved as a start point

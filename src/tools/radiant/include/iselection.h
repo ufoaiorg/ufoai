@@ -143,7 +143,6 @@ class SelectionSystem
 		virtual void SetManipulatorMode (EManipulatorMode mode) = 0;
 		virtual EManipulatorMode ManipulatorMode () const = 0;
 
-		virtual SelectionChangeCallback getObserver (EMode mode) = 0;
 		// amount of selected primitives (brushes)
 		virtual std::size_t countSelected () const = 0;
 		// amount of selected components (vertices, edges, faces)
