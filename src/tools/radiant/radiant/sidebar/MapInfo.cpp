@@ -120,13 +120,13 @@ namespace sidebar
 		GtkTreeViewColumn* columnEntityName = gtk_tree_view_column_new_with_attributes(_("Entity"), rendererEntityName,
 				"text", 0, (char const*) 0);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(_view), columnEntityName);
-		gtk_tree_view_column_set_sort_column_id(columnEntityName, 0);
+		gtk_tree_view_column_set_sort_column_id(columnEntityName, ENTITY_NAME);
 
 		GtkCellRenderer* rendererEntityCount = gtk_cell_renderer_text_new();
 		GtkTreeViewColumn* columnEntityCount = gtk_tree_view_column_new_with_attributes(_("Count"),
 				rendererEntityCount, "text", 1, (char const*) 0);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(_view), columnEntityCount);
-		gtk_tree_view_column_set_sort_column_id(columnEntityCount, 1);
+		gtk_tree_view_column_set_sort_column_id(columnEntityCount, ENTITY_COUNT);
 
 		gtk_container_add(GTK_CONTAINER(_vboxEntityBreakdown), gtkutil::ScrolledFrame(_view));
 
