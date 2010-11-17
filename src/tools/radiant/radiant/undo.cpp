@@ -19,14 +19,12 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "debugging/debugging.h"
-
-#include "radiant_i18n.h"
 #include "iundo.h"
 #include "iregistry.h"
-#include "preferencesystem.h"
 #include "string/string.h"
 #include "settings/preferences.h"
+
+#include "radiant_i18n.h"
 
 #include "undo/SnapShot.h"
 #include "undo/Operation.h"
@@ -36,8 +34,6 @@
 #include <list>
 #include <map>
 #include <set>
-
-#include "timer.h"
 
 namespace undo {
 
@@ -97,15 +93,11 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 
 		UndoObserver* observer (Undoable* undoable)
 		{
-			ASSERT_NOTNULL(undoable);
-
 			return &_undoables[undoable];
 		}
 
 		void release (Undoable* undoable)
 		{
-			ASSERT_NOTNULL(undoable);
-
 			_undoables.erase(undoable);
 		}
 
@@ -223,13 +215,11 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 
 		void trackerAttach (UndoTracker& tracker)
 		{
-			ASSERT_MESSAGE(_trackers.find(&tracker) == _trackers.end(), "undo tracker already attached");
 			_trackers.insert(&tracker);
 		}
 
 		void trackerDetach (UndoTracker& tracker)
 		{
-			ASSERT_MESSAGE(_trackers.find(&tracker) != _trackers.end(), "undo tracker cannot be detached");
 			_trackers.erase(&tracker);
 		}
 

@@ -37,7 +37,6 @@
 #include "../map/map.h"
 #include "../dialog.h"
 #include "../mainframe.h"
-#include "../settings/preferences.h"
 
 BrushModuleClass::BrushModuleClass():_textureLockEnabled(GlobalRegistry().get(RKEY_ENABLE_TEXTURE_LOCK) == "1")
 {
