@@ -3,6 +3,8 @@
 #include "iradiant.h"
 #include "eclasslib.h"
 #include "gtkutil/dialog.h"
+#include "gtkutil/RightAlignment.h"
+#include "gtkutil/ScrolledFrame.h"
 #include <gdk/gdkkeysyms.h>
 
 #include "../../entity.h" // Entity_createFromSelection()
@@ -51,6 +53,7 @@ namespace ui
 		gtk_box_pack_start(GTK_BOX(vbx), createTreeView(), TRUE, TRUE, 0);
 		gtk_box_pack_start(GTK_BOX(vbx), createUsagePanel(), FALSE, FALSE, 0);
 		gtk_box_pack_start(GTK_BOX(vbx), createButtonPanel(), FALSE, FALSE, 0);
+		gtk_container_set_border_width(GTK_CONTAINER(_widget), 12);
 		gtk_container_add(GTK_CONTAINER(_widget), vbx);
 
 		// Signals
@@ -124,15 +127,7 @@ namespace ui
 		gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_usageTextView), GTK_WRAP_WORD);
 		gtk_text_view_set_editable(GTK_TEXT_VIEW(_usageTextView), FALSE);
 
-		// Pack into scrolled window and frame
-		GtkWidget* scroll = gtk_scrolled_window_new(NULL, NULL);
-		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-		gtk_container_add(GTK_CONTAINER(scroll), _usageTextView);
-
-		GtkWidget* frame = gtk_frame_new(NULL);
-		gtk_container_add(GTK_CONTAINER(frame), scroll);
-
-		return frame;
+		return gtkutil::ScrolledFrame(_usageTextView);
 	}
 
 	// Create the button panel
@@ -146,19 +141,41 @@ namespace ui
 		g_signal_connect(G_OBJECT(cancelButton), "clicked", G_CALLBACK(callbackCancel), this);
 		g_signal_connect(G_OBJECT(_addButton), "clicked", G_CALLBACK(callbackAdd), this);
 
-		gtk_box_pack_end(GTK_BOX(hbx), _addButton, FALSE, FALSE, 0);
-		gtk_box_pack_end(GTK_BOX(hbx), cancelButton, FALSE, FALSE, 0);
-		return hbx;
+		gtk_box_pack_end(GTK_BOX(hbx), _addButton, TRUE, TRUE, 0);
+		gtk_box_pack_end(GTK_BOX(hbx), cancelButton, TRUE, TRUE, 0);
+		return gtkutil::RightAlignment(hbx);
 	}
 
 	// Update the usage information
 	void EntityClassChooser::updateUsageInfo (const std::string& eclass)
 	{
+		std::string usageText;
+
+		struct EntityClassAttributeFiller: public EntityClassAttributeVisitor
+		{
+				// TreeStore to populate
+				std::string& _string;
+
+				// Constructor
+				EntityClassAttributeFiller (std::string& string) :
+					_string(string)
+				{
+				}
+
+				// Required visit function
+				void visit (const EntityClassAttribute& attribute)
+				{
+					_string += attribute.m_name + ": " + attribute.m_description + "\n";
+				}
+
+		} visitor(usageText);
+
 		// Lookup the IEntityClass instance
 		EntityClass* e = GlobalEntityClassManager().findOrInsert(eclass, true);
+		e->forEachClassAttribute(visitor);
 		// Set the usage panel to the IEntityClass' usage information string
 		GtkTextBuffer* buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_usageTextView));
-		gtk_text_buffer_set_text(buf, e->m_comments.c_str(), -1);
+		gtk_text_buffer_set_text(buf, usageText.c_str(), -1);
 	}
 
 	/* GTK CALLBACKS */
