@@ -532,10 +532,6 @@ void Entity_constructMenu (GtkMenu* menu)
 	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemSelectColor), FALSE);
 }
 
-#include "preferencesystem.h"
-#include "stringio.h"
-#include "signal/isignal.h"
-
 void Entity_Construct ()
 {
 	GlobalEventManager().addCommand("EntityColor", FreeCaller<Entity_setColour> ());
