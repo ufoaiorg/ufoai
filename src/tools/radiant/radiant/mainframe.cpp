@@ -1533,7 +1533,7 @@ void Layout_constructPage (PreferenceGroup& group)
 
 void Layout_registerPreferencesPage (void)
 {
-	PreferencesDialog_addInterfacePage(FreeCaller1<PreferenceGroup&, Layout_constructPage> ());
+	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Layout_constructPage> ());
 }
 
 void EditColourScheme() {

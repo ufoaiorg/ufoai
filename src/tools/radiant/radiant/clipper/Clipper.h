@@ -91,15 +91,10 @@ class BrushClipper: public Clipper, public RegistryKeyObserver, public Preferenc
 		// Adds the given clip point coordinates
 		void newClipPoint (const Vector3& point);
 
-		// Adds the preferences settings to the preference dialog
-		void registerPreferencesPage ();
-
 	private:
 
 		// The method that is passed to the preference system
 		void constructPreferencePage (PreferenceGroup& group);
-		typedef MemberCaller1<BrushClipper, PreferenceGroup&, &BrushClipper::constructPreferencePage>
-				PreferencePageConstructor;
 };
 
 #endif /*GLOBALCLIPPOINTS_H_*/

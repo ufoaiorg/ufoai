@@ -46,11 +46,6 @@ void BrushClipper::constructPreferencePage (PreferenceGroup& group)
 	page->appendEntry(_("Caulk shader name"), RKEY_CLIPPER_CAULK_SHADER);
 }
 
-void BrushClipper::registerPreferencesPage ()
-{
-	PreferencesDialog_addSettingsPage(PreferencePageConstructor(*this));
-}
-
 EViewType BrushClipper::getViewType () const
 {
 	return _viewType;

@@ -172,17 +172,6 @@ inline void PreferencesPageCallbacks_pushBack (PreferencesPageCallbacks& callbac
 	callbacks.push_back(callback);
 }
 
-PreferencesPageCallbacks g_interfacePreferences;
-inline void PreferencesDialog_addInterfacePreferences (const PreferencesPageCallback& callback)
-{
-	PreferencesPageCallbacks_pushBack(g_interfacePreferences, callback);
-}
-PreferenceGroupCallbacks g_interfaceCallbacks;
-void PreferencesDialog_addInterfacePage (const PreferenceGroupCallback& callback)
-{
-	PreferenceGroupCallbacks_pushBack(g_interfaceCallbacks, callback);
-}
-
 PreferencesPageCallbacks g_settingsPreferences;
 
 PreferenceGroupCallbacks g_settingsCallbacks;
@@ -344,20 +333,6 @@ GtkWindow* PrefsDlg::BuildDialog ()
 					{
 						// Add preference tree options
 						PreferencePages_addPage(m_notebook, _("Front Page"));
-
-						{
-							GtkWidget* interfacePage = PreferencePages_addPage(m_notebook, _("Interface Preferences"));
-							{
-								PrefPage preferencesPage(*this, getVBox(interfacePage));
-								PreferencesPageCallbacks_constructPage(g_interfacePreferences, &preferencesPage);
-							}
-
-							GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Interface"), interfacePage);
-							PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
-
-							PreferenceGroupCallbacks_constructGroup(g_interfaceCallbacks, preferenceGroup);
-						}
-
 						{
 							GtkWidget* settings = PreferencePages_addPage(m_notebook, _("General Settings"));
 							{
