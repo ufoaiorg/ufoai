@@ -18,7 +18,7 @@ namespace brushconstruct
 			}
 
 		public:
-			~BrushConstructor() {}
+			virtual ~BrushConstructor() {}
 
 			/**
 			 * @param[out] brush The brush to create the planes for

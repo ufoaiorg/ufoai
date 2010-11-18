@@ -13,6 +13,8 @@ class TexDef: public GenericTextureDefinition
 		// Constructs a TexDef out of the given transformation matrix plus width/height
 		TexDef (float width, float height, const Matrix4& transform);
 
+		virtual ~TexDef() {}
+
 		void shift (float s, float t);
 
 		void scale (float s, float t);

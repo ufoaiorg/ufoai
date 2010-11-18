@@ -27,7 +27,7 @@ struct FlatShadedVertex
 // A manipulatable object, as the name states.
 class Manipulatable {
   public:
-	~Manipulatable() {}
+	virtual ~Manipulatable() {}
 
 	virtual void Construct(const Matrix4& device2manip, const float x, const float y) = 0;
 
@@ -39,7 +39,7 @@ class Manipulatable {
 class Rotatable
 {
 	public:
-		~Rotatable() {}
+		virtual ~Rotatable() {}
 
 		virtual void rotate (const Quaternion& rotation) = 0;
 };
@@ -47,7 +47,7 @@ class Rotatable
 class Translatable
 {
 	public:
-		~Translatable() {}
+		virtual ~Translatable() {}
 
 		virtual void translate (const Vector3& translation) = 0;
 };
@@ -55,7 +55,7 @@ class Translatable
 class Scalable
 {
 	public:
-		~Scalable() {}
+		virtual ~Scalable() {}
 
 		virtual void scale (const Vector3& scaling) = 0;
 };

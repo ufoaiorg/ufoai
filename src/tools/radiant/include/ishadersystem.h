@@ -72,6 +72,8 @@ class ShaderSystem
 		 */
 		struct Visitor
 		{
+				virtual ~Visitor() {}
+
 				virtual void visit (const std::string& shaderName) const = 0;
 		};
 

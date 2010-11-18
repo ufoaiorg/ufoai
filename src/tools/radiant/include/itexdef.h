@@ -35,6 +35,8 @@ class GenericTextureDefinition
 		float _rotate;
 		float _scale[2];
 
+		virtual ~GenericTextureDefinition() {}
+
 		// Test the texture definition for insanely large values
 		virtual bool isSane () const = 0;
 		virtual Matrix4 getTransform (float width, float height) const = 0;
