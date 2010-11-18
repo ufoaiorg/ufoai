@@ -543,8 +543,5 @@ void Entity_Construct ()
 	GlobalEventManager().addCommand("GroupSelection", FreeCaller<Entity_groupSelected> ());
 	GlobalEventManager().addCommand("UngroupSelection", FreeCaller<Entity_ungroupSelected> ());
 
-	GlobalPreferenceSystem().registerPreference("SI_Colors5", Vector3ImportStringCaller(g_entity_globals.color_entity),
-			Vector3ExportStringCaller(g_entity_globals.color_entity));
-
 	Entity_registerPrefPage();
 }
