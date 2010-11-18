@@ -417,7 +417,7 @@ int main (int argc, char* argv[])
 	// Try to load all the XML files into the registry
 	GlobalRegistry().init();
 
-	g_GamesDialog.Init();
+	ui::CGameDialog::Instance().initialise();
 
 	ui::Splash::Instance().show();
 

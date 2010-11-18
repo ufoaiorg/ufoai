@@ -6,27 +6,23 @@
 #include "gtkutil/dialog.h"
 #include <libxml/parser.h>
 
-GameDescription *g_pGameDescription; ///< shortcut to g_GamesDialog.m_pCurrentDescription
+namespace ui {
 
 GtkWindow* CGameDialog::BuildDialog ()
 {
 	return NULL;
 }
 
-void CGameDialog::Reset ()
-{
-}
-
 /**
  * @brief Loads the game description file
  */
-void CGameDialog::Init ()
+void CGameDialog::initialise ()
 {
 	std::string strGameFilename = GlobalRegistry().get(RKEY_APP_PATH) + "game.xml";
 
 	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
 	if (pDoc) {
-		g_pGameDescription = new GameDescription(pDoc, strGameFilename);
+		_currentGameDescription = new GameDescription(pDoc, strGameFilename);
 		// Import this information into the registry
 		//GlobalRegistry().importFromFile(strGameFilename, "");
 		xmlFreeDoc(pDoc);
@@ -37,7 +33,24 @@ void CGameDialog::Init ()
 
 CGameDialog::~CGameDialog ()
 {
-	delete g_pGameDescription;
+	if (_currentGameDescription)
+		delete _currentGameDescription;
 }
 
-CGameDialog g_GamesDialog;
+void CGameDialog::setGameDescription (GameDescription* newGameDescription)
+{
+	_currentGameDescription = newGameDescription;
+}
+
+GameDescription* CGameDialog::getGameDescription ()
+{
+	return _currentGameDescription;
+}
+
+CGameDialog& CGameDialog::Instance ()
+{
+	static CGameDialog _instance;
+	return _instance;
+}
+
+} // namespace ui

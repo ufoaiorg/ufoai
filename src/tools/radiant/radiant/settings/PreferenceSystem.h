@@ -162,9 +162,6 @@ typedef MemberCaller1<LatchedInt, int, &LatchedInt::import> LatchedIntImportCall
 #include "GameDescription.h"
 #include "GameDialog.h"
 
-extern GameDescription *g_pGameDescription;
-extern CGameDialog g_GamesDialog;
-
 class PreferenceTreeGroup;
 
 class PrefsDlg: public Dialog

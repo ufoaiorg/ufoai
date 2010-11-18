@@ -347,7 +347,7 @@ namespace
 
 const std::string& basegame_get (void)
 {
-	return g_pGameDescription->getRequiredKeyValue("basegame");
+	return ui::CGameDialog::Instance().getGameDescription()->getRequiredKeyValue("basegame");
 }
 
 void Radiant_attachGameModeObserver (ModuleObserver& observer)

@@ -3,39 +3,34 @@
 
 #include "../dialog.h"
 
+class GameDescription;
 typedef struct _GtkWindow GtkWindow;
+
+namespace ui {
 
 /*!
  standalone dialog for games selection, and more generally global settings
  */
 class CGameDialog: public Dialog
 {
+	private:
+
+		GameDescription* _currentGameDescription;
+
 	public:
 
-		/*!
-		 those settings are saved in the global prefs file
-		 I'm too lazy to wrap behind protected access, not sure this needs to be public
-		 NOTE: those are preference settings. if you change them it is likely that you would
-		 have to restart the editor for them to take effect
-		 */
-
-		CGameDialog ()
-		{
-		}
 		virtual ~CGameDialog ();
 
-		void Init ();
+		static CGameDialog& Instance ();
 
-		/*!
-		 reset the global settings by removing the file
-		 */
-		void Reset ();
+		void initialise ();
 
-		/*!
-		 Dialog API
-		 this is only called when the dialog is built at startup for main engine select
-		 */
+		void setGameDescription (GameDescription* newGameDescription);
+		GameDescription* getGameDescription ();
+
 		GtkWindow* BuildDialog ();
 };
+
+} // namespace ui
 
 #endif

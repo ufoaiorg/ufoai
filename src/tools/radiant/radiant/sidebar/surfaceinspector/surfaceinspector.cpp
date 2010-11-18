@@ -223,13 +223,13 @@ void SurfaceInspector::onFaceFitClick (GtkWidget *widget, SurfaceInspector *insp
 
 const std::string& SurfaceInspector::getSurfaceFlagName (std::size_t bit) const
 {
-	const std::string& value = g_pGameDescription->getKeyValue(surfaceflagNamesDefault[bit]);
+	const std::string& value = ui::CGameDialog::Instance().getGameDescription()->getKeyValue(surfaceflagNamesDefault[bit]);
 	return value;
 }
 
 const std::string& SurfaceInspector::getContentFlagName (std::size_t bit) const
 {
-	const std::string& value = g_pGameDescription->getKeyValue(contentflagNamesDefault[bit]);
+	const std::string& value = ui::CGameDialog::Instance().getGameDescription()->getKeyValue(contentflagNamesDefault[bit]);
 	return value;
 }
 
@@ -556,7 +556,7 @@ GtkWidget* SurfaceInspector::buildNotebook (void)
 		}
 	}
 	{
-		const std::string& valueEnablingFields = g_pGameDescription->getKeyValue("surfaceinspector_enable_value");
+		const std::string& valueEnablingFields = ui::CGameDialog::Instance().getGameDescription()->getKeyValue("surfaceinspector_enable_value");
 		{
 			_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
 			gtk_widget_show(GTK_WIDGET (_surfaceFlagsFrame));
