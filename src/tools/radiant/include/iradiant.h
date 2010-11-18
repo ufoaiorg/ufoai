@@ -117,6 +117,8 @@ struct IRadiant
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "radiant");
 
+	virtual ~IRadiant() {}
+
 	// Registers/de-registers an event listener class
 	virtual void addEventListener(RadiantEventListener* listener) = 0;
 	virtual void removeEventListener(RadiantEventListener* listener) = 0;
