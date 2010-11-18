@@ -6,6 +6,8 @@
 class CameraObserver
 {
 	public:
+		~CameraObserver() {}
+
 		// This gets called as soon as the camera is moved
 		virtual void cameraMoved () = 0;
 

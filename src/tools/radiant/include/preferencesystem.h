@@ -19,7 +19,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#if !defined(INCLUDED_PREFERENCESYSTEM_H)
+#ifndef INCLUDED_PREFERENCESYSTEM_H
 #define INCLUDED_PREFERENCESYSTEM_H
 
 #include "generic/constant.h"

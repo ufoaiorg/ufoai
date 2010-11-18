@@ -23,10 +23,7 @@
 #define INCLUDED_PREFERENCES_H
 
 #include "../dialog.h"
-#include <list>
-#include <map>
 #include "preferencesystem.h"
-#include "iregistry.h"
 
 class PrefPage : public PreferencesPage
 {

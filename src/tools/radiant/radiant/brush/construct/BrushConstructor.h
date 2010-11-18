@@ -18,6 +18,8 @@ namespace brushconstruct
 			}
 
 		public:
+			~BrushConstructor() {}
+
 			/**
 			 * @param[out] brush The brush to create the planes for
 			 * @param[in] bounds The mins and maxs of the cube
