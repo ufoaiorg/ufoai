@@ -56,12 +56,15 @@ void LoadTextureRGBA (qtexture_t* q, Image* image)
 
 	glBindTexture(GL_TEXTURE_2D, q->texture_number);
 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+
 	// Tell OpenGL how to use the mip maps we will be creating here
 	g_manipulator->setTextureParameters();
 
-	// Now create the mipmaps; conveniently, there exists an openGL method for this
-	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, processed->getWidth(), processed->getHeight(),
-					  GL_RGBA, GL_UNSIGNED_BYTE, processed->getRGBAPixels());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, processed->getWidth(), processed->getHeight(), 0, GL_RGBA,
+			GL_UNSIGNED_BYTE, processed->getRGBAPixels());
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
