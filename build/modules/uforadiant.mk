@@ -37,7 +37,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
 	$(RADIANT_BASE)/radiant/sound.cpp \
 	$(RADIANT_BASE)/radiant/shaders.cpp \
-	$(RADIANT_BASE)/radiant/texmanip.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
 	$(RADIANT_BASE)/radiant/undo.cpp \
@@ -176,6 +175,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/sidebar/MapInfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/JobInfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/texturebrowser.cpp \
+	\
+	$(RADIANT_BASE)/radiant/textures/TextureManipulator.cpp \
 	\
 	$(RADIANT_BASE)/radiant/particles/ParticleParser.cpp \
 	$(RADIANT_BASE)/radiant/particles/ParticleSystem.cpp \

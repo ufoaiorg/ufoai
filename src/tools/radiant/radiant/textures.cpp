@@ -37,8 +37,11 @@
 #include "stringio.h"
 
 #include "image.h"
-#include "texmanip.h"
 #include "settings/PreferenceSystem.h"
+
+#include "textures/TextureManipulator.h"
+
+shaders::TextureManipulator* g_manipulator;
 
 enum TextureCompressionFormat
 {
@@ -74,165 +77,45 @@ struct texture_globals_t
 
 static texture_globals_t g_texture_globals(GL_RGBA);
 
-static void SetTexParameters (ETexturesMode mode)
-{
-	const int maxAniso = QGL_maxTextureAnisotropy();
-	if (maxAniso > 1)
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
-	else if (mode == eTextures_MAX_ANISOTROPY)
-		mode = eTextures_LINEAR_MIPMAP_LINEAR;
-
-	switch (mode) {
-	case eTextures_NEAREST:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		break;
-	case eTextures_NEAREST_MIPMAP_NEAREST:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		break;
-	case eTextures_NEAREST_MIPMAP_LINEAR:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		break;
-	case eTextures_LINEAR:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		break;
-	case eTextures_LINEAR_MIPMAP_NEAREST:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		break;
-	case eTextures_LINEAR_MIPMAP_LINEAR:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		break;
-	case eTextures_MAX_ANISOTROPY:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAniso);
-		break;
-	default:
-		globalErrorStream() << "invalid texture mode\n";
-	}
-}
-
-static ETexturesMode g_texture_mode = eTextures_LINEAR_MIPMAP_LINEAR;
-
-static byte g_gammatable[256];
-static void ResampleGamma (float fGamma)
-{
-	int i, inf;
-	if (fGamma == 1.0) {
-		for (i = 0; i < 256; i++)
-			g_gammatable[i] = i;
-	} else {
-		for (i = 0; i < 256; i++) {
-			inf = (int) (255 * pow(static_cast<double> ((i + 0.5) / 255.5), static_cast<double> (fGamma)) + 0.5);
-			if (inf < 0)
-				inf = 0;
-			if (inf > 255)
-				inf = 255;
-			g_gammatable[i] = inf;
-		}
-	}
-}
-
 static inline const int& min_int (const int& left, const int& right)
 {
 	return std::min(left, right);
 }
 
 static int max_tex_size = 0;
-static const int max_texture_quality = 3;
-static LatchedInt g_Textures_textureQuality(3, _("Texture Quality"));
 
 /**
  * @brief This function does the actual processing of raw RGBA data into a GL texture.
  * @note It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
  */
-void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight)
+void LoadTextureRGBA (qtexture_t* q, Image* image)
 {
-	static float fGamma = -1;
-	float total[3];
-	byte *outpixels = 0;
-	int nCount = nWidth * nHeight;
+	q->surfaceFlags = image->getSurfaceFlags();
+	q->contentFlags = image->getContentFlags();
+	q->value = image->getValue();
+	q->width = image->getWidth();
+	q->height = image->getHeight();
 
-	if (fGamma != g_texture_globals.fGamma) {
-		fGamma = g_texture_globals.fGamma;
-		ResampleGamma(fGamma);
-	}
+	Image* processed = g_manipulator->getProcessedImage(image);
 
-	q->width = nWidth;
-	q->height = nHeight;
-
-	total[0] = total[1] = total[2] = 0.0f;
-
-	// resample texture gamma according to user settings
-	for (int i = 0; i < (nCount * 4); i += 4) {
-		for (int j = 0; j < 3; j++) {
-			total[j] += (pPixels + i)[j];
-			byte b = (pPixels + i)[j];
-			(pPixels + i)[j] = g_gammatable[b];
-		}
-	}
-
-	q->color[0] = total[0] / (nCount * 255);
-	q->color[1] = total[1] / (nCount * 255);
-	q->color[2] = total[2] / (nCount * 255);
+	q->color = g_manipulator->getFlatshadeColour(processed);
 
 	glGenTextures(1, &q->texture_number);
 
 	glBindTexture(GL_TEXTURE_2D, q->texture_number);
 
-	SetTexParameters(g_texture_mode);
+	// Tell OpenGL how to use the mip maps we will be creating here
+	g_manipulator->setTextureParameters();
 
-	int gl_width = 1;
-	while (gl_width < nWidth)
-		gl_width <<= 1;
-
-	int gl_height = 1;
-	while (gl_height < nHeight)
-		gl_height <<= 1;
-
-	bool resampled = false;
-	if (!(gl_width == nWidth && gl_height == nHeight)) {
-		resampled = true;
-		outpixels = (byte *) malloc(gl_width * gl_height * 4);
-		R_ResampleTexture(pPixels, nWidth, nHeight, outpixels, gl_width, gl_height, 4);
-	} else {
-		outpixels = pPixels;
-	}
-
-	int quality_reduction = max_texture_quality - g_Textures_textureQuality.m_value;
-	int target_width = min_int(gl_width >> quality_reduction, max_tex_size);
-	int target_height = min_int(gl_height >> quality_reduction, max_tex_size);
-
-	while (gl_width > target_width || gl_height > target_height) {
-		GL_MipReduce(outpixels, outpixels, gl_width, gl_height, target_width, target_height);
-
-		if (gl_width > target_width)
-			gl_width >>= 1;
-		if (gl_height > target_height)
-			gl_height >>= 1;
-	}
-
-	int mip = 0;
-	glTexImage2D(GL_TEXTURE_2D, mip++, g_texture_globals.texture_components, gl_width, gl_height, 0, GL_RGBA,
-			GL_UNSIGNED_BYTE, outpixels);
-	while (gl_width > 1 || gl_height > 1) {
-		GL_MipReduce(outpixels, outpixels, gl_width, gl_height, 1, 1);
-
-		if (gl_width > 1)
-			gl_width >>= 1;
-		if (gl_height > 1)
-			gl_height >>= 1;
-
-		glTexImage2D(GL_TEXTURE_2D, mip++, g_texture_globals.texture_components, gl_width, gl_height, 0, GL_RGBA,
-				GL_UNSIGNED_BYTE, outpixels);
-	}
+	// Now create the mipmaps; conveniently, there exists an openGL method for this
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, processed->getWidth(), processed->getHeight(),
+					  GL_RGBA, GL_UNSIGNED_BYTE, processed->getRGBAPixels());
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-	if (resampled)
-		free(outpixels);
+
+	// if we had to resize it
+	if (image != processed)
+		delete processed;
 }
 
 typedef std::pair<LoadImageCallback, std::string> TextureKey;
@@ -244,10 +127,7 @@ void qtexture_realise (qtexture_t& texture, const TextureKey& key)
 	if (!key.second.empty() && !strstr(key.second.c_str(), "_nm")) {
 		AutoPtr<Image> image(key.first.loadImage(key.second));
 		if (image) {
-			LoadTextureRGBA(&texture, image->getRGBAPixels(), image->getWidth(), image->getHeight());
-			texture.surfaceFlags = image->getSurfaceFlags();
-			texture.contentFlags = image->getContentFlags();
-			texture.value = image->getValue();
+			LoadTextureRGBA(&texture, image);
 		} else {
 			g_warning("Texture load failed: \"%s\"\n", key.second.c_str());
 		}
@@ -429,37 +309,6 @@ void Textures_Unrealise ()
 	g_texturesmap->unrealise();
 }
 
-Callback g_texturesModeChangedNotify;
-
-void Textures_setModeChangedNotify (const Callback& notify)
-{
-	g_texturesModeChangedNotify = notify;
-}
-
-void Textures_ModeChanged ()
-{
-	if (g_texturesmap->realised()) {
-		SetTexParameters(g_texture_mode);
-
-		for (TexturesMap::iterator i = g_texturesmap->begin(); i != g_texturesmap->end(); ++i) {
-			glBindTexture(GL_TEXTURE_2D, (*i).value->texture_number);
-			SetTexParameters(g_texture_mode);
-		}
-
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	g_texturesModeChangedNotify();
-}
-
-void Textures_SetMode (ETexturesMode mode)
-{
-	if (g_texture_mode != mode) {
-		g_texture_mode = mode;
-
-		Textures_ModeChanged();
-	}
-}
-
 void Textures_setTextureComponents (GLint texture_components)
 {
 	if (g_texture_globals.texture_components != texture_components) {
@@ -549,125 +398,6 @@ void TextureCompressionImport (TextureCompressionFormat& self, int value)
 }
 typedef ReferenceCaller1<TextureCompressionFormat, int, TextureCompressionImport> TextureCompressionImportCaller;
 
-void TextureGammaImport (float& self, float value)
-{
-	if (self != value) {
-		Textures_Unrealise();
-		self = value;
-		Textures_Realise();
-	}
-}
-typedef ReferenceCaller1<float, float, TextureGammaImport> TextureGammaImportCaller;
-
-void TextureModeImport (ETexturesMode& self, int value)
-{
-	switch (value) {
-	case 0:
-		Textures_SetMode(eTextures_NEAREST);
-		break;
-	case 1:
-		Textures_SetMode(eTextures_NEAREST_MIPMAP_NEAREST);
-		break;
-	case 2:
-		Textures_SetMode(eTextures_LINEAR);
-		break;
-	case 3:
-		Textures_SetMode(eTextures_NEAREST_MIPMAP_LINEAR);
-		break;
-	case 4:
-		Textures_SetMode(eTextures_LINEAR_MIPMAP_NEAREST);
-		break;
-	case 5:
-		Textures_SetMode(eTextures_LINEAR_MIPMAP_LINEAR);
-		break;
-	case 6:
-		Textures_SetMode(eTextures_MAX_ANISOTROPY);
-	}
-}
-typedef ReferenceCaller1<ETexturesMode, int, TextureModeImport> TextureModeImportCaller;
-
-void TextureModeExport (ETexturesMode& self, const IntImportCallback& importer)
-{
-	switch (self) {
-	case eTextures_NEAREST:
-		importer(0);
-		break;
-	case eTextures_NEAREST_MIPMAP_NEAREST:
-		importer(1);
-		break;
-	case eTextures_LINEAR:
-		importer(2);
-		break;
-	case eTextures_NEAREST_MIPMAP_LINEAR:
-		importer(3);
-		break;
-	case eTextures_LINEAR_MIPMAP_NEAREST:
-		importer(4);
-		break;
-	case eTextures_LINEAR_MIPMAP_LINEAR:
-		importer(5);
-		break;
-	case eTextures_MAX_ANISOTROPY:
-		importer(6);
-		break;
-	default:
-		importer(4);
-	}
-}
-typedef ReferenceCaller1<ETexturesMode, const IntImportCallback&, TextureModeExport> TextureModeExportCaller;
-
-void Textures_constructPreferences (PrefPage* page)
-{
-	{
-		const char* percentages[] = { N_("12.5%"), N_("25%"), N_("50%"), N_("100%") };
-		page->appendRadio(_("Texture Quality"), STRING_ARRAY_RANGE(percentages), LatchedIntImportCaller(
-				g_Textures_textureQuality), IntExportCaller(g_Textures_textureQuality.m_latched));
-	}
-	page->appendSpinner(_("Texture Gamma"), 1.0, 0.0, 1.0, FloatImportCallback(TextureGammaImportCaller(
-			g_texture_globals.fGamma)), FloatExportCallback(FloatExportCaller(g_texture_globals.fGamma)));
-	{
-		const char* texture_mode[] = {
-				N_("Nearest"),
-				N_("Nearest Mipmap"),
-				N_("Linear"),
-				N_("Bilinear"),
-				N_("Bilinear Mipmap"),
-				N_("Trilinear"),
-				N_("Anisotropy") };
-		page->appendCombo(_("Texture Render Mode"), STRING_ARRAY_RANGE(texture_mode), IntImportCallback(
-				TextureModeImportCaller(g_texture_mode)), IntExportCallback(TextureModeExportCaller(g_texture_mode)));
-	}
-	{
-		const char* compression_none[] = { N_("None") };
-		const char* compression_opengl[] = { N_("None"), N_("OpenGL ARB") };
-		const char* compression_s3tc[] = { N_("None"), N_("S3TC DXT1"), N_("S3TC DXT3"), N_("S3TC DXT5") };
-		const char* compression_opengl_s3tc[] = {
-				N_("None"),
-				N_("OpenGL ARB"),
-				N_("S3TC DXT1"),
-				N_("S3TC DXT3"),
-				N_("S3TC DXT5") };
-		StringArrayRange
-				compression(
-						(g_texture_globals.m_bOpenGLCompressionSupported) ? (g_texture_globals.m_bS3CompressionSupported) ? STRING_ARRAY_RANGE(compression_opengl_s3tc)
-								: STRING_ARRAY_RANGE(compression_opengl)
-								: (g_texture_globals.m_bS3CompressionSupported) ? STRING_ARRAY_RANGE(compression_s3tc)
-										: STRING_ARRAY_RANGE(compression_none));
-		page->appendCombo(_("Hardware Texture Compression"), compression, TextureCompressionImportCaller(
-				g_texture_globals.m_nTextureCompressionFormat), IntExportCaller(
-				reinterpret_cast<int&> (g_texture_globals.m_nTextureCompressionFormat)));
-	}
-}
-void Textures_constructPage (PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Textures"), _("Texture Settings"));
-	Textures_constructPreferences(reinterpret_cast<PrefPage*>(page));
-}
-void Textures_registerPreferencesPage ()
-{
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Textures_constructPage> ());
-}
-
 void TextureCompression_importString (const char* string)
 {
 	g_texture_globals.m_nTextureCompressionFormat = static_cast<TextureCompressionFormat> (atoi(string));
@@ -678,25 +408,15 @@ typedef FreeCaller1<const char*, TextureCompression_importString> TextureCompres
 void Textures_Construct ()
 {
 	g_texturesmap = new TexturesMap;
+	g_manipulator = new shaders::TextureManipulator;
 
 	GlobalPreferenceSystem().registerPreference("TextureCompressionFormat", TextureCompressionImportStringCaller(),
 			IntExportStringCaller(reinterpret_cast<int&> (g_texture_globals.m_nTextureCompressionFormat)));
-	GlobalPreferenceSystem().registerPreference("TextureFiltering", IntImportStringCaller(
-			reinterpret_cast<int&> (g_texture_mode)), IntExportStringCaller(reinterpret_cast<int&> (g_texture_mode)));
-	GlobalPreferenceSystem().registerPreference("TextureQuality", IntImportStringCaller(
-			g_Textures_textureQuality.m_latched), IntExportStringCaller(g_Textures_textureQuality.m_latched));
-	GlobalPreferenceSystem().registerPreference("SI_Gamma", FloatImportStringCaller(g_texture_globals.fGamma),
-			FloatExportStringCaller(g_texture_globals.fGamma));
-
-	g_Textures_textureQuality.useLatched();
-
-	Textures_registerPreferencesPage();
-
-	Textures_ModeChanged();
 }
 void Textures_Destroy ()
 {
 	delete g_texturesmap;
+	delete g_manipulator;
 }
 
 #include "modulesystem/modulesmap.h"
@@ -705,6 +425,7 @@ void Textures_Destroy ()
 
 class TexturesDependencies: public GlobalRadiantModuleRef,
 		public GlobalOpenGLModuleRef,
+		public GlobalRegistryModuleRef,
 		public GlobalPreferenceSystemModuleRef
 {
 		ImageModulesRef m_image_modules;

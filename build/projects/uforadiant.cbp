@@ -699,11 +699,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\surfaceinspector\surfaceinspector.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\texturebrowser.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\texturebrowser.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\textures\TextureManipulator.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\stacktrace.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\stacktrace.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\texmanip.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\texmanip.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\textool\Rectangle.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\textool\Renderable.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\textool\Selectable.h" />

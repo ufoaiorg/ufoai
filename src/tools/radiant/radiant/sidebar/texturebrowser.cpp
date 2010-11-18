@@ -95,8 +95,6 @@ TextureBrowser::TextureBrowser () :
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_UNIFORM_SIZE);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_THUMBNAIL_SCALE);
 
-	Textures_setModeChangedNotify(MemberCaller<TextureBrowser, &TextureBrowser::queueDraw> (*this));
-
 	createWidget();
 
 	GlobalShaderSystem().setActiveShadersChangedNotify(MemberCaller<TextureBrowser,
@@ -1059,7 +1057,6 @@ void TextureBrowser_Destroy ()
 	GlobalShaderSystem().detach(g_ShadersObserver);
 
 	GlobalShaderSystem().setActiveShadersChangedNotify(Callback());
-	Textures_setModeChangedNotify(Callback());
 }
 
 TextureBrowser& GlobalTextureBrowser ()

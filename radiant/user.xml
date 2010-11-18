@@ -61,6 +61,9 @@
 
 		<textures>
 			<defaultTextureScale value="0.5" />
+			<quality value="3" />
+			<mode value="5" />
+			<gamma value="1.0" />
 
 			<browser>
 				<hideUnused value="0" />
