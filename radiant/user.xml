@@ -28,6 +28,10 @@
 			<drawMode value="2" />
 		</camera>
 
+		<mainFrame>
+			<window xPosition="-1" yPosition="-1" width="640" height="480" state="4" />
+		</mainFrame>
+
 		<ModelSelector>
 			<previewSizeFactor value="0.4"/>
 		</ModelSelector>

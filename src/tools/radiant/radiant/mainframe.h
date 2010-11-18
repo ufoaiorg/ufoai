@@ -26,6 +26,7 @@
 #include "gtkutil/idledraw.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/button.h"
+#include "gtkutil/WindowPosition.h"
 #include "string/string.h"
 #include "iundo.h"
 
@@ -91,6 +92,8 @@ class MainFrame
 		std::string m_brushcount_status;
 		std::string m_texture_status;
 	private:
+
+		gtkutil::WindowPosition _windowPosition;
 
 		void Create ();
 		void SaveWindowInfo ();

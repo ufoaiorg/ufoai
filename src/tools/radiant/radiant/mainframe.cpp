@@ -128,20 +128,19 @@
 #include "settings/GameDescription.h"
 #include "settings/GameManager.h"
 
+namespace {
+const std::string RKEY_WINDOW_STATE = "user/ui/mainFrame/window";
+}
+
 struct LayoutGlobals
 {
-		WindowPosition m_position;
-
 		int nXYHeight;
 		int nXYWidth;
 		int nCamWidth;
 		int nCamHeight;
-		int nState;
 
 		LayoutGlobals () :
-			m_position(-1, -1, 640, 480),
-
-			nXYHeight(650), nXYWidth(300), nCamWidth(200), nCamHeight(200), nState(GDK_WINDOW_STATE_MAXIMIZED)
+			nXYHeight(650), nXYWidth(300), nCamWidth(200), nCamHeight(200)
 		{
 		}
 };
@@ -1292,15 +1291,19 @@ void MainFrame::Create (void)
 	gtk_widget_show(GTK_WIDGET(main_toolbar_v));
 
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
-	if ((g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
-		/* set stored position and default height/width, otherwise problems with extended screens */
-		g_layout_globals.m_position.h = 800;
-		g_layout_globals.m_position.w = 600;
-		window_set_position(window, g_layout_globals.m_position);
-		/* maximize will be done when window is shown */
+
+	int windowState = GDK_WINDOW_STATE_MAXIMIZED;
+
+	// Connect the window position tracker
+	_windowPosition.loadFromPath(RKEY_WINDOW_STATE);
+	windowState =  string::toInt(GlobalRegistry().getAttribute(RKEY_WINDOW_STATE, "state"));
+
+	if (windowState & GDK_WINDOW_STATE_MAXIMIZED) {
 		gtk_window_maximize(window);
-	} else {
-		window_set_position(window, g_layout_globals.m_position);
+	}
+	else {
+		_windowPosition.connect(window);
+		_windowPosition.applyPosition();
 	}
 
 	m_window = window;
@@ -1409,13 +1412,15 @@ void MainFrame::Create (void)
 
 void MainFrame::SaveWindowInfo (void)
 {
-	if (CurrentStyle() == eRegular) {
-		g_layout_globals.nXYWidth = gtk_paned_get_position(GTK_PANED(m_hSplit));
-		g_layout_globals.nCamHeight = gtk_paned_get_position(GTK_PANED(m_vSplit2));
-	}
+	// Delete all the current window states from the registry
+	GlobalRegistry().deleteXPath(RKEY_WINDOW_STATE);
 
-	g_layout_globals.m_position = m_position_tracker.getPosition();
-	g_layout_globals.nState = gdk_window_get_state(GTK_WIDGET(m_window)->window);
+	// Tell the position tracker to save the information
+	_windowPosition.saveToPath(RKEY_WINDOW_STATE);
+
+	GdkWindow* window = GTK_WIDGET(m_window)->window;
+	if (window != NULL)
+		GlobalRegistry().setAttribute(RKEY_WINDOW_STATE, "state", string::toString(gdk_window_get_state(window)));
 }
 
 void MainFrame::Shutdown (void)
@@ -1715,17 +1720,6 @@ void MainFrame_Construct (void)
 			IntExportStringCaller(g_layout_globals.nCamWidth));
 	GlobalPreferenceSystem().registerPreference("CamHeight", IntImportStringCaller(g_layout_globals.nCamHeight),
 			IntExportStringCaller(g_layout_globals.nCamHeight));
-
-	GlobalPreferenceSystem().registerPreference("State", IntImportStringCaller(g_layout_globals.nState),
-			IntExportStringCaller(g_layout_globals.nState));
-	GlobalPreferenceSystem().registerPreference("PositionX", IntImportStringCaller(g_layout_globals.m_position.x),
-			IntExportStringCaller(g_layout_globals.m_position.x));
-	GlobalPreferenceSystem().registerPreference("PositionY", IntImportStringCaller(g_layout_globals.m_position.y),
-			IntExportStringCaller(g_layout_globals.m_position.y));
-	GlobalPreferenceSystem().registerPreference("Width", IntImportStringCaller(g_layout_globals.m_position.w),
-			IntExportStringCaller(g_layout_globals.m_position.w));
-	GlobalPreferenceSystem().registerPreference("Height", IntImportStringCaller(g_layout_globals.m_position.h),
-			IntExportStringCaller(g_layout_globals.m_position.h));
 
 #ifdef PKGDATADIR
 	StringOutputStream path(256);
