@@ -88,10 +88,8 @@ const std::string RKEY_TEXTURES_THUMBNAIL_SCALE = "user/ui/textures/browser/thum
 static void TextureBrowser_scrollChanged (void* data, gdouble value);
 
 TextureBrowser::TextureBrowser () :
-	_glWidget(false), m_texture_scroll(0), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
-			TextureBrowser_scrollChanged, this), m_textureScale(50), m_hideUnused(GlobalRegistry().get(
-			RKEY_TEXTURES_HIDE_UNUSED) == "1"), m_hideInvalid(GlobalRegistry().get(RKEY_TEXTURES_HIDE_INVALID) == "1"),
-			m_rmbSelected(false), m_resizeTextures(true), m_uniformTextureSize(128)
+	_glWidget(false), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
+			TextureBrowser_scrollChanged, this), m_rmbSelected(false), m_resizeTextures(true)
 {
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_UNUSED);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_INVALID);
@@ -100,12 +98,61 @@ TextureBrowser::TextureBrowser () :
 
 	Textures_setModeChangedNotify(MemberCaller<TextureBrowser, &TextureBrowser::queueDraw> (*this));
 
+	createWidget();
+
 	GlobalShaderSystem().setActiveShadersChangedNotify(MemberCaller<TextureBrowser,
 			&TextureBrowser::activeShadersChanged> (*this));
 
 	GlobalPreferenceSystem().addConstructor(this);
 	keyChanged("", "");
 	setSelectedShader("");
+}
+
+void TextureBrowser::createWidget() {
+	_widget = gtk_vbox_new(FALSE, 0);
+
+	gtk_box_pack_start(GTK_BOX(_widget), createMenuBar(), false, true, 0);
+	gtk_box_pack_start(GTK_BOX(_widget), createToolBar(), false, true, 0);
+
+	GtkWidget* texhbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(_widget), texhbox, true, true, 0);
+
+	m_texture_scroll = gtk_vscrollbar_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 0, 1, 1, 1)));
+
+	GtkAdjustment *vadjustment = gtk_range_get_adjustment(GTK_RANGE(m_texture_scroll));
+	g_signal_connect(G_OBJECT(vadjustment), "value_changed", G_CALLBACK(onVerticalScroll),
+			this);
+
+	widget_set_visible(m_texture_scroll, true);
+
+	gtk_box_pack_end(GTK_BOX(texhbox), m_texture_scroll, false, true, 0);
+
+	{ // gl_widget
+		GtkWidget *glWidget = _glWidget;
+
+		gtk_widget_set_events(glWidget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
+				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
+		GTK_WIDGET_SET_FLAGS(glWidget, GTK_CAN_FOCUS);
+		gtk_widget_show(glWidget);
+
+		g_signal_connect(G_OBJECT(glWidget), "size_allocate",
+				G_CALLBACK(onSizeAllocate), this);
+		g_signal_connect(G_OBJECT(glWidget), "expose_event",
+				G_CALLBACK(onExpose), this);
+		g_signal_connect(G_OBJECT(glWidget), "button_press_event", G_CALLBACK(
+						onButtonPress), this);
+		g_signal_connect(G_OBJECT(glWidget), "button_release_event", G_CALLBACK(
+						onButtonRelease), this);
+		g_signal_connect(G_OBJECT(glWidget), "motion_notify_event", G_CALLBACK(
+						onMouseMotion), this);
+		g_signal_connect(G_OBJECT(glWidget), "scroll_event", G_CALLBACK(onMouseScroll),
+				this);
+		gtk_box_pack_start(GTK_BOX(texhbox), glWidget, true, true, 0);
+	}
+
+	gtk_container_unset_focus_chain(GTK_CONTAINER(_widget));
+
+	gtk_widget_show_all(_widget);
 }
 
 void TextureBrowser::textureScaleImport (int value)
@@ -955,51 +1002,7 @@ GtkWidget* TextureBrowser::createToolBar ()
 
 GtkWidget* TextureBrowser::getWidget ()
 {
-	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
-
-	gtk_box_pack_start(GTK_BOX(vbox), createMenuBar(), false, true, 0);
-	gtk_box_pack_start(GTK_BOX(vbox), createToolBar(), false, true, 0);
-
-	GtkWidget* texhbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_end(GTK_BOX(vbox), texhbox, true, true, 0);
-
-	m_texture_scroll = gtk_vscrollbar_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 0, 1, 1, 1)));
-
-	GtkAdjustment *vadjustment = gtk_range_get_adjustment(GTK_RANGE(m_texture_scroll));
-	g_signal_connect(G_OBJECT(vadjustment), "value_changed", G_CALLBACK(onVerticalScroll),
-			this);
-
-	widget_set_visible(m_texture_scroll, true);
-
-	gtk_box_pack_end(GTK_BOX(texhbox), m_texture_scroll, false, true, 0);
-
-	{ // gl_widget
-		GtkWidget *glWidget = _glWidget;
-
-		gtk_widget_set_events(glWidget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
-				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
-		GTK_WIDGET_SET_FLAGS(glWidget, GTK_CAN_FOCUS);
-		gtk_widget_show(glWidget);
-
-		g_signal_connect(G_OBJECT(glWidget), "size_allocate",
-				G_CALLBACK(onSizeAllocate), this);
-		g_signal_connect(G_OBJECT(glWidget), "expose_event",
-				G_CALLBACK(onExpose), this);
-		g_signal_connect(G_OBJECT(glWidget), "button_press_event", G_CALLBACK(
-						onButtonPress), this);
-		g_signal_connect(G_OBJECT(glWidget), "button_release_event", G_CALLBACK(
-						onButtonRelease), this);
-		g_signal_connect(G_OBJECT(glWidget), "motion_notify_event", G_CALLBACK(
-						onMouseMotion), this);
-		g_signal_connect(G_OBJECT(glWidget), "scroll_event", G_CALLBACK(onMouseScroll),
-				this);
-		gtk_box_pack_start(GTK_BOX(texhbox), glWidget, true, true, 0);
-	}
-
-	gtk_container_unset_focus_chain(GTK_CONTAINER(vbox));
-
-	gtk_widget_show_all(vbox);
-	return vbox;
+	return _widget;
 }
 
 void TextureBrowser::showAll ()

@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "environment.h"
 
+#include "iregistry.h"
+
 #include "gtkutil/image.h"
 #include "string/string.h"
 #include "os/path.h"
@@ -116,6 +118,20 @@ std::string Environment::getBitmapsPath() {
 Environment& Environment::Instance() {
 	static Environment _instance;
 	return _instance;
+}
+
+void Environment::savePathsToRegistry() {
+	GlobalRegistry().set(RKEY_APP_PATH, _appPath);
+	GlobalRegistry().set(RKEY_HOME_PATH, _homePath);
+	GlobalRegistry().set(RKEY_SETTINGS_PATH, _settingsPath);
+	GlobalRegistry().set(RKEY_BITMAPS_PATH, _bitmapsPath);
+}
+
+void Environment::deletePathsFromRegistry() {
+	GlobalRegistry().deleteXPath(RKEY_APP_PATH);
+	GlobalRegistry().deleteXPath(RKEY_HOME_PATH);
+	GlobalRegistry().deleteXPath(RKEY_SETTINGS_PATH);
+	GlobalRegistry().deleteXPath(RKEY_BITMAPS_PATH);
 }
 
 void Environment::initPaths() {

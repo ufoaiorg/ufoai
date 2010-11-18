@@ -393,6 +393,9 @@ void Radiant_Initialise (void)
 	// Try to load all the XML files into the registry
 	GlobalRegistry().init(AppPath_get(), SettingsPath_get());
 
+	// Tell the Environment class to store the paths into the Registry
+	Environment::Instance().savePathsToRegistry();
+
 	// Load the ColourSchemes from the registry
 	ColourSchemes().loadColourSchemes();
 
@@ -413,6 +416,8 @@ void Radiant_Initialise (void)
 
 void Radiant_Shutdown (void)
 {
+	Environment::Instance().deletePathsFromRegistry();
+
 	GlobalMRU().saveRecentFiles();
 
 	GlobalSurfaceInspector().shutdown();

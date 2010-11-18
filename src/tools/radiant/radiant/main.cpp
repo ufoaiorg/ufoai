@@ -443,6 +443,9 @@ int main (int argc, char* argv[])
 	// load up shaders now that we have the map loaded
 	GlobalTextureBrowser().showStartupShaders();
 
+	// Save the paths *once again* into the registry, to overwrite bogus stuff in there
+	Environment::Instance().savePathsToRegistry();
+
 	gtk_main();
 
 	GlobalMap().free();

@@ -112,6 +112,7 @@ class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor {
 		std::string shader;
 		GtkWindow* m_parent;
 		gtkutil::GLWidget _glWidget;
+		GtkWidget* _widget;
 		GtkWidget* m_texture_scroll;
 		GtkWidget* m_treeViewTree;
 		GtkWidget* m_scr_win_tree;
@@ -160,6 +161,7 @@ class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor {
 		void setOriginY(int originy);
 	private:
 
+		void createWidget();
 		void focus(const std::string& name);
 		void selectTextureAt(int mx, int my);
 		void queueDraw();
