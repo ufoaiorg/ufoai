@@ -46,6 +46,10 @@
 #include "../map/map.h"
 #include <string>
 
+namespace {
+	const std::string RKEY_GAME_TYPE = "user/game/type";
+}
+
 void Interface_constructPreferences (PrefPage* page)
 {
 	page->appendCheckBox(_("Console"), _("Enable logfile"), g_Console_enableLogfile);
@@ -74,38 +78,7 @@ static void Mouse_registerPreferencesPage ()
  =========================================================
  */
 
-#include <map>
-
-inline const char* xmlAttr_getName (xmlAttrPtr attr)
-{
-	return reinterpret_cast<const char*> (attr->name);
-}
-
-inline const char* xmlAttr_getValue (xmlAttrPtr attr)
-{
-	return reinterpret_cast<const char*> (attr->children->content);
-}
-
-CGameDescription::CGameDescription (xmlDocPtr pDoc, const std::string& gameFile) :
-	emptyString("")
-{
-	// read the user-friendly game name
-	xmlNodePtr pNode = pDoc->children;
-
-	while (strcmp((const char*) pNode->name, "game") && pNode != 0)
-		pNode = pNode->next;
-
-	if (!pNode)
-		gtkutil::errorDialog(_("Didn't find 'game' node in game.xml file\n"));
-
-	for (xmlAttrPtr attr = pNode->properties; attr != 0; attr = attr->next) {
-		m_gameDescription.insert(GameDescription::value_type(xmlAttr_getName(attr), xmlAttr_getValue(attr)));
-	}
-
-	mGameFile = gameFile;
-}
-
-CGameDescription *g_pGameDescription; ///< shortcut to g_GamesDialog.m_pCurrentDescription
+GameDescription *g_pGameDescription; ///< shortcut to g_GamesDialog.m_pCurrentDescription
 
 
 #include "stream/textfilestream.h"
@@ -173,7 +146,7 @@ void CGameDialog::Init ()
 
 	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
 	if (pDoc) {
-		g_pGameDescription = new CGameDescription(pDoc, strGameFilename);
+		g_pGameDescription = new GameDescription(pDoc, strGameFilename);
 		// Import this information into the registry
 		//GlobalRegistry().importFromFile(strGameFilename, "");
 		xmlFreeDoc(pDoc);

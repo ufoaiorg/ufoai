@@ -161,48 +161,9 @@ typedef MemberCaller1<LatchedBool, bool, &LatchedBool::import> LatchedBoolImport
 typedef LatchedValue<int> LatchedInt;
 typedef MemberCaller1<LatchedInt, int, &LatchedInt::import> LatchedIntImportCaller;
 
-/*!
- holds game specific configuration stuff
- such as base names, engine names, some game specific features to activate in the various modules
- it is not strictly a prefs thing since the user is not supposed to edit that (unless he is hacking
- support for a new game)
+#include "GameDescription.h"
 
- what we do now is fully generate the information for this during the setup. We might want to
- generate a piece that just says "the game pack is there", but put the rest of the config somwhere
- else (i.e. not generated, copied over during setup .. for instance in the game tools directory)
- */
-class CGameDescription
-{
-	private:
-		typedef std::map<std::string, std::string> GameDescription;
-
-	public:
-		std::string mGameFile; ///< the .game file that describes this game
-		const std::string emptyString;
-		GameDescription m_gameDescription;
-
-		const std::string& getKeyValue (const std::string& key) const
-		{
-			GameDescription::const_iterator i = m_gameDescription.find(key);
-			if (i != m_gameDescription.end()) {
-				return (*i).second;
-			}
-			return CGameDescription::emptyString;
-		}
-		const std::string& getRequiredKeyValue (const std::string& key) const
-		{
-			GameDescription::const_iterator i = m_gameDescription.find(key);
-			if (i != m_gameDescription.end()) {
-				return (*i).second;
-			}
-			ERROR_MESSAGE("game attribute " << makeQuoted(key) << " not found in " << makeQuoted(mGameFile));
-			return CGameDescription::emptyString;
-		}
-
-		CGameDescription (xmlDocPtr pDoc, const std::string &GameFile);
-};
-
-extern CGameDescription *g_pGameDescription;
+extern GameDescription *g_pGameDescription;
 
 typedef struct _GtkWidget GtkWidget;
 class PrefsDlg;
@@ -250,7 +211,7 @@ class CGameDialog: public Dialog
 		/*!
 		 uses m_nComboItem to find the right mGames
 		 */
-		CGameDescription *GameDescriptionForComboItem ();
+		GameDescription *GameDescriptionForComboItem ();
 };
 
 /*!
