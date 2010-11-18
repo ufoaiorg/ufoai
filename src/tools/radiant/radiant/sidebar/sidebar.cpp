@@ -18,6 +18,7 @@
 #include "radiant_i18n.h"
 #include "gtkutil/widget.h"
 #include "ieventmanager.h"
+#include "iradiant.h"
 #include "../log/console.h"
 
 #include "entitylist/EntityList.h"
