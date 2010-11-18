@@ -96,13 +96,13 @@ class DeferredAdjustment {
 #include "gtkutil/glwidget.h"
 #include "texturelib.h"
 #include "math/Vector3.h"
-#include "../settings/PreferenceSystem.h"
+#include "preferencesystem.h"
 #include "iregistry.h"
 
-class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor {
+class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor
+{
 	private:
 		TextureGroups groups;
-
 
 		int width, height;
 		int originy;

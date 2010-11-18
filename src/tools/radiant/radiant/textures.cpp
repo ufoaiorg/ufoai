@@ -21,6 +21,8 @@
 
 #include "textures.h"
 #include "itextures.h"
+#include "iregistry.h"
+#include "iradiant.h"
 #include "igl.h"
 #include "radiant_i18n.h"
 
@@ -29,7 +31,7 @@
 #include "container/hashfunc.h"
 #include "container/cache.h"
 #include "image.h"
-#include "settings/PreferenceSystem.h"
+#include "preferencesystem.h"
 #include "textures/TextureManipulator.h"
 
 shaders::TextureManipulator* g_manipulator;

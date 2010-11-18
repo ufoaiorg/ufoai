@@ -22,7 +22,7 @@
 #include "iundo.h"
 #include "iregistry.h"
 #include "string/string.h"
-#include "settings/PreferenceSystem.h"
+#include "preferencesystem.h"
 
 #include "radiant_i18n.h"
 

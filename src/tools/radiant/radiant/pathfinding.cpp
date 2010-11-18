@@ -33,7 +33,8 @@
 #include "map/map.h"
 #include "signal/isignal.h"
 #include "stringio.h"
-#include "settings/PreferenceSystem.h"
+#include "preferencesystem.h"
+#include "iregistry.h"
 #include "preferencesystem.h"
 #include "radiant_i18n.h"
 #include "gtkutil/widget.h"
@@ -157,10 +158,9 @@ class Pathfinding: public PreferenceConstructor, public RegistryKeyObserver
 		void constructPreferencePage (PreferenceGroup& group)
 		{
 			PreferencesPage* page = group.createPage(_("Pathfinding"), _("Pathfinding Settings"));
-			PrefPage *p = reinterpret_cast<PrefPage*> (page);
-			p->appendCheckBox("", _("Show pathfinding information"), RKEY_PATHFINDING_SHOW);
-			p->appendCheckBox("", _("Show all lower levels"), RKEY_PATHFINDING_SHOW_ALL_LOWER);
-			p->appendCheckBox("", _("Show in 2D views"), RKEY_PATHFINDING_SHOW_IN_2D);
+			page->appendCheckBox("", _("Show pathfinding information"), RKEY_PATHFINDING_SHOW);
+			page->appendCheckBox("", _("Show all lower levels"), RKEY_PATHFINDING_SHOW_ALL_LOWER);
+			page->appendCheckBox("", _("Show in 2D views"), RKEY_PATHFINDING_SHOW_IN_2D);
 		}
 };
 
