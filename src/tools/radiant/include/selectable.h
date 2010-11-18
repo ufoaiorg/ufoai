@@ -90,9 +90,8 @@ class VertexPointer
 {
 		typedef const unsigned char* byte_pointer;
 	public:
-		typedef float elem_type;
-		typedef const elem_type* pointer;
-		typedef const elem_type& reference;
+		typedef const Vector3* vector_pointer;
+		typedef const Vector3& vector_reference;
 
 		class iterator
 		{
@@ -134,16 +133,16 @@ class VertexPointer
 					m_iter += m_stride;
 					return tmp;
 				}
-				reference operator* () const
+				vector_reference operator* () const
 				{
-					return *reinterpret_cast<pointer> (m_iter);
+					return *reinterpret_cast<vector_pointer> (m_iter);
 				}
 			private:
 				byte_pointer m_iter;
 				std::size_t m_stride;
 		};
 
-		VertexPointer (pointer vertices, std::size_t stride) :
+		VertexPointer (vector_pointer vertices, std::size_t stride) :
 			m_vertices(reinterpret_cast<byte_pointer> (vertices)), m_stride(stride)
 		{
 		}
@@ -153,9 +152,9 @@ class VertexPointer
 			return iterator(m_vertices, m_stride);
 		}
 
-		reference operator[] (std::size_t i) const
+		vector_reference operator[] (std::size_t i) const
 		{
-			return *reinterpret_cast<pointer> (m_vertices + m_stride * i);
+			return *reinterpret_cast<vector_pointer> (m_vertices + m_stride * i);
 		}
 
 	private:

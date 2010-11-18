@@ -67,7 +67,7 @@ void TextureProjection::normalise (float width, float height)
 void TextureProjection::fitTexture (std::size_t width, std::size_t height, const Vector3& normal, const Winding& w,
 		float s_repeat, float t_repeat)
 {
-	if (w.numpoints < 3) {
+	if (w.size() < 3) {
 		return;
 	}
 
@@ -182,7 +182,7 @@ void TextureProjection::basisForNormal (const Vector3& normal, Matrix4& basis)
 void TextureProjection::emitTextureCoordinates (std::size_t width, std::size_t height, Winding& w,
 		const Vector3& normal, const Matrix4& localToWorld)
 {
-	if (w.numpoints < 3) {
+	if (w.size() < 3) {
 		return;
 	}
 

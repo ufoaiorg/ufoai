@@ -222,7 +222,7 @@ std::size_t Brush::absoluteIndex (FaceVertexId faceVertex)
 {
 	std::size_t index = 0;
 	for (std::size_t i = 0; i < faceVertex.getFace(); ++i) {
-		index += m_faces[i]->getWinding().numpoints;
+		index += m_faces[i]->getWinding().size();
 	}
 	return index + faceVertex.getVertex();
 }
@@ -559,7 +559,7 @@ void Brush::removeDegenerateEdges ()
 		Winding& winding = m_faces[i]->getWinding();
 		for (Winding::iterator j = winding.begin(); j != winding.end();) {
 			std::size_t index = std::distance(winding.begin(), j);
-			std::size_t next = Winding_next(winding, index);
+			std::size_t next = winding.next(index);
 			if (Edge_isDegenerate(winding[index].vertex, winding[next].vertex)) {
 				Winding& other = m_faces[winding[index].adjacent]->getWinding();
 				std::size_t adjacent = Winding_FindAdjacent(other, i);
@@ -581,7 +581,7 @@ void Brush::removeDegenerateFaces ()
 	for (std::size_t i = 0; i < m_faces.size(); ++i) {
 		Winding& degen = m_faces[i]->getWinding();
 
-		if (degen.numpoints == 2) {
+		if (degen.size() == 2) {
 			// this is an "edge" face, where the plane touches the edge of the brush
 			{
 				Winding& winding = m_faces[degen[0].adjacent]->getWinding();
@@ -609,8 +609,8 @@ void Brush::removeDuplicateEdges ()
 	// verify face connectivity graph
 	for (std::size_t i = 0; i < m_faces.size(); ++i) {
 		Winding& winding = m_faces[i]->getWinding();
-		for (std::size_t j = 0; j != winding.numpoints;) {
-			std::size_t next = Winding_next(winding, j);
+		for (std::size_t j = 0; j != winding.size();) {
+			std::size_t next = winding.next(j);
 			if (winding[j].adjacent == winding[next].adjacent) {
 				winding.erase(winding.begin() + next);
 			} else {
@@ -748,7 +748,7 @@ void Brush::buildBRep ()
 		if ((*i)->contributes()) {
 			++faces_size;
 		}
-		faceVerticesCount += (*i)->getWinding().numpoints;
+		faceVerticesCount += (*i)->getWinding().size();
 	}
 
 	if (degenerate || faces_size < 4 || faceVerticesCount != (faceVerticesCount >> 1) << 1) { // sum of vertices for each face of a valid polyhedron is always even
@@ -775,7 +775,7 @@ void Brush::buildBRep ()
 
 			{
 				for (std::size_t i = 0; i != m_faces.size(); ++i) {
-					for (std::size_t j = 0; j < m_faces[i]->getWinding().numpoints; ++j) {
+					for (std::size_t j = 0; j < m_faces[i]->getWinding().size(); ++j) {
 						faceVertices.push_back(FaceVertexId(i, j));
 					}
 				}
@@ -828,8 +828,7 @@ void Brush::buildBRep ()
 						FaceVertexId faceVertex = faceVertices[ProximalVertexArray_index(edgePairs, uniqueEdges[i])];
 
 						const Winding& w = m_faces[faceVertex.getFace()]->getWinding();
-						Vector3 edge = vector3_mid(w[faceVertex.getVertex()].vertex, w[Winding_next(w,
-								faceVertex.getVertex())].vertex);
+						Vector3 edge = vector3_mid(w[faceVertex.getVertex()].vertex, w[w.next(faceVertex.getVertex())].vertex);
 						m_uniqueEdgePoints[i] = PointVertex(edge, colour_vertex);
 					}
 				}
@@ -905,13 +904,13 @@ void Brush::buildBRep ()
 
 				for (std::size_t i = 0, count = 0; i < m_faces.size(); ++i) {
 					const Winding& winding = m_faces[i]->getWinding();
-					for (std::size_t j = 0; j < winding.numpoints; ++j) {
+					for (std::size_t j = 0; j < winding.size(); ++j) {
 						const RenderIndex edge_index = uniqueEdgeIndices[count + j];
 
 						m_edge_indices[edge_index].first = uniqueVertexIndices[count + j];
-						m_edge_indices[edge_index].second = uniqueVertexIndices[count + Winding_next(winding, j)];
+						m_edge_indices[edge_index].second = uniqueVertexIndices[count + winding.next(j)];
 					}
-					count += winding.numpoints;
+					count += winding.size();
 				}
 			}
 		}

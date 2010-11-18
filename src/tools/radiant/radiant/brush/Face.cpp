@@ -71,7 +71,7 @@ void Face::instanceDetach (MapFile* map)
 
 void Face::render (RenderStateFlags state) const
 {
-	Winding_Draw(m_winding, m_planeTransformed.plane3().normal(), state);
+	m_winding.draw(m_planeTransformed.plane3().normal(), state);
 }
 
 void Face::undoSave ()
@@ -168,11 +168,11 @@ void Face::freezeTransform ()
 
 void Face::update_move_planepts_vertex (std::size_t index, PlanePoints planePoints)
 {
-	std::size_t numpoints = getWinding().numpoints;
+	std::size_t numpoints = getWinding().size();
 	ASSERT_MESSAGE(index < numpoints, "update_move_planepts_vertex: invalid index");
 
 	std::size_t opposite = Winding_Opposite(getWinding(), index);
-	std::size_t adjacent = Winding_wrap(getWinding(), opposite + numpoints - 1);
+	std::size_t adjacent = getWinding().wrap(opposite + numpoints - 1);
 	planePoints[0] = getWinding()[opposite].vertex;
 	planePoints[1] = getWinding()[index].vertex;
 	planePoints[2] = getWinding()[adjacent].vertex;
@@ -200,7 +200,7 @@ void Face::snapto (float snap)
 
 void Face::testSelect (SelectionTest& test, SelectionIntersection& best)
 {
-	Winding_testSelect(m_winding, test, best);
+	m_winding.testSelect(test, best);
 }
 
 void Face::testSelect_centroid (SelectionTest& test, SelectionIntersection& best)
@@ -399,7 +399,7 @@ void Face::setDetail (bool detail)
 
 bool Face::contributes () const
 {
-	return m_winding.numpoints > 2;
+	return m_winding.size() > 2;
 }
 bool Face::is_bounded () const
 {

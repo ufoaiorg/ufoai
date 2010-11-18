@@ -101,11 +101,14 @@ namespace model
 			void testSelect (Selector& selector, SelectionTest& test, const Matrix4& localToWorld)
 			{
 				test.BeginMesh(localToWorld);
+				SelectionIntersection result;
 
-				SelectionIntersection best;
-				testSelect(test, best);
-				if (best.valid()) {
-					selector.addIntersection(best);
+				test.TestTriangles(VertexPointer(&_vertices[0].vertex, sizeof(ArbitraryMeshVertex)), IndexPointer(
+					&_indices[0], IndexPointer::index_type(_indices.size())), result);
+
+				// Add the intersection to the selector if it is valid
+				if(result.valid()) {
+					selector.addIntersection(result);
 				}
 			}
 
@@ -117,15 +120,6 @@ namespace model
 			 * path of the skin to apply
 			 */
 			void applySkin (const std::string& skin);
-
-		private:
-
-			void testSelect (SelectionTest& test, SelectionIntersection& best)
-			{
-				test.TestTriangles(VertexPointer(VertexPointer::pointer(&_vertices.data()->vertex),
-						sizeof(ArbitraryMeshVertex)), IndexPointer(_indices.data(), IndexPointer::index_type(
-						_indices.size())), best);
-			}
 	};
 }
 

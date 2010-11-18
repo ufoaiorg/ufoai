@@ -144,7 +144,7 @@ void FaceInstance::SelectedEdges_foreach (Functor functor) const
 		std::size_t index = Winding_FindAdjacent(getFace().getWinding(), *i);
 		if (index != c_brush_maxFaces) {
 			const Winding& winding = getFace().getWinding();
-			std::size_t adjacent = Winding_next(winding, index);
+			std::size_t adjacent = winding.next(index);
 			functor(vector3_mid(winding[index].vertex, winding[adjacent].vertex));
 		}
 	}
@@ -319,7 +319,7 @@ void FaceInstance::update_move_planepts_vertex (std::size_t index)
 }
 void FaceInstance::update_move_planepts_vertex2 (std::size_t index, std::size_t other)
 {
-	const std::size_t numpoints = m_face->getWinding().numpoints;
+	const std::size_t numpoints = m_face->getWinding().size();
 	ASSERT_MESSAGE(index < numpoints, "select_vertex: invalid index");
 
 	const std::size_t opposite = Winding_Opposite(m_face->getWinding(), index, other);
@@ -387,10 +387,10 @@ bool FaceInstance::selected_vertex (std::size_t index) const
 
 void FaceInstance::update_move_planepts_edge (std::size_t index)
 {
-	std::size_t numpoints = m_face->getWinding().numpoints;
+	std::size_t numpoints = m_face->getWinding().size();
 	ASSERT_MESSAGE(index < numpoints, "select_edge: invalid index");
 
-	std::size_t adjacent = Winding_next(m_face->getWinding(), index);
+	std::size_t adjacent = m_face->getWinding().next(index);
 	std::size_t opposite = Winding_Opposite(m_face->getWinding(), index);
 	m_face->m_move_planepts[0] = m_face->getWinding()[index].vertex;
 	m_face->m_move_planepts[1] = m_face->getWinding()[adjacent].vertex;

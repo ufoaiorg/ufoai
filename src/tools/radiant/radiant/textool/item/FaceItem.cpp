@@ -90,7 +90,7 @@ Vector2 FaceItem::getCentroid() const {
 	}
 
 	// Take the average value of all the winding texcoords to retrieve the centroid
-	texCentroid /= _winding.numpoints;
+	texCentroid /= _winding.size();
 
 	return texCentroid;
 }

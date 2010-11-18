@@ -72,72 +72,57 @@ class WindingVertex
 		std::size_t adjacent;	// The index of the adjacent WindingVertex
 };
 
-struct Winding
+// A Winding consists of several connected WindingVertex objects,
+// each of which holding information about a single corner point.
+typedef std::vector<WindingVertex> IWinding;
+
+class Winding : public IWinding
 {
-		typedef Array<WindingVertex> container_type;
-
-		std::size_t numpoints;
-		container_type points;
-
-		typedef container_type::iterator iterator;
-		typedef container_type::const_iterator const_iterator;
-
-		Winding () :
-			numpoints(0)
+	public:
+		// Wraps the given index around if it's larger than the size of this winding
+		inline std::size_t wrap(std::size_t i) const
 		{
-		}
-		Winding (std::size_t size) :
-			numpoints(0), points(size)
-		{
-		}
-		void resize (std::size_t size)
-		{
-			points.resize(size);
-			numpoints = 0;
+			ASSERT_MESSAGE(size() != 0, "Winding_wrap: empty winding");
+			return i % size();
 		}
 
-		iterator begin ()
+		// Returns the next winding index (wraps around)
+		inline std::size_t next(std::size_t i) const
 		{
-			return points.begin();
-		}
-		const_iterator begin () const
-		{
-			return points.begin();
-		}
-		iterator end ()
-		{
-			return points.begin() + numpoints;
-		}
-		const_iterator end () const
-		{
-			return points.begin() + numpoints;
+			return wrap(++i);
 		}
 
-		WindingVertex& operator[] (std::size_t index)
+		void testSelect (SelectionTest& test, SelectionIntersection& best)
 		{
-			ASSERT_MESSAGE(index < points.size(), "winding: index out of bounds");
-			return points[index];
-		}
-		const WindingVertex& operator[] (std::size_t index) const
-		{
-			ASSERT_MESSAGE(index < points.size(), "winding: index out of bounds");
-			return points[index];
+			test.TestPolygon(VertexPointer(&data()->vertex, sizeof(WindingVertex)), size(), best);
 		}
 
-		void push_back (const WindingVertex& point)
+		void draw (const Vector3& normal, RenderStateFlags state) const
 		{
-			points[numpoints] = point;
-			++numpoints;
-		}
-		void erase (iterator point)
-		{
-			for (iterator i = point + 1; i != end(); point = i, ++i) {
-				*point = *i;
+			if (empty())
+				return;
+
+			glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &data()->vertex);
+			if (state & RENDER_LIGHTING) {
+				Vector3 normals[c_brush_maxFaces];
+				typedef Vector3* Vector3Iter;
+				for (Vector3Iter i = normals, last = normals + size(); i != last; ++i) {
+					*i = normal;
+				}
+				glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
 			}
-			--numpoints;
+			if (state & RENDER_TEXTURE_2D) {
+				glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &data()->texcoord);
+			}
+			glDrawArrays(GL_POLYGON, 0, GLsizei(size()));
 		}
-		std::size_t size() const {
-			return numpoints;
+
+		void drawWireframe () const
+		{
+			if (!empty()) {
+				glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &front().vertex);
+				glDrawArrays(GL_LINE_LOOP, 0, GLsizei(size()));
+			}
 		}
 };
 
@@ -218,24 +203,12 @@ struct FixedWinding
 inline void Winding_forFixedWinding (Winding& winding, const FixedWinding& fixed)
 {
 	winding.resize(fixed.size());
-	winding.numpoints = fixed.size();
 	for (std::size_t i = 0; i < fixed.size(); ++i) {
 		winding[i].vertex[0] = static_cast<float> (fixed[i].vertex[0]);
 		winding[i].vertex[1] = static_cast<float> (fixed[i].vertex[1]);
 		winding[i].vertex[2] = static_cast<float> (fixed[i].vertex[2]);
 		winding[i].adjacent = fixed[i].adjacent;
 	}
-}
-
-inline std::size_t Winding_wrap (const Winding& winding, std::size_t i)
-{
-	ASSERT_MESSAGE(winding.numpoints != 0, "Winding_wrap: empty winding");
-	return i % winding.numpoints;
-}
-
-inline std::size_t Winding_next (const Winding& winding, std::size_t i)
-{
-	return Winding_wrap(winding, ++i);
 }
 
 class Plane3;
@@ -270,32 +243,6 @@ inline void Winding_printConnectivity (Winding& winding)
 		std::size_t vertexIndex = std::distance(winding.begin(), i);
 		globalOutputStream() << "vertex: " << string::toString(vertexIndex) << " adjacent: " << string::toString((*i).adjacent) << "\n";
 	}
-}
-
-/**
- * @brief Brush rendering
- */
-inline void Winding_Draw (const Winding& winding, const Vector3& normal, RenderStateFlags state)
-{
-	glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->vertex);
-	if (state & RENDER_LIGHTING) {
-		Vector3 normals[c_brush_maxFaces];
-		typedef Vector3* Vector3Iter;
-		for (Vector3Iter i = normals, last = normals + winding.numpoints; i != last; ++i) {
-			*i = normal;
-		}
-		glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
-	}
-	if (state & RENDER_TEXTURE_2D) {
-		glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->texcoord);
-	}
-	glDrawArrays(GL_POLYGON, 0, GLsizei(winding.numpoints));
-}
-
-inline void Winding_testSelect (Winding& winding, SelectionTest& test, SelectionIntersection& best)
-{
-	test.TestPolygon(VertexPointer(reinterpret_cast<VertexPointer::pointer> (&winding.points.data()->vertex),
-			sizeof(WindingVertex)), winding.numpoints, best);
 }
 
 #endif

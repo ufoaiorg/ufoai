@@ -251,7 +251,7 @@ void Winding_Clip (const FixedWinding& winding, const Plane3& plane, const Plane
 
 std::size_t Winding_FindAdjacent (const Winding& winding, std::size_t face)
 {
-	for (std::size_t i = 0; i < winding.numpoints; ++i) {
+	for (std::size_t i = 0; i < winding.size(); ++i) {
 		ASSERT_MESSAGE(winding[i].adjacent != c_brush_maxFaces, "edge connectivity data is invalid");
 		if (winding[i].adjacent == face) {
 			return i;
@@ -262,14 +262,14 @@ std::size_t Winding_FindAdjacent (const Winding& winding, std::size_t face)
 
 std::size_t Winding_Opposite (const Winding& winding, const std::size_t& index, const std::size_t& other)
 {
-	ASSERT_MESSAGE(index < winding.numpoints && other < winding.numpoints, "Winding_Opposite: index out of range");
+	ASSERT_MESSAGE(index < winding.size() && other < winding.size(), "Winding_Opposite: index out of range");
 
 	double dist_best = 0;
 	std::size_t index_best = c_brush_maxFaces;
 
 	Ray edge(ray_for_points(winding[index].vertex, winding[other].vertex));
 
-	for (std::size_t i = 0; i < winding.numpoints; ++i) {
+	for (std::size_t i = 0; i < winding.size(); ++i) {
 		if (i == index || i == other) {
 			continue;
 		}
@@ -286,7 +286,7 @@ std::size_t Winding_Opposite (const Winding& winding, const std::size_t& index, 
 
 std::size_t Winding_Opposite (const Winding& winding, const std::size_t index)
 {
-	return Winding_Opposite(winding, index, Winding_next(winding, index));
+	return Winding_Opposite(winding, index, winding.next(index));
 }
 
 /// \brief Calculate the \p centroid of the polygon defined by \p winding which lies on plane \p plane.
@@ -295,7 +295,7 @@ void Winding_Centroid (const Winding& winding, const Plane3& plane, Vector3& cen
 	double area2 = 0, x_sum = 0, y_sum = 0;
 	const ProjectionAxis axis = projectionaxis_for_normal(plane.normal());
 	const indexremap_t remap = indexremap_for_projectionaxis(axis);
-	for (std::size_t i = winding.numpoints - 1, j = 0; j < winding.numpoints; i = j, ++j) {
+	for (std::size_t i = winding.size() - 1, j = 0; j < winding.size(); i = j, ++j) {
 		const double ai = winding[i].vertex[remap.x] * winding[j].vertex[remap.y] - winding[j].vertex[remap.x]
 				* winding[i].vertex[remap.y];
 		area2 += ai;

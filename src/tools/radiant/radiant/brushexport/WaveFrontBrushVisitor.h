@@ -62,7 +62,7 @@ class CExportFormatWavefront: public BrushVisitor
 		{
 			size_t v_start = vertices;
 			const Winding& w(face.getWinding());
-			for (size_t i = 0; i < w.numpoints; ++i) {
+			for (size_t i = 0; i < w.size(); ++i) {
 				vertexbuffer << "v " << w[i].vertex.x() << " " << w[i].vertex.y() << " " << w[i].vertex.z() << "\n";
 				texcoordbuffer << "vt " << w[i].texcoord.x() << " " << w[i].texcoord.y() << "\n";
 				++vertices;
