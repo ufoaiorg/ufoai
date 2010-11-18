@@ -38,7 +38,7 @@
 
 #include "image.h"
 #include "texmanip.h"
-#include "settings/preferences.h"
+#include "settings/PreferenceSystem.h"
 
 enum TextureCompressionFormat
 {

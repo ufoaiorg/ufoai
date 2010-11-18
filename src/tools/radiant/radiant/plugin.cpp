@@ -78,7 +78,7 @@
 #include "ui/mru/MRU.h"
 #include "entity.h"
 #include "select.h"
-#include "settings/preferences.h"
+#include "settings/PreferenceSystem.h"
 #include "map/AutoSaver.h"
 #include "referencecache/nullmodel.h"
 #include "xyview/GlobalXYWnd.h"

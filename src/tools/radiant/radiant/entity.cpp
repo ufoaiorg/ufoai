@@ -49,7 +49,7 @@
 #include "gtkmisc.h"
 #include "select.h"
 #include "map/map.h"
-#include "settings/preferences.h"
+#include "settings/PreferenceSystem.h"
 #include "iradiant.h"
 #include "ui/lightdialog/LightDialog.h"
 #include "ui/particles/ParticleSelector.h"

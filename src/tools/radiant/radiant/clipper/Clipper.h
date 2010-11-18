@@ -4,7 +4,7 @@
 #include "ClipPoint.h"
 #include "math/aabb.h"
 
-#include "../settings/preferences.h"
+#include "../settings/PreferenceSystem.h"
 
 namespace {
 const unsigned int NUM_CLIP_POINTS = 3;

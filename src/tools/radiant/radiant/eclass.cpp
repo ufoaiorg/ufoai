@@ -36,7 +36,7 @@
 #include "stream/stringstream.h"
 #include "moduleobservers.h"
 
-#include "settings/preferences.h"
+#include "settings/PreferenceSystem.h"
 #include "mainframe.h"
 
 namespace

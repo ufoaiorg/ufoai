@@ -33,7 +33,7 @@
 #include "map/map.h"
 #include "signal/isignal.h"
 #include "stringio.h"
-#include "settings/preferences.h"
+#include "settings/PreferenceSystem.h"
 #include "preferencesystem.h"
 #include "radiant_i18n.h"
 #include "gtkutil/widget.h"
