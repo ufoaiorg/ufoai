@@ -24,6 +24,7 @@ typedef std::map<OpenGLState*, OpenGLShaderPass*, OpenGLStateLess> OpenGLStates;
  */
 class OpenGLStateManager {
 	public:
+		virtual ~OpenGLStateManager() {}
 
 		/**
 		 * \brief

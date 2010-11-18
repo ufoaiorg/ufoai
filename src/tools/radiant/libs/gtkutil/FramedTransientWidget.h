@@ -38,7 +38,7 @@ public:
 	{}
 
 	// Operator cast to GtkWindow* (use this to create and retrieve the GtkWidget* pointer)
-	virtual operator GtkWidget* () {
+	operator GtkWidget* () {
 		// Create a new top level window and set the "transient_for" property
 		GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
 		gtk_window_set_transient_for(window, _parent);

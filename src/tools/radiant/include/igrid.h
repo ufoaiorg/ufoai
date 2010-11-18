@@ -30,6 +30,8 @@ class IGridManager
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "grid");
 
+		virtual ~IGridManager() {}
+
 		virtual void setGridSize(GridSize gridSize) = 0;
 		virtual float getGridSize() const = 0;
 
