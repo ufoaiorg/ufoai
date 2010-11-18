@@ -54,6 +54,8 @@ class Brush;
 class IBrushNode
 {
 public:
+	virtual ~IBrushNode() {}
+
 	/** greebo: Retrieves the contained Brush from the BrushNode
 	 */
 	virtual Brush& getBrush() = 0;

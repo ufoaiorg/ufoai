@@ -34,6 +34,7 @@
 #include "ifilesystem.h"
 #include "iundo.h"
 #include "ieventmanager.h"
+#include "iradiant.h"
 #include "editable.h"
 
 #include "eclasslib.h"
@@ -51,7 +52,6 @@
 #include "select.h"
 #include "map/map.h"
 #include "settings/PreferenceSystem.h"
-#include "iradiant.h"
 #include "ui/lightdialog/LightDialog.h"
 #include "ui/particles/ParticleSelector.h"
 #include "ui/modelselector/ModelSelector.h"

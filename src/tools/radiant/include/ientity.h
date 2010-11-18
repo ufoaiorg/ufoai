@@ -96,6 +96,8 @@ class Entity
 class EntityNode
 {
 public:
+	virtual ~EntityNode() {}
+
 	/** greebo: Temporary workaround for entity-containing nodes.
 	 * 			This is only used by Node_getEntity to retrieve the
 	 * 			contained entity from a node.

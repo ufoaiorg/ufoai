@@ -9,6 +9,8 @@ namespace scene {
 class INode
 {
 public:
+	virtual ~INode() {}
+
 	/** greebo: Returns true, if the node is the root element
 	 * 			of the scenegraph.
 	 */

@@ -14,6 +14,8 @@ class Bounded
 	public:
 		STRING_CONSTANT(Name, "Bounded");
 
+		virtual ~Bounded() {}
+
 		/**
 		 * Return the local AABB for this object.
 		 */

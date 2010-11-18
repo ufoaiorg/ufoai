@@ -58,6 +58,8 @@ namespace ui {
 class IEvent
 {
 public:
+	virtual ~IEvent() {}
+
 	// Handles the incoming keyUp / keyDown calls
 	virtual void keyUp() = 0;
 	virtual void keyDown() = 0;
@@ -83,6 +85,8 @@ public:
  */
 class IMouseEvents {
 public:
+	virtual ~IMouseEvents() {}
+
 	// Return the ObserverEvent type for a given GdkEventButton
 	virtual ui::CamViewEvent getCameraViewEvent(GdkEventButton* event) = 0;
 
@@ -113,6 +117,8 @@ public:
 class IAccelerator
 {
 public:
+	virtual ~IAccelerator() {}
+
 	// Get/set the GDK key value
 	virtual void setKey(const unsigned int& key) = 0;
 	virtual unsigned int getKey() const = 0;
@@ -128,6 +134,8 @@ public:
 // Event visitor class
 class IEventVisitor {
 public:
+	virtual ~IEventVisitor() {}
+
 	virtual void visit(const std::string& eventName, const IEvent* event) = 0;
 };
 
@@ -137,6 +145,7 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "EventManager");
 
+	virtual ~IEventManager() {}
 
 	/* Create an accelerator using the given arguments and add it to the list
 	 *
