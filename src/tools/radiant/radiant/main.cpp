@@ -82,6 +82,7 @@
 #include "environment.h"
 #include "referencecache/referencecache.h"
 #include "stacktrace.h"
+#include "settings/GameManager.h"
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
 #include "server.h"
@@ -417,7 +418,7 @@ int main (int argc, char* argv[])
 	// Try to load all the XML files into the registry
 	GlobalRegistry().init();
 
-	ui::CGameDialog::Instance().initialise();
+	ui::GameManager::Instance().initialise();
 
 	ui::Splash::Instance().show();
 

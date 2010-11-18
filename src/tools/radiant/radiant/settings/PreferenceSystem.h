@@ -159,9 +159,6 @@ typedef MemberCaller1<LatchedBool, bool, &LatchedBool::import> LatchedBoolImport
 typedef LatchedValue<int> LatchedInt;
 typedef MemberCaller1<LatchedInt, int, &LatchedInt::import> LatchedIntImportCaller;
 
-#include "GameDescription.h"
-#include "GameDialog.h"
-
 class PreferenceTreeGroup;
 
 class PrefsDlg: public Dialog

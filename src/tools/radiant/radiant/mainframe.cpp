@@ -125,6 +125,8 @@
 #include "selection/algorithm/General.h"
 #include "selection/algorithm/Group.h"
 #include "selection/algorithm/Transformation.h"
+#include "settings/GameDescription.h"
+#include "settings/GameManager.h"
 
 struct LayoutGlobals
 {
@@ -347,7 +349,7 @@ namespace
 
 const std::string& basegame_get (void)
 {
-	return ui::CGameDialog::Instance().getGameDescription()->getRequiredKeyValue("basegame");
+	return ui::GameManager::Instance().getGameDescription()->getRequiredKeyValue("basegame");
 }
 
 void Radiant_attachGameModeObserver (ModuleObserver& observer)

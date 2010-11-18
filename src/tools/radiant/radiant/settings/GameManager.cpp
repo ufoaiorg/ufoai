@@ -1,4 +1,4 @@
-#include "GameDialog.h"
+#include "GameManager.h"
 #include "GameDescription.h"
 #include "iregistry.h"
 #include "radiant_i18n.h"
@@ -8,15 +8,10 @@
 
 namespace ui {
 
-GtkWindow* CGameDialog::BuildDialog ()
-{
-	return NULL;
-}
-
 /**
  * @brief Loads the game description file
  */
-void CGameDialog::initialise ()
+void GameManager::initialise ()
 {
 	std::string strGameFilename = GlobalRegistry().get(RKEY_APP_PATH) + "game.xml";
 
@@ -31,25 +26,20 @@ void CGameDialog::initialise ()
 	}
 }
 
-CGameDialog::~CGameDialog ()
+GameManager::~GameManager ()
 {
 	if (_currentGameDescription)
 		delete _currentGameDescription;
 }
 
-void CGameDialog::setGameDescription (GameDescription* newGameDescription)
-{
-	_currentGameDescription = newGameDescription;
-}
-
-GameDescription* CGameDialog::getGameDescription ()
+GameDescription* GameManager::getGameDescription ()
 {
 	return _currentGameDescription;
 }
 
-CGameDialog& CGameDialog::Instance ()
+GameManager& GameManager::Instance ()
 {
-	static CGameDialog _instance;
+	static GameManager _instance;
 	return _instance;
 }
 

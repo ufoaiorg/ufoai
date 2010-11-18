@@ -45,6 +45,8 @@
 #include "../../brush/brushmanip.h"
 #include "../../textureentry.h"
 #include "../../textool/TexTool.h"
+#include "../../settings/GameDescription.h"
+#include "../../settings/GameManager.h"
 
 #include "BrushGetClosestFaceVisible.h"
 
@@ -223,13 +225,13 @@ void SurfaceInspector::onFaceFitClick (GtkWidget *widget, SurfaceInspector *insp
 
 const std::string& SurfaceInspector::getSurfaceFlagName (std::size_t bit) const
 {
-	const std::string& value = ui::CGameDialog::Instance().getGameDescription()->getKeyValue(surfaceflagNamesDefault[bit]);
+	const std::string& value = ui::GameManager::Instance().getGameDescription()->getKeyValue(surfaceflagNamesDefault[bit]);
 	return value;
 }
 
 const std::string& SurfaceInspector::getContentFlagName (std::size_t bit) const
 {
-	const std::string& value = ui::CGameDialog::Instance().getGameDescription()->getKeyValue(contentflagNamesDefault[bit]);
+	const std::string& value = ui::GameManager::Instance().getGameDescription()->getKeyValue(contentflagNamesDefault[bit]);
 	return value;
 }
 
@@ -556,7 +558,7 @@ GtkWidget* SurfaceInspector::buildNotebook (void)
 		}
 	}
 	{
-		const std::string& valueEnablingFields = ui::CGameDialog::Instance().getGameDescription()->getKeyValue("surfaceinspector_enable_value");
+		const std::string& valueEnablingFields = ui::GameManager::Instance().getGameDescription()->getKeyValue("surfaceinspector_enable_value");
 		{
 			_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
 			gtk_widget_show(GTK_WIDGET (_surfaceFlagsFrame));
