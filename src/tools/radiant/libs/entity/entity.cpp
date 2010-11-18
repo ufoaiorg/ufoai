@@ -181,11 +181,6 @@ EntityCreator& GetEntityCreator ()
 
 void P_Entity_Construct ()
 {
-	GlobalPreferenceSystem().registerPreference("LightRadiuses", BoolImportStringCaller(g_lightRadii),
-			BoolExportStringCaller(g_lightRadii));
-	GlobalPreferenceSystem().registerPreference("ForceLightRadiuses", BoolImportStringCaller(g_forceLightRadii),
-			BoolExportStringCaller(g_forceLightRadii));
-
 	Light_Construct();
 
 	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");
