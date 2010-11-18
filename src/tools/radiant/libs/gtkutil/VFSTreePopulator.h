@@ -54,6 +54,8 @@ namespace gtkutil
 
 		public:
 
+			virtual ~VFSTreePopulator() {}
+
 			/**
 			 * Construct a VFSTreePopulator which will populate the given tree store.
 			 *

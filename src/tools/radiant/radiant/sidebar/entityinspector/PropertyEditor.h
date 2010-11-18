@@ -31,6 +31,8 @@ class PropertyEditor
 
 	public:
 
+		virtual ~PropertyEditor() {}
+
 		/**
 		 * Return the GtkWidget which is packed into the EntityInspector to display
 		 * the PropertyEditor.
