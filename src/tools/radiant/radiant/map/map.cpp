@@ -47,6 +47,7 @@
 
 #include "gtkutil/filechooser.h"
 #include "gtkutil/messagebox.h"
+#include "gtkutil/dialog.h"
 #include "../plugin.h"
 #include "../filetypes.h"
 #include "../sidebar/MapInfo.h"

@@ -46,6 +46,7 @@
 
 #include "gtkutil/filechooser.h"
 #include "gtkutil/idledraw.h"
+#include "gtkutil/dialog.h"
 #include "gtkmisc.h"
 #include "select.h"
 #include "map/map.h"
