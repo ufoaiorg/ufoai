@@ -497,29 +497,6 @@ void Entity_registerPrefPage ()
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Entity_constructPage> ());
 }
 
-namespace
-{
-	GtkMenuItem *g_menuItemRegroup = 0;
-	GtkMenuItem *g_menuItemUngroup = 0;
-	GtkMenuItem *g_menuItemSelectColor = 0;
-	GtkMenuItem *g_menuItemConnectSelection = 0;
-}
-
-void Entity_constructMenu (GtkMenu* menu)
-{
-	g_menuItemRegroup = createMenuItemWithMnemonic(menu, _("_Ungroup"), "UngroupSelection");
-	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemRegroup), FALSE);
-
-	g_menuItemRegroup = createMenuItemWithMnemonic(menu, _("_Regroup"), "GroupSelection");
-	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemUngroup), FALSE);
-
-	g_menuItemConnectSelection = createMenuItemWithMnemonic(menu, _("_Connect"), "ConnectSelection", ui::icons::ICON_CONNECT_ENTITIES);
-	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemConnectSelection), FALSE);
-
-	g_menuItemSelectColor = createMenuItemWithMnemonic(menu, _("_Select Color..."), "EntityColor", ui::icons::ICON_COLOR);
-	gtk_widget_set_sensitive(GTK_WIDGET(g_menuItemSelectColor), FALSE);
-}
-
 void Entity_Construct ()
 {
 	GlobalEventManager().addCommand("EntityColor", FreeCaller<Entity_setColour> ());
