@@ -437,18 +437,6 @@ bool DoNormalisedColor (Vector3& color)
 	return true;
 }
 
-struct entity_globals_t
-{
-		Vector3 color_entity;
-
-		entity_globals_t () :
-			color_entity(0.0f, 0.0f, 0.0f)
-		{
-		}
-};
-
-entity_globals_t g_entity_globals;
-
 void Entity_setColour ()
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
@@ -459,10 +447,10 @@ void Entity_setColour ()
 				return;
 			const std::string strColor = entity->getKeyValue("_color");
 			if (!strColor.empty()) {
-				g_entity_globals.color_entity = Vector3(strColor);
-			}
-			if (DoNormalisedColor(g_entity_globals.color_entity)) {
-				Scene_EntitySetKeyValue_Selected(entity->getEntityClass().name(), "_color", g_entity_globals.color_entity.toString());
+				Vector3 color_entity(strColor);
+				if (DoNormalisedColor(color_entity)) {
+					Scene_EntitySetKeyValue_Selected(entity->getEntityClass().name(), "_color", color_entity.toString());
+				}
 			}
 		}
 	}
