@@ -43,7 +43,7 @@ namespace model
 
 	//copy constructor, won't release shader
 	RenderablePicoSurface::RenderablePicoSurface (RenderablePicoSurface const& other) :
-		_originalShaderName(other._originalShaderName), _mappedShaderName(other._mappedShaderName), _vertices(
+		Cullable(other), _originalShaderName(other._originalShaderName), _mappedShaderName(other._mappedShaderName), _vertices(
 				other._vertices), _indices(other._indices), _localAABB(other._localAABB)
 	{
 		_nIndices = other._nIndices;

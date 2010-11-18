@@ -46,10 +46,6 @@
 #include "../map/map.h"
 #include <string>
 
-namespace {
-	const std::string RKEY_GAME_TYPE = "user/game/type";
-}
-
 void Interface_constructPreferences (PrefPage* page)
 {
 	page->appendCheckBox(_("Console"), _("Enable logfile"), g_Console_enableLogfile);
