@@ -131,8 +131,6 @@ struct IRadiant
 	 */
 	virtual GtkWindow* getMainWindow() = 0;
 	virtual const std::string& getEnginePath() = 0;
-	virtual const std::string getAppPath() = 0;
-	virtual const std::string getSettingsPath() = 0;
 
 	// Returns the Counter object of the given type
 	virtual Counter& getCounter(CounterType counter) = 0;

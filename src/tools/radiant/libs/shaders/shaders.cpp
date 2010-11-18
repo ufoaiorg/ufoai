@@ -49,8 +49,10 @@
 #include "iscriplib.h"
 #include "imaterial.h"
 #include "itextures.h"
-#include "iradiant.h"
 #include "irender.h"
+#include "iregistry.h"
+
+#include "../../radiant/environment.h"
 
 #include <glib/gslist.h>
 
@@ -488,7 +490,7 @@ void ParseShaderFile(Tokeniser& tokeniser, const std::string& filename) {
 }
 
 static void LoadShaderFile(const std::string& filename) {
-	const std::string& appPath = GlobalRadiant().getAppPath();
+	const std::string& appPath = GlobalRegistry().get(RKEY_APP_PATH);
 	std::string shadername = appPath + filename;
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername));
@@ -527,7 +529,7 @@ void ParseLicensesFile(Tokeniser& tokeniser, const std::string& filename) {
 }
 
 static void LoadLicenses(const std::string& filename) {
-	const std::string& appPath = GlobalRadiant().getAppPath();
+	const std::string& appPath = GlobalRegistry().get(RKEY_APP_PATH);
 	std::string fullpath = appPath + filename;
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(fullpath));

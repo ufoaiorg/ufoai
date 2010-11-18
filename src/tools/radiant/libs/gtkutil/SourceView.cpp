@@ -2,7 +2,9 @@
 
 #include "radiant_i18n.h"
 #include "itextstream.h"
-#include "iradiant.h"
+#include "iregistry.h"
+
+#include "../../radiant/environment.h"
 
 #include "ScrolledFrame.h"
 #include <gtksourceview/gtksourcelanguagemanager.h>
@@ -20,7 +22,7 @@ namespace gtkutil
 		// Set the search path to the language and style files
 		gchar* directories[2];
 
-		std::string langFilesDir = GlobalRadiant().getAppPath() + "sourceviewer/";
+		std::string langFilesDir = GlobalRegistry().get(RKEY_APP_PATH) + "sourceviewer/";
 
 		directories[0] = const_cast<gchar*> (langFilesDir.c_str()); // stupid GtkSourceLanguageManager is expecting non-const gchar* pointer...
 		directories[1] = NULL;

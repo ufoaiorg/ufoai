@@ -1,9 +1,10 @@
 #include "MapDef.h"
 #include "../../map/map.h"
 #include "radiant_i18n.h"
-#include "iradiant.h"
+#include "iregistry.h"
 #include "iump.h"
 #include "gtkutil/dialog.h"
+#include "../../environment.h"
 #include "../../brush/brush.h"
 #include "../../ui/scripteditor/UFOScriptEditor.h"
 #include "os/path.h"
@@ -29,7 +30,7 @@ namespace scripts
 			return false;
 		}
 
-		TextFileInputStream file(GlobalRadiant().getAppPath() + "mapdef.template");
+		TextFileInputStream file(GlobalRegistry().get(RKEY_APP_PATH) + "mapdef.template");
 		if (!file.failed()) {
 			ui::UFOScriptEditor editor("ufos/maps.ufo", file.getString());
 			editor.show();

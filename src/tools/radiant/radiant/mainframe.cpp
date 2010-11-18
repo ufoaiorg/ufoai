@@ -288,16 +288,6 @@ void setEnginePath (const std::string& path)
 
 // App Path
 
-const std::string AppPath_get (void)
-{
-	return Environment::Instance().getAppPath();
-}
-
-const std::string SettingsPath_get (void)
-{
-	return Environment::Instance().getSettingsPath();
-}
-
 void EnginePathImport (std::string& self, const char* value)
 {
 	setEnginePath(value);
@@ -385,17 +375,6 @@ void Radiant_detachGameToolsPathObserver (ModuleObserver& observer)
 // This is called from main() to start up the Radiant stuff.
 void Radiant_Initialise (void)
 {
-	// Initialise and instantiate the registry
-	GlobalModuleServer::instance().set(GlobalModuleServer_get());
-	StaticModuleRegistryList().instance().registerModule("registry");
-	GlobalRegistryModuleRef registryRef;
-
-	// Try to load all the XML files into the registry
-	GlobalRegistry().init(AppPath_get(), SettingsPath_get());
-
-	// Tell the Environment class to store the paths into the Registry
-	Environment::Instance().savePathsToRegistry();
-
 	// Load the ColourSchemes from the registry
 	ColourSchemes().loadColourSchemes();
 

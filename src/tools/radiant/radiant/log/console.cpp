@@ -22,6 +22,8 @@
 #include "console.h"
 #include "radiant_i18n.h"
 
+#include "iregistry.h"
+
 #include <iostream>
 #include <time.h>
 
@@ -32,6 +34,7 @@
 #include "convert.h"
 #include "os/file.h"
 
+#include "../environment.h"
 #include "version.h"
 #include "../gtkmisc.h"
 #include "../mainframe.h"
@@ -44,8 +47,6 @@ namespace
 
 bool g_Console_enableLogfile = false;
 
-static bool g_Console_createLogFailed = false;
-
 /**
  * @note called whenever we need to open/close/check the console log file
  */
@@ -53,27 +54,21 @@ void Sys_LogFile (bool enable)
 {
 	if (enable && !g_hLogFile) {
 		// settings say we should be logging and we don't have a log file .. so create it
-		if (SettingsPath_get().empty())
-			return; // cannot open a log file yet
 		// open a file to log the console (if user prefs say so)
 		// the file handle is g_hLogFile
 		// the log file is erased
-		std::string name = SettingsPath_get() + "radiant.log";
-		g_hLogFile = fopen(name.c_str(), "w");
+		std::string logFileName = GlobalRegistry().get(RKEY_SETTINGS_PATH) + "radiant.log";
+		g_hLogFile = fopen(logFileName.c_str(), "w");
 		if (g_hLogFile != 0) {
-			globalOutputStream() << "Started logging to " << name << "\n";
+			globalOutputStream() << "Started logging to " << logFileName << "\n";
 			time_t localtime;
 			time(&localtime);
-			g_Console_createLogFailed = false;
 			globalOutputStream() << "Today is: " << ctime(&localtime) << "\n";
 			globalOutputStream()
 					<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n";
 		} else {
-			if (g_Console_createLogFailed)
-				return;
 			gtk_MessageBox(0, _("Failed to create log file, check write permissions in UFORadiant directory.\n"),
 					_("Console logging"), eMB_OK, eMB_ICONERROR);
-			g_Console_createLogFailed = true;
 		}
 	} else if (!enable && g_hLogFile != 0) {
 		// settings say we should not be logging but still we have an active logfile .. close it
@@ -154,8 +149,10 @@ std::size_t Sys_Print (int level, const char* buf, std::size_t length)
 {
 	bool contains_newline = std::find(buf, buf + length, '\n') != buf + length;
 
-	if (level == SYS_ERR || level == SYS_WRN) {
+	if (level == SYS_ERR) {
 		Sys_LogFile(true);
+		std::cerr << buf;
+	} else if (level == SYS_WRN) {
 		std::cerr << buf;
 	} else {
 		std::cout << buf;

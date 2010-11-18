@@ -31,6 +31,7 @@
 #include "../mainframe.h"
 #include "../map/map.h"
 #include "../select.h"
+#include "../environment.h"
 #include "os/path.h"
 #include "os/dir.h"
 #include "os/file.h"
@@ -180,7 +181,7 @@ namespace sidebar
 						GTK_TREE_MODEL(gtk_tree_model_sort_new_with_model(_fileFiltered))), _view(
 						GTK_TREE_VIEW(gtk_tree_view_new_with_model(_fileSorted)))
 	{
-		std::string fullpath = AppPath_get() + "prefabs/";
+		std::string fullpath = GlobalRegistry().get(RKEY_APP_PATH) + "prefabs/";
 		_selectedSelectionStrategy = PREFAB_SELECT_EXTEND;
 
 		GtkWidget* scr = gtk_scrolled_window_new(0, 0);
@@ -360,7 +361,7 @@ namespace sidebar
 	 */
 	std::string PrefabSelector::GetFullPath (const std::string& baseFileName)
 	{
-		return os::standardPath(AppPath_get() + "prefabs/" + baseFileName);
+		return os::standardPath(GlobalRegistry().get(RKEY_APP_PATH) + "prefabs/" + baseFileName);
 	}
 
 	/* GTK CALLBACKS */

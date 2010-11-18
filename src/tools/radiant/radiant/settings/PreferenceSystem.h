@@ -226,16 +226,8 @@ class CGameDialog: public Dialog
 		 NOTE: those are preference settings. if you change them it is likely that you would
 		 have to restart the editor for them to take effect
 		 */
-		/*@{*/
-		/*!
-		 log console to radiant.log
-		 m_bForceLogConsole is an obscure forced latching situation
-		 */
-		bool m_bForceLogConsole;
-		/*@}*/
 
-		CGameDialog () :
-			m_bForceLogConsole(false)
+		CGameDialog ()
 		{
 		}
 		virtual ~CGameDialog ();

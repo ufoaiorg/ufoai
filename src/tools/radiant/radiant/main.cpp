@@ -71,6 +71,7 @@
 #include "os/path.h"
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
+#include "modulesystem/moduleregistry.h"
 
 #include "gtkutil/messagebox.h"
 #include "log/console.h"
@@ -83,6 +84,7 @@
 #include "stacktrace.h"
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
+#include "server.h"
 
 #include <gtk/gtk.h>
 #include <gtk/gtkgl.h>
@@ -179,7 +181,7 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 		buf << "aborting...\n";
 
 	// spam it...
-	globalErrorStream() << buf.toString();
+	globalOutputStream() << buf.toString();
 
 	if (is_fatal)
 		ERROR_MESSAGE("GTK+ error: " << buf.toString());
@@ -303,7 +305,7 @@ static void streams_init (void)
  */
 static void create_local_pid (void)
 {
-	std::string g_pidGameFile = SettingsPath_get() + "/radiant.pid";
+	std::string g_pidGameFile = GlobalRegistry().get(RKEY_SETTINGS_PATH) + "/radiant.pid";
 
 	FILE *pid = fopen(g_pidGameFile.c_str(), "r");
 	if (pid != 0) {
@@ -324,15 +326,11 @@ static void create_local_pid (void)
 			Preferences_Reset();
 		}
 
-		std::string msg = "Logging console output to " + SettingsPath_get()
+		std::string msg = "Logging console output to " + GlobalRegistry().get(RKEY_SETTINGS_PATH)
 				+ "radiant.log\nRefer to the log if Radiant fails to start again.";
 
 		gtk_MessageBox(0, msg, _("UFORadiant - Console Log"), eMB_OK);
 #endif
-
-		// force console logging on! (will go in prefs too)
-		g_GamesDialog.m_bForceLogConsole = true;
-		Sys_LogFile(true);
 	} else {
 		// create one, will remove right after entering message loop
 		pid = fopen(g_pidGameFile.c_str(), "w");
@@ -346,7 +344,7 @@ static void create_local_pid (void)
  */
 static void remove_local_pid (void)
 {
-	std::string g_pidGameFile = SettingsPath_get() + "/radiant.pid";
+	std::string g_pidGameFile = GlobalRegistry().get(RKEY_SETTINGS_PATH) + "/radiant.pid";
 	file_remove(g_pidGameFile);
 }
 
@@ -405,20 +403,25 @@ int main (int argc, char* argv[])
 	// Retrieve the application path and such
 	Environment::Instance().init(argc, argv);
 
-	ui::Splash::Instance().show();
+	// Initialise and instantiate the registry
+	GlobalModuleServer::instance().set(GlobalModuleServer_get());
+	StaticModuleRegistryList().instance().registerModule("registry");
+	GlobalRegistryModuleRef registryRef;
+
+	// Tell the Environment class to store the paths into the Registry
+	Environment::Instance().savePathsToRegistry();
+
+	// The settings path is set, start logging now
+	Sys_LogFile(true);
+
+	// Try to load all the XML files into the registry
+	GlobalRegistry().init();
 
 	g_GamesDialog.Init();
 
-	create_local_pid();
+	ui::Splash::Instance().show();
 
-	// in a very particular post-.pid startup
-	// we may have the console turned on and want to keep it that way
-	// so we use a latching system
-	if (g_GamesDialog.m_bForceLogConsole) {
-		Sys_LogFile(true);
-		g_Console_enableLogfile = true;
-		g_GamesDialog.m_bForceLogConsole = false;
-	}
+	create_local_pid();
 
 	Radiant_Initialise();
 

@@ -6,6 +6,8 @@
 #include "stringio.h"
 #include "stream/stringstream.h"
 
+#include "../environment.h"
+
 #include "os/file.h"
 #include "os/path.h"
 
@@ -233,8 +235,9 @@ void XMLRegistry::notifyKeyObservers(const std::string& changedKey, const std::s
 	}
 }
 
-void XMLRegistry::init(const std::string& basePath, const std::string& settingsPath) {
-	_settingsPath = settingsPath;
+void XMLRegistry::init() {
+	_settingsPath = GlobalRegistry().get(RKEY_SETTINGS_PATH);
+	const std::string basePath = GlobalRegistry().get(RKEY_APP_PATH);
 
 	try {
 		// Load all of the required XML files
@@ -250,7 +253,7 @@ void XMLRegistry::init(const std::string& basePath, const std::string& settingsP
 
 	// Load user preferences, these overwrite any values that have defined before
 	// The called method also checks for any upgrades that have to be performed
-	const std::string userSettingsFile = settingsPath + "user.xml";
+	const std::string userSettingsFile = _settingsPath + "user.xml";
 	if (file_exists(userSettingsFile)) {
 		import(userSettingsFile, "", Registry::treeUser);
 	}
@@ -259,17 +262,17 @@ void XMLRegistry::init(const std::string& basePath, const std::string& settingsP
 		globalOutputStream() << "XMLRegistry: no user.xml in " << userSettingsFile << "\n";
 	}
 
-	const std::string userColoursFile = settingsPath + "colours.xml";
+	const std::string userColoursFile = _settingsPath + "colours.xml";
 	if (file_exists(userColoursFile)) {
 		import(userColoursFile, "user/ui", Registry::treeUser);
 	}
 
-	const std::string userInputFile = settingsPath + "input.xml";
+	const std::string userInputFile = _settingsPath + "input.xml";
 	if (file_exists(userInputFile)) {
 		import(userInputFile, "user/ui", Registry::treeUser);
 	}
 
-	const std::string userFilterFile = settingsPath + "filters.xml";
+	const std::string userFilterFile = _settingsPath + "filters.xml";
 	if (file_exists(userFilterFile)) {
 		import(userFilterFile, "user/ui/filtersystem", Registry::treeUser);
 	}

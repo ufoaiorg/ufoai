@@ -159,12 +159,6 @@ class RadiantModule : public IRadiant
 		const std::string& getEnginePath() {
 			return EnginePath_get();
 		}
-		const std::string getAppPath() {
-			return AppPath_get();
-		}
-		const std::string getSettingsPath() {
-			return SettingsPath_get();
-		}
 		const std::string getGamePath() {
 			return basegame_get();
 		}

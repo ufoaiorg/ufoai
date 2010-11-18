@@ -28,6 +28,8 @@
 #include "PreferenceSystem.h"
 #include "radiant_i18n.h"
 
+#include "iregistry.h"
+
 #include "debugging/debugging.h"
 
 #include "generic/callback.h"
@@ -38,6 +40,7 @@
 #include "gtkutil/filechooser.h"
 #include "gtkutil/messagebox.h"
 
+#include "../environment.h"
 #include "../log/console.h"
 #include "../mainframe.h"
 #include "../map/map.h"
@@ -152,13 +155,6 @@ static bool Preferences_Save_Safe (PreferenceDictionary& preferences, const std:
 			&& file_move(tmpName.data(), filename);
 }
 
-void LogConsole_importString (const char* string)
-{
-	g_Console_enableLogfile = string_equal(string, "true");
-	Sys_LogFile(g_Console_enableLogfile);
-}
-typedef FreeCaller1<const char*, LogConsole_importString> LogConsoleImportStringCaller;
-
 GtkWindow* CGameDialog::BuildDialog ()
 {
 	return NULL;
@@ -173,7 +169,7 @@ void CGameDialog::Reset ()
  */
 void CGameDialog::Init ()
 {
-	std::string strGameFilename = AppPath_get() + "game.xml";
+	std::string strGameFilename = GlobalRegistry().get(RKEY_APP_PATH) + "game.xml";
 
 	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
 	if (pDoc) {
@@ -543,7 +539,7 @@ StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule
 
 void Preferences_Load ()
 {
-	std::string filename = SettingsPath_get() + PREFS_LOCAL_FILENAME;
+	std::string filename = GlobalRegistry().get(RKEY_SETTINGS_PATH) + PREFS_LOCAL_FILENAME;
 
 	g_message("loading settings from %s\n", filename.c_str());
 
@@ -561,7 +557,7 @@ void Preferences_Save (void)
 	if (g_preferences_globals.disable_ini)
 		return;
 
-	std::string filename = SettingsPath_get() + PREFS_LOCAL_FILENAME;
+	std::string filename = GlobalRegistry().get(RKEY_SETTINGS_PATH) + PREFS_LOCAL_FILENAME;
 	g_message("saving settings to %s\n", filename.c_str());
 
 	if (!Preferences_Save_Safe(g_preferences, filename)) {
@@ -571,7 +567,7 @@ void Preferences_Save (void)
 
 void Preferences_Reset (void)
 {
-	std::string filename = SettingsPath_get() + PREFS_LOCAL_FILENAME;
+	std::string filename = GlobalRegistry().get(RKEY_SETTINGS_PATH) + PREFS_LOCAL_FILENAME;
 	file_remove(filename);
 }
 
@@ -606,13 +602,6 @@ void PreferencesDialog_showDialog ()
 	}
 }
 
-static void RegisterPreferences (PreferenceSystem& preferences)
-{
-	preferences.registerPreference("LogConsoleToFile", LogConsoleImportStringCaller(), BoolExportStringCaller(
-			g_Console_enableLogfile));
-}
-
 void Preferences_Init ()
 {
-	RegisterPreferences(GetPreferenceSystem());
 }
