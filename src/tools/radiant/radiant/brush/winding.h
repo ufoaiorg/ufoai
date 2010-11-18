@@ -94,7 +94,9 @@ class Winding : public IWinding
 
 		void testSelect (SelectionTest& test, SelectionIntersection& best)
 		{
-			test.TestPolygon(VertexPointer(&data()->vertex, sizeof(WindingVertex)), size(), best);
+			if (empty())
+				return;
+			test.TestPolygon(VertexPointer(&front().vertex, sizeof(WindingVertex)), size(), best);
 		}
 
 		void draw (const Vector3& normal, RenderStateFlags state) const
@@ -102,7 +104,7 @@ class Winding : public IWinding
 			if (empty())
 				return;
 
-			glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &data()->vertex);
+			glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &front().vertex);
 			if (state & RENDER_LIGHTING) {
 				Vector3 normals[c_brush_maxFaces];
 				typedef Vector3* Vector3Iter;
@@ -112,7 +114,7 @@ class Winding : public IWinding
 				glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
 			}
 			if (state & RENDER_TEXTURE_2D) {
-				glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &data()->texcoord);
+				glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &front().texcoord);
 			}
 			glDrawArrays(GL_POLYGON, 0, GLsizei(size()));
 		}
