@@ -23,10 +23,10 @@
 
  */
 
-#ifndef CLIENT_CP_PRODUCE_CALLBACKS_H
-#define CLIENT_CP_PRODUCE_CALLBACKS_H
+#ifndef CP_PRODUCE_CALLBACKS_H
+#define CP_PRODUCE_CALLBACKS_H
 
 void PR_InitCallbacks (void);
 void PR_ShutdownCallbacks (void);
 
-#endif /* CLIENT_CP_PRODUCE_CALLBACKS_H */
+#endif

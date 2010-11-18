@@ -673,7 +673,6 @@ static void PR_ProductionIncrease_f (void)
 		Cvar_SetValue("mn_production_amount", prod->amount);
 	} else {
 		const char *name = NULL;
-		production_queue_t *queue = PR_GetProductionForBase(base);
 
 		/* no free production slot */
 		if (PR_QueueFreeSpace(base) <= 0) {
@@ -710,9 +709,8 @@ static void PR_ProductionIncrease_f (void)
 			return;
 
 		/* Now we select the item we just created. */
-		UI_ExecuteConfunc("prod_selectline %i", prod->idx);
-		PR_ClearSelected();
-		selectedProduction = &queue->items[queue->numItems - 1];
+		selectedProduction = prod;
+		UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 
 		/* messages */
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(name));
