@@ -147,7 +147,6 @@ struct LayoutGlobals
 };
 
 LayoutGlobals g_layout_globals;
-GLWindowGlobals g_glwindow_globals;
 
 // Virtual file system
 class VFSModuleObserver: public ModuleObserver
@@ -1753,12 +1752,6 @@ void MainFrame_Destroy (void)
 {
 	// Broadcast shutdown event to RadiantListeners
 	GlobalRadiant().broadcastShutdownEvent();
-}
-
-void GLWindow_Construct (void)
-{
-	GlobalPreferenceSystem().registerPreference("MouseButtons", IntImportStringCaller(g_glwindow_globals.m_nMouseType),
-			IntExportStringCaller(g_glwindow_globals.m_nMouseType));
 }
 
 /**

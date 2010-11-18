@@ -46,28 +46,6 @@
 #include "../map/map.h"
 #include <string>
 
-void Interface_constructPreferences (PrefPage* page)
-{
-	page->appendCheckBox(_("Console"), _("Enable logfile"), g_Console_enableLogfile);
-}
-
-static void Mouse_constructPreferences (PrefPage* page)
-{
-	const char* buttons[] = { _("2 button"), _("3 button") };
-	page->appendRadio(_("Mouse Type"), g_glwindow_globals.m_nMouseType, STRING_ARRAY_RANGE(buttons));
-}
-
-void Mouse_constructPage (PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Mouse"), _("Mouse Preferences"));
-	Mouse_constructPreferences(reinterpret_cast<PrefPage*>(page));
-}
-
-static void Mouse_registerPreferencesPage ()
-{
-	PreferencesDialog_addInterfacePage(FreeCaller1<PreferenceGroup&, Mouse_constructPage> ());
-}
-
 #include "stream/textfilestream.h"
 #include "container/array.h"
 #include "xml/ixml.h"
@@ -292,8 +270,6 @@ void PrefsDlg::callConstructors(PreferenceTreeGroup& preferenceGroup) {
 
 GtkWindow* PrefsDlg::BuildDialog ()
 {
-	PreferencesDialog_addInterfacePreferences(FreeCaller1<PrefPage*, Interface_constructPreferences> ());
-	Mouse_registerPreferencesPage();
 	// Construct the main dialog window. Set a vertical default size as the
 	// size_request is too small.
 	GtkWindow* dialog = create_floating_window(_("UFORadiant Preferences"), m_parent);
@@ -429,25 +405,18 @@ void PreferencesDialog_destroyWindow ()
 
 PreferenceDictionary g_preferences;
 
-PreferenceSystem& GetPreferenceSystem ()
-{
-	return g_preferences;
-}
-
 class PreferenceSystemAPI
 {
-		PreferenceSystem* m_preferencesystem;
 	public:
 		typedef PreferenceSystem Type;
 		STRING_CONSTANT(Name, "*");
 
 		PreferenceSystemAPI ()
 		{
-			m_preferencesystem = &GetPreferenceSystem();
 		}
 		PreferenceSystem* getTable ()
 		{
-			return m_preferencesystem;
+			return &g_preferences;
 		}
 };
 
@@ -523,8 +492,4 @@ void PreferencesDialog_showDialog ()
 			g_restart_required.clear();
 		}
 	}
-}
-
-void Preferences_Init ()
-{
 }

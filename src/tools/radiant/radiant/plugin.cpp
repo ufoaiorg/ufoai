@@ -78,7 +78,6 @@
 #include "ui/mru/MRU.h"
 #include "entity.h"
 #include "select.h"
-#include "settings/PreferenceSystem.h"
 #include "map/AutoSaver.h"
 #include "referencecache/nullmodel.h"
 #include "xyview/GlobalXYWnd.h"
@@ -259,15 +258,12 @@ class Radiant
 	public:
 		Radiant ()
 		{
-			Preferences_Init();
-
 			/** @todo Add soundtypes support into game.xml */
 			GlobalFiletypes().addType("sound", "wav", filetype_t("PCM sound files", "*.wav"));
 			GlobalFiletypes().addType("sound", "ogg", filetype_t("OGG sound files", "*.ogg"));
 
 			HomePaths_Construct();
 			VFS_Construct();
-			GLWindow_Construct();
 			GlobalMap().Construct();
 			sidebar::MapInfo_Construct();
 			MainFrame_Construct();

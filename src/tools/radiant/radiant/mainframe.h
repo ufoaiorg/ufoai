@@ -140,24 +140,6 @@ extern MainFrame* g_pParentWnd;
 
 GtkWindow* MainFrame_getWindow ();
 
-enum EMouseButtonMode
-{
-	ETwoButton = 0, EThreeButton = 1
-};
-
-struct GLWindowGlobals
-{
-		int m_nMouseType;
-
-		GLWindowGlobals () :
-			m_nMouseType(EThreeButton)
-		{
-		}
-};
-
-void GLWindow_Construct ();
-
-extern GLWindowGlobals g_glwindow_globals;
 template<typename Value>
 class LatchedValue;
 typedef LatchedValue<bool> LatchedBool;

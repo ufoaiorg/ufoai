@@ -45,8 +45,6 @@ namespace
 	FILE* g_hLogFile;
 }
 
-bool g_Console_enableLogfile = false;
-
 /**
  * @note called whenever we need to open/close/check the console log file
  */

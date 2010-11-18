@@ -211,8 +211,6 @@ void PreferencesDialog_destroyWindow ();
 
 void PreferencesDialog_showDialog ();
 
-void Preferences_Init ();
-
 void Preferences_Load ();
 void Preferences_Save ();
 
