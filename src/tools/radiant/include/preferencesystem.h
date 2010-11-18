@@ -31,7 +31,6 @@ typedef Callback1<const char*> StringImportCallback;
 typedef Callback1<const StringImportCallback&> StringExportCallback;
 
 // Forward declaration
-class PreferenceGroup;
 typedef struct _GtkWidget GtkWidget;
 
 // A list containing possible values for a combo box widgets
@@ -42,6 +41,9 @@ typedef std::list<std::string> ComboBoxValueList;
 class PreferencesPage
 {
 public:
+
+	virtual ~PreferencesPage() {}
+
 	// greebo: Use this to add a checkbox to the preference dialog that is connected to a registry value
 	virtual GtkWidget* appendCheckBox(const std::string& name, const std::string& flag, const std::string& registryKey) = 0;
 
@@ -74,6 +76,9 @@ public:
 class PreferenceGroup
 {
 public:
+
+	virtual ~PreferenceGroup() {}
+
 	virtual PreferencesPage* createPage(const std::string& treeName, const std::string& frameName) = 0;
 };
 
@@ -83,6 +88,9 @@ public:
 class PreferenceConstructor
 {
 public:
+
+	virtual ~PreferenceConstructor() {}
+
 	/* greebo: This gets called by the preference system and is responsible for adding the
 	 * according pages and elements to the preference dialog.*/
 	virtual void constructPreferencePage(PreferenceGroup& group) = 0;

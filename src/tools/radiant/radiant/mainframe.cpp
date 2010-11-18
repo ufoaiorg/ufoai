@@ -1709,8 +1709,7 @@ void MainFrame_Construct (void)
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
 
-	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle.m_latched),
-			IntExportStringCaller(g_Layout_viewStyle.m_latched));
+	// TODO: Use PanedPosition for these
 	GlobalPreferenceSystem().registerPreference("XYHeight", IntImportStringCaller(g_layout_globals.nXYHeight),
 			IntExportStringCaller(g_layout_globals.nXYHeight));
 	GlobalPreferenceSystem().registerPreference("XYWidth", IntImportStringCaller(g_layout_globals.nXYWidth),
@@ -1726,6 +1725,8 @@ void MainFrame_Construct (void)
 	g_strEnginePath = path.toString();
 #endif
 
+	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle.m_latched),
+			IntExportStringCaller(g_Layout_viewStyle.m_latched));
 	GlobalPreferenceSystem().registerPreference("EnginePath", StringImportStringCaller(g_strEnginePath),
 			StringExportStringCaller(g_strEnginePath));
 
