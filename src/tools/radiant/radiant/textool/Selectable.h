@@ -17,6 +17,8 @@ public:
 		_selected(false)
 	{}
 
+	virtual ~Selectable() {}
+
 	/** greebo: Tests if this can be selected within the given
 	 * 			rectangle (s/t coordinates).
 	 *

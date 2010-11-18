@@ -26,6 +26,8 @@ namespace ui {
 class IMenuManager
 {
 public:
+	virtual ~IMenuManager() {}
+
 	/** greebo: Retrieves the menuitem widget specified by the path.
 	 *
 	 * Example: get("main/file/open") delivers the widget for the "Open..." command.
