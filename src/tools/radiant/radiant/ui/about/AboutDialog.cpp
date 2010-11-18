@@ -138,9 +138,9 @@ void AboutDialog::populateWindow() {
 	gtk_box_pack_start(GTK_BOX(dialogVBox), gtkutil::LeftAlignedLabel(
 		_("<b>OpenAL Properties</b>")), FALSE, FALSE, 0);
 
-	const char* alVendorStr = alGetString(AL_VENDOR);
-	const char* alVersionStr = alGetString(AL_VERSION);
-	const char* alRendererStr = alGetString(AL_RENDERER);
+	const char* alVendorStr = reinterpret_cast<const char*>(alGetString(AL_VENDOR));
+	const char* alVersionStr = reinterpret_cast<const char*>(alGetString(AL_VERSION));
+	const char* alRendererStr = reinterpret_cast<const char*>(alGetString(AL_RENDERER));
 
 	GtkWidget* alVendor = gtkutil::LeftAlignedLabel(string::format(_("Vendor: %s"), alVendorStr ? alVendorStr : ""));
 	GtkWidget* alVersion = gtkutil::LeftAlignedLabel(string::format(_("Version: %s"), alVersionStr ? alVersionStr : ""));
@@ -156,7 +156,7 @@ void AboutDialog::populateWindow() {
 
 	GtkWidget* alExtTextView = gtk_text_view_new();
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(alExtTextView), FALSE);
-	const char* alExtensions = alGetString(AL_EXTENSIONS);
+	const char* alExtensions = reinterpret_cast<const char*>(alGetString(AL_EXTENSIONS));
 	gtk_text_buffer_set_text(
 		gtk_text_view_get_buffer(GTK_TEXT_VIEW(alExtTextView)),
 		alExtensions ? alExtensions : "",
