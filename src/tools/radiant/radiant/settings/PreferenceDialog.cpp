@@ -25,7 +25,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "PreferenceSystem.h"
+#include "PreferenceDialog.h"
 #include "radiant_i18n.h"
 
 #include "iregistry.h"

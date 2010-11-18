@@ -96,7 +96,7 @@
 #include "map/map.h"
 #include "ump.h"
 #include "plugin.h"
-#include "settings/PreferenceSystem.h"
+#include "settings/PreferenceDialog.h"
 #include "render/OpenGLRenderSystem.h"
 #include "select.h"
 #include "textures.h"

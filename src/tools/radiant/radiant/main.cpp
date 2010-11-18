@@ -78,7 +78,7 @@
 #include "sidebar/texturebrowser.h"
 #include "map/map.h"
 #include "mainframe.h"
-#include "settings/PreferenceSystem.h"
+#include "settings/PreferenceDialog.h"
 #include "environment.h"
 #include "referencecache/referencecache.h"
 #include "stacktrace.h"
