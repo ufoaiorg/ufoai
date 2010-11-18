@@ -22,7 +22,6 @@
 #if !defined(INCLUDED_PREFERENCES_H)
 #define INCLUDED_PREFERENCES_H
 
-#include <libxml/parser.h>
 #include "../dialog.h"
 #include <list>
 #include <map>
@@ -125,7 +124,6 @@ typedef Callback1<PrefPage*> PreferencesPageCallback;
 typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;
 
 void PreferencesDialog_addInterfacePage (const PreferenceGroupCallback& callback);
-void PreferencesDialog_addSettingsPreferences (const PreferencesPageCallback& callback);
 void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback);
 
 void PreferencesDialog_restartRequired (const std::string& staticName);
@@ -162,61 +160,9 @@ typedef LatchedValue<int> LatchedInt;
 typedef MemberCaller1<LatchedInt, int, &LatchedInt::import> LatchedIntImportCaller;
 
 #include "GameDescription.h"
+#include "GameDialog.h"
 
 extern GameDescription *g_pGameDescription;
-
-typedef struct _GtkWidget GtkWidget;
-class PrefsDlg;
-
-class StringOutputStream;
-
-/*!
- standalone dialog for games selection, and more generally global settings
- */
-class CGameDialog: public Dialog
-{
-	protected:
-
-		mutable int m_nComboSelect; ///< intermediate int value for combo in dialog box
-
-	public:
-
-		/*!
-		 those settings are saved in the global prefs file
-		 I'm too lazy to wrap behind protected access, not sure this needs to be public
-		 NOTE: those are preference settings. if you change them it is likely that you would
-		 have to restart the editor for them to take effect
-		 */
-
-		CGameDialog ()
-		{
-		}
-		virtual ~CGameDialog ();
-
-		void Init ();
-
-		/*!
-		 reset the global settings by removing the file
-		 */
-		void Reset ();
-
-		/*!
-		 Dialog API
-		 this is only called when the dialog is built at startup for main engine select
-		 */
-		GtkWindow* BuildDialog ();
-
-	private:
-
-		/*!
-		 uses m_nComboItem to find the right mGames
-		 */
-		GameDescription *GameDescriptionForComboItem ();
-};
-
-/*!
- this holds global level preferences
- */
 extern CGameDialog g_GamesDialog;
 
 class PreferenceTreeGroup;

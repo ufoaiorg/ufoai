@@ -68,15 +68,6 @@ static void Mouse_registerPreferencesPage ()
 	PreferencesDialog_addInterfacePage(FreeCaller1<PreferenceGroup&, Mouse_constructPage> ());
 }
 
-/*!
- =========================================================
- Games selection dialog
- =========================================================
- */
-
-GameDescription *g_pGameDescription; ///< shortcut to g_GamesDialog.m_pCurrentDescription
-
-
 #include "stream/textfilestream.h"
 #include "container/array.h"
 #include "xml/ixml.h"
@@ -123,40 +114,6 @@ static bool Preferences_Save_Safe (PreferenceDictionary& preferences, const std:
 	return Preferences_Save(preferences, tmpName.data()) && (!file_exists(filename) || file_remove(filename))
 			&& file_move(tmpName.data(), filename);
 }
-
-GtkWindow* CGameDialog::BuildDialog ()
-{
-	return NULL;
-}
-
-void CGameDialog::Reset ()
-{
-}
-
-/**
- * @brief Loads the game description file
- */
-void CGameDialog::Init ()
-{
-	std::string strGameFilename = GlobalRegistry().get(RKEY_APP_PATH) + "game.xml";
-
-	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
-	if (pDoc) {
-		g_pGameDescription = new GameDescription(pDoc, strGameFilename);
-		// Import this information into the registry
-		//GlobalRegistry().importFromFile(strGameFilename, "");
-		xmlFreeDoc(pDoc);
-	} else {
-		gtkutil::errorDialog(_("XML parser failed game.xml"));
-	}
-}
-
-CGameDialog::~CGameDialog ()
-{
-	delete g_pGameDescription;
-}
-
-CGameDialog g_GamesDialog;
 
 /**
  * Widget callback for PrefsDlg
@@ -249,10 +206,7 @@ void PreferencesDialog_addInterfacePage (const PreferenceGroupCallback& callback
 }
 
 PreferencesPageCallbacks g_settingsPreferences;
-void PreferencesDialog_addSettingsPreferences (const PreferencesPageCallback& callback)
-{
-	PreferencesPageCallbacks_pushBack(g_settingsPreferences, callback);
-}
+
 PreferenceGroupCallbacks g_settingsCallbacks;
 void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback)
 {
