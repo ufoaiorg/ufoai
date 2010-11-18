@@ -20,69 +20,19 @@
  */
 
 #include "textures.h"
-
-#include "debugging/debugging.h"
-
 #include "itextures.h"
 #include "igl.h"
-#include "preferencesystem.h"
-#include "render/OpenGLRenderSystem.h"
 #include "radiant_i18n.h"
 
 #include "AutoPtr.h"
 #include "texturelib.h"
 #include "container/hashfunc.h"
 #include "container/cache.h"
-#include "generic/callback.h"
-#include "stringio.h"
-
 #include "image.h"
 #include "settings/PreferenceSystem.h"
-
 #include "textures/TextureManipulator.h"
 
 shaders::TextureManipulator* g_manipulator;
-
-enum TextureCompressionFormat
-{
-	TEXTURECOMPRESSION_NONE = 0,
-	TEXTURECOMPRESSION_RGBA = 1,
-	TEXTURECOMPRESSION_RGBA_S3TC_DXT1 = 2,
-	TEXTURECOMPRESSION_RGBA_S3TC_DXT3 = 3,
-	TEXTURECOMPRESSION_RGBA_S3TC_DXT5 = 4
-};
-
-struct texture_globals_t
-{
-		// RIANT
-		// texture compression format
-		TextureCompressionFormat m_nTextureCompressionFormat;
-
-		float fGamma;
-
-		bool bTextureCompressionSupported; // is texture compression supported by hardware?
-		GLint texture_components;
-
-		// temporary values that should be initialised only once at run-time
-		bool m_bOpenGLCompressionSupported;
-		bool m_bS3CompressionSupported;
-
-		texture_globals_t (GLint components) :
-			m_nTextureCompressionFormat(TEXTURECOMPRESSION_NONE), fGamma(1.0f), bTextureCompressionSupported(false),
-					texture_components(components), m_bOpenGLCompressionSupported(false), m_bS3CompressionSupported(
-							false)
-		{
-		}
-};
-
-static texture_globals_t g_texture_globals(GL_RGBA);
-
-static inline const int& min_int (const int& left, const int& right)
-{
-	return std::min(left, right);
-}
-
-static int max_tex_size = 0;
 
 /**
  * @brief This function does the actual processing of raw RGBA data into a GL texture.
@@ -246,23 +196,6 @@ class TexturesMap: public TexturesCache
 		void realise ()
 		{
 			if (--m_unrealised == 0) {
-				g_texture_globals.bTextureCompressionSupported = false;
-
-				if (GlobalOpenGL().ARB_texture_compression()) {
-					g_texture_globals.bTextureCompressionSupported = true;
-					g_texture_globals.m_bOpenGLCompressionSupported = true;
-				}
-
-				if (GlobalOpenGL().EXT_texture_compression_s3tc()) {
-					g_texture_globals.bTextureCompressionSupported = true;
-					g_texture_globals.m_bS3CompressionSupported = true;
-				}
-
-				glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_tex_size);
-				if (max_tex_size == 0) {
-					max_tex_size = 1024;
-				}
-
 				for (qtextures_t::iterator i = m_qtextures.begin(); i != m_qtextures.end(); ++i) {
 					if (!(*i).value.empty()) {
 						qtexture_realise(*(*i).value, (*i).key);
@@ -309,109 +242,10 @@ void Textures_Unrealise ()
 	g_texturesmap->unrealise();
 }
 
-void Textures_setTextureComponents (GLint texture_components)
-{
-	if (g_texture_globals.texture_components != texture_components) {
-		Textures_Unrealise();
-		g_texture_globals.texture_components = texture_components;
-		Textures_Realise();
-	}
-}
-
-void Textures_UpdateTextureCompressionFormat ()
-{
-	GLint texture_components = GL_RGBA;
-
-	if (!g_texturesmap->realised()) {
-		texture_components = g_texture_globals.m_nTextureCompressionFormat;
-		if (texture_components == TEXTURECOMPRESSION_NONE)
-			texture_components = GL_RGBA;
-	} else {
-		if (g_texture_globals.bTextureCompressionSupported) {
-			if (g_texture_globals.m_nTextureCompressionFormat != TEXTURECOMPRESSION_NONE
-					&& g_texture_globals.m_nTextureCompressionFormat != TEXTURECOMPRESSION_RGBA
-					&& !g_texture_globals.m_bS3CompressionSupported) {
-				g_message(
-						"OpenGL extension GL_EXT_texture_compression_s3tc not supported by current graphics drivers\n");
-				g_texture_globals.m_nTextureCompressionFormat = TEXTURECOMPRESSION_RGBA; // if this is not supported either, see below
-			}
-			if (g_texture_globals.m_nTextureCompressionFormat == TEXTURECOMPRESSION_RGBA
-					&& !g_texture_globals.m_bOpenGLCompressionSupported) {
-				g_message("OpenGL extension GL_ARB_texture_compression not supported by current graphics drivers\n");
-				g_texture_globals.m_nTextureCompressionFormat = TEXTURECOMPRESSION_NONE;
-			}
-
-			switch (g_texture_globals.m_nTextureCompressionFormat) {
-			case (TEXTURECOMPRESSION_NONE): {
-				texture_components = GL_RGBA;
-				break;
-			}
-			case (TEXTURECOMPRESSION_RGBA): {
-				texture_components = GL_COMPRESSED_RGBA_ARB;
-				break;
-			}
-			case (TEXTURECOMPRESSION_RGBA_S3TC_DXT1): {
-				texture_components = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
-				break;
-			}
-			case (TEXTURECOMPRESSION_RGBA_S3TC_DXT3): {
-				texture_components = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
-				break;
-			}
-			case (TEXTURECOMPRESSION_RGBA_S3TC_DXT5): {
-				texture_components = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-				break;
-			}
-			}
-		} else {
-			texture_components = GL_RGBA;
-			g_texture_globals.m_nTextureCompressionFormat = TEXTURECOMPRESSION_NONE;
-		}
-	}
-
-	Textures_setTextureComponents(texture_components);
-}
-
-void TextureCompressionImport (TextureCompressionFormat& self, int value)
-{
-	if (!g_texture_globals.m_bOpenGLCompressionSupported && g_texture_globals.m_bS3CompressionSupported && value >= 1) {
-		++value;
-	}
-	switch (value) {
-	case 0:
-		self = TEXTURECOMPRESSION_NONE;
-		break;
-	case 1:
-		self = TEXTURECOMPRESSION_RGBA;
-		break;
-	case 2:
-		self = TEXTURECOMPRESSION_RGBA_S3TC_DXT1;
-		break;
-	case 3:
-		self = TEXTURECOMPRESSION_RGBA_S3TC_DXT3;
-		break;
-	case 4:
-		self = TEXTURECOMPRESSION_RGBA_S3TC_DXT5;
-		break;
-	}
-	Textures_UpdateTextureCompressionFormat();
-}
-typedef ReferenceCaller1<TextureCompressionFormat, int, TextureCompressionImport> TextureCompressionImportCaller;
-
-void TextureCompression_importString (const char* string)
-{
-	g_texture_globals.m_nTextureCompressionFormat = static_cast<TextureCompressionFormat> (atoi(string));
-	Textures_UpdateTextureCompressionFormat();
-}
-typedef FreeCaller1<const char*, TextureCompression_importString> TextureCompressionImportStringCaller;
-
 void Textures_Construct ()
 {
 	g_texturesmap = new TexturesMap;
 	g_manipulator = new shaders::TextureManipulator;
-
-	GlobalPreferenceSystem().registerPreference("TextureCompressionFormat", TextureCompressionImportStringCaller(),
-			IntExportStringCaller(reinterpret_cast<int&> (g_texture_globals.m_nTextureCompressionFormat)));
 }
 void Textures_Destroy ()
 {
