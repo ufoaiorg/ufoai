@@ -1705,7 +1705,6 @@ void MainFrame_Construct (void)
 	ui::TexTool::registerCommands();
 
 	LevelFilters_registerCommands();
-	Model_RegisterToggles();
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
