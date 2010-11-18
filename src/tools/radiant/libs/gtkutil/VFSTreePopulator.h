@@ -54,8 +54,6 @@ namespace gtkutil
 
 		public:
 
-			virtual ~VFSTreePopulator() {}
-
 			/**
 			 * Construct a VFSTreePopulator which will populate the given tree store.
 			 *
@@ -82,6 +80,7 @@ namespace gtkutil
 			 */
 			struct Visitor
 			{
+					virtual ~Visitor() {}
 
 					/**
 					 * Visit callback function, called for each node in the tree.
