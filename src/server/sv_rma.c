@@ -159,6 +159,8 @@ static qboolean SV_ParseMapTileSet (const char *filename, const char **text, map
 		if (!*text)
 			return qfalse;
 		if (token[0] != '}') {
+			if (target->numTiles >= MAX_TILESETTILES)
+				Com_Error(ERR_DROP, "Max tileset limit reached for tileset '%s'", target->id);
 			char *tileTarget = target->tiles[target->numTiles];
 			const size_t size = sizeof(target->tiles[target->numTiles]);
 			if (inherit) {
