@@ -21,6 +21,8 @@ namespace gtkutil
 
 		public:
 
+			virtual ~Widget() {}
+
 			/**
 			 * \brief
 			 * Return the GtkWidget for packing into the parent window.

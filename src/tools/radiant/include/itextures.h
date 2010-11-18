@@ -65,15 +65,6 @@ class TexturesCacheObserver
 		virtual void realise () = 0;
 };
 
-/* greebo: A TextureModeObserver gets notified if the
- * texture mode gets changed.
- */
-class TextureModeObserver
-{
-	public:
-		virtual void textureModeChanged() = 0;
-};
-
 class TexturesCache
 {
 	public:

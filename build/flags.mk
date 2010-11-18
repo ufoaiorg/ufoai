@@ -57,3 +57,4 @@ endif
 #CCFLAGS += -Wc++-compat
 
 CXXFLAGS += $(CFLAGS)
+CXXFLAGS += -Wnon-virtual-dtor
