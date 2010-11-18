@@ -263,6 +263,7 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModalProgressDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\ModalProgressDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\MultiMonitor.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\PanedPosition.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\RegistryConnector.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\RegistryConnector.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\RightAlignedLabel.h" />
