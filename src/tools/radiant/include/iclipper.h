@@ -54,7 +54,7 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "clipper");
 
-	virtual ~IClipper() {}
+	virtual ~Clipper() {}
 
 	// Gets called if the clip mode is toggled on/off
 	virtual void onClipMode(bool enabled) = 0;
