@@ -95,8 +95,6 @@ TextureBrowser::TextureBrowser () :
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_UNIFORM_SIZE);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_THUMBNAIL_SCALE);
 
-	createWidget();
-
 	GlobalShaderSystem().setActiveShadersChangedNotify(MemberCaller<TextureBrowser,
 			&TextureBrowser::activeShadersChanged> (*this));
 
@@ -999,6 +997,8 @@ GtkWidget* TextureBrowser::createToolBar ()
 
 GtkWidget* TextureBrowser::getWidget ()
 {
+	if (_widget == NULL)
+		createWidget();
 	return _widget;
 }
 
