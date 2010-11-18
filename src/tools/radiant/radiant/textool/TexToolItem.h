@@ -16,6 +16,8 @@ typedef std::vector<TexToolItem*> TexToolItemVec;
 class ItemVisitor
 {
 public:
+	virtual ~ItemVisitor() {}
+
 	virtual void visit(TexToolItem* texToolItem) = 0;
 };
 

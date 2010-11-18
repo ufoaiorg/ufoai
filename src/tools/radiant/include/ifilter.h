@@ -64,8 +64,10 @@ typedef std::vector<FilterRule> FilterRules;
  * FilterSystem.
  */
 struct IFilterVisitor {
-	// Visit function
-	virtual void visit(const std::string& filterName) = 0;
+	public:
+		virtual ~IFilterVisitor() {}
+		// Visit function
+		virtual void visit(const std::string& filterName) = 0;
 };
 
 /** Interface for the FilterSystem.
