@@ -80,6 +80,12 @@ inline void assign_if_closer (SelectionIntersection& best, const SelectionInters
 	}
 }
 
+/**
+ * greebo: A helper class allowing to traverse a sequence of Vector3
+ * objects in memory. The Vector3 objects can have a certain distance
+ * (stride) which is passed to the constructor. Incrementing the contained
+ * iterator object moves from one Vector3 to the next in memory.
+ */
 class VertexPointer
 {
 		typedef const unsigned char* byte_pointer;
@@ -153,7 +159,10 @@ class VertexPointer
 		}
 
 	private:
+		// The address of the first Vector3 object
 		byte_pointer m_vertices;
+
+		// The distance (in bytes) to the next object in memory
 		std::size_t m_stride;
 };
 

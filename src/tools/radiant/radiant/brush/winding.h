@@ -65,11 +65,11 @@ const std::size_t c_brush_maxFaces = 1024;
 class WindingVertex
 {
 	public:
-		Vector3 vertex;
-		Vector2 texcoord;
-		Vector3 tangent;
-		Vector3 bitangent;
-		std::size_t adjacent;
+		Vector3 vertex;			// The 3D coordinates of the point
+		Vector2 texcoord;		// The UV coordinates
+		Vector3 tangent;		// The tangent
+		Vector3 bitangent;		// The bitangent
+		std::size_t adjacent;	// The index of the adjacent WindingVertex
 };
 
 struct Winding
