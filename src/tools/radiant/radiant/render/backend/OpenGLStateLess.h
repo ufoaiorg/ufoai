@@ -41,12 +41,6 @@ struct OpenGLStateLess {
 			if (self->m_state != other->m_state) {
 				return self->m_state < other->m_state;
 			}
-			if (self->m_surfaceFlags != other->m_surfaceFlags) {
-				return self->m_surfaceFlags < other->m_surfaceFlags;
-			}
-			if (self->m_contentFlags != other->m_contentFlags) {
-				return self->m_contentFlags < other->m_contentFlags;
-			}
 			// Comparing address makes sure states are never equal.
 			return self < other;
 		}
