@@ -96,7 +96,7 @@ void R_ShutdownImages(void);
 void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
 void R_UploadAlpha(const image_t *image, const byte *alphaData);
-void R_FilterTexture(byte *in, int width, int height, imagetype_t type, int bpp);
+void R_FilterTexture(byte *in, int width, int height, vec3_t color, imagetype_t type, int bpp);
 void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);

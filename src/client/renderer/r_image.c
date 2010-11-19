@@ -205,10 +205,10 @@ void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int
  * the image's average color. Also handles image inversion and monochrome. This is
  * all munged into one function to reduce loops on level load.
  */
-void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp)
+void R_FilterTexture (byte *in, int width, int height, vec3_t color, imagetype_t type, int bpp)
 {
 	const float scale = 1.0 / 255.0;
-
+	unsigned col[3];
 	byte *p = in;
 	const byte *end = p + width * height * bpp;
 	const float brightness = type == it_lightmap ? r_modulate->value : r_brightness->value;
@@ -220,9 +220,10 @@ void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp
 
 	VectorSet(luminosity, 0.2125, 0.7154, 0.0721);
 
+	VectorClear(col);
+
 	for (; p != end; p += bpp) {
-		VectorCopy(p, temp);
-		VectorScale(temp, scale, temp);  /* convert to float */
+		VectorScale(p, scale, temp);  /* convert to float */
 
 		VectorScale(temp, brightness, temp);  /* apply brightness */
 
@@ -265,7 +266,19 @@ void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp
 				temp[j] = 0;
 
 			p[j] = (byte)temp[j];
+
+			if (color)  /* accumulate color */
+				col[j] += p[j];
 		}
+	}
+
+	if (color) { /* average accumulated colors */
+		int i;
+		for (i = 0; i < 3; i++)
+			col[i] /= (width * height);
+
+		for (i = 0; i < 3; i++)
+			color[i] = col[i] / 255.0;
 	}
 }
 
@@ -345,7 +358,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
-		R_FilterTexture((byte*)scaled, scaledWidth, scaledHeight, image->type, 4);
+		R_FilterTexture((byte*)scaled, scaledWidth, scaledHeight, NULL, image->type, 4);
 
 	/* and mipmapped */
 	if (mipmap) {

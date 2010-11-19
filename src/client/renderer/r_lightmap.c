@@ -174,7 +174,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	}
 
 	/* apply modulate, contrast, resolve average surface color, etc.. */
-	R_FilterTexture(lightmap, smax, tmax, it_lightmap, LIGHTMAP_BLOCK_BYTES);
+	R_FilterTexture(lightmap, smax, tmax, surf->color, it_lightmap, LIGHTMAP_BLOCK_BYTES);
 
 	if (surf->texinfo->flags & (SURF_BLEND33 | SURF_ALPHATEST))
 		surf->color[3] = 0.25;
