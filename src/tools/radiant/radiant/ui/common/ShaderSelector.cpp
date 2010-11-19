@@ -345,7 +345,7 @@ void ShaderSelector::displayShaderInfo(IShader* shader, GtkListStore* listStore)
 	gtk_list_store_append(listStore, &iter);
 	gtk_list_store_set(listStore, &iter,
 		0, (std::string("<b>") + _("Shader") + "</b>").c_str(),
-		1, shader->getName(),
+		1, shader->getName().c_str(),
 		-1);
 }
 

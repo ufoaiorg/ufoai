@@ -44,7 +44,6 @@ class MapLayer: public ShaderLayer {
 	private:
 		qtexture_t* m_texture;
 		BlendFunc m_blendFunc;
-		bool m_clampToBorder;
 		double m_alphaTest;
 		ShaderLayer::Type m_type;
 		Vector3 m_color;
@@ -52,11 +51,12 @@ class MapLayer: public ShaderLayer {
 		float _ceilVal;
 		float _floorVal;
 		bool _terrain;
+		float _polygonOffset;
 	public:
 		MapLayer(qtexture_t* texture, BlendFunc blendFunc, ShaderLayer::Type type, Vector3& color,
 				double alphaTest) :
 			m_texture(texture), m_blendFunc(blendFunc), m_alphaTest(alphaTest), m_type(type),
-					m_color(color), _terrain(false) {
+					m_color(color), _height(0), _ceilVal(0), _floorVal(0), _terrain(false), _polygonOffset(0.0) {
 		}
 
 		Type getType() const {
@@ -98,6 +98,14 @@ class MapLayer: public ShaderLayer {
 			else
 				return (z - _floorVal) / _height;
 		}
+
+		float getPolygonOffset () const {
+			return _polygonOffset;
+		}
+
+		void setPolygonOffset (float polygonOffset) {
+			_polygonOffset = polygonOffset;
+		}
 };
 
 class MaterialShader: public IShader {
@@ -134,7 +142,7 @@ class MaterialShader: public IShader {
 		qtexture_t* getTexture() const;
 
 		// get shader name
-		const char* getName() const;
+		const std::string& getName() const;
 
 		bool IsInUse() const;
 

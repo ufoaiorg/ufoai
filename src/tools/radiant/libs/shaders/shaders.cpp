@@ -144,8 +144,8 @@ class ShaderTemplate {
 			return m_refcount;
 		}
 
-		const char* getName() const {
-			return m_Name.c_str();
+		const std::string& getName() const {
+			return m_Name;
 		}
 		void setName(const std::string& name) {
 			m_Name = name;
@@ -302,8 +302,8 @@ class CShader: public IShader {
 			return m_pTexture;
 		}
 		// get shader name
-		const char* getName() const {
-			return m_Name.c_str();
+		const std::string& getName() const {
+			return m_Name;
 		}
 		bool IsValid() const {
 			return m_bIsValid;

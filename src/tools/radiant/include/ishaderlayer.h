@@ -94,6 +94,12 @@ class ShaderLayer
 		 * value is set, -1 will be returned.
 		 */
 		virtual double getAlphaTest () const = 0;
+
+		/**
+		 * \brief
+		 * Return a polygon offset if one is defined. The default is 0.
+		 */
+		virtual float getPolygonOffset () const = 0;
 };
 
 typedef Callback1<const ShaderLayer&> ShaderLayerCallback;

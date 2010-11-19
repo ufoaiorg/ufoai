@@ -87,7 +87,7 @@ const std::string RKEY_TEXTURES_THUMBNAIL_SCALE = "user/ui/textures/browser/thum
 static void TextureBrowser_scrollChanged (void* data, gdouble value);
 
 TextureBrowser::TextureBrowser () :
-	_glWidget(false), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
+	_glWidget(false), m_texture_scroll(NULL), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
 			TextureBrowser_scrollChanged, this), m_rmbSelected(false), m_resizeTextures(true)
 {
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_UNUSED);
@@ -811,6 +811,8 @@ void TextureBrowser::onVerticalScroll (GtkAdjustment *adjustment, TextureBrowser
 
 void TextureBrowser::updateScroll ()
 {
+	if (!m_texture_scroll)
+		return;
 	int totalHeight = getTotalHeight();
 
 	totalHeight = std::max(totalHeight, height);

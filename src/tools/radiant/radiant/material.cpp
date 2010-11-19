@@ -190,9 +190,9 @@ qtexture_t* MaterialShader::getTexture () const
 }
 
 // get shader name
-const char* MaterialShader::getName () const
+const std::string& MaterialShader::getName () const
 {
-	return _fileName.c_str();
+	return _fileName;
 }
 
 bool MaterialShader::IsInUse () const

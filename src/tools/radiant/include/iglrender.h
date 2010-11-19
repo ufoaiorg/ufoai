@@ -47,7 +47,7 @@ class OpenGLState {
 			eSortLast = 4096
 		};
 
-		int m_polygonOffset;
+		float m_polygonOffset;
 		unsigned int m_state;
 		std::size_t m_sort;
 		GLint m_texture;

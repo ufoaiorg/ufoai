@@ -232,11 +232,6 @@ class TexturesMap: public TexturesCache
 
 TexturesMap* g_texturesmap;
 
-TexturesCache& GetTexturesCache ()
-{
-	return *g_texturesmap;
-}
-
 void Textures_Realise ()
 {
 	g_texturesmap->realise();
@@ -245,17 +240,6 @@ void Textures_Realise ()
 void Textures_Unrealise ()
 {
 	g_texturesmap->unrealise();
-}
-
-void Textures_Construct ()
-{
-	g_texturesmap = new TexturesMap;
-	g_manipulator = new shaders::TextureManipulator;
-}
-void Textures_Destroy ()
-{
-	delete g_texturesmap;
-	delete g_manipulator;
 }
 
 #include "modulesystem/modulesmap.h"
@@ -281,20 +265,22 @@ class TexturesDependencies: public GlobalRadiantModuleRef,
 
 class TexturesAPI
 {
-		TexturesCache* m_textures;
+		TexturesMap* m_textures;
 	public:
 		typedef TexturesCache Type;
 		STRING_CONSTANT(Name, "*");
 
 		TexturesAPI ()
 		{
-			Textures_Construct();
+			g_texturesmap = new TexturesMap;
+			g_manipulator = new shaders::TextureManipulator;
 
-			m_textures = &GetTexturesCache();
+			m_textures = g_texturesmap;
 		}
 		~TexturesAPI ()
 		{
-			Textures_Destroy();
+			delete g_texturesmap;
+			delete g_manipulator;
 		}
 		TexturesCache* getTable ()
 		{

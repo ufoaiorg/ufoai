@@ -40,7 +40,7 @@ class IShader
 		/**
 		 * get shader name
 		 */
-		virtual const char* getName () const = 0;
+		virtual const std::string& getName () const = 0;
 
 		virtual bool IsInUse () const = 0;
 
@@ -74,7 +74,11 @@ class IShader
 
 		virtual void forEachLayer(const ShaderLayerCallback& layer) const = 0;
 
-	    float getPolygonOffset() const;
+		/**
+		 * \brief
+		 * Return a polygon offset if one is defined. The default is 0.
+		 */
+		float getPolygonOffset () const;
 
 		/**
 		 * get the cull type

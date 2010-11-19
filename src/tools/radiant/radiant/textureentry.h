@@ -94,8 +94,9 @@ class TextureNameList
 			for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
 				IShader *shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
-				if (shader_equal_prefix(shader->getName(), GlobalTexturePrefix_get())) {
-					callback(shader->getName() + 9);
+				const std::string prefix = GlobalTexturePrefix_get();
+				if (shader_equal_prefix(shader->getName(), prefix)) {
+					callback(shader->getName().substr(prefix.length()));
 				}
 			}
 		}
