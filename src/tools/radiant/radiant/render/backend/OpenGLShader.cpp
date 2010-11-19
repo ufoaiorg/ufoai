@@ -476,6 +476,7 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 		state.m_colour[3] = 0.5;
 	} else if (m_shader->getTexture()->hasAlpha) {
 		state.m_state |= RENDER_BLEND;
+		state.m_state |= RENDER_DEPTHWRITE;
 		state.m_sort = OpenGLState::eSortTranslucent;
 	} else {
 		state.m_state |= RENDER_DEPTHWRITE;
