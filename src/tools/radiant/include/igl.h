@@ -42,6 +42,10 @@
 #define QGL_DLLEXPORT
 #endif
 
+#ifndef GL_VERSION_1_4
+#define GL_GENERATE_MIPMAP                0x8191
+#endif
+
 #define glActiveTexture GlobalOpenGL().m_glActiveTexture
 #define glClientActiveTexture GlobalOpenGL().m_glClientActiveTexture
 #define glBlendColor(r,g,b,a) if (GlobalOpenGL().ARB_imaging()) GlobalOpenGL().m_glBlendColor(r,g,b,a)
