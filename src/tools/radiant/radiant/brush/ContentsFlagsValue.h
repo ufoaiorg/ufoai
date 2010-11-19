@@ -1,12 +1,9 @@
 #ifndef CONTENTSFLAGSVALUE_H_
 #define CONTENTSFLAGSVALUE_H_
 
-class FaceShaderObserver;
-
 class ContentsFlagsValue
 {
 	private:
-		FaceShaderObserver* _observer;
 		int m_surfaceFlags;
 		int m_contentFlags;
 		int m_value;
@@ -17,16 +14,10 @@ class ContentsFlagsValue
 		bool m_valueDirty;
 		bool m_firstValue;// marker for value diff calculation. see GetFlags for use
 
-	private:
-
-		void notifyChange ();
-
 	public:
 		ContentsFlagsValue ();
 		ContentsFlagsValue (int surfaceFlags, int contentFlags, int value, bool specified, int surfaceFlagsDirty = 0,
 				int contentFlagsDirty = 0, bool valueDirty = false);
-
-		void setObserver (FaceShaderObserver* observer);
 
 		void assignMasked (const ContentsFlagsValue& other);
 

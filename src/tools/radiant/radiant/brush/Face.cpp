@@ -16,7 +16,6 @@ Face::Face (FaceObserver* observer) :
 {
 	m_shader.attach(*this);
 	m_plane.copy(Vector3(0, 0, 0), Vector3(64, 0, 0), Vector3(0, 64, 0));
-	getShader().m_flags.setObserver(this);
 	planeChanged();
 }
 Face::Face (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
@@ -26,7 +25,6 @@ Face::Face (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::
 {
 	m_shader.attach(*this);
 	m_plane.copy(p0, p1, p2);
-	getShader().m_flags.setObserver(this);
 	planeChanged();
 }
 Face::Face (const Face& other, FaceObserver* observer) :
@@ -36,7 +34,6 @@ Face::Face (const Face& other, FaceObserver* observer) :
 	m_shader.attach(*this);
 	m_plane.copy(other.m_plane);
 	planepts_assign(m_move_planepts, other.m_move_planepts);
-	getShader().m_flags.setObserver(this);
 	planeChanged();
 }
 Face::~Face ()

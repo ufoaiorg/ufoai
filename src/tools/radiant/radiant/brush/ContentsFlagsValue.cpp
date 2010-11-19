@@ -7,28 +7,17 @@ const unsigned int BRUSH_DETAIL_FLAG = 27;
 const unsigned int BRUSH_DETAIL_MASK = (1 << BRUSH_DETAIL_FLAG);
 }
 
-void ContentsFlagsValue::notifyChange ()
-{
-	if (_observer)
-		_observer->shaderChanged();
-}
-
 ContentsFlagsValue::ContentsFlagsValue () :
-	_observer(0), m_surfaceFlags(0), m_contentFlags(0), m_value(0), m_specified(false), m_surfaceFlagsDirty(0),
+	m_surfaceFlags(0), m_contentFlags(0), m_value(0), m_specified(false), m_surfaceFlagsDirty(0),
 			m_contentFlagsDirty(0), m_markDirty(0), m_valueDirty(false), m_firstValue(true)
 {
 }
 ContentsFlagsValue::ContentsFlagsValue (int surfaceFlags, int contentFlags, int value, bool specified,
 		int surfaceFlagsDirty, int contentFlagsDirty, bool valueDirty) :
-	_observer(0), m_surfaceFlags(surfaceFlags), m_contentFlags(contentFlags), m_value(value),
+	m_surfaceFlags(surfaceFlags), m_contentFlags(contentFlags), m_value(value),
 			m_specified(specified), m_surfaceFlagsDirty(surfaceFlagsDirty), m_contentFlagsDirty(contentFlagsDirty),
 			m_markDirty(0), m_valueDirty(valueDirty), m_firstValue(true)
 {
-}
-
-void ContentsFlagsValue::setObserver (FaceShaderObserver* observer)
-{
-	_observer = observer;
 }
 
 void ContentsFlagsValue::assignMasked (const ContentsFlagsValue& other)
@@ -44,8 +33,6 @@ void ContentsFlagsValue::assignMasked (const ContentsFlagsValue& other)
 	if (m_valueDirty)
 		m_value = value;
 	m_valueDirty = false;
-
-	notifyChange();
 }
 
 bool ContentsFlagsValue::isSpecified () const
@@ -76,19 +63,16 @@ int ContentsFlagsValue::getValue () const
 void ContentsFlagsValue::setContentFlags (int contentFlags)
 {
 	m_contentFlags = contentFlags;
-	notifyChange();
 }
 
 void ContentsFlagsValue::setSurfaceFlags (int surfaceFlags)
 {
 	m_surfaceFlags = surfaceFlags;
-	notifyChange();
 }
 
 void ContentsFlagsValue::setValue (int value)
 {
 	m_value = value;
-	notifyChange();
 }
 
 void ContentsFlagsValue::setDirty (bool dirty)
@@ -114,8 +98,6 @@ void ContentsFlagsValue::setLevelFlags (int levelFlags)
 
 	m_contentFlags &= levels;
 	m_contentFlags |= levels;
-
-	notifyChange();
 }
 
 void ContentsFlagsValue::moveLevelUp ()
@@ -149,7 +131,6 @@ void ContentsFlagsValue::setDetail (bool detail)
 	} else if (!detail && isDetail()) {
 		m_contentFlags &= ~BRUSH_DETAIL_MASK;
 	}
-	notifyChange();
 }
 
 bool ContentsFlagsValue::isValueDirty () const
