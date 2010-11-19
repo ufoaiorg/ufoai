@@ -49,7 +49,10 @@ enum
 // Constructor creates UI components for the EntityInspector dialog
 
 EntityInspector::EntityInspector () :
-	_idleDraw(MemberCaller<EntityInspector, &EntityInspector::callbackRedraw> (*this)) // Set the IdleDraw
+	_listStore(gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF,
+	G_TYPE_STRING)), _treeView(gtk_tree_view_new_with_model(GTK_TREE_MODEL(_listStore))), _contextMenu(
+			gtkutil::PopupMenu(_treeView)), _idleDraw(MemberCaller<EntityInspector, &EntityInspector::callbackRedraw> (
+			*this)) // Set the IdleDraw
 {
 	_widget = gtk_vbox_new(FALSE, 0);
 
@@ -68,24 +71,54 @@ EntityInspector::EntityInspector () :
 	GlobalSelectionSystem().addObserver(this);
 }
 
-// Create the context menu
+void EntityInspector::_onAddKey (gpointer data, gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	// Obtain the entity class to provide to the AddPropertyDialog
+	const EntityClass& ec = self->_selectedEntity->getEntityClass();
 
+	// Choose a property, and add to entity with a default value
+	std::string property = AddPropertyDialog::chooseProperty(&ec);
+	if (!property.empty()) {
+		// Save last key, so that it will be automatically selected
+		self->_lastKey = property;
+
+		// Add the keyvalue on the entity (triggering the refresh)
+		self->_selectedEntity->setKeyValue(property, "-");
+	}
+}
+
+void EntityInspector::_onDeleteKey (gpointer data, gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	std::string property = self->getListSelection(PROPERTY_NAME_COLUMN);
+	if (!property.empty())
+		self->_selectedEntity->setKeyValue(property, "");
+}
+
+bool EntityInspector::_testDeleteKey (gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	// Make sure the Delete item is only available for explicit
+	// (non-inherited) properties
+	if (self->getListSelection(INHERITED_FLAG_COLUMN) != "1")
+		return true;
+	else
+		return false;
+}
+
+// Create the context menu
 void EntityInspector::createContextMenu ()
 {
-	// Menu widget
-	_contextMenu = gtk_menu_new();
-
 	// Menu items
-	_addKeyMenuItem = gtkutil::StockIconMenuItem(GTK_STOCK_ADD, _("Add property..."));
-	_delKeyMenuItem = gtkutil::StockIconMenuItem(GTK_STOCK_DELETE, _("Delete property"));
+	GtkWidget* addKey = gtkutil::StockIconMenuItem(GTK_STOCK_ADD, _("Add property...")
+	);
+	GtkWidget* delKey = gtkutil::StockIconMenuItem(GTK_STOCK_DELETE, _("Delete property")
+	);
 
-	gtk_menu_shell_append(GTK_MENU_SHELL(_contextMenu), _addKeyMenuItem);
-	gtk_menu_shell_append(GTK_MENU_SHELL(_contextMenu), _delKeyMenuItem);
-
-	g_signal_connect(G_OBJECT(_delKeyMenuItem), "activate", G_CALLBACK(_onDeleteProperty), this);
-	g_signal_connect(G_OBJECT(_addKeyMenuItem), "activate", G_CALLBACK(_onAddProperty), this);
-
-	gtk_widget_show_all(_contextMenu); // won't actually display until popped up
+	// Add the menu items to the PopupMenu
+	_contextMenu.addItem(addKey, _onAddKey, this);
+	_contextMenu.addItem(delKey, _onDeleteKey, this, _testDeleteKey);
 }
 
 // Return the singleton EntityInspector instance, creating it if it is not yet
@@ -122,18 +155,6 @@ GtkWidget* EntityInspector::createDialogPane ()
 GtkWidget* EntityInspector::createTreeViewPane ()
 {
 	GtkWidget* vbx = gtk_vbox_new(FALSE, 3);
-
-	// Initialise the instance TreeStore
-	_listStore = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, // property
-			G_TYPE_STRING, // value
-			G_TYPE_STRING, // text colour
-			GDK_TYPE_PIXBUF, // value icon
-			G_TYPE_STRING); // inherited flag
-
-	// Create the TreeView widget and link it to the model
-	_treeView = gtk_tree_view_new_with_model(GTK_TREE_MODEL(_listStore));
-	g_signal_connect(G_OBJECT(_treeView), "button-release-event",
-			G_CALLBACK(_onPopupMenu), this);
 
 	// Create the Property column
 	GtkTreeViewColumn* nameCol = gtk_tree_view_column_new();
@@ -347,56 +368,6 @@ void EntityInspector::_onEntryActivate (GtkWidget* w, EntityInspector* self)
 	// Set property and move back to key entry
 	self->setPropertyFromEntries();
 	gtk_widget_grab_focus(self->_keyEntry);
-}
-
-bool EntityInspector::_onPopupMenu (GtkWidget* w, GdkEventButton* ev, EntityInspector* self)
-{
-	// Popup on right-click events only
-	if (ev->button == 3) {
-
-		// Make sure the Delete item is only available for explicit (non-inherited)
-		// properties
-		if (self->getListSelection(INHERITED_FLAG_COLUMN) != "1")
-			gtk_widget_set_sensitive(self->_delKeyMenuItem, TRUE);
-		else
-			gtk_widget_set_sensitive(self->_delKeyMenuItem, FALSE);
-
-		// Display the menu
-		gtk_menu_popup(GTK_MENU(self->_contextMenu), NULL, NULL, NULL, NULL, 1, GDK_CURRENT_TIME);
-	}
-
-	return FALSE;
-}
-
-// Callback for Delete property command
-void EntityInspector::_onDeleteProperty (GtkMenuItem* item, EntityInspector* self)
-{
-	std::string property = self->getListSelection(PROPERTY_NAME_COLUMN);
-	if (!property.empty()) {
-		bool isMandatory = self->_selectedEntity->getEntityClass().isMandatory(property);
-		if (!isMandatory)
-			self->_selectedEntity->setKeyValue(property, "");
-	}
-}
-
-// Callback for Add Property command
-void EntityInspector::_onAddProperty (GtkMenuItem* item, EntityInspector* self)
-{
-	// Obtain the entity class to provide to the AddPropertyDialog
-	const EntityClass& ec = self->_selectedEntity->getEntityClass();
-
-	// Choose a property, and add to entity with a default value
-	std::string property = AddPropertyDialog::chooseProperty(&ec);
-	if (!property.empty()) {
-		// Save last key, so that it will be automatically selected
-		self->_lastKey = property;
-
-		// Add the keyvalue on the entity (triggering the refresh)
-		std::string defaultVal = self->_selectedEntity->getEntityClass().getDefaultForAttribute(property);
-		self->_selectedEntity->setKeyValue(property, defaultVal);
-
-		getInstance().queueDraw();
-	}
 }
 
 /* END GTK CALLBACKS */

@@ -5,6 +5,7 @@
 
 #include "iselection.h"
 #include "gtkutil/idledraw.h"
+#include "gtkutil/menu/PopupMenu.h"
 
 #include <gtk/gtkliststore.h>
 #include <gtk/gtkwidget.h>
@@ -60,10 +61,12 @@ class EntityInspector: public SelectionSystem::Observer
 		GtkWidget* _keyEntry;
 		GtkWidget* _valEntry;
 
-		// Context menu main widget and items
-		GtkWidget* _contextMenu;
-		GtkWidget* _addKeyMenuItem;
-		GtkWidget* _delKeyMenuItem;
+		// Context menu
+		gtkutil::PopupMenu _contextMenu;
+		static void _onAddKey(gpointer, gpointer);
+		static void _onDeleteKey(gpointer, gpointer);
+
+		static bool _testDeleteKey(gpointer userData);
 
 		// Currently displayed PropertyEditor
 		PropertyEditorPtr _currentPropertyEditor;
@@ -93,10 +96,6 @@ class EntityInspector: public SelectionSystem::Observer
 
 		static void _onEntryActivate (GtkWidget*, EntityInspector*);
 		static void _onSetProperty (GtkWidget*, EntityInspector*);
-
-		static bool _onPopupMenu (GtkWidget*, GdkEventButton*, EntityInspector*);
-		static void _onDeleteProperty (GtkMenuItem*, EntityInspector*);
-		static void _onAddProperty (GtkMenuItem*, EntityInspector*);
 
 		// Routines to populate the TreeStore with the keyvals attached to the
 		// currently-selected object.

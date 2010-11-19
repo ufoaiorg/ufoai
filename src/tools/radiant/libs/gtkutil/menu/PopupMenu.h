@@ -16,7 +16,7 @@ namespace gtkutil
 	{
 		public:
 
-			typedef bool (*SensitivityTest)(void);
+			typedef bool (*SensitivityTest)(gpointer);
 
 		private:
 
@@ -48,7 +48,7 @@ namespace gtkutil
 			 * not specify its own sensitivity test, this will be used to ensure the
 			 * item is always visible.
 			 */
-			static bool _alwaysVisible ()
+			static bool _alwaysVisible (gpointer)
 			{
 				return true;
 			}

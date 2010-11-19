@@ -64,8 +64,7 @@ namespace sidebar
 
 		gtk_container_add(GTK_CONTAINER(scr), _view);
 
-		_popupMenu.addItem(gtkutil::IconTextMenuItem(ui::icons::ICON_FOLDER, _("Abort job")), JobInfo::stopJobCallback,
-				this);
+		_popupMenu.addItem(gtkutil::IconTextMenuItem(ui::icons::ICON_FOLDER, _("Abort job")), stopJobCallback, this);
 	}
 
 	void JobInfo::stopJobCallback (gpointer data, gpointer userData)

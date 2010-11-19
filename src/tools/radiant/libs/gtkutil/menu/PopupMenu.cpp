@@ -43,7 +43,7 @@ namespace gtkutil
 		// Iterate through the list of MenuItems, enabling or disabling each widget
 		for (MenuItemList::iterator i = _menuItems.begin(); i != _menuItems.end(); ++i) {
 			GtkWidget *widget = i->widget;
-			if (i->test())
+			if (i->test(i->userData))
 				gtk_widget_set_sensitive(widget, TRUE);
 			else
 				gtk_widget_set_sensitive(widget, FALSE);
