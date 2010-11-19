@@ -5059,6 +5059,9 @@ base/textures/tex_alienb/ab_metal01.png | GNU General Public License 2.0 or late
 base/textures/tex_alienb/ab_metal01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_metal01_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_obj_a.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_a_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_a_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_power_sml2.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_power_sml3.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_power_sml4.png | GNU General Public License 2.0 or later | Nate Wright
