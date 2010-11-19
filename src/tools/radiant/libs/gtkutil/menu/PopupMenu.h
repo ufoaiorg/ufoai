@@ -108,6 +108,10 @@ namespace gtkutil
 			 * displayed.
 			 */
 			void show ();
+
+			static bool Callback (gpointer userData) {
+				return false;
+			}
 	};
 } // namespace gtkutil
 

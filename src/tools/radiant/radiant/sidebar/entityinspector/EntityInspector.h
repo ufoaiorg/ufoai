@@ -63,16 +63,34 @@ class EntityInspector: public SelectionSystem::Observer, public gtkutil::SingleI
 
 		// Context menu
 		gtkutil::PopupMenu _contextMenu;
-		static void _onAddKey(gpointer, gpointer);
-		static void _onDeleteKey(gpointer, gpointer);
+		static void _onAddKey (gpointer, gpointer);
+		static void _onDeleteKey (gpointer, gpointer);
+		static void _onCopyKey (gpointer, gpointer);
+		static void _onCutKey (gpointer, gpointer);
+		static void _onPasteKey (gpointer, gpointer);
 
-		static bool _testDeleteKey(gpointer userData);
+		static bool _testDeleteKey (gpointer userData);
+		static bool _testCopyKey (gpointer userData);
+		static bool _testCutKey (gpointer userData);
+		static bool _testPasteKey (gpointer userData);
 
 		// Currently displayed PropertyEditor
 		PropertyEditorPtr _currentPropertyEditor;
 
 		// The last selected key
 		std::string _lastKey;
+
+		// The clipboard for spawnargs
+		struct ClipBoard
+		{
+				std::string key;
+				std::string value;
+
+				bool empty () const
+				{
+					return key.empty();
+				}
+		} _clipBoard;
 
 	private:
 
@@ -108,13 +126,16 @@ class EntityInspector: public SelectionSystem::Observer, public gtkutil::SingleI
 		// Set the keyval on all selected entities from the key and value textboxes
 		void setPropertyFromEntries ();
 
+		// Applies the given key/value pair to the selection (works with multiple selected entities)
+		void applyKeyValueToSelection (const std::string& key, const std::string& value);
+
 		// Static map of property names to PropertyParms objects
 		const PropertyParmMap& getPropertyMap ();
 
 	protected:
 
 		// GTK idle callback, used for refreshing display
-		void onGtkIdle();
+		void onGtkIdle ();
 
 	public:
 

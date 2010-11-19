@@ -11,8 +11,10 @@
 #include "iregistry.h"
 
 #include "scenelib.h"
+#include "selectionlib.h"
 #include "gtkutil/dialog.h"
 #include "gtkutil/StockIconMenuItem.h"
+#include "gtkutil/SeparatorMenuItem.h"
 #include "xmlutil/Document.h"
 #include "signal/signal.h"
 #include "../../map/map.h"
@@ -111,6 +113,73 @@ bool EntityInspector::_testDeleteKey (gpointer userData)
 		return false;
 }
 
+void EntityInspector::_onCopyKey (gpointer data, gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	std::string key = self->getListSelection(PROPERTY_NAME_COLUMN);
+	std::string value = self->getListSelection(PROPERTY_VALUE_COLUMN);
+
+	if (!key.empty()) {
+		self->_clipBoard.key = key;
+		self->_clipBoard.value = value;
+	}
+}
+
+bool EntityInspector::_testCopyKey (gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	return !self->getListSelection(PROPERTY_NAME_COLUMN).empty();
+}
+
+void EntityInspector::_onCutKey (gpointer data, gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	std::string key = self->getListSelection(PROPERTY_NAME_COLUMN);
+	std::string value = self->getListSelection(PROPERTY_VALUE_COLUMN);
+
+	if (!key.empty() && self->_selectedEntity != NULL) {
+		self->_clipBoard.key = key;
+		self->_clipBoard.value = value;
+
+		// Clear the key after copying
+		self->_selectedEntity->setKeyValue(key, "");
+	}
+}
+
+bool EntityInspector::_testCutKey (gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	// Make sure the Delete item is only available for explicit
+	// (non-inherited) properties
+	if (self->getListSelection(INHERITED_FLAG_COLUMN) != "1") {
+		// return true only if selection is not empty
+		return !self->getListSelection(PROPERTY_NAME_COLUMN).empty();
+	} else {
+		return false;
+	}
+}
+
+void EntityInspector::_onPasteKey (gpointer data, gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	if (!self->_clipBoard.key.empty() && !self->_clipBoard.value.empty()) {
+		// Pass the call
+		self->applyKeyValueToSelection(self->_clipBoard.key, self->_clipBoard.value);
+	}
+}
+
+bool EntityInspector::_testPasteKey (gpointer userData)
+{
+	EntityInspector* self = (EntityInspector*) userData;
+	if (GlobalSelectionSystem().getSelectionInfo().entityCount == 0) {
+		// No entities selected
+		return false;
+	}
+
+	// Return true if the clipboard contains data
+	return !self->_clipBoard.key.empty() && !self->_clipBoard.value.empty();
+}
+
 // Create the context menu
 void EntityInspector::createContextMenu ()
 {
@@ -123,6 +192,14 @@ void EntityInspector::createContextMenu ()
 	// Add the menu items to the PopupMenu
 	_contextMenu.addItem(addKey, _onAddKey, this);
 	_contextMenu.addItem(delKey, _onDeleteKey, this, _testDeleteKey);
+
+	// TODO: mattn
+	//_contextMenu.addItem(gtkutil::SeparatorMenuItem(), gtkutil::PopupMenu::Callback, NULL);
+
+	_contextMenu.addItem(gtkutil::StockIconMenuItem(GTK_STOCK_COPY, _("Copy Spawnarg")), _onCopyKey, this, _testCopyKey);
+	_contextMenu.addItem(gtkutil::StockIconMenuItem(GTK_STOCK_CUT, _("Cut Spawnarg")), _onCutKey, this, _testCutKey);
+	_contextMenu.addItem(gtkutil::StockIconMenuItem(GTK_STOCK_PASTE, _("Paste Spawnarg")), _onPasteKey, this,
+			_testPasteKey);
 }
 
 // Return the singleton EntityInspector instance, creating it if it is not yet
@@ -341,12 +418,18 @@ class EntityKeySetter: public SelectionSystem::Visitor
 
 void EntityInspector::setPropertyFromEntries ()
 {
-	// greebo: Instantiate a scoped object to make this operation undoable
-	UndoableCommand command("entitySetProperty");
-
 	// Get the key from the entry box
 	std::string key = gtk_entry_get_text(GTK_ENTRY(_keyEntry));
 	std::string val = gtk_entry_get_text(GTK_ENTRY(_valEntry));
+
+	// Pass the call to the specialised routine
+	applyKeyValueToSelection(key, val);
+}
+
+void EntityInspector::applyKeyValueToSelection (const std::string& key, const std::string& val)
+{
+	// greebo: Instantiate a scoped object to make this operation undoable
+	UndoableCommand command("entitySetProperty");
 
 	if (key.empty() || key == "classname") {
 		return;
@@ -355,6 +438,7 @@ void EntityInspector::setPropertyFromEntries ()
 	// Use EntityKeySetter to set value on all selected entities
 	EntityKeySetter setter(key, val);
 	GlobalSelectionSystem().foreachSelected(setter);
+
 }
 
 // Construct and return static PropertyMap instance
