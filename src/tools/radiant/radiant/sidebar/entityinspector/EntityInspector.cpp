@@ -51,8 +51,7 @@ enum
 EntityInspector::EntityInspector () :
 	_listStore(gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF,
 	G_TYPE_STRING)), _treeView(gtk_tree_view_new_with_model(GTK_TREE_MODEL(_listStore))), _contextMenu(
-			gtkutil::PopupMenu(_treeView)), _idleDraw(MemberCaller<EntityInspector, &EntityInspector::callbackRedraw> (
-			*this)) // Set the IdleDraw
+			gtkutil::PopupMenu(_treeView))
 {
 	_widget = gtk_vbox_new(FALSE, 0);
 
@@ -65,7 +64,7 @@ EntityInspector::EntityInspector () :
 	createContextMenu();
 
 	// Stimulate initial redraw to get the correct status
-	queueDraw();
+	requestIdleCallback();
 
 	// Register self to the SelectionSystem to get notified upon selection changes.
 	GlobalSelectionSystem().addObserver(this);
@@ -247,11 +246,8 @@ std::string EntityInspector::getListSelection (int col)
 	}
 }
 
-// Redraw the GUI elements, such as in response to a key/val change on the
-// selected entity. This is called from the IdleDraw member object when
-// idle.
-
-void EntityInspector::callbackRedraw ()
+// Redraw the GUI elements
+void EntityInspector::onGtkIdle ()
 {
 	// Entity Inspector can only be used on a single entity. Multiple selections
 	// or nothing selected result in a grayed-out dialog, as does the selection
@@ -278,24 +274,17 @@ void EntityInspector::callbackRedraw ()
 void EntityInspector::keyValueChanged ()
 {
 	// Redraw the entity inspector GUI
-	getInstance().queueDraw();
+	getInstance().requestIdleCallback();
 
 	// Set the map modified flag
 	if (getInstance()._selectedEntity != NULL)
 		GlobalMap().setModified(true);
 }
 
-// Pass on a queueDraw request to the contained IdleDraw object.
-
-inline void EntityInspector::queueDraw ()
-{
-	_idleDraw.queueDraw();
-}
-
 // Selection changed callback
 void EntityInspector::selectionChanged ()
 {
-	getInstance().queueDraw();
+	getInstance().requestIdleCallback();
 }
 
 // Set entity property from entry boxes

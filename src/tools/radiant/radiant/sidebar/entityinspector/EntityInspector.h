@@ -4,7 +4,7 @@
 #include "PropertyEditor.h"
 
 #include "iselection.h"
-#include "gtkutil/idledraw.h"
+#include "gtkutil/event/SingleIdleCallback.h"
 #include "gtkutil/menu/PopupMenu.h"
 
 #include <gtk/gtkliststore.h>
@@ -40,7 +40,7 @@ typedef std::map<std::string, PropertyParms> PropertyParmMap;
  * contains a method to return the current instance.
  */
 
-class EntityInspector: public SelectionSystem::Observer
+class EntityInspector: public SelectionSystem::Observer, public gtkutil::SingleIdleCallback
 {
 	private:
 
@@ -70,10 +70,6 @@ class EntityInspector: public SelectionSystem::Observer
 
 		// Currently displayed PropertyEditor
 		PropertyEditorPtr _currentPropertyEditor;
-
-		// GtkUtil IdleDraw class. This allows redraw calls to be scheduled for
-		// when GTK is idle.
-		IdleDraw _idleDraw;
 
 		// The last selected key
 		std::string _lastKey;
@@ -115,6 +111,11 @@ class EntityInspector: public SelectionSystem::Observer
 		// Static map of property names to PropertyParms objects
 		const PropertyParmMap& getPropertyMap ();
 
+	protected:
+
+		// GTK idle callback, used for refreshing display
+		void onGtkIdle();
+
 	public:
 
 		// Constructor
@@ -125,13 +126,6 @@ class EntityInspector: public SelectionSystem::Observer
 
 		// Get the Gtk Widget for display in the main application
 		GtkWidget* getWidget ();
-
-		// Inform the IdleDraw to invoke a redraw when idle
-		void queueDraw ();
-
-		// Redraw the GUI elements. Called by the IdleDraw object when GTK is idle
-		// and a queueDraw request has been passed.
-		void callbackRedraw ();
 
 		// Callback used by the EntityCreator when a key value changes on an entity
 		static void keyValueChanged ();
