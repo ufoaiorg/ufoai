@@ -134,16 +134,6 @@ inline bool Tokeniser_getDouble (Tokeniser& tokeniser, double& f)
 	return false;
 }
 
-inline bool Tokeniser_getInteger (Tokeniser& tokeniser, int& i)
-{
-	const std::string token = tokeniser.getToken();
-	if (token.length() && string_parse_int(token.c_str(), i)) {
-		return true;
-	}
-	Tokeniser_unexpectedError(tokeniser, token, "#integer");
-	return false;
-}
-
 inline bool Tokeniser_getSize (Tokeniser& tokeniser, std::size_t& i)
 {
 	const std::string token = tokeniser.getToken();

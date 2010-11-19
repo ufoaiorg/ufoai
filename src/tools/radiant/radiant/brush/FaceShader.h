@@ -8,8 +8,6 @@
 #include "irender.h"
 #include "shaderlib.h"
 
-#include "ContentsFlagsValue.h"
-
 class FaceShaderObserver
 {
 	public:
@@ -18,6 +16,8 @@ class FaceShaderObserver
 		}
 		virtual void realiseShader () = 0;
 		virtual void unrealiseShader () = 0;
+
+		virtual void shaderChanged () {};
 };
 
 // ----------------------------------------------------------------------------
@@ -52,6 +52,8 @@ inline void brush_check_shader (const std::string& name)
 		globalErrorStream() << "brush face has invalid texture name: '" << name << "'\n";
 	}
 }
+
+#include "ContentsFlagsValue.h"
 
 class FaceShader: public ModuleObserver
 {
@@ -168,7 +170,7 @@ class FaceShader: public ModuleObserver
 		ContentsFlagsValue getFlags () const
 		{
 			ASSERT_MESSAGE(m_realised, "FaceShader::getFlags: flags not valid when unrealised");
-			if (!m_flags.m_specified) {
+			if (!m_flags.isSpecified()) {
 				return ContentsFlagsValue(m_state->getTexture().surfaceFlags, m_state->getTexture().contentFlags,
 						m_state->getTexture().value, true);
 			}

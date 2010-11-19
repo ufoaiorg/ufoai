@@ -5,9 +5,11 @@
 
 #include "ishadersystem.h"
 #include "irender.h"
+#include "ishader.h"
 
 #include "string/string.h"
 #include "../../plugin.h"
+#include "../../../../../shared/defines.h"
 
 OpenGLShader::OpenGLShader (render::OpenGLStateManager& glStateManager) :
 	m_shader(0), m_used(0), _glStateManager(glStateManager)
@@ -412,7 +414,7 @@ void OpenGLShader::construct (const std::string& name)
 
 bool OpenGLShader::isTransparent (const std::string& name)
 {
-	return string::contains(name, "tex_common/") || string::contains(name, "water");
+	return string::contains(name, "tex_common/");
 }
 
 void OpenGLShader::constructNormalShader (const std::string& name)
@@ -423,12 +425,16 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 	OpenGLState& state = appendDefaultPass();
 
 	state.m_texture = m_shader->getTexture()->texture_number;
+	state.m_surfaceFlags = m_shader->getTexture()->surfaceFlags;
+	state.m_contentFlags = m_shader->getTexture()->contentFlags;
 
 	state.m_state = RENDER_FILL | RENDER_TEXTURE_2D | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_LIGHTING
 			| RENDER_SMOOTH;
 	state.m_state |= RENDER_CULLFACE;
-	if ((m_shader->getFlags() & QER_ALPHATEST) != 0) {
+	if (state.m_surfaceFlags & SURF_ALPHATEST) {
 		state.m_state |= RENDER_ALPHATEST;
+		state.m_colour[3] = 0.25;
+		IShader::EAlphaFunc alphafunc;
 		m_shader->getAlphaFunc(&alphafunc, &state.m_alpharef);
 		switch (alphafunc) {
 		case IShader::eAlways:
@@ -450,7 +456,7 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 	state.m_colour[3] = 1.0f;
 
 	bool shouldBeTrans = isTransparent(m_shader->getName());
-	if (shouldBeTrans || (m_shader->getFlags() & QER_TRANS) != 0) {
+	if (shouldBeTrans) {
 		state.m_state |= RENDER_BLEND;
 		state.m_colour[3] = shouldBeTrans ? 0.5 : m_shader->getTrans();
 		state.m_sort = OpenGLState::eSortTranslucent;
@@ -460,6 +466,14 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 		if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA) {
 			state.m_state |= RENDER_DEPTHWRITE;
 		}
+	} else if (state.m_surfaceFlags & SURF_BLEND33) {
+		state.m_state |= RENDER_BLEND;
+		state.m_sort = OpenGLState::eSortTranslucent;
+		state.m_colour[3] = 0.25;
+	} else if (state.m_surfaceFlags & SURF_BLEND66) {
+		state.m_state |= RENDER_BLEND;
+		state.m_sort = OpenGLState::eSortTranslucent;
+		state.m_colour[3] = 0.5;
 	} else if (m_shader->getTexture()->hasAlpha) {
 		state.m_state |= RENDER_BLEND;
 		state.m_sort = OpenGLState::eSortTranslucent;

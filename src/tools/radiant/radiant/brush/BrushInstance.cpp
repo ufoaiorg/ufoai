@@ -182,11 +182,11 @@ void BrushInstance::evaluateViewDependent (const VolumeTest& volume, const Matri
 		{
 			bool* j = faces_visible;
 			ContentsFlagsValue val = m_brush.getFlags();
-			if (GlobalFilterSystem().isVisible("contentflags", val.m_contentFlags)) {
+			if (GlobalFilterSystem().isVisible("contentflags", val.getContentFlags())) {
 				for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i, ++j) {
 					// Check if face is filtered before adding to visibility matrix
 					if (GlobalFilterSystem().isVisible("texture", i->getFace().GetShader())
-							&& GlobalFilterSystem().isVisible("surfaceflags", i->getFace().GetFlags().m_surfaceFlags))
+							&& GlobalFilterSystem().isVisible("surfaceflags", i->getFace().GetFlags().getSurfaceFlags()))
 						*j = i->intersectVolume(volume, localToWorld);
 					else
 						*j = false;

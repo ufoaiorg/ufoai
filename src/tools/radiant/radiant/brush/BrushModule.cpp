@@ -91,9 +91,9 @@ void BrushFaceData_fromFace (const BrushFaceDataCallback& callback, Face& face)
 	faceData.m_p2 = face.getPlane().planePoints()[2];
 	faceData.m_shader = face.GetShader();
 	faceData.m_texdef = face.getTexdef().m_projection.m_texdef;
-	faceData.contents = face.getShader().m_flags.m_contentFlags;
-	faceData.flags = face.getShader().m_flags.m_surfaceFlags;
-	faceData.value = face.getShader().m_flags.m_value;
+	faceData.contents = face.getShader().m_flags.getContentFlags();
+	faceData.flags = face.getShader().m_flags.getSurfaceFlags();
+	faceData.value = face.getShader().m_flags.getValue();
 	callback(faceData);
 }
 typedef ConstReferenceCaller1<BrushFaceDataCallback, Face&, BrushFaceData_fromFace> BrushFaceDataFromFaceCaller;

@@ -111,6 +111,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/brush/brush.cpp \
 	$(RADIANT_BASE)/radiant/brush/brushmanip.cpp \
 	$(RADIANT_BASE)/radiant/brush/BrushModule.cpp \
+	$(RADIANT_BASE)/radiant/brush/ContentsFlagsValue.cpp \
 	$(RADIANT_BASE)/radiant/brush/winding.cpp \
 	$(RADIANT_BASE)/radiant/brush/BrushClass.cpp \
 	$(RADIANT_BASE)/radiant/brush/BrushInstance.cpp \

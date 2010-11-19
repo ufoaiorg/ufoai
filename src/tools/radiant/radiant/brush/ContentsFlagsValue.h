@@ -1,25 +1,12 @@
 #ifndef CONTENTSFLAGSVALUE_H_
 #define CONTENTSFLAGSVALUE_H_
 
-const unsigned int BRUSH_DETAIL_FLAG = 27;
-const unsigned int BRUSH_DETAIL_MASK = (1 << BRUSH_DETAIL_FLAG);
+class FaceShaderObserver;
 
 class ContentsFlagsValue
 {
-	public:
-		ContentsFlagsValue () :
-			m_surfaceFlags(0), m_contentFlags(0), m_value(0), m_specified(false), m_surfaceFlagsDirty(0),
-					m_contentFlagsDirty(0), m_markDirty(0), m_valueDirty(false), m_firstValue(true)
-		{
-		}
-		ContentsFlagsValue (int surfaceFlags, int contentFlags, int value, bool specified, int surfaceFlagsDirty = 0,
-				int contentFlagsDirty = 0, bool valueDirty = false) :
-			m_surfaceFlags(surfaceFlags), m_contentFlags(contentFlags), m_value(value), m_specified(specified),
-					m_surfaceFlagsDirty(surfaceFlagsDirty), m_contentFlagsDirty(contentFlagsDirty), m_markDirty(0),
-					m_valueDirty(valueDirty), m_firstValue(true)
-		{
-		}
-
+	private:
+		FaceShaderObserver* _observer;
 		int m_surfaceFlags;
 		int m_contentFlags;
 		int m_value;
@@ -30,23 +17,54 @@ class ContentsFlagsValue
 		bool m_valueDirty;
 		bool m_firstValue;// marker for value diff calculation. see GetFlags for use
 
-		inline void assignMasked (const ContentsFlagsValue& other)
-		{
-			unsigned int unchangedContentFlags = (m_contentFlags & other.m_contentFlagsDirty);
-			unsigned int changedContentFlags = (other.m_contentFlags & (~other.m_contentFlagsDirty));
-			unsigned int unchangedSurfaceFlags = (m_surfaceFlags & other.m_surfaceFlagsDirty);
-			unsigned int changedSurfaceFlags = (other.m_surfaceFlags & (~other.m_surfaceFlagsDirty));
-			int value = m_value;
-			*this = other;
-			m_contentFlags = unchangedContentFlags | changedContentFlags;
-			m_surfaceFlags = unchangedSurfaceFlags | changedSurfaceFlags;
-			if (m_valueDirty)
-				m_value = value;
-			m_valueDirty = false;
-			//m_contentFlagsDirty = 0;
-			//m_surfaceFlagsDirty = 0;
-			//m_markDirty = 0;
-		}
+	private:
+
+		void notifyChange ();
+
+	public:
+		ContentsFlagsValue ();
+		ContentsFlagsValue (int surfaceFlags, int contentFlags, int value, bool specified, int surfaceFlagsDirty = 0,
+				int contentFlagsDirty = 0, bool valueDirty = false);
+
+		void setObserver (FaceShaderObserver* observer);
+
+		void assignMasked (const ContentsFlagsValue& other);
+
+		bool isSpecified () const;
+		void setSpecified (bool specified);
+
+		int getContentFlags () const;
+		int getContentFlagsDirty () const;
+		void setContentFlags (int contentFlags);
+
+		int getSurfaceFlags () const;
+		int getSurfaceFlagsDirty () const;
+		void setSurfaceFlags (int surfaceFlags);
+
+		int getValue () const;
+		void setValue (int value);
+
+		bool isValueDirty () const;
+		bool isDirty () const;
+		void setDirty (bool dirty);
+
+		int getLevelFlags () const;
+		void setLevelFlags (int levelFlags);
+
+		void moveLevelUp ();
+		void moveLevelDown ();
+
+		bool isDetail () const;
+		void setDetail (bool detail);
+
+		/**
+		 * @brief Get the content and surface flags from a given face
+		 * @note Also generates a diff bitmask of the flag variable given to store
+		 * the flag values in and the current face flags
+		 * @param[in,out] flags The content and surface flag container
+		 * @sa ContentsFlagsValue_assignMasked
+		 */
+		void mergeFlags (ContentsFlagsValue& flags);
 }; // class ContentsFlagsValue
 
 #endif /*CONTENTSFLAGSVALUE_H_*/

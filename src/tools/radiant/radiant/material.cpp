@@ -404,13 +404,12 @@ void MaterialSystem::generateMaterialFromTexture ()
 			if (_material.find(materialDefinition) == std::string::npos) {
 				std::stringstream os;
 				ContentsFlagsValue flags;
-
-				face.GetFlags(flags);
+				ContentsFlagsValue faceFlags(face.GetFlags());
 
 				os << "{" << std::endl;
 				os << "\t" << materialDefinition << std::endl;
 				os << "\t{" << std::endl;
-				generateMaterialForFace(flags.m_contentFlags, flags.m_surfaceFlags, skippedTextureDirectory, os);
+				generateMaterialForFace(flags.getContentFlags(), flags.getSurfaceFlags(), skippedTextureDirectory, os);
 				os << "\t}" << std::endl;
 				os << "}" << std::endl;
 

@@ -16,6 +16,7 @@ Face::Face (FaceObserver* observer) :
 {
 	m_shader.attach(*this);
 	m_plane.copy(Vector3(0, 0, 0), Vector3(64, 0, 0), Vector3(0, 64, 0));
+	getShader().m_flags.setObserver(this);
 	planeChanged();
 }
 Face::Face (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
@@ -25,6 +26,7 @@ Face::Face (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::
 {
 	m_shader.attach(*this);
 	m_plane.copy(p0, p1, p2);
+	getShader().m_flags.setObserver(this);
 	planeChanged();
 }
 Face::Face (const Face& other, FaceObserver* observer) :
@@ -34,6 +36,7 @@ Face::Face (const Face& other, FaceObserver* observer) :
 	m_shader.attach(*this);
 	m_plane.copy(other.m_plane);
 	planepts_assign(m_move_planepts, other.m_move_planepts);
+	getShader().m_flags.setObserver(this);
 	planeChanged();
 }
 Face::~Face ()
@@ -126,8 +129,8 @@ void Face::render (Renderer& renderer, const Matrix4& localToWorld) const
 {
 	// Submit this face to the Renderer only if its shader is not filtered
 	if (GlobalFilterSystem().isVisible("texture", m_shader.getShader())) {
-		if (GlobalFilterSystem().isVisible("surfaceflags", m_shader.getFlags().m_surfaceFlags)
-				&& GlobalFilterSystem().isVisible("contentflags", m_shader.getFlags().m_contentFlags)) {
+		if (GlobalFilterSystem().isVisible("surfaceflags", m_shader.getFlags().getSurfaceFlags())
+				&& GlobalFilterSystem().isVisible("contentflags", m_shader.getFlags().getContentFlags())) {
 			renderer.SetState(m_shader.state(), Renderer::eFullMaterials);
 			renderer.addRenderable(*this, localToWorld);
 		}
@@ -261,23 +264,7 @@ void Face::GetFlags (ContentsFlagsValue& flags) const
 {
 	ContentsFlagsValue oldFlags = flags;
 	flags = m_shader.getFlags();
-
-	// rescue the mark dirty value and old dirty flags
-	flags.m_markDirty = oldFlags.m_markDirty;
-	flags.m_surfaceFlagsDirty = oldFlags.m_surfaceFlagsDirty;
-	flags.m_contentFlagsDirty = oldFlags.m_contentFlagsDirty;
-
-	if (flags.m_markDirty) {
-		// Figure out which buttons are inconsistent
-		flags.m_contentFlagsDirty |= (oldFlags.m_contentFlags ^ flags.m_contentFlags);
-		flags.m_surfaceFlagsDirty |= (oldFlags.m_surfaceFlags ^ flags.m_surfaceFlags);
-	}
-	flags.m_markDirty = 1;
-	// preserve dirty state, don't mark dirty if we only select one face / first face (value in old flags is 0, own value could differ)
-	if (oldFlags.m_valueDirty || ((flags.m_value != oldFlags.m_value) && !oldFlags.m_firstValue)) {
-		flags.m_valueDirty = true;
-	}
-	flags.m_firstValue = false;
+	flags.mergeFlags(oldFlags);
 }
 
 ContentsFlagsValue Face::GetFlags () const
@@ -384,16 +371,12 @@ const FaceShader& Face::getShader () const
 
 bool Face::isDetail () const
 {
-	return (m_shader.m_flags.m_contentFlags & BRUSH_DETAIL_MASK) != 0;
+	return m_shader.m_flags.isDetail();
 }
 void Face::setDetail (bool detail)
 {
 	undoSave();
-	if (detail && !isDetail()) {
-		m_shader.m_flags.m_contentFlags |= BRUSH_DETAIL_MASK;
-	} else if (!detail && isDetail()) {
-		m_shader.m_flags.m_contentFlags &= ~BRUSH_DETAIL_MASK;
-	}
+	m_shader.m_flags.setDetail(detail);
 	m_observer->shaderChanged();
 }
 

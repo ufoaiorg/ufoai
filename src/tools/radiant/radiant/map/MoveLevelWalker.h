@@ -20,26 +20,13 @@ class BrushMoveLevel
 
 		void operator() (Face& face) const
 		{
-			ContentsFlagsValue flags;
-			face.GetFlags(flags);
+			ContentsFlagsValue flags(face.GetFlags());
 
-			int levels = (flags.m_contentFlags >> 8) & 255;
 			if (_up) {
-				levels <<= 1;
-				if (!levels)
-					levels = 1;
+				flags.moveLevelUp();
 			} else {
-				const int newLevel = levels >> 1;
-				if (newLevel != (newLevel & 255))
-					return;
-				levels >>= 1;
+				flags.moveLevelDown();
 			}
-
-			levels &= 255;
-			levels <<= 8;
-
-			flags.m_contentFlags &= levels;
-			flags.m_contentFlags |= levels;
 
 			face.SetFlags(flags);
 		}

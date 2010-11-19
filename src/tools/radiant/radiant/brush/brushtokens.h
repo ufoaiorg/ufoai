@@ -39,11 +39,16 @@ class UFOFaceTokenImporter
 		 * @param tokeniser
 		 * @return
 		 */
-		bool importContentAndSurfaceFlags (FaceShader& faceShader, Tokeniser& tokeniser)
+		void importContentAndSurfaceFlags (ContentsFlagsValue& flags, Tokeniser& tokeniser)
 		{
-			return Tokeniser_getInteger(tokeniser, faceShader.m_flags.m_contentFlags) && Tokeniser_getInteger(
-					tokeniser, faceShader.m_flags.m_surfaceFlags) && Tokeniser_getInteger(tokeniser,
-					faceShader.m_flags.m_value);
+			std::string token = tokeniser.getToken();
+			flags.setContentFlags(string::toInt(token));
+
+			token = tokeniser.getToken();
+			flags.setSurfaceFlags(string::toInt(token));
+
+			token = tokeniser.getToken();
+			flags.setValue(string::toInt(token));
 		}
 
 		/**
@@ -60,7 +65,6 @@ class UFOFaceTokenImporter
 					texdef.m_projection.m_texdef._rotate) && Tokeniser_getFloat(tokeniser,
 					texdef.m_projection.m_texdef._scale[0]) && Tokeniser_getFloat(tokeniser,
 					texdef.m_projection.m_texdef._scale[1]);
-
 		}
 
 		/**
@@ -92,8 +96,8 @@ class UFOFaceTokenImporter
 				Tokeniser_unexpectedError(tokeniser, texture, "#texture-name");
 				return false;
 			}
-			if (texture == "NULL") {
-				faceShader.setShader(GlobalTexturePrefix_get());
+			if (texture == "NULL" || texture.empty()) {
+				faceShader.setShader("");
 			} else {
 				faceShader.setShader(GlobalTexturePrefix_get() + texture);
 			}
@@ -112,11 +116,12 @@ class UFOFaceTokenImporter
 				return false;
 			if (!importTextureDefinition(m_face.getTexdef(), tokeniser))
 				return false;
+
 			if (Tokeniser_nextTokenIsDigit(tokeniser)) {
-				m_face.getShader().m_flags.m_specified = true;
-				if (!importContentAndSurfaceFlags(m_face.getShader(), tokeniser))
-					return false;
+				m_face.getShader().m_flags.setSpecified(true);
+				importContentAndSurfaceFlags(m_face.getShader().m_flags, tokeniser);
 			}
+
 			return true;
 		}
 };
@@ -169,9 +174,9 @@ class UFOFaceTokenExporter
 		 */
 		void exportContentAndSurfaceFlags (const FaceShader& faceShader, TokenWriter& writer) const
 		{
-			writer.writeInteger(faceShader.m_flags.m_contentFlags);
-			writer.writeInteger(faceShader.m_flags.m_surfaceFlags);
-			writer.writeInteger(faceShader.m_flags.m_value);
+			writer.writeInteger(faceShader.m_flags.getContentFlags());
+			writer.writeInteger(faceShader.m_flags.getSurfaceFlags());
+			writer.writeInteger(faceShader.m_flags.getValue());
 		}
 
 		/**
@@ -203,7 +208,7 @@ class UFOFaceTokenExporter
 			exportPlane(m_face.getPlane(), writer);
 			exportTexture(m_face.getShader(), writer);
 			exportTextureDefinition(m_face.getTexdef(), writer);
-			if (m_face.getShader().m_flags.m_specified || m_face.isDetail()) {
+			if (m_face.getShader().m_flags.isSpecified() || m_face.isDetail()) {
 				exportContentAndSurfaceFlags(m_face.getShader(), writer);
 			}
 			writer.nextLine();

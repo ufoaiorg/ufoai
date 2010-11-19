@@ -440,6 +440,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushModule.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushNode.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushVisit.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\ContentsFlagsValue.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\ContentsFlagsValue.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\EdgeInstance.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\Face.cpp" />

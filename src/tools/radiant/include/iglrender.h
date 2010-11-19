@@ -67,6 +67,8 @@ class OpenGLState {
 		GLfloat m_pointsize;
 		GLint m_linestipple_factor;
 		GLushort m_linestipple_pattern;
+		int m_surfaceFlags;
+		int m_contentFlags;
 
 		OpenGLState() {
 		}
@@ -127,6 +129,9 @@ class OpenGLState {
 			m_linestipple_factor = 1;
 			m_linestipple_pattern = 0xaaaa;
 			m_polygonOffset = 0;
+
+			m_surfaceFlags = 0;
+			m_contentFlags = 0;
 		}
 
 		void apply(OpenGLState& current, unsigned int globalstate) {

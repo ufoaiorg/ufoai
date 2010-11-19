@@ -96,8 +96,8 @@ class ForEachFace: public BrushVisitor
 
 		void visit (Face& face) const
 		{
-			m_surfaceFlagsVis = face.getShader().m_flags.m_surfaceFlags;
-			m_contentFlagsVis = face.getShader().m_flags.m_contentFlags;
+			m_surfaceFlagsVis = face.getShader().m_flags.getSurfaceFlags();
+			m_contentFlagsVis = face.getShader().m_flags.getContentFlags();
 		}
 };
 

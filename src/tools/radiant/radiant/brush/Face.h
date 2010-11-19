@@ -139,13 +139,6 @@ class Face: public OpenGLRenderable, public Undoable, public FaceShaderObserver
 		void GetTexdef (TextureProjection& projection) const;
 		void SetTexdef (const TextureProjection& projection);
 
-		/**
-		 * @brief Get the content and surface flags from a given face
-		 * @note Also generates a diff bitmask of the flag variable given to store
-		 * the flag values in and the current face flags
-		 * @param[in,out] flags The content and surface flag container
-		 * @sa ContentsFlagsValue_assignMasked
-		 */
 		void GetFlags (ContentsFlagsValue& flags) const;
 
 		ContentsFlagsValue GetFlags () const;
