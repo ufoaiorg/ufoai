@@ -29,7 +29,7 @@
 
 #include "igl.h"
 
-#if defined(_WIN32)
+#ifdef _WIN32
 
 # include <wtypes.h>
 PROC ( WINAPI * qwglGetProcAddress)(LPCSTR);
@@ -53,7 +53,7 @@ void QGL_Shutdown (OpenGLBinding& table)
 {
 	g_message("Shutting down OpenGL module...");
 
-#if defined(WIN32)
+#ifdef _WIN32
 	qwglGetProcAddress = 0;
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	qglXQueryExtension = 0;
@@ -139,7 +139,7 @@ QGLFunctionPointer QGL_getExtensionFunc (const char* symbol)
 	} else {
 		return (QGLFunctionPointer) qglXGetProcAddressARB(reinterpret_cast<const GLubyte*> (symbol));
 	}
-#elif defined(WIN32)
+#elif defined(_WIN32)
 	ASSERT_NOTNULL(qwglGetProcAddress);
 	return qwglGetProcAddress(symbol);
 #else
@@ -168,7 +168,7 @@ int QGL_Init (OpenGLBinding& table)
 {
 	QGL_clear(table);
 
-#if defined(WIN32)
+#ifdef _WIN32#ifdef _WIN32
 	qwglGetProcAddress = wglGetProcAddress;
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	qglXQueryExtension = glXQueryExtension;

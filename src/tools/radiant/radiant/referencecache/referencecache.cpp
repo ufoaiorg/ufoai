@@ -217,7 +217,7 @@ static NodeSmartReference ModelResource_load (ModelLoader* loader, const std::st
 
 static inline hash_t path_hash (const char* path, hash_t previous = 0)
 {
-#if defined(WIN32)
+#ifdef _WIN32
 	return string_hash_nocase(path, previous);
 #else // UNIX
 	return string_hash(path, previous);

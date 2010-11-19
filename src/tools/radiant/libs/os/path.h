@@ -38,7 +38,7 @@
 /** General utility functions for OS-related tasks
  */
 
-#if defined(WIN32)
+#ifdef _WIN32
 # define OS_CASE_INSENSITIVE
 # ifndef PATH_MAX
 #  define PATH_MAX 260

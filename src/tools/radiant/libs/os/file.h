@@ -27,7 +27,7 @@
 #if !defined(INCLUDED_OS_FILE_H)
 #define INCLUDED_OS_FILE_H
 
-#if defined(WIN32)
+#ifdef _WIN32
 #include <io.h> // _access()
 #define access(path, mode) _access(path, mode)
 #else

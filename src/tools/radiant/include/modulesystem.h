@@ -30,7 +30,7 @@
 #include "generic/static.h"
 #include "debugging/debugging.h"
 
-#if defined(WIN32)
+#ifdef _WIN32
 #define RADIANT_DLLEXPORT __declspec(dllexport)
 #define RADIANT_DLLIMPORT __declspec(dllimport)
 #else

@@ -44,7 +44,7 @@ GdkCursor* create_blank_cursor ()
 	return cursor;
 }
 
-#if defined(WIN32)
+#ifdef _WIN32
 
 #include <gdk/gdkwin32.h>
 

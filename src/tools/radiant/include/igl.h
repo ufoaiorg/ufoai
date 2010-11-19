@@ -35,7 +35,7 @@
 # include <GL/glu.h>
 #endif
 
-#if defined(WIN32)
+#ifdef _WIN32
 #define QGL_DLLEXPORT __stdcall
 #include <GL/glext.h>
 #else

@@ -1236,7 +1236,7 @@ void MainFrame::Create (void)
 
 	gtk_window_set_transient_for(ui::Splash::Instance().getWindow(), window);
 
-#if !defined(WIN32)
+#ifndef _WIN32
 	{
 		GdkPixbuf* pixbuf = gtkutil::getLocalPixbuf(ui::icons::ICON);
 		if (pixbuf != 0) {
