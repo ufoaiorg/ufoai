@@ -73,6 +73,7 @@ void Face::render (RenderStateFlags state) const
 {
 	// TODO: This is a hack to allow to render blended surfaces
 	float colour[4];
+	GLboolean blendActive;
 	const int flags = m_shader.m_flags.getSurfaceFlags();
 	if (flags & (SURF_BLEND33 | SURF_BLEND66)) {
 		glGetFloatv(GL_CURRENT_COLOR, colour);
@@ -80,13 +81,16 @@ void Face::render (RenderStateFlags state) const
 		colour[3] = 0.5;
 		glColor4fv(colour);
 		colour[3] = oldAlpha;
-		glEnable(GL_BLEND);
+		glGetBooleanv(GL_BLEND, &blendActive);
+		if (!blendActive)
+			glEnable(GL_BLEND);
 	}
 
 	m_winding.draw(m_planeTransformed.plane3().normal(), state);
 
 	if (flags & (SURF_BLEND33 | SURF_BLEND66)) {
-		glDisable(GL_BLEND);
+		if (!blendActive)
+			glDisable(GL_BLEND);
 		glColor4fv(colour);
 	}
 }

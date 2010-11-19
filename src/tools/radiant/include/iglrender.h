@@ -28,6 +28,31 @@
 
 //! A collection of opengl state information.
 class OpenGLState {
+	private:
+		void setTextureState(GLint& current, const GLint& texture, GLenum textureUnit) {
+			if (texture != current) {
+				glActiveTexture(textureUnit);
+				glClientActiveTexture(textureUnit);
+				glBindTexture(GL_TEXTURE_2D, texture);
+
+				current = texture;
+			}
+		}
+
+		void setTextureState(GLint& current, const GLint& texture) {
+			if (texture != current) {
+				glBindTexture(GL_TEXTURE_2D, texture);
+				current = texture;
+			}
+		}
+
+		void setState(unsigned int state, unsigned int delta, unsigned int flag, GLenum glflag) {
+			if (delta & state & flag) {
+				glEnable(glflag);
+			} else if (delta & ~state & flag) {
+				glDisable(glflag);
+			}
+		}
 	public:
 		enum ESort {
 			eSortFirst = 0,
@@ -71,33 +96,6 @@ class OpenGLState {
 		OpenGLState() {
 		}
 
-		inline
-		void setTextureState(GLint& current, const GLint& texture, GLenum textureUnit) {
-			if (texture != current) {
-				glActiveTexture(textureUnit);
-				glClientActiveTexture(textureUnit);
-				glBindTexture(GL_TEXTURE_2D, texture);
-
-				current = texture;
-			}
-		}
-
-		inline
-		void setTextureState(GLint& current, const GLint& texture) {
-			if (texture != current) {
-				glBindTexture(GL_TEXTURE_2D, texture);
-				current = texture;
-			}
-		}
-
-		inline
-		void setState(unsigned int state, unsigned int delta, unsigned int flag, GLenum glflag) {
-			if (delta & state & flag) {
-				glEnable(glflag);
-			} else if (delta & ~state & flag) {
-				glDisable(glflag);
-			}
-		}
 
 		void constructDefault() {
 			m_state = RENDER_DEFAULT;
