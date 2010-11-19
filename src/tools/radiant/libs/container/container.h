@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <list>
 #include <set>
+#include <algorithm>
 
 #include "generic/static.h"
 
@@ -279,6 +280,8 @@ inline void swap(UniqueSet<Value>& self, UniqueSet<Value>& other) {
 	self.swap(other);
 }
 }
+
+#include "debugging/debugging.h"
 
 template<typename Type>
 class ReferencePair {

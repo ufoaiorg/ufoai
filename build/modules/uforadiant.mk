@@ -116,6 +116,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/brush/BrushClass.cpp \
 	$(RADIANT_BASE)/radiant/brush/BrushInstance.cpp \
 	$(RADIANT_BASE)/radiant/brush/Face.cpp \
+	$(RADIANT_BASE)/radiant/brush/FaceShader.cpp \
 	$(RADIANT_BASE)/radiant/brush/FaceTexDef.cpp \
 	$(RADIANT_BASE)/radiant/brush/FaceInstance.cpp \
 	$(RADIANT_BASE)/radiant/brush/TextureProjection.cpp \

@@ -9,7 +9,6 @@
 
 #include "string/string.h"
 #include "../../plugin.h"
-#include "../../../../../shared/defines.h"
 
 OpenGLShader::OpenGLShader (render::OpenGLStateManager& glStateManager) :
 	m_shader(0), m_used(0), _glStateManager(glStateManager)

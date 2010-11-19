@@ -448,6 +448,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\FaceInstance.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\FaceInstance.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\FacePlane.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\FaceShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\FaceShader.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\FaceTexDef.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\FaceTexDef.h" />
