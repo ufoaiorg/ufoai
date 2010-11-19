@@ -39,6 +39,8 @@ public:
 };
 
 /// \brief A smart-pointer that uses a counter stored in the object pointed-to.
+/// A class that is wrapped into a smart pointer must implement IncRef and DecRef and must
+/// delete the data in DecRef on its own if the reference count is zero.
 template < typename Type, typename Counter = IncRefDecRefCounter<Type> >
 class SmartPointer : public Counter {
 	Type* m_value;
