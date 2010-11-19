@@ -134,6 +134,9 @@ class EntityCreator
 
 		virtual scene::Node& createEntity (EntityClass* eclass) = 0;
 
+		typedef void (*KeyValueChangedFunc)();
+		virtual void setKeyValueChangedFunc(KeyValueChangedFunc func) = 0;
+
 		virtual void connectEntities (const scene::Path& e1, const scene::Path& e2) = 0;
 
 		virtual void setLightRadii (bool lightRadii) = 0;

@@ -80,6 +80,8 @@ inline scene::Node& node_for_eclass (EntityClass* eclass)
 	return node;
 }
 
+EntityCreator::KeyValueChangedFunc EntityKeyValues::m_entityKeyValueChanged = 0;
+EntityCreator::KeyValueChangedFunc KeyValue::m_entityKeyValueChanged = 0;
 bool g_lightRadii = false;
 bool g_forceLightRadii = false;
 
@@ -115,6 +117,10 @@ class UFOEntityCreator: public EntityCreator
 		scene::Node& createEntity (EntityClass* eclass)
 		{
 			return node_for_eclass(eclass);
+		}
+		void setKeyValueChangedFunc (KeyValueChangedFunc func)
+		{
+			EntityKeyValues::setKeyValueChangedFunc(func);
 		}
 		void connectEntities (const scene::Path& path, const scene::Path& targetPath)
 		{
@@ -152,6 +158,9 @@ class UFOEntityCreator: public EntityCreator
 
 			SceneChangeNotify();
 		}
+
+
+
 		void setLightRadii (bool lightRadii)
 		{
 			g_lightRadii = lightRadii;

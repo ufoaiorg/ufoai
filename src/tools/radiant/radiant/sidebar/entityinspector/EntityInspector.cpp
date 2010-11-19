@@ -7,6 +7,7 @@
 #include "ientity.h"
 #include "ieclass.h"
 #include "iselection.h"
+#include "iundo.h"
 #include "iregistry.h"
 
 #include "scenelib.h"
@@ -50,7 +51,7 @@ enum
 
 EntityInspector::EntityInspector () :
 	_listStore(gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF,
-	G_TYPE_STRING)), _treeView(gtk_tree_view_new_with_model(GTK_TREE_MODEL(_listStore))), _contextMenu(
+			G_TYPE_STRING)), _treeView(gtk_tree_view_new_with_model(GTK_TREE_MODEL(_listStore))), _contextMenu(
 			gtkutil::PopupMenu(_treeView))
 {
 	_widget = gtk_vbox_new(FALSE, 0);
@@ -65,6 +66,10 @@ EntityInspector::EntityInspector () :
 
 	// Stimulate initial redraw to get the correct status
 	requestIdleCallback();
+
+	// Set the function to call when a keyval is changed. This is a requirement
+	// of the EntityCreator interface.
+	GlobalEntityCreator().setKeyValueChangedFunc(EntityInspector::keyValueChanged);
 
 	// Register self to the SelectionSystem to get notified upon selection changes.
 	GlobalSelectionSystem().addObserver(this);
@@ -254,7 +259,9 @@ void EntityInspector::onGtkIdle ()
 	// of something that is not an Entity (worldspawn).
 
 	if (updateSelectedEntity()) {
-		gtk_widget_set_sensitive(_widget, TRUE);
+		gtk_widget_set_sensitive(_editorFrame, TRUE);
+		gtk_widget_set_sensitive(_treeView, TRUE);
+
 		refreshTreeModel(); // get values, already have category tree
 	} else {
 
@@ -265,7 +272,9 @@ void EntityInspector::onGtkIdle ()
 		}
 
 		// Disable the dialog and clear the TreeView
-		gtk_widget_set_sensitive(_widget, FALSE);
+		gtk_widget_set_sensitive(_editorFrame, FALSE);
+		gtk_widget_set_sensitive(_treeView, FALSE);
+
 		gtk_list_store_clear(_listStore);
 	}
 }
@@ -287,29 +296,68 @@ void EntityInspector::selectionChanged ()
 	getInstance().requestIdleCallback();
 }
 
+namespace {
+
+// SelectionSystem visitor to set a keyvalue on each entity, checking for
+// func_static-style name=model requirements
+class EntityKeySetter: public SelectionSystem::Visitor
+{
+		// Key and value to set on all entities
+		std::string _key;
+		std::string _value;
+
+	public:
+
+		// Construct with key and value to set
+		EntityKeySetter (const std::string& k, const std::string& v) :
+			_key(k), _value(v)
+		{
+		}
+
+		// Required visit function
+		void visit (scene::Instance& instance) const
+		{
+			Entity* entity = Node_getEntity(instance.path().top().get());
+			if (entity) {
+				// Check if we have a func_static-style entity
+				std::string name = entity->getKeyValue("name");
+				std::string model = entity->getKeyValue("model");
+				bool isFuncType = (!name.empty() && name == model);
+
+				// Set the actual value
+				entity->setKeyValue(_key, _value);
+
+				// Check for name key changes of func_statics
+				if (isFuncType && _key == "name") {
+					// Adapt the model key along with the name
+					entity->setKeyValue("model", _value);
+				}
+			}
+		}
+};
+}
+
 // Set entity property from entry boxes
 
 void EntityInspector::setPropertyFromEntries ()
 {
+	// greebo: Instantiate a scoped object to make this operation undoable
+	UndoableCommand command("entitySetProperty");
+
+	// Get the key from the entry box
 	std::string key = gtk_entry_get_text(GTK_ENTRY(_keyEntry));
-	if (key.size() > 0 && key != "classname") {
-		std::string name = _selectedEntity->getKeyValue("name");
-		std::string model = _selectedEntity->getKeyValue("model");
-		bool isFuncType = (!name.empty() && name == model);
+	std::string val = gtk_entry_get_text(GTK_ENTRY(_valEntry));
 
-		std::string val = gtk_entry_get_text(GTK_ENTRY(_valEntry));
-		_selectedEntity->setKeyValue(key, val);
-
-		// Check for name key changes of func_statics
-		if (isFuncType && key == "name") {
-			// Adapt the model key along with the name
-			_selectedEntity->setKeyValue("model", val);
-		}
+	if (key.empty() || key == "classname") {
+		return;
 	}
+
+	// Use EntityKeySetter to set value on all selected entities
+	EntityKeySetter setter(key, val);
+	GlobalSelectionSystem().foreachSelected(setter);
 }
 
 // Construct and return static PropertyMap instance
-
 const PropertyParmMap& EntityInspector::getPropertyMap ()
 {
 	// Static instance of local class, which queries the XML Registry
