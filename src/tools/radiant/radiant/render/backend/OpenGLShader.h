@@ -55,6 +55,9 @@ class OpenGLShader: public Shader {
 		/// \todo Define special-case shaders in a data file.
 		void construct(const std::string& name);
 
+		// return true if it's a common texture (tex_common)
+		bool isTransparent(const std::string& name);
+
 		void constructNormalShader(const std::string& name);
 };
 

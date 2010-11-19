@@ -410,6 +410,11 @@ void OpenGLShader::construct (const std::string& name)
 	} // switch
 }
 
+bool OpenGLShader::isTransparent (const std::string& name)
+{
+	return string::contains(name, "tex_common/") || string::contains(name, "water");
+}
+
 void OpenGLShader::constructNormalShader (const std::string& name)
 {
 	// construction from IShader
@@ -422,10 +427,12 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 	state.m_state = RENDER_FILL | RENDER_TEXTURE_2D | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_LIGHTING
 			| RENDER_SMOOTH;
 	state.m_state |= RENDER_CULLFACE;
-	if ((m_shader->getFlags() & QER_ALPHATEST) != 0) {
+	if (m_shader->getTexture()->hasAlpha || (m_shader->getFlags() & QER_ALPHATEST) != 0) {
 		state.m_state |= RENDER_ALPHATEST;
 		IShader::EAlphaFunc alphafunc;
 		m_shader->getAlphaFunc(&alphafunc, &state.m_alpharef);
+		if (m_shader->getTexture()->hasAlpha)
+			state.m_alpharef = 0.5;
 		switch (alphafunc) {
 		case IShader::eAlways:
 			state.m_alphafunc = GL_ALWAYS;
@@ -445,9 +452,10 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 	reinterpret_cast<Vector3&> (state.m_colour) = m_shader->getTexture()->color;
 	state.m_colour[3] = 1.0f;
 
-	if ((m_shader->getFlags() & QER_TRANS) != 0) {
+	bool shouldBeTrans = isTransparent(m_shader->getName());
+	if (shouldBeTrans || (m_shader->getFlags() & QER_TRANS) != 0) {
 		state.m_state |= RENDER_BLEND;
-		state.m_colour[3] = m_shader->getTrans();
+		state.m_colour[3] = shouldBeTrans ? 0.5 : m_shader->getTrans();
 		state.m_sort = OpenGLState::eSortTranslucent;
 		BlendFunc blendFunc = m_shader->getBlendFunc();
 		state.m_blend_src = convertBlendFactor(blendFunc.m_src);

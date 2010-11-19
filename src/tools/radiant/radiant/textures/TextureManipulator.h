@@ -58,6 +58,10 @@ class TextureManipulator: public RegistryKeyObserver, public PreferenceConstruct
 		 */
 		Image* getProcessedImage (Image* input);
 
+		/* Checks whether the give image is using the alpha channel for transparency
+		 */
+		bool hasAlpha (const Image* input) const;
+
 		/* greebo: Performs a fast scan over the pixel data, taking every
 		 * 20th pixel to determine the representative flat shade colour
 		 */

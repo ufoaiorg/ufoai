@@ -41,7 +41,7 @@ struct qtexture_t
 {
 		qtexture_t (const LoadImageCallback& load, const std::string& name) :
 			load(load), name(name), width(0), height(0), texture_number(0),
-			color(0.0, 0.0, 0.0), surfaceFlags(0), contentFlags(0), value(0)
+			color(0.0, 0.0, 0.0), surfaceFlags(0), contentFlags(0), value(0), hasAlpha(false)
 		{
 		}
 		const LoadImageCallback& load;
@@ -50,6 +50,7 @@ struct qtexture_t
 		GLuint texture_number; // gl bind number
 		Colour3 color; // for flat shade mode
 		int surfaceFlags, contentFlags, value;
+		bool hasAlpha;
 };
 
 inline Matrix4 matrix4_rotation_for_vector3 (const Vector3& x, const Vector3& y, const Vector3& z)

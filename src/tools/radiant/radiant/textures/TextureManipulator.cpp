@@ -140,6 +140,22 @@ Colour3 TextureManipulator::getFlatshadeColour (Image* input)
 	return returnValue;
 }
 
+bool TextureManipulator::hasAlpha (const Image* input) const
+{
+	// Calculate the number of pixels in this image
+	int numPixels = input->getWidth() * input->getHeight();
+
+	// Set the pixel pointer to the very first pixel
+	unsigned char* pixels = input->getRGBAPixels();
+	// Go over all the pixels and change their value accordingly
+	for (int i = 0; i < (numPixels * 4); i += 4) {
+		if ((pixels + 3)[i] != 255)
+			return true;
+	}
+
+	return false;
+}
+
 Image* TextureManipulator::getProcessedImage (Image* input)
 {
 	Image* output;

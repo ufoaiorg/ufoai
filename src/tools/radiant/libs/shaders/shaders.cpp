@@ -151,74 +151,11 @@ class ShaderTemplate {
 			m_Name = name;
 		}
 
-		// -----------------------------------------
-
-		bool parseUFO(Tokeniser& tokeniser);
-		bool parseTemplate(Tokeniser& tokeniser);
-
 		void CreateDefault(const std::string& name) {
 			m_textureName = name;
 			setName(name);
 		}
-
-		class MapLayerTemplate {
-				std::string m_texture;
-				BlendFuncExpression m_blendFunc;
-				bool m_clampToBorder;
-				ShaderValue m_alphaTest;
-			public:
-				MapLayerTemplate(const std::string& texture, const BlendFuncExpression& blendFunc,
-						bool clampToBorder, const ShaderValue& alphaTest) :
-					m_texture(texture), m_blendFunc(blendFunc), m_clampToBorder(false),
-							m_alphaTest(alphaTest) {
-				}
-				const std::string& texture() const {
-					return m_texture;
-				}
-				const BlendFuncExpression& blendFunc() const {
-					return m_blendFunc;
-				}
-				bool clampToBorder() const {
-					return m_clampToBorder;
-				}
-				const ShaderValue& alphaTest() const {
-					return m_alphaTest;
-				}
-		};
-		typedef std::vector<MapLayerTemplate> MapLayers;
-		MapLayers m_layers;
-
-	private:
-		bool parseShaderParameters(Tokeniser& tokeniser, ShaderParameters& params);
 };
-
-bool ShaderTemplate::parseShaderParameters(Tokeniser& tokeniser, ShaderParameters& params) {
-	Tokeniser_parseToken(tokeniser, "(");
-	for (;;) {
-		const std::string param = tokeniser.getToken();
-		if (param == ")") {
-			break;
-		}
-		params.push_back(param);
-		const std::string comma = tokeniser.getToken();
-		if (comma == ")") {
-			break;
-		}
-		if (comma != ",") {
-			Tokeniser_unexpectedError(tokeniser, comma, ",");
-			return false;
-		}
-	}
-	return true;
-}
-
-bool ShaderTemplate::parseTemplate(Tokeniser& tokeniser) {
-	m_Name = tokeniser.getToken();
-	if (!parseShaderParameters(tokeniser, m_params))
-		g_warning("shader template: '%s': parameter parse failed\n", m_Name.c_str());
-
-	return false;
-}
 
 typedef SmartPointer<ShaderTemplate> ShaderTemplatePointer;
 typedef std::map<std::string, ShaderTemplatePointer> ShaderTemplateMap;
@@ -381,130 +318,6 @@ typedef std::map<std::string, ShaderPointer, shader_less_t> shaders_t;
 
 shaders_t g_ActiveShaders;
 
-bool ShaderTemplate::parseUFO(Tokeniser& tokeniser) {
-	// name of the qtexture_t we'll use to represent this shader (this one has the "textures/" before)
-	m_textureName = m_Name;
-
-	// we need to read until we hit a balanced }
-	int depth = 0;
-	for (;;) {
-		std::string token = tokeniser.getToken();
-
-		if (token.empty())
-			return false;
-
-		if (token == "{") {
-			++depth;
-			continue;
-		} else if (token == "}") {
-			--depth;
-			if (depth < 0) { // underflow
-				return false;
-			}
-			if (depth == 0) { // end of shader
-				break;
-			}
-
-			continue;
-		}
-
-		if (depth == 1) {
-			if (token == "trans") {
-				if (!Tokeniser_getFloat(tokeniser, m_fTrans))
-					return false;
-				m_nFlags |= QER_TRANS;
-			} else if (token == "alphafunc") {
-				const std::string alphafunc = tokeniser.getToken();
-
-				if (alphafunc.length() == 0) {
-					Tokeniser_unexpectedError(tokeniser, alphafunc, "#alphafunc");
-					return false;
-				}
-
-				if (alphafunc == "equal") {
-					m_AlphaFunc = IShader::eEqual;
-				} else if (alphafunc == "greater") {
-					m_AlphaFunc = IShader::eGreater;
-				} else if (alphafunc == "less") {
-					m_AlphaFunc = IShader::eLess;
-				} else if (alphafunc == "gequal") {
-					m_AlphaFunc = IShader::eGEqual;
-				} else if (alphafunc == "lequal") {
-					m_AlphaFunc = IShader::eLEqual;
-				} else {
-					m_AlphaFunc = IShader::eAlways;
-				}
-
-				m_nFlags |= QER_ALPHATEST;
-
-				if (!Tokeniser_getFloat(tokeniser, m_AlphaRef))
-					return false;
-			} else if (token == "param") {
-				const std::string surfaceparm = tokeniser.getToken();
-
-				if (surfaceparm.length() == 0) {
-					Tokeniser_unexpectedError(tokeniser, surfaceparm, "param");
-					return false;
-				}
-
-				if (surfaceparm == "clip") {
-					m_nFlags |= QER_CLIP;
-				}
-			}
-		}
-	}
-
-	return true;
-}
-
-void ParseShaderFile(Tokeniser& tokeniser, const std::string& filename) {
-	for (;;) {
-		std::string token = tokeniser.getToken();
-		if (token.empty())
-			break;
-
-		if (token != "material" && token != "particle" && token != "skin")
-			tokeniser.ungetToken();
-
-		// first token should be the path + name.. (from base)
-		std::string name = Tokeniser_parseShaderName(tokeniser);
-		ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
-		shaderTemplate->setName(name);
-
-		g_shaders.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
-
-		const bool result = shaderTemplate->parseUFO(tokeniser);
-		if (result) {
-			// do we already have this shader?
-			if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(
-					shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(),
-							ShaderArguments(), filename))).second) {
-				g_debug("Shader '%s' is already in memory, definition in '%s' ignored.\n",
-						shaderTemplate->getName(), filename.c_str());
-			}
-		} else {
-			g_warning("Error parsing shader '%s'\n", shaderTemplate->getName());
-			return;
-		}
-	}
-}
-
-static void LoadShaderFile(const std::string& filename) {
-	const std::string& appPath = GlobalRegistry().get(RKEY_APP_PATH);
-	std::string shadername = appPath + filename;
-
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername));
-	if (file) {
-		g_message("Parsing shaderfile '%s'\n", shadername.c_str());
-
-		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(
-				file->getInputStream()));
-		ParseShaderFile(*tokeniser, shadername);
-	} else {
-		g_warning("Unable to read shaderfile '%s'\n", shadername.c_str());
-	}
-}
-
 void ParseLicensesFile(Tokeniser& tokeniser, const std::string& filename) {
 	for (;;) {
 		std::string token = tokeniser.getToken();
@@ -546,13 +359,6 @@ static void LoadLicenses(const std::string& filename) {
 
 #include "stream/filestream.h"
 
-void Shaders_Load() {
-	LoadShaderFile("shaders/common.shader");
-	LoadShaderFile("shaders/textures.shader");
-	/** @todo add config option */
-	LoadLicenses("../LICENSES");
-}
-
 // will free all GL binded qtextures and shaders
 // NOTE: doesn't make much sense out of Radiant exit or called during a reload
 void Shaders_Free() {
@@ -590,7 +396,9 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver {
 
 		void realise() {
 			if (--g_shaders_unrealised == 0) {
-				Shaders_Load();
+				/** @todo add config option */
+				LoadLicenses("../LICENSES");
+
 				GlobalMaterialSystem()->loadMaterials();
 				g_observers.realise();
 			}

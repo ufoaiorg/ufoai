@@ -50,6 +50,7 @@ void LoadTextureRGBA (qtexture_t* q, Image* image)
 
 	Image* processed = g_manipulator->getProcessedImage(image);
 
+	q->hasAlpha = g_manipulator->hasAlpha(processed);
 	q->color = g_manipulator->getFlatshadeColour(processed);
 
 	glGenTextures(1, &q->texture_number);
