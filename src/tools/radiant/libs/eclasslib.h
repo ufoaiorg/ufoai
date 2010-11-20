@@ -74,40 +74,34 @@ class ListAttributeType
 class EntityClassAttribute
 {
 	public:
-		std::string m_type; /**< type used as entity key and to decide how gui representation will look like @sa EntityAttributeFactory */
-		std::string m_name; /**< name used for display in entityinspector */
-		std::string m_value; /**< current attribute value */
-		std::string m_description; /**< actually not used, could be used as a tooltip @todo use this as tooltip in entityinspector?*/
-		bool m_mandatory; /**< if this is true, the value is needed for the entity to work */
+		std::string type; /**< type used as entity key and to decide how gui representation will look like @sa EntityAttributeFactory */
+		std::string name; /**< name used for display in entityinspector */
+		std::string value; /**< current attribute value */
+		std::string description; /**< actually not used, could be used as a tooltip @todo use this as tooltip in entityinspector?*/
+		bool mandatory; /**< if this is true, the value is needed for the entity to work */
 		EntityClassAttribute ()
 		{
 		}
 		EntityClassAttribute (const std::string& type, const std::string& name, bool mandatory = false, const std::string& value = "",
 				const std::string& description = "") :
-			m_type(type), m_name(name), m_value(value), m_description(description), m_mandatory(mandatory)
+			type(type), name(name), value(value), description(description), mandatory(mandatory)
 		{
+		}
+
+		std::string getNullValue () const
+		{
+			if (type == "spawnflags") {
+				return "0";
+			} else if (type == "float") {
+				return "0.0";
+			}
+			return "-";
 		}
 };
 
 typedef std::pair<std::string, EntityClassAttribute> EntityClassAttributePair;
 typedef std::list<EntityClassAttributePair> EntityClassAttributes;
 typedef std::list<std::string> StringList;
-
-inline const char* EntityClassAttributePair_getName (const EntityClassAttributePair& attributePair)
-{
-	if (!attributePair.second.m_name.empty()) {
-		return attributePair.second.m_name.c_str();
-	}
-	return attributePair.first.c_str();
-}
-
-inline const char* EntityClassAttributePair_getDescription (const EntityClassAttributePair& attributePair)
-{
-	if (!attributePair.second.m_description.empty()) {
-		return attributePair.second.m_description.c_str();
-	}
-	return EntityClassAttributePair_getName(attributePair);
-}
 
 /**
  * Visitor class for EntityClassAttributes.
@@ -193,7 +187,7 @@ class EntityClass
 			for (EntityClassAttributes::const_iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
 				if (attributeName == i->first) {
 					const EntityClassAttribute& attr = i->second;
-					return attr.m_mandatory;
+					return attr.mandatory;
 				}
 			}
 			return false;
@@ -223,8 +217,10 @@ class EntityClass
 		{
 			EntityClassAttribute *attrib = getAttribute(attributeName);
 			//use value if it is set to something
-			if (attrib && attrib->m_value.length() > 0)
-				return attrib->m_value;
+			if (attrib && attrib->value.length() > 0)
+				return attrib->value;
+			else if (attrib)
+				return attrib->getNullValue();
 			return "-";
 		}
 };
@@ -234,7 +230,7 @@ inline std::string EntityClass_valueForKey (const EntityClass& entityClass, cons
 	for (EntityClassAttributes::const_iterator i = entityClass.m_attributes.begin(); i
 			!= entityClass.m_attributes.end(); ++i) {
 		if (key == (*i).first) {
-			return (*i).second.m_value;
+			return (*i).second.value;
 		}
 	}
 	return "";

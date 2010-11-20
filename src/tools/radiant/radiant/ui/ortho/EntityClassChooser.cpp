@@ -157,7 +157,7 @@ namespace ui
 				// Required visit function
 				void visit (const EntityClassAttribute& attribute)
 				{
-					_string += attribute.m_name + ": " + attribute.m_description + "\n";
+					_string += attribute.name + ": " + attribute.description + "\n";
 				}
 
 		} visitor(usageText);

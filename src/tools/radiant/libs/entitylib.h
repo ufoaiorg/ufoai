@@ -679,7 +679,7 @@ class EntityKeyValues: public Entity
 		{
 			for (EntityClassAttributes::const_iterator i = m_eclass->m_attributes.begin(); i
 					!= m_eclass->m_attributes.end(); ++i) {
-				if (i->second.m_mandatory && find(i->first) == m_keyValues.end()) {
+				if (i->second.mandatory && find(i->first) == m_keyValues.end()) {
 					this->setKeyValue(i->first, m_eclass->getDefaultForAttribute(i->first));
 				}
 			}

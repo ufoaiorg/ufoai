@@ -11,6 +11,8 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtktogglebutton.h>
+#include <gtk/gtktreeviewcolumn.h>
+
 #include <map>
 
 /* FORWARD DECLS */
@@ -44,7 +46,8 @@ class EntityInspector: public SelectionSystem::Observer, public gtkutil::SingleI
 {
 	private:
 
-		// Currently selected entity
+		// Currently selected entity, this pointer is only non-NULL if the
+		// current entity selection includes exactly 1 entity.
 		Entity* _selectedEntity;
 
 		// Main EntityInspector widget
@@ -53,9 +56,14 @@ class EntityInspector: public SelectionSystem::Observer, public gtkutil::SingleI
 		// Frame to contain the Property Editor
 		GtkWidget* _editorFrame;
 
+		// The checkbox for showing the eclass properties
+		GtkWidget* _showHelpColumnCheckbox;
+
 		// Key list store and view
 		GtkListStore* _listStore;
 		GtkWidget* _treeView;
+
+		GtkTreeViewColumn* _helpColumn;
 
 		// Key and value edit boxes. These remain available even for multiple entity selections.
 		GtkWidget* _keyEntry;
@@ -110,6 +118,10 @@ class EntityInspector: public SelectionSystem::Observer, public gtkutil::SingleI
 
 		static void _onEntryActivate (GtkWidget*, EntityInspector*);
 		static void _onSetProperty (GtkWidget*, EntityInspector*);
+		static void _onToggleShowHelpIcons (GtkToggleButton*, EntityInspector*);
+
+		static gboolean _onQueryTooltip (GtkWidget* widget, gint x, gint y, gboolean keyboard_mode,
+				GtkTooltip* tooltip, EntityInspector* self);
 
 		// Routines to populate the TreeStore with the keyvals attached to the
 		// currently-selected object.

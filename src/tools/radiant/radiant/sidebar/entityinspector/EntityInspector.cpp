@@ -15,6 +15,10 @@
 #include "gtkutil/dialog.h"
 #include "gtkutil/StockIconMenuItem.h"
 #include "gtkutil/SeparatorMenuItem.h"
+#include "gtkutil/TreeModel.h"
+#include "gtkutil/ScrolledFrame.h"
+#include "gtkutil/image.h"
+
 #include "xmlutil/Document.h"
 #include "signal/signal.h"
 #include "../../map/map.h"
@@ -36,6 +40,8 @@ const int PROPERTYEDITORPANE_MIN_HEIGHT = 90;
 
 const char* PROPERTY_NODES_XPATH = "game/entityInspector//property";
 
+const std::string HELP_ICON_NAME = "helpicon.png";
+
 // TreeView column numbers
 enum
 {
@@ -43,7 +49,8 @@ enum
 	PROPERTY_VALUE_COLUMN,
 	TEXT_COLOUR_COLUMN,
 	PROPERTY_ICON_COLUMN,
-	INHERITED_FLAG_COLUMN,
+	HELP_ICON_COLUMN,
+	HAS_HELP_FLAG_COLUMN,
 	N_COLUMNS
 };
 
@@ -53,13 +60,22 @@ enum
 
 EntityInspector::EntityInspector () :
 	_listStore(gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF,
-			G_TYPE_STRING)), _treeView(gtk_tree_view_new_with_model(GTK_TREE_MODEL(_listStore))), _contextMenu(
-			gtkutil::PopupMenu(_treeView))
+			GDK_TYPE_PIXBUF, G_TYPE_BOOLEAN)), _treeView(gtk_tree_view_new_with_model(GTK_TREE_MODEL(_listStore))),
+			_helpColumn(NULL), _contextMenu(gtkutil::PopupMenu(_treeView))
 {
 	_widget = gtk_vbox_new(FALSE, 0);
 
 	// Pack in GUI components
 
+	GtkWidget* topHBox = gtk_hbox_new(FALSE, 6);
+
+	_showHelpColumnCheckbox = gtk_check_button_new_with_label(_("Show help icons"));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_showHelpColumnCheckbox), FALSE);
+	g_signal_connect(G_OBJECT(_showHelpColumnCheckbox), "toggled", G_CALLBACK(_onToggleShowHelpIcons), this);
+
+	gtk_box_pack_start(GTK_BOX(topHBox), _showHelpColumnCheckbox, FALSE, FALSE, 0);
+
+	gtk_box_pack_start(GTK_BOX(_widget), topHBox, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(_widget), createTreeViewPane(), TRUE, TRUE, 0);
 	gtk_box_pack_start(GTK_BOX(_widget), createDialogPane(), FALSE, FALSE, 0);
 
@@ -90,7 +106,7 @@ void EntityInspector::_onAddKey (gpointer data, gpointer userData)
 		self->_lastKey = property;
 
 		// Add the keyvalue on the entity (triggering the refresh)
-		self->_selectedEntity->setKeyValue(property, "-");
+		self->_selectedEntity->setKeyValue(property, ec.getDefaultForAttribute(property));
 	}
 }
 
@@ -105,11 +121,15 @@ void EntityInspector::_onDeleteKey (gpointer data, gpointer userData)
 bool EntityInspector::_testDeleteKey (gpointer userData)
 {
 	EntityInspector* self = (EntityInspector*) userData;
-	// Make sure the Delete item is only available for explicit
-	// (non-inherited) properties
-	if (self->getListSelection(INHERITED_FLAG_COLUMN) != "1")
+	// Make sure the Delete item is not available for the classname
+	const std::string& name = self->getListSelection(PROPERTY_NAME_COLUMN);
+	if (name != "classname") {
+		// don't allow to delete mandatory properties
+		const EntityClassAttribute* attr = self->_selectedEntity->getEntityClass().getAttribute(name);
+		if (attr != NULL)
+			return !attr->mandatory;
 		return true;
-	else
+	} else
 		return false;
 }
 
@@ -149,14 +169,17 @@ void EntityInspector::_onCutKey (gpointer data, gpointer userData)
 bool EntityInspector::_testCutKey (gpointer userData)
 {
 	EntityInspector* self = (EntityInspector*) userData;
-	// Make sure the Delete item is only available for explicit
-	// (non-inherited) properties
-	if (self->getListSelection(INHERITED_FLAG_COLUMN) != "1") {
+	// Make sure the Cut item is not available for the classname
+	const std::string& name = self->getListSelection(PROPERTY_NAME_COLUMN);
+	if (name != "classname") {
+		// don't allow to cut mandatory properties
+		const EntityClassAttribute* attr = self->_selectedEntity->getEntityClass().getAttribute(name);
+		if (attr != NULL && attr->mandatory)
+			return false;
 		// return true only if selection is not empty
 		return !self->getListSelection(PROPERTY_NAME_COLUMN).empty();
-	} else {
-		return false;
 	}
+	return false;
 }
 
 void EntityInspector::_onPasteKey (gpointer data, gpointer userData)
@@ -268,16 +291,35 @@ GtkWidget* EntityInspector::createTreeViewPane ()
 	gtk_tree_view_column_set_sort_column_id(valCol, PROPERTY_VALUE_COLUMN);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(_treeView), valCol);
 
+	// Help column
+	_helpColumn = gtk_tree_view_column_new();
+	gtk_tree_view_column_set_title(_helpColumn, "?");
+	gtk_tree_view_column_set_spacing(_helpColumn, 3);
+	gtk_tree_view_column_set_visible(_helpColumn, FALSE);
+
+	GdkPixbuf* helpIcon = gtkutil::getLocalPixbuf(HELP_ICON_NAME);
+	if (helpIcon != NULL) {
+		gtk_tree_view_column_set_fixed_width(_helpColumn, gdk_pixbuf_get_width(helpIcon));
+	}
+
+	// Add the help icon
+	GtkCellRenderer* pixRend = gtk_cell_renderer_pixbuf_new();
+	gtk_tree_view_column_pack_start(_helpColumn, pixRend, FALSE);
+	gtk_tree_view_column_set_attributes(_helpColumn, pixRend, "pixbuf", HELP_ICON_COLUMN, NULL);
+
+	gtk_tree_view_append_column(GTK_TREE_VIEW(_treeView), _helpColumn);
+
+	// Connect the tooltip query signal to our custom routine
+	g_object_set(G_OBJECT(_treeView), "has-tooltip", TRUE, NULL);
+	g_signal_connect(G_OBJECT(_treeView), "query-tooltip", G_CALLBACK(_onQueryTooltip), this);
+
 	// Set up the signals
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
 	g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(callbackTreeSelectionChanged), this);
 
 	// Embed the TreeView in a scrolled viewport
-	GtkWidget* scrollWin = gtk_scrolled_window_new(NULL, NULL);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollWin), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollWin), GTK_SHADOW_ETCHED_IN);
-	gtk_widget_set_size_request(scrollWin, TREEVIEW_MIN_WIDTH, TREEVIEW_MIN_HEIGHT);
-	gtk_container_add(GTK_CONTAINER(scrollWin), _treeView);
+	GtkWidget* scrollWin = gtkutil::ScrolledFrame(_treeView);
+	gtk_widget_set_size_request(_treeView, TREEVIEW_MIN_WIDTH, TREEVIEW_MIN_HEIGHT);
 
 	gtk_box_pack_start(GTK_BOX(vbx), scrollWin, TRUE, TRUE, 0);
 
@@ -316,13 +358,7 @@ std::string EntityInspector::getListSelection (int col)
 
 	// Return the selected string if available, else a blank string
 	if (gtk_tree_selection_get_selected(selection, NULL, &tmpIter)) {
-		GValue selString;
-		selString.g_type = 0;
-		gtk_tree_model_get_value(GTK_TREE_MODEL(_listStore), &tmpIter, col, &selString);
-		std::string value = g_value_get_string(&selString);
-		g_value_unset(&selString);
-
-		return value;
+		return gtkutil::TreeModel::getString(GTK_TREE_MODEL(_listStore), &tmpIter, col);
 	} else {
 		return "";
 	}
@@ -338,6 +374,7 @@ void EntityInspector::onGtkIdle ()
 	if (updateSelectedEntity()) {
 		gtk_widget_set_sensitive(_editorFrame, TRUE);
 		gtk_widget_set_sensitive(_treeView, TRUE);
+		gtk_widget_set_sensitive(_showHelpColumnCheckbox, TRUE);
 
 		refreshTreeModel(); // get values, already have category tree
 	} else {
@@ -351,6 +388,7 @@ void EntityInspector::onGtkIdle ()
 		// Disable the dialog and clear the TreeView
 		gtk_widget_set_sensitive(_editorFrame, FALSE);
 		gtk_widget_set_sensitive(_treeView, FALSE);
+		gtk_widget_set_sensitive(_showHelpColumnCheckbox, FALSE);
 
 		gtk_list_store_clear(_listStore);
 	}
@@ -394,20 +432,21 @@ class EntityKeySetter: public SelectionSystem::Visitor
 		// Required visit function
 		void visit (scene::Instance& instance) const
 		{
-			Entity* entity = Node_getEntity(instance.path().top().get());
+			Entity* entity = Node_getEntity(instance.path().top());
 			if (entity) {
-				// Check if we have a func_static-style entity
-				std::string name = entity->getKeyValue("name");
-				std::string model = entity->getKeyValue("model");
-				bool isFuncType = (!name.empty() && name == model);
-
 				// Set the actual value
 				entity->setKeyValue(_key, _value);
+			} else if (Node_isPrimitive(instance.path().top())) {
+				scene::Instance* parent = instance.getParent();
+				// no parent available
+				if (parent == NULL)
+					return;
 
-				// Check for name key changes of func_statics
-				if (isFuncType && _key == "name") {
-					// Adapt the model key along with the name
-					entity->setKeyValue("model", _value);
+				Entity* parentEnt = Node_getEntity(parent->path().top());
+				if (parentEnt != NULL) {
+					// We have child primitive of an entity selected, the change
+					// should go right into that parent entity
+					parentEnt->setKeyValue(_key, _value);
 				}
 			}
 		}
@@ -421,6 +460,12 @@ void EntityInspector::setPropertyFromEntries ()
 	// Get the key from the entry box
 	std::string key = gtk_entry_get_text(GTK_ENTRY(_keyEntry));
 	std::string val = gtk_entry_get_text(GTK_ENTRY(_valEntry));
+
+	//  Baal: check key and value strings for newline characters
+	if (string::removeNewlines(key))
+		gtk_entry_set_text(GTK_ENTRY(_keyEntry ), key.c_str());
+	if (string::removeNewlines(val))
+		gtk_entry_set_text(GTK_ENTRY(_valEntry ), val.c_str());
 
 	// Pass the call to the specialised routine
 	applyKeyValueToSelection(key, val);
@@ -491,6 +536,63 @@ void EntityInspector::_onEntryActivate (GtkWidget* w, EntityInspector* self)
 	gtk_widget_grab_focus(self->_keyEntry);
 }
 
+void EntityInspector::_onToggleShowHelpIcons (GtkToggleButton* b, EntityInspector* self)
+{
+	// Set the visibility of the column accordingly
+	gtk_tree_view_column_set_visible(self->_helpColumn, gtk_toggle_button_get_active(b));
+}
+
+gboolean EntityInspector::_onQueryTooltip (GtkWidget* widget, gint x, gint y, gboolean keyboard_mode,
+		GtkTooltip* tooltip, EntityInspector* self)
+{
+	if (self->_selectedEntity == NULL)
+		return FALSE; // no single entity selected
+
+	GtkTreeView* tv = GTK_TREE_VIEW(widget);
+	bool showToolTip = false;
+
+	// greebo: Important: convert the widget coordinates to bin coordinates first
+	gint binX, binY;
+	gtk_tree_view_convert_widget_to_bin_window_coords(tv, x, y, &binX, &binY);
+
+	gint cellx, celly;
+	GtkTreeViewColumn* column = NULL;
+	GtkTreePath* path = NULL;
+
+	if (gtk_tree_view_get_path_at_pos(tv, binX, binY, &path, &column, &cellx, &celly)) {
+		// Get the iter of the row pointed at
+		GtkTreeIter iter;
+		GtkTreeModel* model = GTK_TREE_MODEL(self->_listStore);
+		if (gtk_tree_model_get_iter(model, &iter, path)) {
+			bool hasHelp = gtkutil::TreeModel::getBoolean(model, &iter, HAS_HELP_FLAG_COLUMN);
+
+			if (hasHelp) {
+				const std::string key = gtkutil::TreeModel::getString(model, &iter, PROPERTY_NAME_COLUMN);
+
+				const EntityClass& eclass = self->_selectedEntity->getEntityClass();
+				// Find the attribute on the eclass, that's where the descriptions are defined
+				const EntityClassAttribute* attr = eclass.getAttribute(key);
+				if (attr != NULL && !attr->description.empty()) {
+					// Check the description of the focused item
+					gtk_tree_view_set_tooltip_row(tv, tooltip, path);
+					gtk_tooltip_set_markup(tooltip, attr->description.c_str());
+					return TRUE;
+				}
+			}
+
+			return FALSE;
+		}
+
+		return FALSE;
+	}
+
+	if (path != NULL) {
+		gtk_tree_path_free(path);
+	}
+
+	return showToolTip ? TRUE : FALSE;
+}
+
 /* END GTK CALLBACKS */
 
 // Update the PropertyEditor pane, displaying the PropertyEditor if necessary
@@ -520,7 +622,7 @@ void EntityInspector::treeSelectionChanged ()
 		if (attr == NULL)
 			type = "";
 		else
-			type = attr->m_type;
+			type = attr->type;
 	}
 
 	// Remove the existing PropertyEditor widget, if there is one
@@ -589,15 +691,18 @@ void EntityInspector::refreshTreeModel ()
 				// Look up type for this key. First check the property parm map,
 				// then the entity class itself. If nothing is found, leave blank.
 				PropertyParmMap::const_iterator typeIter = _map.find(key);
+
+				const EntityClassAttribute* attr = _eclass.getAttribute(key);
+				bool hasDescription = attr ? !attr->description.empty() : false;
+
 				std::string type;
 				if (typeIter != _map.end()) {
 					type = typeIter->second.type;
 				} else {
-					const EntityClassAttribute *attr = _eclass.getAttribute(key);
 					if (attr == NULL)
 						type = key;
 					else
-						type = attr->m_type;
+						type = attr->type;
 				}
 
 				// Append the details to the treestore
@@ -605,8 +710,9 @@ void EntityInspector::refreshTreeModel ()
 				gtk_list_store_append(_store, &iter);
 				gtk_list_store_set(_store, &iter, PROPERTY_NAME_COLUMN, key.c_str(), PROPERTY_VALUE_COLUMN,
 						value.c_str(), TEXT_COLOUR_COLUMN, "black", PROPERTY_ICON_COLUMN,
-						PropertyEditorFactory::getPixbufFor(type), INHERITED_FLAG_COLUMN, "", // not inherited
-						-1);
+						PropertyEditorFactory::getPixbufFor(type), HELP_ICON_COLUMN,
+						hasDescription ? gtkutil::getLocalPixbuf(HELP_ICON_NAME) : NULL, HAS_HELP_FLAG_COLUMN,
+						hasDescription ? TRUE : FALSE, -1);
 
 				// If this was the last selected key, save the Iter so we can
 				// select it again

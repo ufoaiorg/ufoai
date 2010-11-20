@@ -100,7 +100,7 @@ static void Eclass_ParseAttribute (EntityClass *e, entityKeyDef_t *keydef)
 		// string
 	}
 
-	EntityClassAttribute attribute = EntityClassAttribute(type, _(attributeName.c_str()), mandatory, value, desc);
+	EntityClassAttribute attribute = EntityClassAttribute(type, attributeName, mandatory, value, desc);
 	EntityClass_insertAttribute(*e, attributeName, attribute);
 }
 
@@ -119,9 +119,9 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 
 	for (int idx = 0; idx < definition->numKeyDefs; idx++) {
 		entityKeyDef_t keydef = definition->keyDefs[idx];
-		const char *keyName = keydef.name;
+		const std::string keyName = keydef.name;
 
-		if (!strcmp(keyName, "color")) {
+		if (keyName == "color") {
 			//not using _color as this is a valid attribute flag
 			// grab the color, reformat as texture name
 			const int r = sscanf(keydef.desc, "%f %f %f", &e->color[0], &e->color[1], &e->color[2]);
@@ -129,7 +129,7 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 				g_message("Invalid color token given\n");
 				return 0;
 			}
-		} else if (!strcmp(keyName, "size")) {
+		} else if (keyName == "size") {
 			e->fixedsize = true;
 			const int r = sscanf(keydef.desc, "%f %f %f %f %f %f", &e->mins[0], &e->mins[1], &e->mins[2], &e->maxs[0],
 					&e->maxs[1], &e->maxs[2]);
@@ -137,9 +137,9 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 				g_message("Invalid size token given\n");
 				return 0;
 			}
-		} else if (!strcmp(keyName, "description")) {
+		} else if (keyName == "description") {
 			e->m_comments = keydef.desc;
-		} else if (!strcmp(keyName, "spawnflags")) {
+		} else if (keyName == "spawnflags") {
 			if (keydef.flags & ED_ABSTRACT) {
 				/* there are two keydefs, abstract holds the valid levelflags, the other one default value and type */
 				const char *flags = keydef.desc;
@@ -147,20 +147,21 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 			} else {
 				Eclass_ParseAttribute(e, &keydef);
 			}
-		} else if (!strcmp(keyName, "classname")) {
+		} else if (keyName == "classname") {
 			/* ignore, read from head */
 			continue;
-		} else if (!strcmp(keyName, "model")) {
+		} else if (keyName == "model") {
 			/** @todo what does that modelpath stuff do? it does not read anything from keydef */
 			e->m_modelpath = os::standardPath(e->m_modelpath);
 			const bool mandatory = (keydef.flags & ED_MANDATORY);
-			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model", mandatory));
+			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "model", mandatory));
 		} else {
 			/* all other keys are valid attribute keys */
 			Eclass_ParseAttribute(e, &keydef);
 		}
 	}
 
+#if 0
 	/**
 	 * @todo direction and angle are 2 types used for different display
 	 * (see entityinspector DirectionAttribute and AngleAttribute)
@@ -170,11 +171,12 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 	EntityClassAttribute *angle = e->getAttribute("angle");
 	if (angle) {
 		if (e->fixedsize) {
-			angle->m_name = _("Yaw Angle");
+			angle->name = _("Yaw Angle");
 		} else {
-			angle->m_name = _("Direction");
+			angle->name = _("Direction");
 		}
 	}
+#endif
 	eclass_capture_state(e);
 
 	return e;

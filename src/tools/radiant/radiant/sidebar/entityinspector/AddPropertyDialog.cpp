@@ -151,15 +151,15 @@ class CustomPropertyAdder: public EntityClassAttributeVisitor
 		{
 			// Only add the property if its value is empty, this indicates a
 			// *possible* key rather than one which is already set
-			if (attr.m_value.empty()) {
+			if (attr.value.empty()) {
 				// Escape any Pango markup in the attribute name (e.g. "<" or ">")
-				gchar* escName = g_markup_escape_text(attr.m_name.c_str(), -1);
+				gchar* escName = g_markup_escape_text(attr.name.c_str(), -1);
 
 				GtkTreeIter tmp;
 				gtk_tree_store_append(_store, &tmp, _parent);
 				gtk_tree_store_set(_store, &tmp, DISPLAY_NAME_COLUMN, escName, PROPERTY_NAME_COLUMN,
-						attr.m_name.c_str(), ICON_COLUMN, PropertyEditorFactory::getPixbufFor(attr.m_type),
-						DESCRIPTION_COLUMN, attr.m_description.c_str(), -1);
+						attr.name.c_str(), ICON_COLUMN, PropertyEditorFactory::getPixbufFor(attr.type),
+						DESCRIPTION_COLUMN, attr.description.c_str(), -1);
 
 				// Free the escaped string
 				g_free(escName);

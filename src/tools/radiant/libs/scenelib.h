@@ -622,6 +622,10 @@ namespace scene
 				}
 				return m_parentSelected;
 			}
+
+			Instance* getParent() const {
+				return m_parent;
+			}
 	};
 }
 

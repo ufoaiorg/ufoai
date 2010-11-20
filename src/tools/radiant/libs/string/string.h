@@ -392,6 +392,36 @@ namespace string
 
 		return std::string(text);
 	}
+
+	// inline newline (\r and \n) removal
+	// true if newlines where replaced, false if no newlines where in the source string
+	inline bool removeNewlines (std::string& string)
+	{
+		int count = 0;
+
+		// Baal: check string for newline characters \n \r and count them
+		for (std::string::const_iterator i = string.begin(); i != string.end(); i++)
+			if (*i == '\n' || *i == '\r')
+				count++;
+
+		// Baal: copy the string and remove newlines (only if one of these was found before)
+		if (count > 0) {
+			std::string temp(string.length() - count, 0);
+			std::string::const_iterator stringIt;
+			std::string::iterator tempIt;
+
+			for ((stringIt = string.begin(), tempIt = temp.begin()); stringIt != string.end(); stringIt++) {
+				if (*stringIt == '\n' || *stringIt == '\r')
+					continue;
+
+				*tempIt++ = *stringIt;
+			}
+			string = temp;
+			return true;
+		}
+		return false;
+	}
+
 }
 
 #endif
