@@ -320,7 +320,7 @@ entity worldspawn {
 		maxteams		"Max. teams for multiplayer"
 		maxlevel		"Highest selectable level [1-8]"
 		nextmap			"The map that should be started after this one was finished"
-		randomspawn		"Use random spawn positions for the actors to spawn them"
+		randomspawn		"Use random spawn positions for the actors to spawn them - activate by setting this to 1"
 		light_night		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
 		angles_night	"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
 		color_night		"Controls sunlight colour, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
