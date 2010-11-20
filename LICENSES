@@ -1534,6 +1534,8 @@ base/models/objects/trucks/truck2/load_gm.png | GNU General Public License 2.0 o
 base/models/objects/trucks/truck2/truck.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/truck2/truck.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/truck2/truck_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
+base/models/objects/trucks/truck3/truck03.png | GNU General Public License 2.0 or later | Tinker
+base/models/objects/trucks/truck3/truck3.md2 | GNU General Public License 2.0 or later | Tinker
 base/models/objects/trucks/watertruck/watertruck.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/watertruck/watertruck.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/watertruck/watertruck_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
@@ -6926,6 +6928,8 @@ radiant/prefabs/misc/trashbin001.map | GNU General Public License 2.0 or later |
 radiant/prefabs/office/whiteboard.map | GNU General Public License 2.0
 radiant/prefabs/pipes.map | GNU General Public License 2.0
 radiant/prefabs/trucks/military_truck2.map | GNU General Public License 2.0
+radiant/prefabs/trucks/truck3.jpg | GNU General Public License 2.0 | Tinker;Nate Wright
+radiant/prefabs/trucks/truck3.map | GNU General Public License 2.0 | Tinker;Nate Wright
 radiant/prefabs/ufos/ufo_fighter.map | GNU General Public License 2.0
 radiant/prefabs/ufos/ufo_scout.map | GNU General Public License 2.0
 radiant/prefabs/ufos/ufo_supply.map | GNU General Public License 2.0
