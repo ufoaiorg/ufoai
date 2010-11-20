@@ -997,10 +997,8 @@ qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
  */
 void CP_MissionNotifyBaseDestroyed (const base_t *base)
 {
-	linkedList_t *list = ccs.missions;
-
-	for (; list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
+	mission_t *mission;
+	CP_MissionForeach(mission) {
 		/* Check if this is a base attack mission attacking this base */
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->data.base) {
 			if (base == mission->data.base) {
@@ -1017,16 +1015,12 @@ void CP_MissionNotifyBaseDestroyed (const base_t *base)
  */
 void CP_MissionNotifyInstallationDestroyed (const installation_t const *installation)
 {
-	linkedList_t *missionlist = ccs.missions;
-
-	while (missionlist) {
-		mission_t *mission = (mission_t*) missionlist->data;
-
+	mission_t *mission;
+	CP_MissionForeach(mission) {
 		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data.installation) {
 			if (mission->data.installation == installation)
 				CP_InterceptMissionLeave(mission, qfalse);
 		}
-		missionlist = missionlist->next;
 	}
 }
 

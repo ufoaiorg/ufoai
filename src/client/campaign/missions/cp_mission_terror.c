@@ -105,13 +105,12 @@ static const city_t* CP_ChooseCity (void)
 
 static const mission_t* CP_TerrorInCity (const city_t *city)
 {
-	const linkedList_t *list = ccs.missions;
+	mission_t *mission;
 
 	if (!city)
 		return NULL;
 
-	for (;list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		if (mission->category == INTERESTCATEGORY_TERROR_ATTACK
 		 && mission->stage <= STAGE_TERROR_MISSION
 		 && Vector2Equal(mission->pos, city->pos))

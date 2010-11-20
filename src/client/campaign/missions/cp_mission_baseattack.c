@@ -240,7 +240,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 void CP_CheckBaseAttacks (void)
 {
 	mission_t *mission;
-	LIST_Foreach(ccs.missions, mission_t, mission) {
+	CP_MissionForeach(mission) {
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK)
 			CP_BaseAttackStartMission(mission);
 	}

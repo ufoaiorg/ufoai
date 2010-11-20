@@ -76,10 +76,8 @@ nation_t *NAT_GetNationByID (const char *nationID)
  */
 void NAT_UpdateHappinessForAllNations (const float minhappiness)
 {
-	const linkedList_t *list = ccs.missions;
-
-	for (;list; list = list->next) {
-		const mission_t *mission = (const mission_t *)list->data;
+	mission_t *mission;
+	CP_MissionForeach(mission) {
 		nation_t *nation = MAP_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
 

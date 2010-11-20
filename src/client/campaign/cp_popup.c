@@ -232,9 +232,8 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 
 	/* Set missions in popup_aircraft */
 	if (AIR_GetTeamSize(aircraft) > 0) {
-		const linkedList_t *list = ccs.missions;
-		for (; list; list = list->next) {
-			mission_t *tempMission = (mission_t *)list->data;
+		mission_t *tempMission;
+		CP_MissionForeach(tempMission) {
 			if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
 				continue;
 

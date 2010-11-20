@@ -187,14 +187,13 @@ int CP_GetAverageXVIRate (void)
  */
 void CP_SpreadXVI (void)
 {
-	const linkedList_t *list = ccs.missions;
+	mission_t *mission;
 
 	/* don't check if XVI spreading didn't start yet */
 	if (!CP_IsXVIResearched())
 		return;
 
-	for (;list; list = list->next) {
-		const mission_t *mission = (const mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		if (mission->stage == STAGE_SPREAD_XVI)
 			CP_SpreadXVIAtPos(mission->pos);
 	}
