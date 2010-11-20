@@ -101,6 +101,8 @@ public:
 		}
 		_events.clear();
 
+		saveEventListToRegistry();
+
 		globalOutputStream() << "EventManager successfully shut down.\n";
 	}
 
@@ -487,16 +489,6 @@ public:
 		}
 	}
 
-	void saveEventListToRegistry() {
-		const std::string rootKey = "user/ui/input";
-
-		// The visitor class to save each event definition into the registry
-		// Note: the SaveEventVisitor automatically wipes all the existing shortcuts from the registry
-		SaveEventVisitor visitor(rootKey, this);
-
-		foreachEvent(&visitor);
-	}
-
 	void removeEvent(const std::string& eventName) {
 		// Try to lookup the command
 		EventMap::iterator i = _events.find(eventName);
@@ -540,6 +532,16 @@ public:
 	}
 
 private:
+
+	void saveEventListToRegistry() {
+		const std::string rootKey = "user/ui/input";
+
+		// The visitor class to save each event definition into the registry
+		// Note: the SaveEventVisitor automatically wipes all the existing shortcuts from the registry
+		SaveEventVisitor visitor(rootKey, this);
+
+		foreachEvent(&visitor);
+	}
 
 	bool duplicateAccelerator(const std::string& key, const std::string& modifiers, IEvent* event) {
 		AcceleratorList list = findAccelerator(key, modifiers);
