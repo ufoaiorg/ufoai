@@ -239,6 +239,7 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  * @param[in] x Current x position of the bounded box
  * @param[in] y Current y position of the bounded box
  * @param[in] width Current width of the bounded box
+ * @param[in] height Current height of the bounded box
  * @param[in] text The string to draw
  * @param[in] method Truncation method
  * @image html http://ufoai.ninex.info/wiki/images/Text_position.png

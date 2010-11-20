@@ -503,7 +503,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 }
 
 /**
- * @bref Return a variable from the context
+ * @brief Return a variable from the context
  * @param context Call context
  * @param relativeVarId id of the variable relative to the context
  */

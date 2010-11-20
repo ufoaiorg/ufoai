@@ -136,7 +136,7 @@ typedef union {
  * <ul> <li>Each command (EA_ACTION like EA_CALL, EA_CMD...) uses its own action structure. It can sometimes use child actions, or can be a leaf.</li>
  * <li> Operators (EA_OPERATOR_*) use binary tree structure (left and right operands), else are unary.</li>
  * <li> A value (EA_VALUE_*) is a terminal action (a leaf).</li></ul>
- * @fixme Merge terminal and nonTerminal, this way is finally stupid. Left can be terminal and right can be non terminal,
+ * @todo FIXME Merge terminal and nonTerminal, this way is finally stupid. Left can be terminal and right can be non terminal,
  * then the structure make non sens and can create hidden bugs.
  */
 typedef struct uiAction_s {
