@@ -472,6 +472,12 @@ void Com_Error (int code, const char *fmt, ...)
 	}
 }
 
+void Com_Init (void)
+{
+	if (setjmp(abortframe))
+		Sys_Error("Error during initialization");
+}
+
 void Com_Drop (void)
 {
 	longjmp(abortframe, -1);
@@ -1011,8 +1017,7 @@ void Qcommon_Init (int argc, const char **argv)
 	com_genericPool = Mem_CreatePool("Generic");
 	com_networkPool = Mem_CreatePool("Network");
 
-	if (setjmp(abortframe))
-		Sys_Error("Error during initialization");
+	Com_Init();
 
 	memset(&csi, 0, sizeof(csi));
 

@@ -215,6 +215,7 @@ void Com_EndRedirect(void);
 void Com_MakeTimestamp(char* ts, const size_t tslen);
 void Com_vPrintf(const char *fmt, va_list);
 
+void Com_Init(void);
 void Com_Drop(void) __attribute__((noreturn));
 void Com_Quit(void);
 void Com_WriteConfigToFile(const char *filename);

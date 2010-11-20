@@ -56,6 +56,8 @@ void TEST_vPrintf (const char *fmt, va_list argptr)
 
 void TEST_Init (void)
 {
+	Com_Init();
+
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
 	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
