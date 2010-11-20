@@ -91,6 +91,10 @@ EntityInspector::EntityInspector () :
 
 	// Register self to the SelectionSystem to get notified upon selection changes.
 	GlobalSelectionSystem().addObserver(this);
+
+	// Observe the Undo system for undo/redo operations, to refresh the
+	// keyvalues when this happens
+	GlobalUndoSystem().addObserver(this);
 }
 
 void EntityInspector::_onAddKey (gpointer data, gpointer userData)
@@ -223,6 +227,18 @@ void EntityInspector::createContextMenu ()
 	_contextMenu.addItem(gtkutil::StockIconMenuItem(GTK_STOCK_CUT, _("Cut Spawnarg")), _onCutKey, this, _testCutKey);
 	_contextMenu.addItem(gtkutil::StockIconMenuItem(GTK_STOCK_PASTE, _("Paste Spawnarg")), _onPasteKey, this,
 			_testPasteKey);
+}
+
+void EntityInspector::postUndo()
+{
+	// Now rescan the selection and update the stores
+	getInstance().requestIdleCallback();
+}
+
+void EntityInspector::postRedo()
+{
+	// Now rescan the selection and update the stores
+	getInstance().requestIdleCallback();
 }
 
 // Return the singleton EntityInspector instance, creating it if it is not yet

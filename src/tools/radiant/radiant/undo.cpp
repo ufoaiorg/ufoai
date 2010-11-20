@@ -49,7 +49,8 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 		STRING_CONSTANT(Name, "*");
 
 		// Return the static instance
-		UndoSystem* getTable() {
+		UndoSystem* getTable ()
+		{
 			return this;
 		}
 
@@ -63,6 +64,10 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 
 		typedef std::map<Undoable*, undo::UndoStackFiller> UndoablesMap;
 		UndoablesMap _undoables;
+
+		// The operation Observers which get notified on certain events
+		typedef std::set<Observer*> ObserverSet;
+		ObserverSet _observers;
 
 		std::size_t _undoLevels;
 
@@ -87,7 +92,8 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 		}
 
 		// Gets called as soon as the observed registry keys get changed
-		void keyChanged(const std::string& changedKey, const std::string& newValue) {
+		void keyChanged (const std::string& changedKey, const std::string& newValue)
+		{
 			_undoLevels = GlobalRegistry().getInt(RKEY_UNDO_QUEUE_SIZE);
 		}
 
@@ -180,6 +186,11 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 				operation->_snapshot.restore();
 				finishRedo(operation->_command);
 				_undoStack.pop_back();
+
+				for (ObserverSet::iterator i = _observers.begin(); i != _observers.end(); /* in-loop */) {
+					Observer* observer = *(i++);
+					observer->postUndo();
+				}
 			}
 		}
 
@@ -196,6 +207,11 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 				operation->_snapshot.restore();
 				finishUndo(operation->_command);
 				_redoStack.pop_back();
+
+				for (ObserverSet::iterator i = _observers.begin(); i != _observers.end(); /* in-loop */) {
+					Observer* observer = *(i++);
+					observer->postRedo();
+				}
 			}
 		}
 
@@ -205,6 +221,17 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 			_undoStack.clear();
 			_redoStack.clear();
 			trackersClear();
+			_observers.clear();
+		}
+
+		void addObserver (Observer* observer)
+		{
+			_observers.insert(observer);
+		}
+
+		void removeObserver (Observer* observer)
+		{
+			_observers.erase(observer);
 		}
 
 		void clearRedo ()
@@ -259,14 +286,16 @@ class RadiantUndoSystem: public UndoSystem, public PreferenceConstructor, public
 		}
 
 		// Gets called by the PreferenceSystem as request to create the according settings page
-		void constructPreferencePage(PreferenceGroup& group) {
+		void constructPreferencePage (PreferenceGroup& group)
+		{
 			PreferencesPage* page(group.createPage(_("Undo"), _("Undo Queue Settings")));
 			page->appendSpinner(_("Undo Queue Size"), RKEY_UNDO_QUEUE_SIZE, 0, 1024, 1);
 		}
 
 	private:
 		// Assigns the given stack to all of the Undoables listed in the map
-		void mark_undoables(undo::UndoStack* stack) {
+		void mark_undoables (undo::UndoStack* stack)
+		{
 			for (UndoablesMap::iterator i = _undoables.begin(); i != _undoables.end(); ++i) {
 				i->second.setStack(stack);
 			}

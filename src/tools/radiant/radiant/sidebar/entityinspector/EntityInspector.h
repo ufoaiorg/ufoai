@@ -4,6 +4,8 @@
 #include "PropertyEditor.h"
 
 #include "iselection.h"
+#include "iundo.h"
+
 #include "gtkutil/event/SingleIdleCallback.h"
 #include "gtkutil/menu/PopupMenu.h"
 
@@ -42,7 +44,9 @@ typedef std::map<std::string, PropertyParms> PropertyParmMap;
  * contains a method to return the current instance.
  */
 
-class EntityInspector: public SelectionSystem::Observer, public gtkutil::SingleIdleCallback
+class EntityInspector: public SelectionSystem::Observer,
+		public gtkutil::SingleIdleCallback,
+		public UndoSystem::Observer
 {
 	private:
 
@@ -167,6 +171,10 @@ class EntityInspector: public SelectionSystem::Observer, public gtkutil::SingleI
 		 */
 		void selectionChanged ();
 
+		// Gets called after an undo operation
+		void postUndo ();
+		// Gets called after a redo operation
+		void postRedo ();
 };
 
 } // namespace ui
