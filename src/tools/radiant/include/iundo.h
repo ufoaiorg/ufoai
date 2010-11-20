@@ -127,6 +127,8 @@ class UndoSystem
 
 		class Observer {
 		public:
+			virtual ~Observer() {}
+
 			// Gets called after an undo operation is fully completed, allows objects to refresh their state
 			virtual void postUndo() = 0;
 			// Gets called after a redo operation is fully completed, allows objects to refresh their state
