@@ -312,6 +312,12 @@ void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
 qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
+/**
+ * @brief Capacity macros
+ */
+#define CAP_GetMax(base, capacity) (base)->capacities[(capacity)].max
+#define CAP_GetCurrent(base, capacity) (base)->capacities[(capacity)].cur
+#define CAP_SetCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = (value)
 
 base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
