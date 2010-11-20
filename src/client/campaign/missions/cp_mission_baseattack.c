@@ -239,12 +239,10 @@ void CP_BaseAttackStartMission (mission_t *mission)
  */
 void CP_CheckBaseAttacks (void)
 {
-	linkedList_t *missionlist = ccs.missions;
-	while (missionlist) {
-		mission_t *mission = (mission_t*) missionlist->data;
+	mission_t *mission;
+	LIST_Foreach(ccs.missions, mission_t, mission) {
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK)
 			CP_BaseAttackStartMission(mission);
-		missionlist = missionlist->next;
 	}
 }
 
