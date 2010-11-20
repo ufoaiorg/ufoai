@@ -284,7 +284,7 @@ void OpenGLShader::construct (const std::string& name)
 			state.m_depthfunc = GL_LEQUAL;
 		} else if (name == "$CAM_OVERLAY") {
 #if 0
-			state.m_state = RENDER_CULLFACE|RENDER_COLOURWRITE|RENDER_DEPTHWRITE;
+			state._visStack = RENDER_CULLFACE|RENDER_COLOURWRITE|RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortOverlayFirst;
 #else
 			state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE
@@ -345,7 +345,7 @@ void OpenGLShader::construct (const std::string& name)
 			state.m_sort = OpenGLState::eSortTranslucent;
 		} else if (name == "$WIRE_OVERLAY") {
 #if 0
-			state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
+			state._visStack = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
 			state.m_sort = OpenGLState::eSortOverlayFirst;
 #else
 			state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_DEPTHTEST

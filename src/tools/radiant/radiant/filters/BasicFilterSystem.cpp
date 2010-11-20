@@ -1,4 +1,5 @@
 #include "BasicFilterSystem.h"
+#include "InstanceUpdateWalker.h"
 
 #include "generic/callback.h"
 
@@ -7,7 +8,6 @@
 #include "iscenegraph.h"
 #include "iregistry.h"
 #include "ieventmanager.h"
-
 namespace filters
 {
 
@@ -201,6 +201,9 @@ void BasicFilterSystem::setFilterState(const std::string& filter, bool state) {
 	// Invalidate the visibility cache to force new values to be
 	// loaded from the filters themselves
 	_visibilityCache.clear();
+
+	// Update the scenegraph instances
+	updateInstances();
 
 	notifyObservers();
 
@@ -444,6 +447,15 @@ bool BasicFilterSystem::setFilterRules(const std::string& filter, const FilterRu
 	}
 
 	return false; // not found or readonly
+}
+
+// Update scenegraph instances with filtered status
+void BasicFilterSystem::updateInstances() {
+
+	// Construct an InstanceUpdateWalker and traverse the scenegraph to update
+	// all instances
+	InstanceUpdateWalker walker;
+	GlobalSceneGraph().traverse(walker);
 }
 
 }

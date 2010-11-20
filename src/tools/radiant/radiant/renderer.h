@@ -55,140 +55,15 @@ inline VolumeIntersectionValue Cullable_testVisible (scene::Instance& instance, 
 	return parentVisible;
 }
 
-template<typename _Walker>
-class CullingWalker
-{
-		const VolumeTest& m_volume;
-		const _Walker& m_walker;
-	public:
-		CullingWalker (const VolumeTest& volume, const _Walker& walker) :
-			m_volume(volume), m_walker(walker)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance, VolumeIntersectionValue parentVisible) const
-		{
-			VolumeIntersectionValue visible = Cullable_testVisible(instance, m_volume, parentVisible);
-
-			if (visible != VOLUME_OUTSIDE) {
-				return m_walker.pre(path, instance);
-			}
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance, VolumeIntersectionValue parentVisible) const
-		{
-			return m_walker.post(path, instance);
-		}
-};
-
-template<typename Walker_>
-class ForEachVisible: public scene::Graph::Walker
-{
-		const VolumeTest& m_volume;
-		const Walker_& m_walker;
-		mutable std::vector<VolumeIntersectionValue> m_state;
-	public:
-		ForEachVisible (const VolumeTest& volume, const Walker_& walker) :
-			m_volume(volume), m_walker(walker)
-		{
-			m_state.push_back(VOLUME_PARTIAL);
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			VolumeIntersectionValue visible = (path.top().get().visible()) ? m_state.back() : VOLUME_OUTSIDE;
-
-			// Examine the entity class for its filter status. If it is filtered, use the c_volumeOutside
-			// state to ensure it is not rendered.
-			Entity* entity = Node_getEntity(path.top().get());
-			if (entity) {
-				const EntityClass& eclass = entity->getEntityClass();
-				if (!GlobalFilterSystem().isVisible("entityclass", eclass.name())) {
-					visible = VOLUME_OUTSIDE;
-				}
-			}
-
-			if (visible == VOLUME_PARTIAL) {
-				visible = m_volume.TestAABB(instance.worldAABB());
-			}
-
-			m_state.push_back(visible);
-
-			if (visible == VOLUME_OUTSIDE) {
-				return false;
-			} else {
-				return m_walker.pre(path, instance, m_state.back());
-			}
-		}
-		void post (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (m_state.back() != VOLUME_OUTSIDE) {
-				m_walker.post(path, instance, m_state.back());
-			}
-
-			m_state.pop_back();
-		}
-};
-
+#include "render/frontend/CullingWalker.h"
+#include "render/frontend/ForEachVisible.h"
 template<typename Functor>
 inline void Scene_forEachVisible (scene::Graph& graph, const VolumeTest& volume, const Functor& functor)
 {
 	graph.traverse(ForEachVisible<CullingWalker<Functor> > (volume, CullingWalker<Functor> (volume, functor)));
 }
 
-class RenderHighlighted
-{
-		Renderer& m_renderer;
-		const VolumeTest& m_volume;
-	public:
-		RenderHighlighted (Renderer& renderer, const VolumeTest& volume) :
-			m_renderer(renderer), m_volume(volume)
-		{
-		}
-		void render (const Renderable& renderable) const
-		{
-			switch (m_renderer.getStyle()) {
-			case Renderer::eFullMaterials:
-				renderable.renderSolid(m_renderer, m_volume);
-				break;
-			case Renderer::eWireframeOnly:
-				renderable.renderWireframe(m_renderer, m_volume);
-				break;
-			}
-		}
-		typedef ConstMemberCaller1<RenderHighlighted, const Renderable&, &RenderHighlighted::render> RenderCaller;
-
-		bool pre (const scene::Path& path, scene::Instance& instance, VolumeIntersectionValue parentVisible) const
-		{
-			m_renderer.PushState();
-
-			if (Cullable_testVisible(instance, m_volume, parentVisible) != VOLUME_OUTSIDE) {
-				Renderable* renderable = Instance_getRenderable(instance);
-				if (renderable) {
-					renderable->viewChanged();
-				}
-
-				Selectable* selectable = Instance_getSelectable(instance);
-				if (selectable != 0 && selectable->isSelected()) {
-					if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-						m_renderer.Highlight(Renderer::eFace);
-					} else if (renderable) {
-						renderable->renderComponents(m_renderer, m_volume);
-					}
-					m_renderer.Highlight(Renderer::ePrimitive);
-				}
-
-				if (renderable) {
-					render(*renderable);
-				}
-			}
-
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance, VolumeIntersectionValue parentVisible) const
-		{
-			m_renderer.PopState();
-		}
-};
-
+#include "render/frontend/RenderHighlighted.h"
 inline void Scene_Render (Renderer& renderer, const VolumeTest& volume)
 {
 	GlobalSceneGraph().traverse(ForEachVisible<RenderHighlighted> (volume, RenderHighlighted(renderer, volume)));

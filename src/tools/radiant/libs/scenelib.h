@@ -95,22 +95,13 @@ namespace scene
 	class Node : public INode
 	{
 		public:
-			enum unnamed0
-			{
-				eVisible = 0
-			};
-			enum unnamed1
-			{
-				eHidden = 1 << 0
-			};
-			enum unnamed2
-			{
-				eFiltered = 1 << 1
-			};
-			enum unnamed3
-			{
-				eExcluded = 1 << 2
-			};
+		enum
+		{
+			eVisible = 0,
+			eHidden = 1 << 0, // manually hidden by the user
+			eFiltered = 1 << 1, // excluded due to filter settings
+			eExcluded = 1 << 2 // excluded due to regioning
+		};
 
 		private:
 
@@ -454,6 +445,11 @@ namespace scene
 			Callback m_childSelectedChangedCallback;
 			Callback m_transformChangedCallback;
 
+			// Filtered status
+			bool _filtered;
+
+		private:
+
 			void evaluateTransform () const
 			{
 				if (m_transformChanged) {
@@ -511,7 +507,7 @@ namespace scene
 						m_local2world(Matrix4::getIdentity()), m_transformChanged(true), m_transformMutex(false),
 						m_boundsChanged(true), m_boundsMutex(false), m_childBoundsChanged(true), m_childBoundsMutex(
 								false), m_isSelectedChanged(true), m_childSelectedChanged(true),
-						m_parentSelectedChanged(true)
+						m_parentSelectedChanged(true), _filtered(false)
 			{
 				ASSERT_MESSAGE((parent == 0) == (path.size() == 1), "instance has invalid parent");
 			}
@@ -625,6 +621,21 @@ namespace scene
 
 			Instance* getParent() const {
 				return m_parent;
+			}
+
+			/**
+			 * Return the filtered status of this Instance.
+			 */
+			bool getFiltered() const {
+				return _filtered;
+			}
+
+			/**
+			 * Set the filtered status of this Instance. Setting filtered to true will
+			 * prevent the instance from being rendered.
+			 */
+			void setFiltered(bool v) {
+				_filtered = v;
 			}
 	};
 }

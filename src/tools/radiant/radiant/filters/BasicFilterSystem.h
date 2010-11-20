@@ -53,8 +53,14 @@ private:
 	// Notifies all observers about a change
 	void notifyObservers();
 
+private:
+
+	// Perform a traversal of the scenegraph, setting or clearing the filtered
+	// flag on Instances depending on their entity class
+	void updateInstances();
+
 public:
-    virtual ~BasicFilterSystem() {}
+	virtual ~BasicFilterSystem() {}
 
 	void addObserver(const Observer* observer);
 	void removeObserver(const Observer* observer);
