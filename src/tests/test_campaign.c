@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/campaign/cp_nation.h"
 #include "../client/campaign/cp_overlay.h"
 #include "../client/campaign/cp_ufo.h"
+#include "../client/campaign/cp_time.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -959,8 +960,32 @@ static void test3090011 (void)
 
 	CP_InitOverlay();
 
-	success = SAV_GameLoad("unittest2", &error);
+	success = SAV_GameLoad("3090011", &error);
 	UFO_CU_ASSERT_TRUE_MSG(success, error);
+}
+
+static void test3113400 (void)
+{
+	const char *error = NULL;
+	qboolean success;
+	campaign_t* campaign;
+	int i;
+
+	ResetCampaignData();
+
+	CP_InitOverlay();
+
+	success = SAV_GameLoad("3113400", &error);
+	UFO_CU_ASSERT_TRUE_MSG(success, error);
+
+	campaign = ccs.curCampaign;
+
+	i = 0;
+	for (;;) {
+		i++;
+		CL_GameTimeFast();
+		CL_CampaignRun(campaign);
+	}
 }
 
 int UFO_AddCampaignTests (void)
@@ -1039,6 +1064,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, test3113400) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
