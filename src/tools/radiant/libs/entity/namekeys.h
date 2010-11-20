@@ -87,12 +87,12 @@ class NameKeys: public Entity::Observer, public Namespaced
 			m_namespace = &space;
 			insertAll();
 		}
-		void insert (const std::string& key, EntityKeyValue& value)
+		void onKeyInsert (const std::string& key, EntityKeyValue& value)
 		{
 			m_keyValues.insert(KeyValues::value_type(key, &value));
 			insertName(key, value);
 		}
-		void erase (const std::string& key, EntityKeyValue& value)
+		void onKeyErase (const std::string& key, EntityKeyValue& value)
 		{
 			eraseName(key, value);
 			m_keyValues.erase(key);

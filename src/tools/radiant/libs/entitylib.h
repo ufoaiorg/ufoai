@@ -443,7 +443,7 @@ class EntityKeyValues: public Entity
 		{
 			m_observerMutex = true;
 			for (Observers::iterator i = m_observers.begin(); i != m_observers.end(); ++i) {
-				(*i)->insert(key, value);
+				(*i)->onKeyInsert(key, value);
 			}
 			m_observerMutex = false;
 		}
@@ -451,7 +451,7 @@ class EntityKeyValues: public Entity
 		{
 			m_observerMutex = true;
 			for (Observers::iterator i = m_observers.begin(); i != m_observers.end(); ++i) {
-				(*i)->erase(key, value);
+				(*i)->onKeyErase(key, value);
 			}
 			m_observerMutex = false;
 		}
@@ -550,11 +550,6 @@ class EntityKeyValues: public Entity
 		}
 		~EntityKeyValues ()
 		{
-			for (Observers::iterator i = m_observers.begin(); i != m_observers.end();) {
-				// post-increment to allow current element to be removed safely
-				(*i++)->clear();
-			}
-
 			for (KeyValues::iterator i = m_keyValues.begin(); i != m_keyValues.end(); i++) {
 				delete i->second;
 			}
@@ -587,7 +582,7 @@ class EntityKeyValues: public Entity
 			ASSERT_MESSAGE(!m_observerMutex, "observer cannot be attached during iteration");
 			m_observers.insert(&observer);
 			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				observer.insert((*i).first, *(*i).second);
+				observer.onKeyInsert(i->first, *(*i).second);
 			}
 		}
 		void detach (Observer& observer)
@@ -595,7 +590,7 @@ class EntityKeyValues: public Entity
 			ASSERT_MESSAGE(!m_observerMutex, "observer cannot be detached during iteration");
 			m_observers.erase(&observer);
 			for (KeyValues::const_iterator i = m_keyValues.begin(); i != m_keyValues.end(); ++i) {
-				observer.erase((*i).first, *(*i).second);
+				observer.onKeyErase(i->first, *(*i).second);
 			}
 		}
 

@@ -34,14 +34,14 @@ class KeyObserverMap: public Entity::Observer
 		{
 			m_keyObservers.insert(KeyObservers::value_type(key, observer));
 		}
-		void insert (const std::string& key, EntityKeyValue& value)
+		void onKeyInsert (const std::string& key, EntityKeyValue& value)
 		{
 			for (KeyObservers::const_iterator i = m_keyObservers.find(key); i != m_keyObservers.end() && string_equal(
 					(*i).first, key); ++i) {
 				value.attach((*i).second);
 			}
 		}
-		void erase (const std::string& key, EntityKeyValue& value)
+		void onKeyErase (const std::string& key, EntityKeyValue& value)
 		{
 			for (KeyObservers::const_iterator i = m_keyObservers.find(key); i != m_keyObservers.end() && string_equal(
 					(*i).first, key); ++i) {
