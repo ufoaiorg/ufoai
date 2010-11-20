@@ -87,6 +87,8 @@ public:
 	~EventManager() {
 		g_object_unref(_accelGroup);
 
+		saveEventListToRegistry();
+
 		// Remove all accelerators from the heap
 		for (AcceleratorList::iterator i = _accelerators.begin(); i != _accelerators.end(); i++) {
 			Accelerator* accelerator = (*i);
@@ -100,8 +102,6 @@ public:
 			delete event;
 		}
 		_events.clear();
-
-		saveEventListToRegistry();
 
 		globalOutputStream() << "EventManager successfully shut down.\n";
 	}
