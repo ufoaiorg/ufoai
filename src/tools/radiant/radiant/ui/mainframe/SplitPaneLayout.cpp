@@ -19,12 +19,12 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "paned.h"
+#include "SplitPaneLayout.h"
 
 #include <gtk/gtkhpaned.h>
 #include <gtk/gtkvpaned.h>
 
-#include "frame.h"
+#include "gtkutil/frame.h"
 
 class PanedState
 {

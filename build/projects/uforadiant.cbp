@@ -319,8 +319,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\messagebox.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\messagebox.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\nonmodal.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\paned.cpp" />
-		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\paned.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\pointer.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\widget.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window.cpp" />
@@ -783,6 +781,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findshader\FindShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\SplitPaneLayout.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\ErrorCheckDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\ErrorCheckDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\materialeditor\MaterialEditor.cpp" />

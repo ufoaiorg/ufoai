@@ -215,6 +215,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/ToolbarCreator.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/mainframe/SplitPaneLayout.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/mru/MRU.cpp \
 	$(RADIANT_BASE)/radiant/ui/mru/MRUMenuItem.cpp \
 	\
@@ -282,7 +284,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/image.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/menu.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/messagebox.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/paned.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/MenuItemAccelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/ModalProgressDialog.cpp \

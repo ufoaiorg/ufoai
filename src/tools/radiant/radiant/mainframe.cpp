@@ -73,10 +73,11 @@
 #include "gtkutil/glfont.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/image.h"
-#include "gtkutil/paned.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/dialog.h"
 #include "gtkutil/IconTextMenuToggle.h"
+
+#include "ui/mainframe/SplitPaneLayout.h"
 
 #include "map/AutoSaver.h"
 #include "map/MapCompileException.h"
