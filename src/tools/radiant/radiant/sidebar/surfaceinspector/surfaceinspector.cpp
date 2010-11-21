@@ -43,6 +43,7 @@
 #include "../../select.h"
 #include "../../brush/TexDef.h"
 #include "../../brush/brushmanip.h"
+#include "../../brush/BrushClass.h"
 #include "../../textureentry.h"
 #include "../../textool/TexTool.h"
 #include "../../settings/GameDescription.h"

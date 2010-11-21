@@ -3,7 +3,7 @@
 #include "math/quaternion.h"
 #include "igl.h"
 #include "entitylib.h"//for aabb_draw_solid
-#include "../../../shared/defines.h"
+#include "shared.h"
 
 #include "../filters/levelfilters.h"
 

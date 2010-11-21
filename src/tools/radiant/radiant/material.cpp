@@ -30,23 +30,21 @@
 #include "iradiant.h"
 #include "ieventmanager.h"
 #include "iump.h"
-#include "gtkmisc.h"
 #include "iselection.h"
-#include "brush/brush.h"
 #include "map/map.h"
-#include "gtkutil/dialog.h"
 #include "os/path.h"
 #include "os/file.h"
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
 #include "ifilesystem.h"
 #include "AutoPtr.h"
+#include "shared.h"
 #include "iarchive.h"
-#include "modulesystem.h"
-#include "modulesystem/moduleregistry.h"
-#include "modulesystem/singletonmodule.h"
 #include "ui/materialeditor/MaterialEditor.h"
 #include "itextures.h"
+#include "brush/FaceInstance.h"
+#include "brush/ContentsFlagsValue.h"
+#include "gtkutil/dialog.h"
 
 MaterialShader::MaterialShader (const std::string& fileName, const std::string& content) :
 	_refcount(0), _fileName(fileName), _inUse(false), _isValid(false), _texture(0), _notfound(0)
@@ -575,6 +573,9 @@ void MaterialSystem::construct () {
 			&MaterialSystem::showMaterialDefinition> (*this));
 }
 
+#include "modulesystem.h"
+#include "modulesystem/moduleregistry.h"
+#include "modulesystem/singletonmodule.h"
 
 class MaterialSystemAPI
 {

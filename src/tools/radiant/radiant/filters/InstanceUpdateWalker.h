@@ -82,8 +82,7 @@ class InstanceUpdateWalker: public scene::Graph::Walker
 				Node_traverseSubgraph(node, isVisible ? _showWalker : _hideWalker);
 			}
 
-			if (!node.visible())
-			{
+			if (!node.visible()) {
 				// de-select this node and all children
 				Deselector deselector;
 				Node_traverseSubgraph(node, deselector);

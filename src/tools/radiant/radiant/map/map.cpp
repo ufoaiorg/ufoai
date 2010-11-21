@@ -57,7 +57,6 @@
 #include "../referencecache/referencecache.h"
 #include "../ui/mru/MRU.h"
 #include "AutoSaver.h"
-#include "../brush/brush.h"
 #include "../brush/BrushNode.h"
 #include "../ui/menu/UMPMenu.h"
 #include "../selection/algorithm/General.h"

@@ -5,7 +5,6 @@
 #include "iump.h"
 #include "gtkutil/dialog.h"
 #include "../../environment.h"
-#include "../../brush/brush.h"
 #include "../../ui/scripteditor/UFOScriptEditor.h"
 #include "os/path.h"
 #include "stream/textfilestream.h"

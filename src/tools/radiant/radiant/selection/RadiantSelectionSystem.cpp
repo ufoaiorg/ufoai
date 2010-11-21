@@ -6,7 +6,6 @@
 #include "../renderer.h"
 #include "scenelib.h"
 #include "editable.h"
-#include "../brush/brush.h"
 #include "stream/stringstream.h"
 #include "Selectors.h"
 #include "SelectionTest.h"

@@ -1,5 +1,9 @@
 #include "Prism.h"
 
+#include "radiant_i18n.h"
+
+#include "gtkutil/dialog.h"
+
 namespace brushconstruct
 {
 	const std::string Prism::getName () const

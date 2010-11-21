@@ -2,10 +2,7 @@
 #define BRUSHCONSTRUCTOR_H_
 
 #include <string>
-#include "../brush.h"
-#include "gtkutil/dialog.h"
-#include "radiant_i18n.h"
-#include "iradiant.h"
+#include "../BrushClass.h"
 
 namespace brushconstruct
 {

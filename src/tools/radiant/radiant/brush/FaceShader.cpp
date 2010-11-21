@@ -1,6 +1,6 @@
 #include "FaceShader.h"
 #include "ContentsFlagsValue.h"
-#include "../../../../shared/defines.h"
+#include "shared.h"
 #include "debugging/debugging.h"
 #include "shaderlib.h"
 

@@ -4,7 +4,9 @@
 #include "iselection.h"
 #include "gtkutil/dialog.h"
 #include "../../ui/scripteditor/UFOScriptEditor.h"
-#include "../../brush/brush.h"
+#include "../../brush/BrushVisit.h"
+#include "../../brush/Face.h"
+#include "../../brush/FaceInstance.h"
 
 #include <string>
 #include <map>

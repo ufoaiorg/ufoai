@@ -24,14 +24,10 @@
  */
 #include "levelfilters.h"
 
-#include "../brush/TexDef.h"
-#include "ibrush.h"
 #include "ientity.h"
 #include "ieventmanager.h"
 #include "iscenegraph.h"
 
-// believe me, i'm sorry
-#include "../brush/brush.h"
 #include "../brush/BrushNode.h"
 
 #include "generic/callback.h"

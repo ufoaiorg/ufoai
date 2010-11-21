@@ -1,6 +1,8 @@
 #ifndef BRUSHGETCLOSESTFACEVISIBLEWALKER_H_
 #define BRUSHGETCLOSESTFACEVISIBLEWALKER_H_
 
+#include "../../brush/BrushInstance.h"
+
 class OccludeSelector: public Selector
 {
 		SelectionIntersection& m_bestIntersection;
