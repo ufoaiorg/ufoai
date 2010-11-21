@@ -108,7 +108,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/camera/GlobalCamera.cpp \
 	$(RADIANT_BASE)/radiant/camera/view.cpp \
 	\
-	$(RADIANT_BASE)/radiant/brush/brush.cpp \
 	$(RADIANT_BASE)/radiant/brush/BrushClipPlane.cpp \
 	$(RADIANT_BASE)/radiant/brush/brushmanip.cpp \
 	$(RADIANT_BASE)/radiant/brush/BrushModule.cpp \

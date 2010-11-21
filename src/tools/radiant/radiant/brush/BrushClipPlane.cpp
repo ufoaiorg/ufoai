@@ -43,3 +43,5 @@ void BrushClipPlane::render (Renderer& renderer, const VolumeTest& volume, const
 	renderer.SetState(m_state, Renderer::eFullMaterials);
 	renderer.addRenderable(*this, localToWorld);
 }
+
+Shader* BrushClipPlane::m_state = 0;
