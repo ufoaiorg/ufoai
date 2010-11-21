@@ -13,13 +13,12 @@
 namespace filters {
 
 // Walker: de-selects a complete subgraph
-class Deselector: public scene::Traversable::Walker
+class Deselector: public scene::Graph::Walker
 {
 	public:
-		bool pre (scene::Node& node) const
+		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
-			scene::Instance* instance = GlobalSceneGraph().find(node);
-			Instance_getSelectable(*instance)->setSelected(false);
+			Instance_setSelected(instance, false);
 			return true;
 		}
 };
@@ -87,7 +86,7 @@ class InstanceUpdateWalker: public scene::Graph::Walker
 			if (!node.visible()) {
 				// de-select this node and all children
 				Deselector deselector;
-				Node_traverseSubgraph(node, deselector);
+				GlobalSceneGraph().traverse_subgraph(Deselector(), path);
 			}
 
 			// Continue the traversal
