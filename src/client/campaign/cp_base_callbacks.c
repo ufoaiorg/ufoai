@@ -373,8 +373,7 @@ static void B_BuildingOnDestroy_f (void)
 			B_RemoveItemsExceedingCapacity(base);
 			break;
 		case B_ALIEN_CONTAINMENT:
-			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
-				AL_RemoveAliens(base, NULL, (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max), AL_RESEARCH);
+			AL_RemoveAliensExceedingCapacity(base);
 			break;
 		case B_LAB:
 			RS_RemoveScientistsExceedingCapacity(base);

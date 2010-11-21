@@ -528,6 +528,40 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 }
 
 /**
+ * @brief Remove aliens that exceed containment capacity
+ * @note called on destroying an Alien Containment (from building_ondestroy)
+ * @param[in, out] base Pointer to the base to check
+ */
+void AL_RemoveAliensExceedingCapacity (base_t *base)
+{
+	const int max = CAP_GetMax(base, CAP_ALIENS);
+	int current = CAP_GetCurrent(base, CAP_ALIENS);
+	int i;
+
+	assert(base);
+	assert(max >= 0);
+
+	for (i = 0; i < ccs.numAliensTD; i++) {
+		const int remove = min(base->alienscont[i].amountAlive, current - max);
+
+		if (!base->alienscont[i].teamDef)
+			continue;
+
+		/* remove dead aliens if there is no alien containment */
+		if (max == 0)
+			base->alienscont[i].amountDead =  0;
+
+		if (remove > 0) {
+			base->alienscont[i].amountAlive -= remove;
+			CAP_SetCurrent(base, CAP_ALIENS, current - remove);
+			current = CAP_GetCurrent(base, CAP_ALIENS);
+		}
+	}
+
+	assert(max >= current);
+}
+
+/**
  * @brief Check if live aliens can be added/removed to Alien Containment.
  * @param[in] base Pointer to the base where Alien Cont. should be checked.
  * @param[in] containment Pointer to the containment (may be @c NULL when adding
