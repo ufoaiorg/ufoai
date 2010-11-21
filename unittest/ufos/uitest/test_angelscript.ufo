@@ -84,7 +84,7 @@ window test_angelscript
 			}
 
 			void onRClick() {
-				node@ n = getNode("test_angelscript.buttonTest");
+				uinode@ n = getNode("test_angelscript.buttonTest");
 				n.color.red = 0.5;
 				n.left = 23;
 				n.ghost = false;
@@ -104,38 +104,38 @@ window test_angelscript
 			void onMClick() {
 				color red = "1 0 0";
 				color green = "0 1 0";
-				node@ n = getNode("test_angelscript.buttonTest");
+				uinode@ n = getNode("test_angelscript.buttonTest");
 
-				node@ test_1 = getNode("test_angelscript.test4");
-				node@ test_2 = getNode("test_angelscript.test5");
+				uinode@ test_1 = getNode("test_angelscript.test4");
+				uinode@ test_2 = getNode("test_angelscript.test5");
 				bool b = (test_1 == test_2);
 
-				node@ test4 = getNode("test_angelscript.test4");
-				node@ window = n.window;
+				uinode@ test4 = getNode("test_angelscript.test4");
+				uinode@ window = n.window;
 				if (window.type == "window") test4.color = green;
 				else test4.color = red;
 
-				node@ test5 = getNode("test_angelscript.test5");
+				uinode@ test5 = getNode("test_angelscript.test5");
 				if (window.name == "test_angelscript") test5.color = green;
 				else test5.color = red;
 
-				node@ test6 = getNode("test_angelscript.test6");
-				node@ nothing = window.parent;
+				uinode@ test6 = getNode("test_angelscript.test6");
+				uinode@ nothing = window.parent;
 				if (nothing is null) test6.color = green;
 				else test6.color = red;
 
-				node@ test7 = getNode("test_angelscript.test7");
-				node@ child = n.firstChild;
+				uinode@ test7 = getNode("test_angelscript.test7");
+				uinode@ child = n.firstChild;
 				if (child is null) test7.color = green;
 				else test7.color = red;
 
-				node@ test8 = getNode("test_angelscript.test8");
-				node@ parent = n.parent;
+				uinode@ test8 = getNode("test_angelscript.test8");
+				uinode@ parent = n.parent;
 				if (parent == window) test8.color = green;
 				else test8.color = red;
 
-				node@ test9 = getNode("test_angelscript.test9");
-				node@ next = n.next;
+				uinode@ test9 = getNode("test_angelscript.test9");
+				uinode@ next = n.next;
 				if (next !is null) test9.color = green;
 				else test9.color = red;
 			}
@@ -159,29 +159,29 @@ window test_angelscript
 				color red = "1 0 0";
 				color green = "0 1 0";
 
-				node@ test10 = getNode("test_angelscript.test10");
+				uinode@ test10 = getNode("test_angelscript.test10");
 				if (thisNode !is null) test10.color = green;
 				else test10.color = red;
 
-				node@ test11 = getNode("test_angelscript.test11");
+				uinode@ test11 = getNode("test_angelscript.test11");
 				if (thisNode.name == "buttonTest2") test11.color = green;
 				else test11.color = red;
 
-				node@ test12 = getNode("test_angelscript.test12");
+				uinode@ test12 = getNode("test_angelscript.test12");
 				if (thisNode.window.name == "test_angelscript") test12.color = green;
 				else test12.color = red;
 
 				// edit this and see the result
 				thisNode.left = 10;
-				node@ sameNode = getNode("test_angelscript.buttonTest2");
-				node@ test13 = getNode("test_angelscript.test13");
+				uinode@ sameNode = getNode("test_angelscript.buttonTest2");
+				uinode@ test13 = getNode("test_angelscript.test13");
 				if (sameNode.left == 10) test13.color = green;
 				else test13.color = red;
 
 				// edit same and see this
-				node@ sameNode2 = getNode("test_angelscript.buttonTest2");
+				uinode@ sameNode2 = getNode("test_angelscript.buttonTest2");
 				sameNode2.top = 11;
-				node@ test14 = getNode("test_angelscript.test14");
+				uinode@ test14 = getNode("test_angelscript.test14");
 				if (thisNode.top == 11) test14.color = green;
 				else test13.color = red;
 			}
@@ -229,11 +229,11 @@ window test_angelscript
 		color green = "0 1 0";
 
 		// ok it work
-		node@ test15 = getNode("test_angelscript.test15");
+		uinode@ test15 = getNode("test_angelscript.test15");
 		test15.color = green;
 
 		// thisnode is the parent node of the func
-		node@ test16 = getNode("test_angelscript.test16");
+		uinode@ test16 = getNode("test_angelscript.test16");
 		if (thisNode.name == "test_angelscript") test16.color = green;
 		else test16.color = red;
 	}
@@ -243,11 +243,11 @@ window test_angelscript
 		color green = "0 1 0";
 
 		// ok it work
-		node@ test17 = getNode("test_angelscript.test17");
+		uinode@ test17 = getNode("test_angelscript.test17");
 		test17.color = green;
 
 		// thisnode is the parent node of the func
-		node@ test18 = getNode("test_angelscript.test18");
+		uinode@ test18 = getNode("test_angelscript.test18");
 		if (thisNode.name == "test_angelscript") test18.color = green;
 		else test18.color = red;
 	}
@@ -269,24 +269,24 @@ window test_angelscript
 				color green = "0 1 0";
 
 				// ok it compile
-				node@ test0 = getNode("test_angelscript.testNodeMethod0");
+				uinode@ test0 = getNode("test_angelscript.testNodeMethod0");
 				test0.color = green;
 
 				cvar@ value = getCvar("test_check");
 
 				thisNode.toggle();
-				node@ test1 = getNode("test_angelscript.testNodeMethod1");
+				uinode@ test1 = getNode("test_angelscript.testNodeMethod1");
 				if (value.integer == 0) test1.color = green;
 				else test1.color = red;
 
 				thisNode.toggle();
-				node@ test2 = getNode("test_angelscript.testNodeMethod2");
+				uinode@ test2 = getNode("test_angelscript.testNodeMethod2");
 				if (value.integer == 1) test2.color = green;
 				else test2.color = red;
 
 				thisNode.createChild("foo1", "checkbox");
-				node@ foo = getNode(thisNode.path + ".foo1");
-				node@ test3 = getNode("test_angelscript.testNodeMethod3");
+				uinode@ foo = getNode(thisNode.path + ".foo1");
+				uinode@ test3 = getNode("test_angelscript.testNodeMethod3");
 				if (foo !is null) test3.color = green;
 				else test3.color = red;
 
@@ -308,22 +308,22 @@ window test_angelscript
 	/** there is problem to assign that, i dont know why */
 	func testAssignCompile1 angelscript {
 		color green = "0 1 0";
-		node@ foo;
+		uinode@ foo;
 		@foo = thisNode;
 		@foo = getNode(thisNode.path);
-		node@ foo2 = getNode(thisNode.path);
+		uinode@ foo2 = getNode(thisNode.path);
 		@foo = foo2;
 		// ok it compile... or not
-		node@ test = getNode("test_angelscript.testAssign1");
+		uinode@ test = getNode("test_angelscript.testAssign1");
 		test.color = green;
 	}
 	/** the same... with simple code */
 	func testAssignCompile2 angelscript {
 		color green = "0 1 0";
-		node@ foo;
+		uinode@ foo;
 		@foo = thisNode;
 		// ok it compile... or not
-		node@ test = getNode("test_angelscript.testAssign2");
+		uinode@ test = getNode("test_angelscript.testAssign2");
 		test.color = green;
 	}
 	/** assignation of node property without use of temporary var for node
@@ -345,30 +345,30 @@ window test_angelscript
 		color green = "0 1 0";
 
 		// ok it compile
-		node@ test0 = getNode("test_angelscript.testCase0");
+		uinode@ test0 = getNode("test_angelscript.testCase0");
 		test0.color = green;
 
 		// implicit
-		node@ case1 = thisNode;
-		node@ test1 = getNode("test_angelscript.testCase1");
+		uinode@ case1 = thisNode;
+		uinode@ test1 = getNode("test_angelscript.testCase1");
 		if (case1 !is null) test1.color = green;
 		else test1.color = red;
 
 		// explicit to super
-		node@ case2 = cast<node>(thisNode);
-		node@ test2 = getNode("test_angelscript.testCase2");
+		uinode@ case2 = cast<uinode>(thisNode);
+		uinode@ test2 = getNode("test_angelscript.testCase2");
 		if (case2 !is null) test2.color = green;
 		else test2.color = red;
 
 		// explicit to inherited
-		wgwindow@ case3 = cast<wgwindow>(case2);
-		node@ test3 = getNode("test_angelscript.testCase3");
+		uiwindow@ case3 = cast<uiwindow>(case2);
+		uinode@ test3 = getNode("test_angelscript.testCase3");
 		if (case3 !is null) test3.color = green;
 		else test3.color = red;
 
 		// not possible
-		wgcheckbox@ case4 = cast<wgcheckbox>(case2);
-		node@ test4 = getNode("test_angelscript.testCase4");
+		uicheckbox@ case4 = cast<uicheckbox>(case2);
+		uinode@ test4 = getNode("test_angelscript.testCase4");
 		if (case4 is null) test4.color = green;
 		else test4.color = red;
 	}
@@ -393,12 +393,12 @@ window test_angelscript
 		angelscript {
 			void onClick() {
 				color green = "0 1 0";
-				node@ n = getNode("test_angelscript.testEventExecute2");
+				uinode@ n = getNode("test_angelscript.testEventExecute2");
 				n.color = green;
 			}
 			void onRClick() {
 				color green = "0 1 0";
-				node@ n = getNode("test_angelscript.testEventExecute3");
+				uinode@ n = getNode("test_angelscript.testEventExecute3");
 				n.color = green;
 			}
 		}
@@ -413,15 +413,15 @@ window test_angelscript
 	func testEventExecute angelscript {
 		// ok, it compile
 		color green = "0 1 0";
-		node@ n = getNode("test_angelscript.testEventExecute0");
+		uinode@ n = getNode("test_angelscript.testEventExecute0");
 		n.color = green;
 
-		node@ clickMe = getNode("test_angelscript.buttonTest3");
+		uinode@ clickMe = getNode("test_angelscript.buttonTest3");
 		clickMe.onMClick.execute();
 		clickMe.onClick.execute();
 		clickMe.onRClick.execute();
 
-		node@ a_function = getNode("test_angelscript.buttonTest3.a_function");
+		uinode@ a_function = getNode("test_angelscript.buttonTest3.a_function");
 		a_function.execute();
 	}
 
@@ -441,22 +441,22 @@ window test_angelscript
 		angelscript {
 			void listen_bad1() {
 				color red = "1 0 0";
-				node@ n = getNode("test_angelscript.testListener1");
+				uinode@ n = getNode("test_angelscript.testListener1");
 				n.color = red;
 			}
 			void listen1() {
 				color green = "0 1 0";
-				node@ n = getNode("test_angelscript.testListener1");
+				uinode@ n = getNode("test_angelscript.testListener1");
 				n.color = green;
 			}
 			void listen_bad2() {
 				color red = "1 0 0";
-				node@ n = getNode("test_angelscript.testListener2");
+				uinode@ n = getNode("test_angelscript.testListener2");
 				n.color = red;
 			}
 			void listen3() {
 				color green = "0 1 0";
-				node@ n = getNode("test_angelscript.testListener3");
+				uinode@ n = getNode("test_angelscript.testListener3");
 				n.color = green;
 			}
 
@@ -481,31 +481,31 @@ window test_angelscript
 
 		func listen_bad1_func angelscript {
 			color red = "1 0 0";
-			node@ n = getNode("test_angelscript.testListener1_func");
+			uinode@ n = getNode("test_angelscript.testListener1_func");
 			n.color = red;
 		}
 		func listen1_func angelscript {
 			color green = "0 1 0";
-			node@ n = getNode("test_angelscript.testListener1_func");
+			uinode@ n = getNode("test_angelscript.testListener1_func");
 			n.color = green;
 		}
 		func listen_bad2_func angelscript {
 			color red = "1 0 0";
-			node@ n = getNode("test_angelscript.testListener2_func");
+			uinode@ n = getNode("test_angelscript.testListener2_func");
 			n.color = red;
 		}
 		func listen3_func angelscript {
 			color green = "0 1 0";
-			node@ n = getNode("test_angelscript.testListener3_func");
+			uinode@ n = getNode("test_angelscript.testListener3_func");
 			n.color = green;
 		}
 
 		angelscript {
 			void onRClick() {
-				node@ listen_bad1 = getNode("test_angelscript.buttonTest_func_listener.listen_bad1_func");
-				node@ listen_bad2 = getNode("test_angelscript.buttonTest_func_listener.listen_bad2_func");
-				node@ listen1 = getNode("test_angelscript.buttonTest_func_listener.listen1_func");
-				node@ listen3 = getNode("test_angelscript.buttonTest_func_listener.listen3_func");
+				uinode@ listen_bad1 = getNode("test_angelscript.buttonTest_func_listener.listen_bad1_func");
+				uinode@ listen_bad2 = getNode("test_angelscript.buttonTest_func_listener.listen_bad2_func");
+				uinode@ listen1 = getNode("test_angelscript.buttonTest_func_listener.listen1_func");
+				uinode@ listen3 = getNode("test_angelscript.buttonTest_func_listener.listen3_func");
 				thisNode.onClick.set(listen_bad1);
 				thisNode.onClick.set(listen1);
 				thisNode.onClick.add(listen_bad2);
@@ -519,9 +519,9 @@ window test_angelscript
 	}
 
 	func testListener angelscript {
-		node@ n = getNode("test_angelscript.buttonTest_listener");
+		uinode@ n = getNode("test_angelscript.buttonTest_listener");
 		n.onRClick.execute();
-		node@ n2 = getNode("test_angelscript.buttonTest_func_listener");
+		uinode@ n2 = getNode("test_angelscript.buttonTest_func_listener");
 		n2.onRClick.execute();
 	}
 

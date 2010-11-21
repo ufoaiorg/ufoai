@@ -54,9 +54,9 @@ static const char* UI_GetScriptTypeFromBehaviour(const uiBehaviour_t *behaviour)
 	if (!strcmp(behaviour->name, ""))
 		return NULL;
 	if (!strcmp(behaviour->name, "abstractnode"))
-		return "node";
+		return "uinode";
 	else
-		return va("wg%s", behaviour->name);
+		return va("ui%s", behaviour->name);
 }
 
 extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
@@ -485,7 +485,7 @@ static void UI_RegisterNodeBehaviour(asIScriptEngine *engine, const uiBehaviour_
 	strcat(alreadyChecked, name);
 	strcat(alreadyChecked, "|");
 
-	if (strcmp(name, "node") != 0) {
+	if (strcmp(name, "uinode") != 0) {
 		r = engine->RegisterObjectType(name, 0, asOBJ_REF);
 		assert(r >= 0);
 	}
@@ -617,13 +617,13 @@ extern "C" void UI_InitBindScript (void)
 
 	/* Node */
 
-	r = engine->RegisterObjectType("node", 0, asOBJ_REF);
+	r = engine->RegisterObjectType("uinode", 0, asOBJ_REF);
 	assert(r >= 0);
-	r = engine->RegisterGlobalFunction("node@ &getNode(string)", asFUNCTION(Node_GetNode), asCALL_CDECL);
+	r = engine->RegisterGlobalFunction("uinode@ &getNode(string)", asFUNCTION(Node_GetNode), asCALL_CDECL);
 	assert(r >= 0);
-	r = engine->RegisterObjectMethod("node", "void execute()", asFUNCTION(Node_Execute), asCALL_CDECL_OBJFIRST);
+	r = engine->RegisterObjectMethod("uinode", "void execute()", asFUNCTION(Node_Execute), asCALL_CDECL_OBJFIRST);
 	assert( r >= 0 );
-	nodeTypeId = engine->GetTypeIdByDecl("node");
+	nodeTypeId = engine->GetTypeIdByDecl("uinode");
 	assert( nodeTypeId >= 0 );
 
 	/* Event */
@@ -646,11 +646,11 @@ extern "C" void UI_InitBindScript (void)
 	assert( r >= 0 );
 	r = engine->RegisterObjectMethod("event", "void remove(eventdef@)", asFUNCTION(Event_Remove), asCALL_CDECL_OBJFIRST);
 	assert( r >= 0 );
-	r = engine->RegisterObjectMethod("event", "void set(node@)", asFUNCTION(Event_SetNode), asCALL_CDECL_OBJFIRST);
+	r = engine->RegisterObjectMethod("event", "void set(uinode@)", asFUNCTION(Event_SetNode), asCALL_CDECL_OBJFIRST);
 	assert( r >= 0 );
-	r = engine->RegisterObjectMethod("event", "void add(node@)", asFUNCTION(Event_AddNode), asCALL_CDECL_OBJFIRST);
+	r = engine->RegisterObjectMethod("event", "void add(uinode@)", asFUNCTION(Event_AddNode), asCALL_CDECL_OBJFIRST);
 	assert( r >= 0 );
-	r = engine->RegisterObjectMethod("event", "void remove(node@)", asFUNCTION(Event_RemoveNode), asCALL_CDECL_OBJFIRST);
+	r = engine->RegisterObjectMethod("event", "void remove(uinode@)", asFUNCTION(Event_RemoveNode), asCALL_CDECL_OBJFIRST);
 	assert( r >= 0 );
 
 #if 0
@@ -694,7 +694,7 @@ extern "C" void UI_InitBindScript (void)
 	r = engine->RegisterObjectMethod("cvar", "void set_number(float)", asFUNCTION(CvarRef_SetNumber), asCALL_CDECL_OBJFIRST);
 	assert(r >= 0);
 
-	r = engine->RegisterGlobalProperty("node@ __ui_thisNode", &thisNode);
+	r = engine->RegisterGlobalProperty("uinode@ __ui_thisNode", &thisNode);
 	assert( r >= 0 );
 }
 
