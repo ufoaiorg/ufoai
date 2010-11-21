@@ -28,6 +28,7 @@
 #include "../../map/map.h"
 #include "../brushmanip.h"
 #include "../BrushNode.h"
+#include "../BrushVisit.h"
 #include "igrid.h"
 
 typedef std::vector<Brush*> brush_vector_t;

@@ -25,6 +25,7 @@
 
 #include "BrushModule.h"
 #include "BrushNode.h"
+#include "BrushVisit.h"
 #include "../ui/brush/QuerySidesDialog.h"
 #include "../sidebar/texturebrowser.h"
 

@@ -25,7 +25,11 @@
 #include "instancelib.h"
 #include "TexDef.h"
 #include "ibrush.h"
+#include "editable.h"
+
 #include "brushtokens.h"
+#include "BrushClass.h"
+#include "BrushInstance.h"
 
 class BrushNode: public scene::Node,
 		public scene::Instantiable,

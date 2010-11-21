@@ -2,6 +2,7 @@
 #define MOVELEVELWALKER_H_
 
 #include "scenelib.h"
+#include "../brush/BrushVisit.h"
 
 namespace map {
 

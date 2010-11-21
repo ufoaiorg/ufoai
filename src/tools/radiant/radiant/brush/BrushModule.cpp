@@ -30,6 +30,7 @@
 
 #include "BrushNode.h"
 #include "brushmanip.h"
+#include "BrushVisit.h"
 
 #include "preferencesystem.h"
 #include "stringio.h"
