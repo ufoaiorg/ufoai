@@ -8,6 +8,8 @@
 #include "scenelib.h"
 #include "eclasslib.h"
 
+#include "../brush/BrushNode.h"
+
 namespace filters {
 
 // Walker: de-selects a complete subgraph
@@ -78,7 +80,8 @@ class InstanceUpdateWalker: public scene::Graph::Walker
 
 			// greebo: Update visibility of BrushInstances
 			if (Node_isBrush(node)) {
-				bool isVisible = _brushesAreVisible;// && brush->hasVisibleMaterial();
+				Brush* brush = Node_getBrush(node);
+				bool isVisible = _brushesAreVisible && brush->hasVisibleMaterial();
 				Node_traverseSubgraph(node, isVisible ? _showWalker : _hideWalker);
 			}
 

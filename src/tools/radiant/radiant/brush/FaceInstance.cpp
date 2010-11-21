@@ -444,3 +444,5 @@ void FaceInstance::connectivityChanged ()
 	m_edgeSelection.clear();
 	m_selectableEdges.setSelected(false);
 }
+
+FaceInstanceSet g_SelectedFaceInstances;

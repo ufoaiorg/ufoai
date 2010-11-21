@@ -268,6 +268,9 @@ class Brush: public TransformNode,
 		/// \brief Makes this brush a deep-copy of the \p other.
 		void copy (const Brush& other);
 
+		// Returns TRUE if any of the brush's faces has a visible material, FALSE if all faces are effectively hidden
+		bool hasVisibleMaterial () const;
+
 	private:
 		void edge_push_back (FaceVertexId faceVertex);
 		void edge_clear ();

@@ -19,13 +19,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "brush.h"
+#include "BrushClipPlane.h"
 
-QuantiseFunc Face::m_quantise;
-
-double Brush::m_maxWorldCoord = 0;
-Shader* Brush::m_state_point;
 Shader* BrushClipPlane::m_state = 0;
-Shader* BrushInstance::m_state_selpoint;
-
-FaceInstanceSet g_SelectedFaceInstances;

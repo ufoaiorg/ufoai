@@ -429,3 +429,5 @@ void BrushInstance::setClipPlane (const Plane3& plane)
 {
 	m_clipPlane.setPlane(m_brush, plane);
 }
+
+Shader* BrushInstance::m_state_selpoint;

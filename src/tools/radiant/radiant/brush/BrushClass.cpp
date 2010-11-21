@@ -2,6 +2,7 @@
 
 #include "math/frustum.h"
 #include "renderable.h"
+#include "ifilter.h"
 
 #include "Face.h"
 #include "generic/referencecounted.h"
@@ -687,6 +688,22 @@ bool Brush::buildWindings ()
 	return degenerate;
 }
 
+// Returns TRUE if any of the brush's faces has a visible material, FALSE if all faces are effectively hidden
+bool Brush::hasVisibleMaterial () const
+{
+	// Traverse the faces
+	for (Faces::const_iterator i = m_faces.begin(); i != m_faces.end(); ++i)
+	{
+		if (GlobalFilterSystem().isVisible("texture", (*i)->getShader().m_shader))
+		{
+			return true; // return true on first visible material
+		}
+	}
+
+	// no visible material
+	return false;
+}
+
 struct SListNode
 {
 		SListNode* m_next;
@@ -924,6 +941,9 @@ void Brush::buildBRep ()
 		}
 	}
 }
+
+double Brush::m_maxWorldCoord = 0;
+Shader* Brush::m_state_point;
 
 #include "signal/signal.h"
 

@@ -53,27 +53,32 @@ class BrushNode: public scene::Node,
 	public:
 
 		// Nameable implemenation
-		std::string name() const {
+		std::string name () const
+		{
 			return "Brush";
 		}
 
 		// TransformNode implementation
-		const Matrix4& localToParent() const {
+		const Matrix4& localToParent () const
+		{
 			return m_brush.localToParent();
 		}
 
 		// MapImporter implementation
-		bool importTokens(Tokeniser& tokeniser) {
+		bool importTokens (Tokeniser& tokeniser)
+		{
 			return m_mapImporter.importTokens(tokeniser);
 		}
 
 		// MapExporter implementation
-		void exportTokens(TokenWriter& writer) const {
+		void exportTokens (TokenWriter& writer) const
+		{
 			m_mapExporter.exportTokens(writer);
 		}
 
 		// IBrushNode implementation
-		Brush& getBrush() {
+		Brush& getBrush ()
+		{
 			return m_brush;
 		}
 
@@ -94,7 +99,8 @@ class BrushNode: public scene::Node,
 		}
 
 		// Snappable implementation
-		void snapto(float snap) {
+		void snapto (float snap)
+		{
 			m_brush.snapto(snap);
 		}
 
@@ -126,12 +132,11 @@ class BrushNode: public scene::Node,
 // Casts the node onto a BrushNode and returns the Brush pointer
 inline Brush* Node_getBrush (scene::Node& node)
 {
-	IBrushNode* brushNode = dynamic_cast<IBrushNode*>(&node);
+	IBrushNode* brushNode = dynamic_cast<IBrushNode*> (&node);
 	if (brushNode != NULL) {
 		return &brushNode->getBrush();
 	}
 	return NULL;
-
 }
 
 #endif

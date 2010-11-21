@@ -8,11 +8,11 @@
 #include "winding.h"
 #include "cullable.h"
 
-void Brush_textureChanged();
+void Brush_textureChanged ();
 
 Face::Face (FaceObserver* observer) :
-	m_refcount(0), m_shader(GlobalTexturePrefix_get()), m_texdef(m_shader, TextureProjection(), false),
-			m_observer(observer), m_undoable_observer(0), m_map(0)
+	m_refcount(0), m_shader(GlobalTexturePrefix_get()), m_texdef(m_shader, TextureProjection(), false), m_observer(
+			observer), m_undoable_observer(0), m_map(0)
 {
 	m_shader.attach(*this);
 	m_plane.copy(Vector3(0, 0, 0), Vector3(64, 0, 0), Vector3(0, 64, 0));
@@ -20,8 +20,8 @@ Face::Face (FaceObserver* observer) :
 }
 Face::Face (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
 		const TextureProjection& projection, FaceObserver* observer) :
-	m_refcount(0), m_shader(shader), m_texdef(m_shader, projection), m_observer(observer), m_undoable_observer(
-			0), m_map(0)
+	m_refcount(0), m_shader(shader), m_texdef(m_shader, projection), m_observer(observer), m_undoable_observer(0),
+			m_map(0)
 {
 	m_shader.attach(*this);
 	m_plane.copy(p0, p1, p2);
@@ -326,7 +326,8 @@ void Face::FitTexture (float s_repeat, float t_repeat)
 	texdefChanged();
 }
 
-void Face::flipTexture(unsigned int axis) {
+void Face::flipTexture (unsigned int axis)
+{
 	undoSave();
 	m_texdef.flipTexture(axis);
 	texdefChanged();
@@ -334,8 +335,8 @@ void Face::flipTexture(unsigned int axis) {
 
 void Face::EmitTextureCoordinates ()
 {
-	m_texdefTransformed.emitTextureCoordinates(m_shader.width(), m_shader.height(), m_winding,
-			plane3().normal(), Matrix4::getIdentity());
+	m_texdefTransformed.emitTextureCoordinates(m_shader.width(), m_shader.height(), m_winding, plane3().normal(),
+			Matrix4::getIdentity());
 }
 
 const Vector3& Face::centroid () const
@@ -411,3 +412,5 @@ bool Face::is_bounded () const
 	}
 	return true;
 }
+
+QuantiseFunc Face::m_quantise;

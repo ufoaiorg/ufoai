@@ -464,6 +464,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\VertexSelection.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brush.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brush.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushClipPlane.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushmanip.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushmanip.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushTokens.cpp" />

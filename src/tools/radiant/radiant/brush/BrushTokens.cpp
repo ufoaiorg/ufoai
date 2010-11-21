@@ -1,9 +1,9 @@
 #include "brushtokens.h"
 #include "stringio.h"
 #include "stream/stringstream.h"
-#include "brush.h"
 #include "imap.h"
 #include "shaderlib.h"
+#include "BrushClass.h"
 
 /**
  * Parse the optional contents/flags/value
