@@ -108,6 +108,7 @@ static int UFO_InitSuiteCampaign (void)
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f, NULL);
 
 	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
+	cl_3dmap = Cvar_Get("cl_3dmap", "1", 0, NULL);
 
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();
@@ -985,6 +986,9 @@ static void test3113400 (void)
 		i++;
 		CL_GameTimeFast();
 		CL_CampaignRun(campaign);
+
+		if (i > 100000)
+			break;
 	}
 }
 
