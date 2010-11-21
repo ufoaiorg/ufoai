@@ -120,7 +120,7 @@ class PrefPage : public PreferencesPage
 typedef Callback1<PrefPage*> PreferencesPageCallback;
 typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;
 
-void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback);
+void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback) __attribute__ ((deprecated));
 
 void PreferencesDialog_restartRequired (const std::string& staticName);
 
