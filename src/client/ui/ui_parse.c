@@ -899,6 +899,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
  */
 static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char **token)
 {
+	int line;
 	const char *errhead = "UI_ParseScript: unexpected end of file (in event)";
 
 	Com_EnableFunctionScriptToken(qtrue);
@@ -913,10 +914,12 @@ static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char *
 		return qfalse;
 	}
 
+	line = 	Com_CurrentLineNumber();
+
 	*token = Com_ParseBlock(text);
 
 	/** @todo this should return a parsing status */
-	UI_ParseActionScript(node, *token);
+	UI_ParseActionScript(node, *token, Com_CurrentFileName(), line);
 
 	*token = Com_EParse(text, errhead, node->name);
 	if (!*text) {

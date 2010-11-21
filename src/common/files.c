@@ -1252,7 +1252,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 				continue;
 			}
 			*text = (char*)lBuffer;
-			Com_InitParsing();
+			Com_InitParsing(filename);
 		} else if (!lBuffer)
 			break;
 	}

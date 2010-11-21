@@ -30,7 +30,7 @@ window test_angelscript
 	button easyparse3
 	{
 		{ pos			"10 10" size		"50 50" color		".2187 .73 .23 1" }
-		angelscript { void onClick() { @cvar cvar@ b = getCvar("test_1"); } }
+		angelscript { void onClick() { cvar@ b = getCvar("test_1"); } }
 	}
 
 	string test1 {	pos		"200 60" string	"t1" }

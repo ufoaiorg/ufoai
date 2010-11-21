@@ -44,6 +44,8 @@ static uiNode_t *thisNode;
 
 static int eventTypeId;
 static int nodeTypeId;
+static int contextLine;
+static const char* contextScript;
 
 /**
  * @param behaviour
@@ -59,9 +61,11 @@ static const char* UI_GetScriptTypeFromBehaviour(const uiBehaviour_t *behaviour)
 		return va("ui%s", behaviour->name);
 }
 
-extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
+extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script, const char *fileName, int line)
 {
 	int r;
+
+	contextScript = fileName;
 
 	CScriptBuilder builder;
 	r = builder.StartNewModule(engine, UI_GetPath(node));
@@ -70,9 +74,11 @@ extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
 	if (node->behaviour->isFunction) {
 		const char * castName = UI_GetScriptTypeFromBehaviour(node->parent->behaviour);
 		script = va("%s@ get_thisNode() { return cast<%s>(__ui_thisNode); }\nvoid f() {\n%s\n}", castName, castName, script);
+		contextLine = line - 3;
 	} else {
 		const char * castName = UI_GetScriptTypeFromBehaviour(node->behaviour);
 		script = va("%s@ get_thisNode() { return cast<%s>(__ui_thisNode); }\n%s", castName, castName, script);
+		contextLine = line - 2;
 	}
 	r = builder.AddSectionFromMemory(script);
 	if( r < 0 ) return;
@@ -84,8 +90,6 @@ extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
 	}
 
 	asIScriptModule *module = engine->GetModule(UI_GetPath(node));
-
-	Com_Printf("UI_ParseActionScript: Script successfully built\n");
 
 	/* link all node event to relative scripts */
 	const uiBehaviour_t *behaviour = node->behaviour;
@@ -107,7 +111,9 @@ extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
 					if (functionId >= 0) {
 						asIScriptFunction *function = module->GetFunctionDescriptorById(functionId);
 						if (function != NULL) {
+#if 0
 							Com_Printf("UI_ParseActionScript: Found %s\n", property->string);
+#endif
 							uiAction_t *action = UI_AllocStaticAction();
 							action->type = EA_SCRIPT;
 							action->d.terminal.d1.data = function;
@@ -125,6 +131,8 @@ extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script)
 			behaviour = behaviour->super;
 		}
 	}
+
+	contextLine = 0;
 }
 
 /**
@@ -340,7 +348,6 @@ static void Event_Add (uiEventHolder_t*holder, asIScriptFunction *function)
 	action->d.terminal.d1.data = function;
 	action->next = *(holder->actions);
 	*(holder->actions) = action;
-	Com_Printf("Event_Add %s\n", function->GetName());
 }
 
 static void Event_Remove (uiEventHolder_t*holder, asIScriptFunction *function)
@@ -369,7 +376,6 @@ static void Event_Set (uiEventHolder_t*holder, asIScriptFunction *function)
 	action->d.terminal.d1.data = function;
 	action->next = NULL;
 	*(holder->actions) = action;
-	Com_Printf("Event_Set %s\n", function->GetName());
 }
 
 static void Node_Execute (uiNode_t &node)
@@ -444,7 +450,12 @@ static void MessageCallback(const asSMessageInfo *msg, void *param)
 		type = "WARN";
 	else if( msg->type == asMSGTYPE_INFORMATION )
 		type = "INFO";
-	Com_Printf("AngelScript: %s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
+#if 0
+	Com_Printf("[ui angelscript] %s: %s (%d, %d) : %s : %s\n", contextScript, msg->section, msg->row + contextLine, msg->col, type, msg->message);
+#else
+	Com_Printf("[ui angelscript] %s line %d: [%s] %s\n", contextScript, msg->row + contextLine, type, msg->message);
+#endif
+
 }
 
 /**

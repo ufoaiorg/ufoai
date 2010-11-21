@@ -35,17 +35,19 @@ static qboolean isUnparsedToken;
 static qboolean isQuotedToken;
 static qboolean functionScriptTokenEnabled;
 static int lineNumber;
+static char scriptFileName[64];
 
 /**
  * @brief Init the parsing structure
- * @todo Get the file name in param
  */
-void Com_InitParsing (void)
+void Com_InitParsing (const char *fileName)
 {
 	lineNumber = 1;
 	isUnparsedToken = qfalse;
 	isQuotedToken = qfalse;
 	functionScriptTokenEnabled = qfalse;
+	strncpy(scriptFileName, fileName, sizeof(scriptFileName));
+	scriptFileName[sizeof(scriptFileName) - 1] = '\0';
 }
 
 /**
@@ -54,6 +56,14 @@ void Com_InitParsing (void)
 int Com_CurrentLineNumber (void)
 {
 	return lineNumber;
+}
+
+/**
+ * @brief Return the line number of the current parsing
+ */
+const char *Com_CurrentFileName (void)
+{
+	return scriptFileName;
 }
 
 /**

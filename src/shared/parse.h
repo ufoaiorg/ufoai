@@ -39,8 +39,9 @@ void Com_UnParseLastToken(void);
 qboolean Com_ParsedTokenIsQuoted(void);
 void Com_EnableFunctionScriptToken(qboolean enable);
 const char *Com_ParseBlock(const char **data_p);
-void Com_InitParsing(void);
+void Com_InitParsing(const char *fileName);
 int Com_CurrentLineNumber(void);
+const char *Com_CurrentFileName(void);
 
 #ifdef __cplusplus
 }
