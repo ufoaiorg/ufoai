@@ -28,7 +28,6 @@
 #include "gtkutil/messagebox.h"
 #include "gtkutil/image.h"
 #include "gtkutil/pointer.h"
-#include "../mainframe.h"
 #include "../map/map.h"
 #include "../select.h"
 #include "../environment.h"
@@ -39,7 +38,7 @@
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "script/scripttokeniser.h"
-#include "../camera/CamWnd.h"
+#include "../camera/GlobalCamera.h"
 #include "imaterial.h"
 #include "../selection/algorithm/General.h"
 
@@ -428,7 +427,7 @@ namespace sidebar
 				GlobalMap().importFile(fileName);
 				GlobalMaterialSystem()->importMaterialFile(os::stripExtension(fileName) + ".mat");
 				g_free(text);
-				gtk_widget_grab_focus(g_pParentWnd->GetCamWnd()->getWidget());
+				gtk_widget_grab_focus(GlobalCameraManager().getCamWnd()->getWidget());
 				return TRUE;
 			}
 		}

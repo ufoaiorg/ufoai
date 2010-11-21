@@ -2,6 +2,7 @@
 #include "CompilerObserver.h"
 
 #include "radiant_i18n.h"
+#include "iradiant.h"
 #include "imapcompiler.h"
 #include "ieventmanager.h"
 #include "gtkutil/dialog.h"
@@ -12,7 +13,6 @@
 #include "imaterial.h"
 #include "../../map/map.h"
 #include "../../map/MapCompileException.h"
-#include "../../mainframe.h"
 
 namespace ui {
 

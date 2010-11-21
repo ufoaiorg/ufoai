@@ -4,7 +4,6 @@
 #include "iradiant.h"
 #include "iselection.h"
 #include "ieventmanager.h"
-#include "../../mainframe.h"
 
 #include <gtk/gtktoolbar.h>
 #include <gtk/gtkseparatortoolitem.h>

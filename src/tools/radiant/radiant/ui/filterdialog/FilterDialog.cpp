@@ -2,7 +2,7 @@
 
 #include "radiant_i18n.h"
 #include "ifilter.h"
-#include "../../mainframe.h"
+#include "iradiant.h"
 #include "gtkutil/TextColumn.h"
 #include "gtkutil/TreeModel.h"
 #include "gtkutil/ScrolledFrame.h"

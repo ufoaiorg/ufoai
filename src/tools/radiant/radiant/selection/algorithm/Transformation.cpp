@@ -8,7 +8,6 @@
 #include "inamespace.h"
 #include "iscenegraph.h"
 #include "gtkutil/dialog.h"
-#include "../../mainframe.h"
 #include "../../map/algorithm/Clone.h"
 #include "radiant_i18n.h"
 

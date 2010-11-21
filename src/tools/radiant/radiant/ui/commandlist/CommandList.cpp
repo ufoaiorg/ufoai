@@ -1,5 +1,7 @@
 #include "CommandList.h"
 
+#include "iradiant.h"
+
 #include <gtk/gtk.h>
 
 #include "gtkutil/messagebox.h"
@@ -7,8 +9,6 @@
 #include "gtkutil/TextButton.h"
 #include "gtkutil/TextColumn.h"
 #include "gtkutil/TreeModel.h"
-
-#include "../../mainframe.h"
 
 #include "CommandListPopulator.h"
 #include "ShortcutChooser.h"
@@ -25,7 +25,7 @@ const std::string CMDLISTDLG_WINDOW_TITLE = _("Shortcut List");
 }
 
 CommandListDialog::CommandListDialog () :
-		gtkutil::BlockingTransientWindow(CMDLISTDLG_WINDOW_TITLE, MainFrame_getWindow())
+		gtkutil::BlockingTransientWindow(CMDLISTDLG_WINDOW_TITLE, GlobalRadiant().getMainWindow())
 {
 	// Set the default border width in accordance to the HIG
 	gtk_container_set_border_width(GTK_CONTAINER(getWindow()), 12);

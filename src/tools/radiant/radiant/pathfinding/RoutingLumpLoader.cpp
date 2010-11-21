@@ -3,7 +3,6 @@
 #include "AutoPtr.h"
 #include "ifilesystem.h"
 #include "gtkutil/dialog.h"
-#include "../mainframe.h"
 #include "radiant_i18n.h"
 
 #include "../../../shared/ufotypes.h"

@@ -2,7 +2,6 @@
 
 #include "radiant_i18n.h"
 #include "selectionlib.h"
-#include "../../mainframe.h"
 #include "iregistry.h"
 #include "itextstream.h"
 #include "entitylib.h"

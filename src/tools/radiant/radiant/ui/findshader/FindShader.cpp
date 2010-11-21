@@ -3,6 +3,7 @@
 #include "radiant_i18n.h"
 #include "ieventmanager.h"
 #include "iuimanager.h"
+#include "iradiant.h"
 
 #include "gtkutil/LeftAlignedLabel.h"
 #include "gtkutil/LeftAlignment.h"
@@ -15,7 +16,6 @@
 
 #include <gtk/gtk.h>
 
-#include "../../mainframe.h"
 #include "../../textureentry.h"
 
 namespace ui {
