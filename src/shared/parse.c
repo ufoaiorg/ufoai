@@ -34,6 +34,27 @@ static char com_token[4096];
 static qboolean isUnparsedToken;
 static qboolean isQuotedToken;
 static qboolean functionScriptTokenEnabled;
+static int lineNumber;
+
+/**
+ * @brief Init the parsing structure
+ * @todo Get the file name in param
+ */
+void Com_InitParsing (void)
+{
+	lineNumber = 1;
+	isUnparsedToken = qfalse;
+	isQuotedToken = qfalse;
+	functionScriptTokenEnabled = qfalse;
+}
+
+/**
+ * @brief Return the line number of the current parsing
+ */
+int Com_CurrentLineNumber (void)
+{
+	return lineNumber;
+}
 
 /**
  * @brief Put back the last token into the parser
@@ -105,6 +126,8 @@ skipwhite:
 			*data_p = NULL;
 			return "";
 		}
+		if (c == '\n')
+			lineNumber++;
 		data++;
 	}
 
@@ -112,6 +135,8 @@ skipwhite:
 		int clen = 0;
 		data += 2;
 		while (!((data[clen] && data[clen] == '*') && (data[clen + 1] && data[clen + 1] == '/'))) {
+			if (data[clen] == '\n')
+				lineNumber++;
 			clen++;
 		}
 		data += clen + 2; /* skip end of multiline comment */
@@ -122,6 +147,10 @@ skipwhite:
 	if (c == '/' && data[1] == '/') {
 		while (*data && *data != '\n')
 			data++;
+		if (*data == '\n') {
+			lineNumber++;
+			data++;
+		}
 		goto skipwhite;
 	}
 
@@ -223,8 +252,12 @@ const char *Com_ParseBlock(const char **data_p)
 				current++;
 			case '*':
 				current++;
-				while (current[0] && current[1] && current[0] != '*' && current[1] != '/')
+				while (current[0] && current[1] && current[0] != '*' && current[1] != '/') {
+					if (*current == '\n') {
+						lineNumber++;
+					}
 					current++;
+				}
 				current++;
 				current++;
 				break;
@@ -246,6 +279,10 @@ const char *Com_ParseBlock(const char **data_p)
 					current++;
 					if (*current)
 						current++;
+					break;
+				case '\n':
+					lineNumber++;
+					current++;
 					break;
 				default:
 					current++;
@@ -274,6 +311,10 @@ const char *Com_ParseBlock(const char **data_p)
 			current++;
 			break;
 
+		case '\n':
+			lineNumber++;
+			current++;
+			break;
 		default:
 			current++;
 			break;
