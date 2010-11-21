@@ -36,6 +36,7 @@
  * Initial author: niteice
  */
 
+#include <stdint.h>
 #include "as_config.h"
 
 #ifndef AS_MAX_PORTABILITY
@@ -166,7 +167,7 @@ static asQWORD GetReturnedDouble()
 static asQWORD __attribute ((__noinline__)) X64_CallFunction( const asDWORD* pArgs, const asBYTE *pArgsType, void *func )
 {
 	asQWORD retval      = 0;
-	asQWORD ( *call )() = (asQWORD (*)())func;
+	asQWORD ( *call )() = (asQWORD (*)()) ((intptr_t)func);
 	int     i           = 0;
 
 	/* push the stack parameters */
@@ -383,7 +384,7 @@ int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 
 	if ( obj && ( callConv == ICC_VIRTUAL_THISCALL || callConv == ICC_VIRTUAL_THISCALL_RETURNINMEM ) ) {
 		vftable = *( ( funcptr_t ** )obj );
-		func    = ( void * )vftable[( asQWORD )func >> 3];
+		func    = ( void * )  ((intptr_t)(vftable[( asQWORD )func >> 3]));
 	}
 
 	switch ( callConv ) {
