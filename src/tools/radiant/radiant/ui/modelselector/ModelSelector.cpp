@@ -4,18 +4,21 @@
 #include "gtkutil/glwidget.h"
 #include "gtkutil/image.h"
 #include "gtkutil/ScrolledFrame.h"
+#include "gtkutil/ModalProgressDialog.h"
+#include "gtkutil/TreeModel.h"
+
 #include "ifilesystem.h"
 #include "iradiant.h"
 #include "iregistry.h"
-#include "../../referencecache/referencecache.h"
 #include "os/path.h"
+#include "generic/callback.h"
+#include "../../referencecache/referencecache.h"
 #include "../Icons.h"
+
 #include <cmath>
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include "gtkutil/ModalProgressDialog.h"
-#include "../../mainframe.h"
 
 namespace ui
 {
@@ -255,7 +258,7 @@ namespace ui
 			return;
 
 		// Modal dialog window to display progress
-		gtkutil::ModalProgressDialog dialog(MainFrame_getWindow(), string::format(_("Loading models %s"), path.c_str()));
+		gtkutil::ModalProgressDialog dialog(GlobalRadiant().getMainWindow(), string::format(_("Loading models %s"), path.c_str()));
 
 		// Populate the treestore using the VFS callback functor
 		ModelFileFunctor functor(_treeStore, dialog, DirectoryCleaned(path), _dirIterMap);
@@ -357,21 +360,7 @@ namespace ui
 	// Get the value from the selected column
 	std::string ModelSelector::getSelectedString (gint colNum)
 	{
-		// Get the selection
-		GtkTreeIter iter;
-		GtkTreeModel* model;
-
-		if (gtk_tree_selection_get_selected(_selection, &model, &iter)) {
-			// Get the value
-			GValue val;
-			memset(&val, 0, sizeof(val));
-			gtk_tree_model_get_value(model, &iter, colNum, &val);
-			// Get the string
-			return g_value_get_string(&val);
-		} else {
-			// Nothing selected, return empty string
-			return "";
-		}
+		return gtkutil::TreeModel::getSelectedString(_selection, colNum);
 	}
 
 	// Get the value from the selected column

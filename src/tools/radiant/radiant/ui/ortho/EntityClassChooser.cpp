@@ -5,6 +5,8 @@
 #include "gtkutil/dialog.h"
 #include "gtkutil/RightAlignment.h"
 #include "gtkutil/ScrolledFrame.h"
+#include "gtkutil/TreeModel.h"
+
 #include <gdk/gdkkeysyms.h>
 
 #include "../../entity.h" // Entity_createFromSelection()
@@ -184,19 +186,11 @@ namespace ui
 
 	void EntityClassChooser::addEntity (EntityClassChooser* self)
 	{
-		// Get the selection
-		GtkTreeIter iter;
-		gtk_tree_selection_get_selected(self->_selection, NULL, &iter);
-
-		// Get the value
-		GValue val;
-		val.g_type = 0;
-		gtk_tree_model_get_value(GTK_TREE_MODEL(self->_treeStore), &iter, 0, &val);
-
 		// Create the entity and hide the dialog. We might get an EntityCreationException
 		// if the wrong number of brushes is selected.
 		try {
-			Entity_createFromSelection(g_value_get_string(&val), self->_lastPoint);
+			std::string name = gtkutil::TreeModel::getSelectedString(self->_selection, 0);
+			Entity_createFromSelection(name, self->_lastPoint);
 			gtk_widget_hide(self->_widget);
 		} catch (EntityCreationException e) {
 			gtkutil::errorDialog(e.what());

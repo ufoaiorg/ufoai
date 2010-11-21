@@ -28,6 +28,7 @@
 #include "gtkutil/messagebox.h"
 #include "gtkutil/image.h"
 #include "gtkutil/pointer.h"
+#include "gtkutil/TreeModel.h"
 #include "../map/map.h"
 #include "../select.h"
 #include "../environment.h"
@@ -283,10 +284,9 @@ namespace sidebar
 	 */
 	gboolean PrefabSelector::FilterFileOrDirectory (GtkTreeModel *model, GtkTreeIter *entry, PrefabSelector *self)
 	{
-		const char* searchText = gtk_entry_get_text(self->_filterEntry);
-		char* currentEntry;
-		gtk_tree_model_get(model, entry, PREFAB_SHORTNAME, &currentEntry, -1);
-		if (strstr(currentEntry, searchText) != 0)
+		std::string searchText = gtk_entry_get_text(self->_filterEntry);
+		std::string currentEntry = gtkutil::TreeModel::getString(model, entry, PREFAB_SHORTNAME);
+		if (string::contains(currentEntry, searchText))
 			return true;
 		else
 		// check whether there are children in base model (directory)
@@ -406,10 +406,9 @@ namespace sidebar
 			if (gtk_tree_selection_get_selected(gtk_tree_view_get_selection(self->_view), &model, &iter) == FALSE) {
 				return FALSE;
 			} else {
-				char* text;
 				UndoableCommand undo("mapImport");
 
-				gtk_tree_model_get(model, &iter, PREFAB_NAME, &text, -1);
+				const std::string text = gtkutil::TreeModel::getString(model, &iter, PREFAB_NAME);
 
 				switch (self->_selectedSelectionStrategy) {
 				case PREFAB_SELECT_REPLACE:
@@ -426,8 +425,6 @@ namespace sidebar
 				const std::string fileName = PrefabSelector::GetFullPath(text);
 				GlobalMap().importFile(fileName);
 				GlobalMaterialSystem()->importMaterialFile(os::stripExtension(fileName) + ".mat");
-				g_free(text);
-				gtk_widget_grab_focus(GlobalCameraManager().getCamWnd()->getWidget());
 				return TRUE;
 			}
 		}
