@@ -108,7 +108,6 @@ public:
 		std::swap(m_values, other.m_values);
 	}
 	iterator insert(const Value& value) {
-		ASSERT_MESSAGE(find(value) == end(), "UnsortedSet::insert: already added");
 		m_values.push_back(value);
 		return --end();
 	}
