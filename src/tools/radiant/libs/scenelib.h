@@ -169,6 +169,26 @@ namespace scene
 			{
 				return (_state & eExcluded) != 0;
 			}
+
+			/**
+			 * Return the filtered status of this Instance.
+			 */
+			virtual bool isFiltered() const {
+				return (_state & eFiltered) != 0;
+			}
+
+			/**
+			 * Set the filtered status of this Node. Setting filtered to true will
+			 * prevent the node from being rendered.
+			 */
+			virtual void setFiltered(bool filtered) {
+				if (filtered) {
+					_state |= eFiltered;
+				}
+				else {
+					_state &= ~eFiltered;
+				}
+			}
 	};
 }
 
@@ -621,21 +641,6 @@ namespace scene
 
 			Instance* getParent() const {
 				return m_parent;
-			}
-
-			/**
-			 * Return the filtered status of this Instance.
-			 */
-			bool getFiltered() const {
-				return _filtered;
-			}
-
-			/**
-			 * Set the filtered status of this Instance. Setting filtered to true will
-			 * prevent the instance from being rendered.
-			 */
-			void setFiltered(bool v) {
-				_filtered = v;
 			}
 	};
 }

@@ -38,8 +38,7 @@ class NodeVisibilityUpdater: public scene::Traversable::Walker
 
 		bool pre (scene::Node& node) const
 		{
-			scene::Instance* instance = GlobalSceneGraph().find(node);
-			instance->setFiltered(_filtered);
+			node.setFiltered(_filtered);
 			return true;
 		}
 };

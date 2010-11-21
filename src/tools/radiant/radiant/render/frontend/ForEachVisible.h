@@ -41,11 +41,6 @@ class ForEachVisible: public scene::Graph::Walker
 		{
 			VolumeIntersectionValue visible = (path.top().get().visible()) ? _visStack.back() : VOLUME_OUTSIDE;
 
-			// If the instance is filtered, use VOLUME_OUTSIDE
-			if (instance.getFiltered()) {
-				visible = VOLUME_OUTSIDE;
-			}
-
 			// Test for partial visibility
 			if (visible == VOLUME_PARTIAL) {
 				visible = m_volume.TestAABB(instance.worldAABB());
