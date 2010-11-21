@@ -39,17 +39,7 @@ class UFOFaceTokenImporter
 		 * @param tokeniser
 		 * @return
 		 */
-		void importContentAndSurfaceFlags (ContentsFlagsValue& flags, Tokeniser& tokeniser)
-		{
-			std::string token = tokeniser.getToken();
-			flags.setContentFlags(string::toInt(token));
-
-			token = tokeniser.getToken();
-			flags.setSurfaceFlags(string::toInt(token));
-
-			token = tokeniser.getToken();
-			flags.setValue(string::toInt(token));
-		}
+		void importContentAndSurfaceFlags (ContentsFlagsValue& flags, Tokeniser& tokeniser);
 
 		/**
 		 * Parse texture definition
@@ -57,15 +47,7 @@ class UFOFaceTokenImporter
 		 * @param tokeniser
 		 * @return
 		 */
-		bool importTextureDefinition (FaceTexdef& texdef, Tokeniser& tokeniser)
-		{
-			ASSERT_MESSAGE(texdef.m_projection.m_texdef.isSane(), "FaceTexdef_importTokens: bad texdef");
-			return Tokeniser_getFloat(tokeniser, texdef.m_projection.m_texdef._shift[0]) && Tokeniser_getFloat(
-					tokeniser, texdef.m_projection.m_texdef._shift[1]) && Tokeniser_getFloat(tokeniser,
-					texdef.m_projection.m_texdef._rotate) && Tokeniser_getFloat(tokeniser,
-					texdef.m_projection.m_texdef._scale[0]) && Tokeniser_getFloat(tokeniser,
-					texdef.m_projection.m_texdef._scale[1]);
-		}
+		bool importTextureDefinition (FaceTexdef& texdef, Tokeniser& tokeniser);
 
 		/**
 		 * Parse plane points
@@ -73,57 +55,12 @@ class UFOFaceTokenImporter
 		 * @param tokeniser
 		 * @return
 		 */
-		bool importPlane (FacePlane& facePlane, Tokeniser& tokeniser)
-		{
-			for (std::size_t i = 0; i < 3; i++) {
-				if (!Tokeniser_parseToken(tokeniser, "("))
-					return false;
-				for (std::size_t j = 0; j < 3; ++j) {
-					if (!Tokeniser_getDouble(tokeniser, facePlane.planePoints()[i][j]))
-						return false;
-				}
-				if (!Tokeniser_parseToken(tokeniser, ")"))
-					return false;
-			}
-			facePlane.MakePlane();
-			return true;
-		}
+		bool importPlane (FacePlane& facePlane, Tokeniser& tokeniser);
 
-		bool importTextureName (FaceShader& faceShader, Tokeniser& tokeniser)
-		{
-			const std::string texture = tokeniser.getToken();
-			if (texture.empty()) {
-				Tokeniser_unexpectedError(tokeniser, texture, "#texture-name");
-				return false;
-			}
-			if (texture == "NULL" || texture.empty()) {
-				faceShader.setShader("");
-			} else {
-				faceShader.setShader(GlobalTexturePrefix_get() + texture);
-			}
-			return true;
-		}
+		bool importTextureName (FaceShader& faceShader, Tokeniser& tokeniser);
 	public:
-		UFOFaceTokenImporter (Face& face) :
-			m_face(face)
-		{
-		}
-		bool importTokens (Tokeniser& tokeniser)
-		{
-			if (!importPlane(m_face.getPlane(), tokeniser))
-				return false;
-			if (!importTextureName(m_face.getShader(), tokeniser))
-				return false;
-			if (!importTextureDefinition(m_face.getTexdef(), tokeniser))
-				return false;
-
-			if (Tokeniser_nextTokenIsDigit(tokeniser)) {
-				m_face.getShader().m_flags.setSpecified(true);
-				importContentAndSurfaceFlags(m_face.getShader().m_flags, tokeniser);
-			}
-
-			return true;
-		}
+		UFOFaceTokenImporter (Face& face);
+		bool importTokens (Tokeniser& tokeniser);
 };
 
 /**
@@ -140,79 +77,35 @@ class UFOFaceTokenExporter
 		 * @param facePlane
 		 * @param writer
 		 */
-		void exportPlane (const FacePlane& facePlane, TokenWriter& writer) const
-		{
-			for (std::size_t i = 0; i < 3; i++) {
-				writer.writeToken("(");
-				for (std::size_t j = 0; j < 3; j++) {
-					writer.writeFloat(Face::m_quantise(facePlane.planePoints()[i][j]));
-				}
-				writer.writeToken(")");
-			}
-		}
+		void exportPlane (const FacePlane& facePlane, TokenWriter& writer) const;
 
 		/**
 		 * Write shift, rotate and scale texture definition values
 		 * @param faceTexdef
 		 * @param writer
 		 */
-		void exportTextureDefinition (const FaceTexdef& faceTexdef, TokenWriter& writer) const
-		{
-			ASSERT_MESSAGE(faceTexdef.m_projection.m_texdef.isSane(), "FaceTexdef_exportTokens: bad texdef");
-			// write texdef
-			writer.writeFloat(faceTexdef.m_projection.m_texdef._shift[0]);
-			writer.writeFloat(faceTexdef.m_projection.m_texdef._shift[1]);
-			writer.writeFloat(faceTexdef.m_projection.m_texdef._rotate);
-			writer.writeFloat(faceTexdef.m_projection.m_texdef._scale[0]);
-			writer.writeFloat(faceTexdef.m_projection.m_texdef._scale[1]);
-		}
+		void exportTextureDefinition (const FaceTexdef& faceTexdef, TokenWriter& writer) const;
 
 		/**
 		 * Write surface and content flags
 		 * @param faceShader
 		 * @param writer
 		 */
-		void exportContentAndSurfaceFlags (const FaceShader& faceShader, TokenWriter& writer) const
-		{
-			writer.writeInteger(faceShader.m_flags.getContentFlags());
-			writer.writeInteger(faceShader.m_flags.getSurfaceFlags());
-			writer.writeInteger(faceShader.m_flags.getValue());
-		}
+		void exportContentAndSurfaceFlags (const FaceShader& faceShader, TokenWriter& writer) const;
 
 		/**
 		 * Write the texture for the plane
 		 * @param faceShader
 		 * @param writer
 		 */
-		void exportTexture (const FaceShader& faceShader, TokenWriter& writer) const
-		{
-			// write shader name
-			const std::string shaderName = shader_get_textureName(faceShader.getShader());
-			if (shaderName.empty()) {
-				writer.writeToken("tex_common/nodraw");
-			} else {
-				writer.writeToken(shaderName);
-			}
-		}
+		void exportTexture (const FaceShader& faceShader, TokenWriter& writer) const;
 
 	public:
 		/**
 		 * @param face The face to export
 		 */
-		UFOFaceTokenExporter (const Face& face) :
-			m_face(face)
-		{
-		}
-		void exportTokens (TokenWriter& writer) const
-		{
-			exportPlane(m_face.getPlane(), writer);
-			exportTexture(m_face.getShader(), writer);
-			exportTextureDefinition(m_face.getTexdef(), writer);
-			if (m_face.getShader().m_flags.isSpecified() || m_face.isDetail()) {
-				exportContentAndSurfaceFlags(m_face.getShader(), writer);
-			}
-			writer.nextLine();
-		}
+		UFOFaceTokenExporter (const Face& face);
+		void exportTokens (TokenWriter& writer) const;
 };
 
 class BrushTokenImporter: public MapImporter
@@ -220,35 +113,8 @@ class BrushTokenImporter: public MapImporter
 		Brush& m_brush;
 
 	public:
-		BrushTokenImporter (Brush& brush) :
-			m_brush(brush)
-		{
-		}
-		bool importTokens (Tokeniser& tokeniser)
-		{
-			while (1) {
-				// check for end of brush
-				const std::string token = tokeniser.getToken();
-				if (token == "}")
-					break;
-
-				tokeniser.ungetToken();
-
-				m_brush.push_back(FaceSmartPointer(new Face(&m_brush)));
-
-				Face& face = *m_brush.back();
-
-				UFOFaceTokenImporter importer(face);
-				if (!importer.importTokens(tokeniser))
-					return false;
-				face.planeChanged();
-			}
-
-			m_brush.planeChanged();
-			m_brush.shaderChanged();
-
-			return true;
-		}
+		BrushTokenImporter (Brush& brush);
+		bool importTokens (Tokeniser& tokeniser);
 };
 
 class BrushTokenExporter: public MapExporter
@@ -256,33 +122,8 @@ class BrushTokenExporter: public MapExporter
 		const Brush& m_brush;
 
 	public:
-		BrushTokenExporter (const Brush& brush) :
-			m_brush(brush)
-		{
-		}
-		void exportTokens (TokenWriter& writer) const
-		{
-			m_brush.evaluateBRep(); // ensure b-rep is up-to-date, so that non-contributing faces can be identified.
-
-			if (!m_brush.hasContributingFaces()) {
-				return;
-			}
-
-			writer.writeToken("{");
-			writer.nextLine();
-
-			for (Brush::const_iterator i = m_brush.begin(); i != m_brush.end(); ++i) {
-				const Face& face = *(*i);
-
-				if (face.contributes()) {
-					UFOFaceTokenExporter exporter(face);
-					exporter.exportTokens(writer);
-				}
-			}
-
-			writer.writeToken("}");
-			writer.nextLine();
-		}
+		BrushTokenExporter (const Brush& brush);
+		void exportTokens (TokenWriter& writer) const;
 };
 
 #endif

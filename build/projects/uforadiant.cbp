@@ -466,6 +466,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brush.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushmanip.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushmanip.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushTokens.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\brushtokens.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\construct\BrushConstructor.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\construct\Cone.cpp" />
