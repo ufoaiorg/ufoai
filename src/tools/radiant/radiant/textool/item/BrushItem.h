@@ -1,7 +1,7 @@
 #ifndef BRUSHITEM_H_
 #define BRUSHITEM_H_
 
-#include "../../brush/BrushClass.h"
+#include "../../brush/Brush.h"
 #include "../TexToolItem.h"
 
 namespace textool {

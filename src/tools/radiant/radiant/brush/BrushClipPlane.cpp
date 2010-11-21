@@ -1,5 +1,5 @@
 #include "BrushClipPlane.h"
-#include "BrushClass.h"
+#include "Brush.h"
 
 void BrushClipPlane::constructStatic ()
 {

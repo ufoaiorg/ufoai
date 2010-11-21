@@ -28,7 +28,7 @@
 #include "editable.h"
 
 #include "brushtokens.h"
-#include "BrushClass.h"
+#include "Brush.h"
 #include "BrushInstance.h"
 
 class BrushNode: public scene::Node,

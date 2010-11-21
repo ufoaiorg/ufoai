@@ -2,7 +2,7 @@
 #define BRUSHCONSTRUCTOR_H_
 
 #include <string>
-#include "../BrushClass.h"
+#include "../Brush.h"
 
 namespace brushconstruct
 {

@@ -431,8 +431,8 @@
 		<Unit filename="..\..\src\tools\radiant\libs\xmlutil\Node.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\xmlutil\XPathException.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\archivezip.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushClass.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushClass.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\Brush.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\brush\Brush.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushClipPlane.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushInstance.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\brush\BrushInstance.h" />

@@ -3,7 +3,7 @@
 #include "stream/stringstream.h"
 #include "imap.h"
 #include "shaderlib.h"
-#include "BrushClass.h"
+#include "Brush.h"
 
 /**
  * Parse the optional contents/flags/value

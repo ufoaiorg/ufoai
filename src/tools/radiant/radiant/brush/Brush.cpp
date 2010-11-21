@@ -1,4 +1,4 @@
-#include "BrushClass.h"
+#include "Brush.h"
 
 #include "math/frustum.h"
 #include "renderable.h"
