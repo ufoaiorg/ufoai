@@ -1,0 +1,40 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/wheat/wheat1.md2"
+"origin" "-"
+"spawnflags" "255"
+"skin" "0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/wheat/wheat2.md2"
+"origin" "-32 2.24848e-007 0"
+"spawnflags" "255"
+"skin" "0"
+"angles" "0 -20.8782 0"
+}
+// entity 3
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/wheat/wheat2.md2"
+"origin" "12 28 0"
+"spawnflags" "255"
+"skin" "0"
+"angles" "0 135.896 0"
+}
+// entity 4
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/wheat/wheat1.md2"
+"origin" "-32 32 0"
+"spawnflags" "255"
+"skin" "0"
+"angles" "0 -144.115 0"
+}

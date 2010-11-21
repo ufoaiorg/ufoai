@@ -1555,6 +1555,9 @@ base/models/objects/vegi/chestnut/leaves4.png | GNU General Public License 2.0 o
 base/models/objects/vegi/fern/fern.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/fern/fern.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/vegi/fern/fern_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
+base/models/objects/vegi/fern2/fern2.md2 | Creative Commons Attribution-Share Alike 3.0 | Yo Frankie!
+base/models/objects/vegi/fern2/fern2.png | Creative Commons Attribution-Share Alike 3.0 | Yo Frankie!
+base/models/objects/vegi/fern2/fern2_lrg.md2 | Creative Commons Attribution-Share Alike 3.0 | Yo Frankie!
 base/models/objects/vegi/ficus/ficus.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/fir/fir.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/fir/fir.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -1616,6 +1619,9 @@ base/models/objects/vegi/water_lily/lily_leaf.png | GNU General Public License 2
 base/models/objects/vegi/water_lily/lily_stem.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/models/objects/vegi/water_lily2/lily.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/water_lily2/lily.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vegi/wheat/wheat.png | Creative Commons Attribution-Share Alike 3.0 | Yo Frankie!
+base/models/objects/vegi/wheat/wheat1.md2 | Creative Commons Attribution-Share Alike 3.0 | Yo Frankie!
+base/models/objects/vegi/wheat/wheat2.md2 | Creative Commons Attribution-Share Alike 3.0 | Yo Frankie!
 base/models/objects/vehicles/bicycle/bicycle.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vehicles/bicycle/bicycle.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vehicles/forktruck/barrel1.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -6932,7 +6938,6 @@ radiant/prefabs/trucks/truck3.jpg | GNU General Public License 2.0 | Tinker;Nate
 radiant/prefabs/trucks/truck3.map | GNU General Public License 2.0 | Tinker;Nate Wright
 radiant/prefabs/ufos/ufo_fighter.map | GNU General Public License 2.0
 radiant/prefabs/ufos/ufo_scout.map | GNU General Public License 2.0
-radiant/prefabs/ufos/ufo_supply.map | GNU General Public License 2.0
 src/common/pqueue.c | Public Domain
 src/common/pqueue.h | Public Domain
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner "hoehrer" Höhrer
