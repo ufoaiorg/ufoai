@@ -895,13 +895,11 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 }
 
 /**
- * @todo speed up that shit
+ * @brief Parse, compile and link an angelscript script to a node
  */
 static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char **token)
 {
 	const char *errhead = "UI_ParseScript: unexpected end of file (in event)";
-	char buffer[4*1024] = "\0";
-	int count = 1;
 
 	Com_EnableFunctionScriptToken(qtrue);
 
@@ -915,39 +913,30 @@ static qboolean UI_ParseScript (uiNode_t * node, const char **text, const char *
 		return qfalse;
 	}
 
-	while (qtrue) {
-		*token = Com_EParse(text, errhead, node->name);
-		if (!*text) {
-			Com_EnableFunctionScriptToken(qfalse);
-			return qfalse;
-		}
+	*token = Com_ParseBlock(text);
 
-		if ((*token)[0] == '{') {
-			count++;
-		} else if ((*token)[0] == '}') {
-			count--;
-			if (count == 0)
-				break;
-		}
-		/** @todo this is incredibly slow way, only for fast prototyping */
-		strncat(buffer, " ", sizeof(buffer));
-		if (Com_ParsedTokenIsQuoted())
-			strncat(buffer, "\"", sizeof(buffer));
-		strncat(buffer, *token, sizeof(buffer));
-		if (Com_ParsedTokenIsQuoted())
-			strncat(buffer, "\"", sizeof(buffer));
-	}
+	/** @todo this should return a parsing status */
+	UI_ParseActionScript(node, *token);
 
 	*token = Com_EParse(text, errhead, node->name);
 	if (!*text) {
 		Com_EnableFunctionScriptToken(qfalse);
 		return qfalse;
 	}
-
-	/** @todo this should return a parsing status */
-	UI_ParseActionScript(node, buffer);
+	if ((*token)[0] != '}') {
+		Com_Printf("UI_ParseScript: '{' exprected but '%s' found.\n", *token);
+		return qfalse;
+	}
 
 	Com_EnableFunctionScriptToken(qfalse);
+
+	/** pre read next token for the next function */
+	/** @todo remove it, it is disturbing */
+	*token = Com_EParse(text, errhead, node->name);
+	if (!*text) {
+		Com_EnableFunctionScriptToken(qfalse);
+		return qfalse;
+	}
 
 	return qtrue;
 }

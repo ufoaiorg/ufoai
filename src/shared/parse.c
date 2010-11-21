@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include <string.h>
 #include "parse.h"
 #include "defines.h"
 #include "ufotypes.h"
@@ -187,5 +188,110 @@ skipwhite:
 	com_token[len] = '\0';
 
 	*data_p = data;
+	return com_token;
+}
+
+/**
+ * @brief Read the full text inside a block (without modification) and return it.
+ * @param data_p Pointer inside the block.
+ * @return Content of the block, else NULL, if something wrong.
+ */
+const char *Com_ParseBlock(const char **data_p)
+{
+	const char *begin = *data_p;
+	const char *current = *data_p;
+	qboolean reading = qtrue;
+	int count = 1;
+
+	if (isUnparsedToken) {
+		/** @note should not be need */
+		isUnparsedToken = qfalse;
+		return com_token;
+	}
+
+	/* search the end of the block */
+	while (*current && reading) {
+		switch (*current) {
+		case '/':
+			current++;
+			switch(*current) {
+			case '/':
+				current++;
+				while (*current && *current != '\n')
+					current++;
+				break;
+				current++;
+			case '*':
+				current++;
+				while (current[0] && current[1] && current[0] != '*' && current[1] != '/')
+					current++;
+				current++;
+				current++;
+				break;
+			default:
+				current++;
+			}
+
+			break;
+		case '\"':
+		{
+			qboolean quoted = qtrue;
+			while (*current && quoted) {
+				switch (*current) {
+				case '\"':
+					quoted = qfalse;
+					current++;
+					break;
+				case '\\':
+					current++;
+					if (*current)
+						current++;
+					break;
+				default:
+					current++;
+				}
+			}
+			current++;
+			break;
+		}
+		case '\'':
+			current++;
+			while (*current && *current != '\'')
+				current++;
+			current++;
+			break;
+
+		case '{':
+			count++;
+			current++;
+			break;
+		case '}':
+			count--;
+			if (count <= 0) {
+				reading = qfalse;
+				break;
+			}
+			current++;
+			break;
+
+		default:
+			current++;
+			break;
+		}
+	}
+
+	*data_p = current;
+
+	/* copy the result */
+	{
+		size_t len = current - begin;
+		if (len + 1 >= sizeof(com_token)) {
+			/** @todo catch the error */
+			return NULL;
+		}
+		strncpy(com_token, begin, len);
+		com_token[len] = '\0';
+	}
+
 	return com_token;
 }

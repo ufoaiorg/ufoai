@@ -15,6 +15,24 @@ window test_angelscript
 		bgcolor		"0 0 0 1"
 	}
 
+	button easyparse1
+	{
+		{ pos			"10 10" size		"50 50" color		".2187 .73 .23 1" }
+		angelscript { }
+	}
+
+	button easyparse2
+	{
+		{ pos			"10 10" size		"50 50" color		".2187 .73 .23 1" }
+		angelscript { int a = 0; }
+	}
+
+	button easyparse3
+	{
+		{ pos			"10 10" size		"50 50" color		".2187 .73 .23 1" }
+		angelscript { void onClick() { @cvar cvar@ b = getCvar("test_1"); } }
+	}
+
 	string test1 {	pos		"200 60" string	"t1" }
 	string test2 {	pos		"200 70" string	"t2" }
 	string test3 {	pos		"200 80" string	"t3" }
