@@ -478,7 +478,7 @@ GtkWidget* Dialog::addPathEntry (GtkWidget* vbox, const std::string& name, const
 	// Connect the registry key to the newly created input field
 	_registryConnector.connectGtkObject(GTK_OBJECT(pathEntry.m_entry), registryKey);
 
-	GtkTable* row = DialogRow_new(name.c_str(), GTK_WIDGET(pathEntry.m_frame));
+	GtkTable* row = DialogRow_new(name, GTK_WIDGET(pathEntry.m_frame));
 	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(row));
 
 	return GTK_WIDGET(row);

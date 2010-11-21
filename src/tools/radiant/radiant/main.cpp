@@ -418,8 +418,6 @@ int main (int argc, char* argv[])
 	// Try to load all the XML files into the registry
 	GlobalRegistry().init();
 
-	ui::GameManager::Instance().initialise();
-
 	ui::Splash::Instance().show();
 
 	create_local_pid();

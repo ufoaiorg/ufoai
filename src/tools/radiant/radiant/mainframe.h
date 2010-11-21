@@ -173,14 +173,8 @@ void EnginePath_Unrealise ();
 
 class ModuleObserver;
 
-void Radiant_attachEnginePathObserver (ModuleObserver& observer);
-void Radiant_detachEnginePathObserver (ModuleObserver& observer);
-
 void Radiant_attachGameToolsPathObserver (ModuleObserver& observer);
 void Radiant_detachGameToolsPathObserver (ModuleObserver& observer);
-
-void EnginePath_verify ();
-const std::string& EnginePath_get ();
 
 const std::string AppPath_get ();
 
@@ -193,7 +187,6 @@ void UpdateAllWindows ();
 
 void ClipperChangeNotify ();
 
-const std::string& basegame_get ();
 void Radiant_attachGameModeObserver (ModuleObserver& observer);
 void Radiant_detachGameModeObserver (ModuleObserver& observer);
 

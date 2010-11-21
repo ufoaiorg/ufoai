@@ -48,6 +48,7 @@
 #include "editable.h"
 #include "ientity.h"
 #include "ishadersystem.h"
+#include "igamemanager.h"
 #include "iuimanager.h"
 #include "igl.h"
 #include "imapcompiler.h"
@@ -126,8 +127,6 @@
 #include "selection/algorithm/General.h"
 #include "selection/algorithm/Group.h"
 #include "selection/algorithm/Transformation.h"
-#include "settings/GameDescription.h"
-#include "settings/GameManager.h"
 
 namespace {
 const std::string RKEY_WINDOW_STATE = "user/ui/mainFrame/window";
@@ -229,126 +228,16 @@ HomePathsModuleObserver g_HomePathsModuleObserver;
 
 void HomePaths_Construct (void)
 {
-	Radiant_attachEnginePathObserver(g_HomePathsModuleObserver);
+	GlobalRadiant().attachEnginePathObserver(g_HomePathsModuleObserver);
 }
 void HomePaths_Destroy (void)
 {
-	Radiant_detachEnginePathObserver(g_HomePathsModuleObserver);
-}
-
-// Engine Path
-
-static std::string g_strEnginePath;
-ModuleObservers g_enginePathObservers;
-std::size_t g_enginepath_unrealised = 1;
-
-void Radiant_attachEnginePathObserver (ModuleObserver& observer)
-{
-	g_enginePathObservers.attach(observer);
-}
-
-void Radiant_detachEnginePathObserver (ModuleObserver& observer)
-{
-	g_enginePathObservers.detach(observer);
-}
-
-void EnginePath_Realise (void)
-{
-	if (--g_enginepath_unrealised == 0) {
-		g_enginePathObservers.realise();
-	}
-}
-
-const std::string& EnginePath_get (void)
-{
-	ASSERT_MESSAGE(g_enginepath_unrealised == 0, "EnginePath_get: engine path not realised");
-	return g_strEnginePath;
-}
-
-void EnginePath_Unrealise (void)
-{
-	if (++g_enginepath_unrealised == 1) {
-		g_enginePathObservers.unrealise();
-	}
-}
-
-void setEnginePath (const std::string& path)
-{
-	StringOutputStream buffer(256);
-	buffer << DirectoryCleaned(path);
-	if (g_strEnginePath != buffer.toString()) {
-		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Changing Engine Path"));
-
-		EnginePath_Unrealise();
-
-		g_strEnginePath = buffer.toString();
-
-		EnginePath_Realise();
-	}
-}
-
-// App Path
-
-void EnginePathImport (std::string& self, const char* value)
-{
-	setEnginePath(value);
-}
-typedef ReferenceCaller1<std::string, const char*, EnginePathImport> EnginePathImportCaller;
-
-void Paths_constructPreferences (PrefPage* page)
-{
-	page->appendPathEntry(_("Engine Path"), true, StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
-			StringExportCallback(StringExportCaller(g_strEnginePath)));
-}
-void Paths_constructPage (PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Paths"), _("Path Settings"));
-	Paths_constructPreferences(reinterpret_cast<PrefPage*>(page));
-}
-
-void Paths_registerPreferencesPage (void)
-{
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Paths_constructPage> ());
-}
-
-class PathsDialog: public Dialog
-{
-	public:
-		GtkWindow* BuildDialog (void)
-		{
-			GtkFrame* frame = create_dialog_frame(_("Path Settings"), GTK_SHADOW_ETCHED_IN);
-
-			GtkVBox* vbox2 = create_dialog_vbox(0, 4);
-			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));
-
-			{
-				PrefPage preferencesPage(*this, GTK_WIDGET(vbox2));
-				Paths_constructPreferences(&preferencesPage);
-			}
-
-			return create_simple_modal_dialog_window(_("Engine Path Not Found"), m_modal, GTK_WIDGET(frame));
-		}
-};
-
-PathsDialog g_PathsDialog;
-
-void EnginePath_verify (void)
-{
-	if (!file_exists(g_strEnginePath)) {
-		g_PathsDialog.Create();
-		g_PathsDialog.DoModal();
-		g_PathsDialog.Destroy();
-	}
+	GlobalRadiant().detachEnginePathObserver(g_HomePathsModuleObserver);
 }
 
 namespace
 {
 	ModuleObservers g_gameModeObservers;
-}
-
-const std::string& basegame_get (void)
-{
-	return ui::GameManager::Instance().getGameDescription()->getRequiredKeyValue("basegame");
 }
 
 void Radiant_attachGameModeObserver (ModuleObserver& observer)
@@ -1710,6 +1599,7 @@ void MainFrame_Construct (void)
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
 
+	// TODO: These are the only registerPreference (deprecated) calls left
 	// TODO: Use PanedPosition for these
 	GlobalPreferenceSystem().registerPreference("XYHeight", IntImportStringCaller(g_layout_globals.nXYHeight),
 			IntExportStringCaller(g_layout_globals.nXYHeight));
@@ -1720,21 +1610,12 @@ void MainFrame_Construct (void)
 	GlobalPreferenceSystem().registerPreference("CamHeight", IntImportStringCaller(g_layout_globals.nCamHeight),
 			IntExportStringCaller(g_layout_globals.nCamHeight));
 
-#ifdef PKGDATADIR
-	StringOutputStream path(256);
-	path << DirectoryCleaned(PKGDATADIR);
-	g_strEnginePath = path.toString();
-#endif
-
 	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle.m_latched),
 			IntExportStringCaller(g_Layout_viewStyle.m_latched));
-	GlobalPreferenceSystem().registerPreference("EnginePath", StringImportStringCaller(g_strEnginePath),
-			StringExportStringCaller(g_strEnginePath));
 
 	g_Layout_viewStyle.useLatched();
 
 	Layout_registerPreferencesPage();
-	Paths_registerPreferencesPage();
 
 	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
 	GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;

@@ -180,7 +180,6 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 	eclass_capture_state(e);
 
 	return e;
-
 }
 
 static void Eclass_ScanFile (EntityClassCollector& collector, const std::string& filename)

@@ -669,6 +669,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\preferencedictionary.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\GameDescription.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\GameManager.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\settings\GameManagerModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\PreferenceDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\PreferenceDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\shaders.cpp" />

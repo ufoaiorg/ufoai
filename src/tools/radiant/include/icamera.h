@@ -39,7 +39,7 @@ class ICamera
 {
 	public:
 		INTEGER_CONSTANT(Version, 1);
-		STRING_CONSTANT(Name, "registry");
+		STRING_CONSTANT(Name, "camera");
 
 		virtual ~ICamera ()
 		{

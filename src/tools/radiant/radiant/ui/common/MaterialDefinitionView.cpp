@@ -85,9 +85,8 @@ namespace ui
 	void MaterialDefinitionView::save ()
 	{
 		const std::string& content = _view.getContents();
-		const std::string& enginePath = GlobalRadiant().getEnginePath();
-		const std::string& baseGame = basegame_get();
-		std::string fullpath = enginePath + baseGame + "/" + std::string(_material);
+		const std::string& gamePath = GlobalRadiant().getFullGamePath();
+		std::string fullpath = gamePath + "/" + _material;
 		TextFileOutputStream out(fullpath);
 		if (out.failed()) {
 			g_message("Error saving file to '%s'.", fullpath.c_str());

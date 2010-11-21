@@ -54,6 +54,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/settings/PreferenceDialog.cpp \
 	$(RADIANT_BASE)/radiant/settings/GameDescription.cpp \
 	$(RADIANT_BASE)/radiant/settings/GameManager.cpp \
+	$(RADIANT_BASE)/radiant/settings/GameManagerModule.cpp \
 	\
 	$(RADIANT_BASE)/radiant/clipper/ClipPoint.cpp \
 	$(RADIANT_BASE)/radiant/clipper/Clipper.cpp \

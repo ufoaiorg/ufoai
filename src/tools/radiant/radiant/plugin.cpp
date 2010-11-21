@@ -42,6 +42,7 @@
 #include "iundo.h"
 #include "itextures.h"
 #include "ireference.h"
+#include "igamemanager.h"
 #include "ifiletypes.h"
 #include "preferencesystem.h"
 #include "brush/TexDef.h"
@@ -71,6 +72,8 @@
 
 #include "map/map.h"
 #include "map/CounterManager.h"
+
+#include "os/path.h"
 
 #include "sidebar/sidebar.h"
 #include "gtkmisc.h"
@@ -155,21 +158,25 @@ class RadiantModule : public IRadiant
 			return MainFrame_getWindow();
 		}
 
-		const std::string& getEnginePath() {
-			return EnginePath_get();
+		const std::string& getEnginePath ()
+		{
+			return GlobalGameManager().getEnginePath();
 		}
-		const std::string getGamePath() {
-			return basegame_get();
+		const std::string& getGamePath ()
+		{
+			return GlobalGameManager().getKeyValue("basegame");
 		}
-		const std::string getFullGamePath() {
-			return getEnginePath() + getGamePath() + "/";
+		const std::string getFullGamePath ()
+		{
+			const std::string enginePath = getEnginePath();
+			const std::string gamePath = getGamePath();
+			return DirectoryCleaned(enginePath + gamePath);
 		}
 
 		virtual Counter& getCounter(CounterType counter) {
 			// Pass the call to the helper class
 			return _counters.get(counter);
 		}
-
 
 		void setStatusText (const std::string& statusText) {
 			Sys_Status(statusText);
@@ -183,10 +190,10 @@ class RadiantModule : public IRadiant
 		}
 
 		void attachEnginePathObserver (ModuleObserver& observer) {
-			Radiant_attachEnginePathObserver(observer);
+			GlobalGameManager().attachEnginePathObserver(observer);
 		}
 		void detachEnginePathObserver (ModuleObserver& observer) {
-			Radiant_detachEnginePathObserver(observer);
+			GlobalGameManager().detachEnginePathObserver(observer);
 		}
 
 		void attachGameModeObserver (ModuleObserver& observer) {
@@ -229,7 +236,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalOverlayModuleRef,
 		public GlobalSelectionSetManagerModuleRef,
 		public GlobalParticleModuleRef,
-		public GlobalMapCompilerModuleRef
+		public GlobalMapCompilerModuleRef,
+		public GlobalGameManagerModuleRef
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;
@@ -275,8 +283,7 @@ class Radiant
 			Entity_Construct();
 			map::AutoSaver().init();
 
-			EnginePath_verify();
-			EnginePath_Realise();
+			GlobalGameManager().init();
 
 			Pathfinding_Construct();
 			UMP_Construct();
@@ -291,7 +298,7 @@ class Radiant
 			Pathfinding_Destroy();
 			TextureBrowser_Destroy();
 
-			EnginePath_Unrealise();
+			GlobalGameManager().destroy();
 
 			GlobalCamera().destroy();
 			GlobalXYWnd().destroy();

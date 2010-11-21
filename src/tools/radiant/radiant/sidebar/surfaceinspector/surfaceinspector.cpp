@@ -30,6 +30,7 @@
 
 #include "iscenegraph.h"
 #include "iundo.h"
+#include "igamemanager.h"
 #include "iselection.h"
 #include "ieventmanager.h"
 #include "igrid.h"
@@ -46,8 +47,6 @@
 #include "../../brush/Brush.h"
 #include "../../textureentry.h"
 #include "../../textool/TexTool.h"
-#include "../../settings/GameDescription.h"
-#include "../../settings/GameManager.h"
 
 #include "BrushGetClosestFaceVisible.h"
 
@@ -226,13 +225,13 @@ void SurfaceInspector::onFaceFitClick (GtkWidget *widget, SurfaceInspector *insp
 
 const std::string& SurfaceInspector::getSurfaceFlagName (std::size_t bit) const
 {
-	const std::string& value = ui::GameManager::Instance().getGameDescription()->getKeyValue(surfaceflagNamesDefault[bit]);
+	const std::string& value = GlobalGameManager().getKeyValue(surfaceflagNamesDefault[bit]);
 	return value;
 }
 
 const std::string& SurfaceInspector::getContentFlagName (std::size_t bit) const
 {
-	const std::string& value = ui::GameManager::Instance().getGameDescription()->getKeyValue(contentflagNamesDefault[bit]);
+	const std::string& value = GlobalGameManager().getKeyValue(contentflagNamesDefault[bit]);
 	return value;
 }
 
@@ -559,7 +558,7 @@ GtkWidget* SurfaceInspector::buildNotebook (void)
 		}
 	}
 	{
-		const std::string& valueEnablingFields = ui::GameManager::Instance().getGameDescription()->getKeyValue("surfaceinspector_enable_value");
+		const std::string& valueEnablingFields = GlobalGameManager().getKeyValue("surfaceinspector_enable_value");
 		{
 			_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
 			gtk_widget_show(GTK_WIDGET (_surfaceFlagsFrame));

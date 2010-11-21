@@ -133,6 +133,8 @@ struct IRadiant
 	 */
 	virtual GtkWindow* getMainWindow() = 0;
 	virtual const std::string& getEnginePath() = 0;
+	virtual const std::string& getGamePath() = 0;
+	virtual const std::string getFullGamePath() = 0;
 
 	// Returns the Counter object of the given type
 	virtual Counter& getCounter(CounterType counter) = 0;
@@ -140,9 +142,6 @@ struct IRadiant
 	/** greebo: Set the status text of the main window
 	 */
 	virtual void setStatusText (const std::string& statusText) = 0;
-
-	virtual const std::string getGamePath() = 0;
-	virtual const std::string getFullGamePath() = 0;
 
 	virtual void attachGameToolsPathObserver (ModuleObserver& observer) = 0;
 	virtual void detachGameToolsPathObserver (ModuleObserver& observer) = 0;
