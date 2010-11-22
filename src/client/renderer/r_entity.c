@@ -356,6 +356,57 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 }
 
 /**
+ * Merge sort merge helper function.
+ */
+static entity_t* R_MergeSortMerge (entity_t *a, entity_t *b)
+{
+	entity_t *c;
+
+	if (a == NULL)
+		return b;
+
+	if (b == NULL)
+		return a;
+
+	if (a->distanceFromViewOrigin > b->distanceFromViewOrigin) {
+		c = a;
+		c->next = R_MergeSortMerge(a->next, b);
+	} else {
+		c = b;
+		c->next = R_MergeSortMerge(a, b->next);
+	}
+
+	return c;
+}
+
+/**
+ * @brief Merge sort for the entity list
+ *
+ * @note We can't use in-place merging of the entities array because there are references
+ * in this array that must stay intact (references for tagged models e.g.).
+ *
+ * @return the first entity to render
+ */
+static entity_t* R_MergeSortEntList (entity_t *c)
+{
+	entity_t *a, *b;
+
+	if (c == NULL || c->next == NULL)
+		return c;
+
+	a = c;
+	b = c->next;
+	while (b != NULL && b->next != NULL) {
+		c = c->next;
+		b = b->next->next;
+	}
+	b = c->next;
+	c->next = NULL;
+
+	return R_MergeSortMerge(R_MergeSortEntList(a), R_MergeSortEntList(b));
+}
+
+/**
  * @sa R_DrawEntities
  */
 static void R_DrawBlendMeshEntities (entity_t *ents)
@@ -367,7 +418,9 @@ static void R_DrawBlendMeshEntities (entity_t *ents)
 		R_EnableLighting(r_state.world_program, qtrue);
 	}
 	R_EnableBlend(qtrue);
-	R_DrawMeshEntities(ents);
+
+	R_DrawMeshEntities(R_MergeSortEntList(ents));
+
 	R_EnableBlend(qfalse);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		R_EnableLighting(NULL, qfalse);
@@ -528,22 +581,6 @@ static qboolean R_CullEntity (entity_t *e)
 		return R_CullMeshModel(e);
 }
 
-#if 0
-/**
- * @brief Compare two entities according to their distance
- * @param[in] ent1 The first entity
- * @param[in] ent2 The second entity
- * @return An integer less than, equal to, or greater than zero if ent1 is
- * found, respectively, to be less than, to match, or be greater than ent2
- * @note sort function pointer for qsort
- * @todo This isn't working - see bug #3051433
- */
-static int R_SortEntities (const void *ent1, const void *ent2)
-{
-	return ((const entity_t*)ent1)->distanceFromViewOrigin - ((const entity_t*)ent2)->distanceFromViewOrigin;
-}
-#endif
-
 /**
  * @brief Primary entry point for drawing all entities.
  * @sa R_RenderFrame
@@ -561,10 +598,6 @@ void R_DrawEntities (void)
 
 	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
 		r_blend_mesh_entities = r_null_entities = NULL;
-
-#if 0
-	qsort(r_entities, refdef.numEntities, sizeof(entity_t), R_SortEntities);
-#endif
 
 	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *e = &r_entities[i];
