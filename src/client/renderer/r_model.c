@@ -258,14 +258,14 @@ void R_SwitchModelMemPoolTag (void)
 
 /**
  * @brief Register an actorskin name
- * @return The id where the actorskin is registred
+ * @return The id where the actorskin is registered
  */
 int R_ModAllocateActorSkin (const char* name)
 {
 	if (r_numActorSkinName >= lengthof(r_actorSkinNames))
 		return -1;
 
-	r_actorSkinNames[r_numActorSkinName] = Mem_PoolStrDup(name, com_genericPool, 0);
+	r_actorSkinNames[r_numActorSkinName] = Mem_StrDup(name);
 
 	return r_numActorSkinName++;
 }
