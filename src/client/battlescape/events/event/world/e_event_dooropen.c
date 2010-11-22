@@ -26,6 +26,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_dooropen.h"
 
+static void CL_DoorSlidingOpen (le_t * le)
+{
+	const int dir = le->dir & 3;
+	const qboolean left = le->dir & 4;
+	/*const int size = le->maxs[dir] - le->mins[dir]; */
+	/** @todo implement this function */
+	if (left) {
+		/* le->slidingSpeed; */
+		le->think = NULL;
+		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
+		CL_RecalcRouting(le);
+	} else {
+	}
+}
+
 /**
  * @brief Callback for EV_DOOR_OPEN event - rotates the inline model and recalc routing
  * @sa Touch_DoorTrigger
@@ -42,11 +57,15 @@ void CL_DoorOpen (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(number);
 
-	/** @todo YAW should be the orientation of the door */
-	le->angles[YAW] += DOOR_ROTATION_ANGLE;
+	if (le->type == ET_DOOR) {
+		le->angles[le->dir] += DOOR_ROTATION_ANGLE;
 
-	Com_DPrintf(DEBUG_CLIENT, "Client processed door movement.\n");
-
-	CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
-	CL_RecalcRouting(le);
+		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
+		CL_RecalcRouting(le);
+	} else if (le->type == ET_DOOR_SLIDING) {
+		LE_SetThink(le, CL_DoorSlidingOpen);
+		le->think(le);
+	} else {
+		Com_Error(ERR_DROP, "Invalid door entity found of type: %i", le->type);
+	}
 }

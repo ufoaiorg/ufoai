@@ -75,6 +75,7 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 		break;
 	case ET_BREAKABLE:
 	case ET_DOOR:
+	case ET_DOOR_SLIDING:
 		break;
 	default:
 		break;

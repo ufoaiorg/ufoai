@@ -36,15 +36,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
-	int entnum, modelnum1, levelflags, speed;
+	int entnum, modelnum1, levelflags, speed, dir;
 	entity_type_t type;
 	const cBspModel_t *model;
 	int angle;
 	vec3_t origin, angles;
 
-	NET_ReadFormat(msg, self->formatString, &type, &entnum, &modelnum1, &levelflags, &origin, &angles, &speed, &angle);
+	NET_ReadFormat(msg, self->formatString, &type, &entnum, &modelnum1, &levelflags, &origin, &angles, &speed, &angle, &dir);
 
-	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING)
+	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING && type != ET_DOOR_SLIDING)
 		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL type: %i\n", type);
 	else if (modelnum1 > MAX_MODELS || modelnum1 < 1)
 		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ADD_BRUSH_MODEL\n");
@@ -58,7 +58,9 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	assert(le);
 
 	le->rotationSpeed = speed / 100.0f;
-	le->dir = angle;
+	le->slidingSpeed = speed;
+	le->angle = angle;
+	le->dir = dir;
 	le->type = type;
 	le->modelnum1 = modelnum1;
 	le->levelflags = levelflags;
@@ -66,6 +68,8 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	LE_SetThink(le, LET_BrushModel);
 	/* The origin and angles are REQUIRED for doors to work! */
 	VectorCopy(origin, le->origin);
+	/* store the initial position - needed for sliding doors */
+	VectorCopy(le->origin, le->oldOrigin);
 	VectorCopy(angles, le->angles);
 
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);

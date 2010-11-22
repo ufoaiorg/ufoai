@@ -231,6 +231,7 @@ entity misc_particle {
 		particle	"Name of the particle definition."
 		origin		"position"
 		spawnflags	"Levelflags and noday"
+		targetname	"The id of this entity"
 	}
 
 	optional {
@@ -394,6 +395,7 @@ entity misc_sound {
 	optional {
 		volume	"Relative volume - value between 0.0 and 1.0"
 		attenuation	"3.0 is only audible when the sound source is very close to the camera, 0.0 is audible everywhere."
+		targetname	"The id of this entity"
 	}
 
 	range {
@@ -426,6 +428,7 @@ entity misc_mission {
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
 		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
+		targetname	"The id of this entity"
 	}
 
 	mandatory {
@@ -455,6 +458,7 @@ entity misc_mission_alien {
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
 		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
+		targetname	"The id of this entity"
 	}
 
 	mandatory {
@@ -479,9 +483,31 @@ entity func_door {
 		group		"Multipart doors can be grouped to open together"
 		noise		"Soundfile to play when door opens"
 		particle	"Particle id to be spawned after object is destroyed"
+		targetname	"The id of this entity"
 	}
 
 	mandatory {
+		spawnflags	"level flags"
+	}
+
+	default {
+		spawnflags	"255"
+	}
+}
+
+entity func_door_sliding {
+	color		"0 .5 .8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	optional {
+		angle		"Determines the opening direction, 0-360 degree or -1 up, -2 down"
+		group		"Multipart doors can be grouped to open together"
+		noise		"Soundfile to play when door opens"
+		particle	"Particle id to be spawned after object is destroyed"
+		targetname	"The id of this entity"
+	}
+
+	mandatory {
+		dir			"6, 10 (x) and 5, 9 (y) and 3 (z downwards)"
 		spawnflags	"level flags"
 	}
 
@@ -526,6 +552,7 @@ entity func_rotating {
 		particle	"Particle id to be spawned after object is destroyed"
 		speed		"Rotation speed"
 		angle		"Rotate around this angle - pitch = 0, yaw = 1, roll = 2"
+		targetname	"The id of this entity"
 	}
 
 	mandatory {
@@ -543,6 +570,7 @@ entity trigger_hurt {
 
 	optional {
 		dmg	"Damage per step (whole numbers only)"
+		targetname	"The id of this entity"
 	}
 
 	default {
@@ -553,8 +581,12 @@ entity trigger_hurt {
 entity trigger_touch {
 	description	"Any entity that touches this will trigger the use function of the target entity."
 
+	optional {
+		targetname	"The id of this entity"
+	}
+
 	mandatory {
-		target	"Target entity - target entity must have targetname set (to the value given here)"
+		target		"Target entity - target entity must have targetname set (to the value given here)"
 	}
 }
 
@@ -563,6 +595,7 @@ entity trigger_rescue {
 
 	optional {
 		particle	"Display a particle"
+		targetname	"The id of this entity"
 	}
 
 	mandatory {
@@ -584,6 +617,10 @@ entity misc_message {
 	size		"-16 -16 -16 16 16 16"
 	spawnflags	"once"
 
+	optional {
+		targetname	"The id of this entity"
+	}
+
 	mandatory {
 		message	"The message that is send to the client - should contain an underscore as first character to be translatable"
 	}
@@ -600,6 +637,7 @@ entity misc_item {
 		item		"The item to spawn - item id from ufo script definition"
 		spawnflags	"level flags"
 		origin		"Position"
+		targetname	"The id of this entity"
 	}
 
 	type {

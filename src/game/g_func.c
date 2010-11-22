@@ -154,8 +154,12 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 	if (door->doorState == STATE_CLOSED) {
 		door->doorState = STATE_OPENED;
 
-		/* change rotation and relink */
-		door->angles[YAW] += DOOR_ROTATION_ANGLE;
+		/* change rotation/origin and relink */
+		if (door->type == ET_DOOR) {
+			door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
+		} else if (door->type == ET_DOOR_SLIDING) {
+			door->origin[door->dir & 3] += door->maxs[door->dir];
+		}
 		gi.LinkEdict(door);
 
 		/* maybe the server called this because the door starts opened */
@@ -170,7 +174,11 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		door->doorState = STATE_CLOSED;
 
 		/* change rotation and relink */
-		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
+		if (door->type == ET_DOOR) {
+			door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
+		} else if (door->type == ET_DOOR_SLIDING) {
+			door->origin[door->dir & 3] -= door->maxs[door->dir];
+		}
 		gi.LinkEdict(door);
 
 		/* closed is the standard, opened is handled above - we need an active
@@ -261,6 +269,7 @@ void SP_func_door (edict_t *ent)
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
 	ent->doorState = STATE_CLOSED;
+	ent->dir = YAW;
 
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
@@ -269,23 +278,33 @@ void SP_func_door (edict_t *ent)
 	other = G_TriggerSpawn(ent);
 	other->touch = Touch_DoorTrigger;
 	other->reset = Reset_DoorTrigger;
+	ent->child = other;
 
 	G_ActorSetTU(ent, TU_DOOR_ACTION);
 	ent->use = Door_Use;
-	ent->child = other;
 
 	/* the door should start opened */
 	if (ent->spawnflags & FL_TRIGGERED)
 		G_UseEdict(ent, NULL);
 
-	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, ent->solid,
-			(int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
-			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
-			(int)ent->absmin[0], (int)ent->absmin[1], (int)ent->absmin[2],
-			(int)ent->absmax[0], (int)ent->absmax[1], (int)ent->absmax[2],
-			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
+	ent->destroy = Destroy_Breakable;
+}
 
+void SP_func_door_sliding (edict_t *ent)
+{
+	ent->classname = "doorsliding";
+	ent->type = ET_DOOR_SLIDING;
+	if (!ent->noise)
+		ent->noise = "doors/slide";
+
+	/* set an inline model */
+	gi.SetModel(ent, ent->model);
+	ent->solid = SOLID_BSP;
+	gi.LinkEdict(ent);
+
+	ent->doorState = STATE_CLOSED;
+	ent->speed = 10;
+	ent->use = Door_Use;
 	ent->destroy = Destroy_Breakable;
 }
 
@@ -311,8 +330,5 @@ void SP_func_rotating (edict_t *ent)
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
 
-	Com_DPrintf(DEBUG_GAME, "func_rotating: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
-			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
-			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
+	ent->destroy = Destroy_Breakable;
 }

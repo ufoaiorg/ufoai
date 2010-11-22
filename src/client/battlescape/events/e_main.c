@@ -95,7 +95,7 @@ const eventRegister_t events[] = {
 	{E(EV_ENT_APPEAR), "sbg", CL_EntAppear, NULL, NULL},
 	{E(EV_ENT_PERISH), "s", CL_EntPerish, NULL, NULL},
 	{E(EV_ENT_DESTROY), "s", CL_EntDestroy, NULL, NULL},
-	{E(EV_ADD_BRUSH_MODEL), "bssbppsb", CL_AddBrushModel, NULL, NULL},
+	{E(EV_ADD_BRUSH_MODEL), "bssbppsbb", CL_AddBrushModel, NULL, NULL},
 	{E(EV_ADD_EDICT), "bspp", CL_AddEdict, NULL, NULL},
 
 	{E(EV_ACTOR_APPEAR), "!s!sbbbbgbssssbsbbbs", CL_ActorAppear, CL_ActorAppearTime, CL_CheckDefault},

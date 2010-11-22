@@ -181,7 +181,7 @@ extern game_export_t globals;
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
 #define G_IsBreakable(ent)		((ent)->flags & FL_DESTROYABLE)
-#define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || (ent)->type == ET_DOOR || (ent)->type == ET_ROTATING)
+#define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || (ent)->type == ET_DOOR || (ent)->type == ET_DOOR_SLIDING || (ent)->type == ET_ROTATING)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
 #define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
 #define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent))->pers.ai)
@@ -533,6 +533,7 @@ void SP_trigger_rescue(edict_t *ent);
 /* g_func.c */
 void SP_func_rotating(edict_t *ent);
 void SP_func_door(edict_t *ent);
+void SP_func_door_sliding(edict_t *ent);
 void SP_func_breakable(edict_t *ent);
 
 /** Functions handling the storage and lifecycle of all edicts */

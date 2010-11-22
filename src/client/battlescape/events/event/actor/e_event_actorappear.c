@@ -100,7 +100,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	/* get the info */
 	NET_ReadFormat(msg, self->formatString,
 			&le->team, &teamDefID, &le->gender, &le->pnum, &le->pos,
-			&le->dir, &le->right, &le->left,
+			&le->angle, &le->right, &le->left,
 			&modelnum1, &modelnum2, &le->skinnum,
 			&le->state, &le->fieldSize,
 			&le->maxTU, &le->maxMorale, &le->maxHP);
@@ -127,7 +127,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	le->model1 = LE_GetDrawModel(modelnum1);
 	le->model2 = LE_GetDrawModel(modelnum2);
 	Grid_PosToVec(cl.mapData->map, le->fieldSize, le->pos, le->origin);
-	le->angles[YAW] = directionAngles[le->dir];
+	le->angles[YAW] = directionAngles[le->angle];
 
 	le->contents = CONTENTS_ACTOR;
 	VectorCopy(player_mins, le->mins);

@@ -59,9 +59,10 @@ typedef struct le_s {
 
 	vec3_t origin, oldOrigin;	/**< position given via world coordinates */
 	pos3_t pos, oldPos, newPos;		/**< position on the grid */
-	int dir;				/**< the current dir the le is facing into. Beware, this can either
+	int angle;				/**< the current dir the le is facing into. Beware, this can either
 							 * be an index in the bytedirs array or an index for the angles
 							 * array of the le */
+	int dir;
 
 	int TU, maxTU;				/**< time units */
 	int morale, maxMorale;		/**< morale value - used for soldier panic and the like */
@@ -113,6 +114,7 @@ typedef struct le_s {
 	int startTime, endTime;
 	int speed[MAX_LE_PATHLENGTH];			/**< the speed the le is moving with */
 	float rotationSpeed;
+	int slidingSpeed;
 
 	/** sound effects */
 	int sampleIdx;

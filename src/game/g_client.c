@@ -1328,6 +1328,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 			gi.WritePos(ent->angles);
 			gi.WriteShort(ent->speed);
 			gi.WriteByte(ent->angle);
+			gi.WriteByte(ent->dir);
 			ent->visflags |= ~ent->visflags;
 		}
 	}

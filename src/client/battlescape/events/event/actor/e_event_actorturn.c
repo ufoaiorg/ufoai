@@ -50,6 +50,6 @@ void CL_ActorDoTurn (const eventRegister_t *self, struct dbuffer *msg)
 	if (LE_IsDead(le))
 		Com_Error(ERR_DROP, "Can't turn, actor dead\n");
 
-	le->dir = dir;
-	le->angles[YAW] = directionAngles[le->dir];
+	le->angle = dir;
+	le->angles[YAW] = directionAngles[le->angle];
 }

@@ -550,8 +550,8 @@ static void LE_DoPathMove (le_t *le)
 
 	/* only change the direction if the actor moves horizontally. */
 	if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
-		le->dir = dir & (CORE_DIRECTIONS - 1);
-	le->angles[YAW] = directionAngles[le->dir];
+		le->angle = dir & (CORE_DIRECTIONS - 1);
+	le->angles[YAW] = directionAngles[le->angle];
 	le->startTime = le->endTime;
 	/* check for straight movement or diagonal movement */
 	assert(le->speed[le->pathPos]);
@@ -676,7 +676,7 @@ static void LET_Projectile (le_t * le)
 		le->inuse = qfalse;
 		if (le->ref1 && le->ref1[0] != '\0') {
 			VectorCopy(le->ptl->s, impact);
-			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->dir], NULL);
+			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->angle], NULL);
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
 		if (le->ref2 && le->ref2[0] != '\0') {
@@ -687,7 +687,7 @@ static void LET_Projectile (le_t * le)
 			/** @todo Special particles for stun attack (mind you that there is
 			 * electrical and gas/chemical stunning)? */
 			if (le->fd->obj->dmgtype != csi.damStunGas)
-				LE_ActorBodyHit(le->ref3, impact, le->dir);
+				LE_ActorBodyHit(le->ref3, impact, le->angle);
 			CL_ActorPlaySound(le->ref3, SND_HURT);
 		}
 	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
@@ -726,7 +726,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 
 	VecToAngles(delta, le->ptl->angles);
 	/* direction - bytedirs index */
-	le->dir = normal;
+	le->angle = normal;
 	le->fd = fd;
 
 	/* infinite speed projectile? */
@@ -736,7 +736,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
 		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd->bounce)) {
 			ptl_t *ptl = NULL;
-			const float *dir = bytedirs[le->dir];
+			const float *dir = bytedirs[le->angle];
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					S_LoadAndPlaySample(fd->hitBodySound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
@@ -749,7 +749,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 				 * electrical and gas/chemical stunning)? */
 				if (leVictim) {
 					if (fd->obj->dmgtype != csi.damStunGas)
-						LE_ActorBodyHit(leVictim, impact, le->dir);
+						LE_ActorBodyHit(leVictim, impact, le->angle);
 					CL_ActorPlaySound(leVictim, SND_HURT);
 				}
 			} else {
@@ -896,7 +896,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 
 	le->endTime = cl.time + dt;
 	/* direction - bytedirs index (0,0,1) */
-	le->dir = 5;
+	le->angle = 5;
 	le->fd = fd;
 	LE_SetThink(le, LET_Projectile);
 	LE_ExecuteThink(le);
@@ -911,6 +911,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	switch (le->type) {
 	case ET_ROTATING:
 	case ET_DOOR:
+	case ET_DOOR_SLIDING:
 		/* These cause the model to render correctly */
 		VectorCopy(ent->mins, le->mins);
 		VectorCopy(ent->maxs, le->maxs);
@@ -935,8 +936,8 @@ void LET_BrushModel (le_t *le)
 	}
 
 	if (le->type == ET_ROTATING) {
-		const float angle = le->angles[le->dir] + (1.0 / le->rotationSpeed);
-		le->angles[le->dir] = (angle >= 360.0 ? angle - 360.0 : angle);
+		const float angle = le->angles[le->angle] + (1.0 / le->rotationSpeed);
+		le->angles[le->angle] = (angle >= 360.0 ? angle - 360.0 : angle);
 	}
 }
 
