@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <game
+  name="UFO:AI"
   basegame="base"
   surf1="light"
   surf2="slick"

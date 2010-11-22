@@ -17,7 +17,6 @@ class PathsDialog: public Dialog
 		void PostModal (EMessageBoxReturn code)
 		{
 			if (code == eIDOK) {
-
 				_registryConnector.exportValues();
 			}
 		}
@@ -29,7 +28,8 @@ class PathsDialog: public Dialog
 			GtkVBox* vbox2 = create_dialog_vbox(0, 4);
 			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));
 
-			addPathEntry(GTK_WIDGET(vbox2), _("Engine Path"), RKEY_ENGINE_PATH, true);
+			// FIXME: use GlobalGameManager().getKeyValue("name")
+			addPathEntry(GTK_WIDGET(vbox2), _("UFO:AI Installation Path"), RKEY_ENGINE_PATH, true);
 
 			return create_simple_modal_dialog_window(_("Engine Path Not Found"), m_modal, GTK_WIDGET(frame));
 		}

@@ -51,19 +51,6 @@ void GameManager::initialise ()
 			}
 		}
 	}
-
-	std::string path = DirectoryCleaned(_enginePath);
-	std::string strGameFilename = Environment::Instance().getAppPath() + "game.xml";
-
-	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
-	if (pDoc) {
-		_currentGameDescription = new GameDescription(pDoc, strGameFilename);
-		// Import this information into the registry
-		//GlobalRegistry().importFromFile(strGameFilename, "");
-		xmlFreeDoc(pDoc);
-	} else {
-		gtkutil::errorDialog(_("XML parser failed to parse game.xml"));
-	}
 }
 
 const std::string& GameManager::getKeyValue (const std::string& key) const
@@ -88,6 +75,20 @@ GameManager::GameManager () :
 
 	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
 	GlobalPreferenceSystem().addConstructor(this);
+
+	// TODO Remove this and read the game.xml data from the xmlregistry, too
+	std::string path = DirectoryCleaned(_enginePath);
+	std::string strGameFilename = Environment::Instance().getAppPath() + "game.xml";
+
+	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
+	if (pDoc) {
+		_currentGameDescription = new GameDescription(pDoc, strGameFilename);
+		// Import this information into the registry
+		//GlobalRegistry().importFromFile(strGameFilename, "");
+		xmlFreeDoc(pDoc);
+	} else {
+		gtkutil::errorDialog(_("XML parser failed to parse game.xml"));
+	}
 
 	initialise();
 }
@@ -127,7 +128,7 @@ void GameManager::constructPreferencePage (PreferenceGroup& group)
 	PreferencesPage* page(group.createPage(_("Path"), _("Path Preferences")));
 
 	// Add the sliders for the movement and angle speed and connect them to the observer
-	page->appendPathEntry(_("Engine Path"), RKEY_ENGINE_PATH, true);
+	page->appendPathEntry(GlobalGameManager().getKeyValue("name") + " " + std::string(_("Installation Path")), RKEY_ENGINE_PATH, true);
 }
 
 void GameManager::init ()
