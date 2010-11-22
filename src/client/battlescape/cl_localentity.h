@@ -92,6 +92,7 @@ typedef struct le_s {
 
 	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;
+	vec3_t size;
 
 	char inlineModelName[8];	/**< for bmodels */
 	unsigned int modelnum1;	/**< the number of the body model in the cl.model_draw array */

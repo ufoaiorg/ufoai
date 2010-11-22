@@ -182,7 +182,6 @@ void R_DrawBrushModel (const entity_t * e)
 	/* relative to viewpoint */
 	vec3_t modelorg;
 
-
 	/* set the relative origin, accounting for rotation if necessary */
 	VectorSubtract(refdef.viewOrigin, e->origin, modelorg);
 	if (VectorNotEmpty(e->angles)) {

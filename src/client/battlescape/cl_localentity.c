@@ -911,12 +911,14 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	switch (le->type) {
 	case ET_ROTATING:
 	case ET_DOOR:
-	case ET_DOOR_SLIDING:
 		/* These cause the model to render correctly */
 		VectorCopy(ent->mins, le->mins);
 		VectorCopy(ent->maxs, le->maxs);
 		VectorCopy(ent->origin, le->origin);
 		VectorCopy(ent->angles, le->angles);
+		break;
+	case ET_DOOR_SLIDING:
+		VectorCopy(le->origin, ent->origin);
 		break;
 	case ET_BREAKABLE:
 		break;

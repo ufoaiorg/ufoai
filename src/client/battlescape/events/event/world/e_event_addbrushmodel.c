@@ -81,6 +81,8 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	/* Transfer model mins and maxs to entity */
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
+	VectorSubtract(le->maxs, le->mins, le->size);
+
 	/* This is to help the entity collision code out */
 	/* Copy entity origin and angles to model*/
 	CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);

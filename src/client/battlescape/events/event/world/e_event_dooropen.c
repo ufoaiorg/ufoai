@@ -28,17 +28,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void CL_DoorSlidingOpen (le_t * le)
 {
-	const int dir = le->dir & 3;
-	const qboolean left = le->dir & 4;
-	/*const int size = le->maxs[dir] - le->mins[dir]; */
-	/** @todo implement this function */
-	if (left) {
-		/* le->slidingSpeed; */
-		le->think = NULL;
-		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
-		CL_RecalcRouting(le);
-	} else {
-	}
+	vec3_t shiftDir;
+	const int dir = (le->dir & 3) - 1;
+	const qboolean reverse = le->dir & 4;
+
+	VectorClear(shiftDir);
+	shiftDir[dir] = reverse ? le->slidingSpeed : -le->slidingSpeed;
+
+	/* this origin is only an offset to the absolute mins/maxs for rendering */
+	VectorAdd(le->origin, shiftDir, le->origin);
+
+	/* le->slidingSpeed; */
+	le->think = NULL;
+	CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
+	CL_RecalcRouting(le);
 }
 
 /**
@@ -58,7 +61,8 @@ void CL_DoorOpen (const eventRegister_t *self, struct dbuffer *msg)
 		LE_NotFoundError(number);
 
 	if (le->type == ET_DOOR) {
-		le->angles[le->dir] += DOOR_ROTATION_ANGLE;
+		const int dir = (le->dir & 3) - 1;
+		le->angles[dir] += DOOR_ROTATION_ANGLE;
 
 		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 		CL_RecalcRouting(le);
