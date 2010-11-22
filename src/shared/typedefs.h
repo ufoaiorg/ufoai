@@ -24,7 +24,7 @@ typedef struct cBspPlane_s {
 } cBspPlane_t;
 
 typedef struct cBspModel_s {
-	vec3_t mins, maxs;
+	vec3_t mins, maxs;				/**< the absolute mins and maxs values of the bmodel */
 	vec3_t origin, angles, shift;		/**< used to orient doors and rotating entities */
 	int32_t headnode;
 	/** @note Not used by ufo2map */
