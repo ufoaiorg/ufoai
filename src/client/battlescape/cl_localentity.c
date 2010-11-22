@@ -956,6 +956,49 @@ void LMT_Init (localModel_t* localModel)
 }
 
 /**
+ * @brief Slides a door
+ * @param le The local entity of the inline model
+ * @param speed The speed to slide with - a negative value is close the door
+ */
+void LE_SlideDoor (le_t *le, int speed)
+{
+	vec3_t moveAngles, moveDir;
+	qboolean endPos = qfalse;
+
+	GET_SLIDING_DOOR_SHIFT_VECTOR(le->dir, speed, moveAngles);
+
+	/* this origin is only an offset to the absolute mins/maxs for rendering */
+	VectorAdd(le->origin, moveAngles, le->origin);
+
+	if (speed > 0) {
+		int distance;
+
+		AngleVectors(moveAngles, moveDir, NULL, NULL);
+		moveDir[0] = fabsf(moveDir[0]);
+		moveDir[1] = fabsf(moveDir[1]);
+		moveDir[2] = fabsf(moveDir[2]);
+		distance = DotProduct(moveDir, le->size);
+		if (fabs(le->origin[GET_SLIDING_VECTOR_INDEX(le->dir)]) >= distance)
+			endPos = qtrue;
+	} else {
+		if (VectorEmpty(le->origin))
+			endPos = qtrue;
+	}
+
+	if (endPos) {
+		cBspModel_t *model = CM_InlineModel(cl.mapTiles, le->inlineModelName);
+		assert(model);
+
+		VectorAdd(model->mins, moveAngles, model->mins);
+		VectorAdd(model->maxs, moveAngles, model->maxs);
+		CL_RecalcRouting(le);
+
+		le->think = NULL;
+	} else
+		le->thinkDelay = 1000;
+}
+
+/**
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_SpawnParseEntitystring
  */

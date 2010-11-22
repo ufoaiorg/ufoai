@@ -26,22 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_dooropen.h"
 
-static void CL_DoorSlidingOpen (le_t * le)
+static void LET_DoorSlidingOpen (le_t * le)
 {
-	vec3_t shiftDir;
-	const int dir = (le->dir & 3) - 1;
-	const qboolean reverse = le->dir & 4;
-
-	VectorClear(shiftDir);
-	shiftDir[dir] = reverse ? le->slidingSpeed : -le->slidingSpeed;
-
-	/* this origin is only an offset to the absolute mins/maxs for rendering */
-	VectorAdd(le->origin, shiftDir, le->origin);
-
-	/* le->slidingSpeed; */
-	le->think = NULL;
-	CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
-	CL_RecalcRouting(le);
+	LE_SlideDoor(le, le->slidingSpeed);
 }
 
 /**
@@ -67,7 +54,7 @@ void CL_DoorOpen (const eventRegister_t *self, struct dbuffer *msg)
 		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 		CL_RecalcRouting(le);
 	} else if (le->type == ET_DOOR_SLIDING) {
-		LE_SetThink(le, CL_DoorSlidingOpen);
+		LE_SetThink(le, LET_DoorSlidingOpen);
 		le->think(le);
 	} else {
 		Com_Error(ERR_DROP, "Invalid door entity found of type: %i", le->type);

@@ -290,6 +290,10 @@ typedef int32_t shoot_types_t;
 #define GET_TU( ab )        (min((27 + (ab) * 20/MAX_SKILL), 255))
 #define GET_MORALE( ab )        (min((100 + (ab) * 150/MAX_SKILL), 255))
 
+#define GET_SLIDING_VECTOR_INDEX(dir) (((dir) & 3) - 1)
+#define GET_SLIDING_DOOR_SHIFT_VECTOR(dir, speed, vecout) \
+	do { const int dirIdx = GET_SLIDING_VECTOR_INDEX(dir); const qboolean reverse = (dir) & 4; VectorClear(vecout); vecout[dirIdx] = reverse ? -speed : speed; } while (0);
+
 /**
  * config strings are a general means of communication from
  * the server to all connected clients.

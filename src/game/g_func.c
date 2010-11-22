@@ -158,7 +158,9 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		if (door->type == ET_DOOR) {
 			door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
-			door->origin[door->dir & 3] += door->maxs[door->dir];
+			vec3_t shiftDir;
+			GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, door->speed, shiftDir);
+			VectorAdd(door->origin, shiftDir, door->origin);
 		}
 		gi.LinkEdict(door);
 
@@ -177,7 +179,9 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		if (door->type == ET_DOOR) {
 			door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
-			door->origin[door->dir & 3] -= door->maxs[door->dir];
+			vec3_t shiftDir;
+			GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, -door->speed, shiftDir);
+			VectorAdd(door->origin, shiftDir, door->origin);
 		}
 		gi.LinkEdict(door);
 
