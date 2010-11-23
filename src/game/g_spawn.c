@@ -777,7 +777,7 @@ static void G_BuildForbiddenListForEntity (edict_t *ent)
 	}
 }
 
-#define MISC_MODEL_SOLID 256
+#define MISC_MODEL_SOLID (1 << 8)
 /**
  * @brief Spawns a misc_model if there is a solid state
  */
