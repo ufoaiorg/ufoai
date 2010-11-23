@@ -6526,7 +6526,7 @@ if test "${ac_cv_lib_xvidcore_xvid_decore+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lxvidcore  $LIBS"
+LIBS="-lxvidcore -lpthread $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -6746,6 +6746,7 @@ done
 		as_fn_error $? "Could not find libintl.h!" "$LINENO" 5
 	fi
 
+	LIBS=
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing gettext" >&5
 $as_echo_n "checking for library containing gettext... " >&6; }
 if test "${ac_cv_search_gettext+set}" = set; then :

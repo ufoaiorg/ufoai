@@ -597,7 +597,7 @@ then
 		AC_MSG_WARN([Could not find the Xvid development headers])
 	else
 		LIBS=
-		AC_CHECK_LIB(xvidcore, xvid_decore, [], AC_MSG_ERROR([You must have libxvidcore!!!]))
+		AC_CHECK_LIB(xvidcore, xvid_decore, [], AC_MSG_ERROR([You must have libxvidcore!!!]), [-lpthread])
 		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	fi
 
@@ -637,6 +637,7 @@ then
 		AC_MSG_ERROR([Could not find libintl.h!])
 	fi
 
+	LIBS=
 	AC_SEARCH_LIBS([gettext],[intl],[],[],[-liconv])
 	if test "$ac_cv_search_gettext" = "no"
 	then
