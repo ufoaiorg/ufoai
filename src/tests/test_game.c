@@ -63,6 +63,8 @@ static void testSpawnAndConnect (void)
 	byte *buf;
 	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
 	const int size = FS_LoadFile("game/entity.txt", &buf);
+	edict_t *e = NULL;
+	int cnt = 0;
 
 	CU_ASSERT_NOT_EQUAL_FATAL(size, -1);
 	CU_ASSERT_FATAL(size > 0);
@@ -75,6 +77,12 @@ static void testSpawnAndConnect (void)
 	svs.ge->SpawnEntities(name, day, (const char *)buf);
 	CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 	CU_ASSERT_FALSE(svs.ge->RunFrame());
+
+	while ((e = G_EdictsGetNextInUse(e))) {
+		cnt++;
+	}
+
+	CU_ASSERT_EQUAL(cnt, 30);
 
 	SV_ShutdownGameProgs();
 	FS_FreeFile(buf);
