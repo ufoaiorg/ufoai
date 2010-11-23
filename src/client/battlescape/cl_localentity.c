@@ -962,7 +962,7 @@ void LMT_Init (localModel_t* localModel)
  * because it's movement is animated (unlike the rotating door),
  * the final position that is used to calculate the routing data
  * is set once the animation finished (because this recalculation
- * might be very expensive.
+ * might be very expensive).
  *
  * @param[in,out] le The local entity of the inline model
  * @param[in] speed The speed to slide with - a negative value to close the door
