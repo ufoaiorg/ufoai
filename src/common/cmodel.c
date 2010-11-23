@@ -277,7 +277,7 @@ qboolean CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_
 			VectorCopy(start, end);
 			return qtrue;
 		}
-		/* trace not finishd */
+		/* trace not finished */
 		if (trace.fraction < fraction) {
 			blocked = qtrue;
 			fraction = trace.fraction;
