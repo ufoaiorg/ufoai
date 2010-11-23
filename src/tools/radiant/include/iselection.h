@@ -147,6 +147,8 @@ class SelectionSystem
 		virtual std::size_t countSelected () const = 0;
 		// amount of selected components (vertices, edges, faces)
 		virtual std::size_t countSelectedComponents () const = 0;
+		// amount of selected entities
+		virtual std::size_t countSelectedEntities () const = 0;
 		// amount of selected faces
 		virtual std::size_t countSelectedFaces () const = 0;
 		// only checks whether faces are selected, but does not count them

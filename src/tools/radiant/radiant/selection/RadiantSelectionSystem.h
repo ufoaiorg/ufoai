@@ -122,6 +122,7 @@ public:
 	EManipulatorMode ManipulatorMode() const;
 
 	std::size_t countSelected() const;
+	std::size_t countSelectedEntities() const;
 	std::size_t countSelectedComponents() const;
 
 	std::size_t countSelectedFaces () const;

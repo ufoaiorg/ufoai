@@ -173,6 +173,11 @@ std::size_t RadiantSelectionSystem::countSelected() const {
 	return _countPrimitive;
 }
 
+// return the number of selected entities
+std::size_t RadiantSelectionSystem::countSelectedEntities() const {
+	return _selectionInfo.entityCount;
+}
+
 // return the number of selected components
 std::size_t RadiantSelectionSystem::countSelectedComponents() const {
 	return _countComponent;
