@@ -5067,6 +5067,8 @@ base/textures/pt/x/xbctex001_2a7.png | GNU General Public License 2.0 | MCR
 base/textures/pt/x/xbctex001_2a8.png | GNU General Public License 2.0 | MCR
 base/textures/pt/x/xbctex001_2a9.png | GNU General Public License 2.0 | MCR
 base/textures/tex_alienb/ab_grate.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_grate_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_grate_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_grill01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_grill02.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_light01.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5080,6 +5082,19 @@ base/textures/tex_alienb/ab_obj_a.png | GNU General Public License 2.0 or later 
 base/textures/tex_alienb/ab_obj_a_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_obj_a_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_obj_b.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b1.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b2.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b3.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b4.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b5.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b6.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b7.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b8.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b9.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_obj_b_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_power_sml.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_power_sml2.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_power_sml3.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_power_sml4.png | GNU General Public License 2.0 or later | Nate Wright

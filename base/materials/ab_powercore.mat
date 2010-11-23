@@ -1,0 +1,56 @@
+###
+### Alien Base 2 Material file
+###
+
+# Grunge pipe metal with chipped paint
+{
+	material tex_alienb/ab_metal01
+	{
+		specular 2.0
+		hardness 2.0
+		bump 10.0
+		parallax 10.0
+	}
+}
+
+# Flat metal texture
+{
+	material tex_material/metal012
+	bump 0.5
+	parallax 0.5
+	specular 3.0
+	hardness 3.0
+}
+
+# Wall texture with animated green glow
+{
+	material tex_alienb/ab_wall05
+	bump 1.0
+	parallax 1.0
+	specular 1.0
+	hardness 1.0
+}
+
+# Small light with a glow texture
+{
+	material tex_alienb/ab_light01
+	bump 1.0
+	parallax 1
+	specular 2.0
+	hardness 2.0
+	glowscale 1.0
+}
+
+# Control station chair animated panels
+{
+	material tex_alienb/ab_obj_b
+	bump 1.0
+	parallax 1.0
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_alienb/ab_obj_b0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 10 3.0
+	}
+}
