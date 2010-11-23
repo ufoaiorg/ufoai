@@ -972,6 +972,7 @@ void LE_SlideDoor (le_t *le, int speed)
 {
 	vec3_t moveAngles, moveDir;
 	qboolean endPos = qfalse;
+	int distance;
 
 	/* get the movement angle vector */
 	GET_SLIDING_DOOR_SHIFT_VECTOR(le->dir, speed, moveAngles);
@@ -979,16 +980,15 @@ void LE_SlideDoor (le_t *le, int speed)
 	/* this origin is only an offset to the absolute mins/maxs for rendering */
 	VectorAdd(le->origin, moveAngles, le->origin);
 
-	if (speed > 0) {
-		int distance;
+	/* get the direction vector from the movement angles that were set on the entity */
+	AngleVectors(moveAngles, moveDir, NULL, NULL);
+	moveDir[0] = fabsf(moveDir[0]);
+	moveDir[1] = fabsf(moveDir[1]);
+	moveDir[2] = fabsf(moveDir[2]);
+	/* calculate the distance from the movement angles and the entity size */
+	distance = DotProduct(moveDir, le->size);
 
-		/* get the direction vector from the movement angles that were set on the entity */
-		AngleVectors(moveAngles, moveDir, NULL, NULL);
-		moveDir[0] = fabsf(moveDir[0]);
-		moveDir[1] = fabsf(moveDir[1]);
-		moveDir[2] = fabsf(moveDir[2]);
-		/* calculate the distance from the movement angles and the entity size */
-		distance = DotProduct(moveDir, le->size);
+	if (speed > 0) {
 		/* check whether the distance the door may slide is slided already
 		 * - if so, stop the movement of the door */
 		if (fabs(le->origin[GET_SLIDING_VECTOR_INDEX(le->dir)]) >= distance)
@@ -1002,15 +1002,21 @@ void LE_SlideDoor (le_t *le, int speed)
 	}
 
 	if (endPos) {
+		vec3_t distanceVec;
 		/* the door finished its move - either close or open, so make sure to recalc the routing
 		 * data and set the mins/maxs for the inline brush model */
 		cBspModel_t *model = CM_InlineModel(cl.mapTiles, le->inlineModelName);
+
 		assert(model);
 
-		/** @todo this looks wrong - there should be a scalar multiplication with the distance - the
-		 * moveAngles vector is not enough here as it is only one step */
-		VectorAdd(model->mins, moveAngles, model->mins);
-		VectorAdd(model->maxs, moveAngles, model->maxs);
+		/* we need the angles vector normalized */
+		GET_SLIDING_DOOR_SHIFT_VECTOR(le->dir, (speed < 0) ? -1 : 1, moveAngles);
+
+		/* the door is moved in one step on the server side - lerping is not needed here */
+		VectorMul(distance, moveAngles, distanceVec);
+
+		VectorAdd(model->mins, distanceVec, model->mins);
+		VectorAdd(model->maxs, distanceVec, model->maxs);
 		CL_RecalcRouting(le);
 
 		/* reset the think function as the movement finished */
