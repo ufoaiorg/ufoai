@@ -1004,10 +1004,10 @@ static void TR_AddAlienToTransferList (base_t *base, transferData_t *transferDat
 static void TR_AddAircraftToTransferList (base_t *base, transferData_t *transferData, int num)
 {
 	const base_t *transferBase = transferData->transferBase;
-	int cnt = 0;
 
 	if (AIR_AircraftAllowed(transferBase)) {
 		aircraft_t *aircraft;
+		int cnt = 0;
 
 		AIR_Foreach(aircraft) {
 			if (AIR_IsAircraftOfBase(aircraft, base) && TR_AircraftListSelect(aircraft)) {
