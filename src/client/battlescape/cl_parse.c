@@ -166,16 +166,12 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	if (sound[strlen(sound) - 1] == '+') {
 		const int length = strlen(sound) - 1;
 		char randomSound[MAX_QPATH];
-		int i = 1;
+		int i;
 		Com_sprintf(randomSound, sizeof(randomSound), "%s", sound);
-		randomSound[length + 0] = '\0';
-		for (;;) {
-			if (i > 99)
-				break;
-
+		randomSound[length] = '\0';
+		for (i = 1; i <= 99; i++) {
 			if (FS_CheckFile("sounds/%s%c%c", randomSound, i / 10 + '0', i % 10 + '0') == -1)
 				break;
-			i++;
 		}
 
 		Com_sprintf(sound, sizeof(sound), "%s%02i", randomSound, (rand() % i) + 1);
