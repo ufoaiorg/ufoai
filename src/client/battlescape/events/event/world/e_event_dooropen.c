@@ -54,12 +54,6 @@ void CL_DoorOpen (const eventRegister_t *self, struct dbuffer *msg)
 		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 		CL_RecalcRouting(le);
 	} else if (le->type == ET_DOOR_SLIDING) {
-		/* Though doors, sliding doors need a very different handling:
-		 * because it's movement is animated (unlike the rotating door),
-		 * the final position that is used to calculate the routing data
-		 * is set once the animation fininished.
-		 * Because Think isn't a cheap function, we don't use it for both types of doors.
-		 */
 		LE_SetThink(le, LET_DoorSlidingOpen);
 		le->think(le);
 	} else {
