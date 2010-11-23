@@ -147,7 +147,7 @@ DOOR FUNCTIONS
  * @brief Slides a door
  * @param[in,out] door The entity of the inline model
  * @param[in] speed 1 or -1 - the negative value to close the door, the positive will open it
- * @sa LE_SlideDoor
+ * @sa LET_SlideDoor
  */
 static void Door_SlidingUse (edict_t *door, int speed)
 {

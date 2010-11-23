@@ -254,7 +254,7 @@ void LE_AddToScene(void);
 void LE_CenterView(const le_t *le);
 const cBspModel_t *LE_GetClipModel(const le_t *le);
 model_t *LE_GetDrawModel(unsigned int modelIndex);
-void LE_SlideDoor(le_t *le, int speed);
+void LET_SlideDoor(le_t *le, int speed);
 
 trace_t CL_Trace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const le_t * passle, le_t * passle2, int contentmask, int worldLevel);
 

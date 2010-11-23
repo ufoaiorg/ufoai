@@ -968,7 +968,7 @@ void LMT_Init (localModel_t* localModel)
  * @param[in] speed The speed to slide with - a negative value to close the door
  * @sa Door_SlidingUse
  */
-void LE_SlideDoor (le_t *le, int speed)
+void LET_SlideDoor (le_t *le, int speed)
 {
 	vec3_t moveAngles, moveDir;
 	qboolean endPos = qfalse;
