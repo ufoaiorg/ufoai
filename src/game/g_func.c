@@ -144,6 +144,40 @@ DOOR FUNCTIONS
 */
 
 /**
+ * @brief Slides a door
+ * @param[in,out] door The entity of the inline model
+ * @param[in] speed 1 or -1 - the negative value to close the door, the positive will open it
+ * @sa LE_SlideDoor
+ */
+static void Door_SlidingUse (edict_t *door, int speed)
+{
+	vec3_t moveAngles, moveDir, distanceVec;
+	int distance;
+
+	/* get the movement angle vector */
+	GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, speed, moveAngles);
+
+	/* get the direction vector from the movement angles that were set on the entity */
+	AngleVectors(moveAngles, moveDir, NULL, NULL);
+	moveDir[0] = fabsf(moveDir[0]);
+	moveDir[1] = fabsf(moveDir[1]);
+	moveDir[2] = fabsf(moveDir[2]);
+
+	/* calculate the distance from the movement angles and the entity size */
+	distance = DotProduct(moveDir, door->size);
+
+	/* the door is moved in one step on the server side - lerping is not needed here */
+	VectorMul(distance, moveAngles, distanceVec);
+
+	/* set the updated position */
+	/** @todo this is not yet working for tracing and pathfinding - check what must be done to
+	 * allow shooting and walking through the opened door */
+	/*VectorAdd(door->origin, distanceVec, door->origin); */
+	VectorAdd(door->mins, distanceVec, door->mins);
+	VectorAdd(door->maxs, distanceVec, door->maxs);
+}
+
+/**
  * @brief Opens/closes a door
  * @note Use function for func_door
  * @todo Check if the door can be opened or closed - there should not be
@@ -158,9 +192,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		if (door->type == ET_DOOR) {
 			door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
-			vec3_t shiftDir;
-			GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, door->speed, shiftDir);
-			VectorAdd(door->origin, shiftDir, door->origin);
+			Door_SlidingUse(door, 1);
 		}
 		gi.LinkEdict(door);
 
@@ -179,9 +211,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		if (door->type == ET_DOOR) {
 			door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
-			vec3_t shiftDir;
-			GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, -door->speed, shiftDir);
-			VectorAdd(door->origin, shiftDir, door->origin);
+			Door_SlidingUse(door, -1);
 		}
 		gi.LinkEdict(door);
 

@@ -461,23 +461,27 @@ void G_CompleteRecalcRouting (void)
 
 /**
  * @brief Call the reset function for those triggers that are no longer touched (left the trigger zone)
- * @param ent
- * @param touched
- * @param num
+ * @param ent The edict that is leaving the trigger area
+ * @param touched The edicts that the activating ent currently touches
+ * @param num The amount of edicts in the @c touched list
  */
 static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
 {
 	edict_t *trigger = NULL;
+
 	while ((trigger = G_EdictsGetNextInUse(trigger))) {
 		if (trigger->solid == SOLID_TRIGGER) {
-			if (trigger->reset != NULL) {
+			if (G_TriggerIsInList(trigger, ent)) {
 				int i;
 				for (i = 0; i < num; i++) {
 					if (touched[i] == ent)
 						break;
 				}
-				if (i == num)
+				if (i == num) {
+					G_TriggerRemoveFromList(trigger, ent);
+					/* the ent left the trigger area */
 					trigger->reset(trigger, ent);
+				}
 			}
 		}
 	}
@@ -486,6 +490,7 @@ static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
 /**
  * @brief Check the world against triggers for the current entity
  * @param[in,out] ent The entity that maybe touches others
+ * @return Returns the number of associated client actions
  */
 int G_TouchTriggers (edict_t *ent)
 {
@@ -495,7 +500,7 @@ int G_TouchTriggers (edict_t *ent)
 	if (!G_IsLivingActor(ent))
 		return 0;
 
-	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS);
+	num = gi.TouchEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, ent);
 
 	G_ResetTriggers(ent, touch, num);
 
@@ -509,6 +514,13 @@ int G_TouchTriggers (edict_t *ent)
 			continue;
 		if (hit->touch(hit, ent))
 			usedNum++;
+		/* now after the use function was executed, we can add the ent to
+		 * the touched list of the trigger. We do this because we want to be
+		 * able to check whether another call changes the triggered state for
+		 * the added entity. We have to do this after the use function was
+		 * called, because there are triggers that may only be triggered once
+		 * if someone touches it. */
+		G_TriggerAddToList(hit, ent);
 	}
 	return usedNum;
 }

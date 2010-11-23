@@ -958,7 +958,8 @@ void LMT_Init (localModel_t* localModel)
 /**
  * @brief Slides a door
  * @param[in,out] le The local entity of the inline model
- * @param[in] speed The speed to slide with - a negative value is close the door
+ * @param[in] speed The speed to slide with - a negative value to close the door
+ * @sa Door_SlidingUse
  */
 void LE_SlideDoor (le_t *le, int speed)
 {

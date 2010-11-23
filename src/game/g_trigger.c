@@ -29,6 +29,75 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/**
+ * @brief Checks whether the activator of this trigger_touch was already recognized
+ * @param self The trigger self pointer
+ * @param activator The activating edict (might be NULL)
+ * @return @c true if the activator is already in the list of recognized edicts or no activator
+ * was given, @c false if the activator is not yet part of the list
+ */
+qboolean G_TriggerIsInList (edict_t *self, edict_t *activator)
+{
+	edict_t *e = self->touchedNext;
+
+	if (activator == NULL)
+		return qtrue;
+
+	while (e) {
+		if (e == activator)
+			return qtrue;
+		e = e->touchedNext;
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief Adds the activator to the list of recognized edicts for this trigger_touch edict
+ * @param self The trigger self pointer
+ * @param activator The activating edict (might be NULL)
+ */
+void G_TriggerAddToList (edict_t *self, edict_t *activator)
+{
+	edict_t *e = self->touchedNext;
+
+	if (activator == NULL)
+		return;
+
+	if (G_TriggerIsInList(self, activator))
+		return;
+
+	activator->touchedNext = e;
+	self->touchedNext = activator;
+}
+
+/**
+ * @brief Removes an activator from the list or recognized edicts
+ * @param self The trigger self pointer
+ * @param activator The activating edict (might be NULL)
+ * @return @c true if removal was successful or not needed, @c false if the activator wasn't found in the list
+ */
+qboolean G_TriggerRemoveFromList (edict_t *self, edict_t *activator)
+{
+	edict_t *prev = self;
+	edict_t *e = self->touchedNext;
+
+	if (activator == NULL)
+		return qtrue;
+
+	while (e) {
+		if (e == activator) {
+			prev->touchedNext = e->touchedNext;
+			activator->touchedNext = NULL;
+			return qtrue;
+		}
+		prev = e;
+		e = e->touchedNext;
+	}
+
+	return qfalse;
+}
+
 edict_t* G_TriggerSpawn (edict_t *owner)
 {
 	edict_t* trigger;
@@ -107,7 +176,7 @@ void SP_trigger_hurt (edict_t *ent)
 	gi.LinkEdict(ent);
 }
 
-#define TRIGGER_TOUCH_ONCE (1 << 1)
+#define TRIGGER_TOUCH_ONCE (1 << 0)
 
 /**
  * @brief Touch trigger
@@ -132,9 +201,8 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 		return qfalse;
 	}
 
-	if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || (!activator || activator != self->link)) {
+	if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == NULL) {
 		self->owner->use(self->owner, activator);
-		self->link = activator;
 	}
 
 	return qfalse;
@@ -142,13 +210,9 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 
 static void Reset_TouchTrigger (edict_t *self, edict_t *activator)
 {
-	if (!(self->spawnflags & TRIGGER_TOUCH_ONCE))
-		return;
-
-	if (self->link == activator) {
-		/** @todo check whether there is another actor in the trigger area */
-		self->link = NULL;
-	}
+	/* fire the use function on leaving the trigger area */
+	if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == NULL)
+		self->owner->use(self->owner, activator);
 }
 
 /**

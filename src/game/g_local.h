@@ -526,6 +526,9 @@ qboolean G_MatchDoEnd(void);
 
 /* g_trigger.c */
 edict_t* G_TriggerSpawn(edict_t *owner);
+qboolean G_TriggerRemoveFromList(edict_t *self, edict_t *activator);
+qboolean G_TriggerIsInList(edict_t *self, edict_t *activator);
+void G_TriggerAddToList(edict_t *self, edict_t *activator);
 void SP_trigger_hurt(edict_t *ent);
 void SP_trigger_touch(edict_t *ent);
 void SP_trigger_rescue(edict_t *ent);
@@ -748,6 +751,7 @@ struct edict_s {
 	qboolean (*use)(edict_t *self, edict_t *activator);
 	qboolean (*destroy)(edict_t *self);
 
+	edict_t *touchedNext; /**< entity list of edict that are currently touching the trigger_touch */
 	int doorState;	/**< open or closed */
 
 	moveinfo_t		moveinfo;
