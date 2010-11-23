@@ -5,7 +5,7 @@ _ufo2map()
 	cur="${COMP_WORDS[COMP_CWORD]}"
 	prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-	opts="--help -extra -onlyents -onlynewer -nofootstep -material -info -check -fix -subdivide -nosubdiv -tracefile -debugtrace -nomerge -nodetails"
+	opts="--help -extra -onlyents -onlynewer -nofootstep -material -info -check -fix -subdivide -nosubdiv -tracefile -debugtrace -nomerge -nodetails -nolighting"
 
 	if [[ ${cur} == -* ]] ; then
 		COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
