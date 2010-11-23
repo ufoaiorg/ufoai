@@ -474,7 +474,7 @@ static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
 			if (G_TriggerIsInList(trigger, ent)) {
 				int i;
 				for (i = 0; i < num; i++) {
-					if (touched[i] == ent)
+					if (touched[i] == trigger)
 						break;
 				}
 				if (i == num) {
