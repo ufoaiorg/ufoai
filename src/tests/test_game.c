@@ -102,12 +102,15 @@ static void testDoorTrigger (void)
 		while ((e = G_EdictsGetNextInUse(e))) {
 			cnt++;
 			if (e->type == ET_DOOR) {
-				if (!strcmp(e->targetname, "left")) {
+				if (!strcmp(e->targetname, "left-0")) {
 					/* this one is triggered by an actor standing inside of a trigger_touch */
 					CU_ASSERT_TRUE(e->doorState);
-				} else if (!strcmp(e->targetname, "right")) {
+				} else if (!strcmp(e->targetname, "right-0")) {
 					/* this one has a trigger_touch, too - but nobody is touching that trigger yet */
 					CU_ASSERT_FALSE(e->doorState);
+				} else {
+					/* both of the used doors have a targetname set */
+					CU_ASSERT(qfalse);
 				}
 				doors++;
 			}
