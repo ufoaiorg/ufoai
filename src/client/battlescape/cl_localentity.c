@@ -452,7 +452,7 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_PlayStdSample(SOUND_WATER_OUT, le->origin, SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
+				S_PlayStdSample(SOUND_WATER_MOVE, le->origin, SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
 			} else {
 				/* play water entering sound */
 				S_PlayStdSample(SOUND_WATER_IN, le->origin, SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
@@ -462,7 +462,7 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_PlayStdSample(SOUND_WATER_MOVE, le->origin, SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
+			S_PlayStdSample(SOUND_WATER_OUT, le->origin, SOUND_ATTN_IDLE, SND_VOLUME_FOOTSTEPS);
 		}
 	}
 }
