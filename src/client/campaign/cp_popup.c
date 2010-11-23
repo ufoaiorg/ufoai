@@ -192,11 +192,9 @@ static void CL_PopupChangeHomebase_f (void)
 		}
 	}
 
-	/* did we click on an invalid base ? */
-	if (baseIdx == INVALID_BASE)
-		return;
-
 	base = B_GetFoundedBaseByIDX(baseIdx);
+	if (base == NULL)
+		return;
 
 	AIR_MoveAircraftIntoNewHomebase(ccs.selectedAircraft, base);
 
