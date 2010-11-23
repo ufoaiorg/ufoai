@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include "test_game.h"
 #include "../shared/ufotypes.h"
+#include "../game/g_local.h"
 #include "../server/server.h"
 
 /**
@@ -79,6 +80,38 @@ static void testSpawnAndConnect (void)
 	FS_FreeFile(buf);
 }
 
+static void testDoorTrigger (void)
+{
+	const char *mapName = "test_game";
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		edict_t *e = NULL;
+		int cnt = 0;
+		int doors = 0;
+
+		/* the other tests didn't call the server shutdown function to clean up */
+		memset(&sv, 0, sizeof(sv));
+		SV_Map(qtrue, mapName, NULL);
+		while ((e = G_EdictsGetNextInUse(e))) {
+			cnt++;
+			if (e->type == ET_DOOR) {
+				if (!strcmp(e->targetname, "left")) {
+					/* this one is triggered by an actor standing inside of a trigger_touch */
+					CU_ASSERT_TRUE(e->doorState);
+				} else if (!strcmp(e->targetname, "right")) {
+					/* this one has a trigger_touch, too - but nobody is touching that trigger yet */
+					CU_ASSERT_FALSE(e->doorState);
+				}
+				doors++;
+			}
+		}
+
+		CU_ASSERT_TRUE(cnt > 0);
+		CU_ASSERT_TRUE(doors == 2);
+	} else {
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
+	}
+}
+
 static void testShooting (void)
 {
 	const char *mapName = "test_game";
@@ -101,6 +134,9 @@ int UFO_AddGameTests (void)
 
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(GameSuite, testSpawnAndConnect) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GameSuite, testDoorTrigger) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GameSuite, testShooting) == NULL)
