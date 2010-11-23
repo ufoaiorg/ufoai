@@ -580,9 +580,11 @@ entity trigger_hurt {
 
 entity trigger_touch {
 	description	"Any entity that touches this will trigger the use function of the target entity."
+	spawnflags	"once"
 
 	optional {
 		targetname	"The id of this entity"
+		spawnflags	"If once is set, this trigger is only activated once if someone is standing inside it (useful for e.g. doors)"
 	}
 
 	mandatory {

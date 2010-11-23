@@ -107,6 +107,8 @@ void SP_trigger_hurt (edict_t *ent)
 	gi.LinkEdict(ent);
 }
 
+#define TRIGGER_TOUCH_ONCE (1 << 1)
+
 /**
  * @brief Touch trigger
  * @sa SP_trigger_touch
@@ -130,9 +132,23 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 		return qfalse;
 	}
 
-	self->owner->use(self->owner, activator);
+	if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || (!activator || activator != self->link)) {
+		self->owner->use(self->owner, activator);
+		self->link = activator;
+	}
 
 	return qfalse;
+}
+
+static void Reset_TouchTrigger (edict_t *self, edict_t *activator)
+{
+	if (!(self->spawnflags & TRIGGER_TOUCH_ONCE))
+		return;
+
+	if (self->link == activator) {
+		/** @todo check whether there is another actor in the trigger area */
+		self->link = NULL;
+	}
 }
 
 /**
@@ -155,6 +171,7 @@ void SP_trigger_touch (edict_t *ent)
 	gi.SetModel(ent, ent->model);
 
 	ent->touch = Touch_TouchTrigger;
+	ent->reset = Reset_TouchTrigger;
 	ent->child = NULL;
 
 	gi.LinkEdict(ent);
