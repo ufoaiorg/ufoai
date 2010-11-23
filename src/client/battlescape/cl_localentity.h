@@ -104,7 +104,7 @@ typedef struct le_s {
 
 	/** is called every frame */
 	localEntityThinkFunc_t think;
-	/** number of frames to skip the think function for */
+	/** number of milliseconds to skip the think function for */
 	int thinkDelay;
 
 	/** various think function vars */
