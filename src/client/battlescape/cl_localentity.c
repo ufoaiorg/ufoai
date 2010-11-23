@@ -1479,7 +1479,7 @@ const cBspModel_t *LE_GetClipModel (const le_t *le)
 		Com_Error(ERR_DROP, "Clip model index out of bounds");
 	model = cl.model_clip[index];
 	if (!model)
-		Com_Error(ERR_DROP, "LE_GetClipModel: Could not find inline model %ui", index);
+		Com_Error(ERR_DROP, "LE_GetClipModel: Could not find inline model %u", index);
 	return model;
 }
 
@@ -1490,7 +1490,7 @@ model_t *LE_GetDrawModel (unsigned int index)
 		Com_Error(ERR_DROP, "Clip model index out of bounds");
 	model = cl.model_draw[index];
 	if (!model)
-		Com_Error(ERR_DROP, "LE_GetDrawModel: Could not find model %ui", index);
+		Com_Error(ERR_DROP, "LE_GetDrawModel: Could not find model %u", index);
 	return model;
 }
 

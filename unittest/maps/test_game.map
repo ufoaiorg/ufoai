@@ -101,7 +101,7 @@
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "176 336 26"
+"origin" "368 272 26"
 }
 // entity 3
 {
@@ -111,12 +111,12 @@
 // entity 4
 {
 "classname" "info_human_start"
-"origin" "144 336 26"
+"origin" "336 272 26"
 }
 // entity 5
 {
 "classname" "info_human_start"
-"origin" "144 368 26"
+"origin" "336 304 26"
 }
 // entity 6
 {
@@ -382,4 +382,19 @@
 ( 256 160 0 ) ( 256 160 32 ) ( 320 160 0 ) tex_common/trigger 0 0 0 0.5 0.5
 ( 256 128 0 ) ( 256 192 0 ) ( 256 128 32 ) tex_common/trigger 0 0 0 0.5 0.5
 }
+}
+// entity 36
+{
+"classname" "info_human_start"
+"origin" "176 336 26"
+}
+// entity 37
+{
+"classname" "info_human_start"
+"origin" "144 336 26"
+}
+// entity 38
+{
+"classname" "info_human_start"
+"origin" "144 368 26"
 }
