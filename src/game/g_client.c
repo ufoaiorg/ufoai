@@ -281,6 +281,9 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 				gi.WriteShort(NONE);
 			}
 
+			if (check->body == 0 || check->head == 0) {
+				gi.Error("invalid body and/or head model indices");
+			}
 			gi.WriteShort(check->body);
 			gi.WriteShort(check->head);
 			gi.WriteByte(check->chr.skin);
@@ -1123,7 +1126,6 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	}
 
 	G_ActorModifyCounters(NULL, ent, 1, 0, 0);
-	G_TouchTriggers(ent);
 
 	return ent;
 }
@@ -1282,6 +1284,8 @@ void G_ClientTeamInfo (const player_t * player)
 				G_ClientReadInventory(ent);
 
 				G_ClientAssignDefaultActorValues(ent);
+
+				G_TouchTriggers(ent);
 			} else {
 				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->pers.team, actorFieldSize);
 

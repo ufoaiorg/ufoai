@@ -1486,8 +1486,8 @@ const cBspModel_t *LE_GetClipModel (const le_t *le)
 model_t *LE_GetDrawModel (unsigned int index)
 {
 	model_t *model;
-	if (index > lengthof(cl.model_draw))
-		Com_Error(ERR_DROP, "Clip model index out of bounds");
+	if (index == 0 || index > lengthof(cl.model_draw))
+		Com_Error(ERR_DROP, "Draw model index out of bounds");
 	model = cl.model_draw[index];
 	if (!model)
 		Com_Error(ERR_DROP, "LE_GetDrawModel: Could not find model %u", index);

@@ -1193,6 +1193,8 @@ static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 
 		/* initialize the new actor */
 		AI_InitPlayer(player, ent, ed);
+
+		G_TouchTriggers(ent);
 	}
 	/* show visible actors */
 	G_ClearVisFlags(team);
