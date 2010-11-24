@@ -432,7 +432,7 @@ inline void scaleTexture (const Vector2& scale)
 	SceneChangeNotify();
 }
 
-inline void rotateTexture (const float& angle)
+void rotateTexture (const float& angle)
 {
 	std::string command("rotateTexture: ");
 	command += "angle=" + string::toString(angle);
@@ -558,6 +558,46 @@ int findAndReplaceShader (const std::string& find, const std::string& replace, b
 	}
 
 	return replacer.getReplacedCount();
+}
+
+/** greebo: Flips the visited object about the axis given to the constructor.
+ */
+class TextureFlipper
+{
+		unsigned int _flipAxis;
+	public:
+		TextureFlipper (unsigned int flipAxis) :
+			_flipAxis(flipAxis)
+		{
+		}
+
+		void operator() (Face& face) const
+		{
+			face.flipTexture(_flipAxis);
+		}
+};
+
+void flipTexture (unsigned int flipAxis)
+{
+	UndoableCommand undo("flipTexture");
+
+	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
+		// Flip the texture of all the brushes (selected as a whole)
+		Scene_ForEachSelectedBrush_ForEachFace(GlobalSceneGraph(), TextureFlipper(flipAxis));
+	}
+	// Now flip all the seperately selected faces
+	Scene_ForEachSelectedBrushFace(TextureFlipper(flipAxis));
+	SceneChangeNotify();
+}
+
+void flipTextureS ()
+{
+	flipTexture(0);
+}
+
+void flipTextureT ()
+{
+	flipTexture(1);
 }
 
 } // namespace algorithm

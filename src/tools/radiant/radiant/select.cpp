@@ -64,42 +64,12 @@ void Select_ShiftTexture (float x, float y)
 	Scene_BrushShiftTexdef_Component_Selected(GlobalSceneGraph(), x, y);
 }
 
-void Select_ScaleTexture (float x, float y)
-{
-	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		Scene_BrushScaleTexdef_Selected(GlobalSceneGraph(), x, y);
-	}
-	Scene_BrushScaleTexdef_Component_Selected(GlobalSceneGraph(), x, y);
-}
-
 void Select_RotateTexture (float amt)
 {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushRotateTexdef_Selected(GlobalSceneGraph(), amt);
 	}
 	Scene_BrushRotateTexdef_Component_Selected(GlobalSceneGraph(), amt);
-}
-
-void Select_FlipTexture(unsigned int flipAxis) {
-	UndoableCommand undo("flipTexture");
-
-	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		// Flip the texture of all the brushes (selected as a whole)
-		Scene_BrushFlipTexture_Selected(flipAxis);
-	}
-	// Now flip all the seperately selected faces
-	Scene_BrushFlipTexture_Component_Selected(flipAxis);
-	SceneChangeNotify();
-}
-
-void Select_FitTexture (float horizontal, float vertical)
-{
-	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		Scene_BrushFitTexture_Selected(GlobalSceneGraph(), horizontal, vertical);
-	}
-	Scene_BrushFitTexture_Component_Selected(GlobalSceneGraph(), horizontal, vertical);
-
-	SceneChangeNotify();
 }
 
 inline void Select_FlipAxis (int axis)

@@ -723,80 +723,6 @@ void ToggleShowSizeInfo ()
 	SceneChangeNotify();
 }
 
-void Texdef_Rotate (float angle)
-{
-	StringOutputStream command;
-	command << "brushRotateTexture -angle " << angle;
-	UndoableCommand undo(command.toString());
-	Select_RotateTexture(angle);
-}
-
-void Texdef_RotateClockwise (void)
-{
-	Texdef_Rotate(static_cast<float> (fabs(GlobalSurfaceInspector().getRotate())));
-}
-
-void Texdef_RotateAntiClockwise (void)
-{
-	Texdef_Rotate(static_cast<float> (-fabs(GlobalSurfaceInspector().getRotate())));
-}
-
-void Texdef_Scale (float x, float y)
-{
-	StringOutputStream command;
-	command << "brushScaleTexture -x " << x << " -y " << y;
-	UndoableCommand undo(command.toString());
-	Select_ScaleTexture(x, y);
-}
-
-void Texdef_ScaleUp (void)
-{
-	Texdef_Scale(0, GlobalSurfaceInspector().getScale()[1]);
-}
-
-void Texdef_ScaleDown (void)
-{
-	Texdef_Scale(0, -GlobalSurfaceInspector().getScale()[1]);
-}
-
-void Texdef_ScaleLeft (void)
-{
-	Texdef_Scale(-GlobalSurfaceInspector().getScale()[0], 0);
-}
-
-void Texdef_ScaleRight (void)
-{
-	Texdef_Scale(GlobalSurfaceInspector().getScale()[0], 0);
-}
-
-void Texdef_Shift (float x, float y)
-{
-	StringOutputStream command;
-	command << "brushShiftTexture -x " << x << " -y " << y;
-	UndoableCommand undo(command.toString());
-	Select_ShiftTexture(x, y);
-}
-
-void Texdef_ShiftLeft (void)
-{
-	Texdef_Shift(-GlobalSurfaceInspector().getShift()[0], 0);
-}
-
-void Texdef_ShiftRight (void)
-{
-	Texdef_Shift(GlobalSurfaceInspector().getShift()[0], 0);
-}
-
-void Texdef_ShiftUp (void)
-{
-	Texdef_Shift(0, GlobalSurfaceInspector().getShift()[1]);
-}
-
-void Texdef_ShiftDown (void)
-{
-	Texdef_Shift(0, -GlobalSurfaceInspector().getShift()[1]);
-}
-
 class SnappableSnapToGridSelected: public scene::Graph::Walker
 {
 		float m_snap;
@@ -1568,16 +1494,16 @@ void MainFrame_Construct (void)
 
 	GlobalEventManager().addCommand("SelectAllFacesOfTex", FreeCaller<selection::algorithm::selectAllFacesWithTexture> ());
 
-	GlobalEventManager().addCommand("TexRotateClock", FreeCaller<Texdef_RotateClockwise> ());
-	GlobalEventManager().addCommand("TexRotateCounter", FreeCaller<Texdef_RotateAntiClockwise> ());
-	GlobalEventManager().addCommand("TexScaleUp", FreeCaller<Texdef_ScaleUp> ());
-	GlobalEventManager().addCommand("TexScaleDown", FreeCaller<Texdef_ScaleDown> ());
-	GlobalEventManager().addCommand("TexScaleLeft", FreeCaller<Texdef_ScaleLeft> ());
-	GlobalEventManager().addCommand("TexScaleRight", FreeCaller<Texdef_ScaleRight> ());
-	GlobalEventManager().addCommand("TexShiftUp", FreeCaller<Texdef_ShiftUp> ());
-	GlobalEventManager().addCommand("TexShiftDown", FreeCaller<Texdef_ShiftDown> ());
-	GlobalEventManager().addCommand("TexShiftLeft", FreeCaller<Texdef_ShiftLeft> ());
-	GlobalEventManager().addCommand("TexShiftRight", FreeCaller<Texdef_ShiftRight> ());
+	GlobalEventManager().addCommand("TexRotateClock", FreeCaller<selection::algorithm::rotateTextureClock> ());
+	GlobalEventManager().addCommand("TexRotateCounter", FreeCaller<selection::algorithm::rotateTextureCounter> ());
+	GlobalEventManager().addCommand("TexScaleUp", FreeCaller<selection::algorithm::scaleTextureUp> ());
+	GlobalEventManager().addCommand("TexScaleDown", FreeCaller<selection::algorithm::scaleTextureDown> ());
+	GlobalEventManager().addCommand("TexScaleLeft", FreeCaller<selection::algorithm::scaleTextureLeft> ());
+	GlobalEventManager().addCommand("TexScaleRight", FreeCaller<selection::algorithm::scaleTextureRight> ());
+	GlobalEventManager().addCommand("TexShiftUp", FreeCaller<selection::algorithm::shiftTextureUp> ());
+	GlobalEventManager().addCommand("TexShiftDown", FreeCaller<selection::algorithm::shiftTextureDown> ());
+	GlobalEventManager().addCommand("TexShiftLeft", FreeCaller<selection::algorithm::shiftTextureLeft> ());
+	GlobalEventManager().addCommand("TexShiftRight", FreeCaller<selection::algorithm::shiftTextureRight> ());
 
 	GlobalEventManager().addCommand("MoveSelectionDOWN", FreeCaller<Selection_MoveDown> ());
 	GlobalEventManager().addCommand("MoveSelectionUP", FreeCaller<Selection_MoveUp> ());

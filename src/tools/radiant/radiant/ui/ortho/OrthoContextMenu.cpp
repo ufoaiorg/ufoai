@@ -11,6 +11,7 @@
 #include "imaterial.h"
 #include "radiant_i18n.h"
 #include "../Icons.h"
+#include "../../selection/algorithm/Shader.h"
 
 namespace ui
 {
@@ -167,12 +168,12 @@ namespace ui
 
 	void OrthoContextMenu::callbackFlipXTexture (GtkMenuItem* item, OrthoContextMenu* self)
 	{
-		GlobalSurfaceInspector().flipTextureX();
+		selection::algorithm::flipTextureS();
 	}
 
 	void OrthoContextMenu::callbackFlipYTexture (GtkMenuItem* item, OrthoContextMenu* self)
 	{
-		GlobalSurfaceInspector().flipTextureY();
+		selection::algorithm::flipTextureT();
 	}
 
 	void OrthoContextMenu::callbackAddEntity (GtkMenuItem* item, OrthoContextMenu* self)

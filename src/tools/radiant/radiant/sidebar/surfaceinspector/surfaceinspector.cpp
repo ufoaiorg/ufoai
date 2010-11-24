@@ -197,8 +197,7 @@ void SurfaceInspector::onMatchGridClick (GtkWidget *widget, SurfaceInspector *in
 
 void SurfaceInspector::fitTexture (void)
 {
-	UndoableCommand undo("textureAutoFit");
-	Select_FitTexture(_fitHorizontal, _fitVertical);
+	selection::algorithm::fitTexture(_fitHorizontal, _fitVertical);
 }
 
 void SurfaceInspector::setTexdefForSelected (const TextureProjection& projection)
@@ -911,16 +910,6 @@ void SurfaceInspector::onApplyFlagsToggle (GtkWidget *activatedWidget, SurfaceIn
 			contentflagsDirty, inspector->_valueInconsistent));
 }
 
-void SurfaceInspector::flipTextureX ()
-{
-	Select_FlipTexture(0);
-}
-
-void SurfaceInspector::flipTextureY ()
-{
-	Select_FlipTexture(1);
-}
-
 void SurfaceInspector::toggleTexTool ()
 {
 	// Call the toggle() method of the static instance
@@ -933,13 +922,11 @@ void SurfaceInspector::registerCommands (void)
 	GlobalEventManager().addCommand("TextureTool", MemberCaller<SurfaceInspector, &SurfaceInspector::toggleTexTool> (
 			*this));
 
-	GlobalEventManager().addCommand("CopyShader", FreeCaller<selection::algorithm::pickShaderFromSelection>());
-	GlobalEventManager().addCommand("PasteShader", FreeCaller<selection::algorithm::pasteShaderToSelection>());
+	GlobalEventManager().addCommand("CopyShader", FreeCaller<selection::algorithm::pickShaderFromSelection> ());
+	GlobalEventManager().addCommand("PasteShader", FreeCaller<selection::algorithm::pasteShaderToSelection> ());
 
-	GlobalEventManager().addCommand("FlipTextureX", MemberCaller<SurfaceInspector, &SurfaceInspector::flipTextureX> (
-			*this));
-	GlobalEventManager().addCommand("FlipTextureY", MemberCaller<SurfaceInspector, &SurfaceInspector::flipTextureY> (
-			*this));
+	GlobalEventManager().addCommand("FlipTextureX", FreeCaller<selection::algorithm::flipTextureS> ());
+	GlobalEventManager().addCommand("FlipTextureY", FreeCaller<selection::algorithm::flipTextureT> ());
 }
 
 void SurfaceInspector::keyChanged (const std::string& changedKey, const std::string& newValue)
