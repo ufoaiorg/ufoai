@@ -56,12 +56,10 @@ void RadiantWindowObserver::onMouseDown (const WindowVector& position, GdkEventB
 
 		// If the apply texture modifier is held
 		if (observerEvent == ui::obsPasteTexture) {
-			//GlobalSurfaceInspector().applyClosestTexture(volume);
 			selection::algorithm::pasteShader(volume, false);
 		}
 		// If the copy texture modifier is held
 		else if (observerEvent == ui::obsCopyTexture) {
-			//GlobalSurfaceInspector().copyClosestTexture(volume);
 			// Set the source texturable from the given test
 			GlobalShaderClipboard().setSource(volume);
 		} else if (observerEvent == ui::obsPasteTextureToBrush) {
