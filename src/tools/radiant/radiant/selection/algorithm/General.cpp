@@ -10,6 +10,7 @@
 
 #include "SelectionPolicies.h"
 #include "Shader.h"
+#include "../shaderclipboard/ShaderClipboard.h"
 
 #include "../SceneWalkers.h"
 #include "../../select.h"
@@ -194,6 +195,8 @@ class DeleteSelected: public scene::Graph::Walker
 void deleteSelection ()
 {
 	UndoableCommand undo("deleteSelected");
+
+	GlobalShaderClipboard().clear();
 
 	GlobalSceneGraph().traverse(DeleteSelected());
 	SceneChangeNotify();

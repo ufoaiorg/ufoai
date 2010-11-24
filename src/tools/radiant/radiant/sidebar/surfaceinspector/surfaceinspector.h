@@ -86,12 +86,6 @@ class FaceTexture
 typedef Callback3<std::string&, TextureProjection&, ContentsFlagsValue&> GetTextureCallback;
 typedef Callback3<const std::string&, const TextureProjection&, const ContentsFlagsValue&> SetTextureCallback;
 
-struct Texturable
-{
-		GetTextureCallback getTexture;
-		SetTextureCallback setTexture;
-};
-
 class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
 {
 	private:
@@ -103,8 +97,6 @@ class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
 		bool _shutdown;
 
 		bool _snapTToGrid;
-
-		FaceTexture _faceTextureClipboard;
 
 		std::string _selectedShader;
 		TextureProjection _selectedTexdef;
@@ -158,13 +150,6 @@ class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
 
 		void registerCommands (void);
 
-		void copyTextureFromSelectedFaces (void);
-		void pasteTextureFromSelectedFaces (void);
-		void applyClosestTexture (SelectionTest& test);
-		void copyClosestTexture (SelectionTest& test);
-
-		void resetTextureClipboard ();
-
 		void fitTexture ();
 		void flipTextureX ();
 		void flipTextureY ();
@@ -211,14 +196,6 @@ class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
 		const std::string& getSurfaceFlagName (std::size_t bit) const;
 
 		void doSnapTToGrid (float hscale, float vscale);
-
-		Texturable getClosestTexturable (scene::Graph& graph, SelectionTest& test);
-		bool getClosestTexture (scene::Graph& graph, SelectionTest& test, std::string& shader,
-				TextureProjection& projection, ContentsFlagsValue& flags);
-		void setClosestTexture (scene::Graph& graph, SelectionTest& test, const std::string& shader,
-				const TextureProjection& projection, const ContentsFlagsValue& flags);
-
-		static void applyClipboardTexture (FaceInstance& faceInstance);
 
 		guint togglebutton_connect_toggled (GtkToggleButton* button);
 

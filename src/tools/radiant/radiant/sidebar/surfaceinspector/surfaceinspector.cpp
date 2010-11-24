@@ -48,7 +48,7 @@
 #include "../../textureentry.h"
 #include "../../textool/TexTool.h"
 
-#include "BrushGetClosestFaceVisible.h"
+#include "../../selection/algorithm/Shader.h"
 
 namespace {
 const std::string RKEY_SNAP_TO_GRID = "user/ui/surfaceinspector/snapToGrid";
@@ -272,8 +272,6 @@ SurfaceInspector::SurfaceInspector () :
 	_scale[0] = 0.5f;
 	_scale[1] = 0.5f;
 	_rotate = 45.0f;
-
-	resetTextureClipboard();
 
 	GlobalRegistry().addKeyObserver(this, RKEY_SNAP_TO_GRID);
 
@@ -913,87 +911,6 @@ void SurfaceInspector::onApplyFlagsToggle (GtkWidget *activatedWidget, SurfaceIn
 			contentflagsDirty, inspector->_valueInconsistent));
 }
 
-Texturable SurfaceInspector::getClosestTexturable (scene::Graph& graph, SelectionTest& test)
-{
-	Texturable texturable;
-	graph.traverse(BrushGetClosestFaceVisibleWalker(test, texturable));
-	return texturable;
-}
-
-bool SurfaceInspector::getClosestTexture (scene::Graph& graph, SelectionTest& test, std::string& shader,
-		TextureProjection& projection, ContentsFlagsValue& flags)
-{
-	Texturable texturable = getClosestTexturable(graph, test);
-	if (texturable.getTexture != GetTextureCallback()) {
-		texturable.getTexture(shader, projection, flags);
-		return true;
-	}
-	return false;
-}
-
-void SurfaceInspector::setClosestTexture (scene::Graph& graph, SelectionTest& test, const std::string& shader,
-		const TextureProjection& projection, const ContentsFlagsValue& flags)
-{
-	Texturable texturable = getClosestTexturable(graph, test);
-	if (texturable.setTexture != SetTextureCallback()) {
-		texturable.setTexture(shader, projection, flags);
-	}
-}
-
-void SurfaceInspector::resetTextureClipboard ()
-{
-	_faceTextureClipboard.m_flags = ContentsFlagsValue(0, 0, 0, false);
-	_faceTextureClipboard.m_projection.constructDefault();
-}
-
-void SurfaceInspector::copyClosestTexture (SelectionTest& test)
-{
-	std::string shader;
-	if (getClosestTexture(GlobalSceneGraph(), test, shader, _faceTextureClipboard.m_projection,
-			_faceTextureClipboard.m_flags)) {
-		GlobalTextureBrowser().setSelectedShader(shader);
-	}
-}
-
-void SurfaceInspector::applyClosestTexture (SelectionTest& test)
-{
-	UndoableCommand command("facePaintTexture");
-
-	setClosestTexture(GlobalSceneGraph(), test, GlobalTextureBrowser().getSelectedShader(),
-			_faceTextureClipboard.m_projection, _faceTextureClipboard.m_flags);
-
-	SceneChangeNotify();
-}
-
-/**
- * @todo Don't change the levelflags here (content flags)
- */
-void SurfaceInspector::copyTextureFromSelectedFaces (void)
-{
-	if (GlobalSelectionSystem().areFacesSelected()) {
-		Face& face = g_SelectedFaceInstances.last().getFace();
-		face.GetTexdef(_faceTextureClipboard.m_projection);
-		_faceTextureClipboard.m_flags = face.getShader().m_flags;
-
-		GlobalTextureBrowser().setSelectedShader(face.getShader().getShader());
-	}
-}
-
-void SurfaceInspector::applyClipboardTexture (FaceInstance& faceInstance)
-{
-	faceInstance.getFace().SetTexdef(GlobalSurfaceInspector()._faceTextureClipboard.m_projection);
-	faceInstance.getFace().SetShader(GlobalTextureBrowser().getSelectedShader());
-	faceInstance.getFace().SetFlags(GlobalSurfaceInspector()._faceTextureClipboard.m_flags);
-
-	SceneChangeNotify();
-}
-
-void SurfaceInspector::pasteTextureFromSelectedFaces (void)
-{
-	UndoableCommand command("facePasteTexture");
-	g_SelectedFaceInstances.foreach(applyClipboardTexture);
-}
-
 void SurfaceInspector::flipTextureX ()
 {
 	Select_FlipTexture(0);
@@ -1016,10 +933,8 @@ void SurfaceInspector::registerCommands (void)
 	GlobalEventManager().addCommand("TextureTool", MemberCaller<SurfaceInspector, &SurfaceInspector::toggleTexTool> (
 			*this));
 
-	GlobalEventManager().addCommand("FaceCopyTexture", MemberCaller<SurfaceInspector,
-			&SurfaceInspector::copyTextureFromSelectedFaces> (*this));
-	GlobalEventManager().addCommand("FacePasteTexture", MemberCaller<SurfaceInspector,
-			&SurfaceInspector::pasteTextureFromSelectedFaces> (*this));
+	GlobalEventManager().addCommand("CopyShader", FreeCaller<selection::algorithm::pickShaderFromSelection>());
+	GlobalEventManager().addCommand("PasteShader", FreeCaller<selection::algorithm::pasteShaderToSelection>());
 
 	GlobalEventManager().addCommand("FlipTextureX", MemberCaller<SurfaceInspector, &SurfaceInspector::flipTextureX> (
 			*this));

@@ -18,6 +18,10 @@ class ShaderClipboard
 		 */
 		void setSource (SelectionTest& test);
 
+		/** greebo: Sets the source face to the given <sourceFace>
+		 */
+		void setSource (Face& sourceFace);
+
 		/** greebo: Retrieves the current source Texturable
 		 */
 		Texturable& getSource ();

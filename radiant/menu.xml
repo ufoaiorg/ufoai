@@ -223,8 +223,8 @@
 		<menuItem name="makeStructural" caption="Make structural" command="MakeStructural" />
 		<menuItem name="texturelock" caption="Texture lock" command="TogTexLock" />
 		<menuSeparator />
-		<menuItem name="copyFaceTexture" caption="Copy face texture" command="FaceCopyTexture" />
-		<menuItem name="pasteFaceTexture" caption="Paste face texture" command="FacePasteTexture" />
+		<menuItem name="copyFaceTexture" caption="Copy face texture" command="CopyShader" />
+		<menuItem name="pasteFaceTexture" caption="Paste face texture" command="PasteShader" />
 	</subMenu>
 
 	<subMenu name="help" caption="_Help">

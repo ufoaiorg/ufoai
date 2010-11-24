@@ -126,7 +126,9 @@
 #include "textool/TexTool.h"
 #include "selection/algorithm/General.h"
 #include "selection/algorithm/Group.h"
+#include "selection/algorithm/Shader.h"
 #include "selection/algorithm/Transformation.h"
+#include "selection/shaderclipboard/ShaderClipboard.h"
 
 namespace {
 const std::string RKEY_WINDOW_STATE = "user/ui/mainFrame/window";
@@ -314,12 +316,14 @@ void Undo (void)
 {
 	GlobalUndoSystem().undo();
 	SceneChangeNotify();
+	GlobalShaderClipboard().clear();
 }
 
 void Redo (void)
 {
 	GlobalUndoSystem().redo();
 	SceneChangeNotify();
+	GlobalShaderClipboard().clear();
 }
 
 void Map_ExportSelected (TextOutputStream& ostream)
@@ -345,7 +349,7 @@ void Selection_Paste (void)
 void Copy (void)
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
-		GlobalSurfaceInspector().copyTextureFromSelectedFaces();
+		selection::algorithm::pickShaderFromSelection();
 	} else {
 		Selection_Copy();
 	}
@@ -354,7 +358,7 @@ void Copy (void)
 void Paste (void)
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
-		GlobalSurfaceInspector().pasteTextureFromSelectedFaces();
+		selection::algorithm::pasteShaderToSelection();
 	} else {
 		UndoableCommand undo("paste");
 

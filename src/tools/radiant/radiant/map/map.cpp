@@ -60,6 +60,7 @@
 #include "../brush/BrushNode.h"
 #include "../ui/menu/UMPMenu.h"
 #include "../selection/algorithm/General.h"
+#include "../selection/shaderclipboard/ShaderClipboard.h"
 
 #include "RootNode.h"
 #include "MapFileChooserPreview.h"
@@ -372,6 +373,9 @@ void Map::setWorldspawn (scene::Node* node)
 // free all map elements, reinitialize the structures that depend on them
 void Map::free ()
 {
+	// Clear the shaderclipboard, the references are most probably invalid now
+	GlobalShaderClipboard().clear();
+
 	m_resource->detach(*this);
 	GlobalReferenceCache().release(m_name);
 	m_resource = 0;
