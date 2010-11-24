@@ -192,6 +192,7 @@ bool MaterialShader::IsDefault () const
 void MaterialShader::getAlphaFunc (MaterialShader::EAlphaFunc *func, float *ref)
 {
 	*func = eAlways;
+	*ref = -1.0;
 }
 
 BlendFunc MaterialShader::getBlendFunc () const
