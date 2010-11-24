@@ -448,23 +448,8 @@ void PrefsDlg::PostModal (EMessageBoxReturn code)
 	}
 }
 
-std::vector<std::string> g_restart_required;
-
-void PreferencesDialog_restartRequired (const std::string& staticName)
-{
-	g_restart_required.push_back(staticName);
-}
-
 void PreferencesDialog_showDialog ()
 {
-	if (GlobalMap().askForSave(_("Edit Preferences")) && g_Preferences.DoModal() == eIDOK) {
-		if (!g_restart_required.empty()) {
-			std::string message = _("Preference changes require a restart:\n");
-			for (std::vector<std::string>::iterator i = g_restart_required.begin(); i != g_restart_required.end(); ++i) {
-				message += "<b>" + (*i) + "</b>\n";
-			}
-			gtkutil::infoDialog(message);
-			g_restart_required.clear();
-		}
-	}
+	if (GlobalMap().askForSave(_("Edit Preferences")))
+		g_Preferences.DoModal();
 }

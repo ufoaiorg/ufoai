@@ -122,39 +122,6 @@ typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;
 
 void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback) __attribute__ ((deprecated));
 
-void PreferencesDialog_restartRequired (const std::string& staticName);
-
-template<typename Value>
-class LatchedValue
-{
-	public:
-		Value m_value;
-		Value m_latched;
-		const std::string m_description;
-
-		LatchedValue (Value value, const std::string& description) :
-			m_latched(value), m_description(description)
-		{
-		}
-		void useLatched ()
-		{
-			m_value = m_latched;
-		}
-		void import (Value value)
-		{
-			m_latched = value;
-			if (m_latched != m_value) {
-				PreferencesDialog_restartRequired(m_description);
-			}
-		}
-};
-
-typedef LatchedValue<bool> LatchedBool;
-typedef MemberCaller1<LatchedBool, bool, &LatchedBool::import> LatchedBoolImportCaller;
-
-typedef LatchedValue<int> LatchedInt;
-typedef MemberCaller1<LatchedInt, int, &LatchedInt::import> LatchedIntImportCaller;
-
 class PreferenceTreeGroup;
 
 class PrefsDlg: public Dialog

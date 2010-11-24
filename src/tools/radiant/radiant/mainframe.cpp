@@ -889,7 +889,7 @@ void ClipperChangeNotify (void)
 	XY_UpdateAllWindows();
 }
 
-static LatchedInt g_Layout_viewStyle(MainFrame::eSplit, _("Window Layout"));
+static int g_Layout_viewStyle(MainFrame::eSplit);
 
 void CallBrushExportOBJ ()
 {
@@ -1038,7 +1038,7 @@ void MainFrame::Create (void)
 	GlobalEventManager().connect(GTK_OBJECT(window));
 	GlobalEventManager().connectAccelGroup(GTK_WINDOW(window));
 
-	m_nCurrentStyle = (EViewStyle) g_Layout_viewStyle.m_value;
+	m_nCurrentStyle = (EViewStyle) g_Layout_viewStyle;
 
 	// Create the Filter menu entries
 	ui::FiltersMenu::addItemsToMainMenu();
@@ -1299,8 +1299,8 @@ void GlobalGL_sharedContextDestroyed (void)
 void Layout_constructPreferences (PrefPage* page)
 {
 	const char* layouts[] = { ui::icons::ICON_WINDOW_REGULAR.c_str(), ui::icons::ICON_WINDOW_SPLIT.c_str() };
-	page->appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(
-			g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
+	page->appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), IntImportCaller(
+			g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle));
 }
 
 void Layout_constructPage (PreferenceGroup& group)
@@ -1498,10 +1498,8 @@ void MainFrame_Construct (void)
 	GlobalPreferenceSystem().registerPreference("CamHeight", IntImportStringCaller(g_layout_globals.nCamHeight),
 			IntExportStringCaller(g_layout_globals.nCamHeight));
 
-	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle.m_latched),
-			IntExportStringCaller(g_Layout_viewStyle.m_latched));
-
-	g_Layout_viewStyle.useLatched();
+	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle),
+			IntExportStringCaller(g_Layout_viewStyle));
 
 	Layout_registerPreferencesPage();
 
