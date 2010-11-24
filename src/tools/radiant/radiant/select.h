@@ -38,7 +38,4 @@ void Selection_MoveUp ();
 
 void Select_SetShader (const std::string& shader);
 
-void Select_RotateTexture (float amt);
-void Select_ShiftTexture (float x, float y);
-
 #endif

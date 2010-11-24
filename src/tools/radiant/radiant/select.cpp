@@ -56,22 +56,6 @@ void Select_SetShader (const std::string& shader)
 	Scene_BrushSetShader_Component_Selected(GlobalSceneGraph(), shader);
 }
 
-void Select_ShiftTexture (float x, float y)
-{
-	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		Scene_BrushShiftTexdef_Selected(GlobalSceneGraph(), x, y);
-	}
-	Scene_BrushShiftTexdef_Component_Selected(GlobalSceneGraph(), x, y);
-}
-
-void Select_RotateTexture (float amt)
-{
-	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		Scene_BrushRotateTexdef_Selected(GlobalSceneGraph(), amt);
-	}
-	Scene_BrushRotateTexdef_Component_Selected(GlobalSceneGraph(), amt);
-}
-
 inline void Select_FlipAxis (int axis)
 {
 	Vector3 flip(1, 1, 1);
