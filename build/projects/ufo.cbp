@@ -1296,6 +1296,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\ports\system.h" />
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
