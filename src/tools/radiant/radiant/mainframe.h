@@ -168,15 +168,10 @@ class ScopeDisableScreenUpdates
 		}
 };
 
-void EnginePath_Realise ();
-void EnginePath_Unrealise ();
-
 class ModuleObserver;
 
 void Radiant_attachGameToolsPathObserver (ModuleObserver& observer);
 void Radiant_detachGameToolsPathObserver (ModuleObserver& observer);
-
-const std::string AppPath_get ();
 
 void Radiant_Initialise ();
 void Radiant_Shutdown ();
