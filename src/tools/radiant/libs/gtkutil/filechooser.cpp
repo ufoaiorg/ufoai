@@ -119,24 +119,6 @@ class GTKMasks
 		}
 };
 
-static void file_dialog_update_preview (GtkFileChooser *file_chooser, gpointer data)
-{
-	GtkWidget *preview = GTK_WIDGET(data);
-	char *filename = gtk_file_chooser_get_preview_filename(file_chooser);
-
-	if (filename != NULL) {
-		GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_size(filename, 128, 128, NULL);
-
-		gtk_image_set_from_pixbuf(GTK_IMAGE(preview), pixbuf);
-
-		gtk_file_chooser_set_preview_widget_active(file_chooser, pixbuf != NULL);
-		if (pixbuf)
-			gdk_pixbuf_unref(pixbuf);
-
-		g_free(filename);
-	}
-}
-
 #include "MultiMonitor.h"
 
 namespace gtkutil
