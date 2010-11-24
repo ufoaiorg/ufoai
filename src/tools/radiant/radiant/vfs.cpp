@@ -326,7 +326,7 @@ ArchiveFile* OpenFile (const std::string& filename)
 ArchiveTextFile* OpenTextFile (const std::string& filename)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		ArchiveTextFile* file = (*i).archive->openTextFile(filename);
+		ArchiveTextFile* file = i->archive->openTextFile(filename);
 		if (file != 0) {
 			return file;
 		}
@@ -374,8 +374,8 @@ void ClearFileDirList (GSList **lst)
 const std::string FindFile (const std::string& relative)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		if ((*i).archive->containsFile(relative)) {
-			return (*i).name;
+		if (i->archive->containsFile(relative)) {
+			return i->name;
 		}
 	}
 
@@ -385,8 +385,8 @@ const std::string FindFile (const std::string& relative)
 const std::string FindPath (const std::string& absolute)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		if (path_equal_n(absolute, (*i).name, (*i).name.length())) {
-			return (*i).name;
+		if (path_equal_n(absolute, i->name, i->name.length())) {
+			return i->name;
 		}
 	}
 
@@ -434,7 +434,7 @@ class UFOFileSystem: public VirtualFileSystem
 			GSList* list = GetListInternal(basedir, "", true, depth);
 
 			for (GSList* i = list; i != 0; i = g_slist_next(i)) {
-				callback(reinterpret_cast<const char*> ((*i).data));
+				callback(reinterpret_cast<const char*> (i->data));
 			}
 
 			ClearFileDirList(&list);
@@ -446,7 +446,7 @@ class UFOFileSystem: public VirtualFileSystem
 			GSList* list = GetListInternal(basedir, extension, false, depth);
 
 			for (GSList* i = list; i != 0; i = g_slist_next(i)) {
-				const char* name = reinterpret_cast<const char*> ((*i).data);
+				const char* name = reinterpret_cast<const char*> (i->data);
 				if (extension_equal(os::getExtension(name), extension)) {
 					callback(name);
 				}
@@ -481,9 +481,9 @@ class UFOFileSystem: public VirtualFileSystem
 		Archive* getArchive (const std::string& archiveName)
 		{
 			for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-				if ((*i).is_pakfile) {
-					if (path_equal((*i).name, archiveName)) {
-						return (*i).archive;
+				if (i->is_pakfile) {
+					if (path_equal(i->name, archiveName)) {
+						return i->archive;
 					}
 				}
 			}
@@ -492,8 +492,8 @@ class UFOFileSystem: public VirtualFileSystem
 		void forEachArchive (const ArchiveNameCallback& callback)
 		{
 			for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-				if ((*i).is_pakfile) {
-					callback((*i).name);
+				if (i->is_pakfile) {
+					callback(i->name);
 				}
 			}
 		}

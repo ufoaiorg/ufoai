@@ -277,7 +277,6 @@ class Radiant
 			GlobalGameManager().init();
 
 			Pathfinding_Construct();
-			UMP_Construct();
 			GlobalUFOScriptSystem()->init();
 			GlobalParticleSystem().init();
 

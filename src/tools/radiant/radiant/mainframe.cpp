@@ -222,6 +222,8 @@ void Radiant_Initialise (void)
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
 
+	UMP_Construct();
+
 	// Construct the MRU commands and menu structure
 	GlobalMRU().constructMenu();
 
