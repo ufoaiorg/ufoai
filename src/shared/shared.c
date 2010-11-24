@@ -25,7 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../common/common.h"
+#include "shared.h"
+#include "../common/filesys.h"
+#include "../ports/system.h"
 #include "utf8.h"
 
 /**

@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __INFOSTRING_H__
 #define __INFOSTRING_H__
 
+#include <stddef.h>
+#include "ufotypes.h"
+
 /* key / value info strings */
 #define MAX_INFO_KEY        64
 #define MAX_INFO_VALUE      64
