@@ -20,6 +20,44 @@
 #include "CameraSettings.h"
 #include "GlobalCamera.h"
 
+class ObjectFinder: public scene::Graph::Walker
+{
+		scene::Instance*& _instance;
+		SelectionTest& _selectionTest;
+
+		// To store the best intersection candidate
+		mutable SelectionIntersection _bestIntersection;
+	public:
+		// Constructor
+		ObjectFinder (SelectionTest& test, scene::Instance*& instance) :
+			_instance(instance), _selectionTest(test)
+		{
+			_instance = NULL;
+		}
+
+		// The visitor function
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			// Check if the node is filtered
+			if (path.top().get().visible()) {
+				SelectionTestable* selectionTestable = Instance_getSelectionTestable(instance);
+
+				if (selectionTestable != NULL) {
+					bool occluded;
+					OccludeSelector selector(_bestIntersection, occluded);
+					selectionTestable->testSelect(selector, _selectionTest);
+
+					if (occluded) {
+						_instance = &instance;
+					}
+				}
+			}
+
+			return true;
+		}
+};
+
+
 inline WindowVector windowvector_for_widget_centre(GtkWidget* widget) {
 	return WindowVector(static_cast<float>(widget->allocation.width / 2), static_cast<float>(widget->allocation.height / 2));
 }
@@ -232,6 +270,20 @@ CamWnd::CamWnd() :
 	AddSceneChangeCallback(CamWndUpdate(*this));
 
 	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
+}
+
+void CamWnd::jumpToObject(SelectionTest& selectionTest) {
+	// Find a suitable target Instance
+	scene::Instance* instance;
+	GlobalSceneGraph().traverse(ObjectFinder(selectionTest, instance));
+
+	if (instance != NULL) {
+		// An instance has been found, get the bounding box
+		AABB found = instance->worldAABB();
+
+		// Focuse the view at the center of the found AABB
+		GlobalMap().FocusViews(found.origin, getCameraAngles()[CAMERA_YAW]);
+	}
 }
 
 void CamWnd::changeFloor(bool up) {

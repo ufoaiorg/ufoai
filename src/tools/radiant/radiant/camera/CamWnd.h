@@ -12,6 +12,8 @@
 const int CAMWND_MINSIZE_X = 240;
 const int CAMWND_MINSIZE_Y = 200;
 
+class SelectionTest;
+
 class CamWnd
 {
 		View m_view;
@@ -77,6 +79,8 @@ class CamWnd
 		void disableFreeMove ();
 
 		bool m_bFreeMove;
+
+		void jumpToObject(SelectionTest& selectionTest);
 
 		CameraView* getCameraView ();
 

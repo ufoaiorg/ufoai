@@ -1,5 +1,6 @@
 #include "ieventmanager.h"
 #include "RadiantWindowObserver.h"
+#include "../camera/GlobalCamera.h"
 #include "algorithm/Shader.h"
 #include "shaderclipboard/ShaderClipboard.h"
 
@@ -45,7 +46,7 @@ void RadiantWindowObserver::onMouseDown (const WindowVector& position, GdkEventB
 
 	// Check if the user wants to copy/paste a texture
 	if (observerEvent == ui::obsCopyTexture || observerEvent == ui::obsPasteTexture || observerEvent
-			== ui::obsPasteTextureToBrush) {
+			== ui::obsPasteTextureToBrush || observerEvent == ui::obsJumpToObject) {
 		// Get the mouse position
 		DeviceVector devicePosition(device_constrained(window_to_normalised_device(position, _width, _height)));
 
@@ -54,17 +55,23 @@ void RadiantWindowObserver::onMouseDown (const WindowVector& position, GdkEventB
 		ConstructSelectionTest(scissored, SelectionBoxForPoint(&devicePosition[0], &_selectObserver._epsilon[0]));
 		SelectionVolume volume(scissored);
 
-		// If the apply texture modifier is held
-		if (observerEvent == ui::obsPasteTexture) {
-			selection::algorithm::pasteShader(volume, false);
-		}
-		// If the copy texture modifier is held
-		else if (observerEvent == ui::obsCopyTexture) {
-			// Set the source texturable from the given test
-			GlobalShaderClipboard().setSource(volume);
-		} else if (observerEvent == ui::obsPasteTextureToBrush) {
-			// Paste the shader projected (TRUE), and to the entire brush (TRUE)
-			selection::algorithm::pasteShader(volume,  true);
+		// Do we have a camera view (fill() == true)?
+		if (_selectObserver._view->fill()) {
+			if (observerEvent == ui::obsJumpToObject) {
+				GlobalCamera().getCamWnd()->jumpToObject(volume);
+			}
+			// If the apply texture modifier is held
+			else if (observerEvent == ui::obsPasteTexture) {
+				selection::algorithm::pasteShader(volume, false);
+			}
+			// If the copy texture modifier is held
+			else if (observerEvent == ui::obsCopyTexture) {
+				// Set the source texturable from the given test
+				GlobalShaderClipboard().setSource(volume);
+			} else if (observerEvent == ui::obsPasteTextureToBrush) {
+				// Paste the shader projected (TRUE), and to the entire brush (TRUE)
+				selection::algorithm::pasteShader(volume,  true);
+			}
 		}
 	}
 

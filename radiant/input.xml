@@ -34,6 +34,7 @@
 		<event name="CopyTexture" button="MOUSE_MIDDLE" modifiers="" />
 		<event name="PasteTexture" button="MOUSE_MIDDLE" modifiers="CONTROL" />
 		<event name="PasteTextureToBrush" button="MOUSE_MIDDLE" modifiers="ALT+CONTROL" />
+		<event name="JumpToObject" button="MOUSE_RIGHT" modifiers="CONTROL" />
 	</observer>
 	<cameraview>
 		<event name="EnableFreeLookMode" button="MOUSE_RIGHT" modifiers="" />

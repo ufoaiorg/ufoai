@@ -146,6 +146,8 @@ void MouseEventManager::loadObserverEventDefinitions ()
 					_observerConditions[ui::obsPasteTexture] = getCondition(eventList[i]);
 				} else if (eventName == "PasteTextureToBrush") {
 					_observerConditions[ui::obsPasteTextureToBrush] = getCondition(eventList[i]);
+				} else if (eventName == "JumpToObject") {
+					_observerConditions[ui::obsJumpToObject] = getCondition(eventList[i]);
 				} else {
 					globalOutputStream() << "MouseEventManager: Warning: Ignoring unkown event name: " << eventName
 							<< "\n";
@@ -479,6 +481,8 @@ std::string MouseEventManager::printObserverEvent (const ui::ObserverEvent& obse
 		return _("<b>CopyTexture</b>");
 	case ui::obsPasteTexture:
 		return _("<b>PasteTexture</b>");
+	case ui::obsJumpToObject:
+		return _("<b>Jump to Object</b>");
 	default:
 		return _("<b>Unknown event</b>");
 	}
