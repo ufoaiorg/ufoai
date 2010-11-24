@@ -123,6 +123,12 @@ class MaterialShader: public IShader {
 
 		qtexture_t* _notfound;
 
+		typedef std::vector<MapLayer> MapLayers;
+		MapLayers m_layers;
+
+		BlendFactor parseBlendMode(const std::string& token);
+		void parseMaterial(Tokeniser& tokenizer);
+
 	public:
 
 		MaterialShader(const std::string& fileName, const std::string& content);
@@ -134,9 +140,6 @@ class MaterialShader: public IShader {
 		void DecRef();
 
 		std::size_t refcount();
-
-		BlendFactor parseBlendMode(const std::string& token);
-		void parseMaterial(Tokeniser& tokenizer);
 
 		// get/set the qtexture_t* Radiant uses to represent this shader object
 		qtexture_t* getTexture() const;
@@ -172,9 +175,6 @@ class MaterialShader: public IShader {
 		void realise();
 
 		void unrealise();
-
-		typedef std::vector<MapLayer> MapLayers;
-		MapLayers m_layers;
 
 		void addLayer(MapLayer &layer);
 
