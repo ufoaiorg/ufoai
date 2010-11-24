@@ -144,6 +144,8 @@ void MouseEventManager::loadObserverEventDefinitions ()
 					_observerConditions[ui::obsCopyTexture] = getCondition(eventList[i]);
 				} else if (eventName == "PasteTexture") {
 					_observerConditions[ui::obsPasteTexture] = getCondition(eventList[i]);
+				} else if (eventName == "PasteTextureToBrush") {
+					_observerConditions[ui::obsPasteTextureToBrush] = getCondition(eventList[i]);
 				} else {
 					globalOutputStream() << "MouseEventManager: Warning: Ignoring unkown event name: " << eventName
 							<< "\n";

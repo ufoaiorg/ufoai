@@ -154,6 +154,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSet.cpp \
 	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSetManager.cpp \
 	$(RADIANT_BASE)/radiant/selection/selectionset/SelectionSetToolmenu.cpp \
+	$(RADIANT_BASE)/radiant/selection/shaderclipboard/ShaderClipboard.cpp \
+	$(RADIANT_BASE)/radiant/selection/shaderclipboard/Texturable.cpp \
 	\
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/AddPropertyDialog.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector/BooleanPropertyEditor.cpp \

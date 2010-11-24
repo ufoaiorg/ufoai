@@ -148,11 +148,38 @@ class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
 		// TODO: Use gtkutil::TextPanel
 		GtkEntry* _texture;
 
+	public:
+		SurfaceInspector ();
+
+		void shutdown (void);
+		void update ();
+
+		GtkWidget* buildNotebook ();
+
+		void registerCommands (void);
+
+		void copyTextureFromSelectedFaces (void);
+		void pasteTextureFromSelectedFaces (void);
+		void applyClosestTexture (SelectionTest& test);
+		void copyClosestTexture (SelectionTest& test);
+
+		void resetTextureClipboard ();
+
+		void fitTexture ();
+		void flipTextureX ();
+		void flipTextureY ();
+
+		float getRotate () const;
+		const Vector2& getScale () const;
+		const Vector2& getShift () const;
+
+		void constructPreferencePage (PreferenceGroup& group);
+		void keyChanged (const std::string& changedKey, const std::string& newValue);
+
 	private:
 
 		void queueDraw (void);
 
-		void update ();
 		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::update> UpdateCaller;
 		void applyShader ();
 		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::applyShader> ApplyShaderCaller;
@@ -205,32 +232,6 @@ class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
 		static void onAxialClick (GtkWidget *widget, SurfaceInspector *inspector);
 		static void onFaceFitClick (GtkWidget *widget, SurfaceInspector *inspector);
 		static void onApplyFlagsToggle (GtkWidget *widget, SurfaceInspector *inspector);
-	public:
-		SurfaceInspector ();
-
-		void shutdown (void);
-
-		GtkWidget* buildNotebook ();
-
-		void registerCommands (void);
-
-		void copyTextureFromSelectedFaces (void);
-		void pasteTextureFromSelectedFaces (void);
-		void applyClosestTexture (SelectionTest& test);
-		void copyClosestTexture (SelectionTest& test);
-
-		void resetTextureClipboard ();
-
-		void fitTexture ();
-		void flipTextureX ();
-		void flipTextureY ();
-
-		float getRotate () const;
-		const Vector2& getScale () const;
-		const Vector2& getShift () const;
-
-		void constructPreferencePage (PreferenceGroup& group);
-		void keyChanged (const std::string& changedKey, const std::string& newValue);
 };
 
 inline SurfaceInspector& GlobalSurfaceInspector (void)

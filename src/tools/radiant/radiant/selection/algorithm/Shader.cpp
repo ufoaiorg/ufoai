@@ -3,10 +3,13 @@
 #include "iregistry.h"
 #include "iselection.h"
 #include "iscenegraph.h"
+#include "selectable.h"
 #include "../../brush/FaceInstance.h"
 #include "../../brush/BrushVisit.h"
 #include "../../brush/TextureProjection.h"
 #include "Primitives.h"
+#include "../shaderclipboard/ShaderClipboard.h"
+#include "../../sidebar/surfaceinspector/surfaceinspector.h"
 
 // greebo: Nasty global that contains all the selected face instances
 extern FaceInstanceSet g_SelectedFaceInstances;
@@ -98,6 +101,62 @@ std::string getShaderFromSelection() {
 	}
 
 	return returnValue;
+}
+
+/** greebo: Applies the shader from the clipboard to the given <target> face
+ */
+inline void applyClipboardShaderToFace (Face& target)
+{
+	// Get a reference to the source Texturable in the clipboard
+	Texturable& source = GlobalShaderClipboard().getSource();
+
+	// Retrieve the textureprojection from the source face
+	TextureProjection projection;
+	source.face->GetTexdef(projection);
+
+	target.SetShader(source.face->GetShader());
+	target.SetTexdef(projection);
+	target.SetFlags(source.face->getShader().m_flags);
+}
+
+void pasteShader (SelectionTest& test, bool entireBrush)
+{
+	// Construct the command string
+	std::string command("pasteShader");
+	command += (entireBrush ? "ToBrush" : "");
+
+	UndoableCommand undo(command);
+
+	// Initialise an empty Texturable structure
+	Texturable target;
+
+	// Find a suitable target Texturable
+	GlobalSceneGraph().traverse(ClosestTexturableFinder(test, target));
+
+	// Get a reference to the source Texturable in the clipboard
+	Texturable& source = GlobalShaderClipboard().getSource();
+
+	// Check the basic conditions
+	if (!target.empty() && !source.empty()) {
+		// Do we have a Face to copy from?
+		if (source.isFace()) {
+			if (target.isFace() && entireBrush) {
+				// Copy Face >> Whole Brush
+				for (Brush::const_iterator i = target.brush->begin(); i != target.brush->end(); i++) {
+					applyClipboardShaderToFace(*(*i));
+				}
+			} else if (target.isFace() && !entireBrush) {
+				// Copy Face >> Face
+				applyClipboardShaderToFace(*target.face);
+			}
+		} else {
+
+		}
+	}
+
+	SceneChangeNotify();
+	// Update the Texture Tools
+	GlobalSurfaceInspector().update();
 }
 
 TextureProjection getSelectedTextureProjection() {

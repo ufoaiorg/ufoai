@@ -664,6 +664,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSetManager.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSetToolmenu.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection\selectionset\SelectionSetToolmenu.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\shaderclipboard\ShaderClipboard.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\shaderclipboard\ShaderClipboard.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\shaderclipboard\Texturable.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\selection\shaderclipboard\Texturable.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\server.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\server.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\preferencedictionary.h" />

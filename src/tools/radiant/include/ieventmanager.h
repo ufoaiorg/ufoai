@@ -50,7 +50,8 @@ namespace ui {
 		obsReplace,		// replace/cycle selection through possible candidates
 		obsReplaceFace,	// replace/cycle selection through possible face candidates
 		obsCopyTexture,	// copy texture from object
-		obsPasteTexture	// paste texture to object (projected)
+		obsPasteTexture,	// paste texture to object (projected)
+		obsPasteTextureToBrush // paste texture to all brush faces of the selected brush
 	};
 } // namespace ui
 

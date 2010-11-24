@@ -6,6 +6,7 @@
 
 class TextureProjection;
 class Face;
+class SelectionTest;
 
 namespace selection {
 	namespace algorithm {
@@ -16,6 +17,20 @@ namespace selection {
 	 * the empty string "" otherwise.
 	 */
 	std::string getShaderFromSelection();
+
+	/** greebo: Applies the shader in the clipboard to the nearest
+	 * 			texturable object (using the given SelectionTest)
+	 *
+	 * @test: the SelectionTest needed (usually a SelectionVolume).
+	 *
+	 * @projected: Set this to TRUE if the texture is projected onto patches using the
+	 * 			   face in the shaderclipboard as reference plane
+	 * 			   Set this to FALSE if a natural texturing of patches is attempted.
+	 *
+	 * @entireBrush: Set this to TRUE if all brush faces should be textured,
+	 * 				 given the case that the SelectionTest is resulting in a brush.
+	 */
+	void pasteShader(SelectionTest& test, bool entireBrush = false);
 
 	/** greebo: Retrieves the texture projection from the current selection.
 	 *
