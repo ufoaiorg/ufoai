@@ -100,28 +100,24 @@ void SurfaceInspector::setValuesFromSelected (void)
 	if (_textureSelectionDirty) {
 		_textureSelectionDirty = false;
 		if (GlobalSelectionSystem().areFacesSelected()) {
-			TextureProjection projection;
-			Scene_BrushGetTexdef_Component_Selected(GlobalSceneGraph(), projection);
+			TextureProjection projection = selection::algorithm::getSelectedTextureProjection();
 
 			setSelectedTexdef(projection);
 
 			Scene_BrushGetShaderSize_Component_Selected(GlobalSceneGraph(), _selectedShaderSize[0],
 					_selectedShaderSize[1]);
 
-			std::string name;
-			Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
+			std::string name = selection::algorithm::getShaderFromSelection();
 			setSelectedShader(name);
 
 			ContentsFlagsValue flags(0, 0, 0, false);
 			Scene_BrushGetFlags_Component_Selected(GlobalSceneGraph(), flags);
 			setSelectedFlags(flags);
 		} else {
-			TextureProjection projection;
-			Scene_BrushGetTexdef_Selected(GlobalSceneGraph(), projection);
+			TextureProjection projection = selection::algorithm::getSelectedTextureProjection();
 			setSelectedTexdef(projection);
 
-			std::string name;
-			Scene_BrushGetShader_Selected(GlobalSceneGraph(), name);
+			std::string name = selection::algorithm::getShaderFromSelection();
 			setSelectedShader(name);
 
 			ContentsFlagsValue flags(0, 0, 0, false);
@@ -200,21 +196,13 @@ void SurfaceInspector::fitTexture (void)
 	selection::algorithm::fitTexture(_fitHorizontal, _fitVertical);
 }
 
-void SurfaceInspector::setTexdefForSelected (const TextureProjection& projection)
-{
-	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		Scene_BrushSetTexdef_Selected(GlobalSceneGraph(), projection);
-	}
-	Scene_BrushSetTexdef_Component_Selected(GlobalSceneGraph(), projection);
-}
-
 void SurfaceInspector::onAxialClick (GtkWidget *widget, SurfaceInspector *inspector)
 {
 	UndoableCommand undo("textureDefault");
 	TextureProjection projection;
 	projection.constructDefault();
 
-	inspector->setTexdefForSelected(projection);
+	selection::algorithm::applyTextureProjectionToFaces(projection);
 }
 
 void SurfaceInspector::onFaceFitClick (GtkWidget *widget, SurfaceInspector *inspector)
@@ -822,7 +810,7 @@ void SurfaceInspector::applyTexdef (void)
 	TextureProjection projection(shiftScaleRotate);
 
 	UndoableCommand undo("textureProjectionSetSelected");
-	setTexdefForSelected(projection);
+	selection::algorithm::applyTextureProjectionToFaces(projection);
 
 	// Update the TexTool instance as well
 	ui::TexTool::Instance().draw();

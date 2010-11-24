@@ -68,53 +68,6 @@ static void Brush_ConstructPrefab (Brush& brush, EBrushPrefab type, const AABB& 
 	bc->generate(brush, bounds, sides, projection, shader);
 }
 
-class FaceSetTexdef
-{
-		const TextureProjection& m_projection;
-	public:
-		FaceSetTexdef (const TextureProjection& projection) :
-			m_projection(projection)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			face.SetTexdef(m_projection);
-		}
-};
-
-void Scene_BrushSetTexdef_Selected (scene::Graph& graph, const TextureProjection& projection)
-{
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceSetTexdef(projection));
-	SceneChangeNotify();
-}
-
-void Scene_BrushSetTexdef_Component_Selected (scene::Graph& graph, const TextureProjection& projection)
-{
-	Scene_ForEachSelectedBrushFace(FaceSetTexdef(projection));
-	SceneChangeNotify();
-}
-
-class FaceTextureFlipper
-{
-		unsigned int _flipAxis;
-public:
-	FaceTextureFlipper(unsigned int flipAxis) :
-		_flipAxis(flipAxis)
-	{}
-
-	void operator()(Face& face) const {
-		face.flipTexture(_flipAxis);
-	}
-};
-
-void Scene_BrushFlipTexture_Selected(unsigned int flipAxis) {
-	Scene_ForEachSelectedBrush_ForEachFace(GlobalSceneGraph(), FaceTextureFlipper(flipAxis));
-}
-
-void Scene_BrushFlipTexture_Component_Selected(unsigned int flipAxis) {
-	Scene_ForEachSelectedBrushFace(FaceTextureFlipper(flipAxis));
-}
-
 class FaceSetFlags
 {
 		const ContentsFlagsValue& m_projection;
@@ -138,84 +91,6 @@ void Scene_BrushSetFlags_Selected (scene::Graph& graph, const ContentsFlagsValue
 void Scene_BrushSetFlags_Component_Selected (scene::Graph& graph, const ContentsFlagsValue& flags)
 {
 	Scene_ForEachSelectedBrushFace(FaceSetFlags(flags));
-	SceneChangeNotify();
-}
-
-class FaceShiftTexdef
-{
-		float m_s, m_t;
-	public:
-		FaceShiftTexdef (float s, float t) :
-			m_s(s), m_t(t)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			face.ShiftTexdef(m_s, m_t);
-		}
-};
-
-void Scene_BrushShiftTexdef_Selected (scene::Graph& graph, float s, float t)
-{
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceShiftTexdef(s, t));
-	SceneChangeNotify();
-}
-
-void Scene_BrushShiftTexdef_Component_Selected (scene::Graph& graph, float s, float t)
-{
-	Scene_ForEachSelectedBrushFace(FaceShiftTexdef(s, t));
-	SceneChangeNotify();
-}
-
-class FaceScaleTexdef
-{
-		float m_s, m_t;
-	public:
-		FaceScaleTexdef (float s, float t) :
-			m_s(s), m_t(t)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			face.ScaleTexdef(m_s, m_t);
-		}
-};
-
-void Scene_BrushScaleTexdef_Selected (scene::Graph& graph, float s, float t)
-{
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceScaleTexdef(s, t));
-	SceneChangeNotify();
-}
-
-void Scene_BrushScaleTexdef_Component_Selected (scene::Graph& graph, float s, float t)
-{
-	Scene_ForEachSelectedBrushFace(FaceScaleTexdef(s, t));
-	SceneChangeNotify();
-}
-
-class FaceRotateTexdef
-{
-		float m_angle;
-	public:
-		FaceRotateTexdef (float angle) :
-			m_angle(angle)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			face.RotateTexdef(m_angle);
-		}
-};
-
-void Scene_BrushRotateTexdef_Selected (scene::Graph& graph, float angle)
-{
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceRotateTexdef(angle));
-	SceneChangeNotify();
-}
-
-void Scene_BrushRotateTexdef_Component_Selected (scene::Graph& graph, float angle)
-{
-	Scene_ForEachSelectedBrushFace(FaceRotateTexdef(angle));
 	SceneChangeNotify();
 }
 
@@ -262,32 +137,6 @@ class FaceSetDetail
 inline void Scene_BrushSetDetail_Selected (scene::Graph& graph, bool detail)
 {
 	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceSetDetail(detail));
-	SceneChangeNotify();
-}
-
-class FaceFitTexture
-{
-		float m_s_repeat, m_t_repeat;
-	public:
-		FaceFitTexture (float s_repeat, float t_repeat) :
-			m_s_repeat(s_repeat), m_t_repeat(t_repeat)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			face.FitTexture(m_s_repeat, m_t_repeat);
-		}
-};
-
-void Scene_BrushFitTexture_Selected (scene::Graph& graph, float s_repeat, float t_repeat)
-{
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceFitTexture(s_repeat, t_repeat));
-	SceneChangeNotify();
-}
-
-void Scene_BrushFitTexture_Component_Selected (scene::Graph& graph, float s_repeat, float t_repeat)
-{
-	Scene_ForEachSelectedBrushFace(FaceFitTexture(s_repeat, t_repeat));
 	SceneChangeNotify();
 }
 
@@ -391,37 +240,6 @@ void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const std::s
 	Scene_ForEachBrush_ForEachFaceInstance(graph, FaceSelectByShader(name));
 }
 
-class FaceGetTexdef
-{
-		TextureProjection& m_projection;
-		mutable bool m_done;
-	public:
-		FaceGetTexdef (TextureProjection& projection) :
-			m_projection(projection), m_done(false)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			if (!m_done) {
-				m_done = true;
-				face.GetTexdef(m_projection);
-			}
-		}
-};
-
-void Scene_BrushGetTexdef_Selected (scene::Graph& graph, TextureProjection& projection)
-{
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceGetTexdef(projection));
-}
-
-void Scene_BrushGetTexdef_Component_Selected (scene::Graph& graph, TextureProjection& projection)
-{
-	if (!g_SelectedFaceInstances.empty()) {
-		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
-		faceInstance.getFace().GetTexdef(projection);
-	}
-}
-
 void Scene_BrushGetShaderSize_Component_Selected (scene::Graph& graph, size_t& width, size_t& height)
 {
 	if (!g_SelectedFaceInstances.empty()) {
@@ -453,42 +271,6 @@ void Scene_BrushGetFlags_Component_Selected (scene::Graph& graph, ContentsFlagsV
 {
 	if (GlobalSelectionSystem().countSelectedComponents() != 0) {
 		Scene_ForEachSelectedBrushFace(FaceGetFlags(flags));
-	}
-}
-
-class FaceGetShader
-{
-		std::string& m_shader;
-		mutable bool m_done;
-	public:
-		FaceGetShader (std::string& shader) :
-			m_shader(shader), m_done(false)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			if (!m_done) {
-				m_done = true;
-				m_shader = face.GetShader();
-			}
-		}
-};
-
-void Scene_BrushGetShader_Selected (scene::Graph& graph, std::string& shader)
-{
-	if (GlobalSelectionSystem().countSelected() != 0) {
-		BrushInstance* brush = Instance_getBrush(GlobalSelectionSystem().ultimateSelected());
-		if (brush != 0) {
-			Brush_forEachFace(*brush, FaceGetShader(shader));
-		}
-	}
-}
-
-void Scene_BrushGetShader_Component_Selected (scene::Graph& graph, std::string& shader)
-{
-	if (!g_SelectedFaceInstances.empty()) {
-		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
-		shader = faceInstance.getFace().GetShader();
 	}
 }
 

@@ -43,12 +43,10 @@
 #include <gtk/gtkmenu.h>
 
 #include "gtkutil/dialog.h"
-#include "gtkutil/filechooser.h"
 #include "gtkutil/image.h"
 #include "gtkutil/menu.h"
 #include "gtkutil/MenuItemAccelerator.h"
 #include "gtkutil/SeparatorMenuItem.h"
-#include "gtkutil/IConv.h"
 
 // =============================================================================
 // Misc stuff
@@ -160,47 +158,4 @@ bool color_dialog (GtkWidget *parent, Vector3& color, const std::string& title)
 	gtk_widget_destroy(dlg);
 
 	return ok;
-}
-
-void button_clicked_entry_browse_file (GtkWidget* widget, GtkEntry* entry)
-{
-	std::string filename = gtk_entry_get_text(entry);
-
-	gtkutil::FileChooser fileChooser(gtk_widget_get_toplevel(widget), _("Choose File"), true, false);
-	if (!filename.empty()) {
-		fileChooser.setCurrentPath(os::stripFilename(filename));
-		fileChooser.setCurrentFile(filename);
-	}
-
-	std::string file = fileChooser.display();
-
-	if (GTK_IS_WINDOW(gtk_widget_get_toplevel(widget))) {
-		gtk_window_present(GTK_WINDOW(gtk_widget_get_toplevel(widget)));
-	}
-
-	if (!file.empty()) {
-		file = gtkutil::IConv::filenameToUTF8(file);
-		gtk_entry_set_text(entry, file.c_str());
-	}
-}
-
-void button_clicked_entry_browse_directory (GtkWidget* widget, GtkEntry* entry)
-{
-	gtkutil::FileChooser dirChooser(gtk_widget_get_toplevel(widget), _("Choose Directory"), true, true);
-	std::string curEntry = gtk_entry_get_text(entry);
-
-	if (g_path_is_absolute(curEntry.c_str()))
-		curEntry.clear();
-	dirChooser.setCurrentPath(curEntry);
-
-	std::string filename = dirChooser.display();
-
-	if (GTK_IS_WINDOW(gtk_widget_get_toplevel(widget))) {
-		gtk_window_present(GTK_WINDOW(gtk_widget_get_toplevel(widget)));
-	}
-
-	if (!filename.empty()) {
-		filename = gtkutil::IConv::filenameToUTF8(filename);
-		gtk_entry_set_text(entry, filename.c_str());
-	}
 }

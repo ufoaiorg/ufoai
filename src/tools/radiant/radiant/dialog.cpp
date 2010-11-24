@@ -41,7 +41,9 @@
 #include "gtkutil/button.h"
 #include "gtkutil/entry.h"
 #include "gtkutil/image.h"
+#include "gtkutil/filechooser.h"
 
+#include "os/path.h"
 #include "gtkmisc.h"
 
 GtkEntry* DialogEntry_new ()
@@ -466,6 +468,47 @@ void Dialog::addSlider (GtkWidget* vbox, const std::string& name, const std::str
 
 	GtkTable* row = DialogRow_new(name, alignment);
 	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(row));
+}
+
+inline void button_clicked_entry_browse_file (GtkWidget* widget, GtkEntry* entry)
+{
+	std::string filename = gtk_entry_get_text(entry);
+
+	gtkutil::FileChooser fileChooser(gtk_widget_get_toplevel(widget), _("Choose File"), true, false);
+	if (!filename.empty()) {
+		fileChooser.setCurrentPath(os::stripFilename(filename));
+		fileChooser.setCurrentFile(filename);
+	}
+
+	std::string file = fileChooser.display();
+
+	if (GTK_IS_WINDOW(gtk_widget_get_toplevel(widget))) {
+		gtk_window_present(GTK_WINDOW(gtk_widget_get_toplevel(widget)));
+	}
+
+	if (!file.empty()) {
+		gtk_entry_set_text(entry, file.c_str());
+	}
+}
+
+inline void button_clicked_entry_browse_directory (GtkWidget* widget, GtkEntry* entry)
+{
+	gtkutil::FileChooser dirChooser(gtk_widget_get_toplevel(widget), _("Choose Directory"), true, true);
+	std::string curEntry = gtk_entry_get_text(entry);
+
+	if (g_path_is_absolute(curEntry.c_str()))
+		curEntry.clear();
+	dirChooser.setCurrentPath(curEntry);
+
+	std::string filename = dirChooser.display();
+
+	if (GTK_IS_WINDOW(gtk_widget_get_toplevel(widget))) {
+		gtk_window_present(GTK_WINDOW(gtk_widget_get_toplevel(widget)));
+	}
+
+	if (!filename.empty()) {
+		gtk_entry_set_text(entry, filename.c_str());
+	}
 }
 
 // greebo: Adds a PathEntry to choose files or directories (depending on the given boolean)

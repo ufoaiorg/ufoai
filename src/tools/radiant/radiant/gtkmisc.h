@@ -28,23 +28,15 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#if !defined(INCLUDED_GTKMISC_H)
+#ifndef INCLUDED_GTKMISC_H
 #define INCLUDED_GTKMISC_H
 
 #include <string>
 #include <gtk/gtkmain.h>
 #include "radiant_i18n.h"
 
-inline void process_gui ()
-{
-	while (gtk_events_pending()) {
-		gtk_main_iteration();
-	}
-}
-
 typedef struct _GtkMenu GtkMenu;
 typedef struct _GtkMenuItem GtkMenuItem;
-typedef struct _GtkCheckMenuItem GtkCheckMenuItem;
 
 /**
  * Add a menu item to the given menu, with an optional icon. The given global
@@ -54,16 +46,8 @@ GtkMenuItem* createMenuItemWithMnemonic(GtkMenu* menu, const std::string& captio
 GtkMenuItem* createCheckMenuItemWithMnemonic(GtkMenu* menu, const std::string& caption, const std::string& commandName, const std::string& iconName = "");
 GtkMenuItem* createSeparatorMenuItem(GtkMenu* menu);
 
-typedef struct _GtkButton GtkButton;
-typedef struct _GtkToggleButton GtkToggleButton;
-typedef struct _GtkToolbar GtkToolbar;
-
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
 bool color_dialog (GtkWidget *parent, Vector3& color, const std::string& title = _("Choose Color"));
-
-typedef struct _GtkEntry GtkEntry;
-void button_clicked_entry_browse_file (GtkWidget* widget, GtkEntry* entry);
-void button_clicked_entry_browse_directory (GtkWidget* widget, GtkEntry* entry);
 
 #endif

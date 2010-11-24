@@ -361,8 +361,7 @@ class EntityGetSelectedClassnamesWalker: public scene::Graph::Walker
 
 void selectAllFacesWithTexture ()
 {
-	std::string name;
-	Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);
+	std::string name = selection::algorithm::getShaderFromSelection();
 	if (!name.empty()) {
 		GlobalSelectionSystem().setSelectedAllComponents(false);
 		Scene_BrushFacesSelectByShader_Component(GlobalSceneGraph(), name);

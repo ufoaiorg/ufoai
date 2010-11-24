@@ -190,7 +190,6 @@ class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
 		void setValuesFromSelected (void);
 
 		void setFlagsForSelected (const ContentsFlagsValue& flags);
-		void setTexdefForSelected (const TextureProjection& projection);
 
 		const std::string& getContentFlagName (std::size_t bit) const;
 		const std::string& getSurfaceFlagName (std::size_t bit) const;

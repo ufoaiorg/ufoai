@@ -858,7 +858,9 @@ bool ScreenUpdates_Enabled (void)
 void ScreenUpdates_process (void)
 {
 	if (redrawRequired() && GTK_WIDGET_VISIBLE(g_wait.m_window)) {
-		process_gui();
+		while (gtk_events_pending()) {
+			gtk_main_iteration();
+		}
 	}
 }
 
@@ -867,7 +869,9 @@ void ScreenUpdates_Disable (const std::string& message, const std::string& title
 	if (g_wait_stack.empty()) {
 		map::AutoSaver().stopTimer();
 
-		process_gui();
+		while (gtk_events_pending()) {
+			gtk_main_iteration();
+		}
 
 		const bool isActiveApp = MainFrame_isActiveApp();
 

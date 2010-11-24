@@ -19,22 +19,16 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#if !defined(INCLUDED_GTKUTIL_FILECHOOSER_H)
+#ifndef INCLUDED_GTKUTIL_FILECHOOSER_H
 #define INCLUDED_GTKUTIL_FILECHOOSER_H
 
 #include <string>
 #include "radiant_i18n.h"
 
-/// \file
-/// GTK+ file-chooser dialogs.
-
 typedef struct _GtkWidget GtkWidget;
-const char* file_dialog (GtkWidget *parent, bool open, const std::string& title, const std::string& path = "",
-		const std::string& pattern = "");
 
 namespace gtkutil
 {
-
 	class FileChooser
 	{
 		public:
