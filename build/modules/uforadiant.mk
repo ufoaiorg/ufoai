@@ -44,8 +44,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
-	$(RADIANT_BASE)/radiant/material/material.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialShader.cpp \
+	$(RADIANT_BASE)/radiant/material/MaterialSystem.cpp \
 	\
 	$(RADIANT_BASE)/radiant/log/console.cpp \
 	\
