@@ -175,13 +175,6 @@ class VFSModuleObserver: public ModuleObserver
 
 VFSModuleObserver g_VFSModuleObserver;
 
-// Home Paths
-
-void HomePaths_Realise (void)
-{
-	g_mkdir_with_parents(GlobalRadiant().getFullGamePath().c_str(), 0775);
-}
-
 namespace
 {
 	ModuleObservers g_gameModeObservers;
@@ -220,7 +213,6 @@ void Radiant_Initialise (void)
 	// Load the other modules
 	Radiant_Construct(GlobalModuleServer_get());
 
-	HomePaths_Realise();
 	g_VFSModuleObserver.realise();
 	// Rebuild the map path basing on the userGamePath
 	std::string newMapPath = GlobalRadiant().getFullGamePath() + "maps/";
