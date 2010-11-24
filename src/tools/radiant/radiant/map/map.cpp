@@ -50,6 +50,7 @@
 #include "gtkutil/dialog.h"
 #include "../plugin.h"
 #include "../filetypes.h"
+#include "../environment.h"
 #include "../sidebar/MapInfo.h"
 #include "../camera/CamWnd.h"
 #include "../xyview/GlobalXYWnd.h"
@@ -228,7 +229,7 @@ scene::Node& Map::findOrInsertWorldspawn ()
 
 const std::string& getMapsPath ()
 {
-	return g_mapsPath;
+	return Environment::Instance().getMapsPath();
 }
 
 WorldNode::WorldNode () :
@@ -1068,31 +1069,6 @@ class MapEntityClasses: public ModuleObserver
 
 MapEntityClasses g_MapEntityClasses;
 
-class MapModuleObserver: public ModuleObserver
-{
-		std::size_t m_unrealised;
-	public:
-		MapModuleObserver () :
-			m_unrealised(1)
-		{
-		}
-		void realise ()
-		{
-			if (--m_unrealised == 0) {
-				g_mapsPath = GlobalRadiant().getFullGamePath() + "maps/";
-				g_mkdir(g_mapsPath.c_str(), 0775);
-			}
-		}
-		void unrealise ()
-		{
-			if (++m_unrealised == 1) {
-				g_mapsPath = "";
-			}
-		}
-};
-
-MapModuleObserver g_MapModuleObserver;
-
 void Map::Construct ()
 {
 	GlobalEventManager().addCommand("NewMap", MemberCaller<Map, &Map::NewMap> (*this));
@@ -1110,12 +1086,10 @@ void Map::Construct ()
 	GlobalEventManager().addCommand("RegionSetSelection", MemberCaller<Map, &Map::RegionSelected> (*this));
 
 	GlobalEntityClassManager().attach(g_MapEntityClasses);
-	Radiant_attachHomePathsObserver(g_MapModuleObserver);
 }
 
 void Map::Destroy ()
 {
-	Radiant_detachHomePathsObserver(g_MapModuleObserver);
 	GlobalEntityClassManager().detach(g_MapEntityClasses);
 }
 

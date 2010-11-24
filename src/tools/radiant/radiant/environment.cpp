@@ -134,6 +134,14 @@ void Environment::deletePathsFromRegistry() {
 	GlobalRegistry().deleteXPath(RKEY_BITMAPS_PATH);
 }
 
+const std::string& Environment::getMapsPath() const {
+	return _mapsPath;
+}
+
+void Environment::setMapsPath(const std::string& path) {
+	_mapsPath = path;
+}
+
 void Environment::initPaths() {
 	// Make sure the home folder exists (attempt to create it)
 	g_mkdir_with_parents(_homePath.c_str(), 0755);

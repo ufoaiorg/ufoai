@@ -263,7 +263,6 @@ class Radiant
 			GlobalFiletypes().addType("sound", "wav", filetype_t("PCM sound files", "*.wav"));
 			GlobalFiletypes().addType("sound", "ogg", filetype_t("OGG sound files", "*.ogg"));
 
-			VFS_Construct();
 			GlobalMap().Construct();
 			sidebar::MapInfo_Construct();
 			MainFrame_Construct();
@@ -296,7 +295,6 @@ class Radiant
 			GlobalXYWnd().destroy();
 			MainFrame_Destroy();
 			GlobalMap().Destroy();
-			VFS_Destroy();
 		}
 };
 

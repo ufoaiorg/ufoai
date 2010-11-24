@@ -175,32 +175,11 @@ class VFSModuleObserver: public ModuleObserver
 
 VFSModuleObserver g_VFSModuleObserver;
 
-void VFS_Construct (void)
-{
-	Radiant_attachHomePathsObserver(g_VFSModuleObserver);
-}
-void VFS_Destroy (void)
-{
-	Radiant_detachHomePathsObserver(g_VFSModuleObserver);
-}
-
 // Home Paths
 
 void HomePaths_Realise (void)
 {
 	g_mkdir_with_parents(GlobalRadiant().getFullGamePath().c_str(), 0775);
-}
-
-ModuleObservers g_homePathObservers;
-
-void Radiant_attachHomePathsObserver (ModuleObserver& observer)
-{
-	g_homePathObservers.attach(observer);
-}
-
-void Radiant_detachHomePathsObserver (ModuleObserver& observer)
-{
-	g_homePathObservers.detach(observer);
 }
 
 namespace
@@ -242,7 +221,12 @@ void Radiant_Initialise (void)
 	Radiant_Construct(GlobalModuleServer_get());
 
 	HomePaths_Realise();
-	g_homePathObservers.realise();
+	g_VFSModuleObserver.realise();
+	// Rebuild the map path basing on the userGamePath
+	std::string newMapPath = GlobalRadiant().getFullGamePath() + "maps/";
+	g_mkdir_with_parents(newMapPath.c_str(), 0755);
+	Environment::Instance().setMapsPath(newMapPath);
+
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
 
@@ -261,7 +245,8 @@ void Radiant_Shutdown (void)
 
 	GlobalSurfaceInspector().shutdown();
 
-	g_homePathObservers.unrealise();
+	g_VFSModuleObserver.unrealise();
+	Environment::Instance().setMapsPath("");
 	g_gameModeObservers.unrealise();
 	g_gameToolsPathObservers.unrealise();
 

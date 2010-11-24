@@ -44,6 +44,7 @@ class Environment
 	std::string _homePath;
 	std::string _settingsPath;
 	std::string _bitmapsPath;
+	std::string _mapsPath;
 
 	int _argc;
 	char** _argv;
@@ -72,6 +73,10 @@ public:
 	 * 			bogus paths from being saved and loaded at next startup.
 	 */
 	void deletePathsFromRegistry();
+
+	// Get/set the path where the .map files are stored
+	const std::string& getMapsPath() const;
+	void setMapsPath(const std::string& path);
 
 	// Contains the static instance
 	static Environment& Instance();
