@@ -25,26 +25,27 @@
  */
 
 #include "imaterial.h"
-#include "radiant_i18n.h"
-
 #include "iradiant.h"
 #include "ieventmanager.h"
 #include "iump.h"
 #include "iselection.h"
-#include "map/map.h"
+#include "ifilesystem.h"
+#include "iarchive.h"
+#include "itextures.h"
+
+#include "radiant_i18n.h"
 #include "os/path.h"
 #include "os/file.h"
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
-#include "ifilesystem.h"
 #include "AutoPtr.h"
 #include "shared.h"
-#include "iarchive.h"
-#include "ui/materialeditor/MaterialEditor.h"
-#include "itextures.h"
-#include "brush/FaceInstance.h"
-#include "brush/ContentsFlagsValue.h"
 #include "gtkutil/dialog.h"
+
+#include "../map/map.h"
+#include "../ui/materialeditor/MaterialEditor.h"
+#include "../brush/FaceInstance.h"
+#include "../brush/ContentsFlagsValue.h"
 
 MaterialShader::MaterialShader (const std::string& fileName, const std::string& content) :
 	_refcount(0), _fileName(fileName), _inUse(false), _isValid(false), _texture(0), _notfound(0)

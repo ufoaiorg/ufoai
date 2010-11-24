@@ -565,8 +565,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\map\RootNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\write.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\write.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\material.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\material.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\material\material.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\model.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\model.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\Namespace.cpp" />

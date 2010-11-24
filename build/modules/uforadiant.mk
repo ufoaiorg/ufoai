@@ -25,7 +25,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
-	$(RADIANT_BASE)/radiant/material.cpp \
 	$(RADIANT_BASE)/radiant/ump.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
@@ -44,6 +43,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/material/material.cpp \
 	\
 	$(RADIANT_BASE)/radiant/log/console.cpp \
 	\
