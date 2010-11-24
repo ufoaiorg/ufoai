@@ -120,11 +120,13 @@ class GenericFileSystem
 		entry_type& operator[] (const Path& path)
 		{
 			std::vector<std::string> vec;
+			std::string cleaned("");
 			os::getDirectoryComponentsFromPath(path, vec);
 
 			for (std::vector<std::string>::const_iterator i = vec.begin(); i != vec.end(); ++i) {
+				cleaned += DirectoryCleaned(*i);
 				// And insert it as directory (NULL)
-				m_entries.insert(value_type(Path(*i), Entry(NULL)));
+				m_entries.insert(value_type(Path(cleaned), Entry(NULL)));
 			}
 
 			return m_entries[path];
@@ -138,7 +140,7 @@ class GenericFileSystem
 
 		iterator begin (const std::string& root)
 		{
-			if (root[0] == '\0') {
+			if (root.empty()) {
 				return m_entries.begin();
 			}
 			iterator i = m_entries.find(root);

@@ -197,12 +197,12 @@ static GSList* GetListInternal (const std::string& refdir, const std::string& ex
 	if (directories) {
 		for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
 			DirectoryListVisitor visitor(files, refdir);
-			(*i).archive->forEachFile(Archive::VisitorFunc(visitor, Archive::eDirectories, depth), refdir);
+			i->archive->forEachFile(Archive::VisitorFunc(visitor, Archive::eDirectories, depth), refdir);
 		}
 	} else {
 		for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
 			FileListVisitor visitor(files, refdir, ext);
-			(*i).archive->forEachFile(Archive::VisitorFunc(visitor, Archive::eFiles, depth), refdir);
+			i->archive->forEachFile(Archive::VisitorFunc(visitor, Archive::eFiles, depth), refdir);
 		}
 	}
 
