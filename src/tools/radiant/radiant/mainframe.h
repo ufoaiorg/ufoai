@@ -188,8 +188,6 @@ void Radiant_detachGameModeObserver (ModuleObserver& observer);
 void VFS_Construct ();
 void VFS_Destroy ();
 
-void HomePaths_Construct ();
-void HomePaths_Destroy ();
 void Radiant_attachHomePathsObserver (ModuleObserver& observer);
 void Radiant_detachHomePathsObserver (ModuleObserver& observer);
 

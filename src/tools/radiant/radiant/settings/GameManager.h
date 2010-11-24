@@ -53,9 +53,6 @@ class GameManager: public IGameManager, public PreferenceConstructor, public Reg
 
 		const std::string& getEnginePath () const;
 
-		void attachEnginePathObserver (ModuleObserver& observer);
-		void detachEnginePathObserver (ModuleObserver& observer);
-
 		void init();
 		void destroy();
 

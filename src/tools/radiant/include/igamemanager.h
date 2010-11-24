@@ -21,9 +21,6 @@ class IGameManager
 
 		virtual const std::string& getEnginePath() const = 0;
 
-		virtual void attachEnginePathObserver (ModuleObserver& observer) = 0;
-		virtual void detachEnginePathObserver (ModuleObserver& observer) = 0;
-
 		virtual void init() = 0;
 		virtual void destroy() = 0;
 };

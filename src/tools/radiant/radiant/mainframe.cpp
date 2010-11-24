@@ -203,40 +203,6 @@ void Radiant_detachHomePathsObserver (ModuleObserver& observer)
 	g_homePathObservers.detach(observer);
 }
 
-class HomePathsModuleObserver: public ModuleObserver
-{
-		std::size_t m_unrealised;
-	public:
-		HomePathsModuleObserver () :
-			m_unrealised(1)
-		{
-		}
-		void realise (void)
-		{
-			if (--m_unrealised == 0) {
-				HomePaths_Realise();
-				g_homePathObservers.realise();
-			}
-		}
-		void unrealise (void)
-		{
-			if (++m_unrealised == 1) {
-				g_homePathObservers.unrealise();
-			}
-		}
-};
-
-HomePathsModuleObserver g_HomePathsModuleObserver;
-
-void HomePaths_Construct (void)
-{
-	GlobalRadiant().attachEnginePathObserver(g_HomePathsModuleObserver);
-}
-void HomePaths_Destroy (void)
-{
-	GlobalRadiant().detachEnginePathObserver(g_HomePathsModuleObserver);
-}
-
 namespace
 {
 	ModuleObservers g_gameModeObservers;
@@ -275,6 +241,8 @@ void Radiant_Initialise (void)
 	// Load the other modules
 	Radiant_Construct(GlobalModuleServer_get());
 
+	HomePaths_Realise();
+	g_homePathObservers.realise();
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
 
@@ -293,6 +261,7 @@ void Radiant_Shutdown (void)
 
 	GlobalSurfaceInspector().shutdown();
 
+	g_homePathObservers.unrealise();
 	g_gameModeObservers.unrealise();
 	g_gameToolsPathObservers.unrealise();
 

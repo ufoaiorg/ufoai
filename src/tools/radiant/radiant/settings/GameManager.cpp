@@ -99,16 +99,6 @@ GameManager::~GameManager ()
 		delete _currentGameDescription;
 }
 
-void GameManager::attachEnginePathObserver (ModuleObserver& observer)
-{
-	_enginePathObservers.attach(observer);
-}
-
-void GameManager::detachEnginePathObserver (ModuleObserver& observer)
-{
-	_enginePathObservers.detach(observer);
-}
-
 // Callback when a registry key is changed
 void GameManager::keyChanged (const std::string& key, const std::string& val)
 {

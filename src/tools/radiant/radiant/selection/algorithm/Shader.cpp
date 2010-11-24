@@ -432,7 +432,7 @@ inline void scaleTexture (const Vector2& scale)
 	SceneChangeNotify();
 }
 
-void rotateTexture (const float& angle)
+inline void rotateTexture (const float& angle)
 {
 	std::string command("rotateTexture: ");
 	command += "angle=" + string::toString(angle);

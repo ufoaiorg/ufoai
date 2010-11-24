@@ -145,8 +145,6 @@ struct IRadiant
 
 	virtual void attachGameToolsPathObserver (ModuleObserver& observer) = 0;
 	virtual void detachGameToolsPathObserver (ModuleObserver& observer) = 0;
-	virtual void attachEnginePathObserver (ModuleObserver& observer) = 0;
-	virtual void detachEnginePathObserver (ModuleObserver& observer) = 0;
 	virtual void attachGameModeObserver (ModuleObserver& observer) = 0;
 	virtual void detachGameModeObserver (ModuleObserver& observer) = 0;
 };

@@ -189,13 +189,6 @@ class RadiantModule : public IRadiant
 			Radiant_detachGameToolsPathObserver(observer);
 		}
 
-		void attachEnginePathObserver (ModuleObserver& observer) {
-			GlobalGameManager().attachEnginePathObserver(observer);
-		}
-		void detachEnginePathObserver (ModuleObserver& observer) {
-			GlobalGameManager().detachEnginePathObserver(observer);
-		}
-
 		void attachGameModeObserver (ModuleObserver& observer) {
 			Radiant_attachGameModeObserver(observer);
 		}
@@ -270,7 +263,6 @@ class Radiant
 			GlobalFiletypes().addType("sound", "wav", filetype_t("PCM sound files", "*.wav"));
 			GlobalFiletypes().addType("sound", "ogg", filetype_t("OGG sound files", "*.ogg"));
 
-			HomePaths_Construct();
 			VFS_Construct();
 			GlobalMap().Construct();
 			sidebar::MapInfo_Construct();
@@ -305,7 +297,6 @@ class Radiant
 			MainFrame_Destroy();
 			GlobalMap().Destroy();
 			VFS_Destroy();
-			HomePaths_Destroy();
 		}
 };
 
