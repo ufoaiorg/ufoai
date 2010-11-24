@@ -88,6 +88,12 @@ namespace os
 		return filename.substr(0, filename.rfind("/"));
 	}
 
+	inline void getDirectoryComponentsFromPath (const std::string& path, std::vector<std::string>& vec)
+	{
+		string::splitBy(path, vec, "/");
+		vec.pop_back();
+	}
+
 	/**
 	 * Will cut away the characters following the final dot.
 	 * @param filename The filename to extract the basename from.

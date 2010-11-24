@@ -42,17 +42,6 @@ inline unsigned int path_get_depth (const std::string& path)
 	return depth;
 }
 
-/// \brief Returns a pointer to the first character of the component of \p path following the first directory component.
-/// O(n)
-inline const char* path_remove_directory (const std::string& path)
-{
-	const char* first_separator = strchr(path.c_str(), '/');
-	if (first_separator != 0) {
-		return ++first_separator;
-	}
-	return "";
-}
-
 /// \brief A generic unix-style file-system which maps paths to files and directories.
 /// Provides average O(log n) find and insert methods.
 /// \param file_type The data type which represents a file.
@@ -130,17 +119,12 @@ class GenericFileSystem
 		/// O(log n) on average.
 		entry_type& operator[] (const Path& path)
 		{
-			const std::string& start = path;
-			const char* end = path_remove_directory(path);
+			std::vector<std::string> vec;
+			os::getDirectoryComponentsFromPath(path, vec);
 
-			while (end[0] != '\0') {
-				// greebo: Take the substring from start to end
-				Path dir(start, end - start.c_str());
-
+			for (std::vector<std::string>::const_iterator i = vec.begin(); i != vec.end(); ++i) {
 				// And insert it as directory (NULL)
-				m_entries.insert(value_type(dir, Entry(NULL)));
-
-				end = path_remove_directory(end);
+				m_entries.insert(value_type(Path(*i), Entry(NULL)));
 			}
 
 			return m_entries[path];

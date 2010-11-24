@@ -287,15 +287,11 @@ void InitDirectory (const std::string& directory, ArchiveModules& archiveModules
 
 			// add the entries to the vfs
 			for (Archives::iterator i = archivesOverride.begin(); i != archivesOverride.end(); ++i) {
-				char filename[PATH_MAX];
-				strcpy(filename, path);
-				strcat(filename, (*i).c_str());
+				std::string filename = path + *i;
 				InitPK3File(archiveModules, filename);
 			}
 			for (Archives::iterator i = archives.begin(); i != archives.end(); ++i) {
-				char filename[PATH_MAX];
-				strcpy(filename, path);
-				strcat(filename, (*i).c_str());
+				std::string filename = path + *i;
 				InitPK3File(archiveModules, filename);
 			}
 		} else {
