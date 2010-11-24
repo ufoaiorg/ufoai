@@ -153,7 +153,7 @@ void Selection_Rotatez (void)
 	Select_RotateAxis(2, -90);
 }
 
-void Nudge (int nDim, float fNudge)
+inline void Nudge (int nDim, float fNudge)
 {
 	Vector3 translate(0, 0, 0);
 	translate[nDim] = fNudge;
