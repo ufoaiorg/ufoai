@@ -5,12 +5,10 @@
 # Grunge pipe metal with chipped paint
 {
 	material tex_alienb/ab_metal01
-	{
-		specular 2.0
-		hardness 2.0
-		bump 10.0
-		parallax 10.0
-	}
+	specular 2.0
+	hardness 2.0
+	bump 10.0
+	parallax 10.0
 }
 
 # Flat metal texture
