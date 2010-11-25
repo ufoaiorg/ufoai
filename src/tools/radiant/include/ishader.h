@@ -42,13 +42,13 @@ class IShader
 		 */
 		virtual const std::string& getName () const = 0;
 
-		virtual bool IsInUse () const = 0;
+		virtual bool isInUse () const = 0;
 
-		virtual void SetInUse (bool bInUse) = 0;
+		virtual void setInUse (bool inUse) = 0;
 
-		virtual bool IsValid () const = 0;
+		virtual bool isValid () const = 0;
 
-		virtual void SetIsValid (bool bIsValid) = 0;
+		virtual void setIsValid (bool isValid) = 0;
 
 		/**
 		 * get the editor flags (QER_TRANS)
@@ -63,7 +63,7 @@ class IShader
 		/**
 		 * test if it's a true shader, or a default shader created to wrap around a texture
 		 */
-		virtual bool IsDefault () const = 0;
+		virtual bool isDefault () const = 0;
 
 		/**
 		 * get the alphaFunc

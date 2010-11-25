@@ -286,10 +286,10 @@ bool TextureBrowser::isTextureShown (const IShader* shader) const
 	if (!shader_equal_prefix(shader->getName(), GlobalTexturePrefix_get()))
 		return false;
 
-	if (m_hideUnused && !shader->IsInUse())
+	if (m_hideUnused && !shader->isInUse())
 		return false;
 
-	if (m_hideInvalid && !shader->IsValid())
+	if (m_hideInvalid && !shader->isValid())
 		return false;
 
 	if (!shader_equal_prefix(shader_get_textureName(shader->getName()), currentDirectory))
@@ -650,7 +650,7 @@ void TextureBrowser::draw ()
 				glLineWidth(1);
 				// shader border:
 				// TODO: Highlight if material is available for this texture (mattn)
-				if (!shader->IsDefault()) {
+				if (!shader->isDefault()) {
 					glColor3f(1, 1, 1);
 					glDisable(GL_TEXTURE_2D);
 
@@ -664,7 +664,7 @@ void TextureBrowser::draw ()
 				}
 
 				// highlight in-use textures
-				if (!m_hideUnused && shader->IsInUse()) {
+				if (!m_hideUnused && shader->isInUse()) {
 					glColor3f(0.5, 1, 0.5);
 					glDisable(GL_TEXTURE_2D);
 					glBegin(GL_LINE_LOOP);
@@ -675,7 +675,7 @@ void TextureBrowser::draw ()
 					glEnd();
 					glEnable(GL_TEXTURE_2D);
 				}
-				if (!m_hideInvalid && !shader->IsValid()) {
+				if (!m_hideInvalid && !shader->isValid()) {
 					glColor3f(1, 0, 0);
 					glDisable(GL_TEXTURE_2D);
 					glBegin(GL_LINE_LOOP);

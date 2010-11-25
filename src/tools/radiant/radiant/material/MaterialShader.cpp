@@ -158,24 +158,24 @@ const std::string& MaterialShader::getName () const
 	return _fileName;
 }
 
-bool MaterialShader::IsInUse () const
+bool MaterialShader::isInUse () const
 {
 	return _inUse;
 }
 
-void MaterialShader::SetInUse (bool inUse)
+void MaterialShader::setInUse (bool inUse)
 {
 	_inUse = inUse;
 }
 
-bool MaterialShader::IsValid () const
+bool MaterialShader::isValid () const
 {
 	return _isValid;
 }
 
-void MaterialShader::SetIsValid (bool bIsValid)
+void MaterialShader::setIsValid (bool isValid)
 {
-	_isValid = bIsValid;
+	_isValid = isValid;
 }
 
 // get the shader flags
@@ -191,7 +191,7 @@ float MaterialShader::getTrans () const
 }
 
 // test if it's a true shader, or a default shader created to wrap around a texture
-bool MaterialShader::IsDefault () const
+bool MaterialShader::isDefault () const
 {
 	return _fileName.empty();
 }

@@ -78,7 +78,7 @@ IShader* MaterialShaderSystem::getShaderForName (const std::string& name)
 
 	MaterialPointer pShader(material);
 	_activeMaterialShaders.insert(MaterialShaders::value_type(name, pShader));
-	pShader->SetIsValid(_licenseParser.isValid(name));
+	pShader->setIsValid(_licenseParser.isValid(name));
 
 	pShader->IncRef();
 

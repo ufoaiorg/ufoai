@@ -42,14 +42,14 @@ void OpenGLShader::addRenderable (const OpenGLRenderable& renderable, const Matr
 void OpenGLShader::incrementUsed ()
 {
 	if (++m_used == 1 && m_shader != 0) {
-		m_shader->SetInUse(true);
+		m_shader->setInUse(true);
 	}
 }
 
 void OpenGLShader::decrementUsed ()
 {
 	if (--m_used == 0 && m_shader != 0) {
-		m_shader->SetInUse(false);
+		m_shader->setInUse(false);
 	}
 }
 
@@ -80,7 +80,7 @@ void OpenGLShader::realise (const std::string& name)
 		construct(name);
 
 	if (m_used != 0 && m_shader != 0) {
-		m_shader->SetInUse(true);
+		m_shader->setInUse(true);
 	}
 
 	for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
@@ -162,7 +162,7 @@ void OpenGLShader::appendBlendLayer (const ShaderLayer& layer)
 	qtexture_t* layerTex = layer.getTexture();
 
 	OpenGLState& state = appendDefaultPass();
-	state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_DEPTHTEST | RENDER_COLOURWRITE;
+	state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_TEXTURE_2D;
 
 	// Set the texture
 	state.m_texture = layerTex->texture_number;
@@ -177,8 +177,6 @@ void OpenGLShader::appendBlendLayer (const ShaderLayer& layer)
 			&& state.m_blend_dst == GL_ZERO)) {
 		state.m_state |= RENDER_DEPTHWRITE;
 	}
-
-	state.m_state |= RENDER_TEXTURE_2D;
 
 	// Colour modulation
 	reinterpret_cast<Vector3&> (state.m_colour) = layer.getColour();
