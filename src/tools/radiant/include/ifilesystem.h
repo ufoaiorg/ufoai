@@ -36,8 +36,6 @@ class Archive;
 
 class ModuleObserver;
 
-typedef struct _GSList GSList;
-
 /// The Virtual File System.
 class VirtualFileSystem
 {

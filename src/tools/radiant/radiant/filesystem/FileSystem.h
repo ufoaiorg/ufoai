@@ -9,8 +9,6 @@ class FileSystem: public VirtualFileSystem
 {
 	private:
 
-		void clearFileDirList (GSList **lst);
-
 		class ArchiveEntry
 		{
 			public:
@@ -28,9 +26,6 @@ class FileSystem: public VirtualFileSystem
 		ModuleObservers g_observers;
 
 		void initPK3File (const std::string& filename);
-
-		GSList
-		* getListInternal (const std::string& refdir, const std::string& ext, std::size_t depth);
 
 	public:
 		FileSystem ();

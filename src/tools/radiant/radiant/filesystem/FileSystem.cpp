@@ -8,8 +8,8 @@
 #include "generic/callback.h"
 
 #include "directory/DirectoryArchive.h"
-#include "DirectoryListVisitor.h"
 #include "FileVisitor.h"
+#include "DirectoryVisitor.h"
 
 /**
  * @note sort pakfiles in reverse order. This ensures that
@@ -187,36 +187,19 @@ void FileSystem::freeFile (void *p)
 	free(p);
 }
 
-void FileSystem::clearFileDirList (GSList **lst)
-{
-	while (*lst) {
-		g_free((*lst)->data);
-		*lst = g_slist_remove(*lst, (*lst)->data);
-	}
-}
-
-GSList* FileSystem::getListInternal (const std::string& refdir, const std::string& ext, std::size_t depth)
-{
-	GSList* files = 0;
-	for (ArchiveEntryList::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		DirectoryListVisitor visitor(files, refdir);
-		i->archive->forEachFile(Archive::VisitorFunc(visitor, Archive::eDirectories, depth), refdir);
-	}
-	files = g_slist_reverse(files);
-
-	return files;
-}
-
 void FileSystem::forEachDirectory (const std::string& basedir, const FileNameCallback& callback, std::size_t depth)
 {
-	GSList* list = getListInternal(basedir, "", depth);
+	// Set of visited directories, to avoid name conflicts
+	std::set<std::string> visitedDirs;
 
-	for (GSList* i = list; i != 0; i = g_slist_next(i)) {
-		const std::string directory = reinterpret_cast<const char*> (i->data);
-		callback(directory);
+	// Wrap around the passed visitor
+	DirectoryVisitor visitor2(callback, basedir, visitedDirs);
+
+	// Visit each Archive, applying the DirectoryVisitor to each one (which in
+	// turn calls the callback for each matching file.
+	for (ArchiveEntryList::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
+		i->archive->forEachFile(Archive::VisitorFunc(visitor2, Archive::eDirectories, depth), basedir);
 	}
-
-	clearFileDirList(&list);
 }
 
 void FileSystem::forEachFile (const std::string& basedir, const std::string& extension,
