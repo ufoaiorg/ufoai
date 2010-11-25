@@ -30,7 +30,7 @@ class FileSystemAPI
 
 		FileSystemAPI ()
 		{
-			m_filesystem = new UFOFileSystem();
+			m_filesystem = new FileSystem();
 		}
 		~FileSystemAPI ()
 		{

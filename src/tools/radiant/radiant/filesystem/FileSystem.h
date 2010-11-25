@@ -5,11 +5,11 @@
 
 #define VFS_MAXDIRS 8
 
-class UFOFileSystem: public VirtualFileSystem
+class FileSystem: public VirtualFileSystem
 {
 	private:
 
-		void ClearFileDirList (GSList **lst);
+		void clearFileDirList (GSList **lst);
 
 		class ArchiveEntry
 		{
@@ -27,14 +27,13 @@ class UFOFileSystem: public VirtualFileSystem
 
 		ModuleObservers g_observers;
 
-		void InitPK3File (const std::string& filename);
+		void initPK3File (const std::string& filename);
 
 		GSList
-				* GetListInternal (const std::string& refdir, const std::string& ext, bool directories,
-						std::size_t depth);
+		* getListInternal (const std::string& refdir, const std::string& ext, std::size_t depth);
 
 	public:
-		UFOFileSystem ();
+		FileSystem ();
 
 		/** @brief reads all pak files from a dir */
 		void initDirectory (const std::string& path);
