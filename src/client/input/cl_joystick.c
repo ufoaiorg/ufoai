@@ -23,9 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "cl_joystick.h"
 #include "../client.h"
 #include "cl_input.h"
-#include "cl_joystick.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_nodes.h"
 #include "../ui/node/ui_node_abstractoption.h"

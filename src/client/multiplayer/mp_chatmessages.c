@@ -22,11 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "mp_chatmessages.h"
 #include "../cl_shared.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_data.h"
 #include "../ui/node/ui_node_text.h"
-#include "mp_chatmessages.h"
 
 static linkedList_t *mp_chatMessageStack = NULL;
 
