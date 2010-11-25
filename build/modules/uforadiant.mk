@@ -39,7 +39,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/undo.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
-	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
 	$(RADIANT_BASE)/radiant/material/LicenseParser.cpp \
@@ -49,7 +48,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/material/MaterialShaderSystem.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialSystem.cpp \
 	\
-	$(RADIANT_BASE)/radiant/filesystem/directory/archive.cpp \
+	$(RADIANT_BASE)/radiant/filesystem/vfs.cpp \
+	\
+	$(RADIANT_BASE)/radiant/filesystem/directory/DirectoryArchive.cpp \
 	\
 	$(RADIANT_BASE)/radiant/filesystem/pk3/archivezip.cpp \
 	$(RADIANT_BASE)/radiant/filesystem/pk3/ZipArchive.cpp \

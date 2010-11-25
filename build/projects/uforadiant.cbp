@@ -520,7 +520,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\eventmanager\WidgetToggle.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\exec.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\exec.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\directory\archive.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\directory\DirectoryArchive.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\directory\archive.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\directory\fs_path.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\pk3\DeflatedArchiveFile.h" />
@@ -530,6 +530,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\pk3\GenericFileSystem.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\pk3\pkzip.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\pk3\zlibstream.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\vfs.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\vfs.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filetypes.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filetypes.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\BasicFilterSystem.cpp" />
@@ -844,8 +846,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\undo\StackFiller.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\url.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\url.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\vfs.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\vfs.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\windowobservers.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\windowobservers.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\xmlregistry\RegistryTree.cpp" />
