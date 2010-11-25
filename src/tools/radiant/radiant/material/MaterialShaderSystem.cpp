@@ -1,16 +1,25 @@
 #include "MaterialShaderSystem.h"
 
+namespace {
+const std::string RKEY_LICENSE_PATH = "user/ui/textures/browser/licensepath";
+}
+
 MaterialShaderSystem::MaterialShaderSystem () :
-	g_texturePrefix("textures/")
+	_texturePrefix("textures/")
 {
+	GlobalRegistry().addKeyObserver(this, RKEY_LICENSE_PATH);
+}
+
+void MaterialShaderSystem::keyChanged (const std::string& changedKey, const std::string& newValue)
+{
+	_licenseParser.openLicenseFile(newValue);
 }
 
 void MaterialShaderSystem::realise ()
 {
 	GlobalMaterialSystem()->loadMaterials();
 
-	/** @todo add config option */
-	_licenseParser.openLicenseFile("../LICENSES");
+	_licenseParser.openLicenseFile(GlobalRegistry().get(RKEY_LICENSE_PATH));
 
 	// notify the observers that this module is initialized now
 	g_observers.realise();
@@ -121,5 +130,5 @@ void MaterialShaderSystem::setActiveShadersChangedNotify (const Callback& notify
 
 const std::string& MaterialShaderSystem::getTexturePrefix () const
 {
-	return g_texturePrefix;
+	return _texturePrefix;
 }

@@ -1,6 +1,7 @@
 #include "ishadersystem.h"
 #include "imaterial.h"
 #include "ishader.h"
+#include "iregistry.h"
 #include "ishaderlayer.h"
 
 #include "generic/callback.h"
@@ -9,10 +10,10 @@
 #include "MaterialShader.h"
 #include "LicenseParser.h"
 
-class MaterialShaderSystem: public ShaderSystem
+class MaterialShaderSystem: public ShaderSystem, public RegistryKeyObserver
 {
 	private:
-		const std::string g_texturePrefix;
+		const std::string _texturePrefix;
 
 		typedef SmartPointer<MaterialShader> MaterialPointer;
 		typedef std::map<std::string, MaterialPointer, shader_less_t> MaterialShaders;
@@ -56,4 +57,6 @@ class MaterialShaderSystem: public ShaderSystem
 		void detach (ModuleObserver& observer);
 
 		const std::string& getTexturePrefix () const;
+
+		void keyChanged (const std::string& changedKey, const std::string& newValue);
 };

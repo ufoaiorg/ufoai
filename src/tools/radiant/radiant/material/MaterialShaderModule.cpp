@@ -3,6 +3,7 @@
 #include "ifilesystem.h"
 #include "itextures.h"
 #include "iradiant.h"
+#include "iregistry.h"
 #include "iscriplib.h"
 
 #include "modulesystem.h"
@@ -39,6 +40,7 @@ class MaterialShaderSystemAPI
 
 class MaterialShaderSystemDependencies: public GlobalFileSystemModuleRef,
 		public GlobalTexturesModuleRef,
+		public GlobalRegistryModuleRef,
 		public GlobalScripLibModuleRef,
 		public GlobalRadiantModuleRef
 {
