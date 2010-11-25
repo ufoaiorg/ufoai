@@ -2,7 +2,7 @@
 #define ZIPARCHIVE_H_
 
 #include "iarchive.h"
-#include "fs_filesystem.h"
+#include "GenericFileSystem.h"
 #include "stream/filestream.h"
 #include "AutoPtr.h"
 

@@ -13,7 +13,6 @@ $(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $
 $(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(GDK_PIXBUF_LIBS) $(SO_LIBS) -lm -lz
 
 $(TARGET)_SRCS      = \
-	$(RADIANT_BASE)/radiant/archivezip.cpp \
 	$(RADIANT_BASE)/radiant/dialog.cpp \
 	$(RADIANT_BASE)/radiant/eclass.cpp \
 	$(RADIANT_BASE)/radiant/eclass_def.cpp \
@@ -49,6 +48,11 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/material/MaterialShaderModule.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialShaderSystem.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialSystem.cpp \
+	\
+	$(RADIANT_BASE)/radiant/filesystem/directory/archive.cpp \
+	\
+	$(RADIANT_BASE)/radiant/filesystem/pk3/archivezip.cpp \
+	$(RADIANT_BASE)/radiant/filesystem/pk3/ZipArchive.cpp \
 	\
 	$(RADIANT_BASE)/radiant/log/console.cpp \
 	\
@@ -308,8 +312,6 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/libs/sound/SoundManager.cpp \
 	$(RADIANT_BASE)/libs/sound/SoundPlayer.cpp \
-	$(RADIANT_BASE)/libs/archivezip/ZipArchive.cpp \
-	$(RADIANT_BASE)/libs/archivedir/archive.cpp \
 	$(RADIANT_BASE)/libs/entity/entity.cpp \
 	$(RADIANT_BASE)/libs/entity/eclassmodel.cpp \
 	$(RADIANT_BASE)/libs/entity/generic.cpp \

@@ -22,8 +22,7 @@
 #include "iarchive.h"
 #include <string>
 
-#include "archivezip/ZipArchive.h"
-#include "debugging/debugging.h"
+#include "ZipArchive.h"
 #include "modulesystem/singletonmodule.h"
 
 class ArchiveZipAPI
