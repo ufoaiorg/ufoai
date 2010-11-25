@@ -147,7 +147,6 @@ std::size_t MaterialShader::refcount ()
 	return _refcount;
 }
 
-// get/set the qtexture_t* Radiant uses to represent this shader object
 qtexture_t* MaterialShader::getTexture () const
 {
 	return _texture;
@@ -220,13 +219,6 @@ float MaterialShader::getPolygonOffset () const
 	return 1.0f;
 }
 
-void MaterialShader::forEachLayer (const ShaderLayerCallback& callback) const
-{
-	for (MapLayers::const_iterator i = m_layers.begin(); i != m_layers.end(); ++i) {
-		callback(*i);
-	}
-}
-
 void MaterialShader::realise ()
 {
 	_texture = GlobalTexturesCache().capture(_fileName);
@@ -235,21 +227,6 @@ void MaterialShader::realise ()
 		_notfound = _texture;
 		_texture = GlobalTexturesCache().capture(GlobalTexturePrefix_get() + "tex_common/nodraw");
 	}
-}
-
-bool MaterialShader::isLayerValid (const MapLayer& layer) const
-{
-	if (layer.getType() == ShaderLayer::BLEND) {
-		if (layer.getTexture() == 0 || layer.getTexture()->texture_number == 0)
-			return false;
-	}
-	return true;
-}
-
-void MaterialShader::addLayer (MapLayer &layer)
-{
-	if (isLayerValid(layer))
-		m_layers.push_back(layer);
 }
 
 void MaterialShader::unrealise ()
@@ -270,4 +247,26 @@ void MaterialShader::unrealise ()
 
 	_texture = 0;
 	_notfound = 0;
+}
+
+bool MaterialShader::isLayerValid (const MapLayer& layer) const
+{
+	if (layer.getType() == ShaderLayer::BLEND) {
+		if (layer.getTexture() == 0 || layer.getTexture()->texture_number == 0)
+			return false;
+	}
+	return true;
+}
+
+void MaterialShader::addLayer (MapLayer &layer)
+{
+	if (isLayerValid(layer))
+		m_layers.push_back(layer);
+}
+
+void MaterialShader::forEachLayer (const ShaderLayerCallback& callback) const
+{
+	for (MapLayers::const_iterator i = m_layers.begin(); i != m_layers.end(); ++i) {
+		callback(*i);
+	}
 }

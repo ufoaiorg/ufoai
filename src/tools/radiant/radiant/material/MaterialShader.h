@@ -110,7 +110,7 @@ class MaterialShader: public IShader {
 
 		std::size_t refcount();
 
-		// get/set the qtexture_t* Radiant uses to represent this shader object
+		// get the texture pointer Radiant uses to represent this shader object
 		qtexture_t* getTexture() const;
 
 		// get shader name
