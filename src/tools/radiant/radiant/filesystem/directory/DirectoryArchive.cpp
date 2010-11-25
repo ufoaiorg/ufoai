@@ -36,8 +36,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "os/file.h"
 #include "os/dir.h"
 #include "archivelib.h"
-#include "fs_path.h"
 
+#include "UnixPath.h"
 
 class DirectoryArchive : public Archive {
 	std::string m_root;
