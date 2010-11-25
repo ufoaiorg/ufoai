@@ -501,14 +501,6 @@ class UFOFileSystem: public VirtualFileSystem
 
 UFOFileSystem g_UFOFileSystem;
 
-void FileSystem_Init ()
-{
-}
-
-void FileSystem_Shutdown ()
-{
-}
-
 VirtualFileSystem& GetFileSystem ()
 {
 	return g_UFOFileSystem;
@@ -540,12 +532,10 @@ class FileSystemAPI
 
 		FileSystemAPI ()
 		{
-			FileSystem_Init();
 			m_filesystem = &GetFileSystem();
 		}
 		~FileSystemAPI ()
 		{
-			FileSystem_Shutdown();
 		}
 		VirtualFileSystem* getTable ()
 		{
