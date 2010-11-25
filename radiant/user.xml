@@ -184,7 +184,9 @@
 
 		<toolbar name="texture">
 				<toolbutton name="flush" action="RefreshShaders" tooltip="Flush &amp; Reload Shaders" icon="texwindow_flushandreload.png"/>
+				<toolbutton name="showall" action="ShowAllTextures" tooltip="Show all" icon="texwindow_showall.png"/>
 				<toggletoolbutton name="showinuse" action="ShowInUse" tooltip="Hide Unused" icon="texwindow_hideunused.png"/>
+				<toggletoolbutton name="showinvalid" action="ShowInvalid" tooltip="Hide Invalid" icon="texwindow_hideinvalid.png"/>
 			<separator/>
 				<toolbutton name="findandreplace" action="FindReplaceTextures" tooltip="Find &amp; Replace" icon="texwindow_findandreplace.png"/>
 		</toolbar>

@@ -212,7 +212,6 @@ class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor
 
 		GtkWidget* createMenuBar();
 		GtkWidget* createToolBar();
-		GtkMenuItem* constructViewMenu(GtkMenu* menu);
 		GtkMenuItem* constructToolsMenu(GtkMenu* menu);
 		GtkMenuItem* constructDirectoriesMenu(GtkMenu* menu);
 		void constructTreeView();

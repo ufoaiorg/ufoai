@@ -909,18 +909,6 @@ void TextureBrowser::constructTreeView ()
 	GlobalShaderSystem().foreachShaderName(makeCallback1(functorTextures));
 }
 
-GtkMenuItem* TextureBrowser::constructViewMenu (GtkMenu* menu)
-{
-	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic(_("_View"));
-
-	createCheckMenuItemWithMnemonic(menu, _("Hide Invalid"), "ShowInvalid");
-
-	createSeparatorMenuItem(menu);
-	createMenuItemWithMnemonic(menu, _("Show All"), "ShowAllTextures");
-
-	return textures_menu_item;
-}
-
 void TextureBrowser::onActivateDirectoryChange (GtkMenuItem* item, TextureBrowser* textureBrowser)
 {
 	const std::string& dirname = std::string((const gchar*) g_object_get_data(G_OBJECT(item), "directory")) + "/";
@@ -950,10 +938,6 @@ GtkMenuItem* TextureBrowser::constructDirectoriesMenu (GtkMenu* menu)
 GtkWidget* TextureBrowser::createMenuBar ()
 {
 	GtkWidget* menu_bar = gtk_menu_bar_new();
-	GtkWidget* menu_view = gtk_menu_new();
-	GtkWidget* view_item = (GtkWidget*) constructViewMenu(GTK_MENU(menu_view));
-	gtk_menu_item_set_submenu(GTK_MENU_ITEM(view_item), menu_view);
-	gtk_menu_bar_append(GTK_MENU_BAR(menu_bar), view_item);
 
 	GtkWidget* menu_directories = gtk_menu_new();
 	GtkWidget* directories_item = (GtkWidget*) constructDirectoriesMenu(GTK_MENU(menu_directories));
