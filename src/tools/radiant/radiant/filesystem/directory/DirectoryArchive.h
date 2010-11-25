@@ -1,0 +1,46 @@
+/*
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
+
+ This file is part of GtkRadiant.
+
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+#ifndef INCLUDED_ARCHIVE_H
+#define INCLUDED_ARCHIVE_H
+
+#include "iarchive.h"
+
+class DirectoryArchive: public Archive
+{
+	private:
+
+		std::string m_root;
+
+	public:
+
+		DirectoryArchive (const std::string& root);
+
+		ArchiveFile* openFile (const std::string& name);
+
+		ArchiveTextFile* openTextFile (const std::string& name);
+
+		bool containsFile (const std::string& name);
+
+		void forEachFile (VisitorFunc visitor, const std::string& root);
+};
+
+#endif

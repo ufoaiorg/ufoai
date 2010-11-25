@@ -1,29 +1,28 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
-#include "archive.h"
+#include "DirectoryArchive.h"
 
 #include "AutoPtr.h"
 #include "idatastream.h"
-#include "iarchive.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,76 +38,82 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "UnixPath.h"
 
-class DirectoryArchive : public Archive {
-	std::string m_root;
-public:
-	DirectoryArchive(const std::string& root) : m_root(root) {
+DirectoryArchive::DirectoryArchive (const std::string& root) :
+	m_root(root)
+{
+}
+
+ArchiveFile* DirectoryArchive::openFile (const std::string& name)
+{
+	UnixPath path(m_root);
+	path.push_filename(name);
+	AutoPtr<DirectoryArchiveFile> file(new DirectoryArchiveFile(name, path));
+	if (!file->failed()) {
+		return file.release();
+	}
+	return 0;
+}
+
+ArchiveTextFile* DirectoryArchive::openTextFile (const std::string& name)
+{
+	UnixPath path(m_root);
+	path.push_filename(name);
+	AutoPtr<DirectoryArchiveTextFile> file(new DirectoryArchiveTextFile(name, path));
+	if (!file->failed()) {
+		return file.release();
 	}
 
-	virtual ArchiveFile* openFile(const std::string& name) {
-		UnixPath path(m_root);
-		path.push_filename(name);
-		AutoPtr<DirectoryArchiveFile> file(new DirectoryArchiveFile(name, path));
-		if (!file->failed()) {
-			return file.release();
-		}
-		return 0;
+	AutoPtr<DirectoryArchiveTextFile> absfile(new DirectoryArchiveTextFile(name, name));
+	if (!absfile->failed()) {
+		return absfile.release();
 	}
-	virtual ArchiveTextFile* openTextFile(const std::string& name) {
-		UnixPath path(m_root);
-		path.push_filename(name);
-		AutoPtr<DirectoryArchiveTextFile> file(new DirectoryArchiveTextFile(name, path));
-		if (!file->failed()) {
-			return file.release();
-		}
+	return 0;
+}
 
-		AutoPtr<DirectoryArchiveTextFile> absfile(new DirectoryArchiveTextFile(name, name));
-		if (!absfile->failed()) {
-			return absfile.release();
-		}
-		return 0;
-	}
-	virtual bool containsFile(const std::string& name) {
-		UnixPath path(m_root);
-		path.push_filename(name);
-		return file_readable(path);
-	}
-	virtual void forEachFile(VisitorFunc visitor, const std::string& root) {
-		std::vector<Directory*> dirs;
-		UnixPath path(m_root);
-		path.push(root);
-		dirs.push_back(directory_open(path));
+bool DirectoryArchive::containsFile (const std::string& name)
+{
+	UnixPath path(m_root);
+	path.push_filename(name);
+	return file_readable(path);
+}
 
-		while (!dirs.empty() && directory_good(dirs.back())) {
-			const char* name = directory_read_and_increment(dirs.back());
+void DirectoryArchive::forEachFile (VisitorFunc visitor, const std::string& root)
+{
+	std::vector<Directory*> dirs;
+	UnixPath path(m_root);
+	path.push(root);
+	dirs.push_back(directory_open(path));
 
-			if (name == 0) {
-				directory_close(dirs.back());
-				dirs.pop_back();
-				path.pop();
-			} else if (!string_equal(name, ".") && !string_equal(name, "..")) {
-				path.push_filename(name);
+	while (!dirs.empty() && directory_good(dirs.back())) {
+		const char* name = directory_read_and_increment(dirs.back());
 
-				bool is_directory = file_is_directory(path);
+		if (name == 0) {
+			directory_close(dirs.back());
+			dirs.pop_back();
+			path.pop();
+		} else if (!string_equal(name, ".") && !string_equal(name, "..")) {
+			path.push_filename(name);
 
-				if (!is_directory)
-					visitor.file(os::makeRelative(path, m_root));
+			bool is_directory = file_is_directory(path);
 
-				path.pop();
+			if (!is_directory)
+				visitor.file(os::makeRelative(path, m_root));
 
-				if (is_directory) {
-					path.push(name);
+			path.pop();
 
-					if (!visitor.directory(os::makeRelative(path, m_root), dirs.size()))
-						dirs.push_back(directory_open(path));
-					else
-						path.pop();
-				}
+			if (is_directory) {
+				path.push(name);
+
+				if (!visitor.directory(os::makeRelative(path, m_root), dirs.size()))
+					dirs.push_back(directory_open(path));
+				else
+					path.pop();
 			}
 		}
 	}
-};
+}
 
-Archive* OpenDirArchive(const std::string& name) {
+Archive* OpenDirArchive (const std::string& name)
+{
 	return new DirectoryArchive(name);
 }
