@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
 #include "e_server.h"
+#include "../../client.h"
 #include "../cl_hud.h"
 /**
  * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
