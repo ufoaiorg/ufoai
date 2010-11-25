@@ -22,9 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "cl_inventory_callbacks.h"
 #include "client.h"
 #include "cl_inventory.h"
-#include "cl_inventory_callbacks.h"
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
 #include "cl_game.h"
