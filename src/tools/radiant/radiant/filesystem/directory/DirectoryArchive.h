@@ -43,4 +43,6 @@ class DirectoryArchive: public Archive
 		void forEachFile (VisitorFunc visitor, const std::string& root);
 };
 
+Archive* OpenDirArchive (const std::string& name);
+
 #endif

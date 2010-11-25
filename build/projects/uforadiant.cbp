@@ -530,8 +530,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\pk3\GenericFileSystem.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\pk3\pkzip.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\pk3\zlibstream.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\vfs.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\vfs.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\FileSystem.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filesystem\FileSystemModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filetypes.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filetypes.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\BasicFilterSystem.cpp" />

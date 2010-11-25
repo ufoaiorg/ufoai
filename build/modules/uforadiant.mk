@@ -48,7 +48,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/material/MaterialShaderSystem.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialSystem.cpp \
 	\
-	$(RADIANT_BASE)/radiant/filesystem/vfs.cpp \
+	$(RADIANT_BASE)/radiant/filesystem/FileSystem.cpp \
+	$(RADIANT_BASE)/radiant/filesystem/FileSystemModule.cpp \
 	\
 	$(RADIANT_BASE)/radiant/filesystem/directory/DirectoryArchive.cpp \
 	\

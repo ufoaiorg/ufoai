@@ -252,10 +252,9 @@ class DirectoryCleaned
 		std::string m_path;
 		DirectoryCleaned (const std::string& path)
 		{
-			if (string::endsWith(path, "/"))
-				m_path = path;
-			else
-				m_path = path + "/";
+			m_path = string::replaceAll(path, "\\", "/");
+			if (!string::endsWith(m_path, "/"))
+				m_path += "/";
 		}
 
 		operator const std::string&() const
