@@ -36,16 +36,16 @@ class KeyObserverMap: public Entity::Observer
 		}
 		void onKeyInsert (const std::string& key, EntityKeyValue& value)
 		{
-			for (KeyObservers::const_iterator i = m_keyObservers.find(key); i != m_keyObservers.end() && string_equal(
-					(*i).first, key); ++i) {
-				value.attach((*i).second);
+			for (KeyObservers::const_iterator i = m_keyObservers.find(key); i != m_keyObservers.end() && i->first
+					== key; ++i) {
+				value.attach(i->second);
 			}
 		}
 		void onKeyErase (const std::string& key, EntityKeyValue& value)
 		{
-			for (KeyObservers::const_iterator i = m_keyObservers.find(key); i != m_keyObservers.end() && string_equal(
-					(*i).first, key); ++i) {
-				value.detach((*i).second);
+			for (KeyObservers::const_iterator i = m_keyObservers.find(key); i != m_keyObservers.end() && i->first
+					== key; ++i) {
+				value.detach(i->second);
 			}
 		}
 };

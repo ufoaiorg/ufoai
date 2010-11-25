@@ -178,7 +178,7 @@ inline bool path_equal (const std::string& path, const std::string& other)
 #if defined(OS_CASE_INSENSITIVE)
 	return string_equal_nocase(path, other);
 #else
-	return string_equal(path, other);
+	return path == other;
 #endif
 }
 

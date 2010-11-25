@@ -79,7 +79,7 @@ class SelectByBounds: public scene::Graph::Walker
 			/* ignore worldspawn */
 			Entity* entity = Node_getEntity(path.top());
 			if (entity) {
-				if (string_equal(entity->getKeyValue("classname"), "worldspawn"))
+				if (entity->getKeyValue("classname") == "worldspawn")
 					return true;
 			}
 

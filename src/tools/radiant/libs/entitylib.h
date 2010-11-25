@@ -75,7 +75,7 @@ inline Entity* Scene_FindEntityByClass (const std::string& name)
 inline bool node_is_worldspawn (scene::Node& node)
 {
 	Entity* entity = Node_getEntity(node);
-	return entity != 0 && string_equal(entity->getKeyValue("classname"), "worldspawn");
+	return entity != 0 && entity->getKeyValue("classname") == "worldspawn";
 }
 
 inline void arrow_draw (const Vector3& origin, const Vector3& direction)

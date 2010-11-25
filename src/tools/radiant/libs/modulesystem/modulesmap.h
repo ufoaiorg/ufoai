@@ -23,7 +23,7 @@
 #define INCLUDED_MODULESYSTEM_MODULESMAP_H
 
 #include "modulesystem.h"
-#include "string/string.h"
+#include "string/StringTokeniser.h"
 #include <map>
 #include <set>
 #include <iostream>
@@ -114,12 +114,11 @@ class ModulesRef
 					InsertModules<Type> visitor(m_modules);
 					globalModuleServer().foreachModule(typename Type::Name(), typename Type::Version(), visitor);
 				} else {
-					StringTokeniser tokeniser(names.c_str());
+					StringTokeniser tokeniser(names);
 					for (;;) {
-						const char* name = tokeniser.getToken();
-						if (string_empty(name)) {
+						const std::string name = tokeniser.getToken();
+						if (name.empty())
 							break;
-						}
 						Module* module = globalModuleServer().findModule(typename Type::Name(),
 								typename Type::Version(), name);
 						// Module not found in the global module server

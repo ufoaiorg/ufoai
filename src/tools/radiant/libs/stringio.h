@@ -147,7 +147,7 @@ inline bool Tokeniser_getSize (Tokeniser& tokeniser, std::size_t& i)
 inline bool Tokeniser_parseToken (Tokeniser& tokeniser, const char* expected)
 {
 	const std::string token = tokeniser.getToken();
-	if (token.length() && string_equal(token.c_str(), expected)) {
+	if (token.length() && string_equal(token, expected)) {
 		return true;
 	}
 	Tokeniser_unexpectedError(tokeniser, token, expected);

@@ -45,13 +45,13 @@ typedef std::list<Entity*> entitylist_t;
 
 class EntityFindByName: public scene::Graph::Walker
 {
-		const char* m_name;
+		const std::string& m_name;
 		entitylist_t& m_entitylist;
 		/* this starts at 1 << level */
 		int m_flag;
 		int m_hide;
 	public:
-		EntityFindByName (const char* name, entitylist_t& entitylist, int flag, bool hide) :
+		EntityFindByName (const std::string& name, entitylist_t& entitylist, int flag, bool hide) :
 			m_name(name), m_entitylist(entitylist), m_flag(flag), m_hide(hide)
 		{
 		}
@@ -59,7 +59,7 @@ class EntityFindByName: public scene::Graph::Walker
 		{
 			Entity* entity = Node_getEntity(path.top());
 			if (entity != 0) {
-				if (string_equal(m_name, entity->getKeyValue("classname"))) {
+				if (entity->getKeyValue("classname") == m_name) {
 					const std::string spawnflags = entity->getKeyValue("spawnflags");
 					if (!spawnflags.empty()) {
 						const int spawnflagsInt = string::toInt(spawnflags);

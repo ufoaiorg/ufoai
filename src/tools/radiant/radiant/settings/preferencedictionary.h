@@ -225,7 +225,7 @@ class XMLPreferenceDictionaryImporter: public XMLImporter
 		void pushElement (const XMLElement& element)
 		{
 			if (m_xml_stack.empty()) {
-				if (string_equal(element.name(), "qpref")) {
+				if (element.name() == "qpref") {
 					Version dataVersion(version_parse(element.attribute("version")));
 					if (!version_compatible(m_version, dataVersion)) {
 						g_message("qpref import: data version %i:%i is not compatible with code version %i:%i\n",
@@ -240,7 +240,7 @@ class XMLPreferenceDictionaryImporter: public XMLImporter
 			} else {
 				switch (m_xml_stack.back().m_tag) {
 				case xml_state_t::tag_qpref:
-					if (string_equal(element.name(), "epair")) {
+					if (element.name() == "epair") {
 						m_xml_stack.push_back(xml_state_t::tag_epair);
 						m_xml_stack.back().m_name = element.attribute("name");
 					} else {
@@ -248,7 +248,7 @@ class XMLPreferenceDictionaryImporter: public XMLImporter
 					}
 					break;
 				case xml_state_t::tag_qpref_ignore:
-					if (string_equal(element.name(), "epair")) {
+					if (element.name() == "epair") {
 						m_xml_stack.push_back(xml_state_t::tag_epair_ignore);
 					} else {
 						// not valid
