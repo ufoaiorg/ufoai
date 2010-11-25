@@ -3,7 +3,7 @@
 
 #include "iarchive.h"
 #include "stream/filestream.h"
-#include "zlibstream.h"
+#include "DeflatedInputStream.h"
 
 class DeflatedArchiveFile: public ArchiveFile
 {

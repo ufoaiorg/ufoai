@@ -3,7 +3,7 @@
 
 #include "iarchive.h"
 #include "archivelib.h"
-#include "zlibstream.h"
+#include "DeflatedInputStream.h"
 
 /**
  * ArchiveFile stored in a ZIP in DEFLATE format.

@@ -4,8 +4,7 @@
 #include "archivelib.h"
 
 #include "pkzip.h"
-#include "zlibstream.h"
-
+#include "DeflatedInputStream.h"
 #include "DeflatedArchiveFile.h"
 #include "DeflatedArchiveTextFile.h"
 
