@@ -35,7 +35,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/server.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
 	$(RADIANT_BASE)/radiant/sound.cpp \
-	$(RADIANT_BASE)/radiant/shaders.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
 	$(RADIANT_BASE)/radiant/undo.cpp \
@@ -44,8 +43,11 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
+	$(RADIANT_BASE)/radiant/material/LicenseParser.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialModule.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialShader.cpp \
+	$(RADIANT_BASE)/radiant/material/MaterialShaderModule.cpp \
+	$(RADIANT_BASE)/radiant/material/MaterialShaderSystem.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialSystem.cpp \
 	\
 	$(RADIANT_BASE)/radiant/log/console.cpp \
@@ -306,7 +308,6 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/libs/sound/SoundManager.cpp \
 	$(RADIANT_BASE)/libs/sound/SoundPlayer.cpp \
-	$(RADIANT_BASE)/libs/shaders/shaders.cpp \
 	$(RADIANT_BASE)/libs/archivezip/ZipArchive.cpp \
 	$(RADIANT_BASE)/libs/archivedir/archive.cpp \
 	$(RADIANT_BASE)/libs/entity/entity.cpp \

@@ -36,154 +36,6 @@
 #include <map>
 #include <vector>
 #include "ifilesystem.h"
-#include "ishader.h"
-#include "iscriplib.h"
-#include "shaderlib.h"
-
-class MapLayer: public ShaderLayer {
-	private:
-		qtexture_t* m_texture;
-		BlendFunc m_blendFunc;
-		double m_alphaTest;
-		ShaderLayer::Type m_type;
-		Vector3 m_color;
-		float _height;
-		float _ceilVal;
-		float _floorVal;
-		bool _terrain;
-		float _polygonOffset;
-	public:
-		MapLayer(qtexture_t* texture, BlendFunc blendFunc, ShaderLayer::Type type, Vector3& color,
-				double alphaTest) :
-			m_texture(texture), m_blendFunc(blendFunc), m_alphaTest(alphaTest), m_type(type),
-					m_color(color), _height(0), _ceilVal(0), _floorVal(0), _terrain(false), _polygonOffset(0.0) {
-		}
-
-		Type getType() const {
-			return m_type;
-		}
-
-		Vector3 getColour() const {
-			return m_color;
-		}
-
-		qtexture_t* getTexture() const {
-			return m_texture;
-		}
-
-		BlendFunc getBlendFunc() const {
-			return m_blendFunc;
-		}
-
-		double getAlphaTest() const {
-			return m_alphaTest;
-		}
-
-		void setTerrain(float floorVal, float ceilVal) {
-			_floorVal = floorVal;
-			_ceilVal = ceilVal;
-			_height = _ceilVal - _floorVal;
-			_terrain = true;
-		}
-
-		bool isTerrain() {
-			return _terrain;
-		}
-
-		float getTerrainAlpha(float z) const {
-			if (z < _floorVal)
-				return 0.0;
-			else if (z > _ceilVal)
-				return 1.0;
-			else
-				return (z - _floorVal) / _height;
-		}
-
-		float getPolygonOffset () const {
-			return _polygonOffset;
-		}
-
-		void setPolygonOffset (float polygonOffset) {
-			_polygonOffset = polygonOffset;
-		}
-};
-
-class MaterialShader: public IShader {
-	private:
-
-		std::size_t _refcount;
-
-		std::string _fileName;
-
-		bool _inUse;
-
-		bool _isValid;
-
-		qtexture_t* _texture;
-
-		qtexture_t* _notfound;
-
-		typedef std::vector<MapLayer> MapLayers;
-		MapLayers m_layers;
-
-		BlendFactor parseBlendMode(const std::string& token);
-		void parseMaterial(Tokeniser& tokenizer);
-
-	public:
-
-		MaterialShader(const std::string& fileName, const std::string& content);
-
-		virtual ~MaterialShader();
-
-		// IShaders implementation -----------------
-		void IncRef();
-		void DecRef();
-
-		std::size_t refcount();
-
-		// get/set the qtexture_t* Radiant uses to represent this shader object
-		qtexture_t* getTexture() const;
-
-		// get shader name
-		const std::string& getName() const;
-
-		bool IsInUse() const;
-
-		void SetInUse(bool inUse);
-
-		bool IsValid() const;
-
-		void SetIsValid(bool bIsValid);
-
-		// get the shader flags
-		int getFlags() const;
-
-		// get the transparency value
-		float getTrans() const;
-
-		// test if it's a true shader, or a default shader created to wrap around a texture
-		bool IsDefault() const;
-
-		// get the alphaFunc
-		void getAlphaFunc(EAlphaFunc *func, float *ref);
-
-		BlendFunc getBlendFunc() const;
-
-		// get the cull type
-		ECull getCull();
-
-		void realise();
-
-		void unrealise();
-
-		void addLayer(MapLayer &layer);
-
-		bool isLayerValid(const MapLayer& layer) const;
-
-		void forEachLayer(const ShaderLayerCallback& callback) const;
-
-		float getPolygonOffset() const;
-};
 
 class MaterialSystem {
 	private:
@@ -191,18 +43,11 @@ class MaterialSystem {
 		void generateMaterialForFace(int contentFlags, int surfaceFlags, std::string& textureName,
 				std::stringstream& stream);
 
-		typedef SmartPointer<MaterialShader> MaterialPointer;
-		typedef std::map<std::string, MaterialPointer, shader_less_t> MaterialShaders;
-
 		typedef std::map<std::string, std::string> MaterialBlockMap;
 		MaterialBlockMap _blocks;
 
 		std::string _material;
 		bool _materialLoaded;
-
-		MaterialShaders _activeMaterialShaders;
-
-		MaterialShaders::iterator _activeMaterialsIterator;
 
 	public:
 		INTEGER_CONSTANT(Version, 1);
@@ -248,27 +93,9 @@ class MaterialSystem {
 
 		std::string getBlock(const std::string& texture);
 
-		/**
-		 * activate the material for a given name and return it
-		 * will return the default shader if name is not found
-		 */
-		IShader* getMaterialForName(const std::string& name);
-
-		void foreachMaterialName(const ShaderNameCallback& callback);
-
-		void foreachMaterialName(const ShaderSystem::Visitor& visitor);
-
 		void loadMaterials();
 
 		void freeMaterials();
-
-		void beginActiveMaterialsIterator();
-
-		bool endActiveMaterialsIterator();
-
-		IShader* dereferenceActiveMaterialsIterator();
-
-		void incrementActiveMaterialsIterator();
 
 		void construct();
 };

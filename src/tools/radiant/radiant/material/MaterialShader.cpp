@@ -1,9 +1,18 @@
+#include "MaterialShader.h"
 #include "imaterial.h"
 #include "iscriplib.h"
 #include "itextures.h"
+#include "iscriplib.h"
 
 #include "stream/stringstream.h"
 #include "AutoPtr.h"
+
+// constructor for empty material shader
+MaterialShader::MaterialShader (const std::string& textureName) :
+	_refcount(0), _fileName(textureName), _inUse(false), _isValid(false), _texture(0), _notfound(0)
+{
+	realise();
+}
 
 MaterialShader::MaterialShader (const std::string& fileName, const std::string& content) :
 	_refcount(0), _fileName(fileName), _inUse(false), _isValid(false), _texture(0), _notfound(0)
@@ -57,8 +66,7 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 	while (token.length()) {
 		if (token == "{") {
 			depth++;
-		}
-		else if (token == "}") {
+		} else if (token == "}") {
 			--depth;
 			if (depth == 0) {
 				MapLayer layer(layerTexture, BlendFunc(src, dest), ShaderLayer::BLEND, color, alphaTest);
@@ -70,8 +78,7 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 				addLayer(layer);
 				break;
 			}
-		}
-		else if (depth == 2) {
+		} else if (depth == 2) {
 			if (token == "texture") {
 				layerTexture = GlobalTexturesCache().capture(GlobalTexturePrefix_get() + tokeniser.getToken());
 				if (layerTexture->texture_number == 0) {
@@ -162,11 +169,13 @@ void MaterialShader::SetInUse (bool inUse)
 	_inUse = inUse;
 }
 
-bool MaterialShader::IsValid () const {
+bool MaterialShader::IsValid () const
+{
 	return _isValid;
 }
 
-void MaterialShader::SetIsValid (bool bIsValid) {
+void MaterialShader::SetIsValid (bool bIsValid)
+{
 	_isValid = bIsValid;
 }
 
@@ -206,15 +215,14 @@ MaterialShader::ECull MaterialShader::getCull ()
 	return eCullNone;
 }
 
-float MaterialShader::getPolygonOffset() const
+float MaterialShader::getPolygonOffset () const
 {
 	return 1.0f;
 }
 
-void MaterialShader::forEachLayer(const ShaderLayerCallback& callback) const
+void MaterialShader::forEachLayer (const ShaderLayerCallback& callback) const
 {
-	for (MapLayers::const_iterator i = m_layers.begin(); i
-			!= m_layers.end(); ++i) {
+	for (MapLayers::const_iterator i = m_layers.begin(); i != m_layers.end(); ++i) {
 		callback(*i);
 	}
 }
@@ -229,15 +237,17 @@ void MaterialShader::realise ()
 	}
 }
 
-bool MaterialShader::isLayerValid (const MapLayer& layer) const {
+bool MaterialShader::isLayerValid (const MapLayer& layer) const
+{
 	if (layer.getType() == ShaderLayer::BLEND) {
-		if (layer.getTexture() == 0)
+		if (layer.getTexture() == 0 || layer.getTexture()->texture_number == 0)
 			return false;
 	}
 	return true;
 }
 
-void MaterialShader::addLayer(MapLayer &layer) {
+void MaterialShader::addLayer (MapLayer &layer)
+{
 	if (isLayerValid(layer))
 		m_layers.push_back(layer);
 }
@@ -257,4 +267,7 @@ void MaterialShader::unrealise ()
 	if (_notfound != 0) {
 		GlobalTexturesCache().release(_notfound);
 	}
+
+	_texture = 0;
+	_notfound = 0;
 }

@@ -3,9 +3,10 @@
 #include "radiant_i18n.h"
 
 #include "igl.h"
+#include "ishadersystem.h"
+
 #include <stdlib.h>
 #include "imagelib.h"
-#include "shaders/shaders.h"
 #include "stream/textstream.h"
 #include "math/Vector3.h"
 
@@ -51,7 +52,7 @@ void TextureManipulator::keyChanged (const std::string& changedKey, const std::s
 	if (_gamma != newGamma) {
 		_gamma = newGamma;
 		calculateGammaTable();
-		GetShaderSystem().refresh();
+		GlobalShaderSystem().refresh();
 	}
 }
 

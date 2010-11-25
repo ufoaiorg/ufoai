@@ -32,6 +32,7 @@
 #include "ifilesystem.h"
 #include "iarchive.h"
 #include "itextures.h"
+#include "iscriplib.h"
 
 #include "radiant_i18n.h"
 #include "os/path.h"
@@ -192,6 +193,9 @@ const std::string MaterialSystem::getMaterialFilename () const
 
 std::string MaterialSystem::getBlock (const std::string& texture)
 {
+	if (texture.empty())
+		return "";
+
 	const std::string textureDir = GlobalTexturePrefix_get();
 	std::string skippedTextureDirectory = texture.substr(textureDir.length());
 
@@ -239,10 +243,6 @@ std::string MaterialSystem::getBlock (const std::string& texture)
 
 void MaterialSystem::freeMaterials ()
 {
-	for (MaterialShaders::iterator i = _activeMaterialShaders.begin(); i != _activeMaterialShaders.end(); ++i) {
-		ASSERT_MESSAGE(i->second->refcount() == 1, "orphan material still referenced");
-	}
-	_activeMaterialShaders.clear();
 	_blocks.clear();
 	_materialLoaded = false;
 }
@@ -257,61 +257,6 @@ void MaterialSystem::loadMaterials ()
 		_material = file->getString();
 		_materialLoaded = true;
 	}
-}
-
-IShader* MaterialSystem::getMaterialForName (const std::string& name)
-{
-	if (name.empty())
-		return (IShader*)0;
-
-	MaterialShaders::iterator i = _activeMaterialShaders.find(name);
-	if (i != _activeMaterialShaders.end()) {
-		return (*i).second;
-	}
-
-	std::string block = getBlock(name);
-	if (block.empty())
-		return (IShader*)0;
-
-	MaterialPointer pShader(new MaterialShader(name, block));
-	_activeMaterialShaders.insert(MaterialShaders::value_type(name, pShader));
-	return pShader;
-}
-
-void MaterialSystem::foreachMaterialName (const ShaderNameCallback& callback)
-{
-	for (MaterialShaders::const_iterator i = _activeMaterialShaders.begin(); i != _activeMaterialShaders.end(); ++i) {
-		const std::string& str = (*i).first;
-		callback(str);
-	}
-}
-
-void MaterialSystem::foreachMaterialName (const ShaderSystem::Visitor& visitor)
-{
-	for (MaterialShaders::const_iterator i = _activeMaterialShaders.begin(); i != _activeMaterialShaders.end(); ++i) {
-		const std::string& str = (*i).first;
-		visitor.visit(str);
-	}
-}
-
-void MaterialSystem::beginActiveMaterialsIterator ()
-{
-	_activeMaterialsIterator = _activeMaterialShaders.begin();
-}
-
-bool MaterialSystem::endActiveMaterialsIterator ()
-{
-	return _activeMaterialsIterator == _activeMaterialShaders.end();
-}
-
-IShader* MaterialSystem::dereferenceActiveMaterialsIterator ()
-{
-	return _activeMaterialsIterator->second;
-}
-
-void MaterialSystem::incrementActiveMaterialsIterator ()
-{
-	++_activeMaterialsIterator;
 }
 
 void MaterialSystem::construct () {

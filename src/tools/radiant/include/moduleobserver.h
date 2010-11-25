@@ -22,6 +22,8 @@
 #if !defined(INCLUDED_MODULEOBSERVER_H)
 #define INCLUDED_MODULEOBSERVER_H
 
+// Module observer class that get notified on initialization or
+// shutdown of the observed module
 class ModuleObserver
 {
 	public:

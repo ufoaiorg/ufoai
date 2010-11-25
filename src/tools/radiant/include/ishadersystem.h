@@ -38,13 +38,13 @@ typedef Vector3 Colour3;
 
 typedef Callback1<const std::string&> ShaderNameCallback;
 
-class ModuleObserver;
+#include "moduleobserver.h"
 
 /**
  * @note shader and texture names used must be full path.
  * Shaders usable as textures have prefix equal to @c getTexturePrefix()
  */
-class ShaderSystem
+class ShaderSystem : public ModuleObserver
 {
 	public:
 		INTEGER_CONSTANT(Version, 1);
@@ -54,9 +54,11 @@ class ShaderSystem
 		{
 		}
 
+		// ModuleObserver implementation
 		virtual void realise () = 0;
-
 		virtual void unrealise () = 0;
+		virtual void attach (ModuleObserver& observer) = 0;
+		virtual void detach (ModuleObserver& observer) = 0;
 
 		virtual void refresh () = 0;
 
@@ -91,10 +93,6 @@ class ShaderSystem
 		virtual void incrementActiveShadersIterator () = 0;
 
 		virtual void setActiveShadersChangedNotify (const Callback& notify) = 0;
-
-		virtual void attach (ModuleObserver& observer) = 0;
-
-		virtual void detach (ModuleObserver& observer) = 0;
 
 		virtual const std::string& getTexturePrefix () const = 0;
 };

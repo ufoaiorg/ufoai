@@ -391,8 +391,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\script\scripttokenwriter.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\selectionlib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\shaderlib.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\shaders\shaders.cpp" />
-		<Unit filename="..\..\src\tools\radiant\libs\shaders\shaders.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\signal\isignal.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\signal\signal.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\signal\signalfwd.h" />
@@ -565,8 +563,11 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\map\RootNode.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\write.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\write.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\material\LicenseParser.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\material\MaterialModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\material\MaterialShader.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\material\MaterialShaderModule.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\material\MaterialShaderSystem.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\material\MaterialSystem.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\model.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\model.h" />
@@ -677,7 +678,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\GameManagerModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\PreferenceDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\PreferenceDialog.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\shaders.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\JobInfo.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\JobInfo.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\MapInfo.cpp" />
