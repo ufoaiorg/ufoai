@@ -199,6 +199,9 @@ std::string MaterialSystem::getBlock (const std::string& texture)
 	const std::string textureDir = GlobalTexturePrefix_get();
 	std::string skippedTextureDirectory = texture.substr(textureDir.length());
 
+	if (skippedTextureDirectory.empty())
+		return "";
+
 	MaterialBlockMap::iterator i = _blocks.find(skippedTextureDirectory);
 	if (i != _blocks.end())
 		return i->second;

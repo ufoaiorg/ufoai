@@ -381,6 +381,8 @@ void Map::free ()
 	GlobalReferenceCache().release(m_name);
 	m_resource = 0;
 
+	// TODO: what about materials?!
+
 	FlushReferences();
 }
 
