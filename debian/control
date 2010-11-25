@@ -13,7 +13,6 @@ Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg-dev,
  libsdl-image1.2-dev, python
 Standards-Version: 3.7.3
 Homepage: http://ufoai.sf.net
-Vcs-Svn: https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/branches/ufoai_2.3
 
 Package: ufoai
 Section: games

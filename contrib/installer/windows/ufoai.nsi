@@ -1,7 +1,7 @@
 !define PRODUCT_NAME "UFO:Alien Invasion"
 !define SHORT_PRODUCT_NAME "UFO:AI"
 !define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
-!define PRODUCT_VERSION "2.3"
+!define PRODUCT_VERSION "2.3.1"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://ufoai.sf.net"
 !define PRODUCT_DIR_REGKEY "Software\UFOAI\ufo.exe"
