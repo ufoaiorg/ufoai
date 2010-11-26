@@ -20,3 +20,5 @@
 /ufomodel.exe
 gmon.out
 /.settings
+/doxygen.warnings
+/ufosource.tag
