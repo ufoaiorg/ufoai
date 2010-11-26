@@ -43,11 +43,9 @@ else
 endif
 
 CCFLAGS += $(CFLAGS)
-
-ifeq ($(W2K),1)
-  CCFLAGS += -std=gnu89
-else
-  CCFLAGS += -std=c99
+CCFLAGS += -std=c99
+ifeq ($(W2K),1) # Wspiapi.h make use of inline function, but std=c99 will prevent this. -fgnu89-inline tells GCC to use the traditional GNU semantics for inline functions when in C99 mode
+  CCFLAGS += -fgnu89-inline
 endif
 
 #CCFLAGS += -Werror-implicit-function-declaration
