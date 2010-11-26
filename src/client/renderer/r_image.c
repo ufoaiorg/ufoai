@@ -313,6 +313,9 @@ void R_GetScaledTextureSize (int width, int height, int *scaledWidth, int *scale
 /**
  * @brief Uploads the opengl texture to the server
  * @param[in] data Must be in RGBA format
+ * @param width Width of the image
+ * @param height Height of the image
+ * @param[in,out] image Pointer to the image structure to initialize
  */
 void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 {

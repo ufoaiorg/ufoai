@@ -89,7 +89,7 @@ static void UI_OptionTreeNodeUpdateCache (uiNode_t * node)
 static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t * node)
 {
 	if (node->firstChild) {
-		/** FIXME it MUST be an option behaviour */
+		/** @todo FIXME it MUST be an option behaviour */
 		assert(node->firstChild->behaviour == ui_optionBehaviour);
 		return node->firstChild;
 	} else {

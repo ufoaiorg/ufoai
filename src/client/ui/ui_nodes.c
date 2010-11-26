@@ -272,7 +272,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
 				node = UI_GetNode(node, name);
 			break;
 		case '#':	/* window index */
-			/** FIXME use a warning instead of an assert */
+			/** @todo FIXME use a warning instead of an assert */
 			assert(node->behaviour == ui_windowBehaviour);
 			node = UI_WindowNodeGetIndexedChild(node, name);
 			break;
@@ -306,7 +306,7 @@ uiNode_t* UI_GetNodeByPath (const char* path)
 	uiNode_t* node = NULL;
 	const value_t *property;
 	UI_ReadNodePath(path, NULL, &node, &property);
-	/** FIXME warning if it return a peroperty */
+	/** @todo FIXME warning if it return a peroperty */
 	return node;
 }
 

@@ -150,7 +150,7 @@ void UI_RegisterText (int dataId, const char *text)
  */
 void UI_RegisterLinkedListText (int dataId, linkedList_t *text)
 {
-	/** @fixme It is a hack to disable release memory, if we only want to update the same list */
+	/** @todo FIXME It is a hack to disable release memory, if we only want to update the same list */
 	if (ui_global.sharedData[dataId].type == UI_SHARED_LINKEDLISTTEXT && ui_global.sharedData[dataId].data.linkedListText == text) {
 		ui_global.sharedData[dataId].versionId++;
 		return;

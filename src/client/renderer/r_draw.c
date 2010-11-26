@@ -351,8 +351,9 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
 
 /**
  * @brief Draws an image or parts of it
- * @param[in] x X position to draw the image to
- * @param[in] y Y position to draw the image to
+ * @param x X position to draw the image to
+ * @param y Y position to draw the image to
+ * @param[in] image Pointer to the imlage to display
  */
 void R_DrawImage (float x, float y, const image_t *image)
 {
@@ -435,6 +436,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
  * @param[in] mid Center of the circle
  * @param[in] radius Radius of the circle
  * @param[in] color The color of the circle lines
+ * @param thickness Thickness of the line (1 mean 1 pixel in a 1024 screen width)
  * @sa R_DrawPtlCircle
  * @sa R_DrawLineStrip
  */

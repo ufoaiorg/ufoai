@@ -116,7 +116,7 @@ qboolean UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const chil
  */
 qboolean UI_WindowNodeRemoveIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
-	/** FIXME implement it */
+	/** @todo FIXME implement it */
 	return qfalse;
 }
 

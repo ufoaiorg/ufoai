@@ -460,6 +460,7 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 /**
  * @brief Adds new meshes to md2 models for different level of detail meshes
  * @param mod The model to load the lod models for
+ * @param loadNormals If true, load vertex normals
  * @note We support three different levels here
  */
 static void R_ModLoadLevelOfDetailData (model_t* mod, qboolean loadNormals)

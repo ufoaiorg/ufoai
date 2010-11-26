@@ -97,7 +97,7 @@ void R_ModModellist_f (void)
  * @brief Loads in a model for the given name
  * @param[in] name Filename relative to base dir and with extension (models/model.md2)
  */
-static model_t *R_ModForName (const char *name, qboolean crash)
+static model_t *R_ModForName (const char *name)
 {
 	model_t *mod;
 	byte *buf;
@@ -138,8 +138,6 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	/* load the file */
 	modfilelen = FS_LoadFile(mod->name, &buf);
 	if (!buf) {
-		if (crash)
-			Com_Error(ERR_FATAL, "R_ModForName: %s not found", mod->name);
 		memset(mod->name, 0, sizeof(mod->name));
 		r_numModels--;
 		return NULL;
@@ -210,7 +208,7 @@ model_t *R_RegisterModelShort (const char *name)
 
 		while (mod_extensions[i]) {
 			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);
-			mod = R_ModForName(filename, qfalse);
+			mod = R_ModForName(filename);
 			if (mod)
 				return mod;
 			i++;
@@ -218,7 +216,7 @@ model_t *R_RegisterModelShort (const char *name)
 		Com_Printf("R_RegisterModelShort: Could not find: '%s'\n", name);
 		return NULL;
 	} else
-		return R_ModForName(name, qfalse);
+		return R_ModForName(name);
 }
 
 #define MEM_TAG_STATIC_MODELS 1

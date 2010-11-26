@@ -314,7 +314,7 @@ static void UI_ClientLayout (uiNode_t *node)
  * Check to first row to see the needed size of columns, and the height. All rows
  * will use the same row.
  * @todo Use child\@align to align each nodes inside respective cell.
- * @image http://ufoai.ninex.info/wiki/images/Layout_column.png
+ * @image html http://ufoai.ninex.info/wiki/images/Layout_column.png
  */
 static void UI_ColumnLayout (uiNode_t *node)
 {

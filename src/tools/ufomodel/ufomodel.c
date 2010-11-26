@@ -216,7 +216,7 @@ static model_t *LoadModel (const char *name)
 		if (!Q_strcasecmp(mod->name + strlen(mod->name) - 4, ".obj"))
 			R_LoadObjModel(mod, buf, modfilelen);
 		else
-			Com_Error(ERR_FATAL, "R_ModForName: unknown fileid for %s", mod->name);
+			Com_Error(ERR_FATAL, "LoadModel: unknown fileid for %s", mod->name);
 	}
 
 	FS_FreeFile(buf);

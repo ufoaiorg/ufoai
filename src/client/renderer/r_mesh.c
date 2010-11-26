@@ -191,7 +191,7 @@ void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3
  * @param[in,out] pmi The model information of the parent model. This is used
  * in those cases, where the model that should get rendered here is placed relativly
  * to an already existing model in the world.
- * @param[in] If a parent model is given, a @c tagname is given in most cases, too. It's used
+ * @param[in] tagname If a parent model is given, a @c tagname is given in most cases, too. It's used
  * to transform the model location relative to the parent model location again. E.g. a
  * @c tagname of tag_rweapon will transform the location to the right hand of an actor.
  * @sa R_DrawAliasModel
