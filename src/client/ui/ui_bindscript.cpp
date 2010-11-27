@@ -135,11 +135,9 @@ extern "C" void UI_ParseActionScript (uiNode_t *node, const char *script, const 
 	contextLine = 0;
 }
 
-/**
- * @todo fix thisNode to allow recursivity calls
- */
 extern "C" void UI_ExecuteScriptAction (const uiAction_t *action, uiCallContext_t *context)
 {
+	/* store thisNode in the stack */
 	uiNode_t *oldNode = thisNode;
 	int r;
 
