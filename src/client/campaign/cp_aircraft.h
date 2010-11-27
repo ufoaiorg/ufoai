@@ -83,8 +83,6 @@ typedef enum {
 	ITEM_HEAVY
 } itemWeight_t;
 
-#define MAX_AIRCRAFTITEMS 64
-
 /** @brief different positions for aircraft items */
 typedef enum {
 	AIR_NOSE_LEFT,
