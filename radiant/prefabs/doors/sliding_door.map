@@ -262,6 +262,7 @@
 "classname" "func_door_sliding"
 "dir" "6"
 "spawnflags" "255"
+"targetname" "slidingdoor1"
 // brush 0
 {
 ( 204 4 60 ) ( 204 -4 60 ) ( 168 4 60 ) tex_common/nodraw 0 0 0 0.25 0.25 0 0 0
@@ -276,5 +277,20 @@
 ( 176 64 52 ) ( 184 64 28 ) ( 176 -64 52 ) tex_alienb/ab_metal01 0 0 0 0.5 0.5 0 0 0
 ( 184 64 28 ) ( 180 64 8 ) ( 184 -64 28 ) tex_alienb/ab_metal01 0 0 0 0.5 0.5 0 0 0
 ( 180 64 8 ) ( 164 64 4 ) ( 180 -64 8 ) tex_alienb/ab_metal01 0 0 0 0.5 0.5 0 0 0
+}
+}
+// entity 2
+{
+"classname" "trigger_touch"
+"target" "slidingdoor1"
+"spawnflags" "1"
+// brush 0
+{
+( 192 64 64 ) ( 192 -64 64 ) ( 32 64 64 ) tex_common/trigger 0 0 0 0.5 0.5
+( 192 64 64 ) ( 32 64 64 ) ( 192 64 0 ) tex_common/trigger 0 0 0 0.5 0.5
+( 192 64 64 ) ( 192 64 0 ) ( 192 -64 64 ) tex_common/trigger 0 0 0 0.5 0.5
+( 32 -64 0 ) ( 192 -64 0 ) ( 32 64 0 ) tex_common/trigger 0 0 0 0.5 0.5
+( 32 -64 0 ) ( 32 -64 64 ) ( 192 -64 0 ) tex_common/trigger 0 0 0 0.5 0.5
+( 32 -64 0 ) ( 32 64 0 ) ( 32 -64 64 ) tex_common/trigger 0 0 0 0.5 0.5
 }
 }
