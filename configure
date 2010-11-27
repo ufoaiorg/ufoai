@@ -186,9 +186,9 @@ usage() {
 	echo " --enable-static          enable static linking"
 	echo " --enable-universal       enable universal build"
 	echo " --enable-w2k             enable Windows 2000 compatibility"
-   if [ -n "$(echo ${TARGET_ARCH} | grep -e '^i.86$' -e '^x86_64$')" ]; then
-	echo " --enable-sse             enable Streaming SIMD Extensions"
-   fi
+	if [ -n "$(echo ${TARGET_ARCH} | grep -e '^i.86$' -e '^x86_64$')" ]; then
+		echo " --enable-sse             enable Streaming SIMD Extensions"
+	fi
 	echo " --disable-execinfo       disable backtraces for crashes"
 	echo " --disable-signals        disable the use of a signal handler"
 	echo
