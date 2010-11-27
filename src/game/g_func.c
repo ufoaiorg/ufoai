@@ -336,6 +336,9 @@ void SP_func_door_sliding (edict_t *ent)
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
 
+	if (ent->HP)
+		ent->flags |= FL_DESTROYABLE;
+
 	ent->doorState = STATE_CLOSED;
 	ent->speed = 10;
 	ent->use = Door_Use;

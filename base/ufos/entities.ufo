@@ -499,8 +499,8 @@ entity func_door_sliding {
 	color		"0 .5 .8"
 	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	optional {
-		angle		"Determines the opening direction, 0-360 degree or -1 up, -2 down"
 		group		"Multipart doors can be grouped to open together"
+		health		"Define the needed damage to destroy the door"
 		noise		"Soundfile to play when door opens"
 		particle	"Particle id to be spawned after object is destroyed"
 		targetname	"The id of this entity"
