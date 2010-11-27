@@ -161,6 +161,7 @@
 		<Unit filename="..\..\src\tools\ufo2map\common\aselib.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\aselib.h" />
 		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.c">
 			<Option compilerVar="CC" />
 		</Unit>
