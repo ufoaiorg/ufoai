@@ -24,9 +24,9 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include "aselib.h"
 #include "../bsp.h"
 #include "shared.h"
-#include "aselib.h"
 
 #define MAX_ASE_MATERIALS			32
 #define MAX_ASE_OBJECTS				64

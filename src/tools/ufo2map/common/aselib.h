@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef UFO2MAP_ASELIB_H
 #define UFO2MAP_ASELIB_H
 
+#include "../../../shared/mathlib.h"
+
 typedef struct {
 	vec3_t verts[3];
 	vec3_t normals[3];
