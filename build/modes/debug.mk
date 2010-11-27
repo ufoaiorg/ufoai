@@ -11,5 +11,5 @@ ifeq ($(SSE),1) # Not all -O options are working with sse
   ifneq ($(filter -O3 -O4 -Ofast,$(CFLAGS)),)
     CFLAGS += -finline-functions -funswitch-loops -fpredictive-commoning -fgcse-after-reload -ftree-vectorize -fno-strict-aliasing
   endif
-  CFLAGS  := -msse -mfpmath=sse $(filter-out -O2 -O3 -O4 -Ofast -funroll-loops,$(CFLAGS))
+  CFLAGS := -msse -mfpmath=sse $(filter-out -O2 -O3 -O4 -Ofast -funroll-loops,$(CFLAGS))
 endif
