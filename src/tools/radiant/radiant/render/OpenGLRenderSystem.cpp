@@ -168,7 +168,7 @@ int QGL_Init (OpenGLBinding& table)
 {
 	QGL_clear(table);
 
-#ifdef _WIN32#ifdef _WIN32
+#ifdef _WIN32
 	qwglGetProcAddress = wglGetProcAddress;
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	qglXQueryExtension = glXQueryExtension;
