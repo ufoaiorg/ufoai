@@ -11,6 +11,10 @@ $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -DCOMPILE_MAP -ffloat-store $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS)
 $(TARGET)_LDFLAGS  += -lm -lpng -ljpeg -lz $(SDL_LIBS) $(SDL_IMAGE_LIBS)
 
+ifeq ($(SSE),1)
+   $(TARGET)_CFLAGS := $(filter-out -ffloat-store,$($(TARGET)_CFLAGS))
+endif
+
 $(TARGET)_SRCS      = \
 	tools/ufo2map/ufo2map.c \
 	tools/ufo2map/lighting.c \

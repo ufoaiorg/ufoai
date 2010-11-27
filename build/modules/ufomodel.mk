@@ -11,6 +11,10 @@ $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_LDFLAGS  += -lpng -ljpeg -lz -lm $(SDL_LIBS) $(SDL_IMAGE_LIBS)
 $(TARGET)_CFLAGS   += -DCOMPILE_MAP -ffloat-store $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS)
 
+ifeq ($(SSE),1)
+   $(TARGET)_CFLAGS := $(filter-out -ffloat-store,$($(TARGET)_CFLAGS))
+endif
+
 $(TARGET)_SRCS      = \
 	tools/ufomodel/ufomodel.c \
 	\
