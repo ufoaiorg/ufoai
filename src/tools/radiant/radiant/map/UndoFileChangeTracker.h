@@ -3,6 +3,8 @@
 
 #include "mapfile.h"
 
+const std::size_t MAPFILE_MAX_CHANGES = std::numeric_limits<std::size_t>::max();
+
 class UndoFileChangeTracker: public UndoTracker, public MapFile
 {
 		std::size_t m_size;

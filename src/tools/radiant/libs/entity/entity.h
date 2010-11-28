@@ -33,6 +33,5 @@ void P_Entity_Construct ();
 void P_Entity_Destroy ();
 
 extern bool g_lightRadii;
-extern bool g_forceLightRadii;
 
 #endif

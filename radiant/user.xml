@@ -15,6 +15,9 @@
 -->
 <user>
 	<ui>
+		<showAllLightRadii value="0" />
+		<showSelectedLightRadii value="0" />
+
 		<camera>
 			<enableCubicClipping value="1" />
 			<discreteMovement value="1" />

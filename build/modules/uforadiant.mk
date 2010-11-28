@@ -287,6 +287,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/entity/entitydef/EntityClassMgrModule.cpp \
 	$(RADIANT_BASE)/radiant/entity/entitydef/EntityClassScanner.cpp \
 	$(RADIANT_BASE)/radiant/entity/entitydef/EntityDefinitionModule.cpp \
+	$(RADIANT_BASE)/radiant/entity/EntitySettings.cpp \
 	$(RADIANT_BASE)/radiant/entity/entity.cpp \
 	$(RADIANT_BASE)/radiant/entity/entitymodule.cpp \
 	\

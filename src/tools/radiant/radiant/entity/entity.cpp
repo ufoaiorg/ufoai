@@ -61,6 +61,8 @@
 #include "../selection/algorithm/General.h"
 #include "../selection/algorithm/Entity.h"
 
+#include "EntitySettings.h"
+
 class EntitySetKeyValueSelected: public scene::Graph::Walker
 {
 		const std::string& m_classname;
@@ -204,55 +206,14 @@ void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 	} catch (EntityCreationException e) {
 		gtkutil::errorDialog(e.what());
 	}
-
-}
-
-void LightRadiiImport (EntityCreator& self, bool value)
-{
-	self.setLightRadii(value);
-}
-typedef ReferenceCaller1<EntityCreator, bool, LightRadiiImport> LightRadiiImportCaller;
-
-void LightRadiiExport (EntityCreator& self, const BoolImportCallback& importer)
-{
-	importer(self.getLightRadii());
-}
-typedef ReferenceCaller1<EntityCreator, const BoolImportCallback&, LightRadiiExport> LightRadiiExportCaller;
-
-void ForceLightRadiiImport (EntityCreator& self, bool value)
-{
-	self.setForceLightRadii(value);
-}
-typedef ReferenceCaller1<EntityCreator, bool, ForceLightRadiiImport> ForceLightRadiiImportCaller;
-
-void ForceLightRadiiExport (EntityCreator& self, const BoolImportCallback& importer)
-{
-	importer(self.getForceLightRadii());
-}
-typedef ReferenceCaller1<EntityCreator, const BoolImportCallback&, ForceLightRadiiExport> ForceLightRadiiExportCaller;
-
-void Entity_constructPreferences (PrefPage* page)
-{
-	page->appendCheckBox(_("Show"), _("Light Radii"), LightRadiiImportCaller(GlobalEntityCreator()),
-			LightRadiiExportCaller(GlobalEntityCreator()));
-	page->appendCheckBox(_("Force"), _("Force Light Radii"), ForceLightRadiiImportCaller(GlobalEntityCreator()),
-			ForceLightRadiiExportCaller(GlobalEntityCreator()));
-}
-void Entity_constructPage (PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Entities"), _("Entity Display Preferences"));
-	Entity_constructPreferences(reinterpret_cast<PrefPage*>(page));
-}
-void Entity_registerPrefPage ()
-{
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Entity_constructPage> ());
 }
 
 void Entity_Construct ()
 {
+	// instanciate once to register the preferences
+	entity::EntitySettings::Instance();
+
 	GlobalEventManager().addCommand("ConnectSelection", FreeCaller<selection::algorithm::connectSelectedEntities>());
 	GlobalEventManager().addCommand("GroupSelection", FreeCaller<selection::algorithm::groupSelected> ());
 	GlobalEventManager().addCommand("UngroupSelection", FreeCaller<selection::algorithm::ungroupSelected> ());
-
-	Entity_registerPrefPage();
 }

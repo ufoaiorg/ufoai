@@ -56,6 +56,7 @@
 #include "keyobservers.h"
 #include "namekeys.h"
 
+#include "../../radiant/entity/EntitySettings.h"
 #include "entity.h"
 
 static void sphere_draw_fill (const Vector3& origin, float radius, int sides)
@@ -628,7 +629,9 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			renderer.SetState(m_colour.state(), Renderer::eFullMaterials);
 			renderer.addRenderable(*this, localToWorld);
 
-			if ((g_forceLightRadii || (selected && g_lightRadii)) && m_entity.getKeyValue("target").empty()) {
+			if ((entity::EntitySettings::Instance().showAllLightRadii() || (selected
+					&& entity::EntitySettings::Instance().showSelectedLightRadii()))
+					&& m_entity.getKeyValue("target").empty()) {
 				if (renderer.getStyle() == Renderer::eFullMaterials) {
 					renderer.SetState(RenderLightRadiiFill::m_state, Renderer::eFullMaterials);
 					renderer.Highlight(Renderer::ePrimitive, false);

@@ -135,11 +135,6 @@ class EntityCreator
 		virtual void setKeyValueChangedFunc(KeyValueChangedFunc func) = 0;
 
 		virtual void connectEntities (const scene::Path& e1, const scene::Path& e2) = 0;
-
-		virtual void setLightRadii (bool lightRadii) = 0;
-		virtual bool getLightRadii () = 0;
-		virtual void setForceLightRadii (bool forceLightRadii) = 0;
-		virtual bool getForceLightRadii () = 0;
 };
 
 #include "modulesystem.h"
