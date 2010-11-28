@@ -580,7 +580,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\Namespace.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\namespace\NamespaceModule.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\parse.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\particles\ParticleParser.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\particles\ParticleSystem.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\Pathfinding.cpp" />
@@ -621,6 +620,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\SceneGraphModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\script\parse.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection.h" />

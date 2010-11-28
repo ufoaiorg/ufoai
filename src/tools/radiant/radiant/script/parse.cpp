@@ -21,8 +21,8 @@
 
 #include "iscriplib.h"
 
-#include "script/scripttokeniser.h"
-#include "script/scripttokenwriter.h"
+#include "scripttokeniser.h"
+#include "scripttokenwriter.h"
 
 class ScriptLibraryAPI: public ScriptSystem
 {

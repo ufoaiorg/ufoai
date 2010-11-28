@@ -22,7 +22,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
-	$(RADIANT_BASE)/radiant/parse.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
@@ -33,6 +32,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/url.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/script/parse.cpp \
 	\
 	$(RADIANT_BASE)/radiant/undo/RadiantUndoSystem.cpp \
 	$(RADIANT_BASE)/radiant/undo/RadiantUndoSystemModule.cpp \
