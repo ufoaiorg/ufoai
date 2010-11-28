@@ -31,12 +31,13 @@
 #include "iradiant.h"
 #include "ieventmanager.h"
 
-#include "ui/umpeditor/UMPEditor.h"
-#include "ump/UMPFile.h"
-#include "ump/UMPTile.h"
 #include "gtkutil/dialog.h"
 #include "os/path.h"
-#include "map/map.h"
+
+#include "UMPFile.h"
+#include "UMPTile.h"
+#include "../ui/umpeditor/UMPEditor.h"
+#include "../map/map.h"
 
 namespace
 {

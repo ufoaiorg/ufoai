@@ -96,7 +96,7 @@
 #include "pathfinding.h"
 #include "gtkmisc.h"
 #include "map/map.h"
-#include "ump.h"
+#include "ump/ump.h"
 #include "plugin.h"
 #include "settings/PreferenceDialog.h"
 #include "render/OpenGLRenderSystem.h"

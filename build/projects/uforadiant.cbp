@@ -831,8 +831,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\uimanager\UIManager.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\umpeditor\UMPEditor.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\umpeditor\UMPEditor.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ump.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\ump.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ump\ump.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ump\ump.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ump\UMPAssembly.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ump\UMPAssembly.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ump\UMPException.h" />

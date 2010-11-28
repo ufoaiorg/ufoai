@@ -86,7 +86,7 @@
 #include "xyview/GlobalXYWnd.h"
 #include "camera/GlobalCamera.h"
 #include "imaterial.h"
-#include "ump.h"
+#include "ump/ump.h"
 #include "pathfinding.h"
 #include "model.h"
 

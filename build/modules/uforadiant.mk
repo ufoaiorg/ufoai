@@ -20,7 +20,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
-	$(RADIANT_BASE)/radiant/ump.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
@@ -88,6 +87,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ufoscript/terrain/Terrain.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/mapdef/MapDef.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ump/ump.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPFile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPTile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPAssembly.cpp \
