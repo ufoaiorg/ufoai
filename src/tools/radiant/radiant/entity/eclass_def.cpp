@@ -38,8 +38,8 @@
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "script/scripttokeniser.h"
-#include "../../../shared/parse.h"
-#include "../../../shared/entitiesdef.h"
+#include "../../../../shared/parse.h"
+#include "../../../../shared/entitiesdef.h"
 
 #include "string/string.h"
 #include <stdlib.h>

@@ -493,11 +493,11 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\Clipper.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\eclass.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\eclass_def.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entitymodule.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclass.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclass_def.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\entity.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\entity.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitymodule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\environment.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\environment.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\eventmanager\Accelerator.cpp" />

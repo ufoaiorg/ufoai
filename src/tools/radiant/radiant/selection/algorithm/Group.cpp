@@ -9,7 +9,7 @@
 #include "entitylib.h"
 #include "../../map/map.h"
 #include "gtkutil/dialog.h"
-#include "../../entity.h"
+#include "../../entity/entity.h"
 
 namespace selection {
 

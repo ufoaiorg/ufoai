@@ -9,7 +9,7 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include "../../entity.h" // Entity_createFromSelection()
+#include "../../entity/entity.h" // Entity_createFromSelection()
 namespace ui
 {
 	namespace

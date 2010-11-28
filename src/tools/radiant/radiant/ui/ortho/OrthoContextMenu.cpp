@@ -3,8 +3,8 @@
 #include "gtkutil/IconTextMenuItem.h"
 
 #include "iselection.h"
-#include "../../sidebar/surfaceinspector/surfaceinspector.h" // SurfaceInspector_FitTexture()
-#include "../../entity.h" // Entity_createFromSelection(), Entity_connectSelected()
+#include "../../sidebar/surfaceinspector/surfaceinspector.h" // GlobalSurfaceInspector()
+#include "../../entity/entity.h" // Entity_createFromSelection()
 #include "gtkutil/dialog.h"
 #include "../../map/map.h"
 #include "iufoscript.h"
@@ -12,6 +12,7 @@
 #include "radiant_i18n.h"
 #include "../Icons.h"
 #include "../../selection/algorithm/Shader.h"
+#include "../../selection/algorithm/Entity.h"
 
 namespace ui
 {
@@ -158,7 +159,7 @@ namespace ui
 
 	void OrthoContextMenu::callbackConnectEntities (GtkMenuItem* item, OrthoContextMenu* self)
 	{
-		Entity_connectSelected();
+		selection::algorithm::connectSelectedEntities();
 	}
 
 	void OrthoContextMenu::callbackFitTexture (GtkMenuItem* item, OrthoContextMenu* self)

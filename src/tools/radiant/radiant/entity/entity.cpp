@@ -35,30 +35,31 @@
 #include "iundo.h"
 #include "ieventmanager.h"
 #include "iradiant.h"
-#include "editable.h"
 
+#include "editable.h"
 #include "eclasslib.h"
 #include "scenelib.h"
 #include "os/path.h"
 #include "os/file.h"
 #include "stream/stringstream.h"
 #include "stringio.h"
-#include "sidebar/entitylist/EntityList.h"
-
+#include "selectionlib.h"
 #include "gtkutil/filechooser.h"
 #include "gtkutil/idledraw.h"
 #include "gtkutil/dialog.h"
-#include "gtkmisc.h"
-#include "select.h"
-#include "map/map.h"
-#include "settings/PreferenceDialog.h"
-#include "ui/lightdialog/LightDialog.h"
-#include "ui/particles/ParticleSelector.h"
-#include "ui/modelselector/ModelSelector.h"
-#include "ui/common/SoundChooser.h"
-#include "ui/Icons.h"
-#include "selection/algorithm/General.h"
-#include "selectionlib.h"
+
+#include "../sidebar/entitylist/EntityList.h"
+#include "../gtkmisc.h"
+#include "../select.h"
+#include "../map/map.h"
+#include "../settings/PreferenceDialog.h"
+#include "../ui/lightdialog/LightDialog.h"
+#include "../ui/particles/ParticleSelector.h"
+#include "../ui/modelselector/ModelSelector.h"
+#include "../ui/common/SoundChooser.h"
+#include "../ui/Icons.h"
+#include "../selection/algorithm/General.h"
+#include "../selection/algorithm/Entity.h"
 
 class EntitySetKeyValueSelected: public scene::Graph::Walker
 {
@@ -286,7 +287,6 @@ void Entity_connectSelected ()
 
 static bool Entity_create (const std::string& name, const Vector3& origin)
 {
-
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
 
 	bool revert = false;
@@ -500,7 +500,7 @@ void Entity_registerPrefPage ()
 void Entity_Construct ()
 {
 	GlobalEventManager().addCommand("EntityColor", FreeCaller<Entity_setColour> ());
-	GlobalEventManager().addCommand("ConnectSelection", FreeCaller<Entity_connectSelected> ());
+	GlobalEventManager().addCommand("ConnectSelection", FreeCaller<selection::algorithm::connectSelectedEntities>());
 	GlobalEventManager().addCommand("GroupSelection", FreeCaller<Entity_groupSelected> ());
 	GlobalEventManager().addCommand("UngroupSelection", FreeCaller<Entity_ungroupSelected> ());
 

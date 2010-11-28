@@ -159,8 +159,6 @@ class UFOEntityCreator: public EntityCreator
 			SceneChangeNotify();
 		}
 
-
-
 		void setLightRadii (bool lightRadii)
 		{
 			g_lightRadii = lightRadii;

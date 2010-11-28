@@ -23,7 +23,7 @@
 #include "../mainframe.h"
 #include "../sidebar/texturebrowser.h"
 #include "../select.h"
-#include "../entity.h"
+#include "../entity/entity.h"
 #include "../renderer.h"
 #include "../windowobservers.h"
 #include "../camera/GlobalCamera.h"

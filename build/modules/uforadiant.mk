@@ -14,10 +14,6 @@ $(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GL
 
 $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/dialog.cpp \
-	$(RADIANT_BASE)/radiant/eclass.cpp \
-	$(RADIANT_BASE)/radiant/eclass_def.cpp \
-	$(RADIANT_BASE)/radiant/entity.cpp \
-	$(RADIANT_BASE)/radiant/entitymodule.cpp \
 	$(RADIANT_BASE)/radiant/environment.cpp \
 	$(RADIANT_BASE)/radiant/exec.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
@@ -286,6 +282,11 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/xmlregistry/RegistryTree.cpp \
 	$(RADIANT_BASE)/radiant/xmlregistry/XMLRegistry.cpp \
 	$(RADIANT_BASE)/radiant/xmlregistry/XMLRegistryModule.cpp \
+	\
+	$(RADIANT_BASE)/radiant/entity/eclass.cpp \
+	$(RADIANT_BASE)/radiant/entity/eclass_def.cpp \
+	$(RADIANT_BASE)/radiant/entity/entity.cpp \
+	$(RADIANT_BASE)/radiant/entity/entitymodule.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/clipboard.cpp \

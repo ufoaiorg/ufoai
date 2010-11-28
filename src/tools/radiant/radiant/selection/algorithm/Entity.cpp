@@ -7,7 +7,7 @@
 #include "entitylib.h"
 #include "gtkutil/dialog.h"
 
-#include "../../entity.h"
+#include "../../entity/entity.h"
 
 namespace selection {
 	namespace algorithm {

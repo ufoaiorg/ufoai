@@ -79,7 +79,7 @@
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "ui/mru/MRU.h"
-#include "entity.h"
+#include "entity/entity.h"
 #include "select.h"
 #include "map/AutoSaver.h"
 #include "referencecache/nullmodel.h"

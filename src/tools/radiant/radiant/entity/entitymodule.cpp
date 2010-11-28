@@ -19,7 +19,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "debugging/debugging.h"
 #include "iscenegraph.h"
 #include "irender.h"
 #include "iselection.h"
@@ -33,7 +32,7 @@
 #include "preferencesystem.h"
 #include "iradiant.h"
 #include "inamespace.h"
-#include "../libs/entity/entity.h"
+#include "entity/entity.h"
 #include "itextures.h"
 #include "modulesystem/singletonmodule.h"
 

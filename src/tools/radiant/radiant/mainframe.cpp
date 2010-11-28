@@ -86,7 +86,7 @@
 #include "brush/BrushModule.h"
 #include "brush/csg/csg.h"
 #include "log/console.h"
-#include "entity.h"
+#include "entity/entity.h"
 #include "sidebar/sidebar.h"
 #include "ui/findshader/FindShader.h"
 #include "brushexport/BrushExportOBJ.h"
