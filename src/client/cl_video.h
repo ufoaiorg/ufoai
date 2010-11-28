@@ -37,6 +37,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VID_NORM_HEIGHT		768
 
 /**
+ * @brief Contains the game screen context, everything need to create
+ * create the graphic context. This value are stored to allow to restitute
+ * the old context.
+ */
+typedef struct {
+	unsigned width;			/**< game screen/window width */
+	unsigned height;		/**< game screen/window height */
+	int mode;				/**< resolution mode - see vidmode_t */
+	qboolean fullscreen;	/**< currently in fullscreen mode? */
+} viddefContext_t;
+
+/**
  * @brief Contains the game screen size and drawing scale
  *
  * This is used to rationalize the GUI system rendering box
@@ -51,10 +63,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * this struct is also defined in src/renderer/r_local.h
  */
 typedef struct {
-	unsigned width;		/**< game screen/window width */
-	unsigned height;	/**< game screen/window height */
-	int mode;			/**< resolution mode - see vidmode_t */
-	qboolean fullscreen;	/**< currently in fullscreen mode? */
+	viddefContext_t context;
+
 	qboolean strech;		/**< currently strech mode? */
 
 	float rx;		/**< horizontal screen scale factor */

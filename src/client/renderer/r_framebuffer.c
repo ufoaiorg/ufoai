@@ -80,9 +80,9 @@ void R_InitFBObjects (void)
 	screenBuffer.fbo = 0;
 	screenBuffer.depth = 0;
 	screenBuffer.nTextures = 0;
-	screenBuffer.width = viddef.width;
-	screenBuffer.height = viddef.height;
-	R_SetupViewport(&screenBuffer, 0, 0, viddef.width, viddef.height);
+	screenBuffer.width = viddef.context.width;
+	screenBuffer.height = viddef.context.height;
+	R_SetupViewport(&screenBuffer, 0, 0, viddef.context.width, viddef.context.height);
 	Vector4Clear(screenBuffer.clearColor);
 
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
@@ -96,17 +96,17 @@ void R_InitFBObjects (void)
 	filters[1] = GL_LINEAR_MIPMAP_LINEAR;
 
 	/* setup main 3D render target */
-	r_state.renderBuffer = R_CreateFramebuffer(viddef.width, viddef.height, 2, qtrue, qfalse, filters);
+	r_state.renderBuffer = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 2, qtrue, qfalse, filters);
 
 	/* setup bloom render targets */
-	fbo_bloom0 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, filters);
-	fbo_bloom1 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, filters);
+	fbo_bloom0 = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 1, qfalse, qfalse, filters);
+	fbo_bloom1 = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 1, qfalse, qfalse, filters);
 
 	filters[0] = GL_LINEAR;
 	/* setup extra framebuffers */
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
-		const int h = (int)((float)viddef.height / scales[i]);
-		const int w = (int)((float)viddef.width / scales[i]);
+		const int h = (int)((float)viddef.context.height / scales[i]);
+		const int w = (int)((float)viddef.context.width / scales[i]);
 		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
 		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
 		r_state.buffers2[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);

@@ -197,6 +197,6 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 qboolean Rimp_Init(void);
 void Rimp_Shutdown(void);
-qboolean R_InitGraphics(qboolean fullscreen, int width, int height);
+qboolean R_InitGraphics(const viddefContext_t *context);
 
 #endif /* R_LOCAL_H */

@@ -629,7 +629,7 @@ void R_EnableRoughnessMap (const image_t *image, qboolean enable)
  */
 static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 {
-	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) viddef.height / viddef.width;
+	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) viddef.context.height / viddef.context.width;
 
 	if (r_isometric->integer) {
 		glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
@@ -654,10 +654,10 @@ void R_Setup3D (void)
 		int x, x2, y2, y, w, h;
 
 		/* set up viewport */
-		x = floor(viddef.x * viddef.width / viddef.width);
-		x2 = ceil((viddef.x + viddef.viewWidth) * viddef.width / viddef.width);
-		y = floor(viddef.height - viddef.y * viddef.height / viddef.height);
-		y2 = ceil(viddef.height - (viddef.y + viddef.viewHeight) * viddef.height / viddef.height);
+		x = floor(viddef.x * viddef.context.width / viddef.context.width);
+		x2 = ceil((viddef.x + viddef.viewWidth) * viddef.context.width / viddef.context.width);
+		y = floor(viddef.context.height - viddef.y * viddef.context.height / viddef.context.height);
+		y2 = ceil(viddef.context.height - (viddef.y + viddef.viewHeight) * viddef.context.height / viddef.context.height);
 
 		w = x2 - x;
 		h = y - y2;
@@ -716,7 +716,7 @@ void R_Setup2D (void)
 	/* only for the battlescape rendering */
 	if ((refdef.rendererFlags & RDF_NOWORLDMODEL) == 0) {
 		/* set 2D virtual screen size */
-		glViewport(0, 0, viddef.width, viddef.height);
+		glViewport(0, 0, viddef.context.width, viddef.context.height);
 	}
 
 	glMatrixMode(GL_PROJECTION);
@@ -724,7 +724,7 @@ void R_Setup2D (void)
 
 	/* switch to orthographic (2 dimensional) projection
 	 * don't draw anything before skybox */
-	glOrtho(0, viddef.width, viddef.height, 0, 9999.0f, SKYBOX_DEPTH);
+	glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

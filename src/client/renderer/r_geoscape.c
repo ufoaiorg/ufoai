@@ -741,7 +741,7 @@ void R_DrawBloom (void)
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-	glOrtho(0, viddef.width, viddef.height, 0, 9999.0f, SKYBOX_DEPTH);
+	glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);

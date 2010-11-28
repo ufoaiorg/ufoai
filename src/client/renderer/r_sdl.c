@@ -153,16 +153,11 @@ qboolean Rimp_Init (void)
 /**
  * @brief Init the SDL window
  */
-qboolean R_InitGraphics (qboolean fullscreen, int width, int height)
+qboolean R_InitGraphics (const viddefContext_t *context)
 {
 	uint32_t flags;
 	int i;
 	SDL_Surface* screen = NULL;
-
-	vid_strech->modified = qfalse;
-	vid_fullscreen->modified = qfalse;
-	vid_mode->modified = qfalse;
-	r_ext_texture_compression->modified = qfalse;
 
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -181,11 +176,11 @@ qboolean R_InitGraphics (qboolean fullscreen, int width, int height)
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, i);
 
 	flags = SDL_OPENGL;
-	if (fullscreen)
+	if (context->fullscreen)
 		flags |= SDL_FULLSCREEN;
 	/*flags |= SDL_NOFRAME;*/
 
-	screen = SDL_SetVideoMode(width, height, 0, flags);
+	screen = SDL_SetVideoMode(context->width, context->height, 0, flags);
 	if (!screen) {
 		const char *error = SDL_GetError();
 		Com_Printf("SDL SetVideoMode failed: %s\n", error);

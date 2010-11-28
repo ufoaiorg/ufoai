@@ -528,17 +528,28 @@ static void R_RegisterImageVars (void)
 	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Apply blur to lightmap");
 }
 
-static void R_UpdateVidDef (const vidmode_t *vidmode)
+/**
+ * Update the graphical context according to a valid context
+ * @param context New graphical context
+ */
+static void R_UpdateVidDef (const viddefContext_t *context)
 {
-	viddef.width = vidmode->width;
-	viddef.height = vidmode->height;
+	viddef.context = *context;
+
+	Cvar_SetValue("vid_width", viddef.context.width);
+	Cvar_SetValue("vid_height", viddef.context.height);
+	Cvar_SetValue("vid_mode", viddef.context.mode);
+	Cvar_SetValue("vid_fullscreen", viddef.context.fullscreen);
+	vid_strech->modified = qfalse;
+	vid_fullscreen->modified = qfalse;
+	vid_mode->modified = qfalse;
 
 	if (viddef.strech) {
 		viddef.virtualWidth = VID_NORM_WIDTH;
 		viddef.virtualHeight = VID_NORM_HEIGHT;
 	} else {
 		float normRatio = (float) VID_NORM_WIDTH / (float) VID_NORM_HEIGHT;
-		float screenRatio = (float) viddef.width / (float) viddef.height;
+		float screenRatio = (float) viddef.context.width / (float) viddef.context.height;
 
 		/* wide screen */
 		if (screenRatio > normRatio) {
@@ -554,69 +565,61 @@ static void R_UpdateVidDef (const vidmode_t *vidmode)
 			viddef.virtualHeight = VID_NORM_HEIGHT;
 		}
 	}
-	viddef.rx = (float)viddef.width / viddef.virtualWidth;
-	viddef.ry = (float)viddef.height / viddef.virtualHeight;
+	viddef.rx = (float)viddef.context.width / viddef.virtualWidth;
+	viddef.ry = (float)viddef.context.height / viddef.virtualHeight;
 }
 
 qboolean R_SetMode (void)
 {
 	qboolean result;
-	unsigned prevWidth;
-	unsigned prevHeight;
-	int prevMode;
-	qboolean prevFullscreen;
+	viddefContext_t prev;
+	viddefContext_t new;
 	vidmode_t vidmode;
 
 	Com_Printf("I: setting mode %d\n", vid_mode->integer);
 
+	/* not values we must restitute */
+	r_ext_texture_compression->modified = qfalse;
+	viddef.strech = vid_strech->integer;
+
 	/* store old values if new ones will fail */
-	prevWidth = viddef.width;
-	prevHeight = viddef.height;
-	prevFullscreen = viddef.fullscreen;
-	prevMode = viddef.mode;
+	prev = viddef.context;
 
 	/* new values */
-	viddef.mode = vid_mode->integer;
-	viddef.fullscreen = vid_fullscreen->integer;
-	viddef.strech = vid_strech->integer;
-	if (!VID_GetModeInfo(viddef.mode, &vidmode)) {
+	new = viddef.context;
+	new.mode = vid_mode->integer;
+	new.fullscreen = vid_fullscreen->integer;
+	if (!VID_GetModeInfo(new.mode, &vidmode)) {
 		Com_Printf("I: invalid mode\n");
 		return qfalse;
 	}
-
-	result = R_InitGraphics(viddef.fullscreen, vidmode.width, vidmode.height);
-	R_UpdateVidDef(&vidmode);
-	R_ShutdownFBObjects();
-	R_InitFBObjects();
-	UI_InvalidateStack();
-
-	Cvar_SetValue("vid_width", viddef.width);
-	Cvar_SetValue("vid_height", viddef.height);
-
-	Com_Printf("I: %dx%d (fullscreen: %s)\n", vidmode.width, vidmode.height, viddef.fullscreen ? "yes" : "no");
-	if (result)
+	new.width = vidmode.width;
+	new.height = vidmode.height;
+	result = R_InitGraphics(&new);
+	if (result) {
+		R_UpdateVidDef(&new);
+		R_ShutdownFBObjects();
+		R_InitFBObjects();
+		UI_InvalidateStack();
+		Com_Printf("I: %dx%d (fullscreen: %s)\n", viddef.context.width, viddef.context.height, viddef.context.fullscreen ? "yes" : "no");
 		return qtrue;
+	}
 
 	Com_Printf("Failed to set video mode %dx%d %s.\n",
-			viddef.width, viddef.height,
-			(vid_fullscreen->integer ? "fullscreen" : "windowed"));
+			new.width, new.height,
+			(new.fullscreen ? "fullscreen" : "windowed"));
 
-	Cvar_SetValue("vid_width", prevWidth);  /* failed, revert */
-	Cvar_SetValue("vid_height", prevHeight);
-	Cvar_SetValue("vid_mode", prevMode);
-	Cvar_SetValue("vid_fullscreen", prevFullscreen);
+	/* failed, revert */
 
-	viddef.mode = vid_mode->integer;
-	viddef.fullscreen = vid_fullscreen->integer;
-	if (!VID_GetModeInfo(viddef.mode, &vidmode))
+	result = R_InitGraphics(&prev);
+	if (!result)
 		return qfalse;
 
-	result = R_InitGraphics(viddef.fullscreen, vidmode.width, vidmode.height);
-	R_UpdateVidDef(&vidmode);
+	R_UpdateVidDef(&prev);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	UI_InvalidateStack();
-	return result;
+	return qtrue;
 }
 
 /** @note SDL_GL_GetProcAddress returns a void*, which is not on all

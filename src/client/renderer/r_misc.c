@@ -200,7 +200,7 @@ void R_ScreenShot_f (void)
 	const char *ext = NULL;
 	if (Cmd_Argc() > 1)
 		ext = Cmd_Argv(1);
-	R_ScreenShot(0, 0, viddef.width, viddef.height, NULL, ext);
+	R_ScreenShot(0, 0, viddef.context.width, viddef.context.height, NULL, ext);
 }
 
 /**

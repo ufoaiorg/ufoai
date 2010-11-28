@@ -220,14 +220,14 @@ void IN_JoystickMove (void)
 
 			if (i & 1) {
 				mousePosY += in_joystickSpeed->value * velocity;
-				if (mousePosY > (int)viddef.height)
-					mousePosY = (int)viddef.height;
+				if (mousePosY > (int)viddef.context.height)
+					mousePosY = (int)viddef.context.height;
 				else if (mousePosY < 0)
 					mousePosY = 0;
 			} else {
 				mousePosX += in_joystickSpeed->value * velocity;
-				if (mousePosX > (int)viddef.width)
-					mousePosX = (int)viddef.width;
+				if (mousePosX > (int)viddef.context.width)
+					mousePosX = (int)viddef.context.width;
 				else if (mousePosX < 0)
 					mousePosX = 0;
 			}

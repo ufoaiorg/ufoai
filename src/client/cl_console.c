@@ -226,7 +226,7 @@ void Con_CheckResize (void)
 {
 	int i, j, oldWidth, oldTotalLines, numLines, numChars;
 	short tbuf[CON_TEXTSIZE];
-	const int width = (viddef.width >> con_fontShift);
+	const int width = (viddef.context.width >> con_fontShift);
 
 	if (width == con.lineWidth)
 		return;
@@ -547,8 +547,8 @@ void Con_DrawNotify (void)
 			skip = 10;
 		}
 
-		if (msgBufferLen > (viddef.width >> con_fontShift) - (skip + 1))
-			s += msgBufferLen - ((viddef.width >> con_fontShift) - (skip + 1));
+		if (msgBufferLen > (viddef.context.width >> con_fontShift) - (skip + 1))
+			s += msgBufferLen - ((viddef.context.width >> con_fontShift) - (skip + 1));
 
 		x = 0;
 		while (s[x]) {
@@ -572,12 +572,12 @@ void Con_DrawConsole (float frac)
 	short *text;
 	char consoleMessage[128];
 
-	lines = viddef.height * frac;
+	lines = viddef.context.height * frac;
 	if (lines == 0)
 		return;
 
-	if (lines > viddef.height)
-		lines = viddef.height;
+	if (lines > viddef.context.height)
+		lines = viddef.context.height;
 
 	/* draw the background */
 	if (con_background->integer)
@@ -586,7 +586,7 @@ void Con_DrawConsole (float frac)
 	Com_sprintf(consoleMessage, sizeof(consoleMessage), "Hit esc to close - v%s", UFO_VERSION);
 	{
 		const int len = strlen(consoleMessage);
-		const int versionX = viddef.width - (len * con_fontWidth) - CONSOLE_CHAR_ALIGN;
+		const int versionX = viddef.context.width - (len * con_fontWidth) - CONSOLE_CHAR_ALIGN;
 		const int versionY = lines - (con_fontHeight + CONSOLE_CHAR_ALIGN);
 		const uint32_t color = g_color_table[CON_COLOR_WHITE];
 

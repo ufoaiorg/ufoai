@@ -729,10 +729,11 @@ static void UI_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
 	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
 
 	/* compute width and height with the same round error on both sides */
-	const int x2 = (viddef.width / 2) + (mapWidth * magicCoef * 0.5);
-	const int y2 = (viddef.height / 2) + (mapHeight * magicCoef * 0.5) + 1;
-	*x = (viddef.width / 2) - (mapWidth * magicCoef * 0.5);
-	*y = (viddef.height / 2) - (mapHeight * magicCoef * 0.5);
+	/** @todo viddef.context should be removed */
+	const int x2 = (viddef.context.width / 2) + (mapWidth * magicCoef * 0.5);
+	const int y2 = (viddef.context.height / 2) + (mapHeight * magicCoef * 0.5) + 1;
+	*x = (viddef.context.width / 2) - (mapWidth * magicCoef * 0.5);
+	*y = (viddef.context.height / 2) - (mapHeight * magicCoef * 0.5);
 	*width = (x2 - *x);
 	*height = (y2 - *y);
 }

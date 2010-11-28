@@ -427,12 +427,12 @@ void SCR_UpdateScreen (void)
 		SCR_DrawConsole();
 
 		if (cl_fps->integer)
-			SCR_DrawString(viddef.width - 20 - con_fontWidth * 10, 0, va("fps: %3.1f", cls.framerate));
+			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 10, 0, va("fps: %3.1f", cls.framerate));
 		if (scr_rspeed->integer) {
 			if (CL_OnBattlescape())
-				SCR_DrawString(viddef.width - 20 - con_fontWidth * 30, 80, va("brushes: %6i alias: %6i\n", refdef.brushCount, refdef.aliasCount));
+				SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80, va("brushes: %6i alias: %6i\n", refdef.brushCount, refdef.aliasCount));
 			else
-				SCR_DrawString(viddef.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount));
+				SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount));
 		}
 
 		SCR_DrawCursor();
