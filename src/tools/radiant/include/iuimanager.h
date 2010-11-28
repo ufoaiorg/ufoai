@@ -38,20 +38,20 @@ public:
 
 	/** greebo: Shows/hides the menuitem under the given path.
 	 *
-	 * @path: the path to the item (e.g. "main/view/cameraview")
-	 * @visible: FALSE, if the widget should be hidden, TRUE otherwise
+	 * @param path: the path to the item (e.g. "main/view/cameraview")
+	 * @param visible: FALSE, if the widget should be hidden, TRUE otherwise
 	 */
 	virtual void setVisibility(const std::string& path, bool visible) = 0;
 
 	/** greebo: Adds a new item as child under the given path.
 	 *
-	 * @insertPath: the path where to insert the item: "main/filters"
-	 * @name: the name of the new item
-	 * @type: the item type (usually menuFolder / menuItem)
-	 * @caption: the display string of the menu item (incl. mnemonic)
-	 * @icon: the image file name relative to "bitmaps/", can be empty.
-	 * @icon: the icon filename (can be empty)
-	 * @eventname: the event name (e.g. "ToggleShowSizeInfo")
+	 * @param insertPath: the path where to insert the item: "main/filters"
+	 * @param name: the name of the new item
+	 * @param type: the item type (usually menuFolder / menuItem)
+	 * @param caption: the display string of the menu item (incl. mnemonic)
+	 * @param icon: the image file name relative to "bitmaps/", can be empty.
+	 * 		  the icon filename (can be empty)
+	 * @param eventname: the event name (e.g. "ToggleShowSizeInfo")
 	 */
 	virtual GtkWidget* add(const std::string& insertPath,
 						const std::string& name,

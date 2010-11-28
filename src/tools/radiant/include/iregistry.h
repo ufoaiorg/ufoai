@@ -117,9 +117,9 @@ public:
 	/**
 	 * greebo: Sets the named attribute of the given node specified by <path>.
 	 *
-	 * @path: The XPath to the node.
-	 * @attrName: The name of the attribute.
-	 * @attrValue: The string value of the attribute.
+	 * @param path: The XPath to the node.
+	 * @param attrName: The name of the attribute.
+	 * @param attrValue: The string value of the attribute.
 	 */
 	virtual void
 			setAttribute (const std::string& path, const std::string& attrName, const std::string& attrValue) = 0;
@@ -127,10 +127,10 @@ public:
 	/**
 	 * greebo: Loads the value of the given attribute at the given path.
 	 *
-	 * @path: The XPath to the node.
-	 * @attrName: The name of the attribute.
+	 * @param path: The XPath to the node.
+	 * @param attrName: The name of the attribute.
 	 *
-	 * @returns: the string value of the attribute.
+	 * @return the string value of the attribute.
 	 */
 	virtual std::string getAttribute (const std::string& path, const std::string& attrName) = 0;
 
