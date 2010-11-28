@@ -47,19 +47,19 @@ public:
 
 	/** greebo: Shows/hides the menuitem under the given path.
 	 *
-	 * @path: the path to the item (e.g. "main/view/cameraview")
-	 * @visible: FALSE, if the widget should be hidden, TRUE otherwise
+	 * @param path: the path to the item (e.g. "main/view/cameraview")
+	 * @param visible: FALSE, if the widget should be hidden, TRUE otherwise
 	 */
 	void setVisibility(const std::string& path, bool visible);
 
 	/** greebo: Adds a new item as child under the given path.
 	 *
-	 * @insertPath: the path where to insert the item: "main/filters"
-	 * @name: the name of the new item
-	 * @type: the item type (usually menuFolder / menuItem)
-	 * @caption: the display string of the menu item (incl. mnemonic)
-	 * @icon: the icon filename (can be empty)
-	 * @eventname: the event name (e.g. "ToggleShowSizeInfo")
+	 * @param insertPath: the path where to insert the item: "main/filters"
+	 * @param name: the name of the new item
+	 * @param type: the item type (usually menuFolder / menuItem)
+	 * @param caption: the display string of the menu item (incl. mnemonic)
+	 * @param icon: the icon filename (can be empty)
+	 * @param eventname: the event name (e.g. "ToggleShowSizeInfo")
 	 */
 	GtkWidget* add(const std::string& insertPath,
 				const std::string& name,
@@ -70,13 +70,13 @@ public:
 
 	/** greebo: Inserts a new menuItem as sibling _before_ the given insertPath.
 	 *
-	 * @insertPath: the path where to insert the item: "main/filters"
-	 * @name: the name of the new menu item (no path, just the name)
-	 * @caption: the display string including mnemonic
-	 * @icon: the image file name relative to "bitmaps/", can be empty.
-	 * @eventName: the event name this item is associated with (can be empty).
+	 * @param insertPath: the path where to insert the item: "main/filters"
+	 * @param name: the name of the new menu item (no path, just the name)
+	 * @param caption: the display string including mnemonic
+	 * @param icon: the image file name relative to "bitmaps/", can be empty.
+	 * @param eventName: the event name this item is associated with (can be empty).
 	 *
-	 * @returns: the GtkWidget*
+	 * @return the GtkWidget*
 	 */
 	GtkWidget* insert(const std::string& insertPath,
 					const std::string& name,

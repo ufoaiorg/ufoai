@@ -98,9 +98,9 @@ private:
 
 	/** greebo: Helper method that creates a single row
 	 *
-	 * @row: the row index of <table> where the widgets should be packed into.
-	 * @isRotator: set to true if a rotator row is to be created.
-	 * @axis: the axis this transformation is referring to.
+	 * @param row: the row index of <table> where the widgets should be packed into.
+	 * @param isRotator: set to true if a rotator row is to be created.
+	 * @param axis: the axis this transformation is referring to.
 	 */
 	EntryRow createEntryRow(const std::string& label, GtkTable* table,
 							int row, bool isRotator, int axis);
