@@ -75,9 +75,9 @@ public:
 
 	/** Constructor.
 	 *
-	 * @client: The client class that gets notified on selection change
-	 * @prefixes: A comma-separated list of shader prefixes.
-	 * @isLightTexture: set this to TRUE to render the light textures instead of the editor images
+	 * @param client: The client class that gets notified on selection change
+	 * @param prefixes: A comma-separated list of shader prefixes.
+	 * @param isLightTexture: set this to TRUE to render the light textures instead of the editor images
 	 */
 	ShaderSelector(Client* client, const std::string& prefixes, bool isLightTexture = false);
 

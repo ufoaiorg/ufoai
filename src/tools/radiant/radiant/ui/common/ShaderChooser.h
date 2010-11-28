@@ -57,8 +57,8 @@ private:
 public:
 	/** greebo: Construct the dialog window and its contents.
 	 *
-	 * @parent: The widget this dialog is transient for.
-	 * @targetEntry: The text entry where the selected shader can be written to.
+	 * @param parent: The widget this dialog is transient for.
+	 * @param targetEntry: The text entry where the selected shader can be written to.
 	 *               Also, the initially selected shader will be read from
 	 *               this field at startup.
 	 */

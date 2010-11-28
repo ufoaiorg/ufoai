@@ -128,7 +128,7 @@ public:
 	 * 			of the according buttons in the Surface Inspector, but it only affects
 	 * 			the items selected in the TexTool.
 	 *
-	 * @axis: 0 = s-Axis flip, 1 = t-axis flip
+	 * @param axis: 0 = s-Axis flip, 1 = t-axis flip
 	 */
 	void flipSelected(int axis);
 
@@ -216,7 +216,7 @@ private:
 
 	/** greebo: These two get called by the GTK callback and handle the event
 	 *
-	 * @coords: this has already been converted into texture space.
+	 * @param coords: this has already been converted into texture space.
 	 */
 	void doMouseUp(const Vector2& coords, GdkEventButton* event);
 	void doMouseDown(const Vector2& coords, GdkEventButton* event);
