@@ -24,6 +24,9 @@ pdf-manual:
 license-generate:
 	$(Q)python contrib/licenses/generate.py
 
+doxygen:
+	$(Q)doxygen src/docs/doxywarn
+
 help:
 	@echo "Makefile targets:"
 	@echo " -----"
