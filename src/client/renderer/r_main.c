@@ -529,21 +529,28 @@ static void R_RegisterImageVars (void)
 }
 
 /**
- * Update the graphical context according to a valid context
+ * Update the graphical context according to a valid context.
+ * All the system is updated according to this new value (viddef and cvars)
  * @param context New graphical context
  */
 static void R_UpdateVidDef (const viddefContext_t *context)
 {
 	viddef.context = *context;
 
+	/* update cvars */
 	Cvar_SetValue("vid_width", viddef.context.width);
 	Cvar_SetValue("vid_height", viddef.context.height);
 	Cvar_SetValue("vid_mode", viddef.context.mode);
 	Cvar_SetValue("vid_fullscreen", viddef.context.fullscreen);
+	Cvar_SetValue("r_multisample", viddef.context.multisample);
+	Cvar_SetValue("r_swapinterval", viddef.context.swapinterval);
 	vid_strech->modified = qfalse;
 	vid_fullscreen->modified = qfalse;
 	vid_mode->modified = qfalse;
+	r_multisample->modified = qfalse;
+	r_swapinterval->modified = qfalse;
 
+	/* update cache values */
 	if (viddef.strech) {
 		viddef.virtualWidth = VID_NORM_WIDTH;
 		viddef.virtualHeight = VID_NORM_HEIGHT;
@@ -589,6 +596,8 @@ qboolean R_SetMode (void)
 	new = viddef.context;
 	new.mode = vid_mode->integer;
 	new.fullscreen = vid_fullscreen->integer;
+	new.multisample = r_multisample->integer;
+	new.swapinterval = r_swapinterval->integer;
 	if (!VID_GetModeInfo(new.mode, &vidmode)) {
 		Com_Printf("I: invalid mode\n");
 		return qfalse;

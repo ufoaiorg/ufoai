@@ -163,15 +163,18 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	/* valid values are between 0 and 4 */
-	i = min(4, max(0, r_multisample->integer));
+	i = min(4, max(0, context->multisample));
+	Com_Printf("I: set multisample buffers to %i\n", i);
 	if (i > 0) {
-		Com_Printf("I: set multisample buffers to %i\n", i);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, i);
+	} else {
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
 	}
 
 	/* valid values are between 0 and 2 */
-	i = min(2, max(0, r_swapinterval->integer));
+	i = min(2, max(0, context->swapinterval));
 	Com_Printf("I: set swap control to %i\n", i);
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, i);
 
@@ -184,6 +187,7 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 	if (!screen) {
 		const char *error = SDL_GetError();
 		Com_Printf("SDL SetVideoMode failed: %s\n", error);
+		SDL_ClearError();
 		return qfalse;
 	}
 
