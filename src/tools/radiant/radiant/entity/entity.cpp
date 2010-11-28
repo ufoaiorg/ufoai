@@ -23,69 +23,26 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "shared.h"
-#include "radiant_i18n.h"
-
 #include "entity.h"
 
-#include "ientity.h"
-#include "iselection.h"
-#include "imodel.h"
-#include "ifilesystem.h"
-#include "iundo.h"
 #include "ieventmanager.h"
-#include "iradiant.h"
+#include "ieclass.h"
+#include "iselection.h"
+#include "iundo.h"
 
-#include "editable.h"
 #include "eclasslib.h"
-#include "scenelib.h"
-#include "os/path.h"
-#include "os/file.h"
-#include "stream/stringstream.h"
-#include "stringio.h"
 #include "selectionlib.h"
-#include "gtkutil/filechooser.h"
-#include "gtkutil/idledraw.h"
 #include "gtkutil/dialog.h"
 
-#include "../sidebar/entitylist/EntityList.h"
-#include "../gtkmisc.h"
-#include "../select.h"
 #include "../map/map.h"
-#include "../settings/PreferenceDialog.h"
 #include "../ui/lightdialog/LightDialog.h"
 #include "../ui/particles/ParticleSelector.h"
 #include "../ui/modelselector/ModelSelector.h"
 #include "../ui/common/SoundChooser.h"
-#include "../ui/Icons.h"
+#include "../../../../shared/defines.h"
 #include "../selection/algorithm/General.h"
 #include "../selection/algorithm/Entity.h"
-
 #include "EntitySettings.h"
-
-class EntitySetKeyValueSelected: public scene::Graph::Walker
-{
-		const std::string& m_classname;
-		const std::string& m_key;
-		const std::string& m_value;
-	public:
-		EntitySetKeyValueSelected (const std::string& classname, const std::string& key, const std::string& value) :
-			m_classname(classname), m_key(key), m_value(value)
-		{
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance) const
-		{
-			Entity* entity = Node_getEntity(path.top());
-			if (entity != 0 && entity->getEntityClass().name() == m_classname && (instance.childSelected()
-					|| Instance_getSelectable(instance)->isSelected())) {
-				entity->setKeyValue(m_key, m_value);
-			}
-		}
-};
 
 static bool Entity_create (const std::string& name, const Vector3& origin)
 {
