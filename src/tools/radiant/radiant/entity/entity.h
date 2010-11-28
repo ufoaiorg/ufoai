@@ -45,9 +45,6 @@ class EntityCreationException: public std::runtime_error
  */
 void Entity_createFromSelection (const std::string& name, const Vector3& origin);
 
-void Scene_EntitySetKeyValue_Selected (const std::string& classname, const std::string& key, const std::string& value);
-void Scene_EntitySetClassname_Selected (const std::string& classname, const std::string& newClassname);
-
 void Entity_Construct ();
 
 #endif

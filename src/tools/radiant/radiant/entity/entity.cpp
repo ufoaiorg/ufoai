@@ -146,11 +146,6 @@ void Scene_EntitySetKeyValue_Selected (const std::string& classname, const std::
 	GlobalSceneGraph().traverse(EntitySetKeyValueSelected(classname, key, value));
 }
 
-void Scene_EntitySetClassname_Selected (const std::string& oldClassname, const std::string& newClassname)
-{
-	GlobalSceneGraph().traverse(EntitySetClassnameSelected(oldClassname, newClassname));
-}
-
 void Entity_ungroupSelected ()
 {
 	if (GlobalSelectionSystem().countSelected() < 1)
