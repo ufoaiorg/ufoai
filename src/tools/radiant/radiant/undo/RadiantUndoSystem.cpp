@@ -252,4 +252,5 @@ void RadiantUndoSystem::mark_undoables (undo::UndoStack* stack)
 		i->second.setStack(stack);
 	}
 }
+
 }

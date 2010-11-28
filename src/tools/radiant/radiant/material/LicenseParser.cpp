@@ -62,7 +62,7 @@ void LicenseParser::openLicenseFile (const std::string& filename)
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(fullpath));
 	if (file) {
-		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().createScriptTokeniser(file->getInputStream()));
 		parseLicensesFile(*tokeniser, fullpath);
 	}
 }

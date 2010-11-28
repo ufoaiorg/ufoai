@@ -134,7 +134,7 @@ namespace map
 		{
 			AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(map::getMapsPath() + _fileName));
 			if (file) {
-				AutoPtr<Tokeniser> reader(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+				AutoPtr<Tokeniser> reader(GlobalScriptLibrary().createScriptTokeniser(file->getInputStream()));
 				parse(*reader);
 				return true;
 			}

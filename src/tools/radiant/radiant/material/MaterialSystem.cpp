@@ -215,7 +215,7 @@ std::string MaterialSystem::getBlock (const std::string& texture)
 	StringOutputStream outputStream;
 
 	StringInputStream inputStream(_material);
-	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(inputStream));
+	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().createSimpleTokeniser(inputStream));
 	int depth = 0;
 	bool found = false;
 	std::string token = tokeniser->getToken();

@@ -88,7 +88,7 @@ namespace scripts
 			const std::string& filename = (*i);
 			AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(scriptDir + filename));
 			if (file) {
-				AutoPtr<Tokeniser> reader(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+				AutoPtr<Tokeniser> reader(GlobalScriptLibrary().createScriptTokeniser(file->getInputStream()));
 				parse(filename, *reader, id);
 			}
 		}

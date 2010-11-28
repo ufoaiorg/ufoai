@@ -61,27 +61,30 @@ class TokenWriter
 
 class TextOutputStream;
 
-struct _QERScripLibTable
+class ScriptSystem
 {
+	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "scriptlib");
 
-		Tokeniser* (*m_pfnNewScriptTokeniser) (TextInputStream& istream);
-		Tokeniser* (*m_pfnNewSimpleTokeniser) (TextInputStream& istream);
-		TokenWriter* (*m_pfnNewSimpleTokenWriter) (TextOutputStream& ostream);
+		virtual ~ScriptSystem() {}
+
+		virtual Tokeniser* createScriptTokeniser (TextInputStream& istream) = 0;
+		virtual Tokeniser* createSimpleTokeniser (TextInputStream& istream) = 0;
+		virtual TokenWriter* createSimpleTokenWriter (TextOutputStream& ostream) = 0;
 };
 
 #include "modulesystem.h"
 
 template<typename Type>
 class GlobalModule;
-typedef GlobalModule<_QERScripLibTable> GlobalScripLibModule;
+typedef GlobalModule<ScriptSystem> GlobalScripLibModule;
 
 template<typename Type>
 class GlobalModuleRef;
-typedef GlobalModuleRef<_QERScripLibTable> GlobalScripLibModuleRef;
+typedef GlobalModuleRef<ScriptSystem> GlobalScripLibModuleRef;
 
-inline _QERScripLibTable& GlobalScriptLibrary ()
+inline ScriptSystem& GlobalScriptLibrary ()
 {
 	return GlobalScripLibModule::getTable();
 }

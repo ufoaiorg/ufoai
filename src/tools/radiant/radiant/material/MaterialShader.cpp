@@ -18,7 +18,7 @@ MaterialShader::MaterialShader (const std::string& fileName, const std::string& 
 	_refcount(0), _fileName(fileName), _inUse(false), _isValid(false), _texture(0), _notfound(0)
 {
 	StringInputStream inputStream(content);
-	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(inputStream));
+	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().createSimpleTokeniser(inputStream));
 	parseMaterial(*tokeniser);
 
 	realise();

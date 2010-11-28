@@ -1,41 +1,52 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+#include "iscriplib.h"
 
 #include "script/scripttokeniser.h"
 #include "script/scripttokenwriter.h"
 
-class ScriptLibraryAPI {
-	_QERScripLibTable m_scriptlibrary;
-public:
-	typedef _QERScripLibTable Type;
-	STRING_CONSTANT(Name, "*");
+class ScriptLibraryAPI: public ScriptSystem
+{
+	public:
+		typedef ScriptSystem Type;
+		STRING_CONSTANT(Name, "*");
 
-	ScriptLibraryAPI() {
-		m_scriptlibrary.m_pfnNewScriptTokeniser = &NewScriptTokeniser;
-		m_scriptlibrary.m_pfnNewSimpleTokeniser = &NewSimpleTokeniser;
-		m_scriptlibrary.m_pfnNewSimpleTokenWriter = &NewSimpleTokenWriter;
-	}
-	_QERScripLibTable* getTable() {
-		return &m_scriptlibrary;
-	}
+		Tokeniser* createScriptTokeniser (TextInputStream& istream)
+		{
+			return NewScriptTokeniser(istream);
+		}
+		Tokeniser* createSimpleTokeniser (TextInputStream& istream)
+		{
+			return NewSimpleTokeniser(istream);
+		}
+		TokenWriter* createSimpleTokenWriter (TextOutputStream& ostream)
+		{
+			return NewSimpleTokenWriter(ostream);
+		}
+
+		ScriptSystem* getTable ()
+		{
+			return this;
+		}
 };
 
 #include "modulesystem/singletonmodule.h"
