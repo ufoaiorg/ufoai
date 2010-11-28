@@ -25,17 +25,6 @@
 
 #include "EntityClassManager.h"
 
-#include "ifilesystem.h"
-
-#include "os/path.h"
-#include "os/dir.h"
-#include "stream/stringstream.h"
-#include "moduleobservers.h"
-
-#include "../../mainframe.h"
-
-EClassModules& EntityClassManager_getEClassModules ();
-
 /*!
  implementation of the EClass manager API
  */
