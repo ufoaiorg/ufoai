@@ -57,7 +57,7 @@ public:
 	 * window. This object has to be connected to a GtkWindow before
 	 * the method can function properly.
 	 *
-	 * @xfraction,yfraction: the fraction of the screen which the window
+	 * @param xfraction,yfraction: the fraction of the screen which the window
 	 * should occupy. (e.g. Pass 0.5/0.66 to let the window half of the
 	 * monitor width and two thirds of the monitor height.
 	 *

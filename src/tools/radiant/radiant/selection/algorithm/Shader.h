@@ -21,13 +21,13 @@ namespace selection {
 	/** greebo: Applies the shader in the clipboard to the nearest
 	 * 			texturable object (using the given SelectionTest)
 	 *
-	 * @test: the SelectionTest needed (usually a SelectionVolume).
+	 * @param test: the SelectionTest needed (usually a SelectionVolume).
 	 *
-	 * @projected: Set this to TRUE if the texture is projected onto patches using the
+	 * @param projected: Set this to TRUE if the texture is projected onto patches using the
 	 * 			   face in the shaderclipboard as reference plane
 	 * 			   Set this to FALSE if a natural texturing of patches is attempted.
 	 *
-	 * @entireBrush: Set this to TRUE if all brush faces should be textured,
+	 * @param entireBrush: Set this to TRUE if all brush faces should be textured,
 	 * 				 given the case that the SelectionTest is resulting in a brush.
 	 */
 	void pasteShader(SelectionTest& test, bool entireBrush = false);
@@ -50,7 +50,7 @@ namespace selection {
 
 	/** greebo: Retrieves the texture projection from the current selection.
 	 *
-	 * @returns: the TextureProjection of the last selected face/brush.
+	 * @return the TextureProjection of the last selected face/brush.
 	 */
 	TextureProjection getSelectedTextureProjection();
 
@@ -111,10 +111,10 @@ namespace selection {
 
 	/** greebo: Replaces all <find> shaders with <replace>.
 	 *
-	 * @find/replace: the full shadernames ("textures/darkmod/bleh")
-	 * @selectedOnly: if TRUE, searches the current selection only.
+	 * @param find/replace: the full shadernames ("textures/darkmod/bleh")
+	 * @param selectedOnly: if TRUE, searches the current selection only.
 	 *
-	 * @returns: the number of replaced occurrences.
+	 * @return the number of replaced occurrences.
 	 */
 	int findAndReplaceShader(const std::string& find,
 							 const std::string& replace,

@@ -18,7 +18,7 @@ class ShaderClipboard
 		 */
 		void setSource (SelectionTest& test);
 
-		/** greebo: Sets the source face to the given <sourceFace>
+		/** greebo: Sets the source face to the given 'sourceFace'
 		 */
 		void setSource (Face& sourceFace);
 
