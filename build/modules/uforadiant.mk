@@ -87,7 +87,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ufoscript/terrain/Terrain.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/mapdef/MapDef.cpp \
 	\
-	$(RADIANT_BASE)/radiant/ump/ump.cpp \
+	$(RADIANT_BASE)/radiant/ump/UMPModule.cpp \
+	$(RADIANT_BASE)/radiant/ump/UMPSystem.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPFile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPTile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPAssembly.cpp \

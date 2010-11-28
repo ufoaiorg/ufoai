@@ -51,6 +51,7 @@
 #include "igamemanager.h"
 #include "iuimanager.h"
 #include "igl.h"
+#include "iump.h"
 #include "imapcompiler.h"
 #include "imaterial.h"
 #include "ieventmanager.h"
@@ -96,7 +97,6 @@
 #include "pathfinding.h"
 #include "gtkmisc.h"
 #include "map/map.h"
-#include "ump/ump.h"
 #include "plugin.h"
 #include "settings/PreferenceDialog.h"
 #include "render/OpenGLRenderSystem.h"
@@ -222,7 +222,7 @@ void Radiant_Initialise (void)
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
 
-	UMP_Construct();
+	GlobalUMPSystem().init();
 
 	// Construct the MRU commands and menu structure
 	GlobalMRU().constructMenu();
