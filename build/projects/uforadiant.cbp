@@ -583,8 +583,9 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\parse.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\particles\ParticleParser.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\particles\ParticleSystem.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\Pathfinding.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\Pathfinding.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\PathfindingModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\Routing.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\Routing.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding\RoutingLump.cpp" />

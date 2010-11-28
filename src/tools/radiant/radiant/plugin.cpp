@@ -65,6 +65,8 @@
 #include "iuimanager.h"
 #include "iparticles.h"
 #include "imapcompiler.h"
+#include "imaterial.h"
+#include "ipathfinding.h"
 
 #include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
@@ -72,23 +74,21 @@
 
 #include "map/map.h"
 #include "map/CounterManager.h"
+#include "map/AutoSaver.h"
 
 #include "os/path.h"
 
-#include "sidebar/sidebar.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "ui/mru/MRU.h"
 #include "entity/entity.h"
 #include "select.h"
-#include "map/AutoSaver.h"
 #include "referencecache/nullmodel.h"
 #include "xyview/GlobalXYWnd.h"
 #include "camera/GlobalCamera.h"
-#include "imaterial.h"
-#include "pathfinding.h"
 #include "model.h"
 
+#include "sidebar/sidebar.h"
 #include "sidebar/MapInfo.h"
 #include "sidebar/texturebrowser.h"
 
@@ -229,7 +229,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalSelectionSetManagerModuleRef,
 		public GlobalParticleModuleRef,
 		public GlobalMapCompilerModuleRef,
-		public GlobalGameManagerModuleRef
+		public GlobalGameManagerModuleRef,
+		public GlobalPathfindingSystemModuleRef
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;
@@ -275,7 +276,7 @@ class Radiant
 
 			GlobalGameManager().init();
 
-			Pathfinding_Construct();
+			GlobalPathfindingSystem().init();
 			GlobalUFOScriptSystem()->init();
 			GlobalParticleSystem().init();
 
@@ -284,7 +285,6 @@ class Radiant
 		}
 		~Radiant ()
 		{
-			Pathfinding_Destroy();
 			TextureBrowser_Destroy();
 
 			GlobalGameManager().destroy();

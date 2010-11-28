@@ -23,7 +23,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
-	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
@@ -275,6 +274,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/textool/item/FaceItem.cpp \
 	$(RADIANT_BASE)/radiant/textool/item/FaceVertexItem.cpp \
 	\
+	$(RADIANT_BASE)/radiant/pathfinding/Pathfinding.cpp \
+	$(RADIANT_BASE)/radiant/pathfinding/PathfindingModule.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/Routing.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLumpLoader.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLump.cpp \
