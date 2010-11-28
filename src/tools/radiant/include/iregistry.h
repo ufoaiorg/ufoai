@@ -115,7 +115,7 @@ public:
 			createKeyWithName (const std::string& path, const std::string& key, const std::string& name) = 0;
 
 	/**
-	 * greebo: Sets the named attribute of the given node specified by <path>.
+	 * greebo: Sets the named attribute of the given node specified by 'path'.
 	 *
 	 * @param path: The XPath to the node.
 	 * @param attrName: The name of the attribute.

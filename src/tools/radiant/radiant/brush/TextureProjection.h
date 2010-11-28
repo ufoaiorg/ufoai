@@ -47,7 +47,7 @@ class TextureProjection
 
 		/** greebo: Mirrors the texture around the given axis.
 		 *
-		 * @flipAxis: 0 = flip x, 1 = flip y
+		 * @param flipAxis: 0 = flip x, 1 = flip y
 		 */
 		void flipTexture(unsigned int flipAxis);
 
