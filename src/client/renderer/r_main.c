@@ -605,29 +605,22 @@ qboolean R_SetMode (void)
 	new.width = vidmode.width;
 	new.height = vidmode.height;
 	result = R_InitGraphics(&new);
-	if (result) {
-		R_UpdateVidDef(&new);
-		R_ShutdownFBObjects();
-		R_InitFBObjects();
-		UI_InvalidateStack();
-		Com_Printf("I: %dx%d (fullscreen: %s)\n", viddef.context.width, viddef.context.height, viddef.context.fullscreen ? "yes" : "no");
-		return qtrue;
+	if (!result) {
+		/* failed, revert */
+		Com_Printf("Failed to set video mode %dx%d %s.\n",
+				new.width, new.height,
+				(new.fullscreen ? "fullscreen" : "windowed"));
+		result = R_InitGraphics(&prev);
+		if (!result)
+			return qfalse;
+		new = prev;
 	}
 
-	Com_Printf("Failed to set video mode %dx%d %s.\n",
-			new.width, new.height,
-			(new.fullscreen ? "fullscreen" : "windowed"));
-
-	/* failed, revert */
-
-	result = R_InitGraphics(&prev);
-	if (!result)
-		return qfalse;
-
-	R_UpdateVidDef(&prev);
+	R_UpdateVidDef(&new);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	UI_InvalidateStack();
+	Com_Printf("I: %dx%d (fullscreen: %s)\n", viddef.context.width, viddef.context.height, viddef.context.fullscreen ? "yes" : "no");
 	return qtrue;
 }
 
