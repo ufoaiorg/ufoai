@@ -13,10 +13,9 @@
 
 #include "gtkutil/glwidget.h"
 #include "gtkutil/GLWidgetSentry.h"
-
 #include "os/path.h"
-
 #include "stream/stringstream.h"
+#include "radiant_i18n.h"
 
 #include "../plugin.h"
 #include "../brush/brushmanip.h"
@@ -56,6 +55,20 @@ inline float screen_normalised (int pos, unsigned int size)
 inline float normalised_to_world (float normalised, float world_origin, float normalised2world_scale)
 {
 	return world_origin + normalised * normalised2world_scale;
+}
+
+inline const char* ViewType_getTitle (EViewType viewtype)
+{
+	if (viewtype == XY) {
+		return _("XY Top");
+	}
+	if (viewtype == XZ) {
+		return _("XZ Front");
+	}
+	if (viewtype == YZ) {
+		return _("YZ Side");
+	}
+	return "";
 }
 
 XYWnd::XYWnd () :

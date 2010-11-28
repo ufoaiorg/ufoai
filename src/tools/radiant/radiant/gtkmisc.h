@@ -32,8 +32,6 @@
 #define INCLUDED_GTKMISC_H
 
 #include <string>
-#include <gtk/gtkmain.h>
-#include "radiant_i18n.h"
 
 typedef struct _GtkMenu GtkMenu;
 typedef struct _GtkMenuItem GtkMenuItem;
@@ -45,9 +43,5 @@ typedef struct _GtkMenuItem GtkMenuItem;
 GtkMenuItem* createMenuItemWithMnemonic(GtkMenu* menu, const std::string& caption, const std::string& commandName, const std::string& iconName = "");
 GtkMenuItem* createCheckMenuItemWithMnemonic(GtkMenu* menu, const std::string& caption, const std::string& commandName, const std::string& iconName = "");
 GtkMenuItem* createSeparatorMenuItem(GtkMenu* menu);
-
-template<typename Element> class BasicVector3;
-typedef BasicVector3<float> Vector3;
-bool color_dialog (GtkWidget *parent, Vector3& color, const std::string& title = _("Choose Color"));
 
 #endif

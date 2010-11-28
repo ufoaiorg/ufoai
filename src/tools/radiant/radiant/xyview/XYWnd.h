@@ -224,18 +224,4 @@ class XYWnd: public CameraObserver
 		void cameraMoved();
 }; // class XYWnd
 
-inline const char* ViewType_getTitle (EViewType viewtype)
-{
-	if (viewtype == XY) {
-		return _("XY Top");
-	}
-	if (viewtype == XZ) {
-		return _("XZ Front");
-	}
-	if (viewtype == YZ) {
-		return _("YZ Side");
-	}
-	return "";
-}
-
 #endif /*XYWND_H_*/

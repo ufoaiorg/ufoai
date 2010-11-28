@@ -2,6 +2,8 @@
 
 #include "ieventmanager.h"
 
+#include "radiant_i18n.h"
+
 #include "GlobalCamera.h"
 #include "CamWnd.h"
 #include "string/string.h"

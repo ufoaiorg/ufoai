@@ -9,6 +9,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "radiant_i18n.h"
 #include "texturelib.h"
 #include "selectionlib.h"
 #include "gtkutil/window/TransientWindow.h"
