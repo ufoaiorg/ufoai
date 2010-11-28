@@ -283,8 +283,10 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/xmlregistry/XMLRegistry.cpp \
 	$(RADIANT_BASE)/radiant/xmlregistry/XMLRegistryModule.cpp \
 	\
-	$(RADIANT_BASE)/radiant/entity/eclass.cpp \
-	$(RADIANT_BASE)/radiant/entity/eclass_def.cpp \
+	$(RADIANT_BASE)/radiant/entity/entitydef/EntityClassManager.cpp \
+	$(RADIANT_BASE)/radiant/entity/entitydef/EntityClassMgrModule.cpp \
+	$(RADIANT_BASE)/radiant/entity/entitydef/EntityClassScanner.cpp \
+	$(RADIANT_BASE)/radiant/entity/entitydef/EntityDefinitionModule.cpp \
 	$(RADIANT_BASE)/radiant/entity/entity.cpp \
 	$(RADIANT_BASE)/radiant/entity/entitymodule.cpp \
 	\

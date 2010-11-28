@@ -135,7 +135,8 @@ class EntityClass
 		Shader* m_state_blend;
 
 		std::string m_comments;
-		char flagnames[MAX_FLAGS][32];
+		typedef std::vector<std::string> FlagNames;
+		FlagNames flagnames;
 
 		std::string m_modelpath; /** model path - only for displaying in radiant */
 		std::string m_skin;
@@ -320,7 +321,9 @@ inline EntityClass* Eclass_Alloc ()
 	EntityClass* e = new EntityClass;
 
 	e->fixedsize = false;
-	memset(e->flagnames, 0, MAX_FLAGS * 32);
+
+	for (int i = 0; i < 32; i++)
+		e->flagnames.push_back("");
 
 	e->maxs = Vector3(-1, -1, -1);
 	e->mins = Vector3(1, 1, 1);

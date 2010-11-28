@@ -43,19 +43,22 @@ class EntityClassCollector
 		}
 
 		virtual void insert (EntityClass* eclass) = 0;
-		virtual void insert (const char* name, const ListAttributeType& list)
+		virtual void insert (const std::string& name, const ListAttributeType& list)
 		{
 		}
 };
 
-/** @todo remove this - we will only support the entities.ufo from base/ufos */
-struct EntityClassScanner
+class EntityClassScanner
 {
+	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "eclass");
 
-		void (*scanFile) (EntityClassCollector& collector, const std::string& filename);
-		const std::string (*getFilename) ();
+		virtual ~EntityClassScanner ()
+		{
+		}
+
+		virtual void scanFile (EntityClassCollector& collector) = 0;
 };
 
 #include "modulesystem.h"
@@ -87,29 +90,32 @@ class ModuleObserver;
  * is responsible for maintaining a list of available entity
  * classes which the EntityCreator can insert into a map.
  */
-struct EntityClassManager
+class IEntityClassManager
 {
+	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "eclassmanager");
 
-		EntityClass* (*findOrInsert) (const std::string& name, bool has_brushes);
-		const ListAttributeType* (*findListType) (const std::string& name);
-		void (*forEach) (EntityClassVisitor& visitor);
-		void (*attach) (ModuleObserver& observer);
-		void (*detach) (ModuleObserver& observer);
-		void (*realise) ();
-		void (*unrealise) ();
+		virtual ~IEntityClassManager() {}
+
+		virtual EntityClass* findOrInsert (const std::string& name, bool has_brushes) = 0;
+		virtual const ListAttributeType* findListType (const std::string& name) = 0;
+		virtual void forEach (EntityClassVisitor& visitor) = 0;
+		virtual void attach (ModuleObserver& observer) = 0;
+		virtual void detach (ModuleObserver& observer) = 0;
+		virtual void realise () = 0;
+		virtual void unrealise () = 0;
 };
 
 template<typename Type>
 class GlobalModule;
-typedef GlobalModule<EntityClassManager> GlobalEntityClassManagerModule;
+typedef GlobalModule<IEntityClassManager> GlobalEntityClassManagerModule;
 
 template<typename Type>
 class GlobalModuleRef;
-typedef GlobalModuleRef<EntityClassManager> GlobalEntityClassManagerModuleRef;
+typedef GlobalModuleRef<IEntityClassManager> GlobalEntityClassManagerModuleRef;
 
-inline EntityClassManager& GlobalEntityClassManager ()
+inline IEntityClassManager& GlobalEntityClassManager ()
 {
 	return GlobalEntityClassManagerModule::getTable();
 }

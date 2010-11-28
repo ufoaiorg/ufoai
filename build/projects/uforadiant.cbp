@@ -493,8 +493,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\Clipper.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclass.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\entity\eclass_def.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityClassManager.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityClassMgrModule.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityClassScanner.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityDefinitionModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entity.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entity.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitymodule.cpp" />
