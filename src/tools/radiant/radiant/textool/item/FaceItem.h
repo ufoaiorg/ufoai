@@ -38,7 +38,7 @@ public:
 	/** greebo: Flips the face texdef (if selected)
 	 * 			about the given axis in texture space.
 	 *
-	 *  @axis:  0 = s-axis flip, 1 = t-axis flip
+	 *  @param axis:  0 = s-axis flip, 1 = t-axis flip
 	 */
 	virtual void flipSelected(unsigned int axis);
 
@@ -46,7 +46,7 @@ private:
 	/** greebo: Calculates the mean value of all the texCoords,
 	 * 			which is technically the centroid.
 	 *
-	 * @returns: the Vector2 containing the centroid's coords.
+	 * @return  the Vector2 containing the centroid's coords.
 	 */
 	Vector2 getCentroid() const;
 };

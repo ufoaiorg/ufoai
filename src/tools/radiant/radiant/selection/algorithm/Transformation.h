@@ -9,7 +9,7 @@ namespace selection {
 		/** greebo: Rotates the current selection about the
 		 * 			specified rotation angles.
 		 *
-		 * @eulerXYZ: A three-component vector containing the three
+		 * @param eulerXYZ: A three-component vector containing the three
 		 * 			  angles in degrees (vector[0] refers to x-axis rotation).
 		 *
 		 * Note: this is an undoable command.
@@ -20,7 +20,7 @@ namespace selection {
 		 * 			this emits an error if one of the vector's components
 		 * 			are zero.
 		 *
-		 * @scaleXYZ: A three-component vector (can be non-uniform) containing
+		 * @param scaleXYZ: A three-component vector (can be non-uniform) containing
 		 * 			  the three scale factors.
 		 *
 		 * Note: this is an undoable command.

@@ -15,7 +15,7 @@ public:
 
 	/** greebo: This transforms the object using the given transformation matrix.
 	 *
-	 * @transform: A 4x4 transformation matrix with the z-relevant transformation
+	 * @param transform: A 4x4 transformation matrix with the z-relevant transformation
 	 * 			   components set to identity.
 	 *
 	 * 			   xx, xy, yx, yy, tx, ty are the relevant components.
@@ -37,7 +37,7 @@ public:
 
 	/** greebo: Flips the selected coords about the given axis in texspace.
 	 *
-	 *  @axis:  0 = s-axis flip, 1 = t-axis flip
+	 *  @param axis:  0 = s-axis flip, 1 = t-axis flip
 	 */
 	virtual void flipSelected(const int& axis) = 0;
 
