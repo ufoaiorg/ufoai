@@ -12,6 +12,10 @@ namespace selection {
 	 */
 	void connectSelectedEntities();
 
+	void groupSelected ();
+
+	void ungroupSelected ();
+
 	} // namespace algorithm
 } // namespace selection
 

@@ -185,7 +185,6 @@
 		<menuItem name="ungroupEntity" caption="_Ungroup" command="UngroupSelection" />
 		<menuItem name="connectEntity" caption="_Connect" command="ConnectSelection" />
 		<menuItem name="regroupEntity" caption="_Regroup" command="GroupSelection" />
-		<menuItem name="selectEntityColor" caption="_Select Color..." command="EntityColor" icon="editcolour16.png" />
 	</subMenu>
 
 	<subMenu name="tools" caption="Tools">
