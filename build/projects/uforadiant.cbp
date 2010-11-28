@@ -842,7 +842,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ump\UMPFile.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ump\UMPTile.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ump\UMPTile.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\undo.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\undo\RadiantUndoSystem.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\undo\RadiantUndoSystemModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\undo\Operation.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\undo\SnapShot.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\undo\Stack.h" />
