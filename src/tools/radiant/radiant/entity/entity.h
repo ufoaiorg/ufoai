@@ -44,7 +44,6 @@ class EntityCreationException: public std::runtime_error
 /** Create an instance of the given entity at the given position
  */
 void Entity_createFromSelection (const std::string& name, const Vector3& origin);
-void Entity_connectSelected ();
 
 void Scene_EntitySetKeyValue_Selected (const std::string& classname, const std::string& key, const std::string& value);
 void Scene_EntitySetClassname_Selected (const std::string& classname, const std::string& newClassname);

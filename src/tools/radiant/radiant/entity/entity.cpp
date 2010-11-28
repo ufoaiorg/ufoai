@@ -275,16 +275,6 @@ void Entity_groupSelected ()
 	}
 }
 
-void Entity_connectSelected ()
-{
-	if (GlobalSelectionSystem().countSelected() == 2) {
-		GlobalEntityCreator().connectEntities(GlobalSelectionSystem().penultimateSelected().path(),
-				GlobalSelectionSystem().ultimateSelected().path());
-	} else {
-		g_warning("entityConnectSelected: exactly two instances must be selected\n");
-	}
-}
-
 static bool Entity_create (const std::string& name, const Vector3& origin)
 {
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
