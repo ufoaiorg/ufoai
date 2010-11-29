@@ -2,7 +2,7 @@
 !define SHORT_PRODUCT_NAME "UFORadiant"
 !define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Mapeditor"
 !ifndef PRODUCT_VERSION
-!define PRODUCT_VERSION "1.5.0"
+!define PRODUCT_VERSION "1.6.0"
 !endif
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://ufoai.sf.net"
