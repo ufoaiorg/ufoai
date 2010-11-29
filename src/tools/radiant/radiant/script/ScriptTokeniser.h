@@ -24,6 +24,8 @@
 
 #include "iscriplib.h"
 
+#define	MAXTOKEN	1024
+
 class ScriptTokeniser: public Tokeniser
 {
 		enum CharType
