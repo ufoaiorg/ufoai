@@ -45,19 +45,4 @@ create-dev: dataarchive wininstaller linuxinstaller macinstaller sourcearchive
 # Generate a tar archive of the sources.
 #
 sourcearchive:
-# Create the tarsrc/ufoai-$(VERSION)-source directory in order that the
-# resulting tar archive extracts to one directory.
-	mkdir -p ./tarsrc
-	ln -fsn ../ tarsrc/ufoai-$(UFOAI_VERSION)-source
-# Take a list of files from SVN. Trim SVN's output to include only the filenames
-# and paths. Then feed that list to tar.
-	svn status -v|grep -v "^?"|cut -c 7-|awk '{print $$4}'|sed "s/^/ufoai-$(UFOAI_VERSION)-source\//"> ./tarsrc/filelist
-# Also tell tar to exclude base/ and contrib/ directories.
-	tar -cvjh --no-recursion	\
-		-C ./tarsrc				\
-		--exclude "*base/*"		\
-		--exclude "*contrib*"	\
-		-T ./tarsrc/filelist	\
-		-f ./tarsrc/ufoai-$(UFOAI_VERSION)-source.tar.bz2
-	mv ./tarsrc/ufoai-$(UFOAI_VERSION)-source.tar.bz2 ./
-	rm -rf ./tarsrc
+	$(Q)git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-source/ HEAD | bzip2 -9 > ufoai-$(UFOAI_VERSION)-source.tar.bz2
