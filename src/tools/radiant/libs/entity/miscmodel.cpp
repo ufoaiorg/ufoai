@@ -50,7 +50,7 @@
 #include "keyobservers.h"
 #include "namekeys.h"
 
-#include "entity.h"
+#include "EntityCreator.h"
 
 class MiscModel: public Snappable
 {

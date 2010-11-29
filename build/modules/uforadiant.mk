@@ -327,7 +327,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/menu/PopupMenu.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window/PersistentTransientWindow.cpp \
 	\
-	$(RADIANT_BASE)/libs/entity/entity.cpp \
+	$(RADIANT_BASE)/libs/entity/EntityCreator.cpp \
 	$(RADIANT_BASE)/libs/entity/eclassmodel.cpp \
 	$(RADIANT_BASE)/libs/entity/generic.cpp \
 	$(RADIANT_BASE)/libs/entity/group.cpp \

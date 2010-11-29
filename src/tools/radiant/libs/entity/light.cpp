@@ -57,7 +57,7 @@
 #include "namekeys.h"
 
 #include "../../radiant/entity/EntitySettings.h"
-#include "entity.h"
+#include "EntityCreator.h"
 
 static void sphere_draw_fill (const Vector3& origin, float radius, int sides)
 {

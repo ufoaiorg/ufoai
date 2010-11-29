@@ -48,7 +48,7 @@
 #include "keyobservers.h"
 #include "namekeys.h"
 
-#include "entity.h"
+#include "EntityCreator.h"
 #include "arrow.h"
 
 inline void read_aabb (AABB& aabb, const EntityClass& eclass)

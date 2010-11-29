@@ -48,7 +48,7 @@
 #include "namekeys.h"
 #include "nameable.h"
 
-#include "entity.h"
+#include "EntityCreator.h"
 
 class Group
 {

@@ -50,7 +50,7 @@
 #include "keyobservers.h"
 #include "namekeys.h"
 #include "model.h"
-#include "entity.h"
+#include "EntityCreator.h"
 
 /**
  * @brief Render class for the grid windows

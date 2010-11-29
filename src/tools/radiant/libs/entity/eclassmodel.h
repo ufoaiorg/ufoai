@@ -31,6 +31,4 @@ class EntityClass;
 
 scene::Node& New_EclassModel (EntityClass* eclass);
 
-#include "entity.h"
-
 #endif

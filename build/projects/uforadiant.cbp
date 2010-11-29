@@ -201,8 +201,8 @@
 		<Unit filename="..\..\src\tools\radiant\libs\entity\colour.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\entity\eclassmodel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\entity\eclassmodel.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\entity\entity.cpp" />
-		<Unit filename="..\..\src\tools\radiant\libs\entity\entity.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\entity\EntityCreator.cpp" />
+		<Unit filename="..\..\src\tools\radiant\libs\entity\EntityCreator.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\entity\generic.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\entity\generic.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\entity\group.cpp" />
