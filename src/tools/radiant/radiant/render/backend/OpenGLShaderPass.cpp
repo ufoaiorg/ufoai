@@ -81,56 +81,56 @@ void OpenGLShaderPass::apply (OpenGLState& current, unsigned int globalstate)
 	}
 
 	if (delta & state & RENDER_LIGHTING) {
-		glEnable( GL_LIGHTING);
-		glEnable( GL_COLOR_MATERIAL);
-		glEnableClientState( GL_NORMAL_ARRAY);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_COLOR_MATERIAL);
+		glEnableClientState(GL_NORMAL_ARRAY);
 	} else if (delta & ~state & RENDER_LIGHTING) {
-		glDisable( GL_LIGHTING);
-		glDisable( GL_COLOR_MATERIAL);
-		glDisableClientState( GL_NORMAL_ARRAY);
+		glDisable(GL_LIGHTING);
+		glDisable(GL_COLOR_MATERIAL);
+		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 
 	if (delta & state & RENDER_TEXTURE_2D) {
 		if (GlobalOpenGL().GL_1_3()) {
-			glActiveTexture( GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE0);
 			glClientActiveTexture(GL_TEXTURE0);
 		}
 
-		glEnable( GL_TEXTURE_2D);
+		glEnable(GL_TEXTURE_2D);
 		glColor4f(1, 1, 1, m_state.m_colour[3]);
-		glEnableClientState( GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	} else if (delta & ~state & RENDER_TEXTURE_2D) {
 		if (GlobalOpenGL().GL_1_3()) {
-			glActiveTexture( GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE0);
 			glClientActiveTexture(GL_TEXTURE0);
 		}
 
-		glDisable( GL_TEXTURE_2D);
+		glDisable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glDisableClientState( GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 
 	if (delta & state & RENDER_BLEND) {
-		glEnable( GL_BLEND);
+		glEnable(GL_BLEND);
 	} else if (delta & ~state & RENDER_BLEND) {
-		glDisable( GL_BLEND);
+		glDisable(GL_BLEND);
 	}
 
 	setState(state, delta, RENDER_CULLFACE, GL_CULL_FACE);
 
 	if (delta & state & RENDER_SMOOTH) {
-		glShadeModel( GL_SMOOTH);
+		glShadeModel(GL_SMOOTH);
 	} else if (delta & ~state & RENDER_SMOOTH) {
-		glShadeModel( GL_FLAT);
+		glShadeModel(GL_FLAT);
 	}
 
 	setState(state, delta, RENDER_SCALED, GL_NORMALIZE); // not GL_RESCALE_NORMAL
 	setState(state, delta, RENDER_DEPTHTEST, GL_DEPTH_TEST);
 
 	if (delta & state & RENDER_DEPTHWRITE) {
-		glDepthMask( GL_TRUE);
+		glDepthMask(GL_TRUE);
 	} else if (delta & ~state & RENDER_DEPTHWRITE) {
-		glDepthMask( GL_FALSE);
+		glDepthMask(GL_FALSE);
 	}
 
 	if (delta & state & RENDER_COLOURWRITE) {
@@ -142,9 +142,9 @@ void OpenGLShaderPass::apply (OpenGLState& current, unsigned int globalstate)
 	setState(state, delta, RENDER_ALPHATEST, GL_ALPHA_TEST);
 
 	if (delta & state & RENDER_COLOURARRAY) {
-		glEnableClientState( GL_COLOR_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
 	} else if (delta & ~state & RENDER_COLOURARRAY) {
-		glDisableClientState( GL_COLOR_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
 		glColor4fv(m_state.m_colour);
 	}
 
@@ -176,19 +176,17 @@ void OpenGLShaderPass::apply (OpenGLState& current, unsigned int globalstate)
 		current.m_alpharef = m_state.m_alpharef;
 	}
 
-	{
-		if (GlobalOpenGL().GL_1_3()) {
-			setTextureState(current.m_texture, m_state.m_texture, GL_TEXTURE0);
-			setTextureState(current.m_texture1, m_state.m_texture1, GL_TEXTURE1);
-			setTextureState(current.m_texture2, m_state.m_texture2, GL_TEXTURE2);
-			setTextureState(current.m_texture3, m_state.m_texture3, GL_TEXTURE3);
-			setTextureState(current.m_texture4, m_state.m_texture4, GL_TEXTURE4);
-			setTextureState(current.m_texture5, m_state.m_texture5, GL_TEXTURE5);
-			setTextureState(current.m_texture6, m_state.m_texture6, GL_TEXTURE6);
-			setTextureState(current.m_texture7, m_state.m_texture7, GL_TEXTURE7);
-		} else {
-			setTextureState(current.m_texture, m_state.m_texture);
-		}
+	if (GlobalOpenGL().GL_1_3()) {
+		setTextureState(current.m_texture, m_state.m_texture, GL_TEXTURE0);
+		setTextureState(current.m_texture1, m_state.m_texture1, GL_TEXTURE1);
+		setTextureState(current.m_texture2, m_state.m_texture2, GL_TEXTURE2);
+		setTextureState(current.m_texture3, m_state.m_texture3, GL_TEXTURE3);
+		setTextureState(current.m_texture4, m_state.m_texture4, GL_TEXTURE4);
+		setTextureState(current.m_texture5, m_state.m_texture5, GL_TEXTURE5);
+		setTextureState(current.m_texture6, m_state.m_texture6, GL_TEXTURE6);
+		setTextureState(current.m_texture7, m_state.m_texture7, GL_TEXTURE7);
+	} else {
+		setTextureState(current.m_texture, m_state.m_texture);
 	}
 
 	if (state & RENDER_TEXTURE_2D && m_state.m_colour[3] != current.m_colour[3]) {
@@ -224,10 +222,10 @@ void OpenGLShaderPass::apply (OpenGLState& current, unsigned int globalstate)
 		current.m_polygonOffset = m_state.m_polygonOffset;
 
 		if (current.m_polygonOffset > 0.0f) {
-			glEnable( GL_POLYGON_OFFSET_FILL);
+			glEnable(GL_POLYGON_OFFSET_FILL);
 			glPolygonOffset(-1, -1 * current.m_polygonOffset);
 		} else {
-			glDisable( GL_POLYGON_OFFSET_FILL);
+			glDisable(GL_POLYGON_OFFSET_FILL);
 		}
 	}
 
@@ -239,15 +237,15 @@ void OpenGLShaderPass::render (OpenGLState& current, unsigned int globalstate, c
 	if ((globalstate & m_state.m_state & RENDER_SCREEN) != 0) {
 		apply(current, globalstate);
 
-		glMatrixMode( GL_PROJECTION);
+		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glLoadMatrixf(Matrix4::getIdentity());
 
-		glMatrixMode( GL_MODELVIEW);
+		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadMatrixf(Matrix4::getIdentity());
 
-		glBegin( GL_QUADS);
+		glBegin(GL_QUADS);
 		glVertex3f(-1, -1, 0);
 		glVertex3f(1, -1, 0);
 		glVertex3f(1, 1, 0);
