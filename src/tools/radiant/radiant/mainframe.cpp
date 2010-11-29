@@ -93,6 +93,7 @@
 #include "log/console.h"
 #include "entity/entity.h"
 #include "sidebar/sidebar.h"
+#include "sidebar/surfaceinspector/surfaceinspector.h"
 #include "ui/mainframe/SplitPaneLayout.h"
 #include "ui/findshader/FindShader.h"
 #include "ui/about/AboutDialog.h"

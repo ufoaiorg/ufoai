@@ -2,7 +2,6 @@
 #define RADIANTWINDOWOBSERVER_H_
 
 #include "../camera/view.h"
-#include "../sidebar/surfaceinspector/surfaceinspector.h" // For apply/copy texture
 #include "windowobserver.h"
 
 #include "Device.h"

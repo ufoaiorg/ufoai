@@ -91,6 +91,7 @@
 #include "sidebar/sidebar.h"
 #include "sidebar/MapInfo.h"
 #include "sidebar/texturebrowser.h"
+#include "sidebar/surfaceinspector/surfaceinspector.h"
 
 #include "modulesystem/modulesmap.h"
 #include "modulesystem/singletonmodule.h"

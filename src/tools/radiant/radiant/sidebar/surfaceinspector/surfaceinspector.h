@@ -76,13 +76,6 @@ class Increment
 		typedef MemberCaller<Increment, &Increment::apply> ApplyCaller;
 };
 
-class FaceTexture
-{
-	public:
-		TextureProjection m_projection;
-		ContentsFlagsValue m_flags;
-};
-
 typedef Callback3<std::string&, TextureProjection&, ContentsFlagsValue&> GetTextureCallback;
 typedef Callback3<const std::string&, const TextureProjection&, const ContentsFlagsValue&> SetTextureCallback;
 
