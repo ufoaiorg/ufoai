@@ -1,1 +1,1 @@
-#define RADIANT_VERSION "1.5.0"
+#define RADIANT_VERSION "1.6.0"
