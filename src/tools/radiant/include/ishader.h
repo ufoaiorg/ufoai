@@ -72,6 +72,8 @@ class IShader
 
 		virtual BlendFunc getBlendFunc () const = 0;
 
+		virtual bool hasLayers() const = 0;
+
 		virtual void forEachLayer(const ShaderLayerCallback& layer) const = 0;
 
 		/**

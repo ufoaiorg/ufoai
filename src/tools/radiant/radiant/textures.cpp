@@ -50,7 +50,7 @@ void LoadTextureRGBA (qtexture_t* q, Image* image)
 
 	Image* processed = g_manipulator->getProcessedImage(image);
 
-	q->hasAlpha = g_manipulator->hasAlpha(processed);
+	q->hasAlpha = processed->hasAlpha();
 	q->color = g_manipulator->getFlatshadeColour(processed);
 
 	glGenTextures(1, &q->texture_number);
@@ -64,7 +64,7 @@ void LoadTextureRGBA (qtexture_t* q, Image* image)
 	// Tell OpenGL how to use the mip maps we will be creating here
 	g_manipulator->setTextureParameters();
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, processed->getWidth(), processed->getHeight(), 0, GL_RGBA,
+	glTexImage2D(GL_TEXTURE_2D, 0, q->hasAlpha ? GL_RGBA : GL_RGB, processed->getWidth(), processed->getHeight(), 0, GL_RGBA,
 			GL_UNSIGNED_BYTE, processed->getRGBAPixels());
 
 	glBindTexture(GL_TEXTURE_2D, 0);

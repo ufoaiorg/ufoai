@@ -35,6 +35,7 @@ class Image
 		virtual byte* getRGBAPixels () const = 0;
 		virtual unsigned int getWidth () const = 0;
 		virtual unsigned int getHeight () const = 0;
+		virtual bool hasAlpha() const = 0;
 
 		virtual int getSurfaceFlags () const
 		{
@@ -48,6 +49,7 @@ class Image
 		{
 			return 0;
 		}
+
 };
 
 class ArchiveFile;

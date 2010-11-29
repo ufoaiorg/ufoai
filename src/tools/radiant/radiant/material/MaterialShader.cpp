@@ -264,6 +264,11 @@ void MaterialShader::addLayer (MapLayer &layer)
 		m_layers.push_back(layer);
 }
 
+bool MaterialShader::hasLayers() const
+{
+	return !m_layers.empty();
+}
+
 void MaterialShader::forEachLayer (const ShaderLayerCallback& callback) const
 {
 	for (MapLayers::const_iterator i = m_layers.begin(); i != m_layers.end(); ++i) {

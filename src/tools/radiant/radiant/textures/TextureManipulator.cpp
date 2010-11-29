@@ -141,22 +141,6 @@ Colour3 TextureManipulator::getFlatshadeColour (Image* input)
 	return returnValue;
 }
 
-bool TextureManipulator::hasAlpha (const Image* input) const
-{
-	// Calculate the number of pixels in this image
-	int numPixels = input->getWidth() * input->getHeight();
-
-	// Set the pixel pointer to the very first pixel
-	unsigned char* pixels = input->getRGBAPixels();
-	// Go over all the pixels and change their value accordingly
-	for (int i = 0; i < (numPixels * 4); i += 4) {
-		if ((pixels + 3)[i] != 255)
-			return true;
-	}
-
-	return false;
-}
-
 Image* TextureManipulator::getProcessedImage (Image* input)
 {
 	Image* output;
@@ -172,7 +156,6 @@ Image* TextureManipulator::getProcessedImage (Image* input)
 
 Image* TextureManipulator::getResized (Image* input)
 {
-
 	int width = input->getWidth();
 	int height = input->getHeight();
 	unsigned char* sourcePixels = input->getRGBAPixels();
@@ -191,7 +174,7 @@ Image* TextureManipulator::getResized (Image* input)
 	// Check, if the image dimensions are already powers of two, if not, rescale it
 	if (!(gl_width == width && gl_height == height)) {
 		// Create a new Image that hold the resampled texture
-		output = new RGBAImage(gl_width, gl_height);
+		output = new RGBAImage(gl_width, gl_height, input->hasAlpha());
 
 		// Resample the texture into the allocated image
 		resampleTexture(sourcePixels, width, height, output->getRGBAPixels(), gl_width, gl_height, 4);
@@ -231,7 +214,6 @@ Image* TextureManipulator::getResized (Image* input)
 // resample texture gamma according to user settings
 Image* TextureManipulator::processGamma (Image* input)
 {
-
 	// Don't do unnecessary work here...
 	if (_gamma == 1.0f) {
 		return input;

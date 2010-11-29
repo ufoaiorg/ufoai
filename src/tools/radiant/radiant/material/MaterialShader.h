@@ -163,5 +163,7 @@ class MaterialShader: public IShader
 
 		void forEachLayer (const ShaderLayerCallback& callback) const;
 
+		bool hasLayers() const;
+
 		float getPolygonOffset () const;
 };

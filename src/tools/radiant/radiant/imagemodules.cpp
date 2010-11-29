@@ -49,7 +49,7 @@ static Image* LoadImageGDK (ArchiveFile& file)
 
 	if (img != NULL) {
 		// Allocate a new image
-		RGBAImage* image = new RGBAImage(gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img));
+		RGBAImage* image = new RGBAImage(gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img), true);
 
 		// Initialise the source buffer pointers
 		guchar* gdkStart = gdk_pixbuf_get_pixels(img);
@@ -105,7 +105,7 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 		const int stepWidth = gdk_pixbuf_get_n_channels(pixbuf);
 		const guchar *pixels = gdk_pixbuf_get_pixels(pixbuf);
 
-		image = new RGBAImage(width, height);
+		image = new RGBAImage(width, height, hasAlpha);
 		byte *rgba = image->getRGBAPixels();
 		const int rowextra = gdk_pixbuf_get_rowstride(pixbuf) - width * stepWidth;
 

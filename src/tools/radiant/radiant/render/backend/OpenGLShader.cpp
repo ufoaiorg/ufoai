@@ -182,7 +182,7 @@ void OpenGLShader::appendBlendLayer (const ShaderLayer& layer)
 	reinterpret_cast<Vector3&> (state.m_colour) = layer.getColour();
 	state.m_colour[3] = 1.0f;
 
-	state.m_sort = OpenGLState::eSortFullbright;
+	state.m_sort = OpenGLState::eSortMultiFirst;
 
 	// Polygon offset
 	state.m_polygonOffset = layer.getPolygonOffset();
@@ -402,7 +402,7 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 			state.m_state |= RENDER_DEPTHWRITE;
 		}
 		state.m_sort = OpenGLState::eSortTranslucent;
-	} else if (m_shader->getTexture()->hasAlpha) {
+	} else if (m_shader->getTexture()->hasAlpha && m_shader->hasLayers()) {
 		state.m_state |= RENDER_BLEND;
 		state.m_state |= RENDER_DEPTHWRITE;
 		state.m_sort = OpenGLState::eSortTranslucent;
