@@ -38,11 +38,6 @@ inline Cullable* Instance_getCullable (scene::Instance& instance)
 	return dynamic_cast<Cullable*>(&instance);
 }
 
-inline Renderable* Instance_getRenderable (scene::Instance& instance)
-{
-	return dynamic_cast<Renderable*>(&instance);
-}
-
 inline VolumeIntersectionValue Cullable_testVisible (scene::Instance& instance, const VolumeTest& volume,
 		VolumeIntersectionValue parentVisible)
 {

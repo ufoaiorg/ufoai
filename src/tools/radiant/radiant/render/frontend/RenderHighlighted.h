@@ -1,6 +1,11 @@
 #ifndef RENDERHIGHLIGHTED_H_
 #define RENDERHIGHLIGHTED_H_
 
+inline Renderable* Instance_getRenderable (scene::Instance& instance)
+{
+	return dynamic_cast<Renderable*>(&instance);
+}
+
 class RenderHighlighted
 {
 		Renderer& m_renderer;
