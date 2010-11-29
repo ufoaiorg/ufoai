@@ -40,11 +40,11 @@
 #include "eclasslib.h"
 
 #include "targetable.h"
-#include "OriginKey.h"
-#include "AnglesKey.h"
-#include "ScaleKey.h"
+#include "keys/OriginKey.h"
+#include "keys/AnglesKey.h"
+#include "keys/ScaleKey.h"
 #include "namedentity.h"
-#include "KeyObserverMap.h"
+#include "keys/KeyObserverMap.h"
 #include "NameKeys.h"
 #include "nameable.h"
 

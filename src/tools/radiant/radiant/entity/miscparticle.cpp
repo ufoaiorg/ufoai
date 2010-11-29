@@ -45,9 +45,9 @@
 #include <glib/gslist.h>
 
 #include "targetable.h"
-#include "OriginKey.h"
+#include "keys/OriginKey.h"
 #include "namedentity.h"
-#include "KeyObserverMap.h"
+#include "keys/KeyObserverMap.h"
 #include "NameKeys.h"
 #include "model.h"
 #include "EntityCreator.h"

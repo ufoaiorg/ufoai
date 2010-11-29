@@ -50,10 +50,10 @@
 #include "traverselib.h"
 
 #include "targetable.h"
-#include "OriginKey.h"
-#include "ColourKey.h"
+#include "keys/OriginKey.h"
+#include "keys/ColourKey.h"
 #include "namedentity.h"
-#include "KeyObserverMap.h"
+#include "keys/KeyObserverMap.h"
 #include "NameKeys.h"
 
 #include "../../radiant/entity/EntitySettings.h"

@@ -34,10 +34,10 @@
 #include "render.h"
 #include "eclasslib.h"
 #include "targetable.h"
-#include "OriginKey.h"
-#include "AngleKey.h"
+#include "keys/OriginKey.h"
+#include "keys/AngleKey.h"
 #include "namedentity.h"
-#include "KeyObserverMap.h"
+#include "keys/KeyObserverMap.h"
 #include "NameKeys.h"
 
 #include "EntityCreator.h"
