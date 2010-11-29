@@ -210,7 +210,7 @@ void Radiant_Initialise (void)
 	Preferences_Load();
 
 	// Load the other modules
-	Radiant_Construct(GlobalModuleServer_get());
+	Radiant_Construct(GlobalModuleServer());
 
 	g_VFSModuleObserver.realise();
 	// Rebuild the map path basing on the userGamePath

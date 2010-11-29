@@ -103,7 +103,7 @@ class RadiantModuleServer: public ModuleServer
 		}
 };
 
-ModuleServer& GlobalModuleServer_get ()
+ModuleServer& GlobalModuleServer ()
 {
 	static RadiantModuleServer _server;
 	return _server;

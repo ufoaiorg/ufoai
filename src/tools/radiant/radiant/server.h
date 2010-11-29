@@ -27,6 +27,6 @@
 #define INCLUDED_SERVER_H
 
 class ModuleServer;
-ModuleServer& GlobalModuleServer_get ();
+ModuleServer& GlobalModuleServer ();
 
 #endif
