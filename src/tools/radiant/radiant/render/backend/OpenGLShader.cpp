@@ -197,7 +197,7 @@ void OpenGLShader::visitShaderLayers (const ShaderLayer& layer)
 /// \todo Define special-case shaders in a data file.
 void OpenGLShader::construct (const std::string& name)
 {
-	static Vector3 highLightColour(1, 0, 0);
+	static Vector4 highLightColour(1, 0, 0, 0.3);
 
 	// Check the first character of the name to see if this is a special built-in shader
 	switch (name[0]) {
@@ -246,10 +246,6 @@ void OpenGLShader::construct (const std::string& name)
 			state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortControlFirst + 1;
 			state.m_pointsize = 4;
-		} else if (name == "$BIGPOINT") {
-			state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
-			state.m_sort = OpenGLState::eSortControlFirst;
-			state.m_pointsize = 6;
 		} else if (name == "$PIVOT") {
 			state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHTEST | RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortGUI1;
@@ -261,52 +257,31 @@ void OpenGLShader::construct (const std::string& name)
 			hiddenLine.m_sort = OpenGLState::eSortGUI0;
 			hiddenLine.m_linewidth = 2;
 			hiddenLine.m_depthfunc = GL_GREATER;
-		} else if (name == "$LATTICE") {
-			state.m_colour[0] = 1;
-			state.m_colour[1] = 0.5;
-			state.m_colour[2] = 0;
-			state.m_colour[3] = 1;
-			state.m_state = RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
-			state.m_sort = OpenGLState::eSortControlFirst;
 		} else if (name == "$WIREFRAME") {
 			state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortFullbright;
 		} else if (name == "$CAM_HIGHLIGHT") {
-			state.m_colour[0] = highLightColour[0];
-			state.m_colour[1] = highLightColour[1];
-			state.m_colour[2] = highLightColour[2];
-			state.m_colour[3] = 0.3f;
+			state.m_colour = highLightColour;
 			state.m_state = RENDER_FILL | RENDER_DEPTHTEST | RENDER_CULLFACE | RENDER_BLEND | RENDER_COLOURWRITE
 					| RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortHighlight;
 			state.m_depthfunc = GL_LEQUAL;
 		} else if (name == "$CAM_OVERLAY") {
-#if 0
-			state._visStack = RENDER_CULLFACE|RENDER_COLOURWRITE|RENDER_DEPTHWRITE;
-			state.m_sort = OpenGLState::eSortOverlayFirst;
-#else
 			state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE
 					| RENDER_OFFSETLINE;
 			state.m_sort = OpenGLState::eSortOverlayFirst + 1;
 			state.m_depthfunc = GL_LEQUAL;
 
 			OpenGLState& hiddenLine = appendDefaultPass();
-			hiddenLine.m_colour[0] = 0.75;
-			hiddenLine.m_colour[1] = 0.75;
-			hiddenLine.m_colour[2] = 0.75;
-			hiddenLine.m_colour[3] = 1;
+			hiddenLine.m_colour = Vector4(0.75, 0.75, 0.75, 1);
 			hiddenLine.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_OFFSETLINE
 					| RENDER_LINESTIPPLE;
 			hiddenLine.m_sort = OpenGLState::eSortOverlayFirst;
 			hiddenLine.m_depthfunc = GL_GREATER;
 			hiddenLine.m_linestipple_factor = 2;
-#endif
 		} else if (name == "$XY_OVERLAY") {
 			Vector3 colorSelBrushes = ColourSchemes().getColourVector3("selected_brush");
-			state.m_colour[0] = colorSelBrushes[0];
-			state.m_colour[1] = colorSelBrushes[1];
-			state.m_colour[2] = colorSelBrushes[2];
-			state.m_colour[3] = 1;
+			state.m_colour = Vector4(colorSelBrushes, 1);
 			state.m_state = RENDER_COLOURWRITE | RENDER_LINESTIPPLE;
 			state.m_sort = OpenGLState::eSortOverlayFirst;
 			state.m_linewidth = 2;
@@ -314,29 +289,8 @@ void OpenGLShader::construct (const std::string& name)
 		} else if (name == "$DEBUG_CLIPPED") {
 			state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortLast;
-		} else if (name == "$POINTFILE") {
-			state.m_colour[0] = 1;
-			state.m_colour[1] = 0;
-			state.m_colour[2] = 0;
-			state.m_colour[3] = 1;
-			state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
-			state.m_sort = OpenGLState::eSortFullbright;
-			state.m_linewidth = 4;
-		} else if (name == "$LIGHT_SPHERE") {
-			state.m_colour[0] = .15f * .95f;
-			state.m_colour[1] = .15f * .95f;
-			state.m_colour[2] = .15f * .95f;
-			state.m_colour[3] = 1;
-			state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_BLEND | RENDER_FILL | RENDER_COLOURWRITE
-					| RENDER_DEPTHWRITE;
-			state.m_blend_src = GL_ONE;
-			state.m_blend_dst = GL_ONE;
-			state.m_sort = OpenGLState::eSortTranslucent;
 		} else if (name == "$Q3MAP2_LIGHT_SPHERE") {
-			state.m_colour[0] = .05f;
-			state.m_colour[1] = .05f;
-			state.m_colour[2] = .05f;
-			state.m_colour[3] = 1;
+			state.m_colour =  Vector4(.05f, .05f, .05f, 1);
 			state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_BLEND | RENDER_FILL;
 			state.m_blend_src = GL_ONE;
 			state.m_blend_dst = GL_ONE;
@@ -371,30 +325,14 @@ void OpenGLShader::construct (const std::string& name)
 			hiddenLine.m_depthfunc = GL_GREATER;
 		} else if (name == "$CLIPPER_OVERLAY") {
 			Vector3 colorClipper = ColourSchemes().getColourVector3("clipper");
-			state.m_colour[0] = colorClipper[0];
-			state.m_colour[1] = colorClipper[1];
-			state.m_colour[2] = colorClipper[2];
-			state.m_colour[3] = 1;
+			state.m_colour = Vector4(colorClipper, 1);
 			state.m_state = RENDER_CULLFACE | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_FILL
 					| RENDER_POLYGONSTIPPLE;
 			state.m_sort = OpenGLState::eSortOverlayFirst;
-		} else if (name == "$OVERBRIGHT") {
-			const float lightScale = 2;
-			state.m_colour[0] = lightScale * 0.5f;
-			state.m_colour[1] = lightScale * 0.5f;
-			state.m_colour[2] = lightScale * 0.5f;
-			state.m_colour[3] = 0.5;
-			state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_COLOURWRITE | RENDER_SCREEN;
-			state.m_sort = OpenGLState::eSortOverbrighten;
-			state.m_blend_src = GL_DST_COLOR;
-			state.m_blend_dst = GL_SRC_COLOR;
 		} else {
 			// default to something recognisable.. =)
 			ERROR_MESSAGE("hardcoded renderstate not found");
-			state.m_colour[0] = 1;
-			state.m_colour[1] = 0;
-			state.m_colour[2] = 1;
-			state.m_colour[3] = 1;
+			state.m_colour = Vector4(1, 0, 1, 1);
 			state.m_state = RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortFirst;
 		}
