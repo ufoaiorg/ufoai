@@ -75,6 +75,11 @@ typedef struct RT_data_s {
 	const char **list;			/**< The local models list */
 } RT_data_t;
 
+static inline void RT_ConnSetNoGo(RT_data_t *rtd, const int x, const int y, const int z, const int dir) {
+	RT_CONN(rtd->map, rtd->actorSize, x, y, z, dir) = 0;
+	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+}
+
 /**
  * @brief A 'place' is a part of a grid column where an actor can exist
  * Unlike for a grid-cell, floor and ceiling are absolute values
@@ -1411,11 +1416,9 @@ static int RT_UpdateConnection (RT_data_t *rtd, const actorSizeEnum_t actorSize,
 	/* test if the adjacent cell and the cell above it are blocked by a loaded model */
 	if (adjCeiling == 0 && (exadjCeiling == 0 || ceiling == 0)) {
 		/* We can't go this way. */
-		RT_CONN(rtd->map, actorSize, x, y, z, dir) = 0;
-		RT_STEPUP(rtd->map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_ConnSetNoGo(rtd, x, y, z, dir);
 #if RT_IS_BIDIRECTIONAL == 1
-		RT_CONN(rtd->map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(rtd->map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
 #endif
 		if (debugTrace)
 			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(rtd->map, actorSize, x, y, z), RT_CEILING(rtd->map, actorSize, ax, ay, z));
@@ -1435,11 +1438,9 @@ static int RT_UpdateConnection (RT_data_t *rtd, const actorSizeEnum_t actorSize,
 	 */
 	if (absCeiling < absAdjFloor || exabs_adj_ceiling < absFloor) {
 		/* We can't go this way. */
-		RT_CONN(rtd->map, actorSize, x, y, z, dir) = 0;
-		RT_STEPUP(rtd->map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_ConnSetNoGo(rtd, x, y, z, dir);
 #if RT_IS_BIDIRECTIONAL == 1
-		RT_CONN(rtd->map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(rtd->map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
 #endif
 		if (debugTrace)
 			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", absFloor, absCeiling, absAdjFloor, absAdjCeiling);
@@ -1458,8 +1459,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const actorSizeEnum_t actorSize,
 	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
 		/* ^ 1 reverses the direction of dir */
 #if RT_IS_BIDIRECTIONAL == 1
-		RT_CONN(rtd->map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(rtd->map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
 #endif
 		az++;
 	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
@@ -1518,8 +1518,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 	/* if our destination cell is out of bounds, bail. */
 	if (ax < 0 || ax > PATHFINDING_WIDTH - actorSize || ay < 0 || y > PATHFINDING_WIDTH - actorSize) {
 		/* We can't go this way. */
-		RT_CONN(map, actorSize, x, y, z, dir) = 0;
-		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_ConnSetNoGo(&rtd, x, y, z, dir);
 		/* There is only one entry here: There is no inverse cell to store data for. */
 		if (debugTrace)
 			Com_Printf("Destination cell non-existant.\n");
