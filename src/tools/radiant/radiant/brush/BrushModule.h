@@ -29,23 +29,6 @@
 
 #include "preferencesystem.h"
 
-class _QERFaceData
-{
-	public:
-		_QERFaceData () :
-			m_shader(""), contents(0), flags(0), value(0)
-		{
-		}
-		Vector3 m_p0;
-		Vector3 m_p1;
-		Vector3 m_p2;
-		TexDef m_texdef;
-		std::string m_shader;
-		int contents;
-		int flags;
-		int value;
-};
-
 // Some constants
 namespace {
 const std::string RKEY_ENABLE_TEXTURE_LOCK = "user/ui/brush/textureLock";
@@ -69,11 +52,6 @@ class BrushModuleClass: public RegistryKeyObserver, public BrushCreator, public 
 
 		// Creates a new brush node on the heap and returns it
 		scene::Node& createBrush ();
-
-		void Brush_forEachFace (scene::Node& brush, const BrushFaceDataCallback& callback);
-
-		// Adds a face plan to the given brush
-		bool Brush_addFace (scene::Node& brush, const _QERFaceData& faceData);
 
 		// ----------------------------------------------------------------------------------
 

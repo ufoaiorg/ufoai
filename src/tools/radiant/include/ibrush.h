@@ -33,10 +33,6 @@ namespace scene
 	class Node;
 }
 
-class _QERFaceData;
-
-typedef Callback1<const _QERFaceData&> BrushFaceDataCallback;
-
 class BrushCreator
 {
 	public:
@@ -46,8 +42,6 @@ class BrushCreator
 		{
 		}
 		virtual scene::Node& createBrush () = 0;
-		virtual void Brush_forEachFace (scene::Node& brush, const BrushFaceDataCallback& callback) = 0;
-		virtual bool Brush_addFace (scene::Node& brush, const _QERFaceData& faceData) = 0;
 };
 
 class Brush;

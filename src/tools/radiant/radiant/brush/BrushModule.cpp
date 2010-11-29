@@ -83,35 +83,9 @@ void BrushModuleClass::clipperColourChanged ()
 	BrushClipPlane::constructStatic();
 }
 
-void BrushFaceData_fromFace (const BrushFaceDataCallback& callback, Face& face)
-{
-	_QERFaceData faceData;
-	faceData.m_p0 = face.getPlane().planePoints()[0];
-	faceData.m_p1 = face.getPlane().planePoints()[1];
-	faceData.m_p2 = face.getPlane().planePoints()[2];
-	faceData.m_shader = face.GetShader();
-	faceData.m_texdef = face.getTexdef().m_projection.m_texdef;
-	faceData.contents = face.getShader().m_flags.getContentFlags();
-	faceData.flags = face.getShader().m_flags.getSurfaceFlags();
-	faceData.value = face.getShader().m_flags.getValue();
-	callback(faceData);
-}
-typedef ConstReferenceCaller1<BrushFaceDataCallback, Face&, BrushFaceData_fromFace> BrushFaceDataFromFaceCaller;
-typedef Callback1<Face&> FaceCallback;
-
 scene::Node& BrushModuleClass::createBrush ()
 {
 	return *(new BrushNode);
-}
-void BrushModuleClass::Brush_forEachFace (scene::Node& brush, const BrushFaceDataCallback& callback)
-{
-	::Brush_forEachFace(*Node_getBrush(brush), FaceCallback(BrushFaceDataFromFaceCaller(callback)));
-}
-bool BrushModuleClass::Brush_addFace (scene::Node& brush, const _QERFaceData& faceData)
-{
-	Node_getBrush(brush)->undoSave();
-	return Node_getBrush(brush)->addPlane(faceData.m_p0, faceData.m_p1, faceData.m_p2, faceData.m_shader,
-			TextureProjection(faceData.m_texdef)) != 0;
 }
 
 void BrushModuleClass::keyChanged(const std::string& changedKey, const std::string& newValue) {
