@@ -37,8 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VID_NORM_HEIGHT		768
 
 /**
- * @brief Contains the game screen context, everything need to create
- * create the graphic context. This value are stored to allow to restitute
+ * @brief Contains the game screen context, everything that is needed to create
+ * the graphic context. These value are stored to allow to restore
  * the old context.
  */
 typedef struct {
