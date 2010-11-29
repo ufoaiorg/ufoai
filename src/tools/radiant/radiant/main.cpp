@@ -405,7 +405,7 @@ int main (int argc, char* argv[])
 	Environment::Instance().init(argc, argv);
 
 	// Initialise and instantiate the registry
-	GlobalModuleServer::instance().set(GlobalModuleServer_get());
+	GlobalModuleServer::instance().set(GlobalRadiantModuleServer());
 	StaticModuleRegistryList().instance().registerModule("registry");
 	GlobalRegistryModuleRef registryRef;
 
