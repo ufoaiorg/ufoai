@@ -7,6 +7,7 @@ radiant/prefabs/cars/*.map		/usr/share/games/uforadiant/prefabs/cars
 radiant/prefabs/doors/*.map		/usr/share/games/uforadiant/prefabs/doors
 radiant/prefabs/dropships/*.map		/usr/share/games/uforadiant/prefabs/dropships
 radiant/prefabs/household/*.map		/usr/share/games/uforadiant/prefabs/household
+radiant/prefabs/houses/*.map		/usr/share/games/uforadiant/prefabs/houses
 radiant/prefabs/interceptors/*.map	/usr/share/games/uforadiant/prefabs/interceptors
 radiant/prefabs/machines/*.map		/usr/share/games/uforadiant/prefabs/machines
 radiant/prefabs/misc/*.map		/usr/share/games/uforadiant/prefabs/misc
