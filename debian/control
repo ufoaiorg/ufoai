@@ -130,7 +130,7 @@ Description: UFO: Alien Invasion - map-building tool
 Package: ufoai-map-sources
 Section: games
 Priority: optional
-Architecture: any
+Architecture: all
 Depends: ufoai-tools
 Recommends: ufoai-radiant
 Description: UFO: Alien Invasion - map-sources
