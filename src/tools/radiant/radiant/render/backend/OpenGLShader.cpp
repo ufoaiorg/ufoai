@@ -450,17 +450,20 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 	reinterpret_cast<Vector3&> (state.m_colour) = m_shader->getTexture()->color;
 	state.m_colour[3] = 1.0f;
 
-	bool shouldBeTrans = isTransparent(m_shader->getName());
-	if (shouldBeTrans || (m_shader->getFlags() & QER_TRANS) != 0) {
+	if (isTransparent(m_shader->getName())) {
 		state.m_state |= RENDER_BLEND;
-		state.m_colour[3] = shouldBeTrans ? 0.5 : m_shader->getTrans();
+		state.m_colour = Vector4(1.0, 1.0, 1.0, 0.4);
 		state.m_sort = OpenGLState::eSortTranslucent;
+	} else if ((m_shader->getFlags() & QER_TRANS) != 0) {
+		state.m_state |= RENDER_BLEND;
+		state.m_colour[3] = m_shader->getTrans();
 		BlendFunc blendFunc = m_shader->getBlendFunc();
 		state.m_blend_src = convertBlendFactor(blendFunc.m_src);
 		state.m_blend_dst = convertBlendFactor(blendFunc.m_dst);
 		if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA) {
 			state.m_state |= RENDER_DEPTHWRITE;
 		}
+		state.m_sort = OpenGLState::eSortTranslucent;
 	} else if (m_shader->getTexture()->hasAlpha) {
 		state.m_state |= RENDER_BLEND;
 		state.m_state |= RENDER_DEPTHWRITE;
