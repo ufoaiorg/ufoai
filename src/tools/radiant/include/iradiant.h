@@ -24,8 +24,8 @@
  * as function pointers. The class RadiantCoreAPI in plugin.cpp makes sure
  * that these variables are pointing to the correct functions. */
 
-#ifndef __QERPLUGIN_H__
-#define __QERPLUGIN_H__
+#ifndef IRADIANT_H__
+#define IRADIANT_H__
 
 #include "generic/constant.h"
 #include "iclipper.h"

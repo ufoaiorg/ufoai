@@ -25,28 +25,20 @@
 #include "ZipArchive.h"
 #include "modulesystem/singletonmodule.h"
 
-class ArchiveZipAPI
+class ArchiveZipAPI: public ArchiveModule
 {
-	private:
-
-		_QERArchiveTable m_archivezip;
-
-		static Archive* OpenArchive (const std::string& name)
-		{
-			return new ZipArchive(name);
-		}
-
 	public:
-		typedef _QERArchiveTable Type;
+		typedef ArchiveModule Type;
 		STRING_CONSTANT(Name, "pk3");
 
-		ArchiveZipAPI ()
+		ArchiveModule* getTable ()
 		{
-			m_archivezip.m_pfnOpenArchive = &OpenArchive;
+			return this;
 		}
-		_QERArchiveTable* getTable ()
+
+		Archive* openArchive (const std::string& name)
 		{
-			return &m_archivezip;
+			return new ZipArchive(name);
 		}
 };
 

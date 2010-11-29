@@ -42,7 +42,7 @@ FileSystem::FileSystem () :
 {
 }
 
-inline const _QERArchiveTable* GetArchiveTable (ArchiveModules& archiveModules, const std::string& ext)
+inline ArchiveModule* GetArchiveTable (ArchiveModules& archiveModules, const std::string& ext)
 {
 	return archiveModules.findModule(string::toLower(ext));
 }
@@ -52,14 +52,14 @@ ArchiveModules& FileSystemAPI_getArchiveModules ();
 void FileSystem::initPK3File (const std::string& filename)
 {
 	ArchiveModules& archiveModules = FileSystemAPI_getArchiveModules();
-	const _QERArchiveTable* table = GetArchiveTable(archiveModules, os::getExtension(filename));
+	ArchiveModule* table = GetArchiveTable(archiveModules, os::getExtension(filename));
 
 	if (table != 0) {
 		ArchiveEntry entry;
 		entry.name = filename;
 
 		entry.is_pakfile = true;
-		entry.archive = table->m_pfnOpenArchive(filename);
+		entry.archive = table->openArchive(filename);
 		g_archives.push_back(entry);
 		g_message("  pk3 file: %s\n", filename.c_str());
 	}

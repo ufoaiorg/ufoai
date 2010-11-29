@@ -157,23 +157,23 @@ class CustomArchiveVisitor
 		}
 };
 
-typedef Archive* (*PFN_OPENARCHIVE) (const std::string& name);
-
-class _QERArchiveTable
+class ArchiveModule
 {
 	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "archive");
 
-		PFN_OPENARCHIVE m_pfnOpenArchive;
+		virtual ~ArchiveModule() {}
+
+		virtual Archive* openArchive (const std::string& name) = 0;
 };
 
 template<typename Type>
 class Modules;
-typedef Modules<_QERArchiveTable> ArchiveModules;
+typedef Modules<ArchiveModule> ArchiveModules;
 
 template<typename Type>
 class ModulesRef;
-typedef ModulesRef<_QERArchiveTable> ArchiveModulesRef;
+typedef ModulesRef<ArchiveModule> ArchiveModulesRef;
 
 #endif
