@@ -462,6 +462,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityClassMgrModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityClassScanner.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityDefinitionModule.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\EntitySettings.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\entity\EntitySettings.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entity.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entity.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitymodule.cpp" />
