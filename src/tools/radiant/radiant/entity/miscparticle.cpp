@@ -42,7 +42,6 @@
 #include "math/line.h"
 
 #include "ifilesystem.h"
-#include <glib/gslist.h>
 
 #include "targetable.h"
 #include "keys/OriginKey.h"
@@ -51,6 +50,7 @@
 #include "NameKeys.h"
 #include "model.h"
 #include "EntityCreator.h"
+#include "miscparticle.h"
 
 /**
  * @brief Render class for the grid windows

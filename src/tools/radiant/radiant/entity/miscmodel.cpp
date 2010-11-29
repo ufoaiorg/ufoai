@@ -51,6 +51,7 @@
 #include "NameKeys.h"
 
 #include "EntityCreator.h"
+#include "miscmodel.h"
 
 class MiscModel: public Snappable
 {
