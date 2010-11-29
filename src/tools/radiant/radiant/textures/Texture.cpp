@@ -10,22 +10,22 @@
  * @brief This function does the actual processing of raw RGBA data into a GL texture.
  * @note It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
  */
-void qtexture_t::LoadTextureRGBA (qtexture_t* q, Image* image)
+void qtexture_t::LoadTextureRGBA (Image* image)
 {
-	q->surfaceFlags = image->getSurfaceFlags();
-	q->contentFlags = image->getContentFlags();
-	q->value = image->getValue();
-	q->width = image->getWidth();
-	q->height = image->getHeight();
+	surfaceFlags = image->getSurfaceFlags();
+	contentFlags = image->getContentFlags();
+	value = image->getValue();
+	width = image->getWidth();
+	height = image->getHeight();
 
 	Image* processed = shaders::TextureManipulator::Instance().getProcessedImage(image);
 
-	q->hasAlpha = processed->hasAlpha();
-	q->color = shaders::TextureManipulator::Instance().getFlatshadeColour(processed);
+	hasAlpha = processed->hasAlpha();
+	color = shaders::TextureManipulator::Instance().getFlatshadeColour(processed);
 
-	glGenTextures(1, &q->texture_number);
+	glGenTextures(1, &texture_number);
 
-	glBindTexture(GL_TEXTURE_2D, q->texture_number);
+	glBindTexture(GL_TEXTURE_2D, texture_number);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -34,7 +34,7 @@ void qtexture_t::LoadTextureRGBA (qtexture_t* q, Image* image)
 	// Tell OpenGL how to use the mip maps we will be creating here
 	shaders::TextureManipulator::Instance().setTextureParameters();
 
-	glTexImage2D(GL_TEXTURE_2D, 0, q->hasAlpha ? GL_RGBA : GL_RGB, processed->getWidth(), processed->getHeight(), 0,
+	glTexImage2D(GL_TEXTURE_2D, 0, hasAlpha ? GL_RGBA : GL_RGB, processed->getWidth(), processed->getHeight(), 0,
 			GL_RGBA, GL_UNSIGNED_BYTE, processed->getRGBAPixels());
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -57,7 +57,7 @@ void qtexture_t::realise ()
 	if (!name.empty() && !strstr(name.c_str(), "_nm")) {
 		AutoPtr<Image> image(load.loadImage(name));
 		if (image) {
-			LoadTextureRGBA(this, image);
+			LoadTextureRGBA(image);
 		} else {
 			globalWarningStream() << "Texture load failed: '" << name << "'\n";
 		}

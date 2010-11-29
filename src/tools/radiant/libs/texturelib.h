@@ -44,7 +44,7 @@ class qtexture_t
 		 * @brief This function does the actual processing of raw RGBA data into a GL texture.
 		 * @note It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
 		 */
-		void LoadTextureRGBA (qtexture_t* q, Image* image);
+		void LoadTextureRGBA (Image* image);
 
 	public:
 		qtexture_t (const LoadImageCallback& load, const std::string& name);
