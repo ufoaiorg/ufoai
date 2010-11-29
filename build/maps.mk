@@ -27,5 +27,7 @@ clean-maps:
 	@find $(MAPSDIR) -name '*.bsp' -delete
 	@echo "done"
 
+.DELETE_ON_ERROR:
+
 $(BSPS): %.bsp: %.map
 	$(UFO2MAP) $(UFO2MAPFLAGS) $(<:base/%=%)
