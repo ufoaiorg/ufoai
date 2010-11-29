@@ -15,7 +15,8 @@ endif
 
 CONFIGUREFLAGS += --datadir=/usr/share/games \
 	--libdir=/usr/lib/games/ufoai/base \
-	--prefix=/usr
+	--prefix=/usr \
+	--disable-testall
 
 MAINVER := $(shell dpkg-parsechangelog | sed -ne 's/^Version: *\([^~-]*\).*/\1/p' )
 TMPDIR = /tmp/
