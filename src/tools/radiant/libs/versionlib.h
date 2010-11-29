@@ -55,6 +55,7 @@ inline int string_range_parse_unsigned_decimal_integer (const char* first, const
 	return result;
 }
 
+inline Version version_parse (const std::string& versionString) __attribute__ ((deprecated));
 inline Version version_parse (const std::string& versionString)
 {
 	Version version;

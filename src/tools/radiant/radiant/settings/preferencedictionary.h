@@ -99,7 +99,7 @@ class PreferenceDictionary: public PreferenceSystem
 				m_cache.insert(PreferenceCache::value_type(name, value));
 			}
 		}
-};
+} __attribute__ ((deprecated));
 
 inline void XMLPreference_importString (XMLImporter& importer, const char* value)
 {
@@ -189,7 +189,7 @@ class XMLPreferenceDictionaryExporter: public XMLExporter
 			importer.popElement(qpref_element.name());
 			importer.write("\n", 1);
 		}
-};
+} __attribute__ ((deprecated));
 
 class XMLPreferenceDictionaryImporter: public XMLImporter
 {
@@ -273,6 +273,6 @@ class XMLPreferenceDictionaryImporter: public XMLImporter
 		{
 			return m_xml_stack.back().m_ostream.write(buffer, length);
 		}
-};
+} __attribute__ ((deprecated));
 
 #endif
