@@ -59,9 +59,10 @@ class MoveLevelWalker: public scene::Graph::Walker
 					if (entity != 0) {
 						std::string name = entity->getKeyValue("classname");
 						// TODO: get this info from entities.ufo
-						if (name == "func_rotating" || name == "func_door" || name == "func_breakable" || name
-								== "misc_item" || name == "misc_mission" || name == "misc_mission_alien" || name
-								== "misc_model" || name == "misc_sound" || name == "misc_particle") {
+						if (name == "func_rotating" || name == "func_door" || name == "func_door_sliding" || name
+								== "func_breakable" || name == "misc_item" || name == "misc_mission" || name
+								== "misc_mission_alien" || name == "misc_model" || name == "misc_sound" || name
+								== "misc_particle") {
 							const std::string spawnflags = entity->getKeyValue("spawnflags");
 							if (!spawnflags.empty()) {
 								int levels = string::toInt(spawnflags) & 255;

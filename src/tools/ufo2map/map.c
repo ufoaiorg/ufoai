@@ -914,6 +914,7 @@ static inline qboolean IsInlineModelEntity (const char *entName)
 {
 	const qboolean inlineModelEntity = (!strcmp("func_breakable", entName)
 			|| !strcmp("func_door", entName)
+			|| !strcmp("func_door_sliding", entName)
 			|| !strcmp("func_rotating", entName));
 	return inlineModelEntity;
 }

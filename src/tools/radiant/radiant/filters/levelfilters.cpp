@@ -173,6 +173,7 @@ void filter_level (int flag)
 		// TODO: get this info from entities.ufo
 		GlobalSceneGraph().traverse(EntityFindByName("func_rotating", entities, currentActiveLevel, false));
 		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, currentActiveLevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("func_door_sliding", entities, currentActiveLevel, false));
 		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, currentActiveLevel, false));
 		GlobalSceneGraph().traverse(EntityFindByName("misc_item", entities, currentActiveLevel, false));
 		GlobalSceneGraph().traverse(EntityFindByName("misc_mission", entities, currentActiveLevel, false));
@@ -197,6 +198,7 @@ void filter_level (int flag)
 
 	// now all entities
 	GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, level, true));
+	GlobalSceneGraph().traverse(EntityFindByName("func_door_sliding", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
