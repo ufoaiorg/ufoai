@@ -95,8 +95,8 @@ GLTexture* TexturesMap::capture (const LoadImageCallback& loader, const std::str
 
 void TexturesMap::release (GLTexture* texture)
 {
-	g_debug("textures release: '%s'\n", texture->name.c_str());
-	m_qtextures.release(TextureKey(texture->load, texture->name));
+	g_debug("textures release: '%s'\n", texture->getName().c_str());
+	m_qtextures.release(TextureKey(texture->load, texture->getName()));
 }
 
 void TexturesMap::attach (TexturesCacheObserver& observer)

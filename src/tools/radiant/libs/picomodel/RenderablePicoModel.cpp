@@ -74,7 +74,7 @@ namespace model
 		for (SurfaceList::const_iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {
 			// Get the IShader to test the shader name against the filter system
 			GLTexture& tex = i->getShader()->getTexture();
-			if (GlobalFilterSystem().isVisible("texture", tex.name)) {
+			if (GlobalFilterSystem().isVisible("texture", tex.getName())) {
 				// Bind the OpenGL texture and render the surface geometry
 				glBindTexture(GL_TEXTURE_2D, tex.texture_number);
 				i->render(flags);

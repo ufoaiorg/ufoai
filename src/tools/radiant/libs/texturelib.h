@@ -40,11 +40,15 @@ enum ProjectionAxis
 // describes a GL texture
 class GLTexture
 {
+	private:
+
 		/**
 		 * @brief This function does the actual processing of raw RGBA data into a GL texture.
 		 * @note It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
 		 */
 		void LoadTextureRGBA (Image* image);
+
+		const std::string name;
 
 	public:
 		GLTexture (const LoadImageCallback& load, const std::string& name);
@@ -52,8 +56,9 @@ class GLTexture
 		void realise ();
 		void unrealise ();
 
+		const std::string& getName () const;
+
 		const LoadImageCallback& load;
-		const std::string name;
 		std::size_t width, height;
 		GLuint texture_number; // gl bind number
 		Colour3 color; // for flat shade mode

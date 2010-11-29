@@ -45,7 +45,7 @@ void GLTexture::LoadTextureRGBA (Image* image)
 }
 
 GLTexture::GLTexture (const LoadImageCallback& load, const std::string& name) :
-	load(load), name(name), width(0), height(0), texture_number(0), color(0.0, 0.0, 0.0), surfaceFlags(0),
+	name(name), load(load), width(0), height(0), texture_number(0), color(0.0, 0.0, 0.0), surfaceFlags(0),
 			contentFlags(0), value(0), hasAlpha(false)
 {
 }
@@ -62,6 +62,11 @@ void GLTexture::realise ()
 			globalWarningStream() << "Texture load failed: '" << name << "'\n";
 		}
 	}
+}
+
+const std::string& GLTexture::getName () const
+{
+	return name;
 }
 
 void GLTexture::unrealise ()
