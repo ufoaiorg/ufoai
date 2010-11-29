@@ -162,7 +162,8 @@ void OpenGLShader::appendBlendLayer (const ShaderLayer& layer)
 	qtexture_t* layerTex = layer.getTexture();
 
 	OpenGLState& state = appendDefaultPass();
-	state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_COLOURWRITE | RENDER_COLOURCHANGE | RENDER_TEXTURE_2D;
+	state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_COLOURCHANGE | RENDER_TEXTURE_2D;
+	state.m_depthfunc = GL_LEQUAL;
 
 	// Set the texture
 	state.m_texture = layerTex->texture_number;
