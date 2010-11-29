@@ -12,8 +12,14 @@ macinstaller: installer-pre create-dmg-ufoai create-dmg-uforadiant
 
 bundle-dirs-ufoai:
 	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/base
+	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/Contents/MacOS
+	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/Contents/Libraries
+	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/Contents/Frameworks
 
 bundle-dirs-uforadiant:
+	@mkdir -p $(MAC_INST_DIR)/UFORadiant.app/Contents/MacOS
+	@mkdir -p $(MAC_INST_DIR)/UFORadiant.app/Contents/Libraries
+	@mkdir -p $(MAC_INST_DIR)/UFORadiant.app/Contents/Frameworks
 
 # =======================
 
