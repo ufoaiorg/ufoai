@@ -917,7 +917,7 @@ void XYWnd::snapToGrid (Vector3& point)
 void XYWnd::drawAxis (void)
 {
 	if (GlobalXYWnd().showAxes()) {
-		const char g_AxisName[3] = { 'X', 'Y', 'Z' };
+		const char* g_AxisName[3] = { "X", "Y", "Z" };
 		const int nDim1 = (m_viewType == YZ) ? 1 : 0;
 		const int nDim2 = (m_viewType == XY) ? 1 : 2;
 		const int w = (int) (m_nWidth / 2 / m_fScale);
@@ -947,14 +947,14 @@ void XYWnd::drawAxis (void)
 		// now print axis symbols
 		glColor3fv(colourX);
 		glRasterPos2f(m_vOrigin[nDim1] - w + 55 / m_fScale, m_vOrigin[nDim2] + h - 55 / m_fScale);
-		GlobalOpenGL().drawChar(g_AxisName[nDim1]);
+		GlobalOpenGL().drawString(g_AxisName[nDim1]);
 		glRasterPos2f(28 / m_fScale, -10 / m_fScale);
-		GlobalOpenGL().drawChar(g_AxisName[nDim1]);
+		GlobalOpenGL().drawString(g_AxisName[nDim1]);
 		glColor3fv(colourY);
 		glRasterPos2f(m_vOrigin[nDim1] - w + 25 / m_fScale, m_vOrigin[nDim2] + h - 30 / m_fScale);
-		GlobalOpenGL().drawChar(g_AxisName[nDim2]);
+		GlobalOpenGL().drawString(g_AxisName[nDim2]);
 		glRasterPos2f(-10 / m_fScale, 28 / m_fScale);
-		GlobalOpenGL().drawChar(g_AxisName[nDim2]);
+		GlobalOpenGL().drawString(g_AxisName[nDim2]);
 	}
 }
 

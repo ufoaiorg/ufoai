@@ -81,13 +81,6 @@ struct OpenGLBinding
 			glCallLists(GLsizei(string.length()), GL_UNSIGNED_BYTE, reinterpret_cast<const GLubyte*> (string.c_str()));
 		}
 
-		/// \brief Renders \p character at the current raster-position of the current context.
-		void drawChar (char character) const
-		{
-			glListBase(m_font);
-			glCallLists(1, GL_UNSIGNED_BYTE, reinterpret_cast<const GLubyte*> (&character));
-		}
-
 		void perspective (GLdouble fovy, GLdouble yaspect, GLdouble zNear, GLdouble zFar)
 		{
 			GLdouble xmin, xmax, ymin, ymax;
