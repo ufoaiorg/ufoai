@@ -70,6 +70,11 @@ class RGBAImage: public Image
 			return height;
 		}
 
+		void setHasAlpha(bool hasAlpha)
+		{
+			_hasAlpha = hasAlpha;
+		}
+
 		bool hasAlpha() const {
 			return _hasAlpha;
 		}

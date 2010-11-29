@@ -49,7 +49,7 @@ static Image* LoadImageGDK (ArchiveFile& file)
 
 	if (img != NULL) {
 		// Allocate a new image
-		RGBAImage* image = new RGBAImage(gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img), true);
+		RGBAImage* image = new RGBAImage(gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img), false);
 
 		// Initialise the source buffer pointers
 		guchar* gdkStart = gdk_pixbuf_get_pixels(img);
@@ -69,6 +69,8 @@ static Image* LoadImageGDK (ArchiveFile& file)
 				targetPixel->green = gdkPixel[1];
 				targetPixel->blue = gdkPixel[2];
 				targetPixel->alpha = gdkPixel[3];
+				if (targetPixel->alpha != 255)
+					image->setHasAlpha(true);
 
 				// Increase the pointer
 				targetPixel++;
@@ -105,7 +107,7 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 		const int stepWidth = gdk_pixbuf_get_n_channels(pixbuf);
 		const guchar *pixels = gdk_pixbuf_get_pixels(pixbuf);
 
-		image = new RGBAImage(width, height, hasAlpha);
+		image = new RGBAImage(width, height, false);
 		byte *rgba = image->getRGBAPixels();
 		const int rowextra = gdk_pixbuf_get_rowstride(pixbuf) - width * stepWidth;
 
@@ -114,6 +116,8 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 				rgba[pos++] = *(pixels++);
 				rgba[pos++] = *(pixels++);
 				rgba[pos++] = *(pixels++);
+				if (hasAlpha && *pixels != 255)
+					image->setHasAlpha(true);
 				rgba[pos++] = hasAlpha ? *(pixels++) : 255;
 			}
 		}

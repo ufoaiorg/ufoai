@@ -162,7 +162,7 @@ void OpenGLShader::appendBlendLayer (const ShaderLayer& layer)
 	qtexture_t* layerTex = layer.getTexture();
 
 	OpenGLState& state = appendDefaultPass();
-	state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_TEXTURE_2D;
+	state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_COLOURWRITE | RENDER_COLOURCHANGE | RENDER_TEXTURE_2D;
 
 	// Set the texture
 	state.m_texture = layerTex->texture_number;
@@ -179,10 +179,9 @@ void OpenGLShader::appendBlendLayer (const ShaderLayer& layer)
 	}
 
 	// Colour modulation
-	reinterpret_cast<Vector3&> (state.m_colour) = layer.getColour();
-	state.m_colour[3] = 1.0f;
+	state.m_colour = Vector4(layer.getColour(), 1.0f);
 
-	state.m_sort = OpenGLState::eSortMultiFirst;
+	state.m_sort = OpenGLState::eSortOverlayFirst;
 
 	// Polygon offset
 	state.m_polygonOffset = layer.getPolygonOffset();
@@ -385,11 +384,11 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 		}
 	}
 
-	reinterpret_cast<Vector3&> (state.m_colour) = m_shader->getTexture()->color;
-	state.m_colour[3] = 1.0f;
+	state.m_colour = Vector4(m_shader->getTexture()->color, 1.0);
 
 	if (isTransparent(m_shader->getName())) {
 		state.m_state |= RENDER_BLEND;
+		state.m_state |= RENDER_DEPTHWRITE;
 		state.m_colour = Vector4(1.0, 1.0, 1.0, 0.4);
 		state.m_sort = OpenGLState::eSortTranslucent;
 	} else if ((m_shader->getFlags() & QER_TRANS) != 0) {
@@ -402,7 +401,7 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 			state.m_state |= RENDER_DEPTHWRITE;
 		}
 		state.m_sort = OpenGLState::eSortTranslucent;
-	} else if (m_shader->getTexture()->hasAlpha && m_shader->hasLayers()) {
+	} else if (m_shader->getTexture()->hasAlpha) {
 		state.m_state |= RENDER_BLEND;
 		state.m_state |= RENDER_DEPTHWRITE;
 		state.m_sort = OpenGLState::eSortTranslucent;
