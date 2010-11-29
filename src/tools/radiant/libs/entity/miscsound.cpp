@@ -34,14 +34,14 @@
 #include "render.h"
 #include "eclasslib.h"
 #include "targetable.h"
-#include "origin.h"
-#include "angle.h"
+#include "OriginKey.h"
+#include "AngleKey.h"
 #include "namedentity.h"
-#include "keyobservers.h"
-#include "namekeys.h"
+#include "KeyObserverMap.h"
+#include "NameKeys.h"
 
 #include "EntityCreator.h"
-#include "arrow.h"
+#include "RenderableArrow.h"
 
 inline void read_aabb (AABB& aabb, const EntityClass& eclass)
 {

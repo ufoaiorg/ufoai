@@ -45,10 +45,10 @@
 #include <glib/gslist.h>
 
 #include "targetable.h"
-#include "origin.h"
+#include "OriginKey.h"
 #include "namedentity.h"
-#include "keyobservers.h"
-#include "namekeys.h"
+#include "KeyObserverMap.h"
+#include "NameKeys.h"
 #include "model.h"
 #include "EntityCreator.h"
 

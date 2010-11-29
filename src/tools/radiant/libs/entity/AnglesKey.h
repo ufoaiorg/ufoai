@@ -28,7 +28,7 @@
 #include "generic/callback.h"
 #include "stringio.h"
 
-#include "angle.h"
+#include "AngleKey.h"
 
 const Vector3 ANGLESKEY_IDENTITY = Vector3(0, 0, 0);
 

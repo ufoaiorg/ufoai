@@ -29,7 +29,7 @@
 #include "generic/callback.h"
 #include "stringio.h"
 
-class Colour
+class ColourKey
 {
 	private:
 
@@ -53,13 +53,13 @@ class Colour
 	public:
 		Vector3 m_colour;
 
-		Colour (const Callback& colourChanged) :
+		ColourKey (const Callback& colourChanged) :
 			m_colourChanged(colourChanged)
 		{
 			default_colour();
 			capture_state();
 		}
-		~Colour ()
+		~ColourKey ()
 		{
 			release_state();
 		}
@@ -74,7 +74,7 @@ class Colour
 
 			m_colourChanged();
 		}
-		typedef MemberCaller1<Colour, const std::string&, &Colour::colourChanged> ColourChangedCaller;
+		typedef MemberCaller1<ColourKey, const std::string&, &ColourKey::colourChanged> ColourChangedCaller;
 
 		void write (Entity* entity) const
 		{

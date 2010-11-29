@@ -32,7 +32,7 @@
 
 #include "targetable.h"
 #include "uniquenames.h"
-#include "namekeys.h"
+#include "NameKeys.h"
 #include "stream/stringstream.h"
 
 #include "miscmodel.h"

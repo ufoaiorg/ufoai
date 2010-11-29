@@ -50,11 +50,11 @@
 #include "traverselib.h"
 
 #include "targetable.h"
-#include "origin.h"
-#include "colour.h"
+#include "OriginKey.h"
+#include "ColourKey.h"
 #include "namedentity.h"
-#include "keyobservers.h"
-#include "namekeys.h"
+#include "KeyObserverMap.h"
+#include "NameKeys.h"
 
 #include "../../radiant/entity/EntitySettings.h"
 #include "EntityCreator.h"
@@ -459,7 +459,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		IdentityTransform m_transform;
 
 		OriginKey m_originKey;
-		Colour m_colour;
+		ColourKey m_colour;
 
 		NamedEntity m_named;
 		NameKeys m_nameKeys;
@@ -491,7 +491,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			default_extents(m_aabb_light.extents);
 
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
-			m_keyObservers.insert("_color", Colour::ColourChangedCaller(m_colour));
+			m_keyObservers.insert("_color", ColourKey::ColourChangedCaller(m_colour));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 			m_keyObservers.insert("light", LightRadii::IntensityChangedCaller(m_radii));
 			m_keyObservers.insert("spawnflags", LightRadii::FlagsChangedCaller(m_radii));

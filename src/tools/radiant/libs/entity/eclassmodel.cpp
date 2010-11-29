@@ -44,12 +44,12 @@
 #include "pivot.h"
 
 #include "targetable.h"
-#include "origin.h"
-#include "angle.h"
+#include "OriginKey.h"
+#include "AngleKey.h"
 #include "model.h"
 #include "namedentity.h"
-#include "keyobservers.h"
-#include "namekeys.h"
+#include "KeyObserverMap.h"
+#include "NameKeys.h"
 
 #include "EntityCreator.h"
 
