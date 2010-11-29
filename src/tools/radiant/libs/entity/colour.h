@@ -29,26 +29,15 @@
 #include "generic/callback.h"
 #include "stringio.h"
 
-inline void default_colour (Vector3& colour)
-{
-	colour = Vector3(1, 1, 1);
-}
-inline void read_colour (Vector3& colour, const std::string& value)
-{
-	if (!string_parse_vector3(value, colour)) {
-		default_colour(colour);
-	}
-}
-inline void write_colour (const Vector3& colour, Entity* entity)
-{
-	char value[64];
-
-	sprintf(value, "%f %f %f", colour[0], colour[1], colour[2]);
-	entity->setKeyValue("_color", value);
-}
-
 class Colour
 {
+	private:
+
+		void default_colour ()
+		{
+			m_colour = Vector3(1, 1, 1);
+		}
+
 		Callback m_colourChanged;
 		Shader* m_state;
 
@@ -67,7 +56,7 @@ class Colour
 		Colour (const Callback& colourChanged) :
 			m_colourChanged(colourChanged)
 		{
-			default_colour(m_colour);
+			default_colour();
 			capture_state();
 		}
 		~Colour ()
@@ -78,7 +67,9 @@ class Colour
 		void colourChanged (const std::string& value)
 		{
 			release_state();
-			read_colour(m_colour, value);
+			if (!string_parse_vector3(value, m_colour)) {
+				default_colour();
+			}
 			capture_state();
 
 			m_colourChanged();
@@ -87,7 +78,7 @@ class Colour
 
 		void write (Entity* entity) const
 		{
-			write_colour(m_colour, entity);
+			entity->setKeyValue("_color", m_colour);
 		}
 
 		Shader* state () const
