@@ -5746,12 +5746,25 @@ base/textures/tex_lights/land_li_red.png | GNU General Public License 2.0 | MCR
 base/textures/tex_lights/land_li_yellow.png | GNU General Public License 2.0 | MCR
 base/textures/tex_lights/land_li_yellow2.png | GNU General Public License 2.0 | MCR
 base/textures/tex_lights/light001.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light001_gm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light001_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light001_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light003_gm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light003_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003_shell.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003_shell_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light003_shell_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light003_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light004.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light004_gm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light004_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light004_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light004off.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light005.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light005_gm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light005_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light005_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light005off.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light006.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light006_gm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5778,6 +5791,7 @@ base/textures/tex_lights/mtl_l1_fx1.png | GNU General Public License 2.0 | Nexui
 base/textures/tex_lights/mtl_l2.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l2_fx0.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/neon003.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_lights/neon003_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_lights/proto_lightblue.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_lights/stoplights01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/stoplights01_nm.png | GNU General Public License 2.0 or later | Nate Wright
