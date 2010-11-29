@@ -84,7 +84,7 @@ void OpenGLShader::realise (const std::string& name)
 	}
 
 	for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
-		_glStateManager.insertSortedState(render::OpenGLStates::value_type(&(*i)->state(), *i));
+		_glStateManager.insertSortedState(render::OpenGLStates::value_type(&(*i)->getState(), *i));
 	}
 
 	m_observers.realise();
@@ -95,7 +95,7 @@ void OpenGLShader::unrealise ()
 	m_observers.unrealise();
 
 	for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
-		_glStateManager.eraseSortedState(&(*i)->state());
+		_glStateManager.eraseSortedState(&(*i)->getState());
 	}
 
 	destroy();
@@ -122,7 +122,7 @@ IShader& OpenGLShader::getShader () const
 OpenGLState& OpenGLShader::appendDefaultPass ()
 {
 	m_passes.push_back(new OpenGLShaderPass);
-	OpenGLState& state = m_passes.back()->state();
+	OpenGLState& state = m_passes.back()->getState();
 	state.constructDefault();
 	return state;
 }

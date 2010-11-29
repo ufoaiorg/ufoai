@@ -603,6 +603,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLShader.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLShaderCache.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLShaderPass.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLShaderPass.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLStateBucketAdd.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\render\backend\OpenGLStateLess.h" />

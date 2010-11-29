@@ -84,6 +84,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/render/OpenGLRenderSystem.cpp \
 	$(RADIANT_BASE)/radiant/render/OpenGLModule.cpp \
 	$(RADIANT_BASE)/radiant/render/backend/OpenGLShader.cpp \
+	$(RADIANT_BASE)/radiant/render/backend/OpenGLShaderPass.cpp \
 	\
 	$(RADIANT_BASE)/radiant/referencecache/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/referencecache/referencecache.cpp \
