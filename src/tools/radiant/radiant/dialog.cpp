@@ -243,23 +243,6 @@ class CallbackDialogData: public DLG_DATA
 		}
 };
 
-template<typename Widget, typename Viewer>
-class AddData
-{
-		DialogDataList& m_data;
-	public:
-		AddData (DialogDataList& data) :
-			m_data(data)
-		{
-		}
-		void apply (typename Widget::Type& widget, typename Viewer::Type& viewer) const
-		{
-			m_data.push_back(new CallbackDialogData<typename Widget::Other> (typename Widget::ImportCaller(widget),
-					typename Widget::ExportCaller(widget), typename Viewer::ImportCaller(viewer),
-					typename Viewer::ExportCaller(viewer)));
-		}
-};
-
 template<typename Widget>
 class AddCustomData
 {
