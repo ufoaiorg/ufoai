@@ -1,8 +1,5 @@
 radiant/bitmaps/*			/usr/share/games/uforadiant/bitmaps/
-radiant/games/*				/usr/share/games/uforadiant/games/
 radiant/i18n/*				/usr/share/games/uforadiant/i18n/
-radiant/plugins/*.so			/usr/share/games/uforadiant/plugins/
-radiant/shaders/*.shader		/usr/share/games/uforadiant/shaders/
 radiant/sourceviewer/*			/usr/share/games/uforadiant/sourceviewer/
 radiant/prefabs/*.map			/usr/share/games/uforadiant/prefabs/
 radiant/prefabs/alien/*.map		/usr/share/games/uforadiant/prefabs/alien
@@ -17,6 +14,7 @@ radiant/prefabs/office/*.map		/usr/share/games/uforadiant/prefabs/office
 radiant/prefabs/trucks/*.map		/usr/share/games/uforadiant/prefabs/trucks
 radiant/prefabs/ufos/*.map		/usr/share/games/uforadiant/prefabs/ufos
 radiant/prefabs/vegetation/*.map	/usr/share/games/uforadiant/prefabs/vegetation
+radiant/*.xml				/usr/share/games/uforadiant/
 radiant/uforadiant			/usr/lib/games/uforadiant/
 debian/uforadiant			/usr/games/
 debian/uforadiant.xpm			/usr/share/pixmaps/
