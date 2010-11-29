@@ -1306,18 +1306,18 @@ static int RT_TraceOnePassage (mapTiles_t *mapTiles, const routing_t * map, cons
  * @param[in] ay Ending y coordinate
  * @param[out] opening descriptor of the opening found, if any
  */
-static void RT_TracePassage (mapTiles_t *mapTiles, const routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening, const char **list)
+static void RT_TracePassage (RT_data_t *rtd, const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening, const char **list)
 {
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to, above;
 	place_t* placeToCheck = NULL;
 
-	RT_PlaceInit(map, actorSize, &from, x, y, z);
-	RT_PlaceInit(map, actorSize, &to, ax, ay, z);
+	RT_PlaceInit(rtd->map, actorSize, &from, x, y, z);
+	RT_PlaceInit(rtd->map, actorSize, &to, ax, ay, z);
 
-	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
-	lowCeil = min(from.ceiling, (RT_CEILING(map, actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
+	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->map, actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
+	lowCeil = min(from.ceiling, (RT_CEILING(rtd->map, actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
@@ -1341,7 +1341,7 @@ static void RT_TracePassage (mapTiles_t *mapTiles, const routing_t * map, const 
 		placeToCheck = &to;
 	}
 	else if (z < PATHFINDING_HEIGHT - 1) {
-		RT_PlaceInit(map, actorSize, &above, ax, ay, z + 1);
+		RT_PlaceInit(rtd->map, actorSize, &above, ax, ay, z + 1);
 		if (RT_PlaceIsUsable(&above) && RT_PlaceDoesIntersectEnough(&from, &above)) {
 			placeToCheck = &above;
 		}
@@ -1365,7 +1365,7 @@ static void RT_TracePassage (mapTiles_t *mapTiles, const routing_t * map, const 
 	if (debugTrace)
 		Com_Printf(" Testing up c:%i lc:%i.\n", from.ceiling, lowCeil);
 
-	RT_TraceOnePassage(mapTiles, map, actorSize, &from, placeToCheck, opening, list);
+	RT_TraceOnePassage(rtd->mapTiles, rtd->map, actorSize, &from, placeToCheck, opening, list);
 	if (opening->size < PATHFINDING_MIN_OPENING) {
 		if (debugTrace)
 			Com_Printf(" No opening found.\n");
@@ -1447,7 +1447,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const actorSizeEnum_t actorSize,
 	}
 
 	/* Find an opening. */
-	RT_TracePassage(rtd->mapTiles, rtd->map, actorSize, x, y, z, ax, ay, &opening, list);
+	RT_TracePassage(rtd, actorSize, x, y, z, ax, ay, &opening, list);
 	if (debugTrace) {
 		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, actorSize, dir, opening.stepup);
 	}
