@@ -98,7 +98,7 @@
 }
 
 /* ufo2_05: Floor (Harvester, Corrupter, Bomber) */
-{
+/*{
 	material tex_ufo/ufo2_05
 	bump 1.0
 	hardness 3.0
@@ -114,7 +114,7 @@
 	{
 		lightmap
 	}
-}
+}*/
 
 /* ufo2_06: Big Panel with 4 big & several small buttons */
 {
