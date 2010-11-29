@@ -593,4 +593,9 @@ void TextureManipulator::constructPreferencePage (PreferenceGroup& group)
 	page->appendCombo(_("Texture Render Mode"), RKEY_TEXTURES_MODE, textureModes);
 }
 
+TextureManipulator& TextureManipulator::Instance() {
+	static TextureManipulator _textureManipulator;
+	return _textureManipulator;
+}
+
 } // namespace shaders

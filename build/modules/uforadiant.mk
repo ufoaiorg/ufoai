@@ -26,7 +26,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
-	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
@@ -200,7 +199,10 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/sidebar/JobInfo.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/texturebrowser.cpp \
 	\
+	$(RADIANT_BASE)/radiant/textures/Texture.cpp \
 	$(RADIANT_BASE)/radiant/textures/TextureManipulator.cpp \
+	$(RADIANT_BASE)/radiant/textures/TexturesMap.cpp \
+	$(RADIANT_BASE)/radiant/textures/TexturesModule.cpp \
 	\
 	$(RADIANT_BASE)/radiant/particles/ParticleParser.cpp \
 	$(RADIANT_BASE)/radiant/particles/ParticleSystem.cpp \

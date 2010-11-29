@@ -39,8 +39,9 @@ class TextureManipulator: public RegistryKeyObserver, public PreferenceConstruct
 		// The image reduction indicator (3 = no reduction, 0 = 12.5%)
 		int _textureQuality;
 
-	public:
 		TextureManipulator ();
+
+	public:
 
 		// RegistryKeyObserver implementation
 		void keyChanged (const std::string& changedKey, const std::string& newValue);
@@ -67,6 +68,9 @@ class TextureManipulator: public RegistryKeyObserver, public PreferenceConstruct
 		 * texture mode member variable. (e.g. MIPMAP_LINEAR)
 		 */
 		void setTextureParameters ();
+
+		/* static instance accessor */
+		static TextureManipulator& Instance();
 
 	private:
 

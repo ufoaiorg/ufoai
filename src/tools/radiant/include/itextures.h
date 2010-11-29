@@ -90,6 +90,10 @@ class TexturesCache
 		virtual void attach (TexturesCacheObserver& observer) = 0;
 
 		virtual void detach (TexturesCacheObserver& observer) = 0;
+
+		virtual void realise () = 0;
+
+		virtual void unrealise () = 0;
 };
 
 #include "modulesystem.h"

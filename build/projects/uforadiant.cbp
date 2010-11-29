@@ -735,9 +735,11 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\textool\item\FaceVertexItem.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\textool\item\FaceVertexItem.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\textureentry.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\textures.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\textures.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\textures\Texture.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\textures\TextureManipulator.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\textures\TexturesMap.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\textures\TexturesMap.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\textures\TexturesModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\timer.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\timer.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ufoscript\UFOScript.cpp" />

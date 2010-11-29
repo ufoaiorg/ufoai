@@ -1,0 +1,144 @@
+/*
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
+
+ This file is part of GtkRadiant.
+
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+#include "itextures.h"
+#include "iregistry.h"
+#include "iradiant.h"
+#include "igl.h"
+#include "radiant_i18n.h"
+
+#include "AutoPtr.h"
+#include "texturelib.h"
+#include "container/hashfunc.h"
+#include "container/cache.h"
+#include "preferencesystem.h"
+
+#include "TextureManipulator.h"
+#include "TexturesMap.h"
+
+#include "../image.h"
+
+TexturesMap::TextureConstructor::TextureConstructor (TexturesMap* cache) :
+	m_cache(cache)
+{
+}
+qtexture_t* TexturesMap::TextureConstructor::construct (const TextureKey& key)
+{
+	qtexture_t* texture = new qtexture_t(key.first, key.second);
+	if (m_cache->realised()) {
+		texture->realise();
+	}
+	return texture;
+}
+
+void TexturesMap::TextureConstructor::destroy (qtexture_t* texture)
+{
+	if (m_cache->realised()) {
+		texture->unrealise();
+	}
+	delete texture;
+}
+
+TexturesMap::TexturesMap () :
+	m_qtextures(TextureConstructor(this)), m_observer(0), m_unrealised(1)
+{
+}
+
+TexturesMap::iterator TexturesMap::begin ()
+{
+	return m_qtextures.begin();
+}
+
+TexturesMap::iterator TexturesMap::end ()
+{
+	return m_qtextures.end();
+}
+
+LoadImageCallback TexturesMap::defaultLoader () const
+{
+	return LoadImageCallback(0, QERApp_LoadImage);
+}
+
+Image* TexturesMap::loadImage (const std::string& name)
+{
+	return defaultLoader().loadImage(name);
+}
+
+qtexture_t* TexturesMap::capture (const std::string& name)
+{
+	return capture(defaultLoader(), name);
+}
+
+qtexture_t* TexturesMap::capture (const LoadImageCallback& loader, const std::string& name)
+{
+	g_debug("textures capture: '%s'\n", name.c_str());
+	return m_qtextures.capture(TextureKey(loader, name)).get();
+}
+
+void TexturesMap::release (qtexture_t* texture)
+{
+	g_debug("textures release: '%s'\n", texture->name.c_str());
+	m_qtextures.release(TextureKey(texture->load, texture->name));
+}
+
+void TexturesMap::attach (TexturesCacheObserver& observer)
+{
+	ASSERT_MESSAGE(m_observer == 0, "TexturesMap::attach: cannot attach observer");
+	m_observer = &observer;
+}
+
+void TexturesMap::detach (TexturesCacheObserver& observer)
+{
+	ASSERT_MESSAGE(m_observer == &observer, "TexturesMap::detach: cannot detach observer");
+	m_observer = 0;
+}
+
+void TexturesMap::realise ()
+{
+	if (--m_unrealised == 0) {
+		for (qtextures_t::iterator i = m_qtextures.begin(); i != m_qtextures.end(); ++i) {
+			if (!(*i).value.empty()) {
+				(*(*i).value).realise();
+			}
+		}
+		if (m_observer != 0) {
+			m_observer->realise();
+		}
+	}
+}
+void TexturesMap::unrealise ()
+{
+	if (++m_unrealised == 1) {
+		if (m_observer != 0) {
+			m_observer->unrealise();
+		}
+		for (qtextures_t::iterator i = m_qtextures.begin(); i != m_qtextures.end(); ++i) {
+			if (!(*i).value.empty()) {
+				(*(*i).value).unrealise();
+			}
+		}
+	}
+}
+
+bool TexturesMap::realised ()
+{
+	return m_unrealised == 0;
+}

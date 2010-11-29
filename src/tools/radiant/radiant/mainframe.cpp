@@ -51,6 +51,7 @@
 #include "ishadersystem.h"
 #include "igamemanager.h"
 #include "iuimanager.h"
+#include "itextures.h"
 #include "igl.h"
 #include "iump.h"
 #include "imapcompiler.h"
@@ -123,7 +124,6 @@
 #include "gtkmisc.h"
 #include "plugin.h"
 #include "select.h"
-#include "textures.h"
 #include "url.h"
 #include "windowobservers.h"
 #include "model.h"
@@ -1266,7 +1266,7 @@ void GlobalGL_sharedContextCreated (void)
 	QGL_sharedContextCreated(GlobalOpenGL());
 
 	GlobalShaderCache().realise();
-	Textures_Realise();
+	GlobalTexturesCache().realise();
 
 	/* use default font here (Sans 10 is gtk default) */
 	GtkSettings *settings = gtk_settings_get_default();
@@ -1283,7 +1283,7 @@ void GlobalGL_sharedContextCreated (void)
 
 void GlobalGL_sharedContextDestroyed (void)
 {
-	Textures_Unrealise();
+	GlobalTexturesCache().unrealise();
 	GlobalShaderCache().unrealise();
 
 	QGL_sharedContextDestroyed(GlobalOpenGL());

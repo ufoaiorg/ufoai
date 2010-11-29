@@ -50,7 +50,6 @@
 #include "stream/memstream.h"
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
-#include "../textures.h"
 #include "convert.h"
 #include "imaterial.h"
 

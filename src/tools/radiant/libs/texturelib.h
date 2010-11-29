@@ -30,6 +30,7 @@
 typedef Vector3 Colour3;
 typedef unsigned int GLuint;
 class LoadImageCallback;
+class Image;
 
 enum ProjectionAxis
 {
@@ -37,13 +38,20 @@ enum ProjectionAxis
 };
 
 // describes a GL texture
-struct qtexture_t
+class qtexture_t
 {
-		qtexture_t (const LoadImageCallback& load, const std::string& name) :
-			load(load), name(name), width(0), height(0), texture_number(0),
-			color(0.0, 0.0, 0.0), surfaceFlags(0), contentFlags(0), value(0), hasAlpha(false)
-		{
-		}
+		/**
+		 * @brief This function does the actual processing of raw RGBA data into a GL texture.
+		 * @note It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
+		 */
+		void LoadTextureRGBA (qtexture_t* q, Image* image);
+
+	public:
+		qtexture_t (const LoadImageCallback& load, const std::string& name);
+
+		void realise ();
+		void unrealise ();
+
 		const LoadImageCallback& load;
 		const std::string name;
 		std::size_t width, height;
@@ -137,50 +145,51 @@ inline ProjectionAxis projectionaxis_for_normal (const Vector3& normal)
 }
 
 /*!
-\brief Construct a transform from XYZ space to ST space (3d to 2d).
-This will be one of three axis-aligned spaces, depending on the surface normal.
-NOTE: could also be done by swapping values.
-*/
-inline void Normal_GetTransform(const Vector3& normal, Matrix4& transform) {
+ \brief Construct a transform from XYZ space to ST space (3d to 2d).
+ This will be one of three axis-aligned spaces, depending on the surface normal.
+ NOTE: could also be done by swapping values.
+ */
+inline void Normal_GetTransform (const Vector3& normal, Matrix4& transform)
+{
 	switch (projectionaxis_for_normal(normal)) {
-		case eProjectionAxisZ:
-			transform[0]  =  1;
-			transform[1]  =  0;
-			transform[2]  =  0;
+	case eProjectionAxisZ:
+		transform[0] = 1;
+		transform[1] = 0;
+		transform[2] = 0;
 
-			transform[4]  =  0;
-			transform[5]  =  1;
-			transform[6]  =  0;
+		transform[4] = 0;
+		transform[5] = 1;
+		transform[6] = 0;
 
-			transform[8]  =  0;
-			transform[9]  =  0;
-			transform[10] =  1;
+		transform[8] = 0;
+		transform[9] = 0;
+		transform[10] = 1;
 		break;
-		case eProjectionAxisY:
-			transform[0]  =  1;
-			transform[1]  =  0;
-			transform[2]  =  0;
+	case eProjectionAxisY:
+		transform[0] = 1;
+		transform[1] = 0;
+		transform[2] = 0;
 
-			transform[4]  =  0;
-			transform[5]  =  0;
-			transform[6]  = -1;
+		transform[4] = 0;
+		transform[5] = 0;
+		transform[6] = -1;
 
-			transform[8]  =  0;
-			transform[9]  =  1;
-			transform[10] =  0;
+		transform[8] = 0;
+		transform[9] = 1;
+		transform[10] = 0;
 		break;
-		case eProjectionAxisX:
-			transform[0]  =  0;
-			transform[1]  =  0;
-			transform[2]  =  1;
+	case eProjectionAxisX:
+		transform[0] = 0;
+		transform[1] = 0;
+		transform[2] = 1;
 
-			transform[4]  =  1;
-			transform[5]  =  0;
-			transform[6]  =  0;
+		transform[4] = 1;
+		transform[5] = 0;
+		transform[6] = 0;
 
-			transform[8]  =  0;
-			transform[9]  =  1;
-			transform[10] =  0;
+		transform[8] = 0;
+		transform[9] = 1;
+		transform[10] = 0;
 		break;
 	}
 	transform[3] = transform[7] = transform[11] = transform[12] = transform[13] = transform[14] = 0;
