@@ -37,7 +37,7 @@ class OpenGLShader: public Shader {
 		void detach(ModuleObserver& observer);
 		void realise(const std::string& name);
 		void unrealise();
-		qtexture_t& getTexture() const;
+		GLTexture& getTexture() const;
 		unsigned int getFlags() const;
 		IShader& getShader() const;
 		OpenGLState& appendDefaultPass();

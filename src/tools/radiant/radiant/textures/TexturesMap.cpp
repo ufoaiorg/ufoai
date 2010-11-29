@@ -40,16 +40,16 @@ TexturesMap::TextureConstructor::TextureConstructor (TexturesMap* cache) :
 	m_cache(cache)
 {
 }
-qtexture_t* TexturesMap::TextureConstructor::construct (const TextureKey& key)
+GLTexture* TexturesMap::TextureConstructor::construct (const TextureKey& key)
 {
-	qtexture_t* texture = new qtexture_t(key.first, key.second);
+	GLTexture* texture = new GLTexture(key.first, key.second);
 	if (m_cache->realised()) {
 		texture->realise();
 	}
 	return texture;
 }
 
-void TexturesMap::TextureConstructor::destroy (qtexture_t* texture)
+void TexturesMap::TextureConstructor::destroy (GLTexture* texture)
 {
 	if (m_cache->realised()) {
 		texture->unrealise();
@@ -82,18 +82,18 @@ Image* TexturesMap::loadImage (const std::string& name)
 	return defaultLoader().loadImage(name);
 }
 
-qtexture_t* TexturesMap::capture (const std::string& name)
+GLTexture* TexturesMap::capture (const std::string& name)
 {
 	return capture(defaultLoader(), name);
 }
 
-qtexture_t* TexturesMap::capture (const LoadImageCallback& loader, const std::string& name)
+GLTexture* TexturesMap::capture (const LoadImageCallback& loader, const std::string& name)
 {
 	g_debug("textures capture: '%s'\n", name.c_str());
 	return m_qtextures.capture(TextureKey(loader, name)).get();
 }
 
-void TexturesMap::release (qtexture_t* texture)
+void TexturesMap::release (GLTexture* texture)
 {
 	g_debug("textures release: '%s'\n", texture->name.c_str());
 	m_qtextures.release(TextureKey(texture->load, texture->name));
@@ -114,7 +114,7 @@ void TexturesMap::detach (TexturesCacheObserver& observer)
 void TexturesMap::realise ()
 {
 	if (--m_unrealised == 0) {
-		for (qtextures_t::iterator i = m_qtextures.begin(); i != m_qtextures.end(); ++i) {
+		for (TextureCache::iterator i = m_qtextures.begin(); i != m_qtextures.end(); ++i) {
 			if (!(*i).value.empty()) {
 				(*(*i).value).realise();
 			}
@@ -130,7 +130,7 @@ void TexturesMap::unrealise ()
 		if (m_observer != 0) {
 			m_observer->unrealise();
 		}
-		for (qtextures_t::iterator i = m_qtextures.begin(); i != m_qtextures.end(); ++i) {
+		for (TextureCache::iterator i = m_qtextures.begin(); i != m_qtextures.end(); ++i) {
 			if (!(*i).value.empty()) {
 				(*(*i).value).unrealise();
 			}

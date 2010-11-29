@@ -97,7 +97,7 @@ class OpenGLRenderable
 };
 
 class Matrix4;
-struct qtexture_t;
+class GLTexture;
 class ModuleObserver;
 
 #include "math/Vector3.h"
@@ -122,7 +122,7 @@ class Shader
 		virtual void decrementUsed () = 0;
 		virtual void attach (ModuleObserver& observer) = 0;
 		virtual void detach (ModuleObserver& observer) = 0;
-		virtual qtexture_t& getTexture () const = 0;
+		virtual GLTexture& getTexture () const = 0;
 		virtual unsigned int getFlags () const = 0;
 };
 

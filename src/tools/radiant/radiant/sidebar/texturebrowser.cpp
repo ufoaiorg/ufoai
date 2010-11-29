@@ -206,7 +206,7 @@ void TextureBrowser::setStatusText (const std::string& name)
 	if (g_pParentWnd == 0)
 		return;
 	IShader* shaderPtr = GlobalShaderSystem().getShaderForName(name);
-	qtexture_t* q = shaderPtr->getTexture();
+	GLTexture* q = shaderPtr->getTexture();
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << string::toString(q->width) << " H: " << string::toString(q->height);
 	shaderPtr->DecRef();
@@ -224,7 +224,7 @@ void TextureBrowser::setSelectedShader (const std::string& _shader)
 }
 
 // Return the display width of a texture in the texture browser
-int TextureBrowser::getTextureWidth(const qtexture_t* tex) {
+int TextureBrowser::getTextureWidth(const GLTexture* tex) {
 	int width;
 	if (!m_resizeTextures) {
 		// Don't use uniform size
@@ -239,7 +239,7 @@ int TextureBrowser::getTextureWidth(const qtexture_t* tex) {
 	return width;
 }
 // Return the display height of a texture in the texture browser
-int TextureBrowser::getTextureHeight(const qtexture_t* tex) {
+int TextureBrowser::getTextureHeight(const GLTexture* tex) {
 	int height;
 	if (!m_resizeTextures) {
 		// Don't use uniform size
@@ -254,7 +254,7 @@ int TextureBrowser::getTextureHeight(const qtexture_t* tex) {
 	return height;
 }
 
-void TextureBrowser::getNextTexturePosition (TextureLayout& layout, const qtexture_t* q, int *x, int *y)
+void TextureBrowser::getNextTexturePosition (TextureLayout& layout, const GLTexture* q, int *x, int *y)
 {
 	const int nWidth = getTextureWidth(q);
 	const int nHeight = getTextureHeight(q);
@@ -509,7 +509,7 @@ void TextureBrowser::focus (const std::string& name)
 
 		int x, y;
 		getNextTexturePosition(layout, shader->getTexture(), &x, &y);
-		const qtexture_t* q = shader->getTexture();
+		const GLTexture* q = shader->getTexture();
 		if (!q)
 			break;
 
@@ -546,7 +546,7 @@ const IShader* TextureBrowser::getTextureAt (int mx, int my)
 
 		int x, y;
 		getNextTexturePosition(layout, shader->getTexture(), &x, &y);
-		qtexture_t *q = shader->getTexture();
+		GLTexture *q = shader->getTexture();
 		if (!q)
 			break;
 
@@ -575,7 +575,7 @@ void TextureBrowser::selectTextureAt (int mx, int my)
 
 /**
  * @brief relying on the shaders list to display the textures
- * we must query all qtexture_t* to manage and display through the IShaders interface
+ * we must query all GLTexture* to manage and display through the IShaders interface
  * this allows a plugin to completely override the texture system
  */
 void TextureBrowser::draw ()
@@ -607,7 +607,7 @@ void TextureBrowser::draw ()
 
 		int x, y;
 		getNextTexturePosition(layout, shader->getTexture(), &x, &y);
-		const qtexture_t *q = shader->getTexture();
+		const GLTexture *q = shader->getTexture();
 		if (!q)
 			break;
 

@@ -171,9 +171,9 @@ class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor
 		void setStatusText(const std::string& name);
 
 		// Return the display width of a texture in the texture browser
-		int getTextureWidth(const qtexture_t* tex);
+		int getTextureWidth(const GLTexture* tex);
 		// Return the display height of a texture in the texture browser
-		int getTextureHeight(const qtexture_t* tex);
+		int getTextureHeight(const GLTexture* tex);
 
 		void textureScaleImport (int value);
 
@@ -182,7 +182,7 @@ class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor
 		int getTotalHeight();
 		void clampOriginY();
 		int getOriginY();
-		void getNextTexturePosition(TextureLayout& layout, const qtexture_t* q, int *x, int *y);
+		void getNextTexturePosition(TextureLayout& layout, const GLTexture* q, int *x, int *y);
 		const IShader* getTextureAt(int mx, int my);
 		void draw();
 		void onMouseWheel(bool bUp);

@@ -10,7 +10,7 @@
  * @brief This function does the actual processing of raw RGBA data into a GL texture.
  * @note It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
  */
-void qtexture_t::LoadTextureRGBA (Image* image)
+void GLTexture::LoadTextureRGBA (Image* image)
 {
 	surfaceFlags = image->getSurfaceFlags();
 	contentFlags = image->getContentFlags();
@@ -44,13 +44,13 @@ void qtexture_t::LoadTextureRGBA (Image* image)
 		delete processed;
 }
 
-qtexture_t::qtexture_t (const LoadImageCallback& load, const std::string& name) :
+GLTexture::GLTexture (const LoadImageCallback& load, const std::string& name) :
 	load(load), name(name), width(0), height(0), texture_number(0), color(0.0, 0.0, 0.0), surfaceFlags(0),
 			contentFlags(0), value(0), hasAlpha(false)
 {
 }
 
-void qtexture_t::realise ()
+void GLTexture::realise ()
 {
 	texture_number = 0;
 	/* skip empty names and normalmaps */
@@ -64,7 +64,7 @@ void qtexture_t::realise ()
 	}
 }
 
-void qtexture_t::unrealise ()
+void GLTexture::unrealise ()
 {
 	if (GlobalOpenGL().contextValid && texture_number != 0) {
 		glDeleteTextures(1, &texture_number);

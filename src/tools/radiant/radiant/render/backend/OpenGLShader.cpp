@@ -101,7 +101,7 @@ void OpenGLShader::unrealise ()
 	destroy();
 }
 
-qtexture_t& OpenGLShader::getTexture () const
+GLTexture& OpenGLShader::getTexture () const
 {
 	ASSERT_NOTNULL(m_shader);
 	return *m_shader->getTexture();
@@ -159,7 +159,7 @@ GLenum OpenGLShader::convertBlendFactor (BlendFactor factor)
 // Append a blend (non-interaction) layer
 void OpenGLShader::appendBlendLayer (const ShaderLayer& layer)
 {
-	qtexture_t* layerTex = layer.getTexture();
+	GLTexture* layerTex = layer.getTexture();
 
 	OpenGLState& state = appendDefaultPass();
 	state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_COLOURCHANGE | RENDER_TEXTURE_2D;

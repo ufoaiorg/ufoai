@@ -9,7 +9,7 @@ class Tokeniser;
 class MapLayer: public ShaderLayer
 {
 	private:
-		qtexture_t* m_texture;
+		GLTexture* m_texture;
 		BlendFunc m_blendFunc;
 		double m_alphaTest;
 		ShaderLayer::Type m_type;
@@ -20,7 +20,7 @@ class MapLayer: public ShaderLayer
 		bool _terrain;
 		float _polygonOffset;
 	public:
-		MapLayer (qtexture_t* texture, BlendFunc blendFunc, ShaderLayer::Type type, Vector3& color, double alphaTest) :
+		MapLayer (GLTexture* texture, BlendFunc blendFunc, ShaderLayer::Type type, Vector3& color, double alphaTest) :
 			m_texture(texture), m_blendFunc(blendFunc), m_alphaTest(alphaTest), m_type(type), m_color(color),
 					_height(0), _ceilVal(0), _floorVal(0), _terrain(false), _polygonOffset(0.0)
 		{
@@ -36,7 +36,7 @@ class MapLayer: public ShaderLayer
 			return m_color;
 		}
 
-		qtexture_t* getTexture () const
+		GLTexture* getTexture () const
 		{
 			return m_texture;
 		}
@@ -97,9 +97,9 @@ class MaterialShader: public IShader
 
 		bool _isValid;
 
-		qtexture_t* _texture;
+		GLTexture* _texture;
 
-		qtexture_t* _notfound;
+		GLTexture* _notfound;
 
 		typedef std::vector<MapLayer> MapLayers;
 		MapLayers m_layers;
@@ -123,7 +123,7 @@ class MaterialShader: public IShader
 		std::size_t refcount ();
 
 		// get the texture pointer Radiant uses to represent this shader object
-		qtexture_t* getTexture () const;
+		GLTexture* getTexture () const;
 
 		// get shader name
 		const std::string& getName () const;

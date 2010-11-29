@@ -35,7 +35,7 @@ class IShader
 		/**
 		 * get the texture pointer Radiant uses to represent this shader object
 		 */
-		virtual qtexture_t* getTexture () const = 0;
+		virtual GLTexture* getTexture () const = 0;
 
 		/**
 		 * get shader name

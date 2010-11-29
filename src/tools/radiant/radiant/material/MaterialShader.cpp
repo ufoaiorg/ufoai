@@ -57,7 +57,7 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 	Vector3 color(1, 1, 1);
 	double alphaTest = 0.0f;
 	bool terrain = false;
-	qtexture_t *layerTexture = 0;
+	GLTexture *layerTexture = 0;
 	BlendFactor src = BLEND_SRC_ALPHA;
 	BlendFactor dest = BLEND_ONE_MINUS_SRC_ALPHA;
 	float ceilVal, floorVal;
@@ -147,7 +147,7 @@ std::size_t MaterialShader::refcount ()
 	return _refcount;
 }
 
-qtexture_t* MaterialShader::getTexture () const
+GLTexture* MaterialShader::getTexture () const
 {
 	return _texture;
 }

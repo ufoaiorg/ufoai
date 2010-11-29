@@ -38,7 +38,7 @@ enum ProjectionAxis
 };
 
 // describes a GL texture
-class qtexture_t
+class GLTexture
 {
 		/**
 		 * @brief This function does the actual processing of raw RGBA data into a GL texture.
@@ -47,7 +47,7 @@ class qtexture_t
 		void LoadTextureRGBA (Image* image);
 
 	public:
-		qtexture_t (const LoadImageCallback& load, const std::string& name);
+		GLTexture (const LoadImageCallback& load, const std::string& name);
 
 		void realise ();
 		void unrealise ();

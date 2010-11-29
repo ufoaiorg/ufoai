@@ -68,7 +68,7 @@ class ShaderLayer
 		 * \brief
 		 * Return the Texture object corresponding to this layer (may be NULL).
 		 */
-		virtual qtexture_t* getTexture () const = 0;
+		virtual GLTexture* getTexture () const = 0;
 
 		/**
 		 * \brief

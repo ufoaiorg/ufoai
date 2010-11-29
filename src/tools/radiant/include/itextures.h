@@ -25,7 +25,7 @@
 #include "iimage.h"
 #include "generic/constant.h"
 
-struct qtexture_t;
+class GLTexture;
 
 class LoadImageCallback
 {
@@ -78,14 +78,14 @@ class TexturesCache
 		// Loads an image by using the default loader and returns the pointer
 		virtual Image* loadImage (const std::string& name) = 0;
 
-		// Capture the named image texture and return the associated qtexture_t
+		// Capture the named image texture and return the associated GLTexture
 		// struct.
-		virtual qtexture_t* capture (const std::string& name) = 0;
+		virtual GLTexture* capture (const std::string& name) = 0;
 
 		// Capture the named image texture using the provided image loader.
-		virtual qtexture_t* capture (const LoadImageCallback& loader, const std::string& name) = 0;
+		virtual GLTexture* capture (const LoadImageCallback& loader, const std::string& name) = 0;
 
-		virtual void release (qtexture_t* texture) = 0;
+		virtual void release (GLTexture* texture) = 0;
 
 		virtual void attach (TexturesCacheObserver& observer) = 0;
 

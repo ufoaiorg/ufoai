@@ -50,14 +50,14 @@ class TexturesMap: public TexturesCache
 
 				explicit TextureConstructor (TexturesMap* cache);
 
-				qtexture_t* construct (const TextureKey& key);
+				GLTexture* construct (const TextureKey& key);
 
-				void destroy (qtexture_t* texture);
+				void destroy (GLTexture* texture);
 		};
 
-		typedef HashedCache<TextureKey, qtexture_t, TextureKeyHashNoCase, TextureKeyEqualNoCase, TextureConstructor>
-				qtextures_t;
-		qtextures_t m_qtextures;
+		typedef HashedCache<TextureKey, GLTexture, TextureKeyHashNoCase, TextureKeyEqualNoCase, TextureConstructor>
+				TextureCache;
+		TextureCache m_qtextures;
 		TexturesCacheObserver* m_observer;
 		std::size_t m_unrealised;
 
@@ -65,7 +65,7 @@ class TexturesMap: public TexturesCache
 
 		TexturesMap ();
 
-		typedef qtextures_t::iterator iterator;
+		typedef TextureCache::iterator iterator;
 
 		iterator begin ();
 
@@ -75,11 +75,11 @@ class TexturesMap: public TexturesCache
 
 		Image* loadImage (const std::string& name);
 
-		qtexture_t* capture (const std::string& name);
+		GLTexture* capture (const std::string& name);
 
-		qtexture_t* capture (const LoadImageCallback& loader, const std::string& name);
+		GLTexture* capture (const LoadImageCallback& loader, const std::string& name);
 
-		void release (qtexture_t* texture);
+		void release (GLTexture* texture);
 
 		void attach (TexturesCacheObserver& observer);
 
