@@ -1,14 +1,9 @@
-/*!
- *  \file sound.cpp
- *
- *  Created on: 30/08/2009
- *      Author: Martin
- */
+#include "isound.h"
+
 #include "modulesystem.h"
 #include "modulesystem/moduleregistry.h"
-#include "isound.h"
 #include "modulesystem/singletonmodule.h"
-#include "sound/SoundManager.h"
+#include "SoundManager.h"
 
 class SoundManagerAPI
 {

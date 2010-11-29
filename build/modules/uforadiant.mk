@@ -26,12 +26,15 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
-	$(RADIANT_BASE)/radiant/sound.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
+	\
+	$(RADIANT_BASE)/radiant/sound/sound.cpp \
+	$(RADIANT_BASE)/radiant/sound/SoundManager.cpp \
+	$(RADIANT_BASE)/radiant/sound/SoundPlayer.cpp \
 	\
 	$(RADIANT_BASE)/radiant/script/ScriptLibrary.cpp \
 	$(RADIANT_BASE)/radiant/script/ScriptLibraryModule.cpp \
@@ -324,8 +327,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/menu/PopupMenu.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window/PersistentTransientWindow.cpp \
 	\
-	$(RADIANT_BASE)/libs/sound/SoundManager.cpp \
-	$(RADIANT_BASE)/libs/sound/SoundPlayer.cpp \
 	$(RADIANT_BASE)/libs/entity/entity.cpp \
 	$(RADIANT_BASE)/libs/entity/eclassmodel.cpp \
 	$(RADIANT_BASE)/libs/entity/generic.cpp \

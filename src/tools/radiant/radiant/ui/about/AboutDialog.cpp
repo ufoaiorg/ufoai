@@ -13,7 +13,8 @@
 #include "gtkutil/LeftAlignment.h"
 #include "gtkutil/ScrolledFrame.h"
 #include "gtkutil/image.h"
-#include "sound/OpenAL.h"
+
+#include "../../sound/OpenAL.h"
 
 namespace ui {
 
