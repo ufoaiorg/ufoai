@@ -85,6 +85,14 @@
 				<gridActive value="1" />
 				<faceVertexScalePivotIsCentroid value="0" />
 			</texTool>
+
+			<surfaceInspector>
+				<hShiftStep value="1" />
+				<vShiftStep value="1" />
+				<hScaleStep value="0.05" />
+				<vScaleStep value="0.05" />
+				<rotStep value="45" />
+			</surfaceInspector>
 		</textures>
 
 		<map>
