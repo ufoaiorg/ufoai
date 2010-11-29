@@ -70,9 +70,10 @@ class EntityFindSelected: public scene::Graph::Walker
 class EntityGroupSelected: public scene::Graph::Walker
 {
 		NodeSmartReference group;
+		NodeSmartReference worldspawn;
 	public:
 		EntityGroupSelected (const scene::Path &p) :
-			group(p.top().get())
+			group(p.top().get()), worldspawn(GlobalMap().findOrInsertWorldspawn())
 		{
 		}
 
@@ -89,7 +90,7 @@ class EntityGroupSelected: public scene::Graph::Walker
 					NodeSmartReference child(path.top().get());
 					NodeSmartReference parent(path.parent().get());
 
-					if (path.size() >= 3 && parent != GlobalMap().findOrInsertWorldspawn()) {
+					if (path.size() >= 3 && parent != worldspawn) {
 						NodeSmartReference parentparent(path[path.size() - 3].get());
 						Node_getTraversable(parent)->erase(child);
 						Node_getTraversable(group)->insert(child);
