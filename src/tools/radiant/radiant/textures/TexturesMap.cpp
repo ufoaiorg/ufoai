@@ -19,22 +19,10 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "itextures.h"
-#include "iregistry.h"
-#include "iradiant.h"
-#include "igl.h"
-#include "radiant_i18n.h"
-
-#include "AutoPtr.h"
-#include "texturelib.h"
-#include "container/hashfunc.h"
-#include "container/cache.h"
-#include "preferencesystem.h"
-
-#include "TextureManipulator.h"
 #include "TexturesMap.h"
+#include "texturelib.h"
 
-#include "../image.h"
+#include "../image.h" // QERApp_LoadImage
 
 TexturesMap::TextureConstructor::TextureConstructor (TexturesMap* cache) :
 	m_cache(cache)
