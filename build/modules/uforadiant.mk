@@ -274,7 +274,7 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/filters/BasicFilterSystem.cpp \
 	$(RADIANT_BASE)/radiant/filters/filters.cpp \
-	$(RADIANT_BASE)/radiant/filters/levelfilters.cpp \
+	$(RADIANT_BASE)/radiant/filters/LevelFilter.cpp \
 	$(RADIANT_BASE)/radiant/filters/XMLFilter.cpp \
 	\
 	$(RADIANT_BASE)/radiant/textool/TexTool.cpp \

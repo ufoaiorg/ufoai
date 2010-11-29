@@ -107,7 +107,7 @@
 #include "ui/Icons.h"
 #include "settings/PreferenceDialog.h"
 #include "render/OpenGLRenderSystem.h"
-#include "filters/levelfilters.h"
+#include "filters/LevelFilter.h"
 #include "sound/SoundManager.h"
 #include "clipper/Clipper.h"
 #include "camera/CamWnd.h"
@@ -1475,7 +1475,7 @@ void MainFrame_Construct (void)
 
 	ui::TexTool::registerCommands();
 
-	LevelFilters_registerCommands();
+	GlobalLevelFilter().registerCommands();
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());

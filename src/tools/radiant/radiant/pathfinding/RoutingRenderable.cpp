@@ -5,7 +5,7 @@
 #include "entitylib.h"//for aabb_draw_solid
 #include "shared.h"
 
-#include "../filters/levelfilters.h"
+#include "../filters/LevelFilter.h"
 
 #define UNIT_SIZE_HALF (UNIT_SIZE/2)
 #define UNIT_SIZE_QUARTER (UNIT_SIZE/4)
@@ -40,7 +40,7 @@ namespace routing
 
 	void RoutingRenderable::render (RenderStateFlags state) const
 	{
-		int maxDisplayLevel = filter_getCurrentLevel();
+		int maxDisplayLevel = GlobalLevelFilter().getCurrentLevel();
 		const int minDisplayLevel = _showAllLowerLevels ? 0 : std::max(0, maxDisplayLevel - 1);
 		if (maxDisplayLevel == 0)
 			maxDisplayLevel = PATHFINDING_HEIGHT;

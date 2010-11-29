@@ -533,8 +533,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\XMLFilter.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\XMLFilterRule.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\filters\filters.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\filters\levelfilters.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\filters\levelfilters.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filters\LevelFilter.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\filters\LevelFilter.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\gtkmisc.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\gtkmisc.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\image.cpp" />
