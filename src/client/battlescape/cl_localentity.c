@@ -1012,7 +1012,7 @@ void LET_SlideDoor (le_t *le, int speed)
 		/* we need the angles vector normalized */
 		GET_SLIDING_DOOR_SHIFT_VECTOR(le->dir, (speed < 0) ? -1 : 1, moveAngles);
 
-		/* the door is moved in one step on the server side - lerping is not needed here */
+		/* the bounding box of the door is updated in one step - here is no lerping needed */
 		VectorMul(distance, moveAngles, distanceVec);
 
 		VectorAdd(model->mins, distanceVec, model->mins);
