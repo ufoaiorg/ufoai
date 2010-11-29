@@ -28,6 +28,7 @@ TexturesMap::TextureConstructor::TextureConstructor (TexturesMap* cache) :
 	m_cache(cache)
 {
 }
+
 GLTexture* TexturesMap::TextureConstructor::construct (const TextureKey& key)
 {
 	GLTexture* texture = new GLTexture(key.first, key.second);
@@ -50,24 +51,9 @@ TexturesMap::TexturesMap () :
 {
 }
 
-TexturesMap::iterator TexturesMap::begin ()
-{
-	return m_qtextures.begin();
-}
-
-TexturesMap::iterator TexturesMap::end ()
-{
-	return m_qtextures.end();
-}
-
 LoadImageCallback TexturesMap::defaultLoader () const
 {
 	return LoadImageCallback(0, QERApp_LoadImage);
-}
-
-Image* TexturesMap::loadImage (const std::string& name)
-{
-	return defaultLoader().loadImage(name);
 }
 
 GLTexture* TexturesMap::capture (const std::string& name)
@@ -112,6 +98,7 @@ void TexturesMap::realise ()
 		}
 	}
 }
+
 void TexturesMap::unrealise ()
 {
 	if (++m_unrealised == 1) {

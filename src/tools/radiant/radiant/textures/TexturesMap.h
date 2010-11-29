@@ -61,19 +61,11 @@ class TexturesMap: public TexturesCache
 		TexturesCacheObserver* m_observer;
 		std::size_t m_unrealised;
 
+		LoadImageCallback defaultLoader () const;
+
 	public:
 
 		TexturesMap ();
-
-		typedef TextureCache::iterator iterator;
-
-		iterator begin ();
-
-		iterator end ();
-
-		LoadImageCallback defaultLoader () const;
-
-		Image* loadImage (const std::string& name);
 
 		GLTexture* capture (const std::string& name);
 

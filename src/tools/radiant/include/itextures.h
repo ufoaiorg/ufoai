@@ -75,9 +75,6 @@ class TexturesCache
 		{
 		}
 
-		// Loads an image by using the default loader and returns the pointer
-		virtual Image* loadImage (const std::string& name) = 0;
-
 		// Capture the named image texture and return the associated GLTexture
 		// struct.
 		virtual GLTexture* capture (const std::string& name) = 0;
