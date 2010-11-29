@@ -34,10 +34,7 @@
  */
 
 #include "gtkmisc.h"
-#include "radiant_i18n.h"
 #include "ieventmanager.h"
-
-#include "os/path.h"
 
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtkmenu.h>
@@ -47,9 +44,6 @@
 #include "gtkutil/menu.h"
 #include "gtkutil/MenuItemAccelerator.h"
 #include "gtkutil/SeparatorMenuItem.h"
-
-// =============================================================================
-// Misc stuff
 
 /* greebo: Create a menu item under the given <menu> and connect it to the given <command> name
  */

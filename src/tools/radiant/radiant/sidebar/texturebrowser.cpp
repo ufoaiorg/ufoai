@@ -469,7 +469,7 @@ class LoadTexturesByTypeVisitor: public ImageModules::Visitor
 			m_dirstring(dirstring), _dialog(MainFrame_getWindow(), _("Loading textures"))
 		{
 		}
-		void visit (const std::string& minor, const _QERPlugImageTable& table) const
+		void visit (const std::string& minor, const IImageModule& table) const
 		{
 			TextureDirectoryLoadTextureCaller functor(m_dirstring, _dialog);
 			GlobalFileSystem().forEachFile(m_dirstring, minor, makeCallback1(functor));

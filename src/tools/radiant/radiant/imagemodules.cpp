@@ -39,8 +39,8 @@ typedef unsigned char byte;
  * Note: returns NULL if the file could not be loaded.
  */
 
-static Image* LoadImageGDK(ArchiveFile& file) {
-
+static Image* LoadImageGDK (ArchiveFile& file)
+{
 	// Allocate a new GdkPixBuf and create an alpha-channel with alpha=1.0
 	GdkPixbuf* rawPixbuf = gdk_pixbuf_new_from_file(file.getName().c_str(), NULL);
 
@@ -62,7 +62,7 @@ static Image* LoadImageGDK(ArchiveFile& file) {
 		// Now do an unelegant cycle over all the pixels and move them into the target
 		for (unsigned int y = 0; y < image->height; y++) {
 			for (unsigned int x = 0; x < image->width; x++) {
-				guchar* gdkPixel = gdkStart + y*rowstride + x*numChannels;
+				guchar* gdkPixel = gdkStart + y * rowstride + x * numChannels;
 
 				// Copy the values from the GdkPixel
 				targetPixel->red = gdkPixel[0];
@@ -126,98 +126,90 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 	return image;
 }
 
-class ImageTGAAPI
+class ImageTGAAPI: public IImageModule
 {
-	private:
-		_QERPlugImageTable m_imagetga;
+	public:
 
-		static Image* LoadTGA (ArchiveFile& file)
+		typedef IImageModule Type;
+		STRING_CONSTANT(Name, "tga");
+
+		IImageModule* getTable ()
+		{
+			return this;
+		}
+
+	public:
+
+		Image* loadImage (ArchiveFile& file) const
 		{
 			return LoadImage(file, "tga");
 		}
-
-	public:
-		typedef _QERPlugImageTable Type;
-		STRING_CONSTANT(Name, "tga");
-
-		ImageTGAAPI ()
-		{
-			m_imagetga.loadImage = LoadTGA;
-		}
-		_QERPlugImageTable* getTable ()
-		{
-			return &m_imagetga;
-		}
 };
+
 typedef SingletonModule<ImageTGAAPI> ImageTGAModule;
 typedef Static<ImageTGAModule> StaticImageTGAModule;
 
-class ImageJPGAPI
+class ImageJPGAPI: public IImageModule
 {
-	private:
-		_QERPlugImageTable m_imagejpg;
-
-		static Image* LoadJPG (ArchiveFile& file)
-		{
-			return LoadImage(file, "jpeg");
-		}
 	public:
-		typedef _QERPlugImageTable Type;
+
+		typedef IImageModule Type;
 		STRING_CONSTANT(Name, "jpg");
 
-		ImageJPGAPI ()
+		IImageModule* getTable ()
 		{
-			m_imagejpg.loadImage = LoadJPG;
+			return this;
 		}
-		_QERPlugImageTable* getTable ()
+
+	public:
+
+		Image* loadImage (ArchiveFile& file) const
 		{
-			return &m_imagejpg;
+			return LoadImage(file, "jpeg");
 		}
 };
 typedef SingletonModule<ImageJPGAPI, ImageDependencies> ImageJPGModule;
 typedef Static<ImageJPGModule> StaticImageJPGModule;
 
-class ImagePNGAPI
+class ImagePNGAPI: public IImageModule
 {
-	private:
-		_QERPlugImageTable m_imagepng;
-
-		static Image* LoadPNG (ArchiveFile& file)
-		{
-			return LoadImage(file, "png");
-		}
 	public:
-		typedef _QERPlugImageTable Type;
+
+		typedef IImageModule Type;
 		STRING_CONSTANT(Name, "png");
 
-		ImagePNGAPI ()
+		IImageModule* getTable ()
 		{
-			m_imagepng.loadImage = LoadPNG;
+			return this;
 		}
-		_QERPlugImageTable* getTable ()
+
+	public:
+
+		Image* loadImage (ArchiveFile& file) const
 		{
-			return &m_imagepng;
+			return LoadImage(file, "png");
 		}
 };
 typedef SingletonModule<ImagePNGAPI> ImagePNGModule;
 typedef Static<ImagePNGModule> StaticImagePNGModule;
 
-class ImageGDKAPI
+class ImageGDKAPI: public IImageModule
 {
-	private:
-		_QERPlugImageTable m_imagegdk;
-
 	public:
-		typedef _QERPlugImageTable Type;
+
+		typedef IImageModule Type;
 		STRING_CONSTANT(Name, "GDK");
 
-		ImageGDKAPI ()
+		IImageModule* getTable ()
 		{
-			m_imagegdk.loadImage = LoadImageGDK;
+			return this;
 		}
-		_QERPlugImageTable* getTable ()
+
+	public:
+
+		Image* loadImage (ArchiveFile& file) const
 		{
-			return &m_imagegdk;
+			return LoadImageGDK(file);
 		}
 };
 typedef SingletonModule<ImageGDKAPI> ImageGDKModule;

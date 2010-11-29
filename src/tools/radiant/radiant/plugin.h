@@ -32,8 +32,8 @@ void Radiant_Destroy ();
 template<typename Type>
 class Modules;
 
-struct _QERPlugImageTable;
-typedef Modules<_QERPlugImageTable> ImageModules;
+struct IImageModule;
+typedef Modules<IImageModule> ImageModules;
 ImageModules& Radiant_getImageModules ();
 class MapFormat;
 typedef Modules<MapFormat> MapModules;

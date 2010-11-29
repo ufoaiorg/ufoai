@@ -32,7 +32,7 @@
 #include "os/path.h"
 #include "stream/stringstream.h"
 
-typedef Modules<_QERPlugImageTable> ImageModules;
+typedef Modules<IImageModule> ImageModules;
 
 class LoadImageVisitor: public ImageModules::Visitor
 {
@@ -51,7 +51,7 @@ class LoadImageVisitor: public ImageModules::Visitor
 
 		// Visit function called for each image module. Provides the file extension and
 		// a table with the loadImage function.
-		void visit (const std::string& extension, const _QERPlugImageTable& table) const
+		void visit (const std::string& extension, const IImageModule& table) const
 		{
 			// Only do anything, if the image pointer is still NULL (i.e. the image load has not succeeded yet)
 			if (_image == NULL) {
