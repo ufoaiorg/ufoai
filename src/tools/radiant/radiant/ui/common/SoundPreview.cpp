@@ -72,12 +72,12 @@ namespace ui
 		gtk_label_set_markup(GTK_LABEL(self->_statusLabel), "");
 		std::string selectedFile = self->getSelectedSoundFile();
 
-		if (!GlobalSoundManager()->isPlaybackEnabled()) {
+		if (!GlobalSoundManager().isPlaybackEnabled()) {
 			gtk_label_set_markup(GTK_LABEL(self->_statusLabel), _("<b>Error:</b> Sound is deactivated."));
 		} else {
 			if (!selectedFile.empty()) {
 				// Pass the call to the sound manager
-				if (!GlobalSoundManager()->playSound(selectedFile)) {
+				if (!GlobalSoundManager().playSound(selectedFile)) {
 					gtk_label_set_markup(GTK_LABEL(self->_statusLabel), _("<b>Error:</b> File not found."));
 				}
 			}
@@ -87,7 +87,7 @@ namespace ui
 	void SoundPreview::onStop (GtkButton* button, SoundPreview* self)
 	{
 		// Pass the call to the sound manager
-		GlobalSoundManager()->stopSound();
+		GlobalSoundManager().stopSound();
 		gtk_label_set_markup(GTK_LABEL(self->_statusLabel), "");
 	}
 

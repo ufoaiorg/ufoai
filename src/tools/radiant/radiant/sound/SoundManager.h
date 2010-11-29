@@ -8,56 +8,63 @@
 #include "generic/callback.h"
 #include "gtkutil/widget.h"
 
-namespace sound
+namespace sound {
+/**
+ * SoundManager implementing class.
+ */
+class SoundManager: public ISoundManager
 {
-	/**
-	 * SoundManager implementing class.
-	 */
-	class SoundManager: public ISoundManager
-	{
-			// The helper class for playing the sounds
-			SoundPlayer _soundPlayer;
+	public:
 
-			// Enables or Disables playback globally for the plugin.
-			bool playbackEnabled;
+		typedef ISoundManager Type;
+		STRING_CONSTANT(Name, "*");
 
-			// In case the plugin is disabled while playing, this
-			// file will be resumed if reenabled.
-			std::string resumingFileNameToBePlayed;
+		ISoundManager* getTable ()
+		{
+			return this;
+		}
 
-		public:
-			/**
-			 * Main constructor.
-			 */
-			SoundManager ();
+	private:
 
-			virtual ~SoundManager ();
+		// The helper class for playing the sounds
+		SoundPlayer _soundPlayer;
 
-			/** greebo: Plays the sound file. Tries to resolve the filename's
-			 * 			extension by appending .ogg or .wav and such.
-			 */
-			virtual bool playSound (const std::string& fileName);
+		// Enables or Disables playback globally for the plugin.
+		bool playbackEnabled;
 
-			/** greebo: Stops the playback immediately.
-			 */
-			virtual void stopSound ();
+		// In case the plugin is disabled while playing, this
+		// file will be resumed if reenabled.
+		std::string resumingFileNameToBePlayed;
 
-			/** tachop: Switches Sound Playback Enabled flag.
-			 */
-			virtual void switchPlaybackEnabledFlag();
+	public:
+		/**
+		 * Main constructor.
+		 */
+		SoundManager ();
 
-			/** tachop: Returns if Sound Playback is enabled.
-			 */
-			virtual bool isPlaybackEnabled ( ){ return playbackEnabled;};
-	};
+		~SoundManager ();
 
-	typedef AutoPtr<SoundManager> SoundManagerPtr;
+		/** greebo: Plays the sound file. Tries to resolve the filename's
+		 * 			extension by appending .ogg or .wav and such.
+		 */
+		bool playSound (const std::string& fileName);
+
+		/** greebo: Stops the playback immediately.
+		 */
+		void stopSound ();
+
+		/** tachop: Switches Sound Playback Enabled flag.
+		 */
+		void switchPlaybackEnabledFlag ();
+
+		/** tachop: Returns if Sound Playback is enabled.
+		 */
+		bool isPlaybackEnabled ();
+};
+
+typedef AutoPtr<SoundManager> SoundManagerPtr;
 }
 
-bool GlobalSoundManager_isPlaybackEnabled(void);
-
-void GlobalSoundManager_switchPlaybackEnabledFlag(void);
-
-extern ToggleItem g_soundPlaybackEnabled_button;
+void GlobalSoundManager_switchPlaybackEnabledFlag ();
 
 #endif /*SOUNDMANAGER_H_*/

@@ -109,13 +109,9 @@ class GlobalModuleRef;
 typedef GlobalModuleRef<ISoundManager> GlobalSoundManagerModuleRef;
 
 // Accessor method
-inline ISoundManager * GlobalSoundManager ()
+inline ISoundManager& GlobalSoundManager ()
 {
-	Module * soundmodule = globalModuleServer().findModule(ISoundManager::Name_CONSTANT_::evaluate(),
-			ISoundManager::Version_CONSTANT_::evaluate(), "*");
-	ASSERT_MESSAGE(soundmodule,
-			"Couldn't retrieve GlobalSoundManager, is not registered and/or initialized.");
-	return (ISoundManager *) soundmodule->getTable(); // findModule returns the pointer to the valid value, DO NOT DELETE!
+	return GlobalSoundManagerModule::getTable();
 }
 
 #endif /*ISOUND_H_*/

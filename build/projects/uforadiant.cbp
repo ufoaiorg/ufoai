@@ -707,11 +707,11 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\surfaceinspector\surfaceinspector.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\texturebrowser.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\texturebrowser.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\sound\sound.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound\OggFileStream.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound\OpenAL.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound\SoundManager.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound\SoundManager.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\sound\SoundManagerModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound\SoundPlayer.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound\SoundPlayer.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sound\WavFileLoader.h" />

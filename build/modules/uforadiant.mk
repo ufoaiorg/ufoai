@@ -32,8 +32,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
-	$(RADIANT_BASE)/radiant/sound/sound.cpp \
 	$(RADIANT_BASE)/radiant/sound/SoundManager.cpp \
+	$(RADIANT_BASE)/radiant/sound/SoundManagerModule.cpp \
 	$(RADIANT_BASE)/radiant/sound/SoundPlayer.cpp \
 	\
 	$(RADIANT_BASE)/radiant/script/ScriptLibrary.cpp \
