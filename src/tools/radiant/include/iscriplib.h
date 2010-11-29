@@ -61,13 +61,13 @@ class TokenWriter
 
 class TextOutputStream;
 
-class ScriptSystem
+class IScriptLibrary
 {
 	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "scriptlib");
 
-		virtual ~ScriptSystem() {}
+		virtual ~IScriptLibrary() {}
 
 		virtual Tokeniser* createScriptTokeniser (TextInputStream& istream) = 0;
 		virtual Tokeniser* createSimpleTokeniser (TextInputStream& istream) = 0;
@@ -78,13 +78,13 @@ class ScriptSystem
 
 template<typename Type>
 class GlobalModule;
-typedef GlobalModule<ScriptSystem> GlobalScripLibModule;
+typedef GlobalModule<IScriptLibrary> GlobalScripLibModule;
 
 template<typename Type>
 class GlobalModuleRef;
-typedef GlobalModuleRef<ScriptSystem> GlobalScripLibModuleRef;
+typedef GlobalModuleRef<IScriptLibrary> GlobalScripLibModuleRef;
 
-inline ScriptSystem& GlobalScriptLibrary ()
+inline IScriptLibrary& GlobalScriptLibrary ()
 {
 	return GlobalScripLibModule::getTable();
 }

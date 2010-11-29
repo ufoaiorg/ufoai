@@ -33,7 +33,10 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
-	$(RADIANT_BASE)/radiant/script/parse.cpp \
+	$(RADIANT_BASE)/radiant/script/ScriptLibrary.cpp \
+	$(RADIANT_BASE)/radiant/script/ScriptLibraryModule.cpp \
+	$(RADIANT_BASE)/radiant/script/ScriptTokeniser.cpp \
+	$(RADIANT_BASE)/radiant/script/ScriptTokenWriter.cpp \
 	\
 	$(RADIANT_BASE)/radiant/undo/RadiantUndoSystem.cpp \
 	$(RADIANT_BASE)/radiant/undo/RadiantUndoSystemModule.cpp \

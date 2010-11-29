@@ -620,7 +620,10 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\SceneGraphModule.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\scenegraph\treemodel.h" />
-		<Unit filename="..\..\src\tools\radiant\radiant\script\parse.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\script\ScriptLibrary.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\script\ScriptLibraryModule.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\script\ScriptTokeniser.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\script\ScriptTokenWriter.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\select.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\selection.h" />
