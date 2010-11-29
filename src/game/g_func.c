@@ -145,17 +145,19 @@ DOOR FUNCTIONS
 
 /**
  * @brief Slides a door
- * @param[in,out] door The entity of the inline model
- * @param[in] speed 1 or -1 - the negative value to close the door, the positive will open it
+ * @note The new door state must already be set
+ * @param[in,out] door The entity of the inline model. The aabb of this bmodel will get updated
+ * in this function to reflect the new door position in the world
  * @sa LET_SlideDoor
  */
-static void Door_SlidingUse (edict_t *door, int speed)
+static void Door_SlidingUse (edict_t *door)
 {
+	const qboolean open = door->doorState == STATE_OPENED;
 	vec3_t moveAngles, moveDir, distanceVec;
 	int distance;
 
-	/* get the movement angle vector */
-	GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, speed, moveAngles);
+	/* get the movement angle vector - a negative speed value will close the door*/
+	GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, open ? 1 : -1, moveAngles);
 
 	/* get the direction vector from the movement angles that were set on the entity */
 	AngleVectors(moveAngles, moveDir, NULL, NULL);
@@ -163,13 +165,19 @@ static void Door_SlidingUse (edict_t *door, int speed)
 	moveDir[1] = fabsf(moveDir[1]);
 	moveDir[2] = fabsf(moveDir[2]);
 
-	/* calculate the distance from the movement angles and the entity size */
+	/* calculate the distance from the movement angles and the entity size. This is the
+	 * distance the door has to slide to fully open or close */
 	distance = DotProduct(moveDir, door->size);
 
-	/* the door is moved in one step on the server side - lerping is not needed here */
+	/* the door is moved in one step on the server side - lerping is not needed here - so we
+	 * perform the scalar multiplication with the distance the door must move in order to
+	 * fully close/open */
 	VectorMul(distance, moveAngles, distanceVec);
 
-	/* set the updated position */
+	/* set the updated position. The bounding boxes that are used for tracing must be
+	 * shifted when the door state changes. As the mins and maxs of the aabb are absolute
+	 * world coordinates in the map we have to translate the position by the above
+	 * calculated movement vector */
 	/** @todo this is not yet working for tracing and pathfinding - check what must be done to
 	 * allow shooting and walking through the opened door */
 	/*VectorAdd(door->origin, distanceVec, door->origin); */
@@ -192,7 +200,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		if (door->type == ET_DOOR) {
 			door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
-			Door_SlidingUse(door, 1);
+			Door_SlidingUse(door);
 		}
 		gi.LinkEdict(door);
 
@@ -211,7 +219,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		if (door->type == ET_DOOR) {
 			door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
-			Door_SlidingUse(door, -1);
+			Door_SlidingUse(door);
 		}
 		gi.LinkEdict(door);
 
