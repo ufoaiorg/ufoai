@@ -65,7 +65,17 @@ static const box_t actor2x2Box = {{-half2x2Width, -half2x2Width, 0},
 ==========================================================
 */
 
-/*
+/**
+ * @brief RT_data_s contains the essential data that is passed to most of the RT_* functions
+ */
+typedef struct RT_data_s {
+	mapTiles_t *mapTiles;
+	routing_t *map;				/**< The routing table */
+	actorSizeEnum_t actorSize;	/**< The size of the actor, in cells */
+	const char **list;			/**< The local models list */
+} RT_data_t;
+
+/**
  * @brief A 'place' is a part of a grid column where an actor can exist
  * Unlike for a grid-cell, floor and ceiling are absolute values
  */
@@ -1370,7 +1380,6 @@ static void RT_TracePassage (mapTiles_t *mapTiles, const routing_t * map, const 
 
 /**
  * @brief Routing Function to update the connection between two fields
- * @param[in] map Routing field of the current loaded map
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
@@ -1380,16 +1389,16 @@ static void RT_TracePassage (mapTiles_t *mapTiles, const routing_t * map, const 
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-static int RT_UpdateConnection (mapTiles_t *mapTiles, routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int ax, const int ay, const int z, const int dir, const char **list)
+static int RT_UpdateConnection (RT_data_t *rtd, const actorSizeEnum_t actorSize, const int x, const int y, const int ax, const int ay, const int z, const int dir, const char **list)
 {
-	const int ceiling = RT_CEILING(map, actorSize, x, y, z);
-	const int adjCeiling = RT_CEILING(map, actorSize, ax, ay, z);
+	const int ceiling = RT_CEILING(rtd->map, actorSize, x, y, z);
+	const int adjCeiling = RT_CEILING(rtd->map, actorSize, ax, ay, z);
 	const int absCeiling = ceiling + z * CELL_HEIGHT;
-	const int exadjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(map, actorSize, ax, ay, z + 1) : adjCeiling;
+	const int exadjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->map, actorSize, ax, ay, z + 1) : adjCeiling;
 	const int exabs_adj_ceiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
 	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
-	const int absFloor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
-	const int absAdjFloor = RT_FLOOR(map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
+	const int absFloor = RT_FLOOR(rtd->map, actorSize, x, y, z) + z * CELL_HEIGHT;
+	const int absAdjFloor = RT_FLOOR(rtd->map, actorSize, ax, ay, z) + z * CELL_HEIGHT;
 	opening_t opening;	/** the opening between the two cells */
 	int new_z1, az = z;
 #if RT_IS_BIDIRECTIONAL == 1
@@ -1402,21 +1411,21 @@ static int RT_UpdateConnection (mapTiles_t *mapTiles, routing_t * map, const act
 	/* test if the adjacent cell and the cell above it are blocked by a loaded model */
 	if (adjCeiling == 0 && (exadjCeiling == 0 || ceiling == 0)) {
 		/* We can't go this way. */
-		RT_CONN(map, actorSize, x, y, z, dir) = 0;
-		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_CONN(rtd->map, actorSize, x, y, z, dir) = 0;
+		RT_STEPUP(rtd->map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
 #if RT_IS_BIDIRECTIONAL == 1
-		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		RT_CONN(rtd->map, actorSize, ax, ay, z, dir ^ 1) = 0;
+		RT_STEPUP(rtd->map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
 #endif
 		if (debugTrace)
-			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(map, actorSize, x, y, z), RT_CEILING(map, actorSize, ax, ay, z));
+			Com_Printf("Current cell filled. c:%i ac:%i\n", RT_CEILING(rtd->map, actorSize, x, y, z), RT_CEILING(rtd->map, actorSize, ax, ay, z));
 		return z;
 	}
 
 	/* In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
 #if RT_IS_BIDIRECTIONAL == 1
 	if (ceiling == 0 && adjCeiling != 0) {
-		return RT_UpdateConnection(map, actorSize, ax, ay, x, y, z, dir ^ 1);
+		return RT_UpdateConnection(rtd->map, actorSize, ax, ay, x, y, z, dir ^ 1);
 	}
 #endif
 
@@ -1426,11 +1435,11 @@ static int RT_UpdateConnection (mapTiles_t *mapTiles, routing_t * map, const act
 	 */
 	if (absCeiling < absAdjFloor || exabs_adj_ceiling < absFloor) {
 		/* We can't go this way. */
-		RT_CONN(map, actorSize, x, y, z, dir) = 0;
-		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_CONN(rtd->map, actorSize, x, y, z, dir) = 0;
+		RT_STEPUP(rtd->map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
 #if RT_IS_BIDIRECTIONAL == 1
-		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		RT_CONN(rtd->map, actorSize, ax, ay, z, dir ^ 1) = 0;
+		RT_STEPUP(rtd->map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
 #endif
 		if (debugTrace)
 			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", absFloor, absCeiling, absAdjFloor, absAdjCeiling);
@@ -1438,26 +1447,26 @@ static int RT_UpdateConnection (mapTiles_t *mapTiles, routing_t * map, const act
 	}
 
 	/* Find an opening. */
-	RT_TracePassage(mapTiles, map, actorSize, x, y, z, ax, ay, &opening, list);
+	RT_TracePassage(rtd->mapTiles, rtd->map, actorSize, x, y, z, ax, ay, &opening, list);
 	if (debugTrace) {
 		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, actorSize, dir, opening.stepup);
 	}
 	/* We always call the fill function.  If the passage cannot be traveled, the
 	 * function fills it in as unpassable. */
-	new_z1 = RT_FillPassageData(map, actorSize, dir, x, y, z, opening.size, opening.base, opening.stepup);
+	new_z1 = RT_FillPassageData(rtd->map, actorSize, dir, x, y, z, opening.size, opening.base, opening.stepup);
 
 	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
 		/* ^ 1 reverses the direction of dir */
 #if RT_IS_BIDIRECTIONAL == 1
-		RT_CONN(map, actorSize, ax, ay, z, dir ^ 1) = 0;
-		RT_STEPUP(map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
+		RT_CONN(rtd->map, actorSize, ax, ay, z, dir ^ 1) = 0;
+		RT_STEPUP(rtd->map, actorSize, ax, ay, z, dir ^ 1) = PATHFINDING_NO_STEPUP;
 #endif
 		az++;
 	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
 		az--;
 	}
 #if RT_IS_BIDIRECTIONAL == 1
-	new_z2 = RT_FillPassageData(map, actorSize, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
+	new_z2 = RT_FillPassageData(rtd->map, actorSize, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
 	if (new_z2 == az && az < z)
 		new_z2++;
 	return min(new_z1, new_z2);
@@ -1480,6 +1489,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
+	RT_data_t rtd;	/* the essential data passed down the calltree */
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
@@ -1491,13 +1501,19 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
 
 	/* just a place to place a breakpoint */
-	if (x == 119 && y == 136 && dir == 2)
+	if (x == 126 && y == 121 && dir == 3)
 		new_z = 17;
 
 	/* Ensure that the current coordinates are valid. */
 	RT_CONN_TEST(map, actorSize, x, y, z, dir);
 
 	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actorSize); */
+
+	/* build the param list passed to most of the RT_* functions */
+	rtd.mapTiles = mapTiles;
+	rtd.map = map;
+	rtd.actorSize = actorSize;
+	rtd.list = list;
 
 	/* if our destination cell is out of bounds, bail. */
 	if (ax < 0 || ax > PATHFINDING_WIDTH - actorSize || ay < 0 || y > PATHFINDING_WIDTH - actorSize) {
@@ -1515,7 +1531,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 
 	/* Main loop */
 	for (z = 0; z < PATHFINDING_HEIGHT; z++) {
-		new_z = RT_UpdateConnection(mapTiles, map, actorSize, x, y, ax, ay, z, dir, list);
+		new_z = RT_UpdateConnection(&rtd, actorSize, x, y, ax, ay, z, dir, list);
 		assert(new_z >= z);
 		z = new_z;
 	}
