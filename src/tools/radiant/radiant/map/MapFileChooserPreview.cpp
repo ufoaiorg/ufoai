@@ -25,6 +25,7 @@ namespace map
 	{
 		if (_mapResource)
 			GlobalReferenceCache().release(_mapName);
+		_mapResource = NULL;
 	}
 
 	GtkWidget* MapFileChooserPreview::getPreviewWidget ()
@@ -43,6 +44,7 @@ namespace map
 	{
 		if (_mapResource)
 			GlobalReferenceCache().release(_mapName);
+		_mapResource = NULL;
 
 		// Attempt to load file
 		setMapName(newFileName);
@@ -62,12 +64,15 @@ namespace map
 		if (_mapResource == NULL || !_mapResource->load()) {
 			// NULLify the preview map root on failure
 			_preview.setRootNode(NULL);
+			_mapResource = NULL;
 			return false;
 		}
 
 		// Get the node from the reosource
 		scene::Node* root = _mapResource->getNode();
 
+		GlobalSceneGraph().erase_root();
+		GlobalSceneGraph().insert_root(*root);
 		// Set the new rootnode
 		_preview.setRootNode(root);
 

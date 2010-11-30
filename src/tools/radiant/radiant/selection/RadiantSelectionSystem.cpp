@@ -846,6 +846,7 @@ void RadiantSelectionSystem::ConstructPivot() const {
  */
 void RadiantSelectionSystem::renderSolid(Renderer& renderer, const VolumeTest& volume) const {
 	if (!nothingSelected()) {
+		// TODO: Don't render transparent faces textures invisible
 		renderer.Highlight(Renderer::ePrimitive, false);
 		renderer.Highlight(Renderer::eFace, false);
 
