@@ -113,8 +113,8 @@ qboolean Com_GetConstIntFromNamespace (const char *space, const char *variable, 
 
 /**
  * @brief Searches the mapping variable for a given integer value and a namespace
+ * @param[in] space The namespace to search in - might not be @c NULL or empty.
  * @param[in] value The mapped integer
- * @param[in] namespace The namespace to search in - might not be @c NULL or empty.
  * @note only variables with a namespace given are found here
  * @sa Com_RegisterConstInt
  * @sa Com_ParseValue
@@ -2625,7 +2625,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 /**
  * @brief Returns the chrTemplate pointer for the given id - or NULL if not found in the chrTemplates
  * array
- * @param[in] team The character template id (given in ufo-script files)
+ * @param[in] chrTemplate The character template id (given in ufo-script files)
  */
 const chrTemplate_t* Com_GetCharacterTemplateByID (const char *chrTemplate)
 {

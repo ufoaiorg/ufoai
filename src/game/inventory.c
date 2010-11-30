@@ -646,7 +646,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 /**
  * @brief Equip melee actor with item defined per teamDefs.
  * @param[in] inv The inventory that will get the weapon.
- * @param[in] chr Pointer to character data.
+ * @param[in] td Pointer to a team definition.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
  */
 static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const inv, const teamDef_t* td)
@@ -673,7 +673,6 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
 /**
  * @brief Equip robot actor with default weapon. (defined in ugv_t->weapon)
  * @param[in] inv The inventory that will get the weapon.
- * @param[in] chr Pointer to character data.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
 static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, objDef_t* weapon)
@@ -930,8 +929,6 @@ static int I_GetUsedSlots (inventoryInterface_t* self)
 /**
  * @brief Initializes the inventory definition by linking the ->next pointers properly.
  * @param[in] name The name that is shown in the output
- * @param[in,out] invList Pointer to invList_t definition being initialized.
- * @param[in] length The size of the invList array.
  * @param[out] interface The inventory interface pointer which should be initialized in this function.
  * @sa G_Init
  * @sa CL_ResetSinglePlayerData

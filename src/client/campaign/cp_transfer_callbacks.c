@@ -319,7 +319,6 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 
 /**
  * @brief Checks condition for live alien transfer.
- * @param[in] alienidx Index of an alien type.
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
  */
@@ -504,7 +503,7 @@ static void TR_CargoList (void)
 
 /**
  * @brief Check if an aircraft should be displayed for transfer.
- * @param[in] i global idx of the aircraft
+ * @param[in] aircraft Pointer to an aircraft
  * @return qtrue if the aircraft should be displayed, qfalse else.
  */
 static qboolean TR_AircraftListSelect (const aircraft_t *aircraft)

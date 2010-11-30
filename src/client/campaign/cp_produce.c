@@ -47,8 +47,7 @@ static cvar_t* mn_production_amount;	/**< Amount of the current production; if n
 /**
  * @brief Calculates the fraction (percentage) of production of an item in 1 minute.
  * @param[in] base Pointer to the base with given production.
- * @param[in] tech Pointer to the technology for given production.
- * @param[in] storedUFO Pointer to disassembled UFO.
+ * @param[in] prod Pointer to the production.
  * @sa PR_ProductionRun
  * @sa PR_ItemProductionInfo
  * @sa PR_DisassemblyInfo
@@ -192,7 +191,7 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
 
 /**
  * @brief returns the number of free production slots of a queue
- * @param[in] queue Pointer to the queue to check
+ * @param[in] base Pointer to the base to check
  */
 int PR_QueueFreeSpace (const base_t* base)
 {
@@ -245,7 +244,6 @@ technology_t* PR_GetTech (const productionData_t *data)
 /**
  * @brief Add a new item to the bottom of the production queue.
  * @param[in] base Pointer to base, where the queue is.
- * @param[in] queue Pointer to the queue.
  * @param[in] data The production data
  * @param[in] amount Desired amount to produce.
  */

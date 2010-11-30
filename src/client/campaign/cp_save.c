@@ -58,7 +58,6 @@ static cvar_t* save_compressed;
 
 /**
  * @brief Perform actions after loading a game for single player campaign
- * @param[out] error On failure an errormessage may be set.
  * @note error parameter not used actually
  * @sa SAV_GameLoad
  */

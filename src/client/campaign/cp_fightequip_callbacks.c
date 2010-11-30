@@ -78,7 +78,7 @@ static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
 /**
  * @brief Returns a pointer to the selected slot.
  * @param[in] aircraft Pointer to the aircraft
- * @param[in] airequipID value of aircraftItemType_t that defines what item we are installing
+ * @param[in] type Type of slot we want to select
  * @note also used by BDEF_ functions
  * @return Pointer to the slot corresponding to airequipID
  */

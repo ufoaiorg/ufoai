@@ -612,7 +612,6 @@ float SV_GetBounceFraction (const char *texture)
  * @brief Loads the mins/maxs for a md2 mesh model
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
- * @param[in] bufferLength The mesh model buffer length
  */
 static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer)
 {
@@ -640,7 +639,6 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer)
  * @brief Loads the mins/maxs for a md3 mesh model
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
- * @param[in] bufferLength The mesh model buffer length
  */
 static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer)
 {
@@ -666,7 +664,6 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer)
  * @brief Loads the mins/maxs for a dpm mesh model
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
- * @param[in] bufferLength The mesh model buffer length
  */
 static void SV_ModLoadAliasDPMModel (sv_model_t* mod, const byte *buffer)
 {

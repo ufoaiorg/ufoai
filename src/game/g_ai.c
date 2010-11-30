@@ -921,7 +921,7 @@ void G_AddToWayPointList (edict_t *ent)
 /**
  * @brief This function will turn the AI actor into the direction that is needed to walk
  * to the given location
- * @param[in] aiActor The actor to turn
+ * @param[in] ent The actor to turn
  * @param[in] pos The position to set the direction for
  */
 void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)

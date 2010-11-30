@@ -307,7 +307,6 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
 
 /**
  * @brief Check that the dependences of a building is operationnal
- * @param[in] base Base to check
  * @param[in] building Pointer to the building to check
  * @return true if base contains needed dependence for entering building
  */
@@ -452,7 +451,6 @@ qboolean B_AssembleMap (const base_t *base)
 /**
  * @brief Check base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
- * @param[in] base Pointer to base with given building.
  * @note This function checks  base status for particular buildings and base capacities.
  * @return qtrue if a base status has been modified (but do not check capacities)
  */
@@ -763,7 +761,6 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 
 /**
  * @brief Removes a building from the given base
- * @param[in] base Base to remove the building in
  * @param[in] building The building to remove
  * @note Also updates capacities and sets the hasBuilding[] values in base_t
  * @sa B_BuildingDestroy_f
@@ -1069,7 +1066,6 @@ void B_BuildingStatus (const building_t* building)
 /**
  * @brief Updates base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
- * @param[in] base Pointer to base with given building.
  * @param[in] status Enum of buildingStatus_t which is status of given building.
  * @note This function checks whether a building has B_STATUS_WORKING status, and
  * then updates base status for particular buildings and base capacities.
@@ -1148,7 +1144,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
  * @brief Prepares initial equipment for first base at the beginning of the campaign.
  * @param[in] base Pointer to first base.
  * @param[in] assignInitialAircraft aircraft on which the soldiers (to equip) are
- * @param[in] eqname Initial equipment definition id
+ * @param[in] ed Initial equipment definition
  * @param[in] edTarget storage to put items to
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
@@ -2311,7 +2307,6 @@ static void B_BaseList_f (void)
 /**
  * @brief Checks whether the building menu or the pedia entry should be called
  * when you click a building in the baseview
- * @param[in] base The current active base we are viewing right now
  * @param[in] building The building we have clicked
  */
 void B_BuildingOpenAfterClick (const building_t *building)

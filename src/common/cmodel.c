@@ -80,14 +80,14 @@ static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, const
 
 
 /**
+ * @param[in] tile Tile to check (normally 0 - except in assembled maps)
  * @param[in] start trace start vector
  * @param[in] end trace end vector
  * @param[in] mins box mins
  * @param[in] maxs box maxs
- * @param[in] tile Tile to check (normally 0 - except in assembled maps)
  * @param[in] headnode if < 0 we are in a leaf node
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
- * @param[in] brushreject brushes the trace should ignore (see MASK_*)
+ * @param[in] brushrejects brushes the trace should ignore (see MASK_*)
  * @param[in] origin center for rotating objects
  * @param[in] angles current rotation status (in degrees) for rotating objects
  * @param[in] rmaShift how much the object was shifted by the RMA process (needed for doors)

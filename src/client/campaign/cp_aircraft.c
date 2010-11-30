@@ -821,7 +821,6 @@ qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
 /**
  * @brief Places a new aircraft in the given base.
  * @param[in] base Pointer to base where aircraft should be added.
- * @param[in] name Id of aircraft to add (aircraft->id).
  * @sa B_Load
  */
 aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)

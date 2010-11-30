@@ -390,8 +390,6 @@ int G_GetActiveTeam (void)
  * @brief Checks whether the requested action is possible
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent Which of his units is trying to do the action.
- * @param[in] TU The time units to check against the ones ent has.
- * the action with
  */
 static qboolean G_ActionCheck (const player_t *player, edict_t *ent)
 {

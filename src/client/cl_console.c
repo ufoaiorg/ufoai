@@ -88,7 +88,7 @@ static void Con_Clear (void)
 }
 
 /**
- * @param txt The character buffer to draw - color encoded
+ * @param text The character buffer to draw - color encoded
  * @param x The x coordinate on the screen
  * @param y The y coordinate on the screen
  * @param width Characters to draw

@@ -392,9 +392,9 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
  * @brief rotate a planet (sun or moon) with respect to the earth
  * @param[in] v
  * @param[out] r
- * @param[int] rotate
- * @param[int] earthPos
- * @param[int] celestialDist
+ * @param[in] rotate
+ * @param[in] earthPos
+ * @param[in] celestialDist
  */
 static inline void RotateCelestialBody (const vec4_t v, vec4_t * r, const vec3_t rotate, const vec3_t earthPos, const float celestialDist)
 {

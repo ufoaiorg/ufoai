@@ -46,7 +46,6 @@ int E_CountByType (employeeType_t type)
 /**
  * @brief Iterates through unhired employees
  * @param[in] type Employee type to look for
- * @param[in] lastEmployee Pointer of the employee to iterate from. call with NULL to get the first one.
  * @sa employeeType_t
  */
 employee_t* E_GetUnhired (employeeType_t type)
@@ -615,7 +614,6 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 /**
  * @brief Removes the employee completely from the game (buildings + global list).
  * @param[in] employee The pointer to the employee you want to remove.
- * @param[in] type What type of employee to delete.
  * @return True if the employee was removed successfully, otherwise false.
  * @sa E_CreateEmployee
  * @sa E_ResetEmployees

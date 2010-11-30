@@ -1483,7 +1483,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 
 /**
  * @brief Routing Function to update the connection between two fields
- * @param[in] map Routing field of the current loaded map
+ * @param[in] mapTiles Routing field of the current loaded map
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)

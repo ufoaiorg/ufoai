@@ -426,7 +426,7 @@ static int AL_GetAlienIDX (const teamDef_t *alienType)
 
 /**
  * @brief Returns teamdef for global alien idx.
- * @param[in] idx Alien index
+ * @param[in] alienTeamDefIdx Alien index
  * @sa AL_GetAlienIDX
  */
 const teamDef_t* AL_GetAlienTeamDef (int alienTeamDefIdx)

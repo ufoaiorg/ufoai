@@ -312,7 +312,6 @@ qboolean BS_LoadXML (mxml_node_t *parent)
  * @sa CP_CampaignInit
  * @sa B_SetUpFirstBase
  * @sa BS_Load (Market load function)
- * @param[in] load Is this an attempt to init the market for a savegame?
  */
 void BS_InitMarket (const campaign_t *campaign)
 {

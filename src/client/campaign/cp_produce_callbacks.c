@@ -282,7 +282,6 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 
 /**
  * @brief Prints information about the selected disassembly task
- * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] ufo The UFO being disassembled.
  * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo

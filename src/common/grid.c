@@ -76,13 +76,12 @@ CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
 
 /**
 * @brief Checks one field (square) on the grid of the given routing data (i.e. the map).
- * @param[in] map Routing data/map.
+ * @param[in] exclude Exclude this position from the forbidden list check
  * @param[in] actorSize width of the actor in cells
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] x Field in x direction
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
- * @param[in] exclude Exclude this position from the forbidden list check
  * @sa Grid_MoveMark
  * @sa G_BuildForbiddenList
  * @sa CL_BuildForbiddenList

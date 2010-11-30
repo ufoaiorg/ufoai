@@ -70,7 +70,7 @@ void UR_ProcessActive (void)
 
 /**
  * @brief Iterates through the stored UFOs
- * @param[in] lastBase Pointer of the UFO to iterate from. call with NULL to get the first one.
+ * @param[in] lastUFO Pointer of the UFO to iterate from. call with NULL to get the first one.
  */
 storedUFO_t* US_GetNext (storedUFO_t *lastUFO)
 {
@@ -99,7 +99,6 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
  * @param[in,out] installation Pointer to the installation it should be added to
  * @param[in] date Date when UFO is arrives to the storage (recovery || transfer)
  * @param[in] condition Condition of the UFO to store (How much the UFO is damaged)
- * @param[in] idx UFO's index. Call with negative value for
  * @return storedUFO_t pointer to the newly stored UFO (or NULL if failed)
  */
 storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition)

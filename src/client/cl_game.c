@@ -788,7 +788,7 @@ void GAME_Frame (void)
 /**
  * @brief Get a model for an item.
  * @param[in] od The object definition to get the model from.
- * @param[out] menuModel The menu model pointer.
+ * @param[out] uiModel The menu model pointer.
  * @return The model path for the item. Never @c NULL.
  */
 const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)

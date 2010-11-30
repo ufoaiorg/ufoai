@@ -167,12 +167,9 @@ static void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
 
 /**
  * @brief Updates the UGV cvars for the given "character".
- *
  * The models and stats that are displayed in the menu are stored in cvars.
  * These cvars are updated here when you select another character.
- *
  * @param[in] chr Pointer to character_t (may not be null)
- * @param[in] cvarPrefix
  * @sa CL_ActorCvars
  * @sa CL_ActorSelect
  */
@@ -414,7 +411,7 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 
 /**
  * @brief Load one item
- * @param[in] p XML Node structure, where we write the information to
+ * @param[in] n XML Node structure, where we write the information to
  * @param[out] item Pointer to the item
  * @param[out] container Index of the container the item is in
  * @param[out] x Horizontal coordinate of the item in the container

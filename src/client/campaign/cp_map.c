@@ -2100,7 +2100,6 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 /**
  * @brief Notify that an aircraft has been removed from game
  * @param[in] aircraft Pointer to the aircraft has been removed
- * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
  */
 void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft)
 {

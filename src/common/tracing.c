@@ -1054,8 +1054,6 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
  * @param[in] levelmask Selects which submodels get scanned.
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
- * @param[in] fraction The furthest distance needed to trace before we stop.
- *    We assume that a brush was already hit at fraction.
  * @brief Traces all submodels in the specified tile.  Provides for a short
  *   circuit if the trace tries to move past fraction to save time.
  */
