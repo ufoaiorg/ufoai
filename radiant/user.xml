@@ -95,6 +95,10 @@
 			</surfaceInspector>
 		</textures>
 
+		<brush>
+			<textureLock value="1" />
+		</brush>
+
 		<map>
 			<numMRU value="5" />
 			<loadLastMap value="0" />
