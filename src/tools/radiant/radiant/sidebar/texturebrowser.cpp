@@ -55,7 +55,6 @@
 
 #include "gtkutil/image.h"
 #include "gtkutil/menu.h"
-#include "gtkutil/nonmodal.h"
 #include "gtkutil/cursor.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/glwidget.h"
