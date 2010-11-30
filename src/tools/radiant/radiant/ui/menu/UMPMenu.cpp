@@ -15,8 +15,6 @@
 #include "../../ump/UMPFile.h"
 #include "../../map/map.h"
 
-#include "../../gtkmisc.h"
-
 namespace ui {
 	namespace {
 		const std::string MENU_NAME = "main";

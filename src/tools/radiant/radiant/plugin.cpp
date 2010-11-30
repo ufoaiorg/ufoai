@@ -78,7 +78,6 @@
 
 #include "os/path.h"
 
-#include "gtkmisc.h"
 #include "mainframe.h"
 #include "ui/mru/MRU.h"
 #include "entity/entity.h"

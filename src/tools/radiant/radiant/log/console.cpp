@@ -36,7 +36,6 @@
 
 #include "../environment.h"
 #include "version.h"
-#include "../gtkmisc.h"
 
 // handle to the console log file
 namespace

@@ -122,7 +122,6 @@
 #include "selection/algorithm/Transformation.h"
 #include "selection/shaderclipboard/ShaderClipboard.h"
 
-#include "gtkmisc.h"
 #include "plugin.h"
 #include "select.h"
 #include "url.h"

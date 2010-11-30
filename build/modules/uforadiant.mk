@@ -17,7 +17,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/environment.cpp \
 	$(RADIANT_BASE)/radiant/exec.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
-	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \

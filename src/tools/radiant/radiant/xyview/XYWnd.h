@@ -166,9 +166,6 @@ class XYWnd: public CameraObserver
 		static void callbackMoveDelta (int x, int y, unsigned int state, void* data);
 		static gboolean callbackMoveFocusOut (GtkWidget* widget, GdkEventFocus* event, XYWnd* xywnd);
 
-		GtkMenuItem* m_mnitem_separator;
-		GtkMenuItem* m_mnitem_connect;
-		GtkMenuItem* m_mnitem_fitface;
 		void onContextMenu ();
 		void drawSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vMaxBounds);
 

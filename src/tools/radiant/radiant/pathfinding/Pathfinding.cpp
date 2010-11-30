@@ -38,7 +38,6 @@
 #include "radiant_i18n.h"
 #include "gtkutil/widget.h"
 
-#include "../gtkmisc.h"
 #include "../ui/Icons.h"
 #include "../map/map.h"
 

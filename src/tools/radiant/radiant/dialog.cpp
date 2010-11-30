@@ -44,7 +44,6 @@
 #include "gtkutil/filechooser.h"
 
 #include "os/path.h"
-#include "gtkmisc.h"
 
 GtkEntry* DialogEntry_new ()
 {

@@ -106,10 +106,6 @@ XYWnd::XYWnd () :
 
 	m_entityCreate = false;
 
-	m_mnitem_connect = 0;
-	m_mnitem_fitface = 0;
-	m_mnitem_separator = 0;
-
 	GlobalWindowObservers_add(m_window_observer);
 	GlobalWindowObservers_connectWidget(m_gl_widget);
 
