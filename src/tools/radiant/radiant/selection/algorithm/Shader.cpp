@@ -21,11 +21,6 @@ extern FaceInstanceSet g_SelectedFaceInstances;
 namespace selection {
 namespace algorithm {
 
-// Constants
-namespace {
-const std::string RKEY_DEFAULT_TEXTURE_SCALE = "user/ui/textures/defaultTextureScale";
-}
-
 class AmbiguousShaderException: public std::runtime_error
 {
 	public:

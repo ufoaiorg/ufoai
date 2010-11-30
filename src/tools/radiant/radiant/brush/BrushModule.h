@@ -27,14 +27,12 @@
 #include "TexDef.h"
 #include "ibrush.h"
 
-#include "preferencesystem.h"
-
 // Some constants
 namespace {
 const std::string RKEY_ENABLE_TEXTURE_LOCK = "user/ui/brush/textureLock";
 }
 
-class BrushModuleClass: public RegistryKeyObserver, public BrushCreator, public PreferenceConstructor
+class BrushModuleClass: public RegistryKeyObserver, public BrushCreator
 {
 		bool _textureLockEnabled;
 
@@ -67,11 +65,6 @@ class BrushModuleClass: public RegistryKeyObserver, public BrushCreator, public 
 
 		// The callback for registry key changes
 		void keyChanged (const std::string& changedKey, const std::string& newValue);
-
-	private:
-		// Adds the actual preference items to the given page
-		void constructPreferencePage (PreferenceGroup& group);
-
 }; // class BrushModuleClass
 
 // The accessor function declaration
