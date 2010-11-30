@@ -613,7 +613,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
  * @param[in] openingBase Absolute height in QUANT units of the bottom of the opening.
  * @param[in] stepup Required stepup to travel in this direction.
  */
-static int RT_FillPassageData (routing_t * map, const actorSizeEnum_t actorSize, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
+static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
 {
 	const int openingTop = openingBase + openingSize;
 	int fz, cz; /**< Floor and ceiling Z cell coordinates */
@@ -638,8 +638,8 @@ static int RT_FillPassageData (routing_t * map, const actorSizeEnum_t actorSize,
 	/* last chance- if cz < z, then bail (and there is an error with the ceiling data somewhere */
 	if (cz < z) {
 		/* We can't go this way. */
-		RT_CONN(map, actorSize, x, y, z, dir) = 0;
-		RT_STEPUP(map, actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_CONN(rtd->map, rtd->actorSize, x, y, z, dir) = 0;
+		RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
 		if (debugTrace)
 			Com_Printf("Passage found but below current cell, opening_base=%i, opening_top=%i, z = %i, cz = %i.\n", openingBase, openingTop, z, cz);
 		return z;
@@ -654,26 +654,26 @@ static int RT_FillPassageData (routing_t * map, const actorSizeEnum_t actorSize,
 	for (i = fz; i <= cz; i++) {
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
 		/* Only if > 0 */
-		RT_CONN_TEST(map, actorSize, x, y, i, dir);
+		RT_CONN_TEST(rtd->map, rtd->actorSize, x, y, i, dir);
 		assert (openingTop - max(openingBase, i * CELL_HEIGHT) >= 0);
-		RT_CONN(map, actorSize, x, y, i, dir) = openingTop - max(openingBase, i * CELL_HEIGHT);
+		RT_CONN(rtd->map, rtd->actorSize, x, y, i, dir) = openingTop - max(openingBase, i * CELL_HEIGHT);
 		/* The stepup is 0 for all cells that are not at the floor. */
-		RT_STEPUP(map, actorSize, x, y, i, dir) = 0;
+		RT_STEPUP(rtd->map, rtd->actorSize, x, y, i, dir) = 0;
 		if (debugTrace) {
-			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, actorSize, dir, RT_CONN(map, actorSize, x, y, i, dir));
+			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_CONN(rtd->map, rtd->actorSize, x, y, i, dir));
 		}
 	}
 
-	RT_STEPUP(map, actorSize, x, y, z, dir) = stepup;
+	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = stepup;
 	if (debugTrace) {
-		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, actorSize, dir, stepup);
+		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, stepup);
 	}
 
 	/*
 	 * Return the highest z coordinate scanned- cz if fz==cz, z==cz, or the floor in cz is negative.
 	 * Otherwise cz - 1 to recheck cz in case there is a floor in cz with its own ceiling.
 	 */
-	if (fz == cz || z == cz || RT_FLOOR(map, actorSize, x, y, cz) < 0)
+	if (fz == cz || z == cz || RT_FLOOR(rtd->map, rtd->actorSize, x, y, cz) < 0)
 		return cz;
 	return cz - 1;
 }
@@ -1454,7 +1454,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 	}
 	/* We always call the fill function.  If the passage cannot be traveled, the
 	 * function fills it in as unpassable. */
-	new_z1 = RT_FillPassageData(rtd->map, rtd->actorSize, dir, x, y, z, opening.size, opening.base, opening.stepup);
+	new_z1 = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
 
 	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
 		/* ^ 1 reverses the direction of dir */
@@ -1466,7 +1466,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 		az--;
 	}
 #if RT_IS_BIDIRECTIONAL == 1
-	new_z2 = RT_FillPassageData(rtd->map, rtd->actorSize, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
+	new_z2 = RT_FillPassageData(rtd, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
 	if (new_z2 == az && az < z)
 		new_z2++;
 	return min(new_z1, new_z2);
