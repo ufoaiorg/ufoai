@@ -108,9 +108,6 @@ public:
 	 * @arguments: <constructor> is pointing to an implementation of the IPreferenceConstructor class that is responsible
 	 * for adding all the preference elements (pages, checkboxes, etc.) to the dialog.*/
 	virtual void addConstructor(PreferenceConstructor* constructor) = 0;
-
-	// greebo: Deprecated, don't use this in newly written code
-	virtual void registerPreference(const std::string& name, const StringImportCallback& importer, const StringExportCallback& exporter) __attribute__ ((deprecated)) = 0;
 };
 
 #include "modulesystem.h"

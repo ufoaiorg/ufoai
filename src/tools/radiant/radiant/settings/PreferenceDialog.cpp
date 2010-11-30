@@ -55,44 +55,6 @@
 #include "preferencedictionary.h"
 #include "stringio.h"
 
-static const char* const PREFERENCES_VERSION = "1.0";
-
-static bool Preferences_Load (PreferenceDictionary& preferences, const std::string& filename)
-{
-	TextFileInputStream file(filename);
-	if (!file.failed()) {
-		XMLStreamParser parser(file);
-		XMLPreferenceDictionaryImporter importer(preferences, PREFERENCES_VERSION);
-		parser.exportXML(importer);
-		return true;
-	}
-	return false;
-}
-
-static bool Preferences_Save (PreferenceDictionary& preferences, const std::string& filename)
-{
-	TextFileOutputStream file(filename);
-	if (!file.failed()) {
-		XMLStreamWriter writer(file);
-		XMLPreferenceDictionaryExporter exporter(preferences, PREFERENCES_VERSION);
-		exporter.exportXML(writer);
-		return true;
-	}
-	return false;
-}
-
-static bool Preferences_Save_Safe (PreferenceDictionary& preferences, const std::string& filename)
-{
-	Array<char> tmpName(filename.c_str(), filename.c_str() + filename.length() + 1 + 3);
-	*(tmpName.end() - 4) = 'T';
-	*(tmpName.end() - 3) = 'M';
-	*(tmpName.end() - 2) = 'P';
-	*(tmpName.end() - 1) = '\0';
-
-	return Preferences_Save(preferences, tmpName.data()) && (!file_exists(filename) || file_remove(filename))
-			&& file_move(tmpName.data(), filename);
-}
-
 /**
  * Widget callback for PrefsDlg
  * @sa Preferences_Save
@@ -107,8 +69,8 @@ static void OnButtonClean (GtkWidget *widget, gpointer data)
 		PrefsDlg *dlg = (PrefsDlg*) data;
 		dlg->EndModal(eIDCANCEL);
 
-		g_preferences_globals.disable_ini = true;
-		Preferences_Reset();
+		// TODO: migrate to xml registry
+
 		gtk_main_quit();
 	}
 }
@@ -142,50 +104,13 @@ static void treeSelection (GtkTreeSelection* selection, gpointer data)
 	}
 }
 
-typedef std::list<PreferenceGroupCallback> PreferenceGroupCallbacks;
-
-inline void PreferenceGroupCallbacks_constructGroup (const PreferenceGroupCallbacks& callbacks, PreferenceGroup& group)
-{
-	for (PreferenceGroupCallbacks::const_iterator i = callbacks.begin(); i != callbacks.end(); ++i) {
-		(*i)(group);
-	}
-}
-
-inline void PreferenceGroupCallbacks_pushBack (PreferenceGroupCallbacks& callbacks,
-		const PreferenceGroupCallback& callback)
-{
-	callbacks.push_back(callback);
-}
-
-typedef std::list<PreferencesPageCallback> PreferencesPageCallbacks;
-
-inline void PreferencesPageCallbacks_constructPage (const PreferencesPageCallbacks& callbacks, PrefPage* page)
-{
-	for (PreferencesPageCallbacks::const_iterator i = callbacks.begin(); i != callbacks.end(); ++i) {
-		(*i)(page);
-	}
-}
-
-inline void PreferencesPageCallbacks_pushBack (PreferencesPageCallbacks& callbacks,
-		const PreferencesPageCallback& callback)
-{
-	callbacks.push_back(callback);
-}
-
-PreferencesPageCallbacks g_settingsPreferences;
-
-PreferenceGroupCallbacks g_settingsCallbacks;
-void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback)
-{
-	PreferenceGroupCallbacks_pushBack(g_settingsCallbacks, callback);
-}
-
 inline GtkWidget* getVBox (GtkWidget* page)
 {
 	return gtk_bin_get_child(GTK_BIN(page));
 }
 
-GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent, const std::string& name, GtkWidget* page)
+GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent, const std::string& name,
+		GtkWidget* page)
 {
 	GtkTreeIter group;
 	gtk_tree_store_append(store, &group, parent);
@@ -244,11 +169,13 @@ class PreferenceTreeGroup: public PreferenceGroup
 		}
 };
 
-void PrefsDlg::addConstructor(PreferenceConstructor* constructor) {
+void PrefsDlg::addConstructor (PreferenceConstructor* constructor)
+{
 	_constructors.push_back(constructor);
 }
 
-void PrefsDlg::callConstructors(PreferenceTreeGroup& preferenceGroup) {
+void PrefsDlg::callConstructors (PreferenceTreeGroup& preferenceGroup)
+{
 	for (PreferenceConstructorList::iterator i = _constructors.begin(); i != _constructors.end(); i++) {
 		PreferenceConstructor* constructor = *i;
 		if (constructor != NULL) {
@@ -332,22 +259,12 @@ GtkWindow* PrefsDlg::BuildDialog ()
 
 					{
 						// Add preference tree options
-						PreferencePages_addPage(m_notebook, _("Front Page"));
-						{
-							GtkWidget* settings = PreferencePages_addPage(m_notebook, _("General Settings"));
-							{
-								PrefPage preferencesPage(*this, getVBox(settings));
-								PreferencesPageCallbacks_constructPage(g_settingsPreferences, &preferencesPage);
-							}
+						GtkWidget* settings = PreferencePages_addPage(m_notebook, _("General Settings"));
+						GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Settings"), settings);
+						PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
 
-							GtkTreeIter group = PreferenceTree_appendPage(store, 0, _("Settings"), settings);
-							PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
-
-							// greebo: Invoke the registered constructors to do their stuff
-							callConstructors(preferenceGroup);
-
-							PreferenceGroupCallbacks_constructGroup(g_settingsCallbacks, preferenceGroup);
-						}
+						// greebo: Invoke the registered constructors to do their stuff
+						callConstructors(preferenceGroup);
 					}
 
 					gtk_tree_view_expand_all(GTK_TREE_VIEW(view));
@@ -363,10 +280,7 @@ GtkWindow* PrefsDlg::BuildDialog ()
 	return dialog;
 }
 
-preferences_globals_t g_preferences_globals;
-
 PrefsDlg g_Preferences; // global prefs instance
-
 
 void PreferencesDialog_constructWindow (GtkWindow* main_window)
 {
@@ -402,46 +316,9 @@ typedef SingletonModule<PreferenceSystemAPI> PreferenceSystemModule;
 typedef Static<PreferenceSystemModule> StaticPreferenceSystemModule;
 StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule::instance());
 
-#define PREFS_LOCAL_FILENAME "settings.xml"
-
-void Preferences_Load ()
-{
-	std::string filename = GlobalRegistry().get(RKEY_SETTINGS_PATH) + PREFS_LOCAL_FILENAME;
-
-	g_message("loading settings from %s\n", filename.c_str());
-
-	if (!Preferences_Load(g_preferences, filename)) {
-		g_warning("failed to load settings from %s\n", filename.c_str());
-	}
-}
-
-/**
- * @sa OnButtonClean
- */
-void Preferences_Save (void)
-{
-	// we might want to skip the ini settings due to an error
-	if (g_preferences_globals.disable_ini)
-		return;
-
-	std::string filename = GlobalRegistry().get(RKEY_SETTINGS_PATH) + PREFS_LOCAL_FILENAME;
-	g_message("saving settings to %s\n", filename.c_str());
-
-	if (!Preferences_Save_Safe(g_preferences, filename)) {
-		g_warning("failed to save settings to %s\n", filename.c_str());
-	}
-}
-
-void Preferences_Reset (void)
-{
-	std::string filename = GlobalRegistry().get(RKEY_SETTINGS_PATH) + PREFS_LOCAL_FILENAME;
-	file_remove(filename);
-}
-
 void PrefsDlg::PostModal (EMessageBoxReturn code)
 {
 	if (code == eIDOK) {
-		Preferences_Save();
 		// Save the values back into the registry
 		_registryConnector.exportValues();
 		UpdateAllWindows();

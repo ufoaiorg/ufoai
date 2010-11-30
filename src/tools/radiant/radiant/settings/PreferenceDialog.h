@@ -80,8 +80,6 @@ class PrefPage : public PreferencesPage
 typedef Callback1<PrefPage*> PreferencesPageCallback;
 typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;
 
-void PreferencesDialog_addSettingsPage (const PreferenceGroupCallback& callback) __attribute__ ((deprecated));
-
 class PreferenceTreeGroup;
 
 class PrefsDlg: public Dialog
@@ -117,26 +115,10 @@ class PrefsDlg: public Dialog
 
 extern PrefsDlg g_Preferences;
 
-struct preferences_globals_t
-{
-		// disabled all INI / registry read write .. used when shutting down after registry cleanup
-		bool disable_ini;
-		preferences_globals_t () :
-			disable_ini(false)
-		{
-		}
-};
-extern preferences_globals_t g_preferences_globals;
-
 typedef struct _GtkWindow GtkWindow;
 void PreferencesDialog_constructWindow (GtkWindow* main_window);
 void PreferencesDialog_destroyWindow ();
 
 void PreferencesDialog_showDialog ();
-
-void Preferences_Load ();
-void Preferences_Save ();
-
-void Preferences_Reset ();
 
 #endif

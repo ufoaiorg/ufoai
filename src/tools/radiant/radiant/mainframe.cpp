@@ -206,8 +206,6 @@ void Radiant_Initialise (void)
 	// Load the ColourSchemes from the registry
 	ColourSchemes().loadColourSchemes();
 
-	Preferences_Load();
-
 	// Load the other modules
 	Radiant_Construct(GlobalRadiantModuleServer());
 
@@ -241,12 +239,6 @@ void Radiant_Shutdown (void)
 	Environment::Instance().setMapsPath("");
 	g_gameModeObservers.unrealise();
 	g_gameToolsPathObservers.unrealise();
-
-	if (!g_preferences_globals.disable_ini) {
-		g_message("Start writing prefs\n");
-		Preferences_Save();
-		g_message("Done prefs\n");
-	}
 
 	Radiant_Destroy();
 }
@@ -1468,17 +1460,6 @@ void MainFrame_Construct (void)
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
-
-	// TODO: These are the only registerPreference (deprecated) calls left
-	// TODO: Use PanedPosition for these
-	GlobalPreferenceSystem().registerPreference("XYHeight", IntImportStringCaller(g_layout_globals.nXYHeight),
-			IntExportStringCaller(g_layout_globals.nXYHeight));
-	GlobalPreferenceSystem().registerPreference("XYWidth", IntImportStringCaller(g_layout_globals.nXYWidth),
-			IntExportStringCaller(g_layout_globals.nXYWidth));
-	GlobalPreferenceSystem().registerPreference("CamWidth", IntImportStringCaller(g_layout_globals.nCamWidth),
-			IntExportStringCaller(g_layout_globals.nCamWidth));
-	GlobalPreferenceSystem().registerPreference("CamHeight", IntImportStringCaller(g_layout_globals.nCamHeight),
-			IntExportStringCaller(g_layout_globals.nCamHeight));
 
 	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
 	GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
