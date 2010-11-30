@@ -741,9 +741,10 @@ gboolean SurfaceInspector::doUpdate (GtkWidget* widget, SurfaceInspector* self)
 // The GTK keypress callback for the shift/scale/rotation entry fields
 gboolean SurfaceInspector::onValueKeyPress (GtkWidget* entry, GdkEventKey* event, SurfaceInspector* self)
 {
-	// Check for ESC to deselect all items
+	// Check for ENTER to emit the texture definition
 	if (event->keyval == GDK_Return) {
 		self->emitTexDef();
+		// Don't propage the keypress if the Enter could be processed
 		return true;
 	}
 
