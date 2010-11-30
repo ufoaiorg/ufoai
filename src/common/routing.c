@@ -75,8 +75,14 @@ typedef struct RT_data_s {
 	const char **list;			/**< The local models list */
 } RT_data_t;
 
-static inline void RT_ConnSetNoGo(RT_data_t *rtd, const int x, const int y, const int z, const int dir) {
-	RT_CONN(rtd->map, rtd->actorSize, x, y, z, dir) = 0;
+static inline void RT_ConnSet(RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
+{
+	RT_CONN(rtd->map, rtd->actorSize, x, y, z, dir) = val;
+}
+
+static inline void RT_ConnSetNoGo(RT_data_t *rtd, const int x, const int y, const int z, const int dir)
+{
+	RT_ConnSet(rtd, x, y, z, dir, 0);
 	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
 }
 
@@ -651,11 +657,13 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 
 	/* Last, update the routes of cells from (x, y, fz) to (x, y, cz) for direction dir */
 	for (i = fz; i <= cz; i++) {
-		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
-		/* Only if > 0 */
+		int oh;
 		RT_CONN_TEST(rtd->map, rtd->actorSize, x, y, i, dir);
-		assert (openingTop - max(openingBase, i * CELL_HEIGHT) >= 0);
-		RT_CONN(rtd->map, rtd->actorSize, x, y, i, dir) = openingTop - max(openingBase, i * CELL_HEIGHT);
+		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
+		oh = openingTop - max(openingBase, i * CELL_HEIGHT);
+		/* Only if > 0 */
+		assert (oh >= 0);
+		RT_ConnSet(rtd, x, y, i, dir, oh);
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_STEPUP(rtd->map, rtd->actorSize, x, y, i, dir) = 0;
 		if (debugTrace) {
