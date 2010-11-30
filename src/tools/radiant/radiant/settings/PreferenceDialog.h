@@ -75,12 +75,6 @@ class PrefPage : public PreferencesPage
 								 double lower, double upper, int fraction) {
 			return m_dialog.addSpinner(m_vbox, name, registryKey, lower, upper, fraction);
 		}
-
-		void appendRadioIcons (const char* name, StringArrayRange icons, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback)
-		{
-			m_dialog.addRadioIcons(m_vbox, name, icons, importCallback, exportCallback);
-		}
 };
 
 typedef Callback1<PrefPage*> PreferencesPageCallback;

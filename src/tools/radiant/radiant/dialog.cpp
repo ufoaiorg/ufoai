@@ -112,156 +112,6 @@ DialogSpinnerRow DialogSpinnerRow_new (const char* name, double value, double lo
 	return DialogSpinnerRow(GTK_WIDGET(DialogRow_new(name, alignment)), spin);
 }
 
-template<typename Type_, typename Other_, void(*Import) (Type_&, Other_), void(*Export) (Type_&,
-		const Callback1<Other_>&)>
-class ImportExport
-{
-	public:
-		typedef Type_ Type;
-		typedef Other_ Other;
-
-		typedef ReferenceCaller1<Type, Other, Import> ImportCaller;
-		typedef ReferenceCaller1<Type, const Callback1<Other>&, Export> ExportCaller;
-};
-
-void BoolToggleImport (GtkToggleButton& widget, bool value)
-{
-	gtk_toggle_button_set_active(&widget, value);
-}
-void BoolToggleExport (GtkToggleButton& widget, const BoolImportCallback& importCallback)
-{
-	importCallback(gtk_toggle_button_get_active(&widget) != FALSE);
-}
-typedef ImportExport<GtkToggleButton, bool, BoolToggleImport, BoolToggleExport> BoolToggleImportExport;
-
-void IntRadioImport (GtkRadioButton& widget, int index)
-{
-	radio_button_set_active(&widget, index);
-}
-void IntRadioExport (GtkRadioButton& widget, const IntImportCallback& importCallback)
-{
-	importCallback(radio_button_get_active(&widget));
-}
-typedef ImportExport<GtkRadioButton, int, IntRadioImport, IntRadioExport> IntRadioImportExport;
-
-template<typename Type, typename Formatter>
-class StringFromType
-{
-		StringOutputStream value;
-	public:
-		StringFromType (const Type& type)
-		{
-			value << Formatter(type);
-		}
-		operator const char* () const
-		{
-			return value.c_str();
-		}
-};
-
-typedef StringFromType<const char*, ConvertLocaleToUTF8> LocaleToUTF8;
-typedef StringFromType<const char*, ConvertUTF8ToLocale> UTF8ToLocale;
-
-void TextEntryImport (GtkEntry& widget, const char* text)
-{
-	gtk_entry_set_text(&widget, LocaleToUTF8(text));
-}
-void TextEntryExport (GtkEntry& widget, const StringImportCallback& importCallback)
-{
-	importCallback(UTF8ToLocale(gtk_entry_get_text(&widget)));
-}
-typedef ImportExport<GtkEntry, const char*, TextEntryImport, TextEntryExport> TextEntryImportExport;
-
-void FloatSpinnerImport (GtkSpinButton& widget, float value)
-{
-	gtk_spin_button_set_value(&widget, value);
-}
-void FloatSpinnerExport (GtkSpinButton& widget, const FloatImportCallback& importCallback)
-{
-	importCallback(float(gtk_spin_button_get_value_as_float(&widget)));
-}
-typedef ImportExport<GtkSpinButton, float, FloatSpinnerImport, FloatSpinnerExport> FloatSpinnerImportExport;
-
-void IntSpinnerImport (GtkSpinButton& widget, int value)
-{
-	gtk_spin_button_set_value(&widget, value);
-}
-void IntSpinnerExport (GtkSpinButton& widget, const IntImportCallback& importCallback)
-{
-	importCallback(gtk_spin_button_get_value_as_int(&widget));
-}
-typedef ImportExport<GtkSpinButton, int, IntSpinnerImport, IntSpinnerExport> IntSpinnerImportExport;
-
-void IntAdjustmentImport (GtkAdjustment& widget, int value)
-{
-	gtk_adjustment_set_value(&widget, value);
-}
-void IntAdjustmentExport (GtkAdjustment& widget, const IntImportCallback& importCallback)
-{
-	importCallback((int) gtk_adjustment_get_value(&widget));
-}
-typedef ImportExport<GtkAdjustment, int, IntAdjustmentImport, IntAdjustmentExport> IntAdjustmentImportExport;
-
-void IntComboImport (GtkComboBox& widget, int value)
-{
-	gtk_combo_box_set_active(&widget, value);
-}
-void IntComboExport (GtkComboBox& widget, const IntImportCallback& importCallback)
-{
-	importCallback(gtk_combo_box_get_active(&widget));
-}
-typedef ImportExport<GtkComboBox, int, IntComboImport, IntComboExport> IntComboImportExport;
-
-template<typename FirstArgument>
-class CallbackDialogData: public DLG_DATA
-{
-	public:
-		typedef Callback1<FirstArgument> ImportCallback;
-		typedef Callback1<const ImportCallback&> ExportCallback;
-
-	private:
-		ImportCallback m_importWidget;
-		ExportCallback m_exportWidget;
-		ImportCallback m_importViewer;
-		ExportCallback m_exportViewer;
-
-	public:
-		CallbackDialogData (const ImportCallback& importWidget, const ExportCallback& exportWidget,
-				const ImportCallback& importViewer, const ExportCallback& exportViewer) :
-			m_importWidget(importWidget), m_exportWidget(exportWidget), m_importViewer(importViewer), m_exportViewer(
-					exportViewer)
-		{
-		}
-		void importData () const
-		{
-			m_exportViewer(m_importWidget);
-		}
-		void exportData () const
-		{
-			m_exportWidget(m_importViewer);
-		}
-};
-
-template<typename Widget>
-class AddCustomData
-{
-		DialogDataList& m_data;
-	public:
-		AddCustomData (DialogDataList& data) :
-			m_data(data)
-		{
-		}
-		void apply (typename Widget::Type& widget, const Callback1<typename Widget::Other>& importViewer,
-				const Callback1<const Callback1<typename Widget::Other>&>& exportViewer) const
-		{
-			m_data.push_back(new CallbackDialogData<typename Widget::Other> (typename Widget::ImportCaller(widget),
-					typename Widget::ExportCaller(widget), importViewer, exportViewer));
-		}
-};
-
-// =============================================================================
-// Dialog class
-
 Dialog::Dialog () :
 	m_window(0), m_parent(0)
 {
@@ -269,24 +119,18 @@ Dialog::Dialog () :
 
 Dialog::~Dialog ()
 {
-	for (DialogDataList::iterator i = m_data.begin(); i != m_data.end(); ++i) {
-		delete *i;
-	}
-
 	ASSERT_MESSAGE(m_window == 0, "dialog window not destroyed");
 }
 
 void Dialog::ShowDlg ()
 {
 	ASSERT_MESSAGE(m_window != 0, "dialog was not constructed");
-	importData();
 	gtk_widget_show(GTK_WIDGET(m_window));
 }
 
 void Dialog::HideDlg ()
 {
 	ASSERT_MESSAGE(m_window != 0, "dialog was not constructed");
-	exportData();
 	gtk_widget_hide(GTK_WIDGET(m_window));
 }
 
@@ -313,26 +157,6 @@ void Dialog::Destroy ()
 	m_window = 0;
 }
 
-void Dialog::AddIntRadioData (GtkRadioButton& widget, const IntImportCallback& importViewer,
-		const IntExportCallback& exportViewer)
-{
-	AddCustomData<IntRadioImportExport> (m_data).apply(widget, importViewer, exportViewer);
-}
-
-void Dialog::exportData ()
-{
-	for (DialogDataList::iterator i = m_data.begin(); i != m_data.end(); ++i) {
-		(*i)->exportData();
-	}
-}
-
-void Dialog::importData ()
-{
-	for (DialogDataList::iterator i = m_data.begin(); i != m_data.end(); ++i) {
-		(*i)->importData();
-	}
-}
-
 void Dialog::EndModal (EMessageBoxReturn code)
 {
 	m_modal.loop = 0;
@@ -341,8 +165,6 @@ void Dialog::EndModal (EMessageBoxReturn code)
 
 EMessageBoxReturn Dialog::DoModal ()
 {
-	importData();
-
 	// Import the values from the registry before showing the dialog
 	_registryConnector.importValues();
 
@@ -351,7 +173,7 @@ EMessageBoxReturn Dialog::DoModal ()
 	EMessageBoxReturn ret = modal_dialog_show(m_window, m_modal);
 	ASSERT_NOTNULL(m_window);
 	if (ret == eIDOK) {
-		exportData();
+		_registryConnector.exportValues();
 	}
 
 	gtk_widget_hide(GTK_WIDGET(m_window));
@@ -506,37 +328,6 @@ void Dialog::addCombo (GtkWidget* vbox, const std::string& name, const std::stri
 	// Add the widget to the dialog row
 	GtkTable* row = DialogRow_new(name, alignment);
 	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(row));
-}
-
-void Dialog::addRadioIcons (GtkWidget* vbox, const char* name, StringArrayRange icons,
-		const IntImportCallback& importViewer, const IntExportCallback& exportViewer)
-{
-	GtkWidget* table = gtk_table_new(2, static_cast<guint> (icons.last - icons.first), FALSE);
-	gtk_widget_show(table);
-
-	gtk_table_set_row_spacings(GTK_TABLE (table), 5);
-	gtk_table_set_col_spacings(GTK_TABLE (table), 5);
-
-	GSList* group = 0;
-	GtkWidget* radio = 0;
-	for (StringArrayRange::Iterator icon = icons.first; icon != icons.last; ++icon) {
-		guint pos = static_cast<guint> (icon - icons.first);
-		GtkWidget* image = gtkutil::getImage(*icon);
-		gtk_widget_show(image);
-		gtk_table_attach(GTK_TABLE(table), image, pos, pos + 1, 0, 1, (GtkAttachOptions) (0), (GtkAttachOptions) (0),
-				0, 0);
-
-		radio = gtk_radio_button_new(group);
-		gtk_widget_show(radio);
-		gtk_table_attach(GTK_TABLE (table), radio, pos, pos + 1, 1, 2, (GtkAttachOptions) (0), (GtkAttachOptions) (0),
-				0, 0);
-
-		group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(radio));
-	}
-
-	AddIntRadioData(*GTK_RADIO_BUTTON(radio), importViewer, exportViewer);
-
-	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(DialogRow_new(name, table)));
 }
 
 // greebo: add an entry box connected to the given registryKey

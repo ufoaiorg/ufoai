@@ -91,15 +91,6 @@ inline void StringExport (std::string& self, const StringImportCallback& importC
 }
 typedef ReferenceCaller1<std::string, const StringImportCallback&, StringExport> StringExportCaller;
 
-struct DLG_DATA
-{
-		virtual ~DLG_DATA ()
-		{
-		}
-		virtual void importData () const = 0;
-		virtual void exportData () const = 0;
-};
-
 typedef struct _GtkWindow GtkWindow;
 typedef struct _GtkToggleButton GtkToggleButton;
 typedef struct _GtkRadioButton GtkRadioButton;
@@ -108,16 +99,11 @@ typedef struct _GtkComboBox GtkComboBox;
 typedef struct _GtkEntry GtkEntry;
 typedef struct _GtkAdjustment GtkAdjustment;
 
-template<typename FirstArgument>
-class CallbackDialogData;
-
-typedef std::list<DLG_DATA*> DialogDataList;
 typedef std::list<std::string> ComboBoxValueList;
 
 class Dialog
 {
 		GtkWindow* m_window;
-		DialogDataList m_data;
 	protected:
 		gtkutil::RegistryConnector _registryConnector;
 	public:
@@ -134,8 +120,6 @@ class Dialog
 		EMessageBoxReturn DoModal ();
 		void EndModal (EMessageBoxReturn code);
 		virtual GtkWindow* BuildDialog () = 0;
-		virtual void exportData ();
-		virtual void importData ();
 		virtual void PreModal ()
 		{
 		}
@@ -171,14 +155,6 @@ class Dialog
 		// greebo: Adds a PathEntry to choose files or directories (depending on the given boolean)
 		GtkWidget* addPathEntry (GtkWidget* vbox, const std::string& name, const std::string& registryKey,
 				bool browseDirectories);
-
-		void addRadioIcons (GtkWidget* vbox, const char* name, StringArrayRange icons,
-				const IntImportCallback& importCallback, const IntExportCallback& exportCallback);
-
-	protected:
-
-		void AddIntRadioData (GtkRadioButton& object, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback);
 };
 
 #endif

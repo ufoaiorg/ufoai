@@ -883,8 +883,6 @@ void ClipperChangeNotify (void)
 	XY_UpdateAllWindows();
 }
 
-static int g_Layout_viewStyle(MainFrame::eSplit);
-
 void CallBrushExportOBJ ()
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
@@ -1032,7 +1030,7 @@ void MainFrame::Create (void)
 	GlobalEventManager().connect(GTK_OBJECT(window));
 	GlobalEventManager().connectAccelGroup(GTK_WINDOW(window));
 
-	m_nCurrentStyle = (EViewStyle) g_Layout_viewStyle;
+	m_nCurrentStyle = eSplit;
 
 	// Create the Filter menu entries
 	ui::FiltersMenu::addItemsToMainMenu();
@@ -1288,24 +1286,6 @@ void GlobalGL_sharedContextDestroyed (void)
 	QGL_sharedContextDestroyed(GlobalOpenGL());
 }
 
-void Layout_constructPreferences (PrefPage* page)
-{
-	const char* layouts[] = { ui::icons::ICON_WINDOW_REGULAR.c_str(), ui::icons::ICON_WINDOW_SPLIT.c_str() };
-	page->appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), IntImportCaller(g_Layout_viewStyle),
-			IntExportCaller(g_Layout_viewStyle));
-}
-
-void Layout_constructPage (PreferenceGroup& group)
-{
-	PreferencesPage* page = group.createPage(_("Layout"), _("Layout Preferences"));
-	Layout_constructPreferences(reinterpret_cast<PrefPage*> (page));
-}
-
-void Layout_registerPreferencesPage (void)
-{
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Layout_constructPage> ());
-}
-
 void EditColourScheme ()
 {
 	new ui::ColourSchemeEditor(); // self-destructs in GTK callback
@@ -1499,11 +1479,6 @@ void MainFrame_Construct (void)
 			IntExportStringCaller(g_layout_globals.nCamWidth));
 	GlobalPreferenceSystem().registerPreference("CamHeight", IntImportStringCaller(g_layout_globals.nCamHeight),
 			IntExportStringCaller(g_layout_globals.nCamHeight));
-
-	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle),
-			IntExportStringCaller(g_Layout_viewStyle));
-
-	Layout_registerPreferencesPage();
 
 	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
 	GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
