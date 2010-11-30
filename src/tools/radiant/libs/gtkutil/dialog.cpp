@@ -114,16 +114,10 @@ GtkButton* create_modal_dialog_button (const std::string& label, ModalDialogButt
 	return create_dialog_button(label, G_CALLBACK(modal_dialog_button_clicked), &button);
 }
 
-inline GtkWindow* create_modal_dialog_window (GtkWindow* parent, const std::string& title, ModalDialog& dialog, int default_w,
-		int default_h)
-{
-	return create_dialog_window(parent, title, G_CALLBACK(modal_dialog_delete), &dialog, default_w, default_h);
-}
-
 GtkWindow* create_fixedsize_modal_dialog_window (GtkWindow* parent, const std::string& title, ModalDialog& dialog,
 		int width, int height)
 {
-	GtkWindow* window = create_modal_dialog_window(parent, title, dialog, width, height);
+	GtkWindow* window = create_dialog_window(parent, title, G_CALLBACK(modal_dialog_delete), &dialog, width, height);
 
 	gtk_window_set_resizable(window, FALSE);
 	gtk_window_set_modal(window, TRUE);
@@ -145,20 +139,6 @@ gboolean dialog_button_cancel (GtkWidget *widget, ModalDialog* data)
 {
 	data->loop = false;
 	data->ret = eIDCANCEL;
-	return TRUE;
-}
-
-gboolean dialog_button_yes (GtkWidget *widget, ModalDialog* data)
-{
-	data->loop = false;
-	data->ret = eIDYES;
-	return TRUE;
-}
-
-gboolean dialog_button_no (GtkWidget *widget, ModalDialog* data)
-{
-	data->loop = false;
-	data->ret = eIDNO;
 	return TRUE;
 }
 

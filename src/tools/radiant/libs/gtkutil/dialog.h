@@ -30,16 +30,18 @@
 
 typedef int gint;
 typedef gint gboolean;
+typedef void (*GCallback) (void);
+typedef void* gpointer;
 typedef struct _GdkEventAny GdkEventAny;
 typedef struct _GtkWidget GtkWidget;
-typedef struct _GtkHBox GtkHBox;
-typedef struct _GtkVBox GtkVBox;
-typedef struct _GtkRadioButton GtkRadioButton;
-typedef struct _GtkFrame GtkFrame;
 typedef struct _GtkEntry GtkEntry;
 typedef struct _GtkButton GtkButton;
 typedef struct _GtkLabel GtkLabel;
 typedef struct _GtkTable GtkTable;
+typedef struct _GtkWindow GtkWindow;
+typedef struct _GtkVBox GtkVBox;
+typedef struct _GtkHBox GtkHBox;
+typedef struct _GtkFrame GtkFrame;
 
 struct ModalDialog
 {
@@ -61,14 +63,6 @@ struct ModalDialogButton
 		EMessageBoxReturn m_value;
 };
 
-typedef void (*GCallback) (void);
-typedef void* gpointer;
-typedef struct _GtkWindow GtkWindow;
-typedef struct _GtkButton GtkButton;
-typedef struct _GtkVBox GtkVBox;
-typedef struct _GtkHBox GtkHBox;
-typedef struct _GtkFrame GtkFrame;
-
 GtkButton* create_dialog_button (const std::string& label, GCallback func, gpointer data);
 GtkVBox* create_dialog_vbox (int spacing, int border = 0);
 GtkHBox* create_dialog_hbox (int spacing, int border = 0);
@@ -81,8 +75,6 @@ EMessageBoxReturn modal_dialog_show (GtkWindow* window, ModalDialog& dialog);
 
 gboolean dialog_button_ok (GtkWidget *widget, ModalDialog* data);
 gboolean dialog_button_cancel (GtkWidget *widget, ModalDialog* data);
-gboolean dialog_button_yes (GtkWidget *widget, ModalDialog* data);
-gboolean dialog_button_no (GtkWidget *widget, ModalDialog* data);
 gboolean dialog_delete_callback (GtkWidget *widget, GdkEventAny* event, ModalDialog* data);
 
 GtkWindow* create_simple_modal_dialog_window (const std::string& title, ModalDialog& dialog, GtkWidget* contents);
