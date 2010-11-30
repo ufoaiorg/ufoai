@@ -614,8 +614,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 
 /**
  * @brief Performs traces to find a passage between two points given an upper and lower bound.
- * @param[in] map The map's routing data
- * @param[in] actorSize The actor's size
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] dir Direction of movement
  * @param[in] x Starting x coordinate
  * @param[in] y Starting y coordinate
@@ -692,9 +691,9 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 
 /**
  * @brief Helper function to trace for walls
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] start The starting point of the trace, at the FLOOR'S CENTER.
  * @param[in] end The end point of the trace, centered x and y at the destination but at the same height as start.
- * @param[in] actorSize The actor's size in cell units.
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
@@ -714,9 +713,9 @@ static trace_t RT_ObstructedTrace (RT_data_t *rtd, const vec3_t start, const vec
 
 /**
  * @brief Performs a trace to find the floor of a passage a fraction of the way from start to end.
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] start The starting coordinate to search for a floor from.
  * @param[in] end The starting coordinate to search for a floor from.
- * @param[in] actorSize The actor's size.
  * @param[in] frac The fraction of the distance traveled from start to end, using (0.0 to 1.0).
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found floor in QUANT units.
@@ -747,9 +746,9 @@ static int RT_FindOpeningFloorFrac (RT_data_t *rtd, const vec3_t start, const ve
 
 /**
  * @brief Performs a trace to find the ceiling of a passage a fraction of the way from start to end.
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] start The starting coordinate to search for a ceiling from.
  * @param[in] end The starting coordinate to search for a ceiling from.
- * @param[in] actorSize The actor's size.
  * @param[in] frac The fraction of the distance traveled from start to end, using (0.0 to 1.0).
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found ceiling in QUANT units.
@@ -779,9 +778,9 @@ static int RT_FindOpeningCeilingFrac (RT_data_t *rtd, const vec3_t start, const 
 
 /**
  * @brief Performs traces to find the approximate floor of a passage.
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] start The starting coordinate to search for a floor from.
  * @param[in] end The starting coordinate to search for a floor from.
- * @param[in] actorSize The actor's size.
  * @param[in] startingHeight The starting height for this downward trace.
  * @param[in] floorLimit The lowest limit of the found floor.
  * @return The absolute height of the found floor in QUANT units.
@@ -819,9 +818,9 @@ static int RT_FindOpeningFloor (RT_data_t *rtd, const vec3_t start, const vec3_t
 
 /**
  * @brief Performs traces to find the approximate ceiling of a passage.
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] start The starting coordinate to search for a ceiling from.
  * @param[in] end The starting coordinate to search for a ceiling from.
- * @param[in] actorSize The actor's size.
  * @param[in] startingHeight The starting height for this upward trace.
  * @param[in] ceilLimit The highest the ceiling may be.
  * @return The absolute height of the found ceiling in QUANT units.
@@ -885,8 +884,7 @@ static int RT_CalcNewZ (RT_data_t *rtd, const int ax, const int ay, const int to
 
 /**
  * @brief Performs actual trace to find a passage between two points given an upper and lower bound.
- * @param[in] map The map's routing data
- * @param[in] actorSize The actor's size
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] start Starting trace coordinate
  * @param[in] end Ending trace coordinate
  * @param[in] ax Ending x coordinate
@@ -929,8 +927,7 @@ static int RT_TraceOpening (RT_data_t *rtd, const vec3_t start, const vec3_t end
 
 /**
  * @brief Performs traces to find a passage between two points given an upper and lower bound.
- * @param[in] map The map's routing data
- * @param[in] actorSize The actor's size
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] from Starting place
  * @param[in] ax Ending x coordinate
  * @param[in] ay Ending y coordinate
@@ -1033,8 +1030,7 @@ static int RT_FindOpening (RT_data_t *rtd, place_t* from, const int ax, const in
 
 /**
  * @brief Performs small traces to find places when an actor can step up.
- * @param[in] map The map's routing data
- * @param[in] actorSize The actor's size
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] from Starting place
  * @param[in] ax Ending x coordinate
  * @param[in] ay Ending y coordinate
@@ -1231,8 +1227,7 @@ static int RT_MicroTrace (RT_data_t *rtd, place_t* from, const int ax, const int
 
 /**
  * @brief Performs traces to find a passage between two points given an upper and lower bound.
- * @param[in] map The map's routing data
- * @param[in] actorSize The actor's size
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] from Starting place
  * @param[in] to Ending place
  * @param[out] opening descriptor of the opening found, if any
@@ -1314,8 +1309,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, place_t* from, place_t* to, openi
 
 /**
  * @brief Performs traces to find a passage between two points given an upper and lower bound.
- * @param[in] map The map's routing data
- * @param[in] actorSize The actor's size
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] x Starting x coordinate
  * @param[in] y Starting y coordinate
  * @param[in] z Starting z coordinate
@@ -1397,14 +1391,13 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 
 /**
  * @brief Routing Function to update the connection between two fields
- * @param[in] actorSize The size of the actor, in units
+ * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] ax The x of the adjacent cell
  * @param[in] ay The y of the adjacent cell
  * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
  * @param[in] dir The direction to test for a connection through
- * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
 static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
