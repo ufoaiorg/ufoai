@@ -781,8 +781,7 @@ const std::string Map::selectMapFile (const std::string& title, bool open)
 	// Save the most recently-used path so that successive maps can be opened
 	// from the same directory.
 	static std::string lastPath = getMapsPath();
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/
-	"map", "map");
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, "map", ".map");
 	/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
 	if (isUnnamed()) {
 		fileChooser.setCurrentPath(lastPath);
