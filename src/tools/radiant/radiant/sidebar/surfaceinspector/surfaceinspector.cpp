@@ -568,7 +568,7 @@ void SurfaceInspector::emitTexDef ()
 	shiftScaleRotate._scale[1] = string::toFloat(gtk_entry_get_text(GTK_ENTRY(_manipulators[VSCALE].value)));
 	shiftScaleRotate._rotate = string::toFloat(gtk_entry_get_text(GTK_ENTRY(_manipulators[ROTATION].value)));
 
-	TextureProjection projection;
+	TextureProjection projection(shiftScaleRotate);
 
 	// Apply it to the selection
 	selection::algorithm::applyTextureProjectionToFaces(projection);
