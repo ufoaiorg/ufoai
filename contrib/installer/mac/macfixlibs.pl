@@ -6,7 +6,7 @@ use Fcntl ':mode';
 my $appdir = shift;
 my @apps = @ARGV;
 
-my @explicit_libs = ('libcurl', 'libvorbis', 'libogg');
+my @explicit_libs = ('libcurl');
 
 # Replaces the relative framework path returned by otool with
 # the path to the library in the framework top level directory.
