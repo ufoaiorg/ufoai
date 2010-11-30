@@ -37,6 +37,9 @@ public:
 	operator Type&() const {
 		return *m_contained;
 	}
+	operator Type*() const {
+		return m_contained;
+	}
 	Type& get() const {
 		return *m_contained;
 	}
