@@ -58,7 +58,6 @@ copydata-ufoai: bundle-dirs-ufoai
 copydata-uforadiant:
 	$(Q)git archive HEAD:radiant/ | tar -x -C $(MAC_INST_DIR)/UFORadiant.app
 	$(Q)cp -r radiant/i18n/[^.]* $(MAC_INST_DIR)/UFORadiant.app/i18n
-	$(Q)cp -rf radiant/plugins/[^.]*.dylib $(MAC_INST_DIR)/UFORadiant.app/plugins
 
 # =======================
 
