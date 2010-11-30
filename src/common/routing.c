@@ -80,6 +80,11 @@ static inline void RT_ConnSet(RT_data_t *rtd, const int x, const int y, const in
 	RT_CONN(rtd->map, rtd->actorSize, x, y, z, dir) = val;
 }
 
+static inline void RT_StepupSet(RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
+{
+	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = val;
+}
+
 static inline void RT_ConnSetNoGo(RT_data_t *rtd, const int x, const int y, const int z, const int dir)
 {
 	RT_ConnSet(rtd, x, y, z, dir, 0);
@@ -665,13 +670,13 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 		assert (oh >= 0);
 		RT_ConnSet(rtd, x, y, i, dir, oh);
 		/* The stepup is 0 for all cells that are not at the floor. */
-		RT_STEPUP(rtd->map, rtd->actorSize, x, y, i, dir) = 0;
+		RT_StepupSet(rtd, x, y, i, dir, 0);
 		if (debugTrace) {
 			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, RT_CONN(rtd->map, rtd->actorSize, x, y, i, dir));
 		}
 	}
 
-	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = stepup;
+	RT_StepupSet(rtd, x, y, z, dir, stepup);
 	if (debugTrace) {
 		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, stepup);
 	}
