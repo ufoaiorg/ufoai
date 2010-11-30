@@ -384,7 +384,7 @@
 	/* Screen overlay alternating animation (bottom left, frequency display, grey) */
 	{
 		texture pt/so/soctex001_1a0
-		anima 9 6
+		animf 9 6
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Buttons randomized animation (top right, switching black) */
