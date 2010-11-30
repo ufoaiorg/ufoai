@@ -638,8 +638,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 	/* last chance- if cz < z, then bail (and there is an error with the ceiling data somewhere */
 	if (cz < z) {
 		/* We can't go this way. */
-		RT_CONN(rtd->map, rtd->actorSize, x, y, z, dir) = 0;
-		RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;
+		RT_ConnSetNoGo(rtd, x, y, z, dir);
 		if (debugTrace)
 			Com_Printf("Passage found but below current cell, opening_base=%i, opening_top=%i, z = %i, cz = %i.\n", openingBase, openingTop, z, cz);
 		return z;
