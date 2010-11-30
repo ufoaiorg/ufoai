@@ -13,6 +13,9 @@ MaterialShaderSystem::MaterialShaderSystem () :
 void MaterialShaderSystem::keyChanged (const std::string& changedKey, const std::string& newValue)
 {
 	_licenseParser.openLicenseFile(newValue);
+
+	for (MaterialShaders::iterator i = _activeMaterialShaders.begin(); i != _activeMaterialShaders.end(); ++i)
+		i->second->setIsValid(_licenseParser.isValid(i->first));
 }
 
 void MaterialShaderSystem::realise ()

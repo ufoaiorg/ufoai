@@ -124,6 +124,17 @@ namespace os
 		}
 		return path;
 	}
+
+	/// \brief Returns true if \p path is a fully qualified file-system path.
+	/// O(1)
+	inline bool isAbsolute (const std::string& path)
+	{
+	#ifdef _WIN32
+		return path[0] == '/' || (path[0] != '\0' && path[1] == ':'); // local drive
+	#else
+		return path[0] == '/';
+	#endif
+	}
 }
 
 #include "string/string.h"

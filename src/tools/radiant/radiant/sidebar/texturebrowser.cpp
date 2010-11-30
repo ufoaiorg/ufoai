@@ -81,6 +81,7 @@ const std::string RKEY_TEXTURES_HIDE_UNUSED = "user/ui/textures/browser/hideUnus
 const std::string RKEY_TEXTURES_HIDE_INVALID = "user/ui/textures/browser/hideInvalid";
 const std::string RKEY_TEXTURES_UNIFORM_SIZE = "user/ui/textures/browser/uniformSize";
 const std::string RKEY_TEXTURES_THUMBNAIL_SCALE = "user/ui/textures/browser/thumbnailScale";
+const std::string RKEY_TEXTURES_LICENSE_PATH = "user/ui/textures/browser/licensepath";
 }
 
 static void TextureBrowser_scrollChanged (void* data, gdouble value);
@@ -1014,6 +1015,7 @@ void TextureBrowser::constructPreferencePage(PreferenceGroup& group) {
 
 	page->appendCombo(_("Texture thumbnail scale"), RKEY_TEXTURES_THUMBNAIL_SCALE, textureScaleDescriptions);
 	page->appendEntry(_("Uniform texture thumbnail size (pixels)"), RKEY_TEXTURES_UNIFORM_SIZE);
+	page->appendPathEntry(_("License Path"), RKEY_TEXTURES_LICENSE_PATH, false);
 }
 
 void TextureBrowser::registerCommands ()

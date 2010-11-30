@@ -57,8 +57,13 @@ void LicenseParser::openLicenseFile (const std::string& filename)
 {
 	clearLicenses();
 
-	const std::string& appPath = GlobalRegistry().get(RKEY_APP_PATH);
-	std::string fullpath = appPath + filename;
+	std::string fullpath;
+	if (os::isAbsolute(filename)) {
+		fullpath = filename;
+	} else {
+		const std::string& appPath = GlobalRegistry().get(RKEY_APP_PATH);
+		fullpath = appPath + filename;
+	}
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(fullpath));
 	if (file) {
