@@ -1081,75 +1081,28 @@ void MainFrame::Create (void)
 	int w, h;
 	gtk_window_get_size(window, &w, &h);
 
-	// create edit windows according to user setable style
-	switch (CurrentStyle()) {
-	case eRegular: {
-		{
-			GtkWidget* hsplit = gtk_hpaned_new();
-			gtk_widget_show(hsplit);
-			m_hSplit = hsplit;
+	// camera
+	m_pCamWnd = GlobalCamera().newCamWnd();
+	GlobalCamera().setCamWnd(m_pCamWnd);
+	GlobalCamera().setParent(m_pCamWnd, window);
+	GtkWidget* camera = m_pCamWnd->getWidget();
 
-			// Allocate a new OrthoView and set its ViewType to XY
-			xyWnd = GlobalXYWnd().createXY();
-			xyWnd->setViewType(XY);
+	// Allocate the three ortho views
+	xyWnd = GlobalXYWnd().createXY();
+	xyWnd->setViewType(XY);
+	GtkWidget* xy = xyWnd->getWidget();
 
-			// Create a framed window out of the view's internal widget
-			GtkWidget* xy_window = GTK_WIDGET(create_framed_widget(xyWnd->getWidget()));
+	XYWnd* yzWnd = GlobalXYWnd().createXY();
+	yzWnd->setViewType(YZ);
+	GtkWidget* yz = yzWnd->getWidget();
 
-			{
-				GtkWidget* vsplit2 = gtk_vpaned_new();
-				gtk_widget_show(vsplit2);
-				m_vSplit2 = vsplit2;
+	XYWnd* xzWnd = GlobalXYWnd().createXY();
+	xzWnd->setViewType(XZ);
+	GtkWidget* xz = xzWnd->getWidget();
 
-				if (CurrentStyle() == eRegular) {
-					gtk_paned_add1(GTK_PANED(hsplit), xy_window);
-					gtk_paned_add2(GTK_PANED(hsplit), vsplit2);
-				} else {
-					gtk_paned_add1(GTK_PANED(hsplit), vsplit2);
-					gtk_paned_add2(GTK_PANED(hsplit), xy_window);
-				}
-
-				// camera
-				m_pCamWnd = GlobalCamera().newCamWnd();
-				GlobalCamera().setCamWnd(m_pCamWnd);
-				GlobalCamera().setParent(m_pCamWnd, window);
-				GtkFrame* camera_window = create_framed_widget(m_pCamWnd->getWidget());
-				gtk_paned_add1(GTK_PANED(vsplit2), GTK_WIDGET(camera_window));
-			}
-		}
-		gtk_paned_set_position(GTK_PANED(m_vSplit2), g_layout_globals.nCamHeight);
-		break;
-	}
-
-	case eSplit: {
-		// camera
-		m_pCamWnd = GlobalCamera().newCamWnd();
-		GlobalCamera().setCamWnd(m_pCamWnd);
-		GlobalCamera().setParent(m_pCamWnd, window);
-		GtkWidget* camera = m_pCamWnd->getWidget();
-
-		// Allocate the three ortho views
-		xyWnd = GlobalXYWnd().createXY();
-		xyWnd->setViewType(XY);
-		GtkWidget* xy = xyWnd->getWidget();
-
-		XYWnd* yzWnd = GlobalXYWnd().createXY();
-		yzWnd->setViewType(YZ);
-		GtkWidget* yz = yzWnd->getWidget();
-
-		XYWnd* xzWnd = GlobalXYWnd().createXY();
-		xzWnd->setViewType(XZ);
-		GtkWidget* xz = xzWnd->getWidget();
-
-		// split view (4 views)
-		GtkHPaned* split = create_split_views(camera, yz, xy, xz);
-		gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(split), TRUE, TRUE, 0);
-
-		break;
-	}
-	default:
-		gtkutil::errorDialog(_("Invalid layout type set - remove your radiant config files and retry"));
-	}
+	// split view (4 views)
+	GtkHPaned* split = create_split_views(camera, yz, xy, xz);
+	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(split), TRUE, TRUE, 0);
 
 	// greebo: In any layout, there is at least the XY view present, make it active
 	GlobalXYWnd().setActiveXY(xyWnd);

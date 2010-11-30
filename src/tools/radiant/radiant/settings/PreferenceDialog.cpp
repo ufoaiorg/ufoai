@@ -280,6 +280,15 @@ GtkWindow* PrefsDlg::BuildDialog ()
 	return dialog;
 }
 
+void PrefsDlg::PostModal (EMessageBoxReturn code)
+{
+	if (code == eIDOK) {
+		// Save the values back into the registry
+		_registryConnector.exportValues();
+		UpdateAllWindows();
+	}
+}
+
 PrefsDlg g_Preferences; // global prefs instance
 
 void PreferencesDialog_constructWindow (GtkWindow* main_window)
@@ -292,41 +301,10 @@ void PreferencesDialog_destroyWindow ()
 	g_Preferences.Destroy();
 }
 
-PreferenceDictionary g_preferences;
-
-class PreferenceSystemAPI
-{
-	public:
-		typedef PreferenceSystem Type;
-		STRING_CONSTANT(Name, "*");
-
-		PreferenceSystemAPI ()
-		{
-		}
-		PreferenceSystem* getTable ()
-		{
-			return &g_preferences;
-		}
-};
-
-#include "modulesystem/singletonmodule.h"
-#include "modulesystem/moduleregistry.h"
-
-typedef SingletonModule<PreferenceSystemAPI> PreferenceSystemModule;
-typedef Static<PreferenceSystemModule> StaticPreferenceSystemModule;
-StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule::instance());
-
-void PrefsDlg::PostModal (EMessageBoxReturn code)
-{
-	if (code == eIDOK) {
-		// Save the values back into the registry
-		_registryConnector.exportValues();
-		UpdateAllWindows();
-	}
-}
-
 void PreferencesDialog_showDialog ()
 {
 	if (GlobalMap().askForSave(_("Edit Preferences")))
 		g_Preferences.DoModal();
 }
+
+PreferenceDictionary g_preferences;

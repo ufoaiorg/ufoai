@@ -27,6 +27,15 @@
 class PreferenceDictionary: public PreferenceSystem
 {
 	public:
+		typedef PreferenceSystem Type;
+		STRING_CONSTANT(Name, "*");
+
+		PreferenceSystem* getTable ()
+		{
+			return this;
+		}
+
+	public:
 
 		// greebo: Use this to add a preference constructor to the internal list. They get called when time comes.
 		void addConstructor (PreferenceConstructor* constructor)
@@ -35,5 +44,12 @@ class PreferenceDictionary: public PreferenceSystem
 			g_Preferences.addConstructor(constructor);
 		}
 };
+
+#include "modulesystem/singletonmodule.h"
+#include "modulesystem/moduleregistry.h"
+
+typedef SingletonModule<PreferenceDictionary> PreferenceSystemModule;
+typedef Static<PreferenceSystemModule> StaticPreferenceSystemModule;
+StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule::instance());
 
 #endif
