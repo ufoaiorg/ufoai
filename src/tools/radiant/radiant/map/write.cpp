@@ -33,38 +33,40 @@ inline MapExporter* Node_getMapExporter (scene::Node& node)
 static std::size_t g_count_entities;
 static std::size_t g_count_brushes;
 
-void Entity_ExportTokens (const Entity& entity, TokenWriter& writer)
-{
-	g_count_brushes = 0;
-
-	class WriteKeyValue: public Entity::Visitor
-	{
-			TokenWriter& m_writer;
-		public:
-			WriteKeyValue (TokenWriter& writer) :
-				m_writer(writer)
-			{
-			}
-
-			void visit (const std::string& key, const std::string& value)
-			{
-				m_writer.writeString(key);
-				m_writer.writeString(value);
-				m_writer.nextLine();
-			}
-
-	} visitor(writer);
-
-	entity.forEachKeyValue(visitor);
-}
-
 class WriteTokensWalker: public scene::Traversable::Walker
 {
+	private:
+
 		mutable Stack<bool> m_stack;
-		TokenWriter& m_writer;
+		TokenWriter& _writer;
+
+		void exportEntityTokens (const Entity& entity) const
+		{
+			g_count_brushes = 0;
+
+			class WriteKeyValue: public Entity::Visitor
+			{
+					TokenWriter& m_writer;
+				public:
+					WriteKeyValue (TokenWriter& writer) :
+						m_writer(writer)
+					{
+					}
+
+					void visit (const std::string& key, const std::string& value)
+					{
+						m_writer.writeString(key);
+						m_writer.writeString(value);
+						m_writer.nextLine();
+					}
+
+			} visitor(_writer);
+
+			entity.forEachKeyValue(visitor);
+		}
 	public:
 		WriteTokensWalker (TokenWriter& writer) :
-			m_writer(writer)
+			_writer(writer)
 		{
 		}
 		bool pre (scene::Node& node) const
@@ -73,25 +75,25 @@ class WriteTokensWalker: public scene::Traversable::Walker
 
 			Entity* entity = Node_getEntity(node);
 			if (entity != 0) {
-				m_writer.writeToken("//");
-				m_writer.writeToken("entity");
-				m_writer.writeUnsigned(g_count_entities++);
-				m_writer.nextLine();
+				_writer.writeToken("//");
+				_writer.writeToken("entity");
+				_writer.writeUnsigned(g_count_entities++);
+				_writer.nextLine();
 
-				m_writer.writeToken("{");
-				m_writer.nextLine();
+				_writer.writeToken("{");
+				_writer.nextLine();
 				m_stack.top() = true;
 
-				Entity_ExportTokens(*entity, m_writer);
+				exportEntityTokens(*entity);
 			} else {
 				MapExporter* exporter = Node_getMapExporter(node);
 				if (exporter != 0) {
-					m_writer.writeToken("//");
-					m_writer.writeToken("brush");
-					m_writer.writeUnsigned(g_count_brushes++);
-					m_writer.nextLine();
+					_writer.writeToken("//");
+					_writer.writeToken("brush");
+					_writer.writeUnsigned(g_count_brushes++);
+					_writer.nextLine();
 
-					exporter->exportTokens(m_writer);
+					exporter->exportTokens(_writer);
 				}
 			}
 
@@ -100,8 +102,8 @@ class WriteTokensWalker: public scene::Traversable::Walker
 		void post (scene::Node& node) const
 		{
 			if (m_stack.top()) {
-				m_writer.writeToken("}");
-				m_writer.nextLine();
+				_writer.writeToken("}");
+				_writer.nextLine();
 			}
 			m_stack.pop();
 		}
