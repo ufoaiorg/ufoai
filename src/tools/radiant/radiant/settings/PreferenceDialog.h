@@ -77,9 +77,6 @@ class PrefPage : public PreferencesPage
 		}
 };
 
-typedef Callback1<PrefPage*> PreferencesPageCallback;
-typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;
-
 class PreferenceTreeGroup;
 
 class PrefsDlg: public Dialog
