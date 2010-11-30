@@ -12,7 +12,7 @@
 
 #include "../windowobservers.h"
 #include "../plugin.h"
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h"
 #include "../renderer.h"
 #include "../render/RenderStatistics.h"
 

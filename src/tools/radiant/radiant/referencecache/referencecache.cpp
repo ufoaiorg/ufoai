@@ -58,7 +58,7 @@ ModelModules& ReferenceAPI_getModelModules ();
 #include "moduleobserver.h"
 #include "moduleobservers.h"
 
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h"
 #include "../map/map.h"
 #include "../map/algorithm/Traverse.h"
 #include "../filetypes.h"

@@ -9,7 +9,6 @@
 #include "AutoPtr.h"
 #include "stream/textfilestream.h"
 #include "iarchive.h"
-#include "../../mainframe.h" /* basegame_get */
 
 namespace ui
 {
@@ -28,8 +27,8 @@ namespace ui
 		gtk_widget_set_size_request(nameLabel, 90, -1);
 		gtk_widget_set_size_request(materialFileLabel, 90, -1);
 
-		gtk_table_attach(table, nameLabel, 0, 1, 0, 1, (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
-		gtk_table_attach(table, materialFileLabel, 0, 1, 1, 2, (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
+		gtk_table_attach_defaults(table, nameLabel, 0, 1, 0, 1);
+		gtk_table_attach_defaults(table, materialFileLabel, 0, 1, 1, 2);
 
 		gtk_table_attach_defaults(table, _materialName, 1, 2, 0, 1);
 		gtk_table_attach_defaults(table, _filename, 1, 2, 1, 2);

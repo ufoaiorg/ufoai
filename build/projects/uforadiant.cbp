@@ -456,6 +456,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\ClipPoint.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\Clipper.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\clipper\Clipper.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\commands.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\dialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\entity\entitydef\EntityClassManager.cpp" />
@@ -543,8 +544,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\log\console.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\log\console.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\main.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.cpp" />
-		<Unit filename="..\..\src\tools\radiant\radiant\mainframe.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\AutoSaver.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\AutoSaver.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\map\MapCompiler.cpp" />
@@ -798,6 +797,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\SplitPaneLayout.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\mainframe.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\mainframe.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\ErrorCheckDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\maptools\ErrorCheckDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\materialeditor\MaterialEditor.cpp" />

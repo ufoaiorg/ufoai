@@ -9,7 +9,7 @@
 #include "gtkutil/ScrolledFrame.h"
 #include "gtkutil/TreeModel.h"
 #include "entitylib.h"
-#include "../../mainframe.h"
+#include "../../ui/mainframe/mainframe.h"
 #include "../../map/map.h"
 #include "scenelib.h"
 #include "../../scenegraph/treemodel.h"

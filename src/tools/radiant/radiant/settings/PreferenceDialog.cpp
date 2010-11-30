@@ -42,7 +42,7 @@
 
 #include "../environment.h"
 #include "../log/console.h"
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h"
 #include "../map/map.h"
 #include <string>
 

@@ -64,6 +64,7 @@
 #include "gtkutil/ModalProgressDialog.h"
 
 #include "../ui/common/ToolbarCreator.h"
+#include "../ui/mainframe/mainframe.h"
 #include "../map/map.h"
 #include "../render/OpenGLRenderSystem.h"
 #include "../select.h"
@@ -71,7 +72,6 @@
 #include "../brush/TextureProjection.h"
 #include "../brush/brushmanip.h"
 #include "../plugin.h"
-#include "../mainframe.h"
 #include "surfaceinspector/surfaceinspector.h"
 
 namespace {

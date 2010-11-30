@@ -7,7 +7,7 @@
 #include "preferencesystem.h"
 #include "stringio.h"
 
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h"
 #include "../brush/csg/csg.h"
 #include "../sidebar/texturebrowser.h"
 

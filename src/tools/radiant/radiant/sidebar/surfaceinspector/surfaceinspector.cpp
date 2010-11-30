@@ -24,7 +24,7 @@
 #include "../../brush/brushmanip.h"
 #include "../../selection/algorithm/Primitives.h"
 #include "../../selection/algorithm/Shader.h"
-#include "../../mainframe.h"
+#include "../../ui/mainframe/mainframe.h"
 #include "../../textureentry.h"
 #include "../../select.h"
 

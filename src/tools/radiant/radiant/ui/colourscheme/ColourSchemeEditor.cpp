@@ -1,14 +1,16 @@
 #include "ColourSchemeEditor.h"
 #include "ColourSchemeManager.h"
-#include "../../plugin.h"
-#include "iregistry.h"
-#include "../../mainframe.h"
-#include "../../brush/BrushModule.h"
-#include "iscenegraph.h"
-#include "radiant_i18n.h"
 
+#include "iregistry.h"
+#include "iscenegraph.h"
+
+#include "radiant_i18n.h"
 #include "gtkutil/RightAlignment.h"
 #include "gtkutil/ScrolledFrame.h"
+
+#include "../../plugin.h"
+#include "../../ui/mainframe/mainframe.h"
+#include "../../brush/BrushModule.h"
 
 namespace ui {
 

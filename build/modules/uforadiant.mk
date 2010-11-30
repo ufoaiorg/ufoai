@@ -13,6 +13,7 @@ $(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $
 $(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(GDK_PIXBUF_LIBS) $(SO_LIBS) -lm -lz
 
 $(TARGET)_SRCS      = \
+	$(RADIANT_BASE)/radiant/commands.cpp \
 	$(RADIANT_BASE)/radiant/dialog.cpp \
 	$(RADIANT_BASE)/radiant/environment.cpp \
 	$(RADIANT_BASE)/radiant/exec.cpp \
@@ -20,7 +21,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/imagemodules.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
-	$(RADIANT_BASE)/radiant/mainframe.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
@@ -238,6 +238,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/common/ToolbarCreator.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/mainframe/SplitPaneLayout.cpp \
+	$(RADIANT_BASE)/radiant/ui/mainframe/mainframe.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/mru/MRU.cpp \
 	$(RADIANT_BASE)/radiant/ui/mru/MRUMenuItem.cpp \

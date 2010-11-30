@@ -19,7 +19,7 @@
 
 #include "../plugin.h"
 #include "../brush/brushmanip.h"
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h"
 #include "../sidebar/texturebrowser.h"
 #include "../select.h"
 #include "../entity/entity.h"

@@ -84,8 +84,8 @@
 #include "referencecache/referencecache.h"
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
+#include "ui/mainframe/mainframe.h"
 #include "server.h"
-#include "mainframe.h"
 #include "environment.h"
 
 #include <gtk/gtk.h>

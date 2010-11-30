@@ -78,7 +78,7 @@
 
 #include "os/path.h"
 
-#include "mainframe.h"
+#include "ui/mainframe/mainframe.h"
 #include "ui/mru/MRU.h"
 #include "entity/entity.h"
 #include "select.h"

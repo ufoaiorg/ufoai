@@ -1,6 +1,6 @@
 #include "EntitySettings.h"
 
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h" // UpdateAllWindows
 #include "radiant_i18n.h"
 
 namespace entity {

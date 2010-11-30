@@ -6,7 +6,7 @@
 #include "stringio.h"
 #include "../select.h"
 #include "../selection/algorithm/General.h"
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h"
 #include "radiant_i18n.h"
 
 // Constructor

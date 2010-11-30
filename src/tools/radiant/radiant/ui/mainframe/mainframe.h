@@ -37,7 +37,9 @@ class IToolbarButton;
 
 class XYWnd;
 class CamWnd;
-namespace ui { class Sidebar; }
+namespace ui {
+class Sidebar;
+}
 
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
@@ -48,7 +50,7 @@ const int c_brushcount_status = 2;
 const int c_texture_status = 3;
 const int c_count_status = 4;
 
-#include "undo/UndoStateTracker.h"
+#include "../../undo/UndoStateTracker.h"
 
 class MainFrame
 {
@@ -70,6 +72,7 @@ class MainFrame
 		std::string m_position_status;
 		std::string m_brushcount_status;
 		std::string m_texture_status;
+
 	private:
 
 		gtkutil::WindowPosition _windowPosition;
@@ -77,6 +80,10 @@ class MainFrame
 		void Create ();
 		void SaveWindowInfo ();
 		void Shutdown ();
+
+		typedef void(*ToolMode) ();
+		ToolMode g_currentToolMode;
+		ToolMode g_defaultToolMode;
 
 		GtkWidget* m_hSplit;
 		GtkWidget* m_vSplit2;
@@ -99,6 +106,27 @@ class MainFrame
 		UndoSaveStateTracker m_saveStateTracker;
 
 	public:
+
+		ToolMode getCurrentToolMode () const
+		{
+			return g_currentToolMode;
+		}
+
+		void setCurrentToolMode (ToolMode toolmode)
+		{
+			g_currentToolMode = toolmode;
+		}
+
+		ToolMode getDefaultToolMode () const
+		{
+			return g_defaultToolMode;
+		}
+
+		void setDefaultToolMode (ToolMode toolmode)
+		{
+			g_defaultToolMode = toolmode;
+		}
+
 		void SetStatusText (std::string& status_text, const std::string& pText);
 		void UpdateStatusText ();
 		void RedrawStatusText ();
@@ -155,7 +183,7 @@ void Radiant_detachGameToolsPathObserver (ModuleObserver& observer);
 void Radiant_Initialise ();
 void Radiant_Shutdown ();
 
-void GlobalCamera_UpdateWindow();
+void GlobalCamera_UpdateWindow ();
 void XY_UpdateAllWindows ();
 void UpdateAllWindows ();
 

@@ -29,7 +29,7 @@
 
 #include "debugging/debugging.h"
 
-#include "mainframe.h"
+#include "ui/mainframe/mainframe.h"
 
 #include <stdlib.h>
 

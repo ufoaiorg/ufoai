@@ -9,7 +9,7 @@
 #include "os/file.h"
 #include "string/string.h"
 #include "map.h"
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h"
 #include "os/path.h"
 
 #include "radiant_i18n.h"

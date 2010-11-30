@@ -40,7 +40,7 @@
 #include "gtkutil/dialog.h"
 #include "gtkutil/widget.h"
 #include "brush/brushmanip.h"
-#include "mainframe.h"
+#include "ui/mainframe/mainframe.h"
 #include "map/map.h"
 #include "selection/SceneWalkers.h"
 #include "selection/algorithm/General.h"

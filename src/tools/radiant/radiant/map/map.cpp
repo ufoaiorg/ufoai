@@ -54,7 +54,7 @@
 #include "../sidebar/MapInfo.h"
 #include "../camera/CamWnd.h"
 #include "../xyview/GlobalXYWnd.h"
-#include "../mainframe.h"
+#include "../ui/mainframe/mainframe.h"
 #include "../referencecache/referencecache.h"
 #include "../ui/mru/MRU.h"
 #include "AutoSaver.h"
