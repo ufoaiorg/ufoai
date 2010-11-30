@@ -34,16 +34,6 @@ class PrefPage : public PreferencesPage
 			m_dialog(dialog), m_vbox(vbox)
 		{
 		}
-		GtkWidget* appendCheckBox (const char* name, const char* flag, bool& data)
-		{
-			return m_dialog.addCheckBox(m_vbox, name, flag, data);
-		}
-		GtkWidget* appendCheckBox (const char* name, const char* flag, const BoolImportCallback& importCallback,
-				const BoolExportCallback& exportCallback)
-		{
-			return m_dialog.addCheckBox(m_vbox, name, flag, importCallback, exportCallback);
-		}
-
 		/* greebo: This adds a checkbox and connects it to an XMLRegistry key.
 		 * @returns: the pointer to the created GtkWidget */
 		GtkWidget* appendCheckBox (const std::string& name, const std::string& flag, const std::string& registryKey)
@@ -86,34 +76,10 @@ class PrefPage : public PreferencesPage
 			return m_dialog.addSpinner(m_vbox, name, registryKey, lower, upper, fraction);
 		}
 
-		void appendCombo (const char* name, StringArrayRange values, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback)
-		{
-			m_dialog.addCombo(m_vbox, name, values, importCallback, exportCallback);
-		}
-		void appendRadio (const char* name, StringArrayRange names, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback)
-		{
-			m_dialog.addRadio(m_vbox, name, names, importCallback, exportCallback);
-		}
-		void appendRadio (const char* name, int& data, StringArrayRange names)
-		{
-			m_dialog.addRadio(m_vbox, name, data, names);
-		}
 		void appendRadioIcons (const char* name, StringArrayRange icons, const IntImportCallback& importCallback,
 				const IntExportCallback& exportCallback)
 		{
 			m_dialog.addRadioIcons(m_vbox, name, icons, importCallback, exportCallback);
-		}
-		GtkWidget* appendPathEntry (const char* name, bool browse_directory,
-				const StringImportCallback& importCallback, const StringExportCallback& exportCallback)
-		{
-			return m_dialog.addPathEntry(m_vbox, name, browse_directory, importCallback, exportCallback);
-		}
-		GtkWidget* appendSpinner (const char* name, double value, double lower, double upper,
-				const FloatImportCallback& importCallback, const FloatExportCallback& exportCallback)
-		{
-			return m_dialog.addSpinner(m_vbox, name, value, lower, upper, importCallback, exportCallback);
 		}
 };
 

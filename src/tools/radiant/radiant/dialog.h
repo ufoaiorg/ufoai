@@ -155,9 +155,6 @@ class Dialog
 			return m_window;
 		}
 
-		GtkWidget* addCheckBox (GtkWidget* vbox, const char* name, const char* flag,
-				const BoolImportCallback& importCallback, const BoolExportCallback& exportCallback);
-		GtkWidget* addCheckBox (GtkWidget* vbox, const char* name, const char* flag, bool& data);
 		// greebo: Adds a checkbox and connects it to the given registry key
 		GtkWidget* addCheckBox(GtkWidget* vbox, const std::string& name, const std::string& flag, const std::string& registryKey);
 		// greebo: Adds a slider and connects it to the registryKey
@@ -175,37 +172,12 @@ class Dialog
 		GtkWidget* addPathEntry (GtkWidget* vbox, const std::string& name, const std::string& registryKey,
 				bool browseDirectories);
 
-		void addCombo (GtkWidget* vbox, const char* name, StringArrayRange values,
-				const IntImportCallback& importCallback, const IntExportCallback& exportCallback);
-		void addCombo (GtkWidget* vbox, const char* name, int& data, StringArrayRange values);
-		void addSlider (GtkWidget* vbox, const char* name, int& data, gboolean draw_value, const char* low,
-				const char* high, double value, double lower, double upper, double step_increment,
-				double page_increment, double page_size);
-		void addRadio (GtkWidget* vbox, const char* name, StringArrayRange names,
-				const IntImportCallback& importCallback, const IntExportCallback& exportCallback);
-		void addRadio (GtkWidget* vbox, const char* name, int& data, StringArrayRange names);
 		void addRadioIcons (GtkWidget* vbox, const char* name, StringArrayRange icons,
 				const IntImportCallback& importCallback, const IntExportCallback& exportCallback);
-		void addRadioIcons (GtkWidget* vbox, const char* name, int& data, StringArrayRange icons);
-		GtkWidget* addPathEntry (GtkWidget* vbox, const char* name, bool browse_directory,
-				const StringImportCallback& importCallback, const StringExportCallback& exportCallback);
-		GtkWidget* addPathEntry (GtkWidget* vbox, const char* name, std::string& data, bool directory);
-		GtkWidget* addSpinner (GtkWidget* vbox, const char* name, double value, double lower, double upper,
-				const FloatImportCallback& importCallback, const FloatExportCallback& exportCallback);
 
 	protected:
 
-		void AddBoolToggleData (GtkToggleButton& object, const BoolImportCallback& importCallback,
-				const BoolExportCallback& exportCallback);
 		void AddIntRadioData (GtkRadioButton& object, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback);
-		void AddTextEntryData (GtkEntry& object, const StringImportCallback& importCallback,
-				const StringExportCallback& exportCallback);
-		void AddFloatSpinnerData (GtkSpinButton& object, const FloatImportCallback& importCallback,
-				const FloatExportCallback& exportCallback);
-		void AddIntAdjustmentData (GtkAdjustment& object, const IntImportCallback& importCallback,
-				const IntExportCallback& exportCallback);
-		void AddIntComboData (GtkComboBox& object, const IntImportCallback& importCallback,
 				const IntExportCallback& exportCallback);
 };
 
