@@ -87,19 +87,6 @@ gboolean dialog_delete_callback (GtkWidget *widget, GdkEventAny* event, ModalDia
 
 GtkWindow* create_simple_modal_dialog_window (const std::string& title, ModalDialog& dialog, GtkWidget* contents);
 
-class RadioHBox
-{
-	public:
-		GtkHBox* m_hbox;
-		GtkRadioButton* m_radio;
-		RadioHBox (GtkHBox* hbox, GtkRadioButton* radio) :
-			m_hbox(hbox), m_radio(radio)
-		{
-		}
-};
-
-RadioHBox RadioHBox_new (StringArrayRange names);
-
 class PathEntry
 {
 	public:
@@ -113,18 +100,6 @@ class PathEntry
 };
 
 PathEntry PathEntry_new ();
-
-class BrowsedPathEntry
-{
-	public:
-		typedef Callback1<std::string> SetPathCallback;
-		typedef Callback1<const SetPathCallback&> BrowseCallback;
-
-		PathEntry m_entry;
-		BrowseCallback m_browse;
-
-		BrowsedPathEntry (const BrowseCallback& browse);
-};
 
 GtkLabel* DialogLabel_new (const std::string& name);
 GtkTable* DialogRow_new (const std::string& name, GtkWidget* widget);

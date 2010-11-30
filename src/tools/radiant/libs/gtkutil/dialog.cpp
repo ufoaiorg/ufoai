@@ -188,24 +188,6 @@ GtkWindow* create_simple_modal_dialog_window (const std::string& title, ModalDia
 	return window;
 }
 
-RadioHBox RadioHBox_new (StringArrayRange names)
-{
-	GtkHBox* hbox = GTK_HBOX(gtk_hbox_new(TRUE, 4));
-	gtk_widget_show(GTK_WIDGET(hbox));
-
-	GSList* group = 0;
-	GtkRadioButton* radio = 0;
-	for (StringArrayRange::Iterator i = names.first; i != names.last; ++i) {
-		radio = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(group, *i));
-		gtk_widget_show(GTK_WIDGET(radio));
-		gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(radio), FALSE, FALSE, 0);
-
-		group = gtk_radio_button_get_group(radio);
-	}
-
-	return RadioHBox(hbox, radio);
-}
-
 PathEntry PathEntry_new ()
 {
 	GtkFrame* frame = GTK_FRAME(gtk_frame_new(NULL));
@@ -230,23 +212,6 @@ PathEntry PathEntry_new ()
 	gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(hbox));
 
 	return PathEntry(frame, entry, button);
-}
-
-void PathEntry_setPath (PathEntry& self, std::string path)
-{
-	gtk_entry_set_text(self.m_entry, path.c_str());
-}
-typedef ReferenceCaller1<PathEntry, std::string, PathEntry_setPath> PathEntrySetPathCaller;
-
-void BrowsedPathEntry_clicked (GtkWidget* widget, BrowsedPathEntry* self)
-{
-	self->m_browse(PathEntrySetPathCaller(self->m_entry));
-}
-
-BrowsedPathEntry::BrowsedPathEntry (const BrowseCallback& browse) :
-	m_entry(PathEntry_new()), m_browse(browse)
-{
-	g_signal_connect(G_OBJECT(m_entry.m_button), "clicked", G_CALLBACK(BrowsedPathEntry_clicked), this);
 }
 
 GtkLabel* DialogLabel_new (const std::string& name)
