@@ -686,7 +686,7 @@ static int RT_FillPassageData (routing_t * map, const actorSizeEnum_t actorSize,
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
-static trace_t RT_ObstructedTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, actorSizeEnum_t actorSize, int hi, int lo, const char **list)
+static trace_t RT_ObstructedTrace (RT_data_t *rtd, const vec3_t start, const vec3_t end, actorSizeEnum_t actorSize, int hi, int lo, const char **list)
 {
 	box_t box; /**< Tracing box extents */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -696,7 +696,7 @@ static trace_t RT_ObstructedTrace (mapTiles_t *mapTiles, const vec3_t start, con
 	VectorSet(box.mins, -halfActorWidth, -halfActorWidth, QuantToModel(lo)  + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
-	return RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, start, end, &box, list);
+	return RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, start, end, &box, list);
 }
 
 
@@ -709,7 +709,7 @@ static trace_t RT_ObstructedTrace (mapTiles_t *mapTiles, const vec3_t start, con
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloorFrac (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const float frac, const int startingHeight, const char **list)
+static int RT_FindOpeningFloorFrac (RT_data_t *rtd, const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const float frac, const int startingHeight, const char **list)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */	/**< Tracing box extents */
 	trace_t tr;
@@ -721,7 +721,7 @@ static int RT_FindOpeningFloorFrac (mapTiles_t *mapTiles, const vec3_t start, co
 	mstart[2] = QuantToModel(startingHeight) + (QUANT / 2); /* Set at the starting height, plus a little more to keep us off a potential surface. */
 	mend[2] = -QUANT;  /* Set below the model. */
 
-	tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, mstart, mend, box, list);
+	tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, mstart, mend, box, list);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -742,7 +742,7 @@ static int RT_FindOpeningFloorFrac (mapTiles_t *mapTiles, const vec3_t start, co
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeilingFrac (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const float frac, const int startingHeight, const char **list)
+static int RT_FindOpeningCeilingFrac (RT_data_t *rtd, const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const float frac, const int startingHeight, const char **list)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
@@ -754,7 +754,7 @@ static int RT_FindOpeningCeilingFrac (mapTiles_t *mapTiles, const vec3_t start, 
 	mstart[2] = QuantToModel(startingHeight) - (QUANT / 2); /* Set at the starting height, minus a little more to keep us off a potential surface. */
 	mend[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT + QUANT;  /* Set above the model. */
 
-	tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, mstart, mend, box, list);
+	tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, mstart, mend, box, list);
 
 	if (debugTrace)
 		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
@@ -774,14 +774,14 @@ static int RT_FindOpeningCeilingFrac (mapTiles_t *mapTiles, const vec3_t start, 
  * @param[in] floorLimit The lowest limit of the found floor.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloor (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const int startingHeight, const int floorLimit, const char **list)
+static int RT_FindOpeningFloor (RT_data_t *rtd, const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const int startingHeight, const int floorLimit, const char **list)
 {
 	/* Look for additional space below init_bottom, down to lowest_bottom. */
 	int midfloor;
 
 	if (start[0] == end[0] || start[1] == end[1]) {
 		/* For orthogonal dirs, find the height at the midpoint. */
-		midfloor = RT_FindOpeningFloorFrac(mapTiles, start, end, actorSize, 0.5, startingHeight, list);
+		midfloor = RT_FindOpeningFloorFrac(rtd, start, end, actorSize, 0.5, startingHeight, list);
 		if (debugTrace)
 			Com_Printf("midfloor:%i.\n", midfloor);
 	} else {
@@ -789,12 +789,12 @@ static int RT_FindOpeningFloor (mapTiles_t *mapTiles, const vec3_t start, const 
 
 		/* If this is diagonal, trace the 1/3 and 2/3 points instead. */
 		/* 1/3 point */
-		midfloor = RT_FindOpeningFloorFrac(mapTiles, start, end, actorSize, 0.33, startingHeight, list);
+		midfloor = RT_FindOpeningFloorFrac(rtd, start, end, actorSize, 0.33, startingHeight, list);
 		if (debugTrace)
 			Com_Printf("1/3floor:%i.\n", midfloor);
 
 		/* 2/3 point */
-		midfloor2 = RT_FindOpeningFloorFrac(mapTiles, start, end, actorSize, 0.66, startingHeight, list);
+		midfloor2 = RT_FindOpeningFloorFrac(rtd, start, end, actorSize, 0.66, startingHeight, list);
 		if (debugTrace)
 			Com_Printf("2/3floor:%i.\n", midfloor2);
 		midfloor = max(midfloor, midfloor2);
@@ -814,13 +814,13 @@ static int RT_FindOpeningFloor (mapTiles_t *mapTiles, const vec3_t start, const 
  * @param[in] ceilLimit The highest the ceiling may be.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeiling (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const int startingHeight, const int ceilLimit, const char **list)
+static int RT_FindOpeningCeiling (RT_data_t *rtd, const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const int startingHeight, const int ceilLimit, const char **list)
 {
 	int midceil;
 
 	if (start[0] == end[0] || start[1] == end[1]) {
 		/* For orthogonal dirs, find the height at the midpoint. */
-		midceil = RT_FindOpeningCeilingFrac(mapTiles, start, end, actorSize, 0.5, startingHeight, list);
+		midceil = RT_FindOpeningCeilingFrac(rtd, start, end, actorSize, 0.5, startingHeight, list);
 		if (debugTrace)
 			Com_Printf("midceil:%i.\n", midceil);
 	} else {
@@ -828,12 +828,12 @@ static int RT_FindOpeningCeiling (mapTiles_t *mapTiles, const vec3_t start, cons
 
 		/* If this is diagonal, trace the 1/3 and 2/3 points instead. */
 		/* 1/3 point */
-		midceil = RT_FindOpeningCeilingFrac(mapTiles, start, end, actorSize, 0.33, startingHeight, list);
+		midceil = RT_FindOpeningCeilingFrac(rtd, start, end, actorSize, 0.33, startingHeight, list);
 		if (debugTrace)
 			Com_Printf("1/3ceil:%i.\n", midceil);
 
 		/* 2/3 point */
-		midceil2 = RT_FindOpeningCeilingFrac(mapTiles, start, end, actorSize, 0.66, startingHeight, list);
+		midceil2 = RT_FindOpeningCeilingFrac(rtd, start, end, actorSize, 0.66, startingHeight, list);
 		if (debugTrace)
 			Com_Printf("2/3ceil:%i.\n", midceil2);
 		midceil = min(midceil, midceil2);
@@ -887,12 +887,12 @@ static int RT_CalcNewZ (const routing_t * map, const actorSizeEnum_t actorSize, 
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_TraceOpening (mapTiles_t *mapTiles, const routing_t * map, const actorSizeEnum_t actorSize, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val, const char **list)
+static int RT_TraceOpening (RT_data_t *rtd, const routing_t * map, const actorSizeEnum_t actorSize, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val, const char **list)
 {
-	trace_t tr = RT_ObstructedTrace(mapTiles, start, end, actorSize, hi, lo, list);
+	trace_t tr = RT_ObstructedTrace(rtd, start, end, actorSize, hi, lo, list);
 	if (tr.fraction >= 1.0) {
-		lo = RT_FindOpeningFloor(mapTiles, start, end, actorSize, lo, bottom, list);
-		hi = RT_FindOpeningCeiling(mapTiles, start, end, actorSize, hi, top, list);
+		lo = RT_FindOpeningFloor(rtd, start, end, actorSize, lo, bottom, list);
+		hi = RT_FindOpeningCeiling(rtd, start, end, actorSize, hi, top, list);
 		if (hi - lo >= PATHFINDING_MIN_OPENING) {
 			int temp_z;
 			if (lo == -1) {
@@ -998,7 +998,7 @@ static int RT_FindOpening (RT_data_t *rtd, const routing_t * map, const actorSiz
 		const int hi = bottom + PATHFINDING_MIN_OPENING;
 		if (debugTrace)
 			Com_Printf("Tracing closed space from %i to %i.\n", bottom, top);
-		temp_z = RT_TraceOpening(rtd->mapTiles, map, actorSize, start, end, ax, ay, hifloor, top, lo, hi, lo_val, hi_val, list);
+		temp_z = RT_TraceOpening(rtd, map, actorSize, start, end, ax, ay, hifloor, top, lo, hi, lo_val, hi_val, list);
 	} else {
 		/* There is no "guaranteed" opening, brute force search. */
 		int lo = bottom;
@@ -1007,7 +1007,7 @@ static int RT_FindOpening (RT_data_t *rtd, const routing_t * map, const actorSiz
 			/* Check for a 1 QUANT opening. */
 			if (debugTrace)
 				Com_Printf("Tracing open space from %i.\n", lo);
-			temp_z = RT_TraceOpening(rtd->mapTiles, map, actorSize, start, end, ax, ay, bottom, top, lo, lo + 1, lo_val, hi_val, list);
+			temp_z = RT_TraceOpening(rtd, map, actorSize, start, end, ax, ay, bottom, top, lo, lo + 1, lo_val, hi_val, list);
 			if (temp_z != RT_NO_OPENING)
 				break;
 			/* Credit to Duke: We skip the minimum opening, as if there is a
