@@ -857,6 +857,7 @@ void LE_PlaceItem (le_t *le)
  * @param[in] muzzle starting/location vector
  * @param[in] v0 velocity vector
  * @param[in] dt delta seconds
+ * @param[in] leVictim The actor the grenade is thrown at (not yet supported)
  */
 void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim)
 {
