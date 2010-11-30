@@ -347,6 +347,12 @@ void ShaderSelector::displayShaderInfo(IShader* shader, GtkListStore* listStore)
 		0, (std::string("<b>") + _("Shader") + "</b>").c_str(),
 		1, shader->getName().c_str(),
 		-1);
+
+	gtk_list_store_append(listStore, &iter);
+	gtk_list_store_set(listStore, &iter,
+		0, (std::string("<b>") + _("Compatible license") + "</b>").c_str(),
+		1, shader->isValid() ? _("yes") : _("no"),
+		-1);
 }
 
 // Callback for selection changed
