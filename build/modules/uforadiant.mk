@@ -41,6 +41,7 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/undo/RadiantUndoSystem.cpp \
 	$(RADIANT_BASE)/radiant/undo/RadiantUndoSystemModule.cpp \
+	$(RADIANT_BASE)/radiant/undo/UndoStateTracker.cpp \
 	\
 	$(RADIANT_BASE)/radiant/material/LicenseParser.cpp \
 	$(RADIANT_BASE)/radiant/material/MaterialModule.cpp \

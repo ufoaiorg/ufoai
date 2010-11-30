@@ -854,6 +854,8 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\undo\SnapShot.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\undo\Stack.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\undo\StackFiller.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\undo\UndoStateTracker.cpp" />
+		<Unit filename="..\..\src\tools\radiant\radiant\undo\UndoStateTracker.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\url.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\url.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\windowobservers.cpp" />
