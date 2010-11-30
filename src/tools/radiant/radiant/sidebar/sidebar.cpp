@@ -111,7 +111,7 @@ void Sidebar::constructEntityInspector ()
 
 void Sidebar::constructSurfaceInspector ()
 {
-	GtkWidget *pageSurfaceInspector = GlobalSurfaceInspector().buildNotebook();
+	GtkWidget *pageSurfaceInspector = ui::SurfaceInspector::Instance().getWidget();
 	addWidget(_("_Surfaces"), pageSurfaceInspector);
 }
 

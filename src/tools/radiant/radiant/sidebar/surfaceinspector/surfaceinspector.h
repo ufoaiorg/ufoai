@@ -1,212 +1,214 @@
-/*
- Copyright (C) 1999-2006 Id Software, Inc. and contributors.
- For a list of contributors, see the accompanying CONTRIBUTORS file.
+#ifndef SURFACEINSPECTOR_H_
+#define SURFACEINSPECTOR_H_
 
- This file is part of GtkRadiant.
-
- GtkRadiant is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- GtkRadiant is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with GtkRadiant; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
-
-#if !defined(INCLUDED_SURFACEDIALOG_H)
-#define INCLUDED_SURFACEDIALOG_H
-
-#include "iregistry.h"
-#include "preferencesystem.h"
-
-#include <gtk/gtk.h>
-#include "selectable.h"
-
-#include "iscenegraph.h"
-#include "iundo.h"
+#include <map>
 #include "iselection.h"
-#include "ieventmanager.h"
-
-#include "signal/isignal.h"
-
-#include "gtkutil/idledraw.h"
-#include "gtkutil/entry.h"
-#include "gtkutil/nonmodal.h"
-
-#include "../../brush/FaceShader.h"
+#include "iregistry.h"
+#include "gtkutil/RegistryConnector.h"
+#include "gtkutil/TextPanel.h"
+#include "../../ui/common/ShaderChooser.h"
 #include "../../brush/ContentsFlagsValue.h"
-#include "../../brush/FaceInstance.h"
-#include "../../brush/TexDef.h"
-#include "../../brush/TextureProjection.h"
 
-class Increment
+// Forward declarations to decrease compile times
+typedef struct _GtkSpinButton GtkSpinButton;
+typedef struct _GtkEditable GtkEditable;
+typedef struct _GtkTable GtkTable;
+typedef struct _GtkWidget GtkWidget;
+typedef struct _GtkCheckButton GtkCheckButton;
+namespace gtkutil {
+class ControlButton;
+}
+
+namespace ui {
+
+class SurfaceInspector: public RegistryKeyObserver,
+		public SelectionSystem::Observer,
+		public ShaderChooser::ChooserClient
 {
-	private:
-		void spin_button_set_step (GtkSpinButton* spin, gfloat step)
+		// The actual dialog window
+		GtkWidget* _dialogVBox;
+
+		typedef gtkutil::ControlButton* ControlButtonPtr;
+
+		struct ManipulatorRow
 		{
-			GtkAdjustment* adjustment = gtk_spin_button_get_adjustment(spin);
-			adjustment->step_increment = step;
-			gtk_adjustment_changed(adjustment);
-		}
+				GtkWidget* hbox;
+				GtkWidget* label;
+				GtkWidget* value;
+				gulong valueChangedHandler;
+				ControlButtonPtr smaller;
+				ControlButtonPtr larger;
+				GtkWidget* step;
+				GtkWidget* steplabel;
+		};
 
-		float& m_f;
-	public:
-		GtkSpinButton* m_spin;
-		GtkEntry* m_entry;
-		Increment (float& f) :
-			m_f(f), m_spin(0), m_entry(0)
-		{
-		}
-		void cancel (void)
-		{
-			entry_set_float(m_entry, m_f);
-		}
-		typedef MemberCaller<Increment, &Increment::cancel> CancelCaller;
-		void apply (void)
-		{
-			m_f = static_cast<float> (entry_get_float(m_entry));
-			spin_button_set_step(m_spin, m_f);
-		}
-		typedef MemberCaller<Increment, &Increment::apply> ApplyCaller;
-};
-
-typedef Callback3<std::string&, TextureProjection&, ContentsFlagsValue&> GetTextureCallback;
-typedef Callback3<const std::string&, const TextureProjection&, const ContentsFlagsValue&> SetTextureCallback;
-
-class SurfaceInspector: public RegistryKeyObserver, public PreferenceConstructor
-{
-	private:
-		Vector2 _shift;
-		Vector2 _scale;
-		float _rotate;
-
-		// TODO: remove me - use the radiant shutdown listener
-		bool _shutdown;
-
-		bool _snapTToGrid;
-
-		std::string _selectedShader;
-		TextureProjection _selectedTexdef;
-		ContentsFlagsValue _selectedFlags;
-		size_t _selectedShaderSize[2];
-
-		NonModalEntry _textureEntry;
-		NonModalSpinner _hshiftSpinner;
-		NonModalEntry _hshiftEntry;
-		NonModalSpinner _vshiftSpinner;
-		NonModalEntry _vshiftEntry;
-		NonModalSpinner _hscaleSpinner;
-		NonModalEntry _hscaleEntry;
-		NonModalSpinner _vscaleSpinner;
-		NonModalEntry _vscaleEntry;
-		NonModalSpinner _rotateSpinner;
-		NonModalEntry _rotateEntry;
-
-		IdleDraw _idleDraw;
+		// This are the named manipulator rows (shift, scale, rotation, etc)
+		typedef std::map<std::string, ManipulatorRow> ManipulatorMap;
+		ManipulatorMap _manipulators;
 
 		GtkCheckButton* _surfaceFlags[32];
-		GtkFrame* _surfaceFlagsFrame;
 		GtkCheckButton* _contentFlags[32];
-		GtkFrame* _contentFlagsFrame;
 
-		bool _textureSelectionDirty;
+		// The "shader" entry field
+		GtkWidget* _shaderEntry;
+		GtkWidget* _selectShaderButton;
 
-		NonModalEntry _valueEntry;
-		GtkEntry* _valueEntryWidget;
-		bool _valueInconsistent; // inconsistent marker for valueEntryWidget
+		ContentsFlagsValue _selectedFlags;
 
-		// Dialog Data
-		float _fitHorizontal;
-		float _fitVertical;
+		struct FitTextureWidgets
+		{
+				GtkWidget* hbox;
+				GtkObject* widthAdj;
+				GtkObject* heightAdj;
+				GtkWidget* width;
+				GtkWidget* height;
+				GtkWidget* button;
+				GtkWidget* label;
+		} _fitTexture;
 
-		Increment _hshiftIncrement;
-		Increment _vshiftIncrement;
-		Increment _hscaleIncrement;
-		Increment _vscaleIncrement;
-		Increment _rotateIncrement;
-		// TODO: Use gtkutil::TextPanel
-		GtkEntry* _texture;
+		struct FlipTextureWidgets
+		{
+				GtkWidget* hbox;
+				GtkWidget* flipX;
+				GtkWidget* flipY;
+				GtkWidget* label;
+		} _flipTexture;
+
+		struct ApplyTextureWidgets
+		{
+				GtkWidget* hbox;
+				GtkWidget* label;
+				GtkWidget* natural;
+		} _applyTex;
+
+		GtkWidget* _defaultTexScale;
+		GtkWidget* _texLockButton;
+
+		gtkutil::TextPanel _valueEntryWidget;
+		bool _valueInconsistent;
+
+		// To avoid key changed loopbacks when the registry is updated
+		bool _callbackActive;
+
+		// This member takes care of importing/exporting Registry
+		// key values from and to widgets
+		gtkutil::RegistryConnector _connector;
+
+		// A reference to the SelectionInfo structure (with the counters)
+		const SelectionInfo& _selectionInfo;
 
 	public:
+
+		// Constructor
 		SurfaceInspector ();
 
-		void shutdown (void);
+		/** Connect and updates the widgets
+		 */
+		void init ();
+
+		/** greebo: Some sort of "soft" destructor that de-registers
+		 * this class from the SelectionSystem, etc.
+		 */
+		void shutdown ();
+
+		/** greebo: Contains the static instance of this dialog.
+		 * Constructs the instance and calls toggle() when invoked.
+		 */
+		static SurfaceInspector& Instance ();
+
+		/** greebo: Gets called when the default texscale registry key changes
+		 */
+		void keyChanged (const std::string&, const std::string&);
+
+		/** greebo: SelectionSystem::Observer implementation. Gets called by
+		 * the SelectionSystem upon selection change to allow updating of the
+		 * texture properties.
+		 */
+		void selectionChanged ();
+
+		// Updates the widgets
 		void update ();
 
-		GtkWidget* buildNotebook ();
+		/** greebo: Gets called upon shader selection change (during ShaderChooser display)
+		 */
+		void shaderSelectionChanged (const std::string& shaderName);
 
-		void registerCommands (void);
+		GtkWidget* getWidget ();
 
+		// Executes the fit command for the selection
 		void fitTexture ();
-		void flipTextureX ();
-		void flipTextureY ();
-
-		float getRotate () const;
-		const Vector2& getScale () const;
-		const Vector2& getShift () const;
-
-		void constructPreferencePage (PreferenceGroup& group);
-		void keyChanged (const std::string& changedKey, const std::string& newValue);
 
 	private:
+		/** greebo: Creates a row consisting of label, value entry,
+		 * two arrow buttons and a step entry field.
+		 *
+		 * @table: the GtkTable the row should be packed into.
+		 * @row: the target row number (first table row = 0).
+		 *
+		 * @returns: the structure containing the widget pointers.
+		 */
+		ManipulatorRow createManipulatorRow (const std::string& label, GtkTable* table, int row, bool vertical);
 
-		void queueDraw (void);
+		const std::string& getContentFlagName (std::size_t bit) const;
 
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::update> UpdateCaller;
-		void applyShader ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::applyShader> ApplyShaderCaller;
-		void applyTexdef ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::applyTexdef> ApplyTexdefCaller;
+		const std::string& getSurfaceFlagName (std::size_t bit) const;
+
+		// Adds all the widgets to the window
+		void populateWindow ();
+
+		// Connect IEvents to the widgets
+		void connectEvents ();
+
+		// Updates the content- and surfaceflags
+		void updateFlags ();
+
+		// Updates the texture shift/scale/rotation fields
+		void updateTexDef ();
+
+		// The counter-part of updateTexDef() - emits the TexCoords to the selection
+		void emitTexDef ();
+
+		// Applies the entered shader to the current selection
+		void emitShader ();
+
 		void applyFlags ();
-		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::applyFlags> ApplyFlagsCaller;
 
 		void updateFlagButtons ();
 
-		void gridChange ();
-
-		void setSelectedShader (const std::string& shader);
-		const std::string& getSelectedShader (void);
-
-		void setSelectedTexdef (const TextureProjection& projection);
-		const TextureProjection& getSelectedTexdef (void);
-
-		void setSelectedFlags (const ContentsFlagsValue& flags);
-		const ContentsFlagsValue& getSelectedFlags (void);
-
-		// Fills the surface inspector with values of the current selected brush(es) or face(s)
-		void setValuesFromSelected (void);
-
 		void setFlagsForSelected (const ContentsFlagsValue& flags);
 
-		const std::string& getContentFlagName (std::size_t bit) const;
-		const std::string& getSurfaceFlagName (std::size_t bit) const;
+		// Saves the connected widget content into the registry
+		void saveToRegistry ();
 
-		void doSnapTToGrid (float hscale, float vscale);
+		// The callback when the "select shader" button is pressed, opens the ShaderChooser dialog
+		static void onShaderSelect (GtkWidget* button, SurfaceInspector* self);
 
-		guint togglebutton_connect_toggled (GtkToggleButton* button);
+		// The callback for the delete event (toggles the visibility)
+		static gboolean onDelete (GtkWidget* widget, GdkEvent* event, SurfaceInspector* self);
 
-		void updateSelection (void);
-		void selectionChanged (const Selectable& selectable);
-		void toggleTexTool ();
+		// Gets called when the step entry fields get changed
+		static void onStepChanged (GtkEditable* editable, SurfaceInspector* self);
 
-		// Gtk callbacks
-		static void onValueToggle (GtkWidget *widget, SurfaceInspector *inspector);
-		static void onMatchGridClick (GtkWidget *widget, SurfaceInspector *inspector);
-		static void onAxialClick (GtkWidget *widget, SurfaceInspector *inspector);
-		static void onFaceFitClick (GtkWidget *widget, SurfaceInspector *inspector);
-		static void onApplyFlagsToggle (GtkWidget *widget, SurfaceInspector *inspector);
-};
+		// Gets called when the value entry field is changed (shift/scale/rotation) - emits the texcoords
+		static gboolean onDefaultScaleChanged (GtkSpinButton* spinbutton, SurfaceInspector* self);
 
-inline SurfaceInspector& GlobalSurfaceInspector (void)
-{
-	static SurfaceInspector _surfaceInspector;
-	return _surfaceInspector;
-}
+		// The callback for the Fit Texture button
+		static gboolean onFit (GtkWidget* widget, SurfaceInspector* self);
+		static gboolean doUpdate (GtkWidget* widget, SurfaceInspector* self);
 
-#endif
+		// the callback for the surface flag value
+		static void onValueToggle (GtkWidget *widget, SurfaceInspector *self);
+
+		// the callback for the flags toggle
+		static void onApplyFlagsToggle (GtkWidget *activatedWidget, SurfaceInspector *self);
+
+		// The keypress handler for catching the Enter key when in the shader entry field
+		static gboolean onKeyPress (GtkWidget* entry, GdkEventKey* event, SurfaceInspector* self);
+
+		// The keypress handler for catching the Enter key when in the value entry fields
+		static gboolean onValueKeyPress (GtkWidget* entry, GdkEventKey* event, SurfaceInspector* self);
+}; // class SurfaceInspector
+
+} // namespace ui
+
+#endif /*SURFACEINSPECTOR_H_*/

@@ -91,7 +91,6 @@
 #include "sidebar/sidebar.h"
 #include "sidebar/MapInfo.h"
 #include "sidebar/texturebrowser.h"
-#include "sidebar/surfaceinspector/surfaceinspector.h"
 
 #include "modulesystem/modulesmap.h"
 #include "modulesystem/singletonmodule.h"
@@ -267,7 +266,6 @@ class Radiant
 			GlobalMap().Construct();
 			sidebar::MapInfo_Construct();
 			MainFrame_Construct();
-			GlobalSurfaceInspector().registerCommands();
 			GlobalCamera().construct();
 			GlobalXYWnd().construct();
 			GlobalMaterialSystem()->construct();

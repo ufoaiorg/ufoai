@@ -159,7 +159,7 @@ void pasteShader (SelectionTest& test, bool entireBrush)
 
 	SceneChangeNotify();
 	// Update the Texture Tools
-	GlobalSurfaceInspector().update();
+	ui::SurfaceInspector::Instance().update();
 }
 
 /** greebo: This applies the clipboard to the visited faces.
@@ -199,7 +199,7 @@ void pasteShaderToSelection ()
 
 	SceneChangeNotify();
 	// Update the Texture Tools
-	GlobalSurfaceInspector().update();
+	ui::SurfaceInspector::Instance().update();
 }
 
 void pasteShaderNaturalToSelection ()
@@ -221,7 +221,7 @@ void pasteShaderNaturalToSelection ()
 
 	SceneChangeNotify();
 	// Update the Texture Tools
-	GlobalSurfaceInspector().update();
+	ui::SurfaceInspector::Instance().update();
 }
 
 void pickShaderFromSelection ()

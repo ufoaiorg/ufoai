@@ -3,7 +3,7 @@
 #include "gtkutil/IconTextMenuItem.h"
 
 #include "iselection.h"
-#include "../../sidebar/surfaceinspector/surfaceinspector.h" // GlobalSurfaceInspector()
+#include "../../sidebar/surfaceinspector/surfaceinspector.h"
 #include "../../entity/entity.h" // Entity_createFromSelection()
 #include "gtkutil/dialog.h"
 #include "../../map/map.h"
@@ -164,7 +164,7 @@ namespace ui
 
 	void OrthoContextMenu::callbackFitTexture (GtkMenuItem* item, OrthoContextMenu* self)
 	{
-		GlobalSurfaceInspector().fitTexture();
+		ui::SurfaceInspector::Instance().fitTexture();
 	}
 
 	void OrthoContextMenu::callbackFlipXTexture (GtkMenuItem* item, OrthoContextMenu* self)

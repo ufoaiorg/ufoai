@@ -72,20 +72,21 @@
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
 #include "modulesystem/moduleregistry.h"
-
+#include "stacktrace.h"
 #include "gtkutil/messagebox.h"
+
 #include "log/console.h"
 #include "sidebar/texturebrowser.h"
+#include "sidebar/surfaceinspector/surfaceinspector.h"
 #include "map/map.h"
-#include "mainframe.h"
 #include "settings/PreferenceDialog.h"
-#include "environment.h"
-#include "referencecache/referencecache.h"
-#include "stacktrace.h"
 #include "settings/GameManager.h"
+#include "referencecache/referencecache.h"
 #include "ui/mru/MRU.h"
 #include "ui/splash/Splash.h"
 #include "server.h"
+#include "mainframe.h"
+#include "environment.h"
 
 #include <gtk/gtk.h>
 #include <gtk/gtkgl.h>
@@ -425,6 +426,8 @@ int main (int argc, char* argv[])
 	Radiant_Initialise();
 
 	g_pParentWnd = new MainFrame();
+
+	ui::SurfaceInspector::Instance().init();
 
 	ui::Splash::Instance().hide();
 

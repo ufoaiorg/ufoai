@@ -6,6 +6,7 @@
 
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtktoolbutton.h>
+#include "gtk/gtkbutton.h"
 #include <gdk/gdk.h>
 
 #include "Event.h"
@@ -14,33 +15,35 @@
  *
  * Trigger the command via the execute() method (usually done by the associated accelerator).
  *
- * Connect the command to a GtkToolButton or a GtkMenuItem via the connectWidget method.
+ * Connect the command to a GtkToolButton / GtkButton / GtkMenuItem via the connectWidget method.
  */
-class Command :
-	public Event
+class Command: public Event
 {
-	// The callback to be performed on execute()
-	Callback _callback;
+		// The callback to be performed on execute()
+		Callback _callback;
 
-public:
-	Command(const Callback& callback);
+	public:
+		Command (const Callback& callback);
 
-	virtual ~Command() {}
+		virtual ~Command ()
+		{
+		}
 
-	// Invoke the registered callback
-	virtual void execute();
+		// Invoke the registered callback
+		virtual void execute ();
 
-	// Override the derived keyDown method
-	virtual void keyDown();
+		// Override the derived keyDown method
+		virtual void keyDown ();
 
-	// Connect the given menuitem/toolbutton to this Command
-	virtual void connectWidget(GtkWidget* widget);
+		// Connect the given menuitem/toolbutton to this Command
+		virtual void connectWidget (GtkWidget* widget);
 
-private:
+	private:
 
-	// The static GTK callback methods that can be connected to a ToolButton or a MenuItem
-	static gboolean onToolButtonPress(GtkToolButton* toolButton, gpointer data);
-	static gboolean onMenuItemClicked(GtkMenuItem* menuitem, gpointer data);
+		// The static GTK callback methods that can be connected to a ToolButton or a MenuItem
+		static gboolean onButtonPress (GtkButton* button, gpointer data);
+		static gboolean onToolButtonPress (GtkToolButton* toolButton, gpointer data);
+		static gboolean onMenuItemClicked (GtkMenuItem* menuitem, gpointer data);
 
 }; // class Command
 

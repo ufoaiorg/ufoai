@@ -175,9 +175,8 @@ class VFSModuleObserver: public ModuleObserver
 
 VFSModuleObserver g_VFSModuleObserver;
 
-namespace
-{
-	ModuleObservers g_gameModeObservers;
+namespace {
+ModuleObservers g_gameModeObservers;
 }
 
 void Radiant_attachGameModeObserver (ModuleObserver& observer)
@@ -237,7 +236,7 @@ void Radiant_Shutdown (void)
 
 	GlobalMRU().saveRecentFiles();
 
-	GlobalSurfaceInspector().shutdown();
+	ui::SurfaceInspector::Instance().shutdown();
 
 	g_VFSModuleObserver.unrealise();
 	Environment::Instance().setMapsPath("");
@@ -402,7 +401,7 @@ void ToggleEntityMode ()
 	ModeChangeNotify();
 }
 
-void ToggleEdgeMode()
+void ToggleEdgeMode ()
 {
 	if (EdgeMode()) {
 		SelectionSystem_DefaultMode();
@@ -420,11 +419,11 @@ void ToggleEdgeMode()
 	ModeChangeNotify();
 }
 
-void ToggleVertexMode()
+void ToggleVertexMode ()
 {
 	if (VertexMode()) {
 		SelectionSystem_DefaultMode();
-	} else if(GlobalSelectionSystem().countSelected() != 0) {
+	} else if (GlobalSelectionSystem().countSelected() != 0) {
 		if (!g_currentToolModeSupportsComponentEditing) {
 			g_defaultToolMode();
 		}
@@ -438,7 +437,7 @@ void ToggleVertexMode()
 	ModeChangeNotify();
 }
 
-void ToggleFaceMode()
+void ToggleFaceMode ()
 {
 	if (FaceMode()) {
 		SelectionSystem_DefaultMode();
@@ -555,10 +554,13 @@ void Selection_NudgeRight (void)
 	NudgeSelection(eNudgeRight, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
-void ToolChanged() {
+void ToolChanged ()
+{
 	GlobalEventManager().setToggled("ToggleClipper", GlobalClipper().clipMode());
-	GlobalEventManager().setToggled("MouseTranslate", GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eTranslate);
-	GlobalEventManager().setToggled("MouseRotate", GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eRotate);
+	GlobalEventManager().setToggled("MouseTranslate", GlobalSelectionSystem().ManipulatorMode()
+			== SelectionSystem::eTranslate);
+	GlobalEventManager().setToggled("MouseRotate", GlobalSelectionSystem().ManipulatorMode()
+			== SelectionSystem::eRotate);
 	GlobalEventManager().setToggled("MouseScale", GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eScale);
 	GlobalEventManager().setToggled("MouseDrag", GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eDrag);
 }
@@ -767,20 +769,19 @@ static WaitDialog create_wait_dialog (const std::string& title, const std::strin
 	return dialog;
 }
 
-namespace
-{
-	clock_t g_lastRedrawTime = 0;
-	const clock_t c_redrawInterval = clock_t(CLOCKS_PER_SEC / 10);
+namespace {
+clock_t g_lastRedrawTime = 0;
+const clock_t c_redrawInterval = clock_t(CLOCKS_PER_SEC / 10);
 
-	bool redrawRequired (void)
-	{
-		clock_t currentTime = std::clock();
-		if (currentTime - g_lastRedrawTime >= c_redrawInterval) {
-			g_lastRedrawTime = currentTime;
-			return true;
-		}
-		return false;
+bool redrawRequired (void)
+{
+	clock_t currentTime = std::clock();
+	if (currentTime - g_lastRedrawTime >= c_redrawInterval) {
+		g_lastRedrawTime = currentTime;
+		return true;
 	}
+	return false;
+}
 }
 
 bool MainFrame_isActiveApp (void)
@@ -1068,12 +1069,11 @@ void MainFrame::Create (void)
 
 	// Connect the window position tracker
 	_windowPosition.loadFromPath(RKEY_WINDOW_STATE);
-	windowState =  string::toInt(GlobalRegistry().getAttribute(RKEY_WINDOW_STATE, "state"));
+	windowState = string::toInt(GlobalRegistry().getAttribute(RKEY_WINDOW_STATE, "state"));
 
 	if (windowState & GDK_WINDOW_STATE_MAXIMIZED) {
 		gtk_window_maximize(window);
-	}
-	else {
+	} else {
 		_windowPosition.connect(window);
 		_windowPosition.applyPosition();
 	}
@@ -1167,7 +1167,7 @@ void MainFrame::Create (void)
 
 	PreferencesDialog_constructWindow(window);
 
-	GlobalGrid().addGridChangeCallback(FreeCaller<XY_UpdateAllWindows>());
+	GlobalGrid().addGridChangeCallback(FreeCaller<XY_UpdateAllWindows> ());
 
 	g_defaultToolMode = DragMode;
 	g_defaultToolMode();
@@ -1211,7 +1211,7 @@ void MainFrame::Shutdown (void)
 
 	delete _sidebar;
 
-	 // Stop the AutoSaver class from being called
+	// Stop the AutoSaver class from being called
 	map::AutoSaver().stopTimer();
 }
 
@@ -1251,9 +1251,8 @@ void Sys_Status (const std::string& status)
 	}
 }
 
-namespace
-{
-	GLFont g_font(0, 0);
+namespace {
+GLFont g_font(0, 0);
 }
 
 void GlobalGL_sharedContextCreated (void)
@@ -1293,14 +1292,14 @@ void GlobalGL_sharedContextDestroyed (void)
 void Layout_constructPreferences (PrefPage* page)
 {
 	const char* layouts[] = { ui::icons::ICON_WINDOW_REGULAR.c_str(), ui::icons::ICON_WINDOW_SPLIT.c_str() };
-	page->appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), IntImportCaller(
-			g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle));
+	page->appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), IntImportCaller(g_Layout_viewStyle),
+			IntExportCaller(g_Layout_viewStyle));
 }
 
 void Layout_constructPage (PreferenceGroup& group)
 {
 	PreferencesPage* page = group.createPage(_("Layout"), _("Layout Preferences"));
-	Layout_constructPreferences(reinterpret_cast<PrefPage*>(page));
+	Layout_constructPreferences(reinterpret_cast<PrefPage*> (page));
 }
 
 void Layout_registerPreferencesPage (void)
@@ -1308,19 +1307,23 @@ void Layout_registerPreferencesPage (void)
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Layout_constructPage> ());
 }
 
-void EditColourScheme() {
+void EditColourScheme ()
+{
 	new ui::ColourSchemeEditor(); // self-destructs in GTK callback
 }
 
 #include "preferencesystem.h"
 #include "stringio.h"
 
-class NullMapCompilerObserver : public ICompilerObserver {
-	void notify (const std::string &message) {
-	}
+class NullMapCompilerObserver: public ICompilerObserver
+{
+		void notify (const std::string &message)
+		{
+		}
 };
 
-void ToolsCompile () {
+void ToolsCompile ()
+{
 	if (!GlobalMap().askForSave(_("Compile Map")))
 		return;
 
@@ -1338,7 +1341,8 @@ void ToolsCompile () {
 	}
 }
 
-void ToolsCheckErrors () {
+void ToolsCheckErrors ()
+{
 	if (!GlobalMap().askForSave(_("Check Map")))
 		return;
 
@@ -1351,7 +1355,8 @@ void ToolsCheckErrors () {
 	ui::ErrorCheckDialog::showDialog();
 }
 
-void ToolsGenerateMaterials () {
+void ToolsGenerateMaterials ()
+{
 	if (!GlobalMap().askForSave(_("Generate Materials")))
 		return;
 
@@ -1371,7 +1376,8 @@ void ToolsGenerateMaterials () {
 	}
 }
 
-void FindBrushOrEntity() {
+void FindBrushOrEntity ()
+{
 	new ui::FindBrushDialog;
 }
 
@@ -1398,7 +1404,9 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("SelectInside", FreeCaller<selection::algorithm::selectInside> ());
 	GlobalEventManager().addCommand("SelectTouching", FreeCaller<selection::algorithm::selectTouching> ());
 	GlobalEventManager().addCommand("SelectCompleteTall", FreeCaller<selection::algorithm::selectCompleteTall> ());
-	GlobalEventManager().addCommand("ExpandSelectionToEntities", FreeCaller<selection::algorithm::expandSelectionToEntities> ());
+	GlobalEventManager().addCommand("ExpandSelectionToEntities", FreeCaller<
+			selection::algorithm::expandSelectionToEntities> ());
+	GlobalEventManager().addCommand("TextureNatural", FreeCaller<selection::algorithm::naturalTexture> ());
 	GlobalEventManager().addCommand("Preferences", FreeCaller<PreferencesDialog_showDialog> ());
 
 	GlobalEventManager().addCommand("ShowHidden", FreeCaller<selection::algorithm::showAllHidden> ());
@@ -1407,7 +1415,7 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addToggle("DragVertices", FreeCaller<ToggleVertexMode> ());
 	GlobalEventManager().addToggle("DragEdges", FreeCaller<ToggleEdgeMode> ());
 	GlobalEventManager().addToggle("DragFaces", FreeCaller<ToggleFaceMode> ());
-	GlobalEventManager().addToggle("DragEntities", FreeCaller<ToggleEntityMode>());
+	GlobalEventManager().addToggle("DragEntities", FreeCaller<ToggleEntityMode> ());
 
 	GlobalEventManager().setToggled("DragEntities", false);
 
@@ -1418,7 +1426,7 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("MirrorSelectionZ", FreeCaller<Selection_Flipz> ());
 	GlobalEventManager().addCommand("RotateSelectionZ", FreeCaller<Selection_Rotatez> ());
 
-	GlobalEventManager().addCommand("TransformDialog", FreeCaller<ui::TransformDialog::toggle>());
+	GlobalEventManager().addCommand("TransformDialog", FreeCaller<ui::TransformDialog::toggle> ());
 
 	GlobalEventManager().addCommand("FindBrush", FreeCaller<FindBrushOrEntity> ());
 
@@ -1444,7 +1452,8 @@ void MainFrame_Construct (void)
 
 	GlobalEventManager().addCommand("SelectAllOfType", FreeCaller<selection::algorithm::selectAllOfType> ());
 
-	GlobalEventManager().addCommand("SelectAllFacesOfTex", FreeCaller<selection::algorithm::selectAllFacesWithTexture> ());
+	GlobalEventManager().addCommand("SelectAllFacesOfTex",
+			FreeCaller<selection::algorithm::selectAllFacesWithTexture> ());
 
 	GlobalEventManager().addCommand("TexRotateClock", FreeCaller<selection::algorithm::rotateTextureClock> ());
 	GlobalEventManager().addCommand("TexRotateCounter", FreeCaller<selection::algorithm::rotateTextureCounter> ());
@@ -1464,14 +1473,14 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("SelectNudgeRight", FreeCaller<Selection_NudgeRight> ());
 	GlobalEventManager().addCommand("SelectNudgeUp", FreeCaller<Selection_NudgeUp> ());
 	GlobalEventManager().addCommand("SelectNudgeDown", FreeCaller<Selection_NudgeDown> ());
-	GlobalEventManager().addCommand("EditColourScheme", FreeCaller<EditColourScheme>());
+	GlobalEventManager().addCommand("EditColourScheme", FreeCaller<EditColourScheme> ());
 
 	GlobalEventManager().addCommand("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
 
-	GlobalEventManager().addCommand("EditFiltersDialog", FreeCaller<ui::FilterDialog::showDialog>());
-	GlobalEventManager().addCommand("FindReplaceTextures", FreeCaller<ui::FindAndReplaceShader::showDialog>());
-	GlobalEventManager().addCommand("ShowCommandList", FreeCaller<ShowCommandListDialog>());
-	GlobalEventManager().addCommand("About", FreeCaller<ui::AboutDialog::showDialog>());
+	GlobalEventManager().addCommand("EditFiltersDialog", FreeCaller<ui::FilterDialog::showDialog> ());
+	GlobalEventManager().addCommand("FindReplaceTextures", FreeCaller<ui::FindAndReplaceShader::showDialog> ());
+	GlobalEventManager().addCommand("ShowCommandList", FreeCaller<ShowCommandListDialog> ());
+	GlobalEventManager().addCommand("About", FreeCaller<ui::AboutDialog::showDialog> ());
 	GlobalEventManager().addCommand("BugReport", FreeCaller<OpenBugReportURL> ());
 
 	ui::TexTool::registerCommands();
