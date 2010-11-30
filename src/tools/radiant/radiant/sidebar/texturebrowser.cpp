@@ -972,7 +972,7 @@ GtkWidget* TextureBrowser::createToolBar ()
 				G_CALLBACK(onToggleResizeTextures),
 				this);
 
-		gdk_pixbuf_unref(pixBuf);
+		g_object_unref(pixBuf);
 	}
 
 	return GTK_WIDGET(textureToolbar);

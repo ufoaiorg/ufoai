@@ -44,7 +44,7 @@ GdkPixbuf* pixbuf_new_from_file_with_mask (const std::string& fileName)
 		return 0;
 	} else {
 		GdkPixbuf* rgba = gdk_pixbuf_add_alpha(rgb, TRUE, 255, 0, 255);
-		gdk_pixbuf_unref(rgb);
+		g_object_unref(rgb);
 		return rgba;
 	}
 }

@@ -446,7 +446,7 @@ void MainFrame::Create (void)
 		GdkPixbuf* pixbuf = gtkutil::getLocalPixbuf(ui::icons::ICON);
 		if (pixbuf != 0) {
 			gtk_window_set_icon(window, pixbuf);
-			gdk_pixbuf_unref(pixbuf);
+			g_object_unref(pixbuf);
 		}
 	}
 #endif
