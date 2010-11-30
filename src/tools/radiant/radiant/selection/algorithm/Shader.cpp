@@ -236,14 +236,30 @@ void pickShaderFromSelection ()
 	}
 }
 
+class FaceGetTexdef
+{
+		TextureProjection& m_projection;
+	public:
+		FaceGetTexdef (TextureProjection& projection) :
+			m_projection(projection)
+		{
+		}
+		void operator() (Face& face) const
+		{
+			face.GetTexdef(m_projection);
+		}
+};
+
 TextureProjection getSelectedTextureProjection ()
 {
 	TextureProjection returnValue;
 
-	if (selectedFaceCount() == 1) {
+	if (GlobalSelectionSystem().areFacesSelected()) {
 		// Get the last selected face instance from the global
 		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
 		faceInstance.getFace().GetTexdef(returnValue);
+	} else {
+		Scene_ForEachSelectedBrush_ForEachFace(GlobalSceneGraph(), FaceGetTexdef(returnValue));
 	}
 
 	return returnValue;
