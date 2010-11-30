@@ -142,9 +142,19 @@ class AABB
 			}
 		}
 
+		// Returns true if this AABB contains the other AABB (all dimensions)
+		bool contains (const AABB& other) const
+		{
+			// Return true if all coordinates of <other> are contained within these bounds
+			return (origin[0] + extents[0] >= other.origin[0] + other.extents[0]) && (origin[0] - extents[0]
+					<= other.origin[0] - other.extents[0]) && (origin[1] + extents[1] >= other.origin[1]
+					+ other.extents[1]) && (origin[1] - extents[1] <= other.origin[1] - other.extents[1]) && (origin[2]
+					+ extents[2] >= other.origin[2] + other.extents[2]) && (origin[2] - extents[2] <= other.origin[2]
+					- other.extents[2]);
+		}
+
 		// Check whether the AABB is valid, or if the extents are still uninitialised
 		bool isValid() const {
-
 			bool valid = true;
 
 			// Check each origin and extents value. The origins must be between
