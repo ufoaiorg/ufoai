@@ -102,6 +102,8 @@ class SurfaceInspector: public RegistryKeyObserver,
 		// Constructor
 		SurfaceInspector ();
 
+		~SurfaceInspector ();
+
 		/** Connect and updates the widgets
 		 */
 		void init ();

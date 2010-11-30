@@ -124,6 +124,20 @@ SurfaceInspector::SurfaceInspector () :
 	GlobalEventManager().addCommand("FlipTextureY", FreeCaller<selection::algorithm::flipTextureT> ());
 }
 
+SurfaceInspector::~SurfaceInspector ()
+{
+	delete _manipulators[HSHIFT].larger;
+	delete _manipulators[HSHIFT].smaller;
+	delete _manipulators[VSHIFT].larger;
+	delete _manipulators[VSHIFT].smaller;
+	delete _manipulators[HSCALE].larger;
+	delete _manipulators[HSCALE].smaller;
+	delete _manipulators[VSCALE].larger;
+	delete _manipulators[VSCALE].smaller;
+	delete _manipulators[ROTATION].larger;
+	delete _manipulators[ROTATION].smaller;
+}
+
 void SurfaceInspector::init ()
 {
 	// Update the widget status
@@ -739,7 +753,6 @@ gboolean SurfaceInspector::onValueKeyPress (GtkWidget* entry, GdkEventKey* event
 // The GTK keypress callback
 gboolean SurfaceInspector::onKeyPress (GtkWidget* entry, GdkEventKey* event, SurfaceInspector* self)
 {
-
 	// Check for Enter Key to emit the shader
 	if (event->keyval == GDK_Return) {
 		self->emitShader();
