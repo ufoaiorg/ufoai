@@ -351,6 +351,8 @@ static void remove_local_pid (void)
 	file_remove(g_pidGameFile);
 }
 
+void Commands_Init();
+
 int main (int argc, char* argv[])
 {
 	streams_init();
@@ -427,6 +429,8 @@ int main (int argc, char* argv[])
 	Radiant_Initialise();
 
 	g_pParentWnd = new MainFrame();
+
+	Commands_Init();
 
 	ui::SurfaceInspector::Instance().init();
 
