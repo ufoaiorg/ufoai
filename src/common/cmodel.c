@@ -183,6 +183,7 @@ int32_t CM_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs
 
 /**
  * @brief Checks traces against the world and all inline models
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask
@@ -234,6 +235,7 @@ qboolean CM_EntTestLine (mapTiles_t *mapTiles, const const vec3_t start, const v
 
 /**
  * @brief Checks traces against the world and all inline models, gives the hit position back
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[out] end The position where the line hits a object or the stop position if nothing is in the line
@@ -290,6 +292,7 @@ qboolean CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_
 }
 
 /**
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start trace start vector
  * @param[in] end trace end vector
  * @param[in] mins box mins
@@ -352,6 +355,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 
 /**
  * @brief Performs box traces against the world and all inline models, gives the hit position back
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start The position to start the trace.
  * @param[in] end The position where the trace ends.
  * @param[in] traceBox The minimum/maximum extents of the collision box that is projected.

@@ -793,9 +793,11 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
  * @brief This function recalculates the routing in the box bounded by min and max.
  * @sa CMod_LoadRouting
  * @sa Grid_RecalcRouting
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] map The routing map (either server or client map)
  * @param[in] min The lower extents of the box to recalc routing for
  * @param[in] max The upper extents of the box to recalc routing for
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
 void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t min, const pos3_t max, const char **list)
 {
@@ -854,8 +856,10 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t m
  * @sa CM_UpdateConnection
  * @sa CMod_LoadSubmodels
  * @sa Grid_RecalcBoxRouting
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] map The routing map (either server or client map)
  * @param[in] name Name of the inline model to compute the mins/maxs for
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
 void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name, const char **list)
 {

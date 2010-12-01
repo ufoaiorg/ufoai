@@ -923,6 +923,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
  * @param[in] pos In case you gave more than one tile (Random map assembly [rma]) you also
  * have to provide the positions where those tiles should be placed at.
  * @param[out] mapData The loaded data is stored here.
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  */
@@ -996,6 +997,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *ma
 /**
  * @brief Searches all inline models and return the cBspModel_t pointer for the
  * given modelnumber or -name
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] name The modelnumber (e.g. "*2") for inline brush models [bmodels]
  * @note Inline bmodels are e.g. the brushes that are assoziated with a func_breakable or func_door
  */
@@ -1027,6 +1029,7 @@ cBspModel_t *CM_InlineModel (mapTiles_t *mapTiles, const char *name)
 
 /**
  * @brief This function updates a model's orientation
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] name The name of the model, must include the '*'
  * @param[in] origin The new origin for the model
  * @param[in] angles The new facing angles for the model
