@@ -5066,6 +5066,14 @@ base/textures/pt/x/xbctex001_2a6.png | GNU General Public License 2.0 | MCR
 base/textures/pt/x/xbctex001_2a7.png | GNU General Public License 2.0 | MCR
 base/textures/pt/x/xbctex001_2a8.png | GNU General Public License 2.0 | MCR
 base/textures/pt/x/xbctex001_2a9.png | GNU General Public License 2.0 | MCR
+base/textures/tex_alienb/ab_floor01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_floor01_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_floor01_pls.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_floor01_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_floor02.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_floor02_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_floor02_pls.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_floor02_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_grate.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_grate_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_grate_sm.png | GNU General Public License 2.0 or later | Nate Wright

@@ -2,6 +2,30 @@
 ### Alien Base 2 Material file
 ###
 
+# Floor textures
+{
+	material tex_alienb/ab_floor01
+	specular 1.0
+	hardness 1.0
+	bump 2.0
+	parallax 2.0
+	{
+		texture tex_alienb/ab_floor01_pls
+		pulse 0.2
+	}
+}
+{
+	material tex_alienb/ab_floor02
+	specular 1.0
+	hardness 1.0
+	bump 2.0
+	parallax 2.0
+	{
+		texture tex_alienb/ab_floor02_pls
+		pulse 0.2
+	}
+}
+
 # Grunge pipe metal with chipped paint
 {
 	material tex_alienb/ab_metal01
