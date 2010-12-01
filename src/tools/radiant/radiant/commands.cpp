@@ -763,7 +763,10 @@ void Commands_Register ()
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
+}
 
+void Commands_Init()
+{
 	g_pParentWnd->setDefaultToolMode(DragMode);
 	DragMode();
 	g_pParentWnd->SetStatusText(g_pParentWnd->m_command_status, c_TranslateMode_status);

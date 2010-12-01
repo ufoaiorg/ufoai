@@ -391,6 +391,8 @@ GtkWindow* MainFrame_getWindow (void)
 	return g_pParentWnd->m_window;
 }
 
+void Commands_Init();
+
 MainFrame::MainFrame () :
 	m_window(0), g_currentToolMode(0), g_defaultToolMode(0), m_idleRedrawStatusText(RedrawStatusTextCaller(*this))
 {
@@ -401,6 +403,8 @@ MainFrame::MainFrame () :
 	}
 
 	Create();
+
+	Commands_Init;
 }
 
 MainFrame::~MainFrame (void)
