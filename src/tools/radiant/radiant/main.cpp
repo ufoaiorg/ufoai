@@ -319,13 +319,14 @@ static void create_local_pid (void)
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
-#if !defined(DEBUG)
+#ifndef DEBUG
 		std::string startupFailure = _("UFORadiant failed to start properly the last time it was run.\n"
 				"The failure may be caused by current preferences.\n"
 				"Do you want to reset all preferences to defaults?");
 
 		if (gtk_MessageBox(0, startupFailure, _("UFORadiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
-			Preferences_Reset();
+			// TODO: implement for xml registry
+			//Preferences_Reset();
 		}
 
 		std::string msg = "Logging console output to " + GlobalRegistry().get(RKEY_SETTINGS_PATH)
