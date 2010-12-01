@@ -262,6 +262,7 @@ void RT_DumpWholeMap (mapTiles_t *mapTiles, const routing_t *map)
 /**
  * @brief Calculate the map size via model data and store grid size
  * in map_min and map_max. This is done with every new map load
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[out] map_min The lower extents of the current map.
  * @param[out] map_max The upper extents of the current map.
  * @sa CMod_LoadRouting
@@ -368,11 +369,13 @@ qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, 
  *  found above the current cell will be used.  If there is no ceiling above the cell, the ceiling will
  *  be the top of the model.  This function will also adjust all floor and ceiling values for all cells
  *  between the found floor and ceiling.
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] map The map's routing data
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
  * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] z The z position in the routing arrays (0 - PATHFINDING_HEIGHT-1)
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
@@ -1483,7 +1486,8 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 
 /**
  * @brief Routing Function to update the connection between two fields
- * @param[in] mapTiles Routing field of the current loaded map
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
+ * @param[in] map Routing table of the current loaded map
  * @param[in] actorSize The size of the actor, in units
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
