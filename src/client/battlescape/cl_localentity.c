@@ -1509,6 +1509,7 @@ model_t *LE_GetDrawModel (unsigned int index)
  * @param[in] le The local entity to get the bmodel from
  * @param[out] tile The maptile the bmodel belongs, too
  * @param[out] rmaShift the shift vector in case of an RMA (needed for doors)
+ * @param[out] angles The rotation of the entity (in case of bmodels)
  * @return The headnode for the local entity
  * @sa SV_HullForEntity
  */

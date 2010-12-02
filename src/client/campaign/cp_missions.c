@@ -1256,6 +1256,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 
 /**
  * @brief Check if a stage mission is over when UFO reached destination.
+ * @param[in] campaign The campaign data structure
  * @param[in] ufocraft Pointer to the ufo that reached destination.
  * @sa UFO_CampaignRunUFOs
  * @return True if UFO is removed from global array (and therefore pointer ufocraft can't be used anymore).
@@ -1283,6 +1284,7 @@ qboolean CP_CheckNextStageDestination (const campaign_t* campaign, aircraft_t *u
 
 /**
  * @brief Make UFO proceed with its mission when the fight with another aircraft is over (and UFO survived).
+ * @param[in] campaign The campaign data structure
  * @param[in] ufo Pointer to the ufo that should proceed a mission.
  */
 void CP_UFOProceedMission (const campaign_t* campaign, aircraft_t *ufo)
@@ -1309,6 +1311,7 @@ void CP_UFOProceedMission (const campaign_t* campaign, aircraft_t *ufo)
 
 /**
  * @brief Spawn a new crash site after a UFO has been destroyed.
+ * @param[in,out] ufo The ufo to spawn a crash site mission for
  */
 void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 {
@@ -1431,6 +1434,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 
 /**
  * @brief mission begins: UFO arrive on earth.
+ * @param[in] mission The mission to change the state for
  * @note Stage 0 -- This function is common to several mission category.
  * @sa CP_MissionChooseUFO
  * @return true if mission was created, false else.

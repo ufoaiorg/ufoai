@@ -1907,6 +1907,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 /**
  * @brief Draw the geoscape
  * @param[in] node The map menu node
+ * @param[in,out] campaign The campaign data structure
  * @sa MAP_DrawMapMarkers
  */
 void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)

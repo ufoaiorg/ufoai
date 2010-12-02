@@ -53,6 +53,7 @@ aircraft_t* AIR_GetNext (aircraft_t *lastAircraft)
 /**
  * @brief Iterates through the aircraft of a base
  * @param[in] lastAircraft Pointer of the aircraft to iterate from. call with NULL to get the first one.
+ * @param[in] b The base to get the craft from
  */
 aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 {
@@ -821,6 +822,7 @@ qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
 /**
  * @brief Places a new aircraft in the given base.
  * @param[in] base Pointer to base where aircraft should be added.
+ * @param[in] aircraftTemplate The aircraft template to create the new aircraft from.
  * @sa B_Load
  */
 aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
@@ -1260,6 +1262,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 /**
  * @brief Handles aircraft movement and actions in geoscape mode
  * @sa CL_CampaignRun
+ * @param[in,out] campaign The campaign data structure
  * @param[in] dt time delta (may be 0 if radar overlay should be updated but no aircraft moves)
  * @param[in] updateRadarOverlay True if radar overlay should be updated (not needed if geoscape isn't updated)
  */

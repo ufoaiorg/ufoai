@@ -267,13 +267,14 @@ static uiNode_t* popupListNode;
 
 /**
  * @brief Creates a (text) list of all firemodes of the currently selected actor.
+ * @param[in] le The actor local entity
  * @param[in] popupReload Prevent firemode reservation popup from being closed if
  * no firemode is available because of insufficient TUs.
  * @sa HUD_PopupFiremodeReservation_f
  * @sa HUD_CheckFiremodeReservation
  * @todo use components and confuncs here
  */
-static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
+static void HUD_PopupFiremodeReservation (const le_t *le, qboolean popupReload)
 {
 	actorHands_t hand = ACTOR_HAND_RIGHT;
 	int i;
@@ -281,14 +282,6 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 	int selectedEntry;
 	linkedList_t* popupListText = NULL;
 	reserveShot_t reserveShotData;
-
-	if (!selActor)
-		return;
-
-	if (reset) {
-		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, NULL);
-		return;
-	}
 
 	/* reset the list */
 	UI_ResetData(TEXT_LIST);
@@ -305,8 +298,8 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 	selectedEntry = 0;
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
-		const fireDef_t *fd = HUD_GetFireDefinitionForHand(selActor, hand);
-		character_t* chr = CL_ActorGetChr(selActor);
+		const fireDef_t *fd = HUD_GetFireDefinitionForHand(le, hand);
+		character_t* chr = CL_ActorGetChr(le);
 		assert(chr);
 
 		if (fd) {
@@ -314,7 +307,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 
 			for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
 				const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
-				if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= ammoFD->time) {
+				if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= ammoFD->time) {
 					/* Get firemode name and TUs. */
 					Com_sprintf(text, lengthof(text), _("[%i TU] %s"), ammoFD->time, _(ammoFD->name));
 
@@ -362,9 +355,16 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
  */
 static void HUD_PopupFiremodeReservation_f (void)
 {
+	if (!selActor)
+		return;
+
 	/* A second parameter (the value itself will be ignored) was given.
 	 * This is used to reset the shot-reservation.*/
-	HUD_PopupFiremodeReservation(Cmd_Argc() == 2, qfalse);
+	if (Cmd_Argc() == 2) {
+		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, NULL);
+	} else {
+		HUD_PopupFiremodeReservation(selActor, qfalse);
+	}
 }
 
 /**
@@ -895,7 +895,7 @@ static void HUD_RefreshButtons (const le_t *le)
 		if (menuName[0] != '\0' && strstr(UI_GetActiveWindowName(), POPUPLIST_NODE_NAME)) {
 			/* Update firemode reservation popup. */
 			/** @todo this is called every frames... is this really needed? */
-			HUD_PopupFiremodeReservation(qfalse, qtrue);
+			HUD_PopupFiremodeReservation(le, qtrue);
 		}
 	}
 }

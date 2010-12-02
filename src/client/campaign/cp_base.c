@@ -1327,7 +1327,8 @@ void B_UpdateBaseCount (void)
 /**
  * @brief Set the base name
  * @param[out] base The base to set the name for
- * @param[in] name The name for the base
+ * @param[in] name The name for the base. This might already be in utf-8 as
+ * it's the user input from the UI
  */
 void B_SetName (base_t *base, const char *name)
 {
@@ -1336,8 +1337,10 @@ void B_SetName (base_t *base, const char *name)
 
 /**
  * @brief Setup new base, uses template for the first base
+ * @param[in] campaign The campaign data structure
  * @param[in,out] base The base to set up
  * @param[in] pos Position (on Geoscape) the base built at
+ * @param[in] name The name of the new base, this string might already be in utf-8
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */

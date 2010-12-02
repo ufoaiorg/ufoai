@@ -194,6 +194,8 @@ static void HUD_ToggleReaction_f (void)
  * @brief Calculate total reload time for selected actor.
  * @param[in] le Pointer to local entity handling the weapon.
  * @param[in] weapon Item in (currently only right) hand.
+ * @param[in] toContainer The container index to get the ammo from (used
+ * to calculate the TUs that are needed to move the item out of this container)
  * @return Time needed to reload or @c -1 if no suitable ammo found.
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
@@ -224,6 +226,7 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t
  * @brief Check if reload is possible.
  * @param[in] le Pointer to local entity for which we handle an action on hud menu.
  * @param[in] weapon An item in hands.
+ * @param[in] container The container to get the ammo from
  * @return qfalse when action is not possible, otherwise qtrue
  * @sa HUD_ReloadLeft_f
  * @sa HUD_ReloadRight_f

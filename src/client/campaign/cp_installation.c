@@ -101,6 +101,7 @@ const installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (con
  * @param[in,out] installation Pointer to the installation to set up
  * @param[in] installationTemplate Template pointer
  * @param[in] pos Position on Globe to build at
+ * @param[in] name The name of the installation - might already be in utf-8
  * @sa INS_NewInstallation
  */
 void INS_SetUpInstallation (installation_t* installation, const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name)

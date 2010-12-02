@@ -296,6 +296,7 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
 
 /**
  * @brief Decide what an attacking aircraft can do.
+ * @param[in] campaign The campaign data structure
  * @param[in] shooter The aircraft we attack with.
  * @param[in] target The ufo we are going to attack.
  * @todo Implement me and display an attack popup.
@@ -396,6 +397,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * ai
 
 /**
  * @brief Actions to execute when a fight is done.
+ * @param[in] campaign The campaign data structure
  * @param[in] shooter Pointer to the aircraft that fired the projectile.
  * @param[in] aircraft Pointer to the aircraft which was destroyed (alien or phalanx).
  * @param[in] phalanxWon qtrue if PHALANX won, qfalse if UFO won.
@@ -522,6 +524,7 @@ static int AIRFIGHT_GetDamage (const objDef_t *od, const aircraft_t* target)
 
 /**
  * @brief Solve the result of one projectile hitting an aircraft.
+ * @param[in] campaign The campaign data structure
  * @param[in] projectile Pointer to the projectile.
  * @note the target loose (base damage - shield of target) hit points
  */
@@ -586,6 +589,7 @@ static void AIRFIGHT_GetNextPointInPath (const float *movement, const vec2_t ori
 
 /**
  * @brief Update values of projectiles.
+ * @param[in] campaign The campaign data structure
  * @param[in] dt Time elapsed since last call of this function.
  */
 void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
