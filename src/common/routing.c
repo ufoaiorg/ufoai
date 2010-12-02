@@ -1311,7 +1311,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, place_t* from, place_t* to, openi
 }
 
 /**
- * @brief Performs traces to find a passage between two points given an upper and lower bound.
+ * @brief Performs traces to find a passage between two points.
  * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] x Starting x coordinate
  * @param[in] y Starting y coordinate
@@ -1335,11 +1335,11 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
-	 * if there is a potential opening.  The the difference between the
+	 * if there is a potential opening.  The difference between the
 	 * ceiling and the floor is at least PATHFINDING_MIN_OPENING tall, then
 	 * scan it to see if we can use it.  If we can, then one of two things
 	 * will happen:
-	 *  - The actual adjacent call has no floor of its own, and we will walk
+	 *  - The actual adjacent cell has no floor of its own, and we will walk
 	 *      or fall into the cell below the adjacent cell anyway.
 	 *  - There is a floor in the adjacent cell, but we will not be able to
 	 *      walk into it anyway because there cannot be any steps if there is
@@ -1383,7 +1383,7 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	if (opening->size < PATHFINDING_MIN_OPENING) {
 		if (debugTrace)
 			Com_Printf(" No opening found.\n");
-		/* If we got here, then there is no opening from floor to ceiling. */
+		/* If we got here, then there is no useable opening from floor to ceiling. */
 		opening->stepup = PATHFINDING_NO_STEPUP;
 		opening->invstepup = PATHFINDING_NO_STEPUP;
 		opening->base = lowCeil;
@@ -1406,10 +1406,10 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 {
 	const int ceiling = RT_CEILING(rtd->map, rtd->actorSize, x, y, z);
 	const int adjCeiling = RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z);
+	const int extAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z + 1) : adjCeiling;
 	const int absCeiling = ceiling + z * CELL_HEIGHT;
-	const int exadjCeiling = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z + 1) : adjCeiling;
-	const int exabs_adj_ceiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
 	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
+	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
 	const int absFloor = RT_FLOOR(rtd->map, rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
 	const int absAdjFloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
 	opening_t opening;	/** the opening between the two cells */
@@ -1421,8 +1421,8 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 	if (debugTrace)
 		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i) as:%i\n", x, y, z, ax, ay, z, rtd->actorSize);
 
-	/* test if the adjacent cell and the cell above it are blocked by a loaded model */
-	if (adjCeiling == 0 && (exadjCeiling == 0 || ceiling == 0)) {
+	/** test if the adjacent cell and the cell above it are blocked by a loaded model */
+	if (adjCeiling == 0 && (extAdjCeiling == 0 || ceiling == 0)) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
 #if RT_IS_BIDIRECTIONAL == 1
@@ -1433,8 +1433,8 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 		return z;
 	}
 
-	/* In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
 #if RT_IS_BIDIRECTIONAL == 1
+	/** In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
 	if (ceiling == 0 && adjCeiling != 0) {
 		return RT_UpdateConnection(rtd->map, actorSize, ax, ay, x, y, z, dir ^ 1);
 	}
@@ -1444,7 +1444,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 	 * @note OK, simple test here.  We know both cells have a ceiling, so they are both open.
 	 *  If the absolute ceiling of one is below the absolute floor of the other, then there is no intersection.
 	 */
-	if (absCeiling < absAdjFloor || exabs_adj_ceiling < absFloor) {
+	if (absCeiling < absAdjFloor || absExtAdjCeiling < absFloor) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
 #if RT_IS_BIDIRECTIONAL == 1
@@ -1455,12 +1455,13 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 		return z;
 	}
 
-	/* Find an opening. */
+	/** Find an opening. */
 	RT_TracePassage(rtd, x, y, z, ax, ay, &opening);
 	if (debugTrace) {
 		Com_Printf("Final RT_STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, opening.stepup);
 	}
-	/* We always call the fill function.  If the passage cannot be traveled, the
+	/** Apply the data to the routing table.
+	 * We always call the fill function.  If the passage cannot be traveled, the
 	 * function fills it in as unpassable. */
 	new_z1 = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
 
