@@ -2860,7 +2860,6 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 
 	/* load phalanx aircraft */
 	snode = mxml_GetNode(parent, SAVE_AIRCRAFT_PHALANX);
-	ccs.numAircraft = mxml_GetInt(snode, SAVE_AIRCRAFT_NUMAIRCRAFT, 0);
 	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_AIRCRAFT && ssnode;
 			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
 		aircraft_t craft;
@@ -2870,6 +2869,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		craft.homebase->aircraft[craft.homebase->numAircraftInBase] = craft;
 		AII_CorrectAircraftSlotPointers(&craft.homebase->aircraft[craft.homebase->numAircraftInBase]);
 		craft.homebase->numAircraftInBase++;
+		ccs.numAircraft++;
 	}
 
 	/* load the ufos on geoscape */
