@@ -29,6 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Get the weapon firing TUs of the item in the right hand of the edict.
  * @return -1 if no firedef was found for the item or the reaction fire mode is not activated for the right hand.
  * @todo why only right hand?
+ * @param[in] ent The reaction firing actor
+ * @param[in] target The target to check reaction fire for (e.g. check whether the weapon that was marked for
+ * using in reaction fire situations can handle the distance between the shooter and the target)
+ * @param[in] invList The items that are checked for reaction fire
+ * @note This does 'not' return the weapon (lowest TU costs, highest damage, highest accuracy) but the first weapon that
+ * would fit for reaction fire.
  */
 static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *target, const invList_t *invList)
 {
@@ -97,7 +103,10 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
 /**
  * @brief Updates the reaction fire settings in case something was moved into a hand or from a hand
  * that would make the current settings invalid
- * @param ent The actor edict to check the settings for
+ * @param[in,out] ent The actor edict to check the settings for
+ * @param[in] fmIdx The fire mode index that should be used for reaction fire
+ * @param[in] hand The hand that should be used for reaction fire
+ * @param[in] ob The object/weapon for the reaction fire
  */
 void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
 {
@@ -117,7 +126,7 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 
 /**
  * @brief Checks whether an actor has enough TUs left to activate reaction fire.
- * @param ent The actors edict to check for TUs for
+ * @param[in] ent The actors edict to check for TUs for
  * @return @c true if the given actor has enough TUs left to activate reaction fire, @c false otherwise.
  */
 static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
@@ -164,7 +173,7 @@ qboolean G_ReactionFireSetDefault (edict_t *ent)
 /**
  * @brief Checks whether the actor is allowed to activate reaction fire and will informs the player about
  * the reason if this would not work.
- * @param ent The actor to check
+ * @param[in] ent The actor to check
  * @return @c true if the actor is allowed to activate it, @c false otherwise
  */
 qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
