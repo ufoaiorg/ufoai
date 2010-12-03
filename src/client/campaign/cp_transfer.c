@@ -1657,7 +1657,7 @@ void TR_TransferCheck (void)
 		transfer_t *transfer = &ccs.transfers[i];
 		if (!transfer->active)
 			continue;
-		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
+		if (transfer->event.day > ccs.date.day || (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec)) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
 			REMOVE_ELEM(ccs.transfers, i, ccs.numTransfers);
