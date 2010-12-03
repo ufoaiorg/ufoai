@@ -63,8 +63,9 @@ typedef struct storedUFO_s {
 
 void UR_ProcessActive(void);
 
+#define US_Foreach(var) LIST_Foreach(ccs.storedUFOs, storedUFO_t, var)
+
 storedUFO_t *US_StoreUFO(const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition);
-storedUFO_t* US_GetNext(storedUFO_t *lastUFO);
 storedUFO_t *US_GetStoredUFOByIDX(const int idx);
 storedUFO_t *US_GetClosestStoredUFO(const aircraft_t *ufoTemplate, const base_t *base);
 void US_RemoveStoredUFO(storedUFO_t *ufo);

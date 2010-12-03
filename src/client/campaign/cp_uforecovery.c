@@ -45,9 +45,9 @@ Backend functions
  */
 void UR_ProcessActive (void)
 {
-	storedUFO_t *ufo = NULL;
+	storedUFO_t *ufo;
 
-	while ((ufo = US_GetNext(ufo)) != NULL) {
+	US_Foreach(ufo) {
 		assert(ufo->ufoTemplate);
 		assert(ufo->ufoTemplate->tech);
 
@@ -69,24 +69,15 @@ void UR_ProcessActive (void)
 /* ==== UFO Storing stuff ==== */
 
 /**
- * @brief Iterates through the stored UFOs
- * @param[in] lastUFO Pointer of the UFO to iterate from. call with NULL to get the first one.
- */
-storedUFO_t* US_GetNext (storedUFO_t *lastUFO)
-{
-	return (storedUFO_t*)LIST_GetNext(ccs.storedUFOs, lastUFO);
-}
-
-/**
  * @brief Returns a stored ufo
  * @param[in] idx index of the stored UFO
  * @return storedUFO_t Pointer
  */
 storedUFO_t* US_GetStoredUFOByIDX (const int idx)
 {
-	storedUFO_t *ufo = NULL;
+	storedUFO_t *ufo;
 
-	while ((ufo = US_GetNext(ufo)) != NULL) {
+	US_Foreach(ufo) {
 		if (ufo->idx == idx)
 			return ufo;
 	}
@@ -190,10 +181,10 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
  */
 int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *installation)
 {
-	storedUFO_t *ufo = NULL;
+	storedUFO_t *ufo;
 	int count = 0;
 
-	while ((ufo = US_GetNext(ufo)) != NULL) {
+	US_Foreach(ufo) {
 		if (ufo->ufoTemplate != ufoTemplate)
 			continue;
 		if (installation && ufo->installation != installation)
@@ -215,14 +206,14 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 {
 	const capacities_t *ufoCap;
 	storedUFO_t *lastUfo = NULL;
-	storedUFO_t *ufo = NULL;
+	storedUFO_t *ufo;
 
 	if (!installation)
 		Com_Error(ERR_DROP, "US_RemoveUFOsExceedingCapacity: No installation given!\n");
 
 	ufoCap = &installation->ufoCapacity;
 
-	while ((ufo = US_GetNext(ufo)) != NULL) {
+	US_Foreach(ufo) {
 		if (ufoCap->cur <= ufoCap->max)
 			break;
 		if (ufo->installation != installation) {
@@ -244,10 +235,10 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t *base)
 {
 	float minDistance = -1;
-	storedUFO_t *ufo = NULL;
+	storedUFO_t *ufo;
 	storedUFO_t *closestUFO = NULL;
 
-	while ((ufo = US_GetNext(ufo)) != NULL) {
+	US_Foreach(ufo) {
 		float distance = 0;
 
 		if (ufoTemplate && ufo->ufoTemplate != ufoTemplate)
@@ -282,11 +273,11 @@ int US_StoredUFOCount (void)
  */
 qboolean US_SaveXML (mxml_node_t *p)
 {
-	storedUFO_t *ufo = NULL;
+	storedUFO_t *ufo;
 	mxml_node_t *node = mxml_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
-	while ((ufo = US_GetNext(ufo)) != NULL) {
+	US_Foreach(ufo) {
 		mxml_node_t * snode = mxml_AddNode(node, SAVE_UFORECOVERY_UFO);
 
 		mxml_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
@@ -375,9 +366,9 @@ qboolean US_LoadXML (mxml_node_t *p)
  */
 static void US_ListStoredUFOs_f (void)
 {
-	storedUFO_t *ufo = NULL;
+	storedUFO_t *ufo;
 
-	while ((ufo = US_GetNext(ufo)) != NULL) {
+	US_Foreach(ufo) {
 		const base_t *prodBase = PR_ProductionBase(ufo->disassembly);
 		dateLong_t date;
 

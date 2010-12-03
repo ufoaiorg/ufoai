@@ -157,7 +157,7 @@ installation_t *INS_GetFirstUnfoundedInstallation (void)
  */
 void INS_DestroyInstallation (installation_t *installation)
 {
-	storedUFO_t *ufo = NULL;
+	storedUFO_t *ufo;
 
 	if (!installation)
 		return;
@@ -179,7 +179,7 @@ void INS_DestroyInstallation (installation_t *installation)
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
 	/* Correct UFO store positions */
-	while ((ufo = US_GetNext(ufo)) != NULL) {
+	US_Foreach(ufo) {
 		if (ufo->installation >= installation)
 			ufo->installation--;
 	}
