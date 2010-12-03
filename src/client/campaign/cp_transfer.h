@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_TRANSFER_H
 #define CLIENT_CL_TRANSFER_H
 
-#define MAX_TRANSFERS	16
-
 struct transferData_s;
 
 typedef enum {
@@ -46,7 +44,7 @@ enum {
 	TRANS_ALIEN_MAX
 };
 
-/** @brief Transfer informations (they are being stored in ccs.transfers[MAX_TRANSFERS]. */
+/** @brief Transfer informations (they are being stored in ccs.transfers). */
 typedef struct transfer_s {
 	base_t *destBase;				/**< Pointer to destination base. May not be NULL if active is true. */
 	base_t *srcBase;				/**< Pointer to source base. May be NULL if transfer comes from a mission (alien body recovery). */
