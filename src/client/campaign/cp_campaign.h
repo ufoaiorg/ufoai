@@ -469,8 +469,7 @@ typedef struct ccs_s {
 	int numProjectiles;
 
 	/* == Transfers == */
-	transfer_t transfers[MAX_TRANSFERS];
-	int numTransfers;
+	linkedList_t* transfers;
 
 	/* UFO components. */
 	int numComponents;

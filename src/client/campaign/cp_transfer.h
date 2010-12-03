@@ -48,7 +48,7 @@ enum {
 
 /** @brief Transfer informations (they are being stored in ccs.transfers[MAX_TRANSFERS]. */
 typedef struct transfer_s {
-	qboolean active;				/**< True if this transfer is under processing. */
+	qboolean active;				/**< True if this transfer is under processing. @todo no longer needed */
 	base_t *destBase;				/**< Pointer to destination base. May not be NULL if active is true. */
 	base_t *srcBase;				/**< Pointer to source base. May be NULL if transfer comes from a mission (alien body recovery). */
 	date_t event;					/**< When the transfer finish process should start. */
@@ -119,6 +119,7 @@ typedef struct transferData_s {
 } transferData_t;
 
 #define TR_SetData(dataPtr, typeVal, ptr)  do { (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
+#define TR_Foreach(var) LIST_Foreach(ccs.transfers, transfer_t, var)
 
 qboolean TR_AddData(transferData_t *transferData, transferCargoType_t type, const void* data);
 void TR_TransferRun(void);
@@ -127,7 +128,6 @@ void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 transfer_t* TR_TransferStart(base_t *srcBase, transferData_t *transData);
 void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
 
-transfer_t* TR_GetNext(transfer_t *lastTransfer);
 employee_t* TR_GetNextEmployee(transfer_t *transfer, employeeType_t type, employee_t *lastEmployee);
 aircraft_t* TR_GetNextAircraft(transfer_t *transfer, aircraft_t *lastAircraft);
 

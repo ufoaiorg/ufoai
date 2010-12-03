@@ -32,32 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_main.h"
 
 /**
- * @brief Iterates through transfers
- * @param[in] lastTransfer Pointer of the transfer to iterate from. call with NULL to get the first one.
- */
-transfer_t* TR_GetNext (transfer_t *lastTransfer)
-{
-	transfer_t *endOfTransfers = &ccs.transfers[ccs.numTransfers];
-	transfer_t* transfer;
-
-	if (!ccs.numTransfers)
-		return NULL;
-
-	if (!lastTransfer)
-		return ccs.transfers;
-	assert(lastTransfer >= ccs.transfers);
-	assert(lastTransfer < endOfTransfers);
-
-	transfer = lastTransfer;
-
-	transfer++;
-	if (transfer >= endOfTransfers)
-		return NULL;
-	else
-		return transfer;
-}
-
-/**
  * @brief Returns the next transfered employee of a transfer session
  * @param[in] transfer Pointer to the transfersession to check
  * @param[in] type The employee type to query
@@ -204,15 +178,19 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transferAircraft)
 {
 	int i, j;
-	transfer_t *transfer;
+	transfer_t transfer;
 	float time;
 	char message[256];
 	int alienCargoTypes;
 	aliensTmp_t *cargo;
-
 	const technology_t *breathingTech;
 	qboolean alienBreathing = qfalse;
 	const objDef_t *alienBreathingObjDef;
+
+	if (!base) {
+		Com_Printf("TR_TransferAlienAfterMissionStart_f: No base selected!\n");
+		return;
+	}
 
 	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
 	if (!breathingTech)
@@ -222,36 +200,22 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 	if (!alienBreathingObjDef)
 		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus item definition");
 
-	if (!base) {
-		Com_Printf("TR_TransferAlienAfterMissionStart_f: No base selected!\n");
-		return;
-	}
-
-	if (ccs.numTransfers >= MAX_TRANSFERS) {
-		Com_DPrintf(DEBUG_CLIENT, "TR_TransferAlienAfterMissionStart: Max transfers reached.");
-		return;
-	}
-
-	transfer = &ccs.transfers[ccs.numTransfers];
-
-	if (transfer->active)
-		Com_Error(ERR_DROP, "Transfer idx %i shouldn't be active.", ccs.numTransfers);
+	memset(&transfer, 0, sizeof(transfer));
 
 	/* Initialize transfer.
 	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
 	time = GetDistanceOnGlobe(base->pos, transferAircraft->pos) / 90.0f;
-	transfer->event.day = ccs.date.day + floor(time);	/* add day */
+	transfer.event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
-	transfer->event.sec = ccs.date.sec + round(time);
+	transfer.event.sec = ccs.date.sec + round(time);
 	/* check if event is not the following day */
-	if (transfer->event.sec > SECONDS_PER_DAY) {
-		transfer->event.sec -= SECONDS_PER_DAY;
-		transfer->event.day++;
+	if (transfer.event.sec > SECONDS_PER_DAY) {
+		transfer.event.sec -= SECONDS_PER_DAY;
+		transfer.event.day++;
 	}
-	transfer->destBase = B_GetFoundedBaseByIDX(base->idx);	/* Destination base. */
-	transfer->srcBase = NULL;	/* Source base. */
-	transfer->active = qtrue;
-	ccs.numTransfers++;
+	transfer.destBase = B_GetFoundedBaseByIDX(base->idx);	/* Destination base. */
+	transfer.srcBase = NULL;	/* Source base. */
+	transfer.active = qtrue;
 
 	alienCargoTypes = AL_GetAircraftAlienCargoTypes(transferAircraft);
 	cargo = AL_GetAircraftAlienCargo(transferAircraft);
@@ -265,8 +229,8 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
-					transfer->hasAliens = qtrue;
-					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = cargo->amountAlive;
+					transfer.hasAliens = qtrue;
+					transfer.alienAmount[j][TRANS_ALIEN_ALIVE] = cargo->amountAlive;
 					cargo->amountAlive = 0;
 					break;
 				}
@@ -277,12 +241,12 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
-					transfer->hasAliens = qtrue;
-					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = cargo->amountDead;
+					transfer.hasAliens = qtrue;
+					transfer.alienAmount[j][TRANS_ALIEN_DEAD] = cargo->amountDead;
 
 					/* If we transfer aliens from battlefield add also breathing apparatur(s) */
-					transfer->hasItems = qtrue;
-					transfer->itemAmount[alienBreathingObjDef->idx] += cargo->amountDead;
+					transfer.hasItems = qtrue;
+					transfer.itemAmount[alienBreathingObjDef->idx] += cargo->amountDead;
 					cargo->amountDead = 0;
 					break;
 				}
@@ -291,9 +255,11 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 	}
 	AL_SetAircraftAlienCargoTypes(transferAircraft, 0);
 
-	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), transfer->destBase->name);
+	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), transfer.destBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	UI_PopWindow(qfalse);
+
+	LIST_Add(&ccs.transfers, (const byte*) &transfer, sizeof(transfer));
 }
 
 /**
@@ -316,6 +282,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 		MSO_CheckAddNewMessage(NT_TRANSFER_COMPLETED_SUCCESS, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	}
 	transfer->active = qfalse;
+	LIST_Remove(&ccs.transfers, transfer);
 }
 
 qboolean TR_AddData (transferData_t *transferData, transferCargoType_t type, const void* data)
@@ -335,7 +302,7 @@ qboolean TR_AddData (transferData_t *transferData, transferCargoType_t type, con
  */
 transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 {
-	transfer_t *transfer;
+	transfer_t transfer;
 	float time;
 	int i;
 	aircraft_t *aircraft = NULL;
@@ -350,37 +317,28 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 		return NULL;
 	}
 
-	if (ccs.numTransfers >= MAX_TRANSFERS) {
-		Com_DPrintf(DEBUG_CLIENT, "TR_TransferStart: Max transfers reached.");
-		return NULL;
-	}
-
-	transfer = &ccs.transfers[ccs.numTransfers];
-
-	if (transfer->active)
-		Com_Error(ERR_DROP, "Transfer idx %i shouldn't be active.", ccs.numTransfers);
+	memset(&transfer, 0, sizeof(transfer));
 
 	/* Initialize transfer. */
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
 	time = GetDistanceOnGlobe(transData->transferBase->pos, srcBase->pos) / 90.0f;
-	transfer->event.day = ccs.date.day + floor(time);	/* add day */
+	transfer.event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
-	transfer->event.sec = ccs.date.sec + round(time);
+	transfer.event.sec = ccs.date.sec + round(time);
 	/* check if event is not the following day */
-	if (transfer->event.sec > SECONDS_PER_DAY) {
-		transfer->event.sec -= SECONDS_PER_DAY;
-		transfer->event.day++;
+	if (transfer.event.sec > SECONDS_PER_DAY) {
+		transfer.event.sec -= SECONDS_PER_DAY;
+		transfer.event.day++;
 	}
-	transfer->destBase = transData->transferBase;	/* Destination base. */
-	assert(transfer->destBase);
-	transfer->srcBase = srcBase;	/* Source base. */
-	transfer->active = qtrue;
-	ccs.numTransfers++;
+	transfer.destBase = transData->transferBase;	/* Destination base. */
+	assert(transfer.destBase);
+	transfer.srcBase = srcBase;	/* Source base. */
+	transfer.active = qtrue;
 
 	for (i = 0; i < csi.numODs; i++) {	/* Items. */
 		if (transData->trItemsTmp[i] > 0) {
-			transfer->hasItems = qtrue;
-			transfer->itemAmount[i] = transData->trItemsTmp[i];
+			transfer.hasItems = qtrue;
+			transfer.itemAmount[i] = transData->trItemsTmp[i];
 		}
 	}
 	/* Note that the employee remains hired in source base during the transfer, that is
@@ -388,40 +346,39 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		employee_t *employee = NULL;
 
-		LIST_Delete(&transfer->employees[i]);
 		while ((employee = (employee_t*) LIST_GetNext(transData->trEmployeesTmp[i], (void*) employee)) != NULL) {
 			assert(E_IsInBase(employee, srcBase));
 
-			transfer->hasEmployees = qtrue;
+			transfer.hasEmployees = qtrue;
 			E_ResetEmployee(employee);
-			LIST_AddPointer(&transfer->employees[i], (void*) employee);
+			LIST_AddPointer(&transfer.employees[i], (void*) employee);
 			employee->baseHired = NULL;
 			employee->transfer = qtrue;
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
 		if (transData->trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
-			transfer->hasAliens = qtrue;
-			transfer->alienAmount[i][TRANS_ALIEN_ALIVE] = transData->trAliensTmp[i][TRANS_ALIEN_ALIVE];
+			transfer.hasAliens = qtrue;
+			transfer.alienAmount[i][TRANS_ALIEN_ALIVE] = transData->trAliensTmp[i][TRANS_ALIEN_ALIVE];
 		}
 		if (transData->trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
-			transfer->hasAliens = qtrue;
-			transfer->alienAmount[i][TRANS_ALIEN_DEAD] = transData->trAliensTmp[i][TRANS_ALIEN_DEAD];
+			transfer.hasAliens = qtrue;
+			transfer.alienAmount[i][TRANS_ALIEN_DEAD] = transData->trAliensTmp[i][TRANS_ALIEN_DEAD];
 		}
 	}
-	LIST_Delete(&transfer->aircraft);
+
 	while ((aircraft = (aircraft_t*)LIST_GetNext(transData->aircraft, (void *)aircraft)) != NULL) {
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(aircraft);
-		transfer->hasAircraft = qtrue;
-		LIST_AddPointer(&transfer->aircraft, (void*)aircraft);
+		transfer.hasAircraft = qtrue;
+		LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 	}
 
 	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
 	PR_ProductionAllowed(srcBase);
 	RS_ResearchAllowed(srcBase);
 
-	return transfer;
+	return (transfer_t*) LIST_Add(&ccs.transfers, (const byte*) &transfer, sizeof(transfer))->data;
 }
 
 /**
@@ -431,11 +388,12 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
  */
 void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 {
-	transfer_t *transfer = NULL;
+	transfer_t *transfer;
 
 	if (!aircraft)
 		return;
-	while ((transfer = TR_GetNext(transfer)) != NULL) {
+
+	TR_Foreach(transfer) {
 		if (!transfer->active)
 			continue;
 		if (!transfer->hasAircraft)
@@ -451,16 +409,14 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
  */
 void TR_TransferRun (void)
 {
-	transfer_t *transfer = NULL;
-	while ((transfer = TR_GetNext(transfer)) != NULL) {
+	transfer_t *transfer;
+
+	TR_Foreach(transfer) {
 		if (!transfer->active)
 			continue;
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
-			const ptrdiff_t idx = (ptrdiff_t)(transfer - ccs.transfers);
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
-			/** @todo make it TR_Remove() */
-			REMOVE_ELEM(ccs.transfers, idx, ccs.numTransfers);
 			return;
 		}
 	}
@@ -474,21 +430,19 @@ static void TR_ListTransfers_f (void)
 {
 	int transIdx = -1;
 	int i = 0;
-	transfer_t *transfer = NULL;
+	transfer_t *transfer;
 
 	if (Cmd_Argc() == 2) {
 		transIdx = atoi(Cmd_Argv(1));
-		if (transIdx < 0 || transIdx > MAX_TRANSFERS) {
+		if (transIdx < 0 || transIdx > LIST_Count(ccs.transfers)) {
 			Com_Printf("Usage: %s [transferIDX]\nWithout parameter it lists all.\n", Cmd_Argv(0));
 			return;
 		}
 	}
 
-	if (!ccs.numTransfers)
-		Com_Printf("No active transfers.\n");
-
-	for (; (transfer = TR_GetNext(transfer)) != NULL; i++) {
+	TR_Foreach(transfer) {
 		dateLong_t date;
+		i++;
 
 		if (transIdx >= 0 && i != transIdx)
 			continue;
@@ -571,10 +525,10 @@ static void TR_ListTransfers_f (void)
  */
 qboolean TR_SaveXML (mxml_node_t *p)
 {
-	transfer_t *transfer = NULL;
+	transfer_t *transfer;
 	mxml_node_t *n = mxml_AddNode(p, SAVE_TRANSFER_TRANSFERS);
 
-	while ((transfer = TR_GetNext(transfer)) != NULL) {
+	TR_Foreach(transfer) {
 		int j;
 		mxml_node_t *s;
 
@@ -659,50 +613,46 @@ qboolean TR_LoadXML (mxml_node_t *p)
 
 	assert(B_AtLeastOneExists());
 
-	for (s = mxml_GetNode(n, SAVE_TRANSFER_TRANSFER); s && ccs.numTransfers < MAX_TRANSFERS; s = mxml_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
+	for (s = mxml_GetNode(n, SAVE_TRANSFER_TRANSFER); s; s = mxml_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
 		mxml_node_t *ss;
-		transfer_t *transfer = &ccs.transfers[ccs.numTransfers];
-		employeeType_t emplType;
+		transfer_t transfer;
 
-		transfer->destBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE));
-		if (!transfer->destBase) {
+		memset(&transfer, 0, sizeof(transfer));
+
+		transfer.destBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE));
+		if (!transfer.destBase) {
 			Com_Printf("Error: Transfer has no destBase set\n");
 			return qfalse;
 		}
-		transfer->srcBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE));
+		transfer.srcBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE));
 
-		transfer->event.day = mxml_GetInt(s, SAVE_TRANSFER_DAY, 0);
-		transfer->event.sec = mxml_GetInt(s, SAVE_TRANSFER_SEC, 0);
-		transfer->active = qtrue;
+		transfer.event.day = mxml_GetInt(s, SAVE_TRANSFER_DAY, 0);
+		transfer.event.sec = mxml_GetInt(s, SAVE_TRANSFER_SEC, 0);
+		transfer.active = qtrue;
 
 		/* Initializing some variables */
-		transfer->hasItems = qfalse;
-		transfer->hasEmployees = qfalse;
-		transfer->hasAliens = qfalse;
-		transfer->hasAircraft = qfalse;
-		memset(transfer->itemAmount, 0, sizeof(transfer->itemAmount));
-		memset(transfer->alienAmount, 0, sizeof(transfer->alienAmount));
-		for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
-			LIST_Delete(&transfer->employees[emplType]);
-		LIST_Delete(&transfer->aircraft);
+		transfer.hasItems = qfalse;
+		transfer.hasEmployees = qfalse;
+		transfer.hasAliens = qfalse;
+		transfer.hasAircraft = qfalse;
 
 		/* load items */
 		/* If there is at last one element, hasItems is true */
 		ss = mxml_GetNode(s, SAVE_TRANSFER_ITEM);
 		if (ss) {
-			transfer->hasItems = qtrue;
+			transfer.hasItems = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
 				const char *itemId = mxml_GetString(ss, SAVE_TRANSFER_ITEMID);
 				const objDef_t *od = INVSH_GetItemByID(itemId);
 
 				if (od)
-					transfer->itemAmount[od->idx] = mxml_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
+					transfer.itemAmount[od->idx] = mxml_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
 			}
 		}
 		/* load aliens */
 		ss = mxml_GetNode(s, SAVE_TRANSFER_ALIEN);
 		if (ss) {
-			transfer->hasAliens = qtrue;
+			transfer.hasAliens = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
 				const int alive = mxml_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
 				const int dead  = mxml_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
@@ -716,8 +666,8 @@ qboolean TR_LoadXML (mxml_node_t *p)
 				}
 
 				if (j < ccs.numAliensTD) {
-					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = alive;
-					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = dead;
+					transfer.alienAmount[j][TRANS_ALIEN_ALIVE] = alive;
+					transfer.alienAmount[j][TRANS_ALIEN_DEAD] = dead;
 				} else {
 					Com_Printf("CL_LoadXML: AlienId '%s' is invalid\n", id);
 				}
@@ -726,7 +676,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		/* load employee */
 		ss = mxml_GetNode(s, SAVE_TRANSFER_EMPLOYEE);
 		if (ss) {
-			transfer->hasEmployees = qtrue;
+			transfer.hasEmployees = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_EMPLOYEE)) {
 				const int ucn = mxml_GetInt(ss, SAVE_TRANSFER_UCN, -1);
 				employee_t *empl = E_GetEmployeeFromChrUCN(ucn);
@@ -736,23 +686,23 @@ qboolean TR_LoadXML (mxml_node_t *p)
 					return qfalse;
 				}
 
-				LIST_AddPointer(&transfer->employees[empl->type], (void*) empl);
+				LIST_AddPointer(&transfer.employees[empl->type], (void*) empl);
 				empl->transfer = qtrue;
 			}
 		}
 		/* load aircraft */
 		ss = mxml_GetNode(s, SAVE_TRANSFER_AIRCRAFT);
 		if (ss) {
-			transfer->hasAircraft = qtrue;
+			transfer.hasAircraft = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
 				const int j = mxml_GetInt(ss, SAVE_TRANSFER_ID, -1);
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(j);
 
 				if (aircraft)
-					LIST_AddPointer(&transfer->aircraft, (void*)aircraft);
+					LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 			}
 		}
-		ccs.numTransfers++;
+		LIST_Add(&ccs.transfers, (const byte*) &transfer, sizeof(transfer));
 	}
 
 	return qtrue;
@@ -775,15 +725,15 @@ void TR_InitStartup (void)
  */
 void TR_Shutdown (void)
 {
-	int i;
+	transfer_t *transfer;
 
-	for (i = 0; i < ccs.numTransfers; i++) {
+	TR_Foreach(transfer) {
 		employeeType_t emplType;
 
-		LIST_Delete(&ccs.transfers[i].aircraft);
+		LIST_Delete(&transfer->aircraft);
 
 		for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
-			LIST_Delete(&ccs.transfers[i].employees[emplType]);
+			LIST_Delete(&transfer->employees[emplType]);
 	}
 
 	TR_ShutdownCallbacks();

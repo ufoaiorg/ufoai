@@ -302,10 +302,8 @@ static void B_BaseInit_f (void)
 	else
 		UI_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
 
-	if (B_GetFoundedBaseCount() > 1 && ccs.numTransfers < MAX_TRANSFERS)
+	if (B_GetFoundedBaseCount() > 1)
 		UI_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, vehicles, aliens and employees to other bases"));
-	else if (ccs.numTransfers >= MAX_TRANSFERS)
-		UI_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("You have too many active transfers"));
 	else
 		UI_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
 

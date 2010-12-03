@@ -431,13 +431,13 @@ static void testTransferItem (void)
 	transfer = TR_TransferStart(base, &td);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
 
-	CU_ASSERT_EQUAL(ccs.numTransfers, 1);
+	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
 
 	/* to ensure that the transfer is finished with the first think call */
 	transfer->event = ccs.date;
 
 	TR_TransferRun();
-	CU_ASSERT_EQUAL(ccs.numTransfers, 0);
+	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
