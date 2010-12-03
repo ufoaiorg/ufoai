@@ -310,9 +310,9 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	/* Note that the employee remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
-		employee_t *employee = NULL;
+		employee_t *employee;
 
-		while ((employee = (employee_t*) LIST_GetNext(transData->trEmployeesTmp[i], (void*) employee)) != NULL) {
+		LIST_Foreach(transData->trEmployeesTmp[i], employee_t, employee) {
 			assert(E_IsInBase(employee, srcBase));
 
 			transfer.hasEmployees = qtrue;
@@ -333,7 +333,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 		}
 	}
 
-	while ((aircraft = (aircraft_t*)LIST_GetNext(transData->aircraft, (void *)aircraft)) != NULL) {
+	LIST_Foreach(transData->aircraft, aircraft_t, aircraft) {
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(aircraft);
 		transfer.hasAircraft = qtrue;

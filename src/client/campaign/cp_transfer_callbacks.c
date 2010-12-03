@@ -356,7 +356,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 {
 	int hangarStorage;
 	int numAircraftTransfer = 0;
-	aircraft_t *aircraftTemp = NULL;
+	aircraft_t *aircraftTemp;
 
 	assert(aircraft);
 	assert(destbase);
@@ -375,7 +375,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 
 	/* Count weight and number of all aircraft already on the transfer list that goes
 	 * into the same hangar type than aircraft. */
-	while ((aircraftTemp = (aircraft_t*)LIST_GetNext(td.aircraft, (void*)aircraftTemp))) {
+	LIST_Foreach(td.aircraft, aircraft_t, aircraftTemp) {
 		if (aircraftTemp->size == aircraft->size)
 			numAircraftTransfer++;
 	}
@@ -399,7 +399,7 @@ static void TR_CargoList (void)
 	linkedList_t *cargoList = NULL;
 	linkedList_t *cargoListAmount = NULL;
 	char str[128];
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 
 	td.trCargoCountTmp = 0;
 	memset(td.cargo, 0, sizeof(td.cargo));
@@ -419,9 +419,9 @@ static void TR_CargoList (void)
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		switch (emplType) {
 		case EMPL_SOLDIER: {
-			employee_t *employee = NULL;
+			employee_t *employee;
 
-			while ((employee = (employee_t*) LIST_GetNext(td.trEmployeesTmp[emplType], (void*) employee))) {
+			LIST_Foreach(td.trEmployeesTmp[emplType], employee_t, employee) {
 				const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 
 				assert(rank);
@@ -434,9 +434,9 @@ static void TR_CargoList (void)
 			break;
 		}
 		case EMPL_PILOT: {
-			employee_t *employee = NULL;
+			employee_t *employee;
 
-			while ((employee = (employee_t*) LIST_GetNext(td.trEmployeesTmp[emplType], (void*) employee))) {
+			LIST_Foreach(td.trEmployeesTmp[emplType], employee_t, employee) {
 				Com_sprintf(str, lengthof(str), _("Pilot %s"), employee->chr.name);
 				LIST_AddString(&cargoList, str);
 				LIST_AddString(&cargoListAmount, va("%i", 1));
@@ -490,7 +490,7 @@ static void TR_CargoList (void)
 	}
 
 	/* Show all aircraft. */
-	while ((aircraft = (aircraft_t*)LIST_GetNext(td.aircraft, (void*)aircraft))) {
+	LIST_Foreach(td.aircraft, aircraft_t, aircraft) {
 		Com_sprintf(str, lengthof(str), _("Aircraft %s"), aircraft->name);
 		LIST_AddString(&cargoList, str);
 		LIST_AddString(&cargoListAmount, "1");
@@ -1324,7 +1324,7 @@ static void TR_RemoveAircraftFromCargoList (base_t *base, transferData_t *transf
 {
 	int i, cnt;
 	int entries = 0;
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 
 	for (i = 0; i < MAX_CARGO; i++) {
 		/* Count previous types on the list. */
@@ -1340,7 +1340,7 @@ static void TR_RemoveAircraftFromCargoList (base_t *base, transferData_t *transf
 	}
 	/* Start increasing cnt from the amount of previous entries. */
 	cnt = entries;
-	while ((aircraft = (aircraft_t*)LIST_GetNext(transferData->aircraft, (void*)aircraft))) {
+	LIST_Foreach(transferData->aircraft, aircraft_t, aircraft) {
 		if (cnt == num) {
 			LIST_Remove(&transferData->aircraft, aircraft);
 			break;
