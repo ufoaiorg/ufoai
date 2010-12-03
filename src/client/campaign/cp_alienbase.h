@@ -34,10 +34,10 @@ typedef struct alienBase_s {
 						 * and base is known if stealth < 0 */
 } alienBase_t;
 
-alienBase_t* AB_GetNext(alienBase_t *lastBase);
+#define AB_Foreach(var) LIST_Foreach(ccs.alienBases, alienBase_t, var)
 alienBase_t* AB_GetByIDX(int baseIDX);
 
-#define AB_Exists() (AB_GetNext(NULL) != NULL)
+#define AB_Exists() (!LIST_IsEmpty(ccs.alienBases))
 
 void AB_SetAlienBasePosition(vec2_t pos);
 alienBase_t* AB_BuildBase(const vec2_t pos);

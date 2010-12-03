@@ -50,7 +50,7 @@ void AB_SetAlienBasePosition (vec2_t pos)
 	counter = 0;
 	while (counter < maxLoopPosition) {
 		float distance = 0.0f;
-		alienBase_t* base = NULL;
+		alienBase_t* base;
 
 		/* Get a random position */
 		CP_GetRandomPosOnGeoscape(randomPos, qtrue);
@@ -66,7 +66,7 @@ void AB_SetAlienBasePosition (vec2_t pos)
 		}
 
 		/* Calculate minimim distance between THIS position (pos) and all alien bases */
-		while ((base = AB_GetNext(base)) != NULL) {
+		AB_Foreach(base) {
 			const float currentDistance = GetDistanceOnGlobe(base->pos, randomPos);
 			if (distance < currentDistance) {
 				distance = currentDistance;
@@ -119,24 +119,15 @@ void AB_DestroyBase (alienBase_t *base)
 }
 
 /**
- * @brief Iterates through the alien bases
- * @param[in] lastBase Pointer of the alien base to iterate from. call with NULL to get the first one.
- */
-alienBase_t* AB_GetNext (alienBase_t *lastBase)
-{
-	return (alienBase_t*)LIST_GetNext(ccs.alienBases, lastBase);
-}
-
-/**
  * @brief Get Alien Base per Idx.
  * @param[in] baseIDX The unique IDX of the alien Base.
  * @return Pointer to the base.
  */
 alienBase_t* AB_GetByIDX (int baseIDX)
 {
-	alienBase_t* base = NULL;
+	alienBase_t* base;
 
-	while ((base = AB_GetNext(base)) != NULL) {
+	AB_Foreach(base) {
 		if (base->idx == baseIDX)
 			return base;
 	}
@@ -240,8 +231,7 @@ void AB_UpdateStealthForAllBase (void)
 			if (!AIR_IsAircraftOnGeoscape(aircraft))
 				continue;
 
-			alienBase = NULL;
-			while ((alienBase = AB_GetNext(alienBase)) != NULL)
+			AB_Foreach(alienBase)
 				AB_UpdateStealthForOneBase(aircraft, alienBase);
 		}
 	}
@@ -258,13 +248,13 @@ void AB_BaseSearchedByNations (void)
 	float probability = 1.0f;				/**< base probability, will be modified below */
 	const float xviLevel = 20.0f;			/**< xviInfection value of nation that will divide probability to
 											 * find alien base by 2*/
-	alienBase_t* base = NULL;
+	alienBase_t* base;
 
 	/* Stealth is updated only once a week */
 	if (ccs.date.day % daysPerWeek)
 		return;
 
-	while ((base = AB_GetNext(base)) != NULL) {
+	AB_Foreach(base) {
 		const nation_t *nation = MAP_GetNation(base->pos);
 
 		/* If nation is a lot infected, it won't help in finding base (government infected) */
@@ -331,9 +321,9 @@ int AB_GetAlienBaseNumber (void)
  */
 static void AB_AlienBaseDiscovered_f (void)
 {
-	alienBase_t* base = NULL;
+	alienBase_t* base;
 
-	while ((base = AB_GetNext(base)) != NULL) {
+	AB_Foreach(base) {
 		base->stealth = -10.0f;
 		CP_SpawnAlienBaseMission(base);
 	}
@@ -345,9 +335,9 @@ static void AB_AlienBaseDiscovered_f (void)
  */
 static void AB_AlienBaseList_f (void)
 {
-	alienBase_t* base = NULL;
+	alienBase_t* base;
 
-	while ((base = AB_GetNext(base)) != NULL) {
+	AB_Foreach(base) {
 		Com_Printf("Alien Base: %i\n", base->idx);
 		Com_Printf("...pos: (%f, %f)\n", base->pos[0], base->pos[1]);
 		Com_Printf("...supply: %i\n", base->supply);
@@ -402,9 +392,9 @@ qboolean AB_LoadXML (mxml_node_t *p)
 qboolean AB_SaveXML (mxml_node_t *p)
 {
 	mxml_node_t *n = mxml_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
-	alienBase_t* base = NULL;
+	alienBase_t* base;
 
-	while ((base = AB_GetNext(base)) != NULL) {
+	AB_Foreach(base) {
 		mxml_node_t *s = mxml_AddNode(n, SAVE_ALIENBASE_BASE);
 		mxml_AddInt(s, SAVE_ALIENBASE_IDX, base->idx);
 		mxml_AddPos2(s, SAVE_ALIENBASE_POS, base->pos);
