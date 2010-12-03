@@ -798,7 +798,7 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 qboolean AIR_CheckBaseListIterator (void *data, const void *base)
 {
 	const aircraft_t *aircraft = (const aircraft_t *)data;
-	return aircraft->homebase == base;
+	return AIR_IsAircraftOfBase(aircraft, base);
 }
 
 /**
