@@ -247,6 +247,9 @@ void LIST_Delete (linkedList_t **list)
  * @brief Linked list iterator
  * @param list The linked list to iterate over
  * @param lastData The last data entry
+ * @note This function isn't cheap - don't use it, use the
+ * macro LIST_Foreach wherever possible
+ * @deprecated use LIST_Foreach and get rid of this
  */
 void *LIST_GetNext (linkedList_t *list, void *lastData)
 {

@@ -32,37 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_main.h"
 
 /**
- * @brief Returns the next transfered employee of a transfer session
- * @param[in] transfer Pointer to the transfersession to check
- * @param[in] type The employee type to query
- * @param[in] lastEmployee Pointer to the last employee to iterate from. call with NULL for the first
- * @returns NULL, if transfer parameter is NULL or there is no more employee in the transfer, or the pointer of the next employee otherwise
- */
-employee_t* TR_GetNextEmployee (transfer_t *transfer, employeeType_t type, employee_t *lastEmployee)
-{
-	if (!transfer)
-		return NULL;
-	if (type == MAX_EMPL)
-		return NULL;
-
-	return (employee_t*) LIST_GetNext(transfer->employees[type], (void*) lastEmployee);
-}
-
-/**
- * @brief Returns the next transfered aircraft of a transfer session
- * @param[in] transfer Pointer to the transfersession to check
- * @param[in] lastAircraft Pointer to the last aircraft to iterate from. call with NULL for the first
- * @returns NULL, if transfer parameter is NULL or there is no more aircraft in the transfer, or the pointer of the next aircraft otherwise
- */
-aircraft_t* TR_GetNextAircraft (transfer_t *transfer, aircraft_t *lastAircraft)
-{
-	if (!transfer)
-		return NULL;
-
-	return (aircraft_t*) LIST_GetNext(transfer->aircraft, (void*) lastAircraft);
-}
-
-/**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
  * @param[in,out] destination The destination base - might be NULL in case the base
  * is already destroyed
@@ -112,8 +81,8 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
 			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-				employee_t *employee = NULL;
-				while ((employee = TR_GetNextEmployee(transfer, i, employee)) != NULL) {
+				employee_t *employee;
+				TR_ForeachEmployee(employee, transfer, i) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 					employee->transfer = qfalse;
 					E_UnhireEmployee(employee);
@@ -122,8 +91,8 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 		} else {
 			employeeType_t i;
 			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-				employee_t *employee = NULL;
-				while ((employee = TR_GetNextEmployee(transfer, i, employee)) != NULL) {
+				employee_t *employee;
+				TR_ForeachEmployee(employee, transfer, i) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 					employee->transfer = qfalse;
 					E_UnhireEmployee(employee);
@@ -155,9 +124,9 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	 * aircraftArray should contain pointers to aircraftTemplates to avoid this problem, and be removed from
 	 * source base as soon as transfer starts */
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
-		aircraft_t *aircraft = NULL;
+		aircraft_t *aircraft;
 
-		while ((aircraft = TR_GetNextAircraft(transfer, aircraft)) != NULL) {
+		TR_ForeachAircraft(aircraft, transfer) {
 			if ((AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) <= 0) || !AIR_MoveAircraftIntoNewHomebase(aircraft, destination)) {
 				/* No space, aircraft will be lost. */
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have enough free space. Aircraft is lost!"), destination->name);
@@ -467,9 +436,9 @@ static void TR_ListTransfers_f (void)
 
 			Com_Printf("...Carried Employee:\n");
 			for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
-				employee_t *employee = NULL;
+				employee_t *employee;
 
-				while ((employee = TR_GetNextEmployee(transfer, emplType, employee)) != NULL) {
+				TR_ForeachEmployee(employee, transfer, emplType) {
 					if (employee->ugv) {
 						/** @todo: improve ugv listing when they're implemented */
 						Com_Printf("......ugv: %s [ucn: %i]\n", employee->ugv->id, employee->chr.ucn);
@@ -497,10 +466,10 @@ static void TR_ListTransfers_f (void)
 		}
 		/* Transfered Aircraft */
 		if (transfer->hasAircraft) {
-			aircraft_t *aircraft = NULL;
+			aircraft_t *aircraft;
 
 			Com_Printf("...Transfered Aircraft:\n");
-			while ((aircraft = TR_GetNextAircraft(transfer, aircraft)) != NULL) {
+			TR_ForeachAircraft(aircraft, transfer) {
 				Com_Printf("......%s [idx: %i]\n", (aircraft) ? aircraft->id : "(null)", aircraft->idx);
 			}
 		}
@@ -567,9 +536,9 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		/* save employee */
 		if (transfer->hasEmployees) {
 			for (j = 0; j < MAX_EMPL; j++) {
-				employee_t *employee = NULL;
+				employee_t *employee;
 
-				while ((employee = TR_GetNextEmployee(transfer, j, employee)) != NULL) {
+				TR_ForeachEmployee(employee, transfer, j) {
 					mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
 					mxml_AddInt(ss, SAVE_TRANSFER_UCN, employee->chr.ucn);
 				}
@@ -577,9 +546,9 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		}
 		/* save aircraft */
 		if (transfer->hasAircraft) {
-			aircraft_t *aircraft = NULL;
+			aircraft_t *aircraft;
 
-			while ((aircraft = TR_GetNextAircraft(transfer, aircraft)) != NULL) {
+			TR_ForeachAircraft(aircraft, transfer) {
 				mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
 				mxml_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
 			}

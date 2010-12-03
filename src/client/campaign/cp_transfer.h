@@ -117,6 +117,8 @@ typedef struct transferData_s {
 
 #define TR_SetData(dataPtr, typeVal, ptr)  do { (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
 #define TR_Foreach(var) LIST_Foreach(ccs.transfers, transfer_t, var)
+#define TR_ForeachEmployee(var, transfer, employeeType) LIST_Foreach(transfer->employees[employeeType], employee_t, var)
+#define TR_ForeachAircraft(var, transfer) LIST_Foreach(transfer->aircraft, aircraft_t, var)
 
 qboolean TR_AddData(transferData_t *transferData, transferCargoType_t type, const void* data);
 void TR_TransferRun(void);
@@ -125,8 +127,6 @@ void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 transfer_t* TR_TransferStart(base_t *srcBase, transferData_t *transData);
 void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
 
-employee_t* TR_GetNextEmployee(transfer_t *transfer, employeeType_t type, employee_t *lastEmployee);
-aircraft_t* TR_GetNextAircraft(transfer_t *transfer, aircraft_t *lastAircraft);
 
 void TR_InitStartup(void);
 void TR_Shutdown(void);
