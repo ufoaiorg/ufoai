@@ -243,6 +243,12 @@ void LIST_Delete (linkedList_t **list)
 	*list = NULL;
 }
 
+/**
+ * @param list The linked list to iterator ovr
+ * @param check The check function callback. This is called for every entry in the linked list
+ * @param userdata The userdata that is send to perform the check
+ * @return The linked list pointer that matches the criteria from the check function
+ */
 linkedList_t* LIST_GetNextWithCheck (linkedList_t *list, listCheck_t check, const void *userdata)
 {
 	linkedList_t *l = list;

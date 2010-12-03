@@ -9,10 +9,6 @@ typedef struct linkedList_s {
 	qboolean ptr;	/**< don't call Mem_Free for data if this is @c true */
 } linkedList_t;
 
-typedef struct linkedListIterator_s {
-	linkedList_t* pos;
-} linkedListIterator_t;
-
 /** @brief Assign the next variable from the linked list or @c NULL if the list end is reached */
 #define ASSIGN_VAR(l, type, var) ((var) = (((l) != NULL) ? (type*)(l)->data : NULL))
 /** @brief check whether the next data pointer from the linked list is @c NULL or not, if it is @c NULL the end of the list is reached */
@@ -29,12 +25,7 @@ typedef struct linkedListIterator_s {
  * @return @c true if the value should be used, @c false if it should be skipped
  */
 typedef qboolean (*listCheck_t) (void* data, const void *userdata);
-/**
- * @param list The linked list to iterator ovr
- * @param check The check function callback. This is called for every entry in the linked list
- * @param userdata The userdata that is send to perform the check
- * @return The linked list pointer that matches the criteria from the check function
- */
+
 linkedList_t* LIST_GetNextWithCheck(linkedList_t* list, listCheck_t check, const void *userdata);
 
 /** @brief check whether the next data pointer from the linked list is @c NULL or not, if it is @c NULL the end of the list is reached */
