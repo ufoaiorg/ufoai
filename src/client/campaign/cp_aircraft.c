@@ -42,24 +42,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_aircraft.h"
 
 /**
- * @brief Iterates through the aircraft
- * @param[in] lastAircraft Pointer of the aircraft to iterate from. call with NULL to get the first one.
- */
-aircraft_t* AIR_GetNext (aircraft_t *lastAircraft)
-{
-	return (aircraft_t *)LIST_GetNext(ccs.aircraft, (void*)lastAircraft);
-}
-
-/**
  * @brief Iterates through the aircraft of a base
  * @param[in] lastAircraft Pointer of the aircraft to iterate from. call with NULL to get the first one.
  * @param[in] b The base to get the craft from
+ * @todo optimize this function by removing the LIST_GetNext function here
  */
 aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 {
 	if (b) {
 		aircraft_t *aircraft = lastAircraft;
-		while ((aircraft = AIR_GetNext(aircraft)) != NULL) {
+		while ((aircraft = (aircraft_t *)LIST_GetNext(ccs.aircraft, (void*)aircraft))) {
 			if (aircraft->homebase != b)
 				continue;
 			if (aircraft->status != AIR_CRASHED)
