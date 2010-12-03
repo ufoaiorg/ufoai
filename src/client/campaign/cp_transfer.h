@@ -48,7 +48,6 @@ enum {
 
 /** @brief Transfer informations (they are being stored in ccs.transfers[MAX_TRANSFERS]. */
 typedef struct transfer_s {
-	qboolean active;				/**< True if this transfer is under processing. @todo no longer needed */
 	base_t *destBase;				/**< Pointer to destination base. May not be NULL if active is true. */
 	base_t *srcBase;				/**< Pointer to source base. May be NULL if transfer comes from a mission (alien body recovery). */
 	date_t event;					/**< When the transfer finish process should start. */

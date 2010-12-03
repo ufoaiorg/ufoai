@@ -215,7 +215,6 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 	}
 	transfer.destBase = B_GetFoundedBaseByIDX(base->idx);	/* Destination base. */
 	transfer.srcBase = NULL;	/* Source base. */
-	transfer.active = qtrue;
 
 	alienCargoTypes = AL_GetAircraftAlienCargoTypes(transferAircraft);
 	cargo = AL_GetAircraftAlienCargo(transferAircraft);
@@ -281,7 +280,6 @@ static void TR_TransferEnd (transfer_t *transfer)
 		Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in %s"), destination->name);
 		MSO_CheckAddNewMessage(NT_TRANSFER_COMPLETED_SUCCESS, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	}
-	transfer->active = qfalse;
 	LIST_Remove(&ccs.transfers, transfer);
 }
 
@@ -333,7 +331,6 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	transfer.destBase = transData->transferBase;	/* Destination base. */
 	assert(transfer.destBase);
 	transfer.srcBase = srcBase;	/* Source base. */
-	transfer.active = qtrue;
 
 	for (i = 0; i < csi.numODs; i++) {	/* Items. */
 		if (transData->trItemsTmp[i] > 0) {
@@ -394,8 +391,6 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 		return;
 
 	TR_Foreach(transfer) {
-		if (!transfer->active)
-			continue;
 		if (!transfer->hasAircraft)
 			continue;
 		if (LIST_Remove(&transfer->aircraft, aircraft))
@@ -412,8 +407,6 @@ void TR_TransferRun (void)
 	transfer_t *transfer;
 
 	TR_Foreach(transfer) {
-		if (!transfer->active)
-			continue;
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
@@ -445,8 +438,6 @@ static void TR_ListTransfers_f (void)
 		i++;
 
 		if (transIdx >= 0 && i != transIdx)
-			continue;
-		if (!transfer->active)
 			continue;
 
 		/* @todo: we need a strftime feature to make this easier */
@@ -628,7 +619,6 @@ qboolean TR_LoadXML (mxml_node_t *p)
 
 		transfer.event.day = mxml_GetInt(s, SAVE_TRANSFER_DAY, 0);
 		transfer.event.sec = mxml_GetInt(s, SAVE_TRANSFER_SEC, 0);
-		transfer.active = qtrue;
 
 		/* Initializing some variables */
 		transfer.hasItems = qfalse;
