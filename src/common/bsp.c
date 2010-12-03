@@ -467,7 +467,7 @@ static void CM_MakeTracingNodes (mapTile_t *tile)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *base, const char *name, const lump_t * l, int sX, int sY, int sZ)
+static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *base, const char *name, const lump_t * l, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
 	static routing_t tempMap[ACTOR_MAX_SIZE];
@@ -756,7 +756,7 @@ static void CM_InitBoxHull (mapTile_t *tile)
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static void CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
+static void CM_AddMapTile (const char *name, const qboolean day, const int sX, const int sY, const byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
