@@ -376,7 +376,7 @@ void TR_TransferRun (void)
 	transfer_t *transfer;
 
 	TR_Foreach(transfer) {
-		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
+		if (transfer->event.day > ccs.date.day || (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec)) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
 			return;
