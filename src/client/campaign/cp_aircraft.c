@@ -45,16 +45,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Iterates through the aircraft of a base
  * @param[in] lastAircraft Pointer of the aircraft to iterate from. call with NULL to get the first one.
  * @param[in] b The base to get the craft from
- * @todo optimize this function by removing the LIST_GetNext function here
  */
-aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
+aircraft_t* AIR_GetFirstFromBase (const base_t *b)
 {
 	if (b) {
-		aircraft_t *aircraft = lastAircraft;
-		while ((aircraft = (aircraft_t *)LIST_GetNext(ccs.aircraft, (void*)aircraft))) {
-			if (AIR_IsAircraftOfBase(aircraft, b))
-				return aircraft;
-		}
+		aircraft_t *aircraft;
+		AIR_ForeachFromBase(aircraft, b)
+			return aircraft;
 	}
 
 	return NULL;
@@ -67,7 +64,7 @@ aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
  */
 qboolean AIR_BaseHasAircraft (const base_t *base)
 {
-	return base != NULL && AIR_GetNextFromBase(base, NULL) != NULL;
+	return base != NULL && AIR_GetFirstFromBase(base) != NULL;
 }
 
 /**
@@ -697,8 +694,7 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
 	base = aircraft->homebase;
 
 	i = 0;
-	aircraftInBase = NULL;
-	while ((aircraftInBase = AIR_GetNextFromBase(base, aircraftInBase)) != NULL) {
+	AIR_ForeachFromBase(aircraftInBase, base) {
 		if (aircraftInBase == aircraft)
 			return i;
 		i++;
@@ -720,8 +716,7 @@ aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
 	int i;
 
 	i = 0;
-	aircraft = NULL;
-	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+	AIR_ForeachFromBase(aircraft, base) {
 		if (index == i)
 			return aircraft;
 		i++;
@@ -795,6 +790,15 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 	aircraft_t *aircraft = (aircraft_t *)LIST_Add(&ccs.aircraft, (const byte *)aircraftTemplate, sizeof(*aircraftTemplate))->data;
 	aircraft->homebase = base;
 	return aircraft;
+}
+
+/**
+ * @brief AIR_ForeachFromBase check callback
+ */
+qboolean AIR_CheckBaseListIterator (void *data, const void *base)
+{
+	const aircraft_t *aircraft = (const aircraft_t *)data;
+	return aircraft->homebase == base;
 }
 
 /**
@@ -1003,7 +1007,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	base->capacities[capacity].cur++;
 
 	if (oldBase->aircraftCurrent == aircraft)
-		oldBase->aircraftCurrent = AIR_GetNextFromBase(oldBase, NULL);
+		oldBase->aircraftCurrent = AIR_GetFirstFromBase(oldBase);
 	if (!base->aircraftCurrent)
 		base->aircraftCurrent = aircraft;
 
@@ -1065,7 +1069,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		Cvar_Set("mn_aircraftname", "");
 		Cvar_Set("mn_aircraft_model", "");
 	} else if (base->aircraftCurrent == NULL) {
-		base->aircraftCurrent = AIR_GetNextFromBase(base, NULL);
+		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	}
 
 	/* also update the base menu buttons */

@@ -223,8 +223,8 @@ void AB_UpdateStealthForAllBase (void)
 {
 	base_t *base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
-		aircraft_t *aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+		aircraft_t *aircraft;
+		AIR_ForeachFromBase(aircraft, base) {
 			alienBase_t* alienBase;
 
 			/* Only aircraft on geoscape can detect alien bases */

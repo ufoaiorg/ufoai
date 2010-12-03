@@ -187,7 +187,7 @@ static void testAircraftHandling (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
 	/** @todo we should not assume that initial base has aircraft. It's a campaign parameter */
-	aircraft = AIR_GetNextFromBase(base, NULL);
+	aircraft = AIR_GetFirstFromBase(base);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 
 	/* aircraft should have a template */
@@ -226,7 +226,7 @@ static void testAircraftHandling (void)
 	AIR_Foreach(aircraft) {
 		AIR_DeleteAircraft(aircraft);
 	}
-	aircraft = AIR_GetNextFromBase(base, NULL);
+	aircraft = AIR_GetFirstFromBase(base);
 	CU_ASSERT_PTR_NULL_FATAL(aircraft);
 	count = AIR_BaseCountAircraft(base);
 	CU_ASSERT_EQUAL(count, 0);
@@ -744,12 +744,16 @@ static void testAirFight (void)
 	base = CreateBase("unittestairfight", destination);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
-	aircraft = AIR_GetNextFromBase(base, NULL);
+	cnt = AIR_BaseCountAircraft(base);
+	i = 0;
+	AIR_ForeachFromBase(aircraft, base)
+		i++;
+	CU_ASSERT_EQUAL(i, cnt);
+
+	aircraft = AIR_GetFirstFromBase(base);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 	aircraft->status = AIR_IDLE;
 	CU_ASSERT_TRUE(AIR_IsAircraftOnGeoscape(aircraft));
-
-	cnt = AIR_BaseCountAircraft(base);
 
 	/* prepare the mission */
 	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, qtrue);

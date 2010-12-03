@@ -243,29 +243,14 @@ void LIST_Delete (linkedList_t **list)
 	*list = NULL;
 }
 
-/**
- * @brief Linked list iterator
- * @param list The linked list to iterate over
- * @param lastData The last data entry
- * @note This function isn't cheap - don't use it, use the
- * macro LIST_Foreach wherever possible
- * @deprecated use LIST_Foreach and get rid of this
- */
-void *LIST_GetNext (linkedList_t *list, void *lastData)
+linkedList_t* LIST_GetNextWithCheck (linkedList_t *list, listCheck_t check, const void *userdata)
 {
-	linkedList_t *entry;
-
-	if (LIST_IsEmpty(list))
-		return NULL;
-
-	if (lastData == NULL)
-		return list->data;
-
-	entry = LIST_GetPointer(list, lastData);
-	assert(entry);
-
-	if (entry->next)
-		return entry->next->data;
+	linkedList_t *l = list;
+	while ((l != NULL)) {
+		if (check(l->data, userdata))
+			return l;
+		l = l->next;
+	}
 
 	return NULL;
 }

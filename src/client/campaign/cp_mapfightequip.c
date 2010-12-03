@@ -1079,8 +1079,7 @@ void AII_RepairAircraft (void)
 	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft;
 
-		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+		AIR_ForeachFromBase(aircraft, base) {
 			if (!AIR_IsAircraftInBase(aircraft))
 				continue;
 			aircraft->damage = min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);

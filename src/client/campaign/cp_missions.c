@@ -1415,7 +1415,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	/* after we set this to AIR_CRASHED we can get the next 'valid'
 	 * aircraft to correct the pointer in the homebase */
 	if (aircraft->homebase->aircraftCurrent == aircraft)
-		aircraft->homebase->aircraftCurrent = AIR_GetNextFromBase(aircraft->homebase, NULL);
+		aircraft->homebase->aircraftCurrent = AIR_GetFirstFromBase(aircraft->homebase);
 
 	/* a crashed aircraft is no longer using capacity of the hangars */
 	AIR_UpdateHangarCapForAll(aircraft->homebase);
@@ -1758,7 +1758,7 @@ static void CP_SpawnNewMissions_f (void)
 			return;
 		}
 
-		aircraft = AIR_GetNextFromBase(base, NULL);
+		aircraft = AIR_GetFirstFromBase(base);
 		if (!aircraft) {
 			Com_Printf("No aircraft in base\n");
 			return;

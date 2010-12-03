@@ -300,8 +300,7 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 
 		RADAR_NotifyUFORemovedFromOneRadar(&base->radar, ufo, destroyed);
 
-		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
+		AIR_ForeachFromBase(aircraft, base)
 			RADAR_NotifyUFORemovedFromOneRadar(&aircraft->radar, ufo, destroyed);
 	}
 

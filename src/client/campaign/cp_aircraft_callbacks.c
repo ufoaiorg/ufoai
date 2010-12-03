@@ -225,9 +225,8 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	/** @todo This shouldn't exists. UI should use the global idx as reference */
 	/* compute the ID and... */
-	aircraftInBase = NULL;
 	id = 0;
-	while ((aircraftInBase = AIR_GetNextFromBase(base, aircraftInBase)) != NULL) {
+	AIR_ForeachFromBase(aircraftInBase, base) {
 		if (aircraft == aircraftInBase)
 			break;
 		id++;

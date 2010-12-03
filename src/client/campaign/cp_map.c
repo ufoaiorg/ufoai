@@ -1121,8 +1121,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	maxEventIdx = numMissions + numBases + ccs.numInstallations - 1;
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
-		aircraft_t *aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+		aircraft_t *aircraft;
+		AIR_ForeachFromBase(aircraft, base) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				maxEventIdx++;
 		}

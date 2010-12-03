@@ -857,10 +857,10 @@ qboolean B_BuildingDestroy (building_t* building)
  */
 static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 {
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 	aircraft_t *prevAircraft = NULL;
 
-	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			base_t *newbase = NULL;
 			qboolean moved = qfalse;
@@ -2006,7 +2006,7 @@ void B_SetCurrentSelectedBase (const base_t *base)
 		if (b == base) {
 			b->selected = qtrue;
 			if (b->aircraftCurrent == NULL)
-				b->aircraftCurrent = AIR_GetNextFromBase(b, NULL);
+				b->aircraftCurrent = AIR_GetFirstFromBase(b);
 		} else
 			b->selected = qfalse;
 	}

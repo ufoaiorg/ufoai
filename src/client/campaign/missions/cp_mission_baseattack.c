@@ -68,7 +68,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 
 	/* we really don't want to use the fake aircraft anywhere */
 	if (base)
-		base->aircraftCurrent = AIR_GetNextFromBase(base, NULL);
+		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	ccs.missionAircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
