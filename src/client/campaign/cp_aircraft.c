@@ -52,9 +52,7 @@ aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 	if (b) {
 		aircraft_t *aircraft = lastAircraft;
 		while ((aircraft = (aircraft_t *)LIST_GetNext(ccs.aircraft, (void*)aircraft))) {
-			if (aircraft->homebase != b)
-				continue;
-			if (aircraft->status != AIR_CRASHED)
+			if (AIR_IsAircraftOfBase(aircraft, b))
 				return aircraft;
 		}
 	}
