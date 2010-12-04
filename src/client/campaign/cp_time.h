@@ -34,6 +34,7 @@ void CL_GameTimeSlow(void);
 void CL_SetGameTime_f(void);
 
 qboolean Date_LaterThan(const date_t *now, const date_t *compare);
+qboolean Date_IsDue(const date_t *date);
 date_t Date_Add(date_t a, date_t b);
 date_t Date_Random(date_t minFrame, date_t maxFrame);
 const char *Date_GetMonthName(int month);

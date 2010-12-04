@@ -955,6 +955,42 @@ static void testLoad (void)
 	CU_ASSERT_EQUAL(i, 1);
 }
 
+static void testDateHandling (void)
+{
+	date_t date;
+	date.day = 300;
+	date.sec = 300;
+
+	ccs.date = date;
+
+	CU_ASSERT_TRUE(Date_IsDue(&date));
+	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
+
+	date.day = 299;
+	date.sec = 310;
+
+	CU_ASSERT_FALSE(Date_IsDue(&date));
+	CU_ASSERT_TRUE(Date_LaterThan(&ccs.date, &date));
+
+	date.day = 301;
+	date.sec = 0;
+
+	CU_ASSERT_TRUE(Date_IsDue(&date));
+	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
+
+	date.day = 300;
+	date.sec = 299;
+
+	CU_ASSERT_FALSE(Date_IsDue(&date));
+	CU_ASSERT_TRUE(Date_LaterThan(&ccs.date, &date));
+
+	date.day = 300;
+	date.sec = 301;
+
+	CU_ASSERT_TRUE(Date_IsDue(&date));
+	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
+}
+
 /* https://sourceforge.net/tracker/index.php?func=detail&aid=3090011&group_id=157793&atid=805242 */
 static void test3090011 (void)
 {
@@ -1069,6 +1105,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testLoad) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testDateHandling) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)

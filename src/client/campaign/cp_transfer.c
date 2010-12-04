@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../cl_shared.h"
 #include "cp_campaign.h"
+#include "cp_time.h"
 #include "save/save_transfer.h"
 #include "cp_transfer_callbacks.h"
 #include "../ui/ui_main.h"
@@ -376,7 +377,7 @@ void TR_TransferRun (void)
 	transfer_t *transfer;
 
 	TR_Foreach(transfer) {
-		if (transfer->event.day > ccs.date.day || (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec)) {
+		if (Date_IsDue(&transfer->event)) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
 			return;

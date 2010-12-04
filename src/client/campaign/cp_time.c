@@ -175,7 +175,7 @@ void CL_SetGameTime_f (void)
 }
 
 /**
- * @brief Check wheter given date and time is later than current date.
+ * @brief Check whether the given date and time is later than current date.
  * @param[in] now Current date.
  * @param[in] compare Date to compare.
  * @return True if current date is later than given one.
@@ -188,6 +188,22 @@ qboolean Date_LaterThan (const date_t *now, const date_t *compare)
 		return qfalse;
 	if (now->sec > compare->sec)
 		return qtrue;
+	return qfalse;
+}
+
+/**
+ * @brief Checks whether a given date is equal or later than the current campaign date
+ * @param date The date to check
+ * @return @c true if the given date is equal or later than the current campaign date, @c false otherwise
+ */
+qboolean Date_IsDue (const date_t *date)
+{
+	if (date->day > ccs.date.day)
+		return qtrue;
+
+	else if (ccs.date.day == date->day && ccs.date.sec <= date->sec)
+		return qtrue;
+
 	return qfalse;
 }
 
