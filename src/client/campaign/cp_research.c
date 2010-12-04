@@ -152,7 +152,7 @@ void RS_MarkOneResearchable (technology_t* tech)
  * @param[in] requiredAND Pointer to a list of AND-related requirements.
  * @param[in] requiredOR Pointer to a list of OR-related requirements.
  * @param[in] base In what base to check the "collected" items etc..
- * @return @c true if all requirements are satisfied otherwise @cfalse.
+ * @return @c true if all requirements are satisfied otherwise @c false.
  * @todo Add support for the "delay" value.
  */
 qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requirements_t *requiredOR, const base_t *base)

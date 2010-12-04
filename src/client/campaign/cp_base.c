@@ -1250,6 +1250,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 /**
  * @brief Setup buildings and equipment for first base. Uses the campaign
  * scriptable first base template to place the buildings in the base.
+ * @param[in] campaign The campaign data structure
  * @param[in,out] base The base to set up
  * @sa B_SetUpBase
  */

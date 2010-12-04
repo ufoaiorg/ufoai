@@ -144,7 +144,7 @@ void Cbuf_AddText (const char *text)
 
 /**
  * @brief Adds command text immediately after the current command
- * @note Adds a \n to the text
+ * @note Adds a @c \\n to the text
  * @todo actually change the command buffer to do less copying
  */
 void Cbuf_InsertText (const char *text)
@@ -199,7 +199,7 @@ void Cbuf_InsertFromDefer (void)
 
 /**
  * @sa Cmd_ExecuteString
- * Pulls off \n terminated lines of text from the command buffer and sends them
+ * Pulls off @c \\n terminated lines of text from the command buffer and sends them
  * through Cmd_ExecuteString, stopping when the buffer is empty.
  * Normally called once per frame, but may be explicitly invoked.
  * @note Do not call inside a command function!
@@ -508,8 +508,9 @@ static cmd_function_t *cmd_functions;	/* possible commands to execute */
 static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
 
 /**
+ * @brief Return the number of arguments of the current command.
+ * "command parameter" will result in a @c argc of 2, not 1.
  * @return the number of arguments including the command itself.
- * @example "command parameter" will result in a argc of 2, not 1
  * @sa Cmd_Argv
  */
 int Cmd_Argc (void)

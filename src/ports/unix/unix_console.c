@@ -67,9 +67,9 @@ static void CON_FlushIn (void)
 
 /**
  * @brief Output a backspace
- * @note it seems on some terminals just sending '\b' is not enough so instead we
- * send "\b \b"
- * @todo there may be a way to find out if '\b' alone would work though
+ * @note it seems on some terminals just sending @c '\\b' is not enough so instead we
+ * send @c "\\b \\b"
+ * @todo there may be a way to find out if @c '\\b' alone would work though
  */
 static void Sys_TTYDeleteCharacter (void)
 {

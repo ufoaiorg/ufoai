@@ -509,6 +509,7 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 
 /**
  * @brief Functions that should be called with a minimum time lapse (will be called at least every DETECTION_INTERVAL)
+ * @param[in] campaign The campaign data structure
  * @param[in] dt Ellapsed second since last call.
  * @param[in] updateRadarOverlay true if radar overlay should be updated (only for drawing purpose)
  * @sa CL_CampaignRun
@@ -1013,6 +1014,9 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_
  * @brief Handles the auto mission for none storyrelated missions
  * @param[in,out] mission The mission to auto play
  * @param[in,out] aircraft The aircraft (or fake aircraft in case of a base attack)
+ * @param[in] campaign The campaign data structure
+ * @param[out] results Result of the mission
+ * @param[in] battleParameters Structure that holds the battle related parameters
  * @sa GAME_CP_MissionAutoGo_f
  * @sa CL_Drop
  * @sa CP_MissionEnd

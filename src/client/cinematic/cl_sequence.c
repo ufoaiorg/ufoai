@@ -429,6 +429,8 @@ void SEQ_SendClickEvent (sequenceContext_t *context)
 /**
  * @brief Define the position of the viewport on the screen
  * @param context Context
+ * @param pos Position of the context screen
+ * @param size Size of the context screen
  */
 void SEQ_SetView (sequenceContext_t *context, vec2_t pos, vec2_t size)
 {

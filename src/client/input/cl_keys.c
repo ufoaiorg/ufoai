@@ -567,6 +567,7 @@ const char *Key_KeynumToString (int keynum)
 /**
  * @brief Return the key binding for a given script command
  * @param[in] binding The script command to bind keynum to
+ * @param space Namespace of the key binding
  * @sa Key_SetBinding
  * @return the binded key or empty string if not found
  */

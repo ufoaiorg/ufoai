@@ -106,7 +106,7 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
  * @param[in,out] ent The actor edict to check the settings for
  * @param[in] fmIdx The fire mode index that should be used for reaction fire
  * @param[in] hand The hand that should be used for reaction fire
- * @param[in] ob The object/weapon for the reaction fire
+ * @param[in] od The object/weapon for the reaction fire
  */
 void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
 {

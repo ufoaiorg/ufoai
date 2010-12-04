@@ -43,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Iterates through the aircraft of a base
- * @param[in] lastAircraft Pointer of the aircraft to iterate from. call with NULL to get the first one.
  * @param[in] b The base to get the craft from
  */
 aircraft_t* AIR_GetFirstFromBase (const base_t *b)
