@@ -38,7 +38,7 @@ csi_t csi;
 static int com_argc;
 static const char *com_argv[MAX_NUM_ARGVS + 1];
 
-static jmp_buf abortframe; /* an ERR_DROP occured, exit the entire frame */
+static jmp_buf abortframe; /* an ERR_DROP occurred, exit the entire frame */
 
 static vPrintfPtr_t vPrintfPtr = Com_vPrintf;
 
@@ -472,10 +472,12 @@ void Com_Error (int code, const char *fmt, ...)
 	}
 }
 
-void Com_Init (void)
+void Com_SetExceptionCallback (exceptionCallback_t callback)
 {
+	static exceptionCallback_t callbackFunc;
+	callbackFunc = callback;
 	if (setjmp(abortframe))
-		Sys_Error("Error during initialization");
+		callbackFunc();
 }
 
 void Com_Drop (void)
@@ -993,6 +995,11 @@ vPrintfPtr_t Qcommon_GetPrintFunction (void)
 	return vPrintfPtr;
 }
 
+static void Qcommon_InitError (void)
+{
+	Sys_Error("Error during initialization");
+}
+
 /**
  * @brief Init function
  * @sa Com_ParseScripts
@@ -1017,7 +1024,7 @@ void Qcommon_Init (int argc, const char **argv)
 	com_genericPool = Mem_CreatePool("Generic");
 	com_networkPool = Mem_CreatePool("Network");
 
-	Com_Init();
+	Com_SetExceptionCallback(Qcommon_InitError);
 
 	memset(&csi, 0, sizeof(csi));
 

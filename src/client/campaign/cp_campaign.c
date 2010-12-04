@@ -546,6 +546,20 @@ qboolean CP_OnGeoscape (void)
 const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
 
 /**
+ * @brief Ensure that the day always matches the seconds. If the seconds
+ * per day limit is reached, the seconds are reset and the day is increased.
+ * @param seconds The seconds to add to the campaign date
+ */
+static inline void CP_AdvanceTimeBySeconds (int seconds)
+{
+	ccs.date.sec += seconds;
+	while (ccs.date.sec >= SECONDS_PER_DAY) {
+		ccs.date.sec -= SECONDS_PER_DAY;
+		ccs.date.day++;
+	}
+}
+
+/**
  * @brief Called every frame when we are in geoscape view
  * @note Called for node types UI_MAP and UI_3DMAP
  * @sa NAT_HandleBudget
@@ -561,22 +575,25 @@ void CL_CampaignRun (campaign_t *campaign)
 		/* calculate new date */
 		int currenthour;
 		int currentmin;
+		int currentsecond = ccs.date.sec;
+		int currentday = ccs.date.day;
 		int i;
-		const int currentinterval = (int)floor(ccs.date.sec) % DETECTION_INTERVAL;
+		const int currentinterval = (int)floor(currentsecond) % DETECTION_INTERVAL;
 		int dt = DETECTION_INTERVAL - currentinterval;
 		dateLong_t date;
 		const int checks = (currentinterval + (int)floor(ccs.timer)) / DETECTION_INTERVAL;
 
-		currenthour = (int)floor(ccs.date.sec / SECONDS_PER_HOUR);
-		currentmin = (int)floor(ccs.date.sec / SECONDS_PER_MINUTE);
+		currenthour = (int)floor(currentsecond / SECONDS_PER_HOUR);
+		currentmin = (int)floor(currentsecond / SECONDS_PER_MINUTE);
 
 		/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
 		 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
 		 *	- Check if any new mission is detected
 		 *	- Update stealth value of phalanx bases and installations ; alien bases */
 		for (i = 0; i < checks; i++) {
-			ccs.date.sec += dt;
 			ccs.timer -= dt;
+			currentsecond += dt;
+			CP_AdvanceTimeBySeconds(dt);
 			CL_CampaignFunctionPeriodicCall(campaign, dt, qfalse);
 
 			/* if something stopped time, we must stop here the loop */
@@ -589,19 +606,20 @@ void CL_CampaignRun (campaign_t *campaign)
 
 		dt = (int)floor(ccs.timer);
 
-		ccs.date.sec += dt;
+		CP_AdvanceTimeBySeconds(dt);
+		currentsecond += dt;
 		ccs.timer -= dt;
 
 		/* compute minutely events  */
 		/* (this may run multiple times if the time stepping is > 1 minute at a time) */
-		while (currentmin < (int)floor(ccs.date.sec / SECONDS_PER_MINUTE)) {
+		while (currentmin < (int)floor(currentsecond / SECONDS_PER_MINUTE)) {
 			currentmin++;
 			PR_ProductionRun();
 		}
 
 		/* compute hourly events  */
 		/* (this may run multiple times if the time stepping is > 1 hour at a time) */
-		while (currenthour < (int)floor(ccs.date.sec / SECONDS_PER_HOUR)) {
+		while (currenthour < (int)floor(currentsecond / SECONDS_PER_HOUR)) {
 			currenthour++;
 			RS_ResearchRun();
 			UR_ProcessActive();
@@ -612,9 +630,7 @@ void CL_CampaignRun (campaign_t *campaign)
 		}
 
 		/* daily events */
-		while (ccs.date.sec > SECONDS_PER_DAY) {
-			ccs.date.sec -= SECONDS_PER_DAY;
-			ccs.date.day++;
+		for (i = currentday; i < ccs.date.day; i++) {
 			/* every day */
 			B_UpdateBaseData();
 			INS_UpdateInstallationData();

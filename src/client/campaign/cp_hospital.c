@@ -39,13 +39,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 {
-	float healing = 1.0f;
-
-	if (hospital)
-		healing = GET_HP_HEALING(chr->score.skills[ABILITY_POWER]);
-
 	assert(chr);
 	if (chr->HP < chr->maxHP) {
+		float healing = 1.0f;
+
+		if (hospital)
+			healing = GET_HP_HEALING(chr->score.skills[ABILITY_POWER]);
+
 		/* if the character has less that 100 hitpoints, he will be disadvantaged by using the percentage
 		 * method of allocating hitpoints.  So just give the character "healing" as Hitpoints, otherwise
 		 * allocate "healing" as a percentage of the characters total hitpoints. */
@@ -68,7 +68,7 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
  */
 void HOS_HospitalRun (void)
 {
-	int type;
+	employeeType_t type;
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		employee_t *employee;

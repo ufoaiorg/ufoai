@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/ui/ui_main.h"
 #include "../client/campaign/cp_campaign.h"
 #include "../client/campaign/cp_map.h"
+#include "../client/campaign/cp_hospital.h"
 #include "../client/campaign/cp_missions.h"
 #include "../client/campaign/cp_nation.h"
 #include "../client/campaign/cp_overlay.h"
@@ -923,13 +924,38 @@ static void testSaveLoad (void)
 
 static void testCampaignRun (void)
 {
+	int i;
+	int deltaDays;
+	campaign_t *campaign;
+	base_t *base;
+	const vec2_t destination = { 10, 10 };
+
 	ResetCampaignData();
 
-	cls.frametime = 1;
-	ccs.gameTimeScale = 1;
+	base = CreateBase("unittestcampaignrun", destination);
 
-	CL_CampaignRun(GetCampaign());
-	/** @todo implement a check here */
+	campaign = GetCampaign();
+
+	RS_InitTree(campaign, qfalse);
+
+	BS_InitMarket(campaign);
+
+	cls.frametime = 1;
+
+	deltaDays = ccs.date.day;
+
+	while (deltaDays < 10) {
+		if (++i > 10000000)
+			UFO_CU_FAIL_MSG_FATAL(va("Time did not advance for 10 days, only %i", deltaDays));
+		ccs.gameTimeScale = 1;
+		CL_CampaignRun(campaign);
+		deltaDays = ccs.date.day - deltaDays;
+	}
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 static void testLoad (void)
@@ -991,6 +1017,48 @@ static void testDateHandling (void)
 	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
 }
 
+static void testHospital (void)
+{
+	base_t *base;
+	const vec2_t destination = { 10, 10 };
+	employeeType_t type;
+	int i;
+
+	ResetCampaignData();
+
+	base = CreateBase("unittesthospital", destination);
+
+	i = 0;
+	/* hurt all employees */
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee;
+		E_Foreach(type, employee) {
+			if (!E_IsHired(employee))
+				continue;
+			employee->chr.HP = employee->chr.maxHP - 10;
+			i++;
+		}
+	}
+	CU_ASSERT_NOT_EQUAL(i, 0);
+
+	HOS_HospitalRun();
+
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee;
+		E_Foreach(type, employee) {
+			if (!E_IsHired(employee))
+				continue;
+			if (employee->chr.HP == employee->chr.maxHP - 10)
+				UFO_CU_FAIL_MSG_FATAL(va("%i/%i", employee->chr.HP, employee->chr.maxHP));
+		}
+	}
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
+}
+
 /* https://sourceforge.net/tracker/index.php?func=detail&aid=3090011&group_id=157793&atid=805242 */
 static void test3090011 (void)
 {
@@ -1005,6 +1073,15 @@ static void test3090011 (void)
 	UFO_CU_ASSERT_TRUE_MSG(success, error);
 }
 
+/* just a dummy exception callback for the end of a campaign */
+static void test3113400ExceptionCallback (void)
+{
+	/* the game mode must be ended, otherwise it was just a normal
+	 * exception, not the one we are expecting here */
+	CU_ASSERT_PTR_NULL(cls.gametype);
+}
+
+/* http://sourceforge.net/tracker/index.php?func=detail&aid=3113400&group_id=157793&atid=805242 */
 static void test3113400 (void)
 {
 	const char *error = NULL;
@@ -1021,6 +1098,8 @@ static void test3113400 (void)
 
 	campaign = ccs.curCampaign;
 
+	Com_SetExceptionCallback(test3113400ExceptionCallback);
+
 	i = 0;
 	for (;;) {
 		i++;
@@ -1030,6 +1109,10 @@ static void test3113400 (void)
 		if (i > 100000)
 			break;
 	}
+
+	/* we should not get to this place because the campaign end calls the drop function, and
+	 * thus our exception callback is executed */
+	UFO_CU_FAIL_MSG_FATAL("The campaign was not lost");
 }
 
 int UFO_AddCampaignTests (void)
@@ -1108,6 +1191,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testDateHandling) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testHospital) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)

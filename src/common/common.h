@@ -215,7 +215,9 @@ void Com_EndRedirect(void);
 void Com_MakeTimestamp(char* ts, const size_t tslen);
 void Com_vPrintf(const char *fmt, va_list);
 
-void Com_Init(void);
+typedef void (*exceptionCallback_t)(void);
+
+void Com_SetExceptionCallback(exceptionCallback_t callback);
 void Com_Drop(void) __attribute__((noreturn));
 void Com_Quit(void);
 void Com_WriteConfigToFile(const char *filename);
@@ -248,8 +250,8 @@ extern cvar_t* sys_os;
  * @sa CL_DateConvertLong
  */
 typedef struct date_s {
-	int day;	/**< Number of ellapsed days since 1st january of year 0 */
-	int sec;	/**< Number of ellapsed seconds since the begining of current day */
+	int day;	/**< Number of elapsed days since 1st january of year 0 */
+	int sec;	/**< Number of elapsed seconds since the beginning of current day */
 } date_t;
 
 /* Time Constants */
@@ -349,7 +351,6 @@ void Com_ClearArgv(int arg);
 unsigned int Com_HashKey(const char *name, int hashsize);
 const char* Com_MacroExpandString(const char *text);
 
-void Com_Init(void);
 void Com_InitArgv(int argc, const char **argv);
 
 qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset);

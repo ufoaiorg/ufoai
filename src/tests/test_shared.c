@@ -54,9 +54,14 @@ void TEST_vPrintf (const char *fmt, va_list argptr)
 	fflush(stderr);
 }
 
+static void Test_InitError (void)
+{
+	Sys_Error("Error during initialization");
+}
+
 void TEST_Init (void)
 {
-	Com_Init();
+	Com_SetExceptionCallback(Test_InitError);
 
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
