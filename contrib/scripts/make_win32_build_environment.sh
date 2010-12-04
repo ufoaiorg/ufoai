@@ -205,6 +205,8 @@ download()
 
 update()
 {
+	mkdir -p "${DOWNLOAD_DIR}"
+
 	infooutput "try to find WINenvVER"
 	local cur_env=$(cat /bin/WINenvVER)
 
