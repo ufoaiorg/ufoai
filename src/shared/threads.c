@@ -1,5 +1,5 @@
 /**
- * @file threads.c
+ * @file shared/threads.c
  * @brief Thread function wrappers
  * @note Manage a priority queue as a heap - the heap is implemented as an array.
  */

@@ -1,5 +1,5 @@
 /**
- * @file bsp.c
+ * @file ufo2map/bsp.c
  */
 
 /*

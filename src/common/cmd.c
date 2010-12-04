@@ -520,7 +520,7 @@ int Cmd_Argc (void)
 /**
  * @brief Returns a given argument
  * @param[in] arg The argument at position arg in cmd_argv. @c 0 will return the command name.
- * @return the argument from cmd_argv
+ * @return The argument from @c cmd_argv
  * @sa Cmd_Argc
  */
 const char *Cmd_Argv (int arg)

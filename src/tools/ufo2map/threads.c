@@ -1,3 +1,7 @@
+/**
+ * @file ufo2map/threads.c
+ */
+
 /*
 Copyright(c) 1997-2001 Id Software, Inc.
 Copyright(c) 2002 The Quakeforge Project.
