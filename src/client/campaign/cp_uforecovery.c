@@ -53,7 +53,7 @@ void UR_ProcessActive (void)
 
 		if (ufo->status == SUFO_STORED)
 			continue;
-		if (ufo->arrive.day > ccs.date.day || (ufo->arrive.day == ccs.date.day && ufo->arrive.sec > ccs.date.sec))
+		if (Date_LaterThan(&ufo->arrive, &ccs.date))
 			continue;
 
 		ufo->status = SUFO_STORED;
