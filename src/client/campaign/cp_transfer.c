@@ -770,13 +770,27 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
+			qboolean capacityWarning = qfalse;
 			for (i = 0; i < ccs.numAliensTD; i++) {
-				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
-					AL_ChangeAliveAlienNumber(destination, &(destination->alienscont[i]), transfer->alienAmount[i][TRANS_ALIEN_ALIVE]);
-				}
+				/* dead aliens */
 				if (transfer->alienAmount[i][TRANS_ALIEN_DEAD] > 0) {
 					destination->alienscont[i].amountDead += transfer->alienAmount[i][TRANS_ALIEN_DEAD];
 				}
+				/* alive aliens */
+				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
+					int amount = min(transfer->alienAmount[i][TRANS_ALIEN_ALIVE], CAP_GetMax(destination, CAP_ALIENS) - CAP_GetCurrent(destination, CAP_ALIENS));
+
+					if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] != amount)
+						capacityWarning = qtrue;
+					if (amount < 1)
+						continue;
+
+					AL_ChangeAliveAlienNumber(destination, &(destination->alienscont[i]), amount);
+				}
+			}
+			if (capacityWarning) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have enough Alien Containment space, some Aliens are removed!"), destination->name);
+				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
 		}
 	}
@@ -1657,7 +1671,7 @@ void TR_TransferCheck (void)
 		transfer_t *transfer = &ccs.transfers[i];
 		if (!transfer->active)
 			continue;
-		if (transfer->event.day > ccs.date.day || (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec)) {
+		if (transfer->event.day < ccs.date.day || (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec)) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
 			REMOVE_ELEM(ccs.transfers, i, ccs.numTransfers);
