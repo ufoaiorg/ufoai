@@ -2144,6 +2144,15 @@ static void CL_DebugPath_f (void)
 		return;
 
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->map, actorSize, x, y, dir, cl.leInlineModelList);
+
+#if 0
+	{
+	pos3_t boxmin = {118,119,0};
+	pos3_t boxmax = {130,122,1};
+	Grid_RecalcBoxRouting(cl.mapTiles, cl.mapData->map, boxmin, boxmax, cl.leInlineModelList);
+	}
+#endif
+
 	CL_DebugPathDisplay(actorSize, x, y, z);
 
 }
