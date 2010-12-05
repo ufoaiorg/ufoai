@@ -59,6 +59,11 @@ static void Test_InitError (void)
 	Sys_Error("Error during initialization");
 }
 
+static void Test_RunError (void)
+{
+	Sys_Error("There was a Com_Error or Com_Drop call during the execution of this test");
+}
+
 void TEST_Init (void)
 {
 	Com_SetExceptionCallback(Test_InitError);
@@ -79,4 +84,6 @@ void TEST_Init (void)
 	Swap_Init();
 
 	memset(&csi, 0, sizeof(csi));
+
+	Com_SetExceptionCallback(Test_RunError);
 }
