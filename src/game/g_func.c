@@ -178,11 +178,15 @@ static void Door_SlidingUse (edict_t *door)
 	 * shifted when the door state changes. As the mins and maxs of the aabb are absolute
 	 * world coordinates in the map we have to translate the position by the above
 	 * calculated movement vector */
+#if 0
 	/** @todo this is not yet working for tracing and pathfinding - check what must be done to
 	 * allow shooting and walking through the opened door */
-	/*VectorAdd(door->origin, distanceVec, door->origin); */
+	VectorAdd(door->origin, distanceVec, door->origin);
+	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
+#else
 	VectorAdd(door->mins, distanceVec, door->mins);
 	VectorAdd(door->maxs, distanceVec, door->maxs);
+#endif
 }
 
 /**
