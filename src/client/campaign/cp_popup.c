@@ -102,7 +102,8 @@ POPUP_HOMEBASE
  */
 qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 {
-	int baseIdx, homebase, numAvailableBases = 0;
+	int homebase;
+	int numAvailableBases = 0;
 	baseCapacities_t capacity;
 	linkedList_t* popupListText = NULL;
 	base_t *base;
@@ -129,7 +130,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 			msg = AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity);
 			if (!msg) {
 				msg = _("base can hold aircraft");
-				LIST_Add(&popupListData, (byte *)&baseIdx, sizeof(int));
+				LIST_Add(&popupListData, (byte *)&base->idx, sizeof(int));
 				numAvailableBases++;
 			} else {
 				LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
