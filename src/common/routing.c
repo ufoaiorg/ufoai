@@ -424,9 +424,12 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 	start[2] += UNIT_HEIGHT / 2 - QUANT; /* This one QUANT unit below initial. */
 	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
 
+#ifdef DEBUG
+	/** @todo remove me */
 	/* just a place to place a breakpoint */
 	if (x == 126 && y == 121 && actorSize == 1)
 		i = 17;
+#endif
 
 	/*
 	 * Trace for a floor.  Steps:
@@ -1502,7 +1505,6 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
-	int new_z; /**< The last z value processed by the tracing function.  */
 	RT_data_t rtd;	/* the essential data passed down the calltree */
 
 	/* get the neighbor cell's coordinates */
@@ -1514,9 +1516,13 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
 
+#ifdef DEBUG
+	/** @todo remove me */
 	/* just a place to place a breakpoint */
-	if (x == 126 && y == 121 && dir == 3)
-		new_z = 17;
+	if (x == 126 && y == 121 && dir == 3) {
+		z = 17;
+	}
+#endif
 
 	/* Ensure that the current coordinates are valid. */
 	RT_CONN_TEST(map, actorSize, x, y, z, dir);
@@ -1544,7 +1550,8 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 
 	/* Main loop */
 	for (z = 0; z < PATHFINDING_HEIGHT; z++) {
-		new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
+		/* The last z value processed by the tracing function.  */
+		const int new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
 		assert(new_z >= z);
 		z = new_z;
 	}

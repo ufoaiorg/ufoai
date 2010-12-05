@@ -146,6 +146,6 @@ DEBUGGING CODE
 
 #ifdef DEBUG
 void RT_DumpWholeMap(mapTiles_t *mapTiles, const routing_t *map);
-int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list);
+int RT_DebugSpecial(mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list);
 #endif
 void RT_WriteCSVFiles(const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);
