@@ -124,6 +124,8 @@ static void CMod_LoadSurfaces (mapTile_t *tile, const byte *base, const lump_t *
 
 
 /**
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
@@ -176,6 +178,8 @@ static void CMod_LoadNodes (mapTile_t *tile, const byte *base, const lump_t * l,
 }
 
 /**
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
@@ -211,6 +215,8 @@ static void CMod_LoadBrushes (mapTile_t *tile, const byte *base, const lump_t * 
 }
 
 /**
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
@@ -262,6 +268,8 @@ static void CMod_LoadLeafs (mapTile_t *tile, const byte *base, const lump_t * l)
 }
 
 /**
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
@@ -308,6 +316,8 @@ static void CMod_LoadPlanes (mapTile_t *tile, const byte *base, const lump_t * l
 }
 
 /**
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
@@ -344,6 +354,8 @@ static void CMod_LoadLeafBrushes (mapTile_t *tile, const byte *base, const lump_
 }
 
 /**
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
@@ -459,6 +471,7 @@ static void CM_MakeTracingNodes (mapTile_t *tile)
 }
 
 /**
+ * @param[in] mapData The loaded data is stored here.
  * @param[in] name The name of the maptile
  * @param[in] l Routing lump ... (routing data lump from bsp file)
  * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
@@ -579,6 +592,9 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 
 /**
  * @note Transforms coordinates and stuff for assembled maps
+ * @param[in] mapData The loaded data is stored here.
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * loaded map tiles.
@@ -749,6 +765,8 @@ static void CM_InitBoxHull (mapTile_t *tile)
  * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
  * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 up to PATHFINDING_HEIGHT are allowed
+ * @param[in] mapData The loaded data is stored here.
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @note The sX and sY values are grid positions - max. grid size is PATHFINDING_WIDTH - unit size is
  * UNIT_SIZE => ends up at 2*MAX_WORLD_WIDTH (the worldplace size - or [-MAX_WORLD_WIDTH, MAX_WORLD_WIDTH])
  * @return The checksum of the maptile
