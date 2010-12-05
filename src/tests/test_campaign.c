@@ -1073,48 +1073,6 @@ static void test3090011 (void)
 	UFO_CU_ASSERT_TRUE_MSG(success, error);
 }
 
-/* just a dummy exception callback for the end of a campaign */
-static void test3113400ExceptionCallback (void)
-{
-	/* the game mode must be ended, otherwise it was just a normal
-	 * exception, not the one we are expecting here */
-	CU_ASSERT_PTR_NULL(cls.gametype);
-}
-
-/* http://sourceforge.net/tracker/index.php?func=detail&aid=3113400&group_id=157793&atid=805242 */
-static void test3113400 (void)
-{
-	const char *error = NULL;
-	qboolean success;
-	campaign_t* campaign;
-	int i;
-
-	ResetCampaignData();
-
-	CP_InitOverlay();
-
-	success = SAV_GameLoad("3113400", &error);
-	UFO_CU_ASSERT_TRUE_MSG(success, error);
-
-	campaign = ccs.curCampaign;
-
-	Com_SetExceptionCallback(test3113400ExceptionCallback);
-
-	i = 0;
-	for (;;) {
-		i++;
-		CL_GameTimeFast();
-		CL_CampaignRun(campaign);
-
-		if (i > 100000)
-			break;
-	}
-
-	/* we should not get to this place because the campaign end calls the drop function, and
-	 * thus our exception callback is executed */
-	UFO_CU_FAIL_MSG_FATAL("The campaign was not lost");
-}
-
 int UFO_AddCampaignTests (void)
 {
 	/* add a suite to the registry */
@@ -1197,9 +1155,6 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(campaignSuite, test3113400) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
