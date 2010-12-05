@@ -2143,7 +2143,9 @@ static void CL_DebugPath_f (void)
 	if (mouseSpace != MS_WORLD)
 		return;
 
+	RT_DebugSpecial(cl.mapTiles, cl.mapData->map, actorSize, x, y, dir, cl.leInlineModelList);
 	CL_DebugPathDisplay(actorSize, x, y, z);
+
 }
 #endif
 

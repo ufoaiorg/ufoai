@@ -424,6 +424,10 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 	start[2] += UNIT_HEIGHT / 2 - QUANT; /* This one QUANT unit below initial. */
 	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
 
+	/* just a place to place a breakpoint */
+	if (x == 126 && y == 121 && actorSize == 1)
+		i = 17;
+
 	/*
 	 * Trace for a floor.  Steps:
 	 * 1. Start at the top of the designated cell and scan toward the model's base.
@@ -1636,4 +1640,33 @@ void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipo
 		}
 		FS_CloseFile(&f);
 	}
+}
+/**
+ * @brief A debug function to be called from CL_DebugPath_f
+ * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
+ * @param[in] map Routing table of the current loaded map
+ * @param[in] actorSize The size of the actor, in units
+ * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
+ * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
+ * @param[in] dir The direction to test for a connection through
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
+ */
+int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list)
+{
+	int z = 0; /**< The current z value that we are testing. */
+	int new_z; /**< The last z value processed by the tracing function.  */
+	RT_data_t rtd;	/* the essential data passed down the calltree */
+
+	/* get the neighbor cell's coordinates */
+	const int ax = x + dvecs[dir][0];
+	const int ay = y + dvecs[dir][1];
+
+	/* build the param list passed to most of the RT_* functions */
+	rtd.mapTiles = mapTiles;
+	rtd.map = map;
+	rtd.actorSize = actorSize;
+	rtd.list = list;
+
+	new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
+	return new_z;
 }
