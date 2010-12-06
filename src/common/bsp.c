@@ -40,6 +40,8 @@ MAP LOADING
 
 /**
  * @brief Loads brush entities like func_door and func_breakable
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l The lump to load the data from
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
@@ -87,6 +89,8 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
 
 
 /**
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
@@ -471,6 +475,8 @@ static void CM_MakeTracingNodes (mapTile_t *tile)
 }
 
 /**
+ * @param[in] tile Stores the data of the map tile
+ * @param[in] base The start of the data loaded from the file.
  * @param[in] mapData The loaded data is stored here.
  * @param[in] name The name of the maptile
  * @param[in] l Routing lump ... (routing data lump from bsp file)
