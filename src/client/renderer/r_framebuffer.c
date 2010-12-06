@@ -226,7 +226,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	if (depth) {
 		qglGenRenderbuffersEXT(1, &buf->depth);
 		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
-		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, buf->width, buf->height);
+		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, buf->width, buf->height);
 		R_CheckError();
 	} else {
 		buf->depth = 0;
