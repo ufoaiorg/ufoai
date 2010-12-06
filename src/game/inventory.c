@@ -62,7 +62,8 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 /**
  * @brief Add an item to a specified container in a given inventory.
  * @note Set x and y to NONE if the item should get added to an automatically chosen free spot in the container.
- * @param[in] i Pointer to inventory definition, to which we will add item.
+ * @param[in] self The inventory interface pointer
+ * @param[in] inv Pointer to inventory definition, to which we will add item.
  * @param[in] item Item to add to given container (needs to have "rotated" tag already set/checked, this is NOT checked here!)
  * @param[in] container Container in given inventory definition, where the new item will be stored.
  * @param[in] x The x location in the container.
@@ -71,7 +72,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
  * @sa I_RemoveFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
-static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * const i, item_t item, const invDef_t * container, int x, int y, int amount)
+static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * const inv, item_t item, const invDef_t * container, int x, int y, int amount)
 {
 	invList_t *ic;
 
@@ -81,10 +82,10 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 	if (amount <= 0)
 		return NULL;
 
-	assert(i);
+	assert(inv);
 	assert(container);
 
-	if (container->single && i->c[container->id] && i->c[container->id]->next)
+	if (container->single && inv->c[container->id] && inv->c[container->id]->next)
 		return NULL;
 
 	/**
@@ -113,7 +114,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 
 	/* idEquip and idFloor */
 	if (container->temp) {
-		for (ic = i->c[container->id]; ic; ic = ic->next)
+		for (ic = inv->c[container->id]; ic; ic = ic->next)
 			if (INVSH_CompareItem(&ic->item, &item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i (%s)\n",
@@ -124,13 +125,13 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
 		/* No (sane) position in container given as parameter - find free space on our own. */
-		INVSH_FindSpace(i, &item, container, &x, &y, NULL);
+		INVSH_FindSpace(inv, &item, container, &x, &y, NULL);
 		if (x == NONE)
 			return NULL;
 	}
 
 	/* not found - add a new one */
-	ic = I_AddInvList(self, &i->c[container->id]);
+	ic = I_AddInvList(self, &inv->c[container->id]);
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = item;
@@ -142,6 +143,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 }
 
 /**
+ * @param[in] self The inventory interface pointer
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
  * @param[in] fItem The item to be removed.
@@ -219,7 +221,8 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
 
 /**
  * @brief Conditions for moving items between containers.
- * @param[in] i Inventory to move in.
+ * @param[in] self The inventory interface pointer
+ * @param[in] inv Inventory to move in.
  * @param[in] from Source container.
  * @param[in] fItem The item to be moved.
  * @param[in] to Destination container.
@@ -236,7 +239,7 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp)
+static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 
@@ -264,7 +267,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 	if (TU && *TU < time)
 		return IA_NOTIME;
 
-	assert(i);
+	assert(inv);
 
 	/* Special case for moving an item within the same container. */
 	if (from == to) {
@@ -272,11 +275,11 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 		if (from->scroll)
 			return IA_NONE;
 
-		ic = i->c[from->id];
+		ic = inv->c[from->id];
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
-					checkedTo = INVSH_CheckToInventory(i, ic->item.t, to, tx, ty, fItem);
+					checkedTo = INVSH_CheckToInventory(inv, ic->item.t, to, tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
@@ -306,15 +309,15 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 
 	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
-		checkedTo = INVSH_CheckToInventory(i, fItem->item.t, to, 0, 0, fItem);
+		checkedTo = INVSH_CheckToInventory(inv, fItem->item.t, to, 0, 0, fItem);
 	else {
 		if (tx == NONE || ty == NONE)
-			INVSH_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);
+			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
 		/* still no valid location found */
 		if (tx == NONE || ty == NONE)
 			return IA_NONE;
 
-		checkedTo = INVSH_CheckToInventory(i, fItem->item.t, to, tx, ty, fItem);
+		checkedTo = INVSH_CheckToInventory(inv, fItem->item.t, to, tx, ty, fItem);
 	}
 
 	if (to->armour && from != to && !checkedTo) {
@@ -327,12 +330,12 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 
 		/* Check if destination/blocking item is the same as source/from item.
 		 * In that case the move is not needed -> abort. */
-		icTo = INVSH_SearchInInventory(i, to, tx, ty);
+		icTo = INVSH_SearchInInventory(inv, to, tx, ty);
 		if (fItem->item.t == icTo->item.t)
 			return IA_NONE;
 
 		/* Actually remove the ammo from the 'from' container. */
-		if (!self->RemoveFromInventory(self, i, from, fItem))
+		if (!self->RemoveFromInventory(self, inv, from, fItem))
 			return IA_NONE;
 		else
 			/* Removal successful - store this info. */
@@ -341,14 +344,14 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 		cacheItem2 = self->cacheItem; /* Save/cache (source) item. The cacheItem is modified in I_MoveInInventory. */
 
 		/* Move the destination item to the source. */
-		self->MoveInInventory(self, i, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
+		self->MoveInInventory(self, inv, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		self->cacheItem = cacheItem2;
 	} else if (!checkedTo) {
 		/* Get the target-invlist (e.g. a weapon). We don't need to check for
 		 * scroll because checkedTo is always true here. */
-		ic = INVSH_SearchInInventory(i, to, tx, ty);
+		ic = INVSH_SearchInInventory(inv, to, tx, ty);
 
 		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t)) {
 			/* A target-item was found and the dragged item (implicitly ammo)
@@ -369,11 +372,11 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 					const int cacheFromY = INV_IsFloorDef(from) ? NONE : fItem->y;
 
 					/* Actually remove the ammo from the 'from' container. */
-					if (!self->RemoveFromInventory(self, i, from, fItem))
+					if (!self->RemoveFromInventory(self, inv, from, fItem))
 						return IA_NONE;
 
 					/* Add the currently used ammo in place of the new ammo in the "from" container. */
-					if (self->AddToInventory(self, i, item, from, cacheFromX, cacheFromY, 1) == NULL)
+					if (self->AddToInventory(self, inv, item, from, cacheFromX, cacheFromY, 1) == NULL)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", self->name);
 
 					ic->item.m = self->cacheItem.t;
@@ -382,7 +385,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 					return IA_RELOAD_SWAP;
 				} else {
 					/* Actually remove the ammo from the 'from' container. */
-					if (!self->RemoveFromInventory(self, i, from, fItem))
+					if (!self->RemoveFromInventory(self, inv, from, fItem))
 						return IA_NONE;
 
 					ic->item.m = self->cacheItem.t;
@@ -403,7 +406,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 			 * We add the item anyway but it'll not be displayed (yet)
 			 * This is then used in I_AddToInventory below.*/
 			/** @todo change the other code to browse trough these things. */
-			INVSH_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);
+			INVSH_FindSpace(inv, &fItem->item, to, &tx, &ty, fItem);
 			if (tx == NONE || ty == NONE) {
 				Com_DPrintf(DEBUG_SHARED, "I_MoveInInventory - item will be added non-visible (%s)\n", self->name);
 			}
@@ -427,7 +430,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 
 	/* Actually remove the item from the 'from' container (if it wasn't already removed). */
 	if (!alreadyRemovedSource)
-		if (!self->RemoveFromInventory(self, i, from, fItem))
+		if (!self->RemoveFromInventory(self, inv, from, fItem))
 			return IA_NONE;
 
 	/* successful */
@@ -435,7 +438,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 		*TU -= time;
 
 	assert(self->cacheItem.t);
-	ic = self->AddToInventory(self, i, self->cacheItem, to, tx, ty, 1);
+	ic = self->AddToInventory(self, inv, self->cacheItem, to, tx, ty, 1);
 
 	/* return data */
 	if (icp) {
@@ -452,6 +455,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 
 /**
  * @brief Tries to add an item to a container (in the inventory inv).
+ * @param[in] self The inventory interface pointer
  * @param[in] inv Inventory pointer to add the item.
  * @param[in] item Item to add to inventory.
  * @param[in] container Container id.
@@ -482,6 +486,7 @@ static qboolean I_TryAddToInventory (inventoryInterface_t* self, inventory_t* co
 
 /**
  * @brief Clears the linked list of a container - removes all items from this container.
+ * @param[in] self The inventory interface pointer
  * @param[in] i The inventory where the container is located.
  * @param[in] container Index of the container which will be cleared.
  * @sa I_DestroyInventory
@@ -506,25 +511,26 @@ static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, 
 
 /**
  * @brief Destroys inventory.
- * @param[in] i Pointer to the inventory which should be erased.
+ * @param[in] self The inventory interface pointer
+ * @param[in] inv Pointer to the inventory which should be erased.
  * @note Loops through all containers in inventory. @c NULL for temp containers are skipped,
  * for real containers @c I_EmptyContainer is called.
  * @sa I_EmptyContainer
  */
-static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i)
+static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const inv)
 {
 	containerIndex_t container;
 
-	if (!i)
+	if (!inv)
 		return;
 
 	for (container = 0; container < self->csi->numIDs; container++) {
 		const invDef_t *invDef = &self->csi->ids[container];
 		if (!invDef->temp)
-			self->EmptyContainer(self, i, invDef);
+			self->EmptyContainer(self, inv, invDef);
 	}
 
-	memset(i, 0, sizeof(*i));
+	memset(inv, 0, sizeof(*inv));
 }
 
 
@@ -532,6 +538,7 @@ static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i
 
 /**
  * @brief Pack a weapon, possibly with some ammo
+ * @param[in] self The inventory interface pointer
  * @param[in] inv The inventory that will get the weapon
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] ed The equipment for debug messages
@@ -645,6 +652,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 
 /**
  * @brief Equip melee actor with item defined per teamDefs.
+ * @param[in] self The inventory interface pointer
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] td Pointer to a team definition.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
@@ -672,6 +680,7 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
 
 /**
  * @brief Equip robot actor with default weapon. (defined in ugv_t->weapon)
+ * @param[in] self The inventory interface pointer
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
@@ -705,6 +714,7 @@ typedef enum {
 /**
  * @brief Fully equip one actor. The equipment that is added to the inventory of the given actor
  * is taken from the equipment script definition.
+ * @param[in] self The inventory interface pointer
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] ed The equipment that is added from to the actors inventory
  * @param[in] td Pointer to teamdef data - to get the weapon and armour bools.
@@ -912,6 +922,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 
 /**
  * @brief Calculate the number of used inventory slots
+ * @param[in] self The inventory interface pointer
  * @return The number of free inventory slots
  */
 static int I_GetUsedSlots (inventoryInterface_t* self)
