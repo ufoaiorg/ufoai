@@ -326,7 +326,7 @@ void SP_func_door (edict_t *ent)
 	ent->dir = YAW;
 
 	if (ent->spawnflags & FL_REVERSE)
-		ent->dir |= 4;
+		ent->dir |= DOOR_OPEN_REVERSE;
 
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
@@ -360,7 +360,7 @@ void SP_func_door_sliding (edict_t *ent)
 	gi.LinkEdict(ent);
 
 	if (ent->spawnflags & FL_REVERSE)
-		ent->dir |= 4;
+		ent->dir |= DOOR_OPEN_REVERSE;
 
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
