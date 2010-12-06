@@ -1025,7 +1025,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *ma
  * @param[in] name The modelnumber (e.g. "*2") for inline brush models [bmodels]
  * @note Inline bmodels are e.g. the brushes that are assoziated with a func_breakable or func_door
  */
-cBspModel_t *CM_InlineModel (mapTiles_t *mapTiles, const char *name)
+cBspModel_t *CM_InlineModel (const mapTiles_t *mapTiles, const char *name)
 {
 	int i, num;
 

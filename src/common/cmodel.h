@@ -32,7 +32,7 @@ CMODEL
 #include "tracing.h"
 
 void CM_LoadMap(const char *tiles, qboolean day, const char *pos, mapData_t *mapData, mapTiles_t *mapTiles);
-cBspModel_t *CM_InlineModel(mapTiles_t *mapTiles, const char *name);
+cBspModel_t *CM_InlineModel(const mapTiles_t *mapTiles, const char *name);
 cBspModel_t *CM_SetInlineModelOrientation(mapTiles_t *mapTiles, const char *name, const vec3_t origin, const vec3_t angles);
 
 /*==============================================================
