@@ -584,8 +584,10 @@ void R_EnableDrawAsGlow (qboolean enable)
 	r_state.draw_glow_enabled = enable;
 
 	if (enable) {
+		/* switch the draw buffer to the glow buffer */
 		R_BindColorAttachments(1, &glowRenderTarget);
 	} else {
+		/* switch back to the draw buffer we are currently rendering into */
 		if (r_state.glowmap_enabled) {
 			R_DrawBuffers(2);
 		} else {

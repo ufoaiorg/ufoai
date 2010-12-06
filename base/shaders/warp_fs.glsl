@@ -32,7 +32,7 @@ void main(void){
 
 #if r_postprocess
 	gl_FragData[0] = finalColor;
-	if (GLOWSCALE > 0.01) {
+	if (GLOWSCALE > 0.0) {
 		gl_FragData[1] = gl_Color * texture2D(SAMPLER4, coord) * GLOWSCALE;
 	}
 #else

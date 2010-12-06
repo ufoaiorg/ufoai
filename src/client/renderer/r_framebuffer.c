@@ -223,7 +223,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	}
 
 	/* create depth renderbuffer */
-	if (depth == qtrue) {
+	if (depth) {
 		qglGenRenderbuffersEXT(1, &buf->depth);
 		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
 		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, buf->width, buf->height);
@@ -323,13 +323,23 @@ void R_UseViewport (const r_framebuffer_t *buf)
 	glViewport(buf->viewport.x, buf->viewport.y, buf->viewport.width, buf->viewport.height);
 }
 
-/** @todo introduce enum or speaking constants for the buffer numbers that are drawn here and elsewhere */
-void R_DrawBuffers (int n)
+/**
+ * @brief Activate draw buffer(s)
+ * @param[in] drawBufferNum The number of buffers to activate
+ * @todo introduce enum or speaking constants for the buffer numbers that are drawn here and elsewhere
+ */
+void R_DrawBuffers (unsigned int n)
 {
 	R_BindColorAttachments(n, colorAttachments);
 }
 
-void R_BindColorAttachments (int n, unsigned int *attachments)
+/**
+ * @brief Activate draw buffer(s)
+ * @param n The number of buffers to activate
+ * @param attachments The buffers we are rendering into
+ * @note The order of the attachments define the gl_FragData order in the shaders
+*/
+void R_BindColorAttachments (unsigned int n, unsigned int *attachments)
 {
 	if (!r_state.frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;
@@ -343,6 +353,13 @@ void R_BindColorAttachments (int n, unsigned int *attachments)
 		qglDrawBuffers(n, attachments);
 }
 
+/**
+ * @brief Enable the render to the framebuffer
+ * @param enable If @c true we are enabling the rendering to fbo_render, if @c false we are rendering
+ * to fbo that represents the screen
+ * @sa R_DrawBuffers
+ * @return @c true if the fbo was bound, @c false if not supported or deactivated
+ */
 qboolean R_EnableRenderbuffer (qboolean enable)
 {
 	if (!r_state.frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
