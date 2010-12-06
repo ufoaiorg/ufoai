@@ -476,9 +476,8 @@ entity misc_mission_alien {
 
 entity func_door {
 	color		"0 .5 .8"
-	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 opened"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 opened reverse"
 	optional {
-		angle		"Determines the opening direction"
 		health		"Define the needed damage to destroy the door"
 		group		"Multipart doors can be grouped to open together"
 		noise		"Soundfile to play when door opens"
@@ -497,7 +496,7 @@ entity func_door {
 
 entity func_door_sliding {
 	color		"0 .5 .8"
-	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 unused reverse"
 	optional {
 		group		"Multipart doors can be grouped to open together"
 		health		"Define the needed damage to destroy the door"
@@ -507,7 +506,7 @@ entity func_door_sliding {
 	}
 
 	mandatory {
-		dir			"6, 10 (x) and 5, 9 (y) and 3 (z downwards)"
+		dir			"0 (pitch), 1 (yaw), 2 (roll)"
 		spawnflags	"level flags"
 	}
 

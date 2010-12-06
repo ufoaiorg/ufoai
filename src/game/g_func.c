@@ -202,7 +202,10 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 
 		/* change rotation/origin and relink */
 		if (door->type == ET_DOOR) {
-			door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
+			if (door->dir & DOOR_OPEN_REVERSE)
+				door->angles[door->dir] -= DOOR_ROTATION_ANGLE;
+			else
+				door->angles[door->dir] += DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
 			Door_SlidingUse(door);
 		}
@@ -221,7 +224,10 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 
 		/* change rotation and relink */
 		if (door->type == ET_DOOR) {
-			door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
+			if (door->dir & DOOR_OPEN_REVERSE)
+				door->angles[door->dir] += DOOR_ROTATION_ANGLE;
+			else
+				door->angles[door->dir] -= DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
 			Door_SlidingUse(door);
 		}
@@ -294,6 +300,8 @@ static void Reset_DoorTrigger (edict_t *self, edict_t *activator)
 		G_ActorSetClientAction(activator, NULL);
 }
 
+#define FL_REVERSE	0x00000200
+
 /**
  * @brief func_door (0 .5 .8) ?
  * "health" if set, door is destroyable
@@ -316,6 +324,9 @@ void SP_func_door (edict_t *ent)
 	gi.LinkEdict(ent);
 	ent->doorState = STATE_CLOSED;
 	ent->dir = YAW;
+
+	if (ent->spawnflags & FL_REVERSE)
+		ent->dir |= 4;
 
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
@@ -348,12 +359,16 @@ void SP_func_door_sliding (edict_t *ent)
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
 
+	if (ent->spawnflags & FL_REVERSE)
+		ent->dir |= 4;
+
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
 
 	ent->doorState = STATE_CLOSED;
 	ent->speed = 10;
 	ent->use = Door_Use;
+
 	ent->destroy = Destroy_Breakable;
 }
 

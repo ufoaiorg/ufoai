@@ -48,8 +48,10 @@ void CL_DoorOpen (const eventRegister_t *self, struct dbuffer *msg)
 		LE_NotFoundError(number);
 
 	if (le->type == ET_DOOR) {
-		const int dir = (le->dir & 3) - 1;
-		le->angles[dir] += DOOR_ROTATION_ANGLE;
+		if (le->dir & DOOR_OPEN_REVERSE)
+			le->angles[le->dir] -= DOOR_ROTATION_ANGLE;
+		else
+			le->angles[le->dir] += DOOR_ROTATION_ANGLE;
 
 		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 		CL_RecalcRouting(le);

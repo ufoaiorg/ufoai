@@ -431,7 +431,7 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 	int tilePos = 4;
 	const image_t *image;
 	vec4_t color;
-	const float pov = directionAngles[le->dir] * torad + M_PI;
+	const float pov = directionAngles[le->angle] * torad + M_PI;
 
 	image = UI_LoadImage("ui/radar");
 	if (image == NULL)
