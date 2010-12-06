@@ -187,6 +187,7 @@ int32_t CM_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask
+ * @param[in] list The local models list
  * @sa TR_TestLine
  * @sa CM_InlineModel
  * @sa CM_TransformedBoxTrace
@@ -240,6 +241,7 @@ qboolean CM_EntTestLine (mapTiles_t *mapTiles, const const vec3_t start, const v
  * @param[in] stop The position where the trace ends.
  * @param[out] end The position where the line hits a object or the stop position if nothing is in the line
  * @param[in] levelmask
+ * @param[in] list The local models list
  * @sa TR_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
