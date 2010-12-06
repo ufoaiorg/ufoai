@@ -16,8 +16,11 @@ const std::string EntityClassScannerUFO::getFilename () const
 
 void EntityClassScannerUFO::parseFlags (EntityClass *e, const char **text)
 {
-	std::vector<std::string> flags;
+	e->flagnames.clear();
 	string::splitBy(*text, e->flagnames);
+	for (int i = e->flagnames.size(); i < MAX_FLAGS; i++) {
+		e->flagnames.push_back("");
+	}
 }
 
 /**
