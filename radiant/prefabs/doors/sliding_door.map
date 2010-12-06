@@ -260,8 +260,8 @@
 // entity 1
 {
 "classname" "func_door_sliding"
-"dir" "6"
-"spawnflags" "255"
+"dir" "0"
+"spawnflags" "767"
 "targetname" "slidingdoor1"
 // brush 0
 {
