@@ -85,6 +85,7 @@ void R_InitFBObjects (void)
 	R_SetupViewport(&screenBuffer, 0, 0, viddef.context.width, viddef.context.height);
 	Vector4Clear(screenBuffer.clearColor);
 
+	/* use default framebuffer */
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 	r_state.activeFramebuffer = &screenBuffer;
 
@@ -202,10 +203,10 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	buf->nTextures = ntextures;
 	buf->textures = (unsigned int *)Mem_Alloc(sizeof(unsigned int) * ntextures);
 
-	buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA16F_ARB : GL_RGBA8;
-	buf->byteFormat = (halfFloat == qtrue) ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
+	buf->pixelFormat = halfFloat ? GL_RGBA16F_ARB : GL_RGBA8;
+	buf->byteFormat = halfFloat ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
 
-	for (i = 0 ; i < buf->nTextures; i++) {
+	for (i = 0; i < buf->nTextures; i++) {
 		buf->textures[i] = R_GetFreeFBOTexture();
 		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
@@ -227,7 +228,6 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 		qglGenRenderbuffersEXT(1, &buf->depth);
 		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
 		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, buf->width, buf->height);
-		R_CheckError();
 	} else {
 		buf->depth = 0;
 	}
@@ -251,6 +251,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 	R_CheckError();
 
+	/* unbind the framebuffer and return to default state */
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 
 	return buf;
