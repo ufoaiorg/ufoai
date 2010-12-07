@@ -1205,7 +1205,7 @@ item flamer_ammo
 item rpg
 {
 	name			"_Rocket Launcher"
-	model			weapons/rpg/rpg
+	model			weapons/rpg2/rpg
 	weapon			true
 	type			rpg
 	animationindex	3
@@ -1226,7 +1226,7 @@ item rpg
 item rpg_ammo
 {
 	name			"_HE Rocket"
-	model			weapons/rpg/rpg_ammo
+	model			weapons/rpg2/rpg_ammo
 	type			ammo
 	animationindex	0
 	shape			"0 0 1 2"
@@ -1268,7 +1268,7 @@ item rpg_ammo
 item rpg_incendiary_ammo
 {
 	name			"_IC Rocket"
-	model			weapons/rpg/rpg_inc_ammo
+	model			weapons/rpg2/rpg_inc_ammo
 	type			ammo
 	animationindex	0
 	shape			"0 0 1 2"
