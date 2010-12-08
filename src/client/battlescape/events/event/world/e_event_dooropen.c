@@ -49,9 +49,9 @@ void CL_DoorOpen (const eventRegister_t *self, struct dbuffer *msg)
 
 	if (le->type == ET_DOOR) {
 		if (le->dir & DOOR_OPEN_REVERSE)
-			le->angles[le->dir] -= DOOR_ROTATION_ANGLE;
+			le->angles[le->dir & 3] -= DOOR_ROTATION_ANGLE;
 		else
-			le->angles[le->dir] += DOOR_ROTATION_ANGLE;
+			le->angles[le->dir & 3] += DOOR_ROTATION_ANGLE;
 
 		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 		CL_RecalcRouting(le);

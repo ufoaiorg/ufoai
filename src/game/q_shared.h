@@ -292,7 +292,7 @@ typedef int32_t shoot_types_t;
 
 #define DOOR_OPEN_REVERSE 4
 #define GET_SLIDING_DOOR_SHIFT_VECTOR(dir, speed, vecout) \
-	do { const qboolean reverse = (dir) & DOOR_OPEN_REVERSE; VectorClear(vecout); vecout[dir] = reverse ? -speed : speed; } while (0);
+	do { const qboolean reverse = (dir) & DOOR_OPEN_REVERSE; VectorClear(vecout); vecout[dir & 3] = reverse ? -speed : speed; } while (0);
 
 /**
  * config strings are a general means of communication from
