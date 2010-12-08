@@ -1213,8 +1213,8 @@ item rpg
 	firetwohanded	true
 	shape			"0 0 5 1"
 	shape			"0 1 3 1"
-	center			"-5.7 0 1.5"
-	scale			0.87
+	center			"-7.8 2.5 3.5"
+	scale			0.80
 	ammo			1
 	reload			12
 	price			4000
