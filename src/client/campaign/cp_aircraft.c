@@ -2186,23 +2186,9 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
  */
 qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *employee)
 {
-	employee_t *employeeInCraft;
-
 	assert(aircraft);
 	assert(employee);
-
-	if (AIR_GetTeamSize(aircraft) == 0)
-		return qfalse;
-
-	LIST_Foreach(aircraft->acTeam, employee_t, employeeInCraft) {
-		/* Search for this exact employee in the aircraft and remove him from the team. */
-		if (employeeInCraft == employee) {
-			LIST_RemoveEntry(&aircraft->acTeam, l);
-			return qtrue;
-		}
-	}
-
-	return qfalse;
+	return LIST_Remove(&aircraft->acTeam, employee);
 }
 
 /**
