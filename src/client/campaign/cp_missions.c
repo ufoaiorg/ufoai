@@ -208,16 +208,17 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
  */
 static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip)
 {
-	const alienTeamGroup_t const *group = ccs.battleParameters.alienTeamGroup;
-	const linkedList_t const *equipPack = ccs.alienCategories[group->categoryIdx].equipment;
-
 	if (mission->initialOverallInterest > equip->maxInterest || mission->initialOverallInterest <= equip->minInterest)
 		return qfalse;
 
-	while (equip->name != NULL && equipPack != NULL) {
-		if (!strncmp((const char*)equipPack->data, equip->name, strlen((const char*)equipPack->data)))
-			return qtrue;
-		equipPack = equipPack->next;
+	if (equip->name != NULL) {
+		const char *name;
+		const alienTeamGroup_t const *group = ccs.battleParameters.alienTeamGroup;
+		linkedList_t *equipPack = ccs.alienCategories[group->categoryIdx].equipment;
+		LIST_Foreach(equipPack, const char, name) {
+			if (!strncmp(name, equip->name, strlen(name)))
+				return qtrue;
+		}
 	}
 
 	return qfalse;
