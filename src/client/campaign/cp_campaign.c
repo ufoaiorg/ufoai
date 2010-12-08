@@ -510,7 +510,7 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 /**
  * @brief Functions that should be called with a minimum time lapse (will be called at least every DETECTION_INTERVAL)
  * @param[in] campaign The campaign data structure
- * @param[in] dt Ellapsed second since last call.
+ * @param[in] dt Elapsed game seconds since last call.
  * @param[in] updateRadarOverlay true if radar overlay should be updated (only for drawing purpose)
  * @sa CL_CampaignRun
  */
@@ -647,10 +647,12 @@ void CL_CampaignRun (campaign_t *campaign)
 			CP_UpdateNationXVIInfection();
 		}
 
-		/* check for campaign events
-		 * aircraft and UFO already moved during radar detection (see above),
-		 * just make them move the missing part -- if any */
-		CL_CampaignFunctionPeriodicCall(campaign, dt, qtrue);
+		if (dt > 0) {
+			/* check for campaign events
+			 * aircraft and UFO already moved during radar detection (see above),
+			 * just make them move the missing part -- if any */
+			CL_CampaignFunctionPeriodicCall(campaign, dt, qtrue);
+		}
 
 		UP_GetUnreadMails();
 		CP_CheckMissionEnd(campaign);
@@ -659,7 +661,6 @@ void CL_CampaignRun (campaign_t *campaign)
 		CP_CheckBaseAttacks();
 		BDEF_AutoSelectTarget();
 
-		/* set time cvars */
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
 		if (date.day == 1 && ccs.paid && B_AtLeastOneExists()) {
@@ -670,6 +671,7 @@ void CL_CampaignRun (campaign_t *campaign)
 			ccs.paid = qtrue;
 
 		CP_UpdateXVIMapButton();
+		/* set time cvars */
 		CL_UpdateTime();
 	}
 }
