@@ -511,12 +511,6 @@ void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
 {
 	int ufoIdx, k;
 
-	assert(deltaTime >= 0);
-
-	/* deltaTime may be 0 if a UFO has been detection occurred */
-	if (!deltaTime)
-		return;
-
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufoIdx = ccs.numUFOs - 1; ufoIdx >= 0; ufoIdx--) {
 		aircraft_t *ufo = UFO_GetByIDX(ufoIdx);
