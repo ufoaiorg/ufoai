@@ -190,8 +190,9 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
  * @sa LIST_Add
  * @sa LIST_AddPointer
  * @sa LIST_Delete
+ * @return @c true if the removal was successful, @c false otherwise.
  */
-void LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
+qboolean LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
 {
 	linkedList_t* prev;
 	linkedList_t* listPos;
@@ -209,6 +210,7 @@ void LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
 		listPos = (*list)->next;
 		Mem_Free(*list);
 		*list = listPos;
+		return qtrue;
 	} else {
 		while (listPos) {
 			if (listPos == entry) {
@@ -216,12 +218,13 @@ void LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
 				if (!listPos->ptr)
 					Mem_Free(listPos->data);
 				Mem_Free(listPos);
-				break;
+				return qtrue;
 			}
 			prev = listPos;
 			listPos = listPos->next;
 		}
 	}
+	return qfalse;
 }
 
 /**
@@ -269,8 +272,8 @@ qboolean LIST_Remove (linkedList_t **list, const void *data)
 {
 	linkedList_t *l = LIST_GetPointer(*list, data);
 	if (l != NULL)
-		LIST_RemoveEntry(list, l);
-	return l != NULL;
+		return LIST_RemoveEntry(list, l);
+	return qfalse;
 }
 
 /**

@@ -47,7 +47,7 @@ linkedList_t* LIST_Add(linkedList_t** list, const byte* data, size_t length);
 const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* string);
 linkedList_t* LIST_GetPointer(linkedList_t* list, const void* data);
 void LIST_Delete(linkedList_t **list);
-void LIST_RemoveEntry(linkedList_t **list, linkedList_t *entry);
+qboolean LIST_RemoveEntry(linkedList_t **list, linkedList_t *entry);
 qboolean LIST_IsEmpty(const linkedList_t *list);
 int LIST_Count(const linkedList_t *list);
 void *LIST_GetByIdx(linkedList_t *list, int index);
