@@ -271,6 +271,7 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
 
 /**
  * @brief checks that a string represents a single number
+ * @param floatOrInt one of ED_TYPE_FLOAT or ED_TYPE_INT
  * @param insistPositive if 1, then tests for the number being greater than or equal to zero.
  * @sa ED_CheckNumericType
  * @note disallows hex, inf, NaN, numbers with junk on the end (eg -0123junk)
@@ -310,6 +311,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 
 /**
  * @brief check a value against the range for the key
+ * @param floatOrInt either ED_TYPE_FLOAT or ED_TYPE_INT
  * @param index the index of the number being checked in the value. eg angles "90 180", 90 is at 0, 180 is at 1.
  * @note checks lastCheckedInt or lastCheckedFloat against the range in the supplied keyDef.
  * @return ED_ERROR or ED_OK
