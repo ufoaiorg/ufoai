@@ -329,9 +329,9 @@ void R_UseViewport (const r_framebuffer_t *buf)
  * @param[in] drawBufferNum The number of buffers to activate
  * @todo introduce enum or speaking constants for the buffer numbers that are drawn here and elsewhere
  */
-void R_DrawBuffers (unsigned int n)
+void R_DrawBuffers (unsigned int drawBufferNum)
 {
-	R_BindColorAttachments(n, colorAttachments);
+	R_BindColorAttachments(drawBufferNum, colorAttachments);
 }
 
 /**
