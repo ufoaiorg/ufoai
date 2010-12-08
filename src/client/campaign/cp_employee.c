@@ -313,23 +313,16 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 {
 	linkedList_t *hiredEmployees = NULL;
-	linkedList_t *hiredEmployeesTemp;
 	employee_t *employee;
 
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
-	hiredEmployeesTemp = hiredEmployees;
 
-	employee = NULL;
-	while (hiredEmployeesTemp) {
-		employee = (employee_t*)hiredEmployeesTemp->data;
-
+	LIST_Foreach(hiredEmployees, employee_t, employee) {
 		if ((employee->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
 		 && E_IsInBase(employee, base)) {		/* It has to be in the defined base. */
 			assert(E_IsHired(employee));
 			break;
 		}
-
-		hiredEmployeesTemp = hiredEmployeesTemp->next;
 	}
 
 	LIST_Delete(&hiredEmployees);

@@ -1000,7 +1000,7 @@ int FS_BuildFileList (const char *fileList)
 				}
 			}
 		} else if (strstr(files, "**")) {
-			linkedList_t *list = NULL, *loopList;
+			linkedList_t *list = NULL;
 			const char *wildcard = strstr(files, "**");
 			const size_t l = strlen(files) - strlen(wildcard);
 			const char *name = &findname[l + 1];
@@ -1013,10 +1013,8 @@ int FS_BuildFileList (const char *fileList)
 
 			Sys_ListFilteredFiles(search->filename, findname, name, &list);
 
-			loopList = list;
-			while (loopList) {
-				_AddToListBlock(&block->files, (const char *)loopList->data, qfalse);
-				loopList = loopList->next;
+			LIST_Foreach(list, const char, name) {
+				_AddToListBlock(&block->files, name, qfalse);
 			}
 
 			LIST_Delete(&list);

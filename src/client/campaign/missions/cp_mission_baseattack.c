@@ -141,6 +141,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 {
 	base_t *base = mission->data.base;
 	linkedList_t *hiredSoldiersInBase = NULL, *pos;
+	employee_t *employee;
 
 	assert(base);
 
@@ -201,10 +202,10 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
-	for (pos = hiredSoldiersInBase; pos != NULL; pos = pos->next) {
-		if (E_IsAwayFromBase((employee_t *)pos->data))
+	LIST_Foreach(hiredSoldiersInBase, employee_t, employee) {
+		if (E_IsAwayFromBase(employee))
 			continue;
-		AIR_AddToAircraftTeam(&baseAttackFakeAircraft, (employee_t *)pos->data);
+		AIR_AddToAircraftTeam(&baseAttackFakeAircraft, employee);
 	}
 	if (AIR_GetTeamSize(&baseAttackFakeAircraft) == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers at home: it can't defend itself. Destroy base.\n", base->name);

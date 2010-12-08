@@ -175,7 +175,7 @@ void AIR_ListAircraft_f (void)
 
 	AIR_Foreach(aircraft) {
 		int k;
-		linkedList_t *l;
+		employee_t *employee;
 
 		if (base && aircraft->homebase != base)
 			continue;
@@ -184,22 +184,23 @@ void AIR_ListAircraft_f (void)
 		Com_Printf("...idx global %i\n", aircraft->idx);
 		Com_Printf("...homebase: %s\n", aircraft->homebase ? aircraft->homebase->name : "NO HOMEBASE");
 		for (k = 0; k < aircraft->maxWeapons; k++) {
-			if (aircraft->weapons[k].item) {
-				Com_Printf("...weapon slot %i contains %s", k, aircraft->weapons[k].item->id);
+			aircraftSlot_t *slot = &aircraft->weapons[k];
+			if (slot->item) {
+				Com_Printf("...weapon slot %i contains %s", k, slot->item->id);
 
-				if (!aircraft->weapons[k].installationTime) {
+				if (!slot->installationTime) {
 					Com_Printf(" (functional)\n");
-				} else if (aircraft->weapons[k].installationTime > 0) {
-					Com_Printf(" (%i hours before installation is finished)\n",aircraft->weapons[k].installationTime);
+				} else if (slot->installationTime > 0) {
+					Com_Printf(" (%i hours before installation is finished)\n", slot->installationTime);
 				} else {
-					Com_Printf(" (%i hours before removing is finished)\n",aircraft->weapons[k].installationTime);
+					Com_Printf(" (%i hours before removing is finished)\n", slot->installationTime);
 				}
 
-				if (aircraft->weapons[k].ammo) {
-					if (aircraft->weapons[k].ammoLeft > 1) {
-						Com_Printf("......this weapon is loaded with ammo %s\n", aircraft->weapons[k].ammo->id);
+				if (slot->ammo) {
+					if (slot->ammoLeft > 1) {
+						Com_Printf("......this weapon is loaded with ammo %s\n", slot->ammo->id);
 					} else {
-						Com_Printf("......no more ammo (%s)\n", aircraft->weapons[k].ammo->id);
+						Com_Printf("......no more ammo (%s)\n", slot->ammo->id);
 					}
 				} else {
 					Com_Printf("......this weapon isn't loaded with ammo\n");
@@ -214,24 +215,25 @@ void AIR_ListAircraft_f (void)
 			if (!aircraft->shield.installationTime) {
 				Com_Printf(" (functional)\n");
 			} else if (aircraft->shield.installationTime > 0) {
-				Com_Printf(" (%i hours before installation is finished)\n",aircraft->shield.installationTime);
+				Com_Printf(" (%i hours before installation is finished)\n", aircraft->shield.installationTime);
 			} else {
-				Com_Printf(" (%i hours before removing is finished)\n",aircraft->shield.installationTime);
+				Com_Printf(" (%i hours before removing is finished)\n", aircraft->shield.installationTime);
 			}
 		} else {
 			Com_Printf("...armour slot is empty\n");
 		}
 
 		for (k = 0; k < aircraft->maxElectronics; k++) {
-			if (aircraft->electronics[k].item) {
-				Com_Printf("...electronics slot %i contains %s", k, aircraft->electronics[k].item->id);
+			aircraftSlot_t *slot = &aircraft->weapons[k];
+			if (slot->item) {
+				Com_Printf("...electronics slot %i contains %s", k, slot->item->id);
 
-				if (!aircraft->electronics[k].installationTime) {
+				if (!slot->installationTime) {
 					Com_Printf(" (functional)\n");
-				} else if (aircraft->electronics[k].installationTime > 0) {
-					Com_Printf(" (%i hours before installation is finished)\n",aircraft->electronics[k].installationTime);
+				} else if (slot->installationTime > 0) {
+					Com_Printf(" (%i hours before installation is finished)\n", slot->installationTime);
 				} else {
-					Com_Printf(" (%i hours before removing is finished)\n",aircraft->electronics[k].installationTime);
+					Com_Printf(" (%i hours before removing is finished)\n", slot->installationTime);
 				}
 			} else {
 				Com_Printf("...electronics slot %i is empty\n", k);
@@ -239,7 +241,8 @@ void AIR_ListAircraft_f (void)
 		}
 
 		if (aircraft->pilot) {
-			Com_Printf("...pilot: ucn: %i name: %s\n", aircraft->pilot->chr.ucn, aircraft->pilot->chr.name);
+			character_t *chr = &aircraft->pilot->chr;
+			Com_Printf("...pilot: ucn: %i name: %s\n", chr->ucn, chr->name);
 		} else {
 			Com_Printf("...no pilot assigned\n");
 		}
@@ -261,9 +264,9 @@ void AIR_ListAircraft_f (void)
 		Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
 		Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
 		Com_Printf("...team: (%i/%i)\n", LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
-		for (l = aircraft->acTeam; l != NULL; l = l->next) {
-			const employee_t const *employee = (const employee_t *)l->data;
-			Com_Printf(".........name: %s (ucn: %i)\n", employee->chr.name, employee->chr.ucn);
+		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+			character_t *chr = &employee->chr;
+			Com_Printf(".........name: %s (ucn: %i)\n", chr->name, chr->ucn);
 		}
 	}
 }
@@ -879,10 +882,9 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 {
 	int size = 0;
-	linkedList_t* l;
+	employee_t *employee;
 
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		const employee_t const *employee = (const employee_t *)l->data;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		containerIndex_t container;
 		for (container = 0; container < csi.numIDs; container++) {
 			invList_t *ic;
@@ -968,7 +970,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 {
 	base_t *oldBase;
 	baseCapacities_t capacity;
-	linkedList_t* l;
+	employee_t *employee;
 
 	assert(aircraft);
 	assert(base);
@@ -993,8 +995,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	/* Transfer employees */
 	E_MoveIntoNewBase(AIR_GetPilot(aircraft), base);
 
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		employee_t *employee = (employee_t *)l->data;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		E_MoveIntoNewBase(employee, base);
 		/* Transfer items carried by soldiers from oldBase to base */
 		AIR_TransferItemsCarriedByCharacterToBase(&employee->chr, oldBase, base);
@@ -1090,14 +1091,12 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
  */
 void AIR_DestroyAircraft (aircraft_t *aircraft)
 {
-	linkedList_t* l;
+	employee_t *employee;
 	employee_t *pilot;
 
 	assert(aircraft);
 
-	for (l = aircraft->acTeam; l != NULL;) {
-		employee_t *employee = (employee_t *)l->data;
-		l = l->next;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		E_RemoveInventoryFromStorage(employee);
 		E_DeleteEmployee(employee);
 	}
@@ -2187,7 +2186,7 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
  */
 qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *employee)
 {
-	linkedList_t* l;
+	employee_t *employeeInCraft;
 
 	assert(aircraft);
 	assert(employee);
@@ -2195,8 +2194,7 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 	if (AIR_GetTeamSize(aircraft) == 0)
 		return qfalse;
 
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		const employee_t const *employeeInCraft = (const employee_t *)l->data;
+	LIST_Foreach(aircraft->acTeam, employee_t, employeeInCraft) {
 		/* Search for this exact employee in the aircraft and remove him from the team. */
 		if (employeeInCraft == employee) {
 			LIST_RemoveEntry(&aircraft->acTeam, l);
@@ -2394,7 +2392,7 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	mxml_node_t *node;
 	mxml_node_t *subnode;
 	int l;
-	linkedList_t *k;
+	employee_t *employee;
 	const employee_t *pilot;
 
 	Com_RegisterConstList(saveAircraftConstants);
@@ -2479,8 +2477,7 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
 
-	for (k = aircraft->acTeam; k != NULL; k = k->next) {
-		const employee_t const *employee = (const employee_t *)k->data;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
 		mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
 	}
@@ -3074,14 +3071,12 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
  */
 void AIR_RemoveEmployees (aircraft_t *aircraft)
 {
-	linkedList_t* l;
+	employee_t* employee;
 
 	if (!aircraft)
 		return;
 
-	for (l = aircraft->acTeam; l != NULL;) {
-		employee_t *employee = (employee_t *)l->data;
-		l = l->next;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		/* use global aircraft index here */
 		AIR_RemoveEmployee(employee, aircraft);
 	}
@@ -3102,7 +3097,6 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_t *ed)
 {
 	containerIndex_t container;
-	linkedList_t *l;
 
 	if (!aircraft) {
 		Com_Printf("AIR_MoveEmployeeInventoryIntoStorage: Warning: Called with no aircraft (and thus no carried equipment to add).\n");
@@ -3119,33 +3113,31 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (l = aircraft->acTeam; l != NULL; l = l->next) {
-			employee_t *employee = (employee_t *)l->data;
-			if (employee != NULL) {
-				character_t *chr = &employee->chr;
-				invList_t *ic = CONTAINER(chr, container);
+		employee_t *employee;
+		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+			character_t *chr = &employee->chr;
+			invList_t *ic = CONTAINER(chr, container);
 #if 0
-				if (INVDEF(container)->temp)
-					continue;
+			if (INVDEF(container)->temp)
+				continue;
 #endif
-				while (ic) {
-					const item_t item = ic->item;
-					const objDef_t *type = item.t;
-					invList_t *next = ic->next;
+			while (ic) {
+				const item_t item = ic->item;
+				const objDef_t *type = item.t;
+				invList_t *next = ic->next;
 
-					ed->numItems[type->idx]++;
-					if (item.a) {
-						assert(type->reload);
-						assert(item.m);
-						ed->numItemsLoose[item.m->idx] += item.a;
-						/* Accumulate loose ammo into clips */
-						if (ed->numItemsLoose[item.m->idx] >= type->ammo) {
-							ed->numItemsLoose[item.m->idx] -= type->ammo;
-							ed->numItems[item.m->idx]++;
-						}
+				ed->numItems[type->idx]++;
+				if (item.a) {
+					assert(type->reload);
+					assert(item.m);
+					ed->numItemsLoose[item.m->idx] += item.a;
+					/* Accumulate loose ammo into clips */
+					if (ed->numItemsLoose[item.m->idx] >= type->ammo) {
+						ed->numItemsLoose[item.m->idx] -= type->ammo;
+						ed->numItems[item.m->idx]++;
 					}
-					ic = next;
 				}
+				ic = next;
 			}
 		}
 	}

@@ -2191,14 +2191,13 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
 	base_t *base = aircraft->homebase;
 	chrList_t chrListTemp;
-	linkedList_t* l;
+	employee_t *employee;
 
 	if (!aircraft)
 		return;
 
 	chrListTemp.num = 0;
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		employee_t *employee = (employee_t *)l->data;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		character_t *chr = &employee->chr;
 		/* pack equipment */
 		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);

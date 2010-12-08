@@ -143,14 +143,14 @@ static void UR_DialogInitStore_f (void)
 	/* Check how many bases can store this UFO. */
 	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
+		capacities_t *capacity;
 
 		if (!installation)
 			continue;
 
-		if (installation->ufoCapacity.max > 0
-		 && installation->ufoCapacity.max > installation->ufoCapacity.cur) {
-
-			Com_sprintf(cap, lengthof(cap), "%i/%i", (installation->ufoCapacity.max - installation->ufoCapacity.cur), installation->ufoCapacity.max);
+		capacity = &installation->ufoCapacity;
+		if (capacity->max > 0 && capacity->max > capacity->cur) {
+			Com_sprintf(cap, lengthof(cap), "%i/%i", (capacity->max - capacity->cur), capacity->max);
 			LIST_AddString(&recoveryYardName, installation->name);
 			LIST_AddString(&recoveryYardCapacity, cap);
 			count++;

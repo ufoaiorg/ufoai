@@ -82,18 +82,16 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 	static linkedList_t *updateCharacters = NULL;
 
 	if (!msg) {
-		const linkedList_t *l = updateCharacters;
-		while (l) {
-			const updateCharacter_t *c = (updateCharacter_t*)l->data;
+		updateCharacter_t *c;
+		LIST_Foreach(updateCharacters, updateCharacter_t, c) {
 			employee_t *employee = E_GetEmployeeFromChrUCN(c->ucn);
 			character_t* chr;
-
-			l = l->next;
 
 			if (!employee) {
 				Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
 				continue;
 			}
+
 			chr = &employee->chr;
 			chr->HP = min(c->HP, chr->maxHP);
 			chr->STUN = c->STUN;
@@ -929,10 +927,8 @@ static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, cons
 		const int minCloseExperience = 70;
 		float winProbability;
 		float increaseWinProbability = 1.0f;
-		linkedList_t *listPos;
-		listPos = hiredSoldiers;
-		while (listPos) {
-			const employee_t *employee = (employee_t *)listPos->data;
+		employee_t *employee;
+		LIST_Foreach(hiredSoldiers, employee_t, employee) {
 			/* don't use an employee that is currently being transfered */
 			if (!E_IsAwayFromBase(employee)) {
 				const character_t *chr = &employee->chr;
@@ -941,12 +937,9 @@ static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, cons
 				if (score->experience[SKILL_CLOSE] > minCloseExperience)
 					increaseWinProbability *= rank->factor;
 			}
-			listPos = listPos->next;
 		}
 		/* now handle the ugvs */
-		listPos = ugvs;
-		while (listPos) {
-			const employee_t *employee = (employee_t *)listPos->data;
+		LIST_Foreach(ugvs, employee_t, employee) {
 			/* don't use an employee that is currently being transfered */
 			if (!E_IsAwayFromBase(employee)) {
 				const character_t *chr = &employee->chr;
@@ -954,7 +947,6 @@ static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, cons
 				const rank_t *rank = CL_GetRankByIdx(score->rank);
 				increaseWinProbability *= rank->factor;
 			}
-			listPos = listPos->next;
 		}
 
 		winProbability = exp((0.5 - .15 * difficulty) * numSoldiers - battleParameters->aliens);

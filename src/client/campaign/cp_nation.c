@@ -398,21 +398,16 @@ void CL_ParseCities (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseCities: unexpected end of file (nation ";
 	city_t newCity;
-	linkedList_t *cities;
+	city_t *city;
 	const value_t *vp;
 	const char *token;
 
 	/* search for cities with same name */
-	for (cities = ccs.cities; cities != NULL; cities = cities->next) {
-		const city_t *cty = (city_t*) cities->data;
-
-		assert(cty);
-		if (!strcmp(name, cty->id))
-			break;
-	}
-	if (cities != NULL) {
-		Com_Printf("CL_ParseCities: city def \"%s\" with same name found, second ignored\n", name);
-		return;
+	LIST_Foreach(ccs.cities, city_t, city) {
+		if (!strcmp(name, city->id)) {
+			Com_Printf("CL_ParseCities: city def \"%s\" with same name found, second ignored\n", name);
+			return;
+		}
 	}
 
 	/* initialize the nation */
@@ -479,13 +474,11 @@ qboolean NAT_ScriptSanityCheck (void)
 {
 	int i;
 	int error = 0;
-	linkedList_t *cities;
+	city_t *city;
 
 	/* Check if there is at least one map fitting city parameter for terror mission */
-	for (cities = ccs.cities; cities != NULL; cities = cities->next) {
+	LIST_Foreach(ccs.cities, city_t, city) {
 		int mapIdx;
-		city_t *city = (city_t*) cities->data;
-		const vec2_t pos = {city->pos[0], city->pos[1]};
 		qboolean cityCanBeUsed = qfalse;
 		qboolean parametersFit = qfalse;
 		ufoType_t ufoTypes[UFO_MAX];
@@ -504,7 +497,7 @@ qboolean NAT_ScriptSanityCheck (void)
 			if (md->storyRelated)
 				continue;
 
-			if (MAP_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL)) {
+			if (MAP_PositionFitsTCPNTypes(city->pos, md->terrains, md->cultures, md->populations, NULL)) {
 				/* this map fits city parameter, check if we have some terror mission UFOs available for this map */
 
 				parametersFit = qtrue;
@@ -536,7 +529,7 @@ qboolean NAT_ScriptSanityCheck (void)
 					Com_Printf(" %s", Com_UFOTypeToShortName(ufoTypes[i]));
 				Com_Printf(")\n");
 			}
-			MAP_PrintParameterStringByPos(pos);
+			MAP_PrintParameterStringByPos(city->pos);
 		}
 	}
 
@@ -803,12 +796,9 @@ static void CL_NationSelect_f (void)
  */
 static void NAT_ListCities_f (void)
 {
-	linkedList_t *cities;
+	city_t *city;
 
-	for (cities = ccs.cities; cities != NULL; cities =cities->next) {
-		const city_t const *city = (city_t*) cities->data;
-
-		assert(city);
+	LIST_Foreach(ccs.cities, city_t, city) {
 		Com_Printf("City '%s' -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
 		MAP_PrintParameterStringByPos(city->pos);
 	}
@@ -822,14 +812,15 @@ static void NAT_NationList_f (void)
 {
 	int i;
 	for (i = 0; i < ccs.numNations; i++) {
-		Com_Printf("Nation ID: %s\n", ccs.nations[i].id);
-		Com_Printf("...max-funding %i c\n", ccs.nations[i].maxFunding);
-		Com_Printf("...happiness %0.2f\n", ccs.nations[i].stats[0].happiness);
-		Com_Printf("...xviInfection %i\n", ccs.nations[i].stats[0].xviInfection);
-		Com_Printf("...max-soldiers %i\n", ccs.nations[i].maxSoldiers);
-		Com_Printf("...max-scientists %i\n", ccs.nations[i].maxScientists);
-		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", ccs.nations[i].color[0], ccs.nations[i].color[1], ccs.nations[i].color[2], ccs.nations[i].color[3]);
-		Com_Printf("...pos x:%.0f y:%.0f\n", ccs.nations[i].pos[0], ccs.nations[i].pos[1]);
+		const nation_t *nation = &ccs.nations[i];
+		Com_Printf("Nation ID: %s\n", nation->id);
+		Com_Printf("...max-funding %i c\n", nation->maxFunding);
+		Com_Printf("...happiness %0.2f\n", nation->stats[0].happiness);
+		Com_Printf("...xviInfection %i\n", nation->stats[0].xviInfection);
+		Com_Printf("...max-soldiers %i\n", nation->maxSoldiers);
+		Com_Printf("...max-scientists %i\n", nation->maxScientists);
+		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", nation->color[0], nation->color[1], nation->color[2], nation->color[3]);
+		Com_Printf("...pos x:%.0f y:%.0f\n", nation->pos[0], nation->pos[1]);
 	}
 }
 #endif

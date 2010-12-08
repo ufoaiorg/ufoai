@@ -45,20 +45,17 @@ static linkedList_t *eventMails = NULL;
 eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 {
 	int i;
-	linkedList_t* list;
-	eventMail_t* listMail;
 
 	if (!createCopy) {
+		eventMail_t* listMail;
+
 		for (i = 0; i < ccs.numEventMails; i++)
 			if (!strcmp(ccs.eventMails[i].id, id))
 				return &ccs.eventMails[i];
 
-		list = eventMails;
-		while (list) {
-			listMail = (eventMail_t *)list->data;
+		LIST_Foreach(eventMails, eventMail_t, listMail) {
 			if (!strcmp(listMail->id, id))
 				return listMail;
-			list = list->next;
 		}
 
 		return NULL;
@@ -67,11 +64,13 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		eventMail_t *eventMail = NULL, *newEventMail;
 
 		/* search the static mails - and only the static ones! */
-		for (i = 0; i < ccs.numEventMails; i++)
-			if (!strcmp(ccs.eventMails[i].id, id)) {
-				eventMail = &ccs.eventMails[i];
+		for (i = 0; i < ccs.numEventMails; i++) {
+			eventMail_t* mail = &ccs.eventMails[i];
+			if (!strcmp(mail->id, id)) {
+				eventMail = mail;
 				break;
 			}
+		}
 
 		if (!eventMail)
 			return NULL;

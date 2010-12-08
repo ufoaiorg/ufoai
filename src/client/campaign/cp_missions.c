@@ -1274,7 +1274,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	const date_t crashDelay = {14, 0};
 	const nation_t *nation;
 	mission_t *mission;
-	linkedList_t* l;
+	employee_t *employee;
 	employee_t *pilot;
 
 	mission = CP_CreateNewMission(INTERESTCATEGORY_RESCUE, qtrue);
@@ -1305,8 +1305,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	mission->ufo = ufo;
 	mission->stage = STAGE_TERROR_MISSION;
 
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		employee_t *employee = (employee_t *)l->data;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		/*const character_t *chr = &employee->chr;
 		const chrScoreGlobal_t *score = &chr->score;*/
 		/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
