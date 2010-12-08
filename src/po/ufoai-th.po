@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-17 15:30+0200\n"
-"PO-Revision-Date: 2010-11-06 11:13+0530\n"
+"PO-Revision-Date: 2010-12-08 21:32+0530\n"
 "Last-Translator: Phakphum Visetnut <shellingford47@gmail.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
 "MIME-Version: 1.0\n"
@@ -32,19 +32,19 @@ msgstr "ศูนย์บัญชาการ PHALANX "
 
 #: ../base/maps/bomber_city.ump:68
 msgid "Bomber_city"
-msgstr ""
+msgstr "เมืองบอมเบอร์"
 
 #: ../base/maps/bridge.ump:67
 msgid "Bridge"
-msgstr ""
+msgstr "สะพาน"
 
 #: ../base/maps/cemetery.ump:222
 msgid "Small cemetery"
-msgstr ""
+msgstr "สุสานเล็ก"
 
 #: ../base/maps/city_disco.ump:65
 msgid "City_disco"
-msgstr ""
+msgstr "ดิสโก้"
 
 #: ../base/maps/community_centre.ump:61
 #, fuzzy
@@ -65,7 +65,7 @@ msgstr ""
 
 #: ../base/maps/eaglenest.ump:66
 msgid "Eaglenest"
-msgstr ""
+msgstr "รังอินทรี"
 
 #: ../base/maps/forest.ump:404
 #: ../base/maps/forest.ump:435
@@ -110,7 +110,7 @@ msgstr "ประเทศ"
 
 #: ../base/maps/hills.ump:363
 msgid "UFO landed in hills area"
-msgstr ""
+msgstr "UFO ลงจอดในพื้นที่หุบเขา"
 
 #: ../base/maps/industrial.ump:257
 #: ../base/maps/industrial.ump:281
@@ -148,7 +148,7 @@ msgstr "มีค."
 
 #: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
-msgstr ""
+msgstr "ยานขนส่งทางการทหาร"
 
 #: ../base/maps/oriental.ump:292
 msgid "Oriental small"
@@ -237,7 +237,7 @@ msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:167
 msgid "Raptor-class Combat Transport"
-msgstr ""
+msgstr "ยานขนส่งปฏิบัติการรบได้ชั้นแรปเตอร์"
 
 #: ../base/ufos/aircraftmanagement.ufo:168
 #, fuzzy
@@ -341,11 +341,11 @@ msgstr ""
 #: ../base/ufos/aircraftmanagement.ufo:610
 #: ../base/ufos/research.ufo:3762
 msgid "UFO - Supply Ship"
-msgstr ""
+msgstr "ยานขนส่งทรัพยากรของ UFO"
 
 #: ../base/ufos/aircraftmanagement.ufo:611
 msgid "Supply U"
-msgstr ""
+msgstr "ทรัพยากร"
 
 #: ../base/ufos/aircraftmanagement.ufo:632
 #: ../base/ufos/research.ufo:3977
@@ -386,7 +386,7 @@ msgstr "จานบิน - ยานเก็บเกี่ยว"
 
 #: ../base/ufos/aircraftmanagement.ufo:749
 msgid "Mothership U"
-msgstr ""
+msgstr "ยานแม่"
 
 #: ../base/ufos/aircraftmanagement.ufo:765
 #: ../base/ufos/research.ufo:4692
@@ -481,7 +481,7 @@ msgstr "ประเภทมนุษย์ต่างดาว"
 #: ../base/ufos/aircraftmanagement.ufo:1025
 #: ../base/ufos/research.ufo:4479
 msgid "AA51 missile launcher"
-msgstr ""
+msgstr "เครื่องยิงจรวด AA51"
 
 #: ../base/ufos/aircraftmanagement.ufo:1055
 #: ../base/ufos/research.ufo:160
@@ -519,7 +519,7 @@ msgstr "ลำแสงอนุภาค"
 
 #: ../base/ufos/armour.ufo:56
 msgid "stun_electro"
-msgstr ""
+msgstr "เครื่องช็อตไฟฟ้า"
 
 #: ../base/ufos/armour.ufo:57
 #, fuzzy
@@ -601,7 +601,7 @@ msgstr "เรดาร์"
 
 #: ../base/ufos/basemanagement.ufo:208
 msgid "Advanced Radar"
-msgstr ""
+msgstr "เรดาร์ระดับสูง"
 
 #: ../base/ufos/basemanagement.ufo:240
 #: ../base/ufos/ui/bases.ufo:191
@@ -622,7 +622,7 @@ msgstr "ห้องวิจัย"
 
 #: ../base/ufos/basemanagement.ufo:287
 msgid "Missile Battery"
-msgstr ""
+msgstr "ฐานยิงจรวด"
 
 #: ../base/ufos/campaign.ufo:3
 msgid "Very Hard Campaign"
@@ -694,15 +694,15 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:15
 msgid "Amsterdam"
-msgstr ""
+msgstr "อัมสเตอร์ดัม"
 
 #: ../base/ufos/cities.ufo:21
 msgid "Mumbai"
-msgstr ""
+msgstr "มุมไบ"
 
 #: ../base/ufos/cities.ufo:27
 msgid "Cape Town"
-msgstr ""
+msgstr "เคปทาวน์"
 
 #: ../base/ufos/cities.ufo:33
 #, fuzzy
@@ -867,7 +867,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:243
 msgid "Baltimore"
-msgstr ""
+msgstr "บัลติมอร์"
 
 #: ../base/ufos/cities.ufo:249
 #, fuzzy
@@ -876,7 +876,7 @@ msgstr "ถอยกลับ"
 
 #: ../base/ufos/cities.ufo:255
 msgid "Bandung"
-msgstr ""
+msgstr "บันดัง"
 
 #: ../base/ufos/cities.ufo:261
 msgid "Bangalore"
@@ -932,7 +932,7 @@ msgstr "เบอร์ลิน"
 
 #: ../base/ufos/cities.ufo:333
 msgid "Birmingham"
-msgstr ""
+msgstr "เบอร์มิงแฮม"
 
 #: ../base/ufos/cities.ufo:339
 #, fuzzy
@@ -1079,7 +1079,7 @@ msgstr "เชียงใหม่"
 
 #: ../base/ufos/cities.ufo:525
 msgid "Chicago"
-msgstr ""
+msgstr "ชิคาโก"
 
 #: ../base/ufos/cities.ufo:531
 msgid "Chihuahua"
@@ -1106,7 +1106,7 @@ msgstr "เหรียญ"
 
 #: ../base/ufos/cities.ufo:561
 msgid "Christchurch"
-msgstr ""
+msgstr "โบสถ์คริสต์"
 
 #: ../base/ufos/cities.ufo:567
 msgid "Chui"
@@ -1276,7 +1276,7 @@ msgstr "เอดมันตัน"
 
 #: ../base/ufos/cities.ufo:783
 msgid "El Paso"
-msgstr ""
+msgstr "เอล ปาโซ"
 
 #: ../base/ufos/cities.ufo:789
 msgid "Enugu"
@@ -1284,7 +1284,7 @@ msgstr "เอนูกู"
 
 #: ../base/ufos/cities.ufo:795
 msgid "Espoo"
-msgstr ""
+msgstr "เอสพู"
 
 #: ../base/ufos/cities.ufo:801
 msgid "Fairbanks"
@@ -1296,7 +1296,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:813
 msgid "Frankfurt am Main"
-msgstr ""
+msgstr "แฟรงก์เฟิร์ต"
 
 #: ../base/ufos/cities.ufo:819
 #, fuzzy
@@ -1329,7 +1329,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:861
 msgid "Gold Coast"
-msgstr ""
+msgstr "โกลด์โคสท์"
 
 #: ../base/ufos/cities.ufo:867
 msgid "Gothenburg"
@@ -1421,7 +1421,7 @@ msgstr "มีค."
 
 #: ../base/ufos/cities.ufo:987
 msgid "Ho Chi Minh City"
-msgstr ""
+msgstr "โฮจิมินท์ซิตี้"
 
 #: ../base/ufos/cities.ufo:993
 msgid "Hong Kong"
@@ -1447,7 +1447,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1029
 msgid "Iloilo City"
-msgstr ""
+msgstr "รัฐโอไฮโอ"
 
 #: ../base/ufos/cities.ufo:1035
 #, fuzzy
@@ -1505,7 +1505,7 @@ msgstr "เจอรซียซิตี้"
 
 #: ../base/ufos/cities.ufo:1113
 msgid "Jerusalem"
-msgstr ""
+msgstr "กรุงเยรูซาเล็ม"
 
 #: ../base/ufos/cities.ufo:1119
 #, fuzzy
@@ -1514,7 +1514,7 @@ msgstr "มค."
 
 #: ../base/ufos/cities.ufo:1125
 msgid "Johannesburg"
-msgstr ""
+msgstr "โจฮันเนสเบิร์ก"
 
 #: ../base/ufos/cities.ufo:1131
 msgid "Johor Bahru"
@@ -1535,7 +1535,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1155
 msgid "Kaliningrad"
-msgstr ""
+msgstr "คาลินินกราด"
 
 #: ../base/ufos/cities.ufo:1161
 #, fuzzy
@@ -1566,7 +1566,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1197
 msgid "Karachi"
-msgstr ""
+msgstr "คาราจิ"
 
 #: ../base/ufos/cities.ufo:1203
 msgid "Kathmandu"
@@ -1574,7 +1574,7 @@ msgstr "กาฐมาณฑุ"
 
 #: ../base/ufos/cities.ufo:1209
 msgid "Kawasaki"
-msgstr ""
+msgstr "คาวาซากิ"
 
 #: ../base/ufos/cities.ufo:1215
 msgid "Kharkiv"
@@ -1612,11 +1612,11 @@ msgstr "โกลกาตา"
 
 #: ../base/ufos/cities.ufo:1263
 msgid "Konya"
-msgstr ""
+msgstr "คองยะ"
 
 #: ../base/ufos/cities.ufo:1269
 msgid "Koulikoro"
-msgstr ""
+msgstr "โควริโคโระ"
 
 #: ../base/ufos/cities.ufo:1275
 #, fuzzy
@@ -1661,7 +1661,7 @@ msgstr "ลา ปาซ"
 
 #: ../base/ufos/cities.ufo:1329
 msgid "Las Vegas"
-msgstr ""
+msgstr "ลาส เวกัส"
 
 #: ../base/ufos/cities.ufo:1335
 #, fuzzy
@@ -1716,7 +1716,7 @@ msgstr "ลองเยียรเบียน"
 
 #: ../base/ufos/cities.ufo:1401
 msgid "Los Angeles"
-msgstr ""
+msgstr "ลอส แอนเจลลิส"
 
 #: ../base/ufos/cities.ufo:1407
 #, fuzzy
@@ -1746,7 +1746,7 @@ msgstr "ลักเซมเบิรก"
 
 #: ../base/ufos/cities.ufo:1443
 msgid "Luxor"
-msgstr ""
+msgstr "ลูซอร์"
 
 #: ../base/ufos/cities.ufo:1449
 msgid "Lviv"
@@ -1783,7 +1783,7 @@ msgstr "โมโห"
 
 #: ../base/ufos/cities.ufo:1491
 msgid "Makati City"
-msgstr ""
+msgstr "มาคาติซิตี้"
 
 #: ../base/ufos/cities.ufo:1497
 msgid "Malacca Town"
@@ -1791,7 +1791,7 @@ msgstr "มะละกาทาวน์"
 
 #: ../base/ufos/cities.ufo:1503
 msgid "Malaga"
-msgstr ""
+msgstr "มะละกา"
 
 #: ../base/ufos/cities.ufo:1509
 msgid "Malang"
@@ -1872,7 +1872,7 @@ msgstr "เสนารักษ์"
 
 #: ../base/ufos/cities.ufo:1611
 msgid "Mendoza"
-msgstr ""
+msgstr "เมนโดซ่า"
 
 #: ../base/ufos/cities.ufo:1617
 #, fuzzy
@@ -1890,7 +1890,7 @@ msgstr "เม็กซิโกซิตี้"
 
 #: ../base/ufos/cities.ufo:1635
 msgid "Miami"
-msgstr ""
+msgstr "ไมอามี่"
 
 #: ../base/ufos/cities.ufo:1641
 #, fuzzy
@@ -1944,11 +1944,11 @@ msgstr "มนุษย์"
 
 #: ../base/ufos/cities.ufo:1707
 msgid "Nagoya"
-msgstr ""
+msgstr "นาโกย่า"
 
 #: ../base/ufos/cities.ufo:1713
 msgid "Nagpur"
-msgstr ""
+msgstr "นังพัวร์"
 
 #: ../base/ufos/cities.ufo:1719
 #, fuzzy
@@ -1957,7 +1957,7 @@ msgstr "กางเขน"
 
 #: ../base/ufos/cities.ufo:1725
 msgid "Nakhon Ratchasima"
-msgstr ""
+msgstr "นครราชสีมา"
 
 #: ../base/ufos/cities.ufo:1731
 #, fuzzy
@@ -2114,7 +2114,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1935
 msgid "Philadelphia"
-msgstr ""
+msgstr "ฟิลาเดลเฟีย"
 
 #: ../base/ufos/cities.ufo:1941
 msgid "Phnom Penh"
@@ -2169,7 +2169,7 @@ msgstr "ปวยบลา"
 
 #: ../base/ufos/cities.ufo:2007
 msgid "Puerto Williams"
-msgstr ""
+msgstr "เปอร์โต วิลเลี่ยม"
 
 #: ../base/ufos/cities.ufo:2013
 #, fuzzy
@@ -2178,7 +2178,7 @@ msgstr "ฐาน"
 
 #: ../base/ufos/cities.ufo:2019
 msgid "Punta Arenas"
-msgstr ""
+msgstr "พุนตา อาร์นาส"
 
 #: ../base/ufos/cities.ufo:2025
 msgid "Pyongyang"
@@ -2190,7 +2190,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2037
 msgid "Quebec City"
-msgstr ""
+msgstr "เมืองควิเบ็ก"
 
 #: ../base/ufos/cities.ufo:2043
 msgid "Quetzaltenango"
@@ -2198,7 +2198,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2049
 msgid "Quezon City"
-msgstr ""
+msgstr "ควิซอนซิตี้"
 
 #: ../base/ufos/cities.ufo:2055
 #, fuzzy
@@ -2230,7 +2230,7 @@ msgstr "รีโอเดจาเนโร"
 
 #: ../base/ufos/cities.ufo:2091
 msgid "Riverside"
-msgstr ""
+msgstr "ริมแม่น้ำ"
 
 #: ../base/ufos/cities.ufo:2097
 msgid "Rockhampton"
@@ -2314,7 +2314,7 @@ msgstr "ซันติอาโก"
 
 #: ../base/ufos/cities.ufo:2205
 msgid "Santiago de Cuba"
-msgstr ""
+msgstr "ซานติเอโก้ในคิวบา"
 
 #: ../base/ufos/cities.ufo:2211
 msgid "Santo Domingo"
@@ -2322,11 +2322,11 @@ msgstr "ซันโตโดมิงโก"
 
 #: ../base/ufos/cities.ufo:2217
 msgid "Sao Jose dos Campos"
-msgstr ""
+msgstr "ซาน โจเซ่ในแคมโปส"
 
 #: ../base/ufos/cities.ufo:2223
 msgid "Sao Paulo"
-msgstr ""
+msgstr "เซา เปาโล"
 
 #: ../base/ufos/cities.ufo:2229
 #, fuzzy
@@ -2419,7 +2419,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2349
 msgid "St. Louis"
-msgstr ""
+msgstr "เซนต์หลุยส์"
 
 #: ../base/ufos/cities.ufo:2355
 msgid "Stockholm"
@@ -2576,7 +2576,7 @@ msgstr "ขว้าง"
 
 #: ../base/ufos/cities.ufo:2559
 msgid "Udon Thani"
-msgstr ""
+msgstr "อุดรธานี"
 
 #: ../base/ufos/cities.ufo:2565
 msgid "Ushuaia"
@@ -2594,7 +2594,7 @@ msgstr "มนุษย์ต่างดาว"
 
 #: ../base/ufos/cities.ufo:2583
 msgid "Vancouver"
-msgstr ""
+msgstr "แวนคูเวอร์"
 
 #: ../base/ufos/cities.ufo:2589
 msgid "Vienna"
@@ -2693,7 +2693,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2721
 msgid "Yokohama"
-msgstr ""
+msgstr "โยโกฮาม่า"
 
 #: ../base/ufos/cities.ufo:2727
 msgid "Zagreb"
@@ -2887,7 +2887,7 @@ msgstr "ดร. คอนเนอร์, แผนกวิจัยและ�
 #: ../base/ufos/research.ufo:5230
 #: ../base/ufos/research.ufo:5259
 msgid "mail_to_base_commander"
-msgstr "ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัิตการแอตแลนติค"
+msgstr "ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2899,7 +2899,7 @@ msgstr "โชคดี"
 
 #: ../base/ufos/events.ufo:37
 msgid "mail_prolog"
-msgstr ""
+msgstr "จดหมาในกล่อง"
 
 #: ../base/ufos/events.ufo:43
 #: ../base/ufos/events.ufo:55
@@ -3049,7 +3049,7 @@ msgstr "Not enough workshops"
 
 #: ../base/ufos/events.ufo:80
 msgid "mail_not_enough_money"
-msgstr ""
+msgstr "จดหมายแสดงความไม่เพียงพอของเงิน"
 
 #: ../base/ufos/events.ufo:90
 #, fuzzy
@@ -3058,7 +3058,7 @@ msgstr "Not enough workshops"
 
 #: ../base/ufos/events.ufo:91
 msgid "mail_not_enough_ressources"
-msgstr ""
+msgstr "จดหมายแสดงความไม่เพียงพอของทรัพยากร"
 
 #: ../base/ufos/events.ufo:101
 #, fuzzy
@@ -3089,11 +3089,11 @@ msgstr "รายงานประจำเดือน -- %s"
 
 #: ../base/ufos/events.ufo:113
 msgid "mail_monthly_report"
-msgstr ""
+msgstr "จดหมายแสดงรายงานประจำเดือน"
 
 #: ../base/ufos/events.ufo:123
 msgid "UFO Stored In Hangar -- %s"
-msgstr ""
+msgstr "จานบินถูกเก็บในลานจอด -- %s"
 
 #: ../base/ufos/events.ufo:124
 #, fuzzy
@@ -3139,11 +3139,11 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:134
 msgid "Transfer Received -- %s"
-msgstr ""
+msgstr "ได้รับแล้ว -- %s"
 
 #: ../base/ufos/events.ufo:135
 msgid "mail_transfer_received"
-msgstr ""
+msgstr "ได้รับจดหมายที่ส่งมาแล้ว"
 
 #: ../base/ufos/events.ufo:145
 msgid "Equipment Order Received -- %s"
@@ -3151,7 +3151,7 @@ msgstr "รายการอุปกรณ์ได้รับแล้ว"
 
 #: ../base/ufos/events.ufo:146
 msgid "mail_equipment_order_received"
-msgstr ""
+msgstr "จดหมายแสดงการได้รับชิ้นส่วนที่เรียกร้องแล้ว"
 
 #: ../base/ufos/events.ufo:156
 #, fuzzy
@@ -3165,7 +3165,7 @@ msgstr "ก่อสร้างเสร็จสิ้น"
 
 #: ../base/ufos/events.ufo:167
 msgid "New Base Ready -- %s"
-msgstr ""
+msgstr "ฐานที่ตั้งใหม่พร้อมแล้ว -- %s"
 
 #: ../base/ufos/events.ufo:168
 #, fuzzy
@@ -3179,7 +3179,7 @@ msgstr "โจมตีฐาน"
 
 #: ../base/ufos/events.ufo:179
 msgid "mail_base_attack_report"
-msgstr ""
+msgstr "รายงานฐานถูกจู่โจม"
 
 #: ../base/ufos/events.ufo:189
 msgid "Mission Summary -- %s"
@@ -3187,7 +3187,7 @@ msgstr "สรุปภารกิจ"
 
 #: ../base/ufos/events.ufo:190
 msgid "mail_mission_summary"
-msgstr ""
+msgstr "สรุปภารกิจ"
 
 #: ../base/ufos/events.ufo:200
 msgid "Alien Base Discovered -- %s"
@@ -3200,19 +3200,19 @@ msgstr "ผู้บัญชาการฐาน, PHALANX, หน่วยป�
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
-msgstr ""
+msgstr "เรดาร์อยู่ระหว่างการค้นหาสิ่งสูญหาาย -- %s"
 
 #: ../base/ufos/events.ufo:212
 msgid "mail_lost_radar_tracking"
-msgstr ""
+msgstr "ขาดการติดตาม"
 
 #: ../base/ufos/events.ufo:222
 msgid "New Radar Contact -- %s"
-msgstr ""
+msgstr "เรดาร์ใหม่พร้อมใน -- %s"
 
 #: ../base/ufos/events.ufo:223
 msgid "mail_new_radar_contact"
-msgstr ""
+msgstr "เรดาร์ใหม่พร้อมแล้ว"
 
 #: ../base/ufos/events.ufo:231
 #: ../base/ufos/events.ufo:242
@@ -3228,7 +3228,7 @@ msgstr "พล.ท. อินกริด ฟอล์คแลนด์, สำ
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
-msgstr ""
+msgstr "แสดงท่าทีช้าเกินไป -- %s"
 
 #: ../base/ufos/events.ufo:234
 msgid "mail_response_too_late"
@@ -3240,7 +3240,7 @@ msgstr "UFO ถูกยิงแล้ว -- %s"
 
 #: ../base/ufos/events.ufo:245
 msgid "mail_ufo_shot_down"
-msgstr ""
+msgstr "ยานอวกาศถูกยิงตกแล้ว"
 
 #: ../base/ufos/events.ufo:255
 #, fuzzy
@@ -3266,7 +3266,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:267
 msgid "mail_new_aircraft_arrived"
-msgstr ""
+msgstr "อากาศยานใหม่มาถึงแล้ว"
 
 #: ../base/ufos/events.ufo:277
 msgid "Aircraft Lost Target -- %s"
@@ -3274,7 +3274,7 @@ msgstr "เครื่องบินคลาดกับเป้าหมา
 
 #: ../base/ufos/events.ufo:278
 msgid "mail_aircraft_lost_target"
-msgstr ""
+msgstr "อากาศยานสูญเสียการติดตาม"
 
 #: ../base/ufos/events.ufo:288
 msgid "Aircraft Ready -- %s"
@@ -3282,7 +3282,7 @@ msgstr "เครื่องบินพร้อม -- %s"
 
 #: ../base/ufos/events.ufo:289
 msgid "mail_aircraft_ready"
-msgstr ""
+msgstr "อากาศยานพร้อมใช้งาน"
 
 #: ../base/ufos/events.ufo:299
 msgid "Aircraft Bingo Fuel -- %s"
@@ -3298,7 +3298,7 @@ msgstr "เครื่องบินลงจอด -- %s"
 
 #: ../base/ufos/events.ufo:311
 msgid "mail_aircraft_landed"
-msgstr ""
+msgstr "อากาศยานลงจอด"
 
 #: ../base/ufos/fonts.ufo:11
 #: ../base/ufos/fonts.ufo:18
@@ -3310,8 +3310,9 @@ msgstr ""
 #: ../base/ufos/fonts.ufo:56
 #: ../base/ufos/fonts.ufo:62
 #: ../base/ufos/fonts.ufo:69
+#, fuzzy
 msgid "media/DejaVuSans.ttf"
-msgstr "media/Loma.ttf"
+msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/gametypes.ufo:4
 msgid "1on1"
@@ -3370,7 +3371,7 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:1134
 #: ../base/ufos/ui/lostwon.ufo:202
 msgid "UFO Yard"
-msgstr ""
+msgstr "ลาน UFO"
 
 #: ../base/ufos/installation.ufo:33
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
@@ -3404,11 +3405,11 @@ msgstr "สเปน"
 
 #: ../base/ufos/language.ufo:114
 msgid "Czech"
-msgstr ""
+msgstr "สาธารณรัฐเช็ค"
 
 #: ../base/ufos/language.ufo:124
 msgid "Danish"
-msgstr ""
+msgstr "เดนิช"
 
 #: ../base/ufos/language.ufo:134
 msgid "Estonian"
@@ -3441,11 +3442,11 @@ msgstr "เกาหลี"
 
 #: ../base/ufos/language.ufo:214
 msgid "Dutch"
-msgstr ""
+msgstr "ดัชท์"
 
 #: ../base/ufos/language.ufo:224
 msgid "Brazilian Portuguese"
-msgstr ""
+msgstr "บราซิลโปรตุเกส"
 
 #: ../base/ufos/language.ufo:232
 msgid "Portuguese"
@@ -3481,7 +3482,7 @@ msgstr "จีน"
 
 #: ../base/ufos/language.ufo:312
 msgid "Bulgarian"
-msgstr ""
+msgstr "บัลแกเรียน"
 
 #: ../base/ufos/language.ufo:320
 #, fuzzy
@@ -3490,7 +3491,7 @@ msgstr "ย. ซาราเซน"
 
 #: ../base/ufos/language.ufo:328
 msgid "No language"
-msgstr ""
+msgstr "ไม่มีภาษา"
 
 #: ../base/ufos/maps.ufo:47
 #: ../base/ufos/maps.ufo:89
@@ -3512,7 +3513,7 @@ msgstr ""
 #: ../base/ufos/maps.ufo:342
 #: ../base/ufos/maps.ufo:381
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
-msgstr ""
+msgstr "ไร่ในพื้นที่นอกเมือง มีพื้นที่ซ่อนตัวมากแต่มีสิ่งกีดขวางการมองเห็นอยู่บ้าง"
 
 #: ../base/ufos/maps.ufo:430
 #: ../base/ufos/maps.ufo:512
@@ -3526,7 +3527,7 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:593
 msgid "An industrial compound."
-msgstr ""
+msgstr "ส่วนผสมทางอุตสาหกรรม"
 
 #: ../base/ufos/maps.ufo:648
 #, fuzzy
@@ -3536,20 +3537,20 @@ msgstr "ภารกิจการเคลื่อนย้าย"
 #: ../base/ufos/maps.ufo:689
 #: ../base/ufos/maps.ufo:729
 msgid "A river runs through this piece of jungle."
-msgstr ""
+msgstr "แม่น้ำไหลผ่านป่า"
 
 #: ../base/ufos/maps.ufo:770
 #: ../base/ufos/maps.ufo:811
 #: ../base/ufos/maps.ufo:852
 msgid "A cleared stretch of land in the middle of the jungle."
-msgstr ""
+msgstr "พื้นที่โล่งกว้างในส่วนกลางของป่า"
 
 #: ../base/ufos/maps.ufo:898
 #: ../base/ufos/maps.ufo:938
 #: ../base/ufos/maps.ufo:981
 #: ../base/ufos/maps.ufo:1023
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr ""
+msgstr "เพื่อนบ้านผู้รักสงบในพื้นที่ชายขอบของส่วนกลางของประชากร"
 
 #: ../base/ufos/maps.ufo:1065
 #: ../base/ufos/maps.ufo:1146
@@ -3564,7 +3565,7 @@ msgstr ""
 #: ../base/ufos/maps.ufo:1227
 #: ../base/ufos/maps.ufo:1269
 msgid "Some houses in desert"
-msgstr ""
+msgstr "บ้านสักหลังในทะเลทราย"
 
 #: ../base/ufos/maps.ufo:1310
 msgid "An excavation site that has fallen under alien attack."
@@ -3572,15 +3573,15 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:1357
 msgid "An estate owned by rich and influential people."
-msgstr ""
+msgstr "อสังหาริมทรัพย์ที่คนรวยและคนที่ไม่มีอันตรายเป็นเจ้าของ"
 
 #: ../base/ufos/maps.ufo:1401
 msgid "A small village in England."
-msgstr ""
+msgstr "หมู่บ้านเล็กๆ ในอังกฤษ"
 
 #: ../base/ufos/maps.ufo:1447
 msgid "A small office in a mountainous region."
-msgstr ""
+msgstr "ออฟฟิศเล็กๆ ในพื้นที่ภูเขา"
 
 #: ../base/ufos/maps.ufo:1495
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
@@ -3588,41 +3589,41 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:1545
 msgid "An old mine."
-msgstr ""
+msgstr "เหมืองเก่า"
 
 #: ../base/ufos/maps.ufo:1593
 msgid "An industrial area, used for loading and unloading goods."
-msgstr ""
+msgstr "พื้นที่อุตสาหกรรมที่ใช้ในการขนถ่ายสินค้า"
 
 #: ../base/ufos/maps.ufo:1639
 msgid "A bunker used in a previous conflict."
-msgstr ""
+msgstr "บังเกอร์ที่ใช้ในสถานการณ์รุนแรงเมืองครั้งก่อน"
 
 #: ../base/ufos/maps.ufo:1685
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr ""
+msgstr "เขื่อนไฮโดรอิเล็คทริคที่ถูกแทรกแซงโดยผู้รุกรานจากต่างดาว"
 
 #: ../base/ufos/maps.ufo:1729
 #: ../base/ufos/maps.ufo:1779
 #: ../base/ufos/maps.ufo:1829
 msgid "A classic eastern suburban area."
-msgstr ""
+msgstr "พื้นที่อาคารตะวันตกแบบคลาสสิค"
 
 #: ../base/ufos/maps.ufo:1878
 msgid "A small industrial area."
-msgstr ""
+msgstr "พื้นที่อุตสาหกรรมขนาดเล็ก"
 
 #: ../base/ufos/maps.ufo:1924
 msgid "A stadium used for various recreational events."
-msgstr ""
+msgstr "สเตเดียมที่ใช้เพื่องานสันทนาการหลากหลายแบบ"
 
 #: ../base/ufos/maps.ufo:1973
 msgid "A tropical area where several suspected criminals have made their homes."
-msgstr ""
+msgstr "พื้นที่ทั่วไปที่คนร้ายที่ตกเป็นที่ต้องสงสัยใช้เป็นที่ซุกหัวนอน"
 
 #: ../base/ufos/maps.ufo:2031
 msgid "A small estate in the mountains"
-msgstr ""
+msgstr "สิ่งปลูกสร้างในพื้นที่ภูเขา"
 
 #: ../base/ufos/maps.ufo:2081
 #, fuzzy
@@ -3631,24 +3632,24 @@ msgstr "ห้องเก็บของ"
 
 #: ../base/ufos/maps.ufo:2116
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
-msgstr ""
+msgstr "บ้านไร่ที่ล้อมรอบด้วยไร่และ UFO ลงจอดที่จุดไหนสักจุดในพื้นที่นี้"
 
 #: ../base/ufos/maps.ufo:2163
 msgid "A ferry."
-msgstr ""
+msgstr "เรือเฟอร์รี่"
 
 #: ../base/ufos/maps.ufo:2211
 msgid "A rather old-fashioned suburban district."
-msgstr ""
+msgstr "เขตพื้นที่รูปแบบเก่า"
 
 #: ../base/ufos/maps.ufo:2260
 #: ../base/ufos/maps.ufo:2307
 msgid "A small neighbourhood in a warm urban region."
-msgstr ""
+msgstr "เพื่อนบ้านกลุ่มเล็กที่อบอุ่นในพื้นที่อยู่อาศัย"
 
 #: ../base/ufos/maps.ufo:2355
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr ""
+msgstr "สถานที่ๆ ประชาชนนำรถมาเติมน้ำมัน"
 
 #: ../base/ufos/maps.ufo:2404
 #: ../base/ufos/maps.ufo:2448
@@ -3657,15 +3658,15 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:2492
 msgid "Underground pipe construction site."
-msgstr ""
+msgstr "พื้นที่ก่อสร้างท่อใต้ดิน"
 
 #: ../base/ufos/maps.ufo:2539
 msgid "A subway station in a suburban part of town."
-msgstr ""
+msgstr "สถานีรถใต้ดินในบางส่วนของเมือง"
 
 #: ../base/ufos/maps.ufo:2585
 msgid "An office complex in the centre of town."
-msgstr ""
+msgstr "กลุ่มอาคารออฟฟิศในส่วนกลางของเมือง"
 
 #: ../base/ufos/maps.ufo:2633
 msgid "A suburban district."
@@ -3673,70 +3674,70 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:2678
 msgid "A military convoy has caught the eye of the aliens."
-msgstr ""
+msgstr "พาหนะขนส่งทางการทหารพบเห็นพวกมนุษย์ต่างดาว"
 
 #: ../base/ufos/maps.ufo:2725
 #: ../base/ufos/maps.ufo:2773
 msgid "A small UFO has crashed in this mining region."
-msgstr ""
+msgstr "UFO ตกในพื้นที่เหมือง"
 
 #: ../base/ufos/maps.ufo:2823
 msgid "An office complex under construction."
-msgstr ""
+msgstr "กลุ่มออฟฟิศที่อยู่ระหว่างการก่อสร้าง"
 
 #: ../base/ufos/maps.ufo:2870
 msgid "A local harbour."
-msgstr ""
+msgstr "ท่าเรือท้องถิ่น"
 
 #: ../base/ufos/maps.ufo:2915
 msgid "An office complex on the outskirts of town."
-msgstr ""
+msgstr "กลุ่มอาคารออฟฟิศในพื้นที่รอบนอกของเมือง"
 
 #: ../base/ufos/maps.ufo:2960
 msgid "A luxurious vacation resort."
-msgstr ""
+msgstr "สถานที่พักผ่อนที่หรูหรามาก"
 
 #: ../base/ufos/maps.ufo:3017
 msgid "A suburb that has been visited by UFO."
-msgstr ""
+msgstr "ชานเมืองที่ UFO เคยมาเยือน"
 
 #: ../base/ufos/maps.ufo:3069
 msgid "A suburb that has received a visit from a Harvester."
-msgstr ""
+msgstr "ชานเมืองที่มียานค้นหามาเยือน"
 
 #: ../base/ufos/maps.ufo:3121
 msgid "An alien Harvester has crashed in the wastelands."
-msgstr ""
+msgstr "ยานค้นหาของเอเลี่ยนตกในพื้นที่สกปรก"
 
 #: ../base/ufos/maps.ufo:3167
 #: ../base/ufos/maps.ufo:3201
 msgid "A small settlement in winter."
-msgstr ""
+msgstr "อาคารสถานที่ในฤดูหนาว"
 
 #: ../base/ufos/maps.ufo:3240
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr ""
+msgstr "เชลเตอร์ที่สร้างขึ้นเพื่อใช้เป็นบ้านในช่วงเวลาที่เกิดภัยพิบัติใหญ่ ประตูบางบานที่เสียหายแล้วถูกปิดไปแล้ว"
 
 #: ../base/ufos/maps.ufo:3288
 msgid "A Bomber has landed in the middle of a city."
-msgstr ""
+msgstr "ยานบอมเบอร์ลงจอดกลางเมือง"
 
 #: ../base/ufos/maps.ufo:3341
 msgid "A place where people come to relax and mingle."
-msgstr ""
+msgstr "สถานที่ที่ผู้คนมาพักผ่อนด้วยกัน"
 
 #: ../base/ufos/maps.ufo:3389
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr ""
+msgstr "ห้องทดลองที่เคยมีการค้นคว้าเกี่ยวกับชิ้นส่วนแตกหักของ UFO"
 
 #: ../base/ufos/maps.ufo:3440
 #: ../base/ufos/maps.ufo:3482
 msgid "Big city"
-msgstr ""
+msgstr "เมืองใหญ่"
 
 #: ../base/ufos/maps.ufo:3518
 msgid "A fuel depot the aliens try to destroy."
-msgstr ""
+msgstr "จุดติดตั้งเชื้อเพลิงที่เอเลี่ยนพยายามทำลายอยู่"
 
 #: ../base/ufos/maps.ufo:3557
 #, fuzzy
@@ -3745,7 +3746,7 @@ msgstr "ภารกิจการเคลื่อนย้าย"
 
 #: ../base/ufos/maps.ufo:3599
 msgid "UFO landed in hills area."
-msgstr ""
+msgstr "UFO ลงจอดในพื้นที่ภูเขา"
 
 #: ../base/ufos/maps.ufo:3648
 msgid "UFO Crashsite."
@@ -3756,12 +3757,10 @@ msgid "Rescue mission."
 msgstr "ภารกิจช่วยเหลือ"
 
 #: ../base/ufos/maps.ufo:3710
-#, fuzzy
 msgid "An alien base."
-msgstr "มนุษย์ต่างดาว"
+msgstr "ฐานมนุษย์ต่างดาว"
 
 #: ../base/ufos/maps.ufo:3726
-#, fuzzy
 msgid "Base is under attack."
 msgstr "ฐานถูกโจมตี"
 
@@ -3808,27 +3807,27 @@ msgstr "พล."
 
 #: ../base/ufos/medals.ufo:71
 msgid "Lance-Corporal"
-msgstr "Lance-Corporal"
+msgstr "สิบตรี"
 
 #: ../base/ufos/medals.ufo:72
 msgid "LCpl"
-msgstr "LCpl"
+msgstr "ส.ต."
 
 #: ../base/ufos/medals.ufo:83
 msgid "Corporal"
-msgstr "จ่าสิบเอก"
+msgstr "สิบโท"
 
 #: ../base/ufos/medals.ufo:84
 msgid "Cpl"
-msgstr "จสอ."
+msgstr "ส.ท."
 
 #: ../base/ufos/medals.ufo:95
 msgid "Sergeant"
-msgstr "ร้อยเอก"
+msgstr "สิบเอก"
 
 #: ../base/ufos/medals.ufo:96
 msgid "Sgt"
-msgstr "รอ."
+msgstr "ส.อ."
 
 #: ../base/ufos/medals.ufo:107
 msgid "Warrant Officer"
@@ -3848,23 +3847,23 @@ msgstr "SWO"
 
 #: ../base/ufos/medals.ufo:130
 msgid "Second Lieutenant"
-msgstr "Second Lieutenant"
+msgstr "ร้อยตรี"
 
 #: ../base/ufos/medals.ufo:131
 msgid "2Lt"
-msgstr "2Lt"
+msgstr "ร.ต."
 
 #: ../base/ufos/medals.ufo:141
 msgid "Lieutenant"
-msgstr "Lieutenant"
+msgstr "ร้อยโท"
 
 #: ../base/ufos/medals.ufo:142
 msgid "Lt"
-msgstr "Lt"
+msgstr "ร.ท."
 
 #: ../base/ufos/medals.ufo:152
 msgid "Captain"
-msgstr "พันเอก"
+msgstr "ร้อยเอก"
 
 #: ../base/ufos/medals.ufo:153
 #, fuzzy
@@ -3873,27 +3872,27 @@ msgstr "พอ."
 
 #: ../base/ufos/medals.ufo:163
 msgid "Major"
-msgstr "Major"
+msgstr "พันตรี"
 
 #: ../base/ufos/medals.ufo:164
 msgid "Maj"
-msgstr "Maj"
+msgstr "พ.ต."
 
 #: ../base/ufos/medals.ufo:174
 msgid "Lieutenant-Colonel"
-msgstr "Lieutenant-Colonel"
+msgstr "พันโท"
 
 #: ../base/ufos/medals.ufo:175
 msgid "Lt Col"
-msgstr "Lt Col"
+msgstr "พ.ท."
 
 #: ../base/ufos/medals.ufo:185
 msgid "Colonel"
-msgstr "Colonel"
+msgstr "พันเอก"
 
 #: ../base/ufos/medals.ufo:186
 msgid "Col"
-msgstr "Col"
+msgstr "พ.อ."
 
 #: ../base/ufos/msgcategories.ufo:7
 #, fuzzy
@@ -3906,21 +3905,18 @@ msgid "installation_construction"
 msgstr "ประเทศ"
 
 #: ../base/ufos/msgcategories.ufo:23
-#, fuzzy
 msgid "research"
-msgstr "วิจัย"
+msgstr "การวิจัย"
 
 #: ../base/ufos/msgcategories.ufo:30
-#, fuzzy
 msgid "production"
 msgstr "การผลิต"
 
 #: ../base/ufos/msgcategories.ufo:37
 msgid "nations_happiness"
-msgstr ""
+msgstr "ความสุขมวลรวมของประเทศ"
 
 #: ../base/ufos/msgcategories.ufo:44
-#, fuzzy
 msgid "transfer"
 msgstr "โยกย้าย"
 
@@ -4355,9 +4351,8 @@ msgstr ""
 "ดร. คอนเนอร์"
 
 #: ../base/ufos/research.ufo:453
-#, fuzzy
 msgid "Alien Communication"
-msgstr "เขตกักกันถัดไป"
+msgstr "การสื่อสารของมนุษย์ต่างดาว"
 
 #: ../base/ufos/research.ufo:458
 msgid "alien_communication_txt"
@@ -4400,9 +4395,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:494
 #: client/campaign/cp_alienbase.c:169
 #: client/campaign/cp_missions.c:464
-#, fuzzy
 msgid "Alien base"
-msgstr "มนุษย์ต่างดาว"
+msgstr "ฐานมนุษย์ต่างดาว"
 
 #: ../base/ufos/research.ufo:496
 msgid "alien_base_txt"
@@ -4524,9 +4518,8 @@ msgstr ""
 "พล.ท. ฟอล์คแลนด์"
 
 #: ../base/ufos/research.ufo:592
-#, fuzzy
 msgid "UFO Theory"
-msgstr "จานบินต่อสู้"
+msgstr "ทฤษฏีจานบิน"
 
 #: ../base/ufos/research.ufo:597
 msgid "alien_theory_txt"
@@ -9949,7 +9942,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5098
 msgid "The Enemy On Earth"
-msgstr ""
+msgstr "ศัตรูบนโลก"
 
 #: ../base/ufos/research.ufo:5103
 msgid "enemy_on_earth_alt_txt"
@@ -10084,7 +10077,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5179
 msgid "The Enemy On Earth - Revisited"
-msgstr ""
+msgstr "ศัตรูบนโลก - กลับมาเยี่ยมอีกครั้ง"
 
 #: ../base/ufos/research.ufo:5184
 #, fuzzy
@@ -10280,7 +10273,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:441
 msgid "General Support"
-msgstr ""
+msgstr "ฝ่ายสนับสนุนทั่วไป"
 
 #: ../base/ufos/seq_credits.ufo:452
 msgid "Richlv"
@@ -10556,7 +10549,7 @@ msgstr "จบตา"
 
 #: ../base/ufos/seq_tutorials.ufo:771
 msgid "How to play skirmish"
-msgstr ""
+msgstr "วิธีการเล่นแบบ skirmish"
 
 #: ../base/ufos/seq_tutorials.ufo:785
 #, fuzzy
@@ -10565,20 +10558,19 @@ msgstr "วิธีเล่นภารกิจรบ"
 
 #: ../base/ufos/seq_tutorials.ufo:796
 msgid "Skirmish is type of fast game."
-msgstr ""
+msgstr "ระบบการเล่นแบบ Skirmish เป็นการเล่นแบบเร็ว"
 
 #: ../base/ufos/seq_tutorials.ufo:835
-#, fuzzy
 msgid "Equipment selection"
-msgstr "เลือกทีม"
+msgstr "คัดเลือกอุปกรณ์"
 
 #: ../base/ufos/seq_tutorials.ufo:856
 msgid "Day or night version of map to play"
-msgstr ""
+msgstr "แผนที่แบบกลางวันหรือกลางคืนที่จะใช้เล่น"
 
 #: ../base/ufos/seq_tutorials.ufo:877
 msgid "How many aliens will fight versus you"
-msgstr ""
+msgstr "จำนวนมนุษย์ต่างดาวที่จะสู้กับคุณ"
 
 #: ../base/ufos/seq_tutorials.ufo:898
 #, fuzzy
@@ -10589,17 +10581,17 @@ msgstr "จ้างลูกทีมก่อน"
 msgid ""
 "Select UFO to secure \n"
 "(if possible for current map)"
-msgstr ""
+msgstr "เลือก UFO ที่ต้องการเก็บเอาไว้ (หากว่าเป็นไปได้สำหรับแผนที่ปัจจุบัน)"
 
 #: ../base/ufos/seq_tutorials.ufo:940
 msgid ""
 "Select dropship\n"
 "(if possible for current map)"
-msgstr ""
+msgstr "เลือกพื้นที่ลงจอดเรืออากาศ (หากเป็นไปได้สำหรับแผนที่ปัจจุบัน)"
 
 #: ../base/ufos/seq_tutorials.ufo:961
 msgid "Select map to play"
-msgstr ""
+msgstr "เลือกแผนที่ที่ต้องการเล่น"
 
 #: ../base/ufos/seq_tutorials.ufo:974
 msgid "And..."
@@ -10620,24 +10612,24 @@ msgstr "ออกสู่เมนูหลัก"
 
 #: ../base/ufos/seq_tutorials.ufo:1042
 msgid "How to play multiplayer"
-msgstr ""
+msgstr "วิธีการเล่นแบบ Multiplayer"
 
 #: ../base/ufos/seq_tutorials.ufo:1057
 #: ../base/ufos/ui/multiplayer.ufo:917
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
-msgstr ""
+msgstr "ตรวจสอบให้มั่นใจว่าคุณเปิดพอร์ต TCP หมายเลข 27910 ในระบบป้องกันไฟร์วอล์ของคุณ"
 
 #: ../base/ufos/seq_tutorials.ufo:1066
 msgid "You should connect to the lobby and wait for invitations or start your own server"
-msgstr ""
+msgstr "คุณต้องเชื่อมต่อไปยังล็อบบี้และรอการเข้าร่วมก่อนจะเริ่มเซอร์เวอร์ของคุณ"
 
 #: ../base/ufos/seq_tutorials.ufo:1075
 msgid "While you are connected to the lobby you can play singleplayer until someone invites you"
-msgstr ""
+msgstr "เมื่อคุณเชื่อมต่อไปยังล็อบบี้แล้วคุณสามารถเข้าสู่ระบบเล่นคนเดียวเพื่อรอคนเชิญคุณได้ด้วย"
 
 #: ../base/ufos/seq_tutorials.ufo:1084
 msgid "As a server admin you should consider setting a round time limit."
-msgstr ""
+msgstr "หากคุณเป็น Admin ของเซอร์เวอร์นั้นควรใส่ใจเรื่องการตั้งเวลาต่อรอบด้วย"
 
 #: ../base/ufos/team_aliens.ufo:10
 msgid "Taman"
@@ -10665,83 +10657,83 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:5
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
-msgstr ""
+msgstr "กดปุ่ม Shift เพื่อจัดการกับความสูงของเป้าหมาย - มีประโยชน์อย่างมากในตัวอย่างเช่นการใช้เครื่องยิงจรวดยิงไปยังด้านหน้ากลุ่มเอเลี่ยนได้"
 
 #: ../base/ufos/tips.ufo:6
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
-msgstr ""
+msgstr "จัดการและบันทึกความแตกต่างของกลุ่มผู้เล่นจำนวนมาก ผู้เล่น 4 - 8 ทีมและมากกว่านั้น วิธีนี้จะเร็วมากเมื่อใช้สำหรับการเล่นอย่างรวดเร็ว"
 
 #: ../base/ufos/tips.ufo:7
 msgid "With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
-msgstr ""
+msgstr "ในระบบการเล่นหลายคน ตรวจสอบด้วยว่าทหารที่เก่งที่สุดของคุณอยู่บนสุดของรายชื่อทีม และเมื่อจำนวนทหารต่ำสุดน้อยกว่าจำนวนทหารในกลุ่มของคุณ ทหารที่เก่งที่สุดจะถูกนำออกมาใช้"
 
 #: ../base/ufos/tips.ufo:8
 msgid "Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
-msgstr ""
+msgstr "ตรวจสอบให้มั่นใจเสมอว่าคุณจะมีค่าหน่วยเวลา (TUs) เหลือพอให้หลบหลังยิงไปแล้ว"
 
 #: ../base/ufos/tips.ufo:9
 msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
-msgstr ""
+msgstr "เมื่อใช้ระบบการยิงตอบโต้อัตโนมัติแล้วควรนึกเสมอว่าคุณจะจัดการระบบการยิงได้โดยการจัดการที่ช่องจัดการระบบการยิงด้านข้าง"
 
 #: ../base/ufos/tips.ufo:10
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
-msgstr ""
+msgstr "จำไว้ว่าเมื่อคุณมอบอาวุธให้ทหารใช้หลากหลายแบบ คุณจะไม่มีทางรู้เลยว่าอาวุธที่สมควรใช้จะถูกหยิบออกมาใช้เมื่อไหร่"
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
-msgstr ""
+msgstr "อย่าลืมเตรียมกระสุนให้ทหารของคุณให้เพียงพอ"
 
 #: ../base/ufos/tips.ufo:12
 msgid "Don't forget to equip your soldiers with armour."
-msgstr ""
+msgstr "อย่าลืมใส่เสื้อเกราะให้ทหารของคุณด้วย"
 
 #: ../base/ufos/tips.ufo:13
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
-msgstr ""
+msgstr "คุณสามารถใช้ระเบิดแสงเพื่อหยุดการยิงตอบโต้อัตโนมัติของฝ่ายตรงข้ามโดยทันทีหรือชิงค่าหน่วยเวลาที่เหลือทั้งหมดในรอบต่อไปของอีกฝ่ายได้ด้วย"
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
-msgstr ""
+msgstr "ในระบบการเล่นหลายคน คุณสามารถพูดคุยโดยใช้ปุ่ม k [คุยกับทกคน] l เพื่อคุยกับคนในกลุ่มเท่านั้น หรือกดปุ่ม chat ที่ HUD ได้เช่นกัน"
 
 #: ../base/ufos/tips.ufo:15
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
-msgstr ""
+msgstr "เพื่อให้ทหารหันหน้าไปถูกทิศทางที่ต้องการ ให้เอาเคอร์เซอร์ไปวางแล้วกดหรือใช้ปุ่ม Ctrl ก็ได้เช่นกันโดยแลกกับค่าหน่วยเวลา (TUs) ด้วย"
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
-msgstr ""
+msgstr "ใช้ปุ่ม Backspace เพื่อเปิดประตู"
 
 #: ../base/ufos/tips.ufo:17
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
-msgstr ""
+msgstr "ตรวจสอบเสมอว่าคุณจ้างนักวิทยาศาสตร์ได้มากที่สุดเท่าที่จะทำได้แล้ว มันเป็นวิธีที่ดีที่สุดที่จะล่วงรู้เรื่องของฝ่ายตรงข้ามและเอาชนะได้ง่ายขึ้นด้วย"
 
 #: ../base/ufos/tips.ufo:18
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can access better equipment and resupplies."
-msgstr ""
+msgstr "ตรวจสอบเสมอว่าคุณจ้างหน่วยกรรมกรมามากที่สุดเท่าที่จะทำได้แล้ว เพราะจะเป็นการเพิ่มความเร็วในการสร้างอุปกรณ์และเร็วยิ่งขึ้นเพื่อสร้างอุปกรณ์และเติมทรัพยากรได้ดีขึ้นด้วย"
 
 #: ../base/ufos/tips.ufo:19
 msgid "Be sure to visit our website, http://ufoai.sourceforge.net/, and drop by our community channel, #ufoai on irc.freenode.net."
-msgstr ""
+msgstr "อย่าลืมไปเยี่ยมชมเว็บไซด์ของเราที่, http://ufoai.sourceforge.net/, แล้วเข้าร่วมฟอร์รั่มของเราได้ที่, #ufoai on irc.freenode.net."
 
 #: ../base/ufos/tips.ufo:20
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
-msgstr ""
+msgstr "อย่าลืมเลือกเริ่มการทำงานของกองบัญชาการเพื่อส่งอินเซ็ปเตอร์ออกไป"
 
 #: ../base/ufos/tips.ufo:21
 msgid "Never pass up an opportunity to capture a live alien, even one of a species you have already researched."
-msgstr ""
+msgstr "อย่าปล่อยโอกาสที่จะจับเอเลี่ยนเป็นๆ ให้หลุดมือไปได้ไม่ว่าจะกรณีใดๆ แม้ว่ากรรมพันธุ์ตัวนั้นคุณจะได้มาแล้วก็ตามที"
 
 #: ../base/ufos/tips.ufo:22
 msgid "Watch your back! Your soldiers can only see enemies in an arc in front of them."
-msgstr ""
+msgstr "ระวังหลังคุณเอาไว้ให้ดี! เพราะทหารของคุณจะมองเห็นแต่ด้านหน้าเท่านั้น"
 
 #: ../base/ufos/tips.ufo:23
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr ""
+msgstr "สร้างโรงงานและลาน UFO ด้วยเพื่อทำให้คุณแยกชิ้นส่วน UFO ได้ในเวลาเดียวกัน"
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
-msgstr ""
+msgstr "คุณสามารถให้ทหารหมอบต่ำแล้วเคลื่อนที่เพื่อหลบกระสุนของอีกฝ่ายได้เช่นกัน แต่คุณจะเสียค่าเวลามากกว่าเพราะต้องหมอบและต้องยืนด้วย และการใช้ค่าเวลาในการหมอบนั้นสูงกว่าเดินแบบปกติมาก"
 
 #: ../base/ufos/tips.ufo:25
 msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
@@ -10908,9 +10900,8 @@ msgstr ""
 #: ../base/ufos/ui/_hud.ufo:702
 #: ../base/ufos/ui/_hud.ufo:731
 #: ../base/ufos/ui/_hud.ufo:760
-#, fuzzy
 msgid "Check to use this firemode for reaction fire"
-msgstr "เลือกเพื่อใช้รูปแบบนี้ในการยิงโต้ตอบ"
+msgstr "ทำเครื่องหมายเพื่อใช้รูปแบบการยิงนี้ในการยิงตอบโต้"
 
 #: ../base/ufos/ui/_menu.ufo:120
 #: ../base/ufos/ui/geoscape.ufo:209
@@ -11008,28 +10999,24 @@ msgid "Soldiers"
 msgstr "ทหาร"
 
 #: ../base/ufos/ui/aircraft.ufo:116
-#, fuzzy
 msgid "Soldier equipment"
-msgstr "ทหารมีอุปกรณ์"
+msgstr "อุปกรณ์ของทหาร"
 
 #: ../base/ufos/ui/aircraft.ufo:170
 msgid "Rename aircraft"
 msgstr "ตั้งชื่ออากาศยาน"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:88
-#, fuzzy
 msgid "Selected item:"
-msgstr "เลือกอุปกรณ์"
+msgstr "ไอเท็มที่ถูกเลือก"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:152
-#, fuzzy
 msgid "Equip this item"
-msgstr "ติดอุปกรณ์ให้ทหารคนนี้"
+msgstr "ติดตั้งไอเท็มนี้"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:169
-#, fuzzy
 msgid "Remove this item"
-msgstr "เพิ่ม/ลด ทหารคนนี้"
+msgstr "ปลดไอเท็มนี้ออก"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:193
 msgid "Available equipment:"
@@ -11042,9 +11029,8 @@ msgstr "อาวุธ"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:218
 #: client/campaign/cp_fightequip_callbacks.c:142
-#, fuzzy
 msgid "Ammo"
-msgstr "กระสุนสูงสุด:\t%i\n"
+msgstr "กระสุน"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:222
 #: ../base/ufos/ui/equipment.ufo:291
@@ -11063,14 +11049,12 @@ msgstr "อุปกรณ์"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:292
 #: ../base/ufos/ui/aircraft_equip.ufo:312
-#, fuzzy
 msgid "Select this zone"
-msgstr "เลือกอุปกรณ์"
+msgstr "เลือกโซนนี้"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:332
-#, fuzzy
 msgid "Current item in slot"
-msgstr "ทีมปัจจุบัน: %i"
+msgstr "ไอเท็มปัจจุบันในตำแหน่ง"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:343
 msgid "Ammo fitting this weapon"
@@ -11084,9 +11068,8 @@ msgstr "กระสุนสำหรับอาวุธนี้"
 #: ../base/ufos/ui/aircraft_equip.ufo:453
 #: ../base/ufos/ui/aircraft_equip.ufo:472
 #: ../base/ufos/ui/aircraft_equip.ufo:491
-#, fuzzy
 msgid "Select this slot"
-msgstr "เลือกอุปกรณ์"
+msgstr "เลือกตำแหน่งนี้"
 
 #: ../base/ufos/ui/aircraft_info.ufo:62
 #: ../base/ufos/ui/aircraft_soldiers.ufo:118
@@ -11102,27 +11085,24 @@ msgid "Call back"
 msgstr "เรียกกลับ"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:11
-#, fuzzy
 msgid "Add/remove this pilot"
-msgstr "เพิ่ม/ลด ทหารคนนี้"
+msgstr "เพิ่ม/ปลด นักบินคนนี้"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:143
 msgid "Pilot is assigned to another craft"
 msgstr ""
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:161
-#, fuzzy
 msgid "A pilot is already assigned to this craft"
-msgstr "กระสุนถัดไปที่ใช้กับอาวุธนี้"
+msgstr "นักบินได้ถูกกำหนดบนยานนี้แล้ว"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:163
 msgid "Assign pilot to this craft"
 msgstr "เลือกนักบินในเครื่อง"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:174
-#, fuzzy
 msgid "Remove pilot from this craft"
-msgstr "โหลดทีมจากชุดที่เลือกอยู่"
+msgstr "ปลดนักบินออกจากยานนี้"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:140
 #: ../base/ufos/ui/aircraft_soldiers.ufo:552
@@ -11132,23 +11112,20 @@ msgid "Equip soldiers"
 msgstr "ติดอุปกรณ์ให้ทหารคนนี้"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:168
-#, fuzzy
 msgid "Soldier is assigned to another craft"
-msgstr "เลือกยาน"
+msgstr "ทหารได้ถูกกำหนดบนยานลำอื่นแล้ว"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:187
-#, fuzzy
 msgid "No more soldiers can be assigned to this craft"
-msgstr "กระสุนถัดไปที่ใช้กับอาวุธนี้"
+msgstr "ไม่สามารถกำหนดทหารขึ้นยานลำนี้ได้แล้ว"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:189
 msgid "Assign soldier to this craft"
 msgstr "เลือกทหารขึ้นเครื่อง"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:200
-#, fuzzy
 msgid "Remove soldier from this craft"
-msgstr "เลือกทหารจากรายชื่อ"
+msgstr "ปลดทหารออกจากยานนี้"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:210
 msgid "Soldier carries equipment"
@@ -11159,9 +11136,8 @@ msgid "Soldier carries no equipment"
 msgstr "ทหารไม่มีอุปกรณ์"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:371
-#, fuzzy
 msgid "Missions info"
-msgstr "ภารกิจ"
+msgstr "ข้อมูลภารกิจ"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:388
 #: ../base/ufos/ui/equipment.ufo:443
@@ -11440,14 +11416,12 @@ msgid "Information"
 msgstr "ข้อมูลของฐาน"
 
 #: ../base/ufos/ui/basedefence.ufo:34
-#, fuzzy
 msgid "Missile Defences"
-msgstr "ภารกิจ"
+msgstr "ระบบขีปนาวุธป้องกัน"
 
 #: ../base/ufos/ui/basedefence.ufo:38
-#, fuzzy
 msgid "Laser Defences"
-msgstr "Laser Rifle"
+msgstr "ระบบเลเซอร์ป้องกัน"
 
 #: ../base/ufos/ui/basedefence.ufo:106
 #, fuzzy
@@ -11641,7 +11615,7 @@ msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:198
 msgid "Base Summary"
-msgstr ""
+msgstr "สรุปข้อมูลฐาน"
 
 #: ../base/ufos/ui/bases.ufo:199
 msgid "Information about this base (available storage space, production, research, etc.)"
@@ -11982,7 +11956,7 @@ msgstr "จานบินอภิธาน"
 #: ../base/ufos/ui/geoscape.ufo:497
 #: ../base/ufos/ui/geoscape.ufo:498
 msgid "Create installation"
-msgstr ""
+msgstr "ติดตั้งสิ่งก่อสร้าง"
 
 #: ../base/ufos/ui/geoscape.ufo:515
 #: ../base/ufos/ui/geoscape.ufo:1919
@@ -12142,7 +12116,7 @@ msgstr "สร้างฐาน"
 
 #: ../base/ufos/ui/geoscape.ufo:1393
 msgid "New radar tower"
-msgstr ""
+msgstr "หอเรดาห์ใหม่"
 
 #: ../base/ufos/ui/geoscape.ufo:1396
 #, fuzzy
@@ -12151,7 +12125,7 @@ msgstr "ฐานใหม่"
 
 #: ../base/ufos/ui/geoscape.ufo:1399
 msgid "New UFO yard"
-msgstr ""
+msgstr "ลานเก็บกู้จานบินใหม่"
 
 #: ../base/ufos/ui/geoscape.ufo:1412
 #, fuzzy
@@ -12198,7 +12172,7 @@ msgstr "ฐาน:"
 
 #: ../base/ufos/ui/geoscape.ufo:1598
 msgid "Surface-to-air missile site:"
-msgstr ""
+msgstr "ที่ตั้งจรวดภาคพื้นดินต่อต้านอากาศยาน"
 
 #: ../base/ufos/ui/geoscape.ufo:1673
 msgid "Select aircraft"
@@ -12378,11 +12352,11 @@ msgstr "ตัดการเชื่อมต่อ"
 
 #: ../base/ufos/ui/irc.ufo:32
 msgid "Close menu and disconnect"
-msgstr ""
+msgstr "ปิดเมนูและตัดการเชื่อมต่ะ"
 
 #: ../base/ufos/ui/irc.ufo:43
 msgid "Close menu but stay connected"
-msgstr ""
+msgstr "ปิดเมนูแต่คงการเชื่อมต่อไว้"
 
 #: ../base/ufos/ui/irc.ufo:54
 msgid "Users"
@@ -12461,7 +12435,7 @@ msgstr "พักฟี้น"
 
 #: ../base/ufos/ui/lostwon.ufo:273
 msgid "Begin UFO recovery process"
-msgstr ""
+msgstr "เริ่มการเก็บกู้จานบิน"
 
 #: ../base/ufos/ui/lostwon.ufo:291
 msgid "Nation:"
@@ -12478,7 +12452,7 @@ msgstr "ราคา:"
 
 #: ../base/ufos/ui/lostwon.ufo:303
 msgid "Sort nations by price"
-msgstr ""
+msgstr "จัดเรียงสัญชาติตามราคา"
 
 #: ../base/ufos/ui/lostwon.ufo:313
 #, fuzzy
@@ -12487,7 +12461,7 @@ msgstr "ความคมชัด:"
 
 #: ../base/ufos/ui/lostwon.ufo:314
 msgid "Sort nations by relation"
-msgstr ""
+msgstr "จัดเรียงสัญชาติตามความสัมพันธ์"
 
 #: ../base/ufos/ui/lostwon.ufo:363
 #, fuzzy
@@ -12501,7 +12475,7 @@ msgstr "ขายอุปกรณ์"
 
 #: ../base/ufos/ui/lostwon.ufo:378
 msgid "Begin UFO sell process"
-msgstr ""
+msgstr "เริ่มการขายจานบิน"
 
 #: ../base/ufos/ui/mailclient.ufo:135
 msgid "Time:"
@@ -12571,7 +12545,7 @@ msgstr "ภาษา:"
 
 #: ../base/ufos/ui/main.ufo:231
 msgid "You have to set the playername and hit the 'OK' button:"
-msgstr ""
+msgstr "คุณต้องตั้งชื่อผู้เล่นและกดปุ่ม 'โอเค'"
 
 #: ../base/ufos/ui/main.ufo:239
 #: ../base/ufos/ui/multiplayer.ufo:1721
@@ -12590,7 +12564,7 @@ msgstr "คำแนะนำประจำวัน"
 
 #: ../base/ufos/ui/main.ufo:275
 msgid "Show tip of the day"
-msgstr ""
+msgstr "เปิดคำแนะนำประจำวัน"
 
 #: ../base/ufos/ui/main.ufo:296
 #: ../base/ufos/ui/main.ufo:315
@@ -12741,15 +12715,15 @@ msgstr "บันทึก"
 
 #: ../base/ufos/ui/messageoptions.ufo:12
 msgid "enable or disable displaying a notification message"
-msgstr ""
+msgstr "เปิดหรือปิดการแสดงข้อความเตือน"
 
 #: ../base/ufos/ui/messageoptions.ufo:21
 msgid "enable or disable game stopping"
-msgstr ""
+msgstr "เปิดหรือปิดการหยุดเกมส์"
 
 #: ../base/ufos/ui/messageoptions.ufo:30
 msgid "enable or disable playing sound"
-msgstr ""
+msgstr "เปิดหรือปิดเสียง"
 
 #: ../base/ufos/ui/messageoptions.ufo:48
 #, fuzzy
@@ -12762,11 +12736,11 @@ msgstr "ประยุกต์"
 
 #: ../base/ufos/ui/messageoptions.ufo:54
 msgid "Apply changes"
-msgstr ""
+msgstr "ประยุกต์ใช้ค่าเปลี่ยนแปลง"
 
 #: ../base/ufos/ui/messageoptions.ufo:61
 msgid "Revert changes"
-msgstr ""
+msgstr "ย้อนกลับค่าเปลี่ยนแปลง"
 
 #: ../base/ufos/ui/messageoptions.ufo:68
 msgid "Notify types:"
@@ -12777,6 +12751,8 @@ msgid ""
 "Enable or disable messages being displayed for all notification types.\n"
 "Left click enables all notifications, right click disables."
 msgstr ""
+"เปิดหรือปิดการแสดงข้อความสำหรับข้อความเตือนทุกหมวดหมู่\n"
+"คลิกซ้ายเพื่อเปิดใช้งาน, คลิกขวาเพื่อปิด"
 
 #: ../base/ufos/ui/messageoptions.ufo:87
 msgid ""
@@ -12784,12 +12760,17 @@ msgid ""
 "Pause can't be enabled without notification\n"
 "Left click enables pause for all, right click disables."
 msgstr ""
+"เปิดหรือปิดการหยุดเกมส์สำหรับข้อความเตือนทุกหมวดหมู่\n"
+"การหยุดเกมส์ไม่สามารถเปิดได้โดยไม่มีการเตือนข้อความ\n"
+"คลิกซ้ายเพื่อเปิดใช้งาน, คลิกขวาเพื่อปิด"
 
 #: ../base/ufos/ui/messageoptions.ufo:98
 msgid ""
 "Enable or disable sounds being played for all notification types.\n"
 "Left click enables all sounds, right click disables."
 msgstr ""
+"เปิดหรือปิดเสียงที่จะเล่นสำหรับข้อความเตือนทุกหมวด\n"
+"คลิกซ้ายเพื่อเปิดใช้งาน, คลิกขวาเพื่อปิด"
 
 #: ../base/ufos/ui/multiplayer.ufo:9
 msgid "Connect to this server"
@@ -13303,7 +13284,7 @@ msgstr "เปิดคำแนะนำเคอร์เซอร์"
 
 #: ../base/ufos/ui/options.ufo:339
 msgid "Enable this if you are new to UFO:AI and want to see interesting tips written by the most experienced UFO:AI players out there."
-msgstr ""
+msgstr "เปิดใช้งานระบบนี้ถ้าคุณเป็นผู้เริ่มเล่น UFO:AI และต้องการอ่านคำแนะนำที่น่าสนใจจากผู้เล่น UFO:AI ชั้นนำ"
 
 #: ../base/ufos/ui/options.ufo:340
 msgid "Show 'Tip of the Day':"
@@ -13311,7 +13292,7 @@ msgstr "เปิด 'คำแนะนำประจำวัน'"
 
 #: ../base/ufos/ui/options.ufo:347
 msgid "Enable the 'Tip of the Day'."
-msgstr ""
+msgstr "เปิดใช้งาน 'คำแนะนำประจำวัน'"
 
 #: ../base/ufos/ui/options.ufo:358
 #, fuzzy
@@ -13345,11 +13326,11 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:448
 msgid "Adjust resolution and display settings here."
-msgstr ""
+msgstr "ตั้งค่าความละเอียดและจอภาพแสดงผลได้ที่นี้"
 
 #: ../base/ufos/ui/options.ufo:449
 msgid "Resolution and Display Settings"
-msgstr ""
+msgstr "ตั้งค่าความละเอียดและจอภาพแสดงผล"
 
 #: ../base/ufos/ui/options.ufo:460
 msgid "The resolution (x*y) in pixel which UFO:AI should use."
@@ -14685,11 +14666,11 @@ msgstr "ขว้าง"
 
 #: ../base/ufos/weapons.ufo:63
 msgid "IR Goggles"
-msgstr "IR Goggles"
+msgstr "แว่น IR"
 
 #: ../base/ufos/weapons.ufo:82
 msgid "Scan"
-msgstr "Scan"
+msgstr "สแกน"
 
 #: ../base/ufos/weapons.ufo:116
 msgid "Frag Grenade"
@@ -14776,8 +14757,9 @@ msgstr "Cannonade"
 
 #: ../base/ufos/weapons_aliens.ufo:107
 #: ../base/ufos/weapons_aliens.ufo:177
+#, fuzzy
 msgid "Precision Shot"
-msgstr "Precision Shot"
+msgstr "แนบยิง"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
@@ -14947,7 +14929,7 @@ msgstr "จรวด HE"
 
 #: ../base/ufos/weapons_human.ufo:1268
 msgid "IC Rocket"
-msgstr "กระสุน IC"
+msgstr "จรวด IC"
 
 #: ../base/ufos/weapons_human.ufo:1313
 msgid "Grenade Launcher"
@@ -14955,7 +14937,7 @@ msgstr "เครื่องยิงระเบิด"
 
 #: ../base/ufos/weapons_human.ufo:1334
 msgid "25mm HIT Grenades"
-msgstr "กระสุนระเบิด 25mm HIT"
+msgstr "ระเบิด HIT 25มม."
 
 #: ../base/ufos/weapons_human.ufo:1351
 #: ../base/ufos/weapons_human.ufo:1532
@@ -14999,7 +14981,7 @@ msgstr "ระบบ  IC 25มม."
 
 #: ../base/ufos/weapons_human.ufo:1699
 msgid "25mm Flechette Grenades"
-msgstr "25mm Flechette Grenades"
+msgstr "ระเบิด Flechette 25มม."
 
 #: ../base/ufos/weapons_human.ufo:1760
 msgid "25mm PB Grenades"
@@ -15007,15 +14989,15 @@ msgstr "ระเบิด PB 25มม."
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
-msgstr "Laser Pistol"
+msgstr "ปืนพกเลเซอร์"
 
 #: ../base/ufos/weapons_laser.ufo:28
 msgid "Laser Rifle"
-msgstr "Laser Rifle"
+msgstr "ไรเฟิลเลเซอร์"
 
 #: ../base/ufos/weapons_laser.ufo:52
 msgid "Heavy Laser"
-msgstr "Heavy Laser"
+msgstr "ปืนเลเซอร์หนัก"
 
 #: ../base/ufos/weapons_laser.ufo:76
 #, fuzzy
@@ -15049,7 +15031,7 @@ msgstr "มีด"
 
 #: ../base/ufos/weapons_melee.ufo:68
 msgid "Monomolecular Knife"
-msgstr "Monomolecular Knife"
+msgstr "มีดตัดโมเลกุล"
 
 #: ../base/ufos/weapons_melee.ufo:130
 msgid "Stun Rod"
@@ -15889,7 +15871,7 @@ msgstr ""
 #: client/campaign/cp_airfight.c:434
 #: client/campaign/cp_airfight.c:461
 msgid "Interception"
-msgstr "ดักจับ"
+msgstr "การเข้าสกัด"
 
 #: client/campaign/cp_airfight.c:434
 msgid "UFO interception successful -- UFO lost to sea."
@@ -15911,7 +15893,7 @@ msgstr "คุณยังจับมนุษย์ต่างดาวที
 
 #: client/campaign/cp_aliencont.c:244
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
-msgstr "You don't have enough space in Alien Containment. Some aliens got killed."
+msgstr "คุณไม่มีพื้นที่เพียงพอในห้องเก็บมนุษย์ต่างดาว มนุษย์ต่างดาวบางตัวถูกกำจัด"
 
 #: client/campaign/cp_aliencont.c:254
 msgid "You've captured new aliens."
@@ -16466,8 +16448,8 @@ msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
 msgstr ""
-"You don't have enough quarters for your employees.\n"
-"Build more quarters."
+"คุณไม่มีพื้นที่พักอาศัยเพียงพอสำหรับพนักงาน\n"
+"สร้างที่พักอาศัยเพิ่ม"
 
 #: client/campaign/cp_employee_callbacks.c:274
 #: client/campaign/cp_employee_callbacks.c:328
@@ -16822,16 +16804,16 @@ msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 msgstr ""
-"You cannot buy this aircraft.\n"
-"Not enough space in hangars.\n"
+"คุณไม่สามารถซื้ออากาศยานนี้ได้\n"
+"พื้นที่ลานจอดไม่เพียงพอ\n"
 
 #: client/campaign/cp_market_callbacks.c:617
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
 msgstr ""
-"You cannot buy this aircraft.\n"
-"Not enough credits.\n"
+"คุณไม่สามารถซื้ออากาศยานนี้ได้\n"
+"เงินไม่พอ\n"
 
 #: client/campaign/cp_market_callbacks.c:707
 msgid "You can't sell an aircraft if it still has a team assigned"
@@ -17405,15 +17387,15 @@ msgstr "ที่อยู่ไม่พอ"
 
 #: client/campaign/cp_produce_callbacks.c:650
 msgid "Not enough workshops"
-msgstr "Not enough workshops"
+msgstr "โรงงานไม่เพียงพอ"
 
 #: client/campaign/cp_produce_callbacks.c:650
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 msgstr ""
-"You cannot queue more items.\n"
-"Build more workshops.\n"
+"คุณไม่สามารถจัดเรียงคิวไอเท็มได้มากกว่านี้\n"
+"สร้างโรงงานเพิ่ม\n"
 
 #: client/campaign/cp_produce_callbacks.c:671
 #, fuzzy
@@ -17463,13 +17445,13 @@ msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
 msgstr ""
-"No free space in laboratories left.\n"
-"Build more laboratories.\n"
+"ไม่มีพื้นที่ห้องแลปฯเพียงพอ\n"
+"สร้างห้องแลปเพิ่ม\n"
 
 #: client/campaign/cp_research.c:721
 #: client/campaign/cp_research.c:725
 msgid "Not enough laboratories"
-msgstr "Not enough laboratories"
+msgstr "ห้องแลปไม่เพียงพอ"
 
 #: client/campaign/cp_research.c:862
 #, c-format
@@ -18698,9 +18680,8 @@ msgid "Action:\t%s\n"
 msgstr "ปฏิบัติการ:\t%s\n"
 
 #: client/cl_inventory_callbacks.c:198
-#, fuzzy
 msgid "Unknown - not useable"
-msgstr "วิทยการที่ยังไม่รู้จัก วิจัยไม่ได้"
+msgstr "วิทยการที่ยังไม่รู้จัก - ไม่สามารถใช้ได้"
 
 #: client/cl_inventory_callbacks.c:342
 msgid "Update the GUI with the selected item"
@@ -18883,14 +18864,13 @@ msgid "Invalid or full team"
 msgstr "ทีมนี้ใช้ไม่ได้ หรือเต็มแล้ว"
 
 #: client/multiplayer/mp_serverlist.c:236
-#, fuzzy, c-format
+#, c-format
 msgid "Team %d"
-msgstr "ทีม"
+msgstr "ทีม %d"
 
 #: client/multiplayer/mp_serverlist.c:238
-#, fuzzy
 msgid "No team"
-msgstr "ข้อสังเกต"
+msgstr "ไม่มีทีม"
 
 #: client/multiplayer/mp_serverlist.c:298
 #, c-format
@@ -18944,7 +18924,7 @@ msgstr "ต้องใส่รหัส:\t%s\n"
 #: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Roundtime:\t%s\n"
-msgstr "เวลาในรอบ:\t%s\n"
+msgstr "เวลาต่อรอบ:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:322
 #, c-format
@@ -19002,7 +18982,7 @@ msgstr "เกิดข้อผิดพลาดในการบันทึ
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
-msgstr[0] "ขาดอีด %i วัน"
+msgstr[0] "เหลือ %i วัน"
 msgstr[1] "ขาดอีก %i วัน"
 
 #: client/ui/node/ui_node_base.c:274
@@ -19062,7 +19042,7 @@ msgstr ""
 #: client/ui/ui_tooltip.c:101
 #, c-format
 msgid "Key: %s"
-msgstr "รหัส: %s"
+msgstr "คีย์: %s"
 
 #: client/ui/ui_windows.c:839
 msgid "Hide the HUD (press ESC to reactivate HUD)"
