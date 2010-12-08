@@ -2186,12 +2186,8 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
  */
 qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employee)
 {
-	if (!aircraft)
-		return qfalse;
-
-	if (!employee)
-		return qfalse;
-
+	assert(aircraft);
+	assert(employee);
 	return LIST_GetPointer(aircraft->acTeam, employee) != NULL;
 }
 
