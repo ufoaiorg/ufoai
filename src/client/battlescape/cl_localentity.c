@@ -992,7 +992,7 @@ void LET_SlideDoor (le_t *le, int speed)
 	if (speed > 0) {
 		/* check whether the distance the door may slide is slided already
 		 * - if so, stop the movement of the door */
-		if (fabs(le->origin[le->dir]) >= distance)
+		if (fabs(le->origin[le->dir & 3]) >= distance)
 			endPos = qtrue;
 	} else {
 		/* the sliding door has not origin set - except when it is opened. This door type is no
