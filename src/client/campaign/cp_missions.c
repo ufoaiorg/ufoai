@@ -816,15 +816,14 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
  */
 qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 {
-	const linkedList_t *list = ccs.missions;
 	/* Probability to detect UFO each DETECTION_INTERVAL
 	 * This correspond to 40 percents each 30 minutes (coded this way to be able to
 	 * change DETECTION_INTERVAL without changing the way radar works) */
 	const float missionDetectionProbability = 0.000125f * DETECTION_INTERVAL;
 	qboolean newDetection = qfalse;
+	mission_t *mission;
 
-	for (; list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		const missionDetectionStatus_t status = CP_CheckMissionVisibleOnGeoscape(mission);
 
 		/* only check mission that can be detected, and that are not already detected */
@@ -859,10 +858,9 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
  */
 void CP_UpdateMissionVisibleOnGeoscape (void)
 {
-	const linkedList_t *list = ccs.missions;
+	mission_t *mission;
 
-	for (; list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		if (mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission) == MISDET_CANT_BE_DETECTED) {
 			/* remove a mission when radar is destroyed */
 			CP_MissionRemoveFromGeoscape(mission);
@@ -893,15 +891,13 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	MAP_NotifyUFORemoved(mission->ufo, destroyed);
 
 	if (destroyed) {
-		linkedList_t *list;
+		mission_t *removedMission;
 
 		/* remove UFO from radar and update idx of ufo in radar array */
 		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
 
 		/* Update UFO idx */
-		for (list = ccs.missions; list; list = list->next) {
-			mission_t *removedMission = (mission_t *)list->data;
-
+		CP_MissionForeach(removedMission) {
 			if (removedMission->ufo && (removedMission->ufo > mission->ufo))
 				removedMission->ufo--;
 		}
@@ -928,8 +924,6 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
  */
 void CP_MissionRemove (mission_t *mission)
 {
-	linkedList_t *list;
-
 	/* Destroy UFO */
 	if (mission->ufo)
 		CP_UFORemoveFromGeoscape(mission, qtrue);		/* for the notifications */
@@ -941,26 +935,8 @@ void CP_MissionRemove (mission_t *mission)
 	/* Notifications */
 	CP_MissionRemoveFromGeoscape(mission);
 
-	list = ccs.missions;
-	for (; list; list = list->next) {
-		mission_t *removedMission = (mission_t *)list->data;
-		if (removedMission == mission) {
-			LIST_RemoveEntry(&ccs.missions, list);
-			Com_DPrintf(DEBUG_CLIENT, "Mission removed from global array: %i missions left\n", CP_CountMission());
-			return;
-		}
-	}
-
-	Com_Printf("CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->id);
-#ifdef DEBUG
-	Com_Printf("   missions in list are: ");
-	list = ccs.missions;
-	for (; list; list = list->next) {
-		const mission_t *removedMission = (mission_t *)list->data;
-		Com_Printf("'%s', ", removedMission->id);
-	}
-	Com_Printf("\n");
-#endif
+	if (!LIST_Remove(&ccs.missions, mission))
+		Com_Error(ERR_DROP, "CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->id);
 }
 
 /**
@@ -1834,11 +1810,10 @@ static void CP_MissionSetMap_f (void)
  */
 static void CP_MissionList_f (void)
 {
-	const linkedList_t *list = ccs.missions;
 	qboolean noMission = qtrue;
+	mission_t *mission;
 
-	for (; list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		Com_Printf("mission: '%s'\n", mission->id);
 		Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
 			CP_MissionCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
@@ -1864,12 +1839,11 @@ static void CP_MissionList_f (void)
 static void CP_DeleteMissions_f (void)
 {
 	int n = CP_CountMission();
-	const linkedList_t *list = ccs.missions;
+	mission_t *mission;
 
-	for (;list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission)
 		CP_MissionRemove(mission);
-	}
+
 	Com_Printf("Removed %i mission(s) from global array\n", n);
 
 	if (ccs.numUFOs != 0) {
@@ -1915,13 +1889,12 @@ static void CP_SetAlienInterest_f (void)
  */
 qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 {
-	const linkedList_t *list = ccs.missions;
 	mxml_node_t *missionsNode = mxml_AddNode(parent, SAVE_MISSIONS);
+	mission_t *mission;
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
-	for (; list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		mxml_node_t *missionNode = mxml_AddNode(missionsNode, SAVE_MISSIONS_MISSION);
 
 		mxml_AddInt(missionNode, SAVE_MISSIONS_MISSION_IDX, mission->idx);
