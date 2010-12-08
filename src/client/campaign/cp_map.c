@@ -1711,7 +1711,6 @@ static const char *MAP_GetUFOText (char *buffer, size_t size, const aircraft_t* 
  */
 void MAP_UpdateGeoscapeDock (void)
 {
-	const linkedList_t *list;
 	char buf[512];
 	aircraft_t *ufo;
 	mission_t *mission;
@@ -1746,7 +1745,6 @@ void MAP_UpdateGeoscapeDock (void)
  */
 static void MAP_DrawMapMarkers (const uiNode_t* node)
 {
-	const linkedList_t *list;
 	int x, y, i, installationIdx, idx;
 	const char* font;
 	aircraft_t *ufo;
