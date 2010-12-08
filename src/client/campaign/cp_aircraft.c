@@ -2179,19 +2179,6 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 }
 
 /**
- * @brief Removes given employee from given aircraft team.
- * @param[in] aircraft The aircraft to remove the employee from.
- * @param[in] employee The employee to remove from the team.
- * @note This is responsible for removing soldiers from a team in a dropship.
- */
-qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *employee)
-{
-	assert(aircraft);
-	assert(employee);
-	return LIST_Remove(&aircraft->acTeam, employee);
-}
-
-/**
  * @brief Checks whether given employee is in given aircraft
  * @param[in] aircraft The aircraft to check
  * @param[in] employee Employee to check.
@@ -3010,7 +2997,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
 	cls.i.DestroyInventory(&cls.i, &employee->chr.i);
-	return AIR_RemoveFromAircraftTeam(aircraft, employee);
+	return LIST_Remove(&aircraft->acTeam, employee);
 }
 
 /**
