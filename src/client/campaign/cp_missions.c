@@ -557,7 +557,7 @@ int CP_CountMissionOnGeoscape (void)
 	mission_t *mission;
 
 	CP_MissionForeach(mission) {
-		/* check whether current selected gametype is a valid one */
+		/** @todo only use if (mission->onGeoscape) as we do in the mission render loop */
 		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape) {
 			counterVisibleMission++;
 		}
@@ -1468,7 +1468,7 @@ static inline void CP_SetMissionName (mission_t *mission)
 			mission->category, mission->initialOverallInterest, num);
 
 		/* if mission list is empty, the id is unique for sure */
-		if (!ccs.missions)
+		if (LIST_IsEmpty(ccs.missions))
 			return;
 
 		/* check whether a mission with the same id already exists in the list

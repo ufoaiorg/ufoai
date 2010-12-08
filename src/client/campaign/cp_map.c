@@ -275,7 +275,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	base_t *base;
 	int i;
 	vec2_t pos;
-	const linkedList_t *list;
+	mission_t *tempMission;
 
 	/* get map position */
 	if (cl_3dmap->integer)
@@ -320,10 +320,8 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	/* Init data for multi selection */
 	multiSelect.nbSelect = 0;
 	memset(multiSelect.popupText, 0, sizeof(multiSelect.popupText));
-
 	/* Get selected missions */
-	for (list = ccs.missions; list; list = list->next) {
-		const mission_t *tempMission = (const mission_t *)list->data;
+	CP_MissionForeach(tempMission) {
 		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
 			break;
 		if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
@@ -1146,10 +1144,10 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* Cycle through missions */
 	if (centerOnEventIdx < numMissions) {
-		const linkedList_t *list = ccs.missions;
 		mission_t *mission = NULL;
-		for (;list && (centerOnEventIdx != counter - 1); list = list->next) {
-			mission = (mission_t *)list->data;
+		CP_MissionForeach(mission) {
+			if (centerOnEventIdx != counter - 1)
+				break;
 			if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape)
 				counter++;
 		}
@@ -1716,16 +1714,16 @@ void MAP_UpdateGeoscapeDock (void)
 	const linkedList_t *list;
 	char buf[512];
 	aircraft_t *ufo;
+	mission_t *mission;
 
 	UI_ExecuteConfunc("clean_geoscape_object");
 
 	/* draw mission pics */
-	for (list = ccs.missions; list; list = list->next) {
-		const mission_t *ms = (const mission_t *)list->data;
-		if (!ms->onGeoscape)
+	CP_MissionForeach(mission) {
+		if (!mission->onGeoscape)
 			continue;
 		UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
-				ms->idx, ms->location, MAP_GetMissionModel(ms), MAP_GetShortMissionText(buf, sizeof(buf), ms));
+				mission->idx, mission->location, MAP_GetMissionModel(mission), MAP_GetShortMissionText(buf, sizeof(buf), mission));
 	}
 
 	/* draws ufos */
@@ -1754,6 +1752,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	aircraft_t *ufo;
 	aircraft_t *aircraft;
 	base_t *base;
+	mission_t *mission;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
@@ -1773,11 +1772,10 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
-	for (list = ccs.missions; list; list = list->next) {
-		const mission_t *ms = (mission_t *)list->data;
-		if (!ms->onGeoscape)
+	CP_MissionForeach(mission) {
+		if (!mission->onGeoscape)
 			continue;
-		MAP_DrawMapOneMission(node, ms);
+		MAP_DrawMapOneMission(node, mission);
 	}
 
 	/* draw installations */
