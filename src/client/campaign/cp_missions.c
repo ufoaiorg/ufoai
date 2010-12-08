@@ -386,13 +386,12 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param)
  */
 mission_t* CP_GetMissionByIDSilent (const char *missionId)
 {
-	const linkedList_t *list = ccs.missions;
+	mission_t *mission;
 
 	if (!missionId)
 		return NULL;
 
-	for (;list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		if (!strcmp(mission->id, missionId))
 			return mission;
 	}
@@ -422,19 +421,13 @@ mission_t* CP_GetMissionByID (const char *missionId)
  */
 mission_t* MAP_GetMissionByIDX (int id)
 {
-	const linkedList_t *list;
+	mission_t *mission;
 
-	/* first element start to 1 */
-	if (id == 0)
-		return NULL;
-
-	for (list = ccs.missions; list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		if (mission->idx == id)
 			return mission;
 	}
 
-	Com_Printf("MAP_GetMissionByIDX: No mission of id %i\n", id);
 	return NULL;
 }
 
@@ -555,75 +548,15 @@ static const char* CP_MissionStageToName (const missionStage_t stage)
 #endif
 
 /**
- * @brief Count the number of mission created.
- * @return Number of created mission
- * @sa CP_CountMissionActive
- * @sa CP_CountMissionOnGeoscape
- */
-int CP_CountMission (void)
-{
-	int counterMission = 0;
-	const linkedList_t *list = ccs.missions;
-#ifdef DEBUG
-	int counterInvalidMission = 0;
-#endif
-
-	for (; list; list = list->next, counterMission++) {
-#ifdef DEBUG
-		const mission_t *mission = (mission_t *)list->data;
-		/* check whether current selected gametype is a valid one */
-		if (mission->stage == STAGE_OVER) {
-			counterInvalidMission++;
-		}
-#endif
-	}
-
-#ifdef DEBUG
-	if (counterInvalidMission)
-		Com_Printf("CP_CountMission: Warning, there are %i mission that should have been removed from global mission array\n", counterInvalidMission);
-#endif
-	return counterMission;
-}
-
-/**
- * @brief Count the number of mission created and active.
- * @return Number of active mission
- * @sa CP_CountMission
- * @sa CP_CountMissionOnGeoscape
- */
-int CP_CountMissionActive (void)
-{
-	int counterMission = 0;
-	int counterActiveMission = 0;
-
-	const linkedList_t *list = ccs.missions;
-
-	for (; list; list = list->next, counterMission++) {
-		const mission_t *mission = (mission_t *)list->data;
-		/* check whether current selected gametype is a valid one */
-		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER) {
-			counterActiveMission++;
-		}
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Total number of mission: %i -- Number of active mission: %i\n", counterMission, counterActiveMission);
-	return counterActiveMission;
-}
-
-/**
  * @brief Count the number of mission active and displayed on geoscape.
  * @return Number of active mission visible on geoscape
- * @sa CP_CountMission
- * @sa CP_CountMissionActive
  */
 int CP_CountMissionOnGeoscape (void)
 {
 	int counterVisibleMission = 0;
+	mission_t *mission;
 
-	const linkedList_t *list = ccs.missions;
-
-	for (; list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
+	CP_MissionForeach(mission) {
 		/* check whether current selected gametype is a valid one */
 		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape) {
 			counterVisibleMission++;
@@ -635,10 +568,8 @@ int CP_CountMissionOnGeoscape (void)
 
 
 /*====================================
-*
 * Functions relative to geoscape
-*
-====================================*/
+*====================================*/
 
 /**
  * @brief Get mission model that should be shown on the geoscape
@@ -1838,13 +1769,11 @@ static void CP_MissionList_f (void)
  */
 static void CP_DeleteMissions_f (void)
 {
-	int n = CP_CountMission();
 	mission_t *mission;
 
-	CP_MissionForeach(mission)
+	CP_MissionForeach(mission) {
 		CP_MissionRemove(mission);
-
-	Com_Printf("Removed %i mission(s) from global array\n", n);
+	}
 
 	if (ccs.numUFOs != 0) {
 		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions. Force removal.\n", ccs.numUFOs);

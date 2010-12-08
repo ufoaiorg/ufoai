@@ -1004,7 +1004,8 @@ static void MAP_ConvertObjectPositionToGeoscapePosition (float* vector, const ve
 static void MAP_GetMissionAngle (float *vector, int id)
 {
 	mission_t *mission = MAP_GetMissionByIDX(id);
-	assert(mission);
+	if (mission == NULL)
+		return;
 	MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
 	MAP_SelectMission(mission);
 }

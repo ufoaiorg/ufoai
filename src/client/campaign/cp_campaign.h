@@ -602,8 +602,6 @@ void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);
 const char* CL_SecondConvert(int second);
 
 /* Mission related functions */
-int CP_CountMission(void);
-int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
 int CP_TerrorMissionAvailableUFOs(const mission_t const *mission, ufoType_t *ufoTypes);
