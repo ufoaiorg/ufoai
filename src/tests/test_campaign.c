@@ -944,14 +944,12 @@ static void testCampaignRun (void)
 
 	cls.frametime = 1;
 
-	i = 0;
 	startDay = ccs.date.day;
-	while (ccs.date.day - startDay < days) {
-		if (++i > seconds)
-			UFO_CU_FAIL_MSG_FATAL(va("Time did not advance for 10 days, only %i (and %i seconds)", ccs.date.day - startDay, ccs.date.sec));
+	for (i = 0; i < seconds; i++) {
 		ccs.gameTimeScale = 1;
 		CL_CampaignRun(campaign);
 	}
+	CU_ASSERT_EQUAL(ccs.date.day - startDay, days);
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
