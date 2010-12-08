@@ -140,7 +140,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 void CP_BaseAttackStartMission (mission_t *mission)
 {
 	base_t *base = mission->data.base;
-	linkedList_t *hiredSoldiersInBase = NULL, *pos;
+	linkedList_t *hiredSoldiersInBase = NULL;
 	employee_t *employee;
 
 	assert(base);

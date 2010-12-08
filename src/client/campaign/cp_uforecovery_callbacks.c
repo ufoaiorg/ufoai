@@ -143,7 +143,7 @@ static void UR_DialogInitStore_f (void)
 	/* Check how many bases can store this UFO. */
 	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
-		capacities_t *capacity;
+		const capacities_t *capacity;
 
 		if (!installation)
 			continue;
