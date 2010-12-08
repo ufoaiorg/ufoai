@@ -925,10 +925,12 @@ static void testSaveLoad (void)
 static void testCampaignRun (void)
 {
 	int i;
-	int deltaDays;
+	int startDay;
 	campaign_t *campaign;
 	base_t *base;
 	const vec2_t destination = { 10, 10 };
+	const int days = 10;
+	const int seconds = days * SECONDS_PER_DAY;
 
 	ResetCampaignData();
 
@@ -942,14 +944,13 @@ static void testCampaignRun (void)
 
 	cls.frametime = 1;
 
-	deltaDays = ccs.date.day;
-
-	while (deltaDays < 10) {
-		if (++i > 10000000)
-			UFO_CU_FAIL_MSG_FATAL(va("Time did not advance for 10 days, only %i", deltaDays));
+	i = 0;
+	startDay = ccs.date.day;
+	while (ccs.date.day - startDay < days) {
+		if (++i > seconds)
+			UFO_CU_FAIL_MSG_FATAL(va("Time did not advance for 10 days, only %i (and %i seconds)", ccs.date.day - startDay, ccs.date.sec));
 		ccs.gameTimeScale = 1;
 		CL_CampaignRun(campaign);
-		deltaDays = ccs.date.day - deltaDays;
 	}
 
 	/* cleanup for the following tests */
