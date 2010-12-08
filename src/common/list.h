@@ -51,7 +51,6 @@ qboolean LIST_RemoveEntry(linkedList_t **list, linkedList_t *entry);
 qboolean LIST_IsEmpty(const linkedList_t *list);
 int LIST_Count(const linkedList_t *list);
 void *LIST_GetByIdx(linkedList_t *list, int index);
-void *LIST_GetLast(linkedList_t *list);
 qboolean LIST_Remove(linkedList_t **list, const void *data);
 
 #endif /* LIST_H_ */

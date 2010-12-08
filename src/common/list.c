@@ -303,22 +303,6 @@ int LIST_Count (const linkedList_t *list)
 }
 
 /**
- * @brief Returns the last entry in the linked list
- * @param[in] list Linked list to get the entry from.
- */
-void *LIST_GetLast (linkedList_t *list)
-{
-	while (list) {
-		linkedList_t *next = list->next;
-		if (next == NULL)
-			return (void *)list->data;
-		list = next;
-	}
-
-	return NULL;
-}
-
-/**
  * @brief Get an entry of a linked list by its index in the list.
  * @param[in] list Linked list to get the entry from.
  * @param[in] index The index of the entry in the linked list.
