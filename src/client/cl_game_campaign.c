@@ -143,9 +143,9 @@ static void GAME_CP_Results_f (void)
 
 /**
  * @brief Translate the difficulty int to a translated string
- * @param difficulty the difficulty integer value
+ * @param[in] difficulty The difficulty level of the game
  */
-static inline const char* CP_ToDifficultyName (int difficulty)
+static inline const char* CP_ToDifficultyName (const int difficulty)
 {
 	switch (difficulty) {
 	case -4:

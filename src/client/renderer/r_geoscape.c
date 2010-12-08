@@ -38,15 +38,15 @@ extern const float STANDARD_3D_ZOOM;
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
  * @sa R_Draw3DGlobe
- * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
- * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
- * @param[in] cx The x texture coordinate
- * @param[in] cy The y texture coordinate
- * @param[in] p The horizontal shift of the night map
  * @param[in] x The x position of the geoscape node
  * @param[in] y The y position of the geoscape node
  * @param[in] w The width of the geoscape node
  * @param[in] h The height of the geoscape node
+ * @param[in] p The horizontal shift of the night map
+ * @param[in] cx The x texture coordinate
+ * @param[in] cy The y texture coordinate
+ * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
+ * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
  */
 void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy, float iz, const char *map, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
 {

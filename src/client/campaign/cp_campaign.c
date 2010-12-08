@@ -909,8 +909,9 @@ void CP_StartSelectedMission (void)
  * @return a float value that is between 0 and 1
  * @param[in] mis The mission we are calculating the probability for
  * @param[in] battleParameters Structure that holds the battle related parameters
+ * @param[in] difficulty The difficulty level of the game
  */
-static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, const battleParam_t* battleParameters, signed int difficulty)
+static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, const battleParam_t* battleParameters, const int difficulty)
 {
 	const base_t *base = mis->data.base;
 	linkedList_t *hiredSoldiers = NULL;
@@ -969,8 +970,9 @@ static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, cons
  * @param[in] mis The mission we are calculating the probability for
  * @param[in] aircraft Your aircraft that has reached the mission location
  * @param[in] battleParameters Structure that holds the battle related parameters
+ * @param[in] difficulty The difficulty level of the game
  */
-static float CP_GetWinProbabilty (const mission_t *mis, const aircraft_t *aircraft, const battleParam_t* battleParameters, signed int difficulty)
+static float CP_GetWinProbabilty (const mission_t *mis, const aircraft_t *aircraft, const battleParam_t* battleParameters, const int difficulty)
 {
 	const int aircraftTeamSize = AIR_GetTeamSize(aircraft);
 	assert(aircraft);
