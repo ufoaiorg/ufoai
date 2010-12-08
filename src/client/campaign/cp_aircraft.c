@@ -1265,53 +1265,48 @@ void CL_CampaignRunAircraft (campaign_t* campaign, int dt, qboolean updateRadarO
 	 * This is static because aircraft can move without radar being
 	 * updated (sa CL_CampaignRun) */
 	static qboolean radarOverlayReset = qfalse;
+	aircraft_t *aircraft;
 
-	assert(dt >= 0);
+	/* Run each aircraft */
+	AIR_Foreach(aircraft) {
+		int k;
 
-	if (dt > 0) {
-		aircraft_t *aircraft;
+		if (aircraft->status == AIR_CRASHED)
+			continue;
 
-		/* Run each aircraft */
-		AIR_Foreach(aircraft) {
-			int k;
+		assert(aircraft->homebase);
+		if (aircraft->status == AIR_IDLE) {
+			/* Aircraft idle out of base */
+			aircraft->fuel -= dt;
+		} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
+			AIR_Move(aircraft, dt);
+			/* radar overlay should be updated */
+			radarOverlayReset = qtrue;
+		} else if (aircraft->status == AIR_REFUEL) {
+			AIR_Refuel(aircraft, dt);
+		}
 
-			if (aircraft->status == AIR_CRASHED)
-				continue;
+		/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
+		if (aircraft->status != AIR_RETURNING && AIR_IsAircraftOnGeoscape(aircraft) &&
+			!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
+			/** @todo check if aircraft can go to a closer base with free space */
+			MS_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), aircraft->name), qfalse, MSG_STANDARD, NULL);
+			AIR_AircraftReturnToBase(aircraft);
+		}
 
-			assert(aircraft->homebase);
-			if (aircraft->status == AIR_IDLE) {
-				/* Aircraft idle out of base */
-				aircraft->fuel -= dt;
-			} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
-				AIR_Move(aircraft, dt);
-				/* radar overlay should be updated */
-				radarOverlayReset = qtrue;
-			} else if (aircraft->status == AIR_REFUEL) {
-				AIR_Refuel(aircraft, dt);
-			}
+		/* Aircraft purchasing ufo */
+		if (aircraft->status == AIR_UFO) {
+			/* Solve the fight */
+			AIRFIGHT_ExecuteActions(campaign, aircraft, aircraft->aircraftTarget);
+		}
 
-			/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
-			if (aircraft->status != AIR_RETURNING && AIR_IsAircraftOnGeoscape(aircraft) &&
-				!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
-				/** @todo check if aircraft can go to a closer base with free space */
-				MS_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), aircraft->name), qfalse, MSG_STANDARD, NULL);
-				AIR_AircraftReturnToBase(aircraft);
-			}
-
-			/* Aircraft purchasing ufo */
-			if (aircraft->status == AIR_UFO) {
-				/* Solve the fight */
-				AIRFIGHT_ExecuteActions(campaign, aircraft, aircraft->aircraftTarget);
-			}
-
-			for (k = 0; k < aircraft->maxWeapons; k++) {
-				/* Update delay to launch next projectile */
-				if (AIR_IsAircraftOnGeoscape(aircraft) && (aircraft->weapons[k].delayNextShot > 0))
-					aircraft->weapons[k].delayNextShot -= dt;
-				/* Reload if needed */
-				if (aircraft->weapons[k].ammoLeft <= 0)
-					AII_ReloadWeapon(&aircraft->weapons[k]);
-			}
+		for (k = 0; k < aircraft->maxWeapons; k++) {
+			/* Update delay to launch next projectile */
+			if (AIR_IsAircraftOnGeoscape(aircraft) && (aircraft->weapons[k].delayNextShot > 0))
+				aircraft->weapons[k].delayNextShot -= dt;
+			/* Reload if needed */
+			if (aircraft->weapons[k].ammoLeft <= 0)
+				AII_ReloadWeapon(&aircraft->weapons[k]);
 		}
 	}
 
