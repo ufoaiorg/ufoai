@@ -2,37 +2,65 @@
 ### Alien Base 2 Material file
 ###
 
+/* Structural textures
+   ------------------- */
+
 # Floor textures
 {
 	material tex_alienb/ab_floor01
-	specular 1.0
-	hardness 1.0
+	specular 0.5
+	hardness 0.5
 	bump 2.0
 	parallax 2.0
 	{
 		texture tex_alienb/ab_floor01_pls
-		pulse 0.2
+		pulse 0.1
 	}
 }
 {
 	material tex_alienb/ab_floor02
-	specular 1.0
-	hardness 1.0
+	specular 0.5
+	hardness 0.5
 	bump 2.0
 	parallax 2.0
 	{
 		texture tex_alienb/ab_floor02_pls
-		pulse 0.2
+		pulse 0.1
 	}
 }
 
-# Grunge pipe metal with chipped paint
+# Brown wall textures
+{
+	material tex_alienb/ab_wall03
+	bump 2.0
+	parallax 2.0
+	specular 0.2
+	hardness 0.2
+}
+{
+	material tex_alienb/ab_wall04
+	bump 2.0
+	parallax 2.0
+	specular 0.2
+	hardness 0.2
+}
+
+# Light wall texture with green glow
+{
+	material tex_alienb/ab_wall05
+	bump 1.0
+	parallax 1.0
+	specular 0.7
+	hardness 0.7
+}
+
+# Pipe metal with chipped paint
 {
 	material tex_alienb/ab_metal01
-	specular 2.0
-	hardness 2.0
-	bump 10.0
-	parallax 10.0
+	specular 0.1
+	hardness 0.1
+	bump 2.0
+	parallax 2.0
 }
 
 # Flat metal texture
@@ -40,26 +68,20 @@
 	material tex_material/metal012
 	bump 0.5
 	parallax 0.5
-	specular 3.0
-	hardness 3.0
-}
-
-# Wall texture with animated green glow
-{
-	material tex_alienb/ab_wall05
-	bump 1.0
-	parallax 1.0
 	specular 1.0
 	hardness 1.0
 }
+
+/* Lights and objects
+   ------------------ */
 
 # Small light with a glow texture
 {
 	material tex_alienb/ab_light01
 	bump 1.0
 	parallax 1
-	specular 2.0
-	hardness 2.0
+	specular 0.7
+	hardness 0.7
 	glowscale 1.0
 }
 
@@ -68,11 +90,38 @@
 	material tex_alienb/ab_obj_b
 	bump 1.0
 	parallax 1.0
-	specular 1.0
-	hardness 1.0
+	specular 0.5
+	hardness 0.5
 	{
 		texture tex_alienb/ab_obj_b0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		anim 10 3.0
 	}
+}
+
+# Light machinery object texture
+{
+	material tex_alienb/ab_obj_a
+	bump 2.0
+	parallax 2.0
+	specular 1.0
+	hardness 1.0
+}
+
+# Grate texture
+{
+	material tex_alienb/ab_grate
+	bump 2.0
+	parallax 2.0
+	specular 1.0
+	hardness 1.0
+}
+
+# Crate objects
+{
+	material tex_alienb/ab_obj_c
+	bump 2.0
+	parallax 2.0
+	specular 1.0
+	hardness 1.0
 }

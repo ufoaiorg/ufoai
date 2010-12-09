@@ -1,0 +1,14 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 32 32 -16 ) ( 32 0 -16 ) ( 32 32 16 ) tex_alienb/ab_crate_j 0 0 90 0.125 0.125
+( 64 32 -16 ) ( 64 32 16 ) ( -64 32 -16 ) tex_alienb/ab_crate_h 0 0 90 0.125 0.125
+( 64 32 0 ) ( -64 32 0 ) ( 64 0 0 ) tex_common/nodraw 0 0 0 0.125 0.125
+( 0 0 16 ) ( 0 0 -16 ) ( 0 32 16 ) tex_alienb/ab_crate_j 0 0 90 0.125 0.125
+( -64 0 16 ) ( 64 0 16 ) ( -64 0 -16 ) tex_alienb/ab_crate_h 0 0 90 0.125 0.125
+( -64 0 16 ) ( -64 32 16 ) ( 64 0 16 ) tex_alienb/ab_crate_d 0 0 0 0.125 0.125
+}
+}
