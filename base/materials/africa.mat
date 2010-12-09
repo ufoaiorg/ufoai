@@ -65,13 +65,6 @@
 	hardness 0.8
 	parallax 1.0
 	specular 5.0
-	/* Small button alternating animation (red) */
-	{
-		texture pt/b/b2_04_0b0
-		anima 9 9.0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		glowmaplink
-	}
 	/* Stone panel skin */
 	{
 		texture pt/sk/usk2_04_1_3a0
@@ -104,6 +97,12 @@
 	/* Big button #2 */
 	{
 		texture pt/b/b2_04_2a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Small button alternating animation (red) */
+	{
+		texture pt/b/b2_04_0b0
+		anima 9 9.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	{
