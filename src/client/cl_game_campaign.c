@@ -368,16 +368,17 @@ qboolean GAME_CP_Spawn (void)
 {
 	aircraft_t *aircraft = ccs.missionAircraft;
 	base_t *base;
-	linkedList_t* l;
+	employee_t *employee;
+	chrList_t *chrList;
 
 	if (!aircraft)
 		return qfalse;
 
+	chrList = &cl.chrList;
 	/* convert aircraft team to character list */
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		employee_t *employee = (employee_t *)l->data;
-		cl.chrList.chr[cl.chrList.num] = &employee->chr;
-		cl.chrList.num++;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+		chrList->chr[chrList->num] = &employee->chr;
+		chrList->num++;
 	}
 
 	base = aircraft->homebase;
