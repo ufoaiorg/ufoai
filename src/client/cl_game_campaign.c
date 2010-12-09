@@ -209,6 +209,7 @@ static void GAME_CP_CampaignListClick_f (void)
 	int num;
 	const char *racetype;
 	uiNode_t *campaignlist;
+	const campaign_t *campaign;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <campaign list index>\n", Cmd_Argv(0));
@@ -227,7 +228,8 @@ static void GAME_CP_CampaignListClick_f (void)
 			return;
 	}
 
-	Cvar_Set("cp_campaign", ccs.campaigns[num].id);
+	campaign = &ccs.campaigns[num];
+	Cvar_Set("cp_campaign", campaign->id);
 	if (ccs.campaigns[num].team == TEAM_PHALANX)
 		racetype = _("Human");
 	else
@@ -237,13 +239,13 @@ static void GAME_CP_CampaignListClick_f (void)
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
 		"Max. allowed debts: %ic\n"
-		"%s\n"), _(ccs.campaigns[num].name), racetype,
-			ccs.campaigns[num].soldiers, ngettext("soldier", "soldiers", ccs.campaigns[num].soldiers),
-			ccs.campaigns[num].scientists, ngettext("scientist", "scientists", ccs.campaigns[num].scientists),
-			ccs.campaigns[num].workers, ngettext("worker", "workers", ccs.campaigns[num].workers),
-			ccs.campaigns[num].credits, CP_ToDifficultyName(ccs.campaigns[num].difficulty),
-			(int)(round(ccs.campaigns[num].minhappiness * 100.0f)), ccs.campaigns[num].negativeCreditsUntilLost,
-			_(ccs.campaigns[num].text));
+		"%s\n"), _(campaign->name), racetype,
+		campaign->soldiers, ngettext("soldier", "soldiers", campaign->soldiers),
+		campaign->scientists, ngettext("scientist", "scientists", campaign->scientists),
+		campaign->workers, ngettext("worker", "workers", campaign->workers),
+		campaign->credits, CP_ToDifficultyName(campaign->difficulty),
+		(int)(round(campaign->minhappiness * 100.0f)), campaign->negativeCreditsUntilLost,
+		_(campaign->text));
 	UI_RegisterText(TEXT_STANDARD, campaignDesc);
 
 	/* Highlight currently selected entry */
