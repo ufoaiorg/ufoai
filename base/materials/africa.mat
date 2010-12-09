@@ -65,6 +65,13 @@
 	hardness 0.8
 	parallax 1.0
 	specular 5.0
+	/* Small button alternating animation (red) */
+	{
+		texture pt/b/b2_04_0b0
+		anima 9 9.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		glowmaplink
+	}
 	/* Stone panel skin */
 	{
 		texture pt/sk/usk2_04_1_3a0
@@ -97,12 +104,6 @@
 	/* Big button #2 */
 	{
 		texture pt/b/b2_04_2a0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-	/* Small button alternating animation (red) */
-	{
-		texture pt/b/b2_04_0b0
-		anima 9 9.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	{
@@ -197,11 +198,10 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-
-	/* 3 small buttons (top left) animation (blue)*/
+	/* 3 small buttons (top left) force randomized animation (blue)*/
 	{
 		texture pt/b/b2_06_0b0
-		anim 13 8.6
+		animf 13 8.6
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* 2 middle buttons (top left & bottom left) alternating animation (blue)*/
@@ -255,7 +255,6 @@
 	{
 		lightmap
 	}
-
 }
 
 /* ufo2_07: Panel with 4 big buttons */
@@ -348,6 +347,12 @@
 		texture pt/fx/fx2_09_1a0
 		anim 14 19.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		glowmaplink
+	}
+	{
+		texture tex_ufo/ufo2_09
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
 	}
 }
 
@@ -363,6 +368,12 @@
 		texture pt/fx/fx2_10_1a0
 		anim 14 19.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		glowmaplink
+	}
+	{
+		texture tex_ufo/ufo2_10
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
 	}
 }
 
@@ -381,7 +392,7 @@
 		anima 9 8.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Screen overlay alternating animation (bottom left, frequency display, grey) */
+	/* Screen overlay force randomized animation (bottom left, frequency display, grey) */
 	{
 		texture pt/so/soctex001_1a0
 		animf 9 6
@@ -405,10 +416,10 @@
 		anima 9 8.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons alternating animation (top middle, switching grey) */
+	/* Buttons randomized animation (top middle, switching grey) */
 	{
 		texture pt/b/bctex001_3a0
-		anima 9 3.0
+		animr 9 3.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
