@@ -1644,7 +1644,8 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 {
 	int i;
 
-	assert(aircraft->idx >= 0 && aircraft->idx < MAX_AIRCRAFT);
+	if (aircraft->idx < 0 || aircraft->idx >= MAX_AIRCRAFT)
+		return;
 
 	for (i = 0; i < ccs.numTransfers; i++) {
 		transfer_t *transfer = &ccs.transfers[i];
