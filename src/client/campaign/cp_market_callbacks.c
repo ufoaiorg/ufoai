@@ -591,6 +591,10 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	if (buyCat == FILTER_AIRCRAFT) {
+		if (ccs.numAircraft >= MAX_AIRCRAFT) {
+			MN_Popup(_("Note"), _("Cannot buy more aircraft you've reached max aircraft limit."));
+			return;
+		}
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!B_GetBuildingStatus(base, B_POWER)) {
 			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));

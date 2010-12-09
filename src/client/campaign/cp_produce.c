@@ -320,6 +320,14 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 			PR_ProductionRollBottom_f();
 			return;
 		}
+		if (ccs.numAircraft >= MAX_AIRCRAFT) {
+			production_queue_t *queue = &ccs.productions[base->idx];
+
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Cannot produce more aircraft (at %s). Max aircraft limit reached.\n"), base->name);
+			MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+			PR_QueueDelete(base, queue, prod->idx);
+			return;
+		}
 		prod->percentDone += (PR_CalculateProductionPercentDone(base, aircraft->tech, NULL) / MINUTES_PER_HOUR);
 	}
 

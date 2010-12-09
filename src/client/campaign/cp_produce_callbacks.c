@@ -709,6 +709,10 @@ static void PR_ProductionIncrease_f (void)
 		prod = selectedProduction;
 		if (prod->production) {		/* Production. */
 			if (prod->aircraft) {
+				if (ccs.numAircraft + prod->amount + amount >= MAX_AIRCRAFT) {
+					MN_Popup(_("Limit reached"), _("You cannot queue aircraft.\nMax aircraft limit reached.\n"));
+					return;
+				}
 				/* Don't allow to queue more aircraft if there is no free space. */
 				if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
 					MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
@@ -733,9 +737,15 @@ static void PR_ProductionIncrease_f (void)
 		}
 	} else {
 		if (!selectedDisassembly) {
-			if (selectedAircraft && AIR_CalculateHangarStorage(selectedAircraft, base, 0) <= 0) {
-				MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
-				return;
+			if (selectedAircraft) {
+				if (ccs.numAircraft >= MAX_AIRCRAFT) {
+					MN_Popup(_("Limit reached"), _("You cannot queue aircraft.\nMax aircraft limit reached.\n"));
+					return;
+				}
+				if (AIR_CalculateHangarStorage(selectedAircraft, base, 0) <= 0) {
+					MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+					return;
+				}
 			}
 			/* Production. (only one of the "selected" pointers can be non-NULL) */
 			prod = PR_QueueNew(base, queue, selectedItem, selectedAircraft, NULL, amount);

@@ -756,6 +756,11 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		return NULL;
 	}
 
+	if (ccs.numAircraft >= MAX_AIRCRAFT) {
+		Com_Printf("Max aircraft limit reached!\n");
+		return NULL;
+	}
+
 	assert(base);
 
 	if (base->numAircraftInBase < MAX_AIRCRAFT) {
