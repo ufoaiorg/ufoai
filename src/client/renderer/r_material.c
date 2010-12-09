@@ -523,7 +523,7 @@ static int R_LoadAnimImages (materialStage_t *s)
 	name[j - 1] = 0;
 
 	/* now load the rest */
-	for (i = 1; i < s->anim.num_frames; i++) {
+	for (i = 0; i < s->anim.num_frames; i++) {
 		const char *c = va("%s%d", name, i);
 		image_t *image = R_FindImage(c, it_material);
 		s->anim.images[i] = image;
