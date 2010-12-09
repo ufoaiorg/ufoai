@@ -343,6 +343,9 @@ qboolean R_CullMeshModel (const entity_t *e)
 	vec3_t vectors[3];
 	vec4_t bbox[8];
 
+	/* this is an approximation of the origin of the tagged model - we are
+	 * using the origin of the parent entity to check the culling for the model
+	 * that is placed relative to the tag */
 	if (e->tagent) {
 		VectorCopy(e->tagent->origin, origin);
 		VectorCopy(e->tagent->angles, angles);
@@ -498,6 +501,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_ResetArrayState();
 
+	/** @todo what about the origin of a tagged model here? */
 	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
 	refdef.aliasCount += lodMesh->num_tris;
 	if (mod->num_frames == 1)
