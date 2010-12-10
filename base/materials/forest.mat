@@ -15,7 +15,6 @@
 	parallax 1.0
 	specular 1.0
 	{
-		envmap 0
 		lightmap
 	}
 }
@@ -40,7 +39,6 @@
 	parallax 1.0
 	specular 5.0
 	{
-		envmap 0
 		lightmap
 	}
 }
@@ -112,6 +110,7 @@
 		lightmap
 	}
 	{
+		envmap 0
 		lightmap
 	}
 }
@@ -183,7 +182,6 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-
 	/* 3 small buttons (top left) animation (green)*/
 	{
 		texture pt/b/b2_06_0c0
@@ -241,7 +239,6 @@
 	{
 		lightmap
 	}
-
 }
 
 /* ufo2_07: Panel with 4 Big Buttons */
@@ -318,7 +315,6 @@
 	parallax 1.0
 	specular 1.5
 	{
-		envmap 0
 		lightmap
 	}
 }
@@ -335,9 +331,12 @@
 		texture pt/fx/fx2_09_1a0
 		anim 14 38
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		glowmaplink
 	}
 	{
-		envmap 0
+		texture tex_ufo/ufo2_09
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
 	}
 }
 
@@ -353,9 +352,12 @@
 		texture pt/fx/fx2_10_1a0
 		anim 14 38
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		glowmaplink
 	}
 	{
-		envmap 0
+		texture tex_ufo/ufo2_10
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
 	}
 }
 
