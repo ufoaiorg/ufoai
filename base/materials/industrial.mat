@@ -444,6 +444,12 @@
 		texture pt/fx/fx2_09_1a0
 		anim 14 24
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		glowmaplink
+	}
+	{
+		texture tex_ufo/ufo2_09
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
 	}
 }
 
@@ -459,6 +465,12 @@
 		texture pt/fx/fx2_10_1a0
 		anim 14 24
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		glowmaplink
+	}
+	{
+		texture tex_ufo/ufo2_10
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
 	}
 }
 
