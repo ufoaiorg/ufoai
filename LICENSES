@@ -953,7 +953,6 @@ base/models/civilians/male/sheik_head01.md2 | GNU General Public License 2.0 | h
 base/models/civilians/male/soldier01.md2 | GNU General Public License 2.0 | Willem Sitters; Martin Gerhardy
 base/models/civilians/male/soldier01.tag | GNU General Public License 2.0 or later | Willem Sitters
 base/models/civilians/male/soldier01_body.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/models/civilians/male/soldier01_head.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/civilians/male/soldier01_head.md2 | GNU General Public License 2.0 | Willem Sitters; Martin Gerhardy
 base/models/civilians/male/soldier01_head.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/civilians/male/soldier01_head02.md2 | GNU General Public License 2.0 | Willem Sitters
@@ -967,9 +966,7 @@ base/models/civilians/male/worker02_head.md2 | GNU General Public License 2.0 or
 base/models/civilians/male/worker02_head02.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/civilians/male/worker_body.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/civilians/male/worker_body02.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/models/civilians/male/worker_head.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/civilians/male/worker_head.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/civilians/male/worker_head02.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/civilians/male/worker_head02.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/alienbase.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/alienbase.png | GNU General Public License 2.0 or later | Willem Sitters
