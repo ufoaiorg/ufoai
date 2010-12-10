@@ -856,7 +856,7 @@
 	specular 1.0
 	/* Brighter version of itself skin pulsating with floor */
 	{
-		texture pt/sk/usk2_05_0_0b0
+		texture pt/sk/usk2_05_0_0f0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		pulse 0.2
 		lightmap
@@ -1123,17 +1123,17 @@
 	hardness 1.0
 	parallax 1.0
 	specular 1.0
-	/* Screen overlay alternating animation (top left, green small text) */
+	/* Screen overlay alternating animation (top left, red-green) */
 	{
-		texture pt/so/so2_13-16_1_a0
-		anim 16 5
+		texture pt/so/soctex001_0g0
+		anima 9 6
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Screen overlay force randomized animation (bottom left, frequency display, colormorph green) */
+	/* Screen overlay force randomized animation (bottom left, frequency display, colormorph yellow) */
 	{
 		texture pt/so/soctex001_1a0
 		animf 9 6.5
-		color 0.1 1.0 0.1
+		color 1.0 1.0 0.1
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Buttons randomized animation (top right, switching black) */
@@ -1176,9 +1176,8 @@
 	}
 	/* Screen Overlay (Alien weapon animation) */
 	{
-		texture pt/so/soscrp004_0b0
+		texture pt/so/soscrp004_0c0
 		anim 12 8.0
-		pulse 0.25
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Border screen overlay alternating animation (green-blue glow) */
