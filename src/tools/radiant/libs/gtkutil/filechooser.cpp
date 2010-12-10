@@ -215,7 +215,7 @@ namespace gtkutil
 		if (!_open // save operation
 				&& !fileName.empty() // valid filename
 				&& !_defaultExt.empty() // non-empty default extension
-				&& os::getExtension(fileName) != _defaultExt) // no default extension
+				&& os::getExtension(fileName) == fileName) // no default extension
 		{
 			fileName.append(_defaultExt);
 		}
