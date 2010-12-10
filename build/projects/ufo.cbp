@@ -1238,6 +1238,7 @@
 		<Unit filename="..\..\src\common\list.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\common\list.h" />
 		<Unit filename="..\..\src\common\md4.c">
 			<Option compilerVar="CC" />
 		</Unit>
