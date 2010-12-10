@@ -1103,11 +1103,14 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	/* the craft may no longer have any employees assigned */
 	/* remove the pilot */
 	pilot = AIR_GetPilot(aircraft);
-	if (pilot && E_DeleteEmployee(pilot)) {
-		AIR_SetPilot(aircraft, NULL);
+	if (pilot) {
+		if (E_DeleteEmployee(pilot))
+			AIR_SetPilot(aircraft, NULL);
+		else
+			Com_Error(ERR_DROP, "AIR_DestroyAircraft: Could not remove pilot from game: %s (ucn: %i)\n", pilot->chr.name, pilot->chr.ucn);
 	} else {
-		/* This shouldn't ever happen. */
-		Com_Error(ERR_DROP, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
+		if (aircraft->status != AIR_CRASHED)
+			Com_Error(ERR_DROP, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
 	}
 
 	AIR_DeleteAircraft(aircraft);
