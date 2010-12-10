@@ -264,7 +264,7 @@
 	}
 }
 
-/* ufo2_12: Engines & Powersource (Corrupter) */
+/* ufo2_12: Engines & Powersource (Corrupter, Bomber) */
 {
 	material tex_ufo/ufo2_12
 	bump 2.0

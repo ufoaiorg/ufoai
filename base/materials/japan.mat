@@ -421,11 +421,11 @@
 		anima 9 6
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Screen overlay alternating animation (bottom left, frequency display, colormorph red) */
+	/* Screen overlay force randomized animation (bottom left, frequency display, colormorph cyan) */
 	{
 		texture pt/so/soctex001_1a0
-		anima 9 12
-		color 1.0 0.1 0.1
+		animf 9 12
+		color 0.1 1.0 1.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Buttons randomized animation (top right, switching black) */
