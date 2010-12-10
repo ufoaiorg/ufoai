@@ -94,10 +94,10 @@
 	hardness 1.0
 	parallax 1.0
 	specular 1.0
-	/* 3 small buttons (top left) animation (blue)*/
+	/* 3 small buttons (top left) force randomized animation (blue)*/
 	{
 		texture pt/b/b2_06_0b0
-		anim 13 15
+		animf 13 15
 		pulse 3
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}

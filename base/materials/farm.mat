@@ -214,11 +214,10 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-
-	/* 3 small buttons (top left) animation (green)*/
+	/* 3 small buttons (top left) force randomized animation (green)*/
 	{
 		texture pt/b/b2_06_0c0
-		anim 13 11
+		animf 13 11
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* 2 middle buttons (top left & bottom left) alternating animation (yellow)*/

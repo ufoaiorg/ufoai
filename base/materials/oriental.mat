@@ -207,11 +207,10 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-
-	/* 3 small buttons (top left) animation (red)*/
+	/* 3 small buttons (top left) force randomized animation (red)*/
 	{
 		texture pt/b/b2_06_0a0
-		anim 13 2
+		animf 13 2
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* 2 middle buttons (top left & bottom left) alternating animation (green)*/
@@ -265,7 +264,6 @@
 	{
 		lightmap
 	}
-
 }
 
 /* ufo2_07: Panel with 4 Big Buttons */
