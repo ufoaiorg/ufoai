@@ -142,6 +142,7 @@
 		lightmap
 	}
 	{
+		envmap 0
 		lightmap
 	}
 }
