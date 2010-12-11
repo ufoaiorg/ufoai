@@ -5,6 +5,85 @@ import sys, os, re
 from licensesapi import *
 from optparse import OptionParser, OptionGroup
 
+def error(message):
+    """
+        Display an error and exit with an error status
+    """
+    print >> sys.stderr, "Error: " + message
+    exit(-1)
+
+def get_licenses_set(licenses):
+    """
+        Return the set of used licenses
+    """
+    entries = licenses.get_entries()
+    l = set([])
+    for e in entries:
+        if e.license == None:
+            continue
+        l.add(e.license)
+    return l
+
+def check_license(licenses, license_requested):
+    """
+        Check if a license is already used in the project, else exit with an error message
+    """
+    used = get_licenses_set(licenses)
+    if not (license_requested in used):
+        error("The license \"%s\" is not yet used in the project. Action rejected.\n    (use \"--force\" to force use of this new license)\n    (use \"stats\" command to have a list of current licenses)" % license_requested)
+
+def command_add(new_entry_name, options):
+    licenses = LicenseSet(options.datafile)
+    if options.force and licenses.exists_entry(new_entry_name):
+        licenses.remove_entry(new_entry_name)
+    if options.license != None and not options.force:
+        check_license(licenses, options.license)
+    e = LicenseEntry(new_entry_name, author=options.author, license=options.license, source=options.source)
+    licenses.add_entry(e)
+    if not options.dryrun:
+        licenses.save_to_file(options.datafile)
+
+def command_remove(entry_name, options):
+    licenses = LicenseSet(options.datafile)
+    licenses.remove_entry(entry_name)
+    if not options.dryrun:
+        licenses.save_to_file(options.datafile)
+
+def command_edit(entry_name, options):
+    licenses = LicenseSet(options.datafile)
+    e = licenses.get_entry(entry_name)
+    if e == None:
+        error("Entry %s not found" % entry_name)
+    if options.license != None and not options.force:
+        check_license(licenses, options.license)
+    if options.author != None:
+        e.author = options.author
+    if options.license != None:
+        e.license = options.license
+    if options.source != None:
+        e.source = options.source
+    if not options.dryrun:
+        licenses.save_to_file(options.datafile)
+
+def command_copy(entry_name, new_entry_name, options):
+    licenses = LicenseSet(options.datafile)
+    if options.force and licenses.exists_entry(new_entry_name):
+        licenses.remove_entry(new_entry_name)
+    e = licenses.get_entry(entry_name)
+    e = e.copy(new_entry_name)
+    licenses.add_entry(e)
+    if not options.dryrun:
+        licenses.save_to_file(options.datafile)
+
+def command_move(entry_name, new_entry_name, options):
+    licenses = LicenseSet(options.datafile)
+    if options.force and licenses.exists_entry(new_entry_name):
+        licenses.remove_entry(new_entry_name)
+    e = licenses.get_entry(entry_name)
+    licenses.move_entry(e, new_entry_name)
+    if not options.dryrun:
+        licenses.save_to_file(options.datafile)
+
 if __name__ == "__main__":
 
     parser = OptionParser(usage="usage: %prog [OPTIONS] COMMAND [ARGS]", add_help_option=False)
@@ -42,7 +121,7 @@ Commands:
     show ENTRYNAME      Show properties of an entry
     stats               Display license stats
     check               Check if all entry files exists
-    show ENTRYNAME_REGEX
+    list ENTRYNAME_REGEX
                         List entry name (use metadata options to
                         filter the list)
 """
@@ -50,72 +129,39 @@ Commands:
 
     if args[0] == "add":
         if len(args) != 2:
-            raise Exception("2 arguments expected but \"%s\" found" % str(args))
+            error("2 arguments expected but \"%s\" found" % str(args))
         new_entry_name = args[1]
-        licenses = LicenseSet(options.datafile)
-        if options.force and licenses.exists_entry(new_entry_name):
-            licenses.remove_entry(new_entry_name)
-        e = LicenseEntry(new_entry_name, author=options.author, license=options.license, source=options.source)
-        licenses.add_entry(e)
-        if not options.dryrun:
-            licenses.save_to_file(options.datafile)
+        command_add(new_entry_name, options)
 
     elif args[0] == "remove":
         if len(args) != 2:
-            raise Exception("2 arguments expected but \"%s\" found" % str(args))
+            error("2 arguments expected but \"%s\" found" % str(args))
         entry_name = args[1]
-        licenses = LicenseSet(options.datafile)
-        licenses.remove_entry(entry_name)
-        if not options.dryrun:
-            licenses.save_to_file(options.datafile)
+        command_remove(entry_name, options)
 
     elif args[0] == "edit":
         if len(args) != 2:
-            raise Exception("2 arguments expected but \"%s\" found" % str(args))
+            error("2 arguments expected but \"%s\" found" % str(args))
         entry_name = args[1]
-        licenses = LicenseSet(options.datafile)
-        e = licenses.get_entry(entry_name)
-        if e == None:
-            raise Exception("Entry %s not found" % entry_name)
-        if options.author != None:
-            e.author = options.author
-        if options.license != None:
-            e.license = options.license
-        if options.source != None:
-            e.source = options.source
-        if not options.dryrun:
-            licenses.save_to_file(options.datafile)
+        command_edit(entry_name, options)
 
     elif args[0] == "move":
         if len(args) != 3:
-            raise Exception("3 arguments expected but \"%s\" found" % str(args))
+            error("3 arguments expected but \"%s\" found" % str(args))
         entry_name = args[1]
         new_entry_name = args[2]
-        licenses = LicenseSet(options.datafile)
-        if options.force and licenses.exists_entry(new_entry_name):
-            licenses.remove_entry(new_entry_name)
-        e = licenses.get_entry(entry_name)
-        licenses.move_entry(e, new_entry_name)
-        if not options.dryrun:
-            licenses.save_to_file(options.datafile)
+        command_move(entry_name, new_entry_name, options)
 
     elif args[0] == "copy":
         if len(args) != 3:
-            raise Exception("3 arguments expected but \"%s\" found" % str(args))
+            error("3 arguments expected but \"%s\" found" % str(args))
         entry_name = args[1]
         new_entry_name = args[2]
-        licenses = LicenseSet(options.datafile)
-        if options.force and licenses.exists_entry(new_entry_name):
-            licenses.remove_entry(new_entry_name)
-        e = licenses.get_entry(entry_name)
-        e = e.copy(new_entry_name)
-        licenses.add_entry(e)
-        if not options.dryrun:
-            licenses.save_to_file(options.datafile)
+        command_copy(entry_name, new_entry_name, options)
 
     elif args[0] == "show":
         if len(args) != 2:
-            raise Exception("2 arguments expected but \"%s\" found" % str(args))
+            error("2 arguments expected but \"%s\" found" % str(args))
         entry_name = args[1]
         licenses = LicenseSet(options.datafile)
         e = licenses.get_entry(entry_name)
@@ -125,7 +171,7 @@ Commands:
 
     elif args[0] == "stats":
         if len(args) != 1:
-            raise Exception("1 arguments expected but \"%s\" found" % str(args))
+            error("1 arguments expected but \"%s\" found" % str(args))
         licenses = LicenseSet(options.datafile)
         entries = licenses.get_entries()
         print "Global:"
@@ -151,7 +197,7 @@ Commands:
 
     elif args[0] == "check":
         if len(args) != 1:
-            raise Exception("1 arguments expected but \"%s\" found" % str(args))
+            error("1 arguments expected but \"%s\" found" % str(args))
         licenses = LicenseSet(options.datafile)
         entries = licenses.get_entries()
         for e in entries:
@@ -160,7 +206,7 @@ Commands:
 
     elif args[0] == "list":
         if len(args) != 2:
-            raise Exception("2 arguments expected but \"%s\" found" % str(args))
+            error("2 arguments expected but \"%s\" found" % str(args))
         check_name = re.compile(args[1])
         check_license = re.compile(".*")
         check_author = re.compile(".*")
@@ -208,4 +254,4 @@ Commands:
             print "%d entry found." % count
 
     else:
-        raise Exception("Command for args %s unknown" % str(args))
+        error("Command for args %s unknown" % str(args))
