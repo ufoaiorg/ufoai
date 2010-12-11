@@ -6912,6 +6912,9 @@ base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or late
 base/textures/tex_vehicles/tire_002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.png | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf
+base/textures/tex_vehicles/truck_c.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_c_lq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_c_mq.png | GNU General Public License 2.0 | MCR
 base/ufos/aircraftmanagement.ufo | GNU General Public License 2.0
 base/ufos/armour.ufo | GNU General Public License 2.0
 base/ufos/basemanagement.ufo | GNU General Public License 2.0
