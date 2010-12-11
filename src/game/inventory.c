@@ -941,6 +941,7 @@ static int I_GetUsedSlots (inventoryInterface_t* self)
  * @brief Initializes the inventory definition by linking the ->next pointers properly.
  * @param[in] name The name that is shown in the output
  * @param[out] interface The inventory interface pointer which should be initialized in this function.
+ * @param[in] csi The client-server-information structure
  * @sa G_Init
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
