@@ -291,6 +291,22 @@ qboolean INVSH_CompareItem (item_t *item1, item_t *item2)
 }
 
 /**
+ * @brief Checks the shape if there is a 1-bit on the position x/y.
+ * @param[in] shape The shape to check in. (8x4)
+ * @param[in] x
+ * @param[in] y
+ */
+static qboolean INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int y)
+{
+	if (y >= SHAPE_SMALL_MAX_HEIGHT || x >= SHAPE_SMALL_MAX_WIDTH|| x < 0 || y < 0) {
+		return qfalse;
+	}
+
+	return shape & (0x01 << (y * SHAPE_SMALL_MAX_WIDTH + x));
+}
+
+/**
+
  * @brief Check if a position in a container is used by an item (i.e. collides with the shape).
  * @param[in] ic A pointer to an invList_t struct. The position is checked against its contained item.
  * @param[in] x The x location in the container.
@@ -298,19 +314,18 @@ qboolean INVSH_CompareItem (item_t *item1, item_t *item2)
  */
 static qboolean INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const int y)
 {
+	uint32_t shape;
+
 	assert(ic);
 
 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
 	if (ic->item.rotated) {
-		if (((INVSH_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
-			return qtrue;
+		shape = INVSH_ShapeRotate(ic->item.t->shape);
 	} else {
-		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
-			return qtrue;
+		shape = ic->item.t->shape;
 	}
 
-	/* Position is out of bounds or position not inside item-shape. */
-	return qfalse;
+	return INVSH_CheckShapeSmall(shape, x - ic->x, y - ic->y);
 }
 
 /**
@@ -703,22 +718,6 @@ qboolean INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 		return qfalse;
 	else
 		return qtrue;
-}
-
-/**
- * @brief Checks the shape if there is a 1-bit on the position x/y.
- * @param[in] shape The shape to check in. (8x4)
- * @param[in] x
- * @param[in] y
- */
-static qboolean INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int y)
-{
-	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
-		Com_Printf("INVSH_CheckShapeSmall: Bad x or y value: (x=%i, y=%i)\n", x, y);
-		return qfalse;
-	}
-
-	return shape & (0x01 << (y * SHAPE_SMALL_MAX_WIDTH + x));
 }
 
 /**
