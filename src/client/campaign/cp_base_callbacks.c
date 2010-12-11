@@ -133,7 +133,7 @@ static void B_NextBase_f (void)
 	base = B_GetNextFounded(base);
 	/* if it was the last base, select the first */
 	if (!base)
-		B_GetNextFounded(NULL);
+		base = B_GetNextFounded(NULL);
 	if (base)
 		B_SelectBase(base);
 }
