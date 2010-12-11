@@ -24,20 +24,29 @@ def get_licenses_set(licenses):
         l.add(e.license)
     return l
 
+def check_filename(filename_requested):
+    """
+        Check if a filename exists, else exit with an error message
+    """
+    if not os.path.exists(filename_requested):
+        error("The filename \"%s\" do not exists in the project. Action rejected.\n    (use \"--force\" to force the use of this filename)" % filename_requested)
+
 def check_license(licenses, license_requested):
     """
         Check if a license is already used in the project, else exit with an error message
     """
     used = get_licenses_set(licenses)
     if not (license_requested in used):
-        error("The license \"%s\" is not yet used in the project. Action rejected.\n    (use \"--force\" to force use of this new license)\n    (use \"stats\" command to have a list of current licenses)" % license_requested)
+        error("The license \"%s\" is not yet used in the project. Action rejected.\n    (use \"--force\" to force the use of this new license)\n    (use \"stats\" command to have a list of current licenses)" % license_requested)
 
 def command_add(new_entry_name, options):
     licenses = LicenseSet(options.datafile)
-    if options.force and licenses.exists_entry(new_entry_name):
-        licenses.remove_entry(new_entry_name)
+    if not options.force:
+        check_filename(new_entry_name)
     if options.license != None and not options.force:
         check_license(licenses, options.license)
+    if options.force and licenses.exists_entry(new_entry_name):
+        licenses.remove_entry(new_entry_name)
     e = LicenseEntry(new_entry_name, author=options.author, license=options.license, source=options.source)
     licenses.add_entry(e)
     if not options.dryrun:
@@ -77,6 +86,8 @@ def command_copy(entry_name, new_entry_name, options):
 
 def command_move(entry_name, new_entry_name, options):
     licenses = LicenseSet(options.datafile)
+    if not options.force:
+        check_filename(new_entry_name)
     if options.force and licenses.exists_entry(new_entry_name):
         licenses.remove_entry(new_entry_name)
     e = licenses.get_entry(entry_name)
