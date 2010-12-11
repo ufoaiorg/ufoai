@@ -672,8 +672,8 @@ base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_dragon/inter_dragon_gear.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
+base/models/aircraft/inter_saracen/saracen.png | GNU General Public License 2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_starchaser/starchaser.md2 | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser.png | GNU General Public License 2.0 | Willem Sitters
