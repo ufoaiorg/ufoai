@@ -1,11 +1,11 @@
-/*{
+{
 	material tex_nature/desert004
 	{
 		texture tex_dirt/dirt001
 		dirtmap 0.1
 		lightmap
 	}
-}*/
+}
 {
 	material tex_buildings/window012
 	specular 2.0
@@ -13,4 +13,12 @@
 {
 	material tex_buildings/roof006
 	specular 2.0
+}
+/* flares for neon003 truck lights */
+{
+	material tex_lights/neon003
+	{
+		flare 4
+		color 1.0 0.3 0.1
+	}
 }

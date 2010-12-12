@@ -1,10 +1,18 @@
 
-
 # scrolling texture
 {
 	material tex_nature/ice002
 	{
 		texture tex_nature/ice002
 		scroll.s 1
+	}
+}
+
+/* flares for neon003 truck lights */
+{
+	material tex_lights/neon003
+	{
+		flare 4
+		color 1.0 0.3 0.1
 	}
 }

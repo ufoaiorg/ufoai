@@ -1,12 +1,3 @@
-{
-	material tex_nature/grass001
-	{
-		texture tex_nature/grass
-		dirtmap 1.0
-		lightmap
-	}
-}
-
 /* flares for neon003 truck lights */
 {
 	material tex_lights/neon003

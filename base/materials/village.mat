@@ -23,6 +23,15 @@
 	}
 }
 
+/* flares for neon003 truck lights */
+{
+	material tex_lights/neon003
+	{
+		flare 4
+		color 1.0 0.3 0.1
+	}
+}
+
 /* ufo2: (Harvester, Corrupter, Bomber) */
 
 /* ufo2_01: Outside Hull clean */
