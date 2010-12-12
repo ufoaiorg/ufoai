@@ -240,11 +240,13 @@ void R_SwitchModelMemPoolTag (void)
 		if (!mod->alias.num_meshes)
 			Com_Printf("Model '%s' has no meshes\n", mod->name);
 		for (j = 0; j < mod->alias.num_meshes; j++) {
-			if (!mod->alias.meshes[j].num_skins)
+			mAliasMesh_t *mesh = &mod->alias.meshes[j];
+			if (!mesh->num_skins)
 				Com_Printf("Model '%s' has no skins\n", mod->name);
-			for (k = 0; k < mod->alias.meshes[j].num_skins; k++) {
-				if (mod->alias.meshes[j].skins[k].skin != r_noTexture)
-					mod->alias.meshes[j].skins[k].skin->type = it_static;
+			for (k = 0; k < mesh->num_skins; k++) {
+				mAliasSkin_t *modelSkin = &mesh->skins[k];
+				if (modelSkin->skin != r_noTexture)
+					modelSkin->skin->type = it_static;
 				else
 					Com_Printf("No skin for #%i of '%s'\n", j, mod->name);
 			}
@@ -296,16 +298,17 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t * defaultSkin)
 		Com_Printf("R_LoadActorSkinsFromModel: No default skin found for model \"%s\"\n", outMesh->name);
 
 	for (i = 0; i < outMesh->num_skins; i++) {
+		mAliasSkin_t *modelSkin = &outMesh->skins[i];
 		if (i == 0) {
-			outMesh->skins[i].skin = defaultSkin;
+			modelSkin->skin = defaultSkin;
 		} else {
 			const char *skin = R_GetActorSkin(i);
-			outMesh->skins[i].skin = R_AliasModelGetSkin(NULL, va("%s_%s", defaultSkin->name, skin));
+			modelSkin->skin = R_AliasModelGetSkin(NULL, va("%s_%s", defaultSkin->name, skin));
 			/** @todo should we add warning here? */
-			if (outMesh->skins[i].skin == r_noTexture)
-				outMesh->skins[i].skin = defaultSkin;
+			if (modelSkin->skin == r_noTexture)
+				modelSkin->skin = defaultSkin;
 		}
-		Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
+		Q_strncpyz(modelSkin->name, modelSkin->skin->name, sizeof(outMesh->skins[i].name));
 	}
 }
 
@@ -324,17 +327,18 @@ void R_ShutdownModels (qboolean complete)
 	 * r_models array */
 	for (i = start; i < r_numModels; i++) {
 		model_t *mod = &r_models[i];
+		mBspModel_t *bsp = &mod->bsp;
 
-		if (mod->bsp.vertex_buffer)
-			qglDeleteBuffers(1, &mod->bsp.vertex_buffer);
-		if (mod->bsp.texcoord_buffer)
-			qglDeleteBuffers(1, &mod->bsp.texcoord_buffer);
-		if (mod->bsp.lmtexcoord_buffer)
-			qglDeleteBuffers(1, &mod->bsp.lmtexcoord_buffer);
-		if (mod->bsp.normal_buffer)
-			qglDeleteBuffers(1, &mod->bsp.normal_buffer);
-		if (mod->bsp.tangent_buffer)
-			qglDeleteBuffers(1, &mod->bsp.tangent_buffer);
+		if (bsp->vertex_buffer)
+			qglDeleteBuffers(1, &bsp->vertex_buffer);
+		if (bsp->texcoord_buffer)
+			qglDeleteBuffers(1, &bsp->texcoord_buffer);
+		if (bsp->lmtexcoord_buffer)
+			qglDeleteBuffers(1, &bsp->lmtexcoord_buffer);
+		if (bsp->normal_buffer)
+			qglDeleteBuffers(1, &bsp->normal_buffer);
+		if (bsp->tangent_buffer)
+			qglDeleteBuffers(1, &bsp->tangent_buffer);
 	}
 
 	/* don't free the static models with the tag MEM_TAG_STATIC_MODELS */
