@@ -122,15 +122,17 @@ void CL_ViewLoadMedia (void)
  * @sa CL_ViewPrecacheModels
  * @todo Does not precache armoured models
  */
-static void CL_PrecacheCharacterModels (void)
+static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 {
 	teamDef_t *td;
 	int i, j, num;
 	char model[MAX_QPATH];
 	const char *path;
-	float loading = cls.loadingPercent;
 	linkedList_t *list;
 	const float percent = 55.0f;
+
+	if (!cl_precache->integer)
+		return 0;
 
 	/* search the name */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
@@ -161,12 +163,12 @@ static void CL_PrecacheCharacterModels (void)
 				/* new path */
 				list = list->next;
 
-				cls.loadingPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
-				SCR_DrawPrecacheScreen(qtrue);
+				alreadyLoadedPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
+				SCR_DrawPrecacheScreen(qtrue, alreadyLoadedPercent);
 			}
 		}
 	/* some genders may not have models - ensure that we do the wanted percent step */
-	cls.loadingPercent = loading + percent;
+	return percent;
 }
 
 /**
@@ -176,17 +178,20 @@ void CL_ViewPrecacheModels (void)
 {
 	int i;
 	float percent = 40.0f;
+	float alreadyLoadedPercent = 5.0f;
+	float loaded;
 
-	cls.loadingPercent = 5.0f;
-	SCR_DrawPrecacheScreen(qtrue);
-
-	if (cl_precache->integer)
-		CL_PrecacheCharacterModels(); /* 55% */
-	else
-		percent = 95.0f;
+	loaded = CL_PrecacheCharacterModels(alreadyLoadedPercent);
+	alreadyLoadedPercent += loaded;
+	if (loaded == 0)
+		percent = 100 - alreadyLoadedPercent;
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
+
+		alreadyLoadedPercent += percent / csi.numODs;
+		SCR_DrawPrecacheScreen(qtrue, alreadyLoadedPercent);
+
 		if (od->type[0] == '\0' || od->isDummy)
 			continue;
 
@@ -195,18 +200,13 @@ void CL_ViewPrecacheModels (void)
 			if (cls.modelPool[i])
 				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", od->model, i);
 		}
-		cls.loadingPercent += percent / csi.numODs;
-		SCR_DrawPrecacheScreen(qtrue);
 	}
-
-	cls.loadingPercent = 100.0f;
-	SCR_DrawPrecacheScreen(qtrue);
 
 	/* now make sure that all the precached models are stored until we quit the game
 	 * otherwise they would be freed with every map change */
 	R_SwitchModelMemPoolTag();
 
-	SCR_DrawPrecacheScreen(qfalse);
+	SCR_DrawPrecacheScreen(qfalse, 100.f);
 }
 
 /**

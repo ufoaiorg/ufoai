@@ -875,7 +875,7 @@ void CL_InitAfter (void)
 	S_LoadSamples();
 
 	/* preload all models for faster access */
-	CL_ViewPrecacheModels(); /* 95% */
+	CL_ViewPrecacheModels();
 
 	CL_TeamDefInitMenu();
 	CL_VideoInitMenu();

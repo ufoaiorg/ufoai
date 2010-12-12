@@ -95,7 +95,7 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  * @param[in] string Draw the loading string - if the scripts are not parsed, this is
  * not possible, so use qfalse for very early calls
  */
-void SCR_DrawPrecacheScreen (qboolean string)
+void SCR_DrawPrecacheScreen (qboolean string, int percent)
 {
 	const image_t *image;
 
@@ -110,7 +110,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
 			(int)(viddef.virtualWidth / 2), 30,
 			0, viddef.virtualWidth, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
-	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.loadingPercent);
+	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, percent);
 
 	R_EndFrame();
 }

@@ -34,6 +34,6 @@ void SCR_UpdateScreen(void);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
 void SCR_RunConsole(void);
-void SCR_DrawPrecacheScreen(qboolean string);
+void SCR_DrawPrecacheScreen(qboolean string, int percent);
 
 #endif /* CLIENT_SCREEN_H */
