@@ -99,6 +99,8 @@ struct timer {
 	void *data;
 };
 
+static void Schedule_Timer(cvar_t *freq, event_func *func, event_check_func *check, void *data);
+
 /*
 ==============================================================================
 TARGETING FUNCTIONS
@@ -1145,18 +1147,18 @@ void Qcommon_Init (int argc, const char **argv)
 
 #ifndef DEDICATED_ONLY
 	if (!sv_dedicated->integer) {
-		Schedule_Timer(cl_maxfps, &CL_Frame, NULL);
-		Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL);
+		Schedule_Timer(cl_maxfps, &CL_Frame, NULL, NULL);
+		Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL, NULL);
 
 		/* now hide the console */
 		Sys_ShowConsole(qfalse);
 	}
 #endif
 
-	Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, NULL), &SV_Frame, NULL);
+	Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, NULL), &SV_Frame, NULL, NULL);
 
 	/** @todo This line wants to be removed */
-	Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL);
+	Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL, NULL);
 
 	Com_Printf("====== UFO Initialized ======\n");
 	Com_Printf("=============================\n");
@@ -1221,7 +1223,7 @@ static void tick_timer (int now, void *data)
 	Schedule_Event(now + lateness + timer->interval, &tick_timer, NULL, NULL, timer);
 }
 
-void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
+static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *check, void *data)
 {
 	struct timer *timer = (struct timer *)Mem_PoolAlloc(sizeof(*timer), com_genericPool, 0);
 	int i;
@@ -1237,7 +1239,7 @@ void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
 	for (i = 0; i < TIMER_LATENESS_HISTORY; i++)
 		timer->recent_lateness[i] = 0;
 
-	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, NULL, NULL, timer);
+	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, check, NULL, timer);
 }
 
 /**
