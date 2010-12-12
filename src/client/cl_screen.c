@@ -55,8 +55,6 @@ static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
 
 static qboolean screenInitialized = qfalse;/* ready to draw */
 
-static int screenDrawLoading = 0;
-
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
 static cvar_t *scr_rspeed;
@@ -169,7 +167,7 @@ static void SCR_DrawDownloading (void)
  * @brief Draws the current loading pic of the map from base/pics/maps/loading
  * @sa SCR_DrawLoadingBar
  */
-static void SCR_DrawLoading (int percent)
+void SCR_DrawLoading (int percent, const char *loadingMessages)
 {
 	static const image_t* loadingPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
@@ -180,13 +178,10 @@ static void SCR_DrawLoading (int percent)
 		return;
 	}
 
-	if (!screenDrawLoading) {
-		loadingPic = NULL;
-		return;
-	}
-
 	if (!loadingPic)
 		loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
+
+	R_BeginFrame();
 
 	/* center loading screen */
 	R_DrawImage(viddef.virtualWidth / 2 - loadingPic->width / 2, viddef.virtualHeight / 2 - loadingPic->height / 2, loadingPic);
@@ -205,9 +200,11 @@ static void SCR_DrawLoading (int percent)
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2),
 		(int)(viddef.virtualWidth / 2),
-		viddef.virtualWidth, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
+		viddef.virtualWidth, 50, loadingMessages, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, percent);
+
+	R_EndFrame();
 }
 
 /**
@@ -332,9 +329,7 @@ static void SCR_DrawConsole (void)
  */
 void SCR_BeginLoadingPlaque (void)
 {
-	screenDrawLoading = 1;
-
-	SCR_UpdateScreen();
+	SCR_DrawLoading(0, "");
 	cls.disableScreen = CL_Milliseconds();
 }
 
@@ -344,9 +339,6 @@ void SCR_BeginLoadingPlaque (void)
 void SCR_EndLoadingPlaque (void)
 {
 	cls.disableScreen = 0;
-	screenDrawLoading = 0;
-	/* reset the loadingPic pointer */
-	SCR_DrawLoading(0);
 	/* clear any lines of console text */
 	Con_ClearNotify();
 }
@@ -395,6 +387,9 @@ static void SCR_TimeRefresh_f (void)
  */
 void SCR_UpdateScreen (void)
 {
+	if (cls.waitingForStart)
+		return;
+
 	/* if the screen is disabled (loading plaque is up, or vid mode changing)
 	 * do nothing at all */
 	if (cls.disableScreen) {
@@ -411,33 +406,26 @@ void SCR_UpdateScreen (void)
 
 	R_BeginFrame();
 
-	if (cls.state == ca_disconnected && !screenDrawLoading)
-		SCR_EndLoadingPlaque();
+	UI_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
 
-	if (screenDrawLoading)
-		SCR_DrawLoading(cls.loadingPercent);
-	else {
-		UI_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
+	/* draw scene, if it is need */
+	CL_ViewRender();
 
-		/* draw scene, if it is need */
-		CL_ViewRender();
+	/* draw the ui on top of the render view */
+	UI_Draw();
 
-		/* draw the ui on top of the render view */
-		UI_Draw();
+	SCR_DrawConsole();
 
-		SCR_DrawConsole();
-
-		if (cl_fps->integer)
-			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 10, 0, va("fps: %3.1f", cls.framerate));
-		if (scr_rspeed->integer) {
-			if (CL_OnBattlescape())
-				SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80, va("brushes: %6i alias: %6i\n", refdef.brushCount, refdef.aliasCount));
-			else
-				SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount));
-		}
-
-		SCR_DrawCursor();
+	if (cl_fps->integer)
+		SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 10, 0, va("fps: %3.1f", cls.framerate));
+	if (scr_rspeed->integer) {
+		if (CL_OnBattlescape())
+			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80, va("brushes: %6i alias: %6i\n", refdef.brushCount, refdef.aliasCount));
+		else
+			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount));
 	}
+
+	SCR_DrawCursor();
 
 	R_EndFrame();
 }

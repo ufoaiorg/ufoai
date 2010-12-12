@@ -87,9 +87,6 @@ typedef struct client_static_s {
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;			/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */
 
-	float loadingPercent;
-	char loadingMessages[96];
-
 	int currentSelectedMap;	/**< current selected multiplayer or skirmish map */
 
 	char downloadName[MAX_OSPATH];

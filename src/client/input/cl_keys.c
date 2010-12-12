@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_screen.h"
 #include "../cl_console.h"
 #include "../ui/ui_input.h"
 #include "../ui/ui_nodes.h"
@@ -255,10 +254,6 @@ static void Key_Console (int key, int unicode)
 		 * from history buffer in our console */
 		keyLines[editLine][1] = '\0';
 		keyLinePos = 1;
-
-		/* force an update, because the command may take some time */
-		if (cls.state == ca_disconnected)
-			SCR_UpdateScreen();
 
 		return;
 	}

@@ -1118,9 +1118,7 @@ static void CL_SendCommand (void)
 				Com_Error(ERR_DROP, "Server aborted connection - the server didn't response in %is. You can try to increase the cvar cl_connecttimeout",
 						cl_connecttimeout->integer / 1000);
 			} else {
-				Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-					"%s (%i)", _("Awaiting game start"), (CL_Milliseconds() - cls.waitingForStart) / 1000);
-				SCR_UpdateScreen();
+				SCR_DrawLoading(100, va("%s (%i)", _("Awaiting game start"), (CL_Milliseconds() - cls.waitingForStart) / 1000));
 			}
 		}
 		break;

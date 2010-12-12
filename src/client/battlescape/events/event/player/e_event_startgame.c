@@ -64,7 +64,4 @@ void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 	CL_SetClientState(ca_active);
 
 	GAME_StartBattlescape(isTeamPlay);
-
-	/* get rid of loading plaque */
-	SCR_EndLoadingPlaque();
 }

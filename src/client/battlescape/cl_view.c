@@ -47,23 +47,25 @@ void CL_ViewLoadMedia (void)
 {
 	le_t *le;
 	int i, max;
+	float loadingPercent;
+	char loadingMessages[96];
 
 	CL_ViewUpdateRenderData();
 
 	if (CL_GetConfigString(CS_TILES)[0] == '\0')
 		return;					/* no map loaded */
 
-	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading %s"), _(CL_GetConfigString(CS_MAPTITLE)));
-	cls.loadingPercent = 0;
+	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading %s"), _(CL_GetConfigString(CS_MAPTITLE)));
+	loadingPercent = 0;
 
 	/* register models, pics, and skins */
-	SCR_UpdateScreen();
+	SCR_DrawLoading(loadingPercent, loadingMessages);
 	R_ModBeginLoading(CL_GetConfigString(CS_TILES), CL_GetConfigStringInteger(CS_LIGHTMAP), CL_GetConfigString(CS_POSITIONS), CL_GetConfigString(CS_NAME));
 	CL_SpawnParseEntitystring();
 
-	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading models..."));
-	cls.loadingPercent += 10.0f;
-	SCR_UpdateScreen();
+	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading models..."));
+	loadingPercent += 10.0f;
+	SCR_DrawLoading(loadingPercent, loadingMessages);
 
 	LM_Register();
 	CL_ParticleRegisterArt();
@@ -73,15 +75,15 @@ void CL_ViewLoadMedia (void)
 
 	max += csi.numODs;
 
-	for (i = 1; i < MAX_MODELS && CL_GetConfigString(CS_MODELS + i)[0] != '\0'; i++) {
+	for (i = 1; i < MAX_MODELS; i++) {
 		const char *name = CL_GetConfigString(CS_MODELS + i);
+		if (name[0] == '\0')
+			break;
 		/* skip inline bmodels */
 		if (name[0] != '*') {
-			Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-				_("loading %s"), name);
+			Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading %s"), name);
 		}
-		SCR_UpdateScreen();
-		IN_SendKeyEvents();	/* pump message loop */
+		SCR_DrawLoading(loadingPercent, loadingMessages);
 		cl.model_draw[i] = R_RegisterModelShort(name);
 		if (!cl.model_draw[i])
 			Com_Error(ERR_DROP, "Could not load model '%s'\n", name);
@@ -92,7 +94,7 @@ void CL_ViewLoadMedia (void)
 		else
 			cl.model_clip[i] = NULL;
 
-		cls.loadingPercent += 100.0f / (float)max;
+		loadingPercent += 100.0f / (float)max;
 	}
 
 	/* update le model references */
@@ -104,13 +106,14 @@ void CL_ViewLoadMedia (void)
 			le->model2 = LE_GetDrawModel(le->modelnum2);
 	}
 
-	cls.loadingPercent = 100.0f;
-	SCR_UpdateScreen();
+	loadingPercent = 100.0f;
 
 	/* waiting for EV_START */
-	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
-	SCR_UpdateScreen();
+	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("Awaiting game start"));
+	SCR_DrawLoading(loadingPercent, loadingMessages);
 	refdef.ready = qtrue;
+
+	SCR_EndLoadingPlaque();
 }
 
 /**
