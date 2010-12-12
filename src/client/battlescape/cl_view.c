@@ -111,10 +111,6 @@ void CL_ViewLoadMedia (void)
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
 	SCR_UpdateScreen();
 	refdef.ready = qtrue;
-	/** @todo Parse fog from configstrings */
-	refdef.weather = WEATHER_NONE;
-	refdef.fogColor[3] = 1.0;
-	VectorSet(refdef.fogColor, 0.75, 0.75, 0.75);
 }
 
 /**

@@ -231,6 +231,11 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 		Vector4Set(sun.diffuseColor, 0.2, 0.2, 0.3, 1);
 		Vector4Set(sun.specularColor, 0.5, 0.5, 0.7, 1);
 	}
+
+	/** @todo Parse fog from worldspawn config */
+	refdef.weather = WEATHER_NONE;
+	refdef.fogColor[3] = 1.0;
+	VectorSet(refdef.fogColor, 0.75, 0.75, 0.75);
 }
 
 static void SP_misc_model (const localEntityParse_t *entData)
