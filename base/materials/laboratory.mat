@@ -16,6 +16,82 @@
 		lightmap
 	}
 }
+
+/* flare for neon003 light */
+{
+	material tex_lights/neon003
+	{
+		flare 4
+		color 1.0 0.3 0.1
+	}
+}
+
+/* ufo2_07: Panel with 4 Big Buttons */
+{
+	material tex_ufo/ufo2_07
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	/* Black Plate */
+	{
+		texture pt/sk/usk2_07_1_1a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button top left */
+	{
+		texture pt/b/b2_07_0_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button left */
+	{
+		texture pt/b/b2_07_1_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button top right */
+	{
+		texture pt/b/b2_07_2_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button right */
+	{
+		texture pt/b/b2_07_3_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Big button top left animation */
+	{
+		texture pt/b/b2_07_0b0
+		anima 16 1
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Big button bottom left alternating animation */
+	{
+		texture pt/b/b2_07_1a0
+		anima 9 2
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Medium button top right alternating animation */
+	{
+		texture pt/b/b2_07_2b0
+		anima 9 6
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Big button right alternating animation */
+	{
+		texture pt/b/b2_07_3b0
+		anima 9 9
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	{
+		lightmap
+	}
+}
+
 /* ufo2_12: Engines & Powersource (Corrupter & Bomber) */
 {
 	material tex_ufo/ufo2_12
