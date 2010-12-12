@@ -22,14 +22,19 @@ ContentsFlagsValue::ContentsFlagsValue (int surfaceFlags, int contentFlags, int 
 
 void ContentsFlagsValue::assignMasked (const ContentsFlagsValue& other)
 {
-	unsigned int unchangedContentFlags = (m_contentFlags & other.m_contentFlagsDirty);
-	unsigned int changedContentFlags = (other.m_contentFlags & (~other.m_contentFlagsDirty));
-	unsigned int unchangedSurfaceFlags = (m_surfaceFlags & other.m_surfaceFlagsDirty);
-	unsigned int changedSurfaceFlags = (other.m_surfaceFlags & (~other.m_surfaceFlagsDirty));
-	int value = m_value;
+	const unsigned int unchangedContentFlags = (m_contentFlags & other.m_contentFlagsDirty);
+	const unsigned int changedContentFlags = (other.m_contentFlags & (~other.m_contentFlagsDirty));
+	const unsigned int unchangedSurfaceFlags = (m_surfaceFlags & other.m_surfaceFlagsDirty);
+	const unsigned int changedSurfaceFlags = (other.m_surfaceFlags & (~other.m_surfaceFlagsDirty));
+	const int value = m_value;
+
 	*this = other;
+
 	m_contentFlags = unchangedContentFlags | changedContentFlags;
 	m_surfaceFlags = unchangedSurfaceFlags | changedSurfaceFlags;
+
+	// if it's not exactly clear which value should be taken here (multiple components
+	// are selected that have different value settings) we just restore the original one
 	if (m_valueDirty)
 		m_value = value;
 	m_valueDirty = false;
@@ -169,7 +174,7 @@ void ContentsFlagsValue::mergeFlags (ContentsFlagsValue& flags)
 	}
 	setDirty(true);
 	// preserve dirty state, don't mark dirty if we only select one face / first face (value in old flags is 0, own value could differ)
-	if (flags.m_valueDirty || ((getValue() != flags.getValue()) && !flags.m_firstValue)) {
+	if (flags.m_valueDirty || (getValue() != flags.getValue() && !flags.m_firstValue)) {
 		m_valueDirty = true;
 	}
 	m_firstValue = false;

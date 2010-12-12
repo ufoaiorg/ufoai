@@ -85,6 +85,8 @@ class SurfaceInspector: public RegistryKeyObserver,
 		GtkWidget* _texLockButton;
 
 		gtkutil::TextPanel _valueEntryWidget;
+		// if more than one of the selected objects has a value set, this is inconsistent and we can't know which we should take
+		// So in this case we just don't change the old value until we explicitly edit the value entry field
 		bool _valueInconsistent;
 
 		// To avoid key changed loopbacks when the registry is updated
@@ -173,8 +175,6 @@ class SurfaceInspector: public RegistryKeyObserver,
 		// Applies the entered shader to the current selection
 		void emitShader ();
 
-		void applyFlags ();
-
 		void updateFlagButtons ();
 
 		void setFlagsForSelected (const ContentsFlagsValue& flags);
@@ -209,6 +209,12 @@ class SurfaceInspector: public RegistryKeyObserver,
 
 		// The keypress handler for catching the Enter key when in the value entry fields
 		static gboolean onValueKeyPress (GtkWidget* entry, GdkEventKey* event, SurfaceInspector* self);
+
+		// the callback for changing the surface property value like e.g. the light intensity for surface lights
+		static gboolean onValueEntryKeyPress (GtkWindow* window, GdkEventKey* event, SurfaceInspector* self);
+
+		// the callback that changes the value when we focus-out the entry field
+		static gboolean onValueEntryFocusOut (GtkWidget* widget, GdkEventKey* event, SurfaceInspector* self);
 }; // class SurfaceInspector
 
 } // namespace ui

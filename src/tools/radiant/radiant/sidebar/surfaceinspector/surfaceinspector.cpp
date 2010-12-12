@@ -425,6 +425,8 @@ void SurfaceInspector::populateWindow ()
 
 	// Pack the value text entry into the dialog
 	gtk_box_pack_start(GTK_BOX(_dialogVBox), _valueEntryWidget.getWidget(), true, true, 0);
+	g_signal_connect(G_OBJECT(_valueEntryWidget.getWidget()), "key-press-event", G_CALLBACK(onValueEntryKeyPress), this);
+	g_signal_connect(G_OBJECT(_valueEntryWidget.getWidget()), "focus-out-event", G_CALLBACK(onValueEntryFocusOut), this);
 
 	// ======================== Content Flags ====================================
 
@@ -794,9 +796,6 @@ void SurfaceInspector::updateFlagButtons ()
 			const unsigned int stateInconistent = _selectedFlags.getContentFlagsDirty() & (1 << (p - _contentFlags));
 			gtk_toggle_button_set_inconsistent(b, stateInconistent);
 			toggle_button_set_active_no_signal(b, state);
-			if (state && g_object_get_data(G_OBJECT(*p), "valueEnabler") != 0) {
-				enableValueField = true;
-			}
 		}
 	}
 
@@ -810,16 +809,31 @@ void SurfaceInspector::updateFlagButtons ()
 	gtk_widget_set_sensitive(_valueEntryWidget.getWidget(), enableValueField);
 }
 
-void SurfaceInspector::applyFlags ()
+gboolean SurfaceInspector::onValueEntryFocusOut (GtkWidget* widget, GdkEventKey* event, SurfaceInspector* self)
 {
-	_valueInconsistent = false;
-	onApplyFlagsToggle(_valueEntryWidget.getWidget(), this);
+	self->_valueInconsistent = false;
+	onApplyFlagsToggle(widget, self);
+
+	return false;
+}
+
+gboolean SurfaceInspector::onValueEntryKeyPress (GtkWindow* window, GdkEventKey* event, SurfaceInspector* self)
+{
+	// Check for ESC to deselect all items
+	if (event->keyval == GDK_Return) {
+		self->_valueInconsistent = false;
+		onApplyFlagsToggle(self->_valueEntryWidget.getWidget(), self);
+		// Don't propagate the keypress if the Enter could be processed
+		return true;
+	}
+
+	return false;
 }
 
 /**
  * @brief extended callback used to update value field sensitivity based on activation state of button
  * @param widget toggle button activated
- * @param inspector reference to surface inspector
+ * @param self pointer to surface inspector instance
  */
 void SurfaceInspector::onValueToggle (GtkWidget *widget, SurfaceInspector *self)
 {
@@ -847,9 +861,6 @@ void SurfaceInspector::setFlagsForSelected (const ContentsFlagsValue& flags)
  * @brief Sets the flags for all selected faces/brushes
  * @param[in] activatedWidget currently activated widget
  * @param[in] inspector SurfaceInspector which holds the buttons
- * @todo Change this to only update those, that were changed
- * @todo Make sure to set those flags that are not used (and not clickable anymore)
- * are set back to 0
  */
 void SurfaceInspector::onApplyFlagsToggle (GtkWidget *activatedWidget, SurfaceInspector *self)
 {
@@ -869,20 +880,29 @@ void SurfaceInspector::onApplyFlagsToggle (GtkWidget *activatedWidget, SurfaceIn
 			surfaceflags |= bitmask;
 		}
 	}
+
 	unsigned int contentflags = 0;
 	unsigned int contentflagsDirty = 0;
-	for (GtkCheckButton** p = self->_contentFlags; p != self->_contentFlags + 32; ++p) {
-		if (*p == NULL)
-			continue;
-		GtkToggleButton *b = GTK_TOGGLE_BUTTON(*p);
-		unsigned int bitmask = 1 << (p - self->_contentFlags);
-		if (activatedWidget == GTK_WIDGET(b))
-			gtk_toggle_button_set_inconsistent(b, FALSE);
-		if (gtk_toggle_button_get_inconsistent(b)) {
-			contentflagsDirty |= bitmask;
-		}
-		if (gtk_toggle_button_get_active(b)) {
-			contentflags |= bitmask;
+
+	// if we have faces selected, the content flags are not active, that's why we are using the
+	// original content flags here
+	if (self->_selectionInfo.totalCount > 0 && GlobalSelectionSystem().areFacesSelected()) {
+		contentflags = self->_selectedFlags.getContentFlags();
+		contentflagsDirty = self->_selectedFlags.getContentFlagsDirty();
+	} else {
+		for (GtkCheckButton** p = self->_contentFlags; p != self->_contentFlags + 32; ++p) {
+			if (*p == NULL)
+				continue;
+			GtkToggleButton *b = GTK_TOGGLE_BUTTON(*p);
+			unsigned int bitmask = 1 << (p - self->_contentFlags);
+			if (activatedWidget == GTK_WIDGET(b))
+				gtk_toggle_button_set_inconsistent(b, FALSE);
+			if (gtk_toggle_button_get_inconsistent(b)) {
+				contentflagsDirty |= bitmask;
+			}
+			if (gtk_toggle_button_get_active(b)) {
+				contentflags |= bitmask;
+			}
 		}
 	}
 	int value = string::toInt(self->_valueEntryWidget.getValue());
