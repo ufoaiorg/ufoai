@@ -1,0 +1,8 @@
+{
+	material tex_nature/dirt_se05
+	{
+		texture tex_nature/grass
+		terrain 1 3
+		lightmap
+	}
+}
