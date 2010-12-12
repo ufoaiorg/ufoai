@@ -169,7 +169,7 @@ static void SCR_DrawDownloading (void)
  * @brief Draws the current loading pic of the map from base/pics/maps/loading
  * @sa SCR_DrawLoadingBar
  */
-static void SCR_DrawLoading (void)
+static void SCR_DrawLoading (int percent)
 {
 	static const image_t* loadingPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
@@ -207,7 +207,7 @@ static void SCR_DrawLoading (void)
 		(int)(viddef.virtualWidth / 2),
 		viddef.virtualWidth, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
 
-	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.loadingPercent);
+	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, percent);
 }
 
 /**
@@ -345,7 +345,8 @@ void SCR_EndLoadingPlaque (void)
 {
 	cls.disableScreen = 0;
 	screenDrawLoading = 0;
-	SCR_DrawLoading(); /* reset the loadingPic pointer */
+	/* reset the loadingPic pointer */
+	SCR_DrawLoading(0);
 	/* clear any lines of console text */
 	Con_ClearNotify();
 }
@@ -414,7 +415,7 @@ void SCR_UpdateScreen (void)
 		SCR_EndLoadingPlaque();
 
 	if (screenDrawLoading)
-		SCR_DrawLoading();
+		SCR_DrawLoading(cls.loadingPercent);
 	else {
 		UI_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
 
