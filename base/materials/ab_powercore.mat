@@ -75,7 +75,7 @@
 /* Lights and objects
    ------------------ */
 
-# Small light with a glow texture
+# Small alien green light with a glow texture
 {
 	material tex_alienb/ab_light01
 	bump 1.0
