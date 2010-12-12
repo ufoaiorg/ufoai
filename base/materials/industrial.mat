@@ -3,6 +3,17 @@
 	hardness 0.1
 }
 
+/* Rotating fan blades for the ventilation */
+{
+	material tex_base/vent_round
+	{
+		texture tex_base/fan
+		blend GL_SRC_ALPHA GL_ONE
+		rotate 2.0
+		lightmap
+	}
+}
+
 /* ufo1: (Supply Ship) */
 
 /* ufo1_01: Wall with Relief (Supply Ship) */
