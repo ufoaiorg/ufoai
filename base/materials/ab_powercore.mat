@@ -125,3 +125,38 @@
 	specular 1.0
 	hardness 1.0
 }
+
+# Powercore
+{
+	material tex_alienb/ab_powercore
+	bump 2.0
+	parallax 2.0
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_alienb/ab_powercore_pls
+		pulse 0.4
+	}
+}
+
+# Powercore monitoring machines side panel
+{
+	material tex_alienb/ab_obj_d
+	bump 2.0
+	parallax 2.0
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_alienb/ab_obj_d_pls
+		pulse 0.6
+	}
+}
+
+# Powercore monitoring machines with glow bars
+{
+	material tex_alienb/ab_obj_e
+	bump 2.0
+	parallax 2.0
+	specular 1.0
+	hardness 1.0
+}
