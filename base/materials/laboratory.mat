@@ -16,3 +16,23 @@
 		lightmap
 	}
 }
+/* ufo2_12: Engines & Powersource (Corrupter & Bomber) */
+{
+	material tex_ufo/ufo2_12
+	bump 2.0
+	hardness 0.2
+	parallax 1.5
+	specular 1.5
+	/* fx Animation (green/yellow animation #2) */
+	{
+		texture pt/fx/fx2_12_1a0
+		anim 16 18.5
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Additional flare (green) */
+	{
+		flare 2
+		color 0.1 0.7 0.0
+		scale.s 0.7
+	}
+}
