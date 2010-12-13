@@ -271,7 +271,6 @@ item plasblade
 	size			5
 	is_secondary	true
 	thrown			true
-	reload			0
 	oneshot			true
 	deplete			true
 	ammo			1
