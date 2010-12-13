@@ -202,7 +202,7 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 	}
 
 	if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == NULL) {
-		self->owner->use(self->owner, activator);
+		G_UseEdict(self->owner, activator);
 	}
 
 	return qfalse;
@@ -212,7 +212,7 @@ static void Reset_TouchTrigger (edict_t *self, edict_t *activator)
 {
 	/* fire the use function on leaving the trigger area */
 	if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == NULL)
-		self->owner->use(self->owner, activator);
+		G_UseEdict(self->owner, activator);
 }
 
 /**
