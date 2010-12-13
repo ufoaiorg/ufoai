@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../shared/mathlib.h"
 #include "../../shared/defines.h"
+#include "common/polylib.h"
 
 typedef struct brush_texture_s {
 	vec2_t		shift;
@@ -38,13 +39,6 @@ typedef struct brush_texture_s {
 	uint32_t	surfaceFlags;
 	int			value;
 } brush_texture_t;
-
-/** @brief for storing the vertices of the side of a brush or other polygon */
-typedef struct winding_s {
-	int		numpoints;
-	vec3_t	p[4];		/**< variable sized array of points. minimum numpoints is 3,
-						 * but most brushes have rectangular faces, so default is 4.*/
-} winding_t;
 
 typedef struct face_s {
 	struct face_s	*next;		/**< on node */
