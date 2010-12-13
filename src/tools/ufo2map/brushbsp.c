@@ -812,25 +812,17 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 }
 
 /**
- * @brief The incoming list will be freed before exiting
+ * @brief Counts the faces and calculate the aabb
  */
-tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
+static void BrushlistCalcStats (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 {
-	node_t *node;
 	bspbrush_t *b;
-	int c_faces, c_nonvisfaces, c_brushes;
-	tree_t *tree;
-	int i;
-	vec_t volume;
+	int c_faces = 0, c_nonvisfaces = 0, c_brushes = 0;
 
-	Verb_Printf(VERB_EXTRA, "--- BrushBSP ---\n");
-
-	tree = AllocTree();
-
-	c_faces = 0;
-	c_nonvisfaces = 0;
-	c_brushes = 0;
 	for (b = brushlist; b; b = b->next) {
+		int i;
+		vec_t volume;
+
 		c_brushes++;
 
 		volume = BrushVolume(b);
@@ -853,13 +845,33 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 				c_nonvisfaces++;
 		}
 
-		AddPointToBounds(b->mins, tree->mins, tree->maxs);
-		AddPointToBounds(b->maxs, tree->mins, tree->maxs);
+		AddPointToBounds(b->mins, mins, maxs);
+		AddPointToBounds(b->maxs, mins, maxs);
 	}
 
 	Verb_Printf(VERB_EXTRA, "%5i brushes\n", c_brushes);
 	Verb_Printf(VERB_EXTRA, "%5i visible faces\n", c_faces);
 	Verb_Printf(VERB_EXTRA, "%5i nonvisible faces\n", c_nonvisfaces);
+}
+
+
+/**
+ * @brief The incoming list will be freed before exiting
+ */
+tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
+{
+	node_t *node;
+	tree_t *tree;
+	vec3_t blmins, blmaxs;
+
+	Verb_Printf(VERB_EXTRA, "--- BrushBSP ---\n");
+
+	tree = AllocTree();
+
+	ClearBounds(blmins, blmaxs);
+	BrushlistCalcStats(brushlist, blmins, blmaxs);
+	AddPointToBounds(blmins, tree->mins, tree->maxs);
+	AddPointToBounds(blmaxs, tree->mins, tree->maxs);
 
 	c_nodes = 0;
 	c_nonvis = 0;
@@ -870,6 +882,7 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	tree->headnode = node;
 
 	node = BuildTree_r(node, brushlist);
+
 	Verb_Printf(VERB_EXTRA, "%5i visible nodes\n", c_nodes / 2 - c_nonvis);
 	Verb_Printf(VERB_EXTRA, "%5i nonvis nodes\n", c_nonvis);
 	Verb_Printf(VERB_EXTRA, "%5i leafs\n", (c_nodes + 1) / 2);
