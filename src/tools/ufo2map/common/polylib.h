@@ -46,6 +46,7 @@ void WindingBounds(const winding_t *w, vec3_t mins, vec3_t maxs);
 void ChopWindingInPlace(winding_t **w, const vec3_t normal, const vec_t dist, const vec_t epsilon);
 qboolean WindingIsTiny(winding_t *w);
 qboolean WindingIsHuge(const winding_t *w);
+qboolean FixWinding(winding_t *w);
 
 
 #endif /* POLYLIB */
