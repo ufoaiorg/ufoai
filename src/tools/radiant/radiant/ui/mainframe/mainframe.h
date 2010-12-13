@@ -29,6 +29,7 @@
 #include "gtkutil/WindowPosition.h"
 #include "string/string.h"
 #include "iundo.h"
+#include "preferencesystem.h"
 
 #include "iradiant.h"
 
@@ -52,7 +53,7 @@ const int c_count_status = 4;
 
 #include "../../undo/UndoStateTracker.h"
 
-class MainFrame
+class MainFrame : public PreferenceConstructor
 {
 	public:
 		/** @brief The style of the window layout */
@@ -104,6 +105,8 @@ class MainFrame
 		GtkButton *m_toolBtnRedo;
 
 		UndoSaveStateTracker m_saveStateTracker;
+
+		void constructPreferencePage(PreferenceGroup& group);
 
 	public:
 

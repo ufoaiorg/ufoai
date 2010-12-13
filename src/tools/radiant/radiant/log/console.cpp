@@ -30,6 +30,7 @@
 #include "gtkutil/messagebox.h"
 #include "gtkutil/container.h"
 #include "gtkutil/nonmodal.h"
+#include "gtkutil/IConv.h"
 #include "stream/stringstream.h"
 #include "convert.h"
 #include "os/file.h"
@@ -143,15 +144,16 @@ class GtkTextBufferOutputStream: public TextOutputStream
 
 std::size_t Sys_Print (int level, const char* buf, std::size_t length)
 {
+	const std::string str = std::string(buf, length);
 	bool contains_newline = std::find(buf, buf + length, '\n') != buf + length;
 
 	if (level == SYS_ERR) {
 		Sys_LogFile(true);
-		std::cerr << buf;
+		std::cerr << str;
 	} else if (level == SYS_WRN) {
-		std::cerr << buf;
+		std::cerr << str;
 	} else {
-		std::cout << buf;
+		std::cout << str;
 	}
 
 	if (g_hLogFile != 0) {
@@ -197,9 +199,9 @@ std::size_t Sys_Print (int level, const char* buf, std::size_t length)
 				GtkTextBufferOutputStream textBuffer(buffer, &iter, tag);
 				if (!globalCharacterSet().isUTF8()) {
 					BufferedTextOutputStream<GtkTextBufferOutputStream> buffered(textBuffer);
-					buffered << ConvertLocaleToUTF8(StringRange(buf, buf + length));
+					buffered << gtkutil::IConv::localeToUTF8(str);
 				} else {
-					textBuffer << StringRange(buf, buf + length);
+					textBuffer << str;
 				}
 			}
 		}

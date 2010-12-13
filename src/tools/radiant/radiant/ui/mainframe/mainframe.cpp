@@ -59,6 +59,7 @@
 #include "gtkutil/image.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/IconTextMenuToggle.h"
+#include "gtkutil/MultiMonitor.h"
 #include "gtkutil/menu.h"
 
 #include "SplitPaneLayout.h"
@@ -84,6 +85,7 @@
 
 namespace {
 const std::string RKEY_WINDOW_STATE = "user/ui/mainFrame/window";
+const std::string RKEY_MULTIMON_START_MONITOR = "user/ui/multiMonitor/startMonitorNum";
 }
 
 // Virtual file system
@@ -162,6 +164,8 @@ void Radiant_Initialise (void)
 
 	// Initialise the most recently used files list
 	GlobalMRU().loadRecentFiles();
+
+	gtkutil::MultiMonitor::printMonitorInfo();
 }
 
 void Radiant_Shutdown (void)
@@ -401,6 +405,9 @@ MainFrame::MainFrame () :
 	}
 
 	Create();
+
+	// Register this class in the preference system so that the constructPreferencePage() gets called.
+	GlobalPreferenceSystem().addConstructor(this);
 }
 
 MainFrame::~MainFrame (void)
@@ -421,6 +428,27 @@ static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data)
 	}
 
 	return TRUE;
+}
+
+void MainFrame::constructPreferencePage (PreferenceGroup& group)
+{
+	// Add another page for Multi-Monitor stuff
+	PreferencesPage* page(group.createPage(_("Settings"), _("Multi Monitor")));
+
+	// Initialise the registry, if no key is set
+	if (GlobalRegistry().get(RKEY_MULTIMON_START_MONITOR).empty()) {
+		GlobalRegistry().set(RKEY_MULTIMON_START_MONITOR, "0");
+	}
+
+	ComboBoxValueList list;
+
+	for (int i = 0; i < gtkutil::MultiMonitor::getNumMonitors(); ++i) {
+		GdkRectangle rect = gtkutil::MultiMonitor::getMonitor(i);
+
+		list.push_back(string::format("Monitor %d (%dx%d)", i, rect.width, rect.height));
+	}
+
+	page->appendCombo(_("Start UFORadiant on monitor"), RKEY_MULTIMON_START_MONITOR, list);
 }
 
 /**
@@ -497,18 +525,25 @@ void MainFrame::Create (void)
 
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
 
-	int windowState = GDK_WINDOW_STATE_MAXIMIZED;
 
 	// Connect the window position tracker
 	_windowPosition.loadFromPath(RKEY_WINDOW_STATE);
-	windowState = string::toInt(GlobalRegistry().getAttribute(RKEY_WINDOW_STATE, "state"));
 
-	if (windowState & GDK_WINDOW_STATE_MAXIMIZED) {
-		gtk_window_maximize(window);
-	} else {
-		_windowPosition.connect(window);
-		_windowPosition.applyPosition();
+	// Yes, connect the position tracker, this overrides the existing setting.
+	_windowPosition.connect(window);
+
+	int startMonitor = GlobalRegistry().getInt(RKEY_MULTIMON_START_MONITOR);
+	if (startMonitor < gtkutil::MultiMonitor::getNumMonitors()) {
+		// Load the correct coordinates into the position tracker
+		_windowPosition.fitToScreen(gtkutil::MultiMonitor::getMonitor(startMonitor), 0.8f, 0.8f);
 	}
+
+	// Apply the position
+	_windowPosition.applyPosition();
+
+	int windowState = string::toInt(GlobalRegistry().getAttribute(RKEY_WINDOW_STATE, "state"), GDK_WINDOW_STATE_MAXIMIZED);
+	if (windowState & GDK_WINDOW_STATE_MAXIMIZED)
+		gtk_window_maximize(window);
 
 	m_window = window;
 
