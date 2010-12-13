@@ -58,7 +58,7 @@ public:
 private:
 	const std::string m_name;
 	const char** m_atts;
-};
+} __attribute__ ((deprecated));
 
 #include <stdarg.h>
 
@@ -165,41 +165,6 @@ public:
 	void* context() {
 		return this;
 	}
-};
-
-class XMLStreamParser : public XMLExporter {
-	enum unnamed0 { BUFSIZE = 1024 };
-public:
-	XMLStreamParser(TextInputStream& istream)
-			: m_istream(istream) {
-	}
-	virtual void exportXML(XMLImporter& importer) {
-		bool wellFormed = false;
-
-		char chars[BUFSIZE];
-		std::size_t res = m_istream.read(chars, 4);
-		if (res > 0) {
-			XMLSAXImporter sax(importer);
-
-			xmlParserCtxtPtr ctxt = xmlCreatePushParserCtxt(sax.callbacks(), sax.context(), chars, static_cast<int>(res), 0);
-			ctxt->replaceEntities = 1;
-
-			while ((res = m_istream.read(chars, BUFSIZE)) > 0) {
-				xmlParseChunk(ctxt, chars, static_cast<int>(res), 0);
-			}
-			xmlParseChunk(ctxt, chars, 0, 1);
-
-			wellFormed = (ctxt->wellFormed == 1);
-
-			xmlFreeParserCtxt(ctxt);
-		}
-
-		//return wellFormed;
-	}
-private:
-	TextInputStream& m_istream;
-};
-
-
+} __attribute__ ((deprecated));
 
 #endif

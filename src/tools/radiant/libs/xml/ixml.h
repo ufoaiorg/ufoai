@@ -29,7 +29,7 @@ class XMLAttrVisitor {
 public:
 	virtual ~XMLAttrVisitor(){}
 	virtual void visit(const std::string& name, const std::string& value) = 0;
-};
+} __attribute__ ((deprecated));
 
 class XMLElement {
 public:
@@ -37,7 +37,7 @@ public:
 	virtual const std::string name() const = 0;
 	virtual const std::string attribute(const std::string& name) const = 0;
 	virtual void forEachAttribute(XMLAttrVisitor& visitor) const = 0;
-};
+} __attribute__ ((deprecated));
 
 class XMLImporter : public TextOutputStream {
 public:
@@ -45,15 +45,6 @@ public:
 
 	virtual void pushElement(const XMLElement& element) = 0;
 	virtual void popElement(const std::string& name) = 0;
-};
-
-class XMLExporter {
-public:
-	STRING_CONSTANT(Name, "XMLExporter");
-	virtual ~XMLExporter(){}
-
-	virtual void exportXML(XMLImporter& importer) = 0;
-};
-
+} __attribute__ ((deprecated));
 
 #endif

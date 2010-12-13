@@ -124,7 +124,7 @@ class UTF8CharacterToExtendedASCII
 			m_utf8(utf8), m_c(c)
 		{
 		}
-};
+} __attribute__ ((deprecated));
 
 inline bool operator< (const UTF8CharacterToExtendedASCII& self, const UTF8CharacterToExtendedASCII& other)
 {
@@ -203,7 +203,7 @@ class ExtendedASCIICharacterSet
 			ASSERT_MESSAGE(range.first != range.second, "encode: invalid character: " << c);
 			return (*range.first).m_c;
 		}
-};
+} __attribute__ ((deprecated));
 
 typedef LazyStatic<ExtendedASCIICharacterSet> GlobalExtendedASCIICharacterSet;
 
@@ -213,6 +213,7 @@ inline ExtendedASCIICharacterSet& globalExtendedASCIICharacterSet ()
 	return GlobalExtendedASCIICharacterSet::instance();
 }
 
+// deprecated, use gtkutil::IConv class
 class ConvertUTF8ToLocale
 {
 	public:
@@ -225,7 +226,7 @@ class ConvertUTF8ToLocale
 			m_range(range)
 		{
 		}
-};
+} __attribute__ ((deprecated));
 
 /// \brief Writes \p convert to \p ostream after encoding each character to extended-ascii from UTF-8.
 template<typename TextOutputStreamType>
@@ -242,39 +243,6 @@ inline TextOutputStreamType& ostream_write (TextOutputStreamType& ostream, const
 			p += c.length;
 		} else {
 			ostream << *p++;
-		}
-	}
-	return ostream;
-}
-
-class ConvertLocaleToUTF8
-{
-	public:
-		StringRange m_range;
-		ConvertLocaleToUTF8 (const char* string) :
-			m_range(StringRange(string, string + strlen(string)))
-		{
-		}
-		ConvertLocaleToUTF8 (const StringRange& range) :
-			m_range(range)
-		{
-		}
-};
-
-/// \brief Writes \p convert to \p ostream after decoding each character from extended-ascii to UTF-8.
-template<typename TextOutputStreamType>
-inline TextOutputStreamType& ostream_write (TextOutputStreamType& ostream, const ConvertLocaleToUTF8& convert)
-{
-	if (globalCharacterSet().isUTF8()) {
-		return ostream << convert.m_range;
-	}
-
-	for (const char* p = convert.m_range.first; p != convert.m_range.last; ++p) {
-		if (!char_is_ascii(*p)) {
-			UTF8Character c(globalExtendedASCIICharacterSet().decode(*p));
-			ostream.write(c.buffer, c.length);
-		} else {
-			ostream << *p;
 		}
 	}
 	return ostream;

@@ -48,9 +48,6 @@
 
 #include "stream/textfilestream.h"
 #include "container/array.h"
-#include "xml/ixml.h"
-#include "xml/xmlparser.h"
-#include "xml/xmlwriter.h"
 
 #include "preferencedictionary.h"
 #include "stringio.h"
