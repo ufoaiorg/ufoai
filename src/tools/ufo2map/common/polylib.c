@@ -425,3 +425,43 @@ winding_t *ChopWinding (winding_t *in, vec3_t normal, vec_t dist)
 		FreeWinding(b);
 	return f;
 }
+
+#define EDGE_LENGTH 0.2
+/**
+ * @brief Returns true if the winding would be crunched out of existance by the
+ * vertex snapping.
+ */
+qboolean WindingIsTiny (winding_t *w)
+{
+	int i, edges;
+	vec_t len;
+	vec3_t delta;
+
+	edges = 0;
+	for (i = 0; i < w->numpoints; i++) {
+		const int j = ((i == w->numpoints - 1) ? 0 : i) + 1;
+		VectorSubtract(w->p[j], w->p[i], delta);
+		len = VectorLength(delta);
+		if (len > EDGE_LENGTH) {
+			if (++edges == 3)
+				return qfalse;
+		}
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Returns true if the winding still has one of the points from
+ * basewinding for plane
+ */
+qboolean WindingIsHuge (const winding_t *w)
+{
+	int i, j;
+
+	for (i = 0; i < w->numpoints; i++) {
+		for (j = 0; j < 3; j++)
+			if (w->p[i][j] < -MAX_WORLD_WIDTH || w->p[i][j] > MAX_WORLD_WIDTH)
+				return qtrue;
+	}
+	return qfalse;
+}

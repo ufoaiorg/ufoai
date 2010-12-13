@@ -112,17 +112,18 @@ bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, vec3_t cli
 bspbrush_t *ChopBrushes(bspbrush_t *head);
 
 /* brushbsp.c */
-
+#if 0
+#include "bspbrush.h"
+#else
 bspbrush_t *CopyBrush(const bspbrush_t *brush);
 void SplitBrush(const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
 bspbrush_t *AllocBrush(int numsides);
 int	CountBrushList(bspbrush_t *brushes);
 void FreeBrush(bspbrush_t *brushes);
 void FreeBrushList(bspbrush_t *brushes);
-qboolean WindingIsTiny(winding_t *w);
 tree_t *BrushBSP(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
-
+#endif
 /* portals.c */
 
 uint32_t VisibleContents(uint32_t contents);
