@@ -170,19 +170,6 @@ int CountBrushList (bspbrush_t *brushes)
 
 /**
  * @sa AllocBrush
- * @sa AllocNode
- */
-static tree_t *AllocTree (void)
-{
-	tree_t *tree = Mem_AllocType(tree_t);
-
-	ClearBounds(tree->mins, tree->maxs);
-
-	return tree;
-}
-
-/**
- * @sa AllocBrush
  * @sa AllocTree
  */
 static node_t *AllocNode (void)

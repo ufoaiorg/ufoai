@@ -155,6 +155,7 @@ void FreeFace(face_t *f);
 
 /* tree.c */
 
+tree_t *AllocTree(void);
 void FreeTree(tree_t *tree);
 
 /* trace.c */

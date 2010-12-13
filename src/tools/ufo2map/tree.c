@@ -76,6 +76,19 @@ static void FreeTree_r (node_t *node)
 }
 
 
+/**
+ * @brief Allocates a tree and initializes it
+ */
+tree_t *AllocTree (void)
+{
+	tree_t *tree = Mem_AllocType(tree_t);
+
+	ClearBounds(tree->mins, tree->maxs);
+
+	return tree;
+}
+
+
 void FreeTree (tree_t *tree)
 {
 	FreeTreePortals_r(tree->headnode);
