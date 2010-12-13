@@ -1648,6 +1648,8 @@ void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipo
 		FS_CloseFile(&f);
 	}
 }
+
+#ifdef DEBUG
 /**
  * @brief A debug function to be called from CL_DebugPath_f
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
@@ -1677,3 +1679,4 @@ int RT_DebugSpecial (mapTiles_t *mapTiles, routing_t * map, const int actorSize,
 	new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
 	return new_z;
 }
+#endif
