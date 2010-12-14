@@ -40,7 +40,6 @@ void FreeBrush(bspbrush_t *brushes);
 void FreeBrushList(bspbrush_t *brushes);
 node_t *BuildTree_r(node_t *node, bspbrush_t *brushes);
 void BrushlistCalcStats(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
-tree_t *BuildTree(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
 
 #endif /* UFO2MAP_BSPBRUSH_H */

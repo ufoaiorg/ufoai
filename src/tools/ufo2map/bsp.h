@@ -67,6 +67,10 @@ typedef struct node_s {
 	struct portal_s	*portals;	/**< also on nodes during construction */
 } node_t;
 
+/* bspbrush.h still needs node_t */
+
+#include "bspbrush.h"
+
 typedef struct {
 	struct node_s		*headnode;
 	struct node_s		outside_node;
@@ -111,22 +115,6 @@ int MapBrushesBounds(const int startbrush, const int endbrush, const int level, 
 bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs);
 bspbrush_t *ChopBrushes(bspbrush_t *head);
 
-/* brushbsp.c */
-#if 0
-#include "bspbrush.h"
-#else
-bspbrush_t *BrushFromBounds(vec3_t mins, vec3_t maxs);
-bspbrush_t *CopyBrush(const bspbrush_t *brush);
-void SplitBrush(const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
-bspbrush_t *AllocBrush(int numsides);
-int	CountBrushList(bspbrush_t *brushes);
-void FreeBrush(bspbrush_t *brushes);
-void FreeBrushList(bspbrush_t *brushes);
-node_t *BuildTree_r(node_t *node, bspbrush_t *brushes);
-void BrushlistCalcStats(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
-tree_t *BuildTree(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
-void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
-#endif
 /* portals.c */
 
 uint32_t VisibleContents(uint32_t contents);
@@ -160,6 +148,7 @@ void FreeFace(face_t *f);
 
 node_t *AllocNode(void);
 tree_t *AllocTree(void);
+tree_t *BuildTree(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 void FreeTree(tree_t *tree);
 
 /* trace.c */
