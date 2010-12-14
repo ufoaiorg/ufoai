@@ -404,10 +404,10 @@ MainFrame::MainFrame () :
 		m_pStatusLabel[n] = 0;
 	}
 
-	Create();
-
 	// Register this class in the preference system so that the constructPreferencePage() gets called.
 	GlobalPreferenceSystem().addConstructor(this);
+
+	Create();
 }
 
 MainFrame::~MainFrame (void)
@@ -433,7 +433,7 @@ static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data)
 void MainFrame::constructPreferencePage (PreferenceGroup& group)
 {
 	// Add another page for Multi-Monitor stuff
-	PreferencesPage* page(group.createPage(_("Settings"), _("Multi Monitor")));
+	PreferencesPage* page(group.createPage(_("Display"), _("Multi Monitor")));
 
 	// Initialise the registry, if no key is set
 	if (GlobalRegistry().get(RKEY_MULTIMON_START_MONITOR).empty()) {
