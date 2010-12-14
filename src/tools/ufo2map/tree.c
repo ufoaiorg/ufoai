@@ -106,6 +106,56 @@ void FreeTree (tree_t *tree)
 	Mem_Free(tree);
 }
 
+
+static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
+{
+	node_t *newnode;
+	side_t *bestside;
+	int i;
+	bspbrush_t *children[2];
+
+	if (threadstate.numthreads == 1)
+		c_nodes++;
+
+	/* find the best plane to use as a splitter */
+	bestside = SelectSplitSide(brushes, node);
+	if (!bestside) {
+		/* leaf node */
+		node->side = NULL;
+		node->planenum = PLANENUM_LEAF;
+		LeafNode(node, brushes);
+		Verb_Printf(VERB_DUMP, "BuildTree_r: Created a leaf node.\n");
+		return node;
+	}
+
+	Verb_Printf(VERB_DUMP, "BuildTree_r: splitting along plane %i\n", bestside->planenum);
+
+	/* this is a splitplane node */
+	node->side = bestside;
+	assert(bestside->planenum < MAX_MAP_PLANES);
+	node->planenum = bestside->planenum & ~1;	/* always use front facing */
+
+	SplitBrushList(brushes, node, &children[0], &children[1]);
+	FreeBrushList(brushes);
+
+	/* allocate children before recursing */
+	for (i = 0; i < 2; i++) {
+		newnode = AllocNode();
+		newnode->parent = node;
+		node->children[i] = newnode;
+	}
+
+	SplitBrush(node->volume, node->planenum, &node->children[0]->volume,
+		&node->children[1]->volume);
+
+	/* recursively process children */
+	for (i = 0; i < 2; i++) {
+		node->children[i] = BuildTree_r(node->children[i], children[i]);
+	}
+
+	return node;
+}
+
 /**
  * @brief The incoming list will be freed before exiting
  */

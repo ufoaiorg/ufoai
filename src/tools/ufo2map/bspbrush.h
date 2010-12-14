@@ -33,13 +33,15 @@ typedef struct bspbrush_s bspbrush_t;
 
 bspbrush_t *BrushFromBounds(vec3_t mins, vec3_t maxs);
 bspbrush_t *CopyBrush(const bspbrush_t *brush);
+side_t *SelectSplitSide(bspbrush_t *brushes, node_t *node);
+void SplitBrushList(bspbrush_t *brushes, node_t *node, bspbrush_t **front, bspbrush_t **back);
 void SplitBrush(const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
 bspbrush_t *AllocBrush(int numsides);
 int	CountBrushList(bspbrush_t *brushes);
 void FreeBrush(bspbrush_t *brushes);
 void FreeBrushList(bspbrush_t *brushes);
-node_t *BuildTree_r(node_t *node, bspbrush_t *brushes);
 void BrushlistCalcStats(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
+void LeafNode(node_t *node, bspbrush_t *brushes);
 
 #endif /* UFO2MAP_BSPBRUSH_H */

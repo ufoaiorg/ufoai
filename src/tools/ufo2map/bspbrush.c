@@ -308,7 +308,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	return s;
 }
 
-static void LeafNode (node_t *node, bspbrush_t *brushes)
+void LeafNode (node_t *node, bspbrush_t *brushes)
 {
 	bspbrush_t *b;
 	int i;
@@ -370,7 +370,7 @@ static qboolean CheckPlaneAgainstVolume (int pnum, node_t *node)
  * to partition the brushes with.
  * @return NULL if there are no valid planes to split with..
  */
-static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
+side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 {
 	int value, bestvalue;
 	bspbrush_t *brush, *test;
@@ -684,7 +684,7 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 	*back = b[1];
 }
 
-static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **front, bspbrush_t **back)
+void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *brush, *newbrush, *newbrush2;
 	side_t *side;
@@ -739,55 +739,6 @@ static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **fron
 	}
 }
 
-
-node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
-{
-	node_t *newnode;
-	side_t *bestside;
-	int i;
-	bspbrush_t *children[2];
-
-	if (threadstate.numthreads == 1)
-		c_nodes++;
-
-	/* find the best plane to use as a splitter */
-	bestside = SelectSplitSide(brushes, node);
-	if (!bestside) {
-		/* leaf node */
-		node->side = NULL;
-		node->planenum = PLANENUM_LEAF;
-		LeafNode(node, brushes);
-		Verb_Printf(VERB_DUMP, "BuildTree_r: Created a leaf node.\n");
-		return node;
-	}
-
-	Verb_Printf(VERB_DUMP, "BuildTree_r: splitting along plane %i\n", bestside->planenum);
-
-	/* this is a splitplane node */
-	node->side = bestside;
-	assert(bestside->planenum < MAX_MAP_PLANES);
-	node->planenum = bestside->planenum & ~1;	/* always use front facing */
-
-	SplitBrushList(brushes, node, &children[0], &children[1]);
-	FreeBrushList(brushes);
-
-	/* allocate children before recursing */
-	for (i = 0; i < 2; i++) {
-		newnode = AllocNode();
-		newnode->parent = node;
-		node->children[i] = newnode;
-	}
-
-	SplitBrush(node->volume, node->planenum, &node->children[0]->volume,
-		&node->children[1]->volume);
-
-	/* recursively process children */
-	for (i = 0; i < 2; i++) {
-		node->children[i] = BuildTree_r(node->children[i], children[i]);
-	}
-
-	return node;
-}
 
 /**
  * @brief Counts the faces and calculate the aabb
