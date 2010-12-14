@@ -25,11 +25,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef UFO2MAP_BSPBRUSH_H
 #define UFO2MAP_BSPBRUSH_H
 
-#include "../../shared/ufotypes.h"	/* for qboolean */
-/* the code is not yet ready for this
+#include "../../shared/mathlib.h"	/* for vec3_t */
+
+#if 0
+/* the code is not yet ready for this */
 struct bspbrush_s;
 typedef struct bspbrush_s bspbrush_t;
-*/
+#else
+typedef struct bspbrush_s {
+	struct bspbrush_s	*next;
+	vec3_t	mins, maxs;
+	int		side, testside;		/**< side of node during construction */
+	struct mapbrush_s	*original;
+	int		numsides;
+	side_t	sides[6];			/**< variably sized */
+} bspbrush_t;
+#endif
 
 bspbrush_t *BrushFromBounds(vec3_t mins, vec3_t maxs);
 bspbrush_t *CopyBrush(const bspbrush_t *brush);

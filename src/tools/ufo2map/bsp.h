@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <assert.h>
 
 #include "map.h"
+#include "bspbrush.h"
 
 #include "common/shared.h"
 #include "common/scriplib.h"
@@ -39,14 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern dMapTile_t *curTile;
 extern mapTiles_t mapTiles;
 
-typedef struct bspbrush_s {
-	struct bspbrush_s	*next;
-	vec3_t	mins, maxs;
-	int		side, testside;		/**< side of node during construction */
-	struct mapbrush_s	*original;
-	int		numsides;
-	side_t	sides[6];			/**< variably sized */
-} bspbrush_t;
 
 typedef struct node_s {
 	/** both leafs and nodes */
@@ -66,10 +59,6 @@ typedef struct node_s {
 	int				area;		/**< for areaportals - @todo not used, remove it when we change the bsp version the next time */
 	struct portal_s	*portals;	/**< also on nodes during construction */
 } node_t;
-
-/* bspbrush.h still needs node_t */
-
-#include "bspbrush.h"
 
 typedef struct {
 	struct node_s		*headnode;

@@ -61,14 +61,14 @@ typedef struct face_s {
 typedef struct side_s {
 	int			planenum;
 	int			texinfo;
-	struct winding_s	*winding;
+	winding_t	*winding;
 	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
 	uint32_t	contentFlags;	/**< from miptex */
 	uint32_t	surfaceFlags;	/**< from miptex */
 	qboolean	visible;		/**< choose visible planes first */
 	qboolean	tested;			/**< this plane already checked as a split */
 	qboolean	bevel;			/**< don't ever use for bsp splitting */
-	qboolean	isCompositeMember; /**< forms a side with sides from other brushes @sa Check_FindCompositeSides */
+	qboolean	isCompositeMember;	/**< forms a side with sides from other brushes @sa Check_FindCompositeSides */
 
 	struct mapbrush_s *brush;		/**< backlink to the brush this side belongs to */
 } side_t;
@@ -77,7 +77,7 @@ typedef struct mapbrush_s {
 	int		entitynum;		/**< the entity number in the map - 0 is the world - everything else is a bmodel */
 	int		brushnum;		/**< the brush number in the map */
 
-	uint32_t		contentFlags;
+	uint32_t	contentFlags;
 
 	vec3_t	mins, maxs;
 
