@@ -139,7 +139,7 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 		c_nodes++;
 
 	/* find the best plane to use as a splitter */
-	bestside = SelectSplitSide(brushes, node);
+	bestside = SelectSplitSide(brushes, node->volume);
 	if (!bestside) {
 		/* leaf node */
 		LeafNode(node, brushes);

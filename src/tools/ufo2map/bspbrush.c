@@ -357,7 +357,7 @@ static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
  * to partition the brushes with.
  * @return NULL if there are no valid planes to split with..
  */
-side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
+side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 {
 	int value, bestvalue;
 	bspbrush_t *brush, *test;
@@ -403,7 +403,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				pnum = side->planenum;
 				pnum &= ~1;	/* always use positive facing plane */
 
-				if (!CheckPlaneAgainstVolume(pnum, node->volume))
+				if (!CheckPlaneAgainstVolume(pnum, volume))
 					continue;	/* would produce a tiny volume */
 
 				front = 0;

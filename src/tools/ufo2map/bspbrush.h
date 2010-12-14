@@ -33,7 +33,7 @@ typedef struct bspbrush_s bspbrush_t;
 
 bspbrush_t *BrushFromBounds(vec3_t mins, vec3_t maxs);
 bspbrush_t *CopyBrush(const bspbrush_t *brush);
-side_t *SelectSplitSide(bspbrush_t *brushes, node_t *node);
+side_t *SelectSplitSide(bspbrush_t *brushes, bspbrush_t *volume);
 void SplitBrushList(bspbrush_t *brushes, int planenum, bspbrush_t **front, bspbrush_t **back);
 void SplitBrush(const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
 bspbrush_t *AllocBrush(int numsides);
