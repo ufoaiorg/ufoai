@@ -15,6 +15,7 @@
 	{
 		texture tex_alienb/ab_floor01_pls
 		pulse 0.1
+		glowmaplink
 	}
 }
 {
@@ -26,6 +27,7 @@
 	{
 		texture tex_alienb/ab_floor02_pls
 		pulse 0.1
+		glowmaplink
 	}
 }
 

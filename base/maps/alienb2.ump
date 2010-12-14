@@ -1,0 +1,47 @@
+// *********************************
+// New Alien base THEME
+// *********************************
+
+
+// Tile Definitions
+// ----------------
+base alienb2/ab_		// Prefix for each tile's .map file including path from /maps/
+
+
+// Power core
+tile +powercore
+{
+	6 4
+
+	0		a		a		a		x		0
+	x		+x		+a		+a		+x		a
+	a		+a		+a		+a		+x		a
+	0		a		a		a		x		0
+}
+
+
+// Hallway, Vertical
+// Entrances: top/btm, no horizontal entrances
+// Has an empty space on its left tile (hall takes up only right tile)
+tile +hall_v1
+{
+	4 4
+
+	0		a		x		0
+	a		+a		+x		a
+	a		+a		+x		a
+	0		a		x		0
+}
+
+
+// Assembly definitions
+// --------------------
+
+assembly test
+{
+	size "4 4"
+
+	// Far left street going all the way up
+	fix +powercore "0 2"
+	fix +hall_v1 "2 0"
+}
