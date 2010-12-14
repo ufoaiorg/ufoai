@@ -348,12 +348,12 @@ static void CheckPlaneAgainstParents (int pnum, const node_t *node)
 	}
 }
 
-static qboolean CheckPlaneAgainstVolume (int pnum, node_t *node)
+static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
 {
 	bspbrush_t *front, *back;
 	qboolean good;
 
-	SplitBrush(node->volume, pnum, &front, &back);
+	SplitBrush(volume, pnum, &front, &back);
 
 	good = (front && back);
 
@@ -418,7 +418,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 				CheckPlaneAgainstParents(pnum, node);
 
-				if (!CheckPlaneAgainstVolume(pnum, node))
+				if (!CheckPlaneAgainstVolume(pnum, node->volume))
 					continue;	/* would produce a tiny volume */
 
 				front = 0;
@@ -684,7 +684,7 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 	*back = b[1];
 }
 
-void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **front, bspbrush_t **back)
+void SplitBrushList (bspbrush_t *brushes, int planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *brush, *newbrush, *newbrush2;
 	side_t *side;
@@ -696,7 +696,7 @@ void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **front, bspb
 		sides = brush->side;
 
 		if (sides == PSIDE_BOTH) {	/* split into two brushes */
-			SplitBrush(brush, node->planenum, &newbrush, &newbrush2);
+			SplitBrush(brush, planenum, &newbrush, &newbrush2);
 			if (newbrush) {
 				newbrush->next = *front;
 				Verb_Printf(VERB_DUMP, "SplitBrushList: Adding brush %i to front list.\n", newbrush->original->brushnum);
@@ -718,7 +718,7 @@ void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **front, bspb
 		if (sides & PSIDE_FACING) {
 			for (i = 0; i < newbrush->numsides; i++) {
 				side = newbrush->sides + i;
-				if ((side->planenum & ~1) == node->planenum)
+				if ((side->planenum & ~1) == planenum)
 					side->texinfo = TEXINFO_NODE;
 			}
 		}

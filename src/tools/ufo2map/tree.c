@@ -135,7 +135,7 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	assert(bestside->planenum < MAX_MAP_PLANES);
 	node->planenum = bestside->planenum & ~1;	/* always use front facing */
 
-	SplitBrushList(brushes, node, &children[0], &children[1]);
+	SplitBrushList(brushes, node->planenum, &children[0], &children[1]);
 	FreeBrushList(brushes);
 
 	/* allocate children before recursing */
