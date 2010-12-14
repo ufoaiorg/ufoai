@@ -121,7 +121,7 @@ bspbrush_t *AllocBrush(int numsides);
 int	CountBrushList(bspbrush_t *brushes);
 void FreeBrush(bspbrush_t *brushes);
 void FreeBrushList(bspbrush_t *brushes);
-tree_t *BrushBSP(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
+tree_t *BuildTree(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
 #endif
 /* portals.c */

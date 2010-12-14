@@ -84,7 +84,7 @@ static void ProcessSubModel (int entityNum)
 	list = MakeBspBrushList(start, end, -1, mins, maxs);
 	if (!config.nocsg)
 		list = ChopBrushes(list);
-	tree = BrushBSP(list, mins, maxs);
+	tree = BuildTree(list, mins, maxs);
 	assert(tree);
 	assert(tree->headnode);
 	if (tree->headnode->planenum == PLANENUM_LEAF)

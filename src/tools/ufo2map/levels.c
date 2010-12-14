@@ -196,7 +196,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 		list = ChopBrushes(list);
 
 	/* begin model creation now */
-	tree = BrushBSP(list, bmins, bmaxs);
+	tree = BuildTree(list, bmins, bmaxs);
 	MakeTreePortals(tree);
 	MarkVisibleSides(tree, brush_start, brush_end);
 	MakeFaces(tree->headnode);

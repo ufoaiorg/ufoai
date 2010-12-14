@@ -845,7 +845,7 @@ static void BrushlistCalcStats (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 /**
  * @brief The incoming list will be freed before exiting
  */
-tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
+tree_t *BuildTree (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 {
 	node_t *node;
 	tree_t *tree;
