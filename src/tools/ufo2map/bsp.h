@@ -139,22 +139,12 @@ node_t *AllocNode(void);
 tree_t *AllocTree(void);
 tree_t *BuildTree(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 void FreeTree(tree_t *tree);
+void PruneNodes(node_t *node);
 
 /* trace.c */
 
 void MakeTracingNodes(int levels);
 void CloseTracingNodes(void);
-
-/* levels.c */
-
-extern const vec3_t v_epsilon;
-extern vec3_t worldMins, worldMaxs;
-
-void PushInfo(void);
-void PopInfo(void);
-void ProcessLevelEntityNumber(int entityNumber);
-void ProcessLevel(unsigned int levelnum);
-void PruneNodes(node_t *node);
 
 /* routing.c */
 

@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "bsp.h"
+#include "levels.h"
 #include "map.h"
 
 /**
@@ -41,7 +42,7 @@ static void ProcessWorldModel (int entityNumber)
 	brush_start = e->firstbrush;
 	brush_end = brush_start + e->numbrushes;
 
-	ClearBounds(worldMins, worldMaxs);
+	ClearWorldBounds();
 
 	/* This is set so the Emit* functions in writebsp.c work correctly. */
 	curTile->nummodels = NUM_REGULAR_MODELS;

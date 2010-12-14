@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "bsp.h"
 #include "../../common/routing.h"
+#include "levels.h"
 
 static const vec3_t move_vec[4] = {
 	{ UNIT_SIZE,          0, 0},

@@ -187,6 +187,7 @@
 		<Unit filename="..\..\src\tools\ufo2map\levels.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\levels.h" />
 		<Unit filename="..\..\src\tools\ufo2map\lighting.c">
 			<Option compilerVar="CC" />
 		</Unit>
