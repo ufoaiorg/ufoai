@@ -146,6 +146,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
+		<Unit filename="..\..\src\tools\ufo2map\bspbrush.h" />
 		<Unit filename="..\..\src\tools\ufo2map\check\check.c">
 			<Option compilerVar="CC" />
 		</Unit>
