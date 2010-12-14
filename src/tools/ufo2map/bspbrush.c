@@ -335,16 +335,6 @@ uint32_t BrushListCalcContents (bspbrush_t *brushlist)
 	return contentFlags;
 }
 
-static void CheckPlaneAgainstParents (int pnum, const node_t *node)
-{
-	node_t *p;
-
-	for (p = node->parent; p; p = p->parent) {
-		if (p->planenum == pnum)
-			Sys_Error("Tried parent");
-	}
-}
-
 static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
 {
 	bspbrush_t *front, *back;
@@ -412,8 +402,6 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 				pnum = side->planenum;
 				pnum &= ~1;	/* always use positive facing plane */
-
-				CheckPlaneAgainstParents(pnum, node);
 
 				if (!CheckPlaneAgainstVolume(pnum, node->volume))
 					continue;	/* would produce a tiny volume */

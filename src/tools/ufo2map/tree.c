@@ -107,6 +107,16 @@ void FreeTree (tree_t *tree)
 }
 
 
+static void CheckPlaneAgainstParents (int pnum, const node_t *node)
+{
+	node_t *p;
+
+	for (p = node->parent; p; p = p->parent) {
+		if (p->planenum == pnum)
+			Sys_Error("Tried parent");
+	}
+}
+
 static void LeafNode (node_t *node, bspbrush_t *brushes)
 {
 	node->side = NULL;
@@ -136,6 +146,8 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 		Verb_Printf(VERB_DUMP, "BuildTree_r: Created a leaf node.\n");
 		return node;
 	}
+	/* make sure the selected plane hasn't been used before. */
+	CheckPlaneAgainstParents(bestside->planenum, node);
 
 	Verb_Printf(VERB_DUMP, "BuildTree_r: splitting along plane %i\n", bestside->planenum);
 
