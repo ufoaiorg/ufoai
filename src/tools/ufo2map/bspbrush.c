@@ -308,32 +308,41 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	return s;
 }
 
-void LeafNode (node_t *node, bspbrush_t *brushes)
+/**
+ * @brief Collects the contentsflags of the brushes in the given list
+ */
+uint32_t BrushListCalcContents (bspbrush_t *brushlist)
 {
 	bspbrush_t *b;
-	int i;
+	uint32_t contentFlags = 0;
 
-	node->planenum = PLANENUM_LEAF;
-	node->contentFlags = 0;
-
-	Verb_Printf(VERB_DUMP, "LeafNode: scanning brushes.\n");
-
-	for (b = brushes; b; b = b->next) {
+	for (b = brushlist; b; b = b->next) {
 		Verb_Printf(VERB_DUMP, "LeafNode: scanning brush %i\n", b->original->brushnum);
 		/* if the brush is solid and all of its sides are on nodes,
 		 * it eats everything */
 		if (b->original->contentFlags & CONTENTS_SOLID && !(b->original->contentFlags & CONTENTS_PASSABLE)) {
+			int i;
 			for (i = 0; i < b->numsides; i++)
 				if (b->sides[i].texinfo != TEXINFO_NODE)
 					break;
 			if (i == b->numsides) {
-				node->contentFlags = CONTENTS_SOLID;
+				contentFlags = CONTENTS_SOLID;
 				break;
 			}
 		}
-		node->contentFlags |= b->original->contentFlags;
+		contentFlags |= b->original->contentFlags;
 	}
 
+	return contentFlags;
+}
+
+void LeafNode (node_t *node, bspbrush_t *brushes)
+{
+	node->planenum = PLANENUM_LEAF;
+
+	Verb_Printf(VERB_DUMP, "LeafNode: scanning brushes.\n");
+
+	node->contentFlags = BrushListCalcContents(brushes);
 	node->brushlist = brushes;
 }
 
