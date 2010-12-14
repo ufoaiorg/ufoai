@@ -5899,6 +5899,8 @@ base/textures/tex_material/red_gray.png | GNU General Public License 2.0 or late
 base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/window_grey.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/wood002.png | GNU General Public License 2.0 | Nexuiz GPLed Data; MCR
+base/textures/tex_material/wood002_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data; MCR
 base/textures/tex_material/wood004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art002.png | GNU General Public License 2.0 or later | Martin Gerhardy
