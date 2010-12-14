@@ -1162,7 +1162,7 @@ base/models/objects/alien/wormhole/wormhole_low.md2 | GNU General Public License
 base/models/objects/alien/wormhole/wormhole_mid.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
 base/models/objects/alien/wormhole/wormhole_nm.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
 base/models/objects/barrel/barrel.jpg | GNU General Public License 2.0 or later | Nate Wright
-base/models/objects/barrel/barrel.md2 | GNU General Public License 2.0 | Martin Gerhardy | Worldforge GPLed data
+base/models/objects/barrel/barrel.md2 | GNU General Public License 2.0 | Martin Gerhardy | Worldforge GPLed Data
 base/models/objects/barrel/barrel2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/barrel/barrel2_1.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/barrel/barrel2_2.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -3500,7 +3500,7 @@ base/sound/ambience/alienbase-bubbles.ogg | Creative Commons Attribution-Share A
 base/sound/ambience/bloodspiderwalk.ogg | Creative Commons Attribution 3.0 | Gren | http://wiki.creativecommons.org/File:BloodSpiderWalk.ogg
 base/sound/ambience/city_abnd_ufoai_atm.ogg | GNU General Public License 2.0 or later | Axis REC
 base/sound/ambience/creak.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/cricket_loop.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/cricket_loop.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed Data
 base/sound/ambience/disco-outdoor.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/disco.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/droning_long.ogg | GNU General Public License 2.0 | Karen Rei Pease
@@ -3510,20 +3510,20 @@ base/sound/ambience/fire03.ogg | Creative Commons Attribution-Share Alike 3.0 Un
 base/sound/ambience/fire04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/ambience/fire05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/ambience/fire06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
-base/sound/ambience/fire1.ogg | GNU General Public License 2.0 | OpenArena | Openarena GPLed data
-base/sound/ambience/fire2.ogg | GNU General Public License 2.0 | OpenArena | Openarena GPLed data
-base/sound/ambience/firesoft.ogg | GNU General Public License 2.0 | OpenArena | Openarena GPLed data
+base/sound/ambience/fire1.ogg | GNU General Public License 2.0 | OpenArena | Openarena GPLed Data
+base/sound/ambience/fire2.ogg | GNU General Public License 2.0 | OpenArena | Openarena GPLed Data
+base/sound/ambience/firesoft.ogg | GNU General Public License 2.0 | OpenArena | Openarena GPLed Data
 base/sound/ambience/hum.ogg | GNU General Public License 2.0 or later | Max Neave
 base/sound/ambience/hum2.ogg | GNU General Public License 2.0 or later | Max Neave
 base/sound/ambience/jingle.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/jingle2.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/lights_loop.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/ambience/machine1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/lights_loop.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed Data
+base/sound/ambience/machine1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed Data
 base/sound/ambience/minepump03.ogg | Creative Commons Attribution 3.0 | Gren | http://wiki.creativecommons.org/File:MinePump03.ogg
-base/sound/ambience/radiomessage.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/radiomessage.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed Data
 base/sound/ambience/sand-city.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/smallfire.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/ambience/sparks.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
+base/sound/ambience/sparks.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
 base/sound/ambience/sparks_short.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | sparks.ogg
 base/sound/ambience/steam.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | http://www.pdsounds.org/sounds/tram_doors_open_and_close_hiss_and_beeping
 base/sound/ambience/thunder1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3532,7 +3532,7 @@ base/sound/ambience/thunder3.ogg | Creative Commons Attribution-Share Alike 3.0 
 base/sound/ambience/tv_newswav.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/tv_static.ogg | Creative Commons Sampling Plus 1.0 | Gaiamuse | http://www.freesound.org/samplesViewSingle.php?id=50500
 base/sound/ambience/ufo_night_atm.ogg | GNU General Public License 2.0 or later | Axis REC
-base/sound/ambience/water.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
+base/sound/ambience/water.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
 base/sound/ambience/water01.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/water02.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/water03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
@@ -3590,9 +3590,9 @@ base/sound/footsteps/gravel1.ogg | Creative Commons Attribution-Share Alike 3.0 
 base/sound/footsteps/gravel2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/gravel3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/gravel4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/footsteps/hitground2.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
-base/sound/footsteps/hitground3.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
-base/sound/footsteps/hitground4.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
+base/sound/footsteps/hitground2.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
+base/sound/footsteps/hitground3.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
+base/sound/footsteps/hitground4.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
 base/sound/footsteps/linoleum.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | footsteps_linoleum1.ogg by David Reeves
 base/sound/footsteps/mech1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/mech2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
