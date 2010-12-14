@@ -24,7 +24,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "bsp.h"
 
-extern int c_nodes;
+int c_nodes;
+int c_nonvis;
+
+/**
+ * @sa AllocBrush
+ * @sa AllocTree
+ */
+node_t *AllocNode (void)
+{
+	return Mem_AllocType(node_t);
+}
 
 static void FreeTreePortals_r (node_t *node)
 {
@@ -94,6 +104,40 @@ void FreeTree (tree_t *tree)
 	FreeTreePortals_r(tree->headnode);
 	FreeTree_r(tree->headnode);
 	Mem_Free(tree);
+}
+
+/**
+ * @brief The incoming list will be freed before exiting
+ */
+tree_t *BuildTree (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
+{
+	node_t *node;
+	tree_t *tree;
+	vec3_t blmins, blmaxs;
+
+	Verb_Printf(VERB_EXTRA, "--- BrushBSP ---\n");
+
+	tree = AllocTree();
+
+	ClearBounds(blmins, blmaxs);
+	BrushlistCalcStats(brushlist, blmins, blmaxs);
+	AddPointToBounds(blmins, tree->mins, tree->maxs);
+	AddPointToBounds(blmaxs, tree->mins, tree->maxs);
+
+	c_nodes = 0;
+	c_nonvis = 0;
+	node = AllocNode();
+
+	node->volume = BrushFromBounds(mins, maxs);
+
+	tree->headnode = node;
+
+	node = BuildTree_r(node, brushlist);
+
+	Verb_Printf(VERB_EXTRA, "%5i visible nodes\n", c_nodes / 2 - c_nonvis);
+	Verb_Printf(VERB_EXTRA, "%5i nonvis nodes\n", c_nonvis);
+	Verb_Printf(VERB_EXTRA, "%5i leafs\n", (c_nodes + 1) / 2);
+	return tree;
 }
 
 /*=========================================================

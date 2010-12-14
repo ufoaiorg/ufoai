@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bsp.h"
 #include "map.h"
 
-int c_nodes;
-static int c_nonvis;
+extern int c_nodes;
+extern int c_nonvis;
 static int c_active_brushes;
 
 
@@ -90,7 +90,7 @@ static void CreateBrushWindings (bspbrush_t *brush)
 /**
  * @brief Creates a new axial brush
  */
-static bspbrush_t *BrushFromBounds (vec3_t mins, vec3_t maxs)
+bspbrush_t *BrushFromBounds (vec3_t mins, vec3_t maxs)
 {
 	bspbrush_t *b;
 	int i;
@@ -166,15 +166,6 @@ int CountBrushList (bspbrush_t *brushes)
 	for (; brushes; brushes = brushes->next)
 		c++;
 	return c;
-}
-
-/**
- * @sa AllocBrush
- * @sa AllocTree
- */
-static node_t *AllocNode (void)
-{
-	return Mem_AllocType(node_t);
 }
 
 /**
@@ -749,7 +740,7 @@ static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **fron
 }
 
 
-static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
+node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 {
 	node_t *newnode;
 	side_t *bestside;
@@ -801,7 +792,7 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 /**
  * @brief Counts the faces and calculate the aabb
  */
-static void BrushlistCalcStats (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
+void BrushlistCalcStats (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 {
 	bspbrush_t *b;
 	int c_faces = 0, c_nonvisfaces = 0, c_brushes = 0;
@@ -839,41 +830,6 @@ static void BrushlistCalcStats (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	Verb_Printf(VERB_EXTRA, "%5i brushes\n", c_brushes);
 	Verb_Printf(VERB_EXTRA, "%5i visible faces\n", c_faces);
 	Verb_Printf(VERB_EXTRA, "%5i nonvisible faces\n", c_nonvisfaces);
-}
-
-
-/**
- * @brief The incoming list will be freed before exiting
- */
-tree_t *BuildTree (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
-{
-	node_t *node;
-	tree_t *tree;
-	vec3_t blmins, blmaxs;
-
-	Verb_Printf(VERB_EXTRA, "--- BrushBSP ---\n");
-
-	tree = AllocTree();
-
-	ClearBounds(blmins, blmaxs);
-	BrushlistCalcStats(brushlist, blmins, blmaxs);
-	AddPointToBounds(blmins, tree->mins, tree->maxs);
-	AddPointToBounds(blmaxs, tree->mins, tree->maxs);
-
-	c_nodes = 0;
-	c_nonvis = 0;
-	node = AllocNode();
-
-	node->volume = BrushFromBounds(mins, maxs);
-
-	tree->headnode = node;
-
-	node = BuildTree_r(node, brushlist);
-
-	Verb_Printf(VERB_EXTRA, "%5i visible nodes\n", c_nodes / 2 - c_nonvis);
-	Verb_Printf(VERB_EXTRA, "%5i nonvis nodes\n", c_nonvis);
-	Verb_Printf(VERB_EXTRA, "%5i leafs\n", (c_nodes + 1) / 2);
-	return tree;
 }
 
 

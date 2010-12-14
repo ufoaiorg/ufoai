@@ -115,12 +115,15 @@ bspbrush_t *ChopBrushes(bspbrush_t *head);
 #if 0
 #include "bspbrush.h"
 #else
+bspbrush_t *BrushFromBounds(vec3_t mins, vec3_t maxs);
 bspbrush_t *CopyBrush(const bspbrush_t *brush);
 void SplitBrush(const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
 bspbrush_t *AllocBrush(int numsides);
 int	CountBrushList(bspbrush_t *brushes);
 void FreeBrush(bspbrush_t *brushes);
 void FreeBrushList(bspbrush_t *brushes);
+node_t *BuildTree_r(node_t *node, bspbrush_t *brushes);
+void BrushlistCalcStats(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 tree_t *BuildTree(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
 #endif
@@ -155,6 +158,7 @@ void FreeFace(face_t *f);
 
 /* tree.c */
 
+node_t *AllocNode(void);
 tree_t *AllocTree(void);
 void FreeTree(tree_t *tree);
 
