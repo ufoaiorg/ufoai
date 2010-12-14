@@ -176,6 +176,8 @@ Commands:
         entry_name = args[1]
         licenses = LicenseSet(options.datafile)
         e = licenses.get_entry(entry_name)
+        if e == None:
+            error("Entry %s not found" % entry_name)
         print "license: " + str(e.license)
         print "author: " + str(e.author)
         print "source: " + str(e.source)

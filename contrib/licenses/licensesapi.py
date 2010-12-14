@@ -4,9 +4,12 @@
 import sys
 from optparse import OptionParser, OptionGroup
 
+def independant_path(path):
+    return path.replace('\\', '/')
+
 class LicenseEntry(object):
     def __init__(self, filename, author = None, license = None, source = None):
-        self._filename = filename
+        self._filename = independant_path(filename)
         self.author = author
         self.license = license
         self.source = source
@@ -124,6 +127,7 @@ class LicenseSet(object):
             self.entries[resource.filename] = resource
 
     def get_entry(self, filename):
+        filename = independant_path(filename)
         if not filename in self.entries:
             return None
         return self.entries[filename]
@@ -132,16 +136,19 @@ class LicenseSet(object):
         return self.entries.values()
 
     def exists_entry(self, entry_name):
+        entry_name = independant_path(entry_name)
         return entry_name in self.entries
 
     def remove_entry(self, entry_name):
         entry_name = str(entry_name)
+        entry_name = independant_path(entry_name)
         if not self.exists_entry(entry_name):
             message = "Entry %s not found" % entry_name
             raise Exception(message)
         del self.entries[entry_name]
 
     def move_entry(self, entry, new_filename):
+        new_filename = independant_path(new_filename)
         if not self.exists_entry(entry.filename):
             message = "Entry %s not found" % entry.filename
             raise Exception(message)
