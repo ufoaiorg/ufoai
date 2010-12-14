@@ -2,6 +2,7 @@
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
 
 import sys, os, re
+import subprocess
 from licensesapi import *
 from optparse import OptionParser, OptionGroup
 
@@ -39,10 +40,32 @@ def check_license(licenses, license_requested):
     if not (license_requested in used):
         error("The license \"%s\" is not yet used in the project. Action rejected.\n    (use \"--force\" to force the use of this new license)\n    (use \"stats\" command to have a list of current licenses)" % license_requested)
 
+def execute(cmd):
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    data = p.stdout.read()
+    return data
+
 def command_add(new_entry_name, options):
     licenses = LicenseSet(options.datafile)
     if not options.force:
         check_filename(new_entry_name)
+
+    if options.self:
+        if options.license == None:
+            l = execute("git config user.licensemedia")
+            l = l.strip()
+            if l == "":
+                error("Default media license is not defined.\n    (use \"git config --add user.licensemedia YOURLICENSENAME\" to define it)")
+            else:
+                options.license = l
+        if options.author == None:
+            a = execute("git config user.name")
+            a = a.strip()
+            if l == "":
+                error("Default username is not defined.\n    (use \"git config --add user.name YOURNAME\" to define it)")
+            else:
+                options.author = a
+
     if options.license != None and not options.force:
         check_license(licenses, options.license)
     if options.force and licenses.exists_entry(new_entry_name):
@@ -107,11 +130,13 @@ if __name__ == "__main__":
 
     group = OptionGroup(parser, "Metadata edition")
     group.add_option("-l", "--license", dest="license", default=None,
-                      help="Define the license of an entry")
+                      help="Define the license of an entry (it override --self)")
     group.add_option("-a", "--author", dest="author", default=None,
-                      help="Define the author of an entry")
+                      help="Define the author of an entry (it override --self)")
     group.add_option("-s", "--source", dest="source", default=None,
                       help="Define the source of an entry")
+    group.add_option("", "--self", dest="self", action="store_true", default=False,
+                      help="Define yourself as author and use your default license name. We only can use it for add command. git config user.name and user.licensemedia must be set")
     group.add_option("-f", "--force", dest="force", action="store_true", default=False,
                       help="Force move, add or copy when target already exists")
     parser.add_option_group(group)
