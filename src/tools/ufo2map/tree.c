@@ -107,6 +107,17 @@ void FreeTree (tree_t *tree)
 }
 
 
+static void LeafNode (node_t *node, bspbrush_t *brushes)
+{
+	node->side = NULL;
+	node->planenum = PLANENUM_LEAF;
+
+	Verb_Printf(VERB_DUMP, "LeafNode: scanning brushes.\n");
+
+	node->contentFlags = BrushListCalcContents(brushes);
+	node->brushlist = brushes;
+}
+
 static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 {
 	node_t *newnode;
@@ -121,8 +132,6 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	bestside = SelectSplitSide(brushes, node);
 	if (!bestside) {
 		/* leaf node */
-		node->side = NULL;
-		node->planenum = PLANENUM_LEAF;
 		LeafNode(node, brushes);
 		Verb_Printf(VERB_DUMP, "BuildTree_r: Created a leaf node.\n");
 		return node;

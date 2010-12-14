@@ -317,7 +317,6 @@ uint32_t BrushListCalcContents (bspbrush_t *brushlist)
 	uint32_t contentFlags = 0;
 
 	for (b = brushlist; b; b = b->next) {
-		Verb_Printf(VERB_DUMP, "LeafNode: scanning brush %i\n", b->original->brushnum);
 		/* if the brush is solid and all of its sides are on nodes,
 		 * it eats everything */
 		if (b->original->contentFlags & CONTENTS_SOLID && !(b->original->contentFlags & CONTENTS_PASSABLE)) {
@@ -335,17 +334,6 @@ uint32_t BrushListCalcContents (bspbrush_t *brushlist)
 
 	return contentFlags;
 }
-
-void LeafNode (node_t *node, bspbrush_t *brushes)
-{
-	node->planenum = PLANENUM_LEAF;
-
-	Verb_Printf(VERB_DUMP, "LeafNode: scanning brushes.\n");
-
-	node->contentFlags = BrushListCalcContents(brushes);
-	node->brushlist = brushes;
-}
-
 
 static void CheckPlaneAgainstParents (int pnum, const node_t *node)
 {
