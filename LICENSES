@@ -6527,6 +6527,11 @@ base/textures/tex_nature/desert007.jpg | GNU General Public License 2.0 |  | htt
 base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/dirt.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/dirt001.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/dirt_se01.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_nature/dirt_se05.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_nature/dirt_se11.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_nature/dirt_se12.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_nature/dirt_se13.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_nature/drymud.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/data/textures/evil3_floors/bdirt.jpg
 base/textures/tex_nature/drymud_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 or later | Willem Sitters
