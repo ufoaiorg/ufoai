@@ -124,6 +124,8 @@ class LicenseSet(object):
             self.entries[resource.filename] = resource
 
     def get_entry(self, filename):
+        if not filename in self.entries:
+            return None
         return self.entries[filename]
 
     def get_entries(self):
