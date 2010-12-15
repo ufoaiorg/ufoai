@@ -44,7 +44,7 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 	spread *= torad;
 	cosSpread = cos(spread);
 	VectorSubtract(target, ent->origin, dtarget);
-	VectorNormalize(dtarget);
+	VectorNormalizeFast(dtarget);
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
 	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
@@ -54,7 +54,7 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 			if (DotProduct(dtarget, dcheck) > 0.0) {
 				/* ally in front of player */
 				VectorAdd(dcheck, back, dcheck);
-				VectorNormalize(dcheck);
+				VectorNormalizeFast(dcheck);
 				if (DotProduct(dtarget, dcheck) > cosSpread)
 					return qtrue;
 			}
@@ -383,9 +383,9 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 			if (length < bestlength) {
 				/* check this position to locate behind target from enemy */
 				VectorSubtract(target, ent->origin, vfriend);
-				VectorNormalize(vfriend);
+				VectorNormalizeFast(vfriend);
 				VectorSubtract(enemy->origin, ent->origin, venemy);
-				VectorNormalize(venemy);
+				VectorNormalizeFast(venemy);
 				if (DotProduct(vfriend, venemy) > 0.5) {
 					bestlength = length;
 					VectorCopy(ent->pos, bestpos);

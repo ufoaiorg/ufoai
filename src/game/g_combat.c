@@ -806,7 +806,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	impact[2] -= z_align;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
-	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
+	VectorNormalizeFast(dir);			/* Normalize the vector i.e. make length 1.0 */
 
 	/* places the starting-location a bit away from the attacker-model/grid. */
 	/** @todo need some change to reflect 2x2 units.

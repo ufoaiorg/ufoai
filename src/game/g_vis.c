@@ -83,7 +83,7 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 	dir[0] = from[1] - check->origin[1];
 	dir[1] = check->origin[0] - from[0];
 	dir[2] = 0;
-	VectorNormalize(dir);
+	VectorNormalizeFast(dir);
 	VectorMA(test, -7, dir, test);
 
 	/* do 3 tests */

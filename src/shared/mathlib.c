@@ -406,7 +406,7 @@ int VectorCompareEps (const vec3_t v1, const vec3_t v2, float epsilon)
  */
 vec_t VectorLength (const vec3_t v)
 {
-	return sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+	return sqrtf(DotProduct(v, v));
 }
 
 /**
@@ -419,10 +419,11 @@ vec_t VectorLength (const vec3_t v)
  */
 void VectorMix (const vec3_t v1, const vec3_t v2, float mix, vec3_t out)
 {
-	int i;
+	const float number = 1.0 - mix;
 
-	for (i = 0; i < 3; i++)
-		out[i] = v1[i] * (1.0 - mix) + v2[i] * mix;
+	out[0] = v1[0] * number + v2[0] * mix;
+	out[1] = v1[1] * number + v2[1] * mix;
+	out[2] = v1[2] * number + v2[2] * mix;
 }
 
 /**
@@ -604,7 +605,7 @@ qboolean FrustumVis (const vec3_t origin, int dir, const vec3_t point)
 	delta[0] = point[0] - origin[0];
 	delta[1] = point[1] - origin[1];
 	delta[2] = 0;
-	VectorNormalize(delta);
+	VectorNormalizeFast(delta);
 	dv = dir & (DIRECTIONS - 1);
 
 	/* test 120 frustum (cos 60 = 0.5) */
@@ -645,6 +646,27 @@ static inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const ve
 	dst[2] = point[2] - distance * normal[2];
 }
 
+static inline float Q_rsqrtApprox (const float number)
+{
+	union
+	{
+		float f;
+		int i;
+	} t;
+	float y;
+	float x2;
+	const float threehalfs = 1.5F;
+
+	x2 = number * 0.5F;
+	t.f = number;
+	/* what the fuck? */
+	t.i = 0x5f3759df - (t.i >> 1);
+	y = t.f;
+	/* 1st iteration */
+	y = y * (threehalfs - (x2 * y * y));
+	return y;
+}
+
 /**
  * @brief Calculate unit vector for a given vec3_t
  * @param[in] v Vector to normalize
@@ -653,20 +675,27 @@ static inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const ve
  */
 vec_t VectorNormalize (vec3_t v)
 {
-	float length;
-	/** @note - Embedding the assignments into the expressions provides huge performance
-	 * increases when compiled with optimizations.  The value of an assignment is retained for
-	 * the comparison or evaluation, saving time for a function that is called 471342268 times in 2 minutes. */
-
-	length = DotProduct(v, v);
-	if (!equal(length, 0.0)) { /**< Assign and compare the result */
-		const float ilength = 1.0 / (length = sqrtf(length)); /** @todo */ /**< Assign and use the result */
+	const float length = sqrt(DotProduct(v, v));
+	if (length) {
+		const float ilength = 1.0 / length;
 		v[0] *= ilength;
 		v[1] *= ilength;
 		v[2] *= ilength;
 	}
 
 	return length;
+}
+
+/**
+ * @brief fast vector normalize routine that does not check to make sure
+ * that length != 0, nor does it return length
+ */
+void VectorNormalizeFast (vec3_t v)
+{
+	const float ilength = Q_rsqrtApprox(DotProduct(v, v));
+	v[0] *= ilength;
+	v[1] *= ilength;
+	v[2] *= ilength;
 }
 
 /**
@@ -688,9 +717,10 @@ void PerpendicularVector (vec3_t dst, const vec3_t src)
 
 	/* find the smallest magnitude axially aligned vector */
 	for (pos = 0, i = 0; i < 3; i++) {
-		if (fabs(src[i]) < minelem) {
+		const float a = fabs(src[i]);
+		if (a < minelem) {
 			pos = i;
-			minelem = fabs(src[i]);
+			minelem = a;
 		}
 	}
 	tempvec[0] = tempvec[1] = tempvec[2] = 0.0F;
@@ -700,7 +730,7 @@ void PerpendicularVector (vec3_t dst, const vec3_t src)
 	ProjectPointOnPlane(dst, tempvec, src);
 
 	/* normalize the result */
-	VectorNormalize(dst);
+	VectorNormalizeFast(dst);
 }
 
 /**
@@ -997,14 +1027,14 @@ void TangentVectors (const vec3_t normal, const vec3_t sdir, const vec3_t tdir, 
 
 	/* normalize the directional vectors */
 	VectorCopy(sdir, s);
-	VectorNormalize(s);
+	VectorNormalizeFast(s);
 
 	VectorCopy(tdir, t);
-	VectorNormalize(t);
+	VectorNormalizeFast(t);
 
 	/* project the directional vector onto the plane */
 	VectorMA(s, -DotProduct(s, normal), normal, tangent);
-	VectorNormalize(tangent);
+	VectorNormalizeFast(tangent);
 
 	/* resolve sidedness, encode as fourth tangent component */
 	CrossProduct(normal, tangent, binormal);
@@ -1027,7 +1057,7 @@ void Orthogonalize (vec3_t v1, const vec3_t v2)
 	vec3_t tmp;
 	VectorMul(DotProduct(v1, v2), v2, tmp);
 	VectorSubtract(v1, tmp, v1);
-	VectorNormalize(v1);
+	VectorNormalizeFast(v1);
 }
 
 /**

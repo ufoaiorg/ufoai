@@ -63,7 +63,7 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 	case STYLE_AXIS:
 		AngleVectors(p->angles, right, NULL, NULL);
 		CrossProduct(right, r_locals.forward, up);
-		VectorNormalize(up);
+		VectorNormalizeFast(up);
 		VectorScale(right, p->size[0], right);
 		VectorScale(up, p->size[1], up);
 		break;
@@ -117,8 +117,8 @@ static void R_DrawSprite (const ptl_t * p)
 	/* Calculate normalised */
 	VectorCopy(up, nup);
 	VectorCopy(right, nright);
-	VectorNormalize(nup);
-	VectorNormalize(nright);
+	VectorNormalizeFast(nup);
+	VectorNormalizeFast(nright);
 
 	/* offset */
 	VectorCopy(q->s, pos);

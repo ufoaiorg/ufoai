@@ -274,5 +274,5 @@ void R_InterpolateTransform (animState_t * as, int numframes, const float *tag, 
 
 	/* normalize */
 	for (i = 0; i < 3; i++)
-		VectorNormalize(interpolated + i * 4);
+		VectorNormalizeFast(interpolated + i * 4);
 }

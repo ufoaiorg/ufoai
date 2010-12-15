@@ -199,6 +199,7 @@ qboolean VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
 vec_t VectorLength(const vec3_t v);
 void CrossProduct(const vec3_t v1, const vec3_t v2, vec3_t cross);
 vec_t VectorNormalize(vec3_t v);    /* returns vector length */
+void VectorNormalizeFast(vec3_t v);
 vec_t VectorNormalize2(const vec3_t v, vec3_t out);
 void VectorInverse(vec3_t v);
 void VectorMidpoint(const vec3_t point1, const vec3_t point2, vec3_t midpoint);

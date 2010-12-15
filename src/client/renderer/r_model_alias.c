@@ -139,7 +139,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 		 * them, which is the direction of the surface normal */
 		CrossProduct(dir1, dir2, triangleNormals[j]);
 		/* normalize */
-		VectorNormalize(triangleNormals[j]);
+		VectorNormalizeFast(triangleNormals[j]);
 
 		/* then we use the texture coordinates to calculate a tangent space */
 		if ((dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]) != 0.0) {
@@ -157,8 +157,8 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
 
 			/* normalize */
-			VectorNormalize(triangleTangents[j]);
-			VectorNormalize(triangleBitangents[j]);
+			VectorNormalizeFast(triangleTangents[j]);
+			VectorNormalizeFast(triangleBitangents[j]);
 		} else {
 			VectorClear(triangleTangents[j]);
 			VectorClear(triangleBitangents[j]);
@@ -185,9 +185,9 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 		}
 
 		/* normalization here does shared-vertex smoothing */
-		VectorNormalize(n);
-		VectorNormalize(t);
-		VectorNormalize(b);
+		VectorNormalizeFast(n);
+		VectorNormalizeFast(t);
+		VectorNormalizeFast(b);
 
 		/* Grahm-Schmidt orthogonalization */
 		Orthogonalize(t, n);
@@ -355,9 +355,9 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 		}
 
 		/* normalize */
-		VectorNormalize(triangleNormals[j]);
-		VectorNormalize(triangleTangents[j]);
-		VectorNormalize(triangleBitangents[j]);
+		VectorNormalizeFast(triangleNormals[j]);
+		VectorNormalizeFast(triangleTangents[j]);
+		VectorNormalizeFast(triangleBitangents[j]);
 
 		Orthogonalize(triangleTangents[j], triangleBitangents[j]);
 	}
@@ -398,9 +398,9 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 			}
 		}
 
-		VectorNormalize(tmpVertexes[i].normal);
-		VectorNormalize(tmpVertexes[i].tangent);
-		VectorNormalize(tmpBitangents[i]);
+		VectorNormalizeFast(tmpVertexes[i].normal);
+		VectorNormalizeFast(tmpVertexes[i].tangent);
+		VectorNormalizeFast(tmpBitangents[i]);
 	}
 
 	/* assume all vertices are unique until proven otherwise */
@@ -428,14 +428,14 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 		VectorCopy(tmpBitangents[i], b);
 
 		/* normalization here does shared-vertex smoothing */
-		VectorNormalize(n);
-		VectorNormalize(t);
-		VectorNormalize(b);
+		VectorNormalizeFast(n);
+		VectorNormalizeFast(t);
+		VectorNormalizeFast(b);
 
 		/* Grahm-Schmidt orthogonalization */
 		VectorMul(DotProduct(t, n), n, v);
 		VectorSubtract(t, v, t);
-		VectorNormalize(t);
+		VectorNormalizeFast(t);
 
 		/* calculate handedness */
 		CrossProduct(n, t, v);

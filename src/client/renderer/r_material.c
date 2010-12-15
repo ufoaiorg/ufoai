@@ -198,7 +198,7 @@ static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const
 
 	if (stage->flags & STAGE_ENVMAP) {  /* generate texcoords */
 		VectorSubtract(v, refdef.viewOrigin, tmp);
-		VectorNormalize(tmp);
+		VectorNormalizeFast(tmp);
 		Vector2Copy(tmp, out);
 	} else {  /* or use the ones we were given */
 		Vector2Copy(in, out);

@@ -275,12 +275,12 @@ float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboole
 	/* calculate velocities */
 	vx = v * cos(alpha);
 	vy = v * sin(alpha);
-	VectorNormalize(delta);
+	VectorNormalizeFast(delta);
 	VectorScale(delta, vx, v0);
 	v0[2] = vy;
 
 	/* prevent any rounding errors */
-	VectorNormalize(v0);
+	VectorNormalizeFast(v0);
 	VectorScale(v0, v - DIST_EPSILON, v0);
 
 	/* return time */
