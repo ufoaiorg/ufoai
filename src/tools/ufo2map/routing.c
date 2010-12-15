@@ -29,12 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/routing.h"
 #include "levels.h"
 
-static const vec3_t move_vec[4] = {
-	{ UNIT_SIZE,          0, 0},
-	{-UNIT_SIZE,          0, 0},
-	{         0,  UNIT_SIZE, 0},
-	{         0, -UNIT_SIZE, 0} };
-
 /** routing data structures */
 static routing_t Nmap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
 
@@ -62,11 +56,8 @@ static int CheckUnit (unsigned int unitnum)
 		return 0;
 	}
 
-	/* Com_Printf("%i %i %i %i\n", x, y, z, size); */
 	/* Call the common CheckUnit function */
 	new_z = RT_CheckCell(&mapTiles, Nmap, actorSize + 1, x, y, z, NULL);
-
-	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 
 	/* new_z should never be above z. */
 	assert(new_z <= z);
