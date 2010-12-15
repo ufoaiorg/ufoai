@@ -6,5 +6,6 @@
 		texture tex_vehicles/car_e0
 		blend GL_SRC_ALPHA GL_ONE
 		anim 2 1
+		glowmaplink
 	}
 }
