@@ -69,7 +69,7 @@ static inline int GetPlaneHashValueForDistance (const vec_t distance)
 /**
  * @brief Set the type of the plane according to it's normal vector
  */
-static inline int PlaneTypeForNormal (const vec3_t normal)
+static int PlaneTypeForNormal (const vec3_t normal)
 {
 	vec_t ax, ay, az;
 
@@ -116,7 +116,7 @@ static inline void AddPlaneToHash (plane_t *p)
 	planehash[hash] = p;
 }
 
-static inline int CreateNewFloatPlane (vec3_t normal, vec_t dist)
+static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 {
 	plane_t *p;
 
@@ -497,7 +497,7 @@ static int materialsCnt = 0;
 /**
  * @brief Generates material files in case the settings can be guessed from map file
  */
-static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, side_t *s)
+static void GenerateMaterialFile (const char *filename, int mipTexIndex, side_t *s)
 {
 	qFILE f;
 	qboolean terrainByTexture = qfalse;
@@ -569,7 +569,7 @@ static int footstepsCnt = 0;
  * @sa SV_GetFootstepSound
  * @sa Com_GetTerrainType
  */
-static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
+static void GenerateFootstepList (const char *filename, int mipTexIndex)
 {
 	qFILE f;
 	char fileBase[MAX_OSPATH];
