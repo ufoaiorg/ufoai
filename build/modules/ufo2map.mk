@@ -19,7 +19,7 @@ $(TARGET)_SRCS      = \
 	tools/ufo2map/ufo2map.c \
 	tools/ufo2map/lighting.c \
 	tools/ufo2map/bsp.c \
-	tools/ufo2map/brushbsp.c \
+	tools/ufo2map/bspbrush.c \
 	tools/ufo2map/csg.c \
 	tools/ufo2map/faces.c \
 	tools/ufo2map/levels.c \
