@@ -1034,7 +1034,6 @@ base/models/objects/abrams/abrams_bottom.obj | GNU General Public License 2.0 or
 base/models/objects/abrams/abrams_bump.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_gun.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_sm.png | GNU General Public License 2.0 or later | feanix
-base/models/objects/abrams/abrams_spec.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_turret.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/aircraft/airplane/airplane_1.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/airplane/airplane_2.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -1114,7 +1113,6 @@ base/models/objects/alien/disassembled/ufo_harvester.jpg | GNU General Public Li
 base/models/objects/alien/disassembled/ufo_harvester.md2 | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_scout.jpg | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_scout.md2 | GNU General Public License 2.0
-base/models/objects/alien/ion_condenser/ion_condenser.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.md2 | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.mtl | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.png | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
@@ -1224,7 +1222,6 @@ base/models/objects/cars/hummer/hummer_gm.png | GNU General Public License 2.0 o
 base/models/objects/cars/jeep/jeep.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/jeep/jeep_civ.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/jeep/jeep_mil.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/cars/landy/landy.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/landy/landy.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/landy/landy.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/landy/landy_nm.png | GNU General Public License 2.0 or later | Willem Sitters
