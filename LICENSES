@@ -5109,7 +5109,11 @@ base/textures/tex_alienb/ab_grate.png | GNU General Public License 2.0 or later 
 base/textures/tex_alienb/ab_grate_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_grate_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_grill01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_grill01_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_grill01_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_grill02.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_grill02_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_grill02_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_light01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_light01_gm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_light01_nm.png | GNU General Public License 2.0 or later | Nate Wright
