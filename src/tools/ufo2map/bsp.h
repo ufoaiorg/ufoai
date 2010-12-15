@@ -85,19 +85,6 @@ int FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
 
 /*============================================================================= */
 
-/* textures.c */
-
-typedef struct {
-	char	name[MAX_TEXPATH];
-	qboolean	footstepMarked; /**< only print it once to the footsteps file */
-	qboolean	materialMarked; /**< only print it once to the material file */
-} textureref_t;
-
-
-extern	textureref_t	textureref[MAX_MAP_TEXTURES];
-int	FindMiptex(const char *name);
-int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, const vec3_t origin, qboolean isTerrain);
-
 /* csg.c */
 
 int MapBrushesBounds(const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs);

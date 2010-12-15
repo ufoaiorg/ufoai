@@ -211,6 +211,7 @@
 		<Unit filename="..\..\src\tools\ufo2map\textures.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\textures.h" />
 		<Unit filename="..\..\src\tools\ufo2map\threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
