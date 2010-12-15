@@ -583,10 +583,10 @@ base/media/FreeSans.ttf | GNU General Public License v3 or later | http://savann
 base/media/FreeSerif.ttf | GNU General Public License v3 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
 base/media/Loma.ttf | Public Domain | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/Norasi.ttf | Public Domain | NECTEC National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
-base/media/UnDinaruBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
-base/media/UnGraphicBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
+base/media/UnDinaruBold.ttf | GNU General Public License 2.0 | http://kldp.net/projects/unfonts/
+base/media/UnGraphicBold.ttf | GNU General Public License 2.0 | http://kldp.net/projects/unfonts/
 base/media/ume-pgo4.ttf | see umefont-readme_license.html | Wada Laboratory, the University of Tokyo; Electronic Font Open Laboratory | http://ume-font.sourceforge.jp
-base/media/wqy-zenhei.ttf | GNU General Public License 2.0 |  | http://sourceforge.net/projects/wqy/
+base/media/wqy-zenhei.ttf | GNU General Public License 2.0 | http://sourceforge.net/projects/wqy/
 base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_arm_plate/plating.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_arm_poly/polymer.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -979,16 +979,16 @@ base/models/geoscape/base2.png | GNU General Public License 2.0 or later | Wille
 base/models/geoscape/baseattack.png | GNU General Public License 2.0 or later
 base/models/geoscape/crash.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/crash.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/geoscape/drop_firebird.jpg | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
-base/models/geoscape/drop_firebird.md2 | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/geoscape/drop_firebird.jpg | GNU General Public License 2.0 | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/geoscape/drop_firebird.md2 | GNU General Public License 2.0 | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/drop_herakles.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | herakles model by sitters
 base/models/geoscape/drop_herakles.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | herakles model by sitters
 base/models/geoscape/drop_raptor.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/drop_raptor.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/inter_dragon.jpg | GNU General Public License 2.0
 base/models/geoscape/inter_dragon.md2 | GNU General Public License 2.0
-base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
-base/models/geoscape/inter_saracen.png | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
+base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
+base/models/geoscape/inter_saracen.png | GNU General Public License 2.0 | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_starchaser.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/inter_starchaser.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/inter_stiletto.jpg | GNU General Public License 2.0
@@ -1014,8 +1014,8 @@ base/models/geoscape/ufo_bomber.png | GNU General Public License 2.0 or later | 
 base/models/geoscape/ufo_bomber_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_carrier.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_carrier.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/geoscape/ufo_corrupter.md2 | GNU General Public License 2.0 or later |  | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
-base/models/geoscape/ufo_corrupter.png | GNU General Public License 2.0 or later |  | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
+base/models/geoscape/ufo_corrupter.md2 | GNU General Public License 2.0 or later | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
+base/models/geoscape/ufo_corrupter.png | GNU General Public License 2.0 or later | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
 base/models/geoscape/ufo_fighter.md2 | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_fighter.png | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_harvester.md2 | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
@@ -1547,7 +1547,7 @@ base/models/objects/vegi/chestnut/chestnut_blaetter3.md2 | GNU General Public Li
 base/models/objects/vegi/chestnut/chestnut_stamm1.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/chestnut_stamm2.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/chestnut_stamm3.md2 | GNU General Public License 2.0 | hullbr3ach
-base/models/objects/vegi/chestnut/leaves1.png |  | "SparX" Beyeler
+base/models/objects/vegi/chestnut/leaves1.png | "SparX" Beyeler
 base/models/objects/vegi/chestnut/leaves2.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/vegi/chestnut/leaves3.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/vegi/chestnut/leaves4.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1603,12 +1603,12 @@ base/models/objects/vegi/plants/plantc.md2 | GNU General Public License 2.0 | Da
 base/models/objects/vegi/plants/plantd.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/vegi/plants/plante.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/vegi/plants/plants.png | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
-base/models/objects/vegi/tree02/tree2.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
-base/models/objects/vegi/tree02/tree2_b.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
-base/models/objects/vegi/tree02/tree2_snow.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
-base/models/objects/vegi/tree02/tree2_snowb.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
-base/models/objects/vegi/tree02/tree2_snowg.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
-base/models/objects/vegi/tree02/tree2_snowr.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
+base/models/objects/vegi/tree02/tree2.png | GNU General Public License 2.0 | http://opengameart.org/content/jkms-tree-set
+base/models/objects/vegi/tree02/tree2_b.png | GNU General Public License 2.0 | http://opengameart.org/content/jkms-tree-set
+base/models/objects/vegi/tree02/tree2_snow.png | GNU General Public License 2.0 | http://opengameart.org/content/jkms-tree-set
+base/models/objects/vegi/tree02/tree2_snowb.png | GNU General Public License 2.0 | http://opengameart.org/content/jkms-tree-set
+base/models/objects/vegi/tree02/tree2_snowg.png | GNU General Public License 2.0 | http://opengameart.org/content/jkms-tree-set
+base/models/objects/vegi/tree02/tree2_snowr.png | GNU General Public License 2.0 | http://opengameart.org/content/jkms-tree-set
 base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/tree_dead/tree_dead.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -1664,7 +1664,7 @@ base/models/pilots/male/body.md2 | GNU General Public License 2.0 or later | Wil
 base/models/pilots/male/body.tag | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/male/head01.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/male/head01.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/sequence/earth.jpg | Public Domain |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
+base/models/sequence/earth.jpg | Public Domain | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/models/sequence/earth.md2 | GNU General Public License 2.0 or later | Nate Wright
 base/models/soldiers/female/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -2325,7 +2325,7 @@ base/models/weapons/plasrifle/plasrifle_gm.png | GNU General Public License 2.0 
 base/models/weapons/rpg/rocket.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/rpg/rocket.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/rpg/rocket_inc.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/rpg/rocket_inc.md2 |  | TimberDragon
+base/models/weapons/rpg/rocket_inc.md2 | TimberDragon
 base/models/weapons/rpg/rocket_particle.jpg | GNU General Public License 2.0 | A M D G
 base/models/weapons/rpg/rocket_particle.png | GNU General Public License 2.0 | A M D G
 base/models/weapons/rpg/rpg.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -2461,20 +2461,20 @@ base/music/van_mission4.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethi
 base/music/van_theme.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/pics/althud/bar_chat.png | GNU General Public License 2.0 or later
 base/pics/althud/bar_chat_choice.png | GNU General Public License 2.0 or later
-base/pics/althud/bar_floor.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/bar_right.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/bar_selbox.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/bar_teambox.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/bar_teamleft.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/bar_teamright.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/bar_teamsep.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/bar_top.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/buttons_althud1.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/buttons_althud1a.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/buttons_althud1ar.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/buttons_althud1b.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/buttons_althud1br.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/buttons_althud1g.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/bar_floor.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/bar_right.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/bar_selbox.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/bar_teambox.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/bar_teamleft.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/bar_teamright.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/bar_teamsep.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/bar_top.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/buttons_althud1.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/buttons_althud1a.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/buttons_althud1ar.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/buttons_althud1b.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/buttons_althud1br.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
+base/pics/althud/buttons_althud1g.png | GNU General Public License 2.0 | Based on the original menu artwork by SparX and Rasta
 base/pics/armour/light.png | GNU General Public License 2.0
 base/pics/armour/lightadv.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/armour/medium.png | GNU General Public License 2.0
@@ -2485,21 +2485,21 @@ base/pics/armour/taman_light.png | GNU General Public License 2.0
 base/pics/armour/taman_medium.png | GNU General Public License 2.0
 base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/conback.jpg | GNU General Public License 2.0
-base/pics/background/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/equipment_bg.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/background/irc_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/loading.png | GNU General Public License 2.0
-base/pics/background/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/losegame_bg.jpg | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/background/lost_bg.png | GNU General Public License 2.0 or later
-base/pics/background/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/mail_bg.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/background/mailclient_bg.png | GNU General Public License 2.0 or later
-base/pics/background/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/main_bg.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/background/mp_team_edit_bg.png | GNU General Public License 2.0 or later
-base/pics/background/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/skirmish_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/multiplayer_bg.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/background/options_bg.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/background/skirmish_bg.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/background/won_bg.jpg | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/background/world_bg.png | GNU General Public License 2.0 or later
 base/pics/base/adrop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2585,14 +2585,14 @@ base/pics/geoscape/low/map_earth_season_02.png | GNU General Public License 2.0 
 base/pics/geoscape/low/map_earth_season_03.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_atmosphere.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_culture.png | GNU General Public License 2.0 or later
-base/pics/geoscape/map_earth_day.jpg | Public Domain |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
+base/pics/geoscape/map_earth_day.jpg | Public Domain | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_halo.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_moon.jpg | Public Domain | NASA | http://maps.jpl.nasa.gov/textures/ear1ccc2.jpg
 base/pics/geoscape/map_earth_nations.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_nations_overlay.png | GNU General Public License 2.0 | John W. Bjerk (eleazar) | map_earth_nations.tga
 base/pics/geoscape/map_earth_nations_overlay_glow.jpg | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_nations_overlay_glow.png | GNU General Public License 2.0 or later
-base/pics/geoscape/map_earth_night.jpg | Public Domain |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
+base/pics/geoscape/map_earth_night.jpg | Public Domain | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_night_lights.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_population.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_stars.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
@@ -2622,17 +2622,17 @@ base/pics/hud/bar_phys.png | GNU General Public License 2.0
 base/pics/hud/bar_popup.png | GNU General Public License 2.0
 base/pics/hud/bar_rightweapon.png | GNU General Public License 2.0
 base/pics/hud/bar_teammember.png | GNU General Public License 2.0
-base/pics/hud/button_assigned.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
-base/pics/hud/button_chat.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/button_assigned.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/button_chat.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/button_chat2.png | GNU General Public License 2.0
-base/pics/hud/button_guard.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/button_guard.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/button_notassigned.png | GNU General Public License 2.0
-base/pics/hud/button_reserve_shot.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
-base/pics/hud/buttons1.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
-base/pics/hud/buttons1a.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
-base/pics/hud/buttons1g.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
-base/pics/hud/buttons2.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
-base/pics/hud/buttons2g.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/button_reserve_shot.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/buttons1.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/buttons1a.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/buttons1g.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/buttons2.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/buttons2g.png | GNU General Public License 2.0 | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/checkbox.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/close.png | GNU General Public License 2.0
 base/pics/hud/event_log.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -2652,10 +2652,10 @@ base/pics/icons/aircraft_send_hovered.png | GNU General Public License 2.0 or la
 base/pics/icons/alien_kill.png | GNU General Public License 2.0 or later | Martin Gerhardy | Icons by Gerd Heisse
 base/pics/icons/alien_surgery.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/alien_unused.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/arrow_bottom.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/arrow_bottom_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/arrow_top.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/arrow_top_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/arrow_bottom.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/arrow_bottom_hovered.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/arrow_top.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/arrow_top_hovered.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/icons/bighead_medic.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf)
 base/pics/icons/bighead_pilot.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf)
 base/pics/icons/bighead_scientist.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf)
@@ -2674,8 +2674,8 @@ base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_event.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_intelligence.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/mail_read.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_read.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/notify_notice.png | GNU General Public License 2.0 or later
@@ -2689,13 +2689,13 @@ base/pics/icons/pack3.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_hud2.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_message.png | GNU General Public License 2.0 or later | bayo
-base/pics/icons/pen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/pen_disabled.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/pen_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/scroll_bottom.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/scroll_bottom_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/scroll_top.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/scroll_top_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/pen.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/pen_disabled.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/pen_hovered.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/scroll_bottom.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/scroll_bottom_hovered.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/scroll_top.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/icons/scroll_top_hovered.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/icons/soldier_holdequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
 base/pics/icons/soldier_noequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
 base/pics/icons/system_capture.png | GNU General Public License 2.0 or later | bayo
@@ -3213,7 +3213,7 @@ base/pics/sfx/blueflare.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/bms2fl_rglow.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/bubble.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/sfx/corona.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/corona4.png |  | raz0r
+base/pics/sfx/corona4.png | raz0r
 base/pics/sfx/corona_b.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/corona_y.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/cross.png | GNU General Public License 2.0 or later | MCR
@@ -3252,10 +3252,10 @@ base/pics/sfx/explosions/explosion1_a23.png | GNU General Public License 2.0 | L
 base/pics/sfx/explosions/explosion1_a24.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/explosions/explosion1_a25.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/explosions/explosion1_a26.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosions/explosions1.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/explosions/explosions2.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/explosions/explosions3.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/explosions/explosions4.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/explosions/explosions1.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/explosions/explosions2.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/explosions/explosions3.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/explosions/explosions4.jpg | Public Domain | Public Domain Golgotha
 base/pics/sfx/explosions/flashbang.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/explosions/flashbang_a00.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/explosions/flashbang_a01.png | GNU General Public License 2.0 | Lord Havoc;MCR
@@ -3276,9 +3276,9 @@ base/pics/sfx/explosions/flashbang_a15.png | GNU General Public License 2.0 | Lo
 base/pics/sfx/explosions/flashbang_a16.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/explosions/flashbang_a17.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/explosions/flashbang_a18.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosions/greenplas_00.png |  | Mikolaj Konarski (bandobraz)
-base/pics/sfx/explosions/greenplas_07.png |  | Mikolaj Konarski (bandobraz)
-base/pics/sfx/fireball.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/explosions/greenplas_00.png | Mikolaj Konarski (bandobraz)
+base/pics/sfx/explosions/greenplas_07.png | Mikolaj Konarski (bandobraz)
+base/pics/sfx/fireball.jpg | Public Domain | Public Domain Golgotha
 base/pics/sfx/flame1.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame2.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame3.png | GNU General Public License 2.0 | OpenArena
@@ -3287,9 +3287,9 @@ base/pics/sfx/flame5.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame6.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame7.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame8.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/flare_blue.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/flare_red.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/greenball.png |  | Mikolaj Konarski (bandobraz)
+base/pics/sfx/flare_blue.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/flare_red.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/greenball.png | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplasbeam.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/sfx/greenplasmaball.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/heal.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3297,20 +3297,20 @@ base/pics/sfx/lightningscroll.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/plasmaball.png | GNU General Public License 2.0 | OpenArena | OpenArena
 base/pics/sfx/plasmadust.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/powerup_flare3.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/powerup_flare3.jpg | Public Domain | Public Domain Golgotha
 base/pics/sfx/rain.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/shadow.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/smoke.png | GNU General Public License 2.0 |  | OpenAreana
+base/pics/sfx/smoke.png | GNU General Public License 2.0 | OpenAreana
 base/pics/sfx/smoke_00.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_01.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_02.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_03.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
-base/pics/sfx/smoke_particle.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff1.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff2.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff3.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff4.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff5.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/smoke_particle.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/smoke_puff1.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/smoke_puff2.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/smoke_puff3.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/smoke_puff4.jpg | Public Domain | Public Domain Golgotha
+base/pics/sfx/smoke_puff5.jpg | Public Domain | Public Domain Golgotha
 base/pics/sfx/snow.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/spark.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/tesla1.jpg | GNU General Public License 2.0 | OpenArena
@@ -3390,63 +3390,63 @@ base/pics/tutorial/gameplay8b.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/skirmish1.png | GNU General Public License 2.0 or later
 base/pics/tutorial/tactical1.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/ufoai.jpg | GNU General Public License 2.0
-base/pics/ui/airequip_element.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/airequip_no_shield.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/airequip_no_weapon.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/airequip_selected_element.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/airequip_element.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/airequip_no_shield.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/airequip_no_weapon.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/airequip_selected_element.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/bar_attribute.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_border.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_health.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/bar_rahmen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/bar_rahmen.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/bar_skill.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/base_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/base_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/base_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_big_menu.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/base_lr.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/base_ul.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/base_ur.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_big_menu.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_blue.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_geoscape.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_green_big.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_green_small.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_green_verysmall.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later |  | Source: Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_square.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later | Source: Based on original menu artwork by SparX and Rasta
 base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo | Source: Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
 base/pics/ui/mail_button.png | GNU General Public License 2.0 or later
-base/pics/ui/map_ll.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/map_ll.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/map_lr.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/map_ul.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/map_ur.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/panel_green.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/panel_green_slim.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/panel_green_tab.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/panel_grey.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/panel_grey_black.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/panel_grey_green.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/panel_grey_green_large.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/panel_grey_green_large2.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/panel_grey_white.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_black.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_green.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_green_large.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_green_large2.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_white.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/panel_rounded_black.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/panel_rounded_green.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/panel_tab.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/panel_window.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/popup_alpha_tile.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_tab.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_window.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/popup_alpha_tile.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/popup_button_hl.png | GNU General Public License 2.0 or later
-base/pics/ui/popup_tile.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/popup_tile.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/radar.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/scrollbar_v_green.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/selectbox.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/selectbox_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/selectbox.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
+base/pics/ui/selectbox_blue.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/pics/ui/selectbox_red.png | GNU General Public License 2.0 or later | SparX;Rasta;MCR | Based on original menu artwork by SparX and Rasta
 base/pics/ui/spinner_blue.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/tab.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/transtypebox.png | GNU General Public License 2.0 or later
-base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later | Based on original menu artwork by SparX and Rasta
 base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/bump_fs.glsl | GNU General Public License 2.0 or later
@@ -3520,7 +3520,7 @@ base/sound/ambience/minepump03.ogg | Creative Commons Attribution 3.0 | Gren | h
 base/sound/ambience/radiomessage.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed Data
 base/sound/ambience/sand-city.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/smallfire.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/ambience/sparks.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
+base/sound/ambience/sparks.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/ambience/sparks_short.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | sparks.ogg
 base/sound/ambience/steam.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | http://www.pdsounds.org/sounds/tram_doors_open_and_close_hiss_and_beeping
 base/sound/ambience/thunder1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3529,7 +3529,7 @@ base/sound/ambience/thunder3.ogg | Creative Commons Attribution-Share Alike 3.0 
 base/sound/ambience/tv_newswav.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/tv_static.ogg | Creative Commons Sampling Plus 1.0 | Gaiamuse | http://www.freesound.org/samplesViewSingle.php?id=50500
 base/sound/ambience/ufo_night_atm.ogg | GNU General Public License 2.0 or later | Axis REC
-base/sound/ambience/water.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
+base/sound/ambience/water.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/ambience/water01.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/water02.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/water03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
@@ -3549,15 +3549,15 @@ base/sound/civilians/civfemscream02a.ogg | Creative Commons Attribution-Share Al
 base/sound/civilians/civmaledeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/civilians/civmaledeath02a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/civilians/civmalehurt01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/civilians/femaledeath01.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
+base/sound/civilians/femaledeath01.ogg | Creative Commons Sampling Plus 1.0 | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
 base/sound/civilians/femalehurt01.ogg | Creative Commons Sampling Plus 1.0 | Robinhood76 | http://www.freesound.org/samplesViewSingle.php?id=66949
-base/sound/civilians/maledeath01.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/maledeath02.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/maledeath03.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/malehurt01.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/data/37/sounds/37553__mw_1984__ah.mp3
-base/sound/civilians/malehurt02.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/malehurt03.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/civilians/malehurt04.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
+base/sound/civilians/maledeath01.ogg | GNU General Public License 2.0 | OpenQuartz GPLed game content
+base/sound/civilians/maledeath02.ogg | GNU General Public License 2.0 | OpenQuartz GPLed game content
+base/sound/civilians/maledeath03.ogg | GNU General Public License 2.0 | OpenQuartz GPLed game content
+base/sound/civilians/malehurt01.ogg | Creative Commons Sampling Plus 1.0 | http://freesound.iua.upf.edu/data/37/sounds/37553__mw_1984__ah.mp3
+base/sound/civilians/malehurt02.ogg | GNU General Public License 2.0 | OpenQuartz GPLed game content
+base/sound/civilians/malehurt03.ogg | GNU General Public License 2.0 | OpenQuartz GPLed game content
+base/sound/civilians/malehurt04.ogg | GNU General Public License 2.0 | OpenQuartz GPLed game content
 base/sound/doors/creak_low_short.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | http://www.pdsounds.org/sounds/squeaky_door
 base/sound/doors/door1-close.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/doors/door1-open.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3587,9 +3587,9 @@ base/sound/footsteps/gravel1.ogg | Creative Commons Attribution-Share Alike 3.0 
 base/sound/footsteps/gravel2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/gravel3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/gravel4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/footsteps/hitground2.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
-base/sound/footsteps/hitground3.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
-base/sound/footsteps/hitground4.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
+base/sound/footsteps/hitground2.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/footsteps/hitground3.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/footsteps/hitground4.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/footsteps/linoleum.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | footsteps_linoleum1.ogg by David Reeves
 base/sound/footsteps/mech1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/mech2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -3600,7 +3600,7 @@ base/sound/footsteps/metal2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/metal3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/metal4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/sand.ogg | GNU General Public License 2.0 | Al Riddoch | Worldforge media repository
-base/sound/footsteps/sand2.ogg | GNU General Public License 2.0 |  | sand.wav by Al Riddoch (Worldforge media repository)
+base/sound/footsteps/sand2.ogg | GNU General Public License 2.0 | sand.wav by Al Riddoch (Worldforge media repository)
 base/sound/footsteps/snow1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/snow2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/snow3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -5314,7 +5314,7 @@ base/textures/tex_buildings/concrete004.jpg | GNU General Public License 2.0 | W
 base/textures/tex_buildings/concrete004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete005_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete006.jpg | GNU General Public License 2.0 |  | concrete004 and concrete005
+base/textures/tex_buildings/concrete006.jpg | GNU General Public License 2.0 | concrete004 and concrete005
 base/textures/tex_buildings/concrete006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5450,7 +5450,7 @@ base/textures/tex_buildings/platstep2.png | GNU General Public License 2.0 or la
 base/textures/tex_buildings/platvert.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/q1metal7_99.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/q1metal7_99_broke.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_buildings/roof004.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_buildings/roof004.jpg | Public Domain | Public Domain Golgotha
 base/textures/tex_buildings/roof006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/roof006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/roof007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -5605,135 +5605,135 @@ base/textures/tex_common/origin.png | GNU General Public License 2.0 or later | 
 base/textures/tex_common/slick.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/trigger.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/weaponclip.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ctp1/asphalt_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bark_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_c_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_g_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_g_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_p_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_r_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_r_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_r_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_r_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_r_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_r_6.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_t_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_t_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_t_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_t_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_t_6.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/bricks_y_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/ceiling_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/cliff_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_10.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_11.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/asphalt_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bark_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_c_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_g_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_g_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_g_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_m_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_p_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_r_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_r_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_r_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_r_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_r_5.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_r_6.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_t_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_t_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_t_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_t_5.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_t_6.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_w_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_y_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/ceiling_w_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/cliff_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_b_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_10.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_11.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_11_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ctp1/concrete_g_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_6.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_7.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_8.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_9.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_p_10.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_r_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_r_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_s_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_y_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/curtains_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/dirt_01.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/dirt_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/dirt_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/dirt_b_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/dirt_b_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/door_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/door_r_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/door_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/door_w_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/fence_b_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/glass_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/grass_g_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/grass_g_7.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/grass_g_8.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/grate_b_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/ground_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/ground_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/ground_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/ground_g_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/hedge01.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/hedge02.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/jailbars_b_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/jailbars_w_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/ladder_b_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/light_f_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/marble_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/metal_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/metal_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/metal_g_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/metal_g_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/metal_r_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_5.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_6.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_7.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_8.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_g_9.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_p_10.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_r_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_r_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_s_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/concrete_y_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/curtains_m_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/dirt_01.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/dirt_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/dirt_b_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/dirt_b_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/dirt_b_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/door_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/door_r_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/door_w_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/door_w_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/fence_b_1.png | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/glass_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/grass_g_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/grass_g_7.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/grass_g_8.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/grate_b_1.png | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/ground_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/ground_b_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/ground_g_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/ground_g_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/hedge01.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/hedge02.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/jailbars_b_1.png | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/jailbars_w_1.png | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/ladder_b_1.png | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/light_f_1.png | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/marble_m_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/metal_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/metal_g_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/metal_g_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/metal_g_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/metal_r_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/metal_r_1_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ctp1/metal_r_2.jpg | GNU General Public License 2.0 |  | metal_r_1.jpg
+base/textures/tex_ctp1/metal_r_2.jpg | GNU General Public License 2.0 | metal_r_1.jpg
 base/textures/tex_ctp1/metal_r_2_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ctp1/misc_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/misc_y_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/pebbles_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/rocks_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/roof_t_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/roof_t_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/roof_t_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/roof_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/sand_s_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/stucco_o_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_b_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_g_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_g_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_g_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_m_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_m_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_m_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_m_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_m_6.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_r_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_r_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tiles_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tires_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tires_d_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tool_h_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tree_g_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/volcano_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wall_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wall_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wall_g_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wall_g_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wall_y_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wallpaper_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wallpaper_bl_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wallpaper_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wallpaper_g_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wallpaper_r_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wallpaper_t_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/window_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_b_10.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_b_11.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_b_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_b_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_b_6.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_b_9.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/wood_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/woodb_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/misc_m_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/misc_y_1.png | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/pebbles_m_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/rocks_w_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/roof_t_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/roof_t_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/roof_t_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/roof_w_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/sand_s_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/stucco_o_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_b_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_b_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_g_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_g_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_g_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_g_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_m_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_m_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_m_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_m_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_m_5.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_m_6.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_r_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_r_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tiles_w_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tires_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tires_d_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tool_h_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tree_g_1.png | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/volcano_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wall_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wall_b_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wall_g_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wall_g_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wall_y_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wallpaper_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wallpaper_bl_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wallpaper_g_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wallpaper_g_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wallpaper_r_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wallpaper_t_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/window_m_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_b_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_b_10.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_b_11.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_b_2.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_b_3.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_b_4.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_b_6.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_b_9.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/wood_g_1.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/woodb_5.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_dirt/dirt001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_dirt/dirt002.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_doors/door001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6345,8 +6345,8 @@ base/textures/tex_misc/bask_board.png | GNU General Public License 2.0 or later 
 base/textures/tex_misc/bask_board_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/billiard001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/billiard001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_misc/biohazard_clean.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_misc/biohazard_dirty.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/biohazard_clean.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_misc/biohazard_dirty.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_misc/books004.jpg | Public Domain | Weird Tales, Inc. | http://commons.wikimedia.org/wiki/File:Weird_Tales_September_1939.jpg
 base/textures/tex_misc/books005.jpg | Public Domain | Jacobs, Joseph, 1854-1916; Batten, John Dickson, 1860-1932, ill | http://www.archive.org/details/bookofwondervoya00jacoiala
 base/textures/tex_misc/books006.jpg | Creative Commons Attribution 3.0 Unported | Ernst Wurdack | http://commons.wikimedia.org/wiki/File:Cover_PhanMorde.jpg   http://www.storyolympiade.de/
@@ -6406,13 +6406,13 @@ base/textures/tex_misc/e8_btrim02.jpg | GNU General Public License 2.0 | Nexuiz 
 base/textures/tex_misc/e8_btrim05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8beam02.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8jumpspawn02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_misc/exit_clean.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_misc/exit_clean_gm.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_misc/exit_dirty.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_misc/exit_dirty_gm.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/exit_clean.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_misc/exit_clean_gm.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_misc/exit_dirty.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_misc/exit_dirty_gm.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_misc/fridge001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
-base/textures/tex_misc/glasses_clean.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_misc/glasses_dirty.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/glasses_clean.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_misc/glasses_dirty.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_misc/grate_rusty.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/grate_rusty_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/laminate001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
@@ -6426,9 +6426,9 @@ base/textures/tex_misc/phone001.png | GNU General Public License 2.0 or later | 
 base/textures/tex_misc/phone002.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/phone002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/pingpong.png | GNU General Public License 2.0 or later
-base/textures/tex_misc/pipes001.jpg | Public Domain |  | Public Domain Golgotha
-base/textures/tex_misc/pipes002.jpg | Public Domain |  | Public Domain Golgotha
-base/textures/tex_misc/pipes003.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/pipes001.jpg | Public Domain | Public Domain Golgotha
+base/textures/tex_misc/pipes002.jpg | Public Domain | Public Domain Golgotha
+base/textures/tex_misc/pipes003.jpg | Public Domain | Public Domain Golgotha
 base/textures/tex_misc/rail_info.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_info0.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_notice.png | GNU General Public License 2.0 or later | Nate Wright
@@ -6490,8 +6490,8 @@ base/textures/tex_misc/soft_drinks2_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
-base/textures/tex_misc/toxic_clean.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_misc/toxic_dirty.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/toxic_clean.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_misc/toxic_dirty.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_misc/trashbin001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/trashbin001_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/trashbin001_sm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -6511,17 +6511,17 @@ base/textures/tex_misc/vehentpan_sm.png | GNU General Public License 2.0 or late
 base/textures/tex_misc/vendor_cart.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vendor_cart_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/verbot.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_misc/yellowcamelcrossing.jpg | Public Domain |  | Public Domain Golgotha
-base/textures/tex_misc/yellowroadcrossingsign.jpg | Public Domain |  | Public Domain Golgotha
-base/textures/tex_misc/yellowtwowaysign.jpg | Public Domain |  | Public Domain Golgotha
-base/textures/tex_misc/yellowtwowaysignback.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/yellowcamelcrossing.jpg | Public Domain | Public Domain Golgotha
+base/textures/tex_misc/yellowroadcrossingsign.jpg | Public Domain | Public Domain Golgotha
+base/textures/tex_misc/yellowtwowaysign.jpg | Public Domain | Public Domain Golgotha
+base/textures/tex_misc/yellowtwowaysignback.jpg | Public Domain | Public Domain Golgotha
 base/textures/tex_misc/zulu01.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/desert001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_nature/desert003.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_nature/desert004.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_nature/desert006.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_nature/desert007.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert001.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert003.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert004.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert006.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert007.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/dirt.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/dirt001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/dirt_se01.png | GNU General Public License 2.0 | Nate Wright
@@ -6533,7 +6533,7 @@ base/textures/tex_nature/drymud.jpg | GNU General Public License 2.0 | Nexuiz GP
 base/textures/tex_nature/drymud_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_nature/grass.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_nature/grass001.jpg | GNU General Public License 2.0 |  | grass_lash.tga
+base/textures/tex_nature/grass001.jpg | GNU General Public License 2.0 | grass_lash.tga
 base/textures/tex_nature/grass003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_d2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_hor.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -6560,17 +6560,17 @@ base/textures/tex_nature/grass_tall_dry_c.jpg | GNU General Public License 2.0 |
 base/textures/tex_nature/grass_tall_green_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_tall_green_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
-base/textures/tex_nature/ice001.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
+base/textures/tex_nature/ice001.jpg | Public Domain | Public Domain Golgotha
 base/textures/tex_nature/ice001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/ice002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/ice003.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/ice003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/icefloor.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_nature/leaves1.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_nature/leaves2.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_nature/leaves3.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_nature/leaves4.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_nature/leaves1.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_nature/leaves2.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_nature/leaves3.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_nature/leaves4.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/pjrock1.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/pjrock16.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/pjrock17.jpg | GNU General Public License 2.0 | OpenArena
@@ -6804,12 +6804,12 @@ base/textures/tex_tech/uelektro003_lq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/uelektro003_lq_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/uelektro003_mq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/uelektro003_mq_gm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_terrain/desert.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_terrain/dummy.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_terrain/grass.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_terrain/mountain.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_terrain/tropical.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_terrain/wasted.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_terrain/desert.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_terrain/dummy.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_terrain/grass.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_terrain/mountain.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_terrain/tropical.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_terrain/wasted.jpg | GNU General Public License 2.0 | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_trak/crate1e.png | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_trak/crate1e_nm.png | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_trak/floor2a.png | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
@@ -7022,14 +7022,14 @@ base/ufos/weapons_particle.ufo | GNU General Public License 2.0
 base/ufos/weapons_plasma.ufo | GNU General Public License 2.0
 base/ufos/weapons_ugv.ufo | GNU General Public License 2.0
 base/videos/intro.ogm | GNU General Public License 2.0 or later | David Reeves (Destructavator)
-contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
+contrib/7th.zip | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
 contrib/licenses/resources/grid.png | Public Domain
-contrib/scripts/compile_po.bat |  | Kostia "Kildor" Romanov
-contrib/scripts/update_potfiles_in.bat |  | Kostia "Kildor" Romanov
+contrib/scripts/compile_po.bat | Kostia "Kildor" Romanov
+contrib/scripts/update_potfiles_in.bat | Kostia "Kildor" Romanov
 radiant/bitmaps/grid_window.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/particle_map.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/particle_weapon.png | GNU General Public License 2.0 or later | Nate Wright
-radiant/bitmaps/texwindow_uniformsize.png |  | orbweaver (commiter in darkradiant repository) | http://darkradiant.svn.sourceforge.net/viewvc/darkradiant/trunk/darkradiant/install/bitmaps/texwindow_uniformsize.png?view=markup&pathrev=309
+radiant/bitmaps/texwindow_uniformsize.png | orbweaver (commiter in darkradiant repository) | http://darkradiant.svn.sourceforge.net/viewvc/darkradiant/trunk/darkradiant/install/bitmaps/texwindow_uniformsize.png?view=markup&pathrev=309
 radiant/prefabs/dropships/drop_firebird.map | GNU General Public License 2.0
 radiant/prefabs/household/bookshelf.jpg | GNU General Public License 2.0 | Nate Wright
 radiant/prefabs/household/bookshelf.map | GNU General Public License 2.0 | Nate Wright
@@ -7061,7 +7061,7 @@ src/tools/blender/export_md2_new.py | GNU General Public License 2.0
 src/tools/blender/md2_export.py | GNU General Public License 2.0
 src/tools/blender/md2_import.py | GNU General Public License 2.0
 src/tools/blender/md2tag_export.py | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/blender/md2tag_test.blend |  | Werner "hoehrer" Höhrer
+src/tools/blender/md2tag_test.blend | Werner "hoehrer" Höhrer
 src/tools/blender/test_matrix.py | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 src/tools/findrep.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 src/tools/map2obj.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
