@@ -749,6 +749,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 	} else {
 		/* No assigned scientists found - serious inconsistency. */
 		/** @todo add proper handling of this case. */
+		Com_Error(ERR_DROP, "%i scientist researching %s but there is no assigned employee on base (%s)!", tech->scientists, tech->id, base->name);
 	}
 
 	assert(tech->scientists >= 0);
