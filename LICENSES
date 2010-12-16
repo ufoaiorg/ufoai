@@ -5600,6 +5600,10 @@ base/textures/tex_buildings/xred1_2.jpg | GNU General Public License 2.0 | OpenA
 base/textures/tex_buildings/yellow_rustb.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/yellow_rustb_v1.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/yellow_rustbx128.jpg | GNU General Public License 2.0 | OpenArena
+base/textures/tex_buildings_snow/concrete001.png | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings_snow/concrete001_hq.png | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings_snow/concrete001_hq_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings_snow/concrete001_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_common/actorclip.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/caulk.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/error.png | GNU General Public License 2.0 or later | Martin Gerhardy
