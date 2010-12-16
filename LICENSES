@@ -5322,6 +5322,10 @@ base/textures/tex_buildings/concrete006.jpg | GNU General Public License 2.0 |  
 base/textures/tex_buildings/concrete006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete007.png | GNU General Public License 2.0 | MCR
 base/textures/tex_buildings/concrete007_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_buildings/concrete008.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete02.tga
+base/textures/tex_buildings/concrete008_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
+base/textures/tex_buildings/concrete009.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete03.tga
+base/textures/tex_buildings/concrete009_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
