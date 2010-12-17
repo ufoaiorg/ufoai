@@ -1257,11 +1257,11 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 /**
  * @brief Handles aircraft movement and actions in geoscape mode
  * @sa CL_CampaignRun
- * @param[in,out] campaign The campaign data structure
+ * @param[in] campaign The campaign data structure
  * @param[in] dt time delta (may be 0 if radar overlay should be updated but no aircraft moves)
  * @param[in] updateRadarOverlay True if radar overlay should be updated (not needed if geoscape isn't updated)
  */
-void CL_CampaignRunAircraft (campaign_t* campaign, int dt, qboolean updateRadarOverlay)
+void CL_CampaignRunAircraft (const campaign_t* campaign, int dt, qboolean updateRadarOverlay)
 {
 	/* true if at least one aircraft moved: radar overlay must be updated
 	 * This is static because aircraft can move without radar being
