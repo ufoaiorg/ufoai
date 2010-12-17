@@ -69,15 +69,8 @@ void FileSystem::initDirectory (const std::string& directory)
 {
 	ArchiveModules& archiveModules = FileSystemAPI_getArchiveModules();
 
-	if (g_numDirs == (VFS_MAXDIRS - 1))
-		return;
-
-	strncpy(g_strDirs[g_numDirs], std::string(DirectoryCleaned(directory)).c_str(), PATH_MAX);
-	g_strDirs[g_numDirs][PATH_MAX] = '\0';
-
-	const char* path = g_strDirs[g_numDirs];
-
-	g_numDirs++;
+	std::string path = DirectoryCleaned(directory);
+	g_strDirs.push_back(path);
 
 	{
 		ArchiveEntry entry;
@@ -88,10 +81,10 @@ void FileSystem::initDirectory (const std::string& directory)
 	}
 
 	if (g_bUsePak) {
-		GDir* dir = g_dir_open(path, 0, 0);
+		GDir* dir = g_dir_open(path.c_str(), 0, 0);
 
 		if (dir != 0) {
-			g_message("vfs directory: %s\n", path);
+			g_message("vfs directory: %s\n", path.c_str());
 
 			Archives archives;
 			Archives archivesOverride;
@@ -119,7 +112,7 @@ void FileSystem::initDirectory (const std::string& directory)
 				initPK3File(filename);
 			}
 		} else {
-			g_message("vfs directory not found: '%s'\n", path);
+			g_message("vfs directory not found: '%s'\n", path.c_str());
 		}
 	}
 }
@@ -138,8 +131,7 @@ void FileSystem::shutdown ()
 		delete i->archive;
 	}
 	g_archives.clear();
-
-	g_numDirs = 0;
+	g_strDirs.clear();
 }
 
 ArchiveFile* FileSystem::openFile (const std::string& filename)

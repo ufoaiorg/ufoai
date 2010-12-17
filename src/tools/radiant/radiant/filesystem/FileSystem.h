@@ -1,5 +1,7 @@
 #include "ifilesystem.h"
 #include <list>
+#include <vector>
+#include <string>
 
 #include "moduleobservers.h"
 
@@ -19,8 +21,7 @@ class FileSystem: public VirtualFileSystem
 		typedef std::list<ArchiveEntry> ArchiveEntryList;
 		ArchiveEntryList g_archives;
 
-		char g_strDirs[VFS_MAXDIRS][PATH_MAX + 1];
-		int g_numDirs;
+		std::vector<std::string> g_strDirs;
 		bool g_bUsePak;
 
 		ModuleObservers g_observers;
