@@ -190,6 +190,10 @@ private:
 	 */
 	void rescanSelection();
 
+	/** Deallocates the textool items
+	 */
+	void clearItemList();
+
 	/** greebo: Passes the given visitor to every Item in the hierarchy.
 	 */
 	void foreachItem(textool::ItemVisitor& visitor);

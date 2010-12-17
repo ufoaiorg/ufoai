@@ -32,6 +32,14 @@ BrushItem::BrushItem(Brush& sourceBrush) :
 	_sourceBrush.forEachFace(FaceItemCreator(_children));
 }
 
+BrushItem::~BrushItem() {
+	for (TexToolItemVec::iterator i = _children.begin(); i != _children.end(); ++i) {
+		delete *i;
+	}
+
+	_children.clear();
+}
+
 void BrushItem::beginTransformation() {
 	_sourceBrush.undoSave();
 }

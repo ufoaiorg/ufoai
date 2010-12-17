@@ -20,6 +20,14 @@ FaceItem::FaceItem(Face& sourceFace) :
 	}
 }
 
+FaceItem::~FaceItem() {
+	for (TexToolItemVec::iterator i = _children.begin(); i != _children.end(); ++i) {
+		delete *i;
+	}
+
+	_children.clear();
+}
+
 AABB FaceItem::getExtents() {
 	AABB returnValue;
 

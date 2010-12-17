@@ -163,6 +163,8 @@ void TexTool::gridDown() {
 }
 
 void TexTool::shutdown() {
+	clearItemList();
+
 	// De-register this as selectionsystem observer
 	GlobalSelectionSystem().removeObserver(this);
 
@@ -196,11 +198,19 @@ void TexTool::update() {
 		_shader->DecRef();
 }
 
+void TexTool::clearItemList() {
+	for (textool::TexToolItemVec::iterator i = _items.begin(); i != _items.end(); ++i) {
+		delete *i;
+	}
+
+	_items.clear();
+}
+
 void TexTool::rescanSelection() {
 	update();
 
 	// Clear the list to remove all the previously allocated items
-	_items.clear();
+	clearItemList();
 	std::string name = _shader != NULL ? _shader->getName() : "";
 	// Does the selection use one single shader?
 	if (name != "") {
