@@ -5326,12 +5326,6 @@ base/textures/tex_buildings/concrete008.png | GNU General Public License 2.0 |  
 base/textures/tex_buildings/concrete008_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_buildings/concrete009.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete03.tga
 base/textures/tex_buildings/concrete009_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
-base/textures/tex_buildings/concrete010.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete1a.tga
-base/textures/tex_buildings/concrete010_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete1a_norm.tga
-base/textures/tex_buildings/concrete010_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete1a_gloss.tga
-base/textures/tex_buildings/concrete011.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete1a.tga
-base/textures/tex_buildings/concrete011_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete1a_norm.tga
-base/textures/tex_buildings/concrete011_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete1a_gloss.tga
 base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -5349,27 +5343,6 @@ base/textures/tex_buildings/concrete021.jpg | GNU General Public License 2.0 | W
 base/textures/tex_buildings/concrete022.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete022_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete023.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/concrete024.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete2a.tga
-base/textures/tex_buildings/concrete024_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete2a_norm.tga
-base/textures/tex_buildings/concrete024_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete2a_gloss.tga
-base/textures/tex_buildings/concrete025.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete3.tga
-base/textures/tex_buildings/concrete025_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete3_norm.tga
-base/textures/tex_buildings/concrete025_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete3_gloss.tga
-base/textures/tex_buildings/concrete026.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete4a.tga
-base/textures/tex_buildings/concrete026_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete4a_norm.tga
-base/textures/tex_buildings/concrete026_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete4a_gloss.tga
-base/textures/tex_buildings/concrete027.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete4b.tga
-base/textures/tex_buildings/concrete027_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete4b_norm.tga
-base/textures/tex_buildings/concrete027_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete4b_gloss.tga
-base/textures/tex_buildings/concrete028.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5a.tga
-base/textures/tex_buildings/concrete028_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5a_norm.tga
-base/textures/tex_buildings/concrete028_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5a_gloss.tga
-base/textures/tex_buildings/concrete029.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5b.tga
-base/textures/tex_buildings/concrete029_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5b_norm.tga
-base/textures/tex_buildings/concrete029_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5b_gloss.tga
-base/textures/tex_buildings/concrete030.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5a.tga
-base/textures/tex_buildings/concrete030_nm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5a_norm.tga
-base/textures/tex_buildings/concrete030_sm.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete5a_gloss.tga
 base/textures/tex_buildings/crate_drtyow.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/crate_drtyow_sign.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
