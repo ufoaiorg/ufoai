@@ -5809,7 +5809,7 @@ base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or late
 base/textures/tex_furniture/couch_d.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_d_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e.png | GNU General Public License 2.0 or later | Voller
-base/textures/tex_furniture/couche_sm.png | GNU General Public License 2.0 or later
+base/textures/tex_furniture/couch_e_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/seat002.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/seat003.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6682,6 +6682,7 @@ base/textures/tex_pics/art_portrait_madonna01.jpg | GNU General Public License 2
 base/textures/tex_pics/art_portrait_maiden.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_runner.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_textile01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/art_textile01_nm.png | GNU General Public License 2.0 | MCR | John W. Bjerk (eleazar)
 base/textures/tex_pics/asia001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/asia002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/asia003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -6706,6 +6707,7 @@ base/textures/tex_pics/landsc008.jpg | GNU General Public License 2.0 | John W. 
 base/textures/tex_pics/landsc_conners_hill.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/landsc_topichow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/mc_kinnsi.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/mc_kinnsi_gm.png | GNU General Public License 2.0 | MCR | John W. Bjerk (eleazar)
 base/textures/tex_pics/messboard002.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_pics/poster_xcommando.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/science001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -6715,7 +6717,9 @@ base/textures/tex_pics/science004.jpg | GNU General Public License 2.0 | John W.
 base/textures/tex_pics/science005.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/statistics.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/tonight1.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_pics/tonight1_gm.png | GNU General Public License 2.0 or later | MCR | Martin Gerhardy
 base/textures/tex_pics/tonight_honuda.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_pics/tonight_honuda_gm.png | GNU General Public License 2.0 or later | MCR | Martin Gerhardy
 base/textures/tex_pics/traktor1.jpg | Public Domain | US Federal Government
 base/textures/tex_pics/traktor2.jpg | Creative Commons Attribution-Share Alike 2.0 | Solitude
 base/textures/tex_shop/fruits001.png | GNU General Public License 2.0 | MCR
