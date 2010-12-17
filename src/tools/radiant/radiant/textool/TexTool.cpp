@@ -128,10 +128,10 @@ void TexTool::populateWindow() {
 }
 
 void TexTool::toggle() {
-	if (isVisible())
-		hide();
+	if (Instance().isVisible())
+		Instance().hide();
 	else
-		show();
+		Instance().show();
 }
 
 // Pre-hide callback
@@ -800,7 +800,7 @@ gboolean TexTool::triggerRedraw(GtkWidget* widget, GdkEventFocus* event, TexTool
 
 gboolean TexTool::onDelete(GtkWidget* widget, GdkEvent* event, TexTool* self) {
 	// Toggle the visibility of the textool window
-	self->toggle();
+	toggle();
 
 	// Don't propagate the delete event
 	return true;
@@ -930,6 +930,7 @@ void TexTool::texToolFlipT() {
 }
 
 void TexTool::registerCommands() {
+	GlobalEventManager().addCommand("TextureTool", FreeCaller<TexTool::toggle>());
 	GlobalEventManager().addCommand("TexToolGridUp", FreeCaller<TexTool::texToolGridUp>());
 	GlobalEventManager().addCommand("TexToolGridDown", FreeCaller<TexTool::texToolGridDown>());
 	GlobalEventManager().addCommand("TexToolSnapToGrid", FreeCaller<TexTool::texToolSnapToGrid>());
