@@ -242,6 +242,7 @@ static void CL_ParseResearchedCampaignItems (const campaign_t *campaign, const c
 
 /**
  * @brief This function parses a list of items that should be set to researchable = true after campaign start
+ * @param[in] campaign The campaign data structure
  * @param[in] name Name of the techlist
  * @param[in,out] text Script to parse
  * @param[in] researchable Mark them researchable or not researchable

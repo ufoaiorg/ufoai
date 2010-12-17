@@ -477,6 +477,7 @@ technology_t* RS_GetTechForItem (const objDef_t *item)
  * @brief Gets all needed names/file-paths/etc... for each technology entry.
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
  * research tree/inventory/etc... are initialised.
+ * @param[in] campaign The campaign data structure
  * @param[in] load qtrue if we are loading a game, qfalse otherwise
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
  * @todo Enhance ammo model display (see comment in code).

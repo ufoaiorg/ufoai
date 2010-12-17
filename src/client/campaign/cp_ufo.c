@@ -505,6 +505,7 @@ void UFO_CheckShootBack (const campaign_t* campaign, aircraft_t *ufo, aircraft_t
 
 /**
  * @brief Make the UFOs run
+ * @param[in] campaign The campaign data structure
  * @param[in] deltaTime The time passed since last call
  */
 void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
