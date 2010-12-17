@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/ufotypes.h"
 #include "../game/g_local.h"
 #include "../server/server.h"
+#include "../client/renderer/r_state.h"
 
 /**
  * The suite initialization function.
@@ -41,6 +42,7 @@ static int UFO_InitSuiteGame (void)
 	Com_ParseScripts(qtrue);
 
 	sv_genericPool = Mem_CreatePool("server-gametest");
+	r_state.active_texunit = &r_state.texunits[0];
 	return 0;
 }
 
