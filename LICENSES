@@ -6654,6 +6654,10 @@ base/textures/tex_nature/rock003_nm.png | GNU General Public License 2.0 or late
 base/textures/tex_nature/rock005_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/rock006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/rock007_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/rockyground01.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, rockyground01.tga
+base/textures/tex_nature/rockyground01_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rockyground01_bump.tga
+base/textures/tex_nature/rockyground02.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, rockyground02.tga
+base/textures/tex_nature/rockyground02_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rockyground02_bump.tga
 base/textures/tex_nature/sand.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/snow001.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/snow001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
