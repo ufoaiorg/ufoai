@@ -657,19 +657,19 @@ struct edict_s {
 	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 	solid_t solid;
 
-	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
-	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
+	vec3_t mins, maxs;		/**< position of min and max points - relative to origin */
+	vec3_t absmin, absmax;	/**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
 	edict_t *child;	/**< e.g. the trigger for this edict */
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
-	int modelindex;	 /**< inline model index */
+	int modelindex;	/**< inline model index */
 
 	/*================================ */
 	/* don't change anything above here - the server expects the fields in that order */
 	/*================================ */
 
-	int mapNum;		/**< entity number in the map file */
+	int mapNum;			/**< entity number in the map file */
 	const char *model;	/**< inline model (start with * and is followed by the model numberer)
 						 * or misc_model model name (e.g. md2) */
 
@@ -705,10 +705,10 @@ struct edict_s {
 
 	/** delayed reaction fire */
 	const edict_t *reactionTarget;	/**< the current moving actor - only set when this actor has reaction fire enabled */
-	float reactionTUs;	/**< time that an opponent has left until the attacker can react */
+	float reactionTUs;				/**< time that an opponent has left until the attacker can react */
 	qboolean reactionNoDraw;
-	qboolean inRescueZone;	/**< the actor is standing in a rescue zone if this is true - this means that
-							 * when the mission is aborted the actor will not die */
+	qboolean inRescueZone;			/**< the actor is standing in a rescue zone if this is true - this means that
+									 * when the mission is aborted the actor will not die */
 
 	/** client actions - interact with the world */
 	edict_t *clientAction;
@@ -722,13 +722,13 @@ struct edict_s {
 	float angle;	/**< entity yaw - (0-360 degree) set via mapeditor - sometimes used for movement direction,
 					 * then -1=up; -2=down is used additionally */
 
-	int speed;	/**< speed of entities - e.g. rotating or actors */
-	const char *target;	/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
-	const char *targetname;	/**< name pointed to by target - see the target of the parent edict */
-	const char *item;	/**< the item id that must be placed to e.g. the func_mission to activate the use function */
+	int speed;					/**< speed of entities - e.g. rotating or actors */
+	const char *target;			/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
+	const char *targetname;		/**< name pointed to by target - see the target of the parent edict */
+	const char *item;			/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
-	const char *message; /**< misc_message */
-	const char *noise;	/**< sounds - e.g. for func_door */
+	const char *message;		/**< misc_message */
+	const char *noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
 	int time;		/**< general purpose 'rounds' variable - set via mapeditor often */
@@ -751,8 +751,8 @@ struct edict_s {
 	qboolean (*use)(edict_t *self, edict_t *activator);
 	qboolean (*destroy)(edict_t *self);
 
-	edict_t *touchedNext; /**< entity list of edict that are currently touching the trigger_touch */
-	int doorState;	/**< open or closed */
+	edict_t *touchedNext;	/**< entity list of edict that are currently touching the trigger_touch */
+	int doorState;			/**< open or closed */
 
 	moveinfo_t		moveinfo;
 
@@ -763,12 +763,12 @@ struct edict_s {
 	 * @sa G_FindEdictGroups */
 	edict_t *groupChain;
 	edict_t *groupMaster;	/**< first entry in the list */
-	int flags;		/**< FL_* */
+	int flags;				/**< FL_* */
 
 	AI_t AI; /**< The character's artificial intelligence */
 
-	pos3_t *forbiddenListPos; /**< this is used for e.g. misc_models with the solid flag set - this will
-								* hold a list of grid positions that are blocked by the aabb of the model */
+	pos3_t *forbiddenListPos;	/**< this is used for e.g. misc_models with the solid flag set - this will
+								 * hold a list of grid positions that are blocked by the aabb of the model */
 	int forbiddenListSize;		/**< amount of entries in the forbiddenListPos */
 };
 
