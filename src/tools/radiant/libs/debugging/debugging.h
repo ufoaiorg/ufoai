@@ -41,8 +41,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define STR2(x)	STR(x)
 #define FILE_LINE __FILE__ ":" STR2(__LINE__)
 
-#define DEBUG_ASSERTS
-
 class DebugMessageHandler {
 public:
 	virtual ~DebugMessageHandler(){}
@@ -94,7 +92,7 @@ inline DebugMessageHandler& globalDebugMessageHandler() {
 	return GlobalDebugMessageHandler::instance().getHandler();
 }
 
-#if defined(DEBUG_ASSERTS)
+#ifdef DEBUG
 
 /// \brief Sends a \p message to the current debug-message-handler text-output-stream if \p condition evaluates to false.
 #define ASSERT_MESSAGE(condition, message) do{\
