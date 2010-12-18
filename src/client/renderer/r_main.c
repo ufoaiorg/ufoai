@@ -419,8 +419,8 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 
 static qboolean R_CvarCheckLights (cvar_t *cvar)
 {
-	if (!cvar->integer)
-		Cvar_SetValue("r_dynamic_lights", 0);
+	if (r_dynamic_lights)
+		Cvar_SetValue("r_dynamic_lights", cvar->integer);
 
 	return Cvar_AssertValue(cvar, 0, 1, qtrue);
 }
@@ -428,7 +428,11 @@ static qboolean R_CvarCheckLights (cvar_t *cvar)
 static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 {
 	if (!r_lights->integer){
-		Cvar_SetValue(cvar->name, 0);
+		if (cvar->integer != 0) {
+			Com_Printf("No lighting activated\n");
+			Cvar_SetValue(cvar->name, 0);
+			return qtrue;
+		}
 		return qfalse;
 	}
 	return Cvar_AssertValue(cvar, 1, r_config.maxLights, qtrue);
