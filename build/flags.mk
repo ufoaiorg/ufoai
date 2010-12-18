@@ -31,6 +31,7 @@ CFLAGS += -Wwrite-strings
 
 ifeq ($(PROFILING),1)
   CFLAGS  += -pg
+  CCFLAGS  += -pg
   LDFLAGS += -pg
 endif
 
