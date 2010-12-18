@@ -180,7 +180,7 @@ foreach my $app (@apps) {
 		if($i=~/\.dylib$/) {
 			$fworlib2 = "Libraries";
 		} else {
-			next;
+			$fworlib2 = "Frameworks";
 		}
 
 		if($i =~ /.*\/([^\/]+)$/) {
