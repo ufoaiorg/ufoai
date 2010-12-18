@@ -92,7 +92,7 @@ class FaceShader: public ModuleObserver
 
 		const std::string& getShader () const;
 		void setShader (const std::string& name);
-		ContentsFlagsValue getFlags () const;
+		const ContentsFlagsValue& getFlags () const;
 		void setFlags (const ContentsFlagsValue& flags);
 
 		Shader* state () const;

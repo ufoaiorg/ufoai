@@ -52,14 +52,10 @@ class InstanceUpdateWalker: public scene::Graph::Walker
 		NodeVisibilityUpdater _hideWalker;
 		NodeVisibilityUpdater _showWalker;
 
-		// Cached boolean to avoid GlobalFilterSystem() queries for each node
-		bool _brushesAreVisible;
-
 	public:
 
 		InstanceUpdateWalker () :
-			_hideWalker(true), _showWalker(false),
-					_brushesAreVisible(GlobalFilterSystem().isVisible("object", "brush"))
+			_hideWalker(true), _showWalker(false)
 		{
 		}
 
@@ -79,7 +75,7 @@ class InstanceUpdateWalker: public scene::Graph::Walker
 			// greebo: Update visibility of BrushInstances
 			if (Node_isBrush(node)) {
 				Brush* brush = Node_getBrush(node);
-				bool isVisible = _brushesAreVisible && brush->hasVisibleMaterial();
+				bool isVisible = brush->hasVisibleMaterial();
 				Node_traverseSubgraph(node, isVisible ? _showWalker : _hideWalker);
 			}
 
