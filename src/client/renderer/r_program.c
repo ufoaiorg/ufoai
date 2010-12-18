@@ -788,12 +788,9 @@ void R_InitPrograms (void)
  */
 void R_RestartPrograms_f (void)
 {
-	if(r_programs->integer)
-	{
+	if (r_programs->integer) {
 		Com_Printf("glsl restart to a version of v%s\n", Cvar_Get("r_glsl_version", NULL, 0, NULL)->string);
-	}
-	else
-	{
+	} else {
 		Com_Printf("glsl shutdown\n");
 	}
 
