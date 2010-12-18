@@ -833,7 +833,7 @@ static qboolean R_InitExtensions (void)
 
 	if (strstr(r_config.extensionsString, "GL_ARB_shading_language_100") || glVersionMajor >= 2) {
 		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0; it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0 then enable shaders as the implementation supports the shading language!*/
-		sscanf((const char *)glGetString(GL_SHADING_LANGUAGE_VERSION), "%d %*c %2s", &glslVersionMajor, glslVersionMinor);
+		sscanf((const char *)glGetString(GL_SHADING_LANGUAGE_VERSION), "%d%*1c%2s", &glslVersionMajor, glslVersionMinor);
 		snprintf(r_config.shadingLanguageGuaranteedVersion, sizeof(r_config.shadingLanguageGuaranteedVersion), "%d.%s", glslVersionMajor, glslVersionMinor);
 		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %s\n", (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
 	} else {
@@ -893,7 +893,7 @@ static qboolean R_InitExtensions (void)
 	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
 
 	/* Set up the string component of r_glsl_version.*/
-	r_glsl_version = Cvar_Get("r_glsl_version", r_config.shadingLanguageGuaranteedVersion, CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
+	r_glsl_version = Cvar_Get("r_glsl_version", "1.10", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
 	r_glsl_version->modified = qfalse;
 	/* Set up the integer component of r_glsl_version.*/
 	sscanf(r_glsl_version->string, "%1d%*1c%d", &glslVersionMajor, &glslVersionMinorInt);
