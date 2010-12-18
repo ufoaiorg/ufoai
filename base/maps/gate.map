@@ -9836,7 +9836,7 @@
 // entity 59
 {
 "classname" "func_door"
-"spawnflags" "255"
+"spawnflags" "252"
 // brush 0
 {
 ( 96 -32 200 ) ( 96 -64 200 ) ( 94 -32 200 ) tex_doors/door007 3 114.7586 0 0.25 0.2265625
