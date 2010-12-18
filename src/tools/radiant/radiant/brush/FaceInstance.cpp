@@ -130,20 +130,22 @@ void FaceInstance::invertSelected ()
 template<typename Functor>
 void FaceInstance::SelectedVertices_foreach (Functor functor) const
 {
+	const Face& face = getFace();
 	for (VertexSelection::const_iterator i = m_vertexSelection.begin(); i != m_vertexSelection.end(); ++i) {
-		std::size_t index = Winding_FindAdjacent(getFace().getWinding(), *i);
+		std::size_t index = Winding_FindAdjacent(face.getWinding(), *i);
 		if (index != c_brush_maxFaces) {
-			functor(getFace().getWinding()[index].vertex);
+			functor(face.getWinding()[index].vertex);
 		}
 	}
 }
 template<typename Functor>
 void FaceInstance::SelectedEdges_foreach (Functor functor) const
 {
+	const Face& face = getFace();
 	for (VertexSelection::const_iterator i = m_edgeSelection.begin(); i != m_edgeSelection.end(); ++i) {
-		std::size_t index = Winding_FindAdjacent(getFace().getWinding(), *i);
+		std::size_t index = Winding_FindAdjacent(face.getWinding(), *i);
 		if (index != c_brush_maxFaces) {
-			const Winding& winding = getFace().getWinding();
+			const Winding& winding = face.getWinding();
 			std::size_t adjacent = winding.next(index);
 			functor(vector3_mid(winding[index].vertex, winding[adjacent].vertex));
 		}
