@@ -18,13 +18,13 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
 	float attenuate = 1.0;
 
-	if (lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
+	if (bool(lightSource.position.w)){ /* directional sources don't get attenuated */
 		float dist = length((lightSource.position).xyz - point);
 		float attenDiv = (lightSource.constantAttenuation +
 				lightSource.linearAttenuation * dist +
 				lightSource.quadraticAttenuation * dist * dist);
 		// if none of the attenuation parameters are set, we keep 1.0
-		if (attenDiv != 0.0) {
+		if (bool(attenDiv)) {
 			attenuate = 1.0 / attenDiv;
 		}
 	}
