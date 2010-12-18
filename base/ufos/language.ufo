@@ -308,6 +308,14 @@ language zh_cn {
 	}
 }
 
+language zh_tw {
+	"_Traditional Chinese"
+	{
+		zh_TW.UTF-8
+		zh_TW.utf8
+	}
+}
+
 language bg {
 	"_Bulgarian"
 	{
