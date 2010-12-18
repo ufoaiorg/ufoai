@@ -26,6 +26,7 @@
 
 #include "r_local.h"
 #include "r_error.h"
+#include "r_program.h"
 #include "../../shared/parse.h"
 #include "../../shared/shared.h"
 
@@ -245,6 +246,13 @@ void R_ShutdownPrograms (void)
 	}
 }
 
+/**
+ * @brief Prefixes shader string (out) with in.
+ * @param[in] in The string to prefix onto the shader string (out).
+ * @param[in/out] out The shader string (initially was the whole shader file).
+ * @param[in/out] len The amount of space left in the buffer pointed to by *out (why on earth is it done this way?!)
+ * @return strlen(in)
+ */
 static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char **out, size_t *len)
 {
 	const size_t inLength = strlen(in);
@@ -256,7 +264,7 @@ static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in
 
 static size_t R_InitializeShader (const char *name, char *out, size_t len)
 {
-	size_t i;
+	size_t initialChars = 0;
 	const char *hwHack, *defines;
 
 	switch (r_config.hardwareType) {
@@ -277,27 +285,44 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 		Com_Error(ERR_FATAL, "R_PreprocessShader: Unknown hardwaretype");
 	}
 
-	i = 0;
+	/*
+	 * Prefix "#version xxx" onto shader string.
+	 * This causes GLSL compiler to compile to that version.
+	 */
+	defines = va("#version %d\n", r_glsl_version->integer);
+	initialChars += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
-	defines = "#version 110\n";
-	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+	/*
+	 * Prefix "#define glslxxx" onto shader string.
+	 * This named constant is used to setup shader code to match the desired GLSL spec.
+	 */
+	defines = va("#define glsl%d\n", r_glsl_version->integer);
+	initialChars += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+
+	/* Define r_width.*/
 	defines = va("#ifndef r_width\n#define r_width %f\n#endif\n", (float)viddef.context.width);
-	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+	initialChars += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+
+	/* Define r_height.*/
 	defines = va("#ifndef r_height\n#define r_height %f\n#endif\n", (float)viddef.context.height);
-	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+	initialChars += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
-	if (hwHack)
-		i += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
+	if (hwHack) {
+		initialChars += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
+	}
 
-	return i;
+	return initialChars;
 }
 
+/**
+ * @brief Does our own preprocessing to the shader file, before the
+ * GLSL implementation calls its preprocessor.
+ */
 static size_t R_PreprocessShader (const char *name, const char *in, char *out, int len)
 {
 	byte *buffer;
 	size_t i = 0;
 
-	/** @todo (arisian): don't GLSL compilers have built-in preprocessors that can handle this kind of stuff? */
 	while (*in) {
 		if (!strncmp(in, "#include", 8)) {
 			char path[MAX_QPATH];
@@ -317,7 +342,8 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, i
 			FS_FreeFile(buf);
 		}
 
-		if (!strncmp(in, "#if", 3)) {  /* conditionals */
+		/** Handle #if here, not #ifndef or #ifdef.*/
+		if (!strncmp(in, "#if", 3) && strncmp(in, "#ifndef", 7) && strncmp(in, "#ifdef", 6)) {
 			float f;
 			qboolean elseclause = qfalse;
 
@@ -469,12 +495,19 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	size_t bufLength = SHADER_BUF_SIZE;
 	size_t initializeLength;
 
+#ifdef DEBUG
+	/* Used to contain result of shader compile.*/
+	char log[MAX_STRING_CHARS];
+#endif
+
 	snprintf(path, sizeof(path), "shaders/%s", name);
 
 	if (FS_LoadFile(path, &buf) == -1) {
-		Com_DPrintf(DEBUG_RENDERER, "R_LoadShader: Failed to load %s.\n", name);
+		Com_DPrintf(DEBUG_RENDERER, "R_LoadShader: Failed to load ./base/shaders/%s.\n", name);
 		return NULL;
 	}
+
+	Com_DPrintf(DEBUG_RENDERER, "R_LoadShader: Loading ./base/shaders/%s.\n", name);
 
 	srcBuf = source = (char *)Mem_PoolAlloc(bufLength, vid_imagePool, 0);
 
@@ -518,10 +551,16 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	Mem_Free(source);
 
 	qglGetShaderiv(sh->id, GL_COMPILE_STATUS, &e);
+#ifdef DEBUG
+	qglGetShaderInfoLog(sh->id, sizeof(log) - 1, NULL, log);
+	Com_Printf("R_LoadShader: %s: %s", sh->name, log);
+#endif
 	if (!e) {
+#ifndef DEBUG
 		char log[MAX_STRING_CHARS];
 		qglGetShaderInfoLog(sh->id, sizeof(log) - 1, NULL, log);
-		Com_Printf("R_LoadShader: %s: %s\n", sh->name, log);
+		Com_Printf("R_LoadShader: %s: %s", sh->name, log);
+#endif
 
 		qglDeleteShader(sh->id);
 		memset(sh, 0, sizeof(*sh));
