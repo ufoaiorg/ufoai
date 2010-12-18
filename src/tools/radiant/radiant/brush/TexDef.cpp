@@ -13,6 +13,15 @@ TexDef::TexDef ()
 	_scale[1] = 1;
 }
 
+TexDef::TexDef (const TexDef& other)
+{
+	_shift[0] = other._shift[0];
+	_shift[1] = other._shift[1];
+	_rotate = other._rotate;
+	_scale[0] = other._scale[0];
+	_scale[1] = other._scale[1];
+}
+
 // Constructs a TexDef out of the given transformation matrix plus width/height
 TexDef::TexDef (float width, float height, const Matrix4& transform)
 {

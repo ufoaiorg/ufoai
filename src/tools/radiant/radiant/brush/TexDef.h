@@ -10,6 +10,9 @@ class TexDef: public GenericTextureDefinition
 		// Constructor
 		TexDef ();
 
+		// copy constructor
+		TexDef (const TexDef& other);
+
 		// Constructs a TexDef out of the given transformation matrix plus width/height
 		TexDef (float width, float height, const Matrix4& transform);
 
