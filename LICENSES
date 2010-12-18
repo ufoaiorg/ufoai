@@ -5809,6 +5809,7 @@ base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or late
 base/textures/tex_furniture/couch_d.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_d_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e.png | GNU General Public License 2.0 or later | Voller
+base/textures/tex_furniture/couch_e_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/seat002.jpg | GNU General Public License 2.0 or later
@@ -5830,8 +5831,11 @@ base/textures/tex_furniture/table007.png | GNU General Public License 2.0 or lat
 base/textures/tex_furniture/table007_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/table008.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/textil001.png | GNU General Public License 2.0 or later | Voller
+base/textures/tex_furniture/textil001_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/textil002.png | GNU General Public License 2.0 or later | Voller
+base/textures/tex_furniture/textil002_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/textil003.png | GNU General Public License 2.0 or later | Voller
+base/textures/tex_furniture/textil003_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/textil006.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_lights/japlight.png | GNU General Public License 2.0 | MCR
 base/textures/tex_lights/land_li_blue.png | GNU General Public License 2.0 | MCR
@@ -6563,13 +6567,18 @@ base/textures/tex_misc/yellowtwowaysign.jpg | Public Domain |  | Public Domain G
 base/textures/tex_misc/yellowtwowaysignback.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/zulu01.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/desert001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert002.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock.tga
+base/textures/tex_nature/desert002_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock_norm.tga
 base/textures/tex_nature/desert003.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert004.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert005.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock2.tga
+base/textures/tex_nature/desert005_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock2_norm.tga
 base/textures/tex_nature/desert006.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert007.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/dirt.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/dirt001.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/dirt_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/dirt_se01.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_nature/dirt_se05.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_nature/dirt_se11.png | GNU General Public License 2.0 | Nate Wright
