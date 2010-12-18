@@ -1,4 +1,7 @@
-// default battlescape fragment shader
+/**
+ * @file world_fs.glsl
+ * @brief Default battlescape fragment shader.
+ */
 
 uniform int BUMPMAP;
 uniform int ROUGHMAP;
@@ -6,15 +9,15 @@ uniform int SPECULARMAP;
 uniform int DYNAMICLIGHTS;
 uniform float GLOWSCALE;
 
-/* diffuse texture */
+/** Diffuse texture.*/
 uniform sampler2D SAMPLER0;
-/* lightmap or specularmap*/
+/** Lightmap or specularmap.*/
 uniform sampler2D SAMPLER1;
-/* deluxemap or roughnessmap*/
+/** Deluxemap or roughnessmap.*/
 uniform sampler2D SAMPLER2;
-/* normalmap */
+/** Normalmap.*/
 uniform sampler2D SAMPLER3;
-/* glowmap */
+/** Glowmap.*/
 uniform sampler2D SAMPLER4;
 
 const vec3 two = vec3(2.0);
@@ -31,7 +34,7 @@ varying vec3 lightDirs[R_DYNAMIC_LIGHTS];
 #include "cook-torrance_fs.glsl"
 
 /**
- * main
+ * @brief main
  */
 void main(void){
 
@@ -52,7 +55,8 @@ void main(void){
 		vec3 lightmap = texture2D(SAMPLER1, gl_TexCoord[1].st).rgb;
 
 #if r_bumpmap
-		if(BUMPMAP > 0){  // sample deluxemap and normalmap
+		if(BUMPMAP > 0){
+			/* Sample deluxemap and normalmap.*/
 			vec4 normalmap = texture2D(SAMPLER3, gl_TexCoord[0].st);
 			normalmap.rgb = normalize(two * (normalmap.rgb + negHalf));
 
@@ -60,24 +64,25 @@ void main(void){
 			vec3 deluxemap = texture2D(SAMPLER2, gl_TexCoord[1].st).rgb;
 			deluxemap = normalize(two * (deluxemap + negHalf));
 
-			// resolve parallax offset and bump mapping
+			/* Resolve parallax offset and bump mapping.*/
 			offset = BumpTexcoord(normalmap.a);
 			bump = BumpFragment(deluxemap, normalmap.rgb);
 		}
 #endif
 
-		// sample the diffuse texture, honoring the parallax offset
+		/* Sample the diffuse texture, honoring the parallax offset.*/
 		vec4 diffuse = texture2D(SAMPLER0, gl_TexCoord[0].st + offset);
 
-		// factor in bump mapping
+		/* Factor in bump mapping.*/
 		diffuse.rgb *= bump;
 
-		// otherwise, add to lightmap
+		/* Otherwise, add to lightmap.*/
 		finalColor = LightFragment(diffuse, lightmap);
 	}
 
 #if r_fog
-	finalColor = FogFragment(finalColor);  // add fog
+	/* Add fog.*/
+	finalColor = FogFragment(finalColor);
 #endif
 
 #if r_postprocess
@@ -91,7 +96,7 @@ void main(void){
 	gl_FragColor = finalColor;
 #endif
 
-// developer tools
+/* Developer tools */
 
 #if r_debug_normals
 	if(DYNAMICLIGHTS > 0) {

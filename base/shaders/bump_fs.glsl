@@ -1,4 +1,7 @@
-// bumpmap fragment shader
+/**
+ * @file bump_fs.glsl
+ * @brief Bumpmap fragment shader.
+ */
 
 varying vec3 eyedir;
 
@@ -9,9 +12,8 @@ uniform float SPECULAR;
 
 vec3 V;
 
-
-/*
- * BumpTexcoord
+/**
+ * @brief BumpTexcoord.
  */
 vec2 BumpTexcoord(in float height){
 
@@ -21,8 +23,8 @@ vec2 BumpTexcoord(in float height){
 }
 
 
-/*
- *BumpFragment
+/**
+ * @brief BumpFragment.
  */
 vec3 BumpFragment(in vec3 lightVec, in vec3 normalVec){
 

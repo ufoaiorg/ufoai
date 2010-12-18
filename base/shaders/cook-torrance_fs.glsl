@@ -1,15 +1,18 @@
-/* NOTE: portions based on D3D9 source from Jack Hoxley */
+/**
+ * @file cook-torrance_fs.glsl
+ * @brief A fragment shader model for light reflection.
+ *
+ * The Cook-Torrance model for light reflection is a physics
+ * based model which uses two "roughness" parameters to describe
+ * the shape and distribution of micro-facets on the surface.
+ * NOTE: portions based on D3D9 source from Jack Hoxley
+ */
 
 #define ATTENUATE_THRESH 0.05
 
 /**
- * The Cook-Torrance model for light reflection is a physics
- * based model which uses two "roughness" parameters to describe
- * the shape and distribution of micro-facets on the surface.
+ * @todo does not compile on my ati x600 yet
  */
-
-
-/** @todo does not compile on my ati x600 yet */
 vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse){
 
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */

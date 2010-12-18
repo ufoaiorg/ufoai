@@ -1,4 +1,7 @@
-// warp fragment shader
+/**
+ * @file warp_fs.glsl
+ * @brief Warp fragment shader.
+ */
 
 #include "fog_fs.glsl"
 
@@ -9,25 +12,25 @@ uniform sampler2D SAMPLER0;
 uniform sampler2D SAMPLER1;
 uniform sampler2D SAMPLER4;
 
-
-/*
- * main
+/**
+ * @brief Main.
  */
 void main(void){
 
 	vec4 finalColor = vec4(0.0);
 
-	// sample the warp texture at a time-varied offset
+	/* Sample the warp texture at a time-varied offset,*/
 	vec4 warp = texture2D(SAMPLER1, gl_TexCoord[0].xy + OFFSET.xy);
 
-	// and derive a diffuse texcoord based on the warp data
+	/* and derive a diffuse texcoord based on the warp data,*/
 	vec2 coord = vec2(gl_TexCoord[0].x + warp.z, gl_TexCoord[0].y + warp.w);
 
-	// sample the diffuse texture, factoring in primary color as well
+	/* sample the diffuse texture, factoring in primary color as well.*/
 	finalColor = gl_Color * texture2D(SAMPLER0, coord);
 
 #if r_fog
-	finalColor = FogFragment(finalColor);  // add fog
+	/* Add fog.*/
+	finalColor = FogFragment(finalColor);
 #endif
 
 #if r_postprocess

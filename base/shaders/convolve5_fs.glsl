@@ -1,11 +1,18 @@
+/**
+ * @file convolve5_fs.glsl
+ * @brief convolve5 fragment shader.
+ */
+
 uniform sampler2D SAMPLER0;
 uniform float COEFFICIENTS[5];
 uniform vec2 OFFSETS[5];
 
-/* fragment shader that convolves a 5 element filter with
- * the specified texture.
+/**
+ * @brief Fragment shader that convolves a 5 element filter with the specified texture.
+ *
  * Orientation of the filter is controlled by "OFFSETS".
- * The filter itself is specified by "COEFFICIENTS". */
+ * The filter itself is specified by "COEFFICIENTS".
+ */
 void main(void) {
 
 	vec2 inColor = gl_TexCoord[0].st;

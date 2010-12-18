@@ -1,10 +1,18 @@
+/**
+ * @file convolve9_fs.glsl
+ * @brief convolve9 fragment shader.
+ */
+
 uniform sampler2D SAMPLER0;
 uniform float COEFFICIENTS[9];
 uniform vec2 OFFSETS[9];
 
-/* fragment shader that convolves a 9 element filter with the specified texture.
+/**
+ * @brief Fragment shader that convolves a 9 element filter with the specified texture.
+ *
  * Orientation of the filter is controlled by "OFFSETS".
- * The filter itself is specified by "COEFFICIENTS". */
+ * The filter itself is specified by "COEFFICIENTS".
+ */
 void main(void){
 
 	vec2 inColor = gl_TexCoord[0].st;

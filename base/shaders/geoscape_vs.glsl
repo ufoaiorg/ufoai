@@ -1,3 +1,8 @@
+/**
+ * @file geoscape_vs.glsl
+ * @brief Geoscape vertex shader.
+ */
+
 varying vec2 tex;
 
 varying vec4 ambientLight;

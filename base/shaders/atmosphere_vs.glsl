@@ -1,3 +1,8 @@
+/**
+ * @file atmosphere_vs.glsl
+ * @brief Atmosphere vertex shader
+ */
+
 varying vec2 tex;
 
 varying vec4 ambientLight;

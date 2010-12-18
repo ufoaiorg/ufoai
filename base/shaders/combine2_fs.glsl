@@ -1,3 +1,8 @@
+/**
+ * @file combine2_fs.glsl
+ * @brief combine2 fragment shader.
+ */
+
 uniform sampler2D SAMPLER0;
 uniform sampler2D SAMPLER1;
 uniform vec4 DEFAULTCOLOR;

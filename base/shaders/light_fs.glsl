@@ -1,9 +1,10 @@
-// dynamic lighting fragment shader
+/**
+ * @file light_fs.glsl
+ * @brief Dynamic lighting fragment shader.
+ */
 
 varying vec3 point;
 varying vec3 normal;
-
-
 
 vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec4 diffuse, in vec3 lightmap){
 
@@ -35,8 +36,8 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec4 diffuse,
 	return light;
 }
 
-/*
- * LightFragment
+/**
+ * @brief LightFragment.
  */
 vec4 LightFragment(in vec4 diffuse, in vec3 lightmap){
 
@@ -48,10 +49,10 @@ vec4 LightFragment(in vec4 diffuse, in vec3 lightmap){
 
 	light = clamp(light, 0.0, 1.8);
 
-	// now modulate the diffuse sample with the modified lightmap
+	/* Now modulate the diffuse sample with the modified lightmap.*/
 	vec4 lightColor;
 	lightColor.rgb = diffuse.rgb * (lightmap + light);
-	// lastly modulate the alpha channel by the color
+	/* Lastly modulate the alpha channel by the color.*/
 	lightColor.a = diffuse.a * gl_Color.a;
 
 	return lightColor;

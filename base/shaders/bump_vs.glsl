@@ -1,4 +1,7 @@
-// bumpmap vertex shader, requires light_vs.glsl and lerp_vs.glsl
+/**
+ * @file bump_vs.glsl
+ * @brief Bumpmap vertex shader, requires light_vs.glsl and lerp_vs.glsl.
+ */
 
 attribute vec4 TANGENT;
 uniform int DYNAMICLIGHTS;
@@ -10,8 +13,8 @@ varying vec3 eyedir;
 varying vec3 lightDirs[R_DYNAMIC_LIGHTS];
 #endif
 
-/*
- * BumpVertex
+/**
+ * @brief BumpVertex
  */
 void BumpVertex(void){
 

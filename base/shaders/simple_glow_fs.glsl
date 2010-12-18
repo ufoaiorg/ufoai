@@ -1,3 +1,8 @@
+/**
+ * @file simple_glow_fs.glsl
+ * @brief I'm not sure where this shader is applied.
+ */
+
 uniform sampler2D SAMPLER0;
 uniform sampler2D SAMPLER1;
 

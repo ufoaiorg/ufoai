@@ -1,4 +1,7 @@
-// world vertex shader
+/**
+ * @file world_vs.glsl
+ * @brief Default battlescape vertex shader.
+ */
 
 uniform float OFFSET;
 uniform int BUMPMAP;
@@ -31,7 +34,7 @@ varying float fog;
 #include "fog_vs.glsl"
 
 /**
- * main
+ * @brief Main.
  */
 void main(void){
 
@@ -43,12 +46,12 @@ void main(void){
 		Tangent = TANGENTS;
 	}
 
-	// mvp transform into clip space
-	//gl_Position = ftransform();
+	/* MVP transform into clip space.*/
+	/*gl_Position = ftransform();*/
 	gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4(Vertex);
 
 
-	// pass texcoords through
+	/* Pass texcoords through.*/
 	gl_TexCoord[0] = gl_MultiTexCoord0 + OFFSET;
 	gl_TexCoord[1] = gl_MultiTexCoord1 + OFFSET;
 

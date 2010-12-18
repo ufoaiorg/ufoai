@@ -1,3 +1,7 @@
+/**
+ * @file atmosphere_fs.glsl
+ * @brief Atmosphere fragment shader.
+ */
 varying vec2 tex;
 
 varying vec4 ambientLight;
@@ -7,9 +11,9 @@ varying vec4 specularLight;
 varying vec3 lightVec;
 varying vec3 eyeVec;
 
-/* diffuse */
+/** Diffuse.*/
 uniform sampler2D SAMPLER0;
-/* normalmap */
+/** Normalmap.*/
 uniform sampler2D SAMPLER2;
 
 uniform float GLOWSCALE;
@@ -17,7 +21,9 @@ uniform vec4 DEFAULTCOLOR;
 
 const float specularExp = 32.0;
 
-/* Fresnel's equations for reflection and refraction between different density media */
+/**
+ * @brief Fresnel's equations for reflection and refraction between different density media.
+ */
 void fresnelRefract(vec3 L, vec3 N, float n1, float n2,
 	out vec3 reflection, out vec3 refraction,
 	out float reflectance, out float transmittance){

@@ -1,20 +1,23 @@
-// warp vertex shader
+/**
+ * @file warp_vs.glsl
+ * @brief Warp vertex shader.
+ */
 
 #include "fog_vs.glsl"
 
 
-/*
- * main
+/**
+ * @brief Main.
  */
 void main(void){
 
-	// mvp transform into clip space
+	/* MVP transform into clip space.*/
 	gl_Position = ftransform();
 
-	// pass texcoords through
+	/* Pass texcoords through, */
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 
-	// and primary color
+	/*  and primary color.*/
 	gl_FrontColor = gl_Color;
 
 #if r_fog
