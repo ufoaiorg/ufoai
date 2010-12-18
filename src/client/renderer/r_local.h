@@ -87,6 +87,7 @@ extern cvar_t *r_maxlightmap;
 extern cvar_t *r_warp;
 extern cvar_t *r_lights;
 extern cvar_t *r_programs;
+extern cvar_t *r_glsl_version;
 extern cvar_t *r_postprocess;
 extern cvar_t *r_shownormals;
 extern cvar_t *r_bumpmap;
@@ -149,7 +150,8 @@ typedef struct {
 	const char *vendorString;
 	const char *versionString;
 	const char *extensionsString;
-	const char *shadingLanguageVersion;
+	/** @brief Version of GLSL guaranteed to be supported by OpenGL implementation (not necessarily the one in use). Ex: "1.10". Empty if none.*/
+	char shadingLanguageGuaranteedVersion[6];
 	int maxTextureSize;
 	int maxTextureUnits;
 	int maxTextureCoords;

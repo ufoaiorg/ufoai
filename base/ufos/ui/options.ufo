@@ -973,6 +973,45 @@ window options
 				pos			"32 190"
 				size		"240 20"
 			}
+			selectbox glsl_ver
+			{
+				{
+					tooltip	"_Sets the OpenGL Shader Version.  See: http://pastebin.com/QjmRus4S"
+					cvar	*cvar:r_glsl_version
+					pos	"342 190"
+					size	"100 20"
+				}
+				option low_value
+				{
+					label   "1.10"
+					value   "1.10"
+				}
+				option medium_value
+				{
+					label   "1.30"
+					value   "1.30"
+				}
+				option normal_value
+				{
+					label   "1.50"
+					value   "1.50"
+				}
+				option high_value
+				{
+					label   "3.30"
+					value   "3.30"
+				}
+				option excellent_value
+				{
+					label   "4.00"
+					value   "4.00"
+				}
+				option extrem_value
+				{
+					label   "4.10"
+					value   "4.10"
+				}
+			}
 			checkbox glsl
 			{
 				tooltip		"_Enable OpenGL GLSL Shaders. Disable this if you experience graphical problems. ATTENTION: May require restart to take effect."
