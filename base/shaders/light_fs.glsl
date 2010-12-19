@@ -3,8 +3,16 @@
  * @brief Dynamic lighting fragment shader.
  */
 
-varying vec3 point;
-varying vec3 normal;
+#ifndef glsl110
+	/** Linkage into a shader from a previous stage, variable is copied in.*/
+        #define in_qualifier in
+#else
+        /** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
+        #define in_qualifier varying
+#endif
+
+in_qualifier vec3 point;
+in_qualifier vec3 normal;
 
 vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec4 diffuse, in vec3 lightmap){
 

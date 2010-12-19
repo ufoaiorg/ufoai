@@ -3,14 +3,26 @@
  * @brief Atmosphere vertex shader
  */
 
-varying vec2 tex;
+#ifndef glsl110
+        /** Linkage into a shader from a previous stage, variable is copied in.*/
+        #define in_qualifier in
+        /** Linkage out of a shader to a subsequent stage, variable is copied out.*/
+        #define out_qualifier out
+#else
+        /** Deprecated after glsl110; linkage between a vertex shader and OpenGL for per-vertex data.*/
+        #define in_qualifier attribute
+        /** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
+        #define out_qualifier varying
+#endif
 
-varying vec4 ambientLight;
-varying vec4 diffuseLight;
-varying vec4 specularLight;
+out_qualifier vec2 tex;
 
-varying vec3 lightVec;
-varying vec3 eyeVec;
+out_qualifier vec4 ambientLight;
+out_qualifier vec4 diffuseLight;
+out_qualifier vec4 specularLight;
+
+out_qualifier vec3 lightVec;
+out_qualifier vec3 eyeVec;
 
 uniform vec2 UVSCALE;
 

@@ -2,14 +2,23 @@
  * @file atmosphere_fs.glsl
  * @brief Atmosphere fragment shader.
  */
-varying vec2 tex;
 
-varying vec4 ambientLight;
-varying vec4 diffuseLight;
-varying vec4 specularLight;
+#ifndef glsl110
+	/** Linkage into a shader from a previous stage, variable is copied in.*/
+	#define in_qualifier in
+#else
+	/** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
+	#define in_qualifier varying
+#endif
 
-varying vec3 lightVec;
-varying vec3 eyeVec;
+in_qualifier vec2 tex;
+
+in_qualifier vec4 ambientLight;
+in_qualifier vec4 diffuseLight;
+in_qualifier vec4 specularLight;
+
+in_qualifier vec3 lightVec;
+in_qualifier vec3 eyeVec;
 
 /** Diffuse.*/
 uniform sampler2D SAMPLER0;
