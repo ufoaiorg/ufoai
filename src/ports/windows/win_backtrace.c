@@ -262,6 +262,18 @@ static LPTOP_LEVEL_EXCEPTION_FILTER g_prev = NULL;
 static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 {
 	struct output_buffer ob;
+	SYSTEMTIME timeInfo;
+	OSVERSIONINFOEX osInfo;
+
+	GetSystemTime(&timeInfo);
+
+	memset(&osInfo, 0, sizeof(osInfo));
+	osInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	if (!GetVersionEx((OSVERSIONINFO*)&osInfo)) {
+		osInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+		GetVersionEx((OSVERSIONINFO*)&osInfo);
+	}
+
 	output_init(&ob, g_output, BUFFER_MAX);
 
 	if (!SymInitialize(GetCurrentProcess(), 0, TRUE)) {
@@ -275,6 +287,17 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 		SymCleanup(GetCurrentProcess());
 	}
 
+	FILE* crash = fopen("crashdump.txt", "a");
+	if (crash != NULL) {
+		fprintf(crash, "======start======\n");
+		fprintf(crash, "Date: %.4d-%.2d-%.2d\n",
+				timeInfo.wYear, timeInfo.wMonth, timeInfo.wDay);
+		fprintf(crash, "Windows version %d.%d (Build %d) %s\n\n",
+				osInfo.dwMajorVersion, osInfo.dwMinorVersion, osInfo.dwBuildNumber, osInfo.szCSDVersion);
+		fprintf(crash, g_output);
+		fprintf(crash, "======end========\n");
+		fclose(crash);
+	}
 	fputs(g_output, stderr);
 
 	return 0;
