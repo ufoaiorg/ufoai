@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_particle.h"
 #include "ui/ui_main.h"
 #include "ui/ui_popup.h"
-#include "ui/ui_main.h"
+#include "ui/ui_draw.h"
 #include "ui/ui_font.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_parse.h"
@@ -1242,12 +1242,24 @@ static void CL_InitMemPools (void)
 	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
 }
 
+static void CL_RContextCvarChange (const char *cvarName, const char *oldValue, const char *newValue)
+{
+	UI_DisplayNotice(_("This change requires a restart"), 2000, NULL);
+}
+
+static void CL_RImagesCvarChange (const char *cvarName, const char *oldValue, const char *newValue)
+{
+	UI_DisplayNotice(_("This change might require a restart"), 2000, NULL);
+}
+
 /**
  * @sa CL_Shutdown
  * @sa CL_InitAfter
  */
 void CL_Init (void)
 {
+	const cvar_t *var;
+
 	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
 	cvar_t *fs_i18ndir;
@@ -1294,6 +1306,14 @@ void CL_Init (void)
 
 	/* Touch memory */
 	Mem_TouchGlobal();
+
+	/* cvar feedback */
+	for (var = Cvar_GetFirst(); var; var = var->next) {
+		if (var->flags & CVAR_R_CONTEXT)
+			Cvar_RegisterChangeListener(var->name, CL_RContextCvarChange);
+		if (var->flags & CVAR_R_IMAGES)
+			Cvar_RegisterChangeListener(var->name, CL_RImagesCvarChange);
+	}
 }
 
 int CL_Milliseconds (void)
@@ -1310,6 +1330,7 @@ int CL_Milliseconds (void)
  */
 void CL_Shutdown (void)
 {
+	const cvar_t *var;
 	static qboolean isdown = qfalse;
 
 	if (isdown) {
@@ -1317,6 +1338,14 @@ void CL_Shutdown (void)
 		return;
 	}
 	isdown = qtrue;
+
+	/* remove cvar feedback */
+	for (var = Cvar_GetFirst(); var; var = var->next) {
+		if (var->flags & CVAR_R_CONTEXT)
+			Cvar_UnRegisterChangeListener(var->name, CL_RContextCvarChange);
+		if (var->flags & CVAR_R_IMAGES)
+			Cvar_UnRegisterChangeListener(var->name, CL_RImagesCvarChange);
+	}
 
 	GAME_SetMode(NULL);
 	CL_HTTP_Cleanup();

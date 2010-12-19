@@ -90,6 +90,11 @@ typedef struct cvarList_s {
 } cvarList_t;
 
 /**
+ * @brief Return the first cvar of the cvar list
+ */
+cvar_t *Cvar_GetFirst(void);
+
+/**
  * @brief creates the variable if it doesn't exist, or returns the existing one
  * if it exists, the value will not be changed, but flags will be ORed in
  * that allows variables to be unarchived without needing bitflags

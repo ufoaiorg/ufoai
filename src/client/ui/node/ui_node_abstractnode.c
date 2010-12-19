@@ -411,7 +411,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 
 				b = (byte*) (*(void**)b);
 				if (!strncmp((const char*)b, "*cvar", 5))
-					UI_SetCvar(&((char*)b)[6], NULL, f);
+					Cvar_SetValue(&((char*)b)[6], f);
 				else
 					*(float*) b = f;
 				node->behaviour->propertyChanged(node, property);

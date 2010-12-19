@@ -71,7 +71,7 @@ const char *UI_AbstractOptionGetCurrentValue (uiNode_t * node)
 void UI_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value)
 {
 	const char *cvarName = &EXTRADATA(node).cvar[6];
-	UI_SetCvar(cvarName, value, 0);
+	Cvar_Set(cvarName, value);
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);
 }

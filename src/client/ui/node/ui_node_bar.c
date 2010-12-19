@@ -129,7 +129,7 @@ static void UI_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 			frac = 0;
 			Com_Printf("UI_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
 		}
-		UI_SetCvar(&var[6], NULL, min + frac * (max - min));
+		Cvar_SetValue(&var[6], min + frac * (max - min));
 	}
 
 	/* callback */

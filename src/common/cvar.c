@@ -72,6 +72,12 @@ qboolean Com_IsRenderModified (void)
  */
 static cvar_t *cvarVars;
 
+cvar_t *Cvar_GetFirst (void)
+{
+	return cvarVars;
+}
+
+
 static qboolean Cvar_InfoValidate (const char *s)
 {
 	if (strstr(s, "\\"))

@@ -48,21 +48,6 @@ static cvar_t *ui_debug;
  * @sa UI_DisplayNotice
  * @todo move it into a better file
  */
-static void UI_CheckCvar (const cvar_t *cvar)
-{
-	if (cvar->modified) {
-		if (cvar->flags & CVAR_R_CONTEXT) {
-			UI_DisplayNotice(_("This change requires a restart"), 2000, NULL);
-		} else if (cvar->flags & CVAR_R_IMAGES) {
-			UI_DisplayNotice(_("This change might require a restart"), 2000, NULL);
-		}
-	}
-}
-
-/**
- * @sa UI_DisplayNotice
- * @todo move it into a better file
- */
 int UI_DebugMode (void)
 {
 #ifdef DEBUG
@@ -70,27 +55,6 @@ int UI_DebugMode (void)
 #else
 	return 0;
 #endif
-}
-
-/**
- * @param[in] name Name of the cvar
- * @param[in] str Might be NULL if you want to set a float value
- * @param[in] value Float value to set
- * @todo move it into a better file
- */
-void UI_SetCvar (const char *name, const char *str, float value)
-{
-	const cvar_t *cvar;
-	cvar = Cvar_FindVar(name);
-	if (!cvar) {
-		Com_Printf("Could not find cvar '%s'\n", name);
-		return;
-	}
-	if (str)
-		Cvar_Set(cvar->name, str);
-	else
-		Cvar_SetValue(cvar->name, value);
-	UI_CheckCvar(cvar);
 }
 
 /**

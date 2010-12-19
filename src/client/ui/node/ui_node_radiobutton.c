@@ -122,7 +122,7 @@ static void UI_RadioButtonNodeActivate (uiNode_t * node)
 
 	{
 		const char *cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
-		UI_SetCvar(cvarName, NULL, EXTRADATA(node).value);
+		Cvar_SetValue(cvarName, EXTRADATA(node).value);
 		if (node->onChange)
 			UI_ExecuteEventActions(node, node->onChange);
 	}
