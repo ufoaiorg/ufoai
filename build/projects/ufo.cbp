@@ -8,9 +8,9 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../ufo" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/client" />
+				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="1" />
@@ -18,30 +18,35 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-Wall" />
+					<Add option="-g" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add option="-DHAVE_BFD_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add library="opengl32" />
-					<Add library="intl" />
 					<Add library="winmm" />
 					<Add library="ws2_32" />
+					<Add library="bfd" />
+					<Add library="iberty" />
+					<Add library="imagehlp" />
+					<Add library="intl" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 					<Add after="..\..\contrib\scripts\compile_po.bat /ufoai" />
 				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="../../ufo" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/client" />
+				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="1" />
@@ -56,24 +61,28 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add option="-DHAVE_BFD_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
 					<Add library="opengl32" />
-					<Add library="intl" />
 					<Add library="winmm" />
 					<Add library="ws2_32" />
+					<Add library="bfd" />
+					<Add library="iberty" />
+					<Add library="imagehlp" />
+					<Add library="intl" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 					<Add after="..\..\contrib\scripts\compile_po.bat /ufoai" />
 				</ExtraCommands>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="../../ufo" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/client" />
+				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="1" />
@@ -96,9 +105,9 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="../../ufo" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/client" />
+				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="1" />
@@ -107,8 +116,8 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
-					<Add directory="/sw/include" />
-					<Add directory="/Library/Frameworks/SDL.framework/Versions/A/Headers" />
+					<Add directory="\sw\include" />
+					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
 				</Compiler>
 				<Linker>
 					<Add option="-framework OpenGL" />
@@ -120,7 +129,7 @@
 					<Add option="-framework,Cocoa" />
 					<Add option="-framework foundation" />
 					<Add library="libintl" />
-					<Add directory="/sw/lib" />
+					<Add directory="\sw\lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -145,7 +154,7 @@
 			<Add library="ogg" />
 			<Add library="theora" />
 			<Add library="xvidcore" />
-		</Linker>
+		<\Linker>
 		<Unit filename="../../Makefile.in" />
 		<Unit filename="../../base/autoexec.cfg" />
 		<Unit filename="../../base/dedicated.cfg" />
@@ -264,10 +273,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_actor.h" />
-		<Unit filename="../../src/client/battlescape/cl_ugv.c">
+		<Unit filename="../../src/client/battlescape/cl_battlescape.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/battlescape/cl_ugv.h" />
+		<Unit filename="../../src/client/battlescape/cl_battlescape.h" />
+		<Unit filename="../../src/client/battlescape/cl_camera.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_camera.h" />
 		<Unit filename="../../src/client/battlescape/cl_hud.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -276,14 +289,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_hud_callbacks.h" />
-		<Unit filename="../../src/client/battlescape/cl_camera.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/battlescape/cl_camera.h" />
-		<Unit filename="../../src/client/battlescape/cl_battlescape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/battlescape/cl_battlescape.h" />
 		<Unit filename="../../src/client/battlescape/cl_localentity.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -296,14 +301,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_particle.h" />
-		<Unit filename="../../src/client/battlescape/cl_view.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/battlescape/cl_view.h" />
 		<Unit filename="../../src/client/battlescape/cl_spawn.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_spawn.h" />
+		<Unit filename="../../src/client/battlescape/cl_ugv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_ugv.h" />
+		<Unit filename="../../src/client/battlescape/cl_view.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_view.h" />
 		<Unit filename="../../src/client/battlescape/events/e_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -340,14 +349,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actormove.h" />
-		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorresetclientaction.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorresetclientaction.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfirechange.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfirechange.h" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreservationchange.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreservationchange.h" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorresetclientaction.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorresetclientaction.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorshoot.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -364,10 +377,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorstatechange.h" />
-		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreservationchange.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreservationchange.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorstats.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -440,14 +449,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entappear.h" />
-		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entperish.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entperish.h" />
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entdestroy.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entdestroy.h" />
+		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entperish.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entperish.h" />
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_explode.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -830,10 +839,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/m_main.h" />
-		<Unit filename="../../src/client/menu/m_windows.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/menu/m_windows.h" />
 		<Unit filename="../../src/client/menu/m_nodes.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -858,6 +863,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/m_tooltip.h" />
+		<Unit filename="../../src/client/menu/m_windows.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/menu/m_windows.h" />
 		<Unit filename="../../src/client/menu/node/m_node_abstractnode.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -926,6 +935,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/node/m_node_item.h" />
+		<Unit filename="../../src/client/menu/node/m_node_keybinding.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/menu/node/m_node_keybinding.h" />
 		<Unit filename="../../src/client/menu/node/m_node_linechart.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1002,10 +1015,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/node/m_node_textentry.h" />
-		<Unit filename="../../src/client/menu/node/m_node_keybinding.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/menu/node/m_node_keybinding.h" />
 		<Unit filename="../../src/client/menu/node/m_node_textlist.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1080,11 +1089,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_array.h" />
-		<Unit filename="../../src/client/renderer/r_matrix.c">
+		<Unit filename="../../src/client/renderer/r_bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/renderer/r_matrix.h" />
-		<Unit filename="../../src/client/renderer/r_bsp.c">
+		<Unit filename="../../src/client/renderer/r_corona.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_draw.c">
@@ -1096,6 +1104,9 @@
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_entity.h" />
 		<Unit filename="../../src/client/renderer/r_error.h" />
+		<Unit filename="../../src/client/renderer/r_flare.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/client/renderer/r_font.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1125,13 +1136,11 @@
 		<Unit filename="../../src/client/renderer/r_material.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/renderer/r_corona.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/renderer/r_flare.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/client/renderer/r_material.h" />
+		<Unit filename="../../src/client/renderer/r_matrix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_matrix.h" />
 		<Unit filename="../../src/client/renderer/r_mesh.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1252,6 +1261,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/ioapi.h" />
+		<Unit filename="../../src/common/list.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/common/md4.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1298,10 +1310,10 @@
 		<Unit filename="../../src/game/inv_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/game/inv_shared.h" />
 		<Unit filename="../../src/game/inventory.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/inv_shared.h" />
 		<Unit filename="../../src/game/q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1328,6 +1340,11 @@
 		</Unit>
 		<Unit filename="../../src/ports/windows/ufo.rc">
 			<Option compilerVar="WINDRES" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="../../src/ports/windows/win_backtrace.c">
+			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
@@ -1375,11 +1392,11 @@
 		<Unit filename="../../src/shared/byte.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/list.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/shared/byte.h" />
 		<Unit filename="../../src/shared/defines.h" />
+		<Unit filename="../../src/shared/images.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/shared/infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1402,9 +1419,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/utf8.h" />
-		<Unit filename="../../src/shared/images.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/shared/vertex_normals.h" />
 		<Extensions>
 			<code_completion />
