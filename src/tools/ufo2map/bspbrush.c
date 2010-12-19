@@ -335,19 +335,94 @@ uint32_t BrushListCalcContents (bspbrush_t *brushlist)
 	return contentFlags;
 }
 
+/**
+ * @brief Checks on which side a of plane the brush is
+ * @todo Or vice versa?
+ */
+static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
+{
+	int i, j, side;
+	vec_t max;
+
+	max = 0;
+	side = PSIDE_FRONT;
+	for (i = 0; i < brush->numsides; i++) {
+		const winding_t *w = brush->sides[i].winding;
+		if (!w)
+			continue;
+		for (j = 0; j < w->numpoints; j++) {
+			const vec_t d = DotProduct(w->p[j], plane->normal) - plane->dist;
+			if (d > max) {
+				max = d;
+				side = PSIDE_FRONT;
+			}
+			if (-d > max) {
+				max = -d;
+				side = PSIDE_BACK;
+			}
+		}
+	}
+	return side;
+}
+
+/**
+ * @brief Checks if the plane splits the brush
+ */
+static qboolean DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
+{
+	int i, j;
+	winding_t *w;
+	plane_t *plane, *plane2;
+	float d_front, d_back;
+	qboolean split = qtrue;
+
+	plane = &mapplanes[planenum];
+
+	/* check all points */
+	d_front = d_back = 0;
+	for (i = 0; i < brush->numsides; i++) {
+		w = brush->sides[i].winding;
+		if (!w)
+			continue;
+		for (j = 0; j < w->numpoints; j++) {
+			const float d = DotProduct(w->p[j], plane->normal) - plane->dist;
+			if (d > 0 && d > d_front)
+				d_front = d;
+			if (d < 0 && d < d_back)
+				d_back = d;
+		}
+	}
+	if (d_front < 0.1) { /* PLANESIDE_EPSILON) */
+		/* only on back */
+		return qfalse;
+	}
+	if (d_back > -0.1) { /* PLANESIDE_EPSILON) */
+		/* only on front */
+		return qfalse;
+	}
+
+	/* create a new winding from the split plane */
+	w = BaseWindingForPlane(plane->normal, plane->dist);
+	for (i = 0; i < brush->numsides && w; i++) {
+		plane2 = &mapplanes[brush->sides[i].planenum ^ 1];
+		ChopWindingInPlace(&w, plane2->normal, plane2->dist, 0); /* PLANESIDE_EPSILON); */
+	}
+
+	/* the brush isn't really split */
+	if (!w || WindingIsTiny(w)) {
+		const int side = BrushMostlyOnSide(brush, plane);
+		if (side == PSIDE_FRONT || side == PSIDE_BACK)
+			split = qfalse;
+	}
+	FreeWinding(w);
+	return split;
+}
+
 static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
 {
-	bspbrush_t *front, *back;
 	qboolean good;
 
-	SplitBrush(volume, pnum, &front, &back);
-
-	good = (front && back);
-
-	if (front)
-		FreeBrush(front);
-	if (back)
-		FreeBrush(back);
+	good = DoesPlaneSplitBrush(volume, pnum);
 
 	return good;
 }
@@ -479,36 +554,6 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 	}
 
 	return bestside;
-}
-
-/**
- * @brief Checks on which side a of plane the brush is
- * @todo Or vice versa?
- */
-static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
-{
-	int i, j, side;
-	vec_t max;
-
-	max = 0;
-	side = PSIDE_FRONT;
-	for (i = 0; i < brush->numsides; i++) {
-		const winding_t *w = brush->sides[i].winding;
-		if (!w)
-			continue;
-		for (j = 0; j < w->numpoints; j++) {
-			const vec_t d = DotProduct(w->p[j], plane->normal) - plane->dist;
-			if (d > max) {
-				max = d;
-				side = PSIDE_FRONT;
-			}
-			if (-d > max) {
-				max = -d;
-				side = PSIDE_BACK;
-			}
-		}
-	}
-	return side;
 }
 
 /**
