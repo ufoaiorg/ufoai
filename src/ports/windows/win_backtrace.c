@@ -110,18 +110,21 @@ static void find (struct bfd_ctx * b, DWORD offset, const char **file, const cha
 
 static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct output_buffer *ob)
 {
+	int r1, r2, r3;
+	bfd *b;
+
 	bc->handle = NULL;
 	bc->symbol = NULL;
 
-	bfd *b = bfd_openr(procname, 0);
+	b = bfd_openr(procname, 0);
 	if (!b) {
 		output_print(ob, "Failed to open bfd from (%s)\n", procname);
 		return 1;
 	}
 
-	int r1 = bfd_check_format(b, bfd_object);
-	int r2 = bfd_check_format_matches(b, bfd_object, NULL);
-	int r3 = bfd_get_file_flags(b) & HAS_SYMS;
+	r1 = bfd_check_format(b, bfd_object);
+	r2 = bfd_check_format_matches(b, bfd_object, NULL);
+	r3 = bfd_get_file_flags(b) & HAS_SYMS;
 
 	if (!(r1 && r2 && r3)) {
 		bfd_close(b);
@@ -159,13 +162,14 @@ static void close_bfd_ctx (struct bfd_ctx *bc)
 
 static struct bfd_ctx *get_bc (struct output_buffer *ob, struct bfd_set *set, const char *procname)
 {
+	struct bfd_ctx bc;
+
 	while (set->name) {
 		if (strcmp(set->name, procname) == 0) {
 			return set->bc;
 		}
 		set = set->next;
 	}
-	struct bfd_ctx bc;
 	if (init_bfd_ctx(&bc, procname, ob)) {
 		return NULL;
 	}

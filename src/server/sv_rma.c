@@ -161,21 +161,23 @@ static qboolean SV_ParseMapTileSet (const char *filename, const char **text, map
 		if (token[0] != '}') {
 			if (target->numTiles >= MAX_TILESETTILES)
 				Com_Error(ERR_DROP, "Max tileset limit reached for tileset '%s'", target->id);
-			char *tileTarget = target->tiles[target->numTiles];
-			const size_t size = sizeof(target->tiles[target->numTiles]);
-			if (inherit) {
-				if (token[0] == '+')
-					token++;
+			else {	/* just to get rid of the 'mixed decl and code' warning */
+				char *tileTarget = target->tiles[target->numTiles];
+				const size_t size = sizeof(target->tiles[target->numTiles]);
+				if (inherit) {
+					if (token[0] == '+')
+						token++;
 
-				Com_sprintf(tileTarget, size, "%s%s", map->inheritBasePath, token);
-			} else {
-				Q_strncpyz(tileTarget, token, size);
+					Com_sprintf(tileTarget, size, "%s%s", map->inheritBasePath, token);
+				} else {
+					Q_strncpyz(tileTarget, token, size);
+				}
+
+				if (SV_GetMapTile(map, tileTarget) != NULL)
+					target->numTiles++;
+				else
+					Com_Error(ERR_DROP, "Did not find tile '%s' from tileset '%s'", tileTarget, target->id);
 			}
-
-			if (SV_GetMapTile(map, tileTarget) != NULL)
-				target->numTiles++;
-			else
-				Com_Error(ERR_DROP, "Did not find tile '%s' from tileset '%s'", tileTarget, target->id);
 		}
 	} while (token[0] != '}');
 
