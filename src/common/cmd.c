@@ -577,17 +577,8 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 
 		/* set cmd_args to everything after the first arg */
 		if (cmd_argc == 1) {
-			size_t l;
-
 			Q_strncpyz(cmd_args, text, sizeof(cmd_args));
-
-			/* strip off any trailing whitespace */
-			l = strlen(cmd_args) - 1;
-			for (; l >= 0; l--)
-				if (cmd_args[l] <= ' ')
-					cmd_args[l] = 0;
-				else
-					break;
+			Com_Chop(cmd_args);
 		}
 
 		com_token = Com_Parse(&text);

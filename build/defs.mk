@@ -6,6 +6,21 @@ CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -DUSE_SIGNALS=$(USE_SIGNALS)
 CFLAGS+=-DHAVE_CONFIG_H -DUSE_SIGNALS=$(USE_SIGNALS) $(GENERIC_FLAGS) -pipe -Winline \
 	-Wcast-qual -Wcast-align -Wdeclaration-after-statement -Wmissing-prototypes \
 	-Wmissing-declarations -std=c99
+
+CFLAGS += -Winline
+CFLAGS += -Wcast-qual
+CFLAGS += -Wcast-align
+CFLAGS += -Wmissing-declarations
+CFLAGS += -Wpointer-arith
+CFLAGS += -Wno-long-long
+CFLAGS += -pedantic
+CFLAGS += -Wall
+CFLAGS += -Wextra
+CFLAGS += -Wno-sign-compare
+CFLAGS += -Wno-unused-parameter
+CFLAGS += -Wreturn-type
+
+
 #	-Wunreachable-code -Wlogical-op -Wc++-compat
 #	-Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
 #	-Wimplicit-int -Wpacked -Wparentheses -Wpadded \

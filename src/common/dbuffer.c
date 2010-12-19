@@ -332,7 +332,7 @@ size_t dbuffer_get_at (const struct dbuffer *buf, size_t offset, char *data, siz
 	/* element we're currently reading from */
 	const struct dbuffer_element *e;
 	/* position we're currently reading from */
-	const void *p;
+	const char *p;
 
 	if (!buf || !data || !len)
 		return 0;

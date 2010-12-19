@@ -93,4 +93,66 @@ void (APIENTRY *qglGetFramebufferAttachmentParameterivEXT) (GLenum, GLenum, GLen
 void (APIENTRY *qglGenerateMipmapEXT) (GLenum);
 void (APIENTRY *qglDrawBuffers) (GLsizei, const GLenum *);
 
+
+/* multitexture */
+typedef void (*ActiveTexture_t)(GLenum texture);
+typedef void (*ClientActiveTexture_t)(GLenum texture);
+
+/* vertex buffer objects */
+typedef void (*GenBuffers_t)  (GLuint count, GLuint *id);
+typedef void (*DeleteBuffers_t)  (GLuint count, GLuint *id);
+typedef void (*BindBuffer_t)  (GLenum target, GLuint id);
+typedef void (*BufferData_t)  (GLenum target, GLsizei size, const GLvoid *data, GLenum usage);
+
+/* vertex attribute arrays */
+typedef void (*EnableVertexAttribArray_t)(GLuint index);
+typedef void (*DisableVertexAttribArray_t)(GLuint index);
+typedef void (*VertexAttribPointer_t)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+
+/* glsl vertex and fragment shaders and programs */
+typedef GLuint (*CreateShader_t)(GLenum type);
+typedef void (*DeleteShader_t)(GLuint id);
+typedef void (*ShaderSource_t)(GLuint id, GLuint count, GLchar **sources, GLuint *len);
+typedef void (*CompileShader_t)(GLuint id);
+typedef void (*GetShaderiv_t)(GLuint id, GLenum field, GLuint *dest);
+typedef void (*GetShaderInfoLog_t)(GLuint id, GLuint maxlen, GLuint *len, GLchar *dest);
+typedef GLuint (*CreateProgram_t)(void);
+typedef void (*DeleteProgram_t)(GLuint id);
+typedef void (*AttachShader_t)(GLuint prog, GLuint shader);
+typedef void (*DetachShader_t)(GLuint prog, GLuint shader);
+typedef void (*LinkProgram_t)(GLuint id);
+typedef void (*UseProgram_t)(GLuint id);
+typedef void (*GetActiveUniforms_t)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name);
+typedef void (*GetProgramiv_t)(GLuint id, GLenum field, GLuint *dest);
+typedef void (*GetProgramInfoLog_t)(GLuint id, GLuint maxlen, GLuint *len, GLchar *dest);
+typedef GLint (*GetUniformLocation_t)(GLuint id, const GLchar *name);
+typedef void (*Uniform1i_t)(GLint location, GLint i);
+typedef void (*Uniform1f_t)(GLint location, GLfloat f);
+typedef void (*Uniform1fv_t)(GLint location, int count, GLfloat *f);
+typedef void (*Uniform2fv_t)(GLint location, int count, GLfloat *f);
+typedef void (*Uniform3fv_t)(GLint location, int count, GLfloat *f);
+typedef void (*Uniform4fv_t)(GLint location, int count, GLfloat *f);
+typedef GLint (*GetAttribLocation_t)(GLuint id, const GLchar *name);
+typedef void (*UniformMatrix4fv_t)(GLint location, int count, GLboolean transpose, GLfloat *v);
+
+/* frame buffer objects (fbo) */
+typedef GLboolean (*IsRenderbufferEXT_t) (GLuint);
+typedef void (*BindRenderbufferEXT_t) (GLenum, GLuint);
+typedef void (*DeleteRenderbuffersEXT_t) (GLsizei, const GLuint *);
+typedef void (*GenRenderbuffersEXT_t) (GLsizei, GLuint *);
+typedef void (*RenderbufferStorageEXT_t) (GLenum, GLenum, GLsizei, GLsizei);
+typedef void (*GetRenderbufferParameterivEXT_t) (GLenum, GLenum, GLint *);
+typedef GLboolean (*IsFramebufferEXT_t) (GLuint);
+typedef void (*BindFramebufferEXT_t) (GLenum, GLuint);
+typedef void (*DeleteFramebuffersEXT_t) (GLsizei, const GLuint *);
+typedef void (*GenFramebuffersEXT_t) (GLsizei, GLuint *);
+typedef GLenum (*CheckFramebufferStatusEXT_t) (GLenum);
+typedef void (*FramebufferTexture1DEXT_t) (GLenum, GLenum, GLenum, GLuint, GLint);
+typedef void (*FramebufferTexture2DEXT_t) (GLenum, GLenum, GLenum, GLuint, GLint);
+typedef void (*FramebufferTexture3DEXT_t) (GLenum, GLenum, GLenum, GLuint, GLint, GLint);
+typedef void (*FramebufferRenderbufferEXT_t) (GLenum, GLenum, GLenum, GLuint);
+typedef void (*GetFramebufferAttachmentParameterivEXT_t) (GLenum, GLenum, GLenum, GLint *);
+typedef void (*GenerateMipmapEXT_t) (GLenum);
+typedef void (*DrawBuffers_t) (GLsizei, const GLenum *);
+
 #endif

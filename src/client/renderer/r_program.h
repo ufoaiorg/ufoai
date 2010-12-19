@@ -40,9 +40,14 @@ typedef struct r_progvar_s {
 	GLint location;
 } r_progvar_t;
 
-/* NOTE: OpenGL spec says we must be able to have at 
+/* NOTE: OpenGL spec says we must be able to have at
  * least 64 uniforms; may be more.  glGet(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS) */
 #define MAX_PROGRAM_VARS 32
+
+struct r_program_s;
+
+typedef void (*programInitFunc_t)(struct r_program_s *prog);
+typedef void (*programUseFunc_t)(struct r_program_s *prog);
 
 /* and glsl programs */
 typedef struct r_program_s {
@@ -51,8 +56,8 @@ typedef struct r_program_s {
 	r_shader_t *v;	/**< vertex shader */
 	r_shader_t *f;	/**< fragment shader */
 	r_progvar_t vars[MAX_PROGRAM_VARS];
-	void (*init)(struct r_program_s *prog);
-	void (*use)(struct r_program_s *prog);
+	programInitFunc_t init;
+	programUseFunc_t use;
 	void *userdata;
 } r_program_t;
 
@@ -109,7 +114,7 @@ void R_ProgramParameter4fv(const char *name, GLfloat *value);
 void R_InitParticleProgram(r_program_t *prog);
 void R_UseParticleProgram(r_program_t *prog);
 
-r_program_t *R_LoadProgram(const char *name, void *init, void *use);
+r_program_t *R_LoadProgram(const char *name, programInitFunc_t init, programUseFunc_t use);
 void R_RestartPrograms_f(void);
 
 #endif

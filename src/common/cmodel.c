@@ -725,7 +725,7 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 		if (*name[0] != '*') {
 			/* Let's see what the data looks like... */
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s' (inlines: %p, name: %p)",
-					*name, inlineList, name);
+					*name, (void*)inlineList, (void*)name);
 		}
 		model = CM_InlineModel(*name);
 		assert(model);

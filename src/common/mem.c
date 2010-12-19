@@ -385,7 +385,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	memcpy(newPtr, ptr, min(mem->memSize, size));
 	if (mem->memSize < size) {
 		const size_t delta = size - mem->memSize;
-		memset(newPtr + mem->memSize, 0, delta);
+		memset((byte*)newPtr + mem->memSize, 0, delta);
 	}
 
 	/* if there was old data, free it */

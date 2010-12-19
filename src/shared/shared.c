@@ -38,6 +38,23 @@ const char *Com_SkipPath (const char *pathname)
 	return last ? last + 1 : pathname;
 }
 
+/**
+ * @brief Removed trailing whitespaces
+ * @param s The string that is modified
+ * @return The start of the input string
+ */
+char *Com_Chop (char *s)
+{
+	char *right;
+
+	right = s + strlen(s) - 1;
+
+	while (isspace(*right))
+		*right-- = 0;
+
+	return s;
+}
+
 char *Com_Trim (char *s)
 {
 	char *left, *right;

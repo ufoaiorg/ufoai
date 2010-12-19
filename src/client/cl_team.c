@@ -115,6 +115,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 	mxml_node_t *sScore;
 	mxml_node_t *sInventory;
 	int k;
+	const chrScoreGlobal_t *score;
 
 	assert(chr);
 	Com_RegisterConstList(saveCharacterConstants);
@@ -134,32 +135,39 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 	mxml_AddInt(p, SAVE_CHARACTER_FIELDSIZE, chr->fieldSize);
 	mxml_AddIntValue(p, SAVE_CHARACTER_STATE, chr->state);
 
+	score = &chr->score;
+
 	sScore = mxml_AddNode(p, SAVE_CHARACTER_SCORES);
 	/* Store skills */
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++) {
-		if ((k < SKILL_NUM_TYPES && chr->score.skills[k])
-		 || chr->score.experience[k] || chr->score.initialSkills[k]) {
-			mxml_node_t *sSkill = mxml_AddNode(sScore, SAVE_CHARACTER_SKILLS);;
+	for (k = 0; k <= SKILL_NUM_TYPES; k++) {
+		if (score->experience[k] || score->initialSkills[k]
+		 || (k < SKILL_NUM_TYPES && score->skills[k])) {
+			mxml_node_t *sSkill = mxml_AddNode(sScore, SAVE_CHARACTER_SKILLS);
+			const int initial = score->initialSkills[k];
+			const int experience = score->experience[k];
 
 			mxml_AddString(sSkill, SAVE_CHARACTER_SKILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, k));
-			mxml_AddIntValue(sSkill, SAVE_CHARACTER_INITSKILL, chr->score.initialSkills[k]);
-			mxml_AddIntValue(sSkill, SAVE_CHARACTER_EXPERIENCE, chr->score.experience[k]);
-			if (k < SKILL_NUM_TYPES)
-				mxml_AddIntValue(sSkill, SAVE_CHARACTER_SKILLIMPROVE, chr->score.skills[k] - chr->score.initialSkills[k]);
+			mxml_AddIntValue(sSkill, SAVE_CHARACTER_INITSKILL, initial);
+			mxml_AddIntValue(sSkill, SAVE_CHARACTER_EXPERIENCE, experience);
+			if (k < SKILL_NUM_TYPES) {
+				const int skills = *(score->skills + k);
+				const int improve = skills - initial;
+				mxml_AddIntValue(sSkill, SAVE_CHARACTER_SKILLIMPROVE, improve);
+			}
 		}
 	}
 	/* Store kills */
 	for (k = 0; k < KILLED_NUM_TYPES; k++) {
 		mxml_node_t *sKill;
-		if (chr->score.kills[k] || chr->score.stuns[k]) {
+		if (score->kills[k] || score->stuns[k]) {
 			sKill = mxml_AddNode(sScore, SAVE_CHARACTER_KILLS);
 			mxml_AddString(sKill, SAVE_CHARACTER_KILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_KILLTYPE_NAMESPACE, k));
-			mxml_AddIntValue(sKill, SAVE_CHARACTER_KILLED, chr->score.kills[k]);
-			mxml_AddIntValue(sKill, SAVE_CHARACTER_STUNNED, chr->score.stuns[k]);
+			mxml_AddIntValue(sKill, SAVE_CHARACTER_KILLED, score->kills[k]);
+			mxml_AddIntValue(sKill, SAVE_CHARACTER_STUNNED, score->stuns[k]);
 		}
 	}
-	mxml_AddIntValue(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr->score.assignedMissions);
-	mxml_AddInt(sScore, SAVE_CHARACTER_SCORE_RANK, chr->score.rank);
+	mxml_AddIntValue(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, score->assignedMissions);
+	mxml_AddInt(sScore, SAVE_CHARACTER_SCORE_RANK, score->rank);
 
 	/* Store inventories */
 	sInventory = mxml_AddNode(p, SAVE_INVENTORY_INVENTORY);
@@ -206,7 +214,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	if (s[0] == '\0') {
 		const int td = mxml_GetInt(p, SAVE_CHARACTER_TEAMDEFIDX, -1);
 
-		Com_Printf("No TeamDefID for %s (ucn: %i) found. Try teamDefIDX (oldsave method)\n", chr->name, chr->ucn);		
+		Com_Printf("No TeamDefID for %s (ucn: %i) found. Try teamDefIDX (oldsave method)\n", chr->name, chr->ucn);
 		if (td != -1) {
 			assert(csi.numTeamDefs);
 			if (td >= csi.numTeamDefs) {

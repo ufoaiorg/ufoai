@@ -304,8 +304,6 @@ LE thinking
 void LE_ExecuteThink (le_t *le)
 {
 	if (le->inuse && le->think) {
-		Com_DPrintf(DEBUG_EVENTSYS, "LE_ExecuteThink: Execute think function %p for le %i\n",
-					le->think, le->entnum);
 		le->think(le);
 	}
 }

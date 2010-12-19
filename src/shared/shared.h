@@ -93,6 +93,7 @@ void Com_FilePath(const char *in, char *out);
 const char *Com_GetExtension(const char *path);
 void Com_DefaultExtension(char *path, size_t len, const char *extension);
 int Com_Filter(const char *pattern, const char *text);
+char *Com_Chop(char *s);
 char *Com_Trim(char *s);
 
 /** returns the amount of elements - not the amount of bytes */
