@@ -160,6 +160,7 @@ check_headers() {
 	check_header "theora/theora.h"
 	check_header "execinfo.h"
 	check_header "bfd.h"
+	check_header "sys/utsname.h"
 	check_header "CUnit/Basic.h"
 }
 

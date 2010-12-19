@@ -43,6 +43,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BACKTRACE_SYMBOLS 50
 #endif
 
+#ifdef HAVE_SYS_UTSNAME_H
+#include <sys/utsname.h>
+#endif
+
 const char *Sys_GetCurrentUser (void)
 {
 	static char s_userName[MAX_VAR];
@@ -389,10 +393,19 @@ void Sys_Mkdir (const char *thePath)
  */
 void Sys_Backtrace (void)
 {
+#ifdef HAVE_SYS_UTSNAME_H
+	struct utsname	info;
+#endif
+
 #ifdef HAVE_EXECINFO_H
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
 	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
+#endif
+
+#ifdef HAVE_SYS_UTSNAME_H
+	uname(&info);
+	fprintf(stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
 #endif
 }
 
