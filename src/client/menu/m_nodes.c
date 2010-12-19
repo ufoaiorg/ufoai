@@ -74,7 +74,7 @@ typedef void (*registerFunction_t)(nodeBehaviour_t *node);
  * @brief List of functions to register nodes
  * @note Functions must be sorted by node name
  */
-const static registerFunction_t registerFunctions[] = {
+static const registerFunction_t registerFunctions[] = {
 	MN_RegisterNullNode,
 	MN_RegisterAbstractBaseNode,
 	MN_RegisterAbstractNode,

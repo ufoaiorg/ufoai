@@ -108,7 +108,7 @@ static qboolean SAV_VerifyHeader (saveFileHeader_t const * const header)
 	}
 
 	/* saved games should not be bigger than 15MB */
-	if (header->xmlSize < 0 || header->xmlSize > 15 * 1024 * 1024) {
+	if (header->xmlSize > 15 * 1024 * 1024) {
 		Com_DPrintf(DEBUG_CLIENT, "Save size seems to be to large (over 15 MB) %i.\n", header->xmlSize);
 		return qfalse;
 	}

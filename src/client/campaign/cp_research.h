@@ -122,7 +122,7 @@ typedef struct techMail_s {
 								 * automatically */
 	char *date;			/**< date string, if empty use the date of research */
 	char *icon;			/**< name of an image file to display in the mail client */
-	char *model;		/**< model name of the sender */
+	const char *model;		/**< model name of the sender */
 	qboolean read;		/**< already read the mail? */
 } techMail_t;
 

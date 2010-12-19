@@ -40,7 +40,7 @@ static const value_t fontValues[] = {
 	{"size", V_INT, offsetof(menuFont_t, size), MEMBER_SIZEOF(menuFont_t, size)},
 	{"style", V_CLIENT_HUNK_STRING, offsetof(menuFont_t, style), 0},
 
-	{NULL, V_NULL, 0},
+	{NULL, V_NULL, 0, 0},
 };
 
 /**

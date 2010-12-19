@@ -198,7 +198,7 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 		}
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
-		if ((ccs.eMarket.bidAircraft[i] > 0) || (ccs.eMarket.askAircraft > 0)) {
+		if ((ccs.eMarket.bidAircraft[i] > 0) || (ccs.eMarket.askAircraft[i] > 0)) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_AIRCRAFT);
 			mxml_AddString(snode, SAVE_MARKET_ID, Com_DropShipTypeToShortName(i));
 			mxml_AddIntValue(snode, SAVE_MARKET_NUM, ccs.eMarket.numAircraft[i]);
@@ -242,7 +242,7 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 	for (snode = mxml_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = mxml_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
 		const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
 		humanAircraftType_t type = Com_DropShipShortNameToID(s);
-		
+
 		ccs.eMarket.numAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_NUM, 0);
 		ccs.eMarket.bidAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
 		ccs.eMarket.askAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);

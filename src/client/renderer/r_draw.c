@@ -610,7 +610,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 
 #define MAX_LINEVERTS 256
 
-static void inline R_Draw2DArray (int points, int *verts, GLenum mode)
+static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
 {
 	int i;
 

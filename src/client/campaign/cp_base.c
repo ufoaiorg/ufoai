@@ -1581,7 +1581,7 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 		return -1;
 	}
 
-	if (buildingType >= MAX_BUILDING_TYPE || buildingType < 0) {
+	if (buildingType >= MAX_BUILDING_TYPE) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: no sane building-type given!\n");
 		return -1;
 	}
@@ -2961,7 +2961,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		aircraftIdxInBase = mxml_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
 		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID)
 			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
-		else 
+		else
 			b->aircraftCurrent = NULL;
 
 		/* building space*/
