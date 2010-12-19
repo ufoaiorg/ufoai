@@ -586,6 +586,8 @@ void CL_HTTP_Cleanup (void)
 			curl_easy_cleanup(dl->curl);
 			dl->curl = NULL;
 		}
+
+		dl->queueEntry = NULL;
 	}
 
 	if (multi) {
