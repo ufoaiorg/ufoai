@@ -1,6 +1,7 @@
 /**
  * @file simple_glow_fs.glsl
- * @brief I'm not sure where this shader is applied.
+ * @brief This is the glow shader that is applied if no other shader is
+ * active but the glow map should get rendered.
  */
 
 uniform sampler2D SAMPLER0;
