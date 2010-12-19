@@ -6570,11 +6570,11 @@ base/textures/tex_misc/yellowtwowaysignback.jpg | Public Domain |  | Public Doma
 base/textures/tex_misc/zulu01.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/desert001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert002.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock.tga
-base/textures/tex_nature/desert002_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock_norm.tga
+base/textures/tex_nature/desert002_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock.tga
 base/textures/tex_nature/desert003.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert004.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert005.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock2.tga
-base/textures/tex_nature/desert005_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock2_norm.tga
+base/textures/tex_nature/desert005_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rock2.tga
 base/textures/tex_nature/desert006.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert007.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
