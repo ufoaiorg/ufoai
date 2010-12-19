@@ -47,6 +47,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/utsname.h>
 #endif
 
+#ifdef HAVE_LINK_H
+#include <link.h>
+#endif
+
 const char *Sys_GetCurrentUser (void)
 {
 	static char s_userName[MAX_VAR];
@@ -388,6 +392,30 @@ void Sys_Mkdir (const char *thePath)
 		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }
 
+
+static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, void *data)
+{
+	int j;
+	int end;
+
+	end = 0;
+
+	if (!info->dlpi_name || !info->dlpi_name[0])
+		return 0;
+
+	for (j = 0; j < info->dlpi_phnum; j++) {
+		end += info->dlpi_phdr[j].p_memsz;
+	}
+
+	//this is terrible.
+#if __WORDSIZE == 64
+	fprintf(stderr, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+#else
+	fprintf (stderr, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+#endif
+	return 0;
+}
+
 /**
  * @brief On platforms supporting it, print a backtrace.
  */
@@ -401,6 +429,11 @@ void Sys_Backtrace (void)
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
 	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
+#endif
+
+#ifdef HAVE_LINK_H
+	fprintf(stderr, "Loaded libraries:\n");
+	dl_iterate_phdr(Sys_BacktraceLibsCallback, NULL);
 #endif
 
 #ifdef HAVE_SYS_UTSNAME_H
