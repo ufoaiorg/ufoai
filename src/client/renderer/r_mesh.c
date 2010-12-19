@@ -439,6 +439,30 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 	}
 }
 
+static void R_DrawAliasModelBuffer (entity_t *e)
+{
+	mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
+	mAliasMesh_t* lodMesh;
+
+	glPushMatrix();
+	glMultMatrixf(e->transform.matrix);
+
+	if (VectorNotEmpty(e->scale))
+		glScalef(e->scale[0], e->scale[1], e->scale[2]);
+
+	R_ResetArrayState();
+
+	/** @todo what about the origin of a tagged model here? */
+	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
+	refdef.aliasCount += lodMesh->num_tris;
+	if (mod->num_frames == 1)
+		R_DrawAliasStatic(lodMesh, e->shell);
+	else
+		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
+
+	glPopMatrix();
+}
+
 /**
  * @brief Draw a model from the battlescape entity list
  * @sa R_DrawEntities
@@ -451,14 +475,6 @@ void R_DrawAliasModel (entity_t *e)
 	int i;
 	float g;
 	vec4_t color = {0.8, 0.8, 0.8, 1.0};
-	mAliasMesh_t* lodMesh;
-
-	glPushMatrix();
-
-	glMultMatrixf(e->transform.matrix);
-
-	if (VectorNotEmpty(e->scale))
-		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
 	/* IR goggles override color for entities that are affected */
 	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
@@ -499,15 +515,7 @@ void R_DrawAliasModel (entity_t *e)
 	if (skin->roughnessmap)
 		R_EnableRoughnessMap(skin->roughnessmap, qtrue);
 
-	R_ResetArrayState();
-
-	/** @todo what about the origin of a tagged model here? */
-	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
-	refdef.aliasCount += lodMesh->num_tris;
-	if (mod->num_frames == 1)
-		R_DrawAliasStatic(lodMesh, e->shell);
-	else
-		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
+	R_DrawAliasModelBuffer(e);
 
 	if (r_state.specularmap_enabled)
 		R_EnableSpecularMap(NULL, qfalse);
@@ -526,8 +534,6 @@ void R_DrawAliasModel (entity_t *e)
 	/* show model bounding box */
 	if (r_showbox->integer)
 		R_DrawBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs);
-
-	glPopMatrix();
 
 	R_Color(NULL);
 }
