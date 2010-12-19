@@ -456,7 +456,6 @@ static void Sys_Signal (int s)
 		Sys_Quit();
 		break;
 	default:
-		Sys_Backtrace();
 		Sys_Error("Received signal %d.\n", s);
 		break;
 	}
