@@ -15,11 +15,16 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-DNDEBUG" />
+					<Add option="-DHAVE_BFD_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add library="winmm" />
 					<Add library="ws2_32" />
+					<Add library="bfd" />
+					<Add library="iberty" />
+					<Add library="imagehlp" />
+					<Add library="intl" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -35,11 +40,16 @@
 				<Compiler>
 					<Add option="-pg" />
 					<Add option="-DDEBUG" />
+					<Add option="-DHAVE_BFD_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
 					<Add library="winmm" />
 					<Add library="ws2_32" />
+					<Add library="bfd" />
+					<Add library="iberty" />
+					<Add library="imagehlp" />
+					<Add library="intl" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />

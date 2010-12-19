@@ -392,7 +392,6 @@ void Sys_Mkdir (const char *thePath)
 		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }
 
-
 static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, void *data)
 {
 	int j;
