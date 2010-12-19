@@ -624,6 +624,7 @@ qboolean R_SetMode (void)
 	new.swapinterval = r_swapinterval->integer;
 	if (!VID_GetModeInfo(new.mode, &vidmode)) {
 		Com_Printf("I: invalid mode\n");
+		Cvar_Set("vid_mode", "-1");
 		return qfalse;
 	}
 	new.width = vidmode.width;
