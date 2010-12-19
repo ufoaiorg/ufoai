@@ -169,7 +169,7 @@ static void SCR_DrawDownloading (void)
  */
 void SCR_DrawLoading (int percent, const char *loadingMessages)
 {
-	static const image_t* loadingPic;
+	const image_t* loadingPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 	char *mapmsg;
 
@@ -178,8 +178,7 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 		return;
 	}
 
-	if (!loadingPic)
-		loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
+	loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
 
 	R_BeginFrame();
 
