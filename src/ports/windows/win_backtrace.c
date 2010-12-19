@@ -57,10 +57,10 @@ static void output_init (struct output_buffer *ob, char * buf, size_t sz)
 
 static void output_print (struct output_buffer *ob, const char * format, ...)
 {
+	va_list ap;
 	if (ob->sz == ob->ptr)
 		return;
 	ob->buf[ob->ptr] = '\0';
-	va_list ap;
 	va_start(ap, format);
 	vsnprintf(ob->buf + ob->ptr, ob->sz - ob->ptr, format, ap);
 	va_end(ap);
@@ -71,6 +71,7 @@ static void output_print (struct output_buffer *ob, const char * format, ...)
 static void lookup_section (bfd *abfd, asection *sec, void *opaque_data)
 {
 	struct find_info *data = opaque_data;
+	bfd_vma vma;
 
 	if (data->func)
 		return;
@@ -78,7 +79,7 @@ static void lookup_section (bfd *abfd, asection *sec, void *opaque_data)
 	if (!(bfd_get_section_flags(abfd, sec) & SEC_ALLOC))
 		return;
 
-	bfd_vma vma = bfd_get_section_vma(abfd, sec);
+	vma = bfd_get_section_vma(abfd, sec);
 	if (data->counter < vma || vma + bfd_get_section_size(sec) <= data->counter)
 		return;
 
@@ -112,6 +113,8 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 {
 	int r1, r2, r3;
 	bfd *b;
+	void *symbol_table;
+	unsigned dummy = 0;
 
 	bc->handle = NULL;
 	bc->symbol = NULL;
@@ -132,9 +135,6 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 		return 1;
 	}
 
-	void *symbol_table;
-
-	unsigned dummy = 0;
 	if (bfd_read_minisymbols(b, FALSE, &symbol_table, &dummy) == 0) {
 		if (bfd_read_minisymbols(b, TRUE, &symbol_table, &dummy) < 0) {
 			free(symbol_table);
@@ -195,9 +195,9 @@ static void release_set (struct bfd_set *set)
 static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth, LPCONTEXT context)
 {
 	char procname[MAX_PATH];
-	GetModuleFileNameA(NULL, procname, sizeof procname);
-
 	struct bfd_ctx *bc = NULL;
+
+	GetModuleFileNameA(NULL, procname, sizeof procname);
 
 	STACKFRAME frame;
 	memset(&frame, 0, sizeof(frame));
