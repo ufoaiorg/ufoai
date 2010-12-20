@@ -268,6 +268,8 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	struct output_buffer ob;
 	SYSTEMTIME timeInfo;
 	OSVERSIONINFOEX osInfo;
+	FILE* crash;
+	const char *dumpFile = "crashdump.txt";
 
 	GetSystemTime(&timeInfo);
 
@@ -291,7 +293,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 		SymCleanup(GetCurrentProcess());
 	}
 
-	FILE* crash = fopen("crashdump.txt", "a");
+	crash = fopen(dumpFile, "a");
 	if (crash != NULL) {
 		fprintf(crash, "======start======\n");
 		fprintf(crash, "Date: %.4d-%.2d-%.2d\n",
