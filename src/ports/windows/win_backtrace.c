@@ -19,6 +19,8 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdbool.h>
+#define CURL_STATICLIB
+#include <curl/curl.h>
 
 #define BUFFER_MAX (16*1024)
 
@@ -260,6 +262,27 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 	}
 }
 
+static void Sys_UploadCrashDump (const char *crashDump)
+{
+	CURL *curl;
+	struct curl_httppost* post = NULL;
+	struct curl_httppost* last = NULL;
+
+	curl = curl_easy_init();
+
+	curl_formadd(&post, &last, CURLFORM_PTRNAME, "crashdump", CURLFORM_FILE, crashDump, CURLFORM_END);
+
+	curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
+	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
+	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
+	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
+	curl_easy_setopt(curl, CURLOPT_URL, "http://ufoai.ninex.info/CrashDump.php");
+
+	curl_easy_perform(curl);
+
+	curl_easy_cleanup(curl);
+}
+
 static char * g_output = NULL;
 static LPTOP_LEVEL_EXCEPTION_FILTER g_prev = NULL;
 
@@ -305,6 +328,8 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 		fclose(crash);
 	}
 	fputs(g_output, stderr);
+
+	Sys_UploadCrashDump(dumpFile);
 
 	return 0;
 }
