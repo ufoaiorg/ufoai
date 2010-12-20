@@ -53,7 +53,7 @@ void CL_AddEdict (const eventRegister_t *self, struct dbuffer * msg)
 	entity_type_t type;
 	vec3_t mins, maxs;
 
-	NET_ReadFormat(msg, self->formatString, &type, &entnum, &mins, &maxs);
+	NET_ReadFormat(msg, self->formatString, &entnum, &type, &mins, &maxs);
 
 	/* use an offset to ensure that we don't conflict with any other solid edict that is already spawned */
 	le = LE_Get(entnum + MAX_EDICTS);

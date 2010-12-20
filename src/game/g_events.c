@@ -356,8 +356,8 @@ void G_EventThrow (int visMask, const fireDef_t *fd, float dt, byte flags, const
 void G_EventSendEdict (const edict_t *ent)
 {
 	gi.AddEvent(PM_ALL, EV_ADD_EDICT);
-	gi.WriteByte(ent->type);
 	gi.WriteShort(ent->number);
+	gi.WriteByte(ent->type);
 	gi.WritePos(ent->absmin);
 	gi.WritePos(ent->absmax);
 }
