@@ -156,7 +156,7 @@ void DoRouting (void)
 	/* Try to shrink the world bounds along the x and y coordinates */
 	for (i = 0; i < 2; i++) {
 		/* Increase the mins */
-		while (wpMaxs[i] > wpMins[i]) {
+		while (wpMaxs[i ^ 1] > wpMins[i ^ 1]) {
 			VectorSet(pos, wpMins[0], wpMins[1], wpMaxs[2]);
 			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {	/* for all cells in an x or y row */
 				if (RT_FLOOR(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)	/* no floor ? */
@@ -167,7 +167,7 @@ void DoRouting (void)
 			wpMins[i ^ 1]++;			/* if it was an x-row, increase y-value of mins and vice versa */
 		}
 		/* Decrease the maxs */
-		while (wpMaxs[i] > wpMins[i]) {
+		while (wpMaxs[i ^ 1] > wpMins[i ^ 1]) {
 			VectorCopy(wpMaxs, pos);
 			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {
 				if (RT_FLOOR(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)
