@@ -158,15 +158,15 @@ void DoRouting (void)
 		/* Increase the mins */
 		while (wpMaxs[i] > wpMins[i]) {
 			VectorSet(pos, wpMins[0], wpMins[1], wpMaxs[2]);
-			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {
-				if (RT_FLOOR(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)
+			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {	/* for all cells in an x or y row */
+				if (RT_FLOOR(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)	/* no floor ? */
 					break;
 			}
-			if (pos[i] <= wpMaxs[i])
-				break;
-			wpMins[i ^ 1]++;
+			if (pos[i] <= wpMaxs[i])	/* found a floor before the end of the row ? */
+				break;					/* break while */
+			wpMins[i ^ 1]++;			/* if it was an x-row, increase y-value of mins and vice versa */
 		}
-		/* Increase the mins */
+		/* Decrease the maxs */
 		while (wpMaxs[i] > wpMins[i]) {
 			VectorCopy(wpMaxs, pos);
 			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {
