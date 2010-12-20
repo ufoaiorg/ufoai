@@ -1129,7 +1129,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	/* add the looted goods to base storage and market */
 	base->storage = ccs.eMission;
 
-	CL_HandleNationData(campaign, won, mission, battleParameters->nation, &ccs.missionResults);
+	CL_HandleNationData(campaign->minhappiness, won, mission, battleParameters->nation, &ccs.missionResults);
 	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */

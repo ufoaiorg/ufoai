@@ -614,7 +614,7 @@ mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 
-void CL_HandleNationData(const campaign_t *campaign, qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
+void CL_HandleNationData(float minHappiness, qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
 void CL_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
 /* Other functions */

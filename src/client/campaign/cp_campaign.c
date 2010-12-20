@@ -387,7 +387,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
  */
-void CL_HandleNationData (const campaign_t *campaign, qboolean won, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
+void CL_HandleNationData (float minHappiness, qboolean won, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
 {
 	int i;
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
@@ -401,8 +401,7 @@ void CL_HandleNationData (const campaign_t *campaign, qboolean won, mission_t * 
 	if (civilianSum == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
 		performance = 0.0f;
-	}
-	else {
+	} else {
 		/* Calculate how well the mission went. */
 		performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
 				* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
@@ -435,7 +434,7 @@ void CL_HandleNationData (const campaign_t *campaign, qboolean won, mission_t * 
 		else
 			happinessFactor = deltaHappiness / happinessDivisor;
 
-		NAT_SetHappiness(campaign->minhappiness, nation, stats->happiness + performance * happinessFactor);
+		NAT_SetHappiness(minHappiness, nation, stats->happiness + performance * happinessFactor);
 	}
 }
 
@@ -1059,7 +1058,7 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	CP_InitMissionResults(results->won, results);
 
 	/* update nation opinions */
-	CL_HandleNationData(campaign, results->won, mission, battleParameters->nation, results);
+	CL_HandleNationData(campaign->minhappiness, results->won, mission, battleParameters->nation, results);
 
 	CP_CheckLostCondition(campaign);
 
