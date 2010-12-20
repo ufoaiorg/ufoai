@@ -154,9 +154,10 @@ void DoRouting (void)
 	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / (1 + RT_IS_BIDIRECTIONAL)) * (ACTOR_MAX_SIZE), config.verbosity >= VERB_NORMAL, "CONNCHECK");
 
 	/* Try to shrink the world bounds along the x and y coordinates */
-	for (i = 0; i < 2; i++) {
+	for (i = 0; i < 2; i++) {			/* for x and y, but not z */
+		int j = i ^ 1;					/* if i points to x, j points to y and vice versa */
 		/* Increase the mins */
-		while (wpMaxs[i ^ 1] > wpMins[i ^ 1]) {
+		while (wpMaxs[j] > wpMins[j]) {
 			VectorSet(pos, wpMins[0], wpMins[1], wpMaxs[2]);
 			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {	/* for all cells in an x or y row */
 				if (RT_FLOOR(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)	/* no floor ? */
@@ -164,10 +165,10 @@ void DoRouting (void)
 			}
 			if (pos[i] <= wpMaxs[i])	/* found a floor before the end of the row ? */
 				break;					/* break while */
-			wpMins[i ^ 1]++;			/* if it was an x-row, increase y-value of mins and vice versa */
+			wpMins[j]++;				/* if it was an x-row, increase y-value of mins and vice versa */
 		}
 		/* Decrease the maxs */
-		while (wpMaxs[i ^ 1] > wpMins[i ^ 1]) {
+		while (wpMaxs[j] > wpMins[j]) {
 			VectorCopy(wpMaxs, pos);
 			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {
 				if (RT_FLOOR(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)
@@ -175,7 +176,7 @@ void DoRouting (void)
 			}
 			if (pos[i] <= wpMaxs[i])
 				break;
-			wpMaxs[i ^ 1]--;
+			wpMaxs[j]--;
 		}
 	}
 
