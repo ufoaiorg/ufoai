@@ -362,7 +362,6 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
-		//while ((employee = E_GetNextFromBase(type, employee, base)) != NULL) {
 		if (!E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
