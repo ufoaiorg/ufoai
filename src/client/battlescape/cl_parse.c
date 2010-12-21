@@ -151,7 +151,7 @@ ACTION MESSAGES
 */
 
 /**
- * @brief Parsed a server send sound package
+ * @brief Parse a server sent sound package
  * @sa svc_sound
  * @sa SV_StartSound
  */
