@@ -142,9 +142,8 @@ void FS_CloseFile (qFILE * f)
  * @param[in] mode read, write, append as an enum
  * @return the filesize or -1 in case of an error
  * @note Used for streaming data out of either a pak file or a separate file.
- * @sa FS_OpenFile
  */
-static int FS_OpenFileSingle (const char *filename, qFILE * file, filemode_t mode)
+int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 {
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
@@ -279,17 +278,6 @@ int FS_Seek (qFILE * f, long offset, int origin)
 }
 
 /**
- * @return the filesize or -1 in case of an error
- * @sa FS_OpenFileSingle
- * @sa FS_LoadFile
- */
-int FS_OpenFile (const char *filename, qFILE * file, filemode_t mode)
-{
-	/* open file */
-	return FS_OpenFileSingle(filename, file, mode);
-}
-
-/**
  * @brief Just returns the filelength and -1 if the file wasn't found
  * @note Won't print any errors
  * @sa FS_FileExists
@@ -305,7 +293,7 @@ int FS_CheckFile (const char *fmt, ...)
 	Q_vsnprintf(filename, sizeof(filename), fmt, ap);
 	va_end(ap);
 
-	result = FS_OpenFileSingle(filename, &file, FILE_READ);
+	result = FS_OpenFile(filename, &file, FILE_READ);
 	if (result != -1)
 		FS_CloseFile(&file);
 
