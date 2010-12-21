@@ -731,14 +731,11 @@ static void FS_Link_f (void)
  */
 static void FS_Dir_f (void)
 {
+	char const *wildcard = Cmd_Argc() != 1 ? Cmd_Argv(1) : "*.*";
 	const char *path = NULL;
 	char findname[1024];
-	char wildcard[1024] = "*.*";
 	char **dirnames;
 	int ndirs;
-
-	if (Cmd_Argc() != 1)
-		Q_strncpyz(wildcard, Cmd_Argv(1), sizeof(wildcard));
 
 	while ((path = FS_NextPath(path)) != NULL) {
 		Com_sprintf(findname, sizeof(findname), "%s/%s", path, wildcard);
@@ -765,11 +762,8 @@ static void FS_Dir_f (void)
 
 static void FS_List_f (void)
 {
-	char wildcard[1024] = "*.*";
+	char const *wildcard = Cmd_Argc() == 2 ? Cmd_Argv(1) : "*.*";
 	const char *filename;
-
-	if (Cmd_Argc() == 2)
-		Q_strncpyz(wildcard, Cmd_Argv(1), sizeof(wildcard));
 
 	Com_Printf("Show files for '%s'\n", wildcard);
 	FS_BuildFileList(wildcard);
