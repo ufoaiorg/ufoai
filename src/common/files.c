@@ -1697,7 +1697,5 @@ qboolean FS_RenameFile (const char *from, const char *to, qboolean relative)
 		to = to_buf;
 	}
 
-	if (rename(from, to))
-		return qfalse;
-	return qtrue;
+	return rename(from, to) == 0;
 }
