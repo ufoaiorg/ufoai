@@ -877,7 +877,6 @@ static listBlock_t *fs_blocklist = NULL;
 static void _AddToListBlock (linkedList_t** fl, const char* name, qboolean stripPath)
 {
 	const char *f;
-	const linkedList_t *entry;
 
 	/* strip path */
 	if (stripPath)
@@ -885,15 +884,11 @@ static void _AddToListBlock (linkedList_t** fl, const char* name, qboolean strip
 	else
 		f = name;
 
-	if (*fl == NULL)
-		entry = NULL;
-	else
-		entry = LIST_ContainsString(*fl, f);
+	if (LIST_ContainsString(*fl, f))
+		return;
 
 	/* add the new file */
-	if (entry == NULL) {
-		LIST_AddStringSorted(fl, f);
-	}
+	LIST_AddStringSorted(fl, f);
 }
 
 /**
