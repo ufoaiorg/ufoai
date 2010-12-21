@@ -138,7 +138,7 @@ void FS_CloseFile (qFILE * f)
 /**
  * @brief Finds and opens the file in the search path.
  * @param[in] filename
- * @param[in,out] file The file pointer
+ * @param[out] file The file pointer
  * @param[in] mode read, write, append as an enum
  * @return the filesize or -1 in case of an error
  * @note Used for streaming data out of either a pak file or a separate file.
