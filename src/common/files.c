@@ -169,7 +169,7 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 	Q_strncpyz(file->name, filename, sizeof(file->name));
 
 	/* check for links first */
-	for (link = fs_links; link; link = link->next)
+	for (link = fs_links; link; link = link->next) {
 		if (!strncmp(filename, link->from, link->fromlength)) {
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
 			file->f = fopen(netpath, "rb");
@@ -180,6 +180,7 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 			Com_Printf("linked file could not be opened: %s\n", netpath);
 			return -1;
 		}
+	}
 
 	/* search through the path, one element at a time */
 	for (search = fs_searchpaths; search; search = search->next) {
@@ -187,7 +188,7 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 		if (search->pack) {
 			/* look through all the pak file elements */
 			pack_t *pak = search->pack;
-			for (i = 0; i < pak->numfiles; i++)
+			for (i = 0; i < pak->numfiles; i++) {
 				/* found it! */
 				if (!Q_strcasecmp(pak->files[i].name, filename)) {
 					/* open a new file on the pakfile */
@@ -204,6 +205,7 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 					}
 					return pak->files[i].filelen;
 				}
+			}
 		} else {
 			/* check a file in the directory tree */
 			Com_sprintf(netpath, sizeof(netpath), "%s/%s", search->filename, filename);
@@ -1037,15 +1039,17 @@ const char* FS_NextFileFromFileList (const char *files)
 		return NULL;
 	}
 
-	for (block = fs_blocklist; block; block = block->next)
+	for (block = fs_blocklist; block; block = block->next) {
 		if (!strncmp(files, block->path, MAX_QPATH))
 			break;
+	}
 
 	if (!block) {
 		FS_BuildFileList(files);
-		for (block = fs_blocklist; block; block = block->next)
+		for (block = fs_blocklist; block; block = block->next) {
 			if (!strncmp(files, block->path, MAX_QPATH))
 				break;
+		}
 		if (!block) {
 			/* still no filelist */
 			Com_Printf("FS_NextFileFromFileList: Could not create filelist for %s\n", files);
@@ -1095,17 +1099,19 @@ const char *FS_GetFileData (const char *files)
 		return NULL;
 	}
 
-	for (block = fs_blocklist; block; block = block->next)
+	for (block = fs_blocklist; block; block = block->next) {
 		if (!strcmp(files, block->path))
 			break;
+	}
 
 	if (!block) {
 		/* didn't find any valid file list */
 		fileList = NULL;
 		FS_BuildFileList(files);
-		for (block = fs_blocklist; block; block = block->next)
+		for (block = fs_blocklist; block; block = block->next) {
 			if (!strcmp(files, block->path))
 				break;
+		}
 		if (!block) {
 			/* still no filelist */
 			Com_Printf("FS_GetFileData: Could not create filelist for %s\n", files);
@@ -1172,9 +1178,10 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 		/* search for file lists */
 		Q_strncpyz(lastList, files, sizeof(lastList));
 
-		for (block = fs_blocklist; block; block = block->next)
+		for (block = fs_blocklist; block; block = block->next) {
 			if (!strcmp(files, block->path))
 				break;
+		}
 
 		if (!block)
 			/* didn't find any valid file list */
@@ -1206,13 +1213,15 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 			/* search a new file */
 			lFile = lFile->next;
 
-			while (!lFile && lBlock)
+			while (!lFile && lBlock) {
 				/* it was the last file in the block, continue to next block */
-				for (lBlock = lBlock->next; lBlock; lBlock = lBlock->next)
+				for (lBlock = lBlock->next; lBlock; lBlock = lBlock->next) {
 					if (!strcmp(files, lBlock->path)) {
 						lFile = lBlock->files;
 						break;
 					}
+				}
+			}
 		}
 
 		if (lFile) {

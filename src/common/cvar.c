@@ -101,9 +101,10 @@ cvar_t *Cvar_FindVar (const char *varName)
 	cvar_t *var;
 	const unsigned hash = Com_HashKey(varName, CVAR_HASH_SIZE);
 
-	for (var = cvarVarsHash[hash]; var; var = var->hash_next)
+	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
 		if (!strcmp(varName, var->name))
 			return var;
+	}
 
 	return NULL;
 }
@@ -273,7 +274,7 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 	localMatch[matches] = NULL;
 
 	/* check for partial matches */
-	for (cvar = cvarVars; cvar; cvar = cvar->next)
+	for (cvar = cvarVars; cvar; cvar = cvar->next) {
 		if (!strncmp(partial, cvar->name, len)) {
 #ifndef DEBUG
 			if (cvar->flags & CVAR_DEVELOPER)
@@ -286,6 +287,7 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 			if (matches >= MAX_COMPLETE)
 				break;
 		}
+	}
 
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
@@ -368,11 +370,12 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	cvar_t *var;
 	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 
-	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO))
+	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO)) {
 		if (!Cvar_InfoValidate(var_name)) {
 			Com_Printf("invalid info cvar name\n");
 			return NULL;
 		}
+	}
 
 	var = Cvar_FindVar(var_name);
 	if (var) {
@@ -390,11 +393,12 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	if (!var_value)
 		return NULL;
 
-	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO))
+	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO)) {
 		if (!Cvar_InfoValidate(var_value)) {
 			Com_Printf("invalid info cvar value '%s' of cvar '%s'\n", var_value, var_name);
 			return NULL;
 		}
+	}
 
 	var = (cvar_t *)Mem_PoolAlloc(sizeof(*var), com_cvarSysPool, 0);
 	var->name = Mem_PoolStrDup(var_name, com_cvarSysPool, 0);
@@ -531,11 +535,12 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 	if (!var)
 		return Cvar_Get(varName, value, 0, NULL);
 
-	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO))
+	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO)) {
 		if (!Cvar_InfoValidate(value)) {
 			Com_Printf("invalid info cvar value '%s' of cvar '%s'\n", value, varName);
 			return var;
 		}
+	}
 
 	if (!force) {
 		if (var->flags & CVAR_NOSET) {
@@ -573,9 +578,8 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 				var->integer = atoi(var->string);
 			}
 
-			if (var->check)
-				if (var->check(var))
-					Com_Printf("Invalid value for cvar %s\n", varName);
+			if (var->check && var->check(var))
+				Com_Printf("Invalid value for cvar %s\n", varName);
 
 			return var;
 		}
@@ -604,11 +608,10 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
 
-	if (var->check)
-		if (var->check(var)) {
-			Com_Printf("Invalid value for cvar %s\n", varName);
-			return var;
-		}
+	if (var->check && var->check(var)) {
+		Com_Printf("Invalid value for cvar %s\n", varName);
+		return var;
+	}
 
 	Cvar_ExecuteChangeListener(var);
 
@@ -882,9 +885,10 @@ void Cvar_WriteVariables (qFILE *f)
 {
 	const cvar_t *var;
 
-	for (var = cvarVars; var; var = var->next)
+	for (var = cvarVars; var; var = var->next) {
 		if (var->flags & CVAR_ARCHIVE)
 			FS_Printf(f, "set %s \"%s\" a\n", var->name, var->string);
+	}
 }
 
 /**
@@ -896,9 +900,10 @@ qboolean Cvar_PendingCvars (int flags)
 {
 	const cvar_t *var;
 
-	for (var = cvarVars; var; var = var->next)
+	for (var = cvarVars; var; var = var->next) {
 		if ((var->flags & flags) && var->modified)
 			return qtrue;
+	}
 
 	return qfalse;
 }
@@ -907,9 +912,10 @@ void Cvar_ClearVars (int flags)
 {
 	cvar_t *var;
 
-	for (var = cvarVars; var; var = var->next)
+	for (var = cvarVars; var; var = var->next) {
 		if ((var->flags & flags) && var->modified)
 			var->modified = qfalse;
+	}
 }
 
 /**
@@ -930,7 +936,7 @@ static void Cvar_List_f (void)
 
 	i = 0;
 	for (var = cvarVars; var; var = var->next, i++) {
-		if (c == 2 && strncmp(var->name, token, l)) {
+		if (token && strncmp(var->name, token, l)) {
 			i--;
 			continue;
 		}
@@ -997,9 +1003,10 @@ static char *Cvar_BitInfo (int bit)
 
 	info[0] = 0;
 
-	for (var = cvarVars; var; var = var->next)
+	for (var = cvarVars; var; var = var->next) {
 		if (var->flags & bit)
 			Info_SetValueForKey(info, sizeof(info), var->name, var->string);
+	}
 	return info;
 }
 
