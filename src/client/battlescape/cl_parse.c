@@ -159,22 +159,22 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
 	vec3_t origin;
 	char sound[MAX_QPATH];
+	size_t length;
 
 	NET_ReadString(msg, sound, sizeof(sound));
 	NET_ReadPos(msg, origin);
 
-	if (sound[strlen(sound) - 1] == '+') {
-		const int length = strlen(sound) - 1;
-		char randomSound[MAX_QPATH];
+	length = strlen(sound) - 1;
+	if (sound[length] == '+') {
 		int i;
-		Com_sprintf(randomSound, sizeof(randomSound), "%s", sound);
-		randomSound[length] = '\0';
+
+		sound[length] = '\0';
 		for (i = 1; i <= 99; i++) {
-			if (FS_CheckFile("sounds/%s%c%c", randomSound, i / 10 + '0', i % 10 + '0') == -1)
+			if (FS_CheckFile("sounds/%s%02i", sound, i) == -1)
 				break;
 		}
 
-		Com_sprintf(sound, sizeof(sound), "%s%02i", randomSound, (rand() % i) + 1);
+		Com_sprintf(sound + length, sizeof(sound) - length, "%02i", rand() % i + 1);
 	}
 
 	S_LoadAndPlaySample(sound, origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
