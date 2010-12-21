@@ -752,10 +752,8 @@ static void FS_Dir_f (void)
 			int i;
 
 			for (i = 0; i < ndirs - 1; i++) {
-				if (strrchr(dirnames[i], '/'))
-					Com_Printf("%s\n", strrchr(dirnames[i], '/') + 1);
-				else
-					Com_Printf("%s\n", dirnames[i]);
+				char const *const slash = strrchr(dirnames[i], '/');
+				Com_Printf("%s\n", slash ? slash + 1 : dirnames[i]);
 
 				Mem_Free(dirnames[i]);
 			}
