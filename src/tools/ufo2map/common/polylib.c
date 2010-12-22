@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "polylib.h"
 #include "shared.h"
 
-static int c_active_windings;
-static int c_peak_windings;
 
 #define	BOGUS_RANGE	8192
 
@@ -39,11 +37,6 @@ static int c_peak_windings;
  */
 winding_t *AllocWinding (int points)
 {
-	if (threadstate.numthreads == 1) {
-		c_active_windings++;
-		c_peak_windings = c_active_windings > c_peak_windings ? c_active_windings : c_peak_windings;
-	}
-
 	return (winding_t *)Mem_Alloc(sizeof(vec3_t) * points + sizeof(int));
 }
 
@@ -56,8 +49,6 @@ void FreeWinding (winding_t *w)
 		Sys_Error("FreeWinding: freed a freed winding");
 	*(unsigned *)w = 0xdeaddead;
 
-	if (threadstate.numthreads == 1)
-		c_active_windings--;
 	Mem_Free(w);
 }
 
