@@ -418,15 +418,6 @@ static qboolean DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 	return split;
 }
 
-static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
-{
-	qboolean good;
-
-	good = DoesPlaneSplitBrush(volume, pnum);
-
-	return good;
-}
-
 /**
  * @brief Using a heuristic, choses one of the sides out of the brushlist
  * to partition the brushes with.
@@ -478,7 +469,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 				pnum = side->planenum;
 				pnum &= ~1;	/* always use positive facing plane */
 
-				if (!CheckPlaneAgainstVolume(pnum, volume))
+				if (!DoesPlaneSplitBrush(volume, pnum))
 					continue;	/* would produce a tiny volume */
 
 				front = 0;
