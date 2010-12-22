@@ -209,19 +209,23 @@ static void BS_MarketScroll_f (void)
 
 	/* get item list */
 	for (i = buyList.scroll; i < buyList.length - buyList.scroll; i++) {
+		const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
+
 		if (i >= MAX_MARKET_MENU_ENTRIES)
 			break;
-		else {
-			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
-			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od && (base->storage.numItems[od->idx] || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
-				MN_ExecuteConfunc("buy_show %i", i - buyList.scroll);
-				BS_UpdateItem(base, i - buyList.scroll);
-				if (ccs.autosell[od->idx])
-					MN_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
-				else
-					MN_ExecuteConfunc("buy_autoselld %i", i - buyList.scroll);
-			}
+		if (od && (B_ItemInBase(od, base) > 0 || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
+			const technology_t *tech = od->tech;
+
+			MN_ExecuteConfunc("buy_show %i", i - buyList.scroll);
+			BS_UpdateItem(base, i - buyList.scroll);
+
+			/* autosell setting */
+			if (!RS_IsResearched_ptr(tech))
+				continue;
+			if (ccs.autosell[od->idx])
+				MN_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
+			else
+				MN_ExecuteConfunc("buy_autoselld %i", i - buyList.scroll);
 		}
 	}
 }
