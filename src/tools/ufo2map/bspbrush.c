@@ -388,7 +388,7 @@ static qboolean DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 			const float d = DotProduct(w->p[j], plane->normal) - plane->dist;
 			if (d > 0 && d > d_front)
 				d_front = d;
-			if (d < 0 && d < d_back)
+			else if (d < 0 && d < d_back)
 				d_back = d;
 		}
 	}
@@ -572,7 +572,7 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 			const float d = DotProduct(w->p[j], plane->normal) - plane->dist;
 			if (d > 0 && d > d_front)
 				d_front = d;
-			if (d < 0 && d < d_back)
+			else if (d < 0 && d < d_back)
 				d_back = d;
 		}
 	}
