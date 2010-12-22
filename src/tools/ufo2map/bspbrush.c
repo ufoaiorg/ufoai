@@ -118,10 +118,10 @@ bspbrush_t *BrushFromBounds (vec3_t mins, vec3_t maxs)
 /**
  * @brief Returns the volume of the given brush
  */
-static vec_t BrushVolume (bspbrush_t *brush)
+static vec_t BrushVolume (const bspbrush_t *brush)
 {
 	int i;
-	winding_t *w;
+	const winding_t *w;
 	vec3_t corner;
 	vec_t volume;
 
