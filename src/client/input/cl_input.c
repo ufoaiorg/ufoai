@@ -485,7 +485,7 @@ static void IN_Parse (void)
 	mouseSpace = MS_NULL;
 
 	/* standard menu and world mouse handling */
-	if (UI_IsPointOnWindow()) {
+	if (UI_IsMouseOnWindow()) {
 		mouseSpace = MS_UI;
 		return;
 	}

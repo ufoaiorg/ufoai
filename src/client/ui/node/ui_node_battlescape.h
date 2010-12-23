@@ -1,5 +1,5 @@
 /**
- * @file ui_node_zone.h
+ * @file ui_node_battlescape.h
  */
 
 /*
@@ -22,16 +22,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_ZONE_H
-#define CLIENT_UI_UI_NODE_ZONE_H
-
-typedef struct {
-	qboolean repeat;			/**< repeat action when "click" is held */
-	int clickDelay;				/**< delay for the next "click" */
-} zoneExtraData_t;
+#ifndef CLIENT_UI_UI_NODE_BATTLESCAPE_H
+#define CLIENT_UI_UI_NODE_BATTLESCAPE_H
 
 struct uiBehaviour_s;
 
-void UI_RegisterZoneNode(struct uiBehaviour_s *behaviour);
+extern const struct uiBehaviour_s *ui_battleScapeBehaviour;
+
+void UI_RegisterBattlescapeNode(struct uiBehaviour_s *behaviour);
 
 #endif

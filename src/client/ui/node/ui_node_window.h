@@ -63,9 +63,6 @@ typedef struct {
 
 	struct uiNode_s *parent;	/**< to create child window */
 
-	/** @todo we can remove it if we create a node for the battlescape */
-	struct uiNode_s *renderNode;
-
 	struct uiKeyBinding_s *keyList;	/** list of key binding */
 
 	/** @todo think about converting it to action instead of node */
@@ -85,7 +82,6 @@ qboolean UI_WindowIsDropDown(const struct uiNode_s* const window);
 qboolean UI_WindowIsModal(const struct uiNode_s* const window);
 void UI_WindowNodeRegisterKeyBinding(struct uiNode_s* window, struct uiKeyBinding_s *binding);
 struct uiKeyBinding_s *UI_WindowNodeGetKeyBinding(const struct uiNode_s* const node, unsigned int key);
-void UI_WindowNodeSetRenderNode(struct uiNode_s *node, struct uiNode_s *renderNode);
 vec_t *UI_WindowNodeGetNoticePosition(struct uiNode_s *node);
 /* child index */
 struct uiNode_s* UI_WindowNodeGetIndexedChild(struct uiNode_s* const node, const char* childName);

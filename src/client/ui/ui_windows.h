@@ -43,14 +43,13 @@ void UI_CloseWindow(const char* name);
 struct uiNode_s* UI_GetActiveWindow(void);
 int UI_CompleteWithWindow(const char *partial, const char **match);
 qboolean UI_IsWindowOnStack(const char* name);
-qboolean UI_IsPointOnWindow(void);
+qboolean UI_IsMouseOnWindow(void);
 void UI_InvalidateStack(void);
 void UI_InsertWindow(struct uiNode_s* window);
 void UI_MoveWindowOnTop (struct uiNode_s * window);
 
 /* deprecated */
 const char* UI_GetActiveWindowName(void);
-void UI_GetActiveRenderRect(int *x, int *y, int *width, int *height);
 
 /** @todo move it on m_nodes, its a common getter/setter */
 void UI_SetNewWindowPos(struct uiNode_s* window, int x, int y);

@@ -58,7 +58,7 @@ window hhud extends hud
 	// ==================
 	// render rectangle
 	// ==================
-	zone render
+	zone battlescape
 	{
 		pos			"0 0"
 		size		"1024 768"

@@ -273,21 +273,6 @@ static void UI_WindowNodeLoading (uiNode_t *node)
 	node->padding = 5;
 }
 
-void UI_WindowNodeSetRenderNode (uiNode_t *node, uiNode_t *renderNode)
-{
-	if (!UI_NodeInstanceOf(node, "window")) {
-		Com_Printf("UI_WindowNodeSetRenderNode: '%s' node is not an 'window'.\n", UI_GetPath(node));
-		return;
-	}
-
-	if (EXTRADATA(node).renderNode) {
-		Com_Printf("UI_WindowNodeSetRenderNode: second render node ignored (\"%s\")\n", UI_GetPath(renderNode));
-		return;
-	}
-
-	EXTRADATA(node).renderNode = renderNode;
-}
-
 /**
  * @brief Called at the end of the load from script
  */
@@ -339,12 +324,6 @@ static void UI_WindowNodeLoaded (uiNode_t *node)
 
 static void UI_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
-	/** @todo anyway we should remove soon renderNode */
-	if (EXTRADATACONST(source).renderNode != NULL) {
-		Com_Printf("UI_WindowNodeClone: Do not inherite window using a render node. Render node ignored (\"%s\")\n", UI_GetPath(clone));
-		EXTRADATA(clone).renderNode = NULL;
-	}
-
 	/* clean up index */
 	EXTRADATA(clone).index = NULL;
 	memset(EXTRADATA(clone).index_hash, 0, sizeof(EXTRADATA(clone).index_hash[0]) * INDEXEDCHILD_HASH_SIZE);

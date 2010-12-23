@@ -405,8 +405,6 @@ void SCR_UpdateScreen (void)
 
 	R_BeginFrame();
 
-	UI_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
-
 	/* draw scene, if it is need */
 	CL_ViewRender();
 

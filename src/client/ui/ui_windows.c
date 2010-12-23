@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_input.h"
 #include "node/ui_node_abstractnode.h"
 #include "node/ui_node_window.h"
+#include "node/ui_node_battlescape.h"
 
 #include "../client.h"
 
@@ -568,37 +569,6 @@ uiNode_t* UI_GetActiveWindow (void)
 }
 
 /**
- * @brief Determine the position and size of render
- */
-void UI_GetActiveRenderRect (int *x, int *y, int *width, int *height)
-{
-	uiNode_t *window = UI_GetActiveWindow();
-
-	/** @todo the better way is to add a 'battlescape' node */
-	if (!window || !WINDOWEXTRADATA(window).renderNode)
-		if (UI_IsWindowOnStack(mn_hud->string))
-			window = UI_GetWindow(mn_hud->string);
-
-	if (window && WINDOWEXTRADATA(window).renderNode) {
-		uiNode_t* node = WINDOWEXTRADATA(window).renderNode;
-		vec2_t pos;
-
-		UI_Validate(window);
-
-		UI_GetNodeAbsPos(node, pos);
-		*x = pos[0] * viddef.rx;
-		*y = pos[1] * viddef.ry;
-		*width = node->size[0] * viddef.rx;
-		*height = node->size[1] * viddef.ry;
-	} else {
-		*x = 0;
-		*y = 0;
-		*width = 0;
-		*height = 0;
-	}
-}
-
-/**
  * @brief Returns the name of the current window
  * @return Active window name, else empty string
  * @sa UI_GetActiveWIndow
@@ -615,7 +585,7 @@ const char* UI_GetActiveWindowName (void)
  * @brief Check if a point is over a window from the stack
  * @sa IN_Parse
  */
-qboolean UI_IsPointOnWindow (void)
+qboolean UI_IsMouseOnWindow (void)
 {
 	const uiNode_t *hovered;
 
@@ -630,7 +600,7 @@ qboolean UI_IsPointOnWindow (void)
 	hovered = UI_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
-		if (hovered->root && hovered == WINDOWEXTRADATACONST(hovered->root).renderNode) {
+		if (hovered->behaviour == ui_battleScapeBehaviour) {
 			return qfalse;
 		}
 		return qtrue;

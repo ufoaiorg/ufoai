@@ -980,6 +980,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_baseinventory.h" />
+		<Unit filename="..\..\src\client\ui\node\ui_node_battlescape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\ui\node\ui_node_battlescape.c" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_button.c">
 			<Option compilerVar="CC" />
 		</Unit>

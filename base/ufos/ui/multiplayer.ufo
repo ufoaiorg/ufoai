@@ -973,7 +973,7 @@ window multiplayer_wait extends levelbuttons
 		starlayout	true
 	}
 
-	zone render {
+	zone battlescape {
 		pos			"0 0"
 		size		"1024 768"
 		align		LAYOUTALIGN_FILL

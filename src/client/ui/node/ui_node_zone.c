@@ -1,11 +1,8 @@
 /**
- * @file ui_node_special.c
+ * @file ui_node_zone.c
  * @brief The <code>zone</code> node allow to create an hidden active node.
  * Currently we only use it to support repeat mouse actions without merging
  * the code which managing this feature.
- * @brief The very special zone called "render" is used to identify a rendering rectangle
- * for battlescape. This part of the code should be removed.
- * @todo Find a way to remove the zone called "render". Create a node for the battlescape?
  */
 
 /*
@@ -90,15 +87,6 @@ static void UI_ZoneNodeLoading (uiNode_t *node)
 	EXTRADATA(node).clickDelay = 1000;
 }
 
-/**
- * @brief Call after the script initialized the node
- */
-static void UI_ZoneNodeLoaded (uiNode_t *node)
-{
-	if (!strcmp(node->name, "render"))
-		UI_WindowNodeSetRenderNode(node->root, node);
-}
-
 static const value_t properties[] = {
 	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */
 	{"repeat", V_BOOL, UI_EXTRADATA_OFFSETOF(zoneExtraData_t, repeat), MEMBER_SIZEOF(zoneExtraData_t, repeat)},
@@ -111,7 +99,6 @@ void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "zone";
 	behaviour->loading = UI_ZoneNodeLoading;
-	behaviour->loaded = UI_ZoneNodeLoaded;
 	behaviour->mouseDown = UI_ZoneNodeDown;
 	behaviour->mouseUp = UI_ZoneNodeUp;
 	behaviour->capturedMouseLost = UI_ZoneNodeCapturedMouseLost;

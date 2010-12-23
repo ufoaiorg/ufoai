@@ -25,7 +25,7 @@ window hud_alt extends hud
 	// ==================
 	// render rectangle
 	// ==================
-	zone render
+	battlescape render
 	{
 		pos			"0 0"
 		size		"1024 768"
