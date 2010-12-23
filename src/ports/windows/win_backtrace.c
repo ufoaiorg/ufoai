@@ -9,6 +9,7 @@
  */
 
 #include "win_local.h"
+#include "../../common/common.h"
 #ifdef HAVE_BFD_H
 #include <excpt.h>
 #include <imagehlp.h>
