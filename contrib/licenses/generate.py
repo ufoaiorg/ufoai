@@ -404,8 +404,12 @@ class Analysis(object):
         content = '<h2>%s</h2>' % license
 
         content += '<ol>' + EOL
+        list = []
         for meta in contents:
-            content += self.getContentEntry(output, meta) + EOL
+            list.append((meta.fileName, meta))
+        list.sort()
+        for meta in list:
+            content += self.getContentEntry(output, meta[1]) + EOL
         content += '</ol>'
 
         html = HTML
