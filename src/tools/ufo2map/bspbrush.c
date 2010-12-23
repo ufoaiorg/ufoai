@@ -418,6 +418,36 @@ static qboolean DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 	return split;
 }
 
+#if 0
+/* DoesPlaneSplitBrush does not yet work for all maps, namely city_train.map
+ * Until we know why, let's use the old stuff. */
+static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
+{
+	qboolean good;
+
+	good = DoesPlaneSplitBrush(volume, pnum);
+
+	return good;
+}
+
+#else
+static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
+{
+		bspbrush_t *front, *back;
+		qboolean good;
+
+		SplitBrush(volume, pnum, &front, &back);
+
+		good = (front && back);
+
+		if (front)
+				FreeBrush(front);
+		if (back)
+				FreeBrush(back);
+
+		return good;
+}
+#endif
 /**
  * @brief Using a heuristic, choses one of the sides out of the brushlist
  * to partition the brushes with.
@@ -469,7 +499,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 				pnum = side->planenum;
 				pnum &= ~1;	/* always use positive facing plane */
 
-				if (!DoesPlaneSplitBrush(volume, pnum))
+				if (!CheckPlaneAgainstVolume(pnum, volume))
 					continue;	/* would produce a tiny volume */
 
 				front = 0;
