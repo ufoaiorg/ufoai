@@ -13,13 +13,13 @@ window intro
 		}
 	}
 
-	func onInit {
+	func onWindowOpened {
 		cmd "music_stop;"
 		*cvar:intro_old_scr_showcursor = *cvar:scr_showcursor
 		*cvar:scr_showcursor = 0
 	}
 
-	func onClose {
+	func onWindowClosed {
 		*cvar:scr_showcursor = *cvar:intro_old_scr_showcursor
 		delete *cvar:intro_old_scr_showcursor
 	}

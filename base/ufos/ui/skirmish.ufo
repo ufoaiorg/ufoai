@@ -373,7 +373,7 @@ window skirmish
 	// =====
 	// INIT
 	// =====
-	func onInit
+	func onWindowOpened
 	{
 		// TODO: Allow changing the difficulty via menu
 		cmd	"game_setmode;set ai_numaliens 8;set ai_equipment multiplayer_alien;set difficulty 0;"

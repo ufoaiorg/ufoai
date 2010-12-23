@@ -180,7 +180,7 @@ window popup_button
 		invis		true
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 	}
 }

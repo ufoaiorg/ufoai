@@ -66,8 +66,8 @@ typedef struct {
 	struct uiKeyBinding_s *keyList;	/** list of key binding */
 
 	/** @todo think about converting it to action instead of node */
-	struct uiAction_s *onInit; 	/**< Call when the window is pushed */
-	struct uiAction_s *onClose;	/**< Call when the window is popped */
+	struct uiAction_s *onWindowOpened; 	/**< Call when the window is pushed */
+	struct uiAction_s *onWindowClosed;	/**< Call when the window is popped */
 	struct uiAction_s *onTimeOut;	/**< Call when the own timer of the window out */
 
 	node_index_t *index;

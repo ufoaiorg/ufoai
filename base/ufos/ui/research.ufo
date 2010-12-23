@@ -457,7 +457,7 @@ window research
 	// ==================
 	// init
 	// ==================
-	func onInit
+	func onWindowOpened
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 22 ) {

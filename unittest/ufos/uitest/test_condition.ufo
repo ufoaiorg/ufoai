@@ -328,7 +328,7 @@ window test_condition
 		else { *node:root.testControl5@color = "0 1 0 1" }
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:test_float0 = "0"
 		*cvar:test_float1 = "1"
 		*cvar:test_float0-2 = "0"
@@ -392,7 +392,7 @@ window test_condition
 		cmd "test_testIfControl"
 	}
 
-	func onClose {
+	func onWindowClosed {
 		cmd "del test_float0"
 		cmd "del test_float0-2"
 		cmd "del test_float314"

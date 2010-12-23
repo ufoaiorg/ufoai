@@ -94,7 +94,7 @@ window test_inheritedconfunc {
 		cmd "test_inheritedconfunc_call;"
 	}
 
-	func onInit {
+	func onWindowOpened {
 		cmd "ui_push test_inheritedconfunc_popup_push"
 		cmd "test_inheritedconfunc_firecall;"
 	}

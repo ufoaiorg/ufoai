@@ -124,7 +124,7 @@ window aircraft extends iaircraft
 		*node:root.aircraft_list@lineselected = <1>
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		*cvar:mn_aircrafttab = "aircraft"
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"

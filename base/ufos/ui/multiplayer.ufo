@@ -25,7 +25,7 @@ window multiplayer
 	}
 
 	/** @brief prevent pushing this menu */
-	func onInit
+	func onWindowOpened
 	{
 		cmd "ui_pop;"
 		call *node:root.mn_push_multiplayer
@@ -245,11 +245,11 @@ window serverinfo
 		onClick		{ cmd "bookmark_add;" }
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd	"pingservers; check_bookmarks;"
 	}
@@ -418,7 +418,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 	// ====================
 	// init
 	// ====================
-	func onInit
+	func onWindowOpened
 	{
 		cmd "set cl_serverlist 0;"
 		cmd "pingservers refresh;"
@@ -498,7 +498,7 @@ window mp_bookmarks extends abstract_multiplayer_join
 		delete *cvar:i
 	}
 
-	func onInit {
+	func onWindowOpened {
 		cmd "check_bookmarks;"
 	}
 }
@@ -952,7 +952,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_updategametype;mn_getmaps;"
@@ -1661,7 +1661,7 @@ window multiplayer_wait extends levelbuttons
 		cmd "mp_selectteam_init;"
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "mp_selectteam_init;"
 		*cvar:mn_displaypartyinfo = 1
@@ -1670,7 +1670,7 @@ window multiplayer_wait extends levelbuttons
 		*cvar:cl_ready = 0
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		delete *cvar:mn_entry
 		delete *cvar:mn_chatselect

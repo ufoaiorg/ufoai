@@ -206,7 +206,7 @@ window bases
 		*node:root.base_buttons.<1>@tooltip = <3>
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "base_init;"
 	}

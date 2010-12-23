@@ -725,7 +725,7 @@ window hhud extends hud
 	// init function
 	// ==================
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "debug_ui 1;"
 		// missed currently

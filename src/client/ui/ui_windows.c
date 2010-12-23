@@ -195,8 +195,8 @@ static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboo
 	else
 		Com_Printf("Window stack overflow\n");
 
-	if (window->behaviour->init) {
-		window->behaviour->init(window);
+	if (window->behaviour->windowOpened) {
+		window->behaviour->windowOpened(window);
 	}
 
 	/* change from e.g. console mode to game input mode (fetch input) */
@@ -376,8 +376,8 @@ static void UI_CloseAllWindow (void)
 	for (i = ui_global.windowStackPos - 1; i >= 0; i--) {
 		uiNode_t *window = ui_global.windowStack[i];
 
-		if (window->behaviour->close)
-			window->behaviour->close(window);
+		if (window->behaviour->windowClosed)
+			window->behaviour->windowClosed(window);
 
 		/* safe: unlink window */
 		WINDOWEXTRADATA(window).parent = NULL;
@@ -447,15 +447,15 @@ static void UI_CloseWindowByRef (uiNode_t *window)
 		if (WINDOWEXTRADATA(m).parent != window) {
 			break;
 		}
-		if (window->behaviour->close)
-			window->behaviour->close(window);
+		if (window->behaviour->windowClosed)
+			window->behaviour->windowClosed(window);
 		WINDOWEXTRADATA(m).parent = NULL;
 		UI_RemoveWindowAtPositionFromStack(i + 1);
 	}
 
 	/* close the window */
-	if (window->behaviour->close)
-		window->behaviour->close(window);
+	if (window->behaviour->windowClosed)
+		window->behaviour->windowClosed(window);
 	WINDOWEXTRADATA(window).parent = NULL;
 	UI_RemoveWindowAtPositionFromStack(i);
 
@@ -730,8 +730,8 @@ static void UI_FireInit_f (void)
 
 	/* initialize it */
 	if (window) {
-		if (WINDOWEXTRADATACONST(window).onInit)
-			UI_ExecuteEventActions(window, WINDOWEXTRADATACONST(window).onInit);
+		if (WINDOWEXTRADATACONST(window).onWindowOpened)
+			UI_ExecuteEventActions(window, WINDOWEXTRADATACONST(window).onWindowOpened);
 		Com_DPrintf(DEBUG_CLIENT, "Reinitialize %s\n", window->name);
 	}
 }

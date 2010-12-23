@@ -121,8 +121,8 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 	behaviour->name = "sequence";
 	behaviour->draw = UI_SequenceNodeDraw;
 	behaviour->properties = properties;
-	behaviour->init = UI_SequenceNodeInit;
-	behaviour->close = UI_SequenceNodeClose;
+	behaviour->windowOpened = UI_SequenceNodeInit;
+	behaviour->windowClosed = UI_SequenceNodeClose;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->propertyChanged = UI_SequencePropertyChanged;
 	behaviour->leftClick = UI_SequenceNodeLeftClick;

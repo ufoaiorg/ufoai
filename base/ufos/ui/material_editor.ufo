@@ -674,7 +674,7 @@ window material_editor {
 		}
 	}
 
-	func onInit {
+	func onWindowOpened {
 		// general cvars
 		*cvar:me_image_id = -1
 		*cvar:me_stage_id = -1
@@ -707,7 +707,7 @@ window material_editor {
 		cmd "ui_materialeditor;"
 	}
 
-	func onClose {
+	func onWindowClosed {
 		// general cvars
 		cmd "del me_image_id; del me_stage_id; del me_imagename; del me_stagetype;"
 		// shader cvars

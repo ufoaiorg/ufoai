@@ -194,7 +194,7 @@ window basesummary
 	// ==================
 	// init
 	// ==================
-	func onInit
+	func onWindowOpened
 	{
 		cmd "basesummary_selectbase;"
 	}

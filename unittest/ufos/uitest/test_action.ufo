@@ -9,7 +9,7 @@ window test_action_eventtest {
 		invis true
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:test = 4
 		cmd "ui_pop"
 	}
@@ -348,7 +348,7 @@ window test_action
 	// Main
 	//
 
-	func onInit {
+	func onWindowOpened {
 		call *node:root.testCommon
 		call *node:root.testListener
 		call *node:root.testLack

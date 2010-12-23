@@ -224,7 +224,7 @@ window test_cvar
 		delete *cvar:test6
 	}
 
-	func onInit {
+	func onWindowOpened {
 		call *node:root.cvarOrFloat
 	}
 

@@ -1163,7 +1163,7 @@ window hud_alt extends hud
 	// init function
 	// ==================
 
-	func onInit
+	func onWindowOpened
 	{
 		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"

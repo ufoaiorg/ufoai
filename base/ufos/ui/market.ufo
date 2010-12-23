@@ -560,7 +560,7 @@ window market extends objectinfo
 	// init
 	// ==================
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "buy_type *cvar:mn_itemtype;"
 		*cvar:i = 0

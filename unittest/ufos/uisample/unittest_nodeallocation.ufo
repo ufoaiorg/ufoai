@@ -114,11 +114,11 @@ window unittest_nodeallocation
 		}
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:nb = 0
 	}
 
-	func onClose {
+	func onWindowClosed {
 		delete *cvar:nb
 	}
 }

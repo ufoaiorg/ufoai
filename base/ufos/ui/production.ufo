@@ -607,13 +607,13 @@ window production
 		delete *cvar:tmp
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "prod_init; prod_type *cvar:mn_itemtype;"
 		call *node:root.prod_stores
 		*cvar:ui_prreq = ""
 	}
-	func onClose
+	func onWindowClosed
 	{
 		delete *cvar:ui_prreq
 	}

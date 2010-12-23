@@ -105,7 +105,7 @@ window buildings
 		cmd "ui_resetdata TEXT_BUILDING_INFO;"
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "building_init;"
 		call *node:root.mn_buildings_reset
@@ -115,7 +115,7 @@ window buildings
 
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd "reset_building_current 0;"
 	}
@@ -181,7 +181,7 @@ window popup_buildingpreview
 		onClick		{ cmd "building_ufopedia;" }
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		*node:buildings.building_preview@current = 0
 	}

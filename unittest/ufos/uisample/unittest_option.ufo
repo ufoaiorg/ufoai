@@ -117,11 +117,11 @@ window unittest_option
 		}
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:nb = 0
 	}
 
-	func onClose {
+	func onWindowClosed {
 		delete *cvar:mn_unittest_option
 		delete *cvar:mn_unittest_option2
 		delete *cvar:nb

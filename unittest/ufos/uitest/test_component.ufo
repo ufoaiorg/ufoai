@@ -58,7 +58,7 @@ window test_component {
 	test_component_myFunkyPanel foo1 { pos "10 10"}
 	test_component_myFunkyPanel foo2 { pos "10 110"}
 
-	func onInit {
+	func onWindowOpened {
 		// check existence of some nodes
 /** @todo add "exists" for nodes
 		if ( exists *node:root.foo1 ) { *node:root.test1@color = "0 1 0 1" }

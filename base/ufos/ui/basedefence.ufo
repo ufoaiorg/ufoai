@@ -401,7 +401,7 @@ window basedefence extends objectinfo
 		delete *cvar:tmp
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:mn_itemname = ""
 		*cvar:mn_upmodel_top = ""
 		*cvar:mn_bdef_type = "info"

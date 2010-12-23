@@ -95,8 +95,8 @@ void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 	behaviour->name = "video";
 	behaviour->draw = UI_VideoNodeDraw;
 	behaviour->properties = properties;
-	behaviour->init = UI_VideoNodeInit;
-	behaviour->close = UI_VideoNodeClose;
+	behaviour->windowOpened = UI_VideoNodeInit;
+	behaviour->windowClosed = UI_VideoNodeClose;
 	behaviour->drawOverWindow = UI_VideoNodeDrawOverWindow;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

@@ -400,13 +400,13 @@ window test_setter
 
 	}
 
-	func onInit {
+	func onWindowOpened {
 		call *node:root.testCvar
 		call *node:root.testProperty
 		call *node:root.testDelete
 	}
 
-	func onClose {
+	func onWindowClosed {
 	}
 
 }

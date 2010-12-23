@@ -115,14 +115,14 @@ window editor {
 		font		"f_verysmall"
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:scr_showcursor = 1
 		*cvar:ui_sys_editor_node = ""
 		*cvar:ui_sys_editor_window = ""
 		cmd "echo \"Use ui_extract to write your changes to a file\";"
 	}
 
-	func onClose {
+	func onWindowClosed {
 		delete *cvar:ui_sys_editor_node
 		delete *cvar:ui_sys_editor_window
 		call *node:root.editor@stop

@@ -233,7 +233,7 @@ window test_action2
 	// Main
 	//
 
-	func onInit {
+	func onWindowOpened {
 		call *node:root.testParam
 	}
 

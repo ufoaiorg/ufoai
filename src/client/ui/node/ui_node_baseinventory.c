@@ -852,7 +852,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->mouseUp = UI_BaseInventoryNodeMouseUp;
 	behaviour->mouseWheel = UI_BaseInventoryNodeWheel;
 	behaviour->capturedMouseMove = UI_BaseInventoryNodeCapturedMouseMove;
-	behaviour->init = UI_BaseInventoryNodeInit;
+	behaviour->windowOpened = UI_BaseInventoryNodeInit;
 	behaviour->loading = UI_BaseInventoryNodeLoading;
 	behaviour->loaded = UI_BaseInventoryNodeLoaded;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);

@@ -160,7 +160,7 @@ window irc
 	// ==================
 	// init
 	// ==================
-	func onInit
+	func onWindowOpened
 	{
 		cmd "irc_activate; activate_irc_textentry;"
 	}
@@ -168,7 +168,7 @@ window irc
 	// ==================
 	// close
 	// ==================
-	func onClose
+	func onWindowClosed
 	{
 		cmd "irc_deactivate;"
 	}

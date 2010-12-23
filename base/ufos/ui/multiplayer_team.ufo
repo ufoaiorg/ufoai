@@ -722,7 +722,7 @@ window mp_team_edit extends objectinfo
 		onClick	{ cmd "ui_pop;" }
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		call *node:root.mp_names_clear
 		call *node:root.mp_actor_stats
@@ -731,7 +731,7 @@ window mp_team_edit extends objectinfo
 		cmd "team_initskin;mp_update_item_list;mp_team_select 0;mp_team_update;"
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd "mp_saveteamstate;"
 	}
@@ -929,7 +929,7 @@ window mp_team extends abstract_multiplayer
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd	"team_comments;define cl_teamdef phalanx;"
 	}
@@ -940,7 +940,7 @@ window mp_team extends abstract_multiplayer
 // ==========================
 
 /**
- * @todo The ui_pop into the change event dont work - the workaround is the func onClose team_comments call
+ * @todo The ui_pop into the change event dont work - the workaround is the func onWindowClosed team_comments call
  */
 window mp_team_save_popup
 {
@@ -1071,7 +1071,7 @@ window mp_team_save_popup
 		onChange	{ cmd "saveteam 7;ui_pop;" }
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd "team_comments;"
 	}

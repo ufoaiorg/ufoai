@@ -87,7 +87,7 @@ window unittest_radiobutton
 		icon	number_8
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:foo = 1
 	}
 

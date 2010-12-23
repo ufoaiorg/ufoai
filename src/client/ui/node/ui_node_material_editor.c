@@ -591,7 +591,7 @@ void UI_RegisterMaterialEditorNode (uiBehaviour_t *behaviour)
 	behaviour->name = "material_editor";
 	behaviour->extends = "abstractscrollable";
 	behaviour->draw = UI_MaterialEditorNodeDraw;
-	behaviour->init = UI_MaterialEditorNodeInit;
+	behaviour->windowOpened = UI_MaterialEditorNodeInit;
 	behaviour->mouseDown = UI_MaterialEditorMouseDown;
 	behaviour->mouseWheel = UI_MaterialEditorNodeWheel;
 

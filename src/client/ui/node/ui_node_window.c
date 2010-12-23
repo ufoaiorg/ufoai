@@ -230,14 +230,14 @@ static void UI_WindowNodeInit (uiNode_t *node)
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->behaviour->init) {
-			child->behaviour->init(child);
+		if (child->behaviour->windowOpened) {
+			child->behaviour->windowOpened(child);
 		}
 	}
 
 	/* script callback */
-	if (EXTRADATA(node).onInit)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onInit);
+	if (EXTRADATA(node).onWindowOpened)
+		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowOpened);
 
 	UI_Invalidate(node);
 }
@@ -252,14 +252,14 @@ static void UI_WindowNodeClose (uiNode_t *node)
 
 	/* close child */
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->behaviour->close) {
-			child->behaviour->close(child);
+		if (child->behaviour->windowClosed) {
+			child->behaviour->windowClosed(child);
 		}
 	}
 
 	/* script callback */
-	if (EXTRADATA(node).onClose)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onClose);
+	if (EXTRADATA(node).onWindowClosed)
+		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowClosed);
 }
 
 /**
@@ -369,9 +369,9 @@ static const value_t windowNodeProperties[] = {
 	{"timeout", V_INT,UI_EXTRADATA_OFFSETOF(windowExtraData_t, timeOut), MEMBER_SIZEOF(windowExtraData_t, timeOut)},
 
 	/* Called when the window is puched into the active window stack. */
-	{"oninit", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},
+	{"onWindowOpened", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onWindowOpened), MEMBER_SIZEOF(windowExtraData_t, onWindowOpened)},
 	/* Called when the window is removed from the active window stack. */
-	{"onclose", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onClose), MEMBER_SIZEOF(windowExtraData_t, onClose)},
+	{"onWindowClosed", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onWindowClosed), MEMBER_SIZEOF(windowExtraData_t, onWindowClosed)},
 	/* Called periodically. See <code>timeout</code>. */
 	{"onevent", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onTimeOut), MEMBER_SIZEOF(windowExtraData_t, onTimeOut)},
 
@@ -450,8 +450,8 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	behaviour->name = "window";
 	behaviour->loading = UI_WindowNodeLoading;
 	behaviour->loaded = UI_WindowNodeLoaded;
-	behaviour->init = UI_WindowNodeInit;
-	behaviour->close = UI_WindowNodeClose;
+	behaviour->windowOpened = UI_WindowNodeInit;
+	behaviour->windowClosed = UI_WindowNodeClose;
 	behaviour->draw = UI_WindowNodeDraw;
 	behaviour->doLayout = UI_WindowNodeDoLayout;
 	behaviour->clone = UI_WindowNodeClone;

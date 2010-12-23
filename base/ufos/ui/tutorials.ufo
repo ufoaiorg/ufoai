@@ -56,7 +56,7 @@ window tutorials
 		onChange	{ *node:root.tutoriallist@viewpos = <current> }
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd	"gettutorials;"
 	}

@@ -90,12 +90,12 @@ window mail
 	}
 	*/
 
-	func onClose
+	func onWindowClosed
 	{
 		/** @todo we should remove that call. */
 		cmd "ui_fireinit mailclient;"
 	}
-	func onInit
+	func onWindowOpened
 	{
 		*node:root.mail@viewpos = 0
 		*node:root.mail_scroll@current = 0
@@ -568,7 +568,7 @@ window mailclient
 		onClick		{ cmd "ui_pop;" }
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "ufopedia_openmail 0;"
 	}

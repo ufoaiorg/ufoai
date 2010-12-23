@@ -256,11 +256,11 @@ window test_function extends test_function_interface
 		cmd "test7 foo 1 2"
 	}
 
-	func onInit {
+	func onWindowOpened {
 		call *node:root.testCommon
 	}
 
-	func onClose {
+	func onWindowClosed {
 		delete *cvar:error
 		delete *cvar:errorMessage
 	}

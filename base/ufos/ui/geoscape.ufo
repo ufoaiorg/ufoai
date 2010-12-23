@@ -653,7 +653,7 @@ window geoscape
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd	"music_change geoscape;"
 		if ( not exists *cvar:mn_messagesystem ) {
@@ -724,7 +724,7 @@ window popup_intercept_ready
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "cp_missionauto_check;popup_intercept_ready_update"
 	}
@@ -879,7 +879,7 @@ window popup_baseattack
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd	"cp_missionauto_check;"
 	}
@@ -1197,7 +1197,7 @@ window popup_newinstallation_type
 		onClick		{ cmd "ui_pop;" }
 	}
 
-	func onInit {
+	func onWindowOpened {
 		if ( *cvar:mn_base_count >= *cvar:mn_base_max ) {
 			*node:root.click_base@invis = true
 			*node:root.disabled_base@invis = false
@@ -1341,12 +1341,12 @@ window popup_newinstallation
 		onClick		{ cmd "ui_pop; mn_installation_build *cvar:mn_installation_type;" }
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd "mn_mapaction_reset;"
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		if ( *cvar:mn_installation_type eq "radartower" ) {
 			*node:root.title@string = "_New radar tower"
@@ -1426,7 +1426,7 @@ window popup_installationstatus
 		onClick		{ cmd "ui_pop; mn_installation_destroy;" }
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "game_timestop;"
 
@@ -1607,12 +1607,12 @@ window popup_intercept
 		}
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:mn_defencetab = 0
 		cmd "popup_intercept_update;"
 	}
 
-	func onClose {
+	func onWindowClosed {
 		cmd "del mn_defencetab;"
 	}
 }
@@ -1926,7 +1926,7 @@ window geoscape_options {
 		}
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:cl_geoscape_overlay_fooooo = 0
 	}
 }

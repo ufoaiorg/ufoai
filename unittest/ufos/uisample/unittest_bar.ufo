@@ -73,7 +73,7 @@ window unittest_bar
 		direction "lc"
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:foo = 50
 	}
 }

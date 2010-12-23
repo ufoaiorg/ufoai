@@ -118,7 +118,7 @@ window campaigns
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "game_setmode;cp_getcampaigns;"
 	}
@@ -384,7 +384,7 @@ window load
 		onClick		{ cmd "ui_pop;" }
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "game_comments;"
 	}
@@ -568,7 +568,7 @@ window save
 		onClick		{ cmd "ui_pop;" }
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "game_comments;"
 	}
@@ -588,7 +588,7 @@ window lostgame
 		src		"background/losegame_bg"
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "music_stop;snd_music Crystan-LooseGame;"
 	}
@@ -732,7 +732,7 @@ window endgame
 		onChange	{ *node:root.reason@viewpos = <current> }
 	}
 
-	func onInit {
+	func onWindowOpened {
 		cmd "music_stop;snd_music Crystan-WinGame;"
 	}
 }

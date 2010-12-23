@@ -74,8 +74,8 @@ void UI_RegisterBattlescapeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "battlescape";
 	behaviour->loading = UI_BattlescapeNodeLoading;
-	behaviour->init = UI_BattlescapeNodeInit;
-	behaviour->close = UI_BattlescapeNodeClose;
+	behaviour->windowOpened = UI_BattlescapeNodeInit;
+	behaviour->windowClosed = UI_BattlescapeNodeClose;
 	behaviour->sizeChanged = UI_BattlescapeNodeSizeChanged;
 	ui_battleScapeBehaviour = behaviour;
 }

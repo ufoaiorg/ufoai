@@ -2299,7 +2299,7 @@ window options
 			onChange	{ *node:root.options_keys.keylist@viewpos = <current> }
 		}
 	}
-	func onInit
+	func onWindowOpened
 	{
 		*cvar:mn_vidratio = "all"
 		cmd "cl_setratiofilter <cvar:mn_vidratio>"
@@ -2346,13 +2346,13 @@ window popup_maintain_resolution
 		pos			"297 188"
 		onClick		{ cmd "ui_pop; copy new_vidmode old_vidmode;" }
 	}
-	func onInit
+	func onWindowOpened
 	{
 		cmd "copy old_vidmode vid_mode;"
 		cmd "copy vid_mode mn_vidmode;"
 		cmd "copy new_vidmode old_vidmode;"
 	}
-	func onClose
+	func onWindowClosed
 	{
 		cmd "copy vid_mode new_vidmode;"
 	}

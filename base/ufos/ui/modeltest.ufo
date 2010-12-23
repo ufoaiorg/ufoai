@@ -23,7 +23,7 @@ window model_test
 		rotatewithmouse	true
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "set mn_model drop_firebird;"
 	}

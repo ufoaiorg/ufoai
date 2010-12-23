@@ -173,8 +173,8 @@ typedef struct uiBehaviour_s {
 	void (*deleteNode)(uiNode_t *node);		/**< call to delete a dynamic node */
 
 	/* system callback */
-	void (*init)(uiNode_t *node);			/**< call every time we push the parent window */
-	void (*close)(uiNode_t *node);		/**< call every time we pop the parent window */
+	void (*windowOpened)(uiNode_t *node);			/**< Invoked when the window is added to the rendering stack */
+	void (*windowClosed)(uiNode_t *node);		/**< Invoked when the window is removed from the rendering stack */
 	void (*doLayout)(uiNode_t *node);		/**< call to update node layout */
 	void (*activate)(uiNode_t *node);		/**< Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
 	void (*propertyChanged)(uiNode_t *node, const value_t *property);		/**< Called when a property change */

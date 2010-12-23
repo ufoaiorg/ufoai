@@ -416,13 +416,13 @@ window ufopedia extends objectinfo
 		*cvar:up_summary_selection = ""
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		call *node:root.init_summary
 		cmd "update_ufopedia_layout;"
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		delete *cvar:up_summary_selection
 	}

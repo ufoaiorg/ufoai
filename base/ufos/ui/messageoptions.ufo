@@ -260,7 +260,7 @@ window messageoptions
 		*node:root.option<1>@invis = true
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		*cvar:mn_messagetype = -1
 		*node:root.messagetypes@viewpos = 0
@@ -268,7 +268,7 @@ window messageoptions
 		cmd "game_timestop;msgoptions_init 13;msgoptions_backup;"
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd "msgoptions_restore;"
 		cmd "del mn_messagetype;"

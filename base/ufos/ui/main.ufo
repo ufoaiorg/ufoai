@@ -72,7 +72,7 @@ window main
 		string	"_Exit"
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "music_change main;"
 		cmd "ui_push_child popup_tipoftheday main;check_cvars;"
@@ -243,7 +243,7 @@ window checkcvars
 	}
 
 	// check again - maybe the user has forgotton something
-	func onClose
+	func onWindowClosed
 	{
 		cmd "check_cvars;"
 	}
@@ -320,7 +320,7 @@ window popup_tipoftheday
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		if ( *cvar:cl_showTipOfTheDay == 1 ) {
 			cmd "tipoftheday random; check_nexttip;"

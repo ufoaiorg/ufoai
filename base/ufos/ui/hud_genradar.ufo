@@ -128,7 +128,7 @@ window genradarhud extends hud
 		*cvar:scr_showcursor = 1
 	}
 
-	func onInit {
+	func onWindowOpened {
 		cmd "mn_radarhud_reinit;"
 		cmd "echo Run the game in 1024x1024:;"
 		cmd "echo ufo +set vid_mode -1 +set vid_width 1024 +set vid_height 1024;"
@@ -136,7 +136,7 @@ window genradarhud extends hud
 		*cvar:cl_showactors = 0
 	}
 
-	func onClose {
+	func onWindowClosed {
 		*cvar:scr_showcursor = 1
 		*cvar:cl_showactors = 1
 	}

@@ -346,6 +346,6 @@ void UI_RegisterTabNode (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_TabNodeDraw;
 	behaviour->drawTooltip = UI_TabNodeDrawTooltip;
 	behaviour->leftClick = UI_TabNodeClick;
-	behaviour->init = UI_TabNodeInit;
+	behaviour->windowOpened = UI_TabNodeInit;
 	behaviour->drawItselfChild = qtrue;
 }

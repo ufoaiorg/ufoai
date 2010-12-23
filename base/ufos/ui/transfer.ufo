@@ -609,13 +609,13 @@ window transfer
 	// init function
 	// ==================
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "trans_init;"
 		if ( *cvar:mn_itemtype_name eq "" ) { *cvar:mn_itemtype_name = "_Equipment" }
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd "trans_close;"
 	}
@@ -657,7 +657,7 @@ window popup_transferbaselist
 		onClick		{ cmd "ui_pop; aircraft_return;" }
 	}
 
-	func onInit {
+	func onWindowOpened {
 		*cvar:tr_base = -1
 	}
 }

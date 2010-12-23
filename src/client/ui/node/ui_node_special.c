@@ -159,8 +159,8 @@ void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
 	behaviour->loaded = UI_ConFuncNodeLoaded;
-	behaviour->init = UI_ConFuncNodeInit;
-	behaviour->close = UI_ConFuncNodeClose;
+	behaviour->windowOpened = UI_ConFuncNodeInit;
+	behaviour->windowClosed = UI_ConFuncNodeClose;
 	behaviour->clone = UI_ConFuncNodeClone;
 }
 

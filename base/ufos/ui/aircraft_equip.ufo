@@ -605,7 +605,7 @@ window aircraft_equip extends iaircraft
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
@@ -615,7 +615,7 @@ window aircraft_equip extends iaircraft
 		*cvar:mn_upmodel_top = ""
 		*cvar:mn_aircraft_item_selected = -1
 	}
-	func onClose
+	func onWindowClosed
 	{
 		delete *cvar:mn_aircraft_item_model_slot0
 		delete *cvar:mn_aircraft_item_model_slot1

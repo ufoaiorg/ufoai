@@ -54,12 +54,12 @@ window won
 		}
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "snd_music ufo2;"
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd "cp_results 1;"
 	}
@@ -127,12 +127,12 @@ window lost
 		onClick		{ cmd "set cp_mission_tryagain 0;ui_pop;" }
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "snd_music ufo1;"
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		cmd "cp_results 0;"
 	}
@@ -425,7 +425,7 @@ window uforecovery
 		*node:root.store_panel.ur_capacities@lineselected = <1>
 	}
 
-	func onInit {
+	func onWindowOpened {
 		cmd "uforecovery_tabselect store"
 		*node:root.store_panel.ur_ufoyards@lineselected = -1
 		*node:root.store_panel.ur_capacities@lineselected = -1
@@ -439,7 +439,7 @@ window uforecovery
 		}
 	}
 
-	func onClose {
+	func onWindowClosed {
 		delete *cvar:mn_uforecovery_tab
 		delete *cvar:mn_uforecovery_actualufo
 	}

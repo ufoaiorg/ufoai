@@ -93,7 +93,7 @@ window unittest_event
 		*cvar:counter = 0
 	}
 
-	func onClose {
+	func onWindowClosed {
 		cmd "del counter"
 	}
 

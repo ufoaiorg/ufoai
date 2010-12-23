@@ -665,8 +665,8 @@ static void UI_AbstractNodeInit (uiNode_t *node)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->behaviour->init) {
-			child->behaviour->init(child);
+		if (child->behaviour->windowOpened) {
+			child->behaviour->windowOpened(child);
 		}
 	}
 }
@@ -675,8 +675,8 @@ static void UI_AbstractNodeClose (uiNode_t *node)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->behaviour->close) {
-			child->behaviour->close(child);
+		if (child->behaviour->windowClosed) {
+			child->behaviour->windowClosed(child);
 		}
 	}
 }
@@ -891,8 +891,8 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	behaviour->activate = UI_AbstractNodeActivate;
 	behaviour->propertyChanged = UI_AbstractNodePropertyChanged;
 	behaviour->sizeChanged = UI_AbstractNodeSizeChanged;
-	behaviour->init = UI_AbstractNodeInit;
-	behaviour->close = UI_AbstractNodeClose;
+	behaviour->windowOpened = UI_AbstractNodeInit;
+	behaviour->windowClosed = UI_AbstractNodeClose;
 
 	/** @todo move it into common? */
 	Com_RegisterConstInt("ALIGN_UL", ALIGN_UL);

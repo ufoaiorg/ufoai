@@ -522,7 +522,7 @@ window employees
 	// init function
 	// ==================
 
-	func onInit
+	func onWindowOpened
 	{
 		*node:root.employee_list@viewpos = 0
 		*node:root.employee_list@lineselected = 0
@@ -532,7 +532,7 @@ window employees
 		cmd "employee_update_count;"
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		// call base init function because the amount of workers, scientists and
 		// so on can also change the button state in the base view

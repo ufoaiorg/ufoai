@@ -571,7 +571,7 @@ window team extends iaircraft
 		cmd "aircraft_status_change"
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		*cvar:i = 0

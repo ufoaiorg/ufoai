@@ -702,7 +702,7 @@ window equipment extends objectinfo
 		onClick	{ cmd "ui_pop;" }
 	}
 
-	func onClose
+	func onWindowClosed
 	{
 		/** @note Do not define action here
 		 * this close is edited by the code
@@ -710,7 +710,7 @@ window equipment extends objectinfo
 		 */
 	}
 
-	func onInit
+	func onWindowOpened
 	{
 		call *node:root.names_clear
 		call *node:root.actor_stats
