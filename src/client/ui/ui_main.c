@@ -271,6 +271,24 @@ static void UI_InitHUDConfig_f (void)
 	}
 }
 
+/**
+ * @brief Checks that the given cvar is a valid hud cvar
+ * @param cvar The cvar to check and to modify if the value is invalid
+ * @return @c true if the valid is invalid, @c false otherwise
+ */
+static qboolean UI_CvarCheckMNHud (cvar_t *cvar)
+{
+	uiNode_t *window = UI_GetWindow(cvar->string);
+	if (window == NULL) {
+		Cvar_Set(cvar->name, cvar->oldString);
+		return qtrue;
+	}
+	/**
+	 * @todo check that the window inherits from hud
+	 */
+	return qfalse;
+}
+
 void UI_Init (void)
 {
 #ifdef DEBUG
@@ -282,7 +300,7 @@ void UI_Init (void)
 
 	/** @todo move it in cl_hud INIT */
 	mn_hud = Cvar_Get("mn_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected HUD");
-	/** @todo Add cvarchecker (new name must be a window, and super window must be "hud") */
+	Cvar_SetCheckFunction("mn_hud", UI_CvarCheckMNHud);
 
 	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 
