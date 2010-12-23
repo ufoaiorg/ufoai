@@ -7076,7 +7076,6 @@ base/ufos/ui/aircraft_equip.ufo | GNU General Public License 2.0
 base/ufos/ui/aircraft_info.ufo | GNU General Public License 2.0
 base/ufos/ui/aircraft_soldiers.ufo | GNU General Public License 2.0
 base/ufos/ui/aliencont.ufo | GNU General Public License 2.0
-base/ufos/ui/althud.ufo | GNU General Public License 2.0
 base/ufos/ui/basedefence.ufo | GNU General Public License 2.0
 base/ufos/ui/bases.ufo | GNU General Public License 2.0
 base/ufos/ui/basesummary.ufo | GNU General Public License 2.0
@@ -7086,7 +7085,6 @@ base/ufos/ui/equipment.ufo | GNU General Public License 2.0
 base/ufos/ui/geoscape.ufo | GNU General Public License 2.0
 base/ufos/ui/hire.ufo | GNU General Public License 2.0
 base/ufos/ui/hospital.ufo | GNU General Public License 2.0
-base/ufos/ui/hud.ufo | GNU General Public License 2.0
 base/ufos/ui/inventory.ufo | GNU General Public License 2.0
 base/ufos/ui/irc.ufo | GNU General Public License 2.0
 base/ufos/ui/lostwon.ufo | GNU General Public License 2.0
@@ -7096,7 +7094,6 @@ base/ufos/ui/messageoptions.ufo | GNU General Public License 2.0
 base/ufos/ui/modeltest.ufo | GNU General Public License 2.0
 base/ufos/ui/multiplayer.ufo | GNU General Public License 2.0
 base/ufos/ui/multiplayeringame.ufo | GNU General Public License 2.0
-base/ufos/ui/nohud.ufo | GNU General Public License 2.0
 base/ufos/ui/options.ufo | GNU General Public License 2.0
 base/ufos/ui/physdat.ufo | GNU General Public License 2.0
 base/ufos/ui/production.ufo | GNU General Public License 2.0

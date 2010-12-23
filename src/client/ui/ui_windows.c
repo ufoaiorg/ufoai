@@ -343,8 +343,9 @@ static void UI_PushDropDownWindow_f (void)
 
 /**
  * @brief Console function to hide the HUD in battlescape mode
- * Note: relies on a "nohud" window existing
+ * Note: relies on a "hud_nohud" window existing
  * @sa UI_PushWindow
+ * @todo Nothing to do here
  */
 static void UI_PushNoHud_f (void)
 {
@@ -352,7 +353,7 @@ static void UI_PushNoHud_f (void)
 	if (!CL_BattlescapeRunning())
 		return;
 
-	UI_PushWindow("nohud", NULL);
+	UI_PushWindow("hud_nohud", NULL);
 }
 
 static void UI_RemoveWindowAtPositionFromStack (int position)

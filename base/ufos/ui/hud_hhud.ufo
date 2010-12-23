@@ -35,13 +35,19 @@ component panel cmpSoldierPanel {
 	}
 }
 
-window hhud extends ahud
+window hhud extends hud
 {
 	{
 		noticepos	"512 20"
 		timeout	10000
 		starlayout	true
 		fill		true
+	}
+
+	// @note Used to name this hud in the option GUI
+	string hudname {
+		string	"_Custom HUD (by H-Hour)"
+		invis	true
 	}
 
 	func showinventory

@@ -77,7 +77,7 @@ window levelbuttons {
  * @note called "ahud" to be loaded before another huds
  * @todo rename the interface confuncs
  */
-window ahud extends levelbuttons {
+window hud extends levelbuttons {
 
 	confunc hudselect { }
 	confunc hudenable { }

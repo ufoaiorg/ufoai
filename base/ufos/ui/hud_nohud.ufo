@@ -3,7 +3,7 @@
 // ==================
 // with console command forwarding
 
-window nohud extends ahud
+window hud_nohud extends hud
 {
 	{
 		fill		true

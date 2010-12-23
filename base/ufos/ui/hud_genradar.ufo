@@ -5,7 +5,7 @@
 // use the command "gen_radarmap"
 // ==================
 
-window genradarhud extends ahud
+window genradarhud extends hud
 {
 	{
 		fill		true

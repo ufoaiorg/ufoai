@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_timer.h"
 #include "ui_font.h"
 #include "ui_sound.h"
+#include "node/ui_node_abstractnode.h"
 
 #include "../client.h"
 
@@ -238,6 +239,38 @@ void UI_Shutdown (void)
 
 #define UI_HUNK_SIZE 2*1024*1024
 
+/**
+ * @brief Init default and custom hud name
+ * @todo we should move it to client (cl_hud?)
+ * @note UI script must already be readed
+ */
+static void UI_InitHUDConfig_f (void)
+{
+	int i;
+	qboolean customHudFound = qfalse;
+	const uiNode_t *hudInterface = UI_GetWindow("hud");
+
+	for (i = 0; i < ui_global.numWindows; i++) {
+		const uiNode_t *window = ui_global.windows[i];
+		const uiNode_t *label;
+		if (window->super != hudInterface) {
+			continue;
+		}
+		if (!strcmp(mn_hud->string, window->name)) {
+			customHudFound = qtrue;
+		}
+		// if no label, the hud is hidden for the final user
+		label = UI_GetNode(window, "hudname");
+		if (label != NULL) {
+			UI_ExecuteConfunc("add_hud_name %s \"%s\"", window->name, label->text);
+		}
+	}
+
+	if (!customHudFound) {
+		Cvar_Set("mn_hud", "hud_default");
+	}
+}
+
 void UI_Init (void)
 {
 #ifdef DEBUG
@@ -247,15 +280,17 @@ void UI_Init (void)
 	/* reset global UI structures */
 	memset(&ui_global, 0, sizeof(ui_global));
 
-	/* add cvars */
-	/** @todo should be a client Cvar, not a ui */
-	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected HUD");
+	/** @todo move it in cl_hud INIT */
+	mn_hud = Cvar_Get("mn_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected HUD");
+	/** @todo Add cvarchecker (new name must be a window, and super window must be "hud") */
 
 	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 
 	/* add global UI commands */
 	/** @todo delete me */
 	Cmd_AddCommand("mn_translate", UI_Translate_f, NULL);
+	Cmd_AddCommand("inithudconfig", UI_InitHUDConfig_f, NULL);
+
 #ifdef DEBUG
 	Cmd_AddCommand("debug_uimemory", UI_Memory_f, "Display info about UI memory allocation");
 #endif

@@ -2118,22 +2118,14 @@ window options
 			pos			"72 440"
 			size		"250 20"
 		}
+
+		// @note selectbox completed by the confunc add_hud_name
 		selectbox select_hud
 		{
-			{
-				tooltip		"_Don't be shy and try the Alternative HUD."
-				cvar		*cvar:mn_hud
-				pos			"343 440"
-				size		"155 20"
-			}
-			option hud_value {
-				label	"_Original HUD"
-				value	"hud"
-			}
-			option althud_value {
-				label	"_Alternative HUD"
-				value	"althud"
-			}
+			tooltip		"_Available HUD for the battlescape mode."
+			cvar		*cvar:mn_hud
+			pos			"343 440"
+			size		"155 20"
 		}
 		// =================================
 		// JOYSTICK/JOYPAD SETTINGS SUBMENU
@@ -2244,6 +2236,18 @@ window options
 				*node:root.options_keys@invis = false
 			}
 		}
+	}
+
+	/**
+	 * Add a hud window the user can use to play battlescape
+	 * <1> HUD identifier name
+	 * <2> HUD label
+	 */
+	confunc add_hud_name {
+		cmd "echo HUDNAME <1> <2>"
+		call *node:root.options_gameplay.select_hud@createchild("option<1>", "option")
+		*node:root.options_gameplay.select_hud.option<1>@value = <1>
+		*node:root.options_gameplay.select_hud.option<1>@label = <2>
 	}
 
 	// ==================

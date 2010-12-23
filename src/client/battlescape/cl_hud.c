@@ -173,7 +173,7 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
 		break;
 	}
 
-	/* Connect confunc strings to the ones as defined in "menu nohud". */
+	/* Connect confunc strings to the ones as defined in "menu hud_nohud". */
 	UI_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
 }
 
