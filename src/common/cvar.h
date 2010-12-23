@@ -230,6 +230,8 @@ qboolean Com_IsRenderModified(void);
 
 void Cvar_ClearVars(int flags);
 
+void Cvar_Reset(cvar_t *cvar);
+
 #ifdef DEBUG
 void Cvar_PrintDebugCvars(void);
 #endif

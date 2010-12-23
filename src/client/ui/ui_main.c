@@ -280,12 +280,22 @@ static qboolean UI_CvarCheckMNHud (cvar_t *cvar)
 {
 	uiNode_t *window = UI_GetWindow(cvar->string);
 	if (window == NULL) {
-		Cvar_Set(cvar->name, cvar->oldString);
+		Cvar_Reset(cvar);
 		return qtrue;
 	}
+
+	if (window->super == NULL) {
+		Cvar_Reset(cvar);
+		return qtrue;
+	}
+
 	/**
-	 * @todo check that the window inherits from hud
+	 * @todo check for multiple base classes
 	 */
+	if (strcmp(window->super->name, "hud")) {
+		Cvar_Reset(cvar);
+		return qtrue;
+	}
 	return qfalse;
 }
 

@@ -270,6 +270,22 @@ const char *Cvar_VariableStringOld (const char *varName)
 }
 
 /**
+ * @brief Sets the cvar value back to the old value
+ * @param cvar The cvar to reset
+ */
+void Cvar_Reset (cvar_t *cvar)
+{
+	const char *str;
+
+	if (cvar->oldString == NULL)
+		return;
+
+	str = Mem_StrDup(cvar->oldString);
+	Cvar_Set(cvar->name, str);
+	Mem_Free(str);
+}
+
+/**
  * @brief Unix like tab completion for console variables
  * @param partial The beginning of the variable we try to complete
  * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
