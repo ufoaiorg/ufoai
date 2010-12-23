@@ -2611,6 +2611,56 @@ base/pics/geoscape/med/map_earth_season_03.png | GNU General Public License 2.0 
 base/pics/geoscape/mission.png | GNU General Public License 2.0
 base/pics/geoscape/radar.png | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
 base/pics/geoscape/ufoyard.png | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
+base/pics/hhud/arrow_r.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/btnset_lft.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/btnset_lft_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/btnset_rgt.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/btnset_rgt_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/crouch_icon.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/crouch_icon_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/fm_btn_l.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/fm_btn_l_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/fm_btn_r.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/fm_btn_r_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/glow_soldier.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/inv_icon.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/inv_icon_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/old/fm_btn_l.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/old/fm_btn_l_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/old/fm_btn_r.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/old/fm_btn_r_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/old/reload_btn_l.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/old/reload_btn_l_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/old/reload_btn_r.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/old/reload_btn_r_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/panel_bg.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/panel_bg_overlay.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/r_fm_btn.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/r_fm_btn_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/r_inv_btn.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/r_inv_btn_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/reload_btn_l.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/reload_btn_l_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/reload_btn_r.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/reload_btn_r_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/res_crouch.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/res_crouch_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/res_multi.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/res_multi_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/res_none.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/res_none_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/res_single.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/res_single_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/stand_icon.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/stand_icon_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/stats_icon.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/stats_icon_on.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/status_border.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/tm_panel.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/tm_sldbg.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/tm_sldbg_sel.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/wp_r_gap.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/hhud/wpn_l_gap.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/hud/bar_chat.png | GNU General Public License 2.0
 base/pics/hud/bar_chat_choice.png | GNU General Public License 2.0
 base/pics/hud/bar_floor.png | GNU General Public License 2.0
