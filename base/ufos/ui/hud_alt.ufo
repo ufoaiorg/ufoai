@@ -11,12 +11,6 @@ window hud_alt extends hud
 		fill		true
 	}
 
-	// @note Used to name this hud in the option GUI
-	string hudname {
-		string	"_Alternative HUD"
-		invis	true
-	}
-
 	func showinventory
 	{
 		cmd "ui_push ahudinv;"
@@ -1170,4 +1164,10 @@ window hud_alt extends hud
 		call *node:root.right.show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
 	}
+
+	func onScriptLoaded {
+		// Register the window to the HUD list
+		cmd "add_hud_name <path:root> \"_Alternative HUD\""
+	}
+
 }

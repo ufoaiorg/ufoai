@@ -11,12 +11,6 @@ window hud_default extends hud
 		timeout		10000
 	}
 
-	// @note Used to name this hud in the option GUI
-	string hudname {
-		string	"_Original HUD"
-		invis	true
-	}
-
 	func showinventory
 	{
 		cmd "ui_push hudinv;"
@@ -1132,4 +1126,10 @@ window hud_default extends hud
 		cmd "music_change battlescape;"
 		cmd "set mn_showchatbuttons 0;"
 	}
+
+	func onScriptLoaded {
+		// Register the window to the HUD list
+		cmd "add_hud_name <path:root> \"_Original HUD\""
+	}
+
 }

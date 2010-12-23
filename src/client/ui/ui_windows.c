@@ -401,6 +401,8 @@ static void UI_CloseAllWindow (void)
  */
 void UI_InitStack (const char* activeWindow, const char* mainWindow, qboolean popAll, qboolean pushActive)
 {
+	UI_FinishInit();
+
 	if (popAll)
 		UI_PopWindow(qtrue);
 	if (activeWindow) {
@@ -701,6 +703,20 @@ static void UI_SetNewWindowPos_f (void)
 		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
 
 	UI_SetNewWindowPos(window, atoi(Cmd_Argv(1)), atoi(Cmd_Argv(2)));
+}
+
+/**
+ * @brief Finish windows initialization
+ * @note private function
+ */
+void UI_FinishWindowsInit (void)
+{
+	int i;
+	for (i = 0; i < ui_global.numWindows; i++) {
+		uiNode_t *window = ui_global.windows[i];
+		if (WINDOWEXTRADATA(window).onScriptLoaded)
+			UI_ExecuteEventActions(window, WINDOWEXTRADATA(window).onScriptLoaded);
+	}
 }
 
 /**

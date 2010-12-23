@@ -44,12 +44,6 @@ window hhud extends hud
 		fill		true
 	}
 
-	// @note Used to name this hud in the option GUI
-	string hudname {
-		string	"_Custom HUD (by H-Hour)"
-		invis	true
-	}
-
 	func showinventory
 	{
 		cmd "ui_push ahudinv;"
@@ -746,5 +740,10 @@ window hhud extends hud
 		delete *cvar:i
 
 		cmd "hudselect <cvar:selected_soldier>;"
+	}
+
+	func onScriptLoaded {
+		// Register the window to the HUD list
+		cmd "add_hud_name <path:root> \"_Custom HUD (by H-Hour)\""
 	}
 }

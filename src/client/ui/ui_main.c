@@ -240,35 +240,17 @@ void UI_Shutdown (void)
 #define UI_HUNK_SIZE 2*1024*1024
 
 /**
- * @brief Init default and custom hud name
- * @todo we should move it to client (cl_hud?)
- * @note UI script must already be readed
+ * @brief Finish initialization after everything was loaded
+ * @note private function
  */
-static void UI_InitHUDConfig_f (void)
+void UI_FinishInit (void)
 {
-	int i;
-	qboolean customHudFound = qfalse;
-	const uiNode_t *hudInterface = UI_GetWindow("hud");
+	static qboolean initialized = qfalse;
+	if (initialized)
+		return;
+	initialized = qtrue;
 
-	for (i = 0; i < ui_global.numWindows; i++) {
-		const uiNode_t *window = ui_global.windows[i];
-		const uiNode_t *label;
-		if (window->super != hudInterface) {
-			continue;
-		}
-		if (!strcmp(mn_hud->string, window->name)) {
-			customHudFound = qtrue;
-		}
-		// if no label, the hud is hidden for the final user
-		label = UI_GetNode(window, "hudname");
-		if (label != NULL) {
-			UI_ExecuteConfunc("add_hud_name %s \"%s\"", window->name, label->text);
-		}
-	}
-
-	if (!customHudFound) {
-		Cvar_Set("mn_hud", "hud_default");
-	}
+	UI_FinishWindowsInit();
 }
 
 /**
@@ -317,7 +299,6 @@ void UI_Init (void)
 	/* add global UI commands */
 	/** @todo delete me */
 	Cmd_AddCommand("mn_translate", UI_Translate_f, NULL);
-	Cmd_AddCommand("inithudconfig", UI_InitHUDConfig_f, NULL);
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_uimemory", UI_Memory_f, "Display info about UI memory allocation");
