@@ -197,39 +197,3 @@ void UI_DrawSpriteInBox (const uiSprite_t* sprite, uiSpriteStatus_t status, int 
 	if (sprite->blend)
 		R_Color(NULL);
 }
-
-/**
- * @brief Return an icon by is name
- * @param[in] name Name of the icon
- * @return The requested icon, else NULL
- * @note not very fast; if we use it often we should improve the search
- */
-uiSprite_t* UI_GetIconByName (const char* name)
-{
-	return UI_GetSpriteByName(va("icons/%s", name));
-}
-
-/**
- * @brief Allocate an icon to the UI static memory
- * @note Its not a dynamic memory allocation. Please only use it at the loading time
- * @param[in] name Name of the icon
- * @todo Assert out when we are not in parsing/loading stage
- */
-uiSprite_t* UI_AllocStaticIcon (const char* name)
-{
-	return UI_AllocStaticSprite(va("icons/%s", name));
-}
-
-/**
- * @param[in] status The state of the icon node
- * @param[in] icon Context icon
- * @param[in] posX Absolute X position of the top-left corner
- * @param[in] posY Absolute Y position of the top-left corner
- * @param[in] sizeX Width of the bounded box
- * @param[in] sizeY Height of the bounded box
- * @todo use named const for status
- */
-void UI_DrawIconInBox (const uiSprite_t* icon, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
-{
-	UI_DrawSpriteInBox(icon, status, posX, posY, sizeX, sizeY);
-}

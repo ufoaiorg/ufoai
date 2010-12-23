@@ -363,7 +363,7 @@ window market extends objectinfo
 
 		custombutton ufopedia_link
 		{
-			icon		bordered_magnifying_glass
+			icon		"icons/bordered_magnifying_glass"
 			tooltip		"_UFOpaedia"
 			pos			"370 37"
 			size		"16 16"
@@ -427,7 +427,7 @@ window market extends objectinfo
 		custombutton action_dec
 		{
 			pos		"142 390"
-			icon	prev
+			icon	"icons/prev"
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
@@ -444,7 +444,7 @@ window market extends objectinfo
 		custombutton action_inc
 		{
 			pos		"356 390"
-			icon	next
+			icon	"icons/next"
 			size	"16 16"
 			onClick	{ cmd "mn_increaseitem;" }
 		}
@@ -465,7 +465,7 @@ window market extends objectinfo
 		{
 			tooltip "_Previous firemode"
 			pos		"142 414"
-			icon	prev
+			icon	"icons/prev"
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
@@ -483,7 +483,7 @@ window market extends objectinfo
 		{
 			tooltip "_Next firemode"
 			pos		"356 414"
-			icon	next
+			icon	"icons/next"
 			size	"16 16"
 			onClick	{ cmd "mn_increasefiremode;" }
 		}

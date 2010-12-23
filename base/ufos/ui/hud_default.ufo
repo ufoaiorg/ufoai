@@ -57,7 +57,7 @@ window hud_default extends hud
 			background	"buttons/blue2-1"
 			value	0
 			cvar	*cvar:cl_worldlevel
-			icon	number_1
+			icon	"icons/number_1"
 		}
 
 		radiobutton bt1
@@ -68,7 +68,7 @@ window hud_default extends hud
 			background	"buttons/blue2-1"
 			value	1
 			cvar	*cvar:cl_worldlevel
-			icon	number_2
+			icon	"icons/number_2"
 		}
 
 		radiobutton bt2
@@ -79,7 +79,7 @@ window hud_default extends hud
 			background	"buttons/blue2-1"
 			value	2
 			cvar	*cvar:cl_worldlevel
-			icon	number_3
+			icon	"icons/number_3"
 		}
 
 		radiobutton bt3
@@ -90,7 +90,7 @@ window hud_default extends hud
 			background	"buttons/blue2-1"
 			value	3
 			cvar	*cvar:cl_worldlevel
-			icon	number_4
+			icon	"icons/number_4"
 		}
 
 		radiobutton bt4
@@ -101,7 +101,7 @@ window hud_default extends hud
 			background	"buttons/blue2-1"
 			value	4
 			cvar	*cvar:cl_worldlevel
-			icon	number_5
+			icon	"icons/number_5"
 		}
 
 		radiobutton bt5
@@ -112,7 +112,7 @@ window hud_default extends hud
 			background	"buttons/blue2-1"
 			value	5
 			cvar	*cvar:cl_worldlevel
-			icon	number_6
+			icon	"icons/number_6"
 		}
 
 		radiobutton bt6
@@ -123,7 +123,7 @@ window hud_default extends hud
 			background	"buttons/blue2-1"
 			value	6
 			cvar	*cvar:cl_worldlevel
-			icon	number_7
+			icon	"icons/number_7"
 		}
 
 		radiobutton bt7
@@ -134,7 +134,7 @@ window hud_default extends hud
 			background	"buttons/blue2-1"
 			value	7
 			cvar	*cvar:cl_worldlevel
-			icon	number_8
+			icon	"icons/number_8"
 		}
 	}
 
@@ -407,7 +407,7 @@ window hud_default extends hud
 				background	"buttons/blue2-1"
 				value		0
 				cvar		*cvar:selected_soldier
-				icon		number_1
+				icon		"icons/number_1"
 				onClick		{ cmd "actor_select 0;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 0 ) }
 			}
@@ -419,7 +419,7 @@ window hud_default extends hud
 				background	"buttons/blue2-1"
 				value		1
 				cvar		*cvar:selected_soldier
-				icon		number_2
+				icon		"icons/number_2"
 				onClick		{ cmd "actor_select 1;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 1 ) }
 			}
@@ -431,7 +431,7 @@ window hud_default extends hud
 				background	"buttons/blue2-1"
 				value		2
 				cvar		*cvar:selected_soldier
-				icon		number_3
+				icon		"icons/number_3"
 				onClick		{ cmd "actor_select 2;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 2 ) }
 			}
@@ -443,7 +443,7 @@ window hud_default extends hud
 				background	"buttons/blue2-1"
 				value		3
 				cvar		*cvar:selected_soldier
-				icon		number_4
+				icon		"icons/number_4"
 				onClick		{ cmd "actor_select 3;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 3 ) }
 			}
@@ -455,7 +455,7 @@ window hud_default extends hud
 				background	"buttons/blue2-1"
 				value		4
 				cvar		*cvar:selected_soldier
-				icon		number_5
+				icon		"icons/number_5"
 				onClick		{ cmd "actor_select 4;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 4 ) }
 			}
@@ -467,7 +467,7 @@ window hud_default extends hud
 				background	"buttons/blue2-1"
 				value		5
 				cvar		*cvar:selected_soldier
-				icon		number_6
+				icon		"icons/number_6"
 				onClick		{ cmd "actor_select 5;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 5 ) }
 			}
@@ -479,7 +479,7 @@ window hud_default extends hud
 				background	"buttons/blue2-1"
 				value		6
 				cvar		*cvar:selected_soldier
-				icon		number_7
+				icon		"icons/number_7"
 				onClick		{ cmd "actor_select 6;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 6 ) }
 			}
@@ -491,7 +491,7 @@ window hud_default extends hud
 				background	"buttons/blue2-1"
 				value		7
 				cvar		*cvar:selected_soldier
-				icon		number_8
+				icon		"icons/number_8"
 				onClick		{ cmd "actor_select 7;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 7 ) }
 			}
@@ -521,7 +521,7 @@ window hud_default extends hud
 			background	"buttons/large_blue"
 			pos		"142 10"
 			size	"64 37"
-			icon	return
+			icon	"icons/return"
 			onClick	{ cmd "nextround;" }
 		}
 

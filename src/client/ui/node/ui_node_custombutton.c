@@ -100,7 +100,7 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 	}
 
 	if (EXTRADATA(node).super.icon) {
-		UI_DrawIconInBox(EXTRADATA(node).super.icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(EXTRADATA(node).super.icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
 	text = UI_GetReferenceString(node, node->text);

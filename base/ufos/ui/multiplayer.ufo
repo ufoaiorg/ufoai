@@ -10,7 +10,7 @@ component panel cmpAdr {
 		onClick { cmd "server_info *cvar:adr<node:parent@num>;" }
 		onRClick { cmd "del adr<node:parent@num>; check_bookmarks;" }
 	}
-	custombutton resetadr { pos "0 1" size "22 22" icon garbage tooltip "_Delete this bookmark"
+	custombutton resetadr { pos "0 1" size "22 22" icon "icons/garbage" tooltip "_Delete this bookmark"
 		onClick { cmd "del adr<node:parent@num>; check_bookmarks;" }
 		onRClick { cmd "del adr<node:parent@num>; check_bookmarks;" }
 	}
@@ -228,7 +228,7 @@ window serverinfo
 		background	"buttons/large_blue"
 		pos			"26 720"
 		size		"64 37"
-		icon		return
+		icon		"icons/return"
 		onClick		{ cmd "ui_pop; pingservers;" }
 	}
 
@@ -287,7 +287,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		{
 			pos			"455 7"
 			size		"16 16"
-			icon		prev
+			icon		"icons/prev"
 			onClick		{
 				*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 2)
 				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
@@ -298,7 +298,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		{
 			pos			"470 7"
 			size		"16 16"
-			icon		next
+			icon		"icons/next"
 			onClick		{
 				*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 2)
 				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
@@ -588,7 +588,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			pos			"364 40"
 			size		"16 16"
-			icon		prev
+			icon		"icons/prev"
 			onClick		{ cmd "mp_prevgametype;" }
 			onWheelUp	{ cmd "mp_prevgametype;" }
 			onWheelDown	{ cmd "mp_nextgametype;" }
@@ -597,7 +597,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			pos			"460 40"
 			size		"16 16"
-			icon		next
+			icon		"icons/next"
 			onClick		{ cmd "mp_nextgametype;" }
 			onWheelUp	{ cmd "mp_prevgametype;" }
 			onWheelDown	{ cmd "mp_nextgametype;" }
@@ -1008,7 +1008,7 @@ window multiplayer_wait extends levelbuttons
 			background	"buttons/blue2-1"
 			value	0
 			cvar	*cvar:cl_worldlevel
-			icon	number_1
+			icon	"icons/number_1"
 		}
 
 		radiobutton bt1
@@ -1019,7 +1019,7 @@ window multiplayer_wait extends levelbuttons
 			background	"buttons/blue2-1"
 			value	1
 			cvar	*cvar:cl_worldlevel
-			icon	number_2
+			icon	"icons/number_2"
 		}
 
 		radiobutton bt2
@@ -1030,7 +1030,7 @@ window multiplayer_wait extends levelbuttons
 			background	"buttons/blue2-1"
 			value	2
 			cvar	*cvar:cl_worldlevel
-			icon	number_3
+			icon	"icons/number_3"
 		}
 
 		radiobutton bt3
@@ -1041,7 +1041,7 @@ window multiplayer_wait extends levelbuttons
 			background	"buttons/blue2-1"
 			value	3
 			cvar	*cvar:cl_worldlevel
-			icon	number_4
+			icon	"icons/number_4"
 		}
 
 		radiobutton bt4
@@ -1052,7 +1052,7 @@ window multiplayer_wait extends levelbuttons
 			background	"buttons/blue2-1"
 			value	4
 			cvar	*cvar:cl_worldlevel
-			icon	number_5
+			icon	"icons/number_5"
 		}
 
 		radiobutton bt5
@@ -1063,7 +1063,7 @@ window multiplayer_wait extends levelbuttons
 			background	"buttons/blue2-1"
 			value	5
 			cvar	*cvar:cl_worldlevel
-			icon	number_6
+			icon	"icons/number_6"
 		}
 
 		radiobutton bt6
@@ -1074,7 +1074,7 @@ window multiplayer_wait extends levelbuttons
 			background	"buttons/blue2-1"
 			value	6
 			cvar	*cvar:cl_worldlevel
-			icon	number_7
+			icon	"icons/number_7"
 		}
 
 		radiobutton bt7
@@ -1085,7 +1085,7 @@ window multiplayer_wait extends levelbuttons
 			background	"buttons/blue2-1"
 			value	7
 			cvar	*cvar:cl_worldlevel
-			icon	number_8
+			icon	"icons/number_8"
 		}
 	}
 
@@ -1281,7 +1281,7 @@ window multiplayer_wait extends levelbuttons
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Next free team"
-			icon		next
+			icon		"icons/next"
 			pos			"298 82"
 			size		"16 16"
 			padding		0
@@ -1291,7 +1291,7 @@ window multiplayer_wait extends levelbuttons
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Previous free team"
-			icon		prev
+			icon		"icons/prev"
 			pos			"314 82"
 			size		"16 16"
 			padding		0

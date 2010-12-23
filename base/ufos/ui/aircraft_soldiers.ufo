@@ -208,7 +208,7 @@ window team extends iaircraft
 	 */
 	confunc aircraft_soldier_holdsequip {
 		*node:root.actor_select<1>.bt_equip@tooltip = "_Soldier carries equipment"
-		*node:root.actor_select<1>.bt_equip@icon = "soldier_holdequipment"
+		*node:root.actor_select<1>.bt_equip@icon = "icons/soldier_holdequipment"
 	}
 
 	/**
@@ -216,7 +216,7 @@ window team extends iaircraft
 	 */
 	confunc aircraft_soldier_holdsnoequip {
 		*node:root.actor_select<1>.bt_equip@tooltip = "_Soldier carries no equipment"
-		*node:root.actor_select<1>.bt_equip@icon = "soldier_noequipment"
+		*node:root.actor_select<1>.bt_equip@icon = "icons/soldier_noequipment"
 	}
 
 	/**
@@ -519,11 +519,11 @@ window team extends iaircraft
 	// ==================
 	confunc toggle_show_heavybutton {
 		//*node:root.bt_switch_list@tooltip	= "_Assign tanks"
-		//*node:root.bt_switch_list@icon	= uvc
+		//*node:root.bt_switch_list@icon	= "icons/uvc"
 	}
 	confunc toggle_show_soldiersbutton {
 		//*node:root.bt_switch_list@tooltip	= "_Assign soldiers"
-		//*node:root.bt_switch_list@icon	= soldier
+		//*node:root.bt_switch_list@icon	= "icons/soldier"
 	}
 
 	/**

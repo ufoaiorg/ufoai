@@ -93,7 +93,7 @@ static void UI_RadioButtonNodeDraw (uiNode_t *node)
 	}
 
 	if (EXTRADATA(node).icon) {
-		UI_DrawIconInBox(EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 }
 
@@ -145,7 +145,7 @@ static const value_t properties[] = {
 	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
 	{"cvar", V_UI_CVAR, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 	/* Icon used to display the node */
-	{"icon", V_UI_ICONREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
 	/* Sprite used to display the background */
 	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
 

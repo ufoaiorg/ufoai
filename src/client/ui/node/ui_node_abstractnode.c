@@ -352,8 +352,6 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
 		}
 	} else if (property->type == V_UI_ACTION) {
 		*(const uiAction_t**) mem = (const uiAction_t*) rawValue;
-	} else if (property->type == V_UI_ICONREF) {
-		*(const uiSprite_t**) mem = (const uiSprite_t*) rawValue;
 	} else if (property->type == V_UI_SPRITEREF) {
 		*(const uiSprite_t**) mem = (const uiSprite_t*) rawValue;
 	} else {

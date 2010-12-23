@@ -12,7 +12,7 @@ component image cmpAlienContainment {
 		pos		"247  11"
 		size	"40 40"
 		padding	0
-		icon 	"alien_unused"
+		icon 	"icons/alien_unused"
 	}
 	zone kill_zone		{
 		pos			"247  11"
@@ -89,7 +89,7 @@ window aliencont
 		*cvar:i = 0
 		while ( *cvar:i < 12 ) {
 			*node:root.ac.ac<cvar:i>@image = "ui/hosp_button_green"
-			*node:root.ac.ac<cvar:i>.icon@icon = "alien_unused"
+			*node:root.ac.ac<cvar:i>.icon@icon = "icons/alien_unused"
 			*node:root.ac.ac<cvar:i>.kill_zone@invis = true
 			*node:root.ac.ac<cvar:i>.autopsy_zone@invis = true
 			*cvar:i = ( *cvar:i + 1 )
@@ -102,7 +102,7 @@ window aliencont
 	 */
 	confunc aliencontneedautopsy {
 		*node:root.ac.ac<1>@image = "ui/hosp_button_light"
-		*node:root.ac.ac<1>.icon@icon = "alien_surgery"
+		*node:root.ac.ac<1>.icon@icon = "icons/alien_surgery"
 		*node:root.ac.ac<1>.icon@tooltip = "_Start autopsy"
 
 		/* hide kill */
@@ -115,7 +115,7 @@ window aliencont
 	 */
 	confunc aliencontkill
 	{
-		*node:root.ac.ac<1>.icon@icon = "alien_kill"
+		*node:root.ac.ac<1>.icon@icon = "icons/alien_kill"
 		*node:root.ac.ac<1>.icon@tooltip = "_Kill this alien"
 		*node:root.ac.ac<1>@image = "ui/hosp_button_light"
 
@@ -383,7 +383,7 @@ window aliencont
 		tooltip		"_Kill all aliens in this base"
 		pos			"915 674"
 		size		"64 64"
-		icon		killalien
+		icon		"icons/killalien"
 		onClick		{ cmd "aliencont_killall;" }
 	}
 

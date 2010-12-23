@@ -185,7 +185,7 @@ window skirmish
 		{
 			pos			"0 30"
 			size		"35 35"
-			icon		prev
+			icon		"icons/prev"
 			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
 			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 			onClick		{ cmd "sk_prevequip ai_equipment;" }
@@ -194,7 +194,7 @@ window skirmish
 		{
 			pos			"285 30"
 			size		"35 35"
-			icon		next
+			icon		"icons/next"
 			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
 			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 			onClick		{ cmd "sk_nextequip ai_equipment;" }
@@ -227,7 +227,7 @@ window skirmish
 		{
 			pos			"0 105"
 			size		"35 35"
-			icon		prev
+			icon		"icons/prev"
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 			onClick		{ cmd "sk_prevequip cl_equip;" }
@@ -236,7 +236,7 @@ window skirmish
 		{
 			pos			"285 105"
 			size		"35 35"
-			icon		next
+			icon		"icons/next"
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 			onClick		{ cmd "sk_nextequip cl_equip;" }

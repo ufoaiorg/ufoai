@@ -790,7 +790,7 @@ window hud_alt extends hud
 		button switch_to_right_hand
 		{
 			tooltip		"_Switch to right hand weapon"
-			icon		"next"
+			icon		"icons/next"
 			pos			"196 400"
 			size		"16 16"
 			padding		0
@@ -801,7 +801,7 @@ window hud_alt extends hud
 		button switch_to_left_hand
 		{
 			tooltip		"_Switch to left hand weapon"
-			icon		"prev"
+			icon		"icons/prev"
 			pos			"212 400"
 			size		"16 16"
 			padding		0

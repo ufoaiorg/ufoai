@@ -95,7 +95,7 @@ window iaircraft
 		option pilot {
 			label	"_Pilots"
 			value	"aircraft_pilots"
-			icon	smallhead_pilot
+			icon	"icons/smallhead_pilot"
 		}
 		option equip {
 			label	"_Equipment"
@@ -110,7 +110,7 @@ window iaircraft
 		option soldier {
 			label	"_Soldiers"
 			value	"team"
-			icon	smallhead_soldier
+			icon	"icons/smallhead_soldier"
 		}
 /*		option soldier_equipment {
 			label	"_Soldier equipment"
@@ -168,7 +168,7 @@ window iaircraft
 	button air_nameedit
 	{
 		tooltip		"_Rename aircraft"
-		icon		pen
+		icon		"icons/pen"
 		pos			"380 116"
 		size		"16 16"
 		padding		0

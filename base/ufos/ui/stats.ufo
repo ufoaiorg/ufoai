@@ -21,7 +21,7 @@ window stats
 		background	"buttons/large_blue"
 		pos			"950 720"
 		size		"64 37"
-		icon		return
+		icon		"icons/return"
 		onClick		{ cmd "ui_pop;" }
 	}
 
@@ -200,7 +200,7 @@ window nations
 		background	"buttons/large_blue"
 		pos			"950 720"
 		size		"64 37"
-		icon		return
+		icon		"icons/return"
 		onClick		{ cmd "ui_pop;" }
 	}
 

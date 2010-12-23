@@ -470,7 +470,7 @@ window hhud extends hud
 //		image "hhud/btnset_lft"
 		background "hhud/btnset_lft"
 //		background "hhud/inv_icon"
-		icon "hhud/inv_icon"
+		icon "icons/hhud/inv_icon"
 		pos "643 12"
 		align ALIGN_CC
 		size "44 44"

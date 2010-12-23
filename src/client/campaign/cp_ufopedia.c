@@ -820,7 +820,7 @@ static void UP_GenerateSummary (void)
 
 			/* chapter section*/
 			chapter = UI_AddOption(&chapters, ccs.upChapters[i].id, va("_%s", ccs.upChapters[i].name), va("%i", num));
-			OPTIONEXTRADATA(chapter).icon = UI_GetIconByName(va("ufopedia_%s", ccs.upChapters[i].id));
+			OPTIONEXTRADATA(chapter).icon = UI_GetSpriteByName(va("icons/ufopedia_%s", ccs.upChapters[i].id));
 			chapter->firstChild = UP_GenerateArticlesSummary(&ccs.upChapters[i]);
 
 			num++;

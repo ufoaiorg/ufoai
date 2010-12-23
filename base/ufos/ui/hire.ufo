@@ -236,7 +236,7 @@ window employees
 	{
 		visiblewhen "*cvar:mn_employee_hired == 1"
 		tooltip		"_Rename your employee"
-		icon		pen
+		icon		"icons/pen"
 		pos			"865 322"
 		size		"16 16"
 		padding		0
@@ -419,7 +419,7 @@ window employees
 		}
 
 		custombutton icon_soldier {
-			icon	bighead_soldier
+			icon	"icons/bighead_soldier"
 			pos		"190 28"
 			size	"42 42"
 		}
@@ -431,7 +431,7 @@ window employees
 		}
 
 		custombutton icon_pilot {
-			icon	bighead_pilot
+			icon	"icons/bighead_pilot"
 			pos		"250 28"
 			size	"42 42"
 		}
@@ -443,7 +443,7 @@ window employees
 		}
 
 		custombutton icon_worker {
-			icon	bighead_worker
+			icon	"icons/bighead_worker"
 			pos		"310 28"
 			size	"42 42"
 		}
@@ -455,7 +455,7 @@ window employees
 		}
 
 		custombutton icon_scientist {
-			icon	bighead_scientist
+			icon	"icons/bighead_scientist"
 			pos		"370 28"
 			size	"42 42"
 		}
@@ -492,22 +492,22 @@ window employees
 		option soldier {
 			label	"_Soldiers"
 			value	"0"
-			icon	smallhead_soldier
+			icon	"icons/smallhead_soldier"
 		}
 		option pilot {
 			label	"_Pilots"
 			value	"3"
-			icon	smallhead_pilot
+			icon	"icons/smallhead_pilot"
 		}
 		option worker {
 			label	"_Workers"
 			value	"2"
-			icon	smallhead_worker
+			icon	"icons/smallhead_worker"
 		}
 		option scientist {
 			label	"_Scientists"
 			value	"1"
-			icon	smallhead_scientist
+			icon	"icons/smallhead_scientist"
 		}
 	}
 

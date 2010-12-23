@@ -117,7 +117,7 @@ static const value_t properties[] = {
 
 	/* Icon used to display the node
 	 */
-	{"icon", V_UI_ICONREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
 
 	{NULL, V_NULL, 0, 0},
 };

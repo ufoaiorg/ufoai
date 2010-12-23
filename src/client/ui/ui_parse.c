@@ -249,17 +249,7 @@ qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 		return qtrue;
 	}
 
-	if (property->type == V_UI_ICONREF) {
-		uiSprite_t* icon = UI_GetIconByName(string);
-		if (icon == NULL) {
-			Com_Printf("UI_ParseSetAction: icon '%s' not found (%s)\n", string, UI_GetPath(node));
-			return qfalse;
-		}
-		action->type = EA_VALUE_RAW;
-		action->d.terminal.d1.data = icon;
-		action->d.terminal.d2.integer = property->type;
-		return qtrue;
-	} else if (property->type == V_UI_SPRITEREF) {
+	if (property->type == V_UI_SPRITEREF) {
 			uiSprite_t* sprite = UI_GetSpriteByName(string);
 			if (sprite == NULL) {
 				Com_Printf("UI_ParseSetAction: sprite '%s' not found (%s)\n", string, UI_GetPath(node));
@@ -819,20 +809,6 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 				return qfalse;
 			break;
 
-		case V_UI_ICONREF:
-			{
-				uiSprite_t** icon = (uiSprite_t**) valuePtr;
-				*token = Com_EParse(text, errhead, objectName);
-				if (!*text)
-					return qfalse;
-
-				*icon = UI_GetIconByName(*token);
-				if (*icon == NULL) {
-					Com_Printf("UI_ParseProperty: icon '%s' not found (object %s)\n", *token, objectName);
-				}
-			}
-			break;
-
 		case V_UI_SPRITEREF:
 			{
 				uiSprite_t** sprite = (uiSprite_t**) valuePtr;
@@ -1231,13 +1207,13 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 	return qtrue;
 }
 
-qboolean UI_ParseIcon (const char *name, const char **text)
+qboolean UI_ParseSprite (const char *name, const char **text)
 {
 	uiSprite_t *icon;
 	const char *token;
 
 	/* search for icons with same name */
-	icon = UI_AllocStaticIcon(name);
+	icon = UI_AllocStaticSprite(name);
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -1264,7 +1240,7 @@ qboolean UI_ParseIcon (const char *name, const char **text)
 		/* get parameter values */
 		result = UI_ParseProperty(icon, property, icon->name, text, &token);
 		if (!result) {
-			Com_Printf("UI_ParseIcon: Parsing for icon '%s'. See upper\n", icon->name);
+			Com_Printf("UI_ParseIcon: Parsing for sprite '%s'. See upper\n", icon->name);
 			return qfalse;
 		}
 	}

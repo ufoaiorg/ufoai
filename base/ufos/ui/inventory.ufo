@@ -155,7 +155,7 @@ window inventory
 		background	"buttons/large_blue"
 		size "64 37"
 		pos		"428 458"
-		icon return
+		icon "icons/return"
 		onClick	{ call *node:root.hideinventory }
 	}
 }

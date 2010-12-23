@@ -95,7 +95,7 @@ window hospital
 		background	"buttons/big_blue"
 		pos		"950 20"
 		size	"59 55"
-		icon	"return"
+		icon	"icons/return"
 		onClick	{ cmd "ui_pop;" }
 	}
 
@@ -356,7 +356,7 @@ window hospital
 	button hos_button_scrollup
 	{
 		tooltip "_Scroll up"
-		icon	scroll_top
+		icon	"icons/scroll_top"
 		pos		"980 95"
 		size		"16 16"
 		padding		0
@@ -366,7 +366,7 @@ window hospital
 	button hos_button_scrolldown
 	{
 		tooltip "_Scroll down"
-		icon	scroll_bottom
+		icon	"icons/scroll_bottom"
 		pos		"980 733"
 		size		"16 16"
 		padding		0

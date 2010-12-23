@@ -153,7 +153,7 @@ window basedefence extends objectinfo
 
 		button bt_add
 		{
-			icon		varrow_swap
+			icon		"icons/varrow_swap"
 			string		"_Add"
 			tooltip		"_Equip the selected slot with this weapon"
 			image		"ui/button_green_small"
@@ -165,7 +165,7 @@ window basedefence extends objectinfo
 		}
 		button bt_remove
 		{
-			icon		varrow_top_bottom
+			icon		"icons/varrow_top_bottom"
 			string		"_Remove"
 			tooltip		"_Remove weapon from the selected slot"
 			image		"ui/button_green_small"

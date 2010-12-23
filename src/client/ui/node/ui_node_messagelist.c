@@ -72,62 +72,62 @@ static uiSprite_t *UI_MessageGetIcon (const message_t *message)
 
 	switch (message->type) {
 	case MSG_DEBUG:			/**< only save them in debug mode */
-		iconName = "message_debug";
+		iconName = "icons/message_debug";
 		break;
 	case MSG_INFO:			/**< don't save these messages */
-		iconName = "message_info";
+		iconName = "icons/message_info";
 		break;
 	case MSG_STANDARD:
-		iconName = "message_info";
+		iconName = "icons/message_info";
 		break;
 	case MSG_RESEARCH_PROPOSAL:
-		iconName = "message_research";
+		iconName = "icons/message_research";
 		break;
 	case MSG_RESEARCH_HALTED:
-		iconName = "message_research";
+		iconName = "icons/message_research";
 		break;
 	case MSG_RESEARCH_FINISHED:
-		iconName = "message_research";
+		iconName = "icons/message_research";
 		break;
 	case MSG_CONSTRUCTION:
-		iconName = "message_construction";
+		iconName = "icons/message_construction";
 		break;
 	case MSG_UFOSPOTTED:
-		iconName = "message_ufo";
+		iconName = "icons/message_ufo";
 		break;
 	case MSG_TERRORSITE:
-		iconName = "message_ufo";
+		iconName = "icons/message_ufo";
 		break;
 	case MSG_BASEATTACK:
-		iconName = "message_ufo";
+		iconName = "icons/message_ufo";
 		break;
 	case MSG_TRANSFERFINISHED:
-		iconName = "message_transfer";
+		iconName = "icons/message_transfer";
 		break;
 	case MSG_PROMOTION:
-		iconName = "message_promotion";
+		iconName = "icons/message_promotion";
 		break;
 	case MSG_PRODUCTION:
-		iconName = "message_production";
+		iconName = "icons/message_production";
 		break;
 	case MSG_NEWS:
-		iconName = "message_info";
+		iconName = "icons/message_info";
 		break;
 	case MSG_DEATH:
-		iconName = "message_death";
+		iconName = "icons/message_death";
 		break;
 	case MSG_CRASHSITE:
-		iconName = "message_ufo";
+		iconName = "icons/message_ufo";
 		break;
 	case MSG_EVENT:
-		iconName = "message_info";
+		iconName = "icons/message_info";
 		break;
 	default:
-		iconName = "message_info";
+		iconName = "icons/message_info";
 		break;
 	}
 
-	return UI_GetIconByName(iconName);
+	return UI_GetSpriteByName(iconName);
 }
 
 static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int *screenLines)
@@ -155,7 +155,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 		const uiSprite_t *icon;
 		icon = UI_MessageGetIcon(message);
 		R_Color(NULL);
-		UI_DrawIconInBox(icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
+		UI_DrawSpriteInBox(icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */

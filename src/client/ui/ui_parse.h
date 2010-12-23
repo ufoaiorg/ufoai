@@ -33,7 +33,7 @@ struct value_s;
 
 qboolean UI_ParseWindow(const char *type, const char *name, const char **text);
 qboolean UI_ParseComponent(const char *type, const char **text);
-qboolean UI_ParseIcon(const char *name, const char **text);
+qboolean UI_ParseSprite(const char *name, const char **text);
 qboolean UI_ParseUIModel(const char *name, const char **text);
 float UI_GetReferenceFloat(const struct uiNode_s* const node, const void *ref);
 const char *UI_GetReferenceString(const struct uiNode_s* const node, const char *ref) __attribute__ ((warn_unused_result));
@@ -51,7 +51,6 @@ qboolean UI_InitRawActionValue(struct uiAction_s* action, struct uiNode_s *node,
 #define V_NOT_UI			0
 #define	V_UI_ACTION			(V_UI + 0)		/**< Identify an action type into the value_t structure */
 #define V_UI_EXCLUDERECT	(V_UI + 1)		/**< Identify a special attribute, use special parse function */
-#define V_UI_ICONREF		(V_UI + 2)		/**< Identify a special attribute, use special parse function */
 #define V_UI_SPRITEREF		(V_UI + 3)		/**< Identify a special attribute, use special parse function */
 #define V_UI_IF				(V_UI + 4)		/**< Identify a special attribute, use special parse function */
 #define V_UI_DATAID			(V_UI + 5)

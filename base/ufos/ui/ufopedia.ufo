@@ -260,7 +260,7 @@ window ufopedia extends objectinfo
 		custombutton action_dec
 		{
 			pos		"120 0"
-			icon	prev
+			icon	"icons/prev"
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
@@ -277,7 +277,7 @@ window ufopedia extends objectinfo
 		custombutton action_inc
 		{
 			pos		"334 0"
-			icon	next
+			icon	"icons/next"
 			size	"16 16"
 			onClick	{ cmd "mn_increaseitem;" }
 		}
@@ -298,7 +298,7 @@ window ufopedia extends objectinfo
 		{
 			tooltip "_Previous firemode"
 			pos		"120 20"
-			icon	prev
+			icon	"icons/prev"
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
@@ -316,7 +316,7 @@ window ufopedia extends objectinfo
 		{
 			tooltip "_Next firemode"
 			pos		"334 20"
-			icon	next
+			icon	"icons/next"
 			size	"16 16"
 			onClick	{ cmd "mn_increasefiremode;" }
 		}

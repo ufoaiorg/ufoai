@@ -44,7 +44,7 @@ window irc
 		background	"buttons/large_blue"
 		pos			"950 720"
 		size		"64 37"
-		icon		return
+		icon		"icons/return"
 		onClick		{ cmd "ui_pop;" }
 	}
 

@@ -260,7 +260,7 @@ static void UI_TabNodeDraw (uiNode_t *node)
 			if (status == UI_TAB_DISABLED) {
 				iconStatus = SPRITE_STATUS_DISABLED;
 			}
-			UI_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
+			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
 			textPos += OPTIONEXTRADATA(option).icon->size[0];
 		}
 

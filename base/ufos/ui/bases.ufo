@@ -11,7 +11,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 	custombutton bt_back
 	{
 		tooltip		"_Back to geoscape"
-		icon		geoscape
+		icon		"icons/geoscape"
 	}
 
 	textentry name
@@ -38,7 +38,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 	button bt_edit
 	{
 		tooltip	"_Rename your base"
-		icon	pen
+		icon	"icons/pen"
 		pos	"570 40"
 		size "16 16"
 		padding 0
@@ -51,7 +51,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 	custombutton prev_base
 	{
 		tooltip	"_Switch to the previous base"
-		icon	prev
+		icon	"icons/prev"
 		pos		"30 30"
 		size	"30 30"
 		onClick	{ cmd "mn_base_prev;" }
@@ -62,7 +62,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 	custombutton next_base
 	{
 		tooltip	"_Switch to the next base"
-		icon	next
+		icon	"icons/next"
 		pos		"600 30"
 		size	"30 30"
 		onClick	{ cmd "mn_base_next;" }

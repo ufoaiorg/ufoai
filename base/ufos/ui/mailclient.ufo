@@ -168,7 +168,7 @@ window mailclient
 
 	button mail_allread
 	{
-		icon		mail_read
+		icon		"icons/mail_read"
 		tooltip		"_Mark all messages read"
 		pos			"50 50"
 		size		"32 32"
@@ -564,7 +564,7 @@ window mailclient
 		background	"buttons/large_blue"
 		pos			"920 720"
 		size		"64 37"
-		icon		return
+		icon		"icons/return"
 		onClick		{ cmd "ui_pop;" }
 	}
 

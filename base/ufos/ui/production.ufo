@@ -416,7 +416,7 @@ window production
 	button prod_stop
 	{
 		tooltip		"_Stop production"
-		icon		bordered_cross
+		icon		"icons/bordered_cross"
 		pos			"900 505"
 		size		"16 16"
 		padding		0
@@ -426,7 +426,7 @@ window production
 	button prod_up
 	{
 		tooltip		"_Increase priority"
-		icon		arrow_top
+		icon		"icons/arrow_top"
 		pos			"615 400"
 		size		"16 16"
 		padding		"0"
@@ -438,7 +438,7 @@ window production
 	button prod_down
 	{
 		tooltip		"_Decrease priority"
-		icon		arrow_bottom
+		icon		"icons/arrow_bottom"
 		pos			"615 420"
 		size		"16 16"
 		padding		0

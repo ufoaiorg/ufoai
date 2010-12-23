@@ -909,8 +909,8 @@ qboolean CL_ParseClientData (const char *type, const char *name, const char **te
 		TUT_ParseTutorials(name, text);
 	else if (!strcmp(type, "menu_model"))
 		return UI_ParseUIModel(name, text);
-	else if (!strcmp(type, "icon"))
-		return UI_ParseIcon(name, text);
+	else if (!strcmp(type, "sprite"))
+		return UI_ParseSprite(name, text);
 	else if (!strcmp(type, "particle"))
 		CL_ParseParticle(name, text);
 	else if (!strcmp(type, "sequence"))

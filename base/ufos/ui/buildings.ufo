@@ -174,7 +174,7 @@ window popup_buildingpreview
 
 	custombutton ufopedia_link
 	{
-		icon		bordered_magnifying_glass
+		icon		"icons/bordered_magnifying_glass"
 		tooltip		"_UFOpaedia"
 		pos			"320 190"
 		size		"16 16"

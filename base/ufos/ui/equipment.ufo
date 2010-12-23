@@ -130,56 +130,56 @@ window equipment extends objectinfo
 	{
 		pos		"10 14"
 		value	0
-		icon	number_1
+		icon	"icons/number_1"
 	}
 
 	buttonActorEquip bt_actor1
 	{
 		pos		"10 55"
 		value	1
-		icon	number_2
+		icon	"icons/number_2"
 	}
 
 	buttonActorEquip bt_actor2
 	{
 		pos		"10 96"
 		value	2
-		icon	number_3
+		icon	"icons/number_3"
 	}
 
 	buttonActorEquip bt_actor3
 	{
 		pos		"10 137"
 		value	3
-		icon	number_4
+		icon	"icons/number_4"
 	}
 
 	buttonActorEquip bt_actor4
 	{
 		pos		"10 178"
 		value	4
-		icon	number_5
+		icon	"icons/number_5"
 	}
 
 	buttonActorEquip bt_actor5
 	{
 		pos		"10 219"
 		value	5
-		icon	number_6
+		icon	"icons/number_6"
 	}
 
 	buttonActorEquip bt_actor6
 	{
 		pos		"10 260"
 		value	6
-		icon	number_7
+		icon	"icons/number_7"
 	}
 
 	buttonActorEquip bt_actor7
 	{
 		pos		"10 301"
 		value	7
-		icon	number_8
+		icon	"icons/number_8"
 	}
 
 	txtActorEquip txt_actor0
@@ -364,7 +364,7 @@ window equipment extends objectinfo
 		custombutton action_dec
 		{
 			pos		"120 290"
-			icon	prev
+			icon	"icons/prev"
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
@@ -381,7 +381,7 @@ window equipment extends objectinfo
 		custombutton action_inc
 		{
 			pos		"334 290"
-			icon	next
+			icon	"icons/next"
 			size	"16 16"
 			onClick	{ cmd "mn_increaseitem;" }
 		}
@@ -402,7 +402,7 @@ window equipment extends objectinfo
 		{
 			tooltip "_Previous firemode"
 			pos		"120 314"
-			icon	prev
+			icon	"icons/prev"
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
@@ -420,7 +420,7 @@ window equipment extends objectinfo
 		{
 			tooltip "_Next firemode"
 			pos		"334 314"
-			icon	next
+			icon	"icons/next"
 			size	"16 16"
 			onClick	{ cmd "mn_increasefiremode;" }
 		}
@@ -581,7 +581,7 @@ window equipment extends objectinfo
 	button bt_edit
 	{
 		tooltip		"_Rename your unit"
-		icon		pen
+		icon		"icons/pen"
 		pos			"780 24"
 		size		"16 16"
 		padding		0
@@ -698,7 +698,7 @@ window equipment extends objectinfo
 		background	"buttons/large_blue"
 		pos		"940 720"
 		size	"64 37"
-		icon return
+		icon "icons/return"
 		onClick	{ cmd "ui_pop;" }
 	}
 

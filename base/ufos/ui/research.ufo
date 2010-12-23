@@ -9,7 +9,7 @@ component panel cmpResearchItem {
 
 	// use a node icon, instead of a button
 	button img_status {
-		icon		bordered_question
+		icon		"icons/bordered_question"
 		pos			"0 0"
 		size		"16 16"
 		padding		0
@@ -99,7 +99,7 @@ window research
 	{
 		tooltip		"_Start research"
 		background	"buttons/big_blue"
-		icon		research_start
+		icon		"icons/research_start"
 		pos			"725 674"
 		size		"59 55"
 		onClick		{ cmd "mn_start_research;" }
@@ -109,7 +109,7 @@ window research
 	{
 		tooltip		"_Stop research"
 		background	"buttons/big_blue"
-		icon		research_stop
+		icon		"icons/research_stop"
 		pos			"795 674"
 		size		"59 55"
 		onClick		{ cmd "mn_stop_research;" }
@@ -119,7 +119,7 @@ window research
 	{
 		tooltip		"_Show research proposal"
 		background	"buttons/big_blue"
-		icon		mail
+		icon		"icons/mail"
 		pos			"865 674"
 		size		"59 55"
 		onClick		{ cmd "mn_show_ufopedia;" }
@@ -246,21 +246,21 @@ window research
 	 * @param[in] <1> Item row
 	 */
 	confunc research_normal {
-		*node:root.item<1>.img_status@icon = "bordered_magnifying_glass"
+		*node:root.item<1>.img_status@icon = "icons/bordered_magnifying_glass"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_running {
-		*node:root.item<1>.img_status@icon	= "bordered_magnifying_glass"
+		*node:root.item<1>.img_status@icon	= "icons/bordered_magnifying_glass"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_paused {
-		*node:root.item<1>.img_status@icon	= "bordered_sleep"
+		*node:root.item<1>.img_status@icon	= "icons/bordered_sleep"
 	}
 
 	/**

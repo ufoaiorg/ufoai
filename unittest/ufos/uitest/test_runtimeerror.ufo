@@ -41,7 +41,7 @@ window test_runtimeerror
 
 		// not possible to parse value as binary
 		*node:root.foo<cvar:foo1>@max = 100
-		*node:root.foo<cvar:foo2>@icon = "bordered_magnifying_glass"
+		*node:root.foo<cvar:foo2>@icon = "icons/bordered_magnifying_glass"
 
 		// not possible to type nodes at run time
 		if ( *node:root.foo<cvar:foo1>@max == *node:root.foo<cvar:foo1>@min ) {

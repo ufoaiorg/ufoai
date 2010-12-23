@@ -527,7 +527,7 @@ window options
 			button res_test_pic
 			{
 				tooltip		"_Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
-				icon		bordered_magnifying_glass
+				icon		"icons/bordered_magnifying_glass"
 				pos			"446 39"
 				size		"16 16"
 				padding		0
@@ -1610,7 +1610,7 @@ window options
 		button rate_test_pic
 		{
 			tooltip		"_Restart the sound-engine and apply your settings."
-			icon		bordered_magnifying_glass
+			icon		"icons/bordered_magnifying_glass"
 			pos			"486 297"
 			size		"16 16"
 			padding		0

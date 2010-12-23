@@ -89,7 +89,7 @@ component panel cmpMapSlot
 	{
 		pos			"0 0"
 		size		"35 35"
-		icon		prev
+		icon		"icons/prev"
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
 		onClick		{ cmd "mn_prevmap;" }
@@ -98,7 +98,7 @@ component panel cmpMapSlot
 	{
 		pos			"285 0"
 		size		"35 35"
-		icon		next
+		icon		"icons/next"
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
 		onClick		{ cmd "mn_nextmap;" }
@@ -138,7 +138,7 @@ component panel cmpDefBaseHeader {
 		background	"buttons/big_blue"
 		pos			"950 20"
 		size		"59 55"
-		icon		"return"
+		icon		"icons/return"
 		onClick		{ cmd "ui_pop;" }
 	}
 }

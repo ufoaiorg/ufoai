@@ -396,7 +396,7 @@ window mp_team_edit extends objectinfo
 		custombutton action_dec
 		{
 			pos		"120 290"
-			icon	prev
+			icon	"icons/prev"
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
@@ -413,7 +413,7 @@ window mp_team_edit extends objectinfo
 		custombutton action_inc
 		{
 			pos		"334 290"
-			icon	next
+			icon	"icons/next"
 			size	"16 16"
 			onClick	{ cmd "mn_increaseitem;" }
 		}
@@ -434,7 +434,7 @@ window mp_team_edit extends objectinfo
 		{
 			tooltip "_Previous firemode"
 			pos		"120 314"
-			icon	prev
+			icon	"icons/prev"
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
@@ -452,7 +452,7 @@ window mp_team_edit extends objectinfo
 		{
 			tooltip "_Next firemode"
 			pos		"334 314"
-			icon	next
+			icon	"icons/next"
 			size	"16 16"
 			onClick	{ cmd "mn_increasefiremode;" }
 		}
@@ -718,7 +718,7 @@ window mp_team_edit extends objectinfo
 		background	"buttons/large_blue"
 		pos		"940 720"
 		size	"64 37"
-		icon return
+		icon "icons/return"
 		onClick	{ cmd "ui_pop;" }
 	}
 

@@ -28,7 +28,7 @@ window editor {
 
 		button start_capture_mode {
 			tooltip		"_Capture a node"
-			icon		"system_capture"
+			icon		"icons/system_capture"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
 			image		"ui/button_green_small"
@@ -40,7 +40,7 @@ window editor {
 
 		button select_parent {
 			tooltip		"_Select parent node"
-			icon		"system_parent"
+			icon		"icons/system_parent"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
 			image		"ui/button_green_small"
@@ -52,7 +52,7 @@ window editor {
 
 		button select_firstchild {
 			tooltip		"_Select first child node"
-			icon		"system_child"
+			icon		"icons/system_child"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
 			image		"ui/button_green_small"
@@ -64,7 +64,7 @@ window editor {
 
 		button select_next {
 			tooltip		"_Select next node"
-			icon		"system_next"
+			icon		"icons/system_next"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
 			image		"ui/button_green_small"

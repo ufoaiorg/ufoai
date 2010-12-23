@@ -77,7 +77,7 @@ window messageoptions
 		pos			"356 60"
 		size		"26 20"
 		padding		0
-		icon		notify_notice
+		icon		"icons/notify_notice"
 		onClick		{ cmd "msgoptions_setall notify 1;" }
 		onRClick		{ cmd "msgoptions_setall notify 0;" }
 	}
@@ -87,7 +87,7 @@ window messageoptions
 		tooltip		"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
 		pos			"386 60"
 		size		"26 20"
-		icon		notify_pause
+		icon		"icons/notify_pause"
 		padding		0
 		onClick		{ cmd "msgoptions_setall pause 1;" }
 		onRClick		{ cmd "msgoptions_setall pause 0;" }
@@ -98,7 +98,7 @@ window messageoptions
 		tooltip		"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
 		pos			"416 60"
 		size		"26 20"
-		icon		notify_sound
+		icon		"icons/notify_sound"
 		padding		0
 		onClick		{ cmd "msgoptions_setall sound 1;" }
 		onRClick		{ cmd "msgoptions_setall sound 0;" }
