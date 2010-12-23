@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../shared/threads.h"
+#include "../../shared/mutex.h"
 #include "bsp.h"
 
 #define	MAX_THREADS	8

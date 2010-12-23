@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "mp_serverlist.h"
 #include "mp_callbacks.h"
-#include "../../shared/threads.h"
+#include "../../shared/mutex.h"
 
 #define MAX_SERVERLIST 128
 

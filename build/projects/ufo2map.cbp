@@ -122,6 +122,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\mutex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mutex.h" />
 		<Unit filename="..\..\src\shared\parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -130,10 +134,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\shared.h" />
-		<Unit filename="..\..\src\shared\threads.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\shared\threads.h" />
 		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\shared\utf8.c">
 			<Option compilerVar="CC" />

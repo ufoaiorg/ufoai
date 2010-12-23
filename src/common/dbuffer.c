@@ -24,7 +24,7 @@
  */
 
 #include "common.h"
-#include "../shared/threads.h"
+#include "../shared/mutex.h"
 
 /* This should fit neatly in one page */
 #define DBUFFER_ELEMENT_SIZE 4000

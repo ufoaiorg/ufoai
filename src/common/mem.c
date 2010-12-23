@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "common.h"
-#include "../shared/threads.h"
+#include "../shared/mutex.h"
 
 #define MEM_HEAD_SENTINEL_TOP	0xFEBDFAED
 #define MEM_HEAD_SENTINEL_BOT	0xD0BAF0FF

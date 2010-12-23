@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "sv_rma.h"
 #include "../shared/parse.h"
-#include "../shared/threads.h"
+#include "../shared/mutex.h"
 
 #define ASSEMBLE_THREADS 2
 static SDL_sem *mapSem;
