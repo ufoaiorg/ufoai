@@ -318,7 +318,7 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_thread.c \
 	\
 	shared/byte.c \
-	shared/threads.c \
+	shared/mutex.c \
 	shared/images.c \
 	\
 	$(game_SRCS)

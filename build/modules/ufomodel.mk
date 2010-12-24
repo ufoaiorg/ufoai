@@ -19,7 +19,7 @@ $(TARGET)_SRCS      = \
 	tools/ufomodel/ufomodel.c \
 	\
 	shared/mathlib.c \
-	shared/threads.c \
+	shared/mutex.c \
 	shared/byte.c \
 	shared/images.c \
 	shared/parse.c \

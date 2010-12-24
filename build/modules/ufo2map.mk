@@ -42,7 +42,7 @@ $(TARGET)_SRCS      = \
 	tools/ufo2map/common/trace.c \
 	\
 	shared/mathlib.c \
-	shared/threads.c \
+	shared/mutex.c \
 	shared/byte.c \
 	shared/images.c \
 	shared/parse.c \

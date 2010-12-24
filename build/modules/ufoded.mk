@@ -49,7 +49,7 @@ $(TARGET)_SRCS      = \
 	shared/byte.c \
 	shared/infostring.c \
 	shared/mathlib.c \
-	shared/threads.c \
+	shared/mutex.c \
 	shared/parse.c \
 	shared/shared.c \
 	shared/utf8.c \

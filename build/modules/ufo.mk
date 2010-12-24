@@ -307,7 +307,7 @@ $(TARGET)_SRCS      = \
 	\
 	shared/byte.c \
 	shared/mathlib.c \
-	shared/threads.c \
+	shared/mutex.c \
 	shared/utf8.c \
 	shared/images.c \
 	shared/infostring.c \
