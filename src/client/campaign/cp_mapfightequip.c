@@ -609,8 +609,10 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 			if (!AIR_IsAircraftInBase(slot->aircraft))
 				return qfalse;
 			/* no more ammo available */
-			if (!B_BaseHasItem(slot->aircraft->homebase, slot->ammo))
+			if (!B_BaseHasItem(slot->aircraft->homebase, slot->ammo)) {
+				slot->ammo = NULL;
 				return qfalse;
+			}
 
 			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, qfalse, qfalse);
 			slot->ammoLeft = slot->ammo->ammo;
