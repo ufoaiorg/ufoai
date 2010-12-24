@@ -77,7 +77,6 @@ technology_t **AII_GetCraftitemTechsByType (int type)
 itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
 {
 	assert(od);
-	assert(od->craftitem.type >= 0);
 
 	if (od->size < 50)
 		return ITEM_LIGHT;
@@ -619,8 +618,10 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 			if (!AIR_IsAircraftInBase(slot->aircraft))
 				return qfalse;
 			/* no more ammo available */
-			if (!B_BaseHasItem(slot->aircraft->homebase, slot->ammo))
+			if (!B_BaseHasItem(slot->aircraft->homebase, slot->ammo)) {
+				slot->ammo = NULL;
 				return qfalse;
+			}
 
 			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, qfalse, qfalse);
 			slot->ammoLeft = slot->ammo->ammo;
