@@ -6,3 +6,21 @@
 		lightmap
 	}
 }
+
+/* flare for light003 light */
+{
+	material tex_lights/light003
+	{
+		flare 3
+		color 1.0 1.0 0.7
+	}
+}
+
+/* flare for light004 light */
+{
+	material tex_lights/light004
+	{
+		flare 2
+		color 0.8 0.2 0.3
+	}
+}
