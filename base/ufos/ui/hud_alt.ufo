@@ -546,7 +546,7 @@ window hud_alt extends hud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMRIGHT althud.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
+			onClick		{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMRIGHT <path:root>.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
 		}
 		image bt_primaryleft
 		{
@@ -556,7 +556,7 @@ window hud_alt extends hud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT althud.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
+			onClick		{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT <path:root>.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
 		}
 
 		// ==================
