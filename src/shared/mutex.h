@@ -1,5 +1,5 @@
-#ifndef _SHARED_THREADS_H
-#define _SHARED_THREADS_H
+#ifndef _SHARED_MUTEX_H
+#define _SHARED_MUTEX_H
 
 #include <SDL_thread.h>
 
