@@ -182,12 +182,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
 
-	/**
-	 * @note This value is worthless if it is between CORE_DIRECTIONS and FLYING_DIRECTIONS:
-	 * These are defined actions or climbing.
-	 */
-	const int coreDir = dir % CORE_DIRECTIONS;/**< The compass direction of this move if less than CORE_DIRECTIONS or at least FLYING_DIRECTIONS */
-
 	/** @note This is the actor's height in QUANT units. */
 	const int actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
 
@@ -301,6 +295,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	 *  to the actor's actual height, including crouching. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
+		const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 		int neededHeight;
 		if (dz > 0) {
 			/* If the actor is moving up, check the passage at the current cell.
@@ -338,8 +333,8 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		int actorStepupHeight = PATHFINDING_MAX_STEPUP;
 
 		/* This is the standard passage height for all units trying to move horizontally. */
-		RT_CONN_TEST(map, actorSize, x, y, z, coreDir);
-		passageHeight = RT_CONN(map, actorSize, x, y, z, coreDir);
+		RT_CONN_TEST(map, actorSize, x, y, z, dir);
+		passageHeight = RT_CONN(map, actorSize, x, y, z, dir);
 		if (passageHeight < actorHeight) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passageHeight, actorHeight);
 			return;
