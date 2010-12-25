@@ -148,7 +148,7 @@ static void UI_TextNodeMouseMove (uiNode_t *node, int x, int y)
 
 /**
  * @brief Handles linked list of text. Each element of the list must be a line of text without line break.
- * A line break is betwwen 2 element of the list. Text line is wrapped/truncated... according to
+ * A line break is between 2 element of the list. Text line is wrapped/truncated... according to
  * a node property
  * @param[in] node The context node
  * @param[in] list The test to draw else NULL
