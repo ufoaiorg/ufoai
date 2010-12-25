@@ -7,6 +7,14 @@
 #include "mutex.h"
 #include "../common/common.h"
 
+/** @brief mutex wrapper */
+struct threads_mutex_s {
+	int line;				/**< line it was last locked */
+	const char *file;		/**< filename it was last locked */
+	const char *name;		/**< name of the mutex */
+	SDL_mutex *mutex;		/**< the real sdl mutex */
+};
+
 /**
  * @brief Lock the mutex
  * @return @c -1 on error, @c 0 on success
@@ -61,4 +69,9 @@ void TH_MutexDestroy (threads_mutex_t *mutex)
 		SDL_DestroyMutex(mutex->mutex);
 		free(mutex);
 	}
+}
+
+int TH_MutexCondWaitTimeout (threads_mutex_t *mutex, SDL_cond *condition, int timeout)
+{
+	return SDL_CondWaitTimeout(condition, mutex->mutex, timeout);
 }

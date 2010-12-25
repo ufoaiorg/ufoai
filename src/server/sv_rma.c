@@ -1068,7 +1068,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	}
 	while (threadID == 0) {
 		/* if nobody is done after 5 sec, restart, double the timeout. */
-		if (SDL_CondWaitTimeout(mapCond, mapLock->mutex, timeout) != 0) {
+		if (TH_MutexCondWaitTimeout(mapLock, mapCond, timeout) != 0) {
 			Com_Printf("SV_ParallelSearch: timeout at %i ms, restarting\n", timeout);
 			timeout += timeout;
 			/* tell them all to die */
