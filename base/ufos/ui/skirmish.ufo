@@ -118,35 +118,6 @@ window skirmish
 			cvar	*cvar:rm_drop
 			dataid	OPTION_DROPSHIPS
 		}
-		// =============================
-		// DAY/NIGHT STRING & SELECTBOX
-		// =============================
-		string daynight_str
-		{
-			string		"_Daytime Version:"
-			pos			"10 200"
-			size		"280 20"
-		}
-		selectbox daynight_box
-		{
-			{
-				tooltip		"_Select whether you want to play @ day- or nighttime."
-				cvar		*cvar:mn_serverday
-				pos			"240 200"
-				size		"200 20"
-				color		"0.6 0.6 0.6 0.3"
-			}
-			option night
-			{
-				label	"_Night"
-				value	"0"
-			}
-			option day
-			{
-				label	"_Day"
-				value	"1"
-			}
-		}
 	}
 	// ============
 	// OPTIONS TAB
