@@ -365,6 +365,8 @@ static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 	return side;
 }
 
+#define TESTING_MOCK_SPLIT 0
+#if TESTING_MOCK_SPLIT
 /**
  * @brief Checks if the plane splits the brush
  */
@@ -417,8 +419,9 @@ static qboolean DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 	FreeWinding(w);
 	return split;
 }
+#endif
 
-#if 0
+#if TESTING_MOCK_SPLIT
 /* DoesPlaneSplitBrush does not yet work for all maps, namely city_train.map
  * Until we know why, let's use the old stuff. */
 static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
