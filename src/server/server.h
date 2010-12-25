@@ -77,10 +77,10 @@ typedef struct {
 	qboolean initialized;		/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
 	struct datagram_socket *netDatagramSocket;
-	struct client_s *clients;			/**< [sv_maxclients->value]; */
+	struct client_s *clients;	/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
-	qboolean abandon;		/**< shutdown server when all clients disconnect and don't accept new connections */
+	qboolean abandon;			/**< shutdown server when all clients disconnect and don't accept new connections */
 	qboolean killserver;		/**< will initiate shutdown once abandon is set */
 	threads_mutex_t *serverMutex;
 	SDL_Thread *gameThread;
