@@ -1,6 +1,18 @@
 // ==================
 // TRANSFER MENU
 // ==================
+
+component spinner cmp_t_spinner
+		{
+			tooltip		"_Add/Remove item to transfer cargo"
+			image		"ui/spinner_blue"
+			onChange	{
+				*cvar:tline = <node:parent.trans_list@viewpos>
+				*cvar:tline = ( *cvar:tline + *node:this@num )
+				cmd "trans_list_click <cvar:tline> <lastdiff>;"
+			}
+		}
+
 window transfer
 {
 	/** @todo Remove me */
@@ -168,238 +180,92 @@ window transfer
 			}
 		}
 
-		spinner t_spinner0
+
+		cmp_t_spinner t_spinner0
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 43"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 0 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner1
+		cmp_t_spinner t_spinner1
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 68"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 1 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner2
+		cmp_t_spinner t_spinner2
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 93"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 2 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner3
+		cmp_t_spinner t_spinner3
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 118"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 3 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
 
-		spinner t_spinner4
+		cmp_t_spinner t_spinner4
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 143"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 4 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner5
+		cmp_t_spinner t_spinner5
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 168"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 5 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner6
+		cmp_t_spinner t_spinner6
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 193"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 6 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner7
+		cmp_t_spinner t_spinner7
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 218"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 7 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner8
+		cmp_t_spinner t_spinner8
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 243"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 8 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner9
+		cmp_t_spinner t_spinner9
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 268"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 9 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner10
+		cmp_t_spinner t_spinner10
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 293"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 10 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner11
+		cmp_t_spinner t_spinner11
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 318"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 11 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
 
-		spinner t_spinner12
+		cmp_t_spinner t_spinner12
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 343"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 12 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner13
+		cmp_t_spinner t_spinner13
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 368"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 13 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner14
+		cmp_t_spinner t_spinner14
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 393"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 14 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner15
+		cmp_t_spinner t_spinner15
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 418"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 15 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner16
+		cmp_t_spinner t_spinner16
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 443"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 16 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner17
+		cmp_t_spinner t_spinner17
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 468"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 17 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner18
+		cmp_t_spinner t_spinner18
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 493"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 18 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner19
+		cmp_t_spinner t_spinner19
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 518"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 19 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
-		spinner t_spinner20
+		cmp_t_spinner t_spinner20
 		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
 			pos			"485 543"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + 20 )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
 		}
 	}
 
@@ -613,6 +479,12 @@ window transfer
 	{
 		cmd "trans_init;"
 		if ( *cvar:mn_itemtype_name eq "" ) { *cvar:mn_itemtype_name = "_Equipment" }
+		*cvar:i = 0;
+		while ( *cvar:i < 21 ) {
+			*node:root.itemlist.t_spinner<cvar:i>@num = <cvar:i>
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
 	}
 
 	func onWindowClosed
