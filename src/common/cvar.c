@@ -275,7 +275,7 @@ const char *Cvar_VariableStringOld (const char *varName)
  */
 void Cvar_Reset (cvar_t *cvar)
 {
-	const char *str;
+	char *str;
 
 	if (cvar->oldString == NULL)
 		return;
