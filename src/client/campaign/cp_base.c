@@ -2,7 +2,7 @@
  * @file cp_base.c
  * @brief Handles everything that is located in or accessed trough a base.
  * @note Basemanagement functions prefix: B_
- * @note See "base/ufos/basemanagement.ufo", "base/ufos/menu_bases.ufo" and "base/ufos/menu_buildings.ufo" for the underlying content.
+ * @note See "base/ufos/basemanagement.ufo" for the underlying content.
  */
 
 /*
@@ -909,18 +909,16 @@ void B_Destroy (base_t *base)
 
 	E_DeleteAllEmployees(base);
 
-	/** @todo Destroy the base if we solved aircraft transfer issue
-	 *	it should be done via moving other bases (and adjusting pointers
-	 *  where needed. We don't allow holes in baselist
+	/** @todo Destroy the base. For this we need to check all the dependencies and references.
+	 * Should be only done after putting bases into a linkedList
 	 */
 }
 
 #ifdef DEBUG
 /**
  * @brief Debug command for destroying a base.
- * @param[in] base index to be destroyed.
  */
-static void CL_BaseDestroy_f (void)
+static void B_Destroy_f (void)
 {
 	int baseIdx;
 	base_t *base;
@@ -933,13 +931,13 @@ static void CL_BaseDestroy_f (void)
 	baseIdx = atoi(Cmd_Argv(1));
 
 	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("CL_BaseDestroy_f: baseIdx %i is outside bounds\n", baseIdx);
+		Com_Printf("B_Destroy_f: baseIdx %i is outside bounds\n", baseIdx);
 		return;
 	}
 
 	base = B_GetFoundedBaseByIDX(baseIdx);
 	if (!base) {
-		Com_Printf("CL_BaseDestroy_f: Base %i not founded\n", baseIdx);
+		Com_Printf("B_Destroy_f: Base %i not founded\n", baseIdx);
 		return;
 	}
 
@@ -2030,6 +2028,7 @@ base_t *B_GetCurrentSelectedBase (void)
 }
 
 /**
+ * @brief Select and opens a base
  * @param[in] base If this is @c NULL we want to build a new base
  */
 void B_SelectBase (const base_t *base)
@@ -2472,7 +2471,7 @@ void B_InitStartup (void)
 	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");
 	Cmd_AddCommand("debug_listcapacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
 	Cmd_AddCommand("debug_basereset", B_ResetAllStatusAndCapacities_f, "Reset building status and capacities of all bases");
-	Cmd_AddCommand("debug_destroybase", CL_BaseDestroy_f, "Destroy a base");
+	Cmd_AddCommand("debug_destroybase", B_Destroy_f, "Destroy a base");
 	Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
 #endif
 }

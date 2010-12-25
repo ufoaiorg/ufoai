@@ -267,6 +267,9 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 /**
  * @brief Click on the map/geoscape
+ * @param[in] node UI Node of the geoscape map
+ * @param[in] x Mouse click X coordinate
+ * @param[in] y Mouse click Y coordinate
  */
 void MAP_MapClick (uiNode_t* node, int x, int y)
 {
@@ -283,16 +286,14 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	else
 		MAP_ScreenToMap(node, x, y, pos);
 
-	/* new base construction */
 	switch (ccs.mapAction) {
 	case MA_NEWBASE:
+		/* new base construction */
 		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos */
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			Vector2Copy(pos, ccs.newBasePos);
-
-			CL_GameTimeStop();
-
 			if (B_GetCount() < MAX_BASES) {
+				Vector2Copy(pos, ccs.newBasePos);
+				CL_GameTimeStop();
 				Cmd_ExecuteString("mn_set_base_title");
 				UI_PushWindow("popup_newbase", NULL, NULL);
 			}
@@ -301,9 +302,8 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 		break;
 	case MA_NEWINSTALLATION:
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			Vector2Copy(pos, ccs.newBasePos);
-
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
+				Vector2Copy(pos, ccs.newBasePos);
 				CL_GameTimeStop();
 				UI_PushWindow("popup_newinstallation", NULL, NULL);
 			}
