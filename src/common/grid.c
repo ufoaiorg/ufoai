@@ -149,6 +149,74 @@ static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const i
 }
 
 /**
+ * @brief a struct holding the relevant data to check if we can move between two adjacent cells
+ */
+typedef struct step_s {
+	const routing_t *map;
+	qboolean flier;
+
+	/** @todo has_ladder_climb should return true if
+	 *  1) There is a ladder in the new cell in the specified direction. */
+	qboolean hasLadderToClimb;	/**< Indicates if there is a ladder present providing ability to climb. */
+
+	/** @todo has_ladder_support should return true if
+	 *  1) There is a ladder in the new cell in the specified direction or
+	 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself. */
+	qboolean hasLadderSupport;	/**< Indicates if there is a ladder present providing support. */
+
+} step_t;
+
+/**
+ * @brief Checks if we can move in the given vertical direction
+ * @param[in] step The struct describing the move
+ * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @param[in] pos Current location in the map.
+ * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
+ * @return false if we can't move there
+ */
+static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const int dir)
+{
+	int x, y, z;
+
+	x = pos[0];
+	y = pos[1];
+	z = pos[2];
+
+	if (dir == DIRECTION_FALL) {
+		if (step->flier) {
+			/* Fliers cannot fall intentionally. */
+			return qfalse;
+		} else if (RT_FLOOR(step->map, actorSize, x, y, z) >= 0) {
+			/* We cannot fall if there is a floor in this cell. */
+			return qfalse;
+		} else if (step->hasLadderSupport) {
+			/* The actor can't fall if there is ladder support. */
+			return qfalse;
+		}
+	} else if (dir == DIRECTION_CLIMB_UP) {
+		if (step->flier && QuantToModel(RT_CEILING(step->map, actorSize, x, y, z)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+			return qfalse;
+		}
+		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
+		if (dir == DIRECTION_CLIMB_UP && !step->hasLadderToClimb) {
+			return qfalse;
+		}
+	} else if (dir == DIRECTION_CLIMB_DOWN) {
+		if (step->flier) {
+			if (RT_FLOOR(step->map, actorSize, x, y, z) >= 0 ) { /* Can't fly down through a floor. */
+				return qfalse;
+			}
+		} else {
+			/* If the actor is not a flyer and tries to move down, there must be a ladder. */
+			if (!step->hasLadderToClimb) {
+				return qfalse;
+			}
+		}
+	}
+	return qtrue;
+}
+
+/**
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] exclude Exclude this position from the forbidden list check
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
@@ -161,29 +229,25 @@ static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const i
  */
 static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
+	step_t step_;
+	step_t *step = &step_;	/* temporary solution */
 	int x, y, z;
 	int nx, ny, nz;
 	int dx, dy, dz;
 	byte len, oldLen;
 	int passageHeight;
 
-	/** @todo flier should return true if the actor can fly. */
-	const qboolean flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
-
-	/** @todo has_ladder_support should return true if
-	 *  1) There is a ladder in the new cell in the specified direction or
-	 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself. */
-	const qboolean hasLadderSupport = qfalse; /**< Indicates if there is a ladder present providing support. */
-
-	/** @todo has_ladder_climb should return true if
-	 *  1) There is a ladder in the new cell in the specified direction. */
-	const qboolean hasLadderToClimb = qfalse; /**< Indicates if there is a ladder present providing ability to climb. */
-
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
 
 	/** @note This is the actor's height in QUANT units. */
 	const int actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
+
+	step->map = map;
+	/** @todo flier should return true if the actor can fly. */
+	step->flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
+	step->hasLadderToClimb = qfalse;
+	step->hasLadderSupport = qfalse;
 
 	/* Ensure that dir is in bounds. */
 	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
@@ -194,7 +258,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		return;
 
 	/* IMPORTANT: only fliers can use directions higher than NON_FLYING_DIRECTIONS. */
-	if (!flier && dir >= FLYING_DIRECTIONS) {
+	if (!step->flier && dir >= FLYING_DIRECTIONS) {
 		return;
 	}
 
@@ -373,7 +437,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		heightChange = RT_FLOOR(map, actorSize, nx, ny, nz) - RT_FLOOR(map, actorSize, x, y, z) + (nz - z) * CELL_HEIGHT;
 
 		/* If the actor tries to fall more than falling_height, then prohibit the move. */
-		if (heightChange < -fallingHeight && !hasLadderSupport) {
+		if (heightChange < -fallingHeight && !step->hasLadderSupport) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", heightChange, -fallingHeight);
 			return;
 		}
@@ -402,39 +466,8 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	}
 	/* else there is no movement that uses passages. */
 	/* If we are falling, the height difference is the floor value. */
-	else if (dir == DIRECTION_FALL) {
-		if (flier) {
-			/* Fliers cannot fall intentionally. */
-			return;
-		} else if (RT_FLOOR(map, actorSize, x, y, z) >= 0) {
-			/* We cannot fall if there is a floor in this cell. */
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall while supported. floor:%i\n", RT_FLOOR(map, actorSize, x, y, z));
-			return;
-		} else if (hasLadderSupport) {
-			/* The actor can't fall if there is ladder support. */
-			return;
-		}
-	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (flier && QuantToModel(RT_CEILING(map, actorSize, x, y, z)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* up */
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not enough headroom to fly up. passage:%i actor:%i\n", QuantToModel(RT_CEILING(map, actorSize, x, y, z)), UNIT_HEIGHT * 2 - PLAYER_HEIGHT);
-			return;
-		}
-		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
-		if (dir == DIRECTION_CLIMB_UP && !hasLadderToClimb) {
-			return;
-		}
-	} else if (dir == DIRECTION_CLIMB_DOWN) {
-		if (flier) {
-			if (RT_FLOOR(map, actorSize, x, y, z) >= 0 ) { /* down */
-				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fly down through a floor. floor:%i\n", RT_FLOOR(map, actorSize, x, y, z));
-				return;
-			}
-		} else {
-			/* If the actor is not a flyer and tries to move down, there must be a ladder. */
-			if (!hasLadderToClimb) {
-				return;
-			}
-		}
+	else if (!Grid_StepCheckVerticalDirections(step, actorSize, pos, dir)) {
+		return;
 	}
 
 	/* OK, at this point we are certain of a few things:
