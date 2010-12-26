@@ -167,6 +167,22 @@ typedef struct step_s {
 } step_t;
 
 /**
+ * @brief Initialize the step_t data
+ * @param[in] step The struct describing the move
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @return false if something went wrong
+ */
+static qboolean Grid_StepInit (step_t *step, const routing_t *map)
+{
+	step->map = map;
+	/** @todo flier should return true if the actor can fly. */
+	step->flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
+	step->hasLadderToClimb = qfalse;
+	step->hasLadderSupport = qfalse;
+	return qtrue;
+}
+
+/**
  * @brief Checks if we can move in the given vertical direction
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
@@ -243,11 +259,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	/** @note This is the actor's height in QUANT units. */
 	const int actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
 
-	step->map = map;
-	/** @todo flier should return true if the actor can fly. */
-	step->flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
-	step->hasLadderToClimb = qfalse;
-	step->hasLadderSupport = qfalse;
+	Grid_StepInit(step, map);
 
 	/* Ensure that dir is in bounds. */
 	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
