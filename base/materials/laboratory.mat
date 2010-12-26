@@ -6,6 +6,7 @@
 		texture tex_tech/tv0
 		blend GL_SRC_ALPHA GL_ONE
 		anim 2 10.0
+		glowmaplink
 	}
 }
 {
@@ -66,25 +67,25 @@
 	/* Big button top left animation */
 	{
 		texture pt/b/b2_07_0b0
-		anima 16 1
+		anima 16 4
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Big button bottom left alternating animation */
 	{
 		texture pt/b/b2_07_1a0
-		anima 9 2
+		anima 9 8
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Medium button top right alternating animation */
 	{
 		texture pt/b/b2_07_2b0
-		anima 9 6
+		anima 9 12
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Big button right alternating animation */
 	{
 		texture pt/b/b2_07_3b0
-		anima 9 9
+		anima 9 18
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	{
@@ -110,5 +111,21 @@
 		flare 2
 		color 0.0 0.5 0.0
 		scale.s 0.4
+	}
+}
+
+/* no lightmap for comptex001 */
+{
+	material tex_tech/comptex001
+	{
+		texture tex_tech/comptex001
+	}
+}
+
+/* no lightmap for comptex003 */
+{
+	material tex_tech/comptex003
+	{
+		texture tex_tech/comptex003
 	}
 }

@@ -16,3 +16,35 @@
 		color 1.0 0.3 0.1
 	}
 }
+
+/* no lightmap for comptable */
+{
+	material tex_tech/comptable
+	{
+		texture tex_tech/comptable
+	}
+}
+
+/* no lightmap for comptex003 */
+{
+	material tex_tech/comptex003
+	{
+		texture tex_tech/comptex003
+	}
+}
+
+/* no lightmap for screen1 */
+{
+	material tex_tech/screen1
+	{
+		texture tex_tech/screen1
+	}
+}
+
+/* no lightmap for screen2 */
+{
+	material tex_tech/screen2
+	{
+		texture tex_tech/screen2
+	}
+}
