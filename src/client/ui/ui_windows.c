@@ -327,21 +327,6 @@ static void UI_PushDropDownWindow_f (void)
 	UI_PushWindow(node->name, NULL);
 }
 
-/**
- * @brief Console function to hide the HUD in battlescape mode
- * Note: relies on a "hud_nohud" window existing
- * @sa UI_PushWindow
- * @todo Nothing to do here
- */
-static void UI_PushNoHud_f (void)
-{
-	/* can't hide hud if we are not in battlescape */
-	if (!CL_BattlescapeRunning())
-		return;
-
-	UI_PushWindow("hud_nohud", NULL);
-}
-
 static void UI_RemoveWindowAtPositionFromStack (int position)
 {
 	int i;
@@ -773,7 +758,4 @@ void UI_InitWindows (void)
 
 	Cmd_AddCommand("ui_tree", UI_DebugTree_f, "Display a tree of nodes from a window into the console.");
 	Cmd_AddParamCompleteFunction("ui_tree", UI_CompleteWithWindow);
-
-	/** @todo move it outside */
-	Cmd_AddCommand("hidehud", UI_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 }
