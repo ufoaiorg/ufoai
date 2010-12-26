@@ -29,13 +29,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* prototype */
 struct uiNode_s;
+struct uiCallContext_s;
 
 /* module initialization */
 void UI_InitWindows(void);
 
 /* window stack */
 int UI_GetLastFullScreenWindow(void);
-struct uiNode_s* UI_PushWindow(const char *name, const char *parentName);
+struct uiNode_s* UI_PushWindow(const char *name, const char *parentName, linkedList_t *params);
 void UI_InitStack(const char* activeWindow, const char* mainWindow, qboolean popAll, qboolean pushActive);
 void UI_PopWindow(qboolean all);
 void UI_PopWindowWithEscKey(void);

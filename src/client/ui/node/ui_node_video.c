@@ -72,7 +72,7 @@ static void UI_VideoNodeDraw (uiNode_t *node)
 	UI_VideoNodeDrawOverWindow(node);
 }
 
-static void UI_VideoNodeInit (uiNode_t *node)
+static void UI_VideoNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	CIN_InitCinematic(&(EXTRADATA(node).cin));
 }

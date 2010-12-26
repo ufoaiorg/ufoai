@@ -221,7 +221,7 @@ static void UI_WindowNodeDoLayout (uiNode_t *node)
  * @brief Called when we init the node on the screen
  * @todo we can move generic code into abstract node
  */
-static void UI_WindowNodeInit (uiNode_t *node)
+static void UI_WindowNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	uiNode_t *child;
 
@@ -231,13 +231,13 @@ static void UI_WindowNodeInit (uiNode_t *node)
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->behaviour->windowOpened) {
-			child->behaviour->windowOpened(child);
+			child->behaviour->windowOpened(child, NULL);
 		}
 	}
 
 	/* script callback */
 	if (EXTRADATA(node).onWindowOpened)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowOpened);
+		UI_ExecuteEventActionsEx(node, EXTRADATA(node).onWindowOpened, params);
 
 	UI_Invalidate(node);
 }

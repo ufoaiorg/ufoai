@@ -339,7 +339,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
 		UI_RegisterText(TEXT_LIST, userInfoText);
-		UI_PushWindow("serverinfo", NULL);
+		UI_PushWindow("serverinfo", NULL, NULL);
 	} else
 		Com_Printf(S_COLOR_GREEN "%s", str);
 }

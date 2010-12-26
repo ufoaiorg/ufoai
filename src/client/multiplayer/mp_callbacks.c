@@ -64,7 +64,7 @@ void CL_Connect_f (void)
 	}
 
 	if (Cvar_GetInteger("mn_server_need_password")) {
-		UI_PushWindow("serverpassword", NULL);
+		UI_PushWindow("serverpassword", NULL, NULL);
 		return;
 	}
 

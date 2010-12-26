@@ -163,7 +163,7 @@ static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
  * @param[in] parentName Window name to link as parent-child (else NULL)
  * @return pointer to uiNode_t
  */
-uiNode_t* UI_PushWindow (const char *name, const char *parentName)
+uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t *params)
 {
 	uiNode_t *window;
 
@@ -192,7 +192,7 @@ uiNode_t* UI_PushWindow (const char *name, const char *parentName)
 		Com_Printf("Window stack overflow\n");
 
 	if (window->behaviour->windowOpened) {
-		window->behaviour->windowOpened(window);
+		window->behaviour->windowOpened(window, params);
 	}
 
 	/* change from e.g. console mode to game input mode (fetch input) */
@@ -242,7 +242,7 @@ int UI_CompleteWithWindow (const char *partial, const char **match)
 static void UI_PushChildWindow_f (void)
 {
 	if (Cmd_Argc() > 1)
-		UI_PushWindow(Cmd_Argv(1), Cmd_Argv(2));
+		UI_PushWindow(Cmd_Argv(1), Cmd_Argv(2), NULL);
 	else
 		Com_Printf("Usage: %s <name> <parentname>\n", Cmd_Argv(0));
 }
@@ -253,10 +253,19 @@ static void UI_PushChildWindow_f (void)
  */
 static void UI_PushWindow_f (void)
 {
-	if (Cmd_Argc() > 1)
-		UI_PushWindow(Cmd_Argv(1), NULL);
-	else
-		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
+	linkedList_t *params = NULL;
+	int i;
+
+	if (Cmd_Argc() == 0) {
+		Com_Printf("Usage: %s <name> <params>\n", Cmd_Argv(0));
+		return;
+	}
+
+	for (i = 2; i < Cmd_Argc(); i++) {
+		LIST_AddString(&params, Cmd_Argv(i));
+	}
+	UI_PushWindow(Cmd_Argv(1), NULL, params);
+	LIST_Delete(&params);
 }
 
 /**
@@ -324,7 +333,7 @@ static void UI_PushDropDownWindow_f (void)
 	node = node->root;
 	node->pos[0] += destination[0] - source[0];
 	node->pos[1] += destination[1] - source[1];
-	UI_PushWindow(node->name, NULL);
+	UI_PushWindow(node->name, NULL, NULL);
 }
 
 static void UI_RemoveWindowAtPositionFromStack (int position)
@@ -380,7 +389,7 @@ void UI_InitStack (const char* activeWindow, const char* mainWindow, qboolean po
 		/* prevent calls before UI script initialization */
 		if (ui_global.numWindows != 0) {
 			if (pushActive)
-				UI_PushWindow(activeWindow, NULL);
+				UI_PushWindow(activeWindow, NULL, NULL);
 		}
 	}
 
@@ -471,14 +480,14 @@ void UI_PopWindow (qboolean all)
 			 * right now) */
 			if (!strcmp(oldfirst->name, ui_sys_main->string)) {
 				if (ui_sys_active->string[0] != '\0')
-					UI_PushWindow(ui_sys_active->string, NULL);
+					UI_PushWindow(ui_sys_active->string, NULL, NULL);
 				if (!ui_global.windowStackPos)
-					UI_PushWindow(ui_sys_main->string, NULL);
+					UI_PushWindow(ui_sys_main->string, NULL, NULL);
 			} else {
 				if (ui_sys_main->string[0] != '\0')
-					UI_PushWindow(ui_sys_main->string, NULL);
+					UI_PushWindow(ui_sys_main->string, NULL, NULL);
 				if (!ui_global.windowStackPos)
-					UI_PushWindow(ui_sys_active->string, NULL);
+					UI_PushWindow(ui_sys_active->string, NULL, NULL);
 			}
 		}
 	}
@@ -740,7 +749,6 @@ void UI_InitWindows (void)
 	Cmd_AddCommand("ui_pop", UI_PopWindow_f, "Pops the current window from the stack");
 	Cmd_AddCommand("ui_close", UI_CloseWindow_f, "Close a window");
 	Cmd_AddCommand("ui_initstack", UI_InitStack_f, "Initialize the window stack with a main and an option window.");
-
 	Cmd_AddCommand("ui_tree", UI_DebugTree_f, "Display a tree of nodes from a window into the console.");
 	Cmd_AddParamCompleteFunction("ui_tree", UI_CompleteWithWindow);
 }

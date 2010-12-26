@@ -108,7 +108,7 @@ static void AC_ResearchAlien_f (void)
 		Com_Error(ERR_DROP, "aliencontCurrent without tech pointer");
 
 	if (!RS_IsResearched_ptr(tech))
-		UI_PushWindow("research", NULL);
+		UI_PushWindow("research", NULL, NULL);
 }
 
 /**

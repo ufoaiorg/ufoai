@@ -294,7 +294,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 
 			if (B_GetCount() < MAX_BASES) {
 				Cmd_ExecuteString("mn_set_base_title");
-				UI_PushWindow("popup_newbase", NULL);
+				UI_PushWindow("popup_newbase", NULL, NULL);
 			}
 			return;
 		}
@@ -305,13 +305,13 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
 				CL_GameTimeStop();
-				UI_PushWindow("popup_newinstallation", NULL);
+				UI_PushWindow("popup_newinstallation", NULL, NULL);
 			}
 			return;
 		}
 		break;
 	case MA_UFORADAR:
-		UI_PushWindow("popup_intercept_ufo", NULL);
+		UI_PushWindow("popup_intercept_ufo", NULL, NULL);
 		break;
 	default:
 		break;
@@ -366,7 +366,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 		/* Display popup for multi selection */
 		UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
 		CL_GameTimeStop();
-		UI_PushWindow("popup_multi_selection", NULL);
+		UI_PushWindow("popup_multi_selection", NULL, NULL);
 	} else {
 		aircraft_t *aircraft = ccs.selectedAircraft;
 		/* Nothing selected */

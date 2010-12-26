@@ -155,7 +155,7 @@ static void TR_TransferAliensFromMission_f (void)
 
 	if (baseList != NULL){
 		UI_RegisterOption(OPTION_BASELIST, baseList);
-		UI_PushWindow("popup_transferbaselist", NULL);
+		UI_PushWindow("popup_transferbaselist", NULL, NULL);
 	} else {
 		/** @todo send a message (?) */
 		Com_Printf("TR_TransferAliensFromMission_f: No base with alien containment available.\n");

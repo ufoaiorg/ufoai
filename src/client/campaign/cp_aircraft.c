@@ -1186,7 +1186,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			MAP_SelectMission(aircraft->mission);
 			ccs.interceptAircraft = aircraft;
 			CL_GameTimeStop();
-			UI_PushWindow("popup_intercept_ready", NULL);
+			UI_PushWindow("popup_intercept_ready", NULL, NULL);
 			break;
 		case AIR_RETURNING:
 			/* aircraft entered in homebase */
@@ -1367,7 +1367,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	if (B_IsUnderAttack(aircraft->homebase) && AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->active = qtrue;
-		UI_PushWindow("popup_baseattack", NULL);
+		UI_PushWindow("popup_baseattack", NULL, NULL);
 		return qtrue;
 	}
 

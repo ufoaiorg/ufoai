@@ -51,7 +51,7 @@ static void UI_BattlescapeNodeLoading (uiNode_t *node)
 	/* node->ghost = qtrue; */
 }
 
-static void UI_BattlescapeNodeInit (uiNode_t *node)
+static void UI_BattlescapeNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);

@@ -350,7 +350,7 @@ static void UI_MaterialEditorMouseDown (uiNode_t *node, int x, int y, int button
 /**
  * @brief Called when we push a window with this node
  */
-static void UI_MaterialEditorNodeInit (uiNode_t *node)
+static void UI_MaterialEditorNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	node->num = -1;
 	UI_MaterialEditorNodeUpdateView(node, qtrue);

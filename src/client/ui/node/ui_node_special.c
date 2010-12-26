@@ -131,7 +131,7 @@ static void UI_ConFuncNodeClone (const uiNode_t *source, uiNode_t *clone)
 /**
  * @brief Callback every time the parent window is opened (pushed into the active window stack)
  */
-static void UI_ConFuncNodeInit (uiNode_t *node)
+static void UI_ConFuncNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	if (UI_ConFuncIsVirtual(node)) {
 		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");

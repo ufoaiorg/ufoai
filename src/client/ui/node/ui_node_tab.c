@@ -313,7 +313,7 @@ static void UI_TabNodeDrawTooltip (uiNode_t *node, int x, int y)
  * check cvar then, reduce runtime check
  * @todo move cvar check to AbstractOption
  */
-static void UI_TabNodeInit (uiNode_t *node)
+static void UI_TabNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	const char *cvarName;
 

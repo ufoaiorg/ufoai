@@ -1,0 +1,63 @@
+/**
+ * @brief Unittest for some events
+ */
+
+window test_event_test_1
+{
+	func onWindowOpened {
+		if (param1 != 1) {
+			cmd "echo ARGGGG! 11"
+		}
+		cmd "ui_close <path:root>"
+	}
+}
+
+window test_event_test_2
+{
+	func onWindowOpened {
+		if (param1 ne "aaaa") {
+			cmd "echo ARGGGG! 21"
+		}
+		if (param2 ne "bbbb") {
+			cmd "echo ARGGGG! 22"
+		}
+		cmd "ui_close <path:root>"
+	}
+}
+
+window test_event_test_3
+{
+	func onWindowOpened {
+		if (param1 != 1.1) {
+			cmd "echo ARGGGG! 31"
+		}
+		if (param2 ne "aaaa") {
+			cmd "echo ARGGGG! 32"
+		}
+		if (param3 != 4) {
+			cmd "echo ARGGGG! 33"
+		}
+		if (param4 ne "bbbb") {
+			cmd "echo ARGGGG! 34"
+		}
+		cmd "ui_close <path:root>"
+	}
+}
+
+window test_event
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest events"
+		bgcolor		"0 0 0 1"
+	}
+
+	func onWindowOpened {
+		cmd "ui_push test_event_test_1 1"
+		cmd "ui_push test_event_test_2 aaaa bbbb"
+		cmd "ui_push test_event_test_3 1.1 aaaa 4 bbbb"
+	}
+}

@@ -672,6 +672,17 @@ void UI_ExecuteEventActions (uiNode_t* source, const uiAction_t* firstAction)
 	UI_ExecuteActions(firstAction, &context);
 }
 
+void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t *params)
+{
+	uiCallContext_t context;
+	memset(&context, 0, sizeof(context));
+	context.source = source;
+	context.useCmdParam = qfalse;
+	context.params = params;
+	context.paramNumber = LIST_Count(params);
+	UI_ExecuteActions(firstAction, &context);
+}
+
 /**
  * @brief Test if a string use an injection syntax
  * @param[in] string The string to check for injection

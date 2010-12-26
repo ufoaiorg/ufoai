@@ -804,7 +804,7 @@ static void B_MakeBaseMapShot_f (void)
 	Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
 	Cvar_SetValue("cl_worldlevel", 1);
-	UI_PushWindow("hud_nohud", NULL);
+	UI_PushWindow("hud_nohud", NULL, NULL);
 	/* hide any active console */
 	Cmd_ExecuteString("toggleconsole");
 	Cmd_ExecuteString("r_screenshot tga");

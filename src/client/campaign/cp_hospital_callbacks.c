@@ -206,7 +206,7 @@ static void HOS_ListClick_f (void)
 
 	/* open the hospital menu for this employee */
 	if (type != MAX_EMPL)
-		UI_PushWindow("hospital_employee", NULL);
+		UI_PushWindow("hospital_employee", NULL, NULL);
 }
 
 /**

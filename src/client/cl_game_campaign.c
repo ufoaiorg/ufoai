@@ -82,10 +82,10 @@ static void GAME_CP_MissionAutoGo_f (void)
 
 	if (results->won) {
 		Cvar_SetValue("mn_autogo", 1);
-		UI_PushWindow("won", NULL);
+		UI_PushWindow("won", NULL, NULL);
 		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
 	} else {
-		UI_PushWindow("lost", NULL);
+		UI_PushWindow("lost", NULL, NULL);
 		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 	}
 
@@ -356,9 +356,9 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	CP_ExecuteMissionTrigger(ccs.selectedMission, won);
 
 	if (won)
-		UI_PushWindow("won", NULL);
+		UI_PushWindow("won", NULL, NULL);
 	else
-		UI_PushWindow("lost", NULL);
+		UI_PushWindow("lost", NULL, NULL);
 
 	CL_Disconnect();
 	SV_Shutdown("Mission end", qfalse);

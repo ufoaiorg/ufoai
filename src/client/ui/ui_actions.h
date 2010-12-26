@@ -214,9 +214,9 @@ typedef struct uiCallContext_s {
 	int varNumber;
 } uiCallContext_t;
 
-
 void UI_ExecuteEventActions(struct uiNode_s* source, const uiAction_t* firstAction);
 void UI_ExecuteConFuncActions(struct uiNode_s* source, const uiAction_t* firstAction);
+void UI_ExecuteEventActionsEx (struct uiNode_s* source, const uiAction_t* firstAction, linkedList_t *params);
 qboolean UI_IsInjectedString(const char *string);
 void UI_FreeStringProperty(void* pointer);
 const char* UI_GenInjectedString(const char* input, qboolean addNewLine, const uiCallContext_t *context);

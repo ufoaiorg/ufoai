@@ -66,7 +66,7 @@ static void UI_SequenceNodeDraw (uiNode_t *node)
 	}
 }
 
-static void UI_SequenceNodeInit (uiNode_t *node)
+static void UI_SequenceNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	if (EXTRADATA(node).context == NULL)
 		EXTRADATA(node).context = SEQ_AllocContext();
@@ -96,7 +96,7 @@ static void UI_SequencePropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertySource) {
 		if (node->image != NULL) {
-			UI_SequenceNodeInit(node);
+			UI_SequenceNodeInit(node, NULL);
 		} else if (EXTRADATA(node).context != NULL) {
 			UI_SequenceNodeClose(node);
 		}

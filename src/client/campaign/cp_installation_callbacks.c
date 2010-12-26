@@ -90,7 +90,7 @@ void INS_SelectInstallation (installation_t *installation)
 			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 		}
 		INS_SetCurrentSelectedInstallation(installation);
-		UI_PushWindow("popup_installationstatus", NULL);
+		UI_PushWindow("popup_installationstatus", NULL, NULL);
 	}
 }
 

@@ -659,12 +659,12 @@ static void UI_AbstractNodeDoLayout (uiNode_t *node)
 	node->invalidated = qfalse;
 }
 
-static void UI_AbstractNodeInit (uiNode_t *node)
+static void UI_AbstractNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->behaviour->windowOpened) {
-			child->behaviour->windowOpened(child);
+			child->behaviour->windowOpened(child, NULL);
 		}
 	}
 }

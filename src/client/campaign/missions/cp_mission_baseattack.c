@@ -230,7 +230,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	UI_RegisterText(TEXT_POPUP, popupText);
 
 	CL_GameTimeStop();
-	UI_PushWindow("popup_baseattack", NULL);
+	UI_PushWindow("popup_baseattack", NULL, NULL);
 }
 
 

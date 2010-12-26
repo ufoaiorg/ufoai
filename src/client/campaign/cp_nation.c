@@ -555,7 +555,7 @@ static void CP_NationStatsClick_f (void)
 	if (num < 0 || num >= ccs.numNations)
 		return;
 
-	UI_PushWindow("nations", NULL);
+	UI_PushWindow("nations", NULL, NULL);
 	Cbuf_AddText(va("nation_select %i;", num));
 }
 

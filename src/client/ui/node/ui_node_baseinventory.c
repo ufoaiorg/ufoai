@@ -805,7 +805,7 @@ static void UI_BaseInventoryNodeDNDLeave (uiNode_t *node)
 /**
  * @brief Call when we open the window containing the node
  */
-static void UI_BaseInventoryNodeInit (uiNode_t *node)
+static void UI_BaseInventoryNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	/** ATM it should not work with the battlescape cause TU is not computed */
 	assert(!CL_BattlescapeRunning());

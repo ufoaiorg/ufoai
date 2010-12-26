@@ -686,7 +686,7 @@ void UP_OpenEventMail (const char *eventMailID)
 	if (!mail)
 		return;
 
-	UI_PushWindow("mail", NULL);
+	UI_PushWindow("mail", NULL, NULL);
 	UP_Article(NULL, mail);
 }
 
@@ -700,7 +700,7 @@ static void UP_OpenMailWith (const char *techID)
 	if (!techID)
 		return;
 
-	UI_PushWindow("mail", NULL);
+	UI_PushWindow("mail", NULL, NULL);
 	Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
@@ -714,7 +714,7 @@ void UP_OpenWith (const char *techID)
 	if (!techID)
 		return;
 
-	UI_PushWindow("ufopedia", NULL);
+	UI_PushWindow("ufopedia", NULL, NULL);
 	Cbuf_AddText(va("ufopedia %s; update_ufopedia_layout;\n", techID));
 }
 

@@ -361,7 +361,7 @@ static void CL_HudRadarDown_f (void)
 {
 	if (!UI_IsWindowOnStack(mn_hud->string))
 		return;
-	UI_PushWindow("radarmenu", NULL);
+	UI_PushWindow("radarmenu", NULL, NULL);
 }
 
 /**
