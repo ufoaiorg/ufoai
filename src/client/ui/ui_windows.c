@@ -719,39 +719,6 @@ void UI_FinishWindowsInit (void)
 	}
 }
 
-/**
- * @brief This will reinitialize the current visible window
- * @note also available as script command ui_reinit
- * @todo replace that by a common action "call *ufopedia.init"
- */
-static void UI_FireInit_f (void)
-{
-	uiNode_t* window;
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <window>\n", Cmd_Argv(0));
-		return;
-	}
-
-	window = UI_GetNodeByPath(Cmd_Argv(1));
-	if (window == NULL) {
-		Com_Printf("UI_FireInit_f: Node '%s' not found\n", Cmd_Argv(1));
-		return;
-	}
-
-	if (!UI_NodeInstanceOf(window, "window")) {
-		Com_Printf("UI_FireInit_f: Node '%s' is not a 'window'\n", Cmd_Argv(1));
-		return;
-	}
-
-	/* initialize it */
-	if (window) {
-		if (WINDOWEXTRADATACONST(window).onWindowOpened)
-			UI_ExecuteEventActions(window, WINDOWEXTRADATACONST(window).onWindowOpened);
-		Com_DPrintf(DEBUG_CLIENT, "Reinitialize %s\n", window->name);
-	}
-}
-
 static void UI_InitStack_f (void) {
 	const char *mainWindow;
 	const char *optionWindow = NULL;
@@ -809,8 +776,6 @@ void UI_InitWindows (void)
 	ui_sys_active = Cvar_Get("ui_sys_active", "", 0, "The active window we will return to when hitting esc once - also see ui_sys_main");
 
 	/* add command */
-	/** @todo delete me */
-	Cmd_AddCommand("ui_fireinit", UI_FireInit_f, "Call the init function of a window");
 	Cmd_AddCommand("ui_push", UI_PushWindow_f, "Push a window to the window stack");
 	Cmd_AddParamCompleteFunction("ui_push", UI_CompleteWithWindow);
 	Cmd_AddCommand("ui_push_dropdown", UI_PushDropDownWindow_f, "Push a dropdown window at a position");

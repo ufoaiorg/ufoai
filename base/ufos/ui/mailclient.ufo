@@ -90,11 +90,6 @@ window mail
 	}
 	*/
 
-	func onWindowClosed
-	{
-		/** @todo we should remove that call. */
-		cmd "ui_fireinit mailclient;"
-	}
 	func onWindowOpened
 	{
 		*node:root.mail@viewpos = 0
@@ -568,8 +563,19 @@ window mailclient
 		onClick		{ cmd "ui_pop;" }
 	}
 
-	func onWindowOpened
+	func update
 	{
 		cmd "ufopedia_openmail 0;"
+	}
+
+	func onWindowOpened
+	{
+		cmd "ui_addlistener mail@onWindowClosed <path:root>.update"
+		call *node:this.update
+	}
+
+	func onWindowClosed
+	{
+		cmd "ui_removelistener mail@onWindowClosed <path:root>.update"
 	}
 }
