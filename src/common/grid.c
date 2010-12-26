@@ -177,7 +177,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/** @todo has_ladder_climb should return true if
 	 *  1) There is a ladder in the new cell in the specified direction. */
-	const qboolean hasLadderClimb = qfalse; /**< Indicates if there is a ladder present providing ability to climb. */
+	const qboolean hasLadderToClimb = qfalse; /**< Indicates if there is a ladder present providing ability to climb. */
 
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
@@ -420,7 +420,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 			return;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
-		if (dir == DIRECTION_CLIMB_UP && !hasLadderClimb) {
+		if (dir == DIRECTION_CLIMB_UP && !hasLadderToClimb) {
 			return;
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
@@ -431,7 +431,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 			}
 		} else {
 			/* If the actor is not a flyer and tries to move down, there must be a ladder. */
-			if (!hasLadderClimb) {
+			if (!hasLadderToClimb) {
 				return;
 			}
 		}
