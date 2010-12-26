@@ -1415,6 +1415,7 @@ void G_ClientSpawn (player_t * player)
 void G_ClientUserinfoChanged (player_t * player, const char *userinfo)
 {
 	const qboolean alreadyReady = player->isReady;
+	const int oldTeamnum = Info_IntegerForKey(player->pers.userinfo, "cl_teamnum");
 
 	/* check for malformed or illegal info strings */
 	if (!Info_Validate(userinfo))
@@ -1431,7 +1432,7 @@ void G_ClientUserinfoChanged (player_t * player, const char *userinfo)
 	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
 
 	/* try to update to the preferred team */
-	if (!G_MatchIsRunning()) {
+	if (!G_MatchIsRunning() && oldTeamnum != Info_IntegerForKey(userinfo, "cl_teamnum")) {
 		/* if the player is marked as ready he can't change his team */
 		if (!alreadyReady || !player->isReady) {
 			player->pers.team = TEAM_NO_ACTIVE;
