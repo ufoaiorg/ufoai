@@ -825,8 +825,7 @@ static void G_GetTeam (player_t * player)
 	/* number of currently connected players (no ai players) */
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p)))
-		if (p->inuse)
-			playersInGame++;
+		playersInGame++;
 
 	/* randomly assign a teamnumber in deathmatch games */
 	if (playersInGame <= 1 && sv_maxclients->integer > 1 && !sv_teamplay->integer) {
