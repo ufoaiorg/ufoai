@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
+"maxteams" "3"
 // brush 0
 {
 ( 635 447 144 ) ( 639 418 144 ) ( 635 418 144 ) tex_mattn/wood016 30 244 0 0.1 0.1 64512 0 0
@@ -17035,4 +17036,100 @@
 ( 112 -210 146 ) ( 112 -210 147 ) ( 142 -199 147 ) tex_misc/crate001 20 12 0 -0.5 0.25 64512 0 0
 ( 112 -210 147 ) ( 112 -210 146 ) ( 101 -180 146 ) tex_misc/crate001 38 12 0 -0.5 0.25 64512 0 0
 }
+}
+// entity 235
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 688 220"
+}
+// entity 236
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "784 656 220"
+}
+// entity 237
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "688 688 220"
+}
+// entity 238
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "656 656 220"
+}
+// entity 239
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 688 220"
+}
+// entity 240
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "592 656 220"
+}
+// entity 241
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "752 688 220"
+}
+// entity 242
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "720 656 220"
+}
+// entity 243
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "48 -240 156"
+}
+// entity 244
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "208 -208 156"
+}
+// entity 245
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "176 -208 156"
+}
+// entity 246
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "144 -240 156"
+}
+// entity 247
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "176 -240 156"
+}
+// entity 248
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "112 -240 156"
+}
+// entity 249
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "16 -208 156"
+}
+// entity 250
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "16 -240 156"
 }
