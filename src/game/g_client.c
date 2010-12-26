@@ -845,9 +845,20 @@ static void G_GetTeam (player_t * player)
 			gi.Error("G_GetTeam: Not enough spawn spots in map!");
 
 		/* assign random valid team number */
+		i = spawnSpots;
 		randomSpot = rand() % spawnSpots;
-		G_SetTeamForPlayer(player, spawnCheck[randomSpot]);
-		gi.DPrintf("You have been randomly assigned to team %i\n", player->pers.team);
+		for (;;) {
+			const int team = spawnCheck[randomSpot];
+			if (i == 0)
+				gi.Error("G_GetTeam: Could not assign a team!");
+			if (G_SetTeamForPlayer(player, team)) {
+				gi.DPrintf("%s has been randomly assigned to team %i\n",
+						player->pers.netname, G_ClientGetTeamNum(player));
+				break;
+			}
+			i--;
+			randomSpot = (randomSpot + 1) % spawnSpots;
+		}
 		return;
 	}
 
@@ -909,10 +920,30 @@ static void G_GetTeam (player_t * player)
 	}
 }
 
-void G_SetTeamForPlayer (player_t* player, const int team)
+/**
+ * @brief Set the used team for the given player
+ * @param[out] player The player the team should be set for
+ * @param[in] team The team to set for the given player
+ * @return <code>true</code> if the team was set successfully, <code>false</code> otherwise.
+ */
+qboolean G_SetTeamForPlayer (player_t* player, const int team)
 {
 	assert(player);
 	assert(team >= TEAM_NO_ACTIVE && team < MAX_TEAMS);
+
+	if (G_IsAIPlayer(player)) {
+		if (team != TEAM_ALIEN && team != TEAM_CIVILIAN)
+			return qfalse;
+	} else {
+		if (!sv_teamplay->integer) {
+			player_t *p = NULL;
+			while ((p = G_PlayerGetNextHuman(p)) != NULL) {
+				if (p->pers.team == team)
+					return qfalse;
+			}
+		}
+	}
+
 	player->pers.team = team;
 
 	/* if we started in dev mode, we maybe don't have a
@@ -926,6 +957,8 @@ void G_SetTeamForPlayer (player_t* player, const int team)
 
 	if (!G_IsAIPlayer(player))
 		Info_SetValueForKeyAsInteger(player->pers.userinfo, sizeof(player->pers.userinfo), "cl_team", team);
+
+	return qtrue;
 }
 
 /**
