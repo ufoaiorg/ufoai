@@ -164,7 +164,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	int x, y, z;
 	int nx, ny, nz;
 	int dx, dy, dz;
-	byte l, ol;
+	byte len, oldLen;
 	int passageHeight;
 
 	/** @todo flier should return true if the actor can fly. */
@@ -204,9 +204,9 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	z = pos[2];
 
 	RT_AREA_TEST(path, x, y, z, crouchingState);
-	ol = RT_AREA(path, x, y, z, crouchingState);
+	oldLen = RT_AREA(path, x, y, z, crouchingState);
 
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actorSize, dir, crouchingState, ol);
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actorSize, dir, crouchingState, oldLen);
 
 	/* We cannot fly and crouch at the same time. This will also cause an actor to stand to fly. */
 	if (crouchingState && dir >= FLYING_DIRECTIONS) {
@@ -214,8 +214,8 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		return;
 	}
 
-	if (ol >= MAX_MOVELENGTH && ol != ROUTING_NOT_REACHABLE) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Exiting because the TUS needed to move here are already too large. %i %i\n", ol , MAX_MOVELENGTH);
+	if (oldLen >= MAX_MOVELENGTH && oldLen != ROUTING_NOT_REACHABLE) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Exiting because the TUS needed to move here are already too large. %i %i\n", oldLen , MAX_MOVELENGTH);
 		return;
 	}
 
@@ -227,14 +227,14 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 #endif
 
 	/* Find the number of TUs used to move in this direction. */
-	l = Grid_GetTUsForDirection(dir);
+	len = Grid_GetTUsForDirection(dir);
 
 	/* If crouching then multiply by the crouching factor. */
 	if (crouchingState == 1)
-		l *= TU_CROUCH_MOVING_FACTOR;
+		len *= TU_CROUCH_MOVING_FACTOR;
 
 	/* Now add the TUs needed to get to the originating cell. */
-	l += ol;
+	len += oldLen;
 
 	/* If this is a crouching or crouching move, then process that motion. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
@@ -259,16 +259,16 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 		/* Is this a better move into this cell? */
 		RT_AREA_TEST(path, x, y, z, crouchingState);
-		if (RT_AREA(path, x, y, z, crouchingState) <= l) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Toggling crouch is not optimum. %i %i\n", RT_AREA(path, x, y, z, crouchingState), l);
+		if (RT_AREA(path, x, y, z, crouchingState) <= len) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Toggling crouch is not optimum. %i %i\n", RT_AREA(path, x, y, z, crouchingState), len);
 			return;
 		}
 
 		/* Store move. */
 		if (pqueue)
-			Grid_SetMoveData(path, x, y, z, crouchingState, l, dir, x, y, z, crouchingState ^ 1, pqueue);
+			Grid_SetMoveData(path, x, y, z, crouchingState, len, dir, x, y, z, crouchingState ^ 1, pqueue);
 
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i.\n", x, y, z, crouchingState, l);
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i.\n", x, y, z, crouchingState, len);
 		/* We are done, exit now. */
 		return;
 	}
@@ -470,8 +470,8 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST(path, nx, ny, nz, crouchingState);
-	if (RT_AREA(path, nx, ny, nz, crouchingState) <= l) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: This move is not optimum. %i %i\n", RT_AREA(path, nx, ny, nz, crouchingState), l);
+	if (RT_AREA(path, nx, ny, nz, crouchingState) <= len) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: This move is not optimum. %i %i\n", RT_AREA(path, nx, ny, nz, crouchingState), len);
 		return;
 	}
 
@@ -483,9 +483,9 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* Store move. */
 	if (pqueue) {
-		Grid_SetMoveData(path, nx, ny, nz, crouchingState, l, dir, x, y, z, crouchingState, pqueue);
+		Grid_SetMoveData(path, nx, ny, nz, crouchingState, len, dir, x, y, z, crouchingState, pqueue);
 	}
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i\n", nx, ny, nz, crouchingState, l, RT_FLOOR(map, actorSize, x, y, z));
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i\n", nx, ny, nz, crouchingState, len, RT_FLOOR(map, actorSize, x, y, z));
 }
 
 
