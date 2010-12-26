@@ -101,7 +101,6 @@ void UI_MoveWindowOnTop (uiNode_t * window)
 /**
  * @brief Remove the window from the window stack
  * @param[in] window The window to remove from the stack
- * @sa UI_PushWindowDelete
  * @todo Why dont we call onClose?
  */
 static void UI_DeleteWindowFromStack (uiNode_t *window)
@@ -161,11 +160,10 @@ static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
 /**
  * @brief Push a window onto the window stack
  * @param[in] name Name of the window to push onto window stack
- * @param[in] parent Window name to link as parent-child (else NULL)
- * @param[in] deleteFromStack Delete the window from the window stack before adding it again
+ * @param[in] parentName Window name to link as parent-child (else NULL)
  * @return pointer to uiNode_t
  */
-static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboolean deleteFromStack)
+uiNode_t* UI_PushWindow (const char *name, const char *parentName)
 {
 	uiNode_t *window;
 
@@ -177,15 +175,13 @@ static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboo
 		return NULL;
 	}
 
-	/* found the correct add it to stack or bring it on top */
-	if (deleteFromStack)
-		UI_DeleteWindowFromStack(window);
+	UI_DeleteWindowFromStack(window);
 
 	if (ui_global.windowStackPos < UI_MAX_WINDOWSTACK)
-		if (parent) {
-			const int parentPos = UI_GetWindowPositionFromStackByName(parent);
+		if (parentName) {
+			const int parentPos = UI_GetWindowPositionFromStackByName(parentName);
 			if (parentPos == -1) {
-				Com_Printf("Didn't find parent window \"%s\" for window push of \"%s\"\n", parent, name);
+				Com_Printf("Didn't find parent window \"%s\" for window push of \"%s\"\n", parentName, name);
 				return NULL;
 			}
 			UI_InsertWindowIntoStack(window, parentPos + 1);
@@ -237,17 +233,6 @@ int UI_CompleteWithWindow (const char *partial, const char **match)
 		}
 
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
-}
-
-/**
- * @brief Push a window onto the window stack
- * @param[in] name Name of the window to push onto window stack
- * @param[in] parentName Window name to link as parent-child (else NULL)
- * @return pointer to uiNode_t
- */
-uiNode_t* UI_PushWindow (const char *name, const char *parentName)
-{
-	return UI_PushWindowDelete(name, parentName, qtrue);
 }
 
 /**
