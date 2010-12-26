@@ -88,30 +88,6 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 	if (container->single && inv->c[container->id] && inv->c[container->id]->next)
 		return NULL;
 
-	/**
-	 * What we are doing here.
-	 * invList_t array looks like that: [u]->next = [w]; [w]->next = [x]; [...]; [z]->next = NULL.
-	 * i->c[container->id] as well as ic are such invList_t.
-	 * Now we want to add new item to this container and that means, we need to create some [t]
-	 * and make sure, that [t]->next points to [u] (so the [t] will be the first in array).
-	 * ic = i->c[container->id];
-	 * So, we are storing old value of i->c[container->id] in ic to remember what was in the original
-	 * container. If the i->c[container->id]->next pointed to [abc], the ic->next will also point to [abc].
-	 * The ic is our [u] and [u]->next still points to our [w].
-	 * i->c[container->id] = invUnused;
-	 * Now we are creating new container - the "original" i->c[container->id] is being set to empty invUnused.
-	 * This is our [t].
-	 * invUnused = invUnused->next;
-	 * Now we need to make sure, that our [t] will point to next free slot in our inventory. Remember, that
-	 * invUnused was empty before, so invUnused->next will point to next free slot.
-	 * i->c[container->id]->next = ic;
-	 * We assigned our [t]->next to [u] here. Thanks to that we still have the correct ->next chain in our
-	 * inventory list.
-	 * ic = i->c[container->id];
-	 * And now ic will be our [t], that is the newly added container.
-	 * After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
-	 */
-
 	/* idEquip and idFloor */
 	if (container->temp) {
 		for (ic = inv->c[container->id]; ic; ic = ic->next)
