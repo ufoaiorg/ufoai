@@ -663,19 +663,6 @@ void UI_InsertWindow (uiNode_t* window)
 }
 
 /**
- * @brief Console command for moving a window
- */
-static void UI_SetNewWindowPos_f (void)
-{
-	uiNode_t* window = UI_GetActiveWindow();
-
-	if (Cmd_Argc() < 3)
-		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
-
-	UI_SetNewWindowPos(window, atoi(Cmd_Argv(1)), atoi(Cmd_Argv(2)));
-}
-
-/**
  * @brief Finish windows initialization
  * @note private function
  */
@@ -752,8 +739,6 @@ void UI_InitWindows (void)
 	Cmd_AddCommand("ui_push_child", UI_PushChildWindow_f, "Push a window to the windowstack with a big dependency to a parent window");
 	Cmd_AddCommand("ui_pop", UI_PopWindow_f, "Pops the current window from the stack");
 	Cmd_AddCommand("ui_close", UI_CloseWindow_f, "Close a window");
-	/** @todo remove it, it should be useless */
-	Cmd_AddCommand("ui_move", UI_SetNewWindowPos_f, "Moves the window to a new position.");
 	Cmd_AddCommand("ui_initstack", UI_InitStack_f, "Initialize the window stack with a main and an option window.");
 
 	Cmd_AddCommand("ui_tree", UI_DebugTree_f, "Display a tree of nodes from a window into the console.");
