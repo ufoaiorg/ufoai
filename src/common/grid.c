@@ -195,7 +195,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* IMPORTANT: only fliers can use directions higher than NON_FLYING_DIRECTIONS. */
 	if (!flier && dir >= FLYING_DIRECTIONS) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Non-fliers can't fly.\n");
 		return;
 	}
 
@@ -210,7 +209,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* We cannot fly and crouch at the same time. This will also cause an actor to stand to fly. */
 	if (crouchingState && dir >= FLYING_DIRECTIONS) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fly while crouching.\n");
 		return;
 	}
 
@@ -218,13 +216,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Exiting because the TUS needed to move here are already too large. %i %i\n", oldLen , MAX_MOVELENGTH);
 		return;
 	}
-
-#ifdef PARANOID
-	if (z >= PATHFINDING_HEIGHT) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, PATHFINDING_HEIGHT);
-		return;
-	}
-#endif
 
 	/* Find the number of TUs used to move in this direction. */
 	len = Grid_GetTUsForDirection(dir);
@@ -240,17 +231,14 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
 		/* Can't stand up if standing. */
 		if (dir == DIRECTION_STAND_UP && crouchingState == 0) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't stand while standing.\n");
 			return;
 		}
 		/* Can't stand up if there's not enough head room. */
 		if (dir == DIRECTION_STAND_UP && QuantToModel(Grid_Height(map, actorSize, pos)) >= PLAYER_STANDING_HEIGHT) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't stand under a short ceiling.\n");
 			return;
 		}
 		/* Can't get down if crouching. */
 		if (dir == DIRECTION_CROUCH && crouchingState == 1) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't crouch while crouching.\n");
 			return;
 		}
 
@@ -315,7 +303,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 			passageHeight = RT_CONN(map, actorSize, x, y, z, coreDir);
 		}
 		if (passageHeight < neededHeight) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passageHeight, actorHeight);
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
@@ -418,7 +405,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	else if (dir == DIRECTION_FALL) {
 		if (flier) {
 			/* Fliers cannot fall intentionally. */
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Fliers can't fall.\n");
 			return;
 		} else if (RT_FLOOR(map, actorSize, x, y, z) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
@@ -426,7 +412,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 			return;
 		} else if (hasLadderSupport) {
 			/* The actor can't fall if there is ladder support. */
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall because of ladder.\n");
 			return;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
@@ -436,7 +421,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
 		if (dir == DIRECTION_CLIMB_UP && !hasLadderClimb) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't climb up without a ladder.\n");
 			return;
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
@@ -448,7 +432,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		} else {
 			/* If the actor is not a flyer and tries to move down, there must be a ladder. */
 			if (!hasLadderClimb) {
-				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't climb down without a ladder.\n");
 				return;
 			}
 		}
