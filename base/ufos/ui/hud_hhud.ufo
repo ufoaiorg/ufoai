@@ -123,7 +123,7 @@ window hhud extends hud
 			pos				"246 19"
 			size			"64 64"
 			invis			false
-			onClick			{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud.right.bt_pfire LAYOUTALIGN_TOPLEFT;toggle_fm_btn_r_on;" }
+			onClick			{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;toggle_fm_btn_r_on;" }
 			excluderect		{ 	pos	"49 0"	size	"15 64" }
 			excluderect		{ 	pos	"0 41"	size	"49 23" }
 		}
@@ -132,7 +132,7 @@ window hhud extends hud
 			pos				"246 19"
 			size			"64 64"
 			invis			true
-			onClick			{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud.right.bt_pfire LAYOUTALIGN_TOPLEFT;toggle_fm_btn_r_off" }
+			onClick			{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;toggle_fm_btn_r_off" }
 			excluderect		{ 	pos	"49 0"	size	"15 64" }
 			excluderect		{ 	pos	"0 41"	size	"49 23" }
 		}
@@ -150,14 +150,14 @@ window hhud extends hud
 			pos				"730 19"
 			size			"64 64"
 			invis			false
-			onClick			{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMLEFT hud.left.bt_pfire LAYOUTALIGN_TOPRIGHT;toggle_fm_btn_l_on;" }
+			onClick			{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.left.bt_pfire LAYOUTALIGN_TOPRIGHT;toggle_fm_btn_l_on;" }
 		}
 		image fm_btn_l_on {
 			src				"hhud/fm_btn_l_on"
 			pos				"730 19"
 			size			"64 64"
 			invis			true
-			onClick			{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMLEFT hud.left.bt_pfire LAYOUTALIGN_TOPRIGHT;toggle_fm_btn_l_off;" }
+			onClick			{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.left.bt_pfire LAYOUTALIGN_TOPRIGHT;toggle_fm_btn_l_off;" }
 		}
 		image reload_btn_l {
 			src				"hhud/reload_btn_l"
