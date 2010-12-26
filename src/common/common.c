@@ -1351,7 +1351,7 @@ void CL_FilterEventQueue (event_filter *filter)
 void Qcommon_Frame (void)
 {
 	int time_to_next;
-	struct event *event;
+	static struct event *event;
 
 	/* an ERR_DROP was thrown */
 	if (setjmp(abortframe))
