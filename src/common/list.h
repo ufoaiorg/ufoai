@@ -9,14 +9,12 @@ typedef struct linkedList_s {
 	qboolean ptr;	/**< don't call Mem_Free for data if this is @c true */
 } linkedList_t;
 
-/** @brief Assign the next variable from the linked list or @c NULL if the list end is reached */
-#define ASSIGN_VAR(l, type, var) ((var) = (((l) != NULL) ? (type*)(l)->data : NULL))
-/** @brief check whether the next data pointer from the linked list is @c NULL or not, if it is @c NULL the end of the list is reached */
-#define CHECK_LIST(l, type, var) ((((l) = (((ASSIGN_VAR(l, type, (var))) != NULL) ? (l)->next : NULL)) != NULL) || var != NULL)
-/** @brief Iterates over a linked list, it's safe to delete the returned entry from the list while looping over it
- * @note Nesting these loop iterators can cause problems, because the local variable @c l is shadowed
- * @note Don't try to use the internal loop variable @c l. This variable is most likely not at the position you would expect it to be */
-#define LIST_Foreach(list, type, var) for (linkedList_t *l = (list); CHECK_LIST(l, type, (var));)
+/** @brief Iterates over a linked list, it's safe to delete the returned entry from the list while looping over it.
+ * @note @c var must be a simple variable name, because it is also used to create the name of the internal iterator variable.
+ * @note Don't try to use the internal loop variable. This variable is most likely not at the position you would expect it to be. */
+#define LIST_Foreach(list, type, var) \
+	for (linkedList_t *var##__iter = (list); var##__iter;) \
+		if (var = (type*)var##__iter->data, var##__iter = var##__iter->next, 0) {} else
 
 void LIST_AddString(linkedList_t** list, const char* data);
 void LIST_AddStringSorted(linkedList_t** listDest, const char* data);
