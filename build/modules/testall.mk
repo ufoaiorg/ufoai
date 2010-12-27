@@ -17,6 +17,7 @@ $(TARGET)_SRCS      = \
 	tests/test_generic.c \
 	tests/test_inventory.c \
 	tests/test_game.c \
+	tests/test_mapdef.c \
 	tests/test_rma.c \
 	tests/test_shared.c \
 	tests/test_ui.c \

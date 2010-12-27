@@ -1192,6 +1192,9 @@
 		<Unit filename="..\..\src\tests\test_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tests\test_mapdef.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_campaign.h" />
 		<Unit filename="..\..\src\tests\test_game.c">
 			<Option compilerVar="CC" />
