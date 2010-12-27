@@ -183,7 +183,7 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 	SV_SetConfigString(CS_OBJECTAMOUNT, csi.numODs);
 	SV_SetConfigString(CS_VERSION, UFO_VERSION);
 	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(randomMap, levelstring));
-	if (!strncmp(SV_GetConfigString(CS_MAPTITLE), "b/", 2)) {
+	if (Q_strstart(SV_GetConfigString(CS_MAPTITLE), "b/")) {
 		/* For base attack, CS_MAPTITLE contains too many chars */
 		SV_SetConfigString(CS_MAPTITLE, "Base attack");
 		SV_SetConfigString(CS_NAME, ".baseattack");
