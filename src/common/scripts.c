@@ -1530,7 +1530,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 			}
 
 		if (!fdp->string) {
-			if (!strncmp(token, "skill", 5)) {
+			if (!strcmp(token, "skill")) {
 				int skill;
 
 				token = Com_EParse(text, errhead, name);
@@ -1544,12 +1544,12 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 					}
 				if (skill >= SKILL_NUM_TYPES)
 					Com_Printf("Com_ParseFire: unknown weapon skill \"%s\" ignored (weapon %s)\n", token, name);
-			} else if (!strncmp(token, "range", 5)) {
+			} else if (!strcmp(token, "range")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				fd->range = atof(token) * UNIT_SIZE;
-			} else if (!strncmp(token, "splrad", 6)) {
+			} else if (!strcmp(token, "splrad")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
