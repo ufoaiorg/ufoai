@@ -1381,7 +1381,7 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 		if (token[0] == '\0')
 			return NULL;
 
-		if (!strncmp(token, "binding:", 8)) {
+		if (Q_strstart(token, "binding:")) {
 			/* skip prefix */
 			token = token + 8;
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME));
@@ -1432,7 +1432,7 @@ float UI_GetReferenceFloat (const uiNode_t* const node, const void *ref)
 		if (token[0] == '\0')
 			return 0.0;
 
-		if (!strncmp(token, "cvar:", 5)) {
+		if (Q_strstart(token, "cvar:")) {
 			/* get the cvar value */
 			return Cvar_GetValue(token + 5);
 		} else {

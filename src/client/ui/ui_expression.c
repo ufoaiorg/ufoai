@@ -579,7 +579,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 	}
 
 	/* it is a cvarname */
-	if (!strncmp(token, "*cvar:", 6)) {
+	if (Q_strstart(token, "*cvar:")) {
 		const char* cvarName = token + 6;
 		expression->d.terminal.d1.constString = UI_AllocStaticString(cvarName, 0);
 		if (UI_IsInjectedString(cvarName))
@@ -591,7 +591,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 
 	/* it is a node property or it is a OLD syntax node property */
 	/** @todo We MUST remove the OLD code as fast as possible */
-	if (!strncmp(token, "*node:", 6) || !strncmp(token, "*", 1)) {
+	if (Q_strstart(token, "*node:") || Q_strstart(token, "*")) {
 		const char* path = token + 1;
 		const char *propertyName;
 		qboolean relativeToNode;
@@ -599,7 +599,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 		const value_t *property;
 #endif
 
-		relativeToNode = !strncmp(path, "node:", 5);
+		relativeToNode = Q_strstart(path, "node:");
 		if (relativeToNode)
 			path = path + 5;
 
