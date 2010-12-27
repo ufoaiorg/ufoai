@@ -182,7 +182,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t const *ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
-		if (strncmp(ed->name, "alien", 5) && strncmp(ed->name, "phalanx", 7))
+		if (!Q_strstart(ed->name, "alien") && !Q_strstart(ed->name, "phalanx"))
 			continue;
 
 		/* Check primary */
