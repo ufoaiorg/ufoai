@@ -329,7 +329,7 @@ void BuildLights (void)
 		const char *target;
 		const entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
-		if (strncmp(name, "light", 5))
+		if (Q_strstart(name, "light"))
 			continue;
 
 		/* remove those lights that are only for the night version */
