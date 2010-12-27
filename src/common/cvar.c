@@ -907,7 +907,7 @@ void Cvar_ClearVars (int flags)
 	cvar_t *var;
 
 	for (var = cvarVars; var; var = var->next) {
-		if ((var->flags & flags) && var->modified)
+		if (var->flags & flags)
 			var->modified = qfalse;
 	}
 }
