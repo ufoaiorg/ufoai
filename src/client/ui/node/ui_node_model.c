@@ -224,7 +224,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 				animState_t *as = &model->animState;
 				const char *anim = R_AnimGetName(as, mi->model);
 				/* initial animation or animation change */
-				if (!anim || (anim && strncmp(anim, ref, MAX_VAR)))
+				if (anim == NULL || strcmp(anim, ref))
 					R_AnimChange(as, mi->model, ref);
 				else
 					R_AnimRun(as, mi->model, cls.frametime * 1000);
