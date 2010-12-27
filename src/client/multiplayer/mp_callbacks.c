@@ -208,7 +208,7 @@ static void CL_TeamNum_f (void)
 		i = TEAM_DEFAULT;
 	}
 
-	if (strncmp(Cmd_Argv(0), "teamnum_dec", 11)) {
+	if (strcmp(Cmd_Argv(0), "teamnum_dec")) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
 			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
