@@ -429,14 +429,6 @@ static void SAV_GameReadGameComment (const int idx)
 static void SAV_GameReadGameComments_f (void)
 {
 	if (Cmd_Argc() == 2) {
-		/* checks whether we plan to save without a running game */
-		if (!CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
-			UI_PopWindow(qfalse);
-			return;
-		}
-	}
-
-	if (Cmd_Argc() == 2) {
 		int idx = atoi(Cmd_Argv(1));
 		SAV_GameReadGameComment(idx);
 	} else {
