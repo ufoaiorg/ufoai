@@ -24,10 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "stdlib.h"
 #include "stdio.h"
-#include "CUnit/Basic.h"
-#include "CUnit/Automated.h"
-#include "CUnit/Console.h"
-#include "CUnit/TestDB.h"
+#include <CUnit/Basic.h>
+#include <CUnit/Automated.h>
+#include <CUnit/Console.h>
+#include <CUnit/TestDB.h>
 
 #include "test_shared.h"
 
