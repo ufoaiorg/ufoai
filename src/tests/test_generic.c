@@ -217,11 +217,6 @@ static void testLinkedListStringSort (void)
 	LIST_Delete(&list);
 }
 
-static qboolean testLinkedListCheckIteratorCheckCallback (void *data, const void *userdata)
-{
-	return !strcmp((const char *)data, "test1") || !strcmp((const char *)data, "test3") || !strcmp((const char *)data, "test7");
-}
-
 static void testFileSystemBuildLists (void)
 {
 	const char *filename, *prev;
