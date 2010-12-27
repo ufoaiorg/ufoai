@@ -46,7 +46,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes);
  */
 static qboolean Check_IsInfoStart(const char *classname)
 {
-	return !strncmp(classname, "info_", 5) && strstr(classname, "_start");
+	return Q_strstart(classname, "info_") && strstr(classname, "_start");
 }
 
 /**
@@ -132,7 +132,7 @@ void CheckEntities (void)
 		if (Check_IsInfoStart(name) && !Check_InfoStartAligned(ed, e))
 			Check_Printf(VERB_CHECK, qfalse, i, -1, "Misaligned %s\n", name);
 
-		if (!strncmp("func_", name, 5)) /* func_* entities should have brushes */
+		if (Q_strstart(name, "func_")) /* func_* entities should have brushes */
 			Check_EntityWithBrushes(e, name, i);
 
 		/* check all keys in the entity - make sure they are OK */
