@@ -329,31 +329,37 @@ while [ $# -gt 0 ]; do
 		STATIC=1
 		;;
 	--disable-static)
+		STATIC=
 		;;
 	--enable-universal)
 		UNIVERSAL=1
 		;;
 	--disable-universal)
+		UNIVERSAL=
 		;;
 	--enable-hardlinkedgame)
 		HARD_LINKED_GAME=1
 		;;
 	--disable-hardlinkedgame)
+		HARD_LINKED_GAME=
 		;;
 	--enable-paranoid)
 		PARANOID=1
 		;;
 	--disable-paranoid)
+		PARANOID=
 		;;
 	--enable-profiling)
 		PROFILING=1
 		;;
 	--disable-profiling)
+		PROFILING=
 		;;
 	--enable-w2k)
 		W2K=1
 		;;
 	--disable-w2k)
+		W2K=
 		;;
 	--enable-sse)
 		if [ -z "$(echo ${TARGET_ARCH} | grep -e '^i.86$' -e '^x86_64$')" ] ;then
@@ -363,13 +369,16 @@ while [ $# -gt 0 ]; do
 		SSE=1
 		;;
 	--disable-sse)
+		SSE=0
 		;;
 	--enable-signals)
+		USE_SIGNALS=1
 		;;
 	--disable-signals)
 		USE_SIGNALS=
 		;;
 	--enable-execinfo)
+		HAVE_EXECINFO_H=yes
 		;;
 	--disable-execinfo)
 		HAVE_EXECINFO_H=no
