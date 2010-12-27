@@ -503,3 +503,12 @@ const char *Q_stristr (const char *str, const char *substr)
 		str = NULL;
 	return str;
 }
+
+qboolean Q_strstart (char const *str, char const *start)
+{
+	for (; *start != '\0'; ++str, ++start) {
+		if (*str != *start)
+			return qfalse;
+	}
+	return qtrue;
+}

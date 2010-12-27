@@ -137,6 +137,9 @@ void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull))
 char *Q_strlwr(char *str) __attribute__((nonnull));
 const char *Q_stristr(const char *str, const char *substr) __attribute__((nonnull));
 
+/** Returns whether start is a prefix of str. */
+qboolean Q_strstart(char const *str, char const *start) __attribute__((nonnull));
+
 void Com_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
 void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
