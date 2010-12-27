@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_nodes.h"
 #include "ui/ui_popup.h"
 #include "multiplayer/mp_chatmessages.h"
+#include "battlescape/cl_hud.h"
 
 #ifdef _WIN32
 #	include <winerror.h>
@@ -969,7 +970,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
-				if (strcmp(UI_GetActiveWindowName(), "irc") && strcmp(UI_GetActiveWindowName(), mn_hud->string)) {
+				if (strcmp(UI_GetActiveWindowName(), "irc") && strcmp(UI_GetActiveWindowName(), cl_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
 					UI_PushWindow("chat_popup", NULL, NULL);
 				}

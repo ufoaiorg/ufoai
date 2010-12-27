@@ -2123,7 +2123,7 @@ window options
 		selectbox select_hud
 		{
 			tooltip		"_Available HUD for the battlescape mode."
-			cvar		*cvar:mn_hud
+			cvar		*cvar:cl_hud
 			pos			"343 440"
 			size		"155 20"
 		}

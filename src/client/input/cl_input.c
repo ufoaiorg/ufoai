@@ -43,11 +43,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_keys.h"
 #include "cl_joystick.h"
 #include "../battlescape/cl_localentity.h"
+#include "../battlescape/cl_hud.h"
 #include "../cl_console.h"
 #include "../battlescape/cl_actor.h"
 #include "../battlescape/cl_view.h"
 #include "../battlescape/cl_parse.h"
-#include "../battlescape/cl_hud.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_input.h"
 #include "../ui/node/ui_node_abstractnode.h"
@@ -359,7 +359,7 @@ static void CL_TurnUp_f (void)
  */
 static void CL_HudRadarDown_f (void)
 {
-	if (!UI_IsWindowOnStack(mn_hud->string))
+	if (!CL_BattlescapeRunning())
 		return;
 	UI_PushWindow("radarmenu", NULL, NULL);
 }
@@ -369,7 +369,7 @@ static void CL_HudRadarDown_f (void)
  */
 static void CL_HudRadarUp_f (void)
 {
-	if (!UI_IsWindowOnStack(mn_hud->string))
+	if (!CL_BattlescapeRunning())
 		return;
 	UI_CloseWindow("radarmenu");
 }

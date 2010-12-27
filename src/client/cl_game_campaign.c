@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cp_mission_triggers.h"
 #include "campaign/cp_team.h"
 #include "campaign/cp_map.h"
+#include "battlescape/cl_hud.h"
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
 #include "ui/node/ui_node_model.h"
@@ -387,7 +388,8 @@ qboolean GAME_CP_Spawn (void)
 	CL_CleanTempInventory(base);
 
 	/* activate hud */
-	UI_InitStack(mn_hud->string, NULL, qfalse, qtrue);
+	/** @todo check cl_hud here */
+	UI_InitStack(cl_hud->string, NULL, qfalse, qtrue);
 
 	return qtrue;
 }

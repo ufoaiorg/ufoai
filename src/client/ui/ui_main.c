@@ -32,9 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 
-/** @todo client code should manage itself this vars (do not use ui_ prefix) */
-cvar_t *mn_hud;
-
 uiGlobal_t ui_global;
 
 struct memPool_s *ui_dynStringPool;
@@ -253,34 +250,6 @@ void UI_FinishInit (void)
 	UI_FinishWindowsInit();
 }
 
-/**
- * @brief Checks that the given cvar is a valid hud cvar
- * @param cvar The cvar to check and to modify if the value is invalid
- * @return @c true if the valid is invalid, @c false otherwise
- */
-static qboolean UI_CvarCheckMNHud (cvar_t *cvar)
-{
-	uiNode_t *window = UI_GetWindow(cvar->string);
-	if (window == NULL) {
-		Cvar_Reset(cvar);
-		return qtrue;
-	}
-
-	if (window->super == NULL) {
-		Cvar_Reset(cvar);
-		return qtrue;
-	}
-
-	/**
-	 * @todo check for multiple base classes
-	 */
-	if (strcmp(window->super->name, "hud")) {
-		Cvar_Reset(cvar);
-		return qtrue;
-	}
-	return qfalse;
-}
-
 void UI_Init (void)
 {
 #ifdef DEBUG
@@ -289,19 +258,6 @@ void UI_Init (void)
 
 	/* reset global UI structures */
 	memset(&ui_global, 0, sizeof(ui_global));
-
-	/** @todo move it in cl_hud INIT */
-	mn_hud = Cvar_Get("mn_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected HUD");
-	Cvar_SetCheckFunction("mn_hud", UI_CvarCheckMNHud);
-
-	/** @todo Compatibility hack; remove it for the 2.4 release */
-	if (!strcmp(mn_hud->string, "hud")) {
-		Cvar_Set("mn_hud", "hud_default");
-	} else if (!strcmp(mn_hud->string, "althud")) {
-		Cvar_Set("mn_hud", "hud_alt");
-	} else if (!strcmp(mn_hud->string, "hhud")) {
-		Cvar_Set("mn_hud", "hud_hhud");
-	}
 
 	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 

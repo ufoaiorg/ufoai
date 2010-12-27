@@ -46,6 +46,7 @@ static qboolean visibleFiremodeListRight = qfalse;
 static cvar_t *cl_hud_message_timeout;
 static cvar_t *cl_show_cursor_tooltips;
 cvar_t *cl_worldlevel;
+cvar_t *cl_hud;
 
 enum {
 	REMAINING_TU_RELOAD_RIGHT,
@@ -118,7 +119,7 @@ static char hudText[256];
 void HUD_DisplayMessage (const char *text)
 {
 	assert(text);
-	UI_DisplayNotice(text, cl_hud_message_timeout->integer, mn_hud->string);
+	UI_DisplayNotice(text, cl_hud_message_timeout->integer, cl_hud->string);
 }
 
 /**
@@ -1435,6 +1436,34 @@ static qboolean CL_CvarWorldLevel (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 0, maxLevel, qtrue);
 }
 
+/**
+ * @brief Checks that the given cvar is a valid hud cvar
+ * @param cvar The cvar to check and to modify if the value is invalid
+ * @return @c true if the valid is invalid, @c false otherwise
+ */
+static qboolean HUD_CvarCheckMNHud (cvar_t *cvar)
+{
+	uiNode_t *window = UI_GetWindow(cvar->string);
+	if (window == NULL) {
+		Cvar_Reset(cvar);
+		return qtrue;
+	}
+
+	if (window->super == NULL) {
+		Cvar_Reset(cvar);
+		return qtrue;
+	}
+
+	/**
+	 * @todo check for multiple base classes
+	 */
+	if (strcmp(window->super->name, "hud")) {
+		Cvar_Reset(cvar);
+		return qtrue;
+	}
+	return qfalse;
+}
+
 void HUD_InitStartup (void)
 {
 	HUD_InitCallbacks();
@@ -1446,6 +1475,9 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, _("Update cvars from actor from list"));
+
+	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD");
+	Cvar_SetCheckFunction("cl_hud", HUD_CvarCheckMNHud);
 
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
 	Cvar_SetCheckFunction("cl_worldlevel", CL_CvarWorldLevel);

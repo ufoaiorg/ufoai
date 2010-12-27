@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_game.h"
 #include "battlescape/cl_localentity.h"
+#include "battlescape/cl_hud.h"
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
 #include "cl_team.h"
@@ -155,7 +156,8 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 	if (list != NULL && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {
-		UI_InitStack(mn_hud->string, NULL, qtrue, qtrue);
+		/** @todo check cl_hud here */
+		UI_InitStack(cl_hud->string, NULL, qtrue, qtrue);
 	}
 	if (list != NULL)
 		Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));

@@ -28,10 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_data.h"
 #include "ui_windows.h"
 
-/** @todo client code should manage itself this vars */
-struct cvar_s;
-extern struct cvar_s *mn_hud;
-
 /* initialization */
 void UI_Init(void);
 void UI_Shutdown(void);
