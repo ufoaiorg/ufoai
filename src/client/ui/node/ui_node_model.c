@@ -57,11 +57,10 @@ static const uiBehaviour_t const *localBehaviour;
 uiModel_t *UI_GetUIModel (const char *modelName)
 {
 	int i;
-	uiModel_t *m;
 
 	for (i = 0; i < ui_global.numModels; i++) {
-		m = &ui_global.models[i];
-		if (!strncmp(m->id, modelName, MAX_VAR))
+		uiModel_t *m = &ui_global.models[i];
+		if (!strcmp(m->id, modelName))
 			return m;
 	}
 	return NULL;
