@@ -140,7 +140,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	outMesh->num_verts = md2Verts;
 
 	if (mod->alias.num_meshes == 1) {
-		if (R_UseActorSkin() && !strncmp(outMesh->name, actorModelPrefix, sizeof(actorModelPrefix) - 1)) {
+		if (R_UseActorSkin() && Q_strstart(outMesh->name, actorModelPrefix)) {
 			image_t *defaultSkin;
 			md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 			defaultSkin = R_AliasModelGetSkin(mod->name, md2Path);
