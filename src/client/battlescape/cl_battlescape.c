@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_battlescape.h"
 #include "cl_actor.h"
 
-client_state_t cl;
+clientBattleScape_t cl;
 
 /**
  * @brief Check whether we already have actors spawned on the battlefield

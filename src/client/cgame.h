@@ -68,7 +68,7 @@ typedef struct cgame_export_s {
 typedef struct cgame_import_s {
 	csi_t *csi;
 	client_static_t *cls;
-	client_state_t *cl;
+	clientBattleScape_t *cl;
 
 	/* UI functions */
 	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));

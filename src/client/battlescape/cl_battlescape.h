@@ -35,7 +35,7 @@ typedef struct {
  * @note the client_state_t structure is wiped completely at every server map change
  * @sa client_static_t
  */
-typedef struct client_state_s {
+typedef struct clientBattleScape_s {
 	int time;					/**< this is the time value that the client
 								 * is rendering at.  always <= cls.realtime */
 	camera_t cam;
@@ -81,9 +81,9 @@ typedef struct client_state_s {
 	mapTiles_t *mapTiles;
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
-} client_state_t;
+} clientBattleScape_t;
 
-extern client_state_t cl;
+extern clientBattleScape_t cl;
 
 qboolean CL_OnBattlescape(void);
 qboolean CL_BattlescapeRunning(void);
