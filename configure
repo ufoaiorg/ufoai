@@ -318,12 +318,15 @@ while [ $# -gt 0 ]; do
 		USE_CCACHE="yes"
 		;;
 	--disable-ccache)
+		USE_CCACHE="no"
 		;;
 	--enable-release)
 		MODE=release
 		DEBUG=
 		;;
 	--disable-release)
+		MODE=debug
+		DEBUG=1
 		;;
 	--enable-static)
 		STATIC=1
