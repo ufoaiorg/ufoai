@@ -364,7 +364,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	}
 
 	/* remote command from gui front end */
-	if (!strncmp(c, "cmd", 3)) {
+	if (Q_strstart(c, "cmd")) {
 		if (!NET_StreamIsLoopback(cls.netStream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
@@ -378,25 +378,25 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	}
 
 	/* teaminfo command */
-	if (!strncmp(c, "teaminfo", 8)) {
+	if (Q_strstart(c, "teaminfo")) {
 		CL_ParseTeamInfoMessage(msg);
 		return;
 	}
 
 	/* ping from server */
-	if (!strncmp(c, "ping", 4)) {
+	if (Q_strstart(c, "ping")) {
 		NET_OOB_Printf(cls.netStream, "ack");
 		return;
 	}
 
 	/* echo request from server */
-	if (!strncmp(c, "echo", 4)) {
+	if (Q_strstart(c, "echo")) {
 		NET_OOB_Printf(cls.netStream, "%s", Cmd_Argv(1));
 		return;
 	}
 
 	/* print */
-	if (!strncmp(c, "print", 5)) {
+	if (Q_strstart(c, "print")) {
 		char str[1024];
 		NET_ReadString(msg, str, sizeof(str));
 		/* special reject messages needs proper handling */
