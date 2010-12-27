@@ -156,21 +156,21 @@ static void Test_Parameters (const int argc, const char **argv)
 			config.console = qtrue;
 		} else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--automated")) {
 			config.automated = qtrue;
-		} else if (!strncmp(argv[i], "--disable-", 10)) {
+		} else if (Q_strstart(argv[i], "--disable-")) {
 			const char *name = argv[i] + 10;
 			if (Test_RemoveSuite(name) != 0) {
 				printf("Suite \"%s\" unknown\n", name);
 				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
 			}
-		} else if (!strncmp(argv[i], "--only-", 7)) {
+		} else if (Q_strstart(argv[i], "--only-")) {
 			const char *name = argv[i] + 7;
 			if (Test_RemoveAllSuitesExcept(name) != 0) {
 				printf("Suite \"%s\" unknown\n", name);
 				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
 			}
-		} else if (!strncmp(argv[i], "--output-prefix=", 16)) {
+		} else if (Q_strstart(argv[i], "--output-prefix=")) {
 			resultPrefix = argv[i] + 16;
 		} else if (!strcmp(argv[i], "-l") || !strcmp(argv[i], "--list")) {
 			Test_List();

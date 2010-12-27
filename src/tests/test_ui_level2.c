@@ -100,7 +100,7 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 		if (node->invis)
 			continue;
 		/* skip nodes without "test" prefix */
-		if (strncmp(node->name, "test", 4) != 0)
+		if (!Q_strstart(node->name, "test") != 0)
 			continue;
 
 		isGreen = node->color[0] < 0.1 && node->color[1] > 0.9 && node->color[2] < 0.1;
