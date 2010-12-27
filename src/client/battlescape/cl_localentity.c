@@ -397,7 +397,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 			akimbo = qtrue;
 	}
 
-	if (!strncmp(anim, "stand", 5) || !strncmp(anim, "walk", 4)) {
+	if (Q_strstart(anim, "stand") || Q_strstart(anim, "walk")) {
 		Q_strncpyz(mod, anim, length);
 		mod += strlen(anim);
 		*mod++ = animationIndex;
