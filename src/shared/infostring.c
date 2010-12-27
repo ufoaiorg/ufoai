@@ -163,7 +163,7 @@ void Info_SetValueForKeyAsInteger (char *s, const size_t size, const char *key, 
 /**
  * @brief Adds a new entry into string with given value.
  * @note Removed any old version of the key
- * @param[out] s The target info string
+ * @param[in,out] s The target info string
  * @param[in] size The size of @c s
  * @param[in] key The key to set
  * @param[in] value The value to set for the given key
@@ -203,9 +203,7 @@ void Info_SetValueForKey (char *s, const size_t size, const char *key, const cha
 	if (!value || value[0] == '\0')
 		return;
 
-	Com_sprintf(newi, sizeof(newi), "\\%s\\%s", key, value);
-
-	Q_strcat(newi, s, sizeof(newi));
+	Com_sprintf(newi, sizeof(newi), "\\%s\\%s%s", key, value, s);
 	Q_strncpyz(s, newi, size);
 }
 
