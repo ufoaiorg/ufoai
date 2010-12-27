@@ -9392,81 +9392,6 @@
 }
 // entity 44
 {
-"classname" "trigger_touch"
-"target" "gate_slide1"
-// brush 0
-{
-( 0 96 64 ) ( 0 32 64 ) ( -96 96 64 ) tex_common/trigger 0 0 0 0.5 0.5
-( 0 112 64 ) ( -96 112 64 ) ( 0 112 0 ) tex_common/trigger 0 0 0 0.5 0.5
-( 16 96 64 ) ( 16 96 0 ) ( 16 32 64 ) tex_common/trigger 0 0 0 0.5 0.5
-( -96 32 0 ) ( 0 32 0 ) ( -96 96 0 ) tex_common/trigger 0 0 0 0.5 0.5
-( -96 16 0 ) ( -96 16 64 ) ( 0 16 0 ) tex_common/trigger 0 0 0 0.5 0.5
-( -112 32 0 ) ( -112 96 0 ) ( -112 32 64 ) tex_common/trigger 0 0 0 0.5 0.5
-}
-}
-// entity 45
-{
-"classname" "func_door_sliding"
-"dir" "0"
-"spawnflags" "767"
-"targetname" "gate_slide1"
-"group" "door_sliding"
-// brush 0
-{
-( -1 68 9 ) ( -1 64 9 ) ( -2 68 9 ) tex_base/lab_wall001 0 4 0 0.5 0.5 65280 0 0
-( 0 66 12 ) ( -96 66 -49 ) ( 0 66 -49 ) tex_base/lab_wall001 0 156 0 0.5 0.5 65280 0 0
-( 0 65 11 ) ( 0 67 -50 ) ( 0 65 -50 ) tex_common/nodraw 60 26 0 0.5 0.5 65280 0 0
-( 0 64 6 ) ( -96 66 6 ) ( -96 64 6 ) tex_common/nodraw 0 2 0 0.5 0.5 65280 0 0
-( -96 65 11 ) ( 0 65 -50 ) ( -96 65 -50 ) tex_base/lab_wall001 0 154 0 0.5 0.5 65280 0 0
-( -96 67 11 ) ( -96 65 -50 ) ( -96 67 -50 ) tex_common/nodraw 60 22 0 0.5 0.5 65280 0 0
-}
-// brush 1
-{
-( -1 68 26 ) ( -1 64 26 ) ( -2 68 26 ) tex_base/lab_wall001 0 4 0 0.5 0.5 65280 0 0
-( 0 66 29 ) ( -96 66 -32 ) ( 0 66 -32 ) tex_base/lab_wall001 0 190 0 0.5 0.5 65280 0 0
-( 0 65 28 ) ( 0 67 -33 ) ( 0 65 -33 ) tex_common/nodraw 60 60 0 0.5 0.5 65280 0 0
-( 0 64 23 ) ( -96 66 23 ) ( -96 64 23 ) tex_common/nodraw 0 2 0 0.5 0.5 65280 0 0
-( -96 65 28 ) ( 0 65 -33 ) ( -96 65 -33 ) tex_base/lab_wall001 0 188 0 0.5 0.5 65280 0 0
-( -96 67 28 ) ( -96 65 -33 ) ( -96 67 -33 ) tex_common/nodraw 60 56 0 0.5 0.5 65280 0 0
-}
-// brush 2
-{
-( -1 68 43 ) ( -1 64 43 ) ( -2 68 43 ) tex_base/lab_wall001 0 4 0 0.5 0.5 65280 0 0
-( 0 66 46 ) ( -96 66 -15 ) ( 0 66 -15 ) tex_base/lab_wall001 0 224 0 0.5 0.5 65280 0 0
-( 0 65 45 ) ( 0 67 -16 ) ( 0 65 -16 ) tex_common/nodraw 60 30 0 0.5 0.5 65280 0 0
-( 0 64 40 ) ( -96 66 40 ) ( -96 64 40 ) tex_common/nodraw 0 2 0 0.5 0.5 65280 0 0
-( -96 65 45 ) ( 0 65 -16 ) ( -96 65 -16 ) tex_base/lab_wall001 0 222 0 0.5 0.5 65280 0 0
-( -96 67 45 ) ( -96 65 -16 ) ( -96 67 -16 ) tex_common/nodraw 60 26 0 0.5 0.5 65280 0 0
-}
-// brush 3
-{
-( -1 68 60 ) ( -1 64 60 ) ( -2 68 60 ) tex_base/lab_wall001 0 4 0 0.5 0.5 65280 0 0
-( 0 66 63 ) ( -96 66 2 ) ( 0 66 2 ) tex_base/lab_wall001 0 2 0 0.5 0.5 65280 0 0
-( 0 65 62 ) ( 0 67 1 ) ( 0 65 1 ) tex_common/nodraw 60 0 0 0.5 0.5 65280 0 0
-( 0 64 57 ) ( -96 66 57 ) ( -96 64 57 ) tex_common/nodraw 0 2 0 0.5 0.5 65280 0 0
-( -96 65 62 ) ( 0 65 1 ) ( -96 65 1 ) tex_base/lab_wall001 0 0 0 0.5 0.5 65280 0 0
-( -96 67 62 ) ( -96 65 1 ) ( -96 67 1 ) tex_common/nodraw 60 60 0 0.5 0.5 65280 0 0
-}
-}
-// entity 46
-{
-"classname" "func_door_sliding"
-"dir" "0"
-"spawnflags" "255"
-"targetname" "gate_slide2"
-"group" "door_sliding"
-// brush 0
-{
-( 1 67 62 ) ( 1 63 62 ) ( 0 67 62 ) tex_base/panel1 252 2 0 0.5 0.5 65280 0 0
-( 0 65 12 ) ( -96 65 -49 ) ( 0 65 -49 ) tex_buildings/clanggrate2 256 260.1967 0 0.375 0.2382812 65280 0 0
-( 0 64 11 ) ( 0 66 -50 ) ( 0 64 -50 ) tex_common/nodraw 62 26 0 0.5 0.5 65280 0 0
-( -1 63 1 ) ( -97 65 1 ) ( -97 63 1 ) tex_common/nodraw 2 0 0 0.5 0.5 65280 0 0
-( -96 63 11 ) ( 0 63 -50 ) ( -96 63 -50 ) tex_buildings/clanggrate2 256 260.1967 0 0.375 0.2382812 65280 0 0
-( -96 66 11 ) ( -96 64 -50 ) ( -96 66 -50 ) tex_common/nodraw 62 22 0 0.5 0.5 65280 0 0
-}
-}
-// entity 47
-{
 "classname" "func_group"
 // brush 0
 {
@@ -9498,7 +9423,7 @@
 ( 300 -220 186 ) ( 300 -216 186 ) ( 300 -220 208 ) tex_common/nodraw 0 0 0 0.5 0.5 64512 0 0
 }
 }
-// entity 48
+// entity 45
 {
 "classname" "func_group"
 // brush 0
@@ -9531,7 +9456,7 @@
 ( 300 -436 186 ) ( 300 -432 186 ) ( 300 -436 208 ) tex_common/nodraw 48 0 0 0.5 0.5 64512 0 0
 }
 }
-// entity 49
+// entity 46
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/wheat/wheat2.md2"
@@ -9540,7 +9465,7 @@
 "skin" "0"
 "angles" "-0 -110.878 0"
 }
-// entity 50
+// entity 47
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/wheat/wheat1.md2"
@@ -9548,7 +9473,7 @@
 "spawnflags" "255"
 "skin" "0"
 }
-// entity 51
+// entity 48
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/wheat/wheat2.md2"
@@ -9557,7 +9482,7 @@
 "skin" "0"
 "angles" "0 135.896 0"
 }
-// entity 52
+// entity 49
 {
 "classname" "misc_model"
 "model" "models//objects/industrial/console/console.md2"
@@ -9565,7 +9490,7 @@
 "spawnflags" "508"
 "skin" "0"
 }
-// entity 53
+// entity 50
 {
 "classname" "func_group"
 // brush 0
@@ -9659,7 +9584,7 @@
 ( 180 -534 178 ) ( 180 -734 178 ) ( 180 -534 188 ) tex_buildings/mtl_gray 76 132 0 -0.5 0.5 64512 0 0
 }
 }
-// entity 54
+// entity 51
 {
 "classname" "func_group"
 // brush 0
@@ -9843,7 +9768,7 @@
 ( 257 -540 140 ) ( 257 -536 140 ) ( 257 -540 180 ) tex_common/nodraw 0 53.33337 0 0.03125 0.7499998 134282240 0 0
 }
 }
-// entity 55
+// entity 52
 {
 "classname" "func_group"
 // brush 0
@@ -9910,7 +9835,7 @@
 ( 188 -1 8 ) ( 188 -1 56 ) ( 188 0 8 ) tex_buildings/d_tech_dw2 80 254 0 -0.5 0.5 196352 0 0
 }
 }
-// entity 56
+// entity 53
 {
 "classname" "func_group"
 // brush 0
@@ -10049,7 +9974,7 @@
 ( -229 -164 104 ) ( -265 -164 104 ) ( -265 -164 68 ) tex_misc/wood_palet 46 10 0 -0.5 0.5 65024 0 0
 }
 }
-// entity 57
+// entity 54
 {
 "classname" "func_group"
 // brush 0
@@ -10503,7 +10428,7 @@
 ( 118 -640 126 ) ( 130 -640 98 ) ( 130 -640 126 ) tex_buildings/d_tech_dw2 220 0 0 0.5 0.5 65024 0 0
 }
 }
-// entity 58
+// entity 55
 {
 "classname" "func_group"
 // brush 0
@@ -10966,37 +10891,14 @@
 ( 130 -640 162 ) ( 126 -644 159 ) ( 126 -644 162 ) tex_buildings/d_tech_dw2 64 0 0 -0.5 0.5 64512 0 0
 }
 }
-// entity 59
-{
-"classname" "func_door"
-"spawnflags" "252"
-// brush 0
-{
-( 96 -32 200 ) ( 96 -64 200 ) ( 94 -32 200 ) tex_doors/door007 3 114.7586 0 0.25 0.2265625
-( 96 -32 200 ) ( 94 -32 200 ) ( 96 -32 142 ) tex_doors/door007 3 114.7586 0 0.25 0.2265625
-( 96 -32 200 ) ( 96 -32 142 ) ( 96 -64 200 ) tex_doors/door007 0 114.7586 0 0.25 0.2265625
-( 94 -64 142 ) ( 96 -64 142 ) ( 94 -32 142 ) tex_common/nodraw 0 0 0 0.5 0.5
-( 94 -64 142 ) ( 94 -64 200 ) ( 96 -64 142 ) tex_doors/door007 5 114.7586 0 0.25 0.2265625
-( 94 -64 142 ) ( 94 -32 142 ) ( 94 -64 200 ) tex_doors/door007 0 114.7586 0 0.25 0.2265625
-}
-// brush 1
-{
-( 96 -62 200 ) ( 96 -64 200 ) ( 94 -62 200 ) tex_common/origin 0 0 0 0.5 0.5
-( 96 -62 200 ) ( 94 -62 200 ) ( 96 -62 142 ) tex_common/origin 0 0 0 0.5 0.5
-( 96 -62 200 ) ( 96 -62 142 ) ( 96 -64 200 ) tex_common/origin 0 0 0 0.5 0.5
-( 94 -64 142 ) ( 96 -64 142 ) ( 94 -62 142 ) tex_common/origin 0 0 0 0.5 0.5
-( 94 -64 142 ) ( 94 -64 200 ) ( 96 -64 142 ) tex_common/origin 0 0 0 0.5 0.5
-( 94 -64 142 ) ( 94 -62 142 ) ( 94 -64 200 ) tex_common/origin 0 0 0 0.5 0.5
-}
-}
-// entity 60
+// entity 56
 {
 "classname" "misc_model"
 "origin" "-253 -188 1"
 "model" "models/objects/vehicles/forktruck/forktruck2.md2"
 "spawnflags" "255"
 }
-// entity 61
+// entity 57
 {
 "classname" "func_group"
 // brush 0
@@ -11090,7 +10992,7 @@
 ( 504 -340 114 ) ( 304 -340 114 ) ( 504 -340 124 ) tex_buildings/mtl_gray 104 4 0 -0.5 0.5 32256 0 0
 }
 }
-// entity 62
+// entity 58
 {
 "classname" "misc_model"
 "model" "models/objects/trucks/truck3/truck3.md2"
@@ -11098,7 +11000,7 @@
 "spawnflags" "255"
 "skin" "0"
 }
-// entity 63
+// entity 59
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/wheat/wheat2.md2"
@@ -11107,7 +11009,7 @@
 "skin" "0"
 "angles" "0 -110.878 0"
 }
-// entity 64
+// entity 60
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/wheat/wheat1.md2"
@@ -11116,176 +11018,176 @@
 "skin" "0"
 "angles" "0 -90 0"
 }
-// entity 65
+// entity 61
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "80 -720 122"
 "angle" "90"
 }
-// entity 66
+// entity 62
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "144 -656 122"
 "angle" "90"
 }
-// entity 67
+// entity 63
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 -656 122"
 "angle" "90"
 }
-// entity 68
+// entity 64
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "240 -656 122"
 "angle" "90"
 }
-// entity 69
+// entity 65
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 -688 122"
 "angle" "90"
 }
-// entity 70
+// entity 66
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "240 -720 122"
 "angle" "90"
 }
-// entity 71
+// entity 67
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "144 -592 122"
 "angle" "90"
 }
-// entity 72
+// entity 68
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-144 272 26"
 "angle" "-90"
 }
-// entity 73
+// entity 69
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "16 -592 122"
 "angle" "90"
 }
-// entity 74
+// entity 70
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "48 -688 122"
 "angle" "90"
 }
-// entity 75
+// entity 71
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "-144 -688 122"
 "angle" "90"
 }
-// entity 76
+// entity 72
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "-80 -720 122"
 "angle" "90"
 }
-// entity 77
+// entity 73
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "80 -592 122"
 "angle" "90"
 }
-// entity 78
+// entity 74
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "80 144 26"
 "angle" "-90"
 }
-// entity 79
+// entity 75
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "16 176 26"
 "angle" "-90"
 }
-// entity 80
+// entity 76
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-48 208 26"
 "angle" "-90"
 }
-// entity 81
+// entity 77
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-144 176 26"
 "angle" "-90"
 }
-// entity 82
+// entity 78
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-48 144 26"
 "angle" "-90"
 }
-// entity 83
+// entity 79
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "16 240 26"
 "angle" "-90"
 }
-// entity 84
+// entity 80
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "48 208 26"
 "angle" "-90"
 }
-// entity 85
+// entity 81
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "144 176 26"
 "angle" "-90"
 }
-// entity 86
+// entity 82
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-80 272 26"
 "angle" "-90"
 }
-// entity 87
+// entity 83
 {
 "classname" "info_alien_start"
 "origin" "-304 -464 92"
 }
-// entity 88
+// entity 84
 {
 "classname" "info_alien_start"
 "origin" "-304 -272 156"
 }
-// entity 89
+// entity 85
 {
 "classname" "info_alien_start"
 "origin" "-304 -272 92"
 }
-// entity 90
+// entity 86
 {
 "classname" "info_alien_start"
 "origin" "-432 -16 92"
