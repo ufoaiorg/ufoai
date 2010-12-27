@@ -75,9 +75,8 @@ int AIR_BaseCountAircraft (const base_t *base)
 	aircraft_t *aircraft;
 	int count = 0;
 
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base))
-			count++;
+	AIR_ForeachFromBase(aircraft, base) {
+		count++;
 	}
 
 	return count;
@@ -151,9 +150,8 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 	base->capacities[CAP_AIRCRAFT_BIG].cur = 0;
 	base->capacities[CAP_AIRCRAFT_SMALL].cur = 0;
 
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base))
-			AIR_UpdateHangarCapForOne(aircraft->tpl, base);
+	AIR_ForeachFromBase(aircraft, base) {
+		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 	}
 }
 
@@ -533,8 +531,8 @@ int AIR_CountTypeInBase (const base_t *base, aircraftType_t aircraftType)
 	int count = 0;
 	aircraft_t *aircraft;
 
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base) && aircraft->type == aircraftType)
+	AIR_ForeachFromBase(aircraft, base) {
+		if (aircraft->type == aircraftType)
 			count++;
 	}
 	return count;
@@ -550,8 +548,8 @@ int AIR_CountInBaseByTemplate (const base_t *base, const aircraft_t *aircraftTem
 	int count = 0;
 	aircraft_t *aircraft;
 
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base) && aircraft->tpl == aircraftTemplate)
+	AIR_ForeachFromBase(aircraft, base) {
+		if (aircraft->tpl == aircraftTemplate)
 			count++;
 	}
 	return count;
@@ -2247,8 +2245,8 @@ void AIR_AutoAddPilotToAircraft (const base_t* base, employee_t* pilot)
 {
 	aircraft_t *aircraft;
 
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base) && AIR_SetPilot(aircraft, pilot))
+	AIR_ForeachFromBase(aircraft, base) {
+		if (AIR_SetPilot(aircraft, pilot))
 			break;
 	}
 }
@@ -2263,8 +2261,8 @@ void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const employee_t* 
 {
 	aircraft_t *aircraft;
 
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base) && AIR_GetPilot(aircraft) == pilot) {
+	AIR_ForeachFromBase(aircraft, base) {
+		if (AIR_GetPilot(aircraft) == pilot) {
 			AIR_SetPilot(aircraft, NULL);
 			break;
 		}

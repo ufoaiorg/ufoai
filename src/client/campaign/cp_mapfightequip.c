@@ -168,8 +168,8 @@ qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
 	qboolean found = qfalse;
 	aircraft_t *aircraft;
 
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base) && AIR_GetPilot(aircraft) == pilot) {
+	AIR_ForeachFromBase(aircraft, base) {
+		if (AIR_GetPilot(aircraft) == pilot) {
 			found = qtrue;
 			break;
 		}

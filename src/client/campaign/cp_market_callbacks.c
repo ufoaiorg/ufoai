@@ -127,8 +127,8 @@ static int BS_GetStorageAmountInBase (const base_t* base, const char *aircraftID
 	assert(base);
 
 	/* Get storage amount in the base. */
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base) && !strcmp(aircraft->id, aircraftID))
+	AIR_ForeachFromBase(aircraft, base) {
+		if (!strcmp(aircraft->id, aircraftID))
 			storage++;
 	}
 	return storage;
@@ -664,9 +664,7 @@ static void BS_SellAircraft_f (void)
 		if (!aircraftTemplate)
 			return;
 
-		AIR_Foreach(aircraft) {
-			if (!AIR_IsAircraftOfBase(aircraft, base))
-				continue;
+		AIR_ForeachFromBase(aircraft, base) {
 			if (!strcmp(aircraft->id, aircraftTemplate->id)) {
 				if (AIR_GetTeamSize(aircraft) > 0) {
 					teamNote = qtrue;

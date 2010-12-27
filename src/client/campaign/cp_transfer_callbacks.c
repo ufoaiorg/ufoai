@@ -683,8 +683,8 @@ static int TR_FillAircraft (const base_t *srcbase, const base_t *destbase, linke
 	if (AIR_AircraftAllowed(destbase)) {
 		aircraft_t *aircraft;
 
-		AIR_Foreach(aircraft) {
-			if (AIR_IsAircraftOfBase(aircraft, srcbase) && TR_AircraftListSelect(aircraft)) {
+		AIR_ForeachFromBase(aircraft, srcbase) {
+			if (TR_AircraftListSelect(aircraft)) {
 				char str[128];
 				Com_sprintf(str, sizeof(str), _("Aircraft %s"), aircraft->name);
 				TR_AddListEntry(names, str, amounts, 1, transfers, -1);
@@ -1008,8 +1008,8 @@ static void TR_AddAircraftToTransferList (base_t *base, transferData_t *transfer
 		aircraft_t *aircraft;
 		int cnt = 0;
 
-		AIR_Foreach(aircraft) {
-			if (AIR_IsAircraftOfBase(aircraft, base) && TR_AircraftListSelect(aircraft)) {
+		AIR_ForeachFromBase(aircraft, base) {
+			if (TR_AircraftListSelect(aircraft)) {
 				if (cnt == num) {
 					if (TR_CheckAircraft(aircraft, transferBase)) {
 						LIST_AddPointer(&transferData->aircraft, (void*)aircraft);

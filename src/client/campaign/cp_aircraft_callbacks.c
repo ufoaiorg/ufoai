@@ -248,9 +248,8 @@ static void AIR_AircraftUpdateList_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 	aircraft_t *aircraft;
 
-	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOfBase(aircraft, base))
-			LIST_AddString(&list, aircraft->name);
+	AIR_ForeachFromBase(aircraft, base) {
+		LIST_AddString(&list, aircraft->name);
 	}
 
 	UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);

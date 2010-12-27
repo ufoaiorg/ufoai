@@ -707,11 +707,8 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 		return;
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
-	AIR_Foreach(aircraft) {
+	AIR_ForeachFromBase(aircraft, base) {
 		const int aircraftSize = aircraft->size;
-
-		if (!AIR_IsAircraftOfBase(aircraft, base))
-			continue;
 
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
