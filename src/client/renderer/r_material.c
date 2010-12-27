@@ -772,7 +772,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			continue;
 		}
 
-		if (!strncmp(c, "anim", 4)) {
+		if (Q_strstart(c, "anim")) {
 			switch (c[4]) {
 			case 'a':
 				s->anim.type = ANIM_ALTERNATE;
