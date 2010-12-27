@@ -108,7 +108,6 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
  */
 static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
 {
-	static const char actorModelPrefix[] = "models/soldiers/";
 	int i, j;
 	const dMD2Triangle_t *pintri;
 	const dMD2Coord_t *pincoord;
@@ -140,7 +139,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	outMesh->num_verts = md2Verts;
 
 	if (mod->alias.num_meshes == 1) {
-		if (R_UseActorSkin() && Q_strstart(outMesh->name, actorModelPrefix)) {
+		if (R_UseActorSkin() && Q_strstart(outMesh->name, "models/soldiers/")) {
 			image_t *defaultSkin;
 			md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 			defaultSkin = R_AliasModelGetSkin(mod->name, md2Path);
