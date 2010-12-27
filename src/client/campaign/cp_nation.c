@@ -315,7 +315,7 @@ void CL_ParseNations (const char *name, const char **text)
 	/* search for nations with same name */
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *n = NAT_GetNationByIDX(i);
-		if (!strncmp(name, n->id, sizeof(n->id)))
+		if (!strcmp(name, n->id))
 			break;
 	}
 	if (i < ccs.numNations) {
