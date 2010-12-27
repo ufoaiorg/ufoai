@@ -39,9 +39,14 @@ static int UFO_InitSuiteMapDef (void)
 {
 	TEST_Init();
 
+	NET_Init();
+
 	sv_genericPool = Mem_CreatePool("mapdef-test");
+	com_networkPool = Mem_CreatePool("Network");
 	vid_imagePool = Mem_CreatePool("Vid: Image system");
 	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
+	sv_public = Cvar_Get("sv_public", "0", 0, NULL);
+	port = Cvar_Get("testport", "27909", 0, NULL);
 
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 
@@ -62,6 +67,9 @@ static int UFO_InitSuiteMapDef (void)
 static int UFO_CleanSuiteMapDef (void)
 {
 	TEST_Shutdown();
+
+	NET_Shutdown();
+
 	return 0;
 }
 
@@ -75,6 +83,7 @@ static void testMapDefsSingleplayer (void)
 		const mapDef_t* md = &cls.mds[i];
 
 		SV_Map(qtrue, md->map, md->param);
+		CU_PASS(md->map);
 	}
 }
 
@@ -89,8 +98,10 @@ static void testMapDefsMultiplayer (void)
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t* md = &cls.mds[i];
 
-		if (md->multiplayer)
+		if (md->multiplayer) {
 			SV_Map(qtrue, md->map, md->param);
+			CU_PASS(md->map);
+		}
 	}
 }
 
