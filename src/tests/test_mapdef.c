@@ -89,7 +89,8 @@ static void testMapDefsMultiplayer (void)
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t* md = &cls.mds[i];
 
-		SV_Map(qtrue, md->map, md->param);
+		if (md->multiplayer)
+			SV_Map(qtrue, md->map, md->param);
 	}
 }
 
