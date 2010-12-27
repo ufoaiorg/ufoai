@@ -1806,7 +1806,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 						return;
 				} else {
 					for (vp = valid_building_vars; vp->string; vp++)
-						if (!strncmp(token, vp->string, sizeof(vp->string))) {
+						if (!strcmp(token, vp->string)) {
 							/* found a definition */
 							token = Com_EParse(text, errhead, name);
 							if (!*text)
