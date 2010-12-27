@@ -586,7 +586,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 	}
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (keySpace[i] && *keySpace[i] && !strncmp(keySpace[i], binding, strlen(binding))) {
+		if (keySpace[i] && *keySpace[i] && !strcmp(keySpace[i], binding)) {
 			return Key_KeynumToString(i);
 		}
 
