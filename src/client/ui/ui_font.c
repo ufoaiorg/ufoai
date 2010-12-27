@@ -110,7 +110,7 @@ qboolean UI_ParseFont (const char *name, const char **text)
 			break;
 
 		for (v = fontValues; v->string; v++)
-			if (!strncmp(token, v->string, sizeof(v->string))) {
+			if (!strcmp(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)

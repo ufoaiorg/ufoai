@@ -108,7 +108,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
  */
 static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
 {
-	static const char* actorModelPrefix = "models/soldiers/";
+	static const char actorModelPrefix[] = "models/soldiers/";
 	int i, j;
 	const dMD2Triangle_t *pintri;
 	const dMD2Coord_t *pincoord;

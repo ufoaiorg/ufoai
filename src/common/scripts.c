@@ -2555,7 +2555,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 			break;
 
 		for (v = teamDefValues; v->string; v++)
-			if (!strncmp(token, v->string, strlen(token))) {
+			if (!strcmp(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2697,7 +2697,7 @@ static void Com_ParseUGVs (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		for (v = ugvValues; v->string; v++)
-			if (!strncmp(token, v->string, sizeof(v->string))) {
+			if (!strcmp(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2852,7 +2852,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 			break;
 
 		for (v = terrainTypeValues; v->string; v++)
-			if (!strncmp(token, v->string, sizeof(v->string))) {
+			if (!strcmp(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2925,7 +2925,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 				break;
 
 			for (v = gameTypeValues; v->string; v++)
-				if (!strncmp(token, v->string, sizeof(v->string))) {
+				if (!strcmp(token, v->string)) {
 					/* found a definition */
 					token = Com_EParse(text, errhead, name);
 					if (!*text)
