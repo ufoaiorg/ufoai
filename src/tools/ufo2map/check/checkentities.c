@@ -204,7 +204,7 @@ void Check_Stats(void) {
 		const char *name = ValueForKey(&entities[i], "classname");
 
 		for (j = 0; j < numEntityDefs; j++)
-			if (!strncmp(name, entityDefs[j].classname, strlen(entityDefs[j].classname))) {
+			if (!strcmp(name, entityDefs[j].classname)) {
 				entNums[j]++;
 				break;
 			}
