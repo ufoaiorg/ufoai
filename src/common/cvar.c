@@ -80,13 +80,7 @@ cvar_t *Cvar_GetFirst (void)
 
 static qboolean Cvar_InfoValidate (const char *s)
 {
-	if (strstr(s, "\\"))
-		return qfalse;
-	if (strstr(s, "\""))
-		return qfalse;
-	if (strstr(s, ";"))
-		return qfalse;
-	return qtrue;
+	return s[strcspn(s, "\\\";")] == '\0';
 }
 
 /**
