@@ -339,7 +339,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s\n", Cmd_Args());
 
 	/* server connection */
-	if (strcmp(c, "client_connect")) {
+	if (!strcmp(c, "client_connect")) {
 		int i;
 		for (i = 1; i < Cmd_Argc(); i++) {
 			const char *p = Cmd_Argv(i);
@@ -364,7 +364,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	}
 
 	/* remote command from gui front end */
-	if (strcmp(c, "cmd")) {
+	if (!strcmp(c, "cmd")) {
 		if (!NET_StreamIsLoopback(cls.netStream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
@@ -378,25 +378,25 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	}
 
 	/* teaminfo command */
-	if (strcmp(c, "teaminfo")) {
+	if (!strcmp(c, "teaminfo")) {
 		CL_ParseTeamInfoMessage(msg);
 		return;
 	}
 
 	/* ping from server */
-	if (strcmp(c, "ping")) {
+	if (!strcmp(c, "ping")) {
 		NET_OOB_Printf(cls.netStream, "ack");
 		return;
 	}
 
 	/* echo request from server */
-	if (strcmp(c, "echo")) {
+	if (!strcmp(c, "echo")) {
 		NET_OOB_Printf(cls.netStream, "%s", Cmd_Argv(1));
 		return;
 	}
 
 	/* print */
-	if (strcmp(c, "print")) {
+	if (!strcmp(c, "print")) {
 		char str[1024];
 		NET_ReadString(msg, str, sizeof(str));
 		/* special reject messages needs proper handling */
