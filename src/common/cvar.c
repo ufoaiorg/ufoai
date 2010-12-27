@@ -940,36 +940,14 @@ static void Cvar_List_f (void)
 			continue;
 #endif
 
-		if (var->flags & CVAR_ARCHIVE)
-			Com_Printf("A");
-		else
-			Com_Printf(" ");
-		if (var->flags & CVAR_USERINFO)
-			Com_Printf("U");
-		else
-			Com_Printf(" ");
-		if (var->flags & CVAR_SERVERINFO)
-			Com_Printf("S");
-		else
-			Com_Printf(" ");
-		if (var->modified)
-			Com_Printf("M");
-		else
-			Com_Printf(" ");
-		if (var->flags & CVAR_DEVELOPER)
-			Com_Printf("D");
-		else
-			Com_Printf(" ");
-		if (var->flags & CVAR_R_IMAGES)
-			Com_Printf("I");
-		else
-			Com_Printf(" ");
-		if (var->flags & CVAR_NOSET)
-			Com_Printf("-");
-		else if (var->flags & CVAR_LATCH)
-			Com_Printf("L");
-		else
-			Com_Printf(" ");
+		Com_Printf(var->flags & CVAR_ARCHIVE    ? "A" : " ");
+		Com_Printf(var->flags & CVAR_USERINFO   ? "U" : " ");
+		Com_Printf(var->flags & CVAR_SERVERINFO ? "S" : " ");
+		Com_Printf(var->modified                ? "M" : " ");
+		Com_Printf(var->flags & CVAR_DEVELOPER  ? "D" : " ");
+		Com_Printf(var->flags & CVAR_R_IMAGES   ? "I" : " ");
+		Com_Printf(var->flags & CVAR_NOSET      ? "-" :
+		           var->flags & CVAR_LATCH      ? "L" : " ");
 		Com_Printf(" %-20s \"%s\"\n", var->name, var->string);
 		if (var->description)
 			Com_Printf(S_COLOR_GREEN "        %s\n", var->description);
