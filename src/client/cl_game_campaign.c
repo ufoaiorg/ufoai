@@ -388,8 +388,7 @@ qboolean GAME_CP_Spawn (void)
 	CL_CleanTempInventory(base);
 
 	/* activate hud */
-	/** @todo check cl_hud here */
-	UI_InitStack(cl_hud->string, NULL, qfalse, qtrue);
+	HUD_InitUI(NULL, qfalse);
 
 	return qtrue;
 }

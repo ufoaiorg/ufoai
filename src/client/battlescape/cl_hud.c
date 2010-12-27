@@ -1438,26 +1438,51 @@ static qboolean CL_CvarWorldLevel (cvar_t *cvar)
 
 /**
  * @brief Checks that the given cvar is a valid hud cvar
- * @param cvar The cvar to check and to modify if the value is invalid
- * @return @c true if the valid is invalid, @c false otherwise
+ * @param cvar The cvar to check
+ * @return @c true if cvar is valid, @c false otherwise
  */
-static qboolean HUD_CvarCheckMNHud (cvar_t *cvar)
+static qboolean HUD_CheckCLHud (cvar_t *cvar)
 {
 	uiNode_t *window = UI_GetWindow(cvar->string);
 	if (window == NULL) {
-		Cvar_Reset(cvar);
-		return qtrue;
+		return qfalse;
 	}
 
 	if (window->super == NULL) {
-		Cvar_Reset(cvar);
-		return qtrue;
+		return qfalse;
 	}
 
 	/**
 	 * @todo check for multiple base classes
 	 */
 	if (strcmp(window->super->name, "hud")) {
+		return qfalse;
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Display the user interface
+ * @param optionWindowName Name of the window used to display options, else NULL if nothing
+ * @param popAll If true
+ * @todo Remove popAll when it is possible. It should always be true
+ */
+void HUD_InitUI (const char *optionWindowName, qboolean popAll)
+{
+	if (!HUD_CheckCLHud(cl_hud)) {
+		Cvar_Set("cl_hud", "hud_default");
+	}
+	UI_InitStack(cl_hud->string, optionWindowName, popAll, qtrue);
+}
+
+/**
+ * @brief Checks that the given cvar is a valid hud cvar
+ * @param cvar The cvar to check and to modify if the value is invalid
+ * @return @c true if the valid is invalid, @c false otherwise
+ */
+static qboolean HUD_CvarCheckMNHud (cvar_t *cvar)
+{
+	if (!HUD_CheckCLHud(cl_hud)) {
 		Cvar_Reset(cvar);
 		return qtrue;
 	}
@@ -1476,6 +1501,7 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, _("Update cvars from actor from list"));
 
+	/** @note We can't check the value at startup cause scripts are not yet loaded */
 	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD");
 	Cvar_SetCheckFunction("cl_hud", HUD_CvarCheckMNHud);
 

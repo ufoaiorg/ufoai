@@ -156,8 +156,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 	if (list != NULL && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {
-		/** @todo check cl_hud here */
-		UI_InitStack(cl_hud->string, NULL, qtrue, qtrue);
+		HUD_InitUI(NULL, qtrue);
 	}
 	if (list != NULL)
 		Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));

@@ -40,6 +40,7 @@ extern cvar_t *cl_hud;
 /** @todo these should probably not be called from other places than menu */
 void HUD_DisplayFiremodes(const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay);
 void HUD_HideFiremodes(void);
+void HUD_InitUI(const char *optionWindowName, qboolean popAll);
 /* check above for removal */
 
 void HUD_InitStartup(void);
