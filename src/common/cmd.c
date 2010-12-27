@@ -1106,7 +1106,7 @@ void Cmd_PrintDebugCommands (void)
 
 	Com_Printf("Debug commands:\n");
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (!strncmp(cmd->name, "debug_", 6))
+		if (Q_strstart(cmd->name, "debug_"))
 			Com_Printf(" * %s\n   %s\n", cmd->name, cmd->description);
 	}
 
