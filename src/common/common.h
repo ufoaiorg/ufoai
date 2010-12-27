@@ -341,6 +341,7 @@ extern memPool_t *com_cmodelSysPool;
 extern memPool_t *com_cvarSysPool;
 extern memPool_t *com_fileSysPool;
 extern memPool_t *com_genericPool;
+extern memPool_t *com_networkPool;
 
 /*============================================================================ */
 

@@ -39,8 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_STREAMS 56
 #define MAX_DATAGRAM_SOCKETS 7
 
-struct memPool_s *com_networkPool;
-
 #ifdef _WIN32
 # include <winsock2.h>
 # include <ws2tcpip.h>
