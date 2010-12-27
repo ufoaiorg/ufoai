@@ -339,12 +339,13 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s\n", Cmd_Args());
 
 	/* server connection */
-	if (!strncmp(c, "client_connect", 13)) {
+	if (Q_strstart(c, "client_connect")) {
 		int i;
 		for (i = 1; i < Cmd_Argc(); i++) {
 			const char *p = Cmd_Argv(i);
-			if (!strncmp(p, "dlserver=", 9)) {
-				p += 9;
+			const char *downloadServerParam = "dlserver=";
+			if (Q_strstart(p, downloadServerParam)) {
+				p += strlen(downloadServerParam);
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
 				CL_SetHTTPServer(p);
 				if (cls.downloadServer[0])
