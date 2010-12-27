@@ -153,7 +153,6 @@ qboolean Cvar_SetCheckFunction (const char *varName, qboolean (*check) (cvar_t* 
  * @param[in] minVal The minimal value the cvar should have
  * @param[in] maxVal The maximal value the cvar should have
  * @param[in] shouldBeIntegral No floats for this cvar please
- * @sa Cvar_AssertString
  */
 qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral)
 {
@@ -179,38 +178,6 @@ qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qboolean s
 
 	/* no changes */
 	return qfalse;
-}
-
-/**
- * @brief Checks cvar values
- * @return true if assert
- * @sa Cvar_AssertValue
- * @param[in] cvar Cvar to check
- * @param[in] array Array of valid cvar value strings
- * @param[in] arraySize Number of entries in the string array
- */
-qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
-{
-	int i;
-	char *string;
-
-	assert(cvar);
-
-	for (i = 0; i < arraySize; i++) {
-		string = array[i];
-		if (strncmp(cvar->string, string, sizeof(cvar->string))) {
-			/* valid value */
-			return qfalse;
-		}
-	}
-
-	Com_Printf("Cvar '%s' has not a valid value\n", cvar->name);
-
-	if (cvar->oldString)
-		Cvar_Set(cvar->name, cvar->oldString);
-
-	/* not a valid value */
-	return qtrue;
 }
 
 /**

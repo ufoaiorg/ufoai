@@ -175,11 +175,6 @@ const char *Cvar_Serverinfo(void);
 qboolean Cvar_AssertValue(cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral);
 
 /**
- * @brief this function checks whether the cvar string is a valid string in char ** array
- */
-qboolean Cvar_AssertString(cvar_t * cvar, char **array, int arraySize);
-
-/**
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)
  */
 qboolean Cvar_SetCheckFunction(const char *varName, qboolean (*check) (cvar_t* cvar));
