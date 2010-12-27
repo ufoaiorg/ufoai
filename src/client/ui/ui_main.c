@@ -294,14 +294,12 @@ void UI_Init (void)
 	mn_hud = Cvar_Get("mn_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected HUD");
 	Cvar_SetCheckFunction("mn_hud", UI_CvarCheckMNHud);
 
-	/* @todo Compatibility hack; remove it for the 2.4 release */
+	/** @todo Compatibility hack; remove it for the 2.4 release */
 	if (!strcmp(mn_hud->string, "hud")) {
 		Cvar_Set("mn_hud", "hud_default");
-	}
-	if (!strcmp(mn_hud->string, "althud")) {
+	} else if (!strcmp(mn_hud->string, "althud")) {
 		Cvar_Set("mn_hud", "hud_alt");
-	}
-	if (!strcmp(mn_hud->string, "hhud")) {
+	} else if (!strcmp(mn_hud->string, "hhud")) {
 		Cvar_Set("mn_hud", "hud_hhud");
 	}
 
