@@ -97,6 +97,9 @@ void SCR_DrawPrecacheScreen (qboolean string, int percent)
 {
 	const image_t *image;
 
+	if (!refdef.ready)
+		return;
+
 	R_BeginFrame();
 
 	image = R_FindImage("pics/background/loading", it_pic);
@@ -177,6 +180,9 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 		SCR_DrawDownloading();
 		return;
 	}
+
+	if (!refdef.ready)
+		return;
 
 	loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
 
