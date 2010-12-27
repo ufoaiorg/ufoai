@@ -217,7 +217,7 @@ const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const 
 			const char *next = UI_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
 				/* cvar injection */
-				if (!strncmp(propertyName, "cvar:", 5)) {
+				if (Q_strstart(propertyName, "cvar:")) {
 					const cvar_t *cvar = Cvar_Get(propertyName + 5, "", 0, NULL);
 					const int l = snprintf(cout, length, "%s", cvar->string);
 					cout += l;
@@ -225,7 +225,7 @@ const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const 
 					length -= l;
 					continue;
 
-				} else if (!strncmp(propertyName, "node:", 5)) {
+				} else if (Q_strstart(propertyName, "node:")) {
 					const char *path = propertyName + 5;
 					uiNode_t *node;
 					const value_t *property;
@@ -256,7 +256,7 @@ const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const 
 					continue;
 
 				/* source path injection */
-				} else if (!strncmp(propertyName, "path:", 5)) {
+				} else if (Q_strstart(propertyName, "path:")) {
 					if (context->source) {
 						const char *command = propertyName + 5;
 						const uiNode_t *node = NULL;
@@ -346,7 +346,7 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 	/* pre compute value if possible */
 	if (value->type == EA_VALUE_STRING) {
 		const char* string = value->d.terminal.d1.constString;
-		if ((property->type & V_UI_MASK) == V_UI_CVAR && !strncmp(string, "*cvar:", 6)) {
+		if ((property->type & V_UI_MASK) == V_UI_CVAR && Q_strstart(string, "*cvar:")) {
 			void *mem = ((byte *) node + property->ofs);
 			*(void**) mem = value->d.terminal.d1.data;
 		} else {

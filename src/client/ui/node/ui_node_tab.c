@@ -322,7 +322,7 @@ static void UI_TabNodeInit (uiNode_t *node, linkedList_t *params)
 		return;
 
 	/* not a cvar? */
-	if (strncmp(EXTRADATA(node).cvar, "*cvar:", 6) != 0) {
+	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:")) {
 		/* normalize */
 		Com_Printf("UI_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", UI_GetPath(node), EXTRADATA(node).cvar);
 		EXTRADATA(node).cvar = NULL;

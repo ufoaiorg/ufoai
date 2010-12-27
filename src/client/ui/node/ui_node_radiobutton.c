@@ -112,7 +112,7 @@ static void UI_RadioButtonNodeActivate (uiNode_t * node)
 
 	/* its not a cvar! */
 	/** @todo the parser should already check that the property value is a right cvar */
-	if (strncmp((const char *)(EXTRADATA(node).cvar), "*cvar", 5))
+	if (Q_strstart((const char *)(EXTRADATA(node).cvar), "*cvar"))
 		return;
 
 	current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);

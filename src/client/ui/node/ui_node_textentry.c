@@ -120,7 +120,7 @@ static void UI_TextEntryNodeClick (uiNode_t *node, int x, int y)
 	/* no cvar */
 	if (!node->text)
 		return;
-	if (strncmp(node->text, "*cvar", 5))
+	if (!Q_strstart(node->text, "*cvar"))
 		return;
 
 	if (!UI_HasFocus(node)) {
