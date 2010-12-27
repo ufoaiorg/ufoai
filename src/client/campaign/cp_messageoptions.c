@@ -355,7 +355,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 
 		if (token[0] != '\0') {
 			for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
-				if (!strncmp(token, nt_strings[idx],MAX_VAR)) {
+				if (!strcmp(token, nt_strings[idx])) {
 					/* prepare a new msgcategory entry */
 					msgCategoryEntry_t *old = ccs.messageCategories[ccs.numMsgCategories].last;
 
