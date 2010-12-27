@@ -269,9 +269,9 @@ void Cbuf_AddEarlyCommands (qboolean clear)
 {
 	int i;
 
-	for (i = 0; i < Com_Argc(); i++) {
+	for (i = 1; i < Com_Argc(); i++) {
 		const char *s = Com_Argv(i);
-		if (strncmp(s, "+set", 4))
+		if (strcmp(s, "+set"))
 			continue;
 		Cbuf_AddText(va("set %s %s\n", Com_Argv(i + 1), Com_Argv(i + 2)));
 		if (clear) {
@@ -1148,5 +1148,4 @@ void Cmd_Shutdown (void)
 	memset(cmd_functions, 0, sizeof(cmd_functions));
 	memset(cmd_argv, 0, sizeof(cmd_argv));
 	cmd_argc = 0;
-
 }
