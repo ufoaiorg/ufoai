@@ -246,7 +246,7 @@ static seqEnt_t *SEQ_FindEnt (sequenceContext_t *context, const char *name)
 	int i;
 
 	for (i = 0, se = context->ents; i < context->numEnts; i++, se++)
-		if (se->inuse && !strncmp(se->name, name, MAX_VAR))
+		if (se->inuse && !strcmp(se->name, name))
 			break;
 	if (i < context->numEnts)
 		return se;
