@@ -106,7 +106,7 @@ static void UI_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	UI_GetNodeAbsPos(node, pos);
 	Q_strncpyz(var, (const char *)EXTRADATA(node).super.value, sizeof(var));
 	/* no cvar? */
-	if (!strncmp(var, "*cvar:", 6)) {
+	if (Q_strstart(var, "*cvar:")) {
 		/* normalize it */
 		float frac;
 		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);

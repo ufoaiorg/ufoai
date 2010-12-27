@@ -74,7 +74,7 @@ static void UI_AbstractValueDelete (uiNode_t * node)
 static void UI_CloneCvarOrFloat (const uiNode_t *source, uiNode_t *clone, const float*const* sourceData, float** cloneData)
 {
 	/* dont update cvar */
-	if (!strncmp(*(const char*const*)sourceData, "*cvar", 5)) {
+	if (Q_strstart(*(const char*const*)sourceData, "*cvar")) {
 		/* thats anyway a const string */
 		assert(!source->dynamic);
 		if (clone->dynamic)

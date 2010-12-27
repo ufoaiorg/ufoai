@@ -402,7 +402,7 @@ static void UI_ContainerNodeLoaded (uiNode_t* const node)
 
 	/** @todo find a better way to add more equip node, without this hack */
 	name = node->name;
-	if (!strncmp(node->name, "equip_", 6))
+	if (Q_strstart(node->name, "equip_"))
 		name = "equip";
 
 	container = INVSH_GetInventoryDefinitionByID(name);

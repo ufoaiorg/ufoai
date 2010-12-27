@@ -57,7 +57,7 @@ static void UI_KeyBindingNodeClick (uiNode_t *node, int x, int y)
 	if (!node->text)
 		return;
 
-	if (strncmp(node->text, "*binding", 8))
+	if (!Q_strstart(node->text, "*binding"))
 		return;
 
 	if (!UI_HasFocus(node)) {
@@ -79,7 +79,7 @@ static qboolean UI_KeyBindingNodeKeyPressed (uiNode_t *node, unsigned int key, u
 	UI_RemoveFocus();
 
 	/** @todo what about macro expansion? */
-	if (strncmp(node->text, "*binding:", 9))
+	if (!Q_strstart(node->text, "*binding:"))
 		return qfalse;
 
 	command = node->text + 9;

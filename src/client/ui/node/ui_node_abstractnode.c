@@ -383,7 +383,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 	case V_UI_CVAR:	/* cvar */
 		switch ((int)property->type) {
 		case V_UI_CVAR:
-			if (!strncmp(value, "*cvar:", 6)) {
+			if (Q_strstart(value, "*cvar:")) {
 				UI_FreeStringProperty(*(void**)b);
 				*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				node->behaviour->propertyChanged(node, property);
@@ -394,7 +394,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 			{
 				float f;
 
-				if (!strncmp(value, "*cvar:", 6)) {
+				if (Q_strstart(value, "*cvar:")) {
 					UI_FreeStringProperty(*(void**)b);
 					*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 					node->behaviour->propertyChanged(node, property);
@@ -408,7 +408,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 				}
 
 				b = (byte*) (*(void**)b);
-				if (!strncmp((const char*)b, "*cvar", 5))
+				if (Q_strstart((const char*)b, "*cvar"))
 					Cvar_SetValue(&((char*)b)[6], f);
 				else
 					*(float*) b = f;
@@ -487,7 +487,7 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 		return *(const float*) b;
 	} else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
 		b = *(const byte* const*) b;
-		if (!strncmp((const char*)b, "*cvar", 5)) {
+		if (Q_strstart((const char*)b, "*cvar")) {
 			const char* cvarName = (const char*)b + 6;
 			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
 			return cvar->value;
