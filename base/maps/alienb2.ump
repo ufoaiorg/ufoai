@@ -8,6 +8,19 @@
 base alienb2/ab_		// Prefix for each tile's .map file including path from /maps/
 
 
+// Hub
+tile +hub
+{
+	6 6
+
+	0		b		b		b		b		0
+	w		+w		+a		+a		+w		a
+	w		+w		+a		+a		+w		a
+	w		+w		+a		+a		+w		a
+	w		+w		+a		+a		+w		a
+	0		a		x		a		x		0
+}
+
 // Power core
 tile +powercore
 {
