@@ -793,15 +793,6 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 }
 
 /**
- * @brief AIR_ForeachFromBase check callback
- */
-qboolean AIR_CheckBaseListIterator (void *data, const void *base)
-{
-	const aircraft_t *aircraft = (const aircraft_t *)data;
-	return AIR_IsAircraftOfBase(aircraft, base);
-}
-
-/**
  * @brief Will remove the given aircraft from the base
  * @param[out] base The base to remove the aircraft from
  * @param aircraft The aircraft to remove

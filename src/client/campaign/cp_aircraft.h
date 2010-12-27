@@ -244,8 +244,9 @@ void AIR_ListCraftIndexes_f(void);
 aircraft_t *AIR_Add(struct base_s *base, const aircraft_t *aircraftTemplate);
 qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 
-qboolean AIR_CheckBaseListIterator(void *data, const void *base);
-#define AIR_ForeachFromBase(var, base) LIST_ForeachCheck(ccs.aircraft, aircraft_t, (var), AIR_CheckBaseListIterator, (const void *)base)
+#define AIR_ForeachFromBase(var, base) \
+	AIR_Foreach(var) \
+		if (!AIR_IsAircraftOfBase(var, (base))) continue; else
 
 aircraft_t* AIR_GetFirstFromBase(const struct base_s *base);
 
