@@ -18,28 +18,6 @@ typedef struct linkedList_s {
  * @note Don't try to use the internal loop variable @c l. This variable is most likely not at the position you would expect it to be */
 #define LIST_Foreach(list, type, var) for (linkedList_t *l = (list); CHECK_LIST(l, type, (var));)
 
-/**
- * @brief LIST_ForeachGetNextWithCheck callback function that checks whether a value should be used in the foreach loop, or whether it should be skipped
- * @param data The list data
- * @param userdata The userdata that is send to perform the check
- * @return @c true if the value should be used, @c false if it should be skipped
- */
-typedef qboolean (*listCheck_t) (void* data, const void *userdata);
-
-linkedList_t* LIST_GetNextWithCheck(linkedList_t* list, listCheck_t check, const void *userdata);
-
-/** @brief check whether the next data pointer from the linked list is @c NULL or not, if it is @c NULL the end of the list is reached */
-#define CHECK_LIST_CHECK(l, type, var, check, userdata) ((((l) = (((ASSIGN_VAR(l, type, (var))) != NULL) ? LIST_GetNextWithCheck((l)->next, (check), (userdata)) : NULL)) != NULL) || var != NULL)
-
-/**
- * @brief Iterates over a linked list and perform a check whether the entry should be part of the loop or not.
- * @param list The linked list to iterate over
- * @param type The type the data pointer in the list entry should be cast into
- * @param check The check callback
- * @param userdata Userdata that is passed to the check callback
- */
-#define LIST_ForeachCheck(list, type, var, check, userdata) for (linkedList_t *l = LIST_GetNextWithCheck((list), (check), (userdata)); CHECK_LIST_CHECK(l, type, (var), (check), (userdata));)
-
 void LIST_AddString(linkedList_t** list, const char* data);
 void LIST_AddStringSorted(linkedList_t** listDest, const char* data);
 void LIST_AddPointer(linkedList_t** listDest, void* data);

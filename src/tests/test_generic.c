@@ -222,32 +222,6 @@ static qboolean testLinkedListCheckIteratorCheckCallback (void *data, const void
 	return !strcmp((const char *)data, "test1") || !strcmp((const char *)data, "test3") || !strcmp((const char *)data, "test7");
 }
 
-static void testLinkedListCheckIterator (void)
-{
-	linkedList_t *list = NULL;
-	char *data;
-	int cnt;
-
-	LIST_AddString(&list, "test1");
-	LIST_AddString(&list, "test2");
-	LIST_AddString(&list, "test3");
-	LIST_AddString(&list, "test4");
-	LIST_AddString(&list, "test5");
-	LIST_AddString(&list, "test6");
-	LIST_AddString(&list, "test7");
-
-	cnt = 0;
-	LIST_ForeachCheck(list, char, data, testLinkedListCheckIteratorCheckCallback, NULL) {
-		CU_ASSERT_TRUE(testLinkedListCheckIteratorCheckCallback(data, NULL));
-		Com_Printf("Found string: %s\n", data);
-		cnt++;
-	}
-
-	CU_ASSERT_EQUAL(cnt, 3);
-
-	LIST_Delete(&list);
-}
-
 static void testFileSystemBuildLists (void)
 {
 	const char *filename, *prev;
@@ -414,9 +388,6 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == NULL)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testLinkedListCheckIterator) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testFileSystemBuildLists) == NULL)
