@@ -264,6 +264,18 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		timeout	60000
 	}
 
+	func set_mn_serverliststr_from_id {
+		if (<1> == 0) {
+			*cvar:mn_serverliststr = "All"
+		} elif (<1> == 1) {
+			*cvar:mn_serverliststr = "Free"
+		} elif (<1> == 2) {
+			*cvar:mn_serverliststr = "Playing"
+		} else {
+			*cvar:mn_serverliststr = "Invalid"
+		}
+	}
+
 	panel content {
 		{
 			pos			"415 120"
@@ -290,7 +302,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			icon		"icons/prev"
 			onClick		{
 				*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 2)
-				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+				call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
 				cmd "pingservers refresh;"
 			}
 		}
@@ -301,7 +313,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			icon		"icons/next"
 			onClick		{
 				*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 2)
-				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+				call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
 				cmd "pingservers refresh;"
 			}
 		}
@@ -420,9 +432,9 @@ window mp_serverbrowser extends abstract_multiplayer_join
 	// ====================
 	func onWindowOpened
 	{
-		cmd "set cl_serverlist 0;"
+		*cvar:cl_serverlist = 0
 		cmd "pingservers refresh;"
-		cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+		call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
 	}
 
 	func onEvent

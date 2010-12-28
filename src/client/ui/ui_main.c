@@ -43,8 +43,8 @@ static cvar_t *ui_debug;
 #endif
 
 /**
+ * @brief Get the current debug mode (0 mean disabled)
  * @sa UI_DisplayNotice
- * @todo move it into a better file
  */
 int UI_DebugMode (void)
 {
@@ -53,55 +53,6 @@ int UI_DebugMode (void)
 #else
 	return 0;
 #endif
-}
-
-/**
- * @brief Shows the corresponding strings in the UI
- * Example: Options window - fullscreen: yes
- */
-static void UI_Translate_f (void)
-{
-	const char *current, *list;
-	char original[MAX_VAR], translation[MAX_VAR];
-
-	if (Cmd_Argc() < 4) {
-		Com_Printf("Usage: %s <source> <dest> <list>\n", Cmd_Argv(0));
-		return;
-	}
-
-	current = Cvar_GetString(Cmd_Argv(1));
-	list = Cmd_Argv(3);
-
-	while (list[0] != '\0') {
-		char *trans;
-		char *orig = original;
-		while (list[0] != '\0' && list[0] != ':') {
-			/** @todo overflow check */
-			*orig++ = *list++;
-		}
-		*orig = '\0';
-		list++;
-
-		trans = translation;
-		while (list[0] != '\0' && list[0] != ',') {
-			/** @todo overflow check */
-			*trans++ = *list++;
-		}
-		*trans = '\0';
-		list++;
-
-		if (!strcmp(current, original)) {
-			Cvar_Set(Cmd_Argv(2), _(translation));
-			return;
-		}
-	}
-
-	if (current[0] != '\0') {
-		/* nothing found, copy value */
-		Cvar_Set(Cmd_Argv(2), _(current));
-	} else {
-		Cvar_Set(Cmd_Argv(2), "");
-	}
 }
 
 #ifdef DEBUG
@@ -260,10 +211,6 @@ void UI_Init (void)
 	memset(&ui_global, 0, sizeof(ui_global));
 
 	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
-
-	/* add global UI commands */
-	/** @todo delete me */
-	Cmd_AddCommand("mn_translate", UI_Translate_f, NULL);
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_uimemory", UI_Memory_f, "Display info about UI memory allocation");
