@@ -29,7 +29,6 @@
 
 #include "gtkutil/messagebox.h"
 #include "gtkutil/container.h"
-#include "gtkutil/nonmodal.h"
 #include "gtkutil/IConv.h"
 #include "gtkutil/dialog.h"
 #include "stream/stringstream.h"
@@ -112,8 +111,6 @@ GtkWidget* Console_constructWindow (GtkWindow* toplevel)
 		gtk_container_add(GTK_CONTAINER (scr), text);
 		gtk_widget_show(text);
 		g_console = text;
-
-		widget_connect_escape_clear_focus_widget(g_console);
 
 		g_signal_connect(G_OBJECT(g_console), "populate-popup", G_CALLBACK(console_populate_popup), 0);
 		g_signal_connect(G_OBJECT(g_console), "destroy", G_CALLBACK(destroy_set_null), &g_console);
