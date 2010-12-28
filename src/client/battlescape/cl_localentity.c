@@ -347,8 +347,6 @@ void LM_Think (void)
  LE think functions
 =========================================================================== */
 
-static char retAnim[MAX_VAR];
-
 /**
  * @brief Get the correct animation for the given actor state and weapons
  * @param[in] anim Type of animation (for example "stand", "walk")
@@ -360,16 +358,12 @@ static char retAnim[MAX_VAR];
  */
 const char *LE_GetAnim (const char *anim, int right, int left, int state)
 {
-	char *mod;
-	qboolean akimbo;
-	char animationIndex;
-	const char *type;
-	size_t length = sizeof(retAnim);
-
 	if (!anim)
 		return "";
 
-	mod = retAnim;
+	static char retAnim[MAX_VAR];
+	char*       mod    = retAnim;
+	size_t      length = sizeof(retAnim);
 
 	/* add crouched flag */
 	if (state & STATE_CROUCHED) {
@@ -378,7 +372,9 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 	}
 
 	/* determine relevant data */
-	akimbo = qfalse;
+	char        animationIndex;
+	char const* type;
+	qboolean    akimbo = qfalse;
 	if (right == NONE) {
 		animationIndex = '0';
 		if (left == NONE)
