@@ -175,7 +175,7 @@ static void MD5Update(struct MD5Context *ctx, unsigned char const *buf, unsigned
 
 	t = ctx->bits[0];
 	if ((ctx->bits[0] = t + ((uint32_t) len << 3)) < t)
-	ctx->bits[1]++;		/* Carry from low to high */
+		ctx->bits[1]++;		/* Carry from low to high */
 	ctx->bits[1] += len >> 29;
 
 	t = (t >> 3) & 0x3f;	/* Bytes already in shsInfo->data */
@@ -273,11 +273,9 @@ char *Com_MD5File (const char *fn, int length)
 	MD5_CTX md5;
 	char buffer[2048];
 	int i;
-	int filelen = 0;
-	int r = 0;
 	int total = 0;
+	const int filelen = FS_OpenFile(fn, &f, FILE_READ);
 
-	filelen = FS_OpenFile(fn, &f, FILE_READ);
 	if (filelen < 1)
 		return final;
 
@@ -287,7 +285,7 @@ char *Com_MD5File (const char *fn, int length)
 	MD5Init(&md5);
 
 	for (;;) {
-		r = FS_Read(buffer, sizeof(buffer), &f);
+		int r = FS_Read(buffer, sizeof(buffer), &f);
 		if (r < 1)
 			break;
 		if (r + total > length)
