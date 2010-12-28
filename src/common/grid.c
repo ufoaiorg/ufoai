@@ -246,7 +246,7 @@ static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeE
 		if (step->flier) {
 			/* Fliers cannot fall intentionally. */
 			return qfalse;
-		} else if (RT_FLOOR(step->map, actorSize, x, y, z) >= 0) {
+		} else if (RT_FLOOR_POS(step->map, actorSize, pos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return qfalse;
 		} else if (step->hasLadderSupport) {
@@ -263,7 +263,7 @@ static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeE
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
 		if (step->flier) {
-			if (RT_FLOOR(step->map, actorSize, x, y, z) >= 0 ) { /* Can't fly down through a floor. */
+			if (RT_FLOOR_POS(step->map, actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
 				return qfalse;
 			}
 		} else {
@@ -422,8 +422,8 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		int actorStepupHeight = PATHFINDING_MAX_STEPUP;
 
 		/* This is the standard passage height for all units trying to move horizontally. */
-		RT_CONN_TEST(map, actorSize, x, y, z, dir);
-		passageHeight = RT_CONN(map, actorSize, x, y, z, dir);
+		RT_CONN_TEST_POS(map, actorSize, pos, dir);
+		passageHeight = RT_CONN_POS(map, actorSize, pos, dir);
 		if (passageHeight < step->actorHeight) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passageHeight, step->actorHeight);
 			return;
