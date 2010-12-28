@@ -38,7 +38,7 @@ class Snapshot
 		}
 
 		void release() {
-			delete _data;;
+			delete _data;
 		}
 	};
 

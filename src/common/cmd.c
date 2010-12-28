@@ -1141,7 +1141,7 @@ void Cmd_Init (void)
 void Cmd_Shutdown (void)
 {
 	memset(cmd_functions_hash, 0, sizeof(cmd_functions_hash));
-	cmd_functions = NULL;;
+	cmd_functions = NULL;
 
 	memset(cmd_argv, 0, sizeof(cmd_argv));
 	cmd_argc = 0;
