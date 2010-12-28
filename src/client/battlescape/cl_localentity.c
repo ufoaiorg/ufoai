@@ -374,7 +374,6 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 	/* determine relevant data */
 	char        animationIndex;
 	char const* type;
-	qboolean    akimbo = qfalse;
 	if (right == NONE) {
 		animationIndex = '0';
 		if (left == NONE)
@@ -383,14 +382,16 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 			type = INVSH_GetItemByIDX(left)->type;
 			/* left hand grenades look OK with default anim; others don't */
 			if (strcmp(type, "grenade"))
-				akimbo = qtrue;
+				goto akimbo;
 		}
 	} else {
 		const objDef_t *od = INVSH_GetItemByIDX(right);
 		animationIndex = od->animationIndex;
 		type = od->type;
-		if (left != NONE && !strcmp(od->type, "pistol") && !strcmp(INVSH_GetItemByIDX(left)->type, "pistol"))
-			akimbo = qtrue;
+		if (left != NONE && !strcmp(od->type, "pistol") && !strcmp(INVSH_GetItemByIDX(left)->type, "pistol")) {
+akimbo:
+			type = "pistol_d";
+		}
 	}
 
 	if (Q_strstart(anim, "stand") || Q_strstart(anim, "walk")) {
@@ -399,7 +400,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		*mod++ = animationIndex;
 		*mod++ = 0;
 	} else {
-		Com_sprintf(mod, length, "%s_%s", anim, akimbo ? "pistol_d" : type);
+		Com_sprintf(mod, length, "%s_%s", anim, type);
 	}
 
 	return retAnim;
