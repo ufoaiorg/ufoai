@@ -164,6 +164,8 @@ public:
 	virtual void removeKeyObserver (RegistryKeyObserver* observer) = 0;
 
 	virtual void init() = 0;
+
+	virtual void reset() = 0;
 };
 
 // Module definitions

@@ -277,3 +277,9 @@ void XMLRegistry::init() {
 		import(userFilterFile, "user/ui/filtersystem", Registry::treeUser);
 	}
 }
+
+void XMLRegistry::reset()
+{
+	deleteXPath("user");
+	init();
+}
