@@ -7,15 +7,24 @@
 #include "../../radiant/environment.h"
 
 #include "ScrolledFrame.h"
+#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include <gtksourceview/gtksourcelanguagemanager.h>
 #include <gtksourceview/gtksourcestyleschememanager.h>
 #include <gtksourceview/gtksourceview.h>
 
 #include "dialog.h"
-#include "nonmodal.h"
 
 namespace gtkutil
 {
+	inline gboolean escape_clear_focus_widget (GtkWidget* widget, GdkEventKey* event, gpointer data)
+	{
+		if (event->keyval == GDK_Escape) {
+			gtk_window_set_focus(GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(widget))), NULL);
+			return TRUE;
+		}
+		return FALSE;
+	}
 
 	SourceView::SourceView (const std::string& language, bool readOnly)
 	{
@@ -65,7 +74,7 @@ namespace gtkutil
 		// Use a tab size of 4
 		gtk_source_view_set_tab_width(GTK_SOURCE_VIEW(_view), 4);
 
-		widget_connect_escape_clear_focus_widget(GTK_WIDGET(_view));
+		g_signal_connect(G_OBJECT(_view), "key_press_event", G_CALLBACK(escape_clear_focus_widget), 0);
 
 		_widget = gtkutil::ScrolledFrame(GTK_WIDGET(_view));
 	}
