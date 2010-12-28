@@ -359,18 +359,6 @@ void Key_Init(void);
 
 
 /** Remove element at index from array of size n.  n gets adjusted to the new
- * array size, so must be an lvalue - the old array slot is set to the value
- * given via @c val */
-#define REMOVE_ELEM_MEMSET(array, index, n, val)                                      \
-do {                                                                               \
-	size_t idx__ = (index);                                                          \
-	size_t n__   = --(n);                                                            \
-	assert(idx__ <= n__);                                                            \
-	memmove((array) + idx__, (array) + idx__ + 1, (n__ - idx__) * sizeof(*(array))); \
-	memset((array) + n__, val, sizeof(*(array)));                                      \
-} while (0)
-
-/** Remove element at index from array of size n.  n gets adjusted to the new
  * array size, so must be an lvalue */
 #define REMOVE_ELEM(array, index, n)                                               \
 do {                                                                               \
