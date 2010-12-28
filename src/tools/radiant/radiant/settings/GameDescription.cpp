@@ -2,9 +2,9 @@
 
 #include "gtkutil/dialog.h"
 #include "string/string.h"
-#include "xml/xmlparser.h"
-
 #include "radiant_i18n.h"
+
+#include <libxml/parser.h>
 
 inline const char* xmlAttr_getName (xmlAttrPtr attr)
 {
