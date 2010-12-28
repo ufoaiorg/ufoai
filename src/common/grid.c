@@ -199,34 +199,26 @@ static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnu
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
-	int x, y, z;
-	int nx, ny, nz;
 	int dz;
 
-	x = pos[0];
-	y = pos[1];
-	z = pos[2];
-	nx = toPos[0];
-	ny = toPos[1];
-	nz = toPos[2];
 	dz = toPos[2] - pos[2];
 
 	if (dz > 0) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-		neededHeight = step->actorHeight + CELL_HEIGHT - max(0, RT_FLOOR(step->map, actorSize, x, y, z));
-		RT_CONN_TEST(step->map, actorSize, x, y, z, coreDir);
-		*passageHeight = RT_CONN(step->map, actorSize, x, y, z, coreDir);
+		neededHeight = step->actorHeight + CELL_HEIGHT - max(0, RT_FLOOR_POS(step->map, actorSize, pos));
+		RT_CONN_TEST_POS(step->map, actorSize, pos, coreDir);
+		*passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
 	} else if (dz < 0) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-		neededHeight = step->actorHeight + CELL_HEIGHT - max(0, RT_FLOOR(step->map, actorSize, nx, ny, nz));
-		RT_CONN_TEST(step->map, actorSize, nx, ny, nz, coreDir ^ 1);
-		*passageHeight = RT_CONN(step->map, actorSize, nx, ny, nz, coreDir ^ 1);
+		neededHeight = step->actorHeight + CELL_HEIGHT - max(0, RT_FLOOR_POS(step->map, actorSize, toPos));
+		RT_CONN_TEST_POS(step->map, actorSize, toPos, coreDir ^ 1);
+		*passageHeight = RT_CONN_POS(step->map, actorSize, toPos, coreDir ^ 1);
 	} else {
 		neededHeight = step->actorHeight;
-		RT_CONN_TEST(step->map, actorSize, x, y, z, coreDir);
-		*passageHeight = RT_CONN(step->map, actorSize, x, y, z, coreDir);
+		RT_CONN_TEST_POS(step->map, actorSize, pos, coreDir);
+		*passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
 	}
 	if (*passageHeight < neededHeight) {
 		return qfalse;

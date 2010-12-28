@@ -55,11 +55,17 @@ MACROS
 /* route - Used by Grid_* only  */
 /** @note IMPORTANT: actorSize is 1 or greater!!! */
 #define RT_CONN(map, actorSize, x, y, z, dir)			map[(actorSize) - 1].route[(z)][(y)][(x)][(dir)]
+#define RT_CONN_POS(map, actorSize, p, dir)				(int)(map[(actorSize) - 1].route[p[0]][p[1]][p[2]])
 #define RT_CONN_TEST(map, actorSize, x, y, z, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
 															assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
 															assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
 															assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
 															assert((dir) >= 0); assert((dir) < CORE_DIRECTIONS);
+#define RT_CONN_TEST_POS(map, actorSize, p, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
+															assert(p[2] < PATHFINDING_HEIGHT);\
+															assert((dir) >= 0); assert((dir) < CORE_DIRECTIONS);
+															/* assuming p is a pos3_t, we don't need to check fo p[n] >= 0 here because it's unsigned.
+															 * also we don't need to check against PATHFINDING_WIDTH because it's always greater than a 'byte' type. */
 
 #define RT_CONN_PX(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 0))
 #define RT_CONN_NX(map, actorSize, x, y, z)		(RT_CONN(map, actorSize, x, y, z, 1))
@@ -84,6 +90,7 @@ MACROS
 #define RT_STEPUP_NX_NY(map, actorSize, x, y, z)	    (RT_STEPUP(map, actorSize, x, y, z, 5))
 
 #define RT_FLOOR(map, actorSize, x, y, z)			map[(actorSize) - 1].floor[(z)][(y)][(x)]
+#define RT_FLOOR_POS(map, actorSize, p)				map[(actorSize) - 1].floor[p[0]][p[1]][p[2]]
 #define RT_CEILING(map, actorSize, x, y, z)			map[(actorSize) - 1].ceil[(z)][(y)][(x)]
 #define RT_FILLED(map, actorSize, x, y, z)			(RT_CEILING(map, actorSize, x, y, z) - RT_FLOOR(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
