@@ -346,7 +346,7 @@ void CP_InitializeRadarOverlay (qboolean source)
 {
 	/* Initialize Radar */
 	if (source)
-		memset(r_radarSourcePic, INITIAL_ALPHA_VALUE, sizeof(r_radarSourcePic));
+		OBJSET(r_radarSourcePic, INITIAL_ALPHA_VALUE);
 	else
 		memcpy(r_radarPic, r_radarSourcePic, sizeof(r_radarPic));
 }

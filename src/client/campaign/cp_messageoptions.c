@@ -230,7 +230,7 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 {
 	mxml_node_t *n, *s;
 	/* reset current message settings (default to set for undefined settings)*/
-	memset(messageSettings, 1, sizeof(messageSettings));
+	OBJSET(messageSettings, 1);
 
 	n = mxml_GetNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 	if (!n)

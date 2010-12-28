@@ -569,8 +569,8 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	pos3_t excludeFromForbiddenList;
 
 	/* reset move data */
-	memset(path->area, ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT * ACTOR_MAX_STATES);
-	memset(path->areaFrom, ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT * ACTOR_MAX_STATES);
+	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
+	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
 	path->fblist = fb_list;
 	path->fblength = fb_length;
 
