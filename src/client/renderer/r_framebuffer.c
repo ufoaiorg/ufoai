@@ -68,8 +68,8 @@ void R_InitFBObjects (void)
 		return;
 
 	frameBufferObjectCount = 0;
-	memset(frameBufferObjects, 0, sizeof(frameBufferObjects));
-	memset(frameBufferTextures, 0, sizeof(frameBufferTextures));
+	OBJZERO(frameBufferObjects);
+	OBJZERO(frameBufferTextures);
 
 	r_state.frameBufferObjectsInitialized = qtrue;
 
@@ -156,7 +156,7 @@ void R_ShutdownFBObjects (void)
 	R_UseFramebuffer(&screenBuffer);
 
 	frameBufferObjectCount = 0;
-	memset(frameBufferObjects, 0, sizeof(frameBufferObjects));
+	OBJZERO(frameBufferObjects);
 	r_state.frameBufferObjectsInitialized = qfalse;
 
 	Mem_Free(colorAttachments);

@@ -425,7 +425,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 
 	/* initialize the campaign */
 	cp = &ccs.campaigns[ccs.numCampaigns++];
-	memset(cp, 0, sizeof(*cp));
+	OBJZERO(*cp);
 
 	cp->idx = ccs.numCampaigns - 1;
 	Q_strncpyz(cp->id, name, sizeof(cp->id));
@@ -530,7 +530,7 @@ static void CL_ParseComponents (const char *name, const char **text)
 	comp = &ccs.components[ccs.numComponents];
 	ccs.numComponents++;
 
-	memset(comp, 0, sizeof(*comp));
+	OBJZERO(*comp);
 
 	/* set standard values */
 	Q_strncpyz(comp->assemblyId, name, sizeof(comp->assemblyId));

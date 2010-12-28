@@ -326,5 +326,5 @@ void GAME_MP_Shutdown (void)
 
 	SV_Shutdown("Game mode shutdown", qfalse);
 
-	memset(&teamData, 0, sizeof(teamData));
+	OBJZERO(teamData);
 }

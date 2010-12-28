@@ -173,7 +173,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	vec3_t scale, center, position, angles;
 	float zoom = 0.4f;
 
-	memset(&mi, 0, sizeof(mi));
+	OBJZERO(mi);
 	VectorCopy(vec3_origin, position);
 	VectorCopy(vec3_origin, angles);
 
@@ -241,7 +241,7 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	vec3_t scale, center, position, angles;
 	float zoom = 0.4f;
 
-	memset(&mi, 0, sizeof(mi));
+	OBJZERO(mi);
 	VectorCopy(vec3_origin, position);
 	VectorCopy(vec3_origin, angles);
 

@@ -85,7 +85,7 @@ static void testItemAdd (void)
 
 	ResetInventoryList();
 
-	memset(&inv, 0, sizeof(inv));
+	OBJZERO(inv);
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
@@ -114,7 +114,7 @@ static void testItemDel (void)
 
 	ResetInventoryList();
 
-	memset(&inv, 0, sizeof(inv));
+	OBJZERO(inv);
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
@@ -147,8 +147,8 @@ static void testItemMove (void)
 
 	ResetInventoryList();
 
-	memset(&inv, 0, sizeof(inv));
-	memset(&item, 0, sizeof(item));
+	OBJZERO(inv);
+	OBJZERO(item);
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
@@ -186,7 +186,7 @@ static void testItemReload (void)
 
 	ResetInventoryList();
 
-	memset(&inv, 0, sizeof(inv));
+	OBJZERO(inv);
 
 	od = INVSH_GetItemByIDSilent("rpg");
 	CU_ASSERT_PTR_NOT_NULL(od);
@@ -276,7 +276,7 @@ static void testItemMassActions (void)
 
 	ResetInventoryList();
 
-	memset(&inv, 0, sizeof(inv));
+	OBJZERO(inv);
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);

@@ -42,10 +42,10 @@ void CL_ParseResults (const eventRegister_t *self, struct dbuffer *msg)
 	int num_kills[MAX_TEAMS][MAX_TEAMS];
 	int num_stuns[MAX_TEAMS][MAX_TEAMS];
 
-	memset(num_spawned, 0, sizeof(num_spawned));
-	memset(num_alive, 0, sizeof(num_alive));
-	memset(num_kills, 0, sizeof(num_kills));
-	memset(num_stuns, 0, sizeof(num_stuns));
+	OBJZERO(num_spawned);
+	OBJZERO(num_alive);
+	OBJZERO(num_kills);
+	OBJZERO(num_stuns);
 
 	/* get number of teams */
 	num = NET_ReadByte(msg);

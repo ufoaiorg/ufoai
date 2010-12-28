@@ -351,7 +351,7 @@ void M_Init (void)
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
 	snd_music_volume->modified = qtrue;
 
-	memset(&music, 0, sizeof(music));
+	OBJZERO(music);
 }
 
 void M_Shutdown (void)

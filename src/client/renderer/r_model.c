@@ -132,13 +132,13 @@ static model_t *R_ModForName (const char *name)
 		r_numModels++;
 	}
 
-	memset(mod, 0, sizeof(*mod));
+	OBJZERO(*mod);
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
 
 	/* load the file */
 	modfilelen = FS_LoadFile(mod->name, &buf);
 	if (!buf) {
-		memset(mod->name, 0, sizeof(mod->name));
+		OBJZERO(mod->name);
 		r_numModels--;
 		return NULL;
 	}
@@ -348,7 +348,7 @@ void R_ShutdownModels (qboolean complete)
 		if (vid_lightPool)
 			Mem_FreePool(vid_lightPool);
 		r_numModels = 0;
-		memset(&r_models, 0, sizeof(r_models));
+		OBJZERO(r_models);
 	} else {
 		if (vid_modelPool)
 			Mem_FreeTag(vid_modelPool, 0);

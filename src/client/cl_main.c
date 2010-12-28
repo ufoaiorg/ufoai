@@ -224,7 +224,7 @@ static void CL_ClearState (void)
 	LE_Cleanup();
 
 	/* wipe the entire cl structure */
-	memset(&cl, 0, sizeof(cl));
+	OBJZERO(cl);
 	cl.cam.zoom = 1.0;
 	CL_ViewCalcFieldOfViewX();
 
@@ -770,7 +770,7 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 	if (cls.numMDs >= lengthof(cls.mds))
 		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
 
-	memset(md, 0, sizeof(*md));
+	OBJZERO(*md);
 	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
 
 	do {
@@ -1268,7 +1268,7 @@ void CL_Init (void)
 	if (sv_dedicated->integer)
 		return;					/* nothing running on the client */
 
-	memset(&cls, 0, sizeof(cls));
+	OBJZERO(cls);
 
 	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 	/* i18n through gettext */

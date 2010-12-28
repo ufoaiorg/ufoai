@@ -44,7 +44,7 @@ void R_InitMiscTexture (void)
 	int x, y;
 	byte data[MISC_TEXTURE_SIZE][MISC_TEXTURE_SIZE][4];
 
-	memset(data, 0, sizeof(data));
+	OBJZERO(data);
 
 	/* also use this for bad textures, but without alpha */
 	for (x = 0; x < 8; x++) {

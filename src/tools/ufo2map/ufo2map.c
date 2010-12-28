@@ -544,9 +544,9 @@ int main (int argc, const char **argv)
 	double begin, start, end;
 	long size;
 
-	memset(&config, 0, sizeof(config));
+	OBJZERO(config);
 	/* init thread state */
-	memset(&threadstate, 0, sizeof(threadstate));
+	OBJZERO(threadstate);
 
 	U2M_SetDefaultConfigValues();
 

@@ -548,7 +548,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		return AI_ACTION_NOTHING_FOUND;
 
 	bestActionPoints = 0.0;
-	memset(aia, 0, sizeof(*aia));
+	OBJZERO(*aia);
 
 	/* set basic parameters */
 	VectorCopy(to, aia->to);
@@ -653,7 +653,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
-	memset(aia, 0, sizeof(*aia));
+	OBJZERO(*aia);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
@@ -764,7 +764,7 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* reset any previous given action set */
-	memset(aia, 0, sizeof(*aia));
+	OBJZERO(*aia);
 
 	if (ent->team == TEAM_CIVILIAN) {
 		edict_t *checkPoint = NULL;
@@ -894,7 +894,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
-		memset(&bestAia, 0, sizeof(bestAia));
+		OBJZERO(bestAia);
 
 	return bestAia;
 }
@@ -1222,7 +1222,7 @@ player_t *AI_CreatePlayer (int team)
 	p = NULL;
 	while ((p = G_PlayerGetNextAI(p))) {
 		if (!p->inuse) {
-			memset(p, 0, sizeof(*p));
+			OBJZERO(*p);
 			p->inuse = qtrue;
 			p->num = p - game.players;
 			p->pers.ai = qtrue;

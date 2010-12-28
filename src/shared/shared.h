@@ -144,4 +144,6 @@ void Com_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
 void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
 
+#define OBJZERO(obj) (memset(&(obj), 0, sizeof(obj)))
+
 #endif

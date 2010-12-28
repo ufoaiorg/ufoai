@@ -203,7 +203,7 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 	GetModuleFileNameA(NULL, procname, sizeof procname);
 
 	STACKFRAME frame;
-	memset(&frame, 0, sizeof(frame));
+	OBJZERO(frame);
 
 	frame.AddrPC.Offset = context->Eip;
 	frame.AddrPC.Mode = AddrModeFlat;
@@ -297,7 +297,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 
 	GetSystemTime(&timeInfo);
 
-	memset(&osInfo, 0, sizeof(osInfo));
+	OBJZERO(osInfo);
 	osInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 	if (!GetVersionEx((OSVERSIONINFO*)&osInfo)) {
 		osInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);

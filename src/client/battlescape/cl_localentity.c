@@ -112,7 +112,7 @@ static void LM_AddToSceneOrder (qboolean parents)
 			continue;
 
 		/* set entity values */
-		memset(&ent, 0, sizeof(ent));
+		OBJZERO(ent);
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
@@ -278,7 +278,7 @@ localModel_t *LM_AddModel (const char *model, const vec3_t origin, const vec3_t 
 	if (cl.numLMs >= MAX_LOCALMODELS)
 		Com_Error(ERR_DROP, "Too many local models\n");
 
-	memset(lm, 0, sizeof(*lm));
+	OBJZERO(*lm);
 	Q_strncpyz(lm->name, model, sizeof(lm->name));
 	VectorCopy(origin, lm->origin);
 	VectorCopy(angles, lm->angles);
@@ -1090,7 +1090,7 @@ le_t *LE_Add (int entnum)
 	}
 
 	/* initialize the new LE */
-	memset(le, 0, sizeof(*le));
+	OBJZERO(*le);
 	le->inuse = qtrue;
 	le->entnum = entnum;
 	le->fieldSize = ACTOR_SIZE_NORMAL;
@@ -1335,7 +1335,7 @@ void LE_AddToScene (void)
 			} else if (le->pos[2] > cl_worldlevel->integer)
 				continue;
 
-			memset(&ent, 0, sizeof(ent));
+			OBJZERO(ent);
 
 			ent.alpha = le->alpha;
 

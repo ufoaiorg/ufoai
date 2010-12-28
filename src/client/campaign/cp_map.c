@@ -319,7 +319,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 
 	/* Init data for multi selection */
 	multiSelect.nbSelect = 0;
-	memset(multiSelect.popupText, 0, sizeof(multiSelect.popupText));
+	OBJZERO(multiSelect.popupText);
 	/* Get selected missions */
 	CP_MissionForeach(tempMission) {
 		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)

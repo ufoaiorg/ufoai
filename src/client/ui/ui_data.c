@@ -436,7 +436,7 @@ static uiNode_t* UI_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIter
 uiNode_t* UI_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
 {
 	assert(option == NULL || option->behaviour == ui_optionBehaviour);
-	memset(iterator, 0, sizeof(*iterator));
+	OBJZERO(*iterator);
 	iterator->skipCollapsed = qtrue;
 	iterator->skipInvisible = qtrue;
 	return UI_FindOptionAtIndex(index, option, iterator);

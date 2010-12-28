@@ -142,7 +142,7 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 	}
 
 	/* reset the used flag */
-	memset(used, 0, sizeof(used));
+	OBJZERO(used);
 
 	width = node->size[0] / BASE_SIZE;
 	height = node->size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;

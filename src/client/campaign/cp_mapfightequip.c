@@ -899,7 +899,7 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, bas
 	/* Only one of them is allowed or neither. */
 	assert((!base && installation) || (base && !installation) || (!base && !installation));
 
-	memset(slot, 0, sizeof(*slot));
+	OBJZERO(*slot);
 	slot->aircraft = aircraftTemplate;
 	slot->base = base;
 	slot->installation = installation;

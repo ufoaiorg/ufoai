@@ -92,7 +92,7 @@ static void UI_FreeRadarImages (void)
 		for (j = 0; j < radar.images[i].maxlevel; j++)
 			Mem_Free(radar.images[i].path[j]);
 	}
-	memset(&radar, 0, sizeof(radar));
+	OBJZERO(radar);
 }
 
 /**

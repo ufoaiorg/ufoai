@@ -366,7 +366,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 	PicoSetModelFileName(model, fileName);
 
 	/* initialize some stuff */
-	memset(lastNodeName, 0, sizeof(lastNodeName));
+	OBJZERO(lastNodeName);
 
 	/* parse ase model file */
 	while (1) {

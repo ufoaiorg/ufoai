@@ -186,7 +186,7 @@ static void CL_AddServerToList (const char *node, const char *service)
 		if (strcmp(serverList[i].node, node) == 0 && strcmp(serverList[i].service, service) == 0)
 			return;
 
-	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
+	OBJZERO(serverList[serverListLength]);
 	serverList[serverListLength].node = Mem_PoolStrDup(node, cl_genericPool, 0);
 	serverList[serverListLength].service = Mem_PoolStrDup(service, cl_genericPool, 0);
 	CL_PingServer(&serverList[serverListLength]);
@@ -216,7 +216,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		return;
 	}
 
-	memset(&teamData, 0, sizeof(teamData));
+	OBJZERO(teamData);
 
 	teamData.maxteams = Info_IntegerForKey(str, "sv_maxteams");
 	teamData.maxPlayersPerTeam = Info_IntegerForKey(str, "sv_maxplayersperteam");
@@ -559,7 +559,7 @@ void CL_PingServers_f (void)
 		}
 		serverListPos = 0;
 		serverListLength = 0;
-		memset(serverList, 0, sizeof(serverList));
+		OBJZERO(serverList);
 	} else {
 		UI_RegisterText(TEXT_LIST, serverText);
 		return;

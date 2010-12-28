@@ -85,7 +85,7 @@ qboolean UI_ParseFont (const char *name, const char **text)
 
 	/* initialize the UI */
 	font = &fonts[numFonts];
-	memset(font, 0, sizeof(*font));
+	OBJZERO(*font);
 
 	font->name = Mem_PoolStrDup(name, ui_sysPool, 0);
 

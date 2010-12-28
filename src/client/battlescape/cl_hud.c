@@ -609,7 +609,7 @@ static void HUD_RemainingTUs_f (void)
 	type = Cmd_Argv(1);
 	state = Com_ParseBoolean(Cmd_Argv(2));
 
-	memset(displayRemainingTus, 0, sizeof(displayRemainingTus));
+	OBJZERO(displayRemainingTus);
 
 	if (!strcmp(type, "reload_r")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] = state;

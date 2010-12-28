@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void SZ_Init (sizebuf_t * buf, byte * data, int length)
 {
-	memset(buf, 0, sizeof(*buf));
+	OBJZERO(*buf);
 	buf->data = data;
 	buf->maxsize = length;
 }

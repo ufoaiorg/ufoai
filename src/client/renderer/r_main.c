@@ -1067,9 +1067,9 @@ qboolean R_Init (void)
 {
 	R_RegisterSystemVars();
 
-	memset(&r_state, 0, sizeof(r_state));
-	memset(&r_locals, 0, sizeof(r_locals));
-	memset(&r_config, 0, sizeof(r_config));
+	OBJZERO(r_state);
+	OBJZERO(r_locals);
+	OBJZERO(r_config);
 
 	/* some config default values */
 	r_config.gl_solid_format = GL_RGB;

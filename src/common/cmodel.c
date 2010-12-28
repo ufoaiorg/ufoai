@@ -311,7 +311,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
 	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 
-	memset(&tr, 0, sizeof(tr));
+	OBJZERO(tr);
 	tr.fraction = 2.0f;
 
 	/* Prep the mins and maxs */

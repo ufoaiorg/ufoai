@@ -125,7 +125,7 @@ void CP_UpdateNationXVIInfection (void)
 		const byte* previousNationColor;
 		const nation_t* nation;
 
-		memset(sum, 0, sizeof(sum));
+		OBJZERO(sum);
 
 		Vector2Set(currentPos, 180.0f, 90.0f - y / heightPerDegree);
 		previousNationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS);

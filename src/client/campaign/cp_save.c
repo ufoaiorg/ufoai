@@ -301,7 +301,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	}
 
 	/* calculate the needed buffer size */
-	memset(&header, 0, sizeof(header));
+	OBJZERO(header);
 	header.compressed = LittleLong(save_compressed->integer);
 	header.version = LittleLong(SAVE_FILE_VERSION);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
@@ -656,7 +656,7 @@ void SAV_Init (void)
 	static saveSubsystems_t us_subsystemXML = {"ufostores", US_SaveXML, US_LoadXML};
 
 	saveSubsystemsAmount = 0;
-	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
+	OBJZERO(saveSubsystems);
 
 	Com_Printf("\n--- save subsystem initialization --\n");
 

@@ -1669,7 +1669,7 @@ static void Com_ParseItem (const char *name, const char **text)
 
 	/* initialize the object definition */
 	od = &csi.ods[csi.numODs++];
-	memset(od, 0, sizeof(*od));
+	OBJZERO(*od);
 
 	od->craftitem.type = MAX_ACITEMS; /**< default is no craftitem */
 
@@ -1873,7 +1873,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 
 	/* initialize the inventory definition */
 	id = &csi.ids[csi.numIDs++];
-	memset(id, 0, sizeof(*id));
+	OBJZERO(*id);
 
 	Q_strncpyz(id->name, name, sizeof(id->name));
 
@@ -1999,7 +1999,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 	/* initialize the equipment definition */
 	ed = &csi.eds[csi.numEDs++];
-	memset(ed, 0, sizeof(*ed));
+	OBJZERO(*ed);
 
 	Q_strncpyz(ed->name, name, sizeof(ed->name));
 
@@ -2518,7 +2518,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 	/* reset new category */
 	if (i == csi.numTeamDefs) {
 		if (csi.numTeamDefs < MAX_TEAMDEFS) {
-			memset(td, 0, sizeof(*td));
+			OBJZERO(*td);
 			/* index backlink */
 			td->idx = csi.numTeamDefs;
 			csi.numTeamDefs++;
@@ -2684,7 +2684,7 @@ static void Com_ParseUGVs (const char *name, const char **text)
 	}
 
 	ugv = &csi.ugvs[csi.numUGV];
-	memset(ugv, 0, sizeof(*ugv));
+	OBJZERO(*ugv);
 	ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
 	ugv->idx = csi.numUGV;
 	csi.numUGV++;
@@ -2731,7 +2731,7 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 
 	/* initialize the character template */
 	ct = &csi.chrTemplates[csi.numChrTemplates++];
-	memset(ct, 0, sizeof(*ct));
+	OBJZERO(*ct);
 
 	Q_strncpyz(ct->id, name, sizeof(ct->id));
 
@@ -2912,7 +2912,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 		if (i >= MAX_GAMETYPES)
 			Sys_Error("Com_ParseGameTypes: MAX_GAMETYPES exceeded\n");
 		gt = &gts[numGTs++];
-		memset(gt, 0, sizeof(*gt));
+		OBJZERO(*gt);
 		Q_strncpyz(gt->id, name, sizeof(gt->id));
 		if (numGTs >= MAX_GAMETYPES)
 			Sys_Error("Com_ParseGameTypes: Too many gametypes.\n");
@@ -3315,9 +3315,9 @@ int Com_GetScriptChecksum (void)
 
 void Com_Shutdown (void)
 {
-	memset(terrainTypesHash, 0, sizeof(terrainTypesHash));
-	memset(com_constNameInt_hash, 0, sizeof(com_constNameInt_hash));
-	memset(gts, 0, sizeof(gts));
+	OBJZERO(terrainTypesHash);
+	OBJZERO(com_constNameInt_hash);
+	OBJZERO(gts);
 	com_constNameInt = NULL;
 	versionParsed = qfalse;
 	numGTs = 0;

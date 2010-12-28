@@ -277,7 +277,7 @@ void MSO_ParseSettings (const char *name, const char **text)
 		return;
 	}
 	/* settings available, reset previous settings */
-	memset(messageSettings, 0, sizeof(messageSettings));
+	OBJZERO(messageSettings);
 
 	do {
 		/* get the msg type*/
@@ -328,14 +328,14 @@ void MSO_ParseCategories (const char *name, const char **text)
 
 	category = &ccs.messageCategories[ccs.numMsgCategories];
 
-	memset(category, 0, sizeof(*category));
+	OBJZERO(*category);
 	category->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 	category->idx = ccs.numMsgCategories;	/* set self-link */
 
 	entry = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
 
 	/* first entry is category */
-	memset(entry, 0, sizeof(*entry));
+	OBJZERO(*entry);
 	entry->category = &ccs.messageCategories[ccs.numMsgCategories];
 	category->last = category->first = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
 	entry->previous = NULL;
@@ -359,7 +359,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 					/* prepare a new msgcategory entry */
 					msgCategoryEntry_t *old = ccs.messageCategories[ccs.numMsgCategories].last;
 
-					memset(&ccs.msgCategoryEntries[ccs.numMsgCategoryEntries], 0, sizeof(ccs.msgCategoryEntries[ccs.numMsgCategoryEntries]));
+					OBJZERO(ccs.msgCategoryEntries[ccs.numMsgCategoryEntries]);
 					ccs.msgCategoryEntries[ccs.numMsgCategoryEntries].category = &ccs.messageCategories[ccs.numMsgCategories];
 
 					ccs.messageCategories[ccs.numMsgCategories].last = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];

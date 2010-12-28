@@ -1149,7 +1149,7 @@ void CheckNodraws (void)
 					qboolean paired[CH_COMP_NDR_EDGE_INTSCT_BUF];
 					int numIntsct = 0;
 
-					memset(paired, '\0', CH_COMP_NDR_EDGE_INTSCT_BUF * sizeof(qboolean));
+					OBJZERO(paired);
 
 					for (l = 0; l < composite->numMembers; l++) {
 						const winding_t *mWinding = composite->memberSides[l]->winding;

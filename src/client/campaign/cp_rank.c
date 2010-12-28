@@ -103,7 +103,7 @@ void CL_ParseRanks (const char *name, const char **text)
 	}
 
 	rank = &ccs.ranks[ccs.numRanks++];
-	memset(rank, 0, sizeof(*rank));
+	OBJZERO(*rank);
 	rank->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	do {

@@ -465,7 +465,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 	/* new entry */
 	installation = &ccs.installationTemplates[ccs.numInstallationTemplates];
-	memset(installation, 0, sizeof(*installation));
+	OBJZERO(*installation);
 	installation->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);

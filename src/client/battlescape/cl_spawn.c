@@ -124,7 +124,7 @@ void CL_SpawnParseEntitystring (void)
 	if (cl.numMapParticles || cl.numLMs)
 		return;
 
-	memset(&sun, 0, sizeof(sun));
+	OBJZERO(sun);
 
 	/* parse ents */
 	while (1) {
@@ -139,7 +139,7 @@ void CL_SpawnParseEntitystring (void)
 			Com_Error(ERR_DROP, "V_ParseEntitystring: found %s when expecting {", entityToken);
 
 		/* initialize */
-		memset(&entData, 0, sizeof(entData));
+		OBJZERO(entData);
 		VectorSet(entData.scale, 1, 1, 1);
 		entData.volume = SND_VOLUME_DEFAULT;
 		entData.maxLevel = maxLevel;
@@ -301,7 +301,7 @@ static void SP_light (const localEntityParse_t *entData)
 {
 #if 0
 	r_light_t light;
-	memset(&light, 0, sizeof(light));
+	OBJZERO(light);
 	VectorCopy(entData->color, light.diffuseColor);
 	light.diffuseColor[3] = 1.0;
 	VectorCopy(entData->origin, light.loc);

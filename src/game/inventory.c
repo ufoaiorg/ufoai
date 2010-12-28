@@ -506,7 +506,7 @@ static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i
 			self->EmptyContainer(self, inv, invDef);
 	}
 
-	memset(inv, 0, sizeof(*inv));
+	OBJZERO(*inv);
 }
 
 
@@ -926,7 +926,7 @@ void INV_InitInventory (const char *name, inventoryInterface_t *interface, const
 {
 	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 
-	memset(interface, 0, sizeof(*interface));
+	OBJZERO(*interface);
 
 	interface->import = import;
 	interface->name = name;
@@ -951,5 +951,5 @@ void INV_DestroyInventory (inventoryInterface_t *interface)
 	if (interface->import == NULL)
 		return;
 	interface->import->FreeAll();
-	memset(interface, 0, sizeof(*interface));
+	OBJZERO(*interface);
 }

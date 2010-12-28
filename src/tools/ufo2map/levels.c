@@ -263,7 +263,7 @@ void ProcessLevel (unsigned int levelnum)
 
 	/** @note Should be reentrant as each thread has a unique levelnum at any given time */
 	dm = &curTile->models[levelnum];
-	memset(dm, 0, sizeof(*dm));
+	OBJZERO(*dm);
 
 	/** @todo Check what happens if two threads do the memcpy */
 	/* back copy backup brush sides structure */

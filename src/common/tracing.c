@@ -971,7 +971,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 #endif
 
 	/* fill in a default trace */
-	memset(&traceData.trace, 0, sizeof(traceData.trace));
+	OBJZERO(traceData.trace);
 	traceData.trace.fraction = min(fraction, 1.0f); /* Use 1 or fraction, whichever is lower. */
 	traceData.trace.surface = NULL;
 
@@ -1065,7 +1065,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t 
 	int i;
 	cBspHead_t *h;
 
-	memset(&tr, 0, sizeof(tr));
+	OBJZERO(tr);
 	/* ensure that the first trace is set in every case */
 	tr.fraction = 2.0f;
 

@@ -218,7 +218,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 		return;
 	popupAircraft.aircraft = aircraft;
 	popupAircraft.numItems = 0;
-	memset(popupAircraft.textPopup, 0, sizeof(popupAircraft.textPopup));
+	OBJZERO(popupAircraft.textPopup);
 	UI_RegisterText(TEXT_POPUP, popupAircraft.textPopup);
 
 	/* Set static datas in popup_aircraft */
@@ -602,8 +602,8 @@ void CL_PopupInit (void)
 	/* popup_homebase commands */
 	Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f, NULL);
 
-	memset(&popupIntercept, 0, sizeof(popupIntercept));
-	memset(&popupAircraft, 0, sizeof(popupAircraft));
+	OBJZERO(popupIntercept);
+	OBJZERO(popupAircraft);
 }
 
 /**

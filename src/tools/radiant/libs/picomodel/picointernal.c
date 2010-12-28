@@ -712,7 +712,7 @@ picoParser_t *_pico_new_parser (picoByte_t *buffer, int bufSize)
 	p = _pico_alloc(sizeof(*p));
 	if (p == NULL)
 		return NULL;
-	memset(p, 0, sizeof(*p));
+	OBJZERO(*p);
 
 	/* allocate token space */
 	p->tokenSize = 0;
@@ -1170,7 +1170,7 @@ picoMemStream_t *_pico_new_memstream (picoByte_t *buffer, int bufSize)
 	s = _pico_alloc(sizeof(*s));
 	if (s == NULL)
 		return NULL;
-	memset(s, 0, sizeof(*s));
+	OBJZERO(*s);
 
 	/* setup */
 	s->buffer = buffer;

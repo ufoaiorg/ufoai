@@ -83,7 +83,7 @@ void TEST_Init (void)
 	FS_AddGameDirectory("./unittest", qfalse);
 	Swap_Init();
 
-	memset(&csi, 0, sizeof(csi));
+	OBJZERO(csi);
 
 	Com_SetExceptionCallback(Test_RunError);
 }

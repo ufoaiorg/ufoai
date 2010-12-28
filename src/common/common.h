@@ -366,7 +366,7 @@ do {                                                                            
 	size_t n__   = --(n);                                                            \
 	assert(idx__ <= n__);                                                            \
 	memmove((array) + idx__, (array) + idx__ + 1, (n__ - idx__) * sizeof(*(array))); \
-	memset((array) + n__, 0, sizeof(*(array)));                                      \
+	OBJZERO((array)[n__]);                                                           \
 } while (0)
 
 /** Same as REMOVE_ELEM() and also updates the idx attribute of every moved

@@ -620,7 +620,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
 
 	b = &mapbrushes[nummapbrushes];
-	memset(b, 0, sizeof(*b));
+	OBJZERO(*b);
 	b->original_sides = &brushsides[nummapbrushsides];
 	b->entitynum = num_entities - 1;
 	b->brushnum = nummapbrushes - mapent->firstbrush;
@@ -961,7 +961,7 @@ static qboolean ParseMapEntity (const char *filename)
 		Sys_Error("num_entities == MAX_MAP_ENTITIES (%i)", num_entities);
 
 	mapent = &entities[num_entities++];
-	memset(mapent, 0, sizeof(*mapent));
+	OBJZERO(*mapent);
 	mapent->firstbrush = nummapbrushes;
 	mapent->numbrushes = 0;
 
@@ -1124,15 +1124,15 @@ void LoadMapFile (const char *filename)
 
 	LoadScriptFile(filename);
 
-	memset(mapbrushes, 0, sizeof(mapbrush_t) * MAX_MAP_BRUSHES);
+	OBJZERO(mapbrushes);
 	nummapbrushes = 0;
 
-	memset(brushsides, 0, sizeof(side_t) * MAX_MAP_SIDES);
+	OBJZERO(brushsides);
 	nummapbrushsides = 0;
 
-	memset(side_brushtextures, 0, sizeof(brush_texture_t) * MAX_MAP_SIDES);
+	OBJZERO(side_brushtextures);
 
-	memset(mapplanes, 0, sizeof(plane_t) * MAX_MAP_PLANES);
+	OBJZERO(mapplanes);
 
 	num_entities = 0;
 	/* Create this shortcut to mapTiles[0] */

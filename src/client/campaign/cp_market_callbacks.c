@@ -929,7 +929,7 @@ void BS_InitCallbacks(void)
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
 	Cmd_AddCommand("market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item");
 
-	memset(&buyList, 0, sizeof(buyList));
+	OBJZERO(buyList);
 	buyList.length = -1;
 }
 

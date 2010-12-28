@@ -1505,7 +1505,7 @@ mission_t *CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	if (category <= INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
 		return NULL;
 
-	memset(&mission, 0, sizeof(mission));
+	OBJZERO(mission);
 
 	/* First fill common datas between all type of missions */
 	mission.category = category;
@@ -1917,7 +1917,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		const char *categoryId = mxml_GetString(node, SAVE_MISSIONS_CATEGORY);
 		const char *stageId = mxml_GetString(node, SAVE_MISSIONS_STAGE);
 
-		memset(&mission, 0, sizeof(mission));
+		OBJZERO(mission);
 		Q_strncpyz(mission.id, mxml_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
 		mission.idx = mxml_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
 		if (mission.idx <= 0) {

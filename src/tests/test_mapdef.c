@@ -54,7 +54,7 @@ static int UFO_InitSuiteMapDef (void)
 	R_FontInit();
 	UI_Init();
 
-	memset(&cls, 0, sizeof(cls));
+	OBJZERO(cls);
 	Com_ParseScripts(qfalse);
 
 	return 0;

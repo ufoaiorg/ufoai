@@ -555,7 +555,7 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 	if (type >= MAX_EMPL)
 		return NULL;
 
-	memset(&employee, 0, sizeof(employee));
+	OBJZERO(employee);
 
 	employee.baseHired = NULL;
 	employee.assigned = qfalse;
@@ -1116,7 +1116,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 			mxml_node_t * chrNode;
 			employee_t e;
 
-			memset(&e, 0, sizeof(e));
+			OBJZERO(e);
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			e.type = emplType;
 			/* base */

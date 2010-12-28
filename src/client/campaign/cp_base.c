@@ -411,7 +411,7 @@ qboolean B_AssembleMap (const base_t *base)
 	coords[0] = '\0';
 
 	/* reset the used flag */
-	memset(used, 0, sizeof(used));
+	OBJZERO(used);
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
@@ -1761,7 +1761,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 
 		/* new entry */
 		building = &ccs.buildingTemplates[ccs.numBuildingTemplates];
-		memset(building, 0, sizeof(*building));
+		OBJZERO(*building);
 		building->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
@@ -1913,8 +1913,8 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	baseTemplate->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	/* clear map for checking duplicate positions and buildingNums for checking moreThanOne constraint */
-	memset(&map, 0, sizeof(map));
-	memset(&buildingNums, 0, sizeof(buildingNums));
+	OBJZERO(map);
+	OBJZERO(buildingNums);
 
 	ccs.numBaseTemplates++;
 
@@ -2636,8 +2636,8 @@ void B_DumpAircraftToHomeBase (aircraft_t *aircraft)
 
 	/* Now empty alien/item cargo just in case. */
 	cargo = AL_GetAircraftAlienCargo(aircraft);
-	memset(cargo, 0, sizeof(*cargo));
-	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
+	OBJZERO(*cargo);
+	OBJZERO(aircraft->itemcargo);
 	AL_SetAircraftAlienCargoTypes(aircraft, 0);
 }
 
@@ -3069,7 +3069,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 
 		/** @todo can't we use something like I_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
-		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
+		OBJZERO(b->bEquipment);
 		/* reset capacities */
 	}
 	Com_UnregisterConstList(saveBaseConstants);

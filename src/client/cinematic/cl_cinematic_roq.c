@@ -572,7 +572,7 @@ void CIN_ROQ_PlayCinematic (cinematic_t *cin, const char *fileName)
 
 	assert(cin->codecData == NULL);
 	cin->codecData = Mem_PoolAlloc(sizeof(ROQCIN), vid_genericPool, 0);
-	memset(&ROQCIN, 0, sizeof(ROQCIN));
+	OBJZERO(ROQCIN);
 
 	/* Open the file */
 	size = FS_OpenFile(fileName, &ROQCIN.file, FILE_READ);

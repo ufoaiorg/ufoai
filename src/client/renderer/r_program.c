@@ -207,7 +207,7 @@ void R_DisableAttribute (const char *name)
 static void R_ShutdownShader (r_shader_t *sh)
 {
 	qglDeleteShader(sh->id);
-	memset(sh, 0, sizeof(*sh));
+	OBJZERO(*sh);
 }
 
 static void R_ShutdownProgram (r_program_t *prog)
@@ -225,7 +225,7 @@ static void R_ShutdownProgram (r_program_t *prog)
 
 	qglDeleteProgram(prog->id);
 
-	memset(prog, 0, sizeof(*prog));
+	OBJZERO(*prog);
 }
 
 void R_ShutdownPrograms (void)
@@ -563,7 +563,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 #endif
 
 		qglDeleteShader(sh->id);
-		memset(sh, 0, sizeof(*sh));
+		OBJZERO(*sh);
 
 		return NULL;
 	}
@@ -805,8 +805,8 @@ void R_InitPrograms (void)
 		return;
 	}
 
-	memset(r_state.shaders, 0, sizeof(r_state.shaders));
-	memset(r_state.programs, 0, sizeof(r_state.programs));
+	OBJZERO(r_state.shaders);
+	OBJZERO(r_state.programs);
 
 	/* shaders are deactivated - don't try to load them - some cards
 	 * even have problems with this */

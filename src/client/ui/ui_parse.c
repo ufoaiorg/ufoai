@@ -1151,7 +1151,7 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 
 	/* initialize the model */
 	model = &ui_global.models[ui_global.numModels];
-	memset(model, 0, sizeof(*model));
+	OBJZERO(*model);
 
 	Vector4Set(model->color, 1, 1, 1, 1);
 

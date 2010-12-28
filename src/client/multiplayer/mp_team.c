@@ -51,7 +51,7 @@ static void MP_UpdateActiveTeamList (void)
 {
 	int i;
 
-	memset(characterActive, 0, sizeof(characterActive));
+	OBJZERO(characterActive);
 	for (i = 0; i < chrDisplayList.num; i++)
 		characterActive[i] = qtrue;
 
@@ -169,7 +169,7 @@ static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
 	const size_t size = GAME_GetCharacterArraySize();
 
 	GAME_ResetCharacters();
-	memset(characterActive, 0, sizeof(characterActive));
+	OBJZERO(characterActive);
 
 	/* header */
 	for (i = 0, n = mxml_GetNode(p, SAVE_MULTIPLAYER_CHARACTER); n && i < size; i++, n = mxml_GetNextNode(n, p, SAVE_MULTIPLAYER_CHARACTER)) {
@@ -202,7 +202,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 
 	topNode = mxmlNewXML("1.0");
 	node = mxml_AddNode(topNode, SAVE_MULTIPLAYER_ROOTNODE);
-	memset(&header, 0, sizeof(header));
+	OBJZERO(header);
 	header.version = LittleLong(MPTEAM_SAVE_FILE_VERSION);
 	header.soldiercount = LittleLong(chrDisplayList.num);
 	Q_strncpyz(header.name, name, sizeof(header.name));

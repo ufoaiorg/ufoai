@@ -273,7 +273,7 @@ void LoadBSPFile (const char *filename)
 
 	/* Because the tracing functions use cBspBrush_t and not dBspBrush_t,
 	 * copy data from curTile->dbrushes into curTile->cbrushes */
-	memset(curTile->brushes, 0, MAX_MAP_BRUSHES * sizeof(cBspBrush_t));
+	OBJZERO(curTile->brushes);
 	for (i = 0; i < curTile->numbrushes; i++) {
 		cBspBrush_t *brush = &curTile->brushes[i];
 		brush->firstbrushside = brush->firstbrushside;
@@ -314,8 +314,8 @@ long WriteBSPFile (const char *filename)
 	dBspHeader_t outheader;
 	long size;
 
-	memset(&outheader, 0, sizeof(outheader));
-	memset(&bspfile, 0, sizeof(bspfile));
+	OBJZERO(outheader);
+	OBJZERO(bspfile);
 
 	SwapBSPFile();
 

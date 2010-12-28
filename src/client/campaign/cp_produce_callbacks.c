@@ -57,7 +57,7 @@ static const int QUEUE_SPACERS = 2;
  */
 static void PR_ClearSelectedItems (void)
 {
-	memset(&selectedData, 0, sizeof(selectedData));
+	OBJZERO(selectedData);
 	selectedData.type = PRODUCTION_TYPE_MAX;
 }
 

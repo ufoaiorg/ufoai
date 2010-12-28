@@ -48,7 +48,7 @@ static int S_AllocChannel (void)
  */
 void S_FreeChannel (int c)
 {
-	memset(&s_env.channels[c], 0, sizeof(s_env.channels[0]));
+	OBJZERO(s_env.channels[c]);
 }
 
 /**

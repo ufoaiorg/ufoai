@@ -349,7 +349,7 @@ void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float l
 void RADAR_InitialiseUFOs (radar_t *radar)
 {
 	radar->numUFOs = 0;
-	memset(radar->ufos, 0, sizeof(radar->ufos));
+	OBJZERO(radar->ufos);
 }
 
 /**

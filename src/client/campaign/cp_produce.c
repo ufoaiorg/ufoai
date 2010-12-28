@@ -260,7 +260,7 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 
 	/* Initialize */
 	prod = &queue->items[queue->numItems];
-	memset(prod, 0, sizeof(*prod));
+	OBJZERO(*prod);
 	/* self-reference. */
 	prod->idx = queue->numItems;
 	prod->data = *data;

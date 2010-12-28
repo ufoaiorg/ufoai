@@ -145,7 +145,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
 	char tok[32];
 	int i, tris;
 
-	memset(verts, 0, sizeof(verts));
+	OBJZERO(verts);
 	i = 0;
 
 	while (qtrue) {
@@ -166,7 +166,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
 		d = c;
 		v = &verts[i++];
 
-		memset(tok, 0, sizeof(tok));
+		OBJZERO(tok);
 		e = tok;
 
 		/* parse the vertex definition */
@@ -180,7 +180,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
 				else if (!v->normal)
 					v->normal = atoi(tok);
 
-				memset(tok, 0, sizeof(tok));
+				OBJZERO(tok);
 				e = tok;
 
 				d++;
@@ -332,7 +332,7 @@ void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
 	mod->alias.num_frames = 1;
 	mod->alias.num_meshes = 1;
 
-	memset(&obj, 0, sizeof(obj));
+	OBJZERO(obj);
 
 	/* resolve primitive counts */
 	R_LoadObjModel_(mod, &obj, buffer, bufSize);

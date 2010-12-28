@@ -119,7 +119,7 @@ void TUT_ParseTutorials (const char *name, const char **text)
 	}
 
 	t = &tutorials[numTutorials++];
-	memset(t, 0, sizeof(*t));
+	OBJZERO(*t);
 	do {
 		/* get the name type */
 		token = Com_EParse(text, errhead, name);

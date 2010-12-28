@@ -74,13 +74,13 @@ size_t GAME_GetCharacterArraySize (void)
 }
 
 /**
- * @brief Will reset (memset) all characters in the static character array
+ * @brief Reset all characters in the static character array
  * @sa GAME_GetCharacterArraySize
  * @sa GAME_GetCharacter
  */
 void GAME_ResetCharacters (void)
 {
-	memset(&characters, 0, sizeof(characters));
+	OBJZERO(characters);
 	chrDisplayList.num = 0;
 }
 

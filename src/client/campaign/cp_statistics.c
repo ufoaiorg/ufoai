@@ -46,8 +46,8 @@ void CL_StatsUpdate_f (void)
 	aircraft_t *aircraft;
 
 	/* delete buffer */
-	memset(statsBuffer, 0, sizeof(statsBuffer));
-	memset(hired, 0, sizeof(hired));
+	OBJZERO(statsBuffer);
+	OBJZERO(hired);
 
 	pos = statsBuffer;
 

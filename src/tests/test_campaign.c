@@ -102,7 +102,7 @@ static int UFO_InitSuiteCampaign (void)
 	R_FontInit();
 	UI_Init();
 
-	memset(&cls, 0, sizeof(cls));
+	OBJZERO(cls);
 	Com_ParseScripts(qfalse);
 
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f, NULL);
@@ -357,8 +357,8 @@ static void testAutoMissions (void)
 
 	ResetCampaignData();
 
-	memset(&result, 0, sizeof(result));
-	memset(&battleParameters, 0, sizeof(battleParameters));
+	OBJZERO(result);
+	OBJZERO(battleParameters);
 
 	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
 	campaign = GetCampaign();
@@ -423,7 +423,7 @@ static void testTransferItem (void)
 	od = INVSH_GetItemByID("assault");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
 
-	memset(&td, 0, sizeof(td));
+	OBJZERO(td);
 	td.trItemsTmp[od->idx] += 1;
 	td.transferBase = targetBase;
 	TR_AddData(&td, CARGO_TYPE_ITEM, od);

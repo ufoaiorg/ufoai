@@ -744,7 +744,7 @@ void Key_WriteBindings (const char* filename)
 	qFILE f;
 	int cnt = 0;
 
-	memset(&f, 0, sizeof(f));
+	OBJZERO(f);
 	FS_OpenFile(filename, &f, FILE_WRITE);
 	if (!f.f) {
 		Com_Printf("Couldn't write %s.\n", filename);

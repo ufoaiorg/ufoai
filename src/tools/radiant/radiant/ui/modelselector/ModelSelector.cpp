@@ -373,7 +373,7 @@ namespace ui
 		if (gtk_tree_selection_get_selected(_selection, &model, &iter)) {
 			// Get the value
 			GValue val;
-			memset(&val, 0, sizeof(val));
+			OBJZERO(val);
 			gtk_tree_model_get_value(model, &iter, colNum, &val);
 			// Get the integer
 			return g_value_get_int(&val);

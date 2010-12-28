@@ -102,7 +102,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 	if (!bt->name[0])
 		return 0;
 
-	memset(&tx, 0, sizeof(tx));
+	OBJZERO(tx);
 	Q_strncpyz(tx.texture, bt->name, sizeof(tx.texture));
 
 	TextureAxisFromPlane(plane, vecs[0], vecs[1], isTerrain);

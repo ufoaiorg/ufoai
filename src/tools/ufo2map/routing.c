@@ -134,7 +134,7 @@ void DoRouting (void)
 	MakeTracingNodes(LEVEL_ACTORCLIP + 1);
 
 	/* Reset the whole block of map data to 0 */
-	memset(Nmap, 0, sizeof(Nmap));
+	OBJZERO(Nmap);
 
 	/* get world bounds for optimizing */
 	RT_GetMapSize(&mapTiles, mins, maxs);

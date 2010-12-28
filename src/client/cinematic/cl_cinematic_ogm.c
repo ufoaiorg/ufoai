@@ -91,8 +91,8 @@ static int CIN_XVID_Init (cinematic_t *cin)
 	xvid_dec_create_t xvid_dec_create;
 
 	/* Reset the structure with zeros */
-	memset(&xvid_gbl_init, 0, sizeof(xvid_gbl_init_t));
-	memset(&xvid_dec_create, 0, sizeof(xvid_dec_create_t));
+	OBJZERO(xvid_gbl_init);
+	OBJZERO(xvid_dec_create);
 
 	/* Version */
 	xvid_gbl_init.version = XVID_VERSION;
@@ -123,8 +123,8 @@ static int CIN_XVID_Decode (cinematic_t *cin, unsigned char *input, int inputSiz
 	xvid_dec_frame_t xvid_dec_frame;
 
 	/* Reset all structures */
-	memset(&xvid_dec_frame, 0, sizeof(xvid_dec_frame_t));
-	memset(&OGMCIN.xvidDecodeStats, 0, sizeof(xvid_dec_stats_t));
+	OBJZERO(xvid_dec_frame);
+	OBJZERO(OGMCIN.xvidDecodeStats);
 
 	/* Set version */
 	xvid_dec_frame.version = XVID_VERSION;
@@ -225,8 +225,8 @@ static qboolean CIN_OGM_LoadAudioFrame (cinematic_t *cin)
 	ogg_packet op;
 	vorbis_block vb;
 
-	memset(&op, 0, sizeof(op));
-	memset(&vb, 0, sizeof(vb));
+	OBJZERO(op);
+	OBJZERO(vb);
 	vorbis_block_init(&OGMCIN.vd, &vb);
 
 	while (OGMCIN.currentTime > (int) (OGMCIN.vd.granulepos * 1000 / OGMCIN.vi.rate)) {
@@ -281,7 +281,7 @@ static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
 	int r = 0;
 	ogg_packet op;
 
-	memset(&op, 0, sizeof(op));
+	OBJZERO(op);
 
 	while (!r && (ogg_stream_packetout(&OGMCIN.os_video, &op))) {
 		int usedBytes = CIN_XVID_Decode(cin, op.packet, op.bytes);
@@ -391,7 +391,7 @@ static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
 	int r = 0;
 	ogg_packet op;
 
-	memset(&op, 0, sizeof(op));
+	OBJZERO(op);
 
 	while (!r && (ogg_stream_packetout(&OGMCIN.os_video, &op))) {
 		ogg_int64_t th_frame;

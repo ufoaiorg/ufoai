@@ -136,7 +136,7 @@ static qboolean SV_ParseMapTileSet (const char *filename, const char **text, map
 	const char *token;
 	mTileSet_t *target = &map->mTileSets[map->numTileSets];
 
-	memset(target, 0, sizeof(*target));
+	OBJZERO(*target);
 
 	/* get tileset name */
 	token = Com_EParse(text, errhead, filename);
@@ -202,7 +202,7 @@ static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInf
 	if (!*text)
 		return qfalse;
 
-	memset(target, 0, sizeof(*target));
+	OBJZERO(*target);
 
 	if (inherit) {
 		if (token[0] == '+')
@@ -346,7 +346,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 		return qfalse;
 
 	/* init */
-	memset(a, 0, sizeof(*a));
+	OBJZERO(*a);
 	Q_strncpyz(a->id, token, sizeof(a->id));
 	a->width = 8;
 	a->height = 8;
@@ -524,7 +524,7 @@ static void SV_ClearMap (mapInfo_t *map)
 	unsigned long *mp = &map->curMap[0][0];
 	unsigned long *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
 
-	memset(map->curRating, 0, sizeof(map->curRating));
+	OBJZERO(map->curRating);
 
 	while (mp <= end)
 		*(mp++) = ALL_TILES;
@@ -973,7 +973,7 @@ static void SV_PrepareTilesToPlace (mapInfo_t *map)
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
 	map->numToPlace = 0;
-	memset(&map->mToPlace[0], 0, sizeof(map->mToPlace));
+	OBJZERO(map->mToPlace);
 
 	for (i = 0; i < map->numTiles; i++) {
 		if (mAsm->max[i]) {

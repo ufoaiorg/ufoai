@@ -161,7 +161,7 @@ static void MakeHeadnodePortals (tree_t *tree)
 			portal_t *p = AllocPortal();
 			plane_t *pl = &bplanes[n];
 
-			memset(pl, 0, sizeof(*pl));
+			OBJZERO(*pl);
 			portals[n] = p;
 
 			if (j) {

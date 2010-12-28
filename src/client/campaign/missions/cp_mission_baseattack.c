@@ -184,7 +184,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
 
 	/* Fill the fake aircraft */
-	memset(&baseAttackFakeAircraft, 0, sizeof(baseAttackFakeAircraft));
+	OBJZERO(baseAttackFakeAircraft);
 	baseAttackFakeAircraft.homebase = base;
 	/* needed for transfer of alien corpses */
 	VectorCopy(base->pos, baseAttackFakeAircraft.pos);

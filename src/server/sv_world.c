@@ -553,7 +553,7 @@ trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, cons
 	if (!maxs)
 		maxs = vec3_origin;
 
-	memset(&clip, 0, sizeof(clip));
+	OBJZERO(clip);
 
 	/* clip to world - 0x1FF = all levels */
 	clip.trace = CM_CompleteBoxTrace(&sv.mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
@@ -743,7 +743,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 		return qfalse;
 	}
 
-	memset(mod, 0, sizeof(*mod));
+	OBJZERO(*mod);
 	mod->name = Mem_PoolStrDup(model, com_genericPool, 0);
 	mod->frame = frame;
 	ClearBounds(mod->mins, mod->maxs);

@@ -137,7 +137,7 @@ uiSprite_t* UI_AllocStaticSprite (const char* name)
 	result = &ui_global.sprites[ui_global.numSprites];
 	ui_global.numSprites++;
 
-	memset(result, 0, sizeof(*result));
+	OBJZERO(*result);
 	Q_strncpyz(result->name, name, sizeof(result->name));
 	return result;
 }

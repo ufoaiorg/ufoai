@@ -1248,7 +1248,7 @@ static void G_ClientSkipActorInfo (void)
 static void G_ClientAssignDefaultActorValues (edict_t *ent)
 {
 	/* Mission Scores */
-	memset(&scoreMission[scoreMissionNum], 0, sizeof(scoreMission[scoreMissionNum]));
+	OBJZERO(scoreMission[scoreMissionNum]);
 	ent->chr.scoreMission = &scoreMission[scoreMissionNum];
 	scoreMissionNum++;
 
@@ -1521,7 +1521,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo, size_t userinfoSize
 	}
 
 	/* reset persistent data */
-	memset(&player->pers, 0, sizeof(player->pers));
+	OBJZERO(player->pers);
 	G_ClientUserinfoChanged(player, userinfo);
 
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s is connecting...\n", player->pers.netname);
@@ -1571,5 +1571,5 @@ void G_ClientDisconnect (player_t * player)
 void G_ResetClientData (void)
 {
 	scoreMissionNum = 0;
-	memset(scoreMission, 0, sizeof(scoreMission));
+	OBJZERO(scoreMission);
 }

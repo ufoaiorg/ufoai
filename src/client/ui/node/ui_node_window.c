@@ -326,7 +326,7 @@ static void UI_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
 	/* clean up index */
 	EXTRADATA(clone).index = NULL;
-	memset(EXTRADATA(clone).index_hash, 0, sizeof(EXTRADATA(clone).index_hash[0]) * INDEXEDCHILD_HASH_SIZE);
+	OBJZERO(EXTRADATA(clone).index_hash);
 }
 
 /**

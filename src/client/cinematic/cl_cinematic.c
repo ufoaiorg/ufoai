@@ -30,14 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sound/s_main.h"
 #include "../sound/s_music.h"
 /* trying to get rid of client.h ... */
-#include <string.h>		/* memset */
 #include <assert.h>
 #include "../cl_video.h"	/* viddef */
 #include "../../shared/shared.h"	/* Q_strncpyz */
 
 void CIN_InitCinematic (cinematic_t *cin)
 {
-	memset(cin, 0, sizeof(*cin));
+	OBJZERO(*cin);
 }
 
 /**

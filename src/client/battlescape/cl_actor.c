@@ -1418,7 +1418,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		const qboolean addRightHandWeapon = CL_AddActorWeapon(le->right);
 		/* add left hand weapon */
 		if (addLeftHandWeapon) {
-			memset(&add, 0, sizeof(add));
+			OBJZERO(add);
 
 			add.model = cls.modelPool[le->left];
 			if (!add.model)
@@ -1433,7 +1433,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 		/* add right hand weapon */
 		if (addRightHandWeapon) {
-			memset(&add, 0, sizeof(add));
+			OBJZERO(add);
 
 			add.alpha = le->alpha;
 			add.model = cls.modelPool[le->right];
@@ -1458,7 +1458,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	}
 
 	/* add head */
-	memset(&add, 0, sizeof(add));
+	OBJZERO(add);
 
 	add.alpha = le->alpha;
 	add.model = le->model2;
@@ -1722,7 +1722,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	if (!cl_showactors->integer)
 		return;
 
-	memset(&ent, 0, sizeof(ent));
+	OBJZERO(ent);
 	ent.flags = RF_BOX;
 
 	Grid_PosToVec(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
@@ -1944,7 +1944,7 @@ static void CL_AddPathingBox (pos3_t pos)
 		const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
 		const int TUhave = CL_ActorUsableTUs(selActor);
 
-		memset(&ent, 0, sizeof(ent));
+		OBJZERO(ent);
 		ent.flags = RF_PATH;
 
 		Grid_PosToVec(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
@@ -2016,7 +2016,7 @@ static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float b
 
 	/* Com_Printf("Adding arrow (%f, %f, %f) to (%f, %f, %f).\n", from[0], from[1], from[2], to[0], to[1], to[2]); */
 
-	memset(&ent, 0, sizeof(ent));
+	OBJZERO(ent);
 	ent.flags = RF_ARROW;
 	VectorCopy(from, ent.origin);
 	VectorCopy(to, ent.oldorigin);

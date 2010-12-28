@@ -164,7 +164,7 @@ void S_FreeSamples (void)
 		}
 	}
 
-	memset(sampleHash, 0, sizeof(sampleHash));
+	OBJZERO(sampleHash);
 }
 
 /**

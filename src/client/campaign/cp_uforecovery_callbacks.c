@@ -115,7 +115,7 @@ static void UR_DialogInit_f (void)
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	/* Fill ufoRecovery structure */
-	memset(&ufoRecovery, 0, sizeof(ufoRecovery));
+	OBJZERO(ufoRecovery);
 	ufoRecovery.ufoTemplate = ufoCraft;
 	ufoRecovery.condition = cond;
 	ufoRecovery.sortedColumn = ORDER_NATION;

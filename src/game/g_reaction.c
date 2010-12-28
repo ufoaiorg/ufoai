@@ -331,7 +331,7 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
 
 	/* calculate the mock values - e.g. how many friendly units we would hit
 	 * when opening the reaction fire */
-	memset(&mock, 0, sizeof(mock));
+	OBJZERO(mock);
 	for (i = 0; i < 100; i++)
 		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, qfalse, 0))
 			break;

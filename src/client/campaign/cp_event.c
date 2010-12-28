@@ -163,7 +163,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 
 	/* initialize the eventMail */
 	eventMail = &ccs.eventMails[ccs.numEventMails++];
-	memset(eventMail, 0, sizeof(*eventMail));
+	OBJZERO(*eventMail);
 
 	Com_DPrintf(DEBUG_CLIENT, "...found eventMail %s\n", name);
 	eventMail->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
@@ -283,7 +283,7 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 	}
 
 	events = &ccs.campaignEvents[ccs.numCampaignEventDefinitions];
-	memset(events, 0, sizeof(*events));
+	OBJZERO(*events);
 	Com_DPrintf(DEBUG_CLIENT, "...found events %s\n", name);
 	events->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 	ccs.numCampaignEventDefinitions++;
@@ -303,7 +303,7 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 
 		/* initialize the eventMail */
 		event = &events->campaignEvents[events->numCampaignEvents++];
-		memset(event, 0, sizeof(*event));
+		OBJZERO(*event);
 
 		Mem_PoolStrDupTo(token, (char**) ((char*)event + (int)offsetof(campaignEvent_t, tech)), cp_campaignPool, 0);
 

@@ -532,7 +532,7 @@ static void UI_ReleaseVariable (uiValue_t *variable)
 	}
 
 	/* bug safe, but useless */
-	memset(variable, 0, sizeof(*variable));
+	OBJZERO(*variable);
 }
 
 /**
@@ -657,7 +657,7 @@ static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t *c
 void UI_ExecuteConFuncActions (uiNode_t* source, const uiAction_t* firstAction)
 {
 	uiCallContext_t context;
-	memset(&context, 0, sizeof(context));
+	OBJZERO(context);
 	context.source = source;
 	context.useCmdParam = qtrue;
 	UI_ExecuteActions(firstAction, &context);
@@ -666,7 +666,7 @@ void UI_ExecuteConFuncActions (uiNode_t* source, const uiAction_t* firstAction)
 void UI_ExecuteEventActions (uiNode_t* source, const uiAction_t* firstAction)
 {
 	uiCallContext_t context;
-	memset(&context, 0, sizeof(context));
+	OBJZERO(context);
 	context.source = source;
 	context.useCmdParam = qfalse;
 	UI_ExecuteActions(firstAction, &context);
@@ -675,7 +675,7 @@ void UI_ExecuteEventActions (uiNode_t* source, const uiAction_t* firstAction)
 void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t *params)
 {
 	uiCallContext_t context;
-	memset(&context, 0, sizeof(context));
+	OBJZERO(context);
 	context.source = source;
 	context.useCmdParam = qfalse;
 	context.params = params;

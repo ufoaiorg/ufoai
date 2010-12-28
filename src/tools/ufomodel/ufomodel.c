@@ -535,7 +535,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 			fixedMD2 = (dMD2Model_t *)model;
 			skinPath = (char *) fixedMD2 + LittleLong(fixedMD2->ofs_skins) + i * MD2_MAX_SKINNAME;
 
-			memset(path, 0, sizeof(path));
+			OBJZERO(path);
 
 			if (extension != NULL) {
 				Com_StripExtension(name, pathBuf, sizeof(pathBuf));

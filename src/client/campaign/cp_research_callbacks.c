@@ -849,7 +849,7 @@ void RS_InitCallbacks (void)
 
 	/* reset some static data - this is needed because we can start several
 	 * campaign games without restarting ufo. */
-	memset(&researchList2, 0, sizeof(researchList2));
+	OBJZERO(researchList2);
 	researchListLength = 0;
 	researchListPos = 0;
 }

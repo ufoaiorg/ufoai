@@ -586,7 +586,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 	*numfiles = nfiles;
 
 	list = (char **)Mem_PoolAlloc(sizeof(char*) * nfiles, com_fileSysPool, 0);
-	memset(tempList, 0, sizeof(tempList));
+	OBJZERO(tempList);
 
 	s = Sys_FindFirst(findname, musthave, canthave);
 	nfiles = 0;

@@ -39,7 +39,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	if (!LE_IsDead(le)) {
 		/* add weapon */
 		if (le->left != NONE) {
-			memset(&add, 0, sizeof(add));
+			OBJZERO(add);
 
 			add.model = cls.modelPool[le->left];
 
@@ -51,7 +51,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 		/* add weapon */
 		if (le->right != NONE) {
-			memset(&add, 0, sizeof(add));
+			OBJZERO(add);
 
 			add.alpha = le->alpha;
 			add.model = cls.modelPool[le->right];
@@ -64,7 +64,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	}
 
 	/* add head */
-	memset(&add, 0, sizeof(add));
+	OBJZERO(add);
 
 	add.alpha = le->alpha;
 	add.model = le->model2;

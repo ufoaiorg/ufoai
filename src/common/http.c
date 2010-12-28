@@ -102,7 +102,7 @@ char* HTTP_GetURL (const char *url)
 		return NULL;
 	}
 
-	memset(&dl, 0, sizeof(dl));
+	OBJZERO(dl);
 
 	downloading = qtrue;
 	dl.curl = curl_easy_init();

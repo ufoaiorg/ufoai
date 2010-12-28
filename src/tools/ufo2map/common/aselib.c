@@ -111,7 +111,7 @@ void ASE_Load (const char *filename, qboolean verbose)
 	if (!file.f && !file.z)
 		Sys_Error("File not found '%s'", filename);
 
-	memset(&ase, 0, sizeof(ase));
+	OBJZERO(ase);
 
 	ase.verbose = verbose;
 	ase.len = FS_FileLength(&file);
@@ -223,7 +223,7 @@ static void ASE_FreeGeomObject (int ndx)
 			Mem_Free(pObject->anim.frames[i].tfaces);
 	}
 
-	memset(pObject, 0, sizeof(*pObject));
+	OBJZERO(*pObject);
 }
 
 static aseMesh_t *ASE_GetCurrentMesh (void)

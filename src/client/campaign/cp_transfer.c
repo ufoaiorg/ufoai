@@ -185,7 +185,7 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 	if (!alienBreathingObjDef)
 		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus item definition");
 
-	memset(&transfer, 0, sizeof(transfer));
+	OBJZERO(transfer);
 
 	/* Initialize transfer.
 	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
@@ -300,7 +300,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 		return NULL;
 	}
 
-	memset(&transfer, 0, sizeof(transfer));
+	OBJZERO(transfer);
 
 	/* Initialize transfer. */
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
@@ -593,7 +593,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		mxml_node_t *ss;
 		transfer_t transfer;
 
-		memset(&transfer, 0, sizeof(transfer));
+		OBJZERO(transfer);
 
 		transfer.destBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE));
 		if (!transfer.destBase) {

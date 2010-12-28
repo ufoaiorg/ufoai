@@ -132,9 +132,9 @@ static void R_FontCleanCache (void)
 		R_CheckError();
 	}
 
-	memset(chunkCache, 0, sizeof(chunkCache));
-	memset(wrapCache, 0, sizeof(wrapCache));
-	memset(hash, 0, sizeof(hash));
+	OBJZERO(chunkCache);
+	OBJZERO(wrapCache);
+	OBJZERO(hash);
 	numChunks = 0;
 	numWraps = 0;
 }
@@ -156,7 +156,7 @@ void R_FontShutdown (void)
 			SDL_RWclose(fonts[i].rw);
 		}
 
-	memset(fonts, 0, sizeof(fonts));
+	OBJZERO(fonts);
 	numFonts = 0;
 
 	/* now quit SDL_ttf, too */
@@ -176,7 +176,7 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 
 	/* allocate new font */
 	f = &fonts[numFonts];
-	memset(f, 0, sizeof(*f));
+	OBJZERO(*f);
 
 	/* copy fontname */
 	f->name = name;
@@ -740,11 +740,11 @@ void R_FontInit (void)
 #endif
 
 	numFonts = 0;
-	memset(fonts, 0, sizeof(fonts));
+	OBJZERO(fonts);
 
-	memset(chunkCache, 0, sizeof(chunkCache));
-	memset(wrapCache, 0, sizeof(wrapCache));
-	memset(hash, 0, sizeof(hash));
+	OBJZERO(chunkCache);
+	OBJZERO(wrapCache);
+	OBJZERO(hash);
 	numChunks = 0;
 	numWraps = 0;
 

@@ -701,7 +701,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 		ns = mod->bsp.nummodelsurfaces;
 	}
 
-	memset(r_sorted_surfaces, 0, sizeof(r_sorted_surfaces));
+	OBJZERO(r_sorted_surfaces);
 
 	/* allocate the per-texture surfaces arrays and determine counts */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
@@ -937,7 +937,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* alloc model and tile */
 	r_worldmodel = &r_models[r_numModels++];
 	r_mapTiles[r_numMapTiles++] = r_worldmodel;
-	memset(r_worldmodel, 0, sizeof(*r_worldmodel));
+	OBJZERO(*r_worldmodel);
 	Com_sprintf(r_worldmodel->name, sizeof(r_worldmodel->name), "maps/%s.bsp", name);
 
 	/* load the file */

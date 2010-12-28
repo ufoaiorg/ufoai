@@ -822,7 +822,7 @@ static void CM_AddMapTile (const char *name, const qboolean day, const int sX, c
 		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded %i", mapTiles->numTiles);
 
 	tile = &(mapTiles->mapTiles[mapTiles->numTiles]);
-	memset(tile, 0, sizeof(*tile));
+	OBJZERO(*tile);
 	tile->idx = mapTiles->numTiles;
 	Q_strncpyz(tile->name, name, sizeof(tile->name));
 
@@ -964,8 +964,8 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *ma
 	base[0] = 0;
 
 	/* Reset the map related data */
-	memset(mapData, 0, sizeof(*mapData));
-	memset(mapTiles, 0, sizeof(*mapTiles));
+	OBJZERO(*mapData);
+	OBJZERO(*mapTiles);
 
 	if (pos && *pos)
 		Com_Printf("CM_LoadMap: \"%s\" \"%s\"\n", tiles, pos);

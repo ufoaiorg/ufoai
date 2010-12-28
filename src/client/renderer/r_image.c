@@ -62,7 +62,7 @@ void R_ImageClearMaterials (void)
 			s = ss;
 		}
 
-		memset(m, 0, sizeof(*m));
+		OBJZERO(*m);
 
 		m->bump = DEFAULT_BUMP;
 		m->parallax = DEFAULT_PARALLAX;
@@ -473,7 +473,7 @@ static inline void R_DeleteImage (image_t *image)
 		imageHash[hash] = next;
 	}
 
-	memset(image, 0, sizeof(*image));
+	OBJZERO(*image);
 }
 
 image_t *R_GetImage (const char *name)
@@ -716,7 +716,7 @@ void R_ShutdownImages (void)
 			continue;			/* free image_t slot */
 		R_DeleteImage(image);
 	}
-	memset(imageHash, 0, sizeof(imageHash));
+	OBJZERO(imageHash);
 }
 
 

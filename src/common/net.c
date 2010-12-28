@@ -625,7 +625,7 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 	struct net_stream *s = NULL;
 	int index;
 
-	memset(&hints, 0, sizeof(hints));
+	OBJZERO(hints);
 	hints.ai_flags = AI_ADDRCONFIG | AI_NUMERICSERV;
 	hints.ai_socktype = SOCK_STREAM;
 	/* force ipv4 */
@@ -922,7 +922,7 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 		struct addrinfo hints;
 		int rc;
 
-		memset(&hints, 0, sizeof(hints));
+		OBJZERO(hints);
 		hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV | AI_PASSIVE;
 		hints.ai_socktype = SOCK_STREAM;
 		/* force ipv4 */
@@ -1043,7 +1043,7 @@ struct datagram_socket *NET_DatagramSocketNew (const char *node, const char *ser
 	if (!service || !func)
 		return NULL;
 
-	memset(&hints, 0, sizeof(hints));
+	OBJZERO(hints);
 	hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV | AI_PASSIVE;
 	hints.ai_socktype = SOCK_DGRAM;
 	/* force ipv4 */

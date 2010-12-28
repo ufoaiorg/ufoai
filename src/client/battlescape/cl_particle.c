@@ -739,7 +739,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 
 	/* allocate particle */
 	p = &r_particles[i];
-	memset(p, 0, sizeof(*p));
+	OBJZERO(*p);
 
 	/* set basic values */
 	p->inuse = qtrue;
@@ -1199,7 +1199,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				if (numPtlCmds >= MAX_PTLCMDS)
 					Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
 				pc = &ptlCmd[numPtlCmds++];
-				memset(pc, 0, sizeof(*pc));
+				OBJZERO(*pc);
 
 				pc->cmd = i;
 
@@ -1356,7 +1356,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 	if (numPtlCmds >= MAX_PTLCMDS)
 		Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
 	pc = &ptlCmd[numPtlCmds++];
-	memset(pc, 0, sizeof(*pc));
+	OBJZERO(*pc);
 }
 
 /**
@@ -1392,7 +1392,7 @@ int CL_ParseParticle (const char *name, const char **text)
 			return -1;
 		}
 	}
-	memset(pd, 0, sizeof(*pd));
+	OBJZERO(*pd);
 
 	Q_strncpyz(pd->name, name, sizeof(pd->name));
 

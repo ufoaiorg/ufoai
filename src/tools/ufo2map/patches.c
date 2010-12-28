@@ -203,7 +203,7 @@ void BuildPatches (void)
 {
 	int i;
 
-	memset(face_patches, 0, sizeof(face_patches));
+	OBJZERO(face_patches);
 
 	for (i = 0; i < curTile->nummodels; i++) {
 		const dBspModel_t *mod = &curTile->models[i];

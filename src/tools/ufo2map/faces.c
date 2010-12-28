@@ -384,7 +384,7 @@ void FixTjuncs (node_t *headnode)
 {
 	/* snap and merge all vertexes */
 	Verb_Printf(VERB_EXTRA, "---- snap verts ----\n");
-	memset(hashverts, 0, sizeof(hashverts));
+	OBJZERO(hashverts);
 	c_totalverts = 0;
 	c_uniqueverts = 0;
 	c_faceoverflows = 0;

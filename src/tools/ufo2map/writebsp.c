@@ -248,7 +248,7 @@ void EmitBrushes (void)
 	curTile->numbrushsides = 0;
 	curTile->numbrushes = nummapbrushes;
 	/* Clear out curTile->brushes */
-	memset(curTile->brushes, 0, MAX_MAP_BRUSHES * sizeof(cBspBrush_t));
+	OBJZERO(curTile->brushes);
 
 	for (bnum = 0; bnum < nummapbrushes; bnum++) {
 		const mapbrush_t *b = &mapbrushes[bnum];

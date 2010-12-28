@@ -785,7 +785,7 @@ void BuildFacelights (unsigned int facenum)
 	else
 		numsamples = 1;
 
-	memset(l, 0, sizeof(l));
+	OBJZERO(l);
 
 	scale = 1.0 / numsamples; /* each sample contributes this much */
 

@@ -95,7 +95,7 @@ alienBase_t* AB_BuildBase (const vec2_t pos)
 	alienBase_t base;
 	const float initialStealthValue = 50.0f;				/**< How hard PHALANX will find the base */
 
-	memset(&base, 0, sizeof(base));
+	OBJZERO(base);
 	Vector2Copy(pos, base.pos);
 	base.stealth = initialStealthValue;
 	base.idx = ccs.campaignStats.alienBasesBuilt++;

@@ -115,7 +115,7 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 
 		for (i = 0; i < num; i++) {
 			updateCharacter_t c;
-			memset(&c, 0, sizeof(c));
+			OBJZERO(c);
 			c.ucn = NET_ReadShort(msg);
 			c.HP = NET_ReadShort(msg);
 			c.STUN = NET_ReadByte(msg);
@@ -874,7 +874,7 @@ void CP_StartSelectedMission (void)
 	mis = ccs.selectedMission;
 
 	/* Before we start, we should clear the missionResults array. */
-	memset(&ccs.missionResults, 0, sizeof(ccs.missionResults));
+	OBJZERO(ccs.missionResults);
 
 	/* Various sanity checks. */
 	if (!mis->active) {
@@ -1483,7 +1483,7 @@ void CL_ResetSinglePlayerData (void)
 	RS_ResetTechs();
 	E_ResetEmployees();
 
-	memset(&ccs, 0, sizeof(ccs));
+	OBJZERO(ccs);
 
 	/* Collect and count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {

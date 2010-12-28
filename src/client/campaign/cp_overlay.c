@@ -320,7 +320,7 @@ void CP_InitializeXVIOverlay (const byte *data)
 	assert(r_xviTexture);
 
 	if (!data)
-		memset(r_xviAlpha, 0, sizeof(r_xviAlpha));
+		OBJZERO(r_xviAlpha);
 	else
 		memcpy(r_xviAlpha, data, sizeof(r_xviAlpha));
 

@@ -171,7 +171,7 @@ static void R_DrawParticleModel (ptl_t * p)
 	modelInfo_t mi;
 
 	/* initialize model info */
-	memset(&mi, 0, sizeof(mi));
+	OBJZERO(mi);
 	mi.color = p->color;
 	mi.origin = p->s;
 	mi.angles = p->angles;

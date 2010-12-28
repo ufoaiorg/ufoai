@@ -377,7 +377,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 			if (child->invis || !UI_CheckVisibility(child))
 				continue;
 
-			memset(&mi, 0, sizeof(mi));
+			OBJZERO(mi);
 			mi.angles = EXTRADATA(child).angles;
 			mi.scale = EXTRADATA(child).scale;
 			mi.center = nullVector;

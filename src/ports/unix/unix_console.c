@@ -210,7 +210,7 @@ void Sys_ConsoleShutdown (void)
 
 static void Sys_TTYConsoleHistoryClear (consoleHistory_t *edit)
 {
-	memset(edit, 0, sizeof(*edit));
+	OBJZERO(*edit);
 }
 
 static qboolean Sys_IsATTY (void)

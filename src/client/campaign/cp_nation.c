@@ -325,7 +325,7 @@ void CL_ParseNations (const char *name, const char **text)
 
 	/* initialize the nation */
 	nation = &ccs.nations[ccs.numNations];
-	memset(nation, 0, sizeof(*nation));
+	OBJZERO(*nation);
 	nation->idx = ccs.numNations;
 	ccs.numNations++;
 
@@ -411,7 +411,7 @@ void CL_ParseCities (const char *name, const char **text)
 	}
 
 	/* initialize the nation */
-	memset(&newCity, 0, sizeof(newCity));
+	OBJZERO(newCity);
 	newCity.idx = ccs.numCities;
 	ccs.numCities++;
 
@@ -700,7 +700,7 @@ static void CL_NationStatsUpdate_f (void)
 		lineStrip_t *color = &colorLineStrip[i];
 		const int funding = NAT_GetFunding(nation, 0);
 
-		memset(color, 0, sizeof(*color));
+		OBJZERO(*color);
 
 		if (i > 0)
 			colorLineStrip[i - 1].next = color;
@@ -751,7 +751,7 @@ static void CL_NationStatsUpdate_f (void)
 			lineStrip_t *funding = &fundingLineStrip[i];
 
 			/* init the structure */
-			memset(funding, 0, sizeof(*funding));
+			OBJZERO(*funding);
 
 			if (i > 0)
 				fundingLineStrip[i - 1].next = funding;

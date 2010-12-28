@@ -352,7 +352,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	/* build a new connection - accept the new client
 	 * this is the only place a client_t is ever initialized */
-	memset(cl, 0, sizeof(*cl));
+	OBJZERO(*cl);
 	playernum = cl - SV_GetClient(0);
 	player = PLAYER_NUM(playernum);
 	cl->player = player;
@@ -710,7 +710,7 @@ void SV_Init (void)
 
 	sv_genericPool = Mem_CreatePool("Server: Generic");
 
-	memset(&svs, 0, sizeof(svs));
+	OBJZERO(svs);
 
 	SV_InitOperatorCommands();
 
@@ -811,7 +811,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	}
 
 	/* free current level */
-	memset(&sv, 0, sizeof(sv));
+	OBJZERO(sv);
 
 	/* free server static data */
 	if (svs.clients)
@@ -820,7 +820,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	if (svs.serverMutex != NULL)
 		TH_MutexDestroy(svs.serverMutex);
 
-	memset(&svs, 0, sizeof(svs));
+	OBJZERO(svs);
 
 	/* maybe we shut down before we init - e.g. in case of an error */
 	if (sv_maxclients)

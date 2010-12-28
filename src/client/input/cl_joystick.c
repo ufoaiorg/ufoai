@@ -88,7 +88,7 @@ void IN_JoystickMove (void)
 
 	SDL_JoystickUpdate();
 
-	memset(joy_pressed, '\0', sizeof(joy_pressed));
+	OBJZERO(joy_pressed);
 
 	/* update the ball state */
 	total = SDL_JoystickNumBalls(stick);
@@ -303,7 +303,7 @@ void IN_StartupJoystick (void)
 	}
 
 	stick = NULL;
-	memset(&stick_state, '\0', sizeof(stick_state));
+	OBJZERO(stick_state);
 
 	if (!SDL_WasInit(SDL_INIT_JOYSTICK)) {
 		Com_DPrintf(DEBUG_CLIENT, "Calling SDL_Init(SDL_INIT_JOYSTICK)...\n");

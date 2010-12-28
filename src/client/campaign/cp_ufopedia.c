@@ -1291,7 +1291,7 @@ void UP_ParseChapters (const char *name, const char **text)
 			Com_Printf("UP_ParseChapters: too many chapter defs\n");
 			return;
 		}
-		memset(&ccs.upChapters[ccs.numChapters], 0, sizeof(ccs.upChapters[ccs.numChapters]));
+		OBJZERO(ccs.upChapters[ccs.numChapters]);
 		ccs.upChapters[ccs.numChapters].id = Mem_PoolStrDup(token, cp_campaignPool, 0);
 		ccs.upChapters[ccs.numChapters].idx = ccs.numChapters;	/* set self-link */
 

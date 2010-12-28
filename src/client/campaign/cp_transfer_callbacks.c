@@ -182,8 +182,8 @@ static void TR_TransferStart_f (void)
 		return;
 
 	/* Clear temporary cargo arrays. */
-	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
-	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
+	OBJZERO(td.trItemsTmp);
+	OBJZERO(td.trAliensTmp);
 
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
 		LIST_Delete(&td.trEmployeesTmp[i]);
@@ -402,7 +402,7 @@ static void TR_CargoList (void)
 	aircraft_t *aircraft;
 
 	td.trCargoCountTmp = 0;
-	memset(td.cargo, 0, sizeof(td.cargo));
+	OBJZERO(td.cargo);
 
 	/* Show items. */
 	for (i = 0; i < csi.numODs; i++) {
@@ -809,8 +809,8 @@ static void TR_TransferListClear_f (void)
 	}
 
 	/* Clear temporary cargo arrays. */
-	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
-	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
+	OBJZERO(td.trItemsTmp);
+	OBJZERO(td.trAliensTmp);
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
 		LIST_Delete(&td.trEmployeesTmp[i]);
 	LIST_Delete(&td.aircraft);
@@ -1456,8 +1456,8 @@ static void TR_TransferClose_f (void)
 	TR_TransferListClear_f();
 
 	/* Clear temporary cargo arrays. */
-	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
-	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
+	OBJZERO(td.trItemsTmp);
+	OBJZERO(td.trAliensTmp);
 	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
 		LIST_Delete(&td.trEmployeesTmp[emplType]);
 	LIST_Delete(&td.aircraft);
@@ -1515,7 +1515,7 @@ static void TR_TransferList_Scroll_f (void)
 
 void TR_InitCallbacks (void)
 {
-	memset(&td, 0, sizeof(td));
+	OBJZERO(td);
 
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "Scrolls the transferlist");

@@ -233,7 +233,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 
 			VectorNegate(od->center, center);
 
-			memset(&mi, 0, sizeof(mi));
+			OBJZERO(mi);
 			mi.origin = origin;
 			mi.angles = angles;
 			mi.center = center;
@@ -365,7 +365,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 		qboolean showTUs = qtrue;
 		int x, y;
 
-		memset(free, 0, sizeof(free));
+		OBJZERO(free);
 
 		for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 			for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {

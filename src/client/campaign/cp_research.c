@@ -1079,8 +1079,8 @@ void RS_InitStartup (void)
 void RS_ResetTechs (void)
 {
 	/* they are static - but i'm paranoid - this is called before the techs were parsed */
-	memset(techHash, 0, sizeof(techHash));
-	memset(techHashProvided, 0, sizeof(techHashProvided));
+	OBJZERO(techHash);
+	OBJZERO(techHashProvided);
 
 	/* delete redirectedTechs, will be filled during parse */
 	LIST_Delete(&redirectedTechs);
@@ -1160,7 +1160,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech = &ccs.technologies[ccs.numTechnologies];
 	ccs.numTechnologies++;
 
-	memset(tech, 0, sizeof(*tech));
+	OBJZERO(*tech);
 
 	/*
 	 * Set standard values

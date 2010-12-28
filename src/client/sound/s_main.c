@@ -56,7 +56,7 @@ void S_Stop (void)
 		return;
 	Mix_HaltChannel(-1);
 
-	memset(s_env.channels, 0, sizeof(s_env.channels));
+	OBJZERO(s_env.channels);
 }
 
 /**
@@ -193,7 +193,7 @@ void S_Init (void)
 
 	Com_Printf("\n------- sound initialization -------\n");
 
-	memset(&s_env, 0, sizeof(s_env));
+	OBJZERO(s_env);
 
 	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
 	snd_init->modified = qfalse; /* don't restart right away */

@@ -624,7 +624,7 @@ const char *Com_MacroExpandString (const char *text)
 	}
 
 	count = 0;
-	memset(expanded, 0, sizeof(expanded));
+	OBJZERO(expanded);
 	pos = expanded;
 
 	/* also the \0 */
@@ -1028,7 +1028,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 	Com_SetExceptionCallback(Qcommon_InitError);
 
-	memset(&csi, 0, sizeof(csi));
+	OBJZERO(csi);
 
 	/* prepare enough of the subsystems to handle
 	 * cvar and command buffer management */

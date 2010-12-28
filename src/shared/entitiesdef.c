@@ -105,7 +105,7 @@ static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int en
 	memcpy(eDef->keyDefs, newKeyDefs, numKeyDefs * sizeof(entityKeyDef_t));
 
 	/* set NULLs at the end, to enable looping through using a pointer */
-	memset(&eDef->keyDefs[numKeyDefs], 0, sizeof(entityKeyDef_t));
+	OBJZERO(eDef->keyDefs[numKeyDefs]);
 
 	/* classname is commonly used, put it in its own field, copied from keyDefs[0] */
 	eDef->classname = strdup(eDef->keyDefs->desc);
@@ -555,7 +555,7 @@ static int ED_AllocRange (entityKeyDef_t *kd, const char *rangeStr)
 	/* start a new range */
 	char *newStr = strdup(rangeStr);
 	entityKeyRange_t *newRange = (entityKeyRange_t *)malloc(sizeof(entityKeyRange_t));
-	memset(newRange, 0, sizeof(*newRange));
+	OBJZERO(*newRange);
 	/* resize array of pointers */
 	newRanges = (entityKeyRange_t **)malloc((kd->numRanges + 1) * sizeof(entityKeyRange_t *));
 	ED_TEST_RETURN_ERROR(!newRanges || !newStr || !newRange, "ED_AllocRange: out of memory");
@@ -671,7 +671,7 @@ static int ED_ParseEntities (const char **data_p)
 			if (tokensOnLevel0 == 1) {/* classname of entity, start parsing new entity */
 				const entityDef_t *prevED = ED_GetEntityDef(parsedToken);
 				ED_TEST_RETURN_ERROR(prevED, "ED_ParseEntities: duplicate entity definition \"%s\"", parsedToken);
-				memset(keyDefBuf, 0, sizeof(keyDefBuf)); /* ensure pointers are not carried over from previous entity */
+				OBJZERO(keyDefBuf); /* ensure pointers are not carried over from previous entity */
 				keyIndex = 0;
 				ED_PASS_ERROR(ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY));
 				mode = ED_ABSTRACT;
@@ -806,9 +806,9 @@ int ED_Parse (const char *data_p)
 		return ED_OK;
 
 	snprintf(lastErr, sizeof(lastErr), "no error");
-	/* memset to NULL now so that looping through the ones that have already
+	/* Zero out so that looping through the ones that have already
 	 * been parsed is possible while the rest are parsed */
-	memset(entityDefs, 0, (ED_MAX_DEFS + 1) * sizeof(entityDef_t));
+	OBJZERO(entityDefs);
 	numEntityDefs = 0;
 
 	ED_PASS_ERROR(ED_ParseEntities(&data_p));

@@ -249,7 +249,7 @@ void CL_SetHTTPServer (const char *URL)
 
 	multi = curl_multi_init();
 
-	memset(&cls.downloadQueue, 0, sizeof(cls.downloadQueue));
+	OBJZERO(cls.downloadQueue);
 
 	abortDownloads = HTTPDL_ABORT_NONE;
 	handleCount = pendingCount = 0;

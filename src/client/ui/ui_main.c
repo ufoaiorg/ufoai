@@ -208,7 +208,7 @@ void UI_Init (void)
 #endif
 
 	/* reset global UI structures */
-	memset(&ui_global, 0, sizeof(ui_global));
+	OBJZERO(ui_global);
 
 	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 

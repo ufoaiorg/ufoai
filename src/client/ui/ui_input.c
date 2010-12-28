@@ -226,7 +226,7 @@ static uiKeyBinding_t* UI_AllocStaticKeyBinding (void)
 	result = &ui_global.keyBindings[ui_global.numKeyBindings];
 	ui_global.numKeyBindings++;
 
-	memset(result, 0, sizeof(*result));
+	OBJZERO(*result);
 	return result;
 }
 

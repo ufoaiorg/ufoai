@@ -444,7 +444,7 @@ static qboolean Irc_Proto_Join (const char *channel, const char *password)
 	}
 
 	chan = &ircChan;
-	memset(chan, 0, sizeof(*chan));
+	OBJZERO(*chan);
 	Q_strncpyz(chan->name, channel, sizeof(chan->name));
 	return Irc_Proto_Enqueue(msg, msg_len);
 }
@@ -916,7 +916,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 	char nick[MAX_VAR];
 	char * const emph = strchr(prefix, '!');
 	char * ctcp = strchr(trailing, IRC_CTCP_MARKER_CHR);
-	memset(nick, 0, sizeof(nick));
+	OBJZERO(nick);
 	if (emph)
 		memcpy(nick, prefix, emph - prefix);
 	else

@@ -25,6 +25,7 @@
  */
 
 #include "images.h"
+#include "shared.h"
 
 /* Workaround for a warning about redeclaring the macro. jpeglib sets this macro
  * and SDL, too. */
@@ -135,8 +136,8 @@ void R_WriteCompressedTGA (qFILE *f, const byte *buffer, int width, int height)
 	int y;
 	size_t x;
 
-	memset(header, 0, sizeof(header));
-	memset(footer, 0, sizeof(footer));
+	OBJZERO(header);
+	OBJZERO(footer);
 
 	/* Fill in header */
 	/* byte 0: image ID field length */

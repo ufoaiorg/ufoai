@@ -372,10 +372,10 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 	memcpy(prevItemCargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
 	prevItemTypes = aircraft->itemTypes;
 	/* Make sure itemcargo is empty. */
-	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
+	OBJZERO(aircraft->itemcargo);
 
 	/* Make sure eTempEq is empty as well. */
-	memset(&eTempEq, 0, sizeof(eTempEq));
+	OBJZERO(eTempEq);
 
 	cargo = aircraft->itemcargo;
 	aircraft->itemTypes = 0;
@@ -1481,7 +1481,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 
 		/* initialize the menu */
 		aircraftTemplate = &ccs.aircraftTemplates[ccs.numAircraftTemplates];
-		memset(aircraftTemplate, 0, sizeof(*aircraftTemplate));
+		OBJZERO(*aircraftTemplate);
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		aircraftTemplate->tpl = aircraftTemplate;

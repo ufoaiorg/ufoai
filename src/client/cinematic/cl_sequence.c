@@ -305,7 +305,7 @@ static void SEQ_Render3D (sequenceContext_t *context)
 		R_AnimRun(&se->as, se->model, context->animspeed * cls.frametime);
 
 		/* add to scene */
-		memset(&ent, 0, sizeof(ent));
+		OBJZERO(ent);
 		ent.model = se->model;
 		ent.skinnum = se->skin;
 		ent.as = se->as;
@@ -460,7 +460,7 @@ qboolean SEQ_InitContext (sequenceContext_t *context, const char *name)
 		return qfalse;
 	}
 
-	memset(context, 0, sizeof(*context));
+	OBJZERO(*context);
 	context->numEnts = 0;
 	context->numObj2Ds = 0;
 	context->time = cl.time;
@@ -668,7 +668,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 			se = &context->ents[context->numEnts++];
 		}
 		/* allocate */
-		memset(se, 0, sizeof(*se));
+		OBJZERO(*se);
 		se->inuse = qtrue;
 		Q_strncpyz(se->name, name, sizeof(se->name));
 		VectorSet(se->color, 0.7, 0.7, 0.7);
@@ -747,7 +747,7 @@ static int SEQ_Execute2Dobj (sequenceContext_t *context, const char *name, const
 			s2d = &context->obj2Ds[context->numObj2Ds++];
 		}
 		/* allocate */
-		memset(s2d, 0, sizeof(*s2d));
+		OBJZERO(*s2d);
 		for (i = 0; i < 4; i++)
 			s2d->color[i] = 1.0f;
 		s2d->inuse = qtrue;
@@ -889,7 +889,7 @@ void CL_ParseSequence (const char *name, const char **text)
 		Com_Error(ERR_FATAL, "Too many sequences");
 
 	sp = &sequences[numSequences++];
-	memset(sp, 0, sizeof(*sp));
+	OBJZERO(*sp);
 	Q_strncpyz(sp->name, name, sizeof(sp->name));
 	sp->start = numSeqCmds;
 
@@ -928,7 +928,7 @@ void CL_ParseSequence (const char *name, const char **text)
 
 				/* init seqCmd */
 				sc = &seqCmds[numSeqCmds++];
-				memset(sc, 0, sizeof(*sc));
+				OBJZERO(*sc);
 				sc->handler = seqCmdFunc[i];
 				sp->length++;
 

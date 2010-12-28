@@ -272,7 +272,7 @@ void Con_LoadConsoleHistory (void)
 	if (!con_history->integer)
 		return;
 
-	memset(&f, 0, sizeof(f));
+	OBJZERO(f);
 
 	FS_OpenFile(CONSOLE_HISTORY_FILENAME, &f, FILE_READ);
 	if (!f.f)
@@ -342,7 +342,7 @@ void Con_Init (void)
 	/* load console history if con_history is true */
 	Con_LoadConsoleHistory();
 
-	memset(&con, 0, sizeof(con));
+	OBJZERO(con);
 	con.lineWidth = VID_NORM_WIDTH / con_fontWidth;
 	con.totalLines = lengthof(con.text) / con.lineWidth;
 	con.initialized = qtrue;

@@ -53,7 +53,7 @@ actorSkin_t* Com_AllocateActorSkin (const char *name)
 
 	index = R_ModAllocateActorSkin(name);
 	skin = &cls.actorSkins[index];
-	memset(skin, 0, sizeof(*skin));
+	OBJZERO(*skin);
 	skin->idx = index;
 
 	skin->id = Mem_PoolStrDup(name, com_genericPool, 0);
@@ -425,7 +425,7 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, containerIndex_t *cont
 	int i;
 
 	/* reset */
-	memset(item, 0, sizeof(*item));
+	OBJZERO(*item);
 
 	for (i = 0; i < csi.numIDs; i++) {
 		if (!strcmp(csi.ids[i].name, contID))
@@ -482,7 +482,7 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
  */
 void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 {
-	memset(chr, 0, sizeof(*chr));
+	OBJZERO(*chr);
 
 	/* link inventory */
 	cls.i.DestroyInventory(&cls.i, &chr->i);

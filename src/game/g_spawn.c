@@ -235,7 +235,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 	char keyname[MAX_VAR];
 
 	init = qfalse;
-	memset(&st, 0, sizeof(st));
+	OBJZERO(st);
 
 	/* go through all the dictionary pairs */
 	while (1) {
@@ -267,7 +267,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 	}
 
 	if (!init)
-		memset(ent, 0, sizeof(*ent));
+		OBJZERO(*ent);
 
 	return data;
 }
@@ -319,7 +319,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 
 	G_FreeTags(TAG_LEVEL);
 
-	memset(&level, 0, sizeof(level));
+	OBJZERO(level);
 	G_EdictsReset();
 
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
