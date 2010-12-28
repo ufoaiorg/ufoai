@@ -400,17 +400,6 @@ static qboolean Check_SidesTouch (side_t *a, side_t *b)
 	return qfalse;
 }
 
-#if 0
-/** @brief returns qtrue if the side has the texture */
-static qboolean Check_HasTex(const side_t *s, const char *tex)
-{
-	const ptrdiff_t index = s - brushsides;
-	brush_texture_t *stex = &side_brushtextures[index];
-
-	return strcmp(stex->name, tex) ? qfalse : qtrue;
-}
-#endif
-
 /**
  * @brief a composite side is a side made of sides from neighbouring brushes. the sides abut.
  * these sides can cooperate to hide a face, this is used for nodraw setting. composite sides may be
