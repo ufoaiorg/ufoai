@@ -733,21 +733,19 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 		sv.numSVModels++;
 	}
 
-	memset(mod, 0, sizeof(*mod));
-	mod->name = Mem_PoolStrDup(model, com_genericPool, 0);
-	mod->frame = frame;
-
 	VectorCopy(vec3_origin, mins);
 	VectorCopy(vec3_origin, maxs);
 
 	/* load the file */
 	modfilelen = FS_LoadFile(model, &buf);
 	if (!buf) {
-		memset(mod->name, 0, sizeof(mod->name));
 		sv.numSVModels--;
 		return qfalse;
 	}
 
+	memset(mod, 0, sizeof(*mod));
+	mod->name = Mem_PoolStrDup(model, com_genericPool, 0);
+	mod->frame = frame;
 	ClearBounds(mod->mins, mod->maxs);
 
 	/* call the appropriate loader */
