@@ -56,12 +56,12 @@ void TEST_vPrintf (const char *fmt, va_list argptr)
 
 static void Test_InitError (void)
 {
-	CU_FAIL_FATAL("Error during initialization");
+	Sys_Error("Error during initialization");
 }
 
 static void Test_RunError (void)
 {
-	CU_FAIL_FATAL("There was a Com_Error or Com_Drop call during the execution of this test");
+	Sys_Error("There was a Com_Error or Com_Drop call during the execution of this test");
 }
 
 void TEST_Init (void)
