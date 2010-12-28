@@ -233,12 +233,6 @@ static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnu
  */
 static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const int dir)
 {
-	int x, y, z;
-
-	x = pos[0];
-	y = pos[1];
-	z = pos[2];
-
 	if (dir == DIRECTION_FALL) {
 		if (step->flier) {
 			/* Fliers cannot fall intentionally. */
@@ -251,7 +245,7 @@ static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeE
 			return qfalse;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (step->flier && QuantToModel(RT_CEILING(step->map, actorSize, x, y, z)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (step->flier && QuantToModel(RT_CEILING_POS(step->map, actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return qfalse;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */

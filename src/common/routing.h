@@ -92,6 +92,7 @@ MACROS
 #define RT_FLOOR(map, actorSize, x, y, z)			map[(actorSize) - 1].floor[(z)][(y)][(x)]
 #define RT_FLOOR_POS(map, actorSize, p)				map[(actorSize) - 1].floor[(p)[0]][(p)[1]][(p)[2]]
 #define RT_CEILING(map, actorSize, x, y, z)			map[(actorSize) - 1].ceil[(z)][(y)][(x)]
+#define RT_CEILING_POS(map, actorSize, p)			map[(actorSize) - 1].ceil[(p)[0]][(p)[1]][(p)[2]]
 #define RT_FILLED(map, actorSize, x, y, z)			(RT_CEILING(map, actorSize, x, y, z) - RT_FLOOR(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
 /* area - Used by Grid_* only */
