@@ -80,5 +80,6 @@ size "7 7"
 +h07 "0 2"
 +d01 "0 2"
 +d03 "0 2"
-*rm_drop +craft_crash_firebird "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_crashed +craft_crash_firebird "1 1"
 }

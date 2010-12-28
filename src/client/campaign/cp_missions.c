@@ -370,11 +370,13 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+') {
-		if (aircraft->status == AIR_CRASHED)
+		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			/** @todo add function to return the crashed craft names as they are used in the rescue.ump */
-			Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
-		else
-			Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
+			Cvar_Set("rm_crashed", Com_GetRandomMapAssemblyNameForCraft(mission->data.aircraft->id));
+		} else {
+			Cvar_Set("rm_crashed", "");
+		}
+		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
 	}
 }
 
