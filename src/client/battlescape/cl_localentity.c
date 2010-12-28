@@ -388,7 +388,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		const objDef_t *od = INVSH_GetItemByIDX(right);
 		animationIndex = od->animationIndex;
 		type = od->type;
-		if (left != NONE && Q_streq(od, "pistol") && Q_streq(INVSH_GetItemByIDX(left)->type, "pistol")) {
+		if (left != NONE && Q_streq(od->type, "pistol") && Q_streq(INVSH_GetItemByIDX(left)->type, "pistol")) {
 akimbo:
 			type = "pistol_d";
 		}
