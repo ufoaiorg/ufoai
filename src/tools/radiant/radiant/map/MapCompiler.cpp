@@ -94,7 +94,7 @@ inline void compileReadProgress (void *ex, void *buffer)
 	if (strstr(buf, "(time:")) {
 		job->parse_progress = FALSE;
 	} else {
-		const char **step = steps;
+		const char *const *step = steps;
 		while (*step) {
 			if (buf != 0 && !string_equal(*step, buf)) {
 				job->parse_progress = TRUE;
