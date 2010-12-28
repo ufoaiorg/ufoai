@@ -7,7 +7,7 @@
 
 #include "../../../shared/ufotypes.h"
 #include "../../../shared/typedefs.h"
-#include "../../../game/q_shared.h"
+#include "../../../game/q_sizes.h"
 #include "../../../common/qfiles.h"
 #define COMPILE_MAP
 typedef int mapTiles_t;
@@ -203,13 +203,7 @@ namespace routing
 		maxY = min(curTile.wpMaxs[1], PATHFINDING_WIDTH - 1);
 		maxZ = min(curTile.wpMaxs[2], PATHFINDING_HEIGHT - 1);
 
-		assert(minX <= maxX);
-		assert(minY <= maxY);
-		assert(minZ <= maxZ);
-
-		g_message("Tile bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX, minY, minZ, maxX, maxY, maxZ);
-
-		/**@todo check whether we need this copy code */
+		/** @todo check whether we need this copy code */
 		for (size = 0; size < ACTOR_MAX_SIZE; size++)
 			/* Adjust starting x and y by size to catch large actor cell overlap. */
 			for (y = minY - size; y <= maxY; y++)
