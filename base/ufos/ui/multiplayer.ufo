@@ -266,13 +266,13 @@ window mp_serverbrowser extends abstract_multiplayer_join
 
 	func set_mn_serverliststr_from_id {
 		if (<1> == 0) {
-			*cvar:mn_serverliststr = "All"
+			*cvar:mn_serverliststr = "_All"
 		} elif (<1> == 1) {
-			*cvar:mn_serverliststr = "Free"
+			*cvar:mn_serverliststr = "_Free"
 		} elif (<1> == 2) {
-			*cvar:mn_serverliststr = "Playing"
+			*cvar:mn_serverliststr = "_Playing"
 		} else {
-			*cvar:mn_serverliststr = "Invalid"
+			*cvar:mn_serverliststr = "_Invalid"
 		}
 	}
 
