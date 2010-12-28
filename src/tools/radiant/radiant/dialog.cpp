@@ -36,7 +36,6 @@
 #include <gtk/gtk.h>
 
 #include "stream/stringstream.h"
-#include "convert.h"
 #include "gtkutil/dialog.h"
 #include "gtkutil/button.h"
 #include "gtkutil/entry.h"
