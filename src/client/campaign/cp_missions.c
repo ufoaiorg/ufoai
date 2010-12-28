@@ -315,10 +315,11 @@ static void CP_CreateCivilianTeam (const mission_t *mission)
  * the tactical part of the mission.
  * @param[in] mission Pointer to the mission that generates the battle
  * @param[out] param The battle parameters to set
+ * @param[in] aircraft the aircraft to go to the mission with
  * @sa CP_CreateAlienTeam
  * @sa CP_CreateCivilianTeam
  */
-void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param)
+void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const aircraft_t *aircraft)
 {
 	const char *zoneType;
 	const byte *color;

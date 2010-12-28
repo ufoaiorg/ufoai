@@ -890,7 +890,7 @@ void CP_StartSelectedMission (void)
 	SV_Shutdown("Server quit.", qfalse);
 	CL_Disconnect();
 
-	CP_CreateBattleParameters(mis, &ccs.battleParameters);
+	CP_CreateBattleParameters(mis, &ccs.battleParameters, aircraft);
 	CP_SetMissionVars(mis);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_uforecovered", 0);

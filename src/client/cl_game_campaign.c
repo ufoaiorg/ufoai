@@ -76,7 +76,7 @@ static void GAME_CP_MissionAutoGo_f (void)
 	}
 
 	/* start the map */
-	CP_CreateBattleParameters(mission, &ccs.battleParameters);
+	CP_CreateBattleParameters(mission, &ccs.battleParameters, ccs.missionAircraft);
 
 	results->won = qfalse;
 	CL_GameAutoGo(mission, ccs.interceptAircraft, ccs.curCampaign, &ccs.battleParameters, results);

@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern const int MAX_POS_LOOP;
 
 void CP_SetMissionVars(const mission_t *mission);
-void CP_CreateBattleParameters(mission_t *mission, battleParam_t *param);
+void CP_CreateBattleParameters(mission_t *mission, battleParam_t *param, const aircraft_t *aircraft);
 void CP_StartMissionMap(mission_t* mission);
 mission_t* CP_GetMissionByIDSilent(const char *missionId);
 mission_t *CP_GetMissionByID(const char *missionId);
