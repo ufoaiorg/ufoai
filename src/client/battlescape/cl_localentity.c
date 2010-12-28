@@ -395,10 +395,7 @@ akimbo:
 	}
 
 	if (Q_strstart(anim, "stand") || Q_strstart(anim, "walk")) {
-		Q_strncpyz(mod, anim, length);
-		mod += strlen(anim);
-		*mod++ = animationIndex;
-		*mod++ = 0;
+		Com_sprintf(mod, length, "%s%c", anim, animationIndex);
 	} else {
 		Com_sprintf(mod, length, "%s_%s", anim, type);
 	}
