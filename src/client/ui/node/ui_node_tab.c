@@ -221,7 +221,7 @@ static void UI_TabNodeDraw (uiNode_t *node)
 		}
 
 		/* Check the status of the current tab */
-		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
+		if (Q_streq(OPTIONEXTRADATA(option).value, ref)) {
 			status = UI_TAB_SELECTED;
 		} else if (option->disabled || node->disabled) {
 			status = UI_TAB_DISABLED;

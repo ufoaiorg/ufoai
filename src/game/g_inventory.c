@@ -66,7 +66,7 @@ qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerI
 	invList_t *ic = CONTAINER(ent, container);
 	while (ic) {
 		objDef_t *item = ic->item.t;
-		if (item != NULL && !strcmp(item->id, itemID)) {
+		if (item != NULL && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",

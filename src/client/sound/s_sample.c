@@ -51,7 +51,7 @@ static s_sample_t *S_FindByName (const char *name)
 	const unsigned hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
 
 	for (sample = sampleHash[hash]; sample; sample = sample->hashNext)
-		if (!strcmp(name, sample->name))
+		if (Q_streq(name, sample->name))
 			return sample;
 
 	return NULL;

@@ -339,7 +339,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s\n", Cmd_Args());
 
 	/* server connection */
-	if (!strcmp(c, "client_connect")) {
+	if (Q_streq(c, "client_connect")) {
 		int i;
 		for (i = 1; i < Cmd_Argc(); i++) {
 			const char *p = Cmd_Argv(i);
@@ -364,7 +364,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	}
 
 	/* remote command from gui front end */
-	if (!strcmp(c, "cmd")) {
+	if (Q_streq(c, "cmd")) {
 		if (!NET_StreamIsLoopback(cls.netStream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
@@ -378,25 +378,25 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	}
 
 	/* teaminfo command */
-	if (!strcmp(c, "teaminfo")) {
+	if (Q_streq(c, "teaminfo")) {
 		CL_ParseTeamInfoMessage(msg);
 		return;
 	}
 
 	/* ping from server */
-	if (!strcmp(c, "ping")) {
+	if (Q_streq(c, "ping")) {
 		NET_OOB_Printf(cls.netStream, "ack");
 		return;
 	}
 
 	/* echo request from server */
-	if (!strcmp(c, "echo")) {
+	if (Q_streq(c, "echo")) {
 		NET_OOB_Printf(cls.netStream, "%s", Cmd_Argv(1));
 		return;
 	}
 
 	/* print */
-	if (!strcmp(c, "print")) {
+	if (Q_streq(c, "print")) {
 		char str[1024];
 		NET_ReadString(msg, str, sizeof(str));
 		/* special reject messages needs proper handling */
@@ -513,7 +513,7 @@ static qboolean CL_CanMultiplayerStart (void)
 	const char *serverVersion = CL_GetConfigString(CS_VERSION);
 
 	/* checksum doesn't match with the one the server gave us via configstring */
-	if (strcmp(UFO_VERSION, serverVersion)) {
+	if (!Q_streq(UFO_VERSION, serverVersion)) {
 		Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the server version (%s)"), UFO_VERSION, serverVersion);
 		UI_Popup(_("Error"), popupText);
 		Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the server version (%s)", UFO_VERSION, serverVersion);
@@ -615,9 +615,9 @@ static void CL_SetRatioFilter_f (void)
 		return;
 	}
 
-	if (!strcmp(Cmd_Argv(1), "all"))
+	if (Q_streq(Cmd_Argv(1), "all"))
 		all = qtrue;
-	else if (!strcmp(Cmd_Argv(1), "custom"))
+	else if (Q_streq(Cmd_Argv(1), "custom"))
 		custom = qtrue;
 	else
 		requestedRation = atof(Cmd_Argv(1));
@@ -703,7 +703,7 @@ static void CL_ParseActorSkin (const char *name, const char **text)
 
 	/* NOTE: first skin is special cause we don't get the skin with suffix */
 	if (Com_GetActorSkinCount() == 0) {
-		if (strcmp(name, "default") != 0) {
+		if (!Q_streq(name, "default") != 0) {
 			Com_Error(ERR_DROP, "CL_ParseActorSkin: First actorskin read from script must be \"default\" skin.");
 		}
 	}
@@ -718,7 +718,7 @@ static void CL_ParseActorSkin (const char *name, const char **text)
 			break;
 
 		for (vp = actorskin_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
+			if (Q_streq(token, vp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -781,7 +781,7 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 			break;
 
 		for (vp = mapdef_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
+			if (Q_streq(token, vp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -804,17 +804,17 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 
 		if (!vp->string) {
 			linkedList_t **list;
-			if (!strcmp(token, "ufos")) {
+			if (Q_streq(token, "ufos")) {
 				list = &md->ufos;
-			} else if (!strcmp(token, "aircraft")) {
+			} else if (Q_streq(token, "aircraft")) {
 				list = &md->aircraft;
-			} else if (!strcmp(token, "terrains")) {
+			} else if (Q_streq(token, "terrains")) {
 				list = &md->terrains;
-			} else if (!strcmp(token, "populations")) {
+			} else if (Q_streq(token, "populations")) {
 				list = &md->populations;
-			} else if (!strcmp(token, "cultures")) {
+			} else if (Q_streq(token, "cultures")) {
 				list = &md->cultures;
-			} else if (!strcmp(token, "gametypes")) {
+			} else if (Q_streq(token, "gametypes")) {
 				list = &md->gameTypes;
 			} else {
 				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
@@ -904,31 +904,31 @@ void CL_InitAfter (void)
  */
 qboolean CL_ParseClientData (const char *type, const char *name, const char **text)
 {
-	if (!strcmp(type, "font"))
+	if (Q_streq(type, "font"))
 		return UI_ParseFont(name, text);
-	else if (!strcmp(type, "tutorial"))
+	else if (Q_streq(type, "tutorial"))
 		TUT_ParseTutorials(name, text);
-	else if (!strcmp(type, "menu_model"))
+	else if (Q_streq(type, "menu_model"))
 		return UI_ParseUIModel(name, text);
-	else if (!strcmp(type, "sprite"))
+	else if (Q_streq(type, "sprite"))
 		return UI_ParseSprite(name, text);
-	else if (!strcmp(type, "particle"))
+	else if (Q_streq(type, "particle"))
 		CL_ParseParticle(name, text);
-	else if (!strcmp(type, "sequence"))
+	else if (Q_streq(type, "sequence"))
 		CL_ParseSequence(name, text);
-	else if (!strcmp(type, "music"))
+	else if (Q_streq(type, "music"))
 		M_ParseMusic(name, text);
-	else if (!strcmp(type, "tips"))
+	else if (Q_streq(type, "tips"))
 		CL_ParseTipsOfTheDay(name, text);
-	else if (!strcmp(type, "language"))
+	else if (Q_streq(type, "language"))
 		CL_ParseLanguages(name, text);
-	else if (!strcmp(type, "window"))
+	else if (Q_streq(type, "window"))
 		return UI_ParseWindow(type, name, text);
-	else if (!strcmp(type, "component"))
+	else if (Q_streq(type, "component"))
 		return UI_ParseComponent(type, text);
-	else if (!strcmp(type, "mapdef"))
+	else if (Q_streq(type, "mapdef"))
 		CL_ParseMapDefinition(name, text);
-	else if (!strcmp(type, "actorskin"))
+	else if (Q_streq(type, "actorskin"))
 		CL_ParseActorSkin(name, text);
 	return qtrue;
 }

@@ -90,7 +90,7 @@ static qboolean UI_KeyBindingNodeKeyPressed (uiNode_t *node, unsigned int key, u
 	if (binding[0] != '\0') {
 		/* if it's the same command, do not change anything, otherwise
 		 * show the reason why nothing was changed */
-		if (strcmp(binding, command)) {
+		if (!Q_streq(binding, command)) {
 			const char *keyStr = Key_KeynumToString(key);
 			UI_DisplayNotice(va(_("Key %s already bound"), keyStr), 2000, NULL);
 		}

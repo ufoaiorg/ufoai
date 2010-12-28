@@ -77,7 +77,7 @@ uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childN
 
 	hash = Com_HashKey(childName, INDEXEDCHILD_HASH_SIZE);
 	for (a = EXTRADATA(node).index_hash[hash]; a; a = a->hash_next) {
-		if (!strcmp(childName, a->node->name)) {
+		if (Q_streq(childName, a->node->name)) {
 			return a->node;
 		}
 	}
@@ -94,7 +94,7 @@ qboolean UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const chil
 
 	hash = Com_HashKey(child->name, INDEXEDCHILD_HASH_SIZE);
 	for (a = EXTRADATA(node).index_hash[hash]; a; a = a->hash_next) {
-		if (!strcmp(child->name, a->node->name)) {
+		if (Q_streq(child->name, a->node->name)) {
 			/** @todo display a warning, we must not override a node name here */
 			break;
 		}

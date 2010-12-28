@@ -70,7 +70,7 @@ static const char *CL_GetLocaleID (const char *fullLocale)
 		localeMapping_t *mapping = language->localeMapping;
 
 		while (mapping) {
-			if (!strcmp(fullLocale, mapping->localeMapping))
+			if (Q_streq(fullLocale, mapping->localeMapping))
 				return language->localeID;
 			mapping = mapping->next;
 		}
@@ -183,7 +183,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 	}
 #else
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		if (!strcmp(localeID, language->localeID))
+		if (Q_streq(localeID, language->localeID))
 			break;
 	}
 	if (i == languageCount) {
@@ -252,7 +252,7 @@ void CL_LanguageInit (void)
 #endif
 
 		/* Test the locale first, add to list if setting given locale possible. */
-		if (CL_LanguageTest(language->localeID) || !strcmp(language->localeID, "none")) {
+		if (CL_LanguageTest(language->localeID) || Q_streq(language->localeID, "none")) {
 			UI_AddOption(&languageOption, "", va("_%s", language->localeString), language->localeID);
 		}
 	}
@@ -293,7 +293,7 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 	s_language->modified = qfalse;
 
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		if (!strcmp(localeID, language->localeID))
+		if (Q_streq(localeID, language->localeID))
 			break;
 	}
 

@@ -110,7 +110,7 @@ qboolean UI_ParseFont (const char *name, const char **text)
 			break;
 
 		for (v = fontValues; v->string; v++)
-			if (!strcmp(token, v->string)) {
+			if (Q_streq(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -159,7 +159,7 @@ const uiFont_t *UI_GetFontByID (const char *name)
 	int i;
 
 	for (i = 0; i < numFonts; i++)
-		if (!strcmp(fonts[i].name, name))
+		if (Q_streq(fonts[i].name, name))
 			return &fonts[i];
 
 	return NULL;

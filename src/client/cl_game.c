@@ -391,7 +391,7 @@ static void UI_GetMaps_f (void)
 
 static void UI_ChangeMap_f (void)
 {
-	if (!strcmp(Cmd_Argv(0), "mn_nextmap"))
+	if (Q_streq(Cmd_Argv(0), "mn_nextmap"))
 		UI_MapInfo(1);
 	else
 		UI_MapInfo(-1);
@@ -414,7 +414,7 @@ static void UI_SelectMap_f (void)
 
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t *md = Com_GetMapDefByIDX(i);
-		if (strcmp(md->map, mapname))
+		if (!Q_streq(md->map, mapname))
 			continue;
 		cls.currentSelectedMap = i;
 		UI_MapInfo(0);
@@ -423,7 +423,7 @@ static void UI_SelectMap_f (void)
 
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t *md = Com_GetMapDefByIDX(i);
-		if (strcmp(md->id, mapname))
+		if (!Q_streq(md->id, mapname))
 			continue;
 		cls.currentSelectedMap = i;
 		UI_MapInfo(0);
@@ -450,7 +450,7 @@ static void GAME_SetMode_f (void)
 		return;
 
 	while (list->name) {
-		if (!strcmp(list->menu, modeName)) {
+		if (Q_streq(list->menu, modeName)) {
 			GAME_SetMode(list);
 			return;
 		}
@@ -817,7 +817,7 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 
 	for (i = 0; i < cls.numMDs; i++) {
 		mapDef_t *md = Com_GetMapDefByIDX(i);
-		if (!strcmp(md->id, mapDefID))
+		if (Q_streq(md->id, mapDefID))
 			return md;
 	}
 

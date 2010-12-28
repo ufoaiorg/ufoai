@@ -271,7 +271,7 @@ void Cbuf_AddEarlyCommands (qboolean clear)
 
 	for (i = 1; i < Com_Argc(); i++) {
 		const char *s = Com_Argv(i);
-		if (strcmp(s, "+set"))
+		if (!Q_streq(s, "+set"))
 			continue;
 		Cbuf_AddText(va("set %s %s\n", Com_Argv(i + 1), Com_Argv(i + 2)));
 		if (clear) {
@@ -427,7 +427,7 @@ static void Cmd_Alias_f (void)
 	/* if the alias already exists, reuse it */
 	hash = Com_HashKey(s, ALIAS_HASH_SIZE);
 	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
-		if (!strcmp(s, a->name)) {
+		if (Q_streq(s, a->name)) {
 			Mem_Free(a->value);
 			break;
 		}
@@ -452,7 +452,7 @@ static void Cmd_Alias_f (void)
 			Q_strcat(cmd, " ", sizeof(cmd));
 	}
 
-	if (!strcmp(Cmd_Argv(0), "aliasa"))
+	if (Q_streq(Cmd_Argv(0), "aliasa"))
 		a->archive = qtrue;
 
 	a->value = Mem_PoolStrDup(cmd, com_aliasSysPool, 0);
@@ -646,7 +646,7 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 	/* fail if the command already exists */
 	hash = Com_HashKey(searchName, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!strcmp(searchName, cmd->name)) {
+		if (Q_streq(searchName, cmd->name)) {
 			if (cmd->description)
 				return cmd->description;
 			else
@@ -718,7 +718,7 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
 
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!strcmp(cmd_name, cmd->name)) {
+		if (Q_streq(cmd_name, cmd->name)) {
 			cmd->completeParam = function;
 			return;
 		}
@@ -746,7 +746,7 @@ void* Cmd_GetUserdata (const char *cmd_name)
 
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!strcmp(cmd_name, cmd->name)) {
+		if (Q_streq(cmd_name, cmd->name)) {
 			return cmd->userdata;
 		}
 	}
@@ -773,7 +773,7 @@ void Cmd_AddUserdata (const char *cmd_name, void* userdata)
 
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!strcmp(cmd_name, cmd->name)) {
+		if (Q_streq(cmd_name, cmd->name)) {
 			cmd->userdata = userdata;
 			return;
 		}
@@ -804,7 +804,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 	/* fail if the command already exists */
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!strcmp(cmd_name, cmd->name)) {
+		if (Q_streq(cmd_name, cmd->name)) {
 			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmd_name);
 			return;
 		}
@@ -852,7 +852,7 @@ void Cmd_RemoveCommand (const char *cmd_name)
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
 			return;
 		}
-		if (!strcmp(cmd_name, cmd->name)) {
+		if (Q_streq(cmd_name, cmd->name)) {
 			*back = cmd->next;
 			Mem_Free(cmd);
 			return;
@@ -872,7 +872,7 @@ qboolean Cmd_Exists (const char *cmd_name)
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!strcmp(cmd_name, cmd->name))
+		if (Q_streq(cmd_name, cmd->name))
 			return qtrue;
 	}
 
@@ -1089,7 +1089,7 @@ static void Cmd_Test_f (void)
 	cmd_function_t *cmd;
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (strcmp(cmd->name, "quit"))
+		if (!Q_streq(cmd->name, "quit"))
 			Cmd_ExecuteString(cmd->name);
 	}
 }

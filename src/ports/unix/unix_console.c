@@ -216,7 +216,7 @@ static void Sys_TTYConsoleHistoryClear (consoleHistory_t *edit)
 static qboolean Sys_IsATTY (void)
 {
 	const char* term = getenv("TERM");
-	return isatty(STDIN_FILENO) && !(term && (!strcmp(term, "raw") || !strcmp(term, "dumb")));
+	return isatty(STDIN_FILENO) && !(term && (Q_streq(term, "raw") || Q_streq(term, "dumb")));
 }
 
 /**

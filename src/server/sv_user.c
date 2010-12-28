@@ -207,7 +207,7 @@ static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 	Cmd_TokenizeString(s, qfalse);
 
 	for (u = ucmds; u->name; u++)
-		if (!strcmp(Cmd_Argv(0), u->name)) {
+		if (Q_streq(Cmd_Argv(0), u->name)) {
 			Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: %s\n", s);
 			u->func(cl);
 			return;

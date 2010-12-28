@@ -339,25 +339,25 @@ static void UM_Parameter (int argc, char **argv)
 	int i;
 
 	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i], "-overwrite")) {
+		if (Q_streq(argv[i], "-overwrite")) {
 			config.overwrite = qtrue;
-		} else if (!strcmp(argv[i], "-f") && (i + 1 < argc)) {
+		} else if (Q_streq(argv[i], "-f") && (i + 1 < argc)) {
 			Q_strncpyz(config.inputName, argv[++i], sizeof(config.inputName));
-		} else if (!strcmp(argv[i], "-s") && (i + 1 < argc)) {
+		} else if (Q_streq(argv[i], "-s") && (i + 1 < argc)) {
 			config.smoothness = strtod(argv[++i], NULL);
 			if (config.smoothness < -1.0 || config.smoothness > 1.0){
 				Usage();
 				Exit(1);
 			}
-		} else if (!strcmp(argv[i], "-mdx")) {
+		} else if (Q_streq(argv[i], "-mdx")) {
 			config.action = ACTION_MDX;
-		} else if (!strcmp(argv[i], "-glcmds")) {
+		} else if (Q_streq(argv[i], "-glcmds")) {
 			config.action = ACTION_GLCMDSREMOVE;
-		} else if (!strcmp(argv[i], "-skinfix")) {
+		} else if (Q_streq(argv[i], "-skinfix")) {
 			config.action = ACTION_SKINFIX;
-		} else if (!strcmp(argv[i], "-check")) {
+		} else if (Q_streq(argv[i], "-check")) {
 			config.action = ACTION_CHECK;
-		} else if (!strcmp(argv[i], "-skinedit")) {
+		} else if (Q_streq(argv[i], "-skinedit")) {
 			config.action = ACTION_SKINEDIT;
 			if (i + 1 == argc) {
 				Usage();
@@ -365,9 +365,9 @@ static void UM_Parameter (int argc, char **argv)
 			}
 			Q_strncpyz(config.fileName, argv[i + 1], sizeof(config.fileName));
 			i++;
-		} else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose")) {
+		} else if (Q_streq(argv[i], "-v") || Q_streq(argv[i], "--verbose")) {
 			config.verbose = qtrue;
-		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+		} else if (Q_streq(argv[i], "-h") || Q_streq(argv[i], "--help")) {
 			Usage();
 			Exit(0);
 		} else {

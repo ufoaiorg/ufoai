@@ -260,11 +260,11 @@ const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const 
 					if (context->source) {
 						const char *command = propertyName + 5;
 						const uiNode_t *node = NULL;
-						if (!strcmp(command, "root"))
+						if (Q_streq(command, "root"))
 							node = context->source->root;
-						else if (!strcmp(command, "this"))
+						else if (Q_streq(command, "this"))
 							node = context->source;
-						else if (!strcmp(command, "parent"))
+						else if (Q_streq(command, "parent"))
 							node = context->source->parent;
 						else
 							Com_Printf("UI_GenCommand: Command '%s' for path injection unknown\n", command);

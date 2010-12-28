@@ -593,13 +593,13 @@ static int AIL_see (lua_State *L)
 			const char *s = lua_tostring(L, 1);
 			/** @todo Properly implement at edict level, get rid of magic numbers.
 			 * These are only "placeholders". */
-			if (strcmp(s, "all") == 0)
+			if (Q_streq(s, "all"))
 				vision = 0;
-			else if (strcmp(s, "sight") == 0)
+			else if (Q_streq(s, "sight"))
 				vision = 1;
-			else if (strcmp(s, "psionic") == 0)
+			else if (Q_streq(s, "psionic"))
 				vision = 2;
-			else if (strcmp(s, "infrared") == 0)
+			else if (Q_streq(s, "infrared"))
 				vision = 3;
 			else
 				AIL_invalidparameter(1);
@@ -724,9 +724,9 @@ static int AIL_reactionfire (lua_State *L)
 		if (lua_isstring(L, 1)) {
 			/* get reaction fire mode */
 			const char* cmd = lua_tostring(L, 1);
-			reactionState = !strcmp(cmd, "disable") ? ~STATE_REACTION
-				: !strcmp(cmd, "once") ? STATE_REACTION_ONCE
-				: !strcmp(cmd, "many") ? STATE_REACTION_MANY : 0;
+			reactionState = Q_streq(cmd, "disable") ? ~STATE_REACTION
+				: Q_streq(cmd, "once") ? STATE_REACTION_ONCE
+				: Q_streq(cmd, "many") ? STATE_REACTION_MANY : 0;
 		}
 
 		if (reactionState && lua_gettop(L) > 1 && lua_isboolean(L, 2)) {
@@ -782,9 +782,9 @@ static int AIL_reload (lua_State *L)
 		if (lua_isstring(L, 1)) {
 			const char *s = lua_tostring(L, 1);
 
-			if (!strcmp(s, "right"))
+			if (Q_streq(s, "right"))
 				container = gi.csi->idRight;
-			else if (!strcmp(s, "left"))
+			else if (Q_streq(s, "left"))
 				container = gi.csi->idLeft;
 			else
 				return 0;

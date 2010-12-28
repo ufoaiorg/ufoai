@@ -212,7 +212,7 @@ font_t *R_GetFont (const char *name)
 	int i;
 
 	for (i = 0; i < numFonts; i++)
-		if (!strcmp(name, fonts[i].name))
+		if (Q_streq(name, fonts[i].name))
 			return &fonts[i];
 
 #ifndef COMPILE_UNITTESTS

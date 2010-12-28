@@ -499,7 +499,7 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 
 	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
 		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
-			if (tech->markResearched.markOnly[j] && !strcmp(tech->markResearched.campaign[j], campaign->researched)) {
+			if (tech->markResearched.markOnly[j] && Q_streq(tech->markResearched.campaign[j], campaign->researched)) {
 				Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 				RS_ResearchFinish(tech);
 				break;
@@ -532,7 +532,7 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 				objDef_t *item = INVSH_GetItemByIDX(j);
 
 				/* This item has been 'provided' -> get the correct data. */
-				if (!strcmp(tech->provides, item->id)) {
+				if (Q_streq(tech->provides, item->id)) {
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(item->name, cp_campaignPool, 0);
@@ -555,7 +555,7 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 			for (j = 0; j < ccs.numBuildingTemplates; j++) {
 				building_t *building = &ccs.buildingTemplates[j];
 				/* This building has been 'provided'  -> get the correct data. */
-				if (!strcmp(tech->provides, building->id)) {
+				if (Q_streq(tech->provides, building->id)) {
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(building->name, cp_campaignPool, 0);
@@ -577,7 +577,7 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 				/* This aircraft has been 'provided'  -> get the correct data. */
 				if (!tech->provides)
 					Com_Error(ERR_FATAL, "RS_InitTree: \"%s\" - No linked aircraft or craft-upgrade.\n", tech->id);
-				if (!strcmp(tech->provides, aircraftTemplate->id)) {
+				if (Q_streq(tech->provides, aircraftTemplate->id)) {
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(aircraftTemplate->name, cp_campaignPool, 0);
@@ -1138,7 +1138,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	int i;
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
-		if (!strcmp(ccs.technologies[i].id, name)) {
+		if (Q_streq(ccs.technologies[i].id, name)) {
 			Com_Printf("RS_ParseTechnologies: Second tech with same name found (%s) - second ignored\n", name);
 			return;
 		}
@@ -1198,41 +1198,41 @@ void RS_ParseTechnologies (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		/* get values */
-		if (!strcmp(token, "type")) {
+		if (Q_streq(token, "type")) {
 			/* what type of tech this is */
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			/** @todo use Com_RegisterConstInt(); */
 			/* redundant, but oh well. */
-			if (!strcmp(token, "tech"))
+			if (Q_streq(token, "tech"))
 				tech->type = RS_TECH;
-			else if (!strcmp(token, "weapon"))
+			else if (Q_streq(token, "weapon"))
 				tech->type = RS_WEAPON;
-			else if (!strcmp(token, "news"))
+			else if (Q_streq(token, "news"))
 				tech->type = RS_NEWS;
-			else if (!strcmp(token, "armour"))
+			else if (Q_streq(token, "armour"))
 				tech->type = RS_ARMOUR;
-			else if (!strcmp(token, "craft"))
+			else if (Q_streq(token, "craft"))
 				tech->type = RS_CRAFT;
-			else if (!strcmp(token, "craftitem"))
+			else if (Q_streq(token, "craftitem"))
 				tech->type = RS_CRAFTITEM;
-			else if (!strcmp(token, "building"))
+			else if (Q_streq(token, "building"))
 				tech->type = RS_BUILDING;
-			else if (!strcmp(token, "alien"))
+			else if (Q_streq(token, "alien"))
 				tech->type = RS_ALIEN;
-			else if (!strcmp(token, "ugv"))
+			else if (Q_streq(token, "ugv"))
 				tech->type = RS_UGV;
-			else if (!strcmp(token, "logic"))
+			else if (Q_streq(token, "logic"))
 				tech->type = RS_LOGIC;
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", name, token);
 		} else {
-			if (!strcmp(token, "description") || !strcmp(token, "pre_description")) {
+			if (Q_streq(token, "description") || Q_streq(token, "pre_description")) {
 				/* Parse the available descriptions for this tech */
 
 				/* Link to correct list. */
-				if (!strcmp(token, "pre_description")) {
+				if (Q_streq(token, "pre_description")) {
 					descTemp = &tech->preDescription;
 				} else {
 					descTemp = &tech->description;
@@ -1270,16 +1270,16 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					}
 				} while (*text);
 
-			} else if (!strcmp(token, "redirect")) {
+			} else if (Q_streq(token, "redirect")) {
 				token = Com_EParse(text, errhead, name);
 				/* Store this tech and the parsed tech-id of the target of the redirection for later linking. */
 				LIST_AddPointer(&redirectedTechs, tech);
 				LIST_AddString(&redirectedTechs, token);
-			} else if (!strcmp(token, "require_AND") || !strcmp(token, "require_OR") || !strcmp(token, "require_for_production")) {
+			} else if (Q_streq(token, "require_AND") || Q_streq(token, "require_OR") || Q_streq(token, "require_for_production")) {
 				/* Link to correct list. */
-				if (!strcmp(token, "require_AND")) {
+				if (Q_streq(token, "require_AND")) {
 					requiredTemp = &tech->requireAND;
-				} else if (!strcmp(token, "require_OR")) {
+				} else if (Q_streq(token, "require_OR")) {
 					requiredTemp = &tech->requireOR;
 				} else { /* It's "requireForProduction" */
 					requiredTemp = &tech->requireForProduction;
@@ -1300,10 +1300,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					if (*token == '}')
 						break;
 
-					if (!strcmp(token, "tech") || !strcmp(token, "tech_not")) {
+					if (Q_streq(token, "tech") || Q_streq(token, "tech_not")) {
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							if (!strcmp(token, "tech_not"))
+							if (Q_streq(token, "tech_not"))
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH_NOT;
 							else
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH;
@@ -1318,7 +1318,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
-					} else if (!strcmp(token, "item")) {
+					} else if (Q_streq(token, "item")) {
 						/* Defines what items need to be collected for this item to be researchable. */
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
@@ -1334,7 +1334,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
-					} else if (!strcmp(token, "alienglobal")) {
+					} else if (Q_streq(token, "alienglobal")) {
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN_GLOBAL;
@@ -1347,11 +1347,11 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
-					} else if (!strcmp(token, "alien_dead") || !strcmp(token, "alien")) { /* Does this only check the beginning of the string? */
+					} else if (Q_streq(token, "alien_dead") || Q_streq(token, "alien")) { /* Does this only check the beginning of the string? */
 						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							if (!strcmp(token, "alien_dead")) {
+							if (Q_streq(token, "alien_dead")) {
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN_DEAD;
 								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien dead - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							} else {
@@ -1368,7 +1368,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
-					} else if (!strcmp(token, "ufo")) {
+					} else if (Q_streq(token, "ufo")) {
 						/* Defines what ufos need to be collected for this item to be researchable. */
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
@@ -1382,7 +1382,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-ufo - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
 						}
-					} else if (!strcmp(token, "antimatter")) {
+					} else if (Q_streq(token, "antimatter")) {
 						/* Defines what ufos need to be collected for this item to be researchable. */
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
@@ -1397,7 +1397,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", name, token);
 					}
 				} while (*text);
-			} else if (!strcmp(token, "up_chapter")) {
+			} else if (Q_streq(token, "up_chapter")) {
 				/* UFOpaedia chapter */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -1406,7 +1406,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				if (*token) {
 					/* find chapter */
 					for (i = 0; i < ccs.numChapters; i++) {
-						if (!strcmp(token, ccs.upChapters[i].id)) {
+						if (Q_streq(token, ccs.upChapters[i].id)) {
 							/* add entry to chapter */
 							tech->upChapter = &ccs.upChapters[i];
 							if (!ccs.upChapters[i].first) {
@@ -1428,7 +1428,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", name, token);
 					}
 				}
-			} else if (!strcmp(token, "mail") || !strcmp(token, "mail_pre")) {
+			} else if (Q_streq(token, "mail") || Q_streq(token, "mail_pre")) {
 				techMail_t* mail;
 
 				/* how many mails found for this technology
@@ -1438,7 +1438,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				if (tech->numTechMails > TECHMAIL_MAX)
 					Com_Printf("RS_ParseTechnologies: more techmail-entries found than supported. \"%s\"\n",  name);
 
-				if (!strcmp(token, "mail_pre")) {
+				if (Q_streq(token, "mail_pre")) {
 					mail = &tech->mail[TECHMAIL_PRE];
 				} else {
 					mail = &tech->mail[TECHMAIL_RESEARCHED];
@@ -1453,7 +1453,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					return;
 				do {
 					for (vp = valid_techmail_vars; vp->string; vp++)
-						if (!strcmp(token, vp->string)) {
+						if (Q_streq(token, vp->string)) {
 							/* found a definition */
 							token = Com_EParse(text, errhead, name);
 							if (!*text)
@@ -1483,7 +1483,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					mail->model = "characters/navarre";
 			} else {
 				for (vp = valid_tech_vars; vp->string; vp++)
-					if (!strcmp(token, vp->string)) {
+					if (Q_streq(token, vp->string)) {
 						/* found a definition */
 						token = Com_EParse(text, errhead, name);
 						if (!*text)

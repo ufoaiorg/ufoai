@@ -60,7 +60,7 @@ uiModel_t *UI_GetUIModel (const char *modelName)
 
 	for (i = 0; i < ui_global.numModels; i++) {
 		uiModel_t *m = &ui_global.models[i];
-		if (!strcmp(m->id, modelName))
+		if (Q_streq(m->id, modelName))
 			return m;
 	}
 	return NULL;
@@ -224,7 +224,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 				animState_t *as = &model->animState;
 				const char *anim = R_AnimGetName(as, mi->model);
 				/* initial animation or animation change */
-				if (anim == NULL || strcmp(anim, ref))
+				if (anim == NULL || !Q_streq(anim, ref))
 					R_AnimChange(as, mi->model, ref);
 				else
 					R_AnimRun(as, mi->model, cls.frametime * 1000);
@@ -347,7 +347,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 			if (!as)
 				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 			anim = R_AnimGetName(as, mi.model);
-			if (anim && strcmp(anim, ref))
+			if (anim && !Q_streq(anim, ref))
 				R_AnimChange(as, mi.model, ref);
 			R_AnimRun(as, mi.model, cls.frametime * 1000);
 		}

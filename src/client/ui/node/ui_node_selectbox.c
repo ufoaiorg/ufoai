@@ -132,7 +132,7 @@ static void UI_SelectBoxNodeDraw (uiNode_t *node)
 	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		const char *label;
 
-		if (strcmp(OPTIONEXTRADATA(option).value, ref) != 0)
+		if (!Q_streq(OPTIONEXTRADATA(option).value, ref))
 			continue;
 
 		if (option->invis)

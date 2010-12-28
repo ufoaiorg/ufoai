@@ -97,7 +97,7 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, qboolean
 
 	for (i = 1; i < max && SV_GetConfigString(start + i)[0] != '\0'; i++) {
 		const char *configString = SV_GetConfigString(start + i);
-		if (!strcmp(configString, name))
+		if (Q_streq(configString, name))
 			return i;
 	}
 

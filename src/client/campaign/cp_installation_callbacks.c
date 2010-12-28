@@ -45,7 +45,7 @@ static void INS_SetInstallationTitle (void)
 	do {
 		j = 0;
 		Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), i);
-		while (j <= ccs.numInstallations && strcmp(insName, ccs.installations[j++].name));
+		while (j <= ccs.numInstallations && !Q_streq(insName, ccs.installations[j++].name));
 	} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
 
 	Cvar_Set("mn_installation_title", insName);

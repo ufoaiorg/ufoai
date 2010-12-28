@@ -74,14 +74,14 @@ static qboolean Check_TargetExists(const epair_t *kvp)
 {
 	const char *thisKey = kvp->key;
 	const char *value = kvp->value;
-	const char *otherKey = !strcmp("target", thisKey) ? "targetname" : "target";
+	const char *otherKey = Q_streq("target", thisKey) ? "targetname" : "target";
 	int i;
 
 	for (i = 0; i < num_entities; i++) {
 		const entity_t *e = &entities[i];
 		const char *searchVal = ValueForKey(e, otherKey);
 
-		if (searchVal && !strcmp(searchVal, value))
+		if (searchVal && Q_streq(searchVal, value))
 			return qtrue;
 	}
 
@@ -96,11 +96,11 @@ static void Check_EntityWithBrushes(entity_t *e, const char *classname, int entn
 		return;
 	}
 
-	if (e->numbrushes > 1 && !strcmp(classname, "func_breakable")) {
+	if (e->numbrushes > 1 && Q_streq(classname, "func_breakable")) {
 		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
 	}
 
-	if (e->numbrushes == 1 && !strcmp(classname, "func_group")) {
+	if (e->numbrushes == 1 && Q_streq(classname, "func_group")) {
 		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", classname);
 		numToMoveToWorldspawn++;
 		e->skip = qtrue;
@@ -149,11 +149,11 @@ void CheckEntities (void)
 				continue;
 			}
 
-			if (!strcmp("target", kvp->key) || !strcmp("targetname", kvp->key)) {
+			if (Q_streq("target", kvp->key) || Q_streq("targetname", kvp->key)) {
 				if (!Check_TargetExists(kvp)) {
 					Check_Printf(VERB_CHECK, qfalse, i, -1,
 						"%s with %s of %s: no corresponding entity with %s with matching value\n",
-						ed->classname, kvp->key, kvp->value, !strcmp("target", kvp->key) ? "targetname" : "target");
+						ed->classname, kvp->key, kvp->value, Q_streq("target", kvp->key) ? "targetname" : "target");
 				}
 			}
 		}
@@ -204,7 +204,7 @@ void Check_Stats(void) {
 		const char *name = ValueForKey(&entities[i], "classname");
 
 		for (j = 0; j < numEntityDefs; j++)
-			if (!strcmp(name, entityDefs[j].classname)) {
+			if (Q_streq(name, entityDefs[j].classname)) {
 				entNums[j]++;
 				break;
 			}
@@ -274,7 +274,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 		const entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 
-		if (e->numbrushes == 1 && !strcmp(name, "func_group")) {
+		if (e->numbrushes == 1 && Q_streq(name, "func_group")) {
 			assert(j < numToMoveToWorldspawn);
 			brushesToMove[j++] = &mapbrushes[e->firstbrush];
 		}

@@ -95,7 +95,7 @@ inline void compileReadProgress (void *ex, void *buffer)
 	} else {
 		const char **step = steps;
 		while (*step) {
-			if (buf != 0 && strcmp(*step, buf)) {
+			if (buf != 0 && !Q_streq(*step, buf)) {
 				job->parse_progress = TRUE;
 				break;
 			}

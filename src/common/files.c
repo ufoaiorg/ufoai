@@ -420,7 +420,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 {
 	const char *extension = Com_GetExtension(packfile);
 
-	if (!strcmp(extension, "pk3") || !strcmp(extension, "zip")) {
+	if (Q_streq(extension, "pk3") || Q_streq(extension, "zip")) {
 		int i;
 		pack_t *pack;
 		packfile_t *newfiles;
@@ -502,7 +502,7 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 
 	search = fs_searchpaths;
 	while (search) {
-		if (!strcmp(search->filename, dir))
+		if (Q_streq(search->filename, dir))
 			return;
 		if (write && search->write) {
 			Com_Printf("change writing directory to %s\n", dir);
@@ -628,7 +628,7 @@ const char *FS_NextPath (const char *prevpath)
 	for (s = fs_searchpaths; s; s = s->next) {
 		if (s->pack)
 			continue;
-		if (prev && !strcmp(prevpath, prev))
+		if (prev && Q_streq(prevpath, prev))
 			return s->filename;
 		prev = s->filename;
 	}
@@ -701,7 +701,7 @@ static void FS_Link_f (void)
 	/* see if the link already exists */
 	prev = &fs_links;
 	for (l = fs_links; l; l = l->next) {
-		if (!strcmp(l->from, Cmd_Argv(1))) {
+		if (Q_streq(l->from, Cmd_Argv(1))) {
 			Mem_Free(l->to);
 			if (!strlen(Cmd_Argv(2))) {	/* delete it */
 				*prev = l->next;
@@ -904,7 +904,7 @@ int FS_BuildFileList (const char *fileList)
 	/* check the blocklist for older searches
 	 * and do a new one after deleting them */
 	for (block = fs_blocklist, tblock = NULL; block;) {
-		if (!strcmp(block->path, files)) {
+		if (Q_streq(block->path, files)) {
 			/* delete old one */
 			if (tblock)
 				tblock->next = block->next;
@@ -965,7 +965,7 @@ int FS_BuildFileList (const char *fileList)
 						char pathNameEntry[MAX_QPATH];
 						Com_FilePath(findname, pathName);
 						Com_FilePath(fileNameEntry, pathNameEntry);
-						if (!strcmp(pathNameEntry, pathName))
+						if (Q_streq(pathNameEntry, pathName))
 							add = qtrue;
 					}
 
@@ -1087,7 +1087,7 @@ const char *FS_GetFileData (const char *files)
 	}
 
 	for (block = fs_blocklist; block; block = block->next) {
-		if (!strcmp(files, block->path))
+		if (Q_streq(files, block->path))
 			break;
 	}
 
@@ -1096,7 +1096,7 @@ const char *FS_GetFileData (const char *files)
 		fileList = NULL;
 		FS_BuildFileList(files);
 		for (block = fs_blocklist; block; block = block->next) {
-			if (!strcmp(files, block->path))
+			if (Q_streq(files, block->path))
 				break;
 		}
 		if (!block) {
@@ -1161,12 +1161,12 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 		return NULL;
 	}
 
-	if (strcmp(files, lastList)) {
+	if (!Q_streq(files, lastList)) {
 		/* search for file lists */
 		Q_strncpyz(lastList, files, sizeof(lastList));
 
 		for (block = fs_blocklist; block; block = block->next) {
-			if (!strcmp(files, block->path))
+			if (Q_streq(files, block->path))
 				break;
 		}
 
@@ -1203,7 +1203,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 			while (!lFile && lBlock) {
 				/* it was the last file in the block, continue to next block */
 				for (lBlock = lBlock->next; lBlock; lBlock = lBlock->next) {
-					if (!strcmp(files, lBlock->path)) {
+					if (Q_streq(files, lBlock->path)) {
 						lFile = lBlock->files;
 						break;
 					}

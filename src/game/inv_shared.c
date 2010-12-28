@@ -514,7 +514,7 @@ objDef_t *INVSH_GetItemByIDSilent (const char *id)
 		return NULL;
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
 		objDef_t *item = &CSI->ods[i];
-		if (!strcmp(id, item->id)) {
+		if (Q_streq(id, item->id)) {
 			return item;
 		}
 	}
@@ -560,7 +560,7 @@ invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 	invDef_t *container;
 
 	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)
-		if (!strcmp(id, container->name))
+		if (Q_streq(id, container->name))
 			return container;
 
 	return NULL;

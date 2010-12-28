@@ -225,7 +225,7 @@ static qboolean CompareAttributes (const char *path, const char *name, unsigned 
 	char fn[MAX_OSPATH];
 
 	/* . and .. never match */
-	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
+	if (Q_streq(name, ".") || Q_streq(name, ".."))
 		return qfalse;
 
 	Com_sprintf(fn, sizeof(fn), "%s/%s", path, name);
@@ -264,7 +264,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 	} else
 		Q_strncpyz(findpattern, "*", sizeof(findpattern));
 
-	if (strcmp(findpattern, "*.*") == 0)
+	if (Q_streq(findpattern, "*.*"))
 		Q_strncpyz(findpattern, "*", sizeof(findpattern));
 
 	if ((fdir = opendir(findbase)) == NULL)

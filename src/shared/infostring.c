@@ -77,7 +77,7 @@ const char *Info_ValueForKey (const char *s, const char *key)
 const char *Info_BoolForKey (const char *s, const char *key)
 {
 	const char *boolStr = Info_ValueForKey(s, key);
-	if (boolStr[0] == '0' || boolStr[0] == '\0' || !strcmp(boolStr, "No"))
+	if (boolStr[0] == '0' || boolStr[0] == '\0' || Q_streq(boolStr, "No"))
 		return "No";
 	return "Yes";
 }

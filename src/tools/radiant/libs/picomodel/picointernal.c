@@ -915,7 +915,7 @@ int _pico_parse_check (picoParser_t *p, int allowLFs, const char *str)
 {
 	if (!_pico_parse_ex(p, allowLFs, 1))
 		return 0;
-	if (!strcmp(p->token, str))
+	if (Q_streq(p->token, str))
 		return 1;
 	return 0;
 }

@@ -407,7 +407,7 @@ static inline qboolean Rcon_Validate (const char *password)
 		return qfalse;
 
 	/* password not valid */
-	if (strcmp(password, rcon_password->string))
+	if (!Q_streq(password, rcon_password->string))
 		return qfalse;
 
 	return qtrue;
@@ -472,15 +472,15 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 	c = Cmd_Argv(0);
 	Com_DPrintf(DEBUG_SERVER, "Packet : %s\n", c);
 
-	if (!strcmp(c, "teaminfo"))
+	if (Q_streq(c, "teaminfo"))
 		SVC_TeamInfo(stream);
-	else if (!strcmp(c, "info"))
+	else if (Q_streq(c, "info"))
 		SVC_Info(stream);
-	else if (!strcmp(c, "status"))
+	else if (Q_streq(c, "status"))
 		SVC_Status(stream);
-	else if (!strcmp(c, "connect"))
+	else if (Q_streq(c, "connect"))
 		SVC_DirectConnect(stream);
-	else if (!strcmp(c, "rcon"))
+	else if (Q_streq(c, "rcon"))
 		SVC_RemoteCommand(stream);
 	else
 		Com_Printf("Bad connectionless packet from %s:\n%s\n", NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue), s);

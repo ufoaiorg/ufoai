@@ -145,7 +145,7 @@ static void ED_CallSpawn (edict_t * ent)
 	/* check normal spawn functions */
 	for (s = spawns; s->name; s++) {
 		/* found it */
-		if (!strcmp(s->name, ent->classname)) {
+		if (Q_streq(s->name, ent->classname)) {
 			s->spawn(ent);
 			return;
 		}
@@ -296,7 +296,7 @@ static void G_FindEdictGroups (void)
 				continue;
 			if (ent2->flags & FL_GROUPSLAVE)
 				continue;
-			if (!strcmp(ent->group, ent2->group)) {
+			if (Q_streq(ent->group, ent2->group)) {
 				chain->groupChain = ent2;
 				ent2->groupMaster = ent;
 				chain = ent2;

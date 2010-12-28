@@ -108,7 +108,7 @@ static const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *til
 	int i;
 
 	for (i = 0; i < map->numTileSets; i++)
-		if (!strcmp(tileSetName, map->mTileSets[i].id))
+		if (Q_streq(tileSetName, map->mTileSets[i].id))
 			return &map->mTileSets[i];
 
 	return NULL;
@@ -119,7 +119,7 @@ static inline const mTile_t *SV_GetMapTile (const mapInfo_t *map, const char *ti
 	int i;
 
 	for (i = 0; i < map->numTiles; i++)
-		if (!strcmp(tileName, map->mTile[i].id))
+		if (Q_streq(tileName, map->mTile[i].id))
 			return &map->mTile[i];
 
 	return NULL;
@@ -363,7 +363,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 		if (!text || *token == '}')
 			break;
 
-		if (!strcmp(token, "title")) {
+		if (Q_streq(token, "title")) {
 			/* get map title */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -371,7 +371,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 
 			Q_strncpyz(a->title, token, sizeof(a->title));
 			continue;
-		} else if (!strcmp(token, "multiplayer")) {
+		} else if (Q_streq(token, "multiplayer")) {
 			/* get map title */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -390,7 +390,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 				}
 			}
 			continue;
-		} else if (!strcmp(token, "size")) {
+		} else if (Q_streq(token, "size")) {
 			/* get map size */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -399,7 +399,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 			sscanf(token, "%i %i", &a->width, &a->height);
 			a->size = a->width * a->height;
 			continue;
-		} else if (!strcmp(token, "grid")) {
+		} else if (Q_streq(token, "grid")) {
 			/* get map size */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -408,10 +408,10 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 			sscanf(token, "%i %i", &a->dx, &a->dy);
 			continue;
 		/* chose a tile from a tileset */
-		} else if (!strcmp(token, "tileset")) {
+		} else if (Q_streq(token, "tileset")) {
 			token = SV_GetTileFromTileSet(map, filename, text, a);
 		/* fix tilename "x y" */
-		} else if (!strcmp(token, "fix")) {
+		} else if (Q_streq(token, "fix")) {
 			const mTile_t *t;
 
 			/* get tile */
@@ -423,7 +423,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 				token = SV_GetCvarToken(a, token + 1, filename, text, errhead);
 				if (token == NULL)
 					break;
-			} else if (!strcmp(token, "tileset")) {
+			} else if (Q_streq(token, "tileset")) {
 				token = SV_GetTileFromTileSet(map, filename, text, a);
 			}
 
@@ -1141,26 +1141,26 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 		if (!text)
 			break;
 
-		if (!strcmp(token, "extends")) {
+		if (Q_streq(token, "extends")) {
 			token = Com_Parse(&text);
 			SV_ParseUMP(token, map, qtrue);
-		} else if (!strcmp(token, "base")) {
+		} else if (Q_streq(token, "base")) {
 			token = Com_Parse(&text);
 			if (inherit)
 				Q_strncpyz(map->inheritBasePath, token, sizeof(map->inheritBasePath));
 			else
 				Q_strncpyz(map->basePath, token, sizeof(map->basePath));
-		} else if (!strcmp(token, "tileset")) {
+		} else if (Q_streq(token, "tileset")) {
 			if (map->numTileSets >= MAX_TILESETS)
 				Com_Printf("SV_ParseUMP: Too many map tileset found in (%s)\n", filename);
 			else if (SV_ParseMapTileSet(filename, &text, map, inherit))
 				map->numTileSets++;
-		} else if (!strcmp(token, "tile")) {
+		} else if (Q_streq(token, "tile")) {
 			if (map->numTiles >= MAX_TILETYPES)
 				Com_Printf("SV_ParseUMP: Too many map tile types (%s)\n", filename);
 			else if (SV_ParseMapTile(filename, &text, map, inherit))
 				map->numTiles++;
-		} else if (!strcmp(token, "assembly")) {
+		} else if (Q_streq(token, "assembly")) {
 			if (inherit) {
 				FS_SkipBlock(&text);
 			} else {
@@ -1232,7 +1232,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	/* overwrite with specified, if any */
 	if (assembly && assembly[0]) {
 		for (i = 0; i < map->numAssemblies; i++)
-			if (!strcmp(assembly, map->mAssembly[i].id)) {
+			if (Q_streq(assembly, map->mAssembly[i].id)) {
 				map->mAsm = i;
 				break;
 			}

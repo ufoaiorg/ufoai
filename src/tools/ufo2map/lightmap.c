@@ -361,7 +361,7 @@ void BuildLights (void)
 		l->type = emit_point;
 
 		target = ValueForKey(e, "target");
-		if (target[0] != '\0' || !strcmp(name, "light_spot")) {
+		if (target[0] != '\0' || Q_streq(name, "light_spot")) {
 			l->type = emit_spotlight;
 			l->stopdot = FloatForKey(e, "_cone");
 			if (!l->stopdot)

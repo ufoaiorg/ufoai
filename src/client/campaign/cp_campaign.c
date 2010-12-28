@@ -531,7 +531,7 @@ static void CL_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, qbool
 
 qboolean CP_OnGeoscape (void)
 {
-	return !strcmp("geoscape", UI_GetActiveWindowName());
+	return Q_streq("geoscape", UI_GetActiveWindowName());
 }
 
 /**
@@ -1452,7 +1452,7 @@ campaign_t* CL_GetCampaign (const char* name)
 	int i;
 
 	for (i = 0, campaign = ccs.campaigns; i < ccs.numCampaigns; i++, campaign++)
-		if (!strcmp(name, campaign->id))
+		if (Q_streq(name, campaign->id))
 			break;
 
 	if (i == ccs.numCampaigns) {

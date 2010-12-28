@@ -483,7 +483,7 @@ image_t *R_GetImage (const char *name)
 
 	/* look for it */
 	for (image = imageHash[hash]; image; image = image->hashNext)
-		if (!strcmp(name, image->name))
+		if (Q_streq(name, image->name))
 			return image;
 
 	return NULL;

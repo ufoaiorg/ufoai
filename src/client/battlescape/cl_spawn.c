@@ -98,7 +98,7 @@ static void CL_SpawnCall (const localEntityParse_t *entData)
 	/* check normal spawn functions */
 	for (s = spawns; s->name; s++) {
 		/* found it */
-		if (!strcmp(s->name, entData->classname)) {
+		if (Q_streq(s->name, entData->classname)) {
 			s->spawn(entData);
 			return;
 		}
@@ -159,7 +159,7 @@ void CL_SpawnParseEntitystring (void)
 				Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
 
 			for (v = localEntityValues; v->string; v++)
-				if (!strcmp(entityToken, v->string)) {
+				if (Q_streq(entityToken, v->string)) {
 					/* found a definition */
 					entityToken = Com_Parse(&es);
 					if (!es)

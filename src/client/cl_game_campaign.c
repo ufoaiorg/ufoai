@@ -194,7 +194,7 @@ static void GAME_CP_GetCampaigns_f (void)
 	/* select main as default */
 	for (i = 0; i < ccs.numCampaigns; i++) {
 		const campaign_t *c = &ccs.campaigns[i];
-		if (!strcmp(c->id, "main")) {
+		if (Q_streq(c->id, "main")) {
 			Cmd_ExecuteString(va("campaignlist_click %i", i));
 			return;
 		}

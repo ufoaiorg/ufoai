@@ -96,7 +96,7 @@ cvar_t *Cvar_FindVar (const char *varName)
 	const unsigned hash = Com_HashKey(varName, CVAR_HASH_SIZE);
 
 	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
-		if (!strcmp(varName, var->name))
+		if (Q_streq(varName, var->name))
 			return var;
 	}
 
@@ -550,12 +550,12 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 
 		if (var->flags & CVAR_LATCH) {
 			if (var->latchedString) {
-				if (!strcmp(value, var->latchedString))
+				if (Q_streq(value, var->latchedString))
 					return var;
 				Mem_Free(var->latchedString);
 				var->latchedString = NULL;
 			} else {
-				if (!strcmp(value, var->string))
+				if (Q_streq(value, var->string))
 					return var;
 			}
 
@@ -584,7 +584,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 		}
 	}
 
-	if (!strcmp(value, var->string))
+	if (Q_streq(value, var->string))
 		return var;				/* not changed */
 
 	if (var->flags & CVAR_R_MASK)
@@ -1080,7 +1080,7 @@ void Cvar_FixCheatVars (void)
 			continue;
 		}
 
-		if (!strcmp(var->string, var->defaultString))
+		if (Q_streq(var->string, var->defaultString))
 			continue;
 
 		/* also remove the oldString value here */

@@ -532,7 +532,7 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 	epair_t *ep;
 
 	for (ep = ent->epairs; ep; ep = ep->next)
-		if (!strcmp(ep->key, key)) {
+		if (Q_streq(ep->key, key)) {
 			Mem_Free(ep->value);
 			ep->value = Mem_StrDup(value);
 			return;
@@ -549,7 +549,7 @@ const char *ValueForKey (const entity_t *ent, const char *key)
 	const epair_t *ep;
 
 	for (ep = ent->epairs; ep; ep = ep->next)
-		if (!strcmp(ep->key, key))
+		if (Q_streq(ep->key, key))
 			return ep->value;
 	return "";
 }

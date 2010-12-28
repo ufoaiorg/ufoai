@@ -130,7 +130,7 @@ static inline int UI_GetWindowPositionFromStackByName (const char *name)
 {
 	int i;
 	for (i = 0; i < ui_global.windowStackPos; i++)
-		if (!strcmp(ui_global.windowStack[i]->name, name))
+		if (Q_streq(ui_global.windowStack[i]->name, name))
 			return i;
 
 	return -1;
@@ -307,7 +307,7 @@ static void UI_PushDropDownWindow_f (void)
 	UI_NodeRelativeToAbsolutePoint(node, source);
 
 	/* get the destination anchor */
-	if (!strcmp(Cmd_Argv(4), "mouse")) {
+	if (Q_streq(Cmd_Argv(4), "mouse")) {
 		destination[0] = mousePosX;
 		destination[1] = mousePosY;
 	} else {
@@ -480,7 +480,7 @@ void UI_PopWindow (qboolean all)
 			/* ui_sys_main contains the window that is the very first window and should be
 			 * pushed back onto the stack (otherwise there would be no window at all
 			 * right now) */
-			if (!strcmp(oldfirst->name, ui_sys_main->string)) {
+			if (Q_streq(oldfirst->name, ui_sys_main->string)) {
 				if (ui_sys_active->string[0] != '\0')
 					UI_PushWindow(ui_sys_active->string, NULL, NULL);
 				if (!ui_global.windowStackPos)

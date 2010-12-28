@@ -656,7 +656,7 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: closing brace without data");
 
 			/* alter value, if needed */
-			if (!strcmp(keyname, "origin")) {
+			if (Q_streq(keyname, "origin")) {
 				/* origins are shifted */
 				sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
@@ -667,7 +667,7 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 					VectorSubtract(model->maxs, shift, model->maxs);
 					model = NULL; /* reset it, or the next origin will shift it again */
 				}
-			} else if (!strcmp(keyname, "model") && token[0] == '*') {
+			} else if (Q_streq(keyname, "model") && token[0] == '*') {
 				/* adapt inline model number */
 				int num = atoi(token + 1);
 				/* Get the model */
@@ -675,7 +675,7 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 				/* Now update the model number to reflect prior tiles loaded. */
 				num += mapData->numInline;
 				Q_strcat(mapData->mapEntityString, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
-			} else if (!strcmp(keyname, "targetname") || !strcmp(keyname, "target")) {
+			} else if (Q_streq(keyname, "targetname") || Q_streq(keyname, "target")) {
 				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tile->idx), MAX_MAP_ENTSTRING);
 			} else {
 				/* just store key and value */

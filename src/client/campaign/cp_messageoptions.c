@@ -121,7 +121,7 @@ static void MSO_Set_f (void)
 		const char *messagetype = Cmd_Argv(1);
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-			if (!strcmp(nt_strings[type], messagetype))
+			if (Q_streq(nt_strings[type], messagetype))
 				break;
 		}
 		if (type == NT_NUM_NOTIFYTYPE) {
@@ -129,11 +129,11 @@ static void MSO_Set_f (void)
 			return;
 		}
 
-		if (!strcmp(Cmd_Argv(2), "pause"))
+		if (Q_streq(Cmd_Argv(2), "pause"))
 			optionsType = MSO_PAUSE;
-		else if (!strcmp(Cmd_Argv(2), "notify"))
+		else if (Q_streq(Cmd_Argv(2), "notify"))
 			optionsType = MSO_NOTIFY;
-		else if (!strcmp(Cmd_Argv(2), "sound"))
+		else if (Q_streq(Cmd_Argv(2), "sound"))
 			optionsType = MSO_SOUND;
 		else {
 			Com_Printf("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2));
@@ -156,11 +156,11 @@ static void MSO_SetAll_f(void)
 		int optionsType;
 		notify_t type;
 		qboolean activate = atoi(Cmd_Argv(2));
-		if (!strcmp(Cmd_Argv(1), "pause"))
+		if (Q_streq(Cmd_Argv(1), "pause"))
 			optionsType = MSO_PAUSE;
-		else if (!strcmp(Cmd_Argv(1), "notify"))
+		else if (Q_streq(Cmd_Argv(1), "notify"))
 			optionsType = MSO_NOTIFY;
-		else if (!strcmp(Cmd_Argv(1), "sound"))
+		else if (Q_streq(Cmd_Argv(1), "sound"))
 			optionsType = MSO_SOUND;
 		else {
 			Com_Printf("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2));
@@ -241,7 +241,7 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 		notify_t type;
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-			if (strcmp(nt_strings[type], messagetype) == 0)
+			if (Q_streq(nt_strings[type], messagetype))
 				break;
 		}
 
@@ -355,7 +355,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 
 		if (token[0] != '\0') {
 			for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
-				if (!strcmp(token, nt_strings[idx])) {
+				if (Q_streq(token, nt_strings[idx])) {
 					/* prepare a new msgcategory entry */
 					msgCategoryEntry_t *old = ccs.messageCategories[ccs.numMsgCategories].last;
 

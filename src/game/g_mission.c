@@ -72,7 +72,7 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 							const objDef_t *od = ic->item.t;
 							/* check whether we found the searched item in the
 							 * actor's inventory */
-							if (!strcmp(od->id, self->owner->item)) {
+							if (Q_streq(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
 								G_ActorInvMove(activator, invDef, ic, INVDEF(gi.csi->idFloor),
 									NONE, NONE, qfalse);
@@ -167,7 +167,7 @@ void G_MissionThink (edict_t *self)
 					const objDef_t *od = ic->item.t;
 					assert(od);
 					/* not the item we are looking for */
-					if (!strcmp(od->id, chain->item))
+					if (Q_streq(od->id, chain->item))
 						break;
 				}
 				if (!ic) {

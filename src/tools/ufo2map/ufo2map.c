@@ -219,74 +219,74 @@ static void U2M_Parameter (int argc, const char **argv)
 	int i;
 
 	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "-verbosity")) {
+		if (Q_streq(argv[i], "-v") || Q_streq(argv[i], "-verbosity")) {
 			/* arg to -v should be a single digit. if it is not a number
 			 * atoi will return 0, and no warning will be given. so check that
 			 * it looks like the arg for -v first */
 			if (strlen(argv[i+1]) == 1)
 				config.verbosity = atoi(argv[++i]);
 			Verb_Printf(VERB_LESS, "verbosity = %i\n", config.verbosity);
-		} else if (!strcmp(argv[i], "-noweld")) {
+		} else if (Q_streq(argv[i], "-noweld")) {
 			/* make every point unique */
 			Verb_Printf(VERB_LESS, "noweld = true\n");
 			config.noweld = qtrue;
-		} else if (!strcmp(argv[i], "--statistics") || !strcmp(argv[i], "-stats")) {
+		} else if (Q_streq(argv[i], "--statistics") || Q_streq(argv[i], "-stats")) {
 			Verb_Printf(VERB_LESS, "statistics mode\n");
 			config.stats = qtrue;
 			config.performMapCheck = qtrue;
-		} else if (!strcmp(argv[i], "-check") || !strcmp(argv[i], "-fix")) {
+		} else if (Q_streq(argv[i], "-check") || Q_streq(argv[i], "-fix")) {
 			/* check for subparameters terminate loop before last arg (path) or
 			 * when we hit a param (as opposed to a subparam).
 			 * full parameters are prefixed with "-". */
 			const int iInitial = i;
 
-			if (!strcmp(argv[i], "-check")) {
+			if (Q_streq(argv[i], "-check")) {
 				Verb_Printf(VERB_LESS, "check = true\n");
 				config.performMapCheck = qtrue;
 			}
-			if (!strcmp(argv[i], "-fix")) {
+			if (Q_streq(argv[i], "-fix")) {
 				Verb_Printf(VERB_LESS, "fix = true\n");
 				config.fixMap = qtrue;
 			}
 			while (++i < (argc - 1) && argv[i][0] != '-') {
-				if (!strcmp(argv[i], "entities") || !strcmp(argv[i], "ent")) {
+				if (Q_streq(argv[i], "entities") || Q_streq(argv[i], "ent")) {
 					Verb_Printf(VERB_LESS, "  %s entities\n", config.fixMap ? "fixing" : "checking");
 					config.chkEntities = qtrue;
-				} else if (!strcmp(argv[i], "brushes") || !strcmp(argv[i], "bru")) {
+				} else if (Q_streq(argv[i], "brushes") || Q_streq(argv[i], "bru")) {
 					Verb_Printf(VERB_LESS, "  %s brushes\n", config.fixMap ? "fixing" : "checking");
 					config.chkBrushes = qtrue;
-				} else if (!strcmp(argv[i], "contained") || !strcmp(argv[i], "con")) {
+				} else if (Q_streq(argv[i], "contained") || Q_streq(argv[i], "con")) {
 					Verb_Printf(VERB_LESS, "  %s contained brushes\n", config.fixMap ? "fixing" : "checking");
 					config.chkContained = qtrue;
-				} else if (!strcmp(argv[i], "filllevelflags") || !strcmp(argv[i], "flv")) {
+				} else if (Q_streq(argv[i], "filllevelflags") || Q_streq(argv[i], "flv")) {
 					Verb_Printf(VERB_LESS, "  %s filllevelflags\n", config.fixMap ? "fixing" : "checking");
 					config.chkFillLevelFlags = qtrue;
-				} else if (!strcmp(argv[i], "levelflags") || !strcmp(argv[i], "lvl")) {
+				} else if (Q_streq(argv[i], "levelflags") || Q_streq(argv[i], "lvl")) {
 					Verb_Printf(VERB_LESS, "  %s levelflags\n", config.fixMap ? "fixing" : "checking");
 					config.chkLevelFlags = qtrue;
-				} else if (!strcmp(argv[i], "textures") || !strcmp(argv[i], "tex")) {
+				} else if (Q_streq(argv[i], "textures") || Q_streq(argv[i], "tex")) {
 					Verb_Printf(VERB_LESS, "  %s textures\n", config.fixMap ? "fixing" : "checking");
 					config.chkTextures = qtrue;
-				} else if (!strcmp(argv[i], "nodraws") || !strcmp(argv[i], "ndr")) {
+				} else if (Q_streq(argv[i], "nodraws") || Q_streq(argv[i], "ndr")) {
 					Verb_Printf(VERB_LESS, "  %s nodraws\n", config.fixMap ? "fixing" : "checking");
 					config.chkNodraws = qtrue;
-				} else if (!strcmp(argv[i], "intersection") || !strcmp(argv[i], "isc")) {
+				} else if (Q_streq(argv[i], "intersection") || Q_streq(argv[i], "isc")) {
 					Verb_Printf(VERB_LESS, "  %s intersection\n", config.fixMap ? "fixing" : "checking");
 					config.chkIntersection = qtrue;
-				} else if (!strcmp(argv[i], "mixedfacecontents") || !strcmp(argv[i], "mfc")) {
+				} else if (Q_streq(argv[i], "mixedfacecontents") || Q_streq(argv[i], "mfc")) {
 					Verb_Printf(VERB_LESS, "  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
 					config.chkMixedFaceContents = qtrue;
-				} else if (!strcmp(argv[i], "microbrush") || !strcmp(argv[i], "mbr")) {
+				} else if (Q_streq(argv[i], "microbrush") || Q_streq(argv[i], "mbr")) {
 					config.chkMMicro = qtrue;
 					if (atof(argv[i + 1]) > 0.0001) {
 						config.mapMicrovol = atof(argv[i + 1]);
 						i++;
 					}
 					Verb_Printf(VERB_LESS, "  checking map for microbrushes smaller than %f unit^3\n", config.mapMicrovol);
-				} else if (!strcmp(argv[i], "zfighting") || !strcmp(argv[i], "zft")) {
+				} else if (Q_streq(argv[i], "zfighting") || Q_streq(argv[i], "zft")) {
 					Verb_Printf(VERB_LESS, "  %s for z-fighting\n", config.fixMap ? "fixing" : "checking");
 					config.chkZFight = qtrue;
-				} else if (!strcmp(argv[i], "all")) {
+				} else if (Q_streq(argv[i], "all")) {
 					Verb_Printf(VERB_LESS, "  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
 					config.chkAll = qtrue;
 				} else {
@@ -299,31 +299,31 @@ static void U2M_Parameter (int argc, const char **argv)
 				Verb_Printf(VERB_LESS, "  no %s subparameters set, assuming all\n", config.fixMap ? "fix" : "check");
 				config.chkAll = qtrue;
 			}
-		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+		} else if (Q_streq(argv[i], "-h") || Q_streq(argv[i], "--help")) {
 			Usage();
 			exit(0);
-		} else if (!strcmp(argv[i], "-t") || !strcmp(argv[i], "-threads")) {
+		} else if (Q_streq(argv[i], "-t") || Q_streq(argv[i], "-threads")) {
 			threadstate.numthreads = atoi(argv[++i]);
 			Verb_Printf(VERB_LESS, "threads: #%i\n", threadstate.numthreads);
-		} else if (!strcmp(argv[i], "-info")) {
+		} else if (Q_streq(argv[i], "-info")) {
 			config.info = qtrue;
-		} else if (!strcmp(argv[i], "-nocsg")) {
+		} else if (Q_streq(argv[i], "-nocsg")) {
 			Verb_Printf(VERB_LESS, "nocsg = true\n");
 			config.nocsg = qtrue;
-		} else if (!strcmp(argv[i], "-gamedir")) {
+		} else if (Q_streq(argv[i], "-gamedir")) {
 			Q_strncpyz(config.gamedir, argv[i + 1], sizeof(config.gamedir));
 			Verb_Printf(VERB_LESS, "additional gamedir = %s\n", config.gamedir);
 			i++;
-		} else if (!strcmp(argv[i], "-noshare")) {
+		} else if (Q_streq(argv[i], "-noshare")) {
 			Verb_Printf(VERB_LESS, "noshare = true\n");
 			config.noshare = qtrue;
-		} else if (!strcmp(argv[i], "-notjunc")) {
+		} else if (Q_streq(argv[i], "-notjunc")) {
 			Verb_Printf(VERB_LESS, "notjunc = true\n");
 			config.notjunc = qtrue;
-		} else if (!strcmp(argv[i], "-nowater")) {
+		} else if (Q_streq(argv[i], "-nowater")) {
 			Verb_Printf(VERB_LESS, "nowater = true\n");
 			config.nowater = qtrue;
-		} else if (!strcmp(argv[i], "-nice")) {
+		} else if (Q_streq(argv[i], "-nice")) {
 #if defined _WIN32
 			HANDLE proc = GetCurrentProcess();
 			config.nice = atoi(argv[++i]);
@@ -349,56 +349,56 @@ static void U2M_Parameter (int argc, const char **argv)
 			if (setpriority(PRIO_PROCESS, 0, config.nice))
 				Verb_Printf(VERB_LESS, "failed to set nice level of %i\n", config.nice);
 #endif
-		} else if (!strcmp(argv[i], "-noprune")) {
+		} else if (Q_streq(argv[i], "-noprune")) {
 			Verb_Printf(VERB_LESS, "noprune = true\n");
 			config.noprune = qtrue;
-		} else if (!strcmp(argv[i],"-nofootstep")) {
+		} else if (Q_streq(argv[i],"-nofootstep")) {
 			config.generateFootstepFile = qfalse;
 			Verb_Printf(VERB_LESS, "generateFootstepFile = false\n");
-		} else if (!strcmp(argv[i],"-tracefile")) {
+		} else if (Q_streq(argv[i],"-tracefile")) {
 			config.generateTraceFile = qtrue;
 			Verb_Printf(VERB_NORMAL, "generateTraceFile = true\n");
-		} else if (!strcmp(argv[i],"-debugtrace")) {
+		} else if (Q_streq(argv[i],"-debugtrace")) {
 			config.generateDebugTrace = qtrue;
 			Verb_Printf(VERB_NORMAL, "generateDebugTrace = true\n");
-		} else if (!strcmp(argv[i],"-material")) {
+		} else if (Q_streq(argv[i],"-material")) {
 			config.generateMaterialFile = qtrue;
 			Verb_Printf(VERB_LESS, "generateMaterialFile = true\n");
-		} else if (!strcmp(argv[i], "-nomerge")) {
+		} else if (Q_streq(argv[i], "-nomerge")) {
 			Verb_Printf(VERB_LESS, "nomerge = true\n");
 			config.nomerge = qtrue;
-		} else if (!strcmp(argv[i], "-nosubdiv")) {
+		} else if (Q_streq(argv[i], "-nosubdiv")) {
 			Verb_Printf(VERB_LESS, "nosubdiv = true\n");
 			config.nosubdiv = qtrue;
-		} else if (!strcmp(argv[i], "-nodetail")) {
+		} else if (Q_streq(argv[i], "-nodetail")) {
 			Verb_Printf(VERB_LESS, "nodetail = true\n");
 			config.nodetail = qtrue;
-		} else if (!strcmp(argv[i], "-fulldetail")) {
+		} else if (Q_streq(argv[i], "-fulldetail")) {
 			Verb_Printf(VERB_LESS, "fulldetail = true\n");
 			config.fulldetail = qtrue;
-		} else if (!strcmp(argv[i], "-onlyents")) {
+		} else if (Q_streq(argv[i], "-onlyents")) {
 			Verb_Printf(VERB_LESS, "onlyents = true\n");
 			config.onlyents = qtrue;
-		} else if (!strcmp(argv[i], "-exportlightmaps")) {
+		} else if (Q_streq(argv[i], "-exportlightmaps")) {
 			Verb_Printf(VERB_LESS, "exportlightmaps = true\n");
 			config.exportLightmaps = qtrue;
-		} else if (!strcmp(argv[i], "-micro")) {
+		} else if (Q_streq(argv[i], "-micro")) {
 			config.microvolume = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "microvolume = %f\n", config.microvolume);
 			i++;
-		} else if (!strcmp(argv[i], "-verboseentities")) {
+		} else if (Q_streq(argv[i], "-verboseentities")) {
 			Verb_Printf(VERB_LESS, "verboseentities = true\n");
 			config.verboseentities = qtrue;
-		} else if (!strcmp(argv[i], "-subdivide")) {
+		} else if (Q_streq(argv[i], "-subdivide")) {
 			config.subdivideSize = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "subdivide_size = %f\n", config.subdivideSize);
 			i++;
-		} else if (!strcmp(argv[i], "-block")) {
+		} else if (Q_streq(argv[i], "-block")) {
 			config.block_xl = config.block_xh = atoi(argv[i + 1]);
 			config.block_yl = config.block_yh = atoi(argv[i + 2]);
 			Verb_Printf(VERB_LESS, "block: %i,%i\n", config.block_xl, config.block_yl);
 			i += 2;
-		} else if (!strcmp(argv[i], "-blocks")) {
+		} else if (Q_streq(argv[i], "-blocks")) {
 			config.block_xl = atoi(argv[i + 1]);
 			config.block_yl = atoi(argv[i + 2]);
 			config.block_xh = atoi(argv[i + 3]);
@@ -406,45 +406,45 @@ static void U2M_Parameter (int argc, const char **argv)
 			Verb_Printf(VERB_LESS, "blocks: %i,%i to %i,%i\n",
 				config.block_xl, config.block_yl, config.block_xh, config.block_yh);
 			i += 4;
-		} else if (!strcmp(argv[i], "-nobackclip")) {
+		} else if (Q_streq(argv[i], "-nobackclip")) {
 			Verb_Printf(VERB_LESS, "nobackclip = true\n");
 			config.nobackclip = qtrue;
-		} else if (!strcmp(argv[i],"-extra")) {
+		} else if (Q_streq(argv[i],"-extra")) {
 			config.extrasamples = qtrue;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
-		} else if (!strcmp(argv[i],"-quant")) {
+		} else if (Q_streq(argv[i],"-quant")) {
 			config.lightquant = (byte)atoi(argv[i + 1]);
 			if (config.lightquant < 1 || config.lightquant > 6) {
 				config.lightquant = 4;
 				Verb_Printf(VERB_LESS, "lightquant must be between 1 and 6\n");
 			}
 			i++;
-		} else if (!strcmp(argv[i],"-scale")) {
+		} else if (Q_streq(argv[i],"-scale")) {
 			config.brightness = atof(argv[i + 1]);
 			i++;
-		} else if (!strcmp(argv[i], "-saturation")) {
+		} else if (Q_streq(argv[i], "-saturation")) {
 			config.saturation = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "saturation at %f\n", config.saturation);
 			i++;
-		} else if (!strcmp(argv[i], "-contrast")) {
+		} else if (Q_streq(argv[i], "-contrast")) {
 			config.contrast = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "contrast at %f\n", config.contrast);
 			i++;
-		} else if (!strcmp(argv[i],"-surface")) {
+		} else if (Q_streq(argv[i],"-surface")) {
 			config.surface_scale *= atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "surface light scaling at %f\n", config.surface_scale);
 			i++;
-		} else if (!strcmp(argv[i],"-entity")) {
+		} else if (Q_streq(argv[i],"-entity")) {
 			config.entity_scale *= atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "entity light scaling at %f\n", config.entity_scale);
 			i++;
-		} else if (!strcmp(argv[i], "-nolighting")) {
+		} else if (Q_streq(argv[i], "-nolighting")) {
 			if (argc > i + 1) {
-				if (!strcmp(argv[i + 1], "day")) {
+				if (Q_streq(argv[i + 1], "day")) {
 					Verb_Printf(VERB_LESS, "nolighting = day\n");
 					config.nolighting = LIGHTING_NIGHT_ONLY;
 					i++;
-				} else if (!strcmp(argv[i + 1], "night")) {
+				} else if (Q_streq(argv[i + 1], "night")) {
 					Verb_Printf(VERB_LESS, "nolighting = night\n");
 					config.nolighting = LIGHTING_DAY_ONLY;
 					i++;
@@ -455,7 +455,7 @@ static void U2M_Parameter (int argc, const char **argv)
 			} else {
 				Sys_Error("invalid parameter count\n");
 			}
-		} else if (!strcmp(argv[i], "-V") || !strcmp(argv[i], "--version")) {
+		} else if (Q_streq(argv[i], "-V") || Q_streq(argv[i], "--version")) {
 			Verb_Printf(VERB_LESS, "version:"VERSION" revision:"REVISION"\n");
 			exit(0);
 		} else if (i < (argc - 1)) {

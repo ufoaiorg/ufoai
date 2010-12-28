@@ -117,7 +117,7 @@ static model_t *R_ModForName (const char *name)
 
 	/* search the currently loaded models */
 	for (i = 0, mod = r_models; i < r_numModels; i++, mod++)
-		if (!strcmp(mod->name, name))
+		if (Q_streq(mod->name, name))
 			return mod;
 
 	/* find a free model slot spot */

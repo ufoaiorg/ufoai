@@ -169,7 +169,7 @@ static void UI_OptionTreeNodeDraw (uiNode_t *node)
 			UI_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
 
 		/* text color */
-		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
+		if (Q_streq(OPTIONEXTRADATA(option).value, ref)) {
 			textColor = node->selectedColor;
 		} else if (node->disabled || option->disabled) {
 			textColor = disabledColor;

@@ -501,9 +501,9 @@ qboolean UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 
 			switch (expression->type) {
 			case EA_OPERATOR_STR_EQ:
-				return strcmp(value1, value2) == 0;
+				return Q_streq(value1, value2);
 			case EA_OPERATOR_STR_NE:
-				return strcmp(value1, value2) != 0;
+				return !Q_streq(value1, value2);
 			default:
 				Com_Error(ERR_FATAL, "UI_GetBooleanFromExpression: (STRING2BOOL) Invalid expression type");
 			}
@@ -638,12 +638,12 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 	}
 
 	/* boolean */
-	if (!strcmp(token, "true")) {
+	if (Q_streq(token, "true")) {
 		expression->d.terminal.d1.number = 1.0;
 		expression->type = EA_VALUE_FLOAT;
 		return expression;
 	}
-	if (!strcmp(token, "false")) {
+	if (Q_streq(token, "false")) {
 		expression->d.terminal.d1.number = 0.0;
 		expression->type = EA_VALUE_FLOAT;
 		return expression;
@@ -660,7 +660,7 @@ uiAction_t *UI_ParseExpression (const char **text)
 	if (*text == NULL)
 		return NULL;
 
-	if (!strcmp(token, "(")) {
+	if (Q_streq(token, "(")) {
 		uiAction_t *expression;
 		uiAction_t *e;
 
@@ -671,7 +671,7 @@ uiAction_t *UI_ParseExpression (const char **text)
 			return NULL;
 
 		/* unary operator or unneed "( ... )" */
-		if (!strcmp(token, ")"))
+		if (Q_streq(token, ")"))
 			return e;
 
 		/* then its an operator */
@@ -689,7 +689,7 @@ uiAction_t *UI_ParseExpression (const char **text)
 		token = Com_Parse(text);
 		if (*text == NULL)
 			return NULL;
-		if (strcmp(token, ")") != 0) {
+		if (!Q_streq(token, ")")) {
 			Com_Printf("UI_ParseExpression: Token ')' expected\n");
 			return NULL;
 		}

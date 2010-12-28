@@ -128,7 +128,7 @@ static int BS_GetStorageAmountInBase (const base_t* base, const char *aircraftID
 
 	/* Get storage amount in the base. */
 	AIR_ForeachFromBase(aircraft, base) {
-		if (!strcmp(aircraft->id, aircraftID))
+		if (Q_streq(aircraft->id, aircraftID))
 			storage++;
 	}
 	return storage;
@@ -665,7 +665,7 @@ static void BS_SellAircraft_f (void)
 			return;
 
 		AIR_ForeachFromBase(aircraft, base) {
-			if (!strcmp(aircraft->id, aircraftTemplate->id)) {
+			if (Q_streq(aircraft->id, aircraftTemplate->id)) {
 				if (AIR_GetTeamSize(aircraft) > 0) {
 					teamNote = qtrue;
 					continue;

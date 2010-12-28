@@ -803,7 +803,7 @@ void Com_SetGameType (void)
 
 	for (i = 0; i < numGTs; i++) {
 		const gametype_t *gt = &gts[i];
-		if (!strcmp(gt->id, sv_gametype->string)) {
+		if (Q_streq(gt->id, sv_gametype->string)) {
 			int j;
 			const cvarlist_t *list;
 			if (sv_dedicated->integer)
@@ -857,11 +857,11 @@ static void Com_DebugError_f (void)
 {
 	if (Cmd_Argc() == 3) {
 		const char *errorType = Cmd_Argv(1);
-		if (!strcmp(errorType, "ERR_DROP"))
+		if (Q_streq(errorType, "ERR_DROP"))
 			Com_Error(ERR_DROP, "%s", Cmd_Argv(2));
-		else if (!strcmp(errorType, "ERR_FATAL"))
+		else if (Q_streq(errorType, "ERR_FATAL"))
 			Com_Error(ERR_FATAL, "%s", Cmd_Argv(2));
-		else if (!strcmp(errorType, "ERR_DISCONNECT"))
+		else if (Q_streq(errorType, "ERR_DISCONNECT"))
 			Com_Error(ERR_DISCONNECT, "%s", Cmd_Argv(2));
 	}
 	Com_Printf("Usage: %s <ERR_FATAL|ERR_DROP|ERR_DISCONNECT> <msg>\n", Cmd_Argv(0));
@@ -900,7 +900,7 @@ static void Com_DeveloperSet_f (void)
 	if (Cmd_Argc() == 2) {
 		const char *debugLevel = Cmd_Argv(1);
 		while (debugLevels[i].str) {
-			if (!strcmp(debugLevel, debugLevels[i].str)) {
+			if (Q_streq(debugLevel, debugLevels[i].str)) {
 				if (oldValue & debugLevels[i].debugLevel)	/* if it's already set... */
 					newValue &= ~debugLevels[i].debugLevel;	/* ...reset it. */
 				else

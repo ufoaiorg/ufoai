@@ -168,7 +168,7 @@ static struct bfd_ctx *get_bc (struct output_buffer *ob, struct bfd_set *set, co
 	struct bfd_ctx bc;
 
 	while (set->name) {
-		if (strcmp(set->name, procname) == 0) {
+		if (Q_streq(set->name, procname)) {
 			return set->bc;
 		}
 		set = set->next;

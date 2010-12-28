@@ -110,7 +110,7 @@ static qboolean EndOfScript (qboolean crossline)
 		Sys_Error("Line %i is incomplete\n", script->line);
 
 	/* not if the current script is a memory buffer */
-	if (!strcmp(script->filename, "memory buffer"))
+	if (Q_streq(script->filename, "memory buffer"))
 		return qfalse;
 
 	Mem_Free(script->buffer);

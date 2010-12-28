@@ -40,7 +40,7 @@ qboolean UI_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
 {
 	const uiBehaviour_t *behaviour;
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
-		if (strcmp(behaviour->name, behaviourName) == 0)
+		if (Q_streq(behaviour->name, behaviourName))
 			return qtrue;
 	}
 	return qfalse;
@@ -221,7 +221,7 @@ uiNode_t *UI_GetNode (const uiNode_t* const node, const char *name)
 		return NULL;
 
 	for (current = node->firstChild; current; current = current->next)
-		if (!strcmp(name, current->name))
+		if (Q_streq(name, current->name))
 			break;
 
 	return current;

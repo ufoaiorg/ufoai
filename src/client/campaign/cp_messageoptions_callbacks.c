@@ -174,7 +174,7 @@ static void MSO_Toggle_f (void)
 			return;
 		}
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-			if (!strcmp(nt_strings[type], selectedEntry->notifyType))
+			if (Q_streq(nt_strings[type], selectedEntry->notifyType))
 				break;
 		}
 		if (type == NT_NUM_NOTIFYTYPE) {
@@ -182,10 +182,10 @@ static void MSO_Toggle_f (void)
 			return;
 		}
 
-		if (!strcmp(Cmd_Argv(2), "pause")) {
+		if (Q_streq(Cmd_Argv(2), "pause")) {
 			optionType = MSO_PAUSE;
 			activate = !selectedEntry->settings->doPause;
-		} else if (!strcmp(Cmd_Argv(2), "notify")) {
+		} else if (Q_streq(Cmd_Argv(2), "notify")) {
 			optionType = MSO_NOTIFY;
 			activate = !selectedEntry->settings->doNotify;
 		} else {

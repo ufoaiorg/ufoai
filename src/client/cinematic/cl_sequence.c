@@ -246,7 +246,7 @@ static seqEnt_t *SEQ_FindEnt (sequenceContext_t *context, const char *name)
 	int i;
 
 	for (i = 0, se = context->ents; i < context->numEnts; i++, se++)
-		if (se->inuse && !strcmp(se->name, name))
+		if (se->inuse && Q_streq(se->name, name))
 			break;
 	if (i < context->numEnts)
 		return se;
@@ -265,7 +265,7 @@ static seq2D_t *SEQ_Find2D (sequenceContext_t *context, const char *name)
 	int i;
 
 	for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++)
-		if (s2d->inuse && !strcmp(s2d->name, name))
+		if (s2d->inuse && Q_streq(s2d->name, name))
 			break;
 	if (i < context->numObj2Ds)
 		return s2d;
@@ -453,7 +453,7 @@ qboolean SEQ_InitContext (sequenceContext_t *context, const char *name)
 
 	/* find sequence */
 	for (i = 0, sp = sequences; i < numSequences; i++, sp++)
-		if (!strcmp(name, sp->name))
+		if (Q_streq(name, sp->name))
 			break;
 	if (i >= numSequences) {
 		Com_Printf("Couldn't find sequence '%s'\n", name);
@@ -607,13 +607,13 @@ static int SEQ_ExecuteAnimSpeed (sequenceContext_t *context, const char *name, c
  */
 static int SEQ_ExecutePrecache (sequenceContext_t *context, const char *name, const char *data)
 {
-	if (!strcmp(name, "models")) {
+	if (Q_streq(name, "models")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching model: %s\n", data);
 			R_RegisterModelShort(data);
 			data += strlen(data) + 1;
 		}
-	} else if (!strcmp(name, "pics")) {
+	} else if (Q_streq(name, "pics")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching image: %s\n", data);
 			R_RegisterImage(data);
@@ -633,7 +633,7 @@ static int SEQ_ExecuteCamera (sequenceContext_t *context, const char *name, cons
 	while (*data) {
 		const value_t *vp;
 		for (vp = seqCamera_vals; vp->string; vp++)
-			if (!strcmp(data, vp->string)) {
+			if (Q_streq(data, vp->string)) {
 				data += strlen(data) + 1;
 				Com_EParseValue(&context->camera, data, vp->type, vp->ofs, vp->size);
 				break;
@@ -678,17 +678,17 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 	while (*data) {
 		const value_t *vp;
 		for (vp = seqEnt_vals; vp->string; vp++)
-			if (!strcmp(data, vp->string)) {
+			if (Q_streq(data, vp->string)) {
 				data += strlen(data) + 1;
 				Com_EParseValue(se, data, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string) {
-			if (!strcmp(data, "model")) {
+			if (Q_streq(data, "model")) {
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
 				se->model = R_RegisterModelShort(data);
-			} else if (!strcmp(data, "anim")) {
+			} else if (Q_streq(data, "anim")) {
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Change anim to: %s\n", data);
 				R_AnimChange(&se->as, se->model, data);
@@ -758,7 +758,7 @@ static int SEQ_Execute2Dobj (sequenceContext_t *context, const char *name, const
 	/* get values */
 	while (*data) {
 		for (vp = seq2D_vals; vp->string; vp++)
-			if (!strcmp(data, vp->string)) {
+			if (Q_streq(data, vp->string)) {
 				data += strlen(data) + 1;
 				switch (vp->type) {
 				case V_TRANSLATION_STRING:
@@ -876,7 +876,7 @@ void CL_ParseSequence (const char *name, const char **text)
 
 	/* search for sequences with same name */
 	for (i = 0; i < numSequences; i++)
-		if (!strcmp(name, sequences[i].name))
+		if (Q_streq(name, sequences[i].name))
 			break;
 
 	if (i < numSequences) {
@@ -912,7 +912,7 @@ void CL_ParseSequence (const char *name, const char **text)
 
 		/* check for commands */
 		for (i = 0; i < SEQ_NUMCMDS; i++)
-			if (!strcmp(token, seqCmdName[i])) {
+			if (Q_streq(token, seqCmdName[i])) {
 				int maxLength = MAX_DATA_LENGTH;
 				int depth;
 				char *data;

@@ -64,7 +64,7 @@ static void clipboard_received (GtkClipboard *clipboard, GtkSelectionData *data,
 {
 	if (data->length < 0) {
 		globalErrorStream() << "Error retrieving selection\n";
-	} else if (strcmp(gdk_atom_name(data->type), clipboard_targets.target) == 0) {
+	} else if (Q_streq(gdk_atom_name(data->type), clipboard_targets.target)) {
 		BufferInputStream istream(reinterpret_cast<const char*> (data->data), data->length);
 		(*reinterpret_cast<ClipboardPasteFunc*> (user_data))(istream);
 	}

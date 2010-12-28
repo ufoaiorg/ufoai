@@ -1509,7 +1509,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo, size_t userinfoSize
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
-	if (password->string[0] != '\0' && strcmp(password->string, "none") && strcmp(password->string, value)) {
+	if (password->string[0] != '\0' && !Q_streq(password->string, "none") && !Q_streq(password->string, value)) {
 		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
 		return qfalse;
 	}

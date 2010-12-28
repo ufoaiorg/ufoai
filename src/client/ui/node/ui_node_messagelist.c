@@ -142,7 +142,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 		lines1 = 0;
 
 	/* display the date */
-	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0) {
+	if (lastDate == NULL || !Q_streq(lastDate, message->timestamp)) {
 		R_Color(node->color);
 		UI_DrawString(fontID, ALIGN_UL, x, y, x, column1, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
 		R_Color(NULL);

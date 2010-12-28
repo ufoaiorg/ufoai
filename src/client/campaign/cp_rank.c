@@ -37,7 +37,7 @@ int CL_GetRankIdx (const char* rankID)
 	int i;
 
 	for (i = 0; i < ccs.numRanks; i++) {
-		if (!strcmp(ccs.ranks[i].id, rankID))
+		if (Q_streq(ccs.ranks[i].id, rankID))
 			return i;
 	}
 
@@ -90,7 +90,7 @@ void CL_ParseRanks (const char *name, const char **text)
 	}
 
 	for (i = 0; i < ccs.numRanks; i++) {
-		if (!strcmp(name, ccs.ranks[i].name)) {
+		if (Q_streq(name, ccs.ranks[i].name)) {
 			Com_Printf("CL_ParseRanks: Rank with same name '%s' already loaded.\n", name);
 			return;
 		}
@@ -114,7 +114,7 @@ void CL_ParseRanks (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		for (v = rankValues; v->string; v++)
-			if (!strcmp(token, v->string)) {
+			if (Q_streq(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -130,7 +130,7 @@ void CL_ParseRanks (const char *name, const char **text)
 				break;
 			}
 
-		if (!strcmp(token, "type")) {
+		if (Q_streq(token, "type")) {
 			/* employeeType_t */
 			token = Com_EParse(text, errhead, name);
 			if (!*text)

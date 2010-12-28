@@ -715,7 +715,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 
 	/* search the currently loaded models */
 	for (i = 0, mod = sv.svModels; i < sv.numSVModels; i++, mod++)
-		if (mod->frame == frame && !strcmp(mod->name, model)) {
+		if (mod->frame == frame && Q_streq(mod->name, model)) {
 			VectorCopy(mod->mins, mins);
 			VectorCopy(mod->maxs, maxs);
 			return qtrue;

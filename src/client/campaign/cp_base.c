@@ -1391,7 +1391,7 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
 
 	assert(buildingName);
 	for (i = 0; i < ccs.numBuildingTemplates; i++)
-		if (!strcmp(ccs.buildingTemplates[i].id, buildingName))
+		if (Q_streq(ccs.buildingTemplates[i].id, buildingName))
 			return &ccs.buildingTemplates[i];
 
 	Com_Printf("Building %s not found\n", buildingName);
@@ -1411,7 +1411,7 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 		return NULL;
 
 	for (i = 0; i < ccs.numBaseTemplates; i++)
-		if (!strcmp(ccs.baseTemplates[i].id, baseTemplateID))
+		if (Q_streq(ccs.baseTemplates[i].id, baseTemplateID))
 			return &ccs.baseTemplates[i];
 
 	Com_Printf("Base Template %s not found\n", baseTemplateID);
@@ -1685,37 +1685,37 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
  */
 buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 {
-	if (!strcmp(buildingID, "lab")) {
+	if (Q_streq(buildingID, "lab")) {
 		return B_LAB;
-	} else if (!strcmp(buildingID, "hospital")) {
+	} else if (Q_streq(buildingID, "hospital")) {
 		return B_HOSPITAL;
-	} else if (!strcmp(buildingID, "aliencont")) {
+	} else if (Q_streq(buildingID, "aliencont")) {
 		return B_ALIEN_CONTAINMENT;
-	} else if (!strcmp(buildingID, "workshop")) {
+	} else if (Q_streq(buildingID, "workshop")) {
 		return B_WORKSHOP;
-	} else if (!strcmp(buildingID, "storage")) {
+	} else if (Q_streq(buildingID, "storage")) {
 		return B_STORAGE;
-	} else if (!strcmp(buildingID, "hangar")) {
+	} else if (Q_streq(buildingID, "hangar")) {
 		return B_HANGAR;
-	} else if (!strcmp(buildingID, "smallhangar")) {
+	} else if (Q_streq(buildingID, "smallhangar")) {
 		return B_SMALL_HANGAR;
-	} else if (!strcmp(buildingID, "quarters")) {
+	} else if (Q_streq(buildingID, "quarters")) {
 		return B_QUARTERS;
-	} else if (!strcmp(buildingID, "workshop")) {
+	} else if (Q_streq(buildingID, "workshop")) {
 		return B_WORKSHOP;
-	} else if (!strcmp(buildingID, "power")) {
+	} else if (Q_streq(buildingID, "power")) {
 		return B_POWER;
-	} else if (!strcmp(buildingID, "command")) {
+	} else if (Q_streq(buildingID, "command")) {
 		return B_COMMAND;
-	} else if (!strcmp(buildingID, "amstorage")) {
+	} else if (Q_streq(buildingID, "amstorage")) {
 		return B_ANTIMATTER;
-	} else if (!strcmp(buildingID, "entrance")) {
+	} else if (Q_streq(buildingID, "entrance")) {
 		return B_ENTRANCE;
-	} else if (!strcmp(buildingID, "missile")) {
+	} else if (Q_streq(buildingID, "missile")) {
 		return B_DEFENCE_MISSILE;
-	} else if (!strcmp(buildingID, "laser")) {
+	} else if (Q_streq(buildingID, "laser")) {
 		return B_DEFENCE_LASER;
-	} else if (!strcmp(buildingID, "radar")) {
+	} else if (Q_streq(buildingID, "radar")) {
 		return B_RADAR;
 	}
 	return MAX_BUILDING_TYPE;
@@ -1753,7 +1753,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 	if (!link) {
 		int i;
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
-			if (!strcmp(ccs.buildingTemplates[i].id, name)) {
+			if (Q_streq(ccs.buildingTemplates[i].id, name)) {
 				Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
 				return;
 			}
@@ -1785,7 +1785,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				break;
 
 			/* get values */
-			if (!strcmp(token, "type")) {
+			if (Q_streq(token, "type")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1795,13 +1795,13 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 					Com_Printf("didn't find buildingType '%s'\n", token);
 			} else {
 				/* no linking yet */
-				if (!strcmp(token, "depends")) {
+				if (Q_streq(token, "depends")) {
 					token = Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} else {
 					for (vp = valid_building_vars; vp->string; vp++)
-						if (!strcmp(token, vp->string)) {
+						if (Q_streq(token, vp->string)) {
 							/* found a definition */
 							token = Com_EParse(text, errhead, name);
 							if (!*text)
@@ -1845,7 +1845,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			if (*token == '}')
 				break;
 			/* get values */
-			if (!strcmp(token, "depends")) {
+			if (Q_streq(token, "depends")) {
 				const building_t *dependsBuilding = B_GetBuildingTemplate(Com_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					Com_Error(ERR_DROP, "Could not find building depend of %s\n", building->id);
@@ -1934,7 +1934,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		baseTemplate->numBuildings++;
 
 		for (i = 0; i < ccs.numBuildingTemplates; i++)
-			if (!strcmp(ccs.buildingTemplates[i].id, token)) {
+			if (Q_streq(ccs.buildingTemplates[i].id, token)) {
 				tile->building = &ccs.buildingTemplates[i];
 				if (tile->building->maxCount >= 0 && tile->building->maxCount <= buildingNums[i])
 					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s (%d))", token, baseTemplate->id, tile->building->maxCount);
@@ -3087,7 +3087,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 qboolean B_ItemIsStoredInBaseStorage (const objDef_t *obj)
 {
 	/* antimatter is stored in antimatter storage */
-	if (obj->isVirtual || !strcmp(obj->id, ANTIMATTER_TECH_ID))
+	if (obj->isVirtual || Q_streq(obj->id, ANTIMATTER_TECH_ID))
 		return qfalse;
 
 	return qtrue;

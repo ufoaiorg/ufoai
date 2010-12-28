@@ -428,7 +428,7 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, containerIndex_t *cont
 	OBJZERO(*item);
 
 	for (i = 0; i < csi.numIDs; i++) {
-		if (!strcmp(csi.ids[i].name, contID))
+		if (Q_streq(csi.ids[i].name, contID))
 			break;
 	}
 	if (i >= csi.numIDs) {

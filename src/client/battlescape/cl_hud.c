@@ -611,11 +611,11 @@ static void HUD_RemainingTUs_f (void)
 
 	OBJZERO(displayRemainingTus);
 
-	if (!strcmp(type, "reload_r")) {
+	if (Q_streq(type, "reload_r")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] = state;
-	} else if (!strcmp(type, "reload_l")) {
+	} else if (Q_streq(type, "reload_l")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_LEFT] = state;
-	} else if (!strcmp(type, "crouch")) {
+	} else if (Q_streq(type, "crouch")) {
 		displayRemainingTus[REMAINING_TU_CROUCH] = state;
 	}
 }
@@ -1455,10 +1455,7 @@ static qboolean HUD_CheckCLHud (cvar_t *cvar)
 	/**
 	 * @todo check for multiple base classes
 	 */
-	if (strcmp(window->super->name, "hud")) {
-		return qfalse;
-	}
-	return qtrue;
+	return Q_streq(window->super->name, "hud");
 }
 
 /**

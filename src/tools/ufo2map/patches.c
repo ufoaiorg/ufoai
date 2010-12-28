@@ -53,7 +53,7 @@ void CalcTextureReflectivity (void)
 	for (i = 0; i < curTile->numtexinfo; i++) {
 		/* see if an earlier texinfo already got the value */
 		for (j = 0; j < i; j++) {
-			if (!strcmp(curTile->texinfo[i].texture, curTile->texinfo[j].texture)) {
+			if (Q_streq(curTile->texinfo[i].texture, curTile->texinfo[j].texture)) {
 				VectorCopy(texture_reflectivity[j], texture_reflectivity[i]);
 				break;
 			}
@@ -187,7 +187,7 @@ static entity_t *EntityForModel (int modnum)
 	/* search the entities for one using modnum */
 	for (i = 0; i < num_entities; i++) {
 		const char *s = ValueForKey(&entities[i], "model");
-		if (!strcmp(s, name))
+		if (Q_streq(s, name))
 			return &entities[i];
 	}
 

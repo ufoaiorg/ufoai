@@ -41,7 +41,7 @@ int FindMiptex (const char *name)
 
 	/* search through textures that have already been loaded. */
 	for (i = 0; i < nummiptex; i++)
-		if (!strcmp(name, textureref[i].name)) {
+		if (Q_streq(name, textureref[i].name)) {
 			return i;
 		}
 	if (nummiptex == MAX_MAP_TEXTURES)
@@ -180,7 +180,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 			continue;
 		if (tc->value != tx.value)
 			continue;
-		if (strcmp(tc->texture, tx.texture))
+		if (!Q_streq(tc->texture, tx.texture))
 			continue;
 		for (j = 0; j < 2; j++) {
 			for (k = 0; k < 4; k++) {

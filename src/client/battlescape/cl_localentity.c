@@ -250,7 +250,7 @@ localModel_t *LM_GetByID (const char *id)
 
 	for (i = 0; i < cl.numLMs; i++) {
 		localModel_t *lm = &cl.LMs[i];
-		if (!strcmp(lm->id, id))
+		if (Q_streq(lm->id, id))
 			return lm;
 	}
 	return NULL;
@@ -381,14 +381,14 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		else {
 			type = INVSH_GetItemByIDX(left)->type;
 			/* left hand grenades look OK with default anim; others don't */
-			if (strcmp(type, "grenade"))
+			if (!Q_streq(type, "grenade"))
 				goto akimbo;
 		}
 	} else {
 		const objDef_t *od = INVSH_GetItemByIDX(right);
 		animationIndex = od->animationIndex;
 		type = od->type;
-		if (left != NONE && !strcmp(od->type, "pistol") && !strcmp(INVSH_GetItemByIDX(left)->type, "pistol")) {
+		if (left != NONE && Q_streq(od, "pistol") && Q_streq(INVSH_GetItemByIDX(left)->type, "pistol")) {
 akimbo:
 			type = "pistol_d";
 		}

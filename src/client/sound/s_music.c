@@ -67,13 +67,13 @@ void M_ParseMusic (const char *name, const char **text)
 	const char *token;
 	int i;
 
-	if (!strcmp(name, "geoscape"))
+	if (Q_streq(name, "geoscape"))
 		i = MUSIC_GEOSCAPE;
-	else if (!strcmp(name, "battlescape"))
+	else if (Q_streq(name, "battlescape"))
 		i = MUSIC_BATTLESCAPE;
-	else if (!strcmp(name, "aircombat"))
+	else if (Q_streq(name, "aircombat"))
 		i = MUSIC_AIRCOMBAT;
-	else if (!strcmp(name, "main"))
+	else if (Q_streq(name, "main"))
 		i = MUSIC_MAIN;
 	else {
 		Com_Printf("M_ParseMusic: Invalid music id '%s'\n", name);
@@ -156,7 +156,7 @@ static void M_Start (const char *file)
 	}
 
 	/* we are already playing that track */
-	if (!strcmp(name, music.currentTrack))
+	if (Q_streq(name, music.currentTrack))
 		return;
 
 	/* we are still playing some background track - fade it out */
@@ -257,13 +257,13 @@ static void M_Change_f (void)
 		return;
 	}
 	type = Cmd_Argv(1);
-	if (!strcmp(type, "geoscape")) {
+	if (Q_streq(type, "geoscape")) {
 		category = MUSIC_GEOSCAPE;
-	} else if (!strcmp(type, "battlescape")) {
+	} else if (Q_streq(type, "battlescape")) {
 		category = MUSIC_BATTLESCAPE;
-	} else if (!strcmp(type, "main")) {
+	} else if (Q_streq(type, "main")) {
 		category = MUSIC_MAIN;
-	} else if (!strcmp(type, "aircombat")) {
+	} else if (Q_streq(type, "aircombat")) {
 		category = MUSIC_AIRCOMBAT;
 	} else {
 		Com_Printf("Invalid parameter given\n");

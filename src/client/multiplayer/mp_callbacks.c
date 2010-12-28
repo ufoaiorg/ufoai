@@ -88,7 +88,7 @@ static void CL_RconCallback (struct net_stream *s)
 		char commandBuf[8];
 		NET_ReadStringLine(buf, commandBuf, sizeof(commandBuf));
 
-		if (cmd == clc_oob && !strcmp(commandBuf, "print")) {
+		if (cmd == clc_oob && Q_streq(commandBuf, "print")) {
 			char paramBuf[2048];
 			NET_ReadString(buf, paramBuf, sizeof(paramBuf));
 			Com_Printf("%s\n", paramBuf);
@@ -208,7 +208,7 @@ static void CL_TeamNum_f (void)
 		i = TEAM_DEFAULT;
 	}
 
-	if (strcmp(Cmd_Argv(0), "teamnum_dec")) {
+	if (!Q_streq(Cmd_Argv(0), "teamnum_dec")) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
 			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);

@@ -80,7 +80,7 @@ static qboolean UI_TokenIsReserved (const char *name)
 {
 	char const* const* token = reservedTokens;
 	while (*token) {
-		if (!strcmp(*token, name))
+		if (Q_streq(*token, name))
 			return qtrue;
 		token++;
 	}
@@ -98,9 +98,9 @@ static qboolean UI_TokenIsValue (const char *name, qboolean isQuoted)
 	/* is it a var (*cvar:...) */
 	if (name[0] == '*')
 		return qtrue;
-	if (!strcmp(name, "true"))
+	if (Q_streq(name, "true"))
 		return qtrue;
-	if (!strcmp(name, "false"))
+	if (Q_streq(name, "false"))
 		return qtrue;
 
 	/* uppercase const name */
@@ -300,7 +300,7 @@ static qboolean UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const cha
 	*token = Com_EParse(text, errhead, NULL);
 	if (!*text)
 		return qfalse;
-	if (strcmp(*token, "=") != 0) {
+	if (!Q_streq(*token, "=")) {
 		Com_Printf("UI_ParseSetAction: Assign sign '=' expected between variable and value. '%s' found in node %s.\n", *token, UI_GetPath(node));
 		return qfalse;
 	}
@@ -317,7 +317,7 @@ static qboolean UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const cha
 	if (!*text)
 		return qfalse;
 
-	if (!strcmp(*token, "{")) {
+	if (Q_streq(*token, "{")) {
 		uiAction_t* actionList;
 
 		if (property != NULL && property->type != V_UI_ACTION) {
@@ -338,7 +338,7 @@ static qboolean UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const cha
 		return qtrue;
 	}
 
-	if (!strcmp(*token, "(")) {
+	if (Q_streq(*token, "(")) {
 		Com_UnParseLastToken();
 		action->d.nonTerminal.right = UI_ParseExpression(text);
 		return qtrue;
@@ -385,7 +385,7 @@ static qboolean UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const ch
 		return qfalse;
 
 	/* there is no parameters */
-	if (strcmp(*token, "(") != 0) {
+	if (!Q_streq(*token, "(")) {
 		Com_UnParseLastToken();
 		return qtrue;
 	}
@@ -411,8 +411,8 @@ static qboolean UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const ch
 		*token = Com_EParse(text, errhead, NULL);
 		if (!*token)
 			return qfalse;
-		if (strcmp(*token, ",") != 0) {
-			if (strcmp(*token, ")") == 0)
+		if (!Q_streq(*token, ",")) {
+			if (Q_streq(*token, ")"))
 				break;
 			Com_UnParseLastToken();
 			Com_Printf("UI_ParseCallAction: Invalidate end of 'call' after param %i\n", paramID);
@@ -607,12 +607,12 @@ static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const c
 		if (!*text)
 			return qfalse;
 		/** @todo move it into a property array */
-		if (!strcmp(*token, "pos")) {
+		if (Q_streq(*token, "pos")) {
 			*token = Com_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
 			Com_EParseValue(&rect, *token, V_POS, offsetof(uiExcludeRect_t, pos), sizeof(vec2_t));
-		} else if (!strcmp(*token, "size")) {
+		} else if (Q_streq(*token, "size")) {
 			*token = Com_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
@@ -1139,7 +1139,7 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 
 	/* search for a UI models with same name */
 	for (i = 0; i < ui_global.numModels; i++)
-		if (!strcmp(ui_global.models[i].id, name)) {
+		if (Q_streq(ui_global.models[i].id, name)) {
 			Com_Printf("UI_ParseUIModel: menu_model \"%s\" with same name found, second ignored\n", name);
 			return qfalse;
 		}
@@ -1181,7 +1181,7 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 			Com_Printf("UI_ParseUIModel: unknown token \"%s\" ignored (UI model %s)\n", token, name);
 
 		if (v->type == V_NULL) {
-			if (!strcmp(v->string, "need")) {
+			if (Q_streq(v->string, "need")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return qfalse;
@@ -1262,7 +1262,7 @@ qboolean UI_ParseComponent (const char *type, const char **text)
 	uiNode_t *component;
 	const char *token;
 
-	if (strcmp(type, "component") != 0) {
+	if (!Q_streq(type, "component")) {
 		Com_Error(ERR_FATAL, "UI_ParseComponent: \"component\" expected but \"%s\" found.\n", type);
 		return qfalse;	/* never reached */
 	}
@@ -1296,7 +1296,7 @@ qboolean UI_ParseWindow (const char *type, const char *name, const char **text)
 	qboolean result;
 	int i;
 
-	if (strcmp(type, "window") != 0) {
+	if (!Q_streq(type, "window")) {
 		Com_Error(ERR_FATAL, "UI_ParseWindow: '%s %s' is not a window node\n", type, name);
 		return qfalse;	/* never reached */
 	}
@@ -1328,7 +1328,7 @@ qboolean UI_ParseWindow (const char *type, const char *name, const char **text)
 	token = Com_Parse(text);
 
 	/* does this window inherit data from another window? */
-	if (!strcmp(token, "extends")) {
+	if (Q_streq(token, "extends")) {
 		uiNode_t *superWindow;
 		token = Com_Parse(text);
 		superWindow = UI_GetWindow(token);

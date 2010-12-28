@@ -63,7 +63,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 	/* Add modifiers for difficulty setting here! */
 	if (multiplayer && td->race == RACE_PHALANX_HUMAN) {
 		for (i = 0; i < td->numTemplates; i++) {
-			if (!strcmp(td->characterTemplates[i]->id, "soldier_mp")) {
+			if (Q_streq(td->characterTemplates[i]->id, "soldier_mp")) {
 				ct = td->characterTemplates[i];
 				break;
 			}

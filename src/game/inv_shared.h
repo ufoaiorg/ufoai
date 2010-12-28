@@ -420,8 +420,8 @@ invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
 #define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
 
-#define INV_IsArmour(od)	(!strcmp((od)->type, "armour"))
-#define INV_IsAmmo(od)		(!strcmp((od)->type, "ammo"))
+#define INV_IsArmour(od)	(Q_streq((od)->type, "armour"))
+#define INV_IsAmmo(od)		(Q_streq((od)->type, "ammo"))
 
 /* =============================== */
 /*  FIREMODE MANAGEMENT FUNCTIONS  */

@@ -78,8 +78,8 @@ qboolean Com_GetConstInt (const char *name, int *value)
 	/* if the alias already exists */
 	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
-		if (!strcmp(variable, a->name)) {
-			if (!a->fullname || variable == name || !strcmp(a->fullname, name)) {
+		if (Q_streq(variable, a->name)) {
+			if (!a->fullname || variable == name || Q_streq(a->fullname, name)) {
 				*value = a->value;
 				return qtrue;
 			}
@@ -155,7 +155,7 @@ qboolean Com_UnregisterConstVariable (const char *name)
 	a = com_constNameInt;
 	while (a) {
 		if (a->fullname) {
-			if (!strcmp(a->fullname, name)) {
+			if (Q_streq(a->fullname, name)) {
 				const char *variable = Com_ConstIntGetVariable(name);
 				const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 				com_constNameInt_t *b;
@@ -169,7 +169,7 @@ qboolean Com_UnregisterConstVariable (const char *name)
 
 				for (b = com_constNameInt_hash[hash]; b; prev = b, b = b->hash_next) {
 					if (b->fullname) {
-						if (!strcmp(name, b->fullname)) {
+						if (Q_streq(name, b->fullname)) {
 							if (prev)
 								prev->hash_next = b->hash_next;
 							else
@@ -213,7 +213,7 @@ void Com_RegisterConstInt (const char *name, int value)
 	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
 		if (a->fullname) {
-			if (!strcmp(a->fullname, name))
+			if (Q_streq(a->fullname, name))
 				break;
 		} else if (!strncmp(variable, a->name, sizeof(a->name))) {
 			break;
@@ -227,7 +227,7 @@ void Com_RegisterConstInt (const char *name, int value)
 
 	a = (com_constNameInt_t *)Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
 	Q_strncpyz(a->name, variable, sizeof(a->name));
-	if (strcmp(variable, name))
+	if (!Q_streq(variable, name))
 		a->fullname = Mem_StrDup(name);
 	a->next = com_constNameInt;
 	/* com_constNameInt_hash should be null on the first run */
@@ -294,7 +294,7 @@ static qboolean versionParsed;
 static void Com_ParseVersion (const char *version)
 {
 	if (!versionParsed) {
-		if (strcmp(version, UFO_VERSION))
+		if (!Q_streq(version, UFO_VERSION))
 			Sys_Error("You are mixing versions of the binary ("UFO_VERSION") and the script (%s) files.", version);
 	} else {
 		Sys_Error("More than one version string found in the script files.");
@@ -502,9 +502,9 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_BOOL:
-		if (!strcmp(token, "true") || *token == '1')
+		if (Q_streq(token, "true") || *token == '1')
 			*(qboolean *)b = qtrue;
-		else if (!strcmp(token, "false") || *token == '0')
+		else if (Q_streq(token, "false") || *token == '0')
 			*(qboolean *)b = qfalse;
 		else {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal bool statement '%s'", token);
@@ -527,11 +527,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_TEAM:
-		if (!strcmp(token, "civilian"))
+		if (Q_streq(token, "civilian"))
 			*(int *) b = TEAM_CIVILIAN;
-		else if (!strcmp(token, "phalanx"))
+		else if (Q_streq(token, "phalanx"))
 			*(int *) b = TEAM_PHALANX;
-		else if (!strcmp(token, "alien"))
+		else if (Q_streq(token, "alien"))
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team string: '%s' found in script files", token);
@@ -539,19 +539,19 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_RACE:
-		if (!strcmp(token, "phalanx"))
+		if (Q_streq(token, "phalanx"))
 			*(racetypes_t *) b = RACE_PHALANX_HUMAN;
-		else if (!strcmp(token, "civilian"))
+		else if (Q_streq(token, "civilian"))
 			*(racetypes_t *) b = RACE_CIVILIAN;
-		else if (!strcmp(token, "robot"))
+		else if (Q_streq(token, "robot"))
 			*(racetypes_t *) b = RACE_ROBOT;
-		else if (!strcmp(token, "taman"))
+		else if (Q_streq(token, "taman"))
 			*(racetypes_t *) b = RACE_TAMAN;
-		else if (!strcmp(token, "ortnok"))
+		else if (Q_streq(token, "ortnok"))
 			*(racetypes_t *) b = RACE_ORTNOK;
-		else if (!strcmp(token, "bloodspider"))
+		else if (Q_streq(token, "bloodspider"))
 			*(racetypes_t *) b = RACE_BLOODSPIDER;
-		else if (!strcmp(token, "shevaar"))
+		else if (Q_streq(token, "shevaar"))
 			*(racetypes_t *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", token);
@@ -559,21 +559,21 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_AIRCRAFTTYPE:
-		if (!strcmp(token, "craft_drop_firebird"))
+		if (Q_streq(token, "craft_drop_firebird"))
 			*(humanAircraftType_t *) b = DROPSHIP_FIREBIRD;
-		else if (!strcmp(token, "craft_drop_herakles"))
+		else if (Q_streq(token, "craft_drop_herakles"))
 			*(humanAircraftType_t *) b = DROPSHIP_HERAKLES;
-		else if (!strcmp(token, "craft_drop_raptor"))
+		else if (Q_streq(token, "craft_drop_raptor"))
 			*(humanAircraftType_t *) b = DROPSHIP_RAPTOR;
-		else if (!strcmp(token, "craft_inter_stiletto"))
+		else if (Q_streq(token, "craft_inter_stiletto"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STILETTO;
-		else if (!strcmp(token, "craft_inter_saracen"))
+		else if (Q_streq(token, "craft_inter_saracen"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_SARACEN;
-		else if (!strcmp(token, "craft_inter_dragon"))
+		else if (Q_streq(token, "craft_inter_dragon"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_DRAGON;
-		else if (!strcmp(token, "craft_inter_starchaser"))
+		else if (Q_streq(token, "craft_inter_starchaser"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STARCHASER;
-		else if (!strcmp(token, "craft_inter_stingray"))
+		else if (Q_streq(token, "craft_inter_stingray"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", token);
@@ -581,25 +581,25 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_UFO:
-		if (!strcmp(token, "craft_ufo_bomber"))
+		if (Q_streq(token, "craft_ufo_bomber"))
 			*(ufoType_t *) b = UFO_BOMBER;
-		else if (!strcmp(token, "craft_ufo_carrier"))
+		else if (Q_streq(token, "craft_ufo_carrier"))
 			*(ufoType_t *) b = UFO_CARRIER;
-		else if (!strcmp(token, "craft_ufo_corrupter"))
+		else if (Q_streq(token, "craft_ufo_corrupter"))
 			*(ufoType_t *) b = UFO_CORRUPTER;
-		else if (!strcmp(token, "craft_ufo_fighter"))
+		else if (Q_streq(token, "craft_ufo_fighter"))
 			*(ufoType_t *) b = UFO_FIGHTER;
-		else if (!strcmp(token, "craft_ufo_harvester"))
+		else if (Q_streq(token, "craft_ufo_harvester"))
 			*(ufoType_t *) b = UFO_HARVESTER;
-		else if (!strcmp(token, "craft_ufo_scout"))
+		else if (Q_streq(token, "craft_ufo_scout"))
 			*(ufoType_t *) b = UFO_SCOUT;
-		else if (!strcmp(token, "craft_ufo_supply"))
+		else if (Q_streq(token, "craft_ufo_supply"))
 			*(ufoType_t *) b = UFO_SUPPLY;
-		else if (!strcmp(token, "craft_ufo_gunboat"))
+		else if (Q_streq(token, "craft_ufo_gunboat"))
 			*(ufoType_t *) b = UFO_GUNBOAT;
-		else if (!strcmp(token, "craft_ufo_ripper"))
+		else if (Q_streq(token, "craft_ufo_ripper"))
 			*(ufoType_t *) b = UFO_RIPPER;
-		else if (!strcmp(token, "craft_ufo_mothership"))
+		else if (Q_streq(token, "craft_ufo_mothership"))
 			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
@@ -607,25 +607,25 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_UFOCRASHED:
-		if (!strcmp(token, "craft_crash_bomber"))
+		if (Q_streq(token, "craft_crash_bomber"))
 			*(ufoType_t *) b = UFO_BOMBER;
-		else if (!strcmp(token, "craft_crash_carrier"))
+		else if (Q_streq(token, "craft_crash_carrier"))
 			*(ufoType_t *) b = UFO_CARRIER;
-		else if (!strcmp(token, "craft_crash_corrupter"))
+		else if (Q_streq(token, "craft_crash_corrupter"))
 			*(ufoType_t *) b = UFO_CORRUPTER;
-		else if (!strcmp(token, "craft_crash_fighter"))
+		else if (Q_streq(token, "craft_crash_fighter"))
 			*(ufoType_t *) b = UFO_FIGHTER;
-		else if (!strcmp(token, "craft_crash_harvester"))
+		else if (Q_streq(token, "craft_crash_harvester"))
 			*(ufoType_t *) b = UFO_HARVESTER;
-		else if (!strcmp(token, "craft_crash_scout"))
+		else if (Q_streq(token, "craft_crash_scout"))
 			*(ufoType_t *) b = UFO_SCOUT;
-		else if (!strcmp(token, "craft_crash_supply"))
+		else if (Q_streq(token, "craft_crash_supply"))
 			*(ufoType_t *) b = UFO_SUPPLY;
-		else if (!strcmp(token, "craft_crash_gunboat"))
+		else if (Q_streq(token, "craft_crash_gunboat"))
 			*(ufoType_t *) b = UFO_GUNBOAT;
-		else if (!strcmp(token, "craft_crash_ripper"))
+		else if (Q_streq(token, "craft_crash_ripper"))
 			*(ufoType_t *) b = UFO_RIPPER;
-		else if (!strcmp(token, "craft_crash_mothership"))
+		else if (Q_streq(token, "craft_crash_mothership"))
 			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
@@ -720,7 +720,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_ALIGN:
 		for (num = 0; num < ALIGN_LAST; num++)
-			if (!strcmp(token, align_names[num]))
+			if (Q_streq(token, align_names[num]))
 				break;
 		if (num == ALIGN_LAST) {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal align token '%s'", token);
@@ -732,7 +732,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_BLEND:
 		for (num = 0; num < BLEND_LAST; num++)
-			if (!strcmp(token, blend_names[num]))
+			if (Q_streq(token, blend_names[num]))
 				break;
 		if (num == BLEND_LAST) {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal blend token '%s'", token);
@@ -744,7 +744,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_STYLE:
 		for (num = 0; num < STYLE_LAST; num++)
-			if (!strcmp(token, style_names[num]))
+			if (Q_streq(token, style_names[num]))
 				break;
 		if (num == STYLE_LAST) {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal style token '%s'", token);
@@ -756,7 +756,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_FADE:
 		for (num = 0; num < FADE_LAST; num++)
-			if (!strcmp(token, fade_names[num]))
+			if (Q_streq(token, fade_names[num]))
 				break;
 		if (num == FADE_LAST) {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal fade token '%s'", token);
@@ -807,7 +807,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
 		for (num = 0; num < csi.numDTs; num++)
-			if (!strcmp(token, csi.dts[num].id))
+			if (Q_streq(token, csi.dts[num].id))
 				break;
 		if (num == csi.numDTs)
 			*b = 0;
@@ -956,101 +956,101 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return sizeof(char);
 
 	case V_TEAM:
-		if (!strcmp((const char *)set, "civilian"))
+		if (Q_streq((const char *)set, "civilian"))
 			*(int *) b = TEAM_CIVILIAN;
-		else if (!strcmp((const char *)set, "phalanx"))
+		else if (Q_streq((const char *)set, "phalanx"))
 			*(int *) b = TEAM_PHALANX;
-		else if (!strcmp((const char *)set, "alien"))
+		else if (Q_streq((const char *)set, "alien"))
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team given: '%s'", (const char *)set);
 		return sizeof(int);
 
 	case V_RACE:
-		if (!strcmp((const char *)set, "phalanx"))
+		if (Q_streq((const char *)set, "phalanx"))
 			*(racetypes_t *) b = RACE_PHALANX_HUMAN;
-		else if (!strcmp((const char *)set, "civilian"))
+		else if (Q_streq((const char *)set, "civilian"))
 			*(racetypes_t *) b = RACE_CIVILIAN;
-		else if (!strcmp((const char *)set, "robot"))
+		else if (Q_streq((const char *)set, "robot"))
 			*(racetypes_t *) b = RACE_ROBOT;
-		else if (!strcmp((const char *)set, "taman"))
+		else if (Q_streq((const char *)set, "taman"))
 			*(racetypes_t *) b = RACE_TAMAN;
-		else if (!strcmp((const char *)set, "ortnok"))
+		else if (Q_streq((const char *)set, "ortnok"))
 			*(racetypes_t *) b = RACE_ORTNOK;
-		else if (!strcmp((const char *)set, "bloodspider"))
+		else if (Q_streq((const char *)set, "bloodspider"))
 			*(racetypes_t *) b = RACE_BLOODSPIDER;
-		else if (!strcmp((const char *)set, "shevaar"))
+		else if (Q_streq((const char *)set, "shevaar"))
 			*(racetypes_t *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", (const char *)set);
 		return sizeof(racetypes_t);
 
 	case V_AIRCRAFTTYPE:
-		if (!strcmp((const char *)set, "craft_drop_firebird"))
+		if (Q_streq((const char *)set, "craft_drop_firebird"))
 			*(humanAircraftType_t *) b = DROPSHIP_FIREBIRD;
-		else if (!strcmp((const char *)set, "craft_drop_herakles"))
+		else if (Q_streq((const char *)set, "craft_drop_herakles"))
 			*(humanAircraftType_t *) b = DROPSHIP_HERAKLES;
-		else if (!strcmp((const char *)set, "craft_drop_raptor"))
+		else if (Q_streq((const char *)set, "craft_drop_raptor"))
 			*(humanAircraftType_t *) b = DROPSHIP_RAPTOR;
-		else if (!strcmp((const char *)set, "craft_inter_stiletto"))
+		else if (Q_streq((const char *)set, "craft_inter_stiletto"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STILETTO;
-		else if (!strcmp((const char *)set, "craft_inter_saracen"))
+		else if (Q_streq((const char *)set, "craft_inter_saracen"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_SARACEN;
-		else if (!strcmp((const char *)set, "craft_inter_dragon"))
+		else if (Q_streq((const char *)set, "craft_inter_dragon"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_DRAGON;
-		else if (!strcmp((const char *)set, "craft_inter_starchaser"))
+		else if (Q_streq((const char *)set, "craft_inter_starchaser"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STARCHASER;
-		else if (!strcmp((const char *)set, "craft_inter_stingray"))
+		else if (Q_streq((const char *)set, "craft_inter_stingray"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", (const char *)set);
 		return sizeof(humanAircraftType_t);
 
 	case V_UFO:
-		if (!strcmp((const char *)set, "craft_ufo_bomber"))
+		if (Q_streq((const char *)set, "craft_ufo_bomber"))
 			*(ufoType_t *) b = UFO_BOMBER;
-		else if (!strcmp((const char *)set, "craft_ufo_carrier"))
+		else if (Q_streq((const char *)set, "craft_ufo_carrier"))
 			*(ufoType_t *) b = UFO_CARRIER;
-		else if (!strcmp((const char *)set, "craft_ufo_corrupter"))
+		else if (Q_streq((const char *)set, "craft_ufo_corrupter"))
 			*(ufoType_t *) b = UFO_CORRUPTER;
-		else if (!strcmp((const char *)set, "craft_ufo_fighter"))
+		else if (Q_streq((const char *)set, "craft_ufo_fighter"))
 			*(ufoType_t *) b = UFO_FIGHTER;
-		else if (!strcmp((const char *)set, "craft_ufo_harvester"))
+		else if (Q_streq((const char *)set, "craft_ufo_harvester"))
 			*(ufoType_t *) b = UFO_HARVESTER;
-		else if (!strcmp((const char *)set, "craft_ufo_scout"))
+		else if (Q_streq((const char *)set, "craft_ufo_scout"))
 			*(ufoType_t *) b = UFO_SCOUT;
-		else if (!strcmp((const char *)set, "craft_ufo_supply"))
+		else if (Q_streq((const char *)set, "craft_ufo_supply"))
 			*(ufoType_t *) b = UFO_SUPPLY;
-		else if (!strcmp((const char *)set, "craft_ufo_gunboat"))
+		else if (Q_streq((const char *)set, "craft_ufo_gunboat"))
 			*(ufoType_t *) b = UFO_GUNBOAT;
-		else if (!strcmp((const char *)set, "craft_ufo_ripper"))
+		else if (Q_streq((const char *)set, "craft_ufo_ripper"))
 			*(ufoType_t *) b = UFO_RIPPER;
-		else if (!strcmp((const char *)set, "craft_ufo_mothership"))
+		else if (Q_streq((const char *)set, "craft_ufo_mothership"))
 			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char *)set);
 		return sizeof(ufoType_t);
 
 	case V_UFOCRASHED:
-		if (!strcmp((const char *)set, "craft_crash_bomber"))
+		if (Q_streq((const char *)set, "craft_crash_bomber"))
 			*(ufoType_t *) b = UFO_BOMBER;
-		else if (!strcmp((const char *)set, "craft_crash_carrier"))
+		else if (Q_streq((const char *)set, "craft_crash_carrier"))
 			*(ufoType_t *) b = UFO_CARRIER;
-		else if (!strcmp((const char *)set, "craft_crash_corrupter"))
+		else if (Q_streq((const char *)set, "craft_crash_corrupter"))
 			*(ufoType_t *) b = UFO_CORRUPTER;
-		else if (!strcmp((const char *)set, "craft_crash_fighter"))
+		else if (Q_streq((const char *)set, "craft_crash_fighter"))
 			*(ufoType_t *) b = UFO_FIGHTER;
-		else if (!strcmp((const char *)set, "craft_crash_harvester"))
+		else if (Q_streq((const char *)set, "craft_crash_harvester"))
 			*(ufoType_t *) b = UFO_HARVESTER;
-		else if (!strcmp((const char *)set, "craft_crash_scout"))
+		else if (Q_streq((const char *)set, "craft_crash_scout"))
 			*(ufoType_t *) b = UFO_SCOUT;
-		else if (!strcmp((const char *)set, "craft_crash_supply"))
+		else if (Q_streq((const char *)set, "craft_crash_supply"))
 			*(ufoType_t *) b = UFO_SUPPLY;
-		else if (!strcmp((const char *)set, "craft_crash_gunboat"))
+		else if (Q_streq((const char *)set, "craft_crash_gunboat"))
 			*(ufoType_t *) b = UFO_GUNBOAT;
-		else if (!strcmp((const char *)set, "craft_crash_ripper"))
+		else if (Q_streq((const char *)set, "craft_crash_ripper"))
 			*(ufoType_t *) b = UFO_RIPPER;
-		else if (!strcmp((const char *)set, "craft_crash_mothership"))
+		else if (Q_streq((const char *)set, "craft_crash_mothership"))
 			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char *)set);
@@ -1530,7 +1530,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 			}
 
 		if (!fdp->string) {
-			if (!strcmp(token, "skill")) {
+			if (Q_streq(token, "skill")) {
 				int skill;
 
 				token = Com_EParse(text, errhead, name);
@@ -1538,18 +1538,18 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 					return;
 
 				for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++)
-					if (!strcmp(skillNames[skill], token)) {
+					if (Q_streq(skillNames[skill], token)) {
 						fd->weaponSkill = skill;
 						break;
 					}
 				if (skill >= SKILL_NUM_TYPES)
 					Com_Printf("Com_ParseFire: unknown weapon skill \"%s\" ignored (weapon %s)\n", token, name);
-			} else if (!strcmp(token, "range")) {
+			} else if (Q_streq(token, "range")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				fd->range = atof(token) * UNIT_SIZE;
-			} else if (!strcmp(token, "splrad")) {
+			} else if (Q_streq(token, "splrad")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1599,7 +1599,7 @@ static void Com_ParseArmourOrResistance (const char *name, const char **text, sh
 
 		for (i = 0; i < csi.numDTs; i++) {
 			damageType_t *dt = &csi.dts[i];
-			if (!strcmp(token, dt->id)) {
+			if (Q_streq(token, dt->id)) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1735,7 +1735,7 @@ static void Com_ParseItem (const char *name, const char **text)
 								if (*token == '}')
 									break;
 
-								if (!strcmp(token, "firedef")) {
+								if (Q_streq(token, "firedef")) {
 									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
 										const fireDefIndex_t fdIdx = od->numFiredefs[weapFdsIdx];
 										od->fd[weapFdsIdx][fdIdx].fireAttenuation = SOUND_ATTN_NORM;
@@ -1773,7 +1773,7 @@ static void Com_ParseItem (const char *name, const char **text)
 			}
 		}
 		if (!val->string) {
-			if (!strcmp(token, "craftweapon")) {
+			if (Q_streq(token, "craftweapon")) {
 				/* parse a value */
 				token = Com_EParse(text, errhead, name);
 				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
@@ -1785,7 +1785,7 @@ static void Com_ParseItem (const char *name, const char **text)
 				} else {
 					Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
 				}
-			} else if (!strcmp(token, "crafttype")) {
+			} else if (Q_streq(token, "crafttype")) {
 				/* Craftitem type definition. */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -1793,7 +1793,7 @@ static void Com_ParseItem (const char *name, const char **text)
 
 				/* Check which type it is and store the correct one.*/
 				for (i = 0; i < MAX_ACITEMS; i++) {
-					if (!strcmp(token, air_slot_type_strings[i])) {
+					if (Q_streq(token, air_slot_type_strings[i])) {
 						od->craftitem.type = i;
 						break;
 					}
@@ -1887,34 +1887,34 @@ static void Com_ParseInventory (const char *name, const char **text)
 	}
 
 	/* Special IDs for container. These are also used elsewhere, so be careful. */
-	if (!strcmp(name, "right")) {
+	if (Q_streq(name, "right")) {
 		csi.idRight = id - csi.ids;
 		id->id = csi.idRight;
-	} else if (!strcmp(name, "left")) {
+	} else if (Q_streq(name, "left")) {
 		csi.idLeft = id - csi.ids;
 		id->id = csi.idLeft;
-	} else if (!strcmp(name, "extension")) {
+	} else if (Q_streq(name, "extension")) {
 		csi.idExtension = id - csi.ids;
 		id->id = csi.idExtension;
-	} else if (!strcmp(name, "belt")) {
+	} else if (Q_streq(name, "belt")) {
 		csi.idBelt = id - csi.ids;
 		id->id = csi.idBelt;
-	} else if (!strcmp(name, "holster")) {
+	} else if (Q_streq(name, "holster")) {
 		csi.idHolster = id - csi.ids;
 		id->id = csi.idHolster;
-	} else if (!strcmp(name, "backpack")) {
+	} else if (Q_streq(name, "backpack")) {
 		csi.idBackpack = id - csi.ids;
 		id->id = csi.idBackpack;
-	} else if (!strcmp(name, "armour")) {
+	} else if (Q_streq(name, "armour")) {
 		csi.idArmour = id - csi.ids;
 		id->id = csi.idArmour;
-	} else if (!strcmp(name, "floor")) {
+	} else if (Q_streq(name, "floor")) {
 		csi.idFloor = id - csi.ids;
 		id->id = csi.idFloor;
-	} else if (!strcmp(name, "equip")) {
+	} else if (Q_streq(name, "equip")) {
 		csi.idEquip = id - csi.ids;
 		id->id = csi.idEquip;
-	} else if (!strcmp(name, "headgear")) {
+	} else if (Q_streq(name, "headgear")) {
 		csi.idHeadgear = id - csi.ids;
 		id->id = csi.idHeadgear;
 	}
@@ -1986,7 +1986,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 	/* search for equipments with same name */
 	for (i = 0; i < csi.numEDs; i++)
-		if (!strcmp(name, csi.eds[i].name))
+		if (Q_streq(name, csi.eds[i].name))
 			break;
 
 	if (i < csi.numEDs) {
@@ -2018,7 +2018,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 			return;
 
 		for (vp = equipment_definition_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
+			if (Q_streq(token, vp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2028,7 +2028,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 			}
 
 		if (!vp->string) {
-			if (!strcmp(token, "item")) {
+			if (Q_streq(token, "item")) {
 				objDef_t *od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
@@ -2050,7 +2050,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				} else {
 					Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
 				}
-			} else if (!strcmp(token, "aircraft")) {
+			} else if (Q_streq(token, "aircraft")) {
 				humanAircraftType_t type;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
@@ -2195,7 +2195,7 @@ teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 
 	/* get team definition */
 	for (i = 0; i < csi.numTeamDefs; i++)
-		if (!strcmp(team, csi.teamDef[i].id))
+		if (Q_streq(team, csi.teamDef[i].id))
 			return &csi.teamDef[i];
 
 	Com_Printf("Com_GetTeamDefinitionByID: could not find team definition for '%s' in team definitions\n", team);
@@ -2295,7 +2295,7 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 			break;
 
 		for (i = 0; i < NAME_NUM_TYPES; i++)
-			if (!strcmp(token, name_strings[i])) {
+			if (Q_streq(token, name_strings[i])) {
 				td->numNames[i] = 0;
 
 				token = Com_EParse(text, errhead, name);
@@ -2370,7 +2370,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 			break;
 
 		for (i = 0; i < NAME_NUM_TYPES; i++)
-			if (!strcmp(token, name_strings[i])) {
+			if (Q_streq(token, name_strings[i])) {
 				if (td->numModels[i])
 					Sys_Error("Com_ParseActorModels: Already parsed models for actor definition '%s'\n", name);
 				td->numModels[i] = 0;
@@ -2449,7 +2449,7 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 			break;
 
 		for (i = 0; i < NAME_LAST; i++)
-			if (!strcmp(token, name_strings[i])) {
+			if (Q_streq(token, name_strings[i])) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					break;
@@ -2463,13 +2463,13 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 						break;
 					if (*token == '}')
 						break;
-					if (!strcmp(token, "hurtsound")) {
+					if (Q_streq(token, "hurtsound")) {
 						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							break;
 						LIST_AddString(&td->sounds[SND_HURT][i], token);
 						td->numSounds[SND_HURT][i]++;
-					} else if (!strcmp(token, "deathsound")) {
+					} else if (Q_streq(token, "deathsound")) {
 						token = Com_EParse(text, errhead, name);
 						if (!*text)
 							break;
@@ -2512,7 +2512,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		if (!strcmp(td->id, name))
+		if (Q_streq(td->id, name))
 			break;
 
 	/* reset new category */
@@ -2555,7 +2555,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 			break;
 
 		for (v = teamDefValues; v->string; v++)
-			if (!strcmp(token, v->string)) {
+			if (Q_streq(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2566,7 +2566,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 			}
 
 		if (!v->string) {
-			if (!strcmp(token, "onlyWeapon")) {
+			if (Q_streq(token, "onlyWeapon")) {
 				objDef_t *od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2577,7 +2577,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 					td->onlyWeapon = od;
 				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
-			} else if (!strcmp(token, "templates")) {
+			} else if (Q_streq(token, "templates")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{')
 					Com_Printf("Com_ParseTeam: template list without body ignored in team def \"%s\" \n", name);
@@ -2587,7 +2587,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 						if (*token == '}')
 							break;
 						for (i = 0; i < td->numTemplates; i++) {
-							if (!strcmp(token, td->characterTemplates[i]->id)) {
+							if (Q_streq(token, td->characterTemplates[i]->id)) {
 								Com_Printf("Com_ParseTeam: template %s used more than once in team def %s second ignored", token, name);
 								break;
 							}
@@ -2602,13 +2602,13 @@ static void Com_ParseTeam (const char *name, const char **text)
 							break;
 					} while (*text);
 				}
-			} else if (!strcmp(token, "models"))
+			} else if (Q_streq(token, "models"))
 				Com_ParseActorModels(name, text, td);
-			else if (!strcmp(token, "names"))
+			else if (Q_streq(token, "names"))
 				Com_ParseActorNames(name, text, td);
-			else if (!strcmp(token, "actorsounds"))
+			else if (Q_streq(token, "actorsounds"))
 				Com_ParseActorSounds(name, text, td);
-			else if (!strcmp(token, "resistance"))
+			else if (Q_streq(token, "resistance"))
 				Com_ParseArmourOrResistance(name, text, td->resistance, qfalse);
 			else
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
@@ -2633,7 +2633,7 @@ const chrTemplate_t* Com_GetCharacterTemplateByID (const char *chrTemplate)
 
 	/* get character template */
 	for (i = 0; i < csi.numChrTemplates; i++)
-		if (!strcmp(chrTemplate, csi.chrTemplates[i].id))
+		if (Q_streq(chrTemplate, csi.chrTemplates[i].id))
 			return &csi.chrTemplates[i];
 
 	Com_Printf("Com_GetCharacterTemplateByID: could not find character template: '%s'\n", chrTemplate);
@@ -2671,7 +2671,7 @@ static void Com_ParseUGVs (const char *name, const char **text)
 	}
 
 	for (i = 0; i < csi.numUGV; i++) {
-		if (!strcmp(name, csi.ugvs[i].id)) {
+		if (Q_streq(name, csi.ugvs[i].id)) {
 			Com_Printf("Com_ParseUGVs: ugv \"%s\" with same name already loaded\n", name);
 			return;
 		}
@@ -2697,7 +2697,7 @@ static void Com_ParseUGVs (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		for (v = ugvValues; v->string; v++)
-			if (!strcmp(token, v->string)) {
+			if (Q_streq(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2721,7 +2721,7 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 	int i;
 
 	for (i = 0; i < csi.numChrTemplates; i++)
-		if (!strcmp(name, csi.chrTemplates[i].id)) {
+		if (Q_streq(name, csi.chrTemplates[i].id)) {
 			Com_Printf("Com_ParseCharacterTemplate: Template with same name found, second ignored '%s'\n", name);
 			return;
 		}
@@ -2749,7 +2749,7 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 			return;
 
 		for (i = 0; i < SKILL_NUM_TYPES + 1; i++)
-			if (!strcmp(token, skillNames[i])) {
+			if (Q_streq(token, skillNames[i])) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2759,7 +2759,7 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 				break;
 			}
 		if (i >= SKILL_NUM_TYPES + 1) {
-			if (!strcmp(token, "rate")) {
+			if (Q_streq(token, "rate")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -2801,7 +2801,7 @@ const terrainType_t* Com_GetTerrainType (const char *textureName)
 	assert(textureName);
 	hash = Com_HashKey(textureName, TERRAIN_HASH_SIZE);
 	for (t = terrainTypesHash[hash]; t; t = t->hash_next) {
-		if (!strcmp(textureName, t->texture))
+		if (Q_streq(textureName, t->texture))
 			return t;
 	}
 
@@ -2852,7 +2852,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 			break;
 
 		for (v = terrainTypeValues; v->string; v++)
-			if (!strcmp(token, v->string)) {
+			if (Q_streq(token, v->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -2925,7 +2925,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 				break;
 
 			for (v = gameTypeValues; v->string; v++)
-				if (!strcmp(token, v->string)) {
+				if (Q_streq(token, v->string)) {
 					/* found a definition */
 					token = Com_EParse(text, errhead, name);
 					if (!*text)
@@ -3000,7 +3000,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 
 		/* search for damage types with same name */
 		for (i = 0; i < csi.numDTs; i++)
-			if (!strcmp(token, csi.dts[i].id))
+			if (Q_streq(token, csi.dts[i].id))
 				break;
 
 		/* Not found in the for loop. */
@@ -3011,23 +3011,23 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 			if (csi.dts[csi.numDTs].showInMenu) {
 				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgtype/dmgweight %s\n", token);
 				/* Special IDs */
-				if (!strcmp(token, "normal"))
+				if (Q_streq(token, "normal"))
 					csi.damNormal = csi.numDTs;
-				else if (!strcmp(token, "blast"))
+				else if (Q_streq(token, "blast"))
 					csi.damBlast = csi.numDTs;
-				else if (!strcmp(token, "fire"))
+				else if (Q_streq(token, "fire"))
 					csi.damFire = csi.numDTs;
-				else if (!strcmp(token, "shock"))
+				else if (Q_streq(token, "shock"))
 					csi.damShock = csi.numDTs;
-				else if (!strcmp(token, "laser"))
+				else if (Q_streq(token, "laser"))
 					csi.damLaser = csi.numDTs;
-				else if (!strcmp(token, "plasma"))
+				else if (Q_streq(token, "plasma"))
 					csi.damPlasma = csi.numDTs;
-				else if (!strcmp(token, "particlebeam"))
+				else if (Q_streq(token, "particlebeam"))
 					csi.damParticle = csi.numDTs;
-				else if (!strcmp(token, "stun_electro"))
+				else if (Q_streq(token, "stun_electro"))
 					csi.damStunElectro = csi.numDTs;
-				else if (!strcmp(token, "stun_gas"))
+				else if (Q_streq(token, "stun_gas"))
 					csi.damStunGas = csi.numDTs;
 				else
 					Com_Printf("Unknown dmgtype: '%s'\n", token);
@@ -3133,7 +3133,7 @@ const ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
 		return NULL;
 	for (i = 0; i < csi.numUGV; i++) {
 		const ugv_t *ugv = &csi.ugvs[i];
-		if (!strcmp(ugv->id, ugvID)) {
+		if (Q_streq(ugv->id, ugvID)) {
 			return ugv;
 		}
 	}
@@ -3240,11 +3240,11 @@ void Com_ParseScripts (qboolean onlyServer)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
-		if (!strcmp(type, "damagetypes"))
+		if (Q_streq(type, "damagetypes"))
 			Com_ParseDamageTypes(name, &text);
-		else if (!strcmp(type, "gametype"))
+		else if (Q_streq(type, "gametype"))
 			Com_ParseGameTypes(name, &text);
-		else if (!strcmp(type, "version"))
+		else if (Q_streq(type, "version"))
 			Com_ParseVersion(name);
 
 	/* stage one parsing */
@@ -3253,15 +3253,15 @@ void Com_ParseScripts (qboolean onlyServer)
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
-		if (!strcmp(type, "item") || !strcmp(type, "craftitem"))
+		if (Q_streq(type, "item") || Q_streq(type, "craftitem"))
 			Com_ParseItem(name, &text);
-		else if (!strcmp(type, "inventory"))
+		else if (Q_streq(type, "inventory"))
 			Com_ParseInventory(name, &text);
-		else if (!strcmp(type, "terrain"))
+		else if (Q_streq(type, "terrain"))
 			Com_ParseTerrain(name, &text);
-		else if (!strcmp(type, "ugv"))
+		else if (Q_streq(type, "ugv"))
 			Com_ParseUGVs(name, &text);
-		else if (!strcmp(type, "chrtemplate"))
+		else if (Q_streq(type, "chrtemplate"))
 			Com_ParseCharacterTemplate(name, &text);
 		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
@@ -3276,9 +3276,9 @@ void Com_ParseScripts (qboolean onlyServer)
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
-		if (!strcmp(type, "equipment"))
+		if (Q_streq(type, "equipment"))
 			Com_ParseEquipment(name, &text);
-		else if (!strcmp(type, "team"))
+		else if (Q_streq(type, "team"))
 			Com_ParseTeam(name, &text);
 	}
 

@@ -454,7 +454,7 @@ static int PR_DisassembleItem (base_t *base, const components_t *comp, float con
 		size += compOd->size * amount;
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
-			if (!strcmp(compOd->id, ANTIMATTER_TECH_ID)) {
+			if (Q_streq(compOd->id, ANTIMATTER_TECH_ID)) {
 				B_ManageAntimatter(base, amount, qtrue);
 			} else {
 				technology_t *tech = RS_GetTechForItem(compOd);

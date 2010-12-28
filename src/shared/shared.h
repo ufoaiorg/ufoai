@@ -125,6 +125,11 @@ _CRTIMP int __cdecl	_strnicmp (const char*, const char*, size_t);
 #	define Q_strncasecmp(s1, s2, n) strncasecmp((s1), (s2), (n))
 #endif
 
+static inline qboolean Q_streq(char const* const a, char const* const b)
+{
+	return strcmp(a, b) == 0;
+}
+
 #ifndef DEBUG
 void Q_strncpyz(char *dest, const char *src, size_t destsize) __attribute__((nonnull));
 #else

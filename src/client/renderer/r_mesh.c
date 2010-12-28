@@ -148,7 +148,7 @@ const float* R_GetTagMatrix (const model_t* mod, const char* tagName)
 	/* find the right tag */
 	name = (const char *) taghdr + taghdr->ofs_names;
 	for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
-		if (!strcmp(name, tagName)) {
+		if (Q_streq(name, tagName)) {
 			/* found the tag (matrix) */
 			const float *tag = (const float *) ((const byte *) taghdr + taghdr->ofs_tags);
 			tag += i * 16 * taghdr->num_frames;

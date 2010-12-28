@@ -115,7 +115,7 @@ static int Test_RemoveSuite (const char *name)
 	registry = CU_get_registry();
 	suite = registry->pSuite;
 	while (suite) {
-		if (!strcmp(suite->pName, name)) {
+		if (Q_streq(suite->pName, name)) {
 			Test_RemovePSuite(suite);
 			return 0;
 		}
@@ -133,7 +133,7 @@ static int Test_RemoveAllSuitesExcept (const char *name)
 	registry = CU_get_registry();
 	suite = registry->pSuite;
 	while (suite) {
-		if (!strcmp(suite->pName, name)) {
+		if (Q_streq(suite->pName, name)) {
 			suite = suite->pNext;
 			found = 1;
 		} else {
@@ -152,9 +152,9 @@ static void Test_Parameters (const int argc, const char **argv)
 	int i;
 
 	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i], "-c") || !strcmp(argv[i], "--console")) {
+		if (Q_streq(argv[i], "-c") || Q_streq(argv[i], "--console")) {
 			config.console = qtrue;
-		} else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--automated")) {
+		} else if (Q_streq(argv[i], "-a") || Q_streq(argv[i], "--automated")) {
 			config.automated = qtrue;
 		} else if (Q_strstart(argv[i], "--disable-")) {
 			const char *name = argv[i] + 10;
@@ -172,12 +172,12 @@ static void Test_Parameters (const int argc, const char **argv)
 			}
 		} else if (Q_strstart(argv[i], "--output-prefix=")) {
 			resultPrefix = argv[i] + 16;
-		} else if (!strcmp(argv[i], "-l") || !strcmp(argv[i], "--list")) {
+		} else if (Q_streq(argv[i], "-l") || Q_streq(argv[i], "--list")) {
 			Test_List();
 			exit(0);
-		} else if (!strcmp(argv[i], "--log")) {
+		} else if (Q_streq(argv[i], "--log")) {
 			config.log = qtrue;
-		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+		} else if (Q_streq(argv[i], "-h") || Q_streq(argv[i], "--help")) {
 			printf("Usage:\n");
 			printf("-h  --help                 | show this help screen\n");
 			printf("-c  --console              | run tests in console mode\n");

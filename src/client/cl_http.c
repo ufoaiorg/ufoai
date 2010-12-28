@@ -149,7 +149,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 
 	/* yet another hack to accomodate filelists, how i wish i could push :(
 	 * NULL file handle indicates filelist. */
-	if (extension != NULL && !strcmp(extension, "filelist")) {
+	if (extension != NULL && Q_streq(extension, "filelist")) {
 		dl->file = NULL;
 		CL_EscapeHTTPPath(entry->ufoPath, escapedFilePath);
 	} else {
@@ -319,7 +319,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 		q = q->next;
 
 		/* avoid sending duplicate requests */
-		if (!strcmp(ufoPath, q->ufoPath))
+		if (Q_streq(ufoPath, q->ufoPath))
 			return qtrue;
 	}
 
@@ -374,7 +374,7 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 		return qtrue;
 
 	/* r1: don't attempt same file many times */
-	if (!strcmp(filename, lastfilename))
+	if (Q_streq(filename, lastfilename))
 		return qtrue;
 
 	Q_strncpyz(lastfilename, filename, sizeof(lastfilename));
@@ -434,15 +434,25 @@ static void CL_CheckAndQueueDownload (char *path)
 	if (ext == NULL)
 		return;
 
-	if (!strcmp(ext, "pk3")) {
+	if (Q_streq(ext, "pk3")) {
 		Com_Printf("NOTICE: Filelist is requesting a .pk3 file (%s)\n", path);
 		pak = qtrue;
 	} else
 		pak = qfalse;
 
-	if (!pak && strcmp(ext, "bsp") && strcmp(ext, "wav") && strcmp(ext, "md2") && strcmp(ext, "ogg") &&
-		strcmp(ext, "md3") && strcmp(ext, "tga") && strcmp(ext, "png") && strcmp(ext, "jpg") &&
-		strcmp(ext, "dpm") && strcmp(ext, "obj") && strcmp(ext, "mat") && strcmp(ext, "ump")) {
+	if (!pak &&
+			!Q_streq(ext, "bsp") &&
+			!Q_streq(ext, "wav") &&
+			!Q_streq(ext, "md2") &&
+			!Q_streq(ext, "ogg") &&
+			!Q_streq(ext, "md3") &&
+			!Q_streq(ext, "tga") &&
+			!Q_streq(ext, "png") &&
+			!Q_streq(ext, "jpg") &&
+			!Q_streq(ext, "dpm") &&
+			!Q_streq(ext, "obj") &&
+			!Q_streq(ext, "mat") &&
+			!Q_streq(ext, "ump")) {
 		Com_Printf("WARNING: Illegal file type '%s' in filelist.\n", path);
 		return;
 	}
@@ -668,7 +678,7 @@ static void CL_FinishHTTPDownload (void)
 			curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
 			if (responseCode == 404) {
 				const char *extension = Com_GetExtension(dl->queueEntry->ufoPath);
-				if (extension != NULL && !strcmp(extension, "pk3"))
+				if (extension != NULL && Q_streq(extension, "pk3"))
 					downloadingPK3 = qfalse;
 
 				if (isFile)
@@ -706,7 +716,7 @@ static void CL_FinishHTTPDownload (void)
 			continue;
 		default:
 			i = strlen(dl->queueEntry->ufoPath);
-			if (!strcmp(dl->queueEntry->ufoPath + i - 4, ".pk3"))
+			if (Q_streq(dl->queueEntry->ufoPath + i - 4, ".pk3"))
 				downloadingPK3 = qfalse;
 			if (isFile)
 				FS_RemoveFile(dl->filePath);
@@ -724,7 +734,7 @@ static void CL_FinishHTTPDownload (void)
 
 			/* a pk3 file is very special... */
 			i = strlen(tempName);
-			if (!strcmp(tempName + i - 4, ".pk3")) {
+			if (Q_streq(tempName + i - 4, ".pk3")) {
 				FS_RestartFilesystem();
 				CL_ReVerifyHTTPQueue();
 				downloadingPK3 = qfalse;

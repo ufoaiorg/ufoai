@@ -344,7 +344,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, artType_t type)
 
 	/* search for the pic in the list */
 	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
-		if (a->type == type && (type == ART_PIC && a->frame == frame) && !strcmp(name, a->name))
+		if (a->type == type && (type == ART_PIC && a->frame == frame) && Q_streq(name, a->name))
 			break;
 
 	if (i < r_numParticlesArt)
@@ -713,7 +713,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 
 	/* find the particle definition */
 	for (i = 0; i < numPtlDefs; i++)
-		if (!strcmp(name, ptlDef[i].name))
+		if (Q_streq(name, ptlDef[i].name))
 			break;
 
 	if (i == numPtlDefs) {
@@ -1114,7 +1114,7 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 			continue;
 
 		for (pp = pps; pp->string; pp++) {
-			if (!strcmp(key, pp->string)) {
+			if (Q_streq(key, pp->string)) {
 				/* found a normal particle value */
 				Com_EParseValue(ptl, token, pp->type, pp->ofs, pp->size);
 				break;
@@ -1123,11 +1123,11 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 
 		if (!pp->string) {
 			/* register art */
-			if (!strcmp(key, "image"))
+			if (Q_streq(key, "image"))
 				ptl->pic = CL_ParticleGetArt(token, ptl->frame, ART_PIC);
-			else if (!strcmp(key, "model"))
+			else if (Q_streq(key, "model"))
 				ptl->model = CL_ParticleGetArt(token, ptl->frame, ART_MODEL);
-			else if (!strcmp(key, "program")) {
+			else if (Q_streq(key, "program")) {
 				ptl->program = R_LoadProgram(token, R_InitParticleProgram, R_UseParticleProgram);
 				if (ptl->program)
 					ptl->program->userdata = ptl;
@@ -1194,7 +1194,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 			break;
 
 		for (i = 0; i < PC_NUM_PTLCMDS; i++)
-			if (!strcmp(token, pc_strings[i])) {
+			if (Q_streq(token, pc_strings[i])) {
 				/* allocate an new cmd */
 				if (numPtlCmds >= MAX_PTLCMDS)
 					Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
@@ -1239,7 +1239,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 						len = 0;
 
 					for (pp = pps; pp->string; pp++)
-						if (!strcmp(baseComponentToken, pp->string))
+						if (Q_streq(baseComponentToken, pp->string))
 							break;
 
 					if (!pp->string) {
@@ -1293,7 +1293,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 					j = pc_types[i] & ~PTL_ONLY_ONE_TYPE;
 				else {
 					for (j = 0; j < V_NUM_TYPES; j++)
-						if (!strcmp(token, vt_names[j]))
+						if (Q_streq(token, vt_names[j]))
 							break;
 
 					if (j >= V_NUM_TYPES || !((1 << j) & pc_types[i])) {
@@ -1323,7 +1323,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 			continue;
 
 		for (pp = pps; pp->string; pp++)
-			if (!strcmp(token, pp->string)) {
+			if (Q_streq(token, pp->string)) {
 				/* get parameter */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -1375,7 +1375,7 @@ int CL_ParseParticle (const char *name, const char **text)
 
 	/* search for particles with same name */
 	for (i = 0; i < numPtlDefs; i++)
-		if (!strcmp(name, ptlDef[i].name))
+		if (Q_streq(name, ptlDef[i].name))
 			break;
 
 	if (i < numPtlDefs) {
@@ -1414,7 +1414,7 @@ int CL_ParseParticle (const char *name, const char **text)
 			break;
 
 		for (i = 0; i < PF_NUM_PTLFUNCS; i++)
-			if (!strcmp(token, pf_strings[i])) {
+			if (Q_streq(token, pf_strings[i])) {
 				/* allocate the first particle command */
 				ptlCmd_t **pc;
 
@@ -1475,11 +1475,11 @@ static void PTL_DebugList_f (void)
 		Com_Printf(" name: %s\n", def->name);
 		for (pp = pps; pp->string; pp++) {
 			const char* value = "";
-			if (!strcmp(pp->string, "image") && p->pic) {
+			if (Q_streq(pp->string, "image") && p->pic) {
 				value = p->pic->name;
-			} else if (!strcmp(pp->string, "model") && p->model) {
+			} else if (Q_streq(pp->string, "model") && p->model) {
 				value = p->model->name;
-			} else if (!strcmp(pp->string, "program") && p->program) {
+			} else if (Q_streq(pp->string, "program") && p->program) {
 				value = p->program->name;
 			} else {
 				value = Com_ValueToStr(p, pp->type, pp->ofs);

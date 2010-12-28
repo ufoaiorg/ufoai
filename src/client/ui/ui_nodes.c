@@ -249,16 +249,16 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
 
 		switch (command) {
 		case '^':	/* first string */
-			if (!strcmp(name, "this")) {
+			if (Q_streq(name, "this")) {
 				if (relativeNode == NULL)
 					return;
 				/** @todo find a way to fix the bad cast. only here to remove "discards qualifiers" warning */
 				node = *(uiNode_t**) ((void*)&relativeNode);
-			} else if (!strcmp(name, "parent")) {
+			} else if (Q_streq(name, "parent")) {
 				if (relativeNode == NULL)
 					return;
 				node = relativeNode->parent;
-			} else if (!strcmp(name, "root")) {
+			} else if (Q_streq(name, "root")) {
 				if (relativeNode == NULL)
 					return;
 				node = relativeNode->root;
@@ -266,9 +266,9 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
 				node = UI_GetWindow(name);
 			break;
 		case '.':	/* child node */
-			if (!strcmp(name, "parent"))
+			if (Q_streq(name, "parent"))
 				node = node->parent;
-			else if (!strcmp(name, "root"))
+			else if (Q_streq(name, "root"))
 				node = node->root;
 			else
 				node = UI_GetNode(node, name);
@@ -693,7 +693,7 @@ static void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 	}
 
 	/* everything inherits 'abstractnode' */
-	if (behaviour->extends == NULL && strcmp(behaviour->name, "abstractnode") != 0) {
+	if (behaviour->extends == NULL && !Q_streq(behaviour->name, "abstractnode")) {
 		behaviour->extends = "abstractnode";
 	}
 

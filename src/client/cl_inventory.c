@@ -44,7 +44,7 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 
 	for (i = 0, csi.eds; i < csi.numEDs; i++) {
 		const equipDef_t *ed = &csi.eds[i];
-		if (!strcmp(name, ed->name))
+		if (Q_streq(name, ed->name))
 			return ed;
 	}
 
@@ -315,7 +315,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		return obj->isDummy;
 
 	case FILTER_AIRCRAFT:
-		return !strcmp(obj->type, "aircraft");
+		return Q_streq(obj->type, "aircraft");
 
 	case FILTER_DISASSEMBLY:
 		/** @todo I guess we should search for components matching this item here. */
@@ -397,7 +397,7 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 
 	for (i = 0; i < MAX_FILTERTYPES; i++) {
 		const char *fileTypeName = filterTypeNames[i];
-		if (fileTypeName && !strcmp(fileTypeName, filterTypeID))
+		if (fileTypeName && Q_streq(fileTypeName, filterTypeID))
 			return i;
 	}
 

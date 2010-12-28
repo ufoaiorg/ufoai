@@ -41,7 +41,7 @@ void SV_NextMapcycle (void)
 					base[0] = '\0'; /* split the strings */
 					Q_strncpyz(assembly, base + 1, sizeof(assembly));
 					/* get current position */
-					if (!strcmp(sv.name, expanded) && !strcmp(sv.assembly, assembly)) {
+					if (Q_streq(sv.name, expanded) && Q_streq(sv.assembly, assembly)) {
 						/* next map in cycle */
 						if (mapcycle->next) {
 							map = mapcycle->next->map;
@@ -63,7 +63,7 @@ void SV_NextMapcycle (void)
 				}
 			} else {
 				/* get current position */
-				if (!strcmp(sv.name, mapcycle->map)) {
+				if (Q_streq(sv.name, mapcycle->map)) {
 					/* next map in cycle */
 					if (mapcycle->next) {
 						map = mapcycle->next->map;
@@ -219,9 +219,9 @@ static void SV_ParseMapcycle (void)
 			token = Com_Parse(&buf);
 			if (!buf)
 				break;
-			if (!strcmp(token, "day"))
+			if (Q_streq(token, "day"))
 				day = qtrue;
-			else if (strcmp(token, "night")) {
+			else if (!Q_streq(token, "night")) {
 				Com_Printf("Skip mapcycle parsing, expected day or night.");
 				break;
 			}
@@ -262,7 +262,7 @@ static void SV_MapcycleAdd_f (void)
 			return;
 		}
 		Com_Printf("adding map '%s' with gametype '%s' to mapcycle (to add this permanently edit your mapcycle.txt)\n", map, gametype);
-		if (!strcmp(day, "day"))
+		if (Q_streq(day, "day"))
 			SV_MapcycleAdd(map, qtrue, gametype);
 		else
 			SV_MapcycleAdd(map, qfalse, gametype);

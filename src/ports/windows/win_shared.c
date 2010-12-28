@@ -180,7 +180,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
 	findhandle = _findfirst(path, &findinfo);
 	while (findhandle != -1) {
 		/* found one that matched */
-		if (strcmp(findinfo.name, ".") && strcmp(findinfo.name, "..") &&
+		if (!Q_streq(findinfo.name, ".") && !Q_streq(findinfo.name, "..") &&
 			CompareAttributes(findinfo.attrib, musthave, canthave)) {
 			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
 			return findpath;
@@ -209,7 +209,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canthave)
 
 	/* until we found the next entry */
 	while (_findnext(findhandle, &findinfo) != -1) {
-		if (strcmp(findinfo.name, ".") && strcmp(findinfo.name, "..") &&
+		if (!Q_streq(findinfo.name, ".") && !Q_streq(findinfo.name, "..") &&
 			CompareAttributes(findinfo.attrib, musthave, canthave)) {
 			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
 			return findpath;

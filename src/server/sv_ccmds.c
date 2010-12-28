@@ -90,7 +90,7 @@ static client_t* SV_GetPlayerClientStructure (const char *s)
 		while ((cl = SV_GetNextClient(cl)) != NULL) {
 			if (cl->state == cs_free)
 				continue;
-			if (!strcmp(cl->name, s)) {
+			if (Q_streq(cl->name, s)) {
 				return cl;
 			}
 		}
@@ -146,7 +146,7 @@ static void SV_Map_f (void)
 		return;
 	}
 
-	if (!strcmp(Cmd_Argv(0), "devmap")) {
+	if (Q_streq(Cmd_Argv(0), "devmap")) {
 		Com_Printf("deactivate ai - make sure to reset sv_ai after maptesting\n");
 		Cvar_SetValue("sv_ai", 0);
 		Cvar_SetValue("sv_cheats", 1);
@@ -160,9 +160,9 @@ static void SV_Map_f (void)
 		Cvar_SetValue("g_nospawn", 0);
 	}
 
-	if (!strcmp(Cmd_Argv(1), "day")) {
+	if (Q_streq(Cmd_Argv(1), "day")) {
 		day = qtrue;
-	} else if (!strcmp(Cmd_Argv(1), "night")) {
+	} else if (Q_streq(Cmd_Argv(1), "night")) {
 		day = qfalse;
 	} else {
 		Com_Printf("Invalid lightmap parameter - use day or night\n");
@@ -410,7 +410,7 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 		*match = dayNightMatch;
 		return 2;
 	} else {
-		if (!strcmp(partial,"day ") || !strcmp(partial,"night ")) {
+		if (Q_streq(partial, "day ") || Q_streq(partial, "night ")) {
 			/* dayNightStr is correct, use it */
 			partial = dayNightStr + 1;
 		} else {

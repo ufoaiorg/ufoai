@@ -1175,7 +1175,7 @@ static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 		char name[MAX_VAR];
 		Q_strncpyz(name, gi.Cvar_String("ai_equipment"), sizeof(name));
 		for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
-			if (!strcmp(name, ed->name))
+			if (Q_streq(name, ed->name))
 				break;
 		if (i == gi.csi->numEDs)
 			ed = &gi.csi->eds[0];

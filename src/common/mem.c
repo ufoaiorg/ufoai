@@ -52,7 +52,7 @@ static memPool_t *Mem_FindPool (const char *name)
 	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
 		if (!pool->inUse)
 			continue;
-		if (strcmp(name, pool->name))
+		if (!Q_streq(name, pool->name))
 			continue;
 
 		return pool;

@@ -649,7 +649,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg, ...)
 	UI_RegisterText(TEXT_IRCCONTENT, irc_buffer);
 	UI_TextScrollEnd("irc.irc_data");
 
-	if (irc_showIfNotInMenu->integer && strcmp(UI_GetActiveWindowName(), "irc")) {
+	if (irc_showIfNotInMenu->integer && !Q_streq(UI_GetActiveWindowName(), "irc")) {
 		S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
 		MP_AddChatMessage(appendString);
 		return qtrue;
@@ -875,7 +875,7 @@ static void Irc_Client_CmdKick (const char *prefix, const char *params, const ch
 	strcpy(buf, params);
 	channel = strtok(buf, " ");
 	victim = strtok(NULL, " ");
-	if (!strcmp(victim, irc_nick->string)) {
+	if (Q_streq(victim, irc_nick->string)) {
 		/* we have been kicked */
 		Irc_AppendToBuffer("^BYou were kicked from %s by %s (%s)", channel, nick, trailing);
 	} else {
@@ -898,7 +898,7 @@ static void Irc_Client_CmdNick (const char *prefix, const char *params, const ch
 		return;
 
 	Irc_ParseName(prefix, nick, sizeof(nick), &p);
-	if (!strcmp(irc_nick->string, nick))
+	if (Q_streq(irc_nick->string, nick))
 		Cvar_ForceSet("cl_name", trailing);
 	Irc_AppendToBuffer("%s is now known as %s", nick, trailing);
 	Irc_Logic_RemoveChannelName(chan, nick);
@@ -923,7 +923,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		strcpy(nick, prefix);
 
 	if (ctcp) {
-		if (!strcmp(trailing + 1, "VERSION" IRC_CTCP_MARKER_STR)) {
+		if (Q_streq(trailing + 1, "VERSION" IRC_CTCP_MARKER_STR)) {
 			/* response with the game version */
 			Irc_Proto_Msg(irc_defaultChannel->string, Cvar_GetString("version"));
 			/*Irc_Proto_Notice(nick, IRC_CTCP_MARKER_STR "VERSION " UFO_VERSION " " CPUSTRING " " __DATE__ " " BUILDSTRING);*/
@@ -934,7 +934,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			strcpy(response, trailing);
 			response[2] = 'O'; /* PING => PONG */
 			Irc_Proto_Notice(nick, response);
-		} else if (!strcmp(trailing + 1, "TIME" IRC_CTCP_MARKER_STR)) {
+		} else if (Q_streq(trailing + 1, "TIME" IRC_CTCP_MARKER_STR)) {
 			const time_t t = time(NULL);
 			char response[IRC_SEND_BUF_SIZE];
 			const size_t response_len = sprintf(response, IRC_CTCP_MARKER_STR "TIME :%s" IRC_CTCP_MARKER_STR, ctime(&t));
@@ -964,20 +964,20 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			UI_PushWindow("multiplayer_invite", NULL, NULL);
 		} else if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
-			if (params && strcmp(params, irc_defaultChannel->string)) {
+			if (params && !Q_streq(params, irc_defaultChannel->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
-				if (strcmp(UI_GetActiveWindowName(), "irc") && strcmp(UI_GetActiveWindowName(), cl_hud->string)) {
+				if (!Q_streq(UI_GetActiveWindowName(), "irc") && !Q_streq(UI_GetActiveWindowName(), cl_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
 					UI_PushWindow("chat_popup", NULL, NULL);
 				}
 			}
 		}
 
-		if (UI_GetActiveWindow() && strcmp(UI_GetActiveWindowName(), "irc")) {
+		if (UI_GetActiveWindow() && !Q_streq(UI_GetActiveWindowName(), "irc")) {
 			Com_Printf(S_COLOR_GREEN "<%s@lobby> %s\n", nick, trailing);
 		}
 	}
@@ -1841,7 +1841,7 @@ static void Irc_Client_Invite_f (void)
 		/* the first character is a prefix, skip it when checking
 		 * against our own nickname */
 		const char *name = &(user->key[1]);
-		if (strcmp(name, irc_nick->string))
+		if (!Q_streq(name, irc_nick->string))
 			Irc_Proto_Msg(name, buf);
 		user = user->next;
 	}

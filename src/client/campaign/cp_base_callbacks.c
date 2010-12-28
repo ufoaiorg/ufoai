@@ -187,7 +187,7 @@ static void B_SetBaseTitle_f (void)
 			do {
 				j = 0;
 				Com_sprintf(baseName, lengthof(baseName), _("Base #%i"), i);
-				while (j <= baseCount && strcmp(baseName, ccs.bases[j++].name));
+				while (j <= baseCount && !Q_streq(baseName, ccs.bases[j++].name));
 			} while (i++ <= baseCount && j <= baseCount);
 		} else {
 			Q_strncpyz(baseName, _("Home"), lengthof(baseName));

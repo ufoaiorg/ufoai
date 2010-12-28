@@ -913,10 +913,10 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
  */
 static inline qboolean IsInlineModelEntity (const char *entName)
 {
-	const qboolean inlineModelEntity = (!strcmp("func_breakable", entName)
-			|| !strcmp("func_door", entName)
-			|| !strcmp("func_door_sliding", entName)
-			|| !strcmp("func_rotating", entName));
+	const qboolean inlineModelEntity = (Q_streq("func_breakable", entName)
+			|| Q_streq("func_door", entName)
+			|| Q_streq("func_door_sliding", entName)
+			|| Q_streq("func_rotating", entName));
 	return inlineModelEntity;
 }
 
@@ -932,7 +932,7 @@ entity_t *FindTargetEntity (const char *target)
 
 	for (i = 0; i < num_entities; i++) {
 		const char *n = ValueForKey(&entities[i], "targetname");
-		if (!strcmp(n, target))
+		if (Q_streq(n, target))
 			return &entities[i];
 	}
 
@@ -989,9 +989,9 @@ static qboolean ParseMapEntity (const char *filename)
 	if (IsInlineModelEntity(entName) && VectorNotEmpty(mapent->origin))
 		AdjustBrushesForOrigin(mapent);
 
-	if (num_entities == 1 && strcmp("worldspawn", entName))
+	if (num_entities == 1 && !Q_streq("worldspawn", entName))
 		Sys_Error("The first entity must be worldspawn, it is: %s", entName);
-	if (notCheckOrFix && !strcmp("func_group", entName)) {
+	if (notCheckOrFix && Q_streq("func_group", entName)) {
 		MoveBrushesToWorld(mapent);
 		num_entities--;
 	} else if (IsInlineModelEntity(entName)) {
@@ -999,7 +999,7 @@ static qboolean ParseMapEntity (const char *filename)
 			num_entities--;
 			Com_Printf("Warning: %s has no brushes assigned (entnum: %i)\n", entName, num_entities + 1);
 		}
-	} else if (!strcmp("worldspawn", entName)) {
+	} else if (Q_streq("worldspawn", entName)) {
 		worldspawnCount++;
 		if (worldspawnCount > 1)
 			Com_Printf("Warning: more than one %s in one map\n", entName);

@@ -216,7 +216,7 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
 		return qfalse;
 
 	LIST_Foreach(equipPack, const char, name) {
-		if (!strcmp(name, equip->name))
+		if (Q_streq(name, equip->name))
 			return qtrue;
 	}
 
@@ -351,7 +351,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
-				if (!strcmp(mission->mapDef->id, "ufocrash"))
+				if (Q_streq(mission->mapDef->id, "ufocrash"))
 					param->param = Mem_PoolStrDup(shortUFOType, cp_campaignPool, 0);
 			}
 			ufoCondition = frand() * (MAX_CRASHEDUFO_CONDITION - MIN_CRASHEDUFO_CONDITION) + MIN_CRASHEDUFO_CONDITION;
@@ -399,7 +399,7 @@ mission_t* CP_GetMissionByIDSilent (const char *missionId)
 		return NULL;
 
 	CP_MissionForeach(mission) {
-		if (!strcmp(mission->id, missionId))
+		if (Q_streq(mission->id, missionId))
 			return mission;
 	}
 

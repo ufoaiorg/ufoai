@@ -130,7 +130,7 @@ static void GAME_SK_ChangeEquip_f (void)
 	ed = INV_GetEquipmentDefinitionByID(Cvar_GetString(cvarName));
 	index = ed - csi.eds;
 
-	if (!strcmp(Cmd_Argv(0), "sk_prevequip")) {
+	if (Q_streq(Cmd_Argv(0), "sk_prevequip")) {
 		index--;
 		if (index < 0)
 			index = csi.numEDs - 1;

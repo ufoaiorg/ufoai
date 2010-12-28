@@ -586,7 +586,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 	}
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (keySpace[i] && *keySpace[i] && !strcmp(keySpace[i], binding)) {
+		if (keySpace[i] && *keySpace[i] && Q_streq(keySpace[i], binding)) {
 			return Key_KeynumToString(i);
 		}
 
@@ -659,9 +659,9 @@ static void Key_Unbind_f (void)
 		return;
 	}
 
-	if (!strcmp(Cmd_Argv(0), "unbindmenu"))
+	if (Q_streq(Cmd_Argv(0), "unbindmenu"))
 		Key_SetBinding(b, "", KEYSPACE_UI);
-	else if (!strcmp(Cmd_Argv(0), "unbindbattle"))
+	else if (Q_streq(Cmd_Argv(0), "unbindbattle"))
 		Key_SetBinding(b, "", KEYSPACE_BATTLE);
 	else
 		Key_SetBinding(b, "", KEYSPACE_GAME);
@@ -677,7 +677,7 @@ static void Key_Unbindall_f (void)
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keyBindings[i]) {
-			if (!strcmp(Cmd_Argv(0), "unbindallmenu"))
+			if (Q_streq(Cmd_Argv(0), "unbindallmenu"))
 				Key_SetBinding(i, "", KEYSPACE_UI);
 			else
 				Key_SetBinding(i, "", KEYSPACE_GAME);
@@ -721,11 +721,11 @@ static void Key_Bind_f (void)
 			Q_strcat(cmd, " ", sizeof(cmd));
 	}
 
-	if (!strcmp(Cmd_Argv(0), "bindui"))
+	if (Q_streq(Cmd_Argv(0), "bindui"))
 		UI_SetKeyBinding(cmd, b);
-	else if (!strcmp(Cmd_Argv(0), "bindmenu"))
+	else if (Q_streq(Cmd_Argv(0), "bindmenu"))
 		Key_SetBinding(b, cmd, KEYSPACE_UI);
-	else if (!strcmp(Cmd_Argv(0), "bindbattle"))
+	else if (Q_streq(Cmd_Argv(0), "bindbattle"))
 		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);
 	else
 		Key_SetBinding(b, cmd, KEYSPACE_GAME);

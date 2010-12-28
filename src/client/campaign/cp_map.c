@@ -1079,18 +1079,18 @@ static void MAP_SelectObject_f (void)
 	idx = atoi(Cmd_Argv(2));
 
 	if (cl_3dmap->integer) {
-		if (!strcmp(type, "mission"))
+		if (Q_streq(type, "mission"))
 			MAP_GetMissionAngle(ccs.smoothFinalGlobeAngle, idx);
-		else if (!strcmp(type, "ufo"))
+		else if (Q_streq(type, "ufo"))
 			MAP_GetUFOAngle(ccs.smoothFinalGlobeAngle, idx);
 		else {
 			Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
 			return;
 		}
 	} else {
-		if (!strcmp(type, "mission"))
+		if (Q_streq(type, "mission"))
 			MAP_GetMissionAngle(ccs.smoothFinal2DGeoscapeCenter, idx);
-		else if (!strcmp(type, "ufo"))
+		else if (Q_streq(type, "ufo"))
 			MAP_GetUFOAngle(ccs.smoothFinal2DGeoscapeCenter, idx);
 		else {
 			Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
@@ -1225,7 +1225,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	if (strcmp(UI_GetActiveWindowName(), "geoscape"))
+	if (!Q_streq(UI_GetActiveWindowName(), "geoscape"))
 		return;
 
 	centerOnEventIdx++;
@@ -2642,7 +2642,7 @@ void MAP_Scroll_f (void)
  */
 void MAP_SetOverlay (const char *overlayID)
 {
-	if (!strcmp(overlayID, "nations")) {
+	if (Q_streq(overlayID, "nations")) {
 		if (MAP_IsNationOverlayActivated())
 			cl_geoscape_overlay->integer ^= OVERLAY_NATION;
 		else
@@ -2655,12 +2655,12 @@ void MAP_SetOverlay (const char *overlayID)
 	if (ccs.numInstallations == 0)
 		return;
 
-	if (!strcmp(overlayID, "xvi")) {
+	if (Q_streq(overlayID, "xvi")) {
 		if (cl_geoscape_overlay->integer & OVERLAY_XVI)
 			cl_geoscape_overlay->integer ^= OVERLAY_XVI;
 		else
 			cl_geoscape_overlay->integer |= OVERLAY_XVI;
-	} else if (!strcmp(overlayID, "radar")) {
+	} else if (Q_streq(overlayID, "radar")) {
 		if (MAP_IsRadarOverlayActivated())
 			cl_geoscape_overlay->integer ^= OVERLAY_RADAR;
 		else {
@@ -2686,7 +2686,7 @@ static void MAP_SetOverlay_f (void)
 	MAP_SetOverlay(arg);
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
-	if (!strcmp(arg, "radar"))
+	if (Q_streq(arg, "radar"))
 		radarOverlayWasSet = MAP_IsRadarOverlayActivated();
 }
 
@@ -2696,13 +2696,13 @@ static void MAP_SetOverlay_f (void)
  */
 void MAP_DeactivateOverlay (const char *overlayID)
 {
-	if (!strcmp(overlayID, "nations")) {
+	if (Q_streq(overlayID, "nations")) {
 		if (MAP_IsNationOverlayActivated())
 			MAP_SetOverlay("nations");
-	} else if (!strcmp(overlayID, "xvi")) {
+	} else if (Q_streq(overlayID, "xvi")) {
 		if (MAP_IsXVIOverlayActivated())
 			MAP_SetOverlay("xvi");
-	} else if (!strcmp(overlayID, "radar")) {
+	} else if (Q_streq(overlayID, "radar")) {
 		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
 	}

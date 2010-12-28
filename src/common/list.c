@@ -57,7 +57,7 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
 const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)
 {
 	while ((string != NULL) && (list != NULL)) {
-		if (!strcmp((const char*)list->data, string))
+		if (Q_streq((const char*)list->data, string))
 			return list;
 		list = list->next;
 	}

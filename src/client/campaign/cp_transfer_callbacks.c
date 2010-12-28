@@ -205,7 +205,7 @@ static transferType_t TR_GetTransferType (const char *id)
 {
 	int i;
 	for (i = 0; i < TRANS_TYPE_MAX; i++) {
-		if (!strcmp(transferTypeIDs[i], id))
+		if (Q_streq(transferTypeIDs[i], id))
 			return i;
 	}
 	return TRANS_TYPE_INVALID;
@@ -232,7 +232,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 		const objDef_t *object = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td.trItemsTmp[i];
 		if (itemCargoAmount > 0) {
-			if (!strcmp(object->id, ANTIMATTER_TECH_ID))
+			if (Q_streq(object->id, ANTIMATTER_TECH_ID))
 				amtransfer = itemCargoAmount;
 			else
 				intransfer += object->size * itemCargoAmount;
@@ -240,7 +240,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	}
 
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
-	if (!strcmp(od->id, ANTIMATTER_TECH_ID)) {
+	if (Q_streq(od->id, ANTIMATTER_TECH_ID)) {
 		/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
 		if (!B_GetBuildingStatus(destbase, B_ANTIMATTER)) {
 			UI_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
@@ -793,7 +793,7 @@ static void TR_TransferListClear_f (void)
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		if (itemCargoAmount > 0) {
-			if (!strcmp(od->id, ANTIMATTER_TECH_ID))
+			if (Q_streq(od->id, ANTIMATTER_TECH_ID))
 				B_ManageAntimatter(base, itemCargoAmount, qtrue);
 			else
 				B_UpdateStorageAndCapacity(base, od, itemCargoAmount, qfalse, qfalse);
@@ -1196,7 +1196,7 @@ static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferDa
 				const int amount = min(TR_GetTransferFactor(), itemCargoAmount);
 				/* you can't transfer more item than there are in current transfer */
 				transferData->trItemsTmp[i] -= amount;
-				if (!strcmp(od->id, ANTIMATTER_TECH_ID))
+				if (Q_streq(od->id, ANTIMATTER_TECH_ID))
 					B_ManageAntimatter(base, amount, qfalse);
 				else
 					B_UpdateStorageAndCapacity(base, od, amount, qfalse, qfalse);

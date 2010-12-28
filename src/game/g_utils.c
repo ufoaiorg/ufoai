@@ -375,7 +375,7 @@ edict_t *G_FindTargetEntity (const char *target)
 
 	while ((ent = G_EdictsGetNext(ent))) {
 		const char *n = ent->targetname;
-		if (n && !strcmp(n, target))
+		if (n && Q_streq(n, target))
 			return ent;
 	}
 

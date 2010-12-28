@@ -89,7 +89,7 @@ const installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (con
 
 	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
 		const installationTemplate_t *t = &ccs.installationTemplates[idx];
-		if (!strcmp(t->id, id))
+		if (Q_streq(t->id, id))
 			return t;
 	}
 
@@ -457,7 +457,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 	}
 
 	for (i = 0; i < ccs.numInstallationTemplates; i++) {
-		if (!strcmp(ccs.installationTemplates[i].name, name)) {
+		if (Q_streq(ccs.installationTemplates[i].name, name)) {
 			Com_Printf("INS_ParseInstallations: Second installation with same name found (%s) - second ignored\n", name);
 			return;
 		}
@@ -481,7 +481,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 		/* check for some standard values */
 		for (vp = installation_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
+			if (Q_streq(token, vp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -504,7 +504,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 		/* other values */
 		if (!vp->string) {
-			if (!strcmp(token, "cost")) {
+			if (Q_streq(token, "cost")) {
 				char cvarname[MAX_VAR] = "mn_installation_";
 
 				Q_strcat(cvarname, installation->id, MAX_VAR);
@@ -516,7 +516,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 				installation->cost = atoi(token);
 
 				Cvar_Set(cvarname, va(_("%d c"), atoi(token)));
-			} else if (!strcmp(token, "buildtime")) {
+			} else if (Q_streq(token, "buildtime")) {
 				char cvarname[MAX_VAR];
 
 

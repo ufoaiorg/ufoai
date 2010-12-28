@@ -124,7 +124,7 @@ static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDe
 	for (i = 0; i < numDefs; i++) {
 		const entityKeyDef_t *keyDef = &keyDefs[i];
 		/* names equal. both abstract or both not abstract */
-		if (!strcmp(keyDef->name, name) && !((keyDef->flags ^ parseMode) & ED_ABSTRACT)) {
+		if (Q_streq(keyDef->name, name) && !((keyDef->flags ^ parseMode) & ED_ABSTRACT)) {
 			return &keyDefs[i];
 		}
 	}
@@ -138,11 +138,11 @@ static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDe
  */
 static int ED_Type2Constant (const char *strType)
 {
-	if (!strcmp(strType, "V_FLOAT"))
+	if (Q_streq(strType, "V_FLOAT"))
 		return ED_TYPE_FLOAT;
-	else if (!strcmp(strType, "V_INT"))
+	else if (Q_streq(strType, "V_INT"))
 		return ED_TYPE_INT;
-	else if (!strcmp(strType, "V_STRING"))
+	else if (Q_streq(strType, "V_STRING"))
 		return ED_TYPE_STRING;
 
 	ED_RETURN_ERROR("ED_Type2Constant: type string not recognised: \"%s\"", strType);
@@ -476,9 +476,9 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 
 	partToken = Com_Parse(&buf_p);
 
-	if (!strcmp("SIGNED", partToken)) {
+	if (Q_streq("SIGNED", partToken)) {
 		partToken = Com_Parse(&buf_p);/* get next token */
-	} else if (!strcmp("UNSIGNED", partToken)) {
+	} else if (Q_streq("UNSIGNED", partToken)) {
 		kd->flags |= ED_INSIST_POSITIVE;
 		partToken = Com_Parse(&buf_p);
 	}
@@ -507,17 +507,17 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
  */
 static int ED_Block2Constant (const char *blockName)
 {
-	if (!strcmp("optional", blockName))
+	if (Q_streq("optional", blockName))
 		return ED_OPTIONAL;
-	else if (!strcmp("mandatory", blockName))
+	else if (Q_streq("mandatory", blockName))
 		return ED_MANDATORY;
-	else if (!strcmp("abstract", blockName))
+	else if (Q_streq("abstract", blockName))
 		return ED_ABSTRACT;
-	else if (!strcmp("default", blockName))
+	else if (Q_streq("default", blockName))
 		return ED_DEFAULT;
-	else if (!strcmp("type", blockName))
+	else if (Q_streq("type", blockName))
 		return ED_MODE_TYPE;
-	else if (!strcmp("range", blockName))
+	else if (Q_streq("range", blockName))
 		return ED_RANGE;
 	else
 		ED_RETURN_ERROR("parse mode not recognised");
@@ -665,7 +665,7 @@ static int ED_ParseEntities (const char **data_p)
 		}
 
 		if (braceLevel == 0) {
-			if (tokensOnLevel0 == 0 && strcmp(parsedToken, "entity"))
+			if (tokensOnLevel0 == 0 && !Q_streq(parsedToken, "entity"))
 				ED_RETURN_ERROR( "Next entity expected, found \"%s\"", parsedToken);
 
 			if (tokensOnLevel0 == 1) {/* classname of entity, start parsing new entity */
@@ -748,7 +748,7 @@ static int ED_ProcessRanges (void)
 					const char *tok = Com_Parse(&tmpRange_p);
 					if (tok[0] == '\0')
 						break;
-					if (!strcmp("-", tok)) {
+					if (Q_streq("-", tok)) {
 						kr->continuous = 1;
 						ED_TEST_RETURN_ERROR(numElements != 1, "ED_ProcessRanges: problem with continuous range, \"%s\" in %s in %s",
 							kr->str, kd->name, ed->classname);
@@ -857,7 +857,7 @@ const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *key
 		return NULL;
 
 	for (kd = ed->keyDefs; kd->name; kd++)
-		if (!strcmp(keyname, kd->name)) {
+		if (Q_streq(keyname, kd->name)) {
 			if (abstract) {
 				if (kd->flags & ED_ABSTRACT)
 					return kd;
@@ -880,7 +880,7 @@ const entityDef_t *ED_GetEntityDef (const char *classname)
 	const entityDef_t *ed;
 
 	for (ed = entityDefs; ed->numKeyDefs; ed++)
-		if (!strcmp(classname, ed->classname))
+		if (Q_streq(classname, ed->classname))
 			return ed;
 
 	snprintf(lastErr, sizeof(lastErr), "ED_GetEntityDef: no entity definition for %s found in entities.ufo", classname);

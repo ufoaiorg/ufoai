@@ -630,7 +630,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
 					const objDef_t *od = INVSH_GetItemByIDX(i);
-					if (!strcmp(tech->provides, od->id)) {
+					if (Q_streq(tech->provides, od->id)) {
 						INV_ItemDescription(od);
 						UP_DisplayTechTree(tech);
 						Cvar_Set("mn_upmetadata", "1");

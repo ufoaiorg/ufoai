@@ -67,7 +67,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 		if (!v->location)
 			break;
 
-		if (v->type == type && !strcmp(v->name, name))
+		if (v->type == type && Q_streq(v->name, name))
 			return v;
 	}
 
@@ -581,7 +581,7 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 	for (i = 0; i < MAX_PROGRAMS; i++) {
 		prog = &r_state.programs[i];
 
-		if (!strcmp(prog->name, name))
+		if (Q_streq(prog->name, name))
 			return prog;
 	}
 

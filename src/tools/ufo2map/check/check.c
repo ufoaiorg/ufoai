@@ -191,17 +191,17 @@ static qboolean Check_SurfProp (const int flag, const side_t *s)
 	const brush_texture_t *tex = &side_brushtextures[indexSide];
 	switch (flag) {
 	case SURF_NODRAW:
-		return !strcmp(tex->name, "tex_common/nodraw");
+		return Q_streq(tex->name, "tex_common/nodraw");
 	case CONTENTS_LADDER:
-		return !strcmp(tex->name, "tex_common/ladder");
+		return Q_streq(tex->name, "tex_common/ladder");
 	case CONTENTS_WEAPONCLIP:
-		return !strcmp(tex->name, "tex_common/weaponclip");
+		return Q_streq(tex->name, "tex_common/weaponclip");
 	case CONTENTS_ACTORCLIP:
-		return !strcmp(tex->name, "tex_common/actorclip");
+		return Q_streq(tex->name, "tex_common/actorclip");
 	case CONTENTS_LIGHTCLIP:
-		return !strcmp(tex->name, "tex_common/lightclip");
+		return Q_streq(tex->name, "tex_common/lightclip");
 	case CONTENTS_ORIGIN:
-		return !strcmp(tex->name, "tex_common/origin");
+		return Q_streq(tex->name, "tex_common/origin");
 	default:
 		return qfalse;
 	}
@@ -224,22 +224,22 @@ static qboolean Check_SurfProps (const int flags, const side_t *s)
 	const char *texname = tex->name;
 	assert(flags & (SURF_NODRAW | MASK_CLIP));
 
-	if ((flags & SURF_NODRAW) && !strcmp(texname, "tex_common/nodraw"))
+	if ((flags & SURF_NODRAW) && Q_streq(texname, "tex_common/nodraw"))
 		return qtrue;
 
-	if ((flags & CONTENTS_WEAPONCLIP) && !strcmp(texname, "tex_common/weaponclip"))
+	if ((flags & CONTENTS_WEAPONCLIP) && Q_streq(texname, "tex_common/weaponclip"))
 		return qtrue;
 
-	if ((flags & CONTENTS_ACTORCLIP) && !strcmp(texname, "tex_common/actorclip"))
+	if ((flags & CONTENTS_ACTORCLIP) && Q_streq(texname, "tex_common/actorclip"))
 		return qtrue;
 
-	if ((flags & CONTENTS_LIGHTCLIP) && !strcmp(texname, "tex_common/lightclip"))
+	if ((flags & CONTENTS_LIGHTCLIP) && Q_streq(texname, "tex_common/lightclip"))
 		return qtrue;
 
-	if ((flags & CONTENTS_LADDER) && !strcmp(texname, "tex_common/ladder"))
+	if ((flags & CONTENTS_LADDER) && Q_streq(texname, "tex_common/ladder"))
 		return qtrue;
 
-	if ((flags & CONTENTS_ORIGIN) && !strcmp(texname, "tex_common/origin"))
+	if ((flags & CONTENTS_ORIGIN) && Q_streq(texname, "tex_common/origin"))
 		return qtrue;
 
 	return qfalse;
@@ -254,7 +254,7 @@ static qboolean Check_IsOptimisable (const mapbrush_t *b)
 	const char *name = ValueForKey(e, "classname");
 	int i, numNodraws = 0;
 
-	if (strcmp(name, "func_group") && strcmp(name, "worldspawn"))
+	if (!Q_streq(name, "func_group") && !Q_streq(name, "worldspawn"))
 		return qfalse;/* other entities, eg func_breakable are no use */
 
 	/* content flags should be the same on all faces, but we shall be suspicious */
@@ -1471,41 +1471,41 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 
 	/* see discussion at Check_SetNodraw */
 	if (!config.fixMap && !config.performMapCheck) {
-		if (!strcmp(texname, "tex_common/actorclip")) {
+		if (Q_streq(texname, "tex_common/actorclip")) {
 			side->contentFlags |= CONTENTS_ACTORCLIP;
 			flagsDescription = "CONTENTS_ACTORCLIP";
-		} else if (!strcmp(texname, "tex_common/caulk")) {
+		} else if (Q_streq(texname, "tex_common/caulk")) {
 			side->surfaceFlags |= SURF_NODRAW;
 			tex->surfaceFlags |= SURF_NODRAW;
 			flagsDescription = "SURF_NODRAW";
-		} else if (!strcmp(texname, "tex_common/hint")) {
+		} else if (Q_streq(texname, "tex_common/hint")) {
 			side->surfaceFlags |= SURF_HINT;
 			tex->surfaceFlags |= SURF_HINT;
 			flagsDescription = "SURF_HINT";
-		} else if (!strcmp(texname, "tex_common/ladder")) {
+		} else if (Q_streq(texname, "tex_common/ladder")) {
 			side->contentFlags |= CONTENTS_LADDER;
 			side->surfaceFlags |= SURF_NODRAW;
 			tex->surfaceFlags |= SURF_NODRAW;
 			flagsDescription = "CONTENTS_LADDER";
-		} else if (!strcmp(texname, "tex_common/lightclip")) {
+		} else if (Q_streq(texname, "tex_common/lightclip")) {
 			side->contentFlags |= CONTENTS_LIGHTCLIP;
 			flagsDescription = "CONTENTS_LIGHTCLIP";
-		} else if (!strcmp(texname, "tex_common/nodraw")) {
+		} else if (Q_streq(texname, "tex_common/nodraw")) {
 			/*side->contentFlags |= CONTENTS_SOLID;*/
 			side->surfaceFlags |= SURF_NODRAW;
 			tex->surfaceFlags |= SURF_NODRAW;
 			flagsDescription = "SURF_NODRAW";
-		} else if (!strcmp(texname, "tex_common/trigger")) {
+		} else if (Q_streq(texname, "tex_common/trigger")) {
 			side->surfaceFlags |= SURF_NODRAW;
 			tex->surfaceFlags |= SURF_NODRAW;
 			flagsDescription = "SURF_NODRAW";
-		} else if (!strcmp(texname, "tex_common/origin")) {
+		} else if (Q_streq(texname, "tex_common/origin")) {
 			side->contentFlags |= CONTENTS_ORIGIN;
 			flagsDescription = "CONTENTS_ORIGIN";
-		} else if (!strcmp(texname, "tex_common/slick")) {
+		} else if (Q_streq(texname, "tex_common/slick")) {
 			side->contentFlags |= SURF_SLICK;
 			flagsDescription = "SURF_SLICK";
-		} else if (!strcmp(texname, "tex_common/weaponclip")) {
+		} else if (Q_streq(texname, "tex_common/weaponclip")) {
 			side->contentFlags |= CONTENTS_WEAPONCLIP;
 			flagsDescription = "CONTENTS_WEAPONCLIP";
 		}
@@ -1591,39 +1591,39 @@ void CheckTexturesBasedOnFlags (void)
 				Check_Printf(VERB_CHECK, qfalse, brush->entitynum, brush->brushnum, " no texture assigned\n");
 			}
 
-			if (!strcmp(tex->name, "tex_common/error")) {
+			if (Q_streq(tex->name, "tex_common/error")) {
 				Check_Printf(VERB_CHECK, qfalse, brush->entitynum, brush->brushnum, "error texture assigned - check this brush\n");
 			}
 
-			if (!strcmp(tex->name, "NULL")) {
+			if (Q_streq(tex->name, "NULL")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "replaced NULL with nodraw texture\n");
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 				tex->surfaceFlags |= SURF_NODRAW;
 			}
-			if (tex->surfaceFlags & SURF_NODRAW && strcmp(tex->name, "tex_common/nodraw")) {
+			if (tex->surfaceFlags & SURF_NODRAW && !Q_streq(tex->name, "tex_common/nodraw")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "set nodraw texture for SURF_NODRAW\n");
 				tex->surfaceFlags &= ~SURF_PHONG;
 				side->surfaceFlags &= ~SURF_PHONG;
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 			}
-			if (tex->surfaceFlags & SURF_HINT && strcmp(tex->name, "tex_common/hint")) {
+			if (tex->surfaceFlags & SURF_HINT && !Q_streq(tex->name, "tex_common/hint")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "set hint texture for SURF_HINT\n");
 				Q_strncpyz(tex->name, "tex_common/hint", sizeof(tex->name));
 			}
 
-			if (side->contentFlags & CONTENTS_WEAPONCLIP && strcmp(tex->name, "tex_common/weaponclip")) {
+			if (side->contentFlags & CONTENTS_WEAPONCLIP && !Q_streq(tex->name, "tex_common/weaponclip")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "set weaponclip texture for CONTENTS_WEAPONCLIP\n");
 				Q_strncpyz(tex->name, "tex_common/weaponclip", sizeof(tex->name));
 			}
-			if (side->contentFlags & CONTENTS_ACTORCLIP && strcmp(tex->name, "tex_common/actorclip")) {
+			if (side->contentFlags & CONTENTS_ACTORCLIP && !Q_streq(tex->name, "tex_common/actorclip")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "set actorclip texture for CONTENTS_ACTORCLIP\n");
 				Q_strncpyz(tex->name, "tex_common/actorclip", sizeof(tex->name));
 			}
-			if (side->contentFlags & CONTENTS_LIGHTCLIP && strcmp(tex->name, "tex_common/lightclip")) {
+			if (side->contentFlags & CONTENTS_LIGHTCLIP && !Q_streq(tex->name, "tex_common/lightclip")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "set lightclip texture for CONTENTS_LIGHTCLIP\n");
 				Q_strncpyz(tex->name, "tex_common/lightclip", sizeof(tex->name));
 			}
-			if (side->contentFlags & CONTENTS_ORIGIN && strcmp(tex->name, "tex_common/origin")) {
+			if (side->contentFlags & CONTENTS_ORIGIN && !Q_streq(tex->name, "tex_common/origin")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "set origin texture for CONTENTS_ORIGIN\n");
 				Q_strncpyz(tex->name, "tex_common/origin", sizeof(tex->name));
 			}
@@ -1716,7 +1716,7 @@ void CheckMixedFaceContents (void)
 				const ptrdiff_t index = side - brushsides;
 				brush_texture_t *tex = &side_brushtextures[index];
 
-				if (side->contentFlags & CONTENTS_ACTORCLIP && !strcmp(tex->name, "tex_common/actorclip")) {
+				if (side->contentFlags & CONTENTS_ACTORCLIP && Q_streq(tex->name, "tex_common/actorclip")) {
 					Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "removing tex_common/actorclip, setting tex_common/error\n");
 					Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
 				}

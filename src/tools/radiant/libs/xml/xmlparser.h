@@ -41,7 +41,7 @@ public:
 	const std::string attribute(const std::string& name) const {
 		if (m_atts != 0) {
 			for (const char** att = m_atts; *att != 0; att += 2) {
-				if (strcmp(*att, name.c_str()) == 0) {
+				if (Q_streq(*att, name.c_str())) {
 					return *(++att);
 				}
 			}

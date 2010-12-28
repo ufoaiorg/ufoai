@@ -400,11 +400,11 @@ static ufoRecoveryNationOrder_t UR_GetOrderTypeByID (const char *id)
 {
 	if (!id)
 		return MAX_ORDER;
-	if (!strcmp(id, "nation"))
+	if (Q_streq(id, "nation"))
 		return ORDER_NATION;
-	if (!strcmp(id, "price"))
+	if (Q_streq(id, "price"))
 		return ORDER_PRICE;
-	if (!strcmp(id, "happiness"))
+	if (Q_streq(id, "happiness"))
 		return ORDER_HAPPINESS;
 	return MAX_ORDER;
 }

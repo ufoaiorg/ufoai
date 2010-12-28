@@ -618,9 +618,9 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	pos = atoi(Cmd_Argv(1));
 
 	if (Cmd_Argc() == 3) {
-		if (!strcmp(Cmd_Argv(2), "zone1")) {
+		if (Q_streq(Cmd_Argv(2), "zone1")) {
 			updateZone = 1;
-		} else if (!strcmp(Cmd_Argv(2), "zone2")) {
+		} else if (Q_streq(Cmd_Argv(2), "zone2")) {
 			updateZone = 2;
 		}
 	}
@@ -905,13 +905,13 @@ static void AIM_AircraftItemtypeByName_f (void)
 
 	name = Cmd_Argv(1);
 
-	if (!strcmp(name, "weapon"))
+	if (Q_streq(name, "weapon"))
 		i = AC_ITEM_WEAPON;
-	else if (!strcmp(name, "ammo"))
+	else if (Q_streq(name, "ammo"))
 		i = AC_ITEM_AMMO;
-	else if (!strcmp(name, "armour"))
+	else if (Q_streq(name, "armour"))
 		i = AC_ITEM_SHIELD;
-	else if (!strcmp(name, "item"))
+	else if (Q_streq(name, "item"))
 		i = AC_ITEM_ELECTRONICS;
 	else {
 		Com_Printf("AIM_AircraftItemtypeByName_f: Invalid itemtype!\n");

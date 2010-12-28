@@ -47,7 +47,7 @@ static const mAliasAnim_t *R_AnimGet (const model_t * mod, const char *name)
 		return NULL;
 
 	for (i = 0, anim = mod->alias.animdata; i < mod->alias.num_anims; i++, anim++)
-		if (!strcmp(name, anim->name))
+		if (Q_streq(name, anim->name))
 			return anim;
 
 	Com_Printf("model \"%s\" doesn't have animation \"%s\"\n", mod->name, name);

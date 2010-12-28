@@ -222,15 +222,15 @@ employeeType_t E_GetEmployeeType (const char* type)
 	if (!type)
 		return MAX_EMPL;
 
-	if (!strcmp(type, "EMPL_SCIENTIST"))
+	if (Q_streq(type, "EMPL_SCIENTIST"))
 		return EMPL_SCIENTIST;
-	else if (!strcmp(type, "EMPL_SOLDIER"))
+	else if (Q_streq(type, "EMPL_SOLDIER"))
 		return EMPL_SOLDIER;
-	else if (!strcmp(type, "EMPL_WORKER"))
+	else if (Q_streq(type, "EMPL_WORKER"))
 		return EMPL_WORKER;
-	else if (!strcmp(type, "EMPL_PILOT"))
+	else if (Q_streq(type, "EMPL_PILOT"))
 		return EMPL_PILOT;
-	else if (!strcmp(type, "EMPL_ROBOT"))
+	else if (Q_streq(type, "EMPL_ROBOT"))
 		return EMPL_ROBOT;
 
 	return MAX_EMPL;

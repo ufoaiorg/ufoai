@@ -38,9 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
 {
 	assert(type);
-	if (!strcmp(type, "missile"))
+	if (Q_streq(type, "missile"))
 		return AC_ITEM_BASE_MISSILE;
-	else if (!strcmp(type, "laser"))
+	else if (Q_streq(type, "laser"))
 		return AC_ITEM_BASE_LASER;
 
 	return MAX_ACITEMS;
@@ -252,9 +252,9 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 						&& installation->numBatteries > 0) ? "enable" : "disable", "na");
 	}
 
-	if (!strcmp(type, "missile"))
+	if (Q_streq(type, "missile"))
 		bdefType = AC_ITEM_BASE_MISSILE;
-	else if (!strcmp(type, "laser"))
+	else if (Q_streq(type, "laser"))
 		bdefType = AC_ITEM_BASE_LASER;
 	else	/* info page */
 		return;
@@ -464,11 +464,11 @@ static void BDEF_RemoveBattery_f (void)
 		char type[MAX_VAR];
 
 		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
-		if (!strcmp(type, "missile"))
+		if (Q_streq(type, "missile"))
 			basedefType = BASEDEF_MISSILE;
-		else if (!strcmp(type, "laser"))
+		else if (Q_streq(type, "laser"))
 			basedefType = BASEDEF_LASER;
-		else if (!strcmp(type, "random"))
+		else if (Q_streq(type, "random"))
 			basedefType = BASEDEF_RANDOM;
 		else
 			return;
@@ -560,11 +560,11 @@ static void BDEF_AddBattery_f (void)
 	}
 
 	type = Cmd_Argv(1);
-	if (!strcmp(type, "missile"))
+	if (Q_streq(type, "missile"))
 		basedefType = BASEDEF_MISSILE;
-	else if (!strcmp(type, "laser"))
+	else if (Q_streq(type, "laser"))
 		basedefType = BASEDEF_LASER;
-	else if (!strcmp(type, "random"))
+	else if (Q_streq(type, "random"))
 		basedefType = BASEDEF_RANDOM;
 	else {
 		Com_Printf("BDEF_AddBattery_f: base defence type %s doesn't exist.\n", type);

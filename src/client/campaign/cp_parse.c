@@ -36,25 +36,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int CL_GetAlienMissionTypeByID (const char *type)
 {
-	if (!strcmp(type, "recon"))
+	if (Q_streq(type, "recon"))
 		return INTERESTCATEGORY_RECON;
-	else if (!strcmp(type, "terror"))
+	else if (Q_streq(type, "terror"))
 		return INTERESTCATEGORY_TERROR_ATTACK;
-	else if (!strcmp(type, "baseattack"))
+	else if (Q_streq(type, "baseattack"))
 		return INTERESTCATEGORY_BASE_ATTACK;
-	else if (!strcmp(type, "building"))
+	else if (Q_streq(type, "building"))
 		return INTERESTCATEGORY_BUILDING;
-	else if (!strcmp(type, "supply"))
+	else if (Q_streq(type, "supply"))
 		return INTERESTCATEGORY_SUPPLY;
-	else if (!strcmp(type, "xvi"))
+	else if (Q_streq(type, "xvi"))
 		return INTERESTCATEGORY_XVI;
-	else if (!strcmp(type, "intercept"))
+	else if (Q_streq(type, "intercept"))
 		return INTERESTCATEGORY_INTERCEPT;
-	else if (!strcmp(type, "harvest"))
+	else if (Q_streq(type, "harvest"))
 		return INTERESTCATEGORY_HARVEST;
-	else if (!strcmp(type, "alienbase"))
+	else if (Q_streq(type, "alienbase"))
 		return INTERESTCATEGORY_ALIENBASE;
-	else if (!strcmp(type, "rescue"))
+	else if (Q_streq(type, "rescue"))
 		return INTERESTCATEGORY_RESCUE;
 	else {
 		Com_Printf("CL_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
@@ -94,7 +94,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 	/* search for category with same name */
 	for (i = 0; i < ccs.numAlienCategories; i++)
-		if (!strcmp(name, ccs.alienCategories[i].id))
+		if (Q_streq(name, ccs.alienCategories[i].id))
 			break;
 	if (i < ccs.numAlienCategories) {
 		Com_Printf("CL_ParseAlienTeam: alien category def \"%s\" with same name found, second ignored\n", name);
@@ -111,7 +111,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		if (!strcmp(token, "equipment")) {
+		if (Q_streq(token, "equipment")) {
 			linkedList_t **list = &alienCategory->equipment;
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
@@ -124,7 +124,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 					break;
 				LIST_AddString(list, token);
 			} while (*text);
-		} else if (!strcmp(token, "category")) {
+		} else if (Q_streq(token, "category")) {
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
 				Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" has category with no opening brace\n", name);
@@ -139,7 +139,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 					Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
 				alienCategory->numMissionCategories++;
 			} while (*text);
-		} else if (!strcmp(token, "team")) {
+		} else if (Q_streq(token, "team")) {
 			alienTeamGroup_t *group;
 
 			token = Com_EParse(text, errhead, name);
@@ -163,7 +163,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 				/* check for some standard values */
 				for (vp = alien_group_vals; vp->string; vp++)
-					if (!strcmp(token, vp->string)) {
+					if (Q_streq(token, vp->string)) {
 						/* found a definition */
 						token = Com_EParse(text, errhead, name);
 						if (!*text)
@@ -203,7 +203,7 @@ static void CL_ParseResearchedCampaignItems (const campaign_t *campaign, const c
 	int i;
 
 	/* Don't parse if it is not definition for current type of campaign. */
-	if (strcmp(campaign->researched, name))
+	if (!Q_streq(campaign->researched, name))
 		return;
 
 	/* get it's body */
@@ -224,7 +224,7 @@ static void CL_ParseResearchedCampaignItems (const campaign_t *campaign, const c
 		for (i = 0; i < ccs.numTechnologies; i++) {
 			technology_t *tech = RS_GetTechByIDX(i);
 			assert(tech);
-			if (!strcmp(token, tech->id)) {
+			if (Q_streq(token, tech->id)) {
 				tech->mailSent = MAILSENT_FINISHED;
 				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = qtrue;
 				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cp_campaignPool, 0);
@@ -262,7 +262,7 @@ static void CL_ParseResearchableCampaignStates (const campaign_t *campaign, cons
 		return;
 	}
 
-	if (strcmp(campaign->researched, name)) {
+	if (!Q_streq(campaign->researched, name)) {
 		Com_DPrintf(DEBUG_CLIENT, "..don't use '%s' as researchable list\n", name);
 		return;
 	}
@@ -275,7 +275,7 @@ static void CL_ParseResearchableCampaignStates (const campaign_t *campaign, cons
 
 		for (i = 0; i < ccs.numTechnologies; i++) {
 			technology_t *tech = RS_GetTechByIDX(i);
-			if (!strcmp(token, tech->id)) {
+			if (Q_streq(token, tech->id)) {
 				if (researchable) {
 					tech->mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(tech);
@@ -352,7 +352,7 @@ static void CL_ParseSalary (const char *name, const char **text, salary_t *s, co
 
 		/* check for some standard values */
 		for (vp = salary_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
+			if (Q_streq(token, vp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -410,7 +410,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 
 	/* search for campaigns with same name */
 	for (i = 0; i < ccs.numCampaigns; i++)
-		if (!strcmp(name, ccs.campaigns[i].id))
+		if (Q_streq(name, ccs.campaigns[i].id))
 			break;
 
 	if (i < ccs.numCampaigns) {
@@ -475,7 +475,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 
 		/* check for some standard values */
 		for (vp = campaign_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
+			if (Q_streq(token, vp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -484,9 +484,9 @@ void CL_ParseCampaign (const char *name, const char **text)
 				Com_EParseValue(cp, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
-		if (!strcmp(token, "salary")) {
+		if (Q_streq(token, "salary")) {
 			CL_ParseSalary(token, text, s, cp->id);
-		} else if (!strcmp(token, "events")) {
+		} else if (Q_streq(token, "events")) {
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
@@ -547,7 +547,7 @@ static void CL_ParseComponents (const char *name, const char **text)
 			break;
 
 		/* get values */
-		if (!strcmp(token, "item")) {
+		if (Q_streq(token, "item")) {
 			/* Defines what items need to be collected for this item to be researchable. */
 			if (comp->numItemtypes < MAX_COMP) {
 				/* Parse item name */
@@ -572,7 +572,7 @@ static void CL_ParseComponents (const char *name, const char **text)
 			} else {
 				Com_Printf("CL_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
 			}
-		} else if (!strcmp(token, "time")) {
+		} else if (Q_streq(token, "time")) {
 			/* Defines how long disassembly lasts. */
 			token = Com_Parse(text);
 			comp->time = atoi(token);
@@ -612,7 +612,7 @@ components_t *CL_GetComponentsByID (const char *id)
 
 	for (i = 0; i < ccs.numComponents; i++) {
 		components_t *comp = &ccs.components[i];
-		if (!strcmp(comp->assemblyId, id)) {
+		if (Q_streq(comp->assemblyId, id)) {
 			return comp;
 		}
 	}
@@ -632,33 +632,33 @@ components_t *CL_GetComponentsByID (const char *id)
 static void CL_ParseScriptFirst (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
-	if (!strcmp(type, "up_chapters"))
+	if (Q_streq(type, "up_chapters"))
 		UP_ParseChapters(name, text);
-	else if (!strcmp(type, "building"))
+	else if (Q_streq(type, "building"))
 		B_ParseBuildings(name, text, qfalse);
-	else if (!strcmp(type, "installation"))
+	else if (Q_streq(type, "installation"))
 		INS_ParseInstallations(name, text);
-	else if (!strcmp(type, "tech"))
+	else if (Q_streq(type, "tech"))
 		RS_ParseTechnologies(name, text);
-	else if (!strcmp(type, "nation"))
+	else if (Q_streq(type, "nation"))
 		CL_ParseNations(name, text);
-	else if (!strcmp(type, "city"))
+	else if (Q_streq(type, "city"))
 		CL_ParseCities(name, text);
-	else if (!strcmp(type, "rank"))
+	else if (Q_streq(type, "rank"))
 		CL_ParseRanks(name, text);
-	else if (!strcmp(type, "aircraft"))
+	else if (Q_streq(type, "aircraft"))
 		AIR_ParseAircraft(name, text, qfalse);
-	else if (!strcmp(type, "mail"))
+	else if (Q_streq(type, "mail"))
 		CL_ParseEventMails(name, text);
-	else if (!strcmp(type, "events"))
+	else if (Q_streq(type, "events"))
 		CL_ParseCampaignEvents(name, text);
-	else if (!strcmp(type, "components"))
+	else if (Q_streq(type, "components"))
 		CL_ParseComponents(name, text);
-	else if (!strcmp(type, "alienteam"))
+	else if (Q_streq(type, "alienteam"))
 		CL_ParseAlienTeam(name, text);
-	else if (!strcmp(type, "msgoptions"))
+	else if (Q_streq(type, "msgoptions"))
 		MSO_ParseSettings(name, text);
-	else if (!strcmp(type, "msgcategory"))
+	else if (Q_streq(type, "msgcategory"))
 		MSO_ParseCategories(name, text);
 }
 
@@ -676,13 +676,13 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 static void CL_ParseScriptSecond (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
-	if (!strcmp(type, "building"))
+	if (Q_streq(type, "building"))
 		B_ParseBuildings(name, text, qtrue);
-	else if (!strcmp(type, "aircraft"))
+	else if (Q_streq(type, "aircraft"))
 		AIR_ParseAircraft(name, text, qtrue);
-	else if (!strcmp(type, "basetemplate"))
+	else if (Q_streq(type, "basetemplate"))
 		B_ParseBaseTemplate(name, text);
-	else if (!strcmp(type, "campaign"))
+	else if (Q_streq(type, "campaign"))
 		CL_ParseCampaign(name, text);
 }
 
@@ -691,11 +691,11 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
  */
 static void CL_ParseScriptCampaignRelated (const campaign_t *campaign, const char *type, const char *name, const char **text)
 {
-	if (!strcmp(type, "researched"))
+	if (Q_streq(type, "researched"))
 		CL_ParseResearchedCampaignItems(campaign, name, text);
-	else if (!strcmp(type, "researchable"))
+	else if (Q_streq(type, "researchable"))
 		CL_ParseResearchableCampaignStates(campaign, name, text, qtrue);
-	else if (!strcmp(type, "notresearchable"))
+	else if (Q_streq(type, "notresearchable"))
 		CL_ParseResearchableCampaignStates(campaign, name, text, qfalse);
 }
 

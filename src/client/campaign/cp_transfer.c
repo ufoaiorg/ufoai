@@ -636,7 +636,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 
 				/* look for alien teamDef */
 				for (j = 0; j < ccs.numAliensTD; j++) {
-					if (ccs.alienTeams[j] && !strcmp(id, ccs.alienTeams[j]->id))
+					if (ccs.alienTeams[j] && Q_streq(id, ccs.alienTeams[j]->id))
 						break;
 				}
 

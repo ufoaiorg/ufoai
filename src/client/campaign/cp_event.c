@@ -50,11 +50,11 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		eventMail_t* listMail;
 
 		for (i = 0; i < ccs.numEventMails; i++)
-			if (!strcmp(ccs.eventMails[i].id, id))
+			if (Q_streq(ccs.eventMails[i].id, id))
 				return &ccs.eventMails[i];
 
 		LIST_Foreach(eventMails, eventMail_t, listMail) {
-			if (!strcmp(listMail->id, id))
+			if (Q_streq(listMail->id, id))
 				return listMail;
 		}
 
@@ -66,7 +66,7 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		/* search the static mails - and only the static ones! */
 		for (i = 0; i < ccs.numEventMails; i++) {
 			eventMail_t* mail = &ccs.eventMails[i];
-			if (!strcmp(mail->id, id)) {
+			if (Q_streq(mail->id, id)) {
 				eventMail = mail;
 				break;
 			}
@@ -186,7 +186,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 
 		/* check for some standard values */
 		for (vp = eventMail_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
+			if (Q_streq(token, vp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -244,7 +244,7 @@ const campaignEvents_t *CP_GetEventsByID (const char *name)
 
 	for (i = 0; i < ccs.numCampaignEventDefinitions; i++) {
 		const campaignEvents_t *events = &ccs.campaignEvents[i];
-		if (!strcmp(events->id, name)) {
+		if (Q_streq(events->id, name)) {
 			int j;
 			for (j = 0; j < events->numCampaignEvents; j++) {
 				const campaignEvent_t *event = &events->campaignEvents[j];

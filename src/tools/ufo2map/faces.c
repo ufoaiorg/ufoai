@@ -710,7 +710,7 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 		/* this face is not visible from birds view - optimize away
 		 * but only if it's not light emitting surface */
 		const entity_t *e = &entities[side->brush->entitynum];
-		if (strcmp(ValueForKey(e, "classname"), "func_rotating")) {
+		if (!Q_streq(ValueForKey(e, "classname"), "func_rotating")) {
 			if (!(curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
 				/* e.g. water surfaces are removed if we set the surfaceFlags
 				 * to SURF_NODRAW for this side */

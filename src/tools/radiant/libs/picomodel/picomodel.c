@@ -400,7 +400,7 @@ picoShader_t *PicoFindShader (picoModel_t *model, char *name, int caseSensitive)
 
 		/* compare the shader name with name we're looking for */
 		if (caseSensitive) {
-			if (!strcmp(name, model->shader[i]->name))
+			if (Q_streq(name, model->shader[i]->name))
 				return model->shader[i];
 		} else if (!_pico_stricmp(name, model->shader[i]->name))
 			return model->shader[i];
@@ -600,7 +600,7 @@ picoSurface_t *PicoFindSurface (picoModel_t *model, char *name, int caseSensitiv
 
 		/* compare the surface name with name we're looking for */
 		if (caseSensitive) {
-			if (!strcmp(name, model->surface[i]->name))
+			if (Q_streq(name, model->surface[i]->name))
 				return model->surface[i];
 		} else {
 			if (!_pico_stricmp(name, model->surface[i]->name))

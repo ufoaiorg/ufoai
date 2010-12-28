@@ -122,7 +122,7 @@ int UI_GetDataIDByName (const char* name)
 {
 	int num;
 	for (num = 0; num < UI_MAX_DATAID; num++)
-		if (!strcmp(name, ui_sharedDataIDNames[num]))
+		if (Q_streq(name, ui_sharedDataIDNames[num]))
 			return num;
 
 	return -1;
@@ -488,7 +488,7 @@ uiNode_t* UI_FindOptionByValue (uiOptionIterator_t* iterator, const char* value)
 {
 	while (iterator->option) {
 		assert(iterator->option->behaviour == ui_optionBehaviour);
-		if (!strcmp(OPTIONEXTRADATA(iterator->option).value, value))
+		if (Q_streq(OPTIONEXTRADATA(iterator->option).value, value))
 			return iterator->option;
 		UI_OptionIteratorNextOption(iterator);
 	}
