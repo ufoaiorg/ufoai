@@ -751,7 +751,7 @@ static void CL_NationStatsUpdate_f (void)
 			lineStrip_t *funding = &fundingLineStrip[i];
 
 			/* init the structure */
-			memset(funding, 0, sizeof(funding));
+			memset(funding, 0, sizeof(*funding));
 
 			if (i > 0)
 				fundingLineStrip[i - 1].next = funding;
