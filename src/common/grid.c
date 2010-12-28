@@ -172,9 +172,9 @@ typedef struct step_s {
  * @brief Initialize the step_t data
  * @param[in] step The struct describing the move
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
- * @return false if something went wrong
+ * @return false if dir is irrelevant or something went wrong
  */
-static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte crouchingState)
+static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte crouchingState, const int dir)
 {
 	step->map = map;
 	/** @todo flier should return true if the actor can fly. */
@@ -183,6 +183,24 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
 	step->hasLadderSupport = qfalse;
 	/** @note This is the actor's height in QUANT units. */
 	step->actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
+
+	/* Ensure that dir is in bounds. */
+	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
+		return qfalse;
+
+	/* Directions 12, 14, and 15 are currently undefined. */
+	if (dir == 12 || dir == 14 || dir == 15)
+		return qfalse;
+
+	/* IMPORTANT: only fliers can use directions higher than NON_FLYING_DIRECTIONS. */
+	if (!step->flier && dir >= FLYING_DIRECTIONS) {
+		return qfalse;
+	}
+
+	/* We cannot fly and crouch at the same time. This will also cause an actor to stand to fly. */
+	if (crouchingState && dir >= FLYING_DIRECTIONS) {
+		return qfalse;
+	}
 
 	return qtrue;
 }
@@ -292,20 +310,8 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
 
-	Grid_StepInit(step, map, crouchingState);
-
-	/* Ensure that dir is in bounds. */
-	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
-		return;
-
-	/* Directions 12, 14, and 15 are currently undefined. */
-	if (dir == 12 || dir == 14 || dir == 15)
-		return;
-
-	/* IMPORTANT: only fliers can use directions higher than NON_FLYING_DIRECTIONS. */
-	if (!step->flier && dir >= FLYING_DIRECTIONS) {
-		return;
-	}
+	if (!Grid_StepInit(step, map, crouchingState, dir))
+		return;		/* either dir is irrelevant or something worse happened */
 
 	x = pos[0];
 	y = pos[1];
@@ -315,11 +321,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	oldLen = RT_AREA(path, x, y, z, crouchingState);
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actorSize, dir, crouchingState, oldLen);
-
-	/* We cannot fly and crouch at the same time. This will also cause an actor to stand to fly. */
-	if (crouchingState && dir >= FLYING_DIRECTIONS) {
-		return;
-	}
 
 	if (oldLen >= MAX_MOVELENGTH && oldLen != ROUTING_NOT_REACHABLE) {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Exiting because the TUS needed to move here are already too large. %i %i\n", oldLen , MAX_MOVELENGTH);
