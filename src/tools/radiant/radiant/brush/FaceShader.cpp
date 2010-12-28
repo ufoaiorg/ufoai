@@ -91,10 +91,6 @@ void FaceShader::setShader (const std::string& name)
 const ContentsFlagsValue& FaceShader::getFlags () const
 {
 	ASSERT_MESSAGE(m_realised, "FaceShader::getFlags: flags not valid when unrealised");
-	if (!m_flags.isSpecified()) {
-		return ContentsFlagsValue(m_state->getTexture().surfaceFlags, m_state->getTexture().contentFlags,
-				m_state->getTexture().value, true);
-	}
 	return m_flags;
 }
 void FaceShader::setFlags (const ContentsFlagsValue& flags)
