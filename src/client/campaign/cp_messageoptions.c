@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_messageoptions.h"
 
 /** @brief valid notification types that may cause pause / notice */
-const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
+char const* const nt_strings[NT_NUM_NOTIFYTYPE] = {
 	N_("installation_installed"),
 	N_("installation_removed"),
 	N_("installation_replaced"),
