@@ -32,7 +32,6 @@
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/IConv.h"
 #include "stream/stringstream.h"
-#include "convert.h"
 #include "os/file.h"
 
 #include "../environment.h"
@@ -197,7 +196,7 @@ std::size_t Sys_Print (int level, const char* buf, std::size_t length)
 
 			{
 				GtkTextBufferOutputStream textBuffer(buffer, &iter, tag);
-				if (!globalCharacterSet().isUTF8()) {
+				if (!gtkutil::IConv::isUTF8()) {
 					BufferedTextOutputStream<GtkTextBufferOutputStream> buffered(textBuffer);
 					buffered << gtkutil::IConv::localeToUTF8(str);
 				} else {

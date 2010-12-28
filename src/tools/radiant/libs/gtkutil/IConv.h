@@ -152,6 +152,10 @@ namespace gtkutil
 				return returnValue;
 			}
 
+			static bool isUTF8() {
+				return g_get_charset(NULL);
+			}
+
 			/**
 			 * greebo: Converts the given filename to UTF-8.
 			 * Returns an empty string if the conversion fails.
