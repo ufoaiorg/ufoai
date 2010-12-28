@@ -319,7 +319,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 {
 	picoModel_t *model;
 	picoParser_t *p;
-	char lastNodeName[1024];
+	char lastNodeName[1024] = "";
 
 	aseVertex_t* vertices = NULL;
 	aseTexCoord_t* texcoords = NULL;
@@ -364,9 +364,6 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 	PicoSetModelFrameNum(model, frameNum);
 	PicoSetModelName(model, fileName);
 	PicoSetModelFileName(model, fileName);
-
-	/* initialize some stuff */
-	OBJZERO(lastNodeName);
 
 	/* parse ase model file */
 	while (1) {

@@ -233,9 +233,6 @@ picoModel_t *PicoNewModel (void)
 	if (model == NULL)
 		return NULL;
 
-	/* clear */
-	OBJZERO(*model);
-
 	/* model set up */
 	_pico_zero_bounds(model->mins, model->maxs);
 
@@ -334,7 +331,6 @@ picoShader_t *PicoNewShader (picoModel_t *model)
 	shader = _pico_alloc(sizeof(*shader));
 	if (shader == NULL)
 		return NULL;
-	OBJZERO(*shader);
 
 	/* attach it to the model */
 	if (model != NULL) {
@@ -422,7 +418,6 @@ picoSurface_t *PicoNewSurface (picoModel_t *model)
 	surface = _pico_alloc(sizeof(*surface));
 	if (surface == NULL)
 		return NULL;
-	OBJZERO(*surface);
 
 	/* attach it to the model */
 	if (model != NULL) {
