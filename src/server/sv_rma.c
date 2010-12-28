@@ -955,7 +955,7 @@ static void SV_AddMapTiles (mapInfo_t *map)
 			pos++;
 		}
 
-		if ((idx == numToPlace) && !SV_AddMissingTiles(map)) {
+		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
@@ -1242,7 +1242,6 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	}
 
 	mAsm = &map->mAssembly[map->mAsm];
-	assert(mAsm);
 
 	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
 
