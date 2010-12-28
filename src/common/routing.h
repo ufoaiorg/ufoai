@@ -55,7 +55,7 @@ MACROS
 /* route - Used by Grid_* only  */
 /** @note IMPORTANT: actorSize is 1 or greater!!! */
 #define RT_CONN(map, actorSize, x, y, z, dir)			map[(actorSize) - 1].route[(z)][(y)][(x)][(dir)]
-#define RT_CONN_POS(map, actorSize, p, dir)				(int)(map[(actorSize) - 1].route[p[0]][p[1]][p[2]])
+#define RT_CONN_POS(map, actorSize, p, dir)				(int)(map[(actorSize) - 1].route[p[0]][p[1]][p[2]][(dir)])
 #define RT_CONN_TEST(map, actorSize, x, y, z, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
 															assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
 															assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
