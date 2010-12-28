@@ -71,7 +71,7 @@ typedef enum {
 } buttonTypes_t;
 
 /** @brief a cbuf string for each button_types_t */
-static const char *shootTypeStrings[] = {
+static char const* const shootTypeStrings[] = {
 	"primaryright",
 	"reaction",
 	"primaryleft",
@@ -93,7 +93,7 @@ typedef enum {
 } weaponButtonState_t;
 
 /** @note Order of elements here must correspond to order of elements in walkType_t. */
-static const char *moveModeDescriptions[] = {
+static char const* const moveModeDescriptions[] = {
 	N_("Crouch walk"),
 	N_("Autostand"),
 	N_("Walk"),

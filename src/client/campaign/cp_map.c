@@ -69,7 +69,7 @@ enum {
 	GEOSCAPE_IMAGE_MAX
 };
 
-static const char *geoscapeImageNames[] = {
+static char const* const geoscapeImageNames[] = {
 	"pics/geoscape/mission",
 	"pics/geoscape/circle",
 	"pics/geoscape/circleactive",

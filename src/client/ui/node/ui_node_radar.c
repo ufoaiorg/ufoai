@@ -247,13 +247,13 @@ static void UI_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
 	Vector2Set(gridSize, round(radar.w * ratioConversion), round(radar.h * ratioConversion));
 }
 
-static const char *imageExtensions[] = {
+static char const* const imageExtensions[] = {
 	"tga", "jpg", "png", NULL
 };
 
 static qboolean UI_CheckRadarImage (const char *imageName, const int level)
 {
-	const char **ext = imageExtensions;
+	char const* const* ext = imageExtensions;
 
 	while (*ext) {
 		if (FS_CheckFile("pics/radars/%s_%i.%s", imageName, level, *ext) > 0)

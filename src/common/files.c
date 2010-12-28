@@ -479,7 +479,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 
 #define MAX_PACKFILES 1024
 
-static const char *pakFileExt[] = {
+static char const* const pakFileExt[] = {
 	"pk3", "zip", NULL
 };
 
@@ -497,7 +497,6 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
 	int pakfile_count = 0;
 	char pattern[MAX_OSPATH];
-	const char **extList;
 
 	search = fs_searchpaths;
 	while (search) {
@@ -512,8 +511,7 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 
 	Com_Printf("Adding game dir: %s\n", dir);
 
-	extList = pakFileExt;
-	while (*extList) {
+	for (char const* const* extList = pakFileExt; *extList; ++extList) {
 		Com_sprintf(pattern, sizeof(pattern), "%s/*.%s", dir, *extList);
 		dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != NULL) {
@@ -530,7 +528,6 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 			}
 			Mem_Free(dirnames);
 		}
-		extList++;
 	}
 
 	/* Sort our list alphabetically */

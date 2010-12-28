@@ -179,7 +179,7 @@ static model_t *R_ModForName (const char *name)
  * @brief all supported model formats
  * @sa modtype_t
  */
-static const char *mod_extensions[] = {
+static char const* const mod_extensions[] = {
 	"md2", "md3", "dpm", "obj", NULL
 };
 

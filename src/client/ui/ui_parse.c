@@ -61,7 +61,7 @@ static const value_t uiModelProperties[] = {
 /** @brief reserved token preventing calling a node with it
  * @todo Use dichotomic search
  */
-static const char *reservedTokens[] = {
+static char const* const reservedTokens[] = {
 	"this",
 	"parent",
 	"root",
@@ -78,7 +78,7 @@ static const char *reservedTokens[] = {
 
 static qboolean UI_TokenIsReserved (const char *name)
 {
-	const char **token = reservedTokens;
+	char const* const* token = reservedTokens;
 	while (*token) {
 		if (!strcmp(*token, name))
 			return qtrue;

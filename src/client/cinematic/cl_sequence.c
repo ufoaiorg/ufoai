@@ -825,7 +825,7 @@ static int SEQ_ExecuteCommand (sequenceContext_t *context, const char *name, con
 
 /* =========================================================== */
 
-static const char *seqCmdName[] = {
+static char const* const seqCmdName[] = {
 	"end",
 	"wait",
 	"click",

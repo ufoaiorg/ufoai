@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note don't change the array size - a NET_ReadByte can
  * return values between 0 and UCHAR_MAX (-1 is not handled here)
  */
-static const char *svc_strings[] =
+static char const* const svc_strings[] =
 {
 	"svc_bad",
 

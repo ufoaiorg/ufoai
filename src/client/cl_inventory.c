@@ -365,7 +365,7 @@ invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const 
 
 /** Names of the filter types as used in console function. e.g. in .ufo files.
  * @sa inv_shared.h:itemFilterTypes_t */
-static const char *filterTypeNames[MAX_FILTERTYPES] = {
+static char const* const filterTypeNames[MAX_FILTERTYPES] = {
 	"primary",		/**< FILTER_S_PRIMARY */
 	"secondary",	/**< FILTER_S_SECONDARY */
 	"heavy",		/**< FILTER_S_HEAVY */

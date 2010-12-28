@@ -1394,7 +1394,7 @@ static void AII_InitialiseAircraftSlots (aircraft_t *aircraftTemplate)
  * @brief List of valid strings for itemPos_t
  * @note must be in the same order than @c itemPos_t
  */
-static const char *air_position_strings[AIR_POSITIONS_MAX] = {
+static char const* const air_position_strings[] = {
 	"nose_left",
 	"nose_center",
 	"nose_right",

@@ -80,7 +80,7 @@ typedef enum pf_s {
 } pf_t;
 
 /** @brief valid particle functions - see pf_t and pf_values */
-static const char *pf_strings[] = {
+static char const* const pf_strings[] = {
 	"init",
 	"run",
 	"think",
@@ -117,7 +117,7 @@ typedef enum pc_s {
 } pc_t;
 
 /** @brief particle commands - see pc_t */
-static const char *pc_strings[PC_NUM_PTLCMDS] = {
+static char const* const pc_strings[] = {
 	"end",
 
 	"push", "pop", "kpop",
