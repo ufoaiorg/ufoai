@@ -285,7 +285,7 @@ class PopupDebugMessageHandler: public DebugMessageHandler
 				return handled;
 #else
 				m_buffer << "Please report this error to the developers\n";
-				gtk_MessageBox(0, m_buffer.toString(), _("Radiant - Runtime Error"), eMB_OK, eMB_ICONERROR);
+				gtkutil::errorDialog(m_buffer.toString());
 				m_buffer.clear();
 #endif
 			}
@@ -315,7 +315,7 @@ static void create_local_pid (void)
 
 		if (!file_remove(g_pidGameFile)) {
 			std::string msg = _("WARNING: Could not delete game pid at ") + g_pidGameFile;
-			gtk_MessageBox(0, msg, _("UFORadiant"), eMB_OK, eMB_ICONERROR);
+			gtkutil::errorDialog(msg);
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
@@ -325,14 +325,13 @@ static void create_local_pid (void)
 				"Do you want to reset all preferences to defaults?");
 
 		if (gtk_MessageBox(0, startupFailure, _("UFORadiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
-			// TODO: implement for xml registry
-			//Preferences_Reset();
+			GlobalRegistry().reset();
 		}
 
 		std::string msg = "Logging console output to " + GlobalRegistry().get(RKEY_SETTINGS_PATH)
 				+ "radiant.log\nRefer to the log if Radiant fails to start again.";
 
-		gtk_MessageBox(0, msg, _("UFORadiant - Console Log"), eMB_OK);
+		gtkutil::errorDialog(msg);
 #endif
 	} else {
 		// create one, will remove right after entering message loop

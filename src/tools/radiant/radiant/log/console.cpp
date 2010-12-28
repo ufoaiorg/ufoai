@@ -31,6 +31,7 @@
 #include "gtkutil/container.h"
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/IConv.h"
+#include "gtkutil/dialog.h"
 #include "stream/stringstream.h"
 #include "os/file.h"
 
@@ -63,8 +64,7 @@ void Sys_LogFile (bool enable)
 			globalOutputStream()
 					<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n";
 		} else {
-			gtk_MessageBox(0, _("Failed to create log file, check write permissions in UFORadiant directory.\n"),
-					_("Console logging"), eMB_OK, eMB_ICONERROR);
+			gtkutil::errorDialog(_("Failed to create log file, check write permissions in UFORadiant directory.\n"));
 		}
 	} else if (!enable && g_hLogFile != 0) {
 		// settings say we should not be logging but still we have an active logfile .. close it
