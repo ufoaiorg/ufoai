@@ -254,9 +254,9 @@ static void MD5Final(struct MD5Context *ctx, unsigned char *digest)
 	MD5Transform(ctx->buf, (uint32_t *) ctx->in);
 	byteReverse((unsigned char *) ctx->buf, 4);
 
-	if (digest!=NULL)
+	if (digest != NULL)
 		memcpy(digest, ctx->buf, 16);
-	memset(ctx, 0, sizeof(ctx));	/* In case it's sensitive */
+	memset(ctx, 0, sizeof(*ctx));	/* In case it's sensitive */
 }
 
 /**
