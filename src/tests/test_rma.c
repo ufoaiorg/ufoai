@@ -57,6 +57,16 @@ static int UFO_CleanSuiteRandomMapAssembly (void)
 char map[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 char pos[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
+static void testUMPExtends (void)
+{
+	mapInfo_t *randomMap;
+
+	srand(0);
+	randomMap = SV_AssembleMap("test_extends", "default", map, pos);
+	CU_ASSERT(randomMap != NULL);
+	Mem_Free(randomMap);
+}
+
 static void testAssembly (void)
 {
 	mapInfo_t *randomMap;
@@ -150,6 +160,9 @@ int UFO_AddRandomMapAssemblyTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testUMPExtends) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testAssembly) == NULL)
 		return CU_get_error();
 
