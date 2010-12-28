@@ -29,6 +29,7 @@
 
 #include "stream/memstream.h"
 #include "stream/textstream.h"
+#include "string/string.h"
 
 #include <gtk/gtk.h>
 
@@ -64,7 +65,7 @@ static void clipboard_received (GtkClipboard *clipboard, GtkSelectionData *data,
 {
 	if (data->length < 0) {
 		globalErrorStream() << "Error retrieving selection\n";
-	} else if (Q_streq(gdk_atom_name(data->type), clipboard_targets.target)) {
+	} else if (string_equal(gdk_atom_name(data->type), clipboard_targets.target)) {
 		BufferInputStream istream(reinterpret_cast<const char*> (data->data), data->length);
 		(*reinterpret_cast<ClipboardPasteFunc*> (user_data))(istream);
 	}

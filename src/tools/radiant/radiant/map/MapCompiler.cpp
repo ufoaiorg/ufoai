@@ -5,6 +5,7 @@
 #include "ifilesystem.h"
 #include "radiant_i18n.h"
 #include "os/path.h"
+#include "string/string.h"
 #include "gtkutil/dialog.h"
 
 #include "map.h"
@@ -95,7 +96,7 @@ inline void compileReadProgress (void *ex, void *buffer)
 	} else {
 		const char **step = steps;
 		while (*step) {
-			if (buf != 0 && !Q_streq(*step, buf)) {
+			if (buf != 0 && !string_equal(*step, buf)) {
 				job->parse_progress = TRUE;
 				break;
 			}

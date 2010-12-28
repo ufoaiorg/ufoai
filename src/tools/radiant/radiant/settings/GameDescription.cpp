@@ -22,7 +22,7 @@ GameDescription::GameDescription (xmlDocPtr pDoc, const std::string& gameFile) :
 	// read the user-friendly game name
 	xmlNodePtr pNode = pDoc->children;
 
-	while (!Q_streq((const char*)pNode->name, "game") && pNode != 0)
+	while (!string_equal((const char*)pNode->name, "game") && pNode != 0)
 		pNode = pNode->next;
 
 	if (!pNode)
