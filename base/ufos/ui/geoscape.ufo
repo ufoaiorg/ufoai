@@ -823,7 +823,7 @@ window popup_baseattack
 	func listen_automission
 	{
 		cmd "cp_mission_autogo;"
-		cmd "ui_removelistener equipment@onWindowClose <path:this>"
+		cmd "ui_removelistener equipment@onWindowClosed <path:this>"
 	}
 
 	cmpPopupButton bt_auto_go
@@ -842,7 +842,7 @@ window popup_baseattack
 				cmd "pwr_down;"
 			}
 			if ( *node:root.equip@current > 0 ) {
-				cmd "ui_addlistener equipment@onWindowClose <path:root>.listen_automission;"
+				cmd "ui_addlistener equipment@onWindowClosed <path:root>.listen_automission;"
 				cmd "ui_push equipment;"
 			} else {
 				cmd "cp_mission_autogo;"
@@ -853,7 +853,7 @@ window popup_baseattack
 	func listen_mission
 	{
 		cmd "game_go;"
-		cmd "ui_removelistener equipment@onWindowClose <path:this>;"
+		cmd "ui_removelistener equipment@onWindowClosed <path:this>;"
 	}
 	cmpPopupButton bt_go
 	{
@@ -871,7 +871,7 @@ window popup_baseattack
 				cmd "pwr_down;"
 			}
 			if ( *node:root.equip@current > 0 ) {
-				cmd "ui_addlistener equipment@onWindowClose <path:root>.listen_mission;"
+				cmd "ui_addlistener equipment@onWindowClosed <path:root>.listen_mission;"
 				cmd "ui_push equipment;"
 			} else {
 				cmd "game_go;"
