@@ -234,7 +234,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 {
 	int i, randomNum, availableEquipDef = 0;
 
-	/* look for all available fitting alien equipement definitions
+	/* look for all available fitting alien equipment definitions
 	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien equipment should not change depending on
 	 * when you encounter it */
 	for (i = 0; i < csi.numEDs; i++) {

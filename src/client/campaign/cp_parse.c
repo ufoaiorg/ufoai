@@ -167,7 +167,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 						/* found a definition */
 						token = Com_EParse(text, errhead, name);
 						if (!*text)
-							return;
+							break;
 
 						Com_EParseValue(group, token, vp->type, vp->ofs, vp->size);
 						break;
@@ -191,6 +191,9 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 			continue;
 		}
 	} while (*text);
+
+	if (LIST_IsEmpty(alienCategory->equipment))
+		Sys_Error("alien category equipment list is empty");
 }
 
 /**

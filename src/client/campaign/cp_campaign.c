@@ -1425,7 +1425,7 @@ void CP_Shutdown (void)
 		TR_Shutdown();
 		UR_Shutdown();
 
-		/* @todo Where this is belongs? */
+		/** @todo Where does this belong? */
 		for (i = 0; i < ccs.numAlienCategories; i++) {
 			alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
 			LIST_Delete(&alienCat->equipment);
