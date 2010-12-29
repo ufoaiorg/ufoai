@@ -163,8 +163,9 @@ static qboolean CP_IsAlienTeamForCategory (const alienTeamCategory_t const *cat,
 /**
  * @brief Sets the alien races used for a mission.
  * @param[in] mission Pointer to the mission.
+ * @param[out] battleParameters The battlescape parameter the alien team is stored in
  */
-static void CP_SetAlienTeamByInterest (const mission_t *mission)
+static void CP_SetAlienTeamByInterest (const mission_t *mission, battleParam_t *battleParameters)
 {
 	int i, j;
 	const int MAX_AVAILABLE_GROUPS = 4;
@@ -197,20 +198,19 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 	i = rand() % numAvailableGroup;
 
 	/* store this group for latter use */
-	ccs.battleParameters.alienTeamGroup = availableGroups[i];
+	battleParameters->alienTeamGroup = availableGroups[i];
 }
 
 /**
  * @brief Check if an alien equipment may be used with a mission.
  * @param[in] mission Pointer to the mission.
  * @param[in] equip Pointer to the alien equipment to check.
+ * @param[in] equipPack Equipment definitions that may be used
  * @return True if equipment definition is selectable.
  */
-static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip)
+static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip, linkedList_t *equipPack)
 {
 	const char *name;
-	const alienTeamGroup_t const *group = ccs.battleParameters.alienTeamGroup;
-	linkedList_t *equipPack = ccs.alienCategories[group->categoryIdx].equipment;
 
 	if (mission->initialOverallInterest > equip->maxInterest || mission->initialOverallInterest <= equip->minInterest)
 		return qfalse;
@@ -227,9 +227,10 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
  * @brief Set alien equipment for a mission (depends on the interest values)
  * @note This function is used to know which equipment pack described in equipment_missions.ufo should be used
  * @pre Alien team must be already chosen
+ * @param[in] equipPack Equipment definitions that may be used
  * @sa CP_SetAlienTeamByInterest
  */
-static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
+static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList_t *equipPack)
 {
 	int i, randomNum, availableEquipDef = 0;
 
@@ -238,7 +239,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 	 * when you encounter it */
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t *ed = &csi.eds[i];
-		if (CP_IsAlienEquipmentSelectable(mission, ed))
+		if (CP_IsAlienEquipmentSelectable(mission, ed, equipPack))
 			availableEquipDef++;
 	}
 
@@ -253,7 +254,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 	availableEquipDef = 0;
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t *ed = &csi.eds[i];
-		if (CP_IsAlienEquipmentSelectable(mission, ed)) {
+		if (CP_IsAlienEquipmentSelectable(mission, ed, equipPack)) {
 			if (availableEquipDef == randomNum) {
 				Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "%s", ed->name);
 				break;
@@ -270,7 +271,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
  * @param[in] mission Pointer to the mission that generates the battle.
  * @sa CP_SetAlienTeamByInterest
  */
-static void CP_CreateAlienTeam (mission_t *mission)
+static void CP_CreateAlienTeam (mission_t *mission, battleParam_t *battleParam)
 {
 	int numAliens;
 
@@ -281,32 +282,32 @@ static void CP_CreateAlienTeam (mission_t *mission)
 		numAliens = mission->ufo->maxTeamSize;
 	if (numAliens > mission->mapDef->maxAliens)
 		numAliens = mission->mapDef->maxAliens;
-	ccs.battleParameters.aliens = numAliens;
+	battleParam->aliens = numAliens;
 
-	CP_SetAlienTeamByInterest(mission);
+	CP_SetAlienTeamByInterest(mission, battleParam);
 
-	CP_SetAlienEquipmentByInterest(mission);
+	CP_SetAlienEquipmentByInterest(mission, ccs.alienCategories[battleParam->alienTeamGroup->categoryIdx].equipment);
 }
 
 /**
  * @brief Create civilian team.
  * @param[in] mission Pointer to the mission that generates the battle
  */
-static void CP_CreateCivilianTeam (const mission_t *mission)
+static void CP_CreateCivilianTeam (const mission_t *mission, battleParam_t *param)
 {
 	nation_t *nation;
 
 	assert(mission->posAssigned);
 
-	ccs.battleParameters.civilians = MAP_GetCivilianNumberByPosition(mission->pos);
+	param->civilians = MAP_GetCivilianNumberByPosition(mission->pos);
 
 	nation = MAP_GetNation(mission->pos);
-	ccs.battleParameters.nation = nation;
+	param->nation = nation;
 	if (nation) {
 		/** @todo There should always be a nation, no? Otherwise the mission was placed wrong. */
-		Q_strncpyz(ccs.battleParameters.civTeam, nation->id, sizeof(ccs.battleParameters.civTeam));
+		Q_strncpyz(param->civTeam, nation->id, sizeof(param->civTeam));
 	} else {
-		Q_strncpyz(ccs.battleParameters.civTeam, "europe", sizeof(ccs.battleParameters.civTeam));
+		Q_strncpyz(param->civTeam, "europe", sizeof(param->civTeam));
 	}
 }
 
@@ -326,8 +327,8 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 
 	assert(mission->posAssigned);
 
-	CP_CreateAlienTeam(mission);
-	CP_CreateCivilianTeam(mission);
+	CP_CreateAlienTeam(mission, param);
+	CP_CreateCivilianTeam(mission, param);
 
 	/* Reset parameters */
 	if (param->param) {
