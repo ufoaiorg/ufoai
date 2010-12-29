@@ -295,6 +295,8 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
 	const qboolean won = (winner == cls.team);
 	missionResults_t *results;
+	aircraft_t *aircraft = ccs.missionAircraft;
+	mission_t *mission = ccs.selectedMission;
 
 	CP_ParseCharacterData(msg);
 
@@ -336,10 +338,10 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		civiliansKilled += civiliansStunned;
 
 	/* Collect items from the battlefield. */
-	AII_CollectingItems(ccs.missionAircraft, won);
+	AII_CollectingItems(aircraft, won);
 	if (won)
 		/* Collect aliens from the battlefield. */
-		AL_CollectingAliens(ccs.missionAircraft);
+		AL_CollectingAliens(aircraft);
 
 	ccs.aliensKilled += aliensKilled;
 
@@ -360,7 +362,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
-	CP_ExecuteMissionTrigger(ccs.selectedMission, won);
+	CP_ExecuteMissionTrigger(mission, won);
 
 	if (won)
 		UI_PushWindow("won", NULL, NULL);

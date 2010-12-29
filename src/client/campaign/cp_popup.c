@@ -443,7 +443,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
  * @brief return the selected aircraft in popup_intercept
  * Close the popup if required
  */
-static aircraft_t* CL_PopupInterceptGetAircraft_f (void)
+static aircraft_t* CL_PopupInterceptGetAircraft (void)
 {
 	int num;
 
@@ -471,7 +471,7 @@ static void CL_PopupInterceptClick_f (void)
 	base_t *base;
 
 	/* Get the selected aircraft */
-	aircraft = CL_PopupInterceptGetAircraft_f();
+	aircraft = CL_PopupInterceptGetAircraft();
 	if (aircraft == NULL)
 		return;
 
@@ -499,7 +499,7 @@ static void CL_PopupInterceptRClick_f (void)
 	aircraft_t* aircraft;
 
 	/* Get the selected aircraft */
-	aircraft = CL_PopupInterceptGetAircraft_f();
+	aircraft = CL_PopupInterceptGetAircraft();
 	if (aircraft == NULL)
 		return;
 

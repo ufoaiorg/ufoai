@@ -74,7 +74,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
 
-	/* reset ccs.selectedMission */
+	/* reset current selected mission */
 	MAP_NotifyMissionRemoved(mission);
 
 	CP_MissionRemove(mission);
@@ -176,9 +176,9 @@ void CP_BaseAttackStartMission (mission_t *mission)
 #endif
 
 	MAP_SelectMission(mission);
-	ccs.selectedMission->active = qtrue;
+	mission->active = qtrue;
 	ccs.mapAction = MA_BASEATTACK;
-	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", ccs.selectedMission->id, ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
+	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
 
 	/** @todo EMPL_ROBOT */
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);

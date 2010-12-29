@@ -210,18 +210,21 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		MAP_ResetAction();
 		INS_SelectInstallation(INS_GetFoundedInstallationByIDX(id));
 		break;
-	case MULTISELECT_TYPE_MISSION: /* Select a mission */
-		if (ccs.mapAction == MA_INTERCEPT && ccs.selectedMission && ccs.selectedMission == MAP_GetMissionByIDX(id)) {
-			CL_DisplayPopupInterceptMission(ccs.selectedMission);
+	case MULTISELECT_TYPE_MISSION: {
+		mission_t *mission = ccs.selectedMission;
+		/* Select a mission */
+		if (ccs.mapAction == MA_INTERCEPT && mission && mission == MAP_GetMissionByIDX(id)) {
+			CL_DisplayPopupInterceptMission(mission);
 			return;
 		}
 		MAP_SelectMission(MAP_GetMissionByIDX(id));
 		if (multiSelection) {
 			/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
-			CL_DisplayPopupInterceptMission(ccs.selectedMission);
+			CL_DisplayPopupInterceptMission(mission);
 			return;
 		}
 		break;
+	}
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
 		aircraft = AIR_AircraftGetFromIDX(id);
 		if (aircraft == NULL) {
@@ -1376,21 +1379,22 @@ static void MAP_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t
 static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 {
 	int x, y;
+	const qboolean isCurrentSelectedMission = ms == ccs.selectedMission;
 
-	if (ms == ccs.selectedMission)
+	if (isCurrentSelectedMission)
 		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
 
 	if (!MAP_AllMapToScreen(node, ms->pos, &x, &y, NULL))
 		return;
 
-	if (ms == ccs.selectedMission) {
+	if (isCurrentSelectedMission) {
 		/* Draw circle around the mission */
 		if (cl_3dmap->integer) {
-			if (!ccs.selectedMission->active)
+			if (!ms->active)
 				MAP_MapDrawEquidistantPoints(node, ms->pos, SELECT_CIRCLE_RADIUS, yellow);
 		} else {
 			const image_t *image;
-			if (ccs.selectedMission->active) {
+			if (ms->active) {
 				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_ACTIVE];
 			} else {
 				image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
@@ -1910,6 +1914,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 {
 	vec2_t pos;
+	mission_t *mission;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
 	UI_GetNodeAbsPos(node, pos);
@@ -1963,6 +1968,7 @@ void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 		MAP_DrawMapMarkers(node);
 	}
 
+	mission = ccs.selectedMission;
 	/* display text */
 	UI_ResetData(TEXT_STANDARD);
 	switch (ccs.mapAction) {
@@ -1973,17 +1979,17 @@ void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 		UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
 		return;
 	case MA_BASEATTACK:
-		if (ccs.selectedMission)
+		if (mission)
 			break;
 		UI_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
 		return;
 	case MA_INTERCEPT:
-		if (ccs.selectedMission)
+		if (mission)
 			break;
 		UI_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
 		return;
 	case MA_UFORADAR:
-		if (ccs.selectedMission)
+		if (mission)
 			break;
 		UI_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
 		return;
@@ -1992,8 +1998,8 @@ void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 	}
 
 	/* Nothing is displayed yet */
-	if (ccs.selectedMission) {
-		UI_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), ccs.selectedMission));
+	if (mission) {
+		UI_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), mission));
 	} else if (ccs.selectedAircraft) {
 		const aircraft_t *aircraft = ccs.selectedAircraft;
 		if (AIR_IsAircraftInBase(aircraft)) {
@@ -2001,7 +2007,7 @@ void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 			MAP_ResetAction();
 			return;
 		}
-		UI_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), ccs.selectedAircraft));
+		UI_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), aircraft));
 	} else if (ccs.selectedUFO) {
 		UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.selectedUFO));
 	} else {

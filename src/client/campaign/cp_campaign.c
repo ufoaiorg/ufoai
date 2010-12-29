@@ -866,13 +866,12 @@ void CP_StartSelectedMission (void)
 
 	if (!ccs.selectedMission)
 		ccs.selectedMission = aircraft->mission;
+	mis = ccs.selectedMission;
 
-	if (!ccs.selectedMission) {
+	if (!mis) {
 		Com_Printf("CP_StartSelectedMission: No mission selected\n");
 		return;
 	}
-
-	mis = ccs.selectedMission;
 
 	/* Before we start, we should clear the missionResults array. */
 	OBJZERO(ccs.missionResults);
