@@ -199,10 +199,14 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 {
 	char procname[MAX_PATH];
 	struct bfd_ctx *bc = NULL;
+	HANDLE process = GetCurrentProcess();
+	HANDLE thread = GetCurrentThread();
+	STACKFRAME frame;
+	char symbol_buffer[sizeof(IMAGEHLP_SYMBOL) + 255];
+	char module_name_raw[MAX_PATH];
 
 	GetModuleFileNameA(NULL, procname, sizeof procname);
 
-	STACKFRAME frame;
 	OBJZERO(frame);
 
 	frame.AddrPC.Offset = context->Eip;
@@ -212,34 +216,26 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 	frame.AddrFrame.Offset = context->Ebp;
 	frame.AddrFrame.Mode = AddrModeFlat;
 
-	HANDLE process = GetCurrentProcess();
-	HANDLE thread = GetCurrentThread();
-
-	char symbol_buffer[sizeof(IMAGEHLP_SYMBOL) + 255];
-	char module_name_raw[MAX_PATH];
-
 	while (StackWalk(IMAGE_FILE_MACHINE_I386, process, thread, &frame, context,
 			0, SymFunctionTableAccess, SymGetModuleBase, 0)) {
+		const char * file = NULL;
+		const char * func = NULL;
+		unsigned line = 0;
+		DWORD module_base = SymGetModuleBase(process, frame.AddrPC.Offset);
+		const char * module_name = "[unknown module]";
+		IMAGEHLP_SYMBOL *symbol = (IMAGEHLP_SYMBOL *) symbol_buffer;
+
 		--depth;
 		if (depth < 0)
 			break;
 
-		IMAGEHLP_SYMBOL *symbol = (IMAGEHLP_SYMBOL *) symbol_buffer;
 		symbol->SizeOfStruct = (sizeof *symbol) + 255;
 		symbol->MaxNameLength = 254;
 
-		DWORD module_base = SymGetModuleBase(process, frame.AddrPC.Offset);
-
-		const char * module_name = "[unknown module]";
-		if (module_base && GetModuleFileNameA((HINSTANCE) module_base,
-				module_name_raw, MAX_PATH)) {
+		if (module_base && GetModuleFileNameA((HINSTANCE) module_base, module_name_raw, MAX_PATH)) {
 			module_name = module_name_raw;
 			bc = get_bc(ob, set, module_name);
 		}
-
-		const char * file = NULL;
-		const char * func = NULL;
-		unsigned line = 0;
 
 		if (bc) {
 			find(bc, frame.AddrPC.Offset, &file, &func, &line);
@@ -309,8 +305,8 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	if (!SymInitialize(GetCurrentProcess(), 0, TRUE)) {
 		output_print(&ob, "Failed to init symbol context\n");
 	} else {
-		bfd_init();
 		struct bfd_set *set = calloc(1, sizeof(*set));
+		bfd_init();
 		_backtrace(&ob, set, 128, info->ContextRecord);
 		release_set(set);
 
