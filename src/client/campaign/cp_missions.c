@@ -57,32 +57,25 @@ static const float MAX_CRASHEDUFO_CONDITION = 0.81f;
  * @param[in] mission mission definition pointer with the needed data to set the cvars to
  * @sa CP_StartSelectedMission
  */
-void CP_SetMissionVars (const mission_t *mission)
+void CP_SetMissionVars (const mission_t *mission, const battleParam_t *battleParameters)
 {
 	int i;
 
 	assert(mission->mapDef);
 
 	/* start the map */
-	Cvar_SetValue("ai_numaliens", (float) ccs.battleParameters.aliens);
-	Cvar_SetValue("ai_numcivilians", (float) ccs.battleParameters.civilians);
-	Cvar_Set("ai_civilian", ccs.battleParameters.civTeam);
-	Cvar_Set("ai_equipment", ccs.battleParameters.alienEquipment);
+	Cvar_SetValue("ai_numaliens", battleParameters->aliens);
+	Cvar_SetValue("ai_numcivilians", battleParameters->civilians);
+	Cvar_Set("ai_civilian", battleParameters->civTeam);
+	Cvar_Set("ai_equipment", battleParameters->alienEquipment);
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
 	csi.numAlienTeams = 0;
-	for (i = 0; i < ccs.battleParameters.alienTeamGroup->numAlienTeams; i++) {
-		csi.alienTeams[i] = ccs.battleParameters.alienTeamGroup->alienTeams[i];
+	for (i = 0; i < battleParameters->alienTeamGroup->numAlienTeams; i++) {
+		csi.alienTeams[i] = battleParameters->alienTeamGroup->alienTeams[i];
 		csi.numAlienTeams++;
 	}
-
-	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..numalienTeams: %i\n..civTeam: '%s'\n..alienEquip: '%s'\n",
-		ccs.battleParameters.aliens,
-		ccs.battleParameters.civilians,
-		ccs.battleParameters.alienTeamGroup->numAlienTeams,
-		ccs.battleParameters.civTeam,
-		ccs.battleParameters.alienEquipment);
 }
 
 /**
@@ -93,7 +86,7 @@ void CP_SetMissionVars (const mission_t *mission)
  * @sa Mod_LoadTexinfo
  * @sa B_AssembleMap_f
  */
-void CP_StartMissionMap (mission_t* mission)
+void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParameters)
 {
 	const char *param = NULL;
 
@@ -106,7 +99,7 @@ void CP_StartMissionMap (mission_t* mission)
 	 * with the suitable terrain texture - just use tex_terrain/dummy for the
 	 * brushes you want the terrain textures on
 	 * @sa Mod_LoadTexinfo */
-	refdef.mapZone = ccs.battleParameters.zoneType;
+	refdef.mapZone = battleParameters->zoneType;
 
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
@@ -125,8 +118,8 @@ void CP_StartMissionMap (mission_t* mission)
 
 	SAV_QuickSave();
 
-	if (ccs.battleParameters.param)
-		param = ccs.battleParameters.param;
+	if (battleParameters->param)
+		param = battleParameters->param;
 	else
 		param = mission->mapDef->param;
 
@@ -230,7 +223,7 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
  * @param[in] equipPack Equipment definitions that may be used
  * @sa CP_SetAlienTeamByInterest
  */
-static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList_t *equipPack)
+static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList_t *equipPack, battleParam_t *battleParameters)
 {
 	int i, randomNum, availableEquipDef = 0;
 
@@ -256,14 +249,12 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 		const equipDef_t *ed = &csi.eds[i];
 		if (CP_IsAlienEquipmentSelectable(mission, ed, equipPack)) {
 			if (availableEquipDef == randomNum) {
-				Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "%s", ed->name);
+				Com_sprintf(battleParameters->alienEquipment, sizeof(battleParameters->alienEquipment), "%s", ed->name);
 				break;
 			} else
 				availableEquipDef++;
 		}
 	}
-
-	Com_DPrintf(DEBUG_CLIENT, "CP_SetAlienEquipmentByInterest: selected available equipment pack '%s'\n", ccs.battleParameters.alienEquipment);
 }
 
 /**
@@ -286,7 +277,7 @@ static void CP_CreateAlienTeam (mission_t *mission, battleParam_t *battleParam)
 
 	CP_SetAlienTeamByInterest(mission, battleParam);
 
-	CP_SetAlienEquipmentByInterest(mission, ccs.alienCategories[battleParam->alienTeamGroup->categoryIdx].equipment);
+	CP_SetAlienEquipmentByInterest(mission, ccs.alienCategories[battleParam->alienTeamGroup->categoryIdx].equipment, battleParam);
 }
 
 /**

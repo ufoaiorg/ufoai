@@ -891,7 +891,7 @@ void CP_StartSelectedMission (void)
 	CL_Disconnect();
 
 	CP_CreateBattleParameters(mis, &ccs.battleParameters, aircraft);
-	CP_SetMissionVars(mis);
+	CP_SetMissionVars(mis, &ccs.battleParameters);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_uforecovered", 0);
 	Cvar_SetValue("mn_autogo", 0);
@@ -900,7 +900,7 @@ void CP_StartSelectedMission (void)
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory(base);
 	CL_CleanupAircraftCrew(aircraft, &ccs.eMission);
-	CP_StartMissionMap(mis);
+	CP_StartMissionMap(mis, &ccs.battleParameters);
 }
 
 /**
