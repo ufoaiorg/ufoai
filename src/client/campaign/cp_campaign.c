@@ -854,6 +854,7 @@ void CP_StartSelectedMission (void)
 	mission_t *mis;
 	aircraft_t *aircraft;
 	base_t *base;
+	battleParam_t *battleParam = &ccs.battleParameters;
 
 	if (!ccs.missionAircraft) {
 		Com_Printf("CP_StartSelectedMission: No mission aircraft\n");
@@ -890,8 +891,8 @@ void CP_StartSelectedMission (void)
 	SV_Shutdown("Server quit.", qfalse);
 	CL_Disconnect();
 
-	CP_CreateBattleParameters(mis, &ccs.battleParameters, aircraft);
-	CP_SetMissionVars(mis, &ccs.battleParameters);
+	CP_CreateBattleParameters(mis, battleParam, aircraft);
+	CP_SetMissionVars(mis, battleParam);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_uforecovered", 0);
 	Cvar_SetValue("mn_autogo", 0);
@@ -900,7 +901,7 @@ void CP_StartSelectedMission (void)
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory(base);
 	CL_CleanupAircraftCrew(aircraft, &ccs.eMission);
-	CP_StartMissionMap(mis, &ccs.battleParameters);
+	CP_StartMissionMap(mis, battleParam);
 }
 
 /**

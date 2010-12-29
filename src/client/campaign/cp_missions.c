@@ -858,7 +858,7 @@ void CP_MissionRemove (mission_t *mission)
 	if (mission->ufo)
 		CP_UFORemoveFromGeoscape(mission, qtrue);		/* for the notifications */
 
-	/* Remove from ccs.battleParameters */
+	/* Remove from battle parameters */
 	if (mission == ccs.battleParameters.mission)
 		ccs.battleParameters.mission = NULL;
 

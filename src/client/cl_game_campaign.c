@@ -45,6 +45,7 @@ static void GAME_CP_MissionAutoGo_f (void)
 {
 	mission_t *mission = ccs.selectedMission;
 	missionResults_t *results = &ccs.missionResults;
+	battleParam_t *battleParam = &ccs.battleParameters;
 
 	if (!mission) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoGo_f: No update after automission\n");
@@ -76,10 +77,10 @@ static void GAME_CP_MissionAutoGo_f (void)
 	}
 
 	/* start the map */
-	CP_CreateBattleParameters(mission, &ccs.battleParameters, ccs.missionAircraft);
+	CP_CreateBattleParameters(mission, battleParam, ccs.missionAircraft);
 
 	results->won = qfalse;
-	CL_GameAutoGo(mission, ccs.interceptAircraft, ccs.curCampaign, &ccs.battleParameters, results);
+	CL_GameAutoGo(mission, ccs.interceptAircraft, ccs.curCampaign, battleParam, results);
 
 	if (results->won) {
 		Cvar_SetValue("mn_autogo", 1);
