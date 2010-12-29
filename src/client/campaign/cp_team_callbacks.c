@@ -415,7 +415,7 @@ static void CL_TeamListDebug_f (void)
 	aircraft_t *aircraft;
 	linkedList_t *l;
 
-	aircraft = ccs.missionAircraft;
+	aircraft = ccs.geoscape.missionAircraft;
 	base = aircraft->homebase;
 
 	if (!base) {

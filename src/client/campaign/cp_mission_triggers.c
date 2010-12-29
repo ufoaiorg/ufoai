@@ -94,7 +94,7 @@ static void CP_ChangeNationHappiness_f (void)
 	float change;
 	nation_t *nation;
 	const nationInfo_t *stats;
-	const mission_t *mission = ccs.selectedMission;
+	const mission_t *mission = ccs.geoscape.selectedMission;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <absolute change value>\n", Cmd_Argv(0));

@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void GAME_CP_MissionAutoGo_f (void)
 {
-	mission_t *mission = ccs.selectedMission;
+	mission_t *mission = ccs.geoscape.selectedMission;
 	missionResults_t *results = &ccs.missionResults;
 	battleParam_t *battleParam = &ccs.battleParameters;
 
@@ -52,12 +52,12 @@ static void GAME_CP_MissionAutoGo_f (void)
 		return;
 	}
 
-	if (!ccs.missionAircraft) {
+	if (!ccs.geoscape.missionAircraft) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No aircraft at target pos\n");
 		return;
 	}
 
-	if (!ccs.interceptAircraft) {
+	if (!ccs.geoscape.interceptAircraft) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No intercept aircraft given\n");
 		return;
 	}
@@ -77,10 +77,10 @@ static void GAME_CP_MissionAutoGo_f (void)
 	}
 
 	/* start the map */
-	CP_CreateBattleParameters(mission, battleParam, ccs.missionAircraft);
+	CP_CreateBattleParameters(mission, battleParam, ccs.geoscape.missionAircraft);
 
 	results->won = qfalse;
-	CL_GameAutoGo(mission, ccs.interceptAircraft, ccs.curCampaign, battleParam, results);
+	CL_GameAutoGo(mission, ccs.geoscape.interceptAircraft, ccs.curCampaign, battleParam, results);
 
 	if (results->won) {
 		Cvar_SetValue("mn_autogo", 1);
@@ -103,9 +103,9 @@ static void GAME_CP_MissionAutoGo_f (void)
  */
 static void GAME_CP_MissionAutoCheck_f (void)
 {
-	const mission_t *mission = ccs.selectedMission;
+	const mission_t *mission = ccs.geoscape.selectedMission;
 
-	if (!mission || !ccs.interceptAircraft) {
+	if (!mission || !ccs.geoscape.interceptAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
 		return;
 	}
@@ -126,7 +126,7 @@ static void GAME_CP_MissionAutoCheck_f (void)
  */
 static void GAME_CP_Results_f (void)
 {
-	mission_t *mission = ccs.selectedMission;
+	mission_t *mission = ccs.geoscape.selectedMission;
 
 	if (!mission)
 		return;
@@ -295,8 +295,8 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
 	const qboolean won = (winner == cls.team);
 	missionResults_t *results;
-	aircraft_t *aircraft = ccs.missionAircraft;
-	mission_t *mission = ccs.selectedMission;
+	aircraft_t *aircraft = ccs.geoscape.missionAircraft;
+	mission_t *mission = ccs.geoscape.selectedMission;
 
 	CP_ParseCharacterData(msg);
 
@@ -375,7 +375,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 qboolean GAME_CP_Spawn (void)
 {
-	aircraft_t *aircraft = ccs.missionAircraft;
+	aircraft_t *aircraft = ccs.geoscape.missionAircraft;
 	base_t *base;
 	employee_t *employee;
 	chrList_t *chrList;

@@ -395,20 +395,22 @@ typedef struct ccs_s {
 	float zoom;				/**< zoom used when looking at earth */
 
 	/* Smoothing variables */
-	qboolean smoothRotation;	/**< qtrue if the rotation of 3D geoscape must me smooth */
-	vec3_t smoothFinalGlobeAngle;	/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
+	qboolean smoothRotation;	/**< @c true if the rotation of 3D geoscape must me smooth */
+	vec3_t smoothFinalGlobeAngle;	/**< value of final ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
 	vec2_t smoothFinal2DGeoscapeCenter;		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
 	float smoothDeltaLength;	/**< angle/position difference that we need to change when smoothing */
-	float smoothFinalZoom;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
+	float smoothFinalZoom;		/**< value of final ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 	float smoothDeltaZoom;		/**< zoom difference that we need to change when smoothing */
 	float curZoomSpeed;			/**< The current zooming speed. Used for smooth zooming. */
 	float curRotationSpeed;		/**< The current rotation speed. Used for smooth rotating.*/
 
-	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
-	/** @todo make this a union? */
-	mission_t *selectedMission;			/**< Currently selected mission on geoscape */
-	aircraft_t *selectedAircraft;		/**< Currently selected aircraft */
-	aircraft_t *selectedUFO;			/**< Currently selected UFO */
+	struct {
+		mission_t *selectedMission;			/**< Currently selected mission on geoscape */
+		aircraft_t *selectedAircraft;		/**< Currently selected aircraft on geoscape */
+		aircraft_t *selectedUFO;			/**< Currently selected UFO on geoscape */
+		aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
+		aircraft_t *missionAircraft;		/**< aircraft pointer for mission handling */
+	} geoscape;
 
 	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
@@ -422,7 +424,6 @@ typedef struct ccs_s {
 	int gameTimeScale;
 	int gameLapse;
 
-	aircraft_t *missionAircraft;	/**< aircraft pointer for mission handling */
 
 	/* already paid in this month? */
 	qboolean paid;

@@ -211,7 +211,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		INS_SelectInstallation(INS_GetFoundedInstallationByIDX(id));
 		break;
 	case MULTISELECT_TYPE_MISSION: {
-		mission_t *mission = ccs.selectedMission;
+		mission_t *mission = ccs.geoscape.selectedMission;
 		/* Select a mission */
 		if (ccs.mapAction == MA_INTERCEPT && mission && mission == MAP_GetMissionByIDX(id)) {
 			CL_DisplayPopupInterceptMission(mission);
@@ -232,7 +232,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			return;
 		}
 
-		if (aircraft == ccs.selectedAircraft) {
+		if (aircraft == ccs.geoscape.selectedAircraft) {
 			/* Selection of an already selected aircraft */
 			CL_DisplayPopupAircraft(aircraft);	/* Display popup_aircraft */
 		} else {
@@ -249,7 +249,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			return;
 		aircraft = UFO_GetByIDX(id);
 
-		if (aircraft == ccs.selectedUFO) {
+		if (aircraft == ccs.geoscape.selectedUFO) {
 			/* Selection of an already selected ufo */
 			CL_DisplayPopupInterceptUFO(aircraft);
 		} else {
@@ -257,7 +257,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			MAP_SelectUFO(aircraft);
 			if (multiSelection)
 				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
-				CL_DisplayPopupInterceptUFO(ccs.selectedUFO);
+				CL_DisplayPopupInterceptUFO(ccs.geoscape.selectedUFO);
 		}
 		break;
 	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
@@ -371,7 +371,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 		CL_GameTimeStop();
 		UI_PushWindow("popup_multi_selection", NULL, NULL);
 	} else {
-		aircraft_t *aircraft = ccs.selectedAircraft;
+		aircraft_t *aircraft = ccs.geoscape.selectedAircraft;
 		/* Nothing selected */
 		if (!aircraft)
 			MAP_ResetAction();
@@ -1379,7 +1379,7 @@ static void MAP_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t
 static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 {
 	int x, y;
-	const qboolean isCurrentSelectedMission = ms == ccs.selectedMission;
+	const qboolean isCurrentSelectedMission = ms == ccs.geoscape.selectedMission;
 
 	if (isCurrentSelectedMission)
 		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
@@ -1594,7 +1594,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 	}
 
 	/* Draw a circle around selected aircraft */
-	if (aircraft == ccs.selectedAircraft) {
+	if (aircraft == ccs.geoscape.selectedAircraft) {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
 		int x;
 		int y;
@@ -1817,7 +1817,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, white);
-			if (ufo == ccs.selectedUFO) {
+			if (ufo == ccs.geoscape.selectedUFO) {
 				if (cl_3dmap->integer)
 					MAP_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
@@ -1968,7 +1968,7 @@ void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 		MAP_DrawMapMarkers(node);
 	}
 
-	mission = ccs.selectedMission;
+	mission = ccs.geoscape.selectedMission;
 	/* display text */
 	UI_ResetData(TEXT_STANDARD);
 	switch (ccs.mapAction) {
@@ -2000,16 +2000,16 @@ void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 	/* Nothing is displayed yet */
 	if (mission) {
 		UI_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), mission));
-	} else if (ccs.selectedAircraft) {
-		const aircraft_t *aircraft = ccs.selectedAircraft;
+	} else if (ccs.geoscape.selectedAircraft) {
+		const aircraft_t *aircraft = ccs.geoscape.selectedAircraft;
 		if (AIR_IsAircraftInBase(aircraft)) {
 			UI_RegisterText(TEXT_STANDARD, NULL);
 			MAP_ResetAction();
 			return;
 		}
 		UI_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), aircraft));
-	} else if (ccs.selectedUFO) {
-		UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.selectedUFO));
+	} else if (ccs.geoscape.selectedUFO) {
+		UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.geoscape.selectedUFO));
 	} else {
 #ifdef DEBUG
 		if (debug_showInterest->integer) {
@@ -2031,10 +2031,10 @@ void MAP_ResetAction (void)
 	if (B_AtLeastOneExists())
 		ccs.mapAction = MA_NONE;
 
-	ccs.interceptAircraft = NULL;
-	ccs.selectedMission = NULL;
-	ccs.selectedAircraft = NULL;
-	ccs.selectedUFO = NULL;
+	ccs.geoscape.interceptAircraft = NULL;
+	ccs.geoscape.selectedMission = NULL;
+	ccs.geoscape.selectedAircraft = NULL;
+	ccs.geoscape.selectedUFO = NULL;
 
 	if (!radarOverlayWasSet)
 		MAP_DeactivateOverlay("radar");
@@ -2046,7 +2046,7 @@ void MAP_ResetAction (void)
 void MAP_SelectUFO (aircraft_t* ufo)
 {
 	MAP_ResetAction();
-	ccs.selectedUFO = ufo;
+	ccs.geoscape.selectedUFO = ufo;
 }
 
 /**
@@ -2055,7 +2055,7 @@ void MAP_SelectUFO (aircraft_t* ufo)
 void MAP_SelectAircraft (aircraft_t* aircraft)
 {
 	MAP_ResetAction();
-	ccs.selectedAircraft = aircraft;
+	ccs.geoscape.selectedAircraft = aircraft;
 }
 
 /**
@@ -2063,11 +2063,11 @@ void MAP_SelectAircraft (aircraft_t* aircraft)
  */
 void MAP_SelectMission (mission_t* mission)
 {
-	if (!mission || mission == ccs.selectedMission)
+	if (!mission || mission == ccs.geoscape.selectedMission)
 		return;
 	MAP_ResetAction();
 	ccs.mapAction = MA_INTERCEPT;
-	ccs.selectedMission = mission;
+	ccs.geoscape.selectedMission = mission;
 }
 
 /**
@@ -2076,7 +2076,7 @@ void MAP_SelectMission (mission_t* mission)
 void MAP_NotifyMissionRemoved (const mission_t* mission)
 {
 	/* Unselect the current selected mission if it's the same */
-	if (ccs.selectedMission == mission)
+	if (ccs.geoscape.selectedMission == mission)
 		MAP_ResetAction();
 
 	MAP_UpdateGeoscapeDock();
@@ -2091,14 +2091,14 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
 	MAP_UpdateGeoscapeDock();
 
-	if (!ccs.selectedUFO)
+	if (!ccs.geoscape.selectedUFO)
 		return;
 
 	/* Unselect the current selected ufo if its the same */
-	if (ccs.selectedUFO == ufo)
+	if (ccs.geoscape.selectedUFO == ufo)
 		MAP_ResetAction();
-	else if (destroyed && ccs.selectedUFO > ufo)
-		ccs.selectedUFO--;
+	else if (destroyed && ccs.geoscape.selectedUFO > ufo)
+		ccs.geoscape.selectedUFO--;
 }
 
 /**
@@ -2108,7 +2108,7 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft)
 {
 	/* Unselect the current selected ufo if its the same */
-	if (ccs.selectedAircraft == aircraft || ccs.interceptAircraft == aircraft)
+	if (ccs.geoscape.selectedAircraft == aircraft || ccs.geoscape.interceptAircraft == aircraft)
 		MAP_ResetAction();
 }
 
@@ -2510,7 +2510,7 @@ void MAP_Reset (const char *map)
 void MAP_NotifyUFODisappear (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
-	if (ccs.selectedUFO == ufo)
+	if (ccs.geoscape.selectedUFO == ufo)
 		MAP_ResetAction();
 
 	MAP_UpdateGeoscapeDock();
