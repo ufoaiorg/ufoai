@@ -251,7 +251,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 		if (aircraft == ccs.selectedUFO) {
 			/* Selection of an already selected ufo */
-			CL_DisplayPopupInterceptUFO(ccs.selectedUFO);
+			CL_DisplayPopupInterceptUFO(aircraft);
 		} else {
 			/* Selection of an unselected ufo */
 			MAP_SelectUFO(aircraft);

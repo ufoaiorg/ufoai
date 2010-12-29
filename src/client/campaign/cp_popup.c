@@ -166,9 +166,10 @@ static void CL_PopupChangeHomebase_f (void)
 	int i;
 	base_t *base;
 	int baseIdx;
+	aircraft_t *aircraft = ccs.selectedAircraft;
 
 	/* If popup is opened, that means an aircraft is selected */
-	if (!ccs.selectedAircraft) {
+	if (!aircraft) {
 		Com_Printf("CL_PopupChangeHomebase_f: An aircraft must be selected\n");
 		return;
 	}
@@ -197,10 +198,10 @@ static void CL_PopupChangeHomebase_f (void)
 	if (base == NULL)
 		return;
 
-	AIR_MoveAircraftIntoNewHomebase(ccs.selectedAircraft, base);
+	AIR_MoveAircraftIntoNewHomebase(aircraft, base);
 
 	UI_PopWindow(qfalse);
-	CL_DisplayHomebasePopup(ccs.selectedAircraft, qtrue);
+	CL_DisplayHomebasePopup(aircraft, qtrue);
 }
 
 /*========================================
