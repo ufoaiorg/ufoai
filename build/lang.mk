@@ -13,7 +13,7 @@ $(RADIANT_MOFILES) : radiant/i18n/%/LC_MESSAGES/uforadiant.mo : $(SRCDIR)/po/ufo
 	$(Q)msgfmt -c -v -o $@ $^
 
 clean-lang:
-	$(Q)rm $(UFOAI_MOFILES) $(RADIANT_MOFILES)
+	$(Q)rm -f $(UFOAI_MOFILES) $(RADIANT_MOFILES)
 
 lang: $(UFOAI_MOFILES) $(RADIANT_MOFILES)
 
