@@ -52,12 +52,12 @@ static void GAME_CP_MissionAutoGo_f (void)
 		return;
 	}
 
-	if (MAP_GetMissionAircraft() != NULL) {
+	if (MAP_GetMissionAircraft() == NULL) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No aircraft at target pos\n");
 		return;
 	}
 
-	if (MAP_GetInterceptorAircraft() != NULL) {
+	if (MAP_GetInterceptorAircraft() == NULL) {
 		Com_Printf("GAME_CP_MissionAutoGo_f: No intercept aircraft given\n");
 		return;
 	}
