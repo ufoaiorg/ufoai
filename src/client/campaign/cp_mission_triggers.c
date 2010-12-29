@@ -94,6 +94,7 @@ static void CP_ChangeNationHappiness_f (void)
 	float change;
 	nation_t *nation;
 	const nationInfo_t *stats;
+	const mission_t *mission = ccs.selectedMission;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <absolute change value>\n", Cmd_Argv(0));
@@ -101,15 +102,12 @@ static void CP_ChangeNationHappiness_f (void)
 	}
 	change = atof(Cmd_Argv(1));
 
-	if (!ccs.selectedMission) {
+	if (!mission) {
 		Com_Printf("No mission selected - could not determine nation to use\n");
 		return;
 	}
 
-	/* we can use an assert here - because this script function will only
-	 * be available as trigger command - selectedMission must be set at that stage */
-	assert(ccs.selectedMission);
-	nation = MAP_GetNation(ccs.selectedMission->pos);
+	nation = MAP_GetNation(mission->pos);
 	assert(nation);
 
 	stats = NAT_GetCurrentMonthInfo(nation);
@@ -164,41 +162,40 @@ static void CP_MissionTriggerFunctions (qboolean add)
 /**
  * @brief Executes console commands after a mission
  *
- * @param m Pointer to mission_t
- * @param won Int value that is one when you've won the game, and zero when the game was lost
+ * @param[in] mission Pointer to the mission to execute the triggers for
+ * @param[in] won Int value that is one when you've won the game, and zero when the game was lost
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
+void CP_ExecuteMissionTrigger (const mission_t *mission, qboolean won)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
 
-	if (m == NULL) {
-		Com_Printf("CL_ParseResults: Error - no mission triggers, because ccs.selectedMission is not set\n");
+	if (mission == NULL)
 		return;
-	}
 
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
 
 	if (won) {
-		if (m->onwin[0] != '\0') {
-			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
-			Cmd_ExecuteString(m->onwin);
+		if (mission->onwin[0] != '\0') {
+			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", mission->onwin);
+			Cmd_ExecuteString(mission->onwin);
 		}
-		if (m->mapDef && m->mapDef->onwin != NULL) {
-			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->mapDef->onwin);
-			Cmd_ExecuteString(m->mapDef->onwin);
+		if (mission->mapDef && mission->mapDef->onwin != NULL) {
+			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", mission->mapDef->onwin);
+			Cmd_ExecuteString(mission->mapDef->onwin);
 		}
 	} else {
-		if (m->onlose[0] != '\0') {
-			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->onlose);
-			Cmd_ExecuteString(m->onlose);
+		if (mission->onlose[0] != '\0') {
+			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", mission->onlose);
+			Cmd_ExecuteString(mission->onlose);
 		}
-		if (m->mapDef && m->mapDef->onlose != NULL) {
-			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->mapDef->onlose);
-			Cmd_ExecuteString(m->mapDef->onlose);
+		if (mission->mapDef && mission->mapDef->onlose != NULL) {
+			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", mission->mapDef->onlose);
+			Cmd_ExecuteString(mission->mapDef->onlose);
 		}
 	}
+
 	CP_MissionTriggerFunctions(qfalse);
 }

@@ -103,12 +103,14 @@ static void GAME_CP_MissionAutoGo_f (void)
  */
 static void GAME_CP_MissionAutoCheck_f (void)
 {
-	if (!ccs.selectedMission || !ccs.interceptAircraft) {
+	const mission_t *mission = ccs.selectedMission;
+
+	if (!mission || !ccs.interceptAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
 		return;
 	}
 
-	if (ccs.selectedMission->mapDef->storyRelated) {
+	if (mission->mapDef->storyRelated) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: story related - auto mission is disabled\n");
 		Cvar_Set("cp_mission_autogo_available", "0");
 	} else {
@@ -124,8 +126,9 @@ static void GAME_CP_MissionAutoCheck_f (void)
  */
 static void GAME_CP_Results_f (void)
 {
-	/* multiplayer? */
-	if (!ccs.selectedMission)
+	mission_t *mission = ccs.selectedMission;
+
+	if (!mission)
 		return;
 
 	/* check for replay */
@@ -140,7 +143,7 @@ static void GAME_CP_Results_f (void)
 		return;
 	}
 
-	CP_MissionEnd(ccs.curCampaign, ccs.selectedMission, &ccs.battleParameters, Com_ParseBoolean(Cmd_Argv(1)));
+	CP_MissionEnd(ccs.curCampaign, mission, &ccs.battleParameters, Com_ParseBoolean(Cmd_Argv(1)));
 }
 
 /**
@@ -291,6 +294,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int aliensSurvived, aliensKilled, aliensStunned;
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
 	const qboolean won = (winner == cls.team);
+	missionResults_t *results;
 
 	CP_ParseCharacterData(msg);
 
@@ -339,19 +343,20 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 	ccs.aliensKilled += aliensKilled;
 
-	ccs.missionResults.won = won;
-	ccs.missionResults.aliensKilled = aliensKilled;
-	ccs.missionResults.aliensStunned = aliensStunned;
-	ccs.missionResults.aliensSurvived = aliensSurvived;
-	ccs.missionResults.ownKilled = ownKilled - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
-	ccs.missionResults.ownStunned = ownStunned;
-	ccs.missionResults.ownKilledFriendlyFire = numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
-	ccs.missionResults.ownSurvived = ownSurvived;
-	ccs.missionResults.civiliansKilled = civiliansKilled;
-	ccs.missionResults.civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
-	ccs.missionResults.civiliansSurvived = civiliansSurvived;
+	results = &ccs.missionResults;
+	results->won = won;
+	results->aliensKilled = aliensKilled;
+	results->aliensStunned = aliensStunned;
+	results->aliensSurvived = aliensSurvived;
+	results->ownKilled = ownKilled - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+	results->ownStunned = ownStunned;
+	results->ownKilledFriendlyFire = numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
+	results->ownSurvived = ownSurvived;
+	results->civiliansKilled = civiliansKilled;
+	results->civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+	results->civiliansSurvived = civiliansSurvived;
 
-	CP_InitMissionResults(won, &ccs.missionResults);
+	CP_InitMissionResults(won, results);
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
