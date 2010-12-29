@@ -55,7 +55,7 @@ MACROS
 /* route - Used by Grid_* only  */
 /** @note IMPORTANT: actorSize is 1 or greater!!! */
 #define RT_CONN(map, actorSize, x, y, z, dir)			map[(actorSize) - 1].route[(z)][(y)][(x)][(dir)]
-#define RT_CONN_POS(map, actorSize, p, dir)				(int)(map[(actorSize) - 1].route[(p)[0]][(p)[1]][(p)[2]][(dir)])
+#define RT_CONN_POS(map, actorSize, p, dir)				(int)(map[(actorSize) - 1].route[(p)[2]][(p)[1]][(p)[0]][(dir)])
 #define RT_CONN_TEST(map, actorSize, x, y, z, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
 															assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
 															assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
@@ -90,9 +90,9 @@ MACROS
 #define RT_STEPUP_NX_NY(map, actorSize, x, y, z)	(RT_STEPUP(map, actorSize, x, y, z, 5))
 
 #define RT_FLOOR(map, actorSize, x, y, z)			map[(actorSize) - 1].floor[(z)][(y)][(x)]
-#define RT_FLOOR_POS(map, actorSize, p)				map[(actorSize) - 1].floor[(p)[0]][(p)[1]][(p)[2]]
+#define RT_FLOOR_POS(map, actorSize, p)				map[(actorSize) - 1].floor[(p)[2]][(p)[1]][(p)[0]]
 #define RT_CEILING(map, actorSize, x, y, z)			map[(actorSize) - 1].ceil[(z)][(y)][(x)]
-#define RT_CEILING_POS(map, actorSize, p)			map[(actorSize) - 1].ceil[(p)[0]][(p)[1]][(p)[2]]
+#define RT_CEILING_POS(map, actorSize, p)			map[(actorSize) - 1].ceil[(p)[2]][(p)[1]][(p)[0]]
 #define RT_FILLED(map, actorSize, x, y, z)			(RT_CEILING(map, actorSize, x, y, z) - RT_FLOOR(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
 /* area - Used by Grid_* only */
