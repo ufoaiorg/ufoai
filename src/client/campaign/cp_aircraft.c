@@ -2403,7 +2403,7 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 		if (isUfo)
 			mxml_AddInt(node, SAVE_AIRCRAFT_AIRCRAFTTARGET, aircraft->aircraftTarget->idx);
 		else
-			mxml_AddInt(node, SAVE_AIRCRAFT_AIRCRAFTTARGET, aircraft->aircraftTarget - ccs.ufos);
+			mxml_AddInt(node, SAVE_AIRCRAFT_AIRCRAFTTARGET, UFO_GetGeoscapeIDX(aircraft->aircraftTarget));
 	}
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRSTATS);

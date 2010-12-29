@@ -38,6 +38,11 @@ extern cvar_t *cl_3dmap;
 /* prototype */
 struct uiNode_s;
 
+#define MAP_IsAircraftSelected(aircraft) ((aircraft) == ccs.geoscape.selectedAircraft)
+#define MAP_IsInterceptorSelected(aircraft) ((aircraft) == ccs.geoscape.interceptAircraft)
+#define MAP_IsUFOSelected(ufo) ((ufo) == ccs.geoscape.selectedUFO)
+#define MAP_IsMissionSelected(mission) ((mission) == ccs.geoscape.selectedMission)
+
 nation_t* MAP_GetNation(const vec2_t pos);
 qboolean MAP_AllMapToScreen(const struct uiNode_s* node, const vec2_t pos, int *x, int *y, int *z);
 qboolean MAP_MapToScreen(const struct uiNode_s* node, const vec2_t pos, int *x, int *y);

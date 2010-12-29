@@ -1287,7 +1287,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		return;
 	}
 
-	if (ccs.geoscape.selectedAircraft == aircraft)
+	if (MAP_IsAircraftSelected(aircraft))
 		ccs.geoscape.selectedAircraft = NULL;
 
 	Vector2Copy(aircraft->pos, mission->pos);
@@ -1878,7 +1878,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 		mxml_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.day, mission->finalDate.sec);
 		mxml_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
 		if (mission->ufo)
-			mxml_AddShort(missionNode, SAVE_MISSIONS_UFO, mission->ufo - ccs.ufos);
+			mxml_AddShort(missionNode, SAVE_MISSIONS_UFO, UFO_GetGeoscapeIDX(mission->ufo));
 		mxml_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
 	}
 	Com_UnregisterConstList(saveInterestConstants);

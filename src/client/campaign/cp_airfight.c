@@ -841,7 +841,7 @@ qboolean AIRFIGHT_SaveXML (mxml_node_t *parent)
 
 			mxml_AddBoolValue(attacking, SAVE_AIRFIGHT_ISUFO, projectile->attackingAircraft->type == AIRCRAFT_UFO);
 			if (projectile->attackingAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->attackingAircraft - ccs.ufos);
+				mxml_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, UFO_GetGeoscapeIDX(projectile->attackingAircraft));
 			else
 				mxml_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->attackingAircraft->idx);
 		}
@@ -851,7 +851,7 @@ qboolean AIRFIGHT_SaveXML (mxml_node_t *parent)
 
 			mxml_AddBoolValue(aimed, SAVE_AIRFIGHT_ISUFO, projectile->aimedAircraft->type == AIRCRAFT_UFO);
 			if (projectile->aimedAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->aimedAircraft - ccs.ufos);
+				mxml_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, UFO_GetGeoscapeIDX(projectile->aimedAircraft));
 			else
 				mxml_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->aimedAircraft->idx);
 		}

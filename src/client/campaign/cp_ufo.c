@@ -691,7 +691,7 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 static void UFO_RemoveFromGeoscape_f (void)
 {
 	if (ccs.numUFOs > 0)
-	UFO_RemoveFromGeoscape(ccs.ufos);
+		UFO_RemoveFromGeoscape(ccs.ufos);
 }
 #endif
 
