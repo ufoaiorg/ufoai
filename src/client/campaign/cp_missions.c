@@ -1120,7 +1120,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 		/* HACK */
 		aircraft = base->aircraftCurrent;
 	} else {
-		aircraft = ccs.geoscape.missionAircraft;
+		aircraft = MAP_GetMissionAircraft();
 		base = aircraft->homebase;
 	}
 
@@ -1288,7 +1288,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	}
 
 	if (MAP_IsAircraftSelected(aircraft))
-		ccs.geoscape.selectedAircraft = NULL;
+		MAP_SetSelectedAircraft(NULL);
 
 	Vector2Copy(aircraft->pos, mission->pos);
 	mission->posAssigned = qtrue;

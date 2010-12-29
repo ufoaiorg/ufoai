@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
+#include "cp_map.h" /* MAP_GetSelectedAircraft */
 
 linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
@@ -415,16 +416,15 @@ static void CL_TeamListDebug_f (void)
 	aircraft_t *aircraft;
 	linkedList_t *l;
 
-	aircraft = ccs.geoscape.missionAircraft;
-	base = aircraft->homebase;
-
-	if (!base) {
-		Com_Printf("Build and select a base first\n");
+	aircraft = MAP_GetSelectedAircraft();
+	if (!aircraft) {
+		Com_Printf("Buy/build an aircraft first.\n");
 		return;
 	}
 
-	if (!aircraft) {
-		Com_Printf("Buy/build an aircraft first.\n");
+	base = aircraft->homebase;
+	if (!base) {
+		Com_Printf("Build and select a base first\n");
 		return;
 	}
 

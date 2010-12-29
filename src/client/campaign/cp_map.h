@@ -43,6 +43,18 @@ struct uiNode_s;
 #define MAP_IsUFOSelected(ufo) ((ufo) == ccs.geoscape.selectedUFO)
 #define MAP_IsMissionSelected(mission) ((mission) == ccs.geoscape.selectedMission)
 
+#define MAP_GetSelectedAircraft() (ccs.geoscape.selectedAircraft)
+#define MAP_GetInterceptorAircraft() (ccs.geoscape.interceptAircraft)
+#define MAP_GetSelectedUFO() (ccs.geoscape.selectedUFO)
+#define MAP_GetSelectedMission() (ccs.geoscape.selectedMission)
+#define MAP_GetMissionAircraft() (ccs.geoscape.missionAircraft)
+
+#define MAP_SetSelectedAircraft(aircraft) (ccs.geoscape.selectedAircraft = (aircraft))
+#define MAP_SetInterceptorAircraft(interceptor) (ccs.geoscape.interceptAircraft = (interceptor))
+#define MAP_SetSelectedUFO(ufo) (ccs.geoscape.selectedUFO = (ufo))
+#define MAP_SetSelectedMission(mission) (ccs.geoscape.selectedMission = (mission))
+#define MAP_SetMissionAircraft(aircraft) (ccs.geoscape.missionAircraft = (aircraft))
+
 nation_t* MAP_GetNation(const vec2_t pos);
 qboolean MAP_AllMapToScreen(const struct uiNode_s* node, const vec2_t pos, int *x, int *y, int *z);
 qboolean MAP_MapToScreen(const struct uiNode_s* node, const vec2_t pos, int *x, int *y);

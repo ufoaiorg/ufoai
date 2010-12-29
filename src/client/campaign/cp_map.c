@@ -211,7 +211,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		INS_SelectInstallation(INS_GetFoundedInstallationByIDX(id));
 		break;
 	case MULTISELECT_TYPE_MISSION: {
-		mission_t *mission = ccs.geoscape.selectedMission;
+		mission_t *mission = MAP_GetSelectedMission();
 		/* Select a mission */
 		if (ccs.mapAction == MA_INTERCEPT && mission && mission == MAP_GetMissionByIDX(id)) {
 			CL_DisplayPopupInterceptMission(mission);
@@ -257,7 +257,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			MAP_SelectUFO(aircraft);
 			if (multiSelection)
 				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
-				CL_DisplayPopupInterceptUFO(ccs.geoscape.selectedUFO);
+				CL_DisplayPopupInterceptUFO(MAP_GetSelectedUFO());
 		}
 		break;
 	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
@@ -371,7 +371,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 		CL_GameTimeStop();
 		UI_PushWindow("popup_multi_selection", NULL, NULL);
 	} else {
-		aircraft_t *aircraft = ccs.geoscape.selectedAircraft;
+		aircraft_t *aircraft = MAP_GetSelectedAircraft();
 		/* Nothing selected */
 		if (!aircraft)
 			MAP_ResetAction();
@@ -1968,7 +1968,7 @@ void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 		MAP_DrawMapMarkers(node);
 	}
 
-	mission = ccs.geoscape.selectedMission;
+	mission = MAP_GetSelectedMission();
 	/* display text */
 	UI_ResetData(TEXT_STANDARD);
 	switch (ccs.mapAction) {
@@ -2000,16 +2000,16 @@ void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 	/* Nothing is displayed yet */
 	if (mission) {
 		UI_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), mission));
-	} else if (ccs.geoscape.selectedAircraft) {
-		const aircraft_t *aircraft = ccs.geoscape.selectedAircraft;
+	} else if (MAP_GetSelectedAircraft() != NULL) {
+		const aircraft_t *aircraft = MAP_GetSelectedAircraft();
 		if (AIR_IsAircraftInBase(aircraft)) {
 			UI_RegisterText(TEXT_STANDARD, NULL);
 			MAP_ResetAction();
 			return;
 		}
 		UI_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), aircraft));
-	} else if (ccs.geoscape.selectedUFO) {
-		UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.geoscape.selectedUFO));
+	} else if (MAP_GetSelectedUFO() != NULL) {
+		UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), MAP_GetSelectedUFO()));
 	} else {
 #ifdef DEBUG
 		if (debug_showInterest->integer) {
@@ -2031,10 +2031,10 @@ void MAP_ResetAction (void)
 	if (B_AtLeastOneExists())
 		ccs.mapAction = MA_NONE;
 
-	ccs.geoscape.interceptAircraft = NULL;
-	ccs.geoscape.selectedMission = NULL;
-	ccs.geoscape.selectedAircraft = NULL;
-	ccs.geoscape.selectedUFO = NULL;
+	MAP_SetInterceptorAircraft(NULL);
+	MAP_SetSelectedMission(NULL);
+	MAP_SetSelectedAircraft(NULL);
+	MAP_SetSelectedUFO(NULL);
 
 	if (!radarOverlayWasSet)
 		MAP_DeactivateOverlay("radar");
@@ -2046,7 +2046,7 @@ void MAP_ResetAction (void)
 void MAP_SelectUFO (aircraft_t* ufo)
 {
 	MAP_ResetAction();
-	ccs.geoscape.selectedUFO = ufo;
+	MAP_SetSelectedUFO(ufo);
 }
 
 /**
@@ -2055,7 +2055,7 @@ void MAP_SelectUFO (aircraft_t* ufo)
 void MAP_SelectAircraft (aircraft_t* aircraft)
 {
 	MAP_ResetAction();
-	ccs.geoscape.selectedAircraft = aircraft;
+	MAP_SetSelectedAircraft(aircraft);
 }
 
 /**
@@ -2067,7 +2067,7 @@ void MAP_SelectMission (mission_t* mission)
 		return;
 	MAP_ResetAction();
 	ccs.mapAction = MA_INTERCEPT;
-	ccs.geoscape.selectedMission = mission;
+	MAP_SetSelectedMission(mission);
 }
 
 /**
@@ -2091,14 +2091,14 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
 	MAP_UpdateGeoscapeDock();
 
-	if (!ccs.geoscape.selectedUFO)
+	if (MAP_GetSelectedUFO() == NULL)
 		return;
 
 	/* Unselect the current selected ufo if its the same */
 	if (MAP_IsUFOSelected(ufo))
 		MAP_ResetAction();
 	else if (destroyed && ccs.geoscape.selectedUFO > ufo)
-		/** @todo still needed? */
+		/** @todo convert to linked list */
 		ccs.geoscape.selectedUFO--;
 }
 

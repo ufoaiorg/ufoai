@@ -166,7 +166,7 @@ static void CL_PopupChangeHomebase_f (void)
 	int i;
 	base_t *base;
 	int baseIdx;
-	aircraft_t *aircraft = ccs.geoscape.selectedAircraft;
+	aircraft_t *aircraft = MAP_GetSelectedAircraft();
 
 	/* If popup is opened, that means an aircraft is selected */
 	if (!aircraft) {
@@ -528,7 +528,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 	}
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
-	if (!ccs.geoscape.selectedUFO)
+	if (MAP_GetSelectedUFO() == NULL)
 		return;
 
 	num = atoi(Cmd_Argv(1));
@@ -576,12 +576,12 @@ static void CL_PopupInterceptBaseClick_f (void)
 	assert(base || installation);
 	if (installation) {
 		for (i = 0; i < installation->installationTemplate->maxBatteries; i++)
-			installation->batteries[i].target = ccs.geoscape.selectedUFO;
+			installation->batteries[i].target = MAP_GetSelectedUFO();
 	} else {
 		for (i = 0; i < base->numBatteries; i++)
-			base->batteries[i].target = ccs.geoscape.selectedUFO;
+			base->batteries[i].target = MAP_GetSelectedUFO();
 		for (i = 0; i < base->numLasers; i++)
-			base->lasers[i].target = ccs.geoscape.selectedUFO;
+			base->lasers[i].target = MAP_GetSelectedUFO();
 	}
 
 	UI_PopWindow(qfalse);

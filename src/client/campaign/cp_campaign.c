@@ -852,7 +852,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 void CP_StartSelectedMission (void)
 {
 	mission_t *mis;
-	aircraft_t *aircraft = ccs.geoscape.missionAircraft;
+	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	base_t *base;
 	battleParam_t *battleParam = &ccs.battleParameters;
 
@@ -863,10 +863,10 @@ void CP_StartSelectedMission (void)
 
 	base = aircraft->homebase;
 
-	if (!ccs.geoscape.selectedMission)
-		ccs.geoscape.selectedMission = aircraft->mission;
+	if (MAP_GetSelectedMission() == NULL)
+		MAP_SetSelectedMission(aircraft->mission);
 
-	mis = ccs.geoscape.selectedMission;
+	mis = MAP_GetSelectedMission();
 	if (!mis) {
 		Com_Printf("CP_StartSelectedMission: No mission selected\n");
 		return;

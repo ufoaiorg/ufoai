@@ -1171,9 +1171,9 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			assert(aircraft->mission);
 			aircraft->mission->active = qtrue;
 			aircraft->status = AIR_DROP;
-			ccs.geoscape.missionAircraft = aircraft;
+			MAP_SetMissionAircraft(aircraft);
 			MAP_SelectMission(aircraft->mission);
-			ccs.geoscape.interceptAircraft = aircraft;
+			MAP_SetInterceptorAircraft(aircraft);
 			CL_GameTimeStop();
 			UI_PushWindow("popup_intercept_ready", NULL, NULL);
 			break;
@@ -1349,7 +1349,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	}
 
 	/* ensure interceptAircraft is set correctly */
-	ccs.geoscape.interceptAircraft = aircraft;
+	MAP_SetInterceptorAircraft(aircraft);
 
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */
