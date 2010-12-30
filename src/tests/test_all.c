@@ -121,6 +121,7 @@ static void Test_AddSuiteTo (CU_pSuite *list, CU_pSuite suite)
 		*list = suite;
 	else
 		(*list)->pPrev = suite;
+	*list = suite;
 }
 
 static void Test_RemoveSuiteFrom (CU_pSuite *list, CU_pSuite suite)
