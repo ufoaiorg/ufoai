@@ -97,7 +97,7 @@ static void Test_List (qboolean displayStatus)
 	suite = registry->pSuite;
 	while (suite) {
 		if (displayStatus)
-			printf("* %s [enabled]\n", suite->pName);
+			printf("* %-26s [enabled]\n", suite->pName);
 		else
 			printf("* %s\n", suite->pName);
 		suite = suite->pNext;
@@ -105,7 +105,7 @@ static void Test_List (qboolean displayStatus)
 	suite = disabledSuites;
 	while (suite) {
 		if (displayStatus)
-			printf("* %s [disabled]\n", suite->pName);
+			printf("* %-26s [disabled]\n", suite->pName);
 		else
 			printf("* %s\n", suite->pName);
 		suite = suite->pNext;
