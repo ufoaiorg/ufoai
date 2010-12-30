@@ -306,6 +306,8 @@ int main (int argc, const char **argv)
 			return fatalError();
 	}
 
+	Test_RemoveSuite("MapDefTests");
+
 	Test_Parameters(argc, argv);
 
 	if (displayStatus) {
