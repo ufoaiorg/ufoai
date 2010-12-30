@@ -277,6 +277,7 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
 
 /**
  * @brief Checks if we can walk in the given direction
+ * First test for opening height availablilty. Then test for stepup compatibility. Last test for fall.
  * @note Fliers use this code only when they are walking.
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
@@ -290,20 +291,9 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	int passageHeight;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
-
-	/**
-	 * @brief First test for opening height availablilty.  Then test for stepup compatibility.
-	 * Last test for fall.
-	 */
-
-	nx = toPos[0];
-	ny = toPos[1];
-	nz = toPos[2];
-
 	const int stepup = RT_STEPUP_POS(step->map, actorSize, pos, dir); /**< The stepup needed to get to/through the passage */
 	const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
 	int heightChange;
-
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
 	int actorStepupHeight = PATHFINDING_MAX_STEPUP;
 
@@ -311,8 +301,7 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	RT_CONN_TEST_POS(step->map, actorSize, pos, dir);
 	passageHeight = RT_CONN_POS(step->map, actorSize, pos, dir);
 	if (passageHeight < step->actorHeight) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passageHeight, step->actorHeight);
-		return qfalse;
+		return qfalse;	/* Passage is not tall enough. */
 	}
 
 	/* If we are moving horizontally, use the stepup requirement of the floors.
@@ -323,6 +312,11 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Actor cannot stepup high enough. passage:%i actor:%i\n", stepupHeight, actorStepupHeight);
 		return qfalse;
 	}
+
+	nx = toPos[0];
+	ny = toPos[1];
+	nz = toPos[2];
+
 	if ((stepup & PATHFINDING_BIG_STEPUP) && nz < PATHFINDING_HEIGHT - 1) {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
 		nz++;
