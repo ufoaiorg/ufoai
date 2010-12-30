@@ -38,9 +38,6 @@ MSGFMT = msgfmt
 XGETTEXT = xgettext
 MSGMERGE = msgmerge
 MSGMERGE_UPDATE = msgmerge --update
-MSGINIT = msginit
-MSGCONV = msgconv
-MSGFILTER = msgfilter
 UFOPO := $(srcdir)/ufopo.pl
 MSGCAT = msgcat
 
@@ -83,7 +80,7 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	fi
 
 	if test -f $(DOMAIN).ufo.po -a -f $(DOMAIN).c1.po ; then \
-	  msgcat --sort-by-file $(DOMAIN).c1.po $(DOMAIN).ufo.po -o $(DOMAIN).po ;\
+	  $(MSGCAT) --sort-by-file $(DOMAIN).c1.po $(DOMAIN).ufo.po -o $(DOMAIN).po ;\
 	elif test -f $(DOMAIN).ufo.po ; then \
 	  mv $(DOMAIN).ufo.po $(DOMAIN).po ;\
 	else \
