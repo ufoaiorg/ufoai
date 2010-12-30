@@ -232,7 +232,7 @@ def gen(args):
 
     # run make maps etc.
     # call separately otherwise linking happens last -> building maps fails
-    run('sh configure --enable-release --disable-ufo --disable-ufoded --disable-uforadiant-brushexport --disable-uforadiant --disable-game --disable-ufomodel')
+    run('sh configure --enable-release --enable-only-ufo2map')
     run('make clean')
     run('make ufo2map')
 
