@@ -213,6 +213,46 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
+static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, byte len, const pos3_t pos, const int dir, byte crouchingState)
+{
+	int x, y, z;
+	x = pos[0];
+	y = pos[1];
+	z = pos[2];
+
+	/* Can't stand up if standing. */
+	if (dir == DIRECTION_STAND_UP && crouchingState == 0) {
+		return qfalse;
+	}
+	/* Can't stand up if there's not enough head room. */
+	if (dir == DIRECTION_STAND_UP && QuantToModel(Grid_Height(step->map, actorSize, pos)) >= PLAYER_STANDING_HEIGHT) {
+		return qfalse;
+	}
+	/* Can't get down if crouching. */
+	if (dir == DIRECTION_CROUCH && crouchingState == 1) {
+		return qfalse;
+	}
+
+	/* Since we can toggle crouching, then do so. */
+	crouchingState ^= 1;
+
+	/* Is this a better move into this cell? */
+	RT_AREA_TEST(path, x, y, z, crouchingState);
+	if (RT_AREA(path, x, y, z, crouchingState) <= len) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Toggling crouch is not optimum. %i %i\n", RT_AREA(path, x, y, z, crouchingState), len);
+		return qfalse;
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Checks if we can move in the given flying direction
+ * @param[in] step The struct describing the move
+ * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @param[in] pos Current location in the map.
+ * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
+ * @return false if we can't fly there
+ */
 static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const pos3_t toPos, const int dir, int *passageHeight)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
@@ -339,26 +379,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* If this is a crouching or crouching move, then process that motion. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
-		/* Can't stand up if standing. */
-		if (dir == DIRECTION_STAND_UP && crouchingState == 0) {
-			return;
-		}
-		/* Can't stand up if there's not enough head room. */
-		if (dir == DIRECTION_STAND_UP && QuantToModel(Grid_Height(map, actorSize, pos)) >= PLAYER_STANDING_HEIGHT) {
-			return;
-		}
-		/* Can't get down if crouching. */
-		if (dir == DIRECTION_CROUCH && crouchingState == 1) {
-			return;
-		}
-
-		/* Since we can toggle crouching, then do so. */
-		crouchingState ^= 1;
-
-		/* Is this a better move into this cell? */
-		RT_AREA_TEST(path, x, y, z, crouchingState);
-		if (RT_AREA(path, x, y, z, crouchingState) <= len) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Toggling crouch is not optimum. %i %i\n", RT_AREA(path, x, y, z, crouchingState), len);
+		if (!Grid_StepCheckCrouchingDirections(step, actorSize, path, len, pos, dir, crouchingState)) {
 			return;
 		}
 
