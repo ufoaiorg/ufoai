@@ -276,6 +276,126 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
 }
 
 /**
+ * @brief Checks if we can walk in the given direction
+ * @note Fliers use this code only when they are walking.
+ * @param[in] step The struct describing the move
+ * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @param[in] pos Current location in the map.
+ * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
+ * @return false if we can't fly there
+ */
+static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, const pos3_t toPos, const int dir, const pos3_t exclude, int *newZ)
+{
+	int x, y, z;
+	int nx, ny, nz;
+	int passageHeight;
+	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
+	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
+
+	/**
+	 * @brief First test for opening height availablilty.  Then test for stepup compatibility.
+	 * Last test for fall.
+	 */
+
+	x = pos[0];
+	y = pos[1];
+	z = pos[2];
+
+	nx = toPos[0];
+	ny = toPos[1];
+	nz = toPos[2];
+
+	const int stepup = RT_STEPUP(step->map, actorSize, x, y, z, dir); /**< The stepup needed to get to/through the passage */
+	const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
+	int heightChange;
+
+	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
+	int actorStepupHeight = PATHFINDING_MAX_STEPUP;
+
+	/* This is the standard passage height for all units trying to move horizontally. */
+	RT_CONN_TEST_POS(step->map, actorSize, pos, dir);
+	passageHeight = RT_CONN_POS(step->map, actorSize, pos, dir);
+	if (passageHeight < step->actorHeight) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passageHeight, step->actorHeight);
+		return qfalse;
+	}
+
+	/* If we are moving horizontally, use the stepup requirement of the floors.
+	 * The new z coordinate may need to be adjusted from stepup.
+	 * Also, actor_stepup_height must be at least the cell's positive stepup value to move that direction. */
+	/* If the actor cannot reach stepup, then we can't go this way. */
+	if (actorStepupHeight < stepupHeight) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Actor cannot stepup high enough. passage:%i actor:%i\n", stepupHeight, actorStepupHeight);
+		return qfalse;
+	}
+	if ((stepup & PATHFINDING_BIG_STEPUP) && nz < PATHFINDING_HEIGHT - 1) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
+		nz++;
+		/**
+		 * @note If you need to know about how pathfinding works,  you need to understand the
+		 * following brief.  It may cause nausea, but is an important concept.
+		 *
+		 * @brief OK, now some crazy tests:
+		 * Because of the grid based nature of this game, each cell can have at most only ONE
+		 * floor that can be stood upon.  If an actor can walk down a slope that is in the
+		 * same level, and actor should be able to walk on (and not fall into) the slope that
+		 * decends a game level.  BUT it is possible for an actor to be able to crawl under a
+		 * floor that can be stood on, with this opening being in the same cell as the floor.
+		 * SO to prevent any conflicts, we will move down a floor under the following conditions:
+		 * - The STEPDOWN flag is set
+		 * - The floor in the immediately adjacent cell is lower than the current floor, but not
+		 *   more than CELL_HEIGHT units (in QUANT units) below the current floor.
+		 * - The actor's stepup value is at least the inverse stepup value.  This is the stepup
+		 *   FROM the cell we are moving towards back into the cell we are starting in.  This
+		 *    ensures that the actor can actually WALK BACK.
+		 * If the actor does not have a high enough stepup but meets all the other requirements to
+		 * descend the level, the actor will move into a fall state, provided that there is no
+		 * floor in the adjacent cell.
+		 *
+		 * This will prevent actors from walking under a floor in the same cell in order to fall
+		 * to the floor beneath.  They will need to be able to step down into the cell or will
+		 * not be able to use the opening.
+		 */
+	} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && nz > 0
+		&& actorStepupHeight >= (RT_STEPUP(step->map, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping down into lower cell.\n");
+		nz--;
+	} else {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up or down.\n");
+	}
+	heightChange = RT_FLOOR(step->map, actorSize, nx, ny, nz) - RT_FLOOR(step->map, actorSize, x, y, z) + (nz - z) * CELL_HEIGHT;
+
+	/* If the actor tries to fall more than falling_height, then prohibit the move. */
+	if (heightChange < -fallingHeight && !step->hasLadderSupport) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", heightChange, -fallingHeight);
+		return qfalse;
+	}
+
+	/* If we are walking normally, we can fall if we move into a cell that does not
+	 * have its STEPDOWN flag set and has a negative floor:
+	 * Set heightChange to 0.
+	 * The actor enters the cell.
+	 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
+	if (RT_FLOOR(step->map, actorSize, nx, ny, nz) < 0) {
+		/* We cannot fall if STEPDOWN is defined. */
+		if (stepup & PATHFINDING_BIG_STEPDOWN) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: There is stepdown from here.\n");
+			return qfalse;
+		}
+		/* We cannot fall if there is an entity below the cell we want to move to. */
+		if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz - 1)) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: The fall destination is occupied.\n");
+			return qfalse;
+		}
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
+		heightChange = 0;
+		nz--;
+	}
+	*newZ = nz;		/* pass back the resulting z-value */
+	return qtrue;
+}
+
+/**
  * @brief Checks if we can move in the given flying direction
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
@@ -376,9 +496,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	byte len, oldLen;
 	int passageHeight;
 
-	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
-	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
-
 	if (!Grid_StepInit(step, map, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
 
@@ -439,104 +556,15 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
-		/**
-		 * @note Fliers use this code only when they are walking.
-		 * @brief First test for opening height availablilty.  Then test for stepup compatibility.
-		 * Last test for fall.
-		 */
-
-		const int stepup = RT_STEPUP(map, actorSize, x, y, z, dir); /**< The stepup needed to get to/through the passage */
-		const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
-		int heightChange;
-
-		/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
-		int actorStepupHeight = PATHFINDING_MAX_STEPUP;
-
-		/* This is the standard passage height for all units trying to move horizontally. */
-		RT_CONN_TEST_POS(map, actorSize, pos, dir);
-		passageHeight = RT_CONN_POS(map, actorSize, pos, dir);
-		if (passageHeight < step->actorHeight) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passageHeight, step->actorHeight);
+		if (!Grid_StepCheckWalkingDirections(step, actorSize, path, pos, toPos, dir, exclude, &nz)) {
 			return;
 		}
-
-		/* If we are moving horizontally, use the stepup requirement of the floors.
-		 * The new z coordinate may need to be adjusted from stepup.
-		 * Also, actor_stepup_height must be at least the cell's positive stepup value to move that direction. */
-		/* If the actor cannot reach stepup, then we can't go this way. */
-		if (actorStepupHeight < stepupHeight) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Actor cannot stepup high enough. passage:%i actor:%i\n", stepupHeight, actorStepupHeight);
+	} else {
+		/* else there is no movement that uses passages. */
+		/* If we are falling, the height difference is the floor value. */
+		if (!Grid_StepCheckVerticalDirections(step, actorSize, pos, dir)) {
 			return;
 		}
-		if ((stepup & PATHFINDING_BIG_STEPUP) && nz < PATHFINDING_HEIGHT - 1) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
-			nz++;
-			/**
-			 * @note If you need to know about how pathfinding works,  you need to understand the
-			 * following brief.  It may cause nausea, but is an important concept.
-			 *
-			 * @brief OK, now some crazy tests:
-			 * Because of the grid based nature of this game, each cell can have at most only ONE
-			 * floor that can be stood upon.  If an actor can walk down a slope that is in the
-			 * same level, and actor should be able to walk on (and not fall into) the slope that
-			 * decends a game level.  BUT it is possible for an actor to be able to crawl under a
-			 * floor that can be stood on, with this opening being in the same cell as the floor.
-			 * SO to prevent any conflicts, we will move down a floor under the following conditions:
-			 * - The STEPDOWN flag is set
-			 * - The floor in the immediately adjacent cell is lower than the current floor, but not
-			 *   more than CELL_HEIGHT units (in QUANT units) below the current floor.
-			 * - The actor's stepup value is at least the inverse stepup value.  This is the stepup
-			 *   FROM the cell we are moving towards back into the cell we are starting in.  This
-			 *    ensures that the actor can actually WALK BACK.
-			 * If the actor does not have a high enough stepup but meets all the other requirements to
-			 * descend the level, the actor will move into a fall state, provided that there is no
-			 * floor in the adjacent cell.
-			 *
-			 * This will prevent actors from walking under a floor in the same cell in order to fall
-			 * to the floor beneath.  They will need to be able to step down into the cell or will
-			 * not be able to use the opening.
-			 */
-		} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && nz > 0
-			&& actorStepupHeight >= (RT_STEPUP(map, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping down into lower cell.\n");
-			nz--;
-		} else {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up or down.\n");
-		}
-		heightChange = RT_FLOOR(map, actorSize, nx, ny, nz) - RT_FLOOR(map, actorSize, x, y, z) + (nz - z) * CELL_HEIGHT;
-
-		/* If the actor tries to fall more than falling_height, then prohibit the move. */
-		if (heightChange < -fallingHeight && !step->hasLadderSupport) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", heightChange, -fallingHeight);
-			return;
-		}
-
-		/* If we are walking normally, we can fall if we move into a cell that does not
-		 * have its STEPDOWN flag set and has a negative floor:
-		 * Set heightChange to 0.
-		 * The actor enters the cell.
-		 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
-		if (RT_FLOOR(map, actorSize, nx, ny, nz) < 0) {
-			/* We cannot fall if STEPDOWN is defined. */
-			if (stepup & PATHFINDING_BIG_STEPDOWN) {
-				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: There is stepdown from here.\n");
-				return;
-			}
-			/* We cannot fall if there is an entity below the cell we want to move to. */
-			if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz - 1)) {
-				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: The fall destination is occupied.\n");
-				return;
-			}
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
-			heightChange = 0;
-			nz--;
-		}
-
-	}
-	/* else there is no movement that uses passages. */
-	/* If we are falling, the height difference is the floor value. */
-	else if (!Grid_StepCheckVerticalDirections(step, actorSize, pos, dir)) {
-		return;
 	}
 
 	/* OK, at this point we are certain of a few things:
@@ -556,8 +584,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST(path, nx, ny, nz, crouchingState);
 	if (RT_AREA(path, nx, ny, nz, crouchingState) <= len) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: This move is not optimum. %i %i\n", RT_AREA(path, nx, ny, nz, crouchingState), len);
-		return;
+		return;	/* This move is not optimum. */
 	}
 
 	/* Test for forbidden (by other entities) areas. */
