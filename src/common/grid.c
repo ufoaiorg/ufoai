@@ -285,7 +285,7 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, const pos3_t toPos, const int dir, const pos3_t exclude, int *newZ)
+static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const pos3_t exclude)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -317,9 +317,9 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	ny = toPos[1];
 	nz = toPos[2];
 
-	if ((stepup & PATHFINDING_BIG_STEPUP) && nz < PATHFINDING_HEIGHT - 1) {
+	if ((stepup & PATHFINDING_BIG_STEPUP) && toPos[2] < PATHFINDING_HEIGHT - 1) {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
-		nz++;
+		toPos[2]++;
 		/**
 		 * @note If you need to know about how pathfinding works,  you need to understand the
 		 * following brief.  It may cause nausea, but is an important concept.
@@ -345,14 +345,14 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 		 * to the floor beneath.  They will need to be able to step down into the cell or will
 		 * not be able to use the opening.
 		 */
-	} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && nz > 0
+	} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && toPos[2] > 0
 		&& actorStepupHeight >= (RT_STEPUP(step->map, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping down into lower cell.\n");
-		nz--;
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping down into lower cell.\n");
+		toPos[2]--;
 	} else {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up or down.\n");
 	}
-	heightChange = RT_FLOOR(step->map, actorSize, nx, ny, nz) - RT_FLOOR_POS(step->map, actorSize, pos) + (nz - pos[2]) * CELL_HEIGHT;
+	heightChange = RT_FLOOR_POS(step->map, actorSize, toPos) - RT_FLOOR_POS(step->map, actorSize, pos) + (toPos[2] - pos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !step->hasLadderSupport) {
@@ -365,7 +365,7 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	 * Set heightChange to 0.
 	 * The actor enters the cell.
 	 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
-	if (RT_FLOOR(step->map, actorSize, nx, ny, nz) < 0) {
+	if (RT_FLOOR_POS(step->map, actorSize, toPos) < 0) {
 		/* We cannot fall if STEPDOWN is defined. */
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: There is stepdown from here.\n");
@@ -378,9 +378,8 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 		}
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
 		heightChange = 0;
-		nz--;
+		toPos[2]--;
 	}
-	*newZ = nz;		/* pass back the resulting z-value */
 	return qtrue;
 }
 
@@ -545,7 +544,8 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
-		if (!Grid_StepCheckWalkingDirections(step, actorSize, path, pos, toPos, dir, exclude, &nz)) {
+		/** note that this function may modify toPos ! */
+		if (!Grid_StepCheckWalkingDirections(step, actorSize, path, pos, toPos, dir, exclude)) {
 			return;
 		}
 	} else {
