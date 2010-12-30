@@ -5,6 +5,7 @@
 ./client/battlescape/events/e_server.c
 ./client/battlescape/events/event/actor/e_event_actorappear.c
 ./client/battlescape/events/event/actor/e_event_actordie.c
+./client/battlescape/events/event/actor/e_event_actorrevitalised.c
 ./client/battlescape/events/event/player/e_event_doendround.c
 ./client/campaign/cp_aircraft.c
 ./client/campaign/cp_aircraft_callbacks.c
@@ -31,7 +32,6 @@
 ./client/campaign/cp_missions.c
 ./client/campaign/cp_mission_triggers.c
 ./client/campaign/cp_nation.c
-./client/campaign/cp_nations.c
 ./client/campaign/cp_popup.c
 ./client/campaign/cp_produce.c
 ./client/campaign/cp_produce_callbacks.c
@@ -59,7 +59,6 @@
 ./client/cl_language.c
 ./client/cl_main.c
 ./client/cl_screen.c
-./client/cl_team.c
 ./client/input/cl_input.c
 ./client/input/cl_joystick.c
 ./client/multiplayer/mp_callbacks.c
@@ -70,9 +69,7 @@
 ./client/ui/node/ui_node_container.c
 ./client/ui/node/ui_node_keybinding.c
 ./client/ui/node/ui_node_window.c
-./client/ui/ui_main.c
 ./client/ui/ui_tooltip.c
-./client/ui/ui_windows.c
 ./game/g_actor.c
 ./game/g_client.c
 ./game/g_cmds.c

@@ -38,7 +38,7 @@ update-po-uforadiant: po-check
 # The idea is to run this before making pretests, as well as official
 # releases, so that
 po-check:
-	$(Q)cd src; \
+	cd src; \
 	if test -f ./po/POTFILES.in; then					\
 	  files="./po/OTHER_STRINGS";							\
 	  for file in `find ./client -name '*.[ch]'` `find ./game -name '*.[ch]'`; do \
@@ -55,13 +55,13 @@ po-check:
 	  grep -E -l '\b(N?_|gettext|ngettext *)\([^)"]*("|$$)' $$files		\
 	    | sort -u > ./po/POTFILES.in;						\
 	fi; \
-	$(Q)cd ..
+	cd ..
 
 po-sync:
 	@echo "This will sync all po files with the wiki articles - run update-po before this step"
 	@echo "Gamers don't have to do this - translators should use ./$(SRCDIR)/po/update_po_from_wiki.sh <lang> directly"
 	@echo "Hit any key if you are sure you really want to start the sync"
-	$(Q)pofiles='$(UFOAI_POFILES)'; \
+	pofiles='$(UFOAI_POFILES)'; \
 	read enter; cd $(SRCDIR)/po; \
 	for po in $$pofiles; do \
 	  po=`basename $$po .po`; \
