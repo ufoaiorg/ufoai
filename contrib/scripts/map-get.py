@@ -23,7 +23,7 @@ if os.name == 'nt':
     UFO2MAP+= '.exe'
 
 UFO2MAPFLAGS = ' -v 2 -nice 19 -extra'
-URI = 'http://static.ufo.ludwigf.org/maps'
+URI = 'http://88.198.107.20/~mattn/ufoai/maps'
 __version__ = '0.0.4.2'
 
 displayDownloadStatus = False
