@@ -97,9 +97,6 @@ void SCR_DrawPrecacheScreen (qboolean string, int percent)
 {
 	const image_t *image;
 
-	if (!refdef.ready)
-		return;
-
 	R_BeginFrame();
 
 	image = R_FindImage("pics/background/loading", it_pic);

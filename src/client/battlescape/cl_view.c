@@ -108,10 +108,11 @@ void CL_ViewLoadMedia (void)
 
 	loadingPercent = 100.0f;
 
+	refdef.ready = qtrue;
+
 	/* waiting for EV_START */
 	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("Awaiting game start"));
 	SCR_DrawLoading(loadingPercent, loadingMessages);
-	refdef.ready = qtrue;
 
 	SCR_EndLoadingPlaque();
 }
