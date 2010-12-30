@@ -214,7 +214,7 @@ static int CIN_OGM_LoadPagesToStream (cinematic_t *cin)
 	return r;
 }
 
-#define SIZEOF_RAWBUFF SAMPLE_SIZE * 4048
+#define SIZEOF_RAWBUFF SAMPLE_SIZE * 1024
 static byte rawBuffer[SIZEOF_RAWBUFF];
 
 /**
