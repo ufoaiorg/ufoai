@@ -12,11 +12,26 @@
 
 PACKAGE = ufoai
 PACKAGE_BUGREPORT = "tlh2000@users.sourceforge.net"
+DOMAIN = $(PACKAGE)
+# This is the copyright holder that gets inserted into the header of the
+# $(DOMAIN).pot file.  Set this to the copyright holder of the surrounding
+# package.  (Note that the msgstr strings, extracted from the package's
+# sources, belong to the copyright holder of the package.)  Translators are
+# expected to transfer the copyright for their translations to this person
+# or entity, or to disclaim their copyright.  The empty string stands for
+# the public domain; in this case the translators are expected to disclaim
+# their copyright.
+COPYRIGHT_HOLDER = The UFO:AI team
 
 SHELL = /bin/sh
 
 srcdir = .
 top_srcdir = ..
+subdir = po
+top_builddir = ..
+
+# These options get passed to xgettext.
+XGETTEXT_OPTIONS = --keyword=_ --keyword=N_ --no-wrap
 
 GMSGFMT = msgfmt
 MSGFMT = msgfmt
@@ -26,7 +41,7 @@ MSGMERGE_UPDATE = msgmerge --update
 MSGINIT = msginit
 MSGCONV = msgconv
 MSGFILTER = msgfilter
-UFOPO := $(top_srcdir)/po/ufopo.pl
+UFOPO := $(srcdir)/ufopo.pl
 MSGCAT = msgcat
 
 POFILES = $(wildcard ufoai-*.po)
@@ -36,11 +51,8 @@ DUMMYPOFILES = $(POFILES:.po=.nop)
 
 POTFILES =
 
-# Makevars gets inserted here. (Don't remove this line!)
-include Makevars
-
 .SUFFIXES:
-.SUFFIXES: .po .gmo .mo .sed .sin .nop .po-create .po-update
+.SUFFIXES: .po .gmo .mo .sed .nop .po-create .po-update
 
 .po.mo:
 	@echo "$(MSGFMT) -c -o $@ $<"; \
@@ -51,10 +63,6 @@ include Makevars
 	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
 	echo "$${cdcmd}rm -f $${lang}.gmo && $(GMSGFMT) -c --statistics -o $${lang}.gmo $${lang}.po"; \
 	cd $(srcdir) && rm -f $${lang}.gmo && $(GMSGFMT) -c --statistics -o t-$${lang}.gmo $${lang}.po && mv t-$${lang}.gmo $${lang}.gmo
-
-.sin.sed:
-	sed -e '/^#/d' $< > t-$@
-	mv t-$@ $@
 
 # This target rebuilds $(DOMAIN).pot; it is an expensive operation.
 # Note that $(DOMAIN).pot is not touched if it doesn't need to be changed.
