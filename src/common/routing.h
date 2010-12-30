@@ -78,6 +78,7 @@ MACROS
 #define RT_CONN_NX_NY(map, actorSize, x, y, z)	(RT_CONN(map, actorSize, x, y, z, 5))
 
 #define RT_STEPUP(map, actorSize, x, y, z, dir)	map[(actorSize) - 1].stepup[(z)][(y)][(x)][(dir)]
+#define RT_STEPUP_POS(map, actorSize, p, dir)	map[(actorSize) - 1].stepup[(p)[2]][(p)[1]][(p)[0]][(dir)]
 
 #define RT_STEPUP_PX(map, actorSize, x, y, z)		(RT_STEPUP(map, actorSize, x, y, z, 0))
 #define RT_STEPUP_NX(map, actorSize, x, y, z)		(RT_STEPUP(map, actorSize, x, y, z, 1))

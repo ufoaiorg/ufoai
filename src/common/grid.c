@@ -286,7 +286,6 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
  */
 static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, const pos3_t toPos, const int dir, const pos3_t exclude, int *newZ)
 {
-	int x, y, z;
 	int nx, ny, nz;
 	int passageHeight;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
@@ -297,15 +296,11 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	 * Last test for fall.
 	 */
 
-	x = pos[0];
-	y = pos[1];
-	z = pos[2];
-
 	nx = toPos[0];
 	ny = toPos[1];
 	nz = toPos[2];
 
-	const int stepup = RT_STEPUP(step->map, actorSize, x, y, z, dir); /**< The stepup needed to get to/through the passage */
+	const int stepup = RT_STEPUP_POS(step->map, actorSize, pos, dir); /**< The stepup needed to get to/through the passage */
 	const int stepupHeight = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
 	int heightChange;
 
@@ -363,7 +358,7 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	} else {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up or down.\n");
 	}
-	heightChange = RT_FLOOR(step->map, actorSize, nx, ny, nz) - RT_FLOOR(step->map, actorSize, x, y, z) + (nz - z) * CELL_HEIGHT;
+	heightChange = RT_FLOOR(step->map, actorSize, nx, ny, nz) - RT_FLOOR_POS(step->map, actorSize, pos) + (nz - pos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !step->hasLadderSupport) {
