@@ -83,6 +83,9 @@ static config_t config;
 
 static FILE *logFile;
 
+/**
+ * @brief List storing all removed suite from CUnit (disabled suite)
+ */
 static CU_pSuite disabledSuites;
 
 static qboolean displayStatus;
@@ -147,6 +150,11 @@ static CU_pSuite Test_GetSuiteByName (CU_pSuite first, const char *name)
 	return NULL;
 }
 
+/**
+ * @brief Disable a test suite by name
+ * @param name Name of the test suite
+ * @return 1 if the name is unknown, 2 if the suite is already disabled, else 0
+ */
 static int Test_DisableSuite (const char *name)
 {
 	CU_pTestRegistry registry;
@@ -159,9 +167,16 @@ static int Test_DisableSuite (const char *name)
 		Test_AddSuiteTo(&disabledSuites, suite);
 		return 0;
 	}
+	if (Test_GetSuiteByName(disabledSuites, name) != NULL)
+		return 2;
 	return 1;
 }
 
+/**
+ * @brief Enable a test suite by name
+ * @param name Name of the test suite
+ * @return 1 if the name is unknown, 2 if the suite is already enabled, else 0
+ */
 static int Test_EnableSuite (const char *name)
 {
 	CU_pTestRegistry registry;
@@ -174,9 +189,14 @@ static int Test_EnableSuite (const char *name)
 		Test_AddSuiteTo(&registry->pSuite, suite);
 		return 0;
 	}
+	if (Test_GetSuiteByName(registry->pSuite, name) != NULL)
+		return 2;
 	return 1;
 }
 
+/**
+ * @brief Disable all test suites
+ */
 static void Test_DisableAllSuites (void)
 {
 	CU_pTestRegistry registry;
@@ -191,6 +211,9 @@ static void Test_DisableAllSuites (void)
 	}
 }
 
+/**
+ * @brief Enable all test suites
+ */
 static void Test_EnableAllSuites (void)
 {
 	CU_pSuite suite;
@@ -216,26 +239,36 @@ static void Test_Parameters (const int argc, const char **argv)
 			Test_DisableAllSuites();
 		} else if (Q_strstart(argv[i], "--disable-")) {
 			const char *name = argv[i] + 10;
-			if (Test_DisableSuite(name) != 0) {
-				printf("Suite \"%s\" unknown\n", name);
-				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
+			switch (Test_DisableSuite(name)) {
+			case 0:
+				break;
+			case 1:
+				fprintf(stderr, "Error: Suite \"%s\" unknown\n", name);
+				fprintf(stderr, "Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
+			case 2:
+				fprintf(stderr, "Warning: Suite \"%s\" already disabled\n", name);
 			}
 		} else if (Q_streq(argv[i], "--enable-all")) {
 			Test_EnableAllSuites();
 		} else if (Q_strstart(argv[i], "--enable-")) {
 			const char *name = argv[i] + 9;
-			if (Test_EnableSuite(name) != 0) {
-				printf("Suite \"%s\" unknown\n", name);
-				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
+			switch (Test_EnableSuite(name)) {
+			case 0:
+				break;
+			case 1:
+				fprintf(stderr, "Error: Suite \"%s\" unknown\n", name);
+				fprintf(stderr, "Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
+			case 2:
+				printf("Warning: Suite \"%s\" already enabled\n", name);
 			}
 		} else if (Q_strstart(argv[i], "--only-")) {
 			const char *name = argv[i] + 7;
 			Test_DisableAllSuites();
 			if (Test_EnableSuite(name) != 0) {
-				printf("Suite \"%s\" unknown\n", name);
-				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
+				fprintf(stderr, "Error: Suite \"%s\" unknown\n", name);
+				fprintf(stderr, "Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
 			}
 		} else if (Q_strstart(argv[i], "--output-prefix=")) {
@@ -267,8 +300,8 @@ static void Test_Parameters (const int argc, const char **argv)
 			printf("                           | SUITE=suite name\n");
 			exit(0);
 		} else {
-			printf("Param \"%s\" unknown\n", argv[i]);
-			printf("Use \"%s -h\" to show the help screen\n", argv[0]);
+			fprintf(stderr, "Error: Param \"%s\" unknown\n", argv[i]);
+			fprintf(stderr, "Use \"%s -h\" to show the help screen\n", argv[0]);
 			exit(2);
 		}
 	}
