@@ -161,7 +161,8 @@ static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
  * @brief Push a window onto the window stack
  * @param[in] name Name of the window to push onto window stack
  * @param[in] parentName Window name to link as parent-child (else NULL)
- * @return pointer to uiNode_t
+ * @param[in] params List of string parametters we want to send to the onWindowOpened method
+ * @return A pointer to @c uiNode_t
  */
 uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t *params)
 {
