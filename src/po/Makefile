@@ -69,39 +69,17 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	  --msgid-bugs-address="$(PACKAGE_BUGREPORT)" \
 	  --no-wrap \
 	  --output=$(DOMAIN).c.po
-
-	if test -f $(DOMAIN).c.po ; then \
-	  sed s/charset=CHARSET/charset=UTF-8/ $(DOMAIN).c.po > $(DOMAIN).c1.po ;\
-	fi
-
-	if test -r $(srcdir)/FINDUFOS ;\
-	then ${UFOPO} --directory=$(top_srcdir) \
-	  `cd $(top_srcdir) && sh $(subdir)/FINDUFOS` > $(DOMAIN).ufo.po ;\
-	fi
-
-	if test -f $(DOMAIN).ufo.po -a -f $(DOMAIN).c1.po ; then \
-	  $(MSGCAT) --sort-by-file $(DOMAIN).c1.po $(DOMAIN).ufo.po -o $(DOMAIN).po ;\
-	elif test -f $(DOMAIN).ufo.po ; then \
-	  mv $(DOMAIN).ufo.po $(DOMAIN).po ;\
+	sed s/charset=CHARSET/charset=UTF-8/ $(DOMAIN).c.po > $(DOMAIN).c1.po
+	${UFOPO} --directory=$(top_srcdir) `cd $(top_srcdir) && sh $(subdir)/FINDUFOS` > $(DOMAIN).ufo.po
+	$(MSGCAT) --sort-by-file $(DOMAIN).c1.po $(DOMAIN).ufo.po -o $(DOMAIN).po ;\
+	sed -f remove-potcdate.sed < $(srcdir)/$(DOMAIN).pot > $(DOMAIN).1po && \
+	sed -f remove-potcdate.sed < $(DOMAIN).po > $(DOMAIN).2po && \
+	if cmp $(DOMAIN).1po $(DOMAIN).2po >/dev/null 2>&1; then \
+	  rm -f $(DOMAIN).1po $(DOMAIN).2po $(DOMAIN).po; \
 	else \
-	  mv $(DOMAIN).c1.po $(DOMAIN).po ;\
+	  rm -f $(DOMAIN).1po $(DOMAIN).2po $(srcdir)/$(DOMAIN).pot && \
+	  mv $(DOMAIN).po $(srcdir)/$(DOMAIN).pot; \
 	fi
-	rm -f $(DOMAIN).c.po $(DOMAIN).c1.po $(DOMAIN).ufo.po
-
-	test ! -f $(DOMAIN).po || { \
-	  if test -f $(srcdir)/$(DOMAIN).pot; then \
-	    sed -f remove-potcdate.sed < $(srcdir)/$(DOMAIN).pot > $(DOMAIN).1po && \
-	    sed -f remove-potcdate.sed < $(DOMAIN).po > $(DOMAIN).2po && \
-	    if cmp $(DOMAIN).1po $(DOMAIN).2po >/dev/null 2>&1; then \
-	      rm -f $(DOMAIN).1po $(DOMAIN).2po $(DOMAIN).po; \
-	    else \
-	      rm -f $(DOMAIN).1po $(DOMAIN).2po $(srcdir)/$(DOMAIN).pot && \
-	      mv $(DOMAIN).po $(srcdir)/$(DOMAIN).pot; \
-	    fi; \
-	  else \
-	    mv $(DOMAIN).po $(srcdir)/$(DOMAIN).pot; \
-	  fi; \
-	}
 
 # This rule has no dependencies: we don't need to update $(DOMAIN).pot at
 # every "make" invocation, only create it when it is missing.
