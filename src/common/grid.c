@@ -213,7 +213,7 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, byte len, const pos3_t pos, const int dir, byte crouchingState)
+static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, byte len, const pos3_t pos, const int dir, byte *crouchingState)
 {
 	int x, y, z;
 	x = pos[0];
@@ -221,7 +221,7 @@ static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSize
 	z = pos[2];
 
 	/* Can't stand up if standing. */
-	if (dir == DIRECTION_STAND_UP && crouchingState == 0) {
+	if (dir == DIRECTION_STAND_UP && *crouchingState == 0) {
 		return qfalse;
 	}
 	/* Can't stand up if there's not enough head room. */
@@ -229,19 +229,20 @@ static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSize
 		return qfalse;
 	}
 	/* Can't get down if crouching. */
-	if (dir == DIRECTION_CROUCH && crouchingState == 1) {
+	if (dir == DIRECTION_CROUCH && *crouchingState == 1) {
 		return qfalse;
 	}
 
 	/* Since we can toggle crouching, then do so. */
-	crouchingState ^= 1;
+	*crouchingState ^= 1;
 
 	/* Is this a better move into this cell? */
-	RT_AREA_TEST(path, x, y, z, crouchingState);
-	if (RT_AREA(path, x, y, z, crouchingState) <= len) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Toggling crouch is not optimum. %i %i\n", RT_AREA(path, x, y, z, crouchingState), len);
+	RT_AREA_TEST(path, x, y, z, *crouchingState);
+	if (RT_AREA(path, x, y, z, *crouchingState) <= len) {
+		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Toggling crouch is not optimum. %i %i\n", RT_AREA(path, x, y, z, *crouchingState), len);
 		return qfalse;
 	}
+
 	return qtrue;
 }
 
@@ -379,7 +380,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* If this is a crouching or crouching move, then process that motion. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
-		if (!Grid_StepCheckCrouchingDirections(step, actorSize, path, len, pos, dir, crouchingState)) {
+		if (!Grid_StepCheckCrouchingDirections(step, actorSize, path, len, pos, dir, &crouchingState)) {
 			return;
 		}
 
