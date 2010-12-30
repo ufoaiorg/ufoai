@@ -1359,6 +1359,14 @@ base/models/objects/furniture/automat/automat.png | GNU General Public License 2
 base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/campbed/campbed.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/chairs/bank1.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/chairs/bank1.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/chairs/kantst.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/chairs/kantst.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/chairs/stleer.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/chairs/stleer.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/chairs/stoel.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/chairs/stoel.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker_gm.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer);MCR
