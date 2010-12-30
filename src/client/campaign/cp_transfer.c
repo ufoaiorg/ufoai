@@ -157,6 +157,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 /**
  * @brief Starts alien bodies transfer between mission and base.
  * @param[in] base Pointer to the base to send the alien bodies.
+ * @param[in, out] transferAircraft Pointer to the dropship held bodies (temporary)
  * @sa TR_TransferBaseListClick_f
  * @sa TR_TransferStart_f
  */

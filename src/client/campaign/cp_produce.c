@@ -91,7 +91,9 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
 
 /**
  * @brief Calculates the remaining hours for a technology
- * @param[in] percentDone 0.0 - 1.0
+ * @param[in] base Pointer to the base production is at
+ * @param[in] prod Pointer to the production datastructure
+ * @param[in] percentDone Production progress. Value is between 0.0 and 1.0.
  */
 int PR_GetRemainingMinutes (const base_t *base, const production_t *prod, double percentDone)
 {

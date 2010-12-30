@@ -326,6 +326,7 @@ static const value_t salary_vals[] = {
  * @brief Parse the salaries from campaign definition
  * @param[in] name Name or ID of the found character skill and ability definition
  * @param[in] text The text of the nation node
+ * @param[out] s Pointer to the campaign salaries data structure to parse into
  * @param[in] campaignID Current campaign id (idx)
  * @note Example:
  * <code>salary {
