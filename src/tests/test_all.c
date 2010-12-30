@@ -146,7 +146,7 @@ static CU_pSuite Test_GetSuiteByName (CU_pSuite first, const char *name)
 	return NULL;
 }
 
-static int Test_RemoveSuite (const char *name)
+static int Test_DisableSuite (const char *name)
 {
 	CU_pTestRegistry registry;
 	CU_pSuite suite;
@@ -161,7 +161,7 @@ static int Test_RemoveSuite (const char *name)
 	return 1;
 }
 
-static int Test_AddSuite (const char *name)
+static int Test_EnableSuite (const char *name)
 {
 	CU_pTestRegistry registry;
 	CU_pSuite suite;
@@ -176,7 +176,7 @@ static int Test_AddSuite (const char *name)
 	return 1;
 }
 
-static void Test_RemoveAllSuites (void)
+static void Test_DisableAllSuites (void)
 {
 	CU_pTestRegistry registry;
 	CU_pSuite suite;
@@ -185,19 +185,19 @@ static void Test_RemoveAllSuites (void)
 	suite = registry->pSuite;
 	while (suite) {
 		CU_pSuite tmp = suite->pNext;
-		Test_RemoveSuite(suite->pName);
+		Test_DisableSuite(suite->pName);
 		suite = tmp;
 	}
 }
 
-static void Test_AddAllSuites (void)
+static void Test_EnableAllSuites (void)
 {
 	CU_pSuite suite;
 
 	suite = disabledSuites;
 	while (suite) {
 		CU_pSuite tmp = suite->pNext;
-		Test_AddSuite(suite->pName);
+		Test_EnableSuite(suite->pName);
 		suite = tmp;
 	}
 }
@@ -212,27 +212,27 @@ static void Test_Parameters (const int argc, const char **argv)
 		} else if (Q_streq(argv[i], "-a") || Q_streq(argv[i], "--automated")) {
 			config.automated = qtrue;
 		} else if (Q_streq(argv[i], "--disable-all")) {
-			Test_RemoveAllSuites();
+			Test_DisableAllSuites();
 		} else if (Q_strstart(argv[i], "--disable-")) {
 			const char *name = argv[i] + 10;
-			if (Test_RemoveSuite(name) != 0) {
+			if (Test_DisableSuite(name) != 0) {
 				printf("Suite \"%s\" unknown\n", name);
 				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
 			}
 		} else if (Q_streq(argv[i], "--enable-all")) {
-			Test_AddAllSuites();
+			Test_EnableAllSuites();
 		} else if (Q_strstart(argv[i], "--enable-")) {
 			const char *name = argv[i] + 9;
-			if (Test_AddSuite(name) != 0) {
+			if (Test_EnableSuite(name) != 0) {
 				printf("Suite \"%s\" unknown\n", name);
 				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
 			}
 		} else if (Q_strstart(argv[i], "--only-")) {
 			const char *name = argv[i] + 7;
-			Test_RemoveAllSuites();
-			if (Test_AddSuite(name) != 0) {
+			Test_DisableAllSuites();
+			if (Test_EnableSuite(name) != 0) {
 				printf("Suite \"%s\" unknown\n", name);
 				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
@@ -306,7 +306,7 @@ int main (int argc, const char **argv)
 			return fatalError();
 	}
 
-	Test_RemoveSuite("MapDefTests");
+	Test_DisableSuite("MapDefTests");
 
 	Test_Parameters(argc, argv);
 
