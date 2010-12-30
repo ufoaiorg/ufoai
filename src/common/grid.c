@@ -99,7 +99,6 @@ static qboolean Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t
 	for (i = 0, p = path->fblist; i < path->fblength / 2; i++, p += 2) {
 		/* Skip initial position. */
 		if (VectorCompare((*p), exclude)) {
-			/* Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: skipping %i|%i|%i\n", (*p)[0], (*p)[1], (*p)[2]); */
 			continue;
 		}
 
@@ -109,14 +108,11 @@ static qboolean Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t
 		fy = (*p)[1];
 		fz = (*p)[2];
 
-		/* Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: comparing (%i, %i, %i) * %i to (%i, %i, %i) * %i \n", x, y, z, actorSize, fx, fy, fz, size); */
-
 		if (fx + size <= x || x + actorSize <= fx)
 			continue; /* x bounds do not intersect */
 		if (fy + size <= y || y + actorSize <= fy)
 			continue; /* y bounds do not intersect */
 		if (z == fz) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: Collision (%i, %i, %i) * %i and (%i, %i, %i) * %i \n", x, y, z, actorSize, fx, fy, fz, size);
 			return qtrue; /* confirmed intersection */
 		}
 	}
@@ -239,8 +235,7 @@ static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSize
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST(path, x, y, z, *crouchingState);
 	if (RT_AREA(path, x, y, z, *crouchingState) <= len) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Toggling crouch is not optimum. %i %i\n", RT_AREA(path, x, y, z, *crouchingState), len);
-		return qfalse;
+		return qfalse;	/* Toggling crouch is not optimum. */
 	}
 
 	return qtrue;
@@ -309,8 +304,7 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	 * Also, actor_stepup_height must be at least the cell's positive stepup value to move that direction. */
 	/* If the actor cannot reach stepup, then we can't go this way. */
 	if (actorStepupHeight < stepupHeight) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Actor cannot stepup high enough. passage:%i actor:%i\n", stepupHeight, actorStepupHeight);
-		return qfalse;
+		return qfalse;	/* Actor cannot stepup high enough. */
 	}
 
 	nx = toPos[0];
@@ -347,17 +341,14 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 		 */
 	} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && toPos[2] > 0
 		&& actorStepupHeight >= (RT_STEPUP(step->map, actorSize, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping down into lower cell.\n");
-		toPos[2]--;
-	} else {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up or down.\n");
+		toPos[2]--;		/* Stepping down into lower cell. */
 	}
+
 	heightChange = RT_FLOOR_POS(step->map, actorSize, toPos) - RT_FLOOR_POS(step->map, actorSize, pos) + (toPos[2] - pos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !step->hasLadderSupport) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", heightChange, -fallingHeight);
-		return qfalse;
+		return qfalse;		/* Too far a drop without a ladder. */
 	}
 
 	/* If we are walking normally, we can fall if we move into a cell that does not
@@ -368,13 +359,11 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	if (RT_FLOOR_POS(step->map, actorSize, toPos) < 0) {
 		/* We cannot fall if STEPDOWN is defined. */
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: There is stepdown from here.\n");
-			return qfalse;
+			return qfalse;		/* There is stepdown from here. */
 		}
 		/* We cannot fall if there is an entity below the cell we want to move to. */
 		if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz - 1)) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: The fall destination is occupied.\n");
-			return qfalse;
+			return qfalse;		/* The fall destination is occupied. */
 		}
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
 		heightChange = 0;
@@ -497,8 +486,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actorSize, dir, crouchingState, oldLen);
 
 	if (oldLen >= MAX_MOVELENGTH && oldLen != ROUTING_NOT_REACHABLE) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Exiting because the TUS needed to move here are already too large. %i %i\n", oldLen , MAX_MOVELENGTH);
-		return;
+		return;		/* Exiting because the TUS needed to move here are already too large. */
 	}
 
 	/* Find the number of TUs used to move in this direction. */
@@ -578,8 +566,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* Test for forbidden (by other entities) areas. */
 	if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz)) {
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: That spot is occupied.\n");
-		return;
+		return;		/* That spot is occupied. */
 	}
 
 	/* Store move. */
