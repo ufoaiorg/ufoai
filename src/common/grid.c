@@ -206,7 +206,7 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
 }
 
 /**
- * @brief Checks if we can move in the given flying direction
+ * @brief Handle couching/uncrouching moves
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
@@ -243,6 +243,35 @@ static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSize
 		return qfalse;
 	}
 
+	return qtrue;
+}
+
+/**
+ * @brief Calculate the cell the we end up in if moving in the give dir
+ * @param[in] step The struct describing the move
+ * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @param[in] pos Current location in the map.
+ * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
+ * @return false if we can't fly there
+ */
+static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, pos3_t toPos, const int dir)
+{
+	toPos[0] = pos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
+	toPos[1] = pos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
+	toPos[2] = pos[2] + dvecs[dir][2];	/**< "new" z value = starting z value + difference from chosen direction */
+
+	/* Connection checks.  If we cannot move in the desired direction, then bail. */
+	/* Range check of new values (all sizes) */
+	/* "comparison is always false due to limited range of data type" */
+	/* Only activate this check if PATHFINDING_WIDTH or pos3_t changes */
+/*	if (toPos[0] < 0 || toPos[0] > PATHFINDING_WIDTH - actorSize
+	 || toPos[1] < 0 || toPos[1] > PATHFINDING_WIDTH - actorSize
+	 || toPos[2] < 0  {
+		return qfalse;
+	} */
+	if (toPos[2] > PATHFINDING_HEIGHT) {
+		return qfalse;
+	}
 	return qtrue;
 }
 
@@ -344,7 +373,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	pos3_t toPos;
 	int x, y, z;
 	int nx, ny, nz;
-	int dx, dy, dz;
 	byte len, oldLen;
 	int passageHeight;
 
@@ -393,23 +421,12 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		return;
 	}
 
-	dx = dvecs[dir][0];	/**< Get the difference value for x for this direction. (can be pos or neg) */
-	dy = dvecs[dir][1];	/**< Get the difference value for y for this direction. (can be pos or neg) */
-	dz = dvecs[dir][2];	/**< Get the difference value for z for this direction. (can be pos or neg) */
-	nx = x + dx;		/**< "new" x value = starting x value + difference from chosen direction */
-	ny = y + dy;		/**< "new" y value = starting y value + difference from chosen direction */
-	nz = z + dz;		/**< "new" z value = starting z value + difference from chosen direction */
-	toPos[0] = nx;
-	toPos[1] = ny;
-	toPos[2] = nz;
-
-	/* Connection checks.  If we cannot move in the desired direction, then bail. */
-	/* Range check of new values (all sizes) */
-	if (nx < 0 || nx > PATHFINDING_WIDTH - actorSize
-	 || ny < 0 || ny > PATHFINDING_WIDTH - actorSize
-	 || nz < 0 || nz > PATHFINDING_HEIGHT) {
+	if (!Grid_StepCalcNewPos(step, actorSize, pos, toPos, dir)) {
 		return;
 	}
+	nx = toPos[0];
+	ny = toPos[1];
+	nz = toPos[2];
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i to (%i %i %i)\n", x, y, z, actorSize, nx, ny, nz);
 
