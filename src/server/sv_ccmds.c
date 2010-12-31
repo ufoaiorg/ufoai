@@ -459,7 +459,7 @@ static void SV_ListMaps_f (void)
 
 	for (i = 0; i <= fs_numInstalledMaps; i++)
 		Com_Printf("%s\n", fs_maps[i]);
-	Com_Printf("-----\n %i installed maps\n+name means random map assembly", fs_numInstalledMaps + 1);
+	Com_Printf("-----\n %i installed maps\n+name means random map assembly\n", fs_numInstalledMaps + 1);
 }
 
 /**
