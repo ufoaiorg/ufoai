@@ -467,14 +467,12 @@ window hhud extends hud
 		/* Inventory and stats buttons */
 		custombutton inv
 		{
-//		image "hhud/btnset_lft"
-		background "hhud/btnset_lft"
-//		background "hhud/inv_icon"
-		icon "icons/hhud/inv_icon"
-		pos "643 12"
-		align ALIGN_CC
-		size "44 44"
-		onclick {cmd "toggle_btn_inv" }
+			background "hhud/btnset_lft"
+			icon "hhud/inv_icon"
+			pos "643 12"
+			align ALIGN_CC
+			size "44 44"
+			onclick {cmd "toggle_btn_inv" }
 		}
 		/*
 		image inv
