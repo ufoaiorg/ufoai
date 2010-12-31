@@ -199,50 +199,6 @@ sprite icons/speed_dot {
 	pack64	true
 }
 
-// geoscape
-
-sprite icons/geo_messagelog {
-	image "icons/pack3"
-	texl	"2 2"
-	size	"22 21"
-	pack64	true
-}
-
-sprite icons/geo_radar {
-	image "icons/pack3"
-	texl	"32 2"
-	size	"18 20"
-	pack64	true
-}
-
-sprite icons/geo_option {
-	image "icons/pack3"
-	texl	"57 2"
-	size	"21 20"
-	pack64	true
-}
-
-sprite icons/geo_center {
-	image "icons/pack3"
-	texl	"82 3"
-	size	"18 18"
-	pack64	true
-}
-
-sprite icons/geo_messageoption {
-	image "icons/pack3"
-	texl	"108 3"
-	size	"22 21"
-	pack64	true
-}
-
-sprite icons/geo_map {
-	image "icons/pack3"
-	texl	"131 2"
-	size	"22 20"
-	pack64	true
-}
-
 sprite icons/plus {
 	image "icons/pack3"
 	texl	"64 33"

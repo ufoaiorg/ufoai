@@ -510,41 +510,35 @@ window geoscape
 		// small buttons
 		// ==================
 
-		image bt_show_overlay
+		custombutton bt_show_overlay
 		{
 			tooltip		"_Highlight nation borders"
-			src		"icons/geo_nations_highlight"
+			background	"buttons/blue3"
+			icon		"icons/geo_nations"
 			pos			"40 515"
-			texl		"0 0"
-			texh		"32 32"
+			size		"32 32"
 			onClick		{ cmd "map_overlay nations;" }
-			onMouseLeave			{ *node:this@texl = "0 0" *node:this@texh = "32 32" }
-			onMouseEnter			{ *node:this@texl = "32 0" *node:this@texh = "64 32" }
 		}
 
-		image bt_show_radar
+		custombutton bt_show_radar
 		{
 			tooltip		"_Show radar range"
-			src		"icons/geo_radar"
+			background	"buttons/blue3"
+			icon		"icons/geo_radar"
 			pos			"70 515"
-			texl		"0 0"
-			texh		"32 32"
+			size		"32 32"
 			onClick		{ cmd "map_overlay radar;" }
-			onMouseLeave			{ *node:this@texl = "0 0" *node:this@texh = "32 32" }
-			onMouseEnter			{ *node:this@texl = "32 0" *node:this@texh = "64 32" }
 		}
 
-		image bt_show_xvi
+		custombutton bt_show_xvi
 		{
 			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
-			src		"icons/geo_xvi"
+			background	"buttons/blue3"
+			icon		"icons/geo_xvi"
 			pos			"100 515"
-			texl		"0 0"
-			texh		"32 32"
+			size		"32 32"
 			onClick		{ cmd "map_overlay xvi;" }
-			onMouseLeave			{ *node:this@texl = "0 0" *node:this@texh = "32 32" }
-			onMouseEnter			{ *node:this@texl = "32 0" *node:this@texh = "64 32" }
 		}
 
 		custombutton bt_mapcenter

@@ -2720,9 +2720,22 @@ base/pics/icons/bighead_pilot.png | GNU General Public License 2.0 or later | Mi
 base/pics/icons/bighead_scientist.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf)
 base/pics/icons/bighead_soldier.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf)
 base/pics/icons/bighead_worker.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf)
-base/pics/icons/geo_nations_highlight.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
+base/pics/icons/geo_center.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/pics/icons/geo_center_hovered.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/pics/icons/geo_nations.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
+base/pics/icons/geo_nations_disabled.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
+base/pics/icons/geo_nations_hovered.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
+base/pics/icons/geo_option.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/pics/icons/geo_option_clicked.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/pics/icons/geo_option_disabled.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/pics/icons/geo_option_hovered.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_radar.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/pics/icons/geo_radar_clicked.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/pics/icons/geo_radar_hovered.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_xvi.png | GNU General Public License 2.0 or later
+base/pics/icons/geo_xvi_active.png | GNU General Public License 2.0 or later
+base/pics/icons/geo_xvi_active_hovered.png | GNU General Public License 2.0 or later
+base/pics/icons/geo_xvi_hovered.png | GNU General Public License 2.0 or later
 base/pics/icons/healing.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_critical.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_medium.png | GNU General Public License 2.0 | Gerd Heisse
