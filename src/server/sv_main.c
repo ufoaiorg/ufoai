@@ -627,6 +627,9 @@ void SV_Frame (int now, void *data)
 
 	if (!sv_threads->integer)
 		SV_RunGameFrame();
+	else
+		/* signal the game frame thread to wake up */
+		SDL_CondSignal(svs.gameFrameCond);
 
 	/* next map in the cycle */
 	if (sv.endgame && sv_maxclients->integer > 1)

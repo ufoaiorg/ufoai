@@ -514,6 +514,7 @@ void SV_ShutdownGameProgs (void)
 
 	if (svs.gameThread) {
 		Com_Printf("Shutdown the game thread\n");
+		SDL_CondSignal(svs.gameFrameCond);
 		SDL_WaitThread(svs.gameThread, NULL);
 		svs.gameThread = NULL;
 	}
@@ -542,7 +543,10 @@ void SV_ShutdownGameProgs (void)
 int SV_RunGameFrameThread (void *data)
 {
 	do {
+		TH_MutexLock(svs.serverMutex);
+		TH_MutexCondWait(svs.serverMutex, svs.gameFrameCond);
 		SV_RunGameFrame();
+		TH_MutexUnlock(svs.serverMutex);
 	} while (!sv.endgame);
 
 	return 0;
@@ -556,13 +560,9 @@ int SV_RunGameFrameThread (void *data)
  */
 void SV_RunGameFrame (void)
 {
-	TH_MutexLock(svs.serverMutex);
-
 	sv.endgame = svs.ge->RunFrame();
 	if (sv.state == ss_game_shutdown)
 		sv.endgame = qtrue;
-
-	TH_MutexUnlock(svs.serverMutex);
 }
 
 /**
@@ -687,6 +687,8 @@ void SV_InitGameProgs (void)
 
 	svs.ge->Init();
 
-	if (sv_threads->integer)
+	if (sv_threads->integer) {
+		svs.gameFrameCond = SDL_CreateCond();
 		svs.gameThread = SDL_CreateThread(SV_RunGameFrameThread, NULL);
+	}
 }

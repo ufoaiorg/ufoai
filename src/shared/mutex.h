@@ -13,6 +13,7 @@ int _TH_MutexUnlock(threads_mutex_t *mutex, const char *file, int line);
 int _TH_MutexLock(threads_mutex_t *mutex, const char *file, int line);
 threads_mutex_t *TH_MutexCreate(const char *name);
 void TH_MutexDestroy(threads_mutex_t *mutex);
+int TH_MutexCondWait(threads_mutex_t *mutex, SDL_cond *condition);
 int TH_MutexCondWaitTimeout (threads_mutex_t *mutex, SDL_cond *condition, int timeout);
 
 #endif

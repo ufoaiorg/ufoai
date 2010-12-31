@@ -70,6 +70,11 @@ void TH_MutexDestroy (threads_mutex_t *mutex)
 	}
 }
 
+int TH_MutexCondWait (threads_mutex_t *mutex, SDL_cond *condition)
+{
+	return SDL_CondWait(condition, mutex->mutex);
+}
+
 int TH_MutexCondWaitTimeout (threads_mutex_t *mutex, SDL_cond *condition, int timeout)
 {
 	return SDL_CondWaitTimeout(condition, mutex->mutex, timeout);

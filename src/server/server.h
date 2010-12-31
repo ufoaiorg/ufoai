@@ -83,6 +83,7 @@ typedef struct {
 	qboolean abandon;			/**< shutdown server when all clients disconnect and don't accept new connections */
 	qboolean killserver;		/**< will initiate shutdown once abandon is set */
 	threads_mutex_t *serverMutex;
+	SDL_cond *gameFrameCond;	/**< the signal that the game frame threads waits for */
 	SDL_Thread *gameThread;
 #ifndef HARD_LINKED_GAME
 	void *gameLibrary;
