@@ -284,6 +284,12 @@ int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, con
  */
 qboolean INVSH_CompareItem (item_t *item1, item_t *item2)
 {
+	if (item1 == item2)
+		return qtrue;
+
+	if (item1 == NULL || item2 == NULL)
+		return qfalse;
+
 	if (item1->t == item2->t && item1->m == item2->m && item1->a == item2->a)
 		return qtrue;
 
