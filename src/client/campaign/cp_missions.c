@@ -209,7 +209,7 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
 		return qfalse;
 
 	LIST_Foreach(equipPack, const char, name) {
-		if (Q_streq(name, equip->name))
+		if (Q_strstart(equip->name, name))
 			return qtrue;
 	}
 
