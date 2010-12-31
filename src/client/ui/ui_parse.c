@@ -250,15 +250,15 @@ qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 	}
 
 	if (property->type == V_UI_SPRITEREF) {
-			uiSprite_t* sprite = UI_GetSpriteByName(string);
-			if (sprite == NULL) {
-				Com_Printf("UI_ParseSetAction: sprite '%s' not found (%s)\n", string, UI_GetPath(node));
-				return qfalse;
-			}
-			action->type = EA_VALUE_RAW;
-			action->d.terminal.d1.data = sprite;
-			action->d.terminal.d2.integer = property->type;
-			return qtrue;
+		uiSprite_t* sprite = UI_GetSpriteByName(string);
+		if (sprite == NULL) {
+			Com_Printf("UI_ParseSetAction: sprite '%s' not found (%s)\n", string, UI_GetPath(node));
+			return qfalse;
+		}
+		action->type = EA_VALUE_RAW;
+		action->d.terminal.d1.data = sprite;
+		action->d.terminal.d2.integer = property->type;
+		return qtrue;
 	} else {
 		const int baseType = property->type & V_UI_MASK;
 		if (baseType != 0 && baseType != V_UI_CVAR) {

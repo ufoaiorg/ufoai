@@ -422,7 +422,6 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 		}
 	}
 
-
 	FS_GetMaps(qfalse);
 
 	len = strlen(partial);
