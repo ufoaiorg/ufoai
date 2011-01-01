@@ -261,7 +261,10 @@ typedef struct mission_s {
 	qboolean posAssigned;			/**< is the position of this mission already set? */
 } mission_t;
 
-#define CP_MissionForeach(var) LIST_Foreach(ccs.missions, mission_t, var)
+/**
+ * @brief iterates through missions
+ */
+#define MIS_Foreach(var) LIST_Foreach(ccs.missions, mission_t, var)
 
 /** battlescape parameters that were used */
 typedef struct battleParam_s {

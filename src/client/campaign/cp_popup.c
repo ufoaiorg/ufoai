@@ -233,7 +233,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	/* Set missions in popup_aircraft */
 	if (AIR_GetTeamSize(aircraft) > 0) {
 		mission_t *tempMission;
-		CP_MissionForeach(tempMission) {
+		MIS_Foreach(tempMission) {
 			if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
 				continue;
 

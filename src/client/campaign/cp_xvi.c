@@ -193,7 +193,7 @@ void CP_SpreadXVI (void)
 	if (!CP_IsXVIResearched())
 		return;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (mission->stage == STAGE_SPREAD_XVI)
 			CP_SpreadXVIAtPos(mission->pos);
 	}

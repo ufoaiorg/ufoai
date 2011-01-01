@@ -444,7 +444,7 @@ void CL_HandleNationData (float minHappiness, qboolean won, mission_t * mis, con
 static void CP_CheckMissionEnd (const campaign_t* campaign)
 {
 	mission_t *mission;
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(&ccs.date, &mission->finalDate))
 			CP_MissionStageEnd(campaign, mission);
 	}
@@ -529,6 +529,10 @@ static void CL_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, qbool
 	UFO_CampaignCheckEvents();
 }
 
+/**
+ * @brief Returns if we are currently on the Geoscape
+ * @todo This relies on scripted content. Should work other way!
+ */
 qboolean CP_OnGeoscape (void)
 {
 	return Q_streq("geoscape", UI_GetActiveWindowName());

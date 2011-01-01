@@ -110,7 +110,7 @@ static const mission_t* CP_TerrorInCity (const city_t *city)
 	if (!city)
 		return NULL;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_TERROR_ATTACK
 		 && mission->stage <= STAGE_TERROR_MISSION
 		 && Vector2Equal(mission->pos, city->pos))

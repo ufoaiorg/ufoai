@@ -324,7 +324,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	multiSelect.nbSelect = 0;
 	OBJZERO(multiSelect.popupText);
 	/* Get selected missions */
-	CP_MissionForeach(tempMission) {
+	MIS_Foreach(tempMission) {
 		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
 			break;
 		if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
@@ -1148,7 +1148,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	/* Cycle through missions */
 	if (centerOnEventIdx < numMissions) {
 		mission_t *mission = NULL;
-		CP_MissionForeach(mission) {
+		MIS_Foreach(mission) {
 			if (centerOnEventIdx != counter - 1)
 				break;
 			if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape)
@@ -1722,7 +1722,7 @@ void MAP_UpdateGeoscapeDock (void)
 	UI_ExecuteConfunc("clean_geoscape_object");
 
 	/* draw mission pics */
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (!mission->onGeoscape)
 			continue;
 		UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
@@ -1774,7 +1774,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (!mission->onGeoscape)
 			continue;
 		MAP_DrawMapOneMission(node, mission);

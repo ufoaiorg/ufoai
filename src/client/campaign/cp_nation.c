@@ -77,7 +77,7 @@ nation_t *NAT_GetNationByID (const char *nationID)
 void NAT_UpdateHappinessForAllNations (const float minhappiness)
 {
 	mission_t *mission;
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		nation_t *nation = MAP_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
 

@@ -46,7 +46,6 @@ const int MAX_POS_LOOP = 10;
 static const float MIN_CRASHEDUFO_CONDITION = 0.2f;
 static const float MAX_CRASHEDUFO_CONDITION = 0.81f;
 
-
 /**
  * @brief Actions to be done when rescue mission finished/expired
  * @param[in,out] mission Pointer to the finished mission
@@ -54,7 +53,8 @@ static const float MAX_CRASHEDUFO_CONDITION = 0.81f;
  * @param[in] won Boolean flag if thew mission was successful (from PHALANX's PoV)
  * @todo move this function to a better place
  */
-static void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, qboolean won) {
+static void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, qboolean won)
+{
 	aircraft_t *crashedAircraft = mission->data.aircraft;
 
 	assert(crashedAircraft);
@@ -424,7 +424,7 @@ mission_t* CP_GetMissionByIDSilent (const char *missionId)
 	if (!missionId)
 		return NULL;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (Q_streq(mission->id, missionId))
 			return mission;
 	}
@@ -456,7 +456,7 @@ mission_t* MAP_GetMissionByIDX (int id)
 {
 	mission_t *mission;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (mission->idx == id)
 			return mission;
 	}
@@ -589,7 +589,7 @@ int CP_CountMissionOnGeoscape (void)
 	int counterVisibleMission = 0;
 	mission_t *mission;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		/** @todo only use if (mission->onGeoscape) as we do in the mission render loop */
 		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape) {
 			counterVisibleMission++;
@@ -787,7 +787,7 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 	qboolean newDetection = qfalse;
 	mission_t *mission;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		const missionDetectionStatus_t status = CP_CheckMissionVisibleOnGeoscape(mission);
 
 		/* only check mission that can be detected, and that are not already detected */
@@ -824,7 +824,7 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
 {
 	mission_t *mission;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission) == MISDET_CANT_BE_DETECTED) {
 			/* remove a mission when radar is destroyed */
 			CP_MissionRemoveFromGeoscape(mission);
@@ -861,7 +861,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
 
 		/* Update UFO idx */
-		CP_MissionForeach(removedMission) {
+		MIS_Foreach(removedMission) {
 			if (removedMission->ufo && (removedMission->ufo > mission->ufo))
 				removedMission->ufo--;
 		}
@@ -938,7 +938,7 @@ qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
 void CP_MissionNotifyBaseDestroyed (const base_t *base)
 {
 	mission_t *mission;
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		/* Check if this is a base attack mission attacking this base */
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->data.base) {
 			if (base == mission->data.base) {
@@ -956,7 +956,7 @@ void CP_MissionNotifyBaseDestroyed (const base_t *base)
 void CP_MissionNotifyInstallationDestroyed (const installation_t const *installation)
 {
 	mission_t *mission;
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data.installation) {
 			if (mission->data.installation == installation)
 				CP_InterceptMissionLeave(mission, qfalse);
@@ -1780,7 +1780,7 @@ static void CP_MissionList_f (void)
 	qboolean noMission = qtrue;
 	mission_t *mission;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		Com_Printf("mission: '%s'\n", mission->id);
 		Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
 			CP_MissionCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
@@ -1807,7 +1807,7 @@ static void CP_DeleteMissions_f (void)
 {
 	mission_t *mission;
 
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		CP_MissionRemove(mission);
 	}
 
@@ -1859,7 +1859,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
-	CP_MissionForeach(mission) {
+	MIS_Foreach(mission) {
 		mxml_node_t *missionNode = mxml_AddNode(missionsNode, SAVE_MISSIONS_MISSION);
 
 		mxml_AddInt(missionNode, SAVE_MISSIONS_MISSION_IDX, mission->idx);
