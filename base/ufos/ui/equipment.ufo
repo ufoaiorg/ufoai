@@ -110,6 +110,15 @@ window equipment extends objectinfo
 		*node:root.txt_actor7@color = "0 .78 0 1"
 	}
 
+	confunc equipenable {
+		*node:root.bt_actor<1>@disabled = false
+	}
+
+	confunc equipdisable {
+		*node:root.bt_actor<1>@disabled = true
+		*cvar:mn_name<1> = ""
+	}
+
 	confunc equipdeselect {
 		*node:root.bt_actor<1>@disabled = false
 		*node:root.txt_actor<1>@color = "0 .78 0 1"
@@ -119,11 +128,6 @@ window equipment extends objectinfo
 		*node:root.bt_actor<1>@disabled = false
 		*cvar:selected_actor = <1>
 		*node:root.txt_actor<1>@color = "1 1 1 1"
-	}
-
-	confunc equipdisable {
-		*node:root.bt_actor<1>@disabled = true
-		*cvar:mn_name<1> = ""
 	}
 
 	buttonActorEquip bt_actor0
