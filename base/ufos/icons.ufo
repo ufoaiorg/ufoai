@@ -199,6 +199,13 @@ sprite icons/speed_dot {
 	pack64	true
 }
 
+sprite icons/bordered_magnifying_glass {
+	image "icons/pack1"
+	texl	"1 46"
+	size	"16 16"
+	pack64	true
+}
+
 sprite icons/bordered_sleep {
 	image "icons/pack1"
 	texl	"19 46"
