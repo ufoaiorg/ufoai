@@ -2244,7 +2244,6 @@ window options
 	 * <2> HUD label
 	 */
 	confunc add_hud_name {
-		cmd "echo HUDNAME <1> <2>"
 		call *node:root.options_gameplay.select_hud@createchild("option<1>", "option")
 		*node:root.options_gameplay.select_hud.option<1>@value = <1>
 		*node:root.options_gameplay.select_hud.option<1>@label = <2>
