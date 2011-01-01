@@ -447,7 +447,6 @@ static void SAV_GameReadGameComments_f (void)
 static void SAV_GameLoad_f (void)
 {
 	const char *error = NULL;
-	const cvar_t *gamedesc;
 
 	/* get argument */
 	if (Cmd_Argc() < 2) {
@@ -455,10 +454,9 @@ static void SAV_GameLoad_f (void)
 		return;
 	}
 
-	/* try to get game description from "mn_<filename>" as indicator whether file will exist */
-	gamedesc = Cvar_FindVar(va("mn_%s", Cmd_Argv(1)));
-	if (!gamedesc || gamedesc->string[0] == '\0') {
-		Com_DPrintf(DEBUG_CLIENT, "don't load file '%s', there is no description for it\n", Cmd_Argv(1));
+	/* Check if savegame exists */
+	if (FS_CheckFile("save/%s.%s", Cmd_Argv(1), SAVEGAME_EXTENSION) <= 0) {
+		Com_Printf("savegame file '%s' doesn't exist or an empty file\n", Cmd_Argv(1));
 		return;
 	}
 
