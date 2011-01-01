@@ -86,6 +86,8 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 
 	base = employee->baseHired;
 
+	/* Crashed aircraft no longer belongs to any base but poor pilot/soldiers assigned
+	 * to it are definetly away from the base so we need to iterate trought all aircraft */
 	AIR_Foreach(aircraft) {
 		if (aircraft->homebase != base)
 			continue;
