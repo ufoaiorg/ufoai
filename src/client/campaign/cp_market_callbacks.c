@@ -313,6 +313,7 @@ static void BS_AddToList (const char *name, int storage, int market, int price)
 
 /**
  * @brief Updates the Buy/Sell menu list.
+ * @param[in] base Pointer to the base to buy/sell at
  * @sa BS_BuyType_f
  */
 static void BS_BuyType (const base_t *base)
@@ -332,7 +333,11 @@ static void BS_BuyType (const base_t *base)
 	bsMarketPrices = NULL;
 	MN_ResetData(TEXT_ITEMDESCRIPTION);
 
-	/* 'normal' items */
+	/* hide autosell checkboxes by default */
+	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
+		MN_ExecuteConfunc("buy_autoselli %i", i);
+	}
+
 	switch (buyCat) {
 	case FILTER_AIRCRAFT:	/* Aircraft */
 		{
@@ -345,7 +350,6 @@ static void BS_BuyType (const base_t *base)
 			assert(tech);
 			if (BS_GetStorageAmountInBase(base, aircraftTemplate->id) + BS_GetAircraftOnMarket(aircraftTemplate) > 0) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_autoselli %i", j - buyList.scroll);
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
 				BS_AddToList(aircraftTemplate->name, BS_GetStorageAmountInBase(base, aircraftTemplate->id),
@@ -371,11 +375,15 @@ static void BS_BuyType (const base_t *base)
 			if (od->tech && (base->storage.numItems[i] || ccs.eMarket.numItems[i])
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
+					const technology_t *tech = od->tech;
+
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (ccs.autosell[i])
-						MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
-					else
-						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+					if (RS_IsResearched_ptr(tech)) {
+						if (ccs.autosell[i])
+							MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
+						else
+							MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+					}
 				}
 				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				if (j >= MAX_BUYLIST)
@@ -435,11 +443,15 @@ static void BS_BuyType (const base_t *base)
 				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
+					const technology_t *tech = od->tech;
+
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (ccs.autosell[i])
-						MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
-					else
-						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+					if (RS_IsResearched_ptr(tech)) {
+						if (ccs.autosell[i])
+							MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
+						else
+							MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+					}
 				}
 
 				if (j >= MAX_BUYLIST)
@@ -465,11 +477,15 @@ static void BS_BuyType (const base_t *base)
 					BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
+						const technology_t *tech = od->tech;
+
 						MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-						if (ccs.autosell[i])
-							MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
-						else
-							MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+						if (RS_IsResearched_ptr(tech)) {
+							if (ccs.autosell[i])
+								MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
+							else
+								MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+						}
 					}
 
 					if (j >= MAX_BUYLIST)
@@ -488,7 +504,6 @@ static void BS_BuyType (const base_t *base)
 
 	for (; j < MAX_MARKET_MENU_ENTRIES; j++) {
 		/* Hide the rest of the entries. */
-		MN_ExecuteConfunc("buy_autoselli %i", j);
 		MN_ExecuteConfunc("buy_hide %i", j);
 	}
 
