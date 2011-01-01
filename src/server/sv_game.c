@@ -516,6 +516,8 @@ void SV_ShutdownGameProgs (void)
 		Com_Printf("Shutdown the game thread\n");
 		SDL_CondSignal(svs.gameFrameCond);
 		SDL_WaitThread(svs.gameThread, NULL);
+		SDL_DestroyCond(svs.gameFrameCond);
+		svs.gameFrameCond = NULL;
 		svs.gameThread = NULL;
 	}
 
