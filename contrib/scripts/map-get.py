@@ -307,7 +307,7 @@ def gen(args):
 def main(argv=None):
     global displayDownloadStatus
     global displayAlreadyUpToDate
-    global INTERACTIVE_REPLY
+    global INTERACTIVE_REPLY, UFO2MAPFLAGS
 
     print "map-get version " + __version__
 
@@ -319,6 +319,8 @@ def main(argv=None):
     parser.add_option('', '--no-downloadstatus', action='store_false', dest='displayDownloadStatus')
     parser.add_option('', '--hide-uptodate', action='store_false', dest='displayAlreadyUpToDate')
     parser.add_option("", "--reply", action="store", default="query", type="string", dest="reply", help='Allow to auto reply interactive questions, REPLY={yes,no,query}')
+    parser.add_option("", "--flags", action="store", default=UFO2MAPFLAGS, type="string", dest="flags", help='Set specific ufo2map flags for map compilation, default value is "' + UFO2MAPFLAGS + '"')
+
 
     parser.usage = '%prog [options] command\n\n' \
                    'Commands:\n' \
@@ -338,6 +340,7 @@ def main(argv=None):
     displayDownloadStatus = options.displayDownloadStatus
     displayAlreadyUpToDate = options.displayAlreadyUpToDate
     INTERACTIVE_REPLY = options.reply
+    UFO2MAPFLAGS = options.flags
 
     # on windows always just upgrade
     if os.name == 'nt':
