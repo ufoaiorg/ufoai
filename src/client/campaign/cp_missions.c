@@ -46,6 +46,40 @@ const int MAX_POS_LOOP = 10;
 static const float MIN_CRASHEDUFO_CONDITION = 0.2f;
 static const float MAX_CRASHEDUFO_CONDITION = 0.81f;
 
+
+/**
+ * @brief Actions to be done when rescue mission finished/expired
+ * @param[in,out] mission Pointer to the finished mission
+ * @param[in,out] aircraft Pointer to the dropship done the mission
+ * @param[in] won Boolean flag if thew mission was successful (from PHALANX's PoV)
+ * @todo move this function to a better place
+ */
+static void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, qboolean won) {
+	aircraft_t *crashedAircraft = mission->data.aircraft;
+
+	assert(crashedAircraft);
+	if (won) {
+		employee_t *employee;
+
+		/* Save the pilot */
+		if (crashedAircraft->pilot)
+			AIR_RemoveEmployee(crashedAircraft->pilot, crashedAircraft);
+		/* Save the soldiers */
+		LIST_Foreach(crashedAircraft->acTeam, employee_t, employee) {
+			AIR_RemoveEmployee(employee, crashedAircraft);
+		}
+
+		/* return to collect goods and aliens from the crashed aircraft */
+		/** @todo it should be dumped to the cargo loot of the dropship done
+		 *  the rescue mission not the base directly */
+		B_DumpAircraftToHomeBase(crashedAircraft);
+	}
+
+	if (won || (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(&ccs.date, &mission->finalDate)))
+		AIR_DestroyAircraft(crashedAircraft);
+
+}
+
 /*====================================
 *
 * Prepare battlescape
@@ -977,8 +1011,11 @@ void CP_MissionStageEnd (const campaign_t* campaign, mission_t *mission)
 	case INTERESTCATEGORY_HARVEST:
 		CP_HarvestMissionNextStage(mission);
 		break;
-	case INTERESTCATEGORY_ALIENBASE:
 	case INTERESTCATEGORY_RESCUE:
+		CP_EndRescueMission(mission, NULL, qfalse);
+		CP_MissionRemove(mission);
+		break;
+	case INTERESTCATEGORY_ALIENBASE:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Com_Printf("CP_MissionStageEnd: Invalid type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
@@ -1093,10 +1130,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 	}
 
 	if (mission->category == INTERESTCATEGORY_RESCUE) {
-		if (won)
-			/* return to collect goods and aliens from the crashed aircraft */
-			B_DumpAircraftToHomeBase(mission->data.aircraft);
-		AIR_DestroyAircraft(mission->data.aircraft);
+		CP_EndRescueMission(mission, aircraft, won);
 	}
 
 	AIR_AircraftReturnToBase(aircraft);
@@ -1265,6 +1299,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
  * @param[in] aircraft The crashed aircraft to spawn the rescue mission for.
  * @param[in] ufo The UFO that shot down the phalanx aircraft, can also
  * be @c NULL if the UFO was destroyed, too or left already.
+ * @todo Don't spawn rescue mission every time! It should depend on pilot's manoeuvring (piloting) skill
  */
 void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 {
@@ -1273,8 +1308,10 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	const date_t crashDelay = {14, 0};
 	const nation_t *nation;
 	mission_t *mission;
-	employee_t *employee;
 	employee_t *pilot;
+#if 0
+	employee_t *employee;
+#endif
 
 	mission = CP_CreateNewMission(INTERESTCATEGORY_RESCUE, qtrue);
 	if (!mission)
@@ -1304,15 +1341,17 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	mission->ufo = ufo;
 	mission->stage = STAGE_TERROR_MISSION;
 
+#if 0
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		/*const character_t *chr = &employee->chr;
-		const chrScoreGlobal_t *score = &chr->score;*/
+		const character_t *chr = &employee->chr;
+		const chrScoreGlobal_t *score = &chr->score;
 		/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
-		AIR_RemoveEmployee(employee, aircraft);
+		E_DeleteEmployee(employee);
 	}
+#endif
 
 	pilot = AIR_GetPilot(aircraft);
-	AIR_RemovePilotFromAssignedAircraft(aircraft->homebase, pilot);
+	/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
 	E_DeleteEmployee(pilot);
 
 	aircraft->status = AIR_CRASHED;
@@ -1329,7 +1368,6 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, qfalse);
 }
-
 
 /*====================================
 *
