@@ -22,7 +22,7 @@ UFO2MAP = 'ufo2map'
 if os.name == 'nt':
     UFO2MAP+= '.exe'
 
-UFO2MAPFLAGS = ' -v 2 -nice 19 -extra'
+UFO2MAPFLAGS = ' -v 4 -nice 19 -quant 4 -extra'
 URI = 'http://88.198.107.20/~mattn/ufoai/maps'
 __version__ = '0.0.4.2'
 
@@ -257,7 +257,7 @@ def gen(args):
             for i in old_maps:
                 os.unlink(i)
 
-    run('make maps -j 2')
+    run('make maps UFO2MAPFLAGS="%s"' % UFO2MAPFLAGS)
     print
 
     # create md5 sums of .map files
