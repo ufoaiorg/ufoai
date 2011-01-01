@@ -3303,8 +3303,11 @@ void Com_ParseScripts (qboolean onlyServer)
 
 int Com_GetScriptChecksum (void)
 {
-	int checksum = 0;
+	static int checksum = 0;
 	const char *buf;
+
+	if (checksum != 0)
+		return checksum;
 
 	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
 		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
