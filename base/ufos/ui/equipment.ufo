@@ -92,6 +92,15 @@ window equipment extends objectinfo
 		*txt_actor7@color = "0 .78 0 1"
 	}
 
+	confunc equipenable {
+		*bt_actor<1>@disabled = false
+	}
+
+	confunc equipdisable {
+		*bt_actor<1>@disabled = true
+		*cvar:mn_name<1> = ""
+	}
+
 	confunc equipdeselect {
 		*bt_actor<1>@disabled = false
 		*txt_actor<1>@color = "0 .78 0 1"
@@ -101,11 +110,6 @@ window equipment extends objectinfo
 		*bt_actor<1>@disabled = false
 		*cvar:selected_actor = <1>
 		*txt_actor<1>@color = "1 1 1 1"
-	}
-
-	confunc equipdisable {
-		*bt_actor<1>@disabled = true
-		*cvar:mn_name<1> = ""
 	}
 
 	radiobutton bt_actor0
