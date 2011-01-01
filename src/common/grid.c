@@ -234,7 +234,7 @@ static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSize
 
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST(path, x, y, z, *crouchingState);
-	if (RT_AREA(path, x, y, z, *crouchingState) <= len) {
+	if (RT_AREA_POS(path, pos, *crouchingState) <= len) {
 		return qfalse;	/* Toggling crouch is not optimum. */
 	}
 
@@ -481,7 +481,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	z = pos[2];
 
 	RT_AREA_TEST(path, x, y, z, crouchingState);
-	oldLen = RT_AREA(path, x, y, z, crouchingState);
+	oldLen = RT_AREA_POS(path, pos, crouchingState);
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actorSize, dir, crouchingState, oldLen);
 
@@ -622,7 +622,7 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	assert((from[2]) < PATHFINDING_HEIGHT);
 	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
 
-	RT_AREA(path, from[0], from[1], from[2], crouchingState) = 0;
+	RT_AREA_POS(path, from, crouchingState) = 0;
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Start at (%i %i %i) c:%i\n", from[0], from[1], from[2], crouchingState);
 
@@ -638,7 +638,7 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 		*/
 		/**< if reaching that square already took too many TUs,
 		 * don't bother to reach new squares *from* there. */
-		if (RT_AREA(path, pos[0], pos[1], pos[2], crouchingState) >= distance)
+		if (RT_AREA_POS(path, pos, crouchingState) >= distance)
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
@@ -684,7 +684,7 @@ pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingSta
 	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
 
 	if (!stored)
-		return RT_AREA(path, to[0], to[1], to[2], crouchingState);
+		return RT_AREA_POS(path, to, crouchingState);
 	else
 		return RT_SAREA(path, to[0], to[1], to[2], crouchingState);
 }
@@ -700,7 +700,7 @@ pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingSta
  */
 int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingState)
 {
-	const pos_t l = RT_AREA(path, toPos[0], toPos[1], toPos[2], crouchingState); /**< Get TUs for this square */
+	const pos_t l = RT_AREA_POS(path, toPos, crouchingState); /**< Get TUs for this square */
 
 	/* Check to see if the TUs needed to move here are greater than 0 and less then ROUTING_NOT_REACHABLE */
 	if (!l || l == ROUTING_NOT_REACHABLE) {
