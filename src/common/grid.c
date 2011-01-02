@@ -211,11 +211,6 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
  */
 static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, byte len, const pos3_t pos, const int dir, byte *crouchingState)
 {
-	int x, y, z;
-	x = pos[0];
-	y = pos[1];
-	z = pos[2];
-
 	/* Can't stand up if standing. */
 	if (dir == DIRECTION_STAND_UP && *crouchingState == 0) {
 		return qfalse;
@@ -233,7 +228,7 @@ static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSize
 	*crouchingState ^= 1;
 
 	/* Is this a better move into this cell? */
-	RT_AREA_TEST(path, x, y, z, *crouchingState);
+	RT_AREA_TEST_POS(path, pos, *crouchingState);
 	if (RT_AREA_POS(path, pos, *crouchingState) <= len) {
 		return qfalse;	/* Toggling crouch is not optimum. */
 	}
@@ -480,7 +475,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	y = pos[1];
 	z = pos[2];
 
-	RT_AREA_TEST(path, x, y, z, crouchingState);
+	RT_AREA_TEST_POS(path, pos, crouchingState);
 	oldLen = RT_AREA_POS(path, pos, crouchingState);
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actorSize, dir, crouchingState, oldLen);
