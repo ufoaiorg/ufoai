@@ -205,6 +205,7 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
  * @brief Handle couching/uncrouching moves
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] pos Current location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
@@ -241,6 +242,7 @@ static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSize
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
+ * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
@@ -271,7 +273,9 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
  * @note Fliers use this code only when they are walking.
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] pos Current location in the map.
+ * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
@@ -372,6 +376,7 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
+ * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
