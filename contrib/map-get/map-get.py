@@ -258,7 +258,7 @@ def upgrade(arg):
             continue
 
 
-        if md5sum(mappath, True) != maps[i].maphash:
+        if md5sum(mappath, False) != maps[i].maphash:
             print '* %s version mismatch, skip update' % map_name
             missmatch += 1
             continue
@@ -272,10 +272,11 @@ def upgrade(arg):
             open(bsppath, 'wb').write(data)
             print '* %s - updated' % i
             updated += 1
-        else:
-            if displayAlreadyUpToDate:
-                print '* %s - already up to date' % i
-            uptodate += 1
+            continue
+
+        if displayAlreadyUpToDate:
+            print '* %s - already up to date' % i
+        uptodate += 1
 
     print
     print '%d upgraded, %d version mismatched, %d already up to date' % (updated, missmatch, uptodate)
