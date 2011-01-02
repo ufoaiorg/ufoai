@@ -19,7 +19,9 @@ UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
 
 INTERACTIVE_REPLY = 'query'
 
-UFO2MAP = 'ufo2map'
+UFO2MAP_DIRSRC = UFOAI_ROOT + '/src/tools/ufo2map'
+UFO2MAP_MAINSRC = UFOAI_ROOT + '/src/tools/ufo2map/ufo2map.c'
+UFO2MAP = UFOAI_ROOT + '/ufo2map'
 if os.name == 'nt':
     UFO2MAP+= '.exe'
 
@@ -115,6 +117,8 @@ class Ufo2mapMetadata:
 
     def __init__(self):
         self.hash_from_source = None
+        self.version_from_source = None
+        self.version_from_binary = None
         self.version = None
 
     def set_content(self, data):
@@ -132,11 +136,18 @@ class Ufo2mapMetadata:
         data += "hash_from_source: %s\n" % self.hash_from_source
         return data
 
+    def get_full_content(self):
+        data = ""
+        data += "version_from_binary: %s\n" % self.version_from_source
+        data += "version_from_source: %s\n" % self.version_from_binary
+        data += "hash_from_source: %s\n" % self.hash_from_source
+        data += "version: %s\n" % self.version
+        return data
+
     def extract(self):
         """Extract ufo2map information from source and binary files."""
 
         # TODO maybe useless
-        UFO2MAP_DIRSRC = 'src/tools/ufo2map'
         if os.path.exists(UFO2MAP_DIRSRC):
             src = md5()
             files = []
@@ -152,7 +163,7 @@ class Ufo2mapMetadata:
         # take the version from the more up-to-date
         timestamp = 0
         if os.path.exists(UFO2MAP):
-            version = execute("./%s --version" % UFO2MAP)
+            version = execute("%s --version" % UFO2MAP)
             # format is ATM "version:1.2.5 revision:1"
             version = version.replace("version", "")
             version = version.replace("revision", "rev")
@@ -161,11 +172,11 @@ class Ufo2mapMetadata:
             version = version.strip()
             # format converted to "1.2.5rev1"
             self.version = version
+            self.version_from_binary = version
 
             stat = os.stat(UFO2MAP)
             timestamp = stat.st_mtime
 
-        UFO2MAP_MAINSRC = 'src/tools/ufo2map/ufo2map.c'
         if os.path.exists(UFO2MAP_MAINSRC):
             file = open(UFO2MAP_MAINSRC, 'rt')
             data = file.read()
@@ -176,6 +187,7 @@ class Ufo2mapMetadata:
             version = v[0]
             if r != []:
                 version += "rev" + r[0]
+            self.version_from_source = version
 
             stat = os.stat(UFO2MAP_MAINSRC)
             t = stat.st_mtime
@@ -200,6 +212,7 @@ def upgrade(arg):
     global displayAlreadyUpToDate
     maps = {}
     print 'getting list of available maps'
+    ufo2map_srchash = None
     for l in download(URI + '/Maps').split('\n'):
         if l == "":
             continue
@@ -207,32 +220,31 @@ def upgrade(arg):
         if len(i) == 3:
             o = Object()
             if i[0] == 'ufo2map':
-                o.binhash = i[1]
-                o.srchash = i[2]
-            else:
-                o.bsphash = i[1]
-                o.maphash = i[2]
+                ufo2map_srchash = i[1]
+                continue
+            o.bsphash = i[1]
+            o.maphash = i[2]
             maps[i[0]] = o
         else:
             print 'Line "%s" corrupted' % l
 
     ufo2mapMeta = Ufo2mapMetadata()
     ufo2mapMeta.extract()
+    print "Local ufo2map information:"
+    print '* ' + ufo2mapMeta.get_full_content().strip().replace("\n", "\n* ")
+    print
 
     # check ufo2map's _source_ md5
-    if 'ufo2map' not in maps:
+    if ufo2map_srchash == None:
         print 'Mirror corrupted, please try later. If problem persists contact admin.'
         sys.exit(6)
-    if maps['ufo2map'].srchash == ufo2mapMeta.hash_from_source:
-        print 'ufo2map version ok'
-    else:
-        print 'WARNING ufo2map version mismatch'
+
+    if ufo2map_srchash != ufo2mapMeta.hash_from_source:
+        print 'WARNING: ufo2map version mismatch'
         if not ask_boolean_question('Continue? [Y|n]'):
             sys.exit(3)
-    del maps['ufo2map']
 
-	print 'INFO write files into ' + UFOAI_ROOT
-
+	print 'Start updating files to ' + UFOAI_ROOT
     updated = missmatch = uptodate = 0
     mapnames = maps.keys()
     mapnames.sort()
@@ -242,13 +254,13 @@ def upgrade(arg):
         bsppath = UFOAI_ROOT + '/' + i
 
         if not os.path.exists(mappath):
-            print '%s not found' % map_name
+            print '* %s not found' % map_name
             continue
 
 
         if md5sum(mappath, True) != maps[i].maphash:
-            print '%s version mismatch' % i
-            missmatch+= 1
+            print '* %s version mismatch, skip update' % map_name
+            missmatch += 1
             continue
 
         if not os.path.exists(bsppath) or md5sum(bsppath, True) != maps[i].bsphash:
@@ -258,13 +270,14 @@ def upgrade(arg):
             data = GzipFile(name, 'rb').read()
             os.unlink(name)
             open(bsppath, 'wb').write(data)
-            print '%s - updated' % i
-            updated+= 1
+            print '* %s - updated' % i
+            updated += 1
         else:
             if displayAlreadyUpToDate:
-                print '%s - already up to date' % i
-            uptodate+= 1
+                print '* %s - already up to date' % i
+            uptodate += 1
 
+    print
     print '%d upgraded, %d version mismatched, %d already up to date' % (updated, missmatch, uptodate)
 
 
