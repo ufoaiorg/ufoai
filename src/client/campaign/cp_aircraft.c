@@ -498,7 +498,7 @@ qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
  * @return @c false if given aircraft is not on geoscape, @c true if given aircraft is on geoscape.
  * @sa UFO_IsUFOSeenOnGeoscape
  */
-qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
+qboolean AIR_IsAircraftOnGeoscape (const aircraft_t const * aircraft)
 {
 	switch (aircraft->status) {
 	case AIR_IDLE:

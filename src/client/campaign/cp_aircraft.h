@@ -256,7 +256,7 @@ int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
-qboolean AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
+qboolean AIR_IsAircraftOnGeoscape(const aircraft_t const *aircraft);
 
 void AIR_DeleteAircraft(aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);

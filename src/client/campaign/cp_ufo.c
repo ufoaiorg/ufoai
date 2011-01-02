@@ -436,8 +436,8 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 
 /**
  * @brief Make the specified UFO pursue a phalanx aircraft.
- * @param[in] ufo Pointer to the UFO.
- * @param[in] aircraft Pointer to the target aircraft.
+ * @param[in,out] ufo Pointer to the UFO.
+ * @param[in,out] aircraft Pointer to the target aircraft.
  * @sa UFO_SendAttackBase
  */
 qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
@@ -484,6 +484,9 @@ void UFO_SendToDestination (aircraft_t* ufo, const vec2_t dest)
 
 /**
  * @brief Check if the ufo can shoot back at phalanx aircraft
+ * @param[in] campaign The campaign data structure
+ * @param[in,out] ufo The ufo to check the shotting for
+ * @param[in,out] phalanxAircraft The possible target
  */
 void UFO_CheckShootBack (const campaign_t* campaign, aircraft_t *ufo, aircraft_t* phalanxAircraft)
 {
@@ -604,6 +607,58 @@ static void UFO_ListOnGeoscape_f (void)
 #endif
 
 /**
+ * @brief Get the template data for the given ufo type
+ * @param ufoType The ufo type to search the template for.
+ * @note This function will only return those templates that may appear on the geoscape!
+ * @return @c NULL in case the ufoType wasn't found, or the pointer to the ufo template.
+ */
+static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
+{
+	int newUFONum;
+
+	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
+		const aircraft_t *tpl = &ccs.aircraftTemplates[newUFONum];
+		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype && !tpl->notOnGeoscape)
+			break;
+	}
+
+	/* not found */
+	if (newUFONum == ccs.numAircraftTemplates)
+		return NULL;
+
+	return &ccs.aircraftTemplates[newUFONum];
+}
+
+/**
+ * @brief Creates a new ufo on the geoscape from the given aircraft template
+ * @param ufoTemplate The aircraft template to create the ufo from.
+ * @return @c NULL if the max allowed amount of ufos are already on the geoscape, otherwise
+ * the newly created ufo pointer
+ */
+static aircraft_t* UFO_CreateFromTemplate (const aircraft_t *ufoTemplate)
+{
+	aircraft_t *ufo;
+
+	/* check max amount */
+	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE)
+		return NULL;
+
+	/* must be an ufo */
+	assert(ufoTemplate->type == AIRCRAFT_UFO);
+	/* must be allowed to be on the geoscape */
+	assert(!ufoTemplate->notOnGeoscape);
+
+	/* get a new free slot */
+	ufo = UFO_GetByIDX(ccs.numUFOs);
+	/* copy the data */
+	*ufo = *ufoTemplate;
+	/* assign an unique index */
+	ufo->idx = ccs.numUFOs++;
+
+	return ufo;
+}
+
+/**
  * @brief Add a UFO to geoscape
  * @param[in] ufoType The type of ufo (fighter, scout, ...).
  * @param[in] destination Position where the ufo should go. NULL is randomly chosen
@@ -613,36 +668,17 @@ static void UFO_ListOnGeoscape_f (void)
  */
 aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, const vec2_t destination, mission_t *mission)
 {
-	int newUFONum;
 	aircraft_t *ufo;
+	const aircraft_t *ufoTemplate;
 
-	if (ufoType == UFO_MAX) {
-		Com_Printf("UFO_AddToGeoscape: ufotype does not exist\n");
+	ufoTemplate = UFO_GetTemplateForGeoscape(ufoType);
+	if (ufoTemplate == NULL)
 		return NULL;
-	}
-
-	/* check max amount */
-	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE) {
-		Com_DPrintf(DEBUG_CLIENT, "UFO_AddToGeoscape: Too many UFOs on geoscape\n");
-		return NULL;
-	}
-
-	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
-		const aircraft_t *tpl = &ccs.aircraftTemplates[newUFONum];
-		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype && !tpl->notOnGeoscape)
-			break;
-	}
-
-	if (newUFONum == ccs.numAircraftTemplates) {
-		Com_DPrintf(DEBUG_CLIENT, "Could not add ufo type %i to geoscape\n", ufoType);
-		return NULL;
-	}
 
 	/* Create ufo */
-	ufo = UFO_GetByIDX(ccs.numUFOs);
-	*ufo = ccs.aircraftTemplates[newUFONum];
-	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (ccs.numUFOs: %i, newUFONum: %i)\n", ufo->id, ccs.numUFOs, newUFONum);
-	ufo->idx = ccs.numUFOs++;
+	ufo = UFO_CreateFromTemplate(ufoTemplate);
+	if (ufo == NULL)
+		return NULL;
 
 	/* Update Stats of UFO */
 	AII_UpdateAircraftStats(ufo);
