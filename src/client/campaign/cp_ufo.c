@@ -468,7 +468,7 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 
 /**
  * @brief Make the specified UFO go to destination.
- * @param[in] ufo Pointer to the UFO.
+ * @param[in,out] ufo Pointer to the UFO.
  * @param[in] dest Destination.
  * @sa UFO_SendAttackBase
  */

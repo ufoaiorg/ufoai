@@ -730,6 +730,7 @@ static void testAirFight (void)
 	const vec2_t destination = { 10, 10 };
 	mission_t *mission;
 	aircraft_t *aircraft;
+	aircraft_t *ufo;
 	base_t *base;
 	int i, cnt;
 	/* just some random delta time value that is high enough
@@ -763,13 +764,15 @@ static void testAirFight (void)
 	CU_ASSERT_EQUAL(mission->stage, STAGE_COME_FROM_ORBIT);
 	CP_InterceptNextStage(mission);
 	CU_ASSERT_EQUAL(mission->stage, STAGE_INTERCEPT);
-	mission->ufo->ufotype = UFO_FIGHTER;
+	ufo = mission->ufo;
+	CU_ASSERT_PTR_NOT_NULL_FATAL(ufo);
+	ufo->ufotype = UFO_FIGHTER;
 	/* we have to update the routing data here to be sure that the ufo is
 	 * not spawned on the other side of the globe */
-	Vector2Copy(destination, mission->ufo->pos);
-	UFO_SendToDestination(mission->ufo, destination);
-	CU_ASSERT_TRUE(VectorEqual(mission->ufo->pos, base->pos));
-	CU_ASSERT_TRUE(VectorEqual(mission->ufo->pos, aircraft->pos));
+	Vector2Copy(destination, ufo->pos);
+	UFO_SendToDestination(ufo, destination);
+	CU_ASSERT_TRUE(VectorEqual(ufo->pos, base->pos));
+	CU_ASSERT_TRUE(VectorEqual(ufo->pos, aircraft->pos));
 
 	CU_ASSERT_TRUE(aircraft->maxWeapons > 0);
 	for (i = 0; i < aircraft->maxWeapons; i++)
@@ -777,19 +780,20 @@ static void testAirFight (void)
 
 	/* search a target */
 	UFO_CampaignRunUFOs(campaign, deltaTime);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(mission->ufo->aircraftTarget);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(ufo->aircraftTarget);
 
 	/* ensure that one hit will destroy the craft */
-	mission->ufo->aircraftTarget->damage = 1;
+	ufo->aircraftTarget->damage = 1;
 	srand(1);
-	UFO_CheckShootBack(campaign, mission->ufo, mission->ufo->aircraftTarget);
+	UFO_CheckShootBack(campaign, ufo, ufo->aircraftTarget);
 
 	/* one projectile should be spawned */
 	CU_ASSERT_EQUAL(ccs.numProjectiles, 1);
 	AIRFIGHT_CampaignRunProjectiles(campaign, deltaTime);
+	/* don't use mission pointer from here it might been removed */
 
 	/* target is destroyed */
-	CU_ASSERT_PTR_NULL(mission->ufo->aircraftTarget);
+	CU_ASSERT_PTR_NULL(ufo->aircraftTarget);
 
 	/* one aircraft less */
 	CU_ASSERT_EQUAL(cnt - 1, AIR_BaseCountAircraft(base));

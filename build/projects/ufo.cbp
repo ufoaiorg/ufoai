@@ -645,6 +645,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_recon.h" />
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_rescue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\missions\cp_mission_rescue.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_supply.c">
 			<Option compilerVar="CC" />
 		</Unit>

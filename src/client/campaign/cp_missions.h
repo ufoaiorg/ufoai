@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "missions/cp_mission_harvest.h"
 #include "missions/cp_mission_intercept.h"
 #include "missions/cp_mission_recon.h"
+#include "missions/cp_mission_rescue.h"
 #include "missions/cp_mission_supply.h"
 #include "missions/cp_mission_terror.h"
 #include "missions/cp_mission_xvi.h"

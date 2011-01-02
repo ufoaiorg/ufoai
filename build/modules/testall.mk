@@ -166,6 +166,7 @@ $(TARGET)_SRCS      = \
 	client/campaign/missions/cp_mission_harvest.c \
 	client/campaign/missions/cp_mission_intercept.c \
 	client/campaign/missions/cp_mission_recon.c \
+	client/campaign/missions/cp_mission_rescue.c \
 	client/campaign/missions/cp_mission_supply.c \
 	client/campaign/missions/cp_mission_terror.c \
 	client/campaign/missions/cp_mission_xvi.c \

@@ -46,40 +46,6 @@ const int MAX_POS_LOOP = 10;
 static const float MIN_CRASHEDUFO_CONDITION = 0.2f;
 static const float MAX_CRASHEDUFO_CONDITION = 0.81f;
 
-/**
- * @brief Actions to be done when rescue mission finished/expired
- * @param[in,out] mission Pointer to the finished mission
- * @param[in,out] aircraft Pointer to the dropship done the mission
- * @param[in] won Boolean flag if thew mission was successful (from PHALANX's PoV)
- * @todo move this function to a better place
- */
-static void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, qboolean won)
-{
-	aircraft_t *crashedAircraft = mission->data.aircraft;
-
-	assert(crashedAircraft);
-	if (won) {
-		employee_t *employee;
-
-		/* Save the pilot */
-		if (crashedAircraft->pilot)
-			AIR_RemoveEmployee(crashedAircraft->pilot, crashedAircraft);
-		/* Save the soldiers */
-		LIST_Foreach(crashedAircraft->acTeam, employee_t, employee) {
-			AIR_RemoveEmployee(employee, crashedAircraft);
-		}
-
-		/* return to collect goods and aliens from the crashed aircraft */
-		/** @todo it should be dumped to the cargo loot of the dropship done
-		 *  the rescue mission not the base directly */
-		B_DumpAircraftToHomeBase(crashedAircraft);
-	}
-
-	if (won || (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(&ccs.date, &mission->finalDate)))
-		AIR_DestroyAircraft(crashedAircraft);
-
-}
-
 /*====================================
 *
 * Prepare battlescape
@@ -1012,8 +978,7 @@ void CP_MissionStageEnd (const campaign_t* campaign, mission_t *mission)
 		CP_HarvestMissionNextStage(mission);
 		break;
 	case INTERESTCATEGORY_RESCUE:
-		CP_EndRescueMission(mission, NULL, qfalse);
-		CP_MissionRemove(mission);
+		CP_RescueNextStage(mission);
 		break;
 	case INTERESTCATEGORY_ALIENBASE:
 	case INTERESTCATEGORY_NONE:
@@ -1295,51 +1260,27 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 
 /**
- * @brief Spawn a new rescue mission for a crashed aircraft
+ * @brief Spawn a new rescue mission for a crashed (phalanx) aircraft
  * @param[in] aircraft The crashed aircraft to spawn the rescue mission for.
  * @param[in] ufo The UFO that shot down the phalanx aircraft, can also
- * be @c NULL if the UFO was destroyed, too or left already.
+ * be @c NULL if the UFO was destroyed.
+ * @note Don't use ufo's old mission pointer after this call! It might have been removed.
  * @todo Don't spawn rescue mission every time! It should depend on pilot's manoeuvring (piloting) skill
  */
 void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 {
-	const date_t minCrashDelay = {7, 0};
-	/* How long the crash mission will stay before aliens leave / die */
-	const date_t crashDelay = {14, 0};
-	const nation_t *nation;
 	mission_t *mission;
+	mission_t *oldMission;
 	employee_t *pilot;
 #if 0
 	employee_t *employee;
 #endif
 
-	mission = CP_CreateNewMission(INTERESTCATEGORY_RESCUE, qtrue);
-	if (!mission)
-		Com_Error(ERR_DROP, "CP_SpawnRescueMission: mission could not be created");
-
-	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
-	mission->mapDef = NULL;
-	if (!CP_ChooseMap(mission, aircraft->pos)) {
-		CP_MissionRemove(mission);
-		return;
-	}
-
-	if (MAP_IsAircraftSelected(aircraft))
-		MAP_SetSelectedAircraft(NULL);
-
-	Vector2Copy(aircraft->pos, mission->pos);
-	mission->posAssigned = qtrue;
-
-	nation = MAP_GetNation(mission->pos);
-	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
-	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
-	}
-
-	mission->data.aircraft = aircraft;
-	mission->ufo = ufo;
-	mission->stage = STAGE_TERROR_MISSION;
+	/* Handle events about crash */
+	/* Do this first, if noone survived the crash => no mission to spawn */
+	pilot = AIR_GetPilot(aircraft);
+	/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
+	E_DeleteEmployee(pilot);
 
 #if 0
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
@@ -1349,10 +1290,6 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		E_DeleteEmployee(employee);
 	}
 #endif
-
-	pilot = AIR_GetPilot(aircraft);
-	/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
-	E_DeleteEmployee(pilot);
 
 	aircraft->status = AIR_CRASHED;
 
@@ -1364,9 +1301,44 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	/* a crashed aircraft is no longer using capacity of the hangars */
 	AIR_UpdateHangarCapForAll(aircraft->homebase);
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
-	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	if (MAP_IsAircraftSelected(aircraft))
+		MAP_SetSelectedAircraft(NULL);
+
+	/* Check if ufo was destroyed too */
+	if (!ufo) {
+		/** @todo find out what to do in this case */
+		Com_Printf("CP_SpawnRescueMission: UFO was also destroyed.\n");
+		return;
+	}
+
+	/* create the mission */
+	mission = CP_CreateNewMission(INTERESTCATEGORY_RESCUE, qtrue);
+	if (!mission)
+		Com_Error(ERR_DROP, "CP_SpawnRescueMission: mission could not be created");
+
+	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
+	mission->mapDef = NULL;
+	if (!CP_ChooseMap(mission, aircraft->pos)) {
+		Com_Printf("CP_SpawnRescueMission: Cannot set mapDef for mission %s, removing.\n", mission->id);
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->data.aircraft = aircraft;
+	Com_sprintf(mission->location, sizeof(mission->location), "%s %s", _("Crashed"), aircraft->name);
+
+	/* UFO drops it's previous mission and goes for the crashed aircraft */
+	oldMission = ufo->mission;
+	oldMission->ufo = NULL;
+	ufo->mission = mission;
+	CP_MissionRemove(oldMission);
+
+	mission->ufo = ufo;
+	mission->stage = STAGE_MISSION_GOTO;
+	Vector2Copy(aircraft->pos, mission->pos);
+
+	/* Stage will finish when UFO arrives at destination */
+	CP_MissionDisableTimeLimit(mission);
 }
 
 /*====================================
@@ -2089,7 +2061,6 @@ void MIS_InitStartup (void)
 	Cmd_AddCommand("debug_interestset", CP_SetAlienInterest_f, "Set overall interest level.");
 #endif
 }
-
 
 /**
  * @brief Closing actions for missions-subsystem
