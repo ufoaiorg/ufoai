@@ -22,6 +22,7 @@ UFO2MAP = 'ufo2map'
 if os.name == 'nt':
     UFO2MAP+= '.exe'
 
+JOBS = 1
 UFO2MAPFLAGS = ' -v 4 -nice 19 -quant 4 -extra'
 URI = 'http://ufoai.ninex.info/maps/2.4'
 __version__ = '0.0.4.2'
@@ -257,7 +258,7 @@ def gen(args):
             for i in old_maps:
                 os.unlink(i)
 
-    run('make maps UFO2MAPFLAGS="%s"' % UFO2MAPFLAGS)
+    run('make maps -j %d UFO2MAPFLAGS="%s"' % (JOBS, UFO2MAPFLAGS))
     print
 
     # create md5 sums of .map files
@@ -307,7 +308,7 @@ def gen(args):
 def main(argv=None):
     global displayDownloadStatus
     global displayAlreadyUpToDate
-    global INTERACTIVE_REPLY, UFO2MAPFLAGS
+    global INTERACTIVE_REPLY, UFO2MAPFLAGS, JOBS
 
     print "map-get version " + __version__
 
@@ -320,7 +321,7 @@ def main(argv=None):
     parser.add_option('', '--hide-uptodate', action='store_false', dest='displayAlreadyUpToDate')
     parser.add_option("", "--reply", action="store", default="query", type="string", dest="reply", help='Allow to auto reply interactive questions, REPLY={yes,no,query}')
     parser.add_option("", "--flags", action="store", default=UFO2MAPFLAGS, type="string", dest="flags", help='Set specific ufo2map flags for map compilation, default value is "' + UFO2MAPFLAGS + '"')
-
+    parser.add_option("-j", "--jobs", action="store", default=JOBS, type="int", dest="jobs", help='Allow JOBS jobs at once, default value is ' + str(JOBS))
 
     parser.usage = '%prog [options] command\n\n' \
                    'Commands:\n' \
@@ -341,6 +342,7 @@ def main(argv=None):
     displayAlreadyUpToDate = options.displayAlreadyUpToDate
     INTERACTIVE_REPLY = options.reply
     UFO2MAPFLAGS = options.flags
+    JOBS = options.jobs
 
     # on windows always just upgrade
     if os.name == 'nt':
