@@ -375,29 +375,30 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const pos3_t toPos, const int dir, int *passageHeight)
+static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const pos3_t toPos, const int dir)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
+	int passageHeight;
 
 	if (toPos[2] > pos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
 		neededHeight = step->actorHeight + CELL_HEIGHT - max(0, RT_FLOOR_POS(step->map, actorSize, pos));
 		RT_CONN_TEST_POS(step->map, actorSize, pos, coreDir);
-		*passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
+		passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
 	} else if (toPos[2] < pos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
 		neededHeight = step->actorHeight + CELL_HEIGHT - max(0, RT_FLOOR_POS(step->map, actorSize, toPos));
 		RT_CONN_TEST_POS(step->map, actorSize, toPos, coreDir ^ 1);
-		*passageHeight = RT_CONN_POS(step->map, actorSize, toPos, coreDir ^ 1);
+		passageHeight = RT_CONN_POS(step->map, actorSize, toPos, coreDir ^ 1);
 	} else {
 		neededHeight = step->actorHeight;
 		RT_CONN_TEST_POS(step->map, actorSize, pos, coreDir);
-		*passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
+		passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
 	}
-	if (*passageHeight < neededHeight) {
+	if (passageHeight < neededHeight) {
 		return qfalse;
 	}
 	return qtrue;
@@ -466,7 +467,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	int x, y, z;
 	int nx, ny, nz;
 	byte len, oldLen;
-	int passageHeight;
 
 	if (!Grid_StepInit(step, map, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
@@ -523,7 +523,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	 *  to the actor's actual height, including crouching. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
-		if (!Grid_StepCheckFlyingDirections(step, actorSize, pos, toPos, dir, &passageHeight)) {
+		if (!Grid_StepCheckFlyingDirections(step, actorSize, pos, toPos, dir)) {
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
