@@ -507,8 +507,8 @@ void INS_ParseInstallations (const char *name, const char **text)
 			if (Q_streq(token, "cost")) {
 				char cvarname[MAX_VAR] = "mn_installation_";
 
-				Q_strcat(cvarname, installation->id, MAX_VAR);
-				Q_strcat(cvarname, "_cost", MAX_VAR);
+				Q_strcat(cvarname, installation->id, sizeof(cvarname));
+				Q_strcat(cvarname, "_cost", sizeof(cvarname));
 
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -518,7 +518,6 @@ void INS_ParseInstallations (const char *name, const char **text)
 				Cvar_Set(cvarname, va(_("%d c"), atoi(token)));
 			} else if (Q_streq(token, "buildtime")) {
 				char cvarname[MAX_VAR];
-
 
 				token = Com_EParse(text, errhead, name);
 				if (!*text)

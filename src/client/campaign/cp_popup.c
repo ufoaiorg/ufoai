@@ -224,11 +224,11 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 
 	/* Set static datas in popup_aircraft */
 	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
-	Q_strcat(popupAircraft.textPopup, va(_("Back to base\t%s\n"), aircraft->homebase->name), POPUP_AIRCRAFT_MAX_TEXT);
+	Q_strcat(popupAircraft.textPopup, va(_("Back to base\t%s\n"), aircraft->homebase->name), lengthof(popupAircraft.textPopup));
 	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_STOP;
-	Q_strcat(popupAircraft.textPopup, _("Stop\n"), POPUP_AIRCRAFT_MAX_TEXT);
+	Q_strcat(popupAircraft.textPopup, _("Stop\n"), lengthof(popupAircraft.textPopup));
 	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_CHANGE_HOMEBASE;
-	Q_strcat(popupAircraft.textPopup, _("Change homebase\n"), POPUP_AIRCRAFT_MAX_TEXT);
+	Q_strcat(popupAircraft.textPopup, _("Change homebase\n"), lengthof(popupAircraft.textPopup));
 
 	/* Set missions in popup_aircraft */
 	if (AIR_GetTeamSize(aircraft) > 0) {

@@ -634,7 +634,7 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 			Com_Error(ERR_DROP, "CMod_LoadEntityString: found %s when expecting {", token);
 
 		/* new entity */
-		Q_strcat(mapData->mapEntityString, "{ ", MAX_MAP_ENTSTRING);
+		Q_strcat(mapData->mapEntityString, "{ ", sizeof(mapData->mapEntityString));
 
 		/* go through all the dictionary pairs */
 		while (1) {
@@ -660,7 +660,7 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 				/* origins are shifted */
 				sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
-				Q_strcat(mapData->mapEntityString, va("%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]), MAX_MAP_ENTSTRING);
+				Q_strcat(mapData->mapEntityString, va("%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]), sizeof(mapData->mapEntityString));
 				/* If we have a model, then unadjust it's mins and maxs. */
 				if (model) {
 					VectorSubtract(model->mins, shift, model->mins);
@@ -674,17 +674,17 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 				model = &tile->models[NUM_REGULAR_MODELS + num - 1];
 				/* Now update the model number to reflect prior tiles loaded. */
 				num += mapData->numInline;
-				Q_strcat(mapData->mapEntityString, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
+				Q_strcat(mapData->mapEntityString, va("%s *%i ", keyname, num), sizeof(mapData->mapEntityString));
 			} else if (Q_streq(keyname, "targetname") || Q_streq(keyname, "target")) {
-				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tile->idx), MAX_MAP_ENTSTRING);
+				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tile->idx), sizeof(mapData->mapEntityString));
 			} else {
 				/* just store key and value */
-				Q_strcat(mapData->mapEntityString, va("%s \"%s\" ", keyname, token), MAX_MAP_ENTSTRING);
+				Q_strcat(mapData->mapEntityString, va("%s \"%s\" ", keyname, token), sizeof(mapData->mapEntityString));
 			}
 		}
 
 		/* finish entity */
-		Q_strcat(mapData->mapEntityString, "} ", MAX_MAP_ENTSTRING);
+		Q_strcat(mapData->mapEntityString, "} ", sizeof(mapData->mapEntityString));
 	}
 }
 
