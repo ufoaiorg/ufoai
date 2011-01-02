@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
 
-import sys, os
+import sys, os, re
 try:
 	from hashlib import md5
 except ImportError:
 	from md5 import md5
+import subprocess
 import urllib2
 from gzip import GzipFile
 from tempfile import mkstemp
@@ -59,6 +60,11 @@ Changelog
 
 # TODO: use os.path.join
 
+def execute(cmd):
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    data = p.stdout.read()
+    return data
+
 def run(cmd, mandatory=True):
     print cmd
     if os.system(cmd) and mandatory:
@@ -105,26 +111,77 @@ def download(uri):
         sys.stdout.write('\r%s\r' % (' '*len(out)))
     return re
 
+class Ufo2mapMetadata:
 
-def ufo2map_hash():
-    """create an md5sum from the source and the binary of ufo2map."""
-    # TODO fight against / handle svn:eol-style=native
-    # FIXME a hash on ufo2map binary mean nothing
-    src = md5()
-    files = []
-    for i in os.walk('src/tools/ufo2map'):
-        if '/.' in i[0]:
-            continue
-        files+= [os.path.join(i[0], j) for j in i[2]]
-    files.sort()
-    for fname in files:
-        src.update(open(fname).read())
-    src = src.hexdigest()
-    bin = 'null'
-    if os.path.exists(UFO2MAP):
-        bin = md5(open(UFO2MAP).read()).hexdigest()
-    debug('ufo2map_hash: %s %s' % (bin, src))
-    return [bin, src]
+    def __init__(self):
+        self.hash_from_source = None
+        self.version = None
+
+    def set_content(self, data):
+        lines = data.split("\n")
+        for line in lines:
+            elements = line.split(":", 2)
+            if elements[0].strip() == "version":
+                self.version = elements[1].strip()
+            elif elements[0].strip() == "hash_from_source":
+                self.hash_from_source = elements[1].strip()
+
+    def get_content(self):
+        data = ""
+        data += "version: %s\n" % self.version
+        data += "hash_from_source: %s\n" % self.hash_from_source
+        return data
+
+    def extract(self):
+        """Extract ufo2map information from source and binary files."""
+
+        # TODO maybe useless
+        UFO2MAP_DIRSRC = 'src/tools/ufo2map'
+        if os.path.exists(UFO2MAP_DIRSRC):
+            src = md5()
+            files = []
+            for i in os.walk(UFO2MAP_DIRSRC):
+                if '/.' in i[0]:
+                    continue
+                files+= [os.path.join(i[0], j) for j in i[2]]
+            files.sort()
+            for fname in files:
+                src.update(open(fname, 'rt').read())
+            self.hash_from_source = src.hexdigest()
+
+        # take the version from the more up-to-date
+        timestamp = 0
+        if os.path.exists(UFO2MAP):
+            version = execute("./%s --version" % UFO2MAP)
+            # format is ATM "version:1.2.5 revision:1"
+            version = version.replace("version", "")
+            version = version.replace("revision", "rev")
+            version = version.replace(" ", "")
+            version = version.replace(":", "")
+            version = version.strip()
+            # format converted to "1.2.5rev1"
+            self.version = version
+
+            stat = os.stat(UFO2MAP)
+            timestamp = stat.st_mtime
+
+        UFO2MAP_MAINSRC = 'src/tools/ufo2map/ufo2map.c'
+        if os.path.exists(UFO2MAP_MAINSRC):
+            file = open(UFO2MAP_MAINSRC, 'rt')
+            data = file.read()
+            file.close()
+            version = ""
+            v = re.findall("#define\s+VERSION\s+\"([0-9.]+)\"", data)
+            r = re.findall("#define\s+REVISION\s+\"([0-9.]+)\"", data)
+            version = v[0]
+            if r != []:
+                version += "rev" + r[0]
+
+            stat = os.stat(UFO2MAP_MAINSRC)
+            t = stat.st_mtime
+            if (t > timestamp):
+                timestamp = t
+                self.version = version
 
 class Object:
     pass
@@ -157,14 +214,15 @@ def upgrade(arg):
         else:
             print 'Line "%s" corrupted' % l
 
-    binhash, srchash = ufo2map_hash()
+    ufo2mapMeta = Ufo2mapMetadata()
+    ufo2mapMeta.extract()
 
     # check ufo2map's _source_ md5
-    if 'ufo2map' in maps and maps['ufo2map'].srchash == srchash:
-        print 'ufo2map version ok'
-    elif 'ufo2map' not in maps:
+    if 'ufo2map' not in maps:
         print 'Mirror corrupted, please try later. If problem persists contact admin.'
         sys.exit(6)
+    if maps['ufo2map'].srchash == ufo2mapMeta.hash_from_src:
+        print 'ufo2map version ok'
     else:
         print 'WARNING ufo2map version mismatch'
         if not ask_boolean_question('Continue? [Y|n]'):
@@ -261,9 +319,16 @@ def gen(args):
     run('make maps -j %d UFO2MAPFLAGS="%s"' % (JOBS, UFO2MAPFLAGS))
     print
 
+    ufo2mapMeta = Ufo2mapMetadata()
+    ufo2mapMeta.extract()
+
+    version = open(os.path.join(dst, 'UFO2MAP'), 'wt')
+    version.write(ufo2mapMeta.get_content())
+    version.close()
+
     # create md5 sums of .map files
     maps = open(os.path.join(dst, 'Maps'), 'w')
-    maps.write(' '.join(['ufo2map']+ufo2map_hash()) + '\n')
+    maps.write(' '.join(['ufo2map', ufo2mapMeta.hash_from_source, ufo2mapMeta.hash_from_source]) + '\n')
 
     maps_compiled = 0
     for dirname, dnames, fnames in os.walk('base/maps'):
