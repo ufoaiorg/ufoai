@@ -91,7 +91,7 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 	AIR_Foreach(aircraft) {
 		if (aircraft->homebase != base)
 			continue;
-		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsInAircraftTeam(aircraft, employee))
+		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsEmployeeInAircraft(employee, aircraft))
 			return qtrue;
 	}
 	return qfalse;

@@ -2989,9 +2989,9 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 }
 
 /**
- * @brief Tells you if a soldier is assigned to an aircraft.
- * @param[in] employee The soldier to search for.
- * @param[in] aircraft The aircraft to search the soldier in. Use @c NULL to
+ * @brief Tells you if an employee is assigned to an aircraft.
+ * @param[in] employee The employee to search for.
+ * @param[in] aircraft The aircraft to search the employee in. Use @c NULL to
  * check if the soldier is in @b any aircraft.
  * @return true if the soldier was found in the aircraft otherwise false.
  */
