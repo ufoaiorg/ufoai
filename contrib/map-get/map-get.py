@@ -201,6 +201,8 @@ def upgrade(arg):
     maps = {}
     print 'getting list of available maps'
     for l in download(URI + '/Maps').split('\n'):
+        if l == "":
+            continue
         i = l.split(' ')
         if len(i) == 3:
             o = Object()
@@ -221,7 +223,7 @@ def upgrade(arg):
     if 'ufo2map' not in maps:
         print 'Mirror corrupted, please try later. If problem persists contact admin.'
         sys.exit(6)
-    if maps['ufo2map'].srchash == ufo2mapMeta.hash_from_src:
+    if maps['ufo2map'].srchash == ufo2mapMeta.hash_from_source:
         print 'ufo2map version ok'
     else:
         print 'WARNING ufo2map version mismatch'
