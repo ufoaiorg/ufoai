@@ -1516,6 +1516,7 @@ base/models/objects/store/pellet.md2 | GNU General Public License 2.0 or later |
 base/models/objects/store/pellet.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/switchboard/switchboard.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/switchboard/switchboard.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/switchboard/switchboard_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/tanker/small_pipes.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/tanker/tanker.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/tanker/tanker_a.md2 | GNU General Public License 2.0 or later | Willem Sitters
