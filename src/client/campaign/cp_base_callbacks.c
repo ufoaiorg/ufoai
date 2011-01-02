@@ -662,6 +662,8 @@ static void BaseSummary_Init (const base_t *base)
 	static char textInfoBuffer[256];
 	const aliensCont_t *containment = base->alienscont;
 	int i;
+	aircraftType_t airType;
+	employeeType_t emplType;
 
 	baseCapacities_t cap;
 	const production_queue_t *queue;
@@ -672,16 +674,16 @@ static void BaseSummary_Init (const base_t *base)
 	textStatsBuffer[0] = textInfoBuffer[0] = 0;
 
 	Q_strcat(textInfoBuffer, _("^BAircraft\n"), sizeof(textInfoBuffer));
-	for (i = 0; i <= MAX_HUMAN_AIRCRAFT_TYPE; i++)
-		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(i),
-			AIR_CountTypeInBase(base, i)), sizeof(textInfoBuffer));
+	for (airType = 0; airType <= MAX_HUMAN_AIRCRAFT_TYPE; airType++)
+		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(airType),
+			AIR_CountTypeInBase(base, airType)), sizeof(textInfoBuffer));
 
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
 
 	Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
-	for (i = 0; i < MAX_EMPL; i++) {
-		tmp = E_CountHired(base, i);
-		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(i), tmp), sizeof(textInfoBuffer));
+	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+		tmp = E_CountHired(base, emplType);
+		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(emplType), tmp), sizeof(textInfoBuffer));
 	}
 
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
