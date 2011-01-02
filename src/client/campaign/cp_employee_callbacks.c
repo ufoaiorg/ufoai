@@ -117,10 +117,14 @@ static void E_EmployeeListScroll_f (void)
 			continue;
 		}
 		/* change the buttons */
-		if (E_IsHired(employee))
-			UI_ExecuteConfunc("employeeadd %i", cnt);
-		else
-			UI_ExecuteConfunc("employeedel %i", cnt);
+		if (E_IsHired(employee)) {
+			if (E_IsAwayFromBase(employee))
+				UI_ExecuteConfunc("employeedisable %i", cnt);
+			else
+				UI_ExecuteConfunc("employeefire %i", cnt);
+		} else {
+			UI_ExecuteConfunc("employeehire %i", cnt);
+		}
 
 		cnt++;
 
@@ -131,7 +135,7 @@ static void E_EmployeeListScroll_f (void)
 
 	for (;cnt < maxEmployeesPerPage; cnt++) {
 		Cvar_Set(va("mn_name%i", cnt), "");
-		UI_ExecuteConfunc("employeedisable %i", cnt);
+		UI_ExecuteConfunc("employeehide %i", cnt);
 	}
 
 	UI_ExecuteConfunc("hire_fix_scroll %i", employeeScrollPos);
@@ -330,15 +334,17 @@ static void E_EmployeeHire_f (void)
 		if (!E_UnhireEmployee(employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
-		} else
-			UI_ExecuteConfunc("employeedel %i", button);
+		} else {
+			UI_ExecuteConfunc("employeehire %i", button);
+		}
 	} else {
 		if (!E_HireEmployee(base, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
 			UI_DisplayNotice(_("Could not hire employee"), 2000, "employees");
-			UI_ExecuteConfunc("employeedel %i", button);
-		} else
-			UI_ExecuteConfunc("employeeadd %i", button);
+			UI_ExecuteConfunc("employeehire %i", button);
+		} else {
+			UI_ExecuteConfunc("employeefire %i", button);
+		}
 	}
 	E_EmployeeSelect(employee);
 

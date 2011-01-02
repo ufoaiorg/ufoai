@@ -4,7 +4,6 @@
 
 component checkbox cmpSelect
 {
-		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
 		image		"ui/checkbox_green"
 		size		"20 20"
@@ -51,27 +50,46 @@ window employees
 	}
 
 	/**
-	 * @param[in] <1> row of the employee in the view
-	 */
-	confunc employeedel
-	{
-		*node:root.bt_employee<1>@current = 0
-		*node:root.bt_employee<1>@invis = false
-	}
-
-	/**
-	 * @param[in] <1> row of the employee in the view
-	 */
-	confunc employeeadd
-	{
-		*node:root.bt_employee<1>@current = 1
-		*node:root.bt_employee<1>@invis = false
-	}
-
-	/**
+	 * @brief Disable checkbox (employee is away from base)
 	 * @param[in] <1> row of the employee in the view
 	 */
 	confunc employeedisable
+	{
+		*node:root.bt_employee<1>@current = 1
+		*node:root.bt_employee<1>@invis = false
+		*node:root.bt_employee<1>@disabled = true
+		*node:root.bt_employee<1>@tooltip = "_Employee is away"
+	}
+
+	/**
+	 * @brief Enable checked checkox (Employee can be fired)
+	 * @param[in] <1> row of the employee in the view
+	 */
+	confunc employeefire
+	{
+		*node:root.bt_employee<1>@current = 1
+		*node:root.bt_employee<1>@invis = false
+		*node:root.bt_employee<1>@disabled = false
+		*node:root.bt_employee<1>@tooltip = "_Unhire - Right click to remove"
+	}
+
+	/**
+	 * @brief Enable unchecked checkox (Employee can be hired)
+	 * @param[in] <1> row of the employee in the view
+	 */
+	confunc employeehire
+	{
+		*node:root.bt_employee<1>@current = 0
+		*node:root.bt_employee<1>@invis = false
+		*node:root.bt_employee<1>@disabled = false
+		*node:root.bt_employee<1>@tooltip = "_Hire - Right click to remove"
+	}
+
+	/**
+	 * @brief Hide checkox (Empty slot)
+	 * @param[in] <1> row of the employee in the view
+	 */
+	confunc employeehide
 	{
 		*node:root.bt_employee<1>@invis = true
 	}
