@@ -17,10 +17,10 @@ maps-ents:
 
 # TODO only sync if there were updates on the map files
 maps-sync:
-	contrib/scripts/map-get.py upgrade
+	contrib/map-get/map-get.py upgrade
 
 force-maps-sync:
-	contrib/scripts/map-get.py upgrade --reply=yes
+	contrib/map-get/map-get.py upgrade --reply=yes
 
 clean-maps:
 	@echo "Deleting maps..."
