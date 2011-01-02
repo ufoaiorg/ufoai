@@ -23,7 +23,7 @@ if os.name == 'nt':
     UFO2MAP+= '.exe'
 
 UFO2MAPFLAGS = ' -v 4 -nice 19 -quant 4 -extra'
-URI = 'http://88.198.107.20/~mattn/ufoai/maps'
+URI = 'http://ufoai.ninex.info//maps/2.4'
 __version__ = '0.0.4.2'
 
 displayDownloadStatus = False
