@@ -384,17 +384,23 @@ do {                                            \
 
 #define HASH_Add(hash, elem, index) \
 do { \
-	elem->hash_next = hash[index]; \
-	hash[index] = elem; \
+	const int hashIndex = (index); \
+	assert(hashIndex >= 0); \
+	assert(hashIndex < lengthof(hash)); \
+	(elem)->hash_next = (hash)[hashIndex]; \
+	(hash)[hashIndex] = (elem); \
 } while (0)
 
 #define HASH_Delete(hash, elem, previousElem, index) \
 do { \
 	if (previousElem) { \
-		assert(previousElem->hash_next == elem); \
-		previousElem->hash_next = elem->hash_next; \
+		assert((previousElem)->hash_next == (elem)); \
+		(previousElem)->hash_next = (elem)->hash_next; \
 	} else { \
-		hash[index] = elem->hash_next; \
+		const int hashIndex = (index); \
+		assert(hashIndex >= 0); \
+		assert(hashIndex < lengthof(hash)); \
+		(hash)[hashIndex] = (elem)->hash_next; \
 	} \
 } while (0)
 
