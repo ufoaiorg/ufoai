@@ -88,7 +88,6 @@
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
 			<Add option="-std=c99" />
-			<Add option="-Wdeclaration-after-statement" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_UFO" />

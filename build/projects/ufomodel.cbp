@@ -57,24 +57,23 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-D__GNUWIN32__" />
-			<Add option="-DWINVER=0x501" />
-			<Add option="-ggdb" />
-			<Add option="-Winline" />
-			<Add option="-Wcast-qual" />
 			<Add option="-Wcast-align" />
+			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
+			<Add option="-pedantic" />
+			<Add option="-Wextra" />
+			<Add option="-Wall" />
+			<Add option="-ggdb" />
+			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
 			<Add option="-Wno-long-long" />
-			<Add option="-pedantic" />
-			<Add option="-Wall" />
-			<Add option="-Wextra" />
 			<Add option="-Wno-sign-compare" />
 			<Add option="-Wno-unused-parameter" />
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
 			<Add option="-std=c99" />
-			<Add option="-Wdeclaration-after-statement" />
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_MAP" />
 		</Compiler>
 		<Linker>
