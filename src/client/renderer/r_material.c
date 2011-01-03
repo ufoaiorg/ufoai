@@ -1026,7 +1026,6 @@ void R_LoadMaterials (const char *map)
 				}
 			}
 
-
 			/* append the stage to the chain */
 			if (!m->stages)
 				m->stages = s;
