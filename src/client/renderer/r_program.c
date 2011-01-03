@@ -249,8 +249,8 @@ void R_ShutdownPrograms (void)
 /**
  * @brief Prefixes shader string (out) with in.
  * @param[in] in The string to prefix onto the shader string (out).
- * @param[in/out] out The shader string (initially was the whole shader file).
- * @param[in/out] len The amount of space left in the buffer pointed to by *out (why on earth is it done this way?!)
+ * @param[in,out] out The shader string (initially was the whole shader file).
+ * @param[in,out] len The amount of space left in the buffer pointed to by *out (why on earth is it done this way?!)
  * @return strlen(in)
  */
 static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char **out, size_t *len)
