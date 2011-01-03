@@ -311,12 +311,7 @@ qboolean Cvar_Delete (const char *varName)
 				assert(var->next->prev == var);
 				var->next->prev = var->prev;
 			}
-			if (previousVar) {
-				assert(previousVar->hash_next == var);
-				previousVar->hash_next = var->hash_next;
-			} else {
-				cvarVarsHash[hash] = var->hash_next;
-			}
+			HASH_Delete(cvarVarsHash, var, previousVar, hash);
 			Mem_Free(var->name);
 			Mem_Free(var->string);
 			if (var->description)

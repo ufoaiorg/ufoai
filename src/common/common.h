@@ -388,4 +388,14 @@ do { \
 	hash[index] = elem; \
 } while (0)
 
+#define HASH_Delete(hash, elem, previousElem, index) \
+do { \
+	if (previousElem) { \
+		assert(previousElem->hash_next == elem); \
+		previousElem->hash_next = elem->hash_next; \
+	} else { \
+		hash[index] = elem->hash_next; \
+	} \
+} while (0)
+
 #endif
