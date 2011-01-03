@@ -168,6 +168,8 @@ typedef struct step_s {
  * @brief Initialize the step_t data
  * @param[in] step The struct describing the move
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
+ * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
 static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte crouchingState, const int dir)
@@ -206,8 +208,10 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
  * @param[in] step The struct describing the move
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
+ * @param[in] len The total TUs needed to execute the move
  * @param[in] pos Current location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
+ * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
 static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, byte len, const pos3_t pos, const int dir, byte *crouchingState)
@@ -277,6 +281,7 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
+ * @param[in] exclude Exclude this position from the forbidden list check (the actor's pos)
  * @return false if we can't fly there
  */
 static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const pos3_t exclude)
