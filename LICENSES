@@ -1179,8 +1179,6 @@ base/models/objects/base/turret/turret.md2 | GNU General Public License 2.0 or l
 base/models/objects/base/turret/turret.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/base/turret2/turret.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/base/turret2/turret.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/bed/bed.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/bed/bed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
 base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
@@ -1357,6 +1355,8 @@ base/models/objects/firehose/firehose.png | GNU General Public License 2.0 or la
 base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later
+base/models/objects/furniture/bed/bed.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/bed/bed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/campbed/campbed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/chairs/bank1.md2 | GNU General Public License 2.0 or later | Willem Sitters
