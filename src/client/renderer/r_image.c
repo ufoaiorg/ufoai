@@ -453,24 +453,19 @@ void R_UploadAlpha (const image_t *image, const byte *alphaData)
 
 static inline void R_DeleteImage (image_t *image)
 {
-	image_t *next = image->hashNext;
-	image_t *prev = image->hashPrev;
+	const unsigned int hash = Com_HashKey(image->name, MAX_IMAGEHASH);
+	image_t *var, *previousVar = NULL;
 
 	/* free it */
 	glDeleteTextures(1, (GLuint *) &image->texnum);
 	R_CheckError();
 
-	if (next) {
-		assert(next->hashPrev == image);
-		next->hashPrev = prev;
-	}
-	if (prev) {
-		assert(prev->hashNext == image);
-		prev->hashNext = next;
-	} else {
-		const unsigned int hash = Com_HashKey(image->name, MAX_IMAGEHASH);
-		assert(imageHash[hash] == image);
-		imageHash[hash] = next;
+	for (var = imageHash[hash]; var; var = var->hash_next) {
+		if (Q_streq(var->name, image->name) ) {
+			HASH_Delete(imageHash, var, previousVar, hash);
+			break;
+		}
+		previousVar = var;
 	}
 
 	OBJZERO(*image);
@@ -482,7 +477,7 @@ image_t *R_GetImage (const char *name)
 	const unsigned hash = Com_HashKey(name, MAX_IMAGEHASH);
 
 	/* look for it */
-	for (image = imageHash[hash]; image; image = image->hashNext)
+	for (image = imageHash[hash]; image; image = image->hash_next)
 		if (Q_streq(name, image->name))
 			return image;
 
@@ -545,10 +540,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	}
 
 	hash = Com_HashKey(image->name, MAX_IMAGEHASH);
-	image->hashNext = imageHash[hash];
-	if (imageHash[hash])
-		imageHash[hash]->hashPrev = image;
-	imageHash[hash] = image;
+	HASH_Add(imageHash, image, hash);
 
 	if (pic) {
 		R_BindTexture(image->texnum);
