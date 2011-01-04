@@ -196,11 +196,12 @@ def plot(output, d, data, times, imagename):
 
     cmds+= 'plot '
     p = []
+    tmpfile = []
     for i in data:
         plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
-        f = tempfile.NamedTemporaryFile(delete=False)
+        f = tempfile.NamedTemporaryFile()
         f.write(plot_data)
-        f.close()
+        tmpfile.append(f)
         p.append("'%s' title \"%s\" " % (f.name, i))
 
     if len(p) == 0:
@@ -208,13 +209,14 @@ def plot(output, d, data, times, imagename):
 
     cmds+= ', '.join(p) + ';\n'
 
-    f = tempfile.NamedTemporaryFile(delete=False)
+    f = tempfile.NamedTemporaryFile()
+    tmpfile.append(f)
     f.write(cmds)
-    f.close()
     os.system('gnuplot %s' % f.name)
+    f.close()
 
-    # raw_input('press return to continue')
-
+    for f in tmpfile:
+        f.close()
 
 def setup(output_path):
     """Check if output folders etc. are in place"""
