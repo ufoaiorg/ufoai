@@ -930,6 +930,8 @@ qboolean CL_ParseClientData (const char *type, const char *name, const char **te
 		CL_ParseMapDefinition(name, text);
 	else if (Q_streq(type, "actorskin"))
 		CL_ParseActorSkin(name, text);
+	else if (Q_streq(type, "cgame"))
+		GAME_ParseModes(name, text);
 	return qtrue;
 }
 

@@ -137,6 +137,6 @@ typedef struct cgame_import_s {
 	void (IMPORT *Cmd_ExecuteString) (const char *text);
 } cgame_import_t;
 
-cgame_export_t *GetCGameAPI(cgame_import_t *import);
+const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
 
 #endif

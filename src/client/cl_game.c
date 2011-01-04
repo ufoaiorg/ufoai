@@ -32,7 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/events/e_main.h"
 #include "cl_inventory.h"
 #include "ui/node/ui_node_model.h"
+#include "../shared/parse.h"
 
+#define HARD_LINKED_CGAME
+
+#ifdef HARD_LINKED_CGAME
 static const cgame_export_t gameTypeList[] = {
 	{"Multiplayer mode", "multiplayer", 1, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape, NULL, GAME_MP_NotifyEvent},
 	{"Campaign mode", "campaigns", 0, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetItemModel, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, NULL, NULL, GAME_CP_GetTeamDef, NULL},
@@ -40,6 +44,25 @@ static const cgame_export_t gameTypeList[] = {
 
 	{NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };
+
+static const char *cgameMenu;
+
+const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
+{
+	const cgame_export_t *list = gameTypeList;
+
+	if (cgameMenu == NULL)
+		return NULL;
+
+	while (list) {
+		if (Q_streq(list->menu, cgameMenu))
+			return list;
+		list++;
+	}
+
+	return NULL;
+}
+#endif
 
 /**
  * @brief static character array that can be used by a game mode to store the needed character values.
@@ -433,13 +456,86 @@ static void UI_SelectMap_f (void)
 	Com_Printf("Could not find map %s\n", mapname);
 }
 
+typedef struct cgameType_s {
+	char id[MAX_VAR];		/**< the id is also the file basename */
+	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
+} cgameType_t;
+
+#define MAX_CGAMETYPES 16
+static cgameType_t cgameTypes[MAX_CGAMETYPES];
+static int numCGameTypes;
+
+/** @brief Valid equipment definition values from script files. */
+static const value_t cgame_vals[] = {
+	{"window", V_STRING, offsetof(cgameType_t, window), 0},
+
+	{NULL, 0, 0, 0}
+};
+
+void GAME_ParseModes (const char *name, const char **text)
+{
+	const char *errhead = "GAME_ParseModes: unexpected end of file (cgame ";
+	cgameType_t *ed;
+	const char *token;
+	const value_t *vp;
+	int i;
+
+	/* search for equipments with same name */
+	for (i = 0; i < numCGameTypes; i++)
+		if (Q_streq(name, cgameTypes[i].id))
+			break;
+
+	if (i < numCGameTypes) {
+		Com_Printf("GAME_ParseModes: cgame def \"%s\" with same name found, second ignored\n", name);
+		return;
+	}
+
+	if (i >= MAX_CGAMETYPES)
+		Sys_Error("GAME_ParseModes: MAX_CGAMETYPES exceeded\n");
+
+	/* initialize the equipment definition */
+	ed = &cgameTypes[numCGameTypes++];
+	OBJZERO(*ed);
+
+	Q_strncpyz(ed->id, name, sizeof(ed->id));
+
+	/* get it's body */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("GAME_ParseModes: cgame def \"%s\" without body ignored\n", name);
+		numCGameTypes--;
+		return;
+	}
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text || *token == '}')
+			return;
+
+		for (vp = cgame_vals; vp->string; vp++)
+			if (Q_streq(token, vp->string)) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
+				break;
+			}
+
+		if (!vp->string) {
+			Sys_Error("unknown token in cgame definition %s: '%s'", ed->id, token);
+		}
+	} while (*text);
+}
+
 /**
  * @brief Decides with game mode should be set - takes the menu as reference
  */
 static void GAME_SetMode_f (void)
 {
 	const char *modeName;
-	const cgame_export_t *list = gameTypeList;
+	int i;
 
 	if (Cmd_Argc() == 2)
 		modeName = Cmd_Argv(1);
@@ -449,12 +545,17 @@ static void GAME_SetMode_f (void)
 	if (modeName[0] == '\0')
 		return;
 
-	while (list->name) {
-		if (Q_streq(list->menu, modeName)) {
-			GAME_SetMode(list);
+	for (i = 0; i < numCGameTypes; i++) {
+		cgameType_t *t = &cgameTypes[i];
+		if (Q_streq(t->window, modeName)) {
+			const cgame_export_t *gametype;
+#ifdef HARD_LINKED_CGAME
+			cgameMenu = t->window;
+#endif
+			gametype = GetCGameAPI(GAME_GetImportData());
+			GAME_SetMode(gametype);
 			return;
 		}
-		list++;
 	}
 	Com_Printf("GAME_SetMode_f: Mode '%s' not found\n", modeName);
 }

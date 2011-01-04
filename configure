@@ -9,6 +9,7 @@ MAKEFILE_LOCAL=Makefile.local
 DEBUG=1
 UNIVERSAL=
 HARD_LINKED_GAME=
+HARD_LINKED_CGAME=
 PARANOID=
 PROFILING=
 PREFIX=/usr/local
@@ -99,6 +100,7 @@ add_to_config_h() {
 config_h() {
 	add_to_config_h PARANOID "Enable paranoid build"
 	add_to_config_h HARD_LINKED_GAME "Enable hard linked game"
+	add_to_config_h HARD_LINKED_CGAME "Enable hard linked cgame"
 	add_to_config_h USE_SIGNALS "Use signal handler"
 	add_to_config_h_quote PKGDATADIR "Setting custom data directory"
 	add_to_config_h_quote PKGLIBDIR "Setting custom library directory"
@@ -112,6 +114,7 @@ makefile_local() {
 	add_to_makefile_local W2K "Enable Windows 2000 compatibility"
 	add_to_makefile_local SSE "Enable Streaming SIMD Extensions"
 	add_to_makefile_local HARD_LINKED_GAME
+	add_to_makefile_local HARD_LINKED_CGAME
 	add_to_makefile_local UNIVERSAL "Build a universal binary"
 	add_to_makefile_local TARGET_OS "Compile for ${TARGET_OS}"
 	add_to_makefile_local TARGET_ARCH "Compile for ${TARGET_ARCH}"
@@ -323,6 +326,12 @@ while [ $# -gt 0 ]; do
 		;;
 	--disable-hardlinkedgame)
 		HARD_LINKED_GAME=
+		;;
+	--enable-hardlinkedcgame)
+		HARD_LINKED_CGAME=1
+		;;
+	--disable-hardlinkedcgame)
+		HARD_LINKED_CGAME=
 		;;
 	--enable-paranoid)
 		PARANOID=1

@@ -1,0 +1,11 @@
+cgame multiplayer {
+	window	"multiplayer"
+}
+
+cgame singleplayer {
+	window	"singleplayer"
+}
+
+cgame skirmish {
+	window	"skirmish"
+}
