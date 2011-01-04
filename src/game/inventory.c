@@ -918,6 +918,7 @@ static int I_GetUsedSlots (inventoryInterface_t* self)
  * @param[in] name The name that is shown in the output
  * @param[out] interface The inventory interface pointer which should be initialized in this function.
  * @param[in] csi The client-server-information structure
+ * @param[in] import Pointers to the lifecycle functions
  * @sa G_Init
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
