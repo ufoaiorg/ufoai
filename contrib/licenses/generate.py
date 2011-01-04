@@ -189,34 +189,31 @@ def plot(output, d, data, times, imagename):
         if lastelement[0] < lastrevision:
             data[i].append((lastelement[0] + 1, 0))
 
+    filename = "%s/licenses/public_html%s/%s" % (output, d, imagename)
+    print "* %s" % filename
     cmds+= 'set style data linespoints;\n'
-    cmds+= 'set output "%s/licenses/public_html%s/%s";\n' % (output, d, imagename)
+    cmds+= 'set output "%s";\n' % filename
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
     cmds+= 'set yrange [0 to %i];\n' % (int(ymax * 1.15))
 
     cmds+= 'plot '
     p = []
-    tmpfile = []
     for i in data:
         plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
-        f = tempfile.NamedTemporaryFile()
+        f = open(tempfile.mktemp(), "wt")
         f.write(plot_data)
-        tmpfile.append(f)
         p.append("'%s' title \"%s\" " % (f.name, i))
+        f.close()
 
     if len(p) == 0:
         return
 
     cmds+= ', '.join(p) + ';\n'
 
-    f = tempfile.NamedTemporaryFile()
-    tmpfile.append(f)
+    f = open(tempfile.mktemp(), "wt")
     f.write(cmds)
-    os.system('gnuplot %s' % f.name)
     f.close()
-
-    for f in tmpfile:
-        f.close()
+    os.system('gnuplot %s' % f.name)
 
 def setup(output_path):
     """Check if output folders etc. are in place"""
