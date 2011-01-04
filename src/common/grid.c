@@ -541,6 +541,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		if (!Grid_StepCheckWalkingDirections(step, actorSize, path, pos, toPos, dir, exclude)) {
 			return;
 		}
+		nz = toPos[2];	/* get the potentially modified z value back into business */
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
