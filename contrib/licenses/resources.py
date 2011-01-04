@@ -19,6 +19,7 @@
 import subprocess
 import hashlib, os, re
 import datetime
+import licensesapi
 from xml.dom.minidom import parseString
 
 CACHING = False
@@ -87,16 +88,10 @@ class Resources(object):
     def __init__(self):
         self.resources = {}
         self.computedBaseDir = set()
-        self.mode = "svn"
         self.timestamp = None
-        if os.path.exists("LICENSES"):
-            self.mode = "git"
 
     def computeResources(self, dir):
-        if self.mode == "git":
-            self.computeResourcesFromGit(dir)
-        else:
-            self.computeResourcesFromSVN(dir)
+        self.computeResourcesFromGit(dir)
 
     def getRevisionFromDate(self):
         """
@@ -117,106 +112,22 @@ class Resources(object):
             return
         self.computedBaseDir.add("ok")
 
-        file = open("LICENSES", "rt")
-        content = file.read()
-        content = unicode(content, "utf-8")
-        file.close()
-        lines = content.splitlines()
-
-        # read header
-        header = lines.pop(0)
-        header = header.split(' | ')
-        filenameId = header.index('filename')
-        authorId = header.index('author')
-        licenseId = header.index('license')
-        sourceId = header.index('source')
-
         # generate a revision from date
         revision = self.getRevisionFromDate()
 
-        # read content
-        for line in lines:
-            data = line.split(' | ')
-            filename = data[filenameId].strip()
-
-            if filename in self.resources:
-                resource = self.resources[filename]
+        # read all licenses entries
+        licenses = licensesapi.LicenseSet("LICENSES")
+        entries = licenses.get_entries()
+        for entry in entries:
+            if entry.filename in self.resources:
+                resource = self.resources[entry.filename]
             else:
-                resource = Resource(filename)
-                self.resources[filename] = resource
+                resource = Resource(entry.filename)
+                self.resources[entry.filename] = resource
             resource.revision = revision
-            try:
-                v = data[authorId].strip()
-                if v != "":
-                    resource.copyright = v
-            except IndexError:
-                pass
-            try:
-                v = data[licenseId].strip()
-                if v != "":
-                    resource.license = v
-            except IndexError:
-                pass
-            try:
-                v = data[sourceId].strip()
-                if v != "":
-                    resource.source = v
-            except IndexError:
-                pass
-            #print resource.fileName, resource.copyright, resource.license, resource.source
-
-    def computeResourcesFromSVN(self, dir):
-        """
-            Read resources and metadatas for all versionned file of a dir
-            TODO can we "propget" more than 1 property? faster
-            TODO using getResource here is a little stupid
-        """
-
-        if dir in self.computedBaseDir:
-            return
-        self.computedBaseDir.add(dir)
-
-        print "Parse '%s' revisions..." % dir
-        xml = get('svn info %s --xml -R' % dir, False)
-        dom = parseString(xml)
-        entries = dom.firstChild.getElementsByTagName('entry')
-        for e in entries:
-            path = e.getAttribute("path")
-            meta = self.getResource(path)
-            meta.revision = int(e.getAttribute("revision"))
-
-        print "Parse '%s' licenses..." % dir
-        xml = get('svn pg svn:license %s --xml -R' % dir, False)
-        dom = parseString(xml)
-        entries = dom.firstChild.getElementsByTagName('target')
-        for e in entries:
-            path = e.getAttribute("path")
-            property = e.getElementsByTagName('property')[0]
-            assert(property.getAttribute("name") == 'svn:license')
-            meta = self.getResource(path)
-            meta.license = property.firstChild.nodeValue
-
-        print "Parse '%s' copyright..." % dir
-        xml = get('svn pg svn:copyright %s --xml -R' % dir, False)
-        dom = parseString(xml)
-        entries = dom.firstChild.getElementsByTagName('target')
-        for e in entries:
-            path = e.getAttribute("path")
-            property = e.getElementsByTagName('property')[0]
-            assert(property.getAttribute("name") == 'svn:copyright')
-            meta = self.getResource(path)
-            meta.copyright = property.firstChild.nodeValue
-
-        print "Parse '%s' sources..." % dir
-        xml = get('svn pg svn:source %s --xml -R' % dir, False)
-        dom = parseString(xml)
-        entries = dom.firstChild.getElementsByTagName('target')
-        for e in entries:
-            path = e.getAttribute("path")
-            property = e.getElementsByTagName('property')[0]
-            assert(property.getAttribute("name") == 'svn:source')
-            meta = self.getResource(path)
-            meta.source = property.firstChild.nodeValue
+            resource.copyright = entry.author
+            resource.license = entry.license
+            resource.source = entry.source
 
     def getResource(self, fileName):
         "Get a resource from a name without extension"
@@ -234,14 +145,13 @@ class Resources(object):
         else:
             resource = Resource(fileName)
             self.resources[fileName] = resource
-            if self.mode == "git":
-                # FIXME A little hackish to know if it is versioned
-                if os.path.isdir(fileName):
-                    content = get("git log -n1 %s" % fileName)
-                    if "Date:" in content:
-                        resource.revision = self.getRevisionFromDate()
-                else:
+            # FIXME A little hackish to know if it is versioned
+            if os.path.isdir(fileName):
+                content = get("git log -n1 %s" % fileName)
+                if "Date:" in content:
                     resource.revision = self.getRevisionFromDate()
+            else:
+                resource.revision = self.getRevisionFromDate()
 
         return resource
 
