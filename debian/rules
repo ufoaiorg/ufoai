@@ -16,6 +16,7 @@ endif
 CONFIGUREFLAGS += --datadir=/usr/share/games \
 	--libdir=/usr/lib/games/ufoai/base \
 	--prefix=/usr \
+	--enable-uforadiant \
 	--disable-testall
 
 MAINVER := $(shell dpkg-parsechangelog | sed -ne 's/^Version: *\([^~-]*\).*/\1/p' )
@@ -47,7 +48,6 @@ stamps/build-arch: config.status
 	dh_testdir
 
 	$(MAKE) $(MAKEFLAGS)
-	$(MAKE) $(MAKEFLAGS) uforadiant
 
 	mkdir -p stamps
 	touch $@
