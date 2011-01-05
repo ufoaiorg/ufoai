@@ -2,8 +2,8 @@ cgame multiplayer {
 	window	"multiplayer"
 }
 
-cgame singleplayer {
-	window	"singleplayer"
+cgame campaigns {
+	window	"campaigns"
 }
 
 cgame skirmish {
