@@ -1,5 +1,5 @@
-// wheather particles like snow and rain
-// these particles are deactivateable via the cvar cl_particleweather
+// Weather particles like snow and rain.
+// These particles are deactivateable via the cvar cl_particleweather
 
 // ====================================
 // snow

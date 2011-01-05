@@ -222,7 +222,7 @@ tech rs_autopsy_S_Br
 tech rs_any_2_autopsies
 {
 	type	logic
-	name	"LOGC: Any 2 autopsies (organic aliens)"
+	name	"LOGIC: Any 2 autopsies (organic aliens)"
 	require_OR
 	{
 		tech rs_autopsy_O_T
