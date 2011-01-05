@@ -55,8 +55,10 @@ const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 		return NULL;
 
 	while (list) {
-		if (Q_streq(list->menu, cgameMenu))
+		if (Q_streq(list->menu, cgameMenu)) {
+			list->Init(import);
 			return list;
+		}
 		list++;
 	}
 
@@ -333,12 +335,10 @@ void GAME_SetMode (const cgame_export_t *gametype)
 
 	list = GAME_GetCurrentType();
 	if (list) {
-		const cgame_import_t *import = GAME_GetImportData();
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory(&cls.i);
 		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
-		list->Init(import);
 	}
 }
 
