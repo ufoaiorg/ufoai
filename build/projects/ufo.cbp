@@ -1242,6 +1242,7 @@
 		<Unit filename="..\..\src\common\grid.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\common\grid.h" />
 		<Unit filename="..\..\src\common\http.c">
 			<Option compilerVar="CC" />
 		</Unit>
