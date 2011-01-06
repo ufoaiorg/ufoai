@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CP_PRODUCE
-#define CLIENT_CP_PRODUCE
+#ifndef CP_PRODUCE
+#define CP_PRODUCE
 
 /** @brief Maximum number of productions queued in any one base. */
 #define MAX_PRODUCTIONS		256
@@ -127,4 +127,4 @@ void PR_QueueDelete(struct base_s *base, production_queue_t *queue, int index);
 void PR_QueueNext(struct base_s *base);
 int PR_QueueFreeSpace(const struct base_s* base);
 
-#endif /* CLIENT_CP_PRODUCE */
+#endif

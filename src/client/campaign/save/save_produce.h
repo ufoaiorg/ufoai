@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_PRODUCE_AIRCRAFTID "aircraftid"
 #define SAVE_PRODUCE_UFOIDX "UFOIDX"
 #define SAVE_PRODUCE_AMOUNT "amount"
-#define SAVE_PRODUCE_PERCENTDONE "percentDone"
+#define SAVE_PRODUCE_PROGRESS "progress"
 
 #endif
 
@@ -55,11 +55,9 @@ DTD:
 	aircraftid	CDATA	#IMPLIED
 	UFOIDX		CDATA	#IMPLIED
 	amount		CDATA	#REQUIRED
-	percentDone	CDATA	'0.0'
-	itemsCached	CDATA	'false'
+	frame		CDATA	'0'
 >
 
 *Note: One of itemid, aircraftid, UFOIDX is required
-*Note: itemsCached is not fully implemented
 *Note: amount must be greater than zero
 */

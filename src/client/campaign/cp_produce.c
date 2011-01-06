@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -21,7 +21,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../cl_shared.h"
@@ -741,14 +740,16 @@ void PR_ProductionInit (void)
 void PR_UpdateProductionCap (base_t *base)
 {
 	capacities_t *workspaceCapacity = &base->capacities[CAP_WORKSPACE];
+	int workers;
 	assert(base);
 
 	if (workspaceCapacity->max <= 0) {
 		PR_EmptyQueue(base);
 	}
 
-	if (workspaceCapacity->max >= E_CountHired(base, EMPL_WORKER)) {
-		workspaceCapacity->cur = E_CountHired(base, EMPL_WORKER);
+	workers = E_CountHired(base, EMPL_WORKER);
+	if (workspaceCapacity->max >= workers) {
+		workspaceCapacity->cur = workers;
 	} else {
 		workspaceCapacity->cur = workspaceCapacity->max;
 	}
@@ -811,7 +812,7 @@ qboolean PR_SaveXML (mxml_node_t *p)
 			else if (PR_IsDisassembly(prod))
 				mxml_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, prod->data.data.ufo->idx);
 			mxml_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, prod->amount);
-			mxml_AddFloatValue(ssnode, SAVE_PRODUCE_PERCENTDONE, PR_GetProgress(prod));
+			mxml_AddInt(ssnode, SAVE_PRODUCE_PROGRESS, prod->frame);
 		}
 	}
 	return qtrue;
@@ -849,10 +850,11 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			const char *s2;
 			int ufoIDX;
 			production_t *prod = &pq->items[pq->numItems];
+			int totalFrames;
 
 			prod->idx = pq->numItems;
 			prod->amount = mxml_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
-			prod->percentDone = mxml_GetDouble(ssnode, SAVE_PRODUCE_PERCENTDONE, 0.0);
+			prod->frame = mxml_GetInt(ssnode, SAVE_PRODUCE_PROGRESS, 0);
 
 			/* amount */
 			if (prod->amount <= 0) {
@@ -886,6 +888,8 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				continue;
 			}
 
+			totalFrames = (1.0 / PR_CalculateProductionPercentPerMinute(base, prod)) + 1;
+			prod->percentDone = (prod->frame * 100.0 / totalFrames) / 100.0;
 			pq->numItems++;
 		}
 	}
