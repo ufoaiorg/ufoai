@@ -2,7 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
+"maxlevel" "5"
 // brush 0
 {
 ( 46 68 64 ) ( 39 60 64 ) ( 39 68 64 ) tex_buildings/e8_mtlwall2 28 16 0 -0.5 0.5 65280 0 0
