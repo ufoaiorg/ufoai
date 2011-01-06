@@ -1272,9 +1272,8 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	mission_t *mission;
 	mission_t *oldMission;
 	employee_t *pilot;
-#if 0
 	employee_t *employee;
-#endif
+	int survivors = 0;
 
 	/* Handle events about crash */
 	/* Do this first, if noone survived the crash => no mission to spawn */
@@ -1282,14 +1281,15 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
 	E_DeleteEmployee(pilot);
 
-#if 0
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+#if 0
 		const character_t *chr = &employee->chr;
 		const chrScoreGlobal_t *score = &chr->score;
 		/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
 		E_DeleteEmployee(employee);
-	}
 #endif
+		survivors++;
+	}
 
 	aircraft->status = AIR_CRASHED;
 
@@ -1308,6 +1308,11 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	if (!ufo) {
 		/** @todo find out what to do in this case */
 		Com_Printf("CP_SpawnRescueMission: UFO was also destroyed.\n");
+		return;
+	}
+
+	if (survivors == 0) {
+		AIR_DestroyAircraft(aircraft);
 		return;
 	}
 
