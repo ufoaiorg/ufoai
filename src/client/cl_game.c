@@ -56,7 +56,8 @@ const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 
 	while (list) {
 		if (Q_streq(list->menu, cgameMenu)) {
-			list->Init(import);
+			/** @todo this should be here, not in GAME_SetMode */
+			/*list->Init(import);*/
 			return list;
 		}
 		list++;
@@ -339,6 +340,8 @@ void GAME_SetMode (const cgame_export_t *gametype)
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory(&cls.i);
 		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
+		/** @todo this should be in GetCGameAPI */
+		list->Init(NULL);
 	}
 }
 
