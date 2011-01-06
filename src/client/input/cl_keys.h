@@ -171,11 +171,6 @@ typedef enum {
 } keyNum_t;
 
 typedef enum {
-	MSG_SAY,
-	MSG_SAY_TEAM
-} msg_mode_t;
-
-typedef enum {
 	KEYSPACE_UI,
 	KEYSPACE_GAME,
 	KEYSPACE_BATTLE,

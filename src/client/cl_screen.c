@@ -310,17 +310,11 @@ static void SCR_DrawConsole (void)
 		/* draw the console like in game */
 		if (scr_con_current > 0.0)
 			Con_DrawConsole(scr_con_current);
-		/* allow chat in waiting dialogs */
-		if (cls.keyDest == key_message)
-			Con_DrawNotify(); /* only draw notify in game */
 		return;
 	}
 
 	if (scr_con_current > 0.0) {
 		Con_DrawConsole(scr_con_current);
-	} else {
-		if (cls.keyDest == key_game || cls.keyDest == key_message)
-			Con_DrawNotify(); /* only draw notify in game */
 	}
 }
 
@@ -341,8 +335,6 @@ void SCR_BeginLoadingPlaque (void)
 void SCR_EndLoadingPlaque (void)
 {
 	cls.disableScreen = 0;
-	/* clear any lines of console text */
-	Con_ClearNotify();
 }
 
 static void SCR_TimeRefresh_f (void)

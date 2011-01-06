@@ -35,7 +35,6 @@ void Con_CheckResize(void);
 void Con_Init(void);
 void Con_DrawConsole(float frac);
 void Con_Print(const char *txt);
-void Con_DrawNotify(void);
 void Con_ClearNotify(void);
 void Con_ToggleConsole_f(void);
 void Con_Close(void);

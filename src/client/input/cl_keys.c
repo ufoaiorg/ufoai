@@ -432,80 +432,6 @@ static void Key_Console (int key, int unicode)
 }
 
 /**
- * @brief Handles input when cls.keyDest == key_message
- * @note Used for chatting and cvar editing via menu
- * @sa Key_Event
- * @sa UI_LeftClick
- */
-static void Key_Message (int key)
-{
-	int utf8len;
-
-	if (key == K_ENTER || key == K_KP_ENTER) {
-		qboolean send = qtrue;
-
-		switch (msgMode) {
-		case MSG_SAY:
-			if (msgBuffer[0])
-				Cbuf_AddText("say \"");
-			else
-				send = qfalse;
-			break;
-		case MSG_SAY_TEAM:
-			if (msgBuffer[0])
-				Cbuf_AddText("say_team \"");
-			else
-				send = qfalse;
-			break;
-		default:
-			Com_Printf("Invalid msg_mode\n");
-			return;
-		}
-		if (send) {
-			Com_DPrintf(DEBUG_CLIENT, "msg_buffer: %s\n", msgBuffer);
-			Cbuf_AddText(msgBuffer);
-			Cbuf_AddText("\"\n");
-		}
-
-		Key_SetDest(key_game);
-		msgBufferLen = 0;
-		msgBuffer[0] = 0;
-		return;
-	}
-
-	if (key == K_ESCAPE) {
-		if (cls.state != ca_active) {
-			/* If connecting or loading a level, disconnect */
-			if (cls.state != ca_disconnected)
-				Com_Error(ERR_DROP, "Disconnected from server");
-		}
-
-		Key_SetDest(key_game);
-		msgBufferLen = 0;
-		msgBuffer[0] = 0;
-		return;
-	}
-
-	if (key == K_BACKSPACE) {
-		if (msgBufferLen)
-			msgBufferLen = UTF8_delete_char(msgBuffer, msgBufferLen - 1);
-		return;
-	}
-
-	utf8len = UTF8_encoded_len(key);
-
-	/** @todo figure out which unicode codes to accept */
-	if (utf8len == 0 || key < 32 || (key >= 127 && key < 192))
-		return;					/* non printable */
-
-	if (msgBufferLen + utf8len >= sizeof(msgBuffer))
-		return;					/* all full */
-
-	msgBufferLen += UTF8_insert_char(msgBuffer, sizeof(msgBuffer),  msgBufferLen, key);
-}
-
-
-/**
  * @brief Convert to given string to keynum
  * @param[in] str The keystring to convert to keynum
  * @return a key number to be used to index keyBindings[] by looking at
@@ -935,9 +861,6 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 			return;
 
 		switch (cls.keyDest) {
-		case key_message:
-			Key_Message(unicode);
-			break;
 		case key_console:
 			Con_ToggleConsole_f();
 			break;
@@ -1012,9 +935,6 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		return;	/* other systems only care about key down events */
 
 	switch (cls.keyDest) {
-	case key_message:
-		Key_Message(unicode);
-		break;
 	case key_game:
 	case key_console:
 		Key_Console(key, unicode);

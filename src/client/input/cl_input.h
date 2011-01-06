@@ -37,8 +37,7 @@ typedef enum {
 
 typedef enum {
 	key_game,		/**< input focus is on the menu (or the keyBindings) */
-	key_console,	/**< console is opened */
-	key_message		/**< chatting */
+	key_console		/**< console is opened */
 } keydest_t;
 
 #define STATE_FORWARD	1

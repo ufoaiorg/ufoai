@@ -65,9 +65,6 @@ typedef struct {
 	int totalLines;				/**< total lines in console scrollback */
 
 	int visLines;
-
-	float times[NUM_CON_TIMES];	/**< cls.realtime time the line was generated
-								 * for transparent notify lines */
 } console_t;
 
 static console_t con;
@@ -145,7 +142,6 @@ static void Key_ClearTyping (void)
 void Con_ToggleConsole_f (void)
 {
 	Key_ClearTyping();
-	Con_ClearNotify();
 
 	if (cls.keyDest == key_console) {
 		Key_SetDest(key_game);
@@ -163,8 +159,6 @@ static void Con_ToggleChat_f (void)
 			Key_SetDest(key_game);
 	} else
 		Key_SetDest(key_console);
-
-	Con_ClearNotify();
 }
 
 /**
@@ -186,37 +180,6 @@ void Con_Scroll (int scroll)
 		con.displayLine = con.currentLine;
 	else if (con.displayLine < 0)
 		con.displayLine = 0;
-}
-
-/**
- * @brief Clear the notify times to ensure that every message will disappear from screen.
- */
-void Con_ClearNotify (void)
-{
-	int i;
-
-	for (i = 0; i < NUM_CON_TIMES; i++)
-		con.times[i] = 0.0;
-}
-
-static void Con_MessageModeSay_f (void)
-{
-	/* chatting makes only sense in battle field multiplayer mode */
-	if (!CL_OnBattlescape() || GAME_IsSingleplayer())
-		return;
-
-	msgMode = MSG_SAY;
-	Key_SetDest(key_message);
-}
-
-static void Con_MessageModeSayTeam_f (void)
-{
-	/* chatting makes only sense in battle field multiplayer mode */
-	if (!CL_OnBattlescape() || GAME_IsSingleplayer())
-		return;
-
-	msgMode = MSG_SAY_TEAM;
-	Key_SetDest(key_message);
 }
 
 /**
@@ -253,8 +216,6 @@ void Con_CheckResize (void)
 			con.text[(con.totalLines - 1 - i) * con.lineWidth + j] = tbuf[((con.currentLine - i + oldTotalLines) % oldTotalLines) * oldWidth + j];
 		}
 	}
-
-	Con_ClearNotify();
 
 	con.currentLine = con.totalLines - 1;
 	con.displayLine = con.currentLine;
@@ -335,8 +296,6 @@ void Con_Init (void)
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
-	Cmd_AddCommand("messagesay", Con_MessageModeSay_f, _("Send a message to all players"));
-	Cmd_AddCommand("messagesayteam", Con_MessageModeSayTeam_f, _("Send a message to allied team members"));
 	Cmd_AddCommand("clear", Con_Clear_f, "Clear console text");
 
 	/* load console history if con_history is true */
@@ -407,9 +366,6 @@ void Con_Print (const char *txt)
 
 		if (!con.pos) {
 			Con_Linefeed();
-			/* mark time for transparent overlay */
-			if (con.currentLine >= 0)
-				con.times[con.currentLine % NUM_CON_TIMES] = CL_Milliseconds();
 		}
 
 		switch (c) {
@@ -491,73 +447,6 @@ static void Con_DrawInput (void)
 	y = con.visLines - con_fontHeight;
 
 	Con_DrawText(text, 0, y - CONSOLE_CHAR_ALIGN, con.lineWidth);
-}
-
-
-/**
- * @brief Draws the last few lines of output transparently over the game top
- * @sa SCR_DrawConsole
- */
-void Con_DrawNotify (void)
-{
-	int i;
-	int v = 60 * viddef.rx;
-	const int l = 120 * viddef.ry;
-
-	for (i = con.currentLine - NUM_CON_TIMES + 1; i <= con.currentLine; i++) {
-		qboolean draw = qfalse;
-		int x, time;
-		const short *text;
-
-		if (i < 0)
-			continue;
-
-		time = con.times[i % NUM_CON_TIMES];
-		if (time == 0)
-			continue;
-
-		time = CL_Milliseconds() - time;
-		if (time > con_notifytime->integer * 1000)
-			continue;
-
-		text = con.text + (i % con.totalLines) * con.lineWidth;
-
-		for (x = 0; x < con.lineWidth; x++) {
-			/* only draw chat or check for developer mode */
-			if (developer->integer || text[x] & 0xff) {
-				const int currentColor = (text[x] >> 8) & 7;
-				R_DrawChar(l + (x << con_fontShift), v, text[x], g_color_table[currentColor]);
-				draw = qtrue;
-			}
-		}
-		if (draw)
-			v += con_fontHeight;
-	}
-
-	if (cls.keyDest == key_message && (msgMode == MSG_SAY_TEAM || msgMode == MSG_SAY)) {
-		const char *s = msgBuffer;
-		int x, skip;
-		const uint32_t color = g_color_table[CON_COLOR_WHITE];
-
-		if (msgMode == MSG_SAY) {
-			Con_DrawString("say:", l, v, con.lineWidth);
-			skip = 4;
-		} else {
-			Con_DrawString("say_team:", l, v, con.lineWidth);
-			skip = 10;
-		}
-
-		if (msgBufferLen > (viddef.context.width >> con_fontShift) - (skip + 1))
-			s += msgBufferLen - ((viddef.context.width >> con_fontShift) - (skip + 1));
-
-		x = 0;
-		while (s[x]) {
-			R_DrawChar(l + ((x + skip) << con_fontShift), v, s[x], color);
-			x++;
-		}
-		R_DrawChar(l + ((x + skip) << con_fontShift), v, 10 + ((CL_Milliseconds() >> 8) & 1), color);
-		v += con_fontHeight;
-	}
 }
 
 /**
