@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2010 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,8 +20,8 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
+
 #include "../cl_shared.h"
 #include "../ui/ui_data.h"
 #include "../ui/ui_main.h" /* UI_ExecuteConfunc */
@@ -581,6 +581,22 @@ static void BDEF_AddBattery_f (void)
 }
 
 /**
+ * @brief Function to turn on/off autofire of a base weapon
+ * @param[in,out] weapon Pointer to the weapon to turn off
+ * @param[in] state New status for autofire
+ * @note on turning off it also reset the target so the defence weapon stop shoting
+ */
+static void BDEF_SetAutoFire (baseWeapon_t *weapon, qboolean state)
+{
+	assert(weapon);
+	weapon->autofire = state;
+	if (!weapon->autofire) {
+		weapon->target = NULL;
+		Cvar_Set("mn_target", _("None"));
+	}
+}
+
+/**
  * @brief Menu callback for changing autofire state
  * Command: basedef_autofire <0|1>
  */
@@ -599,12 +615,13 @@ static void BDEF_ChangeAutoFire (void)
 
 	if (base) {
 		for (i = 0; i < base->numBatteries; i++)
-			base->batteries[i].autofire = atoi(Cmd_Argv(1));
+			BDEF_SetAutoFire(&base->batteries[i], atoi(Cmd_Argv(1)));
 		for (i = 0; i < base->numLasers; i++)
-			base->lasers[i].autofire = atoi(Cmd_Argv(1));
-	} else if (installation)
+			BDEF_SetAutoFire(&base->lasers[i], atoi(Cmd_Argv(1)));
+	} else if (installation) {
 		for (i = 0; i < installation->numBatteries; i++)
-			installation->batteries[i].autofire = atoi(Cmd_Argv(1));
+			BDEF_SetAutoFire(&installation->batteries[i], atoi(Cmd_Argv(1)));
+	}
 }
 
 void BDEF_InitCallbacks (void)
