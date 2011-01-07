@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,11 +20,10 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
-#ifndef CLIENT_CL_SAVE_H
-#define CLIENT_CL_SAVE_H
+#ifndef CP_SAVE_H
+#define CP_SAVE_H
 
 #include "../../common/msg.h"
 #include "../mxml/mxml_ufoai.h"
@@ -83,7 +82,8 @@ qboolean CP_LoadInterestsXML(mxml_node_t *parent);
 
 qboolean B_PostLoadInit(void);
 qboolean AIR_PostLoadInit(void);
+qboolean PR_PostLoadInit(void);
 
 qboolean SAV_GameLoad(const char *file, const char **error);
 
-#endif /* CLIENT_CL_SAVE_H */
+#endif

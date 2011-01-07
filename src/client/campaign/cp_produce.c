@@ -850,7 +850,6 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			const char *s2;
 			int ufoIDX;
 			production_t *prod = &pq->items[pq->numItems];
-			int totalFrames;
 
 			prod->idx = pq->numItems;
 			prod->amount = mxml_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
@@ -888,10 +887,40 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				continue;
 			}
 
-			totalFrames = (1.0 / PR_CalculateProductionPercentPerMinute(base, prod)) + 1;
-			prod->percentDone = (prod->frame * 100.0 / totalFrames) / 100.0;
 			pq->numItems++;
 		}
 	}
 	return qtrue;
+}
+
+/**
+ * @brief Set percentDone values after loading the campaign
+ * @note it need to be done after B_PostLoadInitCapacity
+ * @sa PR_PostLoadInit
+ */
+static qboolean PR_PostLoadInitProgress (void)
+{
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		production_queue_t *pq = PR_GetProductionForBase(base);
+		int j;
+
+		for (j = 0; j < pq->numItems; j++) {
+			production_t *prod = &pq->items[j];
+			const int totalFrames = (1.0 / PR_CalculateProductionPercentPerMinute(base, prod)) + 1;
+
+			prod->percentDone = (prod->frame * 100.0 / totalFrames) / 100.0;
+		}
+	}
+
+	return qtrue;
+}
+
+/**
+ * @brief actions to do with productions after loading a savegame
+ * @sa SAV_GameActionsAfterLoad
+ */
+qboolean PR_PostLoadInit (void)
+{
+	return PR_PostLoadInitProgress();
 }
