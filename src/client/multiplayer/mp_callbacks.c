@@ -37,12 +37,24 @@ static cvar_t *info_password;
 
 void CL_Connect_f (void)
 {
-	const char *server;
-	const char *serverport;
+	char server[MAX_VAR];
+	char serverport[16];
 
 	if (!selectedServer && Cmd_Argc() != 2 && Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <server> [<port>]\n", Cmd_Argv(0));
 		return;
+	}
+
+	if (Cmd_Argc() == 2) {
+		Q_strncpyz(server, Cmd_Argv(1), sizeof(server));
+		Q_strncpyz(serverport, DOUBLEQUOTE(PORT_SERVER), sizeof(serverport));
+	} else if (Cmd_Argc() == 3) {
+		Q_strncpyz(server, Cmd_Argv(1), sizeof(server));
+		Q_strncpyz(serverport, Cmd_Argv(2), sizeof(serverport));
+	} else {
+		assert(selectedServer);
+		Q_strncpyz(server, selectedServer->node, sizeof(server));
+		Q_strncpyz(serverport, selectedServer->service, sizeof(serverport));
 	}
 
 	if (!chrDisplayList.num && !MP_LoadDefaultTeamMultiplayer()) {
@@ -59,17 +71,6 @@ void CL_Connect_f (void)
 	SV_Shutdown("Server quit.", qfalse);
 	CL_Disconnect();
 
-	if (Cmd_Argc() == 2) {
-		server = Cmd_Argv(1);
-		serverport = DOUBLEQUOTE(PORT_SERVER);
-	} else if (Cmd_Argc() == 3) {
-		server = Cmd_Argv(1);
-		serverport = Cmd_Argv(2);
-	} else {
-		assert(selectedServer);
-		server = selectedServer->node;
-		serverport = selectedServer->service;
-	}
 	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
 	Q_strncpyz(cls.serverport, serverport, sizeof(cls.serverport));
 
