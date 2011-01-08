@@ -28,7 +28,6 @@
 					<Add option="-DHAVE_BFD_H" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add library="opengl32" />
 					<Add library="winmm" />
 					<Add library="ws2_32" />
