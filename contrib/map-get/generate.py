@@ -70,7 +70,7 @@ def gen(dst, changed_maps):
     run('make maps -j %d UFO2MAPFLAGS="%s"' % (JOBS, UFO2MAPFLAGS))
     print
 
-    ufo2mapMeta = Ufo2mapMetadata()
+    ufo2mapMeta = mapsync.Ufo2mapMetadata()
     ufo2mapMeta.extract()
 
     version = open(os.path.join(dst, 'UFO2MAP'), 'wt')
