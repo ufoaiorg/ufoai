@@ -1,0 +1,34 @@
+
+==Windows Notes==
+On Windows generating a repository is not supported. All parameters are ignored and an upgrade is allways performed. This helps windows users as they just need to double click the map-get file.
+
+return codes
+1 - programming error or unexpected abort (ctrl + c for example)
+    if there was no user interaction you migh want to report this as a bug
+2 - usage error
+3 - user abort (probably after a warning)
+5 - path error
+6 - download error
+
+==Changelog==
+0.0.4.2
+ * compile ufo2map as release
+ * add .map file hash into Maps
+
+0.0.4 serverside work
+ * execute ./configure
+ * abort on configure or make errors
+
+0.0.3 windows work
+ * URI to maps changed.
+ * check if ufo2map exists
+ * use ufo2map.exe on windows systems
+ * on windows always upgrade, generating is not supported anyway
+
+0.0.2
+ * handle corrupted mirror files
+ * use optparse
+ * allow upgrade even if ufo2map version differs
+ * search root of ufo tree
+ * display summary
+ * generation: guess if ufo2map changed and maps need to be rebuild
