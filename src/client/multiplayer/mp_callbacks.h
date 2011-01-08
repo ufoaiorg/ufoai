@@ -36,10 +36,6 @@ typedef struct teamData_s {
 
 extern teamData_t teamData;
 
-void CL_Rcon_f(void);
-void CL_Connect_f(void);
-void CL_Disconnect_f(void);
-void CL_Reconnect_f(void);
 void MP_CallbacksInit(void);
 void MP_CallbacksShutdown(void);
 

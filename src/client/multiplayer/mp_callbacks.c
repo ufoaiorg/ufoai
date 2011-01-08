@@ -36,7 +36,7 @@ static cvar_t *rcon_client_password;
 static cvar_t *rcon_address;
 static cvar_t *info_password;
 
-void CL_Connect_f (void)
+static void CL_Connect_f (void)
 {
 	char server[MAX_VAR];
 	char serverport[16];
@@ -101,7 +101,7 @@ static void CL_RconCallback (struct net_stream *s)
  * Send the rest of the command line over as
  * an unconnected command.
  */
-void CL_Rcon_f (void)
+static void CL_Rcon_f (void)
 {
 	char message[MAX_STRING_CHARS];
 
@@ -145,7 +145,7 @@ void CL_Rcon_f (void)
  * @sa CL_Drop
  * @sa SV_ShutdownWhenEmpty
  */
-void CL_Disconnect_f (void)
+static void CL_Disconnect_f (void)
 {
 	SV_ShutdownWhenEmpty();
 	CL_Drop();
@@ -154,7 +154,7 @@ void CL_Disconnect_f (void)
 /**
  * @brief The server is changing levels
  */
-void CL_Reconnect_f (void)
+static void CL_Reconnect_f (void)
 {
 	if (Com_ServerState())
 		return;

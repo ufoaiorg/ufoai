@@ -236,7 +236,6 @@ static void CL_ClearState (void)
 
 /**
  * @brief Sets the @c cls.state to @c ca_disconnected and informs the server
- * @sa CL_Disconnect_f
  * @sa CL_Drop
  * @note Goes from a connected state to disconnected state
  * Sends a disconnect message to the server

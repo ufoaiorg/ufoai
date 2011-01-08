@@ -981,16 +981,14 @@ static void RS_TechnologyList_f (void)
 
 /**
  * @brief Mark everything as researched
- * @sa CL_Connect_f
  * @sa UI_StartServer
  */
 static void RS_DebugMarkResearchedAll (void)
 {
 	int i;
-	technology_t *tech;
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
+		technology_t *tech = RS_GetTechByIDX(i);
 		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 		RS_MarkOneResearchable(tech);
 		RS_ResearchFinish(tech);
