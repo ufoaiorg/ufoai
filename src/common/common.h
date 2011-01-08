@@ -398,4 +398,17 @@ do { \
 	hash[index] = elem; \
 } while (0)
 
+#define HASH_Delete(hash, elem, previousElem, index) \
+do { \
+	if (previousElem) { \
+		assert((previousElem)->hash_next == (elem)); \
+		(previousElem)->hash_next = (elem)->hash_next; \
+	} else { \
+		const int hashIndex = (index); \
+		assert(hashIndex >= 0); \
+		assert(hashIndex < lengthof(hash)); \
+		(hash)[hashIndex] = (elem)->hash_next; \
+	} \
+} while (0)
+
 #endif

@@ -69,8 +69,7 @@ typedef struct image_s {
 	struct image_s *glowmap;			/**< glowmap texture  */
 	struct image_s *specularmap;		/**< specularity texture (for reflection color) */
 	struct image_s *roughnessmap;		/**< roughness texture (for Cook-Torrance shading) */
-	struct image_s *hashNext;			/**< hash map next pointer in case of collision */
-	struct image_s *hashPrev;			/**< hash map prev pointer for easier removing */
+	struct image_s *hash_next;			/**< hash map next pointer in case of collision */
 } image_t;
 
 #define MAX_GL_TEXTURES		1024
