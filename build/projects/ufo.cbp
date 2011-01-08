@@ -154,7 +154,7 @@
 			<Add library="ogg" />
 			<Add library="theora" />
 			<Add library="xvidcore" />
-		<\Linker>
+		</Linker>
 		<Unit filename="../../Makefile.in" />
 		<Unit filename="../../base/autoexec.cfg" />
 		<Unit filename="../../base/dedicated.cfg" />
