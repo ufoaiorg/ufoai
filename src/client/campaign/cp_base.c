@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -180,7 +180,6 @@ buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t buildingType)
 {
 	assert(base);
-	assert(buildingType >= 0);
 
 	if (buildingType == B_MISC)
 		return qtrue;
@@ -203,7 +202,6 @@ qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t bui
 void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType, qboolean newStatus)
 {
 	assert(base);
-	assert(buildingType >= 0);
 
 	if (buildingType == B_MISC)
 		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");

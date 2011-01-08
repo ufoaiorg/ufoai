@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,7 +22,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../client.h"
@@ -265,7 +264,6 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	}
 
 	/* select item */
-	assert(item->craftitem.type >= 0);
 	assert(item->tech);
 	Cvar_Set("mn_item", item->id);
 	Cvar_Set("mn_itemname", _(item->tech->name));
