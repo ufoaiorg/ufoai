@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mem.h"
 #include "http.h"
 
-#define UFO_VERSION "2.3.1"
+#define UFO_VERSION "2.3.2"
 #define GAME_TITLE "UFO:AI"
 #define GAME_TITLE_LONG "UFO:Alien Invasion"
 
