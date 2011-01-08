@@ -25,6 +25,11 @@ UFO2MAP = UFOAI_ROOT + '/ufo2map'
 if os.name == 'nt':
     UFO2MAP+= '.exe'
 
+def md5sum(path, binary = False):
+    # to be used carefully with big files
+    if binary:
+        return md5(open(path, "rb").read()).hexdigest()
+    return md5(open(path).read()).hexdigest()
 
 def execute(cmd):
     """

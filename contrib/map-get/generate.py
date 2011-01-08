@@ -62,7 +62,7 @@ def gen(dst, changed_maps):
 
         # taken from build/maps.mk
         run('./ufo2map %s %s' % (UFO2MAPFLAGS, test_map[5:-3] + 'map'))
-        if md5sum(test_map) != old_md5:
+        if mapsync.md5sum(test_map) != old_md5:
             sys.stderr.write('Compiler must have changed significant! Compiling all maps again.\n')
             for i in old_maps:
                 os.unlink(i)
@@ -96,8 +96,8 @@ def gen(dst, changed_maps):
                 print "Warning: Cant find .bsp for %s" % mapfile
                 continue
 
-            maphash = md5sum(mapfile)
-            bsphash = md5sum(bspfile, True)
+            maphash = mapsync.md5sum(mapfile)
+            bsphash = mapsync.md5sum(bspfile, True)
 
             if not bspfile in old or bsphash != old[bspfile]:
                 print '%s - updating' % bspfile

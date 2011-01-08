@@ -24,13 +24,6 @@ displayAlreadyUpToDate = True
 
 # TODO: use os.path.join
 
-def md5sum(path, binary = False):
-    # to be used carefully with big files
-    if binary:
-        return md5(open(path, "rb").read()).hexdigest()
-    return md5(open(path).read()).hexdigest()
-
-
 import time
 def download(uri):
     global displayDownloadStatus
@@ -130,12 +123,12 @@ def upgrade(arg):
             continue
 
 
-        if md5sum(mappath, False) != maps[i].maphash:
+        if mapsync.md5sum(mappath, False) != maps[i].maphash:
             print '* %s version mismatch, skip update' % map_name
             missmatch += 1
             continue
 
-        if not os.path.exists(bsppath) or md5sum(bsppath, True) != maps[i].bsphash:
+        if not os.path.exists(bsppath) or mapsync.md5sum(bsppath, True) != maps[i].bsphash:
             fd, name = mkstemp()
             os.write(fd, download('%s/%s.gz' %(URI, i)))
             os.close(fd)
