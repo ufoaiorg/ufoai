@@ -10,6 +10,7 @@ import urllib2
 from gzip import GzipFile
 import optparse
 import mapsync
+from tempfile import mkstemp
 
 # path where exists ufo binary
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
@@ -34,9 +35,9 @@ def download(uri):
     try:
         f = urllib2.build_opener().open(request)
     except urllib2.URLError, e:
-        error('Err %s' % uri)
-        error('%s: %s' % (e.message, e.reason[1]))
-        sys.exit(6) # TODO
+        sys.stderr.write('Error: %s' % uri)
+        sys.stderr.write('%s: %s' % (e.message, e.reason[1]))
+        sys.exit(6)
 
     re = out = ''
     t = 1

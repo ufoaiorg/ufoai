@@ -8,11 +8,6 @@ except ImportError:
 	from md5 import md5
 import subprocess
 import urllib2
-from gzip import GzipFile
-from tempfile import mkstemp
-import logging # TODO: use me
-from logging import debug, error, info
-import optparse
 
 __version__ = '0.0.5.0'
 

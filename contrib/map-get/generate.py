@@ -9,7 +9,6 @@ except ImportError:
 import subprocess
 import urllib2
 from gzip import GzipFile
-from tempfile import mkstemp
 import optparse
 import mapsync
 import time
@@ -78,7 +77,7 @@ def gen(dst, changed_maps):
     version.close()
 
     # create md5 sums of .map files
-    maps = open(os.path.join(dst, 'Maps'), 'w')
+    maps = open(os.path.join(dst, 'MAPS'), 'w')
 
     maps_compiled = 0
     for dirname, dnames, fnames in os.walk('base/maps'):
