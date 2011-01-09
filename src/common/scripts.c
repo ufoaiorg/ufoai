@@ -1917,6 +1917,12 @@ static void Com_ParseInventory (const char *name, const char **text)
 	} else if (Q_streq(name, "headgear")) {
 		csi.idHeadgear = id - csi.ids;
 		id->id = csi.idHeadgear;
+	} else {
+		id->id = -1;
+	}
+
+	if (id->id != -1) {
+		Com_Printf("...%3i: %s\n", id->id, name);
 	}
 
 	do {
