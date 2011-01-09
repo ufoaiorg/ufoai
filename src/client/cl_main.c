@@ -396,12 +396,12 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	/* print */
 	if (Q_streq(c, "print")) {
-		char str[1024];
-		NET_ReadString(msg, str, sizeof(str));
+		NET_ReadString(msg, popupText, sizeof(popupText));
 		/* special reject messages needs proper handling */
+		/** @todo this is in the userinfo string, but not announced via print */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
 			UI_PushWindow("serverpassword", NULL, NULL);
-		UI_Popup(_("Notice"), _(str));
+		UI_Popup(_("Notice"), _(popupText));
 		return;
 	}
 
