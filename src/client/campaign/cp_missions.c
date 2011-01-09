@@ -259,7 +259,8 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 
 /**
  * @brief Set number of aliens in mission.
- * @param[in] mission Pointer to the mission that generates the battle.
+ * @param[in,out] mission Pointer to the mission that generates the battle.
+ * @param[in,out] battleParam The battlescape parameter container
  * @sa CP_SetAlienTeamByInterest
  */
 static void CP_CreateAlienTeam (mission_t *mission, battleParam_t *battleParam)
