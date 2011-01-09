@@ -306,7 +306,7 @@ int NET_ReadString (struct dbuffer *buf, char *string, size_t length)
 		l++;
 	} while (l < length - 1);
 
-	string[l] = 0;
+	string[l] = '\0';
 
 	return l;
 }

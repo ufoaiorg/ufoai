@@ -182,7 +182,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 {
 	client_t *cl;
 	struct dbuffer *msg = new_dbuffer();
-	char infoGlobal[MAX_INFO_STRING];
+	char infoGlobal[MAX_INFO_STRING] = "";
 
 	NET_WriteByte(msg, clc_oob);
 	NET_WriteRawString(msg, "teaminfo\n");
