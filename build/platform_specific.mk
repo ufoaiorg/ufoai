@@ -22,6 +22,7 @@ ifeq ($(TARGET_OS),mingw32)
 	endif
 	RADIANT_LIBS+=-lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0
 	SHARED_EXT=dll
+	EXE_EXT=.exe
 	SHARED_LDFLAGS=-shared
 	SHARED_CFLAGS=-shared
 	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32

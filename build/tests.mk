@@ -61,6 +61,7 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	TESTS_SRCS+=\
+		ports/windows/win_backtrace.c \
 		ports/windows/win_console.c \
 		ports/windows/win_shared.c \
 		ports/windows/ufo.rc
