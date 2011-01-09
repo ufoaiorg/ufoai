@@ -816,12 +816,13 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 	im[2][1] = m[1][2];
 
 	OBJZERO(zrot);
-	zrot[0][0] = zrot[1][1] = zrot[2][2] = 1.0F;
 
+	/* now prepare the rotation matrix */
 	zrot[0][0] = cos(degrees * torad);
 	zrot[0][1] = sin(degrees * torad);
 	zrot[1][0] = -sin(degrees * torad);
 	zrot[1][1] = cos(degrees * torad);
+	zrot[2][2] = 1.0F;
 
 	R_ConcatRotations(m, zrot, tmpmat);
 	R_ConcatRotations(tmpmat, im, rot);
