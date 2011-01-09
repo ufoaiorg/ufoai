@@ -910,18 +910,8 @@ static void HUD_RefreshButtons (const le_t *le)
 static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId)
 {
 	const char *string = UI_GetText(textId);
-
-	if (string && cl_show_cursor_tooltips->integer) {
-		int width = 0;
-		int height = 0;
-
-		R_FontTextSize("f_verysmall", string, viddef.virtualWidth - mousePosX, LONGLINES_WRAP, &width, &height, NULL, NULL);
-
-		if (!width)
-			return;
-
-		UI_DrawString("f_verysmall", ALIGN_UL, mousePosX + xOffset, mousePosY - yOffset, 0, viddef.virtualWidth, 12, string, 0, 0, NULL, qfalse, 0);
-	}
+	if (string && cl_show_cursor_tooltips->integer)
+		UI_DrawTooltip(string, mousePosX + xOffset, mousePosY - yOffset, viddef.virtualWidth - mousePosX);
 }
 
 /**
