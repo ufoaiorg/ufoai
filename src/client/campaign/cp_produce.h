@@ -35,9 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Size of a UGV in hangar capacity */
 #define UGV_SIZE 300
 
-extern const int PRODUCE_FACTOR;
-extern const int PRODUCE_DIVISOR;
-
 typedef enum {
 	PRODUCTION_TYPE_ITEM,
 	PRODUCTION_TYPE_AIRCRAFT,
@@ -87,6 +84,13 @@ typedef struct production_s
 #define PR_IsDataValid(dataPtr)	((dataPtr)->data.pointer != NULL)
 
 #define PR_GetProgress(prod)	((prod)->percentDone)
+
+/** @brief Used in production costs (to allow reducing prices below 1x). */
+#define PRODUCE_FACTOR 1
+#define PRODUCE_DIVISOR 1
+
+#define PR_GetPrice(item)			((item)->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)
+#define PR_HasEnoughCredits(item)	(PR_GetPrice(item) > ccs.credits)
 
 /**
  * @brief A production queue. Lists all items to be produced.

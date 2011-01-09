@@ -31,10 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_produce_callbacks.h"
 #include "save/save_produce.h"
 
-/** @brief Used in production costs (to allow reducing prices below 1x). */
-const int PRODUCE_FACTOR = 1;
-const int PRODUCE_DIVISOR = 1;
-
 /** @brief Default amount of workers, the produceTime for technologies is defined. */
 /** @note producetime for technology entries is the time for PRODUCE_WORKERS amount of workers. */
 static const int PRODUCE_WORKERS = 10;
@@ -481,7 +477,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 	if (PR_IsItem(prod)) {
 		const objDef_t *od = prod->data.data.item;
 		/* Not enough money to produce more items in this base. */
-		if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
+		if (PR_HasEnoughCredits(od)) {
 			if (!prod->creditMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -501,7 +497,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 	} else if (PR_IsAircraft(prod)) {
 		const aircraft_t *aircraft = prod->data.data.aircraft;
 		/* Not enough money to produce more items in this base. */
-		if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
+		if (PR_HasEnoughCredits(aircraft)) {
 			if (!prod->creditMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -558,11 +554,11 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 		prod->amount--;
 
 		if (PR_IsItem(prod)) {
-			CL_UpdateCredits(ccs.credits - (prod->data.data.item->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
+			CL_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item));
 			/* Now add it to equipment and update capacity. */
 			B_UpdateStorageAndCapacity(base, prod->data.data.item, 1, qfalse, qfalse);
 		} else if (PR_IsAircraft(prod)) {
-			CL_UpdateCredits(ccs.credits - (prod->data.data.aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
+			CL_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft));
 			/* Now add new aircraft. */
 			AIR_NewAircraft(base, prod->data.data.aircraft);
 		}
