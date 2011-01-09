@@ -162,6 +162,9 @@ const char *Sys_SetLocale (const char *localeID)
 	}
 # endif /* __APPLE__ */
 
+	Sys_Setenv("LC_NUMERIC", "C");
+	setlocale(LC_NUMERIC, "C");
+
 	/* set to system default */
 	setlocale(LC_ALL, "C");
 	locale = setlocale(LC_MESSAGES, localeID);

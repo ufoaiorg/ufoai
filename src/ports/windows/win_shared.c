@@ -120,6 +120,7 @@ const char *Sys_SetLocale (const char *localeID)
 {
 	Sys_Setenv("LANG", localeID);
 	Sys_Setenv("LANGUAGE", localeID);
+	Sys_Setenv("LC_NUMERIC", "C");
 
 	return localeID;
 }
