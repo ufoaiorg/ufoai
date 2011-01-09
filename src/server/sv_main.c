@@ -195,7 +195,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state >= cs_connected) {
-			char infoPlayer[MAX_INFO_STRING];
+			char infoPlayer[MAX_INFO_STRING] = "";
 			/* show players that already have a team with their teamnum */
 			int teamId = svs.ge->ClientGetTeamNum(cl->player);
 			if (!teamId)
