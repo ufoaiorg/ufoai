@@ -1101,98 +1101,6 @@ window multiplayer_wait extends levelbuttons
 		}
 	}
 
-	panel partyinfo {
-		{
-			pos		"100 30"
-			size	"400 460"
-			padding	5
-			image	"ui/panel_window"
-		}
-
-		string title
-		{
-			string		"_Party info"
-			font		"f_big"
-			color		"1 1 1 1"
-			pos			"0 0"
-			size		"415 50"
-			textalign	ALIGN_CC
-		}
-
-		checkbox display
-		{
-			tooltip		"_Display/hide the panel"
-			image		"ui/checkbox_green"
-			pos			"15 14"
-			size		"20 20"
-			current		*cvar:mn_displaypartyinfo
-			onChange {
-				if ( *cvar:mn_displaypartyinfo == true ) {
-					*node:parent.mapname@invis = false
-					*node:parent.mappic@invis = false
-					*node:parent.maxplayersperteams_str@invis = false
-					*node:parent.maxplayersperteams_value@invis = false
-					*node:parent.maxteams_str@invis = false
-					*node:parent.maxteams_value@invis = false
-					*node:parent@height = 430
-				} else {
-					*node:parent.mapname@invis = true
-					*node:parent.mappic@invis = true
-					*node:parent.maxplayersperteams_str@invis = true
-					*node:parent.maxplayersperteams_value@invis = true
-					*node:parent.maxteams_str@invis = true
-					*node:parent.maxteams_value@invis = true
-					*node:parent@height = 49
-				}
-			}
-		}
-
-		string mapname
-		{
-			font		"f_small"
-			color		"1 1 1 1"
-			string		*cvar:mn_svmapname
-			pos			"50 50"
-			size		"300 20"
-			textalign	ALIGN_CC
-		}
-
-		image mappic
-		{
-			pos			"40 80"
-			size		"320 200"
-			src		*cvar:mn_mappicbig
-		}
-
-		string maxplayersperteams_str
-		{
-			string		"_Max. players per team"
-			pos			"50 310"
-			size		"240 20"
-		}
-
-		string maxplayersperteams_value
-		{
-			string		*cvar:mn_maxplayersperteam
-			pos			"300 310"
-			size		"50 20"
-		}
-
-		string maxteams_str
-		{
-			string		"_Max. teams for this map"
-			pos			"50 330"
-			size		"240 20"
-		}
-
-		string maxteams_value
-		{
-			string		*cvar:mn_maxteams
-			pos			"300 330"
-			size		"50 20"
-		}
-	}
-
 	panel players {
 		{
 			pos		"520 30"
@@ -1206,7 +1114,7 @@ window multiplayer_wait extends levelbuttons
 			string		"_Players connected"
 			font		"f_big"
 			color		"1 1 1 1"
-			pos			"0 0"
+			pos			"0 5"
 			size		"415 50"
 			textalign	ALIGN_CC
 		}
@@ -1260,7 +1168,7 @@ window multiplayer_wait extends levelbuttons
 			string		"_Team selection"
 			font		"f_big"
 			color		"1 1 1 1"
-			pos			"5 0"
+			pos			"0 5"
 			size		"415 50"
 			textalign	ALIGN_CC
 		}
