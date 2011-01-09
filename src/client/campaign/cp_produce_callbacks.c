@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -345,7 +345,7 @@ static void PR_ProductionInfo (const base_t *base)
 {
 	if (selectedProduction) {
 		const production_t *prod = selectedProduction;
-		const int time = PR_GetRemainingHours(base, prod, PR_GetProgress(prod));
+		const int time = PR_GetRemainingHours(prod);
 		UI_ExecuteConfunc("prod_taskselected");
 
 		if (PR_IsAircraft(prod)) {

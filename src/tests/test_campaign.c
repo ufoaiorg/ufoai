@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "test_shared.h"
@@ -572,9 +571,9 @@ static void testProductionItem (void)
 	prod = PR_QueueNew(base, &data, 1);
 	CU_ASSERT_PTR_NOT_NULL(prod);
 	tech = RS_GetTechForItem(od);
-	n = PR_GetRemainingMinutes(base, prod, 0.0);
+	n = PR_GetRemainingMinutes(prod);
 	i = tech->produceTime;
-	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(base, prod, 0.0));
+	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(prod));
 	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
 	}
@@ -641,9 +640,9 @@ static void testProductionAircraft (void)
 	prod = PR_QueueNew(base, &data, 1);
 	CU_ASSERT_PTR_NOT_NULL(prod);
 
-	n = PR_GetRemainingMinutes(base, prod, 0.0);
+	n = PR_GetRemainingMinutes(prod);
 	i = aircraft->tech->produceTime;
-	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(base, prod, 0.0));
+	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(prod));
 	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
 	}
@@ -692,9 +691,9 @@ static void testDisassembly (void)
 	CU_ASSERT_PTR_NOT_NULL(prod);
 
 	old = base->capacities[CAP_ITEMS].cur;
-	n = PR_GetRemainingMinutes(base, prod, 0.0);
+	n = PR_GetRemainingMinutes(prod);
 	i = storedUFO->comp->time;
-	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(base, prod, 0.0));
+	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(prod));
 	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
 	}

@@ -85,25 +85,32 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
 }
 
 /**
- * @brief Calculates the remaining hours for a technology
- * @param[in] base Pointer to the base production is at
- * @param[in] prod Pointer to the production datastructure
- * @param[in] percentDone Production progress. Value is between 0.0 and 1.0.
+ * @brief Calculates the total frame count needed for producing an item
+ * @param[in] base Pointer to the base the production happen
+ * @param[in] prod Poiter to the production structure itself
  */
-int PR_GetRemainingMinutes (const base_t *base, const production_t *prod, double percentDone)
+static int PR_CalculateTotalFrames (const base_t const *base, const production_t const *prod)
 {
-	const double prodPerMinute = PR_CalculateProductionPercentPerMinute(base, prod);
-	const double minutes = (1.0f - percentDone) / prodPerMinute;
-	return ceil(minutes);
+	return (1.0 / PR_CalculateProductionPercentPerMinute(base, prod)) + 1;
+}
+
+/**
+ * @brief Calculates the remaining time for a technology in minutes
+ * @param[in] prod Pointer to the production structure
+ */
+int PR_GetRemainingMinutes (const production_t const *prod)
+{
+	assert(prod);
+	return prod->totalFrames - prod->frame;
 }
 
 /**
  * @brief Calculates the remaining hours for a technology
- * @param[in] percentDone 0.0 - 1.0
+ * @param[in] prod Pointer to the production structure
  */
-int PR_GetRemainingHours (const base_t *base, const production_t *prod, double percentDone)
+int PR_GetRemainingHours (const production_t const *prod)
 {
-	return ceil(PR_GetRemainingMinutes(base, prod, percentDone) / (double)MINUTES_PER_HOUR);
+	return round(PR_GetRemainingMinutes(prod) / (double)MINUTES_PER_HOUR);
 }
 
 /**
@@ -262,11 +269,12 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	prod->idx = queue->numItems;
 	prod->data = *data;
 	prod->amount = amount;
-	prod->percentDone = 0.0;
 
 	tech = PR_GetTech(&prod->data);
 	if (!tech)
 		return NULL;
+
+	prod->totalFrames = PR_CalculateTotalFrames(base, prod);
 
 	if (PR_IsDisassemblyData(data)) {
 		/* only one item for disassemblies */
@@ -545,12 +553,11 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 	if (!PR_IsProduction(prod))
 		return;
 
-	if (prod->percentDone >= 1.0) {
+	if (PR_IsReady(prod)) {
 		const char *name = PR_GetName(&prod->data);
 		technology_t *tech = PR_GetTech(&prod->data);
 
 		prod->frame = 0;
-		prod->percentDone = 0.0;
 		prod->amount--;
 
 		if (PR_IsItem(prod)) {
@@ -584,7 +591,7 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 	if (!PR_IsDisassembly(prod))
 		return;
 
-	if (prod->percentDone >= 1.0) {
+	if (PR_IsReady(prod)) {
 		storedUFO_t *ufo = prod->data.data.ufo;
 		base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse);
 
@@ -686,7 +693,6 @@ void PR_ProductionRun (void)
 	while ((base = B_GetNextFounded(base)) != NULL) {
 		production_t *prod;
 		production_queue_t *q = PR_GetProductionForBase(base);
-		int totalFrames;
 
 		/* not actually any active productions */
 		if (q->numItems <= 0)
@@ -697,14 +703,11 @@ void PR_ProductionRun (void)
 			continue;
 
 		prod = &q->items[0];
+		prod->totalFrames = PR_CalculateTotalFrames(base, prod);
 		prod->frame++;
 
 		if (!PR_CheckFrame(base, prod))
 			return;
-
-		totalFrames = (1.0 / PR_CalculateProductionPercentPerMinute(base, prod)) + 1;
-
-		prod->percentDone = (prod->frame * 100.0 / totalFrames) / 100.0;
 
 		PR_ProductionFrame(base, prod);
 		PR_DisassemblingFrame(base, prod);
@@ -903,9 +906,7 @@ static qboolean PR_PostLoadInitProgress (void)
 
 		for (j = 0; j < pq->numItems; j++) {
 			production_t *prod = &pq->items[j];
-			const int totalFrames = (1.0 / PR_CalculateProductionPercentPerMinute(base, prod)) + 1;
-
-			prod->percentDone = (prod->frame * 100.0 / totalFrames) / 100.0;
+			prod->totalFrames = PR_CalculateTotalFrames(base, prod);
 		}
 	}
 

@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #ifndef CP_PRODUCE
@@ -64,10 +63,9 @@ typedef struct production_s
 	int idx; /**< Self reference in the production list. Mainly used for moving/deleting them. */
 	productionData_t data; /**< The data behind this production (type and item pointer) */
 
-	int frame;			/**< the frame counter */
+	int totalFrames;	/**< total number of frames needed to finish the production (it can change with worker count and so) */
+	int frame;			/**< the actual frame counter */
 	signed int amount;	/**< How much are we producing. */
-	double percentDone;		/**< Fraction of the item which is already produced.
-							 * 0 if production is not started, 1 if production is over */
 	qboolean spaceMessage;	/**< Used in No Free Space message adding. */
 	qboolean creditMessage;	/**< Used in No Credits message adding. */
 } production_t;
@@ -83,7 +81,8 @@ typedef struct production_s
 #define PR_SetData(dataPtr, typeVal, ptr)  do { assert(ptr); (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
 #define PR_IsDataValid(dataPtr)	((dataPtr)->data.pointer != NULL)
 
-#define PR_GetProgress(prod)	((prod)->percentDone)
+#define PR_GetProgress(prod)	((double)(prod)->frame / (prod)->totalFrames)
+#define PR_IsReady(prod)		((prod)->frame > (prod)->totalFrames)
 
 /** @brief Used in production costs (to allow reducing prices below 1x). */
 #define PRODUCE_FACTOR 1
@@ -122,8 +121,8 @@ void PR_UpdateProductionCap(struct base_s *base);
 void PR_UpdateRequiredItemsInBasestorage(struct base_s *base, int amount, const requirements_t const *reqs);
 int PR_RequirementsMet(int amount, const requirements_t const *reqs, struct base_s *base);
 
-int PR_GetRemainingMinutes(const struct base_s *base, const production_t* prod, double percentDone);
-int PR_GetRemainingHours(const struct base_s *base, const production_t* prod, double percentDone);
+int PR_GetRemainingMinutes(const production_t const * prod);
+int PR_GetRemainingHours(const production_t const * prod);
 
 production_t *PR_QueueNew(struct base_s *base, const productionData_t *data, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
