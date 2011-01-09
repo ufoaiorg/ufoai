@@ -485,7 +485,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 	if (PR_IsItem(prod)) {
 		const objDef_t *od = prod->data.data.item;
 		/* Not enough money to produce more items in this base. */
-		if (PR_HasEnoughCredits(od)) {
+		if (PR_HasInsufficientCredits(od)) {
 			if (!prod->creditMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -505,7 +505,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 	} else if (PR_IsAircraft(prod)) {
 		const aircraft_t *aircraft = prod->data.data.aircraft;
 		/* Not enough money to produce more items in this base. */
-		if (PR_HasEnoughCredits(aircraft)) {
+		if (PR_HasInsufficientCredits(aircraft)) {
 			if (!prod->creditMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);

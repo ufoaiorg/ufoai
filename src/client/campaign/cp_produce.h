@@ -89,7 +89,7 @@ typedef struct production_s
 #define PRODUCE_DIVISOR 1
 
 #define PR_GetPrice(item)			((item)->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)
-#define PR_HasEnoughCredits(item)	(PR_GetPrice(item) > ccs.credits)
+#define PR_HasInsufficientCredits(item)	(PR_GetPrice(item) > ccs.credits)
 
 /**
  * @brief A production queue. Lists all items to be produced.
