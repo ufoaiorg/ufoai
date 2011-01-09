@@ -398,7 +398,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	if (Q_streq(c, "print")) {
 		NET_ReadString(msg, popupText, sizeof(popupText));
 		/* special reject messages needs proper handling */
-		/** @todo this is in the userinfo string, but not announced via print */
+		/** @todo this is in the userinfo string, but not clearly announced via print - see SVC_DirectConnect */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
 			UI_PushWindow("serverpassword", NULL, NULL);
 		UI_Popup(_("Notice"), _(popupText));
