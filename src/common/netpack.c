@@ -332,7 +332,7 @@ char *NET_ReadString (struct dbuffer *buf)
 		l++;
 	} while (l < sizeof(string) - 1);
 
-	string[l] = 0;
+	string[l] = '\0';
 
 	return string;
 }
