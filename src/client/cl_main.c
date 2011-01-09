@@ -335,7 +335,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	c = Cmd_Argv(0);
 
-	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s\n", Cmd_Args());
+	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s (%s)\n", c, Cmd_Args());
 
 	/* server connection */
 	if (Q_streq(c, "client_connect")) {
