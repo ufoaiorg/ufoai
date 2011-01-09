@@ -263,7 +263,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
  * @param[in,out] battleParam The battlescape parameter container
  * @sa CP_SetAlienTeamByInterest
  */
-static void CP_CreateAlienTeam (mission_t *mission, battleParam_t *battleParam)
+static void MIS_CreateAlienTeam (mission_t *mission, battleParam_t *battleParam)
 {
 	int numAliens;
 
@@ -319,7 +319,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 
 	assert(mission->posAssigned);
 
-	CP_CreateAlienTeam(mission, param);
+	MIS_CreateAlienTeam(mission, param);
 	CP_CreateCivilianTeam(mission, param);
 
 	/* Reset parameters */
