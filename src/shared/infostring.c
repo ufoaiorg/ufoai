@@ -39,7 +39,7 @@ const char *Info_ValueForKey (const char *s, const char *key)
 {
 	char pkey[512];
 	/* use two buffers so compares */
-	static char value[2][512];
+	static char value[2][512] = {"", ""};
 
 	/* work without stomping on each other */
 	static int valueindex = 0;
@@ -55,14 +55,14 @@ const char *Info_ValueForKey (const char *s, const char *key)
 				return "";
 			*o++ = *s++;
 		}
-		*o = 0;
+		*o = '\0';
 		s++;
 
 		o = value[valueindex];
 
 		while (*s != '\\' && *s != '\n' && *s)
 			*o++ = *s++;
-		*o = 0;
+		*o = '\0';
 
 		if (!Q_strcasecmp(key, pkey))
 			return value[valueindex];
