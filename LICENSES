@@ -6283,9 +6283,15 @@ base/textures/tex_mattn/wall011_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_mattn/wall012.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall013.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_mattn/wall014.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_mattn/wall015.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_mattn/wall016.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall014.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
+base/textures/tex_mattn/wall014_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
+base/textures/tex_mattn/wall014_sm.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
+base/textures/tex_mattn/wall015.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
+base/textures/tex_mattn/wall015_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
+base/textures/tex_mattn/wall015_sm.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
+base/textures/tex_mattn/wall016.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
+base/textures/tex_mattn/wall016_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
+base/textures/tex_mattn/wall016_sm.png | GNU General Public License 2.0 or later | Martin Gerhardy, Nate Wright
 base/textures/tex_mattn/wall017.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall017_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall018.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
