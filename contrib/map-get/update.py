@@ -17,7 +17,7 @@ UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
 
 INTERACTIVE_REPLY = 'query'
 
-URI = 'http://ufoai.ninex.info/maps/2.4'
+REPOSITORY = 'http://ufoai.ninex.info/maps'
 __version__ = '0.0.4.2'
 
 displayDownloadStatus = True
@@ -70,7 +70,7 @@ def ask_boolean_question(question):
         return False
     return raw_input(question).lower() in ('y', '')
 
-def upgrade(arg):
+def upgrade(repository):
     """Download the list of maps."""
     global displayAlreadyUpToDate
 
@@ -80,7 +80,7 @@ def upgrade(arg):
     print '* ' + ufo2mapMeta.get_full_content().strip().replace("\n", "\n* ")
     print
 
-    data = download(URI + '/UFO2MAP')
+    data = download(repository + '/UFO2MAP')
     ufo2mapRef = mapsync.Ufo2mapMetadata()
     ufo2mapRef.set_content(data)
     print "Remote/reference ufo2map information:"
@@ -96,7 +96,7 @@ def upgrade(arg):
 
     maps = {}
     print 'Getting list of available maps'
-    for l in download(URI + '/MAPS').split('\n'):
+    for l in download(repository + '/MAPS').split('\n'):
         if l == "":
             continue
         i = l.split(' ')
@@ -150,7 +150,7 @@ def upgrade(arg):
 def main(argv=None):
     global displayDownloadStatus
     global displayAlreadyUpToDate
-    global INTERACTIVE_REPLY
+    global INTERACTIVE_REPLY, REPOSITORY
 
     print "map-get version " + mapsync.__version__
 
@@ -160,18 +160,29 @@ def main(argv=None):
     parser.add_option('', '--hide-uptodate', action='store_false', default="True", dest='displayAlreadyUpToDate')
     parser.add_option("", "--reply", action="store", default="query", type="string", dest="reply",
         help='Allow to auto reply interactive questions, REPLY={yes,no,query}')
+    parser.add_option("", "--repository", action="store", default=REPOSITORY, type="string", dest="repository",
+        help='Use a custom repository. The default one is "%s"' % REPOSITORY)
+    parser.add_option("", "--branch", action="store", default="auto", type="string", dest="branch",
+        help='Use a custom a custom branch version for the repository, Default value is "auto"')
 
     options, args = parser.parse_args()
 
     if not (options.reply in ['yes', 'no', 'query']):
         print 'Wrong param --reply={yes,no,query}'
         sys.exit(1)
+    REPOSITORY = options.repository
+    branch = options.branch
+    if branch == "auto":
+        branch = mapsync.get_branch()
+    REPOSITORY = os.path.join(REPOSITORY, branch)
+
+    print REPOSITORY
 
     displayDownloadStatus = options.displayDownloadStatus
     displayAlreadyUpToDate = options.displayAlreadyUpToDate
     INTERACTIVE_REPLY = options.reply
 
-    upgrade([])
+    upgrade(REPOSITORY)
 
 if __name__ == '__main__':
     main()
