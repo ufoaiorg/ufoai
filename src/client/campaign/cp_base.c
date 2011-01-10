@@ -1430,10 +1430,10 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 		building_t* building = &ccs.buildingTemplates[i];
 		vec2_t pos;
 
-		if ((!building->mandatory) || B_GetBuildingStatus(base, building->buildingType))
+		if (!building->mandatory || B_GetBuildingStatus(base, building->buildingType))
 			continue;
 
-		while ((freeSpace > 0) && !B_GetBuildingStatus(base, building->buildingType)) {
+		while (freeSpace > 0 && !B_GetBuildingStatus(base, building->buildingType)) {
 			Vector2Set(pos, rand() % BASE_SIZE, rand() % BASE_SIZE);
 			if (!base->map[(int)pos[0]][(int)pos[1]].building) {
 				B_AddBuildingToBasePos(base, building, hire, pos);
