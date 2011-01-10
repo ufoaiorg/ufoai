@@ -1059,11 +1059,12 @@ static void testHospital (void)
 
 	base->founded = qfalse;
 }
-
+#define B_NOTBLOCKED(base, col, row) ((base)->map[(col)][(row)].building == NULL && !(base)->map[(col)][(row)].blocked)
 static void testBuildingDestroy (void)
 {
 	const vec2_t pos = {0, 0};
 	base_t *base;
+	int i;
 	const building_t *buildingTemplate;
 	building_t *buildingLeft, *buildingMiddle, *buildingRight;
 
@@ -1074,14 +1075,23 @@ static void testBuildingDestroy (void)
 	base = CreateBase("unittestbuildingdestroy", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
+	/* search a free spot, because the mandatory buildings are placed randomly */
+	for (i = 0; i < BASE_SIZE; i++) {
+		if (B_NOTBLOCKED(base, i, 0) && B_NOTBLOCKED(base, i, 1) && B_NOTBLOCKED(base, i, 2)) {
+			break;
+		}
+	}
+
+	CU_ASSERT_NOT_EQUAL_FATAL(i, BASE_SIZE);
+
 	/* build three powerplants in a row */
 	buildingTemplate = B_GetBuildingTemplate("building_powerplant");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingTemplate);
-	buildingLeft = B_SetBuildingByClick(base, buildingTemplate, 0, 0);
+	buildingLeft = B_SetBuildingByClick(base, buildingTemplate, i, 0);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingLeft);
-	buildingMiddle = B_SetBuildingByClick(base, buildingTemplate, 0, 1);
+	buildingMiddle = B_SetBuildingByClick(base, buildingTemplate, i, 1);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingMiddle);
-	buildingRight = B_SetBuildingByClick(base, buildingTemplate, 0, 2);
+	buildingRight = B_SetBuildingByClick(base, buildingTemplate, i, 2);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingRight);
 
 	/* the one in the middle should not be destroyable, as it's the only connection
@@ -1092,6 +1102,49 @@ static void testBuildingDestroy (void)
 	CU_ASSERT_TRUE(B_BuildingDestroy(buildingRight));
 	/* now it should be destroyable, as the right tile is already destroyed */
 	CU_ASSERT_TRUE(B_BuildingDestroy(buildingMiddle));
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
+}
+
+static void testBuildingConstruction (void)
+{
+	const vec2_t pos = {0, 0};
+	base_t *base;
+	int i;
+	const building_t *buildingTemplate;
+	building_t *buildingLeft, *buildingRight;
+
+	ResetCampaignData();
+
+	ccs.campaignStats.basesBuilt = 1;
+
+	base = CreateBase("unittestbuildingconstruction", pos);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+
+	/* search a free spot, because the mandatory buildings are placed randomly */
+	for (i = 0; i < BASE_SIZE; i++) {
+		if (B_NOTBLOCKED(base, i, 0) && B_NOTBLOCKED(base, i + 1, 1)) {
+			break;
+		}
+	}
+
+	CU_ASSERT_NOT_EQUAL_FATAL(i, BASE_SIZE);
+
+	/* build two powerplants that are not connected */
+	buildingTemplate = B_GetBuildingTemplate("building_powerplant");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingTemplate);
+	buildingLeft = B_SetBuildingByClick(base, buildingTemplate, i, 0);
+	CU_ASSERT_PTR_NOT_NULL(buildingLeft);
+	buildingRight = B_SetBuildingByClick(base, buildingTemplate, i + 1, 1);
+	CU_ASSERT_PTR_NULL_FATAL(buildingRight);
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 /* https://sourceforge.net/tracker/index.php?func=detail&aid=3090011&group_id=157793&atid=805242 */
@@ -1190,6 +1243,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testBuildingDestroy) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testBuildingConstruction) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
