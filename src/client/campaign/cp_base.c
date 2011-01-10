@@ -1338,7 +1338,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 	building_t *buildingNew;
 
 	/* fake a click to basemap */
-	buildingNew = B_SetBuildingByClick(base, buildingTemplate, (int)pos[0], (int)pos[1]);
+	buildingNew = B_SetBuildingByClick(base, buildingTemplate, (int)pos[1], (int)pos[0]);
 	if (!buildingNew)
 		return;
 	B_UpdateAllBaseBuildingStatus(buildingNew, B_STATUS_WORKING);
@@ -1413,12 +1413,11 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 	if (baseTemplate) {
 		/* find each building in the template */
 		for (i = 0; i < baseTemplate->numBuildings; i++) {
-			vec2_t pos;
 			const baseBuildingTile_t *buildingTile = &baseTemplate->buildings[i];
 
-			Vector2Set(pos, buildingTile->posX, buildingTile->posY);
-
-			if (!base->map[(int)pos[0]][(int)pos[1]].building) {
+			if (!base->map[buildingTile->posY][buildingTile->posX].building) {
+				vec2_t pos;
+				Vector2Set(pos, buildingTile->posX, buildingTile->posY);
 				B_AddBuildingToBasePos(base, buildingTile->building, hire, pos);
 				freeSpace--;
 			}
@@ -1434,8 +1433,10 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 			continue;
 
 		while (freeSpace > 0 && !B_GetBuildingStatus(base, building->buildingType)) {
-			Vector2Set(pos, rand() % BASE_SIZE, rand() % BASE_SIZE);
-			if (!base->map[(int)pos[0]][(int)pos[1]].building) {
+			int x = rand() % BASE_SIZE;
+			int y = rand() % BASE_SIZE;
+			Vector2Set(pos, x, y);
+			if (!base->map[y][x].building) {
 				B_AddBuildingToBasePos(base, building, hire, pos);
 				freeSpace--;
 			}
@@ -1809,7 +1810,6 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				tile.building = buildingNew;
 				tile.posX = col;
 				tile.posY = row;
-				B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
 				B_TileGraphAdd(base, tileGraph, &tile);
 				if (buildingNew->needs)
 					B_TileGraphAdd(base, tileGraph, &tileNeeded);
