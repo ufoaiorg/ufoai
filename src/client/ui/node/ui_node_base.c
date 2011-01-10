@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +19,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../ui_main.h"
@@ -307,8 +306,6 @@ static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
 
 	if (base->map[row][col].building) {
 		const building_t *entry = base->map[row][col].building;
-		if (!entry)
-			Com_Error(ERR_DROP, "UI_BaseMapNodeClick: no entry at %i:%i", x, y);
 
 		assert(!base->map[row][col].blocked);
 
@@ -340,8 +337,6 @@ static void UI_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 
 	if (base->map[row][col].building) {
 		building_t *entry = base->map[row][col].building;
-		if (!entry)
-			Sys_Error("UI_BaseMapNodeRightClick: no entry at %i:%i\n", x, y);
 
 		assert(!base->map[row][col].blocked);
 		B_MarkBuildingDestroy(entry);
