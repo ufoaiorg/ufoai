@@ -1060,6 +1060,40 @@ static void testHospital (void)
 	base->founded = qfalse;
 }
 
+static void testBuildingDestroy (void)
+{
+	const vec2_t pos = {0, 0};
+	base_t *base;
+	const building_t *buildingTemplate;
+	building_t *buildingLeft, *buildingMiddle, *buildingRight;
+
+	ResetCampaignData();
+
+	ccs.campaignStats.basesBuilt = 1;
+
+	base = CreateBase("unittestbuildingdestroy", pos);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+
+	/* build three powerplants in a row */
+	buildingTemplate = B_GetBuildingTemplate("building_powerplant");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingTemplate);
+	buildingLeft = B_SetBuildingByClick(base, buildingTemplate, 0, 0);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingLeft);
+	buildingMiddle = B_SetBuildingByClick(base, buildingTemplate, 0, 1);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingMiddle);
+	buildingRight = B_SetBuildingByClick(base, buildingTemplate, 0, 2);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingRight);
+
+	/* the one in the middle should not be destroyable, as it's the only connection
+	 * between the left and the right tile */
+	/* note: this is fatal because the removal of the building would move the memory and
+	 * the right and middle pointers would not longe be valid */
+	CU_ASSERT_FALSE_FATAL(B_BuildingDestroy(buildingMiddle));
+	CU_ASSERT_TRUE(B_BuildingDestroy(buildingRight));
+	/* now it should be destroyable, as the right tile is already destroyed */
+	CU_ASSERT_TRUE(B_BuildingDestroy(buildingMiddle));
+}
+
 /* https://sourceforge.net/tracker/index.php?func=detail&aid=3090011&group_id=157793&atid=805242 */
 static void test3090011 (void)
 {
@@ -1153,6 +1187,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testHospital) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testBuildingDestroy) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)

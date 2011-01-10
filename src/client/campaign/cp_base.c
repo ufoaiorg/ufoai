@@ -1457,7 +1457,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 
 	/* Create random blocked fields in the base.
 	 * The first base never has blocked fields so we skip it. */
-	if (ccs.campaignStats.basesBuilt) {
+	if (ccs.campaignStats.basesBuilt >= 1) {
 		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
 		const int j = round((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
 
