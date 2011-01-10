@@ -1341,6 +1341,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 	buildingNew = B_SetBuildingByClick(base, buildingTemplate, (int)pos[1], (int)pos[0]);
 	if (!buildingNew)
 		return;
+	buildingNew->timeStart = 0;
 	B_UpdateAllBaseBuildingStatus(buildingNew, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
 			base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
@@ -2706,6 +2707,7 @@ static void B_BuildingConstructionFinished_f (void)
 
 		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
+			building->timeStart = 0;
 
 			if (building->onConstruct[0] != '\0') {
 				base->buildingCurrent = building;

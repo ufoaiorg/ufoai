@@ -294,7 +294,7 @@ void B_SetCurrentSelectedBase(const base_t *base);
 qboolean B_AssembleMap(const base_t *base);
 
 /* building functions */
-#define B_IsBuildingBuiltUp(building) ((building)->timeStart && (building)->timeStart + (building)->buildTime <= ccs.date.day)
+#define B_IsBuildingBuiltUp(building) (!(building)->timeStart || (building)->timeStart + (building)->buildTime <= ccs.date.day)
 
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
