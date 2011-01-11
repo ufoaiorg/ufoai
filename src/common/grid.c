@@ -130,13 +130,13 @@ static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, 
 
 	RT_AREA_TEST_POS(path, toPos, c);
 	RT_AREA_POS(path, toPos, c) = length;	/**< Store TUs for this square. */
-	RT_AREA_FROM(path, x, y, z, c) = makeDV(dir, oz); /**< Store origination information for this square. */
+	RT_AREA_FROM_POS(path, toPos, c) = makeDV(dir, oz); /**< Store origination information for this square. */
 	{
 		pos3_t pos, test;
 		int crouch = c;
 		VectorSet(pos, ox, oy, oz);
 		VectorSet(test, x, y, z);
-		PosSubDV(test, crouch, RT_AREA_FROM(path, x, y, z, c));
+		PosSubDV(test, crouch, RT_AREA_FROM_POS(path, toPos, c));
 		if (!VectorCompare(test, pos) || crouch != oc) {
 			Com_Printf("Grid_SetMoveData: Created faulty DV table.\nx:%i y:%i z:%i c:%i\ndir:%i\nnx:%i ny:%i nz:%i nc:%i\ntx:%i ty:%i tz:%i tc:%i\n",
 				ox, oy, oz, oc, dir, x, y, z, c, test[0], test[1], test[2], crouch);
@@ -718,7 +718,7 @@ int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingStat
 	}
 
 	/* Return the information indicating how the actor got to this cell */
-	return RT_AREA_FROM(path, toPos[0], toPos[1], toPos[2], crouchingState);
+	return RT_AREA_FROM_POS(path, toPos, crouchingState);
 }
 
 

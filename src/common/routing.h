@@ -103,6 +103,7 @@ MACROS
 #define RT_AREA(path, x, y, z, state)				((path)->area[(state)][(z)][(y)][(x)])
 #define RT_AREA_POS(path, p, state)					((path)->area[(state)][(p)[2]][(p)[1]][(p)[0]])
 #define RT_AREA_FROM(path, x, y, z, state)			((path)->areaFrom[(state)][(z)][(y)][(x)])
+#define RT_AREA_FROM_POS(path, p, state)		((path)->areaFrom[(state)][(p)[2]][(p)[1]][(p)[0]])
 #define RT_SAREA(path, x, y, z, state)				((path)->areaStored[(state)][(z)][(y)][(x)])
 #define RT_AREA_TEST(path, x, y, z, state)			assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
 														assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
