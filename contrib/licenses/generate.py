@@ -84,6 +84,14 @@ ${content}
 
 </body></html>"""
 
+ELEMENT = """<li>
+${image}
+${filename} (<a href="${download_url}" title="Download">download</a>, <a href="${history_url}" title="History">history</a>)
+<br /><span>by ${author}</span>
+<br />Source: ${source}
+${extra_info}
+</li>"""
+
 HTML_IMAGE = u"""<br/><table><tr>
 <td><img src="plot.png" caption="Timeline of all game content by revision and licenses" /></td>
 <td><img src="nonfree.png" caption="Timeline of non free content by revision and licenses" /></td>
@@ -315,9 +323,10 @@ class Analysis(object):
         global THUMBNAIL
         file = meta.fileName.replace(self.base + '/', "", 1)
 
-        content = "<li>"
+        content = {}
 
         # preview
+        content['image'] = ''
         if THUMBNAIL and meta.isImage():
             base = '.thumbnails/%s.png' % meta.fileName.replace(self.base + "/", "", 1)
             thumbFileName = output + '/licenses/public_html/' + base
@@ -329,51 +338,49 @@ class Analysis(object):
                 if not os.path.exists(thumbdir):
                      os.makedirs(thumbdir)
                 os.system('convert %s -thumbnail 128x128 %s' % (meta.fileName, thumbFileName))
-            content += '<img class="thumb" src="%s" />' % thumbURL
+            content['image'] = '<img class="thumb" src="%s" />' % thumbURL
 
         # name and links
-        content += meta.fileName
-        content += ' ('
-        content += '<a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=%s" title="Download">download</a>' % meta.fileName
-        content += ', '
-        content += '<a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=history;f=%s" title="History">history</a>' % meta.fileName
-        content += ')'
+        content['filename'] = meta.fileName
+        content['download_url'] = "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=%s" % meta.fileName
+        content['history_url'] = "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=history;f=%s" % meta.fileName
 
         # author
         copyright = meta.copyright
         if copyright == None:
             copyright = "UNKNOWN"
-        content+= u'<br /><span>by %s</span>' % copyright
+        content['author'] = copyright
 
         # source
         source = meta.source
+        content['source'] = ''
         if source != None:
             if source.startswith('http://') or source.startswith('ftp://'):
                 source = '<a href="%s">%s</a>' % (source, source)
-            content+= '<br />Source: ' + source
+            content['source'] = source
 
+        content['extra_info'] = ""
         if file.endswith('.map'):
             if len(meta.useTextures) > 0:
                 list = []
                 for m in meta.useTextures:
                     list.append(m.fileName)
-                content += '<br /><div>Uses: %s </div>' % ', '.join(list)
+                content['extra_info'] += '<br /><div>Uses: %s </div>' % ', '.join(list)
             else:
-                content += '<br />Note: Map without textures!'
+                content['extra_info'] +=  '<br />Note: Map without textures!'
 
         if 'textures/' in meta.fileName and meta.isImage():
             if len(meta.usedByMaps) > 0:
                 list = []
                 for m in meta.usedByMaps:
                     list.append(m.fileName)
-                content+= '<br/><div>Used in: %s </div>' % ', '.join(list)
+                content['extra_info'] += '<br/><div>Used in: %s </div>' % ', '.join(list)
             elif '_nm.' in meta.fileName or '_gm.' in meta.fileName or '_sm.' in meta.fileName or '_rm.' in meta.fileName:
-                content+= '<br/><div>Special map - only indirectly used</div>'
+                content['extra_info'] += '<br/><div>Special map - only indirectly used</div>'
             else:
-                content+= '<br/><b>UNUSED</b> (at least no map uses it)'
+                content['extra_info'] += '<br/><b>UNUSED</b> (at least no map uses it)'
 
-        content+= '</li>'
-
+        content = string.Template(ELEMENT).substitute(content)
         return content
 
     def getLicenseFileName(self, license):
