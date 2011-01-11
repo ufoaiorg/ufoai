@@ -85,11 +85,16 @@ ${content}
 </body></html>"""
 
 ELEMENT = """<li>
-${image}
-${filename} (<a href="${download_url}" title="Download">download</a>, <a href="${history_url}" title="History">history</a>)
+<table><tr>
+<td>${image}</td>
+<td>
+<a href="${download_url}" title="Download">${filename}</a>
+<br /><a href="${history_url}" title="History">File history</a>
 <br /><span>by ${author}</span>
 <br />Source: ${source}
 ${extra_info}
+</td>
+</tr></table>
 </li>"""
 
 HTML_IMAGE = u"""<br/><table><tr>
