@@ -119,9 +119,14 @@ static qboolean Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t
 	return qfalse;
 }
 
-static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const int z, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
+static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
 {
 	pos4_t dummy;
+	int x, y, z;
+
+	x = toPos[0];
+	y = toPos[1];
+	z = toPos[2];
 
 	RT_AREA_TEST(path, x, y, z, c);
 	RT_AREA(path, x, y, z, c) = length;	/**< Store TUs for this square. */
@@ -512,7 +517,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 		/* Store move. */
 		if (pqueue)
-			Grid_SetMoveData(path, x, y, z, crouchingState, len, dir, x, y, z, crouchingState ^ 1, pqueue);
+			Grid_SetMoveData(path, pos, crouchingState, len, dir, x, y, z, crouchingState ^ 1, pqueue);
 
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i.\n", x, y, z, crouchingState, len);
 		/* We are done, exit now. */
@@ -575,7 +580,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* Store move. */
 	if (pqueue) {
-		Grid_SetMoveData(path, nx, ny, nz, crouchingState, len, dir, x, y, z, crouchingState, pqueue);
+		Grid_SetMoveData(path, toPos, crouchingState, len, dir, x, y, z, crouchingState, pqueue);
 	}
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i\n", nx, ny, nz, crouchingState, len, RT_FLOOR(map, actorSize, x, y, z));
 }
