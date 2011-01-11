@@ -541,7 +541,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		if (!Grid_StepCheckWalkingDirections(step, actorSize, path, pos, toPos, dir, exclude)) {
 			return;
 		}
-		nz = toPos[2];	/* get the potentially modified z value back into business */
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
@@ -559,10 +558,9 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	 * There are no floor difference restrictions for fliers, only obstructions. */
 
 	/* nz can't move out of bounds */
-	if (nz < 0)
-		nz = 0;
-	if (nz >= PATHFINDING_HEIGHT)
-		nz = PATHFINDING_HEIGHT - 1;
+	if (toPos[2] >= PATHFINDING_HEIGHT)
+		toPos[2] = PATHFINDING_HEIGHT - 1;
+	nz = toPos[2];	/* get the potentially modified z value back into business */
 
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST(path, nx, ny, nz, crouchingState);
