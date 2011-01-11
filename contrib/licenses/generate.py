@@ -26,6 +26,7 @@ import shutil
 from xml.dom.minidom import parseString
 import resources
 import tempfile
+import string
 
 # config
 ABS_URL = None
@@ -66,20 +67,20 @@ FILENAME_FILTERS = (re.compile('.txt$'),
 HTML = u"""<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- STYLELINK -->
+${stylelink}
 </head>
 
 <body>
-<h1>Licenses in UFO:AI (<!-- TITLE -->)</h1>
+<h1>Licenses in UFO:AI (${title})</h1>
 Please note that the information are extracted from <a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=LICENSES">LICENSES</a> file.<br />
 Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
 <br />
-State as in revision <!-- REVISION -->.
+State as in revision ${revision}.
 <hr />
 
-<!-- NAVIGATION -->
+${navigation}
 
-<!-- CONTENT -->
+${content}
 
 </body></html>"""
 
@@ -411,12 +412,14 @@ class Analysis(object):
             content += self.getContentEntry(output, meta[1]) + EOL
         content += '</ol>'
 
-        html = HTML
-        html = html.replace("<!-- NAVIGATION -->", navigation)
-        html = html.replace("<!-- STYLELINK -->", style)
-        html = html.replace("<!-- TITLE -->", title)
-        html = html.replace("<!-- CONTENT -->", content)
-        html = html.replace("<!-- REVISION -->", str(self.revision))
+        values = {}
+        values["navigation"] = navigation
+        values["stylelink"] = style
+        values["title"] = title
+        values["content"] = content
+        values["revision"] = str(self.revision)
+
+        html = string.Template(HTML).substitute(values)
         html = html.encode('utf-8')
         fileName = self.getLicenseFileName(license)
         basedir = output + '/licenses/public_html' + self.getLocalDir()
@@ -446,11 +449,11 @@ class Analysis(object):
 
     def write(self, output):
         name = self.getName()
-        html = HTML
+        values = {}
 
         style = '<link rel="stylesheet" type="text/css" href="' + ('../' * self.deep) + 'style.css" />'
-        html = html.replace("<!-- STYLELINK -->", style)
-        html = html.replace("<!-- TITLE -->", "base" + self.getLocalDir())
+        values['stylelink'] = style
+        values['title'] = "base" + self.getLocalDir()
 
         # navigation
         navigation = "<ul>" + EOL
@@ -468,7 +471,7 @@ class Analysis(object):
             dir = a.getLocalDir().replace(self.getLocalDir(), "", 1)
             navigation += ('<li><a href=".%s/index.html">%s</a></li>' % (dir, subname)) + EOL
         navigation += "</ul>" + EOL
-        html = html.replace("<!-- NAVIGATION -->", navigation)
+        values['navigation'] = navigation
 
         content = "<h2>Content by license</h2>" + EOL
 
@@ -505,12 +508,13 @@ class Analysis(object):
             url = self.getLicenseFileName(l)
             content += ('<li>%i - <a%s href="%s">%s</a></li>' % (count, classProp, url, l)) + EOL
         content += "</ul>" + EOL
-        html = html.replace("<!-- CONTENT -->", content)
-        html = html.replace("<!-- REVISION -->", str(self.revision))
+        values['content'] = content
+        values['revision'] = str(self.revision)
 
         basedir = output + '/licenses/public_html' + self.getLocalDir()
         if not os.path.exists(basedir):
             os.makedirs(basedir)
+        html = string.Template(HTML).substitute(values)
         file = open(basedir + '/index.html', 'wt')
         file.write(html)
         file.close()
