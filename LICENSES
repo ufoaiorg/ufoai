@@ -2816,6 +2816,7 @@ base/pics/maps/loading/forest.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/frozen.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/fueldump.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/gasstation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/gate.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/harbour.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/ice.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/industrial.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2927,6 +2928,8 @@ base/pics/maps/shots/fueldump_3.jpg | GNU General Public License 2.0 or later | 
 base/pics/maps/shots/gasstation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/gasstation_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/gasstation_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/gate.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/gate_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/harbour.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/harbour_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/harbour_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
