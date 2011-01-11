@@ -170,19 +170,18 @@ def main(argv=None):
     if not (options.reply in ['yes', 'no', 'query']):
         print 'Wrong param --reply={yes,no,query}'
         sys.exit(1)
-    REPOSITORY = options.repository
     branch = options.branch
     if branch == "auto":
         branch = mapsync.get_branch()
-    REPOSITORY = os.path.join(REPOSITORY, branch)
+    repository = os.path.join(options.repository, branch)
 
-    print REPOSITORY
+    print repository
 
     displayDownloadStatus = options.displayDownloadStatus
     displayAlreadyUpToDate = options.displayAlreadyUpToDate
     INTERACTIVE_REPLY = options.reply
 
-    upgrade(REPOSITORY)
+    upgrade(repository)
 
 if __name__ == '__main__':
     main()
