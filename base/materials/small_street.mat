@@ -1,0 +1,8 @@
+{
+	material tex_streets/2ln_crn_ne
+	{
+		texture tex_nature/grass_mowed_dry_a
+		terrain 3 4
+		lightmap
+	}
+}

@@ -3683,6 +3683,28 @@ mapdef hills_harvester
 }
 
 
+mapdef small_street
+{
+	map			"small_street"
+	description		"A small suburban street"
+	multiplayer		false
+	maxaliens		8
+
+	terrains
+	{
+		grass
+		mountains
+	}
+
+	populations
+	{
+		suburban
+		village
+		rural
+	}
+}
+
+
 ///////////////////////
 // UFOCRASH RANDOM MAPS
 ///////////////////////
