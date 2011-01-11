@@ -158,5 +158,7 @@
 		<shortcut command="TexToolGridDown" key="minus" modifiers="SHIFT" />
 		<shortcut command="TexToolSnapToGrid" key="G" modifiers="CONTROL+SHIFT" />
 		<shortcut command="TexToolMergeItems" key="M" modifiers="ALT" />
+		<shortcut command="CopyShader" key="C" modifiers="SHIFT+CONTROL" />
+		<shortcut command="PasteShader" key="V" modifiers="SHIFT+CONTROL" />
 	</shortcuts>
 </input>
