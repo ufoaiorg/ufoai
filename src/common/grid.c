@@ -128,7 +128,7 @@ static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, 
 	y = toPos[1];
 	z = toPos[2];
 
-	RT_AREA_TEST(path, x, y, z, c);
+	RT_AREA_TEST_POS(path, toPos, c);
 	RT_AREA_POS(path, toPos, c) = length;	/**< Store TUs for this square. */
 	RT_AREA_FROM(path, x, y, z, c) = makeDV(dir, oz); /**< Store origination information for this square. */
 	{
@@ -568,7 +568,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	nz = toPos[2];	/* get the potentially modified z value back into business */
 
 	/* Is this a better move into this cell? */
-	RT_AREA_TEST(path, nx, ny, nz, crouchingState);
+	RT_AREA_TEST_POS(path, toPos, crouchingState);
 	if (RT_AREA_POS(path, toPos, crouchingState) <= len) {
 		return;	/* This move is not optimum. */
 	}
