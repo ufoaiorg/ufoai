@@ -125,51 +125,77 @@ def isInteger(x):
     except:
         return False
 
-def cleanHistory(data):
-    def test(x):
-        if os.path.exists(x):
-            return not os.path.isdir(x)
-        else:
-            return '.' in x
-    # the >>if '.' in x<< is a hack to check if it is a file..
-    # not "good practice" but not easy to get for files/durs that
-    # might not exist anymore ;)
+class LicenseHistory(object):
 
-    result = {}
-    for license in data:
-        result[license] = len([x for x in data[license] if test(x)])
-    return result
+    def __init__(self, root):
+        self.root = root
+        pass
+
+    def cleanHistory(self, data):
+        def test(x):
+            if os.path.exists(x):
+                return not os.path.isdir(x)
+            else:
+                return '.' in x
+        # the >>if '.' in x<< is a hack to check if it is a file..
+        # not "good practice" but not easy to get for files/durs that
+        # might not exist anymore ;)
+
+        result = {}
+        for license in data:
+            result[license] = len([x for x in data[license] if test(x)])
+        return result
+
+    def saveHistory(self, path, revision, data):
+        basedir = self.root + path
+        if not os.path.exists(basedir):
+            os.makedirs(basedir)
+        data = self.cleanHistory(data)
+        filename = os.path.join(basedir, str(revision))
+        cPickle.dump(data, open(filename, 'wt'))
+
+    def getHistoryFromPath(self, path):
+        data = {}
+        times = []
+
+        dirname = self.root + path
+        for time in sorted(os.listdir(dirname)):
+            filename = os.path.join(dirname, time)
+            if os.path.isdir(filename):
+                continue
+
+            history = cPickle.load(open(filename))
+            # new history only save number of file per licenses
+            # but it stay compatible with old history
+            if not isInteger(history[history.keys()[0]]):
+                history = self.cleanHistory(history)
+
+            time = int(time)
+            times.append(time)
+            for license in history:
+                if license not in data:
+                    data[license] = []
+                data[license].append([time, history[license]])
+
+        def key(x):
+            return x[0]
+
+        for license in data:
+            data[license].sort(key=key)
+
+        times.sort()
+        return data, times
 
 def generateGraph(output, d):
     data = {}
     print 'Ploting "%s"' % d
     times = []
 
-    if not os.path.exists(output + '/licenses/history%s' % d):
-        return False
+    #if not os.path.exists(output + '/licenses/history%s' % d):
+    #    return False
 
-    for time in sorted(os.listdir(output + '/licenses/history%s' % d)):
-        if os.path.isdir(output + '/licenses/history%s/%s' % (d, time)):
-            continue
-
-        history = cPickle.load(open(output + '/licenses/history%s/%s' % (d, time)))
-        # new history only save number of file per licenses
-        # but it stay compatible with old history
-        if not isInteger(history[history.keys()[0]]):
-            history = cleanHistory(history)
-
-        time = int(time)
-        times.append(time)
-        for license in history:
-            if license not in data:
-                data[license] = []
-            data[license].append([time, history[license]])
-
-    def key(x):
-        return x[0]
-
-    for license in data:
-        data[license].sort(key=key)
+    history = LicenseHistory(os.path.join(output, 'licenses/history'))
+    data, times = history.getHistoryFromPath(d)
 
     basedir = output + '/licenses/public_html' + d
     if not os.path.exists(basedir):
@@ -249,8 +275,9 @@ def clean_up(output_path):
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.'):
             os.mkdir(output_path + '/licenses/public_html/'+i)
-            if not os.path.exists(output_path + '/licenses/history/'+i):
-                os.mkdir(output_path + '/licenses/history/'+i)
+            # TODO we should remove things about "history"
+            if not os.path.exists(output_path + '/licenses/history/' + i):
+                os.mkdir(output_path + '/licenses/history/' + i)
 
 def group(dictionary, key, value):
     if not (key in dictionary):
@@ -494,11 +521,9 @@ class Analysis(object):
             for m in self.contentByLicense[l]:
                 n = m.fileName.replace(self.base, "")
                 licenses[l].append(n)
-        basedir = output + '/licenses/history' + self.getLocalDir()
-        if not os.path.exists(basedir):
-            os.makedirs(basedir)
-        licenses = cleanHistory(licenses)
-        cPickle.dump(licenses, open(basedir + '/' + str(self.revision), 'wt'))
+        history = LicenseHistory(os.path.join(output, 'licenses/history'))
+        history.saveHistory(self.getLocalDir(), self.revision, licenses)
+
         # generate graph
         if PLOT and self.count > 20:
             if generateGraph(output, self.getLocalDir()):
