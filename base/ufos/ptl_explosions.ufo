@@ -1,0 +1,416 @@
+particle explosionFlameFlash
+{
+	init
+	{
+		image  sfx/weapons/rocketfire
+		blend  add
+		style  facing
+		thinkfade  out
+		v      "0 0 0"
+		offset "0 0 10"
+		tps    2.5
+	}
+	run
+	{
+		push   pos "20 20"
+		mul    *t
+		sub    pos "150 150"
+		pop    *size
+	}
+	think { kill }
+}
+
+particle explosionDebris
+{
+	init
+	{
+		bounce true
+		crand	vector "20 20 30"
+		add		*s
+		pop		*s
+		push	*v
+		mul		float 80.0
+		add		vector "0 0 90"
+		crand	vector "60 60 110"
+		add		#
+		pop		*v
+		a		"0 0 -300"
+		tps		20.0
+		life	1.8
+		physics true
+	}
+	think
+	{
+		spawn  explosionDebrisBurn
+		spawn  explosionDebrisSmoke
+	}
+}
+
+particle explosionDebrisBurn
+{
+	init
+	{
+		image  sfx/weapons/rocketfire
+		blend  add
+		style  axis
+		thinkfade  out
+		angles "90 0 0"
+		v      "0 0 0"
+		size   "10 10"
+		tps    4
+	}
+	run
+	{
+
+		push   *color
+		mul    float .2
+		pop    *color
+
+	}
+	think { kill }
+}
+
+
+particle explosionDebrisSmoke
+{
+	init
+	{
+		frame 0
+		endframe 3
+		image +sfx/smoke/smoke_
+		blend  blend
+		style  facing
+		thinkfade  out
+		a      "0 0 0"
+		rand   float 0.5
+		add    float 0.2
+		pop    *tps
+		crand  vector "1 1 1"
+		add    *s
+		pop    *s
+		v      "0 0 3"
+	}
+	run
+	{
+		push   pos "10 10"
+		mul    *t
+		add    pos "3 3"
+		pop    *size
+
+	}
+	think { kill }
+}
+
+particle explosionDebrisSmall
+{
+	init
+	{
+		bounce true
+		crand	vector "20 20 30"
+		add		*s
+		pop		*s
+		push	*v
+		mul		float 80.0
+		add		vector "0 0 90"
+		crand	vector "60 60 110"
+		add		#
+		pop		*v
+		a		"0 0 -300"
+		tps		20.0
+		life	1.8
+		physics true
+	}
+	think
+	{
+		spawn  explosionDebrisBurnSmall
+		spawn  explosionDebrisSmokeSmall
+	}
+}
+
+particle explosionDebrisBurnSmall
+{
+	init
+	{
+		image  sfx/weapons/rocketfire
+		blend  add
+		style  axis
+		thinkfade  out
+		angles "90 0 0"
+		v      "0 0 0"
+		size   "5 5"
+		tps    4
+	}
+	run
+	{
+
+		push   *color
+		mul    float .2
+		pop    *color
+
+	}
+	think { kill }
+}
+
+particle explosionDebrisSmokeSmall
+{
+	init
+	{
+		frame 0
+		endframe 3
+		image +sfx/smoke/smoke_
+		blend  blend
+		style  facing
+		thinkfade  out
+		a      "0 0 0"
+		rand   float 0.5
+		add    float 0.2
+		pop    *tps
+		crand  vector "1 1 1"
+		add    *s
+		pop    *s
+		v      "0 0 3"
+	}
+	run
+	{
+		push   pos "5 5"
+		mul    *t
+		add    pos "1.5 1.5"
+		pop    *size
+
+	}
+	think { kill }
+}
+
+
+
+particle explosionFireFlame
+{
+	init
+	{
+		image  sfx/explosions/explosions2
+		blend  add
+		style  facing
+		thinkfade  out
+
+		a      "0 0 0"
+		crand  vector "20 20 5"
+		add    vector "3 3 5"
+		pop    *v
+
+		crand  vector "15 15 25"
+		add    *s
+		pop    *s
+
+		rand   float 0.6
+		add    float 0.8
+		pop    *tps
+	}
+	run
+	{
+		push   pos "20 20"
+		mul    *t
+		sub    pos "80 80"
+		pop    *size
+	}
+	think { kill }
+}
+
+particle explosionFireBurn
+{
+	init
+	{
+		image  sfx/weapons/rocketfire
+		blend  add
+		style  facing
+		thinkfade  out
+
+		a      "0 0 0"
+		crand  vector "20 20 30"
+		add    vector "3 3 25"
+		pop    *v
+
+		crand  vector "15 15 40"
+		add    *s
+		pop    *s
+
+		rand   float 0.5
+		add    float 1.0
+		pop    *tps
+	}
+	run
+	{
+		push   pos "30 30"
+		mul    *t
+		sub    pos "80 80"
+		pop    *size
+	}
+	think { kill }
+}
+
+particle explosionGrenade
+{
+	init
+	{
+		spawn	explosionGrenExpl
+		push	int 8
+		nspawn	explosionDebris
+		push	int 10
+		nspawn	explosionDebrisSmall
+		kill
+	}
+}
+
+particle explosionRPG
+{
+	init
+	{
+		spawn	explosionGrenExpl
+		push	int 8
+		nspawn	explosionDebris
+		push	int 10
+		nspawn	explosionDebrisSmall
+		push	int 5
+		nspawn explosionBlast
+		kill
+	}
+}
+
+particle explosionGrenExpl
+{
+	init
+	{
+
+		push   int 18
+		nspawn explosionSmoke
+
+		push   int 18
+		nspawn explosionSmoke2
+
+		push   int 18
+		nspawn explosionSmoke3
+
+		push   int 15
+		nspawn explosionSmokeRing
+
+		push   int 15
+		nspawn explosionSmokeRing2
+
+		push   int 15
+		nspawn explosionSmokeRing3
+
+		push   int 15
+		nspawn explosionFireFlame
+
+		push   int 15
+		nspawn explosionFireBurn
+
+		spawn  explosionFlash
+
+		spawn  explosionFlameFlash
+
+		kill
+	}
+}
+
+particle explosionFlash
+{
+	init
+	{
+		image		sfx/explosions/flashbang
+		blend		add
+		style		facing
+		framefade	out
+		size		"150 230"
+		tps		10
+		v			"0 0 0"
+		life		0.3
+	}
+	think { kill }
+}
+
+particle explosionSmokeRing
+{
+	init
+	{
+		frame 0
+		endframe 3
+		image +sfx/smoke_
+		blend  blend
+		style  facing
+		thinkfade  out
+		size   "60 60"
+		color  ".5 .5 .5 1"
+
+		a      "0 0 0"
+		crand  vector "10 10 8"
+		add    vector "5 5 4"
+		pop    *v
+
+		crand  vector "30 30 10"
+		add    *s
+		pop    *s
+
+		rand   float 0.7
+		add    float 0.4
+		pop    *tps
+	}
+	think { kill }
+}
+
+particle explosionSmokeRing2
+{
+	init
+	{
+		frame 0
+		endframe 3
+		image +sfx/smoke_
+		blend  blend
+		style  facing
+		thinkfade  out
+		size   "70 70"
+		color  ".5 .5 .5 1"
+
+		a      "0 0 0"
+		crand  vector "10 10 8"
+		add    vector "5 5 4"
+		pop    *v
+
+		crand  vector "20 20 10"
+		add    *s
+		pop    *s
+
+		rand   float 0.7
+		add    float 0.4
+		pop    *tps
+	}
+	think { kill }
+}
+
+particle explosionSmokeRing3
+{
+	init
+	{
+		frame 0
+		endframe 3
+		image +sfx/smoke_
+		blend  blend
+		style  facing
+		thinkfade  saw
+		size   "70 70"
+		color  ".5 .5 .5 1"
+
+		a      "0 0 0"
+		crand  vector "10 10 4"
+		add    vector "5 5 4"
+		pop    *v
+
+		crand  vector "10 10 5"
+		add    *s
+		pop    *s
+
+		rand   float 0.7
+		add    float 0.4
+		pop    *tps
+	}
+	think { kill }
+}

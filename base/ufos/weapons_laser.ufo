@@ -180,7 +180,7 @@ item laser_ammo
 			projtl				laserBeam
 			impact				laserImpact
 			hitbody				laserImpact
-			firesnd				weapons/laser-small
+			firesnd				weapons/laser-medium
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
@@ -206,7 +206,7 @@ item laser_ammo
 			projtl		laserOverload
 			impact		laserImpact
 			hitbody		laserImpact
-			firesnd		weapons/laser-huge
+			firesnd		weapons/laser-large
 			speed		0
 			spread		"0.5 0.5"
 			crouch		0.7

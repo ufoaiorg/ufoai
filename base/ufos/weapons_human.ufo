@@ -259,7 +259,7 @@ item machinegun_ammo
 		{
 			name				"_5-Shot Burst"
 			skill				heavy
-			projtl				bullet
+			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
 			firesnd				weapons/bullet-hmg-5x
@@ -282,7 +282,7 @@ item machinegun_ammo
 		{
 			name				"_Full-Auto"
 			skill				heavy
-			projtl				bullet
+			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
 			firesnd				weapons/bullet-hmg-20x
@@ -304,7 +304,7 @@ item machinegun_ammo
 		{
 			name				"_Full-Auto Sweep"
 			skill				heavy
-			projtl				bullet
+			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
 			firesnd				weapons/bullet-hmg-20x
@@ -542,7 +542,7 @@ item pistol_ammo
 		{
 			name		"_Snap Shot"
 			skill		close
-			projtl		bullet
+			projtl		bullet-smg
 			impact		bulletImpact
 			hitbody		null
 			firesnd		weapons/bullet-pistol
@@ -563,7 +563,7 @@ item pistol_ammo
 		{
 			name				"_3-Round Burst"
 			skill				close
-			projtl				bullet
+			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
 			firesnd				weapons/bullet-pistol
@@ -585,7 +585,7 @@ item pistol_ammo
 		{
 			name				"_Aimed Shot"
 			skill				close
-			projtl				bullet
+			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
 			firesnd				weapons/bullet-pistol
@@ -648,7 +648,7 @@ item pistol2_ammo
 		{
 			name		"_Snap Shot"
 			skill		close
-			projtl		bullet
+			projtl		bullet-smg
 			impact		bulletImpact
 			hitbody		null
 			firesnd		weapons/bullet-pistol2
@@ -669,7 +669,7 @@ item pistol2_ammo
 		{
 			name				"_3-Round Burst"
 			skill				close
-			projtl				bullet
+			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
 			firesnd				weapons/bullet-pistol2
@@ -691,7 +691,7 @@ item pistol2_ammo
 		{
 			name				"_Full-Auto"
 			skill				close
-			projtl				bullet
+			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
 			firesnd				weapons/bullet-pistol2
@@ -755,10 +755,10 @@ item smg_ammo
 		{
 			name		"_Snap Shot"
 			skill		close
-			projtl		bullet
+			projtl		bullet-smg
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-smg
+			firesnd		weapons/bullet-smg-1x
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
@@ -776,19 +776,20 @@ item smg_ammo
 		{
 			name				"_5-Round Burst"
 			skill				close
-			projtl				bullet
+			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-smg
+			firesnd				weapons/bullet-smg-5x
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
 			speed				3000
 			spread				"2.0 2.0"
 			crouch				0.7
 			range				50
 			shots				5
 			ammo				5
-			delaybetweenshots	8
+			delaybetweenshots	14
 			time				10
 			damage				"20 4"
 			dmgweight			normal_light
@@ -798,19 +799,20 @@ item smg_ammo
 		{
 			name				"_Full-Auto"
 			skill				close
-			projtl				bullet
+			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-smg
+			firesnd				weapons/bullet-smg-15x
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
 			speed				3000
 			spread				"3.0 3.0"
 			crouch				0.6
 			range				50
 			shots				15
 			ammo				15
-			delaybetweenshots	8
+			delaybetweenshots	14
 			time				18
 			damage				"20 4"
 			dmgweight			normal_light
@@ -820,10 +822,10 @@ item smg_ammo
 		{
 			name		"_Aimed Shot"
 			skill		close
-			projtl		bullet
+			projtl		bullet-smg
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-smg
+			firesnd		weapons/bullet-smg-1x
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
@@ -886,7 +888,7 @@ item shotgun2_slug_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgun
+			firesnd				weapons/bullet-shotgunmini
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
@@ -910,7 +912,7 @@ item shotgun2_slug_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgun
+			firesnd				weapons/bullet-shotgunmini
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				false
@@ -1141,7 +1143,7 @@ item flamer_ammo
 			hitbody				burning
 			firesnd				weapons/flamer-small
 			sndonce				true
-			speed				400
+			speed				300
 			spread				"1.5 0.5"
 			crouch				1.0
 			range				8
@@ -1162,7 +1164,7 @@ item flamer_ammo
 			hitbody				burning
 			firesnd				weapons/flamer-big
 			sndonce				true
-			speed				400
+			speed				300
 			spread				"2 0.5"
 			crouch				1.0
 			range				8
@@ -1183,7 +1185,7 @@ item flamer_ammo
 			hitbody				burning
 			firesnd				weapons/flamer-big
 			sndonce				true
-			speed				400
+			speed				300
 			spread				"1 10"
 			crouch				1.0
 			range				8
@@ -1245,8 +1247,8 @@ item rpg_ammo
 			name		"_Aimed Shot"
 			skill		explosive
 			projtl		rocket
-			impact		explosion
-			hitbody		explosion
+			impact		explosionRPG
+			hitbody		explosionRPG
 			firesnd		weapons/rocket-human
 			impsnd		weapons/explosion-rocket
 			bodysnd		weapons/explosion-rocket
@@ -1268,7 +1270,7 @@ item rpg_ammo
 item rpg_incendiary_ammo
 {
 	name			"_IC Rocket"
-	model			weapons/rpg2/rpg_inc_ammo
+	model			weapons/rpg/rpg_inc_ammo
 	type			ammo
 	animationindex	0
 	shape			"0 0 1 2"
@@ -1353,8 +1355,8 @@ item grenl_ammo
 			name				"_Snap Shot - Airburst"
 			skill				explosive
 			projtl				grenl_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-grenade
 			bodysnd				weapons/explosion-grenade
@@ -1379,8 +1381,8 @@ item grenl_ammo
 			name				"_Aimed Shot - Airburst"
 			skill				explosive
 			projtl				grenl_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-grenade
 			bodysnd				weapons/explosion-grenade
@@ -1405,8 +1407,8 @@ item grenl_ammo
 			name				"_3-Round Burst - Airburst"
 			skill				explosive
 			projtl				grenl_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-grenade
 			bodysnd				weapons/explosion-grenade
@@ -1431,8 +1433,8 @@ item grenl_ammo
 			name				"_Snap Shot - Timed"
 			skill				explosive
 			projtl				grenl_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-grenade
 			bodysnd				weapons/explosion-grenade
@@ -1459,8 +1461,8 @@ item grenl_ammo
 			name				"_Aimed Shot - Timed"
 			skill				explosive
 			projtl				grenl_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-grenade
 			bodysnd				weapons/explosion-grenade
@@ -1487,8 +1489,8 @@ item grenl_ammo
 			name				"_3-Round Burst - Timed"
 			skill				explosive
 			projtl				grenl_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-grenade
 			bodysnd				weapons/explosion-grenade
@@ -1534,8 +1536,8 @@ item grenl_incendiary_ammo
 			name				"_Snap Shot - Airburst"
 			skill				explosive
 			projtl				grenl_ic_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-fire
 			bodysnd				weapons/explosion-fire
@@ -1560,8 +1562,8 @@ item grenl_incendiary_ammo
 			name				"_Aimed Shot - Airburst"
 			skill				explosive
 			projtl				grenl_ic_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-fire
 			bodysnd				weapons/explosion-fire
@@ -1586,8 +1588,8 @@ item grenl_incendiary_ammo
 			name				"_3-Round Burst - Airburst"
 			skill				explosive
 			projtl				grenl_ic_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-fire
 			bodysnd				weapons/explosion-fire
@@ -1612,8 +1614,8 @@ item grenl_incendiary_ammo
 			name				"_Snap Shot - Timed"
 			skill				explosive
 			projtl				grenl_ic_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-fire
 			bodysnd				weapons/explosion-fire
@@ -1640,8 +1642,8 @@ item grenl_incendiary_ammo
 			name				"_Aimed Shot - Timed"
 			skill				explosive
 			projtl				grenl_ic_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-fire
 			bodysnd				weapons/explosion-fire
@@ -1668,8 +1670,8 @@ item grenl_incendiary_ammo
 			name				"_3-Round Burst - Timed"
 			skill				explosive
 			projtl				grenl_ic_ammo
-			impact				frag_explosion
-			hitbody				frag_explosion
+			impact				explosionGrenade
+			hitbody				explosionGrenade
 			firesnd				weapons/grenade-launcher
 			impsnd				weapons/explosion-fire
 			bodysnd				weapons/explosion-fire
@@ -1720,8 +1722,7 @@ item grenl_fle_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/grenade-launcher
-			sndonce				true
+			firesnd				weapons/bullet-flechette
 			speed				3000
 			spread				"4 4.5"
 			range				10
@@ -1741,8 +1742,7 @@ item grenl_fle_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/grenade-launcher-3x
-			sndonce				true
+			firesnd				weapons/bullet-flechette
 			speed				3000
 			spread				"5 5.5"
 			range				10
@@ -1985,7 +1985,7 @@ item bolterrifle_ammo
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
-			speed		1700
+			speed		2000
 			spread		"1.7 1.7"
 			crouch		0.8
 			range		80
@@ -2005,11 +2005,11 @@ item bolterrifle_ammo
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
-			firesnd		weapons/bullet-heavybolter
+			firesnd		weapons/bullet-bolter
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
-			speed		1700
+			speed		2000
 			spread		"2.4 2.4"
 			crouch		0.8
 			range		80
@@ -2032,7 +2032,7 @@ item bolterrifle_ammo
 			firesnd				weapons/bullet-bolter
 			impsnd				impact/nail-impact
 			bodysnd 			impact/nail-bodyimpact
-			speed				1700
+			speed				2000
 			spread				"1.1 1.1"
 			crouch				0.70
 			range				80

@@ -1,0 +1,445 @@
+// See the wiki page
+//   http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/ptl_%2A.ufo#Datatypes
+// for the description of the particle language
+
+// ======================
+// MISCELLANEOUS EFFECTS
+// ======================
+
+particle null
+{
+	init
+	{
+		kill
+	}
+}
+
+// permanent marker that can be used to mark locations in battlescape
+// when you are debugging stuff
+particle debug_marker
+{
+	init
+	{
+		style	circle
+		blend	blend
+		size	"3 1"
+		color	"1 0 0 1"
+	}
+}
+
+particle circle
+{
+	init
+	{
+		style	circle
+		blend	blend
+		size	"0 1"
+		color	"0 1 0 .5"
+		tps		1000
+	}
+
+	think { kill }
+}
+
+// ======================
+// AMBIENCE EFFECTS
+// ======================
+
+particle water_fountain
+{
+	init
+	{
+		v		"0 0 0"
+		tps		25.0
+		spawn	water_drop
+	}
+	think
+	{
+		spawn water_drop
+	}
+}
+
+particle water_drop
+{
+	init
+	{
+		image		sfx/plasmaball
+		blend		add
+		style		facing
+		thinkfade	out
+		rand		float 1.0 // random value between 0 and 1
+		add			float 2.5 // ensure a minimum value
+		pop			*tps // write the current stack value back into particle structure
+		color		".5 .5 .5 1"
+		crand		vector "2 2 2" // get a random vector between -2 and 2
+		add			*s // add this vector to the particle structure starting vector
+		pop			*s // write it back into the particle
+
+		a		"0 0 -100" // the acceleration is going downwards
+		crand	vector "8 8 8" // get a random vector with values between -8 and 8
+		add		vector "-4 -4 50" // add some values to the random vector
+		pop		*v // move it back into particle structure (velocity)
+	}
+	run
+	{
+		// change the size
+		push	pos "1 1"
+		mul		*t
+		add		pos "4 4"
+		pop		*size
+
+		// change the color (fade out)
+		//push	*color
+		//mul	float .01
+		//pop	*color
+	}
+	think { kill }
+}
+
+// this should be the particle for the aliencontainment map
+particle bubble
+{
+	init {
+		image	sfx/bubble
+		blend	add
+		style	facing
+		tps		0.5
+		v		"0 0 20"
+		size	"2 2"
+		crand	vector "20 20 2" // get a random vector
+		add		*s // add this vector to the particle structure starting vector
+		pop		*s // write it back into the particle
+	}
+	run
+	{
+		crand	vector "0.3 0.3 0.3"
+		add		*s
+		pop	*s
+	}
+	think { kill }
+}
+
+particle bubbles
+{
+	init
+	{
+		tps	4
+	}
+	think
+	{
+		spawn	bubble
+	}
+}
+
+// ======================
+// SMOKE EFFECTS
+// ======================
+
+// can be used for chimneys
+particle white_single_smoke
+{
+	init {
+		image	sfx/smoke_gren
+		blend	add
+		style	facing
+		color	"1 1 1 1"
+		v		"0 0 10"
+		size	"16 16"
+		crand	vector "2 2 8" // get a random vector
+		add		*s // add this vector to the particle structure starting vector
+		pop		*s // write it back into the particle
+
+		tps		1
+		life	5
+	}
+	run
+	{
+		crand	vector "0.5 0.5 0"
+		add		*s
+		pop		*s
+
+		// scale the size in relation to time
+		push	pos "10 10"
+		mul		*t
+		add		pos "4 4"
+		pop		*size
+	}
+	think
+	{
+		push	*color
+		mul		float 0.5
+		pop		*color
+	}
+}
+
+particle white_smoke
+{
+	init
+	{
+		tps	10
+	}
+	think
+	{
+		spawn	white_single_smoke
+	}
+}
+
+particle smokesmall // UNKNOWN
+{
+	init
+	{
+		image  sfx/smoke
+		blend  invfilter
+		style  facing
+		thinkfade  out
+		rand   float 0.8
+		add    float 0.7
+		pop    *tps
+		crand  vector "1 1 1"
+		add    *s
+		pop    *s
+		v      "0 0 15"
+		offset "0 0 0"
+	}
+	run
+	{
+		push   pos "16 16"
+		mul    *t
+		add    pos "8 8"
+		pop    *size
+	}
+	think { kill }
+}
+
+particle greensmokebig
+{
+	init
+	{
+		frame		6
+		endframe	7
+		image		+sfx/explosions/greenplas_
+		blend		blend
+		style		facing
+		thinkfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "20 20 20"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "20 20"
+		mul			*t
+		add			pos "10 10"
+		pop			*size
+	}
+	think { kill }
+}
+
+particle smokebig
+{
+	init
+	{
+		image		sfx/smoke
+		blend		add
+		style		facing
+		thinkfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "60 60 20"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "60 60"
+		mul			*t
+		add			pos "30 30"
+		pop			*size
+	}
+	think { kill }
+}
+
+particle smokeRound2
+{
+	init
+	{
+		image		sfx/smoke
+		blend		invfilter
+		style		facing
+		thinkfade		out
+		rand		float 0.2
+		add			float 0.4
+		pop			*tps
+		crand		vector "20 20 20"
+		add			*s
+		pop			*s
+		crand		vector "150 150 1000"
+		add			*v
+	}
+	run
+	{
+		push		pos "20 20"
+		mul			*t
+		add			pos "10 10"
+		pop			*size
+	}
+	think { kill }
+}
+
+// ======================
+// CORONA EFFECTS
+// ======================
+
+particle corona
+{
+	init
+	{
+		image	sfx/corona
+		blend	add
+		style	facing
+		size	"30 30"
+	}
+}
+
+particle corona_yellow
+{
+	init
+	{
+		image	sfx/corona_y
+		blend	add
+		style	facing
+		size	"30 30"
+	}
+}
+
+particle coronaImpact
+{
+	init
+	{
+		image		sfx/corona
+		blend		add
+		style		rotated
+		size		"40 40"
+		thinkfade	out
+		tps			0.7
+	}
+	run
+	{
+		push	pos "140 140"
+		mul		*t
+		add		pos "40 40"
+		pop		*size
+	}
+	think { kill }
+}
+
+particle burnCorona
+{
+	init
+	{
+		image  sfx/corona_y
+		blend  add
+		style  facing
+		color "0 0 0 20"
+		size   "15 15"
+	}
+}
+
+// ======================
+// FIRE EFFECTS
+// ======================
+
+particle smallcampFire
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		thinkfade  out
+		rand   float 0.9
+		add    float 0.8
+		pop    *tps
+		crand  vector "6 6 6"
+		add    *s
+		pop    *s
+		v      "0 0 5"
+		child  burnCorona
+	}
+	run
+	{
+		push   pos "20 20"
+		mul    *t
+		add    pos "10 10"
+		pop    *size
+	}
+	think {	kill }
+}
+
+particle burning
+{
+	init
+	{
+		push   *v
+		mul    float -15.0
+		add    *s
+		add    vector "0 0 -24"
+		pop    *s
+		v      "0 0 0"
+		life   4.0
+		tps    2.0
+		spawn  burnFlame
+	}
+	think
+	{
+		spawn  burnFlame
+	}
+}
+
+particle fire
+{
+	init
+	{
+		tps    15.0
+	}
+	think
+	{
+		spawn  burnFlame
+	}
+}
+
+particle burnFlame
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		thinkfade  out
+		rand   float 0.5
+		add    float 0.6
+		pop    *tps
+		crand  vector "3 3 3"
+		add    *s
+		pop    *s
+		v      "0 0 20"
+	}
+	run
+	{
+		push   pos "20 20"
+		mul    *t
+		add    pos "10 10"
+		pop    *size
+	}
+	think {
+		kill
+	}
+}

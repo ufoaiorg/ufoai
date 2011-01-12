@@ -134,8 +134,8 @@ item fraggrenade
 			name	"_Lob"
 			skill	explosive
 			projtl	fraggren
-			impact	frag_explosion
-			hitbody frag_explosion
+			impact	explosionGrenade
+			hitbody explosionGrenade
 			firesnd	weapons/grenade-pin
 			impsnd	weapons/explosion-grenade
 			bodysnd	weapons/explosion-grenade
@@ -159,8 +159,8 @@ item fraggrenade
 			name	"_Roll"
 			skill	explosive
 			projtl	fraggren
-			impact	frag_explosion
-			hitbody frag_explosion
+			impact	explosionGrenade
+			hitbody explosionGrenade
 			firesnd	weapons/grenade-pin
 			impsnd	weapons/explosion-grenade
 			bodysnd	weapons/explosion-grenade
