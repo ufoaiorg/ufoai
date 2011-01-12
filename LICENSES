@@ -1200,6 +1200,7 @@ base/models/objects/cars/car3/car3.jpg | GNU General Public License 2.0 or later
 base/models/objects/cars/car3/car3.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/car4/car.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/car4/car.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/cars/car4/car_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/cars/carcrashed/car1.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/carcrashed/car1.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/carcrashed/car2.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1246,6 +1247,7 @@ base/models/objects/cars/van2/roof2.md2 | GNU General Public License 2.0 or late
 base/models/objects/cars/van2/van2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/cars/van3/van.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/van3/van.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/cars/van3/van_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/arch/arch.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/arch/arch.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/bench/bench.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
