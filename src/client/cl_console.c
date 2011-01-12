@@ -451,7 +451,6 @@ static void Con_DrawInput (void)
 
 /**
  * @brief Draws the console with the solid background
- * @param[in] frac
  */
 void Con_DrawConsole (float frac)
 {

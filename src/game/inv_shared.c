@@ -102,9 +102,6 @@ static int cacheCheckToInventory = INV_DOES_NOT_FIT;
  * @brief Will check if the item-shape is colliding with something else in the container-shape at position x/y.
  * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
- * @param[in] itemShape
- * @param[in] x
- * @param[in] y
  */
 static qboolean INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
@@ -299,8 +296,6 @@ qboolean INVSH_CompareItem (item_t *item1, item_t *item2)
 /**
  * @brief Checks the shape if there is a 1-bit on the position x/y.
  * @param[in] shape The shape to check in. (8x4)
- * @param[in] x
- * @param[in] y
  */
 static qboolean INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int y)
 {
@@ -692,9 +687,6 @@ const objDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
  * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
  * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
- * @param[in] itemShape
- * @param[in] x
- * @param[in] y
  */
 void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
@@ -707,8 +699,6 @@ void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, 
 /**
  * @brief Checks the shape if there is a 1-bit on the position x/y.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
- * @param[in] x
- * @param[in] y
  */
 qboolean INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 {

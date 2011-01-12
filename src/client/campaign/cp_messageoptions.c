@@ -261,8 +261,6 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 
 /**
  * @brief parses message options settings from file.
- * @param name
- * @param text
  */
 void MSO_ParseSettings (const char *name, const char **text)
 {

@@ -63,7 +63,7 @@ typedef enum {
 	BASEDEF_MAX
 } basedefenceType_t;
 
-/** Base defence functions. */
+/* Base defence functions. */
 void BDEF_AddBattery(basedefenceType_t basedefType, base_t* base);
 void BDEF_RemoveBattery(base_t *base, basedefenceType_t basedefType, int idx);
 void BDEF_InitialiseBaseSlots(base_t *base);

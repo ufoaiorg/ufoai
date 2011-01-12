@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Check whether friendly units are in the line of fire when shooting
  * @param[in] ent AI that is trying to shoot
  * @param[in] target Shoot to this location
- * @param[in] spread
  */
 static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
 {

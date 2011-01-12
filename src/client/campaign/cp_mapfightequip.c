@@ -890,7 +890,6 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
  * @param[in] aircraftTemplate Template	Pointer to aircraft template.
  * @param[in] base	Pointer to base.
  * @param[in] installation Pointer to the thing being installed.
- * @param[in] type
  */
 void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, base_t *base, installation_t *installation, aircraftItemType_t type)
 {

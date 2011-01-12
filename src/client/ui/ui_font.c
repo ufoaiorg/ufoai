@@ -47,7 +47,7 @@ static const value_t fontValues[] = {
  * @brief Registers a new TTF font
  * @note The TTF font path is translated via gettext to be able to use different
  * fonts for every translation
- * @param[in] font
+ * @param[in] font Font to register
  */
 static void UI_RegisterFont (const uiFont_t *font)
 {

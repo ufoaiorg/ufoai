@@ -35,9 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Builds a uniformly subdivided tree for the given world size
  * @sa SV_ClearWorld
  * @sa SV_LinkEdict
- * @param[in] mins
- * @param[in] maxs
- * @param[in] depth
  */
 static worldSector_t *SV_CreateWorldSector (int depth, const vec3_t mins, const vec3_t maxs)
 {
@@ -264,8 +261,6 @@ typedef struct {
  * that intersect the given area. It is possible for a non-axial bmodel
  * to be returned that doesn't actually intersect the area on an exact test.
  * @sa SV_AreaEdicts
- * @param[out] node
- * @param[out] ap
  */
 static void SV_AreaEdicts_r (worldSector_t * node, areaParms_t *ap)
 {

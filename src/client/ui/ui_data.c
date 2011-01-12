@@ -222,7 +222,7 @@ uiNode_t* UI_AddOption (uiNode_t** tree, const char* name, const char* label, co
 /**
  * @warning If we use it with real option node, i will crash the code cause
  * relation with parent node are not updated
- * @param tree
+ * @param tree Root of nodes we want to delete
  */
 static void UI_DeleteOption (uiNode_t* tree)
 {

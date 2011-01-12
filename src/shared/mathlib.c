@@ -1050,15 +1050,15 @@ void TangentVectors (const vec3_t normal, const vec3_t sdir, const vec3_t tdir, 
 
 /**
  * @brief Grahm-Schmidt orthogonalization
- * @param[out] v1
- * @param[in] v2
+ * @param[out] out Orthogonalized vector
+ * @param[in] in Reference vector
  */
-void Orthogonalize (vec3_t v1, const vec3_t v2)
+void Orthogonalize (vec3_t out, const vec3_t in)
 {
 	vec3_t tmp;
-	VectorMul(DotProduct(v1, v2), v2, tmp);
-	VectorSubtract(v1, tmp, v1);
-	VectorNormalizeFast(v1);
+	VectorMul(DotProduct(out, in), in, tmp);
+	VectorSubtract(out, tmp, out);
+	VectorNormalizeFast(out);
 }
 
 /**

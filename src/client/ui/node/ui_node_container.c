@@ -444,8 +444,8 @@ static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview ite
 
 /**
  * @brief Draw a container which only contains one item
- * @param node
- * @param highlightType
+ * @param node Context node
+ * @param highlightType Current selected object
  */
 static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 {

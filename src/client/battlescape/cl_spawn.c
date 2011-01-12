@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static r_light_t sun;
 
-/** position in the spawnflags */
+/* position in the spawnflags */
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
 
