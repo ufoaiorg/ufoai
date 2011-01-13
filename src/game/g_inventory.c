@@ -159,6 +159,8 @@ static qboolean G_InventoryPlaceItemAdjacent (edict_t *ent)
 	for (i = 0; i < DIRECTIONS; i++) {
 		/** @todo Check whether movement is possible here - otherwise don't use this field */
 		/* extend pos with the direction vectors */
+		/** @todo Don't know why the adjacent stuff has been disabled, but if it was buggy, it's probably */
+		/** because the third ent->pos in the next line should be pos[1] ?!. (Duke, 13.1.11) */
 		Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
 		/* now try to get a floor entity for that new location */
 		floorAdjacent = G_GetFloorItems(ent);
