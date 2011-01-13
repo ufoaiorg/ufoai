@@ -166,6 +166,7 @@ typedef struct step_s {
 	qboolean hasLadderSupport;	/**< Indicates if there is a ladder present providing support. */
 
 	int actorHeight;		/**< The actor's height in QUANT units. */
+	int actorCrouchedHeight;
 
 } step_t;
 
@@ -186,6 +187,7 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
 	step->hasLadderSupport = qfalse;
 	/** @note This is the actor's height in QUANT units. */
 	step->actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
+	step->actorCrouchedHeight = ModelCeilingToQuant((float)(PLAYER_CROUCHING_HEIGHT));
 
 	/* Ensure that dir is in bounds. */
 	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
