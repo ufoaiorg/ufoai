@@ -706,7 +706,7 @@ pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingSta
  * @param[in] path Pointer to client or server side pathing table (le->PathMap, svPathMap)
  * @param[in] toPos The desired location
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @return a direction index (see dvecs and DIRECTIONS)
+ * @return a direction vector (see dvecs and DIRECTIONS)
  * @sa Grid_MoveCheck
  */
 int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingState)
