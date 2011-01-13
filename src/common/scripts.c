@@ -478,6 +478,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	b = (byte *) base + ofs;
 	*writtenBytes = 0;
 
+#if debug
+	if (b != Com_AlignPtr(b, type))
+		Com_Printf("Wrong alignment %08X %08X type:%d size:%d\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+#endif
+
 	if (size) {
 #ifdef DEBUG
 		if (size > vt_sizes[type]) {
