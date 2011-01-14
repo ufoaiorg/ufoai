@@ -539,6 +539,7 @@ qboolean Q_strreplace (const char *source, const char *pattern, const char *repl
 		if (length > 0) {
 			strncpy(dest, source, length);
 			dest += length;
+			*dest = '\0';
 			remaining -= length;
 		} else {
 			*dest = '\0';
