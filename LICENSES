@@ -6728,8 +6728,12 @@ base/textures/tex_nature/grass004.jpg | GNU General Public License 2.0 | wotwot
 base/textures/tex_nature/grass_lush.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/grass_mowed_dry_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_dry_a_k1.jpg | GNU General Public License 2.0 | Kostia "Kildor" Romanov | grass_mowed_dry_a.jpg
+base/textures/tex_nature/grass_mowed_dry_a_k1_nm.png | GNU General Public License 2.0 | Kostia "Kildor" Romanov;MCR | grass_mowed_dry_a.jpg
+base/textures/tex_nature/grass_mowed_dry_a_nm.png | GNU General Public License 2.0 | John W. Bjerk (eleazar);MCR | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_dry_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_dry_b_nm.png | GNU General Public License 2.0 | John W. Bjerk (eleazar);MCR | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_dry_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_dry_c_nm.png | GNU General Public License 2.0 | John W. Bjerk (eleazar);MCR | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_green_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_green_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_green_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
