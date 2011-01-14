@@ -659,6 +659,28 @@ static inline uintptr_t R_GetProcAddress (const char *functionName)
 	return (uintptr_t)SDL_GL_GetProcAddress(functionName);
 }
 
+static inline uintptr_t R_GetProcAddressExt (const char *functionName)
+{
+	const char *s = strstr(functionName, "###");
+	if (s == NULL) {
+		return R_GetProcAddress(functionName);
+	} else {
+		const char *replace[] = {"EXT", "OES", "ARB"};
+		char targetBuf[128];
+		const size_t length = lengthof(targetBuf);
+		const size_t replaceNo = lengthof(replace);
+		for (size_t i = 0; i < replaceNo; i++) {
+			if (Q_strreplace(functionName, "###", replace[i], targetBuf, length)) {
+				uintptr_t funcAdr = R_GetProcAddress(targetBuf);
+				if (funcAdr != 0)
+					return funcAdr;
+			}
+		}
+		Com_Printf("%s not found\n", functionName);
+		return 0;
+	}
+}
+
 /**
  * @brief Checks for an OpenGL extension that was announced via the OpenGL ext string. If the given extension string
  * includes a placeholder (###), several types are checked. Those from the ARB, those that official extensions (EXT),
@@ -884,23 +906,23 @@ static qboolean R_InitExtensions (void)
 
 	/* framebuffer objects */
 	if (R_CheckExtension("GL_###_framebuffer_object")) {
-		qglIsRenderbufferEXT = (IsRenderbufferEXT_t)R_GetProcAddress("glIsRenderbufferEXT");
-		qglBindRenderbufferEXT = (BindRenderbufferEXT_t)R_GetProcAddress("glBindRenderbufferEXT");
-		qglDeleteRenderbuffersEXT = (DeleteRenderbuffersEXT_t)R_GetProcAddress("glDeleteRenderbuffersEXT");
-		qglGenRenderbuffersEXT = (GenRenderbuffersEXT_t)R_GetProcAddress("glGenRenderbuffersEXT");
-		qglRenderbufferStorageEXT = (RenderbufferStorageEXT_t)R_GetProcAddress("glRenderbufferStorageEXT");
-		qglGetRenderbufferParameterivEXT = (GetRenderbufferParameterivEXT_t)R_GetProcAddress("glGetRenderbufferParameterivEXT");
-		qglIsFramebufferEXT = (IsFramebufferEXT_t)R_GetProcAddress("glIsFramebufferEXT");
-		qglBindFramebufferEXT = (BindFramebufferEXT_t)R_GetProcAddress("glBindFramebufferEXT");
-		qglDeleteFramebuffersEXT = (DeleteFramebuffersEXT_t)R_GetProcAddress("glDeleteFramebuffersEXT");
-		qglGenFramebuffersEXT = (GenFramebuffersEXT_t)R_GetProcAddress("glGenFramebuffersEXT");
-		qglCheckFramebufferStatusEXT = (CheckFramebufferStatusEXT_t)R_GetProcAddress("glCheckFramebufferStatusEXT");
-		qglFramebufferTexture1DEXT = (FramebufferTexture1DEXT_t)R_GetProcAddress("glFramebufferTexture1DEXT");
-		qglFramebufferTexture2DEXT = (FramebufferTexture2DEXT_t)R_GetProcAddress("glFramebufferTexture2DEXT");
-		qglFramebufferTexture3DEXT = (FramebufferTexture3DEXT_t)R_GetProcAddress("glFramebufferTexture3DEXT");
-		qglFramebufferRenderbufferEXT = (FramebufferRenderbufferEXT_t)R_GetProcAddress("glFramebufferRenderbufferEXT");
-		qglGetFramebufferAttachmentParameterivEXT = (GetFramebufferAttachmentParameterivEXT_t)R_GetProcAddress("glGetFramebufferAttachmentParameterivEXT");
-		qglGenerateMipmapEXT = (GenerateMipmapEXT_t)R_GetProcAddress("glGenerateMipmapEXT");
+		qglIsRenderbufferEXT = (IsRenderbufferEXT_t)R_GetProcAddressExt("glIsRenderbuffer###");
+		qglBindRenderbufferEXT = (BindRenderbufferEXT_t)R_GetProcAddressExt("glBindRenderbuffer###");
+		qglDeleteRenderbuffersEXT = (DeleteRenderbuffersEXT_t)R_GetProcAddressExt("glDeleteRenderbuffers###");
+		qglGenRenderbuffersEXT = (GenRenderbuffersEXT_t)R_GetProcAddressExt("glGenRenderbuffers###");
+		qglRenderbufferStorageEXT = (RenderbufferStorageEXT_t)R_GetProcAddressExt("glRenderbufferStorage###");
+		qglGetRenderbufferParameterivEXT = (GetRenderbufferParameterivEXT_t)R_GetProcAddressExt("glGetRenderbufferParameteriv###");
+		qglIsFramebufferEXT = (IsFramebufferEXT_t)R_GetProcAddressExt("glIsFramebuffer###");
+		qglBindFramebufferEXT = (BindFramebufferEXT_t)R_GetProcAddressExt("glBindFramebuffer###");
+		qglDeleteFramebuffersEXT = (DeleteFramebuffersEXT_t)R_GetProcAddressExt("glDeleteFramebuffers###");
+		qglGenFramebuffersEXT = (GenFramebuffersEXT_t)R_GetProcAddressExt("glGenFramebuffers###");
+		qglCheckFramebufferStatusEXT = (CheckFramebufferStatusEXT_t)R_GetProcAddressExt("glCheckFramebufferStatus###");
+		qglFramebufferTexture1DEXT = (FramebufferTexture1DEXT_t)R_GetProcAddressExt("glFramebufferTexture1D###");
+		qglFramebufferTexture2DEXT = (FramebufferTexture2DEXT_t)R_GetProcAddressExt("glFramebufferTexture2D###");
+		qglFramebufferTexture3DEXT = (FramebufferTexture3DEXT_t)R_GetProcAddressExt("glFramebufferTexture3D###");
+		qglFramebufferRenderbufferEXT = (FramebufferRenderbufferEXT_t)R_GetProcAddressExt("glFramebufferRenderbuffer###");
+		qglGetFramebufferAttachmentParameterivEXT = (GetFramebufferAttachmentParameterivEXT_t)R_GetProcAddressExt("glGetFramebufferAttachmentParameteriv###");
+		qglGenerateMipmapEXT = (GenerateMipmapEXT_t)R_GetProcAddressExt("glGenerateMipmap###");
 		qglDrawBuffers = (DrawBuffers_t)R_GetProcAddress("glDrawBuffers");
 
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
