@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_nodes.h"
 #include "../ui/ui_draw.h"
 #include "../ui/ui_render.h"
+#include "../ui/ui_tooltip.h"
 #include "../renderer/r_mesh_anim.h"
 #include "../renderer/r_draw.h"
 #include "../../common/grid.h"
