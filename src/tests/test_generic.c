@@ -360,6 +360,27 @@ static void testStringCopiers (void)
 	CU_ASSERT_EQUAL(dest[5], '\0');
 }
 
+static void testStringFunctions (void)
+{
+	char targetBuf[256];
+	const size_t length = lengthof(targetBuf);
+
+	CU_ASSERT_FALSE(Q_strreplace("ReplaceNothing", "###", "foobar", targetBuf, length));
+	CU_ASSERT_TRUE(Q_strreplace("Replace###Something", "###", "foobar", targetBuf, length));
+	CU_ASSERT_STRING_EQUAL(targetBuf, "ReplacefoobarSomething");
+
+	CU_ASSERT_TRUE(Q_strreplace("Replace#", "#", "foobar", targetBuf, length));
+	CU_ASSERT_STRING_EQUAL(targetBuf, "Replacefoobar");
+
+	CU_ASSERT_TRUE(Q_strreplace("#Replace", "#", "foobar", targetBuf, length));
+	CU_ASSERT_STRING_EQUAL(targetBuf, "foobarReplace");
+
+	CU_ASSERT_TRUE(Q_strreplace("#Replace#", "#", "foobar", targetBuf, length));
+	CU_ASSERT_STRING_EQUAL(targetBuf, "foobarReplace#");
+
+	CU_ASSERT_FALSE(Q_strreplace("#ReplaceNothing#", "##", "foobar", targetBuf, length));
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -391,6 +412,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testCvars) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testStringFunctions) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == NULL)

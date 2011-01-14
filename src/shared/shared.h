@@ -141,7 +141,7 @@ int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
 char *Q_strlwr(char *str) __attribute__((nonnull));
 const char *Q_stristr(const char *str, const char *substr) __attribute__((nonnull));
-
+qboolean Q_strreplace(const char *source, const char *pattern, const char *replace, char *dest, size_t destsize);
 /** Returns whether start is a prefix of str. */
 qboolean Q_strstart(char const *str, char const *start) __attribute__((nonnull));
 
