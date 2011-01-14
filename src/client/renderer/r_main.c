@@ -660,6 +660,33 @@ static inline uintptr_t R_GetProcAddress (const char *functionName)
 }
 
 /**
+ * @brief Checks for an OpenGL extension that was announced via the OpenGL ext string. If the given extension string
+ * includes a placeholder (###), several types are checked. Those from the ARB, those that official extensions (EXT),
+ * and those from OpenGL ES (OES)
+ * @param extension The extension string to check. Might also contain placeholders. E.g. GL_###_framebuffer_object,
+ * GL_ARB_framebuffer_object
+ * @return @c true if the extension was announced by the OpenGL driver, @c false otherwise.
+ */
+static inline qboolean R_CheckExtension (const char *extension)
+{
+	const char *s = strstr(extension, "###");
+	if (s == NULL) {
+		return strstr(r_config.extensionsString, extension) != NULL;
+	} else {
+		const char *replace[] = {"ARB", "EXT", "OES"};
+		char targetBuf[128];
+		const size_t length = lengthof(targetBuf);
+		for (int i = 0; i < 3; i++) {
+			if (Q_strreplace(extension, "###", replace[i], targetBuf, length)) {
+				if (strstr(r_config.extensionsString, targetBuf) != NULL)
+					return qtrue;
+			}
+		}
+		return qfalse;
+	}
+}
+
+/**
  * @brief Check and load all needed and supported opengl extensions
  * @sa R_Init
  */
@@ -742,12 +769,12 @@ static qboolean R_InitExtensions (void)
 	qglDrawBuffers = NULL;
 
 	/* multitexture */
-	if (strstr(r_config.extensionsString, "GL_ARB_multitexture")) {
+	if (R_CheckExtension("GL_ARB_multitexture")) {
 		qglActiveTexture = (ActiveTexture_t)R_GetProcAddress("glActiveTexture");
 		qglClientActiveTexture = (ClientActiveTexture_t)R_GetProcAddress("glClientActiveTexture");
 	}
 
-	if (strstr(r_config.extensionsString, "GL_ARB_texture_compression")) {
+	if (R_CheckExtension("GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
 			Com_Printf("using GL_ARB_texture_compression\n");
 			if (r_ext_s3tc_compression->integer && strstr(r_config.extensionsString, "GL_EXT_texture_compression_s3tc")) {
@@ -760,7 +787,7 @@ static qboolean R_InitExtensions (void)
 		}
 	}
 
-	if (strstr(r_config.extensionsString, "GL_ARB_texture_non_power_of_two")) {
+	if (R_CheckExtension("GL_ARB_texture_non_power_of_two")) {
 		if (r_ext_nonpoweroftwo->integer) {
 			Com_Printf("using GL_ARB_texture_non_power_of_two\n");
 			r_config.nonPowerOfTwo = qtrue;
@@ -774,7 +801,7 @@ static qboolean R_InitExtensions (void)
 	}
 
 	/* anisotropy */
-	if (strstr(r_config.extensionsString, "GL_EXT_texture_filter_anisotropic")) {
+	if (R_CheckExtension("GL_EXT_texture_filter_anisotropic")) {
 		if (r_anisotropic->integer) {
 			glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &r_config.maxAnisotropic);
 			R_CheckError();
@@ -788,11 +815,11 @@ static qboolean R_InitExtensions (void)
 		}
 	}
 
-	if (strstr(r_config.extensionsString, "GL_EXT_texture_lod_bias"))
+	if (R_CheckExtension("GL_EXT_texture_lod_bias"))
 		r_config.lod_bias = qtrue;
 
 	/* vertex buffer objects */
-	if (strstr(r_config.extensionsString, "GL_ARB_vertex_buffer_object")) {
+	if (R_CheckExtension("GL_ARB_vertex_buffer_object")) {
 		qglGenBuffers = (GenBuffers_t)R_GetProcAddress("glGenBuffers");
 		qglDeleteBuffers = (DeleteBuffers_t)R_GetProcAddress("glDeleteBuffers");
 		qglBindBuffer = (BindBuffer_t)R_GetProcAddress("glBindBuffer");
@@ -800,7 +827,7 @@ static qboolean R_InitExtensions (void)
 	}
 
 	/* glsl vertex and fragment shaders and programs */
-	if (strstr(r_config.extensionsString, "GL_ARB_fragment_shader")) {
+	if (R_CheckExtension("GL_ARB_fragment_shader")) {
 		qglCreateShader = (CreateShader_t)R_GetProcAddress("glCreateShader");
 		qglDeleteShader = (DeleteShader_t)R_GetProcAddress("glDeleteShader");
 		qglShaderSource = (ShaderSource_t)R_GetProcAddress("glShaderSource");
@@ -832,7 +859,7 @@ static qboolean R_InitExtensions (void)
 		qglVertexAttribPointer = (VertexAttribPointer_t)R_GetProcAddress("glVertexAttribPointer");
 	}
 
-	if (strstr(r_config.extensionsString, "GL_ARB_shading_language_100") || glVersionMajor >= 2) {
+	if (R_CheckExtension("GL_ARB_shading_language_100") || glVersionMajor >= 2) {
 		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0; it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0 then enable shaders as the implementation supports the shading language!*/
 		sscanf((const char *)glGetString(GL_SHADING_LANGUAGE_VERSION), "%d%*1c%2s", &glslVersionMajor, glslVersionMinor);
 		snprintf(r_config.shadingLanguageGuaranteedVersion, sizeof(r_config.shadingLanguageGuaranteedVersion), "%d.%s", glslVersionMajor, glslVersionMinor);
@@ -843,8 +870,7 @@ static qboolean R_InitExtensions (void)
 	}
 
 	/* framebuffer objects */
-	if (strstr(r_config.extensionsString, "GL_ARB_framebuffer_object")
-	 || strstr(r_config.extensionsString, "GL_EXT_framebuffer_object")) {
+	if (R_CheckExtension("GL_###_framebuffer_object")) {
 		qglIsRenderbufferEXT = (IsRenderbufferEXT_t)R_GetProcAddress("glIsRenderbufferEXT");
 		qglBindRenderbufferEXT = (BindRenderbufferEXT_t)R_GetProcAddress("glBindRenderbufferEXT");
 		qglDeleteRenderbuffersEXT = (DeleteRenderbuffersEXT_t)R_GetProcAddress("glDeleteRenderbuffersEXT");
@@ -879,14 +905,14 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("max color attachments: %i\n", r_config.maxColorAttachments);
 		}
 
-		if ((strstr(r_config.extensionsString, "GL_ARB_draw_buffers")
-		  || strstr(r_config.extensionsString, "GL_EXT_draw_buffers"))
-		  && r_config.maxDrawBuffers > 1) {
+		if (r_config.maxDrawBuffers > 1 && R_CheckExtension("GL_###_draw_buffers")) {
 			Com_Printf("using GL_ARB_draw_buffers\n");
 			r_config.drawBuffers = qtrue;
 		} else {
 			r_config.drawBuffers = qfalse;
 		}
+	} else {
+		Com_Printf("Framebuffer objects unsupported by OpenGL implementation.\n");
 	}
 
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
