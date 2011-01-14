@@ -6750,10 +6750,14 @@ base/textures/tex_nature/leaves1.png | GNU General Public License 2.0 |  | OpenA
 base/textures/tex_nature/leaves2.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/leaves3.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/leaves4.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_nature/pjrock1.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_nature/pjrock16.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_nature/pjrock17.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_nature/pjrock21.jpg | GNU General Public License 2.0 | OpenArena
+base/textures/tex_nature/pjrock1.jpg | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_nature/pjrock16.jpg | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_nature/pjrock16_nm.png | GNU General Public License 2.0 | MCR | OpenArena
+base/textures/tex_nature/pjrock17.jpg | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_nature/pjrock17_nm.png | GNU General Public License 2.0 | MCR | OpenArena
+base/textures/tex_nature/pjrock1_nm.png | GNU General Public License 2.0 | MCR | OpenArena
+base/textures/tex_nature/pjrock21.jpg | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_nature/pjrock21_nm.png | GNU General Public License 2.0 | MCR | OpenArena
 base/textures/tex_nature/pjrock6.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/railway_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/rock003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
