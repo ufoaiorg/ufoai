@@ -669,21 +669,34 @@ static inline uintptr_t R_GetProcAddress (const char *functionName)
  */
 static inline qboolean R_CheckExtension (const char *extension)
 {
+	qboolean found;
 	const char *s = strstr(extension, "###");
 	if (s == NULL) {
-		return strstr(r_config.extensionsString, extension) != NULL;
+		found = strstr(r_config.extensionsString, extension) != NULL;
 	} else {
 		const char *replace[] = {"ARB", "EXT", "OES"};
 		char targetBuf[128];
 		const size_t length = lengthof(targetBuf);
-		for (int i = 0; i < 3; i++) {
+		const size_t replaceNo = lengthof(replace);
+		size_t i;
+		for (i = 0; i < replaceNo; i++) {
 			if (Q_strreplace(extension, "###", replace[i], targetBuf, length)) {
-				if (strstr(r_config.extensionsString, targetBuf) != NULL)
-					return qtrue;
+				if (strstr(r_config.extensionsString, targetBuf) != NULL) {
+					found = qtrue;
+					break;
+				}
 			}
 		}
-		return qfalse;
+		if (i == replaceNo)
+			found = qfalse;
 	}
+
+	if (found)
+		Com_Printf("found %s\n", extension);
+	else
+		Com_Printf("%s not found\n", extension);
+
+	return found;
 }
 
 /**
@@ -903,6 +916,8 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("max draw buffers: %i\n", r_config.maxDrawBuffers);
 			Com_Printf("max render buffer size: %i\n", r_config.maxRenderbufferSize);
 			Com_Printf("max color attachments: %i\n", r_config.maxColorAttachments);
+		} else {
+			Com_Printf("skipping GL_ARB_framebuffer_object - not every needed extension is supported\n");
 		}
 
 		if (r_config.maxDrawBuffers > 1 && R_CheckExtension("GL_###_draw_buffers")) {
