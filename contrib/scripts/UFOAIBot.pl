@@ -32,13 +32,11 @@ sub said {
 	} elsif ($message->{'body'} =~ /^\!ticket\s*#?(\d+)/i) {
 		return "https://sourceforge.net/apps/trac/ufoai/ticket/$1";
 	} elsif ($message->{'body'} =~ /^\!faq\s*#?(\w*)?/i) {
-		return "http://ufoai.ninex.info/wiki/index.php/FAQ#$1";
+		return "http://ufoai.ninex.info/wiki/index.php/Manual:FAQ#$1";
 	} elsif ($message->{'body'} =~ /^\!todo/i) {
 		return "http://ufoai.ninex.info/wiki/index.php/TODO";
 	} elsif ($message->{'body'} =~ /^\!topic\s*#?(\d+)(?:\s*[\.#\s](\d+))?/i) {
 		return "http://ufoai.ninex.info/forum/index.php?topic=$1".( (defined($2)) ? ".msg$2#msg$2" : "" ) ;
-	} elsif ($message->{'body'} =~ /^\!/) {
-		return "I'm just a bot - ask me for 'help' to get more information";
 	}
 }
 
