@@ -38,9 +38,12 @@ public:
 		_shortcutsNode = GlobalRegistry().createKey(_rootKey + "/shortcuts");
 	}
 
+	~SaveEventVisitor() {
+	}
+
 	void visit(const std::string& eventName, const IEvent* event) {
 		// Only export events with non-empty name
-		if (eventName != "") {
+		if (!eventName.empty()) {
 			// Try to find an accelerator connected to this event
 			Accelerator* accelerator = dynamic_cast<Accelerator*>(_eventManager->findAccelerator(event));
 

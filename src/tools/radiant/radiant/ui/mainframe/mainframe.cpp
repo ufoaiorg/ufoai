@@ -174,8 +174,6 @@ void Radiant_Shutdown (void)
 
 	GlobalMRU().saveRecentFiles();
 
-	ui::SurfaceInspector::Instance().shutdown();
-
 	g_VFSModuleObserver.unrealise();
 	Environment::Instance().setMapsPath("");
 	g_gameModeObservers.unrealise();
