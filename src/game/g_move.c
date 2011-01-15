@@ -163,7 +163,7 @@ void G_ActorFall (edict_t *ent)
  * @param visState The visibility check state @c VIS_PERISH, @c VIS_APPEAR
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvtab, int max)
+static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, short* dvtab, int max)
 {
 	if (visState & VIS_STOP)
 		 return qtrue;
@@ -207,7 +207,7 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, by
 void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos3_t to)
 {
 	int status, initTU;
-	byte dvtab[MAX_DVTAB];
+	short dvtab[MAX_DVTAB];
 	int dv, dir;
 	byte numdv, length;
 	pos3_t pos;
