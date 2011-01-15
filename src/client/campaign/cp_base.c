@@ -47,6 +47,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
+typedef qboolean (*tileCondition_t) (const baseBuildingTile_t *);
+
 /**
  * @brief Condition Function for B_BuildTileGraph for Non Blocked base tiles
  * @param[in] tile Pointer to the base Building Tile to check
@@ -73,7 +75,7 @@ static qboolean B_BuiltTileCondition (const baseBuildingTile_t *tile)
  * @param[out] graph Linked list array of the traversal graph
  * @note graph should be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
  */
-static void B_BuildTileGraph (base_t *base, qboolean B_TileCondition(const baseBuildingTile_t *), linkedList_t *graph[])
+static void B_BuildTileGraph (base_t *base, tileCondition_t condition, linkedList_t *graph[])
 {
 	int y;
 
@@ -84,34 +86,34 @@ static void B_BuildTileGraph (base_t *base, qboolean B_TileCondition(const baseB
 			baseBuildingTile_t *tile = &base->map[y][x];
 			int listNum = y * BASE_SIZE + x;
 
-			if (!B_TileCondition(tile))
+			if (!condition(tile))
 				continue;
 
 			/* self */
 			LIST_AddPointer(&graph[listNum], (void*)tile);
 			/* west */
-			if ( (x - 1 >= 0) && (B_TileCondition(&base->map[y][x - 1])) ) {
+			if (x - 1 >= 0 && condition(&base->map[y][x - 1])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y][x - 1]))
 					LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
 				if (!LIST_GetPointer(graph[listNum - 1], tile))
 					LIST_AddPointer(&graph[listNum - 1], (void*)tile);
 			}
 			/* east */
-			if ( (x + 1 < BASE_SIZE) && (B_TileCondition(&base->map[y][x + 1])) ) {
+			if (x + 1 < BASE_SIZE && condition(&base->map[y][x + 1])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y][x + 1]))
 					LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
 				if (!LIST_GetPointer(graph[listNum + 1], tile))
 					LIST_AddPointer(&graph[listNum + 1], (void*)tile);
 			}
 			/* north */
-			if ( (y - 1 >= 0) && (B_TileCondition(&base->map[y - 1][x])) ) {
+			if (y - 1 >= 0 && condition(&base->map[y - 1][x])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y - 1][x]))
 					LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
 				if (!LIST_GetPointer(graph[listNum - BASE_SIZE], tile))
 					LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
 			}
 			/* south */
-			if ( (y + 1 < BASE_SIZE) && (B_TileCondition(&base->map[y + 1][x])) ) {
+			if (y + 1 < BASE_SIZE && condition(&base->map[y + 1][x])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y + 1][x]))
 					LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
 				if (!LIST_GetPointer(graph[listNum + BASE_SIZE], tile))
