@@ -168,19 +168,19 @@ extern const byte dvleft[CORE_DIRECTIONS];
  *  If the z range for cells exceed 7 (we have more than 8 levels), then we need to write
  *  a huge overhaul for this.
  */
-#define DV_Z_BIT_SHIFT	3	/**< This is the bit shift needed to store the z component of a DV value */
-#define DV_Z_BIT_MASK	((1 << DV_Z_BIT_SHIFT) - 1)  /**< This is the mask to retreive the z component of a  DV value */
+#define DV_DIR_BIT_SHIFT	3	/**< This is the bit shift needed to store the z component of a DV value */
+#define DV_Z_BIT_MASK	0x0007	/**< The mask to retreive the z component of a  DV value */
 
-#define makeDV(dir, z)				(((dir) << DV_Z_BIT_SHIFT) | ((z) & DV_Z_BIT_MASK))
+#define makeDV(dir, z)				(((dir) << DV_DIR_BIT_SHIFT) | ((z) & DV_Z_BIT_MASK))
 #define NewDVZ(dv, z)				(((dv) & (~DV_Z_BIT_MASK)) | ((z) & DV_Z_BIT_MASK))
-#define getDVdir(dv)				((dv) >> DV_Z_BIT_SHIFT)
+#define getDVdir(dv)				((dv) >> DV_DIR_BIT_SHIFT)
 #define getDVz(dv)					((dv) & DV_Z_BIT_MASK)
 
 #define PosAddDV(p, crouch, dv)     ((p)[0]+=dvecs[getDVdir(dv)][0], (p)[1]+=dvecs[getDVdir(dv)][1], (p)[2]=getDVz(dv), (crouch)+=dvecs[getDVdir(dv)][3])
 #define PosSubDV(p, crouch, dv)     ((p)[0]-=dvecs[getDVdir(dv)][0], (p)[1]-=dvecs[getDVdir(dv)][1], (p)[2]=getDVz(dv), (crouch)-=dvecs[getDVdir(dv)][3])
 
 int AngleToDir(int angle);
-#define AngleToDV(x)	(AngleToDir(x) << DV_Z_BIT_SHIFT)
+#define AngleToDV(x)	(AngleToDir(x) << DV_DIR_BIT_SHIFT)
 
 void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t outVector);
 void VectorClampMA(vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);
