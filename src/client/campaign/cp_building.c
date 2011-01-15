@@ -23,22 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cp_building.h"
 #include "../client.h" /* cl, cls */
-#include "../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
-#include "../ui/ui_main.h"
-#include "../ui/ui_popup.h"
 #include "../../shared/parse.h"
 #include "../../common/scripts.h"
 #include "cp_campaign.h"
-#include "cp_mapfightequip.h"
-#include "cp_aircraft.h"
-#include "cp_missions.h"
-#include "cp_map.h"
-#include "cp_popup.h"
-#include "cp_radar.h"
-#include "cp_time.h"
-#include "cp_base_callbacks.h"
-#include "cp_ufo.h"
-#include "save/save_base.h"
 
 /**
  * @brief Returns the building type for a given building identified by its building id
