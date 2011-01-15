@@ -455,6 +455,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_base.h" />
+		<Unit filename="..\..\src\client\campaign\cp_building.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_building.h" />
 		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
