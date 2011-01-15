@@ -924,8 +924,8 @@ qboolean B_BuildingDestroy (building_t* building)
 	if (buildingType == B_ENTRANCE)
 		return qfalse;
 
-	if (!base->map[(int)building->pos[0]][(int)building->pos[1]].building
-	 || base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
+	if (!base->map[(int)building->pos[1]][(int)building->pos[0]].building
+	 || base->map[(int)building->pos[1]][(int)building->pos[0]].building != building) {
 		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
 				base->idx, (int)building->pos[0], (int)building->pos[1]);
 	}
@@ -935,9 +935,9 @@ qboolean B_BuildingDestroy (building_t* building)
 		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
 
 		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[0]][(int)building->pos[1]]);
+		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][(int)building->pos[0]]);
 		if (building->needs)
-			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[0]][((int)building->pos[1]) + 1]);
+			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][((int)building->pos[0]) + 1]);
 		if (!B_IsCoherent(tileGraph))
 			return qfalse;
 	}
@@ -945,9 +945,9 @@ qboolean B_BuildingDestroy (building_t* building)
 	/* Remove the building from the base map */
 	if (building->needs) {
 		/* "Child" building is always right to the "parent" building". */
-		base->map[(int)building->pos[0]][((int)building->pos[1]) + 1].building = NULL;
+		base->map[(int)building->pos[1]][((int)building->pos[0]) + 1].building = NULL;
 	}
-	base->map[(int)building->pos[0]][(int)building->pos[1]].building = NULL;
+	base->map[(int)building->pos[1]][(int)building->pos[0]].building = NULL;
 
 	building->buildingStatus = B_STATUS_NOT_SET;
 
@@ -971,9 +971,9 @@ qboolean B_BuildingDestroy (building_t* building)
 		for (i = 0; i < cntBldgs; i++)
 			if (buildings[i].idx >= idx) {
 				buildings[i].idx--;
-				base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1]].building = &buildings[i];
+				base->map[(int)buildings[i].pos[1]][(int)buildings[i].pos[0]].building = &buildings[i];
 				if (buildings[i].needs)
-					base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1] + 1].building = &buildings[i];
+					base->map[(int)buildings[i].pos[1]][(int)buildings[i].pos[0] + 1].building = &buildings[i];
 			}
 
 		building = NULL;
@@ -1137,9 +1137,9 @@ void B_MarkBuildingDestroy (building_t* building)
 		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
 
 		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[0]][(int)building->pos[1]]);
+		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][(int)building->pos[0]]);
 		if (building->needs)
-			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[0]][((int)building->pos[1]) + 1]);
+			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][((int)building->pos[0]) + 1]);
 		if (!B_IsCoherent(tileGraph)) {
 			UI_Popup(_("Notice"), _("You can't destroy this building! It is the only connection to other buildings!"));
 			return;
@@ -1786,8 +1786,8 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 			base->map[row][col].building = buildingNew;
 
 			/* where is this building located in our base? */
-			buildingNew->pos[0] = row;
-			buildingNew->pos[1] = col;
+			buildingNew->pos[0] = col;
+			buildingNew->pos[1] = row;
 
 			B_ResetBuildingCurrent(base);
 			Cmd_ExecuteString("building_init");
@@ -2007,9 +2007,9 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 					tile->building->id, baseTemplate->id);
 
 		/* check for buildings on same position */
-		if (map[tile->posX][tile->posY])
+		if (map[tile->posY][tile->posX])
 			Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", baseTemplate->id);
-		map[tile->posX][tile->posY] = qtrue;
+		map[tile->posY][tile->posX] = qtrue;
 	} while (*text);
 
 	/* templates without the must-have buildings can't be used */
@@ -2909,6 +2909,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 			int l;
 			for (l = 0; l < BASE_SIZE; l++) {
 				mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_BUILDING);
+				/** @todo save it as vec2t if needed, also it's opposite */
 				mxml_AddInt(snode, SAVE_BASES_X, k);
 				mxml_AddInt(snode, SAVE_BASES_Y, l);
 				if (b->map[k][l].building)
@@ -3069,6 +3070,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		/* building space*/
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGSPACE);
 		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
+			/** @todo save it as vec2t if needed, also it's opposite */
 			const int k = mxml_GetInt(snode, SAVE_BASES_X, 0);
 			const int l = mxml_GetInt(snode, SAVE_BASES_Y, 0);
 			baseBuildingTile_t* tile = &b->map[k][l];
