@@ -565,9 +565,8 @@ qboolean B_AssembleMap (const base_t *base)
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col].building) {
-				const building_t *entry = base->map[row][col].building;
-
+			const building_t *entry = base->map[row][col].building;
+			if (entry && B_IsBuildingBuiltUp(entry)) {
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one
 				 * this is why we check the used flag and continue if it was set already */
 				if (entry->needs) {
