@@ -214,27 +214,27 @@ window options
 			}
 			option geocamzoom_min000
 			{
-				label	"_0.00"
+				label	"0.00"
 				value	"0"
 			}
 			option geocamzoom_min020
 			{
-				label	"_0.20"
+				label	"0.20"
 				value	"0.20"
 			}
 			option geocamzoom_min040
 			{
-				label	"_0.40"
+				label	"0.40"
 				value	"0.40"
 			}
 			option geocamzoom_min060
 			{
-				label	"_0.60"
+				label	"0.60"
 				value	"0.60"
 			}
 			option geocamzoom_min080
 			{
-				label	"_0.80"
+				label	"0.80"
 				value	"0.80"
 			}
 			// default
@@ -1747,38 +1747,38 @@ window options
 			}
 			option minus90degrees
 			{
-				label	"_- 90"
+				label	"- 90"
 				value	"-90"
 			}
 			option minus45degrees
 			{
-				label	"_- 45"
+				label	"- 45"
 				value	"-45"
 			}
 			option minus15degrees
 			{
-				label	"_- 15"
+				label	"- 15"
 				value	"-15"
 			}
 			option plus0degrees
 			{
-				label	"_+- 0"
+				label	"+- 0"
 				value	"0"
 			}
 			// default
 			option plus10degrees
 			{
-				label	"_+ 10"
+				label	"+ 10"
 				value	"10"
 			}
 			option plus15degrees
 			{
-				label	"_+ 15"
+				label	"+ 15"
 				value	"15"
 			}
 			option plus45degrees
 			{
-				label	"_+ 45"
+				label	"+ 45"
 				value	"45"
 			}
 		}
@@ -1790,35 +1790,35 @@ window options
 				pos			"418 210"
 				size		"75 20"
 			}
-			option minus90degrees
-			{
-				label	"_+ 45"
-				value	"+45"
-			}
-			option minus45degrees
-			{
-				label	"_+ 60"
-				value	"+60"
-			}
-			option minus15degrees
-			{
-				label	"_+ 75"
-				value	"-15"
-			}
-			// default
-			option plus0degrees
-			{
-				label	"_+ 89"
-				value	"89"
-			}
-			option plus15degrees
-			{
-				label	"_+135"
-				value	"135"
-			}
 			option plus45degrees
 			{
-				label	"_+180"
+				label	"+ 45"
+				value	"45"
+			}
+			option plus60degrees
+			{
+				label	"+ 60"
+				value	"60"
+			}
+			option plus75degrees
+			{
+				label	"+ 75"
+				value	"75"
+			}
+			// default
+			option plus89degrees
+			{
+				label	"+ 89"
+				value	"89"
+			}
+			option plus135degrees
+			{
+				label	"+135"
+				value	"135"
+			}
+			option plus180degrees
+			{
+				label	"+180"
 				value	"180"
 			}
 		}
@@ -1842,38 +1842,38 @@ window options
 			}
 			option zoom_min0
 			{
-				label	"_0.00"
+				label	"0.00"
 				value	"0"
 			}
 			option zoom_min005
 			{
-				label	"_0.05"
+				label	"0.05"
 				value	"0.05"
 			}
 			option zoom_min010
 			{
-				label	"_0.10"
+				label	"0.10"
 				value	"0.10"
 			}
 			option zoom_min015
 			{
-				label	"_0.15"
+				label	"0.15"
 				value	"0.15"
 			}
 			option zoom_min020
 			{
-				label	"_0.20"
+				label	"0.20"
 				value	"0.20"
 			}
 			option zoom_min025
 			{
-				label	"_0.25"
+				label	"0.25"
 				value	"0.25"
 			}
 			// default
 			option zoom_min030
 			{
-				label	"_0.30"
+				label	"0.30"
 				value	"0.3"
 			}
 		}
@@ -1887,38 +1887,38 @@ window options
 			}
 			option zoom_max200
 			{
-				label	"_2.00"
+				label	"2.00"
 				value	"2.0"
 			}
 			// default
 			option zoom_max340
 			{
-				label	"_3.40"
+				label	"3.40"
 				value	"3.4"
 			}
 			option zoom_max600
 			{
-				label	"_6.00"
+				label	"6.00"
 				value	"6.0"
 			}
 			option zoom_max800
 			{
-				label	"_8.00"
+				label	"8.00"
 				value	"8.0"
 			}
 			option zoom_max1000
 			{
-				label	"_10.00"
+				label	"10.00"
 				value	"10.0"
 			}
 			option zoom_max1200
 			{
-				label	"_12.00"
+				label	"12.00"
 				value	"12.0"
 			}
 			option zoom_max800
 			{
-				label	"_8.00"
+				label	"8.00"
 				value	"8.0"
 			}
 		}
@@ -1942,38 +1942,38 @@ window options
 			}
 			option zoom_quant000
 			{
-				label	"_0.00"
+				label	"0.00"
 				value	"0"
 			}
 			option zoom_quant005
 			{
-				label	"_0.05"
+				label	"0.05"
 				value	"0.05"
 			}
 			option zoom_quant010
 			{
-				label	"_0.10"
+				label	"0.10"
 				value	"0.10"
 			}
 			// default
 			option zoom_quant016
 			{
-				label	"_0.16"
+				label	"0.16"
 				value	"0.16"
 			}
 			option zoom_quant020
 			{
-				label	"_0.20"
+				label	"0.20"
 				value	"0.20"
 			}
 			option zoom_quant025
 			{
-				label	"_0.25"
+				label	"0.25"
 				value	"0.25"
 			}
 			option zoom_quant030
 			{
-				label	"_0.30"
+				label	"0.30"
 				value	"0.30"
 			}
 		}
