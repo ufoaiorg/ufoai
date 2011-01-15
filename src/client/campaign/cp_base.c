@@ -579,6 +579,8 @@ qboolean B_AssembleMap (const base_t *base)
 					Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
 
 				Q_strcat(maps, va("b/%s ", entry->mapPart), sizeof(maps));
+			} else if (entry && ccs.date.day > entry->timeStart) {
+				Q_strcat(maps, "b/construction ", sizeof(maps));
 			} else {
 				Q_strcat(maps, "b/empty ", sizeof(maps));
 			}
