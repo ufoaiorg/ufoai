@@ -221,7 +221,7 @@ typedef struct pathing_s {
 	byte areaStored[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
 	/* Indicates where the actor would have moved from to get to the cell */
-	byte areaFrom[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	short areaFrom[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
 	/* forbidden list */
 	pos_t **fblist;	/**< pointer to forbidden list (entities are standing here) */
