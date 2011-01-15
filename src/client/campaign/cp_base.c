@@ -141,22 +141,22 @@ static void B_TileGraphAdd (base_t *base, linkedList_t *graph[], baseBuildingTil
 	/* self */
 	LIST_AddPointer(&graph[listNum], (void*)tile);
 	/* west */
-	if ( (x - 1 >= 0) && !LIST_IsEmpty(graph[listNum - 1]) ) {
+	if (x - 1 >= 0 && !LIST_IsEmpty(graph[listNum - 1])) {
 		LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
 		LIST_AddPointer(&graph[listNum - 1], (void*)tile);
 	}
 	/* east */
-	if ( (x + 1 < BASE_SIZE) && !LIST_IsEmpty(graph[listNum + 1]) ) {
+	if (x + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + 1])) {
 		LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
 		LIST_AddPointer(&graph[listNum + 1], (void*)tile);
 	}
 	/* north */
-	if ( (y - 1 >= 0) && !LIST_IsEmpty(graph[listNum - BASE_SIZE]) ) {
+	if (y - 1 >= 0 && !LIST_IsEmpty(graph[listNum - BASE_SIZE])) {
 		LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
 		LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
 	}
 	/* south */
-	if ( (y + 1 < BASE_SIZE) && !LIST_IsEmpty(graph[listNum + BASE_SIZE]) ) {
+	if (y + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + BASE_SIZE])) {
 		LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
 		LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
 	}
@@ -178,19 +178,19 @@ static void B_TileGraphRemove (linkedList_t *graph[], baseBuildingTile_t *tile)
 	if (LIST_IsEmpty(graph[listNum]))
 		return;
 	/* west */
-	if ( (x - 1 >= 0) && !LIST_IsEmpty(graph[listNum - 1]) ) {
+	if (x - 1 >= 0 && !LIST_IsEmpty(graph[listNum - 1])) {
 		LIST_Remove(&graph[listNum - 1], (void*)tile);
 	}
 	/* east */
-	if ( (x + 1 < BASE_SIZE) && !LIST_IsEmpty(graph[listNum + 1]) ) {
+	if (x + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + 1])) {
 		LIST_Remove(&graph[listNum + 1], (void*)tile);
 	}
 	/* north */
-	if ( (y - 1 >= 0) && !LIST_IsEmpty(graph[listNum - BASE_SIZE]) ) {
+	if (y - 1 >= 0 && !LIST_IsEmpty(graph[listNum - BASE_SIZE])) {
 		LIST_Remove(&graph[listNum - BASE_SIZE], (void*)tile);
 	}
 	/* south */
-	if ( (y + 1 < BASE_SIZE) && !LIST_IsEmpty(graph[listNum + BASE_SIZE]) ) {
+	if (y + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + BASE_SIZE])) {
 		LIST_Remove(&graph[listNum + BASE_SIZE], (void*)tile);
 	}
 	/* delete self list */
