@@ -1,8 +1,7 @@
 {
-	material tex_streets/2ln_crn_ne
+	material tex_buildings/concrete008
 	{
-		texture tex_nature/grass_mowed_dry_a
+		texture tex_nature/grass
 		terrain 3 4
-		lightmap
 	}
 }
