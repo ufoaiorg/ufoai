@@ -131,7 +131,7 @@ def upgrade(repository):
 
         if not os.path.exists(bsppath) or mapsync.md5sum(bsppath, True) != maps[i].bsphash:
             fd, name = mkstemp()
-            os.write(fd, download('%s/%s.gz' %(URI, i)))
+            os.write(fd, download('%s/%s.gz' %(repository, i)))
             os.close(fd)
             data = GzipFile(name, 'rb').read()
             os.unlink(name)
