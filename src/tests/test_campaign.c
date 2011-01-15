@@ -1112,34 +1112,70 @@ static void testBuildingDestroy (void)
 static void testBuildingConstruction (void)
 {
 	const vec2_t pos = {0, 0};
+	int x, y;
 	base_t *base;
-	int i;
 	const building_t *buildingTemplate;
-	building_t *buildingLeft, *buildingRight;
+	building_t *entrance, *building1, *building2;
 
 	ResetCampaignData();
 
+	/* day 0 has special meaning! */
+	/* if building->startTime is 0 no buildTime checks done! */
+	ccs.date.day++;
 	ccs.campaignStats.basesBuilt = 1;
 
 	base = CreateBase("unittestbuildingconstruction", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
-	/* search a free spot, because the mandatory buildings are placed randomly */
-	for (i = 0; i < BASE_SIZE; i++) {
-		if (B_NOTBLOCKED(base, i, 0) && B_NOTBLOCKED(base, i + 1, 1)) {
-			break;
-		}
-	}
+	/* base should have exactly one building: entrance */
+	CU_ASSERT_EQUAL(ccs.numBuildings[base->idx], 1);
+	entrance = &ccs.buildings[base->idx][0];
 
-	CU_ASSERT_NOT_EQUAL_FATAL(i, BASE_SIZE);
-
-	/* build two powerplants that are not connected */
+	/* try to build powerplant that is not connected */
 	buildingTemplate = B_GetBuildingTemplate("building_powerplant");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingTemplate);
-	buildingLeft = B_SetBuildingByClick(base, buildingTemplate, i, 0);
-	CU_ASSERT_PTR_NOT_NULL(buildingLeft);
-	buildingRight = B_SetBuildingByClick(base, buildingTemplate, i + 1, 1);
-	CU_ASSERT_PTR_NULL_FATAL(buildingRight);
+
+	/* select position */
+	x = entrance->pos[0];
+	y = entrance->pos[1];
+	CU_ASSERT_PTR_EQUAL(entrance, base->map[y][x].building);
+	if (x >= 2)
+		x -= 2;
+	else
+		x += 2;
+	/* reset blocked status if set */
+	base->map[y][x].blocked = qfalse;
+	/* try to build (should fail) */
+	building1 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	CU_ASSERT_PTR_NULL_FATAL(building1);
+
+	/* next to the entrance it should succeed */
+	x = (x + entrance->pos[0]) /2;
+	base->map[y][x].blocked = qfalse;
+	building1 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(building1);
+
+	/* try to build to first pos again (still fail, conecting building not ready) */
+	if (x < entrance->pos[0])
+		x--;
+	else
+		x++;
+	building2 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	CU_ASSERT_PTR_NULL_FATAL(building2);
+	/* roll time one day before building finishes */
+	ccs.date.day += building1->buildTime - 1;
+	B_UpdateBaseData();
+	/* building should be under construction */
+	CU_ASSERT_EQUAL(building1->buildingStatus, B_STATUS_UNDER_CONSTRUCTION);
+	/* step a day */
+	ccs.date.day++;
+	B_UpdateBaseData();
+	/* building should be ready */
+	CU_ASSERT_EQUAL(building1->buildingStatus, B_STATUS_WORKING);
+
+	/* try build other building (now it should succeed) */
+	building2 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(building2);
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
