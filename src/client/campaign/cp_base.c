@@ -247,6 +247,27 @@ static qboolean B_IsCoherent (linkedList_t *graph[])
 }
 
 /**
+ * @brief Returns if a base building is destroyable
+ * @param[in] building Pointer to the building to check
+ * @todo buildings being built are not in the graph and it is possible to remove the only connection to them
+ */
+qboolean B_IsBuildingDestroyable (building_t *building)
+{
+	base_t *base = building->base;
+
+	if (base->baseStatus != BASE_DESTROYED) {
+		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
+
+		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
+		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][(int)building->pos[0]]);
+		if (building->needs)
+			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][((int)building->pos[0]) + 1]);
+		return B_IsCoherent(tileGraph);
+	}
+	return qtrue;
+}
+
+/**
  * @brief Returns the count of founded bases
  */
 int B_GetCount (void)
@@ -815,30 +836,23 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 qboolean B_BuildingDestroy (building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
-	const building_t const *buildingTemplate = building->tpl;	/**< Template of the removed building */
+	const building_t const *buildingTemplate = building->tpl;
 	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
 	base_t *base = building->base;
 
-	/* Don't allow to destroy an entrance. */
-	if (buildingType == B_ENTRANCE)
+	/* Don't allow to destroy a mandatory building. */
+	if (building->mandatory)
 		return qfalse;
 
 	if (!base->map[(int)building->pos[1]][(int)building->pos[0]].building
 	 || base->map[(int)building->pos[1]][(int)building->pos[0]].building != building) {
 		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
-				base->idx, (int)building->pos[0], (int)building->pos[1]);
+			base->idx, (int)building->pos[0], (int)building->pos[1]);
 	}
 
-	/* Refuse removing if it hurts coherency */
-	if (base->baseStatus != BASE_DESTROYED) {
-		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
-
-		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][(int)building->pos[0]]);
-		if (building->needs)
-			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][((int)building->pos[0]) + 1]);
-		if (!B_IsCoherent(tileGraph))
-			return qfalse;
+	/* Refuse destroying if it hurts coherency - only exception is when the whole base destroys */
+	if (!B_IsBuildingDestroyable(building)) {
+		return qfalse;
 	}
 
 	/* Remove the building from the base map */
@@ -1008,89 +1022,6 @@ static void B_Destroy_f (void)
 #endif
 
 /**
- * @brief Mark a building for destruction - you only have to confirm it now
- * @note Also calls the ondestroy trigger
- */
-void B_MarkBuildingDestroy (building_t* building)
-{
-	int cap;
-	base_t *base = building->base;
-
-	/* you can't destroy buildings if base is under attack */
-	if (B_IsUnderAttack(base)) {
-		UI_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
-		return;
-	}
-
-	cap = B_GetCapacityFromBuildingType(building->buildingType);
-	/* store the pointer to the building you wanna destroy */
-	base->buildingCurrent = building;
-
-	/** @todo: make base destroyable by destroying entrance */
-	if (building->buildingType == B_ENTRANCE) {
-		UI_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
-		return;
-	}
-
-	if (base->baseStatus != BASE_DESTROYED) {
-		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
-
-		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][(int)building->pos[0]]);
-		if (building->needs)
-			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][((int)building->pos[0]) + 1]);
-		if (!B_IsCoherent(tileGraph)) {
-			UI_Popup(_("Notice"), _("You can't destroy this building! It is the only connection to other buildings!"));
-			return;
-		}
-	}
-
-	if (building->buildingStatus == B_STATUS_WORKING) {
-		const qboolean hasBases = B_AtLeastOneExists();
-		switch (building->buildingType) {
-		case B_HANGAR:
-		case B_SMALL_HANGAR:
-			if (base->capacities[cap].cur >= base->capacities[cap].max) {
-				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
-					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
-					_("Go to transfer menu without destroying the building"));
-				return;
-			}
-			break;
-		case B_QUARTERS:
-			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
-				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
-					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
-					_("Go to transfer menu without destroying the building"));
-				return;
-			}
-			break;
-		case B_STORAGE:
-			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
-				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
-					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
-					_("Go to transfer menu without destroying the building"));
-				return;
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
-		NULL, NULL, NULL,
-		"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-		NULL, NULL, NULL);
-}
-
-/**
  * @brief Displays the status of a building for baseview.
  * @note updates the cvar mn_building_status which is used in the building
  * construction menu to display the status of the given building
@@ -1206,7 +1137,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 	/* now call the onconstruct trigger */
 	if (buildingNew->onConstruct[0] != '\0') {
 		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n",
-				buildingNew->onConstruct, base->idx);
+			buildingNew->onConstruct, base->idx);
 		Cmd_ExecuteString(va("%s %i", buildingNew->onConstruct, base->idx));
 	}
 }
@@ -1406,16 +1337,6 @@ int B_GetInstallationLimit (void)
 	}
 
 	return min(MAX_INSTALLATIONS, limit * MAX_INSTALLATIONS_PER_BASE);
-}
-
-/**
- * @brief Update menu script related cvars when the amount of bases changed.
- */
-void B_UpdateBaseCount (void)
-{
-	/* this cvar is used for disabling the base build button on geoscape
-	 * if MAX_BASES was reached */
-	Cvar_SetValue("mn_base_count", B_GetCount());
 }
 
 /**
@@ -1850,8 +1771,9 @@ base_t *B_GetFirstUnfoundedBase (void)
 }
 
 /**
- * @sa B_SelectBase
+ * @brief Sets the selected base
  * @param[in] base The base that is going to be selected
+ * @sa B_SelectBase
  */
 void B_SetCurrentSelectedBase (const base_t *base)
 {
@@ -1875,6 +1797,9 @@ void B_SetCurrentSelectedBase (const base_t *base)
 	}
 }
 
+/**
+ * @brief returns the currently selected base
+ */
 base_t *B_GetCurrentSelectedBase (void)
 {
 	base_t *base = NULL;
@@ -2363,21 +2288,6 @@ void B_InitStartup (void)
 	Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
 	Cmd_AddCommand("debug_baseiscoherent", B_CheckCoherency_f, "Checks if all buildings are connected on a base");
 #endif
-}
-
-/**
- * @brief Counts the number of bases.
- * @return The number of founded bases.
- */
-int B_GetFoundedBaseCount (void)
-{
-	int cnt = 0;
-	base_t *base = NULL;
-
-	while ((base = B_GetNext(base)) != NULL)
-		cnt++;
-
-	return cnt;
 }
 
 /**
@@ -2965,9 +2875,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		OBJZERO(b->bEquipment);
 	}
 	Com_UnregisterConstList(saveBaseConstants);
-
-	B_UpdateBaseCount();
-
+	Cvar_SetValue("mn_base_count", B_GetCount());
 	return qtrue;
 }
 

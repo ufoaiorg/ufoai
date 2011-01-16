@@ -202,8 +202,6 @@ base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 int B_GetCount(void);
 void B_SelectBase(const base_t *base);
-void B_UpdateBaseCount(void);
-int B_GetFoundedBaseCount(void);
 void B_Destroy(base_t *base);
 void B_SetName(base_t *base, const char *name);
 
@@ -226,7 +224,7 @@ qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type
 void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);
 
 building_t* B_SetBuildingByClick(base_t *base, const building_t const *buildingTemplate, int row, int col);
-void B_MarkBuildingDestroy(building_t* building);
+qboolean B_IsBuildingDestroyable(building_t *building);
 qboolean B_BuildingDestroy(building_t* building);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
