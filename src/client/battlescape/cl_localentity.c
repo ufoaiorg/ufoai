@@ -532,7 +532,7 @@ static void LE_PlayFootStepSound (le_t *le)
 static void LE_DoPathMove (le_t *le)
 {
 	/* next part */
-	const byte dvec = le->dvtab[le->pathPos];
+	const dvec_t dvec = le->dvtab[le->pathPos];
 	const byte dir = getDVdir(dvec);
 	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 	/* newCrouchingState needs to be set to the current crouching state

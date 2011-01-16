@@ -158,7 +158,7 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 			crouchingState = LE_IsCrouched(le) ? 1 : 0;
 
 			for (i = 0; i < pathLength; i++) {
-				const byte dvec = NET_ReadShort(msg);
+				const dvec_t dvec = NET_ReadShort(msg);
 				const byte dir = getDVdir(dvec);
 				VectorCopy(pos, oldPos);
 				PosAddDV(pos, crouchingState, dvec);

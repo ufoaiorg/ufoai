@@ -995,7 +995,7 @@ qboolean CL_ActorFireModeActivated (const actorModes_t mode)
 void CL_ActorTurnMouse (void)
 {
 	vec3_t directionVector;
-	byte dvec;
+	dvec_t dvec;
 
 	if (mouseSpace != MS_WORLD)
 		return;
