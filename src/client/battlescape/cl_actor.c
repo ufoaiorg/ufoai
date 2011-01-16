@@ -701,7 +701,7 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 	byte length;
 	vec3_t vec, oldVec;
 	pos3_t pos;
-	int dv;
+	int dvec;
 	byte crouchingState;
 
 	if (!selActor)
@@ -718,10 +718,10 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-	while ((dv = Grid_MoveNext(selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dvec = Grid_MoveNext(selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		length = CL_ActorMoveLength(selActor, pos);
-		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
-		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dv);
+		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
+		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dvec);
 		Grid_PosToVec(cl.mapData->map, selActor->fieldSize, pos, vec);
 		if (length > CL_ActorUsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
@@ -743,7 +743,7 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
  */
 static void CL_ActorMaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 {
-	int dv;
+	int dvec;
 	byte crouchingState = le && LE_IsCrouched(le) ? 1 : 0;
 	const int tus = CL_ActorUsableTUs(le);
 	const byte length = CL_ActorMoveLength(le, to);
@@ -752,11 +752,11 @@ static void CL_ActorMaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 
 	VectorCopy(to, pos);
 
-	while ((dv = Grid_MoveNext(le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dvec = Grid_MoveNext(le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		const byte length2 = CL_ActorMoveLength(le, pos);
 		if (length2 <= tus)
 			return;
-		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
+		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
 	}
 }
 
@@ -995,7 +995,7 @@ qboolean CL_ActorFireModeActivated (const actorModes_t mode)
 void CL_ActorTurnMouse (void)
 {
 	vec3_t directionVector;
-	byte dv;
+	byte dvec;
 
 	if (mouseSpace != MS_WORLD)
 		return;
@@ -1014,12 +1014,12 @@ void CL_ActorTurnMouse (void)
 		return; /* and return without turning */
 	}
 
-	/* calculate dv */
+	/* calculate dvec */
 	VectorSubtract(mousePos, selActor->pos, directionVector);
-	dv = AngleToDV((int) (atan2(directionVector[1], directionVector[0]) * todeg));
+	dvec = AngleToDV((int) (atan2(directionVector[1], directionVector[0]) * todeg));
 
 	/* send message to server */
-	MSG_Write_PA(PA_TURN, selActor->entnum, dv);
+	MSG_Write_PA(PA_TURN, selActor->entnum, dvec);
 }
 
 /**

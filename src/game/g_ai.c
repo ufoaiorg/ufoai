@@ -925,14 +925,14 @@ void G_AddToWayPointList (edict_t *ent)
  */
 void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
 {
-	int dv;
+	int dvec;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	G_MoveCalc(ent->team, ent, pos, crouchingState, ent->TU);
 
-	dv = gi.MoveNext(&level.pathingMap, pos, crouchingState);
-	if (dv != ROUTING_UNREACHABLE) {
-		const byte dir = getDVdir(dv);
+	dvec = gi.MoveNext(&level.pathingMap, pos, crouchingState);
+	if (dvec != ROUTING_UNREACHABLE) {
+		const byte dir = getDVdir(dvec);
 		/* Only attempt to turn if the direction is not a vertical only action */
 		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
 			G_ActorDoTurn(ent, dir & (CORE_DIRECTIONS - 1));

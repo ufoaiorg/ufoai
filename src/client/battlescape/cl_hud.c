@@ -1001,7 +1001,7 @@ void HUD_UpdateCursor (void)
 static void HUD_MapDebugCursor (const le_t *le)
 {
 	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
-		int dv;
+		int dvec;
 
 		static char topText[UI_MAX_SMALLTEXTLEN];
 		static char bottomText[UI_MAX_SMALLTEXTLEN];
@@ -1020,8 +1020,8 @@ static void HUD_MapDebugCursor (const le_t *le)
 		UI_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
 
 		/* Display the floor and ceiling values for the current cell. */
-		dv = Grid_MoveNext(le->pathMap, mousePos, 0);
-		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
+		dvec = Grid_MoveNext(le->pathMap, mousePos, 0);
+		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dvec), getDVz(dvec));
 		/* Save the text for later display next to the cursor. */
 		UI_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
 	}

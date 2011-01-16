@@ -477,9 +477,9 @@ qboolean G_ActionCheckForReaction (const player_t *player, edict_t *ent, int TU)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
+static void G_ClientTurn (player_t * player, edict_t* ent, byte dvec)
 {
-	const int dir = getDVdir(dv);
+	const int dir = getDVdir(dvec);
 
 	/* check if action is possible */
 	if (!G_ActionCheckForCurrentTeam(player, ent, TU_TURN))
