@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "cp_campaign.h"
+#include "cp_capacity.h"
 #include "cp_aliencont_callbacks.h"
 #include "save/save_aliencont.h"
 

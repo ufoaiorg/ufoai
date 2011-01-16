@@ -287,6 +287,12 @@
 		<Unit filename="..\..\src\client\campaign\cp_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_building.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_capacity.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>

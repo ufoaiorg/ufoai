@@ -117,6 +117,7 @@ $(TARGET)_SRCS      = \
 	client/campaign/cp_base_callbacks.c \
 	client/campaign/cp_basedefence_callbacks.c \
 	client/campaign/cp_building.c \
+	client/campaign/cp_capacity.c \
 	client/campaign/cp_hospital.c \
 	client/campaign/cp_hospital_callbacks.c \
 	client/campaign/cp_messages.c \

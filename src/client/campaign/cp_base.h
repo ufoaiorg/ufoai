@@ -253,19 +253,6 @@ void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
 qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
-void B_UpdateStorageCap(base_t *base);
-/**
- * @brief Capacity macros
- */
-#define CAP_GetMax(base, capacity) (base)->capacities[(capacity)].max
-#define CAP_GetCurrent(base, capacity) (base)->capacities[(capacity)].cur
-#define CAP_SetCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = (value)
-
-void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType);
-void B_RemoveItemsExceedingCapacity(base_t *base);
-void B_RemoveAntimatterExceedingCapacity(base_t *base);
-
-int B_FreeCapacity(const base_t *base, baseCapacities_t cap);
 
 /* menu functions */
 void B_BaseMenuInit(const base_t *base);
