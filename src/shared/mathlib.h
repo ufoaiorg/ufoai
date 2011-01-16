@@ -173,6 +173,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
  * -- autocrouched: being already autochrouched in the previous cell, stand up if you get the chance
  * -- autodive: we can stand in both cells, but there is just a small hole in the wall between them
  */
+typedef byte dvec_t;
 #define DV_DIR_BIT_SHIFT	3	/**< This is the bit shift needed to store the dir component of a DV value */
 #define DV_HOW_BIT_SHIFT	4	/**< This is the bit shift needed to store the 'how' component of a DV value */
 //#define DV_DIR_BIT_SHIFT	8	/**< This is the bit shift needed to store the dir component of a DV value */
