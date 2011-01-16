@@ -40,8 +40,8 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const 
 		LE_NotFoundError(number);
 
 	for (i = 0; i < le->pathLength; i++) {
-		const byte fulldv = le->path[i];
-		const byte dir = getDVdir(fulldv);
+		const byte dvec = le->path[i];
+		const byte dir = getDVdir(dvec);
 		time += LE_ActorGetStepTime(le, dir, le->pathPos);
 	}
 
