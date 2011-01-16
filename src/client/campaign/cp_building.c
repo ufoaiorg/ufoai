@@ -241,6 +241,24 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 }
 
 /**
+ * @brief Returns the building in the global building-types list that has the unique name buildingID.
+ * @param[in] buildingName The unique id of the building (building_t->id).
+ * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
+ */
+building_t *B_GetBuildingTemplate (const char *buildingName)
+{
+	int i = 0;
+
+	assert(buildingName);
+	for (i = 0; i < ccs.numBuildingTemplates; i++)
+		if (Q_streq(ccs.buildingTemplates[i].id, buildingName))
+			return &ccs.buildingTemplates[i];
+
+	Com_Printf("Building %s not found\n", buildingName);
+	return NULL;
+}
+
+/**
  * @brief Check that the dependences of a building is operationnal
  * @param[in] building Pointer to the building to check
  * @return true if base contains needed dependence for entering building

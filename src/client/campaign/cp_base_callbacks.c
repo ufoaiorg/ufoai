@@ -130,10 +130,10 @@ static void B_NextBase_f (void)
 	if (!base)
 		return;
 
-	base = B_GetNextFounded(base);
+	base = B_GetNext(base);
 	/* if it was the last base, select the first */
 	if (!base)
-		base = B_GetNextFounded(NULL);
+		base = B_GetNext(NULL);
 	if (base)
 		B_SelectBase(base);
 }
@@ -155,14 +155,14 @@ static void B_PrevBase_f (void)
 
 	prevBase = NULL;
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		if (base == currentBase)
 			break;
 		prevBase = base;
 	}
 	/* if it was the first base, select the last */
 	if (!prevBase) {
-		while ((base = B_GetNextFounded(base)) != NULL) {
+		while ((base = B_GetNext(base)) != NULL) {
 			prevBase = base;
 		}
 	}

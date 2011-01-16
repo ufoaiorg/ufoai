@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../cl_shared.h"
@@ -113,7 +112,7 @@ void CL_StatsUpdate_f (void)
 	sum += costs;
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		costs = CP_GetSalaryUpKeepBase(salary, base);
 		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 		sum += costs;

@@ -255,7 +255,7 @@ int B_GetCount (void)
 }
 
 /**
- * @brief Iterates through founded base
+ * @brief Iterates through founded bases
  * @param[in] lastBase Pointer of the base to iterate from. call with NULL to get the first one.
  */
 base_t *B_GetNext (base_t *lastBase)
@@ -281,21 +281,6 @@ base_t *B_GetNext (base_t *lastBase)
 }
 
 /**
- * @brief Iterates through founded base
- * @param[in] lastBase Pointer of the base to iterate from. call with NULL to get the first one.
- */
-base_t* B_GetNextFounded (base_t *lastBase)
-{
-	base_t* base = lastBase;
-
-	while ((base = B_GetNext(base)) != NULL) {
-		if (base->founded)
-			return base;
-	}
-	return NULL;
-}
-
-/**
  * @brief Array bound check for the base index. Will also return unfounded bases as
  * long as the index is in the valid ranges,
  * @param[in] baseIdx Index to check
@@ -316,12 +301,10 @@ base_t* B_GetBaseByIDX (int baseIdx)
  */
 base_t* B_GetFoundedBaseByIDX (int baseIdx)
 {
-	base_t *base = B_GetBaseByIDX(baseIdx);
+	if (baseIdx >= B_GetCount())
+		return NULL;
 
-	if (base && base->founded)
-		return base;
-
-	return NULL;
+	return B_GetBaseByIDX(baseIdx);
 }
 
 /**
@@ -940,7 +923,7 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			base_t *newbase = NULL;
 			qboolean moved = qfalse;
-			while ((newbase = B_GetNextFounded(newbase)) != NULL) {
+			while ((newbase = B_GetNext(newbase)) != NULL) {
 				/* found a new homebase? */
 				if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase)) {
 					moved = qtrue;
@@ -1496,24 +1479,6 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 }
 
 /**
- * @brief Returns the building in the global building-types list that has the unique name buildingID.
- * @param[in] buildingName The unique id of the building (building_t->id).
- * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
- */
-building_t *B_GetBuildingTemplate (const char *buildingName)
-{
-	int i = 0;
-
-	assert(buildingName);
-	for (i = 0; i < ccs.numBuildingTemplates; i++)
-		if (Q_streq(ccs.buildingTemplates[i].id, buildingName))
-			return &ccs.buildingTemplates[i];
-
-	Com_Printf("Building %s not found\n", buildingName);
-	return NULL;
-}
-
-/**
  * @brief Returns the baseTemplate in the global baseTemplate list that has the unique name baseTemplateID.
  * @param[in] baseTemplateID The unique id of the building (baseTemplate_t->name).
  * @return baseTemplate_t If a Template was found it is returned, otherwise->NULL.
@@ -1534,20 +1499,6 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 }
 
 /**
- * @brief Checks whether you have enough credits to build this building
- * @param costs buildcosts of the building
- * @return qboolean true - enough credits
- * @return qboolean false - not enough credits
- * Checks whether the given costs are bigger than the current available credits
- */
-static inline qboolean B_CheckCredits (int costs)
-{
-	if (costs > ccs.credits)
-		return qfalse;
-	return qtrue;
-}
-
-/**
  * @brief Set the currently selected building.
  * @param[in,out] base The base to place the building in
  * @param[in] buildingTemplate The template of the building to place at the given location
@@ -1563,7 +1514,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 	if (!buildingTemplate)
 		Com_Error(ERR_DROP, "no current building\n");
 #endif
-	if (!B_CheckCredits(buildingTemplate->fixCosts)) {
+	if (!CP_CheckCredits(buildingTemplate->fixCosts)) {
 		UI_Popup(_("Notice"), _("Not enough credits to build this\n"));
 		return NULL;
 	}
@@ -1647,6 +1598,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 			/* Update number of buildings on the base. */
 			ccs.numBuildings[base->idx]++;
 
+			B_BuildingStatus(buildingNew);
 			B_ResetBuildingCurrent(base);
 			Cmd_ExecuteString("base_init");
 			Cmd_ExecuteString("building_init");
@@ -1904,7 +1856,7 @@ base_t *B_GetFirstUnfoundedBase (void)
 void B_SetCurrentSelectedBase (const base_t *base)
 {
 	base_t *b = NULL;
-	while ((b = B_GetNextFounded(b)) != NULL) {
+	while ((b = B_GetNext(b)) != NULL) {
 		if (b == base) {
 			b->selected = qtrue;
 			if (b->aircraftCurrent == NULL)
@@ -1926,7 +1878,7 @@ void B_SetCurrentSelectedBase (const base_t *base)
 base_t *B_GetCurrentSelectedBase (void)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL)
+	while ((base = B_GetNext(base)) != NULL)
 		if (base->selected)
 			return base;
 
@@ -2422,7 +2374,7 @@ int B_GetFoundedBaseCount (void)
 	int cnt = 0;
 	base_t *base = NULL;
 
-	while ((base = B_GetNextFounded(base)) != NULL)
+	while ((base = B_GetNext(base)) != NULL)
 		cnt++;
 
 	return cnt;
@@ -2466,7 +2418,7 @@ static int B_CheckBuildingConstruction (building_t *building)
 void B_UpdateBaseData (void)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		building_t *building = NULL;
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (B_CheckBuildingConstruction(building)) {
@@ -2839,7 +2791,7 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, mxml_node_t *p)
 static qboolean B_PostLoadInitCapacity (void)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL)
+	while ((base = B_GetNext(base)) != NULL)
 		B_ResetAllStatusAndCapacities(base, qtrue);
 
 	return qtrue;

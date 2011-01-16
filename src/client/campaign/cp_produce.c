@@ -690,7 +690,7 @@ void PR_ProductionRun (void)
 	 * in global data array. Then increase prod->percentDone and check
 	 * whether an item is produced. Then add to base storage. */
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		production_t *prod;
 		production_queue_t *q = PR_GetProductionForBase(base);
 
@@ -793,7 +793,7 @@ qboolean PR_SaveXML (mxml_node_t *p)
 	mxml_node_t *node = mxml_AddNode(p, SAVE_PRODUCE_PRODUCTION);
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		const production_queue_t *pq = PR_GetProductionForBase(base);
 		int j;
 
@@ -900,7 +900,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 static qboolean PR_PostLoadInitProgress (void)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		production_queue_t *pq = PR_GetProductionForBase(base);
 		int j;
 

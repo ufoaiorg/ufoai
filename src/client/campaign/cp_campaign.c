@@ -678,6 +678,19 @@ void CL_CampaignRun (campaign_t *campaign)
 }
 
 /**
+ * @brief Checks whether you have enough credits for something
+ * @param costs costs to check
+ * @return qboolean true - enough credits
+ * @return qboolean false - not enough credits
+ */
+inline qboolean CP_CheckCredits (int costs)
+{
+	if (costs >= ccs.credits)
+		return qfalse;
+	return qtrue;
+}
+
+/**
  * @brief Sets credits and update mn_credits cvar
  * @param[in] credits The new credits value
  * Checks whether credits are bigger than MAX_CREDITS

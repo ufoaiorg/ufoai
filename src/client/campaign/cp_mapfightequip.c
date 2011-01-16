@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,7 +22,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../cl_shared.h"
@@ -416,7 +415,7 @@ void AII_UpdateInstallationDelay (void)
 	}
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		/* Update base */
 		for (k = 0; k < base->numBatteries; k++)
 			AII_UpdateOneInstallationDelay(base, NULL, NULL, &base->batteries[k].slot);
@@ -1077,7 +1076,7 @@ void AII_RepairAircraft (void)
 	const int REPAIR_PER_HOUR = 1;	/**< Number of damage points repaired per hour */
 	base_t *base = NULL;
 
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		aircraft_t *aircraft;
 
 		AIR_ForeachFromBase(aircraft, base) {
@@ -1314,7 +1313,7 @@ void BDEF_AutoSelectTarget (void)
 	int i;
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		BDEF_AutoTarget(base->batteries, base->numBatteries);
 		BDEF_AutoTarget(base->lasers, base->numLasers);
 	}

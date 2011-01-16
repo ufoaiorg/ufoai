@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../cl_shared.h"
@@ -222,7 +221,7 @@ static void AB_UpdateStealthForOneBase (const aircraft_t const *aircraft, alienB
 void AB_UpdateStealthForAllBase (void)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		aircraft_t *aircraft;
 		AIR_ForeachFromBase(aircraft, base) {
 			alienBase_t* alienBase;

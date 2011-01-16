@@ -62,7 +62,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define B_IsUnderAttack(base) ((base)->baseStatus == BASE_UNDER_ATTACK)
 
-#define B_AtLeastOneExists() (B_GetNextFounded(NULL) != NULL)
+#define B_AtLeastOneExists() (B_GetNext(NULL) != NULL)
 
 /**
  * @brief Macro sets a building used
@@ -189,7 +189,6 @@ float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
 void B_ParseBaseTemplate(const char *name, const char **text);
 void B_BaseResetStatus(base_t* const base);
 const building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, qboolean onlyWorking);
-building_t *B_GetBuildingTemplate(const char *buildingName);
 const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);
 
 void B_InitStartup(void);
