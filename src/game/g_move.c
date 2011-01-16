@@ -401,7 +401,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 				/* write move header and always one step after another - because the next step
 				 * might already be the last one due to some stop event */
-				gi.WriteByte(dvec);
+				gi.WriteShort(dvec);
 				gi.WriteShort(ent->speed);
 				gi.WriteShort(contentFlags);
 
