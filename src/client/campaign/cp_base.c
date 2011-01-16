@@ -3110,7 +3110,7 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 	if (!B_ItemIsStoredInBaseStorage(obj))
 		return 0;
 
-	cap = &base->capacities[CAP_ITEMS];
+	cap = CAP_Get(base, CAP_ITEMS);
 	if (amount > 0) {
 		if (obj->size > 0) {
 			const int freeSpace = cap->max - cap->cur;
@@ -3150,7 +3150,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 	if (obj->isVirtual)
 		return qtrue;
 
-	cap = &base->capacities[CAP_ITEMS];
+	cap = CAP_Get(base, CAP_ITEMS);
 	if (reset) {
 		base->storage.numItems[obj->idx] = 0;
 		base->storage.numItemsLoose[obj->idx] = 0;
@@ -3270,7 +3270,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	if (od == NULL)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
-	cap = &base->capacities[CAP_ANTIMATTER];
+	cap = CAP_Get(base, CAP_ANTIMATTER);
 	if (add) {	/* Adding. */
 		const int a = min(amount, cap->max - cap->cur);
 		base->storage.numItems[od->idx] += a;

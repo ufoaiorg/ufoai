@@ -28,6 +28,7 @@ void B_UpdateStorageCap(base_t *base);
 /**
  * @brief Capacity macros
  */
+#define CAP_Get(base, capacity) &((base)->capacities[(capacity)])
 #define CAP_GetMax(base, capacity) (base)->capacities[(capacity)].max
 #define CAP_GetCurrent(base, capacity) (base)->capacities[(capacity)].cur
 #define CAP_SetCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = (value)
