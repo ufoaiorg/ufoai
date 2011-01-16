@@ -3114,25 +3114,28 @@ qboolean B_ItemIsStoredInBaseStorage (const objDef_t *obj)
  */
 int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 {
+	capacities_t *cap;
+
 	assert(base);
 	assert(obj);
 
 	if (!B_ItemIsStoredInBaseStorage(obj))
 		return 0;
 
+	cap = &base->capacities[CAP_ITEMS];
 	if (amount > 0) {
 		if (obj->size > 0) {
-			const int freeSpace = base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur;
+			const int freeSpace = cap->max - cap->cur;
 			/* correct amount and update capacity */
 			amount = min(amount, freeSpace / obj->size);
-			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
+			cap->cur += (amount * obj->size);
 		}
 		base->storage.numItems[obj->idx] += amount;
 	} else if (amount < 0) {
 		/* correct amount */
 		amount = max(amount, -B_ItemInBase(obj, base));
 		if (obj->size > 0)
-			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
+			cap->cur += (amount * obj->size);
 		base->storage.numItems[obj->idx] += amount;
 	}
 
@@ -3151,16 +3154,19 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
  */
 qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap)
 {
+	capacities_t *cap;
+
 	assert(base);
 	assert(obj);
 
 	if (obj->isVirtual)
 		return qtrue;
 
+	cap = &base->capacities[CAP_ITEMS];
 	if (reset) {
 		base->storage.numItems[obj->idx] = 0;
 		base->storage.numItemsLoose[obj->idx] = 0;
-		base->capacities[CAP_ITEMS].cur = 0;
+		cap->cur = 0;
 	} else {
 		if (!B_ItemIsStoredInBaseStorage(obj)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
@@ -3169,7 +3175,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 
 		if (!ignorecap && amount > 0) {
 			/* Only add items if there is enough room in storage */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < (obj->size * amount)) {
+			if (cap->max - cap->cur < (obj->size * amount)) {
 				Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %s, amount: %i)\n", obj->id, amount);
 				return qfalse;
 			}
@@ -3177,11 +3183,11 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 
 		base->storage.numItems[obj->idx] += amount;
 		if (obj->size > 0)
-			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
+			cap->cur += (amount * obj->size);
 
-		if (base->capacities[CAP_ITEMS].cur < 0) {
-			Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", base->capacities[CAP_ITEMS].cur);
-			base->capacities[CAP_ITEMS].cur = 0;
+		if (cap->cur < 0) {
+			Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", cap->cur);
+			cap->cur = 0;
 		}
 
 		if (base->storage.numItems[obj->idx] < 0) {
