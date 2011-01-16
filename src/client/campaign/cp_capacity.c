@@ -59,7 +59,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	aircraft_t *aircraft;
 
 	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
-	if (B_FreeCapacity(base, capacity) >= 0)
+	if (B_GetFreeCapacity(base, capacity) >= 0)
 		return;
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */

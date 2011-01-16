@@ -120,7 +120,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				}
 				/* alive aliens */
 				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
-					int amount = min(transfer->alienAmount[i][TRANS_ALIEN_ALIVE], B_FreeCapacity(destination, CAP_ALIENS));
+					int amount = min(transfer->alienAmount[i][TRANS_ALIEN_ALIVE], B_GetFreeCapacity(destination, CAP_ALIENS));
 
 					if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] != amount)
 						capacityWarning = qtrue;

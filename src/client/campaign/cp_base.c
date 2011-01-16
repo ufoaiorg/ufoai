@@ -763,10 +763,10 @@ static void B_UpdateAntimatterCap (base_t *base)
  * @param[in] cap Capacity type
  * @sa baseCapacities_t
  */
-int B_FreeCapacity (const base_t *base, baseCapacities_t cap)
+int B_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
 {
-	assert(base);
-	return base->capacities[cap].max - base->capacities[cap].cur;
+	const capacities_t *cap = &base->capacities[capacityType];
+	return cap->max - cap->cur;
 }
 
 /**
@@ -3266,6 +3266,7 @@ int B_AntimatterInBase (const base_t *base)
 void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 {
 	objDef_t *od;
+	capacities_t *cap;
 
 	assert(base);
 
@@ -3281,17 +3282,18 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	if (od == NULL)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
+	cap = &base->capacities[CAP_ANTIMATTER];
 	if (add) {	/* Adding. */
-		const int a = min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
+		const int a = min(amount, cap->max - cap->cur);
 		base->storage.numItems[od->idx] += a;
-		base->capacities[CAP_ANTIMATTER].cur += a;
+		cap->cur += a;
 	} else {	/* Removing. */
 		if (amount == 0) {
-			base->capacities[CAP_ANTIMATTER].cur = 0;
+			cap->cur = 0;
 			base->storage.numItems[od->idx] = 0;
 		} else {
-			const int a = min(amount, base->capacities[CAP_ANTIMATTER].cur);
-			base->capacities[CAP_ANTIMATTER].cur -= a;
+			const int a = min(amount, cap->cur);
+			cap->cur -= a;
 			base->storage.numItems[od->idx] -= a;
 		}
 	}

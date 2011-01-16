@@ -135,7 +135,7 @@ static void TR_TransferAliensFromMission_f (void)
 		if (!AC_ContainmentAllowed(base))
 			continue;
 
-		freeSpace = B_FreeCapacity(base, CAP_ALIENS);
+		freeSpace = B_GetFreeCapacity(base, CAP_ALIENS);
 
 		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
 		string = va("%s %s", base->name, string);
@@ -247,7 +247,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 			UI_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
 			return 0;
 		}
-		amount = min(amount, B_FreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
+		amount = min(amount, B_GetFreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
 		if (amount <= 0) {
 			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return 0;
