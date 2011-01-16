@@ -207,3 +207,15 @@ void B_UpdateStorageCap (base_t *base)
 	/* UGV takes room in storage capacity */
 	base->capacities[CAP_ITEMS].cur += UGV_SIZE * E_CountHired(base, EMPL_ROBOT);
 }
+
+/**
+ * @brief Returns the free capacity of a type
+ * @param[in] base Pointer to the base to check
+ * @param[in] cap Capacity type
+ * @sa baseCapacities_t
+ */
+int B_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
+{
+	const capacities_t *cap = &base->capacities[capacityType];
+	return cap->max - cap->cur;
+}

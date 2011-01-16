@@ -758,18 +758,6 @@ static void B_UpdateAntimatterCap (base_t *base)
 }
 
 /**
- * @brief Returns the free capacity of a type
- * @param[in] base Pointer to the base to check
- * @param[in] cap Capacity type
- * @sa baseCapacities_t
- */
-int B_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
-{
-	const capacities_t *cap = &base->capacities[capacityType];
-	return cap->max - cap->cur;
-}
-
-/**
  * @brief Recalculate status and capacities of one base
  * @param[in] base Pointer to the base where status and capacities must be recalculated
  * @param[in] firstEnable qtrue if this is the first time the function is called for this base
