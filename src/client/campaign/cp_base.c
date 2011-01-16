@@ -1538,9 +1538,6 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
  * @param costs buildcosts of the building
  * @return qboolean true - enough credits
  * @return qboolean false - not enough credits
- *
- * @sa B_ConstructBuilding
- * @sa B_NewBuilding
  * Checks whether the given costs are bigger than the current available credits
  */
 static inline qboolean B_CheckCredits (int costs)
@@ -1548,61 +1545,6 @@ static inline qboolean B_CheckCredits (int costs)
 	if (costs > ccs.credits)
 		return qfalse;
 	return qtrue;
-}
-
-/**
- * @brief Builds new building. And checks whether the player has enough credits
- * to construct the current selected building before starting construction.
- * @sa B_MarkBuildingDestroy
- * @sa B_CheckCredits
- * @sa CL_UpdateCredits
- * @return qboolean
- * @sa B_NewBuilding
- * @param[in,out] base The base to construct the building in
- * @param[in,out] building The building to construct
- */
-static qboolean B_ConstructBuilding (base_t* base, building_t *building)
-{
-	/* maybe someone call this command before the buildings are parsed?? */
-	if (!base || !building)
-		return qfalse;
-
-	/* enough credits to build this? */
-	if (!B_CheckCredits(building->fixCosts)) {
-		Com_DPrintf(DEBUG_CLIENT, "B_ConstructBuilding: Not enough credits to build: '%s'\n", building->id);
-		B_ResetBuildingCurrent(base);
-		return qfalse;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", building->id);
-
-	building->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-	building->timeStart = ccs.date.day;
-
-	CL_UpdateCredits(ccs.credits - building->fixCosts);
-	Cmd_ExecuteString("base_init");
-	return qtrue;
-}
-
-/**
- * @brief Build new building.
- * @param[in,out] base The base to construct the building in
- * @param[in,out] building The building to construct
- * @sa B_MarkBuildingDestroy
- * @sa B_ConstructBuilding
- */
-static void B_NewBuilding (base_t* base, building_t *building)
-{
-	/* maybe someone call this command before the buildings are parsed?? */
-	if (!base || !building)
-		return;
-
-	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		/* credits are updated in the construct function */
-		if (B_ConstructBuilding(base, building)) {
-			B_BuildingStatus(building);
-			Com_DPrintf(DEBUG_CLIENT, "B_NewBuilding: building->buildingStatus = %i\n", building->buildingStatus);
-		}
 }
 
 /**
@@ -1635,12 +1577,13 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 
 		/* copy building from template list to base-buildings-list */
 		*buildingNew = *buildingTemplate;
-
 		/* self-link to building-list in base */
 		buildingNew->idx = B_GetBuildingIDX(base, buildingNew);
-
 		/* Link to the base. */
 		buildingNew->base = base;
+		/* status and build (start) time */
+		buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+		buildingNew->timeStart = ccs.date.day;
 
 		if (!base->map[row][col].blocked && !base->map[row][col].building) {
 			baseBuildingTile_t tile;
@@ -1691,21 +1634,21 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				}
 			}
 
+			/* set building position */
 			if (buildingNew->needs) {
 				base->map[row][col + 1].building = buildingNew;
 			}
-			/* Update number of buildings on the base. */
-			ccs.numBuildings[base->idx]++;
-			/* Credits are updated here, too */
-			B_NewBuilding(base, buildingNew);
-
 			base->map[row][col].building = buildingNew;
-
-			/* where is this building located in our base? */
 			buildingNew->pos[0] = col;
 			buildingNew->pos[1] = row;
 
+			/* pay */
+			CL_UpdateCredits(ccs.credits - buildingNew->fixCosts);
+			/* Update number of buildings on the base. */
+			ccs.numBuildings[base->idx]++;
+
 			B_ResetBuildingCurrent(base);
+			Cmd_ExecuteString("base_init");
 			Cmd_ExecuteString("building_init");
 
 			return buildingNew;
