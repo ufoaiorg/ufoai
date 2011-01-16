@@ -196,6 +196,20 @@ static void testMove (void)
 	}
 }
 
+/* tests for the(future) dvec format */
+static void testDvec (void)
+{
+	short dv1  = 0x0724;
+	CU_ASSERT_EQUAL(getDVdir(dv1), 0x07);
+	CU_ASSERT_EQUAL(getDVz(dv1), 0x04);
+
+	short dv2 = makeDV(6, 3);
+	CU_ASSERT_EQUAL(dv2, 0x0603);
+
+	dv2 = NewDVZ(dv2, 4);
+	CU_ASSERT_EQUAL(dv2, 0x0604);
+}
+
 int UFO_AddRoutingTests (void)
 {
 	/* add a suite to the registry */
@@ -210,5 +224,8 @@ int UFO_AddRoutingTests (void)
 	if (CU_ADD_TEST(routingSuite, testMove) == NULL)
 		return CU_get_error();
 
+/*	if (CU_ADD_TEST(routingSuite, testDvec) == NULL)
+		return CU_get_error();
+*/
 	return CUE_SUCCESS;
 }
