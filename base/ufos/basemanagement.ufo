@@ -10,12 +10,12 @@
 // build_time:			The time (in days) this facility takes to construct
 // varcosts:			The monthely maintenance cost for this facility
 // map_name:			The name of the map tile for this facility (for base defence maps)
+//							buildings without mapname are not buildable
 // pedia:				The tech ID that has the UFOpaedia entry for this facility
 // needs:				Additional sections of this facility. Used for facilities larger than 1 tile
 // capacity:			The capacity of this facility. The meaning of the value depends on the building type.
 // onconstruct:			The name of the script to be run when this facility is built up. Don't add a ; at the end.
 // ondestroy:			The name of the script to be run when this facility is destroyed. Don't add a ; at the end.
-// visible:				Sets whether this facility is visible on the base screen
 // mandatory:			Automatically construct this building when a base is set up.
 // max_count:			No base may have more than this amount of this facility
 // starting_employees:	The amount of employees that come with this building
@@ -45,7 +45,6 @@ building building_aliencontainment2
 	name		"_Alien Containment Facility"
 	image		base/aliencont1
 	pedia		rs_building_aliencontainment
-	visible		false // no 'needs' field here!
 }
 
 building building_entrance
@@ -144,7 +143,6 @@ building building_hangar2
 	name		"_Large Hangar"
 	image		base/drop1
 	pedia		rs_building_large_hangar
-	visible		false // no 'needs' field here!
 }
 
 building building_intercept
@@ -184,7 +182,6 @@ building building_workshop2
 	name		"_Workshop"
 	image		base/workshop1
 	pedia		rs_building_workshop
-	visible		false // no 'needs' field here!
 }
 
 building building_radar

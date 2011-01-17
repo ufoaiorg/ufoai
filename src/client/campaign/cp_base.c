@@ -3010,42 +3010,6 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 }
 
 /**
- * @brief Checks the parsed buildings for errors
- * @return false if there are errors - true otherwise
- */
-qboolean B_ScriptSanityCheck (void)
-{
-	int i, error = 0;
-	building_t* b;
-
-	for (i = 0, b = ccs.buildingTemplates; i < ccs.numBuildingTemplates; i++, b++) {
-		if (!b->mapPart && b->visible) {
-			error++;
-			Com_Printf("...... no mappart for building '%s' given\n", b->id);
-		}
-		if (!b->name) {
-			error++;
-			Com_Printf("...... no name for building '%s' given\n", b->id);
-		}
-		if (!b->image) {
-			error++;
-			Com_Printf("...... no image for building '%s' given\n", b->id);
-		}
-		if (!b->pedia) {
-			error++;
-			Com_Printf("...... no pedia link for building '%s' given\n", b->id);
-		} else if (!RS_GetTechByID(b->pedia)) {
-			error++;
-			Com_Printf("...... could not get pedia entry tech (%s) for building '%s'\n", b->pedia, b->id);
-		}
-	}
-	if (!error)
-		return qtrue;
-	else
-		return qfalse;
-}
-
-/**
  * @brief returns the amount of antimatter stored in a base
  * @param[in] base Pointer to the base to check
  */

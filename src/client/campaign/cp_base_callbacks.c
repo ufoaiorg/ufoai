@@ -411,7 +411,7 @@ static void B_BuildingInit (base_t* base)
 		building_t *tpl = &ccs.buildingTemplates[i];
 		/* make an entry in list for this building */
 
-		if (tpl->visible) {
+		if (tpl->mapPart) {
 			const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
 
 			if (tpl->maxCount >= 0 && tpl->maxCount <= numSameBuildings)

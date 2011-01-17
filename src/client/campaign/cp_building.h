@@ -86,8 +86,6 @@ typedef struct building_s {
 
 	buildingStatus_t buildingStatus;	/**< [BASE_SIZE*BASE_SIZE]; */
 
-	qboolean visible;	/**< Is this building visible in the building list. */
-
 	/** Event handler functions */
 	char onConstruct[MAX_VAR];
 	char onAttack[MAX_VAR];
@@ -109,6 +107,7 @@ typedef struct building_s {
 } building_t;
 
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
+qboolean B_BuildingScriptSanityCheck(void);
 building_t *B_GetBuildingTemplate(const char *buildingName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 qboolean B_CheckBuildingDependencesStatus(const building_t* building);

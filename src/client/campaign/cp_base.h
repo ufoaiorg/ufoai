@@ -266,7 +266,6 @@ qboolean B_SaveStorageXML(mxml_node_t *parent, const equipDef_t equip);
 qboolean B_LoadStorageXML(mxml_node_t *parent, equipDef_t *equip);
 
 /* other */
-qboolean B_ScriptSanityCheck(void);
 int B_GetInstallationLimit(void);
 
 /* functions that checks whether the buttons in the base menu are useable */

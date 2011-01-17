@@ -88,7 +88,6 @@ static const value_t valid_building_vars[] = {
 	{"pedia", V_CLIENT_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
 	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
 	{"image", V_CLIENT_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
-	{"visible", V_BOOL, offsetof(building_t, visible), MEMBER_SIZEOF(building_t, visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
 	{"needs", V_CLIENT_HUNK_STRING, offsetof(building_t, needs), 0},	/**< For buildings with more than one part; the other parts of the building needed.*/
 	{"fixcosts", V_INT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
 	{"varcosts", V_INT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
@@ -155,7 +154,6 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		building->base = NULL;
 		building->buildingType = MAX_BUILDING_TYPE;
 		building->dependsBuilding = NULL;
-		building->visible = qtrue;
 		building->maxCount = -1;	/* Default: no limit */
 
 		ccs.numBuildingTemplates++;
@@ -217,8 +215,6 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		techLink = RS_GetTechByProvided(name);
 		if (techLink)
 			building->tech = techLink;
-		else if (building->visible)
-			Com_Error(ERR_DROP, "B_ParseBuildings: Could not find tech that provides %s\n", name);
 
 		do {
 			/* get the name type */
@@ -238,6 +234,38 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			}
 		} while (*text);
 	}
+}
+
+/**
+ * @brief Checks the parsed buildings for errors
+ * @return false if there are errors - true otherwise
+ */
+qboolean B_BuildingScriptSanityCheck (void)
+{
+	int i, error = 0;
+	building_t* b;
+
+	for (i = 0, b = ccs.buildingTemplates; i < ccs.numBuildingTemplates; i++, b++) {
+		if (!b->name) {
+			error++;
+			Com_Printf("...... no name for building '%s' given\n", b->id);
+		}
+		if (!b->image) {
+			error++;
+			Com_Printf("...... no image for building '%s' given\n", b->id);
+		}
+		if (!b->pedia) {
+			error++;
+			Com_Printf("...... no pedia link for building '%s' given\n", b->id);
+		} else if (!RS_GetTechByID(b->pedia)) {
+			error++;
+			Com_Printf("...... could not get pedia entry tech (%s) for building '%s'\n", b->pedia, b->id);
+		}
+	}
+	if (!error)
+		return qtrue;
+	else
+		return qfalse;
 }
 
 /**
