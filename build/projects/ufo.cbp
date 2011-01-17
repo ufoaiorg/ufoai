@@ -72,7 +72,6 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wcast-align" />
-			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
@@ -455,14 +454,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_base.h" />
-		<Unit filename="..\..\src\client\campaign\cp_capacity.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_capacity.h" />
-		<Unit filename="..\..\src\client\campaign\cp_building.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_building.h" />
 		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -471,10 +462,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_basedefence_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_building.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_building.h" />
 		<Unit filename="..\..\src\client\campaign\cp_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_campaign.h" />
+		<Unit filename="..\..\src\client\campaign\cp_capacity.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_capacity.h" />
 		<Unit filename="..\..\src\client\campaign\cp_employee.c">
 			<Option compilerVar="CC" />
 		</Unit>
