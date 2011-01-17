@@ -180,33 +180,6 @@ static void B_TileGraphAdd (base_t *base, tileCondition_t condition, linkedList_
 		if (!LIST_GetPointer(graph[listNum + BASE_SIZE], tile))
 			LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
 	}
-#if 0
-
-	if (!LIST_IsEmpty(graph[listNum]))
-		return;
-	/* self */
-	LIST_AddPointer(&graph[listNum], (void*)tile);
-	/* west */
-	if (x - 1 >= 0 && LIST_Count(graph[listNum - 1]) > 1) {
-		LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
-		LIST_AddPointer(&graph[listNum - 1], (void*)tile);
-	}
-	/* east */
-	if (x + 1 < BASE_SIZE && LIST_Count(graph[listNum + 1]) > 1) {
-		LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
-		LIST_AddPointer(&graph[listNum + 1], (void*)tile);
-	}
-	/* north */
-	if (y - 1 >= 0 && LIST_Count(graph[listNum - BASE_SIZE]) > 1) {
-		LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
-		LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
-	}
-	/* south */
-	if (y + 1 < BASE_SIZE && LIST_Count(graph[listNum + BASE_SIZE]) > 1) {
-		LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
-		LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
-	}
-#endif
 }
 
 /**
