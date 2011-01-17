@@ -119,32 +119,15 @@ static qboolean Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t
 	return qfalse;
 }
 
-static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
+static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, const byte length, const int dir, const int oz, const int oc, priorityQueue_t *pqueue)
 {
 	pos4_t dummy;
-	int x, y, z;
-
-	x = toPos[0];
-	y = toPos[1];
-	z = toPos[2];
 
 	RT_AREA_TEST_POS(path, toPos, c);
 	RT_AREA_POS(path, toPos, c) = length;	/**< Store TUs for this square. */
 	RT_AREA_FROM_POS(path, toPos, c) = makeDV(dir, oz); /**< Store origination information for this square. */
-	{
-		pos3_t pos, test;
-		int crouch = c;
-		VectorSet(pos, ox, oy, oz);
-		VectorSet(test, x, y, z);
-		PosSubDV(test, crouch, RT_AREA_FROM_POS(path, toPos, c));
-		if (!VectorCompare(test, pos) || crouch != oc) {
-			Com_Printf("Grid_SetMoveData: Created faulty DV table.\nx:%i y:%i z:%i c:%i\ndir:%i\nnx:%i ny:%i nz:%i nc:%i\ntx:%i ty:%i tz:%i tc:%i\n",
-				ox, oy, oz, oc, dir, x, y, z, c, test[0], test[1], test[2], crouch);
 
-			Com_Error(ERR_DROP, "Grid_SetMoveData: Created faulty DV table.");
-		}
-	}
-	Vector4Set(dummy, x, y, z, c);
+	Vector4Set(dummy, toPos[0], toPos[1], toPos[2], c);
 	/** @todo add heuristic for A* algorithm */
 	PQueuePush(pqueue, dummy, length);
 }
@@ -519,7 +502,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 		/* Store move. */
 		if (pqueue)
-			Grid_SetMoveData(path, pos, crouchingState, len, dir, x, y, z, crouchingState ^ 1, pqueue);
+			Grid_SetMoveData(path, pos, crouchingState, len, dir, z, crouchingState ^ 1, pqueue);
 
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i.\n", x, y, z, crouchingState, len);
 		/* We are done, exit now. */
@@ -582,7 +565,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* Store move. */
 	if (pqueue) {
-		Grid_SetMoveData(path, toPos, crouchingState, len, dir, x, y, z, crouchingState, pqueue);
+		Grid_SetMoveData(path, toPos, crouchingState, len, dir, z, crouchingState, pqueue);
 	}
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i\n", nx, ny, nz, crouchingState, len, RT_FLOOR(map, actorSize, x, y, z));
 }
