@@ -1,0 +1,63 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxlevel" "4"
+// brush 0
+{
+( 0 0 0 ) ( 0 256 0 ) ( 0 0 256 ) tex_common/nodraw 224 0 0 0.5 0.5 0 128 0
+( 256 256 256 ) ( 256 256 0 ) ( 256 0 256 ) tex_common/nodraw 224 0 0 0.5 0.5 0 128 0
+( 0 0 0 ) ( 0 0 256 ) ( 256 0 0 ) tex_common/nodraw 224 0 0 0.5 0.5 0 128 0
+( 256 256 256 ) ( 0 256 256 ) ( 256 256 0 ) tex_common/nodraw 224 0 0 0.5 0.5 0 128 0
+( 0 0 0 ) ( 256 0 0 ) ( 0 256 0 ) tex_common/nodraw 224 0 0 0.5 0.5 0 128 0
+( 288 256 4 ) ( 288 0 4 ) ( 32 256 4 ) tex_terrain/dummy 0 0 0 0.25 0.25 65281 0 0
+}
+// brush 1
+{
+( 96 662 107 ) ( 96 656 107 ) ( 96 656 105 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 128 652 130 ) ( 128 660 130 ) ( 128 660 2 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 108 160 131 ) ( 116 160 131 ) ( 116 160 3 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 117 192 131 ) ( 109 192 131 ) ( 109 192 3 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 704 896 0 ) ( 736 896 0 ) ( 704 928 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 736 928 64 ) ( 736 896 64 ) ( 704 928 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+}
+// brush 2
+{
+( 96 598 107 ) ( 96 592 107 ) ( 96 592 105 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 128 588 130 ) ( 128 596 130 ) ( 128 596 2 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 108 96 131 ) ( 116 96 131 ) ( 116 96 3 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 117 128 131 ) ( 109 128 131 ) ( 109 128 3 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 704 832 0 ) ( 736 832 0 ) ( 704 864 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 736 864 64 ) ( 736 832 64 ) ( 704 864 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+}
+// brush 3
+{
+( 160 566 107 ) ( 160 560 107 ) ( 160 560 105 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 192 556 130 ) ( 192 564 130 ) ( 192 564 2 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 172 64 131 ) ( 180 64 131 ) ( 180 64 3 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 181 96 131 ) ( 173 96 131 ) ( 173 96 3 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 768 800 0 ) ( 800 800 0 ) ( 768 832 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 800 832 64 ) ( 800 800 64 ) ( 768 832 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "110 174 5"
+"model" "models/objects/vegi/banana/banana.md2"
+"spawnflags" "255"
+}
+// entity 2
+{
+"classname" "misc_model"
+"origin" "110 110 5"
+"model" "models/objects/vegi/banana/banana.md2"
+"spawnflags" "255"
+}
+// entity 3
+{
+"classname" "misc_model"
+"origin" "174 78 5"
+"model" "models/objects/vegi/banana/banana.md2"
+"spawnflags" "255"
+}
