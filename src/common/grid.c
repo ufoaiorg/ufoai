@@ -148,6 +148,7 @@ typedef struct step_s {
 	 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself. */
 	qboolean hasLadderSupport;	/**< Indicates if there is a ladder present providing support. */
 
+	actorSizeEnum_t actorSize;
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
 
@@ -161,13 +162,14 @@ typedef struct step_s {
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte crouchingState, const int dir)
+static qboolean Grid_StepInit (step_t *step, const routing_t *map, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir)
 {
 	step->map = map;
 	/** @todo flier should return true if the actor can fly. */
 	step->flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
 	step->hasLadderToClimb = qfalse;
 	step->hasLadderSupport = qfalse;
+	step->actorSize = actorSize;
 	/** @note This is the actor's height in QUANT units. */
 	step->actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
 	step->actorCrouchedHeight = ModelCeilingToQuant((float)(PLAYER_CROUCHING_HEIGHT));
@@ -204,14 +206,14 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, byte len, const pos3_t pos, const int dir, byte *crouchingState)
+static qboolean Grid_StepCheckCrouchingDirections (step_t *step, pathing_t *path, byte len, const pos3_t pos, const int dir, byte *crouchingState)
 {
 	/* Can't stand up if standing. */
 	if (dir == DIRECTION_STAND_UP && *crouchingState == 0) {
 		return qfalse;
 	}
 	/* Can't stand up if there's not enough head room. */
-	if (dir == DIRECTION_STAND_UP && QuantToModel(Grid_Height(step->map, actorSize, pos)) >= PLAYER_STANDING_HEIGHT) {
+	if (dir == DIRECTION_STAND_UP && QuantToModel(Grid_Height(step->map, step->actorSize, pos)) >= PLAYER_STANDING_HEIGHT) {
 		return qfalse;
 	}
 	/* Can't get down if crouching. */
@@ -240,7 +242,7 @@ static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSize
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, pos3_t toPos, const int dir)
+static qboolean Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPos, const int dir)
 {
 	toPos[0] = pos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
 	toPos[1] = pos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
@@ -274,10 +276,11 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
  * @param[in] exclude Exclude this position from the forbidden list check (the actor's pos)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const pos3_t exclude)
+static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const pos3_t exclude)
 {
 	int nx, ny, nz;
 	int passageHeight;
+	const actorSizeEnum_t actorSize = step->actorSize;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
 	const int stepup = RT_STEPUP_POS(step->map, actorSize, pos, dir); /**< The stepup needed to get to/through the passage */
@@ -375,11 +378,12 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const pos3_t toPos, const int dir)
+static qboolean Grid_StepCheckFlyingDirections (step_t *step, const pos3_t pos, const pos3_t toPos, const int dir)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
 	int passageHeight;
+	const actorSizeEnum_t actorSize = step->actorSize;
 
 	if (toPos[2] > pos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
@@ -412,13 +416,13 @@ static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnu
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't move there
  */
-static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const int dir)
+static qboolean Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, const int dir)
 {
 	if (dir == DIRECTION_FALL) {
 		if (step->flier) {
 			/* Fliers cannot fall intentionally. */
 			return qfalse;
-		} else if (RT_FLOOR_POS(step->map, actorSize, pos) >= 0) {
+		} else if (RT_FLOOR_POS(step->map, step->actorSize, pos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return qfalse;
 		} else if (step->hasLadderSupport) {
@@ -426,7 +430,7 @@ static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeE
 			return qfalse;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (step->flier && QuantToModel(RT_CEILING_POS(step->map, actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (step->flier && QuantToModel(RT_CEILING_POS(step->map, step->actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return qfalse;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
@@ -435,7 +439,7 @@ static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeE
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
 		if (step->flier) {
-			if (RT_FLOOR_POS(step->map, actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
+			if (RT_FLOOR_POS(step->map, step->actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
 				return qfalse;
 			}
 		} else {
@@ -468,7 +472,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	int nx, ny, nz;
 	byte len, oldLen;
 
-	if (!Grid_StepInit(step, map, crouchingState, dir))
+	if (!Grid_StepInit(step, map, actorSize, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
 
 	x = pos[0];
@@ -496,7 +500,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* If this is a crouching or crouching move, then process that motion. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
-		if (!Grid_StepCheckCrouchingDirections(step, actorSize, path, len, pos, dir, &crouchingState)) {
+		if (!Grid_StepCheckCrouchingDirections(step, path, len, pos, dir, &crouchingState)) {
 			return;
 		}
 
@@ -509,7 +513,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		return;
 	}
 
-	if (!Grid_StepCalcNewPos(step, actorSize, pos, toPos, dir)) {
+	if (!Grid_StepCalcNewPos(step, pos, toPos, dir)) {
 		return;
 	}
 	nx = toPos[0];
@@ -523,18 +527,18 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	 *  to the actor's actual height, including crouching. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
-		if (!Grid_StepCheckFlyingDirections(step, actorSize, pos, toPos, dir)) {
+		if (!Grid_StepCheckFlyingDirections(step, pos, toPos, dir)) {
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!Grid_StepCheckWalkingDirections(step, actorSize, path, pos, toPos, dir, exclude)) {
+		if (!Grid_StepCheckWalkingDirections(step, path, pos, toPos, dir, exclude)) {
 			return;
 		}
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
-		if (!Grid_StepCheckVerticalDirections(step, actorSize, pos, dir)) {
+		if (!Grid_StepCheckVerticalDirections(step, pos, dir)) {
 			return;
 		}
 	}
