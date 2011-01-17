@@ -1059,55 +1059,6 @@ static void testHospital (void)
 
 	base->founded = qfalse;
 }
-#define B_NOTBLOCKED(base, col, row) ((base)->map[(col)][(row)].building == NULL && !(base)->map[(col)][(row)].blocked)
-static void testBuildingDestroy (void)
-{
-	const vec2_t pos = {0, 0};
-	base_t *base;
-	int i;
-	const building_t *buildingTemplate;
-	building_t *buildingLeft, *buildingMiddle, *buildingRight;
-
-	ResetCampaignData();
-
-	ccs.campaignStats.basesBuilt = 1;
-
-	base = CreateBase("unittestbuildingdestroy", pos);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
-
-	/* search a free spot, because the mandatory buildings are placed randomly */
-	for (i = 0; i < BASE_SIZE; i++) {
-		if (B_NOTBLOCKED(base, i, 0) && B_NOTBLOCKED(base, i, 1) && B_NOTBLOCKED(base, i, 2)) {
-			break;
-		}
-	}
-
-	CU_ASSERT_NOT_EQUAL_FATAL(i, BASE_SIZE);
-
-	/* build three powerplants in a row */
-	buildingTemplate = B_GetBuildingTemplate("building_powerplant");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingTemplate);
-	buildingLeft = B_SetBuildingByClick(base, buildingTemplate, i, 0);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingLeft);
-	buildingMiddle = B_SetBuildingByClick(base, buildingTemplate, i, 1);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingMiddle);
-	buildingRight = B_SetBuildingByClick(base, buildingTemplate, i, 2);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingRight);
-
-	/* the one in the middle should not be destroyable, as it's the only connection
-	 * between the left and the right tile */
-	/* note: this is fatal because the removal of the building would move the memory and
-	 * the right and middle pointers would not longe be valid */
-	CU_ASSERT_FALSE_FATAL(B_BuildingDestroy(buildingMiddle));
-	CU_ASSERT_TRUE(B_BuildingDestroy(buildingRight));
-	/* now it should be destroyable, as the right tile is already destroyed */
-	CU_ASSERT_TRUE(B_BuildingDestroy(buildingMiddle));
-
-	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
-
-	base->founded = qfalse;
-}
 
 static void testBuildingConstruction (void)
 {
@@ -1176,6 +1127,24 @@ static void testBuildingConstruction (void)
 	/* try build other building (now it should succeed) */
 	building2 = B_SetBuildingByClick(base, buildingTemplate, y, x);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(building2);
+
+	/* try to destroy the second (should success) */
+	CU_ASSERT_TRUE(B_BuildingDestroy(building2));
+	/* rebuild */
+	building2 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(building2);
+
+	/* try to destroy the first (should fail) */
+	CU_ASSERT_FALSE(B_BuildingDestroy(building1));
+	/* build up the second */
+	ccs.date.day += building2->buildTime;
+	B_UpdateBaseData();
+	/* try to destroy the first (should fail) */
+	CU_ASSERT_FALSE(B_BuildingDestroy(building1));
+	/* try to destroy the second (should succeess) */
+	CU_ASSERT_TRUE(B_BuildingDestroy(building2));
+	/* try to destroy the first (should succeed) */
+	CU_ASSERT_TRUE(B_BuildingDestroy(building1));
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
@@ -1276,9 +1245,6 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testHospital) == NULL)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(campaignSuite, testBuildingDestroy) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testBuildingConstruction) == NULL)
