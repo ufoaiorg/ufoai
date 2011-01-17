@@ -48,31 +48,39 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
-typedef qboolean (*tileCondition_t) (const baseBuildingTile_t *);
+typedef enum tileStatus_e {
+	TILE_EMPTY,			/**< tile cannot be accessed (blocked / no building) */
+	TILE_NODE,			/**< tile can be accessed but doesn't connect other tiles (unfinished building) */
+	TILE_ACTIVENODE		/**< tile can be accessed and connect other tiles (free space / finished building) */
+} tileStatus_t;
+
+typedef tileStatus_t (*tileCondition_t) (const baseBuildingTile_t *);
 
 /**
  * @brief Condition Function for B_BuildTileGraph for Non Blocked base tiles
  * @param[in] tile Pointer to the base Building Tile to check
  */
-static qboolean B_NonBlockedTileCondition (const baseBuildingTile_t *tile)
+static tileStatus_t B_NonBlockedTileCondition (const baseBuildingTile_t *tile)
 {
-	return !tile->blocked;
+	return tile->blocked ? TILE_EMPTY : TILE_ACTIVENODE;
 }
 
 /**
  * @brief Condition Function for B_BuildTileGraph for Built base tiles
  * @param[in] tile Pointer to the base Building Tile to check
  */
-static qboolean B_BuiltTileCondition (const baseBuildingTile_t *tile)
+static tileStatus_t B_BuiltTileCondition (const baseBuildingTile_t *tile)
 {
 	const building_t *building = tile->building;
-	return building != NULL && B_IsBuildingBuiltUp(building);
+	if (!building)
+		return TILE_EMPTY;
+	return B_IsBuildingBuiltUp(building) ? TILE_ACTIVENODE : TILE_NODE;
 }
 
 /**
  * @brief Builds up the traversal graph for base Tiles
  * @param[in] base Pointer to the base to build for
- * @param[in] B_TileCondition Boolean Function reference to decide if the node is exist
+ * @param[in] condition Boolean Function reference to decide if the node is exist
  * @param[out] graph Linked list array of the traversal graph
  * @note graph should be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
  */
@@ -87,11 +95,14 @@ static void B_BuildTileGraph (base_t *base, tileCondition_t condition, linkedLis
 			baseBuildingTile_t *tile = &base->map[y][x];
 			int listNum = y * BASE_SIZE + x;
 
-			if (!condition(tile))
+			if (condition(tile) == TILE_EMPTY)
 				continue;
 
 			/* self */
 			LIST_AddPointer(&graph[listNum], (void*)tile);
+
+			if (condition(tile) == TILE_NODE)
+				continue;
 			/* west */
 			if (x - 1 >= 0 && condition(&base->map[y][x - 1])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y][x - 1]))
@@ -127,40 +138,75 @@ static void B_BuildTileGraph (base_t *base, tileCondition_t condition, linkedLis
 /**
  * @brief Add tile to base Tiles traversal graph
  * @param[in] base Pointer to the base to build for
+ * @param[in] condition Boolean Function reference to decide if the node is exist
  * @param[in,out] graph Linked list array of the traversal graph
  * @param[in] tile Pointer to the new buildingtile
  * @note graph should be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
  */
-static void B_TileGraphAdd (base_t *base, linkedList_t *graph[], baseBuildingTile_t *tile)
+static void B_TileGraphAdd (base_t *base, tileCondition_t condition, linkedList_t *graph[], baseBuildingTile_t *tile)
 {
 	int x = tile->posX;
 	int y = tile->posY;
 	int listNum = y * BASE_SIZE + x;
+
+	/* self */
+	LIST_AddPointer(&graph[listNum], (void*)tile);
+
+	/* west */
+	if (x - 1 >= 0 && condition(&base->map[y][x - 1]) == TILE_ACTIVENODE) {
+		if (!LIST_GetPointer(graph[listNum], &base->map[y][x - 1]))
+			LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
+		if (!LIST_GetPointer(graph[listNum - 1], tile))
+			LIST_AddPointer(&graph[listNum - 1], (void*)tile);
+	}
+	/* east */
+	if (x + 1 < BASE_SIZE && condition(&base->map[y][x + 1]) == TILE_ACTIVENODE) {
+		if (!LIST_GetPointer(graph[listNum], &base->map[y][x + 1]))
+			LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
+		if (!LIST_GetPointer(graph[listNum + 1], tile))
+			LIST_AddPointer(&graph[listNum + 1], (void*)tile);
+	}
+	/* north */
+	if (y - 1 >= 0 && condition(&base->map[y - 1][x]) == TILE_ACTIVENODE) {
+		if (!LIST_GetPointer(graph[listNum], &base->map[y - 1][x]))
+			LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
+		if (!LIST_GetPointer(graph[listNum - BASE_SIZE], tile))
+			LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
+	}
+	/* south */
+	if (y + 1 < BASE_SIZE && condition(&base->map[y + 1][x]) == TILE_ACTIVENODE) {
+		if (!LIST_GetPointer(graph[listNum], &base->map[y + 1][x]))
+			LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
+		if (!LIST_GetPointer(graph[listNum + BASE_SIZE], tile))
+			LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
+	}
+#if 0
 
 	if (!LIST_IsEmpty(graph[listNum]))
 		return;
 	/* self */
 	LIST_AddPointer(&graph[listNum], (void*)tile);
 	/* west */
-	if (x - 1 >= 0 && !LIST_IsEmpty(graph[listNum - 1])) {
+	if (x - 1 >= 0 && LIST_Count(graph[listNum - 1]) > 1) {
 		LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
 		LIST_AddPointer(&graph[listNum - 1], (void*)tile);
 	}
 	/* east */
-	if (x + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + 1])) {
+	if (x + 1 < BASE_SIZE && LIST_Count(graph[listNum + 1]) > 1) {
 		LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
 		LIST_AddPointer(&graph[listNum + 1], (void*)tile);
 	}
 	/* north */
-	if (y - 1 >= 0 && !LIST_IsEmpty(graph[listNum - BASE_SIZE])) {
+	if (y - 1 >= 0 && LIST_Count(graph[listNum - BASE_SIZE]) > 1) {
 		LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
 		LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
 	}
 	/* south */
-	if (y + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + BASE_SIZE])) {
+	if (y + 1 < BASE_SIZE && LIST_Count(graph[listNum + BASE_SIZE]) > 1) {
 		LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
 		LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
 	}
+#endif
 }
 
 /**
@@ -1497,9 +1543,9 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				tile.building = buildingNew;
 				tile.posX = col;
 				tile.posY = row;
-				B_TileGraphAdd(base, tileGraph, &tile);
+				B_TileGraphAdd(base, B_BuiltTileCondition, tileGraph, &tile);
 				if (buildingNew->needs)
-					B_TileGraphAdd(base, tileGraph, &tileNeeded);
+					B_TileGraphAdd(base, B_BuiltTileCondition, tileGraph, &tileNeeded);
 				if (!B_IsCoherent(tileGraph)) {
 					UI_Popup(_("Notice"), _("You must build next to existing buildings."));
 					return qfalse;
