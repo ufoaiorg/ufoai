@@ -69,10 +69,20 @@ static void R_DrawBox (const entity_t * e)
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
 		R_DrawBoundingBox(e->mins, e->maxs);
 	} else {
+#ifdef ANDROID
+		vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->origin[2],
+								e->oldorigin[0], e->origin[1], e->oldorigin[2],
+								e->origin[0], e->origin[1], e->oldorigin[2],
+								e->origin[0], e->oldorigin[1], e->origin[2],
+							};
+		glLineWidth(2.0f);
+		glVertexPointer(3, GL_FLOAT, 0, points);
+		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		glLineWidth(1.0f);
+#else
 		vec3_t upper, lower;
 		const float dx = e->oldorigin[0] - e->origin[0];
 		const float dy = e->oldorigin[1] - e->origin[1];
-
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		VectorCopy(e->origin, lower);
@@ -103,6 +113,7 @@ static void R_DrawBox (const entity_t * e)
 
 		glLineWidth(1.0f);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 	}
 
 	glEnable(GL_TEXTURE_2D);
@@ -133,6 +144,23 @@ static void R_DrawFloor (const entity_t * e)
 	dy = e->oldorigin[2];
 
 	upper[2] += dy;
+
+#ifdef ANDROID
+	vec_t points[3*4*2] = {	lower[0], lower[1], lower[2],
+							lower[0] + dx, lower[1], lower[2],
+							lower[0] + dx, lower[1] + dx, lower[2],
+							lower[0], lower[1] + dx, lower[2],
+							upper[0], upper[1], upper[2],
+							upper[0] + dx, upper[1], upper[2],
+							upper[0] + dx, upper[1] + dx, upper[2],
+							upper[0], upper[1] + dx, upper[2]
+						};
+	glLineWidth(2.0f);
+	glVertexPointer(3, GL_FLOAT, 0, points);
+	glDrawArrays(GL_LINE_LOOP, 0, 4);
+	glDrawArrays(GL_LINE_LOOP, 4, 4);
+	glLineWidth(1.0f);
+#else
 
 	glBegin(GL_QUAD_STRIP);
 	glVertex3fv(lower);
@@ -166,6 +194,7 @@ static void R_DrawFloor (const entity_t * e)
 	glVertex3fv(lower);
 	glVertex3fv(upper);
 	glEnd();
+#endif
 	glDisable(GL_LINE_SMOOTH);
 
 	glEnable(GL_TEXTURE_2D);
@@ -197,12 +226,22 @@ static void R_DrawArrow (const entity_t * e)
 
 	R_Color(color);
 
+#ifdef ANDROID
+	vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->oldorigin[2],
+							upper[0], upper[1], upper[2],
+							mid[0], mid[1], mid[2],
+							lower[0], lower[1], lower[2],
+						};
+	glVertexPointer(3, GL_FLOAT, 0, points);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+#else
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3fv(e->oldorigin);
 	glVertex3fv(upper);
 	glVertex3fv(mid);
 	glVertex3fv(lower);
 	glEnd();
+#endif
 
 	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
@@ -237,6 +276,17 @@ static void R_DrawEntityEffects (void)
 				R_BindTexture(e->deathTexture->texnum);
 			}
 
+#ifdef ANDROID
+			vec_t texcoord[2*4] = {	0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
+			glTexCoordPointer(2, GL_FLOAT, 0, texcoord);
+			vec_t points[3*4] = {	-18.0, 14.0, -28.5,
+									10.0, 14.0, -28.5,
+									10.0, -14.0, -28.5,
+									-18.0, -14.0, -28.5
+								};
+			glVertexPointer(3, GL_FLOAT, 0, points);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+#else
 			glBegin(GL_QUADS);
 			glTexCoord2f(0.0, 1.0);
 			glVertex3f(-18.0, 14.0, -28.5);
@@ -247,6 +297,7 @@ static void R_DrawEntityEffects (void)
 			glTexCoord2f(0.0, 0.0);
 			glVertex3f(-18.0, -14.0, -28.5);
 			glEnd();
+#endif
 		}
 
 		if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
@@ -268,6 +319,20 @@ static void R_DrawEntityEffects (void)
 
 			R_Color(color);
 
+#ifdef ANDROID
+			vec_t points[3*9] = {	10.0, 0.0, -27.0,
+									7.0, -7.0, -27.0,
+									0.0, -10.0, -27.0,
+									-7.0, -7.0, -27.0,
+									-10.0, 0.0, -27.0,
+									-7.0, 7.0, -27.0,
+									0.0, 10.0, -27.0,
+									7.0, 7.0, -27.0,
+									10.0, 0.0, -27.0
+								};
+			glVertexPointer(3, GL_FLOAT, 0, points);
+			glDrawArrays(GL_LINE_STRIP, 0, 9);
+#else
 			/* circle points */
 			glBegin(GL_LINE_STRIP);
 			glVertex3f(10.0, 0.0, -27.0);
@@ -280,7 +345,7 @@ static void R_DrawEntityEffects (void)
 			glVertex3f(7.0, 7.0, -27.0);
 			glVertex3f(10.0, 0.0, -27.0);
 			glEnd();
-
+#endif
 			glDisable(GL_LINE_SMOOTH);
 			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_DEPTH_TEST);
@@ -440,6 +505,25 @@ static void R_DrawNullModel (const entity_t *e)
 	glPushMatrix();
 	glMultMatrixf(e->transform.matrix);
 
+#ifdef ANDROID
+	vec_t points[3*6] = { 0, 0, -16 };
+	for (i = 0; i <= 4; i++) {
+		points[i*3+3] = 16 * cos(i * (M_PI / 2));
+		points[i*3+4] = 16 * sin(i * (M_PI / 2));
+		points[i*3+5] = 0;
+	}
+	glVertexPointer(3, GL_FLOAT, 0, points);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
+	vec_t points2[3*6] = { 0, 0, 16 };
+	for (i = 4; i >= 0; i--) {
+		points2[i*3+3] = 16 * cos(i * (M_PI / 2));
+		points2[i*3+4] = 16 * sin(i * (M_PI / 2));
+		points2[i*3+5] = 0;
+	}
+	glVertexPointer(3, GL_FLOAT, 0, points2);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+#else
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3f(0, 0, -16);
 	for (i = 0; i <= 4; i++)
@@ -451,7 +535,7 @@ static void R_DrawNullModel (const entity_t *e)
 	for (i = 4; i >= 0; i--)
 		glVertex3f(16 * cos(i * (M_PI / 2)), 16 * sin(i * (M_PI / 2)), 0);
 	glEnd();
-
+#endif
 	glPopMatrix();
 
 	R_EnableTexture(&texunit_diffuse, qtrue);

@@ -43,4 +43,6 @@ typedef char GLchar;
 #define GL_COLOR_ATTACHMENT0_EXT							GL_COLOR_ATTACHMENT0_OES
 #define GL_DEPTH_ATTACHMENT_EXT								GL_DEPTH_ATTACHMENT_OES
 
+#define glOrtho												glOrthof
+
 #endif

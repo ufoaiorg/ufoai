@@ -168,7 +168,12 @@ void R_DrawChars (void)
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, r_char_arrays.texcoords);
 	glVertexPointer(2, GL_SHORT, 0, r_char_arrays.verts);
 
+#ifdef ANDROID
+	for(int i = 0; i < r_char_arrays.vert_index / 8; i++)
+		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
+#else
 	glDrawArrays(GL_QUADS, 0, r_char_arrays.vert_index / 2);
+#endif
 
 	r_char_arrays.color_index = 0;
 	r_char_arrays.texcoord_index = 0;
@@ -242,7 +247,12 @@ void R_DrawFills (void)
 	R_BindArray(GL_COLOR_ARRAY, GL_UNSIGNED_BYTE, r_fill_arrays.colors);
 	glVertexPointer(2, GL_SHORT, 0, r_fill_arrays.verts);
 
+#ifdef ANDROID
+	for(int i = 0; i < r_fill_arrays.vert_index / 8; i++)
+		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
+#else
 	glDrawArrays(GL_QUADS, 0, r_fill_arrays.vert_index / 2);
+#endif
 
 	/* and restore them */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -380,7 +390,11 @@ const image_t *R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4
 	if (image != NULL)
 		R_BindTexture(image->texnum);
 
+#ifdef ANDROID
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+#else
 	glDrawArrays(GL_QUADS, 0, 4);
+#endif
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
@@ -414,8 +428,10 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 
 	glDisable(GL_TEXTURE_2D);
 	glLineWidth(lineWidth);
+#ifndef ANDROID
 	glLineStipple(2, pattern);
 	glEnable(GL_LINE_STIPPLE);
+#endif
 
 	glBegin(GL_LINE_LOOP);
 	glVertex2f(nx, ny);
@@ -426,7 +442,9 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 
 	glEnable(GL_TEXTURE_2D);
 	glLineWidth(1.0f);
+#ifndef ANDROID
 	glDisable(GL_LINE_STIPPLE);
+#endif
 
 	R_Color(NULL);
 }
