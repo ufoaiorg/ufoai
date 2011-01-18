@@ -34,6 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <locale.h>
 #include <signal.h>
 #include <dirent.h>
+#ifdef ANDROID
+#include <android/log.h>
+extern void launch_android_debugger();
+#endif
 
 #include "../../common/common.h"
 #include "../system.h"
@@ -107,6 +111,10 @@ void Sys_Error (const char *error, ...)
 	va_start(argptr,error);
 	Q_vsnprintf(string, sizeof(string), error, argptr);
 	va_end(argptr);
+
+#ifdef ANDROID
+	__android_log_print(ANDROID_LOG_FATAL, "UFOAI", "Error: %s", string);
+#endif
 
 	fprintf(stderr, "Error: %s\n", string);
 
@@ -443,6 +451,10 @@ void Sys_Backtrace (void)
 #ifdef HAVE_LINK_H
 	fprintf(stderr, "Loaded libraries:\n");
 	dl_iterate_phdr(Sys_BacktraceLibsCallback, NULL);
+#endif
+
+#ifdef ANDROID
+	launch_android_debugger();
 #endif
 
 #ifdef HAVE_SYS_UTSNAME_H

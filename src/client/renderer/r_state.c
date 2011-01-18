@@ -40,7 +40,11 @@ qboolean R_SelectTexture (gltexunit_t *texunit)
 		return qtrue;
 
 	/* not supported */
+#ifdef ANDROID
+	if (texunit->texture >= r_config.maxTextureCoords + GL_TEXTURE0)
+#else
 	if (texunit->texture >= r_config.maxTextureCoords + GL_TEXTURE0_ARB)
+#endif
 		return qfalse;
 
 	r_state.active_texunit = texunit;
@@ -538,7 +542,8 @@ void R_EnableFog (qboolean enable)
 
 void R_EnableGlowMap (const image_t *image, qboolean enable)
 {
-	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
+#ifndef ANDROID
+	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT; // Not supported in GLES
 
 	if (!r_postprocess->integer)
 		return;
@@ -572,10 +577,12 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 		else
 			R_DrawBuffers(1);
 	}
+#endif
 }
 
 void R_EnableDrawAsGlow (qboolean enable)
 {
+#ifndef ANDROID
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
 	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
@@ -594,6 +601,7 @@ void R_EnableDrawAsGlow (qboolean enable)
 			R_DrawBuffers(1);
 		}
 	}
+#endif
 }
 
 void R_EnableSpecularMap (const image_t *image, qboolean enable)
@@ -629,9 +637,9 @@ void R_EnableRoughnessMap (const image_t *image, qboolean enable)
 /**
  * @sa R_Setup3D
  */
-static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
+static void MYgluPerspective (GLfloat zNear, GLfloat zFar)
 {
-	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) viddef.context.height / viddef.context.width;
+	GLfloat xmin, xmax, ymin, ymax, yaspect = (float) viddef.context.height / viddef.context.width;
 
 	if (r_isometric->integer) {
 		glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
@@ -762,7 +770,9 @@ void R_SetDefaultState (void)
 
 	glClearColor(0, 0, 0, 0);
 
+#ifndef ANDROID
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 
 	/* setup vertex array pointers */
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -782,7 +792,11 @@ void R_SetDefaultState (void)
 	/* setup texture units */
 	for (i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
 		gltexunit_t *tex = &r_state.texunits[i];
+#ifdef ANDROID
+		tex->texture = GL_TEXTURE0 + i;
+#else
 		tex->texture = GL_TEXTURE0_ARB + i;
+#endif
 
 		R_EnableTexture(tex, qtrue);
 
@@ -840,6 +854,6 @@ void R_Color (const vec4_t rgba)
 	else
 		color = color_white;
 
-	glColor4fv(color);
+	glColor4f(color[0], color[1], color[2], color[3]);
 	R_CheckError();
 }

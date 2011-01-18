@@ -70,6 +70,7 @@ static void R_DrawBox (const entity_t * e)
 		R_DrawBoundingBox(e->mins, e->maxs);
 	} else {
 #ifdef ANDROID
+		// TODO: most probably incorrect
 		vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->origin[2],
 								e->oldorigin[0], e->origin[1], e->oldorigin[2],
 								e->origin[0], e->origin[1], e->oldorigin[2],
@@ -146,6 +147,7 @@ static void R_DrawFloor (const entity_t * e)
 	upper[2] += dy;
 
 #ifdef ANDROID
+	// TODO: most probably incorrect
 	vec_t points[3*4*2] = {	lower[0], lower[1], lower[2],
 							lower[0] + dx, lower[1], lower[2],
 							lower[0] + dx, lower[1] + dx, lower[2],
@@ -227,6 +229,7 @@ static void R_DrawArrow (const entity_t * e)
 	R_Color(color);
 
 #ifdef ANDROID
+	// TODO: most probably incorrect
 	vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->oldorigin[2],
 							upper[0], upper[1], upper[2],
 							mid[0], mid[1], mid[2],

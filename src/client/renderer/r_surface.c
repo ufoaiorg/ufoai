@@ -133,7 +133,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
  */
 static inline void R_DrawSurface (const mBspSurface_t *surf)
 {
-	glDrawArrays(GL_POLYGON, surf->index, surf->numedges);
+	glDrawArrays(GL_TRIANGLE_FAN, surf->index, surf->numedges);
 
 	if (r_showbox->integer == 2)
 		R_DrawBoundingBox(surf->mins, surf->maxs);

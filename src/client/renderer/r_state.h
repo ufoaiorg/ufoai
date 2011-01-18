@@ -32,7 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_light.h"
 
 /* vertex arrays are used for many things */
+#ifdef ANDROID
+/* TODO: check whether will it crash like that */
+#define MAX_GL_ARRAY_LENGTH 0x4000
+#else
 #define MAX_GL_ARRAY_LENGTH 0x40000
+#endif
+
 extern const vec2_t default_texcoords[4];
 
 /** @brief texunits maintain multitexture state */
@@ -74,6 +80,7 @@ typedef struct gltexunit_s {
 
 struct mAliasMesh_s;
 
+/* TODO: this struct takes up 36 Mb of static memory with MAX_GL_ARRAY_LENGTH set to 0x40000 */
 typedef struct rstate_s {
 	qboolean fullscreen;
 

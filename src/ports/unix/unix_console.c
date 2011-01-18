@@ -30,6 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/time.h>
+#ifdef ANDROID
+#include <android/log.h>
+#endif
 
 typedef struct {
 	uint32_t	cursor;
@@ -398,14 +401,15 @@ const char *Sys_ConsoleInput (void)
  */
 void Sys_ConsoleOutput (const char *string)
 {
+#ifdef ANDROID
+	__android_log_print(ANDROID_LOG_INFO, "UFOAI", "%s", string);
+#else
 	/* BUG: for some reason, NDELAY also affects stdout (1) when used on stdin (0). */
 	const int origflags = fcntl(STDOUT_FILENO, F_GETFL, 0);
 
 	Sys_ShowConsole(qfalse);
 
-#ifndef ANDROID
 	fcntl(STDOUT_FILENO, F_SETFL, origflags & ~FNDELAY);
-#endif
 	while (*string) {
 		const ssize_t written = write(STDOUT_FILENO, string, strlen(string));
 		if (written <= 0)
@@ -415,4 +419,5 @@ void Sys_ConsoleOutput (const char *string)
 	fcntl(STDOUT_FILENO, F_SETFL, origflags);
 
 	Sys_ShowConsole(qtrue);
+#endif
 }

@@ -89,7 +89,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 
 	/* draw day image */
 	R_BindTexture(gl->texnum);
-	glDrawArrays(GL_QUADS, 0, 4);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	/* draw night map */
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
@@ -115,7 +115,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		R_BindTexture(r_dayandnightTexture->texnum);
 
 		R_SelectTexture(&texunit_diffuse);
-		glDrawArrays(GL_QUADS, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 		R_SelectTexture(&texunit_lightmap);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_texcoords);
@@ -131,7 +131,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 
 		/* draw day image */
 		R_BindTexture(gl->texnum);
-		glDrawArrays(GL_QUADS, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	}
 
 	/* draw XVI image */
@@ -145,7 +145,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		R_EnableTexture(&texunit_lightmap, qtrue);
 		R_BindLightmapTexture(r_xviTexture->texnum);
 
-		glDrawArrays(GL_QUADS, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
@@ -153,7 +153,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 	/* draw radar image */
 	if (overlayRadar) {
 		R_BindTexture(r_radarTexture->texnum);
-		glDrawArrays(GL_QUADS, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	}
 
 	/* and restore them */
@@ -382,7 +382,12 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 	glTexCoordPointer(2, GL_FLOAT, 0, starFieldTexCoords);
 
 	/* draw the cube */
+#ifdef ANDROID
+	for( int ii = 0; ii < 6; ii++ )
+		glDrawArrays(GL_TRIANGLE_FAN, ii * 4, 4);
+#else
 	glDrawArrays(GL_QUADS, 0, 24);
+#endif
 
 	/* restore previous matrix */
 	glPopMatrix();
@@ -661,6 +666,17 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
  */
 static inline void R_DrawQuad (void)
 {
+#ifdef ANDROID
+	GLfloat texcoord[2*4] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
+	glTexCoordPointer(2, GL_FLOAT, 0, texcoord);
+	GLfloat points[2*4] = {	0.0, 0.0,
+							fbo_render->width, 0.0,
+							fbo_render->width, fbo_render->height,
+							0.0, fbo_render->height
+						};
+	glVertexPointer(2, GL_FLOAT, 0, points);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+#else
 	glBegin(GL_QUADS);
 	glTexCoord2i(0, 1);
 	glVertex2i(0, 0);
@@ -671,6 +687,7 @@ static inline void R_DrawQuad (void)
 	glTexCoord2i(0, 0);
 	glVertex2i(0, fbo_render->height);
 	glEnd();
+#endif
 }
 
 /**
@@ -726,7 +743,9 @@ void R_DrawBloom (void)
 
 	/* save state, then set up for blit-style rendering to quads */
 	renderBufferState = R_RenderbufferEnabled();
+#ifndef ANDROID
 	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
+#endif
 	glMatrixMode(GL_TEXTURE);
 	glPushMatrix();
 	glLoadIdentity();
@@ -794,7 +813,9 @@ void R_DrawBloom (void)
 	glPopMatrix();
 	glMatrixMode(GL_TEXTURE);
 	glPopMatrix();
+#ifndef ANDROID
 	glPopAttrib();
+#endif
 	R_CheckError();
 
 	/* reset renderbuffer state to what it was before */

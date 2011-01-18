@@ -348,7 +348,8 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		/* no mipmapping for these images - just use GL_NEAREST here to not waste memory */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		R_TextureConvertNativePixelFormat(data, scaledWidth, scaledHeight, 1);
+		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, data);
 		return;
 	}
 
@@ -372,10 +373,12 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 			R_CheckError();
 		}
+#ifndef ANDROID
 		if (r_texture_lod->integer && r_config.lod_bias) {
 			glTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 			R_CheckError();
 		}
+#endif
 	} else {
 		if (r_config.anisotropic) {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
@@ -393,7 +396,8 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		R_CheckError();
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	R_TextureConvertNativePixelFormat(scaled, scaledWidth, scaledHeight, 1);
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, scaled);
 	R_CheckError();
 
 	if (scaled != data)
@@ -757,6 +761,14 @@ void R_TextureMode (const char *string)
 	}
 }
 
+#ifdef ANDROID
+void R_TextureSolidMode (const char *string)
+{
+}
+void R_TextureAlphaMode (const char *string)
+{
+}
+#else
 typedef struct {
 	const char *name;
 	int mode;
@@ -828,3 +840,4 @@ void R_TextureSolidMode (const char *string)
 
 	Com_Printf("bad solid texture mode name (%s)\n", string);
 }
+#endif

@@ -489,7 +489,7 @@ static void CM_MakeTracingNodes (mapTile_t *tile)
 static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *base, const char *name, const lump_t * l, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
-	static routing_t tempMap[ACTOR_MAX_SIZE];
+	routing_t *tempMap = (routing_t *)malloc(sizeof(routing_t) * ACTOR_MAX_SIZE);
 	const byte *source;
 	int length;
 	int x, y, z, size, dir;
@@ -497,7 +497,10 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 	int maxX, maxY, maxZ;
 	unsigned int i;
 	double start, end;
-	const int targetLength = sizeof(tile->wpMins) + sizeof(tile->wpMaxs) + sizeof(tempMap);
+	const int targetLength = sizeof(tile->wpMins) + sizeof(tile->wpMaxs) + sizeof(routing_t) * ACTOR_MAX_SIZE;
+
+	if(!tempMap)
+		Com_Error(ERR_DROP, "Failed to allocate %d bytes, the CMod_LoadRouting() function should be rewritten to eat less RAM", sizeof(routing_t) * ACTOR_MAX_SIZE);
 
 	start = time(NULL);
 
@@ -593,6 +596,8 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 
 	end = time(NULL);
 	Com_DPrintf(DEBUG_ROUTING, "Loaded routing for tile %s in %5.1fs\n", name, end - start);
+
+	free(tempMap);
 }
 
 

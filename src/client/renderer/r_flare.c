@@ -105,7 +105,12 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 
 		/* bind the flare's texture */
 		if (f->image != image) {
+#ifdef ANDROID
+			for(int ii = 0; ii < l / 3 / 4; ii++)
+				glDrawArrays(GL_TRIANGLE_FAN, ii * 4, 4);
+#else
 			glDrawArrays(GL_QUADS, 0, l / 3);
+#endif
 			j = k = l = 0;
 
 			image = f->image;
@@ -174,7 +179,12 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 		l += sizeof(vec3_t) / sizeof(vec_t) * 4;
 	}
 
+#ifdef ANDROID
+	for(int ii = 0; ii < l / 3 / 4; ii++)
+		glDrawArrays(GL_TRIANGLE_FAN, ii * 4, 4);
+#else
 	glDrawArrays(GL_QUADS, 0, l / 3);
+#endif
 
 	glEnable(GL_DEPTH_TEST);
 

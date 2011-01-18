@@ -203,8 +203,13 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	buf->nTextures = ntextures;
 	buf->textures = (unsigned int *)Mem_Alloc(sizeof(unsigned int) * ntextures);
 
+#ifdef ANDROID
+	buf->pixelFormat = GL_RGBA;
+	buf->byteFormat = GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA; /* GL_UNSIGNED_SHORT_5_5_5_1 will give 1-bit alpha but more colorspace */
+#else
 	buf->pixelFormat = halfFloat ? GL_RGBA16F_ARB : GL_RGBA8;
 	buf->byteFormat = halfFloat ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
+#endif
 
 	for (i = 0; i < buf->nTextures; i++) {
 		buf->textures[i] = R_GetFreeFBOTexture();

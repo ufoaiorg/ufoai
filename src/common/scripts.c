@@ -479,8 +479,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	*writtenBytes = 0;
 
 #ifdef DEBUG
-	if (b != Com_AlignPtr(b, type))
-		Com_Printf("Wrong alignment: %08X %08X type:%d size:%d\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+	if (b != Com_AlignPtr(b, type)) {
+		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T" - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+		Sys_Backtrace();
+	}
 #endif
 
 	if (size) {
@@ -945,6 +947,13 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 #endif
 	}
 
+#ifdef DEBUG
+	if (b != Com_AlignPtr(b, type)) {
+		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T" - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+		Sys_Backtrace();
+	}
+#endif
+
 	switch (type) {
 	case V_NULL:
 		return 0;
@@ -1162,6 +1171,13 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	const byte *b;
 
 	b = (const byte *) base + ofs;
+
+#ifdef DEBUG
+	if (b != Com_AlignPtr(b, type)) {
+		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T" - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+		Sys_Backtrace();
+	}
+#endif
 
 	switch (type) {
 	case V_NULL:

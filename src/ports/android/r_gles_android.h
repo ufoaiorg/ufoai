@@ -27,8 +27,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
-#define APIENTRY
+#define GL_NATIVE_TEXTURE_PIXELFORMAT_SOLID GL_UNSIGNED_SHORT_5_6_5
+#define GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA GL_UNSIGNED_SHORT_4_4_4_4
+
 typedef char GLchar;
+
+#ifndef APIENTRY
+#define APIENTRY
+#endif
+
 #define GL_FRAMEBUFFER_EXT									GL_FRAMEBUFFER_OES
 #define GL_FRAMEBUFFER_COMPLETE_EXT							GL_FRAMEBUFFER_COMPLETE_OES
 #define GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT			GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES
@@ -42,7 +49,31 @@ typedef char GLchar;
 #define GL_MAX_RENDERBUFFER_SIZE_EXT						GL_MAX_RENDERBUFFER_SIZE_OES
 #define GL_COLOR_ATTACHMENT0_EXT							GL_COLOR_ATTACHMENT0_OES
 #define GL_DEPTH_ATTACHMENT_EXT								GL_DEPTH_ATTACHMENT_OES
+#define GL_DEPTH_COMPONENT									GL_DEPTH_COMPONENT16_OES
+
+#ifndef GL_CLAMP
+#define GL_CLAMP											GL_CLAMP_TO_EDGE /* Not exactly GL_CLAMP but very close */
+#endif
 
 #define glOrtho												glOrthof
+#define glFrustum											glFrustumf
+#define glFogi												glFogx
+#define glDepthRange										glDepthRangef
+
+#define glTranslated( X, Y, Z )								glTranslatex( (X)*0x10000, (Y)*0x10000, (Z)*0x10000 )
+
+/* GLES 2 defines for shaders */
+#define GL_COMPILE_STATUS                   0x8B81
+#define GL_LINK_STATUS                      0x8B82
+#define GL_FRAGMENT_SHADER                  0x8B30
+#define GL_VERTEX_SHADER                    0x8B31
+#define GL_SHADING_LANGUAGE_VERSION         0x8B8C
+#define GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS   0x8B4C
+#define GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS
+#define GL_MAX_VERTEX_ATTRIBS               0x8869
+#define GL_MAX_TEXTURE_COORDS               GL_MAX_TEXTURE_UNITS
+#define GL_MAX_VARYING_VECTORS              0x8DFC
+#define GL_MAX_FRAGMENT_UNIFORM_VECTORS     0x8DFD
+#define GL_MAX_VERTEX_UNIFORM_VECTORS       0x8DFB
 
 #endif

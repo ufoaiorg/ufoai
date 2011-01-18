@@ -135,6 +135,7 @@ void R_DrawEntities(void);
 void R_DrawInitLocal(void);
 void R_DrawParticles(void);
 void R_SetupFrustum(void);
+void R_TextureConvertNativePixelFormat(void * pixels, int w, int h, int alphaUsed);
 
 typedef enum {
 	GLHW_GENERIC,

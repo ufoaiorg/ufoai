@@ -358,7 +358,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 		}
 	}
 
-	glDrawArrays(GL_POLYGON, 0, i);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, i);
 
 	R_CheckError();
 }
@@ -398,7 +398,9 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
 
+#ifndef ANDROID
 	glEnable(GL_POLYGON_OFFSET_LINE);
+#endif
 	glPolygonOffset(-1.f, -1.f);
 
 	glMatrixMode(GL_TEXTURE);  /* some stages will manipulate texcoords */
@@ -428,7 +430,9 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	/* polygon offset parameters */
 	glPolygonOffset(0.0, 0.0);
+#ifndef ANDROID
 	glDisable(GL_POLYGON_OFFSET_LINE);
+#endif
 
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);

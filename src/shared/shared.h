@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef HAVE_CONFIG_H
 # ifdef ANDROID
-#  include "config_android.h"
+#  include "../ports/android/config_android.h"
 # else
 #  include "../../config.h"
 # endif

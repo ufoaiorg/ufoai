@@ -102,6 +102,7 @@ typedef enum {
 /**
  * @brief Struct that is only valid for one map. It's deleted on every map load.
  */
+/* TODO: this struct takes up 53 Mb of static memory */
 typedef struct {
 	server_state_t state;		/**< precache commands are only valid during load */
 
@@ -231,5 +232,7 @@ const char *SV_GetFootstepSound(const char *texture);
 float SV_GetBounceFraction(const char *texture);
 qboolean SV_LoadModelMinsMaxs(const char *model, int frame, vec3_t mins, vec3_t maxs);
 trace_t SV_Trace(const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passedict, int contentmask);
+server_state_t SV_GetServerState(void);
+void SV_SetServerState(server_state_t);
 
 #endif /* SERVER_SERVER_H */

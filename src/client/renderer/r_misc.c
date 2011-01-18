@@ -244,3 +244,9 @@ void R_PopMatrix (void)
 {
 	glPopMatrix();
 }
+
+#ifndef ANDROID
+void R_TextureConvertNativePixelFormat(void * pixels, int w, int h, int alphaUsed)
+{
+}
+#endif

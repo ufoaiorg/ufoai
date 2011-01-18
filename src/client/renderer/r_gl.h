@@ -27,9 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __R_GL_H__
 
 #ifdef ANDROID
-#include "r_gles_android.h"
+#include "../../ports/android/r_gles_android.h"
 #else
 #include <SDL_opengl.h>
+#define GL_NATIVE_TEXTURE_PIXELFORMAT_SOLID GL_UNSIGNED_BYTE
+#define GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA GL_UNSIGNED_BYTE
 #endif
 
 /* internally defined convenience constant */
@@ -98,7 +100,6 @@ void (APIENTRY *qglFramebufferRenderbufferEXT) (GLenum, GLenum, GLenum, GLuint);
 void (APIENTRY *qglGetFramebufferAttachmentParameterivEXT) (GLenum, GLenum, GLenum, GLint *);
 void (APIENTRY *qglGenerateMipmapEXT) (GLenum);
 void (APIENTRY *qglDrawBuffers) (GLsizei, const GLenum *);
-
 
 
 /* multitexture */

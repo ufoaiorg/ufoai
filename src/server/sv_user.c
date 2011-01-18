@@ -296,3 +296,13 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		break;
 	}
 }
+
+server_state_t SV_GetServerState(void)
+{
+	return sv.state;
+}
+
+void SV_SetServerState(server_state_t state)
+{
+	sv.state = state;
+}

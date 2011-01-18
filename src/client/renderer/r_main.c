@@ -235,6 +235,7 @@ void R_BeginFrame (void)
 	}
 
 	/* draw buffer stuff */
+#ifndef ANDROID
 	if (r_drawbuffer->modified) {
 		r_drawbuffer->modified = qfalse;
 
@@ -244,6 +245,7 @@ void R_BeginFrame (void)
 			glDrawBuffer(GL_BACK);
 		R_CheckError();
 	}
+#endif
 
 	/* texturemode stuff */
 	/* Realtime set level of anisotropy filtering and change texture lod bias */
@@ -286,8 +288,10 @@ void R_RenderFrame (void)
 	R_Setup3D();
 
 	/* activate wire mode */
+#ifndef ANDROID
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+#endif
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		int tile;
@@ -350,8 +354,10 @@ void R_RenderFrame (void)
 	R_DrawBoundingBoxes();
 
 	/* leave wire mode again */
+#ifndef ANDROID
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 
 	R_ResetArrayState();
 
@@ -639,6 +645,8 @@ qboolean R_SetMode (void)
 		if (!result)
 			return qfalse;
 		new = prev;
+		new.width = SDL_GetVideoSurface()->w;
+		new.height = SDL_GetVideoSurface()->h;
 	}
 
 	R_UpdateVidDef(&new);
@@ -718,6 +726,11 @@ static inline qboolean R_CheckExtension (const char *extension)
 	else
 		Com_Printf("%s not found\n", extension);
 
+#ifdef ANDROID
+	if(strcmp(extension, "GL_ARB_multitexture") == 0) /* Always present in GLES */
+		found = qtrue;
+#endif
+
 	return found;
 }
 
@@ -740,7 +753,17 @@ static qboolean R_InitExtensions (void)
 	int glVersionMinor;
 
 	/* Get OpenGL version.*/
-	sscanf(r_config.versionString, "%d.%d", &glVersionMajor, &glVersionMinor);
+	glVersionMajor = 1;
+	glVersionMinor = 0;
+	if(sscanf(r_config.versionString, "%d.%d", &glVersionMajor, &glVersionMinor) != 2) {
+		const char * versionNumbers = r_config.versionString; /* GLES reports version as "OpenGL ES 1.1", so we must skip non-numeric symbols first */
+		while(*versionNumbers && strchr("0123456789", *versionNumbers) == NULL) {
+			versionNumbers ++;
+		}
+		if( *versionNumbers )
+			sscanf(versionNumbers, "%d.%d", &glVersionMajor, &glVersionMinor);
+	}
+	Com_Printf("OpenGL version detected as: %d.%d", glVersionMajor, glVersionMinor);
 
 	/* multitexture */
 	qglActiveTexture = NULL;
@@ -809,6 +832,7 @@ static qboolean R_InitExtensions (void)
 		qglClientActiveTexture = (ClientActiveTexture_t)R_GetProcAddress("glClientActiveTexture");
 	}
 
+#ifndef ANDROID
 	if (R_CheckExtension("GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
 			Com_Printf("using GL_ARB_texture_compression\n");
@@ -821,6 +845,7 @@ static qboolean R_InitExtensions (void)
 			}
 		}
 	}
+#endif
 
 	if (R_CheckExtension("GL_ARB_texture_non_power_of_two")) {
 		if (r_ext_nonpoweroftwo->integer) {
@@ -893,12 +918,11 @@ static qboolean R_InitExtensions (void)
 		qglDisableVertexAttribArray = (DisableVertexAttribArray_t)R_GetProcAddress("glDisableVertexAttribArray");
 		qglVertexAttribPointer = (VertexAttribPointer_t)R_GetProcAddress("glVertexAttribPointer");
 	}
-
 	if (R_CheckExtension("GL_ARB_shading_language_100") || glVersionMajor >= 2) {
 		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0; it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0 then enable shaders as the implementation supports the shading language!*/
+		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %s\n", (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
 		sscanf((const char *)glGetString(GL_SHADING_LANGUAGE_VERSION), "%d%*1c%2s", &glslVersionMajor, glslVersionMinor);
 		snprintf(r_config.shadingLanguageGuaranteedVersion, sizeof(r_config.shadingLanguageGuaranteedVersion), "%d.%s", glslVersionMajor, glslVersionMinor);
-		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %s\n", (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
 	} else {
 		/* The shading language is not supported.*/
 		Com_Printf("GLSL shaders unsupported by OpenGL implementation.\n");
@@ -928,9 +952,14 @@ static qboolean R_InitExtensions (void)
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
 		 && qglCheckFramebufferStatusEXT) {
+#ifdef ANDROID
+			r_config.maxDrawBuffers = 1; /* GLES does not support multiple buffers or color attachments, only COLOR_ATTACHMENT0_OES is available */
+			r_config.maxColorAttachments = 1;
+#else
 			glGetIntegerv(GL_MAX_DRAW_BUFFERS, &r_config.maxDrawBuffers);
-			glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, &r_config.maxRenderbufferSize);
 			glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS_EXT, &r_config.maxColorAttachments);
+#endif
+			glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, &r_config.maxRenderbufferSize);
 
 			r_config.frameBufferObject = qtrue;
 
@@ -993,14 +1022,21 @@ static qboolean R_InitExtensions (void)
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &r_config.maxVertexAttribs);
 	Com_Printf("max vertex attributes: %i\n", r_config.maxVertexAttribs);
 
+#ifdef ANDROID
+	glGetIntegerv(GL_MAX_VARYING_VECTORS, &tmpInteger);
+	Com_Printf("max varying floats: %i\n", tmpInteger * 4);
+	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_VECTORS, &tmpInteger);
+	Com_Printf("max fragment uniform components: %i\n", tmpInteger * 4);
+	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_VECTORS, &tmpInteger);
+	Com_Printf("max vertex uniform components: %i\n", tmpInteger * 4);
+#else
 	glGetIntegerv(GL_MAX_VARYING_FLOATS, &tmpInteger);
 	Com_Printf("max varying floats: %i\n", tmpInteger);
-
 	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, &tmpInteger);
 	Com_Printf("max fragment uniform components: %i\n", tmpInteger);
-
 	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &tmpInteger);
 	Com_Printf("max vertex uniform components: %i\n", tmpInteger);
+#endif
 
 	/* reset gl error state */
 	R_CheckError();
@@ -1061,6 +1097,7 @@ static inline void R_EnforceVersion (void)
 
 	sscanf(r_config.versionString, "%d.%d.%d ", &maj, &min, &rel);
 
+#ifndef ANDROID
 	if (maj > 1)
 		return;
 
@@ -1078,6 +1115,7 @@ static inline void R_EnforceVersion (void)
 
 	if (rel < 1)
 		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.versionString);
+#endif
 }
 
 /**

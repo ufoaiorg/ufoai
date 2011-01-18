@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifdef DEDICATED_ONLY
+
 #include "../common/common.h"
 #include "../ports/system.h"
 
@@ -86,3 +88,5 @@ void Key_Init (void)
 {
 	Cmd_AddCommand("bind", Cmd_Dummy_f, NULL);
 }
+
+#endif
