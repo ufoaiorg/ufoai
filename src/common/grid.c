@@ -195,43 +195,6 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const actorSi
 	return qtrue;
 }
 
-/**
- * @brief Handle couching/uncrouching moves
- * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
- * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] len The total TUs needed to execute the move
- * @param[in] pos Current location in the map.
- * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
- * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @return false if we can't fly there
- */
-static qboolean Grid_StepCheckCrouchingDirections (step_t *step, pathing_t *path, byte len, const pos3_t pos, const int dir, byte *crouchingState)
-{
-	/* Can't stand up if standing. */
-	if (dir == DIRECTION_STAND_UP && *crouchingState == 0) {
-		return qfalse;
-	}
-	/* Can't stand up if there's not enough head room. */
-	if (dir == DIRECTION_STAND_UP && QuantToModel(Grid_Height(step->map, step->actorSize, pos)) >= PLAYER_STANDING_HEIGHT) {
-		return qfalse;
-	}
-	/* Can't get down if crouching. */
-	if (dir == DIRECTION_CROUCH && *crouchingState == 1) {
-		return qfalse;
-	}
-
-	/* Since we can toggle crouching, then do so. */
-	*crouchingState ^= 1;
-
-	/* Is this a better move into this cell? */
-	RT_AREA_TEST_POS(path, pos, *crouchingState);
-	if (RT_AREA_POS(path, pos, *crouchingState) <= len) {
-		return qfalse;	/* Toggling crouch is not optimum. */
-	}
-
-	return qtrue;
-}
 
 /**
  * @brief Calculate the cell the we end up in if moving in the give dir
@@ -276,7 +239,7 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPo
  * @param[in] exclude Exclude this position from the forbidden list check (the actor's pos)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const pos3_t exclude)
+static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState, const pos3_t exclude)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -293,6 +256,11 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, 
 	RT_CONN_TEST_POS(step->map, actorSize, pos, dir);
 	passageHeight = RT_CONN_POS(step->map, actorSize, pos, dir);
 	if (passageHeight < step->actorHeight) {
+#if 0
+		if (!crouchingState									/* not already crouching */
+		 && passageHeight < step->actorCrouchedHeight)		/* and passage is tall enough for crouching */
+		 && /* enough TUs ? */
+#endif
 		return qfalse;	/* Passage is not tall enough. */
 	}
 
@@ -498,18 +466,8 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	/* Now add the TUs needed to get to the originating cell. */
 	len += oldLen;
 
-	/* If this is a crouching or crouching move, then process that motion. */
+	/* If this is a crouching or crouching move, forget it. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
-		if (!Grid_StepCheckCrouchingDirections(step, path, len, pos, dir, &crouchingState)) {
-			return;
-		}
-
-		/* Store move. */
-		if (pqueue)
-			Grid_SetMoveData(path, pos, crouchingState, len, dir, z, crouchingState ^ 1, pqueue);
-
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i.\n", x, y, z, crouchingState, len);
-		/* We are done, exit now. */
 		return;
 	}
 
@@ -532,7 +490,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!Grid_StepCheckWalkingDirections(step, path, pos, toPos, dir, exclude)) {
+		if (!Grid_StepCheckWalkingDirections(step, path, pos, toPos, dir, crouchingState, exclude)) {
 			return;
 		}
 	} else {
@@ -620,6 +578,7 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	assert((from[2]) < PATHFINDING_HEIGHT);
 	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
 
+	/* set starting position to 0 TUs.*/
 	RT_AREA_POS(path, from, crouchingState) = 0;
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Start at (%i %i %i) c:%i\n", from[0], from[1], from[2], crouchingState);
