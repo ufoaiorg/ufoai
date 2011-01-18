@@ -450,8 +450,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	RT_AREA_TEST_POS(path, pos, crouchingState);
 	oldLen = RT_AREA_POS(path, pos, crouchingState);
 
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actorSize, dir, crouchingState, oldLen);
-
 	if (oldLen >= MAX_MOVELENGTH && oldLen != ROUTING_NOT_REACHABLE) {
 		return;		/* Exiting because the TUS needed to move here are already too large. */
 	}
@@ -477,8 +475,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	nx = toPos[0];
 	ny = toPos[1];
 	nz = toPos[2];
-
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i to (%i %i %i)\n", x, y, z, actorSize, nx, ny, nz);
 
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
@@ -529,7 +525,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	if (pqueue) {
 		Grid_SetMoveData(path, toPos, crouchingState, len, dir, z, crouchingState, pqueue);
 	}
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i\n", nx, ny, nz, crouchingState, len, RT_FLOOR(map, actorSize, x, y, z));
 }
 
 
