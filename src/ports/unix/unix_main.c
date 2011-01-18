@@ -96,7 +96,9 @@ void Sys_Error (const char *error, ...)
 #endif
 
 	/* change stdin to non blocking */
+#ifndef ANDROID
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+#endif
 
 #ifdef COMPILE_MAP
 	Mem_Shutdown();
@@ -125,7 +127,9 @@ void Sys_Quit (void)
 	Mem_Shutdown();
 #endif
 
+#ifndef ANDROID
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL, 0) & ~FNDELAY);
+#endif
 	exit(0);
 }
 

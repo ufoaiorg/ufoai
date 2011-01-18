@@ -15,7 +15,11 @@
 #include "../sound/s_music.h"
 
 #include <ogg/ogg.h>
+#ifdef ANDROID
+#include <tremor/ivorbiscodec.h>
+#else
 #include <vorbis/codec.h>
+#endif
 
 #ifdef HAVE_XVID_H
 #include <xvid.h>

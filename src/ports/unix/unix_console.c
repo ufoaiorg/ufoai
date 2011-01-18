@@ -403,7 +403,9 @@ void Sys_ConsoleOutput (const char *string)
 
 	Sys_ShowConsole(qfalse);
 
+#ifndef ANDROID
 	fcntl(STDOUT_FILENO, F_SETFL, origflags & ~FNDELAY);
+#endif
 	while (*string) {
 		const ssize_t written = write(STDOUT_FILENO, string, strlen(string));
 		if (written <= 0)

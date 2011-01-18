@@ -27,7 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SHARED_H
 
 #ifdef HAVE_CONFIG_H
-# include "../../config.h"
+# ifdef ANDROID
+#  include "config_android.h"
+# else
+#  include "../../config.h"
+# endif
 #endif
 
 #define MAX_VAR     64

@@ -201,8 +201,10 @@ void NET_vWriteFormat (struct dbuffer *buf, const char *format, va_list ap)
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
+	#ifndef ANDROID
 	if (!ap)
 		Com_Error(ERR_DROP, "WriteFormat: Too many arguments!");
+	#endif
 }
 
 /**
@@ -465,8 +467,10 @@ void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
+	#ifndef ANDROID
 	if (!ap)
 		Com_Error(ERR_DROP, "ReadFormat: Too many arguments!");
+	#endif
 }
 
 /**
