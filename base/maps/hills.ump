@@ -256,8 +256,25 @@ wv    +1     1vw
 0      hg     0
 }
 
+// filler with horisontal fence (desert version)
+tile +filler_1s3_d
+{
+3 3
+0      1f     0
+wv    +1     1vw
+0      hg     0
+}
+
 // filler for desert terrain
 tile +filler_1s4_d
+{
+3 3
+0      1f     0
+wv    +1     1vw
+0      hg     0
+}
+
+tile +filler_1s5
 {
 3 3
 0      1f     0
@@ -440,7 +457,7 @@ title "_UFO landed in hills area"
 fix +road_1c1 "4 0"
 
 +filler_1s2 "0 2"
-+filler_1s3 "1 2"
++filler_1s3_d "1 2"
 +filler_1s4_d "1 4"
 
 +filler_2s1 "0 10"
