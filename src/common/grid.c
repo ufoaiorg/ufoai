@@ -436,16 +436,10 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	step_t step_;
 	step_t *step = &step_;	/* temporary solution */
 	pos3_t toPos;
-	int x, y, z;
-	int nx, ny, nz;
 	byte len, oldLen;
 
 	if (!Grid_StepInit(step, map, actorSize, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
-
-	x = pos[0];
-	y = pos[1];
-	z = pos[2];
 
 	RT_AREA_TEST_POS(path, pos, crouchingState);
 	oldLen = RT_AREA_POS(path, pos, crouchingState);
@@ -472,10 +466,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	if (!Grid_StepCalcNewPos(step, pos, toPos, dir)) {
 		return;
 	}
-	nx = toPos[0];
-	ny = toPos[1];
-	nz = toPos[2];
-
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
 	 *  to the actor's actual height, including crouching. */
@@ -508,7 +498,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	/* nz can't move out of bounds */
 	if (toPos[2] >= PATHFINDING_HEIGHT)
 		toPos[2] = PATHFINDING_HEIGHT - 1;
-	nz = toPos[2];	/* get the potentially modified z value back into business */
 
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST_POS(path, toPos, crouchingState);
@@ -517,13 +506,13 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	}
 
 	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz)) {
+	if (Grid_CheckForbidden(exclude, actorSize, path, toPos[0],	toPos[1], toPos[2])) {
 		return;		/* That spot is occupied. */
 	}
 
 	/* Store move. */
 	if (pqueue) {
-		Grid_SetMoveData(path, toPos, crouchingState, len, dir, z, crouchingState, pqueue);
+		Grid_SetMoveData(path, toPos, crouchingState, len, dir, pos[2], crouchingState, pqueue);
 	}
 }
 
