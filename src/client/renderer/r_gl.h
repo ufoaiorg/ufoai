@@ -27,10 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __R_GL_H__
 
 #ifdef ANDROID
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#define APIENTRY
-typedef char GLchar;
+#include "r_gles_android.h"
 #else
 #include <SDL_opengl.h>
 #endif
