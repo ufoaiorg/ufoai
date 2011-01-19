@@ -176,12 +176,7 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const actorSi
 	step->actorCrouchedHeight = ModelCeilingToQuant((float)(PLAYER_CROUCHING_HEIGHT));
 
 	/* Ensure that dir is in bounds. */
-	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
-		return qfalse;
-
-	/* Directions 12, 14, and 15 are currently undefined. */
-	if (dir == 12 || dir == 14 || dir == 15)
-		return qfalse;
+	assert(dir < 0 || dir >= PATHFINDING_DIRECTIONS);
 
 	/* IMPORTANT: only fliers can use directions higher than NON_FLYING_DIRECTIONS. */
 	if (!step->flier && dir >= FLYING_DIRECTIONS) {
@@ -445,11 +440,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	if (crouchingState == 1)
 		TUsForMove *= TU_CROUCH_MOVING_FACTOR;
 
-	/* If this is a crouching or crouching move, forget it. */
-	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
-		return;
-	}
-
+	/* calculate the position we would normally end up if moving in the given dir. */
 	if (!Grid_StepCalcNewPos(step, pos, toPos, dir)) {
 		return;
 	}
@@ -571,6 +562,13 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
+			/* Directions 12, 14, and 15 are currently undefined. */
+			if (dir == 12 || dir == 14 || dir == 15)
+				continue;
+			/* If this is a crouching or crouching move, forget it. */
+			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
+				continue;
+
 			Grid_MoveMark(map, excludeFromForbiddenList, actorSize, path, pos, epos[3], dir, &pqueue);
 		}
 	}
