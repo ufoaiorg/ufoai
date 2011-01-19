@@ -433,17 +433,12 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	step_t step_;
 	step_t *step = &step_;	/* temporary solution */
 	pos3_t toPos;
-	byte len, oldLen;
+	byte len, TUsSoFar;
 
 	if (!Grid_StepInit(step, map, actorSize, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
 
-	RT_AREA_TEST_POS(path, pos, crouchingState);
-	oldLen = RT_AREA_POS(path, pos, crouchingState);
-
-	if (oldLen >= MAX_MOVELENGTH && oldLen != ROUTING_NOT_REACHABLE) {
-		return;		/* Exiting because the TUS needed to move here are already too large. */
-	}
+	TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
 
 	/* Find the number of TUs used to move in this direction. */
 	len = Grid_GetTUsForDirection(dir);
@@ -453,7 +448,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		len *= TU_CROUCH_MOVING_FACTOR;
 
 	/* Now add the TUs needed to get to the originating cell. */
-	len += oldLen;
+	len += TUsSoFar;
 
 	/* If this is a crouching or crouching move, forget it. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
@@ -566,17 +561,15 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 
 	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
+		byte TUsSoFar;
 		PQueuePop(&pqueue, epos);
 		VectorCopy(epos, pos);
 		count++;
 
-		/* for A*
-		if pos = goal
-			return pos
-		*/
 		/**< if reaching that square already took too many TUs,
 		 * don't bother to reach new squares *from* there. */
-		if (RT_AREA_POS(path, pos, crouchingState) >= distance)
+		TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
+		if (TUsSoFar >= distance || TUsSoFar >= MAX_MOVELENGTH)
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
