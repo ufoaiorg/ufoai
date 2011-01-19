@@ -158,6 +158,7 @@ typedef struct step_s {
  * @brief Initialize the step_t data
  * @param[in] step The struct describing the move
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
@@ -199,7 +200,6 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const actorSi
 /**
  * @brief Calculate the cell the we end up in if moving in the give dir
  * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
@@ -231,7 +231,6 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPo
  * First test for opening height availablilty. Then test for stepup compatibility. Last test for fall.
  * @note Fliers use this code only when they are walking.
  * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
@@ -340,7 +339,6 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, 
 /**
  * @brief Checks if we can move in the given flying direction
  * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
@@ -379,7 +377,6 @@ static qboolean Grid_StepCheckFlyingDirections (step_t *step, const pos3_t pos, 
 /**
  * @brief Checks if we can move in the given vertical direction
  * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't move there
