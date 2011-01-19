@@ -506,7 +506,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	}
 
 	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(exclude, actorSize, path, toPos[0],	toPos[1], toPos[2])) {
+	if (Grid_CheckForbidden(exclude, actorSize, path, toPos[0], toPos[1], toPos[2])) {
 		return;		/* That spot is occupied. */
 	}
 
