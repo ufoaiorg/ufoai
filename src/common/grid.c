@@ -433,22 +433,17 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	step_t step_;
 	step_t *step = &step_;	/* temporary solution */
 	pos3_t toPos;
-	byte len, TUsSoFar;
+	byte TUsSoFar, TUsForMove, TUsAfter;
 
 	if (!Grid_StepInit(step, map, actorSize, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
 
 	TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
-
-	/* Find the number of TUs used to move in this direction. */
-	len = Grid_GetTUsForDirection(dir);
-
+	/* Find the number of TUs used (normally) to move in this direction. */
+	TUsForMove = Grid_GetTUsForDirection(dir);
 	/* If crouching then multiply by the crouching factor. */
 	if (crouchingState == 1)
-		len *= TU_CROUCH_MOVING_FACTOR;
-
-	/* Now add the TUs needed to get to the originating cell. */
-	len += TUsSoFar;
+		TUsForMove *= TU_CROUCH_MOVING_FACTOR;
 
 	/* If this is a crouching or crouching move, forget it. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
@@ -491,9 +486,12 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	if (toPos[2] >= PATHFINDING_HEIGHT)
 		toPos[2] = PATHFINDING_HEIGHT - 1;
 
+	/* Now add the TUs needed to get to the originating cell. */
+	TUsAfter = TUsSoFar + TUsForMove;
+
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST_POS(path, toPos, crouchingState);
-	if (RT_AREA_POS(path, toPos, crouchingState) <= len) {
+	if (RT_AREA_POS(path, toPos, crouchingState) <= TUsAfter) {
 		return;	/* This move is not optimum. */
 	}
 
@@ -504,7 +502,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	/* Store move. */
 	if (pqueue) {
-		Grid_SetMoveData(path, toPos, crouchingState, len, dir, pos[2], crouchingState, pqueue);
+		Grid_SetMoveData(path, toPos, crouchingState, TUsAfter, dir, pos[2], crouchingState, pqueue);
 	}
 }
 
