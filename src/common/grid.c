@@ -172,6 +172,8 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const actorSi
 	step->hasLadderSupport = qfalse;
 	step->actorSize = actorSize;
 	/** @note This is the actor's height in QUANT units. */
+	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
+	 *  to the actor's actual height. */
 	step->actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
 	step->actorCrouchedHeight = ModelCeilingToQuant((float)(PLAYER_CROUCHING_HEIGHT));
 
@@ -445,8 +447,6 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		return;
 	}
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
-	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
-	 *  to the actor's actual height, including crouching. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
 		if (!Grid_StepCheckFlyingDirections(step, pos, toPos, dir)) {
