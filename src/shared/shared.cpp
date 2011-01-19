@@ -552,44 +552,9 @@ char const* Q_strstart (char const* str, char const* start)
  */
 qboolean Q_strreplace (const char *source, const char *pattern, const char *replace, char *dest, size_t destsize)
 {
-	const char *hit = strstr(source, pattern);
-	if (hit != NULL) {
-		ptrdiff_t length = hit - source;
-		size_t remaining = destsize;
-		const size_t replacesize = strlen(replace);
-		const size_t patternsize = strlen(pattern);
-		const char *afterpattern = hit + patternsize;
-		const size_t trailingsize = strlen(afterpattern);
-
-		if (length > 0) {
-			strncpy(dest, source, length);
-			dest += length;
-			*dest = '\0';
-			remaining -= length;
-		} else {
-			*dest = '\0';
-		}
-
-		if (remaining < replacesize)
-			return qfalse;
-
-		strncat(dest, replace, replacesize);
-		dest += replacesize;
-		remaining -= replacesize;
-
-		if (remaining < trailingsize)
-			return qfalse;
-
-		strncat(dest, afterpattern, trailingsize);
-		dest += trailingsize;
-		remaining -= trailingsize;
-
-		if (remaining == 0)
-			return qfalse;
-
-		*dest = '\0';
-
-		return qtrue;
+	if (char const* const hit = strstr(source, pattern)) {
+		int const len = snprintf(dest, destsize, "%.*s%s%s", (int)(hit - source), source, replace, hit + strlen(pattern));
+		return 0 < len && (size_t)len < destsize;
 	} else {
 		return qfalse;
 	}
