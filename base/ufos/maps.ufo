@@ -3704,6 +3704,21 @@ mapdef small_street
 	}
 }
 
+mapdef training_a
+{
+	map			"training_a"
+	description	"_Training Zone: Alpha"
+	teams		2
+	multiplayer	true
+	maxaliens	8
+	gametypes {
+		1on1
+		2on2
+		3on3
+		coop2
+		coop3
+	}
+}
 
 ///////////////////////
 // UFOCRASH RANDOM MAPS
