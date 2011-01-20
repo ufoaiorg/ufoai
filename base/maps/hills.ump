@@ -329,6 +329,20 @@ vw     +1     +1     vw
 0      hg     hg    0
 }
 
+/*
+garage+horisontal road.
+*/
+tile +house_15
+{
+3 5
+0      1f     0
+vwg1   +1     vwg1
+vwg    +h     vwg
+vwg    +h     vwg
+0      1      0
+
+}
+
 
 
 /* __
@@ -362,20 +376,12 @@ assembly test
 size "7 9"
 title "test"
 
-fix +house_13 "2 2"
+//fix +house_13 "2 2"
 fix +road_1c1 "4 0"
 fix +house_21 "2 6"
 
 fix +road_12vu1 "0 5"
 
-//fix +road_1v5 "0 0"
-
-//+road_1v1 "0 1"
-//+road_1v2 "0 2"
-//+road_1v3 "0 2"
-//+road_1v4 "0 1"
-//+road_1v5 "0 6"
-//+road_1v6 "0 6"
 tileset vertical_even_1 "0 8"
 tileset vertical_odd_1 "0 8"
 
@@ -392,6 +398,8 @@ tileset vertical_odd_1 "0 8"
 +house_12 "1 15"
 
 +house_13 "0 1"
+//+house_14 "0 1"
++house_15 "0 1"
 
 +house_21 "0 1"
 
@@ -442,6 +450,7 @@ tileset vertical_odd_1 "0 8"
 +house_11 "1 5"
 +house_12 "1 5"
 +house_13 "1 1"
++house_15 "0 1"
 
 +house_22 "0 1"
 
@@ -479,6 +488,7 @@ tileset vertical_odd_1 "0 8"
 +house_11 "1 5"
 +house_12 "1 5"
 +house_13 "1 1"
++house_15 "0 1"
 
 +house_22 "0 1"
 
