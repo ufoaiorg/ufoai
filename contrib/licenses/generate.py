@@ -238,12 +238,14 @@ def plot(output, d, data, times, imagename):
 
     cmds+= 'plot '
     p = []
+    tmpfiles = []
     for i in data:
         plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
         f = open(tempfile.mktemp(), "wt")
         f.write(plot_data)
         p.append("'%s' title \"%s\" " % (f.name, i))
         f.close()
+        tmpfiles.append(f)
 
     if len(p) == 0:
         return
@@ -253,7 +255,12 @@ def plot(output, d, data, times, imagename):
     f = open(tempfile.mktemp(), "wt")
     f.write(cmds)
     f.close()
+    tmpfiles.append(f)
     os.system('gnuplot %s' % f.name)
+
+    # clean up temp files
+    for f in tmpfiles:
+        os.remove(f.name)
 
 def setup(output_path):
     """Check if output folders etc. are in place"""
