@@ -322,10 +322,6 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, 
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
 			return qfalse;		/* There is stepdown from here. */
 		}
-		/* We cannot fall if there is an entity below the cell we want to move to. */
-		if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz - 1)) {
-			return qfalse;		/* The fall destination is occupied. */
-		}
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
 		heightChange = 0;
 		toPos[2]--;
