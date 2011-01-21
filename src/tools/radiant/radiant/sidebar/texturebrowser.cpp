@@ -71,7 +71,6 @@
 #include "../brush/TextureProjection.h"
 #include "../brush/brushmanip.h"
 #include "../plugin.h"
-#include "surfaceinspector/surfaceinspector.h"
 
 namespace {
 const std::string RKEY_TEXTURES_HIDE_UNUSED = "user/ui/textures/browser/hideUnused";

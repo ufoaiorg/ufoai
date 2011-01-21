@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_base_callbacks.h"
 #include "cp_base.h"
+#include "cp_capacity.h"
 #include "cp_map.h"
 #include "cp_popup.h"
 #include "cp_ufo.h"
@@ -129,10 +130,10 @@ static void B_NextBase_f (void)
 	if (!base)
 		return;
 
-	base = B_GetNextFounded(base);
+	base = B_GetNext(base);
 	/* if it was the last base, select the first */
 	if (!base)
-		base = B_GetNextFounded(NULL);
+		base = B_GetNext(NULL);
 	if (base)
 		B_SelectBase(base);
 }
@@ -154,14 +155,14 @@ static void B_PrevBase_f (void)
 
 	prevBase = NULL;
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		if (base == currentBase)
 			break;
 		prevBase = base;
 	}
 	/* if it was the first base, select the last */
 	if (!prevBase) {
-		while ((base = B_GetNextFounded(base)) != NULL) {
+		while ((base = B_GetNext(base)) != NULL) {
 			prevBase = base;
 		}
 	}
@@ -228,7 +229,7 @@ static void B_BuildBase_f (void)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 		MS_AddNewMessage(_("Base built"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
-		B_UpdateBaseCount();
+		Cvar_SetValue("mn_base_count", B_GetCount());
 		B_SelectBase(base);
 	} else {
 		if (MAP_IsRadarOverlayActivated())
@@ -301,7 +302,7 @@ static void B_BaseInit_f (void)
 	else
 		UI_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
 
-	if (B_GetFoundedBaseCount() > 1)
+	if (B_GetCount() > 1)
 		UI_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, vehicles, aliens and employees to other bases"));
 	else
 		UI_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
@@ -410,7 +411,7 @@ static void B_BuildingInit (base_t* base)
 		building_t *tpl = &ccs.buildingTemplates[i];
 		/* make an entry in list for this building */
 
-		if (tpl->visible) {
+		if (tpl->mapPart) {
 			const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
 
 			if (tpl->maxCount >= 0 && tpl->maxCount <= numSameBuildings)
@@ -494,21 +495,112 @@ static void B_BuildingClick_f (void)
 }
 
 /**
- * @brief We are doing the real destroy of a building here
+ * @brief Mark a building for destruction - you only have to confirm it now
+ * @param[in] building Pointer to the base to destroy
+ */
+static void B_MarkBuildingDestroy (building_t* building)
+{
+	int cap;
+	base_t *base = building->base;
+
+	/* you can't destroy buildings if base is under attack */
+	if (B_IsUnderAttack(base)) {
+		UI_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
+		return;
+	}
+
+	cap = B_GetCapacityFromBuildingType(building->buildingType);
+	/* store the pointer to the building you wanna destroy */
+	base->buildingCurrent = building;
+
+	/** @todo: make base destroyable by destroying entrance */
+	if (building->buildingType == B_ENTRANCE) {
+		UI_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
+		return;
+	}
+
+	if (!B_IsBuildingDestroyable(building)) {
+			UI_Popup(_("Notice"), _("You can't destroy this building! It is the only connection to other buildings!"));
+			return;
+	}
+
+	if (building->buildingStatus == B_STATUS_WORKING) {
+		const qboolean hasBases = B_AtLeastOneExists();
+		switch (building->buildingType) {
+		case B_HANGAR:
+		case B_SMALL_HANGAR:
+			if (base->capacities[cap].cur >= base->capacities[cap].max) {
+				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
+					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
+					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
+					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					_("Go to transfer menu without destroying the building"));
+				return;
+			}
+			break;
+		case B_QUARTERS:
+			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
+				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
+					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
+					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
+					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					_("Go to transfer menu without destroying the building"));
+				return;
+			}
+			break;
+		case B_STORAGE:
+			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
+				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
+					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
+					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
+					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					_("Go to transfer menu without destroying the building"));
+				return;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
+		NULL, NULL, NULL,
+		va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+		NULL, NULL, NULL);
+}
+
+/**
+ * @brief Destroy a base building
+ * @sa B_MarkBuildingDestroy
  * @sa B_BuildingDestroy
- * @sa B_NewBuilding
  */
 static void B_BuildingDestroy_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t *base;
+	building_t *building;
 
-	if (!base || !base->buildingCurrent)
+	if (Cmd_Argc() < 3) {
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <buildingID> [confirmed]\n", Cmd_Argv(0));
+		return;
+	} else {
+		const int baseID = atoi(Cmd_Argv(1));
+		const int buildingID = atoi(Cmd_Argv(2));
+		base = B_GetBaseByIDX(baseID);
+		assert(base);
+		building = &ccs.buildings[baseID][buildingID];
+	}
+
+	if (!base || !building)
 		return;
 
-	B_BuildingDestroy(base->buildingCurrent);
+	if (Cmd_Argc() == 4 && Q_streq(Cmd_Argv(3), "confirmed")) {
+		B_BuildingDestroy(base->buildingCurrent);
 
-	B_ResetBuildingCurrent(base);
-	B_BuildingInit(base);
+		B_ResetBuildingCurrent(base);
+		B_BuildingInit(base);
+	} else {
+		B_MarkBuildingDestroy(building);
+	}
 }
 
 /**

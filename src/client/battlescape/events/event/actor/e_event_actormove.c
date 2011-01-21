@@ -40,8 +40,8 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const 
 		LE_NotFoundError(number);
 
 	for (i = 0; i < le->pathLength; i++) {
-		const byte fulldv = le->path[i];
-		const byte dir = getDVdir(fulldv);
+		const dvec_t dvec = le->dvtab[i];
+		const byte dir = getDVdir(dvec);
 		time += LE_ActorGetStepTime(le, dir, le->pathPos);
 	}
 
@@ -99,7 +99,7 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 	le->newPos[2] = NET_ReadByte(msg);
 
 	for (i = 0; i < le->pathLength; i++) {
-		le->path[i] = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
+		le->dvtab[i] = NET_ReadShort(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
 		le->speed[i] = NET_ReadShort(msg);
 		le->pathContents[i] = NET_ReadShort(msg);
 	}

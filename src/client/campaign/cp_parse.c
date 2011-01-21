@@ -749,7 +749,7 @@ typedef struct {
 
 /** @brief Data for sanity check of parsed script data */
 static const sanity_functions_t sanity_functions[] = {
-	{B_ScriptSanityCheck, "buildings"},
+	{B_BuildingScriptSanityCheck, "buildings"},
 	{RS_ScriptSanityCheck, "tech"},
 	{AIR_ScriptSanityCheck, "aircraft"},
 	{CP_ItemsSanityCheck, "items"},

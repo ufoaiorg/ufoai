@@ -3646,7 +3646,51 @@ mapdef hills_harvester
 	size		"small"
 	teams		4
 	multiplayer	false
-	maxaliens	6
+	maxaliens	8
+
+	aircraft
+	{
+		craft_drop_firebird
+//		craft_drop_raptor
+//		craft_drop_herakles
+	}
+
+	ufos
+	{
+//		craft_ufo_scout
+//		craft_ufo_fighter
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+//		desert
+		cold
+		mountain
+		grass
+	}
+
+	cultures
+	{
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+mapdef hills_harvester_desert
+{
+	map			"+hills"
+	param		desert_harvester
+	description	"_UFO landed in hills area."
+	size		"small"
+	teams		4
+	multiplayer	false
+	maxaliens	8
 
 	aircraft
 	{
@@ -3665,9 +3709,6 @@ mapdef hills_harvester
 	terrains
 	{
 		desert
-		cold
-		mountain
-		grass
 	}
 
 	cultures

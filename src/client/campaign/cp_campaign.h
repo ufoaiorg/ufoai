@@ -621,11 +621,14 @@ void CP_StartSelectedMission(void);
 void CL_HandleNationData(float minHappiness, qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
 void CL_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
+/* Credits management */
+qboolean CP_CheckCredits (int costs);
+void CL_UpdateCredits(int credits);
+
 /* Other functions */
 void CP_ParseCharacterData(struct dbuffer *msg);
 qboolean CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
 
-void CL_UpdateCredits(int credits);
 aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);

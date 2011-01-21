@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,13 +20,13 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
 #include "../../ui/ui_popup.h"
 #include "../cp_campaign.h"
+#include "../cp_capacity.h"
 #include "../cp_map.h"
 #include "../cp_ufo.h"
 #include "../cp_missions.h"
@@ -259,10 +259,10 @@ static base_t *CP_BaseAttackChooseBase (void)
 	base_t *base = NULL;
 
 	/* Choose randomly a base depending on alienInterest values for those bases */
-	while ((base = B_GetNextFounded(base)) != NULL)
+	while ((base = B_GetNext(base)) != NULL)
 		sum += base->alienInterest;
 	randomNumber = frand() * sum;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		randomNumber -= base->alienInterest;
 		if (randomNumber < 0)
 			break;

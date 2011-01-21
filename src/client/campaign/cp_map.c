@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../client.h" /* cls */
@@ -1122,7 +1121,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
 	maxEventIdx = numMissions + numBases + ccs.numInstallations - 1;
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		aircraft_t *aircraft;
 		AIR_ForeachFromBase(aircraft, base) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
@@ -1165,7 +1164,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	/* Cycle through bases */
 	if (centerOnEventIdx < numBases + counter) {
 		base = NULL;
-		while ((base = B_GetNextFounded(base)) != NULL) {
+		while ((base = B_GetNext(base)) != NULL) {
 			if (counter == centerOnEventIdx) {
 				MAP_ConvertObjectPositionToGeoscapePosition(vector, base->pos);
 				return;
@@ -1790,7 +1789,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 
 	/* draw bases */
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL)
+	while ((base = B_GetNext(base)) != NULL)
 		MAP_DrawMapOneBase(node, base, oneUFOVisible, font);
 
 	/* draw all aircraft */
@@ -2409,7 +2408,7 @@ static const float MIN_DIST_BASE = 4.0f;
 base_t* MAP_PositionCloseToBase (const vec2_t pos)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL)
+	while ((base = B_GetNext(base)) != NULL)
 		if (GetDistanceOnGlobe(pos, base->pos) < MIN_DIST_BASE)
 			return base;
 

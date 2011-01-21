@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,12 +19,12 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
+#include "cp_transfer_callbacks.h"
 #include "../cl_shared.h"
 #include "cp_campaign.h"
-#include "cp_transfer_callbacks.h"
+#include "cp_capacity.h"
 #include "cp_transfer.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_popup.h"
@@ -126,7 +126,7 @@ static void TR_TransferAliensFromMission_f (void)
 	td.transferStartAircraft = aircraft;
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		const char* string;
 		uiNode_t *option;
 		int freeSpace;
@@ -134,7 +134,7 @@ static void TR_TransferAliensFromMission_f (void)
 		if (!AC_ContainmentAllowed(base))
 			continue;
 
-		freeSpace = B_FreeCapacity(base, CAP_ALIENS);
+		freeSpace = B_GetFreeCapacity(base, CAP_ALIENS);
 
 		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
 		string = va("%s %s", base->name, string);
@@ -246,7 +246,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 			UI_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
 			return 0;
 		}
-		amount = min(amount, B_FreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
+		amount = min(amount, B_GetFreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
 		if (amount <= 0) {
 			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return 0;
@@ -1154,7 +1154,7 @@ static void TR_InitBaseList (void)
 	uiNode_t *baseList = NULL;
 	base_t *base = NULL;
 
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		if (base == currentBase)
 			continue;
 
@@ -1417,10 +1417,10 @@ static void TR_Init_f (void)
 	TR_InitBaseList();
 
 	/* Select first available base. */
-	td.transferBase = B_GetNextFounded(base);
+	td.transferBase = B_GetNext(base);
 	/* If this was the last base select the first */
 	if (!td.transferBase)
-		td.transferBase = B_GetNextFounded(NULL);
+		td.transferBase = B_GetNext(NULL);
 	if (!td.transferBase)
 		Com_Error(ERR_DROP, "No bases! Transfer needs at least two...");
 	TR_TransferBaseSelect(base, td.transferBase);

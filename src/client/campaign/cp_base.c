@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
+#include "cp_capacity.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
 #include "cp_map.h"
@@ -47,33 +48,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
+typedef enum tileStatus_e {
+	TILE_EMPTY,			/**< tile cannot be accessed (blocked / no building) */
+	TILE_NODE,			/**< tile can be accessed but doesn't connect other tiles (unfinished building) */
+	TILE_ACTIVENODE		/**< tile can be accessed and connect other tiles (free space / finished building) */
+} tileStatus_t;
+
+typedef tileStatus_t (*tileCondition_t) (const baseBuildingTile_t *);
+
 /**
  * @brief Condition Function for B_BuildTileGraph for Non Blocked base tiles
  * @param[in] tile Pointer to the base Building Tile to check
  */
-static qboolean B_NonBlockedTileCondition (const baseBuildingTile_t *tile)
+static tileStatus_t B_NonBlockedTileCondition (const baseBuildingTile_t *tile)
 {
-	return !tile->blocked;
+	return tile->blocked ? TILE_EMPTY : TILE_ACTIVENODE;
 }
 
 /**
  * @brief Condition Function for B_BuildTileGraph for Built base tiles
  * @param[in] tile Pointer to the base Building Tile to check
  */
-static qboolean B_BuiltTileCondition (const baseBuildingTile_t *tile)
+static tileStatus_t B_BuiltTileCondition (const baseBuildingTile_t *tile)
 {
 	const building_t *building = tile->building;
-	return building != NULL && B_IsBuildingBuiltUp(building);
+	if (!building)
+		return TILE_EMPTY;
+	return B_IsBuildingBuiltUp(building) ? TILE_ACTIVENODE : TILE_NODE;
 }
 
 /**
  * @brief Builds up the traversal graph for base Tiles
  * @param[in] base Pointer to the base to build for
- * @param[in] B_TileCondition Boolean Function reference to decide if the node is exist
+ * @param[in] condition Boolean Function reference to decide if the node is exist
  * @param[out] graph Linked list array of the traversal graph
  * @note graph should be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
  */
-static void B_BuildTileGraph (base_t *base, qboolean B_TileCondition(const baseBuildingTile_t *), linkedList_t *graph[])
+static void B_BuildTileGraph (base_t *base, tileCondition_t condition, linkedList_t *graph[])
 {
 	int y;
 
@@ -84,34 +95,37 @@ static void B_BuildTileGraph (base_t *base, qboolean B_TileCondition(const baseB
 			baseBuildingTile_t *tile = &base->map[y][x];
 			int listNum = y * BASE_SIZE + x;
 
-			if (!B_TileCondition(tile))
+			if (condition(tile) == TILE_EMPTY)
 				continue;
 
 			/* self */
 			LIST_AddPointer(&graph[listNum], (void*)tile);
+
+			if (condition(tile) == TILE_NODE)
+				continue;
 			/* west */
-			if ( (x - 1 >= 0) && (B_TileCondition(&base->map[y][x - 1])) ) {
+			if (x - 1 >= 0 && condition(&base->map[y][x - 1])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y][x - 1]))
 					LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
 				if (!LIST_GetPointer(graph[listNum - 1], tile))
 					LIST_AddPointer(&graph[listNum - 1], (void*)tile);
 			}
 			/* east */
-			if ( (x + 1 < BASE_SIZE) && (B_TileCondition(&base->map[y][x + 1])) ) {
+			if (x + 1 < BASE_SIZE && condition(&base->map[y][x + 1])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y][x + 1]))
 					LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
 				if (!LIST_GetPointer(graph[listNum + 1], tile))
 					LIST_AddPointer(&graph[listNum + 1], (void*)tile);
 			}
 			/* north */
-			if ( (y - 1 >= 0) && (B_TileCondition(&base->map[y - 1][x])) ) {
+			if (y - 1 >= 0 && condition(&base->map[y - 1][x])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y - 1][x]))
 					LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
 				if (!LIST_GetPointer(graph[listNum - BASE_SIZE], tile))
 					LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
 			}
 			/* south */
-			if ( (y + 1 < BASE_SIZE) && (B_TileCondition(&base->map[y + 1][x])) ) {
+			if (y + 1 < BASE_SIZE && condition(&base->map[y + 1][x])) {
 				if (!LIST_GetPointer(graph[listNum], &base->map[y + 1][x]))
 					LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
 				if (!LIST_GetPointer(graph[listNum + BASE_SIZE], tile))
@@ -124,39 +138,47 @@ static void B_BuildTileGraph (base_t *base, qboolean B_TileCondition(const baseB
 /**
  * @brief Add tile to base Tiles traversal graph
  * @param[in] base Pointer to the base to build for
+ * @param[in] condition Boolean Function reference to decide if the node is exist
  * @param[in,out] graph Linked list array of the traversal graph
  * @param[in] tile Pointer to the new buildingtile
  * @note graph should be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
  */
-static void B_TileGraphAdd (base_t *base, linkedList_t *graph[], baseBuildingTile_t *tile)
+static void B_TileGraphAdd (base_t *base, tileCondition_t condition, linkedList_t *graph[], baseBuildingTile_t *tile)
 {
 	int x = tile->posX;
 	int y = tile->posY;
 	int listNum = y * BASE_SIZE + x;
 
-	if (!LIST_IsEmpty(graph[listNum]))
-		return;
 	/* self */
 	LIST_AddPointer(&graph[listNum], (void*)tile);
+
 	/* west */
-	if ( (x - 1 >= 0) && !LIST_IsEmpty(graph[listNum - 1]) ) {
-		LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
-		LIST_AddPointer(&graph[listNum - 1], (void*)tile);
+	if (x - 1 >= 0 && condition(&base->map[y][x - 1]) == TILE_ACTIVENODE) {
+		if (!LIST_GetPointer(graph[listNum], &base->map[y][x - 1]))
+			LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
+		if (!LIST_GetPointer(graph[listNum - 1], tile))
+			LIST_AddPointer(&graph[listNum - 1], (void*)tile);
 	}
 	/* east */
-	if ( (x + 1 < BASE_SIZE) && !LIST_IsEmpty(graph[listNum + 1]) ) {
-		LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
-		LIST_AddPointer(&graph[listNum + 1], (void*)tile);
+	if (x + 1 < BASE_SIZE && condition(&base->map[y][x + 1]) == TILE_ACTIVENODE) {
+		if (!LIST_GetPointer(graph[listNum], &base->map[y][x + 1]))
+			LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
+		if (!LIST_GetPointer(graph[listNum + 1], tile))
+			LIST_AddPointer(&graph[listNum + 1], (void*)tile);
 	}
 	/* north */
-	if ( (y - 1 >= 0) && !LIST_IsEmpty(graph[listNum - BASE_SIZE]) ) {
-		LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
-		LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
+	if (y - 1 >= 0 && condition(&base->map[y - 1][x]) == TILE_ACTIVENODE) {
+		if (!LIST_GetPointer(graph[listNum], &base->map[y - 1][x]))
+			LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
+		if (!LIST_GetPointer(graph[listNum - BASE_SIZE], tile))
+			LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
 	}
 	/* south */
-	if ( (y + 1 < BASE_SIZE) && !LIST_IsEmpty(graph[listNum + BASE_SIZE]) ) {
-		LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
-		LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
+	if (y + 1 < BASE_SIZE && condition(&base->map[y + 1][x]) == TILE_ACTIVENODE) {
+		if (!LIST_GetPointer(graph[listNum], &base->map[y + 1][x]))
+			LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
+		if (!LIST_GetPointer(graph[listNum + BASE_SIZE], tile))
+			LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
 	}
 }
 
@@ -176,19 +198,19 @@ static void B_TileGraphRemove (linkedList_t *graph[], baseBuildingTile_t *tile)
 	if (LIST_IsEmpty(graph[listNum]))
 		return;
 	/* west */
-	if ( (x - 1 >= 0) && !LIST_IsEmpty(graph[listNum - 1]) ) {
+	if (x - 1 >= 0 && !LIST_IsEmpty(graph[listNum - 1])) {
 		LIST_Remove(&graph[listNum - 1], (void*)tile);
 	}
 	/* east */
-	if ( (x + 1 < BASE_SIZE) && !LIST_IsEmpty(graph[listNum + 1]) ) {
+	if (x + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + 1])) {
 		LIST_Remove(&graph[listNum + 1], (void*)tile);
 	}
 	/* north */
-	if ( (y - 1 >= 0) && !LIST_IsEmpty(graph[listNum - BASE_SIZE]) ) {
+	if (y - 1 >= 0 && !LIST_IsEmpty(graph[listNum - BASE_SIZE])) {
 		LIST_Remove(&graph[listNum - BASE_SIZE], (void*)tile);
 	}
 	/* south */
-	if ( (y + 1 < BASE_SIZE) && !LIST_IsEmpty(graph[listNum + BASE_SIZE]) ) {
+	if (y + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + BASE_SIZE])) {
 		LIST_Remove(&graph[listNum + BASE_SIZE], (void*)tile);
 	}
 	/* delete self list */
@@ -244,6 +266,27 @@ static qboolean B_IsCoherent (linkedList_t *graph[])
 }
 
 /**
+ * @brief Returns if a base building is destroyable
+ * @param[in] building Pointer to the building to check
+ * @todo buildings being built are not in the graph and it is possible to remove the only connection to them
+ */
+qboolean B_IsBuildingDestroyable (building_t *building)
+{
+	base_t *base = building->base;
+
+	if (base->baseStatus != BASE_DESTROYED) {
+		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
+
+		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
+		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][(int)building->pos[0]]);
+		if (building->needs)
+			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][((int)building->pos[0]) + 1]);
+		return B_IsCoherent(tileGraph);
+	}
+	return qtrue;
+}
+
+/**
  * @brief Returns the count of founded bases
  */
 int B_GetCount (void)
@@ -252,7 +295,7 @@ int B_GetCount (void)
 }
 
 /**
- * @brief Iterates through founded base
+ * @brief Iterates through founded bases
  * @param[in] lastBase Pointer of the base to iterate from. call with NULL to get the first one.
  */
 base_t *B_GetNext (base_t *lastBase)
@@ -278,21 +321,6 @@ base_t *B_GetNext (base_t *lastBase)
 }
 
 /**
- * @brief Iterates through founded base
- * @param[in] lastBase Pointer of the base to iterate from. call with NULL to get the first one.
- */
-base_t* B_GetNextFounded (base_t *lastBase)
-{
-	base_t* base = lastBase;
-
-	while ((base = B_GetNext(base)) != NULL) {
-		if (base->founded)
-			return base;
-	}
-	return NULL;
-}
-
-/**
  * @brief Array bound check for the base index. Will also return unfounded bases as
  * long as the index is in the valid ranges,
  * @param[in] baseIdx Index to check
@@ -313,12 +341,10 @@ base_t* B_GetBaseByIDX (int baseIdx)
  */
 base_t* B_GetFoundedBaseByIDX (int baseIdx)
 {
-	base_t *base = B_GetBaseByIDX(baseIdx);
+	if (baseIdx >= B_GetCount())
+		return NULL;
 
-	if (base && base->founded)
-		return base;
-
-	return NULL;
+	return B_GetBaseByIDX(baseIdx);
 }
 
 /**
@@ -502,24 +528,6 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
 }
 
 /**
- * @brief Check that the dependences of a building is operationnal
- * @param[in] building Pointer to the building to check
- * @return true if base contains needed dependence for entering building
- */
-qboolean B_CheckBuildingDependencesStatus (const building_t* building)
-{
-	assert(building);
-
-	if (!building->dependsBuilding)
-		return qtrue;
-
-	/* Make sure the dependsBuilding pointer is really a template .. just in case. */
-	assert(building->dependsBuilding == building->dependsBuilding->tpl);
-
-	return B_GetBuildingStatus(building->base, building->dependsBuilding->buildingType);
-}
-
-/**
  * @brief Resets the buildingCurrent variable and baseAction
  * @param[in,out] base Pointer to the base needs buildingCurrent to be reseted
  * @note Make sure you are not doing anything with the buildingCurrent pointer
@@ -531,36 +539,6 @@ void B_ResetBuildingCurrent (base_t* base)
 		base->buildingCurrent = NULL;
 	ccs.baseAction = BA_NONE;
 }
-
-/**
- * @brief Holds the names of valid entries in the basemanagement.ufo file.
- *
- * The valid definition names for BUILDINGS (building_t) in the basemanagement.ufo file.
- * to the appropriate values in the corresponding struct
- */
-static const value_t valid_building_vars[] = {
-	{"map_name", V_CLIENT_HUNK_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
-	{"max_count", V_INT, offsetof(building_t, maxCount), MEMBER_SIZEOF(building_t, maxCount)},	/**< How many building of the same type allowed? */
-	{"level", V_FLOAT, offsetof(building_t, level), MEMBER_SIZEOF(building_t, level)},	/**< building level */
-	{"name", V_TRANSLATION_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
-	{"pedia", V_CLIENT_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
-	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
-	{"image", V_CLIENT_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
-	{"visible", V_BOOL, offsetof(building_t, visible), MEMBER_SIZEOF(building_t, visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
-	{"needs", V_CLIENT_HUNK_STRING, offsetof(building_t, needs), 0},	/**< For buildings with more than one part; the other parts of the building needed.*/
-	{"fixcosts", V_INT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
-	{"varcosts", V_INT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
-	{"build_time", V_INT, offsetof(building_t, buildTime), MEMBER_SIZEOF(building_t, buildTime)},	/**< How many days it takes to construct the building. */
-	{"starting_employees", V_INT, offsetof(building_t, maxEmployees), MEMBER_SIZEOF(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
-	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buildings in a different way. */
-
-	/*event handler functions */
-	{"onconstruct", V_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
-	{"onattack", V_STRING, offsetof(building_t, onAttack), 0}, /**< Event handler. */
-	{"ondestroy", V_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
-	{"mandatory", V_BOOL, offsetof(building_t, mandatory), MEMBER_SIZEOF(building_t, mandatory)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
-	{NULL, 0, 0, 0}
-};
 
 /**
  * @brief Get the maximum level of a building type in a base.
@@ -611,9 +589,8 @@ qboolean B_AssembleMap (const base_t *base)
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col].building) {
-				const building_t *entry = base->map[row][col].building;
-
+			const building_t *entry = base->map[row][col].building;
+			if (entry && B_IsBuildingBuiltUp(entry)) {
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one
 				 * this is why we check the used flag and continue if it was set already */
 				if (entry->needs) {
@@ -626,6 +603,8 @@ qboolean B_AssembleMap (const base_t *base)
 					Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
 
 				Q_strcat(maps, va("b/%s ", entry->mapPart), sizeof(maps));
+			} else if (entry && ccs.date.day > entry->timeStart) {
+				Q_strcat(maps, "b/construction ", sizeof(maps));
 			} else {
 				Q_strcat(maps, "b/empty ", sizeof(maps));
 			}
@@ -802,18 +781,6 @@ static void B_UpdateAntimatterCap (base_t *base)
 }
 
 /**
- * @brief Returns the free capacity of a type
- * @param[in] base Pointer to the base to check
- * @param[in] cap Capacity type
- * @sa baseCapacities_t
- */
-int B_FreeCapacity (const base_t *base, baseCapacities_t cap)
-{
-	assert(base);
-	return base->capacities[cap].max - base->capacities[cap].cur;
-}
-
-/**
  * @brief Recalculate status and capacities of one base
  * @param[in] base Pointer to the base where status and capacities must be recalculated
  * @param[in] firstEnable qtrue if this is the first time the function is called for this base
@@ -880,79 +847,6 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 }
 
 /**
- * @brief Actions to perform when destroying one hangar.
- * @param[in] base Pointer to the base where hangar is destroyed.
- * @param[in] buildingType Type of hangar: B_SMALL_HANGAR for small hangar, B_HANGAR for large hangar
- * @note called when player destroy its building or hangar is destroyed during base attack.
- * @note These actions will be performed after we actually remove the building.
- * @pre we checked before calling this function that all parameters are valid.
- * @pre building is not under construction.
- * @sa B_BuildingDestroy_f
- * @todo If player choose to destroy the building, a popup should ask him if he wants to sell aircraft in it.
- */
-void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingType)
-{
-	baseCapacities_t capacity = B_GetCapacityFromBuildingType(buildingType);
-	linkedList_t *awayAircraft = NULL;
-	int numAwayAircraft;
-	int randomNum;
-	aircraft_t *aircraft;
-
-	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
-	if (B_FreeCapacity(base, capacity) >= 0)
-		return;
-
-	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
-	AIR_ForeachFromBase(aircraft, base) {
-		const int aircraftSize = aircraft->size;
-
-		switch (aircraftSize) {
-		case AIRCRAFT_SMALL:
-			if (buildingType != B_SMALL_HANGAR)
-				continue;
-			break;
-		case AIRCRAFT_LARGE:
-			if (buildingType != B_HANGAR)
-				continue;
-			break;
-		default:
-			Com_Error(ERR_DROP, "B_RemoveAircraftExceedingCapacity: Unknown type of aircraft '%i'", aircraftSize);
-		}
-
-		/* Only aircraft in hangar will be destroyed by hangar destruction */
-		if (!AIR_IsAircraftInBase(aircraft)) {
-			if (AIR_IsAircraftOnGeoscape(aircraft))
-				LIST_AddPointer(&awayAircraft, (void*)aircraft);
-			continue;
-		}
-
-		/* Remove aircraft and aircraft items, but do not fire employees */
-		AIR_DeleteAircraft(aircraft);
-		LIST_Delete(&awayAircraft);
-		return;
-	}
-	numAwayAircraft = LIST_Count(awayAircraft);
-
-	if (!numAwayAircraft)
-		return;
-	/* All aircraft are away from base, pick up one and change it's homebase */
-	randomNum = rand() % numAwayAircraft;
-	if (!CL_DisplayHomebasePopup((aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum), qfalse)) {
-		aircraft_t *aircraft = (aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum);
-		/* No base can hold this aircraft */
-		UFO_NotifyPhalanxAircraftRemoved(aircraft);
-		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN)))
-			CP_SpawnRescueMission(aircraft, NULL);
-		else {
-			/* Destroy the aircraft and everything onboard - the aircraft pointer
-			 * is no longer valid after this point */
-			AIR_DestroyAircraft(aircraft);
-		}
-	}
-	LIST_Delete(&awayAircraft);
-}
-
-/**
  * @brief Removes a building from the given base
  * @param[in] building The building to remove
  * @note Also updates capacities and sets the hasBuilding[] values in base_t
@@ -961,38 +855,31 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 qboolean B_BuildingDestroy (building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
-	const building_t const *buildingTemplate = building->tpl;	/**< Template of the removed building */
+	const building_t const *buildingTemplate = building->tpl;
 	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
 	base_t *base = building->base;
 
-	/* Don't allow to destroy an entrance. */
-	if (buildingType == B_ENTRANCE)
+	/* Don't allow to destroy a mandatory building. */
+	if (building->mandatory)
 		return qfalse;
 
-	if (!base->map[(int)building->pos[0]][(int)building->pos[1]].building
-	 || base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
+	if (!base->map[(int)building->pos[1]][(int)building->pos[0]].building
+	 || base->map[(int)building->pos[1]][(int)building->pos[0]].building != building) {
 		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
-				base->idx, (int)building->pos[0], (int)building->pos[1]);
+			base->idx, (int)building->pos[0], (int)building->pos[1]);
 	}
 
-	/* Refuse removing if it hurts coherency */
-	if (base->baseStatus != BASE_DESTROYED) {
-		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
-
-		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[0]][(int)building->pos[1]]);
-		if (building->needs)
-			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[0]][((int)building->pos[1]) + 1]);
-		if (!B_IsCoherent(tileGraph))
-			return qfalse;
+	/* Refuse destroying if it hurts coherency - only exception is when the whole base destroys */
+	if (!B_IsBuildingDestroyable(building)) {
+		return qfalse;
 	}
 
 	/* Remove the building from the base map */
 	if (building->needs) {
 		/* "Child" building is always right to the "parent" building". */
-		base->map[(int)building->pos[0]][((int)building->pos[1]) + 1].building = NULL;
+		base->map[(int)building->pos[1]][((int)building->pos[0]) + 1].building = NULL;
 	}
-	base->map[(int)building->pos[0]][(int)building->pos[1]].building = NULL;
+	base->map[(int)building->pos[1]][(int)building->pos[0]].building = NULL;
 
 	building->buildingStatus = B_STATUS_NOT_SET;
 
@@ -1016,9 +903,9 @@ qboolean B_BuildingDestroy (building_t* building)
 		for (i = 0; i < cntBldgs; i++)
 			if (buildings[i].idx >= idx) {
 				buildings[i].idx--;
-				base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1]].building = &buildings[i];
+				base->map[(int)buildings[i].pos[1]][(int)buildings[i].pos[0]].building = &buildings[i];
 				if (buildings[i].needs)
-					base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1] + 1].building = &buildings[i];
+					base->map[(int)buildings[i].pos[1]][(int)buildings[i].pos[0] + 1].building = &buildings[i];
 			}
 
 		building = NULL;
@@ -1069,7 +956,7 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			base_t *newbase = NULL;
 			qboolean moved = qfalse;
-			while ((newbase = B_GetNextFounded(newbase)) != NULL) {
+			while ((newbase = B_GetNext(newbase)) != NULL) {
 				/* found a new homebase? */
 				if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase)) {
 					moved = qtrue;
@@ -1152,89 +1039,6 @@ static void B_Destroy_f (void)
 	B_Destroy(base);
 }
 #endif
-
-/**
- * @brief Mark a building for destruction - you only have to confirm it now
- * @note Also calls the ondestroy trigger
- */
-void B_MarkBuildingDestroy (building_t* building)
-{
-	int cap;
-	base_t *base = building->base;
-
-	/* you can't destroy buildings if base is under attack */
-	if (B_IsUnderAttack(base)) {
-		UI_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
-		return;
-	}
-
-	cap = B_GetCapacityFromBuildingType(building->buildingType);
-	/* store the pointer to the building you wanna destroy */
-	base->buildingCurrent = building;
-
-	/** @todo: make base destroyable by destroying entrance */
-	if (building->buildingType == B_ENTRANCE) {
-		UI_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
-		return;
-	}
-
-	if (base->baseStatus != BASE_DESTROYED) {
-		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
-
-		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[0]][(int)building->pos[1]]);
-		if (building->needs)
-			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[0]][((int)building->pos[1]) + 1]);
-		if (!B_IsCoherent(tileGraph)) {
-			UI_Popup(_("Notice"), _("You can't destroy this building! It is the only connection to other buildings!"));
-			return;
-		}
-	}
-
-	if (building->buildingStatus == B_STATUS_WORKING) {
-		const qboolean hasBases = B_AtLeastOneExists();
-		switch (building->buildingType) {
-		case B_HANGAR:
-		case B_SMALL_HANGAR:
-			if (base->capacities[cap].cur >= base->capacities[cap].max) {
-				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
-					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
-					_("Go to transfer menu without destroying the building"));
-				return;
-			}
-			break;
-		case B_QUARTERS:
-			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
-				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
-					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
-					_("Go to transfer menu without destroying the building"));
-				return;
-			}
-			break;
-		case B_STORAGE:
-			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
-				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
-					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
-					_("Go to transfer menu without destroying the building"));
-				return;
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
-		NULL, NULL, NULL,
-		"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-		NULL, NULL, NULL);
-}
 
 /**
  * @brief Displays the status of a building for baseview.
@@ -1352,7 +1156,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 	/* now call the onconstruct trigger */
 	if (buildingNew->onConstruct[0] != '\0') {
 		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n",
-				buildingNew->onConstruct, base->idx);
+			buildingNew->onConstruct, base->idx);
 		Cmd_ExecuteString(va("%s %i", buildingNew->onConstruct, base->idx));
 	}
 }
@@ -1555,16 +1359,6 @@ int B_GetInstallationLimit (void)
 }
 
 /**
- * @brief Update menu script related cvars when the amount of bases changed.
- */
-void B_UpdateBaseCount (void)
-{
-	/* this cvar is used for disabling the base build button on geoscape
-	 * if MAX_BASES was reached */
-	Cvar_SetValue("mn_base_count", B_GetCount());
-}
-
-/**
  * @brief Set the base name
  * @param[out] base The base to set the name for
  * @param[in] name The name for the base. This might already be in utf-8 as
@@ -1625,24 +1419,6 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 }
 
 /**
- * @brief Returns the building in the global building-types list that has the unique name buildingID.
- * @param[in] buildingName The unique id of the building (building_t->id).
- * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
- */
-building_t *B_GetBuildingTemplate (const char *buildingName)
-{
-	int i = 0;
-
-	assert(buildingName);
-	for (i = 0; i < ccs.numBuildingTemplates; i++)
-		if (Q_streq(ccs.buildingTemplates[i].id, buildingName))
-			return &ccs.buildingTemplates[i];
-
-	Com_Printf("Building %s not found\n", buildingName);
-	return NULL;
-}
-
-/**
  * @brief Returns the baseTemplate in the global baseTemplate list that has the unique name baseTemplateID.
  * @param[in] baseTemplateID The unique id of the building (baseTemplate_t->name).
  * @return baseTemplate_t If a Template was found it is returned, otherwise->NULL.
@@ -1663,78 +1439,6 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 }
 
 /**
- * @brief Checks whether you have enough credits to build this building
- * @param costs buildcosts of the building
- * @return qboolean true - enough credits
- * @return qboolean false - not enough credits
- *
- * @sa B_ConstructBuilding
- * @sa B_NewBuilding
- * Checks whether the given costs are bigger than the current available credits
- */
-static inline qboolean B_CheckCredits (int costs)
-{
-	if (costs > ccs.credits)
-		return qfalse;
-	return qtrue;
-}
-
-/**
- * @brief Builds new building. And checks whether the player has enough credits
- * to construct the current selected building before starting construction.
- * @sa B_MarkBuildingDestroy
- * @sa B_CheckCredits
- * @sa CL_UpdateCredits
- * @return qboolean
- * @sa B_NewBuilding
- * @param[in,out] base The base to construct the building in
- * @param[in,out] building The building to construct
- */
-static qboolean B_ConstructBuilding (base_t* base, building_t *building)
-{
-	/* maybe someone call this command before the buildings are parsed?? */
-	if (!base || !building)
-		return qfalse;
-
-	/* enough credits to build this? */
-	if (!B_CheckCredits(building->fixCosts)) {
-		Com_DPrintf(DEBUG_CLIENT, "B_ConstructBuilding: Not enough credits to build: '%s'\n", building->id);
-		B_ResetBuildingCurrent(base);
-		return qfalse;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", building->id);
-
-	building->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-	building->timeStart = ccs.date.day;
-
-	CL_UpdateCredits(ccs.credits - building->fixCosts);
-	Cmd_ExecuteString("base_init");
-	return qtrue;
-}
-
-/**
- * @brief Build new building.
- * @param[in,out] base The base to construct the building in
- * @param[in,out] building The building to construct
- * @sa B_MarkBuildingDestroy
- * @sa B_ConstructBuilding
- */
-static void B_NewBuilding (base_t* base, building_t *building)
-{
-	/* maybe someone call this command before the buildings are parsed?? */
-	if (!base || !building)
-		return;
-
-	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		/* credits are updated in the construct function */
-		if (B_ConstructBuilding(base, building)) {
-			B_BuildingStatus(building);
-			Com_DPrintf(DEBUG_CLIENT, "B_NewBuilding: building->buildingStatus = %i\n", building->buildingStatus);
-		}
-}
-
-/**
  * @brief Set the currently selected building.
  * @param[in,out] base The base to place the building in
  * @param[in] buildingTemplate The template of the building to place at the given location
@@ -1750,7 +1454,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 	if (!buildingTemplate)
 		Com_Error(ERR_DROP, "no current building\n");
 #endif
-	if (!B_CheckCredits(buildingTemplate->fixCosts)) {
+	if (!CP_CheckCredits(buildingTemplate->fixCosts)) {
 		UI_Popup(_("Notice"), _("Not enough credits to build this\n"));
 		return NULL;
 	}
@@ -1764,12 +1468,13 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 
 		/* copy building from template list to base-buildings-list */
 		*buildingNew = *buildingTemplate;
-
 		/* self-link to building-list in base */
 		buildingNew->idx = B_GetBuildingIDX(base, buildingNew);
-
 		/* Link to the base. */
 		buildingNew->base = base;
+		/* status and build (start) time */
+		buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+		buildingNew->timeStart = ccs.date.day;
 
 		if (!base->map[row][col].blocked && !base->map[row][col].building) {
 			baseBuildingTile_t tile;
@@ -1811,30 +1516,31 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				tile.building = buildingNew;
 				tile.posX = col;
 				tile.posY = row;
-				B_TileGraphAdd(base, tileGraph, &tile);
+				B_TileGraphAdd(base, B_BuiltTileCondition, tileGraph, &tile);
 				if (buildingNew->needs)
-					B_TileGraphAdd(base, tileGraph, &tileNeeded);
+					B_TileGraphAdd(base, B_BuiltTileCondition, tileGraph, &tileNeeded);
 				if (!B_IsCoherent(tileGraph)) {
 					UI_Popup(_("Notice"), _("You must build next to existing buildings."));
 					return qfalse;
 				}
 			}
 
+			/* set building position */
 			if (buildingNew->needs) {
 				base->map[row][col + 1].building = buildingNew;
 			}
+			base->map[row][col].building = buildingNew;
+			buildingNew->pos[0] = col;
+			buildingNew->pos[1] = row;
+
+			/* pay */
+			CL_UpdateCredits(ccs.credits - buildingNew->fixCosts);
 			/* Update number of buildings on the base. */
 			ccs.numBuildings[base->idx]++;
-			/* Credits are updated here, too */
-			B_NewBuilding(base, buildingNew);
 
-			base->map[row][col].building = buildingNew;
-
-			/* where is this building located in our base? */
-			buildingNew->pos[0] = row;
-			buildingNew->pos[1] = col;
-
+			B_BuildingStatus(buildingNew);
 			B_ResetBuildingCurrent(base);
+			Cmd_ExecuteString("base_init");
 			Cmd_ExecuteString("building_init");
 
 			return buildingNew;
@@ -1950,188 +1656,6 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 }
 
 /**
- * @brief Returns the building type for a given building identified by its building id
- * from the ufo script files
- * @sa B_ParseBuildings
- * @sa B_GetBuildingType
- * @param[in] buildingID The script building id that should get converted into the enum value
- * @note Do not use B_GetBuildingType here, this is also used for parsing the types!
- */
-buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
-{
-	if (Q_streq(buildingID, "lab")) {
-		return B_LAB;
-	} else if (Q_streq(buildingID, "hospital")) {
-		return B_HOSPITAL;
-	} else if (Q_streq(buildingID, "aliencont")) {
-		return B_ALIEN_CONTAINMENT;
-	} else if (Q_streq(buildingID, "workshop")) {
-		return B_WORKSHOP;
-	} else if (Q_streq(buildingID, "storage")) {
-		return B_STORAGE;
-	} else if (Q_streq(buildingID, "hangar")) {
-		return B_HANGAR;
-	} else if (Q_streq(buildingID, "smallhangar")) {
-		return B_SMALL_HANGAR;
-	} else if (Q_streq(buildingID, "quarters")) {
-		return B_QUARTERS;
-	} else if (Q_streq(buildingID, "workshop")) {
-		return B_WORKSHOP;
-	} else if (Q_streq(buildingID, "power")) {
-		return B_POWER;
-	} else if (Q_streq(buildingID, "command")) {
-		return B_COMMAND;
-	} else if (Q_streq(buildingID, "amstorage")) {
-		return B_ANTIMATTER;
-	} else if (Q_streq(buildingID, "entrance")) {
-		return B_ENTRANCE;
-	} else if (Q_streq(buildingID, "missile")) {
-		return B_DEFENCE_MISSILE;
-	} else if (Q_streq(buildingID, "laser")) {
-		return B_DEFENCE_LASER;
-	} else if (Q_streq(buildingID, "radar")) {
-		return B_RADAR;
-	}
-	return MAX_BUILDING_TYPE;
-}
-
-/**
- * @brief Copies an entry from the building description file into the list of building types.
- * @note Parses one "building" entry in the basemanagement.ufo file and writes
- * it into the next free entry in bmBuildings[0], which is the list of buildings
- * in the first base (building_t).
- * @param[in] name Unique script id of a building. This is parsed from "building xxx" -> id=xxx.
- * @param[in] text the whole following text that is part of the "building" item definition in .ufo.
- * @param[in] link Bool value that decides whether to link the tech pointer in or not
- * @sa CL_ParseScriptFirst (link is false here)
- * @sa CL_ParseScriptSecond (link it true here)
- */
-void B_ParseBuildings (const char *name, const char **text, qboolean link)
-{
-	building_t *building;
-	technology_t *techLink;
-	const value_t *vp;
-	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
-	const char *token;
-
-	/* get id list body */
-	token = Com_Parse(text);
-	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
-		return;
-	}
-
-	if (ccs.numBuildingTemplates >= MAX_BUILDINGS)
-		Com_Error(ERR_DROP, "B_ParseBuildings: too many buildings");
-
-	if (!link) {
-		int i;
-		for (i = 0; i < ccs.numBuildingTemplates; i++) {
-			if (Q_streq(ccs.buildingTemplates[i].id, name)) {
-				Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
-				return;
-			}
-		}
-
-		/* new entry */
-		building = &ccs.buildingTemplates[ccs.numBuildingTemplates];
-		OBJZERO(*building);
-		building->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
-
-		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
-
-		/* set standard values */
-		building->tpl = building;	/* Self-link just in case ... this way we can check if it is a template or not. */
-		building->idx = -1;			/* No entry in buildings list (yet). */
-		building->base = NULL;
-		building->buildingType = MAX_BUILDING_TYPE;
-		building->dependsBuilding = NULL;
-		building->visible = qtrue;
-		building->maxCount = -1;	/* Default: no limit */
-
-		ccs.numBuildingTemplates++;
-		do {
-			/* get the name type */
-			token = Com_EParse(text, errhead, name);
-			if (!*text)
-				break;
-			if (*token == '}')
-				break;
-
-			/* get values */
-			if (Q_streq(token, "type")) {
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				building->buildingType = B_GetBuildingTypeByBuildingID(token);
-				if (building->buildingType >= MAX_BUILDING_TYPE)
-					Com_Printf("didn't find buildingType '%s'\n", token);
-			} else {
-				/* no linking yet */
-				if (Q_streq(token, "depends")) {
-					token = Com_EParse(text, errhead, name);
-					if (!*text)
-						return;
-				} else {
-					for (vp = valid_building_vars; vp->string; vp++)
-						if (Q_streq(token, vp->string)) {
-							/* found a definition */
-							token = Com_EParse(text, errhead, name);
-							if (!*text)
-								return;
-
-							switch (vp->type) {
-							case V_NULL:
-								break;
-							case V_TRANSLATION_STRING:
-								token++;
-							case V_CLIENT_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cp_campaignPool, 0);
-								break;
-							default:
-								Com_EParseValue(building, token, vp->type, vp->ofs, vp->size);
-								break;
-							}
-							break;
-						}
-					if (!vp->string)
-						Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
-				}
-			}
-		} while (*text);
-	} else {
-		building = B_GetBuildingTemplate(name);
-		if (!building)
-			Com_Error(ERR_DROP, "B_ParseBuildings: Could not find building with id %s\n", name);
-
-		techLink = RS_GetTechByProvided(name);
-		if (techLink)
-			building->tech = techLink;
-		else if (building->visible)
-			Com_Error(ERR_DROP, "B_ParseBuildings: Could not find tech that provides %s\n", name);
-
-		do {
-			/* get the name type */
-			token = Com_EParse(text, errhead, name);
-			if (!*text)
-				break;
-			if (*token == '}')
-				break;
-			/* get values */
-			if (Q_streq(token, "depends")) {
-				const building_t *dependsBuilding = B_GetBuildingTemplate(Com_EParse(text, errhead, name));
-				if (!dependsBuilding)
-					Com_Error(ERR_DROP, "Could not find building depend of %s\n", building->id);
-				building->dependsBuilding = dependsBuilding;
-				if (!*text)
-					return;
-			}
-		} while (*text);
-	}
-}
-
-/**
  * @brief Gets a building of a given type in the given base
  * @param[in] base The base to search the building in
  * @param[in] buildingType What building-type to get.
@@ -2234,9 +1758,9 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 					tile->building->id, baseTemplate->id);
 
 		/* check for buildings on same position */
-		if (map[tile->posX][tile->posY])
+		if (map[tile->posY][tile->posX])
 			Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", baseTemplate->id);
-		map[tile->posX][tile->posY] = qtrue;
+		map[tile->posY][tile->posX] = qtrue;
 	} while (*text);
 
 	/* templates without the must-have buildings can't be used */
@@ -2266,13 +1790,14 @@ base_t *B_GetFirstUnfoundedBase (void)
 }
 
 /**
- * @sa B_SelectBase
+ * @brief Sets the selected base
  * @param[in] base The base that is going to be selected
+ * @sa B_SelectBase
  */
 void B_SetCurrentSelectedBase (const base_t *base)
 {
 	base_t *b = NULL;
-	while ((b = B_GetNextFounded(b)) != NULL) {
+	while ((b = B_GetNext(b)) != NULL) {
 		if (b == base) {
 			b->selected = qtrue;
 			if (b->aircraftCurrent == NULL)
@@ -2291,10 +1816,13 @@ void B_SetCurrentSelectedBase (const base_t *base)
 	}
 }
 
+/**
+ * @brief returns the currently selected base
+ */
 base_t *B_GetCurrentSelectedBase (void)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL)
+	while ((base = B_GetNext(base)) != NULL)
 		if (base->selected)
 			return base;
 
@@ -2782,21 +2310,6 @@ void B_InitStartup (void)
 }
 
 /**
- * @brief Counts the number of bases.
- * @return The number of founded bases.
- */
-int B_GetFoundedBaseCount (void)
-{
-	int cnt = 0;
-	base_t *base = NULL;
-
-	while ((base = B_GetNextFounded(base)) != NULL)
-		cnt++;
-
-	return cnt;
-}
-
-/**
  * @brief Checks whether the construction of a building is finished.
  * Calls the onConstruct functions and assign workers, too.
  */
@@ -2834,7 +2347,7 @@ static int B_CheckBuildingConstruction (building_t *building)
 void B_UpdateBaseData (void)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		building_t *building = NULL;
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (B_CheckBuildingConstruction(building)) {
@@ -3136,6 +2649,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 			int l;
 			for (l = 0; l < BASE_SIZE; l++) {
 				mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_BUILDING);
+				/** @todo save it as vec2t if needed, also it's opposite */
 				mxml_AddInt(snode, SAVE_BASES_X, k);
 				mxml_AddInt(snode, SAVE_BASES_Y, l);
 				if (b->map[k][l].building)
@@ -3206,7 +2720,7 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, mxml_node_t *p)
 static qboolean B_PostLoadInitCapacity (void)
 {
 	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL)
+	while ((base = B_GetNext(base)) != NULL)
 		B_ResetAllStatusAndCapacities(base, qtrue);
 
 	return qtrue;
@@ -3296,6 +2810,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		/* building space*/
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGSPACE);
 		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
+			/** @todo save it as vec2t if needed, also it's opposite */
 			const int k = mxml_GetInt(snode, SAVE_BASES_X, 0);
 			const int l = mxml_GetInt(snode, SAVE_BASES_Y, 0);
 			baseBuildingTile_t* tile = &b->map[k][l];
@@ -3379,9 +2894,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		OBJZERO(b->bEquipment);
 	}
 	Com_UnregisterConstList(saveBaseConstants);
-
-	B_UpdateBaseCount();
-
+	Cvar_SetValue("mn_base_count", B_GetCount());
 	return qtrue;
 }
 
@@ -3411,25 +2924,28 @@ qboolean B_ItemIsStoredInBaseStorage (const objDef_t *obj)
  */
 int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 {
+	capacities_t *cap;
+
 	assert(base);
 	assert(obj);
 
 	if (!B_ItemIsStoredInBaseStorage(obj))
 		return 0;
 
+	cap = CAP_Get(base, CAP_ITEMS);
 	if (amount > 0) {
 		if (obj->size > 0) {
-			const int freeSpace = base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur;
+			const int freeSpace = cap->max - cap->cur;
 			/* correct amount and update capacity */
 			amount = min(amount, freeSpace / obj->size);
-			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
+			cap->cur += (amount * obj->size);
 		}
 		base->storage.numItems[obj->idx] += amount;
 	} else if (amount < 0) {
 		/* correct amount */
 		amount = max(amount, -B_ItemInBase(obj, base));
 		if (obj->size > 0)
-			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
+			cap->cur += (amount * obj->size);
 		base->storage.numItems[obj->idx] += amount;
 	}
 
@@ -3448,16 +2964,19 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
  */
 qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap)
 {
+	capacities_t *cap;
+
 	assert(base);
 	assert(obj);
 
 	if (obj->isVirtual)
 		return qtrue;
 
+	cap = CAP_Get(base, CAP_ITEMS);
 	if (reset) {
 		base->storage.numItems[obj->idx] = 0;
 		base->storage.numItemsLoose[obj->idx] = 0;
-		base->capacities[CAP_ITEMS].cur = 0;
+		cap->cur = 0;
 	} else {
 		if (!B_ItemIsStoredInBaseStorage(obj)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
@@ -3466,7 +2985,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 
 		if (!ignorecap && amount > 0) {
 			/* Only add items if there is enough room in storage */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < (obj->size * amount)) {
+			if (cap->max - cap->cur < (obj->size * amount)) {
 				Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %s, amount: %i)\n", obj->id, amount);
 				return qfalse;
 			}
@@ -3474,11 +2993,11 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 
 		base->storage.numItems[obj->idx] += amount;
 		if (obj->size > 0)
-			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
+			cap->cur += (amount * obj->size);
 
-		if (base->capacities[CAP_ITEMS].cur < 0) {
-			Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", base->capacities[CAP_ITEMS].cur);
-			base->capacities[CAP_ITEMS].cur = 0;
+		if (cap->cur < 0) {
+			Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", cap->cur);
+			cap->cur = 0;
 		}
 
 		if (base->storage.numItems[obj->idx] < 0) {
@@ -3488,125 +3007,6 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 	}
 
 	return qtrue;
-}
-
-/**
- * @brief Checks the parsed buildings for errors
- * @return false if there are errors - true otherwise
- */
-qboolean B_ScriptSanityCheck (void)
-{
-	int i, error = 0;
-	building_t* b;
-
-	for (i = 0, b = ccs.buildingTemplates; i < ccs.numBuildingTemplates; i++, b++) {
-		if (!b->mapPart && b->visible) {
-			error++;
-			Com_Printf("...... no mappart for building '%s' given\n", b->id);
-		}
-		if (!b->name) {
-			error++;
-			Com_Printf("...... no name for building '%s' given\n", b->id);
-		}
-		if (!b->image) {
-			error++;
-			Com_Printf("...... no image for building '%s' given\n", b->id);
-		}
-		if (!b->pedia) {
-			error++;
-			Com_Printf("...... no pedia link for building '%s' given\n", b->id);
-		} else if (!RS_GetTechByID(b->pedia)) {
-			error++;
-			Com_Printf("...... could not get pedia entry tech (%s) for building '%s'\n", b->pedia, b->id);
-		}
-	}
-	if (!error)
-		return qtrue;
-	else
-		return qfalse;
-}
-
-/**
- * @brief Remove items until everything fits in storage.
- * @note items will be randomly selected for removal.
- * @param[in] base Pointer to the base
- */
-void B_RemoveItemsExceedingCapacity (base_t *base)
-{
-	int i;
-	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
-	int num, cnt;
-
-	if (base->capacities[CAP_ITEMS].cur <= base->capacities[CAP_ITEMS].max)
-		return;
-
-	for (i = 0, num = 0; i < csi.numODs; i++) {
-		const objDef_t *obj = INVSH_GetItemByIDX(i);
-
-		if (!B_ItemIsStoredInBaseStorage(obj))
-			continue;
-
-		/* Don't count item that we don't have in base */
-		if (B_ItemInBase(obj, base) <= 0)
-			continue;
-
-		objIdx[num++] = i;
-	}
-
-	cnt = E_CountHired(base, EMPL_ROBOT);
-	/* UGV takes room in storage capacity: we store them with a value MAX_OBJDEFS that can't be used by objIdx */
-	for (i = 0; i < cnt; i++) {
-		objIdx[num++] = MAX_OBJDEFS;
-	}
-
-	while (num && base->capacities[CAP_ITEMS].cur > base->capacities[CAP_ITEMS].max) {
-		/* Select the item to remove */
-		const int randNumber = rand() % num;
-		if (objIdx[randNumber] >= MAX_OBJDEFS) {
-			/* A UGV is destroyed: get first one */
-			employee_t* employee = E_GetHiredRobot(base, 0);
-			/* There should be at least a UGV */
-			assert(employee);
-			E_DeleteEmployee(employee);
-		} else {
-			/* items are destroyed. We guess that all items of a given type are stored in the same location
-			 *	=> destroy all items of this type */
-			const int idx = objIdx[randNumber];
-			objDef_t *od = INVSH_GetItemByIDX(idx);
-			B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), qfalse, qfalse);
-		}
-		REMOVE_ELEM(objIdx, randNumber, num);
-
-		/* Make sure that we don't have an infinite loop */
-		if (num <= 0)
-			break;
-	}
-	Com_DPrintf(DEBUG_CLIENT, "B_RemoveItemsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
-		base->capacities[CAP_ITEMS].cur, base->capacities[CAP_ITEMS].max);
-}
-
-/**
- * @brief Update Storage Capacity.
- * @param[in] base Pointer to the base
- * @sa B_ResetAllStatusAndCapacities_f
- */
-void B_UpdateStorageCap (base_t *base)
-{
-	int i;
-
-	base->capacities[CAP_ITEMS].cur = 0;
-
-	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *obj = INVSH_GetItemByIDX(i);
-
-		if (!B_ItemIsStoredInBaseStorage(obj))
-			continue;
-
-		base->capacities[CAP_ITEMS].cur += B_ItemInBase(obj, base) * obj->size;
-	}
-
-	/* UGV takes room in storage capacity */
-	base->capacities[CAP_ITEMS].cur += UGV_SIZE * E_CountHired(base, EMPL_ROBOT);
 }
 
 /**
@@ -3640,6 +3040,7 @@ int B_AntimatterInBase (const base_t *base)
 void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 {
 	objDef_t *od;
+	capacities_t *cap;
 
 	assert(base);
 
@@ -3655,31 +3056,19 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	if (od == NULL)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
+	cap = CAP_Get(base, CAP_ANTIMATTER);
 	if (add) {	/* Adding. */
-		const int a = min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
+		const int a = min(amount, cap->max - cap->cur);
 		base->storage.numItems[od->idx] += a;
-		base->capacities[CAP_ANTIMATTER].cur += a;
+		cap->cur += a;
 	} else {	/* Removing. */
 		if (amount == 0) {
-			base->capacities[CAP_ANTIMATTER].cur = 0;
+			cap->cur = 0;
 			base->storage.numItems[od->idx] = 0;
 		} else {
-			const int a = min(amount, base->capacities[CAP_ANTIMATTER].cur);
-			base->capacities[CAP_ANTIMATTER].cur -= a;
+			const int a = min(amount, cap->cur);
+			cap->cur -= a;
 			base->storage.numItems[od->idx] -= a;
 		}
 	}
-}
-
-/**
- * @brief Remove exceeding antimatter if an antimatter tank has been destroyed.
- * @param[in] base Pointer to the base.
- */
-void B_RemoveAntimatterExceedingCapacity (base_t *base)
-{
-	const int amount = base->capacities[CAP_ANTIMATTER].cur - base->capacities[CAP_ANTIMATTER].max;
-	if (amount <= 0)
-		return;
-
-	B_ManageAntimatter(base, amount, qfalse);
 }

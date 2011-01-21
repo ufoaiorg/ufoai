@@ -13,6 +13,12 @@ set scriptdir=..\..\contrib\scripts
 
 if NOT EXIST %i18ndir% (
 	echo %i18ndir% does not exists;
+	mkdir %i18ndir%
+	if NOT EXIST %i18ndir% (
+		echo %i18ndir% does not exists and can not be created. Aborted;
+		goto EOF
+		)
+
 )
 
 IF "%1"=="" (

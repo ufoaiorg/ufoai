@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../cl_shared.h"
@@ -62,7 +61,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
 
 	/* Add base radar coverage */
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		if (base->radar.range) {
 			CP_AddRadarCoverage(base->pos, base->radar.range, base->radar.trackingRange, qtrue);
 		}
@@ -189,7 +188,7 @@ void RADAR_DeactivateRadarOverlay (void)
 	}
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		if (base->radar.numUFOs)
 			return;
 	}
@@ -295,7 +294,7 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 	int installationIdx;
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		aircraft_t *aircraft;
 
 		RADAR_NotifyUFORemovedFromOneRadar(&base->radar, ufo, destroyed);
@@ -435,7 +434,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 		}
 	}
 
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		if (!RADAR_IsUFOSensored(&base->radar, ufo)) {
 			/* Distance from radar to UFO */
 			const float dist = GetDistanceOnGlobe(ufo->pos, base->pos);
@@ -473,7 +472,7 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 	int idx;
 	base_t *base = NULL;
 
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		const float dist = GetDistanceOnGlobe(pos, base->pos);		/* Distance from base to position */
 		if (dist <= base->radar.range)
 			return qtrue;

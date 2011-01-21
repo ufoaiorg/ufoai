@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,11 +22,11 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../client.h"
 #include "cp_campaign.h"
+#include "cp_capacity.h"
 #include "cp_aliencont_callbacks.h"
 #include "save/save_aliencont.h"
 
@@ -607,7 +607,7 @@ int AL_CountAll (void)
 	int amount = 0;
 	base_t *base = NULL;
 
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		int j;
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
@@ -736,7 +736,7 @@ qboolean AC_SaveXML (mxml_node_t * parent)
 	mxml_AddBoolValue(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		mxml_node_t *node;
 		int k;
 

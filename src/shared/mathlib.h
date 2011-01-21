@@ -163,24 +163,35 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))
 #define VectorInterpolation(p1,p2,frac,mid)	((mid)[0]=(p1)[0]+(frac)*((p2)[0]-(p1)[0]),(mid)[1]=(p1)[1]+(frac)*((p2)[1]-(p1)[1]),(mid)[2]=(p1)[2]+(frac)*((p2)[2]-(p1)[2]))
 
-/** @note  This works because the dv value is a byte value.
- *  The lowest three bits now hold the z value and the high five bits hold the direction.
- *  If the z range for cells exceed 7 (we have more than 8 levels), then we need to write
- *  a huge overhaul for this.
+/** @brief  The direction vector tells us where the actor came from (in his previous step).
+ * The pathing table holds about a million of these dvecs, so we save quite some memory by squeezing
+ * three informations into a short value:
+ * - the direction where he came from
+ * - the z-level he came from
+ * - *how* he moved. There are three special crouching condiditions
+ * -- autocrouch: standing upright in the previous cell, now crouch and stay crouched
+ * -- autocrouched: being already autochrouched in the previous cell, stand up if you get the chance
+ * -- autodive: we can stand in both cells, but there is just a small hole in the wall between them
  */
-#define DV_Z_BIT_SHIFT	3	/**< This is the bit shift needed to store the z component of a DV value */
-#define DV_Z_BIT_MASK	((1 << DV_Z_BIT_SHIFT) - 1)  /**< This is the mask to retreive the z component of a  DV value */
+typedef short dvec_t;
+//#define DV_DIR_BIT_SHIFT	3	/**< This is the bit shift needed to store the dir component of a DV value */
+#define DV_HOW_BIT_SHIFT	4	/**< This is the bit shift needed to store the 'how' component of a DV value */
+#define DV_DIR_BIT_SHIFT	8	/**< This is the bit shift needed to store the dir component of a DV value */
+#define DV_Z_BIT_MASK	0x0007	/**< The mask to retreive the z component of a  DV value */
+#define DV_HOW_BIT_MASK	0x00F0	/**< The mask to retreive the 'how' component of a  DV value */
+#define DV_DIR_BIT_MASK	0xFF00	/**< The mask to retreive the dir component of a  DV value */
+//#define DV_DIR_BIT_MASK	0x00F8	/**< The mask to retreive the dir component of a  DV value */
 
-#define makeDV(dir, z)				(((dir) << DV_Z_BIT_SHIFT) | ((z) & DV_Z_BIT_MASK))
+#define makeDV(dir, z)				(((dir) << DV_DIR_BIT_SHIFT) | ((z) & DV_Z_BIT_MASK))
 #define NewDVZ(dv, z)				(((dv) & (~DV_Z_BIT_MASK)) | ((z) & DV_Z_BIT_MASK))
-#define getDVdir(dv)				((dv) >> DV_Z_BIT_SHIFT)
+#define getDVdir(dv)				((dv) >> DV_DIR_BIT_SHIFT)
 #define getDVz(dv)					((dv) & DV_Z_BIT_MASK)
 
 #define PosAddDV(p, crouch, dv)     ((p)[0]+=dvecs[getDVdir(dv)][0], (p)[1]+=dvecs[getDVdir(dv)][1], (p)[2]=getDVz(dv), (crouch)+=dvecs[getDVdir(dv)][3])
 #define PosSubDV(p, crouch, dv)     ((p)[0]-=dvecs[getDVdir(dv)][0], (p)[1]-=dvecs[getDVdir(dv)][1], (p)[2]=getDVz(dv), (crouch)-=dvecs[getDVdir(dv)][3])
 
 int AngleToDir(int angle);
-#define AngleToDV(x)	(AngleToDir(x) << DV_Z_BIT_SHIFT)
+#define AngleToDV(x)	(AngleToDir(x) << DV_DIR_BIT_SHIFT)
 
 void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t outVector);
 void VectorClampMA(vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);

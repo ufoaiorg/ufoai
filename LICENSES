@@ -2975,9 +2975,6 @@ base/pics/maps/shots/oriental_3.jpg | GNU General Public License 2.0 or later | 
 base/pics/maps/shots/oriental_mosque.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/oriental_mosque_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/oriental_mosque_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/pipes.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/pics/maps/shots/pipes_2.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/pics/maps/shots/pipes_3.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/pics/maps/shots/pipes_const.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/pipes_const_2.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/pipes_const_3.jpg | GNU General Public License 2.0 or later | MCR
@@ -5274,6 +5271,9 @@ base/textures/tex_alienb/ab_wall05_sm.png | GNU General Public License 2.0 or la
 base/textures/tex_alienb/ab_wall06.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_wall06_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_alienb/ab_wall06_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall07.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall07_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall07_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_base/bollard.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_base/d_drkmtl_dpanelb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/d_drkmtl_dpanelb_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data

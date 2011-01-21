@@ -108,7 +108,7 @@ typedef struct le_s {
 	int thinkDelay;
 
 	/** various think function vars */
-	byte path[MAX_LE_PATHLENGTH];
+	dvec_t dvtab[MAX_LE_PATHLENGTH];
 	int pathContents[MAX_LE_PATHLENGTH];	/**< content flags of the brushes the actor is walking in */
 	int positionContents;					/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;

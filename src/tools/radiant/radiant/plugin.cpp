@@ -283,8 +283,6 @@ class Radiant
 		}
 		~Radiant ()
 		{
-			TextureBrowser_Destroy();
-
 			GlobalGameManager().destroy();
 
 			GlobalCamera().destroy();

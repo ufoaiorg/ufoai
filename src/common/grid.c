@@ -119,32 +119,15 @@ static qboolean Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t
 	return qfalse;
 }
 
-static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
+static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int c, const byte length, const int dir, const int oz, const int oc, priorityQueue_t *pqueue)
 {
 	pos4_t dummy;
-	int x, y, z;
-
-	x = toPos[0];
-	y = toPos[1];
-	z = toPos[2];
 
 	RT_AREA_TEST_POS(path, toPos, c);
 	RT_AREA_POS(path, toPos, c) = length;	/**< Store TUs for this square. */
 	RT_AREA_FROM_POS(path, toPos, c) = makeDV(dir, oz); /**< Store origination information for this square. */
-	{
-		pos3_t pos, test;
-		int crouch = c;
-		VectorSet(pos, ox, oy, oz);
-		VectorSet(test, x, y, z);
-		PosSubDV(test, crouch, RT_AREA_FROM_POS(path, toPos, c));
-		if (!VectorCompare(test, pos) || crouch != oc) {
-			Com_Printf("Grid_SetMoveData: Created faulty DV table.\nx:%i y:%i z:%i c:%i\ndir:%i\nnx:%i ny:%i nz:%i nc:%i\ntx:%i ty:%i tz:%i tc:%i\n",
-				ox, oy, oz, oc, dir, x, y, z, c, test[0], test[1], test[2], crouch);
 
-			Com_Error(ERR_DROP, "Grid_SetMoveData: Created faulty DV table.");
-		}
-	}
-	Vector4Set(dummy, x, y, z, c);
+	Vector4Set(dummy, toPos[0], toPos[1], toPos[2], c);
 	/** @todo add heuristic for A* algorithm */
 	PQueuePush(pqueue, dummy, length);
 }
@@ -165,6 +148,7 @@ typedef struct step_s {
 	 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself. */
 	qboolean hasLadderSupport;	/**< Indicates if there is a ladder present providing support. */
 
+	actorSizeEnum_t actorSize;
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
 
@@ -174,28 +158,27 @@ typedef struct step_s {
  * @brief Initialize the step_t data
  * @param[in] step The struct describing the move
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if dir is irrelevant or something went wrong
  */
-static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte crouchingState, const int dir)
+static qboolean Grid_StepInit (step_t *step, const routing_t *map, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir)
 {
 	step->map = map;
 	/** @todo flier should return true if the actor can fly. */
 	step->flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
 	step->hasLadderToClimb = qfalse;
 	step->hasLadderSupport = qfalse;
+	step->actorSize = actorSize;
 	/** @note This is the actor's height in QUANT units. */
+	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
+	 *  to the actor's actual height. */
 	step->actorHeight = ModelCeilingToQuant((float)(crouchingState ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)); /**< The actor's height */
 	step->actorCrouchedHeight = ModelCeilingToQuant((float)(PLAYER_CROUCHING_HEIGHT));
 
 	/* Ensure that dir is in bounds. */
-	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
-		return qfalse;
-
-	/* Directions 12, 14, and 15 are currently undefined. */
-	if (dir == 12 || dir == 14 || dir == 15)
-		return qfalse;
+	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
 
 	/* IMPORTANT: only fliers can use directions higher than NON_FLYING_DIRECTIONS. */
 	if (!step->flier && dir >= FLYING_DIRECTIONS) {
@@ -210,54 +193,16 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const byte cr
 	return qtrue;
 }
 
-/**
- * @brief Handle couching/uncrouching moves
- * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
- * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] len The total TUs needed to execute the move
- * @param[in] pos Current location in the map.
- * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
- * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @return false if we can't fly there
- */
-static qboolean Grid_StepCheckCrouchingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, byte len, const pos3_t pos, const int dir, byte *crouchingState)
-{
-	/* Can't stand up if standing. */
-	if (dir == DIRECTION_STAND_UP && *crouchingState == 0) {
-		return qfalse;
-	}
-	/* Can't stand up if there's not enough head room. */
-	if (dir == DIRECTION_STAND_UP && QuantToModel(Grid_Height(step->map, actorSize, pos)) >= PLAYER_STANDING_HEIGHT) {
-		return qfalse;
-	}
-	/* Can't get down if crouching. */
-	if (dir == DIRECTION_CROUCH && *crouchingState == 1) {
-		return qfalse;
-	}
-
-	/* Since we can toggle crouching, then do so. */
-	*crouchingState ^= 1;
-
-	/* Is this a better move into this cell? */
-	RT_AREA_TEST_POS(path, pos, *crouchingState);
-	if (RT_AREA_POS(path, pos, *crouchingState) <= len) {
-		return qfalse;	/* Toggling crouch is not optimum. */
-	}
-
-	return qtrue;
-}
 
 /**
  * @brief Calculate the cell the we end up in if moving in the give dir
  * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, pos3_t toPos, const int dir)
+static qboolean Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPos, const int dir)
 {
 	toPos[0] = pos[0] + dvecs[dir][0];	/**< "new" x value = starting x value + difference from chosen direction */
 	toPos[1] = pos[1] + dvecs[dir][1];	/**< "new" y value = starting y value + difference from chosen direction */
@@ -283,7 +228,6 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
  * First test for opening height availablilty. Then test for stepup compatibility. Last test for fall.
  * @note Fliers use this code only when they are walking.
  * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
@@ -291,10 +235,11 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const actorSizeEnum_t actorSi
  * @param[in] exclude Exclude this position from the forbidden list check (the actor's pos)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const pos3_t exclude)
+static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState, const pos3_t exclude)
 {
 	int nx, ny, nz;
 	int passageHeight;
+	const actorSizeEnum_t actorSize = step->actorSize;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
 	const int stepup = RT_STEPUP_POS(step->map, actorSize, pos, dir); /**< The stepup needed to get to/through the passage */
@@ -307,6 +252,11 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 	RT_CONN_TEST_POS(step->map, actorSize, pos, dir);
 	passageHeight = RT_CONN_POS(step->map, actorSize, pos, dir);
 	if (passageHeight < step->actorHeight) {
+#if 0
+		if (!crouchingState									/* not already crouching */
+		 && passageHeight < step->actorCrouchedHeight)		/* and passage is tall enough for crouching */
+		 && /* enough TUs ? */
+#endif
 		return qfalse;	/* Passage is not tall enough. */
 	}
 
@@ -386,17 +336,17 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, const actorSizeEn
 /**
  * @brief Checks if we can move in the given flying direction
  * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const pos3_t toPos, const int dir)
+static qboolean Grid_StepCheckFlyingDirections (step_t *step, const pos3_t pos, const pos3_t toPos, const int dir)
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
 	int passageHeight;
+	const actorSizeEnum_t actorSize = step->actorSize;
 
 	if (toPos[2] > pos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
@@ -424,18 +374,17 @@ static qboolean Grid_StepCheckFlyingDirections (step_t *step, const actorSizeEnu
 /**
  * @brief Checks if we can move in the given vertical direction
  * @param[in] step The struct describing the move
- * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in] pos Current location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @return false if we can't move there
  */
-static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeEnum_t actorSize, const pos3_t pos, const int dir)
+static qboolean Grid_StepCheckVerticalDirections (step_t *step, const pos3_t pos, const int dir)
 {
 	if (dir == DIRECTION_FALL) {
 		if (step->flier) {
 			/* Fliers cannot fall intentionally. */
 			return qfalse;
-		} else if (RT_FLOOR_POS(step->map, actorSize, pos) >= 0) {
+		} else if (RT_FLOOR_POS(step->map, step->actorSize, pos) >= 0) {
 			/* We cannot fall if there is a floor in this cell. */
 			return qfalse;
 		} else if (step->hasLadderSupport) {
@@ -443,7 +392,7 @@ static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeE
 			return qfalse;
 		}
 	} else if (dir == DIRECTION_CLIMB_UP) {
-		if (step->flier && QuantToModel(RT_CEILING_POS(step->map, actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
+		if (step->flier && QuantToModel(RT_CEILING_POS(step->map, step->actorSize, pos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return qfalse;
 		}
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
@@ -452,7 +401,7 @@ static qboolean Grid_StepCheckVerticalDirections (step_t *step, const actorSizeE
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
 		if (step->flier) {
-			if (RT_FLOOR_POS(step->map, actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
+			if (RT_FLOOR_POS(step->map, step->actorSize, pos) >= 0 ) { /* Can't fly down through a floor. */
 				return qfalse;
 			}
 		} else {
@@ -481,77 +430,37 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	step_t step_;
 	step_t *step = &step_;	/* temporary solution */
 	pos3_t toPos;
-	int x, y, z;
-	int nx, ny, nz;
-	byte len, oldLen;
+	byte TUsSoFar, TUsForMove, TUsAfter;
 
-	if (!Grid_StepInit(step, map, crouchingState, dir))
+	if (!Grid_StepInit(step, map, actorSize, crouchingState, dir))
 		return;		/* either dir is irrelevant or something worse happened */
 
-	x = pos[0];
-	y = pos[1];
-	z = pos[2];
-
-	RT_AREA_TEST_POS(path, pos, crouchingState);
-	oldLen = RT_AREA_POS(path, pos, crouchingState);
-
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actorSize, dir, crouchingState, oldLen);
-
-	if (oldLen >= MAX_MOVELENGTH && oldLen != ROUTING_NOT_REACHABLE) {
-		return;		/* Exiting because the TUS needed to move here are already too large. */
-	}
-
-	/* Find the number of TUs used to move in this direction. */
-	len = Grid_GetTUsForDirection(dir);
-
+	TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
+	/* Find the number of TUs used (normally) to move in this direction. */
+	TUsForMove = Grid_GetTUsForDirection(dir);
 	/* If crouching then multiply by the crouching factor. */
 	if (crouchingState == 1)
-		len *= TU_CROUCH_MOVING_FACTOR;
+		TUsForMove *= TU_CROUCH_MOVING_FACTOR;
 
-	/* Now add the TUs needed to get to the originating cell. */
-	len += oldLen;
-
-	/* If this is a crouching or crouching move, then process that motion. */
-	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
-		if (!Grid_StepCheckCrouchingDirections(step, actorSize, path, len, pos, dir, &crouchingState)) {
-			return;
-		}
-
-		/* Store move. */
-		if (pqueue)
-			Grid_SetMoveData(path, pos, crouchingState, len, dir, x, y, z, crouchingState ^ 1, pqueue);
-
-		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i.\n", x, y, z, crouchingState, len);
-		/* We are done, exit now. */
+	/* calculate the position we would normally end up if moving in the given dir. */
+	if (!Grid_StepCalcNewPos(step, pos, toPos, dir)) {
 		return;
 	}
-
-	if (!Grid_StepCalcNewPos(step, actorSize, pos, toPos, dir)) {
-		return;
-	}
-	nx = toPos[0];
-	ny = toPos[1];
-	nz = toPos[2];
-
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i to (%i %i %i)\n", x, y, z, actorSize, nx, ny, nz);
-
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
-	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
-	 *  to the actor's actual height, including crouching. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
-		if (!Grid_StepCheckFlyingDirections(step, actorSize, pos, toPos, dir)) {
+		if (!Grid_StepCheckFlyingDirections(step, pos, toPos, dir)) {
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!Grid_StepCheckWalkingDirections(step, actorSize, path, pos, toPos, dir, exclude)) {
+		if (!Grid_StepCheckWalkingDirections(step, path, pos, toPos, dir, crouchingState, exclude)) {
 			return;
 		}
 	} else {
 		/* else there is no movement that uses passages. */
 		/* If we are falling, the height difference is the floor value. */
-		if (!Grid_StepCheckVerticalDirections(step, actorSize, pos, dir)) {
+		if (!Grid_StepCheckVerticalDirections(step, pos, dir)) {
 			return;
 		}
 	}
@@ -567,24 +476,25 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	/* nz can't move out of bounds */
 	if (toPos[2] >= PATHFINDING_HEIGHT)
 		toPos[2] = PATHFINDING_HEIGHT - 1;
-	nz = toPos[2];	/* get the potentially modified z value back into business */
+
+	/* Now add the TUs needed to get to the originating cell. */
+	TUsAfter = TUsSoFar + TUsForMove;
 
 	/* Is this a better move into this cell? */
 	RT_AREA_TEST_POS(path, toPos, crouchingState);
-	if (RT_AREA_POS(path, toPos, crouchingState) <= len) {
+	if (RT_AREA_POS(path, toPos, crouchingState) <= TUsAfter) {
 		return;	/* This move is not optimum. */
 	}
 
 	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz)) {
+	if (Grid_CheckForbidden(exclude, actorSize, path, toPos[0], toPos[1], toPos[2])) {
 		return;		/* That spot is occupied. */
 	}
 
 	/* Store move. */
 	if (pqueue) {
-		Grid_SetMoveData(path, toPos, crouchingState, len, dir, x, y, z, crouchingState, pqueue);
+		Grid_SetMoveData(path, toPos, crouchingState, TUsAfter, dir, pos[2], crouchingState, pqueue);
 	}
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i\n", nx, ny, nz, crouchingState, len, RT_FLOOR(map, actorSize, x, y, z));
 }
 
 
@@ -633,26 +543,32 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	assert((from[2]) < PATHFINDING_HEIGHT);
 	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
 
+	/* set starting position to 0 TUs.*/
 	RT_AREA_POS(path, from, crouchingState) = 0;
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Start at (%i %i %i) c:%i\n", from[0], from[1], from[2], crouchingState);
 
 	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
+		byte TUsSoFar;
 		PQueuePop(&pqueue, epos);
 		VectorCopy(epos, pos);
 		count++;
 
-		/* for A*
-		if pos = goal
-			return pos
-		*/
 		/**< if reaching that square already took too many TUs,
 		 * don't bother to reach new squares *from* there. */
-		if (RT_AREA_POS(path, pos, crouchingState) >= distance)
+		TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
+		if (TUsSoFar >= distance || TUsSoFar >= MAX_MOVELENGTH)
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
+			/* Directions 12, 14, and 15 are currently undefined. */
+			if (dir == 12 || dir == 14 || dir == 15)
+				continue;
+			/* If this is a crouching or crouching move, forget it. */
+			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
+				continue;
+
 			Grid_MoveMark(map, excludeFromForbiddenList, actorSize, path, pos, epos[3], dir, &pqueue);
 		}
 	}

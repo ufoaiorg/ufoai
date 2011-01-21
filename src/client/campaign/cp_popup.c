@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../cl_shared.h"
@@ -118,7 +117,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	homebase = -1;
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		char text[MAX_VAR];
 		char const* msg;
 
@@ -405,7 +404,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	}
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		/* Check if the base should be displayed in base list
 		 * don't check range because maybe UFO will get closer */
 		if (AII_BaseCanShoot(base))
@@ -534,7 +533,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		/* Check if the base should be displayed in base list */
 		if (AII_BaseCanShoot(base)) {
 			num--;

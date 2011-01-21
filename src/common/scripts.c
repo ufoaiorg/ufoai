@@ -479,10 +479,8 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	*writtenBytes = 0;
 
 #ifdef DEBUG
-	if (b != Com_AlignPtr(b, type)) {
-		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T" - this code will CRASH on ARM CPU\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
-		Sys_Backtrace();
-	}
+	if (b != Com_AlignPtr(b, type))
+		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T"\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
 #endif
 
 	if (size) {

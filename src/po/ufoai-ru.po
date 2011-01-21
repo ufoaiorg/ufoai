@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-01-11 19:10+0600\n"
-"PO-Revision-Date: 2011-01-11 19:24+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"PO-Revision-Date: 2011-01-14 08:56+0600\n"
+"Last-Translator: Vadimuzzz <vadimuzzz@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -11054,14 +11054,12 @@ msgid "Employee is away"
 msgstr "Персонал"
 
 #: ../base/ufos/ui/hire.ufo:73
-#, fuzzy
 msgid "Unhire - Right click to remove"
-msgstr "Нанять/Уволить. Правый клик чтоб удалить"
+msgstr "Уволить — правый клик, чтобы удалить"
 
 #: ../base/ufos/ui/hire.ufo:85
-#, fuzzy
 msgid "Hire - Right click to remove"
-msgstr "Нанять/Уволить. Правый клик чтоб удалить"
+msgstr "Нанять — правый клик, чтобы удалить"
 
 #: ../base/ufos/ui/hire.ufo:256
 msgid "Rename your employee"
@@ -11253,9 +11251,8 @@ msgid "Reserve TUs for shooting."
 msgstr "Отложить ЕВ для выстрела."
 
 #: ../base/ufos/ui/hud_alt.ufo:1170
-#, fuzzy
 msgid "Alternative HUD\""
-msgstr "Альтернативный"
+msgstr "Альтернативная панель управления\""
 
 #: ../base/ufos/ui/hud_default.ufo:54
 #: ../base/ufos/ui/multiplayer.ufo:1017
@@ -11315,9 +11312,8 @@ msgstr "Ответный огонь очередями (невозможен)"
 
 # Не влезет более 14 символов
 #: ../base/ufos/ui/hud_default.ufo:1132
-#, fuzzy
 msgid "Original HUD\""
-msgstr "Оригинальный"
+msgstr "Оригинальная панель управления\""
 
 #: ../base/ufos/ui/hud_genradar.ufo:58
 msgid "Reinit"
@@ -11337,26 +11333,23 @@ msgstr "Сгенерировать все уровни"
 
 #: ../base/ufos/ui/hud_hhud.ufo:263
 msgid "RESERVED"
-msgstr ""
+msgstr "ЗАРЕЗЕРВИРОВАНО"
 
 #: ../base/ufos/ui/hud_hhud.ufo:617
-#, fuzzy
 msgid "Single shot"
-msgstr "одиночными"
+msgstr "Стрельба одиночными"
 
 #: ../base/ufos/ui/hud_hhud.ufo:621
-#, fuzzy
 msgid "Multiple shots"
-msgstr "Многопользовательская командная"
+msgstr "Стрельба очередями"
 
 #: ../base/ufos/ui/hud_hhud.ufo:635
-#, fuzzy
 msgid "Crouch reserved"
-msgstr "ЕВ зарезервировано"
+msgstr "ЕВ для приседания зарезервированы"
 
 #: ../base/ufos/ui/hud_hhud.ufo:745
 msgid "Custom HUD (by H-Hour)\""
-msgstr ""
+msgstr "Пользовательская панель управления (от H-Hour)\""
 
 #: ../base/ufos/ui/inventory.ufo:93
 msgid "Floor"
@@ -12573,7 +12566,7 @@ msgstr "GLSL шейдеры:"
 
 #: ../base/ufos/ui/options.ufo:979
 msgid "Sets the OpenGL Shader Version.  See: http://pastebin.com/QjmRus4S"
-msgstr ""
+msgstr "Установить версию шейдеров OpenGL. См. http://pastebin.com/QjmRus4S"
 
 #: ../base/ufos/ui/options.ufo:1017
 msgid "Enable OpenGL GLSL Shaders. Disable this if you experience graphical problems. ATTENTION: May require restart to take effect."
@@ -12773,19 +12766,16 @@ msgid "Enable the material system."
 msgstr "Задействовать систему материалов."
 
 #: ../base/ufos/ui/options.ufo:1384
-#, fuzzy
 msgid "Switch to low video settings"
-msgstr "Перейти к предыдущей базе"
+msgstr "Переключить настройки видео на низкое качество"
 
 #: ../base/ufos/ui/options.ufo:1398
-#, fuzzy
 msgid "Switch to medium video settings"
-msgstr "Перейти к предыдущей базе"
+msgstr "Переключить настройки видео на среднее качество"
 
 #: ../base/ufos/ui/options.ufo:1412
-#, fuzzy
 msgid "Switch to very high video settings"
-msgstr "Переключить на оружие в правой руке"
+msgstr "Переключить настройки видео на очень высокое качество"
 
 #: ../base/ufos/ui/options.ufo:1441
 msgid "Audio Settings"
@@ -13113,9 +13103,8 @@ msgid "HUD Design:"
 msgstr "Дизайн графической оболочки:"
 
 #: ../base/ufos/ui/options.ufo:2125
-#, fuzzy
 msgid "Available HUD for the battlescape mode."
-msgstr "Выберите дизайн панели управления для поля боя."
+msgstr "Доступные панели управления для поля боя."
 
 #: ../base/ufos/ui/options.ufo:2135
 msgid "Joystick Settings"
@@ -13232,9 +13221,8 @@ msgid "Decrease priority"
 msgstr "Понизить приоритет"
 
 #: ../base/ufos/ui/production.ufo:513
-#, fuzzy
 msgid "Requirements"
-msgstr "Требования:"
+msgstr "Требования"
 
 #: ../base/ufos/ui/research.ufo:42
 msgid "Add and remove scientist"
@@ -14341,9 +14329,8 @@ msgid "Awaiting game start"
 msgstr "Ожидание старта игры"
 
 #: client/battlescape/events/e_server.c:41
-#, fuzzy
 msgid "This isn't your round"
-msgstr "Сейчас не ваш ход!\n"
+msgstr "Сейчас не ваш ход"
 
 #: client/battlescape/events/e_server.c:53
 msgid "Ends current round"
@@ -14407,29 +14394,26 @@ msgid "A member of team %i was killed.\n"
 msgstr "Член отряда %i был убит.\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.c:69
-#, fuzzy, c-format
+#, c-format
 msgid "%s was revitalised\n"
-msgstr "%s был убит\n"
+msgstr "%s был реанимирован.\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.c:75
-#, fuzzy
 msgid "A civilian was revitalised.\n"
-msgstr "Мирный житель убит.\n"
+msgstr "Мирный житель был реанимирован.\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.c:78
-#, fuzzy
 msgid "An alien was revitalised.\n"
-msgstr "Пришелец был убит.\n"
+msgstr "Пришелец был реанимирован.\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.c:81
-#, fuzzy
 msgid "A soldier was revitalised.\n"
-msgstr "Боец погиб.\n"
+msgstr "Боец был реанимирован.\n"
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.c:84
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i was revitalised.\n"
-msgstr "Член отряда %i был убит.\n"
+msgstr "Член отряда %i был реанимирован.\n"
 
 #: client/battlescape/events/event/player/e_event_doendround.c:57
 msgid "Your round started!\n"
@@ -14872,9 +14856,8 @@ msgid "Not enough credits to build this\n"
 msgstr "На строительство модуля не хватает наличных средств\n"
 
 #: client/campaign/cp_base.c:1818
-#, fuzzy
 msgid "You must build next to existing buildings."
-msgstr "Перейти к меню торговли вместо уничтожения модуля"
+msgstr "Вы должны строить рядом с существующими зданиями."
 
 #: client/campaign/cp_base.c:1867
 #, c-format
@@ -15016,9 +14999,8 @@ msgid "No %s functional in base."
 msgstr "На этой базе отсутствует функциональный модуль %s."
 
 #: client/campaign/cp_base_callbacks.c:305
-#, fuzzy
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
-msgstr "Пересылка снаряжения, авиации, танков, пришельцев и персонала на другие базы"
+msgstr "Пересылка снаряжения, техники, пришельцев и персонала на другие базы"
 
 #: client/campaign/cp_base_callbacks.c:307
 msgid "Build at least a second base to transfer equipment or personnel"
@@ -15813,9 +15795,8 @@ msgid "No nation"
 msgstr "Нет государства"
 
 #: client/campaign/cp_missions.c:1334
-#, fuzzy
 msgid "Crashed"
-msgstr "Место крушения НЛО"
+msgstr "Разбился"
 
 #: client/campaign/cp_nation.c:142
 msgid "Giving up"
@@ -16599,9 +16580,9 @@ msgid "Dec"
 msgstr "Дек"
 
 #: client/campaign/cp_transfer.c:56
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
-msgstr "'%s не имеет достаточно места, предметы удалены!"
+msgstr "На базе %s нет хранилища антиматерии, антиматерия удалена!"
 
 #: client/campaign/cp_transfer.c:57
 #: client/campaign/cp_transfer.c:70
@@ -16632,12 +16613,12 @@ msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "%s не имеет изолятора, пришельцы убраны!"
 
 #: client/campaign/cp_transfer.c:133
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have enough Alien Containment space, some Aliens are removed!"
-msgstr "%s не имеет изолятора, пришельцы убраны!"
+msgstr "На базе %s недостаточно места в изоляторах, некоторые пришельцы убраны!"
 
 #: client/campaign/cp_transfer.c:148
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have enough free space. Aircraft is lost!"
 msgstr "На базе %s не хватает места в ангарах. Авиатехника потеряна!"
 
@@ -16789,9 +16770,8 @@ msgid "Storage is empty."
 msgstr "Склад пуст."
 
 #: client/campaign/cp_transfer_callbacks.c:566
-#, fuzzy
 msgid "Transfer is not possible - the base doesn't have a working Storage."
-msgstr "Транспортировка невозможна — база не имеет складов."
+msgstr "Транспортировка невозможна — база назначения не имеет функционирующих складов."
 
 #: client/campaign/cp_transfer_callbacks.c:628
 msgid "Living Quarters empty."
@@ -17435,9 +17415,9 @@ msgid "..."
 msgstr "…"
 
 #: client/cl_main.c:516
-#, fuzzy, c-format
+#, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
-msgstr "Локальная верся игры (%s) отличается от версии на сервере (%s)"
+msgstr "Локальная версия игры (%s) отличается от версии на сервере (%s)"
 
 #: client/cl_main.c:521
 msgid "Script files are not the same"

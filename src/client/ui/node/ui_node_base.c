@@ -334,13 +334,10 @@ static void UI_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
+	if (!base->map[row][col].building)
+		return;
 
-	if (base->map[row][col].building) {
-		building_t *entry = base->map[row][col].building;
-
-		assert(!base->map[row][col].blocked);
-		B_MarkBuildingDestroy(entry);
-	}
+	Cmd_ExecuteString(va("building_destroy %i %i", base->idx, base->map[row][col].building->idx));
 }
 
 /**

@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../cl_shared.h"
 #include "cp_campaign.h"
+#include "cp_capacity.h"
 #include "cp_time.h"
 #include "save/save_transfer.h"
 #include "cp_transfer_callbacks.h"
@@ -119,7 +120,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				}
 				/* alive aliens */
 				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
-					int amount = min(transfer->alienAmount[i][TRANS_ALIEN_ALIVE], B_FreeCapacity(destination, CAP_ALIENS));
+					int amount = min(transfer->alienAmount[i][TRANS_ALIEN_ALIVE], B_GetFreeCapacity(destination, CAP_ALIENS));
 
 					if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] != amount)
 						capacityWarning = qtrue;

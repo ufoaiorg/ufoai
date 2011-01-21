@@ -163,7 +163,7 @@ void G_ActorFall (edict_t *ent)
  * @param visState The visibility check state @c VIS_PERISH, @c VIS_APPEAR
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvtab, int max)
+static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, dvec_t* dvtab, int max)
 {
 	if (visState & VIS_STOP)
 		 return qtrue;
@@ -207,8 +207,9 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, by
 void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos3_t to)
 {
 	int status, initTU;
-	byte dvtab[MAX_DVTAB];
-	int dv, dir;
+	dvec_t dvtab[MAX_DVTAB];
+	int dir;
+	int dvec;
 	byte numdv, length;
 	pos3_t pos;
 	float div, truediv;
@@ -257,19 +258,19 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	ent->think = G_PhysicsStep;
 	ent->nextthink = level.time;
 
-	/* assemble dv-encoded move data */
+	/* assemble dvec-encoded move data */
 	VectorCopy(to, pos);
 	numdv = 0;
 	initTU = ent->TU;
 
-	while ((dv = gi.MoveNext(&level.pathingMap, pos, crouchingState))
+	while ((dvec = gi.MoveNext(&level.pathingMap, pos, crouchingState))
 			!= ROUTING_UNREACHABLE) {
 		const int oldZ = pos[2];
-		/* dv indicates the direction traveled to get to the new cell and the original cell height. */
+		/* dvec indicates the direction traveled to get to the new cell and the original cell height. */
 		/* We are going backwards to the origin. */
-		PosSubDV(pos, crouchingState, dv);
+		PosSubDV(pos, crouchingState, dvec);
 		/* Replace the z portion of the DV value so we can get back to where we were. */
-		dvtab[numdv++] = NewDVZ(dv, oldZ);
+		dvtab[numdv++] = NewDVZ(dvec, oldZ);
 		if (numdv >= lengthof(dvtab))
 			break;
 	}
@@ -288,11 +289,11 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			int crouchFlag;
 			const byte oldDir = ent->dir;
 
-			/* get next dv */
+			/* get next dvec */
 			numdv--;
-			dv = dvtab[numdv];
+			dvec = dvtab[numdv];
 			/* This is the direction to make the step into */
-			dir = getDVdir(dv);
+			dir = getDVdir(dvec);
 
 			/* turn around first */
 			status = G_ActorDoTurn(ent, dir);
@@ -329,7 +330,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			crouchFlag = 0;
 			/* Calculate the new position after the decrease in TUs, otherwise the game
 			 * remembers the false position if the time runs out */
-			PosAddDV(ent->pos, crouchFlag, dv);
+			PosAddDV(ent->pos, crouchFlag, dvec);
 
 			/* slower if crouched */
 			if (G_IsCrouched(ent))
@@ -400,7 +401,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 				/* write move header and always one step after another - because the next step
 				 * might already be the last one due to some stop event */
-				gi.WriteByte(dv);
+				gi.WriteShort(dvec);
 				gi.WriteShort(ent->speed);
 				gi.WriteShort(contentFlags);
 
