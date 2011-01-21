@@ -178,7 +178,7 @@ static qboolean Grid_StepInit (step_t *step, const routing_t *map, const actorSi
 	step->actorCrouchedHeight = ModelCeilingToQuant((float)(PLAYER_CROUCHING_HEIGHT));
 
 	/* Ensure that dir is in bounds. */
-	assert(dir < 0 || dir >= PATHFINDING_DIRECTIONS);
+	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
 
 	/* IMPORTANT: only fliers can use directions higher than NON_FLYING_DIRECTIONS. */
 	if (!step->flier && dir >= FLYING_DIRECTIONS) {
