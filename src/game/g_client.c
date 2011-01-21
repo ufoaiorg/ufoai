@@ -477,7 +477,7 @@ qboolean G_ActionCheckForReaction (const player_t *player, edict_t *ent, int TU)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (player_t * player, edict_t* ent, byte dvec)
+static void G_ClientTurn (player_t * player, edict_t* ent, dvec_t dvec)
 {
 	const int dir = getDVdir(dvec);
 
@@ -734,7 +734,7 @@ int G_ClientAction (player_t * player)
 
 	case PA_TURN:
 		gi.ReadFormat(format, &i);
-		G_ClientTurn(player, ent, (byte) i);
+		G_ClientTurn(player, ent, (dvec_t) i);
 		break;
 
 	case PA_MOVE:
