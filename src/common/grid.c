@@ -247,17 +247,26 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, 
 	int heightChange;
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
 	int actorStepupHeight = PATHFINDING_MAX_STEPUP;
+	int dvFlagsNew = 0;
 
 	/* This is the standard passage height for all units trying to move horizontally. */
 	RT_CONN_TEST_POS(step->map, actorSize, pos, dir);
 	passageHeight = RT_CONN_POS(step->map, actorSize, pos, dir);
 	if (passageHeight < step->actorHeight) {
 #if 0
-		if (!crouchingState									/* not already crouching */
-		 && passageHeight < step->actorCrouchedHeight)		/* and passage is tall enough for crouching */
-		 && /* enough TUs ? */
+		if (!crouchingState									/* not in std crouch mode */
+		 && passageHeight >= step->actorCrouchedHeight)	{	/* and passage is tall enough for crouching */
+			int dvFlagsOld = getDVflags(RT_AREA_POS(path, pos, crouchingState));
+
+			if (!(dvFlagsOld & DV_FLAG_AUTOCROUCH)				/* not already in auto-crouch mode */
+			 && !(dvFlagsOld & DV_FLAG_AUTOCROUCHED)) {
+				dvFlagsNew |= DV_FLAG_AUTODIVE;
+			}
+			return qfalse;
+		}
+		else
 #endif
-		return qfalse;	/* Passage is not tall enough. */
+			return qfalse;	/* Passage is not tall enough. */
 	}
 
 	/* If we are moving horizontally, use the stepup requirement of the floors.

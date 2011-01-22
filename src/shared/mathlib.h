@@ -174,17 +174,20 @@ extern const byte dvleft[CORE_DIRECTIONS];
  * -- autodive: we can stand in both cells, but there is just a small hole in the wall between them
  */
 typedef short dvec_t;
-//#define DV_DIR_BIT_SHIFT	3	/**< This is the bit shift needed to store the dir component of a DV value */
-#define DV_HOW_BIT_SHIFT	4	/**< This is the bit shift needed to store the 'how' component of a DV value */
+#define DV_FLAGS_BIT_SHIFT	4	/**< This is the bit shift needed to store the 'how' component of a DV value */
 #define DV_DIR_BIT_SHIFT	8	/**< This is the bit shift needed to store the dir component of a DV value */
-#define DV_Z_BIT_MASK	0x0007	/**< The mask to retreive the z component of a  DV value */
-#define DV_HOW_BIT_MASK	0x00F0	/**< The mask to retreive the 'how' component of a  DV value */
-#define DV_DIR_BIT_MASK	0xFF00	/**< The mask to retreive the dir component of a  DV value */
-//#define DV_DIR_BIT_MASK	0x00F8	/**< The mask to retreive the dir component of a  DV value */
+#define DV_Z_BIT_MASK		0x0007	/**< The mask to retreive the z component of a  DV value */
+#define DV_FLAGS_BIT_MASK	0x00F0	/**< The mask to retreive the 'how' component of a  DV value */
+#define DV_DIR_BIT_MASK		0xFF00	/**< The mask to retreive the dir component of a  DV value */
+
+#define DV_FLAG_AUTOCROUCH		0x01
+#define DV_FLAG_AUTOCROUCHED	0x02
+#define DV_FLAG_AUTODIVE		0x04
 
 #define makeDV(dir, z)				(((dir) << DV_DIR_BIT_SHIFT) | ((z) & DV_Z_BIT_MASK))
 #define NewDVZ(dv, z)				(((dv) & (~DV_Z_BIT_MASK)) | ((z) & DV_Z_BIT_MASK))
 #define getDVdir(dv)				((dv) >> DV_DIR_BIT_SHIFT)
+#define getDVflags(dv)				(((dv) & DV_FLAGS_BIT_MASK) >> DV_FLAGS_BIT_SHIFT)
 #define getDVz(dv)					((dv) & DV_Z_BIT_MASK)
 
 #define PosAddDV(p, crouch, dv)     ((p)[0]+=dvecs[getDVdir(dv)][0], (p)[1]+=dvecs[getDVdir(dv)][1], (p)[2]=getDVz(dv), (crouch)+=dvecs[getDVdir(dv)][3])
