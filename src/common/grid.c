@@ -233,10 +233,9 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPo
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @param[in] exclude Exclude this position from the forbidden list check (the actor's pos)
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState, const pos3_t exclude)
+static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -451,7 +450,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!Grid_StepCheckWalkingDirections(step, path, pos, toPos, dir, crouchingState, exclude)) {
+		if (!Grid_StepCheckWalkingDirections(step, path, pos, toPos, dir, crouchingState)) {
 			return;
 		}
 	} else {
