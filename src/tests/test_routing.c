@@ -201,6 +201,7 @@ static void testDvec (void)
 {
 	short dv1  = 0x0724;
 	CU_ASSERT_EQUAL(getDVdir(dv1), 0x07);
+	CU_ASSERT_EQUAL(getDVflags(dv1), 0x02);
 	CU_ASSERT_EQUAL(getDVz(dv1), 0x04);
 
 	short dv2 = makeDV(6, 3);
@@ -224,8 +225,8 @@ int UFO_AddRoutingTests (void)
 	if (CU_ADD_TEST(routingSuite, testMove) == NULL)
 		return CU_get_error();
 
-/*	if (CU_ADD_TEST(routingSuite, testDvec) == NULL)
+	if (CU_ADD_TEST(routingSuite, testDvec) == NULL)
 		return CU_get_error();
-*/
+
 	return CUE_SUCCESS;
 }
