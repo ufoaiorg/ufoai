@@ -54,15 +54,7 @@ assembly test
 {
 	size "4 4"
 
-	// Far left street going all the way up
-	fix +powercore "0 2"
-	fix +hall_v1 "2 0"
-}
-
-assembly hub
-{
-	size "4 4"
-
-	// Hub
-	fix +hub "0 0"
+	fix +hub "2 2"
+	fix +powercore "0 0"
+	fix +hall_v1 "4 0"
 }
