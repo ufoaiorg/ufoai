@@ -207,7 +207,7 @@ static void testDvec (void)
 	short dv2 = makeDV(6, 3);
 	CU_ASSERT_EQUAL(dv2, 0x0603);
 
-	dv2 = NewDVZ(dv2, 4);
+	dv2 = setDVz(dv2, 4);
 	CU_ASSERT_EQUAL(dv2, 0x0604);
 }
 

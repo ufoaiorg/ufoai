@@ -185,7 +185,7 @@ typedef short dvec_t;
 #define DV_FLAG_AUTODIVE		0x04
 
 #define makeDV(dir, z)				(((dir) << DV_DIR_BIT_SHIFT) | ((z) & DV_Z_BIT_MASK))
-#define NewDVZ(dv, z)				(((dv) & (~DV_Z_BIT_MASK)) | ((z) & DV_Z_BIT_MASK))
+#define setDVz(dv, z)				(((dv) & (~DV_Z_BIT_MASK)) | ((z) & DV_Z_BIT_MASK))
 #define getDVdir(dv)				((dv) >> DV_DIR_BIT_SHIFT)
 #define getDVflags(dv)				(((dv) & DV_FLAGS_BIT_MASK) >> DV_FLAGS_BIT_SHIFT)
 #define getDVz(dv)					((dv) & DV_Z_BIT_MASK)
