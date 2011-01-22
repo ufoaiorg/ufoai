@@ -72,37 +72,41 @@ void CIN_RunCinematic (cinematic_t *cin)
 	if (cin->replay) {
 		char name[MAX_QPATH];
 		Q_strncpyz(name, cin->name, sizeof(name));
-		CIN_PlayCinematic(cin, name);
+		CIN_OpenCinematic(cin, name);
 		cin->replay = qtrue;
 	} else {
-		CIN_StopCinematic(cin);
+		CIN_CloseCinematic(cin);
 	}
 }
 
 /**
- * @sa CIN_StopCinematic
+ * @brief Open a cinematic file and store status to a structure
+ * @sa CIN_CloseCinematic
  */
-void CIN_PlayCinematic (cinematic_t *cin, const char *fileName)
+void CIN_OpenCinematic (cinematic_t *cin, const char *fileName)
 {
 	char name[MAX_OSPATH];
 
 	Com_StripExtension(fileName, name, sizeof(name));
 
 	/* If already playing a cinematic, stop it */
-	CIN_StopCinematic(cin);
+	CIN_CloseCinematic(cin);
 
 	if (FS_CheckFile("%s.roq", name) >= 0)
-		CIN_ROQ_PlayCinematic(cin, va("%s.roq", name));
+		CIN_ROQ_OpenCinematic(cin, va("%s.roq", name));
 	else if (FS_CheckFile("%s.ogm", name) >= 0)
-		CIN_OGM_PlayCinematic(cin, va("%s.ogm", name));
-	else
+		CIN_OGM_OpenCinematic(cin, va("%s.ogm", name));
+	else {
 		Com_Printf("Could not find cinematic '%s'\n", name);
+		cin->status = CIN_STATUS_INVALID;
+	}
 }
 
 /**
+ * @brief Close a cinematic, and clean up status and memory
  * @sa CIN_PlayCinematic
  */
-void CIN_StopCinematic (cinematic_t *cin)
+void CIN_CloseCinematic (cinematic_t *cin)
 {
 	if (cin->status == CIN_STATUS_NONE)
 		return;			/* Not playing */
@@ -110,9 +114,9 @@ void CIN_StopCinematic (cinematic_t *cin)
 	cin->status = CIN_STATUS_NONE;
 
 	if (cin->cinematicType == CINEMATIC_TYPE_ROQ)
-		CIN_ROQ_StopCinematic(cin);
+		CIN_ROQ_CloseCinematic(cin);
 	else if (cin->cinematicType == CINEMATIC_TYPE_OGM)
-		CIN_OGM_StopCinematic(cin);
+		CIN_OGM_CloseCinematic(cin);
 
 	CIN_InitCinematic(cin);
 }

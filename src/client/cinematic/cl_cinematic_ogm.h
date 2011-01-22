@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct cinematic_s;
 
-int CIN_OGM_PlayCinematic(struct cinematic_s *cin, const char* filename);
+int CIN_OGM_OpenCinematic(struct cinematic_s *cin, const char* filename);
+void CIN_OGM_CloseCinematic(struct cinematic_s *cin);
 qboolean CIN_OGM_RunCinematic(struct cinematic_s *cin);
-void CIN_OGM_StopCinematic(struct cinematic_s *cin);
 
 void CIN_OGM_Init(void);
 

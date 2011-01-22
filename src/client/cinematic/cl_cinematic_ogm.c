@@ -561,7 +561,7 @@ typedef struct
  * @todo vorbis/theora-header & init in sub-functions
  * @todo "clean" error-returns ...
  */
-int CIN_OGM_PlayCinematic (cinematic_t *cin, const char* filename)
+int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 {
 	int status;
 	ogg_page og;
@@ -570,7 +570,7 @@ int CIN_OGM_PlayCinematic (cinematic_t *cin, const char* filename)
 
 	if (cin->codecData && (OGMCIN.ogmFile.f || OGMCIN.ogmFile.z)) {
 		Com_Printf("WARNING: it seams there was already a ogm running, it will be killed to start %s\n", filename);
-		CIN_OGM_StopCinematic(cin);
+		CIN_OGM_CloseCinematic(cin);
 	}
 
 	/* alloc memory for decoding of this video */
@@ -757,7 +757,7 @@ qboolean CIN_OGM_RunCinematic (cinematic_t *cin)
 	return qtrue;
 }
 
-void CIN_OGM_StopCinematic (cinematic_t *cin)
+void CIN_OGM_CloseCinematic (cinematic_t *cin)
 {
 #ifdef HAVE_XVID_H
 	/** @todo is it at the right place? StopCinematic mean we only stop 1 cinematic */

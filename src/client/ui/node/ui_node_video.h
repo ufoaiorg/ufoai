@@ -34,9 +34,12 @@ void UI_RegisterVideoNode(uiBehaviour_t *behaviour);
 #define UI_VIDEOEXTRADATA(node) UI_EXTRADATA(node, UI_VIDEOEXTRADATA_TYPE)
 #define UI_VIDEOEXTRADATACONST(node) UI_EXTRADATACONST(node, UI_VIDEOEXTRADATA_TYPE)
 
+struct uiAction_s;
+
 typedef struct {
 	cinematic_t cin;
 	qboolean nosound;
+	struct uiAction_s *onEnd;
 } videoExtraData_t;
 
 #endif

@@ -248,6 +248,15 @@ static void testRuntimeError (void)
 }
 
 /**
+ * @brief test video nodes
+ * but ATM we only check it dont crash
+ */
+static void testVideo (void)
+{
+	UFO_ExecuteTestWindow("test_video");
+}
+
+/**
  * @brief test if we can parse all samples
  */
 static void testSamples (void)
@@ -283,6 +292,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testInheritedConfunc) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testRuntimeError) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testVideo) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testSamples) == NULL)
 		return CU_get_error();
