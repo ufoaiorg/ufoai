@@ -11,6 +11,9 @@ window intro
 		onClick		{
 			cmd "ui_pop;"
 		}
+		onEnd {
+			cmd "ui_pop;"
+		}
 	}
 
 	func onWindowOpened {

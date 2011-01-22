@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
 #include "../ui_draw.h"
+#include "../ui_actions.h"
 #include "ui_node_video.h"
 #include "ui_node_abstractnode.h"
 
@@ -43,19 +44,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void UI_VideoNodeDrawOverWindow (uiNode_t *node)
 {
+	if (EXTRADATA(node).cin.status == CIN_STATUS_INVALID) {
+		/** @todo Maybe draw a black screen? */
+		return;
+	}
+
 	if (EXTRADATA(node).cin.status == CIN_STATUS_NONE) {
 		vec2_t pos;
 		qboolean nosound = UI_VIDEOEXTRADATACONST(node).nosound;
 
-		CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
+		CIN_OpenCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
+		if (EXTRADATA(node).cin.status == CIN_STATUS_INVALID) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+			return;
+		}
 
 		UI_GetNodeAbsPos(node, pos);
 		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, nosound);
 	}
 
-	if (EXTRADATA(node).cin.status) {
+	if (EXTRADATA(node).cin.status == CIN_STATUS_PLAYING || EXTRADATA(node).cin.status == CIN_STATUS_PAUSE) {
 		/* only set replay to true if video was found and is running */
 		CIN_RunCinematic(&(EXTRADATA(node).cin));
+		if (EXTRADATA(node).cin.status == CIN_STATUS_NONE) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+		}
 	}
 }
 
@@ -80,13 +93,16 @@ static void UI_VideoNodeInit (uiNode_t *node, linkedList_t *params)
 static void UI_VideoNodeClose (uiNode_t *node)
 {
 	/* If playing a cinematic, stop it */
-	CIN_StopCinematic(&(EXTRADATA(node).cin));
+	CIN_CloseCinematic(&(EXTRADATA(node).cin));
 }
 
 static const value_t properties[] = {
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
+	/** Use or not the music from the video. */
 	{"nosound", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, nosound), MEMBER_SIZEOF(EXTRADATA_TYPE, nosound)},
+	/** Invoked when video end. */
+	{"onEnd", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(videoExtraData_t, onEnd), MEMBER_SIZEOF(videoExtraData_t, onEnd)},
 	{NULL, V_NULL, 0, 0}
 };
 

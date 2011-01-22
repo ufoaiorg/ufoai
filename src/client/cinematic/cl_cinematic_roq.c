@@ -541,7 +541,7 @@ qboolean CIN_ROQ_RunCinematic (cinematic_t *cin)
 	return runState;
 }
 
-void CIN_ROQ_StopCinematic (cinematic_t *cin)
+void CIN_ROQ_CloseCinematic (cinematic_t *cin)
 {
 	if (ROQCIN.file.f || ROQCIN.file.z)
 		FS_CloseFile(&ROQCIN.file);
@@ -559,7 +559,7 @@ void CIN_ROQ_StopCinematic (cinematic_t *cin)
 	cin->codecData = NULL;
 }
 
-void CIN_ROQ_PlayCinematic (cinematic_t *cin, const char *fileName)
+void CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 {
 	roqChunk_t chunk;
 	int size;
@@ -567,7 +567,7 @@ void CIN_ROQ_PlayCinematic (cinematic_t *cin, const char *fileName)
 
 	if (cin->codecData && (ROQCIN.file.f || ROQCIN.file.z)) {
 		Com_Printf("WARNING: it seams there was already a roq running, it will be killed to start %s\n", fileName);
-		CIN_ROQ_StopCinematic(cin);
+		CIN_ROQ_CloseCinematic(cin);
 	}
 
 	assert(cin->codecData == NULL);

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/filesys.h"	/* for MAX_QPATH */
 
 enum {
+	CINEMATIC_NO_TYPE,
 	CINEMATIC_TYPE_ROQ,
 	CINEMATIC_TYPE_OGM
 };
@@ -50,8 +51,8 @@ typedef struct cinematic_s {
 	void *codecData;
 } cinematic_t;
 
-void CIN_StopCinematic(cinematic_t *cin);
-void CIN_PlayCinematic(cinematic_t *cin, const char *name);
+void CIN_OpenCinematic(cinematic_t *cin, const char *name);
+void CIN_CloseCinematic(cinematic_t *cin);
 void CIN_SetParameters(cinematic_t *cin, int x, int y, int w, int h, int cinStatus, qboolean noSound);
 void CIN_RunCinematic(cinematic_t *cin);
 void CIN_InitCinematic(cinematic_t *cin);
@@ -61,6 +62,7 @@ void CIN_Shutdown(void);
 
 typedef enum {
 	CIN_STATUS_NONE,	/**< not playing */
+	CIN_STATUS_INVALID,
 	CIN_STATUS_PLAYING,
 	CIN_STATUS_PAUSE,
 } cinStatus_t;
