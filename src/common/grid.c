@@ -232,6 +232,7 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPo
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
+ * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] exclude Exclude this position from the forbidden list check (the actor's pos)
  * @return false if we can't fly there
  */
