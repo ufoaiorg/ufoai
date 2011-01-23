@@ -680,10 +680,9 @@ base/models/aircraft/inter_starchaser/starchaser.png | GNU General Public Licens
 base/models/aircraft/inter_starchaser/starchaser_folded.md2 | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_gear.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_nm.png | GNU General Public License 2.0 | Willem Sitters
-base/models/aircraft/inter_stiletto/stiletto.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aircraft/inter_stiletto/stiletto.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aircraft/inter_stiletto/stiletto_engines.jpg | GNU General Public License 2.0 or later | Lukas "Rastaman" Beyeler
-base/models/aircraft/inter_stiletto/stiletto_engines.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/inter_stiletto/stiletto.md2 | GNU General Public License 2.0 | Julian, Origin
+base/models/aircraft/inter_stiletto/stiletto.png | GNU General Public License 2.0 | Origin, Nate Wright
+base/models/aircraft/inter_stiletto/stiletto_nm.tga | GNU General Public License 2.0 | Origin
 base/models/aircraft/inter_stingray/stingray.png | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
@@ -991,8 +990,6 @@ base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 |  | Bas
 base/models/geoscape/inter_saracen.png | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_starchaser.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/inter_starchaser.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/geoscape/inter_stiletto.jpg | GNU General Public License 2.0
-base/models/geoscape/inter_stiletto.md2 | GNU General Public License 2.0
 base/models/geoscape/inter_stingray.md2 | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/inter_stingray.png | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/missile.md2 | GNU General Public License 2.0
