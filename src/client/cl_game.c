@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "ui/node/ui_node_model.h"
 #include "../shared/parse.h"
+#include "../common/filesys.h"
 
 #define HARD_LINKED_CGAME
 
@@ -348,19 +349,28 @@ void GAME_SetMode (const cgame_export_t *gametype)
 static void UI_MapInfoGetNext (int step)
 {
 	const mapDef_t *md;
+	int ref = cls.currentSelectedMap;
 
-	cls.currentSelectedMap += step;
+	while (qtrue) {
+		cls.currentSelectedMap += step;
+		if (cls.currentSelectedMap < 0)
+			cls.currentSelectedMap = cls.numMDs - 1;
+		cls.currentSelectedMap %= cls.numMDs;
 
-	if (cls.currentSelectedMap < 0)
-		cls.currentSelectedMap = cls.numMDs - 1;
+		md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 
-	cls.currentSelectedMap %= cls.numMDs;
+		/* avoid infinit loop */
+		if (ref == cls.currentSelectedMap)
+			break;
+		/* special purpose maps are not startable without the specific context */
+		if (md->map[0] == '.')
+			continue;
 
-	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
-
-	/* special purpose maps are not startable without the specific context */
-	if (md->map[0] == '.')
-		UI_MapInfoGetNext(step);
+		if (md->map[0] != '+' && FS_CheckFile("maps/%s.bsp", md->map) != -1)
+			break;
+		if (md->map[0] == '+' && FS_CheckFile("maps/%s.ump", md->map + 1) != -1)
+			break;
+	}
 }
 
 /**
@@ -415,12 +425,20 @@ static void UI_GetMaps_f (void)
 	UI_MapInfo(0);
 }
 
-static void UI_ChangeMap_f (void)
+/**
+ * @brief Select the next available map.
+ */
+static void UI_NextMap_f (void)
 {
-	if (Q_streq(Cmd_Argv(0), "mn_nextmap"))
-		UI_MapInfo(1);
-	else
-		UI_MapInfo(-1);
+	UI_MapInfo(1);
+}
+
+/**
+ * @brief Select the previous available map.
+ */
+static void UI_PreviousMap_f (void)
+{
+	UI_MapInfo(-1);
 }
 
 static void UI_SelectMap_f (void)
@@ -940,7 +958,7 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_exit", GAME_Exit_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("game_abort", GAME_Abort_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("mn_getmaps", UI_GetMaps_f, "The initial map to show");
-	Cmd_AddCommand("mn_nextmap", UI_ChangeMap_f, "Switch to the next valid map for the selected gametype");
-	Cmd_AddCommand("mn_prevmap", UI_ChangeMap_f, "Switch to the previous valid map for the selected gametype");
+	Cmd_AddCommand("mn_nextmap", UI_NextMap_f, "Switch to the next valid map for the selected gametype");
+	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 }
