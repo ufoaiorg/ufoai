@@ -5912,6 +5912,9 @@ base/textures/tex_furniture/basket.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/bed001_b.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/chest004.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/chest004_2.jpg | GNU General Public License 2.0 or later
+base/textures/tex_furniture/chest005.png | GNU General Public License 2.0 or later | p0ss
+base/textures/tex_furniture/chest006.png | GNU General Public License 2.0 or later | p0ss
+base/textures/tex_furniture/chest006_2.png | GNU General Public License 2.0 or later | p0ss
 base/textures/tex_furniture/chest006_3.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/chest007.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/door_19 and tex_mattn/door_18
 base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or later | zark127 | models/civilians/ skins
@@ -5921,6 +5924,8 @@ base/textures/tex_furniture/couch_e.png | GNU General Public License 2.0 or late
 base/textures/tex_furniture/couch_e_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/kitchen002.png | GNU General Public License 2.0 or later | p0ss
+base/textures/tex_furniture/kitchen003.png | GNU General Public License 2.0 or later | p0ss
 base/textures/tex_furniture/seat002.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/seat003.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/seat004.png | GNU General Public License 2.0 or later | Martin Gerhardy
