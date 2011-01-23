@@ -247,22 +247,43 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, 
 	int heightChange;
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
 	int actorStepupHeight = PATHFINDING_MAX_STEPUP;
-	int dvFlagsNew = 0;
 
 	/* This is the standard passage height for all units trying to move horizontally. */
 	RT_CONN_TEST_POS(step->map, actorSize, pos, dir);
 	passageHeight = RT_CONN_POS(step->map, actorSize, pos, dir);
 	if (passageHeight < step->actorHeight) {
 #if 0
+/** I know this code could be streamlined, but until I understand it myself, plz leave it like it is !*/
+		int dvFlagsNew = 0;
 		if (!crouchingState									/* not in std crouch mode */
-		 && passageHeight >= step->actorCrouchedHeight)	{	/* and passage is tall enough for crouching */
+		 && passageHeight >= step->actorCrouchedHeight)	{	/* and passage is tall enough for crouching ? */
+															/* we should try autocrouching */
 			int dvFlagsOld = getDVflags(RT_AREA_POS(path, pos, crouchingState));
+			int toHeight = RT_CEILING_POS(step->map, actorSize, toPos) - RT_FLOOR_POS(step->map, actorSize, toPos);
+			int tuCr = Grid_GetTUsForDirection(dir) * TU_CROUCH_MOVING_FACTOR;
+			int newTUs = 0;
 
-			if (!(dvFlagsOld & DV_FLAG_AUTOCROUCH)				/* not already in auto-crouch mode */
-			 && !(dvFlagsOld & DV_FLAG_AUTOCROUCHED)) {
-				dvFlagsNew |= DV_FLAG_AUTODIVE;
+			if (toHeight >= step->actorHeight) {			/* can we stand in the new cell ? */
+				if ((dvFlagsOld & DV_FLAG_AUTOCROUCH)		/* already in auto-crouch mode ? */
+				 || (dvFlagsOld & DV_FLAG_AUTOCROUCHED)) {
+					dvFlagsNew |= DV_FLAG_AUTOCROUCHED;		/* keep that ! */
+					newTUs = tuCr + TU_CROUCH;				/* TUs for crouching plus getting up */
+				}
+				else {
+					dvFlagsNew |= DV_FLAG_AUTODIVE;
+					newTUs = tuCr + 2 * TU_CROUCH;			/* TUs for crouching plus getting down and up */
+				}
 			}
-			return qfalse;
+			else {											/* we can't stand there */
+				if (dvFlagsOld & DV_FLAG_AUTOCROUCHED) {
+					dvFlagsNew |= DV_FLAG_AUTOCROUCHED;		/* keep that ! */
+					newTUs = tuCr;							/* TUs just for crouching */
+				}
+				else {
+					dvFlagsNew |= DV_FLAG_AUTOCROUCH;		/* get down ! */
+					newTUs = tuCr + TU_CROUCH;				/* TUs for crouching plus getting down */
+				}
+			}
 		}
 		else
 #endif
