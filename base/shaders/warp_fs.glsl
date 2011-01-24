@@ -5,6 +5,10 @@
 
 #include "fog_fs.glsl"
 
+#if r_postprocess
+#extension GL_ARB_draw_buffers : enable
+#endif
+
 uniform vec4 OFFSET;
 uniform float GLOWSCALE;
 

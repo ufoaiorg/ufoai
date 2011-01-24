@@ -3,6 +3,8 @@
  * @brief Atmosphere fragment shader.
  */
 
+#extension GL_ARB_draw_buffers : enable
+
 #ifndef glsl110
 	/** Linkage into a shader from a previous stage, variable is copied in.*/
 	#define in_qualifier in
