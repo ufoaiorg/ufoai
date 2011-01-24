@@ -195,14 +195,9 @@ menu_model inter_starchaser
 }
 
 // ============== Stiletto Interceptor =====================
-menu_model inter_stiletto_top
-{
-	model	"aircraft/inter_stiletto/stiletto_engines"
-}
 menu_model inter_stiletto
 {
 	model	"aircraft/inter_stiletto/stiletto"
-	need	"inter_stiletto_top"
 }
 
 // ============== UFO Carrier ======================

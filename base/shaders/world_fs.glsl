@@ -11,6 +11,11 @@
         #define in_qualifier varying
 #endif
 
+/** @todo The developer tools (see below) also need this extension */
+#if r_postprocess
+#extension GL_ARB_draw_buffers : enable
+#endif
+
 uniform int BUMPMAP;
 uniform int ROUGHMAP;
 uniform int SPECULARMAP;

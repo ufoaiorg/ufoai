@@ -11,6 +11,10 @@
         #define in_qualifier varying
 #endif
 
+#if r_postprocess
+#extension GL_ARB_draw_buffers : enable
+#endif
+
 in_qualifier vec2 tex;
 
 in_qualifier vec4 ambientLight;

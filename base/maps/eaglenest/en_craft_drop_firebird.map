@@ -1196,3 +1196,10 @@
 ( 288 576 0 ) ( 416 576 0 ) ( 288 576 96 ) tex_common/trigger 0 0 0 0.25 0.25
 }
 }
+// entity 25
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 688 28"
+"angle" "-90"
+}

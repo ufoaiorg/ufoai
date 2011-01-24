@@ -270,7 +270,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 		/* We are going backwards to the origin. */
 		PosSubDV(pos, crouchingState, dvec);
 		/* Replace the z portion of the DV value so we can get back to where we were. */
-		dvtab[numdv++] = NewDVZ(dvec, oldZ);
+		dvtab[numdv++] = setDVz(dvec, oldZ);
 		if (numdv >= lengthof(dvtab))
 			break;
 	}

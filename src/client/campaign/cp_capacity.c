@@ -25,19 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_capacity.h"
 #include "../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
-#include "../ui/ui_main.h"
-#include "../ui/ui_popup.h"
 #include "../../shared/parse.h"
-#include "cp_mapfightequip.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
 #include "cp_map.h"
 #include "cp_popup.h"
-#include "cp_radar.h"
-#include "cp_time.h"
-#include "cp_base_callbacks.h"
 #include "cp_ufo.h"
-#include "save/save_base.h"
 
 /**
  * @brief Actions to perform when destroying one hangar.

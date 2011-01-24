@@ -680,10 +680,9 @@ base/models/aircraft/inter_starchaser/starchaser.png | GNU General Public Licens
 base/models/aircraft/inter_starchaser/starchaser_folded.md2 | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_gear.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_nm.png | GNU General Public License 2.0 | Willem Sitters
-base/models/aircraft/inter_stiletto/stiletto.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aircraft/inter_stiletto/stiletto.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aircraft/inter_stiletto/stiletto_engines.jpg | GNU General Public License 2.0 or later | Lukas "Rastaman" Beyeler
-base/models/aircraft/inter_stiletto/stiletto_engines.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/inter_stiletto/stiletto.md2 | GNU General Public License 2.0 | Julian, Origin
+base/models/aircraft/inter_stiletto/stiletto.png | GNU General Public License 2.0 | Origin, Nate Wright
+base/models/aircraft/inter_stiletto/stiletto_nm.tga | GNU General Public License 2.0 | Origin
 base/models/aircraft/inter_stingray/stingray.png | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
@@ -991,8 +990,6 @@ base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 |  | Bas
 base/models/geoscape/inter_saracen.png | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_starchaser.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/inter_starchaser.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/geoscape/inter_stiletto.jpg | GNU General Public License 2.0
-base/models/geoscape/inter_stiletto.md2 | GNU General Public License 2.0
 base/models/geoscape/inter_stingray.md2 | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/inter_stingray.png | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/missile.md2 | GNU General Public License 2.0
@@ -5912,7 +5909,13 @@ base/textures/tex_furniture/basket.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/bed001_b.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/chest004.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/chest004_2.jpg | GNU General Public License 2.0 or later
+base/textures/tex_furniture/chest005.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/chest005_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/chest006.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/chest006_2.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/chest006_2_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/chest006_3.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/chest006_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/chest007.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/door_19 and tex_mattn/door_18
 base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or later | zark127 | models/civilians/ skins
 base/textures/tex_furniture/couch_d.png | GNU General Public License 2.0 or later | Voller
@@ -5920,7 +5923,12 @@ base/textures/tex_furniture/couch_d_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_furniture/couch_e.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e_sm.png | GNU General Public License 2.0 or later
-base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/kitchen001.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/kitchen002.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/kitchen002_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/kitchen003.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/kitchen003_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/seat002.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/seat003.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/seat004.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5946,6 +5954,9 @@ base/textures/tex_furniture/textil002_nm.png | GNU General Public License 2.0 or
 base/textures/tex_furniture/textil003.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/textil003_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/textil006.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/wash_a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/wash_a_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/wash_b.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/japlight.png | GNU General Public License 2.0 | MCR
 base/textures/tex_lights/land_li_blue.png | GNU General Public License 2.0 | MCR
 base/textures/tex_lights/land_li_cyan.png | GNU General Public License 2.0 | MCR
@@ -6532,6 +6543,10 @@ base/textures/tex_misc/box004a.jpg | GNU General Public License 2.0 | Werner Hö
 base/textures/tex_misc/box004b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box005a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box006.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_misc/box006_nm.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_misc/box007.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_misc/box007_nm.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_misc/box008.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box008a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -7001,6 +7016,9 @@ base/textures/tex_tech/comptex003.png | GNU General Public License 2.0 | MCR | b
 base/textures/tex_tech/comptex003_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003_lq.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex003_lq_gm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/cover002.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_tech/cover003.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_tech/cover004.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/laptop_screen.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_tech/pc_a.png | GNU General Public License 2.0 or later | nerf5000
 base/textures/tex_tech/radio001.png | GNU General Public License 2.0 or later

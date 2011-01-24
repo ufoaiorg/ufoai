@@ -2655,10 +2655,8 @@ void MAP_SetOverlay (const char *overlayID)
 			cl_geoscape_overlay->integer |= OVERLAY_NATION;
 	}
 
-	/* do nothing while the first base/installation is not build */
+	/* do nothing while the first base is not build */
 	if (!B_AtLeastOneExists())
-		return;
-	if (ccs.numInstallations == 0)
 		return;
 
 	if (Q_streq(overlayID, "xvi")) {

@@ -31,6 +31,23 @@
 	}
 }
 
+# Floor grill textues
+{
+	material tex_alienb/ab_grill01
+	bump 2.0
+	parallax 2.0
+	specular 0.2
+	hardness 0.2
+}
+{
+	material tex_alienb/ab_grill02
+	bump 2.0
+	parallax 2.0
+	specular 0.2
+	hardness 0.2
+}
+
+
 # Brown wall textures
 {
 	material tex_alienb/ab_wall03
@@ -41,6 +58,13 @@
 }
 {
 	material tex_alienb/ab_wall04
+	bump 2.0
+	parallax 2.0
+	specular 0.2
+	hardness 0.2
+}
+{
+	material tex_alienb/ab_wall07
 	bump 2.0
 	parallax 2.0
 	specular 0.2
@@ -119,13 +143,76 @@
 	hardness 1.0
 }
 
-# Crate objects
+# Crate textures
 {
-	material tex_alienb/ab_obj_c
-	bump 2.0
-	parallax 2.0
-	specular 1.0
-	hardness 1.0
+	material tex_alienb/ab_crate_a
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_b
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_c
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_d
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_e
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_f
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_g
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_h
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_i
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
+}
+{
+	material tex_alienb/ab_crate_j
+	bump 1.0
+	parallax 1.0
+	specular 0.4
+	hardness 0.4
 }
 
 # Powercore
@@ -141,24 +228,42 @@
 	}
 }
 
-# Powercore monitoring machines side panel
+# Brown panel with top/btm trim
+{
+	material tex_alienb/ab_obj_c
+	bump 2.0
+	parallax 2.0
+	specular 0.2
+	hardness 0.2
+}
+
+# Brown panel with grate and glowing lights
 {
 	material tex_alienb/ab_obj_d
 	bump 2.0
 	parallax 2.0
-	specular 1.0
-	hardness 1.0
+	specular 0.2
+	hardness 0.2
 	{
 		texture tex_alienb/ab_obj_d_pls
 		pulse 0.6
 	}
 }
 
-# Powercore monitoring machines with glow bars
+# Brown panel with glow bars
 {
 	material tex_alienb/ab_obj_e
 	bump 2.0
 	parallax 2.0
-	specular 1.0
-	hardness 1.0
+	specular 0.2
+	hardness 0.2
+}
+
+# Brown panel with top trim
+{
+	material tex_alienb/ab_obj_f
+	bump 2.0
+	parallax 2.0
+	specular 0.2
+	hardness 0.2
 }

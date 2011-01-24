@@ -127,26 +127,34 @@ static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 /**
  * @brief This function does not add statistical values. Because there is no attacker.
  * The same counts for morale states - they are not affected.
- * @note: This is a debug function to let a hole team die
+ * @note: This is a debug function to let a whole team die
  */
 static void G_KillTeam_f (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1;
 	edict_t *ent = NULL;
+	int amount = -1;
 
 	/* with a parameter we will be able to kill a specific team */
-	if (gi.Cmd_Argc() == 2)
+	if (gi.Cmd_Argc() >= 2) {
 		teamToKill = atoi(gi.Cmd_Argv(1));
+		if (gi.Cmd_Argc() == 3)
+			amount = atoi(gi.Cmd_Argv(2));
+	}
 
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
-	if (teamToKill >= 0)
+	if (teamToKill >= 0) {
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+			if (amount == 0)
+				break;
 			/* die */
 			ent->HP = 0;
 			G_ActorDieOrStun(ent, NULL);
+			amount--;
 		}
+	}
 
 	/* check for win conditions */
 	G_MatchEndCheck();

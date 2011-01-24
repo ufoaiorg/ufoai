@@ -232,10 +232,10 @@ static qboolean Grid_StepCalcNewPos (step_t *step, const pos3_t pos, pos3_t toPo
  * @param[in] pos Current location in the map.
  * @param[in] toPos The position we are moving to with this step.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
- * @param[in] exclude Exclude this position from the forbidden list check (the actor's pos)
+ * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @return false if we can't fly there
  */
-static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState, const pos3_t exclude)
+static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, const pos3_t pos, pos3_t toPos, const int dir, const byte crouchingState)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -253,11 +253,41 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, 
 	passageHeight = RT_CONN_POS(step->map, actorSize, pos, dir);
 	if (passageHeight < step->actorHeight) {
 #if 0
-		if (!crouchingState									/* not already crouching */
-		 && passageHeight < step->actorCrouchedHeight)		/* and passage is tall enough for crouching */
-		 && /* enough TUs ? */
+/** I know this code could be streamlined, but until I understand it myself, plz leave it like it is !*/
+		int dvFlagsNew = 0;
+		if (!crouchingState									/* not in std crouch mode */
+		 && passageHeight >= step->actorCrouchedHeight)	{	/* and passage is tall enough for crouching ? */
+															/* we should try autocrouching */
+			int dvFlagsOld = getDVflags(RT_AREA_POS(path, pos, crouchingState));
+			int toHeight = RT_CEILING_POS(step->map, actorSize, toPos) - RT_FLOOR_POS(step->map, actorSize, toPos);
+			int tuCr = Grid_GetTUsForDirection(dir) * TU_CROUCH_MOVING_FACTOR;
+			int newTUs = 0;
+
+			if (toHeight >= step->actorHeight) {			/* can we stand in the new cell ? */
+				if ((dvFlagsOld & DV_FLAG_AUTOCROUCH)		/* already in auto-crouch mode ? */
+				 || (dvFlagsOld & DV_FLAG_AUTOCROUCHED)) {
+					dvFlagsNew |= DV_FLAG_AUTOCROUCHED;		/* keep that ! */
+					newTUs = tuCr + TU_CROUCH;				/* TUs for crouching plus getting up */
+				}
+				else {
+					dvFlagsNew |= DV_FLAG_AUTODIVE;
+					newTUs = tuCr + 2 * TU_CROUCH;			/* TUs for crouching plus getting down and up */
+				}
+			}
+			else {											/* we can't stand there */
+				if (dvFlagsOld & DV_FLAG_AUTOCROUCHED) {
+					dvFlagsNew |= DV_FLAG_AUTOCROUCHED;		/* keep that ! */
+					newTUs = tuCr;							/* TUs just for crouching */
+				}
+				else {
+					dvFlagsNew |= DV_FLAG_AUTOCROUCH;		/* get down ! */
+					newTUs = tuCr + TU_CROUCH;				/* TUs for crouching plus getting down */
+				}
+			}
+		}
+		else
 #endif
-		return qfalse;	/* Passage is not tall enough. */
+			return qfalse;	/* Passage is not tall enough. */
 	}
 
 	/* If we are moving horizontally, use the stepup requirement of the floors.
@@ -321,10 +351,6 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, 
 		/* We cannot fall if STEPDOWN is defined. */
 		if (stepup & PATHFINDING_BIG_STEPDOWN) {
 			return qfalse;		/* There is stepdown from here. */
-		}
-		/* We cannot fall if there is an entity below the cell we want to move to. */
-		if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz - 1)) {
-			return qfalse;		/* The fall destination is occupied. */
 		}
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", heightChange, -actorStepupHeight);
 		heightChange = 0;
@@ -454,7 +480,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/** note that this function may modify toPos ! */
-		if (!Grid_StepCheckWalkingDirections(step, path, pos, toPos, dir, crouchingState, exclude)) {
+		if (!Grid_StepCheckWalkingDirections(step, path, pos, toPos, dir, crouchingState)) {
 			return;
 		}
 	} else {
