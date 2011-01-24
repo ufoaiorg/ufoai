@@ -1,0 +1,19 @@
+
+
+window test_video
+{
+	video thevideo
+	{
+		size		"1024 768"
+		src		"this_video_do_not_exists"
+		onClick		{
+			cmd "ui_pop;"
+		}
+	}
+
+	func onWindowOpened {
+	}
+
+	func onWindowClosed {
+	}
+}
