@@ -5,10 +5,12 @@ UFOAI_MOFILES = $(patsubst $(SRCDIR)/po/ufoai-%.po, base/i18n/%/LC_MESSAGES/ufoa
 RADIANT_MOFILES = $(patsubst $(SRCDIR)/po/uforadiant-%.po, radiant/i18n/%/LC_MESSAGES/uforadiant.mo, $(RADIANT_POFILES))
 
 $(UFOAI_MOFILES) : base/i18n/%/LC_MESSAGES/ufoai.mo : $(SRCDIR)/po/ufoai-%.po
+	@echo $^
 	$(Q)mkdir -p $(dir $@)
 	$(Q)msgfmt -c -v -o $@ $^
 
 $(RADIANT_MOFILES) : radiant/i18n/%/LC_MESSAGES/uforadiant.mo : $(SRCDIR)/po/uforadiant-%.po
+	@echo $^
 	$(Q)mkdir -p $(dir $@)
 	$(Q)msgfmt -c -v -o $@ $^
 
