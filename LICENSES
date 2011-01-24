@@ -6057,13 +6057,23 @@ base/textures/tex_material/metal012_sm.png | GNU General Public License 2.0 or l
 base/textures/tex_material/metal013.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal013_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal013_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metall001.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall001_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall002_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metall003.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall003_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall005.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall005_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall008.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall008_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metall010.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall010_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall010a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall010a_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
 base/textures/tex_material/metall011_nm.png | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
 base/textures/tex_material/red_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
