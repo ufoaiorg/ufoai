@@ -7013,6 +7013,9 @@ base/textures/tex_tech/comptex003.png | GNU General Public License 2.0 | MCR | b
 base/textures/tex_tech/comptex003_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003_lq.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex003_lq_gm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/cover002.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_tech/cover003.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_tech/cover004.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/laptop_screen.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_tech/pc_a.png | GNU General Public License 2.0 or later | nerf5000
 base/textures/tex_tech/radio001.png | GNU General Public License 2.0 or later
