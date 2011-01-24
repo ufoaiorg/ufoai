@@ -213,8 +213,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	byte numdv, length;
 	pos3_t pos;
 	float div, truediv;
-	int contentFlags;
-	vec3_t pointTrace;
 	byte* stepAmount = NULL;
 	qboolean triggers = qfalse;
 	int oldState;
@@ -341,6 +339,8 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 			if (crouchFlag == 0) { /* No change in crouch */
 				edict_t* clientAction;
+				int contentFlags;
+				vec3_t pointTrace;
 
 				G_EdictCalcOrigin(ent);
 				VectorCopy(ent->origin, pointTrace);
