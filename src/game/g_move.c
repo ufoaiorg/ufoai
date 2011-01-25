@@ -212,7 +212,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	int dvec;
 	byte numdv, length;
 	pos3_t pos;
-	float div, truediv;
+	float div;
 	byte* stepAmount = NULL;
 	qboolean triggers = qfalse;
 	int oldState;
@@ -315,8 +315,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			}
 
 			/* decrease TUs */
-			div = gi.GetTUsForDirection(dir);
-			truediv = div;
+			div = gi.GetTUsForDirection(dir, 0);
 			if (G_IsCrouched(ent) && dir < CORE_DIRECTIONS)
 				div *= TU_CROUCH_MOVING_FACTOR;
 			if ((int) (usedTUs + div) > ent->TU)
@@ -354,6 +353,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 				/* Only the PHALANX team has these stats right now. */
 				if (ent->chr.scoreMission) {
+					float truediv = gi.GetTUsForDirection(dir, 0);		/* regardless of crouching ! */
 					if (G_IsCrouched(ent))
 						ent->chr.scoreMission->movedCrouched += truediv;
 					else
