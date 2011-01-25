@@ -315,9 +315,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			}
 
 			/* decrease TUs */
-			div = gi.GetTUsForDirection(dir, 0);
-			if (G_IsCrouched(ent) && dir < CORE_DIRECTIONS)
-				div *= TU_CROUCH_MOVING_FACTOR;
+			div = gi.GetTUsForDirection(dir, G_IsCrouched(ent));
 			if ((int) (usedTUs + div) > ent->TU)
 				break;
 			usedTUs += div;
