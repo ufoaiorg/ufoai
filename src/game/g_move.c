@@ -214,7 +214,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	pos3_t pos;
 	float div;
 	byte* stepAmount = NULL;
-	qboolean triggers = qfalse;
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
@@ -416,7 +415,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				oldState = ent->state;
 				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
-					triggers = qtrue;
 					if (!clientAction)
 						status |= VIS_STOP;
 				}
