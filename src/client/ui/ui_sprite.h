@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_SPRITE_H
 #define CLIENT_UI_UI_SPRITE_H
 
-#define UI_MAX_SPRITES 128
+#define UI_MAX_SPRITES 256
 
 /**
  * @todo use a more generic name and move it to main ui
