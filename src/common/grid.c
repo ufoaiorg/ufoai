@@ -260,7 +260,7 @@ static qboolean Grid_StepCheckWalkingDirections (step_t *step, pathing_t *path, 
 															/* we should try autocrouching */
 			int dvFlagsOld = getDVflags(RT_AREA_POS(path, pos, crouchingState));
 			int toHeight = RT_CEILING_POS(step->map, actorSize, toPos) - RT_FLOOR_POS(step->map, actorSize, toPos);
-			int tuCr = Grid_GetTUsForDirection(dir) * TU_CROUCH_MOVING_FACTOR;
+			int tuCr = Grid_GetTUsForDirection(dir, 1);		/* 1 means crouched */
 			int newTUs = 0;
 
 			if (toHeight >= step->actorHeight) {			/* can we stand in the new cell ? */
@@ -463,10 +463,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 
 	TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
 	/* Find the number of TUs used (normally) to move in this direction. */
-	TUsForMove = Grid_GetTUsForDirection(dir);
-	/* If crouching then multiply by the crouching factor. */
-	if (crouchingState == 1)
-		TUsForMove *= TU_CROUCH_MOVING_FACTOR;
+	TUsForMove = Grid_GetTUsForDirection(dir, crouchingState);
 
 	/* calculate the position we would normally end up if moving in the given dir. */
 	if (!Grid_StepCalcNewPos(step, pos, toPos, dir)) {
@@ -744,10 +741,13 @@ pos_t Grid_StepUp (const routing_t *map, const actorSizeEnum_t actorSize, const 
  * @param[in] dir the direction in which we are moving
  * @return The TUs needed to move there.
  */
-int Grid_GetTUsForDirection (int dir)
+int Grid_GetTUsForDirection (int dir, int crouched)
 {
 	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
-	return TUsUsed[dir];
+	if (crouched && dir < CORE_DIRECTIONS)
+		return TUsUsed[dir] * TU_CROUCH_MOVING_FACTOR;
+	else
+		return TUsUsed[dir];
 }
 
 

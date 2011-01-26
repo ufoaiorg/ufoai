@@ -196,7 +196,7 @@ static void testMove (void)
 	}
 }
 
-/* tests for the(future) dvec format */
+/* tests for the new dvec format */
 static void testDvec (void)
 {
 	short dv1  = 0x0724;
@@ -209,6 +209,19 @@ static void testDvec (void)
 
 	dv2 = setDVz(dv2, 4);
 	CU_ASSERT_EQUAL(dv2, 0x0604);
+}
+
+static void testTUsForDir (void)
+{
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(0, 0), 2);
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(2, 0), 2);
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, 0), 3);
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, qfalse), 3);
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(0, 1), 3);	/* now crouching */
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, 1), 4);
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, qtrue), 4);
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(16, 0), 4);	/* flying takes twice as much */
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(16, 1), 4);	/* flying & crouching is still the same */
 }
 
 int UFO_AddRoutingTests (void)
@@ -226,6 +239,9 @@ int UFO_AddRoutingTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(routingSuite, testDvec) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(routingSuite, testTUsForDir) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

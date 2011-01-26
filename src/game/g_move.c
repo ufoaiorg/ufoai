@@ -212,11 +212,8 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	int dvec;
 	byte numdv, length;
 	pos3_t pos;
-	float div, truediv;
-	int contentFlags;
-	vec3_t pointTrace;
+	float div;
 	byte* stepAmount = NULL;
-	qboolean triggers = qfalse;
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
@@ -317,10 +314,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			}
 
 			/* decrease TUs */
-			div = gi.GetTUsForDirection(dir);
-			truediv = div;
-			if (G_IsCrouched(ent) && dir < CORE_DIRECTIONS)
-				div *= TU_CROUCH_MOVING_FACTOR;
+			div = gi.GetTUsForDirection(dir, G_IsCrouched(ent));
 			if ((int) (usedTUs + div) > ent->TU)
 				break;
 			usedTUs += div;
@@ -341,6 +335,8 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 			if (crouchFlag == 0) { /* No change in crouch */
 				edict_t* clientAction;
+				int contentFlags;
+				vec3_t pointTrace;
 
 				G_EdictCalcOrigin(ent);
 				VectorCopy(ent->origin, pointTrace);
@@ -354,6 +350,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 				/* Only the PHALANX team has these stats right now. */
 				if (ent->chr.scoreMission) {
+					float truediv = gi.GetTUsForDirection(dir, 0);		/* regardless of crouching ! */
 					if (G_IsCrouched(ent))
 						ent->chr.scoreMission->movedCrouched += truediv;
 					else
@@ -418,7 +415,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				oldState = ent->state;
 				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
-					triggers = qtrue;
 					if (!clientAction)
 						status |= VIS_STOP;
 				}

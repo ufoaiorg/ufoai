@@ -1084,7 +1084,7 @@ base/models/objects/aircraft/heli/heli.md2 | GNU General Public License 2.0 | In
 base/models/objects/aircraft/heli/heli_military.jpg | GNU General Public License 2.0 | Cem Cimrin | heli_uvw.tga
 base/models/objects/aircraft/heli/heli_uvw.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/models/objects/aircraft/heli2/heli2.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
-base/models/objects/aircraft/heli2/heli2.md2 | GNU General Public License 2.0 and Creative Commons Attribution-Share Alike | Ingo Ruhnke <grumbel@gmx.de>
+base/models/objects/aircraft/heli2/heli2.md2 | GNU General Public License 2.0 | Ingo Ruhnke <grumbel@gmx.de>
 base/models/objects/aircraft/heli_military/helicopter.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/heli_military/helicopter.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/hheli/hheli.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1144,18 +1144,18 @@ base/models/objects/alien/ufo_crashed/ufo_scout_engines.jpg | GNU General Public
 base/models/objects/alien/ufo_crashed/ufo_scout_engines.md2 | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/ufo_scout_hull.jpg | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/ufo_scout_hull.md2 | GNU General Public License 2.0
-base/models/objects/alien/wormhole/cable.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/cable.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/cable_hi.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/cable_low.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/wormhole.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/wormhole.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/wormhole_bump.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
+base/models/objects/alien/wormhole/cable.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/cable.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/cable_hi.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/cable_low.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/wormhole.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/wormhole.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/wormhole_bump.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/wormhole/wormhole_gm.png | GNU General Public License 2.0 or later | MCR
-base/models/objects/alien/wormhole/wormhole_hi.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/wormhole_low.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/wormhole_mid.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
-base/models/objects/alien/wormhole/wormhole_nm.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
+base/models/objects/alien/wormhole/wormhole_hi.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/wormhole_low.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/wormhole_mid.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/wormhole/wormhole_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/barrel/barrel.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/barrel/barrel.md2 | GNU General Public License 2.0 | Martin Gerhardy | Worldforge GPLed Data
 base/models/objects/barrel/barrel2.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -6057,13 +6057,23 @@ base/textures/tex_material/metal012_sm.png | GNU General Public License 2.0 or l
 base/textures/tex_material/metal013.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal013_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal013_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metall001.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall001_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall002_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metall003.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall003_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall005.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall005_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall008.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall008_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metall010.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall010_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall010a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_material/metall010a_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
 base/textures/tex_material/metall011_nm.png | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
 base/textures/tex_material/red_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
