@@ -26,34 +26,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Conversion functions from common 24-bit RGB to Android 16-bit RGB */
 
-#define CONVERT_PIXEL_RGBA8888_RGBA4444( X ) ( ( (X) & 0xf ) | ( ((X) & 0xf00) >> 4 ) | ( ((X) & 0xf0000) >> 8 ) | ( ((X) & 0xf000000) >> 12 ) )
+#define CONVERT_PIXEL_RGBA8888_RGBA4444( X ) ( ( ( (X) & 0xf0 ) / 0x10 ) | ( ((X) & 0xf000) / 0x100 ) | ( ((X) & 0xf00000) / 0x1000 ) | ( ((X) & 0xf0000000) / 0x10000 ) )
 
-#define CONVERT_RGBA8888_RGBA4444(data, length) { \
-	GLuint length2 = (length); \
-	for(int ixx = 0; ixx != length2; ixx++) {  \
-		GLuint pixel = ((GLuint *)(data))[ixx]; \
-		((GLushort *)(data))[ixx] = CONVERT_PIXEL_RGBA8888_RGBA4444( pixel ); \
-	} \
-}
+#define CONVERT_PIXEL_RGB888_RGB565( R, G, B ) ( ( B & 0xf8 ) / 0x8 ) | ( ( G & 0xfc ) / 0x4 * 0x20 ) | ( ( R & 0xf8 ) / 0x8 * 0x800 )
 
-#define CONVERT_PIXEL_RGB888_RGB565( X ) ( ( (X) & 0x1f ) | ( ((X) & 0x3f00) >> 3 ) | ( ((X) & 0x1f0000) >> 5 ) )
-
-#define CONVERT_RGB888_RGB565(data, length) { \
-	GLuint length2 = (length); \
-	for(int ixx = 0; ixx != length2; ixx++) {  \
-		GLuint pixel = ((GLuint)((unsigned char *)(data))[ixx*3]) | (((GLuint)((unsigned char *)(data))[ixx*3+1]) << 8) | (((GLuint)((unsigned char *)(data))[ixx*3+2]) << 16); \
-		((GLushort *)(data))[ixx] = CONVERT_PIXEL_RGB888_RGB565( pixel ); \
-	} \
-}
-
-#define GL_CONVERT_NATIVE_PIXEL_FORMAT_ALPHA(pixels, w, h) CONVERT_RGBA8888_RGBA4444(pixels, (w)*(h))
-#define GL_CONVERT_NATIVE_PIXEL_FORMAT_SOLID(pixels, w, h) CONVERT_RGB888_RGB565(pixels, (w)*(h))
 
 void R_TextureConvertNativePixelFormat(void * pixels, int w, int h, int alphaUsed)
 {
-	if(alphaUsed) {
-		GL_CONVERT_NATIVE_PIXEL_FORMAT_ALPHA(pixels, w, h);
-	} else {
-		GL_CONVERT_NATIVE_PIXEL_FORMAT_SOLID(pixels, w, h);
+	if(alphaUsed)
+	{
+		uint32_t * in = pixels;
+		uint16_t * out = pixels;
+		for(int y = 0; y < h; y++)
+		for(int x = 0; x < w; x++)
+		{
+			out[y*w+x] = CONVERT_PIXEL_RGBA8888_RGBA4444(in[y*w+x]);
+		}
+	}
+	else
+	{
+		uint8_t * in = pixels;
+		uint16_t * out = pixels;
+		for(int y = 0; y < h; y++)
+		for(int x = 0; x < w; x++)
+		{
+			out[y*w+x] = CONVERT_PIXEL_RGB888_RGB565( in[(y*w+x)*3], in[(y*w+x)*3+1], in[(y*w+x)*3+2] );
+		}
 	}
 }
