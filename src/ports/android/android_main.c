@@ -1,5 +1,5 @@
 /**
- * @file linux_main.c
+ * @file android_main.c
  * @brief main function and system functions
  */
 
@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <android/log.h>
 
 #include "../../common/common.h"
 #include "../system.h"
@@ -46,6 +47,9 @@ void Sys_Init (void)
  */
 int SDL_main (int argc, const char **argv)
 {
+	__android_log_print(ANDROID_LOG_INFO, "UFOAI", "===== Backtrace test =====");
+	Sys_Backtrace();
+	__android_log_print(ANDROID_LOG_INFO, "UFOAI", "===== Backtrace test =====");
 	Sys_ConsoleInit();
 	Qcommon_Init(argc, argv);
 

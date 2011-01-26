@@ -34,10 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <locale.h>
 #include <signal.h>
 #include <dirent.h>
-#ifdef ANDROID
-#include <android/log.h>
-extern void launch_android_debugger();
-#endif
 
 #include "../../common/common.h"
 #include "../system.h"
@@ -53,6 +49,11 @@ extern void launch_android_debugger();
 
 #ifdef HAVE_LINK_H
 #include <link.h>
+#endif
+
+#ifdef ANDROID
+#include <android/log.h>
+#include "../android/android_debugger.h"
 #endif
 
 const char *Sys_GetCurrentUser (void)
@@ -454,7 +455,7 @@ void Sys_Backtrace (void)
 #endif
 
 #ifdef ANDROID
-	launch_android_debugger();
+	androidDumpBacktrace();
 #endif
 
 #ifdef HAVE_SYS_UTSNAME_H
