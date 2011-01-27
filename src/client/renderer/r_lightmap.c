@@ -45,9 +45,6 @@ static void R_UploadLightmapBlock (void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	R_TextureConvertNativePixelFormat(r_lightmaps.sample_buffer, r_lightmaps.size, r_lightmaps.size, 0);
-#ifdef DEBUG
-	Com_Printf("R_UploadLightmapBlock(): glTexImage2D(): %dx%d\n", r_lightmaps.size, r_lightmaps.size);
-#endif
 	glTexImage2D(GL_TEXTURE_2D, 0, samples, r_lightmaps.size, r_lightmaps.size,
 		0, GL_RGB, GL_NATIVE_TEXTURE_PIXELFORMAT_SOLID, r_lightmaps.sample_buffer);
 

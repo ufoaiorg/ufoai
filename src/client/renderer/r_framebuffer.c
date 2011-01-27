@@ -214,9 +214,6 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	for (i = 0; i < buf->nTextures; i++) {
 		buf->textures[i] = R_GetFreeFBOTexture();
 		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
-#ifdef DEBUG
-		Com_Printf("R_CreateFramebuffer(): glTexImage2D(): %dx%d\n", buf->width, buf->height);
-#endif
 		glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filters[i]);

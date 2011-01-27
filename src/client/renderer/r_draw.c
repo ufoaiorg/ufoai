@@ -319,9 +319,6 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 		img->upload_width = scaledWidth;
 		img->upload_height = scaledHeight;
 		R_TextureConvertNativePixelFormat(scaled, scaledWidth, scaledHeight, 1);
-#ifdef DEBUG
-		Com_Printf("R_UploadData(): glTexImage2D(): %s: scaled %dx%d real %dx%d\n", name, scaledWidth, scaledHeight, width, height);
-#endif
 		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, scaled);
 	}
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -376,10 +373,6 @@ void R_DrawImage (float x, float y, const image_t *image)
 	if (!image)
 		return;
 
-#ifdef DEBUG
-	Com_Printf("R_DrawImage(): %s: %fx%f:%fx%f\n", image->name, x * viddef.rx, y * viddef.ry, image->width * viddef.rx, image->height * viddef.ry);
-	R_DumpOpenGlState();
-#endif
 	R_DrawTexture(image->texnum, x * viddef.rx, y * viddef.ry, image->width * viddef.rx, image->height * viddef.ry);
 }
 

@@ -642,9 +642,6 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	/* use a fixed texture number allocation scheme */
 	chunk->texnum = TEXNUM_FONTS + (chunk - chunkCache);
 	R_BindTexture(chunk->texnum);
-#ifdef DEBUG
-	Com_Printf("R_FontGenerateTexture(): glTexImage2D(): %dx%d\n", w, h);
-#endif
 	glTexImage2D(GL_TEXTURE_2D, 0, samples, w, h, 0, glPixelFormat, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, openGLSurface->pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
