@@ -59,11 +59,14 @@ static void R_BindTexture_ (int texnum)
 	if (texnum == r_state.active_texunit->texnum)
 		return;
 
-	assert(texnum > 0);
+	assert(texnum > 0 && texnum < MAX_GL_TEXTURE_HANDLES);
 
 	r_state.active_texunit->texnum = texnum;
 
-	glBindTexture(GL_TEXTURE_2D, texnum);
+	if( r_state.textureHandles[texnum] == 0 )
+		glGenTextures(1, &r_state.textureHandles[texnum]);
+
+	glBindTexture(GL_TEXTURE_2D, r_state.textureHandles[texnum]);
 	R_CheckError();
 }
 

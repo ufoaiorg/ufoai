@@ -128,7 +128,9 @@ static void R_FontCleanCache (void)
 	for (i = 0; i < numChunks; i++) {
 		if (!chunkCache[i].texnum)
 			continue;
-		glDeleteTextures(1, &(chunkCache[i].texnum));
+		if( r_state.textureHandles[chunkCache[i].texnum] != 0 )
+			glDeleteTextures(1, &r_state.textureHandles[chunkCache[i].texnum]);
+		r_state.textureHandles[chunkCache[i].texnum] = 0;
 		R_CheckError();
 	}
 

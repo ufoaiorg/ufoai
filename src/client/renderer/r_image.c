@@ -33,6 +33,7 @@ static image_t *imageHash[MAX_IMAGEHASH];
 image_t r_images[MAX_GL_TEXTURES];
 int r_numImages;
 
+
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
@@ -461,7 +462,9 @@ static inline void R_DeleteImage (image_t *image)
 	image_t *var, *previousVar = NULL;
 
 	/* free it */
-	glDeleteTextures(1, (GLuint *) &image->texnum);
+	if( r_state.textureHandles[image->texnum] != 0 )
+		glDeleteTextures(1, &r_state.textureHandles[image->texnum]);
+	r_state.textureHandles[image->texnum] = 0;
 	R_CheckError();
 
 	for (var = imageHash[hash]; var; var = var->hash_next) {
