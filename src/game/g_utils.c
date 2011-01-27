@@ -469,15 +469,18 @@ static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
 {
 	edict_t *trigger = NULL;
 
+	/* check all edicts to find all triggers */
 	while ((trigger = G_EdictsGetNextInUse(trigger))) {
 		if (trigger->solid == SOLID_TRIGGER) {
+			/* check if our edict is among the known triggerers of this trigger */
 			if (G_TriggerIsInList(trigger, ent)) {
+				/* if so, check if it still touches it */
 				int i;
 				for (i = 0; i < num; i++) {
 					if (touched[i] == trigger)
-						break;
+						break;	/* Yes ! */
 				}
-				if (i == num) {
+				if (i == num) {	/* No ! */
 					G_TriggerRemoveFromList(trigger, ent);
 					/* the ent left the trigger area */
 					trigger->reset(trigger, ent);
