@@ -297,10 +297,34 @@ void R_DumpOpenGlState()
 #undef CAPABILITY
 
 	char s[1024] = "";
+	GLint activeTex = 0;
+	GLfloat texEnvMode = 0;
+	const char * texEnvModeStr = "UNKNOWN";
+	GLfloat color[4];
 
 	for( int i = 0; i < sizeof(OpenGlCaps) / sizeof(OpenGlCaps[0]); i++ ) {
-		if( glIsEnabled(OpenGlCaps[i].idx) )
+		if( glIsEnabled(OpenGlCaps[i].idx) ) {
 			strcat(s, OpenGlCaps[i].text);
+			strcat(s, " ");
+		}
 	}
+
+	glGetIntegerv(GL_ACTIVE_TEXTURE, &activeTex);
+	glGetTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &texEnvMode);
+	if( fabs( texEnvMode - GL_ADD ) < 0.1f )
+		texEnvModeStr = "ADD";
+	if( fabs( texEnvMode - GL_MODULATE ) < 0.1f )
+		texEnvModeStr = "MODULATE";
+	if( fabs( texEnvMode - GL_DECAL ) < 0.1f )
+		texEnvModeStr = "DECAL";
+	if( fabs( texEnvMode - GL_BLEND ) < 0.1f )
+		texEnvModeStr = "BLEND";
+	if( fabs( texEnvMode - GL_REPLACE ) < 0.1f )
+		texEnvModeStr = "REPLACE";
+	if( fabs( texEnvMode - GL_COMBINE ) < 0.1f )
+		texEnvModeStr = "COMBINE";
+	glGetFloatv(GL_CURRENT_COLOR, color);
+
 	Com_Printf("OpenGL enabled caps: %s\n", s);
+	Com_Printf("Active texture unit: %d texEnv mode %s color %f %f %f %f\n", activeTex - GL_TEXTURE0, texEnvModeStr, color[0], color[1], color[2], color[3]);
 }
