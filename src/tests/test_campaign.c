@@ -739,6 +739,8 @@ static void testAirFight (void)
 
 	ResetCampaignData();
 
+	CP_InitOverlay();
+
 	campaign = GetCampaign();
 
 	base = CreateBase("unittestairfight", destination);
