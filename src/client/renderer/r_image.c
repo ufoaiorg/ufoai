@@ -349,6 +349,9 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		R_TextureConvertNativePixelFormat(data, scaledWidth, scaledHeight, 1);
+#ifdef DEBUG
+		Com_Printf("R_UploadTexture(): glTexImage2D(): %s: scaled %dx%d real %dx%d\n", image->name, scaledWidth, scaledHeight, width, height);
+#endif
 		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, data);
 		return;
 	}
@@ -397,6 +400,9 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	}
 
 	R_TextureConvertNativePixelFormat(scaled, scaledWidth, scaledHeight, 1);
+#ifdef DEBUG
+	Com_Printf("R_UploadTexture(): glTexImage2D(): %s: scaled %dx%d real %dx%d\n", image->name, scaledWidth, scaledHeight, width, height);
+#endif
 	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, scaled);
 	R_CheckError();
 
@@ -447,6 +453,9 @@ void R_UploadAlpha (const image_t *image, const byte *alphaData)
 	R_BindTexture(image->texnum);
 
 	/* upload alpha map into the r_dayandnighttexture */
+#ifdef DEBUG
+	Com_Printf("R_UploadAlpha(): glTexImage2D(): %s: %dx%d\n", image->name, image->width, image->height);
+#endif
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, image->width, image->height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, alphaData);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);

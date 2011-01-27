@@ -245,8 +245,62 @@ void R_PopMatrix (void)
 	glPopMatrix();
 }
 
+
 #ifndef ANDROID
+/**
+ * @brief Converts RGBA8888 or RGB888 pixel data to native OpenGL pixel format, which is RGBA4444/RGB565 on Android
+ */
 void R_TextureConvertNativePixelFormat(void * pixels, int w, int h, int alphaUsed)
 {
 }
 #endif
+
+/**
+ * @brief Dumps OpenGL state for debugging - typically every capability set with glEnable().
+ */
+void R_DumpOpenGlState()
+{
+#define CAPABILITY( X ) GL_ ## X, # X
+	/* List taken from here: http://www.khronos.org/opengles/sdk/1.1/docs/man/glIsEnabled.xml */
+	const struct { GLenum idx; const char * text } OpenGlCaps[] = {
+		CAPABILITY(ALPHA_TEST),
+		CAPABILITY(BLEND),
+		CAPABILITY(COLOR_ARRAY),
+		CAPABILITY(COLOR_LOGIC_OP),
+		CAPABILITY(COLOR_MATERIAL),
+		CAPABILITY(CULL_FACE),
+		CAPABILITY(DEPTH_TEST),
+		CAPABILITY(DITHER),
+		CAPABILITY(FOG),
+		CAPABILITY(LIGHTING),
+		CAPABILITY(LINE_SMOOTH),
+		CAPABILITY(MULTISAMPLE),
+		CAPABILITY(NORMAL_ARRAY),
+		CAPABILITY(NORMALIZE),
+		CAPABILITY(POINT_SMOOTH),
+		CAPABILITY(POLYGON_OFFSET_FILL),
+		CAPABILITY(RESCALE_NORMAL),
+		CAPABILITY(SAMPLE_ALPHA_TO_COVERAGE),
+		CAPABILITY(SAMPLE_ALPHA_TO_ONE),
+		CAPABILITY(SAMPLE_COVERAGE),
+		CAPABILITY(SCISSOR_TEST),
+		CAPABILITY(STENCIL_TEST),
+		CAPABILITY(TEXTURE_2D),
+		CAPABILITY(TEXTURE_COORD_ARRAY),
+		CAPABILITY(VERTEX_ARRAY)
+#ifdef ANDROID
+		,
+		CAPABILITY(POINT_SIZE_ARRAY_OES),
+		CAPABILITY(POINT_SPRITE_OES)
+#endif
+	};
+#undef CAPABILITY
+
+	char s[1024] = "";
+
+	for( int i = 0; i < sizeof(OpenGlCaps) / sizeof(OpenGlCaps[0]); i++ ) {
+		if( glIsEnabled(OpenGlCaps[i].idx) )
+			strcat(s, OpenGlCaps[i].text);
+	}
+	Com_Printf("OpenGL enabled caps: %s\n", s);
+}

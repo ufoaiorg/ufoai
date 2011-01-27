@@ -31,5 +31,6 @@ void R_PushMatrix(void);
 void R_InitMiscTexture(void);
 void R_ScreenShot_f(void);
 void R_ScreenShot(int x, int y, int width, int height, const char *filename, const char *ext);
+void R_DumpOpenGlState();
 
 #endif
