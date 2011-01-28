@@ -260,9 +260,9 @@ void R_TextureConvertNativePixelFormat(void * pixels, int w, int h, int alphaUse
  */
 void R_DumpOpenGlState()
 {
-#define CAPABILITY( X ) { GL_ ## X, # X }
+#define CAPABILITY( X ) GL_ ## X, # X
 	/* List taken from here: http://www.khronos.org/opengles/sdk/1.1/docs/man/glIsEnabled.xml */
-	const struct { GLenum idx; const char * text; } OpenGlCaps[] = {
+	const struct { GLenum idx; const char * text } OpenGlCaps[] = {
 		CAPABILITY(ALPHA_TEST),
 		CAPABILITY(BLEND),
 		CAPABILITY(COLOR_ARRAY),

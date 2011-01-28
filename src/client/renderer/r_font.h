@@ -27,6 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL_ttf.h>
 
+/* starting offset for texture numbers used in text chunk cache */
+#define TEXNUM_FONTS            (TEXNUM_FRAMEBUFFER_TEXTURES + MAX_GL_FRAMEBUFFERS)
+
 typedef struct font_s {
 	const char *name;
 	TTF_Font *font;
