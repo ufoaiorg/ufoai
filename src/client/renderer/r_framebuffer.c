@@ -55,9 +55,7 @@ static void R_FreeFBOTexture (int texnum)
 	assert(i >= 0);
 	assert(i < TEXNUM_FRAMEBUFFER_TEXTURES);
 	frameBufferTextures[i] = 0;
-	if( r_state.textureHandles[texnum] != 0 )
-		glDeleteTextures(1, &r_state.textureHandles[texnum]);
-	r_state.textureHandles[texnum] = 0;
+	glDeleteTextures(1, (GLuint *) &texnum);
 }
 
 void R_InitFBObjects (void)

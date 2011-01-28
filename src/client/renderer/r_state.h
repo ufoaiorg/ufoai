@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_material.h"
 #include "r_framebuffer.h"
 #include "r_light.h"
-#include "r_image.h"
 
 /* vertex arrays are used for many things */
 #ifdef ANDROID
@@ -150,10 +149,6 @@ typedef struct rstate_s {
 	qboolean roughnessmap_enabled;
 	qboolean animation_enabled;
 	qboolean renderbuffer_enabled; /**< renderbuffer vs screen as render target*/
-
-	/* Texture handles generated with glGenTextures() */
-	GLuint textureHandles[MAX_GL_TEXTURE_HANDLES];
-
 } rstate_t;
 
 extern rstate_t r_state;
