@@ -377,6 +377,10 @@ void R_DrawImage (float x, float y, const image_t *image)
 #ifdef DEBUG
 	Com_Printf("R_DrawImage(): %s: %fx%f:%fx%f\n", image->name, x * viddef.rx, y * viddef.ry, image->width * viddef.rx, image->height * viddef.ry);
 	R_DumpOpenGlState();
+	unsigned int texnum = 0;
+	while(texnum == 0)
+		texnum = r_images[random() % r_numImages].texnum ;
+	R_DrawTexture(texnum, x * viddef.rx, y * viddef.ry, image->width * viddef.rx, image->height * viddef.ry);
 #endif
 */
 
