@@ -122,6 +122,7 @@ edict_t* G_TriggerSpawn (edict_t *owner)
 	VectorCopy(maxs, trigger->maxs);
 
 	trigger->solid = SOLID_TRIGGER;
+	trigger->reset = NULL;
 
 	/* link into the world */
 	gi.LinkEdict(trigger);
@@ -171,6 +172,7 @@ void SP_trigger_hurt (edict_t *ent)
 	gi.SetModel(ent, ent->model);
 
 	ent->touch = Touch_HurtTrigger;
+	ent->reset = NULL;
 	ent->child = NULL;
 
 	gi.LinkEdict(ent);

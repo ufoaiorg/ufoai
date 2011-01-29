@@ -483,7 +483,8 @@ static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
 				if (i == num) {	/* No ! */
 					G_TriggerRemoveFromList(trigger, ent);
 					/* the ent left the trigger area */
-					trigger->reset(trigger, ent);
+					if (trigger->reset != NULL)
+						trigger->reset(trigger, ent);
 				}
 			}
 		}
