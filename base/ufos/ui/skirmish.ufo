@@ -2,6 +2,50 @@
 // SKIRMISH MENU
 // ==============
 
+component radiobutton cmpMapPreviewButton
+{
+	{
+		icon	"icons/mapselection"
+		size	"128 128"
+		cvar	"*cvar:cl_mapselected"
+		stringValue	" "
+		onClick {
+			cmd "mn_selectmap \"<node:this.id@string>\";"
+		}
+	}
+
+	image preview {
+		pos	"14 15"
+		size	"100 64"
+		src	"maps/shots/default"
+		ghost	true
+	}
+
+	string name {
+		string	"The map name"
+		pos	"14 96"
+		size	"100 32"
+		ghost	true
+	}
+
+	string id {
+		invis	true
+		string	"The map name"
+		pos	"14 96"
+		size	"100 32"
+	}
+
+	// @param <1> name of the map
+	// @param <2> image name of the map
+	// @todo we should not need more than a map id
+	func init {
+		*node:parent.name@string = "_<1>"
+		*node:parent.id@string = "<1>"
+		*node:parent@stringValue = "<1>"
+		*node:parent.preview@src = "maps/shots/<2>"
+	}
+}
+
 window skirmish
 {
 	/** @todo Remove me */
@@ -12,15 +56,70 @@ window skirmish
 	// ===========
 	image background
 	{
-		src		"background/skirmish_bg"
+		src		"background/skirmish2"
 	}
+
+	panel maplist {
+		pos	"61 50"
+		size	"282 588"
+		layout		LAYOUT_COLUMN
+		layoutColumns	2
+		layoutMargin	5
+		padding		5
+
+		onViewChange {
+			*node:root.maplist_scroll@fullsize = <fullsize>
+			*node:root.maplist_scroll@current = <viewpos>
+			*node:root.maplist_scroll@viewsize = <viewsize>
+		}
+
+		// subnode buttons added at runtime
+	}
+
+
+	/**
+	 * Callback the receive maplist from client
+	 * @param <1> "begin", "add" or "end"
+	 * @param <2> If <1> == "add", map id, else nothing
+	 * @param <3> If <1> == "add", map picture name, else nothing
+	 */
+	confunc	sk_maplist_listener {
+		if (param1 eq "begin") {
+			*cvar:count = 0
+			*cvar:cl_mapselected = ""
+			call *node:root.maplist@removeAllChild
+		} elif (param1 eq "add") {
+//			cmd "echo <1> <2> <3>"
+			call *node:root.maplist@createchild("map<cvar:count>", "cmpMapPreviewButton")
+			call *node:root.maplist.map<cvar:count>.init(param2, param3)
+			*cvar:count = (*cvar:count + 1)
+			if (*cvar:cl_mapselected eq "") {
+				*cvar:cl_mapselected = param2
+			}
+		} elif (param1 eq "end") {
+			delete *cvar:count
+			cmd "mn_selectmap \"<cvar:cl_mapselected>\""
+		} else {
+			cmd "echo sk_maplist_listener: command \"<1>\" unknown."
+		}
+	}
+
+
+	vscrollbar maplist_scroll {
+		image		"ui/scrollbar_v_green"
+		pos		"345 50"
+		height		"588"
+		onChange	{ *node:root.maplist@viewpos = <current> }
+	}
+
 	// ============
 	// BACK BUTTON
 	// ============
 	cmpMenuButton button_back
 	{
 		string		"_Back"
-		pos			"90 200"
+		pos		"724 514"
+		width		"220"
 		onClick
 		{
 			cmd "ui_pop;"
@@ -32,7 +131,8 @@ window skirmish
 	cmpMenuButton button_start
 	{
 		string		"_Start Game"
-		pos			"90 80"
+		pos		"491 514"
+		width		"220"
 		onClick
 		{
 			cmd "sk_start;"
@@ -44,7 +144,7 @@ window skirmish
 	string settings
 	{
 		string		"_Skirmish Game Settings"
-		pos			"500 80"
+		pos			"500 66"
 		size		"450 30"
 		font		"f_big"
 	}
@@ -54,7 +154,7 @@ window skirmish
 	tab create_navigation
 	{
 		{
-			pos	"462 150"
+			pos	"462 106"
 			size	"500 40"
 			cvar	*cvar:mn_skirmish_config_tab
 			onChange
@@ -79,8 +179,8 @@ window skirmish
 	cmpMapPanel panel_map
 	{
 		{
-			pos		"495 210"
-			size	"475 370"
+			pos	"495 150"
+			size	"475 330"
 		}
 		// ====================
 		// UFO(S) SELECTBOX
@@ -118,6 +218,9 @@ window skirmish
 			cvar	*cvar:rm_drop
 			dataid	OPTION_DROPSHIPS
 		}
+
+		custombutton prev_map { invis true }
+		custombutton next_map { invis true }
 	}
 	// ============
 	// OPTIONS TAB
@@ -125,8 +228,8 @@ window skirmish
 	panel panel_options
 	{
 		{
-			pos		"495 210"
-			size	"475 370"
+			pos	"495 150"
+			size	"475 330"
 		}
 		// ==========================================
 		// EQUIPMENT AI STRINGS, TEXTENTRY & BUTTONS
@@ -350,6 +453,8 @@ window skirmish
 		cmd	"game_setmode;set ai_numaliens 8;set ai_equipment multiplayer_alien;set difficulty 0;"
 		cmd "set mn_serverday 1;mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
 		*cvar:mn_skirmish_config_tab = 1
+		*cvar:cl_mapselected = "none"
+		cmd "mn_requestmaplist sk_maplist_listener"
 		call *node:root.sk_update_config_navigation
 	}
 }

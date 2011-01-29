@@ -2507,6 +2507,7 @@ base/pics/background/main_bg.png | GNU General Public License 2.0 or later |  | 
 base/pics/background/mp_team_edit_bg.png | GNU General Public License 2.0 or later
 base/pics/background/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/skirmish2.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/skirmish_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2752,6 +2753,8 @@ base/pics/icons/mail_read.png | GNU General Public License 2.0 or later |  | Bas
 base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/mapselection.png | Public Domain | bayo | SVG from data_source
+base/pics/icons/mapselection_clicked.png | Public Domain | bayo | SVG from data_source
 base/pics/icons/notify_notice.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_pause.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_sound.png | GNU General Public License 2.0 or later

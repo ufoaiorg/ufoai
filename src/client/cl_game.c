@@ -420,6 +420,45 @@ static void UI_MapInfo (int step)
 		Cvar_Set("mn_mappic3", "maps/shots/default");
 }
 
+static void UI_RequestMapList_f (void)
+{
+	const char *callbackCmd;
+	int i;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <callback>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!cls.numMDs)
+		return;
+
+	callbackCmd = Cmd_Argv(1);
+
+	Cbuf_AddText(va("%s begin;", callbackCmd));
+
+	for (i = 0; i < cls.numMDs; i++) {
+		const mapDef_t *md = Com_GetMapDefByIDX(i);
+		const char *preview;
+
+		/* special purpose maps are not startable without the specific context */
+		if (md->map[0] == '.')
+			continue;
+
+		/* do we have the map file? */
+		if (md->map[0] != '+' && FS_CheckFile("maps/%s.bsp", md->map) == -1)
+			continue;
+		if (md->map[0] == '+' && FS_CheckFile("maps/%s.ump", md->map + 1) == -1)
+			continue;
+
+		preview = md->map;
+		if (preview[0] == '+')
+			preview++;
+		Cbuf_AddText(va("%s add \"%s\" \"%s\";", callbackCmd, md->id, preview));
+	}
+	Cbuf_AddText(va("%s end;", callbackCmd));
+}
+
 static void UI_GetMaps_f (void)
 {
 	UI_MapInfo(0);
@@ -961,4 +1000,5 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_nextmap", UI_NextMap_f, "Switch to the next valid map for the selected gametype");
 	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
+	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
 }
