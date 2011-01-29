@@ -9,6 +9,7 @@
  */
 
 #include "win_local.h"
+#include "../../common/http.h"
 #ifdef HAVE_BFD_H
 #include <excpt.h>
 #include <imagehlp.h>
@@ -254,6 +255,11 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 					frame.AddrPC.Offset, module_name, file, line, func);
 		}
 	}
+}
+
+static void Sys_UploadCrashDump (const char *crashDump)
+{
+	HTTP_PutFile("crashdump", crashDump, "http://ufoai.ninex.info/CrashDump.php");
 }
 
 static char * g_output = NULL;

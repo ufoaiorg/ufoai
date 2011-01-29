@@ -131,6 +131,27 @@ char* HTTP_GetURL (const char *url)
 	return dl.tempBuffer;
 }
 
+void HTTP_PutFile (const char *formName, const char *fileName, const char *url)
+{
+	CURL *curl;
+	struct curl_httppost* post = NULL;
+	struct curl_httppost* last = NULL;
+
+	curl = curl_easy_init();
+
+	curl_formadd(&post, &last, CURLFORM_PTRNAME, formName, CURLFORM_FILE, fileName, CURLFORM_END);
+
+	curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
+	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
+	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
+	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
+	curl_easy_setopt(curl, CURLOPT_URL, url);
+
+	curl_easy_perform(curl);
+
+	curl_easy_cleanup(curl);
+}
+
 /**
  * @brief UFO is exiting or we're changing servers. Clean up.
  */
