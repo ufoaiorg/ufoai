@@ -205,19 +205,20 @@ void R_BeginFrame (void)
 {
 	/* change modes if necessary */
 	if (vid_mode->modified || vid_fullscreen->modified || vid_strech->modified) {
-		R_SetMode();
 #if defined(_WIN32) || defined(__APPLE__)
 		VID_Restart_f();
+#else
+		R_SetMode();
 #endif
 	}
 
 	if (Com_IsRenderModified()) {
 		Com_Printf("Modified render related cvars\n");
-		if (Cvar_PendingCvars(CVAR_R_CONTEXT))
-			VID_Restart_f();
-		else if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
+		if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
 			R_RestartPrograms_f();
 
+		/* prevent reloading of some rendering cvars */
+		Cvar_ClearVars(CVAR_R_MASK);
 		Com_SetRenderModified(qfalse);
 	}
 
