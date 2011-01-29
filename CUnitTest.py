@@ -33,6 +33,8 @@ class CUnitTest(ShellCommand):
         self.workdir = None
         if "workdir" in kwargs:
             self.workdir = kwargs["workdir"]
+        if "env" in kwargs:
+            self.env = kwargs["env"]
 
         ShellCommand.__init__(self, **kwargs)
 		self.addFactoryArguments(
