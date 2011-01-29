@@ -45,6 +45,7 @@ static vPrintfPtr_t vPrintfPtr = Com_vPrintf;
 cvar_t *developer;
 cvar_t *http_proxy;
 cvar_t *http_timeout;
+static const char *consoleLogName = "ufoconsole.log";
 static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 #ifndef DEDICATED_ONLY
@@ -374,11 +375,10 @@ void Com_vPrintf (const char *fmt, va_list ap)
 	/* logfile */
 	if (logfile_active && logfile_active->integer) {
 		if (!logfile.f) {
-			const char *name = "ufoconsole.log";
 			if (logfile_active->integer > 2)
-				FS_OpenFile(name, &logfile, FILE_APPEND);
+				FS_OpenFile(consoleLogName, &logfile, FILE_APPEND);
 			else
-				FS_OpenFile(name, &logfile, FILE_WRITE);
+				FS_OpenFile(consoleLogName, &logfile, FILE_WRITE);
 		}
 		if (logfile.f) {
 			/* strip color codes */
@@ -687,12 +687,14 @@ const char *Com_MacroExpandString (const char *text)
 void Com_UploadCrashDump (const char *crashDumpFile)
 {
 	upparam_t param;
+	const char *crashDumpURL = "http://ufoai.ninex.info/CrashDump.php";
 
 	param.name = "user";
 	param.value = Sys_GetCurrentUser();
 	param.next = NULL;
 
-	HTTP_PutFile("crashdump", crashDumpFile, "http://ufoai.ninex.info/CrashDump.php", &param);
+	HTTP_PutFile("crashdump", crashDumpFile, crashDumpURL, &param);
+	HTTP_PutFile("crashdump", va("%s/%s", FS_Gamedir(), consoleLogName), crashDumpURL, &param);
 }
 
 /**
