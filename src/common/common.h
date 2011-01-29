@@ -347,6 +347,7 @@ const char *Com_Argv(int arg);		/* range and null checked */
 void Com_ClearArgv(int arg);
 unsigned int Com_HashKey(const char *name, int hashsize);
 const char* Com_MacroExpandString(const char *text);
+void Com_UploadCrashDump(const char *crashDumpFile);
 
 void Com_Init(void);
 void Com_InitArgv(int argc, const char **argv);
