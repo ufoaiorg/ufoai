@@ -52,6 +52,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Height of a status in a 4 status 256*256 texture */
 #define UI_4STATUS_TEX_HEIGHT 64
 
+static qboolean UI_RadioButtonNodeIsSelected (uiNode_t *node)
+{
+	if (EXTRADATA(node).string == NULL) {
+		const float current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
+		return current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON;
+	} else {
+		const char *current = UI_GetReferenceString(node, EXTRADATA(node).cvar);
+		return Q_streq(current, EXTRADATA(node).string);
+	}
+}
+
 /**
  * @brief Handles RadioButton draw
  * @todo need to implement image. We can't do everything with only one icon (or use nother icon)
@@ -60,15 +71,15 @@ static void UI_RadioButtonNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
 	uiSpriteStatus_t iconStatus;
-	const float current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	int texY;
 	const char *image;
+	const qboolean isSelected = UI_RadioButtonNodeIsSelected(node);
 
 	if (disabled) {
 		iconStatus = SPRITE_STATUS_DISABLED;
 		texY = UI_4STATUS_TEX_HEIGHT * 2;
-	} else if (current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON) {
+	} else if (isSelected) {
 		iconStatus = SPRITE_STATUS_CLICKED;
 		texY = UI_4STATUS_TEX_HEIGHT * 3;
 	} else if (node->state) {
@@ -116,13 +127,18 @@ static void UI_RadioButtonNodeActivate (uiNode_t * node)
 		return;
 
 	current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
-	/* Is we click on the action button, we can continue */
-	if (current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON)
+	/* Is we click on the already selected button, we can continue */
+	if (UI_RadioButtonNodeIsSelected(node))
 		return;
 
 	{
 		const char *cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
-		Cvar_SetValue(cvarName, EXTRADATA(node).value);
+
+		if (EXTRADATA(node).string == NULL) {
+			Cvar_SetValue(cvarName, EXTRADATA(node).value);
+		} else {
+			Cvar_Set(cvarName, EXTRADATA(node).string);
+		}
 		if (node->onChange)
 			UI_ExecuteEventActions(node, node->onChange);
 	}
@@ -140,8 +156,11 @@ static void UI_RadioButtonNodeClick (uiNode_t * node, int x, int y)
 }
 
 static const value_t properties[] = {
-	/* Value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
+	/* Numerical value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
 	{"value", V_FLOAT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), MEMBER_SIZEOF(EXTRADATA_TYPE, value)},
+	/* String Value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
+	{"stringValue", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, string), 0},
+
 	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
 	{"cvar", V_UI_CVAR, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 	/* Icon used to display the node */
