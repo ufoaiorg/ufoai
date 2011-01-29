@@ -1020,6 +1020,9 @@ static void testDateHandling (void)
 	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
 }
 
+/**
+ * see bug #3166234
+ */
 static void testCampaignDateHandling (void)
 {
 	campaign_t *campaign;
@@ -1028,7 +1031,7 @@ static void testCampaignDateHandling (void)
 
 	ResetCampaignData();
 
-	base = CreateBase("unittestcampaignrun", destination);
+	base = CreateBase("unittestcampaigntime", destination);
 
 	campaign = GetCampaign();
 
