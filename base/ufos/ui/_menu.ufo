@@ -238,6 +238,7 @@ component panel cmpMapPanel
 		pos			"10 200"
 		size		"280 20"
 	}
+
 	selectbox daynight_box
 	{
 		{
@@ -257,4 +258,21 @@ component panel cmpMapPanel
 			value	"1"
 		}
 	}
+/*
+	radiobutton day_box {
+		pos		"240 200"
+		size	"64 64"
+		cvar	*cvar:mn_serverday
+		value	"1"
+		icon	"icons/daytime_day"
+	}
+
+	radiobutton night_box {
+		pos		"320 200"
+		size	"64 64"
+		cvar	*cvar:mn_serverday
+		value	"0"
+		icon	"icons/daytime_night"
+	}
+*/
 }
