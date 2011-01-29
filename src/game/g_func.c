@@ -234,13 +234,14 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		gi.LinkEdict(door);
 
 		/* closed is the standard, opened is handled above - we need an active
-		 * team here already, otherwise this is a bug */
-		assert(G_MatchIsRunning());
-		/* let everybody know, that the door closes */
-		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
-		gi.WriteShort(door->number);
-		if (door->noise[0] != '\0')
-			G_EventSpawnSound(door, door->origin, door->noise);
+		 * team here already */
+		if (G_MatchIsRunning()) {
+			/* let everybody know, that the door closes */
+			gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
+			gi.WriteShort(door->number);
+			if (door->noise[0] != '\0')
+				G_EventSpawnSound(door, door->origin, door->noise);
+		}
 	} else
 		return qfalse;
 
