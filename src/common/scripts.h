@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 
 #ifndef ALIGN_PTR
-#define ALIGN_PTR(value,size) (byte*)(((uintptr_t)value + (size - 1)) & (~(size - 1)))
+#define ALIGN_PTR(value,size) (void*)(((uintptr_t)value + (size - 1)) & (~(size - 1)))
 #endif
 
 #define MEMBER_SIZEOF(TYPE, MEMBER) sizeof(((TYPE *)0)->MEMBER)
@@ -194,7 +194,7 @@ int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, s
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
-byte* Com_AlignPtr(void *memory, valueTypes_t type);
+void* Com_AlignPtr(const void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
 const char *Com_GetLastParseError(void);
 int Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes);
