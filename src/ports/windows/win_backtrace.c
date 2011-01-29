@@ -259,11 +259,6 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 	}
 }
 
-static void Sys_UploadCrashDump (const char *crashDump)
-{
-	HTTP_PutFile("crashdump", crashDump, "http://ufoai.ninex.info/CrashDump.php");
-}
-
 static char * g_output = NULL;
 static LPTOP_LEVEL_EXCEPTION_FILTER g_prev = NULL;
 
@@ -310,7 +305,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	}
 	fputs(g_output, stderr);
 
-	Sys_UploadCrashDump(dumpFile);
+	Com_UploadCrashDump(dumpFile);
 
 	return 0;
 }

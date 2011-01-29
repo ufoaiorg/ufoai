@@ -684,6 +684,11 @@ const char *Com_MacroExpandString (const char *text)
 		return NULL;
 }
 
+void Com_UploadCrashDump (const char *crashDumpFile)
+{
+	HTTP_PutFile("crashdump", crashDumpFile, "http://ufoai.ninex.info/CrashDump.php");
+}
+
 /**
  * @brief Console completion for command and variables
  * @sa Key_CompleteCommand
