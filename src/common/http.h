@@ -53,8 +53,14 @@ typedef struct dlhandle_s {
 	char		*tempBuffer;
 } dlhandle_t;
 
+typedef struct upparam_s {
+	const char *name;
+	const char *value;
+	struct upparam_s* next;
+} upparam_t;
+
 char* HTTP_GetURL(const char *url);
-void HTTP_PutFile(const char *formName, const char *fileName, const char *url);
+void HTTP_PutFile(const char *formName, const char *fileName, const char *url, const upparam_t *params);
 size_t HTTP_Recv(void *ptr, size_t size, size_t nmemb, void *stream);
 size_t HTTP_Header(void *ptr, size_t size, size_t nmemb, void *stream);
 void HTTP_Cleanup(void);

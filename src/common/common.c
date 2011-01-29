@@ -686,7 +686,13 @@ const char *Com_MacroExpandString (const char *text)
 
 void Com_UploadCrashDump (const char *crashDumpFile)
 {
-	HTTP_PutFile("crashdump", crashDumpFile, "http://ufoai.ninex.info/CrashDump.php");
+	upparam_t param;
+
+	param.name = "user";
+	param.value = Sys_GetCurrentUser();
+	param.next = NULL;
+
+	HTTP_PutFile("crashdump", crashDumpFile, "http://ufoai.ninex.info/CrashDump.php", &param);
 }
 
 /**
