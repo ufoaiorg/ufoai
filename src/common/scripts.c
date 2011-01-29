@@ -446,7 +446,7 @@ const char* Com_GetLastParseError (void)
  * @brief Align a memory to use a natural address for the data type we will write
  * @note it speed up data read, and fix crash on PPC processors
  */
-byte* Com_AlignPtr (void *memory, valueTypes_t type)
+void* Com_AlignPtr (const void *memory, valueTypes_t type)
 {
 	const size_t align = vt_aligns[type];
 	assert(memory != NULL);
