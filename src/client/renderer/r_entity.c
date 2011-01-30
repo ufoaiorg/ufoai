@@ -210,6 +210,9 @@ static void R_DrawArrow (const entity_t * e)
 	R_Color(NULL);
 }
 
+static image_t *selectedActorIndicator;
+static image_t *actorIndicator;
+
 /**
  * @brief Draws shadow and highlight effects for the entities (actors)
  * @note The origins are already transformed
@@ -219,6 +222,11 @@ static void R_DrawEntityEffects (void)
 	int i;
 
 	R_EnableBlend(qtrue);
+
+	if (actorIndicator == NULL) {
+		selectedActorIndicator = R_FindImage("pics/sfx/actor_selected", it_pic);
+		actorIndicator = R_FindImage("pics/sfx/actor", it_pic);
+	}
 
 	for (i = 0; i < refdef.numEntities; i++) {
 		const entity_t *e = &r_entities[i];
@@ -249,40 +257,43 @@ static void R_DrawEntityEffects (void)
 			glEnd();
 		}
 
-		if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
+
+		if (e->flags & RF_ACTOR) {
+			const float size = 15.0;
+			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
 			glDisable(GL_DEPTH_TEST);
-			glDisable(GL_TEXTURE_2D);
-			glEnable(GL_LINE_SMOOTH);
 
-			if (e->flags & RF_MEMBER) {
-				if (e->flags & RF_SELECTED)
-					Vector4Set(color, 0, 1, 0, 1);
-				else
-					Vector4Set(color, 0, 1, 0, 0.3);
-			} else if (e->flags & RF_ALLIED)
-				Vector4Set(color, 0, 0.5, 1, 0.3);
+			if (e->flags & RF_MEMBER)
+				Vector4Set(color, 0, 1, 0, 0.5);
+			else if (e->flags & RF_ALLIED)
+				Vector4Set(color, 0, 1, 0.5, 0.5);
+			else if (e->flags & RF_NEUTRAL)
+				Vector4Set(color, 1, 1, 0, 0.5);
 			else
-				Vector4Set(color, 0, 1, 0, 1);
+				Vector4Set(color, 1, 0, 0, 0.5);
 
+			if (e->flags & RF_SELECTED)
+				texnum = selectedActorIndicator->texnum;
+			else
+				texnum = actorIndicator->texnum;
+
+			R_BindTexture(texnum);
 			R_Color(color);
 
 			/* circle points */
-			glBegin(GL_LINE_STRIP);
-			glVertex3f(10.0, 0.0, -27.0);
-			glVertex3f(7.0, -7.0, -27.0);
-			glVertex3f(0.0, -10.0, -27.0);
-			glVertex3f(-7.0, -7.0, -27.0);
-			glVertex3f(-10.0, 0.0, -27.0);
-			glVertex3f(-7.0, 7.0, -27.0);
-			glVertex3f(0.0, 10.0, -27.0);
-			glVertex3f(7.0, 7.0, -27.0);
-			glVertex3f(10.0, 0.0, -27.0);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0, 1.0);
+			glVertex3f(-size, size, -27.5);
+			glTexCoord2f(1.0, 1.0);
+			glVertex3f(size, size, -27.5);
+			glTexCoord2f(1.0, 0.0);
+			glVertex3f(size, -size, -27.5);
+			glTexCoord2f(0.0, 0.0);
+			glVertex3f(-size, -size, -27.5);
 			glEnd();
 
-			glDisable(GL_LINE_SMOOTH);
-			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_DEPTH_TEST);
 			R_Color(NULL);
 		}
