@@ -1,0 +1,27 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxteams" "2"
+"maxlevel" "6"
+"angles_day" "-75 10"
+"angles_night" "-75 20"
+// brush 0
+{
+( 56 248 0 ) ( 56 -8 0 ) ( -8 248 0 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
+( 84 256 116 ) ( 20 256 116 ) ( 84 256 -12 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
+( 256 256 104 ) ( 256 256 -24 ) ( 256 0 104 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
+( 24 0 -64 ) ( 88 0 -64 ) ( 24 256 -64 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
+( 0 0 -8 ) ( 0 0 120 ) ( 64 0 -8 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
+( 0 0 -8 ) ( 0 256 -8 ) ( 0 0 120 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
+}
+// brush 1
+{
+( 204 256 256 ) ( 204 80 256 ) ( -4 256 256 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 208 256 128 ) ( 0 256 128 ) ( 208 256 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 256 256 128 ) ( 256 256 0 ) ( 256 80 128 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 0 80 0 ) ( 208 80 0 ) ( 0 256 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 8 0 0 ) ( 8 0 128 ) ( 216 0 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 0 80 0 ) ( 0 256 0 ) ( 0 80 128 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+}
