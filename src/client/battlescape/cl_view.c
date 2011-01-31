@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t* cl_map_debug;
 static cvar_t *cl_precache;
+static cvar_t* cl_map_displayavailablecells;
 
 /**
  * @brief Call before entering a new level, or after vid_restart
@@ -277,6 +278,11 @@ void CL_ViewRender (void)
 	/* add local entities to the renderer chain */
 	LE_AddToScene();
 	/* adds pathing data */
+
+	if (cl_map_displayavailablecells->integer) {
+		CL_AddActorPathing();
+	}
+
 	if (cl_map_debug->integer) {
 		if (cl_map_debug->integer & MAPDEBUG_PATHING)
 			CL_AddPathing();
@@ -287,6 +293,8 @@ void CL_ViewRender (void)
 		if (cl_map_debug->integer & MAPDEBUG_WALLS)
 			CL_DisplayObstructionArrows();
 	}
+
+
 	/* adds target cursor */
 	CL_AddTargeting();
 
@@ -315,4 +323,5 @@ void CL_ViewCenterAtGridPosition (const pos3_t pos)
 void CL_ViewInit (void)
 {
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
+	cl_map_displayavailablecells = Cvar_Get("cl_map_displayavailablecells", "0", 0, "Display cells where a solider can move");
 }

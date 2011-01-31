@@ -96,6 +96,7 @@ qboolean CL_AddUGV(le_t *le, entity_t *ent);
 
 void CL_AddTargeting(void);
 void CL_AddPathing(void);
+void CL_AddActorPathing(void);
 void CL_ActorTargetAlign_f(void);
 
 void CL_ActorSetShotSettings(character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon);

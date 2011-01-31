@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh_anim.h"
 #include "r_draw.h"
 
-#define	MAX_ENTITIES	2048
+#define	MAX_ENTITIES	2048*2
 
 static entity_t r_entities[MAX_ENTITIES];
 
@@ -110,6 +110,8 @@ static void R_DrawBox (const entity_t * e)
 	R_Color(NULL);
 }
 
+static image_t *cellIndicator;
+
 /**
  * @brief Draws a marker on the ground to indicate pathing CL_AddPathingBox
  * @sa CL_AddPathing
@@ -117,58 +119,34 @@ static void R_DrawBox (const entity_t * e)
  */
 static void R_DrawFloor (const entity_t * e)
 {
-	vec3_t upper, lower;
-	float dx, dy;
+	float dx;
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
+	const float size = 4.0;
 
-	glDisable(GL_TEXTURE_2D);
-	glEnable(GL_LINE_SMOOTH);
+	if (cellIndicator == NULL) {
+		cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
+	}
+
+	glDisable(GL_DEPTH_TEST);
 
 	R_Color(color);
-
-	VectorCopy(e->origin, lower);
-	VectorCopy(e->origin, upper);
+	R_BindTexture(cellIndicator->texnum);
 
 	dx = PLAYER_WIDTH * 2;
-	dy = e->oldorigin[2];
 
-	upper[2] += dy;
-
-	glBegin(GL_QUAD_STRIP);
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[0] += dx;
-	upper[0] += dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[1] += dx;
-	upper[1] += dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[0] -= dx;
-	upper[0] -= dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[1] -= dx;
-	upper[1] -= dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
+	/* circle points */
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(e->origin[0]-size, e->origin[1]+dx+size, e->origin[2]);
+	glTexCoord2f(1.0, 1.0);
+	glVertex3f(e->origin[0]+dx+size, e->origin[1]+dx+size, e->origin[2]);
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(e->origin[0]+dx+size, e->origin[1]-size, e->origin[2]);
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(e->origin[0]-size, e->origin[1]-size, e->origin[2]);
 	glEnd();
 
-	lower[2] += dy;
-	upper[1] += dx;
-
-	glBegin(GL_QUAD_STRIP);
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[0] += dx;
-	upper[0] += dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	glEnd();
-	glDisable(GL_LINE_SMOOTH);
-
-	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
 
 	R_Color(NULL);
 }
