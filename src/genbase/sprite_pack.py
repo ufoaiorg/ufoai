@@ -264,7 +264,7 @@ def generateIconScript(icons, destDir):
 	icons.sort(cmp=iconsByName)
 	for i in icons:
 		script.write("sprite " + i.name + " {\n")
-		script.write("\timage \"packs/" + i.pack.name + "\"\n")
+		script.write("\timage \"banks/" + i.pack.name + "\"\n")
 		script.write("\tsize \"" + str(i.width()) + " " + str(i.height()) + "\"\n")
 		script.write("\ttexl \"" + str(i.pos[0]) + " " + str(i.pos[1]) + "\"\n")
 		if i.hoveredIcon:
@@ -284,7 +284,7 @@ def gen_sprite_pack(base_destination, pack_size):
 	for src in SPRITE_SRC:
 		sprites += loadIcons(src)
 	packs = generateIconPacks(sprites, pack_size)
-    pack_dest = os.path.join(base_destination, "pics", "packs")
+    pack_dest = os.path.join(base_destination, "pics", "banks")
 	savePacks(packs, pack_dest, packFormat)
     script_dest = os.path.join(base_destination, "ufos")
 	generateIconScript(sprites, script_dest)
