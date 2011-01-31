@@ -303,7 +303,31 @@ static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
 	if ((len = FS_LoadFile(path, &buf)) != -1) {
 		if ((rw = SDL_RWFromMem(buf, len))) {
 			if ((surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
+#ifdef ANDROID
+				/* TODO: ugly, but works somehow */
+				if( surf->format->Amask ) {
+					s = SDL_ConvertSurface(surf, &format, 0);
+					/*
+					if(s) {
+						SDL_FillRect(s, NULL, 0);
+						assert(surf->format->BytesPerPixel == 4);
+						for( int y = 0; y < surf->h; y++ )
+						for( int x = 0; x < surf->w; x++ ) {
+							Uint8 r, g, b, a;
+							SDL_GetRGBA(((Uint8 *)surf->pixels)[y*surf->pitch + x*4], surf->format, &r, &g, &b, &a);
+							((Uint8 *)s->pixels)[ y*s->pitch + x*4 + 3 ] = a;
+						}
+					}
+					*/
+				} else {
+					s = SDL_CreateRGBSurface(0, surf->w, surf->h, 32,
+							0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+					if(s)
+						SDL_BlitSurface(surf, NULL, s, NULL);
+				}
+#else
 				s = SDL_ConvertSurface(surf, &format, 0);
+#endif
 				SDL_FreeSurface(surf);
 			}
 			SDL_FreeRW(rw);
