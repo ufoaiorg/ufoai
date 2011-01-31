@@ -261,6 +261,7 @@ static void G_Init (void)
 	else
 		logstatsfile = NULL;
 
+	AI_Init();
 	AIL_Init();
 }
 

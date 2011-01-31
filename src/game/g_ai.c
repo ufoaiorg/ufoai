@@ -26,6 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 #include "g_ai.h"
 
+static pathing_t *hidePathingTable;
+static pathing_t *herdPathingTable;
+
+void AI_Init (void)
+{
+	hidePathingTable = NULL;
+	herdPathingTable = NULL;
+}
+
 /**
  * @brief Check whether friendly units are in the line of fire when shooting
  * @param[in] ent AI that is trying to shoot
@@ -293,14 +302,15 @@ int AI_GetHidingTeam (const edict_t *ent)
  */
 qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLeft)
 {
-	/* We need a local table to calculate the hiding steps */
-	static pathing_t hidePathingTable;
 	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const int distance = min(*tuLeft, HIDE_DIST * 2);
 
+	/* We need a local table to calculate the hiding steps */
+	if (!hidePathingTable)
+		hidePathingTable = (pathing_t *) G_TagMalloc(sizeof(*hidePathingTable), TAG_LEVEL);
 	/* search hiding spot */
-	G_MoveCalcLocal(&hidePathingTable, 0, ent, from, crouchingState, distance);
+	G_MoveCalcLocal(hidePathingTable, 0, ent, from, crouchingState, distance);
 	ent->pos[2] = from[2];
 	minX = max(from[0] - HIDE_DIST, 0);
 	minY = max(from[1] - HIDE_DIST, 0);
@@ -310,7 +320,7 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* time */
-			const pos_t delta = gi.MoveLength(&hidePathingTable, ent->pos, crouchingState, qfalse);
+			const pos_t delta = gi.MoveLength(hidePathingTable, ent->pos, crouchingState, qfalse);
 			if (delta > *tuLeft || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
@@ -338,7 +348,6 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
  */
 qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, int tu)
 {
-	static pathing_t hidePathingTable;
 	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const int distance = min(tu, HERD_DIST * 2);
@@ -349,6 +358,8 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 	edict_t* enemy = NULL;
 	vec3_t vfriend, venemy;
 
+	if (!herdPathingTable)
+		herdPathingTable = (pathing_t *) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
 	/* find the nearest enemy actor to the target*/
 	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
 		length = VectorDistSqr(target, next->origin);
@@ -360,7 +371,7 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 	assert(enemy);
 
 	/* calculate move table */
-	G_MoveCalcLocal(&hidePathingTable, 0, ent, from, crouchingState, distance);
+	G_MoveCalcLocal(herdPathingTable, 0, ent, from, crouchingState, distance);
 	ent->pos[2] = from[2];
 	minX = max(from[0] - HERD_DIST, 0);
 	minY = max(from[1] - HERD_DIST, 0);
@@ -373,7 +384,7 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* time */
-			const pos_t delta = gi.MoveLength(&hidePathingTable, ent->pos, crouchingState, qfalse);
+			const pos_t delta = gi.MoveLength(herdPathingTable, ent->pos, crouchingState, qfalse);
 			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
 				continue;
 

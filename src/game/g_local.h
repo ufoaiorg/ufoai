@@ -507,6 +507,7 @@ qboolean G_Vis(const int team, const edict_t * from, const edict_t * check, int 
 qboolean G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 
 /* g_ai.c */
+void AI_Init(void);
 extern edict_t *ai_waypointList;
 void G_AddToWayPointList(edict_t *ent);
 void AI_Run(void);
