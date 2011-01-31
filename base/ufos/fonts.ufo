@@ -45,6 +45,19 @@ font f_normal
 	size	18
 }
 
+font f_verybig_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	30
+	style	TTF_STYLE_BOLD
+}
+
+font f_verybig
+{
+	font	"_media/DejaVuSans.ttf"
+	size	30
+}
+
 font f_big
 {
 	font	"_media/DejaVuSans.ttf"
