@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL_opengl.h>
 #define GL_NATIVE_TEXTURE_PIXELFORMAT_SOLID GL_UNSIGNED_BYTE
 #define GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA GL_UNSIGNED_BYTE
+#define SDL_GL_FIRST_SAFE_TEXTURE_ID 0
 #endif
 
 /* internally defined convenience constant */

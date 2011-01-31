@@ -459,9 +459,10 @@ static inline void R_DeleteImage (image_t *image)
 {
 	const unsigned int hash = Com_HashKey(image->name, MAX_IMAGEHASH);
 	image_t *var, *previousVar = NULL;
+	GLuint texnumGL = image->texnum + SDL_GL_FIRST_SAFE_TEXTURE_ID;
 
 	/* free it */
-	glDeleteTextures(1, (GLuint *) &image->texnum);
+	glDeleteTextures(1, &texnumGL);
 	R_CheckError();
 
 	for (var = imageHash[hash]; var; var = var->hash_next) {

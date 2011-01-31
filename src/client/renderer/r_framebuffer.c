@@ -52,10 +52,11 @@ static GLuint R_GetFreeFBOTexture (void)
 static void R_FreeFBOTexture (int texnum)
 {
 	const int i = texnum - TEXNUM_FRAMEBUFFER_TEXTURES;
+	GLuint texnumGL = texnum + SDL_GL_FIRST_SAFE_TEXTURE_ID;
 	assert(i >= 0);
 	assert(i < TEXNUM_FRAMEBUFFER_TEXTURES);
 	frameBufferTextures[i] = 0;
-	glDeleteTextures(1, (GLuint *) &texnum);
+	glDeleteTextures(1, &texnumGL);
 }
 
 void R_InitFBObjects (void)
@@ -213,7 +214,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 	for (i = 0; i < buf->nTextures; i++) {
 		buf->textures[i] = R_GetFreeFBOTexture();
-		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
+		glBindTexture(GL_TEXTURE_2D, buf->textures[i] + SDL_GL_FIRST_SAFE_TEXTURE_ID);
 		glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filters[i]);
@@ -245,7 +246,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
 
 	for (i = 0; i < buf->nTextures; i++) {
-		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
+		glBindTexture(GL_TEXTURE_2D, buf->textures[i] + SDL_GL_FIRST_SAFE_TEXTURE_ID);
 		qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
 		R_CheckError();
 	}

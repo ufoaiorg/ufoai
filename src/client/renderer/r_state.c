@@ -63,7 +63,7 @@ static void R_BindTexture_ (int texnum)
 
 	r_state.active_texunit->texnum = texnum;
 
-	glBindTexture(GL_TEXTURE_2D, texnum);
+	glBindTexture(GL_TEXTURE_2D, texnum + SDL_GL_FIRST_SAFE_TEXTURE_ID);
 	R_CheckError();
 }
 
