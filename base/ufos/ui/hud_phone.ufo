@@ -1,0 +1,599 @@
+// ==================
+// HUD MAIN
+// ==================
+
+window hud_phone extends hud
+{
+	{
+		fill		true
+		starlayout	true
+		noticepos	"512 50"
+		timeout		10000
+	}
+
+	func showinventory
+	{
+		cmd "ui_push hudinv;"
+	}
+
+	// ==================
+	// render rectangle
+	// ==================
+	battlescape battlescape
+	{
+		pos		"0 0"
+		size		"1024 768"
+		align		LAYOUTALIGN_FILL
+	}
+
+	// ==================
+	// soldier pan
+	// ==================
+
+	panel soldier {
+		{
+			size "394 768"
+			align	LAYOUTALIGN_RIGHT
+		}
+
+		image bg {
+			src "hudphone/background"
+			size "394 768"
+		}
+
+		model body
+		{
+			{
+				src	*cvar:mn_body
+				skin	*cvar:mn_skin
+				anim	"stand2"
+				angles	"0 100 90"
+				scale	"8 8 8"
+				pos	"0 0"
+				size	"392 460"
+				origin	"100 -35 0"
+			}
+
+			model head
+			{
+				src	*cvar:mn_head
+				skin	*cvar:mn_skin
+				tag	"tag_head"
+				scale	"1.0 1.0 1.0"
+			}
+
+			model right_rweapon
+			{
+				src	*cvar:mn_rweapon
+				tag	"tag_rweapon"
+			}
+
+			model right_lweapon
+			{
+				src	*cvar:mn_lweapon
+				tag	"tag_lweapon"
+			}
+		}
+
+		image name_bg {
+			src	"hudphone/sprites/name_bg"
+			pos	"11 386"
+			size	"373 66"
+		}
+
+		string name {
+			string	*cvar:mn_name
+			color	"0 0 0 1"
+			font "f_verybig"
+			pos "11 386"
+			size "373 66"
+			padding	"10"
+		}
+
+		image health_bg {
+			{
+				src	"hudphone/sprites/indicator_bg"
+				pos	"31 208"
+				size	"193 42"
+			}
+
+			bar health
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	"1 0 0 0.7"
+				current	*cvar:mn_hp
+				max		*cvar:mn_hpmax
+				readonly	true
+				ghost	true
+			}
+
+			bar stun
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	".3 .3 .3 .7"
+				current	*cvar:mn_stun
+				max		*cvar:mn_hpmax
+				readonly	true
+				ghost	true
+			}
+
+			string value
+			{
+				string	*cvar:mn_hp
+				color	"0 0 0 1"
+				pos	"10 10"
+				size	"173 22"
+				textalign	ALIGN_CC
+				font	"f_normal_bold"
+				ghost	true
+			}
+		}
+
+		custombutton health_indicator {
+			pos	"11 208"
+			size	"42 42"
+			icon	"hudphone/sprites/indicator_health"
+			ghost	true
+		}
+
+		image moral_bg {
+			{
+				src	"hudphone/sprites/indicator_bg"
+				pos	"31 262"
+				size	"193 42"
+			}
+
+			bar morale
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	"1 1 0.5 0.7"
+				current	*cvar:mn_morale
+				max		*cvar:mn_moralemax
+				readonly	true
+				ghost	true
+			}
+
+			string value
+			{
+				string	*cvar:mn_morale
+				color	"0 0 0 1"
+				pos	"10 10"
+				size	"173 22"
+				textalign	ALIGN_CC
+				font	"f_normal_bold"
+				ghost	true
+			}
+		}
+
+		custombutton moral_indicator {
+			pos	"11 262"
+			size	"42 42"
+			icon	"hudphone/sprites/indicator_moral"
+			ghost	true
+		}
+
+		image time_bg {
+			{
+				src	"hudphone/sprites/indicator_bg"
+				pos	"31 318"
+				size	"193 42"
+				tooltip	*cvar:mn_tu_tooltips
+			}
+
+			bar timeall
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	".1 .1 .7 0.7"
+				current	*cvar:mn_tu
+				max		*cvar:mn_tumax
+				readonly	true
+				ghost	true
+			}
+			bar timeremain
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	".2 .2 1 0.7"
+				current	*cvar:mn_turemain
+				max		*cvar:mn_tumax
+				readonly	true
+				ghost	true
+			}
+
+			bar timereserved
+			{
+				pos	"10 10"
+				size	"173 11"
+				color	"0 .5 0 0.7"
+				current	*cvar:mn_tureserved
+				max		*cvar:mn_tumax
+				readonly	true
+				ghost	true
+			}
+
+			string value
+			{
+				string	*cvar:mn_tu
+				color	"0 0 0 1"
+				pos	"10 10"
+				size	"173 22"
+				textalign	ALIGN_CC
+				font	"f_normal_bold"
+				ghost	true
+			}
+		}
+
+		custombutton time_indicator {
+			pos	"11 318"
+			size	"42 42"
+			icon	"hudphone/sprites/indicator_time"
+			ghost	true
+		}
+
+		panel controls {
+			{
+				pos "0 452"
+				size "393 316"
+				layout		LAYOUT_COLUMN
+				layoutColumns	3
+				layoutMargin	5
+				padding		10
+			}
+
+			// managment
+
+			radiobutton time {
+				size		"122 148"
+				stringValue	"time"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/time"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			radiobutton item {
+				size		"122 148"
+				stringValue	"item"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/item"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			radiobutton team {
+				size		"122 148"
+				stringValue	"team"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/team"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			// action
+
+			radiobutton shoot {
+				size		"122 148"
+				stringValue	"shoot"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/shoot"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			radiobutton move {
+				size		"122 148"
+				stringValue	"move"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/move"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			radiobutton lookat {
+				size		"122 148"
+				stringValue	"lookat"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/lookat"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+		}
+	}
+
+	panel move_controls {
+		{
+			pos "0 0"
+			size "122 460"
+			ghost	true
+		}
+		custombutton standup {
+			pos		"0 0"
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/standup"
+			onClick {
+				// TODO very bad... this command toggle the status. We need a set
+				cmd "actor_standcrouch;"
+			}
+		}
+		custombutton crouch {
+			pos		"0 150"
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/crouch"
+			onClick {
+				// TODO very bad... this command toggle the status. We need a set
+				cmd "actor_standcrouch;"
+			}
+		}
+		custombutton cancel {
+			pos		"0 300"
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/cancel"
+			onClick {
+				*cvar:mn_control_mode = ""
+				call *node:root.update_control_mode
+			}
+		}
+	}
+
+	panel team_controls {
+		{
+			pos "0 0"
+			size "122 460"
+			ghost	true
+		}
+		custombutton prev {
+			pos		"0 0"
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/soldier_prev"
+			disabled	true
+			onClick {
+			}
+		}
+		custombutton next {
+			pos		"0 150"
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/soldier_next"
+			onClick {
+				cmd "actor_next;"
+			}
+		}
+		custombutton cancel {
+			pos		"0 300"
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/cancel"
+			onClick {
+				*cvar:mn_control_mode = ""
+				call *node:root.update_control_mode
+			}
+		}
+	}
+
+	func update_control_mode {
+		*node:root.move_controls@invis = true
+		*node:root.team_controls@invis = true
+		*cvar:cl_map_displayavailablecells = false
+
+		if (*cvar:mn_control_mode eq "move") {
+			*node:root.move_controls@invis = false
+			*cvar:cl_map_displayavailablecells = true
+		} elif (*cvar:mn_control_mode eq "team") {
+			*node:root.team_controls@invis = false
+		}
+	}
+
+	/**
+	 * @param <1> level ID (0..7)
+	 * @param <2> status: 0 not available, 1 available, 2 selected
+	 */
+	confunc updateLevelStatus {
+	}
+
+	// ==================
+	// CHAT BUTTONS
+	// ==================
+
+	// the name must be the same in all huds
+	text chatscreen
+	{
+		dataid		TEXT_CHAT_WINDOW
+		pos			"130 70"
+		size		"690 48"
+		font		"f_verysmall"
+		rows		"3"
+		lineheight	"16"
+		padding		5
+		bordercolor	"0.5 0.5 0.5 1"
+		border		2
+		bgcolor		"0 0.1 0 0.8"
+	}
+
+	panel chat {
+		{
+			visiblewhen	"*cvar:sv_maxclients >= 2"
+			pos		"768 64"
+			size	"256 463"	/* popup height 335+64*2*/
+			ghost	true
+			align	LAYOUTALIGN_RIGHT
+		}
+
+		image bar_chat_bg
+		{
+			src		"hud/bar_chat"
+			pos			"192 0"
+			size		"64 64"
+		}
+		image bar_chat_all
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
+
+			tooltip		"_Chat"
+			src		"hud/button_chat"
+			pos			"176 12"
+			size		"32 32"
+			texl		"0 0"
+			texh		"32 32"
+			onClick		{ cmd "messagesay;" }
+		}
+		image bar_chat_team
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
+			tooltip		"_Teamchat"
+			src		"hud/button_chat"
+			pos			"138 12"
+			size		"32 32"
+			texl		"32 0"
+			texh		"64 32"
+			onClick		{ cmd "messagesayteam;" }
+		}
+		image bar_chat_show
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
+			tooltip		"_Show chat history"
+			src		"hud/button_chat"
+			pos			"100 12"
+			size		"32 32"
+			texl		"64 0"
+			texh		"96 32"
+			onMouseLeave			{
+				*node:root.chatscreen@size = "690 48"
+				*node:root.chatscreen@rows = "3"
+				*node:root@timeout = 10000
+			}
+			onMouseEnter			{
+				*node:root.chatscreen@size = "690 400"
+				*node:root.chatscreen@rows = "25"
+				*node:root@timeout = 0
+				*node:root.chatscreen@invis = false
+			}
+		}
+
+		image button_chat
+		{
+			tooltip		"_Chat messages"
+			src		"hud/event_log"
+			pos			"217 6"
+			texl		"0 0"
+			texh		"32 36"
+			onMouseEnter {
+				*node:this@texl	= "0 36"
+				*node:this@texh	= "32 72"
+			}
+			onMouseLeave {
+				*node:this@texl	= "0 0"
+				*node:this@texh	= "32 36"
+			}
+			onClick		{
+				if ( *cvar:mn_showchatbuttons != 0 ) {
+					*node:parent.bar_chat_bg@src = "hud/bar_chat"
+					*node:parent.bar_chat_bg@pos = "192 0"
+					*node:parent.bar_chat_bg@size = "64 64"
+					*cvar:mn_showchatbuttons = 0
+				} else {
+					*node:parent.bar_chat_bg@src = "hud/bar_chat_choice"
+					*node:parent.bar_chat_bg@pos = "0 0"
+					*node:parent.bar_chat_bg@size = "256 64"
+					*cvar:mn_showchatbuttons = 1
+				}
+			}
+		}
+	}
+
+	func onEvent
+	{
+		*node:root.chatscreen@invis = true
+	}
+
+	// ==================
+	// override ahud confunc
+	// ==================
+
+	confunc crouch_checkbox_disable { }
+	confunc crouch_checkbox_clear	{ }
+	confunc crouch_checkbox_check	{ }
+
+	confunc hudselect { }
+	confunc hudenable { }
+	confunc huddisable { }
+
+	// CROUCH/STAND UP BUTTON
+	confunc deselect_stand {
+		*node:root.move_controls.standup@disabled = true
+		*node:root.move_controls.crouch@disabled = false
+	}
+	confunc deselect_crouch {
+		*node:root.move_controls.standup@disabled = false
+		*node:root.move_controls.crouch@disabled = true
+	}
+	confunc disable_stand {
+		// TODO not sure if it is right or not
+		*node:root.move_controls.standup@disabled = true
+		*node:root.move_controls.crouch@disabled = false
+	}
+	confunc disable_crouch {
+		// TODO not sure if it is right or not
+		*node:root.move_controls.standup@disabled = false
+		*node:root.move_controls.crouch@disabled = true
+	}
+
+	confunc deselect_primaryleft { }
+	confunc deselect_primaryright { }
+	confunc deselect_reloadleft { }
+	confunc deselect_reloadright { }
+
+	confunc disable_primaryleft { }
+	confunc disable_primaryright { }
+	confunc disable_reloadleft { }
+	confunc disable_reloadright { }
+
+	confunc deselect_headgear { }
+	confunc disable_headgear { }
+
+	// ==================
+	// round events
+	// ==================
+
+	confunc startround { }
+	confunc endround { }
+
+	// "RESERVATION FOR SHOT" BUTTON
+	confunc reserve_shot_clear { }
+	confunc reserve_shot_check { }
+	confunc reserve_shot_disable { }
+
+	// REACTION MODE BUTTON
+	confunc startreactionmany { }
+	confunc startreactionmany_impos	{ }
+	confunc startreactiononce { }
+	confunc startreactiononce_impos { }
+	confunc deselect_reaction { }
+	confunc disable_reaction { }
+
+	// ==================
+	// init function
+	// ==================
+
+	func onWindowOpened
+	{
+		*node:root.chatscreen@invis = true
+		*cvar:mn_control_mode = ""
+		call *node:root.update_control_mode
+		cmd "music_change battlescape;"
+		cmd "set mn_showchatbuttons 0;"
+	}
+
+	func onScriptLoaded {
+		// Register the window to the HUD list
+		cmd "add_hud_name <path:root> \"_Phone HUD\""
+	}
+
+}
