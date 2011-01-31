@@ -5,98 +5,98 @@
 //
 
 sprite icons/geoscape {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl "0 0"
 	size "42 42"
 	pack64 true
 }
 
 sprite icons/check {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl "48 0"
 	size "42 42"
 	pack64 true
 }
 
 sprite icons/return {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl "101 36"
 	size "25 24"
 	pack64 true
 }
 
 sprite icons/research_stop {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl "112 0"
 	size "43 34"
 	pack64 true
 }
 
 sprite icons/research_start {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl "160 0"
 	size "49 34"
 	pack64 true
 }
 
 sprite icons/mail {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl "225 5"
 	size "30 23"
 	pack64 true
 }
 
 sprite icons/garbage {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl "229 35"
 	size "22 25"
 	pack64 true
 }
 
 sprite icons/next {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl	"130 38"
 	size	"13 20"
 	pack64 true
 }
 
 sprite icons/prev {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl	"145 38"
 	size	"13 20"
 	pack64 true
 }
 
 sprite icons/list {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl	"162 35"
 	size	"23 26"
 	pack64 true
 }
 
 sprite icons/autopsyalien {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"1 1"
 	size	"44 48"
 	pack64 true
 }
 
 sprite icons/killalien {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"80 1"
 	size	"29 25"
 	pack64 true
 }
 
 sprite icons/question {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"80 0"
 	size	"27 46"
 	pack64 true
 }
 
 sprite icons/change_height {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"96 32"
 	size	"15 15"
 	pack64 true
@@ -105,35 +105,35 @@ sprite icons/change_height {
 // small employee
 
 sprite icons/smallhead_soldier {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"116 0"
 	size	"28 28"
 	pack64 true
 }
 
 sprite icons/smallhead_pilot {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"144 0"
 	size	"28 28"
 	pack64	true
 }
 
 sprite icons/smallhead_worker {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"172 0"
 	size	"28 28"
 	pack64	true
 }
 
 sprite icons/smallhead_scientist {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"200 0"
 	size	"28 28"
 	pack64	true
 }
 
 sprite icons/smallhead_medic {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"228 0"
 	size	"28 28"
 	pack64	true
@@ -142,21 +142,21 @@ sprite icons/smallhead_medic {
 // vertical arrows
 
 sprite icons/varrow_top_bottom {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"202 32"
 	size	"11 15"
 	pack64	true
 }
 
 sprite icons/varrow_swap {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"218 32"
 	size	"19 15"
 	pack64	true
 }
 
 sprite icons/varrow_bottom_top {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"242 32"
 	size	"11 15"
 	pack64	true
@@ -165,63 +165,63 @@ sprite icons/varrow_bottom_top {
 // delay time
 
 sprite icons/speed_stop {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"115 33"
 	size	"10 15"
 	pack64	true
 }
 
 sprite icons/speed_play1 {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"130 33"
 	size	"8 15"
 	pack64	true
 }
 
 sprite icons/speed_play2 {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"143 33"
 	size	"14 15"
 	pack64	true
 }
 
 sprite icons/speed_play3 {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"162 33"
 	size	"20 15"
 	pack64	true
 }
 
 sprite icons/speed_dot {
-	image "icons/pack2"
+	image "banks/pack2"
 	texl	"187 37"
 	size	"7 7"
 	pack64	true
 }
 
 sprite icons/bordered_magnifying_glass {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl	"1 46"
 	size	"16 16"
 	pack64	true
 }
 
 sprite icons/bordered_sleep {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl	"19 46"
 	size	"16 16"
 	pack64	true
 }
 
 sprite icons/bordered_question {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl	"37 46"
 	size	"16 16"
 	pack64	true
 }
 
 sprite icons/bordered_cross {
-	image "icons/pack1"
+	image "banks/pack1"
 	texl	"55 46"
 	size	"16 16"
 	pack64	true
@@ -232,63 +232,63 @@ sprite icons/bordered_cross {
 //
 
 sprite icons/message_debug {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"0 16"
 	size	"15 15"
 	single	true
 }
 
 sprite icons/message_info {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"16 16"
 	size	"15 15"
 	single	true
 }
 
 sprite icons/message_research {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"16 0"
 	size	"15 15"
 	single	true
 }
 
 sprite icons/message_construction {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"0 0"
 	size	"15 15"
 	single	true
 }
 
 sprite icons/message_transfer {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"48 0"
 	size	"15 15"
 	single	true
 }
 
 sprite icons/message_promotion {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"48 16"
 	size	"15 15"
 	single	true
 }
 
 sprite icons/message_production {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"32 0"
 	size	"15 15"
 	single	true
 }
 
 sprite icons/message_death {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"32 16"
 	size	"15 15"
 	single	true
 }
 
 sprite icons/message_ufo {
-	image "icons/pack_message"
+	image "banks/pack_message"
 	texl	"32 16"
 	size	"15 15"
 	single	true
@@ -299,56 +299,56 @@ sprite icons/message_ufo {
 //
 
 sprite icons/number_1 {
-	image "icons/pack_hud"
+	image "banks/pack_hud"
 	texl	"0 0"
 	size	"17 26"
 	pack64	true
 }
 
 sprite icons/number_2 {
-	image "icons/pack_hud"
+	image "banks/pack_hud"
 	texl	"17 0"
 	size	"17 26"
 	pack64	true
 }
 
 sprite icons/number_3 {
-	image "icons/pack_hud"
+	image "banks/pack_hud"
 	texl	"36 0"
 	size	"17 26"
 	pack64	true
 }
 
 sprite icons/number_4 {
-	image "icons/pack_hud"
+	image "banks/pack_hud"
 	texl	"53 0"
 	size	"17 26"
 	pack64	true
 }
 
 sprite icons/number_5 {
-	image "icons/pack_hud"
+	image "banks/pack_hud"
 	texl	"72 0"
 	size	"17 26"
 	pack64	true
 }
 
 sprite icons/number_6 {
-	image "icons/pack_hud"
+	image "banks/pack_hud"
 	texl	"92 0"
 	size	"17 26"
 	pack64	true
 }
 
 sprite icons/number_7 {
-	image "icons/pack_hud"
+	image "banks/pack_hud"
 	texl	"110 0"
 	size	"17 26"
 	pack64	true
 }
 
 sprite icons/number_8 {
-	image "icons/pack_hud"
+	image "banks/pack_hud"
 	texl	"129 0"
 	size	"17 26"
 	pack64	true

@@ -2513,6 +2513,10 @@ base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later |  |
 base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/world_bg.png | GNU General Public License 2.0 or later
+base/pics/banks/pack1.png | GNU General Public License 2.0 or later
+base/pics/banks/pack2.png | GNU General Public License 2.0 or later
+base/pics/banks/pack_hud.png | GNU General Public License 2.0 or later
+base/pics/banks/pack_message.png | GNU General Public License 2.0 or later | bayo
 base/pics/base/adrop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl2.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2789,11 +2793,7 @@ base/pics/icons/notify_pause.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_sound.png | GNU General Public License 2.0 or later
 base/pics/icons/off.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/on.png | GNU General Public License 2.0 or later | bayo
-base/pics/icons/pack1.png | GNU General Public License 2.0 or later
-base/pics/icons/pack2.png | GNU General Public License 2.0 or later
-base/pics/icons/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_hud2.png | GNU General Public License 2.0 or later
-base/pics/icons/pack_message.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/pen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pen_disabled.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pen_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
