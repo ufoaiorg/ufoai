@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "../ports/system.h"
 
+#ifndef COMPILE_UFO_WITHOUT_SERVER
+
 /** password for remote server commands */
 static cvar_t *rcon_password;
 static cvar_t *sv_http_downloadserver;
@@ -866,3 +868,5 @@ int SV_CountPlayers (void)
 
 	return count;
 }
+
+#endif /* COMPILE_UFO_WITHOUT_SERVER */

@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "../common/qfiles.h"
 
+#ifndef COMPILE_UFO_WITHOUT_SERVER
+
 #define	AREA_DEPTH	4
 
 /**
@@ -772,3 +774,5 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	FS_FreeFile(buf);
 	return qtrue;
 }
+
+#endif /* COMPILE_UFO_WITHOUT_SERVER */

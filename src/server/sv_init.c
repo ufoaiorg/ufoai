@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sv_rma.h"
 #include "../shared/parse.h"
 
+#ifndef COMPILE_UFO_WITHOUT_SERVER
+
 serverInstanceStatic_t svs;			/* persistant server info */
 serverInstanceGame_t sv;					/* local server */
 
@@ -215,3 +217,5 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 
 	Cbuf_CopyToDefer();
 }
+
+#endif /* COMPILE_UFO_WITHOUT_SERVER */

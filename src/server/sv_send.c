@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 
+#ifndef COMPILE_UFO_WITHOUT_SERVER
+
 /*
 =============================================================================
 EVENT MESSAGES
@@ -176,3 +178,5 @@ void SV_StartSound (int mask, const vec3_t origin, const edict_t *entity, const 
 
 	SV_Multicast(mask, msg);
 }
+
+#endif /* COMPILE_UFO_WITHOUT_SERVER */

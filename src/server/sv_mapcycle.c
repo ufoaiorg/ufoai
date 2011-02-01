@@ -1,6 +1,8 @@
 #include "server.h"
 #include "../shared/parse.h"
 
+#ifndef COMPILE_UFO_WITHOUT_SERVER
+
 /**
  * @brief map cycle list element
 */
@@ -290,3 +292,5 @@ void SV_MapcycleInit (void)
 	Cmd_AddCommand("mapcycleclear", SV_MapcycleClear, "Delete the current mapcycle");
 	Cmd_AddCommand("mapcycleadd", SV_MapcycleAdd_f, "Add new maps to the mapcycle");
 }
+
+#endif /* COMPILE_UFO_WITHOUT_SERVER */
