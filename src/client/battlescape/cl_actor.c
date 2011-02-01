@@ -1499,6 +1499,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			if (le->pnum != cl.pnum)
 				ent->flags |= RF_ALLIED;
 		}
+		if (le->team == TEAM_CIVILIAN)
+			ent->flags |= RF_NEUTRAL;
 	}
 
 	if (ent->flags & RF_BLOOD) {
@@ -1933,48 +1935,49 @@ static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - D
  * @brief create a targeting box at the given position
  * @sa CL_ParseClientinfo
  */
-static void CL_AddPathingBox (pos3_t pos)
+static qboolean CL_AddPathingBox (pos3_t pos, qboolean addUnreachableCells)
 {
-	if (selActor) {
-		entity_t ent;
-		int height; /* The total opening size */
-		int base; /* The floor relative to this cell */
+	entity_t ent;
+	int height; /* The total opening size */
+	int base; /* The floor relative to this cell */
 
-		const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
-		const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
-		const int TUhave = CL_ActorUsableTUs(selActor);
+	const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
+	const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
+	const int TUhave = CL_ActorUsableTUs(selActor);
+	if (!addUnreachableCells && TUhave < TUneed)
+		return qfalse;
 
-		OBJZERO(ent);
-		ent.flags = RF_PATH;
+	OBJZERO(ent);
+	ent.flags = RF_PATH;
 
-		Grid_PosToVec(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
-		VectorSubtract(ent.origin, boxShift, ent.origin);
+	Grid_PosToVec(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
+	VectorSubtract(ent.origin, boxShift, ent.origin);
 
-		base = Grid_Floor(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), pos);
+	base = Grid_Floor(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), pos);
 
-		/* Paint the box green if it is reachable,
-		 * yellow if it can be entered but is too far,
-		 * or red if it cannot be entered ever. */
-		if (base < -QuantToModel(PATHFINDING_MAX_FALL)) {
-			VectorSet(ent.color, 0.0, 0.0, 0.0); /* Can't enter - black */
-		} else {
-			/* Can reach - green
-			 * Passable but unreachable - yellow
-			 * Not passable - red */
-			VectorSet(ent.color, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
-		}
-
-		/* Set the box height to the ceiling value of the cell. */
-		height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
-		ent.oldorigin[2] = height;
-		ent.oldorigin[0] = TUneed;
-		ent.oldorigin[1] = TUhave;
-
-		ent.alpha = 0.25;
-
-		/* add it */
-		R_AddEntity(&ent);
+	/* Paint the box green if it is reachable,
+	 * yellow if it can be entered but is too far,
+	 * or red if it cannot be entered ever. */
+	if (base < -QuantToModel(PATHFINDING_MAX_FALL)) {
+		VectorSet(ent.color, 0.0, 0.0, 0.0); /* Can't enter - black */
+	} else {
+		/* Can reach - green
+		 * Passable but unreachable - yellow
+		 * Not passable - red */
+		VectorSet(ent.color, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
 	}
+
+	/* Set the box height to the ceiling value of the cell. */
+	height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
+	ent.oldorigin[2] = height;
+	ent.oldorigin[0] = TUneed;
+	ent.oldorigin[1] = TUhave;
+
+	ent.alpha = 0.25;
+
+	/* add it */
+	R_AddEntity(&ent);
+	return qtrue;
 }
 
 /**
@@ -1986,10 +1989,43 @@ void CL_AddPathing (void)
 {
 	pos3_t pos;
 
+	if (selActor == NULL) {
+		return;
+	}
+
 	pos[2] = cl_worldlevel->integer;
-	for (pos[1] = max(mousePos[1] - 8, 0); pos[1] <= min(mousePos[1] + 8, PATHFINDING_WIDTH - 1); pos[1]++)
-		for (pos[0] = max(mousePos[0] - 8, 0); pos[0] <= min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++)
-			CL_AddPathingBox(pos);
+	for (pos[1] = max(mousePos[1] - 8, 0); pos[1] <= min(mousePos[1] + 8, PATHFINDING_WIDTH - 1); pos[1]++) {
+		for (pos[0] = max(mousePos[0] - 8, 0); pos[0] <= min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++) {
+			CL_AddPathingBox(pos, qtrue);
+		}
+	}
+}
+
+/**
+ * @brief Adds an actor pathing marker to the current floor when we render the world.
+ * @sa CL_ViewRender
+ * Draws the tracer (red, yellow, green box) on the grid
+ */
+void CL_AddActorPathing (void)
+{
+	int x, y;
+	pos3_t pos;
+	int i = 0;
+
+	if (selActor == NULL) {
+		return;
+	}
+
+	pos[2] = cl_worldlevel->integer;
+	for (y = 0; y <= PATHFINDING_WIDTH; y++) {
+		for (x = 0; x <= PATHFINDING_WIDTH; x++) {
+			pos[0] = (pos_t)x;
+			pos[1] = (pos_t)y;
+			i += CL_AddPathingBox(pos, qfalse);
+			if (i > 1024)
+				return;
+		}
+	}
 }
 
 /**

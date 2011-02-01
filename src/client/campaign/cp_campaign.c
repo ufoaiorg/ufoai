@@ -581,8 +581,10 @@ void CL_CampaignRun (campaign_t *campaign)
 		int i;
 		const int currentinterval = (int)floor(currentsecond) % DETECTION_INTERVAL;
 		int dt = DETECTION_INTERVAL - currentinterval;
-		dateLong_t date;
+		dateLong_t date, oldDate;
 		const int checks = (currentinterval + (int)floor(ccs.timer)) / DETECTION_INTERVAL;
+
+		CL_DateConvertLong(&ccs.date, &oldDate);
 
 		currenthour = (int)floor(currentsecond / SECONDS_PER_HOUR);
 		currentmin = (int)floor(currentsecond / SECONDS_PER_MINUTE);
@@ -663,8 +665,8 @@ void CL_CampaignRun (campaign_t *campaign)
 		BDEF_AutoSelectTarget();
 
 		CL_DateConvertLong(&ccs.date, &date);
-		/* every first day of a month */
-		if (date.day == 1 && ccs.paid && B_AtLeastOneExists()) {
+		/* every new month we have to handle the budget */
+		if (oldDate.month < date.month && ccs.paid && B_AtLeastOneExists()) {
 			NAT_BackupMonthlyData();
 			NAT_HandleBudget(campaign);
 			ccs.paid = qfalse;

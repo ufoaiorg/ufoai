@@ -1,6 +1,6 @@
 MAPSDIR           ?= base/maps
 UFO2MAP            = ./ufo2map$(EXE_EXT)
-MAPSRCS           := $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'test*' | xargs du | sort -bnr | sed -e 's/^[0-9]+//' | tr -d "\t")
+MAPSRCS           := $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'test*' | xargs du | sort -bnr | sed -e 's/^[0-9]*//' | tr -d "\t")
 BSPS              := $(MAPSRCS:.map=.bsp)
 NICE              ?= 19
 UFO2MAPFLAGS      ?= -v 4 -nice $(NICE) -quant 4 -extra

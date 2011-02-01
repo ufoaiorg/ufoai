@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh_anim.h"
 #include "r_draw.h"
 
-#define	MAX_ENTITIES	2048
+#define	MAX_ENTITIES	2048*2
 
 static entity_t r_entities[MAX_ENTITIES];
 
@@ -122,6 +122,8 @@ static void R_DrawBox (const entity_t * e)
 	R_Color(NULL);
 }
 
+static image_t *cellIndicator;
+
 /**
  * @brief Draws a marker on the ground to indicate pathing CL_AddPathingBox
  * @sa CL_AddPathing
@@ -129,77 +131,38 @@ static void R_DrawBox (const entity_t * e)
  */
 static void R_DrawFloor (const entity_t * e)
 {
-	vec3_t upper, lower;
-	float dx, dy;
+	float dx;
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
+	const float size = 4.0;
 
-	glDisable(GL_TEXTURE_2D);
-	glEnable(GL_LINE_SMOOTH);
+	if (cellIndicator == NULL) {
+		cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
+	}
+
+	glDisable(GL_DEPTH_TEST);
 
 	R_Color(color);
-
-	VectorCopy(e->origin, lower);
-	VectorCopy(e->origin, upper);
+	R_BindTexture(cellIndicator->texnum);
 
 	dx = PLAYER_WIDTH * 2;
-	dy = e->oldorigin[2];
 
-	upper[2] += dy;
-
-#ifdef ANDROID
-	// TODO: most probably incorrect
-	vec_t points[3*4*2] = {	lower[0], lower[1], lower[2],
-							lower[0] + dx, lower[1], lower[2],
-							lower[0] + dx, lower[1] + dx, lower[2],
-							lower[0], lower[1] + dx, lower[2],
-							upper[0], upper[1], upper[2],
-							upper[0] + dx, upper[1], upper[2],
-							upper[0] + dx, upper[1] + dx, upper[2],
-							upper[0], upper[1] + dx, upper[2]
-						};
-	glLineWidth(2.0f);
+	/* circle points */
+	GLfloat points[4*3] = {	e->origin[0]-size, e->origin[1]+dx+size, e->origin[2],
+							e->origin[0]+dx+size, e->origin[1]+dx+size, e->origin[2],
+							e->origin[0]+dx+size, e->origin[1]-size, e->origin[2],
+							e->origin[0]-size, e->origin[1]-size, e->origin[2] };
+	GLfloat texcoords[4*2] = {	0.0, 1.0,
+								1.0, 1.0,
+								1.0, 0.0,
+								0.0, 0.0 };
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, points);
-	glDrawArrays(GL_LINE_LOOP, 0, 4);
-	glDrawArrays(GL_LINE_LOOP, 4, 4);
-	glLineWidth(1.0f);
-#else
+	glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
 
-	glBegin(GL_QUAD_STRIP);
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[0] += dx;
-	upper[0] += dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[1] += dx;
-	upper[1] += dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[0] -= dx;
-	upper[0] -= dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[1] -= dx;
-	upper[1] -= dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	glEnd();
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
-	lower[2] += dy;
-	upper[1] += dx;
-
-	glBegin(GL_QUAD_STRIP);
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	lower[0] += dx;
-	upper[0] += dx;
-	glVertex3fv(lower);
-	glVertex3fv(upper);
-	glEnd();
-#endif
-	glDisable(GL_LINE_SMOOTH);
-
-	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
 
 	R_Color(NULL);
 }
@@ -228,29 +191,22 @@ static void R_DrawArrow (const entity_t * e)
 
 	R_Color(color);
 
-#ifdef ANDROID
-	// TODO: most probably incorrect
-	vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->oldorigin[2],
+	GLfloat points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->oldorigin[2],
 							upper[0], upper[1], upper[2],
 							mid[0], mid[1], mid[2],
-							lower[0], lower[1], lower[2],
-						};
+							lower[0], lower[1], lower[2] };
+	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-#else
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex3fv(e->oldorigin);
-	glVertex3fv(upper);
-	glVertex3fv(mid);
-	glVertex3fv(lower);
-	glEnd();
-#endif
 
 	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
 }
+
+static image_t *selectedActorIndicator;
+static image_t *actorIndicator;
 
 /**
  * @brief Draws shadow and highlight effects for the entities (actors)
@@ -261,6 +217,11 @@ static void R_DrawEntityEffects (void)
 	int i;
 
 	R_EnableBlend(qtrue);
+
+	if (actorIndicator == NULL) {
+		selectedActorIndicator = R_FindImage("pics/sfx/actor_selected", it_pic);
+		actorIndicator = R_FindImage("pics/sfx/actor", it_pic);
+	}
 
 	for (i = 0; i < refdef.numEntities; i++) {
 		const entity_t *e = &r_entities[i];
@@ -279,78 +240,63 @@ static void R_DrawEntityEffects (void)
 				R_BindTexture(e->deathTexture->texnum);
 			}
 
-#ifdef ANDROID
-			vec_t texcoord[2*4] = {	0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
-			glTexCoordPointer(2, GL_FLOAT, 0, texcoord);
-			vec_t points[3*4] = {	-18.0, 14.0, -28.5,
+			GLfloat points[3*4] = {	-18.0, 14.0, -28.5,
 									10.0, 14.0, -28.5,
 									10.0, -14.0, -28.5,
-									-18.0, -14.0, -28.5
-								};
+									-18.0, -14.0, -28.5 };
+			GLfloat texcoords[2*4] = {	0.0, 1.0,
+										1.0, 1.0,
+										1.0, 0.0,
+										0.0, 0.0 };
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			glVertexPointer(3, GL_FLOAT, 0, points);
+			glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-#else
-			glBegin(GL_QUADS);
-			glTexCoord2f(0.0, 1.0);
-			glVertex3f(-18.0, 14.0, -28.5);
-			glTexCoord2f(1.0, 1.0);
-			glVertex3f(10.0, 14.0, -28.5);
-			glTexCoord2f(1.0, 0.0);
-			glVertex3f(10.0, -14.0, -28.5);
-			glTexCoord2f(0.0, 0.0);
-			glVertex3f(-18.0, -14.0, -28.5);
-			glEnd();
-#endif
 		}
 
-		if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
+
+		if (e->flags & RF_ACTOR) {
+			const float size = 15.0;
+			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
 			glDisable(GL_DEPTH_TEST);
-			glDisable(GL_TEXTURE_2D);
-			glEnable(GL_LINE_SMOOTH);
 
-			if (e->flags & RF_MEMBER) {
-				if (e->flags & RF_SELECTED)
-					Vector4Set(color, 0, 1, 0, 1);
-				else
-					Vector4Set(color, 0, 1, 0, 0.3);
-			} else if (e->flags & RF_ALLIED)
-				Vector4Set(color, 0, 0.5, 1, 0.3);
+			if (e->flags & RF_MEMBER)
+				Vector4Set(color, 0, 1, 0, 0.5);
+			else if (e->flags & RF_ALLIED)
+				Vector4Set(color, 0, 1, 0.5, 0.5);
+			else if (e->flags & RF_NEUTRAL)
+				Vector4Set(color, 1, 1, 0, 0.5);
 			else
-				Vector4Set(color, 0, 1, 0, 1);
+				Vector4Set(color, 1, 0, 0, 0.5);
 
+			if (e->flags & RF_SELECTED)
+				texnum = selectedActorIndicator->texnum;
+			else
+				texnum = actorIndicator->texnum;
+
+			R_BindTexture(texnum);
 			R_Color(color);
 
-#ifdef ANDROID
-			vec_t points[3*9] = {	10.0, 0.0, -27.0,
-									7.0, -7.0, -27.0,
-									0.0, -10.0, -27.0,
-									-7.0, -7.0, -27.0,
-									-10.0, 0.0, -27.0,
-									-7.0, 7.0, -27.0,
-									0.0, 10.0, -27.0,
-									7.0, 7.0, -27.0,
-									10.0, 0.0, -27.0
-								};
-			glVertexPointer(3, GL_FLOAT, 0, points);
-			glDrawArrays(GL_LINE_STRIP, 0, 9);
-#else
 			/* circle points */
-			glBegin(GL_LINE_STRIP);
-			glVertex3f(10.0, 0.0, -27.0);
-			glVertex3f(7.0, -7.0, -27.0);
-			glVertex3f(0.0, -10.0, -27.0);
-			glVertex3f(-7.0, -7.0, -27.0);
-			glVertex3f(-10.0, 0.0, -27.0);
-			glVertex3f(-7.0, 7.0, -27.0);
-			glVertex3f(0.0, 10.0, -27.0);
-			glVertex3f(7.0, 7.0, -27.0);
-			glVertex3f(10.0, 0.0, -27.0);
-			glEnd();
-#endif
-			glDisable(GL_LINE_SMOOTH);
-			glEnable(GL_TEXTURE_2D);
+			GLfloat points[3*4] = {	-size, size, -27.5,
+									size, size, -27.5,
+									size, -size, -27.5,
+									-size, -size, -27.5 };
+			GLfloat texcoords[2*4] = {	0.0, 1.0,
+										1.0, 1.0,
+										1.0, 0.0,
+										0.0, 0.0 };
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glVertexPointer(3, GL_FLOAT, 0, points);
+			glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+			glDisableClientState(GL_VERTEX_ARRAY);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
 			glEnable(GL_DEPTH_TEST);
 			R_Color(NULL);
 		}

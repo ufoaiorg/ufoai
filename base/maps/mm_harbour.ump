@@ -1,0 +1,518 @@
+// *********************************
+// MaMeisters Harbour Random map
+// *********************************
+
+// Idea: have a fixed mole to the "right"
+//  - the water is the lowest level an cannot be accessed
+//  - there can or cannot be ships in the harbour
+//  - there are alien dropships but the aliens are at the mole
+//     while the Phalanx guys start at the other side = work their way
+//     to the mole
+
+
+// a_17 is team1 spawn in crate area
+// s1_02 and s3_01 is spawn for team2
+
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// m: harbour mole type (mole + water)
+// w: water right of mole
+
+// a: gap filler 1x1 crate/container type
+
+// k: Dropships
+// u: UFOs
+
+
+// Side notes:
+// A: Alien spawnpoint(s)
+// C: Civilian spawnpoint(s)
+
+
+
+
+
+// n: ship (back)
+// o: ship (middle)
+// p: ship (front)
+// x: mole with ship tile (back)
+// y: mole with ship tile (middle, multiple)
+// z: mole with ship tile (front)
+
+base mm_harbour/
+// /////////////////////////////////////
+// ship bottom ;)
+// /////////////////////////////////////
+tile +s1_01
+{
+4 3
+0     mz   pw     0
+a    +x   +n      w
+0     yz   op     0
+}
+// /////////////////////////////////////
+// ship middle
+// /////////////////////////////////////
+tile +s2_01
+{
+4 3
+0     xy   no     0
+a    +y   +o      w
+0     yz   op     0
+}
+tile +s2_02
+{
+4 3
+0     xy   no     0
+a    +y   +o      w
+0     yz   op     0
+}
+// /////////////////////////////////////
+// ship front
+// /////////////////////////////////////
+tile +s3_01
+{
+4 3
+0    xy   no      0
+a   +z   +p       w
+0    mx   nw      0
+}
+// /////////////////////////////////////
+// simple water
+// /////////////////////////////////////
+tile +w_01
+{
+3 3
+0      wnop      0
+wmnop +w      w
+0      wnop      0
+}
+tile +w_02
+{
+3 3
+0      wnop      0
+wmnop +w      w
+0      wnop      0
+}
+// /////////////////////////////////////
+// simple crates/thingies
+// /////////////////////////////////////
+tile +a_01
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_02
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_03
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_04
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_05
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_06
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_07
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_08
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_09
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_11
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_12
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_13
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_14
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_15
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+tile +a_18
+{
+3 3
+0      a      0
+a     +a      amxyz
+0      a      0
+}
+
+// /////////////////////////////////////
+// simple mole
+// /////////////////////////////////////
+//3 3
+//0      mz      0
+//a     +m       w
+//0      mx      0
+//4 3
+//0      mz      wp  0
+//a     +m       w   w
+//0      mx      wn  0
+tile +m_01
+{
+4 3
+0      mz      wp  0
+a     +m       w   w
+0      mx      wn  0
+}
+tile +m_02
+{
+4 3
+0      mz      wp  0
+a     +m       w   w
+0      mx      wn  0
+}
+tile +m_03
+{
+4 3
+0      mz      wp  0
+a     +m       w   w
+0      mx      wn  0
+}
+tile +m_04
+{
+4 3
+0      mz      wp  0
+a     +m       w   w
+0      mx      wn  0
+}
+tile +m_05
+{
+4 3
+0      mz      wp  0
+a     +m       w   w
+0      mx      wn  0
+}
+tile +m_07
+{
+4 3
+0      mz      wp  0
+a     +m       w   w
+0      mx      wn  0
+}
+// /////////////////////////////////////
+// complex ship
+// /////////////////////////////////////
+tile +s1_02
+{
+4 4
+0     mz   pw     0
+a    +x   +n      w
+a    +y   +o      w
+0     yz   op     0
+}
+// /////////////////////////////////////
+// complex mole
+// /////////////////////////////////////
+tile +m2_01
+{
+4 3
+0      mz   wp    0
+a     +m   +w     w
+0      mx   wn    0
+}
+tile +m_06
+{
+4 3
+0      a      mz   0
+a     +a     +m   w
+0      a      mx   0
+}
+// /////////////////////////////////////
+// complex yard: cranes
+// /////////////////////////////////////
+tile +a_10
+{
+4 3
+0      a      a   0
+a     +a     +a   am
+0      a      a   0
+}
+tile +a_16
+{
+4 3
+0      a      a   0
+a     +a     +a   am
+0      a      a   0
+}
+tile +a_19
+{
+3 4
+0      a     0
+a     +a     am
+a     +a     am
+0      a     0
+}
+tile +a_20
+{
+3 4
+0      a     0
+a     +a     am
+a     +a     am
+0      a     0
+}
+// boxes
+tile +a_17
+{
+3 4
+0      a      0
+a     +a      amxyz
+a     +a      amxyz
+0      a      0
+}
+//---------------------------------
+//Dropships
+//---------------------------------
+tile +craft_drop_firebird
+{
+5 3
+0    a    a    a    0
+a    +a   +a   +a   mxyz
+0    a    a    a    0
+}
+tile +craft_drop_herakles
+{
+5 4
+0    a    a    a    0
+a    +a   +a   +a   mxyz
+a    +a   +a   +a   mxyz
+0    a    a    a    0
+}
+tile +craft_drop_raptor
+{
+5 5
+0    a    a    a    0
+a    +a   +a   +a   mxyz
+a    +a   +a   +a   mxyz
+a    +a   +a   +a   mxyz
+0    a    a    a    0
+}
+// UFOs
+tile +craft_ufo_harvester
+{
+7 5
+0   mz  wp  w   w   w   0
+a  +m  +w  +w  +w  +w   w
+a  +m  +w  +w  +w  +w   w
+a  +m  +w  +w  +w  +w   w
+0   mx  wn  w   w   w   0
+}
+tile +craft_ufo_scout //A(3)
+{
+4 5
+0    a    a    0
+a    +a   +a   m
+a    +a   +a   m
+a    +a   a   m
+0    a    a    0
+}
+
+assembly test3
+{
+title "_Mole test"
+size "9 7"
+
+// works
+//fix *rm_drop +craft_drop_firebird "0 0"
+//fix *rm_drop +craft_ufo_scout "1 3"
+
+// works, too
+//*rm_drop +craft_ufo_scout "1 1"
+//*rm_drop +craft_drop_firebird "1 1"
+
+// works, too
+//*rm_drop +craft_drop_firebird "1 1"
+//*rm_drop +craft_ufo_harvester "1 1"
+
++m_01  "0 1"
++m_02  "0 2"
++m_03  "0 1"
++m_04  "0 1"
++m_05  "0 1"
++m_06  "0 1"
++m_07  "0 1"
++s1_01 "0 1"
++s2_01 "0 8"
++s3_01 "1 1"
+//+s1_02 "1 1"
+//+s2_02 "1 1"
++a_01  "0 3"
++a_02  "0 3"
++a_03  "0 3"
++a_04  "0 4"
++a_05  "0 4"
+// verunglueckte tiles
+//+a_06  "0 2"
+//+a_06  "0 2"
++a_08  "0 2"
++a_09  "0 2"
++a_10  "0 1"
++a_11  "0 1"
++a_12  "0 1"
++a_13  "0 1"
++a_14  "0 1"
++a_15  "0 1"
++a_16  "0 1"
++w_01  "0 120"
++w_02  "0 120"
++m2_01 "0 1"
+}
+
+assembly area
+{
+title "_Mole test"
+size "5 5"
++a_01  "1 1"
++a_02  "1 1"
++a_03  "1 1"
++a_04  "1 1"
++a_05  "1 1"
++a_06  "1 1"
++a_07  "1 1"
++a_08  "1 1"
++a_09  "1 1"
++a_10  "1 1"
++a_11  "1 1"
++a_12  "1 1"
++a_13  "1 1"
++a_14  "1 1"
++a_15  "1 1"
++a_16  "1 1"
++a_17  "1 1"
++a_18  "1 1"
++a_19  "1 1"
++a_20  "1 1"
+}
+
+assembly am
+{
+title "_Mole test"
+size "5 11"
++m_01  "0 10"
++m_02  "0 10"
++m_03  "0 10"
++m_04  "0 10"
++m_05  "0 10"
++m_06  "0 10"
++m_07  "0 10"
++m2_01 "0 10"
++a_01  "0 1"
++a_02  "0 1"
++a_03  "0 1"
++a_04  "0 1"
++a_05  "0 1"
++a_06  "0 1"
++a_07  "0 1"
++a_08  "0 1"
++a_09  "0 100"
++a_10  "0 1"
++a_11  "0 1"
++a_12  "0 1"
++a_13  "0 1"
++a_14  "0 1"
++a_15  "0 1"
++a_16  "0 1"
++a_17  "0 1"
++a_18  "0 1"
++a_19  "0 1"
++a_20  "0 1"
++w_01  "0 120"
++w_02  "0 120"
++s1_02 "1 1"
++s2_01 "0 8"
++s2_02 "0 8"
++s3_01 "1 1"
+}
+
+assembly mole
+{
+title "_Mole test"
+size "3 8"
++a_09  "0 100"
++m_01  "1 1"
++m_02  "1 1"
++m_03  "1 1"
++m_04  "1 1"
++m_05  "1 1"
++m_06  "1 1"
++m_07  "1 1"
++m2_01 "1 1"
++w_01  "0 100"
+}
+assembly mini
+{
+title "_Mole test"
+size "2 4"
++a_10  "0 1"
++a_16  "0 1"
++a_19  "1 1"
++a_20  "1 1"
+}

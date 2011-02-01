@@ -427,7 +427,6 @@ typedef struct ccs_s {
 	int gameTimeScale;
 	int gameLapse;
 
-
 	/* already paid in this month? */
 	qboolean paid;
 

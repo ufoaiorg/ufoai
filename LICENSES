@@ -424,6 +424,51 @@ base/maps/military_convoy/mc_craft_drop_herakles.map | GNU General Public Licens
 base/maps/military_convoy/mc_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 or later | Martin Gerhardy   Maciej Wierzbicki
 base/maps/mine.map | GNU General Public License 2.0 or later
+base/maps/mm_harbour/a_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_03.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_04.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_05.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_06.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_07.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_08.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_09.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_10.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_11.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_12.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_13.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_14.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_15.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_16.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_17.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_18.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_19.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/a_20.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/craft_drop_raptor.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/craft_ufo_harvester.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/craft_ufo_scout.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/craft_ufo_supply.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/inter_saracen.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/inter_stiletto.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/m2_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/m_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/m_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/m_03.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/m_04.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/m_05.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/m_06.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/m_07.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/s1_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/s1_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/s2_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/s2_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/s3_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/w2_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/w_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/w_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0 or later
@@ -3295,6 +3340,8 @@ base/pics/ranks/rank_medic.jpg | Creative Commons Attribution-Share Alike 3.0 | 
 base/pics/ranks/rank_pc.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/ranks/rank_scientist.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/sfx/actor.png | Public Domain | bayo
+base/pics/sfx/actor_selected.png | Public Domain | bayo
 base/pics/sfx/blood.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/sfx/blood/blood_green_0.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood/blood_oil_2.png | GNU General Public License 2.0 | MCR
@@ -3330,6 +3377,7 @@ base/pics/sfx/blood_purple_2.png | GNU General Public License 2.0 | John W. Bjer
 base/pics/sfx/blueflare.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/bms2fl_rglow.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/bubble.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/sfx/cell.png | Public Domain | bayo
 base/pics/sfx/corona.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/corona4.png |  | raz0r
 base/pics/sfx/corona_b.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann

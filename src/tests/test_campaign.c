@@ -739,6 +739,8 @@ static void testAirFight (void)
 
 	ResetCampaignData();
 
+	CP_InitOverlay();
+
 	campaign = GetCampaign();
 
 	base = CreateBase("unittestairfight", destination);
@@ -1018,6 +1020,44 @@ static void testDateHandling (void)
 	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
 }
 
+/**
+ * see bug #3166234
+ */
+static void testCampaignDateHandling (void)
+{
+	campaign_t *campaign;
+	base_t *base;
+	const vec2_t destination = { 10, 10 };
+
+	ResetCampaignData();
+
+	base = CreateBase("unittestcampaigntime", destination);
+
+	campaign = GetCampaign();
+
+	RS_InitTree(campaign, qfalse);
+
+	BS_InitMarket(campaign);
+
+	cls.frametime = 1;
+
+	/* one hour till month change */
+	ccs.date.day = 30;
+	ccs.date.sec = 23 * 60 * 60;
+	/** @todo fix magic number */
+	ccs.gameLapse = 7;
+	ccs.paid = qtrue;
+	CL_UpdateTime();
+	CL_CampaignRun(campaign);
+	CU_ASSERT_FALSE(ccs.paid);
+	CU_ASSERT_TRUE(CL_IsTimeStopped());
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
+}
+
 static void testHospital (void)
 {
 	base_t *base;
@@ -1242,6 +1282,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testDateHandling) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testCampaignDateHandling) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testHospital) == NULL)
