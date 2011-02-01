@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef COMPILE_UFO_WITHOUT_SERVER
 
 serverInstanceStatic_t svs;			/* persistant server info */
-serverInstanceGame_t sv;					/* local server */
+serverInstanceGame_t * sv;					/* local server */
 
 /**
  * @brief Get the map title for a given map
@@ -140,18 +140,18 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 	SV_SetConfigString(CS_NAME, levelstring);
 	SV_SetConfigString(CS_LIGHTMAP, day);
 
-	Q_strncpyz(sv.name, levelstring, sizeof(sv.name));
+	Q_strncpyz(sv->name, levelstring, sizeof(sv->name));
 
 	/* set serverinfo variable */
-	sv_mapname = Cvar_FullSet("sv_mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
+	sv_mapname = Cvar_FullSet("sv_mapname", sv->name, CVAR_SERVERINFO | CVAR_NOSET);
 
 	/* notify the client in case of a listening server */
 	SCR_BeginLoadingPlaque();
 
 	if (assembly)
-		Q_strncpyz(sv.assembly, assembly, sizeof(sv.assembly));
+		Q_strncpyz(sv->assembly, assembly, sizeof(sv->assembly));
 	else
-		sv.assembly[0] = '\0';
+		sv->assembly[0] = '\0';
 
 	/* leave slots at start for clients only */
 	cl = NULL;
@@ -173,10 +173,10 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 		SV_SetConfigString(CS_POSITIONS, assembly ? assembly : "");
 	}
 
-	CM_LoadMap(map, day, pos, &sv.mapData, &sv.mapTiles);
+	CM_LoadMap(map, day, pos, &sv->mapData, &sv->mapTiles);
 
-	Com_Printf("checksum for the map '%s': %u\n", levelstring, sv.mapData.mapChecksum);
-	SV_SetConfigString(CS_MAPCHECKSUM, sv.mapData.mapChecksum);
+	Com_Printf("checksum for the map '%s': %u\n", levelstring, sv->mapData.mapChecksum);
+	SV_SetConfigString(CS_MAPCHECKSUM, sv->mapData.mapChecksum);
 
 	checksum = Com_GetScriptChecksum();
 
@@ -199,15 +199,15 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 	SV_ClearWorld();
 
 	/* fix this! */
-	for (i = 1; i <= sv.mapData.numInline; i++)
-		sv.models[i] = CM_InlineModel(&sv.mapTiles, va("*%i", i));
+	for (i = 1; i <= sv->mapData.numInline; i++)
+		sv->models[i] = CM_InlineModel(&sv->mapTiles, va("*%i", i));
 
 	/* precache and static commands can be issued during map initialization */
 	Com_SetServerState(ss_loading);
 
 	TH_MutexLock(svs.serverMutex);
 	/* load and spawn all other entities */
-	svs.ge->SpawnEntities(sv.name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv.mapData.mapEntityString);
+	svs.ge->SpawnEntities(sv->name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv->mapData.mapEntityString);
 	TH_MutexUnlock(svs.serverMutex);
 
 	/* all precaches are complete */

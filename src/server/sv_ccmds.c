@@ -241,7 +241,7 @@ static void SV_Status_f (void)
 		Com_Printf("No server running.\n");
 		return;
 	}
-	Com_Printf("map              : %s (%s)\n", sv.name, (SV_GetConfigStringInteger(CS_LIGHTMAP) ? "day" : "night"));
+	Com_Printf("map              : %s (%s)\n", sv->name, (SV_GetConfigStringInteger(CS_LIGHTMAP) ? "day" : "night"));
 	Com_Printf("active team      : %i\n", svs.ge->ClientGetActiveTeam());
 
 	Com_Printf("num status  name            address              \n");
@@ -554,7 +554,7 @@ static void Grid_DumpWholeServerMap_f (void)
 	int i;
 
 	for (i = 0; i < ACTOR_MAX_SIZE; i++)
-		RT_DumpWholeMap(&sv.mapTiles, &sv.mapData.map[i]);
+		RT_DumpWholeMap(&sv->mapTiles, &sv->mapData.map[i]);
 }
 
 /**
@@ -564,9 +564,9 @@ static void Grid_DumpWholeServerMap_f (void)
 static void Grid_DumpServerRoutes_f (void)
 {
 	ipos3_t wpMins, wpMaxs;
-	VecToPos(sv.mapData.mapMin, wpMins);
-	VecToPos(sv.mapData.mapMax, wpMaxs);
-	RT_WriteCSVFiles(sv.mapData.map, "ufoaiserver", wpMins, wpMaxs);
+	VecToPos(sv->mapData.mapMin, wpMins);
+	VecToPos(sv->mapData.mapMax, wpMaxs);
+	RT_WriteCSVFiles(sv->mapData.map, "ufoaiserver", wpMins, wpMaxs);
 }
 #endif
 

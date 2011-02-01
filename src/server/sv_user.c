@@ -261,52 +261,52 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 
 	case clc_action:
 		/* client actions are handled by the game module */
-		sv.messageBuffer = msg;
+		sv->messageBuffer = msg;
 		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientAction(cl->player);
 		TH_MutexUnlock(svs.serverMutex);
-		sv.messageBuffer = NULL;
+		sv->messageBuffer = NULL;
 		break;
 
 	case clc_endround:
 		/* player wants to end round */
-		sv.messageBuffer = msg;
+		sv->messageBuffer = msg;
 		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientEndRound(cl->player);
 		TH_MutexUnlock(svs.serverMutex);
-		sv.messageBuffer = NULL;
+		sv->messageBuffer = NULL;
 		break;
 
 	case clc_teaminfo:
 		/* player sends team info */
 		/* actors spawn accordingly */
-		sv.messageBuffer = msg;
+		sv->messageBuffer = msg;
 		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientTeamInfo(cl->player);
 		TH_MutexUnlock(svs.serverMutex);
-		sv.messageBuffer = NULL;
+		sv->messageBuffer = NULL;
 		break;
 
 	case clc_initactorstates:
 		/* player sends team info */
 		/* actors spawn accordingly */
-		sv.messageBuffer = msg;
+		sv->messageBuffer = msg;
 		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientInitActorStates(cl->player);
 		TH_MutexUnlock(svs.serverMutex);
-		sv.messageBuffer = NULL;
+		sv->messageBuffer = NULL;
 		break;
 	}
 }
 
 server_state_t SV_GetServerState(void)
 {
-	return sv.state;
+	return sv->state;
 }
 
 void SV_SetServerState(server_state_t state)
 {
-	sv.state = state;
+	sv->state = state;
 }
 
 #endif /* COMPILE_UFO_WITHOUT_SERVER */

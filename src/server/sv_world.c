@@ -44,11 +44,11 @@ static worldSector_t *SV_CreateWorldSector (int depth, const vec3_t mins, const 
 	vec3_t size;
 	vec3_t mins1, maxs1, mins2, maxs2;
 
-	if (sv.numWorldSectors >= lengthof(sv.worldSectors))
+	if (sv->numWorldSectors >= lengthof(sv->worldSectors))
 		Com_Error(ERR_DROP, "SV_CreateWorldSector: overflow");
 
-	anode = &sv.worldSectors[sv.numWorldSectors];
-	sv.numWorldSectors++;
+	anode = &sv->worldSectors[sv->numWorldSectors];
+	sv->numWorldSectors++;
 
 	anode->entities = NULL;
 
@@ -86,15 +86,15 @@ static worldSector_t *SV_CreateWorldSector (int depth, const vec3_t mins, const 
  */
 void SV_ClearWorld (void)
 {
-	SV_CreateWorldSector(0, sv.mapData.mapMin, sv.mapData.mapMax);
+	SV_CreateWorldSector(0, sv->mapData.mapMin, sv->mapData.mapMax);
 }
 
 static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t *ent)
 {
-	if (!ent || ent->number < 0 || ent->number >= lengthof(sv.edicts))
+	if (!ent || ent->number < 0 || ent->number >= lengthof(sv->edicts))
 		Com_Error(ERR_DROP, "SV_GetServerDataForEdict: bad game ent");
 
-	return &sv.edicts[ent->number];
+	return &sv->edicts[ent->number];
 }
 
 /**
@@ -199,7 +199,7 @@ void SV_LinkEdict (edict_t * ent)
 		return;
 
 	/* find the first node that the ent's box crosses */
-	node = sv.worldSectors;
+	node = sv->worldSectors;
 	while (1) {
 		/* end of tree */
 		if (node->axis == LEAFNODE)
@@ -318,7 +318,7 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 	ap.areaEdictListCount = 0;
 	ap.areaEdictListMaxCount = maxCount;
 
-	SV_AreaEdicts_r(sv.worldSectors, &ap);
+	SV_AreaEdicts_r(sv->worldSectors, &ap);
 
 	return ap.areaEdictListCount;
 }
@@ -387,7 +387,7 @@ static int SV_HullForEntity (const edict_t *ent, int *tile, vec3_t rmaShift)
 
 		assert(ent->modelindex < MAX_MODELS);
 
-		model = sv.models[ent->modelindex];
+		model = sv->models[ent->modelindex];
 		if (!model)
 			Com_Error(ERR_FATAL, "SOLID_BSP with a non bsp model");
 
@@ -400,7 +400,7 @@ static int SV_HullForEntity (const edict_t *ent, int *tile, vec3_t rmaShift)
 	/* create a temp hull from bounding box sizes */
 	*tile = 0;
 	VectorCopy(vec3_origin, rmaShift);
-	return CM_HeadnodeForBox(&sv.mapTiles.mapTiles[*tile], ent->mins, ent->maxs);
+	return CM_HeadnodeForBox(&sv->mapTiles.mapTiles[*tile], ent->mins, ent->maxs);
 }
 
 
@@ -451,7 +451,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_HintedTransformedBoxTrace(&sv.mapTiles.mapTiles[tile], clip->start, clip->end, clip->mins, clip->maxs, headnode,
+		trace = CM_HintedTransformedBoxTrace(&sv->mapTiles.mapTiles[tile], clip->start, clip->end, clip->mins, clip->maxs, headnode,
 				clip->contentmask, 0, touch->origin, angles, rmaShift, 1.0);
 
 #ifdef PARANOID
@@ -489,7 +489,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 int SV_PointContents (vec3_t p)
 {
 	/* clip to all world levels */
-	trace_t trace = CM_CompleteBoxTrace(&sv.mapTiles, p, p, vec3_origin, vec3_origin, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
+	trace_t trace = CM_CompleteBoxTrace(&sv->mapTiles, p, p, vec3_origin, vec3_origin, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
 	return 0;
@@ -553,7 +553,7 @@ trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, cons
 	OBJZERO(clip);
 
 	/* clip to world - 0x1FF = all levels */
-	clip.trace = CM_CompleteBoxTrace(&sv.mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
+	clip.trace = CM_CompleteBoxTrace(&sv->mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
 	clip.trace.ent = svs.ge->edicts; /* the first edict is the world */
@@ -711,7 +711,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 		Com_Error(ERR_DROP, "SV_LoadModelMinsMaxs: NULL model");
 
 	/* search the currently loaded models */
-	for (i = 0, mod = sv.svModels; i < sv.numSVModels; i++, mod++)
+	for (i = 0, mod = sv->svModels; i < sv->numSVModels; i++, mod++)
 		if (mod->frame == frame && Q_streq(mod->name, model)) {
 			VectorCopy(mod->mins, mins);
 			VectorCopy(mod->maxs, maxs);
@@ -719,15 +719,15 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 		}
 
 	/* find a free model slot spot */
-	for (i = 0, mod = sv.svModels; i < sv.numSVModels; i++, mod++) {
+	for (i = 0, mod = sv->svModels; i < sv->numSVModels; i++, mod++) {
 		if (!mod->name)
 			break;				/* free spot */
 	}
 
-	if (i == sv.numSVModels) {
-		if (sv.numSVModels == MAX_MOD_KNOWN)
-			Com_Error(ERR_DROP, "sv.numSVModels == MAX_MOD_KNOWN");
-		sv.numSVModels++;
+	if (i == sv->numSVModels) {
+		if (sv->numSVModels == MAX_MOD_KNOWN)
+			Com_Error(ERR_DROP, "sv->numSVModels == MAX_MOD_KNOWN");
+		sv->numSVModels++;
 	}
 
 	VectorCopy(vec3_origin, mins);
@@ -736,7 +736,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	/* load the file */
 	modfilelen = FS_LoadFile(model, &buf);
 	if (!buf) {
-		sv.numSVModels--;
+		sv->numSVModels--;
 		return qfalse;
 	}
 
