@@ -50,6 +50,12 @@ static SDL_PixelFormat format = {
 	16,  /**< gshift */
 	8,  /**< bshift */
 	0,  /**< ashift */
+#ifdef ANDROID
+	0xff000000,
+	0x00ff0000,
+	0x0000ff00,
+	0x000000ff,
+#else
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	0xff000000,
 	0x00ff0000,
@@ -60,6 +66,7 @@ static SDL_PixelFormat format = {
 	0x0000ff00,
 	0x00ff0000,
 	0xff000000,
+#endif
 #endif
 	0,  /**< colorkey */
 	1   /**< alpha */
