@@ -7274,17 +7274,25 @@ base/textures/tex_vehicles/car_e.png | GNU General Public License 2.0 or later |
 base/textures/tex_vehicles/car_e0.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/car_e1.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/car_f.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/consite_truck_a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/consite_truck_c.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/gabstap_a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/gabstap_b.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer), Nate Wright
 base/textures/tex_vehicles/gabstap_c.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_c_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_d.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_d_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_vehicles/gabstap_e.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.png | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf
+base/textures/tex_vehicles/truck_a.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
+base/textures/tex_vehicles/truck_b.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
 base/textures/tex_vehicles/truck_c.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_lq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_d.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
 base/videos/intro.ogm | GNU General Public License 2.0 or later | David Reeves (Destructavator)
 contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
 contrib/licenses/resources/grid.png | Public Domain
