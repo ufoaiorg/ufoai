@@ -28,12 +28,12 @@ void SV_NextMapcycle (void)
 	mapcycle_t *mapcycle;
 
 	mapcycle = mapcycleList;
-	if (sv.name[0]) {
+	if (sv->name[0]) {
 		int i;
-		Com_Printf("current map: %s\n", sv.name);
+		Com_Printf("current map: %s\n", sv->name);
 		for (i = 0; i < mapcycleCount; i++) {
-			/* random maps may have a theme - but that's not stored in sv.name
-			 * but in sv.assembly */
+			/* random maps may have a theme - but that's not stored in sv->name
+			 * but in sv->assembly */
 			if (mapcycle->map[0] == '+') {
 				Q_strncpyz(expanded, mapcycle->map, sizeof(expanded));
 				base = strstr(expanded, " ");
@@ -41,7 +41,7 @@ void SV_NextMapcycle (void)
 					base[0] = '\0'; /* split the strings */
 					Q_strncpyz(assembly, base + 1, sizeof(assembly));
 					/* get current position */
-					if (Q_streq(sv.name, expanded) && Q_streq(sv.assembly, assembly)) {
+					if (Q_streq(sv->name, expanded) && Q_streq(sv->assembly, assembly)) {
 						/* next map in cycle */
 						if (mapcycle->next) {
 							map = mapcycle->next->map;
@@ -63,7 +63,7 @@ void SV_NextMapcycle (void)
 				}
 			} else {
 				/* get current position */
-				if (Q_streq(sv.name, mapcycle->map)) {
+				if (Q_streq(sv->name, mapcycle->map)) {
 					/* next map in cycle */
 					if (mapcycle->next) {
 						map = mapcycle->next->map;
@@ -108,9 +108,9 @@ void SV_NextMapcycle (void)
 					return;
 				}
 			}
-		} else if (sv.name[0]) {
-			Com_Printf("No mapcycle - restart the current map (%s)\n", sv.name);
-			map = sv.name;
+		} else if (sv->name[0]) {
+			Com_Printf("No mapcycle - restart the current map (%s)\n", sv->name);
+			map = sv->name;
 			gameType = NULL;
 		} else {
 			Com_Printf("No mapcycle and no running map\n");

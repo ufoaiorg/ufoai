@@ -164,7 +164,7 @@ typedef struct client_s {
 } client_t;
 
 extern serverInstanceStatic_t svs;		/**< persistant server instance info */
-extern serverInstanceGame_t sv;			/**< server data per game/map */
+extern serverInstanceGame_t * sv;			/**< server data per game/map */
 
 extern cvar_t *sv_mapname;
 extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */

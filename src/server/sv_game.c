@@ -138,13 +138,13 @@ static void SV_SetModel (edict_t * ent, const char *name)
 
 	/* if it is an inline model, get the size information for it */
 	if (name[0] == '*') {
-		const cBspModel_t *mod = CM_InlineModel(&sv.mapTiles, name);
+		const cBspModel_t *mod = CM_InlineModel(&sv->mapTiles, name);
 		/* Copy model mins and maxs to entity */
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
 		/* This is to help the entity collision code out */
 		/* Copy entity origin and angles to model*/
-		CM_SetInlineModelOrientation(&sv.mapTiles, name, ent->origin, ent->angles);
+		CM_SetInlineModelOrientation(&sv->mapTiles, name, ent->origin, ent->angles);
 	}
 }
 
@@ -178,12 +178,12 @@ static void SV_Configstring (int index, const char *fmt, ...)
 
 static void SV_WriteChar (char c)
 {
-	NET_WriteChar(sv.pendingEvent.buf, c);
+	NET_WriteChar(sv->pendingEvent.buf, c);
 }
 
 static void SV_WriteByte (byte c)
 {
-	NET_WriteByte(sv.pendingEvent.buf, c);
+	NET_WriteByte(sv->pendingEvent.buf, c);
 }
 
 /**
@@ -192,7 +192,7 @@ static void SV_WriteByte (byte c)
  */
 static byte* SV_WriteDummyByte (byte c)
 {
-	pending_event_t *p = &sv.pendingEvent;
+	pending_event_t *p = &sv->pendingEvent;
 	byte *pos = (byte*) p->buf->end;
 	NET_WriteByte(p->buf, c);
 	assert(pos != NULL);
@@ -201,95 +201,95 @@ static byte* SV_WriteDummyByte (byte c)
 
 static void SV_WriteShort (int c)
 {
-	NET_WriteShort(sv.pendingEvent.buf, c);
+	NET_WriteShort(sv->pendingEvent.buf, c);
 }
 
 static void SV_WriteLong (int c)
 {
-	NET_WriteLong(sv.pendingEvent.buf, c);
+	NET_WriteLong(sv->pendingEvent.buf, c);
 }
 
 static void SV_WriteString (const char *s)
 {
-	NET_WriteString(sv.pendingEvent.buf, s);
+	NET_WriteString(sv->pendingEvent.buf, s);
 }
 
 static void SV_WritePos (const vec3_t pos)
 {
-	NET_WritePos(sv.pendingEvent.buf, pos);
+	NET_WritePos(sv->pendingEvent.buf, pos);
 }
 
 static void SV_WriteGPos (const pos3_t pos)
 {
-	NET_WriteGPos(sv.pendingEvent.buf, pos);
+	NET_WriteGPos(sv->pendingEvent.buf, pos);
 }
 
 static void SV_WriteDir (const vec3_t dir)
 {
-	NET_WriteDir(sv.pendingEvent.buf, dir);
+	NET_WriteDir(sv->pendingEvent.buf, dir);
 }
 
 static void SV_WriteAngle (float f)
 {
-	NET_WriteAngle(sv.pendingEvent.buf, f);
+	NET_WriteAngle(sv->pendingEvent.buf, f);
 }
 
 static void SV_WriteFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	NET_vWriteFormat(sv.pendingEvent.buf, format, ap);
+	NET_vWriteFormat(sv->pendingEvent.buf, format, ap);
 	va_end(ap);
 }
 
 static int SV_ReadChar (void)
 {
-	return NET_ReadChar(sv.messageBuffer);
+	return NET_ReadChar(sv->messageBuffer);
 }
 
 static int SV_ReadByte (void)
 {
-	return NET_ReadByte(sv.messageBuffer);
+	return NET_ReadByte(sv->messageBuffer);
 }
 
 static int SV_ReadShort (void)
 {
-	return NET_ReadShort(sv.messageBuffer);
+	return NET_ReadShort(sv->messageBuffer);
 }
 
 static int SV_ReadLong (void)
 {
-	return NET_ReadLong(sv.messageBuffer);
+	return NET_ReadLong(sv->messageBuffer);
 }
 
 static int SV_ReadString (char *str, size_t length)
 {
-	return NET_ReadString(sv.messageBuffer, str, length);
+	return NET_ReadString(sv->messageBuffer, str, length);
 }
 
 static void SV_ReadPos (vec3_t pos)
 {
-	NET_ReadPos(sv.messageBuffer, pos);
+	NET_ReadPos(sv->messageBuffer, pos);
 }
 
 static void SV_ReadGPos (pos3_t pos)
 {
-	NET_ReadGPos(sv.messageBuffer, pos);
+	NET_ReadGPos(sv->messageBuffer, pos);
 }
 
 static void SV_ReadDir (vec3_t vector)
 {
-	NET_ReadDir(sv.messageBuffer, vector);
+	NET_ReadDir(sv->messageBuffer, vector);
 }
 
 static float SV_ReadAngle (void)
 {
-	return NET_ReadAngle(sv.messageBuffer);
+	return NET_ReadAngle(sv->messageBuffer);
 }
 
 static void SV_ReadData (void *buffer, int size)
 {
-	NET_ReadData(sv.messageBuffer, buffer, size);
+	NET_ReadData(sv->messageBuffer, buffer, size);
 }
 
 /**
@@ -304,7 +304,7 @@ static void SV_ReadFormat (const char *format, ...)
 		return;
 
 	va_start(ap, format);
-	NET_vReadFormat(sv.messageBuffer, format, ap);
+	NET_vReadFormat(sv->messageBuffer, format, ap);
 	va_end(ap);
 }
 
@@ -313,7 +313,7 @@ static void SV_ReadFormat (const char *format, ...)
  */
 static void SV_AbortEvents (void)
 {
-	pending_event_t *p = &sv.pendingEvent;
+	pending_event_t *p = &sv->pendingEvent;
 
 	if (!p->pending)
 		return;
@@ -328,7 +328,7 @@ static void SV_AbortEvents (void)
  */
 static void SV_EndEvents (void)
 {
-	pending_event_t *p = &sv.pendingEvent;
+	pending_event_t *p = &sv->pendingEvent;
 
 	if (!p->pending)
 		return;
@@ -346,7 +346,7 @@ static void SV_EndEvents (void)
  */
 static void SV_AddEvent (unsigned int mask, int eType)
 {
-	pending_event_t *p = &sv.pendingEvent;
+	pending_event_t *p = &sv->pendingEvent;
 	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %i)\n", eType, mask);
 
 	/* finish the last event */
@@ -369,7 +369,7 @@ static void SV_AddEvent (unsigned int mask, int eType)
  */
 static int SV_GetEvent (void)
 {
-	const pending_event_t *p = &sv.pendingEvent;
+	const pending_event_t *p = &sv->pendingEvent;
 	if (!p->pending)
 		return -1;
 
@@ -384,7 +384,7 @@ static void *SV_TagAlloc (int size, int tagNum, const char *file, int line)
 	if (tagNum < 0)
 		tagNum *= -1;
 
-	return _Mem_Alloc(size, qtrue, sv.gameSysPool, tagNum, file, line);
+	return _Mem_Alloc(size, qtrue, sv->gameSysPool, tagNum, file, line);
 }
 
 static void SV_MemFree (void *ptr, const char *file, int line)
@@ -400,29 +400,29 @@ static void SV_FreeTags (int tagNum, const char *file, int line)
 	if (tagNum < 0)
 		tagNum *= -1;
 
-	_Mem_FreeTag(sv.gameSysPool, tagNum, file, line);
+	_Mem_FreeTag(sv->gameSysPool, tagNum, file, line);
 }
 
 static qboolean SV_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
 {
-	return TR_TestLine(&sv.mapTiles, start, stop, levelmask);
+	return TR_TestLine(&sv->mapTiles, start, stop, levelmask);
 }
 
 static qboolean SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
 {
 	/* do the line test */
-	const qboolean hit = CM_EntTestLine(&sv.mapTiles, start, stop, levelmask, entlist);
+	const qboolean hit = CM_EntTestLine(&sv->mapTiles, start, stop, levelmask, entlist);
 	return hit;
 }
 
 static void SV_RecalcRouting (routing_t *map, const char *name, const char **list)
 {
-	Grid_RecalcRouting(&sv.mapTiles, map, name, list);
+	Grid_RecalcRouting(&sv->mapTiles, map, name, list);
 }
 
 static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)
 {
-	CM_SetInlineModelOrientation(&sv.mapTiles, name, origin, angles);
+	CM_SetInlineModelOrientation(&sv->mapTiles, name, origin, angles);
 }
 
 static void SV_UnloadGame (void)
@@ -523,14 +523,14 @@ void SV_ShutdownGameProgs (void)
 
 	svs.ge->Shutdown();
 
-	size = Mem_PoolSize(sv.gameSysPool);
+	size = Mem_PoolSize(sv->gameSysPool);
 	if (size > 0) {
 		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
-		Cmd_ExecuteString(va("mem_stats %s", sv.gameSysPool->name));
+		Cmd_ExecuteString(va("mem_stats %s", sv->gameSysPool->name));
 	}
 
-	Mem_DeletePool(sv.gameSysPool);
-	sv.gameSysPool = NULL;
+	Mem_DeletePool(sv->gameSysPool);
+	sv->gameSysPool = NULL;
 
 	SV_UnloadGame();
 
@@ -549,7 +549,7 @@ int SV_RunGameFrameThread (void *data)
 		TH_MutexCondWait(svs.serverMutex, svs.gameFrameCond);
 		SV_RunGameFrame();
 		TH_MutexUnlock(svs.serverMutex);
-	} while (!sv.endgame);
+	} while (!sv->endgame);
 
 	return 0;
 }
@@ -562,9 +562,9 @@ int SV_RunGameFrameThread (void *data)
  */
 void SV_RunGameFrame (void)
 {
-	sv.endgame = svs.ge->RunFrame();
-	if (sv.state == ss_game_shutdown)
-		sv.endgame = qtrue;
+	sv->endgame = svs.ge->RunFrame();
+	if (sv->state == ss_game_shutdown)
+		sv->endgame = qtrue;
 }
 
 /**
@@ -676,7 +676,7 @@ void SV_InitGameProgs (void)
 	import.csi = &csi;
 
 	/* import the server routing table */
-	import.routingMap = sv.mapData.map;
+	import.routingMap = sv->mapData.map;
 
 	svs.ge = SV_GetGameAPI(&import);
 
@@ -685,7 +685,7 @@ void SV_InitGameProgs (void)
 	if (svs.ge->apiversion != GAME_API_VERSION)
 		Com_Error(ERR_DROP, "game is version %i, not %i", svs.ge->apiversion, GAME_API_VERSION);
 
-	sv.gameSysPool = Mem_CreatePool("Server: Game system");
+	sv->gameSysPool = Mem_CreatePool("Server: Game system");
 
 	svs.ge->Init();
 

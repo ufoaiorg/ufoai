@@ -52,14 +52,14 @@ char *SV_GetConfigString (int index)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_FATAL, "Invalid config string index given");
-	return sv.configstrings[index];
+	return sv->configstrings[index];
 }
 
 int SV_GetConfigStringInteger (int index)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_FATAL, "Invalid config string index given");
-	return atoi(sv.configstrings[index]);
+	return atoi(sv->configstrings[index]);
 }
 
 char *SV_SetConfigString (int index, ...)
@@ -88,13 +88,13 @@ char *SV_SetConfigString (int index, ...)
 	 * there may be overflows in i==CS_TILES - but thats ok
 	 * see definition of configstrings and MAX_TILESTRINGS */
 	if (index == CS_TILES || index == CS_POSITIONS)
-		Q_strncpyz(sv.configstrings[index], value, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		Q_strncpyz(sv->configstrings[index], value, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	else
-		Q_strncpyz(sv.configstrings[index], value, sizeof(sv.configstrings[index]));
+		Q_strncpyz(sv->configstrings[index], value, sizeof(sv->configstrings[index]));
 
 	va_end(ap);
 
-	return sv.configstrings[index];
+	return sv->configstrings[index];
 }
 
 /**
@@ -277,7 +277,7 @@ static void SVC_Info (struct net_stream *s)
 		Info_SetValueForKey(infostring, sizeof(infostring), "sv_hostname", sv_hostname->string);
 		Info_SetValueForKey(infostring, sizeof(infostring), "sv_dedicated", sv_dedicated->string);
 		Info_SetValueForKey(infostring, sizeof(infostring), "sv_gametype", sv_gametype->string);
-		Info_SetValueForKey(infostring, sizeof(infostring), "sv_mapname", sv.name);
+		Info_SetValueForKey(infostring, sizeof(infostring), "sv_mapname", sv->name);
 		Info_SetValueForKeyAsInteger(infostring, sizeof(infostring), "clients", count);
 		Info_SetValueForKey(infostring, sizeof(infostring), "sv_maxclients", sv_maxclients->string);
 		Info_SetValueForKey(infostring, sizeof(infostring), "sv_version", UFO_VERSION);
@@ -303,7 +303,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
-	if (sv.started) {
+	if (sv->started) {
 		Com_Printf("rejected connect because match is already running\n");
 		NET_OOB_Printf(stream, "print\nGame has started already.\n");
 		return;
@@ -570,7 +570,7 @@ static void SV_CheckGameStart (void)
 	client_t *cl;
 
 	/* already started? */
-	if (sv.started)
+	if (sv->started)
 		return;
 
 	if (sv_maxclients->integer > 1) {
@@ -586,7 +586,7 @@ static void SV_CheckGameStart (void)
 		return;
 	}
 
-	sv.started = qtrue;
+	sv->started = qtrue;
 
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
@@ -632,7 +632,7 @@ void SV_Frame (int now, void *data)
 		SDL_CondSignal(svs.gameFrameCond);
 
 	/* next map in the cycle */
-	if (sv.endgame && sv_maxclients->integer > 1)
+	if (sv->endgame && sv_maxclients->integer > 1)
 		SV_NextMapcycle();
 
 	/* send a heartbeat to the master if needed */
@@ -696,12 +696,12 @@ static qboolean SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
 
 mapData_t* SV_GetMapData (void)
 {
-	return &sv.mapData;
+	return &sv->mapData;
 }
 
 mapTiles_t* SV_GetMapTiles (void)
 {
-	return &sv.mapTiles;
+	return &sv->mapTiles;
 }
 
 /**
@@ -714,6 +714,8 @@ void SV_Init (void)
 	sv_genericPool = Mem_CreatePool("Server: Generic");
 
 	OBJZERO(svs);
+
+	sv = (serverInstanceGame_t *) Mem_PoolAlloc(sizeof(*sv), sv_genericPool, 0);
 
 	SV_InitOperatorCommands();
 
@@ -807,14 +809,14 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	NET_DatagramSocketClose(svs.netDatagramSocket);
 	SV_Stop();
 
-	for (i = 0; i < sv.numSVModels; i++) {
-		sv_model_t *model = &sv.svModels[i];
+	for (i = 0; i < sv->numSVModels; i++) {
+		sv_model_t *model = &sv->svModels[i];
 		if (model->name)
 			Mem_Free(model->name);
 	}
 
 	/* free current level */
-	OBJZERO(sv);
+	OBJZERO(*sv);
 
 	/* free server static data */
 	if (svs.clients)
