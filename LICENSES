@@ -2513,6 +2513,11 @@ base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later |  |
 base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/world_bg.png | GNU General Public License 2.0 or later
+base/pics/banks/pack1.png | GNU General Public License 2.0 or later
+base/pics/banks/pack2.png | GNU General Public License 2.0 or later
+base/pics/banks/pack_hud.png | GNU General Public License 2.0 or later
+base/pics/banks/pack_hud2.png | GNU General Public License 2.0 or later
+base/pics/banks/pack_message.png | GNU General Public License 2.0 or later | bayo
 base/pics/base/adrop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl2.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2705,6 +2710,35 @@ base/pics/hud/phys_ekg.png | GNU General Public License 2.0
 base/pics/hud/phys_mor.png | GNU General Public License 2.0
 base/pics/hud/popup_cursor.png | GNU General Public License 2.0 or later
 base/pics/hud/weapon_box.png | GNU General Public License 2.0 or later
+base/pics/hudphone/background.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/button.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/button_clicked.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/button_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/cancel.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/cancel_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/crouch.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/crouch_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/indicator_bg.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/indicator_health.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/indicator_moral.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/indicator_time.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/item.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/item_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/lookat.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/lookat_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/move.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/move_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/name_bg.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/shoot.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/shoot_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/soldier_next.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/soldier_next_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/soldier_prev.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/soldier_prev_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/standup.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/standup_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/team.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/time_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/icons/aircraft_return.png | GNU General Public License 2.0 or later
 base/pics/icons/aircraft_return_disabled.png | GNU General Public License 2.0 or later
 base/pics/icons/aircraft_return_hovered.png | GNU General Public License 2.0 or later
@@ -2760,11 +2794,6 @@ base/pics/icons/notify_pause.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_sound.png | GNU General Public License 2.0 or later
 base/pics/icons/off.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/on.png | GNU General Public License 2.0 or later | bayo
-base/pics/icons/pack1.png | GNU General Public License 2.0 or later
-base/pics/icons/pack2.png | GNU General Public License 2.0 or later
-base/pics/icons/pack_hud.png | GNU General Public License 2.0 or later
-base/pics/icons/pack_hud2.png | GNU General Public License 2.0 or later
-base/pics/icons/pack_message.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/pen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pen_disabled.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pen_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
