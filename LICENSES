@@ -7298,6 +7298,9 @@ base/textures/tex_vehicles/gabstap_c_nm.png | GNU General Public License 2.0 or 
 base/textures/tex_vehicles/gabstap_d.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_d_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_e.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/ship01.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/ship03.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/ship04.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
