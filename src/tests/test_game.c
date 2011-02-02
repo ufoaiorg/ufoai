@@ -117,6 +117,8 @@ static void testDoorTrigger (void)
 			}
 		}
 
+		SV_ShutdownGameProgs();
+
 		CU_ASSERT_TRUE(cnt > 0);
 		CU_ASSERT_TRUE(doors == 2);
 	} else {
@@ -131,6 +133,7 @@ static void testShooting (void)
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
 		SV_Map(qtrue, mapName, NULL);
+		SV_ShutdownGameProgs();
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}
