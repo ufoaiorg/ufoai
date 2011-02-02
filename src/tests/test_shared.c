@@ -82,6 +82,7 @@ void TEST_Init (void)
 	FS_InitFilesystem(qtrue);
 	FS_AddGameDirectory("./unittest", qfalse);
 	Swap_Init();
+	SV_Init();
 
 	OBJZERO(csi);
 
