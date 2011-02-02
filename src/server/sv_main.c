@@ -737,11 +737,6 @@ void SV_Init (void)
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
-	if (sv_dedicated->integer)
-		Cvar_Set("sv_maxclients", "8");
-
-	sv_maxclients->modified = qfalse;
-
 	SV_MapcycleInit();
 }
 
