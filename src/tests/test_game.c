@@ -98,7 +98,7 @@ static void testDoorTrigger (void)
 		int doors = 0;
 
 		/* the other tests didn't call the server shutdown function to clean up */
-		OBJZERO(sv);
+		OBJZERO(*sv);
 		SV_Map(qtrue, mapName, NULL);
 		while ((e = G_EdictsGetNextInUse(e))) {
 			cnt++;
@@ -117,6 +117,8 @@ static void testDoorTrigger (void)
 			}
 		}
 
+		SV_ShutdownGameProgs();
+
 		CU_ASSERT_TRUE(cnt > 0);
 		CU_ASSERT_TRUE(doors == 2);
 	} else {
@@ -129,8 +131,9 @@ static void testShooting (void)
 	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		/* the other tests didn't call the server shutdown function to clean up */
-		OBJZERO(sv);
+		OBJZERO(*sv);
 		SV_Map(qtrue, mapName, NULL);
+		SV_ShutdownGameProgs();
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}

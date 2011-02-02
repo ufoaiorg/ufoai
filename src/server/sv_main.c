@@ -717,7 +717,7 @@ void SV_Init (void)
 
 	OBJZERO(svs);
 
-	sv = (serverInstanceGame_t *) calloc(sizeof(serverInstanceGame_t), 1);
+	sv = (serverInstanceGame_t *) Mem_PoolAlloc(sizeof(*sv), sv_genericPool, 0);
 
 	SV_InitOperatorCommands();
 
@@ -738,11 +738,6 @@ void SV_Init (void)
 	sv_threads = Cvar_Get("sv_threads", "1", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
-
-	if (sv_dedicated->integer)
-		Cvar_Set("sv_maxclients", "8");
-
-	sv_maxclients->modified = qfalse;
 
 	SV_MapcycleInit();
 }
@@ -818,7 +813,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	}
 
 	/* free current level */
-	OBJZERO(sv);
+	OBJZERO(*sv);
 
 	/* free server static data */
 	if (svs.clients)

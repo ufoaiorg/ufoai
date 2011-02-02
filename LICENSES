@@ -5578,6 +5578,8 @@ base/textures/tex_buildings/floor003_nm.png | GNU General Public License 2.0 or 
 base/textures/tex_buildings/floor003_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor004.png | GNU General Public License 2.0 or later | Matthias "voller" Volmer | http://ufoai.ninex.info/forum/index.php?topic=3181.msg22120#msg22120
 base/textures/tex_buildings/floor004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_buildings/floor005.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/floor005_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
 base/textures/tex_buildings/floor006.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor006_nm.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor008.png | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
@@ -5589,9 +5591,15 @@ base/textures/tex_buildings/floor013_nm.png | GNU General Public License 2.0 or 
 base/textures/tex_buildings/floor013_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor015.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor015_nm.png | GNU General Public License 2.0 or later | shedeki
+base/textures/tex_buildings/floor016.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/floor016_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
 base/textures/tex_buildings/floor017.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor017_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor020.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_buildings/floor021.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/floor021_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/floor021lrg.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/floor021lrg_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
 base/textures/tex_buildings/floor024.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_buildings/floor025.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor025_nm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -6660,9 +6668,9 @@ base/textures/tex_misc/box017b.jpg | GNU General Public License 2.0 | Werner Hö
 base/textures/tex_misc/box018.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/boxen001.png | Public Domain | sauer2 | http://opengameart.org/content/speaker-images
 base/textures/tex_misc/cable.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_misc/container001_nm.png | GNU General Public License 2.0 or later | Zark127
-base/textures/tex_misc/container002_nm.png | GNU General Public License 2.0 or later | Zark127
-base/textures/tex_misc/container003_nm.png | GNU General Public License 2.0 or later | Zark127
+base/textures/tex_misc/container001.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_misc/container002.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_misc/container003.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_misc/container004.jpg | Creative Commons Attribution-Share Alike 2.5 | Remi Jouan | http://commons.wikimedia.org/wiki/Image:Contenneur_%281%29.jpg
 base/textures/tex_misc/container004_nm.png | GNU General Public License 2.0 or later | Zark127
 base/textures/tex_misc/container006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -7274,17 +7282,25 @@ base/textures/tex_vehicles/car_e.png | GNU General Public License 2.0 or later |
 base/textures/tex_vehicles/car_e0.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/car_e1.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/car_f.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/consite_truck_a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/consite_truck_c.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/gabstap_a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/gabstap_b.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer), Nate Wright
 base/textures/tex_vehicles/gabstap_c.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_c_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_d.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_d_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_vehicles/gabstap_e.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.png | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf
+base/textures/tex_vehicles/truck_a.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
+base/textures/tex_vehicles/truck_b.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
 base/textures/tex_vehicles/truck_c.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_lq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_d.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
 base/videos/intro.ogm | GNU General Public License 2.0 or later | David Reeves (Destructavator)
 contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
 contrib/licenses/resources/grid.png | Public Domain
