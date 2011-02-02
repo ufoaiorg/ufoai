@@ -231,6 +231,7 @@ tileset fillers_12 {
        +filler_12vu2
 }
 
+// empty filler. contains nothing
 tile +filler_1s1
 {
 3 3
@@ -238,7 +239,7 @@ tile +filler_1s1
 1vw     +1     1vw
 0      1hg      0
 }
-
+//  tree (any terrain)
 tile +filler_1s2
 {
 3 3
@@ -265,7 +266,7 @@ wv    +1     1vw
 0      hg     0
 }
 
-// filler for desert terrain
+// filler for desert terrain (3 palmes)
 tile +filler_1s4_d
 {
 3 3
@@ -274,6 +275,7 @@ wv    +1     1vw
 0      hg     0
 }
 
+// wip tile
 tile +filler_1s5
 {
 3 3
@@ -281,6 +283,20 @@ tile +filler_1s5
 wv    +1     1vw
 0      hg     0
 }
+
+tileset fillers_1s_common
+{
+       +filler_1s1
+       +filler_1s2
+}
+
+tileset fillers_1s_desert
+{
+       +filler_1s1
+       +filler_1s2
+       +filler_1s4_d
+}
+
 
 ///**** second level
 
@@ -425,8 +441,8 @@ title "_UFO landed in hills area"
 
 fix +road_1c1 "4 0"
 
-+filler_1s1 "0 2"
-+filler_1s2 "0 2"
+tileset fillers_1s_common "0 4"
+
 +filler_1s3 "1 2"
 
 +filler_2s1 "0 10"
@@ -465,9 +481,9 @@ title "_UFO landed in hills area"
 
 fix +road_1c1 "4 0"
 
-+filler_1s2 "0 2"
 +filler_1s3_d "1 2"
-+filler_1s4_d "1 4"
+
+tileset fillers_1s_desert "1 6"
 
 +filler_2s1 "0 10"
 +filler_2s2 "0 1"
