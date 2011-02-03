@@ -2784,6 +2784,8 @@ base/pics/hudphone/sprites/soldier_prev_disabled.png | Public Domain | bayo | SV
 base/pics/hudphone/sprites/standup.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/standup_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/team.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/team_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/time.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/time_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/icons/aircraft_return.png | GNU General Public License 2.0 or later
 base/pics/icons/aircraft_return_disabled.png | GNU General Public License 2.0 or later
@@ -2806,6 +2808,7 @@ base/pics/icons/bighead_worker.png | GNU General Public License 2.0 or later | M
 base/pics/icons/geo_center.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_center_hovered.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_nations.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
+base/pics/icons/geo_nations_clicked.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
 base/pics/icons/geo_nations_disabled.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
 base/pics/icons/geo_nations_hovered.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
 base/pics/icons/geo_option.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
