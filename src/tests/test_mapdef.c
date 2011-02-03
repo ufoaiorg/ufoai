@@ -81,6 +81,8 @@ static void testMapDefsSingleplayer (void)
 
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t* md = &cls.mds[i];
+		if (md->map[0] == '.')
+			continue;
 
 		SV_Map(qtrue, md->map, md->param);
 		CU_PASS(md->map);
