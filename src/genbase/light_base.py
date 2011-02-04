@@ -25,6 +25,12 @@ import shutil
 import resources
 import sprite_pack
 
+try:
+    os.stat( os.curdir + "/base" )
+except OSError, e:
+    print "light_base.py should be run from the top of your UfoAI src tree"
+    sys.exit(1)
+
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
 
 SRC_BASE = os.path.join(UFOAI_ROOT, "base")
@@ -123,7 +129,7 @@ if __name__ == '__main__':
         base_copy(SRC_BASE, DEST_BASE, name)
 
     # few pics, but no sprites
-    ignore = set(["pics/buttons", "pics/icons"])
+    ignore = set(["pics/buttons", "pics/icons", "pics/tutorial"])
     name = "pics"
     print "Copy \"%s\" (with filters)" % os.path.join(SRC_BASE, name)
     base_copy(SRC_BASE, DEST_BASE, name, ignore_prefix=ignore)
