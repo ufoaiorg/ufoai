@@ -134,13 +134,6 @@ if __name__ == '__main__':
     print "Copy \"%s\" (with filters)" % os.path.join(SRC_BASE, name)
     base_copy(SRC_BASE, DEST_BASE, name, ignore_prefix=ignore)
 
-    # TODO remove this OLD pack as soon as possible
-    base_copy(SRC_BASE, DEST_BASE, "pics/icons/pack1.png")
-    base_copy(SRC_BASE, DEST_BASE, "pics/icons/pack2.png")
-    base_copy(SRC_BASE, DEST_BASE, "pics/icons/pack_hud.png")
-    base_copy(SRC_BASE, DEST_BASE, "pics/icons/pack_hud2.png")
-    base_copy(SRC_BASE, DEST_BASE, "pics/icons/pack_message.png")
-
     # generate sprite pack
     sprite_pack.gen_sprite_pack(DEST_BASE, 512)
 
