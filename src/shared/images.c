@@ -50,7 +50,7 @@ static SDL_PixelFormat format = {
 	16,  /**< gshift */
 	8,  /**< bshift */
 	0,  /**< ashift */
-#ifdef ANDROID
+#ifdef ANDROID /* Android is little-endian, but uses big-endian pixel format */
 	0xff000000,
 	0x00ff0000,
 	0x0000ff00,
@@ -314,18 +314,6 @@ static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
 				/* TODO: ugly, but works somehow */
 				if( surf->format->Amask ) {
 					s = SDL_ConvertSurface(surf, &format, 0);
-					/*
-					if(s) {
-						SDL_FillRect(s, NULL, 0);
-						assert(surf->format->BytesPerPixel == 4);
-						for( int y = 0; y < surf->h; y++ )
-						for( int x = 0; x < surf->w; x++ ) {
-							Uint8 r, g, b, a;
-							SDL_GetRGBA(((Uint8 *)surf->pixels)[y*surf->pitch + x*4], surf->format, &r, &g, &b, &a);
-							((Uint8 *)s->pixels)[ y*s->pitch + x*4 + 3 ] = a;
-						}
-					}
-					*/
 				} else {
 					s = SDL_CreateRGBSurface(0, surf->w, surf->h, 32,
 							0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);

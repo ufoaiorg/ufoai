@@ -39,6 +39,8 @@ image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 /* lense flares */
 image_t *r_flaretextures[NUM_FLARETEXTURES];
 
+static const char * r_downsampledImages = NULL;
+
 #define MAX_TEXTURE_SIZE 8192
 
 /**
@@ -128,6 +130,55 @@ void R_ImageList_f (void)
 	}
 	Com_Printf("Total textures: %i (max textures: %i)\n", r_numImages, MAX_GL_TEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
+}
+
+/**
+ * @brief Retrieves real image size for downsampled images from file downsampledimages.txt
+ * @param[in] name (Full) pathname to the image to load, without extension
+ * @param[out] width Width of the loaded image, will not be changed if image is not downsampled.
+ * @param[out] height Height of the loaded image.
+ * @sa R_FindImage
+ */
+static void R_GetDownsampledImageDimensions(const char * name, int *width, int *height)
+{
+	const char * search;
+	int w, h;
+
+	if( !r_downsampledImages ) {
+		byte *buf;
+		int len;
+
+		r_downsampledImages = "\n";
+
+		if ((len = FS_LoadFile("downsampledimages.txt", &buf)) != -1) {
+			char * buf2 = (char *)Mem_Alloc(len + 2);
+			buf2[0] = '\n';
+			memcpy(buf2 + 1, buf, len);
+			buf2[len + 1] = 0;
+			FS_FreeFile(buf);
+			r_downsampledImages = buf2;
+		}
+	}
+
+	search = strstr(r_downsampledImages, name);
+	if( !search )
+		return;
+	if( search != r_downsampledImages && (search - 1)[0] != '\n' )
+		return;
+	search += strlen(name);
+	if( search[0] != ' ' )
+		return;
+	search++;
+	w = atoi(search);
+	search = strstr(search, " ");
+	if( !search )
+		return;
+	search++;
+	h = atoi(search);
+	if( w && h ) {
+		*width = w;
+		*height = h;
+	}
 }
 
 /**
@@ -551,6 +602,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 		R_BindTexture(image->texnum);
 		R_UploadTexture((unsigned *) pic, width, height, image);
 	}
+	R_GetDownsampledImageDimensions(image->name, &image->width, &image->height);
 	return image;
 }
 

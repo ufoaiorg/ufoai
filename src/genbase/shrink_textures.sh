@@ -21,7 +21,7 @@ mkdir -p "$OUTDIR"
 OUTDIR=`cd $OUTDIR && pwd`
 
 cd "$DIR"
-rm -f "$OUTDIR/imagesizes.txt"
+rm -f "$OUTDIR/downsampledimages.txt"
 find . -name "*.png" -o -name "*.jpg" -o -name "*.tga" | while read IMG; do
 W=`identify -format "%w" $IMG`
 H=`identify -format "%h" $IMG`
@@ -34,6 +34,6 @@ PERCENT=`echo "scale=20; 256 * 100 / $MAX" | bc`
 echo $IMG $W x $H - resizing to 256 by $PERCENT%
 mkdir -p "`dirname $OUTDIR/$IMG`"
 convert "$IMG" -filter Cubic -resize $PERCENT% "$OUTDIR/$IMG"
-echo "`echo $IMG | sed 's@[.]png\|[.]jpg\|[.]tga@@' | sed 's@./@@'`" $W $H >> "$OUTDIR/imagesizes.txt"
+echo "`echo $IMG | sed 's@[.]png\|[.]jpg\|[.]tga@@' | sed 's@./@@'`" $W $H >> "$OUTDIR/downsampledimages.txt"
 fi
 done
