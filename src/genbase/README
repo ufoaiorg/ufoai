@@ -1,1 +1,4 @@
 Contain script to generate a "spacial" base dir from the default base dir
+After you've run light_base.py you may wish to run
+
+shrink_textures.sh ../../base_light ../../base_light
