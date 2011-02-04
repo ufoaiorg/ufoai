@@ -497,11 +497,12 @@ base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
 base/maps/oriental_mosque.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/inter_dragon.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/inter_saracen.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/rescue/inter_starchaser.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_crash_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_crash_drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_crash_inter_dragon.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_crash_inter_saracen.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_crash_inter_starchaser.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/r_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/resort.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/scout_crash.map | GNU General Public License 2.0 or later
@@ -2783,6 +2784,8 @@ base/pics/hudphone/sprites/soldier_prev_disabled.png | Public Domain | bayo | SV
 base/pics/hudphone/sprites/standup.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/standup_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/team.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/team_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/time.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/time_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/icons/aircraft_return.png | GNU General Public License 2.0 or later
 base/pics/icons/aircraft_return_disabled.png | GNU General Public License 2.0 or later
@@ -2805,6 +2808,7 @@ base/pics/icons/bighead_worker.png | GNU General Public License 2.0 or later | M
 base/pics/icons/geo_center.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_center_hovered.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_nations.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
+base/pics/icons/geo_nations_clicked.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
 base/pics/icons/geo_nations_disabled.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
 base/pics/icons/geo_nations_hovered.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
 base/pics/icons/geo_option.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -5734,8 +5738,14 @@ base/textures/tex_buildings/wall013_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_buildings/wall014.png | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
 base/textures/tex_buildings/wall014_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/wall019_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/wall024_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/wall025_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_buildings/wall023.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/wall023_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright
+base/textures/tex_buildings/wall023lrg.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/wall023lrg_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright
+base/textures/tex_buildings/wall024.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/wall024_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall025.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/wall025_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall027.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall027_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall028.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5782,6 +5792,8 @@ base/textures/tex_buildings/wall_ind05_nm.png | GNU General Public License 2.0 o
 base/textures/tex_buildings/wall_se14.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_se15.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_stone_dirt.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
+base/textures/tex_buildings/wall_tab001.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_tab002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_wood_001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/wallpaper001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data, b_wllpaper.jpg
 base/textures/tex_buildings/wallpaper001_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
@@ -5996,6 +6008,7 @@ base/textures/tex_doors/elevator_ooo.png | GNU General Public License 2.0 or lat
 base/textures/tex_doors/elevator_ooo_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_doors/elevator_ooo_sm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_doors/metaldoor.jpg | GNU General Public License 2.0 | OpenArena
+base/textures/tex_doors/spind.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_furniture/basket.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_furniture/bed001_b.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/chest004.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6020,6 +6033,7 @@ base/textures/tex_furniture/kitchen002.png | GNU General Public License 2.0 or l
 base/textures/tex_furniture/kitchen002_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/kitchen003.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/kitchen003_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_furniture/seat001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_furniture/seat002.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/seat003.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/seat004.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6628,6 +6642,9 @@ base/textures/tex_misc/billiard001.png | GNU General Public License 2.0 or later
 base/textures/tex_misc/billiard001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/biohazard_clean.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/biohazard_dirty.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/books001.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/books002.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/books003.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/books004.jpg | Public Domain | Weird Tales, Inc. | http://commons.wikimedia.org/wiki/File:Weird_Tales_September_1939.jpg
 base/textures/tex_misc/books005.jpg | Public Domain | Jacobs, Joseph, 1854-1916; Batten, John Dickson, 1860-1932, ill | http://www.archive.org/details/bookofwondervoya00jacoiala
 base/textures/tex_misc/books006.jpg | Creative Commons Attribution 3.0 Unported | Ernst Wurdack | http://commons.wikimedia.org/wiki/File:Cover_PhanMorde.jpg   http://www.storyolympiade.de/
@@ -7291,6 +7308,9 @@ base/textures/tex_vehicles/gabstap_c_nm.png | GNU General Public License 2.0 or 
 base/textures/tex_vehicles/gabstap_d.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_d_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_e.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/ship01.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/ship03.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/ship04.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright

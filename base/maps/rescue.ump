@@ -7,9 +7,22 @@ base rescue/r_
 extends ufocrash
 
 // ---------------------------------
+// Dropships TODO: Remove these here
+// and use the ones from ufocrash.ump
+// ---------------------------------
+tile +craft_drop_firebird
+{
+5 4
+0      audbh     audbh      audbh      0
+audc      +a        +a         +a   audc
+audc      +a        +a         +a   audc
+0      audbh     audbh      audbh      0
+}
+
+// ---------------------------------
 // Crashed dropships
 // ---------------------------------
-tile +craft_crash_firebird
+tile +craft_crash_drop_firebird
 {
 6 5
 0      audbh   audbh     audbh      audbh      0
@@ -19,7 +32,7 @@ audc      +a      +a        +a         +a   audc
 0      audbh   audbh     audbh      audbh      0
 }
 
-tile +craft_crash_dragon
+tile +craft_crash_inter_dragon
 {
 6 6
 0      audbh     audbh     audbh      audbh      0
@@ -30,7 +43,7 @@ audc      +a        +a        +a         +a   audc
 0      audbh     audbh     audbh      audbh      0
 }
 
-tile +craft_crash_raptor
+tile +craft_crash_drop_raptor
 {
 6 6
 0      audbh     audbh     audbh      audbh      0
@@ -41,7 +54,7 @@ audc      +a        +a        +a         +a   audc
 0      audbh     audbh     audbh      audbh      0
 }
 
-tile +craft_crash_saracen
+tile +craft_crash_inter_saracen
 {
 6 6
 0      audbh     audbh     audbh      audbh      0
@@ -52,7 +65,7 @@ audc      +a        +a        +a         +a   audc
 0      audbh     audbh     audbh      audbh      0
 }
 
-tile +craft_crash_starchaser
+tile +craft_crash_inter_starchaser
 {
 6 6
 0      audbh     audbh     audbh      audbh      0
@@ -71,15 +84,15 @@ assembly default
 {
 title "_Rescue mission"
 size "7 7"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+h07 "0 2"
-+d01 "0 2"
-+d03 "0 2"
+ufocrash/uc_h01 "0 10"
+ufocrash/uc_h02 "0 10"
+ufocrash/uc_h03 "0 10"
+ufocrash/uc_h04 "0 1"
+ufocrash/uc_h05 "0 2"
+ufocrash/uc_h06 "0 2"
+ufocrash/uc_h07 "0 2"
+ufocrash/uc_d01 "0 2"
+ufocrash/uc_d03 "0 2"
 *rm_drop +craft_drop_firebird "1 1"
-*rm_crashed +craft_crash_firebird "1 1"
+*rm_crashed +craft_crash_drop_firebird "1 1"
 }

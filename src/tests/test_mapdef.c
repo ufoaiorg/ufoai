@@ -81,6 +81,8 @@ static void testMapDefsSingleplayer (void)
 
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t* md = &cls.mds[i];
+		if (md->map[0] == '.')
+			continue;
 
 		SV_Map(qtrue, md->map, md->param);
 		CU_PASS(md->map);
@@ -93,6 +95,9 @@ static void testMapDefsMultiplayer (void)
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
+	masterserver_url = Cvar_Get("noname", "", 0, NULL);
+	http_timeout = Cvar_Get("noname", "", 0, NULL);
+	http_proxy = Cvar_Get("noname", "", 0, NULL);
 	Cvar_Set("sv_maxclients", "2");
 
 	for (i = 0; i < cls.numMDs; i++) {
