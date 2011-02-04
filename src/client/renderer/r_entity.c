@@ -77,8 +77,9 @@ static void R_DrawBox (const entity_t * e)
 								e->origin[0], e->oldorigin[1], e->origin[2],
 							};
 		glLineWidth(2.0f);
-		glVertexPointer(3, GL_FLOAT, 0, points);
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		R_BindDefaultArray(GL_VERTEX_ARRAY);
 		glLineWidth(1.0f);
 #else
 		vec3_t upper, lower;
@@ -155,12 +156,11 @@ static void R_DrawFloor (const entity_t * e)
 								1.0, 1.0,
 								1.0, 0.0,
 								0.0, 0.0 };
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, points);
-	glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
-
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -195,9 +195,9 @@ static void R_DrawArrow (const entity_t * e)
 							upper[0], upper[1], upper[2],
 							mid[0], mid[1], mid[2],
 							lower[0], lower[1], lower[2] };
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, points);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
@@ -248,11 +248,11 @@ static void R_DrawEntityEffects (void)
 										1.0, 1.0,
 										1.0, 0.0,
 										0.0, 0.0 };
-			glEnableClientState(GL_VERTEX_ARRAY);
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glVertexPointer(3, GL_FLOAT, 0, points);
-			glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
+			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+			R_BindDefaultArray(GL_VERTEX_ARRAY);
 		}
 
 
@@ -289,13 +289,11 @@ static void R_DrawEntityEffects (void)
 										1.0, 1.0,
 										1.0, 0.0,
 										0.0, 0.0 };
-			glEnableClientState(GL_VERTEX_ARRAY);
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glVertexPointer(3, GL_FLOAT, 0, points);
-			glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
+			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-			glDisableClientState(GL_VERTEX_ARRAY);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+			R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 			glEnable(GL_DEPTH_TEST);
 			R_Color(NULL);
@@ -461,7 +459,7 @@ static void R_DrawNullModel (const entity_t *e)
 		points[i*3+4] = 16 * sin(i * (M_PI / 2));
 		points[i*3+5] = 0;
 	}
-	glVertexPointer(3, GL_FLOAT, 0, points);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
 	vec_t points2[3*6] = { 0, 0, 16 };
@@ -470,8 +468,9 @@ static void R_DrawNullModel (const entity_t *e)
 		points2[i*3+4] = 16 * sin(i * (M_PI / 2));
 		points2[i*3+5] = 0;
 	}
-	glVertexPointer(3, GL_FLOAT, 0, points2);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points2);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3f(0, 0, -16);

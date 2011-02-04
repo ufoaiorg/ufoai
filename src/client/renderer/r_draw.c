@@ -449,6 +449,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 							nx, ny + nh };
 	glVertexPointer(2, GL_FLOAT, 0, points);
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	glLineStipple(2, pattern);
 	glEnable(GL_LINE_STIPPLE);
@@ -511,6 +512,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	}
 	glVertexPointer(2, GL_FLOAT, 0, points);
 	glDrawArrays(GL_LINE_LOOP, 0, STEPS);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	if (thickness <= 1) {
 		glBegin(GL_LINE_STRIP);
@@ -575,6 +577,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	}
 	glVertexPointer(2, GL_FLOAT, 0, points);
 	glDrawArrays(fill ? GL_TRIANGLE_FAN : GL_LINE_LOOP, fill ? 0 : 1, fill ? STEPS + 2 : STEPS);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	if (fill)
 		glBegin(GL_TRIANGLE_STRIP);
@@ -781,6 +784,7 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 									nx, ny + nheight, bigZ };
 	glVertexPointer(3, GL_FLOAT, 0, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	glBegin(GL_QUADS);
 	glVertex3d(nx, ny, bigZ);
@@ -847,6 +851,7 @@ void R_DrawBoundingBoxes (void)
 		}
 		glVertexPointer(3, GL_FLOAT, 0, points);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
+		R_BindDefaultArray(GL_VERTEX_ARRAY);
 	}
 #else
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -931,6 +936,7 @@ void R_DrawBoundingBox (const vec3_t mins, const vec3_t maxs)
 	}
 	glVertexPointer(3, GL_FLOAT, 0, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

@@ -668,14 +668,16 @@ static inline void R_DrawQuad (void)
 {
 #ifdef ANDROID
 	GLfloat texcoord[2*4] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
-	glTexCoordPointer(2, GL_FLOAT, 0, texcoord);
 	GLfloat points[2*4] = {	0.0, 0.0,
 							fbo_render->width, 0.0,
 							fbo_render->width, fbo_render->height,
 							0.0, fbo_render->height
 						};
-	glVertexPointer(2, GL_FLOAT, 0, points);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoord);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	glBegin(GL_QUADS);
 	glTexCoord2i(0, 1);

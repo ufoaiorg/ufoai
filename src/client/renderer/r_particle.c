@@ -143,13 +143,15 @@ static void R_DrawSprite (const ptl_t * p)
 	R_Color(p->color);
 	/* draw it */
 #ifdef ANDROID
-	glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 	GLfloat points[3*4] = {	pos[0], pos[1], pos[2],
 							pos[0] + up[0], pos[1] + up[1], pos[2] + up[2],
 							pos[0] + up[0] + right[0], pos[1] + up[1] + right[1], pos[2] + up[2] + right[2],
 							pos[0] + right[0], pos[1] + right[1], pos[2] + right[2] };
-	glVertexPointer(3, GL_FLOAT, 0, points);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 #else
 	glBegin(GL_TRIANGLE_FAN);
 
@@ -225,6 +227,7 @@ static void R_DrawPtlCircle (const ptl_t* p)
 	}
 	glVertexPointer(3, GL_FLOAT, 0, points);
 	glDrawArrays(GL_LINE_LOOP, 0, STEPS);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	if (thickness <= 1) {
 		glBegin(GL_LINE_LOOP);
@@ -267,6 +270,7 @@ static void R_DrawPtlLine (const ptl_t * p)
 	GLfloat points [ 6 ] = { p->s[0], p->s[1], p->s[2], p->v[0], p->v[1], p->v[2] };
 	glVertexPointer(3, GL_FLOAT, 0, points);
 	glDrawArrays(GL_LINE_STRIP, 0, 2);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 #else
 	glBegin(GL_LINE_STRIP);
 	glVertex3fv(p->s);
