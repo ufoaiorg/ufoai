@@ -193,6 +193,22 @@ static void testMove (void)
 			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
 			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT + 2 * TU_MOVE_DIAGONAL);
 		}
+		/* move into the trigger_touch */
+		{
+			VectorSet(vec, -48, -80, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT + 3 * TU_MOVE_DIAGONAL);
+		}
+		/* try to walk into the actorclip */
+		{
+			VectorSet(vec, -48, -48, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+		}
 	}
 }
 
