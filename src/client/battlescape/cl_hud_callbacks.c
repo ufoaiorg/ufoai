@@ -286,6 +286,40 @@ static void HUD_ReloadRight_f (void)
 	CL_ActorReload(selActor, csi.idRight);
 }
 
+/**
+ * Ask the current selected solider to execute an action
+ * @todo extend it to open doors, or thing like that
+ */
+static void HUD_ExecuteAction_f (void)
+{
+	if (!selActor)
+		return;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <actionid>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (Q_streq(Cmd_Argv(1), "reload_l")) {
+		HUD_ReloadLeft_f();
+		return;
+	}
+
+	if (Q_streq(Cmd_Argv(1), "reload_r")) {
+		HUD_ReloadRight_f();
+		return;
+	}
+
+	if (Q_strstart(Cmd_Argv(1), "fire_hand") && strlen(Cmd_Argv(1)) >= 13) {
+		const char hand = Cmd_Argv(1)[9];
+		const int index = atoi(Cmd_Argv(1) + 11);
+		Cmd_ExecuteString(va("hud_fireweapon %c %i", hand, index));
+		return;
+	}
+
+	Com_Printf("HUD_ExecuteAction_f: Action \"%s\" unknown.\n", Cmd_Argv(1));
+}
+
 void HUD_InitCallbacks (void)
 {
 	Cmd_AddCommand("hud_reloadleft", HUD_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
@@ -293,4 +327,5 @@ void HUD_InitCallbacks (void)
 	Cmd_AddCommand("hud_togglecrouchreserve", HUD_ToggleCrouchReservation_f, _("Toggle reservation for crouching."));
 	Cmd_AddCommand("hud_togglereaction", HUD_ToggleReaction_f, _("Toggle reaction fire"));
 	Cmd_AddCommand("hud_fireweapon", HUD_FireWeapon_f, "Start aiming the weapon.");
+	Cmd_AddCommand("hud_executeaction", HUD_ExecuteAction_f, "Execute an action.");
 }

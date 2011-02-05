@@ -565,7 +565,7 @@ window hud_default extends hud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;" }
+			onClick	{ cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;" }
 		}
 
 		image bt_reload
@@ -631,7 +631,7 @@ window hud_default extends hud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT hud_default.left.bt_pfire LAYOUTALIGN_TOPRIGHT;" }
+			onClick	{ cmd "ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT hud_default.left.bt_pfire LAYOUTALIGN_TOPRIGHT;" }
 		}
 
 		image bt_reload

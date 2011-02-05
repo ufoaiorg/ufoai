@@ -38,7 +38,7 @@ extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_hud;
 
 /** @todo these should probably not be called from other places than menu */
-void HUD_DisplayFiremodes(const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay);
+void HUD_DisplayFiremodes(const char* callback, const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay);
 void HUD_HideFiremodes(void);
 /* check above for removal */
 

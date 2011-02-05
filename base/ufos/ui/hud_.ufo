@@ -5,20 +5,22 @@
 component panel cmpFiremodeEntry {
 	{
 		pos		"0 0"
-		size	"280 60"
+		size	"214 63"
 		align	LAYOUTALIGN_TOP
 	}
 
 	image bg
 	{
 		src	"hud/firemode"
-		pos		"0 576"
+		pos		"0 0"
 		texl	"0 0"
 		texh	"214  63"
 		size	"214  63"
-		onClick	{ cmd "hud_fireweapon <node:parent.hand@string> <node:parent.id@string>;" }
 		onMouseEnter { *node:this@image = "hud/firemode_hover" }
 		onMouseLeave { *node:this@image = "hud/firemode" }
+		onClick	{
+			cmd "hud_executeaction <node:parent.actionid@string>"
+		}
 	}
 
 	image cb
@@ -28,7 +30,15 @@ component panel cmpFiremodeEntry {
 		pos		"0 32"
 		texl	"0 0"
 		texh	"31 31"
-		onClick	{ cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.id@string>;" }
+		onClick	{
+			cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.id@string>"
+		}
+	}
+
+	/** store the actionid */
+	string actionid {
+		size	"0 0"
+		invis	true
 	}
 
 	/** store the hand */
@@ -37,8 +47,8 @@ component panel cmpFiremodeEntry {
 		invis	true
 	}
 
-	/** store the id of the firemode */
-	string id {
+	/** store the index of the firemode */
+	string index {
 		size	"0 0"
 		invis	true
 	}
@@ -65,6 +75,55 @@ component panel cmpFiremodeEntry {
 		textalign ALIGN_CC
 		ghost true
 		font		"f_verysmall"
+	}
+
+	/**
+	 * @param<1> id
+	 * @param<2> hand (char) (l or r for left or right)
+	 * @param<3> firedef index (int)
+	 * @param<4> firedef reaction fire (int) (1= true, 0= false)
+	 * @param<5> status (1 available, 0 need more TU)
+	 * @param<6> name (string)
+	 * @param<7> TUs (string)
+	 * @param<8> shots (string)
+	 * @param<9> tooltip
+	 */
+	func init {
+		*node:parent.actionid@string = "<1>"
+		*node:parent.hand@string = "<2>"
+		*node:parent.index@string = "<3>"
+
+		*node:parent.name@string = "<6>"
+		*node:parent.tu@string = "<7>"
+		*node:parent.shot@string = "<8>"
+		*node:parent.tu@tooltip = "<9>"
+
+		if ( <5> eq "1" ) {
+			*node:parent.bg@texl = "0 0"
+			*node:parent.bg@texh = "214 63"
+		} else {
+			*node:parent.bg@texl = "0 64"
+			*node:parent.bg@texh = "214 128"
+		}
+
+		if ( <4> eq "0" ) {
+			*node:parent.cb@invis = true
+		}
+	}
+
+	/**
+	 * @param<1> activate (1=activate, 0=deactivate)
+	 */
+	func init_reaction {
+		if ( <1> eq "1" ) {
+			*node:parent.cb@texl = "0 32"
+			*node:parent.cb@texh = "31 63"
+			*node:parent.cb@invis = false
+		} else {
+			*node:parent.cb@texl = "0 0"
+			*node:parent.cb@texh = "31 31"
+			*node:parent.cb@invis = false
+		}
 	}
 }
 
@@ -243,282 +302,17 @@ window firemode_left {
 
 	zone anchor
 	{
-		pos		"23 640"
+		pos		"23 700"
 		size	"192 0"
 	}
 
-	image bt_left_fm0
-	{
-		{
-			src			"hud/firemode"
-			pos				"0 576"
-			texl			"0 0"
-			texh			"214  63"
-			size			"214  63"
-			invis			true
-			onClick			{ cmd "hud_fireweapon l 0;ui_pop;" }
-			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
-			onMouseLeave	{ *node:this@image = "hud/firemode" }
-			tooltip			*cvar:mn_l_fm_name0 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode l 0;" }
-		}
-		string name	{ string *cvar:mn_l_fm_name0	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu0	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot0	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+	panel elements {
+		pos		"0 0"
+		size	"255 700"
 	}
 
-	image bt_left_fm1
-	{
-		{
-			src			"hud/firemode"
-			pos				"0 512"
-			texl			"0 0"
-			texh			"214  63"
-			size			"214  63"
-			invis			true
-			onClick			{ cmd "hud_fireweapon l 1;ui_pop;" }
-			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
-			onMouseLeave	{ *node:this@image = "hud/firemode" }
-			tooltip			*cvar:mn_l_fm_name1 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode l 1;" }
-		}
-		string name	{ string *cvar:mn_l_fm_name1	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu1	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot1	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_left_fm2
-	{
-		{
-			src			"hud/firemode"
-			pos				"0 448"
-			texl			"0 0"
-			texh			"214  63"
-			size			"214  63"
-			invis			true
-			onClick			{ cmd "hud_fireweapon l 2;ui_pop;" }
-			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
-			onMouseLeave	{ *node:this@image = "hud/firemode" }
-			tooltip			*cvar:mn_l_fm_name2 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode l 2;" }
-		}
-		string name	{ string *cvar:mn_l_fm_name2	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu2	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot2	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_left_fm3
-	{
-		{
-			src			"hud/firemode"
-			pos				"0 384"
-			texl			"0 0"
-			texh			"214  63"
-			size			"214  63"
-			invis			true
-			onClick			{ cmd "hud_fireweapon l 3;ui_pop;" }
-			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
-			onMouseLeave	{ *node:this@image = "hud/firemode" }
-			tooltip			*cvar:mn_l_fm_name3 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode l 3;" }
-		}
-		string name	{ string *cvar:mn_l_fm_name3	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu3	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot3	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_left_fm4
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 320"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon l 4;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_l_fm_name4 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode l 4;" }
-		}
-		string name	{ string *cvar:mn_l_fm_name4	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu4	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot4	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_left_fm5
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 256"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon l 5;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_l_fm_name5 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode l 5;" }
-		}
-		string name	{ string *cvar:mn_l_fm_name5	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu5	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot5	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_left_fm6
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 192"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon l 6;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_l_fm_name6 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode l 6;" }
-		}
-		string name	{ string *cvar:mn_l_fm_name6	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu6	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot6	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_left_fm7
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 128"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon l 7;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_l_fm_name7 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode l 7;" }
-		}
-		string name	{ string *cvar:mn_l_fm_name7	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu7	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot7	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	/* Firemode console functions ===================================*/
-
-	confunc set_left_inv {
-		*node:root.bt_left_fm<1>@invis = true
-	}
-
-	/**
-	 * @param<1> fd index
-	 * @param<2> status
-	 */
-	confunc set_left_vis {
-		*cvar:tmp = "<2>"
-		*node:root.bt_left_fm<1>@invis = false
-
-		if ( *cvar:tmp eq "1" ) {
-			*node:root.bt_left_fm<1>@texl = "0 0"
-			*node:root.bt_left_fm<1>@texh = "214 63"
-		} else {
-			*node:root.bt_left_fm<1>@texl = "0 64"
-			*node:root.bt_left_fm<1>@texh = "214 128"
-		}
-		delete *cvar:tmp
-	}
-
-	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
-
-	confunc set_left_cb_ina {
-		*node:root.bt_left_fm<1>.cb@texl = "0 0"
-		*node:root.bt_left_fm<1>.cb@texh = "31 31"
-		*node:root.bt_left_fm<1>.cb@invis = false
-	}
-
-	confunc set_left_cb_a {
-		*node:root.bt_left_fm<1>.cb@texl = "0 32"
-		*node:root.bt_left_fm<1>.cb@texh = "31 63"
-		*node:root.bt_left_fm<1>.cb@invis = false
-	}
-
-	confunc set_left_cb_invis {
-		*node:root.bt_left_fm<1>.cb@invis = true
+	func onWindowOpened {
+		cmd "hud_listfiremodes firemode_listener l;"
 	}
 }
 
@@ -532,350 +326,58 @@ window firemode_right {
 
 	zone anchor
 	{
-		pos		"23 640"
+		pos		"23 700"
 		size	"192 0"
 	}
 
-	image bt_right_fm0
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 576"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon r 0;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_r_fm_name0 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode r 0;" }
-		}
-		string name	{ string *cvar:mn_r_fm_name0	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu0	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot0	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+	panel elements {
+		pos		"0 0"
+		size	"255 700"
 	}
 
-	image bt_right_fm1
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 512"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon r 1;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_r_fm_name1 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode r 1;" }
-		}
-		string name	{ string *cvar:mn_r_fm_name1	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu1	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot1	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+	func onWindowOpened {
+		cmd "hud_listfiremodes firemode_listener r;"
 	}
+}
 
-	image bt_right_fm2
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 448"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon r 2;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_r_fm_name2 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode r 2;" }
-		}
-		string name	{ string *cvar:mn_r_fm_name2	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu2	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot2	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_right_fm3
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 384"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon r 3;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_r_fm_name3 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode r 3;" }
-		}
-		string name	{ string *cvar:mn_r_fm_name3	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu3	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot3	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_right_fm4
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 320"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon r 4;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_r_fm_name4 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode r 4;" }
-		}
-		string name	{ string *cvar:mn_r_fm_name4	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu4	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot4	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_right_fm5
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 256"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon r 5;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_r_fm_name5 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode r 5;" }
-		}
-		string name	{ string *cvar:mn_r_fm_name5	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu5	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot5	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_right_fm6
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 192"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon r 6;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_r_fm_name6 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode r 6;" }
-		}
-		string name	{ string *cvar:mn_r_fm_name6	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu6	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot6	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	image bt_right_fm7
-	{
-		{
-			src	"hud/firemode"
-			pos		"0 128"
-			texl	"0 0"
-			texh	"214  63"
-			size	"214  63"
-			invis true
-			onClick	{ cmd "hud_fireweapon r 7;ui_pop;" }
-			onMouseEnter { *node:this@image = "hud/firemode_hover" }
-			onMouseLeave { *node:this@image = "hud/firemode" }
-			tooltip *cvar:mn_r_fm_name7 // @todo create a better tooltip with name, tu, shots...
-		}
-
-		image cb
-		{
-			src	"hud/checkbox"
-			tooltip	"_Check to use this firemode for reaction fire"
-			pos		"0 32"
-			texl	"0 0"
-			texh	"31 31"
-			onClick	{ cmd "hud_selectreactionfiremode r 7;" }
-		}
-		string name	{ string *cvar:mn_r_fm_name7	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu7	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot7	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
-	}
-
-	/* Firemode console functions ===================================*/
-
-	/* texture map
-		checkbox:
-		"hud/checkbox" (inactive)	->	texl "0 0"	texh "31 31"
-		"hud/checkbox" (active)	->	texl "0 32"	texh "31 63"
-		firemode:
-		"hud/firemode" (active)	->	texl "0 0"	texh "214 63"
-		"hud/firemode" (inactive)	->	texl "0 64"	texh "214 128"
-	*/
-
-	confunc set_right_inv {
-		*node:root.bt_right_fm<1>@invis = true
-	}
-
-	/**
-	 * @param<1> fd index
-	 * @param<2> status
-	 */
-	confunc set_right_vis {
-		*cvar:tmp = "<2>"
-		*node:root.bt_right_fm<1>@invis = false
-
-		if ( *cvar:tmp eq "1" ) {
-			*node:root.bt_right_fm<1>@texl = "0 0"
-			*node:root.bt_right_fm<1>@texh = "214 63"
-		} else {
-			*node:root.bt_right_fm<1>@texl = "0 64"
-			*node:root.bt_right_fm<1>@texh = "214 128"
-		}
-		delete *cvar:tmp
-	}
-
-	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
-
-	confunc set_right_cb_ina {
-		*node:root.bt_right_fm<1>.cb@texl = "0 0"
-		*node:root.bt_right_fm<1>.cb@texh = "31 31"
-		*node:root.bt_right_fm<1>.cb@invis = false
-	}
-
-	confunc set_right_cb_a {
-		*node:root.bt_right_fm<1>.cb@texl = "0 32"
-		*node:root.bt_right_fm<1>.cb@texh = "31 63"
-		*node:root.bt_right_fm<1>.cb@invis = false
-	}
-
-	confunc set_right_cb_invis {
-		*node:root.bt_right_fm<1>.cb@invis = true
-	}
-
-	/**
-	 * @param<1> hand (char) (l or r for left or right)
-	 * @param<2> firedef index (int)
-	 * @param<3> firedef reaction fire (int) (1= true, 0= false)
-	 * @param<4> status
-	 * @param<5> name (string)
-	 * @param<6> TUs (string)
-	 * @param<7> shots (string)
-	 * @param<8> tooltip
-	 * @example cvar strings: mn_l_fm_nameX, mn_r_fm_nameX
-	 */
-	confunc set_firemode {
-		*cvar:mn_<1>_fm_name<2> = "<5>"
-		*cvar:mn_<1>_fm_tu<2> = "<6>"
-		*cvar:mn_<1>_fm_shot<2> = "<7>"
-		*cvar:mn_<1>_fm_tt_tu<2> = "<8>"
-		if ( <1> eq "l" ) {
-			cmd "set_left_vis <2> <4>;"
-			if ( <3> eq "0" ) {
-				cmd "set_left_cb_invis <2>;"
-			}
-		} else {
-			cmd "set_right_vis <2> <4>;"
-			if ( <3> eq "0" ) {
-				cmd "set_right_cb_invis <2>;"
-			}
-		}
-	}
-
-	/**
-	 * @param<1> hand (char) (l or r for left or right)
-	 * @param<2> firedef index (int)
-	 * @param<3> activate (1=activate, 0=deactivate)
-	 */
-	confunc set_firemode_checkbox {
-		if ( <1> eq "l" ) {
-			if ( <3> eq "1" ) {
-				cmd "set_left_cb_a <2>;"
-			} else {
-				cmd "set_left_cb_ina <2>;"
-			}
-		} else {
-			if ( <3> eq "1" ) {
-				cmd "set_right_cb_a <2>;"
-			} else {
-				cmd "set_right_cb_ina <2>;"
-			}
-		}
-	}
+window hud_general {
 
 	confunc hide_firemodes {
-		*cvar:i = 0
-		while ( *cvar:i < 8 ) {
-			cmd "set_left_inv <cvar:i>;"
-			cmd "set_right_inv <cvar:i>;"
-			*cvar:i = ( *cvar:i + 1 )
+		call *node:firemode_left.elements@removeAllChild
+		call *node:firemode_right.elements@removeAllChild
+	}
+
+	confunc firemode_listener {
+		if (<1> eq "begin") {
+			call *node:parent.hide_firemodes
+			*cvar:i = 1
+		} elif (<1> eq "firemode") {
+			// @todo use autolayout instead of @top
+			*cvar:side = <3>
+
+			if (<3> eq "l") {
+				call *node:firemode_left.elements@createChild("<2>", "cmpFiremodeEntry")
+				*node:firemode_left.elements.<2>@top = (*node:firemode_left.elements@height - (63 * *cvar:i))
+				call *node:firemode_left.elements.<2>.init(<2>, <3>, <4>, <5>, <6>, <7>, <8>, <9>, <10>)
+			} else {
+				call *node:firemode_right.elements@createChild("<2>", "cmpFiremodeEntry")
+				*node:firemode_right.elements.<2>@top = (*node:firemode_right.elements@height - (63 * *cvar:i))
+				call *node:firemode_right.elements.<2>.init(<2>, <3>, <4>, <5>, <6>, <7>, <8>, <9>, <10>)
+			}
+			*cvar:i = (*cvar:i + 1)
+
+		} elif (<1> eq "reaction") {
+			// node: "firemode" command for action <2> already called
+			if (<3> eq "l") {
+				call *node:firemode_left.elements.<2>.init_reaction(<3>)
+			} else {
+				call *node:firemode_right.elements.<2>.init_reaction(<3>)
+			}
+		} elif (<1> eq "end") {
+			delete *cvar:i
+			delete *cvar:side
+		} else {
+			cmd "echo firemode_listener: unknown \"<1>\" command"
 		}
-		delete *cvar:i
 	}
 }

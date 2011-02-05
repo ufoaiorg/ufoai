@@ -546,7 +546,7 @@ window hud_alt extends hud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMRIGHT <path:root>.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
+			onClick		{ cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMRIGHT <path:root>.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
 		}
 		image bt_primaryleft
 		{
@@ -556,7 +556,7 @@ window hud_alt extends hud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT <path:root>.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
+			onClick		{ cmd "ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT <path:root>.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
 		}
 
 		// ==================
@@ -794,9 +794,10 @@ window hud_alt extends hud
 			pos			"196 400"
 			size		"16 16"
 			padding		0
-			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
-			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
-			onClick		{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
+			/** @todo we should not use hud_switchfiremodelist */
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
+			onClick		{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 		}
 		button switch_to_left_hand
 		{
@@ -805,9 +806,10 @@ window hud_alt extends hud
 			pos			"212 400"
 			size		"16 16"
 			padding		0
-			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
-			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
-			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
+			/** @todo we should not use hud_switchfiremodelist */
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
+			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 		}
 	}
 

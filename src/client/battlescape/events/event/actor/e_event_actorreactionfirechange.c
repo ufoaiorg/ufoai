@@ -60,6 +60,7 @@ void CL_ActorReactionFireChange (const eventRegister_t *self, struct dbuffer *ms
 
 	CL_ActorSetRFMode(chr, hand, fmIdx, od);
 
+	/** @todo We only should have a callback to GUI, how/when update of the GUI is not the responsability of it */
 	/* Update display of firemode checkbuttons. */
-	HUD_DisplayFiremodes(le, hand, qtrue);
+	/* HUD_DisplayFiremodes(le, hand, qtrue); */
 }
