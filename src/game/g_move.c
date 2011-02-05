@@ -92,7 +92,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  */
 void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
 {
-	G_MoveCalcLocal(&level.pathingMap, team, movingActor, from, crouchingState, distance);
+	G_MoveCalcLocal(level.pathingMap, team, movingActor, from, crouchingState, distance);
 }
 
 /**
@@ -227,7 +227,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
-	length = gi.MoveLength(&level.pathingMap, to, crouchingState, qfalse);
+	length = gi.MoveLength(level.pathingMap, to, crouchingState, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length >= ROUTING_NOT_REACHABLE)
@@ -245,7 +245,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
 				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
-				length = gi.MoveLength(&level.pathingMap, to, crouchingState, qfalse);
+				length = gi.MoveLength(level.pathingMap, to, crouchingState, qfalse);
 				autoCrouchRequired = qtrue;
 			}
 		}
@@ -260,7 +260,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	numdv = 0;
 	initTU = ent->TU;
 
-	while ((dvec = gi.MoveNext(&level.pathingMap, pos, crouchingState))
+	while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState))
 			!= ROUTING_UNREACHABLE) {
 		const int oldZ = pos[2];
 		/* dvec indicates the direction traveled to get to the new cell and the original cell height. */

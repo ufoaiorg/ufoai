@@ -497,7 +497,7 @@ static int pos3L_goto (lua_State *L)
 
 	/* Calculate move table. */
 	G_MoveCalc(0, AIL_ent, AIL_ent->pos, crouchingState, AIL_ent->TU);
-	gi.MoveStore(&level.pathingMap);
+	gi.MoveStore(level.pathingMap);
 
 	/* Move. */
 	pos = lua_topos3(L, 1);
@@ -823,7 +823,7 @@ static int AIL_positionshoot (lua_State *L)
 
 	/* Calculate move table. */
 	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
-	gi.MoveStore(&level.pathingMap);
+	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
 	xl = (int) ent->pos[0] - dist;
@@ -848,7 +848,7 @@ static int AIL_positionshoot (lua_State *L)
 				pos_t tu;
 				/* Can we see the target? */
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
-				tu = gi.MoveLength(&level.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, qtrue);
+				tu = gi.MoveLength(level.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, qtrue);
 				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
 					continue;
 				/* Better spot (easier to get to). */
