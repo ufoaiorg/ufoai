@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../common/cmodel.h"
 #include "../common/grid.h"
+#include "../game/g_local.h"
+#include "../server/server.h"
 
 /**
  * The suite initialization function.
@@ -64,9 +66,6 @@ static void testMapLoading (void)
 	}
 }
 
-/**
- * @todo func_door, func_breakable, ...
- */
 static void testMove (void)
 {
 	routing_t *routing;
@@ -212,6 +211,62 @@ static void testMove (void)
 	}
 }
 
+static void testMoveEntities (void)
+{
+	routing_t *routing;
+	pos3_t pos;
+	vec3_t vec;
+
+	SV_Map(qtrue, mapName, NULL);
+
+	/* starting point */
+	VectorSet(vec, 240, -144, 32);
+	VecToPos(vec, pos);
+
+	routing = &sv->mapData.map[ACTOR_SIZE_NORMAL - 1];
+
+	{
+		const byte crouchingState = 0;
+		const int distance = MAX_ROUTE;
+		int lengthStored;
+		pos3_t to;
+		pathing_t *path = Mem_AllocType(pathing_t);
+		edict_t *ent = NULL;
+
+		static pos_t *forbiddenList[MAX_FORBIDDENLIST];
+		static int forbiddenListLength;
+
+		while ((ent = G_EdictsGetNextInUse(ent))) {
+			/* Dead 2x2 unit will stop walking, too. */
+			if (ent->type == ET_SOLID) {
+				int j;
+				for (j = 0; j < ent->forbiddenListSize; j++) {
+					forbiddenList[forbiddenListLength++] = ent->forbiddenListPos[j];
+					forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
+				}
+			}
+		}
+
+		path->fblength = forbiddenListLength;
+		path->fblist = forbiddenList;
+
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, NULL, 0);
+		Grid_MoveStore(path);
+
+		/* walk onto the func_breakable */
+		{
+			VectorSet(vec, 16, -144, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			Com_Printf("%i\n", lengthStored);
+			CU_ASSERT_EQUAL(lengthStored, 7 * TU_MOVE_STRAIGHT);
+		}
+	}
+
+	SV_ShutdownGameProgs();
+}
+
 /* tests for the new dvec format */
 static void testDvec (void)
 {
@@ -252,6 +307,9 @@ int UFO_AddRoutingTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(routingSuite, testMove) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(routingSuite, testMoveEntities) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(routingSuite, testDvec) == NULL)
