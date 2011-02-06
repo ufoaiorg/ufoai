@@ -443,9 +443,8 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	/* @todo use this id as action callback instead of hand and index (we can extend it with any other soldier action we need (open door, reload...)) */
 	Q_strncpyz(id, va("fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index), sizeof(id));
 
-	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
-			fd->fdIdx, fd->reaction, status, _(fd->name), va(_("TU: %i"), fd->time),
-			va(_("Shots: %i"), fd->ammo), tooltip);
+	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" %i %i \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
+			fd->fdIdx, fd->reaction, status, _(fd->name), fd->time, fd->ammo, tooltip);
 
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
@@ -503,6 +502,24 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolea
 		}
 	}
 
+	if (reloadRight) {
+		invList_t* weapon = RIGHT(actor);
+
+		/* Reloeadable item in hand. */
+		if (weapon && weapon->item.t && weapon->item.t->reload) {
+			int tus;
+			containerIndex_t container = csi.idRight;
+			qboolean noAmmo;
+			qboolean noTU;
+			const char *actionId = "reload_handr";
+
+			tus = HUD_CalcReloadTime(actor, weapon->item.t, container);
+			noAmmo = tus == -1;
+			noTU = actor->TU < tus;
+			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'r', tus, !noAmmo, !noTU);
+		}
+	}
+
 	if (left) {
 		const actorHands_t hand = ACTOR_HAND_LEFT;
 		fd = HUD_GetFireDefinitionForHand(actor, hand);
@@ -521,6 +538,25 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolea
 		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 			/* Display the firemode information (image + text). */
 			HUD_DisplayFiremodeEntry(callback, actor, ammo, fd->weapFdsIdx, hand, i);
+		}
+	}
+
+
+	if (reloadLeft) {
+		invList_t* weapon = LEFT(actor);
+
+		/* Reloeadable item in hand. */
+		if (weapon && weapon->item.t && weapon->item.t->reload) {
+			int tus;
+			containerIndex_t container = csi.idLeft;
+			qboolean noAmmo;
+			qboolean noTU;
+			const char *actionId = "reload_handl";
+
+			tus = HUD_CalcReloadTime(actor, weapon->item.t, container);
+			noAmmo = tus == -1;
+			noTU = actor->TU < tus;
+			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'l', tus, !noAmmo, !noTU);
 		}
 	}
 

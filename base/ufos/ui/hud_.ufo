@@ -94,8 +94,8 @@ component panel cmpFiremodeEntry {
 		*node:parent.index@string = "<3>"
 
 		*node:parent.name@string = "<6>"
-		*node:parent.tu@string = "<7>"
-		*node:parent.shot@string = "<8>"
+		*node:parent.tu@string = "_TU: <7>"
+		*node:parent.shot@string = "_Shots: <8>"
 		*node:parent.tu@tooltip = "<9>"
 
 		if ( <5> eq "1" ) {
@@ -373,6 +373,7 @@ window hud_general {
 			} else {
 				call *node:firemode_right.elements.<2>.init_reaction(<3>)
 			}
+		} elif (<1> eq "reload") {
 		} elif (<1> eq "end") {
 			delete *cvar:i
 			delete *cvar:side

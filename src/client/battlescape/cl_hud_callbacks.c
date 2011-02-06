@@ -152,6 +152,14 @@ static void HUD_FireWeapon_f (void)
 	}
 }
 
+static void HUD_SetMoveMode_f (void)
+{
+	if (!selActor)
+		return;
+	CL_ActorSetMode(selActor, M_MOVE);
+}
+
+
 /**
  * @brief Toggles if the current actor reserves Tus for crouching.
  */
@@ -300,12 +308,12 @@ static void HUD_ExecuteAction_f (void)
 		return;
 	}
 
-	if (Q_streq(Cmd_Argv(1), "reload_l")) {
+	if (Q_streq(Cmd_Argv(1), "reload_handl")) {
 		HUD_ReloadLeft_f();
 		return;
 	}
 
-	if (Q_streq(Cmd_Argv(1), "reload_r")) {
+	if (Q_streq(Cmd_Argv(1), "reload_handr")) {
 		HUD_ReloadRight_f();
 		return;
 	}
@@ -322,6 +330,7 @@ static void HUD_ExecuteAction_f (void)
 
 void HUD_InitCallbacks (void)
 {
+	Cmd_AddCommand("hud_movemode",  HUD_SetMoveMode_f, _("Set selected actor to move mode (it cancel the fire mode"));
 	Cmd_AddCommand("hud_reloadleft", HUD_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
 	Cmd_AddCommand("hud_reloadright", HUD_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
 	Cmd_AddCommand("hud_togglecrouchreserve", HUD_ToggleCrouchReservation_f, _("Toggle reservation for crouching."));
