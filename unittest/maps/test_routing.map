@@ -792,3 +792,43 @@
 ( 96 -160 30 ) ( 96 -128 30 ) ( 96 -160 32 ) tex_buildings/ceiling 0 0 0 0.0625 0.00390625
 }
 }
+// entity 8
+{
+"classname" "info_human_start"
+"origin" "-144 208 28"
+}
+// entity 9
+{
+"classname" "info_human_start"
+"origin" "-240 208 28"
+}
+// entity 10
+{
+"classname" "info_human_start"
+"origin" "-208 208 28"
+}
+// entity 11
+{
+"classname" "info_human_start"
+"origin" "-176 208 28"
+}
+// entity 12
+{
+"classname" "info_human_start"
+"origin" "-240 240 28"
+}
+// entity 13
+{
+"classname" "info_human_start"
+"origin" "-176 240 28"
+}
+// entity 14
+{
+"classname" "info_human_start"
+"origin" "-208 240 28"
+}
+// entity 15
+{
+"classname" "info_human_start"
+"origin" "-144 240 28"
+}
