@@ -192,6 +192,63 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, dv
 }
 
 /**
+ * @brief Writes a step of the move event to the net
+ * @param[in] ent Edict to move
+ * @param[in] stepAmount Pointer to the amount of steps in this move-event
+ * @param[in] dvec The direction vector for the step to be added
+ * @param[in] contentFlags The material we are walking over
+ */
+static void G_WriteStep (edict_t* ent, byte** stepAmount, const int dvec, const int contentFlags)
+{
+	/* write move header if not yet done */
+	if (gi.GetEvent() != EV_ACTOR_MOVE) {
+		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
+		gi.WriteShort(ent->number);
+		/* stepAmount is a pointer to a location in the netchannel
+		 * the value of this pointer depends on how far the actor walks
+		 * and this might be influenced at a later stage inside this
+		 * loop. That's why we can modify the value of this byte
+		 * if e.g. a VIS_STOP occurred and no more steps should be made.
+		 * But keep in mind, that no other events might be between
+		 * this event and its successful end - otherwise the
+		 * stepAmount pointer would no longer be valid and you would
+		 * modify data in the new event. */
+		*stepAmount = gi.WriteDummyByte(0);
+		/* Add three more dummy bytes.  These will be the final actor position. */
+		gi.WriteDummyByte(0); /* x */
+		gi.WriteDummyByte(0); /* y */
+		gi.WriteDummyByte(0); /* z */
+	} else if (!*stepAmount) {
+		gi.DPrintf("Event %i activate and no stepAmount pointer set\n", gi.GetEvent());
+		return;
+	}
+
+	/* the moveinfo stuff is used inside the G_PhysicsStep think function */
+	if (ent->moveinfo.steps >= MAX_DVTAB) {
+		ent->moveinfo.steps = 0;
+		ent->moveinfo.currentStep = 0;
+	}
+	ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
+	ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
+	ent->moveinfo.steps++;
+
+	/* store steps in netchannel */
+	byte *pStep = *stepAmount;
+	(*pStep)++;
+	/* store the position too */
+	*(pStep + 1) = ent->pos[0];
+	*(pStep + 2) = ent->pos[1];
+	*(pStep + 3) = ent->pos[2];
+
+	/* write move header and always one step after another - because the next step
+	 * might already be the last one due to some stop event */
+	gi.WriteShort(dvec);
+	gi.WriteShort(ent->speed);
+	gi.WriteShort(contentFlags);
+
+}
+
+/**
  * @brief Generates the client events that are send over the netchannel to move an actor
  * @param[in] player Player who is moving an actor
  * @param[in] visTeam The team to check the visibility for - if this is 0 we build the forbidden list
@@ -213,7 +270,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	byte numdv, length;
 	pos3_t pos;
 	float div;
-	byte* stepAmount = NULL;
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
@@ -277,6 +333,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
+		byte* stepAmount = NULL;
 		int usedTUs = 0;
 		/* no floor inventory at this point */
 		FLOOR(ent) = NULL;
@@ -356,51 +413,8 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 					else
 						ent->chr.scoreMission->movedNormal += truediv;
 				}
-
-				/* write move header if not yet done */
-				if (gi.GetEvent() != EV_ACTOR_MOVE) {
-					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
-					gi.WriteShort(ent->number);
-					/* stepAmount is a pointer to a location in the netchannel
-					 * the value of this pointer depends on how far the actor walks
-					 * and this might be influenced at a later stage inside this
-					 * loop. That's why we can modify the value of this byte
-					 * if e.g. a VIS_STOP occurred and no more steps should be made.
-					 * But keep in mind, that no other events might be between
-					 * this event and its successful end - otherwise the
-					 * stepAmount pointer would no longer be valid and you would
-					 * modify data in the new event. */
-					stepAmount = gi.WriteDummyByte(0);
-					/* Add three more dummy bytes.  These will be the final actor position. */
-					gi.WriteDummyByte(0); /* x */
-					gi.WriteDummyByte(0); /* y */
-					gi.WriteDummyByte(0); /* z */
-				} else if (!stepAmount) {
-					gi.DPrintf("Event %i activate and no stepAmount pointer set\n", gi.GetEvent());
-					break;
-				}
-
-				/* the moveinfo stuff is used inside the G_PhysicsStep think function */
-				if (ent->moveinfo.steps >= MAX_DVTAB) {
-					ent->moveinfo.steps = 0;
-					ent->moveinfo.currentStep = 0;
-				}
-				ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
-				ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
-				ent->moveinfo.steps++;
-
-				/* store steps in netchannel */
-				(*stepAmount)++;
-				/* store the position too */
-				*(stepAmount + 1) = ent->pos[0];
-				*(stepAmount + 2) = ent->pos[1];
-				*(stepAmount + 3) = ent->pos[2];
-
-				/* write move header and always one step after another - because the next step
-				 * might already be the last one due to some stop event */
-				gi.WriteShort(dvec);
-				gi.WriteShort(ent->speed);
-				gi.WriteShort(contentFlags);
+				/* write the step to the net */
+				G_WriteStep(ent, &stepAmount, dvec, contentFlags);
 
 				/* check if player appears/perishes, seen from other teams */
 				G_CheckVis(ent, qtrue);
