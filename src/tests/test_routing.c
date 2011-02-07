@@ -244,16 +244,13 @@ static void testMoveEntities (void)
 				}
 			}
 		}
-
-		path->fblength = forbiddenListLength;
-		path->fblist = forbiddenList;
 	}
 
 	{
 		int lengthStored;
 		pos3_t to;
 
-		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, NULL, 0);
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, forbiddenList, forbiddenListLength);
 		Grid_MoveStore(path);
 
 		/* walk onto the func_breakable */
@@ -290,7 +287,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, NULL, 0);
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, forbiddenList, forbiddenListLength);
 		Grid_MoveStore(path);
 
 		/* walk through the opened door */
