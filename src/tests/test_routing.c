@@ -225,6 +225,8 @@ static void testMoveEntities (void)
 
 	routing = &sv->mapData.map[ACTOR_SIZE_NORMAL - 1];
 
+	G_CompleteRecalcRouting();
+
 	{
 		const byte crouchingState = 0;
 		const int distance = MAX_ROUTE;
