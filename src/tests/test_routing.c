@@ -261,28 +261,22 @@ static void testMoveEntities (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
-			Com_Printf("%i\n", lengthStored);
 			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT);
-
+		}
+		/* walk over the func_breakable */
+		{
 			VectorSet(vec, 80, -144, 32);
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
-			Com_Printf("%i\n", lengthStored);
 			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT);
-
-			VectorSet(vec, 48, -144, 32);
-			VecToPos(vec, to);
-
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
-			Com_Printf("%i\n", lengthStored);
-			CU_ASSERT_EQUAL(lengthStored, 6 * TU_MOVE_STRAIGHT);
-
+		}
+		/* walk over the func_breakable */
+		{
 			VectorSet(vec, 16, -144, 32);
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
-			Com_Printf("%i\n", lengthStored);
 			CU_ASSERT_EQUAL(lengthStored, 7 * TU_MOVE_STRAIGHT);
 		}
 	}
