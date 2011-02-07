@@ -27,29 +27,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_actordooraction.h"
 
 /**
- * @brief Reads the door entity number for client interaction
- * @sa EV_DOOR_ACTION
+ * @brief Reads the entity number for client interaction
+ * @sa EV_CLIENT_ACTION
  * @sa Touch_DoorTrigger
  * @sa CL_ActorUseDoor
  * @todo Hud should have a button that should be activated now
  */
-void CL_ActorDoorAction (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorClientAction (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t* le;
-	int number, doornumber;
+	int number, actionEntityNumber;
 
 	/* read data */
-	NET_ReadFormat(msg, self->formatString, &number, &doornumber);
+	NET_ReadFormat(msg, self->formatString, &number, &actionEntityNumber);
 
 	/* get actor le */
 	le = LE_Get(number);
 	if (!le)
 		LE_NotFoundError(number);
 
-	/* set door number */
-	le->clientAction = LE_Get(doornumber);
+	/* set client action entity number */
+	le->clientAction = LE_Get(actionEntityNumber);
 	if (!le->clientAction)
-		LE_NotFoundError(doornumber);
+		LE_NotFoundError(actionEntityNumber);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction: Set door number: %i (for actor with entnum %i)\n", doornumber, number);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorClientAction: Set entity number: %i (for actor with entnum %i)\n",
+			actionEntityNumber, number);
 }

@@ -129,7 +129,7 @@ const eventRegister_t events[] = {
 
 	{E(EV_DOOR_OPEN), "s", CL_DoorOpen, NULL, NULL},
 	{E(EV_DOOR_CLOSE), "s", CL_DoorClose, NULL, NULL},
-	{E(EV_DOOR_ACTION), "ss", CL_ActorDoorAction, NULL, NULL},
+	{E(EV_CLIENT_ACTION), "ss", CL_ActorClientAction, NULL, NULL},
 	{E(EV_RESET_CLIENT_ACTION), "s", CL_ActorResetClientAction, NULL, NULL},
 #undef E
 };

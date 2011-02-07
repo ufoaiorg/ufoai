@@ -27,6 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../e_main.h"
 
-void CL_ActorDoorAction(const eventRegister_t *self, struct dbuffer *msg);
+void CL_ActorClientAction(const eventRegister_t *self, struct dbuffer *msg);
 
 #endif
