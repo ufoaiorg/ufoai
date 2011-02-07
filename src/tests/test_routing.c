@@ -363,5 +363,10 @@ int UFO_AddRoutingTests (void)
 	if (CU_ADD_TEST(routingSuite, testTUsForDir) == NULL)
 		return CU_get_error();
 
+	/**
+	 * @todo Test for: water, func_door_sliding, some terrain brushes to test the max
+	 * walkable raising, missing trigger types, autocrouch stuff
+	 */
+
 	return CUE_SUCCESS;
 }
