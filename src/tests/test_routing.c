@@ -216,6 +216,11 @@ static void testMoveEntities (void)
 	routing_t *routing;
 	pos3_t pos;
 	vec3_t vec;
+	pathing_t *path = Mem_AllocType(pathing_t);
+	pos_t *forbiddenList[MAX_FORBIDDENLIST];
+	int forbiddenListLength;
+	const byte crouchingState = 0;
+	const int distance = MAX_ROUTE;
 
 	SV_Map(qtrue, mapName, NULL);
 
@@ -228,16 +233,7 @@ static void testMoveEntities (void)
 	G_CompleteRecalcRouting();
 
 	{
-		const byte crouchingState = 0;
-		const int distance = MAX_ROUTE;
-		int lengthStored;
-		pos3_t to;
-		pathing_t *path = Mem_AllocType(pathing_t);
 		edict_t *ent = NULL;
-
-		static pos_t *forbiddenList[MAX_FORBIDDENLIST];
-		static int forbiddenListLength;
-
 		while ((ent = G_EdictsGetNextInUse(ent))) {
 			/* Dead 2x2 unit will stop walking, too. */
 			if (ent->type == ET_SOLID) {
@@ -251,6 +247,11 @@ static void testMoveEntities (void)
 
 		path->fblength = forbiddenListLength;
 		path->fblist = forbiddenList;
+	}
+
+	{
+		int lengthStored;
+		pos3_t to;
 
 		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, NULL, 0);
 		Grid_MoveStore(path);
@@ -278,6 +279,36 @@ static void testMoveEntities (void)
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
 			CU_ASSERT_EQUAL(lengthStored, 7 * TU_MOVE_STRAIGHT);
+		}
+	}
+
+	/* starting point */
+	VectorSet(vec, 144, 144, 32);
+	VecToPos(vec, pos);
+
+	{
+		int lengthStored;
+		pos3_t to;
+
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, NULL, 0);
+		Grid_MoveStore(path);
+
+		/* walk through the opened door */
+		{
+			VectorSet(vec, 112, 144, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_STRAIGHT);
+		}
+
+		/* walk around the opened door */
+		{
+			VectorSet(vec, 144, 208, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 2 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
 		}
 	}
 
