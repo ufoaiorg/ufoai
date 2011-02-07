@@ -1,5 +1,5 @@
 /**
- * @file e_event_actordooraction.h
+ * @file e_event_actorclientaction.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef E_EVENT_ACTORDOORACTION_H_
-#define E_EVENT_ACTORDOORACTION_H_
+#ifndef E_EVENT_ACTORCLIENTACTION_H_
+#define E_EVENT_ACTORCLIENTACTION_H_
 
 #include "../../e_main.h"
 

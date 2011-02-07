@@ -290,10 +290,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordooraction.c">
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordooraction.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.c">
 			<Option compilerVar="CC" />
 		</Unit>

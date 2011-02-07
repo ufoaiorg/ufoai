@@ -70,8 +70,8 @@ $(TARGET)_SRCS      = \
 	client/battlescape/events/e_time.c \
 	client/battlescape/events/event/actor/e_event_actoradd.c \
 	client/battlescape/events/event/actor/e_event_actorappear.c \
+	client/battlescape/events/event/actor/e_event_actorclientaction.c \
 	client/battlescape/events/event/actor/e_event_actordie.c \
-	client/battlescape/events/event/actor/e_event_actordooraction.c \
 	client/battlescape/events/event/actor/e_event_actormove.c \
 	client/battlescape/events/event/actor/e_event_actorresetclientaction.c \
 	client/battlescape/events/event/actor/e_event_actorreservationchange.c \

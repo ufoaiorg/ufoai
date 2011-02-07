@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/actor/e_event_actordie.h"
 #include "event/actor/e_event_actorstats.h"
 #include "event/actor/e_event_actorstatechange.h"
-#include "event/actor/e_event_actordooraction.h"
+#include "event/actor/e_event_actorclientaction.h"
 #include "event/actor/e_event_actorreactionfirechange.h"
 #include "event/actor/e_event_actorresetclientaction.h"
 #include "event/actor/e_event_actorreservationchange.h"
