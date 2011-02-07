@@ -212,7 +212,9 @@ void B_SetCurrentSelectedBase(const base_t *base);
 qboolean B_AssembleMap(const base_t *base);
 
 /* building functions */
+#define B_IsTileBlocked(base, x, y) (base)->map[(y)][(x)].blocked
 #define B_IsBuildingBuiltUp(building) (!(building)->timeStart || (building)->timeStart + (building)->buildTime <= ccs.date.day)
+#define B_GetBuildingAt(base, x, y) (base)->map[(y)][(x)].building
 
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
@@ -224,7 +226,7 @@ qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type
 void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);
 
 building_t* B_SetBuildingByClick(base_t *base, const building_t const *buildingTemplate, int row, int col);
-qboolean B_IsBuildingDestroyable(building_t *building);
+qboolean B_IsBuildingDestroyable(const building_t *building);
 qboolean B_BuildingDestroy(building_t* building);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);

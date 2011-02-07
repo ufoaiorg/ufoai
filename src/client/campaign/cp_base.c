@@ -48,240 +48,241 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
-typedef enum tileStatus_e {
-	TILE_EMPTY,			/**< tile cannot be accessed (blocked / no building) */
-	TILE_NODE,			/**< tile can be accessed but doesn't connect other tiles (unfinished building) */
-	TILE_ACTIVENODE		/**< tile can be accessed and connect other tiles (free space / finished building) */
-} tileStatus_t;
-
-typedef tileStatus_t (*tileCondition_t) (const baseBuildingTile_t *);
-
 /**
- * @brief Condition Function for B_BuildTileGraph for Non Blocked base tiles
- * @param[in] tile Pointer to the base Building Tile to check
+ * @brief Returns the neighbourhood of a building
+ * @param[in] building The building we ask neighbours
+ * @returns a linkedList with neighbouring buildings
+ * @note for unfinished building it returns an empty list
  */
-static tileStatus_t B_NonBlockedTileCondition (const baseBuildingTile_t *tile)
+static linkedList_t *B_GetNeighbours (const building_t const *building)
 {
-	return tile->blocked ? TILE_EMPTY : TILE_ACTIVENODE;
-}
-
-/**
- * @brief Condition Function for B_BuildTileGraph for Built base tiles
- * @param[in] tile Pointer to the base Building Tile to check
- */
-static tileStatus_t B_BuiltTileCondition (const baseBuildingTile_t *tile)
-{
-	const building_t *building = tile->building;
-	if (!building)
-		return TILE_EMPTY;
-	return B_IsBuildingBuiltUp(building) ? TILE_ACTIVENODE : TILE_NODE;
-}
-
-/**
- * @brief Builds up the traversal graph for base Tiles
- * @param[in] base Pointer to the base to build for
- * @param[in] condition Boolean Function reference to decide if the node is exist
- * @param[out] graph Linked list array of the traversal graph
- * @note graph should be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
- */
-static void B_BuildTileGraph (base_t *base, tileCondition_t condition, linkedList_t *graph[])
-{
+	linkedList_t *neighbours = NULL;
+	base_t *base;
+	int x;
 	int y;
 
-	memset(graph, 0, sizeof(graph) * BASE_SIZE * BASE_SIZE);
-	for (y = 0; y < BASE_SIZE; y++) {
-		int x;
-		for (x = 0; x < BASE_SIZE; x++) {
-			baseBuildingTile_t *tile = &base->map[y][x];
-			int listNum = y * BASE_SIZE + x;
+	if (!building || !B_IsBuildingBuiltUp(building))
+		return NULL;
 
-			if (condition(tile) == TILE_EMPTY)
-				continue;
+	x = building->pos[0];
+	y = building->pos[1];
+	base = building->base;
 
-			/* self */
-			LIST_AddPointer(&graph[listNum], (void*)tile);
+	assert(base);
 
-			if (condition(tile) == TILE_NODE)
-				continue;
-			/* west */
-			if (x - 1 >= 0 && condition(&base->map[y][x - 1])) {
-				if (!LIST_GetPointer(graph[listNum], &base->map[y][x - 1]))
-					LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
-				if (!LIST_GetPointer(graph[listNum - 1], tile))
-					LIST_AddPointer(&graph[listNum - 1], (void*)tile);
-			}
-			/* east */
-			if (x + 1 < BASE_SIZE && condition(&base->map[y][x + 1])) {
-				if (!LIST_GetPointer(graph[listNum], &base->map[y][x + 1]))
-					LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
-				if (!LIST_GetPointer(graph[listNum + 1], tile))
-					LIST_AddPointer(&graph[listNum + 1], (void*)tile);
-			}
-			/* north */
-			if (y - 1 >= 0 && condition(&base->map[y - 1][x])) {
-				if (!LIST_GetPointer(graph[listNum], &base->map[y - 1][x]))
-					LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
-				if (!LIST_GetPointer(graph[listNum - BASE_SIZE], tile))
-					LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
-			}
-			/* south */
-			if (y + 1 < BASE_SIZE && condition(&base->map[y + 1][x])) {
-				if (!LIST_GetPointer(graph[listNum], &base->map[y + 1][x]))
-					LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
-				if (!LIST_GetPointer(graph[listNum + BASE_SIZE], tile))
-					LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
-			}
-		}
+	/* West */
+	if (x > 0 && B_GetBuildingAt(base, x - 1, y) != NULL)
+		LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x - 1, y));
+	/* North */
+	if (y > 0 && B_GetBuildingAt(base, x, y - 1) != NULL)
+		LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x, y - 1));
+	/* South */
+	if (y < BASE_SIZE - 1 && B_GetBuildingAt(base, x, y + 1) != NULL)
+		LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x, y + 1));
+
+	if (!building->needs) {
+		/* 1x1 building */
+		/* East */
+		if (x < BASE_SIZE - 1 && B_GetBuildingAt(base, x + 1, y) != NULL)
+			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + 1, y));
+	} else {
+		/* 2x1 building */
+		/* East */
+		if (x < BASE_SIZE - 2 && B_GetBuildingAt(base, x + 2, y) != NULL)
+			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + 2, y));
+		/* NorthEast */
+		if (x < BASE_SIZE - 1 && y > 0 && B_GetBuildingAt(base, x + 1, y - 1) != NULL)
+			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + 1, y - 1));
+		/* SouthEast */
+		if (x < BASE_SIZE - 1 && y < BASE_SIZE - 1 && B_GetBuildingAt(base, x + 1, y + 1) != NULL)
+			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + 1, y + 1));
 	}
+
+	return neighbours;
 }
 
 /**
- * @brief Add tile to base Tiles traversal graph
- * @param[in] base Pointer to the base to build for
- * @param[in] condition Boolean Function reference to decide if the node is exist
- * @param[in,out] graph Linked list array of the traversal graph
- * @param[in] tile Pointer to the new buildingtile
- * @note graph should be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
+ * @brief Check if base coherent (every building connected to eachothers)
+ * @param[in] base Pointer to the base to check
  */
-static void B_TileGraphAdd (base_t *base, tileCondition_t condition, linkedList_t *graph[], baseBuildingTile_t *tile)
+static qboolean B_IsCoherent (const base_t *base)
 {
-	int x = tile->posX;
-	int y = tile->posY;
-	int listNum = y * BASE_SIZE + x;
-
-	/* self */
-	LIST_AddPointer(&graph[listNum], (void*)tile);
-
-	/* west */
-	if (x - 1 >= 0 && condition(&base->map[y][x - 1]) == TILE_ACTIVENODE) {
-		if (!LIST_GetPointer(graph[listNum], &base->map[y][x - 1]))
-			LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x - 1]);
-		if (!LIST_GetPointer(graph[listNum - 1], tile))
-			LIST_AddPointer(&graph[listNum - 1], (void*)tile);
-	}
-	/* east */
-	if (x + 1 < BASE_SIZE && condition(&base->map[y][x + 1]) == TILE_ACTIVENODE) {
-		if (!LIST_GetPointer(graph[listNum], &base->map[y][x + 1]))
-			LIST_AddPointer(&graph[listNum], (void*)&base->map[y][x + 1]);
-		if (!LIST_GetPointer(graph[listNum + 1], tile))
-			LIST_AddPointer(&graph[listNum + 1], (void*)tile);
-	}
-	/* north */
-	if (y - 1 >= 0 && condition(&base->map[y - 1][x]) == TILE_ACTIVENODE) {
-		if (!LIST_GetPointer(graph[listNum], &base->map[y - 1][x]))
-			LIST_AddPointer(&graph[listNum], (void*)&base->map[y - 1][x]);
-		if (!LIST_GetPointer(graph[listNum - BASE_SIZE], tile))
-			LIST_AddPointer(&graph[listNum - BASE_SIZE], (void*)tile);
-	}
-	/* south */
-	if (y + 1 < BASE_SIZE && condition(&base->map[y + 1][x]) == TILE_ACTIVENODE) {
-		if (!LIST_GetPointer(graph[listNum], &base->map[y + 1][x]))
-			LIST_AddPointer(&graph[listNum], (void*)&base->map[y + 1][x]);
-		if (!LIST_GetPointer(graph[listNum + BASE_SIZE], tile))
-			LIST_AddPointer(&graph[listNum + BASE_SIZE], (void*)tile);
-	}
-}
-
-/**
- * @brief Remove tile from base Tiles traversal graph
- * @param[in] B_TileCondition Boolean Function reference to decide if the node is exist
- * @param[in,out] graph Linked list array of the traversal graph
- * @param[in] tile Pointer to the buildingtile to remove
- * @note graph should be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
- */
-static void B_TileGraphRemove (linkedList_t *graph[], baseBuildingTile_t *tile)
-{
-	int x = tile->posX;
-	int y = tile->posY;
-	int listNum = y * BASE_SIZE + x;
-
-	if (LIST_IsEmpty(graph[listNum]))
-		return;
-	/* west */
-	if (x - 1 >= 0 && !LIST_IsEmpty(graph[listNum - 1])) {
-		LIST_Remove(&graph[listNum - 1], (void*)tile);
-	}
-	/* east */
-	if (x + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + 1])) {
-		LIST_Remove(&graph[listNum + 1], (void*)tile);
-	}
-	/* north */
-	if (y - 1 >= 0 && !LIST_IsEmpty(graph[listNum - BASE_SIZE])) {
-		LIST_Remove(&graph[listNum - BASE_SIZE], (void*)tile);
-	}
-	/* south */
-	if (y + 1 < BASE_SIZE && !LIST_IsEmpty(graph[listNum + BASE_SIZE])) {
-		LIST_Remove(&graph[listNum + BASE_SIZE], (void*)tile);
-	}
-	/* delete self list */
-	LIST_Delete(&graph[listNum]);
-}
-
-/**
- * @brief Check if the building tile graph coherent
- * @param[in,out] graph Linked list array of the traversal graph
- * @note graph must be a BASE_SIZE * BASE_SIZE sized linkedList_t* array
- * @note this function destroy the tileGraph while working
- */
-static qboolean B_IsCoherent (linkedList_t *graph[])
-{
+	int found[MAX_BASEBUILDINGS];
 	linkedList_t *queue = NULL;
-	qboolean coherent = qtrue;
+	linkedList_t *neighbours;
+	building_t *bldg = NULL;
 	int i;
 
-	/* add first node to the queue */
-	for (i = 0; i < BASE_SIZE * BASE_SIZE; i++) {
-		if (!LIST_IsEmpty(graph[i])) {
-			LIST_AddPointer(&queue, graph[i]->data);
-			break;
-		}
+	OBJZERO(found);
+	while ((bldg = B_GetNextBuilding(base, bldg)) != NULL) {
+		LIST_AddPointer(&queue, (void*)bldg);
+		break;
 	}
+	if (!bldg)
+		return qtrue;
 
-	/* iterate through accessible nodes */
 	while (!LIST_IsEmpty(queue)) {
-		baseBuildingTile_t *tile = (baseBuildingTile_t*)LIST_GetByIdx(queue, 0);
-		baseBuildingTile_t *neighbour;
-
+		bldg = (building_t*)queue->data;
+		found[bldg->idx] = 1;
 		LIST_RemoveEntry(&queue, queue);
-		Com_DPrintf(DEBUG_CLIENT, "Base tile graph traversal at %2i, %2i\n", tile->posX, tile->posY);
-		LIST_Foreach(graph[tile->posY * BASE_SIZE + tile->posX], baseBuildingTile_t, neighbour) {
-			if (LIST_GetPointer(queue, neighbour))
-				continue;
-			LIST_AddPointer(&queue, neighbour);
-		}
-		/* Remove the neighbourhood list */
-		LIST_Delete(&graph[tile->posY * BASE_SIZE + tile->posX]);
-	}
 
-	/* if there is still a single non-empty list one or mode node was unaccessible */
-	for (i = 0; i < BASE_SIZE * BASE_SIZE; i++) {
-		if (!LIST_IsEmpty(graph[i])) {
-			coherent = qfalse;
-			LIST_Delete(&graph[i]);
+		neighbours = B_GetNeighbours(bldg);
+		LIST_Foreach(neighbours, building_t, bldg) {
+			if (found[bldg->idx] == 0) {
+				found[bldg->idx] = 1;
+				LIST_AddPointer(&queue, (void*)bldg);
+			}
 		}
+		LIST_Delete(&neighbours);
 	}
 	LIST_Delete(&queue);
 
-	return coherent;
+	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+		if (found[i] != 1)
+			return qfalse;
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Check and add blocked tile to the base
+ * @param[in,out] base The base to add blocked tile to
+ * @param[in] row Row position of the tile
+ * @param[in] column Column position of the tile
+ * @return qboolean value of success
+ */
+static qboolean B_AddBlockedTile (base_t *base, int row, int column)
+{
+	int found[BASE_SIZE][BASE_SIZE];
+	linkedList_t *queue = NULL;
+	int x;
+	int y;
+
+	assert(base);
+	OBJZERO(found);
+	found[row][column] = -1;
+
+	/* Get first non blocked tile */
+	for (y = 0; y < BASE_SIZE && LIST_IsEmpty(queue); y++) {
+		for (x = 0; x < BASE_SIZE && LIST_IsEmpty(queue); x++) {
+			if (x == column && y == row)
+				continue;
+			if (!B_IsTileBlocked(base, x, y))
+				LIST_AddPointer(&queue, &base->map[y][x]);
+		}
+	}
+
+	if (LIST_IsEmpty(queue))
+		return qfalse;
+
+	/* BS Traversal */
+	while (!LIST_IsEmpty(queue)) {
+		baseBuildingTile_t *tile = (baseBuildingTile_t*)queue->data;
+		LIST_RemoveEntry(&queue, queue);
+		x = tile->posX;
+		y = tile->posY;
+
+		found[y][x] = 1;
+		/* West */
+		if (x > 0 && !B_IsTileBlocked(base, x - 1, y) && found[y][x - 1] == 0)
+			LIST_AddPointer(&queue, (void*)&base->map[y][x - 1]);
+		/* East */
+		if (x < BASE_SIZE - 1 && !B_IsTileBlocked(base, x + 1, y) && found[y][x + 1] == 0)
+			LIST_AddPointer(&queue, (void*)&base->map[y][x + 1]);
+		/* North */
+		if (y > 0 && !B_IsTileBlocked(base, x, y - 1) && found[y - 1][x] == 0)
+			LIST_AddPointer(&queue, (void*)&base->map[y - 1][x]);
+		/* South */
+		if (y < BASE_SIZE - 1 && !B_IsTileBlocked(base, x, y + 1) && found[y + 1][x] == 0)
+			LIST_AddPointer(&queue, (void*)&base->map[y + 1][x]);
+	}
+	LIST_Delete(&queue);
+
+	/* Check for unreached areas */
+	for (y = 0; y < BASE_SIZE; y++) {
+		for (x = 0; x < BASE_SIZE; x++) {
+			if (!B_IsTileBlocked(base, x, y) && found[y][x] == 0)
+				return qfalse;
+		}
+	}
+	base->map[row][column].blocked = qtrue;
+	return qtrue;
+}
+
+/**
+ * @brief Fuction to put blocked tiles on basemap
+ * @param[out] base The base to fill
+ * @param[in] count Number of blocked tiles to add
+ */
+static void B_AddBlockedTiles (base_t *base, int count)
+{
+	int placed;
+
+	assert(base);
+
+	for (placed = 0; placed < count; placed++) {
+		const int x = rand() % BASE_SIZE;
+		const int y = rand() % BASE_SIZE;
+
+		if (B_IsTileBlocked(base, x, y))
+			continue;
+
+		B_AddBlockedTile(base, y, x);
+	}
 }
 
 /**
  * @brief Returns if a base building is destroyable
  * @param[in] building Pointer to the building to check
- * @todo buildings being built are not in the graph and it is possible to remove the only connection to them
  */
-qboolean B_IsBuildingDestroyable (building_t *building)
+qboolean B_IsBuildingDestroyable (const building_t *building)
 {
-	base_t *base = building->base;
+	base_t *base;
+
+	assert(building);
+	base = building->base;
+	assert(base);
 
 	if (base->baseStatus != BASE_DESTROYED) {
-		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
+		int found[MAX_BASEBUILDINGS];
+		linkedList_t *queue = NULL;
+		linkedList_t *neighbours;
+		building_t *bldg = NULL;
+		int i;
 
-		B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-		B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][(int)building->pos[0]]);
-		if (building->needs)
-			B_TileGraphRemove(tileGraph, &base->map[(int)building->pos[1]][((int)building->pos[0]) + 1]);
-		return B_IsCoherent(tileGraph);
+		OBJZERO(found);
+		/* prevents adding building to be removed to the queue */
+		found[building->idx] = 1;
+
+		while ((bldg = B_GetNextBuilding(base, bldg)) != NULL) {
+			if (bldg != building) {
+				LIST_AddPointer(&queue, (void*)bldg);
+				break;
+			}
+		}
+		if (!bldg)
+			return qtrue;
+
+		while (!LIST_IsEmpty(queue)) {
+			bldg = (building_t*)queue->data;
+			found[bldg->idx] = 1;
+			LIST_RemoveEntry(&queue, queue);
+
+			neighbours = B_GetNeighbours(bldg);
+			LIST_Foreach(neighbours, building_t, bldg) {
+				if (found[bldg->idx] == 0) {
+					found[bldg->idx] = 1;
+					LIST_AddPointer(&queue, (void*)bldg);
+				}
+			}
+			LIST_Delete(&neighbours);
+		}
+		LIST_Delete(&queue);
+
+		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+			if (found[i] != 1)
+				return qfalse;
+		}
 	}
 	return qtrue;
 }
@@ -1264,29 +1265,9 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 	/* Create random blocked fields in the base.
 	 * The first base never has blocked fields so we skip it. */
 	if (ccs.campaignStats.basesBuilt >= 1) {
-		linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
 		const int j = round((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
 
-		for (i = 0; i < j;) {
-			const int x = rand() % (BASE_SIZE);
-			const int y = rand() % (BASE_SIZE);
-			baseBuildingTile_t *mapPtr = &base->map[y][x];
-
-			if (mapPtr->building || mapPtr->blocked)
-				continue;
-
-			/* refuse if it hurts base coherency */
-			B_BuildTileGraph(base, B_NonBlockedTileCondition, tileGraph);
-			B_TileGraphRemove(tileGraph, mapPtr);
-			if (!B_IsCoherent(tileGraph)) {
-				Com_DPrintf(DEBUG_CLIENT, "No blocked tile should be put at %i, %i\n", x, y);
-				continue;
-			}
-
-			mapPtr->blocked = qtrue;
-			i++;
-			freeSpace--;
-		}
+		B_AddBlockedTiles(base, j);
 	}
 }
 
@@ -1388,7 +1369,6 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 
 	base->idx = B_GetBaseIDX(base);
 	base->founded = qtrue;
-	base->baseStatus = BASE_WORKING;
 
 	/* increase this early because a lot of functions rely on this
 	 * value to get the base we are setting up here */
@@ -1399,6 +1379,8 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 		B_SetUpFirstBase(campaign, base);
 	else
 		B_BuildFromTemplate(base, NULL, qtrue);
+
+	base->baseStatus = BASE_WORKING;
 
 	/* a new base is not discovered (yet) */
 	base->alienInterest = newBaseAlienInterest;
@@ -1472,18 +1454,8 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 		buildingNew->idx = B_GetBuildingIDX(base, buildingNew);
 		/* Link to the base. */
 		buildingNew->base = base;
-		/* status and build (start) time */
-		buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-		buildingNew->timeStart = ccs.date.day;
 
 		if (!base->map[row][col].blocked && !base->map[row][col].building) {
-			baseBuildingTile_t tile;
-			baseBuildingTile_t tileNeeded;
-			linkedList_t *tileGraph[BASE_SIZE * BASE_SIZE];
-
-			OBJZERO(tile);
-			OBJZERO(tileNeeded);
-
 			/* No building in this place */
 			if (buildingNew->needs) {
 				if (col + 1 == BASE_SIZE) {
@@ -1502,26 +1474,30 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 					}
 					col--;
 				}
-				/* needed building tile for coherency check */
-				tileNeeded.building = buildingNew;
-				tileNeeded.posX = col + 1;
-				tileNeeded.posY = row;
 			}
 
+			/* set building position */
+			buildingNew->pos[0] = col;
+			buildingNew->pos[1] = row;
+
 			/* Refuse adding if it hurts coherency */
-			/** @todo this first check about unmodified base is just to keep compatibility with savegames. Should be removed */
-			B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-			if (B_IsCoherent(tileGraph)) {
-				B_BuildTileGraph(base, B_BuiltTileCondition, tileGraph);
-				tile.building = buildingNew;
-				tile.posX = col;
-				tile.posY = row;
-				B_TileGraphAdd(base, B_BuiltTileCondition, tileGraph, &tile);
-				if (buildingNew->needs)
-					B_TileGraphAdd(base, B_BuiltTileCondition, tileGraph, &tileNeeded);
-				if (!B_IsCoherent(tileGraph)) {
+			if (base->baseStatus == BASE_WORKING) {
+				linkedList_t *neighbours;
+				qboolean coherent = qfalse;
+				building_t *bldg;
+
+				neighbours = B_GetNeighbours(buildingNew);
+				LIST_Foreach(neighbours, building_t, bldg) {
+					if (B_IsBuildingBuiltUp(bldg)) {
+						coherent = qtrue;
+						break;
+					}
+				}
+				LIST_Delete(&neighbours);
+
+				if (!coherent) {
 					UI_Popup(_("Notice"), _("You must build next to existing buildings."));
-					return qfalse;
+					return NULL;
 				}
 			}
 
@@ -1530,8 +1506,10 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				base->map[row][col + 1].building = buildingNew;
 			}
 			base->map[row][col].building = buildingNew;
-			buildingNew->pos[0] = col;
-			buildingNew->pos[1] = row;
+
+			/* status and build (start) time */
+			buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+			buildingNew->timeStart = ccs.date.day;
 
 			/* pay */
 			CL_UpdateCredits(ccs.credits - buildingNew->fixCosts);
@@ -2281,14 +2259,10 @@ static void B_CheckCoherency_f (void)
 		base = B_GetCurrentSelectedBase();
 	}
 
-	if (base) {
-		linkedList_t *bGraph[BASE_SIZE * BASE_SIZE];
-
-		B_BuildTileGraph(base, B_BuiltTileCondition, bGraph);
-		Com_Printf("Base '%s' (idx:%i) is %scoherent.\n", base->name, base->idx, (B_IsCoherent(bGraph)) ? "" : "not ");
-	} else {
+	if (base)
+		Com_Printf("Base '%s' (idx:%i) is %scoherent.\n", base->name, base->idx, (B_IsCoherent(base)) ? "" : "not ");
+	else
 		Com_Printf("No base selected.\n");
-	}
 }
 #endif
 

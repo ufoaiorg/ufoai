@@ -1221,6 +1221,9 @@ int UFO_AddCampaignTests (void)
 	if (CU_ADD_TEST(campaignSuite, testBaseBuilding) == NULL)
 		return CU_get_error();
 
+	if (CU_ADD_TEST(campaignSuite, testBuildingConstruction) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(campaignSuite, testAircraftHandling) == NULL)
 		return CU_get_error();
 
@@ -1288,9 +1291,6 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testHospital) == NULL)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(campaignSuite, testBuildingConstruction) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
