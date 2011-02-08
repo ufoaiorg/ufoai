@@ -20,7 +20,9 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdbool.h>
+#ifndef CURL_STATICLIB
 #define CURL_STATICLIB
+#endif
 #include <curl/curl.h>
 
 #define BUFFER_MAX (16*1024)
@@ -323,8 +325,9 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 		fprintf(crash, "======start======\n");
 		fprintf(crash, "Date: %.4d-%.2d-%.2d\n",
 				timeInfo.wYear, timeInfo.wMonth, timeInfo.wDay);
-		fprintf(crash, "Windows version %d.%d (Build %d) %s\n\n",
+		fprintf(crash, "Windows version %d.%d (Build %d) %s\n",
 				osInfo.dwMajorVersion, osInfo.dwMinorVersion, osInfo.dwBuildNumber, osInfo.szCSDVersion);
+		fprintf(crash, BUILDSTRING"\n\n");
 		fprintf(crash, g_output);
 		fprintf(crash, "======end========\n");
 		fclose(crash);
