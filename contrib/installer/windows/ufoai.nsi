@@ -104,14 +104,14 @@ SectionGroup /e "Game" SECGROUP01
 	Section "Game Shortcuts" SEC01B
 		SetOutPath "$INSTDIR"
 
-		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set snd_init 1" "$INSTDIR\ufo.exe" 0
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg +set vid_fullscreen 1" "$INSTDIR\ufo.exe" 0
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg" "$INSTDIR\ufo.exe" 0
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufoded.exe" "" "$INSTDIR\ufoded.exe" 0
-		CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe"
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\uninst.exe"
+		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\"
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set snd_init 1" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg +set vid_fullscreen 1" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufoded.exe" "" "$INSTDIR\ufoded.exe" 0
+		CreateShortCut "$DESKTOP\${PRODUCT_NAME}-{PRODUCT_VERSION}.lnk" "$INSTDIR\ufo.exe"
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\Uninstall.lnk" "$INSTDIR\uninst.exe"
 	SectionEnd
 SectionGroupEnd
 
@@ -281,7 +281,6 @@ Function .onSelChange
     IntOp $GAMEICONFLAGS $GAMEICONFLAGS & 510 ; Forces to zero the activation bit
     SectionSetFlags ${SEC01B} $GAMEICONFLAGS
 
-  GameSelected:
   IntCmp $MAPTEST 1 done
     SectionGetFlags ${SEC02B} $MAPICONFLAGS
     IntOp $MAPICONFLAGS $MAPICONFLAGS & 510 ; Forces to zero the activation bit
@@ -300,15 +299,15 @@ Function un.onInit
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure that you want to remove $(^Name) and all its data?" IDYES +2
   Abort
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Do you also want to delete your configuration files and saved games?" IDNO +2
-  RMDIR /r "$APPDATA\UFOAI"
+  RMDIR /r "$APPDATA\UFOAI\${PRODUCT_VERSION}"
 FunctionEnd
 
 ; This uninstaller is unsafe - if a user installs this in the root of a partition, for example, the uninstall will wipe that entire partition.
 Section Uninstall
   RMDIR /r $INSTDIR
   RMDIR $INSTDIR
-  RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
-  Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
+  RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}"
+  Delete "$DESKTOP\${PRODUCT_NAME}-{PRODUCT_VERSION}.lnk"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
