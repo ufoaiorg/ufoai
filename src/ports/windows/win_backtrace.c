@@ -112,12 +112,23 @@ static void find (struct bfd_ctx * b, DWORD offset, const char **file, const cha
 	}
 }
 
+static void list_matching_formats (struct output_buffer *ob, const char * procname, char **p)
+{
+	if (!p || !*p)
+		return;
+
+	output_print(ob, "%s: Matching formats: ", procname);
+	while (*p)
+		output_print(ob, " %s", *p++);
+	output_print(ob, "\n");
+}
+
 static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct output_buffer *ob)
 {
-	int r1, r2, r3;
 	bfd *b;
 	void *symbol_table;
 	unsigned dummy = 0;
+	char **matching = NULL;
 
 	bc->handle = NULL;
 	bc->symbol = NULL;
@@ -128,21 +139,36 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 		return 1;
 	}
 
-	r1 = bfd_check_format(b, bfd_object);
-	r2 = bfd_check_format_matches(b, bfd_object, NULL);
-	r3 = bfd_get_file_flags(b) & HAS_SYMS;
-
-	if (!(r1 && r2 && r3)) {
+	if (bfd_check_format(b, bfd_archive)) {
+		output_print(ob, "Cannot get addresses from archive (%s)\n", procname);
 		bfd_close(b);
-		output_print(ob, "Failed to init bfd from (%s)\n", procname);
+		return -1;
+	}
+
+	if (!bfd_check_format_matches(b, bfd_object, &matching)) {
+		const char *errmsg = bfd_errmsg(bfd_get_error());
+		output_print(ob, "%s (%s)\n", errmsg, b->filename);
+		if (bfd_get_error() == bfd_error_file_ambiguously_recognized) {
+			list_matching_formats(ob, procname, matching);
+			free(matching);
+		}
+		bfd_close(b);
+		return -1;
+	}
+
+	if ((bfd_get_file_flags(b) & HAS_SYMS) == 0) {
+		const char *errmsg = bfd_errmsg(bfd_get_error());
+		output_print(ob, "Failed to get file flags from (%s) %s\n", procname, errmsg);
+		bfd_close(b);
 		return 1;
 	}
 
 	if (bfd_read_minisymbols(b, FALSE, &symbol_table, &dummy) == 0) {
 		if (bfd_read_minisymbols(b, TRUE, &symbol_table, &dummy) < 0) {
+			const char *errmsg = bfd_errmsg(bfd_get_error());
+			output_print(ob, "Failed to read symbols from (%s): %s\n", procname, errmsg);
 			free(symbol_table);
 			bfd_close(b);
-			output_print(ob, "Failed to read symbols from (%s)\n", procname);
 			return 1;
 		}
 	}
