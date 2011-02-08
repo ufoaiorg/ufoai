@@ -455,6 +455,9 @@ static void UI_RequestMapList_f (void)
 		preview = md->map;
 		if (preview[0] == '+')
 			preview++;
+		if (FS_CheckFile("pics/maps/shots/%s.jpg", preview) == -1)
+			preview = "default";
+
 		Cbuf_AddText(va("%s add \"%s\" \"%s\";", callbackCmd, md->id, preview));
 	}
 	Cbuf_AddText(va("%s end;", callbackCmd));
