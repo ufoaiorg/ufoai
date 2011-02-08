@@ -258,8 +258,8 @@ static void UI_DrawNode (uiNode_t *node)
 			vec3_t trans;
 			globalTransX += clientPosition[0];
 			globalTransY += clientPosition[1];
-			trans[0] = clientPosition[0];
-			trans[1] = clientPosition[1];
+			trans[0] = clientPosition[0] * viddef.rx;
+			trans[1] = clientPosition[1] * viddef.ry;
 			trans[2] = 0;
 			R_Transform(trans, NULL, NULL);
 		}
@@ -272,8 +272,8 @@ static void UI_DrawNode (uiNode_t *node)
 			vec3_t trans;
 			globalTransX -= clientPosition[0];
 			globalTransY -= clientPosition[1];
-			trans[0] = -clientPosition[0];
-			trans[1] = -clientPosition[1];
+			trans[0] = -clientPosition[0] * viddef.rx;
+			trans[1] = -clientPosition[1] * viddef.ry;
 			trans[2] = 0;
 			R_Transform(trans, NULL, NULL);
 		}
