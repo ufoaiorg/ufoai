@@ -249,8 +249,6 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	modelInfo_t mi;
 	uiModel_t *model;
 	vec3_t nodeorigin;
-	vec3_t autoScale;
-	vec3_t autoCenter;
 
 	assert(UI_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
@@ -302,9 +300,9 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 
 	/* autoscale? */
 	if (EXTRADATA(node).autoscale) {
-		vec2_t size;
-		size[0] = node->size[0] - node->padding;
-		size[1] = node->size[1] - node->padding;
+		const vec2_t size = {node->size[0] - node->padding, node->size[1] - node->padding};
+		vec3_t autoScale;
+		vec3_t autoCenter;
 		R_ModelAutoScale(size, &mi, autoScale, autoCenter);
 	}
 
