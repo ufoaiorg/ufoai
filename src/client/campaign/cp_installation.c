@@ -363,21 +363,6 @@ installation_t *INS_GetFirstUFOYard (qboolean free)
  */
 void INS_InitStartup (void)
 {
-	int idx;
-
-	Com_DPrintf(DEBUG_CLIENT, "Reset installation\n");
-
-	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
-		ccs.installationTemplates[idx].id = NULL;
-		ccs.installationTemplates[idx].name = NULL;
-		ccs.installationTemplates[idx].cost = 0;
-		ccs.installationTemplates[idx].radarRange = 0.0f;
-		ccs.installationTemplates[idx].trackingRange = 0.0f;
-		ccs.installationTemplates[idx].maxUFOsStored = 0;
-		ccs.installationTemplates[idx].maxBatteries = 0;
-	}
-
-	/* add commands and cvars */
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console");
 	Cmd_AddCommand("debug_finishinstallation", INS_ConstructionFinished_f, "Finish construction of a specified or every installation");

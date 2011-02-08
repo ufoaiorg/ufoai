@@ -164,7 +164,7 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordooraction.c">
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.c">

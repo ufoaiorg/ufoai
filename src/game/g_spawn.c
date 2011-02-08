@@ -320,6 +320,8 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	G_FreeTags(TAG_LEVEL);
 
 	OBJZERO(level);
+	level.pathingMap = (pathing_t *)G_TagMalloc(sizeof(*level.pathingMap), TAG_LEVEL);
+
 	G_EdictsReset();
 
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));

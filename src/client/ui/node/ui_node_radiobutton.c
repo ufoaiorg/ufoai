@@ -113,8 +113,6 @@ static void UI_RadioButtonNodeDraw (uiNode_t *node)
  */
 static void UI_RadioButtonNodeActivate (uiNode_t * node)
 {
-	float current;
-
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*(char*)(EXTRADATA(node).cvar)) {
 		Com_Printf("UI_RadioButtonNodeClick: node '%s' doesn't have a valid cvar assigned\n", UI_GetPath(node));
@@ -126,7 +124,7 @@ static void UI_RadioButtonNodeActivate (uiNode_t * node)
 	if (!Q_strstart((const char *)(EXTRADATA(node).cvar), "*cvar"))
 		return;
 
-	current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
+	UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	/* Is we click on the already selected button, we can continue */
 	if (UI_RadioButtonNodeIsSelected(node))
 		return;

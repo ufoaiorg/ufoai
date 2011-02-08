@@ -42,7 +42,7 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 {
 	int i;
 
-	for (i = 0, csi.eds; i < csi.numEDs; i++) {
+	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t *ed = &csi.eds[i];
 		if (Q_streq(name, ed->name))
 			return ed;

@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/actor/e_event_actordie.h"
 #include "event/actor/e_event_actorstats.h"
 #include "event/actor/e_event_actorstatechange.h"
-#include "event/actor/e_event_actordooraction.h"
+#include "event/actor/e_event_actorclientaction.h"
 #include "event/actor/e_event_actorreactionfirechange.h"
 #include "event/actor/e_event_actorresetclientaction.h"
 #include "event/actor/e_event_actorreservationchange.h"
@@ -129,7 +129,7 @@ const eventRegister_t events[] = {
 
 	{E(EV_DOOR_OPEN), "s", CL_DoorOpen, NULL, NULL},
 	{E(EV_DOOR_CLOSE), "s", CL_DoorClose, NULL, NULL},
-	{E(EV_DOOR_ACTION), "ss", CL_ActorDoorAction, NULL, NULL},
+	{E(EV_CLIENT_ACTION), "ss", CL_ActorClientAction, NULL, NULL},
 	{E(EV_RESET_CLIENT_ACTION), "s", CL_ActorResetClientAction, NULL, NULL},
 #undef E
 };

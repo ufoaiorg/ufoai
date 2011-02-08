@@ -728,7 +728,7 @@ base/models/aircraft/inter_starchaser/starchaser_gear.md2 | GNU General Public L
 base/models/aircraft/inter_starchaser/starchaser_nm.png | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_stiletto/stiletto.md2 | GNU General Public License 2.0 | Julian, Origin
 base/models/aircraft/inter_stiletto/stiletto.png | GNU General Public License 2.0 | Origin, Nate Wright
-base/models/aircraft/inter_stiletto/stiletto_nm.tga | GNU General Public License 2.0 | Origin
+base/models/aircraft/inter_stiletto/stiletto_nm.png | GNU General Public License 2.0 | Origin
 base/models/aircraft/inter_stingray/stingray.png | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
@@ -2757,6 +2757,12 @@ base/pics/hud/phys_mor.png | GNU General Public License 2.0
 base/pics/hud/popup_cursor.png | GNU General Public License 2.0 or later
 base/pics/hud/weapon_box.png | GNU General Public License 2.0 or later
 base/pics/hudphone/background.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/firemode_bg.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/firemode_bg_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/arrowdown.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/arrowdown_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/arrowup.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/arrowup_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/button.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/button_clicked.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/button_disabled.png | Public Domain | bayo | SVG from data_source
@@ -2764,12 +2770,16 @@ base/pics/hudphone/sprites/cancel.png | Public Domain | bayo | SVG from data_sou
 base/pics/hudphone/sprites/cancel_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/crouch.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/crouch_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/hand.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/hand_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/indicator_bg.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/indicator_health.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/indicator_moral.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/indicator_time.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/item.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/item_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/list.png | Public Domain | bayo | SVG from data_source
+base/pics/hudphone/sprites/list_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/lookat.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/lookat_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/move.png | Public Domain | bayo | SVG from data_source
@@ -5364,22 +5374,39 @@ base/textures/tex_base/d_drkmtl_dpanelb_nm.png | GNU General Public License 2.0 
 base/textures/tex_base/d_drkmtlsupport.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/d_drkmtlsupport_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/doorbell.jpg | GNU General Public License 2.0 | XaverXN
+base/textures/tex_base/doorbell_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/ecrate_cln.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/ecrate_cln_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/ecrate_drty-fmtl2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/ecrate_drty-fmtl2_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/ecrate_drty-fmtl3.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/ecrate_drty-fmtl3_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/ecrate_drty.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/ecrate_drty2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/ecrate_drty2_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/ecrate_drty3ow.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/ecrate_drty3ow_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/ecrate_drty_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/ecrate_dunno.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/ecrate_dunno_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/fan.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/fan_grate.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_base/fan_grate_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/fan_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/fence.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_base/fence2.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_base/fence2_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/fence_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/grid2_alpha.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_base/grid2_alpha_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/grid_alpha.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_base/grid_alpha_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/helipad.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/helipad_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/lab_floor001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_base/lab_floor001_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/lab_floor002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_base/lab_floor002_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/lab_floor003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_floor003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -5403,23 +5430,41 @@ base/textures/tex_base/sign03.jpg | GNU General Public License 2.0 | Werner Höh
 base/textures/tex_base/sign04.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/sign05.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/sign07.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_base/sign07_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/sign08.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_base/sign08_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/sign09.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_base/sign09_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/steptop_mtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/steptop_mtl2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/steptop_mtl2_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/steptop_mtl_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/tank001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_base/tank001_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/tank002.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_base/tank002_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/trim001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | trim_cem_grt.jpg
+base/textures/tex_base/trim001_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/trim003.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | trim_cementwall2.jpg
+base/textures/tex_base/trim003_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/trim_drkmtl_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/vent001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | d_drkmtl_mpanelgrt.jpg
+base/textures/tex_base/vent001_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/vent002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent002_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/vent003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent003_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/vent004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent004_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/vent005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent005_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/vent006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent006_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/vent007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent007_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/vent_round.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent_round_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -5461,13 +5506,17 @@ base/textures/tex_base/wall004_red_nm.png | GNU General Public License 2.0 or la
 base/textures/tex_base/wall1.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_base/wall1_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_base/wall2.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/textures/tex_base/wall2_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall2_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/wall5.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_base/wall5_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_base/wires01.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_base/wires01_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/wires02.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_base/wires02_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/wires1.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_base/wires1_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/wires2.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_base/wires2_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_buildings/9basetrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9darktrim02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9floorbasic01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data

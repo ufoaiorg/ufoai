@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_actorresetclientaction.h"
 
 /**
- * @brief When no trigger is touched, the client actions are resetted
+ * @brief When no trigger is touched, the client actions are reset
  * @sa EV_RESET_CLIENT_ACTION
  * @sa G_ClientMove
  */

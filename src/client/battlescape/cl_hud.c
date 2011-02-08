@@ -40,10 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../../common/grid.h"
 
-/** If this is set to qfalse HUD_DisplayFiremodes_f will not attempt to hide the list */
-static qboolean visibleFiremodeListLeft = qfalse;
-static qboolean visibleFiremodeListRight = qfalse;
-
 static cvar_t *cl_hud_message_timeout;
 static cvar_t *cl_show_cursor_tooltips;
 cvar_t *cl_worldlevel;
@@ -184,8 +180,7 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
  */
 void HUD_HideFiremodes (void)
 {
-	visibleFiremodeListLeft = qfalse;
-	visibleFiremodeListRight = qfalse;
+	/** @todo not sure this callback mean something (maybe not need, or dont have any meaning (we hide it for a reason, not for hiding it)) */
 	UI_ExecuteConfunc("hide_firemodes");
 }
 
@@ -416,23 +411,19 @@ static void HUD_ShotReserve_f (void)
  * @brief Sets the display for a single weapon/reload HUD button.
  * @param[in] hand What list to display
  */
-static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, int index)
+static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, int index)
 {
 	int usableTusForRF;
 	char tuString[MAX_VAR];
 	qboolean status;
 	const fireDef_t *fd;
 	const char *tooltip;
+	char id[32];
 
 	if (index < ammo->numFiredefs[weapFdsIdx]) {
 		/* We have a defined fd ... */
 		fd = &ammo->fd[weapFdsIdx][index];
 	} else {
-		/* Hide this entry */
-		if (hand == ACTOR_HAND_RIGHT)
-			UI_ExecuteConfunc("set_right_inv %i", index);
-		else
-			UI_ExecuteConfunc("set_left_inv %i", index);
 		return;
 	}
 
@@ -448,20 +439,33 @@ static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, c
 	} else
 		tooltip = _("No remaining TUs left after shot.");
 
-	UI_ExecuteConfunc("set_firemode %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", ACTOR_GET_HAND_CHAR(hand),
-			fd->fdIdx, fd->reaction, status, _(fd->name), va(_("TU: %i"), fd->time),
-			va(_("Shots: %i"), fd->ammo), tooltip);
+	/* unique identifier of the action */
+	/* @todo use this id as action callback instead of hand and index (we can extend it with any other soldier action we need (open door, reload...)) */
+	Q_strncpyz(id, va("fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index), sizeof(id));
+
+	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" %i %i \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
+			fd->fdIdx, fd->reaction, status, _(fd->name), fd->time, fd->ammo, tooltip);
 
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
 		character_t* chr = CL_ActorGetChr(actor);
 		const qboolean active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
 		/* Change the state of the checkbox. */
-		UI_ExecuteConfunc("set_firemode_checkbox %c %i %i", ACTOR_GET_HAND_CHAR(hand), fd->fdIdx, active);
+		UI_ExecuteConfunc("%s reaction %s %i", callback, id, active);
 	}
 }
 
-void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay)
+/**
+ * List actions from a soldier to a callback confunc
+ * @param callback confunc callback
+ * @param actor actor witch can do the actions
+ * @param right if true, list right firemode
+ * @param left if true, list left firemode
+ * @param reloadRight if true, list right weapon reload actions
+ * @param reloadLeft if true, list left weapon reload actions
+ * @todo we can extend it with short cut equip action, more reload, action on the map (like open doors)...
+ */
+static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolean right, qboolean left, qboolean reloadRight, qboolean reloadLeft)
 {
 	const objDef_t *ammo;
 	const fireDef_t *fd;
@@ -472,37 +476,114 @@ void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemo
 		return;
 
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
-		HUD_HideFiremodes();
 		return;
 	}
 
-	fd = HUD_GetFireDefinitionForHand(actor, hand);
-	if (fd == NULL)
-		return;
+	UI_ExecuteConfunc("%s begin", callback);
 
-	ammo = fd->obj;
-	if (!ammo) {
-		Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
-		return;
-	}
+	if (right) {
+		const actorHands_t hand = ACTOR_HAND_RIGHT;
+		fd = HUD_GetFireDefinitionForHand(actor, hand);
+		if (fd == NULL)
+			return;
 
-	if (firemodesChangeDisplay) {
-		/* Toggle firemode lists if needed. */
-		HUD_HideFiremodes();
-		if (hand == ACTOR_HAND_RIGHT) {
-			visibleFiremodeListRight = qtrue;
-		} else {
-			visibleFiremodeListLeft = qtrue;
+		ammo = fd->obj;
+		if (!ammo) {
+			Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
+			return;
+		}
+
+		chr = CL_ActorGetChr(actor);
+		assert(chr);
+
+		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+			/* Display the firemode information (image + text). */
+			HUD_DisplayFiremodeEntry(callback, actor, ammo, fd->weapFdsIdx, hand, i);
 		}
 	}
 
-	chr = CL_ActorGetChr(actor);
-	assert(chr);
+	if (reloadRight) {
+		invList_t* weapon = RIGHT(actor);
 
-	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		/* Display the firemode information (image + text). */
-		HUD_DisplayFiremodeEntry(actor, ammo, fd->weapFdsIdx, hand, i);
+		/* Reloeadable item in hand. */
+		if (weapon && weapon->item.t && weapon->item.t->reload) {
+			int tus;
+			containerIndex_t container = csi.idRight;
+			qboolean noAmmo;
+			qboolean noTU;
+			const char *actionId = "reload_handr";
+
+			tus = HUD_CalcReloadTime(actor, weapon->item.t, container);
+			noAmmo = tus == -1;
+			noTU = actor->TU < tus;
+			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'r', tus, !noAmmo, !noTU);
+		}
 	}
+
+	if (left) {
+		const actorHands_t hand = ACTOR_HAND_LEFT;
+		fd = HUD_GetFireDefinitionForHand(actor, hand);
+		if (fd == NULL)
+			return;
+
+		ammo = fd->obj;
+		if (!ammo) {
+			Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
+			return;
+		}
+
+		chr = CL_ActorGetChr(actor);
+		assert(chr);
+
+		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+			/* Display the firemode information (image + text). */
+			HUD_DisplayFiremodeEntry(callback, actor, ammo, fd->weapFdsIdx, hand, i);
+		}
+	}
+
+
+	if (reloadLeft) {
+		invList_t* weapon = LEFT(actor);
+
+		/* Reloeadable item in hand. */
+		if (weapon && weapon->item.t && weapon->item.t->reload) {
+			int tus;
+			containerIndex_t container = csi.idLeft;
+			qboolean noAmmo;
+			qboolean noTU;
+			const char *actionId = "reload_handl";
+
+			tus = HUD_CalcReloadTime(actor, weapon->item.t, container);
+			noAmmo = tus == -1;
+			noTU = actor->TU < tus;
+			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'l', tus, !noAmmo, !noTU);
+		}
+	}
+
+	UI_ExecuteConfunc("%s end", callback);
+}
+
+/**
+ * @brief Displays the firemodes for the given hand.
+ */
+static void HUD_DisplayActions_f (void)
+{
+	char callback[32];
+	qboolean right;
+	qboolean left;
+	qboolean rightReload;
+	qboolean leftReload;
+
+	if (!selActor)
+		return;
+
+	right = strchr(Cmd_Argv(2), 'r') != NULL;
+	left = strchr(Cmd_Argv(2), 'l') != NULL;
+	rightReload = strchr(Cmd_Argv(2), 'R') != NULL;
+	leftReload = strchr(Cmd_Argv(2), 'L') != NULL;
+
+	Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
+	HUD_DisplayActions(callback, selActor, right, left, rightReload, leftReload);
 }
 
 /**
@@ -511,33 +592,40 @@ void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemo
 static void HUD_DisplayFiremodes_f (void)
 {
 	actorHands_t hand;
+	char callback[32];
 
 	if (!selActor)
 		return;
 
-	if (Cmd_Argc() < 2)
+	if (Cmd_Argc() < 3)
 		/* no argument given */
 		hand = ACTOR_HAND_RIGHT;
 	else
-		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
+		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
 
-	HUD_DisplayFiremodes(selActor, hand, qtrue);
+	Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
+	HUD_DisplayActions(callback, selActor, hand == ACTOR_HAND_RIGHT, hand == ACTOR_HAND_LEFT, qfalse, qfalse);
 }
 
 /**
  * @brief Changes the display of the firemode-list to a given hand, but only if the list is visible already.
- * @todo Should be done from within the scripts
+ * @todo Delete that function: Should be done from within the scripts
  */
 static void HUD_SwitchFiremodeList_f (void)
 {
 	/* no argument given */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s [l|r]\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s callback [l|r]\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (visibleFiremodeListRight || visibleFiremodeListLeft)
-		HUD_DisplayFiremodes(selActor, ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]), qfalse);
+	{
+		char callback[32];
+		actorHands_t hand;
+		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
+		Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
+		HUD_DisplayActions(callback, selActor, hand == ACTOR_HAND_RIGHT, hand == ACTOR_HAND_LEFT, qfalse, qfalse);
+	}
 }
 
 /**
@@ -1487,6 +1575,7 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_switchfiremodelist", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+	Cmd_AddCommand("hud_listactions", HUD_DisplayActions_f, "Display a list of action from the selected soldier.");
 	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, _("Update cvars from actor from list"));
 
 	/** @note We can't check the value at startup cause scripts are not yet loaded */

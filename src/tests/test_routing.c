@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../common/cmodel.h"
 #include "../common/grid.h"
+#include "../game/g_local.h"
+#include "../server/server.h"
 
 /**
  * The suite initialization function.
@@ -64,9 +66,6 @@ static void testMapLoading (void)
 	}
 }
 
-/**
- * @todo func_door, func_breakable, ...
- */
 static void testMove (void)
 {
 	routing_t *routing;
@@ -193,7 +192,124 @@ static void testMove (void)
 			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
 			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT + 2 * TU_MOVE_DIAGONAL);
 		}
+		/* move into the trigger_touch */
+		{
+			VectorSet(vec, -48, -80, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT + 3 * TU_MOVE_DIAGONAL);
+		}
+		/* try to walk into the actorclip */
+		{
+			VectorSet(vec, -48, -48, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+		}
 	}
+}
+
+static void testMoveEntities (void)
+{
+	routing_t *routing;
+	pos3_t pos;
+	vec3_t vec;
+	pathing_t *path = Mem_AllocType(pathing_t);
+	pos_t *forbiddenList[MAX_FORBIDDENLIST];
+	int forbiddenListLength;
+	const byte crouchingState = 0;
+	const int distance = MAX_ROUTE;
+
+	SV_Map(qtrue, mapName, NULL);
+
+	/* starting point */
+	VectorSet(vec, 240, -144, 32);
+	VecToPos(vec, pos);
+
+	routing = &sv->mapData.map[ACTOR_SIZE_NORMAL - 1];
+
+	G_CompleteRecalcRouting();
+
+	{
+		edict_t *ent = NULL;
+		while ((ent = G_EdictsGetNextInUse(ent))) {
+			/* Dead 2x2 unit will stop walking, too. */
+			if (ent->type == ET_SOLID) {
+				int j;
+				for (j = 0; j < ent->forbiddenListSize; j++) {
+					forbiddenList[forbiddenListLength++] = ent->forbiddenListPos[j];
+					forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
+				}
+			}
+		}
+	}
+
+	{
+		int lengthStored;
+		pos3_t to;
+
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, forbiddenList, forbiddenListLength);
+		Grid_MoveStore(path);
+
+		/* walk onto the func_breakable */
+		{
+			VectorSet(vec, 112, -144, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT);
+		}
+		/* walk over the func_breakable */
+		{
+			VectorSet(vec, 80, -144, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT);
+		}
+		/* walk over the func_breakable */
+		{
+			VectorSet(vec, 16, -144, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 7 * TU_MOVE_STRAIGHT);
+		}
+	}
+
+	/* starting point */
+	VectorSet(vec, 144, 144, 32);
+	VecToPos(vec, pos);
+
+	{
+		int lengthStored;
+		pos3_t to;
+
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, forbiddenList, forbiddenListLength);
+		Grid_MoveStore(path);
+
+		/* walk through the opened door */
+		{
+			VectorSet(vec, 112, 144, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_STRAIGHT);
+		}
+
+		/* walk around the opened door */
+		{
+			VectorSet(vec, 144, 208, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 2 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
+		}
+	}
+
+	SV_ShutdownGameProgs();
 }
 
 /* tests for the new dvec format */
@@ -238,11 +354,19 @@ int UFO_AddRoutingTests (void)
 	if (CU_ADD_TEST(routingSuite, testMove) == NULL)
 		return CU_get_error();
 
+	if (CU_ADD_TEST(routingSuite, testMoveEntities) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(routingSuite, testDvec) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(routingSuite, testTUsForDir) == NULL)
 		return CU_get_error();
+
+	/**
+	 * @todo Test for: water, func_door_sliding, some terrain brushes to test the max
+	 * walkable raising, missing trigger types, autocrouch stuff
+	 */
 
 	return CUE_SUCCESS;
 }

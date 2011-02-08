@@ -325,11 +325,6 @@ void AC_InitCallbacks (void)
 	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
 	Cmd_AddCommand("aliencont_click", AC_AlienClick_f, "Click function for aliencont list");
 	aliencontCurrent = NULL;
-
-	if (ccs.numAliensTD > MAX_AC_MENU_ENTRIES) {
-		Com_Printf("Warning: More alien team definitions than we are able to display in the menus\n");
-		ccs.numAliensTD = MAX_AC_MENU_ENTRIES;
-	}
 }
 
 void AC_ShutdownCallbacks (void)

@@ -281,7 +281,7 @@ void G_EventSetClientAction (const edict_t *ent)
 	assert(ent->clientAction);
 
 	/* tell the hud to show the door buttons */
-	gi.AddEvent(G_TeamToPM(ent->team), EV_DOOR_ACTION);
+	gi.AddEvent(G_TeamToPM(ent->team), EV_CLIENT_ACTION);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->clientAction->number);
 	gi.EndEvents();
