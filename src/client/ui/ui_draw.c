@@ -264,6 +264,7 @@ static void UI_DrawNode (uiNode_t *node)
 			R_Transform(trans, NULL, NULL);
 		}
 
+		/** @todo we can skip nodes outside visible rect */
 		for (child = node->firstChild; child; child = child->next)
 			UI_DrawNode(child);
 
