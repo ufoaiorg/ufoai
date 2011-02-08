@@ -397,6 +397,7 @@ static void UI_MapInfo (int step)
 
 	mapname = md->map;
 	/* skip random map char */
+	Cvar_Set("mn_svmapid", md->id);
 	if (mapname[0] == '+') {
 		Cvar_Set("mn_svmapname", va("%s %s", md->map, md->param ? md->param : ""));
 		mapname++;
