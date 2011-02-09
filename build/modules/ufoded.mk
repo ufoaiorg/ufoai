@@ -8,8 +8,8 @@ endif
 
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_LDFLAGS  += $(SDL_LIBS) $(CURL_LIBS) $(SO_LIBS) -lz -lm
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DDEDICATED_ONLY $(SDL_CFLAGS) $(CURL_CFLAGS)
+$(TARGET)_LDFLAGS  += $(BFD_LIBS) $(INTL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(SO_LIBS) -lz -lm
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DDEDICATED_ONLY $(BFD_CFLAGS) $(INTL_CFLAGS) $(SDL_CFLAGS) $(CURL_CFLAGS)
 
 $(TARGET)_SRCS      = \
 	common/cmd.c \
@@ -46,6 +46,7 @@ $(TARGET)_SRCS      = \
 	server/sv_world.c \
 	server/sv_clientstub.c \
 	\
+	shared/bfd.c \
 	shared/byte.c \
 	shared/infostring.c \
 	shared/mathlib.c \

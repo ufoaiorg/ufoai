@@ -8,8 +8,8 @@ endif
 
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SDL_CFLAGS) $(SDL_TTF_CFLAGS) $(SDL_IMAGE_CFLAGS) $(SDL_MIXER_CFLAGS) $(CURL_CFLAGS) $(THEORA_CFLAGS) $(XVID_CFLAGS) $(VORBIS_CFLAGS) $(OGG_CFLAGS)
-$(TARGET)_LDFLAGS  += -lpng -ljpeg $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(BFD_CFLAGS) $(SDL_CFLAGS) $(SDL_TTF_CFLAGS) $(SDL_IMAGE_CFLAGS) $(SDL_MIXER_CFLAGS) $(CURL_CFLAGS) $(THEORA_CFLAGS) $(XVID_CFLAGS) $(VORBIS_CFLAGS) $(OGG_CFLAGS)
+$(TARGET)_LDFLAGS  += -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
 
 $(TARGET)_SRCS      = \
 	client/cl_console.c \
@@ -308,6 +308,7 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_sphere.c \
 	client/renderer/r_thread.c \
 	\
+	shared/bfd.c \
 	shared/byte.c \
 	shared/mathlib.c \
 	shared/mutex.c \

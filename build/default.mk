@@ -40,3 +40,7 @@ ifdef HAVE_XVID_H
 XVID_CFLAGS              ?=
 XVID_LIBS                ?= -lxvidcore
 endif
+ifdef HAVE_BFD_H
+BFD_CFLAGS               ?=
+BFD_LIBS                 ?= -lbfd
+endif

@@ -1364,6 +1364,9 @@
 		<Unit filename="..\..\src\server\sv_world.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\shared\bfd.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
 		</Unit>

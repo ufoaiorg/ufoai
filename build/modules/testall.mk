@@ -8,8 +8,8 @@ endif
 
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DHARD_LINKED_GAME -DCOMPILE_UNITTESTS $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS)
-$(TARGET)_LDFLAGS  += -lcunit -lpng -ljpeg $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DHARD_LINKED_GAME -DCOMPILE_UNITTESTS $(BFD_CFLAGS) $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS)
+$(TARGET)_LDFLAGS  += -lcunit -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
 
 $(TARGET)_SRCS      = \
 	tests/test_all.c \
@@ -321,6 +321,7 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_sphere.c \
 	client/renderer/r_thread.c \
 	\
+	shared/bfd.c \
 	shared/byte.c \
 	shared/mutex.c \
 	shared/images.c \
