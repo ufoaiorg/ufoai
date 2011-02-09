@@ -265,6 +265,9 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	struct output_buffer ob;
 	SYSTEMTIME timeInfo;
 	OSVERSIONINFOEX osInfo;
+	FILE* crash;
+	const char *dumpFile = "crashdump.txt";
+	int ret;
 
 	GetSystemTime(&timeInfo);
 
@@ -301,7 +304,9 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	}
 	fputs(g_output, stderr);
 
-	Com_UploadCrashDump(dumpFile);
+	ret = MessageBox(NULL, "Would you like to upload this crash dump and your ufoconsole.log? This will help the developers to fix the problem.", GAME_TITLE_LONG" Fatal Error", MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2);
+	if (ret == IDYES)
+		Com_UploadCrashDump(dumpFile);
 
 	return 0;
 }
