@@ -446,6 +446,7 @@ void Sys_Backtrace (void)
 #ifdef HAVE_EXECINFO_H
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
+	/** @todo add bfd support here */
 	backtrace_symbols_fd(symbols, i, filenumber);
 #endif
 
