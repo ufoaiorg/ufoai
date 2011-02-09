@@ -400,6 +400,7 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 {
 	int j;
 	int end;
+	FILE *crash = (FILE*)data;
 
 	end = 0;
 
@@ -412,9 +413,9 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 
 	/* this is terrible. */
 #if __WORDSIZE == 64
-	fprintf(stderr, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+	fprintf(crash, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 #else
-	fprintf (stderr, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+	fprintf(crash, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 #endif
 	return 0;
 }
@@ -426,24 +427,40 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
  */
 void Sys_Backtrace (void)
 {
+	const char *dumpFile = "crashdump.txt";
+	FILE *file = fopen(dumpFile, "a");
+	FILE *crash = file != NULL ? file : stderr;
+	int filenumber = fileno(crash);
+
+	fprintf(crash, "======start======\n");
+
 #ifdef HAVE_SYS_UTSNAME_H
 	struct utsname	info;
+	uname(&info);
+	fprintf(crash, "OS Info: %s %s %s %s %s\n", info.sysname, info.nodename, info.release, info.version, info.machine);
 #endif
+
+	fprintf(crash, BUILDSTRING"\n\n");
+	fflush(crash);
 
 #ifdef HAVE_EXECINFO_H
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
-	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
+	backtrace_symbols_fd(symbols, i, filenumber);
 #endif
 
 #ifdef HAVE_LINK_H
-	fprintf(stderr, "Loaded libraries:\n");
-	dl_iterate_phdr(Sys_BacktraceLibsCallback, NULL);
+	fprintf(crash, "Loaded libraries:\n");
+	dl_iterate_phdr(Sys_BacktraceLibsCallback, crash);
 #endif
 
-#ifdef HAVE_SYS_UTSNAME_H
-	uname(&info);
-	fprintf(stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
+	fprintf(crash, "======end========\n");
+
+	if (file != NULL)
+		fclose(file);
+
+#ifdef COMPILE_UFO
+	Com_UploadCrashDump(dumpFile);
 #endif
 }
 
