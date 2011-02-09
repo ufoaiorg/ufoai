@@ -12,7 +12,7 @@
 // map_name:			The name of the map tile for this facility (for base defence maps)
 //							buildings without mapname are not buildable
 // pedia:				The tech ID that has the UFOpaedia entry for this facility
-// needs:				Additional sections of this facility. Used for facilities larger than 1 tile
+// size					Size of the building (columns, rows)
 // capacity:			The capacity of this facility. The meaning of the value depends on the building type.
 // onconstruct:			The name of the script to be run when this facility is built up. Don't add a ; at the end.
 // ondestroy:			The name of the script to be run when this facility is destroyed. Don't add a ; at the end.
@@ -27,7 +27,7 @@
 building building_aliencontainment
 {
 	name			"_Alien Containment Facility"
-	image			base/aliencont2
+	image			base/aliencont
 	fixcosts		92000
 	depends			building_powerplant
 	type			aliencont
@@ -35,16 +35,9 @@ building building_aliencontainment
 	varcosts		7500
 	map_name		"aliencont"
 	pedia			rs_building_aliencontainment
-	needs			building_aliencontainment2
+	size			"2 1"
 	capacity		10
 	ondestroy		"building_ondestroy"
-}
-
-building building_aliencontainment2
-{
-	name		"_Alien Containment Facility"
-	image		base/aliencont1
-	pedia		rs_building_aliencontainment
 }
 
 building building_entrance
@@ -124,7 +117,7 @@ building building_quarters
 building building_hangar
 {
 	name				"_Large Hangar"
-	image				base/drop2
+	image				base/drop
 	fixcosts			68000
 	depends				building_powerplant // slow dropship operations can be coordinated from another base, so no Command Center needed
 	build_time			8
@@ -132,17 +125,10 @@ building building_hangar
 	map_name			"drop"
 	pedia				rs_building_large_hangar
 	type				hangar
-	needs				building_hangar2
+	size				"2 1"
 	ondestroy			"building_ondestroy"
 	starting_employees	8 //Number of soldiers in dropship when first base is built
 	capacity			1
-}
-
-building building_hangar2
-{
-	name		"_Large Hangar"
-	image		base/drop1
-	pedia		rs_building_large_hangar
 }
 
 building building_intercept
@@ -163,7 +149,7 @@ building building_intercept
 building building_workshop
 {
 	name				"_Workshop"
-	image				base/workshop2
+	image				base/workshop
 	fixcosts			100000
 	depends				building_command
 	build_time			12
@@ -172,16 +158,9 @@ building building_workshop
 	pedia				rs_building_workshop
 	type				workshop
 	starting_employees	10
-	needs				building_workshop2
+	size				"2 1"
 	ondestroy			"building_ondestroy"
 	capacity			10
-}
-
-building building_workshop2
-{
-	name		"_Workshop"
-	image		base/workshop1
-	pedia		rs_building_workshop
 }
 
 building building_radar
@@ -305,7 +284,7 @@ basetemplate balanced {
 	building_command			"2 4"
 	building_hangar				"3 0"
 	building_intercept			"3 1"
-	building_workshop			"1 4"
+	building_workshop			"0 4"
 	building_radar				"4 1"
 	building_lab				"1 3"
 	building_hospital			"2 3"

@@ -70,10 +70,10 @@ typedef struct building_s {
 	struct base_s *base;	/**< The base this building is located in. */
 
 	char *id;
-	char *name;			/**< translatable name of the building */
+	char *name;				/**< translatable name of the building */
 	char *image, *mapPart, *pedia;
 
-	char *needs;		/**< "needs" determines the second building part. */
+	vec2_t	size;
 	int fixCosts, varCosts;
 
 	/**

@@ -31,9 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../../campaign/cp_campaign.h"
+#include "../../renderer/r_draw.h"
 
 #define EXTRADATA_TYPE baseExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, baseExtraData_t)
+
+static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
 
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
@@ -107,7 +110,7 @@ static void UI_BaseMapGetCellAtPos (const uiNode_t *node, int x, int y, int *col
 		return;
 	}
 	*col = x / (node->size[0] / BASE_SIZE);
-	*row = y / (node->size[0] / BASE_SIZE);
+	*row = y / (node->size[1] / BASE_SIZE);
 	assert(*col >= 0 && *col < BASE_SIZE);
 	assert(*row >= 0 && *row < BASE_SIZE);
 }
@@ -131,7 +134,6 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 {
 	int width, height, row, col;
 	const building_t *building;
-	const building_t *secondBuilding = NULL;
 	const base_t *base = B_GetCurrentSelectedBase();
 	qboolean used[MAX_BUILDINGS];
 
@@ -163,43 +165,35 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 				image = "base/grid";
 			} else {
 				building = base->map[row][col].building;
-				secondBuilding = NULL;
 				assert(building);
+
+				if (building->image)
+					image = building->image;
 
 				/* some buildings are drawn with two tiles - e.g. the hangar is no square map tile.
 				 * These buildings have the needs parameter set to the second building part which has
 				 * its own image set, too. We are searching for this second building part here. */
-				if (!B_BuildingGetUsed(used, building->idx)) {
-					if (building->needs)
-						B_BuildingSetUsed(used, building->idx);
-					if (building->image)
-						image = building->image;
-				} else {
-					secondBuilding = B_GetBuildingTemplate(building->needs);
-					if (!secondBuilding)
-						Com_Error(ERR_DROP, "Error in ufo-scriptfile - could not find the needed building");
-					image = secondBuilding->image;
-				}
+				if (B_BuildingGetUsed(used, building->idx))
+					continue;
+				B_BuildingSetUsed(used, building->idx);
 			}
 
 			/* draw tile */
 			if (image != NULL)
-				UI_DrawNormImageByName(pos[0], pos[1], width, height, 0, 0, 0, 0, image);
-
-			/* only draw for first part of building */
-			if (building && !secondBuilding) {
+				UI_DrawNormImageByName(pos[0], pos[1], width * (building ? building->size[0] : 1), height * (building ? building->size[1] : 1), 0, 0, 0, 0, image);
+			if (building) {
 				switch (building->buildingStatus) {
 				case B_STATUS_DOWN:
 				case B_STATUS_CONSTRUCTION_FINISHED:
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
-				{
-					const int time = building->buildTime - (ccs.date.day - building->timeStart);
-					UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->size[0], 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
-					break;
-				}
-				default:
-					break;
+					{
+						const int time = building->buildTime - (ccs.date.day - building->timeStart);
+						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->size[0], 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
+						break;
+					}
+					default:
+						break;
 				}
 			}
 		}
@@ -214,33 +208,20 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 
 	/* if we are building */
 	if (ccs.baseAction == BA_NEWBUILDING) {
-		qboolean isLarge;
+		int y, x;
+		vec2_t pos;
+
 		assert(base->buildingCurrent);
-		/** @todo we should not compute here if we can (or not build something) the map model know it better */
-		if (!UI_BaseMapIsCellFree(base, col, row))
-			return;
 
-		isLarge = base->buildingCurrent->needs != NULL;
-
-		/* large building */
-		if (isLarge) {
-			if (UI_BaseMapIsCellFree(base, col + 1, row)) {
-				/* ok */
-			} else if (UI_BaseMapIsCellFree(base, col - 1, row)) {
-				/* fix col at the left cell */
-				col--;
-			} else {
-				col = -1;
+		for (y = row; y < row + base->buildingCurrent->size[1]; y++) {
+			for (x = col; x < col + base->buildingCurrent->size[0]; x++) {
+				if (!UI_BaseMapIsCellFree(base, x, y))
+					return;
 			}
 		}
-		if (col != -1) {
-			vec2_t pos;
-			UI_GetNodeAbsPos(node, pos);
-			if (isLarge) {
-				UI_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width + width, height, 0, 0, 0, 0, "base/hover2");
-			} else
-				UI_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width, height, 0, 0, 0, 0, "base/hover");
-		}
+
+		UI_GetNodeAbsPos(node, pos);
+		R_DrawRect(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), base->buildingCurrent->size[0] * width, base->buildingCurrent->size[1] * (height - BASE_IMAGE_OVERLAY), white, 3, 1);
 	}
 }
 
@@ -293,14 +274,20 @@ static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
 		return;
 
 	if (ccs.baseAction == BA_NEWBUILDING) {
-		assert(base->buildingCurrent);
-		if (!base->map[row][col].building && !base->map[row][col].blocked) {
-			if (!base->buildingCurrent->needs
-			 || (col < BASE_SIZE - 1 && !base->map[row][col + 1].building && !base->map[row][col + 1].blocked)
-			 || (col > 0 && !base->map[row][col - 1].building && !base->map[row][col - 1].blocked))
-			/* Set position for a new building */
-			B_SetBuildingByClick(base, base->buildingCurrent, row, col);
-		}
+		building_t *building = base->buildingCurrent;
+		int y, x;
+
+		assert(building);
+
+		if (col + building->size[0] > BASE_SIZE)
+			return;
+		if (row + building->size[1] > BASE_SIZE)
+			return;
+		for (y = row; y < row + building->size[1]; y++)
+			for (x = col; x < col + building->size[0]; x++)
+				if (base->map[y][x].building || base->map[y][x].blocked)
+					return;
+		B_SetBuildingByClick(base, building, row, col);
 		return;
 	}
 

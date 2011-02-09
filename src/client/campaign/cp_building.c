@@ -88,7 +88,7 @@ static const value_t valid_building_vars[] = {
 	{"pedia", V_CLIENT_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
 	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
 	{"image", V_CLIENT_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
-	{"needs", V_CLIENT_HUNK_STRING, offsetof(building_t, needs), 0},	/**< For buildings with more than one part; the other parts of the building needed.*/
+	{"size", V_POS, offsetof(building_t, size), MEMBER_SIZEOF(building_t, size)},	/**< Building size. */
 	{"fixcosts", V_INT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
 	{"varcosts", V_INT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
 	{"build_time", V_INT, offsetof(building_t, buildTime), MEMBER_SIZEOF(building_t, buildTime)},	/**< How many days it takes to construct the building. */
@@ -155,6 +155,8 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		building->buildingType = MAX_BUILDING_TYPE;
 		building->dependsBuilding = NULL;
 		building->maxCount = -1;	/* Default: no limit */
+		building->size[0] = 1;
+		building->size[1] = 1;
 
 		ccs.numBuildingTemplates++;
 		do {
@@ -207,6 +209,10 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				}
 			}
 		} while (*text);
+		if (building->size[0] < 1 || building->size[1] < 1 || building->size[0] >= BASE_SIZE || building->size[1] >= BASE_SIZE) {
+			Com_Printf("B_ParseBuildings: Invalid size for building %s (%i, %i)\n", building->id, (int)building->size[0], (int)building->size[1]);
+			ccs.numBuildingTemplates--;
+		}
 	} else {
 		building = B_GetBuildingTemplate(name);
 		if (!building)

@@ -60,6 +60,7 @@ static linkedList_t *B_GetNeighbours (const building_t const *building)
 	base_t *base;
 	int x;
 	int y;
+	int i;
 
 	if (!building || !B_IsBuildingBuiltUp(building))
 		return NULL;
@@ -69,35 +70,22 @@ static linkedList_t *B_GetNeighbours (const building_t const *building)
 	base = building->base;
 
 	assert(base);
-
-	/* West */
-	if (x > 0 && B_GetBuildingAt(base, x - 1, y) != NULL)
-		LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x - 1, y));
-	/* North */
-	if (y > 0 && B_GetBuildingAt(base, x, y - 1) != NULL)
-		LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x, y - 1));
-	/* South */
-	if (y < BASE_SIZE - 1 && B_GetBuildingAt(base, x, y + 1) != NULL)
-		LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x, y + 1));
-
-	if (!building->needs) {
-		/* 1x1 building */
-		/* East */
-		if (x < BASE_SIZE - 1 && B_GetBuildingAt(base, x + 1, y) != NULL)
-			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + 1, y));
-	} else {
-		/* 2x1 building */
-		/* East */
-		if (x < BASE_SIZE - 2 && B_GetBuildingAt(base, x + 2, y) != NULL)
-			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + 2, y));
-		/* NorthEast */
-		if (x < BASE_SIZE - 1 && y > 0 && B_GetBuildingAt(base, x + 1, y - 1) != NULL)
-			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + 1, y - 1));
-		/* SouthEast */
-		if (x < BASE_SIZE - 1 && y < BASE_SIZE - 1 && B_GetBuildingAt(base, x + 1, y + 1) != NULL)
-			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + 1, y + 1));
+	for (i = x; i < x + building->size[0]; i++) {
+		/* North */
+		if (y > 0 && B_GetBuildingAt(base, i, y - 1) != NULL)
+			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y - 1));
+		/* South */
+		if (y < BASE_SIZE - building->size[1] && B_GetBuildingAt(base, i, y + building->size[1]) != NULL)
+			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y + building->size[1]));
 	}
-
+	for (i = y; i < y + building->size[1]; i++) {
+		/* West */
+		if (x > 0 && B_GetBuildingAt(base, x - 1, i) != NULL)
+			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x - 1, i));
+		/* East */
+		if (x < BASE_SIZE - building->size[0] && B_GetBuildingAt(base, x + building->size[0], i) != NULL)
+			LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x + building->size[0], i));
+	}
 	return neighbours;
 }
 
@@ -594,11 +582,9 @@ qboolean B_AssembleMap (const base_t *base)
 			if (entry && B_IsBuildingBuiltUp(entry)) {
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one
 				 * this is why we check the used flag and continue if it was set already */
-				if (entry->needs) {
-					if (B_BuildingGetUsed(used, entry->idx))
-						continue;
-					B_BuildingSetUsed(used, entry->idx);
-				}
+				if (B_BuildingGetUsed(used, entry->idx))
+					continue;
+				B_BuildingSetUsed(used, entry->idx);
 
 				if (!entry->mapPart)
 					Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
@@ -875,13 +861,6 @@ qboolean B_BuildingDestroy (building_t* building)
 		return qfalse;
 	}
 
-	/* Remove the building from the base map */
-	if (building->needs) {
-		/* "Child" building is always right to the "parent" building". */
-		base->map[(int)building->pos[1]][((int)building->pos[0]) + 1].building = NULL;
-	}
-	base->map[(int)building->pos[1]][(int)building->pos[0]].building = NULL;
-
 	building->buildingStatus = B_STATUS_NOT_SET;
 
 	/* Update buildingCurrent */
@@ -896,19 +875,26 @@ qboolean B_BuildingDestroy (building_t* building)
 		int const idx = building->idx;
 		int cntBldgs;
 		int i;
+		int y, x;
+
+		for (y = building->pos[1]; y < building->pos[1] + building->size[1]; y++)
+			for (x = building->pos[0]; x < building->pos[0] + building->size[0]; x++)
+				base->map[y][x].building = NULL;
 
 		REMOVE_ELEM(buildings, idx, ccs.numBuildings[baseIDX]);
 
 		/* Update the link of other buildings */
 		cntBldgs = ccs.numBuildings[baseIDX];
-		for (i = 0; i < cntBldgs; i++)
-			if (buildings[i].idx >= idx) {
-				buildings[i].idx--;
-				base->map[(int)buildings[i].pos[1]][(int)buildings[i].pos[0]].building = &buildings[i];
-				if (buildings[i].needs)
-					base->map[(int)buildings[i].pos[1]][(int)buildings[i].pos[0] + 1].building = &buildings[i];
-			}
+		for (i = 0; i < cntBldgs; i++) {
+			building_t *bldg = &buildings[i];
+			if (bldg->idx >= idx) {
+				bldg->idx--;
 
+				for (y = bldg->pos[1]; y < bldg->pos[1] + bldg->size[1]; y++)
+					for (x = (int)bldg->pos[0]; x < bldg->pos[0] + bldg->size[0]; x++)
+						base->map[y][x].building = bldg;
+			}
+		}
 		building = NULL;
 	}
 	/** @note Don't use the building pointer after this point - it's zeroed. */
@@ -1456,25 +1442,17 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 		buildingNew->base = base;
 
 		if (!base->map[row][col].blocked && !base->map[row][col].building) {
+			int y, x;
+
+			if (col + buildingNew->size[0] > BASE_SIZE)
+				return NULL;
+			if (row + buildingNew->size[1] > BASE_SIZE)
+				return NULL;
+			for (y = row; y < row + buildingNew->size[1]; y++)
+				for (x = col; x < col + buildingNew->size[0]; x++)
+					if (base->map[y][x].building || base->map[y][x].blocked)
+						return NULL;
 			/* No building in this place */
-			if (buildingNew->needs) {
-				if (col + 1 == BASE_SIZE) {
-					if (base->map[row][col - 1].building
-					 || base->map[row][col - 1].blocked) {
-						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
-						return NULL;
-					}
-					col--;
-				} else if (base->map[row][col + 1].building || base->map[row][col + 1].blocked) {
-					if (base->map[row][col - 1].building
-					 || base->map[row][col - 1].blocked
-					 || !col) {
-						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
-						return NULL;
-					}
-					col--;
-				}
-			}
 
 			/* set building position */
 			buildingNew->pos[0] = col;
@@ -1502,10 +1480,9 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 			}
 
 			/* set building position */
-			if (buildingNew->needs) {
-				base->map[row][col + 1].building = buildingNew;
-			}
-			base->map[row][col].building = buildingNew;
+			for (y = row; y < row + buildingNew->size[1]; y++)
+				for (x = col; x < col + buildingNew->size[0]; x++)
+					base->map[y][x].building = buildingNew;
 
 			/* status and build (start) time */
 			buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
