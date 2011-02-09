@@ -20,10 +20,6 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdbool.h>
-#ifndef CURL_STATICLIB
-#define CURL_STATICLIB
-#endif
-#include <curl/curl.h>
 
 #define BUFFER_MAX (16*1024)
 
