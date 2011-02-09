@@ -12,10 +12,6 @@
 #include "../../common/http.h"
 #ifdef HAVE_BFD_H
 #include <bfd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
 
 #include <excpt.h>
 #include <imagehlp.h>
