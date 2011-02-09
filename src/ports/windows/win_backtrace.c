@@ -11,15 +11,15 @@
 #include "win_local.h"
 #include "../../common/http.h"
 #ifdef HAVE_BFD_H
-#include <excpt.h>
-#include <imagehlp.h>
 #include <bfd.h>
-#include <psapi.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include <stdbool.h>
+
+#include <excpt.h>
+#include <imagehlp.h>
+#include <psapi.h>
 
 #define BUFFER_MAX (16*1024)
 
