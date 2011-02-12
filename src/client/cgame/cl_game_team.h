@@ -1,6 +1,6 @@
 /**
- * @file mp_team.h
- * @brief Multiplayer team management headers.
+ * @file cl_game_team.h
+ * @brief cgame team management headers.
  */
 
 /*
@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_TEAM_MULTIPLAYER_H
-#define CL_TEAM_MULTIPLAYER_H
+#ifndef CL_GAME_TEAM_H
+#define CL_GAME_TEAM_H
 
 void MP_SaveTeamMultiplayer_f(void);
 void MP_LoadTeamMultiplayer_f(void);

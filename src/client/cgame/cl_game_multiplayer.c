@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_inventory.h"
 #include "multiplayer/mp_callbacks.h"
 #include "multiplayer/mp_serverlist.h"
-#include "multiplayer/mp_team.h"
+#include "cl_game_team.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_popup.h"
 #include "../battlescape/cl_hud.h"

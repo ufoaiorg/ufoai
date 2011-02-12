@@ -688,7 +688,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.h" />
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_team.c">
+		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_team.h" />

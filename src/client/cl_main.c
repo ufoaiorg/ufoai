@@ -60,7 +60,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_parse.h"
 #include "cgame/multiplayer/mp_callbacks.h"
 #include "cgame/multiplayer/mp_serverlist.h"
-#include "cgame/multiplayer/mp_team.h"
+#include "cgame/cl_game_team.h"
 #include "../shared/infostring.h"
 #include "../shared/parse.h"
 #include "../ports/system.h"

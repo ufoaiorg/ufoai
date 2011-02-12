@@ -111,6 +111,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/cl_game_multiplayer.c \
 	client/cgame/cl_game_shared.c \
 	client/cgame/cl_game_skirmish.c \
+	client/cgame/cl_game_team.c \
 	\
 	client/cgame/campaign/cp_aircraft.c \
 	client/cgame/campaign/cp_aircraft_callbacks.c \
@@ -178,7 +179,6 @@ $(TARGET)_SRCS      = \
 	client/cgame/multiplayer/mp_callbacks.c \
 	client/cgame/multiplayer/mp_serverlist.c \
 	client/cgame/multiplayer/mp_chatmessages.c \
-	client/cgame/multiplayer/mp_team.c \
 	\
 	client/ui/ui_actions.c \
 	client/ui/ui_components.c \
