@@ -1910,7 +1910,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
  * @param[in,out] campaign The campaign data structure
  * @sa MAP_DrawMapMarkers
  */
-void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
+void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 {
 	vec2_t pos;
 	mission_t *mission;
