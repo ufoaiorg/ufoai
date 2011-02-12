@@ -4,7 +4,7 @@ SRCDIR=src
 GENERIC_FLAGS+=-Wall
 CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -DUSE_SIGNALS=$(USE_SIGNALS)
 CFLAGS+=-DHAVE_CONFIG_H -DUSE_SIGNALS=$(USE_SIGNALS) $(GENERIC_FLAGS) -pipe -Winline \
-	-Wcast-qual -Wcast-align -Wdeclaration-after-statement -Wmissing-prototypes \
+	-Wcast-qual -Wcast-align -Wmissing-prototypes \
 	-Wmissing-declarations -std=c99
 
 CFLAGS += -Winline
