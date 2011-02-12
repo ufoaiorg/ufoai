@@ -278,7 +278,7 @@ typedef struct {
 } dBspEdge_t;
 
 typedef struct {
-	unsigned short planenum;	/**< planenum is used in lighting stage, but not in ufo */
+	uint16_t planenum;	/**< planenum is used in lighting stage, but not in ufo */
 	short side;
 
 	int firstedge;				/**< we must support > 64k edges */
