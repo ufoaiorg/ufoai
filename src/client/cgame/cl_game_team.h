@@ -26,14 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_TEAM_H
 #define CL_GAME_TEAM_H
 
-void MP_SaveTeamMultiplayer_f(void);
-void MP_LoadTeamMultiplayer_f(void);
-void MP_MultiplayerTeamSlotComments_f(void);
-void MP_SaveTeamState_f(void);
-void MP_ToggleActorForTeam_f(void);
-void MP_AutoTeam_f(void);
-void MP_UpdateMenuParameters_f(void);
-void MP_TeamSelect_f(void);
-qboolean MP_LoadDefaultTeamMultiplayer(void);
+void GAME_SaveTeam_f(void);
+void GAME_LoadTeam_f(void);
+void GAME_TeamSlotComments_f(void);
+void GAME_SaveTeamState_f(void);
+void GAME_ToggleActorForTeam_f(void);
+void GAME_AutoTeam_f(void);
+void GAME_UpdateTeamMenuParameters_f(void);
+void GAME_TeamSelect_f(void);
+qboolean GAME_LoadDefaultTeam(void);
 
 #endif

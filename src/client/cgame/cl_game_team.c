@@ -34,9 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game_team.h"
 #include "save_team.h"
 
-#define MPTEAM_SAVE_FILE_VERSION 4
+#define TEAM_SAVE_FILE_VERSION 4
 
-static inventory_t mp_inventory;
+static inventory_t game_inventory;
 
 static qboolean characterActive[MAX_ACTIVETEAM];
 
@@ -47,7 +47,7 @@ typedef struct teamSaveFileHeader_s {
 	uint32_t xmlSize; /** needed, if we store compressed */
 } teamSaveFileHeader_t;
 
-static void MP_UpdateActiveTeamList (void)
+static void GAME_UpdateActiveTeamList (void)
 {
 	int i;
 
@@ -58,18 +58,18 @@ static void MP_UpdateActiveTeamList (void)
 	UI_ExecuteConfunc("mp_checkboxes_update %i", chrDisplayList.num);
 }
 
-void MP_AutoTeam_f (void)
+void GAME_AutoTeam_f (void)
 {
 	GAME_MP_AutoTeam();
 
-	MP_UpdateActiveTeamList();
+	GAME_UpdateActiveTeamList();
 }
 
 /**
  * @brief This will activate/deactivate the actor for the team
  * @sa GAME_MP_SaveTeamState_f
  */
-void MP_ToggleActorForTeam_f (void)
+void GAME_ToggleActorForTeam_f (void)
 {
 	int num;
 	int value;
@@ -91,7 +91,7 @@ void MP_ToggleActorForTeam_f (void)
  * @brief Will remove those actors that should not be used in the team
  * @sa GAME_MP_ToggleActorForTeam_f
  */
-void MP_SaveTeamState_f (void)
+void GAME_SaveTeamState_f (void)
 {
 	int i, num;
 
@@ -107,9 +107,9 @@ void MP_SaveTeamState_f (void)
 }
 
 /**
- * @brief Reads tha comments from team files
+ * @brief Reads the comments from team files
  */
-void MP_MultiplayerTeamSlotComments_f (void)
+void GAME_TeamSlotComments_f (void)
 {
 	int i;
 
@@ -128,7 +128,7 @@ void MP_MultiplayerTeamSlotComments_f (void)
 				continue;
 			}
 			FS_CloseFile(&f);
-			if (LittleLong(header.version) == MPTEAM_SAVE_FILE_VERSION) {
+			if (LittleLong(header.version) == TEAM_SAVE_FILE_VERSION) {
 				UI_ExecuteConfunc("set_slotname %i %i \"%s\"", i, LittleLong(header.soldiercount), header.name);
 			} else {
 				Cvar_Set(va("mn_slot%i", i), "");
@@ -144,7 +144,7 @@ void MP_MultiplayerTeamSlotComments_f (void)
  * @note Called by MP_SaveTeamMultiplayer to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-static void MP_SaveTeamMultiplayerInfo (mxml_node_t *p)
+static void GAME_SaveTeamInfo (mxml_node_t *p)
 {
 	int i;
 
@@ -162,7 +162,7 @@ static void MP_SaveTeamMultiplayerInfo (mxml_node_t *p)
  * @note Called by MP_SaveTeamMultiplayer to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
+static void GAME_LoadTeamInfo (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
@@ -180,17 +180,17 @@ static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
 	}
 	chrDisplayList.num = i;
 
-	MP_UpdateActiveTeamList();
+	GAME_UpdateActiveTeamList();
 
 	Com_DPrintf(DEBUG_CLIENT, "Loaded %i teammembers\n", chrDisplayList.num);
 }
 
 /**
- * @brief Saves a multiplayer team in xml format
+ * @brief Saves a team in xml format
  * @sa MP_SaveTeamMultiplayerInfoXML
  * @sa MP_LoadTeamMultiplayerXML
  */
-static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
+static qboolean GAME_SaveTeam (const char *filename, const char *name)
 {
 	int requiredBufferLength;
 	byte *buf, *fbuf;
@@ -203,12 +203,12 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	topNode = mxmlNewXML("1.0");
 	node = mxml_AddNode(topNode, SAVE_MULTIPLAYER_ROOTNODE);
 	OBJZERO(header);
-	header.version = LittleLong(MPTEAM_SAVE_FILE_VERSION);
+	header.version = LittleLong(TEAM_SAVE_FILE_VERSION);
 	header.soldiercount = LittleLong(chrDisplayList.num);
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
 	snode = mxml_AddNode(node, SAVE_MULTIPLAYER_TEAM);
-	MP_SaveTeamMultiplayerInfo(snode);
+	GAME_SaveTeamInfo(snode);
 
 	snode = mxml_AddNode(node, SAVE_MULTIPLAYER_EQUIPMENT);
 	for (i = 0; i < csi.numODs; i++) {
@@ -246,9 +246,9 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 }
 
 /**
- * @brief Stores a team in a specified teamslot (multiplayer)
+ * @brief Stores a team in a specified teamslot
  */
-void MP_SaveTeamMultiplayer_f (void)
+void GAME_SaveTeam_f (void)
 {
 	if (!chrDisplayList.num) {
 		UI_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
@@ -271,7 +271,7 @@ void MP_SaveTeamMultiplayer_f (void)
 
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-		if (!MP_SaveTeamMultiplayer(filename, name))
+		if (!GAME_SaveTeam(filename, name))
 			UI_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
 }
@@ -281,7 +281,7 @@ void MP_SaveTeamMultiplayer_f (void)
  * @sa MP_LoadTeamMultiplayer
  * @sa MP_SaveTeamMultiplayer
  */
-static qboolean MP_LoadTeamMultiplayer (const char *filename)
+static qboolean GAME_LoadTeam (const char *filename)
 {
 	uLongf len;
 	qFILE f;
@@ -314,12 +314,12 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	header.xmlSize = LittleLong(header.xmlSize);
 	len = header.xmlSize + 1 + sizeof(header);
 
-	if (header.version != MPTEAM_SAVE_FILE_VERSION) {
+	if (header.version != TEAM_SAVE_FILE_VERSION) {
 		Com_Printf("Invalid version number\n");
 		return qfalse;
 	}
 
-	Com_Printf("Loading multiplayer team (size %d / %i)\n", clen, header.xmlSize);
+	Com_Printf("Loading team (size %d / %i)\n", clen, header.xmlSize);
 
 	topNode = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
 	Mem_Free(cbuf);
@@ -331,7 +331,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	node = mxml_GetNode(topNode, SAVE_MULTIPLAYER_ROOTNODE);
 	if (!node) {
 		mxmlDelete(topNode);
-		Com_Printf("Error: Failure in loading the xml data! (node 'multiplayer' not found)\n");
+		Com_Printf("Error: Failure in loading the xml data! (node '"SAVE_MULTIPLAYER_ROOTNODE"' not found)\n");
 		return qfalse;
 	}
 	Cvar_Set("mn_teamname", header.name);
@@ -340,16 +340,16 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	if (!snode) {
 		mxmlDelete(topNode);
 		Mem_Free(cbuf);
-		Com_Printf("Error: Failure in loading the xml data! (node 'team' not found)\n");
+		Com_Printf("Error: Failure in loading the xml data! (node '"SAVE_MULTIPLAYER_TEAM"' not found)\n");
 		return qfalse;
 	}
-	MP_LoadTeamMultiplayerInfo(snode);
+	GAME_LoadTeamInfo(snode);
 
 	snode = mxml_GetNode(node, SAVE_MULTIPLAYER_EQUIPMENT);
 	if (!snode) {
 		mxmlDelete(topNode);
 		Mem_Free(cbuf);
-		Com_Printf("Error: Failure in loading the xml data! (node 'equipment' not found)\n");
+		Com_Printf("Error: Failure in loading the xml data! (node '"SAVE_MULTIPLAYER_EQUIPMENT"' not found)\n");
 		return qfalse;
 	}
 
@@ -371,15 +371,15 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	return qtrue;
 }
 
-qboolean MP_LoadDefaultTeamMultiplayer (void)
+qboolean GAME_LoadDefaultTeam (void)
 {
-	return MP_LoadTeamMultiplayer("save/team0.mpt");
+	return GAME_LoadTeam("save/team0.mpt");
 }
 
 /**
  * @brief Loads the selected teamslot
  */
-void MP_LoadTeamMultiplayer_f (void)
+void GAME_LoadTeam_f (void)
 {
 	char filename[MAX_OSPATH];
 	int index;
@@ -393,14 +393,14 @@ void MP_LoadTeamMultiplayer_f (void)
 
 	/* first try to load the xml file, if this does not succeed, try the old file */
 	Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-	MP_LoadTeamMultiplayer(filename);
+	GAME_LoadTeam(filename);
 }
 
 /**
  * @brief Get the equipment definition (from script files) for the current selected multiplayer team
  * and updates the equipment inventory containers
  */
-static void MP_GetEquipment (void)
+static void GAME_GetEquipment (void)
 {
 	const equipDef_t *edFromScript;
 	const char *teamID = Com_ValueToStr(&cl_teamnum->integer, V_TEAM, 0);
@@ -424,14 +424,14 @@ static void MP_GetEquipment (void)
 	/* we don't want to lose anything from ed - so we copy it and screw the copied stuff afterwards */
 	unused = *edFromScript;
 	/* manage inventory */
-	UI_ContainerNodeUpdateEquipment(&mp_inventory, &unused);
+	UI_ContainerNodeUpdateEquipment(&game_inventory, &unused);
 }
 
 /**
  * @brief Displays actor info and equipment and unused items in proper (filter) category.
- * @note This function is called everytime the multiplayer equipment screen for the team pops up.
+ * @note This function is called everytime the team equipment screen for the team pops up.
  */
-void MP_UpdateMenuParameters_f (void)
+void GAME_UpdateTeamMenuParameters_f (void)
 {
 	int i;
 	const size_t size = lengthof(chrDisplayList.chr);
@@ -450,10 +450,10 @@ void MP_UpdateMenuParameters_f (void)
 		Cvar_Set(va("mn_name%i", i), name);
 	}
 
-	MP_GetEquipment();
+	GAME_GetEquipment();
 }
 
-void MP_TeamSelect_f (void)
+void GAME_TeamSelect_f (void)
 {
 	const int old = cl_selected->integer;
 	int num;

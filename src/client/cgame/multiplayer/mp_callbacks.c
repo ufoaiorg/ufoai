@@ -58,7 +58,7 @@ static void CL_Connect_f (void)
 		Q_strncpyz(serverport, selectedServer->service, sizeof(serverport));
 	}
 
-	if (!chrDisplayList.num && !MP_LoadDefaultTeamMultiplayer()) {
+	if (!chrDisplayList.num && !GAME_LoadDefaultTeam()) {
 		UI_Popup(_("Error"), _("Assemble a team first"));
 		return;
 	}
@@ -287,11 +287,6 @@ void MP_CallbacksInit (void)
 	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the preferred teamnum");
 	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the preferred teamnum");
-	Cmd_AddCommand("saveteam", MP_SaveTeamMultiplayer_f, "Save a multiplayer team slot");
-	Cmd_AddCommand("loadteam", MP_LoadTeamMultiplayer_f, "Load a multiplayer team slot");
-	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
-	Cmd_AddCommand("mp_team_update", MP_UpdateMenuParameters_f, "");
-	Cmd_AddCommand("mp_team_select", MP_TeamSelect_f, "");
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
 	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
@@ -299,9 +294,6 @@ void MP_CallbacksInit (void)
 	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
 	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
-	Cmd_AddCommand("mp_toggleactor", MP_ToggleActorForTeam_f, NULL);
-	Cmd_AddCommand("mp_saveteamstate", MP_SaveTeamState_f, NULL);
-	Cmd_AddCommand("mp_autoteam", MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
 }
 
 void MP_CallbacksShutdown (void)
@@ -309,17 +301,9 @@ void MP_CallbacksShutdown (void)
 	Cmd_RemoveCommand("mp_selectteam_init");
 	Cmd_RemoveCommand("teamnum_dec");
 	Cmd_RemoveCommand("teamnum_inc");
-	Cmd_RemoveCommand("saveteam");
-	Cmd_RemoveCommand("loadteam");
-	Cmd_RemoveCommand("team_comments");
-	Cmd_RemoveCommand("mp_team_update");
-	Cmd_RemoveCommand("mp_team_select");
 	Cmd_RemoveCommand("rcon");
 	Cmd_RemoveCommand("pingservers");
 	Cmd_RemoveCommand("disconnect");
 	Cmd_RemoveCommand("connect");
 	Cmd_RemoveCommand("reconnect");
-	Cmd_RemoveCommand("mp_toggleactor");
-	Cmd_RemoveCommand("mp_saveteamstate");
-	Cmd_RemoveCommand("mp_autoteam");
 }
