@@ -741,16 +741,16 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 
 void SplitBrushList (bspbrush_t *brushes, int16_t planenum, bspbrush_t **front, bspbrush_t **back)
 {
-	bspbrush_t *brush, *newbrush, *newbrush2;
-	side_t *side;
-	int sides, i;
+	bspbrush_t *brush;
 
 	*front = *back = NULL;
 
 	for (brush = brushes; brush; brush = brush->next) {
-		sides = brush->side;
+		const int sides = brush->side;
+		bspbrush_t *newbrush;
 
 		if (sides == PSIDE_BOTH) {	/* split into two brushes */
+			bspbrush_t *newbrush2;
 			assert(planenum >= 0);
 			SplitBrush(brush, planenum, &newbrush, &newbrush2);
 			if (newbrush) {
@@ -772,8 +772,9 @@ void SplitBrushList (bspbrush_t *brushes, int16_t planenum, bspbrush_t **front, 
 		 * find the plane and flag it as used so it won't be tried
 		 * as a splitter again */
 		if (sides & PSIDE_FACING) {
+			int i;
 			for (i = 0; i < newbrush->numsides; i++) {
-				side = newbrush->sides + i;
+				side_t *side = newbrush->sides + i;
 				if ((side->planenum & ~1) == planenum)
 					side->texinfo = TEXINFO_NODE;
 			}
