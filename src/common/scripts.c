@@ -1403,15 +1403,7 @@ enum {
 	OD_RATINGS			/**< parse rating values for displaying in the menus */
 };
 
-/**
- * @note Make sure, that you don't change the order of the first entries
- * or you have the change the enum values OD_*, too
- */
 static const value_t od_vals[] = {
-	{"weapon_mod", V_NULL, 0, 0},
-	{"protection", V_NULL, 0, 0},
-	{"rating", V_NULL, 0, 0},
-
 	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name), 0},
 	{"armourpath", V_STRING, offsetof(objDef_t, armourPath), 0},
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
@@ -1641,12 +1633,64 @@ const char *const air_slot_type_strings[] = {
 };
 CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
 
-
 /**
  * @brief Temporary list of weapon ids as parsed from the ufo file "weapon_mod \<id\>"
  * in Com_ParseItem and used in Com_AddObjectLinks.
  */
 static linkedList_t *parseItemWeapons = NULL;
+
+static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *token, const char **text)
+{
+	const char *errhead = "Com_ParseFireDefition: unexpected end of file (weapon_mod ";
+	/* Save the weapon id. */
+	token = Com_Parse(text);
+	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
+		weaponFireDefIndex_t weapFdsIdx;
+		/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
+		LIST_AddPointer(&parseItemWeapons, od);
+		LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
+		LIST_AddString(&parseItemWeapons, token);
+
+		/* get it's body */
+		token = Com_Parse(text);
+
+		if (!*text || *token != '{') {
+			Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
+			return;
+		}
+
+		weapFdsIdx = od->numWeapons;
+		/* For each firedef entry for this weapon.  */
+		do {
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			if (*token == '}')
+				break;
+
+			if (Q_streq(token, "firedef")) {
+				if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
+					const fireDefIndex_t fdIdx = od->numFiredefs[weapFdsIdx];
+					fireDef_t *fd = &od->fd[weapFdsIdx][fdIdx];
+					fd->fireAttenuation = SOUND_ATTN_NORM;
+					fd->impactAttenuation = SOUND_ATTN_NORM;
+					/* Parse firemode into fd[IDXweapon][IDXfiremode] */
+					Com_ParseFire(name, text, fd);
+					/* Self-link fd */
+					fd->fdIdx = fdIdx;
+					/* Self-link weapon_mod */
+					fd->weapFdsIdx = weapFdsIdx;
+					od->numFiredefs[od->numWeapons]++;
+				} else {
+					Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
+				}
+			} else {
+				Com_Printf("Unknown token '%s' - expected firedef\n", token);
+			}
+		} while (*text);
+		od->numWeapons++;
+	}
+}
 
 /**
  * @brief Parses weapon, equipment, craft items and armour
@@ -1659,7 +1703,6 @@ static void Com_ParseItem (const char *name, const char **text)
 	objDef_t *od;
 	const char *token;
 	int i;
-	weaponFireDefIndex_t weapFdsIdx;
 
 	/* search for items with same name */
 	od = INVSH_GetItemByIDSilent(name);
@@ -1677,7 +1720,8 @@ static void Com_ParseItem (const char *name, const char **text)
 	od = &csi.ods[csi.numODs++];
 	OBJZERO(*od);
 
-	od->craftitem.type = MAX_ACITEMS; /**< default is no craftitem */
+	/* default is no craftitem */
+	od->craftitem.type = MAX_ACITEMS;
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
 	if (od->id[0] == '\0')
@@ -1701,80 +1745,15 @@ static void Com_ParseItem (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		for (val = od_vals, i = 0; val->string; val++, i++) {
+		for (val = od_vals; val->string; val++) {
 			if (!Q_strcasecmp(token, val->string)) {
-				/* found a definition */
-				if (val->type != V_NULL) {
-					/* parse a value */
-					token = Com_EParse(text, errhead, name);
-					if (!*text)
-						break;
+				/* parse a value */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					break;
 
-					if (Com_EParseValue(od, token, val->type, val->ofs, val->size) == -1)
-						Com_Printf("Com_ParseItem: Wrong size for value %s\n", val->string);
-				} else {
-					/* parse fire definitions */
-					switch (i) {
-					case OD_WEAPON:
-						/* Save the weapon id. */
-						token = Com_Parse(text);
-						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-							/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
-							LIST_AddPointer(&parseItemWeapons, od);
-							LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
-							LIST_AddString(&parseItemWeapons, token);
-
-							/* get it's body */
-							token = Com_Parse(text);
-
-							if (!*text || *token != '{') {
-								Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
-								break;
-							}
-
-							weapFdsIdx = od->numWeapons;
-							/* For parse each firedef entry for this weapon.  */
-							do {
-								token = Com_EParse(text, errhead, name);
-								if (!*text)
-									return;
-								if (*token == '}')
-									break;
-
-								if (Q_streq(token, "firedef")) {
-									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
-										const fireDefIndex_t fdIdx = od->numFiredefs[weapFdsIdx];
-										od->fd[weapFdsIdx][fdIdx].fireAttenuation = SOUND_ATTN_NORM;
-										od->fd[weapFdsIdx][fdIdx].impactAttenuation = SOUND_ATTN_NORM;
-										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
-										Com_ParseFire(name, text, &od->fd[weapFdsIdx][fdIdx]);
-										/* Self-link fd */
-										od->fd[weapFdsIdx][fdIdx].fdIdx = fdIdx;
-										/* Self-link weapon_mod */
-										od->fd[weapFdsIdx][fdIdx].weapFdsIdx = weapFdsIdx;
-										od->numFiredefs[od->numWeapons]++;
-									} else {
-										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
-									}
-								} else {
-									Com_Printf("Unknown token '%s' - expected firedef\n", token);
-								}
-							} while (*text);
-							od->numWeapons++;
-						} else {
-							Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
-						}
-						break;
-					case OD_PROTECTION:
-						Com_ParseArmourOrResistance(name, text, od->protection, qfalse);
-						break;
-					case OD_RATINGS:
-						Com_ParseArmourOrResistance(name, text, od->ratings, qtrue);
-						break;
-					default:
-						break;
-					}
-				}
+				if (Com_EParseValue(od, token, val->type, val->ofs, val->size) == -1)
+					Com_Printf("Com_ParseItem: Wrong size for value %s\n", val->string);
 				break;
 			}
 		}
@@ -1783,7 +1762,7 @@ static void Com_ParseItem (const char *name, const char **text)
 				/* parse a value */
 				token = Com_EParse(text, errhead, name);
 				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-					/** Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
+					/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
 					LIST_AddPointer(&parseItemWeapons, od);
 					LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
 					LIST_AddString(&parseItemWeapons, token);
@@ -1806,8 +1785,15 @@ static void Com_ParseItem (const char *name, const char **text)
 				}
 				if (i == MAX_ACITEMS)
 					Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
-			} else
+			} else if (Q_streq(token, "protection")) {
+				Com_ParseArmourOrResistance(name, text, od->protection, qfalse);
+			} else if (Q_streq(token, "rating")) {
+				Com_ParseArmourOrResistance(name, text, od->ratings, qtrue);
+			} else if (Q_streq(token, "weapon_mod")) {
+				Com_ParseFireDefition(od, name, token, text);
+			} else {
 				Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
+			}
 		}
 
 	} while (*text);
