@@ -298,12 +298,12 @@ typedef struct {
 	short mins[3];				/**< for frustum culling */
 	short maxs[3];				/**< for frustum culling */
 
-	unsigned short firstleafbrush;
-	unsigned short numleafbrushes;
+	uint16_t firstleafbrush;
+	uint16_t numleafbrushes;
 } dBspLeaf_t;
 
 typedef struct {
-	unsigned short planenum;	/**< facing out of the leaf
+	uint16_t planenum;			/**< facing out of the leaf
 								 * index info the planes array for this side */
 	short texinfo;
 } dBspBrushSide_t;

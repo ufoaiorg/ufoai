@@ -583,13 +583,12 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 /**
  * @brief Generates two new brushes, leaving the original unchanged
  */
-void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *b[2];
 	int i, j;
 	winding_t *w, *cw[2], *midwinding;
 	plane_t *plane, *plane2;
-	side_t *cs;
 	float d_front, d_back;
 
 	*front = *back = NULL;
@@ -660,6 +659,8 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 		ClipWindingEpsilon(w, plane->normal, plane->dist,
 			0 /*PLANESIDE_EPSILON*/, &cw[0], &cw[1]);
 		for (j = 0; j < 2; j++) {
+			side_t *cs;
+
 			if (!cw[j])
 				continue;
 
@@ -710,7 +711,7 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 
 	/* add the midwinding to both sides */
 	for (i = 0; i < 2; i++) {
-		cs = &b[i]->sides[b[i]->numsides];
+		side_t *cs = &b[i]->sides[b[i]->numsides];
 		b[i]->numsides++;
 
 		cs->planenum = planenum ^ i ^ 1;
@@ -738,7 +739,7 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 	*back = b[1];
 }
 
-void SplitBrushList (bspbrush_t *brushes, int planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrushList (bspbrush_t *brushes, int16_t planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *brush, *newbrush, *newbrush2;
 	side_t *side;
@@ -750,6 +751,7 @@ void SplitBrushList (bspbrush_t *brushes, int planenum, bspbrush_t **front, bspb
 		sides = brush->side;
 
 		if (sides == PSIDE_BOTH) {	/* split into two brushes */
+			assert(planenum >= 0);
 			SplitBrush(brush, planenum, &newbrush, &newbrush2);
 			if (newbrush) {
 				newbrush->next = *front;
@@ -766,7 +768,7 @@ void SplitBrushList (bspbrush_t *brushes, int planenum, bspbrush_t **front, bspb
 
 		newbrush = CopyBrush(brush);
 
-		/* if the planenum is actualy a part of the brush
+		/* if the planenum is actually a part of the brush
 		 * find the plane and flag it as used so it won't be tried
 		 * as a splitter again */
 		if (sides & PSIDE_FACING) {

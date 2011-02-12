@@ -40,7 +40,7 @@ brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 /** an index of the planes containing the faces of the brushes */
 plane_t mapplanes[MAX_MAP_PLANES];
-int nummapplanes;
+uint16_t nummapplanes;
 
 #define	PLANE_HASHES	1024
 static plane_t *planehash[PLANE_HASHES];
@@ -116,7 +116,7 @@ static inline void AddPlaneToHash (plane_t *p)
 	planehash[hash] = p;
 }
 
-static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
+static uint16_t CreateNewFloatPlane (vec3_t normal, vec_t dist)
 {
 	plane_t *p;
 
@@ -193,7 +193,7 @@ static inline void SnapPlane (vec3_t normal, vec_t *dist)
 		*dist = Q_rint(*dist);
 }
 
-int FindOrCreateFloatPlane (vec3_t normal, vec_t dist)
+uint16_t FindOrCreateFloatPlane (vec3_t normal, vec_t dist)
 {
 	int i;
 	plane_t *p;
@@ -206,8 +206,10 @@ int FindOrCreateFloatPlane (vec3_t normal, vec_t dist)
 	for (i = -1; i <= 1; i++) {
 		const int h = (hash + i) & (PLANE_HASHES - 1);
 		for (p = planehash[h]; p; p = p->hash_chain) {
-			if (PlaneEqual(p, normal, dist))
-				return p - mapplanes;
+			if (PlaneEqual(p, normal, dist)) {
+				const intptr_t index = p - mapplanes;
+				return (int16_t)index;
+			}
 		}
 	}
 
@@ -224,7 +226,7 @@ int FindOrCreateFloatPlane (vec3_t normal, vec_t dist)
  * @param[in] p2 Three points on the plane. (A vector with plane coordinates)
  * @return the index of the plane in the planes list.
  */
-static int PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p1, const vec3_t p2)
+static int16_t PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p1, const vec3_t p2)
 {
 	vec3_t t1, t2, normal;
 	vec_t dist;
