@@ -739,9 +739,10 @@ window game_team_edit extends objectinfo
 
 
 // =====================
-// MULTIPLAYER TEAM MENU
+// TEAM MENU
 // =====================
 
+// @todo this should not inherit from abstract_multiplayer
 window game_team extends abstract_multiplayer
 {
 	panel content {
