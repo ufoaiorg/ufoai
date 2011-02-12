@@ -1794,7 +1794,6 @@ static void Com_ParseItem (const char *name, const char **text)
 				Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 			}
 		}
-
 	} while (*text);
 	if (od->productionCost == 0)
 		od->productionCost = od->price;
