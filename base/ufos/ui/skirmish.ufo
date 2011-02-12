@@ -396,13 +396,13 @@ window skirmish
 		string team_str
 		{
 			string		"_Team:"
-			pos			"10 245"
+			pos			"10 225"
 			size		"200 20"
 			tooltip		"_Select which side you want to play with."
 		}
 		selectbox team_box
 		{
-			pos		"230 245"
+			pos		"230 225"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
 			cvar	*cvar:cl_teamdef
