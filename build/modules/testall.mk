@@ -109,7 +109,6 @@ $(TARGET)_SRCS      = \
 	client/cgame/cl_game.c \
 	client/cgame/cl_game_campaign.c \
 	client/cgame/cl_game_multiplayer.c \
-	client/cgame/cl_game_shared.c \
 	client/cgame/cl_game_skirmish.c \
 	client/cgame/cl_game_team.c \
 	\

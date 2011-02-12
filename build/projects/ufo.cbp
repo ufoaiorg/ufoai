@@ -691,7 +691,6 @@
 		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_team.h" />
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
