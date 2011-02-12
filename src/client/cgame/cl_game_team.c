@@ -55,7 +55,7 @@ static void GAME_UpdateActiveTeamList (void)
 	for (i = 0; i < chrDisplayList.num; i++)
 		characterActive[i] = qtrue;
 
-	UI_ExecuteConfunc("mp_checkboxes_update %i", chrDisplayList.num);
+	UI_ExecuteConfunc("team_checkboxes_update %i", chrDisplayList.num);
 }
 
 void GAME_AutoTeam_f (void)
@@ -468,7 +468,7 @@ void GAME_TeamSelect_f (void)
 	if (num < 0 || num >= chrDisplayList.num)
 		return;
 
-	UI_ExecuteConfunc("mp_soldier_select %i", num);
-	UI_ExecuteConfunc("mp_soldier_unselect %i", old);
+	UI_ExecuteConfunc("team_soldier_select %i", num);
+	UI_ExecuteConfunc("team_soldier_unselect %i", old);
 	Cmd_ExecuteString(va("actor_select_equip %i", num));
 }

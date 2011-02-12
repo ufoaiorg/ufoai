@@ -2,14 +2,14 @@
 // MULTIPLAYER TEAM CREATION MENU
 // ==============================
 
-component checkbox mpTeamCheckbox
+component checkbox gameTeamCheckbox
 {
 	image		"ui/checkbox_green"
 	size		"20 20"
 	onChange	{ cmd "game_toggleactor <num> <current>;" }
 }
 
-window mp_team_edit extends objectinfo
+window game_team_edit extends objectinfo
 {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
@@ -20,7 +20,7 @@ window mp_team_edit extends objectinfo
 
 	image background
 	{
-		src	"background/mp_team_edit_bg"
+		src	"background/game_team_edit_bg"
 	}
 
 	string s_backpack
@@ -90,49 +90,49 @@ window mp_team_edit extends objectinfo
 	// checkbox list
 	// ==================
 
-	mpTeamCheckbox bt_actor0
+	gameTeamCheckbox bt_actor0
 	{
 		num 0
 		pos	"60 23"
 	}
 
-	mpTeamCheckbox bt_actor1
+	gameTeamCheckbox bt_actor1
 	{
 		num 1
 		pos	"60 64"
 	}
 
-	mpTeamCheckbox bt_actor2
+	gameTeamCheckbox bt_actor2
 	{
 		num 2
 		pos	"60 105"
 	}
 
-	mpTeamCheckbox bt_actor3
+	gameTeamCheckbox bt_actor3
 	{
 		num 3
 		pos	"60 146"
 	}
 
-	mpTeamCheckbox bt_actor4
+	gameTeamCheckbox bt_actor4
 	{
 		num 4
 		pos	"60 187"
 	}
 
-	mpTeamCheckbox bt_actor5
+	gameTeamCheckbox bt_actor5
 	{
 		num 5
 		pos	"60 228"
 	}
 
-	mpTeamCheckbox bt_actor6
+	gameTeamCheckbox bt_actor6
 	{
 		num 6
 		pos	"60 269"
 	}
 
-	mpTeamCheckbox bt_actor7
+	gameTeamCheckbox bt_actor7
 	{
 		num 7
 		pos	"60 310"
@@ -145,21 +145,21 @@ window mp_team_edit extends objectinfo
 	/**
 	 * @param[in] <1> number of soldier in the list
 	 */
-	confunc mp_soldier_unselect {
+	confunc team_soldier_unselect {
 		*node:root.txt_actor<1>@color = "0 .78 0 1"
 	}
 
 	/**
 	 * @param[in] <1> number of soldier in the list
 	 */
-	confunc mp_soldier_select {
+	confunc team_soldier_select {
 		*node:root.txt_actor<1>@color = "1 1 1 1"
 	}
 
 	/**
 	 * @param[in] <1> amount of soldiers in the list
 	 */
-	confunc mp_checkboxes_update {
+	confunc team_checkboxes_update {
 		*cvar:tmp = <1>
 		*cvar:i = 0
 		while ( *cvar:i < 8 ) {
@@ -174,7 +174,7 @@ window mp_team_edit extends objectinfo
 		delete *cvar:tmp
 	}
 
-	func mp_checkboxes_set
+	func team_checkboxes_set
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 8 ) {
@@ -187,7 +187,7 @@ window mp_team_edit extends objectinfo
 		delete *cvar:i
 	}
 
-	func mp_names_clear
+	func team_names_clear
 	{
 		*node:root.txt_actor0@color = "0 .78 0 1"
 		*node:root.txt_actor1@color = "0 .78 0 1"
@@ -268,7 +268,7 @@ window mp_team_edit extends objectinfo
 	// category buttons
 	// ==================
 
-	confunc mp_update_item_list {
+	confunc team_update_item_list {
 		if ( *cvar:mn_equiptype == 0 ) {
 			*node:root.equip@filter = FILTER_S_PRIMARY
 			*node:root.equip_ammo@filter = FILTER_S_PRIMARY
@@ -300,7 +300,7 @@ window mp_team_edit extends objectinfo
 			size	"505 40"
 			cvar	*cvar:mn_equiptype
 			onChange {
-				cmd "mp_update_item_list;"
+				cmd "team_update_item_list;"
 			}
 		}
 		option primary {
@@ -555,7 +555,7 @@ window mp_team_edit extends objectinfo
 	// ==================
 
 	// @todo merge with confunc weapon_stats?
-	func mp_weapon_stats
+	func team_weapon_stats
 	{
 		if ( *cvar:mn_itemname ne "" ) {
 			*node:root.itemdescription@invis = false
@@ -567,7 +567,7 @@ window mp_team_edit extends objectinfo
 	}
 
 	// @todo merge with confunc actor_stats?
-	func mp_actor_stats
+	func team_actor_stats
 	{
 		*node:root.itemdescription@invis = true
 		*node:root.actor_statpanel@invis = false
@@ -580,9 +580,9 @@ window mp_team_edit extends objectinfo
 			cvar	*cvar:mn_infotype
 			onChange {
 				if ( *cvar:mn_infotype == 0 ) {
-					call *node:root.mp_actor_stats
+					call *node:root.team_actor_stats
 				} elif ( *cvar:mn_infotype == 1 ) {
-					call *node:root.mp_weapon_stats
+					call *node:root.team_weapon_stats
 				}
 			}
 		}
@@ -724,11 +724,11 @@ window mp_team_edit extends objectinfo
 
 	func onWindowOpened
 	{
-		call *node:root.mp_names_clear
-		call *node:root.mp_actor_stats
-		call *node:root.mp_checkboxes_set
+		call *node:root.team_names_clear
+		call *node:root.team_actor_stats
+		call *node:root.team_checkboxes_set
 		cmd "set mn_infotype 0;set mn_equiptype 0;"
-		cmd "team_initskin;mp_update_item_list;game_teamselect 0;game_teamupdate;"
+		cmd "team_initskin;team_update_item_list;game_teamselect 0;game_teamupdate;"
 	}
 
 	func onWindowClosed
@@ -742,7 +742,7 @@ window mp_team_edit extends objectinfo
 // MULTIPLAYER TEAM MENU
 // =====================
 
-window mp_team extends abstract_multiplayer
+window game_team extends abstract_multiplayer
 {
 	panel content {
 		{
@@ -776,7 +776,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 130"
 			size		"256 34"
 			string		*cvar:mn_slot0
-			onClick		{ cmd "game_loadteam 0;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 0;ui_push game_team_edit;" }
 		}
 
 		button slot_team1
@@ -791,7 +791,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 165"
 			size		"256 34"
 			string		*cvar:mn_slot1
-			onClick		{ cmd "game_loadteam 1;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 1;ui_push game_team_edit;" }
 		}
 
 		button slot_team2
@@ -806,7 +806,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 200"
 			size		"256 34"
 			string		*cvar:mn_slot2
-			onClick		{ cmd "game_loadteam 2;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 2;ui_push game_team_edit;" }
 		}
 
 		button slot_team3
@@ -821,7 +821,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 235"
 			size		"256 34"
 			string		*cvar:mn_slot3
-			onClick		{ cmd "game_loadteam 3;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 3;ui_push game_team_edit;" }
 		}
 
 		button slot_team4
@@ -836,7 +836,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 270"
 			size		"256 34"
 			string		*cvar:mn_slot4
-			onClick		{ cmd "game_loadteam 4;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 4;ui_push game_team_edit;" }
 		}
 
 		button slot_team5
@@ -851,7 +851,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 305"
 			size		"256 34"
 			string		*cvar:mn_slot5
-			onClick		{ cmd "game_loadteam 5;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 5;ui_push game_team_edit;" }
 		}
 
 		button slot_team6
@@ -866,7 +866,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 340"
 			size		"256 34"
 			string		*cvar:mn_slot6
-			onClick		{ cmd "game_loadteam 6;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 6;ui_push game_team_edit;" }
 		}
 
 		button slot_team7
@@ -881,7 +881,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 375"
 			size		"256 34"
 			string		*cvar:mn_slot7
-			onClick		{ cmd "game_loadteam 7;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 7;ui_push game_team_edit;" }
 		}
 
 		// ==================
@@ -893,7 +893,7 @@ window mp_team extends abstract_multiplayer
 			pos	"85 430"
 			size "256 40"
 			tooltip	"_Generate a new random team"
-			onClick	{ cmd "game_autoteam;ui_push mp_team_edit;" }
+			onClick	{ cmd "game_autoteam;ui_push game_team_edit;" }
 			image	"ui/button_green_small"
 			font	"f_menusmall"
 			color	"0 0.5 0 1"
@@ -906,7 +906,7 @@ window mp_team extends abstract_multiplayer
 			pos	"85 480"
 			size "256 40"
 			tooltip	"_Save the current team"
-			onClick	{ cmd "ui_push mp_team_save_popup;" }
+			onClick	{ cmd "ui_push game_team_save_popup;" }
 			image	"ui/button_green_small"
 			font	"f_menusmall"
 			color	"0 0.5 0 1"
@@ -942,7 +942,7 @@ window mp_team extends abstract_multiplayer
 /**
  * @todo The ui_pop into the change event dont work - the workaround is the func onWindowClosed game_teamcomments call
  */
-window mp_team_save_popup
+window game_team_save_popup
 {
 	{
 		pos			"264 262"

@@ -2543,6 +2543,7 @@ base/pics/armour/taman_medium.png | GNU General Public License 2.0
 base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/conback.jpg | GNU General Public License 2.0
 base/pics/background/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/game_team_edit_bg.png | GNU General Public License 2.0 or later
 base/pics/background/irc_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/loading.png | GNU General Public License 2.0
 base/pics/background/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2550,7 +2551,6 @@ base/pics/background/lost_bg.png | GNU General Public License 2.0 or later
 base/pics/background/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/mailclient_bg.png | GNU General Public License 2.0 or later
 base/pics/background/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/mp_team_edit_bg.png | GNU General Public License 2.0 or later
 base/pics/background/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/skirmish2.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta

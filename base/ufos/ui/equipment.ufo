@@ -525,7 +525,7 @@ window equipment extends objectinfo
 	// switch
 	// ==================
 
-	// @todo merge with confunc mp_weapon_stats?
+	// @todo merge with confunc team_weapon_stats?
 	func weapon_stats
 	{
 		if ( *cvar:mn_itemname ne "" ) {
@@ -537,7 +537,7 @@ window equipment extends objectinfo
 		}
 	}
 
-	// @todo merge with confunc mp_actor_stats?
+	// @todo merge with confunc team_actor_stats?
 	func actor_stats
 	{
 		*node:root.itemdescription@invis = true
