@@ -35,6 +35,5 @@ void GAME_AutoTeam_f(void);
 void GAME_UpdateTeamMenuParameters_f(void);
 void GAME_TeamSelect_f(void);
 qboolean GAME_LoadDefaultTeam(void);
-equipDef_t *GAME_TeamGetEquipmentDefinition(void);
 
 #endif
