@@ -1808,6 +1808,10 @@ static void Com_ParseItem (const char *name, const char **text)
 		if (od->shape & (0xFF << (i * SHAPE_SMALL_MAX_WIDTH)))
 			break;
 	od->sy = i + 1;
+
+	if (od->thrown && od->deplete && od->oneshot && od->ammo) {
+		Sys_Error("Item %s has invalid parameters\n", od->id);
+	}
 }
 
 
