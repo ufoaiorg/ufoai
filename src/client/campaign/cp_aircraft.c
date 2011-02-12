@@ -1434,6 +1434,7 @@ static const value_t aircraft_vals[] = {
 	{"price", V_INT, offsetof(aircraft_t, price), MEMBER_SIZEOF(aircraft_t, price)},
 	/* this is needed to let the buy and sell screen look for the needed building */
 	/* to place the aircraft in */
+	{"productioncost", V_INT, offsetof(aircraft_t, productionCost), MEMBER_SIZEOF(aircraft_t, productionCost)},
 	{"building", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, building), 0},
 
 	{NULL, 0, 0, 0}
@@ -1746,6 +1747,8 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			}
 		} /* assignAircraftItems */
 	} while (*text);
+	if (aircraftTemplate->productionCost == 0)
+		aircraftTemplate->productionCost = aircraftTemplate->price;
 
 	if (aircraftTemplate->size < AIRCRAFT_SMALL || aircraftTemplate->size > AIRCRAFT_LARGE)
 		Sys_Error("Invalid aircraft size given for '%s'", aircraftTemplate->id);

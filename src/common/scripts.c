@@ -1433,6 +1433,7 @@ static const value_t od_vals[] = {
 	{"reload", V_INT, offsetof(objDef_t, reload), MEMBER_SIZEOF(objDef_t, reload)},
 	{"size", V_INT, offsetof(objDef_t, size), MEMBER_SIZEOF(objDef_t, size)},
 	{"price", V_INT, offsetof(objDef_t, price), MEMBER_SIZEOF(objDef_t, price)},
+	{"productioncost", V_INT, offsetof(objDef_t, productionCost), MEMBER_SIZEOF(objDef_t, productionCost)},
 	{"useable", V_TEAM, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
 	{"notonmarket", V_BOOL, offsetof(objDef_t, notOnMarket), MEMBER_SIZEOF(objDef_t, notOnMarket)},
 
@@ -1810,6 +1811,8 @@ static void Com_ParseItem (const char *name, const char **text)
 		}
 
 	} while (*text);
+	if (od->productionCost == 0)
+		od->productionCost = od->price;
 
 	/* get size */
 	for (i = SHAPE_SMALL_MAX_WIDTH - 1; i >= 0; i--)

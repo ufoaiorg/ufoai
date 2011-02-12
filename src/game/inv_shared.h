@@ -286,6 +286,7 @@ typedef struct objDef_s {
 	/* Aircraft specific */
 	craftitem_t craftitem;
 	int price;			/**< Price for this item. */
+	int productionCost;	/**< Production costs for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 } objDef_t;

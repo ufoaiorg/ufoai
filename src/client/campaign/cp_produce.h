@@ -88,7 +88,7 @@ typedef struct production_s
 #define PRODUCE_FACTOR 1
 #define PRODUCE_DIVISOR 1
 
-#define PR_GetPrice(item)			((item)->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)
+#define PR_GetPrice(item)			((item)->productionCost * PRODUCE_FACTOR / PRODUCE_DIVISOR)
 #define PR_HasInsufficientCredits(item)	(PR_GetPrice(item) > ccs.credits)
 
 /**
