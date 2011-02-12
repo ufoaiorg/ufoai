@@ -682,7 +682,7 @@ static void SubdivideNodeFaces (node_t *node)
 
 static int c_nodefaces;
 
-static face_t *FaceFromPortal (portal_t *p, int pside)
+static face_t *FaceFromPortal (portal_t *p, qboolean pside)
 {
 	face_t *f;
 	side_t *side = p->side;
