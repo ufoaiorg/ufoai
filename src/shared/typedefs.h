@@ -253,7 +253,7 @@ typedef struct {
 } dBspPlane_t;
 
 typedef struct {
-	int planenum;				/**< index into the planes array */
+	int32_t planenum;			/**< index into the planes array */
 	int32_t children[2];		/**< negative numbers are -(leafs + 1), not nodes */
 	short mins[3];				/**< for frustum culling */
 	short maxs[3];				/**< for frustum culling */
