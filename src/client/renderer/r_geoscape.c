@@ -726,17 +726,20 @@ void R_DrawBloom (void)
 
 	/* save state, then set up for blit-style rendering to quads */
 	renderBufferState = R_RenderbufferEnabled();
-	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
-	glMatrixMode(GL_TEXTURE);
-	glPushMatrix();
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
+
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
+		glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
+	}
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -788,14 +791,16 @@ void R_DrawBloom (void)
 
 	R_CheckError();
 
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-	glMatrixMode(GL_TEXTURE);
-	glPopMatrix();
-	glPopAttrib();
-	R_CheckError();
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+		glMatrixMode(GL_TEXTURE);
+		glPopMatrix();
+		glPopAttrib();
+		R_CheckError();
+	}
 
 	/* reset renderbuffer state to what it was before */
 	R_EnableRenderbuffer(renderBufferState);
