@@ -288,7 +288,8 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 	const dBspSurface_t *in;
 	mBspSurface_t *out;
 	int i, count, surfnum;
-	int planenum, side;
+	uint16_t planenum;
+	int16_t side;
 	int ti;
 
 	in = (const dBspSurface_t *) (mod_base + l->fileofs);
