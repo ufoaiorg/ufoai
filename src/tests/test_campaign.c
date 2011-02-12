@@ -432,11 +432,51 @@ static void testTransferItem (void)
 
 	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
 
-	/* to ensure that the transfer is finished with the first think call */
 	transfer->event = ccs.date;
+	transfer->event.day++;
 
+	/* check if it's arrived immediately */
+	TR_TransferRun();
+	CU_ASSERT_FALSE(LIST_IsEmpty(ccs.transfers));
+
+	/* check if it arrives (even a second) before it should */
+	ccs.date.day++;
+	ccs.date.sec--;
+	TR_TransferRun();
+	CU_ASSERT_FALSE(LIST_IsEmpty(ccs.transfers));
+
+	/* check if it arrived right when it should */
+	ccs.date.sec++;
 	TR_TransferRun();
 	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
+
+	/* Start another transfer to check higher time lapse */
+	transfer = TR_TransferStart(base, &td);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
+	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
+
+	transfer->event = ccs.date;
+	transfer->event.day++;
+
+	/* check if it arrived when time passed the deadline by days already */
+	ccs.date.day += 2;
+	TR_TransferRun();
+	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
+
+	/* Start another transfer to check higher time lapse */
+	transfer = TR_TransferStart(base, &td);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
+	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
+
+	transfer->event = ccs.date;
+	transfer->event.day++;
+
+	/* check if it arrived when time passed the deadline by days already */
+	ccs.date.day++;
+	ccs.date.sec++;
+	TR_TransferRun();
+	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
+
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
@@ -998,25 +1038,25 @@ static void testDateHandling (void)
 	date.day = 299;
 	date.sec = 310;
 
-	CU_ASSERT_FALSE(Date_IsDue(&date));
+	CU_ASSERT_TRUE(Date_IsDue(&date));
 	CU_ASSERT_TRUE(Date_LaterThan(&ccs.date, &date));
 
 	date.day = 301;
 	date.sec = 0;
 
-	CU_ASSERT_TRUE(Date_IsDue(&date));
+	CU_ASSERT_FALSE(Date_IsDue(&date));
 	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
 
 	date.day = 300;
 	date.sec = 299;
 
-	CU_ASSERT_FALSE(Date_IsDue(&date));
+	CU_ASSERT_TRUE(Date_IsDue(&date));
 	CU_ASSERT_TRUE(Date_LaterThan(&ccs.date, &date));
 
 	date.day = 300;
 	date.sec = 301;
 
-	CU_ASSERT_TRUE(Date_IsDue(&date));
+	CU_ASSERT_FALSE(Date_IsDue(&date));
 	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
 }
 

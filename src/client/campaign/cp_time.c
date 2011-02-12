@@ -192,16 +192,16 @@ qboolean Date_LaterThan (const date_t *now, const date_t *compare)
 }
 
 /**
- * @brief Checks whether a given date is equal or later than the current campaign date
+ * @brief Checks whether a given date is equal or earlier than the current campaign date
  * @param date The date to check
- * @return @c true if the given date is equal or later than the current campaign date, @c false otherwise
+ * @return @c true if the given date is equal or earlier than the current campaign date, @c false otherwise
  */
 qboolean Date_IsDue (const date_t *date)
 {
-	if (date->day > ccs.date.day)
+	if (date->day < ccs.date.day)
 		return qtrue;
 
-	else if (ccs.date.day == date->day && ccs.date.sec <= date->sec)
+	else if (date->day == ccs.date.day && date->sec <= ccs.date.sec)
 		return qtrue;
 
 	return qfalse;
