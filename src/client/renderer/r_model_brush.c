@@ -308,7 +308,6 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 
 		/* resolve plane */
 		planenum = LittleShort(in->planenum);
-		assert(planenum >= 0);
 		out->plane = r_worldmodel->bsp.planes + planenum;
 
 		/* and sideness */
