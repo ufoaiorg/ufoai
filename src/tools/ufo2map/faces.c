@@ -577,16 +577,20 @@ static face_t *TryMerge (face_t *f1, face_t *f2, const vec3_t planenormal)
 
 static void MergeNodeFaces (node_t *node)
 {
-	face_t *f1, *f2, *end;
-	face_t *merged;
-	const plane_t *plane = &mapplanes[node->planenum];
+	face_t *f1;
 
 	for (f1 = node->faces; f1; f1 = f1->next) {
+		face_t *f2;
 		if (f1->merged || f1->split[0] || f1->split[1])
 			continue;
 		for (f2 = node->faces; f2 != f1; f2 = f2->next) {
+			const plane_t *plane = &mapplanes[node->planenum];
+			face_t *merged;
+			face_t *end;
+
 			if (f2->merged || f2->split[0] || f2->split[1])
 				continue;
+
 			merged = TryMerge(f1, f2, plane->normal);
 			if (!merged)
 				continue;
