@@ -736,7 +736,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 	*back = b[1];
 }
 
-void SplitBrushList (bspbrush_t *brushes, int16_t planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *brush;
 
