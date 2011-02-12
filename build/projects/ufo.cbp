@@ -104,7 +104,6 @@
 			<Add library="theora" />
 			<Add library="xvidcore" />
 		</Linker>
-		<Unit filename="..\..\Makefile.in" />
 		<Unit filename="..\..\base\autoexec.cfg" />
 		<Unit filename="..\..\base\dedicated.cfg" />
 		<Unit filename="..\..\base\default.cfg" />
@@ -168,6 +167,9 @@
 		<Unit filename="..\..\base\ufos\ui\basesummary.ufo" />
 		<Unit filename="..\..\base\ufos\ui\buildings.ufo" />
 		<Unit filename="..\..\base\ufos\ui\campaign.ufo" />
+		<Unit filename="..\..\base\ufos\ui\cgame\multiplayer.ufo" />
+		<Unit filename="..\..\base\ufos\ui\cgame\multiplayer_team.ufo" />
+		<Unit filename="..\..\base\ufos\ui\cgame\multiplayeringame.ufo" />
 		<Unit filename="..\..\base\ufos\ui\equipment.ufo" />
 		<Unit filename="..\..\base\ufos\ui\geoscape.ufo" />
 		<Unit filename="..\..\base\ufos\ui\hire.ufo" />
@@ -181,9 +183,6 @@
 		<Unit filename="..\..\base\ufos\ui\material_editor.ufo" />
 		<Unit filename="..\..\base\ufos\ui\messageoptions.ufo" />
 		<Unit filename="..\..\base\ufos\ui\modeltest.ufo" />
-		<Unit filename="..\..\base\ufos\ui\cgame\multiplayer.ufo" />
-		<Unit filename="..\..\base\ufos\ui\cgame\multiplayer_team.ufo" />
-		<Unit filename="..\..\base\ufos\ui\cgame\multiplayeringame.ufo" />
 		<Unit filename="..\..\base\ufos\ui\nohud.ufo" />
 		<Unit filename="..\..\base\ufos\ui\options.ufo" />
 		<Unit filename="..\..\base\ufos\ui\physdat.ufo" />
@@ -217,7 +216,6 @@
 		<Unit filename="..\server.mk" />
 		<Unit filename="..\tools.mk" />
 		<Unit filename="..\various.mk" />
-		<Unit filename="..\..\configure.ac" />
 		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -286,14 +284,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorappear.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -422,6 +420,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particlespawn.h" />
+		<Unit filename="..\..\src\client\cgame\campaignOB\missions\cp_mission_xvi.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -665,7 +664,41 @@
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\campaignOB\missions\cp_mission_xvi.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game_campaign.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_team.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_team.h" />
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -686,25 +719,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_console.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_campaign.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_campaign.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_shared.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.h" />
 		<Unit filename="..\..\src\client\cl_http.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -766,22 +780,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_keys.h" />
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.h" />
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.h" />
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.h" />
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_team.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_team.h" />
 		<Unit filename="..\..\src\client\mxml\config.h" />
 		<Unit filename="..\..\src\client\mxml\mxml-attr.c">
 			<Option compilerVar="CC" />
