@@ -396,6 +396,12 @@ void GAME_LoadTeam_f (void)
 	GAME_LoadTeam(filename);
 }
 
+equipDef_t *GAME_TeamGetEquipmentDefinition (void)
+{
+	static equipDef_t equipDefMultiplayer;
+	return &equipDefMultiplayer;
+}
+
 /**
  * @brief Get the equipment definition (from script files) for the current selected multiplayer team
  * and updates the equipment inventory containers

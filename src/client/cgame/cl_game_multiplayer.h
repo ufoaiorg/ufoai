@@ -34,6 +34,5 @@ void GAME_MP_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numA
 void GAME_MP_EndRoundAnnounce(int playerNum, int team);
 void GAME_MP_StartBattlescape(qboolean isTeamPlay);
 void GAME_MP_NotifyEvent(event_t eventType);
-equipDef_t *GAME_MP_GetEquipmentDefinition(void);
 
 #endif

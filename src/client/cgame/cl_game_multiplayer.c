@@ -282,13 +282,6 @@ const mapDef_t* GAME_MP_MapInfo (int step)
 	return md;
 }
 
-static equipDef_t equipDefMultiplayer;
-
-equipDef_t *GAME_MP_GetEquipmentDefinition (void)
-{
-	return &equipDefMultiplayer;
-}
-
 void GAME_MP_InitStartup (const cgame_import_t *import)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");

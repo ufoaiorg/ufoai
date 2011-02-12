@@ -40,9 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef HARD_LINKED_CGAME
 static const cgame_export_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", 1, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape, NULL, GAME_MP_NotifyEvent},
+	{"Multiplayer mode", "multiplayer", 1, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_TeamGetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape, NULL, GAME_MP_NotifyEvent},
 	{"Campaign mode", "campaigns", 0, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetItemModel, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, NULL, NULL, GAME_CP_GetTeamDef, NULL},
-	{"Skirmish mode", "skirmish", 0, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+	{"Skirmish mode", "skirmish", 0, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, GAME_TeamGetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };
