@@ -539,6 +539,13 @@ void UI_DeleteAllChild (uiNode_t* node)
 	}
 }
 
+static void UI_BeforeDeletingNode (const uiNode_t* node)
+{
+	if (UI_GetHoveredNode() == node) {
+		UI_InvalidateMouse();
+	}
+}
+
 /**
  * Delete the node and remove it from his parent
  * @param node The node we want to delete
@@ -549,6 +556,8 @@ void UI_DeleteNode (uiNode_t* node)
 
 	if (!node->dynamic)
 		return;
+
+	UI_BeforeDeletingNode(node);
 
 	UI_DeleteAllChild(node);
 	if (node->firstChild != NULL) {
