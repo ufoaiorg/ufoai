@@ -408,6 +408,12 @@ window skirmish
 			cvar	*cvar:cl_teamdef
 			dataid	OPTION_TEAMDEFS
 		}
+		cmpMenuButton button_team
+		{
+			string		"_Team"
+			pos			"0 260"
+			onClick		{ cmd "ui_pop; ui_push game_team;" }
+		}
 	}
 	// ============
 	// INTERACTION
