@@ -1200,7 +1200,8 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 			mask |= G_TeamToVisMask(i);
 
 	if (!mock) {
-		qboolean itemAlreadyRemoved = qfalse;	/**< State info so we can check if an item was already removed. */
+		/* State info so we can check if an item was already removed. */
+		qboolean itemAlreadyRemoved = qfalse;
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
