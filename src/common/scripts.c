@@ -1645,7 +1645,6 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 	/* Save the weapon id. */
 	token = Com_Parse(text);
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-		weaponFireDefIndex_t weapFdsIdx;
 		/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
 		LIST_AddPointer(&parseItemWeapons, od);
 		LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
@@ -1659,7 +1658,6 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 			return;
 		}
 
-		weapFdsIdx = od->numWeapons;
 		/* For each firedef entry for this weapon.  */
 		do {
 			token = Com_EParse(text, errhead, name);
@@ -1669,6 +1667,7 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 				break;
 
 			if (Q_streq(token, "firedef")) {
+				const weaponFireDefIndex_t weapFdsIdx = od->numWeapons;
 				if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
 					const fireDefIndex_t fdIdx = od->numFiredefs[weapFdsIdx];
 					fireDef_t *fd = &od->fd[weapFdsIdx][fdIdx];
