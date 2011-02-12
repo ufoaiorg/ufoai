@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../campaign/cp_messages.h" /**< message_t */
+#include "../../cgame/campaign/cp_messages.h" /**< message_t */
 #include "../../../shared/parse.h"
 
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractScrollableExtraData_t)

@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_hud.h"
 #include "cl_hud_callbacks.h"
 #include "cl_view.h"
-#include "../cl_game.h"
+#include "../cgame/cl_game.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_popup.h"
 #include "../ui/ui_nodes.h"

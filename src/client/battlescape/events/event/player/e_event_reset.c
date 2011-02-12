@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../../client.h"
 #include "../../../../ui/ui_main.h"
-#include "../../../../cl_game.h"
+#include "../../../../cgame/cl_game.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h" /* CL_ActorSelect */
 #include "e_event_reset.h"

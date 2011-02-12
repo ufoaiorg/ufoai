@@ -27,14 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/client.h"
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
-#include "../client/campaign/cp_campaign.h"
-#include "../client/campaign/cp_map.h"
-#include "../client/campaign/cp_hospital.h"
-#include "../client/campaign/cp_missions.h"
-#include "../client/campaign/cp_nation.h"
-#include "../client/campaign/cp_overlay.h"
-#include "../client/campaign/cp_ufo.h"
-#include "../client/campaign/cp_time.h"
+#include "../client/cgame/campaign/cp_campaign.h"
+#include "../client/cgame/campaign/cp_map.h"
+#include "../client/cgame/campaign/cp_hospital.h"
+#include "../client/cgame/campaign/cp_missions.h"
+#include "../client/cgame/campaign/cp_nation.h"
+#include "../client/cgame/campaign/cp_overlay.h"
+#include "../client/cgame/campaign/cp_ufo.h"
+#include "../client/cgame/campaign/cp_time.h"
 
 static const int TAG_INVENTORY = 1538;
 

@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
-#include "cl_game.h"
+#include "cgame/cl_game.h"
 #include "ui/ui_popup.h"
 
 static const objDef_t *currentDisplayedObject;

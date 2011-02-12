@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "cl_game.h"
+#include "cgame/cl_game.h"
 #include "cl_team.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
@@ -33,8 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_data.h"
 #include "ui/ui_nodes.h"
 #include "battlescape/events/e_main.h"
-#include "campaign/save/save_character.h"
-#include "campaign/save/save_inventory.h"
+#include "cgame/campaign/save/save_character.h"
+#include "cgame/campaign/save/save_inventory.h"
 
 /** @brief List of currently displayed or equipeable characters. */
 chrList_t chrDisplayList;

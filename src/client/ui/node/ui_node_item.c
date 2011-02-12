@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../cl_game.h"
+#include "../../cgame/cl_game.h"
 #include "../../renderer/r_draw.h"
 
 #define EXTRADATA(node) UI_EXTRADATA(node, modelExtraData_t)
