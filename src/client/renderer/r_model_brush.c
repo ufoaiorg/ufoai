@@ -287,10 +287,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 {
 	const dBspSurface_t *in;
 	mBspSurface_t *out;
-	int i, count, surfnum;
-	uint16_t planenum;
-	int16_t side;
-	int ti;
+	int count, surfnum;
 
 	in = (const dBspSurface_t *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -303,6 +300,11 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 	r_worldmodel->bsp.numsurfaces = count;
 
 	for (surfnum = 0; surfnum < count; surfnum++, in++, out++) {
+		uint16_t planenum;
+		int16_t side;
+		int ti;
+		int i;
+
 		out->firstedge = LittleLong(in->firstedge);
 		out->numedges = LittleShort(in->numedges);
 
