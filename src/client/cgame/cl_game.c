@@ -1001,17 +1001,17 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_setmode", GAME_SetMode_f, "Decides with game mode should be set - takes the menu as reference");
 	Cmd_AddCommand("game_exit", GAME_Exit_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("game_abort", GAME_Abort_f, "Abort the game and let the aliens/opponents win");
+	Cmd_AddCommand("game_autoteam", GAME_AutoTeam_f, "Assign initial equipment to soldiers");
+	Cmd_AddCommand("game_toggleactor", GAME_ToggleActorForTeam_f, NULL);
+	Cmd_AddCommand("game_saveteamstate", GAME_SaveTeamState_f, NULL);
+	Cmd_AddCommand("game_saveteam", GAME_SaveTeam_f, "Save a team slot");
+	Cmd_AddCommand("game_loadteam", GAME_LoadTeam_f, "Load a team slot");
+	Cmd_AddCommand("game_teamcomments", GAME_TeamSlotComments_f, "Fills the team selection menu with the team names");
+	Cmd_AddCommand("game_teamupdate", GAME_UpdateTeamMenuParameters_f, "");
+	Cmd_AddCommand("game_teamselect", GAME_TeamSelect_f, "");
 	Cmd_AddCommand("mn_getmaps", UI_GetMaps_f, "The initial map to show");
 	Cmd_AddCommand("mn_nextmap", UI_NextMap_f, "Switch to the next valid map for the selected gametype");
 	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
-	Cmd_AddCommand("mp_autoteam", GAME_AutoTeam_f, "Assign initial equipment to soldiers");
-	Cmd_AddCommand("mp_toggleactor", GAME_ToggleActorForTeam_f, NULL);
-	Cmd_AddCommand("mp_saveteamstate", GAME_SaveTeamState_f, NULL);
-	Cmd_AddCommand("saveteam", GAME_SaveTeam_f, "Save a team slot");
-	Cmd_AddCommand("loadteam", GAME_LoadTeam_f, "Load a team slot");
-	Cmd_AddCommand("team_comments", GAME_TeamSlotComments_f, "Fills the team selection menu with the team names");
-	Cmd_AddCommand("mp_team_update", GAME_UpdateTeamMenuParameters_f, "");
-	Cmd_AddCommand("mp_team_select", GAME_TeamSelect_f, "");
 }

@@ -6,7 +6,7 @@ component checkbox mpTeamCheckbox
 {
 	image		"ui/checkbox_green"
 	size		"20 20"
-	onChange	{ cmd "mp_toggleactor <num> <current>;" }
+	onChange	{ cmd "game_toggleactor <num> <current>;" }
 }
 
 window mp_team_edit extends objectinfo
@@ -181,7 +181,7 @@ window mp_team_edit extends objectinfo
 			if ( *node:root.bt_actor<cvar:i>@current != 1 ) {
 				call *node:root.bt_actor<cvar:i>@toggle
 			}
-			cmd "mp_toggleactor <cvar:i> 1;"
+			cmd "game_toggleactor <cvar:i> 1;"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
@@ -205,7 +205,7 @@ window mp_team_edit extends objectinfo
 		pos		"90 13"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "mp_team_select 0;" }
+		onClick { cmd "game_teamselect 0;" }
 	}
 	string txt_actor1
 	{
@@ -213,7 +213,7 @@ window mp_team_edit extends objectinfo
 		pos		"90 54"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "mp_team_select 1;" }
+		onClick { cmd "game_teamselect 1;" }
 	}
 	string txt_actor2
 	{
@@ -221,7 +221,7 @@ window mp_team_edit extends objectinfo
 		pos		"90 95"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "mp_team_select 2;" }
+		onClick { cmd "game_teamselect 2;" }
 	}
 	string txt_actor3
 	{
@@ -229,7 +229,7 @@ window mp_team_edit extends objectinfo
 		pos		"90 136"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "mp_team_select 3;" }
+		onClick { cmd "game_teamselect 3;" }
 	}
 	string txt_actor4
 	{
@@ -237,7 +237,7 @@ window mp_team_edit extends objectinfo
 		pos		"90 177"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "mp_team_select 4;" }
+		onClick { cmd "game_teamselect 4;" }
 	}
 	string txt_actor5
 	{
@@ -245,7 +245,7 @@ window mp_team_edit extends objectinfo
 		pos		"90 218"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "mp_team_select 5;" }
+		onClick { cmd "game_teamselect 5;" }
 	}
 	string txt_actor6
 	{
@@ -253,7 +253,7 @@ window mp_team_edit extends objectinfo
 		pos		"90 259"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "mp_team_select 6;" }
+		onClick { cmd "game_teamselect 6;" }
 	}
 	string txt_actor7
 	{
@@ -261,7 +261,7 @@ window mp_team_edit extends objectinfo
 		pos		"90 300"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "mp_team_select 7;" }
+		onClick { cmd "game_teamselect 7;" }
 	}
 
 	// ==================
@@ -728,12 +728,12 @@ window mp_team_edit extends objectinfo
 		call *node:root.mp_actor_stats
 		call *node:root.mp_checkboxes_set
 		cmd "set mn_infotype 0;set mn_equiptype 0;"
-		cmd "team_initskin;mp_update_item_list;mp_team_select 0;mp_team_update;"
+		cmd "team_initskin;mp_update_item_list;game_teamselect 0;game_teamupdate;"
 	}
 
 	func onWindowClosed
 	{
-		cmd "mp_saveteamstate;"
+		cmd "game_saveteamstate;"
 	}
 }
 
@@ -776,7 +776,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 130"
 			size		"256 34"
 			string		*cvar:mn_slot0
-			onClick		{ cmd "loadteam 0;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 0;ui_push mp_team_edit;" }
 		}
 
 		button slot_team1
@@ -791,7 +791,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 165"
 			size		"256 34"
 			string		*cvar:mn_slot1
-			onClick		{ cmd "loadteam 1;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 1;ui_push mp_team_edit;" }
 		}
 
 		button slot_team2
@@ -806,7 +806,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 200"
 			size		"256 34"
 			string		*cvar:mn_slot2
-			onClick		{ cmd "loadteam 2;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 2;ui_push mp_team_edit;" }
 		}
 
 		button slot_team3
@@ -821,7 +821,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 235"
 			size		"256 34"
 			string		*cvar:mn_slot3
-			onClick		{ cmd "loadteam 3;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 3;ui_push mp_team_edit;" }
 		}
 
 		button slot_team4
@@ -836,7 +836,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 270"
 			size		"256 34"
 			string		*cvar:mn_slot4
-			onClick		{ cmd "loadteam 4;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 4;ui_push mp_team_edit;" }
 		}
 
 		button slot_team5
@@ -851,7 +851,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 305"
 			size		"256 34"
 			string		*cvar:mn_slot5
-			onClick		{ cmd "loadteam 5;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 5;ui_push mp_team_edit;" }
 		}
 
 		button slot_team6
@@ -866,7 +866,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 340"
 			size		"256 34"
 			string		*cvar:mn_slot6
-			onClick		{ cmd "loadteam 6;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 6;ui_push mp_team_edit;" }
 		}
 
 		button slot_team7
@@ -881,7 +881,7 @@ window mp_team extends abstract_multiplayer
 			pos			"85 375"
 			size		"256 34"
 			string		*cvar:mn_slot7
-			onClick		{ cmd "loadteam 7;ui_push mp_team_edit;" }
+			onClick		{ cmd "game_loadteam 7;ui_push mp_team_edit;" }
 		}
 
 		// ==================
@@ -893,7 +893,7 @@ window mp_team extends abstract_multiplayer
 			pos	"85 430"
 			size "256 40"
 			tooltip	"_Generate a new random team"
-			onClick	{ cmd "mp_autoteam;ui_push mp_team_edit;" }
+			onClick	{ cmd "game_autoteam;ui_push mp_team_edit;" }
 			image	"ui/button_green_small"
 			font	"f_menusmall"
 			color	"0 0.5 0 1"
@@ -931,7 +931,7 @@ window mp_team extends abstract_multiplayer
 
 	func onWindowOpened
 	{
-		cmd	"team_comments;define cl_teamdef phalanx;"
+		cmd	"game_teamcomments;define cl_teamdef phalanx;"
 	}
 }
 
@@ -940,7 +940,7 @@ window mp_team extends abstract_multiplayer
 // ==========================
 
 /**
- * @todo The ui_pop into the change event dont work - the workaround is the func onWindowClosed team_comments call
+ * @todo The ui_pop into the change event dont work - the workaround is the func onWindowClosed game_teamcomments call
  */
 window mp_team_save_popup
 {
@@ -970,7 +970,7 @@ window mp_team_save_popup
 		pos			"50 130"
 		size		"256 34"
 		string		*cvar:mn_slot0
-		onChange		{ cmd "saveteam 0;ui_pop;" }
+		onChange		{ cmd "game_saveteam 0;ui_pop;" }
 	}
 
 	textentry slot_team1
@@ -984,7 +984,7 @@ window mp_team_save_popup
 		pos			"50 165"
 		size		"256 34"
 		string		*cvar:mn_slot1
-		onChange	{ cmd "saveteam 1;ui_pop;" }
+		onChange	{ cmd "game_saveteam 1;ui_pop;" }
 	}
 
 	textentry slot_team2
@@ -998,7 +998,7 @@ window mp_team_save_popup
 		pos			"50 200"
 		size		"256 34"
 		string		*cvar:mn_slot2
-		onChange	{ cmd "saveteam 2;ui_pop;" }
+		onChange	{ cmd "game_saveteam 2;ui_pop;" }
 	}
 
 	textentry slot_team3
@@ -1012,7 +1012,7 @@ window mp_team_save_popup
 		pos			"50 235"
 		size		"256 34"
 		string		*cvar:mn_slot3
-		onChange	{ cmd "saveteam 3;ui_pop;" }
+		onChange	{ cmd "game_saveteam 3;ui_pop;" }
 	}
 
 	textentry slot_team4
@@ -1026,7 +1026,7 @@ window mp_team_save_popup
 		pos			"50 270"
 		size		"256 34"
 		string		*cvar:mn_slot4
-		onChange	{ cmd "saveteam 4;ui_pop;" }
+		onChange	{ cmd "game_saveteam 4;ui_pop;" }
 	}
 
 	textentry slot_team5
@@ -1040,7 +1040,7 @@ window mp_team_save_popup
 		pos			"50 305"
 		size		"256 34"
 		string		*cvar:mn_slot5
-		onChange	{ cmd "saveteam 5;ui_pop;" }
+		onChange	{ cmd "game_saveteam 5;ui_pop;" }
 	}
 
 	textentry slot_team6
@@ -1054,7 +1054,7 @@ window mp_team_save_popup
 		pos			"50 340"
 		size		"256 34"
 		string		*cvar:mn_slot6
-		onChange	{ cmd "saveteam 6;ui_pop;" }
+		onChange	{ cmd "game_saveteam 6;ui_pop;" }
 	}
 
 	textentry slot_team7
@@ -1068,11 +1068,11 @@ window mp_team_save_popup
 		pos			"50 375"
 		size		"256 34"
 		string		*cvar:mn_slot7
-		onChange	{ cmd "saveteam 7;ui_pop;" }
+		onChange	{ cmd "game_saveteam 7;ui_pop;" }
 	}
 
 	func onWindowClosed
 	{
-		cmd "team_comments;"
+		cmd "game_teamcomments;"
 	}
 }
