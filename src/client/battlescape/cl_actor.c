@@ -437,9 +437,6 @@ qboolean CL_ActorSelect (le_t * le)
 	if (selActor)
 		selActor->selected = qfalse;
 
-	/** @todo remove this here, doesn't really belong here */
-	HUD_HideFiremodes();
-
 	mousePosTargettingAlign = 0;
 	selActor = le;
 	selActor->selected = qtrue;

@@ -144,7 +144,6 @@ static void HUD_FireWeapon_f (void)
 			CL_ActorSetMode(selActor, M_FIRE_L);
 		/* Store firemode. */
 		selActor->currentSelectedFiremode = firemode;
-		HUD_HideFiremodes();
 	} else {
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */

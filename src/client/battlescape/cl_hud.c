@@ -176,15 +176,6 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
 }
 
 /**
- * @brief Makes all entries of the firemode lists invisible.
- */
-void HUD_HideFiremodes (void)
-{
-	/** @todo not sure this callback mean something (maybe not need, or dont have any meaning (we hide it for a reason, not for hiding it)) */
-	UI_ExecuteConfunc("hide_firemodes");
-}
-
-/**
  * @brief Returns the amount of usable "reaction fire" TUs for this actor (depends on active/inactive RF)
  * @param[in] le The actor to check.
  * @return The remaining/usable TUs for this actor

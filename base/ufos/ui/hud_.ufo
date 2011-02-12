@@ -19,6 +19,7 @@ component panel cmpFiremodeEntry {
 		onMouseEnter { *node:this@image = "hud/firemode_hover" }
 		onMouseLeave { *node:this@image = "hud/firemode" }
 		onClick	{
+			cmd "ui_close <path:root>;"
 			cmd "hud_executeaction <node:parent.actionid@string>"
 		}
 	}
@@ -342,7 +343,7 @@ window firemode_right {
 
 window hud_general {
 
-	confunc hide_firemodes {
+	func hide_firemodes {
 		call *node:firemode_left.elements@removeAllChild
 		call *node:firemode_right.elements@removeAllChild
 	}
