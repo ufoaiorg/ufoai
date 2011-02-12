@@ -188,8 +188,8 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
 					{
-						const int time = building->buildTime - (ccs.date.day - building->timeStart);
-						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->size[0], 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
+						const float time = max(0.0, B_GetConstructionTimeRemain(building));
+						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->size[0], 0, va(ngettext("%3.1f day left", "%3.1f days left", time), time), 0, 0, NULL, qfalse, 0);
 						break;
 					}
 					default:

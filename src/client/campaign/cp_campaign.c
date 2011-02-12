@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../client.h" /* cls, cl */
@@ -618,6 +617,7 @@ void CL_CampaignRun (campaign_t *campaign)
 		while (currentmin < (int)floor(currentsecond / SECONDS_PER_MINUTE)) {
 			currentmin++;
 			PR_ProductionRun();
+			B_UpdateBaseData();
 		}
 
 		/* compute hourly events  */
@@ -635,7 +635,6 @@ void CL_CampaignRun (campaign_t *campaign)
 		/* daily events */
 		for (i = currentday; i < ccs.date.day; i++) {
 			/* every day */
-			B_UpdateBaseData();
 			INS_UpdateInstallationData();
 			HOS_HospitalRun();
 			CP_SpawnNewMissions();

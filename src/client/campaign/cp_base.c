@@ -495,7 +495,6 @@ qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t bui
 	}
 }
 
-
 /**
  * @brief Set status associated to a building
  * @param[in] base Base to check
@@ -590,7 +589,7 @@ qboolean B_AssembleMap (const base_t *base)
 					Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", entry->id);
 
 				Q_strcat(maps, va("b/%s ", entry->mapPart), sizeof(maps));
-			} else if (entry && ccs.date.day > entry->timeStart) {
+			} else if (entry) {
 				Q_strcat(maps, "b/construction ", sizeof(maps));
 			} else {
 				Q_strcat(maps, "b/empty ", sizeof(maps));
@@ -1132,7 +1131,8 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 	buildingNew = B_SetBuildingByClick(base, buildingTemplate, (int)pos[1], (int)pos[0]);
 	if (!buildingNew)
 		return;
-	buildingNew->timeStart = 0;
+	buildingNew->timeStart.day = 0;
+	buildingNew->timeStart.sec = 0;
 	B_UpdateAllBaseBuildingStatus(buildingNew, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
 			base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
@@ -1486,7 +1486,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 
 			/* status and build (start) time */
 			buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-			buildingNew->timeStart = ccs.date.day;
+			buildingNew->timeStart = ccs.date;
 
 			/* pay */
 			CL_UpdateCredits(ccs.credits - buildingNew->fixCosts);
@@ -2190,7 +2190,8 @@ static void B_BuildingConstructionFinished_f (void)
 
 		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
-			building->timeStart = 0;
+			building->timeStart.day = 0;
+			building->timeStart.sec = 0;
 
 			if (building->onConstruct[0] != '\0') {
 				base->buildingCurrent = building;
@@ -2621,7 +2622,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 			mxml_AddString(snode, SAVE_BASES_BUILDINGTYPE, building->tpl->id);
 			mxml_AddInt(snode, SAVE_BASES_BUILDING_PLACE, building->idx);
 			mxml_AddString(snode, SAVE_BASES_BUILDINGSTATUS, Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
-			mxml_AddInt(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart);
+			mxml_AddDate(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart.day, building->timeStart.sec);
 			mxml_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
 			mxml_AddFloat(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
 			mxml_AddPos2(snode, SAVE_BASES_POS, building->pos);
@@ -2817,7 +2818,11 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				return qfalse;
 			}
 
-			building->timeStart = mxml_GetInt(snode, SAVE_BASES_BUILDINGTIMESTART, 0);
+			mxml_GetDate(snode, SAVE_BASES_BUILDINGTIMESTART, &building->timeStart.day, &building->timeStart.sec);
+			/** @todo fallback code for compatibility */
+			if (building->timeStart.day == 0 && building->timeStart.sec == 0)
+				building->timeStart.day = mxml_GetInt(snode, SAVE_BASES_BUILDINGTIMESTART, 0);
+
 			building->buildTime = mxml_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
 			building->level = mxml_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
 			mxml_GetPos2(snode, SAVE_BASES_POS, building->pos);

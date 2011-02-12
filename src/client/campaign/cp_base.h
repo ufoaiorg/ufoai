@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,11 +20,10 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
-#ifndef CLIENT_CL_BASEMANGEMENT_H
-#define CLIENT_CL_BASEMANGEMENT_H
+#ifndef CP_BASE_H
+#define CP_BASE_H
 
 #include "cp_aliencont.h"
 #include "cp_produce.h"
@@ -65,19 +64,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define B_AtLeastOneExists() (B_GetNext(NULL) != NULL)
 
 /**
- * @brief Macro sets a building used
- * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
- * @param[in] buildingIDX Index of building to set used
- */
-#define B_BuildingSetUsed(usedArray, buildingIDX) { (usedArray)[buildingIDX] = qtrue; }
-/**
- * @brief Macro returns if a building is used
- * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
- * @param[in] buildingIDX Index of building to check
- */
-#define B_BuildingGetUsed(usedArray, buildingIDX) ((usedArray)[buildingIDX])
-
-/**
  * @brief Possible base states
  * @note: Don't change the order or you have to change the basemenu scriptfiles, too
  */
@@ -111,7 +97,7 @@ typedef enum {
 } baseCapacities_t;
 
 /** @brief Store capacities in base. */
-typedef struct cap_maxcur_s {
+typedef struct capacities_s {
 	int max;		/**< Maximum capacity. */
 	int cur;		/**< Currently used capacity. */
 } capacities_t;
@@ -213,7 +199,6 @@ qboolean B_AssembleMap(const base_t *base);
 
 /* building functions */
 #define B_IsTileBlocked(base, x, y) (base)->map[(int)(y)][(int)(x)].blocked
-#define B_IsBuildingBuiltUp(building) (!(building)->timeStart || (building)->timeStart + (building)->buildTime <= ccs.date.day)
 #define B_GetBuildingAt(base, x, y) (base)->map[(int)(y)][(int)(x)].building
 
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
@@ -279,4 +264,4 @@ qboolean E_HireAllowed(const base_t* base);
 qboolean AC_ContainmentAllowed(const base_t* base);
 qboolean HOS_HospitalAllowed(const base_t* base);
 
-#endif /* CLIENT_CP_BASE_H */
+#endif

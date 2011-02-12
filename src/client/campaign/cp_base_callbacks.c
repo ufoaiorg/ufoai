@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_capacity.h"
 #include "cp_map.h"
 #include "cp_popup.h"
+#include "cp_time.h"
 #include "cp_ufo.h"
 
 /** @brief Used from menu scripts as parameter for mn_base_select */
@@ -682,8 +683,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 			while ((b = B_GetNextBuildingByType(base, b, building->buildingType))) {
 				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-					const int delta = b->buildTime - (ccs.date.day - b->timeStart);
-					minDay = min(minDay, delta);
+					minDay = min(minDay, (int)max(0.0, B_GetConstructionTimeRemain(b)));
 				}
 			}
 
@@ -708,7 +708,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				building_t *b = NULL;
 
 				while ((b = B_GetNextBuildingByType(base, b, dependenceBuilding->buildingType))) {
-					if (b->buildTime > (ccs.date.day - b->timeStart)) {
+					if (!B_IsBuildingBuiltUp(b)) {
 						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
 							_(dependenceBuilding->name), _(building->name));
 						UI_Popup(_("Notice"), popupText);
@@ -812,10 +812,8 @@ static void BaseSummary_Init (const base_t *base)
 				base->capacities[cap].cur, base->capacities[cap].max), sizeof(textStatsBuffer));
 		} else {
 			if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-				const int daysLeft = b->timeStart + b->buildTime - ccs.date.day;
-				/* if there is no day left the status should not be B_STATUS_UNDER_CONSTRUCTION */
-				assert(daysLeft);
-				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i %s", _(b->name), daysLeft, ngettext("day", "days", daysLeft)), sizeof(textStatsBuffer));
+				const float timeLeft = max(0.0, B_GetConstructionTimeRemain(b));
+				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%3.1f %s", _(b->name), timeLeft, ngettext("day", "days", timeLeft)), sizeof(textStatsBuffer));
 			} else {
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), base->capacities[cap].cur, 0), sizeof(textStatsBuffer));
 			}

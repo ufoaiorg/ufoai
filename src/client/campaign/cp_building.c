@@ -27,6 +27,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "../../common/scripts.h"
 #include "cp_campaign.h"
+#include "cp_time.h"
+
+/**
+ * @brief Returns if a building is fully buildt up
+ * @param[in] building Pointer to the building to check
+ * @note it always return @c true for buildings with {0, 0} timeStart
+ */
+qboolean B_IsBuildingBuiltUp (const building_t *building)
+{
+	date_t due;
+
+	if (!building)
+		return qfalse;
+	if (building->timeStart.day == 0 && building->timeStart.sec == 0)
+		return qtrue;
+	due = building->timeStart;
+	due.day += building->buildTime;
+	if (Date_IsDue(&due))
+		return qtrue;
+	return qfalse;
+}
+
+/**
+ * @brief Returns the time remaining time of a building construction
+ * @param[in] building Pointer to the building to check
+ */
+float B_GetConstructionTimeRemain (const building_t const* building)
+{
+	date_t diff = Date_Substract(building->timeStart, ccs.date);
+	diff.day += building->buildTime;
+	return diff.day + (float)diff.sec / SECONDS_PER_DAY;
+}
 
 /**
  * @brief Returns the building type for a given building identified by its building id

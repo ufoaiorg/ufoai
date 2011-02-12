@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../cl_shared.h"
@@ -220,6 +219,23 @@ date_t Date_Add (date_t a, date_t b)
 	a.sec %= SECONDS_PER_DAY;
 	return a;
 }
+
+/**
+ * @brief Substract the second date from the first and return the result.
+ * @param[in] a First date.
+ * @param[in] b Second date.
+ */
+date_t Date_Substract (date_t a, date_t b)
+{
+	a.day -= b.day;
+	a.sec -= b.sec;
+	if (a.sec < 0) {
+		a.day--;
+		a.sec += SECONDS_PER_DAY;
+	}
+	return a;
+}
+
 
 /**
  * @brief Return a random relative date which lies between a lower and upper limit.

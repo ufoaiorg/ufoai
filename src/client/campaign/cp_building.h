@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../shared/shared.h"
 #include "../../shared/mathlib.h"
+#include "../../common/common.h"
 
 struct technology_s;
 
@@ -82,7 +83,8 @@ typedef struct building_s {
 	 * might e.g. be a factor */
 	float level;
 
-	int timeStart, buildTime;
+	date_t timeStart;
+	int buildTime;
 
 	buildingStatus_t buildingStatus;	/**< [BASE_SIZE*BASE_SIZE]; */
 
@@ -106,10 +108,25 @@ typedef struct building_s {
 	int capacity;		/**< Capacity of this building (used in calculate base capacities). */
 } building_t;
 
+/**
+ * @brief Macro sets a building used
+ * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
+ * @param[in] buildingIDX Index of building to set used
+ */
+#define B_BuildingSetUsed(usedArray, buildingIDX) { (usedArray)[buildingIDX] = qtrue; }
+/**
+ * @brief Macro returns if a building is used
+ * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
+ * @param[in] buildingIDX Index of building to check
+ */
+#define B_BuildingGetUsed(usedArray, buildingIDX) ((usedArray)[buildingIDX])
+
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
 qboolean B_BuildingScriptSanityCheck(void);
 building_t *B_GetBuildingTemplate(const char *buildingName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 qboolean B_CheckBuildingDependencesStatus(const building_t* building);
+qboolean B_IsBuildingBuiltUp(const building_t *building);
+float B_GetConstructionTimeRemain(const building_t const* building);
 
 #endif
