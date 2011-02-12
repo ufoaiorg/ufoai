@@ -232,7 +232,7 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 }
 
 
-static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
+static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
 			int *numsplits, qboolean *hintsplit, int *epsilonbrush)
 {
 	int i, s;
@@ -247,9 +247,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	/* if the brush actually uses the planenum,
 	 * we can tell the side for sure */
 	for (i = 0; i < brush->numsides; i++) {
-		const int num = brush->sides[i].planenum;
-		if (num >= 0x10000)
-			Sys_Error("bad planenum");
+		const uint16_t num = brush->sides[i].planenum;
 		if (num == planenum)
 			return (PSIDE_BACK | PSIDE_FACING);
 		if (num == (planenum ^ 1))
@@ -434,7 +432,7 @@ static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
 }
 
 #else
-static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
+static qboolean CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t *volume)
 {
 		bspbrush_t *front, *back;
 		qboolean good;
@@ -461,7 +459,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 	int value, bestvalue;
 	bspbrush_t *brush, *test;
 	side_t *bestside;
-	int i, j, pass, numpasses, pnum;
+	int i, j, pass, numpasses;
 	int front, back, both, facing, splits;
 	int bsplits, epsilonbrush;
 	qboolean hintsplit;
@@ -483,8 +481,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 			if (!(pass & 1) && (brush->original->contentFlags & CONTENTS_DETAIL))
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
-				/** @todo This will overflow if numsides is bigger than 6
-				 * @sa bspbrush_t */
+				uint16_t pnum;
 				side_t *side = &brush->sides[i];
 				if (side->bevel)
 					continue;	/* never use a bevel as a spliter */

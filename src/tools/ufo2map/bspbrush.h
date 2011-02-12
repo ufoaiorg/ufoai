@@ -35,7 +35,8 @@ typedef struct bspbrush_s bspbrush_t;
 typedef struct bspbrush_s {
 	struct bspbrush_s	*next;
 	vec3_t	mins, maxs;
-	int		side, testside;		/**< side of node during construction */
+	int		side;		/**< side of node during construction */
+	int		testside;
 	struct mapbrush_s	*original;
 	int		numsides;
 	side_t	sides[6];			/**< variably sized */
