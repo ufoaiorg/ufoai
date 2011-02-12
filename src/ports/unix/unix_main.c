@@ -42,6 +42,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BACKTRACE_SYMBOLS 50
 #endif
 
+#ifdef HAVE_SYS_UTSNAME_H
+#include <sys/utsname.h>
+#endif
+
+#ifdef HAVE_LINK_H
+#include <link.h>
+#endif
+
 const char *Sys_GetCurrentUser (void)
 {
 	static char s_userName[MAX_VAR];

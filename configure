@@ -5397,6 +5397,46 @@ SERVER_LIBS="$SERVER_LIBS $LIBS"
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
+# Check for execinfo, link and utsname
+#---------------------------------------------------------------------------------------------
+for ac_header in execinfo.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "execinfo.h" "ac_cv_header_execinfo_h" "$ac_includes_default"
+if test "x$ac_cv_header_execinfo_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_EXECINFO_H 1
+_ACEOF
+
+fi
+
+done
+
+for ac_header in link.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "link.h" "ac_cv_header_link_h" "$ac_includes_default"
+if test "x$ac_cv_header_link_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LINK_H 1
+_ACEOF
+
+fi
+
+done
+
+for ac_header in sys/utsname.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "sys/utsname.h" "ac_cv_header_sys_utsname_h" "$ac_includes_default"
+if test "x$ac_cv_header_sys_utsname_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_SYS_UTSNAME_H 1
+_ACEOF
+
+fi
+
+done
+
+
+#---------------------------------------------------------------------------------------------
 # Check for curl
 #---------------------------------------------------------------------------------------------
 LIBS=
