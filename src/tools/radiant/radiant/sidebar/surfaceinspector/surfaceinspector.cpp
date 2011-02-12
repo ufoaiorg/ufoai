@@ -744,7 +744,7 @@ gboolean SurfaceInspector::doUpdate (GtkWidget* widget, SurfaceInspector* self)
 gboolean SurfaceInspector::onValueKeyPress (GtkWidget* entry, GdkEventKey* event, SurfaceInspector* self)
 {
 	// Check for ENTER to emit the texture definition
-	if (event->keyval == GDK_Return) {
+	if (event->keyval == GDK_KEY_Return) {
 		self->emitTexDef();
 		// Don't propage the keypress if the Enter could be processed
 		return true;
@@ -757,7 +757,7 @@ gboolean SurfaceInspector::onValueKeyPress (GtkWidget* entry, GdkEventKey* event
 gboolean SurfaceInspector::onKeyPress (GtkWidget* entry, GdkEventKey* event, SurfaceInspector* self)
 {
 	// Check for Enter Key to emit the shader
-	if (event->keyval == GDK_Return) {
+	if (event->keyval == GDK_KEY_Return) {
 		self->emitShader();
 		// Don't propagate the keypress if the Enter could be processed
 		return true;
@@ -820,7 +820,7 @@ gboolean SurfaceInspector::onValueEntryFocusOut (GtkWidget* widget, GdkEventKey*
 gboolean SurfaceInspector::onValueEntryKeyPress (GtkWindow* window, GdkEventKey* event, SurfaceInspector* self)
 {
 	// Check for ESC to deselect all items
-	if (event->keyval == GDK_Return) {
+	if (event->keyval == GDK_KEY_Return) {
 		self->_valueInconsistent = false;
 		onApplyFlagsToggle(self->_valueEntryWidget.getWidget(), self);
 		// Don't propagate the keypress if the Enter could be processed

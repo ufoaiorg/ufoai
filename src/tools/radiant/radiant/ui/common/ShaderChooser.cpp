@@ -131,7 +131,7 @@ void ShaderChooser::callbackOK(GtkWidget* w, ShaderChooser* self) {
 gboolean ShaderChooser::onKeyPress(GtkWidget* widget, GdkEventKey* event, ShaderChooser* self) {
 	// Check for ESC or ENTER to close the dialog
 	switch (event->keyval) {
-		case GDK_Escape:
+		case GDK_KEY_Escape:
 			// Revert the shadername to the value it had at dialog startup
 			self->revertShader();
 
@@ -140,7 +140,7 @@ gboolean ShaderChooser::onKeyPress(GtkWidget* widget, GdkEventKey* event, Shader
 			// Don't propagate the keypress if ESC could be processed
 			return TRUE;
 
-		case GDK_Return:
+		case GDK_KEY_Return:
 			if (self->_targetEntry != NULL) {
 				gtk_entry_set_text(GTK_ENTRY(self->_targetEntry),
 							self->_selector.getSelection().c_str());

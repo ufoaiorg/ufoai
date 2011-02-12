@@ -584,7 +584,7 @@ private:
 
 		// greebo: I saw this in the original GTKRadiant code, maybe this is necessary to catch GTK_ISO_Left_Tab...
 		if (keyval == GDK_ISO_Left_Tab) {
-			keyval = GDK_Tab;
+			keyval = GDK_KEY_Tab;
 		}
 
 		return findAccelerator(keyval, _modifiers.getKeyboardFlags(event->state));
@@ -595,7 +595,7 @@ private:
 		GdkEventKey eventKey = *event;
 
 		// Sometimes the ALT modifier is not set, so this is a workaround for this
-		if (eventKey.keyval == GDK_Alt_L || eventKey.keyval == GDK_Alt_R) {
+		if (eventKey.keyval == GDK_KEY_Alt_L || eventKey.keyval == GDK_KEY_Alt_R) {
 			if (keyPress) {
 				eventKey.state |= GDK_MOD1_MASK;
 			}
@@ -624,7 +624,7 @@ private:
 			bool isEditableWidget = GTK_IS_EDITABLE(focus) || GTK_IS_TEXT_VIEW(focus);
 
 			// Never propagate keystrokes if editable widgets are focused
-			if ((isEditableWidget && event->keyval != GDK_Escape) || keyProcessed) {
+			if ((isEditableWidget && event->keyval != GDK_KEY_Escape) || keyProcessed) {
 				return keyProcessed;
 			}
 		}
@@ -673,7 +673,7 @@ private:
 			bool isEditableWidget = GTK_IS_EDITABLE(focus) || GTK_IS_TEXT_VIEW(focus);
 
 			// Never propagate keystrokes if editable widgets are focused
-			if ((isEditableWidget && event->keyval != GDK_Escape) || keyProcessed) {
+			if ((isEditableWidget && event->keyval != GDK_KEY_Escape) || keyProcessed) {
 				return keyProcessed;
 			}
 		}
@@ -714,7 +714,7 @@ private:
 
 		// never pass onKeyPress event to the accelerator manager if an editable widget is focused
 		// the only exception is the ESC key
-		if (isEditableWidget && event->keyval != GDK_Escape) {
+		if (isEditableWidget && event->keyval != GDK_KEY_Escape) {
 			return keyProcessed;
 		}
 
@@ -736,7 +736,7 @@ private:
 		GtkWidget* focus = gtk_window_get_focus(window);
 		bool isEditableWidget = GTK_IS_EDITABLE(focus) || GTK_IS_TEXT_VIEW(focus);
 
-		if (isEditableWidget && event->keyval != GDK_Escape) {
+		if (isEditableWidget && event->keyval != GDK_KEY_Escape) {
 			// never pass onKeyPress event to the accelerator manager if an editable widget is focused
 			return keyProcessed;
 		}
@@ -753,7 +753,7 @@ private:
 	guint getGDKCode(const std::string& keyStr) {
 		guint returnValue = gdk_keyval_to_upper(gdk_keyval_from_name(keyStr.c_str()));
 
-		if (returnValue == GDK_VoidSymbol) {
+		if (returnValue == GDK_KEY_VoidSymbol) {
 			globalOutputStream() << "EventManager: Warning: Could not recognise key " << keyStr << "\n";
 		}
 
@@ -761,10 +761,10 @@ private:
 	}
 
 	bool isModifier(GdkEventKey* event) {
-		return (event->keyval == GDK_Control_L || event->keyval == GDK_Control_R ||
-				event->keyval == GDK_Shift_L || event->keyval == GDK_Shift_R ||
-				event->keyval == GDK_Alt_L || event->keyval == GDK_Alt_R ||
-				event->keyval == GDK_Meta_L || event->keyval == GDK_Meta_R);
+		return (event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R ||
+				event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R ||
+				event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R ||
+				event->keyval == GDK_KEY_Meta_L || event->keyval == GDK_KEY_Meta_R);
 	}
 
 	std::string getGDKEventStr(GdkEventKey* event) {
