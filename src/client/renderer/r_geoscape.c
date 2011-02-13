@@ -204,8 +204,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	/* scale model to proper resolution */
 	glScalef(viddef.rx, viddef.ry, 1.0f);
 	/* rotate model to proper direction. */
-	glRotatef(180.0f, 0, 1, 0);
-	glRotatef(90.f - direction, 0, 0, 1);
+	glRotatef(-90.f + direction, 0, 0, 1);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
 
@@ -278,7 +277,7 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	glRotatef(rotate[0] - pos[0], 0, 0, 1);
 	glRotatef(90.0f - pos[1], 1, 0, 0);
 	glTranslatef(0, 0, earthRadius);
-	glRotatef(-90.0f + direction, 0, 0, 1);
+	glRotatef(90.0f + direction, 0, 0, 1);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
 
