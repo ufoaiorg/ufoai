@@ -583,7 +583,7 @@ private:
 		unsigned int keyval = gdk_keyval_to_upper(event->keyval);
 
 		// greebo: I saw this in the original GTKRadiant code, maybe this is necessary to catch GTK_ISO_Left_Tab...
-		if (keyval == GDK_KEY_ISO_Left_Tab) {
+		if (keyval == GDK_ISO_Left_Tab) {
 			keyval = GDK_KEY_Tab;
 		}
 
