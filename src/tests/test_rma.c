@@ -139,6 +139,27 @@ static void testMassAssemblySequential (void)
 	}
 }
 
+/* test a range of random seeds */
+/* "japan big" has problems with seeds 5, 13, 25 */
+static void testMassAssemblySeed (void)
+{
+	int i;
+	long time;
+	mapInfo_t *randomMap;
+
+	sv_threads->integer = 0;
+	for (i = 14; i < 30; i++) {
+		srand(i);
+		time = Sys_Milliseconds();
+		randomMap = SV_AssembleMap("japan", "big", map, pos);
+		CU_ASSERT(randomMap != NULL);
+		time = (Sys_Milliseconds() - time);
+		CU_ASSERT(time < 30000);
+		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
+		Mem_Free(randomMap);
+	}
+}
+
 int UFO_AddRandomMapAssemblyTests (void)
 {
 	static cvar_t svt;
@@ -173,6 +194,10 @@ int UFO_AddRandomMapAssemblyTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == NULL)
+		return CU_get_error();
+
+	/* This test should normally (ie. builbot) not be active */
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySeed) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
