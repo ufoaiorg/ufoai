@@ -669,9 +669,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_shared.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.c">
 			<Option compilerVar="CC" />
 		</Unit>
