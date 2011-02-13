@@ -1604,6 +1604,42 @@ tech rs_weapon_laserammo
 	producetime	20
 }
 
+tech rs_weapon_laserammo_stun
+{
+	type		weapon
+	up_chapter	equipment
+
+	description {
+		default "_laser_ammo_txt"
+	}
+	pre_description {
+		default "_laser_ammo_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	icons/mail_tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+	require_AND
+	{
+		tech rs_weapon_laserammo
+	}
+	provides	laser_ammo_stun
+	time		0
+	producetime	20
+}
+
 tech rs_medikit
 {
 	type	weapon
