@@ -2232,7 +2232,7 @@ static void CL_ActorEquipmentSelect_f (void)
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
-	Cvar_SetValue("mn_ucn", chrDisplayList.chr[num]->ucn);
+	Cvar_SetValue("mn_ucn", chr->ucn);
 
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");
