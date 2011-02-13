@@ -51,12 +51,21 @@ static void UI_BattlescapeNodeLoading (uiNode_t *node)
 	/* node->ghost = qtrue; */
 }
 
+static void UI_BattlescapeNodeDraw (uiNode_t *node)
+{
+	/** Note: hack to fix everytime renderrect (for example when we close hud_nohud) */
+	vec2_t pos;
+	UI_GetNodeAbsPos(node, pos);
+	UI_SetRenderRect(pos[0], pos[1], node->size[0], node->size[1]);
+}
+
 static void UI_BattlescapeNodeInit (uiNode_t *node, linkedList_t *params)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 	UI_SetRenderRect(pos[0], pos[1], node->size[0], node->size[1]);
 }
+
 
 static void UI_BattlescapeNodeSizeChanged (uiNode_t *node)
 {
@@ -77,5 +86,6 @@ void UI_RegisterBattlescapeNode (uiBehaviour_t *behaviour)
 	behaviour->windowOpened = UI_BattlescapeNodeInit;
 	behaviour->windowClosed = UI_BattlescapeNodeClose;
 	behaviour->sizeChanged = UI_BattlescapeNodeSizeChanged;
+	behaviour->draw = UI_BattlescapeNodeDraw;
 	ui_battleScapeBehaviour = behaviour;
 }

@@ -182,6 +182,8 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
+	Cvar_SetValue("cl_onbattlescape", 1.0);
+
 	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
 	if (list != NULL && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
@@ -198,6 +200,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
  */
 void GAME_EndBattlescape (void)
 {
+	Cvar_SetValue("cl_onbattlescape", 0.0);
 	Com_Printf("Used inventory slots after battle: %i\n", cls.i.GetUsedSlots(&cls.i));
 }
 
