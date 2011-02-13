@@ -37,14 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const cgame_import_t *cgi;
 
-void GAME_MP_AutoTeam (void)
-{
-	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
-	const char *teamDefID = GAME_GetTeamDef();
-
-	GAME_GenerateTeam(teamDefID, ed, GAME_GetCharacterArraySize());
-}
-
 void GAME_MP_StartBattlescape (qboolean isTeamPlay)
 {
 	UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
@@ -82,7 +74,7 @@ static void GAME_MP_StartServer_f (void)
 	mapDef_t *md;
 
 	if (!sv_dedicated->integer && !chrDisplayList.num)
-		GAME_MP_AutoTeam();
+		GAME_AutoTeam();
 
 	if (Cvar_GetInteger("sv_teamplay")
 	 && Cvar_GetValue("sv_maxsoldiersperplayer") > Cvar_GetValue("sv_maxsoldiersperteam")) {

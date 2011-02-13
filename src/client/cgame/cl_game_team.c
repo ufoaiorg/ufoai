@@ -58,9 +58,17 @@ static void GAME_UpdateActiveTeamList (void)
 	UI_ExecuteConfunc("team_checkboxes_update %i", chrDisplayList.num);
 }
 
+void GAME_AutoTeam (void)
+{
+	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
+	const char *teamDefID = GAME_GetTeamDef();
+
+	GAME_GenerateTeam(teamDefID, ed, GAME_GetCharacterArraySize());
+}
+
 void GAME_AutoTeam_f (void)
 {
-	GAME_MP_AutoTeam();
+	GAME_AutoTeam();
 
 	GAME_UpdateActiveTeamList();
 }
