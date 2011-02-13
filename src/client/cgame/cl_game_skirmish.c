@@ -69,19 +69,28 @@ static void GAME_SK_Start_f (void)
 {
 	char map[MAX_VAR];
 	mapDef_t *md;
-	const char *name = Cvar_GetString("cl_equip");
-	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
-	const size_t size = GAME_GetCharacterArraySize();
-	uint32_t maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
-	uint32_t ugvs = Cvar_GetInteger("cl_ugvs");
-	/** @todo make the teamdef configurable */
-	const char *ugvTeamDefID = "phalanx_ugv_phoenix";
-	unsigned int i;
 
-	if (maxSoldiers <= 0)
-		maxSoldiers = size;
+	if (!chrDisplayList.num) {
+		unsigned int i;
+		/** @todo make the teamdef configurable */
+		const char *ugvTeamDefID = "phalanx_ugv_phoenix";
+		const char *name = Cvar_GetString("cl_equip");
+		const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
+		const size_t size = GAME_GetCharacterArraySize();
+		uint32_t maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
+		uint32_t ugvs = Cvar_GetInteger("cl_ugvs");
 
-	ugvs = min(ugvs, size - maxSoldiers);
+		if (maxSoldiers <= 0)
+			maxSoldiers = size;
+
+		ugvs = min(ugvs, size - maxSoldiers);
+		Com_Printf("Starting skirmish with %i soldiers and %i ugvs\n", maxSoldiers, ugvs);
+		GAME_AutoTeam(name, maxSoldiers);
+		for (i = 0; i < ugvs; i++)
+			GAME_AppendTeamMember(i + maxSoldiers, ugvTeamDefID, ed);
+	} else {
+		Com_Printf("Using already loaded team with %i members\n", chrDisplayList.num);
+	}
 
 	assert(cls.currentSelectedMap >= 0);
 	assert(cls.currentSelectedMap < MAX_MAPDEFS);
@@ -91,11 +100,6 @@ static void GAME_SK_Start_f (void)
 		return;
 
 	GAME_SK_SetMissionParameters(md);
-
-	Com_Printf("Starting skirmish with %i soldiers and %i ugvs\n", maxSoldiers, ugvs);
-	GAME_AutoTeam("multiplayer_initial", maxSoldiers);
-	for (i = 0; i < ugvs; i++)
-		GAME_AppendTeamMember(i + maxSoldiers, ugvTeamDefID, ed);
 
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
@@ -300,4 +304,6 @@ void GAME_SK_Shutdown (void)
 	UI_ResetData(OPTION_UFOS);
 
 	SV_Shutdown("Quitting server.", qfalse);
+
+	chrDisplayList.num = 0;
 }
