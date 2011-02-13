@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "cl_game.h"
+#include "cl_game_team.h"
 #include "../cl_team.h"
 #include "../cl_inventory.h"
 #include "../ui/ui_main.h"
@@ -70,7 +71,6 @@ static void GAME_SK_Start_f (void)
 	mapDef_t *md;
 	const char *name = Cvar_GetString("cl_equip");
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
-	const char *teamDefID = GAME_GetTeamDef();
 	const size_t size = GAME_GetCharacterArraySize();
 	uint32_t maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
 	uint32_t ugvs = Cvar_GetInteger("cl_ugvs");
@@ -93,7 +93,7 @@ static void GAME_SK_Start_f (void)
 	GAME_SK_SetMissionParameters(md);
 
 	Com_Printf("Starting skirmish with %i soldiers and %i ugvs\n", maxSoldiers, ugvs);
-	GAME_GenerateTeam(teamDefID, ed, maxSoldiers);
+	GAME_AutoTeam("multiplayer_initial", maxSoldiers);
 	for (i = 0; i < ugvs; i++)
 		GAME_AppendTeamMember(i + maxSoldiers, ugvTeamDefID, ed);
 

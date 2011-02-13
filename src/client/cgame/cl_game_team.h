@@ -32,7 +32,7 @@ void GAME_TeamSlotComments_f(void);
 void GAME_SaveTeamState_f(void);
 void GAME_ToggleActorForTeam_f(void);
 void GAME_AutoTeam_f(void);
-void GAME_AutoTeam(void);
+void GAME_AutoTeam(const char *equipmentDefinitionID, int teamMembers);
 void GAME_UpdateTeamMenuParameters_f(void);
 void GAME_TeamSelect_f(void);
 qboolean GAME_LoadDefaultTeam(void);

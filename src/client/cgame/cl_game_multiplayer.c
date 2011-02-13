@@ -74,7 +74,7 @@ static void GAME_MP_StartServer_f (void)
 	mapDef_t *md;
 
 	if (!sv_dedicated->integer && !chrDisplayList.num)
-		GAME_AutoTeam();
+		GAME_AutoTeam("multiplayer_initial", GAME_GetCharacterArraySize());
 
 	if (Cvar_GetInteger("sv_teamplay")
 	 && Cvar_GetValue("sv_maxsoldiersperplayer") > Cvar_GetValue("sv_maxsoldiersperteam")) {
