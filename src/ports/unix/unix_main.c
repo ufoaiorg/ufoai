@@ -464,7 +464,6 @@ static int find_matching_file (struct dl_phdr_info *info, size_t size, void *dat
 
 static void _backtrace (FILE *crash, void * const *buffer, int size)
 {
-	const int stack_depth = size - 1;
 	int x;
 	struct bfd_set *set = calloc(1, sizeof(*set));
 	struct output_buffer ob;
