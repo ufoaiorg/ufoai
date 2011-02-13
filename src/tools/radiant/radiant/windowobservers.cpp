@@ -58,16 +58,16 @@ static inline void WindowObservers_OnModifierUp (WindowObservers& observers, Mod
 static gboolean selection_modifier_key_press (GtkWidget* widget, GdkEventKey* event, WindowObservers& observers)
 {
 	switch (event->keyval) {
-	case GDK_KEY_Alt_L:
-	case GDK_KEY_Alt_R:
+	case GDK_Alt_L:
+	case GDK_Alt_R:
 		WindowObservers_OnModifierDown(observers, c_modifierAlt);
 		break;
-	case GDK_KEY_Shift_L:
-	case GDK_KEY_Shift_R:
+	case GDK_Shift_L:
+	case GDK_Shift_R:
 		WindowObservers_OnModifierDown(observers, c_modifierShift);
 		break;
-	case GDK_KEY_Control_L:
-	case GDK_KEY_Control_R:
+	case GDK_Control_L:
+	case GDK_Control_R:
 		WindowObservers_OnModifierDown(observers, c_modifierControl);
 		break;
 	}
@@ -77,16 +77,16 @@ static gboolean selection_modifier_key_press (GtkWidget* widget, GdkEventKey* ev
 static gboolean selection_modifier_key_release (GtkWidget* widget, GdkEventKey* event, WindowObservers& observers)
 {
 	switch (event->keyval) {
-	case GDK_KEY_Alt_L:
-	case GDK_KEY_Alt_R:
+	case GDK_Alt_L:
+	case GDK_Alt_R:
 		WindowObservers_OnModifierUp(observers, c_modifierAlt);
 		break;
-	case GDK_KEY_Shift_L:
-	case GDK_KEY_Shift_R:
+	case GDK_Shift_L:
+	case GDK_Shift_R:
 		WindowObservers_OnModifierUp(observers, c_modifierShift);
 		break;
-	case GDK_KEY_Control_L:
-	case GDK_KEY_Control_R:
+	case GDK_Control_L:
+	case GDK_Control_R:
 		WindowObservers_OnModifierUp(observers, c_modifierControl);
 		break;
 	}

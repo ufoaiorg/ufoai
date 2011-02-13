@@ -880,7 +880,7 @@ gboolean TexTool::onMouseMotion(GtkWidget* widget, GdkEventMotion* event, TexToo
 gboolean TexTool::onKeyPress(GtkWindow* window, GdkEventKey* event, TexTool* self) {
 
 	// Check for ESC to deselect all items
-	if (event->keyval == GDK_KEY_Escape) {
+	if (event->keyval == GDK_Escape) {
 		// Don't propage the keypress if the ESC could be processed
 		// setAllSelected returns TRUE in that case
 		return self->setAllSelected(false);

@@ -54,7 +54,7 @@ gboolean ShortcutChooser::onShortcutKeyPress(GtkWidget* widget, GdkEventKey* eve
 	/** greebo: Workaround for allowing Shift+TAB as well (Tab becomes ISO_Left_Tab in that case)
 	 */
 	if (event->keyval == GDK_ISO_Left_Tab) {
-		event->keyval = GDK_KEY_Tab;
+		event->keyval = GDK_Tab;
 	}
 
 	// Store the shortcut string representation into the GtkEntry field

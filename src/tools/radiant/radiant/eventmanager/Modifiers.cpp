@@ -165,9 +165,9 @@ void Modifiers::updateState(GdkEventKey* event, bool keyPress) {
 	int shiftMask = 1 << getModifierBitIndex("SHIFT");
 	int altMask = 1 << getModifierBitIndex("ALT");
 
-	mask |= (event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R) ? ctrlMask : 0;
-	mask |= (event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R) ? shiftMask : 0;
-	mask |= (event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R) ? altMask : 0;
+	mask |= (event->keyval == GDK_Control_L || event->keyval == GDK_Control_R) ? ctrlMask : 0;
+	mask |= (event->keyval == GDK_Shift_L || event->keyval == GDK_Shift_R) ? shiftMask : 0;
+	mask |= (event->keyval == GDK_Alt_L || event->keyval == GDK_Alt_R) ? altMask : 0;
 
 	if (keyPress) {
 		_modifierState |= mask;
