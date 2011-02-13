@@ -120,7 +120,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 	}
 
 	if (bfd_check_format(b, bfd_archive)) {
-		output_print(ob, "Cannot get addresses from archive (%s)\n", procname);
+		output_print(ob, "Cannot get addresses from archive (%s)\n", b->filename);
 		bfd_close(b);
 		return -1;
 	}
@@ -129,7 +129,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 		const char *errmsg = bfd_errmsg(bfd_get_error());
 		output_print(ob, "%s (%s)\n", errmsg, b->filename);
 		if (bfd_get_error() == bfd_error_file_ambiguously_recognized) {
-			list_matching_formats(ob, procname, matching);
+			list_matching_formats(ob, b->filename, matching);
 			free(matching);
 		}
 		bfd_close(b);
@@ -138,7 +138,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 
 	if ((bfd_get_file_flags(b) & HAS_SYMS) == 0) {
 		const char *errmsg = bfd_errmsg(bfd_get_error());
-		output_print(ob, "Failed to get file flags from (%s) %s\n", procname, errmsg);
+		output_print(ob, "Failed to get file flags from (%s) %s\n", b->filename, errmsg);
 		bfd_close(b);
 		return 1;
 	}
@@ -146,7 +146,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 	if (bfd_read_minisymbols(b, FALSE, &symbol_table, &dummy) == 0) {
 		if (bfd_read_minisymbols(b, TRUE, &symbol_table, &dummy) < 0) {
 			const char *errmsg = bfd_errmsg(bfd_get_error());
-			output_print(ob, "Failed to read symbols from (%s): %s\n", procname, errmsg);
+			output_print(ob, "Failed to read symbols from (%s): %s\n", b->filename, errmsg);
 			free(symbol_table);
 			bfd_close(b);
 			return 1;
