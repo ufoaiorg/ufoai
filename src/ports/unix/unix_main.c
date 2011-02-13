@@ -428,7 +428,7 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 void Sys_Backtrace (void)
 {
 	const char *dumpFile = "crashdump.txt";
-	FILE *file = fopen(dumpFile, "a");
+	FILE *file = fopen(dumpFile, "w");
 	FILE *crash = file != NULL ? file : stderr;
 	int filenumber = fileno(crash);
 

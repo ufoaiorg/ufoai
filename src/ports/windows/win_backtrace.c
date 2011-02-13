@@ -116,7 +116,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 		SymCleanup(GetCurrentProcess());
 	}
 
-	crash = fopen(dumpFile, "a");
+	crash = fopen(dumpFile, "w");
 	if (crash != NULL) {
 		fprintf(crash, "======start======\n");
 		fprintf(crash, "Date: %.4d-%.2d-%.2d\n",
