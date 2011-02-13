@@ -1,6 +1,6 @@
 /**
- * @file save_multiplayer.h
- * @brief XML tag constants for savegame.
+ * @file save_team.h
+ * @brief XML tag constants for team savegame.
  */
 
 /*
@@ -22,16 +22,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#define SAVE_MULTIPLAYER_ROOTNODE "multiplayer"
+#define SAVE_TEAM_ROOTNODE "multiplayer"
 
-#define SAVE_MULTIPLAYER_TEAM "team"
-#define SAVE_MULTIPLAYER_CHARACTER "character"
+#define SAVE_TEAM_NODE "team"
+#define SAVE_TEAM_CHARACTER "character"
 
-#define SAVE_MULTIPLAYER_EQUIPMENT "equipment"
-#define SAVE_MULTIPLAYER_ITEM "item"
-#define SAVE_MULTIPLAYER_ID "id"
-#define SAVE_MULTIPLAYER_NUM "num"
-#define SAVE_MULTIPLAYER_NUMLOOSE "numLoose"
+#define SAVE_TEAM_EQUIPMENT "equipment"
+#define SAVE_TEAM_ITEM "item"
+#define SAVE_TEAM_ID "id"
+#define SAVE_TEAM_NUM "num"
+#define SAVE_TEAM_NUMLOOSE "numLoose"
 
 /*
 DTD:
