@@ -159,6 +159,7 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	char resultText[UI_MAX_SMALLTEXTLEN];
 	int enemiesKilled, enemiesStunned;
 	int i;
+	const int team = cls.team;
 
 	CL_Drop();
 
@@ -169,9 +170,9 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 	enemiesKilled = enemiesStunned = 0;
 	for (i = 0; i < MAX_TEAMS; i++) {
-		if (i != cls.team && i != TEAM_CIVILIAN) {
-			enemiesKilled += numKilled[cls.team][i];
-			enemiesStunned += numStunned[cls.team][i];
+		if (i != team && i != TEAM_CIVILIAN) {
+			enemiesKilled += numKilled[team][i];
+			enemiesStunned += numStunned[team][i];
 		}
 	}
 
@@ -182,9 +183,9 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 			  "Friendly fire:\t\t%i\n"
 			  "Civilians killed:\t\t%i\n"
 			  "Civilians killed by enemy:\t\t%i\n"),
-			enemiesKilled + enemiesStunned, numAlive[cls.team], numAlive[TEAM_ALIEN],
-			numKilled[cls.team][cls.team], numKilled[cls.team][TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN]);
-	if (winner == cls.team) {
+			enemiesKilled + enemiesStunned, numAlive[team], numAlive[TEAM_ALIEN],
+			numKilled[team][team], numKilled[team][TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN]);
+	if (winner == team) {
 		Com_sprintf(popupText, lengthof(popupText), "%s\n%s", _("You won the game!"), resultText);
 		UI_Popup(_("Congratulations"), popupText);
 	} else {
