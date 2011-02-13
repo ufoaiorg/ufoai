@@ -75,7 +75,7 @@ void GAME_AutoTeam_f (void)
 
 /**
  * @brief This will activate/deactivate the actor for the team
- * @sa GAME_MP_SaveTeamState_f
+ * @sa GAME_SaveTeamState_f
  */
 void GAME_ToggleActorForTeam_f (void)
 {
@@ -97,7 +97,7 @@ void GAME_ToggleActorForTeam_f (void)
 
 /**
  * @brief Will remove those actors that should not be used in the team
- * @sa GAME_MP_ToggleActorForTeam_f
+ * @sa GAME_ToggleActorForTeam_f
  */
 void GAME_SaveTeamState_f (void)
 {
@@ -149,7 +149,7 @@ void GAME_TeamSlotComments_f (void)
 
 /**
  * @brief Stores the wholeTeam into a xml structure
- * @note Called by MP_SaveTeamMultiplayer to store the team info
+ * @note Called by GAME_SaveTeam to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
 static void GAME_SaveTeamInfo (mxml_node_t *p)
@@ -167,7 +167,7 @@ static void GAME_SaveTeamInfo (mxml_node_t *p)
 
 /**
  * @brief Loads the wholeTeam from the xml file
- * @note Called by MP_SaveTeamMultiplayer to store the team info
+ * @note Called by GAME_LoadTeam to load the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
 static void GAME_LoadTeamInfo (mxml_node_t *p)
@@ -195,8 +195,6 @@ static void GAME_LoadTeamInfo (mxml_node_t *p)
 
 /**
  * @brief Saves a team in xml format
- * @sa MP_SaveTeamMultiplayerInfoXML
- * @sa MP_LoadTeamMultiplayerXML
  */
 static qboolean GAME_SaveTeam (const char *filename, const char *name)
 {
@@ -286,8 +284,6 @@ void GAME_SaveTeam_f (void)
 
 /**
  * @brief Load a multiplayer team from an xml file
- * @sa MP_LoadTeamMultiplayer
- * @sa MP_SaveTeamMultiplayer
  */
 static qboolean GAME_LoadTeam (const char *filename)
 {
@@ -437,7 +433,7 @@ static void GAME_GetEquipment (void)
 
 /**
  * @brief Displays actor info and equipment and unused items in proper (filter) category.
- * @note This function is called everytime the team equipment screen for the team pops up.
+ * @note This function is called every time the team equipment screen for the team pops up.
  */
 void GAME_UpdateTeamMenuParameters_f (void)
 {
