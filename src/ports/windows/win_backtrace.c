@@ -27,7 +27,7 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 	char symbol_buffer[sizeof(IMAGEHLP_SYMBOL) + 255];
 	char module_name_raw[MAX_PATH];
 
-	GetModuleFileNameA(NULL, procname, sizeof procname);
+	GetModuleFileNameA(NULL, procname, sizeof(procname));
 
 	OBJZERO(frame);
 
@@ -51,7 +51,7 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 		if (depth < 0)
 			break;
 
-		symbol->SizeOfStruct = (sizeof *symbol) + 255;
+		symbol->SizeOfStruct = sizeof(*symbol) + 255;
 		symbol->MaxNameLength = 254;
 
 		if (module_base && GetModuleFileNameA((HINSTANCE) module_base, module_name_raw, MAX_PATH)) {
@@ -124,7 +124,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 		fprintf(crash, "Windows version %d.%d (Build %d) %s\n",
 				osInfo.dwMajorVersion, osInfo.dwMinorVersion, osInfo.dwBuildNumber, osInfo.szCSDVersion);
 		fprintf(crash, BUILDSTRING"\n\n");
-		fprintf(crash, g_output);
+		fprintf(crash, "%s", g_output);
 		fprintf(crash, "======end========\n");
 		fclose(crash);
 	}
