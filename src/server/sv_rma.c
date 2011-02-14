@@ -1182,6 +1182,41 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 	/* free the file */
 	FS_FreeFile(buf);
 }
+/**
+ * @brief Prints the mapstrings as known from the ufoconsole.log
+ * This can also be used to dump the progress of the RMA process.
+ * @param[in,out] map All we know about the map to assemble
+ * @param[out] asmMap The output string of the random map assembly that contains all the
+ * map tiles that should be assembled. The order is the same as in the @c asmPos string.
+ * Each of the map tiles in this string has a corresponding entry in the pos string, too.
+ * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
+ * string this string contains three coordinates for shifting the given tile names.
+ */
+static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
+{
+	int i;
+	mAssembly_t *mAsm;
+	mAsm = &map->mAssembly[map->mAsm];
+
+	for (i = 0; i < map->numPlaced; i++) {
+		const mPlaced_t *pl = &map->mPlaced[i];
+
+		if (sv_dumpmapassembly->integer)
+			SV_DumpPlaced(map, i);
+
+		if (asmMap[0])
+			Q_strcat(asmMap, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		if (asmPos[0])
+			Q_strcat(asmPos, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+
+		Q_strcat(asmMap, va("%s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		Q_strcat(asmPos, va("%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+	}
+
+	Com_DPrintf(DEBUG_SERVER, "tiles: %s\n", asmMap);
+	Com_DPrintf(DEBUG_SERVER, "pos: %s\n", asmPos);
+	Com_DPrintf(DEBUG_SERVER, "tiles: %i\n", map->numPlaced);
+}
 
 /**
  * @brief Assembles a "random" map
@@ -1275,24 +1310,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	asmPos[0] = 0;
 
 	/* generate the strings */
-	for (i = 0; i < map->numPlaced; i++) {
-		const mPlaced_t *pl = &map->mPlaced[i];
-
-		if (sv_dumpmapassembly->integer)
-			SV_DumpPlaced(map, i);
-
-		if (asmMap[0])
-			Q_strcat(asmMap, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		if (asmPos[0])
-			Q_strcat(asmPos, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-
-		Q_strcat(asmMap, va("%s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		Q_strcat(asmPos, va("%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-	}
-
-	Com_DPrintf(DEBUG_SERVER, "tiles: %s\n", asmMap);
-	Com_DPrintf(DEBUG_SERVER, "pos: %s\n", asmPos);
-	Com_DPrintf(DEBUG_SERVER, "tiles: %i\n", map->numPlaced);
+	SV_PrintMapStrings(map, asmMap, asmPos);
 
 	assert(map);
 	return map;
