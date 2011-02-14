@@ -139,6 +139,8 @@ static void testMassAssemblySequential (void)
 	}
 }
 
+#define SEED_TEST 0
+#if SEED_TEST
 /* test a range of random seeds */
 /* "japan big" has problems with seeds 5, 13, 25, 32, 47 */
 /* "hills desert_harvester" has problems with seeds 1?, 3, 5, 7, 8 */
@@ -149,10 +151,10 @@ static void testMassAssemblySeed (void)
 	mapInfo_t *randomMap;
 
 	sv_threads->integer = 0;
-	for (i = 9; i < 50; i++) {
+	for (i = 0; i < 20; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("hills", "desert_harvester", map, pos);
+		randomMap = SV_AssembleMap("japan", "big", map, pos);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
@@ -160,6 +162,7 @@ static void testMassAssemblySeed (void)
 		Mem_Free(randomMap);
 	}
 }
+#endif
 
 int UFO_AddRandomMapAssemblyTests (void)
 {
@@ -197,7 +200,7 @@ int UFO_AddRandomMapAssemblyTests (void)
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == NULL)
 		return CU_get_error();
 
-#if 0
+#if SEED_TEST
 	/* This test should normally (ie. buildbot) not be active */
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySeed) == NULL)
 		return CU_get_error();
