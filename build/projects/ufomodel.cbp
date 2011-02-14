@@ -19,7 +19,6 @@
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add option="-mwindows" />
 					<Add library="winmm" />
 					<Add library="mingw32" />

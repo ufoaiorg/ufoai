@@ -18,7 +18,6 @@
 					<Add option="-DHAVE_BFD_H" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add library="winmm" />
 					<Add library="ws2_32" />
 					<Add library="bfd" />
