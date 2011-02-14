@@ -31,6 +31,9 @@ const vec2_t default_texcoords[4] = {
 	{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}, {0.0, 1.0}
 };
 
+/* Hack to keep track of active rendering program (have to reinit binings&parameters once it changed)*/
+static r_program_t* lastProgram = NULL;
+
 /**
  * @brief Returns qfalse if the texunit is not supported
  */
@@ -316,9 +319,6 @@ void R_EnableDynamicLights (const entity_t *ent, qboolean enable)
 
 	r_state.dynamic_lighting_enabled = qtrue;
 
-	if (r_state.glowmap_enabled)
-		R_ProgramParameter1f("GLOWSCALE", 1.0);
-
 	R_EnableAttribute("TANGENTS");
 	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
 
@@ -536,17 +536,61 @@ void R_EnableFog (qboolean enable)
 	}
 }
 
-void R_EnableGlowMap (const image_t *image, qboolean enable)
+static void R_UpdateGlowBufferBinding (void)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
+	if (r_state.active_program) {
+		/* got an active shader */
+		if (r_state.draw_glow_enabled) {
+			/* switch the draw buffer to the glow buffer */
+			R_BindColorAttachments(1, &glowRenderTarget);
+			R_ProgramParameter1f("GLOWSCALE", 0.0); /* Plumbing to avoid state leak */
+		} else {
+			/* switch back to the draw buffer we are currently rendering into ... */
+			R_DrawBuffers(2);
+			/* ... and enable glow, if there is a glow map */
+			if (r_state.glowmap_enabled) {
+				R_ProgramParameter1f("GLOWSCALE", 1.0);
+			} else {
+				R_ProgramParameter1f("GLOWSCALE", 0.0);
+			}
+		}
+	} else {
+		/* no shader */
+		if (r_state.draw_glow_enabled) {
+			/* switch the draw buffer to the glow buffer */
+			R_BindColorAttachments(1, &glowRenderTarget);
+		} else {
+			if (!r_state.glowmap_enabled) {
+				/* Awkward case. Postprocessing is requested, but fragment
+				 * shader is disabled, and we are supposed to draw non-glowing object.
+				 * So we just draw this object into color buffer only and hope that it's not
+				 * supposed to overlay any glowing objects.
+				 */
+				R_DrawBuffers(1);
+			} else {
+				/* FIXME: Had to draw glowmapped object,  but don't know how to do it
+				 * when rendering through FFP.
+				 * So -- just copy color into glow buffer.
+				 * (R_DrawAsGlow may hit this)
+				 */
+				R_DrawBuffers(2);
+				/*Con_Print("GLSL glow with no program!\n");*/
+			}
+		}
+	}
+}
+
+void R_EnableGlowMap (const image_t *image, qboolean enable)
+{
 	if (!r_postprocess->integer)
 		return;
 
 	if (enable && image != NULL)
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 
-	if (!enable && r_state.glowmap_enabled == enable)
+	if (!enable && r_state.glowmap_enabled == enable && r_state.active_program == lastProgram)
 		return;
 
 	if (image == NULL)
@@ -554,46 +598,33 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 
 	r_state.glowmap_enabled = enable;
 
+	/* Shouldn't render glow without GLSL, so enable simple program for it */
 	if (enable) {
 		if (!r_state.active_program)
 			R_UseProgram(r_state.simple_glow_program);
-
-		R_ProgramParameter1f("GLOWSCALE", 1.0);
-
-		R_DrawBuffers(2);
 	} else {
 		if (r_state.active_program == r_state.simple_glow_program)
 			R_UseProgram(NULL);
-		else
-			R_ProgramParameter1f("GLOWSCALE", 0.0);
-
-		if (r_state.draw_glow_enabled)
-			R_BindColorAttachments(1, &glowRenderTarget);
-		else
-			R_DrawBuffers(1);
 	}
+
+	lastProgram = r_state.active_program;
+
+	R_UpdateGlowBufferBinding();
 }
 
 void R_EnableDrawAsGlow (qboolean enable)
 {
-	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
+	if (!r_postprocess->integer)
+		return;
 
-	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
+	if (r_state.draw_glow_enabled == enable && r_state.active_program == lastProgram)
 		return;
 
 	r_state.draw_glow_enabled = enable;
 
-	if (enable) {
-		/* switch the draw buffer to the glow buffer */
-		R_BindColorAttachments(1, &glowRenderTarget);
-	} else {
-		/* switch back to the draw buffer we are currently rendering into */
-		if (r_state.glowmap_enabled) {
-			R_DrawBuffers(2);
-		} else {
-			R_DrawBuffers(1);
-		}
-	}
+	lastProgram = r_state.active_program;
+
+	R_UpdateGlowBufferBinding();
 }
 
 void R_EnableSpecularMap (const image_t *image, qboolean enable)

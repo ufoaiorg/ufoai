@@ -119,10 +119,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 
 	R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
 
-	if (image->glowmap)
-		R_EnableGlowMap(image->glowmap, qtrue);
-	else
-		R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(image->glowmap, qtrue);
 
 	R_CheckError();
 }
