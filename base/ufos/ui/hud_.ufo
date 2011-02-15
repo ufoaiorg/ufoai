@@ -20,7 +20,7 @@ component panel cmpFiremodeEntry {
 		onMouseLeave { *node:this@image = "hud/firemode" }
 		onClick	{
 			cmd "ui_close <path:root>;"
-			cmd "hud_executeaction <node:parent.actionid@string>"
+			cmd "hud_executeaction <node:parent.actionid@string>;"
 		}
 	}
 
@@ -32,7 +32,7 @@ component panel cmpFiremodeEntry {
 		texl	"0 0"
 		texh	"31 31"
 		onClick	{
-			cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.index@string>"
+			cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.index@string>;"
 		}
 	}
 
@@ -270,7 +270,7 @@ window radarwindow {
 	}
 
 	confunc closeradar {
-		cmd "ui_close radarwindow"
+		cmd "ui_close radarwindow;"
 	}
 
 	radar hudradar
@@ -393,7 +393,7 @@ window hud_general {
 			delete *cvar:i
 			delete *cvar:side
 		} else {
-			cmd "echo firemode_listener: unknown \"<1>\" command"
+			cmd "echo firemode_listener: unknown \"<1>\" command;"
 		}
 	}
 }
