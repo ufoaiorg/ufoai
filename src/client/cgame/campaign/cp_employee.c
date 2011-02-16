@@ -942,7 +942,6 @@ static inline const nation_t *E_RandomNation (void)
 void E_InitialEmployees (const campaign_t *campaign)
 {
 	int i;
-	int j = 0;
 
 	/* setup initial employee count */
 	for (i = 0; i < campaign->soldiers; i++)
@@ -958,13 +957,8 @@ void E_InitialEmployees (const campaign_t *campaign)
 	for (i = 0; i < campaign->workers; i++)
 		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), NULL);
 
-	/* Fill the global data employee list with pilots, evenly distributed between nations */
-	for (i = 0; i < MAX_EMPLOYEES; i++) {
-		const int index = ++j % ccs.numNations;
-		const nation_t *nation = NAT_GetNationByIDX(index);
-		if (!E_CreateEmployee(EMPL_PILOT, nation, NULL))
-			break;
-	}
+	for (i = 0; i < campaign->pilots; i++)
+		E_CreateEmployee(EMPL_PILOT, E_RandomNation(), NULL);
 }
 
 #ifdef DEBUG

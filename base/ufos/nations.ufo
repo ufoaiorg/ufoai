@@ -17,6 +17,7 @@
 // TODO: tweak all parameters realistically, according to the wiki descriptions
 
 // and soldiers/scientists/etc. from 1 to 5
+// addition of pilots
 
 // NOTE: If you rename a nation, also rename the symbol in base/pics/nations
 
@@ -30,6 +31,7 @@ nation latin
 	happiness 0.5
 	soldiers 4
 	scientists 1
+	pilots	1
 	pos "60 -13"
 }
 
@@ -41,6 +43,7 @@ nation states
 	happiness 0.5
 	soldiers 4
 	scientists 2
+	pilots	2
 	pos "103 48"
 }
 
@@ -53,6 +56,7 @@ nation europe
 	happiness 0.5
 	soldiers 3
 	scientists 3
+	pilots	2
 }
 
 nation asia
@@ -63,6 +67,7 @@ nation asia
 	happiness 0.5
 	soldiers 5
 	scientists 1
+	pilots	1
 	pos "-100 33"
 }
 
@@ -74,6 +79,7 @@ nation middle
 	happiness 0.5
 	soldiers 1
 	scientists 3
+	pilots	1
 	pos "-46 26"
 }
 
@@ -85,6 +91,7 @@ nation africa
 	happiness 0.5
 	soldiers 5
 	scientists 1
+	pilots	1
 	pos "-20 5"
 }
 
@@ -96,6 +103,7 @@ nation russia
 	happiness 0.5
 	soldiers 5
 	scientists 5
+	pilots	2
 	pos "-80 63"
 }
 
@@ -107,5 +115,6 @@ nation oceania
 	happiness 0.5
 	soldiers 4
 	scientists 2
+	pilots	1
 	pos "-130 -25"
 }

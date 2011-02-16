@@ -286,6 +286,7 @@ static const value_t nation_vals[] = {
 	{"happiness", V_FLOAT, offsetof(nation_t, stats[0].happiness), MEMBER_SIZEOF(nation_t, stats[0].happiness)},
 	{"soldiers", V_INT, offsetof(nation_t, maxSoldiers), MEMBER_SIZEOF(nation_t, maxSoldiers)},
 	{"scientists", V_INT, offsetof(nation_t, maxScientists), MEMBER_SIZEOF(nation_t, maxScientists)},
+	{"pilots", V_INT, offsetof(nation_t, maxPilots), MEMBER_SIZEOF(nation_t, maxPilots)},
 
 	{NULL, 0, 0, 0}
 };
@@ -818,6 +819,7 @@ static void NAT_NationList_f (void)
 		Com_Printf("...xviInfection %i\n", nation->stats[0].xviInfection);
 		Com_Printf("...max-soldiers %i\n", nation->maxSoldiers);
 		Com_Printf("...max-scientists %i\n", nation->maxScientists);
+		Com_Printf("...max-pilots %i\n", nation->maxPilots);
 		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", nation->color[0], nation->color[1], nation->color[2], nation->color[3]);
 		Com_Printf("...pos x:%.0f y:%.0f\n", nation->pos[0], nation->pos[1]);
 	}
@@ -830,6 +832,7 @@ static void NAT_NationList_f (void)
  * * credits
  * * new soldiers
  * * new scientists
+ * * new pilots
  * @note Called from CL_CampaignRun
  * @sa CL_CampaignRun
  * @sa B_CreateEmployee
@@ -855,7 +858,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 		const int funding = NAT_GetFunding(nation, 0);
-		int newScientists = 0, newSoldiers = 0, newWorkers = 0;
+		int newScientists = 0, newSoldiers = 0, newPilots = 0, newWorkers = 0;
 
 		totalIncome += funding;
 
@@ -872,6 +875,14 @@ void NAT_HandleBudget (const campaign_t *campaign)
 				newSoldiers++;
 			}
 		}
+		/* pilots */
+		if (stats->happiness > 0) {
+			for (j = 0; 0.25 + j < (float) nation->maxPilots * stats->happiness * stats->happiness * stats->happiness; j++) {
+				/* Create a pilot. */
+				E_CreateEmployee(EMPL_PILOT, nation, NULL);
+				newPilots++;
+			}
+		}
 
 		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * stats->happiness; j++) {
 			/* Create a worker. */
@@ -879,10 +890,11 @@ void NAT_HandleBudget (const campaign_t *campaign)
 			newWorkers++;
 		}
 
-		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
+		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
 					funding, ngettext("credit", "credits", funding),
 					newScientists, ngettext("scientist", "scientists", newScientists),
 					newSoldiers, ngettext("soldier", "soldiers", newSoldiers),
+					newPilots, ngettext("pilot", "pilots", newPilots),
 					newWorkers, ngettext("worker", "workers", newWorkers),
 					_(nation->name), NAT_GetHappinessString(nation));
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
