@@ -124,7 +124,6 @@ static void R_DrawFloor (const entity_t * e)
 	const float size = 4.0;
 	/** @todo use default_texcoords */
 	const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
-	/* circle points */
 	const vec3_t points[] = { { e->origin[0] - size, e->origin[1] + dx + size, e->origin[2] }, { e->origin[0] + dx
 			+ size, e->origin[1] + dx + size, e->origin[2] }, { e->origin[0] + dx + size, e->origin[1] - size,
 			e->origin[2] }, { e->origin[0] - size, e->origin[1] - size, e->origin[2] } };
@@ -248,13 +247,13 @@ static void R_DrawEntityEffects (void)
 			/* circle points */
 			glBegin(GL_QUADS);
 			glTexCoord2f(0.0, 1.0);
-			glVertex3f(-size, size, -27.5);
+			glVertex3f(-size, size, -GROUND_DELTA);
 			glTexCoord2f(1.0, 1.0);
-			glVertex3f(size, size, -27.5);
+			glVertex3f(size, size, -GROUND_DELTA);
 			glTexCoord2f(1.0, 0.0);
-			glVertex3f(size, -size, -27.5);
+			glVertex3f(size, -size, -GROUND_DELTA);
 			glTexCoord2f(0.0, 0.0);
-			glVertex3f(-size, -size, -27.5);
+			glVertex3f(-size, -size, -GROUND_DELTA);
 			glEnd();
 
 			R_Color(NULL);
