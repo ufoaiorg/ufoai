@@ -910,9 +910,9 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 		Q_strcat(asmPos, va("%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
 
-	Com_DPrintf(DEBUG_SERVER, "tiles: %s\n", asmMap);
-	Com_DPrintf(DEBUG_SERVER, "pos: %s\n", asmPos);
-	Com_DPrintf(DEBUG_SERVER, "tiles: %i\n", map->numPlaced);
+	Com_Printf("tiles: %s\n", asmMap);
+	Com_Printf("pos: %s\n", asmPos);
+	Com_Printf("tiles: %i\n", map->numPlaced);
 }
 
 /**
@@ -932,6 +932,12 @@ static void SV_AddMapTiles (mapInfo_t *map)
 	const int start = map->numPlaced;
 #ifdef DEBUG
 	const mPlaced_t *mPlaced = map->mPlaced;
+#endif
+
+#define PRINT_RMA_PROGRESS 0
+#if PRINT_RMA_PROGRESS
+	char mapStr[10000] = {0};
+	char posStr[10000] = {0};
 #endif
 
 	/* shuffle only once, the map will be build with that seed */
@@ -957,6 +963,12 @@ static void SV_AddMapTiles (mapInfo_t *map)
 				if (SV_FitTile(map, mToPlace[idx].tile, x, y)) {
 					/* add tile */
 					SV_AddTile(map, mToPlace[idx].tile, x, y, idx, pos);
+#if PRINT_RMA_PROGRESS
+					mapStr[0] = 0;
+					posStr[0] = 0;
+					if (map->numPlaced < 6)
+						SV_PrintMapStrings(map, mapStr, posStr);
+#endif
 					break;
 				}
 			}
@@ -1246,6 +1258,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	Q_strncpyz(map->name, name, sizeof(map->name));
 
 	SV_ParseUMP(name, map, qfalse);
+/*	developer->integer |= DEBUG_SERVER;		crashes if used in testall.exe. cvar not initialized ? */
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
