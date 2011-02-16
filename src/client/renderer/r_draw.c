@@ -699,6 +699,8 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 	const int nheight = height * viddef.ry;
 	const GLboolean hasDepthTest = glIsEnabled(GL_DEPTH_TEST);
 	const GLdouble bigZ = 2000;
+	const vec3_t points [] = { { nx, ny, bigZ }, { nx + nwidth, ny, bigZ }, { nx + nwidth, ny + nheight, bigZ }, { nx, ny + nheight, bigZ } };
+
 	GLint depthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
 
@@ -707,12 +709,9 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 	glDepthFunc(GL_ALWAYS);
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 
-	glBegin(GL_QUADS);
-	glVertex3d(nx, ny, bigZ);
-	glVertex3d(nx + nwidth, ny, bigZ);
-	glVertex3d(nx + nwidth, ny + nheight, bigZ);
-	glVertex3d(nx, ny + nheight, bigZ);
-	glEnd();
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	if (!hasDepthTest)
