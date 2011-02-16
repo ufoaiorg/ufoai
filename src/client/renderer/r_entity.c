@@ -235,13 +235,11 @@ static void R_DrawEntityEffects (void)
 			glEnd();
 		}
 
-
 		if (e->flags & RF_ACTOR) {
 			const float size = 15.0;
 			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
-			glDisable(GL_DEPTH_TEST);
 
 			if (e->flags & RF_MEMBER)
 				Vector4Set(color, 0, 1, 0, 0.5);
@@ -272,7 +270,6 @@ static void R_DrawEntityEffects (void)
 			glVertex3f(-size, -size, -27.5);
 			glEnd();
 
-			glEnable(GL_DEPTH_TEST);
 			R_Color(NULL);
 		}
 		glPopMatrix();
