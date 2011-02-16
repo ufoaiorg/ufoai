@@ -226,6 +226,10 @@ static void R_DrawEntityEffects (void)
 			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
+			const vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
+					-GROUND_DELTA }, { -size, -size, -GROUND_DELTA } };
+			/** @todo use default_texcoords */
+			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
 
 			if (e->flags & RF_MEMBER)
 				Vector4Set(color, 0, 1, 0, 0.5);
@@ -245,16 +249,11 @@ static void R_DrawEntityEffects (void)
 			R_Color(color);
 
 			/* circle points */
-			glBegin(GL_QUADS);
-			glTexCoord2f(0.0, 1.0);
-			glVertex3f(-size, size, -GROUND_DELTA);
-			glTexCoord2f(1.0, 1.0);
-			glVertex3f(size, size, -GROUND_DELTA);
-			glTexCoord2f(1.0, 0.0);
-			glVertex3f(size, -size, -GROUND_DELTA);
-			glTexCoord2f(0.0, 0.0);
-			glVertex3f(-size, -size, -GROUND_DELTA);
-			glEnd();
+			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+			R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 			R_Color(NULL);
 		}
