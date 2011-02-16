@@ -141,25 +141,18 @@ static void R_DrawSprite (const ptl_t * p)
 	R_SpriteTexcoords(p, texcoords);
 
 	R_Color(p->color);
-	/* draw it */
-	glBegin(GL_TRIANGLE_FAN);
+	{
+		/* draw it */
+		const vec3_t points[] = { { pos[0], pos[1], pos[2] }, { pos[0] + up[0], pos[1] + up[1], pos[2] + up[2] }, { pos[0]
+				+ up[0] + right[0], pos[1] + up[1] + right[1], pos[2] + up[2] + right[2] }, { pos[0] + right[0], pos[1]
+				+ right[1], pos[2] + right[2] } };
 
-	glTexCoord2f(texcoords[0], texcoords[1]);
-	glVertex3fv(pos);
-
-	VectorAdd(pos, up, pos);
-	glTexCoord2f(texcoords[2], texcoords[3]);
-	glVertex3fv(pos);
-
-	VectorAdd(pos, right, pos);
-	glTexCoord2f(texcoords[4], texcoords[5]);
-	glVertex3fv(pos);
-
-	VectorSubtract(pos, up, pos);
-	glTexCoord2f(texcoords[6], texcoords[7]);
-	glVertex3fv(pos);
-
-	glEnd();
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		R_BindDefaultArray(GL_VERTEX_ARRAY);
+		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	}
 }
 
 
@@ -231,6 +224,8 @@ static void R_DrawPtlCircle (const ptl_t* p)
  */
 static void R_DrawPtlLine (const ptl_t * p)
 {
+	const vec3_t points[] = { { p->s[0], p->s[1], p->s[2] }, { p->v[0], p->v[1], p->v[2] } };
+
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
 	glEnable(GL_LINE_SMOOTH);
@@ -238,10 +233,11 @@ static void R_DrawPtlLine (const ptl_t * p)
 	R_Color(p->color);
 
 	/* draw line from s to v */
-	glBegin(GL_LINE_STRIP);
-	glVertex3fv(p->s);
-	glVertex3fv(p->v);
-	glEnd();
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+	glDrawArrays(GL_LINE_STRIP, 0, 2);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	R_Color(NULL);
 
 	glDisable(GL_LINE_SMOOTH);
 
