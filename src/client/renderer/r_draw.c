@@ -431,6 +431,39 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	R_Color(NULL);
 }
 
+void R_DrawCircle_ (float radius, const vec4_t color, int thickness, const vec3_t shift)
+{
+	const float accuracy = 5.0;
+	const float step = M_PI / radius * accuracy;
+	float theta;
+
+	glEnable(GL_LINE_SMOOTH);
+
+	R_Color(color);
+
+	assert(radius > thickness);
+	if (thickness <= 1) {
+		glBegin(GL_LINE_STRIP);
+		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
+			glVertex3f(shift[0] + radius * cos(theta), shift[1] + radius * sin(theta), shift[2]);
+		}
+		glEnd();
+	} else {
+		glBegin(GL_TRIANGLE_STRIP);
+		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
+			glVertex3f(shift[0] + radius * cos(theta), shift[1] + radius * sin(theta), shift[2]);
+			glVertex3f(shift[0] + radius * cos(theta - step), shift[1] + radius * sin(theta - step), shift[2]);
+			glVertex3f(shift[0] + (radius - thickness) * cos(theta - step), shift[1] + (radius - thickness) * sin(theta - step), shift[2]);
+			glVertex3f(shift[0] + (radius - thickness) * cos(theta), shift[1] + (radius - thickness) * sin(theta), shift[2]);
+		}
+		glEnd();
+	}
+
+	R_Color(NULL);
+
+	glDisable(GL_LINE_SMOOTH);
+}
+
 /**
  * @brief Draws a circle out of lines
  * @param[in] mid Center of the circle
@@ -442,16 +475,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
  */
 void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 {
-	float theta;
-	const float accuracy = 5.0;
-	const float step = M_PI / radius * accuracy;
-
 	glDisable(GL_TEXTURE_2D);
-	glEnable(GL_LINE_SMOOTH);
-
-	R_Color(color);
-
-	assert(radius > thickness);
 
 	/* scale it */
 	radius *= viddef.rx;
@@ -463,28 +487,10 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	/* translate the position */
 	glTranslated(mid[0], mid[1], mid[2]);
 
-	if (thickness <= 1) {
-		glBegin(GL_LINE_STRIP);
-		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
-			glVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
-		}
-		glEnd();
-	} else {
-		glBegin(GL_TRIANGLE_STRIP);
-		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
-			glVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
-			glVertex3f(radius * cos(theta - step), radius * sin(theta - step), 0.0);
-			glVertex3f((radius - thickness) * cos(theta - step), (radius - thickness) * sin(theta - step), 0.0);
-			glVertex3f((radius - thickness) * cos(theta), (radius - thickness) * sin(theta), 0.0);
-		}
-		glEnd();
-	}
+	R_DrawCircle_(radius, color, thickness, vec3_origin);
 
 	glPopMatrix();
 
-	R_Color(NULL);
-
-	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
 }
 

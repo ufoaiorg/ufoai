@@ -39,6 +39,7 @@ void R_DrawLineStrip(int points, int *verts);
 void R_DrawLineLoop(int points, int *verts);
 void R_DrawLine(int *verts, float thickness);
 void R_DrawCircle(vec3_t mid, float radius, const vec4_t color, int thickness);
+void R_DrawCircle_(float radius, const vec4_t color, int thickness, const vec3_t shift);
 void R_DrawCircle2D(int x, int y, float radius, qboolean fill, const vec4_t color, float thickness);
 void R_DrawPolygon(int points, int *verts);
 void R_PushClipRect(int x, int y, int width, int height);

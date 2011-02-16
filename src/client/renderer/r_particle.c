@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_particle.h"
+#include "r_draw.h"
 
 ptlArt_t r_particlesArt[MAX_PTL_ART];
 int r_numParticlesArt;
@@ -185,36 +186,10 @@ static void R_DrawPtlCircle (const ptl_t* p)
 {
 	const float radius = p->size[0];
 	const int thickness = (int)p->size[1];
-	float theta;
-	const float accuracy = 5.0f;
 
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
-	R_Color(p->color);
-
-	glEnable(GL_LINE_SMOOTH);
-
-	assert(radius > thickness);
-	if (thickness <= 1) {
-		glBegin(GL_LINE_LOOP);
-		for (theta = 0.0f; theta < 2.0f * M_PI; theta += M_PI / (radius * accuracy)) {
-			glVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
-		}
-		glEnd();
-	} else {
-		const float delta = M_PI / (radius * accuracy);
-		glBegin(GL_TRIANGLE_STRIP);
-		for (theta = 0; theta <= 2 * M_PI; theta += delta) {
-			const float f = theta - M_PI / (radius * accuracy);
-			glVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
-			glVertex3f(p->s[0] + radius * cos(f), p->s[1] + radius * sin(f), p->s[2]);
-			glVertex3f(p->s[0] + (radius - thickness) * cos(f), p->s[1] + (radius - thickness) * sin(f), p->s[2]);
-			glVertex3f(p->s[0] + (radius - thickness) * cos(theta), p->s[1] + (radius - thickness) * sin(theta), p->s[2]);
-		}
-		glEnd();
-	}
-
-	glDisable(GL_LINE_SMOOTH);
+	R_DrawCircle_(radius, p->color, thickness, p->s);
 
 	R_EnableTexture(&texunit_diffuse, qtrue);
 }
