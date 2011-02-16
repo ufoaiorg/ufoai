@@ -174,6 +174,8 @@ static image_t *actorIndicator;
 static void R_DrawEntityEffects (void)
 {
 	int i;
+	GLint oldDepthFunc;
+	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
 
 	R_EnableBlend(qtrue);
 
@@ -241,7 +243,16 @@ static void R_DrawEntityEffects (void)
 			/* circle points */
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+			/* add transparency when something is other the circle */
+			color[3] *= 0.25;
+			R_Color(color);
+			glDepthFunc(GL_GREATER);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+			glDepthFunc(oldDepthFunc);
+
 			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
 
