@@ -204,7 +204,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	buf->nTextures = ntextures;
 	buf->textures = (unsigned int *)Mem_Alloc(sizeof(unsigned int) * ntextures);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	buf->pixelFormat = GL_RGBA;
 	buf->byteFormat = GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA; /* GL_UNSIGNED_SHORT_5_5_5_1 will give 1-bit alpha but more colorspace */
 #else

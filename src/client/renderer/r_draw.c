@@ -169,7 +169,7 @@ void R_DrawChars (void)
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, r_char_arrays.texcoords);
 	glVertexPointer(2, GL_SHORT, 0, r_char_arrays.verts);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	for(int i = 0; i < r_char_arrays.vert_index / 8; i++)
 		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
 #else
@@ -248,7 +248,7 @@ void R_DrawFills (void)
 	R_BindArray(GL_COLOR_ARRAY, GL_UNSIGNED_BYTE, r_fill_arrays.colors);
 	glVertexPointer(2, GL_SHORT, 0, r_fill_arrays.verts);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	for(int i = 0; i < r_fill_arrays.vert_index / 8; i++)
 		glDrawArrays(GL_TRIANGLE_FAN, i * 4, 4);
 #else
@@ -427,7 +427,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 
 	glDisable(GL_TEXTURE_2D);
 	glLineWidth(lineWidth);
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	GLfloat points[2*4] = { nx, ny,
 							nx + nw, ny,
 							nx + nw, ny + nh,
@@ -486,7 +486,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	/* translate the position */
 	glTranslated(mid[0], mid[1], mid[2]);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	// TODO: thickness ignored
 	enum { STEPS = 16 };
 	GLfloat points [ STEPS * 2 ];
@@ -542,7 +542,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 {
 	int i;
 
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 #endif
 
@@ -552,7 +552,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	if (thickness > 0.0)
 		glLineWidth(thickness);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	enum { STEPS = 16 };
 	GLfloat points [ STEPS * 2 + 4 ] = { (float) x, (float) y };
 	for (int i = 0; i <= STEPS; i++ ) {
@@ -590,7 +590,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	glEnable(GL_TEXTURE_2D);
 	R_Color(NULL);
 
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	glPopAttrib();
 #endif
 }
@@ -762,7 +762,7 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 	glDepthFunc(GL_ALWAYS);
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	GLfloat points [ 3 * 4 ] = {	nx, ny, bigZ,
 									nx + nwidth, ny, bigZ,
 									nx + nwidth, ny + nheight, bigZ,
@@ -812,7 +812,7 @@ void R_DrawBoundingBoxes (void)
 
 	R_Color(NULL);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	GLfloat points [ 3 * 15 ];
 	int indexes[15] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
 	int indexes2[3] = { 4, 6, 7 };
@@ -899,7 +899,7 @@ void R_DrawBoundingBox (const vec3_t mins, const vec3_t maxs)
 
 	R_ComputeBoundingBox(mins, maxs, bbox);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	GLfloat points [ 3 * 15 ];
 	int indexes[15] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
 	int indexes2[3] = { 4, 6, 7 };

@@ -236,7 +236,7 @@ void R_BeginFrame (void)
 	}
 
 	/* draw buffer stuff */
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	if (r_drawbuffer->modified) {
 		r_drawbuffer->modified = qfalse;
 
@@ -289,7 +289,7 @@ void R_RenderFrame (void)
 	R_Setup3D();
 
 	/* activate wire mode */
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 #endif
@@ -355,7 +355,7 @@ void R_RenderFrame (void)
 	R_DrawBoundingBoxes();
 
 	/* leave wire mode again */
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 #endif
@@ -727,7 +727,7 @@ static inline qboolean R_CheckExtension (const char *extension)
 	else
 		Com_Printf("%s not found\n", extension);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	if(strcmp(extension, "GL_ARB_multitexture") == 0) /* Always present in GLES */
 		found = qtrue;
 #endif
@@ -833,7 +833,7 @@ static qboolean R_InitExtensions (void)
 		qglClientActiveTexture = (ClientActiveTexture_t)R_GetProcAddress("glClientActiveTexture");
 	}
 
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	if (R_CheckExtension("GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
 			Com_Printf("using GL_ARB_texture_compression\n");
@@ -953,7 +953,7 @@ static qboolean R_InitExtensions (void)
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
 		 && qglCheckFramebufferStatusEXT) {
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 			r_config.maxDrawBuffers = 1; /* GLES does not support multiple buffers or color attachments, only COLOR_ATTACHMENT0_OES is available */
 			r_config.maxColorAttachments = 1;
 #else
@@ -1098,7 +1098,7 @@ static inline void R_EnforceVersion (void)
 
 	sscanf(r_config.versionString, "%d.%d.%d ", &maj, &min, &rel);
 
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	if (maj > 1)
 		return;
 

@@ -69,7 +69,7 @@ static void R_DrawBox (const entity_t * e)
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
 		R_DrawBoundingBox(e->mins, e->maxs);
 	} else {
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 		vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->oldorigin[2],
 								e->oldorigin[0], e->origin[1], e->oldorigin[2],
 								e->origin[0], e->origin[1], e->oldorigin[2],
@@ -471,7 +471,7 @@ static void R_DrawNullModel (const entity_t *e)
 	glPushMatrix();
 	glMultMatrixf(e->transform.matrix);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	vec_t points[3*6] = { 0, 0, -16 };
 	for (i = 0; i <= 4; i++) {
 		points[i*3+3] = 16 * cos(i * (M_PI / 2));

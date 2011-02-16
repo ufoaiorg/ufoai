@@ -398,7 +398,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
 
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	glEnable(GL_POLYGON_OFFSET_FILL);
 #endif
 	glPolygonOffset(-1.f, -1.f);
@@ -430,7 +430,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	/* polygon offset parameters */
 	glPolygonOffset(0.0, 0.0);
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 	glDisable(GL_POLYGON_OFFSET_FILL);
 #endif
 

@@ -142,7 +142,7 @@ static void R_DrawSprite (const ptl_t * p)
 
 	R_Color(p->color);
 	/* draw it */
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	GLfloat points[3*4] = {	pos[0], pos[1], pos[2],
 							pos[0] + up[0], pos[1] + up[1], pos[2] + up[2],
 							pos[0] + up[0] + right[0], pos[1] + up[1] + right[1], pos[2] + up[2] + right[2],
@@ -216,7 +216,7 @@ static void R_DrawPtlCircle (const ptl_t* p)
 
 	assert(radius > thickness);
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	// TODO: no thickness
 	enum { STEPS = 16 };
 	GLfloat points [ STEPS * 3 ];
@@ -267,7 +267,7 @@ static void R_DrawPtlLine (const ptl_t * p)
 	R_Color(p->color);
 
 	/* draw line from s to v */
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	GLfloat points [ 6 ] = { p->s[0], p->s[1], p->s[2], p->v[0], p->v[1], p->v[2] };
 	glVertexPointer(3, GL_FLOAT, 0, points);
 	glDrawArrays(GL_LINE_STRIP, 0, 2);

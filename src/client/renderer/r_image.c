@@ -424,7 +424,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 			R_CheckError();
 		}
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 		if (r_texture_lod->integer && r_config.lod_bias) {
 			glTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 			R_CheckError();
@@ -816,7 +816,7 @@ void R_TextureMode (const char *string)
 	}
 }
 
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 void R_TextureSolidMode (const char *string)
 {
 }

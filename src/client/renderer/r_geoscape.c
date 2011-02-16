@@ -381,7 +381,7 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 	glTexCoordPointer(2, GL_FLOAT, 0, starFieldTexCoords);
 
 	/* draw the cube */
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	for( int ii = 0; ii < 6; ii++ )
 		glDrawArrays(GL_TRIANGLE_FAN, ii * 4, 4);
 #else
@@ -665,7 +665,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
  */
 static inline void R_DrawQuad (void)
 {
-#ifdef ANDROID
+#ifdef GL_VERSION_ES_CM_1_0
 	GLfloat texcoord[2*4] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
 	GLfloat points[2*4] = {	0.0, 0.0,
 							fbo_render->width, 0.0,
@@ -746,7 +746,7 @@ void R_DrawBloom (void)
 	renderBufferState = R_RenderbufferEnabled();
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 		glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
 #endif
 		glMatrixMode(GL_TEXTURE);
@@ -818,7 +818,7 @@ void R_DrawBloom (void)
 		glPopMatrix();
 		glMatrixMode(GL_TEXTURE);
 		glPopMatrix();
-#ifndef ANDROID
+#ifndef GL_VERSION_ES_CM_1_0
 		glPopAttrib();
 #endif
 		R_CheckError();
