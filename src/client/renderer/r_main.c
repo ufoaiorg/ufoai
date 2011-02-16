@@ -334,17 +334,11 @@ void R_RenderFrame (void)
 
 			R_EnableBlend(qfalse);
 
-			/* to avoid state leak*/
-			R_EnableGlowMap(NULL, qfalse);
-
 			R_DrawBspNormals(tile);
 		}
 	}
 
 	R_DrawEntities();
-
-	/* to avoid state leak*/
-	R_EnableGlowMap(NULL, qfalse);
 
 	R_EnableBlend(qtrue);
 

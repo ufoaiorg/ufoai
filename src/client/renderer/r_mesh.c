@@ -525,8 +525,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_EnableDynamicLights(NULL, qfalse);
 
-	if (r_state.glowmap_enabled)
-		R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
 
 	if (r_state.bumpmap_enabled)
 		R_EnableBumpmap(NULL, qfalse);

@@ -341,6 +341,7 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		R_EnableLighting(NULL, qfalse);
+		R_EnableGlowMap(NULL, qfalse);
 	}
 }
 
@@ -413,6 +414,7 @@ static void R_DrawBlendMeshEntities (entity_t *ents)
 	R_EnableBlend(qfalse);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		R_EnableLighting(NULL, qfalse);
+		R_EnableGlowMap(NULL, qfalse);
 	}
 }
 
