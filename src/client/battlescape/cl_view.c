@@ -322,10 +322,6 @@ void CL_ViewCenterAtGridPosition (const pos3_t pos)
 
 void CL_ViewInit (void)
 {
-#ifdef ANDROID
-	cl_precache = Cvar_Get("cl_precache", "0", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
-#else
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
-#endif
 	cl_map_displayavailablecells = Cvar_Get("cl_map_displayavailablecells", "0", 0, "Display cells where a solider can move");
 }
