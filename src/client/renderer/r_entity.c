@@ -69,42 +69,32 @@ static void R_DrawBox (const entity_t * e)
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
 		R_DrawBoundingBox(e->mins, e->maxs);
 	} else {
-		vec3_t upper, lower;
-		const float dx = e->oldorigin[0] - e->origin[0];
-		const float dy = e->oldorigin[1] - e->origin[1];
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		VectorCopy(e->origin, lower);
-		VectorCopy(e->origin, upper);
-		upper[2] = e->oldorigin[2];
+		vec3_t points[] = { { e->oldorigin[0], e->oldorigin[1], e->oldorigin[2] }, { e->oldorigin[0], e->origin[1],
+				e->oldorigin[2] }, { e->origin[0], e->origin[1], e->oldorigin[2] }, { e->origin[0], e->oldorigin[1],
+				e->oldorigin[2] } };
 
 		glLineWidth(2.0f);
-		glBegin(GL_QUAD_STRIP);
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		lower[0] += dx;
-		upper[0] += dx;
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		lower[1] += dy;
-		upper[1] += dy;
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		lower[0] -= dx;
-		upper[0] -= dx;
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		lower[1] -= dy;
-		upper[1] -= dy;
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		glEnd();
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 
-		glLineWidth(1.0f);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		/** @todo fill one array */
+		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		points[0][2] = e->origin[2];
+		points[1][2] = e->origin[2];
+		points[2][2] = e->origin[2];
+		points[3][2] = e->origin[2];
+		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		points[0][2] = e->oldorigin[2];
+		points[1][1] = e->oldorigin[1];
+		points[2][2] = e->oldorigin[2];
+		points[3][1] = e->origin[1];
+		glDrawArrays(GL_LINES, 0, 4);
+		points[0][0] = e->origin[0];
+		points[1][0] = e->origin[0];
+		points[2][0] = e->oldorigin[0];
+		points[3][0] = e->oldorigin[0];
+		glDrawArrays(GL_LINES, 0, 4);
+		R_BindDefaultArray(GL_VERTEX_ARRAY);
 	}
-
 	glEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
@@ -259,7 +249,6 @@ static void R_DrawEntityEffects (void)
 		}
 		glPopMatrix();
 	}
-
 }
 
 /**
