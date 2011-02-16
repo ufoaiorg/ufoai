@@ -107,7 +107,7 @@ void FreeTree (tree_t *tree)
 }
 
 
-static void CheckPlaneAgainstParents (int pnum, const node_t *node)
+static void CheckPlaneAgainstParents (uint16_t pnum, const node_t *node)
 {
 	node_t *p;
 
@@ -149,11 +149,10 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	/* make sure the selected plane hasn't been used before. */
 	CheckPlaneAgainstParents(bestside->planenum, node);
 
-	Verb_Printf(VERB_DUMP, "BuildTree_r: splitting along plane %i\n", bestside->planenum);
+	Verb_Printf(VERB_DUMP, "BuildTree_r: splitting along plane %i\n", (int)bestside->planenum);
 
 	/* this is a splitplane node */
 	node->side = bestside;
-	assert(bestside->planenum < MAX_MAP_PLANES);
 	node->planenum = bestside->planenum & ~1;	/* always use front facing */
 
 	SplitBrushList(brushes, node->planenum, &children[0], &children[1]);

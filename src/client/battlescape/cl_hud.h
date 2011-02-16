@@ -37,8 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_hud;
 
-/** @todo these should probably not be called from other places than menu */
-void HUD_HideFiremodes(void);
 /* check above for removal */
 
 void HUD_InitStartup(void);

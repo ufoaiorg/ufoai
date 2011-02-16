@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
+#include "../../../../ui/ui_main.h"
 #include "e_event_actorreactionfirechange.h"
 
 /**
@@ -60,7 +61,5 @@ void CL_ActorReactionFireChange (const eventRegister_t *self, struct dbuffer *ms
 
 	CL_ActorSetRFMode(chr, hand, fmIdx, od);
 
-	/** @todo We only should have a callback to GUI, how/when update of the GUI is not the responsability of it */
-	/* Update display of firemode checkbuttons. */
-	/* HUD_DisplayFiremodes(le, hand, qtrue); */
+	UI_ExecuteConfunc("reactionfire_updated");
 }

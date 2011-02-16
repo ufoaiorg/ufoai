@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "cl_actor.h"
-#include "../cl_game.h"
+#include "../cgame/cl_game.h"
 #include "cl_hud.h"
 #include "cl_parse.h"
 #include "cl_particle.h"
@@ -436,9 +436,6 @@ qboolean CL_ActorSelect (le_t * le)
 
 	if (selActor)
 		selActor->selected = qfalse;
-
-	/** @todo remove this here, doesn't really belong here */
-	HUD_HideFiremodes();
 
 	mousePosTargettingAlign = 0;
 	selActor = le;
@@ -2235,7 +2232,7 @@ static void CL_ActorEquipmentSelect_f (void)
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
-	Cvar_SetValue("mn_ucn", chrDisplayList.chr[num]->ucn);
+	Cvar_SetValue("mn_ucn", chr->ucn);
 
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");

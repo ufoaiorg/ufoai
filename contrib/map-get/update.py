@@ -32,12 +32,7 @@ def download(uri):
     import platform
     p = ' '.join([platform.platform()] + list(platform.dist()))
     request.add_header('User-Agent', 'ufoai_map-get/%s (%s)' % (mapsync.__version__, p))
-    try:
-        f = urllib2.build_opener().open(request)
-    except urllib2.URLError, e:
-        sys.stderr.write('Error: %s' % uri)
-        sys.stderr.write('%s: %s' % (e.message, e.reason[1]))
-        sys.exit(6)
+    f = urllib2.build_opener().open(request)
 
     re = out = ''
     t = 1

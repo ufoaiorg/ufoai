@@ -104,7 +104,6 @@
 			<Add library="theora" />
 			<Add library="xvidcore" />
 		</Linker>
-		<Unit filename="..\..\Makefile.in" />
 		<Unit filename="..\..\base\autoexec.cfg" />
 		<Unit filename="..\..\base\dedicated.cfg" />
 		<Unit filename="..\..\base\default.cfg" />
@@ -168,6 +167,9 @@
 		<Unit filename="..\..\base\ufos\ui\basesummary.ufo" />
 		<Unit filename="..\..\base\ufos\ui\buildings.ufo" />
 		<Unit filename="..\..\base\ufos\ui\campaign.ufo" />
+		<Unit filename="..\..\base\ufos\ui\cgame\multiplayer.ufo" />
+		<Unit filename="..\..\base\ufos\ui\cgame\multiplayer_team.ufo" />
+		<Unit filename="..\..\base\ufos\ui\cgame\multiplayeringame.ufo" />
 		<Unit filename="..\..\base\ufos\ui\equipment.ufo" />
 		<Unit filename="..\..\base\ufos\ui\geoscape.ufo" />
 		<Unit filename="..\..\base\ufos\ui\hire.ufo" />
@@ -181,9 +183,6 @@
 		<Unit filename="..\..\base\ufos\ui\material_editor.ufo" />
 		<Unit filename="..\..\base\ufos\ui\messageoptions.ufo" />
 		<Unit filename="..\..\base\ufos\ui\modeltest.ufo" />
-		<Unit filename="..\..\base\ufos\ui\multiplayer.ufo" />
-		<Unit filename="..\..\base\ufos\ui\multiplayer_team.ufo" />
-		<Unit filename="..\..\base\ufos\ui\multiplayeringame.ufo" />
 		<Unit filename="..\..\base\ufos\ui\nohud.ufo" />
 		<Unit filename="..\..\base\ufos\ui\options.ufo" />
 		<Unit filename="..\..\base\ufos\ui\physdat.ufo" />
@@ -204,20 +203,12 @@
 		<Unit filename="..\..\base\ufos\weapons_particle.ufo" />
 		<Unit filename="..\..\base\ufos\weapons_plasma.ufo" />
 		<Unit filename="..\..\base\ufos\weapons_ugv.ufo" />
-		<Unit filename="..\client.mk" />
 		<Unit filename="..\data.mk" />
-		<Unit filename="..\defs.mk" />
-		<Unit filename="..\game.mk" />
 		<Unit filename="..\install.mk" />
 		<Unit filename="..\lang.mk" />
 		<Unit filename="..\maps.mk" />
 		<Unit filename="..\pk3_def.mk" />
-		<Unit filename="..\platform_specific.mk" />
-		<Unit filename="..\radiant.mk" />
-		<Unit filename="..\server.mk" />
-		<Unit filename="..\tools.mk" />
 		<Unit filename="..\various.mk" />
-		<Unit filename="..\..\configure.ac" />
 		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -286,14 +277,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorappear.h" />
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -422,250 +413,281 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particlespawn.h" />
-		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
+		<Unit filename="..\..\src\client\cgame\campaignOB\missions\cp_mission_xvi.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_aircraft.h" />
-		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_airfight.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_airfight.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_airfight.h" />
-		<Unit filename="..\..\src\client\campaign\cp_alien_interest.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_airfight.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_alien_interest.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_alien_interest.h" />
-		<Unit filename="..\..\src\client\campaign\cp_alienbase.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_alien_interest.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_alienbase.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_alienbase.h" />
-		<Unit filename="..\..\src\client\campaign\cp_aliencont.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_alienbase.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_aliencont.h" />
-		<Unit filename="..\..\src\client\campaign\cp_aliencont_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_aliencont_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_base.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_base.h" />
-		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_base.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_base_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_basedefence_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_base_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_basedefence_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_basedefence_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_building.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_basedefence_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_building.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_building.h" />
-		<Unit filename="..\..\src\client\campaign\cp_campaign.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_building.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_campaign.h" />
-		<Unit filename="..\..\src\client\campaign\cp_capacity.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_campaign.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_capacity.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_capacity.h" />
-		<Unit filename="..\..\src\client\campaign\cp_employee.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_capacity.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_employee.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_employee.h" />
-		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_employee.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_employee_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_event.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_employee_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_event.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_event.h" />
-		<Unit filename="..\..\src\client\campaign\cp_fightequip_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_event.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_fightequip_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_fightequip_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_hospital.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_fightequip_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_hospital.h" />
-		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_installation.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_installation.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_installation.h" />
-		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_installation.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_installation_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_installation_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_map.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_installation_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_map.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_map.h" />
-		<Unit filename="..\..\src\client\campaign\cp_mapfightequip.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_map.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mapfightequip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_mapfightequip.h" />
-		<Unit filename="..\..\src\client\campaign\cp_market.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mapfightequip.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_market.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_market.h" />
-		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_market.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_market_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_messageoptions.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_market_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_messageoptions.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_messageoptions.h" />
-		<Unit filename="..\..\src\client\campaign\cp_messageoptions_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_messageoptions.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_messageoptions_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_messageoptions_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_messages.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_messageoptions_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_messages.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_messages.h" />
-		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_messages.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_triggers.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.h" />
-		<Unit filename="..\..\src\client\campaign\cp_missions.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_triggers.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_missions.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_missions.h" />
-		<Unit filename="..\..\src\client\campaign\cp_nation.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_missions.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_nation.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_nation.h" />
-		<Unit filename="..\..\src\client\campaign\cp_overlay.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_nation.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_overlay.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_overlay.h" />
-		<Unit filename="..\..\src\client\campaign\cp_parse.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_overlay.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_parse.h" />
-		<Unit filename="..\..\src\client\campaign\cp_popup.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_parse.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_popup.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_popup.h" />
-		<Unit filename="..\..\src\client\campaign\cp_produce.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_popup.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_produce.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_produce.h" />
-		<Unit filename="..\..\src\client\campaign\cp_produce_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_produce.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_produce_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_produce_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_radar.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_produce_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_radar.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_radar.h" />
-		<Unit filename="..\..\src\client\campaign\cp_rank.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_radar.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_rank.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_rank.h" />
-		<Unit filename="..\..\src\client\campaign\cp_research.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_rank.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_research.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_research.h" />
-		<Unit filename="..\..\src\client\campaign\cp_research_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_research.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_research_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_research_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_save.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_research_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_save.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_save.h" />
-		<Unit filename="..\..\src\client\campaign\cp_statistics.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_save.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_statistics.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_statistics.h" />
-		<Unit filename="..\..\src\client\campaign\cp_team.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_statistics.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_team.h" />
-		<Unit filename="..\..\src\client\campaign\cp_team_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_team.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_team_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_team_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_time.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_team_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_time.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_time.h" />
-		<Unit filename="..\..\src\client\campaign\cp_transfer.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_time.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_transfer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_transfer.h" />
-		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_transfer.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_transfer_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_ufo.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_transfer_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_ufo.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_ufo.h" />
-		<Unit filename="..\..\src\client\campaign\cp_ufopedia.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_ufo.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_ufopedia.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_ufopedia.h" />
-		<Unit filename="..\..\src\client\campaign\cp_uforecovery.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_ufopedia.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_uforecovery.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_uforecovery.h" />
-		<Unit filename="..\..\src\client\campaign\cp_uforecovery_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_uforecovery.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_uforecovery_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_uforecovery_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_uforecovery_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_xvi.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_baseattack.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_xvi.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_baseattack.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_baseattack.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_buildbase.c">
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_baseattack.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_buildbase.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_buildbase.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_harvest.c">
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_buildbase.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_harvest.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_harvest.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_intercept.c">
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_harvest.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_intercept.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_intercept.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_recon.c">
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_intercept.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_recon.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_recon.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_rescue.c">
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_recon.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_rescue.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_rescue.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_supply.c">
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_rescue.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_supply.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_supply.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_terror.c">
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_supply.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_terror.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_terror.h" />
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_xvi.c">
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_terror.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\missions\cp_mission_xvi.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game_campaign.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -686,22 +708,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_console.h" />
-		<Unit filename="..\..\src\client\cl_game.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_game.h" />
-		<Unit filename="..\..\src\client\cl_game_campaign.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_game_campaign.h" />
-		<Unit filename="..\..\src\client\cl_game_multiplayer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_game_multiplayer.h" />
-		<Unit filename="..\..\src\client\cl_game_skirmish.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_game_skirmish.h" />
 		<Unit filename="..\..\src\client\cl_http.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -763,22 +769,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_keys.h" />
-		<Unit filename="..\..\src\client\multiplayer\mp_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\multiplayer\mp_callbacks.h" />
-		<Unit filename="..\..\src\client\multiplayer\mp_chatmessages.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\multiplayer\mp_chatmessages.h" />
-		<Unit filename="..\..\src\client\multiplayer\mp_serverlist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\multiplayer\mp_serverlist.h" />
-		<Unit filename="..\..\src\client\multiplayer\mp_team.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\multiplayer\mp_team.h" />
 		<Unit filename="..\..\src\client\mxml\config.h" />
 		<Unit filename="..\..\src\client\mxml\mxml-attr.c">
 			<Option compilerVar="CC" />
@@ -1362,6 +1352,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_world.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\bfd.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\byte.c">

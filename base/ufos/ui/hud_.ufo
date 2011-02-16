@@ -19,7 +19,8 @@ component panel cmpFiremodeEntry {
 		onMouseEnter { *node:this@image = "hud/firemode_hover" }
 		onMouseLeave { *node:this@image = "hud/firemode" }
 		onClick	{
-			cmd "hud_executeaction <node:parent.actionid@string>"
+			cmd "ui_close <path:root>;"
+			cmd "hud_executeaction <node:parent.actionid@string>;"
 		}
 	}
 
@@ -31,7 +32,7 @@ component panel cmpFiremodeEntry {
 		texl	"0 0"
 		texh	"31 31"
 		onClick	{
-			cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.id@string>"
+			cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.index@string>;"
 		}
 	}
 
@@ -129,6 +130,10 @@ component panel cmpFiremodeEntry {
 
 window levelbuttons {
 	confunc updateLevelStatus { }
+}
+
+window reactionfire_listener {
+	confunc reactionfire_updated { }
 }
 
 /**
@@ -265,7 +270,7 @@ window radarwindow {
 	}
 
 	confunc closeradar {
-		cmd "ui_close radarwindow"
+		cmd "ui_close radarwindow;"
 	}
 
 	radar hudradar
@@ -292,7 +297,7 @@ window radarwindow {
 	inv ... invisible
 */
 
-window firemode_left {
+window firemode_left extends reactionfire_listener {
 	{
 		pos			"622 0"
 		size		"255 700"
@@ -314,9 +319,14 @@ window firemode_left {
 	func onWindowOpened {
 		cmd "hud_listfiremodes firemode_listener l;"
 	}
+
+	confunc reactionfire_updated {
+		cmd "hud_listfiremodes firemode_listener l;"
+	}
+
 }
 
-window firemode_right {
+window firemode_right extends reactionfire_listener {
 	{
 		pos			"164 0"
 		size		"255 700"
@@ -338,11 +348,16 @@ window firemode_right {
 	func onWindowOpened {
 		cmd "hud_listfiremodes firemode_listener r;"
 	}
+
+	confunc reactionfire_updated {
+		cmd "hud_listfiremodes firemode_listener r;"
+	}
+
 }
 
 window hud_general {
 
-	confunc hide_firemodes {
+	func hide_firemodes {
 		call *node:firemode_left.elements@removeAllChild
 		call *node:firemode_right.elements@removeAllChild
 	}
@@ -378,7 +393,7 @@ window hud_general {
 			delete *cvar:i
 			delete *cvar:side
 		} else {
-			cmd "echo firemode_listener: unknown \"<1>\" command"
+			cmd "echo firemode_listener: unknown \"<1>\" command;"
 		}
 	}
 }

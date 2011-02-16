@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_mesh.h"
-#include "../../cl_game.h"
+#include "../../cgame/cl_game.h"
 #include "../../battlescape/cl_actor.h"
 #include "../../cl_inventory.h"
 

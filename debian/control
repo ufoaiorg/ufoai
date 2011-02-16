@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg-dev,
  libtheora-dev | libxvidcore4-dev, dpatch,
  libglib2.0-dev, zlib1g-dev, gettext,
  pkg-config, libopenal-dev, libgtksourceview2.0-dev,
- libsdl-image1.2-dev, python
+ libsdl-image1.2-dev, python, binutils-dev
 Build-Conflicts: nvidia-glx, nvidia-current
 Standards-Version: 3.7.3
 Homepage: http://ufoai.sf.net

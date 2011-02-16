@@ -22,9 +22,9 @@ window aircraft extends iaircraft
 		src			*cvar:mn_aircraft_model
 		pos			"478 107"
 		size		"529 260"
-		origin		"-45 25 0"
-		angles		"160 20 -120"
+		angles		"0 0 90"
 		autoscale	true
+		rotatewithmouse	true
 	}
 
 	string aircraft_name

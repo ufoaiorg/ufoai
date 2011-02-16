@@ -119,10 +119,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 
 	R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
 
-	if (image->glowmap)
-		R_EnableGlowMap(image->glowmap, qtrue);
-	else
-		R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(image->glowmap, qtrue);
 
 	R_CheckError();
 }
@@ -163,8 +160,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	if (r_state.bumpmap_enabled)
 		R_EnableBumpmap(NULL, qfalse);
 
-	if (r_state.glowmap_enabled)
-		R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
 
 	/* and restore array pointers */
 	R_ResetArrayState();
@@ -186,7 +182,7 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 	R_EnableLighting(r_state.world_program, qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableLighting(NULL, qfalse);
-
+	R_EnableGlowMap(NULL, qfalse);
 	R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
@@ -202,6 +198,7 @@ void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
 	R_EnableWarp(r_state.warp_program, qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableWarp(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
 }
 
 void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
@@ -213,6 +210,7 @@ void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
 	R_EnableLighting(r_state.world_program, qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableLighting(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
 	R_EnableAlphaTest(qfalse);
 }
 
@@ -244,4 +242,5 @@ void R_DrawBlendWarpSurfaces (mBspSurfaces_t *surfs)
 	R_EnableWarp(r_state.warp_program, qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableWarp(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
 }

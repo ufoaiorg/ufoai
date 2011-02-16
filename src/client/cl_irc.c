@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_popup.h"
-#include "multiplayer/mp_chatmessages.h"
+#include "cgame/multiplayer/mp_chatmessages.h"
 #include "battlescape/cl_hud.h"
 
 #ifdef _WIN32

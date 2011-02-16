@@ -216,7 +216,7 @@ aircraft craft_inter_stiletto
 	name		"_Stiletto-class Interceptor"
 	defaultname	"_Stiletto I"
 	type		interceptor
-	model		"aircraft/inter_stiletto/stiletto"
+	model		"geoscape/inter_stiletto"
 	numteam		0
 	size		1
 	price		20000

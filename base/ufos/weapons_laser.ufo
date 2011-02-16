@@ -91,6 +91,10 @@ item electrolaser
 	is_primary		true
 }
 
+// =======================
+// LASER AMMOS
+// =======================
+
 item laser_ammo
 {
 	name			"_D-F Cartridge"
@@ -241,6 +245,21 @@ item laser_ammo
 			reaction			true
 		}
 	}
+}
+
+item laser_ammo_stun
+{
+	name			"_D-F Cartridge Stun"
+	model			weapons/laserrifle/laserrifle_clip
+	type			ammo
+	animationindex	0
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			1.8
+	price			210
+	size			7
+	is_primary		true
+	dmgtype			stun_electro
 
 	weapon_mod electrolaser
 	{

@@ -27,14 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/client.h"
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
-#include "../client/campaign/cp_campaign.h"
-#include "../client/campaign/cp_map.h"
-#include "../client/campaign/cp_hospital.h"
-#include "../client/campaign/cp_missions.h"
-#include "../client/campaign/cp_nation.h"
-#include "../client/campaign/cp_overlay.h"
-#include "../client/campaign/cp_ufo.h"
-#include "../client/campaign/cp_time.h"
+#include "../client/cgame/campaign/cp_campaign.h"
+#include "../client/cgame/campaign/cp_map.h"
+#include "../client/cgame/campaign/cp_hospital.h"
+#include "../client/cgame/campaign/cp_missions.h"
+#include "../client/cgame/campaign/cp_nation.h"
+#include "../client/cgame/campaign/cp_overlay.h"
+#include "../client/cgame/campaign/cp_ufo.h"
+#include "../client/cgame/campaign/cp_time.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -432,11 +432,51 @@ static void testTransferItem (void)
 
 	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
 
-	/* to ensure that the transfer is finished with the first think call */
 	transfer->event = ccs.date;
+	transfer->event.day++;
 
+	/* check if it's arrived immediately */
+	TR_TransferRun();
+	CU_ASSERT_FALSE(LIST_IsEmpty(ccs.transfers));
+
+	/* check if it arrives (even a second) before it should */
+	ccs.date.day++;
+	ccs.date.sec--;
+	TR_TransferRun();
+	CU_ASSERT_FALSE(LIST_IsEmpty(ccs.transfers));
+
+	/* check if it arrived right when it should */
+	ccs.date.sec++;
 	TR_TransferRun();
 	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
+
+	/* Start another transfer to check higher time lapse */
+	transfer = TR_TransferStart(base, &td);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
+	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
+
+	transfer->event = ccs.date;
+	transfer->event.day++;
+
+	/* check if it arrived when time passed the deadline by days already */
+	ccs.date.day += 2;
+	TR_TransferRun();
+	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
+
+	/* Start another transfer to check higher time lapse */
+	transfer = TR_TransferStart(base, &td);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
+	CU_ASSERT_EQUAL(LIST_Count(ccs.transfers), 1);
+
+	transfer->event = ccs.date;
+	transfer->event.day++;
+
+	/* check if it arrived when time passed the deadline by days already */
+	ccs.date.day++;
+	ccs.date.sec++;
+	TR_TransferRun();
+	CU_ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
+
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
@@ -998,25 +1038,25 @@ static void testDateHandling (void)
 	date.day = 299;
 	date.sec = 310;
 
-	CU_ASSERT_FALSE(Date_IsDue(&date));
+	CU_ASSERT_TRUE(Date_IsDue(&date));
 	CU_ASSERT_TRUE(Date_LaterThan(&ccs.date, &date));
 
 	date.day = 301;
 	date.sec = 0;
 
-	CU_ASSERT_TRUE(Date_IsDue(&date));
+	CU_ASSERT_FALSE(Date_IsDue(&date));
 	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
 
 	date.day = 300;
 	date.sec = 299;
 
-	CU_ASSERT_FALSE(Date_IsDue(&date));
+	CU_ASSERT_TRUE(Date_IsDue(&date));
 	CU_ASSERT_TRUE(Date_LaterThan(&ccs.date, &date));
 
 	date.day = 300;
 	date.sec = 301;
 
-	CU_ASSERT_TRUE(Date_IsDue(&date));
+	CU_ASSERT_FALSE(Date_IsDue(&date));
 	CU_ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
 }
 

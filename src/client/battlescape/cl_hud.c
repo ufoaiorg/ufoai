@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_hud.h"
 #include "cl_hud_callbacks.h"
 #include "cl_view.h"
-#include "../cl_game.h"
+#include "../cgame/cl_game.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_popup.h"
 #include "../ui/ui_nodes.h"
@@ -173,15 +173,6 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
 
 	/* Connect confunc strings to the ones as defined in "menu hud_nohud". */
 	UI_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
-}
-
-/**
- * @brief Makes all entries of the firemode lists invisible.
- */
-void HUD_HideFiremodes (void)
-{
-	/** @todo not sure this callback mean something (maybe not need, or dont have any meaning (we hide it for a reason, not for hiding it)) */
-	UI_ExecuteConfunc("hide_firemodes");
 }
 
 /**

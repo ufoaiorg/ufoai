@@ -18,7 +18,7 @@ component button cmpMenuButton
 /**
  * Bar with border, label and value.
  * Used to show stats of the actor.
- * This version is used in menu "employees" and "mp_team"
+ * This version is used in menu "employees" and "game_team"
  */
 
 component panel cmpDefNamedTbar

@@ -51,7 +51,7 @@ typedef struct face_s {
 
 	struct portal_s	*portal;
 	int				texinfo;
-	int				planenum;
+	uint16_t		planenum;
 	uint32_t		contentFlags;	/**< faces in different contents can't merge */
 	winding_t		*w;
 	int				numpoints;
@@ -59,7 +59,7 @@ typedef struct face_s {
 } face_t;
 
 typedef struct side_s {
-	int			planenum;
+	uint16_t	planenum;
 	int			texinfo;
 	winding_t	*winding;
 	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */

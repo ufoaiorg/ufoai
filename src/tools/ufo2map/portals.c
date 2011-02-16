@@ -431,13 +431,15 @@ static void FindPortalSide (portal_t *p)
 			for (i = 0; i < brush->numsides; i++) {
 				side_t *side = &brush->original_sides[i];
 				float dot;
-				plane_t *p2;
+				const plane_t *p2;
 
 				if (side->bevel)
 					continue;
+				/* non-visible */
 				if (side->texinfo == TEXINFO_NODE)
-					continue;		/* non-visible */
-				if ((side->planenum &~ 1) == planenum) {	/* exact match */
+					continue;
+				/* exact match */
+				if ((side->planenum &~ 1) == planenum) {
 					bestside = &brush->original_sides[i];
 					goto gotit;
 				}

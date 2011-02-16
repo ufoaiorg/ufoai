@@ -204,8 +204,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	/* scale model to proper resolution */
 	glScalef(viddef.rx, viddef.ry, 1.0f);
 	/* rotate model to proper direction. */
-	glRotatef(180.0f, 0, 1, 0);
-	glRotatef(90.f - direction, 0, 0, 1);
+	glRotatef(-90.f + direction, 0, 0, 1);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
 
@@ -278,7 +277,7 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	glRotatef(rotate[0] - pos[0], 0, 0, 1);
 	glRotatef(90.0f - pos[1], 1, 0, 0);
 	glTranslatef(0, 0, earthRadius);
-	glRotatef(-90.0f + direction, 0, 0, 1);
+	glRotatef(90.0f + direction, 0, 0, 1);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
 
@@ -745,19 +744,22 @@ void R_DrawBloom (void)
 
 	/* save state, then set up for blit-style rendering to quads */
 	renderBufferState = R_RenderbufferEnabled();
+
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 #ifndef ANDROID
-	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
+		glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
 #endif
-	glMatrixMode(GL_TEXTURE);
-	glPushMatrix();
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
+	}
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -809,16 +811,18 @@ void R_DrawBloom (void)
 
 	R_CheckError();
 
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-	glMatrixMode(GL_TEXTURE);
-	glPopMatrix();
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+		glMatrixMode(GL_TEXTURE);
+		glPopMatrix();
 #ifndef ANDROID
-	glPopAttrib();
+		glPopAttrib();
 #endif
-	R_CheckError();
+		R_CheckError();
+	}
 
 	/* reset renderbuffer state to what it was before */
 	R_EnableRenderbuffer(renderBufferState);

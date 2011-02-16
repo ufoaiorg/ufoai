@@ -232,7 +232,7 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 }
 
 
-static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
+static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
 			int *numsplits, qboolean *hintsplit, int *epsilonbrush)
 {
 	int i, s;
@@ -247,9 +247,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	/* if the brush actually uses the planenum,
 	 * we can tell the side for sure */
 	for (i = 0; i < brush->numsides; i++) {
-		const int num = brush->sides[i].planenum;
-		if (num >= 0x10000)
-			Sys_Error("bad planenum");
+		const uint16_t num = brush->sides[i].planenum;
 		if (num == planenum)
 			return (PSIDE_BACK | PSIDE_FACING);
 		if (num == (planenum ^ 1))
@@ -434,7 +432,7 @@ static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
 }
 
 #else
-static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
+static qboolean CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t *volume)
 {
 		bspbrush_t *front, *back;
 		qboolean good;
@@ -461,7 +459,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 	int value, bestvalue;
 	bspbrush_t *brush, *test;
 	side_t *bestside;
-	int i, j, pass, numpasses, pnum;
+	int i, j, pass, numpasses;
 	int front, back, both, facing, splits;
 	int bsplits, epsilonbrush;
 	qboolean hintsplit;
@@ -483,8 +481,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 			if (!(pass & 1) && (brush->original->contentFlags & CONTENTS_DETAIL))
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
-				/** @todo This will overflow if numsides is bigger than 6
-				 * @sa bspbrush_t */
+				uint16_t pnum;
 				side_t *side = &brush->sides[i];
 				if (side->bevel)
 					continue;	/* never use a bevel as a spliter */
@@ -583,13 +580,12 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 /**
  * @brief Generates two new brushes, leaving the original unchanged
  */
-void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *b[2];
 	int i, j;
 	winding_t *w, *cw[2], *midwinding;
 	plane_t *plane, *plane2;
-	side_t *cs;
 	float d_front, d_back;
 
 	*front = *back = NULL;
@@ -660,6 +656,8 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 		ClipWindingEpsilon(w, plane->normal, plane->dist,
 			0 /*PLANESIDE_EPSILON*/, &cw[0], &cw[1]);
 		for (j = 0; j < 2; j++) {
+			side_t *cs;
+
 			if (!cw[j])
 				continue;
 
@@ -710,7 +708,7 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 
 	/* add the midwinding to both sides */
 	for (i = 0; i < 2; i++) {
-		cs = &b[i]->sides[b[i]->numsides];
+		side_t *cs = &b[i]->sides[b[i]->numsides];
 		b[i]->numsides++;
 
 		cs->planenum = planenum ^ i ^ 1;
@@ -738,18 +736,19 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 	*back = b[1];
 }
 
-void SplitBrushList (bspbrush_t *brushes, int planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t **front, bspbrush_t **back)
 {
-	bspbrush_t *brush, *newbrush, *newbrush2;
-	side_t *side;
-	int sides, i;
+	bspbrush_t *brush;
 
 	*front = *back = NULL;
 
 	for (brush = brushes; brush; brush = brush->next) {
-		sides = brush->side;
+		const int sides = brush->side;
+		bspbrush_t *newbrush;
 
 		if (sides == PSIDE_BOTH) {	/* split into two brushes */
+			bspbrush_t *newbrush2;
+			assert(planenum >= 0);
 			SplitBrush(brush, planenum, &newbrush, &newbrush2);
 			if (newbrush) {
 				newbrush->next = *front;
@@ -766,12 +765,13 @@ void SplitBrushList (bspbrush_t *brushes, int planenum, bspbrush_t **front, bspb
 
 		newbrush = CopyBrush(brush);
 
-		/* if the planenum is actualy a part of the brush
+		/* if the planenum is actually a part of the brush
 		 * find the plane and flag it as used so it won't be tried
 		 * as a splitter again */
 		if (sides & PSIDE_FACING) {
+			int i;
 			for (i = 0; i < newbrush->numsides; i++) {
-				side = newbrush->sides + i;
+				side_t *side = newbrush->sides + i;
 				if ((side->planenum & ~1) == planenum)
 					side->texinfo = TEXINFO_NODE;
 			}

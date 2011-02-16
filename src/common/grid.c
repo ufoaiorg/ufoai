@@ -739,9 +739,10 @@ pos_t Grid_StepUp (const routing_t *map, const actorSizeEnum_t actorSize, const 
 /**
  * @brief Returns the amounts of TUs that are needed to perform one step into the given direction.
  * @param[in] dir the direction in which we are moving
+ * @param[in] crouched The crouching state of the actor
  * @return The TUs needed to move there.
  */
-int Grid_GetTUsForDirection (int dir, int crouched)
+int Grid_GetTUsForDirection (const int dir, const int crouched)
 {
 	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
 	if (crouched && dir < CORE_DIRECTIONS)

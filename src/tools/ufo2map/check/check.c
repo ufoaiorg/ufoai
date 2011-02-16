@@ -1237,12 +1237,6 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 	const side_t *sides = b->original_sides;
 
 	for (i = 1; i < b->numsides; i++) {
-		/* check for a degenerate plane */
-		if (sides[i].planenum == -1) {
-			Check_Printf(VERB_CHECK, qfalse, b->entitynum, b->brushnum, "degenerate plane\n");
-			continue;
-		}
-
 		/* check for duplication and mirroring */
 		for (j = 0; j < i; j++) {
 			if (sides[i].planenum == sides[j].planenum) {

@@ -1200,7 +1200,8 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 			mask |= G_TeamToVisMask(i);
 
 	if (!mock) {
-		qboolean itemAlreadyRemoved = qfalse;	/**< State info so we can check if an item was already removed. */
+		/* State info so we can check if an item was already removed. */
+		qboolean itemAlreadyRemoved = qfalse;
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
@@ -1233,7 +1234,8 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		/* remove throwable oneshot && deplete weapon from inventory */
 		if (weapon->t->thrown && weapon->t->oneshot && weapon->t->deplete) {
 			const invDef_t *invDef = INVDEF(container);
-			assert(!itemAlreadyRemoved);
+			if (itemAlreadyRemoved)
+				gi.Error("Item %s is already removed", weapon->t->id);
 			assert(invDef->single);
 			game.i.EmptyContainer(&game.i, &ent->chr.i, invDef);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);

@@ -79,6 +79,9 @@ static void SV_error (const char *fmt, ...)
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
+	/* unlock the game thread loop */
+	TH_MutexUnlock(svs.serverMutex);
+
 	Com_Error(ERR_DROP, "Game Error: %s", msg);
 }
 

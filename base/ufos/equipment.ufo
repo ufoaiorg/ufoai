@@ -316,6 +316,7 @@ equipment multiplayer_phalanx
 	item laserpistol			2
 	item electrolaser		2
 	item laserrifle			2
+	item laser_ammo_stun	11
 	item laser_ammo			11
 	item heavylaser			2
 	item plaspistol			2

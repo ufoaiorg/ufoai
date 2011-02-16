@@ -35,7 +35,8 @@ typedef struct bspbrush_s bspbrush_t;
 typedef struct bspbrush_s {
 	struct bspbrush_s	*next;
 	vec3_t	mins, maxs;
-	int		side, testside;		/**< side of node during construction */
+	int		side;		/**< side of node during construction */
+	int		testside;
 	struct mapbrush_s	*original;
 	int		numsides;
 	side_t	sides[6];			/**< variably sized */
@@ -45,8 +46,8 @@ typedef struct bspbrush_s {
 bspbrush_t *BrushFromBounds(vec3_t mins, vec3_t maxs);
 bspbrush_t *CopyBrush(const bspbrush_t *brush);
 side_t *SelectSplitSide(bspbrush_t *brushes, bspbrush_t *volume);
-void SplitBrushList(bspbrush_t *brushes, int planenum, bspbrush_t **front, bspbrush_t **back);
-void SplitBrush(const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
+void SplitBrushList(bspbrush_t *brushes, uint16_t planenum, bspbrush_t **front, bspbrush_t **back);
+void SplitBrush(const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front, bspbrush_t **back);
 bspbrush_t *AllocBrush(int numsides);
 int	CountBrushList(bspbrush_t *brushes);
 void FreeBrush(bspbrush_t *brushes);

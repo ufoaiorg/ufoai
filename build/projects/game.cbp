@@ -16,7 +16,6 @@
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add option="--export-all-symbols" />
 				</Linker>
 				<ExtraCommands>

@@ -67,7 +67,7 @@ typedef struct {
 } tree_t;
 
 extern plane_t mapplanes[MAX_MAP_PLANES];
-extern int nummapplanes;
+extern uint16_t nummapplanes;
 
 extern int nummapbrushes;
 extern mapbrush_t mapbrushes[MAX_MAP_BRUSHES];
@@ -81,7 +81,7 @@ extern int brush_start, brush_end;
 byte GetLevelFlagsFromBrush(const mapbrush_t *brush);
 void LoadMapFile(const char *filename);
 void WriteMapFile(const char *filename);
-int FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
+uint16_t FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
 
 /*============================================================================= */
 

@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "cl_game.h"
+#include "cgame/cl_game.h"
 #include "cl_team.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
@@ -33,10 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_data.h"
 #include "ui/ui_nodes.h"
 #include "battlescape/events/e_main.h"
-#include "campaign/save/save_character.h"
-#include "campaign/save/save_inventory.h"
+#include "cgame/campaign/save/save_character.h"
+#include "cgame/campaign/save/save_inventory.h"
 
-/** @brief List of currently displayed or equipeable characters. */
+/** @brief List of currently displayed or equipable characters. */
 chrList_t chrDisplayList;
 
 /**
@@ -557,12 +557,13 @@ static void CL_ChangeSkin_f (void)
 
 	if (sel >= 0 && sel < chrDisplayList.num) {
 		int newSkin = Cvar_GetInteger("mn_skin");
+		character_t *chr = chrDisplayList.chr[sel];
 		newSkin = CL_FixActorSkinIDX(newSkin);
 
-		if (chrDisplayList.chr[sel]) {
+		if (chr) {
 			/** @todo Get the skin id from the model by using the actorskin id */
 			/** @todo Or remove skins from models and convert character_t->skin to string */
-			chrDisplayList.chr[sel]->skin = newSkin;
+			chr->skin = newSkin;
 
 			Cvar_SetValue("mn_skin", newSkin);
 			Cvar_Set("mn_skinname", CL_GetTeamSkinName(newSkin));
@@ -584,10 +585,11 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 	/* Apply new skin to all (shown/displayed) team-members. */
 	/** @todo What happens if a model of a team member does not have the selected skin? */
 	for (i = 0; i < chrDisplayList.num; i++) {
-		assert(chrDisplayList.chr[i]);
+		character_t *chr = chrDisplayList.chr[i];
+		assert(chr);
 		/** @todo Get the skin id from the model by using the actorskin id */
 		/** @todo Or remove skins from models and convert character_t->skin to string */
-		chrDisplayList.chr[i]->skin = newSkin;
+		chr->skin = newSkin;
 	}
 }
 

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_parse.h"
 #include "cl_hud.h"
 #include "events/e_parse.h"
-#include "../multiplayer/mp_chatmessages.h"
+#include "../cgame/multiplayer/mp_chatmessages.h"
 
 /**
  * @brief see also svc_ops_e in common.h

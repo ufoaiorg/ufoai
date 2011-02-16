@@ -51,6 +51,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <link.h>
 #endif
 
+#ifndef COMPILE_UFO
+#undef HAVE_BFD_H
+#endif
+#include "../../shared/bfd.h"
+
 #ifdef ANDROID
 #include <android/log.h>
 #include "../android/android_debugger.h"
@@ -413,6 +418,7 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 {
 	int j;
 	int end;
+	FILE *crash = (FILE*)data;
 
 	end = 0;
 
@@ -425,11 +431,93 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 
 	/* this is terrible. */
 #if __WORDSIZE == 64
-	fprintf(stderr, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+	fprintf(crash, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 #else
-	fprintf (stderr, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+	fprintf(crash, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 #endif
 	return 0;
+}
+
+#endif
+
+#ifdef HAVE_BFD_H
+
+/* following code parts are taken from libcairo */
+
+struct file_match {
+	const char *file;
+	void *address;
+	void *base;
+	void *hdr;
+};
+
+#define BUFFER_MAX (16*1024)
+static char g_output[BUFFER_MAX];
+
+static int find_matching_file (struct dl_phdr_info *info, size_t size, void *data)
+{
+	struct file_match *match = data;
+	/* This code is modeled from Gfind_proc_info-lsb.c:callback() from libunwind */
+	long n;
+	const ElfW(Phdr) *phdr;
+	ElfW(Addr) load_base = info->dlpi_addr;
+	phdr = info->dlpi_phdr;
+	for (n = info->dlpi_phnum; --n >= 0; phdr++) {
+		if (phdr->p_type == PT_LOAD) {
+			ElfW(Addr) vaddr = phdr->p_vaddr + load_base;
+			if (match->address >= (void*)vaddr && match->address < (void*)(vaddr + phdr->p_memsz)) {
+				/* we found a match */
+				match->file = info->dlpi_name;
+				match->base = (void*)info->dlpi_addr;
+			}
+		}
+	}
+	return 0;
+}
+
+static void _backtrace (FILE *crash, void * const *buffer, int size)
+{
+	int x;
+	struct bfd_set *set = calloc(1, sizeof(*set));
+	struct output_buffer ob;
+	struct bfd_ctx *bc = NULL;
+
+	output_init(&ob, g_output, sizeof(g_output));
+
+	bfd_init();
+
+	for (x = 0; x < size; x++) {
+		struct file_match match = {.address = buffer[x]};
+		bfd_vma addr;
+		const char * file = NULL;
+		const char * func = NULL;
+		unsigned line = 0;
+		const char *procname;
+
+		dl_iterate_phdr(find_matching_file, &match);
+		addr = (char *)buffer[x] - (char *)match.base;
+
+		if (match.file && strlen(match.file))
+			procname = match.file;
+		else
+			procname = "/proc/self/exe";
+
+		bc = get_bc(&ob, set, procname);
+		if (bc) {
+			find(bc, addr, &file, &func, &line);
+			procname = bc->handle->filename;
+		}
+
+		if (func == NULL) {
+			output_print(&ob, "0x%x : %s : %s \n", addr, procname, file);
+		} else {
+			output_print(&ob, "0x%x : %s : %s (%d) : in function (%s) \n", addr, procname, file, line, func);
+		}
+	}
+
+	fprintf(crash, "%s", g_output);
+
+	release_set(set);
 }
 
 #endif
@@ -439,28 +527,50 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
  */
 void Sys_Backtrace (void)
 {
+	const char *dumpFile = "crashdump.txt";
+	FILE *file = fopen(dumpFile, "w");
+	FILE *crash = file != NULL ? file : stderr;
+#ifndef HAVE_BFD_H
+	int filenumber = fileno(crash);
+#endif
+
+	fprintf(crash, "======start======\n");
+
 #ifdef HAVE_SYS_UTSNAME_H
 	struct utsname	info;
+	uname(&info);
+	fprintf(crash, "OS Info: %s %s %s %s %s\n", info.sysname, info.nodename, info.release, info.version, info.machine);
 #endif
+
+	fprintf(crash, BUILDSTRING"\n\n");
+	fflush(crash);
 
 #ifdef HAVE_EXECINFO_H
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
-	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
+#ifdef HAVE_BFD_H
+	_backtrace(crash, symbols, i);
+#else
+	backtrace_symbols_fd(symbols, i, filenumber);
+#endif
 #endif
 
 #ifdef HAVE_LINK_H
-	fprintf(stderr, "Loaded libraries:\n");
-	dl_iterate_phdr(Sys_BacktraceLibsCallback, NULL);
+	fprintf(crash, "Loaded libraries:\n");
+	dl_iterate_phdr(Sys_BacktraceLibsCallback, crash);
 #endif
 
 #ifdef ANDROID
 	androidDumpBacktrace();
 #endif
 
-#ifdef HAVE_SYS_UTSNAME_H
-	uname(&info);
-	fprintf(stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
+	fprintf(crash, "======end========\n");
+
+	if (file != NULL)
+		fclose(file);
+
+#ifdef COMPILE_UFO
+	Com_UploadCrashDump(dumpFile);
 #endif
 }
 

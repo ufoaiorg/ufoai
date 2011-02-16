@@ -26,9 +26,6 @@ ufoded_LDFLAGS           += -lws2_32 -lwinmm -lgdi32 -mwindows
 testall_LDFLAGS          += -lws2_32 -lwinmm -lgdi32 -lfreetype
 ifdef HAVE_BFD_H
     BFD_LIBS             := -lbfd -liberty -limagehlp
-    ufo_LDFLAGS          += $(BFD_LIBS)
-    ufoded_LDFLAGS       += $(BFD_LIBS) -lintl -liconv
-    testall_LDFLAGS      += $(BFD_LIBS)
 endif
 ufo2map_LDFLAGS          += -lwinmm
 ufomodel_LDFLAGS         += -lwinmm

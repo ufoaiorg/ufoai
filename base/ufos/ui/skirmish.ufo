@@ -7,7 +7,7 @@ component radiobutton cmpMapPreviewButton
 	{
 		icon	"icons/mapselection"
 		size	"128 128"
-		cvar	"*cvar:cl_mapselected"
+		cvar	"*cvar:mn_svmapid"
 		stringValue	" "
 		onClick {
 			cmd "mn_selectmap \"<node:this.id@string>\";"
@@ -86,19 +86,19 @@ window skirmish
 	confunc	sk_maplist_listener {
 		if (param1 eq "begin") {
 			*cvar:count = 0
-			*cvar:cl_mapselected = ""
+			*cvar:mn_svmapid = ""
 			call *node:root.maplist@removeAllChild
 		} elif (param1 eq "add") {
 //			cmd "echo <1> <2> <3>"
 			call *node:root.maplist@createchild("map<cvar:count>", "cmpMapPreviewButton")
 			call *node:root.maplist.map<cvar:count>.init(param2, param3)
 			*cvar:count = (*cvar:count + 1)
-			if (*cvar:cl_mapselected eq "") {
-				*cvar:cl_mapselected = param2
+			if (*cvar:mn_svmapid eq "") {
+				*cvar:mn_svmapid = param2
 			}
 		} elif (param1 eq "end") {
 			delete *cvar:count
-			cmd "mn_selectmap \"<cvar:cl_mapselected>\""
+			cmd "mn_selectmap \"<cvar:mn_svmapid>\""
 		} else {
 			cmd "echo sk_maplist_listener: command \"<1>\" unknown."
 		}
@@ -218,9 +218,6 @@ window skirmish
 			cvar	*cvar:rm_drop
 			dataid	OPTION_DROPSHIPS
 		}
-
-		custombutton prev_map { invis true }
-		custombutton next_map { invis true }
 	}
 	// ============
 	// OPTIONS TAB
@@ -399,17 +396,23 @@ window skirmish
 		string team_str
 		{
 			string		"_Team:"
-			pos			"10 245"
+			pos			"10 225"
 			size		"200 20"
 			tooltip		"_Select which side you want to play with."
 		}
 		selectbox team_box
 		{
-			pos		"230 245"
+			pos		"230 225"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
 			cvar	*cvar:cl_teamdef
 			dataid	OPTION_TEAMDEFS
+		}
+		cmpMenuButton button_team
+		{
+			string		"_Team"
+			pos			"0 260"
+			onClick		{ cmd "ui_pop; ui_push game_team;" }
 		}
 	}
 	// ============
@@ -453,7 +456,7 @@ window skirmish
 		cmd	"game_setmode;set ai_numaliens 8;set ai_equipment multiplayer_alien;set difficulty 0;"
 		cmd "set mn_serverday 1;mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
 		*cvar:mn_skirmish_config_tab = 1
-		*cvar:cl_mapselected = "none"
+		*cvar:mn_svmapid = "none"
 		cmd "mn_requestmaplist sk_maplist_listener"
 		call *node:root.sk_update_config_navigation
 	}

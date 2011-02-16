@@ -1036,6 +1036,8 @@ base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 |  | Bas
 base/models/geoscape/inter_saracen.png | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_starchaser.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/inter_starchaser.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/geoscape/inter_stiletto.md2 | GNU General Public License 2.0 or later | Julian, Origin
+base/models/geoscape/inter_stiletto.png | GNU General Public License 2.0 or later | Origin, Nate Wright
 base/models/geoscape/inter_stingray.md2 | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/inter_stingray.png | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/missile.md2 | GNU General Public License 2.0
@@ -2543,6 +2545,7 @@ base/pics/armour/taman_medium.png | GNU General Public License 2.0
 base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/conback.jpg | GNU General Public License 2.0
 base/pics/background/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/game_team_edit_bg.png | GNU General Public License 2.0 or later
 base/pics/background/irc_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/loading.png | GNU General Public License 2.0
 base/pics/background/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2550,7 +2553,6 @@ base/pics/background/lost_bg.png | GNU General Public License 2.0 or later
 base/pics/background/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/mailclient_bg.png | GNU General Public License 2.0 or later
 base/pics/background/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/mp_team_edit_bg.png | GNU General Public License 2.0 or later
 base/pics/background/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/skirmish2.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2567,18 +2569,14 @@ base/pics/banks/pack_message.png | GNU General Public License 2.0 or later | bay
 base/pics/base/adrop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl2.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/aliencont1.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/aliencont2.png | GNU General Public License 2.0
+base/pics/base/aliencont.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/antimatter.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/commando.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/drop1.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/drop2.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/base/drop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/empty.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/entrance.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/grid.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/hospital.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/hover.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/hover2.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/intercept.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/invalid.png | GNU General Public License 2.0
 base/pics/base/lab.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2590,8 +2588,7 @@ base/pics/base/radar.png | GNU General Public License 2.0 or later | Martin Gerh
 base/pics/base/radar_adv.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/storage.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/teamroom.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/workshop1.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/workshop2.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/base/workshop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/buttons/big_blue.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_blue2.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_blue_disabled.png | GNU General Public License 2.0 or later
@@ -5431,6 +5428,15 @@ base/textures/tex_base/sign04.jpg | GNU General Public License 2.0 | Werner Höh
 base/textures/tex_base/sign05.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/sign07.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/sign07_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07b.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07c.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07d.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07e.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07f.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07g.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07h.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_base/sign07i.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/sign08.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/sign08_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_base/sign09.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6681,9 +6687,13 @@ base/textures/tex_misc/advertbb7.png | GNU General Public License 2.0 or later |
 base/textures/tex_misc/advertbb8.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertbba_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/barrel1.png | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
+base/textures/tex_misc/barrel1_nm.png | GNU General Public License 2.0 | MCR | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel2.png | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
+base/textures/tex_misc/barrel2_nm.png | GNU General Public License 2.0 | MCR | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel_top.png | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst_top2.jpg
 base/textures/tex_misc/barrel_top1.png | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst_top2.jpg
+base/textures/tex_misc/barrel_top1_nm.png | GNU General Public License 2.0 | MCR | nexuiz/textures/evil2_misc/barrel_rst_top2.jpg
+base/textures/tex_misc/barrel_top_nm.png | GNU General Public License 2.0 | MCR | nexuiz/textures/evil2_misc/barrel_rst_top2.jpg
 base/textures/tex_misc/barrier001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/bask_board.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/bask_board_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -7056,6 +7066,7 @@ base/textures/tex_pics/tonight_honuda.png | GNU General Public License 2.0 or la
 base/textures/tex_pics/tonight_honuda_gm.png | GNU General Public License 2.0 or later | MCR | Martin Gerhardy
 base/textures/tex_pics/traktor1.jpg | Public Domain | US Federal Government
 base/textures/tex_pics/traktor2.jpg | Creative Commons Attribution-Share Alike 2.0 | Solitude
+base/textures/tex_shop/cashreg_c.jpg | Public Domain
 base/textures/tex_shop/fruits001.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits001_new_lq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits001_new_lq_nm.png | GNU General Public License 2.0 | MCR
@@ -7188,6 +7199,7 @@ base/textures/tex_tech/cover003.png | GNU General Public License 2.0 | Nate Wrig
 base/textures/tex_tech/cover004.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/laptop_screen.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_tech/pc_a.png | GNU General Public License 2.0 or later | nerf5000
+base/textures/tex_tech/pc_b.jpg | Public Domain
 base/textures/tex_tech/radio001.png | GNU General Public License 2.0 or later
 base/textures/tex_tech/radio002.png | GNU General Public License 2.0 or later
 base/textures/tex_tech/screen1.jpg | GNU General Public License 2.0 or later | zark127

@@ -140,6 +140,7 @@ window popup_buildingpreview
 	image building_pic
 	{
 		src		*cvar:mn_building_image
+		preventratio	true
 		pos			"350 58"
 		size		"150 154"
 		bgcolor		"0 0.08 0 1"

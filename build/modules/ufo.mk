@@ -8,15 +8,11 @@ endif
 
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SDL_CFLAGS) $(SDL_TTF_CFLAGS) $(SDL_IMAGE_CFLAGS) $(SDL_MIXER_CFLAGS) $(CURL_CFLAGS) $(THEORA_CFLAGS) $(XVID_CFLAGS) $(VORBIS_CFLAGS) $(OGG_CFLAGS)
-$(TARGET)_LDFLAGS  += -lpng -ljpeg $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(BFD_CFLAGS) $(SDL_CFLAGS) $(SDL_TTF_CFLAGS) $(SDL_IMAGE_CFLAGS) $(SDL_MIXER_CFLAGS) $(CURL_CFLAGS) $(THEORA_CFLAGS) $(XVID_CFLAGS) $(VORBIS_CFLAGS) $(OGG_CFLAGS)
+$(TARGET)_LDFLAGS  += -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
 
 $(TARGET)_SRCS      = \
 	client/cl_console.c \
-	client/cl_game.c \
-	client/cl_game_campaign.c \
-	client/cl_game_multiplayer.c \
-	client/cl_game_skirmish.c \
 	client/cl_http.c \
 	client/cl_inventory.c \
 	client/cl_inventory_callbacks.c \
@@ -97,73 +93,78 @@ $(TARGET)_SRCS      = \
 	client/sound/s_mix.c \
 	client/sound/s_sample.c \
 	\
-	client/campaign/cp_aircraft.c \
-	client/campaign/cp_aircraft_callbacks.c \
-	client/campaign/cp_alien_interest.c \
-	client/campaign/cp_base.c \
-	client/campaign/cp_base_callbacks.c \
-	client/campaign/cp_basedefence_callbacks.c \
-	client/campaign/cp_building.c \
-	client/campaign/cp_capacity.c \
-	client/campaign/cp_hospital.c \
-	client/campaign/cp_hospital_callbacks.c \
-	client/campaign/cp_messages.c \
-	client/campaign/cp_missions.c \
-	client/campaign/cp_mission_triggers.c \
-	client/campaign/cp_parse.c \
-	client/campaign/cp_rank.c \
-	client/campaign/cp_team.c \
-	client/campaign/cp_team_callbacks.c \
-	client/campaign/cp_time.c \
-	client/campaign/cp_xvi.c \
-	client/campaign/cp_alienbase.c \
-	client/campaign/cp_aliencont.c \
-	client/campaign/cp_aliencont_callbacks.c \
-	client/campaign/cp_airfight.c \
-	client/campaign/cp_campaign.c \
-	client/campaign/cp_event.c \
-	client/campaign/cp_employee.c \
-	client/campaign/cp_employee_callbacks.c \
-	client/campaign/cp_installation.c \
-	client/campaign/cp_installation_callbacks.c \
-	client/campaign/cp_market.c \
-	client/campaign/cp_market_callbacks.c \
-	client/campaign/cp_map.c \
-	client/campaign/cp_mapfightequip.c \
-	client/campaign/cp_nation.c \
-	client/campaign/cp_produce.c \
-	client/campaign/cp_produce_callbacks.c \
-	client/campaign/cp_radar.c \
-	client/campaign/cp_research.c \
-	client/campaign/cp_research_callbacks.c \
-	client/campaign/cp_save.c \
-	client/campaign/cp_statistics.c \
-	client/campaign/cp_transfer.c \
-	client/campaign/cp_transfer_callbacks.c \
-	client/campaign/cp_ufo.c \
-	client/campaign/cp_ufopedia.c \
-	client/campaign/cp_uforecovery.c \
-	client/campaign/cp_uforecovery_callbacks.c \
-	client/campaign/cp_messageoptions.c \
-	client/campaign/cp_messageoptions_callbacks.c \
-	client/campaign/cp_overlay.c \
-	client/campaign/cp_popup.c \
-	client/campaign/cp_fightequip_callbacks.c \
+	client/cgame/cl_game.c \
+	client/cgame/cl_game_campaign.c \
+	client/cgame/cl_game_multiplayer.c \
+	client/cgame/cl_game_skirmish.c \
+	client/cgame/cl_game_team.c \
 	\
-	client/campaign/missions/cp_mission_baseattack.c \
-	client/campaign/missions/cp_mission_buildbase.c \
-	client/campaign/missions/cp_mission_harvest.c \
-	client/campaign/missions/cp_mission_intercept.c \
-	client/campaign/missions/cp_mission_recon.c \
-	client/campaign/missions/cp_mission_rescue.c \
-	client/campaign/missions/cp_mission_supply.c \
-	client/campaign/missions/cp_mission_terror.c \
-	client/campaign/missions/cp_mission_xvi.c \
+	client/cgame/campaign/cp_aircraft.c \
+	client/cgame/campaign/cp_aircraft_callbacks.c \
+	client/cgame/campaign/cp_alien_interest.c \
+	client/cgame/campaign/cp_base.c \
+	client/cgame/campaign/cp_base_callbacks.c \
+	client/cgame/campaign/cp_basedefence_callbacks.c \
+	client/cgame/campaign/cp_building.c \
+	client/cgame/campaign/cp_capacity.c \
+	client/cgame/campaign/cp_hospital.c \
+	client/cgame/campaign/cp_hospital_callbacks.c \
+	client/cgame/campaign/cp_messages.c \
+	client/cgame/campaign/cp_missions.c \
+	client/cgame/campaign/cp_mission_triggers.c \
+	client/cgame/campaign/cp_parse.c \
+	client/cgame/campaign/cp_rank.c \
+	client/cgame/campaign/cp_team.c \
+	client/cgame/campaign/cp_team_callbacks.c \
+	client/cgame/campaign/cp_time.c \
+	client/cgame/campaign/cp_xvi.c \
+	client/cgame/campaign/cp_alienbase.c \
+	client/cgame/campaign/cp_aliencont.c \
+	client/cgame/campaign/cp_aliencont_callbacks.c \
+	client/cgame/campaign/cp_airfight.c \
+	client/cgame/campaign/cp_campaign.c \
+	client/cgame/campaign/cp_event.c \
+	client/cgame/campaign/cp_employee.c \
+	client/cgame/campaign/cp_employee_callbacks.c \
+	client/cgame/campaign/cp_installation.c \
+	client/cgame/campaign/cp_installation_callbacks.c \
+	client/cgame/campaign/cp_market.c \
+	client/cgame/campaign/cp_market_callbacks.c \
+	client/cgame/campaign/cp_map.c \
+	client/cgame/campaign/cp_mapfightequip.c \
+	client/cgame/campaign/cp_nation.c \
+	client/cgame/campaign/cp_produce.c \
+	client/cgame/campaign/cp_produce_callbacks.c \
+	client/cgame/campaign/cp_radar.c \
+	client/cgame/campaign/cp_research.c \
+	client/cgame/campaign/cp_research_callbacks.c \
+	client/cgame/campaign/cp_save.c \
+	client/cgame/campaign/cp_statistics.c \
+	client/cgame/campaign/cp_transfer.c \
+	client/cgame/campaign/cp_transfer_callbacks.c \
+	client/cgame/campaign/cp_ufo.c \
+	client/cgame/campaign/cp_ufopedia.c \
+	client/cgame/campaign/cp_uforecovery.c \
+	client/cgame/campaign/cp_uforecovery_callbacks.c \
+	client/cgame/campaign/cp_messageoptions.c \
+	client/cgame/campaign/cp_messageoptions_callbacks.c \
+	client/cgame/campaign/cp_overlay.c \
+	client/cgame/campaign/cp_popup.c \
+	client/cgame/campaign/cp_fightequip_callbacks.c \
 	\
-	client/multiplayer/mp_callbacks.c \
-	client/multiplayer/mp_serverlist.c \
-	client/multiplayer/mp_chatmessages.c \
-	client/multiplayer/mp_team.c \
+	client/cgame/campaign/missions/cp_mission_baseattack.c \
+	client/cgame/campaign/missions/cp_mission_buildbase.c \
+	client/cgame/campaign/missions/cp_mission_harvest.c \
+	client/cgame/campaign/missions/cp_mission_intercept.c \
+	client/cgame/campaign/missions/cp_mission_recon.c \
+	client/cgame/campaign/missions/cp_mission_rescue.c \
+	client/cgame/campaign/missions/cp_mission_supply.c \
+	client/cgame/campaign/missions/cp_mission_terror.c \
+	client/cgame/campaign/missions/cp_mission_xvi.c \
+	\
+	client/cgame/multiplayer/mp_callbacks.c \
+	client/cgame/multiplayer/mp_serverlist.c \
+	client/cgame/multiplayer/mp_chatmessages.c \
 	\
 	client/ui/ui_actions.c \
 	client/ui/ui_components.c \
@@ -308,6 +309,7 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_sphere.c \
 	client/renderer/r_thread.c \
 	\
+	shared/bfd.c \
 	shared/byte.c \
 	shared/mathlib.c \
 	shared/mutex.c \

@@ -20,13 +20,11 @@ window hud_nohud extends hud
 	// ==================
 	battlescape render
 	{
-		pos		"0 0"
-		size	"1024 768"
-		num		LAYOUTALIGN_FILL
+		align	LAYOUTALIGN_FILL
 	}
 
 	confunc hidehud {
-		if (*cvar:cl_worldlevel ne "0") {
+		if (*cvar:cl_onbattlescape == 1) {
 			cmd "ui_push hud_nohud"
 		}
 	}

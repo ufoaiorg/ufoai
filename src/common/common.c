@@ -388,6 +388,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 				char timestamp[40];
 				Com_MakeTimestamp(timestamp, sizeof(timestamp));
 				FS_Write(timestamp, strlen(timestamp), &logfile);
+				FS_Write(" ", 1, &logfile);
 			}
 
 			FS_Write(output, strlen(output), &logfile);

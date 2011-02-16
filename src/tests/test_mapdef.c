@@ -73,6 +73,10 @@ static int UFO_CleanSuiteMapDef (void)
 	return 0;
 }
 
+/**
+ * @brief This test cycles through the list of map definitions found in the maps.ufo script
+ * and tries to load (and build in case of RMA) each map.
+ */
 static void testMapDefsSingleplayer (void)
 {
 	int i;

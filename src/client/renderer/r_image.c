@@ -577,8 +577,10 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 			break;
 
 	if (i == r_numImages) {
-		if (r_numImages >= MAX_GL_TEXTURES)
+		if (r_numImages >= MAX_GL_TEXTURES) {
+			R_ImageList_f();
 			Com_Error(ERR_DROP, "R_LoadImageData: MAX_GL_TEXTURES hit");
+		}
 		r_numImages++;
 	}
 	image = &r_images[i];

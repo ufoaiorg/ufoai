@@ -283,7 +283,6 @@ item plasblade
 	thrown			true
 	oneshot			true
 	deplete			true
-	ammo			1
 
 	weapon_mod plasblade
 	{
@@ -301,7 +300,6 @@ item plasblade
 			range		1.5
 			spread		"1 4"
 			shots		1
-			ammo		1
 			time		7
 			damage		"300 5"
 			dmgweight	plasma_heavy
@@ -321,7 +319,6 @@ item plasblade
 			range		7
 			spread		"2 5"
 			shots		1
-			ammo		1
 			time		12
 			damage		"300 5"
 			dmgweight	plasma_heavy
