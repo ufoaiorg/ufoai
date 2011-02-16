@@ -343,7 +343,7 @@ const image_t *R_RegisterImage (const char *name)
  */
 void R_DrawTexture (int texnum, int x, int y, int w, int h)
 {
-	const vec2_t vertexes[4] = {{x, y}, {x + w, y}, {x + w, y + h}, {x, y + h}};
+	const vec2_t vertexes[] = {{x, y}, {x + w, y}, {x + w, y + h}, {x, y + h}};
 
 	R_BindTexture(texnum);
 	R_DrawImageArray(default_texcoords, vertexes, NULL);
@@ -380,7 +380,7 @@ const image_t *R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4
 	if (image != NULL)
 		R_BindTexture(image->texnum);
 
-	glDrawArrays(GL_QUADS, 0, 4);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);

@@ -89,7 +89,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 
 	/* draw day image */
 	R_BindTexture(gl->texnum);
-	glDrawArrays(GL_QUADS, 0, 4);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	/* draw night map */
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
@@ -115,7 +115,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		R_BindTexture(r_dayandnightTexture->texnum);
 
 		R_SelectTexture(&texunit_diffuse);
-		glDrawArrays(GL_QUADS, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 		R_SelectTexture(&texunit_lightmap);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_texcoords);
@@ -131,7 +131,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 
 		/* draw day image */
 		R_BindTexture(gl->texnum);
-		glDrawArrays(GL_QUADS, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	}
 
 	/* draw XVI image */
@@ -145,7 +145,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		R_EnableTexture(&texunit_lightmap, qtrue);
 		R_BindLightmapTexture(r_xviTexture->texnum);
 
-		glDrawArrays(GL_QUADS, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
@@ -153,7 +153,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 	/* draw radar image */
 	if (overlayRadar) {
 		R_BindTexture(r_radarTexture->texnum);
-		glDrawArrays(GL_QUADS, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	}
 
 	/* and restore them */
