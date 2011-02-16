@@ -393,11 +393,7 @@ const image_t *R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4
 	if (image != NULL)
 		R_BindTexture(image->texnum);
 
-#ifdef ANDROID
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-#else
-	glDrawArrays(GL_QUADS, 0, 4);
-#endif
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);

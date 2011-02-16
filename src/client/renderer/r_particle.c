@@ -143,11 +143,12 @@ static void R_DrawSprite (const ptl_t * p)
 	R_Color(p->color);
 	/* draw it */
 #ifdef ANDROID
-	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 	GLfloat points[3*4] = {	pos[0], pos[1], pos[2],
 							pos[0] + up[0], pos[1] + up[1], pos[2] + up[2],
 							pos[0] + up[0] + right[0], pos[1] + up[1] + right[1], pos[2] + up[2] + right[2],
 							pos[0] + right[0], pos[1] + right[1], pos[2] + right[2] };
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);

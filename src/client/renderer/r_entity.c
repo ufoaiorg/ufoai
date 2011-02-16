@@ -70,15 +70,29 @@ static void R_DrawBox (const entity_t * e)
 		R_DrawBoundingBox(e->mins, e->maxs);
 	} else {
 #ifdef ANDROID
-		// TODO: most probably incorrect
-		vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->origin[2],
+		vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->oldorigin[2],
 								e->oldorigin[0], e->origin[1], e->oldorigin[2],
 								e->origin[0], e->origin[1], e->oldorigin[2],
-								e->origin[0], e->oldorigin[1], e->origin[2],
+								e->origin[0], e->oldorigin[1], e->oldorigin[2]
 							};
 		glLineWidth(2.0f);
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		points[2] = e->origin[2];
+		points[5] = e->origin[2];
+		points[8] = e->origin[2];
+		points[11] = e->origin[2];
+		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		points[2] = e->oldorigin[2];
+		points[4] = e->oldorigin[1];
+		points[8] = e->origin[2];
+		points[10] = e->origin[1];
+		glDrawArrays(GL_LINES, 0, 4);
+		points[0] = e->origin[0];
+		points[3] = e->origin[0];
+		points[6] = e->oldorigin[0];
+		points[9] = e->oldorigin[0];
+		glDrawArrays(GL_LINES, 0, 4);
 		R_BindDefaultArray(GL_VERTEX_ARRAY);
 		glLineWidth(1.0f);
 #else
@@ -156,6 +170,7 @@ static void R_DrawFloor (const entity_t * e)
 								1.0, 1.0,
 								1.0, 0.0,
 								0.0, 0.0 };
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -248,6 +263,7 @@ static void R_DrawEntityEffects (void)
 										1.0, 1.0,
 										1.0, 0.0,
 										0.0, 0.0 };
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -289,6 +305,7 @@ static void R_DrawEntityEffects (void)
 										1.0, 1.0,
 										1.0, 0.0,
 										0.0, 0.0 };
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
