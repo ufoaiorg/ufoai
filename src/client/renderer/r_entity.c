@@ -396,23 +396,32 @@ static void R_DrawBlendMeshEntities (entity_t *ents)
 static void R_DrawNullModel (const entity_t *e)
 {
 	int i;
+	vec3_t points[6];
 
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
 	glPushMatrix();
 	glMultMatrixf(e->transform.matrix);
 
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(0, 0, -16);
-	for (i = 0; i <= 4; i++)
-		glVertex3f(16 * cos(i * (M_PI / 2)), 16 * sin(i * (M_PI / 2)), 0);
-	glEnd();
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(0, 0, 16);
-	for (i = 4; i >= 0; i--)
-		glVertex3f(16 * cos(i * (M_PI / 2)), 16 * sin(i * (M_PI / 2)), 0);
-	glEnd();
+	VectorSet(points[0], 0, 0, -16);
+	for (i = 0; i <= 4; i++) {
+		points[i + 1][0] = 16 * cos(i * (M_PI / 2));
+		points[i + 1][1] = 16 * sin(i * (M_PI / 2));
+		points[i + 1][2] = 0;
+	}
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
+	VectorSet(points[0], 0, 0, 16);
+	for (i = 4; i >= 0; i--) {
+		points[i + 1][0] = 16 * cos(i * (M_PI / 2));
+		points[i + 1][1] = 16 * sin(i * (M_PI / 2));
+		points[i + 1][2] = 0;
+	}
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glPopMatrix();
 
