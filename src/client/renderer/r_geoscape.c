@@ -660,6 +660,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
  */
 static inline void R_DrawQuad (void)
 {
+	/** @todo use default_texcoords */
 	const vec2_t texcoord[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
 	const vec2_t verts[] = { { 0.0, 0.0 }, { fbo_render->width, 0.0 }, { fbo_render->width, fbo_render->height }, { 0.0, fbo_render->height } };
 

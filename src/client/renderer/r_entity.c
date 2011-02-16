@@ -110,7 +110,6 @@ static void R_DrawBox (const entity_t * e)
 	R_Color(NULL);
 }
 
-static image_t *cellIndicator;
 
 /**
  * @brief Draws a marker on the ground to indicate pathing CL_AddPathingBox
@@ -119,32 +118,28 @@ static image_t *cellIndicator;
  */
 static void R_DrawFloor (const entity_t * e)
 {
-	float dx;
+	image_t *cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
+	const float dx = PLAYER_WIDTH * 2;
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 	const float size = 4.0;
-
-	if (cellIndicator == NULL) {
-		cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
-	}
+	/** @todo use default_texcoords */
+	const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
+	/* circle points */
+	const vec3_t points[] = { { e->origin[0] - size, e->origin[1] + dx + size, e->origin[2] }, { e->origin[0] + dx
+			+ size, e->origin[1] + dx + size, e->origin[2] }, { e->origin[0] + dx + size, e->origin[1] - size,
+			e->origin[2] }, { e->origin[0] - size, e->origin[1] - size, e->origin[2] } };
 
 	glDisable(GL_DEPTH_TEST);
 
 	R_Color(color);
 	R_BindTexture(cellIndicator->texnum);
 
-	dx = PLAYER_WIDTH * 2;
-
 	/* circle points */
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0, 1.0);
-	glVertex3f(e->origin[0]-size, e->origin[1]+dx+size, e->origin[2]);
-	glTexCoord2f(1.0, 1.0);
-	glVertex3f(e->origin[0]+dx+size, e->origin[1]+dx+size, e->origin[2]);
-	glTexCoord2f(1.0, 0.0);
-	glVertex3f(e->origin[0]+dx+size, e->origin[1]-size, e->origin[2]);
-	glTexCoord2f(0.0, 0.0);
-	glVertex3f(e->origin[0]-size, e->origin[1]-size, e->origin[2]);
-	glEnd();
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -158,29 +153,21 @@ static void R_DrawFloor (const entity_t * e)
  */
 static void R_DrawArrow (const entity_t * e)
 {
-	vec3_t upper, mid, lower;
-	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
+	const vec3_t upper = { e->origin[0] + 2, e->origin[1], e->origin[2] };
+	const vec3_t mid = { e->origin[0], e->origin[1] + 2, e->origin[2] };
+	const vec3_t lower = { e->origin[0], e->origin[1], e->origin[2] + 2 };
+	const vec4_t color = { e->color[0], e->color[1], e->color[2], e->alpha };
+	const vec3_t points[] = { { e->oldorigin[0], e->oldorigin[1], e->oldorigin[2] }, { upper[0], upper[1], upper[2] },
+			{ mid[0], mid[1], mid[2] }, { lower[0], lower[1], lower[2] } };
 
-	VectorCopy(e->origin, upper);
-	upper[0] += 2;
-
-	VectorCopy(e->origin, mid);
-	mid[1] += 2;
-
-	VectorCopy(e->origin, lower);
-	lower[2] += 2;
+	R_Color(color);
 
 	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_LINE_SMOOTH);
 
-	R_Color(color);
-
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex3fv(e->oldorigin);
-	glVertex3fv(upper);
-	glVertex3fv(mid);
-	glVertex3fv(lower);
-	glEnd();
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
