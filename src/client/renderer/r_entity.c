@@ -85,7 +85,7 @@ static void R_DrawBox (const entity_t * e)
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
 		points[2] = e->oldorigin[2];
 		points[4] = e->oldorigin[1];
-		points[8] = e->origin[2];
+		points[8] = e->oldorigin[2];
 		points[10] = e->origin[1];
 		glDrawArrays(GL_LINES, 0, 4);
 		points[0] = e->origin[0];
@@ -296,6 +296,7 @@ static void R_DrawEntityEffects (void)
 			R_BindTexture(texnum);
 			R_Color(color);
 
+			/* TODO: for some unknown reasons the following code fails on my HTC Evo, but works on PC, so it might be GFX driver problems */
 			/* circle points */
 			GLfloat points[3*4] = {	-size, size, -27.5,
 									size, size, -27.5,
