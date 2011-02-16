@@ -203,6 +203,11 @@ static void R_DrawEntityEffects (void)
 		glMultMatrixf(e->transform.matrix);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
+			const vec3_t points[] = { { 18.0, 14.0, -28.5 }, { 10.0, 14.0, -28.5 }, { 10.0, -14.0, -28.5 }, { -18.0,
+					-14.0, -28.5 } };
+			/** @todo use default_texcoords */
+			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
+
 			if (e->flags & RF_SHADOW) {
 				R_BindTexture(shadow->texnum);
 			} else {
@@ -210,16 +215,11 @@ static void R_DrawEntityEffects (void)
 				R_BindTexture(e->deathTexture->texnum);
 			}
 
-			glBegin(GL_QUADS);
-			glTexCoord2f(0.0, 1.0);
-			glVertex3f(-18.0, 14.0, -28.5);
-			glTexCoord2f(1.0, 1.0);
-			glVertex3f(10.0, 14.0, -28.5);
-			glTexCoord2f(1.0, 0.0);
-			glVertex3f(10.0, -14.0, -28.5);
-			glTexCoord2f(0.0, 0.0);
-			glVertex3f(-18.0, -14.0, -28.5);
-			glEnd();
+			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+			R_BindDefaultArray(GL_VERTEX_ARRAY);
 		}
 
 		if (e->flags & RF_ACTOR) {
