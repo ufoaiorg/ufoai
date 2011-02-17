@@ -917,18 +917,30 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 
 /**
  * @brief Tries to build the map
+ * There are 3 categories of tiles:
+ * - fixed: the position of the tile is already given in the assembly definition
+ * - required: a given number of such a tile must be placed somewhere on the map
+ * - optional: up to a given number of these tiles may be used in the map
+ * The algorithm works as follows:
+ * The fixed tiles have already been placed in the calling function.
+ * This function here now places the required tiles at random posions.
+ * Then the remaining gaps are filled with the optional tiles.
+ * If that fails, the last required tile is moved to a different place and the filling is tried again.
+ * If no more places are left for the required tile, the previous required tile is relocated and so on.
+ * That is, for the required tiles every possible combination is tried before we give up.
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
 static void SV_AddMapTiles (mapInfo_t *map)
 {
-	int idx, pos;
+	int idx;	/* index in the array of available tiles */
+	int pos;	/* index in the array of random positions */
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-	const int mapW = mAsm->width;
-	const int mapSize = mAsm->size;
+	const int mapW = mAsm->width;		/* width in x-direction */
+	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
 	const int numToPlace = map->numToPlace;
-	const mToPlace_t *mToPlace = map->mToPlace;
-	short prList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];
+	const mToPlace_t *mToPlace = map->mToPlace;		/* pointer to a tile descriptor */
+	short prList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];	/* array of random positions */
 	const int start = map->numPlaced;
 #ifdef DEBUG
 	const mPlaced_t *mPlaced = map->mPlaced;
@@ -945,7 +957,7 @@ static void SV_AddMapTiles (mapInfo_t *map)
 
 	pos = 0;
 	idx = 0;
-	while (idx < numToPlace) {
+	while (idx < numToPlace) {		/* for all tile-descriptors */
 		while (mToPlace[idx].cnt < mToPlace[idx].min) {
 			for (; pos < mapSize; pos++) {
 				const int x = prList[pos] % mapW;
@@ -991,7 +1003,7 @@ static void SV_AddMapTiles (mapInfo_t *map)
 
 		/* tile fits, try next tile */
 		if (pos < mapSize) {
-			pos = 0;
+			pos = 0;	/* start at the beginning of the random positions array */
 			idx++;
 		} else {
 			/* no more retries */
@@ -1233,7 +1245,8 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 
 /**
  * @brief Assembles a "random" map
- * parses the *.ump files for assembling the "random" maps
+ * and parses the *.ump files for assembling the "random" maps and places the 'fixed' tiles.
+ * For a more detailed description of the whole algorithm see SV_AddMApTiles.
  * @param[in] name The name of the map (ump) file to parse
  * @param[in] assembly The random map assembly that should be used from the given rma
  * @param[out] asmMap The output string of the random map assembly that contains all the
