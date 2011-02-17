@@ -753,7 +753,7 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 	base_t *base;
 
 	base = NULL;
-	while ((base = (base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		int idx;
 
 		if (B_IsUnderAttack(base))
