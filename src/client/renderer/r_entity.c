@@ -194,7 +194,7 @@ static void R_DrawEntityEffects (void)
 		glMultMatrixf(e->transform.matrix);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-			const vec3_t points[] = { { 18.0, 14.0, -28.5 }, { 10.0, 14.0, -28.5 }, { 10.0, -14.0, -28.5 }, { -18.0,
+			const vec3_t points[] = { { -18.0, 14.0, -28.5 }, { 10.0, 14.0, -28.5 }, { 10.0, -14.0, -28.5 }, { -18.0,
 					-14.0, -28.5 } };
 			/** @todo use default_texcoords */
 			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
