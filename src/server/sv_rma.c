@@ -536,8 +536,7 @@ static void SV_ClearMap (mapInfo_t *map)
  * @param[in] tile The tile definition that should be fitted into the map.
  * @param[in] x The x position in the map where the tile is supposed to be placed/checked.
  * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
- * @return qtrue if the tile fits.
- * @return qfalse if the tile does not fit or an error was encountered.
+ * @return @c true if the tile fits, @c false if the tile does not fit or an error was encountered.
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
@@ -580,8 +579,7 @@ static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, const int x, c
 
 /**
  * @brief Checks if the map is completely filled.
- * @return qtrue if the map is filled
- * @return qfalse if the map has still empty fields
+ * @return @c true if the map is filled, @c false if the map has still empty fields
  * @sa SV_AssembleMap
  * @sa SV_AddRegion
  * @sa SV_FitTile
@@ -670,7 +668,7 @@ static int SV_CalcRating (const mapInfo_t *map)
 
 /**
  * @brief Adds a new map-tile to an assembled map. Also adds the tile to the placed-tiles list.
- * @note The tile must fit at the given position, otherwise an assert will occure!
+ * @note The tile must fit at the given position, otherwise an assert will occur!
  * @param[in,out] map The map that will get the tile.  Modified in place.
  * @param[in] tile The tile to add to the map.
  * @param[in] x The x position in the map where the tile should be placed.
@@ -771,8 +769,7 @@ static void SV_RemoveTile (mapInfo_t *map, int* idx, int* pos)
 
 /**
  * @brief Tries to fit a tile in the current map.
- * @return qtrue if a fitting tile was found.
- * @return qfalse if no tile fits.
+ * @return @c true if a fitting tile was found, @c false if no tile fits.
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
@@ -923,7 +920,7 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
  * - optional: up to a given number of these tiles may be used in the map
  * The algorithm works as follows:
  * The fixed tiles have already been placed in the calling function.
- * This function here now places the required tiles at random posions.
+ * This function here now places the required tiles at random positions.
  * Then the remaining gaps are filled with the optional tiles.
  * If that fails, the last required tile is moved to a different place and the filling is tried again.
  * If no more places are left for the required tile, the previous required tile is relocated and so on.
@@ -1246,7 +1243,7 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 /**
  * @brief Assembles a "random" map
  * and parses the *.ump files for assembling the "random" maps and places the 'fixed' tiles.
- * For a more detailed description of the whole algorithm see SV_AddMApTiles.
+ * For a more detailed description of the whole algorithm see SV_AddMapTiles.
  * @param[in] name The name of the map (ump) file to parse
  * @param[in] assembly The random map assembly that should be used from the given rma
  * @param[out] asmMap The output string of the random map assembly that contains all the
