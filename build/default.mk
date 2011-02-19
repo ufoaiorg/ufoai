@@ -1,8 +1,8 @@
 CURL_CONFIG              ?= curl-config
-CURL_LIBS                ?= $(shell $(CURL_CONFIG) --libs)
+CURL_LIBS                ?= $(shell $(CURL_CONFIG) $(CONFIG_LIBS_FLAGS))
 CURL_CFLAGS              ?= $(shell $(CURL_CONFIG) --cflags)
 SDL_CONFIG               ?= sdl-config
-SDL_LIBS                 ?= $(shell $(SDL_CONFIG) --libs)
+SDL_LIBS                 ?= $(shell $(SDL_CONFIG) $(CONFIG_LIBS_FLAGS))
 SDL_CFLAGS               ?= $(shell $(SDL_CONFIG) --cflags)
 PKG_CONFIG               ?= pkg-config
 SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL_ttf)
