@@ -744,42 +744,40 @@ void R_DrawBoundingBoxes (void)
 	int i;
 	const int step = 3 * 8;
 	const int bboxes = r_bbox_array.bboxes_index / step;
+	const int indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
+	const int indexes2[] = { 4, 6, 7 };
+	vec3_t points[15];
 
 	if (!r_bbox_array.bboxes_index)
 		return;
 
-	R_Color(NULL);
-
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	for (i = 0; i < bboxes; i++) {
-		float *bbox = &r_bbox_array.bboxes[i * step];
-		/* Draw top and sides */
-		glBegin(GL_TRIANGLE_STRIP);
-		glVertex3fv(bbox + 2 * step);
-		glVertex3fv(bbox + 1 * step);
-		glVertex3fv(bbox + 0 * step);
-		glVertex3fv(bbox + 1 * step);
-		glVertex3fv(bbox + 4 * step);
-		glVertex3fv(bbox + 5 * step);
-		glVertex3fv(bbox + 1 * step);
-		glVertex3fv(bbox + 7 * step);
-		glVertex3fv(bbox + 3 * step);
-		glVertex3fv(bbox + 2 * step);
-		glVertex3fv(bbox + 7 * step);
-		glVertex3fv(bbox + 6 * step);
-		glVertex3fv(bbox + 2 * step);
-		glVertex3fv(bbox + 4 * step);
-		glVertex3fv(bbox + 0 * step);
-		glEnd();
+	R_Color(NULL);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 
-		/* Draw bottom */
-		glBegin(GL_TRIANGLE_STRIP);
-		glVertex3fv(bbox + 4 * step);
-		glVertex3fv(bbox + 6 * step);
-		glVertex3fv(bbox + 7 * step);
-		glEnd();
+	for (i = 0; i < bboxes; i++) {
+		const float *bbox = &r_bbox_array.bboxes[i * step];
+		int j;
+
+		for (j = 0; j < 15; j++) {
+			const float * ptr = bbox + indexes[j] * step;
+			points[j][0] = ptr[0];
+			points[j][1] = ptr[1];
+			points[j][2] = ptr[2];
+		}
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 15);
+
+		for (j = 0; j < 3; j++) {
+			const float * ptr = bbox + indexes2[j] * step;
+			points[j][0] = ptr[0];
+			points[j][1] = ptr[1];
+			points[j][2] = ptr[2];
+		}
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
 	}
+
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
