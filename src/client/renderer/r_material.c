@@ -358,7 +358,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 		}
 	}
 
-	glDrawArrays(GL_POLYGON, 0, i);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, i);
 
 	R_CheckError();
 }
