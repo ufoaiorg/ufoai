@@ -222,7 +222,6 @@ qboolean R_ModLoadMDX (model_t *mod)
 		char mdxFileName[MAX_QPATH];
 		byte *buffer = NULL, *buf;
 		const int32_t *intbuf;
-		int32_t numIndexes;
 		uint32_t version;
 		int sharedTris[MAX_ALIAS_VERTS];
 
@@ -248,15 +247,15 @@ qboolean R_ModLoadMDX (model_t *mod)
 		if (mesh->num_verts <= 0 || mesh->num_verts > MAX_ALIAS_VERTS)
 			Com_Error(ERR_DROP, "mdx file for %s has to many (or no) vertices: %i", mod->name, mesh->num_verts);
 		intbuf++;
-		numIndexes = LittleLong(*intbuf);
+		mesh->num_indexes = LittleLong(*intbuf);
 		intbuf++;
 
-		mesh->indexes = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
+		mesh->indexes = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * mesh->num_indexes, vid_modelPool, 0);
 		mesh->revIndexes = (mIndexList_t *)Mem_PoolAlloc(sizeof(mIndexList_t) * mesh->num_verts, vid_modelPool, 0);
 		mesh->vertexes = (mAliasVertex_t *)Mem_PoolAlloc(sizeof(mAliasVertex_t) * mod->alias.num_frames * mesh->num_verts, vid_modelPool, 0);
 
 		/* load index that maps triangle verts to Vertex objects */
-		for (i = 0; i < numIndexes; i++) {
+		for (i = 0; i < mesh->num_indexes; i++) {
 			mesh->indexes[i] = LittleLong(*intbuf);
 			intbuf++;
 		}
@@ -265,7 +264,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 			sharedTris[i] = 0;
 
 		/* set up reverse-index that maps Vertex objects to a list of triangle verts */
-		for (i = 0; i < numIndexes; i++)
+		for (i = 0; i < mesh->num_indexes; i++)
 			sharedTris[mesh->indexes[i]]++;
 
 		for (i = 0; i < mesh->num_verts; i++) {
@@ -273,7 +272,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 			mesh->revIndexes[i].list = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
 		}
 
-		for (i = 0; i < numIndexes; i++)
+		for (i = 0; i < mesh->num_indexes; i++)
 			mesh->revIndexes[mesh->indexes[i]].list[mesh->revIndexes[mesh->indexes[i]].length++] = i;
 
 		FS_FreeFile(buf);
