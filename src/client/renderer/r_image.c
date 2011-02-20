@@ -528,6 +528,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 		r_numImages++;
 	}
 	image = &r_images[i];
+	OBJZERO(*image);
 	image->has_alpha = qfalse;
 	image->type = type;
 	image->width = width;

@@ -653,12 +653,12 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SPECULARMAP", 0);
 	R_ProgramParameter1i("ANIMATE", 0);
 
-	R_ProgramParameter1f("BUMP", 1.0);
-	R_ProgramParameter1f("PARALLAX", 1.0);
-	R_ProgramParameter1f("HARDNESS", 0.2);
-	R_ProgramParameter1f("SPECULAR", 1.0);
+	R_ProgramParameter1f("HARDNESS", DEFAULT_HARDNESS);
+	R_ProgramParameter1f("SPECULAR", DEFAULT_SPECULAR);
+	R_ProgramParameter1f("BUMP", DEFAULT_BUMP);
+	R_ProgramParameter1f("PARALLAX", DEFAULT_PARALLAX);
 	if (r_postprocess->integer)
-		R_ProgramParameter1f("GLOWSCALE", 1.0);
+		R_ProgramParameter1f("GLOWSCALE", DEFAULT_GLOWSCALE);
 }
 
 static void R_UseWorldProgram (r_program_t *prog)

@@ -182,4 +182,6 @@ void R_EnableSpecularMap(const struct image_s *image, qboolean enable);
 void R_EnableRoughnessMap(const struct image_s *image, qboolean enable);
 void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, qboolean enable);
 
+void R_UseMaterial (const material_t *material);
+
 #endif
