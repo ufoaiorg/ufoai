@@ -1603,7 +1603,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 
 	/* Draw a circle around selected aircraft */
 	if (MAP_IsAircraftSelected(aircraft)) {
-		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
+		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
 		int x;
 		int y;
 
