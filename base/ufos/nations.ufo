@@ -31,6 +31,7 @@ nation latin
 	happiness 0.5
 	soldiers 4
 	scientists 1
+	workers 4
 	pilots	1
 	pos "60 -13"
 }
@@ -43,6 +44,7 @@ nation states
 	happiness 0.5
 	soldiers 4
 	scientists 2
+	workers 4
 	pilots	2
 	pos "103 48"
 }
@@ -56,6 +58,7 @@ nation europe
 	happiness 0.5
 	soldiers 3
 	scientists 3
+	workers 3
 	pilots	2
 }
 
@@ -67,6 +70,7 @@ nation asia
 	happiness 0.5
 	soldiers 5
 	scientists 1
+	workers 5
 	pilots	1
 	pos "-100 33"
 }
@@ -79,6 +83,7 @@ nation middle
 	happiness 0.5
 	soldiers 1
 	scientists 3
+	workers 1
 	pilots	1
 	pos "-46 26"
 }
@@ -91,6 +96,7 @@ nation africa
 	happiness 0.5
 	soldiers 5
 	scientists 1
+	workers 5
 	pilots	1
 	pos "-20 5"
 }
@@ -103,6 +109,7 @@ nation russia
 	happiness 0.5
 	soldiers 5
 	scientists 5
+	workers 5
 	pilots	2
 	pos "-80 63"
 }
@@ -115,6 +122,7 @@ nation oceania
 	happiness 0.5
 	soldiers 4
 	scientists 2
+	workers 4
 	pilots	1
 	pos "-130 -25"
 }

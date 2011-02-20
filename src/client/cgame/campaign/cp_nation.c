@@ -286,6 +286,7 @@ static const value_t nation_vals[] = {
 	{"happiness", V_FLOAT, offsetof(nation_t, stats[0].happiness), MEMBER_SIZEOF(nation_t, stats[0].happiness)},
 	{"soldiers", V_INT, offsetof(nation_t, maxSoldiers), MEMBER_SIZEOF(nation_t, maxSoldiers)},
 	{"scientists", V_INT, offsetof(nation_t, maxScientists), MEMBER_SIZEOF(nation_t, maxScientists)},
+	{"workers", V_INT, offsetof(nation_t, maxWorkers), MEMBER_SIZEOF(nation_t, maxWorkers)},
 	{"pilots", V_INT, offsetof(nation_t, maxPilots), MEMBER_SIZEOF(nation_t, maxPilots)},
 
 	{NULL, 0, 0, 0}
@@ -819,6 +820,7 @@ static void NAT_NationList_f (void)
 		Com_Printf("...xviInfection %i\n", nation->stats[0].xviInfection);
 		Com_Printf("...max-soldiers %i\n", nation->maxSoldiers);
 		Com_Printf("...max-scientists %i\n", nation->maxScientists);
+		Com_Printf("...max-workers %i\n", nation->maxWorkers);
 		Com_Printf("...max-pilots %i\n", nation->maxPilots);
 		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", nation->color[0], nation->color[1], nation->color[2], nation->color[3]);
 		Com_Printf("...pos x:%.0f y:%.0f\n", nation->pos[0], nation->pos[1]);
@@ -884,7 +886,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 			}
 		}
 
-		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * stats->happiness; j++) {
+		for (j = 0; 0.25 + j * 2 < (float) nation->maxWorkers * stats->happiness; j++) {
 			/* Create a worker. */
 			E_CreateEmployee(EMPL_WORKER, nation, NULL);
 			newWorkers++;
