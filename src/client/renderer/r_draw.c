@@ -409,6 +409,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	const float ny = y * viddef.ry;
 	const float nw = w * viddef.rx;
 	const float nh = h * viddef.ry;
+	const vec2_t points[] = { { nx, ny }, { nx + nw, ny }, { nx + nw, ny + nh }, { nx, ny + nh } };
 
 	R_Color(color);
 
@@ -417,12 +418,9 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	glLineStipple(2, pattern);
 	glEnable(GL_LINE_STIPPLE);
 
-	glBegin(GL_LINE_LOOP);
-	glVertex2f(nx, ny);
-	glVertex2f(nx + nw, ny);
-	glVertex2f(nx + nw, ny + nh);
-	glVertex2f(nx, ny + nh);
-	glEnd();
+	glVertexPointer(2, GL_FLOAT, 0, points);
+	glDrawArrays(GL_LINE_LOOP, 0, 4);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glEnable(GL_TEXTURE_2D);
 	glLineWidth(1.0f);
