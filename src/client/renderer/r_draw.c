@@ -429,7 +429,7 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	R_Color(NULL);
 }
 
-void R_DrawCircle_ (float radius, const vec4_t color, int thickness, const vec3_t shift)
+void R_DrawCircle (float radius, const vec4_t color, int thickness, const vec3_t shift)
 {
 	const float accuracy = 5.0;
 	const float step = M_PI / radius * accuracy;
@@ -462,36 +462,6 @@ void R_DrawCircle_ (float radius, const vec4_t color, int thickness, const vec3_
 	glDisable(GL_LINE_SMOOTH);
 }
 
-/**
- * @brief Draws a circle out of lines
- * @param[in] mid Center of the circle
- * @param[in] radius Radius of the circle
- * @param[in] color The color of the circle lines
- * @param thickness Thickness of the line (1 mean 1 pixel in a 1024 screen width)
- * @sa R_DrawPtlCircle
- * @sa R_DrawLineStrip
- */
-void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
-{
-	glDisable(GL_TEXTURE_2D);
-
-	/* scale it */
-	radius *= viddef.rx;
-	thickness *= viddef.rx;
-
-	/* store the matrix - we are using glTranslate */
-	glPushMatrix();
-
-	/* translate the position */
-	glTranslated(mid[0], mid[1], mid[2]);
-
-	R_DrawCircle_(radius, color, thickness, vec3_origin);
-
-	glPopMatrix();
-
-	glEnable(GL_TEXTURE_2D);
-}
-
 #define MAX_LINEVERTS 256
 
 static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
@@ -518,7 +488,6 @@ static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
 
 /**
  * @brief 2 dimensional line strip
- * @sa R_DrawCircle
  * @sa R_DrawLineLoop
  */
 void R_DrawLineStrip (int points, int *verts)
@@ -527,7 +496,6 @@ void R_DrawLineStrip (int points, int *verts)
 }
 
 /**
- * @sa R_DrawCircle
  * @sa R_DrawLineStrip
  */
 void R_DrawLineLoop (int points, int *verts)
@@ -537,7 +505,6 @@ void R_DrawLineLoop (int points, int *verts)
 
 /**
  * @brief Draws one line with only one start and one end point
- * @sa R_DrawCircle
  * @sa R_DrawLineStrip
  */
 void R_DrawLine (int *verts, float thickness)
@@ -552,7 +519,6 @@ void R_DrawLine (int *verts, float thickness)
 }
 
 /**
- * @sa R_DrawCircle
  * @sa R_DrawLineStrip
  * @sa R_DrawLineLoop
  */

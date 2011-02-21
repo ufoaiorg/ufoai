@@ -189,7 +189,7 @@ static void R_DrawPtlCircle (const ptl_t* p)
 
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
-	R_DrawCircle_(radius, p->color, thickness, p->s);
+	R_DrawCircle(radius, p->color, thickness, p->s);
 
 	R_EnableTexture(&texunit_diffuse, qtrue);
 }
