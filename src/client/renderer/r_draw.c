@@ -492,58 +492,6 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	glEnable(GL_TEXTURE_2D);
 }
 
-#define CIRCLE_LINE_COUNT	40
-
-/**
- * @brief Draws a circle out of lines
- * @param[in] x X screen coordinate
- * @param[in] y Y screen coordinate
- * @param[in] radius Radius of the circle
- * @param[in] color The color of the circle lines
- * @param[in] fill Fill the circle with the given color
- * @param[in] thickness The thickness of the lines
- * @sa R_DrawPtlCircle
- * @sa R_DrawLineStrip
- */
-void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t color, float thickness)
-{
-	int i;
-
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
-
-	glDisable(GL_TEXTURE_2D);
-	R_Color(color);
-
-	if (thickness > 0.0)
-		glLineWidth(thickness);
-
-	if (fill)
-		glBegin(GL_TRIANGLE_STRIP);
-	else
-		glBegin(GL_LINE_LOOP);
-
-	/* Create a vertex at the exact position specified by the start angle. */
-	glVertex2f(x + radius, y);
-
-	for (i = 0; i < CIRCLE_LINE_COUNT; i++) {
-		const float angle = (2.0 * M_PI / CIRCLE_LINE_COUNT) * i;
-		glVertex2f(x + radius * cos(angle), y - radius * sin(angle));
-
-		/* When filling we're drawing triangles so we need to
-		 * create a vertex in the middle of the vertex to fill
-		 * the entire pie slice/circle. */
-		if (fill)
-			glVertex2f(x, y);
-	}
-
-	glVertex2f(x + radius, y);
-	glEnd();
-	glEnable(GL_TEXTURE_2D);
-	R_Color(NULL);
-
-	glPopAttrib();
-}
-
 #define MAX_LINEVERTS 256
 
 static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
