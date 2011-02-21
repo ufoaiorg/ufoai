@@ -185,7 +185,7 @@ static void R_DrawParticleModel (ptl_t * p)
 static void R_DrawPtlCircle (const ptl_t* p)
 {
 	const float radius = p->size[0];
-	const int thickness = (int)p->size[1];
+	const float thickness = p->size[1];
 
 	R_EnableTexture(&texunit_diffuse, qfalse);
 

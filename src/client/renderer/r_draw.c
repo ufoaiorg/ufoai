@@ -429,36 +429,26 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	R_Color(NULL);
 }
 
-void R_DrawCircle (float radius, const vec4_t color, int thickness, const vec3_t shift)
+void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3_t shift)
 {
 	const float accuracy = 5.0;
 	const float step = M_PI / radius * accuracy;
 	float theta;
 
 	glEnable(GL_LINE_SMOOTH);
+	glLineWidth(thickness);
 
 	R_Color(color);
 
-	assert(radius > thickness);
-	if (thickness <= 1) {
-		glBegin(GL_LINE_STRIP);
-		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
-			glVertex3f(shift[0] + radius * cos(theta), shift[1] + radius * sin(theta), shift[2]);
-		}
-		glEnd();
-	} else {
-		glBegin(GL_TRIANGLE_STRIP);
-		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
-			glVertex3f(shift[0] + radius * cos(theta), shift[1] + radius * sin(theta), shift[2]);
-			glVertex3f(shift[0] + radius * cos(theta - step), shift[1] + radius * sin(theta - step), shift[2]);
-			glVertex3f(shift[0] + (radius - thickness) * cos(theta - step), shift[1] + (radius - thickness) * sin(theta - step), shift[2]);
-			glVertex3f(shift[0] + (radius - thickness) * cos(theta), shift[1] + (radius - thickness) * sin(theta), shift[2]);
-		}
-		glEnd();
+	glBegin(GL_LINE_STRIP);
+	for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
+		glVertex3f(shift[0] + radius * cos(theta), shift[1] + radius * sin(theta), shift[2]);
 	}
+	glEnd();
 
 	R_Color(NULL);
 
+	glLineWidth(1.0f);
 	glDisable(GL_LINE_SMOOTH);
 }
 
