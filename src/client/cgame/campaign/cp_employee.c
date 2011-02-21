@@ -53,9 +53,10 @@ employee_t* E_GetUnhired (employeeType_t type)
 
 	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
-			break;
+			return employee;
 	}
-	return employee;
+
+	return NULL;
 }
 
 /**
