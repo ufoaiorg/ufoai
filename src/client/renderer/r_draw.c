@@ -431,20 +431,23 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 
 void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3_t shift)
 {
-	const float accuracy = 5.0;
-	const float step = M_PI / radius * accuracy;
-	float theta;
+	vec3_t points[16];
+	const size_t steps = lengthof(points);
+	int i;
 
 	glEnable(GL_LINE_SMOOTH);
 	glLineWidth(thickness);
 
 	R_Color(color);
 
-	glBegin(GL_LINE_STRIP);
-	for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
-		glVertex3f(shift[0] + radius * cos(theta), shift[1] + radius * sin(theta), shift[2]);
+	for (i = 0; i < steps; i++) {
+		const float a = 2.0f * M_PI * (float) i / (float) steps;
+		VectorSet(points[i], shift[0] + radius * cos(a), shift[1] + radius * sin(a), shift[2]);
 	}
-	glEnd();
+
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+	glDrawArrays(GL_LINE_LOOP, 0, steps);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	R_Color(NULL);
 
