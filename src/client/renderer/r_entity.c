@@ -54,7 +54,7 @@ void R_EntityAddToOrigin (entity_t *ent, const vec3_t offset)
 }
 
 /**
- * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
+ * @brief Draws the field marker entity is specified in CL_AddTargeting
  * @sa CL_AddTargeting
  * @sa RF_BOX
  */
