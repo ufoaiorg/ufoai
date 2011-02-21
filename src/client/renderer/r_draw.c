@@ -653,7 +653,6 @@ void R_DrawBoundingBoxes (void)
 	const int bboxes = r_bbox_array.bboxes_index / step;
 	const int indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
 	const int indexes2[] = { 4, 6, 7 };
-	vec3_t points[15];
 
 	if (!r_bbox_array.bboxes_index)
 		return;
@@ -661,27 +660,14 @@ void R_DrawBoundingBoxes (void)
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	R_Color(NULL);
-	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 
 	for (i = 0; i < bboxes; i++) {
 		const float *bbox = &r_bbox_array.bboxes[i * step];
-		int j;
-
-		for (j = 0; j < 15; j++) {
-			const float * ptr = bbox + indexes[j] * step;
-			points[j][0] = ptr[0];
-			points[j][1] = ptr[1];
-			points[j][2] = ptr[2];
-		}
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 15);
-
-		for (j = 0; j < 3; j++) {
-			const float * ptr = bbox + indexes2[j] * step;
-			points[j][0] = ptr[0];
-			points[j][1] = ptr[1];
-			points[j][2] = ptr[2];
-		}
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
+		/* Draw top and sides */
+		glDrawElements(GL_TRIANGLE_FAN, 15, GL_UNSIGNED_INT, indexes);
+		/* Draw bottom */
+		glDrawElements(GL_TRIANGLE_FAN, 3, GL_UNSIGNED_INT, indexes2);
 	}
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -695,6 +681,10 @@ void R_DrawBoundingBoxBatched (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
 	vec3_t bbox[8];
+	const size_t max = lengthof(r_bbox_array.bboxes);
+
+	if (r_bbox_array.bboxes_index >= max)
+		return;
 
 	R_ComputeBoundingBox(mins, maxs, bbox);
 
