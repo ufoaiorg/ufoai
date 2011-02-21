@@ -677,7 +677,7 @@ void R_DrawBoundingBoxes (void)
 	r_bbox_array.bboxes_index = 0;
 }
 
-void R_DrawBoundingBoxBatched (const vec3_t mins, const vec3_t maxs)
+void R_DrawBoundingBoxBatched (const vec3_t absmins, const vec3_t absmaxs)
 {
 	int i;
 	vec3_t bbox[8];
@@ -686,7 +686,7 @@ void R_DrawBoundingBoxBatched (const vec3_t mins, const vec3_t maxs)
 	if (r_bbox_array.bboxes_index >= max)
 		return;
 
-	R_ComputeBoundingBox(mins, maxs, bbox);
+	R_ComputeBoundingBox(absmins, absmaxs, bbox);
 
 	for (i = 0; i < 8; i++) {
 		VectorCopy(bbox[i], &r_bbox_array.bboxes[r_bbox_array.bboxes_index]);
@@ -698,13 +698,13 @@ void R_DrawBoundingBoxBatched (const vec3_t mins, const vec3_t maxs)
  * @brief Draws the model bounding box
  * @sa R_EntityComputeBoundingBox
  */
-void R_DrawBoundingBox (const vec3_t mins, const vec3_t maxs)
+void R_DrawBoundingBox (const vec3_t absmins, const vec3_t absmaxs)
 {
 	vec3_t bbox[8];
 	const int indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
 	const int indexes2[] = { 4, 6, 7 };
 
-	R_ComputeBoundingBox(mins, maxs, bbox);
+	R_ComputeBoundingBox(absmins, absmaxs, bbox);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
