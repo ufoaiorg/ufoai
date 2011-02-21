@@ -433,7 +433,7 @@ void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3
 {
 	vec3_t points[16];
 	const size_t steps = lengthof(points);
-	int i;
+	unsigned int i;
 
 	glEnable(GL_LINE_SMOOTH);
 	glLineWidth(thickness);
@@ -711,36 +711,19 @@ void R_DrawBoundingBoxBatched (const vec3_t mins, const vec3_t maxs)
 void R_DrawBoundingBox (const vec3_t mins, const vec3_t maxs)
 {
 	vec3_t bbox[8];
+	const int indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
+	const int indexes2[] = { 4, 6, 7 };
 
 	R_ComputeBoundingBox(mins, maxs, bbox);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
 	/* Draw top and sides */
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[0]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[5]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[7]);
-	glVertex3fv(bbox[3]);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[7]);
-	glVertex3fv(bbox[6]);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[0]);
-	glEnd();
-
+	glDrawElements(GL_TRIANGLE_FAN, 15, GL_UNSIGNED_INT, indexes);
 	/* Draw bottom */
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[6]);
-	glVertex3fv(bbox[7]);
-	glEnd();
+	glDrawElements(GL_TRIANGLE_FAN, 3, GL_UNSIGNED_INT, indexes2);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
