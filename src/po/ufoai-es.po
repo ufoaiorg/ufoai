@@ -13905,7 +13905,7 @@ msgstr "Esperando el inicio del juego"
 
 #: client/battlescape/events/e_server.c:41
 msgid "This isn't your round"
-msgstr "Este no es tu turno\n"
+msgstr "Este no es tu turno"
 
 #: client/battlescape/events/e_server.c:53
 msgid "Ends current round"
