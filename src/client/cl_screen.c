@@ -178,9 +178,6 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 		return;
 	}
 
-	if (!refdef.ready)
-		return;
-
 	loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
 
 	R_BeginFrame();
