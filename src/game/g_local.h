@@ -393,6 +393,13 @@ void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const 
 void G_EventReactionFireChange(const edict_t* ent);
 void G_EventParticleSpawn(int playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void G_EventSendEdict(const edict_t *ent);
+void G_EventSendState(unsigned int playerMask, const edict_t *ent);
+void G_EventCenterView(const edict_t *ent);
+void G_EventActorAdd(unsigned int playerMask, const edict_t *ent);
+void G_EventSendParticle(unsigned int playerMask, const edict_t *ent);
+void G_EventEdictAppear(unsigned int playerMask, const edict_t *ent);
+void G_EventActorAppear(unsigned int playerMask, const edict_t *check, const edict_t *ent);
+void G_EventEdictPerish(unsigned int playerMask, edict_t *ent);
 
 /* g_vis.c */
 #define VIS_APPEAR	1
@@ -426,9 +433,7 @@ int G_CheckVisTeam(const int team, edict_t *check, qboolean perish, const edict_
 int G_CheckVisTeamAll(const int team, qboolean perish, const edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 qboolean G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
-void G_SendState(unsigned int playerMask, const edict_t *ent);
 qboolean G_SetTeamForPlayer(player_t* player, const int team);
-void G_CenterView(const edict_t *ent);
 
 qboolean G_ActorIsInRescueZone(const edict_t* actor);
 void G_ActorSetInRescueZone(edict_t* actor, qboolean inRescueZone);

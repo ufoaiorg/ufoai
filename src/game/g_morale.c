@@ -51,10 +51,10 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity)
 
 	/* send panic */
 	G_SetPanic(ent);
-	G_SendState(G_VisToPM(ent->visflags), ent);
+	G_EventSendState(G_VisToPM(ent->visflags), ent);
 
 	/* center view */
-	G_CenterView(ent);
+	G_EventCenterView(ent);
 
 	/* move around a bit, try to avoid opponents */
 	AI_ActorThink(G_PLAYER_FROM_ENT(ent), ent);
@@ -91,7 +91,7 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 		G_SetRage(ent);
 	else
 		G_SetInsane(ent);
-	G_SendState(G_VisToPM(ent->visflags), ent);
+	G_EventSendState(G_VisToPM(ent->visflags), ent);
 
 	if (sanity)
 		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage.\n"), ent->chr.name);
@@ -112,7 +112,7 @@ static void G_MoraleStopRage (edict_t * ent)
 {
 	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
 		G_RemoveInsane(ent);
-		G_SendState(G_VisToPM(ent->visflags), ent);
+		G_EventSendState(G_VisToPM(ent->visflags), ent);
 	} else
 		G_MoralePanic(ent, qtrue); /* regains sanity */
 }
@@ -172,7 +172,7 @@ void G_MoraleBehaviour (int team)
 					/* shaken is later reset along with reaction fire */
 					G_SetShaken(ent);
 					G_SetState(ent, STATE_REACTION_MANY);
-					G_SendState(G_VisToPM(ent->visflags), ent);
+					G_EventSendState(G_VisToPM(ent->visflags), ent);
 					G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s is currently shaken.\n"),
 							ent->chr.name);
 				} else {
