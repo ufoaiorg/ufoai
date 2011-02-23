@@ -322,7 +322,6 @@ static void SCR_DrawConsole (void)
  */
 void SCR_BeginLoadingPlaque (void)
 {
-	SCR_DrawLoading(0, "");
 	cls.disableScreen = CL_Milliseconds();
 }
 
