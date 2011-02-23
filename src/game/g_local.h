@@ -400,6 +400,15 @@ void G_EventSendParticle(unsigned int playerMask, const edict_t *ent);
 void G_EventEdictAppear(unsigned int playerMask, const edict_t *ent);
 void G_EventActorAppear(unsigned int playerMask, const edict_t *check, const edict_t *ent);
 void G_EventEdictPerish(unsigned int playerMask, edict_t *ent);
+void G_EventActorStateChange(unsigned int playerMask, const edict_t *ent);
+void G_EventAddBrushModel(unsigned int playerMask, const edict_t *ent);
+void G_EventEndRoundAnnounce(const player_t *player);
+void G_EventStart(const player_t *player, qboolean teamplay);
+void G_EventReset(const player_t *player, int activeTeam);
+void G_EventDoorOpen(const edict_t *door);
+void G_EventDoorClose(const edict_t *door);
+void G_EventModelExplodeTriggered(const edict_t *ent);
+void G_EventModelExplode(const edict_t *ent);
 
 /* g_vis.c */
 #define VIS_APPEAR	1

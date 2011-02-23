@@ -364,9 +364,7 @@ void G_EventSendEdict (const edict_t *ent)
 
 void G_EventSendState (unsigned int playerMask, const edict_t *ent)
 {
-	gi.AddEvent(playerMask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
-	gi.WriteShort(ent->number);
-	gi.WriteShort(ent->state);
+	G_EventActorStateChange(playerMask & G_TeamToPM(ent->team), ent);
 
 	gi.AddEvent(playerMask & ~G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 	gi.WriteShort(ent->number);
@@ -466,9 +464,7 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
 	gi.WriteShort(check->chr.maxHP);
 
 	if (mask) {
-		gi.AddEvent(mask, EV_ACTOR_STATECHANGE);
-		gi.WriteShort(check->number);
-		gi.WriteShort(check->state);
+		G_EventActorStateChange(mask, check);
 		G_SendInventory(mask, check);
 	}
 }
@@ -483,4 +479,70 @@ void G_EventEdictPerish (unsigned int playerMask, edict_t *ent)
 	gi.AddEvent(playerMask, EV_ENT_PERISH);
 	gi.WriteShort(ent->number);
 	ent->visflags = 0;
+}
+
+void G_EventActorStateChange (unsigned int playerMask, const edict_t *ent)
+{
+	gi.AddEvent(playerMask, EV_ACTOR_STATECHANGE);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->state);
+}
+
+void G_EventAddBrushModel (unsigned int playerMask, const edict_t *ent)
+{
+	gi.AddEvent(playerMask, EV_ADD_BRUSH_MODEL);
+	gi.WriteByte(ent->type);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->modelindex);
+	/* strip the higher bits - only send levelflags */
+	gi.WriteByte(ent->spawnflags & 0xFF);
+	gi.WritePos(ent->origin);
+	gi.WritePos(ent->angles);
+	gi.WriteShort(ent->speed);
+	gi.WriteByte(ent->angle);
+	gi.WriteByte(ent->dir);
+}
+
+void G_EventEndRoundAnnounce (const player_t *player)
+{
+	gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
+	gi.WriteByte(player->num);
+	gi.WriteByte(player->pers.team);
+}
+
+void G_EventStart (const player_t *player, qboolean teamplay)
+{
+	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
+	gi.WriteByte(teamplay);
+}
+
+void G_EventReset (const player_t *player, int activeTeam)
+{
+	gi.AddEvent(G_PlayerToPM(player), EV_RESET | EVENT_INSTANTLY);
+	gi.WriteByte(player->pers.team);
+	gi.WriteByte(activeTeam);
+}
+
+void G_EventDoorOpen (const edict_t *door)
+{
+	gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
+	gi.WriteShort(door->number);
+}
+
+void G_EventDoorClose (const edict_t *door)
+{
+	gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
+	gi.WriteShort(door->number);
+}
+
+void G_EventModelExplodeTriggered (const edict_t *ent)
+{
+	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED);
+	gi.WriteShort(ent->number);
+}
+
+void G_EventModelExplode (const edict_t *ent)
+{
+	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
+	gi.WriteShort(ent->number);
 }

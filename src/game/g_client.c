@@ -1248,17 +1248,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 
 		/* skip the world(s) in case of map assembly */
 		if (ent->type > ET_NULL) {
-			gi.AddEvent(mask, EV_ADD_BRUSH_MODEL);
-			gi.WriteByte(ent->type);
-			gi.WriteShort(ent->number);
-			gi.WriteShort(ent->modelindex);
-			/* strip the higher bits - only send levelflags */
-			gi.WriteByte(ent->spawnflags & 0xFF);
-			gi.WritePos(ent->origin);
-			gi.WritePos(ent->angles);
-			gi.WriteShort(ent->speed);
-			gi.WriteByte(ent->angle);
-			gi.WriteByte(ent->dir);
+			G_EventAddBrushModel(mask, ent);
 			ent->visflags |= ~ent->visflags;
 		}
 	}
@@ -1282,8 +1272,7 @@ qboolean G_ClientBegin (player_t* player)
 	gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
 	/* spawn camera (starts client rendering) */
-	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
-	gi.WriteByte(sv_teamplay->integer);
+	G_EventStart(player, sv_teamplay->integer);
 
 	/* send things like doors and breakables */
 	G_ClientSendEdictsAndBrushModels(player);
@@ -1315,9 +1304,7 @@ void G_ClientSpawn (player_t * player)
 
 	/* do all the init events here... */
 	/* reset the data */
-	gi.AddEvent(G_PlayerToPM(player), EV_RESET | EVENT_INSTANTLY);
-	gi.WriteByte(player->pers.team);
-	gi.WriteByte(level.activeTeam);
+	G_EventReset(player, level.activeTeam);
 
 	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);

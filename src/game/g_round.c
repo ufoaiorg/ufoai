@@ -167,9 +167,7 @@ void G_ClientEndRound (player_t * player)
 		/* check if all team members are ready */
 		if (!player->roundDone) {
 			player->roundDone = qtrue;
-			gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
-			gi.WriteByte(player->num);
-			gi.WriteByte(player->pers.team);
+			G_EventEndRoundAnnounce(player);
 			gi.EndEvents();
 		}
 		p = NULL;

@@ -59,10 +59,10 @@ static qboolean Destroy_Breakable (edict_t *self)
 	 * call during a fight - a triggered call will be handled differently in
 	 * terms of timing and the related particle effects in the client code */
 	if (self->HP == 0)
-		gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED);
+		G_EventModelExplodeTriggered(self);
 	else
-		gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
-	gi.WriteShort(self->number);
+		G_EventModelExplode(self);
+
 	if (self->particle)
 		G_SpawnParticle(origin, self->spawnflags, self->particle);
 
@@ -82,7 +82,6 @@ static qboolean Destroy_Breakable (edict_t *self)
 	case MAT_MAX:
 		break;
 	}
-
 
 	/* unlink to update the routing */
 	gi.UnlinkEdict(self);
@@ -214,8 +213,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		/* maybe the server called this because the door starts opened */
 		if (G_MatchIsRunning()) {
 			/* let everybody know, that the door opens */
-			gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
-			gi.WriteShort(door->number);
+			G_EventDoorOpen(door);
 			if (door->noise[0] != '\0')
 				G_EventSpawnSound(door, door->origin, door->noise);
 		}
@@ -237,8 +235,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		 * team here already */
 		if (G_MatchIsRunning()) {
 			/* let everybody know, that the door closes */
-			gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
-			gi.WriteShort(door->number);
+			G_EventDoorClose(door);
 			if (door->noise[0] != '\0')
 				G_EventSpawnSound(door, door->origin, door->noise);
 		}

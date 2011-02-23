@@ -517,8 +517,6 @@ void G_ReactionFireReset (int team)
 		ent->reactionTUs = 0;
 		ent->reactionNoDraw = qfalse;
 
-		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
-		gi.WriteShort(ent->number);
-		gi.WriteShort(ent->state);
+		G_EventActorStateChange(G_TeamToPM(ent->team), ent);
 	}
 }
