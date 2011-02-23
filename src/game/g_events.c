@@ -474,11 +474,10 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
  * @param[in] playerMask The bitmask to determine the clients this event is send to
  * @param[in,out] ent The edict that perished
  */
-void G_EventEdictPerish (unsigned int playerMask, edict_t *ent)
+void G_EventEdictPerish (unsigned int playerMask, const edict_t *ent)
 {
 	gi.AddEvent(playerMask, EV_ENT_PERISH);
 	gi.WriteShort(ent->number);
-	ent->visflags = 0;
 }
 
 void G_EventActorStateChange (unsigned int playerMask, const edict_t *ent)

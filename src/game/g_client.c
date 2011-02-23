@@ -240,6 +240,7 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 		}
 	} else if (G_IsVisibleOnBattlefield(check)) {
 		G_EventEdictPerish(playerMask, check);
+		check->visflags = 0;
 	}
 }
 

@@ -399,7 +399,7 @@ void G_EventActorAdd(unsigned int playerMask, const edict_t *ent);
 void G_EventSendParticle(unsigned int playerMask, const edict_t *ent);
 void G_EventEdictAppear(unsigned int playerMask, const edict_t *ent);
 void G_EventActorAppear(unsigned int playerMask, const edict_t *check, const edict_t *ent);
-void G_EventEdictPerish(unsigned int playerMask, edict_t *ent);
+void G_EventEdictPerish(unsigned int playerMask, const edict_t *ent);
 void G_EventActorStateChange(unsigned int playerMask, const edict_t *ent);
 void G_EventAddBrushModel(unsigned int playerMask, const edict_t *ent);
 void G_EventEndRoundAnnounce(const player_t *player);
