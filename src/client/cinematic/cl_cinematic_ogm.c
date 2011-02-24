@@ -588,7 +588,8 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 	/** @todo support for more than one audio stream? / detect files with one stream(or without correct ones) */
 	while (!OGMCIN.os_audio.serialno || !OGMCIN.os_video.serialno) {
 		if (ogg_sync_pageout(&OGMCIN.oy, &og) == 1) {
-			if (strstr((char*) (og.body + 1), "vorbis")) { /** @todo FIXME? better way to find audio stream */
+			const char *headerStr = (const char*) (og.body + 1);
+			if (strstr(headerStr, "vorbis")) { /** @todo FIXME? better way to find audio stream */
 				if (OGMCIN.os_audio.serialno) {
 					Com_Printf("more than one audio stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
@@ -598,7 +599,7 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 				}
 			}
 #ifdef HAVE_THEORA_THEORA_H
-			else if (strstr((char*) (og.body + 1), "theora")) {
+			else if (strstr(headerStr, "theora")) {
 				if (OGMCIN.os_video.serialno) {
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
@@ -610,7 +611,7 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 			}
 #endif
 #ifdef HAVE_XVID_H
-			else if (strstr((char*) (og.body + 1), "video")) { /** @todo better way to find video stream */
+			else if (strstr(headerStr, "video")) { /** @todo better way to find video stream */
 				if (OGMCIN.os_video.serialno) {
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
