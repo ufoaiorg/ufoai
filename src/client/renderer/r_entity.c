@@ -66,6 +66,7 @@ static void R_DrawBox (const entity_t * e)
 	glDisable(GL_TEXTURE_2D);
 
 	R_Color(color);
+	R_EnableDrawAsGlow(qtrue);
 
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
 		R_DrawBoundingBox(e->mins, e->maxs);
@@ -99,6 +100,7 @@ static void R_DrawBox (const entity_t * e)
 	glEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
+	R_EnableDrawAsGlow(qfalse);
 }
 
 
@@ -240,6 +242,7 @@ static void R_DrawEntityEffects (void)
 
 			R_BindTexture(texnum);
 			R_Color(color);
+			R_EnableDrawAsGlow(qtrue);
 
 			/* circle points */
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
@@ -258,6 +261,7 @@ static void R_DrawEntityEffects (void)
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 			R_Color(NULL);
+			R_EnableDrawAsGlow(qfalse);
 		}
 		glPopMatrix();
 	}
