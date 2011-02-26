@@ -849,8 +849,7 @@ qboolean B_BuildingDestroy (building_t* building)
 	if (building->mandatory)
 		return qfalse;
 
-	if (!base->map[(int)building->pos[1]][(int)building->pos[0]].building
-	 || base->map[(int)building->pos[1]][(int)building->pos[0]].building != building) {
+	if (base->map[(int)building->pos[1]][(int)building->pos[0]].building != building) {
 		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
 			base->idx, (int)building->pos[0], (int)building->pos[1]);
 	}
@@ -896,7 +895,7 @@ qboolean B_BuildingDestroy (building_t* building)
 		}
 		building = NULL;
 	}
-	/** @note Don't use the building pointer after this point - it's zeroed. */
+	/* Don't use the building pointer after this point - it's zeroed. */
 
 	if (buildingType != B_MISC && buildingType != MAX_BUILDING_TYPE) {
 		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
