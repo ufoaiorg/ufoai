@@ -949,18 +949,22 @@ aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, in
 	case AC_ITEM_BASE_MISSILE:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
-			for (i = 0; i < base->numBatteries; i++)
-				if (!base->batteries[i].slot.item && !base->batteries[i].slot.nextItem)
-					return &base->batteries[i].slot;
+			for (i = 0; i < base->numBatteries; i++) {
+				aircraftSlot_t *slot = &base->batteries[i].slot;
+				if (!slot->item && !slot->nextItem)
+					return slot;
+			}
 		} else if (idx < base->numBatteries)
 			return &base->batteries[idx].slot;
 		break;
 	case AC_ITEM_BASE_LASER:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
-			for (i = 0; i < base->numLasers; i++)
-				if (!base->lasers[i].slot.item && !base->lasers[i].slot.nextItem)
-					return &base->lasers[i].slot;
+			for (i = 0; i < base->numLasers; i++) {
+				aircraftSlot_t *slot = &base->lasers[i].slot;
+				if (!slot->item && !slot->nextItem)
+					return slot;
+			}
 		} else if (idx < base->numLasers)
 			return &base->lasers[idx].slot;
 		break;
@@ -983,9 +987,11 @@ aircraftSlot_t *BDEF_GetInstallationSlotByIDX (installation_t *installation, air
 	case AC_ITEM_BASE_MISSILE:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
-			for (i = 0; i < installation->numBatteries; i++)
-				if (!installation->batteries[i].slot.item && !installation->batteries[i].slot.nextItem)
-					return &installation->batteries[i].slot;
+			for (i = 0; i < installation->numBatteries; i++) {
+				aircraftSlot_t *slot = &installation->batteries[i].slot;
+				if (!slot->item && !slot->nextItem)
+					return slot;
+			}
 		} else if (idx < installation->numBatteries)
 			return &installation->batteries[idx].slot;
 		break;
@@ -1008,9 +1014,11 @@ aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType
 	case AC_ITEM_WEAPON:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
-			for (i = 0; i < aircraft->maxWeapons; i++)
-				if (!aircraft->weapons[i].item && !aircraft->weapons[i].nextItem)
-					return &aircraft->weapons[i];
+			for (i = 0; i < aircraft->maxWeapons; i++) {
+				aircraftSlot_t *slot = &aircraft->weapons[i];
+				if (!slot->item && !slot->nextItem)
+					return slot;
+			}
 		} else if (idx < aircraft->maxWeapons)
 			return &aircraft->weapons[idx];
 		break;
@@ -1021,9 +1029,11 @@ aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType
 	case AC_ITEM_ELECTRONICS:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
-			for (i = 0; i < aircraft->maxElectronics; i++)
-				if (!aircraft->electronics[i].item && !aircraft->electronics[i].nextItem)
-					return &aircraft->electronics[i];
+			for (i = 0; i < aircraft->maxElectronics; i++) {
+				aircraftSlot_t *slot = &aircraft->electronics[i];
+				if (!slot->item && !slot->nextItem)
+					return slot;
+			}
 		} else if (idx < aircraft->maxElectronics)
 			return &aircraft->electronics[idx];
 		break;
@@ -1096,7 +1106,6 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 {
 	int i, currentStat;
 	const aircraft_t *source;
-	const objDef_t *item;
 
 	assert(aircraft);
 
@@ -1112,9 +1121,11 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
-			if (!AII_CheckUpdateAircraftStats(&aircraft->electronics[i], currentStat))
+			const aircraftSlot_t *slot = &aircraft->electronics[i];
+			const objDef_t *item;
+			if (!AII_CheckUpdateAircraftStats(slot, currentStat))
 				continue;
-			item = aircraft->electronics[i].item;
+			item = slot->item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += (int) item->craftitem.stats[currentStat];
 			else if (!equal(item->craftitem.stats[currentStat], 0))
@@ -1124,9 +1135,11 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by weapons (do nothing if the value of stat is 0)
 		 * note that stats are not modified by ammos */
 		for (i = 0; i < aircraft->maxWeapons; i++) {
-			if (!AII_CheckUpdateAircraftStats(&aircraft->weapons[i], currentStat))
+			const aircraftSlot_t *slot = &aircraft->weapons[i];
+			const objDef_t *item;
+			if (!AII_CheckUpdateAircraftStats(slot, currentStat))
 				continue;
-			item = aircraft->weapons[i].item;
+			item = slot->item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
 			else if (!equal(item->craftitem.stats[currentStat], 0))
@@ -1135,7 +1148,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by shield (do nothing if the value of stat is 0) */
 		if (AII_CheckUpdateAircraftStats(&aircraft->shield, currentStat)) {
-			item = aircraft->shield.item;
+			const objDef_t *item = aircraft->shield.item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
 			else if (!equal(item->craftitem.stats[currentStat], 0))
@@ -1273,9 +1286,10 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 
 	/* Loop weaponslots */
 	for (i = 0; i < maxWeapons; i++) {
-		slot = &weapons[i].slot;
+		baseWeapon_t *weapon  = &weapons[i];
+		slot = &weapon->slot;
 		/* skip if autofire is disabled */
-		if (!weapons[i].autofire)
+		if (!weapon->autofire)
 			continue;
 		/* skip if no weapon or ammo assigned */
 		if (!slot->item || !slot->ammo)
@@ -1293,13 +1307,13 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 			if (test != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT
 			 && test != AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
 			 && (minAttackerDistance <= slot->ammo->craftitem.stats[AIR_STATS_WRANGE]))
-				weapons[i].target = closestAttacker;
+				weapon->target = closestAttacker;
 		} else if (closestCraft) {
 			const int test = AIRFIGHT_CheckWeapon(slot, minCraftDistance);
 			if (test != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT
 			 && test != AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
 			 && (minCraftDistance <= slot->ammo->craftitem.stats[AIR_STATS_WRANGE]))
-				weapons[i].target = closestCraft;
+				weapon->target = closestCraft;
 		}
 	}
 }
@@ -1385,7 +1399,7 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 	const char *name;
 	name = mxml_GetString(node, SAVE_SLOT_ITEMID);
 	if (name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
+		const technology_t *tech = RS_GetTechByProvided(name);
 		/* base is NULL here to not check against the storage amounts - they
 		* are already loaded in the campaign load function and set to the value
 		* after the craftitem was already removed from the initial game - thus
@@ -1398,7 +1412,7 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 	/* item to install after current one is removed */
 	name = mxml_GetString(node, SAVE_SLOT_NEXTITEMID);
 	if (name && name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
+		const technology_t *tech = RS_GetTechByProvided(name);
 		if (tech)
 			AII_AddItemToSlot(NULL, tech, slot, qtrue);
 	}
@@ -1414,7 +1428,7 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 	slot->ammoLeft = mxml_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
 	name = mxml_GetString(node, SAVE_SLOT_AMMOID);
 	if (name && name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
+		const technology_t *tech = RS_GetTechByProvided(name);
 		/* next Item must not be loaded yet in order to install ammo properly */
 		if (tech)
 			AII_AddAmmoToSlot(NULL, tech, slot);
@@ -1422,7 +1436,7 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 	/* ammo to install after current one is removed */
 	name = mxml_GetString(node, SAVE_SLOT_NEXTAMMOID);
 	if (name && name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
+		const technology_t *tech = RS_GetTechByProvided(name);
 		if (tech)
 			AII_AddAmmoToSlot(NULL, tech, slot);
 	}
