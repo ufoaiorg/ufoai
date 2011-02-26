@@ -2994,7 +2994,7 @@ int B_AntimatterInBase (const base_t *base)
  */
 void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 {
-	objDef_t *od;
+	const objDef_t *od;
 	capacities_t *cap;
 
 	assert(base);
