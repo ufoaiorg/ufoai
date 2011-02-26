@@ -251,10 +251,11 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->Cmd_RemoveCommand = Cmd_RemoveCommand;
 		cgi->Cvar_Delete = Cvar_Delete;
 		cgi->Cvar_Get = Cvar_Get;
-		cgi->Cvar_Integer = Cvar_GetInteger;
+		cgi->Cvar_GetInteger = Cvar_GetInteger;
 		cgi->Cvar_Set = Cvar_Set;
 		cgi->Cvar_SetValue = Cvar_SetValue;
-		cgi->Cvar_String = Cvar_GetString;
+		cgi->Cvar_GetString = Cvar_GetString;
+		cgi->Cvar_ForceSet = Cvar_ForceSet;
 		cgi->FS_FreeFile = FS_FreeFile;
 		cgi->FS_LoadFile = FS_LoadFile;
 		cgi->UI_AddOption = UI_AddOption;

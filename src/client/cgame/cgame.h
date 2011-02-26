@@ -114,9 +114,10 @@ typedef struct cgame_import_s {
 	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
 	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
 	void (IMPORT *Cvar_SetValue) (const char *varName, float value);
-	const char *(IMPORT *Cvar_String) (const char *varName);
-	int (IMPORT *Cvar_Integer) (const char *varName);
+	const char *(IMPORT *Cvar_GetString) (const char *varName);
+	int (IMPORT *Cvar_GetInteger) (const char *varName);
 	qboolean (IMPORT *Cvar_Delete) (const char *varName);
+	cvar_t * (IMPORT *Cvar_ForceSet) (const char *varName, const char *value);
 
 	/* sound functions */
 	void (IMPORT *S_StartLocalSample) (const char *s, float volume);
