@@ -1224,8 +1224,8 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 			continue;
 
 		while (freeSpace > 0 && !B_GetBuildingStatus(base, building->buildingType)) {
-			int x = rand() % BASE_SIZE;
-			int y = rand() % BASE_SIZE;
+			const int x = rand() % BASE_SIZE;
+			const int y = rand() % BASE_SIZE;
 			Vector2Set(pos, x, y);
 			if (!base->map[y][x].building) {
 				B_AddBuildingToBasePos(base, building, hire, pos);
