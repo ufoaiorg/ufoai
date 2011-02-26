@@ -118,7 +118,6 @@ void R_UseMaterial (const material_t *material)
 	else
 		r_state.active_material = &defaultMaterial;
 
-
 	b = r_state.active_material->bump * r_bumpmap->value;
 	if (b != last_b)
 		R_ProgramParameter1f("BUMP", b);
@@ -255,6 +254,19 @@ void R_EnableAlphaTest (qboolean enable)
 		glEnable(GL_ALPHA_TEST);
 	else
 		glDisable(GL_ALPHA_TEST);
+}
+
+void R_EnableStencilTest (qboolean enable)
+{
+	if (r_state.stencil_test_enabled == enable)
+		return;
+
+	r_state.stencil_test_enabled = enable;
+
+	if (enable)
+		glEnable(GL_STENCIL_TEST);
+	else
+		glDisable(GL_STENCIL_TEST);
 }
 
 void R_EnableTexture (gltexunit_t *texunit, qboolean enable)

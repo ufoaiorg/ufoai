@@ -49,8 +49,6 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 		glTranslatef(mi->center[0], mi->center[1], mi->center[2]);
 }
 
-
-
 /**
  * @brief Draws an animated, colored shell for the specified entity. Rather than
  * re-lerping or re-scaling the entity, the currently bound vertex arrays
