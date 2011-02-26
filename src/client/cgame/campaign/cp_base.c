@@ -2971,7 +2971,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 int B_AntimatterInBase (const base_t *base)
 {
 #ifdef DEBUG
-	objDef_t *od;
+	const objDef_t *od;
 
 	od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 	if (od == NULL)

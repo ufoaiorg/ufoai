@@ -283,7 +283,7 @@ void GAME_SaveTeam_f (void)
 }
 
 /**
- * @brief Load a multiplayer team from an xml file
+ * @brief Load a team from an xml file
  */
 static qboolean GAME_LoadTeam (const char *filename)
 {
@@ -401,7 +401,7 @@ void GAME_LoadTeam_f (void)
 }
 
 /**
- * @brief Get the equipment definition (from script files) for the current selected multiplayer team
+ * @brief Get the equipment definition (from script files) for the current selected team
  * and updates the equipment inventory containers
  */
 static void GAME_GetEquipment (void)
