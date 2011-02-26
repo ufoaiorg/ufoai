@@ -90,7 +90,7 @@ void GAME_ToggleActorForTeam_f (void)
 	num = atoi(Cmd_Argv(1));
 	value = atoi(Cmd_Argv(2));
 	if (num < 0 || num >= chrDisplayList.num)
-		value = 0;
+		return;
 
 	characterActive[num] = (value != 0);
 }
