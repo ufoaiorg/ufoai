@@ -120,8 +120,9 @@ void GAME_SaveTeamState_f (void)
 void GAME_TeamSlotComments_f (void)
 {
 	int i;
+	const int maxTeamSlots = 8;
 
-	for (i = 0; i < 8; i++) {
+	for (i = 0; i < maxTeamSlots; i++) {
 		/* open file */
 		qFILE f;
 
