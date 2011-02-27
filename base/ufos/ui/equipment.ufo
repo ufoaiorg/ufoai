@@ -7,7 +7,7 @@ component radiobutton buttonActorEquip
 	size	"27 35"
 	background	"buttons/blue2-1"
 	cvar	*cvar:selected_actor
-	onChange { cmd "game_actorselectequip <value>;" }
+	onChange { cmd "game_actorselect <value>;" }
 	tooltip	"_Equip this soldier"
 }
 
@@ -190,49 +190,49 @@ window equipment extends objectinfo
 	{
 		string	*cvar:mn_name0
 		pos		"60 13"
-		onClick { cmd "game_actorselectequip 0;" }
+		onClick { cmd "game_actorselect 0;" }
 	}
 	txtActorEquip txt_actor1
 	{
 		string	*cvar:mn_name1
 		pos		"60 54"
-		onClick { cmd "game_actorselectequip 1;" }
+		onClick { cmd "game_actorselect 1;" }
 	}
 	txtActorEquip txt_actor2
 	{
 		string	*cvar:mn_name2
 		pos		"60 95"
-		onClick { cmd "game_actorselectequip 2;" }
+		onClick { cmd "game_actorselect 2;" }
 	}
 	txtActorEquip txt_actor3
 	{
 		string	*cvar:mn_name3
 		pos		"60 136"
-		onClick { cmd "game_actorselectequip 3;" }
+		onClick { cmd "game_actorselect 3;" }
 	}
 	txtActorEquip txt_actor4
 	{
 		string	*cvar:mn_name4
 		pos		"60 177"
-		onClick { cmd "game_actorselectequip 4;" }
+		onClick { cmd "game_actorselect 4;" }
 	}
 	txtActorEquip txt_actor5
 	{
 		string	*cvar:mn_name5
 		pos		"60 218"
-		onClick { cmd "game_actorselectequip 5;" }
+		onClick { cmd "game_actorselect 5;" }
 	}
 	txtActorEquip txt_actor6
 	{
 		string	*cvar:mn_name6
 		pos		"60 259"
-		onClick { cmd "game_actorselectequip 6;" }
+		onClick { cmd "game_actorselect 6;" }
 	}
 	txtActorEquip txt_actor7
 	{
 		string	*cvar:mn_name7
 		pos		"60 300"
-		onClick { cmd "game_actorselectequip 7;" }
+		onClick { cmd "game_actorselect 7;" }
 	}
 
 	// ==================
@@ -578,7 +578,7 @@ window equipment extends objectinfo
 		pos			"544 24"
 		size		"230 20"
 		onChange	{
-			cmd "employee_changename; team_updateequip; game_actorselectequip <cvar:cl_selected>;"
+			cmd "employee_changename; team_updateequip; game_actorselect <cvar:cl_selected>;"
 		}
 	}
 
@@ -722,6 +722,6 @@ window equipment extends objectinfo
 		*cvar:mn_equiptype = 0
 		*cvar:mn_linkname = ""
 		*cvar:mn_itemname = ""
-		cmd "team_initskin;team_updateequip;update_item_list;game_actorselectequip 0;"
+		cmd "team_initskin;team_updateequip;update_item_list;game_actorselect 0;"
 	}
 }
