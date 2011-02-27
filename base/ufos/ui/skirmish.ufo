@@ -422,7 +422,7 @@ window skirmish
 	{
 		{
 			pos		"495 130"
-			size	"475 370"
+			size	"475 440"
 		}
 	}
 
@@ -450,6 +450,8 @@ window skirmish
 		*node:root.panel_map@invis = true
 		*node:root.panel_options@invis = true
 		*node:root.panel_team@invis = true
+		*node:root.button_back@invis = false
+		*node:root.button_start@invis = false
 		if ( *cvar:mn_skirmish_config_tab == 1 )
 		{
 			*node:root.panel_map@invis = false
@@ -461,6 +463,8 @@ window skirmish
 		elif ( *cvar:mn_skirmish_config_tab == 3 )
 		{
 			*node:root.panel_team@invis = false
+			*node:root.button_back@invis = true
+			*node:root.button_start@invis = true
 		}
 	}
 	// =====

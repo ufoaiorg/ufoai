@@ -423,7 +423,7 @@ component panel cmpTeamPanel
 
 	button button_new
 	{
-		pos	"85 330"
+		pos	"85 320"
 		size "256 40"
 		tooltip	"_Generate a new random team"
 		onClick	{ cmd "game_autoteam;ui_push game_team_edit;" }
@@ -436,7 +436,7 @@ component panel cmpTeamPanel
 
 	button button_save
 	{
-		pos	"85 380"
+		pos	"85 370"
 		size "256 40"
 		tooltip	"_Save the current team"
 		onClick	{ cmd "ui_push game_team_save_popup;" }
@@ -450,12 +450,12 @@ component panel cmpTeamPanel
 	string team_str
 	{
 		string	"_Team:"
-		pos	"85 440"
+		pos	"85 420"
 	}
 
 	selectbox team_box
 	{
-		pos		"200 440"
+		pos		"200 420"
 		size	"200 20"
 		cvar	*cvar:cl_teamdef
 		dataid	OPTION_TEAMDEFS
