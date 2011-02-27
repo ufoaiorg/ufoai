@@ -414,7 +414,6 @@ static void GAME_GetEquipment (void)
 	const equipDef_t *edFromScript;
 	const char *teamID = Com_ValueToStr(&cl_teamnum->integer, V_TEAM, 0);
 	char equipmentName[MAX_VAR];
-	equipDef_t unused;
 	equipDef_t *ed;
 
 	Com_sprintf(equipmentName, sizeof(equipmentName), "multiplayer_%s", teamID);
@@ -425,16 +424,13 @@ static void GAME_GetEquipment (void)
 	ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;
 
-	/* we don't want to lose anything from ed - so we copy it and screw the copied stuff afterwards */
-	unused = *edFromScript;
-
 	if (chrDisplayList.num > 0)
 		ui_inventory = &chrDisplayList.chr[0]->i;
 	else
 		ui_inventory = NULL;
 
 	/* manage inventory */
-	UI_ContainerNodeUpdateEquipment(&game_inventory, &unused);
+	UI_ContainerNodeUpdateEquipment(&game_inventory, ed);
 }
 
 /**
