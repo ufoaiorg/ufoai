@@ -6,12 +6,14 @@
 namespace entity {
 
 EntitySettings::EntitySettings () :
-	_showAllLightRadii(GlobalRegistry().get(RKEY_SHOW_ALL_LIGHT_RADII) == "1"), _showSelectedLightRadii(
-			GlobalRegistry().get(RKEY_SHOW_SELECTED_LIGHT_RADII) == "1")
+	_showAllLightRadii(GlobalRegistry().getBool(RKEY_SHOW_ALL_LIGHT_RADII)), _showSelectedLightRadii(
+			GlobalRegistry().getBool(RKEY_SHOW_SELECTED_LIGHT_RADII)), _showEntityAngles(GlobalRegistry().getBool(
+			RKEY_SHOW_ENTITY_ANGLES))
 {
 	// Register this class as keyobserver
 	GlobalRegistry().addKeyObserver(this, RKEY_SHOW_SELECTED_LIGHT_RADII);
 	GlobalRegistry().addKeyObserver(this, RKEY_SHOW_ALL_LIGHT_RADII);
+	GlobalRegistry().addKeyObserver(this, RKEY_SHOW_ENTITY_ANGLES);
 
 	GlobalPreferenceSystem().addConstructor(this);
 }
@@ -34,6 +36,8 @@ void EntitySettings::keyChanged (const std::string& key, const std::string& valu
 		_showAllLightRadii = (value == "1");
 	} else if (key == RKEY_SHOW_SELECTED_LIGHT_RADII) {
 		_showSelectedLightRadii = (value == "1");
+	} else if (key == RKEY_SHOW_ENTITY_ANGLES) {
+		_showEntityAngles = (value == "1");
 	}
 
 	// Redraw the scene
