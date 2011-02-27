@@ -787,31 +787,31 @@ base_t *PR_ProductionBase (const production_t *production)
  * @sa PR_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean PR_SaveXML (mxml_node_t *p)
+qboolean PR_SaveXML (xmlNode_t *p)
 {
 	base_t *base;
-	mxml_node_t *node = mxml_AddNode(p, SAVE_PRODUCE_PRODUCTION);
+	xmlNode_t *node = XML_AddNode(p, SAVE_PRODUCE_PRODUCTION);
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
 		const production_queue_t *pq = PR_GetProductionForBase(base);
 		int j;
 
-		mxml_node_t *snode = mxml_AddNode(node, SAVE_PRODUCE_QUEUE);
+		xmlNode_t *snode = XML_AddNode(node, SAVE_PRODUCE_QUEUE);
 		/** @todo this should not be the base index */
-		mxml_AddInt(snode, SAVE_PRODUCE_QUEUEIDX, base->idx);
+		XML_AddInt(snode, SAVE_PRODUCE_QUEUEIDX, base->idx);
 
 		for (j = 0; j < pq->numItems; j++) {
 			const production_t *prod = &pq->items[j];
-			mxml_node_t * ssnode = mxml_AddNode(snode, SAVE_PRODUCE_ITEM);
+			xmlNode_t * ssnode = XML_AddNode(snode, SAVE_PRODUCE_ITEM);
 			if (PR_IsItem(prod))
-				mxml_AddString(ssnode, SAVE_PRODUCE_ITEMID, prod->data.data.item->id);
+				XML_AddString(ssnode, SAVE_PRODUCE_ITEMID, prod->data.data.item->id);
 			else if (PR_IsAircraft(prod))
-				mxml_AddString(ssnode, SAVE_PRODUCE_AIRCRAFTID, prod->data.data.aircraft->id);
+				XML_AddString(ssnode, SAVE_PRODUCE_AIRCRAFTID, prod->data.data.aircraft->id);
 			else if (PR_IsDisassembly(prod))
-				mxml_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, prod->data.data.ufo->idx);
-			mxml_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, prod->amount);
-			mxml_AddInt(ssnode, SAVE_PRODUCE_PROGRESS, prod->frame);
+				XML_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, prod->data.data.ufo->idx);
+			XML_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, prod->amount);
+			XML_AddInt(ssnode, SAVE_PRODUCE_PROGRESS, prod->frame);
 		}
 	}
 	return qtrue;
@@ -823,16 +823,16 @@ qboolean PR_SaveXML (mxml_node_t *p)
  * @sa PR_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean PR_LoadXML (mxml_node_t *p)
+qboolean PR_LoadXML (xmlNode_t *p)
 {
-	mxml_node_t *node, *snode;
+	xmlNode_t *node, *snode;
 
-	node = mxml_GetNode(p, SAVE_PRODUCE_PRODUCTION);
+	node = XML_GetNode(p, SAVE_PRODUCE_PRODUCTION);
 
-	for (snode = mxml_GetNode(node, SAVE_PRODUCE_QUEUE); snode;
-			snode = mxml_GetNextNode(snode, node, SAVE_PRODUCE_QUEUE)) {
-		mxml_node_t *ssnode;
-		const int baseIDX = mxml_GetInt(snode, SAVE_PRODUCE_QUEUEIDX, MAX_BASES);
+	for (snode = XML_GetNode(node, SAVE_PRODUCE_QUEUE); snode;
+			snode = XML_GetNextNode(snode, node, SAVE_PRODUCE_QUEUE)) {
+		xmlNode_t *ssnode;
+		const int baseIDX = XML_GetInt(snode, SAVE_PRODUCE_QUEUEIDX, MAX_BASES);
 		base_t *base = B_GetBaseByIDX(baseIDX);
 		production_queue_t *pq;
 
@@ -843,16 +843,16 @@ qboolean PR_LoadXML (mxml_node_t *p)
 
 		pq = PR_GetProductionForBase(base);
 
-		for (ssnode = mxml_GetNode(snode, SAVE_PRODUCE_ITEM); pq->numItems < MAX_PRODUCTIONS && ssnode;
-				ssnode = mxml_GetNextNode(ssnode, snode, SAVE_PRODUCE_ITEM)) {
-			const char *s1 = mxml_GetString(ssnode, SAVE_PRODUCE_ITEMID);
+		for (ssnode = XML_GetNode(snode, SAVE_PRODUCE_ITEM); pq->numItems < MAX_PRODUCTIONS && ssnode;
+				ssnode = XML_GetNextNode(ssnode, snode, SAVE_PRODUCE_ITEM)) {
+			const char *s1 = XML_GetString(ssnode, SAVE_PRODUCE_ITEMID);
 			const char *s2;
 			int ufoIDX;
 			production_t *prod = &pq->items[pq->numItems];
 
 			prod->idx = pq->numItems;
-			prod->amount = mxml_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
-			prod->frame = mxml_GetInt(ssnode, SAVE_PRODUCE_PROGRESS, 0);
+			prod->amount = XML_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
+			prod->frame = XML_GetInt(ssnode, SAVE_PRODUCE_PROGRESS, 0);
 
 			/* amount */
 			if (prod->amount <= 0) {
@@ -864,7 +864,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			if (s1[0] != '\0')
 				PR_SetData(&prod->data, PRODUCTION_TYPE_ITEM, INVSH_GetItemByID(s1));
 			/* UFO */
-			ufoIDX = mxml_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
+			ufoIDX = XML_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
 			if (ufoIDX != -1) {
 				storedUFO_t *ufo = US_GetStoredUFOByIDX(ufoIDX);
 
@@ -877,7 +877,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				prod->data.data.ufo->disassembly = prod;
 			}
 			/* aircraft */
-			s2 = mxml_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
+			s2 = XML_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
 			if (s2[0] != '\0')
 				PR_SetData(&prod->data, PRODUCTION_TYPE_AIRCRAFT, AIR_GetAircraft(s2));
 

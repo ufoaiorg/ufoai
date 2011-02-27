@@ -1370,20 +1370,20 @@ const char* AII_WeightToName (itemWeight_t weight)
  * @param[in] slot The aircraftslot to save
  * @param[in] weapon True if this is a weapon slot
  */
-void AII_SaveOneSlotXML (mxml_node_t *p, const aircraftSlot_t* slot, qboolean weapon)
+void AII_SaveOneSlotXML (xmlNode_t *p, const aircraftSlot_t* slot, qboolean weapon)
 {
-	mxml_AddStringValue(p, SAVE_SLOT_ITEMID, slot->item ? slot->item->id : "");
-	mxml_AddStringValue(p, SAVE_SLOT_NEXTITEMID, slot->nextItem ? slot->nextItem->id : "");
-	mxml_AddIntValue(p, SAVE_SLOT_INSTALLATIONTIME, slot->installationTime);
+	XML_AddStringValue(p, SAVE_SLOT_ITEMID, slot->item ? slot->item->id : "");
+	XML_AddStringValue(p, SAVE_SLOT_NEXTITEMID, slot->nextItem ? slot->nextItem->id : "");
+	XML_AddIntValue(p, SAVE_SLOT_INSTALLATIONTIME, slot->installationTime);
 
 	/* everything below is only for weapon */
 	if (!weapon)
 		return;
 
-	mxml_AddIntValue(p, SAVE_SLOT_AMMOLEFT, slot->ammoLeft);
-	mxml_AddStringValue(p, SAVE_SLOT_AMMOID, slot->ammo ? slot->ammo->id : "");
-	mxml_AddStringValue(p, SAVE_SLOT_NEXTAMMOID, slot->nextAmmo ? slot->nextAmmo->id : "");
-	mxml_AddIntValue(p, SAVE_SLOT_DELAYNEXTSHOT, slot->delayNextShot);
+	XML_AddIntValue(p, SAVE_SLOT_AMMOLEFT, slot->ammoLeft);
+	XML_AddStringValue(p, SAVE_SLOT_AMMOID, slot->ammo ? slot->ammo->id : "");
+	XML_AddStringValue(p, SAVE_SLOT_NEXTAMMOID, slot->nextAmmo ? slot->nextAmmo->id : "");
+	XML_AddIntValue(p, SAVE_SLOT_DELAYNEXTSHOT, slot->delayNextShot);
 }
 
 /**
@@ -1394,10 +1394,10 @@ void AII_SaveOneSlotXML (mxml_node_t *p, const aircraftSlot_t* slot, qboolean we
  * @sa B_Load
  * @sa B_SaveAircraftSlots
  */
-void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapon)
+void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, qboolean weapon)
 {
 	const char *name;
-	name = mxml_GetString(node, SAVE_SLOT_ITEMID);
+	name = XML_GetString(node, SAVE_SLOT_ITEMID);
 	if (name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);
 		/* base is NULL here to not check against the storage amounts - they
@@ -1410,14 +1410,14 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 	}
 
 	/* item to install after current one is removed */
-	name = mxml_GetString(node, SAVE_SLOT_NEXTITEMID);
+	name = XML_GetString(node, SAVE_SLOT_NEXTITEMID);
 	if (name && name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);
 		if (tech)
 			AII_AddItemToSlot(NULL, tech, slot, qtrue);
 	}
 
-	slot->installationTime = mxml_GetInt(node, SAVE_SLOT_INSTALLATIONTIME, 0);
+	slot->installationTime = XML_GetInt(node, SAVE_SLOT_INSTALLATIONTIME, 0);
 
 	/* everything below is weapon specific */
 	if (!weapon)
@@ -1425,8 +1425,8 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 
 	/* current ammo */
 	/* load ammoLeft before adding ammo to avoid unnecessary auto-reloading */
-	slot->ammoLeft = mxml_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
-	name = mxml_GetString(node, SAVE_SLOT_AMMOID);
+	slot->ammoLeft = XML_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
+	name = XML_GetString(node, SAVE_SLOT_AMMOID);
 	if (name && name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);
 		/* next Item must not be loaded yet in order to install ammo properly */
@@ -1434,11 +1434,11 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 			AII_AddAmmoToSlot(NULL, tech, slot);
 	}
 	/* ammo to install after current one is removed */
-	name = mxml_GetString(node, SAVE_SLOT_NEXTAMMOID);
+	name = XML_GetString(node, SAVE_SLOT_NEXTAMMOID);
 	if (name && name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);
 		if (tech)
 			AII_AddAmmoToSlot(NULL, tech, slot);
 	}
-	slot->delayNextShot = mxml_GetInt(node, SAVE_SLOT_DELAYNEXTSHOT, 0);
+	slot->delayNextShot = XML_GetInt(node, SAVE_SLOT_DELAYNEXTSHOT, 0);
 }

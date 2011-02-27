@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void mxml_AddString (mxml_node_t *parent, const char *name, const char *value)
+void XML_AddString (xmlNode_t *parent, const char *name, const char *value)
 {
 	if (value)
 		mxmlElementSetAttr(parent, name, value);
@@ -44,7 +44,7 @@ void mxml_AddString (mxml_node_t *parent, const char *name, const char *value)
  * @param[in] value Value of the attribute
  * @note if the value is empty nothing will be added
  */
-void mxml_AddStringValue (mxml_node_t *parent, const char *name, const char *value)
+void XML_AddStringValue (xmlNode_t *parent, const char *name, const char *value)
 {
 	if (value && value[0] != '\0')
 		mxmlElementSetAttr(parent, name, value);
@@ -56,7 +56,7 @@ void mxml_AddStringValue (mxml_node_t *parent, const char *name, const char *val
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void mxml_AddBool (mxml_node_t *parent, const char *name, qboolean value)
+void XML_AddBool (xmlNode_t *parent, const char *name, qboolean value)
 {
 	mxmlElementSetAttr(parent, name, value ? "true" : "false");
 }
@@ -68,7 +68,7 @@ void mxml_AddBool (mxml_node_t *parent, const char *name, qboolean value)
  * @param[in] value Value of the attribute
  * @note if the value is qfalse nothing will be added
  */
-void mxml_AddBoolValue (mxml_node_t *parent, const char *name, qboolean value)
+void XML_AddBoolValue (xmlNode_t *parent, const char *name, qboolean value)
 {
 	if (value)
 		mxmlElementSetAttr(parent, name, value ? "true" : "false");
@@ -80,9 +80,9 @@ void mxml_AddBoolValue (mxml_node_t *parent, const char *name, qboolean value)
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void mxml_AddFloat (mxml_node_t *parent, const char *name, float value)
+void XML_AddFloat (xmlNode_t *parent, const char *name, float value)
 {
-	mxml_AddDouble(parent, name, value);
+	XML_AddDouble(parent, name, value);
 }
 
 /**
@@ -92,9 +92,9 @@ void mxml_AddFloat (mxml_node_t *parent, const char *name, float value)
  * @param[in] value Value of the attribute
  * @note if the value is zero nothing will be added
  */
-void mxml_AddFloatValue (mxml_node_t *parent, const char *name, float value)
+void XML_AddFloatValue (xmlNode_t *parent, const char *name, float value)
 {
-	mxml_AddDoubleValue(parent, name, value);
+	XML_AddDoubleValue(parent, name, value);
 }
 
 /**
@@ -103,7 +103,7 @@ void mxml_AddFloatValue (mxml_node_t *parent, const char *name, float value)
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void mxml_AddDouble (mxml_node_t *parent, const char *name, double value)
+void XML_AddDouble (xmlNode_t *parent, const char *name, double value)
 {
 	char txt[50];
 	snprintf(txt, sizeof(txt), "%f", value);
@@ -117,7 +117,7 @@ void mxml_AddDouble (mxml_node_t *parent, const char *name, double value)
  * @param[in] value Value of the attribute
  * @note if the value is zero nothing will be added
  */
-void mxml_AddDoubleValue (mxml_node_t *parent, const char *name, double value)
+void XML_AddDoubleValue (xmlNode_t *parent, const char *name, double value)
 {
 	char txt[50];
 
@@ -133,9 +133,9 @@ void mxml_AddDoubleValue (mxml_node_t *parent, const char *name, double value)
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void mxml_AddByte (mxml_node_t *parent, const char *name, byte value)
+void XML_AddByte (xmlNode_t *parent, const char *name, byte value)
 {
-	mxml_AddLong(parent, name, value);
+	XML_AddLong(parent, name, value);
 }
 
 /**
@@ -145,9 +145,9 @@ void mxml_AddByte (mxml_node_t *parent, const char *name, byte value)
  * @param[in] value Value of the attribute
  * @note if the value is zero nothing will be added
  */
-void mxml_AddByteValue (mxml_node_t *parent, const char *name, byte value)
+void XML_AddByteValue (xmlNode_t *parent, const char *name, byte value)
 {
-	mxml_AddLongValue(parent, name, value);
+	XML_AddLongValue(parent, name, value);
 }
 
 /**
@@ -156,9 +156,9 @@ void mxml_AddByteValue (mxml_node_t *parent, const char *name, byte value)
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void mxml_AddShort (mxml_node_t *parent, const char *name, short value)
+void XML_AddShort (xmlNode_t *parent, const char *name, short value)
 {
-	mxml_AddLong(parent, name, value);
+	XML_AddLong(parent, name, value);
 }
 
 /**
@@ -168,9 +168,9 @@ void mxml_AddShort (mxml_node_t *parent, const char *name, short value)
  * @param[in] value Value of the attribute
  * @note if the value is zero nothing will be added
  */
-void mxml_AddShortValue (mxml_node_t *parent, const char *name, short value)
+void XML_AddShortValue (xmlNode_t *parent, const char *name, short value)
 {
-	mxml_AddLongValue(parent, name, value);
+	XML_AddLongValue(parent, name, value);
 }
 
 /**
@@ -179,9 +179,9 @@ void mxml_AddShortValue (mxml_node_t *parent, const char *name, short value)
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void mxml_AddInt (mxml_node_t *parent, const char *name, int value)
+void XML_AddInt (xmlNode_t *parent, const char *name, int value)
 {
-	mxml_AddLong(parent, name, value);
+	XML_AddLong(parent, name, value);
 }
 
 /**
@@ -191,9 +191,9 @@ void mxml_AddInt (mxml_node_t *parent, const char *name, int value)
  * @param[in] value Value of the attribute
  * @note if the value is zero nothing will be added
  */
-void mxml_AddIntValue (mxml_node_t *parent, const char *name, int value)
+void XML_AddIntValue (xmlNode_t *parent, const char *name, int value)
 {
-	mxml_AddLongValue(parent, name, value);
+	XML_AddLongValue(parent, name, value);
 }
 
 /**
@@ -202,7 +202,7 @@ void mxml_AddIntValue (mxml_node_t *parent, const char *name, int value)
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void mxml_AddLong (mxml_node_t *parent, const char *name, long value)
+void XML_AddLong (xmlNode_t *parent, const char *name, long value)
 {
 	char txt[50];
 	snprintf(txt, sizeof(txt), "%ld", value);
@@ -216,7 +216,7 @@ void mxml_AddLong (mxml_node_t *parent, const char *name, long value)
  * @param[in] value Value of the attribute
  * @note if the value is zero nothing will be added
  */
-void mxml_AddLongValue (mxml_node_t *parent, const char *name, long value)
+void XML_AddLongValue (xmlNode_t *parent, const char *name, long value)
 {
 	char txt[50];
 
@@ -233,31 +233,31 @@ void mxml_AddLongValue (mxml_node_t *parent, const char *name, long value)
  * @param[in] pos Pos3 structure with position data
  * @note it creates a new node and adds coordinate(s) to the node as attributes
  */
-void mxml_AddPos3 (mxml_node_t *parent, const char *name, const vec3_t pos)
+void XML_AddPos3 (xmlNode_t *parent, const char *name, const vec3_t pos)
 {
-	mxml_node_t *t;
+	xmlNode_t *t;
 	t = mxmlNewElement(parent, name);
-	mxml_AddFloat(t, "x", pos[0]);
-	mxml_AddFloat(t, "y", pos[1]);
-	mxml_AddFloat(t, "z", pos[2]);
+	XML_AddFloat(t, "x", pos[0]);
+	XML_AddFloat(t, "y", pos[1]);
+	XML_AddFloat(t, "z", pos[2]);
 }
 
-/*
+/**
  * @brief add a Pos2 data to the XML Tree
  * @param[out] parent XML Node structure to add to
  * @param[in] name Name of the node to add
  * @param[in] pos Pos2 structure with position data
  * @note it creates a new node and adds coordinate(s) to the node as attributes
  */
-void mxml_AddPos2 (mxml_node_t *parent, const char *name, const vec2_t pos)
+void XML_AddPos2 (xmlNode_t *parent, const char *name, const vec2_t pos)
 {
-	mxml_node_t *t;
+	xmlNode_t *t;
 	t = mxmlNewElement(parent, name);
-	mxml_AddFloat(t, "x", pos[0]);
-	mxml_AddFloat(t, "y", pos[1]);
+	XML_AddFloat(t, "x", pos[0]);
+	XML_AddFloat(t, "y", pos[1]);
 }
 
-/*
+/**
  * @brief add a date data to the XML Tree
  * @param[out] parent XML Node structure to add to
  * @param[in] name Name of the node to add
@@ -265,12 +265,12 @@ void mxml_AddPos2 (mxml_node_t *parent, const char *name, const vec2_t pos)
  * @param[in] sec Second part of the date
  * @note it creates a new node and adds day/sec attributes to the node
  */
-void mxml_AddDate (mxml_node_t *parent, const char *name, const int day, const int sec)
+void XML_AddDate (xmlNode_t *parent, const char *name, const int day, const int sec)
 {
-	mxml_node_t *t;
+	xmlNode_t *t;
 	t = mxmlNewElement(parent, name);
-	mxml_AddInt(t, "day", day);
-	mxml_AddInt(t, "sec", sec);
+	XML_AddInt(t, "day", day);
+	XML_AddInt(t, "sec", sec);
 }
 
 /**
@@ -279,7 +279,7 @@ void mxml_AddDate (mxml_node_t *parent, const char *name, const int day, const i
  * @param[in] name Name of the new node
  * return pointer to the new XML Node structure
  */
-mxml_node_t * mxml_AddNode (mxml_node_t *parent, const char *name)
+xmlNode_t * XML_AddNode (xmlNode_t *parent, const char *name)
 {
 	return mxmlNewElement(parent,name);
 }
@@ -290,7 +290,7 @@ mxml_node_t * mxml_AddNode (mxml_node_t *parent, const char *name)
  * @param[in] name Name of the attribute
  * @param[in] defaultval Default value to return if no such attribute defined
  */
-qboolean mxml_GetBool (mxml_node_t *parent, const char *name, const qboolean defaultval)
+qboolean XML_GetBool (xmlNode_t *parent, const char *name, const qboolean defaultval)
 {
 	const char *txt;
 	txt = mxmlElementGetAttr(parent, name);
@@ -311,7 +311,7 @@ qboolean mxml_GetBool (mxml_node_t *parent, const char *name, const qboolean def
  * @param[in] name Name of the attribute
  * @param[in] defaultval Default value to return if no such attribute defined
  */
-int mxml_GetInt (mxml_node_t *parent, const char *name, const int defaultval)
+int XML_GetInt (xmlNode_t *parent, const char *name, const int defaultval)
 {
 	const char *txt;
 	txt = mxmlElementGetAttr(parent, name);
@@ -326,7 +326,7 @@ int mxml_GetInt (mxml_node_t *parent, const char *name, const int defaultval)
  * @param[in] name Name of the attribute
  * @param[in] defaultval Default value to return if no such attribute defined
  */
-short mxml_GetShort (mxml_node_t *parent, const char *name, const short defaultval)
+short XML_GetShort (xmlNode_t *parent, const char *name, const short defaultval)
 {
 	const char *txt;
 	txt = mxmlElementGetAttr(parent, name);
@@ -341,7 +341,7 @@ short mxml_GetShort (mxml_node_t *parent, const char *name, const short defaultv
  * @param[in] name Name of the attribute
  * @param[in] defaultval Default value to return if no such attribute defined
  */
-long mxml_GetLong (mxml_node_t *parent, const char *name, const long defaultval)
+long XML_GetLong (xmlNode_t *parent, const char *name, const long defaultval)
 {
 	const char *txt;
 	txt = mxmlElementGetAttr(parent, name);
@@ -356,7 +356,7 @@ long mxml_GetLong (mxml_node_t *parent, const char *name, const long defaultval)
  * @param[in] name Name of the attribute
  * @return empty string if no such attribute defined
  */
-const char * mxml_GetString (mxml_node_t *parent, const char *name)
+const char * XML_GetString (xmlNode_t *parent, const char *name)
 {
 	const char *str = mxmlElementGetAttr(parent, name);
 	if (!str)
@@ -370,7 +370,7 @@ const char * mxml_GetString (mxml_node_t *parent, const char *name)
  * @param[in] name Name of the attribute
  * @param[in] defaultval Default value to return if no such attribute defined
  */
-float mxml_GetFloat (mxml_node_t *parent, const char *name, const float defaultval)
+float XML_GetFloat (xmlNode_t *parent, const char *name, const float defaultval)
 {
 	const char *txt;
 	txt = mxmlElementGetAttr(parent, name);
@@ -385,7 +385,7 @@ float mxml_GetFloat (mxml_node_t *parent, const char *name, const float defaultv
  * @param[in] name Name of the attribute
  * @param[in] defaultval Default value to return if no such attribute defined
  */
-double mxml_GetDouble (mxml_node_t *parent, const char *name, const double defaultval)
+double XML_GetDouble (xmlNode_t *parent, const char *name, const double defaultval)
 {
 	const char *txt;
 	txt = mxmlElementGetAttr(parent, name);
@@ -402,13 +402,13 @@ double mxml_GetDouble (mxml_node_t *parent, const char *name, const double defau
  * @return pointer to the node the data was retrieved from
  * @return NULL if no node with name found
  */
-mxml_node_t * mxml_GetPos2 (mxml_node_t *parent, const char *name, vec2_t pos)
+xmlNode_t * XML_GetPos2 (xmlNode_t *parent, const char *name, vec2_t pos)
 {
-	mxml_node_t *p = mxml_GetNode(parent, name);
+	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
 		return NULL;
-	pos[0] = mxml_GetFloat(p, "x", 0);
-	pos[1] = mxml_GetFloat(p, "y", 0);
+	pos[0] = XML_GetFloat(p, "x", 0);
+	pos[1] = XML_GetFloat(p, "y", 0);
 	return p;
 }
 
@@ -421,13 +421,13 @@ mxml_node_t * mxml_GetPos2 (mxml_node_t *parent, const char *name, vec2_t pos)
  * @return pointer to the node the data was retrieved from
  * @return NULL if no Node with name found
  */
-mxml_node_t * mxml_GetNextPos2 (mxml_node_t *actual, mxml_node_t *parent, const char *name, vec2_t pos)
+xmlNode_t * XML_GetNextPos2 (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos)
 {
-	mxml_node_t *p = mxml_GetNextNode(actual, parent, name);
+	xmlNode_t *p = XML_GetNextNode(actual, parent, name);
 	if (!p)
 		return NULL;
-	pos[0] = mxml_GetFloat(p, "x", 0);
-	pos[1] = mxml_GetFloat(p, "y", 0);
+	pos[0] = XML_GetFloat(p, "x", 0);
+	pos[1] = XML_GetFloat(p, "y", 0);
 	return p;
 }
 
@@ -439,14 +439,14 @@ mxml_node_t * mxml_GetNextPos2 (mxml_node_t *actual, mxml_node_t *parent, const 
  * @return pointer to the node the data was retrieved from
  * @return NULL if no node with name found
  */
-mxml_node_t * mxml_GetPos3 (mxml_node_t *parent, const char *name, vec3_t pos)
+xmlNode_t * XML_GetPos3 (xmlNode_t *parent, const char *name, vec3_t pos)
 {
-	mxml_node_t *p = mxml_GetNode(parent, name);
+	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
 		return NULL;
-	pos[0] = mxml_GetFloat(p, "x", 0);
-	pos[1] = mxml_GetFloat(p, "y", 0);
-	pos[2] = mxml_GetFloat(p, "z", 0);
+	pos[0] = XML_GetFloat(p, "x", 0);
+	pos[1] = XML_GetFloat(p, "y", 0);
+	pos[2] = XML_GetFloat(p, "z", 0);
 	return p;
 }
 
@@ -459,14 +459,14 @@ mxml_node_t * mxml_GetPos3 (mxml_node_t *parent, const char *name, vec3_t pos)
  * @return pointer to the node the data was retrieved from
  * @return NULL if no Node with name found
  */
-mxml_node_t * mxml_GetNextPos3 (mxml_node_t *actual, mxml_node_t *parent, const char *name, vec3_t pos)
+xmlNode_t * XML_GetNextPos3 (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos)
 {
-	mxml_node_t *p = mxml_GetNextNode(actual, parent, name);
+	xmlNode_t *p = XML_GetNextNode(actual, parent, name);
 	if (!p)
 		return NULL;
-	pos[0] = mxml_GetFloat(p, "x", 0);
-	pos[1] = mxml_GetFloat(p, "y", 0);
-	pos[2] = mxml_GetFloat(p, "z", 0);
+	pos[0] = XML_GetFloat(p, "x", 0);
+	pos[1] = XML_GetFloat(p, "y", 0);
+	pos[2] = XML_GetFloat(p, "z", 0);
 	return p;
 }
 
@@ -479,13 +479,13 @@ mxml_node_t * mxml_GetNextPos3 (mxml_node_t *actual, mxml_node_t *parent, const 
  * @return pointer to the node the data was retrieved from
  * @return NULL if no node with name found
  */
-mxml_node_t * mxml_GetDate (mxml_node_t *parent, const char *name, int *day, int *sec)
+xmlNode_t * XML_GetDate (xmlNode_t *parent, const char *name, int *day, int *sec)
 {
-	mxml_node_t *p = mxml_GetNode(parent, name);
+	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)
 		return NULL;
-	*day = mxml_GetInt(p, "day", 0);
-	*sec = mxml_GetInt(p, "sec", 0);
+	*day = XML_GetInt(p, "day", 0);
+	*sec = XML_GetInt(p, "sec", 0);
 	return p;
 }
 
@@ -495,7 +495,7 @@ mxml_node_t * mxml_GetDate (mxml_node_t *parent, const char *name, int *day, int
  * @param[in] name Name of the node to retrieve
  * @return pointer to the found XML Node structure or NULL
  */
-mxml_node_t * mxml_GetNode (mxml_node_t *parent, const char *name)
+xmlNode_t * XML_GetNode (xmlNode_t *parent, const char *name)
 {
 	return mxmlFindElement(parent, parent, name, NULL, NULL, MXML_DESCEND_FIRST);
 }
@@ -507,7 +507,7 @@ mxml_node_t * mxml_GetNode (mxml_node_t *parent, const char *name)
  * @param[in] name Name of the node to retrieve
  * @return pointer to the found XML Node structure or NULL
  */
-mxml_node_t * mxml_GetNextNode (mxml_node_t *current, mxml_node_t *parent, const char *name)
+xmlNode_t * XML_GetNextNode (xmlNode_t *current, xmlNode_t *parent, const char *name)
 {
 	return mxmlFindElement(current, parent, name, NULL, NULL, MXML_NO_DESCEND);
 }
@@ -515,7 +515,7 @@ mxml_node_t * mxml_GetNextNode (mxml_node_t *current, mxml_node_t *parent, const
 /**
  * @brief callback function for parsing the node tree
  */
-mxml_type_t mxml_ufo_type_cb (mxml_node_t *node)
+mxml_type_t mxml_ufo_type_cb (xmlNode_t *node)
 {
 	/* You can lookup attributes and/or use the
 	 * element name, hierarchy, etc... */

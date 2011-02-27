@@ -100,7 +100,7 @@ qboolean AII_ReloadWeapon(aircraftSlot_t *slot);
 void AII_ReloadAircraftWeapons(aircraft_t *aircraft);
 void BDEF_ReloadBaseWeapons(base_t *base, installation_t *installation);
 
-void AII_SaveOneSlotXML(mxml_node_t *p, const aircraftSlot_t *slot, qboolean weapon);
-void AII_LoadOneSlotXML(mxml_node_t *node, aircraftSlot_t* slot, qboolean weapon);
+void AII_SaveOneSlotXML(xmlNode_t *p, const aircraftSlot_t *slot, qboolean weapon);
+void AII_LoadOneSlotXML(xmlNode_t *node, aircraftSlot_t* slot, qboolean weapon);
 
 #endif /* CLIENT_CL_MAPFIGHTEQUIP_H */

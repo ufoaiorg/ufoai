@@ -47,8 +47,8 @@ typedef struct saveFileHeader_s {
 
 typedef struct saveSubsystems_s {
 	const char *name;
-	qboolean (*save) (mxml_node_t *parent);	/**< return false if saving failed */
-	qboolean (*load) (mxml_node_t *parent);	/**< return false if loading failed */
+	qboolean (*save) (xmlNode_t *parent);	/**< return false if saving failed */
+	qboolean (*load) (xmlNode_t *parent);	/**< return false if loading failed */
 } saveSubsystems_t;
 
 static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
@@ -134,7 +134,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 	qFILE f;
 	byte *cbuf, *buf;
 	int i, clen;
-	mxml_node_t *topNode, *node;
+	xmlNode_t *topNode, *node;
 	saveFileHeader_t header;
 
 	Q_strncpyz(filename, file, sizeof(filename));
@@ -207,7 +207,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 
 	/* doing a subsystem run ;) */
 	GAME_ReloadMode();
-	node = mxml_GetNode(topNode, SAVE_ROOTNODE);
+	node = XML_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		Mem_Free(buf);
@@ -253,7 +253,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
  */
 static qboolean SAV_GameSave (const char *filename, const char *comment, char **error)
 {
-	mxml_node_t *topNode, *node;
+	xmlNode_t *topNode, *node;
 	char savegame[MAX_OSPATH];
 	int res;
 	int requiredBufferLength;
@@ -281,16 +281,16 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	Com_MakeTimestamp(timeStampBuffer, sizeof(timeStampBuffer));
 	Com_sprintf(savegame, sizeof(savegame), "save/%s.%s", filename, SAVEGAME_EXTENSION);
 	topNode = mxmlNewXML("1.0");
-	node = mxml_AddNode(topNode, SAVE_ROOTNODE);
+	node = XML_AddNode(topNode, SAVE_ROOTNODE);
 	/* writing  Header */
-	mxml_AddInt(node, SAVE_SAVEVERSION, SAVE_FILE_VERSION);
-	mxml_AddString(node, SAVE_COMMENT, comment);
-	mxml_AddString(node, SAVE_UFOVERSION, UFO_VERSION);
-	mxml_AddString(node, SAVE_REALDATE, timeStampBuffer);
+	XML_AddInt(node, SAVE_SAVEVERSION, SAVE_FILE_VERSION);
+	XML_AddString(node, SAVE_COMMENT, comment);
+	XML_AddString(node, SAVE_UFOVERSION, UFO_VERSION);
+	XML_AddString(node, SAVE_REALDATE, timeStampBuffer);
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
-	mxml_AddString(node, SAVE_GAMEDATE, message);
+	XML_AddString(node, SAVE_GAMEDATE, message);
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
 	Com_Printf("Calling subsystems\n");
 	for (i = 0; i < saveSubsystemsAmount; i++) {

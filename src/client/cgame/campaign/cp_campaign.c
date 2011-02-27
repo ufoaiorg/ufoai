@@ -709,12 +709,12 @@ void CL_UpdateCredits (int credits)
  * @brief Load mapDef statistics
  * @param[in] parent XML Node structure, where we get the information from
  */
-static qboolean CP_LoadMapDefStatXML (mxml_node_t *parent)
+static qboolean CP_LoadMapDefStatXML (xmlNode_t *parent)
 {
-	mxml_node_t *node;
+	xmlNode_t *node;
 
-	for (node = mxml_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = mxml_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
-		const char *s = mxml_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
+	for (node = XML_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = XML_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
+		const char *s = XML_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
 		mapDef_t *map;
 
 		if (s[0] == '\0') {
@@ -726,7 +726,7 @@ static qboolean CP_LoadMapDefStatXML (mxml_node_t *parent)
 			Com_Printf("Warning: No MapDef with id '%s'!\n", s);
 			continue;
 		}
-		map->timesAlreadyUsed = mxml_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
+		map->timesAlreadyUsed = XML_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
 	}
 
 	return qtrue;
@@ -736,20 +736,20 @@ static qboolean CP_LoadMapDefStatXML (mxml_node_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean CP_LoadXML (mxml_node_t *parent)
+qboolean CP_LoadXML (xmlNode_t *parent)
 {
-	mxml_node_t *campaignNode;
-	mxml_node_t *mapNode;
+	xmlNode_t *campaignNode;
+	xmlNode_t *mapNode;
 	const char *name;
 	campaign_t *campaign;
-	mxml_node_t *mapDefStat;
+	xmlNode_t *mapDefStat;
 
-	campaignNode = mxml_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
+	campaignNode = XML_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
 		Com_Printf("Did not find campaign entry in xml!\n");
 		return qfalse;
 	}
-	if (!(name = mxml_GetString(campaignNode, SAVE_CAMPAIGN_ID))) {
+	if (!(name = XML_GetString(campaignNode, SAVE_CAMPAIGN_ID))) {
 		Com_Printf("couldn't locate campaign name in savegame\n");
 		return qfalse;
 	}
@@ -765,36 +765,36 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	MAP_Reset(campaign->map);
 
 	/* read credits */
-	CL_UpdateCredits(mxml_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
-	ccs.paid = mxml_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, qfalse);
+	CL_UpdateCredits(XML_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
+	ccs.paid = XML_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, qfalse);
 
-	cls.nextUniqueCharacterNumber = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0);
+	cls.nextUniqueCharacterNumber = XML_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0);
 
-	mxml_GetDate(campaignNode, SAVE_CAMPAIGN_DATE, &ccs.date.day, &ccs.date.sec);
+	XML_GetDate(campaignNode, SAVE_CAMPAIGN_DATE, &ccs.date.day, &ccs.date.sec);
 
 	/* read other campaign data */
-	ccs.civiliansKilled = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
-	ccs.aliensKilled = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_ALIENSKILLED, 0);
+	ccs.civiliansKilled = XML_GetInt(campaignNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
+	ccs.aliensKilled = XML_GetInt(campaignNode, SAVE_CAMPAIGN_ALIENSKILLED, 0);
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Getting position\n");
 
 	/* read map view */
-	mapNode = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MAP);
-	ccs.center[0] = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_CENTER0, 0.0);
-	ccs.center[1] = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_CENTER1, 0.0);
-	ccs.angles[0] = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_ANGLES0, 0.0);
-	ccs.angles[1] = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_ANGLES1, 0.0);
-	ccs.zoom = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_ZOOM, 0.0);
+	mapNode = XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAP);
+	ccs.center[0] = XML_GetFloat(mapNode, SAVE_CAMPAIGN_CENTER0, 0.0);
+	ccs.center[1] = XML_GetFloat(mapNode, SAVE_CAMPAIGN_CENTER1, 0.0);
+	ccs.angles[0] = XML_GetFloat(mapNode, SAVE_CAMPAIGN_ANGLES0, 0.0);
+	ccs.angles[1] = XML_GetFloat(mapNode, SAVE_CAMPAIGN_ANGLES1, 0.0);
+	ccs.zoom = XML_GetFloat(mapNode, SAVE_CAMPAIGN_ZOOM, 0.0);
 	/* restore the overlay.
 	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
 	* and we never set r_geoscape_overlay->string in game: cl_geoscape_overlay won't be updated if the loaded
 	* value is 0 (and that's a problem if you're loading a game when cl_geoscape_overlay is set to another value */
-	cl_geoscape_overlay->integer = mxml_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0);
-	radarOverlayWasSet = mxml_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
-	ccs.XVIShowMap = mxml_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
+	cl_geoscape_overlay->integer = XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0);
+	radarOverlayWasSet = XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
+	ccs.XVIShowMap = XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
 	CP_UpdateXVIMapButton();
 
-	mapDefStat = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
+	mapDefStat = XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (mapDefStat && !CP_LoadMapDefStatXML(mapDefStat))
 		return qfalse;
 
@@ -806,16 +806,16 @@ qboolean CP_LoadXML (mxml_node_t *parent)
  * @brief Save mapDef statistics
  * @param[out] parent XML Node structure, where we write the information to
  */
-static qboolean CP_SaveMapDefStatXML (mxml_node_t *parent)
+static qboolean CP_SaveMapDefStatXML (xmlNode_t *parent)
 {
 	int i;
 
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t const* map = Com_GetMapDefByIDX(i);
 		if (map->timesAlreadyUsed > 0) {
-			mxml_node_t *node = mxml_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
-			mxml_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, map->id);
-			mxml_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, map->timesAlreadyUsed);
+			xmlNode_t *node = XML_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
+			XML_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, map->id);
+			XML_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, map->timesAlreadyUsed);
 		}
 	}
 
@@ -826,35 +826,35 @@ static qboolean CP_SaveMapDefStatXML (mxml_node_t *parent)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean CP_SaveXML (mxml_node_t *parent)
+qboolean CP_SaveXML (xmlNode_t *parent)
 {
-	mxml_node_t *campaign;
-	mxml_node_t *map;
-	mxml_node_t *mapDefStat;
+	xmlNode_t *campaign;
+	xmlNode_t *map;
+	xmlNode_t *mapDefStat;
 
-	campaign = mxml_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
+	campaign = XML_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
-	mxml_AddString(campaign, SAVE_CAMPAIGN_ID, ccs.curCampaign->id);
-	mxml_AddDate(campaign, SAVE_CAMPAIGN_DATE, ccs.date.day, ccs.date.sec);
-	mxml_AddLong(campaign, SAVE_CAMPAIGN_CREDITS, ccs.credits);
-	mxml_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
-	mxml_AddShortValue(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cls.nextUniqueCharacterNumber);
+	XML_AddString(campaign, SAVE_CAMPAIGN_ID, ccs.curCampaign->id);
+	XML_AddDate(campaign, SAVE_CAMPAIGN_DATE, ccs.date.day, ccs.date.sec);
+	XML_AddLong(campaign, SAVE_CAMPAIGN_CREDITS, ccs.credits);
+	XML_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
+	XML_AddShortValue(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cls.nextUniqueCharacterNumber);
 
-	mxml_AddIntValue(campaign, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
-	mxml_AddIntValue(campaign, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
+	XML_AddIntValue(campaign, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
+	XML_AddIntValue(campaign, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
 
 	/* Map and user interface */
-	map = mxml_AddNode(campaign, SAVE_CAMPAIGN_MAP);
-	mxml_AddFloat(map, SAVE_CAMPAIGN_CENTER0, ccs.center[0]);
-	mxml_AddFloat(map, SAVE_CAMPAIGN_CENTER1, ccs.center[1]);
-	mxml_AddFloat(map, SAVE_CAMPAIGN_ANGLES0, ccs.angles[0]);
-	mxml_AddFloat(map, SAVE_CAMPAIGN_ANGLES1, ccs.angles[1]);
-	mxml_AddFloat(map, SAVE_CAMPAIGN_ZOOM, ccs.zoom);
-	mxml_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cl_geoscape_overlay->integer);
-	mxml_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
-	mxml_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
+	map = XML_AddNode(campaign, SAVE_CAMPAIGN_MAP);
+	XML_AddFloat(map, SAVE_CAMPAIGN_CENTER0, ccs.center[0]);
+	XML_AddFloat(map, SAVE_CAMPAIGN_CENTER1, ccs.center[1]);
+	XML_AddFloat(map, SAVE_CAMPAIGN_ANGLES0, ccs.angles[0]);
+	XML_AddFloat(map, SAVE_CAMPAIGN_ANGLES1, ccs.angles[1]);
+	XML_AddFloat(map, SAVE_CAMPAIGN_ZOOM, ccs.zoom);
+	XML_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cl_geoscape_overlay->integer);
+	XML_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
+	XML_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
 
-	mapDefStat = mxml_AddNode(campaign, SAVE_CAMPAIGN_MAPDEFSTAT);
+	mapDefStat = XML_AddNode(campaign, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (!CP_SaveMapDefStatXML(mapDefStat))
 		return qfalse;
 

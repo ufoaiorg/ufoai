@@ -203,20 +203,20 @@ message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *t
  * @brief saves current notification and pause settings
  * @sa MSO_LoadXML
  */
-qboolean MSO_SaveXML (mxml_node_t *p)
+qboolean MSO_SaveXML (xmlNode_t *p)
 {
 	notify_t type;
-	mxml_node_t *n = mxml_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
+	xmlNode_t *n = XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 
 	/* save positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		messageSettings_t actualSetting = messageSettings[type];
-		mxml_node_t *s = mxml_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
+		xmlNode_t *s = XML_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
 
-		mxml_AddString(s, SAVE_MESSAGEOPTIONS_NAME, nt_strings[type]);
-		mxml_AddBoolValue(s, SAVE_MESSAGEOPTIONS_NOTIFY, actualSetting.doNotify);
-		mxml_AddBoolValue(s, SAVE_MESSAGEOPTIONS_PAUSE, actualSetting.doPause);
-		mxml_AddBoolValue(s, SAVE_MESSAGEOPTIONS_SOUND, actualSetting.doSound);
+		XML_AddString(s, SAVE_MESSAGEOPTIONS_NAME, nt_strings[type]);
+		XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_NOTIFY, actualSetting.doNotify);
+		XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_PAUSE, actualSetting.doPause);
+		XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_SOUND, actualSetting.doSound);
 	}
 
 	return qtrue;
@@ -226,18 +226,18 @@ qboolean MSO_SaveXML (mxml_node_t *p)
  * @brief Restores the notification and pause settings from savegame
  * @sa MSO_SaveXML
  */
-qboolean MSO_LoadXML (mxml_node_t *p)
+qboolean MSO_LoadXML (xmlNode_t *p)
 {
-	mxml_node_t *n, *s;
+	xmlNode_t *n, *s;
 	/* reset current message settings (default to set for undefined settings)*/
 	OBJSET(messageSettings, 1);
 
-	n = mxml_GetNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
+	n = XML_GetNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 	if (!n)
 		return qfalse;
 
-	for (s = mxml_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = mxml_GetNextNode(s,n, SAVE_MESSAGEOPTIONS_TYPE)) {
-		const char *messagetype = mxml_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
+	for (s = XML_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = XML_GetNextNode(s,n, SAVE_MESSAGEOPTIONS_TYPE)) {
+		const char *messagetype = XML_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
 		notify_t type;
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
@@ -250,9 +250,9 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 			Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
 			continue;
 		}
-		MSO_Set(0, type, MSO_NOTIFY, mxml_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, qfalse), qfalse);
-		MSO_Set(0, type, MSO_PAUSE, mxml_GetBool(s, SAVE_MESSAGEOPTIONS_PAUSE, qfalse), qfalse);
-		MSO_Set(0, type, MSO_SOUND, mxml_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, qfalse), qfalse);
+		MSO_Set(0, type, MSO_NOTIFY, XML_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, qfalse), qfalse);
+		MSO_Set(0, type, MSO_PAUSE, XML_GetBool(s, SAVE_MESSAGEOPTIONS_PAUSE, qfalse), qfalse);
+		MSO_Set(0, type, MSO_SOUND, XML_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, qfalse), qfalse);
 	}
 
 	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse, qfalse);

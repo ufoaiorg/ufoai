@@ -151,31 +151,31 @@ void CL_StatsUpdate_f (void)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean STATS_SaveXML (mxml_node_t *parent)
+qboolean STATS_SaveXML (xmlNode_t *parent)
 {
-	mxml_node_t * stats;
+	xmlNode_t * stats;
 
-	stats = mxml_AddNode(parent, SAVE_STATS_STATS);
+	stats = XML_AddNode(parent, SAVE_STATS_STATS);
 
-	mxml_AddIntValue(stats, SAVE_STATS_MISSIONS, ccs.campaignStats.missions);
-	mxml_AddIntValue(stats, SAVE_STATS_MISSIONSWON, ccs.campaignStats.missionsWon);
-	mxml_AddIntValue(stats, SAVE_STATS_MISSIONSLOST, ccs.campaignStats.missionsLost);
-	mxml_AddIntValue(stats, SAVE_STATS_BASESBUILT, ccs.campaignStats.basesBuilt);
-	mxml_AddIntValue(stats, SAVE_STATS_BASESATTACKED, ccs.campaignStats.basesAttacked);
-	mxml_AddIntValue(stats, SAVE_STATS_INTERCEPTIONS, ccs.campaignStats.interceptions);
-	mxml_AddIntValue(stats, SAVE_STATS_SOLDIERSLOST, ccs.campaignStats.soldiersLost);
-	mxml_AddIntValue(stats, SAVE_STATS_SOLDIERSNEW, ccs.campaignStats.soldiersNew);
-	mxml_AddIntValue(stats, SAVE_STATS_KILLEDALIENS, ccs.campaignStats.killedAliens);
-	mxml_AddIntValue(stats, SAVE_STATS_RESCUEDCIVILIANS, ccs.campaignStats.rescuedCivilians);
-	mxml_AddIntValue(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, ccs.campaignStats.researchedTechnologies);
-	mxml_AddIntValue(stats, SAVE_STATS_MONEYINTERCEPTIONS, ccs.campaignStats.moneyInterceptions);
-	mxml_AddIntValue(stats, SAVE_STATS_MONEYBASES, ccs.campaignStats.moneyBases);
-	mxml_AddIntValue(stats, SAVE_STATS_MONEYRESEARCH, ccs.campaignStats.moneyResearch);
-	mxml_AddIntValue(stats, SAVE_STATS_MONEYWEAPONS, ccs.campaignStats.moneyWeapons);
-	mxml_AddIntValue(stats, SAVE_STATS_UFOSDETECTED, ccs.campaignStats.ufosDetected);
-	mxml_AddIntValue(stats, SAVE_STATS_ALIENBASESBUILT, ccs.campaignStats.alienBasesBuilt);
-	mxml_AddIntValue(stats, SAVE_STATS_UFOSSTORED, ccs.campaignStats.ufosStored);
-	mxml_AddIntValue(stats, SAVE_STATS_AIRCRAFTHAD, ccs.campaignStats.aircraftHad);
+	XML_AddIntValue(stats, SAVE_STATS_MISSIONS, ccs.campaignStats.missions);
+	XML_AddIntValue(stats, SAVE_STATS_MISSIONSWON, ccs.campaignStats.missionsWon);
+	XML_AddIntValue(stats, SAVE_STATS_MISSIONSLOST, ccs.campaignStats.missionsLost);
+	XML_AddIntValue(stats, SAVE_STATS_BASESBUILT, ccs.campaignStats.basesBuilt);
+	XML_AddIntValue(stats, SAVE_STATS_BASESATTACKED, ccs.campaignStats.basesAttacked);
+	XML_AddIntValue(stats, SAVE_STATS_INTERCEPTIONS, ccs.campaignStats.interceptions);
+	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSLOST, ccs.campaignStats.soldiersLost);
+	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSNEW, ccs.campaignStats.soldiersNew);
+	XML_AddIntValue(stats, SAVE_STATS_KILLEDALIENS, ccs.campaignStats.killedAliens);
+	XML_AddIntValue(stats, SAVE_STATS_RESCUEDCIVILIANS, ccs.campaignStats.rescuedCivilians);
+	XML_AddIntValue(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, ccs.campaignStats.researchedTechnologies);
+	XML_AddIntValue(stats, SAVE_STATS_MONEYINTERCEPTIONS, ccs.campaignStats.moneyInterceptions);
+	XML_AddIntValue(stats, SAVE_STATS_MONEYBASES, ccs.campaignStats.moneyBases);
+	XML_AddIntValue(stats, SAVE_STATS_MONEYRESEARCH, ccs.campaignStats.moneyResearch);
+	XML_AddIntValue(stats, SAVE_STATS_MONEYWEAPONS, ccs.campaignStats.moneyWeapons);
+	XML_AddIntValue(stats, SAVE_STATS_UFOSDETECTED, ccs.campaignStats.ufosDetected);
+	XML_AddIntValue(stats, SAVE_STATS_ALIENBASESBUILT, ccs.campaignStats.alienBasesBuilt);
+	XML_AddIntValue(stats, SAVE_STATS_UFOSSTORED, ccs.campaignStats.ufosStored);
+	XML_AddIntValue(stats, SAVE_STATS_AIRCRAFTHAD, ccs.campaignStats.aircraftHad);
 
 	return qtrue;
 }
@@ -184,41 +184,41 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean STATS_LoadXML (mxml_node_t *parent)
+qboolean STATS_LoadXML (xmlNode_t *parent)
 {
-	mxml_node_t * stats;
+	xmlNode_t * stats;
 	qboolean success = qtrue;
 
-	stats = mxml_GetNode(parent, SAVE_STATS_STATS);
+	stats = XML_GetNode(parent, SAVE_STATS_STATS);
 	if (!stats) {
 		Com_Printf("Did not find stats entry in xml!\n");
 		return qfalse;
 	}
-	ccs.campaignStats.missions = mxml_GetInt(stats, SAVE_STATS_MISSIONS, 0);
-	ccs.campaignStats.missionsWon = mxml_GetInt(stats, SAVE_STATS_MISSIONSWON, 0);
-	ccs.campaignStats.missionsLost = mxml_GetInt(stats, SAVE_STATS_MISSIONSLOST, 0);
-	ccs.campaignStats.basesBuilt = mxml_GetInt(stats, SAVE_STATS_BASESBUILT, 0);
-	ccs.campaignStats.basesAttacked = mxml_GetInt(stats, SAVE_STATS_BASESATTACKED, 0);
-	ccs.campaignStats.interceptions = mxml_GetInt(stats, SAVE_STATS_INTERCEPTIONS, 0);
-	ccs.campaignStats.soldiersLost = mxml_GetInt(stats, SAVE_STATS_SOLDIERSLOST, 0);
-	ccs.campaignStats.soldiersNew = mxml_GetInt(stats, SAVE_STATS_SOLDIERSNEW, 0);
-	ccs.campaignStats.killedAliens = mxml_GetInt(stats, SAVE_STATS_KILLEDALIENS, 0);
-	ccs.campaignStats.rescuedCivilians = mxml_GetInt(stats, SAVE_STATS_RESCUEDCIVILIANS, 0);
-	ccs.campaignStats.researchedTechnologies = mxml_GetInt(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, 0);
-	ccs.campaignStats.moneyInterceptions = mxml_GetInt(stats, SAVE_STATS_MONEYINTERCEPTIONS, 0);
-	ccs.campaignStats.moneyBases = mxml_GetInt(stats, SAVE_STATS_MONEYBASES, 0);
-	ccs.campaignStats.moneyResearch = mxml_GetInt(stats, SAVE_STATS_MONEYRESEARCH, 0);
-	ccs.campaignStats.moneyWeapons = mxml_GetInt(stats, SAVE_STATS_MONEYWEAPONS, 0);
-	ccs.campaignStats.ufosDetected = mxml_GetInt(stats, SAVE_STATS_UFOSDETECTED, 0);
-	ccs.campaignStats.alienBasesBuilt = mxml_GetInt(stats, SAVE_STATS_ALIENBASESBUILT, 0);
+	ccs.campaignStats.missions = XML_GetInt(stats, SAVE_STATS_MISSIONS, 0);
+	ccs.campaignStats.missionsWon = XML_GetInt(stats, SAVE_STATS_MISSIONSWON, 0);
+	ccs.campaignStats.missionsLost = XML_GetInt(stats, SAVE_STATS_MISSIONSLOST, 0);
+	ccs.campaignStats.basesBuilt = XML_GetInt(stats, SAVE_STATS_BASESBUILT, 0);
+	ccs.campaignStats.basesAttacked = XML_GetInt(stats, SAVE_STATS_BASESATTACKED, 0);
+	ccs.campaignStats.interceptions = XML_GetInt(stats, SAVE_STATS_INTERCEPTIONS, 0);
+	ccs.campaignStats.soldiersLost = XML_GetInt(stats, SAVE_STATS_SOLDIERSLOST, 0);
+	ccs.campaignStats.soldiersNew = XML_GetInt(stats, SAVE_STATS_SOLDIERSNEW, 0);
+	ccs.campaignStats.killedAliens = XML_GetInt(stats, SAVE_STATS_KILLEDALIENS, 0);
+	ccs.campaignStats.rescuedCivilians = XML_GetInt(stats, SAVE_STATS_RESCUEDCIVILIANS, 0);
+	ccs.campaignStats.researchedTechnologies = XML_GetInt(stats, SAVE_STATS_RESEARCHEDTECHNOLOGIES, 0);
+	ccs.campaignStats.moneyInterceptions = XML_GetInt(stats, SAVE_STATS_MONEYINTERCEPTIONS, 0);
+	ccs.campaignStats.moneyBases = XML_GetInt(stats, SAVE_STATS_MONEYBASES, 0);
+	ccs.campaignStats.moneyResearch = XML_GetInt(stats, SAVE_STATS_MONEYRESEARCH, 0);
+	ccs.campaignStats.moneyWeapons = XML_GetInt(stats, SAVE_STATS_MONEYWEAPONS, 0);
+	ccs.campaignStats.ufosDetected = XML_GetInt(stats, SAVE_STATS_UFOSDETECTED, 0);
+	ccs.campaignStats.alienBasesBuilt = XML_GetInt(stats, SAVE_STATS_ALIENBASESBUILT, 0);
 	/* fallback for savegame compatibility */
 	if (ccs.campaignStats.alienBasesBuilt == 0)
 		ccs.campaignStats.alienBasesBuilt = AB_GetAlienBaseNumber();
-	ccs.campaignStats.ufosStored = mxml_GetInt(stats, SAVE_STATS_UFOSSTORED, 0);
+	ccs.campaignStats.ufosStored = XML_GetInt(stats, SAVE_STATS_UFOSSTORED, 0);
 	/* fallback for savegame compatibility */
 	if (ccs.campaignStats.ufosStored == 0)
 		ccs.campaignStats.ufosStored = US_StoredUFOCount();
-	ccs.campaignStats.aircraftHad = mxml_GetInt(stats, SAVE_STATS_AIRCRAFTHAD, 0);
+	ccs.campaignStats.aircraftHad = XML_GetInt(stats, SAVE_STATS_AIRCRAFTHAD, 0);
 	/* fallback for savegame compatibility */
 	if (ccs.campaignStats.aircraftHad == 0)
 		ccs.campaignStats.aircraftHad = LIST_Count(ccs.aircraft);

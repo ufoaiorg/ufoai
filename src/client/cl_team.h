@@ -49,11 +49,11 @@ typedef struct actorSkin_s {
 void CL_GenerateCharacter(character_t *chr, const char *teamDefName);
 void CL_UpdateCharacterValues(const character_t *chr, const char *cvarPrefix);
 
-qboolean CL_SaveCharacterXML(mxml_node_t *p, const character_t *chr);
-qboolean CL_LoadCharacterXML(mxml_node_t *p, character_t *chr);
+qboolean CL_SaveCharacterXML(xmlNode_t *p, const character_t *chr);
+qboolean CL_LoadCharacterXML(xmlNode_t *p, character_t *chr);
 
-void CL_SaveInventoryXML(mxml_node_t *p, const inventory_t * i);
-void CL_LoadInventoryXML(mxml_node_t *p, inventory_t * i);
+void CL_SaveInventoryXML(xmlNode_t *p, const inventory_t * i);
+void CL_LoadInventoryXML(xmlNode_t *p, inventory_t * i);
 void TEAM_InitStartup(void);
 
 actorSkin_t* Com_AllocateActorSkin(const char *name);

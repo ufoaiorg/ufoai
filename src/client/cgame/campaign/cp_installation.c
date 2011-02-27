@@ -522,31 +522,31 @@ void INS_ParseInstallations (const char *name, const char **text)
  * @sa INS_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean INS_SaveXML (mxml_node_t *p)
+qboolean INS_SaveXML (xmlNode_t *p)
 {
 	int i;
-	mxml_node_t *n;
-	n = mxml_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
+	xmlNode_t *n;
+	n = XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 
 	Com_RegisterConstList(saveInstallationConstants);
 	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *inst = INS_GetInstallationByIDX(i);
-		mxml_node_t *s, *ss;
+		xmlNode_t *s, *ss;
 
 		if (!inst->founded)
 			continue;
 
-		s = mxml_AddNode(n, SAVE_INSTALLATION_INSTALLATION);
-		mxml_AddString(s, SAVE_INSTALLATION_TEMPLATEID, inst->installationTemplate->id);
-		mxml_AddString(s, SAVE_INSTALLATION_NAME, inst->name);
-		mxml_AddPos3(s, SAVE_INSTALLATION_POS, inst->pos);
-		mxml_AddString(s, SAVE_INSTALLATION_STATUS, Com_GetConstVariable(SAVE_INSTALLATIONSTATUS_NAMESPACE, inst->installationStatus));
-		mxml_AddInt(s, SAVE_INSTALLATION_DAMAGE, inst->installationDamage);
-		mxml_AddFloat(s, SAVE_INSTALLATION_ALIENINTEREST, inst->alienInterest);
-		mxml_AddInt(s, SAVE_INSTALLATION_BUILDSTART, inst->buildStart);
+		s = XML_AddNode(n, SAVE_INSTALLATION_INSTALLATION);
+		XML_AddString(s, SAVE_INSTALLATION_TEMPLATEID, inst->installationTemplate->id);
+		XML_AddString(s, SAVE_INSTALLATION_NAME, inst->name);
+		XML_AddPos3(s, SAVE_INSTALLATION_POS, inst->pos);
+		XML_AddString(s, SAVE_INSTALLATION_STATUS, Com_GetConstVariable(SAVE_INSTALLATIONSTATUS_NAMESPACE, inst->installationStatus));
+		XML_AddInt(s, SAVE_INSTALLATION_DAMAGE, inst->installationDamage);
+		XML_AddFloat(s, SAVE_INSTALLATION_ALIENINTEREST, inst->alienInterest);
+		XML_AddInt(s, SAVE_INSTALLATION_BUILDSTART, inst->buildStart);
 
-		ss = mxml_AddNode(s, SAVE_INSTALLATION_BATTERIES);
-		mxml_AddIntValue(ss, SAVE_INSTALLATION_NUM, inst->numBatteries);
+		ss = XML_AddNode(s, SAVE_INSTALLATION_BATTERIES);
+		XML_AddIntValue(ss, SAVE_INSTALLATION_NUM, inst->numBatteries);
 		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 	}
 	Com_UnregisterConstList(saveInstallationConstants);
@@ -560,10 +560,10 @@ qboolean INS_SaveXML (mxml_node_t *p)
  * @sa SAV_GameLoadXML
  * @sa INS_LoadItemSlots
  */
-qboolean INS_LoadXML (mxml_node_t *p)
+qboolean INS_LoadXML (xmlNode_t *p)
 {
-	mxml_node_t *s;
-	mxml_node_t *n = mxml_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
+	xmlNode_t *s;
+	xmlNode_t *n = XML_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	int i;
 	qboolean success = qtrue;
 
@@ -571,11 +571,11 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		return qfalse;
 
 	Com_RegisterConstList(saveInstallationConstants);
-	for (i = 0, s = mxml_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s && i < MAX_INSTALLATIONS; s = mxml_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION), i++) {
-		mxml_node_t *ss;
+	for (i = 0, s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s && i < MAX_INSTALLATIONS; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION), i++) {
+		xmlNode_t *ss;
 		installation_t *inst = INS_GetInstallationByIDX(i);
-		const char *instID = mxml_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
-		const char *instStat = mxml_GetString(s, SAVE_INSTALLATION_STATUS);
+		const char *instID = XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
+		const char *instStat = XML_GetString(s, SAVE_INSTALLATION_STATUS);
 
 		inst->idx = INS_GetInstallationIDX(inst);
 		inst->founded = qtrue;
@@ -593,12 +593,12 @@ qboolean INS_LoadXML (mxml_node_t *p)
 			break;
 		}
 
-		Q_strncpyz(inst->name, mxml_GetString(s, SAVE_INSTALLATION_NAME), sizeof(inst->name));
-		mxml_GetPos3(s, SAVE_INSTALLATION_POS, inst->pos);
+		Q_strncpyz(inst->name, XML_GetString(s, SAVE_INSTALLATION_NAME), sizeof(inst->name));
+		XML_GetPos3(s, SAVE_INSTALLATION_POS, inst->pos);
 
-		inst->installationDamage = mxml_GetInt(s, SAVE_INSTALLATION_DAMAGE, 0);
-		inst->alienInterest = mxml_GetFloat(s, SAVE_INSTALLATION_ALIENINTEREST, 0.0);
-		inst->buildStart = mxml_GetInt(s, SAVE_INSTALLATION_BUILDSTART, 0);
+		inst->installationDamage = XML_GetInt(s, SAVE_INSTALLATION_DAMAGE, 0);
+		inst->alienInterest = XML_GetFloat(s, SAVE_INSTALLATION_ALIENINTEREST, 0.0);
+		inst->buildStart = XML_GetInt(s, SAVE_INSTALLATION_BUILDSTART, 0);
 
 		/* Radar */
 		RADAR_InitialiseUFOs(&inst->radar);
@@ -614,13 +614,13 @@ qboolean INS_LoadXML (mxml_node_t *p)
 
 		/* read battery slots */
 		BDEF_InitialiseInstallationSlots(inst);
-		ss = mxml_GetNode(s, SAVE_INSTALLATION_BATTERIES);
+		ss = XML_GetNode(s, SAVE_INSTALLATION_BATTERIES);
 		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
 			success = qfalse;
 			break;
 		}
-		inst->numBatteries = mxml_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
+		inst->numBatteries = XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
 		if (inst->numBatteries > inst->installationTemplate->maxBatteries) {
 			Com_Printf("Installation has more batteries than possible, using upper bound\n");
 			inst->numBatteries = inst->installationTemplate->maxBatteries;

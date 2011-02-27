@@ -206,32 +206,32 @@ void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float h
  * @brief Nation saving callback
  * @param[out] p XML Node structure, where we write the information to
  */
-qboolean NAT_SaveXML (mxml_node_t *p)
+qboolean NAT_SaveXML (xmlNode_t *p)
 {
 	int i;
-	mxml_node_t *n = mxml_AddNode(p, SAVE_NATION_NATIONS);
+	xmlNode_t *n = XML_AddNode(p, SAVE_NATION_NATIONS);
 
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = NAT_GetNationByIDX(i);
-		mxml_node_t *s;
+		xmlNode_t *s;
 		int j;
 
 		if (!nation)
 			continue;
 
-		s = mxml_AddNode(n, SAVE_NATION_NATION);
-		mxml_AddString(s, SAVE_NATION_ID, nation->id);
+		s = XML_AddNode(n, SAVE_NATION_NATION);
+		XML_AddString(s, SAVE_NATION_ID, nation->id);
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			const nationInfo_t *stats = &nation->stats[j];
-			mxml_node_t *ss;
+			xmlNode_t *ss;
 
 			if (!stats->inuse)
 				continue;
 
-			ss = mxml_AddNode(s, SAVE_NATION_MONTH);
-			mxml_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
-			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, stats->happiness);
-			mxml_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);
+			ss = XML_AddNode(s, SAVE_NATION_MONTH);
+			XML_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
+			XML_AddFloat(ss, SAVE_NATION_HAPPINESS, stats->happiness);
+			XML_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);
 		}
 	}
 	return qtrue;
@@ -241,34 +241,34 @@ qboolean NAT_SaveXML (mxml_node_t *p)
  * @brief Nation loading xml callback
  * @param[in] p XML Node structure, where we get the information from
  */
-qboolean NAT_LoadXML (mxml_node_t * p)
+qboolean NAT_LoadXML (xmlNode_t * p)
 {
-	mxml_node_t *n;
-	mxml_node_t *s;
+	xmlNode_t *n;
+	xmlNode_t *s;
 
-	n = mxml_GetNode(p, SAVE_NATION_NATIONS);
+	n = XML_GetNode(p, SAVE_NATION_NATIONS);
 	if (!n)
 		return qfalse;
 
 	/* nations loop */
-	for (s = mxml_GetNode(n, SAVE_NATION_NATION); s; s = mxml_GetNextNode(s, n, SAVE_NATION_NATION)) {
-		mxml_node_t *ss;
-		nation_t *nation = NAT_GetNationByID(mxml_GetString(s, SAVE_NATION_ID));
+	for (s = XML_GetNode(n, SAVE_NATION_NATION); s; s = XML_GetNextNode(s, n, SAVE_NATION_NATION)) {
+		xmlNode_t *ss;
+		nation_t *nation = NAT_GetNationByID(XML_GetString(s, SAVE_NATION_ID));
 
 		if (!nation)
 			return qfalse;
 
 		/* month loop */
-		for (ss = mxml_GetNode(s, SAVE_NATION_MONTH); ss; ss = mxml_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
-			int monthIDX = mxml_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
+		for (ss = XML_GetNode(s, SAVE_NATION_MONTH); ss; ss = XML_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
+			int monthIDX = XML_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
 			nationInfo_t *stats = &nation->stats[monthIDX];
 
 			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
 				return qfalse;
 
 			stats->inuse = qtrue;
-			stats->happiness = mxml_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
-			stats->xviInfection = mxml_GetInt(ss, SAVE_NATION_XVI, 0);
+			stats->happiness = XML_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
+			stats->xviInfection = XML_GetInt(ss, SAVE_NATION_XVI, 0);
 		}
 	}
 	return qtrue;

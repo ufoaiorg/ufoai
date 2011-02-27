@@ -153,7 +153,7 @@ void GAME_TeamSlotComments_f (void)
  * @note Called by GAME_SaveTeam to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-static void GAME_SaveTeamInfo (mxml_node_t *p)
+static void GAME_SaveTeamInfo (xmlNode_t *p)
 {
 	int i;
 
@@ -161,7 +161,7 @@ static void GAME_SaveTeamInfo (mxml_node_t *p)
 	Com_DPrintf(DEBUG_CLIENT, "Saving %i teammembers\n", chrDisplayList.num);
 	for (i = 0; i < chrDisplayList.num; i++) {
 		const character_t *chr = chrDisplayList.chr[i];
-		mxml_node_t *n = mxml_AddNode(p, SAVE_TEAM_CHARACTER);
+		xmlNode_t *n = XML_AddNode(p, SAVE_TEAM_CHARACTER);
 		CL_SaveCharacterXML(n, chr);
 	}
 }
@@ -171,17 +171,17 @@ static void GAME_SaveTeamInfo (mxml_node_t *p)
  * @note Called by GAME_LoadTeam to load the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-static void GAME_LoadTeamInfo (mxml_node_t *p)
+static void GAME_LoadTeamInfo (xmlNode_t *p)
 {
 	int i;
-	mxml_node_t *n;
+	xmlNode_t *n;
 	const size_t size = GAME_GetCharacterArraySize();
 
 	GAME_ResetCharacters();
 	OBJZERO(characterActive);
 
 	/* header */
-	for (i = 0, n = mxml_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = mxml_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
+	for (i = 0, n = XML_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = XML_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
 		character_t *chr = GAME_GetCharacter(i);
 		CL_LoadCharacterXML(n, chr);
 		assert(i < lengthof(chrDisplayList.chr));
@@ -204,27 +204,27 @@ static qboolean GAME_SaveTeam (const char *filename, const char *name)
 	teamSaveFileHeader_t header;
 	char dummy[2];
 	int i;
-	mxml_node_t *topNode, *node, *snode;
+	xmlNode_t *topNode, *node, *snode;
 	equipDef_t *ed = GAME_GetEquipmentDefinition();
 
 	topNode = mxmlNewXML("1.0");
-	node = mxml_AddNode(topNode, SAVE_TEAM_ROOTNODE);
+	node = XML_AddNode(topNode, SAVE_TEAM_ROOTNODE);
 	OBJZERO(header);
 	header.version = LittleLong(TEAM_SAVE_FILE_VERSION);
 	header.soldiercount = LittleLong(chrDisplayList.num);
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
-	snode = mxml_AddNode(node, SAVE_TEAM_NODE);
+	snode = XML_AddNode(node, SAVE_TEAM_NODE);
 	GAME_SaveTeamInfo(snode);
 
-	snode = mxml_AddNode(node, SAVE_TEAM_EQUIPMENT);
+	snode = XML_AddNode(node, SAVE_TEAM_EQUIPMENT);
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (ed->numItems[od->idx] || ed->numItemsLoose[od->idx]) {
-			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_TEAM_ITEM);
-			mxml_AddString(ssnode, SAVE_TEAM_ID, od->id);
-			mxml_AddIntValue(ssnode, SAVE_TEAM_NUM, ed->numItems[od->idx]);
-			mxml_AddIntValue(ssnode, SAVE_TEAM_NUMLOOSE, ed->numItemsLoose[od->idx]);
+			xmlNode_t *ssnode = XML_AddNode(snode, SAVE_TEAM_ITEM);
+			XML_AddString(ssnode, SAVE_TEAM_ID, od->id);
+			XML_AddIntValue(ssnode, SAVE_TEAM_NUM, ed->numItems[od->idx]);
+			XML_AddIntValue(ssnode, SAVE_TEAM_NUMLOOSE, ed->numItemsLoose[od->idx]);
 		}
 	}
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
@@ -292,7 +292,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	qFILE f;
 	byte *cbuf;
 	int clen;
-	mxml_node_t *topNode, *node, *snode, *ssnode;
+	xmlNode_t *topNode, *node, *snode, *ssnode;
 	teamSaveFileHeader_t header;
 	equipDef_t *ed;
 
@@ -333,7 +333,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 		return qfalse;
 	}
 
-	node = mxml_GetNode(topNode, SAVE_TEAM_ROOTNODE);
+	node = XML_GetNode(topNode, SAVE_TEAM_ROOTNODE);
 	if (!node) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node '"SAVE_TEAM_ROOTNODE"' not found)\n");
@@ -341,7 +341,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	}
 	Cvar_Set("mn_teamname", header.name);
 
-	snode = mxml_GetNode(node, SAVE_TEAM_NODE);
+	snode = XML_GetNode(node, SAVE_TEAM_NODE);
 	if (!snode) {
 		mxmlDelete(topNode);
 		Mem_Free(cbuf);
@@ -350,7 +350,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	}
 	GAME_LoadTeamInfo(snode);
 
-	snode = mxml_GetNode(node, SAVE_TEAM_EQUIPMENT);
+	snode = XML_GetNode(node, SAVE_TEAM_EQUIPMENT);
 	if (!snode) {
 		mxmlDelete(topNode);
 		Mem_Free(cbuf);
@@ -359,13 +359,13 @@ static qboolean GAME_LoadTeam (const char *filename)
 	}
 
 	ed = GAME_GetEquipmentDefinition();
-	for (ssnode = mxml_GetNode(snode, SAVE_TEAM_ITEM); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, SAVE_TEAM_ITEM)) {
-		const char *objID = mxml_GetString(ssnode, SAVE_TEAM_ID);
+	for (ssnode = XML_GetNode(snode, SAVE_TEAM_ITEM); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_TEAM_ITEM)) {
+		const char *objID = XML_GetString(ssnode, SAVE_TEAM_ID);
 		const objDef_t *od = INVSH_GetItemByID(objID);
 
 		if (od) {
-			ed->numItems[od->idx] = mxml_GetInt(snode, SAVE_TEAM_NUM, 0);
-			ed->numItemsLoose[od->idx] = mxml_GetInt(snode, SAVE_TEAM_NUMLOOSE, 0);
+			ed->numItems[od->idx] = XML_GetInt(snode, SAVE_TEAM_NUM, 0);
+			ed->numItemsLoose[od->idx] = XML_GetInt(snode, SAVE_TEAM_NUMLOOSE, 0);
 		}
 	}
 

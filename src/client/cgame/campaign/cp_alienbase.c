@@ -353,30 +353,30 @@ static void AB_AlienBaseList_f (void)
  * @param[in] p XML Node structure, where we get the information from
  * @sa AB_SaveXML
  */
-qboolean AB_LoadXML (mxml_node_t *p)
+qboolean AB_LoadXML (xmlNode_t *p)
 {
 	int i; /**< @todo this is for old saves now only */
-	mxml_node_t *n, *s;
+	xmlNode_t *n, *s;
 
-	n = mxml_GetNode(p, SAVE_ALIENBASE_ALIENBASES);
+	n = XML_GetNode(p, SAVE_ALIENBASE_ALIENBASES);
 	if (!n)
 		return qfalse;
 
-	for (i = 0, s = mxml_GetNode(n, SAVE_ALIENBASE_BASE); s; i++, s = mxml_GetNextNode(s, n, SAVE_ALIENBASE_BASE)) {
+	for (i = 0, s = XML_GetNode(n, SAVE_ALIENBASE_BASE); s; i++, s = XML_GetNextNode(s, n, SAVE_ALIENBASE_BASE)) {
 		alienBase_t base;
 
-		base.idx = mxml_GetInt(s, SAVE_ALIENBASE_IDX, -1);
+		base.idx = XML_GetInt(s, SAVE_ALIENBASE_IDX, -1);
 		/* fallback code for compatibility */
 		if (base.idx == -1) {
 			Com_Printf("No IDX defined for Alienbase %d. This must be an old save.\n", i);
 			base.idx = i;
 		}
-		if (!mxml_GetPos2(s, SAVE_ALIENBASE_POS, base.pos)) {
+		if (!XML_GetPos2(s, SAVE_ALIENBASE_POS, base.pos)) {
 			Com_Printf("Position is invalid for Alienbase (idx %d)\n", base.idx);
 			return qfalse;
 		}
-		base.supply = mxml_GetInt(s, SAVE_ALIENBASE_SUPPLY, 0);
-		base.stealth = mxml_GetFloat(s, SAVE_ALIENBASE_STEALTH, 0.0);
+		base.supply = XML_GetInt(s, SAVE_ALIENBASE_SUPPLY, 0);
+		base.stealth = XML_GetFloat(s, SAVE_ALIENBASE_STEALTH, 0.0);
 		LIST_Add(&ccs.alienBases, (const byte *)&base, sizeof(base));
 	}
 
@@ -388,17 +388,17 @@ qboolean AB_LoadXML (mxml_node_t *p)
  * @param[out] p XML Node structure, where we write the information to
  * @sa AB_LoadXML
  */
-qboolean AB_SaveXML (mxml_node_t *p)
+qboolean AB_SaveXML (xmlNode_t *p)
 {
-	mxml_node_t *n = mxml_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
+	xmlNode_t *n = XML_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
 	alienBase_t* base;
 
 	AB_Foreach(base) {
-		mxml_node_t *s = mxml_AddNode(n, SAVE_ALIENBASE_BASE);
-		mxml_AddInt(s, SAVE_ALIENBASE_IDX, base->idx);
-		mxml_AddPos2(s, SAVE_ALIENBASE_POS, base->pos);
-		mxml_AddIntValue(s, SAVE_ALIENBASE_SUPPLY, base->supply);
-		mxml_AddFloatValue(s, SAVE_ALIENBASE_STEALTH, base->stealth);
+		xmlNode_t *s = XML_AddNode(n, SAVE_ALIENBASE_BASE);
+		XML_AddInt(s, SAVE_ALIENBASE_IDX, base->idx);
+		XML_AddPos2(s, SAVE_ALIENBASE_POS, base->pos);
+		XML_AddIntValue(s, SAVE_ALIENBASE_SUPPLY, base->supply);
+		XML_AddFloatValue(s, SAVE_ALIENBASE_STEALTH, base->stealth);
 	}
 
 	return qtrue;

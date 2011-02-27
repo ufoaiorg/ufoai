@@ -1051,33 +1051,33 @@ employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
  * @sa CP_ParseCharacterData
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-qboolean E_SaveXML (mxml_node_t *p)
+qboolean E_SaveXML (xmlNode_t *p)
 {
 	employeeType_t emplType;
 
 	Com_RegisterConstList(saveEmployeeConstants);
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-		mxml_node_t *snode = mxml_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
+		xmlNode_t *snode = XML_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
 		employee_t *employee;
 
-		mxml_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
+		XML_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
 		E_Foreach(emplType, employee) {
-			mxml_node_t * chrNode;
-			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
+			xmlNode_t * chrNode;
+			xmlNode_t *ssnode = XML_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
 
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
 			if (employee->baseHired)
-				mxml_AddInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, employee->baseHired->idx);
+				XML_AddInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, employee->baseHired->idx);
 			if (employee->assigned)
-				mxml_AddBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, employee->assigned);
+				XML_AddBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, employee->assigned);
 			/* Store the nations identifier string. */
 			assert(employee->nation);
-			mxml_AddString(ssnode, SAVE_EMPLOYEE_NATION, employee->nation->id);
+			XML_AddString(ssnode, SAVE_EMPLOYEE_NATION, employee->nation->id);
 			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
 			if (employee->ugv)
-				mxml_AddString(ssnode, SAVE_EMPLOYEE_UGV, employee->ugv->id);
+				XML_AddString(ssnode, SAVE_EMPLOYEE_UGV, employee->ugv->id);
 			/* Character Data */
-			chrNode = mxml_AddNode(ssnode, SAVE_EMPLOYEE_CHR);
+			chrNode = XML_AddNode(ssnode, SAVE_EMPLOYEE_CHR);
 			CL_SaveCharacterXML(chrNode, &employee->chr);
 		}
 	}
@@ -1090,17 +1090,17 @@ qboolean E_SaveXML (mxml_node_t *p)
  * @brief Load callback for savegames in XML Format
  * @param[in] p XML Node structure, where we get the information from
  */
-qboolean E_LoadXML (mxml_node_t *p)
+qboolean E_LoadXML (xmlNode_t *p)
 {
-	mxml_node_t * snode;
+	xmlNode_t * snode;
 	qboolean success = qtrue;
 
 	Com_RegisterConstList(saveEmployeeConstants);
-	for (snode = mxml_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
-			snode = mxml_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES)) {
-		mxml_node_t * ssnode;
+	for (snode = XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
+			snode = XML_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES)) {
+		xmlNode_t * ssnode;
 		employeeType_t emplType;
-		const char *type = mxml_GetString(snode, SAVE_EMPLOYEE_TYPE);
+		const char *type = XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
 
 		if (!Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
 			Com_Printf("Invalid employee type '%s'\n", type);
@@ -1108,10 +1108,10 @@ qboolean E_LoadXML (mxml_node_t *p)
 			break;
 		}
 
-		for (ssnode = mxml_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE); ssnode;
-				ssnode = mxml_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE)) {
+		for (ssnode = XML_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE); ssnode;
+				ssnode = XML_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE)) {
 			int baseIDX;
-			mxml_node_t * chrNode;
+			xmlNode_t * chrNode;
 			employee_t e;
 
 			OBJZERO(e);
@@ -1119,25 +1119,25 @@ qboolean E_LoadXML (mxml_node_t *p)
 			e.type = emplType;
 			/* base */
 			assert(B_AtLeastOneExists());	/* Just in case the order is ever changed. */
-			baseIDX = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
+			baseIDX = XML_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
 			e.baseHired = B_GetBaseByIDX(baseIDX);
 			/* assigned to a building? */
 			/** @todo compatibility code - remove me */
-			if (mxml_GetInt(ssnode, SAVE_EMPLOYEE_BUILDING, -1) != -1)
+			if (XML_GetInt(ssnode, SAVE_EMPLOYEE_BUILDING, -1) != -1)
 				e.assigned = qtrue;
 			else
-				e.assigned = mxml_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, qfalse);
+				e.assigned = XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, qfalse);
 			/* nation */
-			e.nation = NAT_GetNationByID(mxml_GetString(ssnode, SAVE_EMPLOYEE_NATION));
+			e.nation = NAT_GetNationByID(XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
 			if (!e.nation) {
 				Com_Printf("No nation defined for employee\n");
 				success = qfalse;
 				break;
 			}
 			/* UGV-Type */
-			e.ugv = Com_GetUGVByIDSilent(mxml_GetString(ssnode, SAVE_EMPLOYEE_UGV));
+			e.ugv = Com_GetUGVByIDSilent(XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
 			/* Character Data */
-			chrNode = mxml_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
+			chrNode = XML_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {
 				Com_Printf("No character definition found for employee\n");
 				success = qfalse;
