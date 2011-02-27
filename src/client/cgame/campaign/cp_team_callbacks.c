@@ -195,9 +195,7 @@ static void CL_UpdatePilotList_f (void)
  */
 static void CL_UpdateEquipmentMenuParameters_f (void)
 {
-	equipDef_t unused;
 	aircraft_t *aircraft;
-	aircraft_t *aircraftInBase;
 	base_t *base = B_GetCurrentSelectedBase();
 	int i;
 
@@ -229,15 +227,13 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/* clean up aircraft crew for upcoming mission */
 	CL_CleanTempInventory(aircraft->homebase);
 
-	/* manage inventory */
-	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
-
 	if (chrDisplayList.num > 0)
 		ui_inventory = &chrDisplayList.chr[0]->i;
 	else
 		ui_inventory = NULL;
 
-	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
+	/* manage inventory */
+	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &aircraft->homebase->storage);
 }
 
 /**
