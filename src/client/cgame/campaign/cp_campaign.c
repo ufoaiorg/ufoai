@@ -1384,6 +1384,8 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 		return;
 	}
 
+	/* create initial employees */
+	E_InitialEmployees(campaign);
 	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;
 	/* initialise date */

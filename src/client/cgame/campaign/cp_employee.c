@@ -941,6 +941,9 @@ static inline const nation_t *E_RandomNation (void)
 	return NAT_GetNationByIDX(nationIndex);
 }
 
+/**
+ * @brief Create initial hireable employees
+ */
 void E_InitialEmployees (const campaign_t *campaign)
 {
 	int i;
@@ -950,17 +953,17 @@ void E_InitialEmployees (const campaign_t *campaign)
 		E_CreateEmployee(EMPL_SOLDIER, E_RandomNation(), NULL);
 	for (i = 0; i < campaign->scientists; i++)
 		E_CreateEmployee(EMPL_SCIENTIST, E_RandomNation(), NULL);
+	for (i = 0; i < campaign->workers; i++)
+		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), NULL);
+	for (i = 0; i < campaign->pilots; i++)
+		E_CreateEmployee(EMPL_PILOT, E_RandomNation(), NULL);
 	for (i = 0; i < campaign->ugvs; i++) {
+		/** @todo don't use hardcoded UGV ids */
 		if (frand() > 0.5)
 			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), Com_GetUGVByID("ugv_ares_w"));
 		else
 			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), Com_GetUGVByID("ugv_phoenix"));
 	}
-	for (i = 0; i < campaign->workers; i++)
-		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), NULL);
-
-	for (i = 0; i < campaign->pilots; i++)
-		E_CreateEmployee(EMPL_PILOT, E_RandomNation(), NULL);
 }
 
 #ifdef DEBUG

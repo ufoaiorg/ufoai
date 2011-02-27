@@ -1272,7 +1272,6 @@ static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 
 	RS_MarkResearchable(qtrue, base);
 	BS_InitMarket(campaign);
-	E_InitialEmployees(campaign);
 
 	/* Find the initial equipment definition for current campaign. */
 	ed = INV_GetEquipmentDefinitionByID(campaign->equipment);
