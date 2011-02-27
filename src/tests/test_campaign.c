@@ -160,6 +160,7 @@ static base_t* CreateBase (const char *name, const vec2_t pos)
 	CU_ASSERT_FALSE(base->founded);
 
 	RS_InitTree(campaign, qfalse);
+	E_InitialEmployees(campaign);
 	B_SetUpBase(campaign, base, pos, name);
 
 	return base;
