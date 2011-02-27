@@ -34,6 +34,7 @@ void GAME_ToggleActorForTeam_f(void);
 void GAME_AutoTeam_f(void);
 void GAME_AutoTeam(const char *equipmentDefinitionID, int teamMembers);
 void GAME_UpdateTeamMenuParameters_f(void);
+void GAME_ActorSelectEquipment_f(void);
 void GAME_TeamSelect_f(void);
 qboolean GAME_LoadDefaultTeam(void);
 qboolean GAME_SaveCharacter(xmlNode_t *p, const character_t *chr);

@@ -459,6 +459,42 @@ void GAME_UpdateTeamMenuParameters_f (void)
 	GAME_GetEquipment();
 }
 
+void GAME_ActorSelectEquipment_f (void)
+{
+	int num;
+	character_t *chr;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= chrDisplayList.num)
+		return;
+
+	chr = chrDisplayList.chr[num];
+	/* update menu inventory */
+	if (ui_inventory && ui_inventory != &chr->i) {
+		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
+		/* set 'old' idEquip to NULL */
+		ui_inventory->c[csi.idEquip] = NULL;
+	}
+	ui_inventory = &chr->i;
+
+	/* deselect current selected soldier and select the new one */
+	UI_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
+	UI_ExecuteConfunc("equipselect %i", num);
+
+	/* now set the cl_selected cvar to the new actor id */
+	Cvar_ForceSet("cl_selected", va("%i", num));
+	Cvar_SetValue("mn_ucn", chr->ucn);
+
+	/* set info cvars */
+	CL_UpdateCharacterValues(chr, "mn_");
+}
+
 void GAME_TeamSelect_f (void)
 {
 	const int old = cl_selected->integer;
@@ -476,7 +512,7 @@ void GAME_TeamSelect_f (void)
 
 	UI_ExecuteConfunc("team_soldier_select %i", num);
 	UI_ExecuteConfunc("team_soldier_unselect %i", old);
-	Cmd_ExecuteString(va("actor_select_equip %i", num));
+	Cmd_ExecuteString(va("game_actorselectequip %i", num));
 }
 
 /**

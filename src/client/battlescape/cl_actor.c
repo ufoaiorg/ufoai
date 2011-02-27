@@ -2202,42 +2202,6 @@ static void CL_ActorNext_f (void)
 	}
 }
 
-static void CL_ActorEquipmentSelect_f (void)
-{
-	int num;
-	character_t *chr;
-
-	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= chrDisplayList.num)
-		return;
-
-	chr = chrDisplayList.chr[num];
-	/* update menu inventory */
-	if (ui_inventory && ui_inventory != &chr->i) {
-		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
-		/* set 'old' idEquip to NULL */
-		ui_inventory->c[csi.idEquip] = NULL;
-	}
-	ui_inventory = &chr->i;
-
-	/* deselect current selected soldier and select the new one */
-	UI_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
-	UI_ExecuteConfunc("equipselect %i", num);
-
-	/* now set the cl_selected cvar to the new actor id */
-	Cvar_ForceSet("cl_selected", va("%i", num));
-	Cvar_SetValue("mn_ucn", chr->ucn);
-
-	/* set info cvars */
-	CL_UpdateCharacterValues(chr, "mn_");
-}
-
 /**
  * @brief Selects a soldier while we are on battlescape
  */
@@ -2443,7 +2407,6 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("actor_next", CL_ActorNext_f, _("Toggle to next actor"));
 	Cmd_AddCommand("actor_select", CL_ActorSelect_f, _("Select an actor from list"));
 	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, _("Update an actor"));
-	Cmd_AddCommand("actor_select_equip", CL_ActorEquipmentSelect_f, "Select an actor in the equipment menu");
 	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
 	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
 	Cmd_AddCommand("actor_dooraction", CL_ActorDoorAction_f, _("Opens or closes a door"));
