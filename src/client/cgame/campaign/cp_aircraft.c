@@ -2336,10 +2336,9 @@ static void AIR_SaveRouteXML (xmlNode_t *node, const mapline_t *route)
 static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num, xmlNode_t *p, qboolean weapon)
 {
 	int i;
-	xmlNode_t *sub;
 
 	for (i = 0; i < num; i++) {
-		sub = XML_AddNode(p, SAVE_AIRCRAFT_SLOT);
+		xmlNode_t *sub = XML_AddNode(p, SAVE_AIRCRAFT_SLOT);
 		AII_SaveOneSlotXML(sub, &slot[i], weapon);
 	}
 }
