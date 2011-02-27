@@ -646,7 +646,7 @@ qboolean TR_LoadXML (xmlNode_t *p)
 					transfer.alienAmount[j][TRANS_ALIEN_ALIVE] = alive;
 					transfer.alienAmount[j][TRANS_ALIEN_DEAD] = dead;
 				} else {
-					Com_Printf("CL_LoadXML: AlienId '%s' is invalid\n", id);
+					Com_Printf("TR_LoadXML: AlienId '%s' is invalid\n", id);
 				}
 			}
 		}
