@@ -424,13 +424,18 @@ static void GAME_GetEquipment (void)
 	ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;
 
+	GAME_UpdateInventory(&game_inventory, ed);
+}
+
+void GAME_UpdateInventory (inventory_t *inv, const equipDef_t *ed)
+{
 	if (chrDisplayList.num > 0)
 		ui_inventory = &chrDisplayList.chr[0]->i;
 	else
 		ui_inventory = NULL;
 
 	/* manage inventory */
-	UI_ContainerNodeUpdateEquipment(&game_inventory, ed);
+	UI_ContainerNodeUpdateEquipment(inv, ed);
 }
 
 /**

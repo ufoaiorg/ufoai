@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../cl_team.h"
+#include "../../cgame/cl_game_team.h"
 #include "../../ui/ui_main.h"
 #include "../../ui/node/ui_node_container.h"	/**< ui_inventory */
 
@@ -227,13 +228,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/* clean up aircraft crew for upcoming mission */
 	CL_CleanTempInventory(aircraft->homebase);
 
-	if (chrDisplayList.num > 0)
-		ui_inventory = &chrDisplayList.chr[0]->i;
-	else
-		ui_inventory = NULL;
-
-	/* manage inventory */
-	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &aircraft->homebase->storage);
+	GAME_UpdateInventory(&aircraft->homebase->bEquipment, &aircraft->homebase->storage);
 }
 
 /**
