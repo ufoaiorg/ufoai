@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* cls */
 #include "../cl_game.h" /* GAME_GetTeamDef */
+#include "../cl_game_team.h" /* character xml loading */
 #include "../../cl_team.h"
 #include "../../ui/ui_main.h"
 #include "../../ui/ui_popup.h"

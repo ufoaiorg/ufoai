@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
 
+
 #define HARD_LINKED_CGAME
 
 #ifdef HARD_LINKED_CGAME
