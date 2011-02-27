@@ -200,7 +200,6 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	aircraft_t *aircraftInBase;
 	base_t *base = B_GetCurrentSelectedBase();
 	int i;
-	int size;
 
 	if (!base)
 		return;
@@ -218,14 +217,10 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	Cvar_ForceSet("cl_selected", "0");
 
 	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
-	size = CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
-	if (size > 0)
-		ui_inventory = &chrDisplayList.chr[0]->i;
-	else
-		ui_inventory = NULL;
+	CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		if (i < size)
+		if (i < chrDisplayList.num)
 			UI_ExecuteConfunc("equipenable %i", i);
 		else
 			UI_ExecuteConfunc("equipdisable %i", i);
@@ -241,6 +236,11 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 		if (aircraftInBase->homebase == base)
 			CL_CleanupAircraftCrew(aircraftInBase, &unused);
 	}
+
+	if (chrDisplayList.num > 0)
+		ui_inventory = &chrDisplayList.chr[0]->i;
+	else
+		ui_inventory = NULL;
 
 	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
 }

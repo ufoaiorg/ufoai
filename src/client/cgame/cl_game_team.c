@@ -422,16 +422,17 @@ static void GAME_GetEquipment (void)
 	/* search equipment definition */
 	edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
 
-	if (chrDisplayList.num > 0)
-		ui_inventory = &chrDisplayList.chr[0]->i;
-	else
-		ui_inventory = NULL;
-
 	ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;
 
 	/* we don't want to lose anything from ed - so we copy it and screw the copied stuff afterwards */
 	unused = *edFromScript;
+
+	if (chrDisplayList.num > 0)
+		ui_inventory = &chrDisplayList.chr[0]->i;
+	else
+		ui_inventory = NULL;
+
 	/* manage inventory */
 	UI_ContainerNodeUpdateEquipment(&game_inventory, &unused);
 }
