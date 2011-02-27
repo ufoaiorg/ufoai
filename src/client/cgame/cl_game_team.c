@@ -488,9 +488,9 @@ void GAME_TeamSelect_f (void)
  * @param[in] container Index of the container the item is in
  * @param[in] x Horizontal coordinate of the item in the container
  * @param[in] y Vertical coordinate of the item in the container
- * @sa CL_LoadItemXML
+ * @sa GAME_LoadItem
  */
-static void CL_SaveItemXML (xmlNode_t *p, item_t item, containerIndex_t container, int x, int y)
+static void GAME_SaveItem (xmlNode_t *p, item_t item, containerIndex_t container, int x, int y)
 {
 	assert(item.t);
 
@@ -511,8 +511,8 @@ static void CL_SaveItemXML (xmlNode_t *p, item_t item, containerIndex_t containe
  * @brief Save callback for savegames in XML Format
  * @param[out] p XML Node structure, where we write the information to
  * @param[in] i Pointerto the inventory to save
- * @sa CL_SaveItemXML
- * @sa CL_LoadInventoryXML
+ * @sa GAME_SaveItem
+ * @sa GAME_LoadInventory
  */
 static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *i)
 {
@@ -527,7 +527,7 @@ static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *i)
 
 		for (; ic; ic = ic->next) {
 			xmlNode_t *s = XML_AddNode(p, SAVE_INVENTORY_ITEM);
-			CL_SaveItemXML(s, ic->item, container, ic->x, ic->y);
+			GAME_SaveItem(s, ic->item, container, ic->x, ic->y);
 		}
 	}
 }
@@ -539,9 +539,9 @@ static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *i)
  * @param[out] container Index of the container the item is in
  * @param[out] x Horizontal coordinate of the item in the container
  * @param[out] y Vertical coordinate of the item in the container
- * @sa CL_SaveItemXML
+ * @sa GAME_SaveItem
  */
-static void CL_LoadItemXML (xmlNode_t *n, item_t *item, containerIndex_t *container, int *x, int *y)
+static void GAME_LoadItem (xmlNode_t *n, item_t *item, containerIndex_t *container, int *x, int *y)
 {
 	const char *itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
 	const char *contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
@@ -579,8 +579,8 @@ static void CL_LoadItemXML (xmlNode_t *n, item_t *item, containerIndex_t *contai
  * @brief Load callback for savegames in XML Format
  * @param[in] p XML Node structure, where we load the information from
  * @param[out] i Pointerto the inventory
- * @sa CL_SaveInventoryXML
- * @sa CL_LoadItemXML
+ * @sa GAME_SaveInventory
+ * @sa GAME_LoadItem
  * @sa I_AddToInventory
   */
 static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
@@ -592,7 +592,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
 		containerIndex_t container;
 		int x, y;
 
-		CL_LoadItemXML(s, &item, &container, &x, &y);
+		GAME_LoadItem(s, &item, &container, &x, &y);
 		if (!cls.i.AddToInventory(&cls.i, i, item, INVDEF(container), x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
