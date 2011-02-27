@@ -692,12 +692,12 @@ void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *
  * @note The amount of the item_t struct should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
-static void CL_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
+static void GAME_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
 {
 	const int ammoIdx = item.m ? item.m->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
 	assert(item.t);
-	Com_DPrintf(DEBUG_CLIENT, "CL_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
+	Com_DPrintf(DEBUG_CLIENT, "GAME_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
 		item.t->id, container, item.t->idx, item.a, ammoIdx, x, y);
 	NET_WriteFormat(buf, eventData->formatString, item.t->idx, item.a, ammoIdx, container, x, y, item.rotated, item.amount);
 }
@@ -705,7 +705,7 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t c
 /**
  * @sa G_SendInventory
  */
-static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
+static void GAME_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 {
 	containerIndex_t container;
 	int nr = 0;
@@ -719,7 +719,7 @@ static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 	NET_WriteShort(buf, nr * INV_INVENTORY_BYTES);
 	for (container = 0; container < csi.numIDs; container++) {
 		for (ic = i->c[container]; ic; ic = ic->next)
-			CL_NetSendItem(buf, ic->item, container, ic->x, ic->y);
+			GAME_NetSendItem(buf, ic->item, container, ic->x, ic->y);
 	}
 }
 
@@ -790,7 +790,7 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 
 		GAME_NetSendCharacter(buf, chr);
 
-		CL_NetSendInventory(buf, &chr->i);
+		GAME_NetSendInventory(buf, &chr->i);
 	}
 }
 
