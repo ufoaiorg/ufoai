@@ -199,7 +199,6 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 
 /**
  * @brief Clears all containers that are temp containers (see script definition).
- * @sa CL_UpdateEquipmentMenuParameters_f
  * @sa GAME_SaveTeamInfo
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
