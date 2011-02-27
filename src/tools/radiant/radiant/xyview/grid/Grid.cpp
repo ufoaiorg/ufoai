@@ -52,8 +52,7 @@ class GridManager: public IGridManager, public RegistryKeyObserver, public Prefe
 			GlobalRegistry().addKeyObserver(this, RKEY_DEFAULT_GRID_SIZE);
 
 			// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
-			// Deactivated at the moment
-			//GlobalPreferenceSystem().addConstructor(this);
+			GlobalPreferenceSystem().addConstructor(this);
 
 			// Load the default value from the registry
 			keyChanged("", "");
