@@ -1079,7 +1079,7 @@ qboolean E_SaveXML (xmlNode_t *p)
 				XML_AddString(ssnode, SAVE_EMPLOYEE_UGV, employee->ugv->id);
 			/* Character Data */
 			chrNode = XML_AddNode(ssnode, SAVE_EMPLOYEE_CHR);
-			CL_SaveCharacterXML(chrNode, &employee->chr);
+			GAME_SaveCharacter(chrNode, &employee->chr);
 		}
 	}
 	Com_UnregisterConstList(saveEmployeeConstants);
@@ -1144,7 +1144,7 @@ qboolean E_LoadXML (xmlNode_t *p)
 				success = qfalse;
 				break;
 			}
-			if (!CL_LoadCharacterXML(chrNode, &e.chr)) {
+			if (!GAME_LoadCharacter(chrNode, &e.chr)) {
 				Com_Printf("Error loading character definition for employee\n");
 				success = qfalse;
 				break;

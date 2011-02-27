@@ -165,7 +165,7 @@ static void GAME_SaveTeamInfo (xmlNode_t *p)
 	for (i = 0; i < chrDisplayList.num; i++) {
 		const character_t *chr = chrDisplayList.chr[i];
 		xmlNode_t *n = XML_AddNode(p, SAVE_TEAM_CHARACTER);
-		CL_SaveCharacterXML(n, chr);
+		GAME_SaveCharacter(n, chr);
 	}
 }
 
@@ -186,7 +186,7 @@ static void GAME_LoadTeamInfo (xmlNode_t *p)
 	/* header */
 	for (i = 0, n = XML_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = XML_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
 		character_t *chr = GAME_GetCharacter(i);
-		CL_LoadCharacterXML(n, chr);
+		GAME_LoadCharacter(n, chr);
 		assert(i < lengthof(chrDisplayList.chr));
 		chrDisplayList.chr[i] = chr;
 	}
@@ -482,11 +482,128 @@ void GAME_TeamSelect_f (void)
 }
 
 /**
+ * @brief Save one item
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] item Pointer to the item to save
+ * @param[in] container Index of the container the item is in
+ * @param[in] x Horizontal coordinate of the item in the container
+ * @param[in] y Vertical coordinate of the item in the container
+ * @sa CL_LoadItemXML
+ */
+static void CL_SaveItemXML (xmlNode_t *p, item_t item, containerIndex_t container, int x, int y)
+{
+	assert(item.t);
+
+	XML_AddString(p, SAVE_INVENTORY_CONTAINER, csi.ids[container].name);
+	XML_AddInt(p, SAVE_INVENTORY_X, x);
+	XML_AddInt(p, SAVE_INVENTORY_Y, y);
+	XML_AddIntValue(p, SAVE_INVENTORY_ROTATED, item.rotated);
+	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item.t->id);
+	/** @todo: is there any case when amount != 1 for soldier inventory item? */
+	XML_AddInt(p, SAVE_INVENTORY_AMOUNT, item.amount);
+	if (item.a > NONE_AMMO) {
+		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item.m->id);
+		XML_AddInt(p, SAVE_INVENTORY_AMMO, item.a);
+	}
+}
+
+/**
+ * @brief Save callback for savegames in XML Format
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] i Pointerto the inventory to save
+ * @sa CL_SaveItemXML
+ * @sa CL_LoadInventoryXML
+ */
+static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *i)
+{
+	containerIndex_t container;
+
+	for (container = 0; container < csi.numIDs; container++) {
+		invList_t *ic = i->c[container];
+
+		/* ignore items linked from any temp container */
+		if (INVDEF(container)->temp)
+			continue;
+
+		for (; ic; ic = ic->next) {
+			xmlNode_t *s = XML_AddNode(p, SAVE_INVENTORY_ITEM);
+			CL_SaveItemXML(s, ic->item, container, ic->x, ic->y);
+		}
+	}
+}
+
+/**
+ * @brief Load one item
+ * @param[in] n XML Node structure, where we write the information to
+ * @param[out] item Pointer to the item
+ * @param[out] container Index of the container the item is in
+ * @param[out] x Horizontal coordinate of the item in the container
+ * @param[out] y Vertical coordinate of the item in the container
+ * @sa CL_SaveItemXML
+ */
+static void CL_LoadItemXML (xmlNode_t *n, item_t *item, containerIndex_t *container, int *x, int *y)
+{
+	const char *itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
+	const char *contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
+	int i;
+
+	/* reset */
+	OBJZERO(*item);
+
+	for (i = 0; i < csi.numIDs; i++) {
+		if (Q_streq(csi.ids[i].name, contID))
+			break;
+	}
+	if (i >= csi.numIDs) {
+		Com_Printf("Invalid container id '%s'\n", contID);
+	}
+	*container = i;
+
+	item->t = INVSH_GetItemByID(itemID);
+	*x = XML_GetInt(n, SAVE_INVENTORY_X, 0);
+	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
+	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
+	item->amount = XML_GetInt(n, SAVE_INVENTORY_AMOUNT, 1);
+	item->a = XML_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
+	if (item->a > NONE_AMMO) {
+		itemID = XML_GetString(n, SAVE_INVENTORY_MUNITIONID);
+		item->m = INVSH_GetItemByID(itemID);
+
+		/* reset ammo count if ammunition (item) not found */
+		if (!item->m)
+			item->a = NONE_AMMO;
+	}
+}
+
+/**
+ * @brief Load callback for savegames in XML Format
+ * @param[in] p XML Node structure, where we load the information from
+ * @param[out] i Pointerto the inventory
+ * @sa CL_SaveInventoryXML
+ * @sa CL_LoadItemXML
+ * @sa I_AddToInventory
+  */
+static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
+{
+	xmlNode_t *s;
+
+	for (s = XML_GetNode(p, SAVE_INVENTORY_ITEM); s; s = XML_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
+		item_t item;
+		containerIndex_t container;
+		int x, y;
+
+		CL_LoadItemXML(s, &item, &container, &x, &y);
+		if (!cls.i.AddToInventory(&cls.i, i, item, INVDEF(container), x, y, 1))
+			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
+	}
+}
+
+/**
  * @brief saves a character to a given xml node
  * @param[in] p The node to which we should save the character
  * @param[in] chr The charcter we should save
  */
-qboolean CL_SaveCharacterXML (xmlNode_t *p, const character_t* chr)
+qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 {
 	xmlNode_t *sScore;
 	xmlNode_t *sInventory;
@@ -547,7 +664,7 @@ qboolean CL_SaveCharacterXML (xmlNode_t *p, const character_t* chr)
 
 	/* Store inventories */
 	sInventory = XML_AddNode(p, SAVE_INVENTORY_INVENTORY);
-	CL_SaveInventoryXML(sInventory, &chr->i);
+	GAME_SaveInventory(sInventory, &chr->i);
 
 	Com_UnregisterConstList(saveCharacterConstants);
 	return qtrue;
@@ -558,7 +675,7 @@ qboolean CL_SaveCharacterXML (xmlNode_t *p, const character_t* chr)
  * @param[in] p The node from which we should load the character.
  * @param[in] chr Pointer to the charcter we should load.
  */
-qboolean CL_LoadCharacterXML (xmlNode_t *p, character_t *chr)
+qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 {
 	const char *s;
 	xmlNode_t *sScore;
@@ -640,125 +757,8 @@ qboolean CL_LoadCharacterXML (xmlNode_t *p, character_t *chr)
 
 	cls.i.DestroyInventory(&cls.i, &chr->i);
 	sInventory = XML_GetNode(p, SAVE_INVENTORY_INVENTORY);
-	CL_LoadInventoryXML(sInventory, &chr->i);
+	GAME_LoadInventory(sInventory, &chr->i);
 
 	Com_UnregisterConstList(saveCharacterConstants);
 	return qtrue;
-}
-
-/**
- * @brief Save one item
- * @param[out] p XML Node structure, where we write the information to
- * @param[in] item Pointer to the item to save
- * @param[in] container Index of the container the item is in
- * @param[in] x Horizontal coordinate of the item in the container
- * @param[in] y Vertical coordinate of the item in the container
- * @sa CL_LoadItemXML
- */
-static void CL_SaveItemXML (xmlNode_t *p, item_t item, containerIndex_t container, int x, int y)
-{
-	assert(item.t);
-
-	XML_AddString(p, SAVE_INVENTORY_CONTAINER, csi.ids[container].name);
-	XML_AddInt(p, SAVE_INVENTORY_X, x);
-	XML_AddInt(p, SAVE_INVENTORY_Y, y);
-	XML_AddIntValue(p, SAVE_INVENTORY_ROTATED, item.rotated);
-	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item.t->id);
-	/** @todo: is there any case when amount != 1 for soldier inventory item? */
-	XML_AddInt(p, SAVE_INVENTORY_AMOUNT, item.amount);
-	if (item.a > NONE_AMMO) {
-		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item.m->id);
-		XML_AddInt(p, SAVE_INVENTORY_AMMO, item.a);
-	}
-}
-
-/**
- * @brief Save callback for savegames in XML Format
- * @param[out] p XML Node structure, where we write the information to
- * @param[in] i Pointerto the inventory to save
- * @sa CL_SaveItemXML
- * @sa CL_LoadInventoryXML
- */
-void CL_SaveInventoryXML (xmlNode_t *p, const inventory_t *i)
-{
-	containerIndex_t container;
-
-	for (container = 0; container < csi.numIDs; container++) {
-		invList_t *ic = i->c[container];
-
-		/* ignore items linked from any temp container */
-		if (INVDEF(container)->temp)
-			continue;
-
-		for (; ic; ic = ic->next) {
-			xmlNode_t *s = XML_AddNode(p, SAVE_INVENTORY_ITEM);
-			CL_SaveItemXML(s, ic->item, container, ic->x, ic->y);
-		}
-	}
-}
-
-/**
- * @brief Load one item
- * @param[in] n XML Node structure, where we write the information to
- * @param[out] item Pointer to the item
- * @param[out] container Index of the container the item is in
- * @param[out] x Horizontal coordinate of the item in the container
- * @param[out] y Vertical coordinate of the item in the container
- * @sa CL_SaveItemXML
- */
-static void CL_LoadItemXML (xmlNode_t *n, item_t *item, containerIndex_t *container, int *x, int *y)
-{
-	const char *itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
-	const char *contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
-	int i;
-
-	/* reset */
-	OBJZERO(*item);
-
-	for (i = 0; i < csi.numIDs; i++) {
-		if (Q_streq(csi.ids[i].name, contID))
-			break;
-	}
-	if (i >= csi.numIDs) {
-		Com_Printf("Invalid container id '%s'\n", contID);
-	}
-	*container = i;
-
-	item->t = INVSH_GetItemByID(itemID);
-	*x = XML_GetInt(n, SAVE_INVENTORY_X, 0);
-	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
-	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
-	item->amount = XML_GetInt(n, SAVE_INVENTORY_AMOUNT, 1);
-	item->a = XML_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
-	if (item->a > NONE_AMMO) {
-		itemID = XML_GetString(n, SAVE_INVENTORY_MUNITIONID);
-		item->m = INVSH_GetItemByID(itemID);
-
-		/* reset ammo count if ammunition (item) not found */
-		if (!item->m)
-			item->a = NONE_AMMO;
-	}
-}
-
-/**
- * @brief Load callback for savegames in XML Format
- * @param[in] p XML Node structure, where we load the information from
- * @param[out] i Pointerto the inventory
- * @sa CL_SaveInventoryXML
- * @sa CL_LoadItemXML
- * @sa I_AddToInventory
-  */
-void CL_LoadInventoryXML (xmlNode_t *p, inventory_t *i)
-{
-	xmlNode_t *s;
-
-	for (s = XML_GetNode(p, SAVE_INVENTORY_ITEM); s; s = XML_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
-		item_t item;
-		containerIndex_t container;
-		int x, y;
-
-		CL_LoadItemXML(s, &item, &container, &x, &y);
-		if (!cls.i.AddToInventory(&cls.i, i, item, INVDEF(container), x, y, 1))
-			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
-	}
 }

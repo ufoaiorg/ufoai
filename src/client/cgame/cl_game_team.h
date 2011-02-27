@@ -36,11 +36,7 @@ void GAME_AutoTeam(const char *equipmentDefinitionID, int teamMembers);
 void GAME_UpdateTeamMenuParameters_f(void);
 void GAME_TeamSelect_f(void);
 qboolean GAME_LoadDefaultTeam(void);
-
-qboolean CL_SaveCharacterXML(xmlNode_t *p, const character_t *chr);
-qboolean CL_LoadCharacterXML(xmlNode_t *p, character_t *chr);
-
-void CL_SaveInventoryXML(xmlNode_t *p, const inventory_t * i);
-void CL_LoadInventoryXML(xmlNode_t *p, inventory_t * i);
+qboolean GAME_SaveCharacter(xmlNode_t *p, const character_t *chr);
+qboolean GAME_LoadCharacter(xmlNode_t *p, character_t *chr);
 
 #endif
