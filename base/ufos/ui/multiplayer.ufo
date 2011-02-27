@@ -54,7 +54,7 @@ window abstract_multiplayer
 	{
 		string		"_Team"
 		pos			"80 160"
-		onClick		{ cmd "ui_pop; ui_push game_team;" }
+		onClick		{ cmd "ui_push game_team;" }
 	}
 
 	cmpMenuButton button_join

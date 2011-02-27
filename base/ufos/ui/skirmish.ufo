@@ -412,7 +412,7 @@ window skirmish
 		{
 			string		"_Team"
 			pos			"0 260"
-			onClick		{ cmd "ui_pop; ui_push game_team;" }
+			onClick		{ cmd "ui_push game_team;" }
 		}
 	}
 	// ============
