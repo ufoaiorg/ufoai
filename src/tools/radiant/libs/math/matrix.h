@@ -45,16 +45,10 @@ class Matrix4
 		/* NAMED CONSTRUCTORS FOR SPECIFIC MATRICES */
 
 		/* Get a new identity matrix */
-
 		static const Matrix4& getIdentity ()
 		{
-		    static const Matrix4 _identity(
-		        1, 0, 0, 0,
-		        0, 1, 0, 0,
-		        0, 0, 1, 0,
-		        0, 0, 0, 1
-		    );
-		    return _identity;
+			static const Matrix4 _identity(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+			return _identity;
 		}
 
 		/** Get a matrix representing the given 3D translation.
@@ -385,30 +379,30 @@ class Matrix4
 		// Return matrix product
 		Matrix4 getMultipliedBy(const Matrix4& rhs)
 		{
-		    return Matrix4::byColumns(
-		        rhs[0] * m_elements[0] + rhs[1] * m_elements[4] + rhs[2] * m_elements[8] + rhs[3] * m_elements[12],
-		        rhs[0] * m_elements[1] + rhs[1] * m_elements[5] + rhs[2] * m_elements[9] + rhs[3] * m_elements[13],
-		        rhs[0] * m_elements[2] + rhs[1] * m_elements[6] + rhs[2] * m_elements[10]+ rhs[3] * m_elements[14],
-		        rhs[0] * m_elements[3] + rhs[1] * m_elements[7] + rhs[2] * m_elements[11]+ rhs[3] * m_elements[15],
-		        rhs[4] * m_elements[0] + rhs[5] * m_elements[4] + rhs[6] * m_elements[8] + rhs[7] * m_elements[12],
-		        rhs[4] * m_elements[1] + rhs[5] * m_elements[5] + rhs[6] * m_elements[9] + rhs[7] * m_elements[13],
-		        rhs[4] * m_elements[2] + rhs[5] * m_elements[6] + rhs[6] * m_elements[10]+ rhs[7] * m_elements[14],
-		        rhs[4] * m_elements[3] + rhs[5] * m_elements[7] + rhs[6] * m_elements[11]+ rhs[7] * m_elements[15],
-		        rhs[8] * m_elements[0] + rhs[9] * m_elements[4] + rhs[10]* m_elements[8] + rhs[11]* m_elements[12],
-		        rhs[8] * m_elements[1] + rhs[9] * m_elements[5] + rhs[10]* m_elements[9] + rhs[11]* m_elements[13],
-		        rhs[8] * m_elements[2] + rhs[9] * m_elements[6] + rhs[10]* m_elements[10]+ rhs[11]* m_elements[14],
-		        rhs[8] * m_elements[3] + rhs[9] * m_elements[7] + rhs[10]* m_elements[11]+ rhs[11]* m_elements[15],
-		        rhs[12]* m_elements[0] + rhs[13]* m_elements[4] + rhs[14]* m_elements[8] + rhs[15]* m_elements[12],
-		        rhs[12]* m_elements[1] + rhs[13]* m_elements[5] + rhs[14]* m_elements[9] + rhs[15]* m_elements[13],
-		        rhs[12]* m_elements[2] + rhs[13]* m_elements[6] + rhs[14]* m_elements[10]+ rhs[15]* m_elements[14],
-		        rhs[12]* m_elements[3] + rhs[13]* m_elements[7] + rhs[14]* m_elements[11]+ rhs[15]* m_elements[15]
-		    );
+			return Matrix4::byColumns(
+				rhs[0] * m_elements[0] + rhs[1] * m_elements[4] + rhs[2] * m_elements[8] + rhs[3] * m_elements[12],
+				rhs[0] * m_elements[1] + rhs[1] * m_elements[5] + rhs[2] * m_elements[9] + rhs[3] * m_elements[13],
+				rhs[0] * m_elements[2] + rhs[1] * m_elements[6] + rhs[2] * m_elements[10]+ rhs[3] * m_elements[14],
+				rhs[0] * m_elements[3] + rhs[1] * m_elements[7] + rhs[2] * m_elements[11]+ rhs[3] * m_elements[15],
+				rhs[4] * m_elements[0] + rhs[5] * m_elements[4] + rhs[6] * m_elements[8] + rhs[7] * m_elements[12],
+				rhs[4] * m_elements[1] + rhs[5] * m_elements[5] + rhs[6] * m_elements[9] + rhs[7] * m_elements[13],
+				rhs[4] * m_elements[2] + rhs[5] * m_elements[6] + rhs[6] * m_elements[10]+ rhs[7] * m_elements[14],
+				rhs[4] * m_elements[3] + rhs[5] * m_elements[7] + rhs[6] * m_elements[11]+ rhs[7] * m_elements[15],
+				rhs[8] * m_elements[0] + rhs[9] * m_elements[4] + rhs[10]* m_elements[8] + rhs[11]* m_elements[12],
+				rhs[8] * m_elements[1] + rhs[9] * m_elements[5] + rhs[10]* m_elements[9] + rhs[11]* m_elements[13],
+				rhs[8] * m_elements[2] + rhs[9] * m_elements[6] + rhs[10]* m_elements[10]+ rhs[11]* m_elements[14],
+				rhs[8] * m_elements[3] + rhs[9] * m_elements[7] + rhs[10]* m_elements[11]+ rhs[11]* m_elements[15],
+				rhs[12]* m_elements[0] + rhs[13]* m_elements[4] + rhs[14]* m_elements[8] + rhs[15]* m_elements[12],
+				rhs[12]* m_elements[1] + rhs[13]* m_elements[5] + rhs[14]* m_elements[9] + rhs[15]* m_elements[13],
+				rhs[12]* m_elements[2] + rhs[13]* m_elements[6] + rhs[14]* m_elements[10]+ rhs[15]* m_elements[14],
+				rhs[12]* m_elements[3] + rhs[13]* m_elements[7] + rhs[14]* m_elements[11]+ rhs[15]* m_elements[15]
+			);
 		}
 
 		// Multiply by another matrix, in-place
 		void multiplyBy(const Matrix4& other)
 		{
-		    *this = getMultipliedBy(other);
+			*this = getMultipliedBy(other);
 		}
 
 		// Add a scale component
