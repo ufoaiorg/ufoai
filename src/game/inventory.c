@@ -107,7 +107,6 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 			return NULL;
 	}
 
-	/* don't reset an already applied rotation */
 	checkedTo = INVSH_CheckToInventory(inv, item.t, container, x, y, NULL);
 	assert(checkedTo);
 
@@ -118,6 +117,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 	ic->item = item;
 	ic->item.amount = amount;
 
+	/* don't reset an already applied rotation */
 	if (checkedTo == INV_FITS_ONLY_ROTATED)
 		ic->item.rotated = qtrue;
 	ic->x = x;
