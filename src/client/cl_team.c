@@ -24,15 +24,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "cgame/cl_game.h"
 #include "cl_team.h"
+#include "cl_inventory.h"
+#include "cgame/cl_game.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
-#include "cl_inventory.h"
 #include "battlescape/events/e_parse.h"
+#include "battlescape/events/e_main.h"
 #include "ui/ui_data.h"
 #include "ui/ui_nodes.h"
-#include "battlescape/events/e_main.h"
 
 /** @brief List of currently displayed or equipable characters. */
 chrList_t chrDisplayList;
@@ -258,7 +258,7 @@ static int CL_FixActorSkinIDX (int idx)
 	} else {
 		if (GAME_IsSingleplayer() && !skin->singleplayer)
 			idx = 0;
-		if (GAME_IsMultiplayer() && !skin->multiplayer)
+		else if (GAME_IsMultiplayer() && !skin->multiplayer)
 			idx = 0;
 	}
 	return idx;

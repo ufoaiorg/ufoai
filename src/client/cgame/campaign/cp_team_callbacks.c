@@ -191,6 +191,7 @@ static void CL_UpdatePilotList_f (void)
  * @note This function is called everytime the equipment screen for the team pops up.
  * @todo Do we allow EMPL_ROBOTs to be equipable? Or is simple buying of ammo enough (similar to original UFO/XCOM)?
  * In the first case the EMPL_SOLDIER stuff below needs to be changed.
+ * @todo merge with GAME_GetEquipment
  */
 static void CL_UpdateEquipmentMenuParameters_f (void)
 {
