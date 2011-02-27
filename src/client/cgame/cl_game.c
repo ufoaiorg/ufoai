@@ -349,7 +349,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 		INV_DestroyInventory(&cls.i);
 		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
 		/** @todo this should be in GetCGameAPI */
-		list->Init(NULL);
+		list->Init(GAME_GetImportData());
 	}
 }
 
