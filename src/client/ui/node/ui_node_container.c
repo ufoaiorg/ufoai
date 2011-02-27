@@ -112,9 +112,10 @@ static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
  * to the ground container of @c inv
  * @todo dont use, and dont called by the container node; should we move it outside?
  */
-void UI_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
+void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 {
 	int i;
+	int *numItems = Mem_Dup(ed->numItems, sizeof(ed->numItems));
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	 * correctly into buy categories, reloading at the same time;
@@ -127,15 +128,17 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 		if (!GAME_ItemIsUseable(od))
 			continue;
 
-		while (ed->numItems[i]) {
+		while (numItems[i]) {
 			const item_t item = {NONE_AMMO, NULL, od, 0, 0};
 			if (!cls.i.AddToInventory(&cls.i, inv, item, INVDEF(csi.idEquip), NONE, NONE, 1)) {
 				/* no space left in the inventory */
 				break;
 			}
-			ed->numItems[item.t->idx]--;
+			numItems[item.t->idx]--;
 		}
 	}
+
+	Mem_Free(numItems);
 
 	/* First-time linking of ui_inventory. */
 	if (ui_inventory && !ui_inventory->c[csi.idEquip]) {
