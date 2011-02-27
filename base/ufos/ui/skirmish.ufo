@@ -172,6 +172,11 @@ window skirmish
 			label	"_Options"
 			value	"2"
 		}
+		option team
+		{
+			label	"_Team"
+			value	"3"
+		}
 	}
 	// ========
 	// MAP TAB
@@ -408,13 +413,19 @@ window skirmish
 			cvar	*cvar:cl_teamdef
 			dataid	OPTION_TEAMDEFS
 		}
-		cmpMenuButton button_team
+	}
+
+	// ============
+	// TEAM PANEL
+	// ============
+	cmpTeamPanel panel_team
+	{
 		{
-			string		"_Team"
-			pos			"0 260"
-			onClick		{ cmd "ui_push game_team;" }
+			pos		"495 130"
+			size	"475 370"
 		}
 	}
+
 	// ============
 	// INTERACTION
 	// ============
@@ -438,6 +449,7 @@ window skirmish
 	{
 		*node:root.panel_map@invis = true
 		*node:root.panel_options@invis = true
+		*node:root.panel_team@invis = true
 		if ( *cvar:mn_skirmish_config_tab == 1 )
 		{
 			*node:root.panel_map@invis = false
@@ -445,6 +457,10 @@ window skirmish
 		elif ( *cvar:mn_skirmish_config_tab == 2 )
 		{
 			*node:root.panel_options@invis = false
+		}
+		elif ( *cvar:mn_skirmish_config_tab == 3 )
+		{
+			*node:root.panel_team@invis = false
 		}
 	}
 	// =====
@@ -457,7 +473,8 @@ window skirmish
 		cmd "set mn_serverday 1;mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
 		*cvar:mn_skirmish_config_tab = 1
 		*cvar:mn_svmapid = "none"
-		cmd "mn_requestmaplist sk_maplist_listener"
+		cmd "mn_requestmaplist sk_maplist_listener;"
 		call *node:root.sk_update_config_navigation
+		cmd	"game_teamcomments;define cl_teamdef phalanx;"
 	}
 }

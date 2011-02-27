@@ -54,7 +54,7 @@ window abstract_multiplayer
 	{
 		string		"_Team"
 		pos			"80 160"
-		onClick		{ cmd "ui_push game_team;" }
+		onClick		{ cmd "ui_pop;ui_push multiplayer_team;" }
 	}
 
 	cmpMenuButton button_join
@@ -86,6 +86,25 @@ window abstract_multiplayer
 		onClick		{ cmd "ui_pop;" }
 	}
 
+}
+
+// =====================
+// MP TEAM MENU
+// =====================
+window multiplayer_team extends abstract_multiplayer
+{
+	cmpTeamPanel content
+	{
+		{
+			pos		"415 100"
+			size	"608 768"
+		}
+	}
+
+	func onWindowOpened
+	{
+		cmd	"game_teamcomments;define cl_teamdef phalanx;"
+	}
 }
 
 window abstract_multiplayer_join extends abstract_multiplayer {
