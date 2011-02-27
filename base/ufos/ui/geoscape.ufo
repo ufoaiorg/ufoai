@@ -145,7 +145,7 @@ window geoscape
 				cmd "messagesystem_changemode"
 			}
 			onRClick	{
-				cmd "set mn_messagesystem 3;"
+				*cvar:mn_messagesystem = 3
 				cmd "messagesystem_changemode"
 			}
 		}

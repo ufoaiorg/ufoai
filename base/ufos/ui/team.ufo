@@ -727,7 +727,8 @@ window game_team_edit extends objectinfo
 		call *node:root.team_names_clear
 		call *node:root.team_actor_stats
 		call *node:root.team_checkboxes_set
-		cmd "set mn_infotype 0;set mn_equiptype 0;"
+		*cvar:mn_infotype = 0
+		*cvar:mn_equiptype = 0
 		cmd "team_initskin;team_update_item_list;game_teamselect 0;game_teamupdate;"
 	}
 

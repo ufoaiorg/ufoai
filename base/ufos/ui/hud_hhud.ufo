@@ -724,7 +724,7 @@ window hhud extends hud
 //		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
 //		call *node:root.right.show_rightweapon
-		cmd "set mn_showchatbuttons 0;"
+		*cvar:mn_showchatbuttons = 0
 		*cvar:rf_reserve = 0
 		*cvar:inv_opened = false
 		*cvar:i = 0;

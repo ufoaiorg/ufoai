@@ -44,7 +44,10 @@ window won
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		onClick		{ cmd "set cp_mission_tryagain 0;ui_pop;uforecover_check;" }
+		onClick		{
+			*cvar:cp_mission_tryagain = 0
+			cmd "ui_pop;uforecover_check;"
+		}
 	}
 
 	confunc uforecover_check
@@ -111,7 +114,10 @@ window lost
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		onClick		{ cmd "set cp_mission_tryagain 1;ui_pop;" }
+		onClick		{
+			*cvar:cp_mission_tryagain = 1
+			cmd "ui_pop;"
+		}
 	}
 
 	button bt_continue
@@ -124,7 +130,10 @@ window lost
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		onClick		{ cmd "set cp_mission_tryagain 0;ui_pop;" }
+		onClick		{
+			*cvar:cp_mission_tryagain = 0
+			cmd "ui_pop;"
+		}
 	}
 
 	func onWindowOpened

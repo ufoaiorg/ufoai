@@ -367,7 +367,8 @@ window ufopedia extends objectinfo
 			} else {
 				*node:root.content.ufopedia@width = 583
 			}
-			cmd "set mn_uppretext 0; mn_upupdate;"
+			*cvar:mn_uppretext = 0
+			cmd "mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "preresearch" ) {
 			*node:root.content.ufopedia@invis = false
 			*node:root.content.ufopedia_scroll@invis = false
@@ -380,7 +381,8 @@ window ufopedia extends objectinfo
 			} else {
 				*node:root.content.ufopedia@width = 583
 			}
-			cmd "set mn_uppretext 1; mn_upupdate;"
+			*cvar:mn_uppretext = 1
+			cmd "mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "stats" ) {
 			*node:root.content.ufopedia@invis = true
 			*node:root.content.ufopedia_scroll@invis = true
