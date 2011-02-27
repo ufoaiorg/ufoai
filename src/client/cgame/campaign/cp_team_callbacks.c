@@ -232,11 +232,6 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/* manage inventory */
 	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
 
-	AIR_Foreach(aircraftInBase) {
-		if (aircraftInBase->homebase == base)
-			CL_CleanupAircraftCrew(aircraftInBase, &unused);
-	}
-
 	if (chrDisplayList.num > 0)
 		ui_inventory = &chrDisplayList.chr[0]->i;
 	else
