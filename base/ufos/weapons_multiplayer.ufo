@@ -20,6 +20,7 @@ item chaingun
 	scale			1.25
 	ammo			200
 	reload			20
+	reloadsound		weapons/reload-rifle	// @todo better sound?
 	is_primary		true
 	is_heavy		true
 	notonmarket		true
@@ -135,6 +136,7 @@ item shotgun
 	scale			1
 	ammo			7
 	reload			20
+	reloadsound		weapons/reload-shotgun
 	price			1500
 	size			25
 	is_primary		true
@@ -224,6 +226,7 @@ item vhs
 	scale			1.2
 	ammo			30
 	reload			10
+	reloadsound		weapons/reload-rifle
 	size			20
 	notonmarket		true
 	is_primary		true
@@ -247,6 +250,7 @@ item xaw95
 	scale			1.0
 	ammo			200
 	reload			25
+	reloadsound		weapons/reload-rifle
 	price			50000
 	size			40
 	is_primary		true

@@ -16,6 +16,7 @@ item assault
 	scale			1.25
 	ammo			30
 	reload			12
+	reloadsound		weapons/reload-rifle
 	price			1000
 	size			20
 	is_primary		true
@@ -232,6 +233,7 @@ item machinegun
 	scale			1.1
 	ammo			100
 	reload			30
+	reloadsound		weapons/reload-rifle	// @todo better sound?
 	price			1200
 	size			20
 	is_primary		true
@@ -344,6 +346,7 @@ item sniper
 	scale			1.05
 	ammo			5
 	reload			10
+	reloadsound		weapons/reload-sniper
 	price			1300
 	size			30
 	is_primary		true
@@ -431,6 +434,7 @@ item coilgun
 	scale			0.9
 	ammo			2
 	reload			10
+	reloadsound		weapons/reload-sniper
 	price			3000
 	size			30
 	is_primary		true
@@ -517,6 +521,7 @@ item pistol
 	scale			1.35
 	ammo			12
 	reload			12
+	reloadsound		weapons/reload-pistol
 	price			900
 	size			7
 	is_secondary	true
@@ -623,6 +628,7 @@ item pistol2
 	scale			2.0
 	ammo			30
 	reload			12
+	reloadsound		weapons/reload-pistol
 	price			1000
 	size			7
 	is_secondary	true
@@ -730,6 +736,7 @@ item smg
 	scale			1.15
 	ammo			50
 	reload			12
+	reloadsound		weapons/reload-smg
 	price			1350
 	size			8
 	is_secondary	true
@@ -860,6 +867,7 @@ item shotgun2
 	scale			0.98
 	ammo			10
 	reload			14
+	reloadsound		weapons/reload-shotgun
 	price			1500
 	size			25
 	is_primary		true
@@ -948,6 +956,7 @@ item shotgun_micro
 	scale			1.2
 	ammo			7
 	reload			20
+	reloadsound		weapons/reload-shotgun
 	price			1350
 	size			10
 	is_secondary	true
@@ -1111,6 +1120,7 @@ item flamer
 	scale			1.2
 	ammo			6
 	reload			14
+	reloadsound		weapons/reload-pistol	// @todo better sound?
 	price			1500
 	size			55
 	is_primary		true
@@ -1219,6 +1229,7 @@ item rpg
 	scale			0.80
 	ammo			1
 	reload			12
+	reloadsound		weapons/reload-pistol	// @todo better sound?
 	price			4000
 	size			250
 	is_primary		true
@@ -1327,6 +1338,7 @@ item grenl
 	scale			1.1
 	ammo			6
 	reload			14
+	reloadsound		weapons/reload-pistol	// @todo better sound?
 	price			2500
 	size			60
 	is_primary		true
@@ -1951,6 +1963,7 @@ item bolterrifle
 	scale			1.2
 	ammo			8
 	reload			15
+	reloadsound		weapons/reload-rifle
 	price			2000
 	size			45
 	is_primary		true
