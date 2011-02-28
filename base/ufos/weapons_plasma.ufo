@@ -15,6 +15,7 @@ item plaspistol
 	scale			1.5
 	ammo			8
 	reload			10
+	reloadsound		weapons/reload-pistol
 	price			2000
 	size			20
 	is_secondary	true
@@ -122,6 +123,7 @@ item plasrifle
 	scale			1.25
 	ammo			20
 	reload			16
+	reloadsound		weapons/reload-rifle
 	price			2500
 	size			40
 	is_primary		true
@@ -253,6 +255,7 @@ item plasblaster
 	scale			1.06
 	ammo			50
 	reload			20
+	reloadsound		weapons/reload-rifle
 	price			3300
 	size			80
 	is_primary		true

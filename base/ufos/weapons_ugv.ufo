@@ -53,6 +53,7 @@ item ugv_chaingun
 	scale			1.25
 	ammo			500
 	reload			20
+	reloadsound		weapons/reload-pistol	// @todo better sound?
 	price			0 // @todo maybe we still need this somewhere?
 	size			120
 	notonmarket		true
@@ -164,6 +165,7 @@ item ugv_weapon_autocannon
 	scale			1.25
 	ammo			500
 	reload			20
+	reloadsound		weapons/reload-pistol	// @todo better sound?
 	price			0 // @todo maybe we still need this somewhere?
 	size			120
 	notonmarket		true

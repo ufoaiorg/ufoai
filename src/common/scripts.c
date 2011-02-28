@@ -1409,6 +1409,7 @@ static const value_t od_vals[] = {
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
 	{"image", V_STRING, offsetof(objDef_t, image), 0},
 	{"type", V_STRING, offsetof(objDef_t, type), 0},
+	{"reloadsound", V_STRING, offsetof(objDef_t, reloadSound), 0},
 	{"animationindex", V_CHAR, offsetof(objDef_t, animationIndex), MEMBER_SIZEOF(objDef_t, animationIndex)},
 	{"shape", V_SHAPE_SMALL, offsetof(objDef_t, shape), MEMBER_SIZEOF(objDef_t, shape)},
 	{"scale", V_FLOAT, offsetof(objDef_t, scale), MEMBER_SIZEOF(objDef_t, scale)},
@@ -1423,6 +1424,7 @@ static const value_t od_vals[] = {
 	{"oneshot", V_BOOL, offsetof(objDef_t, oneshot), MEMBER_SIZEOF(objDef_t, oneshot)},
 	{"deplete", V_BOOL, offsetof(objDef_t, deplete), MEMBER_SIZEOF(objDef_t, deplete)},
 	{"reload", V_INT, offsetof(objDef_t, reload), MEMBER_SIZEOF(objDef_t, reload)},
+	{"reloadattenuation", V_FLOAT, offsetof(objDef_t, reloadAttenuation), MEMBER_SIZEOF(objDef_t, reloadAttenuation)},
 	{"size", V_INT, offsetof(objDef_t, size), MEMBER_SIZEOF(objDef_t, size)},
 	{"price", V_INT, offsetof(objDef_t, price), MEMBER_SIZEOF(objDef_t, price)},
 	{"productioncost", V_INT, offsetof(objDef_t, productionCost), MEMBER_SIZEOF(objDef_t, productionCost)},
@@ -1721,6 +1723,8 @@ static void Com_ParseItem (const char *name, const char **text)
 
 	/* default is no craftitem */
 	od->craftitem.type = MAX_ACITEMS;
+	od->reloadAttenuation = SOUND_ATTN_IDLE;
+	Q_strncpyz(od->reloadSound, "weapons/reload-pistol", sizeof(od->reloadSound));
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
 	if (od->id[0] == '\0')
@@ -1812,6 +1816,10 @@ static void Com_ParseItem (const char *name, const char **text)
 	if (od->thrown && od->deplete && od->oneshot && od->ammo) {
 		Sys_Error("Item %s has invalid parameters\n", od->id);
 	}
+
+	if (od->reloadAttenuation < SOUND_ATTN_NONE || od->reloadAttenuation > SOUND_ATTN_MAX)
+		Com_Printf("Com_ParseItem: weapon \"%s\" has an invalid reload sound attenuation value set\n", od->id);
+
 }
 
 

@@ -252,6 +252,8 @@ typedef struct objDef_s {
 					     have, if that clip would be full. In other words, max bullets for this type of
 					     weapon with currently loaded type of ammo. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
+	char reloadSound[MAX_VAR];	/**< Sound played when weapon is reloaded */
+	float reloadAttenuation;		/**< Attenuation of reload sound - less louder over distance - */
 	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
 	qboolean deplete;	/**< This weapon useless after all ("oneshot") ammo is used up.
