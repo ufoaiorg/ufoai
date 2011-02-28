@@ -77,17 +77,19 @@ void R_ImageClearMaterials (void)
  */
 void R_ImageList_f (void)
 {
-	int i;
+	int i, cnt;
 	image_t *image;
 	int texels;
 
 	Com_Printf("------------------\n");
 	texels = 0;
+	cnt = 0;
 
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		const char *type;
 		if (!image->texnum)
 			continue;
+		cnt++;
 		texels += image->upload_width * image->upload_height;
 		switch (image->type) {
 		case it_effect:
@@ -127,7 +129,7 @@ void R_ImageList_f (void)
 
 		Com_Printf("%s %4i %4i RGB: %5i idx: %s\n", type, image->upload_width, image->upload_height, image->texnum, image->name);
 	}
-	Com_Printf("Total textures: %i (max textures: %i)\n", r_numImages, MAX_GL_TEXTURES);
+	Com_Printf("Total textures: %i/%i (max textures: %i)\n", cnt, r_numImages, MAX_GL_TEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
 }
 
@@ -325,8 +327,8 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	int i, c;
 	byte *scan;
-	const qboolean mipmap = (image->type != it_pic && image->type != it_chars);
-	const qboolean clamp = (image->type == it_pic);
+	const qboolean mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
+	const qboolean clamp = (image->type == it_pic || image->type == it_worldrelated);
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;

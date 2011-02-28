@@ -54,7 +54,8 @@ typedef enum {
 	it_world,
 	it_lightmap,
 	it_deluxemap,
-	it_material
+	it_material,
+	it_worldrelated
 } imagetype_t;
 
 typedef struct image_s {

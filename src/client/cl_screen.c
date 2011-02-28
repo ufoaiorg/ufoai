@@ -135,7 +135,7 @@ static const image_t* SCR_SetLoadingBackground (const char *mapString)
 	if (mapname[0] == '+')
 		mapname++;
 
-	image = R_FindImage(va("pics/maps/loading/%s", mapname), it_pic);
+	image = R_FindImage(va("pics/maps/loading/%s", mapname), it_worldrelated);
 	if (image == r_noTexture)
 		image = R_FindImage("pics/maps/loading/default", it_pic);
 
