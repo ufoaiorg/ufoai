@@ -85,46 +85,47 @@ void R_ImageList_f (void)
 	texels = 0;
 
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
+		const char *type;
 		if (!image->texnum)
 			continue;
 		texels += image->upload_width * image->upload_height;
 		switch (image->type) {
 		case it_effect:
-			Com_Printf("EF");
+			type = "EF";
 			break;
 		case it_skin:
-			Com_Printf("SK");
+			type = "SK";
 			break;
 		case it_wrappic:
-			Com_Printf("WR");
+			type = "WR";
 			break;
 		case it_chars:
-			Com_Printf("CH");
+			type = "CH";
 			break;
 		case it_static:
-			Com_Printf("ST");
+			type = "ST";
 			break;
 		case it_normalmap:
-			Com_Printf("NM");
+			type = "NM";
 			break;
 		case it_material:
-			Com_Printf("MA");
+			type = "MA";
 			break;
 		case it_lightmap:
-			Com_Printf("LM");
+			type = "LM";
 			break;
 		case it_world:
-			Com_Printf("WO");
+			type = "WO";
 			break;
 		case it_pic:
-			Com_Printf("PI");
+			type = "PI";
 			break;
 		default:
-			Com_Printf("  ");
+			type = "  ";
 			break;
 		}
 
-		Com_Printf(" %4i %4i RGB: %5i idx: %s\n", image->upload_width, image->upload_height, image->texnum, image->name);
+		Com_Printf("%s %4i %4i RGB: %5i idx: %s\n", type, image->upload_width, image->upload_height, image->texnum, image->name);
 	}
 	Com_Printf("Total textures: %i (max textures: %i)\n", r_numImages, MAX_GL_TEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
