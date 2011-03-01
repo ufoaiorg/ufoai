@@ -49,9 +49,7 @@ int main (int argc, const char **argv)
 	Sys_ConsoleInit();
 	Qcommon_Init(argc, argv);
 
-#ifndef ANDROID
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL, 0) | FNDELAY);
-#endif
 
 	while (1)
 		Qcommon_Frame();

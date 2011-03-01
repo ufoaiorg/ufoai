@@ -18,7 +18,7 @@ static void mySignalHandler(int sig)
 	signal( sig, debuggerHandler );
 }
 
-void androidDumpBacktrace(void)
+void androidDumpBacktrace(FILE * out)
 {
 	debuggerHandler = signal( SIGSEGV, mySignalHandler );
 	__android_log_print(ANDROID_LOG_INFO, "UFOAI", "Backtrace (run command \"arm-eabi-gdb libapplication.so -ex 'list *0xaabbccdd'\" where aabbccdd is a stack address below):");
