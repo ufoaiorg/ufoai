@@ -245,7 +245,6 @@ static void G_WriteStep (edict_t* ent, byte** stepAmount, const int dvec, const 
 	gi.WriteShort(dvec);
 	gi.WriteShort(ent->speed);
 	gi.WriteShort(contentFlags);
-
 }
 
 /**

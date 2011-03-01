@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -21,7 +21,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #ifndef CP_NATION_H
@@ -59,6 +58,8 @@ typedef struct nation_s {
 	int maxFunding;		/**< How many (monthly) credits. */
 	int maxSoldiers;	/**< How many (monthly) soldiers. */
 	int maxScientists;	/**< How many (monthly) scientists. */
+	int maxWorkers;		/**< How many (monthly) workers. */
+	int maxPilots;		/**< How many (monthly) pilots. */
 } nation_t;
 
 /**

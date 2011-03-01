@@ -665,30 +665,17 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
  */
 static inline void R_DrawQuad (void)
 {
-#ifdef GL_VERSION_ES_CM_1_0
-	GLfloat texcoord[2*4] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
-	GLfloat points[2*4] = {	0.0, 0.0,
-							fbo_render->width, 0.0,
-							fbo_render->width, fbo_render->height,
-							0.0, fbo_render->height
-						};
+	/** @todo use default_texcoords */
+	const vec2_t texcoord[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
+	const vec2_t verts[] = { { 0.0, 0.0 }, { fbo_render->width, 0.0 }, { fbo_render->width, fbo_render->height }, { 0.0, fbo_render->height } };
+
+	glVertexPointer(2, GL_FLOAT, 0, verts);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoord);
-	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
-	glBegin(GL_QUADS);
-	glTexCoord2i(0, 1);
-	glVertex2i(0, 0);
-	glTexCoord2i(1, 1);
-	glVertex2i(fbo_render->width, 0);
-	glTexCoord2i(1, 0);
-	glVertex2i(fbo_render->width, fbo_render->height);
-	glTexCoord2i(0, 0);
-	glVertex2i(0, fbo_render->height);
-	glEnd();
-#endif
 }
 
 /**

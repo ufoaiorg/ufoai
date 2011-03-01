@@ -29,40 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_draw.h"
 
-static inline void R_UseMaterial (const material_t *material)
-{
-	static float last_b, last_p, last_s, last_h;
-	float b, p, s, h;
-
-	if (r_state.active_material == material)
-		return;
-
-	r_state.active_material = material;
-
-	if (!r_state.active_material)
-		return;
-
-	b = r_state.active_material->bump * r_bumpmap->value;
-	if (b != last_b)
-		R_ProgramParameter1f("BUMP", b);
-	last_b = b;
-
-	p = r_state.active_material->parallax * r_parallax->value;
-	if (p != last_p)
-		R_ProgramParameter1f("PARALLAX", p);
-	last_p = p;
-
-	h = r_state.active_material->hardness * r_hardness->value;
-	if (h != last_h)
-		R_ProgramParameter1f("HARDNESS", h);
-	last_h = h;
-
-	s = r_state.active_material->specular * r_specular->value;
-	if (s != last_s)
-		R_ProgramParameter1f("SPECULAR", s);
-	last_s = s;
-}
-
 void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t *normalMap)
 {
 	if (!r_state.lighting_enabled)

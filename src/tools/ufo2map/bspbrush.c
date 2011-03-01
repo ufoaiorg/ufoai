@@ -748,7 +748,6 @@ void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t **front,
 
 		if (sides == PSIDE_BOTH) {	/* split into two brushes */
 			bspbrush_t *newbrush2;
-			assert(planenum >= 0);
 			SplitBrush(brush, planenum, &newbrush, &newbrush2);
 			if (newbrush) {
 				newbrush->next = *front;

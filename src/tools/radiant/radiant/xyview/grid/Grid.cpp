@@ -6,6 +6,7 @@
 #include "iregistry.h"
 #include "preferencesystem.h"
 #include "signal/signal.h"
+#include "radiant_i18n.h"
 
 #include <iostream>
 
@@ -13,6 +14,8 @@
 
 namespace {
 const std::string RKEY_DEFAULT_GRID_SIZE = "user/ui/grid/defaultGridPower";
+const std::string RKEY_GRID_LOOK_MAJOR = "user/ui/grid/majorGridLook";
+const std::string RKEY_GRID_LOOK_MINOR = "user/ui/grid/minorGridLook";
 }
 
 class GridManager: public IGridManager, public RegistryKeyObserver, public PreferenceConstructor
@@ -49,8 +52,7 @@ class GridManager: public IGridManager, public RegistryKeyObserver, public Prefe
 			GlobalRegistry().addKeyObserver(this, RKEY_DEFAULT_GRID_SIZE);
 
 			// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
-			// Deactivated at the moment
-			//GlobalPreferenceSystem().addConstructor(this);
+			GlobalPreferenceSystem().addConstructor(this);
 
 			// Load the default value from the registry
 			keyChanged("", "");
@@ -120,8 +122,21 @@ class GridManager: public IGridManager, public RegistryKeyObserver, public Prefe
 
 		void constructPreferencePage (PreferenceGroup& group)
 		{
-			/*PreferencesPage* page(group.createPage("Grid", "Default Grid Settings"));
-			page->appendCombo("Default Grid Size", RKEY_DEFAULT_GRID_SIZE, getGridList());*/
+			PreferencesPage* page(group.createPage(_("Grid"), _("Default Grid Settings")));
+			page->appendCombo("Default Grid Size", RKEY_DEFAULT_GRID_SIZE, getGridList());
+
+			ComboBoxValueList looks;
+
+			looks.push_back(_("Lines"));
+			looks.push_back(_("Dotted Lines"));
+			looks.push_back(_("More Dotted Lines"));
+			looks.push_back(_("Crosses"));
+			looks.push_back(_("Dots"));
+			looks.push_back(_("Big Dots"));
+			looks.push_back(_("Squares"));
+
+			page->appendCombo(_("Major Grid Style"), RKEY_GRID_LOOK_MAJOR, looks);
+			page->appendCombo(_("Minor Grid Style"), RKEY_GRID_LOOK_MINOR, looks);
 		}
 
 		void addGridChangeCallback (const SignalHandler& handler)
@@ -183,6 +198,24 @@ class GridManager: public IGridManager, public RegistryKeyObserver, public Prefe
 			gridChangeNotify();
 		}
 
+		static GridLook getLookFromNumber (int i)
+		{
+			if (i >= GRIDLOOK_LINES && i <= GRIDLOOK_SQUARES) {
+				return static_cast<GridLook> (i);
+			}
+
+			return GRIDLOOK_LINES;
+		}
+
+		GridLook getMajorLook () const
+		{
+			return getLookFromNumber(GlobalRegistry().getInt(RKEY_GRID_LOOK_MAJOR));
+		}
+
+		GridLook getMinorLook () const
+		{
+			return getLookFromNumber(GlobalRegistry().getInt(RKEY_GRID_LOOK_MINOR));
+		}
 }; // class GridManager
 
 /* GridManager dependencies class.

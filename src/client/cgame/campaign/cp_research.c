@@ -1723,36 +1723,36 @@ void RS_RemoveScientistsExceedingCapacity (base_t *base)
  * @param[out] parent XML Node structure, where we write the information to
  * @sa RS_LoadXML
  */
-qboolean RS_SaveXML (mxml_node_t *parent)
+qboolean RS_SaveXML (xmlNode_t *parent)
 {
 	int i;
-	mxml_node_t *node;
+	xmlNode_t *node;
 
 	Com_RegisterConstList(saveResearchConstants);
-	node = mxml_AddNode(parent, SAVE_RESEARCH_RESEARCH);
+	node = XML_AddNode(parent, SAVE_RESEARCH_RESEARCH);
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		int j;
 		const technology_t *t = RS_GetTechByIDX(i);
 
-		mxml_node_t * snode = mxml_AddNode(node, SAVE_RESEARCH_TECH);
-		mxml_AddString(snode, SAVE_RESEARCH_ID, t->id);
-		mxml_AddBoolValue(snode, SAVE_RESEARCH_STATUSCOLLECTED, t->statusCollected);
-		mxml_AddFloatValue(snode, SAVE_RESEARCH_TIME, t->time);
-		mxml_AddString(snode, SAVE_RESEARCH_STATUSRESEARCH, Com_GetConstVariable(SAVE_RESEARCHSTATUS_NAMESPACE, t->statusResearch));
+		xmlNode_t * snode = XML_AddNode(node, SAVE_RESEARCH_TECH);
+		XML_AddString(snode, SAVE_RESEARCH_ID, t->id);
+		XML_AddBoolValue(snode, SAVE_RESEARCH_STATUSCOLLECTED, t->statusCollected);
+		XML_AddFloatValue(snode, SAVE_RESEARCH_TIME, t->time);
+		XML_AddString(snode, SAVE_RESEARCH_STATUSRESEARCH, Com_GetConstVariable(SAVE_RESEARCHSTATUS_NAMESPACE, t->statusResearch));
 		if (t->base)
-			mxml_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
-		mxml_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
-		mxml_AddBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
-		mxml_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.day, t->preResearchedDate.sec);
-		mxml_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.day, t->researchedDate.sec);
-		mxml_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
+			XML_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
+		XML_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
+		XML_AddBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
+		XML_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.day, t->preResearchedDate.sec);
+		XML_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.day, t->researchedDate.sec);
+		XML_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
 
 		/* save which techMails were read */
 		/** @todo this should be handled by the mail system */
 		for (j = 0; j < TECHMAIL_MAX; j++) {
 			if (t->mail[j].read) {
-				mxml_node_t * ssnode = mxml_AddNode(snode, SAVE_RESEARCH_MAIL);
-				mxml_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);
+				xmlNode_t * ssnode = XML_AddNode(snode, SAVE_RESEARCH_MAIL);
+				XML_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);
 			}
 		}
 	}
@@ -1766,23 +1766,23 @@ qboolean RS_SaveXML (mxml_node_t *parent)
  * @param[in] parent XML Node structure, where we get the information from
  * @sa RS_SaveXML
  */
-qboolean RS_LoadXML (mxml_node_t *parent)
+qboolean RS_LoadXML (xmlNode_t *parent)
 {
-	mxml_node_t *topnode;
-	mxml_node_t *snode;
+	xmlNode_t *topnode;
+	xmlNode_t *snode;
 	qboolean success = qtrue;
 
-	topnode = mxml_GetNode(parent, SAVE_RESEARCH_RESEARCH);
+	topnode = XML_GetNode(parent, SAVE_RESEARCH_RESEARCH);
 	if (!topnode)
 		return qfalse;
 
 	Com_RegisterConstList(saveResearchConstants);
-	for (snode = mxml_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = mxml_GetNextNode(snode, topnode, "tech")) {
-		const char *techString = mxml_GetString(snode, SAVE_RESEARCH_ID);
-		mxml_node_t * ssnode;
+	for (snode = XML_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = XML_GetNextNode(snode, topnode, "tech")) {
+		const char *techString = XML_GetString(snode, SAVE_RESEARCH_ID);
+		xmlNode_t * ssnode;
 		int baseIdx;
 		technology_t *t = RS_GetTechByID(techString);
-		const char *type = mxml_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);
+		const char *type = XML_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);
 
 		if (!t) {
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
@@ -1795,23 +1795,23 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 			break;
 		}
 
-		t->statusCollected = mxml_GetBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, qfalse);
-		t->time = mxml_GetFloat(snode, SAVE_RESEARCH_TIME, 0.0);
+		t->statusCollected = XML_GetBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, qfalse);
+		t->time = XML_GetFloat(snode, SAVE_RESEARCH_TIME, 0.0);
 		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
-		baseIdx = mxml_GetInt(snode, SAVE_RESEARCH_BASE, -1);
+		baseIdx = XML_GetInt(snode, SAVE_RESEARCH_BASE, -1);
 		if (baseIdx >= 0)
 			/* even if the base is not yet loaded we can set the pointer already */
 			t->base = B_GetBaseByIDX(baseIdx);
-		t->scientists = mxml_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
-		t->statusResearchable = mxml_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, qfalse);
-		mxml_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
-		mxml_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
-		t->mailSent = mxml_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
+		t->scientists = XML_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
+		t->statusResearchable = XML_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, qfalse);
+		XML_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
+		XML_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
+		t->mailSent = XML_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
 
 		/* load which techMails were read */
 		/** @todo this should be handled by the mail system */
-		for (ssnode = mxml_GetNode(snode, SAVE_RESEARCH_MAIL); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, SAVE_RESEARCH_MAIL)) {
-			const int j= mxml_GetInt(ssnode, SAVE_RESEARCH_MAIL_ID, TECHMAIL_MAX);
+		for (ssnode = XML_GetNode(snode, SAVE_RESEARCH_MAIL); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_RESEARCH_MAIL)) {
+			const int j= XML_GetInt(ssnode, SAVE_RESEARCH_MAIL_ID, TECHMAIL_MAX);
 			if (j < TECHMAIL_MAX) {
 				const techMailType_t mailType = j;
 				t->mail[mailType].read = qtrue;

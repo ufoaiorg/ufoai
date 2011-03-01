@@ -100,6 +100,7 @@ typedef	struct mAliasMesh_s {
 
 	int	num_tris;
 	int32_t	*indexes;
+	int32_t num_indexes;
 	mIndexList_t *revIndexes;
 
 	int		num_bones;

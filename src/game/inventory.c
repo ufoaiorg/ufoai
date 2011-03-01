@@ -63,7 +63,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
  * @brief Add an item to a specified container in a given inventory.
  * @note Set x and y to NONE if the item should get added to an automatically chosen free spot in the container.
  * @param[in] self The inventory interface pointer
- * @param[in] inv Pointer to inventory definition, to which we will add item.
+ * @param[in,out] inv Pointer to inventory definition, to which we will add item.
  * @param[in] item Item to add to given container (needs to have "rotated" tag already set/checked, this is NOT checked here!)
  * @param[in] container Container in given inventory definition, where the new item will be stored.
  * @param[in] x The x location in the container.
@@ -75,6 +75,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * const inv, item_t item, const invDef_t * container, int x, int y, int amount)
 {
 	invList_t *ic;
+	int checkedTo;
 
 	if (!item.t)
 		return NULL;
@@ -106,12 +107,19 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 			return NULL;
 	}
 
+	checkedTo = INVSH_CheckToInventory(inv, item.t, container, x, y, NULL);
+	assert(checkedTo);
+
 	/* not found - add a new one */
 	ic = I_AddInvList(self, &inv->c[container->id]);
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = item;
 	ic->item.amount = amount;
+
+	/* don't reset an already applied rotation */
+	if (checkedTo == INV_FITS_ONLY_ROTATED)
+		ic->item.rotated = qtrue;
 	ic->x = x;
 	ic->y = y;
 

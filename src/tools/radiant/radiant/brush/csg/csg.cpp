@@ -166,29 +166,46 @@ static bool Brush_subtract (const Brush& brush, const Brush& other, brush_vector
 {
 	if (aabb_intersects_aabb(brush.localAABB(), other.localAABB())) {
 		brush_vector_t fragments;
-		fragments.reserve(other.size());
-		Brush back(brush);
 
-		for (Brush::const_iterator i(other.begin()); i != other.end(); ++i) {
+		Brush cutter(other);
+		cutter.removeEmptyFaces(); /* clean out the brush to be subtracted */
+		fragments.reserve(cutter.size());
+
+		Vector3 apex = cutter.getCentroid();
+
+		for (Brush::const_iterator i(cutter.begin()); i != cutter.end(); ++i) {
 			if ((*i)->contributes()) {
-				BrushSplitType split = Brush_classifyPlane(back, (*i)->plane3());
-				if (split.counts[ePlaneFront] != 0 && split.counts[ePlaneBack] != 0) {
-					fragments.push_back(new Brush(back));
-					Face* newFace = fragments.back()->addFace(*(*i));
-					if (newFace != 0) {
-						newFace->flipWinding();
-					}
-					back.addFace(*(*i));
-				} else if (split.counts[ePlaneBack] == 0) {
-					for (brush_vector_t::iterator i = fragments.begin(); i != fragments.end(); ++i) {
-						delete (*i);
-					}
-					return false;
+				Brush *frag = new Brush(brush);
+				frag->removeEmptyFaces();
+
+				Face *baseFace = (*i);
+				TextureProjection projection;
+				baseFace->GetTexdef(projection);
+
+				PlanePoints &basePoints = baseFace->getPlane().planePoints();
+
+				frag->chopWithPlane(basePoints[0],basePoints[2],basePoints[1],baseFace->GetShader(),projection);
+				frag->removeEmptyFaces();
+
+				const Winding &faceWinding = baseFace->getWinding();
+				for (std::size_t j=0; j<faceWinding.size(); ++j) {
+					Vector3 a = faceWinding[j].vertex;
+					Vector3 b = faceWinding[faceWinding.next(j)].vertex;
+					frag->chopWithPlane(apex,b,a,baseFace->GetShader(),projection);
+					frag->removeEmptyFaces();
 				}
+
+				if (frag->hasContributingFaces())
+					fragments.push_back(frag);
+				else
+					delete frag;
 			}
 		}
-		ret_fragments.insert(ret_fragments.end(), fragments.begin(), fragments.end());
-		return true;
+
+		if (fragments.size()) {
+			ret_fragments.insert(ret_fragments.end(), fragments.begin(), fragments.end());
+			return true;
+		}
 	}
 	return false;
 }

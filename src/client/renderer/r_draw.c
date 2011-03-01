@@ -356,7 +356,7 @@ const image_t *R_RegisterImage (const char *name)
  */
 void R_DrawTexture (int texnum, int x, int y, int w, int h)
 {
-	const vec2_t vertexes[4] = {{x, y}, {x + w, y}, {x + w, y + h}, {x, y + h}};
+	const vec2_t vertexes[] = {{x, y}, {x + w, y}, {x + w, y + h}, {x, y + h}};
 
 	R_BindTexture(texnum);
 	R_DrawImageArray(default_texcoords, vertexes, NULL);
@@ -422,177 +422,54 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	const float ny = y * viddef.ry;
 	const float nw = w * viddef.rx;
 	const float nh = h * viddef.ry;
+	const vec2_t points[] = { { nx, ny }, { nx + nw, ny }, { nx + nw, ny + nh }, { nx, ny + nh } };
 
 	R_Color(color);
 
 	glDisable(GL_TEXTURE_2D);
 	glLineWidth(lineWidth);
-#ifdef GL_VERSION_ES_CM_1_0
-	GLfloat points[2*4] = { nx, ny,
-							nx + nw, ny,
-							nx + nw, ny + nh,
-							nx, ny + nh };
+#ifndef GL_VERSION_ES_CM_1_0
+	glLineStipple(2, pattern);
+	glEnable(GL_LINE_STIPPLE);
+#endif
+
 	glVertexPointer(2, GL_FLOAT, 0, points);
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
-	glLineStipple(2, pattern);
-	glEnable(GL_LINE_STIPPLE);
-
-	glBegin(GL_LINE_LOOP);
-	glVertex2f(nx, ny);
-	glVertex2f(nx + nw, ny);
-	glVertex2f(nx + nw, ny + nh);
-	glVertex2f(nx, ny + nh);
-	glEnd();
 
 	glEnable(GL_TEXTURE_2D);
 	glLineWidth(1.0f);
+#ifndef GL_VERSION_ES_CM_1_0
 	glDisable(GL_LINE_STIPPLE);
 #endif
 
 	R_Color(NULL);
 }
 
-/**
- * @brief Draws a circle out of lines
- * @param[in] mid Center of the circle
- * @param[in] radius Radius of the circle
- * @param[in] color The color of the circle lines
- * @param thickness Thickness of the line (1 mean 1 pixel in a 1024 screen width)
- * @sa R_DrawPtlCircle
- * @sa R_DrawLineStrip
- */
-void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
+void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3_t shift)
 {
-	float theta;
-	const float accuracy = 5.0;
-	const float step = M_PI / radius * accuracy;
+	vec3_t points[16];
+	const size_t steps = lengthof(points);
+	unsigned int i;
 
-	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_LINE_SMOOTH);
+	glLineWidth(thickness);
 
 	R_Color(color);
 
-	assert(radius > thickness);
-
-	/* scale it */
-	radius *= viddef.rx;
-	thickness *= viddef.rx;
-
-	/* store the matrix - we are using glTranslate */
-	glPushMatrix();
-
-	/* translate the position */
-	glTranslated(mid[0], mid[1], mid[2]);
-
-#ifdef GL_VERSION_ES_CM_1_0
-	// TODO: thickness ignored
-	enum { STEPS = 16 };
-	GLfloat points [ STEPS * 2 ];
-	for (int i = 0; i < STEPS; i++ ) {
-		float a = 2.0f * M_PI * (float) i / (float) STEPS;
-		points[i*2] = radius * cos( a );
-		points[i*2+1] = radius * sin( a );
+	for (i = 0; i < steps; i++) {
+		const float a = 2.0f * M_PI * (float) i / (float) steps;
+		VectorSet(points[i], shift[0] + radius * cos(a), shift[1] + radius * sin(a), shift[2]);
 	}
-	glVertexPointer(2, GL_FLOAT, 0, points);
-	glDrawArrays(GL_LINE_LOOP, 0, STEPS);
+
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+	glDrawArrays(GL_LINE_LOOP, 0, steps);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
-	if (thickness <= 1) {
-		glBegin(GL_LINE_STRIP);
-		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
-			glVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
-		}
-		glEnd();
-	} else {
-		glBegin(GL_TRIANGLE_STRIP);
-		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
-			glVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
-			glVertex3f(radius * cos(theta - step), radius * sin(theta - step), 0.0);
-			glVertex3f((radius - thickness) * cos(theta - step), (radius - thickness) * sin(theta - step), 0.0);
-			glVertex3f((radius - thickness) * cos(theta), (radius - thickness) * sin(theta), 0.0);
-		}
-		glEnd();
-	}
-#endif
-
-	glPopMatrix();
 
 	R_Color(NULL);
 
+	glLineWidth(1.0f);
 	glDisable(GL_LINE_SMOOTH);
-	glEnable(GL_TEXTURE_2D);
-}
-
-#define CIRCLE_LINE_COUNT	40
-
-/**
- * @brief Draws a circle out of lines
- * @param[in] x X screen coordinate
- * @param[in] y Y screen coordinate
- * @param[in] radius Radius of the circle
- * @param[in] color The color of the circle lines
- * @param[in] fill Fill the circle with the given color
- * @param[in] thickness The thickness of the lines
- * @sa R_DrawPtlCircle
- * @sa R_DrawLineStrip
- */
-void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t color, float thickness)
-{
-	int i;
-
-#ifndef GL_VERSION_ES_CM_1_0
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
-#endif
-
-	glDisable(GL_TEXTURE_2D);
-	R_Color(color);
-
-	if (thickness > 0.0)
-		glLineWidth(thickness);
-
-#ifdef GL_VERSION_ES_CM_1_0
-	enum { STEPS = 16 };
-	GLfloat points [ STEPS * 2 + 4 ] = { (float) x, (float) y };
-	for (int i = 0; i <= STEPS; i++ ) {
-		float a = 2.0f * M_PI * (float) i / (float) STEPS;
-		points[i*2+2] = (float) x + radius * cos( a );
-		points[i*2+3] = (float) y + radius * sin( a );
-	}
-	glVertexPointer(2, GL_FLOAT, 0, points);
-	glDrawArrays(fill ? GL_TRIANGLE_FAN : GL_LINE_LOOP, fill ? 0 : 1, fill ? STEPS + 2 : STEPS);
-	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
-	if (fill)
-		glBegin(GL_TRIANGLE_STRIP);
-	else
-		glBegin(GL_LINE_LOOP);
-
-	/* Create a vertex at the exact position specified by the start angle. */
-	glVertex2f(x + radius, y);
-
-	for (i = 0; i < CIRCLE_LINE_COUNT; i++) {
-		const float angle = (2.0 * M_PI / CIRCLE_LINE_COUNT) * i;
-		glVertex2f(x + radius * cos(angle), y - radius * sin(angle));
-
-		/* When filling we're drawing triangles so we need to
-		 * create a vertex in the middle of the vertex to fill
-		 * the entire pie slice/circle. */
-		if (fill)
-			glVertex2f(x, y);
-	}
-
-	glVertex2f(x + radius, y);
-	glEnd();
-#endif
-
-	glEnable(GL_TEXTURE_2D);
-	R_Color(NULL);
-
-#ifndef GL_VERSION_ES_CM_1_0
-	glPopAttrib();
-#endif
 }
 
 #define MAX_LINEVERTS 256
@@ -621,7 +498,6 @@ static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
 
 /**
  * @brief 2 dimensional line strip
- * @sa R_DrawCircle
  * @sa R_DrawLineLoop
  */
 void R_DrawLineStrip (int points, int *verts)
@@ -630,7 +506,6 @@ void R_DrawLineStrip (int points, int *verts)
 }
 
 /**
- * @sa R_DrawCircle
  * @sa R_DrawLineStrip
  */
 void R_DrawLineLoop (int points, int *verts)
@@ -640,7 +515,6 @@ void R_DrawLineLoop (int points, int *verts)
 
 /**
  * @brief Draws one line with only one start and one end point
- * @sa R_DrawCircle
  * @sa R_DrawLineStrip
  */
 void R_DrawLine (int *verts, float thickness)
@@ -655,7 +529,6 @@ void R_DrawLine (int *verts, float thickness)
 }
 
 /**
- * @sa R_DrawCircle
  * @sa R_DrawLineStrip
  * @sa R_DrawLineLoop
  */
@@ -754,6 +627,8 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 	const int nheight = height * viddef.ry;
 	const GLboolean hasDepthTest = glIsEnabled(GL_DEPTH_TEST);
 	const GLfloat bigZ = 2000;
+	const vec3_t points [] = { { nx, ny, bigZ }, { nx + nwidth, ny, bigZ }, { nx + nwidth, ny + nheight, bigZ }, { nx, ny + nheight, bigZ } };
+
 	GLint depthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
 
@@ -762,22 +637,9 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 	glDepthFunc(GL_ALWAYS);
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 
-#ifdef GL_VERSION_ES_CM_1_0
-	GLfloat points [ 3 * 4 ] = {	nx, ny, bigZ,
-									nx + nwidth, ny, bigZ,
-									nx + nwidth, ny + nheight, bigZ,
-									nx, ny + nheight, bigZ };
-	glVertexPointer(3, GL_FLOAT, 0, points);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
-	glBegin(GL_QUADS);
-	glVertex3d(nx, ny, bigZ);
-	glVertex3d(nx + nwidth, ny, bigZ);
-	glVertex3d(nx + nwidth, ny + nheight, bigZ);
-	glVertex3d(nx, ny + nheight, bigZ);
-	glEnd();
-#endif
 
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	if (!hasDepthTest)
@@ -806,82 +668,46 @@ void R_DrawBoundingBoxes (void)
 	int i;
 	const int step = 3 * 8;
 	const int bboxes = r_bbox_array.bboxes_index / step;
+	const GLfloat indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
+	const GLfloat indexes2[] = { 4, 6, 7 };
 
 	if (!r_bbox_array.bboxes_index)
 		return;
 
+#ifndef GL_VERSION_ES_CM_1_0
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+#endif
+
 	R_Color(NULL);
 
-#ifdef GL_VERSION_ES_CM_1_0
-	GLfloat points [ 3 * 15 ];
-	int indexes[15] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
-	int indexes2[3] = { 4, 6, 7 };
 	for (i = 0; i < bboxes; i++) {
-		float *bbox = &r_bbox_array.bboxes[i * step];
-
-		for( int ii = 0; ii < 15; ii++ ) {
-			float * ptr = bbox + indexes[ii] * step;
-			points[ ii*3 ] = ptr [ 0 ];
-			points[ ii*3 + 1 ] = ptr [ 1 ];
-			points[ ii*3 + 2 ] = ptr [ 2 ];
-		}
-		glVertexPointer(3, GL_FLOAT, 0, points);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 15);
-
-		for( int ii = 0; ii < 3; ii++ ) {
-			float * ptr = bbox + indexes2[ii] * step;
-			points[ ii*3 ] = ptr [ 0 ];
-			points[ ii*3 + 1 ] = ptr [ 1 ];
-			points[ ii*3 + 2 ] = ptr [ 2 ];
-		}
-		glVertexPointer(3, GL_FLOAT, 0, points);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
-		R_BindDefaultArray(GL_VERTEX_ARRAY);
-	}
-#else
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	for (i = 0; i < bboxes; i++) {
-		float *bbox = &r_bbox_array.bboxes[i * step];
+		const float *bbox = &r_bbox_array.bboxes[i * step];
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
 		/* Draw top and sides */
-		glBegin(GL_TRIANGLE_STRIP);
-		glVertex3fv(bbox + 2 * step);
-		glVertex3fv(bbox + 1 * step);
-		glVertex3fv(bbox + 0 * step);
-		glVertex3fv(bbox + 1 * step);
-		glVertex3fv(bbox + 4 * step);
-		glVertex3fv(bbox + 5 * step);
-		glVertex3fv(bbox + 1 * step);
-		glVertex3fv(bbox + 7 * step);
-		glVertex3fv(bbox + 3 * step);
-		glVertex3fv(bbox + 2 * step);
-		glVertex3fv(bbox + 7 * step);
-		glVertex3fv(bbox + 6 * step);
-		glVertex3fv(bbox + 2 * step);
-		glVertex3fv(bbox + 4 * step);
-		glVertex3fv(bbox + 0 * step);
-		glEnd();
-
+		glDrawElements(GL_TRIANGLE_FAN, 15, GL_FLOAT, indexes);
 		/* Draw bottom */
-		glBegin(GL_TRIANGLE_STRIP);
-		glVertex3fv(bbox + 4 * step);
-		glVertex3fv(bbox + 6 * step);
-		glVertex3fv(bbox + 7 * step);
-		glEnd();
+		glDrawElements(GL_TRIANGLE_FAN, 3, GL_FLOAT, indexes2);
 	}
 
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 #endif
 
 	r_bbox_array.bboxes_index = 0;
 }
 
-void R_DrawBoundingBoxBatched (const vec3_t mins, const vec3_t maxs)
+void R_DrawBoundingBoxBatched (const vec3_t absmins, const vec3_t absmaxs)
 {
 	int i;
 	vec3_t bbox[8];
+	const size_t max = lengthof(r_bbox_array.bboxes);
 
-	R_ComputeBoundingBox(mins, maxs, bbox);
+	if (r_bbox_array.bboxes_index >= max)
+		return;
+
+	R_ComputeBoundingBox(absmins, absmaxs, bbox);
 
 	for (i = 0; i < 8; i++) {
 		VectorCopy(bbox[i], &r_bbox_array.bboxes[r_bbox_array.bboxes_index]);
@@ -893,64 +719,26 @@ void R_DrawBoundingBoxBatched (const vec3_t mins, const vec3_t maxs)
  * @brief Draws the model bounding box
  * @sa R_EntityComputeBoundingBox
  */
-void R_DrawBoundingBox (const vec3_t mins, const vec3_t maxs)
+void R_DrawBoundingBox (const vec3_t absmins, const vec3_t absmaxs)
 {
 	vec3_t bbox[8];
+	const GLfloat indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
+	const GLfloat indexes2[] = { 4, 6, 7 };
 
-	R_ComputeBoundingBox(mins, maxs, bbox);
+	R_ComputeBoundingBox(absmins, absmaxs, bbox);
 
-#ifdef GL_VERSION_ES_CM_1_0
-	GLfloat points [ 3 * 15 ];
-	int indexes[15] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
-	int indexes2[3] = { 4, 6, 7 };
-
-	for( int ii = 0; ii < 15; ii++ ) {
-		float * ptr = bbox[indexes[ii]];
-		points[ ii*3 ] = ptr [ 0 ];
-		points[ ii*3 + 1 ] = ptr [ 1 ];
-		points[ ii*3 + 2 ] = ptr [ 2 ];
-	}
-	glVertexPointer(3, GL_FLOAT, 0, points);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 15);
-
-	for( int ii = 0; ii < 3; ii++ ) {
-		float * ptr = bbox[indexes2[ii]];
-		points[ ii*3 ] = ptr [ 0 ];
-		points[ ii*3 + 1 ] = ptr [ 1 ];
-		points[ ii*3 + 2 ] = ptr [ 2 ];
-	}
-	glVertexPointer(3, GL_FLOAT, 0, points);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
-	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
+#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+#endif
 
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
 	/* Draw top and sides */
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[0]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[5]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[7]);
-	glVertex3fv(bbox[3]);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[7]);
-	glVertex3fv(bbox[6]);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[0]);
-	glEnd();
-
+	glDrawElements(GL_TRIANGLE_FAN, 15, GL_FLOAT, indexes);
 	/* Draw bottom */
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[6]);
-	glVertex3fv(bbox[7]);
-	glEnd();
+	glDrawElements(GL_TRIANGLE_FAN, 3, GL_FLOAT, indexes2);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+#ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 #endif
 }

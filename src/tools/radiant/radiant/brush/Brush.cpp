@@ -294,6 +294,36 @@ Face* Brush::addPlane (const Vector3& p0, const Vector3& p1, const Vector3& p2, 
 	return m_faces.back();
 }
 
+/* works like addPlane, but cleans the brush from useless planes */
+Face* Brush::chopWithPlane (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
+		const TextureProjection& projection)
+{
+	if (m_faces.size() == c_brush_maxFaces) {
+		return 0;
+	}
+
+	evaluateBRep();
+
+	/* remove faces that will be cut away */
+	Faces::iterator faceIt = m_faces.begin();
+	while (faceIt < m_faces.end()) {
+		Face *victim = *faceIt;
+
+		BrushSplitType split = Winding_ClassifyPlane (victim->getWinding(), Plane3(p0, p1, p2));
+		if (split.counts[ePlaneFront] != 0) {
+			faceIt = ++faceIt;
+			continue; /* this face contrubutes to the brush (at least if brush wasn't malformed before the chop), so keep it */
+		} else {
+			faceIt = m_faces.erase(faceIt);
+		}
+	}
+
+	push_back(FaceSmartPointer(new Face(p0, p1, p2, shader, projection, this)));
+	m_faces.back()->setDetail(isDetail());
+	planeChanged();
+	return m_faces.back();
+}
+
 /**
  * The assumption is that surfaceflags are the same for all faces
  */
@@ -703,6 +733,21 @@ bool Brush::hasVisibleMaterial () const
 	// no visible material
 	return false;
 }
+
+/** @todo replace this garbage by code that calculates real centroid (current code just calculates mean of face centroids) */
+Vector3 Brush::getCentroid () const
+{
+	Vector3 mean(0,0,0);
+	int faceCount = m_faceCentroidPoints.size();
+
+	for (std::size_t i = 0; i < faceCount; ++i)
+		mean +=  m_faceCentroidPoints[i].vertex;
+
+	mean /= faceCount;
+
+	return mean;
+}
+
 
 struct SListNode
 {

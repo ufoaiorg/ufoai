@@ -688,9 +688,10 @@ void BuildVertexNormals (void)
 		for (j = 0; j < num_vert_faces; j++) {
 			const dBspSurface_t *face = &curTile->faces[vert_faces[j]];
 			const dBspPlane_t *plane = &curTile->planes[face->planenum];
+			extents_t *extends = &face_extents[vert_faces[j]];
 
 			/* scale the contribution of each face based on size */
-			VectorSubtract(face_extents[vert_faces[j]].maxs, face_extents[vert_faces[j]].mins, delta);
+			VectorSubtract(extends->maxs, extends->mins, delta);
 			scale = VectorLength(delta);
 
 			if (face->side)

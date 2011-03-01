@@ -266,6 +266,7 @@ void CL_Disconnect (void)
 	S_Stop();
 
 	R_ShutdownModels(qfalse);
+	R_FreeWorldImages();
 
 	CL_SetClientState(ca_disconnected);
 	CL_ClearBattlescapeEvents();

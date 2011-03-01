@@ -90,5 +90,6 @@ entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
 void R_EntitySetOrigin(entity_t *ent, const vec3_t origin);
 void R_EntityAddToOrigin(entity_t *ent, const vec3_t offset);
+void R_TransformForEntity(const entity_t *e, const vec3_t in, vec3_t out);
 
 #endif

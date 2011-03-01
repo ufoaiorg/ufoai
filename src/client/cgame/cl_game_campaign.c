@@ -240,7 +240,7 @@ static void GAME_CP_CampaignListClick_f (void)
 	else
 		racetype = _("Aliens");
 
-	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("%s\n\nRace: %s\nRecruits: %i %s, %i %s, %i %s\n"
+	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("%s\n\nRace: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
 		"Max. allowed debts: %ic\n"
@@ -248,6 +248,7 @@ static void GAME_CP_CampaignListClick_f (void)
 		campaign->soldiers, ngettext("soldier", "soldiers", campaign->soldiers),
 		campaign->scientists, ngettext("scientist", "scientists", campaign->scientists),
 		campaign->workers, ngettext("worker", "workers", campaign->workers),
+		campaign->pilots, ngettext("pilot", "pilots", campaign->pilots),
 		campaign->credits, CP_ToDifficultyName(campaign->difficulty),
 		(int)(round(campaign->minhappiness * 100.0f)), campaign->negativeCreditsUntilLost,
 		_(campaign->text));

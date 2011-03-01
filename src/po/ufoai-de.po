@@ -3113,7 +3113,7 @@ msgstr "Terrormission auf einem Friedhof."
 
 #: ../base/ufos/maps.ufo:689 ../base/ufos/maps.ufo:729
 msgid "A river runs through this piece of jungle."
-msgstr "Ein Stück Dschungel, duch den ein Fluss fliesst."
+msgstr "Ein Stück Dschungel, durch den ein Fluss fließt."
 
 #: ../base/ufos/maps.ufo:770 ../base/ufos/maps.ufo:811
 #: ../base/ufos/maps.ufo:852

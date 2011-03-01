@@ -108,19 +108,19 @@ void CP_IncreaseAlienInterest (const campaign_t *campaign)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean CP_SaveInterestsXML (mxml_node_t *parent)
+qboolean CP_SaveInterestsXML (xmlNode_t *parent)
 {
-	mxml_node_t *interestsNode = mxml_AddNode(parent, SAVE_INTERESTS);
+	xmlNode_t *interestsNode = XML_AddNode(parent, SAVE_INTERESTS);
 	int i;
 
-	mxml_AddShortValue(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
-	mxml_AddShortValue(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
-	mxml_AddShortValue(interestsNode, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
+	XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
+	XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
+	XML_AddShortValue(interestsNode, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
 	Com_RegisterConstList(saveInterestConstants);
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
-		mxml_node_t * interestNode = mxml_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
-		mxml_AddString(interestNode, SAVE_INTERESTS_ID, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
-		mxml_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
+		xmlNode_t * interestNode = XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
+		XML_AddString(interestNode, SAVE_INTERESTS_ID, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
+		XML_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
 	return qtrue;
@@ -130,19 +130,19 @@ qboolean CP_SaveInterestsXML (mxml_node_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean CP_LoadInterestsXML (mxml_node_t *parent)
+qboolean CP_LoadInterestsXML (xmlNode_t *parent)
 {
-	mxml_node_t *node;
-	mxml_node_t *interestsNode = mxml_GetNode(parent, SAVE_INTERESTS);
+	xmlNode_t *node;
+	xmlNode_t *interestsNode = XML_GetNode(parent, SAVE_INTERESTS);
 	qboolean success = qtrue;
 
-	ccs.lastInterestIncreaseDelay = mxml_GetInt(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
-	ccs.lastMissionSpawnedDelay = mxml_GetInt(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
-	ccs.overallInterest = mxml_GetInt(interestsNode, SAVE_INTERESTS_OVERALL, 0);
+	ccs.lastInterestIncreaseDelay = XML_GetInt(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
+	ccs.lastMissionSpawnedDelay = XML_GetInt(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
+	ccs.overallInterest = XML_GetInt(interestsNode, SAVE_INTERESTS_OVERALL, 0);
 	Com_RegisterConstList(saveInterestConstants);
-	for (node = mxml_GetNode(interestsNode, SAVE_INTERESTS_INTEREST); node;
-			node = mxml_GetNextNode(node, interestsNode, SAVE_INTERESTS_INTEREST)) {
-		const char *categoryId = mxml_GetString(node, SAVE_INTERESTS_ID);
+	for (node = XML_GetNode(interestsNode, SAVE_INTERESTS_INTEREST); node;
+			node = XML_GetNextNode(node, interestsNode, SAVE_INTERESTS_INTEREST)) {
+		const char *categoryId = XML_GetString(node, SAVE_INTERESTS_ID);
 		int cat;
 
 		if (!Com_GetConstInt(categoryId, (int*) &cat)) {
@@ -150,7 +150,7 @@ qboolean CP_LoadInterestsXML (mxml_node_t *parent)
 			success = qfalse;
 			break;
 		}
-		ccs.interest[cat]= mxml_GetInt(node, SAVE_INTERESTS_VAL, 0);
+		ccs.interest[cat]= XML_GetInt(node, SAVE_INTERESTS_VAL, 0);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
 	return success;

@@ -569,45 +569,26 @@ invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 
 /**
  * @brief Checks if an item can be used to reload a weapon.
- * @param[in] od The object definition of the ammo.
- * @param[in] weapon The weapon (in the inventory) to check the item with.
- * @return qboolean Returns qtrue if the item can be used in the given weapon, otherwise qfalse.
+ * @param[in] od The object definition of the ammo. Might not be @c NULL.
+ * @param[in] weapon The weapon (in the inventory) to check the item with. Might not be @c NULL.
+ * @return @c true if the item can be used in the given weapon, otherwise @c false.
  */
 qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 {
 	int i;
-	qboolean usable = qfalse;
 
-#ifdef DEBUG
-	if (!od) {
-		Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: No pointer given for 'od'.\n");
+	assert(od);
+	assert(weapon);
+
+	/* check whether the weapon is only linked to itself. */
+	if (od->numWeapons == 1 && od->weapons[0] == od)
 		return qfalse;
-	}
-	if (!weapon) {
-		Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: No weapon pointer given.\n");
-		return qfalse;
-	}
-#endif
 
-	if (od && od->numWeapons == 1 && od->weapons[0] && od->weapons[0] == od) {
-		/* The weapon is only linked to itself. */
-		return qfalse;
-	}
+	for (i = 0; i < od->numWeapons; i++)
+		if (weapon == od->weapons[i])
+			return qtrue;
 
-	for (i = 0; i < od->numWeapons; i++) {
-#ifdef DEBUG
-		if (!od->weapons[i]) {
-			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: No weapon pointer set for the %i. entry found in item '%s'.\n", i, od->id);
-			break;
-		}
-#endif
-		if (weapon == od->weapons[i]) {
-			usable = qtrue;
-			break;
-		}
-	}
-
-	return usable;
+	return qfalse;
 }
 
 /*

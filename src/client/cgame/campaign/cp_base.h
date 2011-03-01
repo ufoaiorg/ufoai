@@ -148,8 +148,7 @@ typedef struct base_s {
 
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
-	inventory_t bEquipment;	/**< The equipment of the base; needn't be saved;
-		a hack based on assertion (MAX_CONTAINERS >= FILTER_AIRCRAFT) ... see e.g. CL_UpdateEquipmentMenuParameters_f */
+	inventory_t bEquipment;	/**< The equipment of the base; needn't be saved */
 
 	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
 	int numBatteries;
@@ -247,10 +246,10 @@ int B_AntimatterInBase(const base_t *base);
 void B_ManageAntimatter(base_t *base, int amount, qboolean add);
 
 /* savesystem */
-void B_SaveBaseSlotsXML(const baseWeapon_t *weapons, const int numWeapons, mxml_node_t *p);
-int B_LoadBaseSlotsXML(baseWeapon_t* weapons, int numWeapons, mxml_node_t *p);
-qboolean B_SaveStorageXML(mxml_node_t *parent, const equipDef_t equip);
-qboolean B_LoadStorageXML(mxml_node_t *parent, equipDef_t *equip);
+void B_SaveBaseSlotsXML(const baseWeapon_t *weapons, const int numWeapons, xmlNode_t *p);
+int B_LoadBaseSlotsXML(baseWeapon_t* weapons, int numWeapons, xmlNode_t *p);
+qboolean B_SaveStorageXML(xmlNode_t *parent, const equipDef_t equip);
+qboolean B_LoadStorageXML(xmlNode_t *parent, equipDef_t *equip);
 
 /* other */
 int B_GetInstallationLimit(void);

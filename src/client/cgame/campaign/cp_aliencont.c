@@ -727,34 +727,34 @@ void AC_InitStartup (void)
  * @sa B_SaveXML
  * @sa SAV_GameSaveXML
  */
-qboolean AC_SaveXML (mxml_node_t * parent)
+qboolean AC_SaveXML (xmlNode_t * parent)
 {
-	mxml_node_t *aliencont;
+	xmlNode_t *aliencont;
 	base_t *base;
 
-	aliencont = mxml_AddNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	mxml_AddBoolValue(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
+	aliencont = XML_AddNode(parent, SAVE_ALIENCONT_ALIENCONT);
+	XML_AddBoolValue(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
-		mxml_node_t *node;
+		xmlNode_t *node;
 		int k;
 
 		if (!AC_ContainmentAllowed(base))
 			continue;
 
-		node = mxml_AddNode(aliencont, SAVE_ALIENCONT_CONT);
-		mxml_AddInt(node, SAVE_ALIENCONT_BASEIDX, base->idx);
+		node = XML_AddNode(aliencont, SAVE_ALIENCONT_CONT);
+		XML_AddInt(node, SAVE_ALIENCONT_BASEIDX, base->idx);
 		for (k = 0; k < MAX_ALIENCONT_CAP && k < ccs.numAliensTD; k++) {
-			mxml_node_t * snode = mxml_AddNode(node, SAVE_ALIENCONT_ALIEN);
+			xmlNode_t * snode = XML_AddNode(node, SAVE_ALIENCONT_ALIEN);
 
 			assert(base->alienscont);
 			assert(base->alienscont[k].teamDef);
 			assert(base->alienscont[k].teamDef->id);
 
-			mxml_AddString(snode, SAVE_ALIENCONT_TEAMID, base->alienscont[k].teamDef->id);
-			mxml_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTALIVE, base->alienscont[k].amountAlive);
-			mxml_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTDEAD, base->alienscont[k].amountDead);
+			XML_AddString(snode, SAVE_ALIENCONT_TEAMID, base->alienscont[k].teamDef->id);
+			XML_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTALIVE, base->alienscont[k].amountAlive);
+			XML_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTDEAD, base->alienscont[k].amountDead);
 		}
 	}
 
@@ -767,14 +767,14 @@ qboolean AC_SaveXML (mxml_node_t * parent)
  * @sa B_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean AC_LoadXML (mxml_node_t * parent)
+qboolean AC_LoadXML (xmlNode_t * parent)
 {
-	mxml_node_t *aliencont;
-	mxml_node_t *contNode;
+	xmlNode_t *aliencont;
+	xmlNode_t *contNode;
 	int i;
 
-	aliencont = mxml_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	ccs.breathingMailSent = mxml_GetBool(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, qfalse);
+	aliencont = XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
+	ccs.breathingMailSent = XML_GetBool(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, qfalse);
 
 	/* Init alienContainers */
 	for (i = 0; i < MAX_BASES; i++) {
@@ -783,25 +783,25 @@ qboolean AC_LoadXML (mxml_node_t * parent)
 		AL_FillInContainment(base);
 	}
 	/* Load data */
-	for (contNode = mxml_GetNode(aliencont, SAVE_ALIENCONT_CONT); contNode;
-			contNode = mxml_GetNextNode(contNode, aliencont, SAVE_ALIENCONT_CONT)) {
-		int j = mxml_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
+	for (contNode = XML_GetNode(aliencont, SAVE_ALIENCONT_CONT); contNode;
+			contNode = XML_GetNextNode(contNode, aliencont, SAVE_ALIENCONT_CONT)) {
+		int j = XML_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
 		base_t *base = B_GetFoundedBaseByIDX(j);
 		int k;
-		mxml_node_t *alienNode;
+		xmlNode_t *alienNode;
 
 		if (!base) {
 			Com_Printf("AC_LoadXML: Invalid base idx '%i'\n", j);
 			continue;
 		}
 
-		for (k = 0, alienNode = mxml_GetNode(contNode, SAVE_ALIENCONT_ALIEN); alienNode && k < MAX_ALIENCONT_CAP; alienNode = mxml_GetNextNode(alienNode, contNode, SAVE_ALIENCONT_ALIEN), k++) {
-			const char *const s = mxml_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
+		for (k = 0, alienNode = XML_GetNode(contNode, SAVE_ALIENCONT_ALIEN); alienNode && k < MAX_ALIENCONT_CAP; alienNode = XML_GetNextNode(alienNode, contNode, SAVE_ALIENCONT_ALIEN), k++) {
+			const char *const s = XML_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
 			/* Fill Alien Containment with default values like the tech pointer. */
 			base->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
 			if (base->alienscont[k].teamDef) {
-				base->alienscont[k].amountAlive = mxml_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
-				base->alienscont[k].amountDead = mxml_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
+				base->alienscont[k].amountAlive = XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
+				base->alienscont[k].amountDead = XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
 			}
 		}
 	}

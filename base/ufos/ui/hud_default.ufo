@@ -1124,7 +1124,7 @@ window hud_default extends hud
 	{
 		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
-		cmd "set mn_showchatbuttons 0;"
+		*cvar:mn_showchatbuttons = 0
 	}
 
 	func onScriptLoaded {

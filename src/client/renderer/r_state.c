@@ -106,6 +106,43 @@ void R_BindNormalmapTexture (GLuint texnum)
 	R_BindTextureForTexUnit(texnum, &texunit_normalmap);
 }
 
+void R_UseMaterial (const material_t *material)
+{
+	static float last_b, last_p, last_s, last_h;
+	float b, p, s, h;
+
+	if (r_state.active_material == material)
+		return;
+
+	if (!r_state.bumpmap_enabled)
+		return;
+
+	if (material)
+		r_state.active_material = material;
+	else
+		r_state.active_material = &defaultMaterial;
+
+	b = r_state.active_material->bump * r_bumpmap->value;
+	if (b != last_b)
+		R_ProgramParameter1f("BUMP", b);
+	last_b = b;
+
+	p = r_state.active_material->parallax * r_parallax->value;
+	if (p != last_p)
+		R_ProgramParameter1f("PARALLAX", p);
+	last_p = p;
+
+	h = r_state.active_material->hardness * r_hardness->value;
+	if (h != last_h)
+		R_ProgramParameter1f("HARDNESS", h);
+	last_h = h;
+
+	s = r_state.active_material->specular * r_specular->value;
+	if (s != last_s)
+		R_ProgramParameter1f("SPECULAR", s);
+	last_s = s;
+}
+
 void R_BindArray (GLenum target, GLenum type, const void *array)
 {
 	switch (target) {
@@ -223,6 +260,19 @@ void R_EnableAlphaTest (qboolean enable)
 		glDisable(GL_ALPHA_TEST);
 }
 
+void R_EnableStencilTest (qboolean enable)
+{
+	if (r_state.stencil_test_enabled == enable)
+		return;
+
+	r_state.stencil_test_enabled = enable;
+
+	if (enable)
+		glEnable(GL_STENCIL_TEST);
+	else
+		glDisable(GL_STENCIL_TEST);
+}
+
 void R_EnableTexture (gltexunit_t *texunit, qboolean enable)
 {
 	if (enable == texunit->enabled)
@@ -326,8 +376,7 @@ void R_EnableDynamicLights (const entity_t *ent, qboolean enable)
 	R_EnableAttribute("TANGENTS");
 	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
 
-	R_ProgramParameter1f("HARDNESS", 0.1);
-	R_ProgramParameter1f("SPECULAR", 0.25);
+	R_UseMaterial(&defaultMaterial);
 
 	glEnable(GL_LIGHTING);
 
@@ -420,11 +469,8 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 		assert(normalmap);
 		R_EnableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 1);
-		/* default parameters to use if no material gets loaded */
-		R_ProgramParameter1f("HARDNESS", 0.1);
-		R_ProgramParameter1f("SPECULAR", 0.25);
-		R_ProgramParameter1f("BUMP", 1.0);
-		R_ProgramParameter1f("PARALLAX", 0.5);
+		/* default material to use if no material gets loaded */
+		R_UseMaterial(&defaultMaterial);
 	} else {
 		R_DisableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 0);

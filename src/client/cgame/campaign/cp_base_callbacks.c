@@ -595,6 +595,8 @@ static void B_BuildingDestroy_f (void)
 		return;
 
 	if (Cmd_Argc() == 4 && Q_streq(Cmd_Argv(3), "confirmed")) {
+		/** @todo why not use the local building pointer here - we should
+		 * reduce the access to these 'current' pointers */
 		B_BuildingDestroy(base->buildingCurrent);
 
 		B_ResetBuildingCurrent(base);

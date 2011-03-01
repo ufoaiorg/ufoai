@@ -231,34 +231,34 @@ qboolean BS_SellAircraft (aircraft_t *aircraft)
  * @sa BS_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean BS_SaveXML (mxml_node_t *parent)
+qboolean BS_SaveXML (xmlNode_t *parent)
 {
 	int i;
-	mxml_node_t *node;
+	xmlNode_t *node;
 	const market_t *market = BS_GetMarket();
 
 	/* store market */
-	node = mxml_AddNode(parent, SAVE_MARKET_MARKET);
+	node = XML_AddNode(parent, SAVE_MARKET_MARKET);
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (BS_IsOnMarket(od)) {
-			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_ITEM);
-			mxml_AddString(snode, SAVE_MARKET_ID, od->id);
-			mxml_AddIntValue(snode, SAVE_MARKET_NUM, market->numItems[i]);
-			mxml_AddIntValue(snode, SAVE_MARKET_BID, market->bidItems[i]);
-			mxml_AddIntValue(snode, SAVE_MARKET_ASK, market->askItems[i]);
-			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionItems[i]);
-			mxml_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, market->autosell[i]);
+			xmlNode_t * snode = XML_AddNode(node, SAVE_MARKET_ITEM);
+			XML_AddString(snode, SAVE_MARKET_ID, od->id);
+			XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numItems[i]);
+			XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidItems[i]);
+			XML_AddIntValue(snode, SAVE_MARKET_ASK, market->askItems[i]);
+			XML_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionItems[i]);
+			XML_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, market->autosell[i]);
 		}
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
-			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_AIRCRAFT);
-			mxml_AddString(snode, SAVE_MARKET_ID, Com_DropShipTypeToShortName(i));
-			mxml_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
-			mxml_AddIntValue(snode, SAVE_MARKET_BID, market->bidAircraft[i]);
-			mxml_AddIntValue(snode, SAVE_MARKET_ASK, market->askAircraft[i]);
-			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionAircraft[i]);
+			xmlNode_t * snode = XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
+			XML_AddString(snode, SAVE_MARKET_ID, Com_DropShipTypeToShortName(i));
+			XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
+			XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidAircraft[i]);
+			XML_AddIntValue(snode, SAVE_MARKET_ASK, market->askAircraft[i]);
+			XML_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionAircraft[i]);
 		}
 	}
 	return qtrue;
@@ -270,17 +270,17 @@ qboolean BS_SaveXML (mxml_node_t *parent)
  * @sa BS_Save
  * @sa SAV_GameLoad
  */
-qboolean BS_LoadXML (mxml_node_t *parent)
+qboolean BS_LoadXML (xmlNode_t *parent)
 {
-	mxml_node_t *node, *snode;
+	xmlNode_t *node, *snode;
 	market_t *market = BS_GetMarket();
 
-	node = mxml_GetNode(parent, SAVE_MARKET_MARKET);
+	node = XML_GetNode(parent, SAVE_MARKET_MARKET);
 	if (!node)
 		return qfalse;
 
-	for (snode = mxml_GetNode(node, SAVE_MARKET_ITEM); snode; snode = mxml_GetNextNode(snode, node, SAVE_MARKET_ITEM)) {
-		const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
+	for (snode = XML_GetNode(node, SAVE_MARKET_ITEM); snode; snode = XML_GetNextNode(snode, node, SAVE_MARKET_ITEM)) {
+		const char *s = XML_GetString(snode, SAVE_MARKET_ID);
 		const objDef_t *od = INVSH_GetItemByID(s);
 
 		if (!od) {
@@ -288,20 +288,20 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 			continue;
 		}
 
-		market->numItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_NUM, 0);
-		market->bidItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
-		market->askItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);
-		market->currentEvolutionItems[od->idx] = mxml_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
-		market->autosell[od->idx] = mxml_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
+		market->numItems[od->idx] = XML_GetInt(snode, SAVE_MARKET_NUM, 0);
+		market->bidItems[od->idx] = XML_GetInt(snode, SAVE_MARKET_BID, 0);
+		market->askItems[od->idx] = XML_GetInt(snode, SAVE_MARKET_ASK, 0);
+		market->currentEvolutionItems[od->idx] = XML_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
+		market->autosell[od->idx] = XML_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
 	}
-	for (snode = mxml_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = mxml_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
-		const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
+	for (snode = XML_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = XML_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
+		const char *s = XML_GetString(snode, SAVE_MARKET_ID);
 		humanAircraftType_t type = Com_DropShipShortNameToID(s);
 
-		market->numAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_NUM, 0);
-		market->bidAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
-		market->askAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);
-		market->currentEvolutionAircraft[type] = mxml_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
+		market->numAircraft[type] = XML_GetInt(snode, SAVE_MARKET_NUM, 0);
+		market->bidAircraft[type] = XML_GetInt(snode, SAVE_MARKET_BID, 0);
+		market->askAircraft[type] = XML_GetInt(snode, SAVE_MARKET_ASK, 0);
+		market->currentEvolutionAircraft[type] = XML_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
 	}
 
 	return qtrue;

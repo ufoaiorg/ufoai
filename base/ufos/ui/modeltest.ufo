@@ -25,7 +25,7 @@ window model_test
 
 	func onWindowOpened
 	{
-		cmd "set mn_model drop_firebird;"
+		*cvar:mn_model = "drop_firebird"
 	}
 
 }

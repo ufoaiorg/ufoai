@@ -9,6 +9,7 @@ namespace entity {
 namespace {
 const std::string RKEY_SHOW_ALL_LIGHT_RADII = "user/ui/showAllLightRadii";
 const std::string RKEY_SHOW_SELECTED_LIGHT_RADII = "user/ui/showSelectedLightRadii";
+const std::string RKEY_SHOW_ENTITY_ANGLES = "user/ui/xyview/showEntityAngles";
 }
 
 /**
@@ -24,6 +25,9 @@ class EntitySettings: public RegistryKeyObserver, public PreferenceConstructor
 
 		// TRUE if light radii should be drawn when selected
 		bool _showSelectedLightRadii;
+
+		// true if GenericEntities should render their direction arrows
+		bool _showEntityAngles;
 
 		// Private constructor
 		EntitySettings ();
@@ -44,6 +48,11 @@ class EntitySettings: public RegistryKeyObserver, public PreferenceConstructor
 		bool showSelectedLightRadii ()
 		{
 			return _showSelectedLightRadii;
+		}
+
+		bool showEntityAngles ()
+		{
+			return _showEntityAngles;
 		}
 
 		// Container for the singleton (ptr)

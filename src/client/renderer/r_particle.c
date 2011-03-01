@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_particle.h"
+#include "r_draw.h"
 
 ptlArt_t r_particlesArt[MAX_PTL_ART];
 int r_numParticlesArt;
@@ -141,38 +142,18 @@ static void R_DrawSprite (const ptl_t * p)
 	R_SpriteTexcoords(p, texcoords);
 
 	R_Color(p->color);
-	/* draw it */
-#ifdef GL_VERSION_ES_CM_1_0
-	GLfloat points[3*4] = {	pos[0], pos[1], pos[2],
-							pos[0] + up[0], pos[1] + up[1], pos[2] + up[2],
-							pos[0] + up[0] + right[0], pos[1] + up[1] + right[1], pos[2] + up[2] + right[2],
-							pos[0] + right[0], pos[1] + right[1], pos[2] + right[2] };
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
-	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	R_BindDefaultArray(GL_VERTEX_ARRAY);
-	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-#else
-	glBegin(GL_TRIANGLE_FAN);
+	{
+		/* draw it */
+		const vec3_t points[] = { { pos[0], pos[1], pos[2] }, { pos[0] + up[0], pos[1] + up[1], pos[2] + up[2] }, { pos[0]
+				+ up[0] + right[0], pos[1] + up[1] + right[1], pos[2] + up[2] + right[2] }, { pos[0] + right[0], pos[1]
+				+ right[1], pos[2] + right[2] } };
 
-	glTexCoord2f(texcoords[0], texcoords[1]);
-	glVertex3fv(pos);
-
-	VectorAdd(pos, up, pos);
-	glTexCoord2f(texcoords[2], texcoords[3]);
-	glVertex3fv(pos);
-
-	VectorAdd(pos, right, pos);
-	glTexCoord2f(texcoords[4], texcoords[5]);
-	glVertex3fv(pos);
-
-	VectorSubtract(pos, up, pos);
-	glTexCoord2f(texcoords[6], texcoords[7]);
-	glVertex3fv(pos);
-
-	glEnd();
-#endif
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		R_BindDefaultArray(GL_VERTEX_ARRAY);
+		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	}
 }
 
 
@@ -204,53 +185,11 @@ static void R_DrawParticleModel (ptl_t * p)
 static void R_DrawPtlCircle (const ptl_t* p)
 {
 	const float radius = p->size[0];
-	const int thickness = (int)p->size[1];
-	float theta;
-	const float accuracy = 5.0f;
+	const float thickness = p->size[1];
 
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
-	R_Color(p->color);
-
-	glEnable(GL_LINE_SMOOTH);
-
-	assert(radius > thickness);
-
-#ifdef GL_VERSION_ES_CM_1_0
-	// TODO: no thickness
-	enum { STEPS = 16 };
-	GLfloat points [ STEPS * 3 ];
-	for (int i = 0; i < STEPS; i++ ) {
-		float a = 2.0f * M_PI * (float) i / (float) STEPS;
-		points[i*3] = p->s[0] + radius * cos( a );
-		points[i*3] = p->s[1] + radius * sin( a );
-		points[i*3] = p->s[2];
-	}
-	glVertexPointer(3, GL_FLOAT, 0, points);
-	glDrawArrays(GL_LINE_LOOP, 0, STEPS);
-	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
-	if (thickness <= 1) {
-		glBegin(GL_LINE_LOOP);
-		for (theta = 0.0f; theta < 2.0f * M_PI; theta += M_PI / (radius * accuracy)) {
-			glVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
-		}
-		glEnd();
-	} else {
-		const float delta = M_PI / (radius * accuracy);
-		glBegin(GL_TRIANGLE_STRIP);
-		for (theta = 0; theta <= 2 * M_PI; theta += delta) {
-			const float f = theta - M_PI / (radius * accuracy);
-			glVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
-			glVertex3f(p->s[0] + radius * cos(f), p->s[1] + radius * sin(f), p->s[2]);
-			glVertex3f(p->s[0] + (radius - thickness) * cos(f), p->s[1] + (radius - thickness) * sin(f), p->s[2]);
-			glVertex3f(p->s[0] + (radius - thickness) * cos(theta), p->s[1] + (radius - thickness) * sin(theta), p->s[2]);
-		}
-		glEnd();
-	}
-#endif
-
-	glDisable(GL_LINE_SMOOTH);
+	R_DrawCircle(radius, p->color, thickness, p->s);
 
 	R_EnableTexture(&texunit_diffuse, qtrue);
 }
@@ -260,6 +199,8 @@ static void R_DrawPtlCircle (const ptl_t* p)
  */
 static void R_DrawPtlLine (const ptl_t * p)
 {
+	const vec3_t points[] = { { p->s[0], p->s[1], p->s[2] }, { p->v[0], p->v[1], p->v[2] } };
+
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
 	glEnable(GL_LINE_SMOOTH);
@@ -267,17 +208,11 @@ static void R_DrawPtlLine (const ptl_t * p)
 	R_Color(p->color);
 
 	/* draw line from s to v */
-#ifdef GL_VERSION_ES_CM_1_0
-	GLfloat points [ 6 ] = { p->s[0], p->s[1], p->s[2], p->v[0], p->v[1], p->v[2] };
-	glVertexPointer(3, GL_FLOAT, 0, points);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_LINE_STRIP, 0, 2);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
-	glBegin(GL_LINE_STRIP);
-	glVertex3fv(p->s);
-	glVertex3fv(p->v);
-	glEnd();
-#endif
+
+	R_Color(NULL);
 
 	glDisable(GL_LINE_SMOOTH);
 

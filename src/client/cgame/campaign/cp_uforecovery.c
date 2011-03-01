@@ -271,23 +271,23 @@ int US_StoredUFOCount (void)
  * @sa US_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean US_SaveXML (mxml_node_t *p)
+qboolean US_SaveXML (xmlNode_t *p)
 {
 	storedUFO_t *ufo;
-	mxml_node_t *node = mxml_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
+	xmlNode_t *node = XML_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
 	US_Foreach(ufo) {
-		mxml_node_t * snode = mxml_AddNode(node, SAVE_UFORECOVERY_UFO);
+		xmlNode_t * snode = XML_AddNode(node, SAVE_UFORECOVERY_UFO);
 
-		mxml_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
-		mxml_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
-		mxml_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.day, ufo->arrive.sec);
-		mxml_AddString(snode, SAVE_UFORECOVERY_STATUS, Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
-		mxml_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
+		XML_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
+		XML_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
+		XML_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.day, ufo->arrive.sec);
+		XML_AddString(snode, SAVE_UFORECOVERY_STATUS, Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
+		XML_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
 
 		if (ufo->installation)
-			mxml_AddInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, ufo->installation->idx);
+			XML_AddInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, ufo->installation->idx);
 	}
 	Com_UnregisterConstList(saveStoredUFOConstants);
 	return qtrue;
@@ -299,22 +299,22 @@ qboolean US_SaveXML (mxml_node_t *p)
  * @sa US_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean US_LoadXML (mxml_node_t *p)
+qboolean US_LoadXML (xmlNode_t *p)
 {
 	int i; /**< @todo this is for old saves now only */
-	mxml_node_t *node, *snode;
+	xmlNode_t *node, *snode;
 
-	node = mxml_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
+	node = XML_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
-	for (i = 0, snode = mxml_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
-			snode = mxml_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO), i++) {
-		const char *id = mxml_GetString(snode, SAVE_UFORECOVERY_STATUS);
+	for (i = 0, snode = XML_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
+			snode = XML_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO), i++) {
+		const char *id = XML_GetString(snode, SAVE_UFORECOVERY_STATUS);
 		storedUFO_t ufo;
 		int statusIDX;
 
 		/* ufo->idx */
-		ufo.idx = mxml_GetInt(snode, SAVE_UFORECOVERY_UFOIDX, -1);
+		ufo.idx = XML_GetInt(snode, SAVE_UFORECOVERY_UFOIDX, -1);
 		/* fallback code for compatibility */
 		if (ufo.idx == -1) {
 			Com_Printf("No IDX defined for stored UFO %d. This must be an old save.\n", i);
@@ -327,7 +327,7 @@ qboolean US_LoadXML (mxml_node_t *p)
 		}
 		ufo.status = statusIDX;
 		/* ufo->installation */
-		ufo.installation = INS_GetFoundedInstallationByIDX(mxml_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, MAX_INSTALLATIONS));
+		ufo.installation = INS_GetFoundedInstallationByIDX(XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, MAX_INSTALLATIONS));
 		if (!ufo.installation) {
 			Com_Printf("UFO has no/invalid installation assigned\n");
 			continue;
@@ -338,7 +338,7 @@ qboolean US_LoadXML (mxml_node_t *p)
 		}
 		ufo.installation->ufoCapacity.cur++;
 		/* ufo->id */
-		Q_strncpyz(ufo.id, mxml_GetString(snode, SAVE_UFORECOVERY_UFOID), sizeof(ufo.id));
+		Q_strncpyz(ufo.id, XML_GetString(snode, SAVE_UFORECOVERY_UFOID), sizeof(ufo.id));
 		/* ufo->ufoTemplate */
 		ufo.ufoTemplate = AIR_GetAircraft(ufo.id);
 		if (!ufo.ufoTemplate) {
@@ -350,8 +350,8 @@ qboolean US_LoadXML (mxml_node_t *p)
 			Com_Printf("UFO has no/invalid components set\n");
 			continue;
 		}
-		mxml_GetDate(snode, SAVE_UFORECOVERY_DATE, &ufo.arrive.day, &ufo.arrive.sec);
-		ufo.condition = mxml_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
+		XML_GetDate(snode, SAVE_UFORECOVERY_DATE, &ufo.arrive.day, &ufo.arrive.sec);
+		ufo.condition = XML_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
 		/* disassembly is set by production savesystem later but only for UFOs that are being disassembled */
 		ufo.disassembly = NULL;
 		LIST_Add(&ccs.storedUFOs, (const byte *)&ufo, sizeof(ufo));

@@ -50,6 +50,7 @@
 
 #include "EntityCreator.h"
 #include "RenderableArrow.h"
+#include "EntitySettings.h"
 
 inline void read_aabb (AABB& aabb, const EntityClass& eclass)
 {
@@ -197,7 +198,7 @@ class GenericEntity: public Cullable, public Bounded, public Snappable
 
 		void renderArrow (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 		{
-			if (GlobalRegistry().get("user/ui/xyview/showEntityAngles") == "1") {
+			if (entity::EntitySettings::Instance().showEntityAngles()) {
 				renderer.addRenderable(m_arrow, localToWorld);
 			}
 		}

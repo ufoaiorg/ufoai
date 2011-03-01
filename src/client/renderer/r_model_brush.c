@@ -1024,8 +1024,6 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 	assert(mapName);
 
-	R_FreeWorldImages();
-
 	/* clear any lights leftover in the active list from previous maps */
 	R_ClearActiveLights();
 

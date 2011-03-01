@@ -119,7 +119,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int32_t *outIndex;
-	int frameSize, numIndexes, numVerts;
+	int frameSize, numVerts;
 	double isw;
 	const char *md2Path;
 	int md2Verts;
@@ -194,19 +194,19 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	}
 
 	/* build list of unique vertices */
-	numIndexes = outMesh->num_tris * 3;
+	outMesh->num_indexes = outMesh->num_tris * 3;
 	numVerts = 0;
-	outMesh->indexes = outIndex = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
+	outMesh->indexes = outIndex = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * outMesh->num_indexes, vid_modelPool, 0);
 
-	for (i = 0; i < numIndexes; i++)
+	for (i = 0; i < outMesh->num_indexes; i++)
 		indRemap[i] = -1;
 
-	for (i = 0; i < numIndexes; i++) {
+	for (i = 0; i < outMesh->num_indexes; i++) {
 		if (indRemap[i] != -1)
 			continue;
 
 		/* remap duplicates */
-		for (j = i + 1; j < numIndexes; j++) {
+		for (j = i + 1; j < outMesh->num_indexes; j++) {
 			if (tempIndex[j] != tempIndex[i])
 				continue;
 			if (pincoord[tempSTIndex[j]].s != pincoord[tempSTIndex[i]].s
@@ -231,7 +231,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
 			mod->name, outMesh->num_verts, outMesh->num_tris);
 
-	for (i = 0; i < numIndexes; i++) {
+	for (i = 0; i < outMesh->num_indexes; i++) {
 		if (indRemap[i] == i)
 			continue;
 
@@ -239,7 +239,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	}
 
 	outMesh->stcoords = outCoord = (mAliasCoord_t *)Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
-	for (j = 0; j < numIndexes; j++) {
+	for (j = 0; j < outMesh->num_indexes; j++) {
 		outCoord[outIndex[j]][0] = (float)(((double)LittleShort(pincoord[tempSTIndex[indRemap[j]]].s) + 0.5) * isw);
 		outCoord[outIndex[j]][1] = (float)(((double)LittleShort(pincoord[tempSTIndex[indRemap[j]]].t) + 0.5) * isw);
 	}
@@ -269,7 +269,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 			AddPointToBounds(outFrame->maxs, mod->mins, mod->maxs);
 		}
 
-		for (j = 0; j < numIndexes; j++) {
+		for (j = 0; j < outMesh->num_indexes; j++) {
 			const int index = tempIndex[indRemap[j]];
 			const dMD2TriangleVertex_t *v = &pinframe->verts[index];
 			float* ov = outVertex[outIndex[j]].point;
@@ -371,11 +371,15 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	numIndexes = outMesh->num_tris * 3;
 	numVerts = outMesh->num_verts;
 
+	if (numIndexes != outMesh->num_indexes)
+		Com_Error(ERR_DROP, "mdx and model file differ: %s", mod->name);
+
 	outMesh->stcoords = outCoord = (mAliasCoord_t *)Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
 	outIndex = outMesh->indexes;
-	for (j = 0; j < numIndexes; j++) {
-		outCoord[outIndex[j]][0] = (float)(((double)LittleShort(pincoord[tempSTIndex[j]].s) + 0.5) * isw);
-		outCoord[outIndex[j]][1] = (float)(((double)LittleShort(pincoord[tempSTIndex[j]].t) + 0.5) * isw);
+	for (j = 0; j < outMesh->num_indexes; j++) {
+		const int32_t index = outIndex[j];
+		outCoord[index][0] = (float)(((double)LittleShort(pincoord[tempSTIndex[j]].s) + 0.5) * isw);
+		outCoord[index][1] = (float)(((double)LittleShort(pincoord[tempSTIndex[j]].t) + 0.5) * isw);
 	}
 
 	/* load the frames */
@@ -403,7 +407,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 			AddPointToBounds(outFrame->maxs, mod->mins, mod->maxs);
 		}
 
-		for (j = 0; j < numIndexes; j++) {
+		for (j = 0; j < outMesh->num_indexes; j++) {
 			const int index = tempIndex[j];
 			const dMD2TriangleVertex_t *v = &pinframe->verts[index];
 			float* ov = outVertex[outIndex[j]].point;

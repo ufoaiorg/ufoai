@@ -30,6 +30,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 mBspSurfaces_t r_material_surfaces;
 
+/** @todo load this from file, will make tweaking the game much easier */
+material_t defaultMaterial = {
+	0, /* unsigned flags; */
+	0.0f, /* float time; */
+	DEFAULT_BUMP, /* float bump; */
+	DEFAULT_PARALLAX, /* float parallax; */
+	DEFAULT_HARDNESS, /* float hardness; */
+	DEFAULT_SPECULAR, /* float specular; */
+	DEFAULT_GLOWSCALE, /* float glowscale; */
+	NULL, /* materialStage_t *stages; */
+	0 /* int num_stages; */
+};
+
 #define UPDATE_THRESHOLD 0.02
 /**
  * @brief Materials "think" every few milliseconds to advance animations.

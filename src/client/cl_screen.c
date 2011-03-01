@@ -135,7 +135,7 @@ static const image_t* SCR_SetLoadingBackground (const char *mapString)
 	if (mapname[0] == '+')
 		mapname++;
 
-	image = R_FindImage(va("pics/maps/loading/%s", mapname), it_pic);
+	image = R_FindImage(va("pics/maps/loading/%s", mapname), it_worldrelated);
 	if (image == r_noTexture)
 		image = R_FindImage("pics/maps/loading/default", it_pic);
 
@@ -177,9 +177,6 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 		SCR_DrawDownloading();
 		return;
 	}
-
-	if (!refdef.ready)
-		return;
 
 	loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
 
@@ -325,7 +322,6 @@ static void SCR_DrawConsole (void)
  */
 void SCR_BeginLoadingPlaque (void)
 {
-	SCR_DrawLoading(0, "");
 	cls.disableScreen = CL_Milliseconds();
 }
 

@@ -382,6 +382,7 @@ static const value_t campaign_vals[] = {
 	{"maxdebts", V_INT, offsetof(campaign_t, negativeCreditsUntilLost), MEMBER_SIZEOF(campaign_t, negativeCreditsUntilLost)},
 	{"minhappiness", V_FLOAT, offsetof(campaign_t, minhappiness), MEMBER_SIZEOF(campaign_t, minhappiness)},
 	{"scientists", V_INT, offsetof(campaign_t, scientists), MEMBER_SIZEOF(campaign_t, scientists)},
+	{"pilots", V_INT, offsetof(campaign_t, pilots), MEMBER_SIZEOF(campaign_t, pilots)},
 	{"ugvs", V_INT, offsetof(campaign_t, ugvs), MEMBER_SIZEOF(campaign_t, ugvs)},
 	{"equipment", V_STRING, offsetof(campaign_t, equipment), 0},
 	{"soldierequipment", V_STRING, offsetof(campaign_t, soldierEquipment), 0},

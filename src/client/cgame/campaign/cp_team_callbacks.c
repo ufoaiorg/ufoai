@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../cl_team.h"
+#include "../../cgame/cl_game_team.h"
 #include "../../ui/ui_main.h"
 #include "../../ui/node/ui_node_container.h"	/**< ui_inventory */
 
@@ -191,15 +192,13 @@ static void CL_UpdatePilotList_f (void)
  * @note This function is called everytime the equipment screen for the team pops up.
  * @todo Do we allow EMPL_ROBOTs to be equipable? Or is simple buying of ammo enough (similar to original UFO/XCOM)?
  * In the first case the EMPL_SOLDIER stuff below needs to be changed.
+ * @todo merge with GAME_GetEquipment
  */
 static void CL_UpdateEquipmentMenuParameters_f (void)
 {
-	equipDef_t unused;
 	aircraft_t *aircraft;
-	aircraft_t *aircraftInBase;
 	base_t *base = B_GetCurrentSelectedBase();
 	int i;
-	int size;
 
 	if (!base)
 		return;
@@ -217,31 +216,19 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	Cvar_ForceSet("cl_selected", "0");
 
 	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
-	size = CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
-	if (size > 0)
-		ui_inventory = &chrDisplayList.chr[0]->i;
-	else
-		ui_inventory = NULL;
+	CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		if (i < size)
+		if (i < chrDisplayList.num)
 			UI_ExecuteConfunc("equipenable %i", i);
 		else
 			UI_ExecuteConfunc("equipdisable %i", i);
 	}
 
-	/* manage inventory */
-	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
-
 	/* clean up aircraft crew for upcoming mission */
 	CL_CleanTempInventory(aircraft->homebase);
 
-	AIR_Foreach(aircraftInBase) {
-		if (aircraftInBase->homebase == base)
-			CL_CleanupAircraftCrew(aircraftInBase, &unused);
-	}
-
-	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
+	GAME_UpdateInventory(&aircraft->homebase->bEquipment, &aircraft->homebase->storage);
 }
 
 /**

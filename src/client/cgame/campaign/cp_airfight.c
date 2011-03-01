@@ -753,7 +753,7 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 	base_t *base;
 
 	base = NULL;
-	while ((base = (base)) != NULL) {
+	while ((base = B_GetNext(base)) != NULL) {
 		int idx;
 
 		if (B_IsUnderAttack(base))
@@ -813,43 +813,43 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean AIRFIGHT_SaveXML (mxml_node_t *parent)
+qboolean AIRFIGHT_SaveXML (xmlNode_t *parent)
 {
 	int i;
 
 	for (i = 0; i < ccs.numProjectiles; i++) {
 		int j;
 		aircraftProjectile_t *projectile = &ccs.projectiles[i];
-		mxml_node_t *node = mxml_AddNode(parent, SAVE_AIRFIGHT_PROJECTILE);
+		xmlNode_t *node = XML_AddNode(parent, SAVE_AIRFIGHT_PROJECTILE);
 
-		mxml_AddString(node, SAVE_AIRFIGHT_ITEMID, projectile->aircraftItem->id);
+		XML_AddString(node, SAVE_AIRFIGHT_ITEMID, projectile->aircraftItem->id);
 		for (j = 0; j < projectile->numProjectiles; j++)
-			mxml_AddPos2(node, SAVE_AIRFIGHT_POS, projectile->pos[j]);
-		mxml_AddPos3(node, SAVE_AIRFIGHT_IDLETARGET, projectile->idleTarget);
+			XML_AddPos2(node, SAVE_AIRFIGHT_POS, projectile->pos[j]);
+		XML_AddPos3(node, SAVE_AIRFIGHT_IDLETARGET, projectile->idleTarget);
 
-		mxml_AddInt(node, SAVE_AIRFIGHT_TIME, projectile->time);
-		mxml_AddFloat(node, SAVE_AIRFIGHT_ANGLE, projectile->angle);
-		mxml_AddBoolValue(node, SAVE_AIRFIGHT_BULLET, projectile->bullets);
-		mxml_AddBoolValue(node, SAVE_AIRFIGHT_BEAM, projectile->beam);
+		XML_AddInt(node, SAVE_AIRFIGHT_TIME, projectile->time);
+		XML_AddFloat(node, SAVE_AIRFIGHT_ANGLE, projectile->angle);
+		XML_AddBoolValue(node, SAVE_AIRFIGHT_BULLET, projectile->bullets);
+		XML_AddBoolValue(node, SAVE_AIRFIGHT_BEAM, projectile->beam);
 
 		if (projectile->attackingAircraft) {
-			mxml_node_t *attacking =  mxml_AddNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT);
+			xmlNode_t *attacking =  XML_AddNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT);
 
-			mxml_AddBoolValue(attacking, SAVE_AIRFIGHT_ISUFO, projectile->attackingAircraft->type == AIRCRAFT_UFO);
+			XML_AddBoolValue(attacking, SAVE_AIRFIGHT_ISUFO, projectile->attackingAircraft->type == AIRCRAFT_UFO);
 			if (projectile->attackingAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, UFO_GetGeoscapeIDX(projectile->attackingAircraft));
+				XML_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, UFO_GetGeoscapeIDX(projectile->attackingAircraft));
 			else
-				mxml_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->attackingAircraft->idx);
+				XML_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->attackingAircraft->idx);
 		}
 
 		if (projectile->aimedAircraft) {
-			mxml_node_t *aimed =  mxml_AddNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT);
+			xmlNode_t *aimed =  XML_AddNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT);
 
-			mxml_AddBoolValue(aimed, SAVE_AIRFIGHT_ISUFO, projectile->aimedAircraft->type == AIRCRAFT_UFO);
+			XML_AddBoolValue(aimed, SAVE_AIRFIGHT_ISUFO, projectile->aimedAircraft->type == AIRCRAFT_UFO);
 			if (projectile->aimedAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, UFO_GetGeoscapeIDX(projectile->aimedAircraft));
+				XML_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, UFO_GetGeoscapeIDX(projectile->aimedAircraft));
 			else
-				mxml_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->aimedAircraft->idx);
+				XML_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->aimedAircraft->idx);
 		}
 	}
 
@@ -860,18 +860,18 @@ qboolean AIRFIGHT_SaveXML (mxml_node_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean AIRFIGHT_LoadXML (mxml_node_t *parent)
+qboolean AIRFIGHT_LoadXML (xmlNode_t *parent)
 {
 	int i;
-	mxml_node_t *node;
+	xmlNode_t *node;
 
-	for (i = 0, node = mxml_GetNode(parent, SAVE_AIRFIGHT_PROJECTILE); i < MAX_PROJECTILESONGEOSCAPE && node;
-			node = mxml_GetNextNode(node, parent, SAVE_AIRFIGHT_PROJECTILE), i++) {
-		technology_t *tech = RS_GetTechByProvided(mxml_GetString(node, SAVE_AIRFIGHT_ITEMID));
+	for (i = 0, node = XML_GetNode(parent, SAVE_AIRFIGHT_PROJECTILE); i < MAX_PROJECTILESONGEOSCAPE && node;
+			node = XML_GetNextNode(node, parent, SAVE_AIRFIGHT_PROJECTILE), i++) {
+		technology_t *tech = RS_GetTechByProvided(XML_GetString(node, SAVE_AIRFIGHT_ITEMID));
 		int j;
-		mxml_node_t *positions;
-		mxml_node_t *attackingAircraft;
-		mxml_node_t *aimedAircraft;
+		xmlNode_t *positions;
+		xmlNode_t *attackingAircraft;
+		xmlNode_t *aimedAircraft;
 		aircraftProjectile_t *projectile = &ccs.projectiles[i];
 
 		if (!tech) {
@@ -881,32 +881,32 @@ qboolean AIRFIGHT_LoadXML (mxml_node_t *parent)
 
 		projectile->aircraftItem = INVSH_GetItemByID(tech->provides);
 
-		for (j = 0, positions = mxml_GetPos2(node, SAVE_AIRFIGHT_POS, projectile->pos[0]); j < MAX_MULTIPLE_PROJECTILES && positions;
-		     j++, positions = mxml_GetNextPos2(positions, node, SAVE_AIRFIGHT_POS, projectile->pos[j]))
+		for (j = 0, positions = XML_GetPos2(node, SAVE_AIRFIGHT_POS, projectile->pos[0]); j < MAX_MULTIPLE_PROJECTILES && positions;
+		     j++, positions = XML_GetNextPos2(positions, node, SAVE_AIRFIGHT_POS, projectile->pos[j]))
 			;
 		projectile->numProjectiles = j;
-		mxml_GetPos3(node, SAVE_AIRFIGHT_IDLETARGET, projectile->idleTarget);
+		XML_GetPos3(node, SAVE_AIRFIGHT_IDLETARGET, projectile->idleTarget);
 
-		projectile->time = mxml_GetInt(node, SAVE_AIRFIGHT_TIME, 0);
-		projectile->angle = mxml_GetFloat(node, SAVE_AIRFIGHT_ANGLE, 0.0);
-		projectile->bullets = mxml_GetBool(node, SAVE_AIRFIGHT_BULLET, qfalse);
-		projectile->beam = mxml_GetBool(node, SAVE_AIRFIGHT_BEAM, qfalse);
+		projectile->time = XML_GetInt(node, SAVE_AIRFIGHT_TIME, 0);
+		projectile->angle = XML_GetFloat(node, SAVE_AIRFIGHT_ANGLE, 0.0);
+		projectile->bullets = XML_GetBool(node, SAVE_AIRFIGHT_BULLET, qfalse);
+		projectile->beam = XML_GetBool(node, SAVE_AIRFIGHT_BEAM, qfalse);
 
-		if ((attackingAircraft = mxml_GetNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT))) {
-			if (mxml_GetBool(attackingAircraft, SAVE_AIRFIGHT_ISUFO, qfalse))
+		if ((attackingAircraft = XML_GetNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT))) {
+			if (XML_GetBool(attackingAircraft, SAVE_AIRFIGHT_ISUFO, qfalse))
 				/** @todo 0 as default might be incorrect */
-				projectile->attackingAircraft = UFO_GetByIDX(mxml_GetInt(attackingAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, 0));
+				projectile->attackingAircraft = UFO_GetByIDX(XML_GetInt(attackingAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, 0));
 			else
-				projectile->attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(attackingAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, AIRCRAFT_INVALID));
+				projectile->attackingAircraft = AIR_AircraftGetFromIDX(XML_GetInt(attackingAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, AIRCRAFT_INVALID));
 		} else {
 			projectile->attackingAircraft = NULL;
 		}
-		if ((aimedAircraft = mxml_GetNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT))) {
-			if (mxml_GetBool(aimedAircraft, SAVE_AIRFIGHT_ISUFO, qfalse))
+		if ((aimedAircraft = XML_GetNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT))) {
+			if (XML_GetBool(aimedAircraft, SAVE_AIRFIGHT_ISUFO, qfalse))
 				/** @todo 0 as default might be incorrect */
-				projectile->aimedAircraft = UFO_GetByIDX(mxml_GetInt(aimedAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, 0));
+				projectile->aimedAircraft = UFO_GetByIDX(XML_GetInt(aimedAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, 0));
 			else
-				projectile->aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(aimedAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, AIRCRAFT_INVALID));
+				projectile->aimedAircraft = AIR_AircraftGetFromIDX(XML_GetInt(aimedAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, AIRCRAFT_INVALID));
 		} else {
 			projectile->aimedAircraft = NULL;
 		}

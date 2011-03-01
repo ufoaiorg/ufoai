@@ -1,5 +1,8 @@
 ifeq ($(STATIC),1)
 PKG_CONFIG_LIBS_FLAGS := --static
+CONFIG_LIBS_FLAGS = --static-libs
+else
+CONFIG_LIBS_FLAGS = --libs
 endif
 
 #TODO the manually added linker flag is more a hack than a solution

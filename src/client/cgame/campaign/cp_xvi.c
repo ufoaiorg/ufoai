@@ -225,18 +225,18 @@ void CP_XVIInit (void)
  * @sa SAV_InitXML
  * @sa XVI_LoadXML
  */
-qboolean XVI_SaveXML (mxml_node_t *p)
+qboolean XVI_SaveXML (xmlNode_t *p)
 {
 	int y;
 	int width;
 	int height;
-	mxml_node_t *n;
+	xmlNode_t *n;
 
 	CP_GetXVIMapDimensions(&width, &height);
 
-	n = mxml_AddNode(p, SAVE_XVI_XVI);
-	mxml_AddInt(n, SAVE_XVI_WIDTH, width);
-	mxml_AddInt(n, SAVE_XVI_HEIGHT, height);
+	n = XML_AddNode(p, SAVE_XVI_XVI);
+	XML_AddInt(n, SAVE_XVI_WIDTH, width);
+	XML_AddInt(n, SAVE_XVI_HEIGHT, height);
 
 	for (y = 0; y < height; y++) {
 		int x;
@@ -244,10 +244,10 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 			const int xviLevel = CP_GetXVILevel(x, y);
 			/* That saves many bytes in the savegame */
 			if (xviLevel > 0) {
-				mxml_node_t *s = mxml_AddNode(n, SAVE_XVI_ENTRY);
-				mxml_AddInt(s, SAVE_XVI_X, x);
-				mxml_AddInt(s, SAVE_XVI_Y, y);
-				mxml_AddInt(s, SAVE_XVI_LEVEL, xviLevel);
+				xmlNode_t *s = XML_AddNode(n, SAVE_XVI_ENTRY);
+				XML_AddInt(s, SAVE_XVI_X, x);
+				XML_AddInt(s, SAVE_XVI_Y, y);
+				XML_AddInt(s, SAVE_XVI_LEVEL, xviLevel);
 			}
 		}
 	}
@@ -260,24 +260,24 @@ qboolean XVI_SaveXML (mxml_node_t *p)
  * @sa SAV_InitXML
  * @sa XVI_SaveXML
  */
-qboolean XVI_LoadXML (mxml_node_t *p)
+qboolean XVI_LoadXML (xmlNode_t *p)
 {
 	int width, height;
-	mxml_node_t *s;
-	mxml_node_t *n = mxml_GetNode(p, SAVE_XVI_XVI);
+	xmlNode_t *s;
+	xmlNode_t *n = XML_GetNode(p, SAVE_XVI_XVI);
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
 		CP_InitializeXVIOverlay(NULL);
 		return qtrue;
 	}
 
-	width = mxml_GetInt(n, SAVE_XVI_WIDTH, 0);
-	height = mxml_GetInt(n, SAVE_XVI_HEIGHT, 0);
+	width = XML_GetInt(n, SAVE_XVI_WIDTH, 0);
+	height = XML_GetInt(n, SAVE_XVI_HEIGHT, 0);
 
-	for (s = mxml_GetNode(n, SAVE_XVI_ENTRY); s; s = mxml_GetNextNode(s, n, SAVE_XVI_ENTRY)) {
-		const int x = mxml_GetInt(s, SAVE_XVI_X, 0);
-		const int y = mxml_GetInt(s, SAVE_XVI_Y, 0);
-		const int level = mxml_GetInt(s, SAVE_XVI_LEVEL, 0);
+	for (s = XML_GetNode(n, SAVE_XVI_ENTRY); s; s = XML_GetNextNode(s, n, SAVE_XVI_ENTRY)) {
+		const int x = XML_GetInt(s, SAVE_XVI_X, 0);
+		const int y = XML_GetInt(s, SAVE_XVI_Y, 0);
+		const int level = XML_GetInt(s, SAVE_XVI_LEVEL, 0);
 
 		if (x >= 0 && x < width && y >= 0 && y <= height)
 			CP_SetXVILevel(x, y, level);

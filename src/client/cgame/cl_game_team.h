@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_TEAM_H
 #define CL_GAME_TEAM_H
 
+#include "../mxml/mxml_ufoai.h"
+
 void GAME_SaveTeam_f(void);
 void GAME_LoadTeam_f(void);
 void GAME_TeamSlotComments_f(void);
@@ -33,8 +35,11 @@ void GAME_SaveTeamState_f(void);
 void GAME_ToggleActorForTeam_f(void);
 void GAME_AutoTeam_f(void);
 void GAME_AutoTeam(const char *equipmentDefinitionID, int teamMembers);
+void GAME_UpdateInventory(inventory_t *inv, const equipDef_t *ed);
 void GAME_UpdateTeamMenuParameters_f(void);
-void GAME_TeamSelect_f(void);
+void GAME_ActorSelect_f(void);
 qboolean GAME_LoadDefaultTeam(void);
+qboolean GAME_SaveCharacter(xmlNode_t *p, const character_t *chr);
+qboolean GAME_LoadCharacter(xmlNode_t *p, character_t *chr);
 
 #endif

@@ -186,7 +186,7 @@ void HOS_InitStartup (void)
  * @sa HOS_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean HOS_SaveXML (mxml_node_t *p)
+qboolean HOS_SaveXML (xmlNode_t *p)
 {
 	/* nothing to save here */
 	return qtrue;
@@ -197,7 +197,7 @@ qboolean HOS_SaveXML (mxml_node_t *p)
  * @sa HOS_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean HOS_LoadXML (mxml_node_t *p)
+qboolean HOS_LoadXML (xmlNode_t *p)
 {
 	return qtrue;
 }

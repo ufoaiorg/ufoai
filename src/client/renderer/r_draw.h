@@ -38,14 +38,13 @@ void R_DrawTexture(int texnum, int x, int y, int w, int h);
 void R_DrawLineStrip(int points, int *verts);
 void R_DrawLineLoop(int points, int *verts);
 void R_DrawLine(int *verts, float thickness);
-void R_DrawCircle(vec3_t mid, float radius, const vec4_t color, int thickness);
-void R_DrawCircle2D(int x, int y, float radius, qboolean fill, const vec4_t color, float thickness);
+void R_DrawCircle(float radius, const vec4_t color, float thickness, const vec3_t shift);
 void R_DrawPolygon(int points, int *verts);
 void R_PushClipRect(int x, int y, int width, int height);
 void R_PopClipRect(void);
 void R_CleanupDepthBuffer(int x, int y, int width, int height);
-void R_DrawBoundingBox(const vec3_t mins, const vec3_t maxs);
-void R_DrawBoundingBoxBatched(const vec3_t mins, const vec3_t maxs);
+void R_DrawBoundingBox(const vec3_t absmins, const vec3_t absmaxs);
+void R_DrawBoundingBoxBatched(const vec3_t absmins, const vec3_t absmaxs);
 void R_DrawBoundingBoxes(void);
 
 #endif

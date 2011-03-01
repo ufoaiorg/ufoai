@@ -22,48 +22,49 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MXML_UFOAI_H
 
 #include "mxml.h"
+#define xmlNode_t mxml_node_t
 #include "../../shared/mathlib.h"
 #include "../../shared/ufotypes.h"
 
-void mxml_AddString(mxml_node_t *parent, const char *name, const char *value);
-void mxml_AddBool(mxml_node_t *parent, const char *name, qboolean value);
-void mxml_AddFloat(mxml_node_t *parent, const char *name, float value);
-void mxml_AddDouble(mxml_node_t *parent, const char *name, double value);
-void mxml_AddByte(mxml_node_t *parent, const char *name, byte value);
-void mxml_AddShort(mxml_node_t *parent, const char *name, short value);
-void mxml_AddInt(mxml_node_t *parent, const char *name, int value);
-void mxml_AddLong(mxml_node_t *parent, const char *name, long value);
-void mxml_AddPos3(mxml_node_t *parent, const char *name, const vec3_t pos);
-void mxml_AddPos2(mxml_node_t *parent, const char *name, const vec2_t pos);
-void mxml_AddDate(mxml_node_t *parent, const char *name, const int day, const int sec);
+void XML_AddString(xmlNode_t *parent, const char *name, const char *value);
+void XML_AddBool(xmlNode_t *parent, const char *name, qboolean value);
+void XML_AddFloat(xmlNode_t *parent, const char *name, float value);
+void XML_AddDouble(xmlNode_t *parent, const char *name, double value);
+void XML_AddByte(xmlNode_t *parent, const char *name, byte value);
+void XML_AddShort(xmlNode_t *parent, const char *name, short value);
+void XML_AddInt(xmlNode_t *parent, const char *name, int value);
+void XML_AddLong(xmlNode_t *parent, const char *name, long value);
+void XML_AddPos3(xmlNode_t *parent, const char *name, const vec3_t pos);
+void XML_AddPos2(xmlNode_t *parent, const char *name, const vec2_t pos);
+void XML_AddDate(xmlNode_t *parent, const char *name, const int day, const int sec);
 
-void mxml_AddStringValue(mxml_node_t *parent, const char *name, const char *value);
-void mxml_AddBoolValue(mxml_node_t *parent, const char *name, qboolean value);
-void mxml_AddFloatValue(mxml_node_t *parent, const char *name, float value);
-void mxml_AddDoubleValue(mxml_node_t *parent, const char *name, double value);
-void mxml_AddByteValue(mxml_node_t *parent, const char *name, byte value);
-void mxml_AddShortValue(mxml_node_t *parent, const char *name, short value);
-void mxml_AddIntValue(mxml_node_t *parent, const char *name, int value);
-void mxml_AddLongValue(mxml_node_t *parent, const char *name, long value);
+void XML_AddStringValue(xmlNode_t *parent, const char *name, const char *value);
+void XML_AddBoolValue(xmlNode_t *parent, const char *name, qboolean value);
+void XML_AddFloatValue(xmlNode_t *parent, const char *name, float value);
+void XML_AddDoubleValue(xmlNode_t *parent, const char *name, double value);
+void XML_AddByteValue(xmlNode_t *parent, const char *name, byte value);
+void XML_AddShortValue(xmlNode_t *parent, const char *name, short value);
+void XML_AddIntValue(xmlNode_t *parent, const char *name, int value);
+void XML_AddLongValue(xmlNode_t *parent, const char *name, long value);
 
-mxml_node_t * mxml_AddNode(mxml_node_t *parent, const char *name);
+xmlNode_t * XML_AddNode(xmlNode_t *parent, const char *name);
 
-qboolean mxml_GetBool(mxml_node_t *parent, const char *name, const qboolean defaultval);
-int mxml_GetInt(mxml_node_t *parent, const char *name, const int defaultval);
-short mxml_GetShort(mxml_node_t *parent, const char *name, const short defaultval);
-long mxml_GetLong(mxml_node_t *parent, const char *name, const long defaultval);
-const char * mxml_GetString(mxml_node_t *parent, const char *name);
-float mxml_GetFloat(mxml_node_t *parent, const char *name, const float defaultval);
-double mxml_GetDouble(mxml_node_t *parent, const char *name, const double defaultval);
-mxml_node_t * mxml_GetPos2(mxml_node_t *parent, const char *name, vec2_t pos);
-mxml_node_t * mxml_GetNextPos2(mxml_node_t *actual, mxml_node_t *parent, const char *name, vec2_t pos);
-mxml_node_t * mxml_GetPos3(mxml_node_t *parent, const char *name, vec3_t pos);
-mxml_node_t * mxml_GetNextPos3(mxml_node_t *actual, mxml_node_t *parent, const char *name, vec3_t pos);
-mxml_node_t * mxml_GetDate(mxml_node_t *parent, const char *name, int *day, int *sec);
+qboolean XML_GetBool(xmlNode_t *parent, const char *name, const qboolean defaultval);
+int XML_GetInt(xmlNode_t *parent, const char *name, const int defaultval);
+short XML_GetShort(xmlNode_t *parent, const char *name, const short defaultval);
+long XML_GetLong(xmlNode_t *parent, const char *name, const long defaultval);
+const char * XML_GetString(xmlNode_t *parent, const char *name);
+float XML_GetFloat(xmlNode_t *parent, const char *name, const float defaultval);
+double XML_GetDouble(xmlNode_t *parent, const char *name, const double defaultval);
+xmlNode_t * XML_GetPos2(xmlNode_t *parent, const char *name, vec2_t pos);
+xmlNode_t * XML_GetNextPos2(xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos);
+xmlNode_t * XML_GetPos3(xmlNode_t *parent, const char *name, vec3_t pos);
+xmlNode_t * XML_GetNextPos3(xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos);
+xmlNode_t * XML_GetDate(xmlNode_t *parent, const char *name, int *day, int *sec);
 
-mxml_node_t * mxml_GetNode(mxml_node_t *parent, const char *name);
-mxml_node_t * mxml_GetNextNode(mxml_node_t *current, mxml_node_t *parent, const char *name);
+xmlNode_t * XML_GetNode(xmlNode_t *parent, const char *name);
+xmlNode_t * XML_GetNextNode(xmlNode_t *current, xmlNode_t *parent, const char *name);
 
-mxml_type_t mxml_ufo_type_cb(mxml_node_t *node);
+mxml_type_t mxml_ufo_type_cb(xmlNode_t *node);
 
 #endif

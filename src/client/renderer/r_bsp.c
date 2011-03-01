@@ -202,8 +202,10 @@ void R_DrawBrushModel (const entity_t * e)
 	R_DrawBspModelSurfaces(e, modelorg);
 
 	/* show model bounding box */
-	if (r_showbox->integer)
-		R_DrawBoundingBox(e->model->mins, e->model->maxs);
+	if (r_showbox->integer) {
+		const model_t *model = e->model;
+		R_DrawBoundingBox(model->mins, model->maxs);
+	}
 
 	glPopMatrix();
 

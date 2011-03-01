@@ -147,6 +147,7 @@ window game_team_edit extends objectinfo
 	 */
 	confunc team_soldier_unselect {
 		*node:root.txt_actor<1>@color = "0 .78 0 1"
+		cmd "equipdeselect <1>;"
 	}
 
 	/**
@@ -154,6 +155,7 @@ window game_team_edit extends objectinfo
 	 */
 	confunc team_soldier_select {
 		*node:root.txt_actor<1>@color = "1 1 1 1"
+		cmd "equipselect <1>;"
 	}
 
 	/**
@@ -205,7 +207,7 @@ window game_team_edit extends objectinfo
 		pos		"90 13"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "game_teamselect 0;" }
+		onClick { cmd "game_actorselect 0;" }
 	}
 	string txt_actor1
 	{
@@ -213,7 +215,7 @@ window game_team_edit extends objectinfo
 		pos		"90 54"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "game_teamselect 1;" }
+		onClick { cmd "game_actorselect 1;" }
 	}
 	string txt_actor2
 	{
@@ -221,7 +223,7 @@ window game_team_edit extends objectinfo
 		pos		"90 95"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "game_teamselect 2;" }
+		onClick { cmd "game_actorselect 2;" }
 	}
 	string txt_actor3
 	{
@@ -229,7 +231,7 @@ window game_team_edit extends objectinfo
 		pos		"90 136"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "game_teamselect 3;" }
+		onClick { cmd "game_actorselect 3;" }
 	}
 	string txt_actor4
 	{
@@ -237,7 +239,7 @@ window game_team_edit extends objectinfo
 		pos		"90 177"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "game_teamselect 4;" }
+		onClick { cmd "game_actorselect 4;" }
 	}
 	string txt_actor5
 	{
@@ -245,7 +247,7 @@ window game_team_edit extends objectinfo
 		pos		"90 218"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "game_teamselect 5;" }
+		onClick { cmd "game_actorselect 5;" }
 	}
 	string txt_actor6
 	{
@@ -253,7 +255,7 @@ window game_team_edit extends objectinfo
 		pos		"90 259"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "game_teamselect 6;" }
+		onClick { cmd "game_actorselect 6;" }
 	}
 	string txt_actor7
 	{
@@ -261,7 +263,7 @@ window game_team_edit extends objectinfo
 		pos		"90 300"
 		size	"270 40"
 		textalign ALIGN_CL
-		onClick { cmd "game_teamselect 7;" }
+		onClick { cmd "game_actorselect 7;" }
 	}
 
 	// ==================
@@ -727,212 +729,14 @@ window game_team_edit extends objectinfo
 		call *node:root.team_names_clear
 		call *node:root.team_actor_stats
 		call *node:root.team_checkboxes_set
-		cmd "set mn_infotype 0;set mn_equiptype 0;"
-		cmd "team_initskin;team_update_item_list;game_teamselect 0;game_teamupdate;"
+		*cvar:mn_infotype = 0
+		*cvar:mn_equiptype = 0
+		cmd "team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;"
 	}
 
 	func onWindowClosed
 	{
 		cmd "game_saveteamstate;"
-	}
-}
-
-
-// =====================
-// TEAM MENU
-// =====================
-
-// @todo this should not inherit from abstract_multiplayer
-window game_team extends abstract_multiplayer
-{
-	panel content {
-		{
-			pos	"415 0"
-			size	"608 768"
-		}
-
-		// ==================
-		// slots
-		// ==================
-
-		/**
-		 * @param[in] <1> id of the slot
-		 * @param[in] <2> amount of soldiers in the savegame
-		 * @param[in] <3> name of the savegame
-		 */
-		confunc set_slotname {
-			cmd "set mn_slot<1> \"<3> (<2>)\";"
-			*node:root.content.slot_team<1>@disabled = false
-		}
-
-		button slot_team0
-		{
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			disabled	true
-			pos			"85 130"
-			size		"256 34"
-			string		*cvar:mn_slot0
-			onClick		{ cmd "game_loadteam 0;ui_push game_team_edit;" }
-		}
-
-		button slot_team1
-		{
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			disabled	true
-			pos			"85 165"
-			size		"256 34"
-			string		*cvar:mn_slot1
-			onClick		{ cmd "game_loadteam 1;ui_push game_team_edit;" }
-		}
-
-		button slot_team2
-		{
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			disabled	true
-			pos			"85 200"
-			size		"256 34"
-			string		*cvar:mn_slot2
-			onClick		{ cmd "game_loadteam 2;ui_push game_team_edit;" }
-		}
-
-		button slot_team3
-		{
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			disabled	true
-			pos			"85 235"
-			size		"256 34"
-			string		*cvar:mn_slot3
-			onClick		{ cmd "game_loadteam 3;ui_push game_team_edit;" }
-		}
-
-		button slot_team4
-		{
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			disabled	true
-			pos			"85 270"
-			size		"256 34"
-			string		*cvar:mn_slot4
-			onClick		{ cmd "game_loadteam 4;ui_push game_team_edit;" }
-		}
-
-		button slot_team5
-		{
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			disabled	true
-			pos			"85 305"
-			size		"256 34"
-			string		*cvar:mn_slot5
-			onClick		{ cmd "game_loadteam 5;ui_push game_team_edit;" }
-		}
-
-		button slot_team6
-		{
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			disabled	true
-			pos			"85 340"
-			size		"256 34"
-			string		*cvar:mn_slot6
-			onClick		{ cmd "game_loadteam 6;ui_push game_team_edit;" }
-		}
-
-		button slot_team7
-		{
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			disabled	true
-			pos			"85 375"
-			size		"256 34"
-			string		*cvar:mn_slot7
-			onClick		{ cmd "game_loadteam 7;ui_push game_team_edit;" }
-		}
-
-		// ==================
-		// current team
-		// ==================
-
-		button button_new
-		{
-			pos	"85 430"
-			size "256 40"
-			tooltip	"_Generate a new random team"
-			onClick	{ cmd "game_autoteam;ui_push game_team_edit;" }
-			image	"ui/button_green_small"
-			font	"f_menusmall"
-			color	"0 0.5 0 1"
-			selectcolor "1 1 1 1"
-			string	"_New"
-		}
-
-		button button_save
-		{
-			pos	"85 480"
-			size "256 40"
-			tooltip	"_Save the current team"
-			onClick	{ cmd "ui_push game_team_save_popup;" }
-			image	"ui/button_green_small"
-			font	"f_menusmall"
-			color	"0 0.5 0 1"
-			selectcolor "1 1 1 1"
-			string	"_Save"
-		}
-
-		string team_str
-		{
-			string	"_Team:"
-			pos	"85 540"
-		}
-
-		selectbox team_box
-		{
-			pos		"200 540"
-			size	"200 20"
-			cvar	*cvar:cl_teamdef
-			dataid	OPTION_TEAMDEFS
-		}
-	}
-
-	func onWindowOpened
-	{
-		cmd	"game_teamcomments;define cl_teamdef phalanx;"
 	}
 }
 

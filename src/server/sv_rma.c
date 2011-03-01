@@ -538,8 +538,7 @@ static void SV_ClearMap (mapInfo_t *map)
  * @param[in] tile The tile definition that should be fitted into the map.
  * @param[in] x The x position in the map where the tile is supposed to be placed/checked.
  * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
- * @return qtrue if the tile fits.
- * @return qfalse if the tile does not fit or an error was encountered.
+ * @return @c true if the tile fits, @c false if the tile does not fit or an error was encountered.
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
@@ -582,8 +581,7 @@ static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, const int x, c
 
 /**
  * @brief Checks if the map is completely filled.
- * @return qtrue if the map is filled
- * @return qfalse if the map has still empty fields
+ * @return @c true if the map is filled, @c false if the map has still empty fields
  * @sa SV_AssembleMap
  * @sa SV_AddRegion
  * @sa SV_FitTile
@@ -672,7 +670,7 @@ static int SV_CalcRating (const mapInfo_t *map)
 
 /**
  * @brief Adds a new map-tile to an assembled map. Also adds the tile to the placed-tiles list.
- * @note The tile must fit at the given position, otherwise an assert will occure!
+ * @note The tile must fit at the given position, otherwise an assert will occur!
  * @param[in,out] map The map that will get the tile.  Modified in place.
  * @param[in] tile The tile to add to the map.
  * @param[in] x The x position in the map where the tile should be placed.
@@ -773,8 +771,7 @@ static void SV_RemoveTile (mapInfo_t *map, int* idx, int* pos)
 
 /**
  * @brief Tries to fit a tile in the current map.
- * @return qtrue if a fitting tile was found.
- * @return qfalse if no tile fits.
+ * @return @c true if a fitting tile was found, @c false if no tile fits.
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
@@ -912,28 +909,46 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 		Q_strcat(asmPos, va("%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
 
-	Com_DPrintf(DEBUG_SERVER, "tiles: %s\n", asmMap);
-	Com_DPrintf(DEBUG_SERVER, "pos: %s\n", asmPos);
-	Com_DPrintf(DEBUG_SERVER, "tiles: %i\n", map->numPlaced);
+	Com_Printf("tiles: %s\n", asmMap);
+	Com_Printf("pos: %s\n", asmPos);
+	Com_Printf("tiles: %i\n", map->numPlaced);
 }
 
 /**
  * @brief Tries to build the map
+ * There are 3 categories of tiles:
+ * - fixed: the position of the tile is already given in the assembly definition
+ * - required: a given number of such a tile must be placed somewhere on the map
+ * - optional: up to a given number of these tiles may be used in the map
+ * The algorithm works as follows:
+ * The fixed tiles have already been placed in the calling function.
+ * This function here now places the required tiles at random positions.
+ * Then the remaining gaps are filled with the optional tiles.
+ * If that fails, the last required tile is moved to a different place and the filling is tried again.
+ * If no more places are left for the required tile, the previous required tile is relocated and so on.
+ * That is, for the required tiles every possible combination is tried before we give up.
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
 static void SV_AddMapTiles (mapInfo_t *map)
 {
-	int idx, pos;
+	int idx;	/* index in the array of available tiles */
+	int pos;	/* index in the array of random positions */
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-	const int mapW = mAsm->width;
-	const int mapSize = mAsm->size;
+	const int mapW = mAsm->width;		/* width in x-direction */
+	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
 	const int numToPlace = map->numToPlace;
-	const mToPlace_t *mToPlace = map->mToPlace;
-	short prList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];
+	const mToPlace_t *mToPlace = map->mToPlace;		/* pointer to a tile descriptor */
+	short prList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];	/* array of random positions */
 	const int start = map->numPlaced;
 #ifdef DEBUG
 	const mPlaced_t *mPlaced = map->mPlaced;
+#endif
+
+#define PRINT_RMA_PROGRESS 0
+#if PRINT_RMA_PROGRESS
+	char mapStr[10000] = {0};
+	char posStr[10000] = {0};
 #endif
 
 	/* shuffle only once, the map will be build with that seed */
@@ -941,7 +956,7 @@ static void SV_AddMapTiles (mapInfo_t *map)
 
 	pos = 0;
 	idx = 0;
-	while (idx < numToPlace) {
+	while (idx < numToPlace) {		/* for all tile-descriptors */
 		while (mToPlace[idx].cnt < mToPlace[idx].min) {
 			for (; pos < mapSize; pos++) {
 				const int x = prList[pos] % mapW;
@@ -959,6 +974,12 @@ static void SV_AddMapTiles (mapInfo_t *map)
 				if (SV_FitTile(map, mToPlace[idx].tile, x, y)) {
 					/* add tile */
 					SV_AddTile(map, mToPlace[idx].tile, x, y, idx, pos);
+#if PRINT_RMA_PROGRESS
+					mapStr[0] = 0;
+					posStr[0] = 0;
+					if (map->numPlaced < 6)
+						SV_PrintMapStrings(map, mapStr, posStr);
+#endif
 					break;
 				}
 			}
@@ -981,7 +1002,7 @@ static void SV_AddMapTiles (mapInfo_t *map)
 
 		/* tile fits, try next tile */
 		if (pos < mapSize) {
-			pos = 0;
+			pos = 0;	/* start at the beginning of the random positions array */
 			idx++;
 		} else {
 			/* no more retries */
@@ -1223,7 +1244,8 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 
 /**
  * @brief Assembles a "random" map
- * parses the *.ump files for assembling the "random" maps
+ * and parses the *.ump files for assembling the "random" maps and places the 'fixed' tiles.
+ * For a more detailed description of the whole algorithm see SV_AddMapTiles.
  * @param[in] name The name of the map (ump) file to parse
  * @param[in] assembly The random map assembly that should be used from the given rma
  * @param[out] asmMap The output string of the random map assembly that contains all the
@@ -1248,6 +1270,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	Q_strncpyz(map->name, name, sizeof(map->name));
 
 	SV_ParseUMP(name, map, qfalse);
+/*	developer->integer |= DEBUG_SERVER;		crashes if used in testall.exe. cvar not initialized ? */
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)

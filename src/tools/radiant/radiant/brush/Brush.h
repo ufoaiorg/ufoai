@@ -217,6 +217,10 @@ class Brush: public TransformNode,
 		Face* addPlane (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
 				const TextureProjection& projection);
 
+		/* works like addPlane, but cleans the brush from useless planes */
+		Face* chopWithPlane (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
+				const TextureProjection& projection);
+
 		/**
 		 * The assumption is that surfaceflags are the same for all faces
 		 */
@@ -271,6 +275,7 @@ class Brush: public TransformNode,
 		// Returns TRUE if any of the brush's faces has a visible material, FALSE if all faces are effectively hidden
 		bool hasVisibleMaterial () const;
 
+		Vector3 getCentroid() const;
 	private:
 		void edge_push_back (FaceVertexId faceVertex);
 		void edge_clear ();

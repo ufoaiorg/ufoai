@@ -147,11 +147,11 @@ typedef struct materialStage_s {
 	struct materialStage_s *next;
 } materialStage_t;
 
-#define DEFAULT_BUMP 1.0
-#define DEFAULT_PARALLAX 1.0
-#define DEFAULT_SPECULAR 1.0
-#define DEFAULT_HARDNESS 1.0
-#define DEFAULT_GLOWSCALE 1.0
+#define DEFAULT_BUMP 1.0f
+#define DEFAULT_PARALLAX 1.0f
+#define DEFAULT_SPECULAR 1.0f
+#define DEFAULT_HARDNESS 1.0f
+#define DEFAULT_GLOWSCALE 1.0f
 
 typedef struct material_s {
 	unsigned flags;
@@ -164,6 +164,8 @@ typedef struct material_s {
 	materialStage_t *stages;
 	int num_stages;
 } material_t;
+
+extern material_t defaultMaterial;
 
 void R_LoadMaterials(const char *map);
 

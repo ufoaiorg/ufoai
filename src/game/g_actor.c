@@ -47,6 +47,11 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 
 	G_ClientUseEdict(G_PLAYER_FROM_ENT(actor), actor, door);
 
+	/* end this loop here, for the AI this is a) not interesting,
+	 * and b) could result in endless loops */
+	if (G_IsAI(actor))
+		return;
+
 	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_ACTOR))) {
 		/* check whether the door is still reachable (this might have
 		 * changed due to the rotation) or whether an actor can reach it now */

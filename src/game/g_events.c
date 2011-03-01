@@ -361,3 +361,187 @@ void G_EventSendEdict (const edict_t *ent)
 	gi.WritePos(ent->absmin);
 	gi.WritePos(ent->absmax);
 }
+
+void G_EventSendState (unsigned int playerMask, const edict_t *ent)
+{
+	G_EventActorStateChange(playerMask & G_TeamToPM(ent->team), ent);
+
+	gi.AddEvent(playerMask & ~G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->state & STATE_PUBLIC);
+}
+
+/**
+ * @brief Centers the view for all clients that are seeing the given edict on the world position of the edict
+ * @param[in] ent The edict to use the position from
+ */
+void G_EventCenterView (const edict_t *ent)
+{
+	gi.AddEvent(G_VisToPM(ent->visflags), EV_CENTERVIEW);
+	gi.WriteGPos(ent->pos);
+}
+
+/**
+ * @sa CL_ActorAdd
+ */
+void G_EventActorAdd (unsigned int playerMask, const edict_t *ent)
+{
+	gi.AddEvent(playerMask, EV_ACTOR_ADD);
+	gi.WriteShort(ent->number);
+	gi.WriteByte(ent->team);
+	gi.WriteByte(ent->chr.teamDef ? ent->chr.teamDef->idx : NONE);
+	gi.WriteByte(ent->chr.gender);
+	gi.WriteByte(ent->pnum);
+	gi.WriteGPos(ent->pos);
+	gi.WriteShort(ent->state & STATE_PUBLIC);
+	gi.WriteByte(ent->fieldSize);
+}
+
+/**
+ * Send a particle spawn event to the client
+ * @param[in] playerMask The clients that should see the particle
+ * @param[in] ent The particle to spawn
+ */
+void G_EventSendParticle (unsigned int playerMask, const edict_t *ent)
+{
+	gi.AddEvent(playerMask, EV_PARTICLE_APPEAR);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->spawnflags);
+	gi.WriteString(ent->particle);
+}
+
+/**
+ * @brief Send an appear event to the client.
+ * @param playerMask The players to send the event to
+ * @param ent The edict that should appear to the players included in the given mask.
+ * @note Each following event that is relying on the fact that this edict must already
+ * be known in the client, must also adopt the client side parsing of the event times.
+ */
+void G_EventEdictAppear (unsigned int playerMask, const edict_t *ent)
+{
+	gi.AddEvent(playerMask, EV_ENT_APPEAR);
+	gi.WriteShort(ent->number);
+	gi.WriteByte(ent->type);
+	gi.WriteGPos(ent->pos);
+}
+
+void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const edict_t *ent)
+{
+	const int mask = G_TeamToPM(check->team) & playerMask;
+
+	/* parsed in CL_ActorAppear */
+	gi.AddEvent(playerMask, EV_ACTOR_APPEAR);
+	gi.WriteShort(check->number);
+	gi.WriteShort(ent && ent->number > 0 ? ent->number : SKIP_LOCAL_ENTITY);
+	gi.WriteByte(check->team);
+	gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
+	gi.WriteByte(check->chr.gender);
+	gi.WriteByte(check->pnum);
+	gi.WriteGPos(check->pos);
+	gi.WriteByte(check->dir);
+	if (RIGHT(check)) {
+		gi.WriteShort(RIGHT(check)->item.t->idx);
+	} else {
+		gi.WriteShort(NONE);
+	}
+
+	if (LEFT(check)) {
+		gi.WriteShort(LEFT(check)->item.t->idx);
+	} else {
+		gi.WriteShort(NONE);
+	}
+
+	if (check->body == 0 || check->head == 0) {
+		gi.Error("invalid body and/or head model indices");
+	}
+	gi.WriteShort(check->body);
+	gi.WriteShort(check->head);
+	gi.WriteByte(check->chr.skin);
+	gi.WriteShort(check->state & STATE_PUBLIC);
+	gi.WriteByte(check->fieldSize);
+	gi.WriteByte(GET_TU(check->chr.score.skills[ABILITY_SPEED]));
+	gi.WriteByte(min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
+	gi.WriteShort(check->chr.maxHP);
+
+	if (mask) {
+		G_EventActorStateChange(mask, check);
+		G_SendInventory(mask, check);
+	}
+}
+
+/**
+ * @brief Send disappear event
+ * @param[in] playerMask The bitmask to determine the clients this event is send to
+ * @param[in,out] ent The edict that perished
+ */
+void G_EventEdictPerish (unsigned int playerMask, const edict_t *ent)
+{
+	gi.AddEvent(playerMask, EV_ENT_PERISH);
+	gi.WriteShort(ent->number);
+}
+
+void G_EventActorStateChange (unsigned int playerMask, const edict_t *ent)
+{
+	gi.AddEvent(playerMask, EV_ACTOR_STATECHANGE);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->state);
+}
+
+void G_EventAddBrushModel (unsigned int playerMask, const edict_t *ent)
+{
+	gi.AddEvent(playerMask, EV_ADD_BRUSH_MODEL);
+	gi.WriteByte(ent->type);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->modelindex);
+	/* strip the higher bits - only send levelflags */
+	gi.WriteByte(ent->spawnflags & 0xFF);
+	gi.WritePos(ent->origin);
+	gi.WritePos(ent->angles);
+	gi.WriteShort(ent->speed);
+	gi.WriteByte(ent->angle);
+	gi.WriteByte(ent->dir);
+}
+
+void G_EventEndRoundAnnounce (const player_t *player)
+{
+	gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
+	gi.WriteByte(player->num);
+	gi.WriteByte(player->pers.team);
+}
+
+void G_EventStart (const player_t *player, qboolean teamplay)
+{
+	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
+	gi.WriteByte(teamplay);
+}
+
+void G_EventReset (const player_t *player, int activeTeam)
+{
+	gi.AddEvent(G_PlayerToPM(player), EV_RESET | EVENT_INSTANTLY);
+	gi.WriteByte(player->pers.team);
+	gi.WriteByte(activeTeam);
+}
+
+void G_EventDoorOpen (const edict_t *door)
+{
+	gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
+	gi.WriteShort(door->number);
+}
+
+void G_EventDoorClose (const edict_t *door)
+{
+	gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
+	gi.WriteShort(door->number);
+}
+
+void G_EventModelExplodeTriggered (const edict_t *ent)
+{
+	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED);
+	gi.WriteShort(ent->number);
+}
+
+void G_EventModelExplode (const edict_t *ent)
+{
+	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
+	gi.WriteShort(ent->number);
+}

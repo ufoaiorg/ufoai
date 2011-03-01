@@ -16,6 +16,7 @@ typedef PlanePointer* PlanesIterator;
 
 class FaceInstance
 {
+	private:
 		Face* m_face;
 		ObservedSelectable m_selectable;
 		ObservedSelectable m_selectableVertices;

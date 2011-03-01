@@ -69,7 +69,7 @@ base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
 void MAP_Scroll_f(void);
 void MAP_Zoom_f(void);
-void MAP_MapClick(struct uiNode_s * node, int x, int y);
+qboolean MAP_MapClick(struct uiNode_s * node, int x, int y);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectUFO(aircraft_t* ufo);

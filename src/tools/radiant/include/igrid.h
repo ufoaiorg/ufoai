@@ -24,6 +24,17 @@ enum GridSize {
 	GRID_256 = 8
 };
 
+// grid renderings
+enum GridLook {
+	GRIDLOOK_LINES,
+	GRIDLOOK_DOTLINES,
+	GRIDLOOK_MOREDOTLINES,
+	GRIDLOOK_CROSSES,
+	GRIDLOOK_DOTS,
+	GRIDLOOK_BIGDOTS,
+	GRIDLOOK_SQUARES
+};
+
 class IGridManager
 {
 	public:
@@ -39,6 +50,9 @@ class IGridManager
 
 		virtual void gridDown() = 0;
 		virtual void gridUp() = 0;
+
+		virtual GridLook getMajorLook() const = 0;
+		virtual GridLook getMinorLook() const = 0;
 
 		virtual void addGridChangeCallback(const SignalHandler& handler) = 0;
 

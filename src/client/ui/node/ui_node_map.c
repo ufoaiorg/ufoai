@@ -127,6 +127,18 @@ static void UI_MapNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
+static void UI_MapNodeStartMouseShifting (uiNode_t *node, int x, int y)
+{
+	UI_SetMouseCapture(node);
+	if (!cl_3dmap->integer)
+		mode = MODE_SHIFT2DMAP;
+	else
+		mode = MODE_SHIFT3DMAP;
+	MAP_StopSmoothMovement();
+	oldMousePosX = x;
+	oldMousePosY = y;
+}
+
 static void UI_MapNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	/* finish the last drag before */
@@ -134,15 +146,12 @@ static void UI_MapNodeMouseDown (uiNode_t *node, int x, int y, int button)
 		return;
 
 	switch (button) {
+	case K_MOUSE1:
+		if (!MAP_MapClick(node, x, y))
+			UI_MapNodeStartMouseShifting(node, x, y);
+		break;
 	case K_MOUSE2:
-		UI_SetMouseCapture(node);
-		if (!cl_3dmap->integer)
-			mode = MODE_SHIFT2DMAP;
-		else
-			mode = MODE_SHIFT3DMAP;
-		MAP_StopSmoothMovement();
-		oldMousePosX = x;
-		oldMousePosY = y;
+		UI_MapNodeStartMouseShifting(node, x, y);
 		break;
 	case K_MOUSE3:
 		UI_SetMouseCapture(node);
@@ -155,20 +164,9 @@ static void UI_MapNodeMouseDown (uiNode_t *node, int x, int y, int button)
 
 static void UI_MapNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
-	if (mode == MODE_NULL)
-		return;
-
-	switch (button) {
-	case K_MOUSE2:
-		if (mode == MODE_SHIFT3DMAP || mode == MODE_SHIFT2DMAP) {
-			UI_MouseRelease();
-		}
-		break;
-	case K_MOUSE3:
-		if (mode == MODE_ZOOMMAP) {
-			UI_MouseRelease();
-		}
-		break;
+	if (mode != MODE_NULL) {
+		UI_MouseRelease();
+		mode = MODE_NULL;
 	}
 }
 
@@ -237,7 +235,6 @@ void UI_RegisterMapNode (uiBehaviour_t *behaviour)
 	behaviour->name = "map";
 	behaviour->properties = properties;
 	behaviour->draw = UI_MapNodeDraw;
-	behaviour->leftClick = MAP_MapClick;
 	behaviour->mouseDown = UI_MapNodeMouseDown;
 	behaviour->mouseUp = UI_MapNodeMouseUp;
 	behaviour->capturedMouseMove = UI_MapNodeCapturedMouseMove;

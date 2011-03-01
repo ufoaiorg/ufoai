@@ -137,6 +137,7 @@ typedef struct rstate_s {
 	qboolean blend_enabled;
 	qboolean color_array_enabled;
 	qboolean alpha_test_enabled;
+	qboolean stencil_test_enabled;
 	qboolean lighting_enabled;
 	qboolean bumpmap_enabled;
 	qboolean warp_enabled;
@@ -171,7 +172,7 @@ void R_BindNormalmapTexture(GLuint texnum);
 void R_BindBuffer(GLenum target, GLenum type, GLuint id);
 void R_BindArray(GLenum target, GLenum type, const void *array);
 void R_BindDefaultArray(GLenum target);
-
+void R_EnableStencilTest(qboolean enable);
 void R_EnableTexture(gltexunit_t *texunit, qboolean enable);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
@@ -188,5 +189,7 @@ void R_EnableDynamicLights(const struct entity_s *ent, qboolean enable);
 void R_EnableSpecularMap(const struct image_s *image, qboolean enable);
 void R_EnableRoughnessMap(const struct image_s *image, qboolean enable);
 void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, qboolean enable);
+
+void R_UseMaterial (const material_t *material);
 
 #endif

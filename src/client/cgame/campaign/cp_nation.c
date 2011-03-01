@@ -206,32 +206,32 @@ void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float h
  * @brief Nation saving callback
  * @param[out] p XML Node structure, where we write the information to
  */
-qboolean NAT_SaveXML (mxml_node_t *p)
+qboolean NAT_SaveXML (xmlNode_t *p)
 {
 	int i;
-	mxml_node_t *n = mxml_AddNode(p, SAVE_NATION_NATIONS);
+	xmlNode_t *n = XML_AddNode(p, SAVE_NATION_NATIONS);
 
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = NAT_GetNationByIDX(i);
-		mxml_node_t *s;
+		xmlNode_t *s;
 		int j;
 
 		if (!nation)
 			continue;
 
-		s = mxml_AddNode(n, SAVE_NATION_NATION);
-		mxml_AddString(s, SAVE_NATION_ID, nation->id);
+		s = XML_AddNode(n, SAVE_NATION_NATION);
+		XML_AddString(s, SAVE_NATION_ID, nation->id);
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			const nationInfo_t *stats = &nation->stats[j];
-			mxml_node_t *ss;
+			xmlNode_t *ss;
 
 			if (!stats->inuse)
 				continue;
 
-			ss = mxml_AddNode(s, SAVE_NATION_MONTH);
-			mxml_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
-			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, stats->happiness);
-			mxml_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);
+			ss = XML_AddNode(s, SAVE_NATION_MONTH);
+			XML_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
+			XML_AddFloat(ss, SAVE_NATION_HAPPINESS, stats->happiness);
+			XML_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);
 		}
 	}
 	return qtrue;
@@ -241,34 +241,34 @@ qboolean NAT_SaveXML (mxml_node_t *p)
  * @brief Nation loading xml callback
  * @param[in] p XML Node structure, where we get the information from
  */
-qboolean NAT_LoadXML (mxml_node_t * p)
+qboolean NAT_LoadXML (xmlNode_t * p)
 {
-	mxml_node_t *n;
-	mxml_node_t *s;
+	xmlNode_t *n;
+	xmlNode_t *s;
 
-	n = mxml_GetNode(p, SAVE_NATION_NATIONS);
+	n = XML_GetNode(p, SAVE_NATION_NATIONS);
 	if (!n)
 		return qfalse;
 
 	/* nations loop */
-	for (s = mxml_GetNode(n, SAVE_NATION_NATION); s; s = mxml_GetNextNode(s, n, SAVE_NATION_NATION)) {
-		mxml_node_t *ss;
-		nation_t *nation = NAT_GetNationByID(mxml_GetString(s, SAVE_NATION_ID));
+	for (s = XML_GetNode(n, SAVE_NATION_NATION); s; s = XML_GetNextNode(s, n, SAVE_NATION_NATION)) {
+		xmlNode_t *ss;
+		nation_t *nation = NAT_GetNationByID(XML_GetString(s, SAVE_NATION_ID));
 
 		if (!nation)
 			return qfalse;
 
 		/* month loop */
-		for (ss = mxml_GetNode(s, SAVE_NATION_MONTH); ss; ss = mxml_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
-			int monthIDX = mxml_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
+		for (ss = XML_GetNode(s, SAVE_NATION_MONTH); ss; ss = XML_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
+			int monthIDX = XML_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
 			nationInfo_t *stats = &nation->stats[monthIDX];
 
 			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
 				return qfalse;
 
 			stats->inuse = qtrue;
-			stats->happiness = mxml_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
-			stats->xviInfection = mxml_GetInt(ss, SAVE_NATION_XVI, 0);
+			stats->happiness = XML_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
+			stats->xviInfection = XML_GetInt(ss, SAVE_NATION_XVI, 0);
 		}
 	}
 	return qtrue;
@@ -286,6 +286,8 @@ static const value_t nation_vals[] = {
 	{"happiness", V_FLOAT, offsetof(nation_t, stats[0].happiness), MEMBER_SIZEOF(nation_t, stats[0].happiness)},
 	{"soldiers", V_INT, offsetof(nation_t, maxSoldiers), MEMBER_SIZEOF(nation_t, maxSoldiers)},
 	{"scientists", V_INT, offsetof(nation_t, maxScientists), MEMBER_SIZEOF(nation_t, maxScientists)},
+	{"workers", V_INT, offsetof(nation_t, maxWorkers), MEMBER_SIZEOF(nation_t, maxWorkers)},
+	{"pilots", V_INT, offsetof(nation_t, maxPilots), MEMBER_SIZEOF(nation_t, maxPilots)},
 
 	{NULL, 0, 0, 0}
 };
@@ -818,6 +820,8 @@ static void NAT_NationList_f (void)
 		Com_Printf("...xviInfection %i\n", nation->stats[0].xviInfection);
 		Com_Printf("...max-soldiers %i\n", nation->maxSoldiers);
 		Com_Printf("...max-scientists %i\n", nation->maxScientists);
+		Com_Printf("...max-workers %i\n", nation->maxWorkers);
+		Com_Printf("...max-pilots %i\n", nation->maxPilots);
 		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", nation->color[0], nation->color[1], nation->color[2], nation->color[3]);
 		Com_Printf("...pos x:%.0f y:%.0f\n", nation->pos[0], nation->pos[1]);
 	}
@@ -830,6 +834,7 @@ static void NAT_NationList_f (void)
  * * credits
  * * new soldiers
  * * new scientists
+ * * new pilots
  * @note Called from CL_CampaignRun
  * @sa CL_CampaignRun
  * @sa B_CreateEmployee
@@ -855,7 +860,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 		const int funding = NAT_GetFunding(nation, 0);
-		int newScientists = 0, newSoldiers = 0, newWorkers = 0;
+		int newScientists = 0, newSoldiers = 0, newPilots = 0, newWorkers = 0;
 
 		totalIncome += funding;
 
@@ -872,17 +877,26 @@ void NAT_HandleBudget (const campaign_t *campaign)
 				newSoldiers++;
 			}
 		}
+		/* pilots */
+		if (stats->happiness > 0) {
+			for (j = 0; 0.25 + j < (float) nation->maxPilots * stats->happiness * stats->happiness * stats->happiness; j++) {
+				/* Create a pilot. */
+				E_CreateEmployee(EMPL_PILOT, nation, NULL);
+				newPilots++;
+			}
+		}
 
-		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * stats->happiness; j++) {
+		for (j = 0; 0.25 + j * 2 < (float) nation->maxWorkers * stats->happiness; j++) {
 			/* Create a worker. */
 			E_CreateEmployee(EMPL_WORKER, nation, NULL);
 			newWorkers++;
 		}
 
-		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
+		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
 					funding, ngettext("credit", "credits", funding),
 					newScientists, ngettext("scientist", "scientists", newScientists),
 					newSoldiers, ngettext("soldier", "soldiers", newSoldiers),
+					newPilots, ngettext("pilot", "pilots", newPilots),
 					newWorkers, ngettext("worker", "workers", newWorkers),
 					_(nation->name), NAT_GetHappinessString(nation));
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);

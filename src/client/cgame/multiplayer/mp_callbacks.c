@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ui/ui_popup.h"
 #include "mp_callbacks.h"
 #include "mp_serverlist.h"
+#include "../cl_game.h"
 #include "../cl_game_team.h"
 
 teamData_t teamData;

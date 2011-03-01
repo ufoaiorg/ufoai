@@ -508,4 +508,5 @@ void dbuffer_init (void)
 void dbuffer_shutdown (void)
 {
 	TH_MutexDestroy(dbuf_lock);
+	dbuf_lock = NULL;
 }

@@ -118,8 +118,8 @@ qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const in
 
 /**
  * @brief Unload a weapon and put the ammo in a container.
- * @param[in] weapon Pointer (invList_t) to weapon to unload ammo.
- * @param[in] inv Pointer (inventory_t) to inventory where the change happen.
+ * @param[in,out] weapon Pointer (invList_t) to weapon to unload ammo.
+ * @param[in,out] inv Pointer (inventory_t) to inventory where the change happen.
  * @param[in] container Pointer (invDef_t) to inventorydef where to put the removed ammo.
  * @return @c true if the unload was successful, @c false otherwise
  */

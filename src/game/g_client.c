@@ -198,45 +198,6 @@ void G_GiveTimeUnits (int team)
 	}
 }
 
-void G_SendState (unsigned int playerMask, const edict_t *ent)
-{
-	gi.AddEvent(playerMask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
-	gi.WriteShort(ent->number);
-	gi.WriteShort(ent->state);
-
-	gi.AddEvent(playerMask & ~G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
-	gi.WriteShort(ent->number);
-	gi.WriteShort(ent->state & STATE_PUBLIC);
-}
-
-/**
- * Send a particle spawn event to the client
- * @param[in] playerMask The clients that should see the particle
- * @param[in] ent The particle to spawn
- */
-static void G_SendParticle (unsigned int playerMask, const edict_t *ent)
-{
-	gi.AddEvent(playerMask, EV_PARTICLE_APPEAR);
-	gi.WriteShort(ent->number);
-	gi.WriteShort(ent->spawnflags);
-	gi.WriteString(ent->particle);
-}
-
-/**
- * @brief Send an appear event to the client.
- * @param playerMask The players to send the event to
- * @param ent The edict that should appear to the players included in the given mask.
- * @note Each following event that is relying on the fact that this edict must already
- * be known in the client, must also adopt the client side parsing of the event times.
- */
-static void G_EdictAppear (unsigned int playerMask, const edict_t *ent)
-{
-	gi.AddEvent(playerMask, EV_ENT_APPEAR);
-	gi.WriteShort(ent->number);
-	gi.WriteByte(ent->type);
-	gi.WriteGPos(ent->pos);
-}
-
 /**
  * @brief Send the appear or perish event to the affected clients
  * @param[in] playerMask These are the affected players or clients
@@ -259,59 +220,17 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 		switch (check->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
-			/* parsed in CL_ActorAppear */
-			gi.AddEvent(playerMask, EV_ACTOR_APPEAR);
-			gi.WriteShort(check->number);
-			gi.WriteShort(ent && ent->number > 0 ? ent->number : SKIP_LOCAL_ENTITY);
-			gi.WriteByte(check->team);
-			gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
-			gi.WriteByte(check->chr.gender);
-			gi.WriteByte(check->pnum);
-			gi.WriteGPos(check->pos);
-			gi.WriteByte(check->dir);
-			if (RIGHT(check)) {
-				gi.WriteShort(RIGHT(check)->item.t->idx);
-			} else {
-				gi.WriteShort(NONE);
-			}
-
-			if (LEFT(check)) {
-				gi.WriteShort(LEFT(check)->item.t->idx);
-			} else {
-				gi.WriteShort(NONE);
-			}
-
-			if (check->body == 0 || check->head == 0) {
-				gi.Error("invalid body and/or head model indices");
-			}
-			gi.WriteShort(check->body);
-			gi.WriteShort(check->head);
-			gi.WriteByte(check->chr.skin);
-			gi.WriteShort(check->state & STATE_PUBLIC);
-			gi.WriteByte(check->fieldSize);
-			gi.WriteByte(GET_TU(check->chr.score.skills[ABILITY_SPEED]));
-			gi.WriteByte(min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
-			gi.WriteShort(check->chr.maxHP);
-
-			{
-				const int mask = G_TeamToPM(check->team) & playerMask;
-				if (mask) {
-					gi.AddEvent(mask, EV_ACTOR_STATECHANGE);
-					gi.WriteShort(check->number);
-					gi.WriteShort(check->state);
-					G_SendInventory(mask, check);
-				}
-			}
+			G_EventActorAppear(playerMask, check, ent);
 			break;
 
 		case ET_ITEM:
-			G_EdictAppear(playerMask, check);
+			G_EventEdictAppear(playerMask, check);
 			G_SendInventory(playerMask, check);
 			break;
 
 		case ET_PARTICLE:
-			G_EdictAppear(playerMask, check);
-			G_SendParticle(playerMask, check);
+			G_EventEdictAppear(playerMask, check);
+			G_EventSendParticle(playerMask, check);
 			break;
 
 		default:
@@ -320,21 +239,9 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 			break;
 		}
 	} else if (G_IsVisibleOnBattlefield(check)) {
-		/* disappear */
-		gi.AddEvent(playerMask, EV_ENT_PERISH);
-		gi.WriteShort(check->number);
+		G_EventEdictPerish(playerMask, check);
 		check->visflags = 0;
 	}
-}
-
-/**
- * @brief Centers the view for all clients that are seeing the given edict on the world position of the edict
- * @param ent The edict to use the position from
- */
-void G_CenterView (const edict_t *ent)
-{
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_CENTERVIEW);
-	gi.WriteGPos(ent->pos);
 }
 
 /**
@@ -359,16 +266,7 @@ void G_SendInvisible (player_t* player)
 			if (ent->team != team) {
 				/* not visible for this team - so add the le only */
 				if (!G_IsVisibleForTeam(ent, team)) {
-					/* parsed in CL_ActorAdd */
-					gi.AddEvent(G_PlayerToPM(player), EV_ACTOR_ADD);
-					gi.WriteShort(ent->number);
-					gi.WriteByte(ent->team);
-					gi.WriteByte(ent->chr.teamDef ? ent->chr.teamDef->idx : NONE);
-					gi.WriteByte(ent->chr.gender);
-					gi.WriteByte(ent->pnum);
-					gi.WriteGPos(ent->pos);
-					gi.WriteShort(ent->state & STATE_PUBLIC);
-					gi.WriteByte(ent->fieldSize);
+					G_EventActorAdd(G_PlayerToPM(player), ent);
 				}
 			}
 		}
@@ -384,7 +282,6 @@ int G_GetActiveTeam (void)
 {
 	return level.activeTeam;
 }
-
 
 /**
  * @brief Checks whether the requested action is possible
@@ -512,7 +409,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, dvec_t dvec)
 static void G_ClientStateChangeUpdate (edict_t *ent)
 {
 	/* Send the state change. */
-	G_SendState(G_VisToPM(ent->visflags), ent);
+	G_EventSendState(G_VisToPM(ent->visflags), ent);
 
 	/* Check if the player appears/perishes, seen from other teams. */
 	G_CheckVis(ent, qtrue);
@@ -1352,17 +1249,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 
 		/* skip the world(s) in case of map assembly */
 		if (ent->type > ET_NULL) {
-			gi.AddEvent(mask, EV_ADD_BRUSH_MODEL);
-			gi.WriteByte(ent->type);
-			gi.WriteShort(ent->number);
-			gi.WriteShort(ent->modelindex);
-			/* strip the higher bits - only send levelflags */
-			gi.WriteByte(ent->spawnflags & 0xFF);
-			gi.WritePos(ent->origin);
-			gi.WritePos(ent->angles);
-			gi.WriteShort(ent->speed);
-			gi.WriteByte(ent->angle);
-			gi.WriteByte(ent->dir);
+			G_EventAddBrushModel(mask, ent);
 			ent->visflags |= ~ent->visflags;
 		}
 	}
@@ -1386,8 +1273,7 @@ qboolean G_ClientBegin (player_t* player)
 	gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
 	/* spawn camera (starts client rendering) */
-	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
-	gi.WriteByte(sv_teamplay->integer);
+	G_EventStart(player, sv_teamplay->integer);
 
 	/* send things like doors and breakables */
 	G_ClientSendEdictsAndBrushModels(player);
@@ -1419,9 +1305,7 @@ void G_ClientSpawn (player_t * player)
 
 	/* do all the init events here... */
 	/* reset the data */
-	gi.AddEvent(G_PlayerToPM(player), EV_RESET | EVENT_INSTANTLY);
-	gi.WriteByte(player->pers.team);
-	gi.WriteByte(level.activeTeam);
+	G_EventReset(player, level.activeTeam);
 
 	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);

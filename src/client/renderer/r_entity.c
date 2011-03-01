@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh.h"
 #include "r_mesh_anim.h"
 #include "r_draw.h"
+#include "r_matrix.h"
 
 #define	MAX_ENTITIES	2048*2
 
@@ -54,7 +55,7 @@ void R_EntityAddToOrigin (entity_t *ent, const vec3_t offset)
 }
 
 /**
- * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
+ * @brief Draws the field marker entity is specified in CL_AddTargeting
  * @sa CL_AddTargeting
  * @sa RF_BOX
  */
@@ -69,75 +70,37 @@ static void R_DrawBox (const entity_t * e)
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
 		R_DrawBoundingBox(e->mins, e->maxs);
 	} else {
-#ifdef GL_VERSION_ES_CM_1_0
-		vec_t points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->oldorigin[2],
-								e->oldorigin[0], e->origin[1], e->oldorigin[2],
-								e->origin[0], e->origin[1], e->oldorigin[2],
-								e->origin[0], e->oldorigin[1], e->oldorigin[2]
-							};
+		vec3_t points[] = { { e->oldorigin[0], e->oldorigin[1], e->oldorigin[2] }, { e->oldorigin[0], e->origin[1],
+				e->oldorigin[2] }, { e->origin[0], e->origin[1], e->oldorigin[2] }, { e->origin[0], e->oldorigin[1],
+				e->oldorigin[2] } };
+
 		glLineWidth(2.0f);
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+
+		/** @todo fill one array */
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
-		points[2] = e->origin[2];
-		points[5] = e->origin[2];
-		points[8] = e->origin[2];
-		points[11] = e->origin[2];
+		points[0][2] = e->origin[2];
+		points[1][2] = e->origin[2];
+		points[2][2] = e->origin[2];
+		points[3][2] = e->origin[2];
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
-		points[2] = e->oldorigin[2];
-		points[4] = e->oldorigin[1];
-		points[8] = e->oldorigin[2];
-		points[10] = e->origin[1];
+		points[0][2] = e->oldorigin[2];
+		points[1][1] = e->oldorigin[1];
+		points[2][2] = e->oldorigin[2];
+		points[3][1] = e->origin[1];
 		glDrawArrays(GL_LINES, 0, 4);
-		points[0] = e->origin[0];
-		points[3] = e->origin[0];
-		points[6] = e->oldorigin[0];
-		points[9] = e->oldorigin[0];
+		points[0][0] = e->origin[0];
+		points[1][0] = e->origin[0];
+		points[2][0] = e->oldorigin[0];
+		points[3][0] = e->oldorigin[0];
 		glDrawArrays(GL_LINES, 0, 4);
 		R_BindDefaultArray(GL_VERTEX_ARRAY);
-		glLineWidth(1.0f);
-#else
-		vec3_t upper, lower;
-		const float dx = e->oldorigin[0] - e->origin[0];
-		const float dy = e->oldorigin[1] - e->origin[1];
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		VectorCopy(e->origin, lower);
-		VectorCopy(e->origin, upper);
-		upper[2] = e->oldorigin[2];
-
-		glLineWidth(2.0f);
-		glBegin(GL_QUAD_STRIP);
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		lower[0] += dx;
-		upper[0] += dx;
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		lower[1] += dy;
-		upper[1] += dy;
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		lower[0] -= dx;
-		upper[0] -= dx;
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		lower[1] -= dy;
-		upper[1] -= dy;
-		glVertex3fv(lower);
-		glVertex3fv(upper);
-		glEnd();
-
-		glLineWidth(1.0f);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-#endif
 	}
-
 	glEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
 }
 
-static image_t *cellIndicator;
 
 /**
  * @brief Draws a marker on the ground to indicate pathing CL_AddPathingBox
@@ -146,31 +109,22 @@ static image_t *cellIndicator;
  */
 static void R_DrawFloor (const entity_t * e)
 {
-	float dx;
+	image_t *cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
+	const float dx = PLAYER_WIDTH * 2;
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 	const float size = 4.0;
-
-	if (cellIndicator == NULL) {
-		cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
-	}
+	/** @todo use default_texcoords */
+	const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
+	const vec3_t points[] = { { e->origin[0] - size, e->origin[1] + dx + size, e->origin[2] }, { e->origin[0] + dx
+			+ size, e->origin[1] + dx + size, e->origin[2] }, { e->origin[0] + dx + size, e->origin[1] - size,
+			e->origin[2] }, { e->origin[0] - size, e->origin[1] - size, e->origin[2] } };
 
 	glDisable(GL_DEPTH_TEST);
 
 	R_Color(color);
 	R_BindTexture(cellIndicator->texnum);
 
-	dx = PLAYER_WIDTH * 2;
-
 	/* circle points */
-	GLfloat points[4*3] = {	e->origin[0]-size, e->origin[1]+dx+size, e->origin[2],
-							e->origin[0]+dx+size, e->origin[1]+dx+size, e->origin[2],
-							e->origin[0]+dx+size, e->origin[1]-size, e->origin[2],
-							e->origin[0]-size, e->origin[1]-size, e->origin[2] };
-	GLfloat texcoords[4*2] = {	0.0, 1.0,
-								1.0, 1.0,
-								1.0, 0.0,
-								0.0, 0.0 };
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -189,27 +143,18 @@ static void R_DrawFloor (const entity_t * e)
  */
 static void R_DrawArrow (const entity_t * e)
 {
-	vec3_t upper, mid, lower;
-	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
+	const vec3_t upper = { e->origin[0] + 2, e->origin[1], e->origin[2] };
+	const vec3_t mid = { e->origin[0], e->origin[1] + 2, e->origin[2] };
+	const vec3_t lower = { e->origin[0], e->origin[1], e->origin[2] + 2 };
+	const vec4_t color = { e->color[0], e->color[1], e->color[2], e->alpha };
+	const vec3_t points[] = { { e->oldorigin[0], e->oldorigin[1], e->oldorigin[2] }, { upper[0], upper[1], upper[2] },
+			{ mid[0], mid[1], mid[2] }, { lower[0], lower[1], lower[2] } };
 
-	VectorCopy(e->origin, upper);
-	upper[0] += 2;
-
-	VectorCopy(e->origin, mid);
-	mid[1] += 2;
-
-	VectorCopy(e->origin, lower);
-	lower[2] += 2;
+	R_Color(color);
 
 	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_LINE_SMOOTH);
 
-	R_Color(color);
-
-	GLfloat points[3*4] = {	e->oldorigin[0], e->oldorigin[1], e->oldorigin[2],
-							upper[0], upper[1], upper[2],
-							mid[0], mid[1], mid[2],
-							lower[0], lower[1], lower[2] };
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -230,12 +175,14 @@ static image_t *actorIndicator;
 static void R_DrawEntityEffects (void)
 {
 	int i;
+	GLint oldDepthFunc;
+	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
 
 	R_EnableBlend(qtrue);
 
 	if (actorIndicator == NULL) {
-		selectedActorIndicator = R_FindImage("pics/sfx/actor_selected", it_pic);
-		actorIndicator = R_FindImage("pics/sfx/actor", it_pic);
+		selectedActorIndicator = R_FindImage("pics/sfx/actor_selected", it_worldrelated);
+		actorIndicator = R_FindImage("pics/sfx/actor", it_worldrelated);
 	}
 
 	for (i = 0; i < refdef.numEntities; i++) {
@@ -248,6 +195,11 @@ static void R_DrawEntityEffects (void)
 		glMultMatrixf(e->transform.matrix);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
+			const vec3_t points[] = { { -18.0, 14.0, -28.5 }, { 10.0, 14.0, -28.5 }, { 10.0, -14.0, -28.5 }, { -18.0,
+					-14.0, -28.5 } };
+			/** @todo use default_texcoords */
+			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
+
 			if (e->flags & RF_SHADOW) {
 				R_BindTexture(shadow->texnum);
 			} else {
@@ -255,15 +207,6 @@ static void R_DrawEntityEffects (void)
 				R_BindTexture(e->deathTexture->texnum);
 			}
 
-			GLfloat points[3*4] = {	-18.0, 14.0, -28.5,
-									10.0, 14.0, -28.5,
-									10.0, -14.0, -28.5,
-									-18.0, -14.0, -28.5 };
-			GLfloat texcoords[2*4] = {	0.0, 1.0,
-										1.0, 1.0,
-										1.0, 0.0,
-										0.0, 0.0 };
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -271,13 +214,15 @@ static void R_DrawEntityEffects (void)
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
 		}
 
-
 		if (e->flags & RF_ACTOR) {
 			const float size = 15.0;
 			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
-			glDisable(GL_DEPTH_TEST);
+			const vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
+					-GROUND_DELTA }, { -size, -size, -GROUND_DELTA } };
+			/** @todo use default_texcoords */
+			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
 
 			if (e->flags & RF_MEMBER)
 				Vector4Set(color, 0, 1, 0, 0.5);
@@ -298,27 +243,25 @@ static void R_DrawEntityEffects (void)
 
 			/* TODO: for some unknown reasons the following code fails on my HTC Evo, but works on PC, so it might be GFX driver problems */
 			/* circle points */
-			GLfloat points[3*4] = {	-size, size, -27.5,
-									size, size, -27.5,
-									size, -size, -27.5,
-									-size, -size, -27.5 };
-			GLfloat texcoords[2*4] = {	0.0, 1.0,
-										1.0, 1.0,
-										1.0, 0.0,
-										0.0, 0.0 };
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+			/* add transparency when something is other the circle */
+			color[3] *= 0.25;
+			R_Color(color);
+			glDepthFunc(GL_GREATER);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+			glDepthFunc(oldDepthFunc);
+
 			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-			glEnable(GL_DEPTH_TEST);
 			R_Color(NULL);
 		}
 		glPopMatrix();
 	}
-
 }
 
 /**
@@ -466,44 +409,33 @@ static void R_DrawBlendMeshEntities (entity_t *ents)
 static void R_DrawNullModel (const entity_t *e)
 {
 	int i;
+	vec3_t points[6];
 
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
 	glPushMatrix();
 	glMultMatrixf(e->transform.matrix);
 
-#ifdef GL_VERSION_ES_CM_1_0
-	vec_t points[3*6] = { 0, 0, -16 };
-	for (i = 0; i <= 4; i++) {
-		points[i*3+3] = 16 * cos(i * (M_PI / 2));
-		points[i*3+4] = 16 * sin(i * (M_PI / 2));
-		points[i*3+5] = 0;
-	}
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
-	vec_t points2[3*6] = { 0, 0, 16 };
-	for (i = 4; i >= 0; i--) {
-		points2[i*3+3] = 16 * cos(i * (M_PI / 2));
-		points2[i*3+4] = 16 * sin(i * (M_PI / 2));
-		points2[i*3+5] = 0;
+	VectorSet(points[0], 0, 0, -16);
+	for (i = 0; i <= 4; i++) {
+		points[i + 1][0] = 16 * cos(i * (M_PI / 2));
+		points[i + 1][1] = 16 * sin(i * (M_PI / 2));
+		points[i + 1][2] = 0;
 	}
-	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points2);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
-	R_BindDefaultArray(GL_VERTEX_ARRAY);
-#else
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(0, 0, -16);
-	for (i = 0; i <= 4; i++)
-		glVertex3f(16 * cos(i * (M_PI / 2)), 16 * sin(i * (M_PI / 2)), 0);
-	glEnd();
 
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(0, 0, 16);
-	for (i = 4; i >= 0; i--)
-		glVertex3f(16 * cos(i * (M_PI / 2)), 16 * sin(i * (M_PI / 2)), 0);
-	glEnd();
-#endif
+	VectorSet(points[0], 0, 0, 16);
+	for (i = 4; i >= 0; i--) {
+		points[i + 1][0] = 16 * cos(i * (M_PI / 2));
+		points[i + 1][1] = 16 * sin(i * (M_PI / 2));
+		points[i + 1][2] = 0;
+	}
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
 	glPopMatrix();
 
 	R_EnableTexture(&texunit_diffuse, qtrue);
@@ -550,6 +482,21 @@ static void R_DrawNullEntities (const entity_t *ents)
 		R_DrawNullModel(e);
 		e = e->next;
 	}
+}
+
+/**
+ * Transforms a point by the inverse of the world-model matrix for the
+ * specified entity.
+ */
+void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
+{
+	matrix4x4_t tmp, mat;
+
+	Matrix4x4_CreateFromQuakeEntity(&tmp, e->origin[0], e->origin[1], e->origin[2], e->angles[0], e->angles[1],
+			e->angles[2], e->scale[0]);
+
+	Matrix4x4_Invert_Simple(&mat, &tmp);
+	Matrix4x4_Transform(&mat, in, out);
 }
 
 /**

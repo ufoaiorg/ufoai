@@ -251,10 +251,11 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->Cmd_RemoveCommand = Cmd_RemoveCommand;
 		cgi->Cvar_Delete = Cvar_Delete;
 		cgi->Cvar_Get = Cvar_Get;
-		cgi->Cvar_Integer = Cvar_GetInteger;
+		cgi->Cvar_GetInteger = Cvar_GetInteger;
 		cgi->Cvar_Set = Cvar_Set;
 		cgi->Cvar_SetValue = Cvar_SetValue;
-		cgi->Cvar_String = Cvar_GetString;
+		cgi->Cvar_GetString = Cvar_GetString;
+		cgi->Cvar_ForceSet = Cvar_ForceSet;
 		cgi->FS_FreeFile = FS_FreeFile;
 		cgi->FS_LoadFile = FS_LoadFile;
 		cgi->UI_AddOption = UI_AddOption;
@@ -269,26 +270,26 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->UI_RegisterText = UI_RegisterText;
 		cgi->UI_ResetData = UI_ResetData;
 		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
-		cgi->mxml_AddBool = mxml_AddBool;
-		cgi->mxml_AddBoolValue = mxml_AddBoolValue;
-		cgi->mxml_AddByte = mxml_AddByte;
-		cgi->mxml_AddByteValue = mxml_AddByteValue;
-		cgi->mxml_AddDate = mxml_AddDate;
-		cgi->mxml_AddDouble = mxml_AddDouble;
-		cgi->mxml_AddDoubleValue = mxml_AddDoubleValue;
-		cgi->mxml_AddFloat = mxml_AddFloat;
-		cgi->mxml_AddFloatValue = mxml_AddFloatValue;
-		cgi->mxml_AddInt = mxml_AddInt;
-		cgi->mxml_AddIntValue = mxml_AddIntValue;
-		cgi->mxml_AddLong = mxml_AddLong;
-		cgi->mxml_AddLongValue = mxml_AddLongValue;
-		cgi->mxml_AddNode = mxml_AddNode;
-		cgi->mxml_AddPos2 = mxml_AddPos2;
-		cgi->mxml_AddPos3 = mxml_AddPos3;
-		cgi->mxml_AddShort = mxml_AddShort;
-		cgi->mxml_AddShortValue = mxml_AddShortValue;
-		cgi->mxml_AddString = mxml_AddString;
-		cgi->mxml_AddStringValue = mxml_AddStringValue;
+		cgi->mxml_AddBool = XML_AddBool;
+		cgi->mxml_AddBoolValue = XML_AddBoolValue;
+		cgi->mxml_AddByte = XML_AddByte;
+		cgi->mxml_AddByteValue = XML_AddByteValue;
+		cgi->mxml_AddDate = XML_AddDate;
+		cgi->mxml_AddDouble = XML_AddDouble;
+		cgi->mxml_AddDoubleValue = XML_AddDoubleValue;
+		cgi->mxml_AddFloat = XML_AddFloat;
+		cgi->mxml_AddFloatValue = XML_AddFloatValue;
+		cgi->mxml_AddInt = XML_AddInt;
+		cgi->mxml_AddIntValue = XML_AddIntValue;
+		cgi->mxml_AddLong = XML_AddLong;
+		cgi->mxml_AddLongValue = XML_AddLongValue;
+		cgi->mxml_AddNode = XML_AddNode;
+		cgi->mxml_AddPos2 = XML_AddPos2;
+		cgi->mxml_AddPos3 = XML_AddPos3;
+		cgi->mxml_AddShort = XML_AddShort;
+		cgi->mxml_AddShortValue = XML_AddShortValue;
+		cgi->mxml_AddString = XML_AddString;
+		cgi->mxml_AddStringValue = XML_AddStringValue;
 		cgi->R_LoadImage = R_LoadImage;
 		cgi->R_LoadImageData = R_LoadImageData;
 		cgi->R_SoftenTexture = R_SoftenTexture;
@@ -348,7 +349,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 		INV_DestroyInventory(&cls.i);
 		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
 		/** @todo this should be in GetCGameAPI */
-		list->Init(NULL);
+		list->Init(GAME_GetImportData());
 	}
 }
 
@@ -691,12 +692,12 @@ void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *
  * @note The amount of the item_t struct should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
-static void CL_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
+static void GAME_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
 {
 	const int ammoIdx = item.m ? item.m->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
 	assert(item.t);
-	Com_DPrintf(DEBUG_CLIENT, "CL_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
+	Com_DPrintf(DEBUG_CLIENT, "GAME_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
 		item.t->id, container, item.t->idx, item.a, ammoIdx, x, y);
 	NET_WriteFormat(buf, eventData->formatString, item.t->idx, item.a, ammoIdx, container, x, y, item.rotated, item.amount);
 }
@@ -704,7 +705,7 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t c
 /**
  * @sa G_SendInventory
  */
-static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
+static void GAME_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 {
 	containerIndex_t container;
 	int nr = 0;
@@ -718,7 +719,7 @@ static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 	NET_WriteShort(buf, nr * INV_INVENTORY_BYTES);
 	for (container = 0; container < csi.numIDs; container++) {
 		for (ic = i->c[container]; ic; ic = ic->next)
-			CL_NetSendItem(buf, ic->item, container, ic->x, ic->y);
+			GAME_NetSendItem(buf, ic->item, container, ic->x, ic->y);
 	}
 }
 
@@ -789,7 +790,7 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 
 		GAME_NetSendCharacter(buf, chr);
 
-		CL_NetSendInventory(buf, &chr->i);
+		GAME_NetSendInventory(buf, &chr->i);
 	}
 }
 
@@ -1013,7 +1014,7 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_loadteam", GAME_LoadTeam_f, "Load a team slot");
 	Cmd_AddCommand("game_teamcomments", GAME_TeamSlotComments_f, "Fills the team selection menu with the team names");
 	Cmd_AddCommand("game_teamupdate", GAME_UpdateTeamMenuParameters_f, "");
-	Cmd_AddCommand("game_teamselect", GAME_TeamSelect_f, "");
+	Cmd_AddCommand("game_actorselect", GAME_ActorSelect_f, "Select an actor in the equipment menu");
 	Cmd_AddCommand("mn_getmaps", UI_GetMaps_f, "The initial map to show");
 	Cmd_AddCommand("mn_nextmap", UI_NextMap_f, "Switch to the next valid map for the selected gametype");
 	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");

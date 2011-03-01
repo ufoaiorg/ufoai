@@ -143,6 +143,7 @@ class OpenGLShaderCache: public ShaderCache,
 			glDisable(GL_LINE_STIPPLE);
 			glDisable(GL_POLYGON_STIPPLE);
 			glDisable(GL_POLYGON_OFFSET_LINE);
+			glDisable(GL_POLYGON_OFFSET_FILL); // greebo: otherwise tiny gap lines between brushes are visible
 
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glColor4f(1, 1, 1, 1);

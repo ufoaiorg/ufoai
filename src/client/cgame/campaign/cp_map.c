@@ -272,8 +272,9 @@ static void MAP_MultiSelectExecuteAction_f (void)
  * @param[in] node UI Node of the geoscape map
  * @param[in] x Mouse click X coordinate
  * @param[in] y Mouse click Y coordinate
+ * @return True if the event is used for something
  */
-void MAP_MapClick (uiNode_t* node, int x, int y)
+qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 {
 	aircraft_t *aircraft;
 	aircraft_t *ufo;
@@ -298,8 +299,9 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 				CL_GameTimeStop();
 				Cmd_ExecuteString("mn_set_base_title");
 				UI_PushWindow("popup_newbase", NULL, NULL);
+				return qtrue;
 			}
-			return;
+			return qfalse;
 		}
 		break;
 	case MA_NEWINSTALLATION:
@@ -308,8 +310,9 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 				Vector2Copy(pos, ccs.newBasePos);
 				CL_GameTimeStop();
 				UI_PushWindow("popup_newinstallation", NULL, NULL);
+				return qtrue;
 			}
-			return;
+			return qfalse;
 		}
 		break;
 	case MA_UFORADAR:
@@ -364,24 +367,30 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
 		Cmd_ExecuteString("multi_select_click");
+		return qtrue;
 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
 		UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
 		CL_GameTimeStop();
 		UI_PushWindow("popup_multi_selection", NULL, NULL);
+		return qtrue;
 	} else {
 		aircraft_t *aircraft = MAP_GetSelectedAircraft();
 		/* Nothing selected */
-		if (!aircraft)
+		if (!aircraft) {
 			MAP_ResetAction();
+			return qfalse;
+		}
 		else if (AIR_IsAircraftOnGeoscape(aircraft) && AIR_AircraftHasEnoughFuel(aircraft, pos)) {
 			/* Move the selected aircraft to the position clicked */
 			MAP_MapCalcLine(aircraft->pos, pos, &aircraft->route);
 			aircraft->status = AIR_TRANSIT;
 			aircraft->time = 0;
 			aircraft->point = 0;
+			return qtrue;
 		}
 	}
+	return qfalse;
 }
 
 
@@ -1594,7 +1603,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 
 	/* Draw a circle around selected aircraft */
 	if (MAP_IsAircraftSelected(aircraft)) {
-		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
+		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
 		int x;
 		int y;
 
