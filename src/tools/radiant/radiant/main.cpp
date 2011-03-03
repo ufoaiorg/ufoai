@@ -360,9 +360,10 @@ int main (int argc, char* argv[])
 	HMODULE lib;
 	lib = LoadLibrary("dwmapi.dll");
 	if (lib != 0) {
-		void (WINAPI *DwmEnableComposition) (bool bEnable) = (void (WINAPI *) (bool bEnable)) GetProcAddress(lib, "DwmEnableComposition");
-		if (DwmEnableComposition)
-		DwmEnableComposition(FALSE);
+		HRESULT (WINAPI *dwmEnableComposition) (UINT) = (HRESULT (WINAPI *) (UINT)) GetProcAddress(lib, "DwmEnableComposition");
+		if (dwmEnableComposition) {
+			dwmEnableComposition(FALSE);
+		}
 		FreeLibrary(lib);
 	}
 #endif
