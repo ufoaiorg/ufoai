@@ -259,7 +259,7 @@ namespace gtkutil
 			askTitle += (!fileName.empty()) ? ": " + os::getFilenameFromPath(fileName) : "";
 
 			if (!file_exists(fileName) || gtk_MessageBox(_parent,
-					_("The specified file already exists.\nDo you want to replace it?"), askTitle.c_str(),
+					_("The specified file already exists.\nDo you want to replace it?"), askTitle,
 					eMB_NOYES, eMB_ICONQUESTION) == eIDYES) {
 				return fileName;
 			}

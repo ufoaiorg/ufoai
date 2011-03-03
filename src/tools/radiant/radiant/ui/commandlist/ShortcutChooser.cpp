@@ -112,7 +112,7 @@ bool ShortcutChooser::retrieveShortcut(const std::string& commandName) {
 				// Fire up the dialog to ask the user what action to take
 				EMessageBoxReturn result = gtk_MessageBox(GTK_WIDGET(_parent),
 														message,
-														"Overwrite existing shortcut?",
+														_("Overwrite existing shortcut?"),
 														eMB_YESNO, eMB_ICONQUESTION);
 
 				// Only react on "YES"
