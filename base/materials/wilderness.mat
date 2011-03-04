@@ -11,10 +11,6 @@
 	material tex_lights/land_li_yellow
 	{
 		{
-			texture pt/fx/rfx_lali_yellow2_sp
-			rotate 0.1
-		}
-		{
 			flare 2
 			size.s 2.5
 			color 1.0 1.0 0.7

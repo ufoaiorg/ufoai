@@ -34,11 +34,6 @@
 {
 	material tex_material/c_red
 	{
-		texture pt/fx/rfx_lali_red_ko
-		rotate 0.1
-		glowscale 0.8
-	}
-	{
 		flare 5
 		scale.s 2.9
 		color 1.0 0.2 0.1
@@ -48,11 +43,6 @@
 /* land_li_yellow: small orange rotating light, additional flare effect (used around the landing pad)*/
 {
 	material tex_lights/land_li_yellow
-	{
-		texture pt/fx/rfx_lali_yellow_ko
-		rotate 0.2
-		glowscale 0.85
-	}
 	{
 		flare 2
 		scale.s 1.2
