@@ -162,6 +162,38 @@ static BrushSplitType Brush_classifyPlane (const Brush& brush, const Plane3& pla
 	return split;
 }
 
+static bool Brush_subtract_orig (const Brush& brush, const Brush& other, brush_vector_t& ret_fragments)
+{
+	if (aabb_intersects_aabb(brush.localAABB(), other.localAABB())) {
+		brush_vector_t fragments;
+		fragments.reserve(other.size());
+		Brush back(brush);
+
+		for (Brush::const_iterator i(other.begin()); i != other.end(); ++i) {
+			if ((*i)->contributes()) {
+				BrushSplitType split = Brush_classifyPlane(back, (*i)->plane3());
+				if (split.counts[ePlaneFront] != 0 && split.counts[ePlaneBack] != 0) {
+					fragments.push_back(new Brush(back));
+					Face* newFace = fragments.back()->addFace(*(*i));
+					if (newFace != 0) {
+						newFace->flipWinding();
+					}
+					back.addFace(*(*i));
+				} else if (split.counts[ePlaneBack] == 0) {
+					for (brush_vector_t::iterator i = fragments.begin(); i != fragments.end(); ++i) {
+						delete (*i);
+					}
+					return false;
+				}
+			}
+		}
+
+		ret_fragments.insert(ret_fragments.end(), fragments.begin(), fragments.end());
+		return true;
+	}
+	return false;
+}
+
 static bool Brush_subtract (const Brush& brush, const Brush& other, brush_vector_t& ret_fragments)
 {
 	if (aabb_intersects_aabb(brush.localAABB(), other.localAABB())) {
@@ -210,14 +242,17 @@ static bool Brush_subtract (const Brush& brush, const Brush& other, brush_vector
 	return false;
 }
 
+typedef bool (*BrushSubtract) (const Brush& brush, const Brush& other, brush_vector_t& ret_fragments);
+
 class SubtractBrushesFromUnselected: public scene::Graph::Walker
 {
 		const brush_vector_t& m_brushlist;
 		std::size_t& m_before;
 		std::size_t& m_after;
+		BrushSubtract _subtractFunc;
 	public:
-		SubtractBrushesFromUnselected (const brush_vector_t& brushlist, std::size_t& before, std::size_t& after) :
-			m_brushlist(brushlist), m_before(before), m_after(after)
+		SubtractBrushesFromUnselected (const brush_vector_t& brushlist, std::size_t& before, std::size_t& after, BrushSubtract subtractFunc) :
+			m_brushlist(brushlist), m_before(before), m_after(after), _subtractFunc(subtractFunc)
 		{
 		}
 		bool pre (const scene::Path& path, scene::Instance& instance) const
@@ -238,7 +273,7 @@ class SubtractBrushesFromUnselected: public scene::Graph::Walker
 						for (brush_vector_t::const_iterator i(m_brushlist.begin()); i != m_brushlist.end(); ++i) {
 							for (brush_vector_t::iterator j(buffer[static_cast<std::size_t> (swap)].begin()); j
 									!= buffer[static_cast<std::size_t> (swap)].end(); ++j) {
-								if (Brush_subtract(*(*j), *(*i), buffer[static_cast<std::size_t> (!swap)])) {
+								if (_subtractFunc(*(*j), *(*i), buffer[static_cast<std::size_t> (!swap)])) {
 									delete (*j);
 								} else {
 									buffer[static_cast<std::size_t> (!swap)].push_back((*j));
@@ -271,7 +306,7 @@ class SubtractBrushesFromUnselected: public scene::Graph::Walker
 		}
 };
 
-void CSG_Subtract ()
+static void CSG_Subtract (BrushSubtract subtractFunc)
 {
 	brush_vector_t selected_brushes;
 	GlobalSceneGraph().traverse(BrushGatherSelected(selected_brushes));
@@ -286,12 +321,22 @@ void CSG_Subtract ()
 		// subtract selected from unselected
 		std::size_t before = 0;
 		std::size_t after = 0;
-		GlobalSceneGraph().traverse(SubtractBrushesFromUnselected(selected_brushes, before, after));
+		GlobalSceneGraph().traverse(SubtractBrushesFromUnselected(selected_brushes, before, after, subtractFunc));
 		globalOutputStream() << "CSG Subtract: Result: " << string::toString(after) << " fragment" << (after == 1 ? "" : "s")
 				<< " from " << string::toString(before) << " brush" << (before == 1 ? "" : "es") << ".\n";
 
 		SceneChangeNotify();
 	}
+}
+
+void CSG_SubtractOrig ()
+{
+	CSG_Subtract(Brush_subtract_orig);
+}
+
+void CSG_Subtract ()
+{
+	CSG_Subtract(Brush_subtract);
 }
 
 class BrushSplitByPlaneSelected: public scene::Graph::Walker
