@@ -171,8 +171,15 @@ check_compiler() {
 	CC=${CC:-cc}
 	CXX=${CXX:-c++}
 
+	if [ "${TARGET_OS}" = "android" ]; then
+		CROSS="arm-linux-androideabi-"
+	fi
+
 	if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
 		CROSS="i686-pc-mingw32-"
+	fi
+
+	if [ -n "${CROSS}" ]; then
 		# TODO Add a check for this
 		echo "Cross compiling, make sure that ${CROSS}${CC} is in your path"
 	fi
@@ -283,6 +290,16 @@ check_module() {
 	done
 
 	[ $FOUND -eq 0 ] && error "invalid module given: $1"
+}
+
+enable_only() {
+	for i in `get_modules`; do
+		if [ "$i" = "$1" ]; then
+			set_var "${i}_DISABLE" ""
+		else
+			set_var "${i}_DISABLE" "yes"
+		fi
+	done
 }
 
 check_path_characters
@@ -400,13 +417,7 @@ while [ $# -gt 0 ]; do
 	--enable-only-*)
 		OPTION="${1#--enable-only-}"
 		check_module $OPTION
-		for i in `get_modules`; do
-			if [ "$i" = "$OPTION" ]; then
-				set_var "${i}_DISABLE" ""
-			else
-				set_var "${i}_DISABLE" "yes"
-			fi
-		done
+		enable_only $OPTION
 		;;
 	--enable-*)
 		OPTION="${1#--enable-}"
@@ -426,6 +437,7 @@ while [ $# -gt 0 ]; do
 done
 
 [ "${TARGET_OS}" = "mingw32" ] && TARGET_ARCH=i386
+[ "${TARGET_OS}" = "android" ] && TARGET_ARCH=arm && enable_only ufo
 [ "${TARGET_OS}" = "darwin" ] && USE_SIGNALS=
 
 PKGDATADIR=${PKGDATADIR:-${PREFIX}/games/ufoai}

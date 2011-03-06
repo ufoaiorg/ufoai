@@ -359,6 +359,14 @@ ifeq ($(TARGET_OS),solaris)
 	$(TARGET)_LDFLAGS +=
 endif
 
+ifeq ($(TARGET_OS),android)
+	$(TARGET)_SRCS += \
+		ports/android/android_console.c \
+		ports/android/android_debugger.c \
+		ports/android/android_main.c \
+		ports/android/android_system.c
+endif
+
 ifeq ($(HARD_LINKED_GAME),1)
 	$(TARGET)_SRCS     += $(game_SRCS)
 else
