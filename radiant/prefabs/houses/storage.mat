@@ -1,0 +1,10 @@
+{
+	material tex_misc/advertbb
+	specular 2.0
+	hardness 2.0
+	{
+		texture tex_misc/advertbb0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 8 3.0
+	}
+}
