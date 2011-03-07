@@ -31,8 +31,6 @@
 #include "../ports/system.h"
 #include <SDL.h>
 
-#ifndef COMPILE_UFO_WITHOUT_SERVER
-
 /**
  * @brief Debug print to server console
  */
@@ -699,5 +697,3 @@ void SV_InitGameProgs (void)
 		svs.gameThread = SDL_CreateThread(SV_RunGameFrameThread, NULL);
 	}
 }
-
-#endif /* COMPILE_UFO_WITHOUT_SERVER */

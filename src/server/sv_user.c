@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 
-#ifndef COMPILE_UFO_WITHOUT_SERVER
-
 /**
  * @brief Set the client state
  * @sa client_state_t
@@ -308,5 +306,3 @@ void SV_SetServerState(server_state_t state)
 {
 	sv->state = state;
 }
-
-#endif /* COMPILE_UFO_WITHOUT_SERVER */

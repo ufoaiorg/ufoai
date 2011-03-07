@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "../common/http.h"
 
-#ifndef COMPILE_UFO_WITHOUT_SERVER
-
 void SV_Heartbeat_f (void)
 {
 	/* heartbeats will always be sent to the ufo master */
@@ -605,5 +603,3 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("sv", SV_ServerCommand_f, "Server command");
 	Cmd_AddParamCompleteFunction("sv", SV_CompleteServerCommand);
 }
-
-#endif /* COMPILE_UFO_WITHOUT_SERVER */

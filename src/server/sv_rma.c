@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 #include "../shared/mutex.h"
 
-#ifndef COMPILE_UFO_WITHOUT_SERVER
-
 #define ASSEMBLE_THREADS 2
 static SDL_sem *mapSem;
 static SDL_cond *mapCond;
@@ -1341,5 +1339,3 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	assert(map);
 	return map;
 }
-
-#endif /* COMPILE_UFO_WITHOUT_SERVER */
