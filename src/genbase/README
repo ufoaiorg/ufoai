@@ -1,8 +1,0 @@
-Contain script to generate a "spacial" base dir from the default base dir
-After you've run light_base.py you may wish to run
-
-src/genbase/shrink_textures.sh base_light base_light
-mkdir -p base_full
-cd base
-find . -type f -exec sh -c "[ -e ../base_light/{} ] || cp --parents {} ../base_full" \;
-src/genbase/shrink_textures.sh base_full base_full
