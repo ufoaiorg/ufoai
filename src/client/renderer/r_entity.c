@@ -183,8 +183,8 @@ static void R_DrawEntityEffects (void)
 	R_EnableBlend(qtrue);
 
 	if (actorIndicator == NULL) {
-		selectedActorIndicator = R_FindImage("pics/sfx/actor_selected", it_worldrelated);
-		actorIndicator = R_FindImage("pics/sfx/actor", it_worldrelated);
+		selectedActorIndicator = R_FindImage("pics/sfx/actor_selected", it_effect);
+		actorIndicator = R_FindImage("pics/sfx/actor", it_effect);
 	}
 
 	for (i = 0; i < refdef.numEntities; i++) {
