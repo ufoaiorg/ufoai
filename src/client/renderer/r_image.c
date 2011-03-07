@@ -460,7 +460,7 @@ static inline void R_DeleteImage (image_t *image)
 	image_t *var, *previousVar = NULL;
 
 	/* free it */
-	glDeleteTextures(1, (GLuint *) &image->texnum);
+	glDeleteTextures(1, &image->texnum);
 	R_CheckError();
 
 	for (var = imageHash[hash]; var; var = var->hash_next) {
@@ -537,7 +537,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	image->type = type;
 	image->width = width;
 	image->height = height;
-	image->texnum = i + 1;
+	glGenTextures(1,&image->texnum);
 
 	Q_strncpyz(image->name, name, sizeof(image->name));
 	/* drop extension */

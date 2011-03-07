@@ -26,11 +26,9 @@
 #include "r_framebuffer.h"
 #include "r_error.h"
 
-#define MAX_FRAMEBUFFER_OBJECTS	    64
-
 static int frameBufferObjectCount;
-static r_framebuffer_t frameBufferObjects[MAX_FRAMEBUFFER_OBJECTS];
-static GLuint frameBufferTextures[TEXNUM_FRAMEBUFFER_TEXTURES];
+static r_framebuffer_t frameBufferObjects[MAX_GL_FRAMEBUFFERS];
+static GLuint frameBufferTextures[MAX_GL_FRAMEBUFFERS];
 
 static r_framebuffer_t screenBuffer;
 static GLenum *colorAttachments;
@@ -39,10 +37,10 @@ static GLuint R_GetFreeFBOTexture (void)
 {
 	int i;
 
-	for (i = 0; i < TEXNUM_FRAMEBUFFER_TEXTURES; i++) {
+	for (i = 0; i < MAX_GL_FRAMEBUFFERS; i++) {
 		if (frameBufferTextures[i] == 0) {
-			frameBufferTextures[i] = 1;
-			return TEXNUM_FRAMEBUFFER_TEXTURES + i;
+			glGenTextures(1, &frameBufferTextures[i]);
+			return frameBufferTextures[i];
 		}
 	}
 
@@ -51,11 +49,17 @@ static GLuint R_GetFreeFBOTexture (void)
 
 static void R_FreeFBOTexture (int texnum)
 {
-	const int i = texnum - TEXNUM_FRAMEBUFFER_TEXTURES;
+	int i;
+
+	for (i = 0; i < MAX_GL_FRAMEBUFFERS; i++) {
+		if (frameBufferTextures[i] == texnum)
+			break;
+	}
+
 	assert(i >= 0);
-	assert(i < TEXNUM_FRAMEBUFFER_TEXTURES);
+	assert(i < MAX_GL_FRAMEBUFFERS);
+	glDeleteTextures(1, &frameBufferTextures[i]);
 	frameBufferTextures[i] = 0;
-	glDeleteTextures(1, (GLuint *) &texnum);
 }
 
 void R_InitFBObjects (void)

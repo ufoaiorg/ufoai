@@ -47,8 +47,13 @@ void R_Trace(vec3_t start, vec3_t end, float size, int contentmask);
 	(MAX_MAP_LIGHTMAP * LIGHTMAP_BYTES)
 
 typedef struct lightmaps_s {
-	GLuint lightmap_texnum;
-	GLuint deluxemap_texnum;
+	GLuint lightmap_texnums[MAX_GL_LIGHTMAPS];
+	GLuint deluxemap_texnums[MAX_GL_DELUXEMAPS];
+
+	int lightmap_count;
+	int deluxemap_count;
+
+	qboolean incomplete_atlas;
 
 	int size;  /**< lightmap block size (NxN) */
 

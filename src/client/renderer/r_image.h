@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_IMAGE_H
 #define R_IMAGE_H
 
+#include "r_gl.h"
 #include "r_material.h"
 /*
 skins will be outline flood filled and mip mapped
@@ -63,7 +64,7 @@ typedef struct image_s {
 	imagetype_t type;
 	int width, height;					/**< source image dimensions */
 	int upload_width, upload_height;	/**< dimensions after power of two and picmip */
-	unsigned int texnum;				/**< gl texture binding */
+	GLuint texnum;						/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;
 	struct image_s *normalmap;			/**< normalmap texture  */
@@ -77,10 +78,6 @@ typedef struct image_s {
 #define MAX_GL_LIGHTMAPS	256
 #define MAX_GL_DELUXEMAPS	256
 #define MAX_GL_FRAMEBUFFERS	256
-
-#define TEXNUM_LIGHTMAPS	MAX_GL_TEXTURES
-#define TEXNUM_DELUXEMAPS	(TEXNUM_LIGHTMAPS + MAX_GL_LIGHTMAPS)
-#define TEXNUM_FRAMEBUFFER_TEXTURES	(TEXNUM_DELUXEMAPS + MAX_GL_DELUXEMAPS)
 
 extern image_t r_images[MAX_GL_TEXTURES];
 extern int r_numImages;

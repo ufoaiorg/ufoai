@@ -132,7 +132,7 @@ typedef struct mBspSurface_s {
 
 /**
  * @brief surfaces are assigned to arrays based on their primary rendering type
- * and then sorted by world texnum to reduce binds
+ * and then sorted by world texture index to reduce binds
  */
 typedef struct mBspSurfaces_s {
 	mBspSurface_t **surfaces;
