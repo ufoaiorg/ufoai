@@ -1,6 +1,6 @@
 /**
  * @file android_console.c
- * @brief console functions for *nix ports
+ * @brief console functions for andriod ports
  */
 
 /*
