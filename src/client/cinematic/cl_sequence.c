@@ -124,7 +124,7 @@ static sequence_t sequences[MAX_SEQUENCES];
 static int numSequences;
 
 /** Store all sequence commands */
-static seqCmd_t seqCmds[MAX_SEQCMDS];
+static seqCmd_t *seqCmds;
 static int numSeqCmds;
 
 /** Sequence context
@@ -927,6 +927,8 @@ void CL_ParseSequence (const char *name, const char **text)
 					Com_Error(ERR_FATAL, "Too many sequence commands");
 
 				/* init seqCmd */
+				if (seqCmds == NULL)
+					seqCmds = (seqCmd_t *) Mem_PoolAlloc(sizeof(seqCmd_t) * MAX_SEQCMDS, cl_genericPool, 0);
 				sc = &seqCmds[numSeqCmds++];
 				OBJZERO(*sc);
 				sc->handler = seqCmdFunc[i];

@@ -517,7 +517,7 @@ void R_DrawLine (int *verts, float thickness)
  */
 void R_DrawPolygon (int points, int *verts)
 {
-	R_Draw2DArray(points, verts, GL_POLYGON);
+	R_Draw2DArray(points, verts, GL_TRIANGLE_FAN);
 }
 
 typedef struct {

@@ -38,7 +38,7 @@ extern const vec2_t default_texcoords[4];
 /** @brief texunits maintain multitexture state */
 typedef struct gltexunit_s {
 	qboolean enabled;	/**< GL_TEXTURE_2D on / off */
-	GLenum texture;		/**< e.g. GL_TEXTURE0_ARB */
+	GLenum texture;		/**< e.g. GL_TEXTURE0 */
 	GLint texnum;		/**< e.g 123 */
 	GLenum texenv;		/**< e.g. GL_MODULATE */
 	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];

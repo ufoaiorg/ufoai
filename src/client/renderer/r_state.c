@@ -43,7 +43,7 @@ qboolean R_SelectTexture (gltexunit_t *texunit)
 		return qtrue;
 
 	/* not supported */
-	if (texunit->texture >= r_config.maxTextureCoords + GL_TEXTURE0_ARB)
+	if (texunit->texture >= r_config.maxTextureCoords + GL_TEXTURE0)
 		return qfalse;
 
 	r_state.active_texunit = texunit;
@@ -859,7 +859,7 @@ void R_SetDefaultState (void)
 	/* setup texture units */
 	for (i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
 		gltexunit_t *tex = &r_state.texunits[i];
-		tex->texture = GL_TEXTURE0_ARB + i;
+		tex->texture = GL_TEXTURE0 + i;
 
 		R_EnableTexture(tex, qtrue);
 

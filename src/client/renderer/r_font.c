@@ -573,6 +573,8 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	char buf[BUF_SIZE];
 	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
 	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
+	int colordepth = 32;
+	int pixelFormat = GL_BGRA;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	Uint32 rmask = 0xff000000;
@@ -608,7 +610,7 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	for (w = 2; w < textSurface->w; w <<= 1) {}
 	for (h = 2; h < textSurface->h; h <<= 1) {}
 
-	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
+	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, colordepth, rmask, gmask, bmask, amask);
 	if (!openGLSurface)
 		return;
 
@@ -626,7 +628,7 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 
 	glGenTextures(1,&chunk->texnum);
 	R_BindTexture(chunk->texnum);
-	glTexImage2D(GL_TEXTURE_2D, 0, samples, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, openGLSurface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, w, h, 0, pixelFormat, GL_UNSIGNED_BYTE, openGLSurface->pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	Vector2Set(chunk->texsize, w, h);
