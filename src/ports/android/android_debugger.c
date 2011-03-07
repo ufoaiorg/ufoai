@@ -8,23 +8,23 @@
 #include <android/log.h>
 #include "android_debugger.h"
 
-// TODO: it does not work
+/* TODO: it does not work */
 
-static sighandler_t debuggerHandler = NULL;
+static sighandler_t debuggerHandler;
 
-static void mySignalHandler(int sig)
+static void mySignalHandler (int sig)
 {
 	debuggerHandler(sig);
 	signal( sig, debuggerHandler );
 }
 
-void androidDumpBacktrace(FILE * out)
+void androidDumpBacktrace (FILE * out)
 {
-	debuggerHandler = signal( SIGSEGV, mySignalHandler );
+	debuggerHandler = signal(SIGSEGV, mySignalHandler);
 	__android_log_print(ANDROID_LOG_INFO, "UFOAI", "Backtrace (run command \"arm-eabi-gdb libapplication.so -ex 'list *0xaabbccdd'\" where aabbccdd is a stack address below):");
-	if( debuggerHandler == SIG_IGN || debuggerHandler == SIG_DFL || debuggerHandler == SIG_ERR ) {
+	if (debuggerHandler == SIG_IGN || debuggerHandler == SIG_DFL || debuggerHandler == SIG_ERR) {
 		__android_log_print(ANDROID_LOG_INFO, "UFOAI", "Getting backtrace failed, you have very custom or broken Android firmware");
-		signal( SIGSEGV, debuggerHandler );
+		signal(SIGSEGV, debuggerHandler);
 		return;
 	}
 	raise(SIGSEGV);

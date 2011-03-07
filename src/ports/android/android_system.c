@@ -1,6 +1,6 @@
 /**
  * @file android_system.c
- * @brief Some generic *nix functions
+ * @brief Some android specific functions
  */
 
 /*

@@ -1,5 +1,5 @@
 /**
- * @file unix_console.c
+ * @file android_console.c
  * @brief console functions for *nix ports
  */
 
