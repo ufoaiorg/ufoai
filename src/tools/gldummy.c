@@ -17,3 +17,11 @@ void glTexImage2D (GLenum target, GLint level, GLint internalformat, GLsizei wid
 		GLenum format, GLenum type, const GLvoid *texels)
 {
 }
+
+void glGenTextures (GLsizei n, GLuint *textures)
+{
+	int i;
+	for (i = 0; i < n; i++) {
+		textures[i] = 0;
+	}
+}
