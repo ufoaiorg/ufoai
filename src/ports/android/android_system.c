@@ -95,64 +95,6 @@ void Sys_Quit (void)
 	exit(0);
 }
 
-void Sys_Sleep (int milliseconds)
-{
-	if (milliseconds < 1)
-		milliseconds = 1;
-	usleep(milliseconds * 1000);
-}
-
-#ifdef COMPILE_UFO
-const char *Sys_SetLocale (const char *localeID)
-{
-	const char *locale;
-
-	unsetenv("LANGUAGE");
-
-	Sys_Setenv("LC_NUMERIC", "C");
-	setlocale(LC_NUMERIC, "C");
-
-	/* set to system default */
-	setlocale(LC_ALL, "C");
-	locale = setlocale(LC_MESSAGES, localeID);
-	if (!locale) {
-		Com_DPrintf(DEBUG_CLIENT, "...could not set to language: %s\n", localeID);
-		locale = setlocale(LC_MESSAGES, "");
-		if (!locale) {
-			Com_DPrintf(DEBUG_CLIENT, "...could not set to system language\n");
-		}
-		return NULL;
-	} else {
-		Com_Printf("...using language: %s\n", locale);
-	}
-
-	return locale;
-}
-
-const char *Sys_GetLocale (void)
-{
-	/* Calling with NULL param should return current system settings. */
-	const char *currentLocale = setlocale(LC_MESSAGES, NULL);
-	if (currentLocale != NULL && currentLocale[0] != '\0')
-		return currentLocale;
-	else
-		return "C";
-}
-#endif
-
-#ifdef COMPILE_UFO
-void Sys_SetAffinityAndPriority (void)
-{
-	if (sys_affinity->modified) {
-		sys_affinity->modified = qfalse;
-	}
-
-	if (sys_priority->modified) {
-		sys_priority->modified = qfalse;
-	}
-}
-#endif
-
 /**
  * @brief On platforms supporting it, print a backtrace.
  */

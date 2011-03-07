@@ -65,6 +65,83 @@ int Sys_Setenv (const char *name, const char *value)
 		return unsetenv(name);
 }
 
+void Sys_Sleep (int milliseconds)
+{
+#if 0
+	struct timespec sleep, remaining;
+	sleep.tv_sec = (long) milliseconds / 1000;
+	sleep.tv_nsec = 1000000 * (milliseconds - (long) milliseconds);
+	while (nanosleep(&sleep, &remaining) < 0 && errno == EINTR)
+		/* If nanosleep has been interrupted by a signal, adjust the
+		 * sleeping period and return to sleep.  */
+		sleep = remaining;
+#endif
+	if (milliseconds < 1)
+		milliseconds = 1;
+	usleep(milliseconds * 1000);
+}
+
+#ifdef COMPILE_UFO
+const char *Sys_SetLocale (const char *localeID)
+{
+	const char *locale;
+
+# ifndef __sun
+	unsetenv("LANGUAGE");
+# endif /* __sun */
+# ifdef __APPLE__
+	if (localeID[0] != '\0') {
+		if (Sys_Setenv("LANGUAGE", localeID) != 0)
+			Com_Printf("...setenv for LANGUAGE failed: %s\n", localeID);
+		if (Sys_Setenv("LC_ALL", localeID) != 0)
+			Com_Printf("...setenv for LC_ALL failed: %s\n", localeID);
+	}
+# endif /* __APPLE__ */
+
+	Sys_Setenv("LC_NUMERIC", "C");
+	setlocale(LC_NUMERIC, "C");
+
+	/* set to system default */
+	setlocale(LC_ALL, "C");
+	locale = setlocale(LC_MESSAGES, localeID);
+	if (!locale) {
+		Com_DPrintf(DEBUG_CLIENT, "...could not set to language: %s\n", localeID);
+		locale = setlocale(LC_MESSAGES, "");
+		if (!locale) {
+			Com_DPrintf(DEBUG_CLIENT, "...could not set to system language\n");
+		}
+		return NULL;
+	} else {
+		Com_Printf("...using language: %s\n", locale);
+	}
+
+	return locale;
+}
+
+const char *Sys_GetLocale (void)
+{
+	/* Calling with NULL param should return current system settings. */
+	const char *currentLocale = setlocale(LC_MESSAGES, NULL);
+	if (currentLocale != NULL && currentLocale[0] != '\0')
+		return currentLocale;
+	else
+		return "C";
+}
+#endif
+
+#ifdef COMPILE_UFO
+void Sys_SetAffinityAndPriority (void)
+{
+	if (sys_affinity->modified) {
+		sys_affinity->modified = qfalse;
+	}
+
+	if (sys_priority->modified) {
+		sys_priority->modified = qfalse;
+	}
+}
+#endif
+
 #ifdef USE_SIGNALS
 /**
  * @brief Catch kernel interrupts and dispatch the appropriate exit routine.
