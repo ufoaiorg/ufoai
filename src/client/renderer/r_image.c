@@ -537,7 +537,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	image->type = type;
 	image->width = width;
 	image->height = height;
-	glGenTextures(1,&image->texnum);
+	glGenTextures(1, &image->texnum);
 
 	Q_strncpyz(image->name, name, sizeof(image->name));
 	/* drop extension */

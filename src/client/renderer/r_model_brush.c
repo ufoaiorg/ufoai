@@ -668,9 +668,9 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
 	int i, j;
 
 	for (i = 0; i < surfs->count; i++) {
-		const ptrdiff_t texindex = surfs->surfaces[i]->texinfo->image-r_images;
+		const ptrdiff_t texindex = surfs->surfaces[i]->texinfo->image - r_images;
 		if (texindex < 0 || texindex >= MAX_GL_TEXTURES)
-			Com_Error(ERR_FATAL,  "R_SortSurfacesArrays: bogus image pointer");
+			Com_Error(ERR_FATAL, "R_SortSurfacesArrays: bogus image pointer");
 		R_SurfaceToSurfaces(r_sorted_surfaces[texindex], surfs->surfaces[i]);
 	}
 

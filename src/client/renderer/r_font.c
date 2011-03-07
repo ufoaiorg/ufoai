@@ -626,7 +626,7 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
 	SDL_FreeSurface(textSurface);
 
-	glGenTextures(1,&chunk->texnum);
+	glGenTextures(1, &chunk->texnum);
 	R_BindTexture(chunk->texnum);
 	glTexImage2D(GL_TEXTURE_2D, 0, samples, w, h, 0, pixelFormat, GL_UNSIGNED_BYTE, openGLSurface->pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
