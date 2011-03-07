@@ -126,10 +126,9 @@ static void R_FontCleanCache (void)
 
 	/* free the surfaces */
 	for (i = 0; i < numChunks; i++) {
-		GLuint texnumGL = chunkCache[i].texnum + SDL_GL_FIRST_SAFE_TEXTURE_ID;
 		if (!chunkCache[i].texnum)
 			continue;
-		glDeleteTextures(1, &texnumGL);
+		glDeleteTextures(1, &(chunkCache[i].texnum));
 		R_CheckError();
 	}
 
