@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "../ui/ui_render.h"
 
-#define MAX_DATA_LENGTH 2048
+#define MAX_DATA_LENGTH 512
 
 struct sequenceContext_s;
 
@@ -111,7 +111,7 @@ typedef struct seq2D_s {
 	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
-#define MAX_SEQCMDS		8192
+#define MAX_SEQCMDS		768
 #define MAX_SEQUENCES	32
 #define MAX_SEQENTS		128
 #define MAX_SEQ2DS		128
@@ -924,7 +924,7 @@ void CL_ParseSequence (const char *name, const char **text)
 					return;
 
 				if (numSeqCmds >= MAX_SEQCMDS)
-					Com_Error(ERR_FATAL, "Too many sequence commands");
+					Com_Error(ERR_FATAL, "Too many sequence commands for %s", name);
 
 				/* init seqCmd */
 				if (seqCmds == NULL)
