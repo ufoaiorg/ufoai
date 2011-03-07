@@ -63,6 +63,8 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 	$(TARGET)_SRCS += \
 		ports/linux/linux_main.c \
 		ports/unix/unix_console.c \
+		ports/unix/unix_files.c \
+		ports/unix/unix_shared.c \
 		ports/unix/unix_main.c
 endif
 
@@ -79,6 +81,8 @@ ifeq ($(TARGET_OS),darwin)
 	$(TARGET)_SRCS += \
 		ports/macosx/osx_main.m \
 		ports/unix/unix_console.c \
+		ports/unix/unix_files.c \
+		ports/unix/unix_shared.c \
 		ports/unix/unix_main.c
 endif
 
@@ -86,6 +90,8 @@ ifeq ($(TARGET_OS),solaris)
 	$(TARGET)_SRCS += \
 		ports/solaris/solaris_main.c \
 		ports/unix/unix_console.c \
+		ports/unix/unix_files.c \
+		ports/unix/unix_shared.c \
 		ports/unix/unix_main.c
 endif
 

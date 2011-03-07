@@ -71,20 +71,6 @@ const char *Sys_GetCurrentUser (void)
 }
 
 /**
- * @return NULL if getcwd failed
- */
-char *Sys_Cwd (void)
-{
-	static char cwd[MAX_OSPATH];
-
-	if (getcwd(cwd, sizeof(cwd) - 1) == NULL)
-		return NULL;
-	cwd[MAX_OSPATH - 1] = 0;
-
-	return cwd;
-}
-
-/**
  * @brief Errors out of the game.
  * @note The error message should not have a newline - it's added inside of this function
  * @note This function does never return
@@ -198,170 +184,6 @@ const char *Sys_GetLocale (void)
 }
 #endif
 
-/**
- * @brief set/unset environment variables (empty value removes it)
- */
-int Sys_Setenv (const char *name, const char *value)
-{
-	if (value && value[0] != '\0')
-		return setenv(name, value, 1);
-	else
-		return unsetenv(name);
-}
-
-/**
- * @brief Returns the home environment variable
- * (which hold the path of the user's homedir)
- */
-char *Sys_GetHomeDirectory (void)
-{
-	return getenv("HOME");
-}
-
-void Sys_NormPath (char* path)
-{
-}
-
-static	char	findbase[MAX_OSPATH];
-static	char	findpath[MAX_OSPATH];
-static	char	findpattern[MAX_OSPATH];
-static	DIR		*fdir;
-
-static qboolean CompareAttributes (const char *path, const char *name, unsigned musthave, unsigned canthave)
-{
-	struct stat st;
-	char fn[MAX_OSPATH];
-
-	/* . and .. never match */
-	if (Q_streq(name, ".") || Q_streq(name, ".."))
-		return qfalse;
-
-	Com_sprintf(fn, sizeof(fn), "%s/%s", path, name);
-	if (stat(fn, &st) == -1) {
-		Com_Printf("CompareAttributes: Warning, stat failed: %s\n", name);
-		return qfalse; /* shouldn't happen */
-	}
-
-	if ((st.st_mode & S_IFDIR) && (canthave & SFF_SUBDIR))
-		return qfalse;
-
-	if ((musthave & SFF_SUBDIR) && !(st.st_mode & S_IFDIR))
-		return qfalse;
-
-	return qtrue;
-}
-
-/**
- * @brief Opens the directory and returns the first file that matches our searchrules
- * @sa Sys_FindNext
- * @sa Sys_FindClose
- */
-char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
-{
-	struct dirent *d;
-	char *p;
-
-	if (fdir)
-		Sys_Error("Sys_BeginFind without close");
-
-	Q_strncpyz(findbase, path, sizeof(findbase));
-
-	if ((p = strrchr(findbase, '/')) != NULL) {
-		*p = 0;
-		Q_strncpyz(findpattern, p + 1, sizeof(findpattern));
-	} else
-		Q_strncpyz(findpattern, "*", sizeof(findpattern));
-
-	if (Q_streq(findpattern, "*.*"))
-		Q_strncpyz(findpattern, "*", sizeof(findpattern));
-
-	if ((fdir = opendir(findbase)) == NULL)
-		return NULL;
-
-	while ((d = readdir(fdir)) != NULL) {
-		if (!*findpattern || Com_Filter(findpattern, d->d_name)) {
-			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
-				return findpath;
-			}
-		}
-	}
-	return NULL;
-}
-
-/**
- * @brief Returns the next file of the already opened directory (Sys_FindFirst) that matches our search mask
- * @sa Sys_FindClose
- * @sa Sys_FindFirst
- * @sa static var findpattern
- */
-char *Sys_FindNext (unsigned musthave, unsigned canhave)
-{
-	struct dirent *d;
-
-	if (fdir == NULL)
-		return NULL;
-	while ((d = readdir(fdir)) != NULL) {
-		if (!*findpattern || Com_Filter(findpattern, d->d_name)) {
-			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
-				return findpath;
-			}
-		}
-	}
-	return NULL;
-}
-
-void Sys_FindClose (void)
-{
-	if (fdir != NULL)
-		closedir(fdir);
-	fdir = NULL;
-}
-
-#define MAX_FOUND_FILES 0x1000
-
-void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char *filter, linkedList_t **list)
-{
-	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
-	char filename[MAX_OSPATH];
-	DIR *directory;
-	struct dirent *d;
-	struct stat st;
-
-	if (subdirs[0] != '\0') {
-		Com_sprintf(search, sizeof(search), "%s/%s", basedir, subdirs);
-	} else {
-		Com_sprintf(search, sizeof(search), "%s", basedir);
-	}
-
-	if ((directory = opendir(search)) == NULL)
-		return;
-
-	while ((d = readdir(directory)) != NULL) {
-		Com_sprintf(filename, sizeof(filename), "%s/%s", search, d->d_name);
-		if (stat(filename, &st) == -1)
-			continue;
-
-		if (st.st_mode & S_IFDIR) {
-			if (Q_strcasecmp(d->d_name, ".") && Q_strcasecmp(d->d_name, "..")) {
-				if (subdirs[0] != '\0') {
-					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s/%s", subdirs, d->d_name);
-				} else {
-					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s", d->d_name);
-				}
-				Sys_ListFilteredFiles(basedir, newsubdirs, filter, list);
-			}
-		}
-		Com_sprintf(filename, sizeof(filename), "%s/%s", subdirs, d->d_name);
-		if (!Com_Filter(filter, filename))
-			continue;
-		LIST_AddString(list, filename);
-	}
-
-	closedir(directory);
-}
-
 #ifdef COMPILE_UFO
 void Sys_SetAffinityAndPriority (void)
 {
@@ -374,31 +196,6 @@ void Sys_SetAffinityAndPriority (void)
 	}
 }
 #endif
-
-int Sys_Milliseconds (void)
-{
-	struct timeval tp;
-	struct timezone tzp;
-	static int secbase = 0;
-
-	gettimeofday(&tp, &tzp);
-
-	if (!secbase) {
-		secbase = tp.tv_sec;
-		return tp.tv_usec / 1000;
-	}
-
-	return (tp.tv_sec - secbase) * 1000 + tp.tv_usec / 1000;
-}
-
-void Sys_Mkdir (const char *thePath)
-{
-	if (mkdir(thePath, 0777) != -1)
-		return;
-
-	if (errno != EEXIST)
-		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
-}
 
 #ifdef HAVE_LINK_H
 static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, void *data)
@@ -554,40 +351,5 @@ void Sys_Backtrace (void)
 
 #ifdef COMPILE_UFO
 	Com_UploadCrashDump(dumpFile);
-#endif
-}
-
-#ifdef USE_SIGNALS
-/**
- * @brief Catch kernel interrupts and dispatch the appropriate exit routine.
- */
-static void Sys_Signal (int s)
-{
-	switch (s) {
-	case SIGHUP:
-	case SIGINT:
-	case SIGQUIT:
-	case SIGTERM:
-		Com_Printf("Received signal %d, quitting..\n", s);
-		Sys_Quit();
-		break;
-	default:
-		Sys_Error("Received signal %d.\n", s);
-		break;
-	}
-}
-#endif
-
-void Sys_InitSignals (void)
-{
-#ifdef USE_SIGNALS
-	signal(SIGHUP, Sys_Signal);
-	signal(SIGINT, Sys_Signal);
-	signal(SIGQUIT, Sys_Signal);
-	signal(SIGILL, Sys_Signal);
-	signal(SIGABRT, Sys_Signal);
-	signal(SIGFPE, Sys_Signal);
-	signal(SIGSEGV, Sys_Signal);
-	signal(SIGTERM, Sys_Signal);
 #endif
 }
