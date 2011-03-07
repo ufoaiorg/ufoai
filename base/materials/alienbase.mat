@@ -27,12 +27,3 @@
 		pulse 1.2
 	}
 }
-{
-	material tex_ufo/ufo2_10
-	/* fx Animation (green/yellow) */
-	{
-		texture pt/fx/fx2_10_1a0
-		anim 14 4.0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-}

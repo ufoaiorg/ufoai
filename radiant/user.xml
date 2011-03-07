@@ -218,6 +218,7 @@
 				<toggletoolbutton name="clipper" action="ToggleClipper" tooltip="Clipper" icon="view_clipper.png" />
 			<separator/>
 				<toolbutton name="csgsubstract" action="CSGSubtract" tooltip="CSG Subtract" icon="selection_csgsubtract.png" />
+				<toolbutton name="csgsubstractoriginal" action="CSGSubtractOrig" tooltip="CSG Subtract Original" icon="selection_csgsubtract.png" />
 				<toolbutton name="csgmerge" action="CSGMerge" tooltip="CSG Merge" icon="selection_csgmerge.png" />
 				<toolbutton name="csghollow" action="CSGHollow" tooltip="Hollow" icon="selection_makehollow.png" />
 			<separator/>

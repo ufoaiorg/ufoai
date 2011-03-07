@@ -718,6 +718,7 @@ void Commands_Register ()
 	GlobalEventManager().addToggle("MouseScale", FreeCaller<ScaleMode> ());
 	GlobalEventManager().addToggle("MouseDrag", FreeCaller<DragMode> ());
 
+	GlobalEventManager().addCommand("CSGSubtractOrig", FreeCaller<CSG_SubtractOrig> ());
 	GlobalEventManager().addCommand("CSGSubtract", FreeCaller<CSG_Subtract> ());
 	GlobalEventManager().addCommand("CSGMerge", FreeCaller<CSG_Merge> ());
 	GlobalEventManager().addCommand("CSGHollow", FreeCaller<CSG_MakeHollow> ());

@@ -5,6 +5,14 @@ ifeq ($(wildcard .git),.git)
 	endif
 endif
 
+# auto generate icon packs
+resources:
+	$(Q)python ./src/resources/sprite_pack.py
+
+clean-resources:
+	$(Q)rm ./base/pics/banks/autogen*
+	$(Q)rm ./base/ufos/*_autogen.ufo
+
 # sync sourceforget.net git into a local dir
 LOCAL_GIT_DIR ?= ~/ufoai-git.sf
 rsync:

@@ -62,7 +62,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 )
 
 /* frame based animation, lerp between consecutive images */
-#define MAX_ANIM_FRAMES 16
+#define MAX_ANIM_FRAMES 8
 
 #define UPDATE_THRESHOLD 0.02
 

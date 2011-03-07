@@ -10,6 +10,8 @@ CFLAGS                   += -DSHARED_EXT=\"$(SO_EXT)\"
 CFLAGS                   += -DGETTEXT_STATIC
 ifeq ($(W2K),1)
   CFLAGS                 += -DWINVER=0x500
+  # Wspiapi.h make use of inline function, but std=c99 will prevent this. -fgnu89-inline tells GCC to use the traditional GNU semantics for inline functions when in C99 mode
+  CCFLAGS                += -fgnu89-inline
 else
   CFLAGS                 += -DWINVER=0x501
 endif

@@ -1,4 +1,5 @@
-Some of the textures are non-free - a list is here http://static.ufo.ludwigf.org/html/textures/index.html
+Some of the textures are non-free - a list is here http://ufoai.ninex.info/licenses/
+We are working on replacing them with free versions.
 
 Textures from http://www.mayang.com/textures/
 * "License: These textures are Copyright \xa9 Mayang Murni Adnin, 2001-2006.

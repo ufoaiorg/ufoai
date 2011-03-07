@@ -34,12 +34,20 @@ lightmaps_t r_lightmaps;
 static void R_UploadLightmapBlock (void)
 {
 	const int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
-	if (r_lightmaps.lightmap_texnum == MAX_GL_LIGHTMAPS) {
+	GLuint texid;
+	if (r_lightmaps.lightmap_count >= MAX_GL_LIGHTMAPS) {
 		Com_Printf("R_UploadLightmapBlock: MAX_GL_LIGHTMAPS reached.\n");
 		return;
 	}
 
-	R_BindTexture(r_lightmaps.lightmap_texnum);
+	if (!r_lightmaps.incomplete_atlas) {
+		glGenTextures(1,&texid);
+		r_lightmaps.lightmap_texnums[r_lightmaps.lightmap_count++] = texid;
+	} else {
+		texid = r_lightmaps.lightmap_texnums[r_lightmaps.lightmap_count];
+	}
+
+	R_BindTexture(texid);
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -50,14 +58,19 @@ static void R_UploadLightmapBlock (void)
 
 	R_CheckError();
 
-	r_lightmaps.lightmap_texnum++;
-
-	if (r_lightmaps.deluxemap_texnum == MAX_GL_DELUXEMAPS) {
+	if (r_lightmaps.deluxemap_count >= MAX_GL_DELUXEMAPS) {
 		Com_Printf("R_UploadLightmapBlock: MAX_GL_DELUXEMAPS reached.\n");
 		return;
 	}
 
-	R_BindTexture(r_lightmaps.deluxemap_texnum);
+	if (!r_lightmaps.incomplete_atlas) {
+		glGenTextures(1,&texid);
+		r_lightmaps.deluxemap_texnums[r_lightmaps.deluxemap_count++] = texid;
+	} else {
+		texid = r_lightmaps.deluxemap_texnums[r_lightmaps.deluxemap_count];
+	}
+
+	R_BindTexture(texid);
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -66,12 +79,12 @@ static void R_UploadLightmapBlock (void)
 	glTexImage2D(GL_TEXTURE_2D, 0, samples, r_lightmaps.size, r_lightmaps.size,
 		0, GL_RGB, GL_NATIVE_TEXTURE_PIXELFORMAT_SOLID, r_lightmaps.direction_buffer);
 
-	r_lightmaps.deluxemap_texnum++;
-
 	/* clear the allocation block and buffers */
 	memset(r_lightmaps.allocated, 0, r_lightmaps.size * sizeof(unsigned));
 	memset(r_lightmaps.sample_buffer, 0, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned));
 	memset(r_lightmaps.direction_buffer, 0, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned));
+
+	r_lightmaps.incomplete_atlas = qfalse;
 }
 
 /**
@@ -81,6 +94,12 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 {
 	int i, j;
 	int best;
+
+	if (!r_lightmaps.incomplete_atlas) {
+		r_lightmaps.incomplete_atlas = qtrue;
+		glGenTextures(1,&r_lightmaps.lightmap_texnums[++r_lightmaps.lightmap_count]);
+		glGenTextures(1,&r_lightmaps.deluxemap_texnums[++r_lightmaps.deluxemap_count]);
+	}
 
 	best = r_lightmaps.size;
 
@@ -252,8 +271,8 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 					smax, tmax, surf->lightmap_scale, surf->stextents[0], surf->stextents[1]);
 	}
 
-	surf->lightmap_texnum = r_lightmaps.lightmap_texnum;
-	surf->deluxemap_texnum = r_lightmaps.deluxemap_texnum;
+	surf->lightmap_texnum = r_lightmaps.lightmap_texnums[r_lightmaps.lightmap_count];
+	surf->deluxemap_texnum = r_lightmaps.deluxemap_texnums[r_lightmaps.deluxemap_count];
 
 	samples = r_lightmaps.sample_buffer;
 	samples += (surf->light_t * r_lightmaps.size + surf->light_s) * LIGHTMAP_BLOCK_BYTES;
@@ -267,12 +286,31 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 		R_BuildLightmap(surf, samples, directions, r_lightmaps.size * LIGHTMAP_BLOCK_BYTES);
 }
 
+static void R_DisposeLightmaps ()
+{
+	if (r_lightmaps.lightmap_count) {
+		glDeleteTextures(r_lightmaps.lightmap_count, r_lightmaps.lightmap_texnums);
+		r_lightmaps.lightmap_count = 0;
+	}
+	if (r_lightmaps.deluxemap_count) {
+		glDeleteTextures(r_lightmaps.deluxemap_count, r_lightmaps.deluxemap_texnums);
+		r_lightmaps.deluxemap_count = 0;
+	}
+}
+
 /**
  * @sa R_ModBeginLoading
  * @sa R_EndBuildingLightmaps
  */
 void R_BeginBuildingLightmaps (void)
 {
+	static qboolean gotAllocatedLightmaps = qfalse;
+
+	if (gotAllocatedLightmaps)
+		R_DisposeLightmaps();
+
+	gotAllocatedLightmaps = qtrue;
+
 	/* users can tune lightmap size for their card */
 	r_lightmaps.size = r_maxlightmap->integer;
 
@@ -285,8 +323,9 @@ void R_BeginBuildingLightmaps (void)
 	r_lightmaps.direction_buffer = (byte *)Mem_PoolAlloc(
 		r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
 
-	r_lightmaps.lightmap_texnum = TEXNUM_LIGHTMAPS;
-	r_lightmaps.deluxemap_texnum = TEXNUM_DELUXEMAPS;
+	r_lightmaps.lightmap_count = 0;
+	r_lightmaps.deluxemap_count = 0;
+	r_lightmaps.incomplete_atlas = qfalse;
 }
 
 /**

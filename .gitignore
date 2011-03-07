@@ -24,3 +24,5 @@ gmon.out
 /ufosource.tag
 /src/docs/doxygen/
 *.pyc
+/base/pics/banks/autogen*
+/base/ufos/*_autogen.ufo

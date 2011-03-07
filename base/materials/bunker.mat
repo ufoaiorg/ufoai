@@ -69,12 +69,6 @@
 {
 	material tex_lights/land_li_yellow
 	{
-		texture pt/fx/rfx_lali_orange_sp2
-		glowscale 0.8
-		pulse 0.03
-		rotate 0.2
-	}
-	{
 		flare 2
 		color 0.9 0.8 0.4
 	}

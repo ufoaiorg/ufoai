@@ -26,11 +26,9 @@
 #include "r_framebuffer.h"
 #include "r_error.h"
 
-#define MAX_FRAMEBUFFER_OBJECTS	    64
-
 static int frameBufferObjectCount;
-static r_framebuffer_t frameBufferObjects[MAX_FRAMEBUFFER_OBJECTS];
-static GLuint frameBufferTextures[TEXNUM_FRAMEBUFFER_TEXTURES];
+static r_framebuffer_t frameBufferObjects[MAX_GL_FRAMEBUFFERS];
+static GLuint frameBufferTextures[MAX_GL_FRAMEBUFFERS];
 
 static r_framebuffer_t screenBuffer;
 static GLenum *colorAttachments;
@@ -39,10 +37,10 @@ static GLuint R_GetFreeFBOTexture (void)
 {
 	int i;
 
-	for (i = 0; i < TEXNUM_FRAMEBUFFER_TEXTURES; i++) {
+	for (i = 0; i < MAX_GL_FRAMEBUFFERS; i++) {
 		if (frameBufferTextures[i] == 0) {
-			frameBufferTextures[i] = 1;
-			return TEXNUM_FRAMEBUFFER_TEXTURES + i;
+			glGenTextures(1, &frameBufferTextures[i]);
+			return frameBufferTextures[i];
 		}
 	}
 
@@ -51,12 +49,17 @@ static GLuint R_GetFreeFBOTexture (void)
 
 static void R_FreeFBOTexture (int texnum)
 {
-	const int i = texnum - TEXNUM_FRAMEBUFFER_TEXTURES;
-	GLuint texnumGL = texnum + SDL_GL_FIRST_SAFE_TEXTURE_ID;
+	int i;
+
+	for (i = 0; i < MAX_GL_FRAMEBUFFERS; i++) {
+		if (frameBufferTextures[i] == texnum)
+			break;
+	}
+
 	assert(i >= 0);
-	assert(i < TEXNUM_FRAMEBUFFER_TEXTURES);
+	assert(i < MAX_GL_FRAMEBUFFERS);
+	glDeleteTextures(1, &frameBufferTextures[i]);
 	frameBufferTextures[i] = 0;
-	glDeleteTextures(1, &texnumGL);
 }
 
 void R_InitFBObjects (void)
@@ -214,7 +217,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 	for (i = 0; i < buf->nTextures; i++) {
 		buf->textures[i] = R_GetFreeFBOTexture();
-		glBindTexture(GL_TEXTURE_2D, buf->textures[i] + SDL_GL_FIRST_SAFE_TEXTURE_ID);
+		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filters[i]);
@@ -246,7 +249,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
 
 	for (i = 0; i < buf->nTextures; i++) {
-		glBindTexture(GL_TEXTURE_2D, buf->textures[i] + SDL_GL_FIRST_SAFE_TEXTURE_ID);
+		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
 		qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
 		R_CheckError();
 	}

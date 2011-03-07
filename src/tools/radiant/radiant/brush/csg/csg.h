@@ -25,9 +25,10 @@
 #include <string>
 #include "iclipper.h"
 
-void CSG_MakeHollow (void);
-void CSG_Subtract (void);
-void CSG_Merge (void);
+void CSG_MakeHollow ();
+void CSG_Subtract ();
+void CSG_SubtractOrig ();
+void CSG_Merge ();
 
 namespace scene
 {
