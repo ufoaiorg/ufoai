@@ -558,13 +558,21 @@ static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, const int x, c
 	/* check for map border */
 	if (x + tile->w > mAsm->width + 2 || y + tile->h > mAsm->height + 2)
 		return qfalse;
-
+	unsigned long combined;
+#if 0
+	/* shortcut: most tiles are solid at [1][1], so check this first */
+	spec = &tile->spec[1][1];
+	m = &map->curMap[y+1][x+1];
+	combined = (*m) & (*spec);
+	if (IS_SOLID(combined) || !combined)
+		return qfalse;
+#endif
 	/* test for fit */
 	spec = &tile->spec[0][0];
 	m = &map->curMap[y][x];
 	for (ty = 0; ty < tile->h; ty++) {
 		for (tx = 0; tx < tile->w; tx++, spec++, m++) {
-			const unsigned long combined = (*m) & (*spec);
+			combined = (*m) & (*spec);
 
 			/* quit if both are solid or no equal connection is found */
 			if (IS_SOLID(combined) || !combined)
@@ -911,7 +919,7 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 	Com_Printf("pos: %s\n", asmPos);
 	Com_Printf("tiles: %i\n", map->numPlaced);
 }
-
+//#include "sv_rma2.c"	/* WIP,needed ! (Duke 08.03.2011) */
 /**
  * @brief Tries to build the map
  * There are 3 categories of tiles:
