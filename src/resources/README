@@ -3,4 +3,7 @@ Go to UfoAI root dir and run
 src/resources/base_android.sh
 It will generate three files - 0base.pk3 (multiplayer-only with 6 small maps),
 0music.pk3 and 1base.pk3 (required for single-player).
-All big textures will be resized to 256x256.
+All big textures will be resized to 256x256 to save space and device RAM.
+You should upload that .pk3 files to some public HTTP server, for example SF.net,
+then update the variable AppDataDownloadUrl inside file build/projects/AndroidAppSettings.cfg
+and rebuild .apk file.
