@@ -155,6 +155,8 @@ static void testMassAssemblySeed (void)
 		srand(i);
 		time = Sys_Milliseconds();
 		randomMap = SV_AssembleMap("japan", "big", map, pos);
+//		randomMap = SV_AssembleMap("forest", "large", map, pos);
+//		randomMap = SV_AssembleMap("hills", "desert_harvester", map, pos);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
@@ -183,7 +185,11 @@ int UFO_AddRandomMapAssemblyTests (void)
 
 	if (RandomMapAssemblySuite == NULL)
 		return CU_get_error();
-
+#if SEED_TEST
+	/* This test should normally (ie. buildbot) not be active */
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySeed) == NULL)
+		return CU_get_error();
+#else
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testUMPExtends) == NULL)
 		return CU_get_error();
@@ -196,15 +202,10 @@ int UFO_AddRandomMapAssemblyTests (void)
 
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyTimeout) == NULL)
 		return CU_get_error();
-
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == NULL)
 		return CU_get_error();
-
-#if SEED_TEST
-	/* This test should normally (ie. buildbot) not be active */
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySeed) == NULL)
-		return CU_get_error();
 #endif
+
 
 	return CUE_SUCCESS;
 }

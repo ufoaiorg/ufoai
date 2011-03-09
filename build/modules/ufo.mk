@@ -329,6 +329,8 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 	$(TARGET)_SRCS += \
 		ports/linux/linux_main.c \
 		ports/unix/unix_console.c \
+		ports/unix/unix_files.c \
+		ports/unix/unix_shared.c \
 		ports/unix/unix_main.c
 	$(TARGET)_LDFLAGS +=
 endif
@@ -347,6 +349,8 @@ ifeq ($(TARGET_OS),darwin)
 	$(TARGET)_SRCS += \
 		ports/macosx/osx_main.m \
 		ports/unix/unix_console.c \
+		ports/unix/unix_files.c \
+		ports/unix/unix_shared.c \
 		ports/unix/unix_main.c
 	$(TARGET)_LDFLAGS +=
 endif
@@ -355,8 +359,20 @@ ifeq ($(TARGET_OS),solaris)
 	$(TARGET)_SRCS += \
 		ports/solaris/solaris_main.c \
 		ports/unix/unix_console.c \
+		ports/unix/unix_files.c \
+		ports/unix/unix_shared.c \
 		ports/unix/unix_main.c
 	$(TARGET)_LDFLAGS +=
+endif
+
+ifeq ($(TARGET_OS),android)
+	$(TARGET)_SRCS += \
+		ports/android/android_console.c \
+		ports/android/android_debugger.c \
+		ports/android/android_main.c \
+		ports/android/android_system.c \
+		ports/unix/unix_shared.c \
+		ports/unix/unix_files.c
 endif
 
 ifeq ($(HARD_LINKED_GAME),1)

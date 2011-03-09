@@ -63,6 +63,8 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/windows/win_shared.c
 else
 	$(TARGET)_SRCS+= \
+		ports/unix/unix_files.c \
+		ports/unix/unix_shared.c \
 		ports/unix/unix_main.c
 endif
 

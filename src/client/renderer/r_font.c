@@ -573,20 +573,18 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	char buf[BUF_SIZE];
 	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
 	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
+	int colordepth = 32;
+	int pixelFormat = GL_BGRA;
 
 
 #ifdef ANDROID
-	int colordepth = 16;
-	int glPixelFormat = GL_RGBA;
+	colordepth = 16;
+	pixelFormat = GL_RGBA;
 	Uint32 rmask = 0x0000f000;
 	Uint32 gmask = 0x00000f00;
 	Uint32 bmask = 0x000000f0;
 	Uint32 amask = 0x0000000f;
 #else
-
-	int colordepth = 32;
-	int glPixelFormat = GL_BGRA;
-
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	Uint32 rmask = 0xff000000;
 	Uint32 gmask = 0x00ff0000;
@@ -622,7 +620,6 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	for (w = 2; w < textSurface->w; w <<= 1) {}
 	for (h = 2; h < textSurface->h; h <<= 1) {}
 
-
 	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, colordepth, rmask, gmask, bmask, amask);
 	if (!openGLSurface)
 		return;
@@ -639,9 +636,9 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
 	SDL_FreeSurface(textSurface);
 
-	glGenTextures(1,&chunk->texnum);
+	glGenTextures(1, &chunk->texnum);
 	R_BindTexture(chunk->texnum);
-	glTexImage2D(GL_TEXTURE_2D, 0, samples, w, h, 0, glPixelFormat, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, openGLSurface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, w, h, 0, pixelFormat, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, openGLSurface->pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	Vector2Set(chunk->texsize, w, h);

@@ -41,7 +41,7 @@ static void R_UploadLightmapBlock (void)
 	}
 
 	if (!r_lightmaps.incomplete_atlas) {
-		glGenTextures(1,&texid);
+		glGenTextures(1, &texid);
 		r_lightmaps.lightmap_texnums[r_lightmaps.lightmap_count++] = texid;
 	} else {
 		texid = r_lightmaps.lightmap_texnums[r_lightmaps.lightmap_count];
@@ -64,7 +64,7 @@ static void R_UploadLightmapBlock (void)
 	}
 
 	if (!r_lightmaps.incomplete_atlas) {
-		glGenTextures(1,&texid);
+		glGenTextures(1, &texid);
 		r_lightmaps.deluxemap_texnums[r_lightmaps.deluxemap_count++] = texid;
 	} else {
 		texid = r_lightmaps.deluxemap_texnums[r_lightmaps.deluxemap_count];
@@ -97,8 +97,8 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 
 	if (!r_lightmaps.incomplete_atlas) {
 		r_lightmaps.incomplete_atlas = qtrue;
-		glGenTextures(1,&r_lightmaps.lightmap_texnums[++r_lightmaps.lightmap_count]);
-		glGenTextures(1,&r_lightmaps.deluxemap_texnums[++r_lightmaps.deluxemap_count]);
+		glGenTextures(1, &r_lightmaps.lightmap_texnums[++r_lightmaps.lightmap_count]);
+		glGenTextures(1, &r_lightmaps.deluxemap_texnums[++r_lightmaps.deluxemap_count]);
 	}
 
 	best = r_lightmaps.size;
@@ -286,7 +286,7 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 		R_BuildLightmap(surf, samples, directions, r_lightmaps.size * LIGHTMAP_BLOCK_BYTES);
 }
 
-static void R_DisposeLightmaps ()
+static void R_DisposeLightmaps (void)
 {
 	if (r_lightmaps.lightmap_count) {
 		glDeleteTextures(r_lightmaps.lightmap_count, r_lightmaps.lightmap_texnums);

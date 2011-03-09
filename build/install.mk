@@ -14,6 +14,7 @@ BINARIES_BASE = \
 BINARIES_RADIANT = \
 	radiant/uforadiant$(EXE_EXT)
 
+include build/install_android.mk
 include build/install_linux.mk
 include build/install_mac.mk
 include build/install_mojo.mk
