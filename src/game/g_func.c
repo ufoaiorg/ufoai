@@ -97,6 +97,10 @@ static qboolean Destroy_Breakable (edict_t *self)
 	G_RecalcRouting(self);
 	G_TouchEdicts(self, 10.0f);
 
+	/* destroy the door trigger */
+	if (self->child)
+		G_FreeEdict(self->child);
+
 	/* now we can destroy the edict completely */
 	G_EventPerish(self);
 	G_FreeEdict(self);
@@ -269,22 +273,22 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
  */
 static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 {
-	if (!self->owner)
-		return qfalse;
-
-	if (G_IsAI(activator)) {
-		/* let the ai interact with the door */
-		if (self->flags & FL_GROUPSLAVE)
-			self = self->groupMaster;
-		if (AI_CheckUsingDoor(activator, self->owner))
-			G_ActorUseDoor(activator, self->owner);
-		/* we don't want the client action stuff to be send for ai actors */
-		return qfalse;
-	} else {
-		/* prepare for client action */
-		G_ActorSetClientAction(activator, self->owner);
-		return qtrue;
+	if (self->owner && self->owner->inuse) {
+		if (G_IsAI(activator)) {
+			/* let the ai interact with the door */
+			if (self->flags & FL_GROUPSLAVE)
+				self = self->groupMaster;
+			if (AI_CheckUsingDoor(activator, self->owner))
+				G_ActorUseDoor(activator, self->owner);
+			/* we don't want the client action stuff to be send for ai actors */
+			return qfalse;
+		} else {
+			/* prepare for client action */
+			G_ActorSetClientAction(activator, self->owner);
+			return qtrue;
+		}
 	}
+	return qfalse;
 }
 
 /**
