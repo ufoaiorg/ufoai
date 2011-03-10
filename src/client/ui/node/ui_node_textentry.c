@@ -43,6 +43,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/utf8.h"
 
+#ifdef ANDROID
+#include <SDL/SDL_screenkeyboard.h>
+#endif
+
 #define EXTRADATA_TYPE textEntryExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -142,6 +146,10 @@ static void UI_TextEntryFocusGained (uiNode_t *node)
 	assert(editedCvar);
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
 	isAborted = qfalse;
+#ifdef ANDROID
+	SDL_ANDROID_ToggleScreenKeyboardTextInput(editedCvar->string);
+	Cvar_ForceSet(editedCvar->name, "");
+#endif
 }
 
 /**
