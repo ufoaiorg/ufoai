@@ -209,7 +209,7 @@ void R_BeginFrame (void)
 {
 	/* change modes if necessary */
 	if (vid_mode->modified || vid_fullscreen->modified || vid_strech->modified) {
-#if defined(_WIN32) || defined(__APPLE__)
+#if defined(_WIN32) || defined(__APPLE__) || defined(ANDROID)
 		VID_Restart_f();
 #else
 		R_SetMode();

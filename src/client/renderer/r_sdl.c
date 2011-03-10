@@ -198,10 +198,13 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 
 void Rimp_Shutdown (void)
 {
+	/* SDL on Android does not support multiple video init/deinit yet, however calling SDL_SetVideoMode() multiple times works */
+#ifndef ANDROID
 	SDL_ShowCursor(SDL_ENABLE);
 
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == SDL_INIT_VIDEO)
 		SDL_Quit();
 	else
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
+#endif
 }
