@@ -346,13 +346,13 @@ void R_RenderFrame (void)
 
 	R_EnableBlend(qfalse);
 
-	R_DrawBloom();
-
-	R_DrawBoundingBoxes();
-
 	/* leave wire mode again */
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	R_DrawBloom();
+
+	R_DrawBoundingBoxes();
 
 	R_ResetArrayState();
 
