@@ -926,7 +926,7 @@ static qboolean UI_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 	exists = qfalse;
 	if ((INV_IsFloorDef(EXTRADATA(target).container) || INV_IsEquipDef(EXTRADATA(target).container))
 		&& (dragInfoToX < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
-		&& INVSH_ExistsInInventory(ui_inventory, EXTRADATA(target).container, *dragItem)) {
+		&& INVSH_ExistsInInventory(ui_inventory, EXTRADATA(target).container, dragItem)) {
 		exists = qtrue;
 	}
 

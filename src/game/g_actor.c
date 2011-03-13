@@ -624,7 +624,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 				/* I_MoveInInventory placed the swapped ammo in an available space, check where it was placed
 				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
-				ic = INVSH_FindInInventory(&ent->chr.i, to, item);
+				ic = INVSH_FindInInventory(&ent->chr.i, to, &item);
 				assert(ic);
 				fItemBackup.item = item;
 				fItemBackup.x = ic->x;
