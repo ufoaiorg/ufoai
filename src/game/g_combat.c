@@ -545,7 +545,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 	if (floor == NULL) {
 		floor = G_SpawnFloor(pos);
 
-		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor))) {
+		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
 			G_FreeEdict(floor);
 		} else {
 			edict_t *actor = G_GetActorFromPos(pos);
@@ -557,7 +557,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 				G_GetFloorItems(actor);
 		}
 	} else {
-		if (game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor))) {
+		if (game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
 			/* make it invisible to send the inventory in the below vis check */
 			G_EventPerish(floor);
 			floor->visflags = 0;

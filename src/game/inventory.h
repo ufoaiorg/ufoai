@@ -33,7 +33,7 @@ typedef struct inventoryInterface_s
 	int (*MoveInInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to,
 			int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1), nonnull(2)));
 
-	qboolean (*TryAddToInventory) (struct inventoryInterface_s* self, inventory_t* const inv, item_t item, const invDef_t * container);
+	qboolean (*TryAddToInventory) (struct inventoryInterface_s* self, inventory_t* const inv, const item_t * const item, const invDef_t * container);
 
 	void (*DestroyInventory) (struct inventoryInterface_s* self, inventory_t* const i) __attribute__((nonnull(1), nonnull(2)));
 

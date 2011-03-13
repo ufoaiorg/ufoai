@@ -263,7 +263,7 @@ static qboolean testAddSingle (inventory_t *inv, objDef_t *od, invDef_t *contain
 	item.m = NULL;
 	item.a = 0;
 
-	return i.TryAddToInventory(&i, inv, item, container);
+	return i.TryAddToInventory(&i, inv, &item, container);
 }
 
 static void testItemMassActions (void)

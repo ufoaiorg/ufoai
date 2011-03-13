@@ -139,7 +139,7 @@ qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
 		floor = G_SpawnFloor(pos);
 
 	item.t = od;
-	return game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor));
+	return game.i.TryAddToInventory(&game.i, &floor->chr.i, &item, INVDEF(gi.csi->idFloor));
 }
 
 /** @brief Move items to adjacent locations if the containers on the current
