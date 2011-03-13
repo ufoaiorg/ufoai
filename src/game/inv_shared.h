@@ -402,7 +402,7 @@ qboolean INV_IsArmourDef(const invDef_t* invDef);
 invList_t* INVSH_HasArmour(const inventory_t *inv);
 void INVSH_InitCSI(struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
-qboolean INVSH_CompareItem(item_t *item1, item_t *item2);
+qboolean INVSH_CompareItem(const item_t *const item1, const item_t *const item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 qboolean INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
 invList_t *INVSH_FindInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);

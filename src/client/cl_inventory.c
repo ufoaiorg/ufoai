@@ -128,7 +128,7 @@ qboolean INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *
 	assert(weapon);
 	if (container && inv) {
 		const item_t item = {NONE_AMMO, NULL, weapon->item.m, 0, 0};
-		if (cls.i.AddToInventory(&cls.i, inv, item, container, NONE, NONE, 1) != NULL) {
+		if (cls.i.AddToInventory(&cls.i, inv, &item, container, NONE, NONE, 1) != NULL) {
 			weapon->item.m = NULL;
 			weapon->item.a = 0;
 			return qtrue;

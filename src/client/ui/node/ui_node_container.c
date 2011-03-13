@@ -110,7 +110,7 @@ static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
  * @param[in,out] inv The inventory to add the unused items from @c ed to
  * @param[in,out] ed The equipment definition to get the used items from that should be added
  * to the ground container of @c inv
- * @todo dont use, and dont called by the container node; should we move it outside?
+ * @todo not used nor called by the container node; should be move somewhere else
  */
 void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 {
@@ -130,7 +130,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 
 		while (numItems[i]) {
 			const item_t item = {NONE_AMMO, NULL, od, 0, 0};
-			if (!cls.i.AddToInventory(&cls.i, inv, item, INVDEF(csi.idEquip), NONE, NONE, 1)) {
+			if (!cls.i.AddToInventory(&cls.i, inv, &item, INVDEF(csi.idEquip), NONE, NONE, 1)) {
 				/* no space left in the inventory */
 				break;
 			}

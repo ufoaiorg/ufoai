@@ -279,7 +279,7 @@ int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, con
  * @param[in] item2 Second item to compare.
  * @return qtrue if they are identical or qfalse otherwise.
  */
-qboolean INVSH_CompareItem (item_t *item1, item_t *item2)
+qboolean INVSH_CompareItem (const item_t *const item1, const item_t *const item2)
 {
 	if (item1 == item2)
 		return qtrue;
