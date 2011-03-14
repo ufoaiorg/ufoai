@@ -1198,9 +1198,6 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 
 	assert(base);
 
-	for (i = 0; i < MAX_CAP; i++)
-		base->capacities[i].cur = 0;
-
 	if (baseTemplate) {
 		/* find each building in the template */
 		for (i = 0; i < baseTemplate->numBuildings; i++) {
@@ -1269,9 +1266,6 @@ static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 
 	if (campaign->firstBaseTemplate[0] == '\0')
 		Com_Error(ERR_DROP, "No base template for setting up the first base given");
-
-	RS_MarkResearchable(qtrue, base);
-	BS_InitMarket(campaign);
 
 	/* Find the initial equipment definition for current campaign. */
 	ed = INV_GetEquipmentDefinitionByID(campaign->equipment);
@@ -1345,7 +1339,7 @@ void B_SetName (base_t *base, const char *name)
  */
 void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, const char *name)
 {
-	const int newBaseAlienInterest = 1.0f;
+	baseCapacities_t cap;
 	float level;
 
 	B_SetName(base, name);
@@ -1358,6 +1352,10 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 	 * value to get the base we are setting up here */
 	ccs.numBases++;
 
+	/* reset capacities */
+	for (cap = 0; cap < MAX_CAP; cap++)
+		CAP_SetCurrent(base, cap, 0);
+
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuilt == 0)
 		B_SetUpFirstBase(campaign, base);
@@ -1367,7 +1365,7 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 	base->baseStatus = BASE_WORKING;
 
 	/* a new base is not discovered (yet) */
-	base->alienInterest = newBaseAlienInterest;
+	base->alienInterest = BASE_INITIALINTEREST;
 
 	BDEF_InitialiseBaseSlots(base);
 
