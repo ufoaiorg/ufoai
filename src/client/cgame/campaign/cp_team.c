@@ -33,7 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] ed Pointer to equipment definition.
  * @param[in] item An item to update.
  * @return Updated item in any case, even if there was no update.
- * @sa CL_CleanupAircraftCrew
+ * @sa CP_CleanupAircraftCrew
+ * @todo remove return value and make item a pointer
  */
 static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
@@ -150,7 +151,7 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  * the first person in the squad filling their backpack with spare ammo
  * leaving others with unloaded guns in their hands...
  */
-void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
+void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
 	containerIndex_t container;
 	linkedList_t* l;
@@ -199,7 +200,7 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
  * @sa GAME_SaveTeamInfo
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-void CL_CleanTempInventory (base_t* base)
+void CP_CleanTempInventory (base_t* base)
 {
 	employee_t *employee;
 

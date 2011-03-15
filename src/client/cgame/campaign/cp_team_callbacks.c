@@ -228,12 +228,12 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	}
 
 	/* clean up aircraft crew for upcoming mission */
-	CL_CleanTempInventory(aircraft->homebase);
+	CP_CleanTempInventory(aircraft->homebase);
 	unused = aircraft->homebase->storage;
 
 	AIR_Foreach(aircraftInBase) {
 		if (aircraftInBase->homebase == base)
-			CL_CleanupAircraftCrew(aircraftInBase, &unused);
+			CP_CleanupAircraftCrew(aircraftInBase, &unused);
 	}
 
 	GAME_UpdateInventory(&aircraft->homebase->bEquipment, &unused);
