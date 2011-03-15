@@ -45,7 +45,7 @@ int employeesInCurrentList;
 static int soldierListSize = 0;
 static int soldierListPos = 0;
 
-static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, const char *nodeTag, int beginIndex, int drawableListSize)
+static qboolean CP_UpdateEmployeeList (employeeType_t employeeType, const char *nodeTag, int beginIndex, int drawableListSize)
 {
 	aircraft_t *aircraft;
 	linkedList_t *emplList;
@@ -65,7 +65,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, const char *
 		return qfalse;
 	}
 
-	CL_UpdateActorAircraftVar(aircraft, employeeType);
+	CP_UpdateActorAircraftVar(aircraft, employeeType);
 
 	soldierListSize = drawableListSize;
 	soldierListPos = beginIndex;
@@ -142,11 +142,11 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, const char *
 
 /**
  * @brief Init the teamlist checkboxes
- * @sa CL_UpdateActorAircraftVar
+ * @sa CP_UpdateActorAircraftVar
  * @todo Make this function use a temporary list with all list-able employees
  * instead of using ccs.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
  */
-static void CL_UpdateSoldierList_f (void)
+static void CP_UpdateSoldierList_f (void)
 {
 	qboolean result;
 	int drawableListSize;
@@ -159,18 +159,18 @@ static void CL_UpdateSoldierList_f (void)
 	drawableListSize = atoi(Cmd_Argv(1));
 	beginIndex = atoi(Cmd_Argv(2));
 
-	result = CL_UpdateEmployeeList(EMPL_SOLDIER, "soldier", beginIndex, drawableListSize);
+	result = CP_UpdateEmployeeList(EMPL_SOLDIER, "soldier", beginIndex, drawableListSize);
 	if (!result)
 		UI_PopWindow(qfalse);
 }
 
 /**
  * @brief Init the teamlist checkboxes
- * @sa CL_UpdateActorAircraftVar
+ * @sa CP_UpdateActorAircraftVar
  * @todo Make this function use a temporary list with all list-able employees
  * instead of using ccs.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
  */
-static void CL_UpdatePilotList_f (void)
+static void CP_UpdatePilotList_f (void)
 {
 	qboolean result;
 	int drawableListSize;
@@ -182,7 +182,7 @@ static void CL_UpdatePilotList_f (void)
 	drawableListSize = atoi(Cmd_Argv(1));
 	beginIndex = atoi(Cmd_Argv(2));
 
-	result = CL_UpdateEmployeeList(EMPL_PILOT, "pilot", beginIndex, drawableListSize);
+	result = CP_UpdateEmployeeList(EMPL_PILOT, "pilot", beginIndex, drawableListSize);
 	if (!result)
 		UI_PopWindow(qfalse);
 }
@@ -194,7 +194,7 @@ static void CL_UpdatePilotList_f (void)
  * In the first case the EMPL_SOLDIER stuff below needs to be changed.
  * @todo merge with GAME_GetEquipment
  */
-static void CL_UpdateEquipmentMenuParameters_f (void)
+static void CP_UpdateEquipmentMenuParameters_f (void)
 {
 	aircraft_t *aircraft;
 	aircraft_t *aircraftInBase;
@@ -218,7 +218,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	Cvar_ForceSet("cl_selected", "0");
 
 	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
-	CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
+	CP_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		if (i < chrDisplayList.num)
@@ -243,7 +243,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
  * @brief Adds or removes a pilot to/from an aircraft.
  * @sa E_EmployeeHire_f
  */
-static void CL_AssignPilot_f (void)
+static void CP_AssignPilot_f (void)
 {
 	employee_t *employee;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -271,7 +271,7 @@ static void CL_AssignPilot_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Com_Error(ERR_DROP, "CL_AssignPilot_f: No employee at list-pos %i (base: %i)", num, base->idx);
+		Com_Error(ERR_DROP, "CP_AssignPilot_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	aircraft = base->aircraftCurrent;
 	if (!aircraft)
@@ -280,7 +280,7 @@ static void CL_AssignPilot_f (void)
 	if (!AIR_SetPilot(aircraft, employee) && AIR_GetPilot(aircraft) == employee)
 		AIR_SetPilot(aircraft, NULL);
 
-	CL_UpdateActorAircraftVar(aircraft, employeeType);
+	CP_UpdateActorAircraftVar(aircraft, employeeType);
 
 	UI_ExecuteConfunc("aircraft_status_change");
 	Cmd_ExecuteString(va("pilot_select %i %i", num - relativeId, relativeId));
@@ -290,7 +290,7 @@ static void CL_AssignPilot_f (void)
  * @brief Adds or removes a soldier to/from an aircraft.
  * @sa E_EmployeeHire_f
  */
-static void CL_AssignSoldier_f (void)
+static void CP_AssignSoldier_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
 	aircraft_t *aircraft;
@@ -320,13 +320,13 @@ static void CL_AssignSoldier_f (void)
 		return;
 
 	AIM_AddEmployeeFromMenu(aircraft, num);
-	CL_UpdateActorAircraftVar(aircraft, employeeType);
+	CP_UpdateActorAircraftVar(aircraft, employeeType);
 
 	UI_ExecuteConfunc("aircraft_status_change");
 	Cbuf_AddText(va("team_select %i %i\n", num - relativeId, relativeId));
 }
 
-static void CL_ActorPilotSelect_f (void)
+static void CP_ActorPilotSelect_f (void)
 {
 	employee_t *employee;
 	character_t *chr;
@@ -355,7 +355,7 @@ static void CL_ActorPilotSelect_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Com_Error(ERR_DROP, "CL_ActorPilotSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
+		Com_Error(ERR_DROP, "CP_ActorPilotSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	chr = &employee->chr;
 
@@ -367,7 +367,7 @@ static void CL_ActorPilotSelect_f (void)
 	UI_ExecuteConfunc("update_pilot_list %i %i", soldierListSize, soldierListPos);
 }
 
-static void CL_ActorTeamSelect_f (void)
+static void CP_ActorTeamSelect_f (void)
 {
 	employee_t *employee;
 	character_t *chr;
@@ -395,7 +395,7 @@ static void CL_ActorTeamSelect_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Com_Error(ERR_DROP, "CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
+		Com_Error(ERR_DROP, "CP_ActorTeamSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	chr = &employee->chr;
 
@@ -408,7 +408,7 @@ static void CL_ActorTeamSelect_f (void)
 }
 
 #ifdef DEBUG
-static void CL_TeamListDebug_f (void)
+static void CP_TeamListDebug_f (void)
 {
 	base_t *base;
 	aircraft_t *aircraft;
@@ -436,16 +436,16 @@ static void CL_TeamListDebug_f (void)
 
 void CP_TEAM_InitCallbacks (void)
 {
-	Cmd_AddCommand("team_updateequip", CL_UpdateEquipmentMenuParameters_f, NULL);
-	Cmd_AddCommand("update_soldier_list", CL_UpdateSoldierList_f, NULL);
-	Cmd_AddCommand("update_pilot_list", CL_UpdatePilotList_f, NULL);
+	Cmd_AddCommand("team_updateequip", CP_UpdateEquipmentMenuParameters_f, NULL);
+	Cmd_AddCommand("update_soldier_list", CP_UpdateSoldierList_f, NULL);
+	Cmd_AddCommand("update_pilot_list", CP_UpdatePilotList_f, NULL);
 
-	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
-	Cmd_AddCommand("pilot_hire", CL_AssignPilot_f, "Add/remove already hired pilot to an aircraft");
-	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
-	Cmd_AddCommand("pilot_select", CL_ActorPilotSelect_f, "Select a pilot in the team creation menu");
+	Cmd_AddCommand("team_hire", CP_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
+	Cmd_AddCommand("pilot_hire", CP_AssignPilot_f, "Add/remove already hired pilot to an aircraft");
+	Cmd_AddCommand("team_select", CP_ActorTeamSelect_f, "Select a soldier in the team creation menu");
+	Cmd_AddCommand("pilot_select", CP_ActorPilotSelect_f, "Select a pilot in the team creation menu");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
+	Cmd_AddCommand("debug_teamlist", CP_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
 
 	soldierListPos = 0;

@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_TEAM_H
 
 void CP_CleanTempInventory(base_t* base);
-int CL_UpdateActorAircraftVar(aircraft_t *aircraft, employeeType_t employeeType);
+int CP_UpdateActorAircraftVar(aircraft_t *aircraft, employeeType_t employeeType);
 void CP_CleanupAircraftCrew(aircraft_t *aircraft, equipDef_t * equip);
 
 #endif

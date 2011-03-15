@@ -235,7 +235,7 @@ void CP_CleanTempInventory (base_t* base)
  * @returns the number of employees that are in the aircraft and were added to
  * the character list
  */
-int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
+int CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
 	int i;
 	size_t size;
@@ -278,7 +278,7 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 
 		/* Sanity check(s) */
 		if (!chrDisplayList.chr[chrDisplayList.num])
-			Com_Error(ERR_DROP, "CL_UpdateActorAircraftVar: Could not get employee character with idx: %i", chrDisplayList.num);
+			Com_Error(ERR_DROP, "CP_UpdateActorAircraftVar: Could not get employee character with idx: %i", chrDisplayList.num);
 		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
 		Cvar_Set(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
 
