@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rm -rf base_light base_full 0base.pk3 0music.pk3 1base.pk3
+rm -rf base_light base_full 0base.pk3 0music.pk3 1base.pk3 i18n.zip
 src/resources/light_base.py
 
 src/resources/shrink_textures.sh base_light base_light
@@ -21,3 +21,5 @@ cd ../base_full
 zip -r -n .png:.jpg:.ogg:.ogm ../0music.pk3 music
 rm -rf music
 zip -r -n .png:.jpg:.ogg:.ogm ../1base.pk3 *
+cd ..
+zip -r i18n.zip base/i18n/*
