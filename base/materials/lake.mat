@@ -4,7 +4,7 @@
 	material tex_nature/dirt002
 	{
 		texture tex_nature/sand
-		terrain 3 20
+		terrain 5 20
 		lightmap
 	}
 	{
