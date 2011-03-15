@@ -186,12 +186,12 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 				break;
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
-				if (B_ItemInBase(req->link.od, base) < req->amount)
+				if (!base || B_ItemInBase(req->link.od, base) < req->amount)
 					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
-				if (AL_GetAlienAmount(req->link.td, req->type, base) < req->amount)
+				if (!base || AL_GetAlienAmount(req->link.td, req->type, base) < req->amount)
 					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -203,7 +203,7 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 					metAND = qfalse;
 				break;
 			case RS_LINK_ANTIMATTER:
-				if (B_AntimatterInBase(base) < req->amount)
+				if (!base || B_AntimatterInBase(base) < req->amount)
 					metAND = qfalse;
 				break;
 			default:
@@ -229,12 +229,12 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 				break;
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
-				if (B_ItemInBase(req->link.od, base) >= req->amount)
+				if (base && B_ItemInBase(req->link.od, base) >= req->amount)
 					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
-				if (AL_GetAlienAmount(req->link.td, req->type, base) >= req->amount)
+				if (base && AL_GetAlienAmount(req->link.td, req->type, base) >= req->amount)
 					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -246,7 +246,7 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 					metOR = qtrue;
 				break;
 			case RS_LINK_ANTIMATTER:
-				if (B_AntimatterInBase(base) >= req->amount)
+				if (base && B_AntimatterInBase(base) >= req->amount)
 					metOR = qtrue;
 			default:
 				break;
@@ -353,8 +353,6 @@ void RS_MarkResearchable (qboolean init, const base_t* base)
 					base = tech->base;
 				else
 					base = thisBase;
-
-				assert(base);
 
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base)) {

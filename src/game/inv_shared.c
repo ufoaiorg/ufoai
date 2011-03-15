@@ -279,7 +279,7 @@ int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, con
  * @param[in] item2 Second item to compare.
  * @return qtrue if they are identical or qfalse otherwise.
  */
-qboolean INVSH_CompareItem (item_t *item1, item_t *item2)
+qboolean INVSH_CompareItem (const item_t *const item1, const item_t *const item2)
 {
 	if (item1 == item2)
 		return qtrue;
@@ -361,12 +361,12 @@ void INVSH_GetFirstShapePosition (const invList_t *ic, int* const x, int* const 
  * @param[in] item The item to search for.
  * @return qtrue if there already is at least one item of this type, otherwise qfalse.
  */
-qboolean INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t * container, item_t item)
+qboolean INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t * container, const item_t * item)
 {
 	invList_t *ic;
 
 	for (ic = inv->c[container->id]; ic; ic = ic->next)
-		if (INVSH_CompareItem(&ic->item, &item)) {
+		if (INVSH_CompareItem(&ic->item, item)) {
 			return qtrue;
 		}
 
@@ -380,12 +380,12 @@ qboolean INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *
  * @param[in] item The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c NULL.
  */
-invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t * container, item_t item)
+invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t * container, const item_t * const item)
 {
 	invList_t *ic;
 
 	for (ic = inv->c[container->id]; ic; ic = ic->next)
-		if (INVSH_CompareItem(&ic->item, &item)) {
+		if (INVSH_CompareItem(&ic->item, item)) {
 			return ic;
 		}
 

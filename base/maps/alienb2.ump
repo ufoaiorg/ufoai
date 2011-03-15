@@ -8,6 +8,17 @@
 base alienb2/ab_		// Prefix for each tile's .map file including path from /maps/
 
 
+// Entrance
+tile +entrance
+{
+	6 4
+
+	0		b		b		b		b		0
+	w		+x		+a		+a		+x		a
+	w		+a		+a		+a		+a		a
+	0		a		x		a		x		0
+}
+
 // Hub
 tile +hub
 {
@@ -54,6 +65,7 @@ assembly test
 {
 	size "4 4"
 
+	fix +entrance "2 6"
 	fix +hub "2 2"
 	fix +powercore "0 0"
 	fix +hall_v1 "4 0"

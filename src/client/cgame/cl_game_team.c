@@ -613,7 +613,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
 		int x, y;
 
 		GAME_LoadItem(s, &item, &container, &x, &y);
-		if (!cls.i.AddToInventory(&cls.i, i, item, INVDEF(container), x, y, 1))
+		if (!cls.i.AddToInventory(&cls.i, i, &item, INVDEF(container), x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
 }

@@ -197,6 +197,8 @@ static void CL_UpdatePilotList_f (void)
 static void CL_UpdateEquipmentMenuParameters_f (void)
 {
 	aircraft_t *aircraft;
+	aircraft_t *aircraftInBase;
+	equipDef_t unused;
 	base_t *base = B_GetCurrentSelectedBase();
 	int i;
 
@@ -225,10 +227,18 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 			UI_ExecuteConfunc("equipdisable %i", i);
 	}
 
+	/* manage inventory */
+	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
+
+	AIR_Foreach(aircraftInBase) {
+		if (aircraftInBase->homebase == base)
+			CL_CleanupAircraftCrew(aircraftInBase, &unused);
+	}
+
 	/* clean up aircraft crew for upcoming mission */
 	CL_CleanTempInventory(aircraft->homebase);
 
-	GAME_UpdateInventory(&aircraft->homebase->bEquipment, &aircraft->homebase->storage);
+	GAME_UpdateInventory(&aircraft->homebase->bEquipment, &unused);
 }
 
 /**

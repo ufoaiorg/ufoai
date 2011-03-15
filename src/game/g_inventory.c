@@ -139,7 +139,7 @@ qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
 		floor = G_SpawnFloor(pos);
 
 	item.t = od;
-	return game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor));
+	return game.i.TryAddToInventory(&game.i, &floor->chr.i, &item, INVDEF(gi.csi->idFloor));
 }
 
 /** @brief Move items to adjacent locations if the containers on the current
@@ -259,7 +259,7 @@ void G_InventoryToFloor (edict_t *ent)
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->item.t->id, container, ent->number);
-			if (game.i.AddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
+			if (game.i.AddToInventory(&game.i, &floor->chr.i, &item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->item.t->id, container, ent->number);
 #ifdef ADJACENT

@@ -680,13 +680,11 @@ void CL_CampaignRun (campaign_t *campaign)
 
 /**
  * @brief Checks whether you have enough credits for something
- * @param costs costs to check
- * @return qboolean true - enough credits
- * @return qboolean false - not enough credits
+ * @param[in] costs costs to check
  */
 inline qboolean CP_CheckCredits (int costs)
 {
-	if (costs >= ccs.credits)
+	if (costs > ccs.credits)
 		return qfalse;
 	return qtrue;
 }
@@ -1362,7 +1360,17 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	CL_ReadCampaignData(campaign);
 
+	/* initialise date */
+	ccs.date = campaign->date;
+	/* get day */
+	while (ccs.date.sec > SECONDS_PER_DAY) {
+		ccs.date.sec -= SECONDS_PER_DAY;
+		ccs.date.day++;
+	}
+	CL_UpdateTime();
+
 	RS_InitTree(campaign, load);		/**< Initialise all data in the research tree. */
+	RS_MarkResearchable(qtrue, NULL);
 
 	CP_AddCampaignCommands();
 
@@ -1377,10 +1385,9 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
+	BS_InitMarket(campaign);
+
 	if (load) {
-		/** @todo this should be called in this function for new campaigns too but as researched items
-		 * not yet set, it can't. It's called in B_SetUpFirstBase for new campaigns */
-		BS_InitMarket(campaign);
 		return;
 	}
 
@@ -1388,18 +1395,9 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	E_InitialEmployees(campaign);
 	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;
-	/* initialise date */
-	ccs.date = campaign->date;
 
 	MAP_Reset(campaign->map);
 	PR_ProductionInit();
-
-	/* get day */
-	while (ccs.date.sec > SECONDS_PER_DAY) {
-		ccs.date.sec -= SECONDS_PER_DAY;
-		ccs.date.day++;
-	}
-	CL_UpdateTime();
 
 	/* set map view */
 	ccs.center[0] = ccs.center[1] = 0.5;

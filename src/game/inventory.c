@@ -72,12 +72,12 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
  * @sa I_RemoveFromInventory
  * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
-static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * const inv, item_t item, const invDef_t * container, int x, int y, int amount)
+static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * const inv, const item_t* const item, const invDef_t * container, int x, int y, int amount)
 {
 	invList_t *ic;
 	int checkedTo;
 
-	if (!item.t)
+	if (!item->t)
 		return NULL;
 
 	if (amount <= 0)
@@ -92,7 +92,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 	/* idEquip and idFloor */
 	if (container->temp) {
 		for (ic = inv->c[container->id]; ic; ic = ic->next)
-			if (INVSH_CompareItem(&ic->item, &item)) {
+			if (INVSH_CompareItem(&ic->item, item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i (%s)\n",
 					ic->item.t->name, ic->item.amount, self->name);
@@ -102,19 +102,19 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
 		/* No (sane) position in container given as parameter - find free space on our own. */
-		INVSH_FindSpace(inv, &item, container, &x, &y, NULL);
+		INVSH_FindSpace(inv, item, container, &x, &y, NULL);
 		if (x == NONE)
 			return NULL;
 	}
 
-	checkedTo = INVSH_CheckToInventory(inv, item.t, container, x, y, NULL);
+	checkedTo = INVSH_CheckToInventory(inv, item->t, container, x, y, NULL);
 	assert(checkedTo);
 
 	/* not found - add a new one */
 	ic = I_AddInvList(self, &inv->c[container->id]);
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
-	ic->item = item;
+	ic->item = *item;
 	ic->item.amount = amount;
 
 	/* don't reset an already applied rotation */
@@ -360,7 +360,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv
 						return IA_NONE;
 
 					/* Add the currently used ammo in place of the new ammo in the "from" container. */
-					if (self->AddToInventory(self, inv, item, from, cacheFromX, cacheFromY, 1) == NULL)
+					if (self->AddToInventory(self, inv, &item, from, cacheFromX, cacheFromY, 1) == NULL)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", self->name);
 
 					ic->item.m = self->cacheItem.t;
@@ -422,7 +422,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv
 		*TU -= time;
 
 	assert(self->cacheItem.t);
-	ic = self->AddToInventory(self, inv, self->cacheItem, to, tx, ty, 1);
+	ic = self->AddToInventory(self, inv, &self->cacheItem, to, tx, ty, 1);
 
 	/* return data */
 	if (icp) {
@@ -446,25 +446,28 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv
  * @sa INVSH_FindSpace
  * @sa I_AddToInventory
  */
-static qboolean I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, item_t item, const invDef_t * container)
+static qboolean I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t * const item, const invDef_t * container)
 {
 	int x, y;
 
-	INVSH_FindSpace(inv, &item, container, &x, &y, NULL);
+	INVSH_FindSpace(inv, item, container, &x, &y, NULL);
 
 	if (x == NONE) {
 		assert(y == NONE);
 		return qfalse;
 	} else {
-		const int checkedTo = INVSH_CheckToInventory(inv, item.t, container, x, y, NULL);
+		const int checkedTo = INVSH_CheckToInventory(inv, item->t, container, x, y, NULL);
 		if (!checkedTo)
 			return qfalse;
-		else if (checkedTo == INV_FITS_ONLY_ROTATED)
-			item.rotated = qtrue;
-		else
-			item.rotated = qfalse;
+		else {
+			item_t itemRotation = *item;
+			if (checkedTo == INV_FITS_ONLY_ROTATED)
+				itemRotation.rotated = qtrue;
+			else
+				itemRotation.rotated = qfalse;
 
-		return self->AddToInventory(self, inv, item, container, x, y, 1) != NULL;
+			return self->AddToInventory(self, inv, &itemRotation, container, x, y, 1) != NULL;
+		}
 	}
 }
 
@@ -595,15 +598,15 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 	}
 
 	/* now try to pack the weapon */
-	packed = self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idRight]);
+	packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idRight]);
 	if (packed)
 		ammoMult = 3;
 	if (!packed && allowLeft)
-		packed = self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idLeft]);
+		packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idLeft]);
 	if (!packed)
-		packed = self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idBelt]);
+		packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idBelt]);
 	if (!packed)
-		packed = self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idHolster]);
+		packed = self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idHolster]);
 	if (!packed)
 		return 0;
 
@@ -623,7 +626,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 
 			mun.t = ammo;
 			/* ammo to backpack; belt is for knives and grenades */
-			numpacked += self->TryAddToInventory(self, inv, mun, &self->csi->ids[self->csi->idBackpack]);
+			numpacked += self->TryAddToInventory(self, inv, &mun, &self->csi->ids[self->csi->idBackpack]);
 			/* no problem if no space left; one ammo already loaded */
 			if (numpacked > ammoMult || numpacked * weapon->ammo > 11)
 				break;
@@ -659,7 +662,7 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)\n",
 				obj->id, td->id, self->name);
-	self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idRight]);
+	self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idRight]);
 }
 
 /**
@@ -683,7 +686,7 @@ static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const in
 	assert(weapon->ammos[0]);
 	item.m = weapon->ammos[0];
 
-	self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idRight]);
+	self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idRight]);
 }
 
 /**
@@ -867,7 +870,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
 						const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
-						if (self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idArmour])) {
+						if (self->TryAddToInventory(self, inv, &item, &self->csi->ids[self->csi->idArmour])) {
 							repeat = 0;
 							break;
 						}
@@ -896,7 +899,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 							container = self->csi->idExtension;
 						else
 							container = self->csi->idBackpack;
-						self->TryAddToInventory(self, inv, item, &self->csi->ids[container]);
+						self->TryAddToInventory(self, inv, &item, &self->csi->ids[container]);
 					}
 				}
 			}
