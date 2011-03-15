@@ -129,6 +129,13 @@ makefile_local() {
 	add_to_makefile_local_quote PKGLIBDIR "Using libdir ${PKGLIBDIR}"
 	add_to_makefile_local_quote LOCALEDIR "Using localedir ${LOCALEDIR}"
 	add_to_makefile_local_quote PREFIX "Using prefix ${PREFIX}"
+	if [ "${TARGET_OS}" = "android" ]; then
+		add_line_to_makefile_local "CC := $CC"
+		add_line_to_makefile_local "CXX := $CXX"
+		add_to_makefile_local CFLAGS "Using CFLAGS ${CFLAGS}"
+		add_to_makefile_local LDFLAGS "Using LDFLAGS ${LDFLAGS}"
+	fi
+
 
 	echo "Build modules:"
 	for i in `get_modules`; do
@@ -172,10 +179,6 @@ check_compiler() {
 	# TODO Implement compiler check
 	CC=${CC:-cc}
 	CXX=${CXX:-c++}
-
-	if [ "${TARGET_OS}" = "android" ]; then
-		CROSS="arm-linux-androideabi-"
-	fi
 
 	if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
 		CROSS="i686-pc-mingw32-"
@@ -445,8 +448,25 @@ while [ $# -gt 0 ]; do
 done
 
 [ "${TARGET_OS}" = "mingw32" ] && TARGET_ARCH=i386
-[ "${TARGET_OS}" = "android" ] && TARGET_ARCH=arm && enable_only ufo
 [ "${TARGET_OS}" = "darwin" ] && USE_SIGNALS=
+if [ "${TARGET_OS}" = "android" ]; then
+	TARGET_ARCH=arm
+	HARD_LINKED_GAME=1
+	USE_SIGNALS=
+	PKGDATADIR=.
+	PKGLIBDIR=.
+	enable_only ufo
+	set_var game_DISABLE ""
+	[ -z "$ANDROID_NDK" ] && echo "ANDROID_NDK not defined, assuming path `pwd`/../android-ndk-r4b" && export PATH=$PATH:`pwd`/../android-ndk-r4b || export PATH=$PATH:$ANDROID_NDK
+	[ -z "`which ndk-build`" ] && echo "Please include Android NDK root in your PATH - the 'ndk-build' script should be accessible" && exit 1
+	[ -z "$ANDROID_SDL" ] && echo "ANDROID_SDL not defined, assuming path `pwd`/../sdl_andorid" && export ANDROID_SDL=`pwd`/../sdl_andorid
+	CC="`$ANDROID_SDL/project/jni/application/setEnvironment.sh env | grep '^CC=' | sed 's/^CC=//'`"
+	CXX="`$ANDROID_SDL/project/jni/application/setEnvironment.sh env | grep '^CXX=' | sed 's/^CXX=//'`"
+	CFLAGS="`$ANDROID_SDL/project/jni/application/setEnvironment.sh env | grep '^CFLAGS=' | sed 's/^CFLAGS=//'` -Werror=implicit-function-declaration -Wstrict-aliasing -Wcast-align -Wpointer-arith -Waddress"
+	LDFLAGS="`$ANDROID_SDL/project/jni/application/setEnvironment.sh env | grep '^LDFLAGS=' | sed 's/^LDFLAGS=//'` -ljpeg -lpng"
+	mkdir -p $ANDROID_SDL/project/obj/local/armeabi/
+	cp -f contrib/installer/android/*.so contrib/installer/android/*.a $ANDROID_SDL/project/obj/local/armeabi/
+fi
 
 PKGDATADIR=${PKGDATADIR:-${PREFIX}/games/ufoai}
 PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin}

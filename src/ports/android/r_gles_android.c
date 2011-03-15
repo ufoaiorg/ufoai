@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "r_local.h"
+#include "../../client/renderer/r_local.h"
 #include "r_gles_android.h"
 
 /* Conversion functions from common 24-bit RGB to Android 16-bit RGB */

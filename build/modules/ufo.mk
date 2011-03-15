@@ -9,7 +9,9 @@ endif
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO $(BFD_CFLAGS) $(SDL_CFLAGS) $(SDL_TTF_CFLAGS) $(SDL_IMAGE_CFLAGS) $(SDL_MIXER_CFLAGS) $(CURL_CFLAGS) $(THEORA_CFLAGS) $(XVID_CFLAGS) $(VORBIS_CFLAGS) $(OGG_CFLAGS)
+ifneq ($(TARGET_OS),android) # android manages CFLAGS using wicked build script
 $(TARGET)_LDFLAGS  += -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
+endif
 
 $(TARGET)_SRCS      = \
 	client/cl_console.c \
@@ -371,6 +373,7 @@ ifeq ($(TARGET_OS),android)
 		ports/android/android_debugger.c \
 		ports/android/android_main.c \
 		ports/android/android_system.c \
+		ports/android/r_gles_android.c \
 		ports/unix/unix_shared.c \
 		ports/unix/unix_files.c
 endif

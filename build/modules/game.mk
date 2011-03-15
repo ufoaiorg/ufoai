@@ -41,7 +41,9 @@ $(TARGET)_SRCS      = \
 	game/g_trigger.c \
 	game/g_utils.c \
 	game/g_vis.c \
-	\
+
+ifneq ($(TARGET_OS),android)
+$(TARGET)_SRCS      += \
 	game/lua/lapi.c \
 	game/lua/lauxlib.c \
 	game/lua/lbaselib.c \
@@ -72,6 +74,7 @@ $(TARGET)_SRCS      = \
 	game/lua/lvm.c \
 	game/lua/lzio.c \
 	game/lua/print.c
+endif
 
 ifneq ($(HARD_LINKED_GAME),1)
 	$(TARGET)_SRCS += shared/mathlib.c \
