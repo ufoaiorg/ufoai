@@ -157,9 +157,6 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 
 	assert(aircraft);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_CleanupAircraftCrew:aircraft idx: %i, team size: %i\n",
-		aircraft->idx, AIR_GetTeamSize(aircraft));
-
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
 		employee_t *employee = (employee_t *)l->data;

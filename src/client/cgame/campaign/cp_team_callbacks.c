@@ -227,16 +227,14 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 			UI_ExecuteConfunc("equipdisable %i", i);
 	}
 
-	/* manage inventory */
-	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
+	/* clean up aircraft crew for upcoming mission */
+	CL_CleanTempInventory(aircraft->homebase);
+	unused = aircraft->homebase->storage;
 
 	AIR_Foreach(aircraftInBase) {
 		if (aircraftInBase->homebase == base)
 			CL_CleanupAircraftCrew(aircraftInBase, &unused);
 	}
-
-	/* clean up aircraft crew for upcoming mission */
-	CL_CleanTempInventory(aircraft->homebase);
 
 	GAME_UpdateInventory(&aircraft->homebase->bEquipment, &unused);
 }
