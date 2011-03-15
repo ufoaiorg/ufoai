@@ -1215,6 +1215,14 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 				Q_strncpyz(map->inheritBasePath, token, sizeof(map->inheritBasePath));
 			else
 				Q_strncpyz(map->basePath, token, sizeof(map->basePath));
+		} else if (Q_streq(token, "line")) {
+			token = Com_Parse(&text);
+			const char *p = token;
+			map->lineFlags = 0;
+			while (*p) {
+				map->lineFlags |= tileMask(*p);
+				p++;
+			}
 		} else if (Q_streq(token, "tileset")) {
 			if (map->numTileSets >= MAX_TILESETS)
 				Com_Printf("SV_ParseUMP: Too many map tileset found in (%s)\n", filename);
