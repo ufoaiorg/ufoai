@@ -474,7 +474,7 @@ tileset vertical_odd_1 "0 8"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-/* the game engine sometime do not create this assembly
+/* the game engine sometime fail to create this assembly
 http://ufoai.ninex.info:8010/builders/unittests/builds/225/steps/test%20MapDefTests/logs/stdio
 assembly desert_harvester
 {

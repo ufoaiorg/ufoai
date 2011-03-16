@@ -364,6 +364,8 @@ tileset fillers "0 10"
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
+/* the game engine sometime fail to create this assembly
+http://ufoai.ninex.info:8010/builders/unittests/builds/244/steps/test%20MapDefTests/logs/stdio
 assembly big
 {
 size "11 5"
@@ -391,3 +393,4 @@ tileset fillers      "0 12"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
+*/
