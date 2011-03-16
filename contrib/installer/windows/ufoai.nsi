@@ -104,14 +104,14 @@ SectionGroup /e "Game" SECGROUP01
 	Section "Game Shortcuts" SEC01B
 		SetOutPath "$INSTDIR"
 
-		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\"
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set snd_init 1" "$INSTDIR\ufo.exe" 0
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg +set vid_fullscreen 1" "$INSTDIR\ufo.exe" 0
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg" "$INSTDIR\ufo.exe" 0
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufoded.exe" "" "$INSTDIR\ufoded.exe" 0
-		CreateShortCut "$DESKTOP\${PRODUCT_NAME}-{PRODUCT_VERSION}.lnk" "$INSTDIR\ufo.exe"
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}\Uninstall.lnk" "$INSTDIR\uninst.exe"
+		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\"
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set snd_init 1" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg +set vid_fullscreen 1" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufoded.exe" "" "$INSTDIR\ufoded.exe" 0
+		CreateShortCut "$DESKTOP\${PRODUCT_NAME}-${PRODUCT_VERSION}.lnk" "$INSTDIR\ufo.exe"
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\Uninstall.lnk" "$INSTDIR\uninst.exe"
 	SectionEnd
 SectionGroupEnd
 
@@ -306,8 +306,8 @@ FunctionEnd
 Section Uninstall
   RMDIR /r $INSTDIR
   RMDIR $INSTDIR
-  RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}-{PRODUCT_VERSION}"
-  Delete "$DESKTOP\${PRODUCT_NAME}-{PRODUCT_VERSION}.lnk"
+  RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}"
+  Delete "$DESKTOP\${PRODUCT_NAME}-${PRODUCT_VERSION}.lnk"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
