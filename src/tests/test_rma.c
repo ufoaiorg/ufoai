@@ -147,7 +147,7 @@ static void testMassAssemblySequential (void)
 static void testMassAssemblySeed (void)
 {
 	int i;
-	long time;
+	long time, timeSum = 0;
 	mapInfo_t *randomMap;
 
 	sv_threads->integer = 0;
@@ -159,10 +159,13 @@ static void testMassAssemblySeed (void)
 //		randomMap = SV_AssembleMap("hills", "desert_harvester", map, pos);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
+		timeSum += time;
 		CU_ASSERT(time < 30000);
-		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
+		if (time > 10000)
+			Com_Printf("Seed %i: tiles: %i ms: %li\n", i, randomMap->numPlaced, time);
 		Mem_Free(randomMap);
 	}
+	Com_Printf("TotalTime: %li\n", timeSum);
 }
 #endif
 

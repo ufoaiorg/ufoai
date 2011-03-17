@@ -23,6 +23,9 @@ base forest/fr_
 // g: water left-top curve
 // u* - UFO tiles
 
+// mark the water tiles as 'lineforming'
+// this tag is ignored by the 2010 RMA algo, but it helps the 2011 algo
+line bcdefg
 
 //** drop and crashes tiles
 
@@ -416,6 +419,10 @@ tileset forest_22 {
 +f5
 +f9
 }
+tileset water_11 {
++w3
++w4
+}
 
 
 ///** Assemblies
@@ -475,8 +482,9 @@ size "8 9"
 
 +w1 "0 5"
 +w2 "0 6"
-+w3 "0 6"
-+w4 "0 6"
+//+w3 "0 6"
+//+w4 "0 6"
+tileset water_11 "0 10"
 +w5 "0 6"
 +w6 "1 4"
 +w7 "0 6"

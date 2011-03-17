@@ -107,24 +107,25 @@ typedef struct mapInfo_s {
 
 	/** @brief Stores the Tiles to Place in the map */
 	mToPlace_t mToPlace[MAX_TILETYPES];
-	int numToPlace;	/**< the size of the to place list */
+	int numToPlace;								/**< the size of the to place list */
 
-	mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< A list of parsed assembly definitions. */
-	int numAssemblies;	 /**< The number of assemblies in mAssembly. */
+	mAssembly_t mAssembly[MAX_MAPASSEMBLIES];	/**< A list of parsed assembly definitions. */
+	int numAssemblies;							/**< The number of assemblies in mAssembly. */
 
-	mPlaced_t mPlaced[MAX_MAPTILES];	 /**< Holds all tiles that have been placed on the current map. */
-	int numPlaced;				/**< The number of tiles in mPlaced. */
+	mPlaced_t mPlaced[MAX_MAPTILES];			/**< Holds all tiles that have been placed on the current map. */
+	int numPlaced;								/**< The number of tiles in mPlaced. */
 
-	mTileSet_t mTileSets[MAX_TILESETS];			 /**< A list of parsed map-tiles. */
-	int numTileSets; /**< Length of the mTile list */
+	mTileSet_t mTileSets[MAX_TILESETS];			/**< A list of parsed map-tiles. */
+	int numTileSets;							/**< Length of the mTile list */
 
-	mTile_t mTile[MAX_TILETYPES];			 /**< A list of parsed map-tiles. */
-	int numTiles; /**< Length of the mTile list */
+	mTile_t mTile[MAX_TILETYPES];				/**< A list of parsed map-tiles. */
+	int numTiles;								/**< Length of the mTile list */
+	unsigned long lineFlags;					/** the combined bit values of the tiles that must form a line, ie. river, street etc. */
 
-	char basePath[MAX_QPATH];	/**< the base path of the main rma */
-	char inheritBasePath[MAX_QPATH]; /**< only used during parsing, don't rely on any reasonable data after the parsing stage */
+	char basePath[MAX_QPATH];					/**< the base path of the main rma */
+	char inheritBasePath[MAX_QPATH];			/**< only used during parsing, don't rely on any reasonable data after the parsing stage */
 
-	int mAsm;	/**< the index of the selected assembly */
+	int mAsm;									/**< the index of the selected assembly */
 } mapInfo_t;
 
 mapInfo_t* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos);

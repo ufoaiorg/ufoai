@@ -201,7 +201,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	assert(aircraft);
 	assert(aircraft->homebase == base);
-	CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
+	CP_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));

@@ -352,7 +352,7 @@ void UP_AircraftDescription (const technology_t* tech)
 				break;
 			}
 		}
-		Q_strcat(upBuffer, va(_("Aircraft size:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Required Hangar:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
 		/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
 		 * there is no use to show this in case of an UFO (would be misleading): */
 		if (!AIR_IsUFO(aircraft))

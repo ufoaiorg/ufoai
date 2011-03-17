@@ -394,7 +394,7 @@ qboolean GAME_CP_Spawn (void)
 	base = aircraft->homebase;
 
 	/* clean temp inventory */
-	CL_CleanTempInventory(base);
+	CP_CleanTempInventory(base);
 
 	/* activate hud */
 	HUD_InitUI(NULL, qfalse);

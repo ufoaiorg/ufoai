@@ -33,7 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] ed Pointer to equipment definition.
  * @param[in] item An item to update.
  * @return Updated item in any case, even if there was no update.
- * @sa CL_CleanupAircraftCrew
+ * @sa CP_CleanupAircraftCrew
+ * @todo remove return value and make item a pointer
  */
 static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
@@ -150,15 +151,12 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  * the first person in the squad filling their backpack with spare ammo
  * leaving others with unloaded guns in their hands...
  */
-void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
+void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
 	containerIndex_t container;
 	linkedList_t* l;
 
 	assert(aircraft);
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_CleanupAircraftCrew:aircraft idx: %i, team size: %i\n",
-		aircraft->idx, AIR_GetTeamSize(aircraft));
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
@@ -202,7 +200,7 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
  * @sa GAME_SaveTeamInfo
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-void CL_CleanTempInventory (base_t* base)
+void CP_CleanTempInventory (base_t* base)
 {
 	employee_t *employee;
 
@@ -237,7 +235,7 @@ void CL_CleanTempInventory (base_t* base)
  * @returns the number of employees that are in the aircraft and were added to
  * the character list
  */
-int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
+int CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
 	int i;
 	size_t size;
@@ -280,7 +278,7 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 
 		/* Sanity check(s) */
 		if (!chrDisplayList.chr[chrDisplayList.num])
-			Com_Error(ERR_DROP, "CL_UpdateActorAircraftVar: Could not get employee character with idx: %i", chrDisplayList.num);
+			Com_Error(ERR_DROP, "CP_UpdateActorAircraftVar: Could not get employee character with idx: %i", chrDisplayList.num);
 		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
 		Cvar_Set(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
 

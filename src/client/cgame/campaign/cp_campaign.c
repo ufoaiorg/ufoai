@@ -913,8 +913,8 @@ void CP_StartSelectedMission (void)
 
 	/* manage inventory */
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
-	CL_CleanTempInventory(base);
-	CL_CleanupAircraftCrew(aircraft, &ccs.eMission);
+	CP_CleanTempInventory(base);
+	CP_CleanupAircraftCrew(aircraft, &ccs.eMission);
 	CP_StartMissionMap(mis, battleParam);
 }
 
