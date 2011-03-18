@@ -1822,6 +1822,7 @@ mapdef japan_small
 	}
 }
 
+/*
 mapdef japan_big
 {
 	map			"+japan"
@@ -1871,6 +1872,7 @@ mapdef japan_big
 		suburban
 	}
 }
+*/
 
 mapdef spedition
 {
