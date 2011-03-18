@@ -270,9 +270,9 @@ wv    +1     1vw
 tile +filler_1s4_d
 {
 3 3
-0      1f     0
+0      1fhg   0
 wv    +1     1vw
-0      hg     0
+0      1hg     0
 }
 
 // wip tile
@@ -293,7 +293,6 @@ tileset fillers_1s_common
 tileset fillers_1s_desert
 {
        +filler_1s1
-       +filler_1s2
        +filler_1s4_d
 }
 
@@ -333,6 +332,12 @@ tile +house_12
 0      1f     0
 vw     +1     1
 0      1      0
+}
+
+tileset houses_1s
+{
+       +house_11
+       +house_12
 }
 
 
@@ -441,30 +446,30 @@ title "_UFO landed in hills area"
 
 fix +road_1c1 "4 0"
 
-tileset fillers_1s_common "0 4"
+tileset fillers_1s_common "0 6"
 
-+filler_1s3 "1 2"
++filler_1s3 "1 1"
 
-+filler_2s1 "0 10"
++filler_2s1 "0 5"
 +filler_2s2 "0 1"
 
 tileset fillers_12 "0 3"
-tileset vertical_even_1 "0 8"
-tileset vertical_odd_1 "0 8"
+tileset vertical_even_1 "0 4"
+tileset vertical_odd_1 "0 4"
 
 +road_1h1 "0 3"
 +road_1h2 "0 3"
 
-+road_2v1 "0 10"
-+road_2v2 "0 10"
++road_2v1 "0 5"
++road_2v2 "0 5"
 +road_2h1 "0 5"
 +road_2h2 "0 5"
 
 
 //+road_1c1 "0 2"
 
-+house_11 "1 5"
-+house_12 "1 5"
++house_11 "1 2"
++house_12 "1 2"
 +house_13 "1 1"
 +house_15 "0 1"
 
@@ -474,8 +479,6 @@ tileset vertical_odd_1 "0 8"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-/* the game engine sometime fail to create this assembly
-http://ufoai.ninex.info:8010/builders/unittests/builds/225/steps/test%20MapDefTests/logs/stdio
 assembly desert_harvester
 {
 size "7 9"
@@ -483,29 +486,30 @@ title "_UFO landed in hills area"
 
 fix +road_1c1 "4 0"
 
-+filler_1s3_d "1 2"
+fix +house_13 "2 2"
 
-tileset fillers_1s_desert "1 6"
++filler_1s3_d "1 1"
 
-+filler_2s1 "0 10"
+tileset fillers_1s_desert "0 6"
+
++filler_2s1 "0 5"
 +filler_2s2 "0 1"
 
 tileset fillers_12 "0 3"
-tileset vertical_even_1 "0 8"
-tileset vertical_odd_1 "0 8"
+tileset vertical_even_1 "0 4"
+tileset vertical_odd_1 "0 4"
 
 +road_1h1 "0 3"
 +road_1h2 "0 3"
 
-+road_2v1 "0 10"
-+road_2v2 "0 10"
++road_2v1 "0 5"
++road_2v2 "0 5"
 +road_2h1 "0 5"
 +road_2h2 "0 5"
 
 
-+house_11 "1 5"
-+house_12 "1 5"
-+house_13 "1 1"
++house_11 "1 2"
++house_12 "1 2"
 +house_15 "0 1"
 
 +house_22 "0 1"
@@ -513,4 +517,3 @@ tileset vertical_odd_1 "0 8"
 *rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
-*/
