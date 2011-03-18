@@ -479,7 +479,11 @@ tileset vertical_odd_1 "0 4"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-/*
+/* the game engine sometime do not create this assembly
+http://ufoai.ninex.info:8010/builders/unittests/builds/255/steps/test%20MapDefTests/logs/stdio
+it is a bug on the random generation
+please test this assembly many time (x10?) before enabling it again
+
 assembly desert_harvester
 {
 size "7 9"
