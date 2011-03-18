@@ -3682,6 +3682,7 @@ mapdef hills_harvester
 	}
 }
 
+/*
 mapdef hills_harvester_desert
 {
 	map			"+hills"
@@ -3722,7 +3723,7 @@ mapdef hills_harvester_desert
 		village
 	}
 }
-
+*/
 
 mapdef small_street
 {

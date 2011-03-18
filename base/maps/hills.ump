@@ -479,6 +479,7 @@ tileset vertical_odd_1 "0 4"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
+/*
 assembly desert_harvester
 {
 size "7 9"
@@ -517,3 +518,4 @@ tileset vertical_odd_1 "0 4"
 *rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
+*/
