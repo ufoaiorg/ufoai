@@ -625,9 +625,9 @@ base/maps/village/vil_s15.map | GNU General Public License 2.0 or later
 base/maps/wilderness.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/materials/city.mat | GNU General Public License 2.0 or later | Nate Wright
 base/media/DejaVuSans.ttf | Public Domain | http://dejavu-fonts.org | http://dejavu.sourceforge.net/
-base/media/FreeMono.ttf | GNU General Public License v3 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
-base/media/FreeSans.ttf | GNU General Public License v3 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
-base/media/FreeSerif.ttf | GNU General Public License v3 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
+base/media/FreeMono.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
+base/media/FreeSans.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
+base/media/FreeSerif.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
 base/media/Loma.ttf | Public Domain | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/Norasi.ttf | Public Domain | NECTEC National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/UnDinaruBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
