@@ -146,20 +146,20 @@
 // brush 12
 {
 ( 136 96 0 ) ( 0 96 0 ) ( 0 0 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 416 168 104 ) ( 416 200 104 ) ( 448 200 104 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 160 192 64 ) ( 192 192 64 ) ( 192 192 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 192 192 64 ) ( 192 224 64 ) ( 192 224 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 192 224 64 ) ( 160 224 64 ) ( 160 224 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 416 168 100 ) ( 416 200 100 ) ( 448 200 100 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 160 192 60 ) ( 192 192 60 ) ( 192 192 -4 ) tex_common/actorclip 0 56 0 0.5 0.5 65536 0 0
+( 192 192 60 ) ( 192 224 60 ) ( 192 224 -4 ) tex_common/actorclip 0 56 0 0.5 0.5 65536 0 0
+( 192 224 60 ) ( 160 224 60 ) ( 160 224 -4 ) tex_common/actorclip 0 56 0 0.5 0.5 65536 0 0
 ( 160 224 84 ) ( 160 192 84 ) ( 160 192 20 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 }
 // brush 13
 {
 ( 136 96 0 ) ( 0 96 0 ) ( 0 0 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 416 168 104 ) ( 416 200 104 ) ( 448 200 104 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 64 128 64 ) ( 96 128 64 ) ( 96 128 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 416 168 100 ) ( 416 200 100 ) ( 448 200 100 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 64 128 60 ) ( 96 128 60 ) ( 96 128 -4 ) tex_common/actorclip 0 56 0 0.5 0.5 65536 0 0
 ( 96 128 64 ) ( 96 160 64 ) ( 96 160 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 96 160 64 ) ( 64 160 64 ) ( 64 160 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 64 160 84 ) ( 64 128 84 ) ( 64 128 20 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 96 160 60 ) ( 64 160 60 ) ( 64 160 -4 ) tex_common/actorclip 0 56 0 0.5 0.5 65536 0 0
+( 64 160 80 ) ( 64 128 80 ) ( 64 128 16 ) tex_common/actorclip 0 56 0 0.5 0.5 65536 0 0
 }
 // brush 14
 {
@@ -184,7 +184,7 @@
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"origin" "432 176 8"
+"origin" "432 176 4"
 "spawnflags" "255"
 }
 // entity 2
@@ -193,21 +193,21 @@
 "angles" "5 15 0"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
-"origin" "432 176 8"
+"origin" "432 176 4"
 "spawnflags" "255"
 }
 // entity 3
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "80 144 8"
+"origin" "80 144 4"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 }
 // entity 4
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "80 144 8"
+"origin" "80 144 4"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 "angles" "0 70 0"
@@ -216,17 +216,17 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "176 208 8"
+"origin" "176 208 4"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 }
 // entity 6
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "176 208 8"
+"origin" "176 208 4"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
-"angles" "0 330 0"
+"angles" "0 -30 0"
 }
 // entity 7
 {

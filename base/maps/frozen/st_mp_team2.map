@@ -145,21 +145,21 @@
 }
 // brush 12
 {
-( 96 256 0 ) ( 96 288 0 ) ( 64 288 0 ) tex_common/actorclip 0 -0 -90 1 1 65536 0 0
-( 72 288 104 ) ( 104 288 104 ) ( 104 256 104 ) tex_common/actorclip 0 -0 -90 1 1 65536 0 0
-( 128 416 64 ) ( 128 384 64 ) ( 128 384 0 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 96 256 0 ) ( 96 288 0 ) ( 64 288 0 ) tex_common/actorclip 0 0 -90 1 1 65536 0 0
+( 72 288 100 ) ( 104 288 100 ) ( 104 256 100 ) tex_common/actorclip 0 0 -90 1 1 65536 0 0
+( 128 416 60 ) ( 128 384 60 ) ( 128 384 -4 ) tex_common/actorclip 0 60 0 -1 1 65536 0 0
 ( 452 384 12 ) ( 484 384 12 ) ( 484 384 4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 160 384 64 ) ( 160 416 64 ) ( 160 416 0 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
-( 484 416 12 ) ( 452 416 12 ) ( 452 416 4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 160 384 60 ) ( 160 416 60 ) ( 160 416 -4 ) tex_common/actorclip 0 60 0 -1 1 65536 0 0
+( 484 416 8 ) ( 452 416 8 ) ( 452 416 0 ) tex_common/actorclip 0 60 0 1 1 65536 0 0
 }
 // brush 13
 {
-( 96 256 0 ) ( 96 288 0 ) ( 64 288 0 ) tex_common/actorclip 0 -0 -90 1 1 65536 0 0
-( 72 288 104 ) ( 104 288 104 ) ( 104 256 104 ) tex_common/actorclip 0 -0 -90 1 1 65536 0 0
-( 160 64 64 ) ( 160 32 64 ) ( 160 32 0 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
-( 160 32 64 ) ( 192 32 64 ) ( 192 32 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 192 32 64 ) ( 192 64 64 ) ( 192 64 0 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
-( 192 64 84 ) ( 160 64 84 ) ( 160 64 20 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 96 256 0 ) ( 96 288 0 ) ( 64 288 0 ) tex_common/actorclip 0 0 -90 1 1 65536 0 0
+( 72 288 100 ) ( 104 288 100 ) ( 104 256 100 ) tex_common/actorclip 0 0 -90 1 1 65536 0 0
+( 160 64 60 ) ( 160 32 60 ) ( 160 32 -4 ) tex_common/actorclip 0 60 0 -1 1 65536 0 0
+( 160 32 60 ) ( 192 32 60 ) ( 192 32 -4 ) tex_common/actorclip 0 60 0 1 1 65536 0 0
+( 192 32 60 ) ( 192 64 60 ) ( 192 64 -4 ) tex_common/actorclip 0 60 0 -1 1 65536 0 0
+( 192 64 80 ) ( 160 64 80 ) ( 160 64 16 ) tex_common/actorclip 0 60 0 1 1 65536 0 0
 }
 // brush 14
 {
@@ -172,11 +172,11 @@
 }
 // brush 15
 {
-( 96 256 0 ) ( 96 288 0 ) ( 64 288 0 ) tex_common/actorclip 0 -0 -90 1 1 65536 0 0
-( 72 288 104 ) ( 104 288 104 ) ( 104 256 104 ) tex_common/actorclip 0 -0 -90 1 1 65536 0 0
-( 64 288 64 ) ( 64 256 64 ) ( 64 256 0 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
-( 64 256 64 ) ( 96 256 64 ) ( 96 256 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 256 64 ) ( 96 288 64 ) ( 96 288 0 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 96 256 0 ) ( 96 288 0 ) ( 64 288 0 ) tex_common/actorclip 0 0 -90 1 1 65536 0 0
+( 72 288 100 ) ( 104 288 100 ) ( 104 256 100 ) tex_common/actorclip 0 0 -90 1 1 65536 0 0
+( 64 288 60 ) ( 64 256 60 ) ( 64 256 -4 ) tex_common/actorclip 0 60 0 -1 1 65536 0 0
+( 64 256 60 ) ( 96 256 60 ) ( 96 256 -4 ) tex_common/actorclip 0 60 0 1 1 65536 0 0
+( 96 256 60 ) ( 96 288 60 ) ( 96 288 -4 ) tex_common/actorclip 0 60 0 -1 1 65536 0 0
 ( 96 288 84 ) ( 64 288 84 ) ( 64 288 20 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 }
 }
@@ -252,24 +252,24 @@
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"origin" "176 48 8"
+"origin" "176 48 4"
 "spawnflags" "255"
 "angles" "0 -90 0"
 }
 // entity 12
 {
 "classname" "misc_model"
-"angles" "-0 -75 -4.99999"
+"angles" "0 -75 -4.99999"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
-"origin" "172.247 44.2256 27.7205"
+"origin" "172.247 44.2256 3.7205"
 "spawnflags" "255"
 }
 // entity 13
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "144 400 8"
+"origin" "144 400 4"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "angles" "0 -90 0"
 }
@@ -277,7 +277,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "144 400 8"
+"origin" "144 400 4"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 "angles" "0 -90 0"
@@ -286,7 +286,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "80 272 8"
+"origin" "80 272 4"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 "angles" "0 -90 0"
@@ -295,7 +295,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "80 272 8"
+"origin" "80 272 4"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "angles" "0 -90 0"
 }

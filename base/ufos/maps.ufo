@@ -504,6 +504,7 @@ mapdef frozen_small
 	}
 }
 
+
 mapdef frozen_alienlandingnature
 {
 	map			"+frozen"
