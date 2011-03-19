@@ -271,7 +271,7 @@ tile +filler_1s4_d
 {
 3 3
 0      1fhg   0
-wv    +1     1vw
+1wv    +1     1vw
 0      1hg     0
 }
 
@@ -484,6 +484,12 @@ http://ufoai.ninex.info:8010/builders/unittests/builds/255/steps/test%20MapDefTe
 it is a bug on the random generation
 please test this assembly many time (x10?) before enabling it again
 
+
+19.03.2011
+I uncomment it again for testing, but it will  not  be  used  in  campaign  or
+skirmish. Please, test it with "other random seeds" then I.
+Kildor.
+*/
 assembly desert_harvester
 {
 size "7 9"
@@ -522,4 +528,4 @@ tileset vertical_odd_1 "0 4"
 *rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
-*/
+//*/
