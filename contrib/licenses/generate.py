@@ -35,6 +35,7 @@ THUMBNAIL = True
 PLOT = True
 PARSE_MAPS = True
 PARSE_SCRIPTS = True
+DOJO = True
 RESOURCES = resources.Resources()
 
 NON_FREE_LICENSES = set([
@@ -77,13 +78,21 @@ FILENAME_FILTERS = (
 
     )
 
+DEFAULT_DOJOHEAD = """
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script>
+    <script src="chartdata.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/tundra/tundra.css" />
+"""
+
 HTML = u"""<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 ${stylelink}
+${jsapi}
+${dojohead}
 </head>
 
-<body>
+<body class="tundra">
 <h1>Licenses in UFO:AI (${title})</h1>
 Please note that the information are extracted from <a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=LICENSES">LICENSES</a> file.<br />
 Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
@@ -96,6 +105,8 @@ ${navigation}
 ${content}
 
 </body></html>"""
+
+DOJOHEAD = ""
 
 ELEMENT = """<li>
 <table><tr>
@@ -110,11 +121,21 @@ ${extra_info}
 </tr></table>
 </li>"""
 
-HTML_IMAGE = u"""<br/><table><tr>
-<td><img src="plot.png" caption="Timeline of all game content by revision and licenses" /></td>
-<td><img src="nonfree.png" caption="Timeline of non free content by revision and licenses" /></td>
-</table><br/>
+DOJO_LICENSEPIE = """
+    <td>
+	    <div>
+		    <div id="licensePie" style="width: 400px; height: 400px;"></div>
+		    <div id="licensePieLegend"></div>
+		    <script type="text/javascript">initializeLicensePieLater("licensePie", "licensePieLegend");</script>
+	    </div>
+    </td>
 """
+
+IMAGE_LICENSECHART = """
+    <td><img src="plot.png" caption="Timeline of all game content by revision and licenses" /></td>
+    <td><img src="nonfree.png" caption="Timeline of non free content by revision and licenses" /></td>
+"""
+
 
 ###################################
 # Util
@@ -435,12 +456,11 @@ class Analysis(object):
         content = string.Template(ELEMENT).substitute(content)
         return content
 
-    def getLicenseFileName(self, license):
+    def getShortLicenseName(self, license):
         name = license.lower()
         name = name.replace(' ', '')
         name = name.replace('-', '')
         name = name.replace(':', '')
-        name = name.replace('.', '')
         name = name.replace('(', '')
         name = name.replace(')', '')
         name = name.replace('/', '')
@@ -452,12 +472,20 @@ class Analysis(object):
         name = name.replace('attribution', 'by-')
         name = name.replace('sharealike', 'sa-')
         name = name.replace('license', '')
-        name = name.replace('and', '_')
+        name = name.replace('and', '&')
+        return name
+
+    def getLicenseFileName(self, license):
+        name = self.getShortLicenseName(license)
+        name = name.replace('.', '')
+        name = name.replace(' ', '')
+        name = name.replace('&', '_')
         return 'license-' + name + '.html'
         #return hashlib.md5(license).hexdigest() + '.html'
 
     def writeLicensePage(self, output, license, contents):
         style = '<link rel="stylesheet" type="text/css" href="' + ('../' * self.deep) + 'style.css" />'
+        jsapi =  '<script src="%s"></script>' % (('../' * self.deep) + "api.js")
         navigation = '<a href="index.html">back</a><br />' + EOL
         title = license
         content = '<h2>%s</h2>' % license
@@ -474,6 +502,8 @@ class Analysis(object):
         values = {}
         values["navigation"] = navigation
         values["stylelink"] = style
+        values["jsapi"] = jsapi
+        values["dojohead"] = DOJOHEAD
         values["title"] = title
         values["content"] = content
         values["revision"] = str(self.revision)
@@ -506,12 +536,34 @@ class Analysis(object):
         html += "</ul></body></html>"
         open(basedir + '/' + name + '.html', 'w').write(html.encode('utf-8'))
 
+    def writeDojoLicensePie(self):
+        pass
+
+    def writeChartData(self, output, licenses):
+        js = "licensePieData = {" + EOL
+        for license in licenses:
+            if license == None:
+                continue
+            value = len(licenses[license])
+            js += "\"%s\": %d,\n" % (license, value)
+        js += "};" + EOL
+
+        basedir = output + '/licenses/public_html' + self.getLocalDir()
+        if not os.path.exists(basedir):
+            os.makedirs(basedir)
+        file = open(basedir + '/chartdata.js', 'wt')
+        file.write(js.encode('utf-8'))
+        file.close()
+
     def write(self, output):
         name = self.getName()
         values = {}
 
         style = '<link rel="stylesheet" type="text/css" href="' + ('../' * self.deep) + 'style.css" />'
+        jsapi =  '<script src="%s"></script>' % (('../' * self.deep) + "api.js")
         values['stylelink'] = style
+        values['jsapi'] = jsapi
+        values["dojohead"] = DOJOHEAD
         values['title'] = "base" + self.getLocalDir()
 
         # navigation
@@ -545,9 +597,14 @@ class Analysis(object):
         history.saveHistory(self.getLocalDir(), self.revision, licenses)
 
         # generate graph
-        if PLOT and self.count > 20:
-            if generateGraph(output, self.getLocalDir()):
-                content += HTML_IMAGE
+        if PLOT or DOJO:
+            content += "<br/><table><tr>"
+            if PLOT and self.count > 20:
+                if generateGraph(output, self.getLocalDir()):
+                    content += IMAGE_LICENSECHART
+            if DOJO:
+                content += DOJO_LICENSEPIE
+            content += "</></table><br/>"
 
         licenseSorting = []
         for l in self.contentByLicense:
@@ -576,12 +633,14 @@ class Analysis(object):
         file.write(html)
         file.close()
 
+        if DOJO:
+            self.writeChartData(output, self.contentByLicense)
         self.writeGroups(output, "copyrights", self.contentByCopyright)
         self.writeGroups(output, "licenses", self.contentByLicense)
         self.writeGroups(output, "sources", self.contentBySource)
 
 def main():
-    global ABS_URL, THUMBNAIL, PLOT, PARSE_MAPS, PARSE_SCRIPTS
+    global ABS_URL, THUMBNAIL, PLOT, PARSE_MAPS, PARSE_SCRIPTS, DOJO, DOJOHEAD, DEFAULT_DOJOHEAD
     from optparse import OptionParser
 
     parser = OptionParser()
@@ -638,10 +697,13 @@ def main():
     setup(output_path)
     clean_up(output_path)
 
-    files = ["style.css", "grid.png"]
+    files = ["style.css", "grid.png", "api.js"]
     for f in files:
         print "Copying " + f
         shutil.copy (sys.path[0] + "/resources/" + f, output_path + "/licenses/public_html/" + f)
+
+    if DOJO:
+        DOJOHEAD = DEFAULT_DOJOHEAD
 
     # map-texture relations
     if PARSE_MAPS:
