@@ -6685,10 +6685,6 @@
 ( -316 308 64 ) ( -316 292 64 ) ( -316 292 56 ) tex_material/c_gray230 0 8 0 0.5 0.5 1536 0 0
 }
 }
-// entity 26
-{
-"classname" "func_group"
-}
 // entity 27
 {
 "classname" "func_group"
