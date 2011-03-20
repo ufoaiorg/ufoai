@@ -81,7 +81,11 @@ FILENAME_FILTERS = (
 DEFAULT_DOJOHEAD = """
     <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script>
     <script src="chartdata.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/soria/soria.css" />
+    <script type="text/javascript">
+        dojo.require("dijit.layout.TabContainer");
+        dojo.require("dijit.layout.ContentPane");
+    </script>
 """
 
 HTML = u"""<html>
@@ -92,7 +96,7 @@ ${jsapi}
 ${dojohead}
 </head>
 
-<body class="tundra">
+<body class="soria">
 <h1>Licenses in UFO:AI (${title})</h1>
 Please note that the information are extracted from <a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=LICENSES">LICENSES</a> file.<br />
 Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
@@ -100,9 +104,16 @@ Warning: the statics/graphs might be wrong since it would be to expensive to get
 State as in revision ${revision}.
 <hr />
 
+<table style="width:100%;">
+<tr>
+<td valign="top" width="25%">
 ${navigation}
-
+</td>
+<td valign="top">
 ${content}
+</td>
+</tr>
+</table>
 
 </body></html>"""
 
@@ -596,21 +607,33 @@ class Analysis(object):
         history = LicenseHistory(os.path.join(output, 'licenses/history'))
         history.saveHistory(self.getLocalDir(), self.revision, licenses)
 
-        # generate graph
-        if PLOT or DOJO:
-            content += "<br/><table><tr>"
-            if PLOT and self.count > 20:
-                if generateGraph(output, self.getLocalDir()):
-                    content += IMAGE_LICENSECHART
-            if DOJO:
-                content += DOJO_LICENSEPIE
-            content += "</></table><br/>"
+        content += '<div dojoType="dijit.layout.TabContainer" style="width: 80%; height: 450px;">'
+
+        if DOJO:
+            content += '<div dojoType="dijit.layout.ContentPane" title="Distribution" selected="true">'
+            content += "<table><tr>"
+            content += DOJO_LICENSEPIE
+            content += "</tr></table>"
+            content += '</div>'
+
+        if PLOT and self.count > 20:
+            if generateGraph(output, self.getLocalDir()):
+                content += '<div dojoType="dijit.layout.ContentPane" title="History" selected="true">'
+                content += "<br/><table><tr>"
+                content += IMAGE_LICENSECHART
+                content += "</></table><br/>"
+                content += '</div>'
+            else:
+                content += '<div dojoType="dijit.layout.ContentPane" title="History" selected="false"></div>'
+
 
         licenseSorting = []
         for l in self.contentByLicense:
             licenseSorting.append((len(self.contentByLicense[l]), l))
         licenseSorting.sort(reverse=True)
 
+        content += '<div dojoType="dijit.layout.ContentPane" title="Brute list" selected="true">'
+        content += '<div style="background-color:#202020; padding:2em;">'
         content += "<ul>" + EOL
         for l in licenseSorting:
             l = l[1]
@@ -622,6 +645,12 @@ class Analysis(object):
             url = self.getLicenseFileName(l)
             content += ('<li>%i - <a%s href="%s">%s</a></li>' % (count, classProp, url, l)) + EOL
         content += "</ul>" + EOL
+        content += '</div>'
+        content += '</div>'
+
+        content += '</div>'
+
+
         values['content'] = content
         values['revision'] = str(self.revision)
 
