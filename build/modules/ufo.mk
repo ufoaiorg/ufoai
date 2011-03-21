@@ -8,8 +8,8 @@ endif
 
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(BFD_CFLAGS) $(SDL_CFLAGS) $(SDL_TTF_CFLAGS) $(SDL_IMAGE_CFLAGS) $(SDL_MIXER_CFLAGS) $(CURL_CFLAGS) $(THEORA_CFLAGS) $(XVID_CFLAGS) $(VORBIS_CFLAGS) $(OGG_CFLAGS)
-$(TARGET)_LDFLAGS  += -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(BFD_CFLAGS) $(SDL_CFLAGS) $(SDL_TTF_CFLAGS) $(SDL_IMAGE_CFLAGS) $(SDL_MIXER_CFLAGS) $(CURL_CFLAGS) $(THEORA_CFLAGS) $(XVID_CFLAGS) $(VORBIS_CFLAGS) $(OGG_CFLAGS) $(MXML_CFLAGS)
+$(TARGET)_LDFLAGS  += -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(MXML_LIBS) $(SO_LIBS) -lz
 
 $(TARGET)_SRCS      = \
 	client/cl_console.c \
@@ -232,15 +232,6 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_window.c \
 	client/ui/node/ui_node_zone.c \
 	\
-	client/mxml/mxml-attr.c \
-	client/mxml/mxml-entity.c \
-	client/mxml/mxml-file.c \
-	client/mxml/mxml-index.c \
-	client/mxml/mxml-node.c \
-	client/mxml/mxml-private.c \
-	client/mxml/mxml-search.c \
-	client/mxml/mxml-set.c \
-	client/mxml/mxml-string.c \
 	client/mxml/mxml_ufoai.c \
 	\
 	common/cmd.c \

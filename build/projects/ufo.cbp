@@ -103,6 +103,7 @@
 			<Add library="ogg" />
 			<Add library="theora" />
 			<Add library="xvidcore" />
+			<Add library="mxml" />
 		</Linker>
 		<Unit filename="..\..\base\autoexec.cfg" />
 		<Unit filename="..\..\base\dedicated.cfg" />
@@ -769,36 +770,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_keys.h" />
-		<Unit filename="..\..\src\client\mxml\config.h" />
-		<Unit filename="..\..\src\client\mxml\mxml-attr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-entity.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-file.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-index.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-node.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-private.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-private.h" />
-		<Unit filename="..\..\src\client\mxml\mxml-search.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-set.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-string.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml.h" />
 		<Unit filename="..\..\src\client\mxml\mxml_ufoai.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MXML_UFOAI_H
 #define CLIENT_MXML_UFOAI_H
 
-#include "mxml.h"
+#include <mxml.h>
 #define xmlNode_t mxml_node_t
 #include "../../shared/mathlib.h"
 #include "../../shared/ufotypes.h"
