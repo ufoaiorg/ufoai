@@ -82,10 +82,10 @@ tile +craft_ufo_harvester
 {
 7 6
 0      0      ah14   ah14   ah14   ah14   0
-0      a4     +a     +a     +a     +a     afv12
-afv34  +a     +a     +a     +a     +a     afv12
-afv34  +a     +a     +a     +a     +a     afv12
-0      a3     +a     +a     +a     +a     afv12
+0      v23     +a     +a     +a     +a     afv12
+af     +v     +a     +a     +a     +a     afv12
+af     +v     +a     +a     +a     +a     afv12
+0      v34     +a     +a     +a     +a     afv12
 0      0      ah23   ah23   ah23   ah23   0
 
 }
