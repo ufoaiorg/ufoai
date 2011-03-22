@@ -329,7 +329,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 
 	Com_Printf("Loading team (size %d / %i)\n", clen, header.xmlSize);
 
-	topNode = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
+	topNode = XML_Parse((const char*)(cbuf + sizeof(header)));
 	Mem_Free(cbuf);
 	if (!topNode) {
 		Com_Printf("Error: Failure in loading the xml data!");

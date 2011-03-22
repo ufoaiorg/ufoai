@@ -65,6 +65,6 @@ xmlNode_t * XML_GetDate(xmlNode_t *parent, const char *name, int *day, int *sec)
 xmlNode_t * XML_GetNode(xmlNode_t *parent, const char *name);
 xmlNode_t * XML_GetNextNode(xmlNode_t *current, xmlNode_t *parent, const char *name);
 
-mxml_type_t mxml_ufo_type_cb(xmlNode_t *node);
+xmlNode_t *XML_Parse(const char *buffer);
 
 #endif

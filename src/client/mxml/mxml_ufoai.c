@@ -515,7 +515,7 @@ xmlNode_t * XML_GetNextNode (xmlNode_t *current, xmlNode_t *parent, const char *
 /**
  * @brief callback function for parsing the node tree
  */
-mxml_type_t mxml_ufo_type_cb (xmlNode_t *node)
+static mxml_type_t mxml_ufo_type_cb (xmlNode_t *node)
 {
 	/* You can lookup attributes and/or use the
 	 * element name, hierarchy, etc... */
@@ -533,4 +533,9 @@ mxml_type_t mxml_ufo_type_cb (xmlNode_t *node)
 		return MXML_REAL;
 	else
 		return MXML_TEXT;
+}
+
+xmlNode_t *XML_Parse (const char *buffer)
+{
+	return mxmlLoadString(NULL, buffer, mxml_ufo_type_cb);
 }
