@@ -245,8 +245,6 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_window.c \
 	client/ui/node/ui_node_zone.c \
 	\
-	client/mxml/mxml_ufoai.c \
-	\
 	common/cmd.c \
 	common/http.c \
 	common/ioapi.c \
@@ -269,6 +267,7 @@ $(TARGET)_SRCS      = \
 	common/scripts.c \
 	common/tracing.c \
 	common/routing.c \
+	common/xml.c \
 	\
 	server/sv_ccmds.c \
 	server/sv_game.c \

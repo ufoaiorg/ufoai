@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "mxml_ufoai.h"
+#include "xml.h"
 
 /**
  * @brief add a String attribute to the XML Node

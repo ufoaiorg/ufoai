@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <mxml.h>
 #define xmlNode_t mxml_node_t
-#include "../../shared/mathlib.h"
-#include "../../shared/ufotypes.h"
+#include "../shared/mathlib.h"
+#include "../shared/ufotypes.h"
 
 void XML_AddString(xmlNode_t *parent, const char *name, const char *value);
 void XML_AddBool(xmlNode_t *parent, const char *name, qboolean value);

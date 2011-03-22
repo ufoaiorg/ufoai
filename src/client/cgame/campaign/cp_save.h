@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_SAVE_H
 
 #include "../../../common/msg.h"
-#include "../../mxml/mxml_ufoai.h"
+#include "../../../common/xml.h"
 
 extern cvar_t *cl_lastsave;
 

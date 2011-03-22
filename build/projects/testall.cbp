@@ -532,7 +532,7 @@
 		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml_ufoai.c">
+		<Unit filename="..\..\src\common\xml.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_array.c">
