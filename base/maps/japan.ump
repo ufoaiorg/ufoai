@@ -264,6 +264,16 @@ h     +4      abf
 0      ab      0
 }
 
+// t-connector
+
+tile +p_btl
+{
+3 3
+0      v2      0
+h      +34    abf
+0      v1      0
+}
+
 // horizontal
 tile +p_h
 {
@@ -279,6 +289,16 @@ tile +p_v
 3 3
 0      v23      0
 abf     +v       abf
+0      v34      0
+}
+
+
+/// test!
+tile +p_c
+{
+3 3
+0      v23      0
+h12     +1234      h34
 0      v34      0
 }
 
@@ -366,12 +386,14 @@ tileset fillers "0 10"
 
 /* the game engine sometime fail to create this assembly
 http://ufoai.ninex.info:8010/builders/unittests/builds/244/steps/test%20MapDefTests/logs/stdio
+*/
 assembly big
 {
-size "11 5"
+size "10 5"
 title         "_Harvester"
-+arc          "1 1"
-+h1           "1 1"
++arc          "0 1"
+//fix +arc          "0 2"
++h1           "0 1"
 +h2           "0 1"
 +h3           "0 1"
 +h4           "0 1"
@@ -380,12 +402,14 @@ title         "_Harvester"
 +f1           "0 2"
 +f2           "0 2"
 +f3           "0 2"
++f4           "0 2"
 +bridge       "0 1"
 +w1           "0 1"
 +p_tr         "0 5"
 +p_tl         "0 5"
 +p_br         "0 5"
 +p_bl         "0 5"
++p_btl        "1 1"
 +p_h          "0 10"
 +p_v          "0 10"
 +fill1        "0 1"
@@ -393,4 +417,4 @@ tileset fillers      "0 12"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
-*/
+//*/
