@@ -38,21 +38,20 @@ void PQueueInitialise (priorityQueue_t *pq, uint32_t maxElements)
 	pq->maxSize = maxElements;
 	pq->currentSize = 0;
 
-	pq->elements = (priorityQueueElement_t*) malloc(sizeof(priorityQueueElement_t) * (maxElements + 1));
+	pq->elements = (priorityQueueElement_t*) Mem_Alloc(sizeof(priorityQueueElement_t) * (maxElements + 1));
 
 	if (pq->elements == NULL)
 		Sys_Error("PQueueInitialise: Memory alloc failed!");
 }
 
-void PQueuePush (priorityQueue_t *pq, pos4_t item, priorityQueueRating_t r)
+void PQueuePush (priorityQueue_t *pq, const pos4_t item, priorityQueueRating_t r)
 {
 	uint32_t i, j;
 	uint32_t currentSize = pq->currentSize;
 
 	if (currentSize == pq->maxSize) {
-		int new_size;
-		new_size = pq->maxSize * 2;
-		pq->elements = (priorityQueueElement_t *)realloc(pq->elements, sizeof(*pq->elements) * (new_size + 1));
+		const int new_size = pq->maxSize * 2;
+		pq->elements = (priorityQueueElement_t *)Mem_ReAlloc(pq->elements, sizeof(*pq->elements) * (new_size + 1));
 		pq->maxSize = new_size;
 	}
 
@@ -84,7 +83,7 @@ void PQueuePush (priorityQueue_t *pq, pos4_t item, priorityQueueRating_t r)
  */
 void PQueueFree (priorityQueue_t *pq)
 {
-	free(pq->elements);
+	Mem_Free(pq->elements);
 }
 
 /**
@@ -116,7 +115,7 @@ void PQueuePop (priorityQueue_t *pq, pos4_t item)
 		if ((child != currentSize) && (elements[child + 1].rating < elements[child].rating))
 			child ++;
 
-		if (pLastElement.rating > elements[ child ].rating)
+		if (pLastElement.rating > elements[child].rating)
 			elements[i] = elements[child];
 		else
 			break;
