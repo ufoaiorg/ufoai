@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 485 768 2 ) ( 485 0 2 ) ( -27 768 2 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
