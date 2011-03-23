@@ -298,3 +298,56 @@
 		color 0.7 0.7 0.5
 	}
 }
+
+// grounds
+
+{
+	material tex_terrain/dummy
+/*	{
+		texture tex_nature/dirt002
+		terrain 5 20
+		lightmap
+	}*/
+	{
+		texture tex_nature/grass_mowed_green_a
+		terrain 5 80
+		lightmap
+	}
+	{
+		texture tex_nature/grass004
+		dirtmap 1.0
+		lightmap
+	}
+	{
+		texture tex_nature/dirt002
+		dirtmap 0.5
+		lightmap
+	}
+}
+{
+	material tex_nature/grass_mowed_green_a
+	{
+		texture tex_nature/dirt002
+		dirtmap 0.8
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/grass
+	{
+		texture tex_nature/grass_mowed_dry_a
+		terrain 5 10
+		lightmap
+	}
+	{
+		texture tex_nature/grass004
+		dirtmap 1.0
+		lightmap
+	}
+	{
+		texture tex_nature/dirt002
+		dirtmap 0.5
+		lightmap
+	}
+}

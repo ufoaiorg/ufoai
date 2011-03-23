@@ -392,7 +392,6 @@ assembly big
 size "10 5"
 title         "_Harvester"
 +arc          "0 1"
-//fix +arc          "0 2"
 +h1           "0 1"
 +h2           "0 1"
 +h3           "0 1"
