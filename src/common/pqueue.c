@@ -11,9 +11,7 @@ Modified by Florian Festi, 2007
 
 This file is in the public domain (it's uncopyrighted).
 
-Check out Justin-Heyes Jones' A* page from which this code has
-originated:
-	http://www.geocities.com/jheyesjones/astar.html
+Bases on Justin-Heyes Jones' A* tutorial
 */
 
 #include "common.h"
