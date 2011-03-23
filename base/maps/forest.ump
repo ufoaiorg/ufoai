@@ -7,10 +7,10 @@ base forest/fr_
 
 // Legend:
 // ------
-// f* - ordinary forest tiles, without any info_*_start
-// w* - water tiles with brooks
-// a* - forest tiles with info_alien_start (use in not craft_crash_* assemblies)
-// h* - house tiles, with info_civilian_start.
+// fxy  ordinary forest tiles
+// wxy  water tiles with brooks
+// axy  forest tiles with info_alien_start
+// hxy  house tiles, with info_civilian_start.
 
 // Tiletypes
 // ------
@@ -21,11 +21,8 @@ base forest/fr_
 // e: water right-bottom curve
 // f: water right-top curve
 // g: water left-top curve
-// u* - UFO tiles
-
-// mark the water tiles as 'lineforming'
-// this tag is ignored by the 2010 RMA algo, but it helps the 2011 algo
-line bcdefg
+// u: UFO tiles
+//
 
 //** drop and crashes tiles
 
@@ -36,7 +33,7 @@ tile +craft_drop_firebird
 0      abfg   abfg   abfg   0
 acdg   +a     +a     +a     acef
 acdg   +a     +a     +a     acef
-0      abde   abde   abde   0
+0      abde  abde  abde   0
 }
 
 tile +craft_drop_herakles
@@ -46,7 +43,7 @@ tile +craft_drop_herakles
 0      abfg   abfg   abfg   0
 acdg   +a     +a     +a     acef
 acdg   +a     +a     +a     acef
-0      abde   abde   abde   0
+0      abdek  abdek  abdek  0
 }
 
 tile +craft_drop_raptor
@@ -57,7 +54,7 @@ tile +craft_drop_raptor
 acdg   +a      +a      +a     acef
 acdg   +a      +a      +a     acef
 acdg   +a      +a      +a     acef
-0     abde    abde    abde    0
+0     abdek   abdek   abdek   0
 }
 
 tile +craft_crash_scout
@@ -136,11 +133,13 @@ acdg     +u      +u      +u     +u     +u   acef
 
 tile +f1
 {
-3 3
+5 5
 
-0      abfgu  0
-acdgu  +a     acefu
-0      abdeu  0
+0      abfgu	abfgu	abfgu       0
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+0      abdeu	abdeu	abdeu       0
 }
 
 tile +f2
@@ -197,21 +196,24 @@ acdgu     +a       acefu
 tile +f7
 {
 
-3 3
+5 5
 
-0      abfgu       0
-acdgu     +a       acefu
-0      abdeu       0
+0      abfgu	abfgu	abfgu       0
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+0      abdeu	abdeu	abdeu       0
 }
 
 tile +f8
 {
+5 5
 
-3 3
-
-0      abfgu      0
-acdgu    +a       acefu
-0      abdeu      0
+0      abfgu	abfgu	abfgu       0
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+0      abdeu	abdeu	abdeu       0
 }
 
 tile +f9
@@ -219,7 +221,7 @@ tile +f9
 
 4 4
 
-0      abfgu     gabfu         0
+0      abfgu     abfgu         0
 acdgu     +a      +a        acefu
 acdgu     +a      +a        acefu
 0      abdeu     abdeu         0
@@ -227,24 +229,260 @@ acdgu     +a      +a        acefu
 
 tile +f10
 {
-4 3
+5 5
+
+0      abfgu	abfgu	abfgu       0
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+0      abdeu	abdeu	abdeu       0
+}
+
+tile +f31
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f32
+{
+3 4
+0      abfgu      0
+acdgu     +a    acefu
+acdgu     +a	acefu
+0      abdeu      0
+}
+
+tile +f33
+{
+3 4
+0      abfgu      0
+acdgu     +a    acefu
+acdgu     +a	acefu
+0      abdeu      0
+}
+
+tile +f34
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f35
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f36
+{
+
+4 4
 
 0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
 acdgu     +a      +a        acefu
 0      abdeu     abdeu         0
 }
 
+
+tile +f37
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f38
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f39
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f40
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f41
+{
+3 4
+0      abfgu      0
+acdgu     +a    acefu
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f42
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+
+tile +f45
+{
+
+4 4
+
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
+}
+
+tile +f46
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f47
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f48
+{
+4 4
+
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
+}
+
+tile +f49
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f50
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+
+tile +f51
+{
+4 4
+
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
+}
+
+
+tile +f52
+{
+4 4
+
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
+}
+
+
+tile +f53
+{
+4 4
+
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
+}
+
+tile +f54
+{
+4 4
+
+0      abfgu     abfgu         0
+acdgu     +a      +a        acefu
+acdgu     +a      +a        acefu
+0      abdeu     abdeu         0
+}
+
+// small ruins tiles
+
+
+tile +f43
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
+
+tile +f44
+{
+3 3
+
+0      abfgu      0
+acdgu     +a    acefu
+0      abdeu      0
+}
 
 //** Alien tiles
 
 tile +a1
 {
 
-3 3
+5 5
 
-0      abfgu      0
-acdgu    +a       acefu
-0      abdeu      0
+0      abfgu	abfgu	abfgu       0
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+acdgu     +a	+a	+a       acefu
+0      abdeu	abdeu	abdeu       0
 }
 
 tile +a2
@@ -271,6 +509,40 @@ acdgu    +a       +a     acefu
 acdgu    +a       +a     acefu
 0      abdeu      abdeu    0
 }
+
+tile +h5
+{
+
+4 4
+
+0      abfgu      abfgu     0
+acdgu    +a       +a     acefu
+acdgu    +a       +a     acefu
+0      abdeu      abdeu    0
+}
+
+tile +h6
+{
+
+4 4
+
+0      abfgu      abfgu     0
+acdgu    +a       +a     acefu
+acdgu    +a       +a     acefu
+0      abdeu      abdeu    0
+}
+
+tile +h7
+{
+
+4 4
+
+0      abfgu      abfgu     0
+acdgu    +a       +a     acefu
+acdgu    +a       +a     acefu
+0      abdeu      abdeu    0
+}
+
 
 // *** Tent and fire
 tile +h2
@@ -403,27 +675,67 @@ b      +d      +g       au
 
 ///** tilesets
 
-tileset forest_11 {
-+f1
-+f2
-+f7
-+f8
-+a1
+tileset forest_11a {
++f37
++f38
++f42
 }
+
+tileset forest_11b {
++f2
++f39
++f31
++f35
++f40
++f43
++f44
+}
+
+tileset forest_11d{
++f34
++f46
++f47
++f49
++f50
+}
+
 tileset forest_12 {
 +f3
 +f6
++f32
++f33
++f41
 }
-tileset forest_22 {
+
+tileset forest_22a {
 +f4
 +f5
 +f9
-}
-tileset water_11 {
-+w3
-+w4
++f36
++f45
++f48
 }
 
+tileset forest_22b {
++f51
++f52
++f53
++f54
+}
+
+tileset forest_33{
++f1
++f7
++f8
++f10
++a1
+}
+
+tileset house_22{
++h5
++h6
++h7
+}
 
 ///** Assemblies
 
@@ -440,13 +752,21 @@ size "5 10"
 +w6 "1 1"
 +w7 "0 5"
 +w8 "1 1"
-tileset forest_11 "0 10"
-tileset forest_12 "0 6"
-tileset forest_22 "0 10"
-+f10 "0 1"
-+h1 "1 1"
-+h2 "1 1"
-+a2 "0 2"
+tileset forest_11a "0 3"
+tileset forest_11b "0 3"
+tileset forest_11b "0 3"
+tileset forest_11d "0 3"
+tileset forest_11d "0 3"
+tileset forest_12 "0 3"
+tileset forest_12 "0 3"
+tileset forest_22a "0 2"
+tileset forest_22a "0 2"
+tileset forest_22b "0 2"
+tileset forest_33 "0 1"
++h1 "0 1"
++h2 "0 1"
+tileset house_22 "0 1"
+tileset house_22 "0 1"
 *rm_ufo +craft_ufo_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -464,13 +784,21 @@ size "5 10"
 +w6 "1 1"
 +w7 "0 5"
 +w8 "1 1"
-tileset forest_11 "0 10"
-tileset forest_12 "0 6"
-tileset forest_22 "0 10"
-+f10 "0 1"
-+h1 "1 1"
-+h2 "1 1"
-+a2 "0 2"
+tileset forest_11b "0 3"
+tileset forest_11d "0 4"
+tileset forest_11d "0 4"
+tileset forest_11d "0 4"
+tileset forest_11d "0 4"
+tileset forest_12 "0 3"
+tileset forest_12 "0 3"
+tileset forest_22a "0 2"
+tileset forest_22a "0 2"
+tileset forest_22b "0 1"
+tileset forest_33 "0 1"
++h1 "0 1"
++h2 "0 1"
+tileset house_22 "0 1"
+tileset house_22 "0 1"
 *rm_ufo +craft_crash_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -482,20 +810,30 @@ size "8 9"
 
 +w1 "0 5"
 +w2 "0 6"
-//+w3 "0 6"
-//+w4 "0 6"
-tileset water_11 "0 10"
++w3 "0 6"
++w4 "0 6"
 +w5 "0 6"
 +w6 "1 4"
 +w7 "0 6"
 +w8 "1 1"
-tileset forest_11 "0 15"
-tileset forest_12 "0 6"
-tileset forest_22 "0 10"
-+f10 "0 2"
-+h1 "1 1"
-+h2 "1 1"
-+a2 "1 3"
+tileset forest_11a "0 3"
+tileset forest_11b "0 3"
+tileset forest_11b "0 3"
+tileset forest_11b "0 3"
+tileset forest_11d "0 3"
+tileset forest_11d "0 3"
+tileset forest_12 "0 3"
+tileset forest_12 "0 3"
+tileset forest_22a "0 2"
+tileset forest_22b "0 2"
+tileset forest_22b "0 2"
+tileset forest_33 "0 1"
++h1 "0 1"
++h2 "0 1"
+tileset house_22 "0 1"
+tileset house_22 "0 1"
+tileset house_22 "0 1"
++a2 "0 1"
 *rm_ufo +craft_ufo_fighter "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -513,13 +851,22 @@ size "8 9"
 +w6 "1 4"
 +w7 "0 6"
 +w8 "1 1"
-tileset forest_11 "0 10"
-tileset forest_12 "0 6"
-tileset forest_22 "0 10"
-+f10 "0 2"
-+h1 "1 2"
-+h2 "1 1"
-+a2 "1 3"
+tileset forest_11b "0 3"
+tileset forest_11d "0 4"
+tileset forest_11d "0 4"
+tileset forest_11d "0 4"
+tileset forest_11d "0 4"
+tileset forest_12 "0 3"
+tileset forest_12 "0 3"
+tileset forest_22a "0 2"
+tileset forest_22a "0 2"
+tileset forest_22b "0 1"
+tileset forest_33 "0 1"
++h1 "0 1"
++h2 "0 1"
+tileset house_22 "0 1"
+tileset house_22 "0 1"
++a2 "0 1"
 *rm_ufo +craft_crash_fighter "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
