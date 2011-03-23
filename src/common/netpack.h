@@ -39,7 +39,7 @@ void NET_WriteString(struct dbuffer *buf, const char *str);
 void NET_WriteRawString(struct dbuffer *buf, const char *str);
 void NET_WriteCoord(struct dbuffer *buf, float f);
 void NET_WritePos(struct dbuffer *buf, const vec3_t pos);
-void NET_Write2Pos(struct dbuffer *buf, vec2_t pos);
+void NET_Write2Pos(struct dbuffer *buf, const vec2_t pos);
 void NET_WriteGPos(struct dbuffer *buf, const pos3_t pos);
 void NET_WriteAngle(struct dbuffer *buf, float f);
 void NET_WriteAngle16(struct dbuffer *buf, float f);
