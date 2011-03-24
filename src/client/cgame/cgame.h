@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_CGAME_H
 #define CL_CGAME_H
 
-#include "../mxml/mxml_ufoai.h"
+#include "../../common/xml.h"
 
 struct cgame_import_s;
 
@@ -85,26 +85,26 @@ typedef struct cgame_import_s {
 	uiNode_t *(IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
 
 	/* xml functions */
-	xmlNode_t * (IMPORT *mxml_AddNode) (xmlNode_t *parent, const char *name);
-	void (IMPORT *mxml_AddString) (xmlNode_t *parent, const char *name, const char *value);
-	void (IMPORT *mxml_AddBool) (xmlNode_t *parent, const char *name, qboolean value);
-	void (IMPORT *mxml_AddFloat) (xmlNode_t *parent, const char *name, float value);
-	void (IMPORT *mxml_AddDouble) (xmlNode_t *parent, const char *name, double value);
-	void (IMPORT *mxml_AddByte) (xmlNode_t *parent, const char *name, byte value);
-	void (IMPORT *mxml_AddShort) (xmlNode_t *parent, const char *name, short value);
-	void (IMPORT *mxml_AddInt) (xmlNode_t *parent, const char *name, int value);
-	void (IMPORT *mxml_AddLong) (xmlNode_t *parent, const char *name, long value);
-	void (IMPORT *mxml_AddPos3) (xmlNode_t *parent, const char *name, const vec3_t pos);
-	void (IMPORT *mxml_AddPos2) (xmlNode_t *parent, const char *name, const vec2_t pos);
-	void (IMPORT *mxml_AddDate) (xmlNode_t *parent, const char *name, const int day, const int sec);
-	void (IMPORT *mxml_AddStringValue) (xmlNode_t *parent, const char *name, const char *value);
-	void (IMPORT *mxml_AddBoolValue) (xmlNode_t *parent, const char *name, qboolean value);
-	void (IMPORT *mxml_AddFloatValue) (xmlNode_t *parent, const char *name, float value);
-	void (IMPORT *mxml_AddDoubleValue) (xmlNode_t *parent, const char *name, double value);
-	void (IMPORT *mxml_AddByteValue) (xmlNode_t *parent, const char *name, byte value);
-	void (IMPORT *mxml_AddShortValue) (xmlNode_t *parent, const char *name, short value);
-	void (IMPORT *mxml_AddIntValue) (xmlNode_t *parent, const char *name, int value);
-	void (IMPORT *mxml_AddLongValue) (xmlNode_t *parent, const char *name, long value);
+	xmlNode_t * (IMPORT *XML_AddNode) (xmlNode_t *parent, const char *name);
+	void (IMPORT *XML_AddString) (xmlNode_t *parent, const char *name, const char *value);
+	void (IMPORT *XML_AddBool) (xmlNode_t *parent, const char *name, qboolean value);
+	void (IMPORT *XML_AddFloat) (xmlNode_t *parent, const char *name, float value);
+	void (IMPORT *XML_AddDouble) (xmlNode_t *parent, const char *name, double value);
+	void (IMPORT *XML_AddByte) (xmlNode_t *parent, const char *name, byte value);
+	void (IMPORT *XML_AddShort) (xmlNode_t *parent, const char *name, short value);
+	void (IMPORT *XML_AddInt) (xmlNode_t *parent, const char *name, int value);
+	void (IMPORT *XML_AddLong) (xmlNode_t *parent, const char *name, long value);
+	void (IMPORT *XML_AddPos3) (xmlNode_t *parent, const char *name, const vec3_t pos);
+	void (IMPORT *XML_AddPos2) (xmlNode_t *parent, const char *name, const vec2_t pos);
+	void (IMPORT *XML_AddDate) (xmlNode_t *parent, const char *name, const int day, const int sec);
+	void (IMPORT *XML_AddStringValue) (xmlNode_t *parent, const char *name, const char *value);
+	void (IMPORT *XML_AddBoolValue) (xmlNode_t *parent, const char *name, qboolean value);
+	void (IMPORT *XML_AddFloatValue) (xmlNode_t *parent, const char *name, float value);
+	void (IMPORT *XML_AddDoubleValue) (xmlNode_t *parent, const char *name, double value);
+	void (IMPORT *XML_AddByteValue) (xmlNode_t *parent, const char *name, byte value);
+	void (IMPORT *XML_AddShortValue) (xmlNode_t *parent, const char *name, short value);
+	void (IMPORT *XML_AddIntValue) (xmlNode_t *parent, const char *name, int value);
+	void (IMPORT *XML_AddLongValue) (xmlNode_t *parent, const char *name, long value);
 
 	/* filesystem functions */
 	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);

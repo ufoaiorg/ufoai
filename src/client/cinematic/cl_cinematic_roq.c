@@ -559,7 +559,7 @@ void CIN_ROQ_CloseCinematic (cinematic_t *cin)
 	cin->codecData = NULL;
 }
 
-void CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
+int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 {
 	roqChunk_t chunk;
 	int size;
@@ -578,7 +578,7 @@ void CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 	size = FS_OpenFile(fileName, &ROQCIN.file, FILE_READ);
 	if (!ROQCIN.file.f && !ROQCIN.file.z) {
 		Com_Printf("Cinematic %s not found\n", fileName);
-		return;
+		return 1;
 	}
 
 	/* Parse the header */
@@ -591,7 +591,8 @@ void CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 
 	if (chunk.id != ROQ_IDENT) {
 		FS_CloseFile(&ROQCIN.file);
-		Com_Error(ERR_DROP, "CIN_PlayCinematic: invalid RoQ header");
+		Com_Printf("CIN_PlayCinematic: invalid RoQ header\n");
+		return 1;
 	}
 
 	cin->cinematicType = CINEMATIC_TYPE_ROQ;
@@ -624,6 +625,8 @@ void CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 	ROQCIN.offset += ROQ_CHUNK_HEADER_SIZE;
 
 	ROQCIN.header = ROQCIN.data;
+
+	return 0;
 }
 
 void CIN_ROQ_Init (void)

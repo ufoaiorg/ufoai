@@ -152,6 +152,8 @@ function main ()
 		serverHeartbeat();
 	} else if (isset($_GET["ping"])) {
 		serverPing();
+	} else if (isset($_GET["ip"])) {
+		echo $_SERVER["REMOTE_ADDR"];
 	} else if (isset($_GET["shutdown"])) {
 		serverShutdown();
 	} else if (isset($_GET["query"])) {

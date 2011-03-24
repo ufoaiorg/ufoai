@@ -829,7 +829,7 @@
 "classname" "info_player_start"
 "angle" "315"
 "team" "2"
-"origin" "80 240 24"
+"origin" "80 240 28"
 }
 // entity 5
 {

@@ -329,7 +329,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 
 	Com_Printf("Loading team (size %d / %i)\n", clen, header.xmlSize);
 
-	topNode = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
+	topNode = XML_Parse((const char*)(cbuf + sizeof(header)));
 	Mem_Free(cbuf);
 	if (!topNode) {
 		Com_Printf("Error: Failure in loading the xml data!");
@@ -510,20 +510,20 @@ void GAME_ActorSelect_f (void)
  * @param[in] y Vertical coordinate of the item in the container
  * @sa GAME_LoadItem
  */
-static void GAME_SaveItem (xmlNode_t *p, item_t item, containerIndex_t container, int x, int y)
+static void GAME_SaveItem (xmlNode_t *p, const item_t *item, containerIndex_t container, int x, int y)
 {
-	assert(item.t);
+	assert(item->t != NULL);
 
-	XML_AddString(p, SAVE_INVENTORY_CONTAINER, csi.ids[container].name);
+	XML_AddString(p, SAVE_INVENTORY_CONTAINER, INVDEF(container)->name);
 	XML_AddInt(p, SAVE_INVENTORY_X, x);
 	XML_AddInt(p, SAVE_INVENTORY_Y, y);
-	XML_AddIntValue(p, SAVE_INVENTORY_ROTATED, item.rotated);
-	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item.t->id);
+	XML_AddIntValue(p, SAVE_INVENTORY_ROTATED, item->rotated);
+	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item->t->id);
 	/** @todo: is there any case when amount != 1 for soldier inventory item? */
-	XML_AddInt(p, SAVE_INVENTORY_AMOUNT, item.amount);
-	if (item.a > NONE_AMMO) {
-		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item.m->id);
-		XML_AddInt(p, SAVE_INVENTORY_AMMO, item.a);
+	XML_AddInt(p, SAVE_INVENTORY_AMOUNT, item->amount);
+	if (item->a > NONE_AMMO) {
+		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item->m->id);
+		XML_AddInt(p, SAVE_INVENTORY_AMMO, item->a);
 	}
 }
 
@@ -547,7 +547,7 @@ static void GAME_SaveInventory (xmlNode_t *p, const inventory_t *i)
 
 		for (; ic; ic = ic->next) {
 			xmlNode_t *s = XML_AddNode(p, SAVE_INVENTORY_ITEM);
-			GAME_SaveItem(s, ic->item, container, ic->x, ic->y);
+			GAME_SaveItem(s, &ic->item, container, ic->x, ic->y);
 		}
 	}
 }

@@ -26,3 +26,4 @@ gmon.out
 *.pyc
 /base/pics/banks/autogen*
 /base/ufos/*_autogen.ufo
+crashdump.txt

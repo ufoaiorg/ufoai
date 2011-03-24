@@ -166,19 +166,35 @@ static bool Brush_subtract_orig (const Brush& brush, const Brush& other, brush_v
 {
 	if (aabb_intersects_aabb(brush.localAABB(), other.localAABB())) {
 		brush_vector_t fragments;
-		fragments.reserve(other.size());
-		Brush back(brush);
 
-		for (Brush::const_iterator i(other.begin()); i != other.end(); ++i) {
+		Brush cutter(other);
+		cutter.removeEmptyFaces(); /* clean out the brush to be subtracted */
+		cutter.evaluateBRep();
+		fragments.reserve(cutter.size());
+
+		Brush back(brush);
+		back.removeEmptyFaces();
+		back.evaluateBRep();
+
+		for (Brush::const_iterator i(cutter.begin()); i != cutter.end(); ++i) {
 			if ((*i)->contributes()) {
 				BrushSplitType split = Brush_classifyPlane(back, (*i)->plane3());
 				if (split.counts[ePlaneFront] != 0 && split.counts[ePlaneBack] != 0) {
-					fragments.push_back(new Brush(back));
-					Face* newFace = fragments.back()->addFace(*(*i));
-					if (newFace != 0) {
-						newFace->flipWinding();
-					}
-					back.addFace(*(*i));
+					Brush *frag = new Brush(back);
+
+					Face *splittingFace = (*i);
+					TextureProjection projection;
+					splittingFace->GetTexdef(projection);
+
+					PlanePoints &basePoints = splittingFace->getPlane().planePoints();
+
+					frag->chopWithPlane(basePoints[0],basePoints[2],basePoints[1],splittingFace->GetShader(),projection);
+					frag->removeEmptyFaces();
+					fragments.push_back(frag);
+
+					back.chopWithPlane(basePoints[0],basePoints[1],basePoints[2],splittingFace->GetShader(),projection);
+					back.removeEmptyFaces();
+					back.evaluateBRep();
 				} else if (split.counts[ePlaneBack] == 0) {
 					for (brush_vector_t::iterator i = fragments.begin(); i != fragments.end(); ++i) {
 						delete (*i);
@@ -201,6 +217,7 @@ static bool Brush_subtract (const Brush& brush, const Brush& other, brush_vector
 
 		Brush cutter(other);
 		cutter.removeEmptyFaces(); /* clean out the brush to be subtracted */
+		cutter.evaluateBRep();
 		fragments.reserve(cutter.size());
 
 		Vector3 apex = cutter.getCentroid();

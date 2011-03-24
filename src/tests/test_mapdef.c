@@ -88,8 +88,15 @@ static void testMapDefsSingleplayer (void)
 		if (md->map[0] == '.')
 			continue;
 
-		SV_Map(qtrue, md->map, md->param);
-		CU_PASS(md->map);
+		{
+			/* use a know seed to allow reproductible error */
+			const unsigned int seed = (unsigned int) time(NULL);
+			srand(seed);
+
+			Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
+			SV_Map(qtrue, md->map, md->param);
+			CU_PASS(md->map);
+		}
 	}
 }
 
@@ -107,7 +114,13 @@ static void testMapDefsMultiplayer (void)
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t* md = &cls.mds[i];
 
+
 		if (md->multiplayer) {
+			/* use a know seed to allow reproductible error */
+			const unsigned int seed = (unsigned int) time(NULL);
+			srand(seed);
+			Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
+
 			SV_Map(qtrue, md->map, md->param);
 			CU_PASS(md->map);
 		}

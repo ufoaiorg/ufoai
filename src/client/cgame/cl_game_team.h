@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_TEAM_H
 #define CL_GAME_TEAM_H
 
-#include "../mxml/mxml_ufoai.h"
+#include "../../common/xml.h"
 
 void GAME_SaveTeam_f(void);
 void GAME_LoadTeam_f(void);

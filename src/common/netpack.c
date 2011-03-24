@@ -72,7 +72,7 @@ void NET_WriteCoord (struct dbuffer *buf, float f)
 /**
  * @sa NET_Read2Pos
  */
-void NET_Write2Pos (struct dbuffer *buf, vec2_t pos)
+void NET_Write2Pos (struct dbuffer *buf, const vec2_t pos)
 {
 	NET_WriteLong(buf, (long) (pos[0] * 32.));
 	NET_WriteLong(buf, (long) (pos[1] * 32.));

@@ -187,7 +187,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			Com_Printf("Error decompressing data in '%s'.\n", filename);
 			return qfalse;
 		}
-		topNode = mxmlLoadString(NULL, (char*)buf , mxml_ufo_type_cb);
+		topNode = XML_Parse((const char*)buf);
 		if (!topNode) {
 			Mem_Free(buf);
 			Com_Printf("Error: Failure in loading the xml data!\n");
@@ -196,7 +196,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 		}
 	} else {
 		/*memcpy(buf, cbuf + sizeof(header), clen - sizeof(header));*/
-		topNode = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
+		topNode = XML_Parse((const char*)(cbuf + sizeof(header)));
 		Mem_Free(cbuf);
 		if (!topNode) {
 			Com_Printf("Error: Failure in loading the xml data!\n");

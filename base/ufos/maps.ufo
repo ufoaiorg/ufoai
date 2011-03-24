@@ -504,6 +504,7 @@ mapdef frozen_small
 	}
 }
 
+
 mapdef frozen_alienlandingnature
 {
 	map			"+frozen"
@@ -1822,10 +1823,11 @@ mapdef japan_small
 	}
 }
 
+
 mapdef japan_big
 {
 	map			"+japan"
-	param		"big"
+	param		"small" // TODO: the big assembly is broken
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
@@ -3682,6 +3684,7 @@ mapdef hills_harvester
 	}
 }
 
+/*
 mapdef hills_harvester_desert
 {
 	map			"+hills"
@@ -3722,7 +3725,7 @@ mapdef hills_harvester_desert
 		village
 	}
 }
-
+*/
 
 mapdef small_street
 {

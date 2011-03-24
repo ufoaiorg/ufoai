@@ -75,17 +75,17 @@ typedef struct RT_data_s {
 	const char **list;			/**< The local models list */
 } RT_data_t;
 
-static inline void RT_ConnSet(RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
+static inline void RT_ConnSet (RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
 	RT_CONN(rtd->map, rtd->actorSize, x, y, z, dir) = val;
 }
 
-static inline void RT_StepupSet(RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
+static inline void RT_StepupSet (RT_data_t *rtd, const int x, const int y, const int z, const int dir, const int val)
 {
 	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = val;
 }
 
-static inline void RT_ConnSetNoGo(RT_data_t *rtd, const int x, const int y, const int z, const int dir)
+static inline void RT_ConnSetNoGo (RT_data_t *rtd, const int x, const int y, const int z, const int dir)
 {
 	RT_ConnSet(rtd, x, y, z, dir, 0);
 	RT_STEPUP(rtd->map, rtd->actorSize, x, y, z, dir) = PATHFINDING_NO_STEPUP;

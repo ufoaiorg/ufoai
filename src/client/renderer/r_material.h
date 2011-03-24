@@ -80,6 +80,7 @@ typedef struct blendmode_s {
 
 typedef struct pulse_s {
 	float hz, dhz;
+	float dutycycle;
 } pulse_t;
 
 typedef struct stretch_s {

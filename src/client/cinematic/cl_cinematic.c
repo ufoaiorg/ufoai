@@ -86,6 +86,7 @@ void CIN_RunCinematic (cinematic_t *cin)
 void CIN_OpenCinematic (cinematic_t *cin, const char *fileName)
 {
 	char name[MAX_OSPATH];
+	int status = 1;
 
 	Com_StripExtension(fileName, name, sizeof(name));
 
@@ -93,11 +94,12 @@ void CIN_OpenCinematic (cinematic_t *cin, const char *fileName)
 	CIN_CloseCinematic(cin);
 
 	if (FS_CheckFile("%s.roq", name) >= 0)
-		CIN_ROQ_OpenCinematic(cin, va("%s.roq", name));
+		status = CIN_ROQ_OpenCinematic(cin, va("%s.roq", name));
 	else if (FS_CheckFile("%s.ogm", name) >= 0)
-		CIN_OGM_OpenCinematic(cin, va("%s.ogm", name));
-	else {
-		Com_Printf("Could not find cinematic '%s'\n", name);
+		status = CIN_OGM_OpenCinematic(cin, va("%s.ogm", name));
+
+	if (status != 0) {
+		Com_Printf("Could not load cinematic '%s'\n", name);
 		cin->status = CIN_STATUS_INVALID;
 	}
 }

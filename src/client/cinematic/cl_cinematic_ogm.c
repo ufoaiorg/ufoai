@@ -745,6 +745,10 @@ static void CIN_OGM_DrawCinematic (cinematic_t *cin)
  */
 qboolean CIN_OGM_RunCinematic (cinematic_t *cin)
 {
+	/* no video stream found */
+	if (!OGMCIN.os_video.serialno)
+		return qfalse;
+
 	OGMCIN.currentTime = CL_Milliseconds() - OGMCIN.startTime;
 
 	while (!OGMCIN.videoFrameCount || OGMCIN.currentTime + 20 >= (int) (OGMCIN.videoFrameCount * OGMCIN.Vtime_unit / 10000)) {

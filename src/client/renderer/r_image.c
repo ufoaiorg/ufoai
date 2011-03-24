@@ -592,7 +592,16 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	image->type = type;
 	image->width = width;
 	image->height = height;
+
+	/** @todo Instead of this hack, unit tests' build should link to the dummy GL driver */
+#ifdef COMPILE_UNITTESTS
+	{
+		static int texnum = 0;
+		image->texnum = ++texnum;
+	}
+#else
 	glGenTextures(1, &image->texnum);
+#endif
 
 	Q_strncpyz(image->name, name, sizeof(image->name));
 	/* drop extension */

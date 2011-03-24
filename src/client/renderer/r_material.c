@@ -57,11 +57,20 @@ static void R_UpdateMaterial (material_t *m)
 	m->time = refdef.time;
 
 	for (s = m->stages; s; s = s->next) {
-		if (s->flags & STAGE_PULSE)
-			s->pulse.dhz = (sin(refdef.time * s->pulse.hz * (2 * M_PI)) + 1.0) / 2.0;
+		if (s->flags & STAGE_PULSE) {
+			float phase = refdef.time * s->pulse.hz;
+			float moduloPhase = phase - floor(phase); /* extract fractional part of phase */
+
+			if (moduloPhase < s->pulse.dutycycle) {
+				moduloPhase /= s->pulse.dutycycle;
+				s->pulse.dhz = (1.0 - cos(moduloPhase * (2 * M_PI)) ) / 2.0;
+			} else {
+				s->pulse.dhz = 0;
+			}
+		}
 
 		if (s->flags & STAGE_STRETCH) {
-			s->stretch.dhz = (sin(refdef.time * s->stretch.hz * (2 * M_PI)) + 1.0) / 2.0;
+			s->stretch.dhz = (1.0 - cos(refdef.time * s->stretch.hz * (2 * M_PI)) ) / 2.0;
 			s->stretch.damp = 1.5 - s->stretch.dhz * s->stretch.amp;
 		}
 
@@ -651,6 +660,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		if (Q_streq(c, "pulse")) {
 			c = Com_Parse(buffer);
 			s->pulse.hz = atof(c);
+			s->pulse.dutycycle = 1.0;
 
 			if (s->pulse.hz < 0.0) {
 				Com_Printf("R_ParseStage: Failed to resolve frequency: %s\n", c);
@@ -658,6 +668,18 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			}
 
 			s->flags |= STAGE_PULSE;
+			continue;
+		}
+
+		if (Q_streq(c, "dutycycle")) {
+			c = Com_Parse(buffer);
+			s->pulse.dutycycle = atof(c);
+
+			if (s->pulse.dutycycle < 0.0 || s->pulse.dutycycle > 1.0) {
+				Com_Printf("R_ParseStage: Failed to resolve pulse duty cycle: %s\n", c);
+				return -1;
+			}
+
 			continue;
 		}
 
@@ -866,6 +888,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 					"  blend: %d %d\n"
 					"  color: %3f %3f %3f\n"
 					"  pulse: %3f\n"
+					"  pulse duty cycle: %1.2f\n"
 					"  stretch: %3f %3f\n"
 					"  rotate: %3f\n"
 					"  scroll.s: %3f\n"
@@ -879,7 +902,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 					s->flags, (s->image ? s->image->name : "NULL"),
 					s->blend.src, s->blend.dest,
 					s->color[0], s->color[1], s->color[2],
-					s->pulse.hz, s->stretch.amp, s->stretch.hz,
+					s->pulse.hz, s->pulse.dutycycle, s->stretch.amp, s->stretch.hz,
 					s->rotate.hz, s->scroll.s, s->scroll.t,
 					s->scale.s, s->scale.t, s->terrain.floor, s->terrain.ceil,
 					s->anim.num_frames, s->anim.fps);

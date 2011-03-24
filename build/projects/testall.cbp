@@ -109,6 +109,7 @@
 			<Add library="ogg" />
 			<Add library="theora" />
 			<Add library="xvidcore" />
+			<Add library="mxml" />
 		</Linker>
 		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
 			<Option compilerVar="CC" />
@@ -531,31 +532,7 @@
 		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-attr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-entity.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-file.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-node.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-private.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-search.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-set.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml-string.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\mxml\mxml_ufoai.c">
+		<Unit filename="..\..\src\common\xml.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_array.c">

@@ -35,6 +35,8 @@ VORBIS_CFLAGS            ?= $(call PKG_CFLAGS,vorbis)
 VORBIS_LIBS              ?= $(call PKG_LIBS,vorbis)
 OGG_CFLAGS               ?= $(call PKG_CFLAGS,ogg)
 OGG_LIBS                 ?= $(call PKG_LIBS,ogg)
+MXML_CFLAGS              ?= $(call PKG_CFLAGS,mxml)
+MXML_LIBS                ?= $(call PKG_LIBS,mxml)
 INTL_LIBS                ?=
 ifdef HAVE_XVID_H
 XVID_CFLAGS              ?=

@@ -1819,7 +1819,7 @@ static void Irc_Client_Invite_f (void)
 {
 	const irc_user_t *user;
 	char buf[128];
-	const char *node;
+	char *externalIP;
 
 	if (!CL_OnBattlescape()) {
 		Com_Printf("You must be connected to a running server to invite others\n");
@@ -1831,9 +1831,15 @@ static void Irc_Client_Invite_f (void)
 		return;
 	}
 
-	/** @todo get own external ip and remove the 127.0.0.1 nonsense (maybe ask the masterserver for this info?) */
-	node = "127.0.0.1";
-	Com_sprintf(buf, sizeof(buf), "%s%s;%s", IRC_INVITE_FOR_A_GAME, node, port->string);
+	externalIP = HTTP_GetURL(va("%s/ufo/masterserver.php?ip", masterserver_url->string));
+	if (!externalIP) {
+		Com_Printf("Could not query masterserver\n");
+		return;
+	}
+	Com_sprintf(buf, sizeof(buf), "%s%s;%s", IRC_INVITE_FOR_A_GAME, externalIP, port->string);
+
+	Mem_Free(externalIP);
+
 	user = chan->user;
 	while (user) {
 		/** @todo Maybe somehow check the version of the client with ctcp VERSION and only send

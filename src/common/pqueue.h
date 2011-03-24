@@ -47,7 +47,7 @@ void PQueueInitialise(priorityQueue_t *pq, uint32_t maxElements);
 void PQueueFree(priorityQueue_t *pq);
 
 #define PQueueIsEmpty(pq) ((pq)->currentSize == 0)
-void PQueuePush(priorityQueue_t *pq, pos4_t item, priorityQueueRating_t rating);
+void PQueuePush(priorityQueue_t *pq, const pos4_t item, priorityQueueRating_t rating);
 void PQueuePop(priorityQueue_t *pq, pos4_t item);
 
 #endif /* #ifdef __PQUEUE_H */
