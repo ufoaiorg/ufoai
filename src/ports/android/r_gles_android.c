@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CONVERT_PIXEL_RGB888_RGB565( R, G, B ) ( ( B & 0xf8 ) / 0x8 ) | ( ( G & 0xfc ) / 0x4 * 0x20 ) | ( ( R & 0xf8 ) / 0x8 * 0x800 )
 #define CONVERT_PIXEL_BGR888_RGB565( B, G, R ) CONVERT_PIXEL_RGB888_RGB565( R, G, B )
 
-#define CONVERT_PIXEL_RGBA8888_RGBA5551( X ) ( ( ( (X) & 0x80 ) / 0x80 ) | ( ((X) & 0xf800) / 0x4 ) | ( ((X) & 0xf80000) / 0x2000 ) | ( ((X) & 0xf8000000) / 0x10000 ) )
+#define CONVERT_PIXEL_RGBA8888_RGBA5551( X ) ( ( ( (X) & 0x80 ) / 0x80 ) | ( ((X) & 0xf800) / 0x400 ) | ( ((X) & 0xf80000) / 0x2000 ) | ( ((X) & 0xf8000000) / 0x10000 ) )
 
 #define CONVERT_PIXEL_ABGR8888_RGBA5551( X ) CONVERT_PIXEL_RGBA8888_RGBA5551( ENDIAN_SWAP_32(X) )
 
