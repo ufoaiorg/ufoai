@@ -268,11 +268,12 @@ static void R_DrawEntityEffects (void)
 			R_EnableTexture(&texunit_diffuse, qfalse);
 			points[0][0] = 0;
 			points[0][1] = 0;
+			color[3] = 0.7; /* Line thickness is ignored on Android, so the circle is rather slim - make it brighter */
 			R_DrawCircle(size, color, 2, points[0]);
 			if (e->flags & RF_SELECTED)
 				R_DrawCircle(size-3, color, 2, points[0]);
 			/* add transparency when something is covering the circle */
-			color[3] *= 0.25;
+			color[3] *= 0.4;
 			glDepthFunc(GL_GREATER);
 			R_DrawCircle(size, color, 2, points[0]);
 			if (e->flags & RF_SELECTED)
