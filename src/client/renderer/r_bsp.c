@@ -253,7 +253,7 @@ void R_DrawBspNormals (int tile)
 			continue;  /* don't care */
 
 		/* avoid overflows, draw in batches */
-		if (k > MAX_GL_ARRAY_LENGTH - 512) {
+		if (k > r_state.array_size - 512) {
 			glDrawArrays(GL_LINES, 0, k / 3);
 			k = 0;
 		}
@@ -268,8 +268,7 @@ void R_DrawBspNormals (int tile)
 			memcpy(&r_state.vertex_array_3d[k], vertex, sizeof(vec3_t));
 			memcpy(&r_state.vertex_array_3d[k + 3], end, sizeof(vec3_t));
 			k += sizeof(vec3_t) / sizeof(vec_t) * 2;
-			if (k > MAX_GL_ARRAY_LENGTH)
-				Com_Error(ERR_DROP, "R_DrawBspNormals: Overflow in array buffer");
+			R_ReallocateStateArrays(k);
 		}
 	}
 

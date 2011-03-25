@@ -559,9 +559,6 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			const float *normal;
 			const int index = mod->bsp.surfedges[surf->firstedge + j];
 
-			if (vertind >= MAX_GL_ARRAY_LENGTH * 3)
-				Com_Error(ERR_DROP, "R_LoadBspVertexArrays: Exceeded MAX_GL_ARRAY_LENGTH %i", vertind);
-
 			/* vertex */
 			if (index > 0) {  /* negative indices to differentiate which end of the edge */
 				const mBspEdge_t *edge = &mod->bsp.edges[index];
@@ -633,6 +630,8 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			tangind += 4;
 		}
 	}
+
+	R_ReallocateStateArrays(vertind/3);
 
 	if (qglBindBuffer) {
 		/* and also the vertex buffer objects */

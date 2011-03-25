@@ -102,7 +102,6 @@ typedef enum {
 /**
  * @brief Struct that is only valid for one map. It's deleted on every map load.
  */
-/* TODO: this struct takes up 53 Mb of static memory */
 typedef struct {
 	server_state_t state;		/**< precache commands are only valid during load */
 

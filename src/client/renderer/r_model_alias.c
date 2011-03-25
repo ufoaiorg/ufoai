@@ -615,6 +615,8 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 					move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
 		}
 
+		R_ReallocateStateArrays(mesh->num_tris * 3);
+		R_ReallocateTexunitArray(&texunit_diffuse, mesh->num_tris * 3);
 		texcoord_array = texunit_diffuse.texcoord_array;
 		vertex_array_3d = r_state.vertex_array_3d;
 

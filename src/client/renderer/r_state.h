@@ -32,12 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_light.h"
 
 /* vertex arrays are used for many things */
-#ifdef ANDROID
-/* TODO: check whether will it crash like that */
-#define MAX_GL_ARRAY_LENGTH 0x4000
-#else
-#define MAX_GL_ARRAY_LENGTH 0x40000
-#endif
+#define GL_ARRAY_LENGTH_CHUNK 4096
 
 extern const vec2_t default_texcoords[4];
 
@@ -47,7 +42,9 @@ typedef struct gltexunit_s {
 	GLenum texture;		/**< e.g. GL_TEXTURE0 */
 	GLint texnum;		/**< e.g 123 */
 	GLenum texenv;		/**< e.g. GL_MODULATE */
-	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
+	GLfloat *texcoord_array;
+	/* Size of the above array - it's dynamically reallocated */
+	int array_size;
 } gltexunit_t;
 
 #define MAX_GL_TEXUNITS		5
@@ -80,19 +77,21 @@ typedef struct gltexunit_s {
 
 struct mAliasMesh_s;
 
-/* TODO: this struct takes up 36 Mb of static memory with MAX_GL_ARRAY_LENGTH set to 0x40000 */
 typedef struct rstate_s {
 	qboolean fullscreen;
 
 	/* arrays */
-	GLfloat vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
-	GLshort vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
-	GLfloat color_array[MAX_GL_ARRAY_LENGTH * 4];
-	GLfloat normal_array[MAX_GL_ARRAY_LENGTH * 3];
-	GLfloat tangent_array[MAX_GL_ARRAY_LENGTH * 4];
-	GLfloat next_vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
-	GLfloat next_normal_array[MAX_GL_ARRAY_LENGTH * 3];
-	GLfloat next_tangent_array[MAX_GL_ARRAY_LENGTH * 4];
+	GLfloat *vertex_array_3d;
+	GLshort *vertex_array_2d;
+	GLfloat *color_array;
+	GLfloat *normal_array;
+	GLfloat *tangent_array;
+	GLfloat *next_vertex_array_3d;
+	GLfloat *next_normal_array;
+	GLfloat *next_tangent_array;
+
+	/* Size of all above arrays - it's dynamically reallocated */
+	int array_size;
 
 	/* multitexture texunits */
 	gltexunit_t texunits[MAX_GL_TEXUNITS];
@@ -157,6 +156,8 @@ extern rstate_t r_state;
 void R_SetDefaultState(void);
 void R_Setup2D(void);
 void R_Setup3D(void);
+void R_ReallocateStateArrays(int size);
+void R_ReallocateTexunitArray(gltexunit_t * texunit, int size);
 
 void R_TexEnv(GLenum value);
 void R_BlendFunc(GLenum src, GLenum dest);

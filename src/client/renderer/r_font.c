@@ -660,7 +660,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 
 	glVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
 
-	memcpy(&texunit_diffuse.texcoord_array, font_texcoords, sizeof(font_texcoords));
+	memcpy(texunit_diffuse.texcoord_array, font_texcoords, sizeof(font_texcoords));
 
 	r_state.vertex_array_2d[0] = nx;
 	r_state.vertex_array_2d[1] = ny;

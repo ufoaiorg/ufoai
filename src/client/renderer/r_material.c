@@ -348,8 +348,9 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 {
 	int i;
 
-	if (surf->numedges >= MAX_GL_ARRAY_LENGTH)
-		Com_Error(ERR_DROP, "R_DrawMaterialSurface: Exceeded MAX_GL_ARRAY_LENGTH\n");
+	R_ReallocateStateArrays(surf->numedges);
+	R_ReallocateTexunitArray(&texunit_diffuse, surf->numedges);
+	R_ReallocateTexunitArray(&texunit_lightmap, surf->numedges);
 
 	for (i = 0; i < surf->numedges; i++) {
 		const float *v = &r_mapTiles[surf->tile]->bsp.verts[surf->index * 3 + i * 3];
