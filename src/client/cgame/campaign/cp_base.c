@@ -95,7 +95,7 @@ static linkedList_t *B_GetNeighbours (const building_t const *building)
  */
 static qboolean B_IsCoherent (const base_t *base)
 {
-	int found[MAX_BASEBUILDINGS];
+	int found[MAX_BUILDINGS];
 	linkedList_t *queue = NULL;
 	linkedList_t *neighbours;
 	building_t *bldg = NULL;
@@ -232,7 +232,7 @@ qboolean B_IsBuildingDestroyable (const building_t *building)
 	assert(base);
 
 	if (base->baseStatus != BASE_DESTROYED) {
-		int found[MAX_BASEBUILDINGS];
+		int found[MAX_BUILDINGS];
 		linkedList_t *queue = NULL;
 		linkedList_t *neighbours;
 		building_t *bldg = NULL;
