@@ -293,6 +293,7 @@ void R_DumpOpenGlState()
 
 	char s[1024] = "";
 	GLint activeTex = 0;
+	GLint activeTexId = 0;
 	GLfloat texEnvMode = 0;
 	const char * texEnvModeStr = "UNKNOWN";
 	GLfloat color[4];
@@ -305,6 +306,7 @@ void R_DumpOpenGlState()
 	}
 
 	glGetIntegerv(GL_ACTIVE_TEXTURE, &activeTex);
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &activeTexId);
 	glGetTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &texEnvMode);
 	if( fabs( texEnvMode - GL_ADD ) < 0.1f )
 		texEnvModeStr = "ADD";
@@ -321,5 +323,5 @@ void R_DumpOpenGlState()
 	glGetFloatv(GL_CURRENT_COLOR, color);
 
 	Com_Printf("OpenGL enabled caps: %s\n", s);
-	Com_Printf("Active texture unit: %d texEnv mode %s color %f %f %f %f\n", activeTex - GL_TEXTURE0, texEnvModeStr, color[0], color[1], color[2], color[3]);
+	Com_Printf("Active texture unit: %d texnum %d texEnv mode %s color %f %f %f %f\n", activeTex - GL_TEXTURE0, activeTexId, texEnvModeStr, color[0], color[1], color[2], color[3]);
 }

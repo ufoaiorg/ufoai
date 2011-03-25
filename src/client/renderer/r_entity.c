@@ -221,7 +221,7 @@ static void R_DrawEntityEffects (void)
 			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
-			const vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
+			vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
 					-GROUND_DELTA }, { -size, -size, -GROUND_DELTA } };
 			/** @todo use default_texcoords */
 			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
@@ -235,6 +235,8 @@ static void R_DrawEntityEffects (void)
 			else
 				Vector4Set(color, 1, 0, 0, 0.5);
 
+			/* TODO: for some unknown reasons the following code fails on my HTC Evo and on emulator, but works on PC, so it might be GFX driver problems */
+#ifndef GL_VERSION_ES_CM_1_0
 			if (e->flags & RF_SELECTED)
 				texnum = selectedActorIndicator->texnum;
 			else
@@ -244,14 +246,13 @@ static void R_DrawEntityEffects (void)
 			R_Color(color);
 			R_EnableDrawAsGlow(qtrue);
 
-			/* TODO: for some unknown reasons the following code fails on my HTC Evo, but works on PC, so it might be GFX driver problems */
 			/* circle points */
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
-			/* add transparency when something is other the circle */
+			/* add transparency when something is covering the circle */
 			color[3] *= 0.25;
 			R_Color(color);
 			glDepthFunc(GL_GREATER);
@@ -263,6 +264,22 @@ static void R_DrawEntityEffects (void)
 
 			R_Color(NULL);
 			R_EnableDrawAsGlow(qfalse);
+#else
+			R_EnableTexture(&texunit_diffuse, qfalse);
+			points[0][0] = 0;
+			points[0][1] = 0;
+			R_DrawCircle(size, color, 2, points[0]);
+			if (e->flags & RF_SELECTED)
+				R_DrawCircle(size-3, color, 2, points[0]);
+			/* add transparency when something is covering the circle */
+			color[3] *= 0.25;
+			glDepthFunc(GL_GREATER);
+			R_DrawCircle(size, color, 2, points[0]);
+			if (e->flags & RF_SELECTED)
+				R_DrawCircle(size-3, color, 2, points[0]);
+			glDepthFunc(oldDepthFunc);
+			R_EnableTexture(&texunit_diffuse, qtrue);
+#endif
 		}
 		glPopMatrix();
 	}
