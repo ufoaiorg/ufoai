@@ -1006,7 +1006,6 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
 static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
-	objDef_t *od;
 	item_t *item;
 
 	if (shootType >= ST_NUM_SHOOT_TYPES)
@@ -1028,11 +1027,6 @@ static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefInd
 		item = &LEFT(ent)->item;
 		*container = gi.csi->idLeft;
 	}
-
-	if (!item->m)
-		od = item->t;
-	else
-		od = item->m;
 
 	/* Get firedef from the weapon entry instead */
 	fdArray = FIRESH_FiredefForWeapon(item);

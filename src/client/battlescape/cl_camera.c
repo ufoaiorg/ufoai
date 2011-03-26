@@ -162,11 +162,10 @@ void CL_CameraMove (void)
 		const float angle = cl.cam.angles[YAW] * torad;
 		const float sy = sin(angle);
 		const float cy = cos(angle);
-		vec3_t g_forward, g_right, g_up;
+		vec3_t g_forward, g_right;
 
 		VectorSet(g_forward, cy, sy, 0.0);
 		VectorSet(g_right, sy, -cy, 0.0);
-		VectorSet(g_up, 0.0, 0.0, 1.0);
 
 		/* calculate camera speed */
 		/* stop acceleration */

@@ -291,7 +291,6 @@ void GAME_SaveTeam_f (void)
  */
 static qboolean GAME_LoadTeam (const char *filename)
 {
-	uLongf len;
 	qFILE f;
 	byte *cbuf;
 	int clen;
@@ -320,7 +319,6 @@ static qboolean GAME_LoadTeam (const char *filename)
 	/* swap all int values if needed */
 	header.version = LittleLong(header.version);
 	header.xmlSize = LittleLong(header.xmlSize);
-	len = header.xmlSize + 1 + sizeof(header);
 
 	if (header.version != TEAM_SAVE_FILE_VERSION) {
 		Com_Printf("Invalid version number\n");
