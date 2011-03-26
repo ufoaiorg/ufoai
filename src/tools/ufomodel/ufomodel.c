@@ -459,13 +459,11 @@ static void ModelWorker (modelWorker_t worker, const char *fileName, void *userD
 
 static void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize, void *userData)
 {
-	const char *md2Path;
 	uint32_t numGLCmds;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (const char *) md2 + LittleLong(md2->ofs_glcmds);
 	numGLCmds = LittleLong(md2->num_glcmds);
 
 	if (numGLCmds > 0) {
