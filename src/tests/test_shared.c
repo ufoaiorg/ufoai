@@ -88,3 +88,123 @@ void TEST_Init (void)
 
 	Com_SetExceptionCallback(Test_RunError);
 }
+
+
+#define PROPERTY_HASH_SIZE	32
+
+#define	MAX_PROPERTY_NAME	32
+
+typedef struct test_property_s {
+	char name[MAX_PROPERTY_NAME];
+	const char *value;
+	struct test_property_s *hash_next;
+	struct test_property_s *next;
+} test_property_t;
+
+static test_property_t *test_property;
+static test_property_t *test_property_hash[PROPERTY_HASH_SIZE];
+
+/**
+ * Register a property name-value to a global structure for all tests
+ * @param name Name of the property
+ * @param value Value of the property. Only the pointer of the value is used. Use it ONLY with stable memory.
+ */
+void TEST_RegisterProperty (const char* name, const char* value)
+{
+	unsigned int hash;
+	test_property_t *element;
+
+	/* if the alias already exists, reuse it */
+	hash = Com_HashKey(name, PROPERTY_HASH_SIZE);
+	for (element = test_property_hash[hash]; element; element = element->hash_next) {
+		if (Q_streq(name, element->name)) {
+			break;
+		}
+	}
+
+	if (!element) {
+		element = (test_property_t *) malloc(sizeof(*element));
+		Q_strncpyz(element->name, name, sizeof(element->name));
+		/** TODO maybe copy the value instead of copying the pointer of the value */
+		element->value = value;
+		element->next = test_property;
+		element->hash_next = test_property_hash[hash];
+		test_property_hash[hash] = element;
+		test_property = element;
+		Com_Printf("Register test property \"%s\" = \"%s\"\n", name, value);
+	}
+}
+
+/**
+ * Get a property name from global test structure
+ * @param name Name of the property
+ * @return A property element, else NULL if property not found.
+ */
+static const test_property_t* TEST_GetProperty (const char* name)
+{
+	unsigned int hash;
+	const test_property_t *element;
+
+	hash = Com_HashKey(name, PROPERTY_HASH_SIZE);
+	for (element = test_property_hash[hash]; element; element = element->hash_next) {
+		if (!Q_strcasecmp(name, element->name)) {
+			return element;
+		}
+	}
+	return NULL;
+}
+
+/**
+ * Test if a property from global test structure exists
+ * @param name Name of the property
+ * @return True if the property exists
+ */
+qboolean TEST_ExistsProperty (const char* name)
+{
+	return TEST_GetProperty(name) != NULL;
+}
+
+/**
+ * Get a property value from global test structure
+ * @param name Name of the property
+ * @return A property value, else NULL if property not found.
+ */
+const char* TEST_GetStringProperty (const char* name)
+{
+	const test_property_t *element = TEST_GetProperty(name);
+	if (element == NULL) {
+		Com_Printf("WARNING: Test property \"%s\" not found. NULL returned.\n", name);
+		return NULL;
+	}
+	return element->value;
+}
+
+/**
+ * Get a property value from global test structure
+ * @param name Name of the property
+ * @return A property value, else 0 if property not found.
+ */
+int TEST_GetIntProperty (const char* name)
+{
+	const test_property_t *element = TEST_GetProperty(name);
+	if (element == NULL) {
+		Com_Printf("WARNING: Test property \"%s\" not found. 0 returned.\n", name);
+		return 0;
+	}
+	return atoi(element->value);
+}
+
+/**
+ * Get a property value from global test structure
+ * @param name Name of the property
+ * @return A property value, else 0 if property not found.
+ */
+long TEST_GetLongProperty (const char* name)
+{
+	const test_property_t *element = TEST_GetProperty(name);
+	if (element == NULL) {
+		Com_Printf("WARNING: Test property \"%s\" not found. 0 returned.\n", name);
+		return 0;
+	}
+	return atol(element->value);
+}

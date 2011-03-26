@@ -235,6 +235,20 @@ static void Test_Parameters (const int argc, const char **argv)
 			config.console = qtrue;
 		} else if (Q_streq(argv[i], "-a") || Q_streq(argv[i], "--automated")) {
 			config.automated = qtrue;
+		} else if (Q_strstart(argv[i], "-D")) {
+			const char* value = strchr(argv[i], '=');
+			if (value != NULL) {
+				char name[32];
+				int size = (value - argv[i]) + 1 - 2;
+				if (size >= sizeof(name)) {
+					fprintf(stderr, "Error: Argument \"%s\" use a property name too much big.\n", argv[i]);
+					exit(2);
+				}
+				Q_strncpyz(name, argv[i] + 2, size);
+				TEST_RegisterProperty(name, value + 1);
+			} else {
+				fprintf(stderr, "Warning: \"%s\" do not value. Command line argument ignored.\n", argv[i]);
+			}
 		} else if (Q_streq(argv[i], "--disable-all")) {
 			Test_DisableAllSuites();
 		} else if (Q_strstart(argv[i], "--disable-")) {
@@ -284,6 +298,7 @@ static void Test_Parameters (const int argc, const char **argv)
 			printf("Usage:\n");
 			printf("-h  --help                 | show this help screen\n");
 			printf("-c  --console              | run tests in console mode\n");
+			printf("-Dprop=value               | defines a test property.");
 			printf("-a  --automated            | run tests in automated mode (create xml file)\n");
 			printf("-l  --list                 | list suite name available, and exit.\n");
 			printf("-s  --status               | list suite name with there status, and exit.\n");
