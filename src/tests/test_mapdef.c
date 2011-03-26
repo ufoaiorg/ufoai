@@ -80,6 +80,7 @@ static int UFO_CleanSuiteMapDef (void)
 static void testMapDefsSingleplayer (void)
 {
 	int i;
+	const char *filterId = TEST_GetStringProperty("mapdef-id");
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
@@ -87,10 +88,17 @@ static void testMapDefsSingleplayer (void)
 		const mapDef_t* md = &cls.mds[i];
 		if (md->map[0] == '.')
 			continue;
+		if (filterId && strcmp(filterId, md->id) != 0)
+			continue;
 
 		{
 			/* use a know seed to allow reproductible error */
-			const unsigned int seed = (unsigned int) time(NULL);
+			unsigned int seed;
+			if (TEST_ExistsProperty("mapdef-seed")) {
+				seed = TEST_GetLongProperty("mapdef-seed");
+			} else {
+				seed = (unsigned int) time(NULL);
+			}
 			srand(seed);
 
 			Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
@@ -103,6 +111,7 @@ static void testMapDefsSingleplayer (void)
 static void testMapDefsMultiplayer (void)
 {
 	int i;
+	const char *filterId = TEST_GetStringProperty("mapdef-id");
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
@@ -113,15 +122,22 @@ static void testMapDefsMultiplayer (void)
 
 	for (i = 0; i < cls.numMDs; i++) {
 		const mapDef_t* md = &cls.mds[i];
-
+		if (filterId && strcmp(filterId, md->id) != 0)
+			continue;
 
 		if (md->multiplayer) {
 			/* use a know seed to allow reproductible error */
-			const unsigned int seed = (unsigned int) time(NULL);
+			unsigned int seed;
+			if (TEST_ExistsProperty("mapdef-seed")) {
+				seed = TEST_GetLongProperty("mapdef-seed");
+			} else {
+				seed = (unsigned int) time(NULL);
+			}
 			srand(seed);
-			Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
 
+			Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
 			SV_Map(qtrue, md->map, md->param);
+			SV_ShutdownGameProgs();
 			CU_PASS(md->map);
 		}
 	}
