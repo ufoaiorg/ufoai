@@ -301,7 +301,6 @@ static int actorL_shoot (lua_State *L)
 	aiActor_t *target;
 	const item_t *item;
 	const fireDef_t *fdArray;
-	objDef_t *od;
 
 	assert(lua_isactor(L, 1));
 
@@ -337,11 +336,6 @@ static int actorL_shoot (lua_State *L)
 		lua_pushboolean(L, 0);
 		return 1;
 	}
-
-	if (!item->m)
-		od = item->t;
-	else
-		od = item->m;
 
 	shots = tu / fdArray->time;
 

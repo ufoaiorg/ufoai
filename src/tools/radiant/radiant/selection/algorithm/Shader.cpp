@@ -39,7 +39,7 @@ class AmbiguousShaderException: public std::runtime_error
 class UniqueFaceShaderFinder
 {
 		// The string containing the result
-		mutable std::string& _shader;
+		std::string& _shader;
 
 	public:
 		UniqueFaceShaderFinder (std::string& shader) :

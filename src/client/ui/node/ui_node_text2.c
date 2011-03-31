@@ -158,8 +158,6 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 {
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
-	vec4_t colorHover;
-	vec4_t colorSelectedHover;
 	int fullSizeY;
 	int x1; /* variable x position */
 	const char *font = UI_GetFontFromNode(node);
@@ -184,14 +182,6 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 	x = pos[0] + node->padding;
 	y = pos[1] + node->padding;
 	width = node->size[0] - node->padding - node->padding;
-
-	/* Hover darkening effect for normal text lines. */
-	VectorScale(node->color, 0.8, colorHover);
-	colorHover[3] = node->color[3];
-
-	/* Hover darkening effect for selected text lines. */
-	VectorScale(node->selectedColor, 0.8, colorSelectedHover);
-	colorSelectedHover[3] = node->selectedColor[3];
 
 	/* fix position of the start of the draw according to the align */
 	switch (node->textalign % 3) {

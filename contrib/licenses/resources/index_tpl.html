@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr">
+
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"
+        djConfig="parseOnLoad: true">
+        </script>
+	<script src="tree2.js"></script>
+	<script src="api.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+            html, body { width: 100%; height: 100%; margin: 0; overflow:hidden; }
+            #borderContainer { width: 100%; height: 100%; }
+        </style>
+
+        <script type="text/javascript">
+            dojo.require("dijit.layout.TabContainer");
+            dojo.require("dijit.layout.ContentPane");
+            dojo.require("dijit.layout.BorderContainer");
+            dojo.require("dojo.data.ItemFileReadStore");
+            dojo.require("dijit.Tree");
+
+            function prepare() {
+                var store = new dojo.data.ItemFileReadStore({
+                    data: {
+                        identifier: 'id',
+                        label: 'label',
+                        items: baseTree
+                    }
+                });
+                var treeModel = new dijit.tree.ForestStoreModel({
+                    store: store
+                });
+                var treeControl = new dijit.Tree({
+                    model: treeModel,
+                    showRoot: false,
+                    _createTreeNode: function(
+                    /*Object*/
+                    args) {
+                        var tnode = new dijit._TreeNode(args);
+                        tnode.labelNode.innerHTML = args.label;
+                        return tnode;
+                    }
+                },
+                "baseTree");
+
+		treeControl.onClick = function (item, node, event) {
+			invokeCharteUpdate(item.id[0]);
+		}
+
+//		dojo.connect(firstLinkNode, 'onclick', foo)
+            }
+
+            dojo.addOnLoad(prepare);
+        </script>
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css"
+        />
+</head>
+<body class="claro">
+	<div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" id="borderContainer">
+		<div dojoType="dijit.layout.ContentPane" splitter="false" region="top" style="background-color: #262626;">
+			<div class="ufoai header">
+				<h1>Licenses in UFO:AI (base)</h1>
+				Please note that the information are extracted from <a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=LICENSES">LICENSES</a> file.<br />
+				Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
+				<br />
+				State as in revision 1300640315.
+			</div>
+		</div>
+		<div dojoType="dijit.layout.BorderContainer" splitter="false" region="center">
+			<div dojoType="dijit.layout.ContentPane" splitter="true" region="leading" style="width: 200px;">
+				<div id="baseTree"></div>
+			</div>
+			<div dojoType="dijit.layout.ContentPane" splitter="true" region="center">
+				<div dojoType="dijit.layout.TabContainer" style="width: 100%; height: 100%;">
+					<div dojoType="dijit.layout.ContentPane" title="Distribution" selected="true">
+						<div id="licensePie" style="width: 400px; height: 400px;"></div>
+						<div id="licensePieLegend"></div>
+					</div>
+					<div dojoType="dijit.layout.ContentPane" title="History" selected="true">
+						<img id="history" src="">
+					</div>
+					<div dojoType="dijit.layout.ContentPane" title="Non free licenses" selected="true">
+						<img id="nonfreehistory" src="">
+					</div>
+					<div dojoType="dijit.layout.ContentPane" title="Brut list" selected="true">
+						<div id="brutlist"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

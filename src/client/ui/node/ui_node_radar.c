@@ -506,6 +506,7 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 	UI_RadarNodeDrawArrays(color, coords, vertices, image);
 }
 
+#if 0
 /**
  * @todo We can merge actor and items draw function
  */
@@ -551,6 +552,7 @@ static void UI_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 	UI_RadarNodeGetActorColor(le, color);
 	Vector4Set(color, 0, 1, 0, color[3]);
 }
+#endif
 
 /*#define RADARSIZE_DEBUG*/
 
@@ -656,7 +658,9 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 			UI_RadarNodeDrawActor(le, itempos);
 			break;
 		case ET_ITEM:
+#if 0
 			UI_RadarNodeDrawItem(le, itempos);
+#endif
 			break;
 		default:
 			break;
