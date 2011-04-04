@@ -919,6 +919,7 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 	Com_Printf("pos: %s\n", asmPos);
 	Com_Printf("tiles: %i\n", map->numPlaced);
 }
+#define PRINT_RMA_PROGRESS 0
 //#include "sv_rma2.c"	/* WIP,needed ! (Duke 08.03.2011) */
 /**
  * @brief Tries to build the map
@@ -951,7 +952,6 @@ static void SV_AddMapTiles (mapInfo_t *map)
 	const mPlaced_t *mPlaced = map->mPlaced;
 #endif
 
-#define PRINT_RMA_PROGRESS 0
 #if PRINT_RMA_PROGRESS
 	char mapStr[10000] = {0};
 	char posStr[10000] = {0};
