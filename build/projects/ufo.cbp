@@ -22,7 +22,6 @@
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
 					<Add option="-DHAVE_BFD_H" />
-					<Add option="-I../../src/libs/mxml" />
 				</Compiler>
 				<Linker>
 					<Add library="opengl32" />
@@ -54,7 +53,6 @@
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
 					<Add option="-DHAVE_BFD_H" />
-					<Add option="-I../../src/libs/mxml" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
@@ -105,6 +103,7 @@
 			<Add library="ogg" />
 			<Add library="theora" />
 			<Add library="xvidcore" />
+			<Add library="mxml" />
 		</Linker>
 		<Unit filename="..\..\base\autoexec.cfg" />
 		<Unit filename="..\..\base\dedicated.cfg" />
@@ -211,33 +210,6 @@
 		<Unit filename="..\maps.mk" />
 		<Unit filename="..\pk3_def.mk" />
 		<Unit filename="..\various.mk" />
-		<Unit filename="..\..\src\libs\mxml\mxml-attr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-entity.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-file.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-index.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-node.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-private.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-search.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-set.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-string.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
