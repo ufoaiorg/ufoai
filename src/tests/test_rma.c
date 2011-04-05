@@ -154,6 +154,7 @@ static void testMassAssemblySeed (void)
 	for (i = 0; i < 20; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
+		Com_Printf("Seed: %i\n", i);
 		randomMap = SV_AssembleMap("japan", "big", map, pos);
 //		randomMap = SV_AssembleMap("forest", "large", map, pos);
 //		randomMap = SV_AssembleMap("hills", "desert_harvester", map, pos);
