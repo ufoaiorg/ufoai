@@ -922,7 +922,8 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 
 #define PRINT_RMA_PROGRESS 0	/* print some debugging info */
 /* RMA2 code. Still disabled to avoid warnings */
-#if 0
+#define RMA2 0
+#if RMA2
 #define RMA2_MAX_REC 50		/* max # of recursions */
 #define TCM 50				/* tile code multiplier */
 #define GAPS 25				/* the # of different tiles we can store for a gap */
@@ -1083,7 +1084,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 							if (SV_TestFilled(map))
 								return qtrue;		/* this was the last tile we needed */
 							if (SV_AddMissingTiles3_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, px, py))
-								return qtrue;		/* recusive placement succeeded */
+								return qtrue;		/* recursive placement succeeded */
 							else {					/* tile was a dead end, remove it */
 								SV_RemoveTile(map, NULL, NULL);
 								if (h >= g)
@@ -1485,7 +1486,11 @@ static void SV_AddMapTiles (mapInfo_t *map)
 			pos++;
 		}
 
+#if RMA2
+		if (idx == numToPlace && !SV_AddMissingTiles3(map)) {
+#else
 		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
+#endif
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
