@@ -1212,6 +1212,8 @@ void G_ClientTeamInfo (const player_t * player)
 
 				G_ClientAssignDefaultActorValues(ent);
 
+				G_ActorGiveTimeUnits(ent);
+
 				G_TouchTriggers(ent);
 			} else {
 				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->pers.team, actorFieldSize);
@@ -1307,6 +1309,7 @@ void G_ClientSpawn (player_t * player)
 	/* reset the data */
 	G_EventReset(player, level.activeTeam);
 
+	/** @todo this is too early - not every coop player might be 'spawned' already */
 	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);
 	G_CheckVisPlayer(player, qfalse);
@@ -1314,9 +1317,6 @@ void G_ClientSpawn (player_t * player)
 
 	/* submit stats */
 	G_SendPlayerStats(player);
-
-	/* give time units */
-	G_GiveTimeUnits(player->pers.team);
 
 	/* ensure that the last event is send, too */
 	gi.EndEvents();

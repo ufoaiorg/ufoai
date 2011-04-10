@@ -173,28 +173,6 @@ qboolean GAME_IsMultiplayer (void)
 }
 
 /**
- * @brief Called when the server sends the @c EV_START event.
- * @param isTeamPlay @c true if the game is a teamplay round. This can be interesting for
- * multiplayer based game types
- * @sa GAME_EndBattlescape
- */
-void GAME_StartBattlescape (qboolean isTeamPlay)
-{
-	const cgame_export_t *list = GAME_GetCurrentType();
-
-	Cvar_SetValue("cl_onbattlescape", 1.0);
-
-	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
-	if (list != NULL && list->StartBattlescape) {
-		list->StartBattlescape(isTeamPlay);
-	} else {
-		HUD_InitUI(NULL, qtrue);
-	}
-	if (list != NULL)
-		Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
-}
-
-/**
  * @brief This is called when a client quits the battlescape
  * @sa GAME_StartBattlescape
  */
@@ -327,6 +305,9 @@ void GAME_SetMode (const cgame_export_t *gametype)
 
 	if (cls.gametype == gametype)
 		return;
+
+	GAME_ResetCharacters();
+	OBJZERO(cl.chrList);
 
 	list = GAME_GetCurrentType();
 	if (list) {
@@ -833,6 +814,44 @@ static qboolean GAME_Spawn (void)
 }
 
 /**
+ * @brief Called when the server sends the @c EV_START event.
+ * @param isTeamPlay @c true if the game is a teamplay round. This can be interesting for
+ * multiplayer based game types
+ * @sa GAME_EndBattlescape
+ */
+void GAME_StartBattlescape (qboolean isTeamPlay)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	qboolean spawnStatus;
+
+	Cvar_SetValue("cl_onbattlescape", 1.0);
+
+	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
+	if (list != NULL && list->StartBattlescape) {
+		list->StartBattlescape(isTeamPlay);
+	} else {
+		HUD_InitUI(NULL, qtrue);
+	}
+	if (list != NULL)
+		Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
+
+	/* this callback is responsible to set up the cl.chrList */
+	if (list && list->Spawn)
+		spawnStatus = list->Spawn();
+	else
+		spawnStatus = GAME_Spawn();
+
+	if (spawnStatus && cl.chrList.num > 0) {
+		struct dbuffer *msg;
+
+		/* send team info */
+		msg = new_dbuffer();
+		GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
+		NET_WriteMsg(cls.netStream, msg);
+	}
+}
+
+/**
  * @brief This is called if actors are spawned (or at least the spawning commands were send to
  * the server). This callback can e.g. be used to set initial actor states. E.g. request crouch and so on.
  * These events are executed without consuming time
@@ -855,24 +874,8 @@ static void GAME_InitializeBattlescape (chrList_t *team)
  */
 void GAME_SpawnSoldiers (void)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
-	qboolean spawnStatus;
-
-	/* this callback is responsible to set up the cl.chrList */
-	if (list && list->Spawn)
-		spawnStatus = list->Spawn();
-	else
-		spawnStatus = GAME_Spawn();
-
-	if (spawnStatus && cl.chrList.num > 0) {
-		struct dbuffer *msg;
-
-		/* send team info */
-		msg = new_dbuffer();
-		GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
-		NET_WriteMsg(cls.netStream, msg);
-
-		msg = new_dbuffer();
+	if (cl.chrList.num > 0) {
+		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "spawn\n");
 		NET_WriteMsg(cls.netStream, msg);
