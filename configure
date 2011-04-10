@@ -166,6 +166,7 @@ check_headers() {
 	check_header "sys/utsname.h"
 	check_header "link.h"
 	check_header "CUnit/Basic.h"
+	check_header "mxml.h"
 	if [ "$HAVE_CUNIT_BASIC_H" != "1" ]; then
 		set_var "testall_DISABLE" "yes"
 	fi
