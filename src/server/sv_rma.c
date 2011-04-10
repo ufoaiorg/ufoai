@@ -1636,7 +1636,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	for (i = 0; i < threadno; i++) {
 		maps[i] = Mem_AllocType(mapInfo_t);
 		memcpy(maps[i], map, sizeof(*map));
-		threads[i] = SDL_CreateThread(&SV_AssemblyThread, (void*) maps[i]);
+		threads[i] = SDL_CreateThread(SV_AssemblyThread, (void*) maps[i]);
 	}
 	while (threadID == 0) {
 		/* if nobody is done after 5 sec, restart, double the timeout. */
@@ -1657,7 +1657,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 			/* start'em again */
 			for (i = 0; i < threadno; i++) {
 				memcpy(maps[i], map, sizeof(*map));
-				threads[i] = SDL_CreateThread(&SV_AssemblyThread, (void*) maps[i]);
+				threads[i] = SDL_CreateThread(SV_AssemblyThread, (void*) maps[i]);
 			}
 		} else {
 			/* someone finished */
