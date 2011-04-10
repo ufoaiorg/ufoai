@@ -254,7 +254,7 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
  * @sa G_CheckVis
  * @sa CL_ActorAdd
  */
-void G_SendInvisible (player_t* player)
+void G_SendInvisible (const player_t* player)
 {
 	const int team = player->pers.team;
 

@@ -449,7 +449,7 @@ int G_ActorDoTurn(edict_t * ent, byte dir);
 
 edict_t *G_GetActorFromPos(const pos3_t pos);
 
-void G_SendInvisible(player_t *player);
+void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, const edict_t *ent);
