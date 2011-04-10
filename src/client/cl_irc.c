@@ -1812,33 +1812,16 @@ static void Irc_Client_Kick_f (void)
 		Com_Printf("Usage: %s <channel> <nick> [<reason>]\n", Cmd_Argv(0));
 }
 
-/**
- * @sa Irc_Client_CmdPrivmsg
- */
-static void Irc_Client_Invite_f (void)
+static void Irc_GetExternalIP (const char *externalIP)
 {
 	const irc_user_t *user;
 	char buf[128];
-	char *externalIP;
 
-	if (!CL_OnBattlescape()) {
-		Com_Printf("You must be connected to a running server to invite others\n");
-		return;
-	}
-
-	if (!chan) {
-		UI_PushWindow("irc_popup", NULL, NULL);
-		return;
-	}
-
-	externalIP = HTTP_GetURL(va("%s/ufo/masterserver.php?ip", masterserver_url->string));
 	if (!externalIP) {
 		Com_Printf("Could not query masterserver\n");
 		return;
 	}
 	Com_sprintf(buf, sizeof(buf), "%s%s;%s", IRC_INVITE_FOR_A_GAME, externalIP, port->string);
-
-	Mem_Free(externalIP);
 
 	user = chan->user;
 	while (user) {
@@ -1851,6 +1834,24 @@ static void Irc_Client_Invite_f (void)
 			Irc_Proto_Msg(name, buf);
 		user = user->next;
 	}
+}
+
+/**
+ * @sa Irc_Client_CmdPrivmsg
+ */
+static void Irc_Client_Invite_f (void)
+{
+	if (!CL_OnBattlescape()) {
+		Com_Printf("You must be connected to a running server to invite others\n");
+		return;
+	}
+
+	if (!chan) {
+		UI_PushWindow("irc_popup", NULL, NULL);
+		return;
+	}
+
+	HTTP_GetURL(va("%s/ufo/masterserver.php?ip", masterserver_url->string), Irc_GetExternalIP);
 }
 
 static void Irc_Client_Who_f (void)

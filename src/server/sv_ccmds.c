@@ -43,8 +43,6 @@ void SV_Heartbeat_f (void)
  */
 void SV_SetMaster_f (void)
 {
-	char *responseBuf;
-
 	if (sv_maxclients->integer == 1)
 		return;
 
@@ -52,11 +50,7 @@ void SV_SetMaster_f (void)
 	Cvar_Set("public", "1");
 
 	Com_Printf("Master server at [%s] - sending a ping\n", masterserver_url->string);
-	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?ping&port=%s", masterserver_url->string, port->string));
-	if (responseBuf) {
-		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
-		Mem_Free(responseBuf);
-	}
+	HTTP_GetURL(va("%s/ufo/masterserver.php?ping&port=%s", masterserver_url->string, port->string), NULL);
 
 	if (!sv_dedicated->integer)
 		return;

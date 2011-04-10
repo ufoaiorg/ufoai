@@ -365,20 +365,16 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 	NET_StreamFree(s);
 }
 
-static SDL_Thread *masterServerQueryThread;
-
-static int CL_QueryMasterServerThread (void *data)
+static void CL_QueryMasterServerThread (const char *responseBuf)
 {
-	char *responseBuf;
 	const char *serverListBuf;
 	const char *token;
 	char node[MAX_VAR], service[MAX_VAR];
 	int i, num;
 
-	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?query", masterserver_url->string));
 	if (!responseBuf) {
 		Com_Printf("Could not query masterserver\n");
-		return 1;
+		return;
 	}
 
 	serverListBuf = responseBuf;
@@ -408,21 +404,18 @@ static int CL_QueryMasterServerThread (void *data)
 		Q_strncpyz(service, token, sizeof(service));
 		CL_AddServerToList(node, service);
 	}
-
-	Mem_Free(responseBuf);
-
-	return 0;
 }
+
+static threads_mutex_t *queryMasterServerLock;
 
 /**
  * @sa CL_PingServers_f
  */
 static void CL_QueryMasterServer (void)
 {
-	if (masterServerQueryThread != NULL)
-		SDL_WaitThread(masterServerQueryThread, NULL);
-
-	masterServerQueryThread = SDL_CreateThread(CL_QueryMasterServerThread, NULL);
+	TH_MutexLock(queryMasterServerLock);
+	HTTP_GetURL(va("%s/ufo/masterserver.php?query", masterserver_url->string), CL_QueryMasterServerThread);
+	TH_MutexUnlock(queryMasterServerLock);
 }
 
 /**
@@ -605,6 +598,8 @@ void MP_ServerListInit (void)
 	Cmd_AddCommand("serverlist", CL_PrintServerList_f, NULL);
 	/* text id is servers in menu_multiplayer.ufo */
 	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
+
+	queryMasterServerLock = TH_MutexCreate("masterserverquery");
 }
 
 void MP_ServerListShutdown (void)
@@ -614,7 +609,5 @@ void MP_ServerListShutdown (void)
 	Cmd_RemoveCommand("serverlist");
 	Cmd_RemoveCommand("servers_click");
 
-	if (masterServerQueryThread)
-		SDL_KillThread(masterServerQueryThread);
-	masterServerQueryThread = NULL;
+	TH_MutexDestroy(queryMasterServerLock);
 }

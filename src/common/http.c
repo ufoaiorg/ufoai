@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "http.h"
 #include "../shared/shared.h"
+#include "../shared/mutex.h"
 
 /**
  * @brief libcurl callback to update header info.
@@ -87,28 +88,28 @@ size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
 	return bytes;
 }
 
+typedef struct getData_s {
+	const char *url;
+	http_callback_t callback;
+	SDL_cond *timeoutCondition;
+	threads_mutex_t *mutex;
+	SDL_sem *timeoutSemaphore;
+} getData_t;
+
 /**
- * @brief Gets a specific url and store into
+ * @brief Gets a specific url
  * @note Make sure, that you free the strings that is returned by this function
  */
-char* HTTP_GetURL (const char *url)
+static char* HTTP_GetURLInternal (const char *url)
 {
-	static qboolean downloading = qfalse;
 	dlhandle_t dl;
-
-	if (downloading) {
-		Com_Printf("Warning: There is still another download running (can't fetch %s) '%s'\n",
-				url, dl.URL);
-		return NULL;
-	}
 
 	OBJZERO(dl);
 
-	downloading = qtrue;
 	dl.curl = curl_easy_init();
 
 	Q_strncpyz(dl.URL, url, sizeof(dl.URL));
-	curl_easy_setopt(dl.curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer);
+	curl_easy_setopt(dl.curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer + 2);
 	curl_easy_setopt(dl.curl, CURLOPT_ENCODING, "");
 	curl_easy_setopt(dl.curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEDATA, &dl);
@@ -126,8 +127,6 @@ char* HTTP_GetURL (const char *url)
 
 	/* clean up */
 	curl_easy_cleanup(dl.curl);
-
-	downloading = qfalse;
 
 	return dl.tempBuffer;
 }
@@ -147,15 +146,58 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 
 	curl_formadd(&post, &last, CURLFORM_PTRNAME, formName, CURLFORM_FILE, fileName, CURLFORM_END);
 
+	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer);
 	curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
 	curl_easy_setopt(curl, CURLOPT_URL, url);
-
 	curl_easy_perform(curl);
 
 	curl_easy_cleanup(curl);
+}
+
+static int HTTP_GetUrlThread (void *data)
+{
+	const getData_t* getData = (const getData_t *) data;
+	char *response = HTTP_GetURLInternal(getData->url);
+
+	if (SDL_SemTryWait(getData->timeoutSemaphore) != 0)
+		return -1;
+
+	TH_MutexLock(getData->mutex);
+	SDL_CondSignal(getData->timeoutCondition);
+	TH_MutexUnlock(getData->mutex);
+	if (getData->callback != NULL)
+		getData->callback(response);
+	Mem_Free(response);
+
+	return 1;
+}
+
+void HTTP_GetURL (const char *url, http_callback_t callback)
+{
+	threads_mutex_t *httpLock = TH_MutexCreate("http");
+	SDL_cond *timeoutCondition = SDL_CreateCond();
+	SDL_sem *timeoutSemaphore = SDL_CreateSemaphore(1);
+	getData_t data = {url, callback, timeoutCondition, httpLock, timeoutSemaphore};
+	SDL_Thread *thread = SDL_CreateThread(HTTP_GetUrlThread, &data);
+	TH_MutexLock(httpLock);
+	TH_MutexCondWaitTimeout(httpLock, timeoutCondition, http_timeout->integer * 1000);
+
+	if (SDL_SemTryWait(timeoutSemaphore) != 0) {
+		SDL_WaitThread(thread, NULL);
+	} else {
+		/* we have to kill the thread because libcurl is using alarm to signal a dns
+		 * timeout - this is in conflict with our longjmp environment and signal handlers
+		 * and would corrupt the stack */
+		Com_Printf("timeout for getting %s\n", url);
+		SDL_KillThread(thread);
+	}
+	TH_MutexUnlock(httpLock);
+	SDL_DestroySemaphore(timeoutSemaphore);
+	SDL_DestroyCond(timeoutCondition);
+	TH_MutexDestroy(httpLock);
 }
 
 /**
