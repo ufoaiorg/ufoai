@@ -298,6 +298,29 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 	}
 }
 
+static void testInventoryTemoContainerLinks (void)
+{
+	const char *mapName = "test_game";
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		edict_t* ent;
+		/* the other tests didn't call the server shutdown function to clean up */
+		OBJZERO(*sv);
+		SV_Map(qtrue, mapName, NULL);
+		level.activeTeam = TEAM_ALIEN;
+
+		/* first alien that should die and drop its inventory */
+		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		CU_ASSERT_PTR_NULL(FLOOR(ent));
+		G_InventoryToFloor(ent);
+		CU_ASSERT_PTR_NOT_NULL(FLOOR(ent));
+		CU_ASSERT_PTR_EQUAL(FLOOR(G_GetFloorItemsFromPos(ent->pos)), FLOOR(ent));
+
+		SV_ShutdownGameProgs();
+	} else {
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
+	}
+}
+
 int UFO_AddGameTests (void)
 {
 	/* add a suite to the registry */
@@ -320,6 +343,9 @@ int UFO_AddGameTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GameSuite, testInventoryWithTwoDiedAliensOnTheSameGridTile) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GameSuite, testInventoryTemoContainerLinks) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

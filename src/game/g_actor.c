@@ -639,8 +639,10 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 	if (INV_IsFloorDef(to)) {
 		/* we have to link the temp floor container to the new floor edict or add
 		 * the item to an already existing floor edict - the floor container that
-		 * is already linked might be from a different entity */
+		 * is already linked might be from a different entity (this might happen
+		 * in case of a throw by another actor) */
 		FLOOR(floor) = FLOOR(ent);
+
 		/* A new container was created for the floor. */
 		if (newFloor) {
 			/* Send item info to the clients */
