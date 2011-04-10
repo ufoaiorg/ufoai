@@ -312,8 +312,9 @@ $(TARGET)_SRCS      = \
 	game/q_shared.c \
 	game/chr_shared.c \
 	game/inv_shared.c \
-	game/inventory.c
-
+	game/inventory.c \
+	\
+	$(MXML_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 	$(TARGET)_SRCS += \

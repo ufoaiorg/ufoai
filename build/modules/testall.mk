@@ -317,7 +317,9 @@ $(TARGET)_SRCS      = \
 	shared/mutex.c \
 	shared/images.c \
 	\
-	$(game_SRCS)
+	$(game_SRCS) \
+	\
+	$(MXML_SRCS)
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS += \
