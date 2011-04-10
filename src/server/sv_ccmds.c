@@ -38,7 +38,7 @@ void SV_Heartbeat_f (void)
 }
 
 /**
- * @brief Specify a list of master servers
+ * @brief Add the server to the master server list so that others can see the server in the server list
  * @sa SV_InitGame
  */
 void SV_SetMaster_f (void)
