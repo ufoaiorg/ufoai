@@ -1223,7 +1223,7 @@ void G_ClientTeamInfo (const player_t * player)
 		}
 	}
 
-	Com_Printf("Free inventory slots client %s spawn: %i\n", player->pers.netname, game.i.GetUsedSlots(&game.i));
+	Com_Printf("Used inventory slots client %s spawn: %i\n", player->pers.netname, game.i.GetUsedSlots(&game.i));
 }
 
 /**
