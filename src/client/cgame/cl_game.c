@@ -832,14 +832,14 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 	} else {
 		HUD_InitUI(NULL, qtrue);
 	}
-	if (list != NULL)
-		Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
 
 	/* this callback is responsible to set up the cl.chrList */
 	if (list && list->Spawn)
 		spawnStatus = list->Spawn();
 	else
 		spawnStatus = GAME_Spawn();
+
+	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
 
 	if (spawnStatus && cl.chrList.num > 0) {
 		struct dbuffer *msg;
