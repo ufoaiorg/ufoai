@@ -29,6 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../shared/shared.h"
 
+#define UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(actual, expected, msg) \
+  { CU_assertImplementation(((actual) == (expected)), __LINE__, msg ? msg : va("UFO_CU_ASSERT(%i but expected %i)", actual, expected), __FILE__, "", CU_TRUE); }
+
+#define UFO_CU_ASSERT_EQUAL_INT_MSG(actual, expected, msg) \
+  { CU_assertImplementation(((actual) == (expected)), __LINE__, msg ? msg : va("UFO_CU_ASSERT(%i but expected %i)", actual, expected), __FILE__, "", CU_FALSE); }
+
 #define UFO_CU_ASSERT_TRUE_MSG(value, msg) \
   { CU_assertImplementation((value), __LINE__, msg ? msg : ("UFO_CU_ASSERT(" #value ")"), __FILE__, "", CU_FALSE); }
 

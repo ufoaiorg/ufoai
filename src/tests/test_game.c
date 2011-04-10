@@ -133,6 +133,165 @@ static void testShooting (void)
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
 		SV_Map(qtrue, mapName, NULL);
+		/** @todo implement the test here */
+		SV_ShutdownGameProgs();
+	} else {
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
+	}
+}
+
+static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container)
+{
+	const invList_t *invlist = CONTAINER(ent, container);
+	int count = 0;
+	while (invlist != NULL) {
+		count += invlist->item.amount;
+		invlist = invlist->next;
+	}
+
+	return count;
+}
+
+static void testInventoryForDiedAlien (void)
+{
+	const char *mapName = "test_game";
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		edict_t* diedEnt;
+		edict_t* ent;
+		edict_t* floorItems;
+		player_t* player;
+		invList_t* invlist;
+		int count;
+		/* the other tests didn't call the server shutdown function to clean up */
+		OBJZERO(*sv);
+		SV_Map(qtrue, mapName, NULL);
+		level.activeTeam = TEAM_ALIEN;
+
+		/* first alien that should die and drop its inventory */
+		diedEnt = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
+		diedEnt->HP = 0;
+		G_ActorDieOrStun(diedEnt, NULL);
+		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
+
+		/* now try to collect the inventory with a second alien */
+		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
+
+		/* move to the location of the first died alien to drop the inventory into the same floor container */
+		player = G_PLAYER_FROM_ENT(ent);
+		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(player));
+		G_ClientMove(player, 0, ent, diedEnt->pos);
+		CU_ASSERT_TRUE_FATAL(VectorCompare(ent->pos, diedEnt->pos));
+
+		floorItems = G_GetFloorItems(ent);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(floorItems);
+		CU_ASSERT_PTR_EQUAL(FLOOR(floorItems), FLOOR(ent));
+
+		/* drop everything to floor to make sure we have space in the backpack */
+		G_InventoryToFloor(ent);
+		CU_ASSERT_EQUAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 0);
+
+		invlist = CONTAINER(ent, csi.idBackpack);
+		CU_ASSERT_PTR_NULL_FATAL(invlist);
+		count = GAMETEST_GetItemCount(ent, csi.idFloor);
+		if (count > 0) {
+			invList_t *entryToMove = FLOOR(ent);
+			int tx, ty;
+			INVSH_FindSpace(&ent->chr.i, &entryToMove->item, INVDEF(csi.idBackpack), &tx, &ty, entryToMove);
+			if (tx != NONE) {
+				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.t->name, tx, ty);
+				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, qfalse));
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idFloor), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.t->name));
+				Com_Printf("item %s was removed from floor\n", entryToMove->item.t->name);
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.t->name));
+				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->item.t->name);
+				invlist = CONTAINER(ent, csi.idBackpack);
+				CU_ASSERT_PTR_NOT_NULL_FATAL(invlist);
+			}
+		}
+
+		SV_ShutdownGameProgs();
+	} else {
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
+	}
+}
+
+static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
+{
+	const char *mapName = "test_game";
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		edict_t* diedEnt;
+		edict_t* diedEnt2;
+		edict_t* ent;
+		edict_t* floorItems;
+		player_t* player;
+		invList_t* invlist;
+		int count;
+		/* the other tests didn't call the server shutdown function to clean up */
+		OBJZERO(*sv);
+		SV_Map(qtrue, mapName, NULL);
+		level.activeTeam = TEAM_ALIEN;
+
+		/* first alien that should die and drop its inventory */
+		diedEnt = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
+		diedEnt->HP = 0;
+		G_ActorDieOrStun(diedEnt, NULL);
+		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
+
+		/* second alien that should die and drop its inventory */
+		diedEnt2 = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt2);
+
+		/* move to the location of the first died alien to drop the inventory into the same floor container */
+		player = G_PLAYER_FROM_ENT(diedEnt2);
+		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(player));
+		G_ClientMove(player, 0, diedEnt2, diedEnt->pos);
+		CU_ASSERT_TRUE_FATAL(VectorCompare(diedEnt2->pos, diedEnt->pos));
+
+		diedEnt2->HP = 0;
+		G_ActorDieOrStun(diedEnt2, NULL);
+		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt2));
+
+		/* now try to collect the inventory with a third alien */
+		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
+
+		player = G_PLAYER_FROM_ENT(ent);
+		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(player));
+
+		G_ClientMove(player, 0, ent, diedEnt->pos);
+		CU_ASSERT_TRUE_FATAL(VectorCompare(ent->pos, diedEnt->pos));
+
+		floorItems = G_GetFloorItems(ent);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(floorItems);
+		CU_ASSERT_PTR_EQUAL(FLOOR(floorItems), FLOOR(ent));
+
+		/* drop everything to floor to make sure we have space in the backpack */
+		G_InventoryToFloor(ent);
+		CU_ASSERT_EQUAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 0);
+
+		invlist = CONTAINER(ent, csi.idBackpack);
+		CU_ASSERT_PTR_NULL_FATAL(invlist);
+
+		count = GAMETEST_GetItemCount(ent, csi.idFloor);
+		if (count > 0) {
+			invList_t *entryToMove = FLOOR(ent);
+			int tx, ty;
+			INVSH_FindSpace(&ent->chr.i, &entryToMove->item, INVDEF(csi.idBackpack), &tx, &ty, entryToMove);
+			if (tx != NONE) {
+				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.t->name, tx, ty);
+				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, qfalse));
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idFloor), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.t->name));
+				Com_Printf("item %s was removed from floor\n", entryToMove->item.t->name);
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.t->name));
+				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->item.t->name);
+				invlist = CONTAINER(ent, csi.idBackpack);
+				CU_ASSERT_PTR_NOT_NULL_FATAL(invlist);
+			}
+		}
+
 		SV_ShutdownGameProgs();
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
@@ -155,6 +314,12 @@ int UFO_AddGameTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GameSuite, testShooting) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GameSuite, testInventoryForDiedAlien) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GameSuite, testInventoryWithTwoDiedAliensOnTheSameGridTile) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
