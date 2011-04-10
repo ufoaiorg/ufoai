@@ -1400,6 +1400,7 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
  * If that fails, the last required tile is moved to a different place and the filling is tried again.
  * If no more places are left for the required tile, the previous required tile is relocated and so on.
  * That is, for the required tiles every possible combination is tried before we give up.
+ * @param map All we know about the map to assemble
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
