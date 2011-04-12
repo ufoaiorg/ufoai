@@ -43,8 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct mTile_s {
 	char id[MAX_VAR];	/**< The id (string) of the tile as defined in the ump file (next to "tile"). */
 	unsigned long spec[MAX_TILESIZE][MAX_TILESIZE];	/**< connection/alternatives info for the tile  */
-	int w, h;		/**< The width and height of the tile. */
-	int area;	/**< Number of solid parts */
+	int w, h;			/**< The width and height of the tile. */
+	int area;			/**< Number of solid parts */
 } mTile_t;
 
 typedef struct mTileSet_s {
