@@ -196,6 +196,7 @@ static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInf
 	const char *token;
 	int x, y, i;
 	mTile_t *target = &map->mTile[map->numTiles];
+	target->area = 0;
 
 	/* get tile name */
 	token = Com_EParse(text, errhead, filename);
@@ -251,6 +252,8 @@ static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInf
 			for (i = 0; token[i]; i++) {
 				target->spec[y][x] |= tileMask(token[i]);
 			}
+			if (IS_SOLID(target->spec[y][x]))
+				target->area++;	/* # of solid tiles */
 		}
 
 	token = Com_EParse(text, errhead, filename);
@@ -962,6 +965,8 @@ static unsigned long SV_GapGetFlagsAtAbsPos (mapInfo_t *map, int tileCode, int m
  * @param prevY well, y
  * @return @c false if the tiles do not fit, @c true if the map could be filled.
  */
+static int availableTiles[MAX_TILETYPES][2];	/* the 2nd dimension is index and count */
+
 static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, short myPosList[], const mTile_t *prevTile, int prevX, int prevY)
 {
 	static int callCnt = 0;
@@ -969,6 +974,8 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 	const int mapW = mAsm->width;
 	const mToPlace_t *mToPlace = map->mToPlace;
 	int i, j = 0;
+	int solids = 0;				/* the # of places that the remaining tiles can theoretically cover */
+	int availableTilesCnt = 0;	/* the # of different tiles remaining in posTileList */
 
 	assert(rec < RMA2_MAX_REC);
 	callCnt++;
@@ -1002,19 +1009,48 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 			ok = SV_FitTile(map, mToPlace[ti].tile, x, y);
 		}
 		if (ok) {
+			/* store the posTile in our new list */
 			posTileList[rec][j] = myPosList[i];
 			j++;
+			/* store the tile index in the list of remaining tile types */
+			int k;
+			for (k = 0; k < availableTilesCnt; k++) {
+				if (availableTiles[k][0] == ti) {
+					availableTiles[k][1]++;		/* inc count */
+					break;
+				}
+			}
+			if (k >= availableTilesCnt)	{					/* didn't find it in the list */
+				availableTiles[availableTilesCnt][0] = ti;	/* store the tile index */
+				availableTiles[availableTilesCnt][1] = 1;	/* init counter of places */
+				availableTilesCnt++;
+			}
 		}
 	}
+
 	/** initialize the list of gaps */
 	int x, y;
+	int gapCount = 0;
 	for (y = 1; y < mAsm->height + 1; y++) {
 		for (x = 1; x < mAsm->width + 1; x++)
 			if (IS_SOLID(map->curMap[y][x]))
 				gapList[x][y][0] = -1;
-			else
+			else {
+				gapCount++;
 				gapList[x][y][0] = 0;
+			}
 	}
+
+	/** if the remaining tiles are simply not enough to cover the gaps, bail */
+	for (i = 0; i < availableTilesCnt; i++) {
+		int ti = availableTiles[i][0];
+		int allowed = mToPlace[ti].max - mToPlace[ti].cnt;
+		int possible = availableTiles[i][1];
+		int remaining = min(allowed, possible);
+		solids += remaining * mToPlace[ti].tile->area;
+	}
+	if (solids < gapCount)
+		return qfalse;
 
 	/** check how well the remaining tiles can cover the gaps */
 	for (i = 0; i < j; i++) {
