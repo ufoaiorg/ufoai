@@ -872,35 +872,38 @@ void BuildFacelights (unsigned int facenum)
 		Mem_Free(l[i].surfpt);
 }
 
+#define TGA_HEADER_SIZE 18
 static void WriteTGA24 (const char *filename, const byte * data, int width, int height, int offset)
 {
-	int i, c;
+	int i, size;
 	byte *buffer;
 	qFILE file;
 
+	size = width * height * 3;
 	/* allocate a buffer and set it up */
-	buffer = (byte *)Mem_Alloc(width * height * 3 + 18);
-	memset(buffer, 0, 18);
+	buffer = (byte *)Mem_Alloc(size + TGA_HEADER_SIZE);
+	memset(buffer, 0, TGA_HEADER_SIZE);
 	buffer[2] = 2;
 	buffer[12] = width & 255;
 	buffer[13] = width >> 8;
 	buffer[14] = height & 255;
 	buffer[15] = height >> 8;
 	buffer[16] = 24;
+	/* create top-down TGA */
+	buffer[17] = 32;
 
 	/* swap rgb to bgr */
-	c = (width * height * 3) + 18;
-	for (i = 18; i < c; i += 6) {
-		buffer[i] = data[i - 18 + offset + 2];	/* blue */
-		buffer[i + 1] = data[i - 18 + offset + 1];	/* green */
-		buffer[i + 2] = data[i - 18 + offset + 0];	/* red */
+	for (i = 0; i < size; i += 3) {
+		buffer[i + TGA_HEADER_SIZE] = data[i*2 + offset + 2];	/* blue */
+		buffer[i + TGA_HEADER_SIZE + 1] = data[i*2 + offset + 1];	/* green */
+		buffer[i + TGA_HEADER_SIZE + 2] = data[i*2 + offset + 0];	/* red */
 	}
 
 	/* write it and free the buffer */
 	if (FS_OpenFile(filename, &file, FILE_WRITE) > 0)
 		Sys_Error("Unable to open %s for writing", filename);
 
-	FS_Write(buffer, c, &file);
+	FS_Write(buffer, size + TGA_HEADER_SIZE, &file);
 
 	/* close the file */
 	FS_CloseFile(&file);
@@ -924,8 +927,10 @@ static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
 		const float mins = floor(stmins[i] / scale);
 		const float maxs = ceil(stmaxs[i] / scale);
 
-		texsize[i] = maxs - mins;
+		texsize[i] = maxs - mins + 1;
 	}
+
+
 }
 
 /**
