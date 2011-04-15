@@ -903,6 +903,15 @@
 ( 1748 1068 6 ) ( 1788 1068 6 ) ( 1748 1108 6 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
 ( 708 388 38 ) ( 708 348 38 ) ( 668 388 38 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
 }
+// brush 96
+{
+( 432 716 147 ) ( 432 708 147 ) ( 432 708 19 ) tex_common/actorclip 52 8 0 0.5 0.5 65536 0 0
+( 464 708 146 ) ( 464 716 146 ) ( 464 716 18 ) tex_common/actorclip 52 8 0 0.5 0.5 65536 0 0
+( 336 472 144 ) ( 372 472 144 ) ( 372 472 16 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
+( 372 504 144 ) ( 336 504 144 ) ( 336 504 16 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
+( 1264 952 16 ) ( 1296 952 16 ) ( 1264 984 16 ) tex_common/actorclip 0 12 0 0.5 0.5 65536 0 0
+( 336 472 76 ) ( 336 512 76 ) ( 372 512 76 ) tex_common/actorclip 0 12 0 0.5 0.5 65536 0 0
+}
 }
 // entity 1
 {
@@ -1268,4 +1277,11 @@
 "model" "models/objects/vegi/plant_hang/plant2.md2"
 "spawnflags" "252"
 "angles" "-1.44031 -69.9109 30.1115"
+}
+// entity 37
+{
+"classname" "misc_model"
+"origin" "449 488 20"
+"model" "models/objects/vegi/plant/plant2.md2"
+"spawnflags" "65280"
 }

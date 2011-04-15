@@ -419,3 +419,18 @@
 "spawnflags" "1023"
 "angles" "0 -83 0"
 }
+// entity 10
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "126 44 4"
+"angles" "0 -87.8403 0"
+}
+// entity 11
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "44 136 4"
+}

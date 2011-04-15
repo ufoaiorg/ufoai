@@ -1160,3 +1160,26 @@
 "spawnflags" "65280"
 "angles" "0 -34.395 0"
 }
+// entity 28
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "66 208 4"
+}
+// entity 29
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "306 336 4"
+"angles" "0 7.92425 0"
+}
+// entity 30
+{
+"classname" "misc_model"
+"origin" "272 100 4"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+"angles" "0 16.7041 0"
+}
