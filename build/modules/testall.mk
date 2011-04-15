@@ -24,6 +24,7 @@ $(TARGET)_SRCS      = \
 	tests/test_ui_level2.c \
 	tests/test_campaign.c \
 	tests/test_parser.c \
+	tests/test_dbuffer.c \
 	\
 	client/cl_console.c \
 	client/cl_http.c \

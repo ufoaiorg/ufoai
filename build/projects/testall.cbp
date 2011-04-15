@@ -1182,6 +1182,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_campaign.h" />
+		<Unit filename="..\..\src\tests\test_dbuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_dbuffer.h" />
 		<Unit filename="..\..\src\tests\test_game.c">
 			<Option compilerVar="CC" />
 		</Unit>
