@@ -131,7 +131,7 @@ static void testMassAssemblySequential (void)
 		srand(i);
 		time = Sys_Milliseconds();
 		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr);
-		CU_ASSERT(randomMap != NULL);
+		CU_ASSERT_PTR_NOT_NULL(randomMap);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
 		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
