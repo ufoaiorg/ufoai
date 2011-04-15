@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_mesh_anim.h"
 
-#define LNEXT(x) ((x + 1 < MAX_ANIMLIST) ? x + 1 : 0)
+#define LOOPNEXT(x) ((x + 1 < MAX_ANIMLIST) ? x + 1 : 0)
 
 /**
  * @brief Searches a given animation id in the given model data
@@ -98,7 +98,7 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 	}
 
 	/* advance in list (no overflow protection!) */
-	as->ladd = LNEXT(as->ladd);
+	as->ladd = LOOPNEXT(as->ladd);
 }
 
 
@@ -144,7 +144,7 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 		as->change = qtrue;
 	} else {
 		/* next animation */
-		as->ladd = LNEXT(as->lcur);
+		as->ladd = LOOPNEXT(as->lcur);
 		as->list[as->ladd] = anim - mod->alias.animdata;
 
 		if (anim->time < as->time)
@@ -155,7 +155,7 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 	}
 
 	/* advance in list (no overflow protection!) */
-	as->ladd = LNEXT(as->ladd);
+	as->ladd = LOOPNEXT(as->ladd);
 }
 
 
@@ -187,8 +187,8 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 
 		if (as->change || as->frame >= anim->to) {
 			/* go to next animation if it isn't the last one */
-			if (LNEXT(as->lcur) != as->ladd)
-				as->lcur = LNEXT(as->lcur);
+			if (LOOPNEXT(as->lcur) != as->ladd)
+				as->lcur = LOOPNEXT(as->lcur);
 
 			anim = mod->alias.animdata + as->list[as->lcur];
 
