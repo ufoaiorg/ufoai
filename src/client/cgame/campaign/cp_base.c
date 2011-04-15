@@ -193,6 +193,7 @@ static qboolean B_AddBlockedTile (base_t *base, int row, int column)
 				return qfalse;
 		}
 	}
+	assert(B_GetBuildingAt(base, column, row) == NULL);
 	base->map[row][column].blocked = qtrue;
 	return qtrue;
 }
@@ -1403,6 +1404,18 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 }
 
 /**
+ * @brief Check a base cell
+ * @return True if the cell is free to build
+ */
+qboolean B_MapIsCellFree (const base_t *base, int col, int row)
+{
+	return col >= 0 && col < BASE_SIZE
+	 && row >= 0 && row < BASE_SIZE
+	 && B_GetBuildingAt(base, col, row) == NULL
+	 && !B_IsTileBlocked(base, col, row);
+}
+
+/**
  * @brief Set the currently selected building.
  * @param[in,out] base The base to place the building in
  * @param[in] buildingTemplate The template of the building to place at the given location
@@ -1437,7 +1450,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 		/* Link to the base. */
 		buildingNew->base = base;
 
-		if (!base->map[row][col].blocked && !base->map[row][col].building) {
+		if (!B_IsTileBlocked(base, col, row) && B_GetBuildingAt(base, col, row) == NULL) {
 			int y, x;
 
 			if (col + buildingNew->size[0] > BASE_SIZE)
@@ -1446,7 +1459,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				return NULL;
 			for (y = row; y < row + buildingNew->size[1]; y++)
 				for (x = col; x < col + buildingNew->size[0]; x++)
-					if (base->map[y][x].building || base->map[y][x].blocked)
+					if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
 						return NULL;
 			/* No building in this place */
 
@@ -1477,8 +1490,10 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 
 			/* set building position */
 			for (y = row; y < row + buildingNew->size[1]; y++)
-				for (x = col; x < col + buildingNew->size[0]; x++)
+				for (x = col; x < col + buildingNew->size[0]; x++) {
+					assert(!B_IsTileBlocked(base, x, y));
 					base->map[y][x].building = buildingNew;
+				}
 
 			/* status and build (start) time */
 			buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
@@ -2601,8 +2616,8 @@ qboolean B_SaveXML (xmlNode_t *parent)
 				XML_AddInt(snode, SAVE_BASES_X, k);
 				XML_AddInt(snode, SAVE_BASES_Y, l);
 				if (b->map[k][l].building)
-					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, b->map[k][l].building->idx);
-				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, b->map[k][l].blocked);
+					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, B_GetBuildingAt(b, l, k)->idx);
+				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, B_IsTileBlocked(b, l, k));
 			}
 		}
 		/* buildings */
@@ -2772,6 +2787,11 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			else
 				tile->building = NULL;
 			tile->blocked = XML_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
+			if (tile->blocked && tile->building != NULL) {
+				Com_Printf("inconstent base layout found\n");
+				Com_UnregisterConstList(saveBaseConstants);
+				return qfalse;
+			}
 		}
 		/* buildings */
 		node = XML_GetNode(base, SAVE_BASES_BUILDINGS);

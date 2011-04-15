@@ -211,6 +211,7 @@ qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type
 qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
 void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);
 
+qboolean B_MapIsCellFree(const base_t *base, int col, int row);
 building_t* B_SetBuildingByClick(base_t *base, const building_t const *buildingTemplate, int row, int col);
 qboolean B_IsBuildingDestroyable(const building_t *building);
 qboolean B_BuildingDestroy(building_t* building);
