@@ -142,7 +142,7 @@ static void CalcLightinfoExtents (lightinfo_t *l)
 		lm_maxs[i] = ceil(stmaxs[i] / luxelScale);
 
 		l->texmins[i] = lm_mins[i];
-		l->texsize[i] = lm_maxs[i] - lm_mins[i];
+		l->texsize[i] = lm_maxs[i] - lm_mins[i] + 1;
 	}
 
 	if (l->texsize[0] * l->texsize[1] > MAX_MAP_LIGHTMAP)
@@ -212,7 +212,7 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 	VectorAdd(l->texorg, l->modelorg, l->texorg);
 
 	/* total sample count */
-	l->numsurfpt = (l->texsize[0] + 1) * (l->texsize[1] + 1);
+	l->numsurfpt = l->texsize[0] * l->texsize[1];
 	l->surfpt = (vec3_t *)Mem_Alloc(l->numsurfpt * sizeof(vec3_t));
 	if (!l->surfpt)
 		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
@@ -237,8 +237,8 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	 * to help avoid edge cases just inside walls */
 	surf = l->surfpt[0];
 
-	h = l->texsize[1] + 1;
-	w = l->texsize[0] + 1;
+	h = l->texsize[1];
+	w = l->texsize[0];
 
 	step = 1 << config.lightquant;
 	starts = l->texmins[0] * step;
@@ -929,8 +929,6 @@ static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
 
 		texsize[i] = maxs - mins + 1;
 	}
-
-
 }
 
 /**
