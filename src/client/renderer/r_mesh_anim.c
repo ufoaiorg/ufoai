@@ -237,8 +237,11 @@ const char *R_AnimGetName (const animState_t * as, const model_t * mod)
 }
 
 /**
- * @brief
+ * @brief Interpolate the transform for a model places on a tag of another model
  * @param[out] interpolated This is an array of 16 floats
+ * @param[in] tag Transformation matrix for a tagged model
+ * @param[in,out] as The animation state
+ * @param[in] numframes The max frames of the tag data
  */
 void R_InterpolateTransform (animState_t * as, int numframes, const float *tag, float *interpolated)
 {
