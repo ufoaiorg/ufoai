@@ -655,13 +655,11 @@ int G_ClientAction (player_t * player)
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
 			gi.DPrintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
-			invDef_t *fromPtr = INVDEF(from);
-			invDef_t *toPtr = INVDEF(to);
+			const invDef_t *fromPtr = INVDEF(from);
+			const invDef_t *toPtr = INVDEF(to);
 			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.i, fromPtr, fx, fy);
-			if (!fromItem)
-				gi.Error("Could not find item in inventory of ent %i (type %i) at %i:%i",
-						ent->number, ent->type, fx, fy);
-			G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue);
+			if (fromItem)
+				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue);
 		}
 		break;
 

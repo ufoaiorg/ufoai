@@ -935,10 +935,14 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
  */
 void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY)
 {
+	const invDef_t *fromPtr = INVDEF(fromContainer);
+
 	assert(CL_BattlescapeRunning());
 	assert(le);
 	assert(LE_IsActor(le));
-	MSG_Write_PA(PA_INVMOVE, le->entnum, fromContainer, fromX, fromY, toContainer, toX, toY);
+
+	if (INVSH_SearchInInventory(&le->i, fromPtr, fromX, fromY) != NULL)
+		MSG_Write_PA(PA_INVMOVE, le->entnum, fromContainer, fromX, fromY, toContainer, toX, toY);
 }
 
 /**
