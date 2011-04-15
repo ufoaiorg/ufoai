@@ -67,7 +67,7 @@ typedef struct {
 } tree_t;
 
 extern plane_t mapplanes[MAX_MAP_PLANES];
-extern uint16_t nummapplanes;
+extern int nummapplanes;
 
 extern int nummapbrushes;
 extern mapbrush_t mapbrushes[MAX_MAP_BRUSHES];
