@@ -1524,7 +1524,8 @@ TARGETING GRAPHICS
 static void CL_TargetingRadius (const vec3_t center, const float radius)
 {
 	ptl_t *particle = CL_ParticleSpawn("circle", 0, center, NULL, NULL);
-	particle->size[0] = radius;
+	if (particle != NULL)
+		particle->size[0] = radius;
 }
 
 /**
