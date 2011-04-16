@@ -54,10 +54,53 @@ static void testDBuffer (void)
 	int i;
 	const int size = 10000000;
 	struct dbuffer* buf = new_dbuffer();
+	char data[128];
+	size_t dataSize = sizeof(data);
 	for (i = 0; i < size; i++)
 		dbuffer_add(buf, "b", 1);
 	CU_ASSERT_EQUAL(size, dbuffer_len(buf));
+
+	CU_ASSERT_EQUAL(dataSize, dbuffer_get(buf, data, dataSize));
+	CU_ASSERT_EQUAL(size, dbuffer_len(buf));
+
+	CU_ASSERT_EQUAL(dataSize, dbuffer_extract(buf, data, dataSize));
+	CU_ASSERT_EQUAL(size - dataSize, dbuffer_len(buf));
+
 	free_dbuffer(buf);
+
+	buf = new_dbuffer();
+	dbuffer_add(buf, "b", 1);
+	CU_ASSERT_EQUAL(1, dbuffer_len(buf));
+
+	CU_ASSERT_EQUAL(1, dbuffer_get(buf, data, dataSize));
+	CU_ASSERT_EQUAL(1, dbuffer_len(buf));
+
+	CU_ASSERT_EQUAL(1, dbuffer_extract(buf, data, dataSize));
+	CU_ASSERT_EQUAL(0, dbuffer_len(buf));
+
+	buf = dbuffer_dup(buf);
+	CU_ASSERT_EQUAL(0, dbuffer_len(buf));
+
+	for (i = 0; i <= dataSize; i++)
+		dbuffer_add(buf, "b", 1);
+	CU_ASSERT_EQUAL(dataSize + 1, dbuffer_len(buf));
+
+	CU_ASSERT_EQUAL(dataSize, dbuffer_extract(buf, data, dataSize));
+	CU_ASSERT_EQUAL(1, dbuffer_len(buf));
+
+	CU_ASSERT_EQUAL(1, dbuffer_remove(buf, 1));
+	CU_ASSERT_EQUAL(0, dbuffer_len(buf));
+
+	CU_ASSERT_EQUAL(0, dbuffer_remove(buf, 1));
+
+	CU_ASSERT_EQUAL(0, dbuffer_get_at(buf, 1, data, dataSize));
+
+	for (i = 0; i <= dataSize; i++)
+		dbuffer_add(buf, "b", 1);
+	CU_ASSERT_EQUAL(dataSize + 1, dbuffer_len(buf));
+
+	CU_ASSERT_EQUAL(dataSize, dbuffer_get_at(buf, 1, data, dataSize));
+	CU_ASSERT_EQUAL(dataSize + 1, dbuffer_len(buf));
 }
 
 static void testDBufferBigData (void)
