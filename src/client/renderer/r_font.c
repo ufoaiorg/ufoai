@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_FONTNAME		32
 #define MAX_TRUNCMARKER		16   /* enough for 3 chinese chars */
 
-#define BUF_SIZE 2048
+#define BUF_SIZE 4096
 
 /**
  * @brief This structure holds one piece of text (usually a whole line)
