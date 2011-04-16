@@ -1330,18 +1330,19 @@ void B_SetName (base_t *base, const char *name)
 }
 
 /**
- * @brief Setup new base, uses template for the first base
- * @param[in] campaign The campaign data structure
- * @param[in,out] base The base to set up
+ * @brief Build new base, uses template for the first base
  * @param[in] pos Position (on Geoscape) the base built at
  * @param[in] name The name of the new base, this string might already be in utf-8
- * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
-void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, const char *name)
+base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 {
 	baseCapacities_t cap;
+	base_t *base = B_GetFirstUnfoundedBase();
 	float level;
+
+	if (!campaign)
+		Com_Error(ERR_DROP, "You can only build a base in an active campaign");
 
 	B_SetName(base, name);
 	Vector2Copy(pos, base->pos);
@@ -1380,7 +1381,8 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 	PR_UpdateProductionCap(base);
 
 	ccs.campaignStats.basesBuilt++;
-	ccs.mapAction = MA_NONE;
+
+	return base;
 }
 
 /**

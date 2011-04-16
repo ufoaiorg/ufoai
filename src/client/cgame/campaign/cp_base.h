@@ -181,8 +181,7 @@ const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);
 void B_InitStartup(void);
 
 /* base functions */
-void B_NewBases(void);
-void B_SetUpBase(const struct campaign_s *campaign, base_t* base, const vec2_t pos, const char *name);
+base_t *B_Build(const struct campaign_s *campaign, const vec2_t pos, const char *name);
 base_t *B_GetNext(base_t *lastBase);
 base_t* B_GetNextFounded(base_t *lastBase);
 base_t* B_GetBaseByIDX(int baseIdx);

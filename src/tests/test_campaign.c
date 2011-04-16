@@ -152,16 +152,15 @@ static installation_t* CreateInstallation (const char *name, const vec2_t pos)
 static base_t* CreateBase (const char *name, const vec2_t pos)
 {
 	const campaign_t *campaign = GetCampaign();
-	base_t *base = B_GetFirstUnfoundedBase();
+	base_t *base;
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
-
-	CU_ASSERT_FALSE(base->founded);
 
 	RS_InitTree(campaign, qfalse);
 	E_InitialEmployees(campaign);
-	B_SetUpBase(campaign, base, pos, name);
+	base = B_Build(campaign, pos, name);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+	CU_ASSERT_TRUE(base->founded);
 
 	return base;
 }

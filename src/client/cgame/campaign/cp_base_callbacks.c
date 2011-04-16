@@ -208,19 +208,20 @@ static void B_SetBaseTitle_f (void)
 static void B_BuildBase_f (void)
 {
 	const nation_t *nation;
-	base_t *base = B_GetFirstUnfoundedBase();
 	const campaign_t *campaign = ccs.curCampaign;
 
-	if (!base)
-		return;
+	if (ccs.mapAction == MA_NEWBASE)
+		ccs.mapAction = MA_NONE;
 
 	if (ccs.credits - campaign->basecost > 0) {
 		const char *baseName = mn_base_title->string;
+		base_t *base;
 		if (baseName[0] == '\0')
 			baseName = "Base";
 
-		/* set up the base with buildings from template */
-		B_SetUpBase(campaign, base, ccs.newBasePos, baseName);
+		base = B_Build(campaign, ccs.newBasePos, baseName);
+		if (!base)
+			Com_Error(ERR_DROP, "Cannot build base");
 
 		CL_UpdateCredits(ccs.credits - campaign->basecost);
 		nation = MAP_GetNation(base->pos);
@@ -235,8 +236,6 @@ static void B_BuildBase_f (void)
 	} else {
 		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
-		if (ccs.mapAction == MA_NEWBASE)
-			ccs.mapAction = MA_NONE;
 
 		CP_PopupList(_("Notice"), _("Not enough credits to set up a new base."));
 	}
