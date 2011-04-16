@@ -13,7 +13,6 @@
 				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-O2" />
@@ -44,7 +43,6 @@
 				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-pg" />
@@ -89,6 +87,7 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_UFO" />
+			<Add directory="..\..\src\libs\mxml\" />
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
@@ -103,7 +102,6 @@
 			<Add library="ogg" />
 			<Add library="theora" />
 			<Add library="xvidcore" />
-			<Add library="mxml" />
 		</Linker>
 		<Unit filename="..\..\base\autoexec.cfg" />
 		<Unit filename="..\..\base\dedicated.cfg" />
@@ -1280,6 +1278,36 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\libs\mxml\config.h" />
+		<Unit filename="..\..\src\libs\mxml\mxml-attr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-entity.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-file.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-index.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-node.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-private.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-private.h" />
+		<Unit filename="..\..\src\libs\mxml\mxml-search.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-set.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml.h" />
 		<Unit filename="..\..\src\ports\system.h" />
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
