@@ -30,13 +30,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_light.h"
 
 typedef struct animState_s {
-	int frame, oldframe;
+	int frame;
+	int oldframe;
 	float backlerp;				/**< linear interpolation from previous frame */
-	int time, dt;
-	int mesh;
+	int time;
+	int dt;
+	int mesh;					/**< the mesh index of the model to animate */
 
-	byte list[MAX_ANIMLIST];
-	byte lcur, ladd;
+	byte list[MAX_ANIMLIST];	/**< the list of @c mAliasAnim_t array indices that should be played */
+	byte lcur;					/**< the current position in the animation list */
+	byte ladd;
 	byte change;
 } animState_t;
 

@@ -29,6 +29,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LOOPNEXT(x) ((x + 1 < MAX_ANIMLIST) ? x + 1 : 0)
 
 /**
+ * @brief Adds the given animation to the animation state
+ */
+static inline void R_AnimAdd (animState_t *as, const model_t *mod, const mAliasAnim_t *anim)
+{
+	as->list[as->ladd] = anim - mod->alias.animdata;
+
+	/* advance in list (no overflow protection!) */
+	as->ladd = LOOPNEXT(as->ladd);
+}
+/**
+ * @brief Get the @c mAliasAnim_t for the given animation state
+ */
+#define R_AnimGetAliasAnim(mod, as) ((mod)->alias.animdata + (as)->list[(as)->lcur])
+
+/**
  * @brief Searches a given animation id in the given model data
  * @sa R_AnimChange
  * @sa R_AnimAppend
@@ -53,7 +68,6 @@ static const mAliasAnim_t *R_AnimGet (const model_t * mod, const char *name)
 	Com_Printf("model \"%s\" doesn't have animation \"%s\"\n", mod->name, name);
 	return NULL;
 }
-
 
 /**
  * @brief Appends a new animation to the current running one
@@ -91,14 +105,10 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 		as->time = anim->time;
 		as->dt = 0;
 
-		as->list[as->ladd] = anim - mod->alias.animdata;
-	} else {
-		/* next animation */
-		as->list[as->ladd] = anim - mod->alias.animdata;
+		as->change = qtrue;
 	}
 
-	/* advance in list (no overflow protection!) */
-	as->ladd = LOOPNEXT(as->ladd);
+	R_AnimAdd(as, mod, anim);
 }
 
 
@@ -140,22 +150,19 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 		as->time = anim->time;
 		as->dt = 0;
 
-		as->list[as->ladd] = anim - mod->alias.animdata;
 		as->change = qtrue;
 	} else {
 		/* next animation */
 		as->ladd = LOOPNEXT(as->lcur);
-		as->list[as->ladd] = anim - mod->alias.animdata;
 
 		if (anim->time < as->time)
 			as->time = anim->time;
 		/* don't change to the same animation */
-		if (anim != mod->alias.animdata + as->list[as->lcur])
+		if (anim != R_AnimGetAliasAnim(mod, as))
 			as->change = qtrue;
 	}
 
-	/* advance in list (no overflow protection!) */
-	as->ladd = LOOPNEXT(as->ladd);
+	R_AnimAdd(as, mod, anim);
 }
 
 
@@ -182,7 +189,7 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 	as->dt += msec;
 
 	while (as->dt > as->time) {
-		const mAliasAnim_t *anim = mod->alias.animdata + as->list[as->lcur];
+		const mAliasAnim_t *anim = R_AnimGetAliasAnim(mod, as);
 		as->dt -= as->time;
 
 		if (as->change || as->frame >= anim->to) {
@@ -190,7 +197,7 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 			if (LOOPNEXT(as->lcur) != as->ladd)
 				as->lcur = LOOPNEXT(as->lcur);
 
-			anim = mod->alias.animdata + as->list[as->lcur];
+			anim = R_AnimGetAliasAnim(mod, as);
 
 			/* prepare next frame */
 			as->dt = 0;
@@ -232,7 +239,7 @@ const char *R_AnimGetName (const animState_t * as, const model_t * mod)
 	if (as->lcur == as->ladd)
 		return NULL;
 
-	anim = mod->alias.animdata + as->list[as->lcur];
+	anim = R_AnimGetAliasAnim(mod, as);
 	return anim->name;
 }
 
