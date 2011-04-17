@@ -144,7 +144,6 @@
 		<Unit filename="..\..\base\ufos\research_logic.ufo" />
 		<Unit filename="..\..\base\ufos\researched_list.ufo" />
 		<Unit filename="..\..\base\ufos\seq_credits.ufo" />
-		<Unit filename="..\..\base\ufos\seq_ingame.ufo" />
 		<Unit filename="..\..\base\ufos\seq_intro.ufo" />
 		<Unit filename="..\..\base\ufos\seq_modelview.ufo" />
 		<Unit filename="..\..\base\ufos\seq_tutorials.ufo" />
@@ -153,27 +152,21 @@
 		<Unit filename="..\..\base\ufos\team_humans.ufo" />
 		<Unit filename="..\..\base\ufos\terrain.ufo" />
 		<Unit filename="..\..\base\ufos\tips.ufo" />
-		<Unit filename="..\..\base\ufos\ui\ahud.ufo" />
 		<Unit filename="..\..\base\ufos\ui\aircraft.ufo" />
 		<Unit filename="..\..\base\ufos\ui\aircraft_equip.ufo" />
 		<Unit filename="..\..\base\ufos\ui\aircraft_info.ufo" />
 		<Unit filename="..\..\base\ufos\ui\aircraft_pilots.ufo" />
 		<Unit filename="..\..\base\ufos\ui\aircraft_soldiers.ufo" />
 		<Unit filename="..\..\base\ufos\ui\aliencont.ufo" />
-		<Unit filename="..\..\base\ufos\ui\althud.ufo" />
 		<Unit filename="..\..\base\ufos\ui\basedefence.ufo" />
 		<Unit filename="..\..\base\ufos\ui\bases.ufo" />
 		<Unit filename="..\..\base\ufos\ui\basesummary.ufo" />
 		<Unit filename="..\..\base\ufos\ui\buildings.ufo" />
 		<Unit filename="..\..\base\ufos\ui\campaign.ufo" />
-		<Unit filename="..\..\base\ufos\ui\cgame\multiplayer.ufo" />
-		<Unit filename="..\..\base\ufos\ui\cgame\multiplayer_team.ufo" />
-		<Unit filename="..\..\base\ufos\ui\cgame\multiplayeringame.ufo" />
 		<Unit filename="..\..\base\ufos\ui\equipment.ufo" />
 		<Unit filename="..\..\base\ufos\ui\geoscape.ufo" />
 		<Unit filename="..\..\base\ufos\ui\hire.ufo" />
 		<Unit filename="..\..\base\ufos\ui\hospital.ufo" />
-		<Unit filename="..\..\base\ufos\ui\hud.ufo" />
 		<Unit filename="..\..\base\ufos\ui\inventory.ufo" />
 		<Unit filename="..\..\base\ufos\ui\lostwon.ufo" />
 		<Unit filename="..\..\base\ufos\ui\mailclient.ufo" />
@@ -182,7 +175,6 @@
 		<Unit filename="..\..\base\ufos\ui\material_editor.ufo" />
 		<Unit filename="..\..\base\ufos\ui\messageoptions.ufo" />
 		<Unit filename="..\..\base\ufos\ui\modeltest.ufo" />
-		<Unit filename="..\..\base\ufos\ui\nohud.ufo" />
 		<Unit filename="..\..\base\ufos\ui\options.ufo" />
 		<Unit filename="..\..\base\ufos\ui\physdat.ufo" />
 		<Unit filename="..\..\base\ufos\ui\production.ufo" />
@@ -412,7 +404,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particlespawn.h" />
-		<Unit filename="..\..\src\client\cgame\campaignOB\missions\cp_mission_xvi.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -898,7 +889,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_thread.h" />
-		<Unit filename="..\..\src\client\renderer\r_warpsin.h" />
 		<Unit filename="..\..\src\client\sound\s_local.h" />
 		<Unit filename="..\..\src\client\sound\s_main.c">
 			<Option compilerVar="CC" />
