@@ -260,3 +260,11 @@
 ( 188 40 4 ) ( 176 40 4 ) ( 176 32 4 ) tex_common/nodraw 0 -64 0 0.5 0.5 65282 128 0
 }
 }
+// entity 12
+{
+"classname" "misc_model"
+"model" "models//animals/crocodile/croc.md2"
+"origin" "152 232 -72"
+"spawnflags" "255"
+"skin" "0"
+}
