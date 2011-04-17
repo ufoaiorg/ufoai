@@ -236,7 +236,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 			if (tag) {
 				float interpolated[16];
 				animState_t as;
-				dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
+				const dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
 
 				/* do interpolation */
 				as.frame = pmi->frame;
