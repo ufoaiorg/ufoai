@@ -420,7 +420,6 @@ static void testHttpHelperFunctions (void)
 	CU_ASSERT_STRING_EQUAL(server, "ufoai.ninex.info")
 	CU_ASSERT_EQUAL(port, 80);
 	CU_ASSERT_STRING_EQUAL(uriPath, "/ufo/masterserver.php?query");
-
 }
 
 static void testNetResolv (void)
