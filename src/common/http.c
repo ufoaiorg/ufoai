@@ -138,13 +138,29 @@ size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
 	return bytes;
 }
 
-typedef struct getData_s {
-	const char *url;
-	http_callback_t callback;
-	SDL_cond *timeoutCondition;
-	threads_mutex_t *mutex;
-	SDL_sem *timeoutSemaphore;
-} getData_t;
+/**
+ * @brief Converts the hostname into an ip to work around a bug in libcurl (resp. the resolver) that
+ * uses alarm for timeouts (this is in conflict with our signal handlers and longjmp environment)
+ * @param[in] url The url to convert
+ * @param[out] buf The resolved url or empty if an error occurred
+ * @param[in] size The size of the target buffer
+ */
+static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
+{
+	char server[512];
+	char ipServer[MAX_VAR];
+	int port;
+	char uriPath[512];
+
+	buf[0] = '\0';
+
+	if (!HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port))
+		Com_Error(ERR_DROP, "invalid url given: %s", url);
+
+	NET_ResolvNode(server, ipServer, sizeof(ipServer));
+	if (ipServer[0] != '\0')
+		Com_sprintf(buf, size, "http://%s:%i%s", ipServer, port, uriPath);
+}
 
 /**
  * @brief Gets a specific url
@@ -156,9 +172,11 @@ static char* HTTP_GetURLInternal (const char *url)
 
 	OBJZERO(dl);
 
-	dl.curl = curl_easy_init();
+	HTTP_ResolvURL(url, dl.URL, sizeof(dl.URL));
+	if (dl.URL[0] == '\0')
+		return NULL;
 
-	Q_strncpyz(dl.URL, url, sizeof(dl.URL));
+	dl.curl = curl_easy_init();
 	curl_easy_setopt(dl.curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer + 2);
 	curl_easy_setopt(dl.curl, CURLOPT_ENCODING, "");
 	curl_easy_setopt(dl.curl, CURLOPT_NOPROGRESS, 1);
@@ -186,6 +204,11 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 	CURL *curl;
 	struct curl_httppost* post = NULL;
 	struct curl_httppost* last = NULL;
+	char buf[576];
+
+	HTTP_ResolvURL(url, buf, sizeof(buf));
+	if (buf[0] == '\0')
+		return;
 
 	curl = curl_easy_init();
 
@@ -201,53 +224,21 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
-	curl_easy_setopt(curl, CURLOPT_URL, url);
+	curl_easy_setopt(curl, CURLOPT_URL, buf);
 	curl_easy_perform(curl);
 
 	curl_easy_cleanup(curl);
 }
 
-static int HTTP_GetUrlThread (void *data)
-{
-	const getData_t* getData = (const getData_t *) data;
-	char *response = HTTP_GetURLInternal(getData->url);
-
-	if (SDL_SemTryWait(getData->timeoutSemaphore) != 0)
-		return -1;
-
-	TH_MutexLock(getData->mutex);
-	SDL_CondSignal(getData->timeoutCondition);
-	TH_MutexUnlock(getData->mutex);
-	if (getData->callback != NULL)
-		getData->callback(response);
-	Mem_Free(response);
-
-	return 1;
-}
-
 void HTTP_GetURL (const char *url, http_callback_t callback)
 {
-	threads_mutex_t *httpLock = TH_MutexCreate("http");
-	SDL_cond *timeoutCondition = SDL_CreateCond();
-	SDL_sem *timeoutSemaphore = SDL_CreateSemaphore(1);
-	getData_t data = {url, callback, timeoutCondition, httpLock, timeoutSemaphore};
-	SDL_Thread *thread = SDL_CreateThread(HTTP_GetUrlThread, &data);
-	TH_MutexLock(httpLock);
-	TH_MutexCondWaitTimeout(httpLock, timeoutCondition, http_timeout->integer * 1000);
+	char *response = HTTP_GetURLInternal(url);
+	if (response == NULL)
+		return;
 
-	if (SDL_SemTryWait(timeoutSemaphore) != 0) {
-		SDL_WaitThread(thread, NULL);
-	} else {
-		/* we have to kill the thread because libcurl is using alarm to signal a dns
-		 * timeout - this is in conflict with our longjmp environment and signal handlers
-		 * and would corrupt the stack */
-		Com_Printf("timeout for getting %s\n", url);
-		SDL_KillThread(thread);
-	}
-	TH_MutexUnlock(httpLock);
-	SDL_DestroySemaphore(timeoutSemaphore);
-	SDL_DestroyCond(timeoutCondition);
-	TH_MutexDestroy(httpLock);
+	if (callback != NULL)
+		callback(response);
+	Mem_Free(response);
 }
 
 /**

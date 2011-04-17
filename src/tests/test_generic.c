@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteGeneric (void)
 {
 	TEST_Init();
+	NET_Init();
 	return 0;
 }
 
@@ -49,6 +50,7 @@ static int UFO_InitSuiteGeneric (void)
 static int UFO_CleanSuiteGeneric (void)
 {
 	TEST_Shutdown();
+	NET_Shutdown();
 	return 0;
 }
 
@@ -421,6 +423,13 @@ static void testHttpHelperFunctions (void)
 
 }
 
+static void testNetResolv (void)
+{
+	char ipServer[MAX_VAR];
+	NET_ResolvNode("localhost", ipServer, sizeof(ipServer));
+	CU_ASSERT_STRING_EQUAL(ipServer, "127.0.0.1");
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -461,6 +470,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testHttpHelperFunctions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testNetResolv) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

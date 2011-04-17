@@ -1162,3 +1162,20 @@ void NET_SockaddrToStrings (struct datagram_socket *s, struct sockaddr *addr, ch
 		Q_strncpyz(service, "(error)", servicelen);
 	}
 }
+
+static void NET_AddrinfoToString (const struct addrinfo *addr, char *buf, size_t bufLength)
+{
+	char *service = inet_ntoa(((struct sockaddr_in *)addr->ai_addr)->sin_addr);
+	Q_strncpyz(buf, service, bufLength);
+}
+
+void NET_ResolvNode (const char *node, char *buf, size_t bufLength)
+{
+	struct addrinfo* addrinfo = NET_GetAddinfoForNode(node, NULL);
+	if (addrinfo == NULL) {
+		buf[0] = '\0';
+		return;
+	}
+	NET_AddrinfoToString(addrinfo, buf, bufLength);
+	freeaddrinfo(addrinfo);
+}
