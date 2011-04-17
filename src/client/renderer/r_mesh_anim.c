@@ -106,8 +106,6 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 		as->dt = 0;
 
 		as->change = qtrue;
-	} else {
-		as->change = qfalse;
 	}
 
 	R_AnimAdd(as, mod, anim);
