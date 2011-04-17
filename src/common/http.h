@@ -66,5 +66,6 @@ void HTTP_PutFile(const char *formName, const char *fileName, const char *url, c
 size_t HTTP_Recv(void *ptr, size_t size, size_t nmemb, void *stream);
 size_t HTTP_Header(void *ptr, size_t size, size_t nmemb, void *stream);
 void HTTP_Cleanup(void);
+qboolean HTTP_ExtractComponents(const char *url, char *server, size_t serverLength, char *path, size_t pathLength, int *port);
 
 #endif /* HTTP_H */

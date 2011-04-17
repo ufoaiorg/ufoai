@@ -23,6 +23,56 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/mutex.h"
 
 /**
+ * @brief Extract the servername, the port and the path part of the given url
+ * @param url The url to extract the data from
+ * @param server The server target buffer
+ * @param serverLength The length of the buffer
+ * @param path The path target buffer
+ * @param pathLength The length of the buffer
+ * @param port The port
+ * @return @c true if the extracting went well, @c false if an error occurred
+ */
+qboolean HTTP_ExtractComponents (const char *url, char *server, size_t serverLength, char *path, size_t pathLength, int *port)
+{
+	char *s, *buf;
+	const char *proto = "http://";
+	const size_t protoLength = strlen(proto);
+	char buffer[1024];
+	int i;
+
+	if (Q_strncasecmp(proto, url, protoLength))
+		return qfalse;
+
+	Q_strncpyz(buffer, url, sizeof(buffer));
+	buf = buffer;
+
+	buf += protoLength;
+	i = 0;
+	for (s = server; *buf != '\0' && *buf != ':' && *buf != '/';) {
+		if (i >= serverLength - 1)
+			return qfalse;
+		i++;
+		*s++ = *buf++;
+	}
+	*s = '\0';
+
+	if (*buf == ':') {
+		buf++;
+		if (sscanf(buf, "%d", port) != 1)
+			return qfalse;
+
+		for (buf++; *buf != '\0' && *buf != '/'; buf++) {
+		}
+	} else {
+		*port = 80;
+	}
+
+	Q_strncpyz(path, buf, pathLength);
+
+	return qtrue;
+}
+
+/**
  * @brief libcurl callback to update header info.
  */
 size_t HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
@@ -98,7 +148,7 @@ typedef struct getData_s {
 
 /**
  * @brief Gets a specific url
- * @note Make sure, that you free the strings that is returned by this function
+ * @note Make sure, that you free the string that is returned by this function
  */
 static char* HTTP_GetURLInternal (const char *url)
 {
