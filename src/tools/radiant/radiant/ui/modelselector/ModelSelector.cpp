@@ -148,6 +148,10 @@ namespace ui
 				{
 					std::string relativePath = DirectoryCleaned(_path + dirName);
 
+					DirIterMap::iterator it = _dirIterMap.find(relativePath);
+					if (it != _dirIterMap.end())
+						return;
+
 					// Add the fields to the treeview
 					GtkTreeIter iter;
 					gtk_tree_store_append(_store, &iter, parIter);
