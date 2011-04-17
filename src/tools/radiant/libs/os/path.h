@@ -112,17 +112,19 @@ namespace os
 	inline std::string makeRelative (const std::string& path, const std::string& base)
 	{
 		const std::size_t length = base.length();
+		std::string cut;
 #if defined(OS_CASE_INSENSITIVE)
 		if (g_ascii_strncasecmp(path.c_str(), base.c_str(), length) == 0)
 #else
 		if (std::strncmp(path.c_str(), base.c_str(), length) == 0)
 #endif
-			return path.substr(length);
-		if (path[0] == '/') {
-			std::string cut = path;
+			cut = path.substr(length);
+		else
+			cut = path;
+		if (cut[0] == '/') {
 			return cut.erase(0, 1);
 		}
-		return path;
+		return cut;
 	}
 
 	/// \brief Returns true if \p path is a fully qualified file-system path.
