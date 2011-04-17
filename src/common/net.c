@@ -898,7 +898,7 @@ static int NET_DoStartServer (const struct addrinfo *addr)
 	return sock;
 }
 
-static struct addrinfo* NET_GetAddinfoForNode (const char *node, const char *service)
+static struct addrinfo* NET_GetAddrinfoForNode (const char *node, const char *service)
 {
 	struct addrinfo *res;
 	struct addrinfo hints;
@@ -940,7 +940,7 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 	}
 
 	if (service) {
-		struct addrinfo *res = NET_GetAddinfoForNode(node, service);
+		struct addrinfo *res = NET_GetAddrinfoForNode(node, service);
 
 		server_socket = NET_DoStartServer(res);
 		if (server_socket == INVALID_SOCKET) {
@@ -1171,7 +1171,7 @@ static void NET_AddrinfoToString (const struct addrinfo *addr, char *buf, size_t
 
 void NET_ResolvNode (const char *node, char *buf, size_t bufLength)
 {
-	struct addrinfo* addrinfo = NET_GetAddinfoForNode(node, NULL);
+	struct addrinfo* addrinfo = NET_GetAddrinfoForNode(node, NULL);
 	if (addrinfo == NULL) {
 		buf[0] = '\0';
 		return;
