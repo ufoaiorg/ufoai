@@ -233,12 +233,10 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 void HTTP_GetURL (const char *url, http_callback_t callback)
 {
 	char *response = HTTP_GetURLInternal(url);
-	if (response == NULL)
-		return;
-
 	if (callback != NULL)
 		callback(response);
-	Mem_Free(response);
+	if (response != NULL)
+		Mem_Free(response);
 }
 
 /**
