@@ -336,6 +336,8 @@ void R_RenderFrame (void)
 
 			R_DrawBspNormals(tile);
 		}
+	} else {
+		glClear(GL_DEPTH_BUFFER_BIT);
 	}
 
 	R_DrawEntities();
