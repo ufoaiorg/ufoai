@@ -33,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static inline void R_AnimAdd (animState_t *as, const model_t *mod, const mAliasAnim_t *anim)
 {
+	assert(as->ladd < sizeof(as->list));
+
 	as->list[as->ladd] = anim - mod->alias.animdata;
 
 	/* advance in list (no overflow protection!) */
@@ -83,8 +85,6 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 {
 	const mAliasAnim_t *anim;
 
-	assert(as->ladd < MAX_ANIMLIST);
-
 	if (!mod || !mod->alias.num_anims)
 		return;
 
@@ -125,8 +125,6 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 {
 	const mAliasAnim_t *anim;
-
-	assert(as->ladd < MAX_ANIMLIST);
 
 	if (!mod || !mod->alias.num_anims)
 		return;
