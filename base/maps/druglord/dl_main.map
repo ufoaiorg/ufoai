@@ -12023,3 +12023,11 @@
 "skin" "0"
 "angles" "6.83245e-007 2.50448e-006 1.00179e-005"
 }
+// entity 342
+{
+"classname" "misc_model"
+"model" "models//animals/crocodile/croc.md2"
+"origin" "760 1200 -72"
+"spawnflags" "255"
+"skin" "0"
+}
