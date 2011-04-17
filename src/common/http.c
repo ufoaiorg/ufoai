@@ -235,8 +235,7 @@ void HTTP_GetURL (const char *url, http_callback_t callback)
 	char *response = HTTP_GetURLInternal(url);
 	if (callback != NULL)
 		callback(response);
-	if (response != NULL)
-		Mem_Free(response);
+	Mem_Free(response);
 }
 
 /**
