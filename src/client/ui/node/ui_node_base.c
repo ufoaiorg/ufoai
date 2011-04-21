@@ -279,10 +279,11 @@ static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
 		return;
 	}
 
-	if (base->map[row][col].building) {
+	if (B_GetBuildingAt(base, col, row) != NULL) {
 		const building_t *entry = B_GetBuildingAt(base, col, row);
 
-		assert(!B_IsTileBlocked(base, col, row));
+		if (B_IsTileBlocked(base, col, row))
+			Com_Error(ERR_DROP, "tile with building is not blocked");
 
 		B_BuildingOpenAfterClick(entry);
 		ccs.baseAction = BA_NONE;
