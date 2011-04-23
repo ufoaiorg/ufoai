@@ -61,7 +61,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 	if (CAP_GetCurrent(base, CAP_ANTIMATTER) <= 0)
 		return;
 
-	B_RemoveAntimatterExceedingCapacity(base);
+	CAP_RemoveAntimatterExceedingCapacity(base);
 
 	if (base->baseStatus != BASE_WORKING)
 		return;
@@ -468,7 +468,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 		switch (building->buildingType) {
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
-			if (base->capacities[cap].cur >= base->capacities[cap].max) {
+			if (CAP_GetFreeCapacity(base, cap) <= 0) {
 				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
@@ -478,7 +478,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 			}
 			break;
 		case B_QUARTERS:
-			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
+			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
@@ -488,7 +488,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 			}
 			break;
 		case B_STORAGE:
-			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
+			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
@@ -749,13 +749,13 @@ static void BaseSummary_Init (const base_t *base)
 		/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
 		if (B_GetBuildingStatus(base, b->buildingType)) {
 			Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
-				base->capacities[cap].cur, base->capacities[cap].max), sizeof(textStatsBuffer));
+				CAP_GetCurrent(base, cap), CAP_GetMax(base, cap)), sizeof(textStatsBuffer));
 		} else {
 			if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 				const float timeLeft = max(0.0, B_GetConstructionTimeRemain(b));
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%3.1f %s", _(b->name), timeLeft, ngettext("day", "days", timeLeft)), sizeof(textStatsBuffer));
 			} else {
-				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), base->capacities[cap].cur, 0), sizeof(textStatsBuffer));
+				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), CAP_GetCurrent(base, cap), 0), sizeof(textStatsBuffer));
 			}
 		}
 		Q_strcat(textStatsBuffer, va("\t\t\t\t%i\n", B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType)), sizeof(textStatsBuffer));

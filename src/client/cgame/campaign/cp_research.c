@@ -665,19 +665,11 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 	}
 
 	if (tech->statusResearchable) {
-		/* Get a free lab from the base. */
-		const building_t *building = B_GetBuildingInBaseByType(base, B_LAB, qtrue);
-		if (building) {
-			/* Check the capacity. */
-			if (base->capacities[CAP_LABSPACE].max > base->capacities[CAP_LABSPACE].cur) {
-				tech->scientists++;			/* Assign a scientist to this tech. */
-				tech->base = base;			/* Make sure this tech has proper base pointer. */
-				base->capacities[CAP_LABSPACE].cur++;	/* Set the amount of currently assigned in capacities. */
-				employee->assigned = qtrue;
-			} else {
-				UI_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
-				return;
-			}
+		if (CAP_GetFreeCapacity(base, CAP_LABSPACE) > 0) {
+			tech->scientists++;
+			tech->base = base;
+			CAP_AddCurrent(base, CAP_LABSPACE, 1);
+			employee->assigned = qtrue;
 		} else {
 			UI_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 			return;
@@ -712,7 +704,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		/* Remove the scientist from the tech. */
 		tech->scientists--;
 		/* Update capacity. */
-		tech->base->capacities[CAP_LABSPACE].cur--;
+		CAP_AddCurrent(tech->base, CAP_LABSPACE, -1);
 		employee->assigned = qfalse;
 	} else {
 		Com_Error(ERR_DROP, "No assigned scientists found - serious inconsistency.");
@@ -1708,10 +1700,10 @@ void RS_RemoveScientistsExceedingCapacity (base_t *base)
 {
 	assert(base);
 
-	/* Make sure base->capacities[CAP_LABSPACE].cur is set to proper value */
+	/* Make sure current CAP_LABSPACE capacity is set to proper value */
 	CAP_SetCurrent(base, CAP_LABSPACE, RS_CountScientistsInBase(base));
 
-	while (B_GetFreeCapacity(base, CAP_LABSPACE) < 0) {
+	while (CAP_GetFreeCapacity(base, CAP_LABSPACE) < 0) {
 		technology_t *tech = RS_GetTechWithMostScientists(base);
 		RS_RemoveScientist(tech, NULL);
 	}

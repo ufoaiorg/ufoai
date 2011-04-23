@@ -177,12 +177,12 @@ qboolean E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
 		case EMPL_WORKER:
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
-			oldBase->capacities[CAP_EMPLOYEES].cur--;
-			newBase->capacities[CAP_EMPLOYEES].cur++;
+			CAP_AddCurrent(oldBase, CAP_EMPLOYEES, -1);
+			CAP_AddCurrent(newBase, CAP_EMPLOYEES, 1);
 			break;
 		case EMPL_ROBOT:
-			oldBase->capacities[CAP_ITEMS].cur -= UGV_SIZE;
-			newBase->capacities[CAP_ITEMS].cur += UGV_SIZE;
+			CAP_AddCurrent(oldBase, CAP_ITEMS, -UGV_SIZE);
+			CAP_AddCurrent(newBase, CAP_ITEMS, UGV_SIZE);
 			break;
 		case MAX_EMPL:
 			break;
@@ -404,7 +404,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
  */
 qboolean E_HireEmployee (base_t* base, employee_t* employee)
 {
-	if (base->capacities[CAP_EMPLOYEES].cur >= base->capacities[CAP_EMPLOYEES].max) {
+	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) <= 0) {
 		UI_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
 		return qfalse;
 	}
@@ -415,17 +415,17 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		/* Update other capacities */
 		switch (employee->type) {
 		case EMPL_WORKER:
-			base->capacities[CAP_EMPLOYEES].cur++;
+			CAP_AddCurrent(base, CAP_EMPLOYEES, 1);
 			PR_UpdateProductionCap(base);
 			break;
 		case EMPL_PILOT:
 			AIR_AutoAddPilotToAircraft(base, employee);
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
-			base->capacities[CAP_EMPLOYEES].cur++;
+			CAP_AddCurrent(base, CAP_EMPLOYEES, 1);
 			break;
 		case EMPL_ROBOT:
-			base->capacities[CAP_ITEMS].cur += UGV_SIZE;
+			CAP_AddCurrent(base, CAP_ITEMS, UGV_SIZE);
 			break;
 		case MAX_EMPL:
 			break;
@@ -506,10 +506,10 @@ qboolean E_UnhireEmployee (employee_t* employee)
 		case EMPL_WORKER:
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
-			base->capacities[CAP_EMPLOYEES].cur--;
+			CAP_AddCurrent(base, CAP_EMPLOYEES, -1);
 			break;
 		case EMPL_ROBOT:
-			base->capacities[CAP_ITEMS].cur -= UGV_SIZE;
+			CAP_AddCurrent(base, CAP_ITEMS, -UGV_SIZE);
 			break;
 		case MAX_EMPL:
 			break;
@@ -680,7 +680,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 	int type;
 
 	/* Check if there are too many employees */
-	if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)
+	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) >= 0)
 		return;
 
 	/* do a reverse loop in order to finish by soldiers (the most important employees) */
@@ -695,7 +695,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 			if (E_IsInBase(employee, base))
 				E_DeleteEmployee(employee);
 
-			if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)
+			if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) >= 0)
 				return;
 		}
 	}

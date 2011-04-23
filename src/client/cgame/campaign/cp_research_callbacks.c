@@ -89,8 +89,7 @@ static void RS_UpdateInfo (const base_t* base)
 
 	/* Display laboratories limits. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (used/all): %i/%i"),
-		base->capacities[CAP_LABSPACE].cur,
-		base->capacities[CAP_LABSPACE].max);
+		CAP_GetCurrent(base, CAP_LABSPACE), CAP_GetMax(base, CAP_LABSPACE));
 	Cvar_Set("mn_research_labs", tmpbuf);
 
 	/* Display scientists amounts. */
@@ -433,17 +432,12 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 	assert(tech->scientists >= 0);
 
 	/* Add as many scientists as possible to this tech. */
-	do {
-		if (base->capacities[CAP_LABSPACE].cur < base->capacities[CAP_LABSPACE].max) {
-			const employee_t *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
-			if (!employee)
-				break;
-			RS_AssignScientist(tech, base, NULL);
-		} else {
-			/* No free lab-space left. */
+	while (CAP_GetFreeCapacity(base, CAP_LABSPACE) > 0) {
+		const employee_t *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+		if (!employee)
 			break;
-		}
-	} while (qtrue);
+		RS_AssignScientist(tech, base, NULL);
+	}
 }
 
 /**

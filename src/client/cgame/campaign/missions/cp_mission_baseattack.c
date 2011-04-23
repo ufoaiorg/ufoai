@@ -128,7 +128,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 
 	/* HACK This hack is only needed until base will be really destroyed
 	 * we must recalculate items in storage because of the items we collected on battlefield */
-	B_UpdateStorageCap(base);
+	CAP_UpdateStorageCap(base);
 	base->aircraftCurrent = NULL;
 	base->baseStatus = BASE_WORKING;
 }

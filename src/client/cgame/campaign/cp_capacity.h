@@ -44,20 +44,23 @@ typedef struct capacities_s {
 	int cur;		/**< Currently used capacity. */
 } capacities_t;
 
-void B_UpdateStorageCap(struct base_s *base);
+void CAP_UpdateStorageCap(struct base_s *base);
 /**
  * @brief Capacity macros
  */
 #define CAP_Get(base, capacity) &((base)->capacities[(capacity)])
 #define CAP_GetMax(base, capacity) (base)->capacities[(capacity)].max
+#define CAP_SetMax(base, capacity, value) (base)->capacities[(capacity)].max = max(0, (value))
+#define CAP_AddMax(base, capacity, value) (base)->capacities[(capacity)].max = max(0, (base)->capacities[(capacity)].max + (value))
 #define CAP_GetCurrent(base, capacity) (base)->capacities[(capacity)].cur
-#define CAP_SetCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = (value)
+#define CAP_SetCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = max(0, (value))
+#define CAP_AddCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = max(0, (base)->capacities[(capacity)].cur + (value))
 
-void B_RemoveAircraftExceedingCapacity(struct base_s* base, baseCapacities_t capacity);
-void B_RemoveItemsExceedingCapacity(struct base_s *base);
-void B_RemoveAntimatterExceedingCapacity(struct base_s *base);
+void CAP_RemoveAircraftExceedingCapacity(struct base_s* base, baseCapacities_t capacity);
+void CAP_RemoveItemsExceedingCapacity(struct base_s *base);
+void CAP_RemoveAntimatterExceedingCapacity(struct base_s *base);
 
-int B_GetFreeCapacity(const struct base_s *base, baseCapacities_t cap);
+int CAP_GetFreeCapacity(const struct base_s *base, baseCapacities_t cap);
 void CAP_CheckOverflow(void);
 
 #endif

@@ -177,8 +177,8 @@ static void AC_UpdateMenu (const base_t *base)
 	Cvar_Set("mn_al_alienimage", "");
 	Cvar_SetValue("mn_al_dead", 0);
 	Cvar_SetValue("mn_al_alive", 0);
-	Cvar_SetValue("mn_al_capacity", base->capacities[CAP_ALIENS].cur);
-	Cvar_SetValue("mn_al_capacity_max", base->capacities[CAP_ALIENS].max);
+	Cvar_SetValue("mn_al_capacity", CAP_GetCurrent(base, CAP_ALIENS));
+	Cvar_SetValue("mn_al_capacity_max", CAP_GetMax(base, CAP_ALIENS));
 
 	/* Reset list. */
 	UI_ExecuteConfunc("aliencont_clear");

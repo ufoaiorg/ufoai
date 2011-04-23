@@ -713,7 +713,7 @@ static void B_UpdateAntimatterCap (base_t *base)
 {
 	const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 	if (od != NULL)
-		base->capacities[CAP_ANTIMATTER].cur = B_ItemInBase(od, base);
+		CAP_SetCurrent(base, CAP_ANTIMATTER, B_ItemInBase(od, base));
 }
 
 /**
@@ -754,20 +754,20 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 
 	/* calculate capacities.cur for every capacity */
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
-		base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
+		CAP_SetCurrent(base, CAP_ALIENS, AL_CountInBase(base));
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_SMALL)) ||
 		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_BIG)))
 		AIR_UpdateHangarCapForAll(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
-		base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
+		CAP_SetCurrent(base, CAP_EMPLOYEES, E_CountAllHired(base));
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
-		B_UpdateStorageCap(base);
+		CAP_UpdateStorageCap(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
-		base->capacities[CAP_LABSPACE].cur = RS_CountScientistsInBase(base);
+		CAP_SetCurrent(base, CAP_LABSPACE, RS_CountScientistsInBase(base));
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
 		PR_UpdateProductionCap(base);
@@ -777,7 +777,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 
 	/* Check that current capacity is possible -- if we changed values in *.ufo */
 	for (i = 0; i < MAX_CAP; i++)
-		if (base->capacities[i].cur > base->capacities[i].max)
+		if (CAP_GetFreeCapacity(base, i) < 0)
 			Com_Printf("B_ResetAllStatusAndCapacities: Warning, capacity of %i is bigger than maximum capacity\n", i);
 }
 
@@ -880,7 +880,7 @@ qboolean B_BuildingDestroy (building_t* building)
  * @brief Will ensure that aircraft on geoscape are not stored
  * in a base that no longer has any hangar left
  * @param[in] base The base that is going to be destroyed
- * @todo this should be merged into B_RemoveAircraftExceedingCapacity
+ * @todo this should be merged into CAP_RemoveAircraftExceedingCapacity
  */
 static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 {
@@ -1122,7 +1122,7 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		price += edTarget->numItems[i] * od->price;
-		base->capacities[CAP_ITEMS].cur += edTarget->numItems[i] * od->size;
+		CAP_AddCurrent(base, CAP_ITEMS, edTarget->numItems[i] * od->size);
 	}
 
 	/* Finally update credits. */
@@ -1921,7 +1921,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 
 	if (base) {
 		AIR_MoveEmployeeInventoryIntoStorage(aircraft, &base->storage);
-		B_UpdateStorageCap(base);
+		CAP_UpdateStorageCap(base);
 	}
 	CL_SwapSkills(&chrListTemp);
 }
@@ -2088,7 +2088,7 @@ void B_BuildingOpenAfterClick (const building_t *building)
 				UP_OpenWith(building->pedia);
 			break;
 		case B_ANTIMATTER:
-			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), base->capacities[CAP_ANTIMATTER].cur, base->capacities[CAP_ANTIMATTER].max);
+			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), CAP_GetCurrent(base, CAP_ANTIMATTER), CAP_GetMax(base, CAP_ANTIMATTER));
 			UI_Popup(_("Information"), popupText);
 			break;
 		default:
@@ -2129,7 +2129,7 @@ static void B_PrintCapacities_f (void)
 					break;
 			}
 			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-			ccs.buildingTemplates[j].id, base->capacities[i].max, base->capacities[i].cur);
+			ccs.buildingTemplates[j].id, CAP_GetMax(base, i), CAP_GetCurrent(base, i));
 		}
 	}
 }
@@ -2339,7 +2339,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	/* Mark new technologies researchable. */
 	RS_MarkResearchable(qfalse, aircraft->homebase);
 	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
-	B_UpdateStorageCap(aircraft->homebase);
+	CAP_UpdateStorageCap(aircraft->homebase);
 }
 
 /**
@@ -2447,7 +2447,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_AIRCRAFT_BIG:		/**< Update aircraft capacity in base. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
 		/* Reset given capacity in current base. */
-		base->capacities[cap].max = 0;
+		CAP_SetMax(base, cap, 0);
 		/* Get building capacity. */
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
 			const building_t *b = &ccs.buildingTemplates[i];
@@ -2462,11 +2462,11 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		building = NULL;
 		while ((building = B_GetNextBuildingByType(base, building, buildingType)))
 			if (building->buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)
-				base->capacities[cap].max += capacity;
+				CAP_AddMax(base, cap, capacity);
 
 		if (buildingTemplateIDX != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
-				ccs.buildingTemplates[buildingTemplateIDX].id, base->capacities[cap].max);
+				ccs.buildingTemplates[buildingTemplateIDX].id, CAP_GetMax(base, cap));
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
@@ -2939,10 +2939,10 @@ int B_AntimatterInBase (const base_t *base)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	assert(base);
-	assert(B_ItemInBase(od, base) == base->capacities[CAP_ANTIMATTER].cur);
+	assert(B_ItemInBase(od, base) == CAP_GetCurrent(base, CAP_ANTIMATTER));
 #endif
 
-	return base->capacities[CAP_ANTIMATTER].cur;
+	return CAP_GetCurrent(base, CAP_ANTIMATTER);
 }
 
 /**

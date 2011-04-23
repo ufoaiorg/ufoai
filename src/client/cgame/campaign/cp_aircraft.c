@@ -901,13 +901,13 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 		return _("No operational hangars at that base.");
 
 	/* not enough capacity */
-	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
+	if (CAP_GetFreeCapacity(base, capacity) <= 0)
 		return _("No free hangars at that base.");
 
-	if (AIR_GetTeamSize(aircraft) + (AIR_GetPilot(aircraft) ? 1 : 0) + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
+	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) < AIR_GetTeamSize(aircraft) + (AIR_GetPilot(aircraft) ? 1 : 0))
 		return _("Insufficient free crew quarter space at that base.");
 
-	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + AIR_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
+	if (aircraft->maxTeamSize && CAP_GetFreeCapacity(base, CAP_ITEMS) < AIR_GetStorageRoom(aircraft))
 		return _("Insufficient storage space at that base.");
 
 	/* check aircraft fuel, because the aircraft has to travel to the new base */
@@ -990,9 +990,9 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	}
 
 	/* Move aircraft to new base */
-	oldBase->capacities[capacity].cur--;
+	CAP_AddCurrent(oldBase, capacity, -1);
 	aircraft->homebase = base;
-	base->capacities[capacity].cur++;
+	CAP_AddCurrent(base, capacity, 1);
 
 	if (oldBase->aircraftCurrent == aircraft)
 		oldBase->aircraftCurrent = AIR_GetFirstFromBase(oldBase);
@@ -2951,7 +2951,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 		const int aircraftCapacity = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
 		/* If this is a small aircraft, we will check space in small hangar.
 		 * If this is a large aircraft, we will check space in big hangar. */
-		const int freespace = base->capacities[aircraftCapacity].max - base->capacities[aircraftCapacity].cur - used;
+		const int freespace = CAP_GetFreeCapacity(base, aircraftCapacity) - used;
 		return max(freespace, 0);
 	}
 }

@@ -54,7 +54,7 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
 	/* Check how many workers hired in this base. */
 	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
 	/* We will not use more workers than workspace capacity in this base. */
-	const signed int maxWorkers = min(allWorkers, base->capacities[CAP_WORKSPACE].max);
+	const signed int maxWorkers = min(allWorkers, CAP_GetMax(base, CAP_WORKSPACE));
 	signed int timeDefault;
 	double distanceFactor;
 
@@ -495,7 +495,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 			state = qfalse;
 		}
 		/* Not enough free space in base storage for this item. */
-		else if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < od->size) {
+		else if (CAP_GetFreeCapacity(base, CAP_ITEMS) < od->size) {
 			if (!prod->spaceMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Production postponed."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -526,7 +526,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 	} else if (PR_IsDisassembly(prod)) {
 		const storedUFO_t *ufo = prod->data.data.ufo;
 
-		if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(base, ufo->comp, ufo->condition, qtrue)) {
+		if (CAP_GetFreeCapacity(base, CAP_ITEMS) < PR_DisassembleItem(base, ufo->comp, ufo->condition, qtrue)) {
 			if (!prod->spaceMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -594,7 +594,7 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 
 	if (PR_IsReady(prod)) {
 		storedUFO_t *ufo = prod->data.data.ufo;
-		base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse);
+		CAP_AddCurrent(base, CAP_ITEMS, PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse));
 
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
 				UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);

@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa B_BuildingDestroy_f
  * @todo If player choose to destroy the building, a popup should ask him if he wants to sell aircraft in it.
  */
-void B_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacity)
+void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacity)
 {
 	linkedList_t *awayAircraft = NULL;
 	int numAwayAircraft;
@@ -51,7 +51,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacity)
 	aircraft_t *aircraft;
 
 	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
-	if (B_GetFreeCapacity(base, capacity) >= 0)
+	if (CAP_GetFreeCapacity(base, capacity) >= 0)
 		return;
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
@@ -108,7 +108,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacity)
  * @brief Remove exceeding antimatter if an antimatter tank has been destroyed.
  * @param[in] base Pointer to the base.
  */
-void B_RemoveAntimatterExceedingCapacity (base_t *base)
+void CAP_RemoveAntimatterExceedingCapacity (base_t *base)
 {
 	const int amount = CAP_GetCurrent(base, CAP_ANTIMATTER) - CAP_GetMax(base, CAP_ANTIMATTER);
 	if (amount <= 0)
@@ -122,13 +122,13 @@ void B_RemoveAntimatterExceedingCapacity (base_t *base)
  * @note items will be randomly selected for removal.
  * @param[in] base Pointer to the base
  */
-void B_RemoveItemsExceedingCapacity (base_t *base)
+void CAP_RemoveItemsExceedingCapacity (base_t *base)
 {
 	int i;
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
 	int num, cnt;
 
-	if (B_GetFreeCapacity(base, CAP_ITEMS) >= 0)
+	if (CAP_GetFreeCapacity(base, CAP_ITEMS) >= 0)
 		return;
 
 	for (i = 0, num = 0; i < csi.numODs; i++) {
@@ -150,7 +150,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 		objIdx[num++] = MAX_OBJDEFS;
 	}
 
-	while (num && B_GetFreeCapacity(base, CAP_ITEMS) < 0) {
+	while (num && CAP_GetFreeCapacity(base, CAP_ITEMS) < 0) {
 		/* Select the item to remove */
 		const int randNumber = rand() % num;
 		if (objIdx[randNumber] >= MAX_OBJDEFS) {
@@ -181,11 +181,11 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
  * @param[in] base Pointer to the base
  * @sa B_ResetAllStatusAndCapacities_f
  */
-void B_UpdateStorageCap (base_t *base)
+void CAP_UpdateStorageCap (base_t *base)
 {
 	int i;
 
-	base->capacities[CAP_ITEMS].cur = 0;
+	CAP_SetCurrent(base, CAP_ITEMS, 0);
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
@@ -193,11 +193,11 @@ void B_UpdateStorageCap (base_t *base)
 		if (!B_ItemIsStoredInBaseStorage(obj))
 			continue;
 
-		base->capacities[CAP_ITEMS].cur += B_ItemInBase(obj, base) * obj->size;
+		CAP_AddCurrent(base, CAP_ITEMS, B_ItemInBase(obj, base) * obj->size);
 	}
 
 	/* UGV takes room in storage capacity */
-	base->capacities[CAP_ITEMS].cur += UGV_SIZE * E_CountHired(base, EMPL_ROBOT);
+	CAP_AddCurrent(base, CAP_ITEMS, UGV_SIZE * E_CountHired(base, EMPL_ROBOT));
 }
 
 /**
@@ -206,9 +206,9 @@ void B_UpdateStorageCap (base_t *base)
  * @param[in] cap Capacity type
  * @sa baseCapacities_t
  */
-int B_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
+int CAP_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
 {
-	const capacities_t *cap = &base->capacities[capacityType];
+	const capacities_t *cap = CAP_Get(base, capacityType);
 	return cap->max - cap->cur;
 }
 
@@ -234,7 +234,7 @@ void CAP_CheckOverflow (void)
 				PR_UpdateProductionCap(base);
 				break;
 			case CAP_ITEMS:
-				B_RemoveItemsExceedingCapacity(base);
+				CAP_RemoveItemsExceedingCapacity(base);
 				break;
 			case CAP_ALIENS:
 				AL_RemoveAliensExceedingCapacity(base);
@@ -244,13 +244,13 @@ void CAP_CheckOverflow (void)
 				break;
 			case CAP_AIRCRAFT_SMALL:
 			case CAP_AIRCRAFT_BIG:
-				B_RemoveAircraftExceedingCapacity(base, capacityType);
+				CAP_RemoveAircraftExceedingCapacity(base, capacityType);
 				break;
 			case CAP_EMPLOYEES:
 				E_DeleteEmployeesExceedingCapacity(base);
 				break;
 			case CAP_ANTIMATTER:
-				B_RemoveAntimatterExceedingCapacity(base);
+				CAP_RemoveAntimatterExceedingCapacity(base);
 				break;
 			default:
 				/* nothing to do */
