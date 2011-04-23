@@ -792,6 +792,7 @@ static qboolean R_InitExtensions (void)
 	qglDeleteRenderbuffersEXT = NULL;
 	qglGenRenderbuffersEXT = NULL;
 	qglRenderbufferStorageEXT = NULL;
+	qglRenderbufferStorageMultisampleEXT = NULL;
 	qglGetRenderbufferParameterivEXT = NULL;
 	qglIsFramebufferEXT = NULL;
 	qglBindFramebufferEXT = NULL;
@@ -914,6 +915,7 @@ static qboolean R_InitExtensions (void)
 		qglDeleteRenderbuffersEXT = (DeleteRenderbuffersEXT_t)R_GetProcAddressExt("glDeleteRenderbuffers###");
 		qglGenRenderbuffersEXT = (GenRenderbuffersEXT_t)R_GetProcAddressExt("glGenRenderbuffers###");
 		qglRenderbufferStorageEXT = (RenderbufferStorageEXT_t)R_GetProcAddressExt("glRenderbufferStorage###");
+		qglRenderbufferStorageMultisampleEXT = (RenderbufferStorageMultisampleEXT_t)R_GetProcAddressExt("glRenderbufferStorageMultisample###");
 		qglGetRenderbufferParameterivEXT = (GetRenderbufferParameterivEXT_t)R_GetProcAddressExt("glGetRenderbufferParameteriv###");
 		qglIsFramebufferEXT = (IsFramebufferEXT_t)R_GetProcAddressExt("glIsFramebuffer###");
 		qglBindFramebufferEXT = (BindFramebufferEXT_t)R_GetProcAddressExt("glBindFramebuffer###");
@@ -927,6 +929,7 @@ static qboolean R_InitExtensions (void)
 		qglGetFramebufferAttachmentParameterivEXT = (GetFramebufferAttachmentParameterivEXT_t)R_GetProcAddressExt("glGetFramebufferAttachmentParameteriv###");
 		qglGenerateMipmapEXT = (GenerateMipmapEXT_t)R_GetProcAddressExt("glGenerateMipmap###");
 		qglDrawBuffers = (DrawBuffers_t)R_GetProcAddress("glDrawBuffers");
+		qglBlitFramebuffer = (BlitFramebuffer_t)R_GetProcAddress("glBlitFramebuffer");
 
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT

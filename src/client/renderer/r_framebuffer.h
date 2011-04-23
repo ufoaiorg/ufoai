@@ -34,6 +34,7 @@ typedef struct {
 typedef struct {
 	int width;
 	int height;
+	int samples;
 	vec4_t clearColor;
 	r_viewport_t viewport;
 	int pixelFormat;
@@ -42,6 +43,7 @@ typedef struct {
 	unsigned int fbo;
 	int nTextures;
 	unsigned int *textures;
+	unsigned int proxyFBO;
 } r_framebuffer_t;
 
 
@@ -54,6 +56,7 @@ void R_DeleteFBObject(r_framebuffer_t *buf);
 void R_SetupViewport(r_framebuffer_t *buf, int x, int y, int width, int height);
 void R_UseViewport(const r_framebuffer_t *buf);
 
+void R_ResolveMSAA (const r_framebuffer_t *buf);
 void R_UseFramebuffer(const r_framebuffer_t *buf);
 void R_DrawBuffers(unsigned int n);
 void R_BindColorAttachments(unsigned int n, unsigned int *attachments);

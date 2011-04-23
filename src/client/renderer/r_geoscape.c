@@ -742,6 +742,7 @@ void R_DrawBloom (void)
 	glDisable(GL_DEPTH_TEST);
 
 	/* downsample into image pyramid */
+	R_ResolveMSAA(fbo_render);
 	R_BindTexture(fbo_render->textures[1]);
 	qglGenerateMipmapEXT(GL_TEXTURE_2D);
 
