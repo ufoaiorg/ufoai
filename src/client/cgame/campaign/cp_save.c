@@ -632,9 +632,9 @@ static void SAV_GameQuickLoad_f (void)
  */
 void SAV_Init (void)
 {
+	static saveSubsystems_t cp_subsystemXML = {"campaign", CP_SaveXML, CP_LoadXML};
 	static saveSubsystems_t b_subsystemXML = {"base", B_SaveXML, B_LoadXML};
 	static saveSubsystems_t rs_subsystemXML = {"research", RS_SaveXML, RS_LoadXML};
-	static saveSubsystems_t cp_subsystemXML = {"campaign", CP_SaveXML, CP_LoadXML};
 	static saveSubsystems_t hos_subsystemXML = {"hospital", HOS_SaveXML, HOS_LoadXML};
 	static saveSubsystems_t bs_subsystemXML = {"market", BS_SaveXML, BS_LoadXML};
 	static saveSubsystems_t e_subsystemXML = {"employee", E_SaveXML, E_LoadXML};
@@ -659,9 +659,9 @@ void SAV_Init (void)
 	Com_Printf("\n--- save subsystem initialization --\n");
 
 	/* don't mess with the order */
+	SAV_AddSubsystem(&cp_subsystemXML);
 	SAV_AddSubsystem(&b_subsystemXML);
 	SAV_AddSubsystem(&rs_subsystemXML);
-	SAV_AddSubsystem(&cp_subsystemXML);
 	SAV_AddSubsystem(&hos_subsystemXML);
 	SAV_AddSubsystem(&bs_subsystemXML);
 	SAV_AddSubsystem(&e_subsystemXML);
