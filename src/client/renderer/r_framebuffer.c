@@ -192,6 +192,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	}
 
 	buf = &frameBufferObjects[frameBufferObjectCount++];
+	OBJZERO(*buf);
 
 	if (ntextures > r_config.maxDrawBuffers) {
 		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
@@ -226,32 +227,28 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 		R_CheckError();
 	}
-
-	/* create depth renderbuffer */
-	if (depth) {
-		qglGenRenderbuffersEXT(1, &buf->depth);
-		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
-		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, buf->width, buf->height);
-	} else {
-		buf->depth = 0;
-	}
-
-	R_CheckError();
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	/* create FBO itself */
 	qglGenFramebuffersEXT(1, &buf->fbo);
 	R_CheckError();
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
 
+	/* create&attach depth renderbuffer */
+	if (depth) {
+		qglGenRenderbuffersEXT(1, &buf->depth);
+		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
+		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, buf->width, buf->height);
+		qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, buf->depth);
+	} else {
+		buf->depth = 0;
+	}
+
+
 	for (i = 0; i < buf->nTextures; i++) {
-		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
 		qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
 		R_CheckError();
 	}
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	if (depth)
-		qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, buf->depth);
 
 	R_CheckError();
 
