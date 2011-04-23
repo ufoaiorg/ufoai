@@ -525,15 +525,15 @@ static void B_MarkBuildingDestroy (building_t* building)
 	}
 
 	if (building->buildingStatus == B_STATUS_WORKING) {
-		const qboolean hasBases = B_AtLeastOneExists();
+		const qboolean hasMoreBases = B_GetCount() > 1;
 		switch (building->buildingType) {
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (base->capacities[cap].cur >= base->capacities[cap].max) {
 				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -542,8 +542,8 @@ static void B_MarkBuildingDestroy (building_t* building)
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
 				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -552,8 +552,8 @@ static void B_MarkBuildingDestroy (building_t* building)
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
 				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
