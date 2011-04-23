@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2010 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,14 +20,14 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
-#ifndef CLIENT_CAMPAIGN_CL_FIGHTEQUIP_CALLBACKS_H
-#define CLIENT_CAMPAIGN_CL_FIGHTEQUIP_CALLBACKS_H
+
+#ifndef CP_FIGHTEQUIP_CALLBACKS_H
+#define CP_FIGHTEQUIP_CALLBACKS_H
 
 aircraftSlot_t *AII_SelectAircraftSlot(aircraft_t *aircraft, aircraftItemType_t type);
 
 void AIM_InitCallbacks(void);
 void AIM_ShutdownCallbacks(void);
 
-#endif /* CLIENT_CAMPAIGN_CL_FIGHTEQUIP_CALLBACKS_H */
+#endif

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_BASE_H
 #define CP_BASE_H
 
+#include "cp_capacity.h"
 #include "cp_aliencont.h"
 #include "cp_produce.h"
 #include "cp_building.h"
@@ -84,26 +85,6 @@ typedef enum {
 	BA_MAX
 } baseAction_t;
 
-/** @brief All possible capacities in base. */
-typedef enum {
-	CAP_ALIENS,		/**< Live aliens stored in base. */
-	CAP_AIRCRAFT_SMALL,	/**< Small aircraft in base. */
-	CAP_AIRCRAFT_BIG,	/**< Big aircraft in base. */
-	CAP_EMPLOYEES,		/**< Personel in base. */
-	CAP_ITEMS,		/**< Items in base. */
-	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
-	CAP_WORKSPACE,		/**< Space for workers in workshop. */
-	CAP_ANTIMATTER,		/**< Space for Antimatter Storage. */
-
-	MAX_CAP
-} baseCapacities_t;
-
-/** @brief Store capacities in base. */
-typedef struct capacities_s {
-	int max;		/**< Maximum capacity. */
-	int cur;		/**< Currently used capacity. */
-} capacities_t;
-
 typedef struct baseBuildingTile_s {
 	building_t *building;	/**< NULL if free spot */
 	qboolean	blocked;	/**< qtrue if the tile is usable for buildings otherwise it's qfalse (blocked somehow). */
@@ -154,8 +135,10 @@ typedef struct base_s {
 
 	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
 	int numBatteries;
+	int numActiveBatteries;
 	baseWeapon_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
 	int numLasers;
+	int numActiveLasers;
 
 	/* we will allow only one active production at the same time for each base */
 	production_queue_t productions;
@@ -183,7 +166,6 @@ void B_InitStartup(void);
 /* base functions */
 base_t *B_Build(const struct campaign_s *campaign, const vec2_t pos, const char *name);
 base_t *B_GetNext(base_t *lastBase);
-base_t* B_GetNextFounded(base_t *lastBase);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 int B_GetCount(void);

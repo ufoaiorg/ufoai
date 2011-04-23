@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Actions to perform when destroying one hangar.
  * @param[in] base Pointer to the base where hangar is destroyed.
- * @param[in] buildingType Type of hangar: B_SMALL_HANGAR for small hangar, B_HANGAR for large hangar
+ * @param[in] capacity Type of hangar capacity: CAP_AIRCRAFT_SMALL or CAP_AIRCRAFT_BIG
  * @note called when player destroy its building or hangar is destroyed during base attack.
  * @note These actions will be performed after we actually remove the building.
  * @pre we checked before calling this function that all parameters are valid.
@@ -43,9 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa B_BuildingDestroy_f
  * @todo If player choose to destroy the building, a popup should ask him if he wants to sell aircraft in it.
  */
-void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingType)
+void B_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacity)
 {
-	baseCapacities_t capacity = B_GetCapacityFromBuildingType(buildingType);
 	linkedList_t *awayAircraft = NULL;
 	int numAwayAircraft;
 	int randomNum;
@@ -61,11 +60,11 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
-			if (buildingType != B_SMALL_HANGAR)
+			if (capacity != CAP_AIRCRAFT_SMALL)
 				continue;
 			break;
 		case AIRCRAFT_LARGE:
-			if (buildingType != B_HANGAR)
+			if (capacity != CAP_AIRCRAFT_BIG)
 				continue;
 			break;
 		default:
@@ -111,7 +110,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
  */
 void B_RemoveAntimatterExceedingCapacity (base_t *base)
 {
-	const int amount = base->capacities[CAP_ANTIMATTER].cur - base->capacities[CAP_ANTIMATTER].max;
+	const int amount = CAP_GetCurrent(base, CAP_ANTIMATTER) - CAP_GetMax(base, CAP_ANTIMATTER);
 	if (amount <= 0)
 		return;
 
@@ -129,7 +128,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
 	int num, cnt;
 
-	if (base->capacities[CAP_ITEMS].cur <= base->capacities[CAP_ITEMS].max)
+	if (B_GetFreeCapacity(base, CAP_ITEMS) >= 0)
 		return;
 
 	for (i = 0, num = 0; i < csi.numODs; i++) {
@@ -151,7 +150,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 		objIdx[num++] = MAX_OBJDEFS;
 	}
 
-	while (num && base->capacities[CAP_ITEMS].cur > base->capacities[CAP_ITEMS].max) {
+	while (num && B_GetFreeCapacity(base, CAP_ITEMS) < 0) {
 		/* Select the item to remove */
 		const int randNumber = rand() % num;
 		if (objIdx[randNumber] >= MAX_OBJDEFS) {
@@ -174,7 +173,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 			break;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "B_RemoveItemsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
-		base->capacities[CAP_ITEMS].cur, base->capacities[CAP_ITEMS].max);
+		CAP_GetCurrent(base, CAP_ITEMS), CAP_GetMax(base, CAP_ITEMS));
 }
 
 /**
@@ -211,4 +210,52 @@ int B_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
 {
 	const capacities_t *cap = &base->capacities[capacityType];
 	return cap->max - cap->cur;
+}
+
+/**
+ * @brief Checks capacity overflows on bases
+ * @sa CL_CampaignRun
+ */
+void CAP_CheckOverflow (void)
+{
+	base_t *base = NULL;
+
+	while ((base = B_GetNext(base)) != NULL) {
+		baseCapacities_t capacityType;
+
+		for (capacityType = CAP_ALIENS; capacityType < MAX_CAP; capacityType++) {
+			capacities_t *cap = CAP_Get(base, capacityType);
+
+			if (cap->cur <= cap->max)
+				continue;
+
+			switch (capacityType) {
+			case CAP_WORKSPACE:
+				PR_UpdateProductionCap(base);
+				break;
+			case CAP_ITEMS:
+				B_RemoveItemsExceedingCapacity(base);
+				break;
+			case CAP_ALIENS:
+				AL_RemoveAliensExceedingCapacity(base);
+				break;
+			case CAP_LABSPACE:
+				RS_RemoveScientistsExceedingCapacity(base);
+				break;
+			case CAP_AIRCRAFT_SMALL:
+			case CAP_AIRCRAFT_BIG:
+				B_RemoveAircraftExceedingCapacity(base, capacityType);
+				break;
+			case CAP_EMPLOYEES:
+				E_DeleteEmployeesExceedingCapacity(base);
+				break;
+			case CAP_ANTIMATTER:
+				B_RemoveAntimatterExceedingCapacity(base);
+				break;
+			default:
+				/* nothing to do */
+				break;
+			}
+		}
+	}
 }

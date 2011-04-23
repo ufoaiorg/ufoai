@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ui/ui_popup.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
+#include "cp_capacity.h"
 #include "cp_research.h"
 #include "save/save_research.h"
 
@@ -1701,16 +1702,16 @@ int RS_CountScientistsInBase (const base_t *base)
 
 /**
  * @brief Remove all exceeding scientist.
- * @param[in] base Pointer to base where a scientist should be removed.
+ * @param[in, out] base Pointer to base where a scientist should be removed.
  */
 void RS_RemoveScientistsExceedingCapacity (base_t *base)
 {
 	assert(base);
 
 	/* Make sure base->capacities[CAP_LABSPACE].cur is set to proper value */
-	base->capacities[CAP_LABSPACE].cur = RS_CountScientistsInBase(base);
+	CAP_SetCurrent(base, CAP_LABSPACE, RS_CountScientistsInBase(base));
 
-	while (base->capacities[CAP_LABSPACE].cur > base->capacities[CAP_LABSPACE].max) {
+	while (B_GetFreeCapacity(base, CAP_LABSPACE) < 0) {
 		technology_t *tech = RS_GetTechWithMostScientists(base);
 		RS_RemoveScientist(tech, NULL);
 	}

@@ -58,7 +58,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 	base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(2)));
 	if (!base)
 		return;
-	if (base->capacities[CAP_ANTIMATTER].cur <= 0)
+	if (CAP_GetCurrent(base, CAP_ANTIMATTER) <= 0)
 		return;
 
 	B_RemoveAntimatterExceedingCapacity(base);
@@ -331,67 +331,6 @@ static void B_BaseInit_f (void)
 		UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
 	else
 		UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
-}
-
-/**
- * @brief On destroy function for several building type.
- * @note this function is only used for sanity checks, and send to related function depending on building type.
- * @pre Functions below will be called AFTER the building is actually destroyed.
- * @sa B_BuildingDestroy_f
- * @todo Why does this exist? why is this not part of B_BuildingDestroy?
- */
-static void B_BuildingOnDestroy_f (void)
-{
-	int baseIdx, buildingType;
-	base_t *base;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", Cmd_Argv(0));
-		return;
-	}
-
-	buildingType = atoi(Cmd_Argv(2));
-	if (buildingType < 0 || buildingType >= MAX_BUILDING_TYPE) {
-		Com_Printf("B_BuildingOnDestroy_f: buildingType '%i' outside limits\n", buildingType);
-		return;
-	}
-
-	baseIdx = atoi(Cmd_Argv(1));
-
-	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("B_BuildingOnDestroy_f: %i is outside bounds\n", baseIdx);
-		return;
-	}
-
-	base = B_GetFoundedBaseByIDX(baseIdx);
-	if (base) {
-		switch (buildingType) {
-		case B_WORKSHOP:
-			PR_UpdateProductionCap(base);
-			break;
-		case B_STORAGE:
-			B_RemoveItemsExceedingCapacity(base);
-			break;
-		case B_ALIEN_CONTAINMENT:
-			AL_RemoveAliensExceedingCapacity(base);
-			break;
-		case B_LAB:
-			RS_RemoveScientistsExceedingCapacity(base);
-			break;
-		case B_HANGAR: /* the Dropship Hangar */
-		case B_SMALL_HANGAR:
-			B_RemoveAircraftExceedingCapacity(base, buildingType);
-			break;
-		case B_QUARTERS:
-			E_DeleteEmployeesExceedingCapacity(base);
-			break;
-		default:
-			/* handled in a seperate function, or number of buildings have no impact
-			 * on how the building works */
-			break;
-		}
-	} else
-		Com_Printf("B_BuildingOnDestroy_f: base %i is not founded\n", baseIdx);
 }
 
 /**
@@ -930,7 +869,6 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
-	Cmd_AddCommand("building_ondestroy", B_BuildingOnDestroy_f, "Destroy a building");
 	Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
 }
 
@@ -954,7 +892,6 @@ void B_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("check_building_status");
 	Cmd_RemoveCommand("buildings_click");
 	Cmd_RemoveCommand("reset_building_current");
-	Cmd_RemoveCommand("building_ondestroy");
 	Cvar_Delete("mn_base_max");
 	Cvar_Delete("mn_base_cost");
 	Cvar_Delete("mn_base_title");

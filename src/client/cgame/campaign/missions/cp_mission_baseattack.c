@@ -168,13 +168,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	base->baseStatus = BASE_UNDER_ATTACK;
 	ccs.campaignStats.basesAttacked++;
 
-#if 0
-	/** @todo implement onattack: add it to basemanagement.ufo and implement functions */
-	if (base->onAttack[0] != '\0')
-		/* execute next frame */
-		Cbuf_AddText(va("%s %i", base->onAttack, base->id));
-#endif
-
 	MAP_SelectMission(mission);
 	mission->active = qtrue;
 	ccs.mapAction = MA_BASEATTACK;

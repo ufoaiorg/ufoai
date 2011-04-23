@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_shared.h"
 #include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
+#include "cp_capacity.h"
 #include "cp_ufo.h"
 #include "cp_produce.h"
 #include "cp_produce_callbacks.h"
@@ -738,20 +739,18 @@ void PR_ProductionInit (void)
  */
 void PR_UpdateProductionCap (base_t *base)
 {
-	capacities_t *workspaceCapacity = &base->capacities[CAP_WORKSPACE];
+	capacities_t *workspaceCapacity = CAP_Get(base, CAP_WORKSPACE);
 	int workers;
 	assert(base);
 
-	if (workspaceCapacity->max <= 0) {
+	if (workspaceCapacity->max <= 0)
 		PR_EmptyQueue(base);
-	}
 
 	workers = E_CountHired(base, EMPL_WORKER);
-	if (workspaceCapacity->max >= workers) {
+	if (workspaceCapacity->max >= workers)
 		workspaceCapacity->cur = workers;
-	} else {
+	else
 		workspaceCapacity->cur = workspaceCapacity->max;
-	}
 }
 
 /**

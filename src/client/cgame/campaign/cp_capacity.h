@@ -24,7 +24,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_CAPACITY_H
 #define CP_CAPACITY_H
 
-void B_UpdateStorageCap(base_t *base);
+/** @brief All possible capacities in base. */
+typedef enum {
+	CAP_ALIENS,		/**< Live aliens stored in base. */
+	CAP_AIRCRAFT_SMALL,	/**< Small aircraft in base. */
+	CAP_AIRCRAFT_BIG,	/**< Big aircraft in base. */
+	CAP_EMPLOYEES,		/**< Personel in base. */
+	CAP_ITEMS,		/**< Items in base. */
+	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
+	CAP_WORKSPACE,		/**< Space for workers in workshop. */
+	CAP_ANTIMATTER,		/**< Space for Antimatter Storage. */
+
+	MAX_CAP
+} baseCapacities_t;
+
+/** @brief Store capacities in base. */
+typedef struct capacities_s {
+	int max;		/**< Maximum capacity. */
+	int cur;		/**< Currently used capacity. */
+} capacities_t;
+
+void B_UpdateStorageCap(struct base_s *base);
 /**
  * @brief Capacity macros
  */
@@ -33,10 +53,11 @@ void B_UpdateStorageCap(base_t *base);
 #define CAP_GetCurrent(base, capacity) (base)->capacities[(capacity)].cur
 #define CAP_SetCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = (value)
 
-void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType);
-void B_RemoveItemsExceedingCapacity(base_t *base);
-void B_RemoveAntimatterExceedingCapacity(base_t *base);
+void B_RemoveAircraftExceedingCapacity(struct base_s* base, baseCapacities_t capacity);
+void B_RemoveItemsExceedingCapacity(struct base_s *base);
+void B_RemoveAntimatterExceedingCapacity(struct base_s *base);
 
-int B_GetFreeCapacity(const base_t *base, baseCapacities_t cap);
+int B_GetFreeCapacity(const struct base_s *base, baseCapacities_t cap);
+void CAP_CheckOverflow(void);
 
 #endif

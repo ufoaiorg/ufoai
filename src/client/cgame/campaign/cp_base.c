@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
-#include "cp_capacity.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
 #include "cp_map.h"
@@ -643,56 +642,6 @@ static qboolean B_CheckUpdateBuilding (building_t* building)
 }
 
 /**
- * @brief Actions to perform when a type of buildings goes from qfalse to qtrue.
- * @note This function is not only called when a building is enabled for the first time in base
- * @note but also when one of its dependencies is destroyed and then rebuilt
- * @param[in] type Type of building that has been modified from qfalse to qtrue
- * @param[in] base Pointer to base with given building.
- * @sa B_UpdateOneBaseBuildingStatusOnDisable
- * @sa onConstruct trigger
- */
-static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
-{
-	switch (type) {
-	case B_RADAR:
-		Cmd_ExecuteString(va("update_base_radar_coverage %i", base->idx));
-		break;
-	case B_COMMAND:
-		Cmd_ExecuteString("mn_installation_update_max_count");
-		break;
-	default:
-		break;
-	}
-}
-
-/**
- * @brief Actions to perform when a type of buildings goes from functional to non-functional.
- * @param[in] type Type of building which hasBuilding value has been modified from qtrue to qfalse
- * @param[in] base Pointer to base with given building.
- * @note That does not mean that a building of this type has been destroyed: maybe one of its dependencies
- * has been destroyed: don't use onDestroy trigger.
- * @sa B_UpdateOneBaseBuildingStatusOnEnable
- * @sa onDestroy trigger
- */
-static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t* base)
-{
-	switch (type) {
-	case B_ALIEN_CONTAINMENT:
-		/* if an alien containment is not functional, aliens die... */
-		AC_KillAll(base);
-		break;
-	case B_RADAR:
-		Cmd_ExecuteString(va("update_base_radar_coverage %i", base->idx));
-		break;
-	case B_COMMAND:
-		Cmd_ExecuteString("mn_installation_update_max_count");
-		break;
-	default:
-		break;
-	}
-}
-
-/**
  * @brief Update status of every building when a building has been built/destroyed
  * @param[in] base
  * @param[in] buildingType The building-type that has been built / removed.
@@ -716,14 +665,14 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONENABLE);
 					test = qtrue;
 					returnValue = qtrue;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONDISABLE);
 					test = qtrue;
 					returnValue = qtrue;
 				}
@@ -739,13 +688,13 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONENABLE);
 					test = qtrue;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONDISABLE);
 					test = qtrue;
 				}
 			}
@@ -771,7 +720,6 @@ static void B_UpdateAntimatterCap (base_t *base)
  * @brief Recalculate status and capacities of one base
  * @param[in] base Pointer to the base where status and capacities must be recalculated
  * @param[in] firstEnable qtrue if this is the first time the function is called for this base
- * @sa B_UpdateOneBaseBuildingStatusOnEnable
  */
 void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 {
@@ -795,7 +743,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 			if (!B_GetBuildingStatus(base, building->buildingType)
 			 && B_CheckUpdateBuilding(building)) {
 				if (firstEnable)
-					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONENABLE);
 				test = qtrue;
 			}
 		}
@@ -843,7 +791,7 @@ qboolean B_BuildingDestroy (building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
 	const building_t const *buildingTemplate = building->tpl;
-	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
+	const qboolean runDisableCommand = building->buildingStatus == B_STATUS_WORKING;
 	base_t *base = building->base;
 
 	/* Don't allow to destroy a mandatory building. */
@@ -916,13 +864,14 @@ qboolean B_BuildingDestroy (building_t* building)
 
 	Cmd_ExecuteString("base_init");
 
-	/* call ondestroy trigger only if building is not under construction
+	/* call ondisable trigger only if building is not under construction
 	 * (we do that after base capacity has been updated) */
-	if (onDestroyCommand) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",
-			buildingTemplate->onDestroy, base->idx, buildingType);
-		Cmd_ExecuteString(va("%s %i %i", buildingTemplate->onDestroy, base->idx, buildingType));
+	if (runDisableCommand) {
+		if (B_FireEvent(buildingTemplate, base, B_ONDISABLE))
+			Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDisable, base->idx, buildingType);
 	}
+	if (B_FireEvent(buildingTemplate, base, B_ONDESTROY))
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDestroy, base->idx, buildingType);
 
 	return qtrue;
 }
@@ -1090,7 +1039,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
 	/* we update the status of the building (we'll call this building building 1) */
 	test = B_CheckUpdateBuilding(building);
 	if (test)
-		B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+		B_FireEvent(building, base, B_ONENABLE);
 
 	/* now, the status of this building may have changed the status of other building.
 	 * We check that, but only for buildings which needed building 1 */
@@ -1140,12 +1089,9 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 	if (hire)
 		E_HireForBuilding(base, buildingNew, -1);
 
-	/* now call the onconstruct trigger */
-	if (buildingNew->onConstruct[0] != '\0') {
-		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n",
-			buildingNew->onConstruct, base->idx);
-		Cmd_ExecuteString(va("%s %i", buildingNew->onConstruct, base->idx));
-	}
+	/* now call the onenable trigger */
+	if (B_FireEvent(buildingNew, base, B_ONENABLE))
+		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n", buildingNew->onEnable, base->idx);
 }
 
 /**
@@ -1510,6 +1456,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 			B_ResetBuildingCurrent(base);
 			Cmd_ExecuteString("base_init");
 			Cmd_ExecuteString("building_init");
+			B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
 
 			return buildingNew;
 		}
@@ -2205,11 +2152,8 @@ static void B_BuildingConstructionFinished_f (void)
 			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 			building->timeStart.day = 0;
 			building->timeStart.sec = 0;
-
-			if (building->onConstruct[0] != '\0') {
-				base->buildingCurrent = building;
-				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
-			}
+			base->buildingCurrent = building;
+			B_FireEvent(building, base, B_ONENABLE);
 		}
 	}
 	/* update menu */
@@ -2276,7 +2220,7 @@ void B_InitStartup (void)
 
 /**
  * @brief Checks whether the construction of a building is finished.
- * Calls the onConstruct functions and assign workers, too.
+ * Calls the onEnable functions and assign workers, too.
  */
 static int B_CheckBuildingConstruction (building_t *building)
 {
@@ -2284,14 +2228,12 @@ static int B_CheckBuildingConstruction (building_t *building)
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 		if (B_IsBuildingBuiltUp(building)) {
-			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
+			base_t *base = building->base;
+			base->buildingCurrent = building;
 
-			if (building->onConstruct[0] != '\0') {
-				base_t *base = building->base;
-				base->buildingCurrent = building;
-				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base->idx);
-				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
-			}
+			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
+			if (B_FireEvent(building, base, B_ONENABLE))
+				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onEnable, base->idx);
 
 			newBuilding++;
 		}

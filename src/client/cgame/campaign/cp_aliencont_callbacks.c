@@ -258,12 +258,19 @@ static void AC_Init_f (void)
 }
 
 /**
- * @brief Kill all aliens in current base.
+ * @brief Console command to kill all aliens on a base.
+ * @note if the first argrument is a base index that, otherwise the current base will remove it's aliens
  * @sa AC_KillAll
  */
 static void AC_KillAll_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t *base;
+
+	if (Cmd_Argc() < 2) {
+		base = B_GetCurrentSelectedBase();
+	} else {
+		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(1)));
+	}
 
 	/* Can be called from everywhere. */
 	if (!base)

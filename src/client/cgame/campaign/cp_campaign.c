@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h" /* cls, cl */
 #include "../../ui/ui_main.h"
 #include "cp_campaign.h"
+#include "cp_capacity.h"
 #include "cp_overlay.h"
 #include "cp_mapfightequip.h"
 #include "cp_hospital.h"
@@ -661,6 +662,8 @@ void CL_CampaignRun (campaign_t *campaign)
 		CP_CheckLostCondition(campaign);
 		/* Check if there is a base attack mission */
 		CP_CheckBaseAttacks();
+		/* check if any stores are full */
+		CAP_CheckOverflow();
 		BDEF_AutoSelectTarget();
 
 		CL_DateConvertLong(&ccs.date, &date);
