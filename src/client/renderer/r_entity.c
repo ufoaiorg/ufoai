@@ -174,7 +174,7 @@ static image_t *actorIndicator;
  * @brief Draws shadow and highlight effects for the entities (actors)
  * @note The origins are already transformed
  */
-static void R_DrawEntityEffects (void)
+void R_DrawEntityEffects (void)
 {
 	int i;
 	GLint oldDepthFunc;
@@ -270,10 +270,10 @@ static void R_DrawEntityEffects (void)
 /**
  * @brief Draws a list of brush model entities (inline models)
  * @param[in] ents The entity list to render (brush model entities)
- * @sa R_DrawEntities
+ * @sa R_GetEntityLists
  * @sa R_DrawBrushModel
  */
-static void R_DrawBspEntities (const entity_t *ents)
+void R_DrawBspEntities (const entity_t *ents)
 {
 	const entity_t *e;
 
@@ -291,9 +291,9 @@ static void R_DrawBspEntities (const entity_t *ents)
 /**
  * @brief Draws the list of entities
  * @param[in,out] ents The list of entities that are going to get rendered
- * @sa R_DrawEntities
+ * @sa R_GetEntityLists
  */
-static void R_DrawMeshEntities (entity_t *ents)
+void R_DrawMeshEntities (entity_t *ents)
 {
 	entity_t *e;
 
@@ -315,9 +315,9 @@ static void R_DrawMeshEntities (entity_t *ents)
 }
 
 /**
- * @sa R_DrawEntities
+ * @sa R_GetEntityLists
  */
-static void R_DrawOpaqueMeshEntities (entity_t *ents)
+void R_DrawOpaqueMeshEntities (entity_t *ents)
 {
 	if (!ents)
 		return;
@@ -384,9 +384,9 @@ static entity_t* R_MergeSortEntList (entity_t *c)
 }
 
 /**
- * @sa R_DrawEntities
+ * @sa R_GetEntityLists
  */
-static void R_DrawBlendMeshEntities (entity_t *ents)
+void R_DrawBlendMeshEntities (entity_t *ents)
 {
 	if (!ents)
 		return;
@@ -444,7 +444,7 @@ static void R_DrawNullModel (const entity_t *e)
 	R_EnableTexture(&texunit_diffuse, qtrue);
 }
 
-static void R_DrawSpecialEntities (const entity_t *ents)
+void R_DrawSpecialEntities (const entity_t *ents)
 {
 	const entity_t *e;
 
@@ -472,7 +472,7 @@ static void R_DrawSpecialEntities (const entity_t *ents)
 /**
  * @brief Draw entities which models couldn't be loaded
  */
-static void R_DrawNullEntities (const entity_t *ents)
+void R_DrawNullEntities (const entity_t *ents)
 {
 	const entity_t *e;
 
@@ -587,13 +587,10 @@ static qboolean R_CullEntity (entity_t *e)
  * @brief Primary entry point for drawing all entities.
  * @sa R_RenderFrame
  */
-void R_DrawEntities (void)
+void R_GetEntityLists (void)
 {
 	int i;
 	entity_t **chain;
-	entity_t *r_bsp_entities, *r_opaque_mesh_entities;
-	entity_t *r_blend_mesh_entities, *r_null_entities;
-	entity_t *r_special_entities;
 
 	if (!r_drawentities->integer)
 		return;
@@ -634,7 +631,7 @@ void R_DrawEntities (void)
 					chain = &r_opaque_mesh_entities;
 				break;
 			default:
-				Com_Error(ERR_DROP, "Unknown model type in R_DrawEntities entity chain: %i (%s)",
+				Com_Error(ERR_DROP, "Unknown model type in R_GetEntityLists entity chain: %i (%s)",
 						e->model->type, e->model->name);
 				break;
 			}
@@ -642,14 +639,6 @@ void R_DrawEntities (void)
 		e->next = *chain;
 		*chain = e;
 	}
-
-	R_DrawBspEntities(r_bsp_entities);
-	R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
-	R_DrawBlendMeshEntities(r_blend_mesh_entities);
-	R_Color(NULL);
-	R_DrawSpecialEntities(r_special_entities);
-	R_DrawNullEntities(r_null_entities);
-	R_DrawEntityEffects();
 }
 
 /**

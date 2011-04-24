@@ -308,11 +308,13 @@ void R_RenderFrame (void)
 
 		R_CheckError();
 
+		R_GetEntityLists();
+
+		R_EnableFog(qtrue);
 		for (tile = 0; tile < r_numMapTiles; tile++) {
 			const model_t *mapTile = r_mapTiles[tile];
 			const mBspModel_t *bsp = &mapTile->bsp;
 
-			R_EnableFog(qtrue);
 
 			R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
 			R_DrawOpaqueWarpSurfaces(bsp->opaque_warp_surfaces);
@@ -320,27 +322,63 @@ void R_RenderFrame (void)
 			R_DrawAlphaTestSurfaces(bsp->alpha_test_surfaces);
 
 			R_EnableBlend(qtrue);
-
 			R_DrawMaterialSurfaces(bsp->material_surfaces);
+			R_EnableBlend(qfalse);
+		}
 
+		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
+		R_DrawBspEntities(r_bsp_entities);
+
+		R_EnableBlend(qtrue);
+		R_EnableFog(qfalse);
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			const model_t *mapTile = r_mapTiles[tile];
+			const mBspModel_t *bsp = &mapTile->bsp;
+
+			R_DrawBlendSurfaces(bsp->blend_surfaces);
+			R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
+		}
+
+		R_DrawBlendMeshEntities(r_blend_mesh_entities);
+
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			const model_t *mapTile = r_mapTiles[tile];
+			const mBspModel_t *bsp = &mapTile->bsp;
+
+			R_EnableFog(qtrue);
 			R_DrawFlareSurfaces(bsp->flare_surfaces);
 
 			R_EnableFog(qfalse);
 
 			R_DrawCoronas();
+		}
 
-			R_DrawBlendSurfaces(bsp->blend_surfaces);
-			R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
+		R_EnableBlend(qfalse);
 
-			R_EnableBlend(qfalse);
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			const model_t *mapTile = r_mapTiles[tile];
+			const mBspModel_t *bsp = &mapTile->bsp;
 
 			R_DrawBspNormals(tile);
 		}
+
+		R_Color(NULL);
+		R_DrawSpecialEntities(r_special_entities);
+		R_DrawNullEntities(r_null_entities);
+		R_DrawEntityEffects();
 	} else {
 		glClear(GL_DEPTH_BUFFER_BIT);
-	}
 
-	R_DrawEntities();
+		R_GetEntityLists();
+
+		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
+		R_DrawBspEntities(r_bsp_entities);
+		R_DrawBlendMeshEntities(r_blend_mesh_entities);
+		R_Color(NULL);
+		R_DrawSpecialEntities(r_special_entities);
+		R_DrawNullEntities(r_null_entities);
+		R_DrawEntityEffects();
+	}
 
 	R_EnableBlend(qtrue);
 
