@@ -38,12 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef MATHLIB_EXTRA_H
 #define MATHLIB_EXTRA_H
 
-/* Don't include common or shared stuff if we are doing an independent test of just mathlib_extra, */
-/* to avoid including the whole game in a simple test app */
-/* #ifndef CODE_QUICK_TEST_MATHLIB_EXTRA */
 #include "ufotypes.h"
 #include "mathlib.h"
-/* #endif */
 
 /**
  * @brief This "DENORM" is for avoiding denormal-related issues when values equal to a
