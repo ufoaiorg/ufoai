@@ -1362,6 +1362,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\mathlib_extra.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib_extra.h" />
 		<Unit filename="..\..\src\shared\mutex.c">
 			<Option compilerVar="CC" />
 		</Unit>

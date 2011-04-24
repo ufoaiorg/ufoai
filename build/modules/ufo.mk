@@ -302,6 +302,7 @@ $(TARGET)_SRCS      = \
 	shared/bfd.c \
 	shared/byte.c \
 	shared/mathlib.c \
+	shared/mathlib_extra.c \
 	shared/mutex.c \
 	shared/utf8.c \
 	shared/images.c \
