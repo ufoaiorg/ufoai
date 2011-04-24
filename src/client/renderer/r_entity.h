@@ -88,11 +88,25 @@ typedef struct entity_s {
 	struct entity_s *next;		/**< for chaining */
 } entity_t;
 
+/* entity chains for rendering */
+entity_t *r_bsp_entities, *r_opaque_mesh_entities;
+entity_t *r_blend_mesh_entities, *r_null_entities;
+entity_t *r_special_entities;
+
+
 int R_AddEntity(const entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
 void R_EntitySetOrigin(entity_t *ent, const vec3_t origin);
 void R_EntityAddToOrigin(entity_t *ent, const vec3_t offset);
 void R_TransformForEntity(const entity_t *e, const vec3_t in, vec3_t out);
+
+void R_DrawEntityEffects(void);
+void R_DrawBspEntities(const entity_t *ents);
+void R_DrawMeshEntities(entity_t *ents);
+void R_DrawOpaqueMeshEntities(entity_t *ents);
+void R_DrawBlendMeshEntities(entity_t *ents);
+void R_DrawSpecialEntities(const entity_t *ents);
+void R_DrawNullEntities(const entity_t *ents);
 
 #endif
