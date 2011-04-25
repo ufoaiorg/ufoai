@@ -35,6 +35,7 @@ struct cgame_export_s;
 qboolean GAME_IsMultiplayer(void);
 void GAME_ParseModes(const char *name, const char **text);
 void GAME_InitStartup(void);
+void GAME_InitUIData(void);
 void GAME_SetMode(const struct cgame_export_s *gametype);
 void GAME_ReloadMode(void);
 void GAME_Init(qboolean load);

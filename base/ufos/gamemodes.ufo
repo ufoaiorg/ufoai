@@ -1,11 +1,14 @@
 cgame multiplayer {
 	window	"multiplayer"
+	name "_Multiplayer"
 }
 
 cgame campaigns {
 	window	"campaigns"
+	name "_Campaign"
 }
 
 cgame skirmish {
 	window	"skirmish"
+	name "_Skirmish"
 }
