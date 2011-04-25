@@ -44,13 +44,13 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 {
 	int i;
 
-	Cvar_SetValue("ai_numcivilians", 8);
-	Cvar_Set("ai_civilian", "europe");
+	cgi->Cvar_SetValue("ai_numcivilians", 8);
+	cgi->Cvar_Set("ai_civilian", "europe");
 
 	if (md->hurtAliens)
-		Cvar_Set("sv_hurtaliens", "1");
+		cgi->Cvar_Set("sv_hurtaliens", "1");
 	else
-		Cvar_Set("sv_hurtaliens", "0");
+		cgi->Cvar_Set("sv_hurtaliens", "0");
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
@@ -77,19 +77,19 @@ static void GAME_SK_Start_f (void)
 		const char *name = Cvar_GetString("cl_equip");
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 		const size_t size = GAME_GetCharacterArraySize();
-		uint32_t maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
-		uint32_t ugvs = Cvar_GetInteger("cl_ugvs");
+		uint32_t maxSoldiers = cgi->Cvar_GetInteger("sv_maxsoldiersperplayer");
+		uint32_t ugvs = cgi->Cvar_GetInteger("cl_ugvs");
 
 		if (maxSoldiers <= 0)
 			maxSoldiers = size;
 
 		ugvs = min(ugvs, size - maxSoldiers);
-		Com_Printf("Starting skirmish with %i soldiers and %i ugvs\n", maxSoldiers, ugvs);
+		cgi->Com_Printf("Starting skirmish with %i soldiers and %i ugvs\n", maxSoldiers, ugvs);
 		GAME_AutoTeam(name, maxSoldiers);
 		for (i = 0; i < ugvs; i++)
 			GAME_AppendTeamMember(i + maxSoldiers, ugvTeamDefID, ed);
 	} else {
-		Com_Printf("Using already loaded team with %i members\n", chrDisplayList.num);
+		cgi->Com_Printf("Using already loaded team with %i members\n", chrDisplayList.num);
 	}
 
 	assert(cls.currentSelectedMap >= 0);
@@ -102,10 +102,10 @@ static void GAME_SK_Start_f (void)
 	GAME_SK_SetMissionParameters(md);
 
 	assert(md->map);
-	Com_sprintf(map, sizeof(map), "map %s %s %s;", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
+	Com_sprintf(map, sizeof(map), "map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* prepare */
-	UI_InitStack(NULL, "singleplayermission", qtrue, qfalse);
+	cgi->UI_InitStack(NULL, "singleplayermission", qtrue, qfalse);
 
 	Cbuf_AddText(map);
 }
@@ -125,25 +125,25 @@ static void GAME_SK_ChangeEquip_f (void)
 	int index;
 	const char *cvarName;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <cvarname>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <cvarname>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	cvarName = Cmd_Argv(1);
-	ed = INV_GetEquipmentDefinitionByID(Cvar_GetString(cvarName));
+	cvarName = cgi->Cmd_Argv(1);
+	ed = INV_GetEquipmentDefinitionByID(cgi->Cvar_GetString(cvarName));
 	index = ed - csi.eds;
 
 	if (Q_streq(Cmd_Argv(0), "sk_prevequip")) {
 		index--;
 		if (index < 0)
 			index = csi.numEDs - 1;
-		Cvar_Set(cvarName, csi.eds[index].name);
+		cgi->Cvar_Set(cvarName, csi.eds[index].name);
 	} else {
 		index++;
 		if (index >= csi.numEDs)
 			index = 0;
-		Cvar_Set(cvarName, csi.eds[index].name);
+		cgi->Cvar_Set(cvarName, csi.eds[index].name);
 	}
 }
 
@@ -191,10 +191,10 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 			numKilled[team][team], numKilled[team][TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN]);
 	if (winner == team) {
 		Com_sprintf(popupText, lengthof(popupText), "%s\n%s", _("You won the game!"), resultText);
-		UI_Popup(_("Congratulations"), popupText);
+		cgi->UI_Popup(_("Congratulations"), popupText);
 	} else {
 		Com_sprintf(popupText, lengthof(popupText), "%s\n%s", _("You've lost the game!"), resultText);
-		UI_Popup(_("Better luck next time"), popupText);
+		cgi->UI_Popup(_("Better luck next time"), popupText);
 	}
 }
 
@@ -207,14 +207,14 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 {
 	const qboolean hide = (dropships == NULL);
 	if (hide) {
-		UI_ExecuteConfunc("skirmish_hide_dropships true");
-		Cvar_Set("rm_drop", "");
+		cgi->UI_ExecuteConfunc("skirmish_hide_dropships true");
+		cgi->Cvar_Set("rm_drop", "");
 	} else {
 		const char *rma = Com_GetRandomMapAssemblyNameForCraft((const char *)dropships->data);
-		Cvar_Set("rm_drop", rma);
-		UI_UpdateInvisOptions(UI_GetOption(OPTION_DROPSHIPS), dropships);
+		cgi->Cvar_Set("rm_drop", rma);
+		cgi->UI_UpdateInvisOptions(UI_GetOption(OPTION_DROPSHIPS), dropships);
 
-		UI_ExecuteConfunc("skirmish_hide_dropships false");
+		cgi->UI_ExecuteConfunc("skirmish_hide_dropships false");
 	}
 }
 
@@ -227,14 +227,14 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 {
 	const qboolean hide = (ufos == NULL);
 	if (hide) {
-		UI_ExecuteConfunc("skirmish_hide_ufos true");
-		Cvar_Set("rm_ufo", "");
+		cgi->UI_ExecuteConfunc("skirmish_hide_ufos true");
+		cgi->Cvar_Set("rm_ufo", "");
 	} else {
 		const char *rma = Com_GetRandomMapAssemblyNameForCraft((const char *)ufos->data);
-		Cvar_Set("rm_ufo", rma);
-		UI_UpdateInvisOptions(UI_GetOption(OPTION_UFOS), ufos);
+		cgi->Cvar_Set("rm_ufo", rma);
+		cgi->UI_UpdateInvisOptions(UI_GetOption(OPTION_UFOS), ufos);
 
-		UI_ExecuteConfunc("skirmish_hide_ufos false");
+		cgi->UI_ExecuteConfunc("skirmish_hide_ufos false");
 	}
 }
 
@@ -264,43 +264,43 @@ static void GAME_InitMenuOptions (void)
 
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOTypeToShortName(i);
-		UI_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		cgi->UI_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOCrashedTypeToShortName(i);
-		UI_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		cgi->UI_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
-	UI_RegisterOption(OPTION_UFOS, ufoOptions);
+	cgi->UI_RegisterOption(OPTION_UFOS, ufoOptions);
 
 	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = Com_DropShipTypeToShortName(i);
-		UI_AddOption(&aircraftOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		cgi->UI_AddOption(&aircraftOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
-	UI_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
+	cgi->UI_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
 
 void GAME_SK_InitStartup (void)
 {
-	Cvar_ForceSet("sv_maxclients", "1");
-	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_ARCHIVE, "Equipment that is used for skirmish mode games");
+	cgi->Cvar_ForceSet("sv_maxclients", "1");
+	cl_equip = cgi->Cvar_Get("cl_equip", "multiplayer_initial", CVAR_ARCHIVE, "Equipment that is used for skirmish mode games");
 
-	Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
-	Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
-	Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
-	Cmd_AddCommand("game_go", GAME_SK_Restart_f, "Restart the skirmish mission");
+	cgi->Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
+	cgi->Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
+	cgi->Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
+	cgi->Cmd_AddCommand("game_go", GAME_SK_Restart_f, "Restart the skirmish mission");
 
 	GAME_InitMenuOptions();
 }
 
 void GAME_SK_Shutdown (void)
 {
-	Cmd_RemoveCommand("sk_start");
-	Cmd_RemoveCommand("sk_nextequip");
-	Cmd_RemoveCommand("sk_prevequip");
-	Cmd_RemoveCommand("game_go");
+	cgi->Cmd_RemoveCommand("sk_start");
+	cgi->Cmd_RemoveCommand("sk_nextequip");
+	cgi->Cmd_RemoveCommand("sk_prevequip");
+	cgi->Cmd_RemoveCommand("game_go");
 
-	UI_ResetData(OPTION_DROPSHIPS);
-	UI_ResetData(OPTION_UFOS);
+	cgi->UI_ResetData(OPTION_DROPSHIPS);
+	cgi->UI_ResetData(OPTION_UFOS);
 
 	SV_Shutdown("Quitting server.", qfalse);
 

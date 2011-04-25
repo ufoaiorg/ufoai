@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_hud.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_nodes.h"
+#include "../ui/ui_popup.h"
 #include "../cl_team.h"
 #include "../battlescape/events/e_main.h"
 #include "../cl_inventory.h"
@@ -229,6 +230,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->Cmd_Argv = Cmd_Argv;
 		cgi->Cmd_ExecuteString = Cmd_ExecuteString;
 		cgi->Cmd_RemoveCommand = Cmd_RemoveCommand;
+		cgi->Com_Printf = Com_Printf;
 		cgi->Cvar_Delete = Cvar_Delete;
 		cgi->Cvar_Get = Cvar_Get;
 		cgi->Cvar_GetInteger = Cvar_GetInteger;
@@ -241,7 +243,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->UI_AddOption = UI_AddOption;
 		cgi->UI_ExecuteConfunc = UI_ExecuteConfunc;
 		cgi->UI_InitStack = UI_InitStack;
-		/*cgi->UI_Popup = UI_Popup;*/
+		cgi->UI_Popup = UI_Popup;
 		/*cgi->UI_PopupList = UI_PopupList;*/
 		cgi->UI_PopWindow = UI_PopWindow;
 		cgi->UI_PushWindow = UI_PushWindow;
@@ -249,6 +251,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->UI_RegisterOption = UI_RegisterOption;
 		cgi->UI_RegisterText = UI_RegisterText;
 		cgi->UI_ResetData = UI_ResetData;
+		cgi->UI_UpdateInvisOptions = UI_UpdateInvisOptions;
 		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
 		cgi->XML_AddBool = XML_AddBool;
 		cgi->XML_AddBoolValue = XML_AddBoolValue;
