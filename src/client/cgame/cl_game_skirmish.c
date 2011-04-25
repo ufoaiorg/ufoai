@@ -55,11 +55,11 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
-	csi.numAlienTeams = 0;
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t* td = &csi.teamDef[i];
+	cgi->csi->numAlienTeams = 0;
+	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
+		const teamDef_t* td = &cgi->csi->teamDef[i];
 		if (CHRSH_IsTeamDefAlien(td))
-			csi.alienTeams[csi.numAlienTeams++] = td;
+			cgi->csi->alienTeams[cgi->csi->numAlienTeams++] = td;
 	}
 }
 
@@ -93,10 +93,10 @@ static void GAME_SK_Start_f (void)
 		cgi->Com_Printf("Using already loaded team with %i members\n", chrDisplayList.num);
 	}
 
-	assert(cls.currentSelectedMap >= 0);
-	assert(cls.currentSelectedMap < MAX_MAPDEFS);
+	assert(cgi->cls->currentSelectedMap >= 0);
+	assert(cgi->cls->currentSelectedMap < MAX_MAPDEFS);
 
-	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+	md = Com_GetMapDefByIDX(cgi->cls->currentSelectedMap);
 	if (!md)
 		return;
 
@@ -133,18 +133,18 @@ static void GAME_SK_ChangeEquip_f (void)
 
 	cvarName = cgi->Cmd_Argv(1);
 	ed = INV_GetEquipmentDefinitionByID(cgi->Cvar_GetString(cvarName));
-	index = ed - csi.eds;
+	index = ed - cgi->csi->eds;
 
 	if (Q_streq(Cmd_Argv(0), "sk_prevequip")) {
 		index--;
 		if (index < 0)
-			index = csi.numEDs - 1;
-		cgi->Cvar_Set(cvarName, csi.eds[index].name);
+			index = cgi->csi->numEDs - 1;
+		cgi->Cvar_Set(cvarName, cgi->csi->eds[index].name);
 	} else {
 		index++;
-		if (index >= csi.numEDs)
+		if (index >= cgi->csi->numEDs)
 			index = 0;
-		cgi->Cvar_Set(cvarName, csi.eds[index].name);
+		cgi->Cvar_Set(cvarName, cgi->csi->eds[index].name);
 	}
 }
 
@@ -164,7 +164,7 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	char resultText[UI_MAX_SMALLTEXTLEN];
 	int enemiesKilled, enemiesStunned;
 	int i;
-	const int team = cls.team;
+	const int team = cgi->cls->team;
 
 	CL_Drop();
 
@@ -241,7 +241,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 
 const mapDef_t* GAME_SK_MapInfo (int step)
 {
-	const mapDef_t *md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+	const mapDef_t *md = Com_GetMapDefByIDX(cgi->cls->currentSelectedMap);
 
 	if (md->map[0] == '.')
 		return NULL;

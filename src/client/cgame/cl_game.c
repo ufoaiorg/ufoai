@@ -232,6 +232,8 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->Cvar_Delete = Cvar_Delete;
 		cgi->Cvar_Get = Cvar_Get;
 		cgi->Cvar_GetInteger = Cvar_GetInteger;
+		cgi->Cvar_GetValue = Cvar_GetValue;
+		cgi->Cvar_VariableStringOld = Cvar_VariableStringOld;
 		cgi->Cvar_Set = Cvar_Set;
 		cgi->Cvar_SetValue = Cvar_SetValue;
 		cgi->Cvar_GetString = Cvar_GetString;
