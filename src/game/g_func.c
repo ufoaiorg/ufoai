@@ -42,6 +42,7 @@ static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
 	if (self->HP != 0)
 		return qfalse;
 
+	/** @todo check that the actor is standing upon the breakable */
 	if (G_IsActor(activator))
 		G_ActorFall(activator);
 
