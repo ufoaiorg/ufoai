@@ -146,6 +146,10 @@ static qboolean B_AddBlockedTile (base_t *base, int row, int column)
 	int y;
 
 	assert(base);
+
+	if (B_GetBuildingAt(base, column, row) != NULL)
+		return qfalse;
+
 	OBJZERO(found);
 	found[row][column] = -1;
 
@@ -192,7 +196,6 @@ static qboolean B_AddBlockedTile (base_t *base, int row, int column)
 				return qfalse;
 		}
 	}
-	assert(B_GetBuildingAt(base, column, row) == NULL);
 	base->map[row][column].blocked = qtrue;
 	return qtrue;
 }
@@ -213,6 +216,9 @@ static void B_AddBlockedTiles (base_t *base, int count)
 		const int y = rand() % BASE_SIZE;
 
 		if (B_IsTileBlocked(base, x, y))
+			continue;
+
+		if (B_GetBuildingAt(base, x, y) != NULL)
 			continue;
 
 		B_AddBlockedTile(base, y, x);
