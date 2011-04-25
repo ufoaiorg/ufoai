@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "cl_game.h"
 #include "cl_game_team.h"
+#include "cl_game_skirmish.h"
 #include "../cl_team.h"
 #include "../cl_inventory.h"
 #include "../ui/ui_main.h"
@@ -33,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 
-static const cgame_import_t *cgi;
 static cvar_t *cl_equip;
 
 /**
@@ -279,9 +279,8 @@ static void GAME_InitMenuOptions (void)
 	UI_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
 
-void GAME_SK_InitStartup (const cgame_import_t *import)
+void GAME_SK_InitStartup (void)
 {
-	cgi = import;
 	Cvar_ForceSet("sv_maxclients", "1");
 	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_ARCHIVE, "Equipment that is used for skirmish mode games");
 
@@ -306,4 +305,26 @@ void GAME_SK_Shutdown (void)
 	SV_Shutdown("Quitting server.", qfalse);
 
 	chrDisplayList.num = 0;
+}
+
+#ifndef HARD_LINKED_CGAME
+const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
+#else
+const cgame_export_t *GetCGameSkirmishAPI (const cgame_import_t *import)
+#endif
+{
+	static cgame_export_t e;
+
+	OBJZERO(e);
+
+	e.name ="Skirmish mode";
+	e.menu = "skirmish";
+	e.Init = GAME_SK_InitStartup;
+	e.Shutdown = GAME_SK_Shutdown;
+	e.MapInfo = GAME_SK_MapInfo;
+	e.Results = GAME_SK_Results;
+
+	cgi = import;
+
+	return &e;
 }

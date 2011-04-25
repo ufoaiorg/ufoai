@@ -34,7 +34,7 @@ typedef struct cgame_export_s {
 	const char *name;
 	const char *menu;
 	int isMultiplayer;
-	void (EXPORT *Init) (const struct cgame_import_s *import);
+	void (EXPORT *Init) (void);
 	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
 	qboolean (EXPORT *Spawn) (void);
@@ -138,6 +138,10 @@ typedef struct cgame_import_s {
 	void (IMPORT *Cmd_ExecuteString) (const char *text);
 } cgame_import_t;
 
+extern const cgame_import_t *cgi;
+
 const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
+
+typedef const cgame_export_t *(*cgame_api_t) (const cgame_import_t *);
 
 #endif

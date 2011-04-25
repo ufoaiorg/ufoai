@@ -28,9 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui/ui_nodes.h"
 
+#ifdef HARD_LINKED_CGAME
+const cgame_export_t *GetCGameCampaignAPI (const cgame_import_t *import);
+#endif
+
 const char* GAME_CP_GetItemModel(const char *string);
 const mapDef_t* GAME_CP_MapInfo(int step);
-void GAME_CP_InitStartup(const cgame_import_t *import);
+void GAME_CP_InitStartup(void);
 void GAME_CP_Shutdown(void);
 qboolean GAME_CP_ItemIsUseable(const objDef_t *od);
 void GAME_CP_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
