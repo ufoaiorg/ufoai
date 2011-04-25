@@ -51,7 +51,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * 1.0f but should not hit it perfectly.
  */
 #ifndef DENORM
-#define DENORM 0.000001
+#define DENORM 0.0000000001
 #endif
 #ifndef DENORM_INV
 #define DENORM_INV (1.0 - (DENORM))
