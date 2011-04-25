@@ -114,7 +114,6 @@ typedef struct client_static_s {
 	/** Map definitions */
 	mapDef_t mds[MAX_MAPDEFS];
 	int numMDs;
-	mapDef_t *currentMD;	/**< currently selected mapdef */
 #ifndef HARD_LINKED_CGAME
 	void *cgameLibrary;
 #endif

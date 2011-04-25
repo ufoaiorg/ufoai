@@ -90,9 +90,6 @@ static void GAME_MP_StartServer_f (void)
 
 	Com_sprintf(map, sizeof(map), "map %s %s %s", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
-	/* let the (local) server know which map we are running right now */
-	cls.currentMD = md;
-
 	/** @todo implement different ufo and dropship support for multiplayer, too (see skirmish) */
 	Cvar_Set("rm_drop", "");
 	Cvar_Set("rm_ufo", "");

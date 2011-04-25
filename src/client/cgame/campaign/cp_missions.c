@@ -130,9 +130,6 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 
 	Cbuf_AddText(va("map %s %s %s\n", (MAP_IsNight(mission->pos) ? "night" : "day"),
 		mission->mapDef->map, param ? param : ""));
-
-	/* let the (local) server know which map we are running right now */
-	cls.currentMD = mission->mapDef;
 }
 
 /**
