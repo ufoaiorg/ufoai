@@ -1,5 +1,6 @@
 !define PRODUCT_NAME "UFO:Alien Invasion"
 !define SHORT_PRODUCT_NAME "UFO:AI"
+!define SHORT_PRODUCT_PATH "UFOAI"
 !define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
 !ifndef PRODUCT_VERSION
 !define PRODUCT_VERSION "2.4-dev"
@@ -112,6 +113,7 @@ SectionGroup /e "Game" SECGROUP01
 		CreateShortCut "$DESKTOP\${PRODUCT_NAME}-${PRODUCT_VERSION}.lnk" "$INSTDIR\ufo.exe"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\Uninstall.lnk" "$INSTDIR\uninst.exe"
+		CreateShortcut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\User data.lnk" "$APPDATA\${SHORT_PRODUCT_PATH}\${PRODUCT_VERSION}"
 	SectionEnd
 SectionGroupEnd
 
@@ -131,6 +133,7 @@ SectionGroup /e "Mapping" SECGROUP02
 			File "..\..\..\ufo2map.exe"
 		; RADIANT
 		SetOutPath "$INSTDIR\radiant"
+			File "..\..\..\radiant\uforadiant.exe"
 			File /r /x .gitignore "..\..\..\radiant\*"
 			File /r /x .gitignore "..\..\dlls\radiant\*"
 	SectionEnd
