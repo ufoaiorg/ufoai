@@ -884,6 +884,8 @@ void CL_InitAfter (void)
 
 	CL_LanguageInit();
 
+	GAME_InitUIData();
+
 	/* sort the mapdef array */
 	qsort(cls.mds, cls.numMDs, sizeof(mapDef_t), Com_MapDefSort);
 }

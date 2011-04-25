@@ -524,6 +524,7 @@ static void UI_SelectMap_f (void)
 typedef struct cgameType_s {
 	char id[MAX_VAR];		/**< the id is also the file basename */
 	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
+	char name[MAX_VAR];		/**< translatable ui name */
 } cgameType_t;
 
 #define MAX_CGAMETYPES 16
@@ -533,6 +534,7 @@ static int numCGameTypes;
 /** @brief Valid equipment definition values from script files. */
 static const value_t cgame_vals[] = {
 	{"window", V_STRING, offsetof(cgameType_t, window), 0},
+	{"name", V_STRING, offsetof(cgameType_t, name), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -653,6 +655,14 @@ static const cgame_export_t *GAME_GetCGameAPI (const char *name)
 	return GetCGameAPI(GAME_GetImportData());
 }
 
+static const cgame_export_t *GAME_GetCGameAPI_ (const cgameType_t *t)
+{
+#ifdef HARD_LINKED_CGAME
+	cgameMenu = t->window;
+#endif
+	return GAME_GetCGameAPI(t->id);
+}
+
 /**
  * @brief Decides with game mode should be set - takes the menu as reference
  */
@@ -672,11 +682,7 @@ static void GAME_SetMode_f (void)
 	for (i = 0; i < numCGameTypes; i++) {
 		cgameType_t *t = &cgameTypes[i];
 		if (Q_streq(t->window, modeName)) {
-			const cgame_export_t *gametype;
-#ifdef HARD_LINKED_CGAME
-			cgameMenu = t->window;
-#endif
-			gametype = GAME_GetCGameAPI(modeName);
+			const cgame_export_t *gametype = GAME_GetCGameAPI_(t);
 			GAME_SetMode(gametype);
 			return;
 		}
@@ -1075,6 +1081,30 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 mapDef_t* Com_GetMapDefByIDX (int index)
 {
 	return &cls.mds[index];
+}
+
+/**
+ * @brief Fills the game mode list entries with the parsed values from the script
+ */
+void GAME_InitUIData (void)
+{
+	int i;
+
+	Com_Printf("----------- game modes -------------\n");
+	for (i = 0; i < numCGameTypes; i++) {
+		const cgameType_t *t = &cgameTypes[i];
+		const cgame_export_t *e = GAME_GetCGameAPI_(t);
+		if (e == NULL)
+			continue;
+
+		if (e->isMultiplayer)
+			UI_ExecuteConfunc("game_addmode_multiplayer \"%s\" \"%s\"", t->window, t->name);
+		else
+			UI_ExecuteConfunc("game_addmode_singleplayer \"%s\" \"%s\"", t->window, t->name);
+		Com_Printf("added %s\n", t->name);
+	}
+
+	Com_Printf("added %i game modes\n", numCGameTypes);
 }
 
 void GAME_InitStartup (void)
