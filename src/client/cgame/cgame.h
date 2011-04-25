@@ -117,6 +117,8 @@ typedef struct cgame_import_s {
 	void (IMPORT *Cvar_SetValue) (const char *varName, float value);
 	const char *(IMPORT *Cvar_GetString) (const char *varName);
 	int (IMPORT *Cvar_GetInteger) (const char *varName);
+	const char *(IMPORT *Cvar_VariableStringOld) (const char *varName);
+	float (IMPORT *Cvar_GetValue) (const char *varName);
 	qboolean (IMPORT *Cvar_Delete) (const char *varName);
 	cvar_t * (IMPORT *Cvar_ForceSet) (const char *varName, const char *value);
 
