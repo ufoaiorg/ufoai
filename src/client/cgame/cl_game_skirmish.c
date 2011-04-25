@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 
 static cvar_t *cl_equip;
+static const cgame_import_t *cgi;
 
 /**
  * @brief Register some data in the shared client/server structs to ensure that e.g. every known
