@@ -36,33 +36,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
 
-#define HARD_LINKED_CGAME
-
 #ifdef HARD_LINKED_CGAME
-static const cgame_export_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", 1, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape, NULL, GAME_MP_NotifyEvent},
-	{"Campaign mode", "campaigns", 0, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetItemModel, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, NULL, NULL, GAME_CP_GetTeamDef, NULL},
-	{"Skirmish mode", "skirmish", 0, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+#include "cl_game_campaign.h"
+#include "cl_game_multiplayer.h"
+#include "cl_game_skirmish.h"
 
-	{NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
+static const cgame_api_t gameTypeList[] = {
+	GetCGameMultiplayerAPI,
+	GetCGameCampaignAPI,
+	GetCGameSkirmishAPI
 };
 
 static const char *cgameMenu;
+const cgame_import_t *cgi;
 
 const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 {
-	const cgame_export_t *list = gameTypeList;
+	const size_t len = lengthof(gameTypeList);
+	int i;
 
 	if (cgameMenu == NULL)
 		return NULL;
 
-	while (list) {
-		if (Q_streq(list->menu, cgameMenu)) {
-			/** @todo this should be here, not in GAME_SetMode */
-			/*list->Init(import);*/
-			return list;
+	for (i = 0; i < len; i++) {
+		const cgame_api_t list = gameTypeList[i];
+		const cgame_export_t *cgame = list(import);
+		if (Q_streq(cgame->menu, cgameMenu)) {
+			cgi = import;
+			return cgame;
 		}
-		list++;
 	}
 
 	return NULL;
@@ -299,6 +301,16 @@ static void GAME_FreeAllInventory (void)
 
 static const inventoryImport_t inventoryImport = { GAME_FreeInventory, GAME_FreeAllInventory, GAME_AllocInventoryMemory };
 
+static void GAME_UnloadGame (void)
+{
+#ifndef HARD_LINKED_CGAME
+	if (cls.cgameLibrary) {
+		Com_Printf("Unload the cgame library\n");
+		SDL_UnloadObject(cls.cgameLibrary);
+	}
+#endif
+}
+
 void GAME_SetMode (const cgame_export_t *gametype)
 {
 	const cgame_export_t *list;
@@ -313,6 +325,8 @@ void GAME_SetMode (const cgame_export_t *gametype)
 	if (list) {
 		Com_Printf("Shutdown gametype '%s'\n", list->name);
 		list->Shutdown();
+
+		GAME_UnloadGame();
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
 		if (!UI_IsWindowOnStack("main"))
@@ -329,8 +343,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory(&cls.i);
 		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
-		/** @todo this should be in GetCGameAPI */
-		list->Init(GAME_GetImportData());
+		list->Init();
 	}
 }
 
@@ -581,6 +594,65 @@ void GAME_ParseModes (const char *name, const char **text)
 	} while (*text);
 }
 
+#ifndef HARD_LINKED_CGAME
+static qboolean GAME_LoadGame (const char *path, const char *name)
+{
+	char fullPath[MAX_OSPATH];
+
+	Com_sprintf(fullPath, sizeof(fullPath), "%s/cgame-%s_"CPUSTRING".%s", path, name, SO_EXT);
+	cls.cgameLibrary = SDL_LoadObject(fullPath);
+	if (!cls.cgameLibrary) {
+		Com_sprintf(fullPath, sizeof(fullPath), "%s/cgame-%s.%s", path, name, SO_EXT);
+		cls.cgameLibrary = SDL_LoadObject(fullPath);
+	}
+
+	if (cls.cgameLibrary) {
+		Com_Printf("found at '%s'\n", path);
+		return qtrue;
+	} else {
+		Com_Printf("not found at '%s'\n", path);
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
+		return qfalse;
+	}
+}
+#endif
+
+static const cgame_export_t *GAME_GetCGameAPI (const char *name)
+{
+#ifndef HARD_LINKED_CGAME
+	cgame_api_t GetCGameAPI;
+	const char *path;
+
+	if (cls.cgameLibrary)
+		Com_Error(ERR_FATAL, "GAME_GetCGameAPI without GAME_UnloadGame");
+
+	Com_Printf("------- Loading cgame-%s.%s -------\n", name, SO_EXT);
+
+#ifdef PKGLIBDIR
+	GAME_LoadGame(PKGLIBDIR, name);
+#endif
+
+	/* now run through the search paths */
+	path = NULL;
+	while (!cls.cgameLibrary) {
+		path = FS_NextPath(path);
+		if (!path)
+			/* couldn't find one anywhere */
+			return NULL;
+		else if (GAME_LoadGame(path, name))
+			break;
+	}
+
+	GetCGameAPI = (cgame_api_t)(uintptr_t)SDL_LoadFunction(cls.cgameLibrary, "GetCGameAPI");
+	if (!GetCGameAPI) {
+		GAME_UnloadGame();
+		return NULL;
+	}
+#endif
+
+	return GetCGameAPI(GAME_GetImportData());
+}
+
 /**
  * @brief Decides with game mode should be set - takes the menu as reference
  */
@@ -604,7 +676,7 @@ static void GAME_SetMode_f (void)
 #ifdef HARD_LINKED_CGAME
 			cgameMenu = t->window;
 #endif
-			gametype = GetCGameAPI(GAME_GetImportData());
+			gametype = GAME_GetCGameAPI(modeName);
 			GAME_SetMode(gametype);
 			return;
 		}

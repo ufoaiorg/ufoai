@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "cl_game.h"
+#include "cl_game_campaign.h"
 #include "../cl_team.h"
 #include "campaign/cp_campaign.h"
 #include "campaign/cp_missions.h"
@@ -511,7 +512,7 @@ const char* GAME_CP_GetItemModel (const char *string)
 	}
 }
 
-void GAME_CP_InitStartup (const cgame_import_t *import)
+void GAME_CP_InitStartup (void)
 {
 	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
 	Cmd_AddCommand("cp_missionauto_check", GAME_CP_MissionAutoCheck_f, "Checks whether this mission can be done automatically");
@@ -547,4 +548,36 @@ void GAME_CP_Shutdown (void)
 	CL_ResetSinglePlayerData();
 
 	SV_Shutdown("Quitting server.", qfalse);
+}
+
+#ifndef HARD_LINKED_CGAME
+const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
+#else
+const cgame_export_t *GetCGameCampaignAPI (const cgame_import_t *import)
+#endif
+{
+	static cgame_export_t e;
+
+	OBJZERO(e);
+
+	e.name = "Campaign mode";
+	e.menu = "campaigns";
+	e.Init = GAME_CP_InitStartup;
+	e.Shutdown = GAME_CP_Shutdown;
+	e.Spawn = GAME_CP_Spawn;
+	e.MapInfo = GAME_CP_MapInfo;
+	e.Results = GAME_CP_Results;
+	e.IsItemUseable = GAME_CP_ItemIsUseable;
+	e.GetModelForItem = GAME_CP_GetItemModel;
+	e.GetEquipmentDefinition = GAME_CP_GetEquipmentDefinition;
+	e.UpdateCharacterValues = GAME_CP_CharacterCvars;
+	e.IsTeamKnown = GAME_CP_TeamIsKnown;
+	e.Drop = GAME_CP_Drop;
+	e.InitializeBattlescape = GAME_CP_InitializeBattlescape;
+	e.RunFrame = GAME_CP_Frame;
+	e.GetTeamDef = GAME_CP_GetTeamDef;
+
+	cgi = import;
+
+	return &e;
 }

@@ -94,6 +94,7 @@
 			<Add option="-DCOMPILE_UFO" />
 			<Add option="-DCOMPILE_UNITTESTS" />
 			<Add option="-DHARD_LINKED_GAME" />
+			<Add option="-DHARD_LINKED_CGAME" />
 		</Compiler>
 		<Linker>
 			<Add library="cunit" />

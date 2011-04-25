@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "cl_game.h"
+#include "cl_game_multiplayer.h"
 #include "../cl_team.h"
 #include "../cl_inventory.h"
 #include "multiplayer/mp_callbacks.h"
@@ -34,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_popup.h"
 #include "../battlescape/cl_hud.h"
 #include "../battlescape/cl_parse.h"
-
-static const cgame_import_t *cgi;
 
 void GAME_MP_StartBattlescape (qboolean isTeamPlay)
 {
@@ -274,12 +273,10 @@ const mapDef_t* GAME_MP_MapInfo (int step)
 	return md;
 }
 
-void GAME_MP_InitStartup (const cgame_import_t *import)
+void GAME_MP_InitStartup (void)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
 	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
-
-	cgi = import;
 
 	chrDisplayList.num = 0;
 
@@ -312,4 +309,30 @@ void GAME_MP_Shutdown (void)
 	SV_Shutdown("Game mode shutdown", qfalse);
 
 	OBJZERO(teamData);
+}
+
+#ifndef HARD_LINKED_CGAME
+const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
+#else
+const cgame_export_t *GetCGameMultiplayerAPI (const cgame_import_t *import)
+#endif
+{
+	static cgame_export_t e;
+
+	OBJZERO(e);
+
+	e.name = "Multiplayer mode";
+	e.menu = "multiplayer";
+	e.isMultiplayer = 1;
+	e.Init = GAME_MP_InitStartup;
+	e.Shutdown = GAME_MP_Shutdown;
+	e.MapInfo = GAME_MP_MapInfo;
+	e.Results = GAME_MP_Results;
+	e.EndRoundAnnounce = GAME_MP_EndRoundAnnounce;
+	e.StartBattlescape = GAME_MP_StartBattlescape;
+	e.NotifyEvent = GAME_MP_NotifyEvent;
+
+	cgi = import;
+
+	return &e;
 }

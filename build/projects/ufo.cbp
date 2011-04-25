@@ -87,6 +87,7 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_UFO" />
+			<Add option="-DHARD_LINKED_CGAME" />
 			<Add directory="..\..\src\libs\mxml\" />
 		</Compiler>
 		<Linker>
