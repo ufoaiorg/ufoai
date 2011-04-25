@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_hud.h"
 #include "../battlescape/cl_parse.h"
 
+static const cgame_import_t *cgi;
+
 void GAME_MP_StartBattlescape (qboolean isTeamPlay)
 {
 	UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);

@@ -49,7 +49,6 @@ static const cgame_api_t gameTypeList[] = {
 };
 
 static const char *cgameMenu;
-const cgame_import_t *cgi;
 
 const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 {
@@ -63,7 +62,6 @@ const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 		const cgame_api_t list = gameTypeList[i];
 		const cgame_export_t *cgame = list(import);
 		if (Q_streq(cgame->menu, cgameMenu)) {
-			cgi = import;
 			return cgame;
 		}
 	}

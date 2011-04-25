@@ -141,8 +141,6 @@ typedef struct cgame_import_s {
 	void (IMPORT *Com_Printf) (const char *msg, ...) __attribute__((format(printf, 1, 2)));
 } cgame_import_t;
 
-extern const cgame_import_t *cgi;
-
 const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
 
 typedef const cgame_export_t *(*cgame_api_t) (const cgame_import_t *);
