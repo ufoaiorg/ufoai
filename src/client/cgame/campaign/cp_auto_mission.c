@@ -76,13 +76,13 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign ccs object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission) */
 void CPAutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const short teamNum, const aircraft_t *aircraft) {
-		assert(battle);
-		assert(aircraft);
+		assert (battle);
+		assert (aircraft);
 
-		int x = AIR_GetTeamSize(aircraft);
+		int x = AIR_GetTeamSize (aircraft);
 		if (x == 0) {
-			Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.");
-			Com_DPrintf(DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!");
+			Com_DPrintf (DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.");
+			Com_DPrintf (DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!");
 			return;
 		}
 		battle->nUnits[teamNum] = x;
@@ -90,7 +90,7 @@ void CPAutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const short 
 		/* Fill Health scores in battle with scores from soldiers on the aircraft */
 		employee_t *employee;
 		int y = 0;
-		for(y = 0; y < x; y++) {
+		for (y = 0; y < x; y++) {
 			employee = ccs.employees[aircraft->acTeam[y]];
 			const character_t *chr = &employee->chr;
 			battle->unitHealthMax[teamNum][y] = chr->maxHP;
