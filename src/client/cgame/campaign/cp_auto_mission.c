@@ -33,27 +33,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 {
-	int x = 0;
-	int y = 0;
-	for (x = 0; x < 8; x++) {
-		battle->teamID[x] = -1;
-		battle->teamActive[x] = qfalse;
-		battle->nUnits[x] = 0;
-		battle->scoreTeamDifficulty[x] = 0.5f;
-		battle->scoreTeamEquipment[x] = 0.5f;
-		battle->scoreTeamSkill[x] = 0.5f;
-		battle->scoreTeamSpecialAttributeA[x] = 0.5f;
-		battle->scoreTeamSpecialAttributeB[x] = 0.5f;
-		battle->scoreTeamSpecialAttributeC[x] = 0.5f;
-		battle->scoreTeamSpecialAttributeD[x] = 0.5f;
+	int team;
+	for (team = 0; team < 8; team++) {
+		int otherTeam;
+		int soldier;
 
-		for (y = 0; y < 8; y++) {
-			battle->isHostile[x][y] = qtrue; /* If you forget to set this and run a battle, then f*** it, everyone will just kill each other by default! */
+		battle->teamID[team] = -1;
+		battle->teamActive[team] = qfalse;
+		battle->nUnits[team] = 0;
+		battle->scoreTeamDifficulty[team] = 0.5f;
+		battle->scoreTeamEquipment[team] = 0.5f;
+		battle->scoreTeamSkill[team] = 0.5f;
+		battle->scoreTeamSpecialAttributeA[team] = 0.5f;
+		battle->scoreTeamSpecialAttributeB[team] = 0.5f;
+		battle->scoreTeamSpecialAttributeC[team] = 0.5f;
+		battle->scoreTeamSpecialAttributeD[team] = 0.5f;
+
+		for (otherTeam = 0; otherTeam < 8; otherTeam++) {
+			/* If you forget to set this and run a battle, everyone will just kill each other by default */
+			battle->isHostile[team][otherTeam] = qtrue;
 		}
 
-		for (y = 0; y < 64; y++) {
-			battle->unitHealth[x][y] = 0;
-			battle->unitHealthMax[x][y] = 0;
+		for (soldier = 0; soldier < 64; soldier++) {
+			battle->unitHealth[team][soldier] = 0;
+			battle->unitHealthMax[team][soldier] = 0;
 		}
 	}
 	battle->useSpecialAttributeFactor[0] = qfalse;
@@ -74,26 +77,32 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
  * @param[in] teamNum The team number in the auto mission instance to update
  * @param[in] aircraft The aircraft to get data from
  * @note This function actually gets the data from the campaign ccs object, using the aircraft data to
- * find out which of all the employees are on the aircraft (in the mission) */
-void CPAutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const short teamNum, const aircraft_t *aircraft) {
-		assert (battle);
-		assert (aircraft);
+ * find out which of all the employees are on the aircraft (in the mission)
+ */
+void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const short teamNum, const aircraft_t *aircraft)
+{
+	employee_t *employee;
+	int teamSize;
 
-		int x = AIR_GetTeamSize (aircraft);
-		if (x == 0) {
-			Com_DPrintf (DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.");
-			Com_DPrintf (DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!");
-			return;
-		}
-		battle->nUnits[teamNum] = x;
+	assert(teamNum >= 0 && teamNum < MAX_ACTIVETEAM);
+	assert(battle);
+	assert(aircraft);
 
-		/* Fill Health scores in battle with scores from soldiers on the aircraft */
-		employee_t *employee;
-		int y = 0;
-		for (y = 0; y < x; y++) {
-			employee = ccs.employees[aircraft->acTeam[y]];
-			const character_t *chr = &employee->chr;
-			battle->unitHealthMax[teamNum][y] = chr->maxHP;
-			battle->unitHealth[teamNum][y] = chr->HP;
-		}
+	teamSize = 0;
+	LIST_Foreach (aircraft->acTeam, employee_t, employee) {
+		const character_t *chr = &employee->chr;
+
+		battle->unitHealthMax[teamNum][teamSize] = chr->maxHP;
+		battle->unitHealth[teamNum][teamSize] = chr->HP;
+		teamSize++;
+
+		if (teamSize >= 64)
+			break;
+	}
+	battle->nUnits[teamNum] = teamSize;
+
+	if (teamSize == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.");
+		Com_DPrintf(DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!");
+	}
 }
