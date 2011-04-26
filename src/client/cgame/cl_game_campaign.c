@@ -282,7 +282,7 @@ static void GAME_CP_Start_f (void)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+static void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	int i, j;
 	int ownSurvived, ownKilled, ownStunned;
@@ -368,7 +368,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	SV_Shutdown("Mission end", qfalse);
 }
 
-qboolean GAME_CP_Spawn (void)
+static qboolean GAME_CP_Spawn (void)
 {
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	base_t *base;
@@ -396,12 +396,7 @@ qboolean GAME_CP_Spawn (void)
 	return qtrue;
 }
 
-const mapDef_t* GAME_CP_MapInfo (int step)
-{
-	return Com_GetMapDefByIDX(cls.currentSelectedMap);
-}
-
-qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
+static qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
 {
 	const technology_t *tech = RS_GetTechForItem(od);
 	return RS_IsResearched_ptr(tech);
@@ -412,7 +407,7 @@ qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
  * @param[in] teamDef The team definition of the alien team
  * @return @c true if known, @c false otherwise.
  */
-qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
+static qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 {
 	if (!CHRSH_IsTeamDefAlien(teamDef))
 		return qtrue;
@@ -423,7 +418,7 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 	return RS_IsResearched_ptr(ccs.teamDefTechs[teamDef->idx]);
 }
 
-void GAME_CP_Drop (void)
+static void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
@@ -432,7 +427,7 @@ void GAME_CP_Drop (void)
 	CL_Disconnect();
 }
 
-void GAME_CP_Frame (void)
+static void GAME_CP_Frame (void)
 {
 	/* don't run the campaign in console mode */
 	if (cls.keyDest == key_console)
@@ -448,7 +443,7 @@ void GAME_CP_Frame (void)
 	CL_CampaignRun(ccs.curCampaign);
 }
 
-const char* GAME_CP_GetTeamDef (void)
+static const char* GAME_CP_GetTeamDef (void)
 {
 	const int team = ccs.curCampaign->team;
 	return Com_ValueToStr(&team, V_TEAM, 0);
@@ -458,7 +453,7 @@ const char* GAME_CP_GetTeamDef (void)
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */
-void GAME_CP_InitializeBattlescape (const chrList_t *team)
+static void GAME_CP_InitializeBattlescape (const chrList_t *team)
 {
 	int i;
 	struct dbuffer *msg = new_dbuffer();
@@ -475,12 +470,12 @@ void GAME_CP_InitializeBattlescape (const chrList_t *team)
 	NET_WriteMsg(cls.netStream, msg);
 }
 
-equipDef_t *GAME_CP_GetEquipmentDefinition (void)
+static equipDef_t *GAME_CP_GetEquipmentDefinition (void)
 {
 	return &ccs.eMission;
 }
 
-void GAME_CP_CharacterCvars (const character_t *chr)
+static void GAME_CP_CharacterCvars (const character_t *chr)
 {
 	/* Display rank if the character has one. */
 	if (chr->score.rank >= 0) {
@@ -500,7 +495,7 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 }
 
-const char* GAME_CP_GetItemModel (const char *string)
+static const char* GAME_CP_GetItemModel (const char *string)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
 	if (aircraft) {
@@ -514,7 +509,7 @@ const char* GAME_CP_GetItemModel (const char *string)
 	}
 }
 
-void GAME_CP_InitStartup (void)
+static void GAME_CP_InitStartup (void)
 {
 	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
 	Cmd_AddCommand("cp_missionauto_check", GAME_CP_MissionAutoCheck_f, "Checks whether this mission can be done automatically");
@@ -536,7 +531,7 @@ void GAME_CP_InitStartup (void)
 	CL_ReadSinglePlayerData();
 }
 
-void GAME_CP_Shutdown (void)
+static void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");
 	Cmd_RemoveCommand("cp_missionauto_check");
@@ -567,7 +562,6 @@ const cgame_export_t *GetCGameCampaignAPI (const cgame_import_t *import)
 	e.Init = GAME_CP_InitStartup;
 	e.Shutdown = GAME_CP_Shutdown;
 	e.Spawn = GAME_CP_Spawn;
-	e.MapInfo = GAME_CP_MapInfo;
 	e.Results = GAME_CP_Results;
 	e.IsItemUseable = GAME_CP_ItemIsUseable;
 	e.GetModelForItem = GAME_CP_GetItemModel;

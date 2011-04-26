@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../../cl_team.h"
 #include "../../ui/ui_main.h"
 #include "../../ui/ui_popup.h"
@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mp_serverlist.h"
 #include "../cl_game.h"
 #include "../cl_game_team.h"
+
+static const cgame_import_t *cgi;
 
 teamData_t teamData;
 static cvar_t *rcon_client_password;
@@ -42,60 +44,59 @@ static void CL_Connect_f (void)
 	char server[MAX_VAR];
 	char serverport[16];
 
-	if (!selectedServer && Cmd_Argc() != 2 && Cmd_Argc() != 3) {
-		Com_Printf("Usage: %s <server> [<port>]\n", Cmd_Argv(0));
+	if (!selectedServer && cgi->Cmd_Argc() != 2 && cgi->Cmd_Argc() != 3) {
+		cgi->Com_Printf("Usage: %s <server> [<port>]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	if (Cmd_Argc() == 2) {
-		Q_strncpyz(server, Cmd_Argv(1), sizeof(server));
+	if (cgi->Cmd_Argc() == 2) {
+		Q_strncpyz(server, cgi->Cmd_Argv(1), sizeof(server));
 		Q_strncpyz(serverport, DOUBLEQUOTE(PORT_SERVER), sizeof(serverport));
-	} else if (Cmd_Argc() == 3) {
-		Q_strncpyz(server, Cmd_Argv(1), sizeof(server));
-		Q_strncpyz(serverport, Cmd_Argv(2), sizeof(serverport));
+	} else if (cgi->Cmd_Argc() == 3) {
+		Q_strncpyz(server, cgi->Cmd_Argv(1), sizeof(server));
+		Q_strncpyz(serverport, cgi->Cmd_Argv(2), sizeof(serverport));
 	} else {
 		assert(selectedServer);
 		Q_strncpyz(server, selectedServer->node, sizeof(server));
 		Q_strncpyz(serverport, selectedServer->service, sizeof(serverport));
 	}
 
-	if (!chrDisplayList.num && !GAME_LoadDefaultTeam()) {
-		UI_Popup(_("Error"), _("Assemble a team first"));
+	if (cgi->GAME_IsTeamEmpty() && !cgi->GAME_LoadDefaultTeam()) {
+		cgi->UI_Popup(_("Error"), "%s", _("Assemble a team first"));
 		return;
 	}
 
-	if (Cvar_GetInteger("mn_server_need_password")) {
-		UI_PushWindow("serverpassword", NULL, NULL);
+	if (cgi->Cvar_GetInteger("mn_server_need_password")) {
+		cgi->UI_PushWindow("serverpassword", NULL, NULL);
 		return;
 	}
 
 	/* if running a local server, kill it and reissue */
-	SV_Shutdown("Server quit.", qfalse);
-	CL_Disconnect();
+	cgi->SV_Shutdown("Server quit.", qfalse);
+	cgi->CL_Disconnect();
 
-	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
-	Q_strncpyz(cls.serverport, serverport, sizeof(cls.serverport));
+	cgi->GAME_SetServerInfo(server, serverport);
 
-	CL_SetClientState(ca_connecting);
+	cgi->CL_SetClientState(ca_connecting);
 
-	UI_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
+	cgi->UI_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
 }
 
 static void CL_RconCallback (struct net_stream *s)
 {
-	struct dbuffer *buf = NET_ReadMsg(s);
+	struct dbuffer *buf = cgi->NET_ReadMsg(s);
 	if (buf) {
-		const int cmd = NET_ReadByte(buf);
+		const int cmd = cgi->NET_ReadByte(buf);
 		char commandBuf[8];
-		NET_ReadStringLine(buf, commandBuf, sizeof(commandBuf));
+		cgi->NET_ReadStringLine(buf, commandBuf, sizeof(commandBuf));
 
 		if (cmd == clc_oob && Q_streq(commandBuf, "print")) {
 			char paramBuf[2048];
-			NET_ReadString(buf, paramBuf, sizeof(paramBuf));
-			Com_Printf("%s\n", paramBuf);
+			cgi->NET_ReadString(buf, paramBuf, sizeof(paramBuf));
+			cgi->Com_Printf("%s\n", paramBuf);
 		}
 	}
-	NET_StreamFree(s);
+	cgi->NET_StreamFree(s);
 }
 
 /**
@@ -106,21 +107,21 @@ static void CL_Rcon_f (void)
 {
 	char message[MAX_STRING_CHARS];
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <command>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <command>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	if (!rcon_client_password->string) {
-		Com_Printf("You must set 'rcon_password' before issuing an rcon command.\n");
+		cgi->Com_Printf("You must set 'rcon_password' before issuing an rcon command.\n");
 		return;
 	}
 
 	Com_sprintf(message, sizeof(message), "rcon %s %s",
-		rcon_client_password->string, Cmd_Args());
+		rcon_client_password->string, cgi->Cmd_Args());
 
-	if (cls.state >= ca_connected) {
-		NET_OOB_Printf(cls.netStream, "%s", message);
+	if (cgi->CL_GetClientState() >= ca_connected) {
+		cgi->NET_OOB_Printf2("%s", message);
 	} else if (rcon_address->string) {
 		const char *port;
 		struct net_stream *s;
@@ -130,13 +131,13 @@ static void CL_Rcon_f (void)
 		else
 			port = DOUBLEQUOTE(PORT_SERVER);
 
-		s = NET_Connect(rcon_address->string, port);
+		s = cgi->NET_Connect(rcon_address->string, port);
 		if (s) {
-			NET_OOB_Printf(s, "%s", message);
-			NET_StreamSetCallback(s, &CL_RconCallback);
+			cgi->NET_OOB_Printf(s, "%s", message);
+			cgi->NET_StreamSetCallback(s, &CL_RconCallback);
 		}
 	} else {
-		Com_Printf("You are not connected to any server\n");
+		cgi->Com_Printf("You are not connected to any server\n");
 	}
 }
 
@@ -148,8 +149,8 @@ static void CL_Rcon_f (void)
  */
 static void CL_Disconnect_f (void)
 {
-	SV_ShutdownWhenEmpty();
-	CL_Drop();
+	cgi->SV_ShutdownWhenEmpty();
+	cgi->CL_Drop();
 }
 
 /**
@@ -157,21 +158,16 @@ static void CL_Disconnect_f (void)
  */
 static void CL_Reconnect_f (void)
 {
-	if (Com_ServerState())
+	if (cgi->Com_ServerState())
 		return;
 
-	if (cls.servername[0]) {
-		if (cls.state >= ca_connecting) {
-			Com_Printf("disconnecting...\n");
-			CL_Disconnect();
-		}
+	if (cgi->CL_GetClientState() >= ca_connecting) {
+		cgi->Com_Printf("disconnecting...\n");
+		cgi->CL_Disconnect();
+	}
 
-		cls.connectTime = CL_Milliseconds() - 1500;
-
-		CL_SetClientState(ca_connecting);
-		Com_Printf("reconnecting...\n");
-	} else
-		Com_Printf("No server to reconnect to\n");
+	cgi->CL_SetClientState(ca_connecting);
+	cgi->Com_Printf("reconnecting...\n");
 }
 
 /**
@@ -182,15 +178,32 @@ static void CL_Reconnect_f (void)
 static void CL_SelectTeam_Init_f (void)
 {
 	/* reset menu text */
-	UI_ResetData(TEXT_STANDARD);
+	cgi->UI_ResetData(TEXT_STANDARD);
 
-	if (Com_ServerState())
-		Cvar_Set("cl_admin", "1");
+	if (cgi->Com_ServerState())
+		cgi->Cvar_Set("cl_admin", "1");
 	else
-		Cvar_Set("cl_admin", "0");
+		cgi->Cvar_Set("cl_admin", "0");
 
-	NET_OOB_Printf(cls.netStream, "teaminfo %i", PROTOCOL_VERSION);
-	UI_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
+	cgi->NET_OOB_Printf2("teaminfo %i", PROTOCOL_VERSION);
+	cgi->UI_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
+}
+
+static qboolean GAME_MP_SetTeamNum (int teamnum)
+{
+	static char buf[MAX_STRING_CHARS];
+
+	if (teamData.maxPlayersPerTeam > teamData.teamCount[teamnum]) {
+		cgi->Cvar_SetValue("cl_teamnum", teamnum);
+		Com_sprintf(buf, sizeof(buf), _("Current team: %i"), teamnum);
+		cgi->UI_RegisterText(TEXT_STANDARD, buf);
+		return qtrue;
+	}
+
+	cgi->UI_RegisterText(TEXT_STANDARD, _("Team is already in use"));
+	cgi->Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
+		teamnum, teamData.teamCount[teamnum], teamData.maxPlayersPerTeam);
+	return qfalse;
 }
 
 /**
@@ -199,48 +212,25 @@ static void CL_SelectTeam_Init_f (void)
  */
 static void CL_TeamNum_f (void)
 {
-	int i = cl_teamnum->integer;
-	static char buf[MAX_STRING_CHARS];
-
-	cl_teamnum->modified = qfalse;
+	int i = cgi->Cvar_GetInteger("cl_teamnum");
 
 	if (i <= TEAM_CIVILIAN || i > teamData.maxteams) {
-		Cvar_SetValue("cl_teamnum", TEAM_DEFAULT);
+		cgi->Cvar_SetValue("cl_teamnum", TEAM_DEFAULT);
 		i = TEAM_DEFAULT;
 	}
 
-	if (!Q_streq(Cmd_Argv(0), "teamnum_dec")) {
+	if (!Q_streq(cgi->Cmd_Argv(0), "teamnum_dec")) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
-			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
-				Cvar_SetValue("cl_teamnum", i);
-				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				UI_RegisterText(TEXT_STANDARD, buf);
+			if (GAME_MP_SetTeamNum(i))
 				break;
-			} else {
-				UI_RegisterText(TEXT_STANDARD, _("Team is already in use"));
-				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
-					i, teamData.teamCount[i], teamData.maxPlayersPerTeam);
-			}
 		}
 	} else {
 		for (i++; i <= teamData.maxteams; i++) {
-			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
-				Cvar_SetValue("cl_teamnum", i);
-				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				UI_RegisterText(TEXT_STANDARD, buf);
+			if (GAME_MP_SetTeamNum(i))
 				break;
-			} else {
-				UI_RegisterText(TEXT_STANDARD, _("Team is already in use"));
-				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
-					i, teamData.teamCount[i], teamData.maxPlayersPerTeam);
-			}
 		}
 	}
 
-#if 0
-	if (!teamnum->modified)
-		UI_RegisterText(TEXT_STANDARD, _("Invalid or full team"));
-#endif
 	CL_SelectTeam_Init_f();
 }
 
@@ -257,9 +247,9 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 	if (!len) {
 		/* list them all if there was no parameter given */
 		for (i = 0; i < MAX_BOOKMARKS; i++) {
-			const char *adrStr = Cvar_GetString(va("adr%i", i));
+			const char *adrStr = cgi->Cvar_GetString(va("adr%i", i));
 			if (adrStr[0] != '\0')
-				Com_Printf("%s\n", adrStr);
+				cgi->Com_Printf("%s\n", adrStr);
 		}
 		return 0;
 	}
@@ -268,43 +258,44 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 
 	/* search all matches and fill the localMatch array */
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *adrStr = Cvar_GetString(va("adr%i", i));
+		const char *adrStr = cgi->Cvar_GetString(va("adr%i", i));
 		if (adrStr[0] != '\0' && !strncmp(partial, adrStr, len)) {
-			Com_Printf("%s\n", adrStr);
+			cgi->Com_Printf("%s\n", adrStr);
 			localMatch[matches++] = adrStr;
 			if (matches >= MAX_COMPLETE)
 				break;
 		}
 	}
 
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	return cgi->Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
-void MP_CallbacksInit (void)
+void MP_CallbacksInit (const cgame_import_t *import)
 {
-	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
-	rcon_address = Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
-	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
-	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
-	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the preferred teamnum");
-	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the preferred teamnum");
-	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
-	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
-	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
-	Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
-	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
-	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
-	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
+	cgi = import;
+	rcon_client_password = cgi->Cvar_Get("rcon_password", "", 0, "Remote console password");
+	rcon_address = cgi->Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
+	info_password = cgi->Cvar_Get("password", "", CVAR_USERINFO, NULL);
+	cgi->Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
+	cgi->Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the preferred teamnum");
+	cgi->Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the preferred teamnum");
+	cgi->Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
+	cgi->Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
+	cgi->Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
+	cgi->Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
+	cgi->Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
+	cgi->Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
+	cgi->Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
 }
 
 void MP_CallbacksShutdown (void)
 {
-	Cmd_RemoveCommand("mp_selectteam_init");
-	Cmd_RemoveCommand("teamnum_dec");
-	Cmd_RemoveCommand("teamnum_inc");
-	Cmd_RemoveCommand("rcon");
-	Cmd_RemoveCommand("pingservers");
-	Cmd_RemoveCommand("disconnect");
-	Cmd_RemoveCommand("connect");
-	Cmd_RemoveCommand("reconnect");
+	cgi->Cmd_RemoveCommand("mp_selectteam_init");
+	cgi->Cmd_RemoveCommand("teamnum_dec");
+	cgi->Cmd_RemoveCommand("teamnum_inc");
+	cgi->Cmd_RemoveCommand("rcon");
+	cgi->Cmd_RemoveCommand("pingservers");
+	cgi->Cmd_RemoveCommand("disconnect");
+	cgi->Cmd_RemoveCommand("connect");
+	cgi->Cmd_RemoveCommand("reconnect");
 }

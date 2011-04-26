@@ -55,6 +55,14 @@ typedef struct chr_list_s {
 	int num;	/* Number of entries */
 } chrList_t;
 
+typedef enum {
+	ca_uninitialized,
+	ca_disconnected,			/**< not talking to a server */
+	ca_connecting,				/**< sending request packets to the server */
+	ca_connected,				/**< netchan_t established, waiting for svc_serverdata */
+	ca_active					/**< game views should be displayed */
+} connstate_t;
+
 typedef struct mapDef_s {
 	/* general */
 	char *id;				/**< script file id */

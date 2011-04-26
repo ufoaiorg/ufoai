@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_popup.h"
-#include "cgame/multiplayer/mp_chatmessages.h"
 #include "battlescape/cl_hud.h"
+#include "cgame/cl_game.h"
 
 #ifdef _WIN32
 #	include <winerror.h>
@@ -651,7 +651,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg, ...)
 
 	if (irc_showIfNotInMenu->integer && !Q_streq(UI_GetActiveWindowName(), "irc")) {
 		S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
-		MP_AddChatMessage(appendString);
+		GAME_AddChatMessage(appendString);
 		return qtrue;
 	}
 	return qfalse;
@@ -966,10 +966,10 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			/* check whether this is no message to the channel - but to the user */
 			if (params && !Q_streq(params, irc_defaultChannel->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
-				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
+				GAME_AddChatMessage(va("<%s> %s\n", nick, trailing));
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
-				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
+				GAME_AddChatMessage(va("<%s> %s\n", nick, trailing));
 				if (!Q_streq(UI_GetActiveWindowName(), "irc") && !Q_streq(UI_GetActiveWindowName(), cl_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
 					UI_PushWindow("chat_popup", NULL, NULL);
