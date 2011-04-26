@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* cls, cl */
 #include "../../ui/ui_main.h"
+#include "../cgame.h"
 #include "cp_campaign.h"
 #include "cp_capacity.h"
 #include "cp_overlay.h"
@@ -59,6 +60,7 @@ ccs_t ccs;
 cvar_t *cp_campaign;
 cvar_t *cp_start_employees;
 cvar_t *cp_missiontest;
+const cgame_import_t *cgi;
 
 typedef struct {
 	int ucn;
@@ -1628,8 +1630,9 @@ int CP_GetSalaryUpKeepBase (const salary_t *salary, const base_t *base)
 }
 
 /** @todo remove me and move all the included stuff to proper places */
-void CP_InitStartup (void)
+void CP_InitStartup (const cgame_import_t *import)
 {
+	cgi = import;
 	cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
 
 	SAV_Init();

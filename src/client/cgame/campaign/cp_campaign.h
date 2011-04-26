@@ -583,8 +583,11 @@ extern cvar_t *cp_start_employees;
 
 #define MAX_CREDITS 10000000
 
+struct cgame_import_s;
+extern const struct cgame_import_s *cgi;
+
 /* Campaign functions */
-void CP_InitStartup(void);
+void CP_InitStartup(const struct cgame_import_s *import);
 campaign_t* CL_GetCampaign(const char *name);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
 void CL_ReadSinglePlayerData(void);
