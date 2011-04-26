@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_localentity.h"
 #include "cl_parse.h"
 #include "cl_hud.h"
+#include "../cgame/cl_game.h"
 #include "events/e_parse.h"
-#include "../cgame/multiplayer/mp_chatmessages.h"
 
 /**
  * @brief see also svc_ops_e in common.h
@@ -102,6 +102,11 @@ static void CL_ParseClientinfo (unsigned int player)
 
 	/* isolate the player's name */
 	Q_strncpyz(ci->name, s, sizeof(ci->name));
+}
+
+int CL_GetPlayerNum (void)
+{
+	return cls.team;
 }
 
 /**
@@ -224,7 +229,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		switch (i) {
 		case PRINT_CHAT:
 			S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
-			MP_AddChatMessage(s);
+			GAME_AddChatMessage(s);
 			/* skip format strings */
 			if (s[0] == '^')
 				memmove(s, &s[2], sizeof(s) - 2);

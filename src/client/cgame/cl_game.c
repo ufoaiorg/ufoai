@@ -24,9 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "cl_game.h"
+#include "../client.h"
 #include "cl_game_team.h"
 #include "../battlescape/cl_localentity.h"
 #include "../battlescape/cl_hud.h"
+#include "../battlescape/cl_parse.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_nodes.h"
 #include "../ui/ui_popup.h"
@@ -36,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/node/ui_node_model.h"
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
+#include "../../shared/mutex.h"
 
 #ifdef HARD_LINKED_CGAME
 #include "cl_game_campaign.h"
@@ -210,6 +213,100 @@ void GAME_DisplayItemInfo (uiNode_t *node, const char *string)
 	}
 }
 
+void GAME_SetServerInfo (const char *server, const char *serverport)
+{
+	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
+	Q_strncpyz(cls.serverport, serverport, sizeof(cls.serverport));
+}
+
+
+static threads_mutex_t *queryMasterServerLock;
+
+/**
+ * @sa CL_PingServers_f
+ */
+static void CL_QueryMasterServer (const char *action, http_callback_t callback)
+{
+	TH_MutexLock(queryMasterServerLock);
+	HTTP_GetURL(va("%s/ufo/masterserver.php?%s", masterserver_url->string, action), callback);
+	TH_MutexUnlock(queryMasterServerLock);
+}
+
+qboolean GAME_HandleServerCommand (const char *command, struct dbuffer *msg)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (!list || list->HandleServerCommand == NULL)
+		return qfalse;
+
+	return list->HandleServerCommand(command, msg);
+}
+
+void GAME_AddChatMessage (const char *format, ...)
+{
+	va_list argptr;
+	char string[4096];
+
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (!list || list->AddChatMessage == NULL)
+		return;
+
+	va_start(argptr, format);
+	Q_vsnprintf(string, sizeof(string), format, argptr);
+	va_end(argptr);
+
+	list->AddChatMessage(string);
+}
+
+qboolean GAME_IsTeamEmpty (void)
+{
+	return chrDisplayList.num == 0;
+}
+
+static void GAME_NET_OOB_Printf (struct net_stream *s, const char *format, ...)
+{
+	va_list argptr;
+	char string[4096];
+
+	va_start(argptr, format);
+	Q_vsnprintf(string, sizeof(string), format, argptr);
+	va_end(argptr);
+
+	NET_OOB_Printf(s, "%s", string);
+}
+
+static void GAME_NET_OOB_Printf2 (const char *format, ...)
+{
+	va_list argptr;
+	char string[4096];
+
+	va_start(argptr, format);
+	Q_vsnprintf(string, sizeof(string), format, argptr);
+	va_end(argptr);
+
+	NET_OOB_Printf(cls.netStream, "%s", string);
+}
+
+static void GAME_UI_Popup (const char *title, const char *format, ...)
+{
+	va_list argptr;
+
+	va_start(argptr, format);
+	Q_vsnprintf(popupText, sizeof(popupText), format, argptr);
+	va_end(argptr);
+
+	UI_Popup(title, popupText);
+}
+
+static void* GAME_StrDup (const char *string)
+{
+	return Mem_PoolStrDup(string, cl_genericPool, 0);
+}
+
+static void GAME_Free (void *ptr)
+{
+	Mem_Free(ptr);
+}
+
 static const cgame_import_t* GAME_GetImportData (void)
 {
 	static cgame_import_t gameImport;
@@ -219,8 +316,6 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi = &gameImport;
 
 		cgi->csi = &csi;
-		cgi->cls = &cls;
-		cgi->cl = &cl;
 
 		cgi->Cmd_AddCommand = Cmd_AddCommand;
 		cgi->Cmd_Argc = Cmd_Argc;
@@ -228,7 +323,14 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->Cmd_Argv = Cmd_Argv;
 		cgi->Cmd_ExecuteString = Cmd_ExecuteString;
 		cgi->Cmd_RemoveCommand = Cmd_RemoveCommand;
-		cgi->Com_Printf = Com_Printf;
+		cgi->Cmd_AddParamCompleteFunction = Cmd_AddParamCompleteFunction;
+		cgi->Cmd_GenericCompleteFunction = Cmd_GenericCompleteFunction;
+
+		cgi->Cbuf_AddText = Cbuf_AddText;
+
+		cgi->LIST_AddString = LIST_AddString;
+		cgi->LIST_ContainsString = LIST_ContainsString;
+
 		cgi->Cvar_Delete = Cvar_Delete;
 		cgi->Cvar_Get = Cvar_Get;
 		cgi->Cvar_GetInteger = Cvar_GetInteger;
@@ -238,12 +340,15 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->Cvar_SetValue = Cvar_SetValue;
 		cgi->Cvar_GetString = Cvar_GetString;
 		cgi->Cvar_ForceSet = Cvar_ForceSet;
+
 		cgi->FS_FreeFile = FS_FreeFile;
 		cgi->FS_LoadFile = FS_LoadFile;
+		cgi->FS_CheckFile = FS_CheckFile;
+
 		cgi->UI_AddOption = UI_AddOption;
 		cgi->UI_ExecuteConfunc = UI_ExecuteConfunc;
 		cgi->UI_InitStack = UI_InitStack;
-		cgi->UI_Popup = UI_Popup;
+		cgi->UI_Popup = GAME_UI_Popup;
 		/*cgi->UI_PopupList = UI_PopupList;*/
 		cgi->UI_PopWindow = UI_PopWindow;
 		cgi->UI_PushWindow = UI_PushWindow;
@@ -252,7 +357,76 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->UI_RegisterText = UI_RegisterText;
 		cgi->UI_ResetData = UI_ResetData;
 		cgi->UI_UpdateInvisOptions = UI_UpdateInvisOptions;
+		cgi->UI_GetOption = UI_GetOption;
 		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
+
+		cgi->NET_StreamSetCallback = NET_StreamSetCallback;
+		cgi->NET_Connect = NET_Connect;
+		cgi->NET_ReadString = NET_ReadString;
+		cgi->NET_ReadStringLine = NET_ReadStringLine;
+		cgi->NET_ReadByte = NET_ReadByte;
+		cgi->NET_ReadMsg = NET_ReadMsg;
+		cgi->NET_StreamGetData = NET_StreamGetData;
+		cgi->NET_StreamSetData = NET_StreamSetData;
+		cgi->NET_StreamFree = NET_StreamFree;
+		cgi->NET_StreamPeerToName = NET_StreamPeerToName;
+		cgi->NET_SockaddrToStrings = NET_SockaddrToStrings;
+		cgi->NET_DatagramSocketNew = NET_DatagramSocketNew;
+		cgi->NET_DatagramBroadcast = NET_DatagramBroadcast;
+		cgi->NET_DatagramSocketClose = NET_DatagramSocketClose;
+		cgi->NET_OOB_Printf = GAME_NET_OOB_Printf;
+		cgi->NET_OOB_Printf2 = GAME_NET_OOB_Printf2;
+
+		cgi->Com_ServerState = Com_ServerState;
+		cgi->Com_Printf = Com_Printf;
+		cgi->Com_DPrintf = Com_DPrintf;
+		cgi->Com_Parse = Com_Parse;
+		cgi->Com_Error = Com_Error;
+		cgi->Com_DropShipTypeToShortName = Com_DropShipTypeToShortName;
+		cgi->Com_UFOCrashedTypeToShortName = Com_UFOCrashedTypeToShortName;
+		cgi->Com_UFOTypeToShortName = Com_UFOTypeToShortName;
+		cgi->Com_GetRandomMapAssemblyNameForCraft = Com_GetRandomMapAssemblyNameForCraft;
+		cgi->Com_SetGameType = Com_SetGameType;
+
+		cgi->SV_ShutdownWhenEmpty = SV_ShutdownWhenEmpty;
+		cgi->SV_Shutdown = SV_Shutdown;
+
+		cgi->CL_Drop = CL_Drop;
+		cgi->CL_Milliseconds = CL_Milliseconds;
+		cgi->CL_PlayerGetName = CL_PlayerGetName;
+		cgi->CL_GetPlayerNum = CL_GetPlayerNum;
+		cgi->CL_SetClientState = CL_SetClientState;
+		cgi->CL_GetClientState = CL_GetClientState;
+		cgi->CL_Disconnect = CL_Disconnect;
+		cgi->CL_QueryMasterServer = CL_QueryMasterServer;
+
+		cgi->GAME_SwitchCurrentSelectedMap = GAME_SwitchCurrentSelectedMap;
+		cgi->GAME_GetCurrentSelectedMap = GAME_GetCurrentSelectedMap;
+		cgi->GAME_GetCurrentTeam = GAME_GetCurrentTeam;
+		cgi->GAME_StrDup = GAME_StrDup;
+		cgi->GAME_AutoTeam = GAME_AutoTeam;
+		cgi->GAME_GetCharacterArraySize = GAME_GetCharacterArraySize;
+		cgi->GAME_IsTeamEmpty = GAME_IsTeamEmpty;
+		cgi->GAME_LoadDefaultTeam = GAME_LoadDefaultTeam;
+		cgi->GAME_AppendTeamMember = GAME_AppendTeamMember;
+		cgi->GAME_ReloadMode = GAME_ReloadMode;
+		cgi->GAME_SetServerInfo = GAME_SetServerInfo;
+
+		cgi->Free = GAME_Free;
+
+		cgi->R_LoadImage = R_LoadImage;
+		cgi->R_SoftenTexture = R_SoftenTexture;
+
+		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
+		cgi->S_StartLocalSample = S_StartLocalSample;
+
+		cgi->INV_GetEquipmentDefinitionByID = INV_GetEquipmentDefinitionByID;
+
+		cgi->Sys_Error = Sys_Error;
+
+		cgi->HUD_InitUI = HUD_InitUI;
+		cgi->HUD_DisplayMessage = HUD_DisplayMessage;
+
 		cgi->XML_AddBool = XML_AddBool;
 		cgi->XML_AddBoolValue = XML_AddBoolValue;
 		cgi->XML_AddByte = XML_AddByte;
@@ -273,12 +447,6 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->XML_AddShortValue = XML_AddShortValue;
 		cgi->XML_AddString = XML_AddString;
 		cgi->XML_AddStringValue = XML_AddStringValue;
-		cgi->R_LoadImage = R_LoadImage;
-		cgi->R_LoadImageData = R_LoadImageData;
-		cgi->R_SoftenTexture = R_SoftenTexture;
-		cgi->R_UploadAlpha = R_UploadAlpha;
-		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
-		cgi->S_StartLocalSample = S_StartLocalSample;
 	}
 
 	return cgi;
@@ -304,14 +472,34 @@ static void GAME_FreeAllInventory (void)
 
 static const inventoryImport_t inventoryImport = { GAME_FreeInventory, GAME_FreeAllInventory, GAME_AllocInventoryMemory };
 
-static void GAME_UnloadGame (void)
+void GAME_UnloadGame (void)
 {
 #ifndef HARD_LINKED_CGAME
 	if (cls.cgameLibrary) {
 		Com_Printf("Unload the cgame library\n");
 		SDL_UnloadObject(cls.cgameLibrary);
+		cls.cgameLibrary = NULL;
 	}
 #endif
+}
+
+void GAME_SwitchCurrentSelectedMap (int step)
+{
+	cls.currentSelectedMap += step;
+
+	if (cls.currentSelectedMap < 0)
+		cls.currentSelectedMap = cls.numMDs - 1;
+	cls.currentSelectedMap %= cls.numMDs;
+}
+
+const mapDef_t* GAME_GetCurrentSelectedMap (void)
+{
+	return Com_GetMapDefByIDX(cls.currentSelectedMap);
+}
+
+int GAME_GetCurrentTeam (void)
+{
+	return cls.team;
 }
 
 void GAME_SetMode (const cgame_export_t *gametype)
@@ -328,8 +516,6 @@ void GAME_SetMode (const cgame_export_t *gametype)
 	if (list) {
 		Com_Printf("Shutdown gametype '%s'\n", list->name);
 		list->Shutdown();
-
-		GAME_UnloadGame();
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
 		if (!UI_IsWindowOnStack("main"))
@@ -685,8 +871,12 @@ static void GAME_SetMode_f (void)
 	for (i = 0; i < numCGameTypes; i++) {
 		cgameType_t *t = &cgameTypes[i];
 		if (Q_streq(t->window, modeName)) {
-			const cgame_export_t *gametype = GAME_GetCGameAPI_(t);
+			const cgame_export_t *gametype;
+			GAME_UnloadGame();
+
+			gametype = GAME_GetCGameAPI_(t);
 			GAME_SetMode(gametype);
+
 			return;
 		}
 	}
@@ -1018,6 +1208,9 @@ void GAME_Drop (void)
 	} else {
 		SV_Shutdown("Drop", qfalse);
 		GAME_SetMode(NULL);
+
+		GAME_UnloadGame();
+
 		UI_InitStack("main", NULL, qfalse, qtrue);
 	}
 }
@@ -1028,6 +1221,8 @@ void GAME_Drop (void)
 static void GAME_Exit_f (void)
 {
 	GAME_SetMode(NULL);
+
+	GAME_UnloadGame();
 }
 
 /**
@@ -1105,6 +1300,7 @@ void GAME_InitUIData (void)
 		else
 			UI_ExecuteConfunc("game_addmode_singleplayer \"%s\" \"%s\"", t->window, t->name);
 		Com_Printf("added %s\n", t->name);
+		GAME_UnloadGame();
 	}
 
 	Com_Printf("added %i game modes\n", numCGameTypes);
@@ -1128,4 +1324,11 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
+
+	queryMasterServerLock = TH_MutexCreate("masterserverquery");
+}
+
+void GAME_Shutdown (void)
+{
+	TH_MutexDestroy(queryMasterServerLock);
 }

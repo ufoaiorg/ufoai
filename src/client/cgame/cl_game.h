@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_H
 #define CL_GAME_H
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "../ui/ui_nodes.h"
 
 struct cgame_export_s;
@@ -35,7 +35,9 @@ struct cgame_export_s;
 qboolean GAME_IsMultiplayer(void);
 void GAME_ParseModes(const char *name, const char **text);
 void GAME_InitStartup(void);
+void GAME_Shutdown(void);
 void GAME_InitUIData(void);
+void GAME_UnloadGame(void);
 void GAME_SetMode(const struct cgame_export_s *gametype);
 void GAME_ReloadMode(void);
 void GAME_Init(qboolean load);
@@ -44,6 +46,8 @@ qboolean GAME_ItemIsUseable(const objDef_t *od);
 void GAME_HandleResults(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 void GAME_SpawnSoldiers(void);
 equipDef_t *GAME_GetEquipmentDefinition(void);
+qboolean GAME_HandleServerCommand(const char *command, struct dbuffer *msg);
+void GAME_AddChatMessage(const char *format, ...);
 void GAME_CharacterCvars(const character_t *chr);
 character_t* GAME_GetCharacter(int index);
 size_t GAME_GetCharacterArraySize(void);
@@ -59,6 +63,11 @@ const char* GAME_GetTeamDef(void);
 void GAME_Drop(void);
 void GAME_Frame(void);
 const char* GAME_GetModelForItem(const objDef_t *od, struct uiModel_s** menuModel);
+const mapDef_t* GAME_GetCurrentSelectedMap(void);
+void GAME_SwitchCurrentSelectedMap(int step);
+qboolean GAME_IsTeamEmpty(void);
+int GAME_GetCurrentTeam(void);
+void GAME_SetServerInfo(const char *server, const char *serverport);
 
 #include "cgame.h"
 

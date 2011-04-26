@@ -2880,9 +2880,6 @@ GAMETYPE INTERPRETER
 ==============================================================================
 */
 
-gametype_t gts[MAX_GAMETYPES];
-int numGTs = 0;
-
 /** @brief possible gametype values for the gameserver (ufo-scriptfiles) */
 static const value_t gameTypeValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
@@ -2906,17 +2903,17 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 	}
 
 	/* search for game types with same name */
-	for (i = 0; i < numGTs; i++)
-		if (!strncmp(token, gts[i].id, MAX_VAR))
+	for (i = 0; i < csi.numGTs; i++)
+		if (!strncmp(token, csi.gts[i].id, MAX_VAR))
 			break;
 
-	if (i == numGTs) {
+	if (i == csi.numGTs) {
 		if (i >= MAX_GAMETYPES)
 			Sys_Error("Com_ParseGameTypes: MAX_GAMETYPES exceeded\n");
-		gt = &gts[numGTs++];
+		gt = &csi.gts[csi.numGTs++];
 		OBJZERO(*gt);
 		Q_strncpyz(gt->id, name, sizeof(gt->id));
-		if (numGTs >= MAX_GAMETYPES)
+		if (csi.numGTs >= MAX_GAMETYPES)
 			Sys_Error("Com_ParseGameTypes: Too many gametypes.\n");
 
 		do {
@@ -3322,8 +3319,6 @@ void Com_Shutdown (void)
 {
 	OBJZERO(terrainTypesHash);
 	OBJZERO(com_constNameInt_hash);
-	OBJZERO(gts);
 	com_constNameInt = NULL;
 	versionParsed = qfalse;
-	numGTs = 0;
 }

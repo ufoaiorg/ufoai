@@ -815,8 +815,8 @@ void Com_SetGameType (void)
 {
 	int i;
 
-	for (i = 0; i < numGTs; i++) {
-		const gametype_t *gt = &gts[i];
+	for (i = 0; i < csi.numGTs; i++) {
+		const gametype_t *gt = &csi.gts[i];
 		if (Q_streq(gt->id, sv_gametype->string)) {
 			int j;
 			const cvarlist_t *list;
@@ -832,7 +832,7 @@ void Com_SetGameType (void)
 		}
 	}
 
-	if (i == numGTs)
+	if (i == csi.numGTs)
 		Com_Printf("Can't set the gametype - unknown value for cvar gametype: '%s'\n", sv_gametype->string);
 }
 
@@ -841,9 +841,9 @@ static void Com_GameTypeList_f (void)
 	int i;
 
 	Com_Printf("Available gametypes:\n");
-	for (i = 0; i < numGTs; i++) {
+	for (i = 0; i < csi.numGTs; i++) {
 		int j;
-		const gametype_t *gt = &gts[i];
+		const gametype_t *gt = &csi.gts[i];
 		const cvarlist_t *list;
 
 		Com_Printf("%s\n", gt->id);

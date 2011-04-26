@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "cl_game.h"
 #include "cl_game_multiplayer.h"
 #include "../cl_team.h"
@@ -38,31 +38,70 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const cgame_import_t *cgi;
 
-void GAME_MP_StartBattlescape (qboolean isTeamPlay)
+#ifndef HARD_LINKED_CGAME
+/* this is only here so the functions in the shared code can link */
+void Sys_Error (const char *error, ...)
 {
-	UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
-	UI_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
+	va_list argptr;
+	char text[1024];
+
+	va_start(argptr, error);
+	Q_vsnprintf(text, sizeof(text), error, argptr);
+	va_end(argptr);
+
+	cgi->Sys_Error("%s", text);
 }
 
-void GAME_MP_NotifyEvent (event_t eventType)
+void Com_Printf (const char *msg, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	va_start(argptr, msg);
+	Q_vsnprintf(text, sizeof(text), msg, argptr);
+	va_end(argptr);
+
+	cgi->Com_Printf("%s", text);
+}
+
+void Com_DPrintf (int level, const char *msg, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	va_start(argptr, msg);
+	Q_vsnprintf(text, sizeof(text), msg, argptr);
+	va_end(argptr);
+
+	cgi->Com_DPrintf(level, "%s", text);
+}
+#endif
+
+static void GAME_MP_StartBattlescape (qboolean isTeamPlay)
+{
+	cgi->UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
+	cgi->UI_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
+}
+
+static void GAME_MP_NotifyEvent (event_t eventType)
 {
 	if (eventType == EV_RESET)
-		HUD_InitUI("multiplayerInGame", qtrue);
+		cgi->HUD_InitUI("multiplayerInGame", qtrue);
 }
 
-void GAME_MP_EndRoundAnnounce (int playerNum, int team)
+static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
 {
 	char buf[128];
 
 	/* it was our own round */
-	if (cl.pnum == playerNum) {
+	if (cgi->CL_GetPlayerNum() == playerNum) {
 		Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
 	} else {
-		const char *playerName = CL_PlayerGetName(playerNum);
+		const char *playerName = cgi->CL_PlayerGetName(playerNum);
 		Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
 	}
 	/* add translated message to chat buffer */
-	HUD_DisplayMessage(buf);
+	cgi->HUD_DisplayMessage(buf);
 }
 
 /**
@@ -72,41 +111,41 @@ void GAME_MP_EndRoundAnnounce (int playerNum, int team)
 static void GAME_MP_StartServer_f (void)
 {
 	char map[MAX_VAR];
-	mapDef_t *md;
+	const mapDef_t *md;
 
-	if (!sv_dedicated->integer && !chrDisplayList.num)
-		GAME_AutoTeam("multiplayer_initial", GAME_GetCharacterArraySize());
+	if (!cgi->Cvar_GetInteger("sv_dedicated") && cgi->GAME_IsTeamEmpty())
+		cgi->GAME_AutoTeam("multiplayer_initial", cgi->GAME_GetCharacterArraySize());
 
-	if (Cvar_GetInteger("sv_teamplay")
-	 && Cvar_GetValue("sv_maxsoldiersperplayer") > Cvar_GetValue("sv_maxsoldiersperteam")) {
-		UI_Popup(_("Settings doesn't make sense"), _("Set soldiers per player lower than soldiers per team"));
+	if (cgi->Cvar_GetInteger("sv_teamplay")
+	 && cgi->Cvar_GetValue("sv_maxsoldiersperplayer") > cgi->Cvar_GetValue("sv_maxsoldiersperteam")) {
+		cgi->UI_Popup(_("Settings doesn't make sense"), _("Set soldiers per player lower than soldiers per team"));
 		return;
 	}
 
-	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+	md = cgi->GAME_GetCurrentSelectedMap();
 	if (!md || !md->multiplayer)
 		return;
 	assert(md->map);
 
-	Com_sprintf(map, sizeof(map), "map %s %s %s", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
+	Com_sprintf(map, sizeof(map), "map %s %s %s", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/** @todo implement different ufo and dropship support for multiplayer, too (see skirmish) */
-	Cvar_Set("rm_drop", "");
-	Cvar_Set("rm_ufo", "");
+	cgi->Cvar_Set("rm_drop", "");
+	cgi->Cvar_Set("rm_ufo", "");
 
 	if (md->hurtAliens)
-		Cvar_Set("sv_hurtaliens", "1");
+		cgi->Cvar_Set("sv_hurtaliens", "1");
 	else
-		Cvar_Set("sv_hurtaliens", "0");
+		cgi->Cvar_Set("sv_hurtaliens", "0");
 
 	if (md->teams)
-		Cvar_SetValue("sv_maxteams", md->teams);
+		cgi->Cvar_SetValue("sv_maxteams", md->teams);
 	else
-		Cvar_SetValue("sv_maxteams", 2);
+		cgi->Cvar_SetValue("sv_maxteams", 2);
 
-	Cmd_ExecuteString(map);
+	cgi->Cmd_ExecuteString(map);
 
-	UI_InitStack("multiplayer_wait", "multiplayerInGame", qfalse, qtrue);
+	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame", qfalse, qtrue);
 }
 
 /**
@@ -114,7 +153,7 @@ static void GAME_MP_StartServer_f (void)
  */
 static void GAME_MP_UpdateGametype_f (void)
 {
-	Com_SetGameType();
+	cgi->Com_SetGameType();
 }
 
 /**
@@ -126,19 +165,21 @@ static void GAME_MP_ChangeGametype_f (void)
 	const mapDef_t *md;
 	const char *newGameTypeID = NULL;
 	qboolean next = qtrue;
+	const int numGTs = cgi->csi->numGTs;
+	const char *gameType = cgi->Cvar_GetString("sv_gametype");
 
 	/* no types defined or parsed */
 	if (numGTs == 0)
 		return;
 
-	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+	md = cgi->GAME_GetCurrentSelectedMap();
 	if (!md || !md->multiplayer) {
-		Com_Printf("UI_ChangeGametype_f: No mapdef for the map\n");
+		cgi->Com_Printf("UI_ChangeGametype_f: No mapdef for the map\n");
 		return;
 	}
 
 	/* previous? */
-	if (Q_streq(Cmd_Argv(0), "mp_prevgametype")) {
+	if (Q_streq(cgi->Cmd_Argv(0), "mp_prevgametype")) {
 		next = qfalse;
 	}
 
@@ -146,7 +187,7 @@ static void GAME_MP_ChangeGametype_f (void)
 		linkedList_t *list = md->gameTypes;
 		linkedList_t *old = NULL;
 		while (list) {
-			if (Q_streq((const char*)list->data, sv_gametype->string)) {
+			if (Q_streq((const char*)list->data, gameType)) {
 				if (next) {
 					if (list->next)
 						newGameTypeID = (const char *)list->next->data;
@@ -173,8 +214,8 @@ static void GAME_MP_ChangeGametype_f (void)
 	} else {
 		int i;
 		for (i = 0; i < numGTs; i++) {
-			const gametype_t *gt = &gts[i];
-			if (Q_streq(gt->id, sv_gametype->string)) {
+			const gametype_t *gt = &cgi->csi->gts[i];
+			if (Q_streq(gt->id, gameType)) {
 				int newType;
 				if (next) {
 					newType = (i + 1);
@@ -186,14 +227,14 @@ static void GAME_MP_ChangeGametype_f (void)
 						newType = numGTs - 1;
 				}
 
-				newGameTypeID = gts[newType].id;
+				newGameTypeID = cgi->csi->gts[newType].id;
 				break;
 			}
 		}
 	}
 	if (newGameTypeID) {
-		Cvar_Set("sv_gametype", newGameTypeID);
-		Com_SetGameType();
+		cgi->Cvar_Set("sv_gametype", newGameTypeID);
+		cgi->Com_SetGameType();
 	}
 }
 
@@ -208,104 +249,125 @@ static void GAME_MP_ChangeGametype_f (void)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+static void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	char resultText[UI_MAX_SMALLTEXTLEN];
 	int their_killed, their_stunned;
 	int i;
+	const int team = cgi->GAME_GetCurrentTeam();
 
-	CL_Drop();
+	cgi->CL_Drop();
 
 	if (winner == 0) {
-		UI_Popup(_("Game Drawn!"), _("The game was a draw!\n\nNo survivors left on any side."));
+		cgi->UI_Popup(_("Game Drawn!"), "%s", _("The game was a draw!\n\nNo survivors left on any side."));
 		return;
 	}
 
 	their_killed = their_stunned = 0;
 	for (i = 0; i < MAX_TEAMS; i++) {
-		if (i != cls.team) {
-			their_killed += numKilled[cls.team][i];
-			their_stunned += numStunned[cls.team][i];
+		if (i != team) {
+			their_killed += numKilled[team][i];
+			their_stunned += numStunned[team][i];
 		}
 	}
 
-	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), their_killed + their_stunned, numAlive[cls.team]);
-	if (winner == cls.team) {
-		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You won the game!"), resultText);
-		UI_Popup(_("Congratulations"), popupText);
+	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), their_killed + their_stunned, numAlive[team]);
+	if (winner == team) {
+		cgi->UI_Popup(_("Congratulations"), "%s%s", _("You won the game!"), resultText);
 	} else {
-		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You've lost the game!"), resultText);
-		UI_Popup(_("Better luck next time"), popupText);
+		cgi->UI_Popup(_("Better luck next time"), "%s%s", _("You've lost the game!"), resultText);
 	}
 }
 
-const mapDef_t* GAME_MP_MapInfo (int step)
+static const mapDef_t* GAME_MP_MapInfo (int step)
 {
 	const mapDef_t *md;
 	int i = 0;
 
-	while (!Com_GetMapDefByIDX(cls.currentSelectedMap)->multiplayer) {
+	while (!cgi->GAME_GetCurrentSelectedMap()->multiplayer) {
 		i++;
-		cls.currentSelectedMap += (step ? step : 1);
-		if (cls.currentSelectedMap < 0)
-			cls.currentSelectedMap = cls.numMDs - 1;
-		cls.currentSelectedMap %= cls.numMDs;
-		if (i >= cls.numMDs)
-			Com_Error(ERR_DROP, "GAME_MP_MapInfo: There is no multiplayer map in any mapdef");
+		cgi->GAME_SwitchCurrentSelectedMap(step ? step : 1);
+		if (i > 100000)
+			cgi->Com_Error(ERR_DROP, "no multiplayer map found");
 	}
 
-	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+	md = cgi->GAME_GetCurrentSelectedMap();
 
 	if (md->gameTypes) {
+		const char *gameType = cgi->Cvar_GetString("sv_gametype");
 		const linkedList_t *list = md->gameTypes;
 		char buf[256] = "";
-		while (list) {
-			Q_strcat(buf, va("%s ", (const char *)list->data), sizeof(buf));
-			list = list->next;
+		const char *gameTypeStr;
+		LIST_Foreach(md->gameTypes, char, gameTypeStr) {
+			Q_strcat(buf, va("%s ", gameTypeStr), sizeof(buf));
 		}
-		Cvar_Set("mn_mapgametypes", buf);
-		list = LIST_ContainsString(md->gameTypes, sv_gametype->string);
+		cgi->Cvar_Set("mn_mapgametypes", buf);
+		list = cgi->LIST_ContainsString(md->gameTypes, gameType);
 	} else {
-		Cvar_Set("mn_mapgametypes", _("all"));
+		cgi->Cvar_Set("mn_mapgametypes", _("all"));
 	}
 
 	return md;
 }
 
-void GAME_MP_InitStartup (void)
+
+static linkedList_t *mp_chatMessageStack = NULL;
+
+/**
+ * @brief Displays a chat on the hud and add it to the chat buffer
+ */
+static void GAME_MP_AddChatMessage (const char *text)
 {
-	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
-	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
+	char message[2048];
+	Q_strncpyz(message, text, sizeof(message));
+	cgi->LIST_AddString(&mp_chatMessageStack, Com_Trim(message));
+	cgi->UI_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
+	cgi->UI_ExecuteConfunc("unhide_chatscreen");
+}
 
-	chrDisplayList.num = 0;
+static qboolean GAME_MP_HandleServerCommand (const char *command, struct dbuffer *msg)
+{
+	/* teaminfo command */
+	if (Q_streq(command, "teaminfo")) {
+		CL_ParseTeamInfoMessage(msg);
+		return qtrue;
+	}
 
-	Cvar_ForceSet("sv_maxclients", "2");
+	return qfalse;
+}
 
-	Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, NULL);
-	Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
-	Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
-	Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
-	MP_CallbacksInit();
-	MP_ServerListInit();
+static void GAME_MP_InitStartup (void)
+{
+	const char *max_s = cgi->Cvar_VariableStringOld("sv_maxsoldiersperteam");
+	const char *max_spp = cgi->Cvar_VariableStringOld("sv_maxsoldiersperplayer");
+
+	cgi->Cvar_ForceSet("sv_maxclients", "2");
+
+	cgi->Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, NULL);
+	cgi->Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
+	cgi->Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
+	cgi->Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
+	MP_CallbacksInit(cgi);
+	MP_ServerListInit(cgi);
 
 	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 	 * cvars if values were previously set */
 	if (max_s[0] != '\0')
-		Cvar_Set("sv_maxsoldiersperteam", max_s);
+		cgi->Cvar_Set("sv_maxsoldiersperteam", max_s);
 	if (max_spp[0] != '\0')
-		Cvar_Set("sv_maxsoldiersperplayer", max_spp);
+		cgi->Cvar_Set("sv_maxsoldiersperplayer", max_spp);
 }
 
-void GAME_MP_Shutdown (void)
+static void GAME_MP_Shutdown (void)
 {
-	Cmd_RemoveCommand("mp_startserver");
-	Cmd_RemoveCommand("mp_updategametype");
-	Cmd_RemoveCommand("mp_nextgametype");
-	Cmd_RemoveCommand("mp_prevgametype");
+	cgi->Cmd_RemoveCommand("mp_startserver");
+	cgi->Cmd_RemoveCommand("mp_updategametype");
+	cgi->Cmd_RemoveCommand("mp_nextgametype");
+	cgi->Cmd_RemoveCommand("mp_prevgametype");
 	MP_CallbacksShutdown();
 	MP_ServerListShutdown();
 
-	SV_Shutdown("Game mode shutdown", qfalse);
+	cgi->SV_Shutdown("Game mode shutdown", qfalse);
 
 	OBJZERO(teamData);
 }
@@ -330,6 +392,8 @@ const cgame_export_t *GetCGameMultiplayerAPI (const cgame_import_t *import)
 	e.EndRoundAnnounce = GAME_MP_EndRoundAnnounce;
 	e.StartBattlescape = GAME_MP_StartBattlescape;
 	e.NotifyEvent = GAME_MP_NotifyEvent;
+	e.AddChatMessage = GAME_MP_AddChatMessage;
+	e.HandleServerCommand = GAME_MP_HandleServerCommand;
 
 	cgi = import;
 

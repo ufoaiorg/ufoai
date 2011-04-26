@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../cl_shared.h"
+#include "../client.h"
 #include "cl_game.h"
 #include "cl_game_team.h"
 #include "../cl_inventory.h"

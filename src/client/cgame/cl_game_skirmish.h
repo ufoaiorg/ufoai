@@ -30,9 +30,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const cgame_export_t *GetCGameSkirmishAPI (const cgame_import_t *import);
 #endif
 
-const mapDef_t* GAME_SK_MapInfo(int step);
-void GAME_SK_InitStartup(void);
-void GAME_SK_Shutdown(void);
-void GAME_SK_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
-
 #endif
