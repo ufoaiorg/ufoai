@@ -44,10 +44,6 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 		battle->scoreTeamDifficulty[team] = 0.5f;
 		battle->scoreTeamEquipment[team] = 0.5f;
 		battle->scoreTeamSkill[team] = 0.5f;
-		battle->scoreTeamSpecialAttributeA[team] = 0.5f;
-		battle->scoreTeamSpecialAttributeB[team] = 0.5f;
-		battle->scoreTeamSpecialAttributeC[team] = 0.5f;
-		battle->scoreTeamSpecialAttributeD[team] = 0.5f;
 
 		for (otherTeam = 0; otherTeam < 8; otherTeam++) {
 			/* If you forget to set this and run a battle, everyone will just kill each other by default */
@@ -59,10 +55,6 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 			battle->unitHealthMax[team][soldier] = 0;
 		}
 	}
-	battle->useSpecialAttributeFactor[0] = qfalse;
-	battle->useSpecialAttributeFactor[1] = qfalse;
-	battle->useSpecialAttributeFactor[2] = qfalse;
-	battle->useSpecialAttributeFactor[3] = qfalse;
 
 	battle->winningTeam = -1;
 	battle->isRescueMission = qfalse;
@@ -105,4 +97,31 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const short
 		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.");
 		Com_DPrintf(DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!");
 	}
+}
+
+/* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
+void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft)
+{
+	/* TODO */
+}
+void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum)
+{
+	/* TODO */
+}
+void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup)
+{
+	/* TODO */
+}
+void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum)
+{
+	/* TODO */
+}
+int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle)
+{
+	/* TODO */
+	return 0;
+}
+void CP_AutoBattleRunBattle(autoMissionBattle_t *battle)
+{
+	/* TODO */
 }

@@ -67,10 +67,6 @@ typedef struct autoMission_battle_s {
 	float scoreTeamEquipment[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
 	float scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
 	float scoreTeamDifficulty[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
-	float scoreTeamSpecialAttributeA[MAX_ACTIVETEAM];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
-	float scoreTeamSpecialAttributeB[MAX_ACTIVETEAM];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
-	float scoreTeamSpecialAttributeC[MAX_ACTIVETEAM];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
-	float scoreTeamSpecialAttributeD[MAX_ACTIVETEAM];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
 
 	qboolean useSpecialAttributeFactor[4];	/**< These decide if special team attributes should be used in calculations (TURE) or ignored and not even factored (FALSE) */
 
