@@ -68,8 +68,6 @@ typedef struct autoMission_battle_s {
 	float scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
 	float scoreTeamDifficulty[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
 
-	qboolean useSpecialAttributeFactor[4];	/**< These decide if special team attributes should be used in calculations (TURE) or ignored and not even factored (FALSE) */
-
 	int unitHealth[MAX_ACTIVETEAM][64];		/**< Health score of each unit for each team */
 	int unitHealthMax[MAX_ACTIVETEAM][64];	/**< Max health of each unit on each team */
 
