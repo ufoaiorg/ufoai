@@ -668,10 +668,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.h" />
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.h" />
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.c">
 			<Option compilerVar="CC" />
 		</Unit>
