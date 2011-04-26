@@ -356,9 +356,6 @@ void R_RenderFrame (void)
 		R_EnableBlend(qfalse);
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
-			const model_t *mapTile = r_mapTiles[tile];
-			const mBspModel_t *bsp = &mapTile->bsp;
-
 			R_DrawBspNormals(tile);
 		}
 
