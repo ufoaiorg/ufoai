@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/node/ui_node_model.h"
 #include "../ui/node/ui_node_text.h"
 
-static const cgame_import_t *cgi;
+static const cgame_import_t *cgImport;
 
 /**
  * @sa GAME_CP_MissionAutoCheck_f
@@ -527,7 +527,7 @@ static void GAME_CP_InitStartup (void)
 	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
 
-	CP_InitStartup();
+	CP_InitStartup(cgImport);
 
 	cp_campaign = Cvar_Get("cp_campaign", "main", 0, "Which is the current selected campaign id");
 	cp_start_employees = Cvar_Get("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
@@ -582,7 +582,7 @@ const cgame_export_t *GetCGameCampaignAPI (const cgame_import_t *import)
 	e.RunFrame = GAME_CP_Frame;
 	e.GetTeamDef = GAME_CP_GetTeamDef;
 
-	cgi = import;
+	cgImport = import;
 
 	return &e;
 }
