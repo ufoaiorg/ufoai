@@ -26,9 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_AUTO_MISSION_H
 #define CP_AUTO_MISSION_H
 
-#include "../../client.h"
-#include "cp_campaign.h"
-#include "../../src/shared/mathlib_extra.h"
+#include "../../cl_shared.h"
+
+struct aircraft_s;
+struct alienTeamGroup_s;
 
 /** @brief Possilbe results from an auto mission to display on-screen after a simulated battle.
  * @note This list of potential results is NOT meant to replace missionResults_t, but is mainly used for displaying the proper message on the screen afterwards. */
@@ -58,37 +59,37 @@ typedef enum autoMission_results_s {
  * ALSO: A team does not have to attack (isHostile toward) another team that attacks it.
  * Teams that are isHostile toward no one will wander around like sheep, doing nothing else. */
 typedef struct autoMission_battle_s {
-	bool teamActive[8];						/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
-	int teamID[8];								/**< An ID for each team, to keep track, useful if needed.  Note: The same ID may be repeated, but two teams of same ID can't be hostile */
-	bool isHostile[8][8];						/**< Friendly or hostile?  Params are [Each team] [Each other team] */
-	short nUnits[8];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
+	qboolean teamActive[MAX_ACTIVETEAM];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
+	int teamID[MAX_ACTIVETEAM];								/**< An ID for each team, to keep track, useful if needed.  Note: The same ID may be repeated, but two teams of same ID can't be hostile */
+	qboolean isHostile[MAX_ACTIVETEAM][MAX_ACTIVETEAM];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
+	short nUnits[MAX_ACTIVETEAM];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
 
-	float amScore_team_equipment[8];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
-	float amScore_team_skill[8];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
-	float amScore_team_difficulty[8];			/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
-	float amScore_team_special_attribute_A[8];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
-	float amScore_team_special_attribute_B[8];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
-	float amScore_team_special_attribute_C[8];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
-	float amScore_team_special_attribute_D[8];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
+	float scoreTeamEquipment[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
+	float scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
+	float scoreTeamDifficulty[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
+	float scoreTeamSpecialAttributeA[MAX_ACTIVETEAM];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
+	float scoreTeamSpecialAttributeB[MAX_ACTIVETEAM];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
+	float scoreTeamSpecialAttributeC[MAX_ACTIVETEAM];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
+	float scoreTeamSpecialAttributeD[MAX_ACTIVETEAM];	/**< UNUSED Special combat modifier, RESERVED FOR FUTURE USE */
 
-	bool am_use_special_attribute_factor[4];	/**< These decide if special team attributes should be used in calculations (TURE) or ignored and not even factored (FALSE) */
+	qboolean useSpecialAttributeFactor[4];	/**< These decide if special team attributes should be used in calculations (TURE) or ignored and not even factored (FALSE) */
 
-	int unit_health[8][64];						/**< Health score of each unit for each team */
-	int unit_health_max[8][64];					/**< Max health of each unit on each team */
+	int unitHealth[MAX_ACTIVETEAM][64];		/**< Health score of each unit for each team */
+	int unitHealthMax[MAX_ACTIVETEAM][64];	/**< Max health of each unit on each team */
 
-	short winning_team;						/**< Which team is victorious */
-	bool has_been_fought;						/**< Did this battle run already?  Auto Battles can be fought only once, please. */
-	bool is_rescue_mission;						/**< Is this a rescue or special mission? (Such as recovering a downed aircraft pilot) */
-	short team_to_rescue;						/**< If a rescue mission, which team needs rescue? */
-	short team_needing_rescue;					/**< If a rescue mission, which team is attempting the rescue? */
-} autoMission_battle_t;
+	int winningTeam;							/**< Which team is victorious */
+	qboolean hasBeenFought;						/**< Did this battle run already?  Auto Battles can be fought only once, please. */
+	qboolean isRescueMission;						/**< Is this a rescue or special mission? (Such as recovering a downed aircraft pilot) */
+	int teamToRescue;						/**< If a rescue mission, which team needs rescue? */
+	int teamNeedingRescue;					/**< If a rescue mission, which team is attempting the rescue? */
+} autoMissionBattle_t;
 
 /* Functions for auto missions */
-void CP_AutoBattle_Clear_Battle(autoMission_battle_t *battle);
-void CP_AutoBattle_Run_Battle(autoMission_battle_t *battle);
-void CP_AutoBattle_Fill_Team_From_Aircraft(autoMission_battle_t *battle, const short teamNum, const aircraft_t *aircraft);
-void CP_AutoBattle_Fill_Team_From_AlienGroup(autoMission_battle_t *battle, const short teamNum, const alienTeamGroup_t *alienGroup);
-void CP_AutoBattle_Create_Team_From_Scratch(autoMission_battle_t *battle, const short teamNum);
-short CP_AutoBattle_Get_Winning_Team(const autoMission_battle_t *battle);
+void CP_AutoBattleClearBattle(autoMissionBattle_t *battle);
+void CP_AutoBattleRunBattle(autoMissionBattle_t *battle);
+void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft);
+void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup);
+void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
+int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle);
 
 #endif
