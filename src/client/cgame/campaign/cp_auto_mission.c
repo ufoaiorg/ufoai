@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 {
 	int team;
-	for (team = 0; team < 8; team++) {
+	for (team = 0; team < MAX_ACTIVETEAM; team++) {
 		int otherTeam;
 		int soldier;
 
@@ -45,7 +45,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 		battle->scoreTeamEquipment[team] = 0.5f;
 		battle->scoreTeamSkill[team] = 0.5f;
 
-		for (otherTeam = 0; otherTeam < 8; otherTeam++) {
+		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
 			/* If you forget to set this and run a battle, everyone will just kill each other by default */
 			battle->isHostile[team][otherTeam] = qtrue;
 		}
@@ -71,7 +71,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign ccs object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const short teamNum, const aircraft_t *aircraft)
+void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft)
 {
 	employee_t *employee;
 	int teamSize;
@@ -81,7 +81,7 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const short
 	assert(aircraft);
 
 	teamSize = 0;
-	LIST_Foreach (aircraft->acTeam, employee_t, employee) {
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		const character_t *chr = &employee->chr;
 
 		battle->unitHealthMax[teamNum][teamSize] = chr->maxHP;
@@ -100,28 +100,33 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const short
 }
 
 /* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
-void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft)
+void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft)
 {
-	/* TODO */
+	/** @todo */
 }
-void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum)
+
+void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum)
 {
-	/* TODO */
+	/** @todo */
 }
-void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup)
+
+void CP_AutoBattleFillTeamFromAlienGroup (autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup)
 {
-	/* TODO */
+	/** @todo */
 }
-void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum)
+
+void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int teamNum)
 {
-	/* TODO */
+	/** @todo */
 }
-int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle)
+
+int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
 {
-	/* TODO */
+	/** @todo */
 	return 0;
 }
-void CP_AutoBattleRunBattle(autoMissionBattle_t *battle)
+
+void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 {
-	/* TODO */
+	/** @todo */
 }
