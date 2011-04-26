@@ -88,6 +88,8 @@ typedef struct autoMission_battle_s {
 void CP_AutoBattleClearBattle(autoMissionBattle_t *battle);
 void CP_AutoBattleRunBattle(autoMissionBattle_t *battle);
 void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft);
+void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft);
+void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum);
 void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup);
 void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
 int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle);
