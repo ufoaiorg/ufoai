@@ -162,7 +162,6 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/missions/cp_mission_supply.c \
 	client/cgame/campaign/missions/cp_mission_terror.c \
 	client/cgame/campaign/missions/cp_mission_xvi.c \
-	shared/mathlib_extra.c \
 	\
 	client/cgame/multiplayer/mp_callbacks.c \
 	client/cgame/multiplayer/mp_serverlist.c \
