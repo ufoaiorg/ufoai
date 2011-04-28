@@ -768,21 +768,21 @@
 }
 // brush 82
 {
-( 159.8881 641.0024 129 ) ( 155.3591 634.4079 129 ) ( 155.3591 634.4079 1 ) tex_common/actorclip 52 8 0 0.5 0.5 65536 0 0
-( 181.7372 616.2918 128 ) ( 186.2663 622.8863 128 ) ( 186.2663 622.8863 0 ) tex_common/actorclip 52 8 0 0.5 0.5 65536 0 0
-( -57.38159 494.2173 126 ) ( -27.70616 473.8367 126 ) ( -27.70616 473.8367 -2 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
-( -9.590073 500.2148 126 ) ( -39.26549 520.5954 126 ) ( -39.26549 520.5954 -2 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
-( 1096 524 -2 ) ( 1128 524 -2 ) ( 1096 556 -2 ) tex_common/actorclip 0 12 0 0.5 0.5 65536 0 0
-( -57.38159 494.2173 58 ) ( -34.73647 527.19 58 ) ( -5.06105 506.8094 58 ) tex_common/actorclip 0 12 0 0.5 0.5 65536 0 0
-}
-// brush 83
-{
 ( 200 108 -2 ) ( 200 140 -2 ) ( 200 108 30 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
 ( 232 140 30 ) ( 232 140 -2 ) ( 232 108 30 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
 ( 200 108 -2 ) ( 200 108 30 ) ( 232 108 -2 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 ( 232 140 30 ) ( 200 140 30 ) ( 232 140 -2 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 ( 1096 524 -2 ) ( 1128 524 -2 ) ( 1096 556 -2 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
 ( 264 -20 30 ) ( 264 -52 30 ) ( 232 -20 30 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
+}
+// brush 83
+{
+( 67.0779 447.1282 2 ) ( 35.1282 448.9221 2 ) ( 67.0779 447.1282 34 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 36.92206 480.8718 34 ) ( 36.92206 480.8718 2 ) ( 68.87173 479.0779 34 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 67.0779 447.1282 2 ) ( 67.0779 447.1282 34 ) ( 68.87173 479.0779 2 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 36.92206 480.8718 34 ) ( 35.1282 448.9221 34 ) ( 36.92206 480.8718 2 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( -298.0403 1365.039 2 ) ( -296.2465 1396.989 2 ) ( -329.99 1366.833 2 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
+( 198.4643 503.8522 34 ) ( 230.414 502.0584 34 ) ( 196.6705 471.9025 34 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
 }
 }
 // entity 1
@@ -914,26 +914,18 @@
 // entity 17
 {
 "classname" "misc_model"
-"origin" "44.8243 443.434 2"
-"model" "models/objects/vegi/plant/plant2.md2"
-"spawnflags" "65280"
-"angles" "0 -34.4807 0"
-}
-// entity 18
-{
-"classname" "misc_model"
 "origin" "216 124 2"
 "model" "models/objects/vegi/plant_v1/plant_v1.md2"
 "spawnflags" "255"
 }
-// entity 19
+// entity 18
 {
 "classname" "misc_model"
 "origin" "228 44 6"
 "model" "models/objects/vegi/tropic/tropic02.md2"
 "spawnflags" "255"
 }
-// entity 20
+// entity 19
 {
 "classname" "misc_model"
 "origin" "192 24 6"
@@ -941,7 +933,7 @@
 "spawnflags" "255"
 "angles" "0 26.7904 0"
 }
-// entity 21
+// entity 20
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -949,7 +941,7 @@
 "origin" "120 88 4"
 "angles" "0 33.699 0"
 }
-// entity 22
+// entity 21
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -957,10 +949,18 @@
 "origin" "140 232 4"
 "angles" "0 7.2831 0"
 }
-// entity 23
+// entity 22
 {
 "classname" "misc_model"
 "origin" "98 296 4"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
+}
+// entity 23
+{
+"classname" "misc_model"
+"origin" "48 464 2"
+"model" "models/objects/vegi/plant_v1/plant_v1.md2"
+"spawnflags" "255"
+"angles" "0 86.7864 0"
 }
