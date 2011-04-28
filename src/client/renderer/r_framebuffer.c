@@ -307,8 +307,10 @@ void R_ResolveMSAA (const r_framebuffer_t *buf)
 	qglBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT,buf->fbo);
 	qglBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT,buf->proxyFBO);
 	for (i = 0; i < buf->nTextures; i++)	 {
+#ifndef GL_VERSION_ES_CM_1_0
 		glReadBuffer(GL_COLOR_ATTACHMENT0_EXT + i);
 		glDrawBuffer(GL_COLOR_ATTACHMENT0_EXT + i);
+#endif
 		qglBlitFramebuffer(0, 0, buf->width, buf-> height, 0, 0, buf->width, buf->height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 		R_CheckError();
