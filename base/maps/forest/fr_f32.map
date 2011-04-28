@@ -766,6 +766,32 @@
 ( -1093.243 1029.315 12.57143 ) ( -1107.268 1058.078 12.57143 ) ( -1122.006 1015.291 12.57143 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( -438.1211 707.9196 88 ) ( -474.075 690.3891 88 ) ( -489.8524 722.7477 88 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 }
+// brush 84
+{
+( 60 46 38 ) ( 36 46 38 ) ( 36 142 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 36 142 36 ) ( 36 46 36 ) ( 60 46 36 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 50 40 38 ) ( 50 40 36 ) ( 42 40 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 62 52 38 ) ( 62 52 36 ) ( 50 40 36 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 62 136 38 ) ( 62 136 36 ) ( 62 52 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 62 136 36 ) ( 62 136 38 ) ( 52 150 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 52 150 36 ) ( 52 150 38 ) ( 42 150 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 36 132 38 ) ( 36 132 36 ) ( 42 150 36 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 36 132 36 ) ( 36 132 38 ) ( 34 54 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 34 54 36 ) ( 34 54 38 ) ( 42 40 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+}
+// brush 85
+{
+( 2 84 38 ) ( 2 108 38 ) ( 98 108 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 98 108 36 ) ( 2 108 36 ) ( 2 84 36 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 0 90 38 ) ( 0 90 36 ) ( 6 102 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 0 90 36 ) ( 0 90 38 ) ( 8 82 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 84 82 38 ) ( 84 82 36 ) ( 8 82 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 98 88 38 ) ( 98 88 36 ) ( 84 82 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 96 98 38 ) ( 96 98 36 ) ( 98 88 36 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 96 98 36 ) ( 96 98 38 ) ( 86 108 36 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 14 108 38 ) ( 14 108 36 ) ( 86 108 36 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 6 102 38 ) ( 6 102 36 ) ( 14 108 38 ) tex_common/lightclip 0 0 0 0.25 0.25
+}
 }
 // entity 1
 {
@@ -951,4 +977,11 @@
 "origin" "155.31 120.587 51.4286"
 "modelscale_vec" "1 1 0.571429"
 "angles" "0 115.993 0"
+}
+// entity 23
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropical1/tropical1.md2"
+"origin" "106 32 19"
 }
