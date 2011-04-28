@@ -627,3 +627,25 @@
 "modelscale_vec" "1 1 0.85"
 "angles" "0 -47.6089 0"
 }
+// entity 16
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "56 458 4"
+}
+// entity 17
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "196 462 4"
+"angles" "0 -110.596 0"
+}
+// entity 18
+{
+"classname" "misc_model"
+"origin" "214 380 4"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}

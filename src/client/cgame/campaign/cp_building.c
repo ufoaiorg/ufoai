@@ -128,9 +128,10 @@ static const value_t valid_building_vars[] = {
 	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buildings in a different way. */
 
 	/*event handler functions */
-	{"onconstruct", V_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
-	{"onattack", V_STRING, offsetof(building_t, onAttack), 0}, /**< Event handler. */
-	{"ondestroy", V_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
+	{"onconstruct", V_CLIENT_HUNK_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
+	{"ondestroy", V_CLIENT_HUNK_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
+	{"onenable", V_CLIENT_HUNK_STRING, offsetof(building_t, onEnable), 0}, /**< Event handler. */
+	{"ondisable", V_CLIENT_HUNK_STRING, offsetof(building_t, onDisable), 0}, /**< Event handler. */
 	{"mandatory", V_BOOL, offsetof(building_t, mandatory), MEMBER_SIZEOF(building_t, mandatory)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{NULL, 0, 0, 0}
 };
@@ -340,4 +341,43 @@ qboolean B_CheckBuildingDependencesStatus (const building_t* building)
 	assert(building->dependsBuilding == building->dependsBuilding->tpl);
 
 	return B_GetBuildingStatus(building->base, building->dependsBuilding->buildingType);
+}
+
+/**
+ * @brief Run eventhandler script for a building
+ * @param[in] buildingTemplate Building type (template) to run event for
+ * @param[in] base The base to run it at
+ * @param[in] eventType Type of the event to run
+ * @return @c true if an event was fired @c false otherwise (the building may not have one)
+ */
+qboolean B_FireEvent (const building_t const* buildingTemplate, const base_t const* base, buildingEvent_t eventType)
+{
+	const char *command = NULL;
+
+	assert(buildingTemplate);
+	assert(base);
+
+	switch (eventType) {
+		case B_ONCONSTRUCT:
+			command = buildingTemplate->onConstruct;
+			break;
+		case B_ONENABLE:
+			command = buildingTemplate->onEnable;
+			break;
+		case B_ONDISABLE:
+			command = buildingTemplate->onDisable;
+			break;
+		case B_ONDESTROY:
+			command = buildingTemplate->onDestroy;
+			break;
+		default:
+			Com_Error(ERR_DROP, "B_FireEvent: Invalid Event\n");
+	}
+
+	if (command && command[0] != '\0') {
+		Cmd_ExecuteString(va("%s %i %i", command, base->idx, buildingTemplate->buildingType));
+		return qtrue;
+	}
+
+	return qfalse;
 }

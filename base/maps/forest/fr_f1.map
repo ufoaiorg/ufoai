@@ -2732,3 +2732,24 @@
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
 }
+// entity 159
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "636 510 4"
+}
+// entity 160
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "584 538 4"
+}
+// entity 161
+{
+"classname" "misc_model"
+"origin" "594 516 4"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}

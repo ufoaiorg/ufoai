@@ -134,7 +134,7 @@ static void TR_TransferAliensFromMission_f (void)
 		if (!AC_ContainmentAllowed(base))
 			continue;
 
-		freeSpace = B_GetFreeCapacity(base, CAP_ALIENS);
+		freeSpace = CAP_GetFreeCapacity(base, CAP_ALIENS);
 
 		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
 		string = va("%s %s", base->name, string);
@@ -246,7 +246,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 			UI_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
 			return 0;
 		}
-		amount = min(amount, B_GetFreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
+		amount = min(amount, CAP_GetFreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
 		if (amount <= 0) {
 			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return 0;
@@ -256,7 +256,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 			return 0;
 
 		/* Does the destination base has enough space in storage? */
-		amount = min(amount, destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur - intransfer / od->size);
+		amount = min(amount, CAP_GetFreeCapacity(destbase, CAP_ITEMS) - intransfer / od->size);
 		if (amount <= 0) {
 			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
 			return 0;
@@ -285,7 +285,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 	}
 
 	/* Does the destination base has enough space in living quarters? */
-	if (destbase->capacities[CAP_EMPLOYEES].max - destbase->capacities[CAP_EMPLOYEES].cur - intransfer < 1) {
+	if (CAP_GetFreeCapacity(destbase, CAP_EMPLOYEES) - intransfer < 1) {
 		UI_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Living Quarters.\n"));
 		return qfalse;
 	}

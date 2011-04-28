@@ -236,7 +236,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 			if (tag) {
 				float interpolated[16];
 				animState_t as;
-				dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
+				const dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
 
 				/* do interpolation */
 				as.frame = pmi->frame;
@@ -463,12 +463,12 @@ static void R_DrawAliasModelBuffer (entity_t *e)
 
 /**
  * @brief Draw a model from the battlescape entity list
- * @sa R_DrawEntities
+ * @sa R_GetEntityLists
  */
 void R_DrawAliasModel (entity_t *e)
 {
 	mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
-	/* the values are sane here already - see R_DrawEntities */
+	/* the values are sane here already - see R_GetEntityLists */
 	const image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
 	int i;
 	float g;

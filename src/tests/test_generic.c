@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "test_shared.h"
 #include "../common/common.h"
+#include "../common/http.h"
 #include "../shared/utf8.h"
 #include "../shared/shared.h"
 #include "../shared/infostring.h"
@@ -38,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteGeneric (void)
 {
 	TEST_Init();
+	NET_Init();
 	return 0;
 }
 
@@ -48,6 +50,7 @@ static int UFO_InitSuiteGeneric (void)
 static int UFO_CleanSuiteGeneric (void)
 {
 	TEST_Shutdown();
+	NET_Shutdown();
 	return 0;
 }
 
@@ -381,6 +384,51 @@ static void testStringFunctions (void)
 	CU_ASSERT_FALSE(Q_strreplace("#ReplaceNothing#", "##", "foobar", targetBuf, length));
 }
 
+static void testHttpHelperFunctions (void)
+{
+	char server[512];
+	char uriPath[512];
+	int port;
+	const char *url;
+
+	url = "http://www.test.domain.com:123/someScript.cgi?parameter";
+	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	CU_ASSERT_STRING_EQUAL(server, "www.test.domain.com")
+	CU_ASSERT_EQUAL(port, 123);
+	CU_ASSERT_STRING_EQUAL(uriPath, "/someScript.cgi?parameter");
+
+	url = "http://www.test.domain.com/someScript.cgi?parameter";
+	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	CU_ASSERT_STRING_EQUAL(server, "www.test.domain.com")
+	CU_ASSERT_EQUAL(port, 80);
+	CU_ASSERT_STRING_EQUAL(uriPath, "/someScript.cgi?parameter");
+
+	url = "http://www.test.domain.com";
+	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	CU_ASSERT_STRING_EQUAL(server, "www.test.domain.com")
+	CU_ASSERT_EQUAL(port, 80);
+	CU_ASSERT_STRING_EQUAL(uriPath, "");
+
+	url = "http://www.test.domain.com/";
+	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	CU_ASSERT_STRING_EQUAL(server, "www.test.domain.com")
+	CU_ASSERT_EQUAL(port, 80);
+	CU_ASSERT_STRING_EQUAL(uriPath, "/");
+
+	url = "http://ufoai.ninex.info/ufo/masterserver.php?query";
+	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	CU_ASSERT_STRING_EQUAL(server, "ufoai.ninex.info")
+	CU_ASSERT_EQUAL(port, 80);
+	CU_ASSERT_STRING_EQUAL(uriPath, "/ufo/masterserver.php?query");
+}
+
+static void testNetResolv (void)
+{
+	char ipServer[MAX_VAR];
+	NET_ResolvNode("localhost", ipServer, sizeof(ipServer));
+	CU_ASSERT_STRING_EQUAL(ipServer, "127.0.0.1");
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -418,6 +466,12 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testHttpHelperFunctions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testNetResolv) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

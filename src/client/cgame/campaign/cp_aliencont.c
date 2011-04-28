@@ -123,7 +123,7 @@ void AL_FillInContainment (base_t *base)
 		containment++;
 		counter++;
 	}
-	base->capacities[CAP_ALIENS].cur = 0;
+	CAP_SetCurrent(base, CAP_ALIENS, 0);
 }
 
 /**
@@ -227,7 +227,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							/* Every exceeding alien is killed
 							 * Display a message only when first one is killed */
 							if (!limit) {
-								toBase->capacities[CAP_ALIENS].cur = toBase->capacities[CAP_ALIENS].max;
+								CAP_SetCurrent(toBase, CAP_ALIENS, CAP_GetMax(toBase, CAP_ALIENS));
 								MS_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
 								limit = qtrue;
 							}
@@ -514,16 +514,16 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 	/* Just a sanity check -- should never be reached */
 	if (!AL_CheckAliveFreeSpace(base, containment, num))
 		Com_Error(ERR_DROP, "AL_ChangeAliveAlienNumber: Can't add/remove %i live aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
-			num, base->capacities[CAP_ALIENS].cur, base->capacities[CAP_ALIENS].max,
+			num, CAP_GetCurrent(base, CAP_ALIENS), CAP_GetMax(base, CAP_ALIENS),
 			B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT));
 
 	containment->amountAlive += num;
-	base->capacities[CAP_ALIENS].cur += num;
+	CAP_AddCurrent(base, CAP_ALIENS, num);
 
 #ifdef DEBUG
-	if (base->capacities[CAP_ALIENS].cur != AL_CountInBase(base))
+	if (CAP_GetCurrent(base, CAP_ALIENS) != AL_CountInBase(base))
 		Com_Printf("AL_ChangeAliveAlienNumber: Wrong capacity in Alien containment: %i instead of %i\n",
-			base->capacities[CAP_ALIENS].cur, AL_CountInBase(base));
+			CAP_GetCurrent(base, CAP_ALIENS), AL_CountInBase(base));
 #endif
 }
 
@@ -576,12 +576,12 @@ qboolean AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *contain
 		/* you need Alien Containment and it's dependencies to handle aliens */
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			return qfalse;
-		if (base->capacities[CAP_ALIENS].cur + num > base->capacities[CAP_ALIENS].max)
+		if (CAP_GetFreeCapacity(base, CAP_ALIENS) < num)
 			return qfalse;
 	} else {
 		/* @note don't check building status here.
 		 * dependencies may have been destroyed before alien container (B_Destroy) */
-		if (base->capacities[CAP_ALIENS].cur + num < 0)
+		if (CAP_GetCurrent(base, CAP_ALIENS) + num < 0)
 			return qfalse;
 		if (containment && (containment->amountAlive + num < 0))
 			return qfalse;

@@ -22,7 +22,6 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
-					<Add option="-I../../src/libs/mxml" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -57,7 +56,6 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
-					<Add option="-I../../src/libs/mxml" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
@@ -96,6 +94,7 @@
 			<Add option="-DCOMPILE_UFO" />
 			<Add option="-DCOMPILE_UNITTESTS" />
 			<Add option="-DHARD_LINKED_GAME" />
+			<Add option="-DHARD_LINKED_CGAME" />
 		</Compiler>
 		<Linker>
 			<Add library="cunit" />
@@ -111,34 +110,8 @@
 			<Add library="ogg" />
 			<Add library="theora" />
 			<Add library="xvidcore" />
+			<Add library="mxml" />
 		</Linker>
-		<Unit filename="..\..\src\libs\mxml\mxml-attr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-entity.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-file.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-index.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-node.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-private.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-search.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-set.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\libs\mxml\mxml-string.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -549,9 +522,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_chatmessages.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.c">
@@ -1210,6 +1180,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_campaign.h" />
+		<Unit filename="..\..\src\tests\test_dbuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_dbuffer.h" />
 		<Unit filename="..\..\src\tests\test_game.c">
 			<Option compilerVar="CC" />
 		</Unit>

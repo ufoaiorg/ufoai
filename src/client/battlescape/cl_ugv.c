@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Adds an UGV to the render entities.
  * @param[in] le The local entity the UGV should be created from
- * @param[in] ent
+ * @param[out] ent
  * @sa CL_AddActor
  */
 qboolean CL_AddUGV (le_t * le, entity_t * ent)

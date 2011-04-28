@@ -33,6 +33,7 @@
 
 #include <jpeglib.h>
 #include <png.h>
+#include <zlib.h>
 
 /** image formats, tried in this order */
 static char const* const IMAGE_TYPES[] = { "tga", "png", "jpg", NULL };

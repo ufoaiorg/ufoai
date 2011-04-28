@@ -152,16 +152,15 @@ static installation_t* CreateInstallation (const char *name, const vec2_t pos)
 static base_t* CreateBase (const char *name, const vec2_t pos)
 {
 	const campaign_t *campaign = GetCampaign();
-	base_t *base = B_GetFirstUnfoundedBase();
+	base_t *base;
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
-
-	CU_ASSERT_FALSE(base->founded);
 
 	RS_InitTree(campaign, qfalse);
 	E_InitialEmployees(campaign);
-	B_SetUpBase(campaign, base, pos, name);
+	base = B_Build(campaign, pos, name);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+	CU_ASSERT_TRUE(base->founded);
 
 	return base;
 }
@@ -655,7 +654,7 @@ static void testProductionAircraft (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 
 	PR_SetData(&data, PRODUCTION_TYPE_AIRCRAFT, aircraft);
-	old = base->capacities[CAP_AIRCRAFT_SMALL].cur;
+	old = CAP_GetCurrent(base, CAP_AIRCRAFT_SMALL);
 	/* not enough space in hangars */
 	CU_ASSERT_PTR_NULL(PR_QueueNew(base, &data, 1));
 
@@ -689,9 +688,9 @@ static void testProductionAircraft (void)
 		PR_ProductionRun();
 	}
 
-	CU_ASSERT_EQUAL(old, base->capacities[CAP_AIRCRAFT_SMALL].cur);
+	CU_ASSERT_EQUAL(old, CAP_GetCurrent(base, CAP_AIRCRAFT_SMALL));
 	PR_ProductionRun();
-	CU_ASSERT_EQUAL(old + 1, base->capacities[CAP_AIRCRAFT_SMALL].cur);
+	CU_ASSERT_EQUAL(old + 1, CAP_GetCurrent(base, CAP_AIRCRAFT_SMALL));
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
@@ -732,7 +731,7 @@ static void testDisassembly (void)
 	prod = PR_QueueNew(base, &data, 1);
 	CU_ASSERT_PTR_NOT_NULL(prod);
 
-	old = base->capacities[CAP_ITEMS].cur;
+	old = CAP_GetCurrent(base, CAP_ITEMS);
 	n = PR_GetRemainingMinutes(prod);
 	i = storedUFO->comp->time;
 	CU_ASSERT_EQUAL(i, PR_GetRemainingHours(prod));
@@ -740,9 +739,9 @@ static void testDisassembly (void)
 		PR_ProductionRun();
 	}
 
-	CU_ASSERT_EQUAL(old, base->capacities[CAP_ITEMS].cur);
+	CU_ASSERT_EQUAL(old, CAP_GetCurrent(base, CAP_ITEMS));
 	PR_ProductionRun();
-	CU_ASSERT_NOT_EQUAL(old, base->capacities[CAP_ITEMS].cur);
+	CU_ASSERT_NOT_EQUAL(old, CAP_GetCurrent(base, CAP_ITEMS));
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);

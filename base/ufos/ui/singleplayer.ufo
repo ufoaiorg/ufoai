@@ -2,6 +2,21 @@
 // SINGLE PLAYER MENU
 // ==================
 
+component cmpMenuButton cmpGameModeButton
+{
+	{
+		pos		"0 0"
+		size	"256 64"
+		align	LAYOUTALIGN_TOP
+	}
+
+	string id
+	{
+		size	"0 0"
+		invis	true
+	}
+}
+
 window singleplayer
 {
 	/** @todo Remove me */
@@ -27,18 +42,27 @@ window singleplayer
 	// buttons
 	// ==================
 
-	cmpMenuButton button_campaign
+	/**
+	 * @param <1> window id
+	 * @param <2> name
+	 */
+	confunc game_addmode_singleplayer
 	{
-		string		"_Campaign"
-		pos			"640 170"
-		onClick		{ cmd "ui_push campaigns;" }
+		call *node:root.gamemodeslistpanel@createChild ( "<1><2>" , "cmpGameModeButton" )
+		*node:root.gamemodeslistpanel.<1><2>.id@string = <1>
+		*node:root.gamemodeslistpanel.<1><2>@string = <2>
+		*node:root.gamemodeslistpanel.<1><2>@onClick = { cmd "ui_push <node:this.id@string>;" }
 	}
 
-	cmpMenuButton button_skirmish
-	{
-		string	"_Skirmish"
-		pos	"640 240"
-		onClick	{ cmd "ui_push skirmish;" }
+	panel gamemodeslistpanel {
+		{
+			pos				"640 170"
+			size			"256 276"
+			align			LAYOUTALIGN_LEFT
+			layout			LAYOUT_PACK
+			ghost			true
+			layoutmargin	5
+		}
 	}
 
 	cmpMenuButton button_back

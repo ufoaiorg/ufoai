@@ -82,8 +82,9 @@ qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerI
 
 /**
  * @brief Checks whether the given container contains items that should be
- * dropped to the floor
- * @param[in,out] ent The entity to check the inventory containers for
+ * dropped to the floor. Also removes virtual items.
+ * @param[in,out] ent The entity to check the inventory containers for. The inventory of
+ * this edict is modified in this function (the virtual items are removed).
  * @param[in] container The container of the entity inventory to check
  * @return @c true if there are items that should be dropped to floor, @c false otherwise
  */

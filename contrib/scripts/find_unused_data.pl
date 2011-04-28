@@ -86,7 +86,7 @@ sub check_textures() {
 		$texture =~ s/^base\/textures\///;
 		$texture =~ s/\..*$//;
 
-		if ($texture =~ /_gm$/ || $texture =~ /_nm$/) {
+		if ($texture =~ /_gm$/ || $texture =~ /_nm$/ || $texture =~ /_sm$/) {
 			my $base = $texture;
 			$base =~ s/_.*$//;
 			unless (grep(/$base/, @textures)) {

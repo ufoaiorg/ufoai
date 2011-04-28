@@ -898,6 +898,28 @@ static int NET_DoStartServer (const struct addrinfo *addr)
 	return sock;
 }
 
+static struct addrinfo* NET_GetAddrinfoForNode (const char *node, const char *service)
+{
+	struct addrinfo *res;
+	struct addrinfo hints;
+	int rc;
+
+	OBJZERO(hints);
+	hints.ai_flags = AI_ADDRCONFIG | AI_PASSIVE;
+	hints.ai_socktype = SOCK_STREAM;
+	/* force ipv4 */
+	if (net_ipv4->integer)
+		hints.ai_family = AF_INET;
+
+	rc = getaddrinfo(node, service, &hints, &res);
+	if (rc != 0) {
+		Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
+		return NULL;
+	}
+
+	return res;
+}
+
 /**
  * @sa NET_DoStartServer
  * @param[in] node The node to start the server with
@@ -918,23 +940,7 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 	}
 
 	if (service) {
-		struct addrinfo *res;
-		struct addrinfo hints;
-		int rc;
-
-		OBJZERO(hints);
-		hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV | AI_PASSIVE;
-		hints.ai_socktype = SOCK_STREAM;
-		/* force ipv4 */
-		if (net_ipv4->integer)
-			hints.ai_family = AF_INET;
-
-		rc = getaddrinfo(node, service, &hints, &res);
-
-		if (rc != 0) {
-			Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
-			return qfalse;
-		}
+		struct addrinfo *res = NET_GetAddrinfoForNode(node, service);
 
 		server_socket = NET_DoStartServer(res);
 		if (server_socket == INVALID_SOCKET) {
@@ -1155,4 +1161,21 @@ void NET_SockaddrToStrings (struct datagram_socket *s, struct sockaddr *addr, ch
 		Q_strncpyz(node, "(error)", nodelen);
 		Q_strncpyz(service, "(error)", servicelen);
 	}
+}
+
+static void NET_AddrinfoToString (const struct addrinfo *addr, char *buf, size_t bufLength)
+{
+	char *service = inet_ntoa(((struct sockaddr_in *)addr->ai_addr)->sin_addr);
+	Q_strncpyz(buf, service, bufLength);
+}
+
+void NET_ResolvNode (const char *node, char *buf, size_t bufLength)
+{
+	struct addrinfo* addrinfo = NET_GetAddrinfoForNode(node, NULL);
+	if (addrinfo == NULL) {
+		buf[0] = '\0';
+		return;
+	}
+	NET_AddrinfoToString(addrinfo, buf, bufLength);
+	freeaddrinfo(addrinfo);
 }

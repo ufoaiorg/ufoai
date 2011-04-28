@@ -110,6 +110,10 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 		}
 	}
 
+	/**
+	 * @todo CHRSH_IsTeamDefRobot: spawn smoke particles for robots
+	 */
+
 	CL_ActorPlaySound(le, SND_DEATH);
 
 	VectorCopy(player_dead_maxs, le->maxs);

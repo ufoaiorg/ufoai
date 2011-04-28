@@ -103,6 +103,18 @@ static void free_element (struct dbuffer_element *e)
 	TH_MutexUnlock(dbuf_lock);
 }
 
+void dbuffer_cleanup (void)
+{
+	struct dbuffer_element *e;
+	while ((e = free_element_list)) {
+		free_element_list = e->next;
+		Mem_Free(e);
+		free_elements--;
+		allocated_elements--;
+	}
+	assert(free_elements == 0);
+}
+
 /**
  * @brief Allocate a dbuffer
  * @return the newly allocated buffer

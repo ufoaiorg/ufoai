@@ -192,6 +192,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	}
 
 	buf = &frameBufferObjects[frameBufferObjectCount++];
+	OBJZERO(*buf);
 
 	if (ntextures > r_config.maxDrawBuffers) {
 		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
@@ -215,6 +216,16 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	buf->byteFormat = halfFloat ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
 #endif
 
+	/* Presence of depth buffer indicates render target that could use antialiasing*/
+	if (depth) {
+		/** @todo also check if we are running on older (SM2.0) hardware, which doesn't support antialiased MRT */
+		if (qglRenderbufferStorageMultisampleEXT && qglBlitFramebuffer) {
+			int samples = min(4, max(0, r_multisample->integer));
+			if (samples>1)
+				buf->samples = samples;
+		}
+	}
+
 	for (i = 0; i < buf->nTextures; i++) {
 		buf->textures[i] = R_GetFreeFBOTexture();
 		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
@@ -231,32 +242,48 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 		R_CheckError();
 	}
-
-	/* create depth renderbuffer */
-	if (depth) {
-		qglGenRenderbuffersEXT(1, &buf->depth);
-		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
-		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, buf->width, buf->height);
-	} else {
-		buf->depth = 0;
-	}
-
-	R_CheckError();
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	/* create FBO itself */
 	qglGenFramebuffersEXT(1, &buf->fbo);
 	R_CheckError();
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
 
+	/* create&attach depth renderbuffer */
+	if (depth) {
+		qglGenRenderbuffersEXT(1, &buf->depth);
+		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
+		if (buf->samples)
+			qglRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, buf->samples, GL_DEPTH_COMPONENT, buf->width, buf->height);
+		else
+			qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, buf->width, buf->height);
+		qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, buf->depth);
+	} else {
+		buf->depth = 0;
+	}
+
+	/* create multisample color buffers if needed */
+	if (buf->samples) {
+		/* generate color buffers */
+		for (i = 0; i < buf->nTextures; i++) {
+			unsigned colorbuffer;
+			qglGenRenderbuffersEXT(1, &colorbuffer);
+			qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, colorbuffer);
+			qglRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, buf->samples, buf->pixelFormat, buf->width, buf->height);
+			qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_RENDERBUFFER_EXT, colorbuffer);
+			R_CheckError();
+		}
+		/* proxy framebuffer object for resolving MSAA */
+		qglGenFramebuffersEXT(1, &buf->proxyFBO);
+		R_CheckError();
+		qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->proxyFBO);
+	}
+
+	/* Whether multisampling was enabled or not, current FBO should be populated with render-to-texture bindings */
 	for (i = 0; i < buf->nTextures; i++) {
-		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
 		qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
 		R_CheckError();
 	}
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	if (depth)
-		qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, buf->depth);
 
 	R_CheckError();
 
@@ -265,6 +292,33 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 	return buf;
 }
+
+/**
+ * @brief Forces multisample antialiasing resolve on given framebuffer, if needed
+ * @param[in] buf the framebuffer to use
+ */
+void R_ResolveMSAA (const r_framebuffer_t *buf)
+{
+	int i;
+
+	if (!buf->samples)
+		return;
+
+	qglBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT,buf->fbo);
+	qglBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT,buf->proxyFBO);
+	for (i = 0; i < buf->nTextures; i++)	 {
+		glReadBuffer(GL_COLOR_ATTACHMENT0_EXT + i);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0_EXT + i);
+		qglBlitFramebuffer(0, 0, buf->width, buf-> height, 0, 0, buf->width, buf->height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+		R_CheckError();
+	}
+	R_CheckError();
+
+	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT,  screenBuffer.fbo);
+	R_CheckError();
+}
+
 
 /**
  * @brief bind specified framebuffer object so we render to it

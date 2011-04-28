@@ -26,7 +26,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_mesh_anim.h"
 
-#define LNEXT(x) ((x + 1 < MAX_ANIMLIST) ? x + 1 : 0)
+#define LOOPNEXT(x) ((x + 1 < MAX_ANIMLIST) ? x + 1 : 0)
+
+/**
+ * @brief Adds the given animation to the animation state
+ */
+static inline void R_AnimAdd (animState_t *as, const model_t *mod, const mAliasAnim_t *anim)
+{
+	assert(as->ladd < sizeof(as->list));
+
+	as->list[as->ladd] = anim - mod->alias.animdata;
+
+	/* advance in list (no overflow protection!) */
+	as->ladd = LOOPNEXT(as->ladd);
+}
+/**
+ * @brief Get the @c mAliasAnim_t for the given animation state
+ */
+#define R_AnimGetAliasAnim(mod, as) ((mod)->alias.animdata + (as)->list[(as)->lcur])
 
 /**
  * @brief Searches a given animation id in the given model data
@@ -54,7 +71,6 @@ static const mAliasAnim_t *R_AnimGet (const model_t * mod, const char *name)
 	return NULL;
 }
 
-
 /**
  * @brief Appends a new animation to the current running one
  * @sa R_AnimGet
@@ -68,8 +84,6 @@ static const mAliasAnim_t *R_AnimGet (const model_t * mod, const char *name)
 void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 {
 	const mAliasAnim_t *anim;
-
-	assert(as->ladd < MAX_ANIMLIST);
 
 	if (!mod || !mod->alias.num_anims)
 		return;
@@ -91,14 +105,10 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 		as->time = anim->time;
 		as->dt = 0;
 
-		as->list[as->ladd] = anim - mod->alias.animdata;
-	} else {
-		/* next animation */
-		as->list[as->ladd] = anim - mod->alias.animdata;
+		as->change = qtrue;
 	}
 
-	/* advance in list (no overflow protection!) */
-	as->ladd = LNEXT(as->ladd);
+	R_AnimAdd(as, mod, anim);
 }
 
 
@@ -115,8 +125,6 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 {
 	const mAliasAnim_t *anim;
-
-	assert(as->ladd < MAX_ANIMLIST);
 
 	if (!mod || !mod->alias.num_anims)
 		return;
@@ -140,22 +148,19 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 		as->time = anim->time;
 		as->dt = 0;
 
-		as->list[as->ladd] = anim - mod->alias.animdata;
 		as->change = qtrue;
 	} else {
 		/* next animation */
-		as->ladd = LNEXT(as->lcur);
-		as->list[as->ladd] = anim - mod->alias.animdata;
+		as->ladd = LOOPNEXT(as->lcur);
 
 		if (anim->time < as->time)
 			as->time = anim->time;
 		/* don't change to the same animation */
-		if (anim != mod->alias.animdata + as->list[as->lcur])
+		if (anim != R_AnimGetAliasAnim(mod, as))
 			as->change = qtrue;
 	}
 
-	/* advance in list (no overflow protection!) */
-	as->ladd = LNEXT(as->ladd);
+	R_AnimAdd(as, mod, anim);
 }
 
 
@@ -182,15 +187,15 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 	as->dt += msec;
 
 	while (as->dt > as->time) {
-		const mAliasAnim_t *anim = mod->alias.animdata + as->list[as->lcur];
+		const mAliasAnim_t *anim = R_AnimGetAliasAnim(mod, as);
 		as->dt -= as->time;
 
 		if (as->change || as->frame >= anim->to) {
 			/* go to next animation if it isn't the last one */
-			if (LNEXT(as->lcur) != as->ladd)
-				as->lcur = LNEXT(as->lcur);
+			if (LOOPNEXT(as->lcur) != as->ladd)
+				as->lcur = LOOPNEXT(as->lcur);
 
-			anim = mod->alias.animdata + as->list[as->lcur];
+			anim = R_AnimGetAliasAnim(mod, as);
 
 			/* prepare next frame */
 			as->dt = 0;
@@ -232,13 +237,16 @@ const char *R_AnimGetName (const animState_t * as, const model_t * mod)
 	if (as->lcur == as->ladd)
 		return NULL;
 
-	anim = mod->alias.animdata + as->list[as->lcur];
+	anim = R_AnimGetAliasAnim(mod, as);
 	return anim->name;
 }
 
 /**
- * @brief
+ * @brief Interpolate the transform for a model places on a tag of another model
  * @param[out] interpolated This is an array of 16 floats
+ * @param[in] tag Transformation matrix for a tagged model
+ * @param[in,out] as The animation state
+ * @param[in] numframes The max frames of the tag data
  */
 void R_InterpolateTransform (animState_t * as, int numframes, const float *tag, float *interpolated)
 {

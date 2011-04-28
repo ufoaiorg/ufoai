@@ -31,9 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/parse.h"
 #include "mp_serverlist.h"
 #include "mp_callbacks.h"
-#include "../../../shared/mutex.h"
 
 #define MAX_SERVERLIST 128
+
+static const cgame_import_t *cgi;
 
 static serverList_t serverList[MAX_SERVERLIST];
 serverList_t *selectedServer;
@@ -41,6 +42,7 @@ static char serverText[1024];
 static int serverListLength;
 static int serverListPos;
 static cvar_t *cl_serverlist;
+static struct datagram_socket *netDatagramSocket;
 
 /**
  * @brief Parsed the server ping response.
@@ -110,15 +112,15 @@ static inline qboolean CL_ShowServer (const serverList_t *server)
  */
 static void CL_PingServerCallback (struct net_stream *s)
 {
-	struct dbuffer *buf = NET_ReadMsg(s);
-	serverList_t *server = (serverList_t *)NET_StreamGetData(s);
-	const int cmd = NET_ReadByte(buf);
+	struct dbuffer *buf = cgi->NET_ReadMsg(s);
+	serverList_t *server = (serverList_t *)cgi->NET_StreamGetData(s);
+	const int cmd = cgi->NET_ReadByte(buf);
 	char str[512];
 
-	NET_ReadStringLine(buf, str, sizeof(str));
+	cgi->NET_ReadStringLine(buf, str, sizeof(str));
 
 	if (cmd == clc_oob && strncmp(str, "info", 4) == 0) {
-		NET_ReadString(buf, str, sizeof(str));
+		cgi->NET_ReadString(buf, str, sizeof(str));
 		if (CL_ProcessPingReply(server, str)) {
 			if (CL_ShowServer(server)) {
 				char string[MAX_INFO_STRING];
@@ -134,7 +136,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 			}
 		}
 	}
-	NET_StreamFree(s);
+	cgi->NET_StreamFree(s);
 }
 
 /**
@@ -144,15 +146,15 @@ static void CL_PingServerCallback (struct net_stream *s)
  */
 static void CL_PingServer (serverList_t *server)
 {
-	struct net_stream *s = NET_Connect(server->node, server->service);
+	struct net_stream *s = cgi->NET_Connect(server->node, server->service);
 
 	if (s) {
-		Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
-		NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
-		NET_StreamSetData(s, server);
-		NET_StreamSetCallback(s, &CL_PingServerCallback);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
+		cgi->NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
+		cgi->NET_StreamSetData(s, server);
+		cgi->NET_StreamSetCallback(s, &CL_PingServerCallback);
 	} else {
-		Com_Printf("pinging failed [%s]:%s...\n", server->node, server->service);
+		cgi->Com_Printf("pinging failed [%s]:%s...\n", server->node, server->service);
 	}
 }
 
@@ -163,10 +165,11 @@ void CL_PrintServerList_f (void)
 {
 	int i;
 
-	Com_Printf("%i servers on the list\n", serverListLength);
+	cgi->Com_Printf("%i servers on the list\n", serverListLength);
 
 	for (i = 0; i < serverListLength; i++) {
-		Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, serverList[i].node, serverList[i].service, serverList[i].pinged);
+		const serverList_t *list = &serverList[i];
+		cgi->Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, list->node, list->service, list->pinged);
 	}
 }
 
@@ -187,8 +190,8 @@ static void CL_AddServerToList (const char *node, const char *service)
 			return;
 
 	OBJZERO(serverList[serverListLength]);
-	serverList[serverListLength].node = Mem_PoolStrDup(node, cl_genericPool, 0);
-	serverList[serverListLength].service = Mem_PoolStrDup(service, cl_genericPool, 0);
+	serverList[serverListLength].node = cgi->GAME_StrDup(node);
+	serverList[serverListLength].service = cgi->GAME_StrDup(service);
 	CL_PingServer(&serverList[serverListLength]);
 	serverListLength++;
 }
@@ -208,11 +211,11 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	linkedList_t *userList = NULL;
 	linkedList_t *userTeam = NULL;
 
-	if (NET_ReadString(msg, str, sizeof(str)) == 0) {
-		UI_ResetData(TEXT_MULTIPLAYER_USERLIST);
-		UI_ResetData(TEXT_MULTIPLAYER_USERTEAM);
-		UI_ExecuteConfunc("multiplayer_playerNumber 0");
-		Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
+	if (cgi->NET_ReadString(msg, str, sizeof(str)) == 0) {
+		cgi->UI_ResetData(TEXT_MULTIPLAYER_USERLIST);
+		cgi->UI_ResetData(TEXT_MULTIPLAYER_USERTEAM);
+		cgi->UI_ExecuteConfunc("multiplayer_playerNumber 0");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
 	}
 
@@ -222,7 +225,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	teamData.maxPlayersPerTeam = Info_IntegerForKey(str, "sv_maxplayersperteam");
 
 	/* for each lines */
-	while (NET_ReadString(msg, str, sizeof(str)) > 0) {
+	while (cgi->NET_ReadString(msg, str, sizeof(str)) > 0) {
 		const int team = Info_IntegerForKey(str, "cl_team");
 		const int isReady = Info_IntegerForKey(str, "cl_ready");
 		const char *user = Info_ValueForKey(str, "cl_name");
@@ -231,20 +234,20 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 			teamData.teamCount[team]++;
 
 		/* store data */
-		LIST_AddString(&userList, user);
+		cgi->LIST_AddString(&userList, user);
 		if (team != TEAM_NO_ACTIVE)
-			LIST_AddString(&userTeam, va(_("Team %d"), team));
+			cgi->LIST_AddString(&userTeam, va(_("Team %d"), team));
 		else
-			LIST_AddString(&userTeam, _("No team"));
+			cgi->LIST_AddString(&userTeam, _("No team"));
 
-		UI_ExecuteConfunc("multiplayer_playerIsReady %i %i", cnt, isReady);
+		cgi->UI_ExecuteConfunc("multiplayer_playerIsReady %i %i", cnt, isReady);
 
 		cnt++;
 	}
 
-	UI_RegisterLinkedListText(TEXT_MULTIPLAYER_USERLIST, userList);
-	UI_RegisterLinkedListText(TEXT_MULTIPLAYER_USERTEAM, userTeam);
-	UI_ExecuteConfunc("multiplayer_playerNumber %i", cnt);
+	cgi->UI_RegisterLinkedListText(TEXT_MULTIPLAYER_USERLIST, userList);
+	cgi->UI_RegisterLinkedListText(TEXT_MULTIPLAYER_USERTEAM, userTeam);
+	cgi->UI_ExecuteConfunc("multiplayer_playerNumber %i", cnt);
 
 	/* no players are connected ATM */
 	if (!cnt) {
@@ -253,8 +256,8 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		/* Q_strcat(teamData.teamInfoText, _("No player connected\n"), sizeof(teamData.teamInfoText)); */
 	}
 
-	Cvar_SetValue("mn_maxteams", teamData.maxteams);
-	Cvar_SetValue("mn_maxplayersperteam", teamData.maxPlayersPerTeam);
+	cgi->Cvar_SetValue("mn_maxteams", teamData.maxteams);
+	cgi->Cvar_SetValue("mn_maxplayersperteam", teamData.maxPlayersPerTeam);
 }
 
 static char serverInfoText[1024];
@@ -275,7 +278,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 	char str[MAX_INFO_STRING];
 	char buf[256];
 
-	NET_ReadString(msg, str, sizeof(str));
+	cgi->NET_ReadString(msg, str, sizeof(str));
 
 	/* check for server status response message */
 	value = Info_ValueForKey(str, "sv_dedicated");
@@ -283,22 +286,22 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		/* server info cvars and users are seperated via newline */
 		const char *users = strstr(str, "\n");
 		if (!users) {
-			Com_Printf(S_COLOR_GREEN "%s\n", str);
+			cgi->Com_Printf(S_COLOR_GREEN "%s\n", str);
 			return;
 		}
-		Com_DPrintf(DEBUG_CLIENT, "%s\n", str); /* status string */
+		cgi->Com_DPrintf(DEBUG_CLIENT, "%s\n", str); /* status string */
 
-		Cvar_Set("mn_mappic", "maps/shots/default.jpg");
+		cgi->Cvar_Set("mn_mappic", "maps/shots/default.jpg");
 		if (*Info_ValueForKey(str, "sv_needpass") == '1')
-			Cvar_Set("mn_server_need_password", "1");
+			cgi->Cvar_Set("mn_server_need_password", "1");
 		else
-			Cvar_Set("mn_server_need_password", "0");
+			cgi->Cvar_Set("mn_server_need_password", "0");
 
 		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), hostname);
-		Cvar_Set("mn_server_ip", hostname);
+		cgi->Cvar_Set("mn_server_ip", hostname);
 		value = Info_ValueForKey(str, "sv_mapname");
 		assert(value);
-		Cvar_Set("mn_svmapname", value);
+		cgi->Cvar_Set("mn_svmapname", value);
 		Q_strncpyz(buf, value, sizeof(buf));
 		token = buf;
 		/* skip random map char */
@@ -306,9 +309,9 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 			token++;
 
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
-		if (FS_CheckFile("pics/maps/shots/%s.jpg", token) != -1) {
+		if (cgi->FS_CheckFile("pics/maps/shots/%s.jpg", token) != -1) {
 			/* store it relative to pics/ dir - not relative to game dir */
-			Cvar_Set("mn_mappic", va("maps/shots/%s", token));
+			cgi->Cvar_Set("mn_mappic", va("maps/shots/%s", token));
 		}
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(str, "sv_hostname"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), _(Info_BoolForKey(str, "sv_enablemorale")));
@@ -325,23 +328,23 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(str, "sv_maxsoldiersperplayer"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(str, "sv_maxsoldiersperteam"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), _(Info_BoolForKey(str, "sv_needpass")));
-		UI_RegisterText(TEXT_STANDARD, serverInfoText);
+		cgi->UI_RegisterText(TEXT_STANDARD, serverInfoText);
 		userInfoText[0] = '\0';
 		do {
 			int team;
-			token = Com_Parse(&users);
+			token = cgi->Com_Parse(&users);
 			if (!users)
 				break;
 			team = atoi(token);
-			token = Com_Parse(&users);
+			token = cgi->Com_Parse(&users);
 			if (!users)
 				break;
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
-		UI_RegisterText(TEXT_LIST, userInfoText);
-		UI_PushWindow("serverinfo", NULL, NULL);
+		cgi->UI_RegisterText(TEXT_LIST, userInfoText);
+		cgi->UI_PushWindow("serverinfo", NULL, NULL);
 	} else
-		Com_Printf(S_COLOR_GREEN "%s", str);
+		cgi->Com_Printf(S_COLOR_GREEN "%s", str);
 }
 
 /**
@@ -350,79 +353,60 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
  */
 static void CL_ServerInfoCallback (struct net_stream *s)
 {
-	struct dbuffer *buf = NET_ReadMsg(s);
+	struct dbuffer *buf = cgi->NET_ReadMsg(s);
 	if (buf) {
-		const int cmd = NET_ReadByte(buf);
+		const int cmd = cgi->NET_ReadByte(buf);
 		char str[8];
-		NET_ReadStringLine(buf, str, sizeof(str));
+		cgi->NET_ReadStringLine(buf, str, sizeof(str));
 
 		if (cmd == clc_oob && Q_streq(str, "print")) {
 			char hostname[256];
-			NET_StreamPeerToName(s, hostname, sizeof(hostname), qtrue);
+			cgi->NET_StreamPeerToName(s, hostname, sizeof(hostname), qtrue);
 			CL_ParseServerInfoMessage(buf, hostname);
 		}
 	}
-	NET_StreamFree(s);
+	cgi->NET_StreamFree(s);
 }
 
-static SDL_Thread *masterServerQueryThread;
-
-static int CL_QueryMasterServerThread (void *data)
+static void CL_QueryMasterServerThread (const char *responseBuf)
 {
-	char *responseBuf;
 	const char *serverListBuf;
 	const char *token;
 	char node[MAX_VAR], service[MAX_VAR];
 	int i, num;
 
-	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?query", masterserver_url->string));
 	if (!responseBuf) {
-		Com_Printf("Could not query masterserver\n");
-		return 1;
+		cgi->Com_Printf("Could not query masterserver\n");
+		return;
 	}
 
 	serverListBuf = responseBuf;
 
 	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverListBuf);
-	token = Com_Parse(&serverListBuf);
+	token = cgi->Com_Parse(&serverListBuf);
 
 	num = atoi(token);
 	if (num >= MAX_SERVERLIST) {
-		Com_DPrintf(DEBUG_CLIENT, "Too many servers: %i\n", num);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Too many servers: %i\n", num);
 		num = MAX_SERVERLIST;
 	}
 	for (i = 0; i < num; i++) {
 		/* host */
-		token = Com_Parse(&serverListBuf);
+		token = cgi->Com_Parse(&serverListBuf);
 		if (!*token || !serverListBuf) {
-			Com_Printf("Could not finish the masterserver response parsing\n");
+			cgi->Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
 		Q_strncpyz(node, token, sizeof(node));
 		/* port */
-		token = Com_Parse(&serverListBuf);
+		token = cgi->Com_Parse(&serverListBuf);
 		if (!*token || !serverListBuf) {
-			Com_Printf("Could not finish the masterserver response parsing\n");
+			cgi->Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
 		Q_strncpyz(service, token, sizeof(service));
 		CL_AddServerToList(node, service);
 	}
-
-	Mem_Free(responseBuf);
-
-	return 0;
-}
-
-/**
- * @sa CL_PingServers_f
- */
-static void CL_QueryMasterServer (void)
-{
-	if (masterServerQueryThread != NULL)
-		SDL_WaitThread(masterServerQueryThread, NULL);
-
-	masterServerQueryThread = SDL_CreateThread(CL_QueryMasterServerThread, NULL);
 }
 
 /**
@@ -434,7 +418,7 @@ static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const cha
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
 		char node[MAX_VAR];
 		char service[MAX_VAR];
-		NET_SockaddrToStrings(s, from, node, sizeof(node), service, sizeof(service));
+		cgi->NET_SockaddrToStrings(s, from, node, sizeof(node), service, sizeof(service));
 		CL_AddServerToList(node, service);
 	}
 }
@@ -449,24 +433,24 @@ static void CL_BookmarkAdd_f (void)
 	int i;
 	const char *newBookmark;
 
-	if (Cmd_Argc() < 2) {
-		newBookmark = Cvar_GetString("mn_server_ip");
+	if (cgi->Cmd_Argc() < 2) {
+		newBookmark = cgi->Cvar_GetString("mn_server_ip");
 		if (!newBookmark) {
-			Com_Printf("Usage: %s <ip>\n", Cmd_Argv(0));
+			cgi->Com_Printf("Usage: %s <ip>\n", cgi->Cmd_Argv(0));
 			return;
 		}
 	} else
-		newBookmark = Cmd_Argv(1);
+		newBookmark = cgi->Cmd_Argv(1);
 
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *bookmark = Cvar_GetString(va("adr%i", i));
+		const char *bookmark = cgi->Cvar_GetString(va("adr%i", i));
 		if (bookmark[0] == '\0') {
-			Cvar_Set(va("adr%i", i), newBookmark);
+			cgi->Cvar_Set(va("adr%i", i), newBookmark);
 			return;
 		}
 	}
 	/* bookmarks are full - overwrite the first entry */
-	UI_Popup(_("Notice"), _("All bookmark slots are used - please removed unused entries and repeat this step"));
+	cgi->UI_Popup(_("Notice"), "%s", _("All bookmark slots are used - please removed unused entries and repeat this step"));
 }
 
 /**
@@ -478,31 +462,31 @@ static void CL_ServerInfo_f (void)
 	const char *host;
 	const char *port;
 
-	switch (Cmd_Argc()) {
+	switch (cgi->Cmd_Argc()) {
 	case 2:
-		host = Cmd_Argv(1);
+		host = cgi->Cmd_Argv(1);
 		port = DOUBLEQUOTE(PORT_SERVER);
 		break;
 	case 3:
-		host = Cmd_Argv(1);
-		port = Cmd_Argv(2);
+		host = cgi->Cmd_Argv(1);
+		port = cgi->Cmd_Argv(2);
 		break;
 	default:
 		if (selectedServer) {
 			host = selectedServer->node;
 			port = selectedServer->service;
 		} else {
-			host = Cvar_GetString("mn_server_ip");
+			host = cgi->Cvar_GetString("mn_server_ip");
 			port = DOUBLEQUOTE(PORT_SERVER);
 		}
 		break;
 	}
-	s = NET_Connect(host, port);
+	s = cgi->NET_Connect(host, port);
 	if (s) {
-		NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
-		NET_StreamSetCallback(s, &CL_ServerInfoCallback);
+		cgi->NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
+		cgi->NET_StreamSetCallback(s, &CL_ServerInfoCallback);
 	} else
-		Com_Printf("Could not connect to %s %s\n", host, port);
+		cgi->Com_Printf("Could not connect to %s %s\n", host, port);
 }
 
 /**
@@ -513,20 +497,20 @@ static void CL_ServerListClick_f (void)
 {
 	int num;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	num = atoi(Cmd_Argv(1));
+	num = atoi(cgi->Cmd_Argv(1));
 
-	UI_RegisterText(TEXT_STANDARD, serverInfoText);
+	cgi->UI_RegisterText(TEXT_STANDARD, serverInfoText);
 	if (num >= 0 && num < serverListLength) {
 		int i;
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
 				/* found the server - grab the infos for this server */
 				selectedServer = &serverList[i];
-				Cbuf_AddText(va("server_info %s %s;", serverList[i].node, serverList[i].service));
+				cgi->Cbuf_AddText(va("server_info %s %s;", serverList[i].node, serverList[i].service));
 				return;
 			}
 	}
@@ -548,73 +532,73 @@ void CL_PingServers_f (void)
 	selectedServer = NULL;
 
 	/* refresh the list */
-	if (Cmd_Argc() == 2) {
+	if (cgi->Cmd_Argc() == 2) {
 		int i;
 		/* reset current list */
 		serverText[0] = 0;
 		serversAlreadyQueried = qfalse;
 		for (i = 0; i < serverListLength; i++) {
-			Mem_Free(serverList[i].node);
-			Mem_Free(serverList[i].service);
+			cgi->Free(serverList[i].node);
+			cgi->Free(serverList[i].service);
 		}
 		serverListPos = 0;
 		serverListLength = 0;
 		OBJZERO(serverList);
 	} else {
-		UI_RegisterText(TEXT_LIST, serverText);
+		cgi->UI_RegisterText(TEXT_LIST, serverText);
 		return;
 	}
 
-	if (!cls.netDatagramSocket)
-		cls.netDatagramSocket = NET_DatagramSocketNew(NULL, DOUBLEQUOTE(PORT_CLIENT), &CL_ServerListDiscoveryCallback);
+	if (!netDatagramSocket)
+		netDatagramSocket = cgi->NET_DatagramSocketNew(NULL, DOUBLEQUOTE(PORT_CLIENT), &CL_ServerListDiscoveryCallback);
 
 	/* broadcast search for all the servers int the local network */
-	if (cls.netDatagramSocket) {
+	if (netDatagramSocket) {
 		const char buf[] = "discover";
-		NET_DatagramBroadcast(cls.netDatagramSocket, buf, sizeof(buf), PORT_SERVER);
+		cgi->NET_DatagramBroadcast(netDatagramSocket, buf, sizeof(buf), PORT_SERVER);
 	}
-	UI_RegisterText(TEXT_LIST, serverText);
+	cgi->UI_RegisterText(TEXT_LIST, serverText);
 
 	/* don't query the masterservers with every call */
 	if (serversAlreadyQueried) {
-		if (lastServerQuery + SERVERQUERYTIMEOUT > CL_Milliseconds())
+		if (lastServerQuery + SERVERQUERYTIMEOUT > cgi->CL_Milliseconds())
 			return;
 	} else
 		serversAlreadyQueried = qtrue;
 
-	lastServerQuery = CL_Milliseconds();
+	lastServerQuery = cgi->CL_Milliseconds();
 
 	/* query master server? */
-	if (Cmd_Argc() == 2 && !Q_streq(Cmd_Argv(1), "local")) {
-		Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
-		CL_QueryMasterServer();
+	if (cgi->Cmd_Argc() == 2 && !Q_streq(cgi->Cmd_Argv(1), "local")) {
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
+		cgi->CL_QueryMasterServer("query", CL_QueryMasterServerThread);
 	}
 }
 
-void MP_ServerListInit (void)
+void MP_ServerListInit (const cgame_import_t *import)
 {
 	int i;
 
+	cgi = import;
 	/* register our variables */
 	for (i = 0; i < MAX_BOOKMARKS; i++)
-		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
-	cl_serverlist = Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
+		cgi->Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
+	cl_serverlist = cgi->Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
-	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
-	Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
-	Cmd_AddCommand("serverlist", CL_PrintServerList_f, NULL);
+	cgi->Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
+	cgi->Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
+	cgi->Cmd_AddCommand("serverlist", CL_PrintServerList_f, NULL);
 	/* text id is servers in menu_multiplayer.ufo */
-	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
+	cgi->Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
 }
 
 void MP_ServerListShutdown (void)
 {
-	Cmd_RemoveCommand("bookmark_add");
-	Cmd_RemoveCommand("server_info");
-	Cmd_RemoveCommand("serverlist");
-	Cmd_RemoveCommand("servers_click");
+	cgi->Cmd_RemoveCommand("bookmark_add");
+	cgi->Cmd_RemoveCommand("server_info");
+	cgi->Cmd_RemoveCommand("serverlist");
+	cgi->Cmd_RemoveCommand("servers_click");
 
-	if (masterServerQueryThread)
-		SDL_KillThread(masterServerQueryThread);
-	masterServerQueryThread = NULL;
+	cgi->NET_DatagramSocketClose(netDatagramSocket);
+	netDatagramSocket = NULL;
 }

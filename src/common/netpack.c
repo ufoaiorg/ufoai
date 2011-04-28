@@ -137,6 +137,7 @@ void NET_WriteDir (struct dbuffer *buf, const vec3_t dir)
 /**
  * @brief Writes to buffer according to format; version without syntactic sugar
  * for variable arguments, to call it from other functions with variable arguments
+ * @note short and char are promoted to int when passed to variadic functions!
  */
 void NET_vWriteFormat (struct dbuffer *buf, const char *format, va_list ap)
 {

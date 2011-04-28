@@ -510,7 +510,7 @@ void SV_ReadPacket (struct net_stream *s)
 	}
 }
 
-#define	HEARTBEAT_SECONDS	300
+#define	HEARTBEAT_SECONDS	30
 
 static SDL_Thread *masterServerHeartBeatThread;
 
@@ -520,15 +520,9 @@ static SDL_Thread *masterServerHeartBeatThread;
  */
 static int Master_HeartbeatThread (void * data)
 {
-	char *responseBuf;
-
 	/* send to master */
 	Com_Printf("sending heartbeat\n");
-	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string));
-	if (responseBuf) {
-		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
-		Mem_Free(responseBuf);
-	}
+	HTTP_GetURL(va("%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string), NULL);
 
 	masterServerHeartBeatThread = NULL;
 	return 0;
@@ -648,8 +642,6 @@ void SV_Frame (int now, void *data)
  */
 static void Master_Shutdown (void)
 {
-	char *responseBuf;
-
 	if (!sv_dedicated || !sv_dedicated->integer)
 		return;					/* only dedicated servers send heartbeats */
 
@@ -657,11 +649,7 @@ static void Master_Shutdown (void)
 		return;					/* a private dedicated game */
 
 	/* send to master */
-	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?shutdown&port=%s", masterserver_url->string, port->string));
-	if (responseBuf) {
-		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
-		Mem_Free(responseBuf);
-	}
+	HTTP_GetURL(va("%s/ufo/masterserver.php?shutdown&port=%s", masterserver_url->string, port->string), NULL);
 }
 
 /**

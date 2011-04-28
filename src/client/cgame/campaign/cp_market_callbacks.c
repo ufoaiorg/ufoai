@@ -508,8 +508,8 @@ static void BS_BuyType (const base_t *base)
 
 	/* Update some menu cvars. */
 	/* Set up base capacities. */
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", base->capacities[CAP_ITEMS].cur,
-		base->capacities[CAP_ITEMS].max);
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", CAP_GetCurrent(base, CAP_ITEMS),
+		CAP_GetMax(base, CAP_ITEMS));
 	Cvar_Set("mn_bs_storage", tmpbuf);
 
 	/* select first item */
@@ -759,8 +759,7 @@ static void BS_BuyItem_f (void)
 			if (!ccs.eMarket.numItems[ugvWeapon->idx])
 				ugvWeaponBuyable = qfalse;
 
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur <
-				UGV_SIZE + ugvWeapon->size) {
+			if (CAP_GetFreeCapacity(base, CAP_ITEMS) < UGV_SIZE + ugvWeapon->size) {
 				UI_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 				ugvWeaponBuyable = qfalse;
 			}

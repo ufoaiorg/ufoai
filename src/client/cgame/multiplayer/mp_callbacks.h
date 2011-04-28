@@ -36,7 +36,9 @@ typedef struct teamData_s {
 
 extern teamData_t teamData;
 
-void MP_CallbacksInit(void);
+struct cgame_import_s;
+
+void MP_CallbacksInit(const struct cgame_import_s *import);
 void MP_CallbacksShutdown(void);
 
 #endif

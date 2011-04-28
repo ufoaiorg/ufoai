@@ -268,24 +268,6 @@ typedef struct date_s {
 
 #define MAXCMDLINE 256
 
-#define MAX_CVARLISTINGAMETYPE 16
-typedef struct cvarlist_s {
-	char name[MAX_VAR];
-	char value[MAX_VAR];
-} cvarlist_t;
-
-typedef struct gametype_s {
-	char id[MAX_VAR];	/**< script id */
-	char name[MAX_VAR];	/**< translated menu name */
-	struct cvarlist_s cvars[MAX_CVARLISTINGAMETYPE];
-	int num_cvars;
-} gametype_t;
-
-/** game types */
-#define MAX_GAMETYPES 16
-extern gametype_t gts[MAX_GAMETYPES];
-extern int numGTs;
-
 typedef void (*vPrintfPtr_t)(const char *fmt, va_list ap);
 vPrintfPtr_t Qcommon_GetPrintFunction(void);
 void Qcommon_SetPrintFunction(vPrintfPtr_t func);

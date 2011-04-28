@@ -2303,6 +2303,49 @@ mapdef city_disco
 	}
 }
 
+mapdef city_industry
+{
+	map				"city_industry"
+	description		"_A small industry city area."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		6 //TODO: This is an arbitrary value right now.
+
+	aircraft
+	{
+	}
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
 mapdef city_train
 {
 	map				"city_train"

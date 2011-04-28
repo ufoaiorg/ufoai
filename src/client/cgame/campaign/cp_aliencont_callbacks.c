@@ -177,8 +177,8 @@ static void AC_UpdateMenu (const base_t *base)
 	Cvar_Set("mn_al_alienimage", "");
 	Cvar_SetValue("mn_al_dead", 0);
 	Cvar_SetValue("mn_al_alive", 0);
-	Cvar_SetValue("mn_al_capacity", base->capacities[CAP_ALIENS].cur);
-	Cvar_SetValue("mn_al_capacity_max", base->capacities[CAP_ALIENS].max);
+	Cvar_SetValue("mn_al_capacity", CAP_GetCurrent(base, CAP_ALIENS));
+	Cvar_SetValue("mn_al_capacity_max", CAP_GetMax(base, CAP_ALIENS));
 
 	/* Reset list. */
 	UI_ExecuteConfunc("aliencont_clear");
@@ -258,12 +258,19 @@ static void AC_Init_f (void)
 }
 
 /**
- * @brief Kill all aliens in current base.
+ * @brief Console command to kill all aliens on a base.
+ * @note if the first argrument is a base index that, otherwise the current base will remove it's aliens
  * @sa AC_KillAll
  */
 static void AC_KillAll_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t *base;
+
+	if (Cmd_Argc() < 2) {
+		base = B_GetCurrentSelectedBase();
+	} else {
+		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(1)));
+	}
 
 	/* Can be called from everywhere. */
 	if (!base)

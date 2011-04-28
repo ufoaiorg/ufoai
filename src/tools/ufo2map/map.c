@@ -40,7 +40,7 @@ brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 /** an index of the planes containing the faces of the brushes */
 plane_t mapplanes[MAX_MAP_PLANES];
-uint16_t nummapplanes;
+int nummapplanes;
 
 #define	PLANE_HASHES	1024
 static plane_t *planehash[PLANE_HASHES];
@@ -61,7 +61,7 @@ PLANE FINDING
  */
 static inline int GetPlaneHashValueForDistance (const vec_t distance)
 {
-	int hash = (int)fabs(distance) / 8;
+	int hash = (int)fabs(distance) * 27;
 	hash &= (PLANE_HASHES - 1);
 	return hash;
 }

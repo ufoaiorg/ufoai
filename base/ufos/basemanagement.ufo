@@ -14,12 +14,18 @@
 // pedia:				The tech ID that has the UFOpaedia entry for this facility
 // size					Size of the building (columns, rows)
 // capacity:			The capacity of this facility. The meaning of the value depends on the building type.
-// onconstruct:			The name of the script to be run when this facility is built up. Don't add a ; at the end.
-// ondestroy:			The name of the script to be run when this facility is destroyed. Don't add a ; at the end.
 // mandatory:			Automatically construct this building when a base is set up.
 // max_count:			No base may have more than this amount of this facility
 // starting_employees:	The amount of employees that come with this building
 // level:				building level
+//
+// Events:				Every event is called with <baseidx> <buildingtype> parameters, so do not put a semicolon (;) at the end.
+// onconstruct:			The name of the script to run when the facility is built (placed on basemap)
+// ondestroy:			The name of the script to run when this facility is destroyed. If the building was operational when destroyed,
+//							the ondisable event will be triggered as well.
+// onenable:			The name of the script to run when this facility get operational.
+// ondisable:			The name of the script to run when this facility get disabled.
+
 // ====================
 // Buildings
 // ====================
@@ -37,7 +43,7 @@ building building_aliencontainment
 	pedia			rs_building_aliencontainment
 	size			"2 1"
 	capacity		10
-	ondestroy		"building_ondestroy"
+	ondisable		"aliencont_killall"
 }
 
 building building_entrance
@@ -67,7 +73,6 @@ building building_storage
 	map_name		"storage"
 	pedia			rs_building_storage
 	capacity		10000
-	ondestroy		"building_ondestroy"
 }
 
 building building_powerplant
@@ -97,7 +102,8 @@ building building_command
 	map_name	"commando"
 	pedia		rs_building_command
 	max_count	1
-	ondestroy	"mn_installation_update_max_count"
+	onenable	"mn_installation_update_max_count"
+	ondisable	"mn_installation_update_max_count"
 }
 
 building building_quarters
@@ -110,7 +116,6 @@ building building_quarters
 	map_name		"quarters"
 	pedia			rs_building_quarters
 	type			quarters
-	ondestroy		"building_ondestroy"
 	capacity		20
 }
 
@@ -126,7 +131,6 @@ building building_hangar
 	pedia				rs_building_large_hangar
 	type				hangar
 	size				"2 1"
-	ondestroy			"building_ondestroy"
 	starting_employees	8 //Number of soldiers in dropship when first base is built
 	capacity			1
 }
@@ -141,7 +145,6 @@ building building_intercept
 	varcosts		5200
 	map_name		"intercept"
 	pedia			rs_building_small_hangar
-	ondestroy		"building_ondestroy"
 	capacity		1
 	type			smallhangar
 }
@@ -159,7 +162,6 @@ building building_workshop
 	type				workshop
 	starting_employees	10
 	size				"2 1"
-	ondestroy			"building_ondestroy"
 	capacity			10
 }
 
@@ -174,8 +176,8 @@ building building_radar
 	map_name		"radar"
 	pedia			rs_building_radar
 	type			radar
-	onconstruct		"update_base_radar_coverage"
-	ondestroy		"update_base_radar_coverage"
+	onenable		"update_base_radar_coverage"
+	ondisable		"update_base_radar_coverage"
 	level			1.0
 }
 
@@ -190,8 +192,8 @@ building building_radar_adv
 	map_name		"radar_adv"
 	pedia			rs_building_radar_adv
 	type			radar
-	onconstruct		"update_base_radar_coverage"
-	ondestroy		"update_base_radar_coverage"
+	onenable		"update_base_radar_coverage"
+	ondisable		"update_base_radar_coverage"
 	level			2.0
 }
 
@@ -207,7 +209,6 @@ building building_lab
 	pedia				rs_building_lab
 	type				lab
 	starting_employees	10
-	ondestroy			"building_ondestroy"
 	capacity			10
 }
 
@@ -254,6 +255,8 @@ building building_laser
 	pedia			rs_building_laser
 	max_count		4
 	onconstruct		"add_battery laser"
+	onenable		"basedef_updatebatteries laser"
+	ondisable		"basedef_updatebatteries laser"
 	ondestroy		"remove_battery laser"
 }
 
@@ -271,6 +274,8 @@ building building_missile
 	pedia			rs_building_missile
 	max_count		4
 	onconstruct		"add_battery missile"
+	onenable		"basedef_updatebatteries missile"
+	ondisable		"basedef_updatebatteries missile"
 	ondestroy		"remove_battery missile"
 }
 

@@ -24,6 +24,15 @@ window multiplayer
 		*cvar:mn_multiplayer_tab = 1
 	}
 
+	/**
+	 * @param <1> window id
+	 * @param <2> name
+	 */
+	confunc game_addmode_multiplayer
+	{
+		// TODO: use this to support several multiplayer game types
+	}
+
 	/** @brief prevent pushing this menu */
 	func onWindowOpened
 	{

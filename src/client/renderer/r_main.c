@@ -312,11 +312,13 @@ void R_RenderFrame (void)
 
 		R_CheckError();
 
+		R_GetEntityLists();
+
+		R_EnableFog(qtrue);
 		for (tile = 0; tile < r_numMapTiles; tile++) {
 			const model_t *mapTile = r_mapTiles[tile];
 			const mBspModel_t *bsp = &mapTile->bsp;
 
-			R_EnableFog(qtrue);
 
 			R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
 			R_DrawOpaqueWarpSurfaces(bsp->opaque_warp_surfaces);
@@ -324,25 +326,60 @@ void R_RenderFrame (void)
 			R_DrawAlphaTestSurfaces(bsp->alpha_test_surfaces);
 
 			R_EnableBlend(qtrue);
-
 			R_DrawMaterialSurfaces(bsp->material_surfaces);
+			R_EnableBlend(qfalse);
+		}
 
+		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
+		R_DrawBspEntities(r_bsp_entities);
+
+		R_EnableBlend(qtrue);
+		R_EnableFog(qfalse);
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			const model_t *mapTile = r_mapTiles[tile];
+			const mBspModel_t *bsp = &mapTile->bsp;
+
+			R_DrawBlendSurfaces(bsp->blend_surfaces);
+			R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
+		}
+
+		R_DrawBlendMeshEntities(r_blend_mesh_entities);
+
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			const model_t *mapTile = r_mapTiles[tile];
+			const mBspModel_t *bsp = &mapTile->bsp;
+
+			R_EnableFog(qtrue);
 			R_DrawFlareSurfaces(bsp->flare_surfaces);
 
 			R_EnableFog(qfalse);
 
 			R_DrawCoronas();
+		}
 
-			R_DrawBlendSurfaces(bsp->blend_surfaces);
-			R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
+		R_EnableBlend(qfalse);
 
-			R_EnableBlend(qfalse);
-
+		for (tile = 0; tile < r_numMapTiles; tile++) {
 			R_DrawBspNormals(tile);
 		}
-	}
 
-	R_DrawEntities();
+		R_Color(NULL);
+		R_DrawSpecialEntities(r_special_entities);
+		R_DrawNullEntities(r_null_entities);
+		R_DrawEntityEffects();
+	} else {
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		R_GetEntityLists();
+
+		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
+		R_DrawBspEntities(r_bsp_entities);
+		R_DrawBlendMeshEntities(r_blend_mesh_entities);
+		R_Color(NULL);
+		R_DrawSpecialEntities(r_special_entities);
+		R_DrawNullEntities(r_null_entities);
+		R_DrawEntityEffects();
+	}
 
 	R_EnableBlend(qtrue);
 
@@ -813,6 +850,7 @@ static qboolean R_InitExtensions (void)
 	qglDeleteRenderbuffersEXT = NULL;
 	qglGenRenderbuffersEXT = NULL;
 	qglRenderbufferStorageEXT = NULL;
+	qglRenderbufferStorageMultisampleEXT = NULL;
 	qglGetRenderbufferParameterivEXT = NULL;
 	qglIsFramebufferEXT = NULL;
 	qglBindFramebufferEXT = NULL;
@@ -936,6 +974,7 @@ static qboolean R_InitExtensions (void)
 		qglDeleteRenderbuffersEXT = (DeleteRenderbuffersEXT_t)R_GetProcAddressExt("glDeleteRenderbuffers###");
 		qglGenRenderbuffersEXT = (GenRenderbuffersEXT_t)R_GetProcAddressExt("glGenRenderbuffers###");
 		qglRenderbufferStorageEXT = (RenderbufferStorageEXT_t)R_GetProcAddressExt("glRenderbufferStorage###");
+		qglRenderbufferStorageMultisampleEXT = (RenderbufferStorageMultisampleEXT_t)R_GetProcAddressExt("glRenderbufferStorageMultisample###");
 		qglGetRenderbufferParameterivEXT = (GetRenderbufferParameterivEXT_t)R_GetProcAddressExt("glGetRenderbufferParameteriv###");
 		qglIsFramebufferEXT = (IsFramebufferEXT_t)R_GetProcAddressExt("glIsFramebuffer###");
 		qglBindFramebufferEXT = (BindFramebufferEXT_t)R_GetProcAddressExt("glBindFramebuffer###");
@@ -949,6 +988,7 @@ static qboolean R_InitExtensions (void)
 		qglGetFramebufferAttachmentParameterivEXT = (GetFramebufferAttachmentParameterivEXT_t)R_GetProcAddressExt("glGetFramebufferAttachmentParameteriv###");
 		qglGenerateMipmapEXT = (GenerateMipmapEXT_t)R_GetProcAddressExt("glGenerateMipmap###");
 		qglDrawBuffers = (DrawBuffers_t)R_GetProcAddress("glDrawBuffers");
+		qglBlitFramebuffer = (BlitFramebuffer_t)R_GetProcAddress("glBlitFramebuffer");
 
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT

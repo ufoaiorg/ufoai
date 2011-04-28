@@ -34,6 +34,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA GL_UNSIGNED_BYTE
 #endif
 
+/** @todo update SDL to version that includes these */
+#ifndef GL_READ_FRAMEBUFFER_EXT
+#define GL_READ_FRAMEBUFFER_EXT 0x8CA8
+#endif
+
+#ifndef GL_DRAW_FRAMEBUFFER_EXT
+#define GL_DRAW_FRAMEBUFFER_EXT 0x8CA9
+#endif
+
 /* internally defined convenience constant */
 #define GL_TANGENT_ARRAY -1
 #define GL_NEXT_VERTEX_ARRAY -2
@@ -87,6 +96,7 @@ void (APIENTRY *qglBindRenderbufferEXT) (GLenum, GLuint);
 void (APIENTRY *qglDeleteRenderbuffersEXT) (GLsizei, const GLuint *);
 void (APIENTRY *qglGenRenderbuffersEXT) (GLsizei, GLuint *);
 void (APIENTRY *qglRenderbufferStorageEXT) (GLenum, GLenum, GLsizei, GLsizei);
+void (APIENTRY *qglRenderbufferStorageMultisampleEXT) (GLenum, GLsizei, GLenum, GLsizei, GLsizei);
 void (APIENTRY *qglGetRenderbufferParameterivEXT) (GLenum, GLenum, GLint *);
 GLboolean (APIENTRY *qglIsFramebufferEXT) (GLuint);
 void (APIENTRY *qglBindFramebufferEXT) (GLenum, GLuint);
@@ -100,6 +110,7 @@ void (APIENTRY *qglFramebufferRenderbufferEXT) (GLenum, GLenum, GLenum, GLuint);
 void (APIENTRY *qglGetFramebufferAttachmentParameterivEXT) (GLenum, GLenum, GLenum, GLint *);
 void (APIENTRY *qglGenerateMipmapEXT) (GLenum);
 void (APIENTRY *qglDrawBuffers) (GLsizei, const GLenum *);
+void (APIENTRY *qglBlitFramebuffer)( GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLbitfield, GLenum);
 
 
 /* multitexture */
@@ -149,6 +160,7 @@ typedef void (*BindRenderbufferEXT_t) (GLenum, GLuint);
 typedef void (*DeleteRenderbuffersEXT_t) (GLsizei, const GLuint *);
 typedef void (*GenRenderbuffersEXT_t) (GLsizei, GLuint *);
 typedef void (*RenderbufferStorageEXT_t) (GLenum, GLenum, GLsizei, GLsizei);
+typedef void (*RenderbufferStorageMultisampleEXT_t) (GLenum, GLsizei, GLenum, GLsizei, GLsizei);
 typedef void (*GetRenderbufferParameterivEXT_t) (GLenum, GLenum, GLint *);
 typedef GLboolean (*IsFramebufferEXT_t) (GLuint);
 typedef void (*BindFramebufferEXT_t) (GLenum, GLuint);
@@ -162,5 +174,6 @@ typedef void (*FramebufferRenderbufferEXT_t) (GLenum, GLenum, GLenum, GLuint);
 typedef void (*GetFramebufferAttachmentParameterivEXT_t) (GLenum, GLenum, GLenum, GLint *);
 typedef void (*GenerateMipmapEXT_t) (GLenum);
 typedef void (*DrawBuffers_t) (GLsizei, const GLenum *);
+typedef void (*BlitFramebuffer_t)( GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLbitfield, GLenum);
 
 #endif

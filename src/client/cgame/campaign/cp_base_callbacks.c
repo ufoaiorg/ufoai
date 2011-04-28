@@ -58,10 +58,10 @@ static void B_Destroy_AntimaterStorage_f (void)
 	base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(2)));
 	if (!base)
 		return;
-	if (base->capacities[CAP_ANTIMATTER].cur <= 0)
+	if (CAP_GetCurrent(base, CAP_ANTIMATTER) <= 0)
 		return;
 
-	B_RemoveAntimatterExceedingCapacity(base);
+	CAP_RemoveAntimatterExceedingCapacity(base);
 
 	if (base->baseStatus != BASE_WORKING)
 		return;
@@ -208,19 +208,20 @@ static void B_SetBaseTitle_f (void)
 static void B_BuildBase_f (void)
 {
 	const nation_t *nation;
-	base_t *base = B_GetFirstUnfoundedBase();
 	const campaign_t *campaign = ccs.curCampaign;
 
-	if (!base)
-		return;
+	if (ccs.mapAction == MA_NEWBASE)
+		ccs.mapAction = MA_NONE;
 
 	if (ccs.credits - campaign->basecost > 0) {
 		const char *baseName = mn_base_title->string;
+		base_t *base;
 		if (baseName[0] == '\0')
 			baseName = "Base";
 
-		/* set up the base with buildings from template */
-		B_SetUpBase(campaign, base, ccs.newBasePos, baseName);
+		base = B_Build(campaign, ccs.newBasePos, baseName);
+		if (!base)
+			Com_Error(ERR_DROP, "Cannot build base");
 
 		CL_UpdateCredits(ccs.credits - campaign->basecost);
 		nation = MAP_GetNation(base->pos);
@@ -235,8 +236,6 @@ static void B_BuildBase_f (void)
 	} else {
 		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
-		if (ccs.mapAction == MA_NEWBASE)
-			ccs.mapAction = MA_NONE;
 
 		CP_PopupList(_("Notice"), _("Not enough credits to set up a new base."));
 	}
@@ -332,67 +331,6 @@ static void B_BaseInit_f (void)
 		UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
 	else
 		UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
-}
-
-/**
- * @brief On destroy function for several building type.
- * @note this function is only used for sanity checks, and send to related function depending on building type.
- * @pre Functions below will be called AFTER the building is actually destroyed.
- * @sa B_BuildingDestroy_f
- * @todo Why does this exist? why is this not part of B_BuildingDestroy?
- */
-static void B_BuildingOnDestroy_f (void)
-{
-	int baseIdx, buildingType;
-	base_t *base;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", Cmd_Argv(0));
-		return;
-	}
-
-	buildingType = atoi(Cmd_Argv(2));
-	if (buildingType < 0 || buildingType >= MAX_BUILDING_TYPE) {
-		Com_Printf("B_BuildingOnDestroy_f: buildingType '%i' outside limits\n", buildingType);
-		return;
-	}
-
-	baseIdx = atoi(Cmd_Argv(1));
-
-	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("B_BuildingOnDestroy_f: %i is outside bounds\n", baseIdx);
-		return;
-	}
-
-	base = B_GetFoundedBaseByIDX(baseIdx);
-	if (base) {
-		switch (buildingType) {
-		case B_WORKSHOP:
-			PR_UpdateProductionCap(base);
-			break;
-		case B_STORAGE:
-			B_RemoveItemsExceedingCapacity(base);
-			break;
-		case B_ALIEN_CONTAINMENT:
-			AL_RemoveAliensExceedingCapacity(base);
-			break;
-		case B_LAB:
-			RS_RemoveScientistsExceedingCapacity(base);
-			break;
-		case B_HANGAR: /* the Dropship Hangar */
-		case B_SMALL_HANGAR:
-			B_RemoveAircraftExceedingCapacity(base, buildingType);
-			break;
-		case B_QUARTERS:
-			E_DeleteEmployeesExceedingCapacity(base);
-			break;
-		default:
-			/* handled in a seperate function, or number of buildings have no impact
-			 * on how the building works */
-			break;
-		}
-	} else
-		Com_Printf("B_BuildingOnDestroy_f: base %i is not founded\n", baseIdx);
 }
 
 /**
@@ -526,35 +464,35 @@ static void B_MarkBuildingDestroy (building_t* building)
 	}
 
 	if (building->buildingStatus == B_STATUS_WORKING) {
-		const qboolean hasBases = B_AtLeastOneExists();
+		const qboolean hasMoreBases = B_GetCount() > 1;
 		switch (building->buildingType) {
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
-			if (base->capacities[cap].cur >= base->capacities[cap].max) {
+			if (CAP_GetFreeCapacity(base, cap) <= 0) {
 				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
 			break;
 		case B_QUARTERS:
-			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
+			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
 			break;
 		case B_STORAGE:
-			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
+			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
-					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
+					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -811,13 +749,13 @@ static void BaseSummary_Init (const base_t *base)
 		/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
 		if (B_GetBuildingStatus(base, b->buildingType)) {
 			Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
-				base->capacities[cap].cur, base->capacities[cap].max), sizeof(textStatsBuffer));
+				CAP_GetCurrent(base, cap), CAP_GetMax(base, cap)), sizeof(textStatsBuffer));
 		} else {
 			if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 				const float timeLeft = max(0.0, B_GetConstructionTimeRemain(b));
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%3.1f %s", _(b->name), timeLeft, ngettext("day", "days", timeLeft)), sizeof(textStatsBuffer));
 			} else {
-				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), base->capacities[cap].cur, 0), sizeof(textStatsBuffer));
+				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), CAP_GetCurrent(base, cap), 0), sizeof(textStatsBuffer));
 			}
 		}
 		Q_strcat(textStatsBuffer, va("\t\t\t\t%i\n", B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType)), sizeof(textStatsBuffer));
@@ -931,7 +869,6 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
-	Cmd_AddCommand("building_ondestroy", B_BuildingOnDestroy_f, "Destroy a building");
 	Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
 }
 
@@ -955,7 +892,6 @@ void B_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("check_building_status");
 	Cmd_RemoveCommand("buildings_click");
 	Cmd_RemoveCommand("reset_building_current");
-	Cmd_RemoveCommand("building_ondestroy");
 	Cvar_Delete("mn_base_max");
 	Cvar_Delete("mn_base_cost");
 	Cvar_Delete("mn_base_title");

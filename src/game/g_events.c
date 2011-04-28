@@ -298,9 +298,9 @@ void G_EventResetClientAction (const edict_t* ent)
 	gi.WriteShort(ent->number);
 }
 
-void G_EventActorStats (const edict_t* ent)
+void G_EventActorStats (const edict_t* ent, int playerMask)
 {
-	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATS);
+	gi.AddEvent(playerMask, EV_ACTOR_STATS);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(ent->TU);
 	gi.WriteShort(ent->HP);

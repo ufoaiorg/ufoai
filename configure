@@ -9,7 +9,7 @@ MAKEFILE_LOCAL=Makefile.local
 DEBUG=1
 UNIVERSAL=
 HARD_LINKED_GAME=
-HARD_LINKED_CGAME=
+HARD_LINKED_CGAME=1
 PARANOID=
 PROFILING=
 PREFIX=/usr/local
@@ -173,6 +173,10 @@ check_headers() {
 	check_header "sys/utsname.h"
 	check_header "link.h"
 	check_header "CUnit/Basic.h"
+	check_header "mxml.h"
+	if [ "$HAVE_CUNIT_BASIC_H" != "1" ]; then
+		set_var "testall_DISABLE" "yes"
+	fi
 }
 
 check_compiler() {
@@ -474,9 +478,9 @@ PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib}
 
 check_compiler
 check_ccache
+check_headers
 makefile_local
 config_h
-check_headers
 
 cat > ${MAKEFILE_LOCAL} << EOF
 # -------- Automatically generated -----------

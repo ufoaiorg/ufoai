@@ -287,14 +287,14 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		if (base->numBatteries == 0) {
 			LIST_AddString(&slotList, _("No defence of this type in this base"));
 		} else {
-			BDEF_FillSlotList(base->batteries, base->numBatteries, &slotList);
+			BDEF_FillSlotList(base->batteries, base->numActiveBatteries, &slotList);
 		}
 	} else if (bdefType == AC_ITEM_BASE_LASER) {
 		/* we are in the base defence menu for laser */
 		if (base->numLasers == 0) {
 			LIST_AddString(&slotList, _("No defence of this type in this base"));
 		} else {
-			BDEF_FillSlotList(base->lasers, base->numLasers, &slotList);
+			BDEF_FillSlotList(base->lasers, base->numActiveLasers, &slotList);
 		}
 	} else {
 		Com_Printf("BDEF_BaseDefenceMenuUpdate_f: unknown bdefType.\n");
@@ -597,6 +597,39 @@ static void BDEF_SetAutoFire (baseWeapon_t *weapon, qboolean state)
 }
 
 /**
+ * @brief Updates the active defences counter
+ */
+static void BDEF_UpdateActiveBattery_f (void)
+{
+	base_t *base;
+	const char* type;
+	int count;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
+		return;
+	}
+
+	base = B_GetBaseByIDX(atoi(Cmd_Argv(2)));
+	if (base == NULL) {
+		Com_Printf("BDEF_UpdateActiveBattery_f: Invalid base index given\n");
+		return;
+	}
+
+	type = Cmd_Argv(1);
+	if (Q_streq(type, "missile")) {
+		B_CheckBuildingTypeStatus(base, B_DEFENCE_MISSILE, B_STATUS_WORKING, &count);
+		base->numActiveBatteries = min(count, base->numBatteries);
+	} else if (Q_streq(type, "laser")) {
+		B_CheckBuildingTypeStatus(base, B_DEFENCE_LASER, B_STATUS_WORKING, &count);
+		base->numActiveLasers = min(count, base->numLasers);
+	} else {
+		Com_Printf("BDEF_UpdateActiveBattery_f: base defence type %s doesn't exist.\n", type);
+		return;
+	}
+}
+
+/**
  * @brief Menu callback for changing autofire state
  * Command: basedef_autofire <0|1>
  */
@@ -633,12 +666,14 @@ void BDEF_InitCallbacks (void)
 	Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
 	Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
 	Cmd_AddCommand("basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system");
+	Cmd_AddCommand("basedef_updatebatteries", BDEF_UpdateActiveBattery_f, "Updates the active defence systems counters");
 }
 
 void BDEF_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("add_battery");
 	Cmd_RemoveCommand("remove_battery");
+	Cmd_RemoveCommand("basedef_updatebatteries");
 	Cmd_RemoveCommand("basedef_updatemenu");
 	Cmd_RemoveCommand("basedef_selectitem");
 	Cmd_RemoveCommand("basedef_additem");

@@ -24,45 +24,49 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "cl_game.h"
+#include "../client.h"
 #include "cl_game_team.h"
 #include "../battlescape/cl_localentity.h"
 #include "../battlescape/cl_hud.h"
+#include "../battlescape/cl_parse.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_nodes.h"
+#include "../ui/ui_popup.h"
 #include "../cl_team.h"
 #include "../battlescape/events/e_main.h"
 #include "../cl_inventory.h"
 #include "../ui/node/ui_node_model.h"
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
-
-#define HARD_LINKED_CGAME
+#include "../../shared/mutex.h"
 
 #ifdef HARD_LINKED_CGAME
-static const cgame_export_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", 1, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape, NULL, GAME_MP_NotifyEvent},
-	{"Campaign mode", "campaigns", 0, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetItemModel, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, NULL, NULL, GAME_CP_GetTeamDef, NULL},
-	{"Skirmish mode", "skirmish", 0, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+#include "cl_game_campaign.h"
+#include "cl_game_multiplayer.h"
+#include "cl_game_skirmish.h"
 
-	{NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
+static const cgame_api_t gameTypeList[] = {
+	GetCGameMultiplayerAPI,
+	GetCGameCampaignAPI,
+	GetCGameSkirmishAPI
 };
 
 static const char *cgameMenu;
 
 const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 {
-	const cgame_export_t *list = gameTypeList;
+	const size_t len = lengthof(gameTypeList);
+	int i;
 
 	if (cgameMenu == NULL)
 		return NULL;
 
-	while (list) {
-		if (Q_streq(list->menu, cgameMenu)) {
-			/** @todo this should be here, not in GAME_SetMode */
-			/*list->Init(import);*/
-			return list;
+	for (i = 0; i < len; i++) {
+		const cgame_api_t list = gameTypeList[i];
+		const cgame_export_t *cgame = list(import);
+		if (Q_streq(cgame->menu, cgameMenu)) {
+			return cgame;
 		}
-		list++;
 	}
 
 	return NULL;
@@ -173,28 +177,6 @@ qboolean GAME_IsMultiplayer (void)
 }
 
 /**
- * @brief Called when the server sends the @c EV_START event.
- * @param isTeamPlay @c true if the game is a teamplay round. This can be interesting for
- * multiplayer based game types
- * @sa GAME_EndBattlescape
- */
-void GAME_StartBattlescape (qboolean isTeamPlay)
-{
-	const cgame_export_t *list = GAME_GetCurrentType();
-
-	Cvar_SetValue("cl_onbattlescape", 1.0);
-
-	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
-	if (list != NULL && list->StartBattlescape) {
-		list->StartBattlescape(isTeamPlay);
-	} else {
-		HUD_InitUI(NULL, qtrue);
-	}
-	if (list != NULL)
-		Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
-}
-
-/**
  * @brief This is called when a client quits the battlescape
  * @sa GAME_StartBattlescape
  */
@@ -231,6 +213,100 @@ void GAME_DisplayItemInfo (uiNode_t *node, const char *string)
 	}
 }
 
+void GAME_SetServerInfo (const char *server, const char *serverport)
+{
+	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
+	Q_strncpyz(cls.serverport, serverport, sizeof(cls.serverport));
+}
+
+
+static threads_mutex_t *queryMasterServerLock;
+
+/**
+ * @sa CL_PingServers_f
+ */
+static void CL_QueryMasterServer (const char *action, http_callback_t callback)
+{
+	TH_MutexLock(queryMasterServerLock);
+	HTTP_GetURL(va("%s/ufo/masterserver.php?%s", masterserver_url->string, action), callback);
+	TH_MutexUnlock(queryMasterServerLock);
+}
+
+qboolean GAME_HandleServerCommand (const char *command, struct dbuffer *msg)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (!list || list->HandleServerCommand == NULL)
+		return qfalse;
+
+	return list->HandleServerCommand(command, msg);
+}
+
+void GAME_AddChatMessage (const char *format, ...)
+{
+	va_list argptr;
+	char string[4096];
+
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (!list || list->AddChatMessage == NULL)
+		return;
+
+	va_start(argptr, format);
+	Q_vsnprintf(string, sizeof(string), format, argptr);
+	va_end(argptr);
+
+	list->AddChatMessage(string);
+}
+
+qboolean GAME_IsTeamEmpty (void)
+{
+	return chrDisplayList.num == 0;
+}
+
+static void GAME_NET_OOB_Printf (struct net_stream *s, const char *format, ...)
+{
+	va_list argptr;
+	char string[4096];
+
+	va_start(argptr, format);
+	Q_vsnprintf(string, sizeof(string), format, argptr);
+	va_end(argptr);
+
+	NET_OOB_Printf(s, "%s", string);
+}
+
+static void GAME_NET_OOB_Printf2 (const char *format, ...)
+{
+	va_list argptr;
+	char string[4096];
+
+	va_start(argptr, format);
+	Q_vsnprintf(string, sizeof(string), format, argptr);
+	va_end(argptr);
+
+	NET_OOB_Printf(cls.netStream, "%s", string);
+}
+
+static void GAME_UI_Popup (const char *title, const char *format, ...)
+{
+	va_list argptr;
+
+	va_start(argptr, format);
+	Q_vsnprintf(popupText, sizeof(popupText), format, argptr);
+	va_end(argptr);
+
+	UI_Popup(title, popupText);
+}
+
+static void* GAME_StrDup (const char *string)
+{
+	return Mem_PoolStrDup(string, cl_genericPool, 0);
+}
+
+static void GAME_Free (void *ptr)
+{
+	Mem_Free(ptr);
+}
+
 static const cgame_import_t* GAME_GetImportData (void)
 {
 	static cgame_import_t gameImport;
@@ -240,8 +316,6 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi = &gameImport;
 
 		cgi->csi = &csi;
-		cgi->cls = &cls;
-		cgi->cl = &cl;
 
 		cgi->Cmd_AddCommand = Cmd_AddCommand;
 		cgi->Cmd_Argc = Cmd_Argc;
@@ -249,19 +323,32 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->Cmd_Argv = Cmd_Argv;
 		cgi->Cmd_ExecuteString = Cmd_ExecuteString;
 		cgi->Cmd_RemoveCommand = Cmd_RemoveCommand;
+		cgi->Cmd_AddParamCompleteFunction = Cmd_AddParamCompleteFunction;
+		cgi->Cmd_GenericCompleteFunction = Cmd_GenericCompleteFunction;
+
+		cgi->Cbuf_AddText = Cbuf_AddText;
+
+		cgi->LIST_AddString = LIST_AddString;
+		cgi->LIST_ContainsString = LIST_ContainsString;
+
 		cgi->Cvar_Delete = Cvar_Delete;
 		cgi->Cvar_Get = Cvar_Get;
 		cgi->Cvar_GetInteger = Cvar_GetInteger;
+		cgi->Cvar_GetValue = Cvar_GetValue;
+		cgi->Cvar_VariableStringOld = Cvar_VariableStringOld;
 		cgi->Cvar_Set = Cvar_Set;
 		cgi->Cvar_SetValue = Cvar_SetValue;
 		cgi->Cvar_GetString = Cvar_GetString;
 		cgi->Cvar_ForceSet = Cvar_ForceSet;
+
 		cgi->FS_FreeFile = FS_FreeFile;
 		cgi->FS_LoadFile = FS_LoadFile;
+		cgi->FS_CheckFile = FS_CheckFile;
+
 		cgi->UI_AddOption = UI_AddOption;
 		cgi->UI_ExecuteConfunc = UI_ExecuteConfunc;
 		cgi->UI_InitStack = UI_InitStack;
-		/*cgi->UI_Popup = UI_Popup;*/
+		cgi->UI_Popup = GAME_UI_Popup;
 		/*cgi->UI_PopupList = UI_PopupList;*/
 		cgi->UI_PopWindow = UI_PopWindow;
 		cgi->UI_PushWindow = UI_PushWindow;
@@ -269,7 +356,77 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->UI_RegisterOption = UI_RegisterOption;
 		cgi->UI_RegisterText = UI_RegisterText;
 		cgi->UI_ResetData = UI_ResetData;
+		cgi->UI_UpdateInvisOptions = UI_UpdateInvisOptions;
+		cgi->UI_GetOption = UI_GetOption;
 		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
+
+		cgi->NET_StreamSetCallback = NET_StreamSetCallback;
+		cgi->NET_Connect = NET_Connect;
+		cgi->NET_ReadString = NET_ReadString;
+		cgi->NET_ReadStringLine = NET_ReadStringLine;
+		cgi->NET_ReadByte = NET_ReadByte;
+		cgi->NET_ReadMsg = NET_ReadMsg;
+		cgi->NET_StreamGetData = NET_StreamGetData;
+		cgi->NET_StreamSetData = NET_StreamSetData;
+		cgi->NET_StreamFree = NET_StreamFree;
+		cgi->NET_StreamPeerToName = NET_StreamPeerToName;
+		cgi->NET_SockaddrToStrings = NET_SockaddrToStrings;
+		cgi->NET_DatagramSocketNew = NET_DatagramSocketNew;
+		cgi->NET_DatagramBroadcast = NET_DatagramBroadcast;
+		cgi->NET_DatagramSocketClose = NET_DatagramSocketClose;
+		cgi->NET_OOB_Printf = GAME_NET_OOB_Printf;
+		cgi->NET_OOB_Printf2 = GAME_NET_OOB_Printf2;
+
+		cgi->Com_ServerState = Com_ServerState;
+		cgi->Com_Printf = Com_Printf;
+		cgi->Com_DPrintf = Com_DPrintf;
+		cgi->Com_Parse = Com_Parse;
+		cgi->Com_Error = Com_Error;
+		cgi->Com_DropShipTypeToShortName = Com_DropShipTypeToShortName;
+		cgi->Com_UFOCrashedTypeToShortName = Com_UFOCrashedTypeToShortName;
+		cgi->Com_UFOTypeToShortName = Com_UFOTypeToShortName;
+		cgi->Com_GetRandomMapAssemblyNameForCraft = Com_GetRandomMapAssemblyNameForCraft;
+		cgi->Com_SetGameType = Com_SetGameType;
+
+		cgi->SV_ShutdownWhenEmpty = SV_ShutdownWhenEmpty;
+		cgi->SV_Shutdown = SV_Shutdown;
+
+		cgi->CL_Drop = CL_Drop;
+		cgi->CL_Milliseconds = CL_Milliseconds;
+		cgi->CL_PlayerGetName = CL_PlayerGetName;
+		cgi->CL_GetPlayerNum = CL_GetPlayerNum;
+		cgi->CL_SetClientState = CL_SetClientState;
+		cgi->CL_GetClientState = CL_GetClientState;
+		cgi->CL_Disconnect = CL_Disconnect;
+		cgi->CL_QueryMasterServer = CL_QueryMasterServer;
+
+		cgi->GAME_SwitchCurrentSelectedMap = GAME_SwitchCurrentSelectedMap;
+		cgi->GAME_GetCurrentSelectedMap = GAME_GetCurrentSelectedMap;
+		cgi->GAME_GetCurrentTeam = GAME_GetCurrentTeam;
+		cgi->GAME_StrDup = GAME_StrDup;
+		cgi->GAME_AutoTeam = GAME_AutoTeam;
+		cgi->GAME_GetCharacterArraySize = GAME_GetCharacterArraySize;
+		cgi->GAME_IsTeamEmpty = GAME_IsTeamEmpty;
+		cgi->GAME_LoadDefaultTeam = GAME_LoadDefaultTeam;
+		cgi->GAME_AppendTeamMember = GAME_AppendTeamMember;
+		cgi->GAME_ReloadMode = GAME_ReloadMode;
+		cgi->GAME_SetServerInfo = GAME_SetServerInfo;
+
+		cgi->Free = GAME_Free;
+
+		cgi->R_LoadImage = R_LoadImage;
+		cgi->R_SoftenTexture = R_SoftenTexture;
+
+		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
+		cgi->S_StartLocalSample = S_StartLocalSample;
+
+		cgi->INV_GetEquipmentDefinitionByID = INV_GetEquipmentDefinitionByID;
+
+		cgi->Sys_Error = Sys_Error;
+
+		cgi->HUD_InitUI = HUD_InitUI;
+		cgi->HUD_DisplayMessage = HUD_DisplayMessage;
+
 		cgi->XML_AddBool = XML_AddBool;
 		cgi->XML_AddBoolValue = XML_AddBoolValue;
 		cgi->XML_AddByte = XML_AddByte;
@@ -290,12 +447,6 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->XML_AddShortValue = XML_AddShortValue;
 		cgi->XML_AddString = XML_AddString;
 		cgi->XML_AddStringValue = XML_AddStringValue;
-		cgi->R_LoadImage = R_LoadImage;
-		cgi->R_LoadImageData = R_LoadImageData;
-		cgi->R_SoftenTexture = R_SoftenTexture;
-		cgi->R_UploadAlpha = R_UploadAlpha;
-		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
-		cgi->S_StartLocalSample = S_StartLocalSample;
 	}
 
 	return cgi;
@@ -321,12 +472,45 @@ static void GAME_FreeAllInventory (void)
 
 static const inventoryImport_t inventoryImport = { GAME_FreeInventory, GAME_FreeAllInventory, GAME_AllocInventoryMemory };
 
+void GAME_UnloadGame (void)
+{
+#ifndef HARD_LINKED_CGAME
+	if (cls.cgameLibrary) {
+		Com_Printf("Unload the cgame library\n");
+		SDL_UnloadObject(cls.cgameLibrary);
+		cls.cgameLibrary = NULL;
+	}
+#endif
+}
+
+void GAME_SwitchCurrentSelectedMap (int step)
+{
+	cls.currentSelectedMap += step;
+
+	if (cls.currentSelectedMap < 0)
+		cls.currentSelectedMap = cls.numMDs - 1;
+	cls.currentSelectedMap %= cls.numMDs;
+}
+
+const mapDef_t* GAME_GetCurrentSelectedMap (void)
+{
+	return Com_GetMapDefByIDX(cls.currentSelectedMap);
+}
+
+int GAME_GetCurrentTeam (void)
+{
+	return cls.team;
+}
+
 void GAME_SetMode (const cgame_export_t *gametype)
 {
 	const cgame_export_t *list;
 
 	if (cls.gametype == gametype)
 		return;
+
+	GAME_ResetCharacters();
+	OBJZERO(cl.chrList);
 
 	list = GAME_GetCurrentType();
 	if (list) {
@@ -348,8 +532,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory(&cls.i);
 		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
-		/** @todo this should be in GetCGameAPI */
-		list->Init(GAME_GetImportData());
+		list->Init();
 	}
 }
 
@@ -530,6 +713,7 @@ static void UI_SelectMap_f (void)
 typedef struct cgameType_s {
 	char id[MAX_VAR];		/**< the id is also the file basename */
 	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
+	char name[MAX_VAR];		/**< translatable ui name */
 } cgameType_t;
 
 #define MAX_CGAMETYPES 16
@@ -539,6 +723,7 @@ static int numCGameTypes;
 /** @brief Valid equipment definition values from script files. */
 static const value_t cgame_vals[] = {
 	{"window", V_STRING, offsetof(cgameType_t, window), 0},
+	{"name", V_STRING, offsetof(cgameType_t, name), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -600,6 +785,73 @@ void GAME_ParseModes (const char *name, const char **text)
 	} while (*text);
 }
 
+#ifndef HARD_LINKED_CGAME
+static qboolean GAME_LoadGame (const char *path, const char *name)
+{
+	char fullPath[MAX_OSPATH];
+
+	Com_sprintf(fullPath, sizeof(fullPath), "%s/cgame-%s_"CPUSTRING".%s", path, name, SO_EXT);
+	cls.cgameLibrary = SDL_LoadObject(fullPath);
+	if (!cls.cgameLibrary) {
+		Com_sprintf(fullPath, sizeof(fullPath), "%s/cgame-%s.%s", path, name, SO_EXT);
+		cls.cgameLibrary = SDL_LoadObject(fullPath);
+	}
+
+	if (cls.cgameLibrary) {
+		Com_Printf("found at '%s'\n", path);
+		return qtrue;
+	} else {
+		Com_Printf("not found at '%s'\n", path);
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
+		return qfalse;
+	}
+}
+#endif
+
+static const cgame_export_t *GAME_GetCGameAPI (const char *name)
+{
+#ifndef HARD_LINKED_CGAME
+	cgame_api_t GetCGameAPI;
+	const char *path;
+
+	if (cls.cgameLibrary)
+		Com_Error(ERR_FATAL, "GAME_GetCGameAPI without GAME_UnloadGame");
+
+	Com_Printf("------- Loading cgame-%s.%s -------\n", name, SO_EXT);
+
+#ifdef PKGLIBDIR
+	GAME_LoadGame(PKGLIBDIR, name);
+#endif
+
+	/* now run through the search paths */
+	path = NULL;
+	while (!cls.cgameLibrary) {
+		path = FS_NextPath(path);
+		if (!path)
+			/* couldn't find one anywhere */
+			return NULL;
+		else if (GAME_LoadGame(path, name))
+			break;
+	}
+
+	GetCGameAPI = (cgame_api_t)(uintptr_t)SDL_LoadFunction(cls.cgameLibrary, "GetCGameAPI");
+	if (!GetCGameAPI) {
+		GAME_UnloadGame();
+		return NULL;
+	}
+#endif
+
+	return GetCGameAPI(GAME_GetImportData());
+}
+
+static const cgame_export_t *GAME_GetCGameAPI_ (const cgameType_t *t)
+{
+#ifdef HARD_LINKED_CGAME
+	cgameMenu = t->window;
+#endif
+	return GAME_GetCGameAPI(t->id);
+}
+
 /**
  * @brief Decides with game mode should be set - takes the menu as reference
  */
@@ -620,11 +872,11 @@ static void GAME_SetMode_f (void)
 		cgameType_t *t = &cgameTypes[i];
 		if (Q_streq(t->window, modeName)) {
 			const cgame_export_t *gametype;
-#ifdef HARD_LINKED_CGAME
-			cgameMenu = t->window;
-#endif
-			gametype = GetCGameAPI(GAME_GetImportData());
+			GAME_UnloadGame();
+
+			gametype = GAME_GetCGameAPI_(t);
 			GAME_SetMode(gametype);
+
 			return;
 		}
 	}
@@ -833,6 +1085,44 @@ static qboolean GAME_Spawn (void)
 }
 
 /**
+ * @brief Called when the server sends the @c EV_START event.
+ * @param isTeamPlay @c true if the game is a teamplay round. This can be interesting for
+ * multiplayer based game types
+ * @sa GAME_EndBattlescape
+ */
+void GAME_StartBattlescape (qboolean isTeamPlay)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	qboolean spawnStatus;
+
+	Cvar_SetValue("cl_onbattlescape", 1.0);
+
+	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
+	if (list != NULL && list->StartBattlescape) {
+		list->StartBattlescape(isTeamPlay);
+	} else {
+		HUD_InitUI(NULL, qtrue);
+	}
+
+	/* this callback is responsible to set up the cl.chrList */
+	if (list && list->Spawn)
+		spawnStatus = list->Spawn();
+	else
+		spawnStatus = GAME_Spawn();
+
+	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
+
+	if (spawnStatus && cl.chrList.num > 0) {
+		struct dbuffer *msg;
+
+		/* send team info */
+		msg = new_dbuffer();
+		GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
+		NET_WriteMsg(cls.netStream, msg);
+	}
+}
+
+/**
  * @brief This is called if actors are spawned (or at least the spawning commands were send to
  * the server). This callback can e.g. be used to set initial actor states. E.g. request crouch and so on.
  * These events are executed without consuming time
@@ -855,24 +1145,8 @@ static void GAME_InitializeBattlescape (chrList_t *team)
  */
 void GAME_SpawnSoldiers (void)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
-	qboolean spawnStatus;
-
-	/* this callback is responsible to set up the cl.chrList */
-	if (list && list->Spawn)
-		spawnStatus = list->Spawn();
-	else
-		spawnStatus = GAME_Spawn();
-
-	if (spawnStatus && cl.chrList.num > 0) {
-		struct dbuffer *msg;
-
-		/* send team info */
-		msg = new_dbuffer();
-		GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
-		NET_WriteMsg(cls.netStream, msg);
-
-		msg = new_dbuffer();
+	if (cl.chrList.num > 0) {
+		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "spawn\n");
 		NET_WriteMsg(cls.netStream, msg);
@@ -934,6 +1208,9 @@ void GAME_Drop (void)
 	} else {
 		SV_Shutdown("Drop", qfalse);
 		GAME_SetMode(NULL);
+
+		GAME_UnloadGame();
+
 		UI_InitStack("main", NULL, qfalse, qtrue);
 	}
 }
@@ -944,6 +1221,8 @@ void GAME_Drop (void)
 static void GAME_Exit_f (void)
 {
 	GAME_SetMode(NULL);
+
+	GAME_UnloadGame();
 }
 
 /**
@@ -1002,6 +1281,31 @@ mapDef_t* Com_GetMapDefByIDX (int index)
 	return &cls.mds[index];
 }
 
+/**
+ * @brief Fills the game mode list entries with the parsed values from the script
+ */
+void GAME_InitUIData (void)
+{
+	int i;
+
+	Com_Printf("----------- game modes -------------\n");
+	for (i = 0; i < numCGameTypes; i++) {
+		const cgameType_t *t = &cgameTypes[i];
+		const cgame_export_t *e = GAME_GetCGameAPI_(t);
+		if (e == NULL)
+			continue;
+
+		if (e->isMultiplayer)
+			UI_ExecuteConfunc("game_addmode_multiplayer \"%s\" \"%s\"", t->window, t->name);
+		else
+			UI_ExecuteConfunc("game_addmode_singleplayer \"%s\" \"%s\"", t->window, t->name);
+		Com_Printf("added %s\n", t->name);
+		GAME_UnloadGame();
+	}
+
+	Com_Printf("added %i game modes\n", numCGameTypes);
+}
+
 void GAME_InitStartup (void)
 {
 	Cmd_AddCommand("game_setmode", GAME_SetMode_f, "Decides with game mode should be set - takes the menu as reference");
@@ -1020,4 +1324,11 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
+
+	queryMasterServerLock = TH_MutexCreate("masterserverquery");
+}
+
+void GAME_Shutdown (void)
+{
+	TH_MutexDestroy(queryMasterServerLock);
 }

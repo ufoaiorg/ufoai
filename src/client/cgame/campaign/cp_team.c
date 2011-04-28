@@ -154,13 +154,12 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
 	containerIndex_t container;
-	linkedList_t* l;
+	employee_t *employee;
 
 	assert(aircraft);
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		employee_t *employee = (employee_t *)l->data;
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		character_t *chr = &employee->chr;
 
 		/* This is an UGV */
@@ -172,8 +171,7 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (l = aircraft->acTeam; l != NULL; l = l->next) {
-			employee_t *employee = (employee_t *)l->data;
+		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 			invList_t *ic, *next;
 			character_t *chr = &employee->chr;
 #if 0
@@ -239,9 +237,9 @@ int CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 {
 	int i;
 	size_t size;
-	linkedList_t* l;
 	int numOnAircraft;
 	const employee_t *pilot = AIR_GetPilot(aircraft);
+	employee_t *empl;
 
 	assert(aircraft);
 
@@ -268,8 +266,7 @@ int CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 
 	/* update chrDisplayList list (this is the one that is currently displayed) */
 	chrDisplayList.num = 0;
-	for (l = aircraft->acTeam; l != NULL; l = l->next) {
-		employee_t *empl = (employee_t *)l->data;
+	LIST_Foreach(aircraft->acTeam, employee_t, empl) {
 		if (empl->type != employeeType)
 			continue;
 

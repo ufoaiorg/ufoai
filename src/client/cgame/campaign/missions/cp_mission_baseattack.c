@@ -128,7 +128,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 
 	/* HACK This hack is only needed until base will be really destroyed
 	 * we must recalculate items in storage because of the items we collected on battlefield */
-	B_UpdateStorageCap(base);
+	CAP_UpdateStorageCap(base);
 	base->aircraftCurrent = NULL;
 	base->baseStatus = BASE_WORKING;
 }
@@ -167,13 +167,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 
 	base->baseStatus = BASE_UNDER_ATTACK;
 	ccs.campaignStats.basesAttacked++;
-
-#if 0
-	/** @todo implement onattack: add it to basemanagement.ufo and implement functions */
-	if (base->onAttack[0] != '\0')
-		/* execute next frame */
-		Cbuf_AddText(va("%s %i", base->onAttack, base->id));
-#endif
 
 	MAP_SelectMission(mission);
 	mission->active = qtrue;

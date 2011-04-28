@@ -39,6 +39,7 @@ void NET_DatagramSend(struct datagram_socket *s, const char *buf, int len, struc
 void NET_DatagramBroadcast(struct datagram_socket *s, const char *buf, int len, int port);
 void NET_DatagramSocketClose(struct datagram_socket *s);
 void NET_SockaddrToStrings(struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen);
+void NET_ResolvNode(const char *node, char *buf, size_t bufLength);
 
 void NET_Init(void);
 void NET_Shutdown(void);

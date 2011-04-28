@@ -443,13 +443,13 @@ void G_ClientMove(const player_t * player, int visTeam, edict_t* ent, const pos3
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
 void G_MoveCalcLocal(pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
-void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction);
+qboolean G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction);
 void G_ClientStateChange(const player_t* player, edict_t* ent, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
 
 edict_t *G_GetActorFromPos(const pos3_t pos);
 
-void G_SendInvisible(player_t *player);
+void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, const edict_t *ent);

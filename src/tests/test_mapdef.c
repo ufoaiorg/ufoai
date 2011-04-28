@@ -47,6 +47,9 @@ static int UFO_InitSuiteMapDef (void)
 	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
 	sv_public = Cvar_Get("sv_public", "0", 0, NULL);
 	port = Cvar_Get("testport", "27909", 0, NULL);
+	masterserver_url = Cvar_Get("masterserver_test", "http://localhost", 0, NULL);
+	http_timeout = Cvar_Get("noname", "", 0, NULL);
+	http_proxy = Cvar_Get("noname", "", 0, NULL);
 
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 
@@ -115,9 +118,6 @@ static void testMapDefsMultiplayer (void)
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
-	masterserver_url = Cvar_Get("noname", "", 0, NULL);
-	http_timeout = Cvar_Get("noname", "", 0, NULL);
-	http_proxy = Cvar_Get("noname", "", 0, NULL);
 	Cvar_Set("sv_maxclients", "2");
 
 	for (i = 0; i < cls.numMDs; i++) {

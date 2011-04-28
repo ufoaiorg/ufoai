@@ -156,7 +156,7 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 	/* you can't buy more items than you have room for */
 	/** @todo Handle items with size 0 better */
 	if (item->size)
-		numItems = min(numItems, (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur) / item->size);
+		numItems = min(numItems, CAP_GetFreeCapacity(base, CAP_ITEMS) / item->size);
 	/* make sure that numItems is > 0 (can be negative because capacities.cur may be greater than
 	 * capacities.max if storage is disabled or if alien items have been collected on mission */
 	if (numItems <= 0) {

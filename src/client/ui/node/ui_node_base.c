@@ -75,9 +75,9 @@ static void UI_BaseLayoutNodeDraw (uiNode_t * node)
 	for (row = 0; row < BASE_SIZE; row++) {
 		int x = nodepos[0] + node->padding;
 		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col].blocked) {
+			if (B_IsTileBlocked(base, col, row)) {
 				UI_DrawFill(x, y, width, height, c_gray);
-			} else if (base->map[row][col].building) {
+			} else if (B_GetBuildingAt(base, col, row) != NULL) {
 				/* maybe destroyed in the meantime */
 				if (base->founded)
 					UI_DrawFill(x, y, width, height, node->color);
@@ -116,18 +116,6 @@ static void UI_BaseMapGetCellAtPos (const uiNode_t *node, int x, int y, int *col
 }
 
 /**
- * @brief Check a base cell
- * @return True if the cell is free to build
- */
-static inline qboolean UI_BaseMapIsCellFree (const base_t *base, int col, int row)
-{
-	return col >= 0 && col < BASE_SIZE
-	 && row >= 0 && row < BASE_SIZE
-	 && base->map[row][col].building == NULL
-	 && !base->map[row][col].blocked;
-}
-
-/**
  * @brief Draws a base.
  */
 static void UI_BaseMapNodeDraw (uiNode_t * node)
@@ -157,14 +145,14 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 			pos[1] += row * (height - BASE_IMAGE_OVERLAY);
 
 			/* base tile */
-			if (base->map[row][col].blocked) {
+			if (B_IsTileBlocked(base, col, row)) {
 				building = NULL;
 				image = "base/invalid";
-			} else if (!base->map[row][col].building) {
+			} else if (B_GetBuildingAt(base, col, row) == NULL) {
 				building = NULL;
 				image = "base/grid";
 			} else {
-				building = base->map[row][col].building;
+				building = B_GetBuildingAt(base, col, row);
 				assert(building);
 
 				if (building->image)
@@ -215,7 +203,7 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 
 		for (y = row; y < row + base->buildingCurrent->size[1]; y++) {
 			for (x = col; x < col + base->buildingCurrent->size[0]; x++) {
-				if (!UI_BaseMapIsCellFree(base, x, y))
+				if (!B_MapIsCellFree(base, x, y))
 					return;
 			}
 		}
@@ -285,16 +273,17 @@ static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
 			return;
 		for (y = row; y < row + building->size[1]; y++)
 			for (x = col; x < col + building->size[0]; x++)
-				if (base->map[y][x].building || base->map[y][x].blocked)
+				if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
 					return;
 		B_SetBuildingByClick(base, building, row, col);
 		return;
 	}
 
-	if (base->map[row][col].building) {
-		const building_t *entry = base->map[row][col].building;
+	if (B_GetBuildingAt(base, col, row) != NULL) {
+		const building_t *entry = B_GetBuildingAt(base, col, row);
 
-		assert(!base->map[row][col].blocked);
+		if (B_IsTileBlocked(base, col, row))
+			Com_Error(ERR_DROP, "tile with building is not blocked");
 
 		B_BuildingOpenAfterClick(entry);
 		ccs.baseAction = BA_NONE;
@@ -352,7 +341,7 @@ static void UI_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
 
 	entry = base->map[row][col].building;
 	if (entry) {
-		assert(!base->map[row][col].blocked);
+		assert(!B_IsTileBlocked(base, col, row));
 		B_DrawBuilding(entry);
 	}
 }

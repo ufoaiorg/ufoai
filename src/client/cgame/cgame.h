@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CL_CGAME_H
 
 #include "../../common/xml.h"
+#include "../../common/http.h"
 
 struct cgame_import_s;
 
@@ -34,7 +35,7 @@ typedef struct cgame_export_s {
 	const char *name;
 	const char *menu;
 	int isMultiplayer;
-	void (EXPORT *Init) (const struct cgame_import_s *import);
+	void (EXPORT *Init) (void);
 	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
 	qboolean (EXPORT *Spawn) (void);
@@ -62,20 +63,20 @@ typedef struct cgame_export_s {
 	void (EXPORT *StartBattlescape) (qboolean isTeamPlay);
 	const char* (EXPORT *GetTeamDef) (void);
 	void (EXPORT *NotifyEvent) (event_t eventType);
+	void (EXPORT *AddChatMessage) (const char *message);
+	qboolean (EXPORT *HandleServerCommand) (const char *command, struct dbuffer *msg);
 } cgame_export_t;
 
 /** @todo define the import interface */
 typedef struct cgame_import_s {
 	csi_t *csi;
-	client_static_t *cls;
-	clientBattleScape_t *cl;
 
 	/* UI functions */
 	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *UI_PopWindow) (qboolean all);
 	uiNode_t* (IMPORT *UI_PushWindow) (const char *name, const char *parentName, linkedList_t *params);
 	void (IMPORT *UI_InitStack) (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
-	void (IMPORT *UI_Popup) (const char *title, const char *text);
+	void (IMPORT *UI_Popup) (const char *title, const char *format, ...);
 	uiNode_t* (IMPORT *UI_AddOption) (uiNode_t** tree, const char* name, const char* label, const char* value);
 	void (IMPORT *UI_RegisterOption) (int dataId, uiNode_t *option);
 	void (IMPORT *UI_RegisterText) (int textId, const char *text);
@@ -83,6 +84,63 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_RegisterLinkedListText) (int textId, linkedList_t *text);
 	void (IMPORT *UI_TextNodeSelectLine) (uiNode_t *node, int num);
 	uiNode_t *(IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+	void (IMPORT *UI_UpdateInvisOptions) (uiNode_t *option, const linkedList_t *stringList);
+	void (IMPORT *HUD_InitUI) (const char *optionWindowName, qboolean popAll);
+	void (IMPORT *HUD_DisplayMessage) (const char *text);
+	uiNode_t *(IMPORT *UI_GetOption) (int dataId);
+
+	void (IMPORT *LIST_AddString) (linkedList_t** listDest, const char* data);
+	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);
+
+	void (IMPORT *SV_ShutdownWhenEmpty) (void);
+	void (IMPORT *SV_Shutdown) (const char *finalmsg, qboolean reconnect);
+
+	int (IMPORT *CL_GetPlayerNum) (void);
+	const char *(IMPORT *CL_PlayerGetName) (unsigned int player);
+	int (IMPORT *CL_Milliseconds) (void);
+	void (IMPORT *CL_Drop) (void);
+	void (IMPORT *CL_QueryMasterServer) (const char *action, http_callback_t callback);
+	void (IMPORT *CL_SetClientState) (int state);
+	int (IMPORT *CL_GetClientState) (void);
+	void (IMPORT *CL_Disconnect) (void);
+
+	void (IMPORT *GAME_SwitchCurrentSelectedMap) (int step);
+	const mapDef_t* (IMPORT *GAME_GetCurrentSelectedMap) (void);
+	int (IMPORT *GAME_GetCurrentTeam) (void);
+	void* (IMPORT *GAME_StrDup) (const char *string);
+	void (IMPORT *GAME_AutoTeam) (const char *equipmentDefinitionID, int teamMembers);
+	size_t (IMPORT *GAME_GetCharacterArraySize) (void);
+	qboolean (IMPORT *GAME_IsTeamEmpty) (void);
+	qboolean (IMPORT *GAME_LoadDefaultTeam) (void);
+	void (IMPORT *GAME_SetServerInfo) (const char *server, const char *serverport);
+	void (IMPORT *GAME_AppendTeamMember) (int memberIndex, const char *teamDefID, const equipDef_t *ed);
+	void (IMPORT *GAME_ReloadMode) (void);
+	void (IMPORT *Free) (void *ptr);
+
+	/* sound functions */
+	void (IMPORT *S_StartLocalSample) (const char *s, float volume);
+	void (IMPORT *S_SetSampleRepeatRate) (int sampleRepeatRate);
+
+	/* renderer functions */
+	void (IMPORT *R_SoftenTexture) (byte *in, int width, int height, int bpp);
+	void (IMPORT *R_LoadImage) (const char *name, byte **pic, int *width, int *height);
+
+	struct dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
+	int (IMPORT *NET_ReadByte)  (struct dbuffer *buf);
+	int (IMPORT *NET_ReadStringLine)  (struct dbuffer *buf, char *string, size_t length);
+	int (IMPORT *NET_ReadString)  (struct dbuffer *buf, char *string, size_t length);
+	struct net_stream *(IMPORT *NET_Connect)  (const char *node, const char *service);
+	void (IMPORT *NET_StreamSetCallback)  (struct net_stream *s, stream_callback_func *func);
+	void (IMPORT *NET_OOB_Printf) (struct net_stream *s, const char *format, ...) __attribute__((format(printf,2,3)));
+	void (IMPORT *NET_OOB_Printf2) (const char *format, ...) __attribute__((format(printf,1,2)));
+	void *(IMPORT *NET_StreamGetData) (struct net_stream *s);
+	void (IMPORT *NET_StreamSetData) (struct net_stream *s, void *data);
+	void (IMPORT *NET_StreamFree) (struct net_stream *s);
+	const char *(IMPORT *NET_StreamPeerToName) (struct net_stream *s, char *dst, int len, qboolean appendPort);
+	void (IMPORT *NET_SockaddrToStrings) (struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen);
+	struct datagram_socket *(IMPORT *NET_DatagramSocketNew) (const char *node, const char *service, datagram_callback_func *func);
+	void (IMPORT *NET_DatagramBroadcast) (struct datagram_socket *s, const char *buf, int len, int port);
+	void (IMPORT *NET_DatagramSocketClose) (struct datagram_socket *s);
 
 	/* xml functions */
 	xmlNode_t * (IMPORT *XML_AddNode) (xmlNode_t *parent, const char *name);
@@ -109,6 +167,7 @@ typedef struct cgame_import_s {
 	/* filesystem functions */
 	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
 	void (IMPORT *FS_FreeFile) (void *buffer);
+	int (IMPORT *FS_CheckFile) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 
 	/* console variable interaction */
 	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
@@ -116,18 +175,10 @@ typedef struct cgame_import_s {
 	void (IMPORT *Cvar_SetValue) (const char *varName, float value);
 	const char *(IMPORT *Cvar_GetString) (const char *varName);
 	int (IMPORT *Cvar_GetInteger) (const char *varName);
+	const char *(IMPORT *Cvar_VariableStringOld) (const char *varName);
+	float (IMPORT *Cvar_GetValue) (const char *varName);
 	qboolean (IMPORT *Cvar_Delete) (const char *varName);
 	cvar_t * (IMPORT *Cvar_ForceSet) (const char *varName, const char *value);
-
-	/* sound functions */
-	void (IMPORT *S_StartLocalSample) (const char *s, float volume);
-	void (IMPORT *S_SetSampleRepeatRate) (int sampleRepeatRate);
-
-	/* renderer functions */
-	void (IMPORT *R_SoftenTexture) (byte *in, int width, int height, int bpp);
-	void (IMPORT *R_UploadAlpha) (const image_t *image, const byte *alphaData);
-	void (IMPORT *R_LoadImage) (const char *name, byte **pic, int *width, int *height);
-	image_t *(IMPORT *R_LoadImageData) (const char *name, byte * pic, int width, int height, imagetype_t type);
 
 	/* ClientCommand and ServerCommand parameter access */
 	int (IMPORT *Cmd_Argc) (void);
@@ -136,8 +187,28 @@ typedef struct cgame_import_s {
 	void (IMPORT *Cmd_AddCommand) (const char *cmdName, xcommand_t function, const char *desc);
 	void (IMPORT *Cmd_RemoveCommand) (const char *cmdName);
 	void (IMPORT *Cmd_ExecuteString) (const char *text);
+	void (IMPORT *Cmd_AddParamCompleteFunction) (const char *cmd_name, int (*function)(const char *partial, const char **match));
+	int (IMPORT *Cmd_GenericCompleteFunction) (size_t len, const char **match, int matches, const char **list);
+
+	void (IMPORT *Cbuf_AddText) (const char *text);
+
+	void (IMPORT *Sys_Error) (const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
+	int (IMPORT *Com_ServerState) (void);
+	void (IMPORT *Com_SetGameType) (void);
+	const char *(IMPORT *Com_Parse) (const char *data_p[]);
+	void (IMPORT *Com_Error) (int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
+	void (IMPORT *Com_Printf) (const char *msg, ...) __attribute__((format(printf, 1, 2)));
+	void (IMPORT *Com_DPrintf) (int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
+	const char* (IMPORT *Com_DropShipTypeToShortName) (humanAircraftType_t type);
+	const char* (IMPORT *Com_UFOCrashedTypeToShortName) (ufoType_t type);
+	const char* (IMPORT *Com_UFOTypeToShortName) (ufoType_t type);
+	const char* (IMPORT *Com_GetRandomMapAssemblyNameForCraft) (const char *craftID);
+
+	const equipDef_t *(IMPORT *INV_GetEquipmentDefinitionByID) (const char *name);
 } cgame_import_t;
 
 const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
+
+typedef const cgame_export_t *(*cgame_api_t) (const cgame_import_t *);
 
 #endif

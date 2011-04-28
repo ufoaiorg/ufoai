@@ -26,9 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_SKIRMISH_H
 #define CL_GAME_SKIRMISH_H
 
-const mapDef_t* GAME_SK_MapInfo(int step);
-void GAME_SK_InitStartup(const cgame_import_t *import);
-void GAME_SK_Shutdown(void);
-void GAME_SK_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
+#ifdef HARD_LINKED_CGAME
+const cgame_export_t *GetCGameSkirmishAPI (const cgame_import_t *import);
+#endif
 
 #endif

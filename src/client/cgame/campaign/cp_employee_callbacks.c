@@ -58,7 +58,7 @@ static void E_UpdateGUICount_f (void)
 	if (!base)
 		return;
 
-	max = base->capacities[CAP_EMPLOYEES].max;
+	max = CAP_GetMax(base, CAP_EMPLOYEES);
 	Cvar_SetValue("mn_hiresoldiers", E_CountHired(base, EMPL_SOLDIER));
 	Cvar_SetValue("mn_hireworkers", E_CountHired(base, EMPL_WORKER));
 	Cvar_SetValue("mn_hirescientists", E_CountHired(base, EMPL_SCIENTIST));

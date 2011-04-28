@@ -131,7 +131,7 @@ void R_DrawBspNormals(int tile);
 qboolean R_CullBspModel(const entity_t *e);
 qboolean R_CullSphere(const vec3_t centre, const float radius, const unsigned int clipflags);
 void R_GetLevelSurfaceLists(void);
-void R_DrawEntities(void);
+void R_GetEntityLists(void);
 void R_DrawInitLocal(void);
 void R_DrawParticles(void);
 void R_SetupFrustum(void);

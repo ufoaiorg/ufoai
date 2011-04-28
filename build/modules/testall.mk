@@ -24,6 +24,7 @@ $(TARGET)_SRCS      = \
 	tests/test_ui_level2.c \
 	tests/test_campaign.c \
 	tests/test_parser.c \
+	tests/test_dbuffer.c \
 	\
 	client/cl_console.c \
 	client/cl_http.c \
@@ -108,8 +109,6 @@ $(TARGET)_SRCS      = \
 	\
 	client/cgame/cl_game.c \
 	client/cgame/cl_game_campaign.c \
-	client/cgame/cl_game_multiplayer.c \
-	client/cgame/cl_game_skirmish.c \
 	client/cgame/cl_game_team.c \
 	\
 	client/cgame/campaign/cp_aircraft.c \
@@ -174,10 +173,6 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/missions/cp_mission_supply.c \
 	client/cgame/campaign/missions/cp_mission_terror.c \
 	client/cgame/campaign/missions/cp_mission_xvi.c \
-	\
-	client/cgame/multiplayer/mp_callbacks.c \
-	client/cgame/multiplayer/mp_serverlist.c \
-	client/cgame/multiplayer/mp_chatmessages.c \
 	\
 	client/ui/ui_actions.c \
 	client/ui/ui_components.c \
@@ -317,7 +312,9 @@ $(TARGET)_SRCS      = \
 	shared/mutex.c \
 	shared/images.c \
 	\
-	$(game_SRCS)
+	$(game_SRCS) \
+	\
+	$(MXML_SRCS)
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS += \
@@ -344,6 +341,16 @@ ifeq ($(HARD_LINKED_GAME),1)
 		game/chr_shared.c \
 		game/inv_shared.c \
 		game/inventory.c
+endif
+
+ifeq ($(HARD_LINKED_CGAME),1)
+	$(TARGET)_SRCS     += \
+		$(cgame-skirmish_SRCS) \
+		$(cgame-multiplayer_SRCS)
+else
+	$(TARGET)_DEPS     := \
+		cgame-skirmish \
+		cgame-multiplayer
 endif
 
 ifneq ($(HAVE_CUNIT_BASIC_H), 1)

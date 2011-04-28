@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
-#include "cp_capacity.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
 #include "cp_map.h"
@@ -147,6 +146,10 @@ static qboolean B_AddBlockedTile (base_t *base, int row, int column)
 	int y;
 
 	assert(base);
+
+	if (B_GetBuildingAt(base, column, row) != NULL)
+		return qfalse;
+
 	OBJZERO(found);
 	found[row][column] = -1;
 
@@ -213,6 +216,9 @@ static void B_AddBlockedTiles (base_t *base, int count)
 		const int y = rand() % BASE_SIZE;
 
 		if (B_IsTileBlocked(base, x, y))
+			continue;
+
+		if (B_GetBuildingAt(base, x, y) != NULL)
 			continue;
 
 		B_AddBlockedTile(base, y, x);
@@ -642,56 +648,6 @@ static qboolean B_CheckUpdateBuilding (building_t* building)
 }
 
 /**
- * @brief Actions to perform when a type of buildings goes from qfalse to qtrue.
- * @note This function is not only called when a building is enabled for the first time in base
- * @note but also when one of its dependencies is destroyed and then rebuilt
- * @param[in] type Type of building that has been modified from qfalse to qtrue
- * @param[in] base Pointer to base with given building.
- * @sa B_UpdateOneBaseBuildingStatusOnDisable
- * @sa onConstruct trigger
- */
-static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
-{
-	switch (type) {
-	case B_RADAR:
-		Cmd_ExecuteString(va("update_base_radar_coverage %i", base->idx));
-		break;
-	case B_COMMAND:
-		Cmd_ExecuteString("mn_installation_update_max_count");
-		break;
-	default:
-		break;
-	}
-}
-
-/**
- * @brief Actions to perform when a type of buildings goes from functional to non-functional.
- * @param[in] type Type of building which hasBuilding value has been modified from qtrue to qfalse
- * @param[in] base Pointer to base with given building.
- * @note That does not mean that a building of this type has been destroyed: maybe one of its dependencies
- * has been destroyed: don't use onDestroy trigger.
- * @sa B_UpdateOneBaseBuildingStatusOnEnable
- * @sa onDestroy trigger
- */
-static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t* base)
-{
-	switch (type) {
-	case B_ALIEN_CONTAINMENT:
-		/* if an alien containment is not functional, aliens die... */
-		AC_KillAll(base);
-		break;
-	case B_RADAR:
-		Cmd_ExecuteString(va("update_base_radar_coverage %i", base->idx));
-		break;
-	case B_COMMAND:
-		Cmd_ExecuteString("mn_installation_update_max_count");
-		break;
-	default:
-		break;
-	}
-}
-
-/**
  * @brief Update status of every building when a building has been built/destroyed
  * @param[in] base
  * @param[in] buildingType The building-type that has been built / removed.
@@ -715,14 +671,14 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONENABLE);
 					test = qtrue;
 					returnValue = qtrue;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONDISABLE);
 					test = qtrue;
 					returnValue = qtrue;
 				}
@@ -738,13 +694,13 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONENABLE);
 					test = qtrue;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONDISABLE);
 					test = qtrue;
 				}
 			}
@@ -763,14 +719,13 @@ static void B_UpdateAntimatterCap (base_t *base)
 {
 	const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 	if (od != NULL)
-		base->capacities[CAP_ANTIMATTER].cur = B_ItemInBase(od, base);
+		CAP_SetCurrent(base, CAP_ANTIMATTER, B_ItemInBase(od, base));
 }
 
 /**
  * @brief Recalculate status and capacities of one base
  * @param[in] base Pointer to the base where status and capacities must be recalculated
  * @param[in] firstEnable qtrue if this is the first time the function is called for this base
- * @sa B_UpdateOneBaseBuildingStatusOnEnable
  */
 void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 {
@@ -794,7 +749,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 			if (!B_GetBuildingStatus(base, building->buildingType)
 			 && B_CheckUpdateBuilding(building)) {
 				if (firstEnable)
-					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+					B_FireEvent(building, base, B_ONENABLE);
 				test = qtrue;
 			}
 		}
@@ -805,20 +760,20 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 
 	/* calculate capacities.cur for every capacity */
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
-		base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
+		CAP_SetCurrent(base, CAP_ALIENS, AL_CountInBase(base));
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_SMALL)) ||
 		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_BIG)))
 		AIR_UpdateHangarCapForAll(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
-		base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
+		CAP_SetCurrent(base, CAP_EMPLOYEES, E_CountAllHired(base));
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
-		B_UpdateStorageCap(base);
+		CAP_UpdateStorageCap(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
-		base->capacities[CAP_LABSPACE].cur = RS_CountScientistsInBase(base);
+		CAP_SetCurrent(base, CAP_LABSPACE, RS_CountScientistsInBase(base));
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
 		PR_UpdateProductionCap(base);
@@ -828,7 +783,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 
 	/* Check that current capacity is possible -- if we changed values in *.ufo */
 	for (i = 0; i < MAX_CAP; i++)
-		if (base->capacities[i].cur > base->capacities[i].max)
+		if (CAP_GetFreeCapacity(base, i) < 0)
 			Com_Printf("B_ResetAllStatusAndCapacities: Warning, capacity of %i is bigger than maximum capacity\n", i);
 }
 
@@ -842,7 +797,7 @@ qboolean B_BuildingDestroy (building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
 	const building_t const *buildingTemplate = building->tpl;
-	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
+	const qboolean runDisableCommand = building->buildingStatus == B_STATUS_WORKING;
 	base_t *base = building->base;
 
 	/* Don't allow to destroy a mandatory building. */
@@ -915,13 +870,14 @@ qboolean B_BuildingDestroy (building_t* building)
 
 	Cmd_ExecuteString("base_init");
 
-	/* call ondestroy trigger only if building is not under construction
+	/* call ondisable trigger only if building is not under construction
 	 * (we do that after base capacity has been updated) */
-	if (onDestroyCommand) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",
-			buildingTemplate->onDestroy, base->idx, buildingType);
-		Cmd_ExecuteString(va("%s %i %i", buildingTemplate->onDestroy, base->idx, buildingType));
+	if (runDisableCommand) {
+		if (B_FireEvent(buildingTemplate, base, B_ONDISABLE))
+			Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDisable, base->idx, buildingType);
 	}
+	if (B_FireEvent(buildingTemplate, base, B_ONDESTROY))
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDestroy, base->idx, buildingType);
 
 	return qtrue;
 }
@@ -930,7 +886,7 @@ qboolean B_BuildingDestroy (building_t* building)
  * @brief Will ensure that aircraft on geoscape are not stored
  * in a base that no longer has any hangar left
  * @param[in] base The base that is going to be destroyed
- * @todo this should be merged into B_RemoveAircraftExceedingCapacity
+ * @todo this should be merged into CAP_RemoveAircraftExceedingCapacity
  */
 static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 {
@@ -1089,7 +1045,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
 	/* we update the status of the building (we'll call this building building 1) */
 	test = B_CheckUpdateBuilding(building);
 	if (test)
-		B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+		B_FireEvent(building, base, B_ONENABLE);
 
 	/* now, the status of this building may have changed the status of other building.
 	 * We check that, but only for buildings which needed building 1 */
@@ -1139,12 +1095,9 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 	if (hire)
 		E_HireForBuilding(base, buildingNew, -1);
 
-	/* now call the onconstruct trigger */
-	if (buildingNew->onConstruct[0] != '\0') {
-		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n",
-			buildingNew->onConstruct, base->idx);
-		Cmd_ExecuteString(va("%s %i", buildingNew->onConstruct, base->idx));
-	}
+	/* now call the onenable trigger */
+	if (B_FireEvent(buildingNew, base, B_ONENABLE))
+		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n", buildingNew->onEnable, base->idx);
 }
 
 /**
@@ -1175,7 +1128,7 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		price += edTarget->numItems[i] * od->price;
-		base->capacities[CAP_ITEMS].cur += edTarget->numItems[i] * od->size;
+		CAP_AddCurrent(base, CAP_ITEMS, edTarget->numItems[i] * od->size);
 	}
 
 	/* Finally update credits. */
@@ -1329,18 +1282,19 @@ void B_SetName (base_t *base, const char *name)
 }
 
 /**
- * @brief Setup new base, uses template for the first base
- * @param[in] campaign The campaign data structure
- * @param[in,out] base The base to set up
+ * @brief Build new base, uses template for the first base
  * @param[in] pos Position (on Geoscape) the base built at
  * @param[in] name The name of the new base, this string might already be in utf-8
- * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
-void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, const char *name)
+base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 {
 	baseCapacities_t cap;
+	base_t *base = B_GetFirstUnfoundedBase();
 	float level;
+
+	if (!campaign)
+		Com_Error(ERR_DROP, "You can only build a base in an active campaign");
 
 	B_SetName(base, name);
 	Vector2Copy(pos, base->pos);
@@ -1379,7 +1333,8 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 	PR_UpdateProductionCap(base);
 
 	ccs.campaignStats.basesBuilt++;
-	ccs.mapAction = MA_NONE;
+
+	return base;
 }
 
 /**
@@ -1400,6 +1355,18 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 
 	Com_Printf("Base Template %s not found\n", baseTemplateID);
 	return NULL;
+}
+
+/**
+ * @brief Check a base cell
+ * @return True if the cell is free to build
+ */
+qboolean B_MapIsCellFree (const base_t *base, int col, int row)
+{
+	return col >= 0 && col < BASE_SIZE
+	 && row >= 0 && row < BASE_SIZE
+	 && B_GetBuildingAt(base, col, row) == NULL
+	 && !B_IsTileBlocked(base, col, row);
 }
 
 /**
@@ -1437,7 +1404,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 		/* Link to the base. */
 		buildingNew->base = base;
 
-		if (!base->map[row][col].blocked && !base->map[row][col].building) {
+		if (!B_IsTileBlocked(base, col, row) && B_GetBuildingAt(base, col, row) == NULL) {
 			int y, x;
 
 			if (col + buildingNew->size[0] > BASE_SIZE)
@@ -1446,7 +1413,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				return NULL;
 			for (y = row; y < row + buildingNew->size[1]; y++)
 				for (x = col; x < col + buildingNew->size[0]; x++)
-					if (base->map[y][x].building || base->map[y][x].blocked)
+					if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
 						return NULL;
 			/* No building in this place */
 
@@ -1477,8 +1444,10 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 
 			/* set building position */
 			for (y = row; y < row + buildingNew->size[1]; y++)
-				for (x = col; x < col + buildingNew->size[0]; x++)
+				for (x = col; x < col + buildingNew->size[0]; x++) {
+					assert(!B_IsTileBlocked(base, x, y));
 					base->map[y][x].building = buildingNew;
+				}
 
 			/* status and build (start) time */
 			buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
@@ -1493,6 +1462,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 			B_ResetBuildingCurrent(base);
 			Cmd_ExecuteString("base_init");
 			Cmd_ExecuteString("building_init");
+			B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
 
 			return buildingNew;
 		}
@@ -1957,7 +1927,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 
 	if (base) {
 		AIR_MoveEmployeeInventoryIntoStorage(aircraft, &base->storage);
-		B_UpdateStorageCap(base);
+		CAP_UpdateStorageCap(base);
 	}
 	CL_SwapSkills(&chrListTemp);
 }
@@ -2124,7 +2094,7 @@ void B_BuildingOpenAfterClick (const building_t *building)
 				UP_OpenWith(building->pedia);
 			break;
 		case B_ANTIMATTER:
-			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), base->capacities[CAP_ANTIMATTER].cur, base->capacities[CAP_ANTIMATTER].max);
+			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), CAP_GetCurrent(base, CAP_ANTIMATTER), CAP_GetMax(base, CAP_ANTIMATTER));
 			UI_Popup(_("Information"), popupText);
 			break;
 		default:
@@ -2165,7 +2135,7 @@ static void B_PrintCapacities_f (void)
 					break;
 			}
 			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-			ccs.buildingTemplates[j].id, base->capacities[i].max, base->capacities[i].cur);
+			ccs.buildingTemplates[j].id, CAP_GetMax(base, i), CAP_GetCurrent(base, i));
 		}
 	}
 }
@@ -2188,11 +2158,8 @@ static void B_BuildingConstructionFinished_f (void)
 			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 			building->timeStart.day = 0;
 			building->timeStart.sec = 0;
-
-			if (building->onConstruct[0] != '\0') {
-				base->buildingCurrent = building;
-				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
-			}
+			base->buildingCurrent = building;
+			B_FireEvent(building, base, B_ONENABLE);
 		}
 	}
 	/* update menu */
@@ -2259,7 +2226,7 @@ void B_InitStartup (void)
 
 /**
  * @brief Checks whether the construction of a building is finished.
- * Calls the onConstruct functions and assign workers, too.
+ * Calls the onEnable functions and assign workers, too.
  */
 static int B_CheckBuildingConstruction (building_t *building)
 {
@@ -2267,14 +2234,12 @@ static int B_CheckBuildingConstruction (building_t *building)
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 		if (B_IsBuildingBuiltUp(building)) {
-			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
+			base_t *base = building->base;
+			base->buildingCurrent = building;
 
-			if (building->onConstruct[0] != '\0') {
-				base_t *base = building->base;
-				base->buildingCurrent = building;
-				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base->idx);
-				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
-			}
+			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
+			if (B_FireEvent(building, base, B_ONENABLE))
+				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onEnable, base->idx);
 
 			newBuilding++;
 		}
@@ -2380,7 +2345,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	/* Mark new technologies researchable. */
 	RS_MarkResearchable(qfalse, aircraft->homebase);
 	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
-	B_UpdateStorageCap(aircraft->homebase);
+	CAP_UpdateStorageCap(aircraft->homebase);
 }
 
 /**
@@ -2488,7 +2453,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_AIRCRAFT_BIG:		/**< Update aircraft capacity in base. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
 		/* Reset given capacity in current base. */
-		base->capacities[cap].max = 0;
+		CAP_SetMax(base, cap, 0);
 		/* Get building capacity. */
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
 			const building_t *b = &ccs.buildingTemplates[i];
@@ -2503,11 +2468,11 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		building = NULL;
 		while ((building = B_GetNextBuildingByType(base, building, buildingType)))
 			if (building->buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)
-				base->capacities[cap].max += capacity;
+				CAP_AddMax(base, cap, capacity);
 
 		if (buildingTemplateIDX != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
-				ccs.buildingTemplates[buildingTemplateIDX].id, base->capacities[cap].max);
+				ccs.buildingTemplates[buildingTemplateIDX].id, CAP_GetMax(base, cap));
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
@@ -2601,8 +2566,8 @@ qboolean B_SaveXML (xmlNode_t *parent)
 				XML_AddInt(snode, SAVE_BASES_X, k);
 				XML_AddInt(snode, SAVE_BASES_Y, l);
 				if (b->map[k][l].building)
-					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, b->map[k][l].building->idx);
-				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, b->map[k][l].blocked);
+					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, B_GetBuildingAt(b, l, k)->idx);
+				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, B_IsTileBlocked(b, l, k));
 			}
 		}
 		/* buildings */
@@ -2772,6 +2737,11 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			else
 				tile->building = NULL;
 			tile->blocked = XML_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
+			if (tile->blocked && tile->building != NULL) {
+				Com_Printf("inconstent base layout found\n");
+				Com_UnregisterConstList(saveBaseConstants);
+				return qfalse;
+			}
 		}
 		/* buildings */
 		node = XML_GetNode(base, SAVE_BASES_BUILDINGS);
@@ -2975,10 +2945,10 @@ int B_AntimatterInBase (const base_t *base)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	assert(base);
-	assert(B_ItemInBase(od, base) == base->capacities[CAP_ANTIMATTER].cur);
+	assert(B_ItemInBase(od, base) == CAP_GetCurrent(base, CAP_ANTIMATTER));
 #endif
 
-	return base->capacities[CAP_ANTIMATTER].cur;
+	return CAP_GetCurrent(base, CAP_ANTIMATTER);
 }
 
 /**

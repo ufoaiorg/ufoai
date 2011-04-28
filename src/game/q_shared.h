@@ -295,6 +295,22 @@ typedef int32_t shoot_types_t;
 
 #define MAX_FORBIDDENLIST (MAX_EDICTS * 4)
 
+/** game types */
+#define MAX_GAMETYPES 16
+
+#define MAX_CVARLISTINGAMETYPE 16
+typedef struct cvarlist_s {
+	char name[MAX_VAR];
+	char value[MAX_VAR];
+} cvarlist_t;
+
+typedef struct gametype_s {
+	char id[MAX_VAR];	/**< script id */
+	char name[MAX_VAR];	/**< translated menu name */
+	struct cvarlist_s cvars[MAX_CVARLISTINGAMETYPE];
+	int num_cvars;
+} gametype_t;
+
 /**
  * @brief The csi structure is the client-server-information structure
  * which contains all the UFO info needed by the server and the client.
@@ -346,6 +362,9 @@ typedef struct csi_s {
 
 	ugv_t ugvs[MAX_UGV];
 	int numUGV;
+
+	gametype_t gts[MAX_GAMETYPES];
+	int numGTs;
 } csi_t;
 
 extern csi_t csi;

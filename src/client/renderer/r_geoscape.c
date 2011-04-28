@@ -731,27 +731,25 @@ void R_DrawBloom (void)
 
 	/* save state, then set up for blit-style rendering to quads */
 	renderBufferState = R_RenderbufferEnabled();
-
-	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	glMatrixMode(GL_TEXTURE);
+	glPushMatrix();
+	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
 #ifndef GL_VERSION_ES_CM_1_0
-		glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
+	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT | GL_LIGHTING_BIT | GL_DEPTH_BUFFER_BIT);
 #endif
-		glMatrixMode(GL_TEXTURE);
-		glPushMatrix();
-		glLoadIdentity();
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
-	}
+	glOrtho(0, viddef.context.width, viddef.context.height, 0, 9999.0f, SKYBOX_DEPTH);
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
 
 	/* downsample into image pyramid */
+	R_ResolveMSAA(fbo_render);
 	R_BindTexture(fbo_render->textures[1]);
 	qglGenerateMipmapEXT(GL_TEXTURE_2D);
 
@@ -798,18 +796,16 @@ void R_DrawBloom (void)
 
 	R_CheckError();
 
-	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-		glMatrixMode(GL_TEXTURE);
-		glPopMatrix();
 #ifndef GL_VERSION_ES_CM_1_0
-		glPopAttrib();
+	glPopAttrib();
 #endif
-		R_CheckError();
-	}
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_TEXTURE);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	R_CheckError();
 
 	/* reset renderbuffer state to what it was before */
 	R_EnableRenderbuffer(renderBufferState);

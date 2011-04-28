@@ -4,5 +4,5 @@ assembly default
 {
 	title "Test"
 	size "1 1"
-	test_game "0 1"
+	test_game "1 1"
 }

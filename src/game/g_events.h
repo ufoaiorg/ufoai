@@ -36,7 +36,7 @@ void G_EventActorFall(const edict_t* ent);
 void G_EventActorRevitalise(const edict_t* ent);
 void G_EventActorSendReservations(const edict_t *ent);
 void G_EventActorStateChange(unsigned int playerMask, const edict_t *ent);
-void G_EventActorStats(const edict_t* ent);
+void G_EventActorStats(const edict_t* ent, int playerMask);
 void G_EventActorTurn(const edict_t* ent);
 void G_EventAddBrushModel(unsigned int playerMask, const edict_t *ent);
 void G_EventCenterView(const edict_t *ent);

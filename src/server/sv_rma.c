@@ -196,6 +196,7 @@ static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInf
 	const char *token;
 	int x, y, i;
 	mTile_t *target = &map->mTile[map->numTiles];
+	target->area = 0;
 
 	/* get tile name */
 	token = Com_EParse(text, errhead, filename);
@@ -251,6 +252,8 @@ static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInf
 			for (i = 0; token[i]; i++) {
 				target->spec[y][x] |= tileMask(token[i]);
 			}
+			if (IS_SOLID(target->spec[y][x]))
+				target->area++;	/* # of solid tiles */
 		}
 
 	token = Com_EParse(text, errhead, filename);
@@ -919,7 +922,507 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 	Com_Printf("pos: %s\n", asmPos);
 	Com_Printf("tiles: %i\n", map->numPlaced);
 }
-//#include "sv_rma2.c"	/* WIP,needed ! (Duke 08.03.2011) */
+
+#define PRINT_RMA_PROGRESS 0	/* print some debugging info */
+/* RMA2 code. Still disabled to avoid warnings */
+#define RMA2 0
+#if RMA2
+#define RMA2_MAX_REC 50		/* max # of recursions */
+#define TCM 50				/* tile code multiplier */
+#define GAPS 25				/* the # of different tiles we can store for a gap */
+static short posTileList[RMA2_MAX_REC][1000];		/* array of working random tile positions, 50 recursions */
+static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS+1];	/* for every x/y we can store the tiles that can cover that place here */
+
+/**
+ * @brief get the specs of a tile at map-x/y if it was placed where tileCode indicates
+ * @param map All we know about the map to assemble
+ * @param tileCode encoded tile and position
+ * @param mapW width of the map. Needed to decode tileCode
+ * @param mapX x of the gap
+ * @param mapY y of the gap
+ * @return the flags
+ */
+static unsigned long SV_GapGetFlagsAtAbsPos (mapInfo_t *map, int tileCode, int mapW, int mapX, int mapY)
+{
+	int pos = tileCode / TCM;
+	int ti = tileCode % TCM;
+	int posX = pos % mapW;
+	int posY = pos / mapW;
+	const mToPlace_t *mToPlace = map->mToPlace;
+	mTile_t *tile = mToPlace[ti].tile;
+
+	return tile->spec[mapY-posY][mapX-posX];
+}
+
+/**
+ * @brief Select the next tile to place and place it (recursively)
+ * @param map All we know about the map to assemble
+ * @param rec The number of the current recursion
+ * @param posListCnt The number of remaining tile position (=options)
+ * @param myPosList The previous list of remaining tile position (=options)
+ * @param prevTile The tile placed by the previous recursion
+ * @param prevX x where it was placed
+ * @param prevY well, y
+ * @return @c false if the tiles do not fit, @c true if the map could be filled.
+ */
+static int availableTiles[MAX_TILETYPES][2];	/* the 2nd dimension is index and count */
+
+static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, short myPosList[], const mTile_t *prevTile, int prevX, int prevY)
+{
+	static int callCnt = 0;
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+	const int mapW = mAsm->width;
+	const mToPlace_t *mToPlace = map->mToPlace;
+	int i, j = 0;
+	int solids = 0;				/* the # of places that the remaining tiles can theoretically cover */
+	int availableTilesCnt = 0;	/* the # of different tiles remaining in posTileList */
+
+	assert(rec < RMA2_MAX_REC);
+	callCnt++;
+
+	/** calculate the area of the tile placed by the previous recursion */
+	int prevMaxX = 0, prevMaxY = 0;
+	if (rec > 0) {
+		prevMaxX = prevX + prevTile->w - 1;
+		prevMaxY = prevY + prevTile->h - 1;
+	}
+
+	/** circle through the old list of available tile positions and store the remaining ones in the static array */
+	for (i = 0; i < posListCnt; i++) {
+		int pos = myPosList[i] / TCM;
+		int ti = myPosList[i] % TCM;
+		int x = pos % mapW;
+		int y = pos / mapW;
+
+		if (mToPlace[ti].cnt >= mToPlace[ti].max)
+			continue;
+
+		mTile_t *cTile = mToPlace[ti].tile;
+		qboolean ok = qfalse;
+		/** try to reduce the # of calls to SV_FitTile by checking only those gaps affected by the placement of the previous tile */
+		if (rec > 0) {	/* the first recursion doesn't have a previous tile */
+			if (x > prevMaxX || y > prevMaxY || prevX > x + cTile->w - 1 || prevY > y + cTile->h - 1)
+				ok = qtrue;	/* tiles do not overlap, so tile will still fit */
+		}
+
+		if (!ok) {
+			ok = SV_FitTile(map, mToPlace[ti].tile, x, y);
+		}
+		if (ok) {
+			/* store the posTile in our new list */
+			posTileList[rec][j] = myPosList[i];
+			j++;
+			/* store the tile index in the list of remaining tile types */
+			int k;
+			for (k = 0; k < availableTilesCnt; k++) {
+				if (availableTiles[k][0] == ti) {
+					availableTiles[k][1]++;		/* inc count */
+					break;
+				}
+			}
+			if (k >= availableTilesCnt)	{					/* didn't find it in the list */
+				availableTiles[availableTilesCnt][0] = ti;	/* store the tile index */
+				availableTiles[availableTilesCnt][1] = 1;	/* init counter of places */
+				availableTilesCnt++;
+			}
+		}
+	}
+
+	/** initialize the list of gaps */
+	int x, y;
+	int gapCount = 0;
+	for (y = 1; y < mAsm->height + 1; y++) {
+		for (x = 1; x < mAsm->width + 1; x++)
+			if (IS_SOLID(map->curMap[y][x]))
+				gapList[x][y][0] = -1;
+			else {
+				gapCount++;
+				gapList[x][y][0] = 0;
+			}
+	}
+
+	/** if the remaining tiles are simply not enough to cover the gaps, bail */
+	for (i = 0; i < availableTilesCnt; i++) {
+		int ti = availableTiles[i][0];
+		int allowed = mToPlace[ti].max - mToPlace[ti].cnt;
+		int possible = availableTiles[i][1];
+		int remaining = min(allowed, possible);
+		solids += remaining * mToPlace[ti].tile->area;
+	}
+	if (solids < gapCount)
+		return qfalse;
+
+	/** check how well the remaining tiles can cover the gaps */
+	for (i = 0; i < j; i++) {
+		int pos = posTileList[rec][i] / TCM;
+		int ti = posTileList[rec][i] % TCM;
+		int x = pos % mapW;
+		int y = pos / mapW;
+		mTile_t *tile = mToPlace[ti].tile;
+		int tx, ty;
+		for (ty = 0; ty < tile->h; ty++) {
+			for (tx = 0; tx < tile->w; tx++) {
+				if (IS_SOLID(tile->spec[ty][tx])) {
+					gapList[x + tx][y + ty][0] += 1;
+					int cnt = gapList[x + tx][y + ty][0];	/* get the counter */
+					if (cnt < GAPS + 1)
+						gapList[x + tx][y + ty][cnt] = posTileList[rec][i];	/* remember the tilecode */
+				}
+			}
+		}
+	}
+
+	/** if we find a gap that NO tile can cover, bail */
+	for (y = 1; y < mAsm->height + 1; y++) {
+		for (x = 1; x < mAsm->width + 1; x++) {
+			if (gapList[x][y][0] == 0)
+				return qfalse;
+		}
+	}
+
+#if 0
+	/** print the gaplist */
+	for (y = 1; y < mAsm->height + 1; y++) {
+		for (x = 1; x < mAsm->width + 1; x++) {
+			Com_Printf("%2.i ", gapList[x][y][0]);
+		}
+		Com_Printf("\n");
+	}
+	Com_Printf("\n");
+#endif
+
+	/** if there is a gap that only ONE tile can cover, try that. If it doesn't work out, we're done. */
+	/** if there is a gap that only TWO tiles can cover, try those two. If it doesn't work out, we're done. Then try with THREE and so on. */
+	int g, h, line = 0;
+	unsigned lineFlags = map->lineFlags;	/* lineforming tiles, eg. water tiles in forest_large */
+	unsigned nonLineFlags = (~lineFlags) ^ 1L;
+	if (lineFlags)
+		line = 1;
+	for (; line >= 0; line--) {				/* if there are lineforming tiles, process them first */
+		for (g = 1; g <= GAPS; g++) {		/* process the gaps with the least alternatives first */
+			for (y = 1; y < mAsm->height + 1; y++) {
+				for (x = 1; x < mAsm->width + 1; x++) {
+					if (gapList[x][y][0] == g) {		/* if this gap has the right amount of covering tiles */
+						/* if we are looking for lines but the gap doesn't require a line-tile, skip */
+						if (line && (map->curMap[y][x] & nonLineFlags))
+							continue;
+						for (h = 1; h <= g; h++) {		/* circle through the alternatives stored for this gap */
+							int tc = gapList[x][y][h];
+							int pos = tc / TCM;
+							int ti = tc % TCM;
+							int px = pos % mapW;
+							int py = pos / mapW;
+
+							SV_AddTile(map, mToPlace[ti].tile, px, py, ti, pos);
+#if PRINT_RMA_PROGRESS
+							if (rec < 10) Com_Printf("GAPS: %i rec: %i chances: %i calls: %i\n", GAPS, rec, j, callCnt);
+#endif
+							if (SV_TestFilled(map))
+								return qtrue;		/* this was the last tile we needed */
+							if (SV_AddMissingTiles3_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, px, py))
+								return qtrue;		/* recursive placement succeeded */
+							else {					/* tile was a dead end, remove it */
+								SV_RemoveTile(map, NULL, NULL);
+								if (h >= g)
+									return qfalse;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/** now try each of the remaining positions, that is, those that have more than GAPS alternatives. Rarely happens. */
+	for (i = 0; i < j; i++) {
+		int pos = posTileList[rec][i] / TCM;
+		int ti = posTileList[rec][i] % TCM;
+		int x = pos % mapW;
+		int y = pos / mapW;
+
+		SV_AddTile(map, mToPlace[ti].tile, x, y, ti, pos);
+		if (SV_TestFilled(map))
+			return qtrue;
+		if (SV_AddMissingTiles3_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, x, y))
+			return qtrue;
+		else
+			SV_RemoveTile(map, NULL, NULL);
+	}
+	return qfalse;
+}
+
+/**
+ * @brief Builds a list of map positions (gaps) and the tiles that can cover them.
+ * @note actually it's not a list but a 3D-array
+ * @param map All we know about the map to assemble
+ * @param tilePosListCnt The number of remaining possible tile positions
+ * @return qfalse if we detect a gap that NO tile can cover
+ */
+static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
+{
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+	const int mapW = mAsm->width;
+	const mToPlace_t *mToPlace = map->mToPlace;
+
+	/** initialize the list of gaps */
+	int x, y;
+	for (y = 1; y < mAsm->height + 1; y++) {
+		for (x = 1; x < mAsm->width + 1; x++)
+			if (IS_SOLID(map->curMap[y][x]))
+				gapList[x][y][0] = -1;
+			else
+				gapList[x][y][0] = 0;		/* the counter for this pos */
+	}
+
+	/** check how well the tiles can cover the gaps */
+	int i;
+	for (i = 0; i < tilePosListCnt; i++) {
+		int pos = posTileList[0][i] / TCM;
+		int ti = posTileList[0][i] % TCM;
+		x = pos % mapW;
+		y = pos / mapW;
+		mTile_t *tile = mToPlace[ti].tile;
+		int tx, ty;
+		ty = 0;	// for a breakpoint
+		for (ty = 0; ty < tile->h; ty++) {
+			for (tx = 0; tx < tile->w; tx++) {
+				if (IS_SOLID(tile->spec[ty][tx])) {
+					gapList[x + tx][y + ty][0] += 1;
+					int cnt = gapList[x + tx][y + ty][0];	/* get the counter */
+					if (cnt < GAPS + 1)
+						gapList[x + tx][y + ty][cnt] = posTileList[0][i];	/* remember the tilecode */
+				}
+			}
+		}
+	}
+
+	/** if we find a gap that NO tile can cover, bail */
+	for (y = 1; y < mAsm->height + 1; y++) {
+		for (x = 1; x < mAsm->width + 1; x++) {
+			if (gapList[x][y][0] == 0)
+				return qfalse;
+		}
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Find a tile that meets the requirements of tc1 at a given pos
+ * @param map All we know about the map to assemble
+ * @param tc1 encoded tile and position
+ * @param mapW width of the map. Needed to decode tc1
+ * @param nx x of the absolute map position to investigate
+ * @param nx y of the absolute map position to investigate
+ * @return qtrue if no matching tile was found
+ */
+static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx, int ny)
+{
+	qboolean found = qfalse;
+	if (nx < 1)
+		return qfalse;				/* map border */
+	if (ny < 1)
+		return qfalse;
+	if (gapList[nx][ny][0] < 1)		/* no tiles cover this gap, probably map border */
+		return qfalse;
+	if (gapList[nx][ny][0] >= GAPS)	/* if there are more tiles than we stored the tc's of, */
+		return qfalse;				/* we can not evaluate this neighbour. */
+
+	qboolean flags1 = SV_GapGetFlagsAtAbsPos(map, tc1, mapW, nx, ny);
+	if (IS_SOLID(flags1))			/* nx/ny is part of tc1 itself */
+		return qfalse;
+
+	/** circle through the tiles that cover this gap */
+	int h;
+	for (h = 1; h <= gapList[nx][ny][0]; h++) {
+		int tc2 = gapList[nx][ny][h];
+		unsigned long flags2 = SV_GapGetFlagsAtAbsPos(map, tc2, mapW, nx, ny);
+
+		if (flags1 & flags2) {
+			found = qtrue;			/* found at least one tile that would work */
+			break;
+		}
+	}
+	if (!found) {
+		return qtrue; /* eliminate tile */
+	}
+	return qfalse;
+}
+
+/**
+ * @brief Tries to find tiles that exclude all of their neighbours
+ * This is called only once, before recursion starts. So we can safely (ab)use the posTileList space for recursion 1
+ * @param map All we know about the map to assemble
+ * @return the number of tiles that could be eliminated
+ */
+static int SV_GapListReduce (mapInfo_t *map)
+{
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+	const int mapW = mAsm->width;
+	int x, y;
+	int n = 0;	/** number of tiles marked for elinimation */
+
+	/** if there is a tile that doesn't match ANY of the tiles available for the adjacent gap we can eliminate it. */
+	for (y = 1; y < mAsm->height + 1; y++) {
+		for (x = 1; x < mAsm->width + 1; x++) {
+			if (gapList[x][y][0] < 1)	/* solid ? */
+				continue;
+
+			int g;
+			for (g = 1; g <= gapList[x][y][0]; g++) {
+				int tc1 = gapList[x][y][g];
+				if (g >= GAPS)
+					break;	/* there are more tiles than we stored the tc's of. */
+
+				/** check the neighbour to the right */
+				if (SV_GapCheckNeighbour(map, tc1, mapW, x+1, y)) {
+					posTileList[1][n] = tc1;
+					n++;
+					continue;
+				}
+				/** check the neighbour to the left */
+				if (SV_GapCheckNeighbour(map, tc1, mapW, x-1, y)) {
+					posTileList[1][n] = tc1;
+					n++;
+					continue;
+				}
+				/** check the upper neighbour */
+				if (SV_GapCheckNeighbour(map, tc1, mapW, x, y+1)) {
+					posTileList[1][n] = tc1;
+					n++;
+					continue;
+				}
+				/** check the neighbour below */
+				if (SV_GapCheckNeighbour(map, tc1, mapW, x, y-1)) {
+					posTileList[1][n] = tc1;
+					n++;
+					continue;
+				}
+			}
+		}
+	}
+
+	return n;
+}
+
+#if PRINT_RMA_PROGRESS
+	char mapStr[10000] = {0};
+	char posStr[10000] = {0};
+#endif
+/**
+ * @brief Tries to fill the missing tiles of the current map.
+ * While the 2010 algo used a 'by chance'-algo, this algo does a full tree search.
+ * Example: After placing the fixed and required tiles on a 8x8 map, we have say 32 places not yet covered by tiles.
+ * If there are 10 different tiles for each gap, we can have up to have 10^32 constellations to try.
+ * That's about one fantastillion. Impossible.
+ * Fortunately, there are usually many solutions to this puzzle. And we only need to find one working solution.
+ * But on some maps eg. 'forest large' with it's little brook, there are fewer solutions, so the search can take longer.
+ * In order to complete the search in a reasonable time, this algo uses several strategies:
+ * - reduce the number of available options to narrow the tree
+ * - direct the search towards those options that are more likely to fail. This can cut off a whole branch of the tree.
+ * Details will be explained along the call-tree
+ * @param map All we know about the map to assemble
+ * @return @c false if the tiles does not fit, @c true if the map could be filled.
+ * @sa SV_FitTile
+ * @sa SV_AddTile
+ */
+static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
+{
+	static int attempts = 0;			/* how often this function is called in the RMA process */
+	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
+	const int mapW = mAsm->width;
+	const mToPlace_t *mToPlace = map->mToPlace;
+	short posList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];	/* array of random positions */
+	short tilenumList[MAX_TILETYPES];	/* array of tiles */
+
+	/* shuffle only once, the map will be build with that seed */
+	RandomList(mapSize, posList);
+	RandomList(map->numToPlace, tilenumList);
+	attempts++;
+
+	/** build a list of all positions of the map and all the tiles that fit there */
+	int i, j, k, n = 0;
+	for (i = 0; i < mapSize; i++) {
+		int x = posList[i] % mapW;
+		int y = posList[i] / mapW;
+
+		for (k = 0; k < map->numToPlace; k++) {
+			int ti = tilenumList[k];
+
+			if (mToPlace[ti].cnt >= mToPlace[ti].max)
+				continue;
+			if (SV_FitTile(map, mToPlace[ti].tile, x, y)) {
+				posTileList[0][n] = posList[i] * TCM + ti;
+				n++;
+			}
+		}
+	}
+#if PRINT_RMA_PROGRESS
+	Com_Printf("\nMapsize: %i tiles: %i chances: %i\n", mapSize, map->numToPlace, n);
+	mapStr[0] = 0;
+	posStr[0] = 0;
+	if (map->numPlaced < 8)
+		SV_PrintMapStrings(map, mapStr, posStr);
+#endif
+	/** try to reduce the number of available options */
+	qboolean eliminated = qtrue;
+	while (eliminated) {		/* if we could eliminate one or more tiles, try again */
+		eliminated = qfalse;
+#if 0
+		/** print the posTileList */
+		for (i = 0; i < n; i++) {
+			Com_Printf("%2.i/%2.i ", posTileList[0][i]/TCM, posTileList[0][i]%TCM);
+			if (!(i%10))
+				Com_Printf("\n");
+		}
+		Com_Printf("\n");
+#endif
+		qboolean covered = SV_GapListBuild(map, n);
+
+#if 0
+		/** print the gapList */
+		int x,y;
+		Com_Printf("\n");
+		for (x=0; x<mAsm->width+1; x++){
+			for (y=0; y<mAsm->height+1; y++){
+				int cnt = gapList[x][y][0];
+				Com_Printf("x:%i y:%i cnt:%i ",x,y,cnt);
+				for (j=0; j<=cnt+3; j++) {
+					Com_Printf("%i ", gapList[x][y][j]);
+				}
+				Com_Printf("\n");
+			}
+		}
+#endif
+
+		if (!covered)
+			return qfalse;		/* creating the gapList left one gap uncovered */
+
+		int m = SV_GapListReduce(map);
+		if (m) {				/* the number of tilepositions to discard */
+			eliminated = qtrue;
+			for (j = 0; j < m; j++) {
+				int tc = posTileList[1][j];	/* SV_GapListReduce abuses the space for rec=1 to return it's result */
+				int offset = 0;
+				for (i = 0; i < n; i++) {
+					if (posTileList[0][i] == tc) {
+						offset = 1;
+						continue;
+					}
+					else
+						posTileList[0][i - offset] = posTileList[0][i];
+				}
+				if (offset)		/* only if we actually removed the tile */
+					n--;		/* reduce the counter of posTileList */
+			}
+		}
+	}
+
+	return SV_AddMissingTiles3_r(map, 0, n, posTileList[0], NULL, 0, 0);
+}
+
+#endif
+
 /**
  * @brief Tries to build the map
  * There are 3 categories of tiles:
@@ -933,6 +1436,7 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
  * If that fails, the last required tile is moved to a different place and the filling is tried again.
  * If no more places are left for the required tile, the previous required tile is relocated and so on.
  * That is, for the required tiles every possible combination is tried before we give up.
+ * @param map All we know about the map to assemble
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
@@ -951,7 +1455,6 @@ static void SV_AddMapTiles (mapInfo_t *map)
 	const mPlaced_t *mPlaced = map->mPlaced;
 #endif
 
-#define PRINT_RMA_PROGRESS 0
 #if PRINT_RMA_PROGRESS
 	char mapStr[10000] = {0};
 	char posStr[10000] = {0};
@@ -1020,7 +1523,11 @@ static void SV_AddMapTiles (mapInfo_t *map)
 			pos++;
 		}
 
+#if RMA2
+		if (idx == numToPlace && !SV_AddMissingTiles3(map)) {
+#else
 		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
+#endif
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
@@ -1129,7 +1636,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	for (i = 0; i < threadno; i++) {
 		maps[i] = Mem_AllocType(mapInfo_t);
 		memcpy(maps[i], map, sizeof(*map));
-		threads[i] = SDL_CreateThread(&SV_AssemblyThread, (void*) maps[i]);
+		threads[i] = SDL_CreateThread(SV_AssemblyThread, (void*) maps[i]);
 	}
 	while (threadID == 0) {
 		/* if nobody is done after 5 sec, restart, double the timeout. */
@@ -1150,7 +1657,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 			/* start'em again */
 			for (i = 0; i < threadno; i++) {
 				memcpy(maps[i], map, sizeof(*map));
-				threads[i] = SDL_CreateThread(&SV_AssemblyThread, (void*) maps[i]);
+				threads[i] = SDL_CreateThread(SV_AssemblyThread, (void*) maps[i]);
 			}
 		} else {
 			/* someone finished */

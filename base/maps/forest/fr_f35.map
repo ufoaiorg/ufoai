@@ -511,3 +511,11 @@
 "origin" "66 132 64"
 "angles" "0 -180 0"
 }
+// entity 16
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "212 176 4"
+"angles" "0 51.9478 0"
+}

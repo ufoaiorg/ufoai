@@ -272,7 +272,7 @@ void G_ActorSetMaxs (edict_t* ent)
 {
 	if (G_IsCrouched(ent))
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
-	else if (G_IsDead(ent))
+	else if (G_IsDead(ent) && !CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
 	else
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
@@ -478,7 +478,7 @@ qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
+qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
 		int ty, qboolean checkaction)
 {
 	player_t *player;
@@ -516,7 +516,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 1))
-		return;
+		return qfalse;
 
 	/* "get floor ready" - searching for existing floor-edict */
 	floor = G_GetFloorItems(ent);
@@ -527,7 +527,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	} else if (INV_IsFloorDef(from) && !floor) {
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> this should never be the case. */
 		gi.DPrintf("G_ClientInvMove: No source-floor found.\n");
-		return;
+		return qfalse;
 	} else {
 		/* There already exists an edict for this floor-tile. */
 		newFloor = qfalse;
@@ -539,7 +539,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		if (ic)
 			INVSH_FindSpace(&ent->chr.i, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)
-			return;
+			return qfalse;
 	}
 
 	/** @todo what if we don't have enough TUs after subtracting the reserved ones? */
@@ -557,14 +557,14 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	switch (ia) {
 	case IA_NONE:
 		/* No action possible - abort */
-		return;
+		return qfalse;
 	case IA_NOTIME:
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!\n"));
-		return;
+		return qfalse;
 	case IA_NORELOAD:
 		G_ClientPrintf(player, PRINT_HUD,
 				_("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
-		return;
+		return qfalse;
 	default:
 		/* Continue below. */
 		break;
@@ -612,7 +612,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 		if (ia == IA_RELOAD) {
 			gi.EndEvents();
-			return;
+			return qtrue;
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.a = NONE_AMMO;
 			item.m = NULL;
@@ -639,8 +639,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	if (INV_IsFloorDef(to)) {
 		/* we have to link the temp floor container to the new floor edict or add
 		 * the item to an already existing floor edict - the floor container that
-		 * is already linked might be from a different entity */
+		 * is already linked might be from a different entity (this might happen
+		 * in case of a throw by another actor) */
 		FLOOR(floor) = FLOOR(ent);
+
 		/* A new container was created for the floor. */
 		if (newFloor) {
 			/* Send item info to the clients */
@@ -674,6 +676,8 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		}
 	}
 	gi.EndEvents();
+
+	return qtrue;
 }
 
 /**

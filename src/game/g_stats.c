@@ -36,7 +36,7 @@ void G_SendStats (edict_t * ent)
 	ent->STUN = min(ent->STUN, 255);
 	ent->morale = max(ent->morale, 0);
 
-	G_EventActorStats(ent);
+	G_EventActorStats(ent, G_TeamToPM(ent->team));
 }
 
 /**
@@ -49,5 +49,5 @@ void G_SendPlayerStats (const player_t *player)
 
 	while ((ent = G_EdictsGetNextActor(ent)))
 		if (ent->team == player->pers.team)
-			G_SendStats(ent);
+			G_EventActorStats(ent, G_PlayerToPM(player));
 }

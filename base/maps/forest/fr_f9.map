@@ -1006,6 +1006,33 @@
 ( 466 502 2 ) ( 466 502 66 ) ( 482 502 2 ) tex_material/c_black 0 0 0 0.25 0.25 65280 0 0
 ( 466 502 2 ) ( 466 506 2 ) ( 466 502 66 ) tex_material/c_black 0 0 0 0.25 0.25 65280 0 0
 }
+// brush 109
+{
+( 341.245 331.819 129 ) ( 338.2935 324.3834 129 ) ( 338.2935 324.3834 1 ) tex_common/actorclip 52 7 0 0.5 0.45 65536 0 0
+( 368.0361 312.5776 128 ) ( 370.9876 320.0132 128 ) ( 370.9876 320.0132 0 ) tex_common/actorclip 52 7 0 0.5 0.45 65536 0 0
+( 161.9979 140.449 126 ) ( 195.4584 127.1675 126 ) ( 195.4584 127.1675 -2 ) tex_common/actorclip 0 7 0 0.5 0.45 65536 0 0
+( 207.2642 156.9101 126 ) ( 173.8037 170.1916 126 ) ( 173.8037 170.1916 -2 ) tex_common/actorclip 0 7 0 0.5 0.45 65536 0 0
+( 1201.621 244.2202 -2 ) ( 1231.363 232.4144 -2 ) ( 1213.427 273.9628 -2 ) tex_common/actorclip 0 11 0 0.5 0.45 65536 0 0
+( 161.9979 140.449 58 ) ( 176.7552 177.6273 58 ) ( 210.2156 164.3457 58 ) tex_common/actorclip 0 11 0 0.5 0.45 65536 0 0
+}
+// brush 110
+{
+( 463.245 615.819 129 ) ( 460.2935 608.3834 129 ) ( 460.2935 608.3834 1 ) tex_common/actorclip 52 7 0 0.5 0.45 65536 0 0
+( 490.0361 596.5776 128 ) ( 492.9876 604.0132 128 ) ( 492.9876 604.0132 0 ) tex_common/actorclip 52 7 0 0.5 0.45 65536 0 0
+( 283.9979 424.449 126 ) ( 317.4584 411.1675 126 ) ( 317.4584 411.1675 -2 ) tex_common/actorclip 0 7 0 0.5 0.45 65536 0 0
+( 329.2642 440.9101 126 ) ( 295.8037 454.1916 126 ) ( 295.8037 454.1916 -2 ) tex_common/actorclip 0 7 0 0.5 0.45 65536 0 0
+( 1323.621 528.2202 -2 ) ( 1353.363 516.4144 -2 ) ( 1335.427 557.9628 -2 ) tex_common/actorclip 0 11 0 0.5 0.45 65536 0 0
+( 283.9979 424.449 58 ) ( 298.7552 461.6273 58 ) ( 332.2156 448.3457 58 ) tex_common/actorclip 0 11 0 0.5 0.45 65536 0 0
+}
+// brush 111
+{
+( 654.0405 365.8476 129 ) ( 646.0652 365.2197 129 ) ( 646.0652 365.2197 1 ) tex_common/actorclip 52 7 0 0.5 0.45 65536 0 0
+( 648.5771 333.3185 128 ) ( 656.5524 333.9464 128 ) ( 656.5524 333.9464 0 ) tex_common/actorclip 52 7 0 0.5 0.45 65536 0 0
+( 403.2579 442.3986 126 ) ( 406.0837 406.5096 126 ) ( 406.0837 406.5096 -2 ) tex_common/actorclip 0 7 0 0.5 0.45 65536 0 0
+( 437.985 409.0214 126 ) ( 435.1591 444.9104 126 ) ( 435.1591 444.9104 -2 ) tex_common/actorclip 0 7 0 0.5 0.45 65536 0 0
+( 954.6209 -445.0604 -2 ) ( 957.1325 -476.9611 -2 ) ( 986.5222 -442.5488 -2 ) tex_common/actorclip 0 11 0 0.5 0.45 65536 0 0
+( 403.2579 442.3986 58 ) ( 443.1345 445.5383 58 ) ( 445.9603 409.6494 58 ) tex_common/actorclip 0 11 0 0.5 0.45 65536 0 0
+}
 }
 // entity 1
 {
@@ -1121,28 +1148,12 @@
 // entity 16
 {
 "classname" "misc_model"
-"origin" "400 400 0"
-"model" "models/objects/vegi/tree04/leafs.md2"
-"spawnflags" "254"
-"modelscale_vec" "1.5 1.5 1.5"
-}
-// entity 17
-{
-"classname" "misc_model"
-"origin" "400 400 0"
-"model" "models/objects/vegi/tree04/bark.md2"
-"spawnflags" "255"
-"modelscale_vec" "1.5 1.5 1.5"
-}
-// entity 18
-{
-"classname" "misc_model"
 "origin" "364 124 7"
 "model" "models/objects/vegi/tropic/tropic02.md2"
 "spawnflags" "255"
 "modelscale_vec" "0.7 0.7 0.6"
 }
-// entity 19
+// entity 17
 {
 "classname" "misc_model"
 "origin" "292.885 50.8521 7"
@@ -1150,7 +1161,7 @@
 "spawnflags" "255"
 "angle" "-14.7232"
 }
-// entity 20
+// entity 18
 {
 "classname" "misc_model"
 "origin" "396.262 39.2617 7"
@@ -1158,7 +1169,7 @@
 "spawnflags" "255"
 "angles" "0 8.82978 0"
 }
-// entity 21
+// entity 19
 {
 "classname" "misc_model"
 "origin" "352.2 79.283 7"
@@ -1166,7 +1177,7 @@
 "spawnflags" "255"
 "angle" "-24.5763"
 }
-// entity 22
+// entity 20
 {
 "classname" "misc_model"
 "origin" "426.381 146.034 7"
@@ -1175,7 +1186,7 @@
 "modelscale_vec" "0.7 0.7 0.6"
 "angle" "-146.33"
 }
-// entity 23
+// entity 21
 {
 "classname" "misc_model"
 "origin" "392.552 142.671 7"
@@ -1183,7 +1194,7 @@
 "spawnflags" "255"
 "angle" "-137.5"
 }
-// entity 24
+// entity 22
 {
 "classname" "misc_model"
 "origin" "411.41 189.792 7"
@@ -1191,7 +1202,7 @@
 "spawnflags" "255"
 "angle" "-170.906"
 }
-// entity 25
+// entity 23
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
@@ -1199,7 +1210,7 @@
 "origin" "204 268 66"
 "skin" "3"
 }
-// entity 26
+// entity 24
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
@@ -1207,43 +1218,91 @@
 "origin" "204 268 66"
 "skin" "3"
 }
-// entity 27
+// entity 25
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "204 268 66"
 }
-// entity 28
+// entity 26
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "204 268 66"
 }
-// entity 29
+// entity 27
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "204 268 66"
 }
-// entity 30
+// entity 28
 {
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "331 309 19"
 }
-// entity 31
+// entity 29
 {
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "329 354 19"
 }
-// entity 32
+// entity 30
 {
 "classname" "info_alien_start"
 "origin" "144 176 26"
+}
+// entity 31
+{
+"classname" "misc_model"
+"origin" "272.929 113.631 2"
+"model" "models/objects/vegi/plant/plant2.md2"
+"spawnflags" "65280"
+"angles" "0 -21.6497 0"
+}
+// entity 32
+{
+"classname" "misc_model"
+"origin" "394.929 397.631 2"
+"model" "models/objects/vegi/plant/plant2.md2"
+"spawnflags" "65280"
+"angles" "0 -21.6497 0"
+}
+// entity 33
+{
+"classname" "misc_model"
+"origin" "428.078 331.003 2"
+"model" "models/objects/vegi/plant/plant2.md2"
+"spawnflags" "65280"
+"angles" "0 -85.4979 0"
+}
+// entity 34
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "145.953 149.975 4"
+"angles" "0 -33.5015 0"
+}
+// entity 35
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "118.047 202.025 4"
+"angles" "0 -33.5015 0"
+}
+// entity 36
+{
+"classname" "misc_model"
+"origin" "114.242 178.16 4"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+"angles" "0 -33.5015 0"
 }

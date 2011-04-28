@@ -21,6 +21,8 @@ base japan/ja_
 // w: vertical water: top (z0) (grid32:   -+ ++ ++ +- ) (leftright)
 //               bottom (z-40) (grid32:   -- -+ ++ -- )
 
+line vh1234gf
+
 tile +main
 {
 10 6
@@ -151,7 +153,7 @@ abvf1234   +a       +a       abvf1234
 tile +fill1
 {
 3 3
-0      abh14      0
+0      abgh14      0
 abfv34     +a      abfv12
 0      abh23      0
 }
@@ -159,7 +161,7 @@ abfv34     +a      abfv12
 tile +fill2
 {
 3 3
-0      abh14  0
+0      abgh14  0
 abfv34 +a     abfv12
 0      abh23   0
 }
@@ -167,7 +169,7 @@ abfv34 +a     abfv12
 tile +fill3
 {
 3 3
-0      abh14      0
+0      abgh14      0
 abfv34  +a      abfv12
 0      abh23      0
 }
@@ -175,7 +177,7 @@ abfv34  +a      abfv12
 tile +fill4
 {
 3 3
-0      abh14      0
+0      abgh14      0
 abfv34     +a      abfv12
 0      abh23      0
 }

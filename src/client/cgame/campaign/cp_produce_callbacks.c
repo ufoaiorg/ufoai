@@ -590,19 +590,17 @@ static void PR_ProductionList_f (void)
 	numWorkshops = max(0, B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP));
 
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
-	Cvar_SetValue("mn_production_basecap", base->capacities[CAP_WORKSPACE].max);
+	Cvar_SetValue("mn_production_basecap", CAP_GetMax(base, CAP_WORKSPACE));
 
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
 	PR_UpdateProductionCap(base);
 
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
-		base->capacities[CAP_WORKSPACE].cur,
-		E_CountHired(base, EMPL_WORKER));
+		CAP_GetCurrent(base, CAP_WORKSPACE), E_CountHired(base, EMPL_WORKER));
 	Cvar_Set("mn_production_workers", tmpbuf);
 
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
-		base->capacities[CAP_ITEMS].cur,
-		base->capacities[CAP_ITEMS].max);
+		CAP_GetCurrent(base, CAP_ITEMS), CAP_GetMax(base, CAP_ITEMS));
 	Cvar_Set("mn_production_storage", tmpbuf);
 
 	PR_ClearSelected();

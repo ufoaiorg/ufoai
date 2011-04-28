@@ -45,14 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct cgame_export_s;
 
-typedef enum {
-	ca_uninitialized,
-	ca_disconnected,			/**< not talking to a server */
-	ca_connecting,				/**< sending request packets to the server */
-	ca_connected,				/**< netchan_t established, waiting for svc_serverdata */
-	ca_active					/**< game views should be displayed */
-} connstate_t;
-
 /**
  * @brief Not cleared on a map change (static data)
  * @note Only some data is set to new values on a map change
@@ -79,7 +71,6 @@ typedef struct client_static_s {
 	int connectTime;				/**< for connection retransmits */
 	int waitingForStart;			/**< waiting for EV_START or timeout */
 
-	struct datagram_socket *netDatagramSocket;
 	struct net_stream *netStream;
 
 	int challenge;				/**< from the server to use for connecting */
@@ -114,7 +105,9 @@ typedef struct client_static_s {
 	/** Map definitions */
 	mapDef_t mds[MAX_MAPDEFS];
 	int numMDs;
-	mapDef_t *currentMD;	/**< currently selected mapdef */
+#ifndef HARD_LINKED_CGAME
+	void *cgameLibrary;
+#endif
 } client_static_t;
 
 extern client_static_t cls;
@@ -133,6 +126,7 @@ extern cvar_t *cl_teamnum;
 extern cvar_t *s_language;
 
 /* cl_main.c */
+int CL_GetClientState(void);
 void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);

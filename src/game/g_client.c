@@ -254,7 +254,7 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
  * @sa G_CheckVis
  * @sa CL_ActorAdd
  */
-void G_SendInvisible (player_t* player)
+void G_SendInvisible (const player_t* player)
 {
 	const int team = player->pers.team;
 
@@ -655,13 +655,11 @@ int G_ClientAction (player_t * player)
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
 			gi.DPrintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
-			invDef_t *fromPtr = INVDEF(from);
-			invDef_t *toPtr = INVDEF(to);
+			const invDef_t *fromPtr = INVDEF(from);
+			const invDef_t *toPtr = INVDEF(to);
 			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.i, fromPtr, fx, fy);
-			if (!fromItem)
-				gi.Error("Could not find item in inventory of ent %i (type %i) at %i:%i",
-						ent->number, ent->type, fx, fy);
-			G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue);
+			if (fromItem)
+				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue);
 		}
 		break;
 
@@ -1212,6 +1210,8 @@ void G_ClientTeamInfo (const player_t * player)
 
 				G_ClientAssignDefaultActorValues(ent);
 
+				G_ActorGiveTimeUnits(ent);
+
 				G_TouchTriggers(ent);
 			} else {
 				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->pers.team, actorFieldSize);
@@ -1221,7 +1221,7 @@ void G_ClientTeamInfo (const player_t * player)
 		}
 	}
 
-	Com_Printf("Free inventory slots client %s spawn: %i\n", player->pers.netname, game.i.GetUsedSlots(&game.i));
+	Com_Printf("Used inventory slots client %s spawn: %i\n", player->pers.netname, game.i.GetUsedSlots(&game.i));
 }
 
 /**
@@ -1307,6 +1307,7 @@ void G_ClientSpawn (player_t * player)
 	/* reset the data */
 	G_EventReset(player, level.activeTeam);
 
+	/** @todo this is too early - not every coop player might be 'spawned' already */
 	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);
 	G_CheckVisPlayer(player, qfalse);
@@ -1314,9 +1315,6 @@ void G_ClientSpawn (player_t * player)
 
 	/* submit stats */
 	G_SendPlayerStats(player);
-
-	/* give time units */
-	G_GiveTimeUnits(player->pers.team);
 
 	/* ensure that the last event is send, too */
 	gi.EndEvents();

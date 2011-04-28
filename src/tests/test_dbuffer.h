@@ -1,5 +1,5 @@
 /**
- * @file mp_chatmessages.c
+ * @file test_dbuffer.h
  */
 
 /*
@@ -22,22 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "mp_chatmessages.h"
-#include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_data.h"
-#include "../../ui/node/ui_node_text.h"
+#ifndef TEST_DBUFFER_H_
+#define TEST_DBUFFER_H_
 
-static linkedList_t *mp_chatMessageStack = NULL;
+int UFO_AddDBufferTests(void);
 
-/**
- * @brief Displays a chat on the hud and add it to the chat buffer
- */
-void MP_AddChatMessage (const char *text)
-{
-	char message[2048];
-	Q_strncpyz(message, text, sizeof(message));
-	LIST_AddString(&mp_chatMessageStack, Com_Trim(message));
-	UI_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
-	UI_ExecuteConfunc("unhide_chatscreen");
-}
+#endif

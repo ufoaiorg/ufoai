@@ -103,6 +103,7 @@ struct dbuffer *dbuffer_merge(struct dbuffer *old, struct dbuffer *old2);
 
 void dbuffer_shutdown(void);
 void dbuffer_init(void);
+void dbuffer_cleanup(void);
 
 #define dbuffer_len(A) (A ? (A)->len : 0)
 

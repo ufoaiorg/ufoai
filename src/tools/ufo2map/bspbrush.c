@@ -363,7 +363,7 @@ static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 	return side;
 }
 
-#define TESTING_MOCK_SPLIT 0
+#define TESTING_MOCK_SPLIT 1
 #if TESTING_MOCK_SPLIT
 /**
  * @brief Checks if the plane splits the brush
@@ -372,50 +372,25 @@ static qboolean DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 {
 	int i, j;
 	winding_t *w;
-	plane_t *plane, *plane2;
-	float d_front, d_back;
-	qboolean split = qtrue;
-
-	plane = &mapplanes[planenum];
+	plane_t *plane  = &mapplanes[planenum];
+	int front_cnt = 0, back_cnt = 0;
 
 	/* check all points */
-	d_front = d_back = 0;
 	for (i = 0; i < brush->numsides; i++) {
 		w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++) {
 			const float d = DotProduct(w->p[j], plane->normal) - plane->dist;
-			if (d > 0 && d > d_front)
-				d_front = d;
-			else if (d < 0 && d < d_back)
-				d_back = d;
+			if (d > 0.1f) /* PLANESIDE_EPSILON) */
+				front_cnt++;
+			if (d < -0.1f) /* PLANESIDE_EPSILON) */
+				back_cnt++;
 		}
 	}
-	if (d_front < 0.1) { /* PLANESIDE_EPSILON) */
-		/* only on back */
-		return qfalse;
-	}
-	if (d_back > -0.1) { /* PLANESIDE_EPSILON) */
-		/* only on front */
-		return qfalse;
-	}
 
-	/* create a new winding from the split plane */
-	w = BaseWindingForPlane(plane->normal, plane->dist);
-	for (i = 0; i < brush->numsides && w; i++) {
-		plane2 = &mapplanes[brush->sides[i].planenum ^ 1];
-		ChopWindingInPlace(&w, plane2->normal, plane2->dist, 0); /* PLANESIDE_EPSILON); */
-	}
-
-	/* the brush isn't really split */
-	if (!w || WindingIsTiny(w)) {
-		const int side = BrushMostlyOnSide(brush, plane);
-		if (side == PSIDE_FRONT || side == PSIDE_BACK)
-			split = qfalse;
-	}
-	FreeWinding(w);
-	return split;
+	/* if brush vertices are both in front and back of given plane, in splits brush */
+	return front_cnt && back_cnt ;
 }
 #endif
 
@@ -463,6 +438,9 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 	int front, back, both, facing, splits;
 	int bsplits, epsilonbrush;
 	qboolean hintsplit;
+
+	if (!volume)
+		return NULL; /* can't split empty brush */
 
 	bestside = NULL;
 	bestvalue = -99999;

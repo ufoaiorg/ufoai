@@ -186,9 +186,6 @@ static void CL_Connect (void)
 {
 	Com_SetUserinfoModified(qfalse);
 
-	NET_DatagramSocketClose(cls.netDatagramSocket);
-	cls.netDatagramSocket = NULL;
-
 	assert(!cls.netStream);
 
 	if (cls.servername[0] != '\0') {
@@ -377,12 +374,6 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		return;
 	}
 
-	/* teaminfo command */
-	if (Q_streq(c, "teaminfo")) {
-		CL_ParseTeamInfoMessage(msg);
-		return;
-	}
-
 	/* ping from server */
 	if (Q_streq(c, "ping")) {
 		NET_OOB_Printf(cls.netStream, "ack");
@@ -406,7 +397,8 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		return;
 	}
 
-	Com_Printf("Unknown command received \"%s\"\n", c);
+	if (!GAME_HandleServerCommand(c, msg))
+		Com_Printf("Unknown command received \"%s\"\n", c);
 }
 
 /**
@@ -884,6 +876,8 @@ void CL_InitAfter (void)
 
 	CL_LanguageInit();
 
+	GAME_InitUIData();
+
 	/* sort the mapdef array */
 	qsort(cls.mds, cls.numMDs, sizeof(mapDef_t), Com_MapDefSort);
 }
@@ -1132,6 +1126,11 @@ static void CL_SendCommand (void)
 	}
 }
 
+int CL_GetClientState (void)
+{
+	return cls.state;
+}
+
 /**
  * @brief Sets the client state
  */
@@ -1351,6 +1350,7 @@ void CL_Shutdown (void)
 	}
 
 	GAME_SetMode(NULL);
+	GAME_UnloadGame();
 	CL_HTTP_Cleanup();
 	Irc_Shutdown();
 	Con_SaveConsoleHistory();
@@ -1359,4 +1359,5 @@ void CL_Shutdown (void)
 	R_Shutdown();
 	UI_Shutdown();
 	CIN_Shutdown();
+	GAME_Shutdown();
 }

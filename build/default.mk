@@ -46,3 +46,18 @@ ifdef HAVE_BFD_H
 BFD_CFLAGS               ?=
 BFD_LIBS                 ?= -lbfd
 endif
+ifndef HAVE_MXML_H
+MXML_SRCS                 = libs/mxml/mxml-attr.c \
+                            libs/mxml/mxml-entity.c \
+                            libs/mxml/mxml-file.c \
+                            libs/mxml/mxml-index.c \
+                            libs/mxml/mxml-node.c \
+                            libs/mxml/mxml-private.c \
+                            libs/mxml/mxml-search.c \
+                            libs/mxml/mxml-set.c \
+                            libs/mxml/mxml-string.c
+MXML_CFLAGS               = -Isrc/libs/mxml
+MXML_LIBS                 =
+else
+MXML_SRCS                 =
+endif
