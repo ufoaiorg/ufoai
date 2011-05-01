@@ -447,7 +447,6 @@ void Com_Error (int code, const char *fmt, ...)
 	switch (code) {
 	case ERR_DISCONNECT:
 		Com_Printf("%s\n", msg);
-		Cvar_Set("mn_afterdrop", "popup");
 		CL_Drop();
 		recursive = qfalse;
 		Com_Drop();
