@@ -277,8 +277,8 @@ void CL_ViewRender (void)
 	LM_AddToScene();
 	/* add local entities to the renderer chain */
 	LE_AddToScene();
-	/* adds pathing data */
 
+	/* adds pathing data */
 	if (cl_map_displayavailablecells->integer) {
 		CL_AddActorPathing();
 	}

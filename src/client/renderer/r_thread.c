@@ -63,8 +63,13 @@ int R_RunThread (void *p)
  */
 void R_ShutdownThreads (void)
 {
-	if (r_threadstate.thread)
+	if (r_threadstate.thread) {
+		const int old = r_threads->integer;
+		r_threads->integer = 0;
+		r_threadstate.state = THREAD_BSP;
 		SDL_WaitThread(r_threadstate.thread, NULL);
+		r_threads->integer = old;
+	}
 
 	r_threadstate.thread = NULL;
 }
