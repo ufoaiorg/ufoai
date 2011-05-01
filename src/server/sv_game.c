@@ -108,7 +108,7 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, qboolean
 		return 0;
 
 	if (i == max)
-		Com_Error(ERR_DROP, "*Index: overflow '%s' start: %i, max: %i", name, start, max);
+		SV_error("*Index: overflow '%s' start: %i, max: %i", name, start, max);
 
 	SV_SetConfigString(start + i, name);
 
@@ -135,7 +135,7 @@ static unsigned int SV_ModelIndex (const char *name)
 static void SV_SetModel (edict_t * ent, const char *name)
 {
 	if (!name)
-		Com_Error(ERR_DROP, "SV_SetModel: NULL");
+		SV_error("SV_SetModel: NULL");
 
 	ent->modelindex = SV_ModelIndex(name);
 
@@ -160,7 +160,7 @@ static void SV_Configstring (int index, const char *fmt, ...)
 	va_list argptr;
 
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "configstring: bad index %i", index);
+		SV_error("configstring: bad index %i", index);
 
 	va_start(argptr, fmt);
 	Q_vsnprintf(val, sizeof(val), fmt, argptr);
