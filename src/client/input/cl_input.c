@@ -649,8 +649,6 @@ static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned s
 	case SDLK_RCTRL:
 		*ascii = K_CTRL;
 		break;
-	case SDLK_LMETA:
-	case SDLK_RMETA:
 	case SDLK_LALT:
 	case SDLK_RALT:
 		*ascii = K_ALT;
@@ -679,10 +677,6 @@ static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned s
 		break;
 	case SDLK_KP_DIVIDE:
 		*ascii = K_KP_SLASH;
-		break;
-	/* suggestions on how to handle this better would be appreciated */
-	case SDLK_WORLD_7:
-		*ascii = '`';
 		break;
 	case SDLK_MODE:
 		*ascii = K_MODE;

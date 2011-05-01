@@ -176,7 +176,11 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 	/* valid values are between 0 and 2 */
 	i = min(2, max(0, context->swapinterval));
 	Com_Printf("I: set swap control to %i\n", i);
+#if SDL_VERSION_ATLEAST(1,3,0)
+	SDL_GL_SetSwapInterval(1);
+#else
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, i);
+#endif
 
 	flags = SDL_OPENGL;
 	if (context->fullscreen)

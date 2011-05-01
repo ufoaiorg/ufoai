@@ -40,30 +40,36 @@ static char const* const IMAGE_TYPES[] = { "tga", "png", "jpg", NULL };
 
 /** default pixel format to which all images are converted */
 static SDL_PixelFormat format = {
-	NULL,  /**< palette */
-	32,  /**< bits */
-	4,  /**< bytes */
-	0,  /**< rloss */
-	0,  /**< gloss */
-	0,  /**< bloss */
-	0,  /**< aloss */
-	24,  /**< rshift */
-	16,  /**< gshift */
-	8,  /**< bshift */
-	0,  /**< ashift */
+	.palette = NULL,  /**< palette */
+	.BitsPerPixel = 32,  /**< bits */
+	.BytesPerPixel = 4,  /**< bytes */
+	.Rloss = 0,  /**< rloss */
+	.Gloss = 0,  /**< gloss */
+	.Bloss = 0,  /**< bloss */
+	.Aloss = 0,  /**< aloss */
+	.Rshift = 24,  /**< rshift */
+	.Gshift = 16,  /**< gshift */
+	.Bshift = 8,  /**< bshift */
+	.Ashift = 0,  /**< ashift */
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	0xff000000,
-	0x00ff0000,
-	0x0000ff00,
-	0x000000ff,
+	.Rmask = 0xff000000,
+	.Gmask = 0x00ff0000,
+	.Bmask = 0x0000ff00,
+	.Amask = 0x000000ff,
 #else
-	0x000000ff,
-	0x0000ff00,
-	0x00ff0000,
-	0xff000000,
+	.Rmask = 0x000000ff,
+	.Gmask = 0x0000ff00,
+	.Bmask = 0x00ff0000,
+	.Amask = 0xff000000,
 #endif
-	0,  /**< colorkey */
-	1   /**< alpha */
+#if SDL_VERSION_ATLEAST(1,3,0)
+	.next = NULL,
+	.format = 0,
+	.refcount = 0,
+#else
+	.colorkey = 0,  /**< colorkey */
+	.alpha = 1   /**< alpha */
+#endif
 };
 
 #define TGA_UNMAP_COMP			10

@@ -35,8 +35,6 @@ renderer_threadstate_t r_threadstate;
 
 int R_RunThread (void *p)
 {
-	Com_DPrintf(DEBUG_RENDERER, "R_RunThread: %d\n", SDL_ThreadID());
-
 	while (r_threads->integer) {
 		if (!refdef.ready) {
 			Sys_Sleep(THREAD_SLEEP_INTERVAL);
@@ -66,7 +64,7 @@ int R_RunThread (void *p)
 void R_ShutdownThreads (void)
 {
 	if (r_threadstate.thread)
-		SDL_KillThread(r_threadstate.thread);
+		SDL_WaitThread(r_threadstate.thread, NULL);
 
 	r_threadstate.thread = NULL;
 }
