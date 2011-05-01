@@ -36,7 +36,7 @@
 #include <zlib.h>
 
 /** image formats, tried in this order */
-static char const* const IMAGE_TYPES[] = { "tga", "png", "jpg", NULL };
+static char const* const IMAGE_TYPES[] = { "png", "jpg", "tga", NULL };
 
 /** default pixel format to which all images are converted */
 static SDL_PixelFormat format = {
