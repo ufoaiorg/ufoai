@@ -36,6 +36,7 @@ void SV_LogHandleOutput (void)
 	char buf[1024];
 	int length;
 
+	/** @todo lock the access to logBuffer here */
 	while ((length = NET_ReadString(logBuffer, buf, sizeof(buf))) > 0)
 		Com_Printf("%s", buf);
 }
@@ -48,5 +49,6 @@ void SV_LogAdd (const char *format, va_list ap)
 	if (logBuffer == NULL)
 		logBuffer = new_dbuffer();
 
+	/** @todo lock the access to logBuffer here */
 	dbuffer_add(logBuffer, msg, strlen(msg) + 1);
 }
