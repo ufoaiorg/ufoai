@@ -1327,6 +1327,9 @@
 		<Unit filename="..\..\src\server\sv_init.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\server\sv_log.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\server\sv_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
