@@ -267,6 +267,7 @@ $(TARGET)_SRCS      = \
 	server/sv_ccmds.c \
 	server/sv_game.c \
 	server/sv_init.c \
+	server/sv_log.c \
 	server/sv_main.c \
 	server/sv_mapcycle.c \
 	server/sv_rma.c \

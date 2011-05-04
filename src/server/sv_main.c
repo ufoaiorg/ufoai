@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "server.h"
+#include "sv_log.h"
 #include "../ports/system.h"
 
 /** password for remote server commands */
@@ -624,6 +625,7 @@ void SV_Frame (int now, void *data)
 	else
 		/* signal the game frame thread to wake up */
 		SDL_CondSignal(svs.gameFrameCond);
+	SV_LogHandleOutput();
 
 	/* next map in the cycle */
 	if (sv->endgame && sv_maxclients->integer > 1)
