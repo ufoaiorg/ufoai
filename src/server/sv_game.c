@@ -27,6 +27,7 @@
  */
 
 #include "server.h"
+#include "sv_log.h"
 #include "../common/grid.h"
 #include "../ports/system.h"
 #include <SDL.h>
@@ -39,7 +40,7 @@ static void SV_dprintf (const char *fmt, ...)
 	va_list ap;
 
 	va_start(ap, fmt);
-	Qcommon_GetPrintFunction()(fmt, ap);
+	SV_LogAdd(fmt, ap);
 	va_end(ap);
 }
 
@@ -49,18 +50,16 @@ static void SV_dprintf (const char *fmt, ...)
  */
 static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt, va_list ap)
 {
-	char msg[1024];
-
 	if (level == PRINT_NONE)
 		return;
 
-	Q_vsnprintf(msg, sizeof(msg), fmt, ap);
-
 	if (player) {
+		char msg[1024];
+		Q_vsnprintf(msg, sizeof(msg), fmt, ap);
 		client_t *cl = SV_GetClient(player->num);
 		SV_ClientPrintf(cl, level, "%s", msg);
 	} else
-		Com_Printf("%s", msg);
+		SV_LogAdd(fmt, ap);
 }
 
 static void SV_error (const char *fmt, ...) __attribute__((noreturn));
@@ -516,7 +515,6 @@ void SV_ShutdownGameProgs (void)
 	Com_SetServerState(ss_game_shutdown);
 
 	if (svs.gameThread) {
-		Com_Printf("Shutdown the game thread\n");
 		SDL_CondSignal(svs.gameFrameCond);
 		SDL_WaitThread(svs.gameThread, NULL);
 		SDL_DestroyCond(svs.gameFrameCond);
