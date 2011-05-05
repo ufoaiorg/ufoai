@@ -348,6 +348,8 @@ void R_ShutdownModels (qboolean complete)
 		if (vid_lightPool)
 			Mem_FreePool(vid_lightPool);
 		r_numModels = 0;
+		r_numModelsInline = 0;
+		r_numMapTiles = 0;
 		OBJZERO(r_models);
 	} else {
 		if (vid_modelPool)
@@ -356,4 +358,5 @@ void R_ShutdownModels (qboolean complete)
 			Mem_FreeTag(vid_lightPool, 0);
 		r_numModels = r_numModelsStatic;
 	}
+
 }
