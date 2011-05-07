@@ -26,15 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_shared.h"
 #include "cl_game.h"
 #include "cl_game_multiplayer.h"
-#include "../cl_team.h"
-#include "../cl_inventory.h"
 #include "multiplayer/mp_callbacks.h"
 #include "multiplayer/mp_serverlist.h"
-#include "cl_game_team.h"
-#include "../ui/ui_main.h"
-#include "../ui/ui_popup.h"
-#include "../battlescape/cl_hud.h"
-#include "../battlescape/cl_parse.h"
+#include "../ui/ui_data.h"
 
 static const cgame_import_t *cgi;
 
@@ -251,7 +245,7 @@ static void GAME_MP_ChangeGametype_f (void)
  */
 static void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
-	char resultText[UI_MAX_SMALLTEXTLEN];
+	char resultText[1024];
 	int their_killed, their_stunned;
 	int i;
 	const int team = cgi->GAME_GetCurrentTeam();
