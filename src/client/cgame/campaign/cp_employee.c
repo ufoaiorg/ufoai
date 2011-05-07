@@ -263,7 +263,6 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
 	employee_t *employee;
 
-	employee = NULL;
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee)) {
 			/* If no type was given we return the first ugv we find. */
@@ -272,7 +271,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 		}
 	}
 
-	return employee;
+	return NULL;
 }
 
 /**
