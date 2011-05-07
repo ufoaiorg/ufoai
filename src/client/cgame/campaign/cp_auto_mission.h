@@ -46,6 +46,8 @@ typedef enum autoMission_results_s {
 	AUTOMISSION_RESULT_MAX
 } autoMission_results_t;
 
+#define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * MAX_ACTIVETEAM
+
 /* FIX ME: The hard-coded max teams of 8 and units on a team (64) should be changed to #define(ed) values set elsewhere! */
 /** @brief Data structure for a simulated or auto mission.
  * @note Supports a hardcoded max of 8 teams that can be simulated in a battle, to
@@ -68,8 +70,8 @@ typedef struct autoMission_battle_s {
 	double scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
 	double scoreTeamDifficulty[MAX_ACTIVETEAM];		/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
 
-	int unitHealth[MAX_ACTIVETEAM][64];		/**< Health score of each unit for each team */
-	int unitHealthMax[MAX_ACTIVETEAM][64];	/**< Max health of each unit on each team */
+	int unitHealth[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Health score of each unit for each team */
+	int unitHealthMax[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];	/**< Max health of each unit on each team */
 
 	int winningTeam;							/**< Which team is victorious */
 	qboolean hasBeenFought;						/**< Did this battle run already?  Auto Battles can be fought only once, please. */

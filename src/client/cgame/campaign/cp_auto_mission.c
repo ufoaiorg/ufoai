@@ -50,7 +50,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 			battle->isHostile[team][otherTeam] = qtrue;
 		}
 
-		for (soldier = 0; soldier < 64; soldier++) {
+		for (soldier = 0; soldier < MAX_SOLDIERS_AUTOMISSION; soldier++) {
 			battle->unitHealth[team][soldier] = 0;
 			battle->unitHealthMax[team][soldier] = 0;
 		}
@@ -78,8 +78,8 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	int unitsAlive;
 
 	assert(teamNum >= 0 && teamNum < MAX_ACTIVETEAM);
-	assert(battle);
-	assert(aircraft);
+	assert(battle != NULL);
+	assert(aircraft != NULL);
 
 	teamSize = 0;
 	unitsAlive = 0;
@@ -89,9 +89,10 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 		battle->unitHealthMax[teamNum][teamSize] = chr->maxHP;
 		battle->unitHealth[teamNum][teamSize] = chr->HP;
 		teamSize++;
-		if (chr->HP > 0) unitsAlive++;
+		if (chr->HP > 0)
+			unitsAlive++;
 
-		if (teamSize >= 64)
+		if (teamSize >= MAX_SOLDIERS_AUTOMISSION)
 			break;
 	}
 	battle->nUnits[teamNum] = teamSize;
@@ -105,7 +106,8 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 		Com_DPrintf(DEBUG_CLIENT, "--- Note: This team will LOSE the battle by default.");
 	}
 
-	if (teamSize > 0) battle->teamActive[teamNum] = qtrue;
+	if (teamSize > 0)
+		battle->teamActive[teamNum] = qtrue;
 }
 
 /* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
@@ -137,52 +139,46 @@ int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
 
 void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 {
-	/** @todo */
-
-	/* Check to see if anything isn't set up properly */
-	qboolean checkError = qfalse;
-	if(battle->hasBeenFought) {
-		Com_DPrintf(DEBUG_CLIENT, "Error: Auto-Battle has already been fought!");
-		checkError = qtrue;
-	}
 	int unitTotal = 0;
 	int isHostileTotal = 0;
 	int totalActiveTeams = 0;
 	int lastActiveTeam = -1;
 	int isHostileCount;
 	int count;
+
+	if (battle->hasBeenFought)
+		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!");
+
 	for (count = 0; count < MAX_ACTIVETEAM; count++) {
 		unitTotal += battle->nUnits[count];
+
 		if (battle->teamActive[count]) {
 			lastActiveTeam = count;
 			totalActiveTeams++;
 		}
 		for (isHostileCount = 0; isHostileCount < MAX_ACTIVETEAM; isHostileCount++) {
 			if (battle->nUnits[isHostileCount] > 0) {
-				if (battle->isHostile[count][isHostileCount] == qtrue && battle->teamActive[count] == qtrue) isHostileTotal++;
+				if (battle->isHostile[count][isHostileCount] && battle->teamActive[count])
+					isHostileTotal++;
 			}
 		}
 	}
-	if (unitTotal == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Error: Grand total of ZERO units are fighting in auto battle, something is wrong.");
-		checkError = qtrue;
-	}
-	if (unitTotal < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Error: Negative number of total units are fighting in auto battle, something is VERY wrong!");
-		checkError = qtrue;
-	}
-	if (isHostileTotal <= 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Error: No team has any other team hostile toward it, no battle is possible!");
-		checkError = qtrue;
-	}
-	if (totalActiveTeams <= 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Error: No Active teams detected in Auto Battle!");
-		checkError = qtrue;
-	}
-	if (totalActiveTeams == 1) {
+
+	/* sanity checks */
+	if (unitTotal == 0)
+		Com_Error(ERR_DROP, "Grand total of ZERO units are fighting in auto battle, something is wrong.");
+
+	if (unitTotal < 0)
+		Com_Error(ERR_DROP, "Negative number of total units are fighting in auto battle, something is VERY wrong!");
+
+	if (isHostileTotal <= 0)
+		Com_Error(ERR_DROP, "No team has any other team hostile toward it, no battle is possible!");
+
+	if (totalActiveTeams <= 0)
+		Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!");
+
+	if (totalActiveTeams == 1)
 		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.");
-	}
-	assert(checkError == qfalse);
 
 	/* Quick easy victory check */
 	if (totalActiveTeams == 1) {
@@ -199,17 +195,18 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	int currentUnit;
 
 	for (count = 0; count < MAX_ACTIVETEAM; count++) {
-		teamPooledHealth = 0.0;
-		teamPooledHealthMax = 0.0;
-		teamPooledUnitsHealthy = 0.0;
-		teamPooledUnitsTotal = 0.0;
-		if (battle->teamActive[count] == qtrue) {
+		teamPooledHealth[count] = 0.0;
+		teamPooledHealthMax[count] = 0.0;
+		teamPooledUnitsHealthy[count] = 0.0;
+		teamPooledUnitsTotal[count] = 0.0;
+		if (battle->teamActive[count]) {
 			for (currentUnit = 0; currentUnit < battle->nUnits[count]; currentUnit++) {
 				if (battle->unitHealth[count][currentUnit] > 0) {
-					teamPooledHealth[count] += double (battle->unitHealth[count][currentUnit]);
-					teamPooledHealthMax[count] += double (battle->unitHealthMax[count][currentUnit]);
+					teamPooledHealth[count] += battle->unitHealth[count][currentUnit];
+					teamPooledHealthMax[count] += battle->unitHealthMax[count][currentUnit];
 					teamPooledUnitsTotal[count] += 1.0;
-					if (battle->unitHealth[count][currentUnit] == battle->unitHealthMax[count][currentUnit]) teamPooledUnitsHealthy[count] += 1.0;
+					if (battle->unitHealth[count][currentUnit] == battle->unitHealthMax[count][currentUnit])
+						teamPooledUnitsHealthy[count] += 1.0;
 				}
 			}
 		}
