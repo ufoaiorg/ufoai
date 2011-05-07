@@ -129,4 +129,36 @@ int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
 void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 {
 	/** @todo */
+
+	/* Check to see if anything isn't set up properly */
+	qboolean checkError = qfalse;
+	if(battle->hasBeenFought) {
+		Com_DPrintf(DEBUG_CLIENT, "Error: Auto-Battle has already been fought!");
+		checkError = qtrue;
+	}
+	int unitTotal = 0;
+	int isHostileTotal = 0;
+	int isHostileCount;
+	int count;
+	for (count = 0; count < MAX_ACTIVETEAM; count++) {
+		unitTotal += battle->nUnits[count];
+		for (isHostileCount = 0; isHostileCount < MAX_ACTIVETEAM; isHostileCount++) {
+			if (battle->nUnits[isHostileCount] > 0) {
+				if (battle->isHostile[count][isHostileCount] == qtrue) isHostileTotal++;
+			}
+		}
+	}
+	if (unitTotal == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "Error: Grand total of ZERO units are fighting in auto battle, something is wrong.");
+		checkError = qtrue;
+	}
+	if (unitTotal < 0) {
+		Com_DPrintf(DEBUG_CLIENT, "Error: Negative number of total units are fighting in auto battle, something is VERY wrong!");
+		checkError = qtrue;
+	}
+	if (isHostileTotal <= 0) {
+		Com_DPrintf(DEBUG_CLIENT, "Error: No team has any other team hostile toward it, no battle is possible!");
+		checkError = qtrue;
+	}
+	assert(checkError == qfalse);
 }
