@@ -801,9 +801,9 @@ static void UP_GenerateSummary (void)
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
-		uiNode_t *chapter;
 		qboolean researchedEntries = qfalse;
-		upCurrentTech = ccs.upChapters[i].first;
+		pediaChapter_t *chapter = &ccs.upChapters[i];
+		upCurrentTech = chapter->first;
 		do {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
 				researchedEntries = qtrue;
@@ -814,14 +814,15 @@ static void UP_GenerateSummary (void)
 
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researchedEntries) {
-			if (numChaptersDisplayList >= MAX_PEDIACHAPTERS)
+			uiNode_t *chapterOption;
+			if (numChaptersDisplayList >= sizeof(upChaptersDisplayList))
 				Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
-			upChaptersDisplayList[numChaptersDisplayList++] = &ccs.upChapters[i];
+			upChaptersDisplayList[numChaptersDisplayList++] = chapter;
 
 			/* chapter section*/
-			chapter = UI_AddOption(&chapters, ccs.upChapters[i].id, va("_%s", ccs.upChapters[i].name), va("%i", num));
-			OPTIONEXTRADATA(chapter).icon = UI_GetSpriteByName(va("icons/ufopedia_%s", ccs.upChapters[i].id));
-			chapter->firstChild = UP_GenerateArticlesSummary(&ccs.upChapters[i]);
+			chapterOption = UI_AddOption(&chapters, chapter->id, va("_%s", chapter->name), va("%i", num));
+			OPTIONEXTRADATA(chapterOption).icon = UI_GetSpriteByName(va("icons/ufopedia_%s", chapter->id));
+			chapterOption->firstChild = UP_GenerateArticlesSummary(chapter);
 
 			num++;
 		}

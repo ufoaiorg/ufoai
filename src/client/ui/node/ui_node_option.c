@@ -71,11 +71,12 @@ int UI_OptionUpdateCache (uiNode_t* option)
 	return count;
 }
 
-static void UI_OptionDoLayout (uiNode_t *node) {
+static void UI_OptionDoLayout (uiNode_t *node)
+{
 	uiNode_t *child = node->firstChild;
 	int count = 0;
 
-	while(child && child->behaviour == ui_optionBehaviour) {
+	while (child && child->behaviour == ui_optionBehaviour) {
 		UI_Validate(child);
 		if (!child->invis) {
 			if (EXTRADATA(child).collapsed)
