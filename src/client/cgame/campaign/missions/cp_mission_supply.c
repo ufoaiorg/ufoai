@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CP_SupplyMissionIsSuccess (mission_t *mission)
 {
 	alienBase_t *base;
-	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_SUPPLY);
+	CP_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_SUPPLY);
 
 	/* Spread XVI */
 	base = mission->data.alienBase;
@@ -55,9 +55,9 @@ void CP_SupplyMissionIsSuccess (mission_t *mission)
  */
 void CP_SupplyMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
+	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }

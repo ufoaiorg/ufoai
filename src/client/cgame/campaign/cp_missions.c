@@ -1585,7 +1585,7 @@ void CP_SpawnNewMissions (void)
 
 		/* Increase the alien's interest in supplying their bases for this cycle.
 		 * The more bases, the greater their interest in supplying them. */
-		CL_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
+		CP_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
 
 		/* Calculate the amount of missions to be spawned this cycle.
 		 * Note: This is a function over css.overallInterest. It looks like this:

@@ -37,8 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CP_TerrorMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_BASE_ATTACK);
-	CL_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_HARVEST);
+	CP_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_HARVEST);
 
 	CP_MissionRemove(mission);
 }
@@ -49,10 +49,10 @@ void CP_TerrorMissionIsSuccess (mission_t *mission)
  */
 void CP_TerrorMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_TERROR_ATTACK);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
-	CL_ChangeIndividualInterest(0.02f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_TERROR_ATTACK);
+	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CP_ChangeIndividualInterest(0.02f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }
@@ -64,7 +64,7 @@ void CP_TerrorMissionIsFailure (mission_t *mission)
 void CP_TerrorMissionOnSpawn (void)
 {
 	/* Prevent multiple terror missions per cycle by resetting interest. */
-	CL_ChangeIndividualInterest(-1.0f, INTERESTCATEGORY_TERROR_ATTACK);
+	CP_ChangeIndividualInterest(-1.0f, INTERESTCATEGORY_TERROR_ATTACK);
 }
 
 

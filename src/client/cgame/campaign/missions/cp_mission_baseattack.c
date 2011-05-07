@@ -47,10 +47,10 @@ static aircraft_t baseAttackFakeAircraft;
  */
 void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
-	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_TERROR_ATTACK);
-	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_INTERCEPT);
+	CP_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
+	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
+	CP_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_TERROR_ATTACK);
+	CP_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_INTERCEPT);
 
 	CP_MissionRemove(mission);
 }
@@ -71,8 +71,8 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	MAP_SetMissionAircraft(NULL);
 
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
 
 	/* reset current selected mission */
 	MAP_NotifyMissionRemoved(mission);
@@ -86,7 +86,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 void CP_BaseAttackMissionOnSpawn (void)
 {
 	/* Prevent multiple bases from being attacked. by resetting interest. */
-	CL_ChangeIndividualInterest(-1.0f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(-1.0f, INTERESTCATEGORY_BASE_ATTACK);
 }
 
 /**
