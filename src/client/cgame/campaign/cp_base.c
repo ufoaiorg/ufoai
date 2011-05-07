@@ -2792,6 +2792,14 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			building->buildTime = XML_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
 			building->level = XML_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
 			XML_GetPos2(snode, SAVE_BASES_POS, building->pos);
+
+			/** @todo fallback code for compatibility */
+			if (b->map[(int)building->pos[1]][(int)building->pos[0]].building != building
+			 && b->map[(int)building->pos[0]][(int)building->pos[1]].building == building) {
+				int swap = building->pos[0];
+				building->pos[0] = building->pos[1];
+				building->pos[1] = swap;
+			}
 		}
 		ccs.numBuildings[i] = j;
 
