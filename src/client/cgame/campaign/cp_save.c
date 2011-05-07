@@ -204,13 +204,13 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			return qfalse;
 		}
 	}
+	Mem_Free(buf);
 
 	/* doing a subsystem run ;) */
 	GAME_ReloadMode();
 	node = XML_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
-		Mem_Free(buf);
 		mxmlDelete(topNode);
 		*error = "Invalid xml data";
 		return qfalse;
@@ -228,6 +228,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			Com_Printf("...subsystem '%s' - loaded.\n", saveSubsystems[i].name);
 	}
 	mxmlDelete(node);
+	mxmlDelete(topNode);
 
 	if (!SAV_GameActionsAfterLoad()) {
 		Com_Printf("Savegame postprocessing returned false - savegame could not be loaded\n");
@@ -237,9 +238,6 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
-	Mem_Free(buf);
-
-	mxmlDelete(topNode);
 
 	UI_InitStack("geoscape", NULL, qtrue, qtrue);
 	return qtrue;
