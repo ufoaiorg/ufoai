@@ -88,7 +88,7 @@ void CP_ChangeIndividualInterest (float interestFactor, interestCategory_t categ
 
 /**
  * @brief Increase alien overall interest.
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @note hourly called
  */
 void CP_IncreaseAlienInterest (const campaign_t *campaign)

@@ -55,7 +55,7 @@ void CL_EventAddMail_f(void);
 void CL_ParseEventMails(const char *name, const char **text);
 eventMail_t* CL_GetEventMail(const char *id, qboolean createCopy);
 eventMail_t* CL_NewEventMail(const char *id, const char *newID, const char *body);
-void CL_FreeDynamicEventMail(void);
+void CP_FreeDynamicEventMail(void);
 
 /**
  * @brief Defines campaign events when story related technologies should be researched

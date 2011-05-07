@@ -268,7 +268,7 @@ qboolean AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee
 qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
 int AIR_GetTeamSize(const aircraft_t *aircraft);
 
-void CL_CampaignRunAircraft(const struct campaign_s* campaign, int dt, qboolean updateRadarOverlay);
+void AIR_CampaignRun(const struct campaign_s* campaign, int dt, qboolean updateRadarOverlay);
 const aircraft_t *AIR_GetAircraftSilent(const char *name);
 const aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIDX(int idx);
@@ -285,7 +285,7 @@ void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(struct base_s *base);
 qboolean AIR_ScriptSanityCheck(void);
 int AIR_CalculateHangarStorage(const aircraft_t *aircraft, const struct base_s *base, int used) __attribute__((nonnull (1, 2)));
-int CL_AircraftMenuStatsValues(const int value, const int stat);
+int AIR_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 int AIR_CountInBaseByTemplate(const struct base_s *base, const aircraft_t *aircraftTemplate);
 const char *AIR_GetAircraftString(aircraftType_t aircraftType);

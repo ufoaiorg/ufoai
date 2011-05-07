@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Shows the current stats from stats_t stats
  * @todo This is very redundant with NAT_HandleBudget Ivestigate and clean up.
  */
-void CL_StatsUpdate_f (void)
+void CP_StatsUpdate_f (void)
 {
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];

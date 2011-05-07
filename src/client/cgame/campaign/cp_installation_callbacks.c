@@ -130,7 +130,7 @@ static void INS_BuildInstallation_f (void)
 		/* set up the installation */
 		INS_SetUpInstallation(installation, installationTemplate, ccs.newBasePos, Cvar_GetString("mn_installation_title"));
 
-		CL_UpdateCredits(ccs.credits - installationTemplate->cost);
+		CP_UpdateCredits(ccs.credits - installationTemplate->cost);
 		/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
 		Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 

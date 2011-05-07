@@ -1064,9 +1064,9 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
 	/** @todo this should be an user option defined in Game Options. */
 	if (oldStatus == B_STATUS_UNDER_CONSTRUCTION && (status == B_STATUS_CONSTRUCTION_FINISHED || status == B_STATUS_WORKING)) {
 		if (B_CheckBuildingDependencesStatus(building))
-			CL_GameTimeStop();
+			CP_GameTimeStop();
 	} else {
-		CL_GameTimeStop();
+		CP_GameTimeStop();
 	}
 }
 
@@ -1132,7 +1132,7 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 	}
 
 	/* Finally update credits. */
-	CL_UpdateCredits(ccs.credits - price);
+	CP_UpdateCredits(ccs.credits - price);
 }
 
 /**
@@ -1234,7 +1234,7 @@ static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
 		const aircraft_t *firebirdAircraft = AIR_GetAircraft(firebird);
 		aircraft_t *aircraft = AIR_NewAircraft(base, firebirdAircraft);
-		CL_UpdateCredits(ccs.credits - firebirdAircraft->price);
+		CP_UpdateCredits(ccs.credits - firebirdAircraft->price);
 		if (!E_HireEmployeeByType(base, EMPL_PILOT))
 			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
 		/* Assign and equip soldiers on Dropships */
@@ -1245,7 +1245,7 @@ static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
 		const aircraft_t *stilettoAircraft = AIR_GetAircraft(stiletto);
 		aircraft_t *aircraft = AIR_NewAircraft(base, stilettoAircraft);
-		CL_UpdateCredits(ccs.credits - stilettoAircraft->price);
+		CP_UpdateCredits(ccs.credits - stilettoAircraft->price);
 		if (!E_HireEmployeeByType(base, EMPL_PILOT))
 			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
 		AIM_AutoEquipAircraft(aircraft);
@@ -1454,7 +1454,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 			buildingNew->timeStart = ccs.date;
 
 			/* pay */
-			CL_UpdateCredits(ccs.credits - buildingNew->fixCosts);
+			CP_UpdateCredits(ccs.credits - buildingNew->fixCosts);
 			/* Update number of buildings on the base. */
 			ccs.numBuildings[base->idx]++;
 
@@ -2253,7 +2253,7 @@ static int B_CheckBuildingConstruction (building_t *building)
 
 /**
  * @brief Updates base data
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @note called every "day"
  * @sa AIRFIGHT_ProjectileHitsBase
  */
@@ -2337,7 +2337,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	}
-	CL_UpdateCredits(ccs.credits + gained + forcedgained);
+	CP_UpdateCredits(ccs.credits + gained + forcedgained);
 
 	/* ship no longer has cargo aboard */
 	aircraft->itemTypes = 0;
@@ -2376,7 +2376,7 @@ void B_DumpAircraftToHomeBase (aircraft_t *aircraft)
  * @brief Do anything when dropship returns to base
  * @param[in] aircraft Returning aircraft.
  * @note Place here any stuff, which should be called when Drophip returns to base.
- * @sa CL_CampaignRunAircraft
+ * @sa AIR_CampaignRun
  */
 void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {

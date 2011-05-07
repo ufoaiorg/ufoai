@@ -80,7 +80,7 @@ static void GAME_CP_MissionAutoGo_f (void)
 	CP_CreateBattleParameters(mission, battleParam, MAP_GetMissionAircraft());
 
 	results->won = qfalse;
-	CL_GameAutoGo(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
+	CP_GameAutoGo(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
 
 	MAP_ResetAction();
 }
@@ -258,7 +258,7 @@ static void GAME_CP_CampaignListClick_f (void)
 static void GAME_CP_Start_f (void)
 {
 	/* get campaign - they are already parsed here */
-	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	campaign_t *campaign = CP_GetCampaign(cp_campaign->string);
 	if (!campaign)
 		return;
 
@@ -437,7 +437,7 @@ static void GAME_CP_Frame (void)
 		return;
 
 	/* advance time */
-	CL_CampaignRun(ccs.curCampaign);
+	CP_CampaignRun(ccs.curCampaign);
 }
 
 static const char* GAME_CP_GetTeamDef (void)
@@ -524,8 +524,8 @@ static void GAME_CP_InitStartup (void)
 	Cvar_ForceSet("sv_ai", "1");
 
 	/* reset campaign data */
-	CL_ResetSinglePlayerData();
-	CL_ReadSinglePlayerData();
+	CP_ResetCampaignData();
+	CP_ParseCampaignData();
 }
 
 static void GAME_CP_Shutdown (void)
@@ -539,7 +539,7 @@ static void GAME_CP_Shutdown (void)
 
 	CP_Shutdown();
 
-	CL_ResetSinglePlayerData();
+	CP_ResetCampaignData();
 
 	SV_Shutdown("Quitting server.", qfalse);
 }

@@ -121,7 +121,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	B_Destroy(base);
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 
 	/* we really don't want to use the fake aircraft anywhere */
 	MAP_SetMissionAircraft(NULL);
@@ -215,14 +215,14 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	MAP_SetMissionAircraft(&baseAttackFakeAircraft);
 	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
-	 * pointer for resolving the aircraft - only CL_GameAutoGo needs this */
-	MAP_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CL_UpdateCharacterStats*/
+	 * pointer for resolving the aircraft - only CP_GameAutoGo needs this */
+	MAP_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats*/
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
 	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do ?"), base->name);
 	UI_RegisterText(TEXT_POPUP, popupText);
 
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 	UI_PushWindow("popup_baseattack", NULL, NULL);
 }
 

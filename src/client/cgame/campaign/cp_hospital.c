@@ -63,7 +63,7 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 
 /**
  * @brief Checks health status of all employees in all bases.
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @note Called every day.
  */
 void HOS_HospitalRun (void)

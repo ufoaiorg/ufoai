@@ -395,7 +395,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 /**
  * @brief Update the installation delay of all slots of a given aircraft.
  * @note hourly called
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @sa AII_UpdateOneInstallationDelay
  */
 void AII_UpdateInstallationDelay (void)

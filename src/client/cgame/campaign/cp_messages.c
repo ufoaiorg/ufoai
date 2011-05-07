@@ -41,7 +41,7 @@ message_t *cp_messageStack;
 static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
 {
 	dateLong_t date;
-	CL_DateConvertLong(&message->date, &date);
+	CP_DateConvertLong(&message->date, &date);
 	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), date.year,
 		Date_GetMonthName(date.month - 1), date.day, date.hour, date.min);
 }

@@ -941,7 +941,7 @@ static void RS_TechnologyList_f (void)
 		Com_Printf("... researchable -> %i\n", tech->statusResearchable);
 
 		if (tech->statusResearchable) {
-			CL_DateConvertLong(&tech->preResearchedDate, &date);
+			CP_DateConvertLong(&tech->preResearchedDate, &date);
 			Com_Printf("... researchable date: %02i %02i %i\n", date.day, date.month, date.year);
 		}
 
@@ -958,7 +958,7 @@ static void RS_TechnologyList_f (void)
 			break;
 		case RS_FINISH:
 			Com_Printf("done\n");
-			CL_DateConvertLong(&tech->researchedDate, &date);
+			CP_DateConvertLong(&tech->researchedDate, &date);
 			Com_Printf("... research date: %02i %02i %i\n", date.day, date.month, date.year);
 			break;
 		default:

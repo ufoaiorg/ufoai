@@ -63,21 +63,21 @@ static inline void ResetInventoryList (void)
 
 static campaign_t *GetCampaign (void)
 {
-	return CL_GetCampaign(cp_campaign->string);
+	return CP_GetCampaign(cp_campaign->string);
 }
 
 static void ResetCampaignData (void)
 {
 	const campaign_t *campaign;
 
-	CL_ResetSinglePlayerData();
-	CL_ReadSinglePlayerData();
+	CP_ResetCampaignData();
+	CP_ParseCampaignData();
 	campaign = GetCampaign();
-	CL_ReadCampaignData(campaign);
+	CP_ReadCampaignData(campaign);
 
 	ResetInventoryList();
 
-	CL_UpdateCredits(MAX_CREDITS);
+	CP_UpdateCredits(MAX_CREDITS);
 
 	MAP_Shutdown();
 	MAP_Init(campaign->map);
@@ -122,7 +122,7 @@ static int UFO_InitSuiteCampaign (void)
 static int UFO_CleanSuiteCampaign (void)
 {
 	UI_Shutdown();
-	CL_ResetSinglePlayerData();
+	CP_ResetCampaignData();
 	TEST_Shutdown();
 	return 0;
 }
@@ -377,7 +377,7 @@ static void testAutoMissions (void)
 
 	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 2);
 
-	CL_GameAutoGo(mission, aircraft, campaign, &battleParameters, &result);
+	CP_GameAutoGo(mission, aircraft, campaign, &battleParameters, &result);
 
 	CU_ASSERT_TRUE(result.won);
 
@@ -905,7 +905,7 @@ static void testMarket (void)
 
 	BS_InitMarket(campaign);
 
-	CL_CampaignRunMarket(campaign);
+	CP_CampaignRunMarket(campaign);
 	/** @todo implement a check here */
 }
 
@@ -990,7 +990,7 @@ static void testCampaignRun (void)
 	startDay = ccs.date.day;
 	for (i = 0; i < seconds; i++) {
 		ccs.gameTimeScale = 1;
-		CL_CampaignRun(campaign);
+		CP_CampaignRun(campaign);
 	}
 	CU_ASSERT_EQUAL(ccs.date.day - startDay, days);
 
@@ -1086,10 +1086,10 @@ static void testCampaignDateHandling (void)
 	/** @todo fix magic number */
 	ccs.gameLapse = 7;
 	ccs.paid = qtrue;
-	CL_UpdateTime();
-	CL_CampaignRun(campaign);
+	CP_UpdateTime();
+	CP_CampaignRun(campaign);
 	CU_ASSERT_FALSE(ccs.paid);
-	CU_ASSERT_TRUE(CL_IsTimeStopped());
+	CU_ASSERT_TRUE(CP_IsTimeStopped());
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);

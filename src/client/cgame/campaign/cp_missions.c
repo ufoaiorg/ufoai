@@ -731,7 +731,7 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 	MS_AddNewMessage(_("Notice"), CP_MissionGetMessage(mission), qfalse, CP_MissionGetMessageLevel(mission), NULL);
 
 	mission->onGeoscape = qtrue;
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 	MAP_UpdateGeoscapeDock();
 }
 
@@ -1101,7 +1101,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 }
 
 /**
- * @sa CL_GameAutoGo
+ * @sa CP_GameAutoGo
  */
 void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, qboolean won)
 {
@@ -1123,14 +1123,14 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	/* add the looted goods to base storage and market */
 	base->storage = ccs.eMission;
 
-	CL_HandleNationData(campaign->minhappiness, won, mission, battleParameters->nation, &ccs.missionResults);
+	CP_HandleNationData(campaign->minhappiness, won, mission, battleParameters->nation, &ccs.missionResults);
 	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */
 	CP_ParseCharacterData(NULL);
 
 	/* update stats */
-	CL_UpdateCharacterStats(base, aircraft);
+	CP_UpdateCharacterStats(base, aircraft);
 
 	E_Foreach(EMPL_SOLDIER, employee) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft))
@@ -1562,7 +1562,7 @@ static int CP_SelectNewMissionType (void)
 
 /**
  * @brief Spawn new missions.
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @note daily called
  */
 void CP_SpawnNewMissions (void)

@@ -579,9 +579,9 @@ const char *AIR_GetAircraftString (aircraftType_t aircraftType)
 /**
  * @brief Some of the aircraft values needs special calculations when they
  * are shown in the menus
- * @sa CL_AircraftStatToName
+ * @sa UP_AircraftStatToName
  */
-int CL_AircraftMenuStatsValues (const int value, const int stat)
+int AIR_AircraftMenuStatsValues (const int value, const int stat)
 {
 	switch (stat) {
 	case AIR_STATS_SPEED:
@@ -1179,7 +1179,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			MAP_SetMissionAircraft(aircraft);
 			MAP_SelectMission(aircraft->mission);
 			MAP_SetInterceptorAircraft(aircraft);
-			CL_GameTimeStop();
+			CP_GameTimeStop();
 			UI_PushWindow("popup_intercept_ready", NULL, NULL);
 			break;
 		case AIR_RETURNING:
@@ -1250,16 +1250,16 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 
 /**
  * @brief Handles aircraft movement and actions in geoscape mode
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @param[in] campaign The campaign data structure
  * @param[in] dt time delta (may be 0 if radar overlay should be updated but no aircraft moves)
  * @param[in] updateRadarOverlay True if radar overlay should be updated (not needed if geoscape isn't updated)
  */
-void CL_CampaignRunAircraft (const campaign_t* campaign, int dt, qboolean updateRadarOverlay)
+void AIR_CampaignRun (const campaign_t* campaign, int dt, qboolean updateRadarOverlay)
 {
 	/* true if at least one aircraft moved: radar overlay must be updated
 	 * This is static because aircraft can move without radar being
-	 * updated (sa CL_CampaignRun) */
+	 * updated (sa CP_CampaignRun) */
 	static qboolean radarOverlayReset = qfalse;
 	aircraft_t *aircraft;
 

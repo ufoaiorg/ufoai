@@ -46,9 +46,8 @@ typedef struct components_s {
 	int itemAmount2[MAX_COMP];		/**< How many items of this type are in this assembly when it crashed (max-value?). */
 } components_t;
 
-void CL_ParseCampaign(const char *name, const char **text);
-void CL_ScriptSanityCheck(void);
-components_t *CL_GetComponentsByItem(const objDef_t *item);
-components_t *CL_GetComponentsByID(const char *id);
+void CP_ScriptSanityCheck(void);
+components_t *CP_GetComponentsByItem(const objDef_t *item);
+components_t *CP_GetComponentsByID(const char *id);
 
 #endif

@@ -390,7 +390,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
  */
-void CL_HandleNationData (float minHappiness, qboolean won, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
+void CP_HandleNationData (float minHappiness, qboolean won, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
 {
 	int i;
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
@@ -402,7 +402,7 @@ void CL_HandleNationData (float minHappiness, qboolean won, mission_t * mis, con
 	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
 	 * if the mission objective is actually to save civilians. */
 	if (civilianSum == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CP_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
 		performance = 0.0f;
 	} else {
 		/* Calculate how well the mission went. */
@@ -458,9 +458,9 @@ static void CP_CheckMissionEnd (const campaign_t* campaign)
 /**
  * @brief Converts a number of second into a char to display.
  * @param[in] second Number of second.
- * @todo Abstract the code into an extra function (DateConvertSeconds?) see also CL_DateConvertLong
+ * @todo Abstract the code into an extra function (DateConvertSeconds?) see also CP_DateConvertLong
  */
-const char* CL_SecondConvert (int second)
+const char* CP_SecondConvert (int second)
 {
 	static char buffer[6];
 	const int hour = second / SECONDS_PER_HOUR;
@@ -478,7 +478,7 @@ static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31
  * @param[in] date Contains the date to be converted.
  * @param[out] dateLong The converted date.
   */
-void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
+void CP_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 {
 	byte i;
 	int d;
@@ -512,12 +512,12 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
  * @param[in] campaign The campaign data structure
  * @param[in] dt Elapsed game seconds since last call.
  * @param[in] updateRadarOverlay true if radar overlay should be updated (only for drawing purpose)
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
-static void CL_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, qboolean updateRadarOverlay)
+static void CP_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, qboolean updateRadarOverlay)
 {
 	UFO_CampaignRunUFOs(campaign, dt);
-	CL_CampaignRunAircraft(campaign, dt, updateRadarOverlay);
+	AIR_CampaignRun(campaign, dt, updateRadarOverlay);
 
 	AIRFIGHT_CampaignRunBaseDefence(dt);
 	AIRFIGHT_CampaignRunProjectiles(campaign, dt);
@@ -568,9 +568,9 @@ static inline void CP_AdvanceTimeBySeconds (int seconds)
  * @note Called for node types UI_MAP and UI_3DMAP
  * @sa NAT_HandleBudget
  * @sa B_UpdateBaseData
- * @sa CL_CampaignRunAircraft
+ * @sa AIR_CampaignRun
  */
-void CL_CampaignRun (campaign_t *campaign)
+void CP_CampaignRun (campaign_t *campaign)
 {
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
@@ -587,7 +587,7 @@ void CL_CampaignRun (campaign_t *campaign)
 		dateLong_t date, oldDate;
 		const int checks = (currentinterval + (int)floor(ccs.timer)) / DETECTION_INTERVAL;
 
-		CL_DateConvertLong(&ccs.date, &oldDate);
+		CP_DateConvertLong(&ccs.date, &oldDate);
 
 		currenthour = (int)floor(currentsecond / SECONDS_PER_HOUR);
 		currentmin = (int)floor(currentsecond / SECONDS_PER_MINUTE);
@@ -600,10 +600,10 @@ void CL_CampaignRun (campaign_t *campaign)
 			ccs.timer -= dt;
 			currentsecond += dt;
 			CP_AdvanceTimeBySeconds(dt);
-			CL_CampaignFunctionPeriodicCall(campaign, dt, qfalse);
+			CP_CampaignFunctionPeriodicCall(campaign, dt, qfalse);
 
 			/* if something stopped time, we must stop here the loop */
-			if (CL_IsTimeStopped()) {
+			if (CP_IsTimeStopped()) {
 				ccs.timer = 0.0f;
 				break;
 			}
@@ -645,7 +645,7 @@ void CL_CampaignRun (campaign_t *campaign)
 			CP_SpreadXVI();
 			NAT_UpdateHappinessForAllNations(campaign->minhappiness);
 			AB_BaseSearchedByNations();
-			CL_CampaignRunMarket(campaign);
+			CP_CampaignRunMarket(campaign);
 			CP_CheckCampaignEvents(campaign);
 			CP_ReduceXVIEverywhere();
 			/* should be executed after all daily event that could
@@ -657,7 +657,7 @@ void CL_CampaignRun (campaign_t *campaign)
 			/* check for campaign events
 			 * aircraft and UFO already moved during radar detection (see above),
 			 * just make them move the missing part -- if any */
-			CL_CampaignFunctionPeriodicCall(campaign, dt, qtrue);
+			CP_CampaignFunctionPeriodicCall(campaign, dt, qtrue);
 		}
 
 		UP_GetUnreadMails();
@@ -669,7 +669,7 @@ void CL_CampaignRun (campaign_t *campaign)
 		CAP_CheckOverflow();
 		BDEF_AutoSelectTarget();
 
-		CL_DateConvertLong(&ccs.date, &date);
+		CP_DateConvertLong(&ccs.date, &date);
 		/* every new month we have to handle the budget */
 		if (oldDate.month < date.month && ccs.paid && B_AtLeastOneExists()) {
 			NAT_BackupMonthlyData();
@@ -680,7 +680,7 @@ void CL_CampaignRun (campaign_t *campaign)
 
 		CP_UpdateXVIMapButton();
 		/* set time cvars */
-		CL_UpdateTime();
+		CP_UpdateTime();
 	}
 }
 
@@ -700,7 +700,7 @@ inline qboolean CP_CheckCredits (int costs)
  * @param[in] credits The new credits value
  * Checks whether credits are bigger than MAX_CREDITS
  */
-void CL_UpdateCredits (int credits)
+void CP_UpdateCredits (int credits)
 {
 	/* credits */
 	if (credits > MAX_CREDITS)
@@ -758,7 +758,7 @@ qboolean CP_LoadXML (xmlNode_t *parent)
 		return qfalse;
 	}
 
-	campaign = CL_GetCampaign(name);
+	campaign = CP_GetCampaign(name);
 	if (!campaign) {
 		Com_Printf("......campaign \"%s\" doesn't exist.\n", name);
 		return qfalse;
@@ -769,7 +769,7 @@ qboolean CP_LoadXML (xmlNode_t *parent)
 	MAP_Reset(campaign->map);
 
 	/* read credits */
-	CL_UpdateCredits(XML_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
+	CP_UpdateCredits(XML_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
 	ccs.paid = XML_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, qfalse);
 
 	cls.nextUniqueCharacterNumber = XML_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0);
@@ -928,7 +928,7 @@ void CP_StartSelectedMission (void)
  * @brief Collect alien bodies for auto missions
  * @note collect all aliens as dead ones
  */
-static void CL_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_t *battleParameters)
+static void CP_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_t *battleParameters)
 {
 	int i;
 	int aliens = battleParameters->aliens;
@@ -967,7 +967,7 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_
  * @sa CP_MissionEnd
  * @sa AL_CollectingAliens
  */
-void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
+void CP_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
 {
 	autoMissionBattle_t autoBattle;
 
@@ -1006,14 +1006,14 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
 		results->won = qfalse;
 
-	CL_HandleNationData(campaign->minhappiness, results->won, mission, battleParameters->nation, results);
+	CP_HandleNationData(campaign->minhappiness, results->won, mission, battleParameters->nation, results);
 
 	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
 		results->won = qtrue;
 
 	CP_CheckLostCondition(campaign);
 
-	CL_AutoMissionAlienCollect(aircraft, battleParameters);
+	CP_AutoMissionAlienCollect(aircraft, battleParameters);
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(mission, results->won);
@@ -1058,7 +1058,7 @@ void CP_InitMissionResults (qboolean won, const missionResults_t *missionResults
  * @param[in] chr The character to check a potential promotion for
  * @todo (Zenerka 20080301) extend ranks and change calculations here.
  */
-static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_t* chr)
+static qboolean CP_ShouldUpdateSoldierRank (const rank_t *rank, const character_t* chr)
 {
 	if (rank->type != EMPL_SOLDIER)
 		return qfalse;
@@ -1084,7 +1084,7 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
  * @param[in] aircraft The aircraft used for the mission.
  * @note Soldier promotion is being done here.
  */
-void CL_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
+void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 {
 	employee_t *employee = NULL;
 
@@ -1110,7 +1110,7 @@ void CL_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 				int j;
 				for (j = ccs.numRanks - 1; j > chr->score.rank; j--) {
 					const rank_t *rank = CL_GetRankByIdx(j);
-					if (CL_ShouldUpdateSoldierRank(rank, chr)) {
+					if (CP_ShouldUpdateSoldierRank(rank, chr)) {
 						chr->score.rank = j;
 						if (chr->HP > 0)
 							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
@@ -1131,7 +1131,7 @@ void CL_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
  * @brief Debug function to add one item of every type to base storage and mark them collected.
  * @note Command to call this: debug_additems
  */
-static void CL_DebugAllItems_f (void)
+static void CP_DebugAllItems_f (void)
 {
 	int i;
 	base_t *base;
@@ -1164,7 +1164,7 @@ static void CL_DebugAllItems_f (void)
  * @brief Debug function to show items in base storage.
  * @note Command to call this: debug_listitem
  */
-static void CL_DebugShowItems_f (void)
+static void CP_DebugShowItems_f (void)
 {
 	int i;
 	base_t *base;
@@ -1190,9 +1190,9 @@ static void CL_DebugShowItems_f (void)
 /**
  * @brief Debug function to set the credits to max
  */
-static void CL_DebugFullCredits_f (void)
+static void CP_DebugFullCredits_f (void)
 {
-	CL_UpdateCredits(MAX_CREDITS);
+	CP_UpdateCredits(MAX_CREDITS);
 }
 #endif
 
@@ -1202,20 +1202,20 @@ static void CL_DebugFullCredits_f (void)
 static const cmdList_t game_commands[] = {
 	{"update_base_radar_coverage", RADAR_UpdateBaseRadarCoverage_f, "Update base radar coverage"},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
-	{"stats_update", CL_StatsUpdate_f, NULL},
+	{"stats_update", CP_StatsUpdate_f, NULL},
 	{"game_go", CP_StartSelectedMission, NULL},
-	{"game_timestop", CL_GameTimeStop, NULL},
-	{"game_timeslow", CL_GameTimeSlow, NULL},
-	{"game_timefast", CL_GameTimeFast, NULL},
-	{"game_settimeid", CL_SetGameTime_f, NULL},
+	{"game_timestop", CP_GameTimeStop, NULL},
+	{"game_timeslow", CP_GameTimeSlow, NULL},
+	{"game_timefast", CP_GameTimeFast, NULL},
+	{"game_settimeid", CP_SetGameTime_f, NULL},
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"map_zoom", MAP_Zoom_f, NULL},
 	{"map_scroll", MAP_Scroll_f, NULL},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 #ifdef DEBUG
-	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
-	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
-	{"debug_listitem", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
+	{"debug_fullcredits", CP_DebugFullCredits_f, "Debug function to give the player full credits"},
+	{"debug_additems", CP_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
+	{"debug_listitem", CP_DebugShowItems_f, "Debug function to show all items in base storage"},
 #endif
 	{NULL, NULL, NULL}
 };
@@ -1291,7 +1291,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 {
 	ccs.curCampaign = campaign;
 
-	CL_ReadCampaignData(campaign);
+	CP_ReadCampaignData(campaign);
 
 	/* initialise date */
 	ccs.date = campaign->date;
@@ -1300,14 +1300,14 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 		ccs.date.sec -= SECONDS_PER_DAY;
 		ccs.date.day++;
 	}
-	CL_UpdateTime();
+	CP_UpdateTime();
 
 	RS_InitTree(campaign, load);		/**< Initialise all data in the research tree. */
 	RS_MarkResearchable(qtrue, NULL);
 
 	CP_AddCampaignCommands();
 
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
@@ -1338,7 +1338,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	Vector2Set(ccs.smoothFinal2DGeoscapeCenter, 0.5, 0.5);
 	VectorSet(ccs.smoothFinalGlobeAngle, 0, GLOBE_ROTATE, 0);
 
-	CL_UpdateCredits(campaign->credits);
+	CP_UpdateCredits(campaign->credits);
 
 	/* Initialize alien interest */
 	CP_ResetAlienInterest();
@@ -1357,7 +1357,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	/* now check the parsed values for errors that are not caught at parsing stage */
 	if (!load)
-		CL_ScriptSanityCheck();
+		CP_ScriptSanityCheck();
 }
 
 /**
@@ -1396,7 +1396,7 @@ void CP_Shutdown (void)
  * @param name Name of the campaign
  * @return campaign_t pointer to campaign with name or NULL if not found
  */
-campaign_t* CL_GetCampaign (const char* name)
+campaign_t* CP_GetCampaign (const char* name)
 {
 	campaign_t* campaign;
 	int i;
@@ -1415,16 +1415,16 @@ campaign_t* CL_GetCampaign (const char* name)
 /**
  * @brief Will clear most of the parsed singleplayer data
  * @sa INV_InitInventory
- * @sa CL_ReadSinglePlayerData
+ * @sa CP_ParseCampaignData
  */
-void CL_ResetSinglePlayerData (void)
+void CP_ResetCampaignData (void)
 {
 	int i;
 
 	cp_messageStack = NULL;
 
 	/* cleanup dynamic mails */
-	CL_FreeDynamicEventMail();
+	CP_FreeDynamicEventMail();
 
 	Mem_FreePool(cp_campaignPool);
 
@@ -1452,7 +1452,7 @@ void CL_ResetSinglePlayerData (void)
 /**
  * @brief Debug function to increase the kills and test the ranks
  */
-static void CL_DebugChangeCharacterStats_f (void)
+static void CP_DebugChangeCharacterStats_f (void)
 {
 	int j;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -1474,7 +1474,7 @@ static void CL_DebugChangeCharacterStats_f (void)
 			chr->score.kills[j]++;
 	}
 	if (base->aircraftCurrent)
-		CL_UpdateCharacterStats(base, base->aircraftCurrent);
+		CP_UpdateCharacterStats(base, base->aircraftCurrent);
 }
 
 #endif /* DEBUG */
@@ -1636,7 +1636,7 @@ void CP_InitStartup (const cgame_import_t *import)
 
 	/* commands */
 #ifdef DEBUG
-	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
+	Cmd_AddCommand("debug_statsupdate", CP_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 #endif
 
 	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, "This will never stop the time on geoscape and print information about spawned missions");

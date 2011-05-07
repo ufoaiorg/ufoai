@@ -223,7 +223,7 @@ static void B_BuildBase_f (void)
 		if (!base)
 			Com_Error(ERR_DROP, "Cannot build base");
 
-		CL_UpdateCredits(ccs.credits - campaign->basecost);
+		CP_UpdateCredits(ccs.credits - campaign->basecost);
 		nation = MAP_GetNation(base->pos);
 		if (nation)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
@@ -283,7 +283,7 @@ static void B_BaseInit_f (void)
 		return;
 
 	/* make sure the credits cvar is up-to-date */
-	CL_UpdateCredits(ccs.credits);
+	CP_UpdateCredits(ccs.credits);
 
 	Cvar_SetValue("mn_base_num_aircraft", AIR_BaseCountAircraft(base));
 

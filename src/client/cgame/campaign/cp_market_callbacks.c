@@ -324,7 +324,7 @@ static void BS_BuyType (const base_t *base)
 	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
 
-	CL_UpdateCredits(ccs.credits);
+	CP_UpdateCredits(ccs.credits);
 
 	bsMarketNames = NULL;
 	bsMarketStorage = NULL;
@@ -640,7 +640,7 @@ static void BS_BuyAircraft_f (void)
 			} else {
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
 				BS_RemoveAircraftFromMarket(aircraftTemplate, 1);
-				CL_UpdateCredits(ccs.credits - price);
+				CP_UpdateCredits(ccs.credits - price);
 				AIR_NewAircraft(base, aircraftTemplate);
 				Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(FILTER_AIRCRAFT)));
 			}
@@ -771,7 +771,7 @@ static void BS_BuyItem_f (void)
 
 				/* Update Display/List and credits. */
 				BS_BuyType(base);
-				CL_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
+				CP_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
 			} else {
 				Com_Printf("Could not buy this item.\n");
 			}
@@ -844,7 +844,7 @@ static void BS_SellItem_f (void)
 				BS_AddItemToMarket(ugvWeapon, 1);
 			}
 			BS_BuyType(base);
-			CL_UpdateCredits(ccs.credits + ugv->price);	/** @todo make this depend on market as well? */
+			CP_UpdateCredits(ccs.credits + ugv->price);	/** @todo make this depend on market as well? */
 		}
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
@@ -861,7 +861,7 @@ static void BS_SellItem_f (void)
 			B_UpdateStorageAndCapacity(base, item, -numItems, qfalse, qfalse);
 			BS_AddItemToMarket(item, numItems);
 			BS_BuyType(base);
-			CL_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(item) * numItems);
+			CP_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(item) * numItems);
 			BS_UpdateItem(base, num);
 		}
 	}
