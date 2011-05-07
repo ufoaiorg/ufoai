@@ -1445,9 +1445,6 @@ static const value_t aircraft_vals[] = {
  * @sa CL_ParseClientData
  * @sa CL_ParseScriptSecond
  * @note parses the aircraft into our aircraft_sample array to use as reference
- * @note This parsing function writes into two different memory pools
- * one is the cp_campaignPool which is cleared on every new game, the other is
- * cl_genericPool which is existent until you close the game
  */
 void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAircraftItems)
 {
@@ -1485,7 +1482,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		aircraftTemplate->tpl = aircraftTemplate;
-		aircraftTemplate->id = Mem_PoolStrDup(name, cl_genericPool, 0);
+		aircraftTemplate->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 		aircraftTemplate->status = AIR_HOME;
 		/* default is no ufo */
 		aircraftTemplate->ufotype = UFO_MAX;
@@ -1668,7 +1665,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					case V_TRANSLATION_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cl_genericPool, 0);
+						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
 						break;
 					default:
 						Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
@@ -1730,7 +1727,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 								case V_TRANSLATION_STRING:
 									token++;
 								case V_CLIENT_HUNK_STRING:
-									Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cl_genericPool, 0);
+									Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
 									break;
 								default:
 									Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
