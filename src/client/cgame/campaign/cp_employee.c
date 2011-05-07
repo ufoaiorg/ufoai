@@ -263,6 +263,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
 	employee_t *employee;
 
+	employee = NULL;
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee)) {
 			/* If no type was given we return the first ugv we find. */
@@ -320,6 +321,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
 
+	employee = NULL;
 	LIST_Foreach(hiredEmployees, employee_t, employee) {
 		if ((employee->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
 		 && E_IsInBase(employee, base)) {		/* It has to be in the defined base. */
