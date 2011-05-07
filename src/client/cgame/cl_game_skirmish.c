@@ -25,12 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../cl_shared.h"
 #include "cl_game.h"
-#include "cl_game_team.h"
 #include "cl_game_skirmish.h"
-#include "../cl_team.h"
-#include "../cl_inventory.h"
-#include "../ui/ui_main.h"
-#include "../ui/ui_popup.h"
+#include "../ui/ui_data.h"
 
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 
@@ -75,6 +71,11 @@ void Com_DPrintf (int level, const char *msg, ...)
 	cgi->Com_DPrintf(level, "%s", text);
 }
 #endif
+
+static inline const char* GAME_SK_GetRandomMapAssemblyNameForCraft (const char *name)
+{
+	return cgi->Com_GetRandomMapAssemblyNameForCraft(name);
+}
 
 /**
  * @brief Register some data in the shared client/server structs to ensure that e.g. every known
@@ -197,7 +198,7 @@ static void GAME_SK_ChangeEquip_f (void)
  */
 static void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
-	char resultText[UI_MAX_SMALLTEXTLEN];
+	char resultText[1024];
 	int enemiesKilled, enemiesStunned;
 	int i;
 	const int team = cgi->GAME_GetCurrentTeam();
@@ -245,7 +246,7 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 		cgi->UI_ExecuteConfunc("skirmish_hide_dropships true");
 		cgi->Cvar_Set("rm_drop", "");
 	} else {
-		const char *rma = cgi->Com_GetRandomMapAssemblyNameForCraft((const char *)dropships->data);
+		const char *rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char *)dropships->data);
 		cgi->Cvar_Set("rm_drop", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_DROPSHIPS), dropships);
 
@@ -265,7 +266,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos true");
 		cgi->Cvar_Set("rm_ufo", "");
 	} else {
-		const char *rma = cgi->Com_GetRandomMapAssemblyNameForCraft((const char *)ufos->data);
+		const char *rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char *)ufos->data);
 		cgi->Cvar_Set("rm_ufo", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_UFOS), ufos);
 
@@ -299,17 +300,17 @@ static void GAME_InitMenuOptions (void)
 
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = cgi->Com_UFOTypeToShortName(i);
-		cgi->UI_AddOption(&ufoOptions, shortName, shortName, cgi->Com_GetRandomMapAssemblyNameForCraft(shortName));
+		cgi->UI_AddOption(&ufoOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = cgi->Com_UFOCrashedTypeToShortName(i);
-		cgi->UI_AddOption(&ufoOptions, shortName, shortName, cgi->Com_GetRandomMapAssemblyNameForCraft(shortName));
+		cgi->UI_AddOption(&ufoOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	cgi->UI_RegisterOption(OPTION_UFOS, ufoOptions);
 
 	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = cgi->Com_DropShipTypeToShortName(i);
-		cgi->UI_AddOption(&aircraftOptions, shortName, shortName, cgi->Com_GetRandomMapAssemblyNameForCraft(shortName));
+		cgi->UI_AddOption(&aircraftOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	cgi->UI_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
