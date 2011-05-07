@@ -38,11 +38,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CP_HarvestMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(-0.3f, INTERESTCATEGORY_HARVEST);
-	CL_ChangeIndividualInterest(0.2f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CP_ChangeIndividualInterest(-0.3f, INTERESTCATEGORY_HARVEST);
+	CP_ChangeIndividualInterest(0.2f, INTERESTCATEGORY_RECON);
+	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 	if (CP_IsXVIResearched())
-		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
+		CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);
 }
@@ -53,9 +53,9 @@ static void CP_HarvestMissionIsSuccess (mission_t *mission)
  */
 void CP_HarvestMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	CL_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_BASE_ATTACK);
-	CL_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_TERROR_ATTACK);
+	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+	CP_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_TERROR_ATTACK);
 
 	CP_MissionRemove(mission);
 }

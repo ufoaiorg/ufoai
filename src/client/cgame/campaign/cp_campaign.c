@@ -1411,7 +1411,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	CL_UpdateCredits(campaign->credits);
 
 	/* Initialize alien interest */
-	CL_ResetAlienInterest();
+	CP_ResetAlienInterest();
 
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
