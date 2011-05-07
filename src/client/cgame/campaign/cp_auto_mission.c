@@ -192,4 +192,26 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	}
 
 	/* Set up teams */
+	double teamPooledHealth[MAX_ACTIVETEAM];
+	double teamPooledHealthMax[MAX_ACTIVETEAM];
+	double teamPooledUnitsHealthy[MAX_ACTIVETEAM];
+	double teamPooledUnitsTotal[MAX_ACTIVETEAM];
+	int currentUnit;
+
+	for (count = 0; count < MAX_ACTIVETEAM; count++) {
+		teamPooledHealth = 0.0;
+		teamPooledHealthMax = 0.0;
+		teamPooledUnitsHealthy = 0.0;
+		teamPooledUnitsTotal = 0.0;
+		if (battle->teamActive[count] == qtrue) {
+			for (currentUnit = 0; currentUnit < battle->nUnits[count]; currentUnit++) {
+				if (battle->unitHealth[count][currentUnit] > 0) {
+					teamPooledHealth[count] += double (battle->unitHealth[count][currentUnit]);
+					teamPooledHealthMax[count] += double (battle->unitHealthMax[count][currentUnit]);
+					teamPooledUnitsTotal[count] += 1.0;
+					if (battle->unitHealth[count][currentUnit] == battle->unitHealthMax[count][currentUnit]) teamPooledUnitsHealthy[count] += 1.0;
+				}
+			}
+		}
+	}
 }
