@@ -104,6 +104,8 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add team to auto battle where all the units on the team are DEAD!");
 		Com_DPrintf(DEBUG_CLIENT, "--- Note: This team will LOSE the battle by default.");
 	}
+
+	if (teamSize > 0) battle->teamActive[teamNum] = qtrue;
 }
 
 /* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
@@ -145,10 +147,12 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	}
 	int unitTotal = 0;
 	int isHostileTotal = 0;
+	int totalActiveTeams = 0;
 	int isHostileCount;
 	int count;
 	for (count = 0; count < MAX_ACTIVETEAM; count++) {
 		unitTotal += battle->nUnits[count];
+		if (battle->teamActive[count] == qtrue) totalActiveTeams++;
 		for (isHostileCount = 0; isHostileCount < MAX_ACTIVETEAM; isHostileCount++) {
 			if (battle->nUnits[isHostileCount] > 0) {
 				if (battle->isHostile[count][isHostileCount] == qtrue) isHostileTotal++;
@@ -167,5 +171,14 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 		Com_DPrintf(DEBUG_CLIENT, "Error: No team has any other team hostile toward it, no battle is possible!");
 		checkError = qtrue;
 	}
+	if (totalActiveTeams <= 0) {
+		Com_DPrintf(DEBUG_CLIENT, "Error: No Active teams detected in Auto Battle!");
+		checkError = qtrue;
+	}
+	if (totalActiveTeams == 1) {
+		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.");
+	}
 	assert(checkError == qfalse);
+
+	/* Set up teams */
 }
