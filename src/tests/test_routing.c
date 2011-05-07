@@ -218,7 +218,7 @@ static void testMoveEntities (void)
 	vec3_t vec;
 	pathing_t *path = Mem_AllocType(pathing_t);
 	pos_t *forbiddenList[MAX_FORBIDDENLIST];
-	int forbiddenListLength;
+	int forbiddenListLength = 0;
 	const byte crouchingState = 0;
 	const int distance = MAX_ROUTE;
 
