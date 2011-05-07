@@ -148,14 +148,18 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	int unitTotal = 0;
 	int isHostileTotal = 0;
 	int totalActiveTeams = 0;
+	int lastActiveTeam = -1;
 	int isHostileCount;
 	int count;
 	for (count = 0; count < MAX_ACTIVETEAM; count++) {
 		unitTotal += battle->nUnits[count];
-		if (battle->teamActive[count] == qtrue) totalActiveTeams++;
+		if (battle->teamActive[count]) {
+			lastActiveTeam = count;
+			totalActiveTeams++;
+		}
 		for (isHostileCount = 0; isHostileCount < MAX_ACTIVETEAM; isHostileCount++) {
 			if (battle->nUnits[isHostileCount] > 0) {
-				if (battle->isHostile[count][isHostileCount] == qtrue) isHostileTotal++;
+				if (battle->isHostile[count][isHostileCount] == qtrue && battle->teamActive[count] == qtrue) isHostileTotal++;
 			}
 		}
 	}
@@ -179,6 +183,13 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.");
 	}
 	assert(checkError == qfalse);
+
+	/* Quick easy victory check */
+	if (totalActiveTeams == 1) {
+		battle->winningTeam = lastActiveTeam;
+		battle->hasBeenFought = qtrue;
+		return;
+	}
 
 	/* Set up teams */
 }
