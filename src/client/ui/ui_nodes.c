@@ -711,7 +711,7 @@ static void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 		behaviour->super = UI_GetNodeBehaviour(behaviour->extends);
 		UI_InitializeNodeBehaviour(behaviour->super);
 
-		while (qtrue) {
+		for (;;) {
 			const size_t pos = virtualFunctions[i];
 			uintptr_t superFunc;
 			uintptr_t func;
