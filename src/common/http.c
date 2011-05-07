@@ -224,7 +224,7 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
-	curl_easy_setopt(curl, CURLOPT_URL, buf);
+	curl_easy_setopt(curl, CURLOPT_URL, url);
 	curl_easy_perform(curl);
 
 	curl_easy_cleanup(curl);
