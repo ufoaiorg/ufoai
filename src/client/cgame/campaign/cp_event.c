@@ -89,12 +89,12 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 
 /**
  * @brief Make sure, that the linked list is freed with every new game
- * @sa CL_ResetSinglePlayerData
+ * @sa CP_ResetCampaignData
  */
-void CL_FreeDynamicEventMail (void)
+void CP_FreeDynamicEventMail (void)
 {
 	/* the pointers are not freed, this is done with the
-	 * pool clear in CL_ResetSinglePlayerData */
+	 * pool clear in CP_ResetCampaignData */
 	LIST_Delete(&eventMails);
 }
 
@@ -102,7 +102,7 @@ void CL_FreeDynamicEventMail (void)
  * @brief Use this function to create new eventmails with dynamic body content
  * @sa CL_GetEventMail
  * @note The pointers in the original eventmail are not freed - we still need this memory later!!
- * @sa CL_ResetSinglePlayerData
+ * @sa CP_ResetCampaignData
  * @sa UR_SendMail
  * @param[in] id eventmail id of the source mail parsed from events.ufo
  * @param[in] newID the new id for the dynamic mail (needed to seperate the new mail
@@ -121,7 +121,7 @@ eventMail_t* CL_NewEventMail (const char *id, const char *newID, const char *bod
 	if (!mail)
 		return NULL;
 
-	/* cp_campaignPool is freed with every new game in CL_ResetSinglePlayerData */
+	/* cp_campaignPool is freed with every new game in CP_ResetCampaignData */
 	mail->id = Mem_PoolStrDup(newID, cp_campaignPool, 0);
 
 	/* maybe we want to use the old body */
@@ -351,7 +351,7 @@ void CL_EventAddMail_f (void)
 
 	if (!eventMail->date) {
 		dateLong_t date;
-		CL_DateConvertLong(&ccs.date, &date);
+		CP_DateConvertLong(&ccs.date, &date);
 		Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 			date.year, Date_GetMonthName(date.month - 1), date.day);
 		eventMail->date = Mem_PoolStrDup(dateBuf, cp_campaignPool, 0);

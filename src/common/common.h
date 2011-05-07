@@ -247,7 +247,7 @@ extern cvar_t* sys_os;
  * @brief Engine-side time information in the game.
  * @note Use this in your custom structs that need to get saved or sent over the network.
  * @sa dateLong_t	For runtime use (human readable).
- * @sa CL_DateConvertLong
+ * @sa CP_DateConvertLong
  */
 typedef struct date_s {
 	int day;	/**< Number of elapsed days since 1st january of year 0 */

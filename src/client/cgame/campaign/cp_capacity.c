@@ -212,7 +212,7 @@ int CAP_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
 
 /**
  * @brief Checks capacity overflows on bases
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
 void CAP_CheckOverflow (void)
 {

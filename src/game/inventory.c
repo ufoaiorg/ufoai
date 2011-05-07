@@ -931,7 +931,6 @@ static int I_GetUsedSlots (inventoryInterface_t* self)
  * @param[in] csi The client-server-information structure
  * @param[in] import Pointers to the lifecycle functions
  * @sa G_Init
- * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
 void INV_InitInventory (const char *name, inventoryInterface_t *interface, const csi_t* csi, const inventoryImport_t *import)

@@ -69,7 +69,7 @@ static qboolean SAV_GameActionsAfterLoad (void)
 	result = result && PR_PostLoadInit();
 
 	/* Make sure the date&time is displayed when loading. */
-	CL_UpdateTime();
+	CP_UpdateTime();
 
 	/* Update number of UFO detected by radar */
 	RADAR_SetRadarAfterLoading();
@@ -287,7 +287,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	XML_AddString(node, SAVE_COMMENT, comment);
 	XML_AddString(node, SAVE_UFOVERSION, UFO_VERSION);
 	XML_AddString(node, SAVE_REALDATE, timeStampBuffer);
-	CL_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
 	XML_AddString(node, SAVE_GAMEDATE, message);
@@ -306,7 +306,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	header.version = LittleLong(SAVE_FILE_VERSION);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
-	CL_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
 	Q_strncpyz(header.realDate, timeStampBuffer, sizeof(header.realDate));

@@ -241,7 +241,7 @@ employeeType_t E_GetEmployeeType (const char* type)
 
 /**
  * @brief Clears the employees list for loaded and new games
- * @sa CL_ResetSinglePlayerData
+ * @sa CP_ResetCampaignData
  * @sa E_DeleteEmployee
  */
 void E_ResetEmployees (void)

@@ -300,10 +300,8 @@ qboolean B_BuildingScriptSanityCheck (void)
 			Com_Printf("...... could not get pedia entry tech (%s) for building '%s'\n", b->pedia, b->id);
 		}
 	}
-	if (!error)
-		return qtrue;
-	else
-		return qfalse;
+
+	return !error;
 }
 
 /**

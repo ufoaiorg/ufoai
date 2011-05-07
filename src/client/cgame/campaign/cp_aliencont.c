@@ -130,7 +130,7 @@ void AL_FillInContainment (base_t *base)
  * @brief Collecting stunned aliens and alien bodies after the mission.
  * @param[in] aircraft Pointer to the aircraft with cargo.
  * @sa CL_ParseResults
- * @sa CL_GameAutoGo
+ * @sa CP_GameAutoGo
  */
 void AL_CollectingAliens (aircraft_t *aircraft)
 {

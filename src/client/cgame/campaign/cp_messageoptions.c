@@ -195,7 +195,7 @@ message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *t
 	if (settings->doNotify)
 		result = MS_AddNewMessageSound(title, text, popup, type, pedia, settings->doSound);
 	if (settings->doPause)
-		CL_GameTimeStop();
+		CP_GameTimeStop();
 	return result;
 }
 

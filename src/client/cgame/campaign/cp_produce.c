@@ -562,11 +562,11 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 		prod->amount--;
 
 		if (PR_IsItem(prod)) {
-			CL_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item));
+			CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item));
 			/* Now add it to equipment and update capacity. */
 			B_UpdateStorageAndCapacity(base, prod->data.data.item, 1, qfalse, qfalse);
 		} else if (PR_IsAircraft(prod)) {
-			CL_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft));
+			CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft));
 			/* Now add new aircraft. */
 			AIR_NewAircraft(base, prod->data.data.aircraft);
 		}
@@ -679,7 +679,7 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 /**
  * @brief Checks whether an item is finished.
  * @note One call each game time minute
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @sa PR_DisassemblingFrame
  * @sa PR_ProductionFrame
  */

@@ -41,7 +41,7 @@ Backend functions
 
 /**
  * @brief Function to process active recoveries.
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
 void UR_ProcessActive (void)
 {
@@ -114,7 +114,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	/* we can store it there */
 	ufo.idx = ccs.campaignStats.ufosStored++;
 	Q_strncpyz(ufo.id, ufoTemplate->id, sizeof(ufo.id));
-	ufo.comp = CL_GetComponentsByID(ufo.id);
+	ufo.comp = CP_GetComponentsByID(ufo.id);
 	assert(ufo.comp);
 
 	ufo.installation = installation;
@@ -345,7 +345,7 @@ qboolean US_LoadXML (xmlNode_t *p)
 			Com_Printf("UFO has no/invalid aircraftTemplare assigned\n");
 			continue;
 		}
-		ufo.comp = CL_GetComponentsByID(ufo.id);
+		ufo.comp = CP_GetComponentsByID(ufo.id);
 		if (!ufo.comp) {
 			Com_Printf("UFO has no/invalid components set\n");
 			continue;
@@ -376,7 +376,7 @@ static void US_ListStoredUFOs_f (void)
 		Com_Printf("id: %s\n", ufo->id);
 		Com_Printf("stored at %s\n", (ufo->installation) ? ufo->installation->name : "NOWHERE");
 
-		CL_DateConvertLong(&(ufo->arrive), &date);
+		CP_DateConvertLong(&(ufo->arrive), &date);
 		Com_Printf("arrived at: %i %s %02i, %02i:%02i\n", date.year,
 		Date_GetMonthName(date.month - 1), date.day, date.hour, date.min);
 

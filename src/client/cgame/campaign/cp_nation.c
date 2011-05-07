@@ -835,10 +835,10 @@ static void NAT_NationList_f (void)
  * * new soldiers
  * * new scientists
  * * new pilots
- * @note Called from CL_CampaignRun
- * @sa CL_CampaignRun
+ * @note Called from CP_CampaignRun
+ * @sa CP_CampaignRun
  * @sa B_CreateEmployee
- * @todo This is very redundant with CL_StatsUpdate_f. Ivestigate and clean up.
+ * @todo This is very redundant with CP_StatsUpdate_f. Ivestigate and clean up.
  */
 void NAT_HandleBudget (const campaign_t *campaign)
 {
@@ -951,8 +951,8 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		totalExpenditure += cost;
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
-	CL_UpdateCredits(ccs.credits - totalExpenditure + totalIncome);
-	CL_GameTimeStop();
+	CP_UpdateCredits(ccs.credits - totalExpenditure + totalIncome);
+	CP_GameTimeStop();
 }
 
 /**
