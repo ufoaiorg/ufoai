@@ -728,6 +728,7 @@ void SV_Init (void)
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
 	SV_MapcycleInit();
+	SV_LogInit();
 }
 
 /**
@@ -768,6 +769,7 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 void SV_Clear (void)
 {
 	SV_MapcycleClear();
+	SV_LogShutdown();
 }
 
 /**

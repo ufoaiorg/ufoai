@@ -23,7 +23,14 @@
 
  */
 
+#ifndef SV_LOG_H
+#define SV_LOG_H
+
 #include <stdarg.h>
 
 void SV_LogHandleOutput(void);
 void SV_LogAdd(const char *format, va_list ap);
+void SV_LogInit(void);
+void SV_LogShutdown(void);
+
+#endif
