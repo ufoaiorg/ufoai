@@ -23,9 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "cp_building.h"
-#include "../../client.h" /* cl, cls */
+#include "../../cl_shared.h"
 #include "../../../shared/parse.h"
-#include "../../../common/scripts.h"
 #include "cp_campaign.h"
 #include "cp_time.h"
 

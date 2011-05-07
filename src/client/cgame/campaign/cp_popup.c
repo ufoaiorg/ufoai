@@ -612,6 +612,13 @@ void CL_PopupInit (void)
 void CP_PopupList (const char *title, const char *text)
 {
 	CL_GameTimeStop();
+	CP_Popup(title, text);
+}
 
+/**
+ * @brief Wrapper around @c UI_Popup
+ */
+void CP_Popup (const char *title, const char *text)
+{
 	UI_Popup(title, text);
 }

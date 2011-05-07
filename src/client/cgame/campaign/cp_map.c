@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls */
+#include "../../client.h" /* cls.frametime */
 #include "../../renderer/r_image.h"
 #include "../../renderer/r_framebuffer.h"
 #include "../../renderer/r_draw.h"
