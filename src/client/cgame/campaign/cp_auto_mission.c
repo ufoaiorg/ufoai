@@ -68,10 +68,11 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
  * @param[in,out] battle  The auto mission battle to add team data to
  * @param[in] teamNum The team number in the auto mission instance to update
  * @param[in] aircraft The aircraft to get data from
+ * @param[in] campaign The current campaign (for retrieving difficulty level)
  * @note This function actually gets the data from the campaign ccs object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft)
+void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, campaign_t *campaign)
 {
 	employee_t *employee;
 	int teamSize;
@@ -108,15 +109,31 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 
 	if (teamSize > 0)
 		battle->teamActive[teamNum] = qtrue;
+
+	/* Set a few defaults.  These can be overridden later with new values if needed. */
+	battle->teamType[teamNum] = AUTOMISSION_TEAM_TYPE_PLAYER;
+
+	battle->scoreTeamDifficulty[teamNum] = 0.5;
+	if (campaign->difficulty == -1) battle->scoreTeamDifficulty[teamNum] = 0.55;
+	if (campaign->difficulty == -2) battle->scoreTeamDifficulty[teamNum] = 0.6;
+	if (campaign->difficulty == -3) battle->scoreTeamDifficulty[teamNum] = 0.65;
+	if (campaign->difficulty == -4) battle->scoreTeamDifficulty[teamNum] = 0.75;
+	if (campaign->difficulty == 1) battle->scoreTeamDifficulty[teamNum] = 0.45;
+	if (campaign->difficulty == 2) battle->scoreTeamDifficulty[teamNum] = 0.4;
+	if (campaign->difficulty == 3) battle->scoreTeamDifficulty[teamNum] = 0.35;
+	if (campaign->difficulty == 4) battle->scoreTeamDifficulty[teamNum] = 0.25;
+
+	/* Zero is default ID for human player team ID, at least for auto missions. */
+	battle->teamID[teamNum] = 0;
 }
 
 /* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
-void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft)
+void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, campaign_t *campaign)
 {
 	/** @todo */
 }
 
-void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum)
+void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum, campaign_t *campaign)
 {
 	/** @todo */
 }
@@ -135,6 +152,62 @@ int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
 {
 	/** @todo */
 	return 0;
+}
+
+/** @brief Run this on an auto mission battle before the battle is actually simulated with CP_AutoBattleRunBattle(), to set
+ * default values for who will attack which team.  If you forget to do this before battle simulation, all teams will default
+ * to "free for all" (Everyone will try to kill everyone else).
+ * @param[in, out] battle The battle to set up team hostility values for.
+ * @param[in] civsInfected Set to "qtrue" if civs have XVI influence, otherwise "qfalse" for a normal mission. */
+void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, qboolean civsInfected)
+{
+	int team;
+	int otherTeam;
+
+	qboolean civsInverted = qtrue;
+	if (civsInfected == qtrue) civsInverted = qfalse;
+
+	/* Build an array of default values for what types of teams will attack whom. */
+	qboolean hostileList[AUTOMISSION_TEAM_TYPE_MAX][AUTOMISSION_TEAM_TYPE_MAX];
+
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_PLAYER] = qfalse;
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = qfalse;
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qtrue;
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_CIVILIAN] = qfalse;
+
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_PLAYER] = qfalse;
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = qfalse;
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qtrue;
+	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_CIVILIAN] = qfalse;
+
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_PLAYER] = qtrue;
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = qtrue;
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_ALIEN] = qfalse;
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qfalse;
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_CIVILIAN] = civsInverted;
+
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_PLAYER] = qtrue;
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = qtrue;
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_ALIEN] = qfalse;
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qfalse;
+	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_CIVILIAN] = civsInverted;
+
+	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_PLAYER] = civsInfected;
+	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = civsInfected;
+	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_ALIEN] = civsInverted;
+	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = civsInverted;
+	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_CIVILIAN] = qfalse;
+
+	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+		if (battle->teamActive[team] == qtrue) {
+			for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
+				if (battle->teamActive[otherTeam] == qtrue)
+					battle->isHostile[team][otherTeam] = hostileList[battle->teamType[team]][battle->teamType[otherTeam]];
+			}
+		}
+	}
 }
 
 void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)

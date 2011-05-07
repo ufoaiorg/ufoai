@@ -46,6 +46,22 @@ typedef enum autoMission_results_s {
 	AUTOMISSION_RESULT_MAX
 } autoMission_results_t;
 
+/** @brief Possible types of teams that can fight in an auto mission battle.
+ * @note This is independent of (int) teamID in the auto mission battle struct.  This allows, in the future, for multiple player teams, or multiple
+ * alien teams, etc., to fight in a simulated battle.  (Different teams can have the same TYPE as listed here, yet have different teamID values.)
+ * Note that teams of UGVs, bots, drones, etc. can fight in the battle, but if they are the only units of a specific team ID remaining in the end,
+ * the side they belong to will LOSE because there will be no one controlling them.  This means, for example, that UGVs without any humans left
+ * will create a losing situation for those humans. */
+typedef enum autoMission_teamType_s {
+	AUTOMISSION_TEAM_TYPE_PLAYER,				/**< Human player-controlled team.  Includes soldiers as well as downed pilots. */
+	AUTOMISSION_TEAM_TYPE_PLAYER_UGV,			/**< Human player-controlled UGVs, bots, or other units.  Note: This type of team can't win by itself. */
+	AUTOMISSION_TEAM_TYPE_ALIEN,				/**< AI-controlled alien team. */
+	AUTOMISSION_TEAM_TYPE_ALIEN_DRONE,			/**< AI-controlled alien bots, drones, or other automated units that can't win by themselves. */
+	AUTOMISSION_TEAM_TYPE_CIVILIAN,				/**< AI-controlled civilians that can be healthy or infected. */
+
+	AUTOMISSION_TEAM_TYPE_MAX
+} autoMission_teamType_t;
+
 #define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * MAX_ACTIVETEAM
 
 /* FIX ME: The hard-coded max teams of 8 and units on a team (64) should be changed to #define(ed) values set elsewhere! */
@@ -65,6 +81,7 @@ typedef struct autoMission_battle_s {
 	int teamID[MAX_ACTIVETEAM];								/**< An ID for each team, to keep track, useful if needed.  Note: The same ID may be repeated, but two teams of same ID can't be hostile */
 	qboolean isHostile[MAX_ACTIVETEAM][MAX_ACTIVETEAM];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
 	short nUnits[MAX_ACTIVETEAM];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
+	autoMission_teamType_t teamType[MAX_ACTIVETEAM];		/**< What type of team is this?  Human player?  Alien? Something else?  */
 
 	double scoreTeamEquipment[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
 	double scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
@@ -82,10 +99,11 @@ typedef struct autoMission_battle_s {
 
 /* Functions for auto missions */
 void CP_AutoBattleClearBattle(autoMissionBattle_t *battle);
+void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, qboolean civsInfected);
 void CP_AutoBattleRunBattle(autoMissionBattle_t *battle);
-void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft);
-void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft);
-void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum);
+void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, campaign_t *campaign);
+void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, campaign_t *campaign);
+void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum, campaign_t *campaign);
 void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup);
 void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
 int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle);
