@@ -75,18 +75,21 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 {
 	employee_t *employee;
 	int teamSize;
+	int unitsAlive;
 
 	assert(teamNum >= 0 && teamNum < MAX_ACTIVETEAM);
 	assert(battle);
 	assert(aircraft);
 
 	teamSize = 0;
+	unitsAlive = 0;
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		const character_t *chr = &employee->chr;
 
 		battle->unitHealthMax[teamNum][teamSize] = chr->maxHP;
 		battle->unitHealth[teamNum][teamSize] = chr->HP;
 		teamSize++;
+		if (chr->HP > 0) unitsAlive++;
 
 		if (teamSize >= 64)
 			break;
@@ -96,6 +99,10 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	if (teamSize == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.");
 		Com_DPrintf(DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!");
+	}
+	if (unitsAlive == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add team to auto battle where all the units on the team are DEAD!");
+		Com_DPrintf(DEBUG_CLIENT, "--- Note: This team will LOSE the battle by default.");
 	}
 }
 
