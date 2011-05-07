@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_capacity.h"
 #include "cp_transfer.h"
+#include "cp_popup.h"
 #include "../../ui/ui_main.h"
 #include "../../ui/ui_popup.h"
-#include "../../ui/ui_data.h"
 
 /**
  * @brief transfer typeID strings
@@ -243,12 +243,12 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	if (Q_streq(od->id, ANTIMATTER_TECH_ID)) {
 		/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
 		if (!B_GetBuildingStatus(destbase, B_ANTIMATTER)) {
-			UI_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
+			CP_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
 			return 0;
 		}
 		amount = min(amount, CAP_GetFreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
 		if (amount <= 0) {
-			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
+			CP_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return 0;
 		}
 	} else {	/*This is not antimatter */
@@ -258,7 +258,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 		/* Does the destination base has enough space in storage? */
 		amount = min(amount, CAP_GetFreeCapacity(destbase, CAP_ITEMS) - intransfer / od->size);
 		if (amount <= 0) {
-			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
+			CP_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
 			return 0;
 		}
 	}
@@ -286,7 +286,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 
 	/* Does the destination base has enough space in living quarters? */
 	if (CAP_GetFreeCapacity(destbase, CAP_EMPLOYEES) - intransfer < 1) {
-		UI_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Living Quarters.\n"));
+		CP_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Living Quarters.\n"));
 		return qfalse;
 	}
 
@@ -297,7 +297,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 				_(rank->shortname), employee->chr.name);
-			UI_Popup(_("Soldier in aircraft"), popupText);
+			CP_Popup(_("Soldier in aircraft"), popupText);
 			return qfalse;
 		}
 		break;
@@ -306,7 +306,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
 			Com_sprintf(popupText, sizeof(popupText), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 				employee->chr.name);
-			UI_Popup(_("Pilot in aircraft"), popupText);
+			CP_Popup(_("Pilot in aircraft"), popupText);
 			return qfalse;
 		}
 		break;
@@ -339,7 +339,7 @@ static qboolean TR_CheckAlien (const base_t *destbase)
 
 	/* Does the destination base has enough space in alien containment? */
 	if (!AL_CheckAliveFreeSpace(destbase, NULL, intransfer)) {
-		UI_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
+		CP_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
 		return qfalse;
 	}
 
@@ -363,13 +363,13 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 
 	/* Hangars in destbase functional? */
 	if (!B_GetBuildingStatus(destbase, B_POWER)) {
-		UI_Popup(_("Hangars not ready"), _("Destination base does not have hangars ready.\nProvide power supplies.\n"));
+		CP_Popup(_("Hangars not ready"), _("Destination base does not have hangars ready.\nProvide power supplies.\n"));
 		return qfalse;
 	} else if (!B_GetBuildingStatus(destbase, B_COMMAND)) {
-		UI_Popup(_("Hangars not ready"), _("Destination base does not have command centre.\nHangars not functional.\n"));
+		CP_Popup(_("Hangars not ready"), _("Destination base does not have command centre.\nHangars not functional.\n"));
 		return qfalse;
 	} else if (!AIR_AircraftAllowed(destbase)) {
-		UI_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
+		CP_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
 		return qfalse;
 	}
 
@@ -382,7 +382,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 	/* Is there a place for this aircraft in destination base? */
 	hangarStorage = AIR_CalculateHangarStorage(aircraft->tpl, destbase, numAircraftTransfer);
 	if (hangarStorage <= 0) {
-		UI_Popup(_("Not enough space"), _("Destination base does not have enough space in hangars.\n"));
+		CP_Popup(_("Not enough space"), _("Destination base does not have enough space in hangars.\n"));
 		return qfalse;
 	}
 
@@ -1061,7 +1061,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 
 	if (!td.transferBase) {
-		UI_Popup(_("No target base selected"), _("Please select the target base from the list"));
+		CP_Popup(_("No target base selected"), _("Please select the target base from the list"));
 		return;
 	}
 

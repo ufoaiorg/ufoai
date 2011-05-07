@@ -25,11 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
+#include "../../ui/ui_popup.h" /* popupText */
 #include "cp_campaign.h"
 #include "cp_installation_callbacks.h"
 #include "cp_installation.h"
 #include "cp_map.h"
-#include "../../ui/ui_popup.h" /* popupText */
 
  /**
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.

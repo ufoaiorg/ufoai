@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls, cl */
+#include "../../client.h" /* cls */
 #include "../../ui/ui_main.h"
 #include "../cgame.h"
 #include "cp_campaign.h"
@@ -1087,9 +1087,6 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
 void CL_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 {
 	employee_t *employee = NULL;
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: base: '%s' numTeamList: %i\n",
-		base->name, cl.numTeamList);
 
 	assert(aircraft);
 

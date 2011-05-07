@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -39,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cp_aircraft_callbacks.h"
 #include "save/save_aircraft.h"
+#include "cp_popup.h"
 
 /**
  * @brief Iterates through the aircraft of a base
@@ -1343,7 +1343,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 		return qfalse;
 
 	if (AIR_GetTeamSize(aircraft) == 0) {
-		UI_Popup(_("Notice"), _("Assign one or more soldiers to this aircraft first."));
+		CP_Popup(_("Notice"), _("Assign one or more soldiers to this aircraft first."));
 		return qfalse;
 	}
 

@@ -25,13 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_aircraft_callbacks.h"
 #include "cp_aircraft.h"
 #include "cp_team.h"
 #include "cp_mapfightequip.h"
+#include "cp_popup.h"
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase
@@ -92,7 +92,7 @@ static void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without Command Centre operational. */
 	if (!B_GetBuildingStatus(base, B_COMMAND)) {
-		UI_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
+		CP_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -100,7 +100,7 @@ static void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without a pilot. */
 	if (!AIR_GetPilot(aircraft)) {
-		UI_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
+		CP_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
 		return;
 	}
 

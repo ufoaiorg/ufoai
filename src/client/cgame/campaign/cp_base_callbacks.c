@@ -444,7 +444,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 
 	/* you can't destroy buildings if base is under attack */
 	if (B_IsUnderAttack(base)) {
-		UI_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
+		CP_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
 		return;
 	}
 
@@ -454,12 +454,12 @@ static void B_MarkBuildingDestroy (building_t* building)
 
 	/** @todo: make base destroyable by destroying entrance */
 	if (building->buildingType == B_ENTRANCE) {
-		UI_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
+		CP_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
 		return;
 	}
 
 	if (!B_IsBuildingDestroyable(building)) {
-			UI_Popup(_("Notice"), _("You can't destroy this building! It is the only connection to other buildings!"));
+			CP_Popup(_("Notice"), _("You can't destroy this building! It is the only connection to other buildings!"));
 			return;
 	}
 
@@ -602,13 +602,13 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 	/* Maybe base is under attack ? */
 	if (B_IsUnderAttack(base)) {
-		UI_Popup(_("Notice"), _("Base is under attack, you can't access this building !"));
+		CP_Popup(_("Notice"), _("Base is under attack, you can't access this building !"));
 		return;
 	}
 
 	if (building->buildingType == B_HANGAR) {
 		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
-		UI_Popup(_("Notice"), _("You need at least one Hangar (and its dependencies) to use aircraft."));
+		CP_Popup(_("Notice"), _("You need at least one Hangar (and its dependencies) to use aircraft."));
 		return;
 	}
 
@@ -629,7 +629,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 			Com_sprintf(popupText, sizeof(popupText), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
 				minDay), minDay);
-			UI_Popup(_("Notice"), popupText);
+			CP_Popup(_("Notice"), popupText);
 			return;
 		}
 
@@ -639,7 +639,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			if (B_GetNumberOfBuildingsInBaseByBuildingType(base, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
 				Com_sprintf(popupText, sizeof(popupText), _("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name));
-				UI_Popup(_("Notice"), popupText);
+				CP_Popup(_("Notice"), popupText);
 				return;
 			} else {
 				/* maybe the dependence of the building is under construction
@@ -651,14 +651,14 @@ static void B_CheckBuildingStatusForMenu_f (void)
 					if (!B_IsBuildingBuiltUp(b)) {
 						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
 							_(dependenceBuilding->name), _(building->name));
-						UI_Popup(_("Notice"), popupText);
+						CP_Popup(_("Notice"), popupText);
 						return;
 					}
 				}
 				/* the dependence is built but doesn't work - must be because of their dependendes */
 				Com_sprintf(popupText, sizeof(popupText), _("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
 					_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name));
-				UI_Popup(_("Notice"), popupText);
+				CP_Popup(_("Notice"), popupText);
 				return;
 			}
 		}
@@ -666,17 +666,17 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		if (building->buildingType == B_WORKSHOP && E_CountHired(base, EMPL_WORKER) <= 0) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_WORKER), _(building->name));
-			UI_Popup(_("Notice"), popupText);
+			CP_Popup(_("Notice"), popupText);
 			return;
 		} else if (building->buildingType == B_LAB && E_CountHired(base, EMPL_SCIENTIST) <= 0) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name));
-			UI_Popup(_("Notice"), popupText);
+			CP_Popup(_("Notice"), popupText);
 			return;
 		}
 	} else {
 		Com_sprintf(popupText, sizeof(popupText), _("Build a %s first."), _(building->name));
-		UI_Popup(_("Notice"), popupText);
+		CP_Popup(_("Notice"), popupText);
 		return;
 	}
 }
