@@ -38,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/node/ui_node_model.h"
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
-#include "../../shared/mutex.h"
 
 #ifdef HARD_LINKED_CGAME
 #include "cl_game_campaign.h"
@@ -219,17 +218,12 @@ void GAME_SetServerInfo (const char *server, const char *serverport)
 	Q_strncpyz(cls.serverport, serverport, sizeof(cls.serverport));
 }
 
-
-static threads_mutex_t *queryMasterServerLock;
-
 /**
  * @sa CL_PingServers_f
  */
 static void CL_QueryMasterServer (const char *action, http_callback_t callback)
 {
-	TH_MutexLock(queryMasterServerLock);
 	HTTP_GetURL(va("%s/ufo/masterserver.php?%s", masterserver_url->string, action), callback);
-	TH_MutexUnlock(queryMasterServerLock);
 }
 
 qboolean GAME_HandleServerCommand (const char *command, struct dbuffer *msg)
@@ -1324,11 +1318,8 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
-
-	queryMasterServerLock = TH_MutexCreate("masterserverquery");
 }
 
 void GAME_Shutdown (void)
 {
-	TH_MutexDestroy(queryMasterServerLock);
 }
