@@ -88,6 +88,7 @@ static linkedList_t *B_GetNeighbours (const building_t const *building)
 	return neighbours;
 }
 
+#ifdef DEBUG
 /**
  * @brief Check if base coherent (every building connected to eachothers)
  * @param[in] base Pointer to the base to check
@@ -130,6 +131,7 @@ static qboolean B_IsCoherent (const base_t *base)
 	}
 	return qtrue;
 }
+#endif
 
 /**
  * @brief Check and add blocked tile to the base
