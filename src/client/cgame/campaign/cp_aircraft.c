@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h"
+#include "../../client.h" /* cls, le_t */
 #include "../../ui/ui_main.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"

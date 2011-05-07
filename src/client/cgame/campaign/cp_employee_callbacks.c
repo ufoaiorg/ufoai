@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_shared.h"
 #include "../../cl_team.h" /* CL_UpdateCharacterValues */
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_data.h"
-#include "../../ui/ui_draw.h"
+#include "../../ui/ui_draw.h" /* UI_DisplayNotice */
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
 #include "cp_employee.h"

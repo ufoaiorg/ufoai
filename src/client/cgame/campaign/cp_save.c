@@ -22,10 +22,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cl_genericPool */
+#include "../../client.h" /* CL_OnBattlescape */
 #include "../cl_game.h" /* GAME_ReloadMode */
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
+#include "../../ui/ui_popup.h" /* popupText */
 #include "cp_campaign.h"
 #include "cp_save.h"
 #include "cp_time.h"
@@ -148,7 +148,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 	}
 
 	clen = FS_FileLength(&f);
-	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
+	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cp_campaignPool, 0);
 	if (FS_Read(cbuf, clen, &f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	FS_CloseFile(&f);
@@ -174,7 +174,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			"...xml Size: %i, compressed? %c\n",
 			header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
 	len = header.xmlSize + 50;
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * len, cl_genericPool, 0);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * len, cp_campaignPool, 0);
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
@@ -314,7 +314,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 
 	header.xmlSize = LittleLong(requiredBufferLength);
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cl_genericPool, 0);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cp_campaignPool, 0);
 	if (!buf) {
 		mxmlDelete(topNode);
 		*error = _("Could not allocate enough memory to save this game");
@@ -330,7 +330,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	else
 		bufLen = requiredBufferLength;
 
-	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
+	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cp_campaignPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
 
 	if (header.compressed) {

@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h" /* cl, cls */
 #include "../../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
+#include "../../ui/ui_popup.h" /* popupText */
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -1386,7 +1386,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 		Com_Error(ERR_DROP, "no current building\n");
 #endif
 	if (!CP_CheckCredits(buildingTemplate->fixCosts)) {
-		UI_Popup(_("Notice"), _("Not enough credits to build this\n"));
+		CP_Popup(_("Notice"), _("Not enough credits to build this\n"));
 		return NULL;
 	}
 
@@ -1437,7 +1437,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				LIST_Delete(&neighbours);
 
 				if (!coherent) {
-					UI_Popup(_("Notice"), _("You must build next to existing buildings."));
+					CP_Popup(_("Notice"), _("You must build next to existing buildings."));
 					return NULL;
 				}
 			}
@@ -2082,9 +2082,9 @@ void B_BuildingOpenAfterClick (const building_t *building)
 				UI_PushWindow("buyaircraft", NULL, NULL);
 				/* transfer is only possible when there are at least two bases */
 				if (B_GetCount() > 1)
-					UI_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
+					CP_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
 				else
-					UI_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
+					CP_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
 			}
 			break;
 		case B_STORAGE:
@@ -2095,7 +2095,7 @@ void B_BuildingOpenAfterClick (const building_t *building)
 			break;
 		case B_ANTIMATTER:
 			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), CAP_GetCurrent(base, CAP_ANTIMATTER), CAP_GetMax(base, CAP_ANTIMATTER));
-			UI_Popup(_("Information"), popupText);
+			CP_Popup(_("Information"), popupText);
 			break;
 		default:
 			UP_OpenWith(building->pedia);

@@ -26,10 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h" /* cls */
 #include "../cl_game.h" /* GAME_GetTeamDef */
 #include "../cl_game_team.h" /* character xml loading */
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
 #include "cp_rank.h"
+#include "cp_popup.h"
 #include "save/save_employee.h"
 
 /**
@@ -403,7 +403,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
 qboolean E_HireEmployee (base_t* base, employee_t* employee)
 {
 	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) <= 0) {
-		UI_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
+		CP_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
 		return qfalse;
 	}
 
