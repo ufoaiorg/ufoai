@@ -920,12 +920,6 @@ static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transfer
 	int cnt = 0;
 	employeeType_t emplType;
 
-	if (TR_GetTransferEmployee(EMPL_SOLDIER, &cnt, base, num))
-		return;
-
-	if (TR_GetTransferEmployee(EMPL_PILOT, &cnt, base, num))
-		return;
-
 	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
 		switch (emplType) {
 		case EMPL_SOLDIER:
@@ -939,6 +933,9 @@ static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transfer
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
 			/* no employee in base or all employees already in the transfer list */
+			if (E_CountHired(base, emplType) <= 0)
+				break;
+
 			if (cnt == num) {
 				employee_t *employee;
 
