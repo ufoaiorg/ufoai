@@ -26,10 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h"
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_ufo.h"
+#include "cp_popup.h"
 #include "cp_produce.h"
 #include "cp_produce_callbacks.h"
 
@@ -616,7 +616,7 @@ static void PR_ProductionIncrease_f (void)
 	technology_t *tech = NULL;
 	int amount = 1;
 	int producibleAmount;
-	static char productionPopup[UI_MAX_SMALLTEXTLEN];
+	static char productionPopup[1024];
 
 	if (!base)
 		return;
@@ -637,7 +637,7 @@ static void PR_ProductionIncrease_f (void)
 		if (PR_IsAircraft(prod)) {
 			/* Don't allow to queue more aircraft if there is no free space. */
 			if (AIR_CalculateHangarStorage(prod->data.data.aircraft, base, 0) <= 0) {
-				UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+				CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 				Cvar_SetValue("mn_production_amount", prod->amount);
 				return;
 			}
@@ -657,12 +657,12 @@ static void PR_ProductionIncrease_f (void)
 
 		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 		if (producibleAmount == 0) {
-			UI_Popup(_("Not enough materials"), _("You don't have the materials needed for producing more of this item.\n"));
+			CP_Popup(_("Not enough materials"), _("You don't have the materials needed for producing more of this item.\n"));
 			Cvar_SetValue("mn_production_amount", prod->amount);
 			return;
 		} else if (amount != producibleAmount) {
 			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) additional items. Only %i could be added."), amount, producibleAmount);
-			UI_Popup(_("Not enough material!"), productionPopup);
+			CP_Popup(_("Not enough material!"), productionPopup);
 		}
 
 		PR_IncreaseProduction(prod, producibleAmount);
@@ -672,7 +672,7 @@ static void PR_ProductionIncrease_f (void)
 
 		/* no free production slot */
 		if (PR_QueueFreeSpace(base) <= 0) {
-			UI_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
+			CP_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
 			return;
 		}
 
@@ -681,11 +681,11 @@ static void PR_ProductionIncrease_f (void)
 
 		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 		if (producibleAmount == 0) {
-			UI_Popup(_("Not enough materials"), _("You don't have the materials needed for producing this item.\n"));
+			CP_Popup(_("Not enough materials"), _("You don't have the materials needed for producing this item.\n"));
 			return;
 		} else if (amount != producibleAmount) {
 			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount);
-			UI_Popup(_("Not enough material!"), productionPopup);
+			CP_Popup(_("Not enough material!"), productionPopup);
 		}
 		/** @todo
 		 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
@@ -693,7 +693,7 @@ static void PR_ProductionIncrease_f (void)
 		 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
 
 		if (PR_IsAircraftData(&selectedData) && AIR_CalculateHangarStorage(selectedData.data.aircraft, base, 0) <= 0) {
-			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return;
 		}
 

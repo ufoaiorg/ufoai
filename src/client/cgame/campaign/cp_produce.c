@@ -24,10 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_capacity.h"
 #include "cp_ufo.h"
+#include "cp_popup.h"
 #include "cp_produce.h"
 #include "cp_produce_callbacks.h"
 #include "save/save_produce.h"
@@ -296,16 +296,16 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	if (data->type == PRODUCTION_TYPE_AIRCRAFT) {
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
 			/** @todo move popup into menucode */
-			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
+			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
 			return NULL;
 		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			/** @todo move popup into menucode */
-			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
+			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
 			return NULL;
 		}
 		/** @todo we should also count aircraft that are already in the queue list */
 		if (AIR_CalculateHangarStorage(data->data.aircraft, base, 0) <= 0) {
-			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return NULL;
 		}
 	}

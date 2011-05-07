@@ -29,12 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_capacity.h"
 #include "cp_research.h"
+#include "cp_popup.h"
 #include "save/save_research.h"
 
 #define TECH_HASH_SIZE 64
@@ -671,7 +670,7 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 			CAP_AddCurrent(base, CAP_LABSPACE, 1);
 			employee->assigned = qtrue;
 		} else {
-			UI_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
+			CP_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 			return;
 		}
 

@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
+#include "cp_popup.h"
 #include "save/save_market.h"
 
 #define BS_GetMarket() (&ccs.eMarket)
@@ -160,7 +160,7 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 	/* make sure that numItems is > 0 (can be negative because capacities.cur may be greater than
 	 * capacities.max if storage is disabled or if alien items have been collected on mission */
 	if (numItems <= 0) {
-		UI_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+		CP_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 		return qfalse;
 	}
 
