@@ -1391,6 +1391,8 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 		return;
 	}
 
+	Cmd_ExecuteString("addeventmail prolog");
+
 	RS_MarkResearchable(qtrue, NULL);
 	BS_InitMarket(campaign);
 
@@ -1419,8 +1421,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	/* create a base as first step */
 	B_SelectBase(NULL);
-
-	Cmd_ExecuteString("addeventmail prolog");
 
 	/* Spawn first missions of the game */
 	CP_InitializeSpawningDelay();
