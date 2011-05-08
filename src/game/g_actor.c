@@ -396,6 +396,15 @@ static void G_ActorRevitalise (edict_t *ent)
 void G_ActorCheckRevitalise (edict_t *ent)
 {
 	if (G_IsStunned(ent) && ent->STUN < ent->HP) {
+		/* check that we could move after we stood up */
+		edict_t *otherActor = NULL;
+		while ((otherActor = G_EdictsGetNextInUse(otherActor))) {
+			if (!VectorCompare(ent->pos, otherActor->pos))
+				continue;
+			if (G_IsBlockingMovementActor(otherActor))
+				return;
+		}
+
 		G_ActorRevitalise(ent);
 		G_EventActorRevitalise(ent);
 		G_SendStats(ent);
