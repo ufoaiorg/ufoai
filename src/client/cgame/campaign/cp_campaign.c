@@ -1372,7 +1372,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	CP_UpdateTime();
 
 	RS_InitTree(campaign, load);		/**< Initialise all data in the research tree. */
-	RS_MarkResearchable(qtrue, NULL);
 
 	CP_AddCampaignCommands();
 
@@ -1387,11 +1386,13 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
-	BS_InitMarket(campaign);
 
 	if (load) {
 		return;
 	}
+
+	RS_MarkResearchable(qtrue, NULL);
+	BS_InitMarket(campaign);
 
 	/* create initial employees */
 	E_InitialEmployees(campaign);
