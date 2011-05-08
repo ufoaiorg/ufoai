@@ -69,15 +69,6 @@ window hhud extends hud
 			align		LAYOUTALIGN_BOTTOM
 			image "hhud/panel_bg"
 		}
-/*
-		image bottom_panel
-		{
-			src			"hhud/panel_bg"
-			pos			"0 0"
-			size		"1024 128"
-			excluderect	{ pos	"0 0"	size	"1024 128" }
-		}
-*/
 		panel rweapon {
 			{
 				pos			"15 13"
@@ -90,7 +81,7 @@ window hhud extends hud
 				src			*cvar:mn_rweapon
 				angles		"-15 170 90"
 				autoscale	true
-				pos			"2 5"
+				pos			"2 15"
 				size 		"140 71"
 				excluderect	{ 	pos	"0 0"	size	"140 71" }
 			}
@@ -121,25 +112,37 @@ window hhud extends hud
 		image fm_btn_r {
 			src				"hhud/fm_btn_r"
 			pos				"246 19"
-			size			"64 64"
-			invis			false
-			onClick			{ cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;toggle_fm_btn_r_on;" }
-			excluderect		{ 	pos	"49 0"	size	"15 64" }
-			excluderect		{ 	pos	"0 41"	size	"49 23" }
+			size			"50 42"
+			onMouseEnter {
+				if (*node:this@src == "hhud/fm_btn_r") {
+				*node:this@src	= "hhud/fm_btn_r_on"
+				}
+			}
+			onMouseLeave {
+				if (*node:this@src == "hhud/fm_btn_r_on") {
+				*node:this@src	= "hhud/r_fm_btn"
+				}
+			}
+
+			onClick			{
+				cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;"
+				*node:this@src	= "hhud/r_fm_btn"
+				}
+
+//			onClick			{ cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;toggle_fm_btn 0;" }
 		}
 		image fm_btn_r_on {
 			src				"hhud/fm_btn_r_on"
 			pos				"246 19"
-			size			"64 64"
+			size			"50 42"
 			invis			true
 			onClick			{ cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;toggle_fm_btn_r_off" }
-			excluderect		{ 	pos	"49 0"	size	"15 64" }
-			excluderect		{ 	pos	"0 41"	size	"49 23" }
 		}
+
 		image reload_btn_r {
 			src				"hhud/reload_btn_r"
 			pos				"245 65"
-			size			"64 64"
+			size			"50 42"
 			invis			false
 			onClick			{ cmd "hud_reloadright;" }
 		}
@@ -148,7 +151,7 @@ window hhud extends hud
 		image fm_btn_l {
 			src				"hhud/fm_btn_l"
 			pos				"730 19"
-			size			"64 64"
+			size			"50 42"
 			invis			false
 			onClick			{ cmd "ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.left.bt_pfire LAYOUTALIGN_TOPRIGHT;toggle_fm_btn_l_on;" }
 		}
@@ -175,7 +178,7 @@ window hhud extends hud
 			size		"31 23"
 			value		0
 			cvar		*cvar:rf_reserve
-			onClick		{	cmd "deselect_reaction;toggle_res_none_on" }
+			onClick		{	cmd "deselect_reaction; toggle_res_none_on;" }
 		}
 		radiobutton res_single
 		{
@@ -184,7 +187,7 @@ window hhud extends hud
 			size		"25 23"
 			value		1
 			cvar		*cvar:rf_reserve
-			onClick		{	cmd "startreactiononce;toggle_res_single_on" }
+			onClick		{	cmd "startreactiononce;toggle_res_single_on;" }
 		}
 		radiobutton res_multi
 		{
@@ -193,7 +196,7 @@ window hhud extends hud
 			size		"31 23"
 			value		2
 			cvar		*cvar:rf_reserve
-			onClick		{	cmd "startreactionmany;toggle_res_multi_on" }
+			onClick		{	cmd "startreactionmany;toggle_res_multi_on;" }
 		}
 		checkbox bt_crouch_reservation
 		{
@@ -262,11 +265,11 @@ window hhud extends hud
 		{
 			string 			"_RESERVED"
 			pos				"404 55"
-			size			"50 10"
+			size			"80 10"
 			color			"0 0 0 1"
 			bgcolor			".7 .7 .52 .5"
 			font			"f_veryverysmall"
-			textalign		ALIGN_CL
+			textalign		ALIGN_CC
 		}
 
 		/* Arrow left of the firemode reservation */
@@ -380,7 +383,7 @@ window hhud extends hud
 				src				*cvar:mn_lweapon
 				angles			"-15 170 90"
 				autoscale		true
-				pos				"2 5"
+				pos				"2 15"
 				size 			"140 71"
 				excluderect		{ 	pos	"0 0"	size	"140 71" }
 			}
@@ -408,60 +411,34 @@ window hhud extends hud
 		}
 
 		/* This puts a blue overlay with lines over all display on the screens */
-		image bottom_panel_overlay
+/*		image bottom_panel_overlay
 		{
 			src			"hhud/panel_bg_overlay"
 			pos			"0 0"
 			size		"1024 128"
 			excluderect	{ pos	"0 0"	size	"1024 128" }
 		}
-
+	*/
 		/* Crouch and stand buttons */
-		image crouch
+		custombutton crouch
 		{
-			src			"hhud/btnset_lft"
-			pos			"556 12"
-			size		"64 64"
-			onClick		{ cmd "actor_standcrouch;toggle_btn_crouch;" }
-			excluderect	{ pos	"42 0" 	size	"22 64" }
-			excluderect	{ pos	"0 42" 	size	"41 22" }
+			background "hhud/btnset_lft"
+			icon "hhud/crouch_icon"
+			pos "556 12"
+			align ALIGN_CC
+			size "44 44"
+			onClick		{ cmd "toggle_btn_crouch;" }
 		}
-		image crouch_icon
+
+
+		custombutton stand
 		{
-			src			"hhud/crouch_icon"
-			pos			"560 16"
-			size		"32 32"
-			excluderect	{ pos	"0 0" 	size	"32 32" }
-		}
-		image crouch_icon_on
-		{
-			src			"hhud/crouch_icon_on"
-			pos			"560 16"
-			size		"32 32"
-			invis		true
-		}
-		image stand
-		{
-			src			"hhud/btnset_rgt"
-			pos			"597 12"
-			size		"64 64"
-			onClick		{ cmd "actor_standcrouch;toggle_btn_stand;" }
-			excluderect	{ pos	"42 0" 	size	"22 64" }
-			excluderect	{ pos	"0 43" 	size	"41 22" }
-		}
-		image stand_icon
-		{
-			src			"hhud/stand_icon"
-			pos			"600 16"
-			size		"32 32"
-			excluderect	{ pos	"0 0" 	size	"32 32" }
-		}
-		image stand_icon_on
-		{
-			src			"hhud/stand_icon_on"
-			pos			"600 16"
-			size		"32 32"
-			invis		true
+			background "hhud/btnset_rgt"
+			icon "hhud/stand_icon"
+			pos "597 12"
+			align ALIGN_CC
+			size "44 44"
+			onClick		{ cmd "toggle_btn_stand;" }
 		}
 
 		/* Inventory and stats buttons */
@@ -472,64 +449,25 @@ window hhud extends hud
 			pos "643 12"
 			align ALIGN_CC
 			size "44 44"
-			onclick {cmd "toggle_btn_inv" }
+			onclick {cmd "toggle_btn_inv;" }
 		}
-		/*
-		image inv
+		custombutton stats
 		{
-			src			"hhud/btnset_lft"
-			pos			"643 12"
-			size		"64 64"
-			onClick		{ cmd "ui_push hudinv;toggle_btn_inv_on;" }
-		}
-		image inv_off
-		{
-			src			"hhud/btnset_lft_on"
-			pos			"643 12"
-			size		"64 64"
-			onClick		{ cmd "ui_pop;toggle_btn_inv_off;" }
-			invis		true
-		}
-		image inv_icon
-		{
-			src			"hhud/inv_icon"
-			pos			"648 18"
-			size		"32 32"
-			excluderect	{ pos	"0 0" 	size	"32 32" }
-		}
-		image inv_icon_on
-		{
-			src			"hhud/inv_icon_on"
-			pos			"648 18"
-			size		"32 32"
-			invis		true
-			excluderect	{ pos	"0 0" 	size	"32 32" }
-		}
-		*/
-		image stats
-		{
-			src			"hhud/btnset_rgt"
-			pos			"684 12"
-			size		"64 64"
-			onClick		{ cmd "toggle_btn_stats;" }
-		}
-		image stats_icon
-		{
-			src			"hhud/stats_icon"
-			pos			"688 16"
-			size		"32 32"
-			excluderect	{ pos	"0 0" 	size	"32 32" }
-		}
-		image stats_icon_on
-		{
-			src			"hhud/stats_icon_on"
-			pos			"688 16"
-			size		"32 32"
-			invis		true
-			excluderect	{ pos	"0 0" 	size	"32 32" }
+			background "hhud/btnset_rgt"
+			icon "hhud/stats_icon"
+			pos "684 12"
+			align ALIGN_CC
+			size "44 44"
+			onclick {cmd "toggle_btn_stats;" }
 		}
 	}
+/*
+	confunc toggle_fm_btn {
+		// <1> is r
 
+		*node:root.bottom.fm_btn_r@invis = true
+		*node:root.bottom.fm_btn_r_on@invis = false
+	}
 	confunc toggle_fm_btn_r_on {
 		*node:root.bottom.fm_btn_r@invis = true
 		*node:root.bottom.fm_btn_r_on@invis = false
@@ -539,7 +477,6 @@ window hhud extends hud
 		*node:root.bottom.fm_btn_r@invis = false
 		*node:root.bottom.fm_btn_r_on@invis = true
 	}
-
 	confunc toggle_reload_btn_r_on {
 		*node:root.bottom.reload_btn_r@invis = true
 		*node:root.bottom.reload_btn_r_on@invis = false
@@ -549,7 +486,27 @@ window hhud extends hud
 		*node:root.bottom.reload_btn_r@invis = false
 		*node:root.bottom.reload_btn_r_on@invis = true
 	}
+*/
+	confunc toggle_btn_crouch {
+		if (*node:root.bottom.crouch@background == "hhud/btnset_lft") {
+			cmd "actor_standcrouch;"
+//			*node:root.bottom.crouch@background = "hhud/btnset_lft_on"
+//			*node:root.bottom.crouch@icon = "hhud/crouch_icon_on"
+//			*node:root.bottom.stand@background = "hhud/btnset_rgt"
+//			*node:root.bottom.stand@icon = "hhud/stand_icon"
+			}
+	}
 
+	confunc toggle_btn_stand {
+		if (*node:root.bottom.crouch@background == "hhud/btnset_lft_on") {
+			cmd "actor_standcrouch;"
+//			*node:root.bottom.crouch@background = "hhud/btnset_lft"
+//			*node:root.bottom.crouch@icon = "hhud/crouch_icon"
+//			*node:root.bottom.stand@background = "hhud/btnset_rgt_on"
+//			*node:root.bottom.stand@icon = "hhud/stand_icon_on"
+			}
+	}
+	/*
 	confunc toggle_btn_crouch {
 		*node:root.bottom.crouch@src = "hhud/btnset_lft_on"
 		*node:root.bottom.crouch_icon@invis = true
@@ -567,7 +524,7 @@ window hhud extends hud
 		*node:root.bottom.stand_icon@invis = true
 		*node:root.bottom.stand_icon_on@invis = false
 	}
-
+*/
 	confunc toggle_btn_inv {
 //		*cvar:inv_opened
 		if ( *cvar:inv_opened != true) {
@@ -582,30 +539,17 @@ window hhud extends hud
 			*cvar:inv_opened = false
 		}
 	}
-	/*
-	confunc toggle_btn_inv_on {
-		*node:root.bottom.inv@invis = true
-		*node:root.bottom.inv_off@invis = false
-		*node:root.bottom.inv_icon@invis = true
-		*node:root.bottom.inv_icon_on@invis = false
-	}
-	confunc toggle_btn_inv_off {
-		*node:root.bottom.inv@invis = false
-		*node:root.bottom.inv_off@invis = true
-		*node:root.bottom.inv_icon@invis = false
-		*node:root.bottom.inv_icon_on@invis = true
-	}
-	*/
 	confunc toggle_btn_stats {
-		if (*node:root.bottom.stats@src == "hhud/btnset_rgt") {
-			*node:root.bottom.stats@src = "hhud/btnset_rgt_on"
-			*node:root.bottom.stats_icon@invis = true
-			*node:root.bottom.stats_icon_on@invis = false
+
+		if (*node:root.bottom.stats@background == "hhud/btnset_rgt") {
+			*node:root.bottom.stats@background = "hhud/btnset_rgt_on"
+			cmd "ui_push hudphysdat;"
+			*node:root.bottom.stats@icon = "hhud/stats_icon_on"
 		}
-		elif (*node:root.bottom.stats@src == "hhud/btnset_rgt_on") {
-			*node:root.bottom.stats@src = "hhud/btnset_rgt"
-			*node:root.bottom.stats_icon@invis = false
-			*node:root.bottom.stats_icon_on@invis = true
+		else {
+			cmd "ui_pop;"
+			*node:root.bottom.stats@background = "hhud/btnset_rgt"
+			*node:root.bottom.stats@icon = "hhud/stats_icon"
 		}
 	}
 
@@ -634,17 +578,30 @@ window hhud extends hud
 		*node:root.bottom.bt_crouch_reservation@current = 1
 		*node:root.bottom.reserved_cnotice@string = "_Crouch reserved"
 	}
+	confunc deselect_stand {
+		*node:root.bottom.crouch@background = "hhud/btnset_lft"
+		*node:root.bottom.crouch@icon = "hhud/crouch_icon"
+		*node:root.bottom.stand@background = "hhud/btnset_rgt_on"
+		*node:root.bottom.stand@icon = "hhud/stand_icon_on"
+		}
+	confunc deselect_crouch {
+		*node:root.bottom.crouch@background = "hhud/btnset_lft_on"
+		*node:root.bottom.crouch@icon = "hhud/crouch_icon_on"
+		*node:root.bottom.stand@background = "hhud/btnset_rgt"
+		*node:root.bottom.stand@icon = "hhud/stand_icon"
+		}
+//	confunc disable_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@image = "hud/buttons2g" }
+//	confunc disable_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@image = "hud/buttons2g" }
 
 	confunc hudselect {
 		*cvar:selected_soldier = <1>
-
 		*cvar:i = 0;
 		while ( *cvar:i < 8 ) {
 			*node:root.team.sld<cvar:i>@image = "hhud/tm_sldbg"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
-		*node:root.team.sld<1>@image = "hhud/tm_sldbg_sel"
+			*node:root.team.sld<1>@image = "hhud/tm_sldbg_sel"
 	}
 
 	/*
@@ -737,7 +694,7 @@ window hhud extends hud
 		}
 		delete *cvar:i
 
-		cmd "hudselect <cvar:selected_soldier>;"
+		cmd "hudselect 0;"
 	}
 
 	func onScriptLoaded {
