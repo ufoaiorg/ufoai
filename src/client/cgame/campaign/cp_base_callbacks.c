@@ -231,6 +231,10 @@ static void B_BuildBase_f (void)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 		MS_AddNewMessage(_("Base built"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
+		/* First base */
+		if (ccs.campaignStats.basesBuilt == 1)
+			B_SetUpFirstBase(campaign, base);
+
 		Cvar_SetValue("mn_base_count", B_GetCount());
 		B_SelectBase(base);
 	} else {

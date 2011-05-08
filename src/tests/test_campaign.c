@@ -162,6 +162,10 @@ static base_t* CreateBase (const char *name, const vec2_t pos)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 	CU_ASSERT_TRUE(base->founded);
 
+	/* First base */
+	if (ccs.campaignStats.basesBuilt == 1)
+		B_SetUpFirstBase(campaign, base);
+
 	return base;
 }
 

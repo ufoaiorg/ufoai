@@ -1209,25 +1209,20 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 }
 
 /**
- * @brief Setup buildings and equipment for first base. Uses the campaign
- * scriptable first base template to place the buildings in the base.
+ * @brief Setup aircraft and equipment for first base. Uses the campaign
+ * scriptable equipmentlist.
  * @param[in] campaign The campaign data structure
  * @param[in,out] base The base to set up
- * @sa B_SetUpBase
  */
-static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
+void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 {
 	const equipDef_t *ed;
-
-	if (campaign->firstBaseTemplate[0] == '\0')
-		Com_Error(ERR_DROP, "No base template for setting up the first base given");
 
 	/* Find the initial equipment definition for current campaign. */
 	ed = INV_GetEquipmentDefinitionByID(campaign->equipment);
 	/* Copy it to base storage. */
 	base->storage = *ed;
 
-	B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
 	/* Add aircraft to the first base */
 	/** @todo move aircraft to .ufo */
 	/* buy two first aircraft and hire pilots for them. */
@@ -1287,7 +1282,6 @@ void B_SetName (base_t *base, const char *name)
  * @brief Build new base, uses template for the first base
  * @param[in] pos Position (on Geoscape) the base built at
  * @param[in] name The name of the new base, this string might already be in utf-8
- * @sa B_SetUpFirstBase
  */
 base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 {
@@ -1313,11 +1307,13 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 		CAP_SetCurrent(base, cap, 0);
 
 	/* setup for first base */
-	if (ccs.campaignStats.basesBuilt == 0)
-		B_SetUpFirstBase(campaign, base);
-	else
+	if (ccs.campaignStats.basesBuilt == 0) {
+		if (campaign->firstBaseTemplate[0] == '\0')
+			Com_Error(ERR_DROP, "No base template for setting up the first base given");
+		B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
+	} else {
 		B_BuildFromTemplate(base, NULL, qtrue);
-
+	}
 	base->baseStatus = BASE_WORKING;
 
 	/* a new base is not discovered (yet) */
