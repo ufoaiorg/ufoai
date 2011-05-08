@@ -358,5 +358,4 @@ void R_ShutdownModels (qboolean complete)
 			Mem_FreeTag(vid_lightPool, 0);
 		r_numModels = r_numModelsStatic;
 	}
-
 }
