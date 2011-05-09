@@ -12,7 +12,7 @@ font f_veryverysmall
 component panel cmpSoldierPanel {
 	{
 		image		"hhud/tm_sldbg"
-		size		"64 64"
+		size		"36 46"
 		onClick		{ cmd "actor_select <node:this@num>;" }
 	}
 	model head
@@ -24,14 +24,19 @@ component panel cmpSoldierPanel {
 		ghost true
 	}
 
-	bar status
+	bar tu_status
 	{
-		pos			"38 0"
-		size		"4 46"
+		pos			"12 39"
+		size		"22 3"
+		color		".371 .7734 .832 1"
+		disabled	true
+	}
+	bar h_status
+	{
+		pos			"12 43"
+		size		"22 3"
 		color		".2187 .73 .23 1"
 		disabled	true
-		direction	"uc"
-		ghost true
 	}
 }
 
@@ -64,11 +69,17 @@ window hhud extends hud
 	// ==================
 	panel bottom {
 		{
-			pos			"40 40"
+			pos			"0 640"
 			size		"1024 128"
-			align		LAYOUTALIGN_BOTTOM
-			image "hhud/panel_bg"
+//			align		LAYOUTALIGN_BOTTOM
+//			image "hhud/panel_bg"
 		}
+		// todo: why setting panel image does not work?
+	image background {
+		src "hhud/panel_bg"
+		pos "0 0"
+		size "1024 128"
+	}
 		panel rweapon {
 			{
 				pos			"15 13"
@@ -311,6 +322,12 @@ window hhud extends hud
 		}
 
 		/* Health bar */
+		image health_border
+		{
+			src			"hhud/status_border"
+			pos			"550 71"
+			size		"256 16"
+		}
 		bar health
 		{
 			pos			"551 72"
@@ -319,35 +336,31 @@ window hhud extends hud
 			border		1
 			bordercolor	".7 .7 .52 1"
 			current		*cvar:mn_hp
+			tooltip *cvar:mn_hp
 			max			*cvar:mn_hpmax
 			disabled	true
 		}
-		image health_border
-		{
-			src			"hhud/status_border"
-			pos			"550 71"
-			size		"256 16"
-			excluderect	{ pos "0 0"	size "256 16" }
-		}
 
 		/* Time units bar */
-		bar tu
-		{
-			pos			"551 88"
-			size		"164 7"
-			color		".371 .7734 .832 1"
-			border		1
-			bordercolor	".7 .7 .52 1"
-			current		*cvar:mn_tu
-			max			*cvar:mn_tumax
-			disabled	true
-		}
-		image tu_border
+/*		image tu_border
 		{
 			src			"hhud/status_border"
 			pos			"550 87"
 			size		"256 16"
-			excluderect	{ pos "0 0"	size "256 16" }
+		}*/
+		bar tu
+		{
+			pos			"551 88"
+			size		"164 9"
+			color		".371 .7734 .832 1"
+			border		1
+			padding		1
+//			bordercolor	".7 .7 .52 1"
+			bordercolor	"1 0 0 1"
+			current		*cvar:mn_tu
+			tooltip		*cvar:mn_tu
+			max			*cvar:mn_tumax
+			disabled	true
 		}
 
 		/* Morale bar */
@@ -359,6 +372,7 @@ window hhud extends hud
 			border		1
 			bordercolor	".7 .7 .52 1"
 			current		*cvar:mn_morale
+			tooltip		*cvar:mn_morale
 			max			*cvar:mn_moralemax
 			disabled	true
 		}
@@ -490,41 +504,9 @@ window hhud extends hud
 	confunc toggle_btn_crouch {
 		if (*node:root.bottom.crouch@background == "hhud/btnset_lft") {
 			cmd "actor_standcrouch;"
-//			*node:root.bottom.crouch@background = "hhud/btnset_lft_on"
-//			*node:root.bottom.crouch@icon = "hhud/crouch_icon_on"
-//			*node:root.bottom.stand@background = "hhud/btnset_rgt"
-//			*node:root.bottom.stand@icon = "hhud/stand_icon"
 			}
 	}
 
-	confunc toggle_btn_stand {
-		if (*node:root.bottom.crouch@background == "hhud/btnset_lft_on") {
-			cmd "actor_standcrouch;"
-//			*node:root.bottom.crouch@background = "hhud/btnset_lft"
-//			*node:root.bottom.crouch@icon = "hhud/crouch_icon"
-//			*node:root.bottom.stand@background = "hhud/btnset_rgt_on"
-//			*node:root.bottom.stand@icon = "hhud/stand_icon_on"
-			}
-	}
-	/*
-	confunc toggle_btn_crouch {
-		*node:root.bottom.crouch@src = "hhud/btnset_lft_on"
-		*node:root.bottom.crouch_icon@invis = true
-		*node:root.bottom.crouch_icon_on@invis = false
-		*node:root.bottom.stand@src = "hhud/btnset_rgt"
-		*node:root.bottom.stand_icon@invis = false
-		*node:root.bottom.stand_icon_on@invis = true
-	}
-
-	confunc toggle_btn_stand {
-		*node:root.bottom.crouch@src = "hhud/btnset_lft"
-		*node:root.bottom.crouch_icon@invis = false
-		*node:root.bottom.crouch_icon_on@invis = true
-		*node:root.bottom.stand@src = "hhud/btnset_rgt_on"
-		*node:root.bottom.stand_icon@invis = true
-		*node:root.bottom.stand_icon_on@invis = false
-	}
-*/
 	confunc toggle_btn_inv {
 //		*cvar:inv_opened
 		if ( *cvar:inv_opened != true) {
@@ -610,7 +592,7 @@ window hhud extends hud
 		*node:root.team.team_sld_sel@left = ( *node:root.team.team_sld<1>@left - 0 )
 	}
 	*/
-
+/*
 	// Select tu button
 	image showtu_btn {
 		align		LAYOUTALIGN_MIDDLE
@@ -624,7 +606,7 @@ window hhud extends hud
 		*node:root.team.team_sld0_status@current = "*cvar:mn_tu0"
 		*node:root.team.team_sld0_status@max = "*cvar:mn_tumax0"
 	}
-
+	*/
 	panel team {
 		{
 			pos		"0 8"
@@ -688,8 +670,10 @@ window hhud extends hud
 		while ( *cvar:i < 8 ) {
 			*node:root.team.sld<cvar:i>@num = <cvar:i>
 			*node:root.team.sld<cvar:i>.head@src = *cvar:mn_head<cvar:i>
-			*node:root.team.sld<cvar:i>.status@max = *cvar:mn_hpmax<cvar:i>
-			*node:root.team.sld<cvar:i>.status@current = *cvar:mn_hp<cvar:i>
+			*node:root.team.sld<cvar:i>.h_status@max = *cvar:mn_hpmax<cvar:i>
+			*node:root.team.sld<cvar:i>.h_status@current = *cvar:mn_hp<cvar:i>
+			*node:root.team.sld<cvar:i>.tu_status@max = *cvar:mn_tumax<cvar:i>
+			*node:root.team.sld<cvar:i>.tu_status@current = *cvar:mn_tu<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
