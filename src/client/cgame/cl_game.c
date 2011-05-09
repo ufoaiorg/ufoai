@@ -962,7 +962,7 @@ static void GAME_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 			nr++;
 	}
 
-	NET_WriteShort(buf, nr * INV_INVENTORY_BYTES);
+	NET_WriteShort(buf, nr);
 	for (container = 0; container < csi.numIDs; container++) {
 		for (ic = i->c[container]; ic; ic = ic->next)
 			GAME_NetSendItem(buf, ic->item, container, ic->x, ic->y);

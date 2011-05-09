@@ -58,7 +58,7 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 {
 	const int number = NET_ReadShort(msg);
 	le_t *le = LE_Get(number);
-	int nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
+	int nr = NET_ReadShort(msg);
 
 	if (!le)
 		Com_Error(ERR_DROP, "InvAdd message ignored... LE not found\n");
