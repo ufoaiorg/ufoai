@@ -68,16 +68,16 @@ static void UI_BarNodeDraw (uiNode_t *node)
 
 	switch (EXTRADATA(node).orientation) {
 	case ALIGN_UC:
-		UI_DrawFill(nodepos[0], nodepos[1] + node->size[1] - fac * node->size[1], node->size[0], fac * node->size[1], color);
+		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding + node->size[1] - fac * node->size[1], node->size[0] - 2 * node->padding, fac * node->size[1] 2 * node->padding , color);
 		break;
 	case ALIGN_LC:
-		UI_DrawFill(nodepos[0], nodepos[1], node->size[0], fac * node->size[1], color);
+		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - 2 * node->padding, fac * node->size[1] - 2 * node->padding, color);
 		break;
 	case ALIGN_CR:
-		UI_DrawFill(nodepos[0], nodepos[1], fac * node->size[0], node->size[1], color);
+		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding, fac * node->size[0] - 2 * node->padding, node->size[1] - 2 * node->padding, color);
 		break;
 	case ALIGN_CL:
-		UI_DrawFill(nodepos[0] + node->size[0] - fac * node->size[0], nodepos[1], fac * node->size[0], node->size[1], color);
+		UI_DrawFill(nodepos[0] + node->padding + node->size[0] - fac * node->size[0], nodepos[1] + node->padding, fac * node->size[0] - 2 * node->padding, node->size[1] - 2 * node->padding, color);
 		break;
 	default:
 		Com_Printf("UI_BarNodeDraw: Orientation %d not supported\n", EXTRADATA(node).orientation);
