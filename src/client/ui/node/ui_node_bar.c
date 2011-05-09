@@ -68,7 +68,7 @@ static void UI_BarNodeDraw (uiNode_t *node)
 
 	switch (EXTRADATA(node).orientation) {
 	case ALIGN_UC:
-		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding + node->size[1] - fac * node->size[1], node->size[0] - 2 * node->padding, fac * node->size[1] 2 * node->padding , color);
+		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding + node->size[1] - fac * node->size[1], node->size[0] - 2 * node->padding, fac * node->size[1] - 2 * node->padding , color);
 		break;
 	case ALIGN_LC:
 		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - 2 * node->padding, fac * node->size[1] - 2 * node->padding, color);
