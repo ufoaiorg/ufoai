@@ -1225,7 +1225,7 @@ mapdef country_large
 	map			"+country"
 	param		"large"
 	multiplayer	false
-	description	"_Some houses in desert"
+	description	"_Some houses in the desert."
 	size		"large"
 	maxaliens	6
 
@@ -1267,7 +1267,7 @@ mapdef country_street
 	map			"+country"
 	param		"street"
 	multiplayer	false
-	description	"_Some houses in desert"
+	description	"_Some houses in the desert."
 	size		"large"
 	maxaliens	15
 
@@ -2030,7 +2030,7 @@ mapdef eaglenest
 		coop4
 	}
 	maxaliens		9 //TODO: This is an arbitrary value right now.
-	description		"_A small estate in the mountains"
+	description		"_A small estate in the mountains."
 
 	aircraft
 	{
@@ -2080,7 +2080,7 @@ mapdef scout_crash
 		coop4
 	}
 	maxaliens		4
-	description		"_A crashed Scout UFO"
+	description		"_A crashed Scout UFO."
 
 	aircraft
 	{
@@ -2446,7 +2446,7 @@ mapdef gasstation
 mapdef gate
 {
 	map				"gate"
-	description		"_A depot with the name 'The Gate' where secret technology is stored"
+	description		"_A depot with the name 'The Gate' where secret technology is stored."
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -3105,7 +3105,7 @@ mapdef africa_small
 		coop3
 		coop4
 	}
-	description		"_A suburb that has been visited by UFO."
+	description		"_A suburb that has been visited by an UFO."
 	maxaliens		6
 
 	aircraft
@@ -3773,7 +3773,7 @@ mapdef hills_harvester_desert
 mapdef small_street
 {
 	map			"small_street"
-	description		"A small suburban street"
+	description		"A small suburban street."
 	multiplayer		false
 	maxaliens		8
 
@@ -3794,7 +3794,7 @@ mapdef small_street
 mapdef training_a
 {
 	map			"training_a"
-	description	"_Training Zone: Alpha"
+	description	"_Training Zone: Alpha."
 	teams		2
 	multiplayer	true
 	maxaliens	8
