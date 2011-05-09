@@ -438,7 +438,4 @@ uint32_t INVSH_ShapeRotate(const uint32_t shape);
 
 const objDef_t* INVSH_HasReactionFireEnabledWeapon(const invList_t *invList);
 
-/** @brief Number of bytes that is read and written via inventory transfer functions */
-#define INV_INVENTORY_BYTES 11
-
 #endif /* GAME_INV_SHARED_H */

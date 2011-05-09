@@ -116,7 +116,7 @@ void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
 {
 	gi.AddEvent(playerMask, EV_INV_ADD);
 	gi.WriteShort(ent->number);
-	gi.WriteShort(itemAmount * INV_INVENTORY_BYTES);
+	gi.WriteShort(itemAmount);
 }
 
 /**
