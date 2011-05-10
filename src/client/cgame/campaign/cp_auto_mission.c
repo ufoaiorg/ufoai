@@ -164,7 +164,7 @@ void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int
 	/** @todo */
 }
 
-void CP_AutoBattleFillTeamFromAlienGroup (autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup)
+void CP_AutoBattleFillTeamFromAlienGroup (autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_t *alienGroup)
 {
 	/** @todo */
 }
@@ -196,7 +196,7 @@ void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, const qbool
 		if (battle->teamActive[team] == qtrue) {
 			for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
 				if (battle->teamActive[otherTeam] == qtrue) {
-					if (battle->teamType[tean] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[tean] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV) {
+					if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV) {
 						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
 							battle->isHostile[team][otherTeam] = qtrue;
 						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
@@ -204,7 +204,7 @@ void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, const qbool
 						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 							battle->isHostile[team][otherTeam] = qfalse;
 					}
-					if (battle->teamType[tean] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[tean] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE) {
+					if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE) {
 						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
 							battle->isHostile[team][otherTeam] = qfalse;
 						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
