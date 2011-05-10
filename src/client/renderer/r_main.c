@@ -327,6 +327,7 @@ void R_RenderFrame (void)
 		}
 
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
+		/** @todo Remove R_DrawBspEntities; it breaks rendering order. Should add all bsp entities to surface lists instead */
 		R_DrawBspEntities(r_bsp_entities);
 
 		R_EnableBlend(qtrue);
