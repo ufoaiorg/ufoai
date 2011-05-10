@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "../../cl_shared.h"
 #include "../../sound/s_main.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
 #include "cp_messages.h"
@@ -43,7 +41,7 @@ message_t *cp_messageStack;
 static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
 {
 	dateLong_t date;
-	CL_DateConvertLong(&message->date, &date);
+	CP_DateConvertLong(&message->date, &date);
 	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), date.year,
 		Date_GetMonthName(date.month - 1), date.day, date.hour, date.min);
 }

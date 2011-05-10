@@ -700,7 +700,7 @@ static inline messageType_t CP_MissionGetMessageLevel (const mission_t *mission)
 static inline const char *CP_MissionGetMessage (const mission_t *mission)
 {
 	if (mission->category == INTERESTCATEGORY_RESCUE)
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Go on a rescue mission at %s. You might some of your soldiers alive."), mission->location);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Go on a rescue mission at %s to save your soldiers, some of whom may still be alive."), mission->location);
 	else
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), mission->location);
 
@@ -732,7 +732,7 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 	MS_AddNewMessage(_("Notice"), CP_MissionGetMessage(mission), qfalse, CP_MissionGetMessageLevel(mission), NULL);
 
 	mission->onGeoscape = qtrue;
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 	MAP_UpdateGeoscapeDock();
 }
 
@@ -1102,7 +1102,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 }
 
 /**
- * @sa CL_GameAutoGo
+ * @sa CP_GameAutoGo
  */
 void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, qboolean won)
 {
@@ -1124,14 +1124,14 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	/* add the looted goods to base storage and market */
 	base->storage = ccs.eMission;
 
-	CL_HandleNationData(campaign->minhappiness, won, mission, battleParameters->nation, &ccs.missionResults);
+	CP_HandleNationData(campaign->minhappiness, won, mission, battleParameters->nation, &ccs.missionResults);
 	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */
 	CP_ParseCharacterData(NULL);
 
 	/* update stats */
-	CL_UpdateCharacterStats(base, aircraft);
+	CP_UpdateCharacterStats(base, aircraft);
 
 	E_Foreach(EMPL_SOLDIER, employee) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft))
@@ -1563,7 +1563,7 @@ static int CP_SelectNewMissionType (void)
 
 /**
  * @brief Spawn new missions.
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @note daily called
  */
 void CP_SpawnNewMissions (void)
@@ -1585,7 +1585,7 @@ void CP_SpawnNewMissions (void)
 
 		/* Increase the alien's interest in supplying their bases for this cycle.
 		 * The more bases, the greater their interest in supplying them. */
-		CL_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
+		CP_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
 
 		/* Calculate the amount of missions to be spawned this cycle.
 		 * Note: This is a function over css.overallInterest. It looks like this:

@@ -444,3 +444,10 @@
 "spawnflags" "65280"
 "angles" "1.55678 -53.5096 -2.1034"
 }
+// entity 16
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropical1/tropical1.md2"
+"origin" "146 64 31"
+}

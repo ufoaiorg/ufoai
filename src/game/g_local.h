@@ -657,7 +657,7 @@ struct edict_s {
 
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
 
-	pos3_t pos;
+	pos3_t pos;					/**< the position on the grid @sa @c UNIT_SIZE */
 	byte dir;					/**< direction the player looks at */
 
 	int TU;						/**< remaining timeunits for actors or timeunits needed to 'use' this entity */

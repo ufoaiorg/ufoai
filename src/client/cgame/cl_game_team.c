@@ -28,11 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game_team.h"
 #include "../cl_inventory.h"
 #include "../cl_team.h"
-#include "../../common/qfiles.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_popup.h"
 #include "../ui/node/ui_node_container.h"	/**< ui_inventory */
-#include "cl_game_team.h"
 #include "save_team.h"
 #include "save_character.h"
 #include "save_inventory.h"
@@ -422,6 +420,7 @@ static void GAME_GetEquipment (void)
 	ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;
 
+	OBJZERO(game_inventory);
 	GAME_UpdateInventory(&game_inventory, ed);
 }
 

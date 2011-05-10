@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct cgame_import_s;
 
 typedef struct cgame_export_s {
+	/** the name of this cgame mode - only for console output */
 	const char *name;
 	const char *menu;
 	int isMultiplayer;

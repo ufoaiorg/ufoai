@@ -26,12 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_TIME_H
 #define CP_TIME_H
 
-void CL_UpdateTime(void);
-void CL_GameTimeStop(void);
-qboolean CL_IsTimeStopped(void);
-void CL_GameTimeFast(void);
-void CL_GameTimeSlow(void);
-void CL_SetGameTime_f(void);
+void CP_UpdateTime(void);
+void CP_GameTimeStop(void);
+qboolean CP_IsTimeStopped(void);
+void CP_GameTimeFast(void);
+void CP_GameTimeSlow(void);
+void CP_SetGameTime_f(void);
 
 qboolean Date_LaterThan(const date_t *now, const date_t *compare);
 qboolean Date_IsDue(const date_t *date);

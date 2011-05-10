@@ -562,7 +562,7 @@ typedef struct ccs_s {
  * @brief Human readable time information in the game.
  * @note Use this on runtime - please avoid for structs that get saved.
  * @sa date_t For storage & network transmitting (engine only).
- * @sa CL_DateConvertLong
+ * @sa CP_DateConvertLong
  */
 typedef struct dateLong_s {
 	short year;	/**< Year in yyyy notation. */
@@ -590,23 +590,23 @@ extern const struct cgame_import_s *cgi;
 
 /* Campaign functions */
 void CP_InitStartup(const struct cgame_import_s *import);
-campaign_t* CL_GetCampaign(const char *name);
+campaign_t* CP_GetCampaign(const char *name);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
-void CL_ReadSinglePlayerData(void);
-void CL_ReadCampaignData(const campaign_t *campaign);
+void CP_ParseCampaignData(void);
+void CP_ReadCampaignData(const campaign_t *campaign);
 qboolean CP_IsRunning(void);
 
-void CL_CampaignRun(campaign_t *campaign);
+void CP_CampaignRun(campaign_t *campaign);
 void CP_CheckLostCondition(const campaign_t *campaign);
 void CP_EndCampaign(qboolean won);
 
 void CP_Shutdown(void);
-void CL_ResetSinglePlayerData(void);
+void CP_ResetCampaignData(void);
 
 
 /* Date functions */
-void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);
-const char* CL_SecondConvert(int second);
+void CP_DateConvertLong(const date_t * date, dateLong_t * dateLong);
+const char* CP_SecondConvert(int second);
 
 /* Mission related functions */
 int CP_CountMissionOnGeoscape(void);
@@ -621,12 +621,12 @@ mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 
-void CL_HandleNationData(float minHappiness, qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
-void CL_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
+void CP_HandleNationData(float minHappiness, qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
+void CP_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
 /* Credits management */
 qboolean CP_CheckCredits (int costs);
-void CL_UpdateCredits(int credits);
+void CP_UpdateCredits(int credits);
 
 /* Other functions */
 void CP_ParseCharacterData(struct dbuffer *msg);
@@ -637,7 +637,7 @@ aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
 void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
 qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
 
-void CL_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results);
+void CP_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results);
 
 qboolean CP_OnGeoscape(void);
 

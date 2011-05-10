@@ -165,6 +165,7 @@ void B_InitStartup(void);
 
 /* base functions */
 base_t *B_Build(const struct campaign_s *campaign, const vec2_t pos, const char *name);
+void B_SetUpFirstBase(const struct campaign_s *campaign, base_t* base);
 base_t *B_GetNext(base_t *lastBase);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);

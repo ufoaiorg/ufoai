@@ -578,7 +578,7 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 		VectorCopy(epos, pos);
 		count++;
 
-		/**< if reaching that square already took too many TUs,
+		/* if reaching that square already took too many TUs,
 		 * don't bother to reach new squares *from* there. */
 		TUsSoFar = RT_AREA_POS(path, pos, crouchingState);
 		if (TUsSoFar >= distance || TUsSoFar >= MAX_MOVELENGTH)

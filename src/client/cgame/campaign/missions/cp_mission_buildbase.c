@@ -54,16 +54,16 @@ void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 {
 	if (CP_BasemissionIsSubvertingGovernmentMission(mission)) {
 		/* This is a subverting government mission */
-		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
+		CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	} else {
 		/* An alien base has been built */
 		const alienBase_t *base = mission->data.alienBase;
 		assert(base);
 		CP_SpreadXVIAtPos(base->pos);
 
-		CL_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_XVI);
-		CL_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_SUPPLY);
-		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
+		CP_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_XVI);
+		CP_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_SUPPLY);
+		CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 	}
 
 	CP_MissionRemove(mission);
@@ -76,8 +76,8 @@ void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 void CP_BuildBaseMissionIsFailure (mission_t *mission)
 {
 	/* Restore some alien interest for build base that has been removed when mission has been created */
-	CL_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BUILDING);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BUILDING);
+	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }
@@ -87,7 +87,7 @@ void CP_BuildBaseMissionIsFailure (mission_t *mission)
  */
 void CP_BuildBaseMissionOnSpawn (void)
 {
-	CL_ChangeIndividualInterest(-0.7f, INTERESTCATEGORY_BUILDING);
+	CP_ChangeIndividualInterest(-0.7f, INTERESTCATEGORY_BUILDING);
 }
 
 /**
@@ -100,8 +100,8 @@ void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
 	alienBase_t *base = mission->data.alienBase;
 	assert(base);
 
-	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
-	CL_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_INTERCEPT);
+	CP_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
+	CP_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_INTERCEPT);
 
 	AB_DestroyBase(base);
 	mission->data.alienBase = NULL;

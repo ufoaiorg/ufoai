@@ -49,7 +49,7 @@ typedef struct stats_s {
 	int aircraftHad;			/**< number of PHALANX aircraft ever bought/produced (used for unique idx generation) */
 } stats_t;
 
-void CL_StatsUpdate_f(void);
+void CP_StatsUpdate_f(void);
 void STATS_InitStartup(void);
 
 #endif

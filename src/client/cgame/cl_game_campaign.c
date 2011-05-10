@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "cl_game.h"
 #include "cl_game_campaign.h"
-#include "../cl_team.h"
 #include "campaign/cp_campaign.h"
 #include "campaign/cp_missions.h"
 #include "campaign/cp_mission_triggers.h"
@@ -34,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cp_map.h"
 #include "../battlescape/cl_hud.h"
 #include "../ui/ui_main.h"
-#include "../ui/ui_nodes.h"
-#include "../ui/node/ui_node_model.h"
 #include "../ui/node/ui_node_text.h"
 
 static const cgame_import_t *cgImport;
@@ -83,7 +80,7 @@ static void GAME_CP_MissionAutoGo_f (void)
 	CP_CreateBattleParameters(mission, battleParam, MAP_GetMissionAircraft());
 
 	results->won = qfalse;
-	CL_GameAutoGo(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
+	CP_GameAutoGo(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
 
 	if (results->won) {
 		Cvar_SetValue("mn_autogo", 1);
@@ -270,7 +267,7 @@ static void GAME_CP_CampaignListClick_f (void)
 static void GAME_CP_Start_f (void)
 {
 	/* get campaign - they are already parsed here */
-	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	campaign_t *campaign = CP_GetCampaign(cp_campaign->string);
 	if (!campaign)
 		return;
 
@@ -449,7 +446,7 @@ static void GAME_CP_Frame (void)
 		return;
 
 	/* advance time */
-	CL_CampaignRun(ccs.curCampaign);
+	CP_CampaignRun(ccs.curCampaign);
 }
 
 static const char* GAME_CP_GetTeamDef (void)
@@ -536,8 +533,8 @@ static void GAME_CP_InitStartup (void)
 	Cvar_ForceSet("sv_ai", "1");
 
 	/* reset campaign data */
-	CL_ResetSinglePlayerData();
-	CL_ReadSinglePlayerData();
+	CP_ResetCampaignData();
+	CP_ParseCampaignData();
 }
 
 static void GAME_CP_Shutdown (void)
@@ -551,7 +548,7 @@ static void GAME_CP_Shutdown (void)
 
 	CP_Shutdown();
 
-	CL_ResetSinglePlayerData();
+	CP_ResetCampaignData();
 
 	SV_Shutdown("Quitting server.", qfalse);
 }

@@ -387,7 +387,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 
 /**
  * @brief Checks whether given transfer should be processed.
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
 void TR_TransferRun (void)
 {
@@ -428,7 +428,7 @@ static void TR_ListTransfers_f (void)
 			continue;
 
 		/* @todo: we need a strftime feature to make this easier */
-		CL_DateConvertLong(&transfer->event, &date);
+		CP_DateConvertLong(&transfer->event, &date);
 
 		Com_Printf("Transfer #%d\n", i);
 		Com_Printf("...From %d (%s) To %d (%s) Arrival: %04i-%02i-%02i %02i:%02i:%02i\n",

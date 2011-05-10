@@ -124,7 +124,7 @@ static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 /**
  * @brief Updates character skills after a mission.
  * @param[in,out] chr Pointer to the character that should get the skills updated
- * @sa CL_UpdateCharacterStats
+ * @sa CP_UpdateCharacterStats
  * @sa G_UpdateCharacterScore
  * @sa G_UpdateHitScore
  */

@@ -27,6 +27,7 @@
  */
 
 #include "server.h"
+#include "sv_log.h"
 #include "../common/grid.h"
 #include "../ports/system.h"
 #include <SDL.h>
@@ -39,7 +40,7 @@ static void SV_dprintf (const char *fmt, ...)
 	va_list ap;
 
 	va_start(ap, fmt);
-	Qcommon_GetPrintFunction()(fmt, ap);
+	SV_LogAdd(fmt, ap);
 	va_end(ap);
 }
 
@@ -49,18 +50,16 @@ static void SV_dprintf (const char *fmt, ...)
  */
 static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt, va_list ap)
 {
-	char msg[1024];
-
 	if (level == PRINT_NONE)
 		return;
 
-	Q_vsnprintf(msg, sizeof(msg), fmt, ap);
-
 	if (player) {
+		char msg[1024];
+		Q_vsnprintf(msg, sizeof(msg), fmt, ap);
 		client_t *cl = SV_GetClient(player->num);
 		SV_ClientPrintf(cl, level, "%s", msg);
 	} else
-		Com_Printf("%s", msg);
+		SV_LogAdd(fmt, ap);
 }
 
 static void SV_error (const char *fmt, ...) __attribute__((noreturn));
@@ -108,7 +107,7 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, qboolean
 		return 0;
 
 	if (i == max)
-		Com_Error(ERR_DROP, "*Index: overflow '%s' start: %i, max: %i", name, start, max);
+		SV_error("*Index: overflow '%s' start: %i, max: %i", name, start, max);
 
 	SV_SetConfigString(start + i, name);
 
@@ -135,7 +134,7 @@ static unsigned int SV_ModelIndex (const char *name)
 static void SV_SetModel (edict_t * ent, const char *name)
 {
 	if (!name)
-		Com_Error(ERR_DROP, "SV_SetModel: NULL");
+		SV_error("SV_SetModel: NULL");
 
 	ent->modelindex = SV_ModelIndex(name);
 
@@ -160,7 +159,7 @@ static void SV_Configstring (int index, const char *fmt, ...)
 	va_list argptr;
 
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "configstring: bad index %i", index);
+		SV_error("configstring: bad index %i", index);
 
 	va_start(argptr, fmt);
 	Q_vsnprintf(val, sizeof(val), fmt, argptr);
@@ -516,7 +515,6 @@ void SV_ShutdownGameProgs (void)
 	Com_SetServerState(ss_game_shutdown);
 
 	if (svs.gameThread) {
-		Com_Printf("Shutdown the game thread\n");
 		SDL_CondSignal(svs.gameFrameCond);
 		SDL_WaitThread(svs.gameThread, NULL);
 		SDL_DestroyCond(svs.gameFrameCond);

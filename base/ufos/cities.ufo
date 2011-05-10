@@ -1555,7 +1555,7 @@ city maputo
 city maracaibo
 {
 	name "_Maracaibo"
-	pos "71.6333 -10.65"
+	pos "72.0 10.65"
 }
 
 city marrakech

@@ -356,7 +356,7 @@ static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t const *u
  * @brief Update alien interest for all PHALANX bases.
  * @note called every @c DETECTION_INTERVAL
  * @sa UFO_UpdateAlienInterestForOneBase
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
 void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 {

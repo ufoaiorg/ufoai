@@ -7,10 +7,8 @@ music geoscape
 {
 	van_geoscape
 	karlmacklin_geoscape
-	azrael1
 	Crystan-Geosphere03
 	Crystan-Geosphere04
-	dbsea
 }
 
 music battlescape
@@ -20,7 +18,7 @@ music battlescape
 //	alBasrahM
 //	turinItalyM
 	ufo1
-	ufo2
+//	ufo2
 //	Marine01
 //	Marine02
 //	MarineAlienRaid
@@ -53,7 +51,7 @@ music battlescape
 //	greecei
 //	space
 //	returnjourney
-	TheThings-Slippycurb
+//	TheThings-Slippycurb
 }
 
 music aircombat

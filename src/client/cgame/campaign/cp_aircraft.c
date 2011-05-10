@@ -26,9 +26,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h"
+#include "../../client.h" /* cls, le_t */
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -39,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cp_aircraft_callbacks.h"
 #include "save/save_aircraft.h"
+#include "cp_popup.h"
 
 /**
  * @brief Iterates through the aircraft of a base
@@ -573,9 +573,9 @@ const char *AIR_GetAircraftString (aircraftType_t aircraftType)
 /**
  * @brief Some of the aircraft values needs special calculations when they
  * are shown in the menus
- * @sa CL_AircraftStatToName
+ * @sa UP_AircraftStatToName
  */
-int CL_AircraftMenuStatsValues (const int value, const int stat)
+int AIR_AircraftMenuStatsValues (const int value, const int stat)
 {
 	switch (stat) {
 	case AIR_STATS_SPEED:
@@ -1173,7 +1173,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			MAP_SetMissionAircraft(aircraft);
 			MAP_SelectMission(aircraft->mission);
 			MAP_SetInterceptorAircraft(aircraft);
-			CL_GameTimeStop();
+			CP_GameTimeStop();
 			UI_PushWindow("popup_intercept_ready", NULL, NULL);
 			break;
 		case AIR_RETURNING:
@@ -1244,16 +1244,16 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 
 /**
  * @brief Handles aircraft movement and actions in geoscape mode
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @param[in] campaign The campaign data structure
  * @param[in] dt time delta (may be 0 if radar overlay should be updated but no aircraft moves)
  * @param[in] updateRadarOverlay True if radar overlay should be updated (not needed if geoscape isn't updated)
  */
-void CL_CampaignRunAircraft (const campaign_t* campaign, int dt, qboolean updateRadarOverlay)
+void AIR_CampaignRun (const campaign_t* campaign, int dt, qboolean updateRadarOverlay)
 {
 	/* true if at least one aircraft moved: radar overlay must be updated
 	 * This is static because aircraft can move without radar being
-	 * updated (sa CL_CampaignRun) */
+	 * updated (sa CP_CampaignRun) */
 	static qboolean radarOverlayReset = qfalse;
 	aircraft_t *aircraft;
 
@@ -1337,7 +1337,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 		return qfalse;
 
 	if (AIR_GetTeamSize(aircraft) == 0) {
-		UI_Popup(_("Notice"), _("Assign one or more soldiers to this aircraft first."));
+		CP_Popup(_("Notice"), _("Assign one or more soldiers to this aircraft first."));
 		return qfalse;
 	}
 
@@ -1445,9 +1445,6 @@ static const value_t aircraft_vals[] = {
  * @sa CL_ParseClientData
  * @sa CL_ParseScriptSecond
  * @note parses the aircraft into our aircraft_sample array to use as reference
- * @note This parsing function writes into two different memory pools
- * one is the cp_campaignPool which is cleared on every new game, the other is
- * cl_genericPool which is existent until you close the game
  */
 void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAircraftItems)
 {
@@ -1485,7 +1482,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		aircraftTemplate->tpl = aircraftTemplate;
-		aircraftTemplate->id = Mem_PoolStrDup(name, cl_genericPool, 0);
+		aircraftTemplate->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 		aircraftTemplate->status = AIR_HOME;
 		/* default is no ufo */
 		aircraftTemplate->ufotype = UFO_MAX;
@@ -1668,7 +1665,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					case V_TRANSLATION_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cl_genericPool, 0);
+						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
 						break;
 					default:
 						Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
@@ -1730,7 +1727,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 								case V_TRANSLATION_STRING:
 									token++;
 								case V_CLIENT_HUNK_STRING:
-									Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cl_genericPool, 0);
+									Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
 									break;
 								default:
 									Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);

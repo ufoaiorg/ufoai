@@ -35,8 +35,6 @@ renderer_threadstate_t r_threadstate;
 
 int R_RunThread (void *p)
 {
-	Com_DPrintf(DEBUG_RENDERER, "R_RunThread: %d\n", SDL_ThreadID());
-
 	while (r_threads->integer) {
 		if (!refdef.ready) {
 			Sys_Sleep(THREAD_SLEEP_INTERVAL);
@@ -46,6 +44,9 @@ int R_RunThread (void *p)
 		/* the renderer is up, so busy-wait for it */
 		while (r_threadstate.state != THREAD_BSP)
 			Sys_Sleep(0);
+
+		if (!r_threads->integer)
+			break;
 
 		R_SetupFrustum();
 
@@ -65,8 +66,13 @@ int R_RunThread (void *p)
  */
 void R_ShutdownThreads (void)
 {
-	if (r_threadstate.thread)
-		SDL_KillThread(r_threadstate.thread);
+	if (r_threadstate.thread) {
+		const int old = r_threads->integer;
+		r_threads->integer = 0;
+		r_threadstate.state = THREAD_BSP;
+		SDL_WaitThread(r_threadstate.thread, NULL);
+		r_threads->integer = old;
+	}
 
 	r_threadstate.thread = NULL;
 }

@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h" /* cl, cls */
 #include "../../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
+#include "../../ui/ui_popup.h" /* popupText */
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -88,6 +88,7 @@ static linkedList_t *B_GetNeighbours (const building_t const *building)
 	return neighbours;
 }
 
+#ifdef DEBUG
 /**
  * @brief Check if base coherent (every building connected to eachothers)
  * @param[in] base Pointer to the base to check
@@ -130,6 +131,7 @@ static qboolean B_IsCoherent (const base_t *base)
 	}
 	return qtrue;
 }
+#endif
 
 /**
  * @brief Check and add blocked tile to the base
@@ -1064,9 +1066,9 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
 	/** @todo this should be an user option defined in Game Options. */
 	if (oldStatus == B_STATUS_UNDER_CONSTRUCTION && (status == B_STATUS_CONSTRUCTION_FINISHED || status == B_STATUS_WORKING)) {
 		if (B_CheckBuildingDependencesStatus(building))
-			CL_GameTimeStop();
+			CP_GameTimeStop();
 	} else {
-		CL_GameTimeStop();
+		CP_GameTimeStop();
 	}
 }
 
@@ -1132,7 +1134,7 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 	}
 
 	/* Finally update credits. */
-	CL_UpdateCredits(ccs.credits - price);
+	CP_UpdateCredits(ccs.credits - price);
 }
 
 /**
@@ -1207,25 +1209,20 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 }
 
 /**
- * @brief Setup buildings and equipment for first base. Uses the campaign
- * scriptable first base template to place the buildings in the base.
+ * @brief Setup aircraft and equipment for first base. Uses the campaign
+ * scriptable equipmentlist.
  * @param[in] campaign The campaign data structure
  * @param[in,out] base The base to set up
- * @sa B_SetUpBase
  */
-static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
+void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 {
 	const equipDef_t *ed;
-
-	if (campaign->firstBaseTemplate[0] == '\0')
-		Com_Error(ERR_DROP, "No base template for setting up the first base given");
 
 	/* Find the initial equipment definition for current campaign. */
 	ed = INV_GetEquipmentDefinitionByID(campaign->equipment);
 	/* Copy it to base storage. */
 	base->storage = *ed;
 
-	B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
 	/* Add aircraft to the first base */
 	/** @todo move aircraft to .ufo */
 	/* buy two first aircraft and hire pilots for them. */
@@ -1234,7 +1231,7 @@ static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
 		const aircraft_t *firebirdAircraft = AIR_GetAircraft(firebird);
 		aircraft_t *aircraft = AIR_NewAircraft(base, firebirdAircraft);
-		CL_UpdateCredits(ccs.credits - firebirdAircraft->price);
+		CP_UpdateCredits(ccs.credits - firebirdAircraft->price);
 		if (!E_HireEmployeeByType(base, EMPL_PILOT))
 			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
 		/* Assign and equip soldiers on Dropships */
@@ -1245,7 +1242,7 @@ static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
 		const aircraft_t *stilettoAircraft = AIR_GetAircraft(stiletto);
 		aircraft_t *aircraft = AIR_NewAircraft(base, stilettoAircraft);
-		CL_UpdateCredits(ccs.credits - stilettoAircraft->price);
+		CP_UpdateCredits(ccs.credits - stilettoAircraft->price);
 		if (!E_HireEmployeeByType(base, EMPL_PILOT))
 			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
 		AIM_AutoEquipAircraft(aircraft);
@@ -1285,7 +1282,6 @@ void B_SetName (base_t *base, const char *name)
  * @brief Build new base, uses template for the first base
  * @param[in] pos Position (on Geoscape) the base built at
  * @param[in] name The name of the new base, this string might already be in utf-8
- * @sa B_SetUpFirstBase
  */
 base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 {
@@ -1311,11 +1307,13 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 		CAP_SetCurrent(base, cap, 0);
 
 	/* setup for first base */
-	if (ccs.campaignStats.basesBuilt == 0)
-		B_SetUpFirstBase(campaign, base);
-	else
+	if (ccs.campaignStats.basesBuilt == 0) {
+		if (campaign->firstBaseTemplate[0] == '\0')
+			Com_Error(ERR_DROP, "No base template for setting up the first base given");
+		B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
+	} else {
 		B_BuildFromTemplate(base, NULL, qtrue);
-
+	}
 	base->baseStatus = BASE_WORKING;
 
 	/* a new base is not discovered (yet) */
@@ -1386,7 +1384,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 		Com_Error(ERR_DROP, "no current building\n");
 #endif
 	if (!CP_CheckCredits(buildingTemplate->fixCosts)) {
-		UI_Popup(_("Notice"), _("Not enough credits to build this\n"));
+		CP_Popup(_("Notice"), _("Not enough credits to build this\n"));
 		return NULL;
 	}
 
@@ -1437,7 +1435,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 				LIST_Delete(&neighbours);
 
 				if (!coherent) {
-					UI_Popup(_("Notice"), _("You must build next to existing buildings."));
+					CP_Popup(_("Notice"), _("You must build next to existing buildings."));
 					return NULL;
 				}
 			}
@@ -1454,7 +1452,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 			buildingNew->timeStart = ccs.date;
 
 			/* pay */
-			CL_UpdateCredits(ccs.credits - buildingNew->fixCosts);
+			CP_UpdateCredits(ccs.credits - buildingNew->fixCosts);
 			/* Update number of buildings on the base. */
 			ccs.numBuildings[base->idx]++;
 
@@ -2082,9 +2080,9 @@ void B_BuildingOpenAfterClick (const building_t *building)
 				UI_PushWindow("buyaircraft", NULL, NULL);
 				/* transfer is only possible when there are at least two bases */
 				if (B_GetCount() > 1)
-					UI_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
+					CP_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
 				else
-					UI_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
+					CP_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
 			}
 			break;
 		case B_STORAGE:
@@ -2095,7 +2093,7 @@ void B_BuildingOpenAfterClick (const building_t *building)
 			break;
 		case B_ANTIMATTER:
 			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), CAP_GetCurrent(base, CAP_ANTIMATTER), CAP_GetMax(base, CAP_ANTIMATTER));
-			UI_Popup(_("Information"), popupText);
+			CP_Popup(_("Information"), popupText);
 			break;
 		default:
 			UP_OpenWith(building->pedia);
@@ -2253,7 +2251,7 @@ static int B_CheckBuildingConstruction (building_t *building)
 
 /**
  * @brief Updates base data
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @note called every "day"
  * @sa AIRFIGHT_ProjectileHitsBase
  */
@@ -2337,7 +2335,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	}
-	CL_UpdateCredits(ccs.credits + gained + forcedgained);
+	CP_UpdateCredits(ccs.credits + gained + forcedgained);
 
 	/* ship no longer has cargo aboard */
 	aircraft->itemTypes = 0;
@@ -2376,7 +2374,7 @@ void B_DumpAircraftToHomeBase (aircraft_t *aircraft)
  * @brief Do anything when dropship returns to base
  * @param[in] aircraft Returning aircraft.
  * @note Place here any stuff, which should be called when Drophip returns to base.
- * @sa CL_CampaignRunAircraft
+ * @sa AIR_CampaignRun
  */
 void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
@@ -2792,6 +2790,14 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			building->buildTime = XML_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
 			building->level = XML_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
 			XML_GetPos2(snode, SAVE_BASES_POS, building->pos);
+
+			/** @todo fallback code for compatibility */
+			if (b->map[(int)building->pos[1]][(int)building->pos[0]].building != building
+			 && b->map[(int)building->pos[0]][(int)building->pos[1]].building == building) {
+				int swap = building->pos[0];
+				building->pos[0] = building->pos[1];
+				building->pos[1] = swap;
+			}
 		}
 		ccs.numBuildings[i] = j;
 

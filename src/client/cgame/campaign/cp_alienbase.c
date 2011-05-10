@@ -215,7 +215,7 @@ static void AB_UpdateStealthForOneBase (const aircraft_t const *aircraft, alienB
 /**
  * @brief Update stealth value of every base for every aircraft.
  * @note Called every @c DETECTION_INTERVAL
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @sa UFO_UpdateAlienInterestForOneBase
  */
 void AB_UpdateStealthForAllBase (void)
@@ -239,7 +239,7 @@ void AB_UpdateStealthForAllBase (void)
 /**
  * @brief Nations help in searching alien base.
  * @note called once per day, but will update stealth only every @c daysPerWeek day
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
 void AB_BaseSearchedByNations (void)
 {

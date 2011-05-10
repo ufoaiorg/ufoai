@@ -22,10 +22,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cl_genericPool */
+#include "../../client.h" /* CL_OnBattlescape */
 #include "../cl_game.h" /* GAME_ReloadMode */
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
+#include "../../ui/ui_popup.h" /* popupText */
 #include "cp_campaign.h"
 #include "cp_save.h"
 #include "cp_time.h"
@@ -69,7 +69,7 @@ static qboolean SAV_GameActionsAfterLoad (void)
 	result = result && PR_PostLoadInit();
 
 	/* Make sure the date&time is displayed when loading. */
-	CL_UpdateTime();
+	CP_UpdateTime();
 
 	/* Update number of UFO detected by radar */
 	RADAR_SetRadarAfterLoading();
@@ -148,7 +148,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 	}
 
 	clen = FS_FileLength(&f);
-	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
+	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cp_campaignPool, 0);
 	if (FS_Read(cbuf, clen, &f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	FS_CloseFile(&f);
@@ -174,7 +174,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			"...xml Size: %i, compressed? %c\n",
 			header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
 	len = header.xmlSize + 50;
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * len, cl_genericPool, 0);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * len, cp_campaignPool, 0);
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
@@ -204,13 +204,13 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			return qfalse;
 		}
 	}
+	Mem_Free(buf);
 
 	/* doing a subsystem run ;) */
 	GAME_ReloadMode();
 	node = XML_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
-		Mem_Free(buf);
 		mxmlDelete(topNode);
 		*error = "Invalid xml data";
 		return qfalse;
@@ -228,6 +228,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			Com_Printf("...subsystem '%s' - loaded.\n", saveSubsystems[i].name);
 	}
 	mxmlDelete(node);
+	mxmlDelete(topNode);
 
 	if (!SAV_GameActionsAfterLoad()) {
 		Com_Printf("Savegame postprocessing returned false - savegame could not be loaded\n");
@@ -237,9 +238,6 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
-	Mem_Free(buf);
-
-	mxmlDelete(topNode);
 
 	UI_InitStack("geoscape", NULL, qtrue, qtrue);
 	return qtrue;
@@ -287,7 +285,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	XML_AddString(node, SAVE_COMMENT, comment);
 	XML_AddString(node, SAVE_UFOVERSION, UFO_VERSION);
 	XML_AddString(node, SAVE_REALDATE, timeStampBuffer);
-	CL_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
 	XML_AddString(node, SAVE_GAMEDATE, message);
@@ -306,7 +304,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	header.version = LittleLong(SAVE_FILE_VERSION);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
-	CL_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
 	Q_strncpyz(header.realDate, timeStampBuffer, sizeof(header.realDate));
@@ -314,7 +312,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 
 	header.xmlSize = LittleLong(requiredBufferLength);
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cl_genericPool, 0);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cp_campaignPool, 0);
 	if (!buf) {
 		mxmlDelete(topNode);
 		*error = _("Could not allocate enough memory to save this game");
@@ -330,7 +328,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	else
 		bufLen = requiredBufferLength;
 
-	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
+	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cp_campaignPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
 
 	if (header.compressed) {

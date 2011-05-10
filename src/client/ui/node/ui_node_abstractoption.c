@@ -101,12 +101,13 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-static void UI_AbstractOptionDoLayout (uiNode_t *node) {
+static void UI_AbstractOptionDoLayout (uiNode_t *node)
+{
 	uiNode_t *option = node->firstChild;
 
 	if (EXTRADATA(node).dataId == 0) {
 		int count = 0;
-		while(option && option->behaviour == ui_optionBehaviour) {
+		while (option && option->behaviour == ui_optionBehaviour) {
 			UI_Validate(option);
 			if (!option->invis)
 				count++;
@@ -123,7 +124,7 @@ static void UI_AbstractOptionDoLayout (uiNode_t *node) {
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-uiNode_t*  UI_AbstractOptionGetFirstOption (uiNode_t * node)
+uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t * node)
 {
 	if (node->firstChild && node->firstChild->behaviour == ui_optionBehaviour) {
 		return node->firstChild;

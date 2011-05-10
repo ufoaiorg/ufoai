@@ -169,17 +169,21 @@ static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
 static char* HTTP_GetURLInternal (const char *url)
 {
 	dlhandle_t dl;
+	char buf[576];
 
 	OBJZERO(dl);
 
-	HTTP_ResolvURL(url, dl.URL, sizeof(dl.URL));
-	if (dl.URL[0] == '\0')
+	HTTP_ResolvURL(url, buf, sizeof(buf));
+	if (buf[0] == '\0')
 		return NULL;
+	Q_strncpyz(dl.URL, url, sizeof(dl.URL));
 
 	dl.curl = curl_easy_init();
-	curl_easy_setopt(dl.curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer + 2);
+	curl_easy_setopt(dl.curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer);
+	curl_easy_setopt(dl.curl, CURLOPT_TIMEOUT, http_timeout->integer);
 	curl_easy_setopt(dl.curl, CURLOPT_ENCODING, "");
 	curl_easy_setopt(dl.curl, CURLOPT_NOPROGRESS, 1);
+	curl_easy_setopt(dl.curl, CURLOPT_FAILONERROR, 1);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEDATA, &dl);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEFUNCTION, HTTP_Recv);
 	curl_easy_setopt(dl.curl, CURLOPT_PROXY, http_proxy->string);
@@ -189,6 +193,7 @@ static char* HTTP_GetURLInternal (const char *url)
 	curl_easy_setopt(dl.curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
 	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, Cvar_GetString("version"));
 	curl_easy_setopt(dl.curl, CURLOPT_URL, dl.URL);
+	curl_easy_setopt(dl.curl, CURLOPT_NOSIGNAL, 1);
 
 	/* get it */
 	curl_easy_perform(dl.curl);
@@ -220,11 +225,14 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 	curl_formadd(&post, &last, CURLFORM_PTRNAME, formName, CURLFORM_FILE, fileName, CURLFORM_END);
 
 	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer);
+	curl_easy_setopt(curl, CURLOPT_TIMEOUT, http_timeout->integer);
 	curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
+	curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
-	curl_easy_setopt(curl, CURLOPT_URL, buf);
+	curl_easy_setopt(curl, CURLOPT_URL, url);
+	curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
 	curl_easy_perform(curl);
 
 	curl_easy_cleanup(curl);

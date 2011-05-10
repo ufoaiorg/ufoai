@@ -21,11 +21,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cl, cls */
+#include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_capacity.h"
-#include "../../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
-#include "../../../shared/parse.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
 #include "cp_map.h"
@@ -214,7 +212,7 @@ int CAP_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
 
 /**
  * @brief Checks capacity overflows on bases
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
 void CAP_CheckOverflow (void)
 {

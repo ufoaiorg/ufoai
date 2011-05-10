@@ -303,7 +303,7 @@ static const char *SV_GetCvarToken (const mAssembly_t *a, const char* token, con
 	return cvar->string;
 }
 
-static inline const char *SV_GetTileFromTileSet (const mapInfo_t *map, const char *filename, const char **text, const mAssembly_t *a)
+static const char *SV_GetTileFromTileSet (const mapInfo_t *map, const char *filename, const char **text, const mAssembly_t *a)
 {
 	const char *errhead = "SV_GetTileFromTileSet: Unexpected end of file (";
 	const mTileSet_t *tileSet;

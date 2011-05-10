@@ -216,9 +216,11 @@ static void _backtrace (FILE *crash, void * const *buffer, int size)
 		}
 
 		if (func == NULL) {
-			output_print(&ob, "0x%x : %s : %s \n", addr, procname, file);
+			output_print(&ob, "0x%x : %s : %s \n",
+					addr, procname == NULL ? "unknown" : procname, file == NULL ? "unknown" : file);
 		} else {
-			output_print(&ob, "0x%x : %s : %s (%d) : in function (%s) \n", addr, procname, file, line, func);
+			output_print(&ob, "0x%x : %s : %s (%d) : in function (%s) \n",
+					addr, procname == NULL ? "unknown" : procname, file == NULL ? "unknown" : file, line, func);
 		}
 	}
 

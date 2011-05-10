@@ -504,7 +504,7 @@ static void UR_DialogStartSell_f (void)
 				ufoRecovery.ufoTemplate->ufotype), _(nation->name), price);
 	}
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-	CL_UpdateCredits(ccs.credits + price);
+	CP_UpdateCredits(ccs.credits + price);
 
 	/* update nation happiness */
 	for (i = 0; i < ccs.numNations; i++) {

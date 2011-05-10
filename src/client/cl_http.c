@@ -196,6 +196,9 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 		curl_easy_setopt(dl->curl, CURLOPT_WRITEDATA, dl);
 		curl_easy_setopt(dl->curl, CURLOPT_WRITEFUNCTION, HTTP_Recv);
 	}
+	curl_easy_setopt(dl->curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer);
+	curl_easy_setopt(dl->curl, CURLOPT_TIMEOUT, http_timeout->integer);
+	curl_easy_setopt(dl->curl, CURLOPT_FAILONERROR, 1);
 	curl_easy_setopt(dl->curl, CURLOPT_PROXY, http_proxy->string);
 	curl_easy_setopt(dl->curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(dl->curl, CURLOPT_MAXREDIRS, 5);
@@ -206,6 +209,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	curl_easy_setopt(dl->curl, CURLOPT_USERAGENT, Cvar_GetString("version"));
 	curl_easy_setopt(dl->curl, CURLOPT_REFERER, cls.downloadReferer);
 	curl_easy_setopt(dl->curl, CURLOPT_URL, dl->URL);
+	curl_easy_setopt(dl->curl, CURLOPT_NOSIGNAL, 1);
 
 	if (curl_multi_add_handle(multi, dl->curl) != CURLM_OK) {
 		Com_Printf("curl_multi_add_handle: error\n");

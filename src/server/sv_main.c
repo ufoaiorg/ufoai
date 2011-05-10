@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "server.h"
+#include "sv_log.h"
 #include "../ports/system.h"
 
 /** password for remote server commands */
@@ -624,6 +625,7 @@ void SV_Frame (int now, void *data)
 	else
 		/* signal the game frame thread to wake up */
 		SDL_CondSignal(svs.gameFrameCond);
+	SV_LogHandleOutput();
 
 	/* next map in the cycle */
 	if (sv->endgame && sv_maxclients->integer > 1)
@@ -726,6 +728,7 @@ void SV_Init (void)
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
 	SV_MapcycleInit();
+	SV_LogInit();
 }
 
 /**
@@ -766,6 +769,7 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 void SV_Clear (void)
 {
 	SV_MapcycleClear();
+	SV_LogShutdown();
 }
 
 /**

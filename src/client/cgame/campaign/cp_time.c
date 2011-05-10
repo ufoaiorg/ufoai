@@ -50,12 +50,12 @@ CASSERT(lengthof(lapse) == NUM_TIMELAPSE);
 /**
  * @brief Updates date/time and timescale (=timelapse) on the geoscape menu
  * @sa SAV_GameLoad
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
-void CL_UpdateTime (void)
+void CP_UpdateTime (void)
 {
 	dateLong_t date;
-	CL_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(&ccs.date, &date);
 
 	/* Update the timelapse text */
 	if (ccs.gameLapse >= 0 && ccs.gameLapse < NUM_TIMELAPSE) {
@@ -76,20 +76,20 @@ void CL_UpdateTime (void)
 /**
  * @brief Stop game time speed
  */
-void CL_GameTimeStop (void)
+void CP_GameTimeStop (void)
 {
 	/* don't allow time scale in tactical mode - only on the geoscape */
 	if (!cp_missiontest->integer && CP_OnGeoscape())
 		ccs.gameLapse = 0;
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
-	CL_UpdateTime();
+	CP_UpdateTime();
 }
 
 /**
  * @brief Check if time is stopped
  */
-qboolean CL_IsTimeStopped (void)
+qboolean CP_IsTimeStopped (void)
 {
 	return !ccs.gameLapse;
 }
@@ -97,7 +97,7 @@ qboolean CL_IsTimeStopped (void)
 /**
  * Time scaling is only allowed when you are on the geoscape and when you had at least one base built.
  */
-static qboolean CL_AllowTimeScale (void)
+static qboolean CP_AllowTimeScale (void)
 {
 	/* check the stats value - already build bases might have been destroyed
 	 * so the B_GetCount() values is pointless here */
@@ -110,28 +110,28 @@ static qboolean CL_AllowTimeScale (void)
 /**
  * @brief Decrease game time speed
  */
-void CL_GameTimeSlow (void)
+void CP_GameTimeSlow (void)
 {
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (CL_AllowTimeScale()) {
+	if (CP_AllowTimeScale()) {
 		if (ccs.gameLapse > 0)
 			ccs.gameLapse--;
 		/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
-		CL_UpdateTime();
+		CP_UpdateTime();
 	}
 }
 
 /**
  * @brief Increase game time speed
  */
-void CL_GameTimeFast (void)
+void CP_GameTimeFast (void)
 {
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (CL_AllowTimeScale()) {
+	if (CP_AllowTimeScale()) {
 		if (ccs.gameLapse < NUM_TIMELAPSE)
 			ccs.gameLapse++;
 		/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
-		CL_UpdateTime();
+		CP_UpdateTime();
 	}
 }
 
@@ -139,7 +139,7 @@ void CL_GameTimeFast (void)
  * @brief Set game time speed
  * @param[in] gameLapseValue The value to set the game time to.
  */
-static void CL_SetGameTime (int gameLapseValue)
+static void CP_SetGameTime (int gameLapseValue)
 {
 	if (gameLapseValue == ccs.gameLapse)
 		return;
@@ -155,7 +155,7 @@ static void CL_SetGameTime (int gameLapseValue)
 	ccs.gameLapse = gameLapseValue;
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
-	CL_UpdateTime();
+	CP_UpdateTime();
 }
 
 
@@ -164,13 +164,13 @@ static void CL_SetGameTime (int gameLapseValue)
  * @sa CL_SetGameTime
  * @sa lapse
  */
-void CL_SetGameTime_f (void)
+void CP_SetGameTime_f (void)
 {
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <timeid>\n", Cmd_Argv(0));
 		return;
 	}
-	CL_SetGameTime(atoi(Cmd_Argv(1)));
+	CP_SetGameTime(atoi(Cmd_Argv(1)));
 }
 
 /**

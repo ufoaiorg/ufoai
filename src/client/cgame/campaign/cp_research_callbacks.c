@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
+#include "cp_popup.h"
 #include "cp_research_callbacks.h"
 
 typedef enum {
@@ -554,13 +554,13 @@ static void RS_ResearchStart_f (void)
 				RS_MaxOutResearch(base, tech);
 			}else {
 				/* Research already running in another base. */
-				UI_Popup(_("Notice"), _("This item is currently under research in another base."));
+				CP_Popup(_("Notice"), _("This item is currently under research in another base."));
 			}
 			break;
 		case RS_PAUSED:
 		case RS_NONE:
 			if (tech->statusResearch == RS_PAUSED) {
-				/* UI_Popup(_("Notice"), _("The research on this item continues.")); Removed because it isn't really needed.*/
+				/* CP_Popup(_("Notice"), _("The research on this item continues.")); Removed because it isn't really needed.*/
 				Com_Printf("RS_ResearchStart_f: The research on this item continues.\n");
 			}
 			/* Add as many scientists as possible to this tech. */
@@ -572,13 +572,13 @@ static void RS_ResearchStart_f (void)
 			break;
 		case RS_FINISH:
 			/* Should never be executed. */
-			UI_Popup(_("Notice"), _("The research on this item is complete."));
+			CP_Popup(_("Notice"), _("The research on this item is complete."));
 			break;
 		default:
 			break;
 		}
 	} else
-		UI_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
+		CP_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
 
 	RS_InitGUI(base, qtrue);
 }
@@ -617,7 +617,7 @@ static void RS_ResearchStop_f (void)
 		/* tech->statusResearch = RS_RUNNING; */
 		break;
 	case RS_FINISH:
-		UI_Popup(_("Notice"), _("The research on this item is complete."));
+		CP_Popup(_("Notice"), _("The research on this item is complete."));
 		break;
 	case RS_NONE:
 		Com_Printf("Can't pause research. Research not started.\n");
@@ -647,7 +647,7 @@ static void RS_ShowPedia_f (void)
 	if (tech->preDescription.numDescriptions > 0) {
 		UP_OpenCopyWith(tech->id);
 	} else {
-		UI_Popup(_("Notice"), _("No research proposal available for this project."));
+		CP_Popup(_("Notice"), _("No research proposal available for this project."));
 	}
 }
 
@@ -806,10 +806,10 @@ static void CL_ResearchType_f (void)
 	/** @todo wrong computation: researchListLength doesn't say if there are research on this base */
 	if (!researchListLength) {
 		UI_PopWindow(qfalse);
-		UI_Popup(_("Notice"), _("Nothing to research"));
+		CP_Popup(_("Notice"), _("Nothing to research"));
 	} else if (!B_GetBuildingStatus(base, B_LAB)) {
 		UI_PopWindow(qfalse);
-		UI_Popup(_("Notice"), _("Build a laboratory first"));
+		CP_Popup(_("Notice"), _("Build a laboratory first"));
 	}
 }
 /**

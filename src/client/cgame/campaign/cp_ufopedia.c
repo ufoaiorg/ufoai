@@ -133,9 +133,9 @@ static void UP_ChangeDisplay (int newDisplay)
 /**
  * @brief Translate a aircraft statistic integer to a translated string
  * @sa aircraftParams_t
- * @sa CL_AircraftMenuStatsValues
+ * @sa AIR_AircraftMenuStatsValues
  */
-static const char* CL_AircraftStatToName (int stat)
+static const char* UP_AircraftStatToName (int stat)
 {
 	switch (stat) {
 	case AIR_STATS_SPEED:
@@ -163,7 +163,7 @@ static const char* CL_AircraftStatToName (int stat)
  * @brief Translate a aircraft size integer to a translated string
  * @sa aircraftSize_t
  */
-static const char* CL_AircraftSizeToName (int aircraftSize)
+static const char* UP_AircraftSizeToName (int aircraftSize)
 {
 	switch (aircraftSize) {
 	case AIRCRAFT_SMALL:
@@ -288,18 +288,18 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		}
 		/* We write the range of the weapon */
 		if (!equal(item->craftitem.stats[AIR_STATS_WRANGE], 0))
-			Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_WRANGE),
-				CL_AircraftMenuStatsValues(item->craftitem.stats[AIR_STATS_WRANGE], AIR_STATS_WRANGE)), sizeof(itemText));
+			Q_strcat(itemText, va("%s:\t%i\n", UP_AircraftStatToName(AIR_STATS_WRANGE),
+				AIR_AircraftMenuStatsValues(item->craftitem.stats[AIR_STATS_WRANGE], AIR_STATS_WRANGE)), sizeof(itemText));
 
 		/* we scan all stats except weapon range */
 		for (i = 0; i < AIR_STATS_MAX; i++) {
-			const char *statsName = CL_AircraftStatToName(i);
+			const char *statsName = UP_AircraftStatToName(i);
 			if (i == AIR_STATS_WRANGE)
 				continue;
 			if (item->craftitem.stats[i] > 2.0f)
-				Q_strcat(itemText, va("%s:\t+%i\n", statsName, CL_AircraftMenuStatsValues(item->craftitem.stats[i], i)), sizeof(itemText));
+				Q_strcat(itemText, va("%s:\t+%i\n", statsName, AIR_AircraftMenuStatsValues(item->craftitem.stats[i], i)), sizeof(itemText));
 			else if (item->craftitem.stats[i] < -2.0f)
-				Q_strcat(itemText, va("%s:\t%i\n", statsName, CL_AircraftMenuStatsValues(item->craftitem.stats[i], i)), sizeof(itemText));
+				Q_strcat(itemText, va("%s:\t%i\n", statsName, AIR_AircraftMenuStatsValues(item->craftitem.stats[i], i)), sizeof(itemText));
 			else if (item->craftitem.stats[i] > 1.0f)
 				Q_strcat(itemText, va(_("%s:\t+%i %%\n"), statsName, (int)(item->craftitem.stats[i] * 100) - 100), sizeof(itemText));
 			else if (!equal(item->craftitem.stats[i], 0))
@@ -333,26 +333,26 @@ void UP_AircraftDescription (const technology_t* tech)
 			switch (i) {
 			case AIR_STATS_SPEED:
 				/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
-				Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
-					CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
+				Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), UP_AircraftStatToName(i),
+					AIR_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
 				break;
 			case AIR_STATS_MAXSPEED:
 				/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
-				Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
-					CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
+				Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), UP_AircraftStatToName(i),
+					AIR_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
 				break;
 			case AIR_STATS_FUELSIZE:
 				Q_strcat(upBuffer, va(_("Operational range:\t%i km\n"),
 					AIR_GetOperationRange(aircraft)), sizeof(upBuffer));
 			case AIR_STATS_ACCURACY:
-				Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i),
-					CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
+				Q_strcat(upBuffer, va(_("%s:\t%i\n"), UP_AircraftStatToName(i),
+					AIR_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
 				break;
 			default:
 				break;
 			}
 		}
-		Q_strcat(upBuffer, va(_("Required Hangar:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Required Hangar:\t%s\n"), UP_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
 		/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
 		 * there is no use to show this in case of an UFO (would be misleading): */
 		if (!AIR_IsUFO(aircraft))
@@ -408,7 +408,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
  * @brief Sets the amount of unread/new mails
  * @note This is called every campaign frame - to update ccs.numUnreadMails
  * just set it to -1 before calling this function
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  */
 int UP_GetUnreadMails (void)
 {
@@ -495,12 +495,12 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		} else {
 			switch (type) {
 			case TECHMAIL_PRE:
-				CL_DateConvertLong(&tech->preResearchedDate, &date);
+				CP_DateConvertLong(&tech->preResearchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
 			case TECHMAIL_RESEARCHED:
-				CL_DateConvertLong(&tech->researchedDate, &date);
+				CP_DateConvertLong(&tech->researchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
@@ -801,9 +801,9 @@ static void UP_GenerateSummary (void)
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
-		uiNode_t *chapter;
 		qboolean researchedEntries = qfalse;
-		upCurrentTech = ccs.upChapters[i].first;
+		pediaChapter_t *chapter = &ccs.upChapters[i];
+		upCurrentTech = chapter->first;
 		do {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
 				researchedEntries = qtrue;
@@ -814,14 +814,15 @@ static void UP_GenerateSummary (void)
 
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researchedEntries) {
-			if (numChaptersDisplayList >= MAX_PEDIACHAPTERS)
+			uiNode_t *chapterOption;
+			if (numChaptersDisplayList >= sizeof(upChaptersDisplayList))
 				Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
-			upChaptersDisplayList[numChaptersDisplayList++] = &ccs.upChapters[i];
+			upChaptersDisplayList[numChaptersDisplayList++] = chapter;
 
 			/* chapter section*/
-			chapter = UI_AddOption(&chapters, ccs.upChapters[i].id, va("_%s", ccs.upChapters[i].name), va("%i", num));
-			OPTIONEXTRADATA(chapter).icon = UI_GetSpriteByName(va("icons/ufopedia_%s", ccs.upChapters[i].id));
-			chapter->firstChild = UP_GenerateArticlesSummary(&ccs.upChapters[i]);
+			chapterOption = UI_AddOption(&chapters, chapter->id, va("_%s", chapter->name), va("%i", num));
+			OPTIONEXTRADATA(chapterOption).icon = UI_GetSpriteByName(va("icons/ufopedia_%s", chapter->id));
+			chapterOption->firstChild = UP_GenerateArticlesSummary(chapter);
 
 			num++;
 		}
@@ -1099,7 +1100,7 @@ static void UP_OpenMail_f (void)
 		case MSG_RESEARCH_PROPOSAL:
 			if (!m->pedia->mail[TECHMAIL_PRE].from)
 				break;
-			CL_DateConvertLong(&m->pedia->preResearchedDate, &date);
+			CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
 			if (!m->pedia->mail[TECHMAIL_PRE].read)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_PRE].subject),
@@ -1114,7 +1115,7 @@ static void UP_OpenMail_f (void)
 		case MSG_RESEARCH_FINISHED:
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
 				break;
-			CL_DateConvertLong(&m->pedia->researchedDate, &date);
+			CP_DateConvertLong(&m->pedia->researchedDate, &date);
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].read)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
@@ -1128,7 +1129,7 @@ static void UP_OpenMail_f (void)
 			break;
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from) {
-				CL_DateConvertLong(&m->pedia->preResearchedDate, &date);
+				CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
 				if (!m->pedia->mail[TECHMAIL_PRE].read)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_PRE].subject),
@@ -1140,7 +1141,7 @@ static void UP_OpenMail_f (void)
 				CHECK_MAIL_EOL
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
-				CL_DateConvertLong(&m->pedia->researchedDate, &date);
+				CP_DateConvertLong(&m->pedia->researchedDate, &date);
 				if (!m->pedia->mail[TECHMAIL_RESEARCHED].read)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),

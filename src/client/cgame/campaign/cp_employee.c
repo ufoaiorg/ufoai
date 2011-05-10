@@ -26,12 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h" /* cls */
 #include "../cl_game.h" /* GAME_GetTeamDef */
 #include "../cl_game_team.h" /* character xml loading */
-#include "../../cl_team.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
 #include "cp_rank.h"
+#include "cp_popup.h"
 #include "save/save_employee.h"
 
 /**
@@ -243,7 +241,7 @@ employeeType_t E_GetEmployeeType (const char* type)
 
 /**
  * @brief Clears the employees list for loaded and new games
- * @sa CL_ResetSinglePlayerData
+ * @sa CP_ResetCampaignData
  * @sa E_DeleteEmployee
  */
 void E_ResetEmployees (void)
@@ -273,7 +271,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 		}
 	}
 
-	return employee;
+	return NULL;
 }
 
 /**
@@ -322,6 +320,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
 
+	employee = NULL;
 	LIST_Foreach(hiredEmployees, employee_t, employee) {
 		if ((employee->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
 		 && E_IsInBase(employee, base)) {		/* It has to be in the defined base. */
@@ -405,7 +404,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
 qboolean E_HireEmployee (base_t* base, employee_t* employee)
 {
 	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) <= 0) {
-		UI_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
+		CP_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
 		return qfalse;
 	}
 

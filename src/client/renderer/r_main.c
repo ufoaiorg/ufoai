@@ -1265,6 +1265,8 @@ void R_Shutdown (void)
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);
 
+	R_ShutdownThreads();
+
 	R_ShutdownModels(qtrue);
 	R_ShutdownImages();
 
@@ -1274,6 +1276,4 @@ void R_Shutdown (void)
 
 	/* shut down OS specific OpenGL stuff like contexts, etc. */
 	Rimp_Shutdown();
-
-	R_ShutdownThreads();
 }

@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls */
+#include "../../client.h" /* cls.frametime */
 #include "../../renderer/r_image.h"
 #include "../../renderer/r_framebuffer.h"
 #include "../../renderer/r_draw.h"
@@ -296,7 +296,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			if (B_GetCount() < MAX_BASES) {
 				Vector2Copy(pos, ccs.newBasePos);
-				CL_GameTimeStop();
+				CP_GameTimeStop();
 				Cmd_ExecuteString("mn_set_base_title");
 				UI_PushWindow("popup_newbase", NULL, NULL);
 				return qtrue;
@@ -308,7 +308,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
 				Vector2Copy(pos, ccs.newBasePos);
-				CL_GameTimeStop();
+				CP_GameTimeStop();
 				UI_PushWindow("popup_newinstallation", NULL, NULL);
 				return qtrue;
 			}
@@ -371,7 +371,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
 		UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
-		CL_GameTimeStop();
+		CP_GameTimeStop();
 		UI_PushWindow("popup_multi_selection", NULL, NULL);
 		return qtrue;
 	} else {
@@ -1683,20 +1683,20 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
 		Q_strcat(buffer, va(_("Distance to target:\t\t%.0f\n"), distance), size);
-		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
-		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
-			CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
-		Q_strcat(buffer, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
+		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+			AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
+		Q_strcat(buffer, va(_("ETA:\t%sh\n"), CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
 	} else {
 		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
-		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
-		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
-			CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
+		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+			AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
 		if (aircraft->status != AIR_IDLE) {
 			const float distance = GetDistanceOnGlobe(aircraft->pos,
 					aircraft->route.point[aircraft->route.numPoints - 1]);
-			Q_strcat(buffer, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
+			Q_strcat(buffer, va(_("ETA:\t%sh\n"), CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
 		}
 	}
 	return buffer;
@@ -1714,7 +1714,7 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 static const char *MAP_GetUFOText (char *buffer, size_t size, const aircraft_t* ufo)
 {
 	Com_sprintf(buffer, size, "%s\n", UFO_AircraftToIDOnGeoscape(ufo));
-	Q_strcat(buffer, va(_("Speed: %i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+	Q_strcat(buffer, va(_("Speed: %i km/h\n"), AIR_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 	return buffer;
 }
 

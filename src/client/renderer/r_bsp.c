@@ -379,14 +379,19 @@ void R_GetLevelSurfaceLists (void)
 	for (tile = 0; tile < r_numMapTiles; tile++) {
 		/* don't draw weaponclip, actorclip and stepon */
 		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
+			mBspHeader_t *header;
+			mBspModel_t *bspModel;
+
 			/* check the worldlevel flags */
 			if (i && !(i & mask))
 				continue;
 
-			if (!r_mapTiles[tile]->bsp.submodels[i].numfaces)
+			bspModel = &r_mapTiles[tile]->bsp;
+			header = &bspModel->submodels[i];
+			if (!header->numfaces)
 				continue;
 
-			R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);
+			R_RecurseWorld(bspModel->nodes + header->headnode, tile);
 		}
 	}
 }

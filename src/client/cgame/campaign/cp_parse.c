@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return Alien mission category
  * @sa interestCategory_t
  */
-static int CL_GetAlienMissionTypeByID (const char *type)
+static int CP_GetAlienMissionTypeByID (const char *type)
 {
 	if (Q_streq(type, "recon"))
 		return INTERESTCATEGORY_RECON;
@@ -57,7 +57,7 @@ static int CL_GetAlienMissionTypeByID (const char *type)
 	else if (Q_streq(type, "rescue"))
 		return INTERESTCATEGORY_RESCUE;
 	else {
-		Com_Printf("CL_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
+		Com_Printf("CP_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
 		return INTERESTCATEGORY_NONE;
 	}
 }
@@ -71,9 +71,9 @@ static const value_t alien_group_vals[] = {
 /**
  * @sa CL_ParseScriptFirst
  */
-static void CL_ParseAlienTeam (const char *name, const char **text)
+static void CP_ParseAlienTeam (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseAlienTeam: unexpected end of file (alienteam ";
+	const char *errhead = "CP_ParseAlienTeam: unexpected end of file (alienteam ";
 	const char *token;
 	const value_t *vp;
 	int i;
@@ -83,12 +83,12 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" without body ignored\n", name);
+		Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	if (ccs.numAlienCategories >= ALIENCATEGORY_MAX) {
-		Com_Printf("CL_ParseAlienTeam: maximum number of alien team category reached (%i)\n", ALIENCATEGORY_MAX);
+		Com_Printf("CP_ParseAlienTeam: maximum number of alien team category reached (%i)\n", ALIENCATEGORY_MAX);
 		return;
 	}
 
@@ -97,7 +97,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 		if (Q_streq(name, ccs.alienCategories[i].id))
 			break;
 	if (i < ccs.numAlienCategories) {
-		Com_Printf("CL_ParseAlienTeam: alien category def \"%s\" with same name found, second ignored\n", name);
+		Com_Printf("CP_ParseAlienTeam: alien category def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
@@ -115,7 +115,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 			linkedList_t **list = &alienCategory->equipment;
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
-				Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" has equipment with no opening brace\n", name);
+				Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" has equipment with no opening brace\n", name);
 				break;
 			}
 			do {
@@ -127,16 +127,16 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 		} else if (Q_streq(token, "category")) {
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
-				Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" has category with no opening brace\n", name);
+				Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" has category with no opening brace\n", name);
 				break;
 			}
 			do {
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					break;
-				alienCategory->missionCategories[alienCategory->numMissionCategories] = CL_GetAlienMissionTypeByID(token);
+				alienCategory->missionCategories[alienCategory->numMissionCategories] = CP_GetAlienMissionTypeByID(token);
 				if (alienCategory->missionCategories[alienCategory->numMissionCategories] == INTERESTCATEGORY_NONE)
-					Com_Printf("CL_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
+					Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
 				alienCategory->numMissionCategories++;
 			} while (*text);
 		} else if (Q_streq(token, "team")) {
@@ -144,12 +144,12 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
-				Com_Printf("CL_ParseAlienTeam: alien team \"%s\" has team with no opening brace\n", name);
+				Com_Printf("CP_ParseAlienTeam: alien team \"%s\" has team with no opening brace\n", name);
 				break;
 			}
 
 			if (alienCategory->numAlienTeamGroups >= MAX_ALIEN_GROUP_PER_CATEGORY) {
-				Com_Printf("CL_ParseAlienTeam: maximum number of alien team reached (%i) in category \"%s\"\n", MAX_ALIEN_GROUP_PER_CATEGORY, name);
+				Com_Printf("CP_ParseAlienTeam: maximum number of alien team reached (%i) in category \"%s\"\n", MAX_ALIEN_GROUP_PER_CATEGORY, name);
 				break;
 			}
 
@@ -187,7 +187,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 				}
 			} while (*text);
 		} else {
-			Com_Printf("CL_ParseAlienTeam: unknown token \"%s\" ignored (category %s)\n", token, name);
+			Com_Printf("CP_ParseAlienTeam: unknown token \"%s\" ignored (category %s)\n", token, name);
 			continue;
 		}
 	} while (*text);
@@ -199,9 +199,9 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  */
-static void CL_ParseResearchedCampaignItems (const campaign_t *campaign, const char *name, const char **text)
+static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseResearchedCampaignItems: unexpected end of file (equipment ";
+	const char *errhead = "CP_ParseResearchedCampaignItems: unexpected end of file (equipment ";
 	const char *token;
 	int i;
 
@@ -213,7 +213,7 @@ static void CL_ParseResearchedCampaignItems (const campaign_t *campaign, const c
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored (%s)\n",
+		Com_Printf("CP_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored (%s)\n",
 				name, token);
 		return;
 	}
@@ -238,7 +238,7 @@ static void CL_ParseResearchedCampaignItems (const campaign_t *campaign, const c
 		}
 
 		if (i == ccs.numTechnologies)
-			Com_Printf("CL_ParseResearchedCampaignItems: unknown token \"%s\" ignored (tech %s)\n", token, name);
+			Com_Printf("CP_ParseResearchedCampaignItems: unknown token \"%s\" ignored (tech %s)\n", token, name);
 
 	} while (*text);
 }
@@ -249,11 +249,11 @@ static void CL_ParseResearchedCampaignItems (const campaign_t *campaign, const c
  * @param[in] name Name of the techlist
  * @param[in,out] text Script to parse
  * @param[in] researchable Mark them researchable or not researchable
- * @sa CL_ParseScriptFirst
+ * @sa CP_ParseScriptFirst
  */
-static void CL_ParseResearchableCampaignStates (const campaign_t *campaign, const char *name, const char **text, qboolean researchable)
+static void CP_ParseResearchableCampaignStates (const campaign_t *campaign, const char *name, const char **text, qboolean researchable)
 {
-	const char *errhead = "CL_ParseResearchableCampaignStates: unexpected end of file (equipment ";
+	const char *errhead = "CP_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	const char *token;
 	int i;
 
@@ -261,7 +261,7 @@ static void CL_ParseResearchableCampaignStates (const campaign_t *campaign, cons
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseResearchableCampaignStates: equipment def \"%s\" without body ignored\n", name);
+		Com_Printf("CP_ParseResearchableCampaignStates: equipment def \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -291,7 +291,7 @@ static void CL_ParseResearchableCampaignStates (const campaign_t *campaign, cons
 		}
 
 		if (i == ccs.numTechnologies)
-			Com_Printf("CL_ParseResearchableCampaignStates: unknown token \"%s\" ignored (tech %s)\n", token, name);
+			Com_Printf("CP_ParseResearchableCampaignStates: unknown token \"%s\" ignored (tech %s)\n", token, name);
 
 	} while (*text);
 }
@@ -333,9 +333,9 @@ static const value_t salary_vals[] = {
  *  soldier_base 3000
  * }</code>
  */
-static void CL_ParseSalary (const char *name, const char **text, salary_t *s, const char* campaignID)
+static void CP_ParseSalary (const char *name, const char **text, salary_t *s, const char* campaignID)
 {
-	const char *errhead = "CL_ParseSalary: unexpected end of file ";
+	const char *errhead = "CP_ParseSalary: unexpected end of file ";
 	const value_t *vp;
 	const char *token;
 
@@ -343,7 +343,7 @@ static void CL_ParseSalary (const char *name, const char **text, salary_t *s, co
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseSalary: salary def without body ignored\n");
+		Com_Printf("CP_ParseSalary: salary def without body ignored\n");
 		return;
 	}
 
@@ -366,7 +366,7 @@ static void CL_ParseSalary (const char *name, const char **text, salary_t *s, co
 				break;
 			}
 		if (!vp->string) {
-			Com_Printf("CL_ParseSalary: unknown token \"%s\" ignored (campaignID %s)\n", token, campaignID);
+			Com_Printf("CP_ParseSalary: unknown token \"%s\" ignored (campaignID %s)\n", token, campaignID);
 			Com_EParse(text, errhead, name);
 		}
 	} while (*text);
@@ -404,9 +404,9 @@ static const value_t campaign_vals[] = {
 /**
  * @sa CL_ParseClientData
  */
-void CL_ParseCampaign (const char *name, const char **text)
+static void CP_ParseCampaign (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseCampaign: unexpected end of file (campaign ";
+	const char *errhead = "CP_ParseCampaign: unexpected end of file (campaign ";
 	campaign_t *cp;
 	const value_t *vp;
 	const char *token;
@@ -419,12 +419,12 @@ void CL_ParseCampaign (const char *name, const char **text)
 			break;
 
 	if (i < ccs.numCampaigns) {
-		Com_Printf("CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name);
+		Com_Printf("CP_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
 	if (ccs.numCampaigns >= MAX_CAMPAIGNS) {
-		Com_Printf("CL_ParseCampaign: Max campaigns reached (%i)\n", MAX_CAMPAIGNS);
+		Com_Printf("CP_ParseCampaign: Max campaigns reached (%i)\n", MAX_CAMPAIGNS);
 		return;
 	}
 
@@ -443,7 +443,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseCampaign: campaign def \"%s\" without body ignored\n", name);
+		Com_Printf("CP_ParseCampaign: campaign def \"%s\" without body ignored\n", name);
 		ccs.numCampaigns--;
 		return;
 	}
@@ -490,14 +490,14 @@ void CL_ParseCampaign (const char *name, const char **text)
 				break;
 			}
 		if (Q_streq(token, "salary")) {
-			CL_ParseSalary(token, text, s, cp->id);
+			CP_ParseSalary(token, text, s, cp->id);
 		} else if (Q_streq(token, "events")) {
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			cp->events = CP_GetEventsByID(token);
 		} else if (!vp->string) {
-			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
+			Com_Printf("CP_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
 			Com_EParse(text, errhead, name);
 		}
 	} while (*text);
@@ -512,22 +512,22 @@ void CL_ParseCampaign (const char *name, const char **text)
  * @brief Parses one "components" entry in a .ufo file and writes it into the next free entry in xxxxxxxx (components_t).
  * @param[in] name The unique id of a components_t array entry.
  * @param[in] text the whole following text after the "components" definition.
- * @sa CL_ParseScriptFirst
+ * @sa CP_ParseScriptFirst
  */
-static void CL_ParseComponents (const char *name, const char **text)
+static void CP_ParseComponents (const char *name, const char **text)
 {
 	components_t *comp;
-	const char *errhead = "CL_ParseComponents: unexpected end of file.";
+	const char *errhead = "CP_ParseComponents: unexpected end of file.";
 	const char *token;
 
 	/* get body */
 	token = Com_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseComponents: \"%s\" components def without body ignored.\n", name);
+		Com_Printf("CP_ParseComponents: \"%s\" components def without body ignored.\n", name);
 		return;
 	}
 	if (ccs.numComponents >= MAX_ASSEMBLIES) {
-		Com_Printf("CL_ParseComponents: too many technology entries. limit is %i.\n", MAX_ASSEMBLIES);
+		Com_Printf("CP_ParseComponents: too many technology entries. limit is %i.\n", MAX_ASSEMBLIES);
 		return;
 	}
 
@@ -541,7 +541,7 @@ static void CL_ParseComponents (const char *name, const char **text)
 	Q_strncpyz(comp->assemblyId, name, sizeof(comp->assemblyId));
 	comp->assemblyItem = INVSH_GetItemByIDSilent(comp->assemblyId);
 	if (comp->assemblyItem)
-		Com_DPrintf(DEBUG_CLIENT, "CL_ParseComponents: linked item: %s with components: %s\n", name, comp->assemblyId);
+		Com_DPrintf(DEBUG_CLIENT, "CP_ParseComponents: linked item: %s with components: %s\n", name, comp->assemblyId);
 
 	do {
 		/* get the name type */
@@ -575,14 +575,14 @@ static void CL_ParseComponents (const char *name, const char **text)
 
 				comp->numItemtypes++;
 			} else {
-				Com_Printf("CL_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
+				Com_Printf("CP_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
 			}
 		} else if (Q_streq(token, "time")) {
 			/* Defines how long disassembly lasts. */
 			token = Com_Parse(text);
 			comp->time = atoi(token);
 		} else {
-			Com_Printf("CL_ParseComponents: Error in \"%s\" - unknown token: \"%s\".\n", name, token);
+			Com_Printf("CP_ParseComponents: Error in \"%s\" - unknown token: \"%s\".\n", name, token);
 		}
 	} while (*text);
 }
@@ -590,28 +590,28 @@ static void CL_ParseComponents (const char *name, const char **text)
 /**
  * @brief Returns components definition for an item.
  * @param[in] item Item to search the components for.
- * @return comp Pointer to components_t definition.
+ * @return Pointer to @c components_t definition.
  */
-components_t *CL_GetComponentsByItem (const objDef_t *item)
+components_t *CP_GetComponentsByItem (const objDef_t *item)
 {
 	int i;
 
 	for (i = 0; i < ccs.numComponents; i++) {
 		components_t *comp = &ccs.components[i];
 		if (comp->assemblyItem == item) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_GetComponentsByItem: found components id: %s\n", comp->assemblyId);
+			Com_DPrintf(DEBUG_CLIENT, "CP_GetComponentsByItem: found components id: %s\n", comp->assemblyId);
 			return comp;
 		}
 	}
-	Com_Error(ERR_DROP, "CL_GetComponentsByItem: could not find components id for: %s", item->id);
+	Com_Error(ERR_DROP, "CP_GetComponentsByItem: could not find components id for: %s", item->id);
 }
 
 /**
  * @brief Returns components definition by ID.
  * @param[in] id assemblyId of the component definition.
- * @return comp Pointer to components_t definition.
+ * @return Pointer to @c components_t definition.
  */
-components_t *CL_GetComponentsByID (const char *id)
+components_t *CP_GetComponentsByID (const char *id)
 {
 	int i;
 
@@ -621,20 +621,18 @@ components_t *CL_GetComponentsByID (const char *id)
 			return comp;
 		}
 	}
-	Com_Error(ERR_DROP, "CL_GetComponentsByItem: could not find components id for: %s", id);
+	Com_Error(ERR_DROP, "CP_GetComponentsByID: could not find components id for: %s", id);
 }
 
 /**
- * @brief Parsing only for singleplayer
+ * @brief Parsing campaign data
  *
- * parsed if we are no dedicated server
  * first stage parses all the main data into their struct
- * see CL_ParseScriptSecond for more details about parsing stages
- * @sa CL_ReadSinglePlayerData
- * @sa Com_ParseScripts
- * @sa CL_ParseScriptSecond
+ * see CP_ParseScriptSecond for more details about parsing stages
+ * @sa CP_ParseCampaignData
+ * @sa CP_ParseScriptSecond
  */
-static void CL_ParseScriptFirst (const char *type, const char *name, const char **text)
+static void CP_ParseScriptFirst (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
 	if (Q_streq(type, "up_chapters"))
@@ -658,9 +656,9 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 	else if (Q_streq(type, "events"))
 		CL_ParseCampaignEvents(name, text);
 	else if (Q_streq(type, "components"))
-		CL_ParseComponents(name, text);
+		CP_ParseComponents(name, text);
 	else if (Q_streq(type, "alienteam"))
-		CL_ParseAlienTeam(name, text);
+		CP_ParseAlienTeam(name, text);
 	else if (Q_streq(type, "msgoptions"))
 		MSO_ParseSettings(name, text);
 	else if (Q_streq(type, "msgcategory"))
@@ -674,11 +672,11 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
  * second stage links all the parsed data from first stage
  * example: we need a techpointer in a building - in the second stage the buildings and the
  * techs are already parsed - so now we can link them
- * @sa CL_ReadSinglePlayerData
+ * @sa CP_ParseCampaignData
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  */
-static void CL_ParseScriptSecond (const char *type, const char *name, const char **text)
+static void CP_ParseScriptSecond (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
 	if (Q_streq(type, "building"))
@@ -688,20 +686,20 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 	else if (Q_streq(type, "basetemplate"))
 		B_ParseBaseTemplate(name, text);
 	else if (Q_streq(type, "campaign"))
-		CL_ParseCampaign(name, text);
+		CP_ParseCampaign(name, text);
 }
 
 /**
  * @brief Parses the campaign specific data - this data can only be parsed once the campaign started
  */
-static void CL_ParseScriptCampaignRelated (const campaign_t *campaign, const char *type, const char *name, const char **text)
+static void CP_ParseScriptCampaignRelated (const campaign_t *campaign, const char *type, const char *name, const char **text)
 {
 	if (Q_streq(type, "researched"))
-		CL_ParseResearchedCampaignItems(campaign, name, text);
+		CP_ParseResearchedCampaignItems(campaign, name, text);
 	else if (Q_streq(type, "researchable"))
-		CL_ParseResearchableCampaignStates(campaign, name, text, qtrue);
+		CP_ParseResearchableCampaignStates(campaign, name, text, qtrue);
 	else if (Q_streq(type, "notresearchable"))
-		CL_ParseResearchableCampaignStates(campaign, name, text, qfalse);
+		CP_ParseResearchableCampaignStates(campaign, name, text, qfalse);
 }
 
 /**
@@ -761,9 +759,9 @@ static const sanity_functions_t sanity_functions[] = {
 
 /**
  * @brief Check the parsed script values for errors after parsing every script file
- * @sa CL_ReadSinglePlayerData
+ * @sa CP_ParseCampaignData
  */
-void CL_ScriptSanityCheck (void)
+void CP_ScriptSanityCheck (void)
 {
 	qboolean status;
 	const sanity_functions_t *s;
@@ -778,12 +776,11 @@ void CL_ScriptSanityCheck (void)
 }
 
 /**
- * @brief Read the data for singleplayer campaigns
+ * @brief Read the data for campaigns
  * @sa SAV_GameLoad
- * @sa CL_GameNew_f
- * @sa CL_ResetSinglePlayerData
+ * @sa CP_ResetCampaignData
  */
-void CL_ReadSinglePlayerData (void)
+void CP_ParseCampaignData (void)
 {
 	const char *type, *name, *text;
 	int i;
@@ -795,7 +792,7 @@ void CL_ReadSinglePlayerData (void)
 	text = NULL;
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
-		CL_ParseScriptFirst(type, name, &text);
+		CP_ParseScriptFirst(type, name, &text);
 
 	/* fill in IDXs for required research techs */
 	RS_RequiredLinksAssign();
@@ -806,7 +803,7 @@ void CL_ReadSinglePlayerData (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
-		CL_ParseScriptSecond(type, name, &text);
+		CP_ParseScriptSecond(type, name, &text);
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t *teamDef = &csi.teamDef[i];
@@ -833,7 +830,7 @@ void CL_ReadSinglePlayerData (void)
 	Com_Printf("\n");
 }
 
-void CL_ReadCampaignData (const campaign_t *campaign)
+void CP_ReadCampaignData (const campaign_t *campaign)
 {
 	const char *type, *name, *text;
 
@@ -843,5 +840,5 @@ void CL_ReadCampaignData (const campaign_t *campaign)
 
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
-		CL_ParseScriptCampaignRelated(campaign, type, name, &text);
+		CP_ParseScriptCampaignRelated(campaign, type, name, &text);
 }

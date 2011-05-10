@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note Should be used when a new single player campaign starts
  * @sa CP_CampaignInit
  */
-void CL_ResetAlienInterest (void)
+void CP_ResetAlienInterest (void)
 {
 	int i;
 
@@ -52,10 +52,10 @@ void CL_ResetAlienInterest (void)
  * @param[in] category Category of interest for aliens that should increase / decrease
  * @note Should be used when a mission is over (success or failure)
  */
-void CL_ChangeIndividualInterest (float interestFactor, interestCategory_t category)
+void CP_ChangeIndividualInterest (float interestFactor, interestCategory_t category)
 {
 	if (category == INTERESTCATEGORY_MAX) {
-		Com_Printf("CL_ChangeIndividualInterest: Unsupported value of category\n");
+		Com_Printf("CP_ChangeIndividualInterest: Unsupported value of category\n");
 		return;
 	}
 
@@ -88,7 +88,7 @@ void CL_ChangeIndividualInterest (float interestFactor, interestCategory_t categ
 
 /**
  * @brief Increase alien overall interest.
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @note hourly called
  */
 void CP_IncreaseAlienInterest (const campaign_t *campaign)

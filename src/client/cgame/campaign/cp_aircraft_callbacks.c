@@ -25,13 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_aircraft_callbacks.h"
 #include "cp_aircraft.h"
 #include "cp_team.h"
 #include "cp_mapfightequip.h"
+#include "cp_popup.h"
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase
@@ -92,7 +92,7 @@ static void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without Command Centre operational. */
 	if (!B_GetBuildingStatus(base, B_COMMAND)) {
-		UI_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
+		CP_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -100,7 +100,7 @@ static void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without a pilot. */
 	if (!AIR_GetPilot(aircraft)) {
-		UI_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
+		CP_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -213,9 +213,9 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i km/h\n"),
-		CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED));
-	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
-		CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(aircraftInfo));
+		AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED));
+	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+		AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Operational range:\t%i km\n"), AIR_GetOperationRange(aircraft)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AIR_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));

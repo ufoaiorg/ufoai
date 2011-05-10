@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../cl_shared.h"
-#include "../../../ui/ui_main.h"
-#include "../../../ui/ui_popup.h"
+#include "../../../ui/ui_main.h" /* TEXT_POPUP */
+#include "../../../ui/ui_popup.h" /* popupText */
 #include "../cp_campaign.h"
 #include "../cp_capacity.h"
 #include "../cp_map.h"
@@ -47,10 +47,10 @@ static aircraft_t baseAttackFakeAircraft;
  */
 void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
-	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_TERROR_ATTACK);
-	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_INTERCEPT);
+	CP_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
+	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
+	CP_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_TERROR_ATTACK);
+	CP_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_INTERCEPT);
 
 	CP_MissionRemove(mission);
 }
@@ -71,8 +71,8 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	MAP_SetMissionAircraft(NULL);
 
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
 
 	/* reset current selected mission */
 	MAP_NotifyMissionRemoved(mission);
@@ -86,7 +86,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 void CP_BaseAttackMissionOnSpawn (void)
 {
 	/* Prevent multiple bases from being attacked. by resetting interest. */
-	CL_ChangeIndividualInterest(-1.0f, INTERESTCATEGORY_BASE_ATTACK);
+	CP_ChangeIndividualInterest(-1.0f, INTERESTCATEGORY_BASE_ATTACK);
 }
 
 /**
@@ -121,7 +121,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	B_Destroy(base);
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 
 	/* we really don't want to use the fake aircraft anywhere */
 	MAP_SetMissionAircraft(NULL);
@@ -215,14 +215,14 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	MAP_SetMissionAircraft(&baseAttackFakeAircraft);
 	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
-	 * pointer for resolving the aircraft - only CL_GameAutoGo needs this */
-	MAP_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CL_UpdateCharacterStats*/
+	 * pointer for resolving the aircraft - only CP_GameAutoGo needs this */
+	MAP_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats*/
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
 	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do ?"), base->name);
 	UI_RegisterText(TEXT_POPUP, popupText);
 
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 	UI_PushWindow("popup_baseattack", NULL, NULL);
 }
 

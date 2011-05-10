@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
+#include "cp_popup.h"
 #include "save/save_market.h"
 
 #define BS_GetMarket() (&ccs.eMarket)
@@ -160,13 +160,13 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 	/* make sure that numItems is > 0 (can be negative because capacities.cur may be greater than
 	 * capacities.max if storage is disabled or if alien items have been collected on mission */
 	if (numItems <= 0) {
-		UI_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+		CP_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 		return qfalse;
 	}
 
 	B_UpdateStorageAndCapacity(base, item, numItems, qfalse, qfalse);
 	BS_RemoveItemFromMarket(item, numItems);
-	CL_UpdateCredits(ccs.credits - price * numItems);
+	CP_UpdateCredits(ccs.credits - price * numItems);
 	return qtrue;
 }
 
@@ -179,7 +179,7 @@ static void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numIte
 {
 	if (craftitem) {
 		BS_AddItemToMarket(craftitem, numItems);
-		CL_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(craftitem) * numItems);
+		CP_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(craftitem) * numItems);
 	}
 }
 
@@ -218,7 +218,7 @@ qboolean BS_SellAircraft (aircraft_t *aircraft)
 
 	/* the capacities are also updated here */
 	BS_AddAircraftToMarket(aircraft, 1);
-	CL_UpdateCredits(ccs.credits + BS_GetAircraftSellingPrice(aircraft));
+	CP_UpdateCredits(ccs.credits + BS_GetAircraftSellingPrice(aircraft));
 
 	AIR_DeleteAircraft(aircraft);
 
@@ -360,12 +360,12 @@ void BS_InitMarket (const campaign_t *campaign)
 
 /**
  * @brief make number of items change every day.
- * @sa CL_CampaignRun
+ * @sa CP_CampaignRun
  * @sa daily called
  * @note This function makes items number on market slowly reach the asymptotic number of items defined in equipment.ufo
  * If an item has just been researched, it's not available on market until RESEARCH_LIMIT_DELAY days is reached.
  */
-void CL_CampaignRunMarket (campaign_t *campaign)
+void CP_CampaignRunMarket (campaign_t *campaign)
 {
 	int i;
 	const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */

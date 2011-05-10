@@ -142,7 +142,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	}
 
 	if (alwaysDisplay || numAvailableBases > 0) {
-		CL_GameTimeStop();
+		CP_GameTimeStop();
 		popupListNode = UI_PopupList(_("Change homebase of aircraft"), _("Base\tStatus"), popupListText, "change_homebase <lineselected>;");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
@@ -330,7 +330,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 			char aircraftListText[256] = "";
 			const float distance = GetDistanceOnGlobe(aircraft->pos, mission->pos);
 			const char *statusName = AIR_AircraftStatusToName(aircraft);
-			const char *time = CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
+			const char *time = CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
 			Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,
 					teamSize, aircraft->maxTeamSize, statusName, aircraft->homebase->name, time);
 			LIST_AddString(&aircraftList, aircraftListText);
@@ -347,7 +347,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 		UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no tactical teams assigned to available craft."));
 
 	/* Stop time */
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 
 	/* Display the popup */
 	UI_PushWindow("popup_mission", NULL, NULL);
@@ -433,7 +433,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 		UI_RegisterText(TEXT_BASE_LIST, _("No defence system operational or no weapon or ammo equipped."));
 
 	/* Stop time */
-	CL_GameTimeStop();
+	CP_GameTimeStop();
 
 	/* Display the popup */
 	UI_PushWindow("popup_intercept", NULL, NULL);
@@ -611,7 +611,14 @@ void CL_PopupInit (void)
  */
 void CP_PopupList (const char *title, const char *text)
 {
-	CL_GameTimeStop();
+	CP_GameTimeStop();
+	CP_Popup(title, text);
+}
 
+/**
+ * @brief Wrapper around @c UI_Popup
+ */
+void CP_Popup (const char *title, const char *text)
+{
 	UI_Popup(title, text);
 }

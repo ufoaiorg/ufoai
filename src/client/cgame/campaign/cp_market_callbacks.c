@@ -25,10 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h"
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_market_callbacks.h"
+#include "cp_popup.h"
 
 #define MAX_BUYLIST		64
 
@@ -324,7 +324,7 @@ static void BS_BuyType (const base_t *base)
 	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
 
-	CL_UpdateCredits(ccs.credits);
+	CP_UpdateCredits(ccs.credits);
 
 	bsMarketNames = NULL;
 	bsMarketStorage = NULL;
@@ -612,12 +612,12 @@ static void BS_BuyAircraft_f (void)
 		int freeSpace;
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!B_GetBuildingStatus(base, B_POWER)) {
-			UI_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
+			CP_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
 			return;
 		}
 		/* We cannot buy aircraft without any hangar. */
 		if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			UI_Popup(_("Note"), _("Build a hangar first."));
+			CP_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}
 		aircraftTemplate = buyList.l[num].aircraft;
@@ -630,17 +630,17 @@ static void BS_BuyAircraft_f (void)
 		}
 
 		if (freeSpace == 0) {
-			UI_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
+			CP_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
 			return;
 		} else {
 			const int price = BS_GetAircraftBuyingPrice(aircraftTemplate);
 			if (ccs.credits < price) {
-				UI_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
+				CP_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
 				return;
 			} else {
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
 				BS_RemoveAircraftFromMarket(aircraftTemplate, 1);
-				CL_UpdateCredits(ccs.credits - price);
+				CP_UpdateCredits(ccs.credits - price);
 				AIR_NewAircraft(base, aircraftTemplate);
 				Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(FILTER_AIRCRAFT)));
 			}
@@ -702,9 +702,9 @@ static void BS_SellAircraft_f (void)
 			BS_BuyType(base);
 		} else {
 			if (teamNote)
-				UI_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
+				CP_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
 			else if (aircraftOutNote)
-				UI_Popup(_("Note"), _("You can't sell an aircraft that is not in base"));
+				CP_Popup(_("Note"), _("You can't sell an aircraft that is not in base"));
 			else
 				Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
 		}
@@ -760,7 +760,7 @@ static void BS_BuyItem_f (void)
 				ugvWeaponBuyable = qfalse;
 
 			if (CAP_GetFreeCapacity(base, CAP_ITEMS) < UGV_SIZE + ugvWeapon->size) {
-				UI_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+				CP_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 				ugvWeaponBuyable = qfalse;
 			}
 
@@ -771,7 +771,7 @@ static void BS_BuyItem_f (void)
 
 				/* Update Display/List and credits. */
 				BS_BuyType(base);
-				CL_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
+				CP_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
 			} else {
 				Com_Printf("Could not buy this item.\n");
 			}
@@ -844,7 +844,7 @@ static void BS_SellItem_f (void)
 				BS_AddItemToMarket(ugvWeapon, 1);
 			}
 			BS_BuyType(base);
-			CL_UpdateCredits(ccs.credits + ugv->price);	/** @todo make this depend on market as well? */
+			CP_UpdateCredits(ccs.credits + ugv->price);	/** @todo make this depend on market as well? */
 		}
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
@@ -861,7 +861,7 @@ static void BS_SellItem_f (void)
 			B_UpdateStorageAndCapacity(base, item, -numItems, qfalse, qfalse);
 			BS_AddItemToMarket(item, numItems);
 			BS_BuyType(base);
-			CL_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(item) * numItems);
+			CP_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(item) * numItems);
 			BS_UpdateItem(base, num);
 		}
 	}
