@@ -185,53 +185,42 @@ int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
  * to "free for all" (Everyone will try to kill everyone else).
  * @param[in, out] battle The battle to set up team hostility values for.
  * @param[in] civsInfected Set to "qtrue" if civs have XVI influence, otherwise "qfalse" for a normal mission. */
-void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, qboolean civsInfected)
+void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, const qboolean civsInfected)
 {
 	int team;
 	int otherTeam;
 
-	qboolean civsInverted = qtrue;
-	if (civsInfected == qtrue) civsInverted = qfalse;
-
-	/* Build an array of default values for what types of teams will attack whom. */
-	/* NOTE:  I seriously expect this ugly mess to go bye-bye within a few commits. */
-	qboolean hostileList[AUTOMISSION_TEAM_TYPE_MAX][AUTOMISSION_TEAM_TYPE_MAX];
-
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_PLAYER] = qfalse;
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = qfalse;
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qtrue;
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_CIVILIAN] = qfalse;
-
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_PLAYER] = qfalse;
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = qfalse;
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qtrue;
-	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER_UGV][AUTOMISSION_TEAM_TYPE_CIVILIAN] = qfalse;
-
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_PLAYER] = qtrue;
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = qtrue;
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_ALIEN] = qfalse;
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qfalse;
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN][AUTOMISSION_TEAM_TYPE_CIVILIAN] = civsInverted;
-
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_PLAYER] = qtrue;
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = qtrue;
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_ALIEN] = qfalse;
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qfalse;
-	hostileList[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][AUTOMISSION_TEAM_TYPE_CIVILIAN] = civsInverted;
-
-	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_PLAYER] = civsInfected;
-	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_PLAYER_UGV] = civsInfected;
-	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_ALIEN] = civsInverted;
-	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = civsInverted;
-	hostileList[AUTOMISSION_TEAM_TYPE_CIVILIAN][AUTOMISSION_TEAM_TYPE_CIVILIAN] = qfalse;
+	qboolean civsInverted =! civsInfected;
 
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
 		if (battle->teamActive[team] == qtrue) {
 			for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
-				if (battle->teamActive[otherTeam] == qtrue)
-					battle->isHostile[team][otherTeam] = hostileList[battle->teamType[team]][battle->teamType[otherTeam]];
+				if (battle->teamActive[otherTeam] == qtrue) {
+					if (battle->teamType[tean] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[tean] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV) {
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+							battle->isHostile[team][otherTeam] = qtrue;
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+							battle->isHostile[team][otherTeam] = qfalse;
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+							battle->isHostile[team][otherTeam] = qfalse;
+					}
+					if (battle->teamType[tean] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[tean] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE) {
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+							battle->isHostile[team][otherTeam] = qfalse;
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+							battle->isHostile[team][otherTeam] = qtrue;
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+							battle->isHostile[team][otherTeam] = civsInverted;
+					}
+					if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_CIVILIAN) {
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+							battle->isHostile[team][otherTeam] = qfalse;
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+							battle->isHostile[team][otherTeam] = civsInfected;
+						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+							battle->isHostile[team][otherTeam] = qfalse;
+					}
+				}
 			}
 		}
 	}
@@ -299,6 +288,7 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 		teamPooledHealthMax[count] = 0.0;
 		teamPooledUnitsHealthy[count] = 0.0;
 		teamPooledUnitsTotal[count] = 0.0;
+
 		if (battle->teamActive[count]) {
 			for (currentUnit = 0; currentUnit < battle->nUnits[count]; currentUnit++) {
 				if (battle->unitHealth[count][currentUnit] > 0) {

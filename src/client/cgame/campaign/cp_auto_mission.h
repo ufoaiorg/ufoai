@@ -99,7 +99,7 @@ typedef struct autoMission_battle_s {
 
 /* Functions for auto missions */
 void CP_AutoBattleClearBattle(autoMissionBattle_t *battle);
-void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, qboolean civsInfected);
+void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, const qboolean civsInfected);
 void CP_AutoBattleRunBattle(autoMissionBattle_t *battle);
 void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const campaign_t *campaign);
 void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const campaign_t *campaign);
