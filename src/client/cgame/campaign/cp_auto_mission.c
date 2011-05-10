@@ -72,7 +72,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign ccs object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, campaign_t *campaign)
+void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
 {
 	employee_t *employee;
 	int teamSize;
@@ -113,27 +113,53 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	/* Set a few defaults.  These can be overridden later with new values if needed. */
 	battle->teamType[teamNum] = AUTOMISSION_TEAM_TYPE_PLAYER;
 
-	battle->scoreTeamDifficulty[teamNum] = 0.5;
-	if (campaign->difficulty == -1) battle->scoreTeamDifficulty[teamNum] = 0.55;
-	if (campaign->difficulty == -2) battle->scoreTeamDifficulty[teamNum] = 0.6;
-	if (campaign->difficulty == -3) battle->scoreTeamDifficulty[teamNum] = 0.65;
-	if (campaign->difficulty == -4) battle->scoreTeamDifficulty[teamNum] = 0.75;
-	if (campaign->difficulty == 1) battle->scoreTeamDifficulty[teamNum] = 0.45;
-	if (campaign->difficulty == 2) battle->scoreTeamDifficulty[teamNum] = 0.4;
-	if (campaign->difficulty == 3) battle->scoreTeamDifficulty[teamNum] = 0.35;
-	if (campaign->difficulty == 4) battle->scoreTeamDifficulty[teamNum] = 0.25;
+	/* NOTE:  For now these are hard-coded to values based upon general campaign difficulty. */
+	/* --- In the future, it might be easier to set this according to a scripted value in a .ufo */
+	/* --- file, with other campaign info.  Reminder:  Higher floating point values mean better */
+	/* --- soldiers, and therefore make an easier fight for the player. */
+	switch (campaign->difficulty) {
+		case 4:
+			battle->scoreTeamDifficulty[teamNum] = 0.20;
+			break;
+		case 3:
+			battle->scoreTeamDifficulty[teamNum] = 0.30;
+			break;
+		case 2:
+			battle->scoreTeamDifficulty[teamNum] = 0.40;
+			break;
+		case 1:
+			battle->scoreTeamDifficulty[teamNum] = 0.45;
+			break;
+		case 0:
+			battle->scoreTeamDifficulty[teamNum] = 0.50;
+			break;
+		case -1:
+			battle->scoreTeamDifficulty[teamNum] = 0.55;
+			break;
+		case -2:
+			battle->scoreTeamDifficulty[teamNum] = 0.60;
+			break;
+		case -3:
+			battle->scoreTeamDifficulty[teamNum] = 0.70;
+			break;
+		case -4:
+			battle->scoreTeamDifficulty[teamNum] = 0.80;
+			break;
+		default:
+			battle->scoreTeamDifficulty[teamNum] = 0.50;
+	}
 
 	/* Zero is default ID for human player team ID, at least for auto missions. */
 	battle->teamID[teamNum] = 0;
 }
 
 /* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
-void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, campaign_t *campaign)
+void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const campaign_t *campaign)
 {
 	/** @todo */
 }
 
-void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum, campaign_t *campaign)
+void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum, const campaign_t *campaign)
 {
 	/** @todo */
 }
@@ -168,6 +194,7 @@ void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, qboolean ci
 	if (civsInfected == qtrue) civsInverted = qfalse;
 
 	/* Build an array of default values for what types of teams will attack whom. */
+	/* NOTE:  I seriously expect this ugly mess to go bye-bye within a few commits. */
 	qboolean hostileList[AUTOMISSION_TEAM_TYPE_MAX][AUTOMISSION_TEAM_TYPE_MAX];
 
 	hostileList[AUTOMISSION_TEAM_TYPE_PLAYER][AUTOMISSION_TEAM_TYPE_PLAYER] = qfalse;

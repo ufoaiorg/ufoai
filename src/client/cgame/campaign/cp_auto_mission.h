@@ -101,9 +101,9 @@ typedef struct autoMission_battle_s {
 void CP_AutoBattleClearBattle(autoMissionBattle_t *battle);
 void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, qboolean civsInfected);
 void CP_AutoBattleRunBattle(autoMissionBattle_t *battle);
-void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, campaign_t *campaign);
-void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, campaign_t *campaign);
-void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum, campaign_t *campaign);
+void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const campaign_t *campaign);
+void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const campaign_t *campaign);
+void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum, const campaign_t *campaign);
 void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup);
 void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
 int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle);
