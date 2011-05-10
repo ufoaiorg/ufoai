@@ -72,7 +72,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign ccs object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
+void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_t *aircraft, const struct campaign_t *campaign)
 {
 	employee_t *employee;
 	int teamSize;
@@ -154,12 +154,12 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 }
 
 /* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
-void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const campaign_t *campaign)
+void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const struct campaign_t *campaign)
 {
 	/** @todo */
 }
 
-void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum, const campaign_t *campaign)
+void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum, const struct campaign_t *campaign)
 {
 	/** @todo */
 }
@@ -174,7 +174,7 @@ void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int 
 	/** @todo */
 }
 
-int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
+int CP_AutoBattleGetWinningTeam (const struct autoMissionBattle_t *battle)
 {
 	/** @todo */
 	return 0;
