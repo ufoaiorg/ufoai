@@ -699,7 +699,7 @@ static inline messageType_t CP_MissionGetMessageLevel (const mission_t *mission)
 static inline const char *CP_MissionGetMessage (const mission_t *mission)
 {
 	if (mission->category == INTERESTCATEGORY_RESCUE)
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Go on a rescue mission at %s. You might save some of your soldiers alive."), mission->location);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Go on a rescue mission at %s to save your soldiers, some of whom may still be alive."), mission->location);
 	else
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), mission->location);
 
