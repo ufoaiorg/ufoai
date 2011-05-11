@@ -102,6 +102,13 @@ sprite icons/change_height {
 	pack64 true
 }
 
+sprite icons/information {
+	image "icons/information"
+	texl  "0 0"
+	size	"28 28"
+	pack64 false
+}
+
 // small employee
 
 sprite icons/smallhead_soldier {

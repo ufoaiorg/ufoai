@@ -91,6 +91,7 @@ window iaircraft
 		option description {
 			label	"_Description"
 			value	"aircraft"
+			icon "icons/information"
 		}
 		option pilot {
 			label	"_Pilots"
