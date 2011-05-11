@@ -368,9 +368,11 @@ static entity_t* R_MergeSortEntList (entity_t *c)
 {
 	entity_t *a, *b;
 
+	/* list containing one or no entities is already sorted by definition */
 	if (c == NULL || c->next == NULL)
 		return c;
 
+	/* two element or longer lists are bisected */
 	a = c;
 	b = c->next;
 	while (b != NULL && b->next != NULL) {
@@ -380,6 +382,7 @@ static entity_t* R_MergeSortEntList (entity_t *c)
 	b = c->next;
 	c->next = NULL;
 
+	/* these halves are sorted recursively, and merged into one sorted list */
 	return R_MergeSortMerge(R_MergeSortEntList(a), R_MergeSortEntList(b));
 }
 
@@ -553,6 +556,9 @@ static float *R_CalcTransform (entity_t * e)
 	else
 		memcpy(t->matrix, mc, sizeof(float) * 16);
 
+	/* matrix elements 12..14 contain (forward) translation vector, which is also the origin of model after transform */
+	e->distanceFromViewOrigin = VectorDist(&t->matrix[12], refdef.viewOrigin);
+
 	/* we're done */
 	t->done = qtrue;
 	t->processing = qfalse;
@@ -678,7 +684,6 @@ int R_AddEntity (const entity_t *ent)
 		return -1;
 
 	r_entities[refdef.numEntities] = *ent;
-	r_entities[refdef.numEntities].distanceFromViewOrigin = VectorDist(ent->origin, refdef.viewOrigin);
 
 	refdef.numEntities++;
 
