@@ -775,6 +775,25 @@ window options
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
+
+			// ================
+			// SHOW INTROVIDEO
+			// ================
+			string intro_video
+			{
+				tooltip		"_Do not play the intro movie when starting the game."
+				string		"_Hold Back Intro Video:"
+				pos			"32 490"
+				size		"240 20"
+			}
+			checkbox intro
+			{
+				tooltip		"_Default is to play the intro video just once at the first game start."
+				current		*cvar:cl_introshown
+				pos			"445 490"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
 		}
 
 		// =======================
