@@ -120,7 +120,7 @@ window options
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CR
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"72 135"
