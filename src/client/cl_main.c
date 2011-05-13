@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2010 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/cl_main.c
 Copyright (C) 1997-2001 Id Software, Inc.
