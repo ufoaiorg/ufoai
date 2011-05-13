@@ -34,7 +34,7 @@ BEGIN
 			VALUE "CompanyName", "UFO:Alien Invasion Team"
 			VALUE "FileDescription", "UFO:Alien Invasion"
 			VALUE "InternalName", "ufoai"
-			VALUE "LegalCopyright", "Copyright (C) 2002-2010"
+			VALUE "LegalCopyright", "Copyright (C) 2002-2011"
 			VALUE "OriginalFilename", "ufo.exe"
 			VALUE "ProductName", "UFO:AI"
 			VALUE "ProductVersion", "Release"
