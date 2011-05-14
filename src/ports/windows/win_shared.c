@@ -406,9 +406,18 @@ void Sys_Sleep (int milliseconds)
 
 /**
  * @brief set/unset environment variables (empty value removes it)
+ * @return nonzero if succeeds
+ * @note gettext FAQ recommends using both functions to set environment variable(s), so we do
  */
 int Sys_Setenv (const char *name, const char *value)
 {
+	size_t n = strlen(name)+strlen(value)+2;
+	char *str = (char *)malloc(n); /* do not convert this to allocation from managed pool, using malloc is intentional */
+
+	strcat(strcat(strcpy(str, name), "="), value);
+	if (putenv(str))
+		return 0;  /* putenv returns nonzero if fails */
+
 	return SetEnvironmentVariable(name, value);
 }
 
