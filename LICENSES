@@ -1399,9 +1399,15 @@ base/models/objects/fence/fence.md2 | GNU General Public License 2.0 or later | 
 base/models/objects/fence/fence.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/firehose/firehose.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/firehose/firehose.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later
+base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/automat_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
+base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
+base/models/objects/furniture/automat/sodamachine.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/sodamachine.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/sodamachine_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
+base/models/objects/furniture/automat/waterdisp.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/waterdisp.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/bed/bed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/bed/bed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem Sitters
