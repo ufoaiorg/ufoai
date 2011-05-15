@@ -9485,7 +9485,7 @@
 // entity 49
 {
 "classname" "misc_model"
-"model" "models//objects/industrial/console/console.md2"
+"model" "models/objects/industrial/console/console.md2"
 "origin" "-64 -334 130"
 "spawnflags" "508"
 "skin" "0"

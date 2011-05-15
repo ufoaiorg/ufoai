@@ -11981,7 +11981,7 @@
 // entity 337
 {
 "classname" "misc_model"
-"model" "models//objects/money/money.md2"
+"model" "models/objects/money/money.md2"
 "origin" "1395.63 1744.51 26.375"
 "spawnflags" "255"
 "skin" "0"
@@ -11989,7 +11989,7 @@
 // entity 338
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/coffeemaker/coffeemaker.md2"
+"model" "models/objects/furniture/coffeemaker/coffeemaker.md2"
 "origin" "440 42.875 28"
 "spawnflags" "255"
 "skin" "0"
@@ -11999,7 +11999,7 @@
 // entity 339
 {
 "classname" "misc_model"
-"model" "models//weapons/pistol/pistol.md2"
+"model" "models/weapons/pistol/pistol.md2"
 "origin" "1368.26 1746 26.875"
 "spawnflags" "255"
 "skin" "0"
@@ -12008,7 +12008,7 @@
 // entity 340
 {
 "classname" "misc_model"
-"model" "models//weapons/pistol/pistol.md2"
+"model" "models/weapons/pistol/pistol.md2"
 "origin" "1361.38 1736.38 26.8821"
 "spawnflags" "255"
 "skin" "0"
@@ -12017,7 +12017,7 @@
 // entity 341
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/plant_hang/plant2.md2"
+"model" "models/objects/vegi/plant_hang/plant2.md2"
 "origin" "1346.9 918.775 -49.5"
 "spawnflags" "255"
 "skin" "0"
@@ -12026,7 +12026,7 @@
 // entity 342
 {
 "classname" "misc_model"
-"model" "models//animals/crocodile/croc.md2"
+"model" "models/animals/crocodile/croc.md2"
 "origin" "760 1200 -72"
 "spawnflags" "255"
 "skin" "0"

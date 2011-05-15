@@ -10900,7 +10900,7 @@
 // entity 193
 {
 "classname" "misc_model"
-"model" "models//objects/vehicles/motorbike/motorbike.md2"
+"model" "models/objects/vehicles/motorbike/motorbike.md2"
 "origin" "687.25 772.875 3.875"
 "spawnflags" "255"
 "skin" "0"
@@ -10909,7 +10909,7 @@
 // entity 194
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/automat/sodamachine.md2"
+"model" "models/objects/furniture/automat/sodamachine.md2"
 "origin" "167.875 1072.14 4.25"
 "spawnflags" "255"
 "skin" "0"
@@ -10917,7 +10917,7 @@
 // entity 195
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/automat/automat.md2"
+"model" "models/objects/furniture/automat/automat.md2"
 "origin" "256 908.875 4"
 "spawnflags" "255"
 "skin" "0"
@@ -10927,7 +10927,7 @@
 // entity 196
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/automat/waterdisp.md2"
+"model" "models/objects/furniture/automat/waterdisp.md2"
 "origin" "974.63 1105.88 4"
 "spawnflags" "1"
 "skin" "0"
@@ -10936,7 +10936,7 @@
 // entity 197
 {
 "classname" "misc_model"
-"model" "models//objects/city/waste/container_closed.md2"
+"model" "models/objects/city/waste/container_closed.md2"
 "origin" "857.817 993.351 5"
 "spawnflags" "255"
 "skin" "0"
@@ -10946,7 +10946,7 @@
 // entity 198
 {
 "classname" "misc_model"
-"model" "models//objects/city/waste/container_opened.md2"
+"model" "models/objects/city/waste/container_opened.md2"
 "origin" "857.302 1054.77 5"
 "spawnflags" "255"
 "skin" "0"

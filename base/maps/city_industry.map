@@ -11703,7 +11703,7 @@
 // entity 39
 {
 "classname" "misc_model"
-"model" "models//objects/pharaoh/pharaoh.md2"
+"model" "models/objects/pharaoh/pharaoh.md2"
 "origin" "704 638 112"
 "spawnflags" "6"
 "skin" "0"
@@ -11711,7 +11711,7 @@
 // entity 40
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/plants/plantb.md2"
+"model" "models/objects/vegi/plants/plantb.md2"
 "origin" "658.006 639.839 40"
 "spawnflags" "7"
 "skin" "0"
@@ -11720,7 +11720,7 @@
 // entity 41
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/plants/plantb.md2"
+"model" "models/objects/vegi/plants/plantb.md2"
 "origin" "679 601 40"
 "spawnflags" "7"
 "skin" "0"
@@ -11729,7 +11729,7 @@
 // entity 42
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/plants/plantb.md2"
+"model" "models/objects/vegi/plants/plantb.md2"
 "origin" "716 600 40"
 "spawnflags" "7"
 "skin" "0"
@@ -11738,7 +11738,7 @@
 // entity 43
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/plants/plantb.md2"
+"model" "models/objects/vegi/plants/plantb.md2"
 "origin" "748 628 40"
 "spawnflags" "7"
 "skin" "0"
@@ -11747,7 +11747,7 @@
 // entity 44
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/plants/plantb.md2"
+"model" "models/objects/vegi/plants/plantb.md2"
 "origin" "740 668 40"
 "spawnflags" "7"
 "skin" "0"
@@ -11756,7 +11756,7 @@
 // entity 45
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/plants/plantb.md2"
+"model" "models/objects/vegi/plants/plantb.md2"
 "origin" "708 686 40"
 "spawnflags" "7"
 "skin" "0"
@@ -11765,7 +11765,7 @@
 // entity 46
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/plants/plantb.md2"
+"model" "models/objects/vegi/plants/plantb.md2"
 "origin" "674.352 673.134 40"
 "spawnflags" "7"
 "skin" "0"
@@ -16556,7 +16556,7 @@
 // entity 143
 {
 "classname" "misc_model"
-"model" "models//objects/rubbish/scrap2.md2"
+"model" "models/objects/rubbish/scrap2.md2"
 "origin" "760 -32 -58"
 "spawnflags" "255"
 "skin" "0"
