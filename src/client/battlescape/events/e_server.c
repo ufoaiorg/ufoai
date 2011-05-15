@@ -50,5 +50,5 @@ static void CL_NextRound_f (void)
 
 void CL_ServerEventsInit (void)
 {
-	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
+	Cmd_AddCommand("nextround", CL_NextRound_f, N_("Ends current round"));
 }

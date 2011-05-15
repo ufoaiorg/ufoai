@@ -329,11 +329,11 @@ static void HUD_ExecuteAction_f (void)
 
 void HUD_InitCallbacks (void)
 {
-	Cmd_AddCommand("hud_movemode",  HUD_SetMoveMode_f, _("Set selected actor to move mode (it cancel the fire mode"));
-	Cmd_AddCommand("hud_reloadleft", HUD_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
-	Cmd_AddCommand("hud_reloadright", HUD_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
-	Cmd_AddCommand("hud_togglecrouchreserve", HUD_ToggleCrouchReservation_f, _("Toggle reservation for crouching."));
-	Cmd_AddCommand("hud_togglereaction", HUD_ToggleReaction_f, _("Toggle reaction fire"));
-	Cmd_AddCommand("hud_fireweapon", HUD_FireWeapon_f, "Start aiming the weapon.");
-	Cmd_AddCommand("hud_executeaction", HUD_ExecuteAction_f, "Execute an action.");
+	Cmd_AddCommand("hud_movemode",  HUD_SetMoveMode_f, N_("Set selected actor to move mode (it cancel the fire mode"));
+	Cmd_AddCommand("hud_reloadleft", HUD_ReloadLeft_f, N_("Reload the weapon in the soldiers left hand"));
+	Cmd_AddCommand("hud_reloadright", HUD_ReloadRight_f, N_("Reload the weapon in the soldiers right hand"));
+	Cmd_AddCommand("hud_togglecrouchreserve", HUD_ToggleCrouchReservation_f, N_("Toggle reservation for crouching."));
+	Cmd_AddCommand("hud_togglereaction", HUD_ToggleReaction_f, N_("Toggle reaction fire"));
+	Cmd_AddCommand("hud_fireweapon", HUD_FireWeapon_f, N_("Start aiming the weapon."));
+	Cmd_AddCommand("hud_executeaction", HUD_ExecuteAction_f, N_("Execute an action."));
 }
