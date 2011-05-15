@@ -5870,8 +5870,6 @@ base/textures/tex_tech/comptable.jpg | GNU General Public License 2.0 or later |
 base/textures/tex_tech/comptable_gm.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex002.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex002_gm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_tech/comptex002_mq.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
-base/textures/tex_tech/comptex002_mq_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex003_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003_lq.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
