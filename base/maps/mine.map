@@ -14913,7 +14913,7 @@
 // entity 199
 {
 "classname" "misc_model"
-"model" "models//objects/skeleton/skelet3.md2"
+"model" "models/objects/skeleton/skelet3.md2"
 "origin" "269.375 -292 2.25"
 "spawnflags" "3"
 "skin" "0"
@@ -14921,7 +14921,7 @@
 // entity 200
 {
 "classname" "misc_model"
-"model" "models//objects/skeleton/skelet.md2"
+"model" "models/objects/skeleton/skelet.md2"
 "origin" "437.375 -467.125 0.125"
 "spawnflags" "63"
 "skin" "0"
@@ -15094,7 +15094,7 @@
 // entity 206
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/fern2/fern2.md2"
+"model" "models/objects/vegi/fern2/fern2.md2"
 "origin" "785.125 408.875 258.875"
 "spawnflags" "48"
 "skin" "0"
