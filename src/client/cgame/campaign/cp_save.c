@@ -679,7 +679,7 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&mso_subsystemXML);
 
 	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Check whether there is a quicksave at all");
-	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, _("Saves to the quick save slot"));
+	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, N_("Saves to the quick save slot"));
 	Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Loads the quick save slot");
 	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");

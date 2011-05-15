@@ -34,8 +34,12 @@ static inline void CLMN_AddBindings (linkedList_t **list, char **bindings)
 {
 	int i;
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (bindings[i] && bindings[i][0] != '\0')
-			LIST_AddString(list, va("%s\t%s", Key_KeynumToString(i), Cmd_GetCommandDesc(bindings[i])));
+		if (bindings[i] && bindings[i][0] != '\0') {
+			const char *binding = Cmd_GetCommandDesc(bindings[i]);
+			if (binding != NULL && binding[0] != '\0')
+				binding = _(binding);
+			LIST_AddString(list, va("%s\t%s", Key_KeynumToString(i), binding));
+		}
 }
 
 /**
