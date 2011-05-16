@@ -732,6 +732,9 @@ base/models/aircraft/inter_stiletto/stiletto_nm.png | GNU General Public License
 base/models/aircraft/inter_stingray/stingray.png | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
+base/models/aircraft/ufo_bomber/ufo_bomber.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/ufo_bomber/ufo_bomber.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/ufo_bomber/ufo_bomber_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/ufo_corrupter/ufo_corrupter.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
