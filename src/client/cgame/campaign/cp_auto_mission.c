@@ -285,10 +285,14 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	}
 
 	/* Set up teams */
+	/* Sums of various values */
 	double teamPooledHealth[MAX_ACTIVETEAM];
 	double teamPooledHealthMax[MAX_ACTIVETEAM];
 	double teamPooledUnitsHealthy[MAX_ACTIVETEAM];
 	double teamPooledUnitsTotal[MAX_ACTIVETEAM];
+	/* Ratios */
+	double teamRatioHealthyUnits[MAX_ACTIVETEAM];
+	double teamRatioHealthTotal[MAX_ACTIVETEAM];
 	int currentUnit;
 
 	for (count = 0; count < MAX_ACTIVETEAM; count++) {
@@ -307,6 +311,17 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 						teamPooledUnitsHealthy[count] += 1.0;
 				}
 			}
+			/* We shouldn't be dividing by zero here. */
+			assert (teamPooledHealthMax[count] > 0.0);
+			assert (teamPooledUnitsTotal[count] > 0.0);
+
+			teamRatioHealthTotal[count] = teamPooledHealth[count] / teamPooledHealthMax[count];
+			teamRatioHealthyUnits[count] = teamPooledUnitsHealthy[count] / teamPooledUnitsTotal[count];
+
+			/* In DEBUG mode, these should help with telling where things are at what time, for bug-hunting purposes. */
+			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf", count, teamRatioHealthyUnits[count]);
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf", count, teamRatioHealthTotal[count]);
 		}
 	}
 }
