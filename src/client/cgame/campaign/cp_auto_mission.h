@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct aircraft_s;
 struct alienTeamGroup_s;
+struct campaign_s;
 
 /** @brief Possilbe results from an auto mission to display on-screen after a simulated battle.
  * @note This list of potential results is NOT meant to replace missionResults_t, but is mainly used for displaying the proper message on the screen afterwards. */
@@ -101,11 +102,11 @@ typedef struct autoMission_battle_s {
 void CP_AutoBattleClearBattle(autoMissionBattle_t *battle);
 void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, const qboolean civsInfected);
 void CP_AutoBattleRunBattle(autoMissionBattle_t *battle);
-void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const struct campaign_s *campaign);
+void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const struct campaign_s *cmpn);
 void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const struct campaign_s *campaign);
 void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum, const struct campaign_s *campaign);
 void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup);
 void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
-int CP_AutoBattleGetWinningTeam(const struct autoMissionBattle_s *battle);
+int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle);
 
 #endif
