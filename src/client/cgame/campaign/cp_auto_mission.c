@@ -177,6 +177,14 @@ void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int 
 int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
 {
 	/** @todo */
+	if (battle->hasBeenFought == qfalse) {
+		Com_Error(ERR_DROP, "Error:  Attempt to retrieve winning team from an auto mission that wasn't fought!");
+		return -1;
+	} else {
+		if (battle->winningTeam == -1)
+			Com_Error(ERR_DROP, "Error:  Auto mission has been fought, but no winning team was set!");
+		return battle->winningTeam;
+	}
 	return 0;
 }
 
