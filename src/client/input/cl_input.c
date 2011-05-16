@@ -16,7 +16,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2010 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/cl_input.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -905,46 +905,46 @@ void IN_Init (void)
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 
 	/* commands */
-	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
+	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, N_("Rotate battlescape camera anti-clockwise"));
 	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
-	Cmd_AddCommand("+turnright", IN_TurnRightDown_f, _("Rotate battlescape camera clockwise"));
+	Cmd_AddCommand("+turnright", IN_TurnRightDown_f, N_("Rotate battlescape camera clockwise"));
 	Cmd_AddCommand("-turnright", IN_TurnRightUp_f, NULL);
-	Cmd_AddCommand("+turnup", IN_TurnUpDown_f, _("Tilt battlescape camera up"));
+	Cmd_AddCommand("+turnup", IN_TurnUpDown_f, N_("Tilt battlescape camera up"));
 	Cmd_AddCommand("-turnup", IN_TurnUpUp_f, NULL);
-	Cmd_AddCommand("+turndown", IN_TurnDownDown_f, _("Tilt battlescape camera down"));
+	Cmd_AddCommand("+turndown", IN_TurnDownDown_f, N_("Tilt battlescape camera down"));
 	Cmd_AddCommand("-turndown", IN_TurnDownUp_f, NULL);
-	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown_f, _("Move battlescape camera left"));
+	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown_f, N_("Move battlescape camera left"));
 	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp_f, NULL);
-	Cmd_AddCommand("+shiftright", IN_ShiftRightDown_f, _("Move battlescape camera right"));
+	Cmd_AddCommand("+shiftright", IN_ShiftRightDown_f, N_("Move battlescape camera right"));
 	Cmd_AddCommand("-shiftright", IN_ShiftRightUp_f, NULL);
-	Cmd_AddCommand("+shiftup", IN_ShiftUpDown_f, _("Move battlescape camera forward"));
+	Cmd_AddCommand("+shiftup", IN_ShiftUpDown_f, N_("Move battlescape camera forward"));
 	Cmd_AddCommand("-shiftup", IN_ShiftUpUp_f, NULL);
-	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown_f, _("Move battlescape camera backward"));
+	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown_f, N_("Move battlescape camera backward"));
 	Cmd_AddCommand("-shiftdown", IN_ShiftDownUp_f, NULL);
-	Cmd_AddCommand("+zoomin", IN_ZoomInDown_f, _("Zoom in"));
+	Cmd_AddCommand("+zoomin", IN_ZoomInDown_f, N_("Zoom in"));
 	Cmd_AddCommand("-zoomin", IN_ZoomInUp_f, NULL);
-	Cmd_AddCommand("+zoomout", IN_ZoomOutDown_f, _("Zoom out"));
+	Cmd_AddCommand("+zoomout", IN_ZoomOutDown_f, N_("Zoom out"));
 	Cmd_AddCommand("-zoomout", IN_ZoomOutUp_f, NULL);
 
-	Cmd_AddCommand("+leftmouse", CL_LeftClickDown_f, _("Left mouse button click (menu)"));
+	Cmd_AddCommand("+leftmouse", CL_LeftClickDown_f, N_("Left mouse button click (menu)"));
 	Cmd_AddCommand("-leftmouse", CL_LeftClickUp_f, NULL);
-	Cmd_AddCommand("+middlemouse", CL_MiddleClickDown_f, _("Middle mouse button click (menu)"));
+	Cmd_AddCommand("+middlemouse", CL_MiddleClickDown_f, N_("Middle mouse button click (menu)"));
 	Cmd_AddCommand("-middlemouse", CL_MiddleClickUp_f, NULL);
-	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, _("Right mouse button click (menu)"));
+	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, N_("Right mouse button click (menu)"));
 	Cmd_AddCommand("-rightmouse", CL_RightClickUp_f, NULL);
-	Cmd_AddCommand("+select", CL_SelectDown_f, _("Select objects/Walk to a square/In fire mode, fire etc"));
+	Cmd_AddCommand("+select", CL_SelectDown_f, N_("Select objects/Walk to a square/In fire mode, fire etc"));
 	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
-	Cmd_AddCommand("+action", CL_ActionDown_f, _("Walk to a square/In fire mode, cancel action"));
+	Cmd_AddCommand("+action", CL_ActionDown_f, N_("Walk to a square/In fire mode, cancel action"));
 	Cmd_AddCommand("-action", CL_ActionUp_f, NULL);
-	Cmd_AddCommand("+turn", CL_TurnDown_f, _("Turn soldier toward mouse pointer"));
+	Cmd_AddCommand("+turn", CL_TurnDown_f, N_("Turn soldier toward mouse pointer"));
 	Cmd_AddCommand("-turn", CL_TurnUp_f, NULL);
-	Cmd_AddCommand("+hudradar", CL_HudRadarDown_f, _("Toggles the hud radar mode"));
+	Cmd_AddCommand("+hudradar", CL_HudRadarDown_f, N_("Toggles the hud radar mode"));
 	Cmd_AddCommand("-hudradar", CL_HudRadarUp_f, NULL);
 
-	Cmd_AddCommand("levelup", CL_LevelUp_f, _("Slice through terrain at a higher level"));
-	Cmd_AddCommand("leveldown", CL_LevelDown_f, _("Slice through terrain at a lower level"));
-	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, _("Zoom in"));
-	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, _("Zoom out"));
+	Cmd_AddCommand("levelup", CL_LevelUp_f, N_("Slice through terrain at a higher level"));
+	Cmd_AddCommand("leveldown", CL_LevelDown_f, N_("Slice through terrain at a lower level"));
+	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, N_("Zoom in"));
+	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, N_("Zoom out"));
 
 	mousePosX = mousePosY = 0.0;
 

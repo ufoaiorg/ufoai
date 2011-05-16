@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -341,5 +341,5 @@ void INV_InitCallbacks (void)
 	Cmd_AddCommand("mn_decreasefiremode", INV_DecreaseFiremode_f, "Decreases the number of the firemode to display");
 	Cmd_AddCommand("mn_increaseitem", INV_IncreaseItem_f, "Increases the number of the weapon or the ammo to display");
 	Cmd_AddCommand("mn_decreaseitem", INV_DecreaseItem_f, "Decreases the number of the weapon or the ammo to display");
-	Cmd_AddCommand("object_update", INV_UpdateObject_f, _("Update the GUI with the selected item"));
+	Cmd_AddCommand("object_update", INV_UpdateObject_f, N_("Update the GUI with the selected item"));
 }

@@ -1399,9 +1399,16 @@ base/models/objects/fence/fence.md2 | GNU General Public License 2.0 or later | 
 base/models/objects/fence/fence.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/firehose/firehose.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/firehose/firehose.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later
+base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/automat_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
+base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
+base/models/objects/furniture/automat/sodamachine.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/sodamachine.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/sodamachine_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
+base/models/objects/furniture/automat/waterdisp.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/waterdisp.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/furniture/automat/waterdisp_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/objects/furniture/bed/bed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/bed/bed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -2836,6 +2843,7 @@ base/pics/icons/health_critical.png | GNU General Public License 2.0 | Gerd Heis
 base/pics/icons/health_medium.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_normal.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_unused.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/information.png | GNU General Public License 2.0 | Kostia "Kildor" Romanov
 base/pics/icons/mail_air.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
@@ -2885,6 +2893,7 @@ base/pics/maps/loading/bunker.png | GNU General Public License 2.0 or later | Ma
 base/pics/maps/loading/cemetery.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/city.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/pics/maps/loading/city_disco.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/city_industry.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/loading/city_train.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/community_centre.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/construction.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5753,37 +5762,25 @@ base/textures/tex_pics/traktor1.jpg | Public Domain | US Federal Government
 base/textures/tex_pics/traktor2.jpg | Creative Commons Attribution-Share Alike 2.0 | Solitude
 base/textures/tex_shop/cashreg_c.jpg | Public Domain
 base/textures/tex_shop/fruits001.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits001_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits001_new_lq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits001_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits002.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits002_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits002_new_lq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits002_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits003.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits003_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits003_new_lq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits003_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits004.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits004_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits004_new_lq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits004_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits005.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits005_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits005_new_lq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/fruits005_nm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits006_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits006_new_lq_nm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits007_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits007_new_lq_nm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits008_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits008_new_lq_nm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits009_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits009_new_lq_nm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits010_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits010_new_lq_nm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits_006_new_lq.png | GNU General Public License 2.0 | MCR
-base/textures/tex_shop/fruits_006_new_lq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits006.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits006_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits007.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits007_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits008.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits008_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits009.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits009_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits010.png | GNU General Public License 2.0 | MCR
+base/textures/tex_shop/fruits010_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_shop/outlay8.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_shop/outlay9.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_shop/rack-pharma2.jpg | GNU General Public License 2.0 | XaverXN
@@ -5873,12 +5870,8 @@ base/textures/tex_tech/comptable.jpg | GNU General Public License 2.0 or later |
 base/textures/tex_tech/comptable_gm.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex002.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex002_gm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_tech/comptex002_mq.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
-base/textures/tex_tech/comptex002_mq_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex003_gm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_tech/comptex003_lq.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
-base/textures/tex_tech/comptex003_lq_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/cover002.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/cover003.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/cover004.png | GNU General Public License 2.0 | Nate Wright

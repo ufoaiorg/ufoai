@@ -2339,7 +2339,7 @@
 // entity 34
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/water_lily2/lily.md2"
+"model" "models/objects/vegi/water_lily2/lily.md2"
 "origin" "443 984 1"
 "spawnflags" "255"
 "skin" "0"
@@ -2347,7 +2347,7 @@
 // entity 35
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/water_lily/lily_bloom.md2"
+"model" "models/objects/vegi/water_lily/lily_bloom.md2"
 "origin" "443 991 -1"
 "spawnflags" "255"
 "skin" "0"

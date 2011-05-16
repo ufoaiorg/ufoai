@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2010 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/cl_main.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -1003,7 +1003,7 @@ static void CL_InitLocal (void)
 
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
-	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, _("Target your shot to the ground"));
+	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, N_("Target your shot to the ground"));
 
 	Cmd_AddCommand("cl_setratiofilter", CL_SetRatioFilter_f, "Filter the resolution screen list with a ration");
 

@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -58,7 +58,7 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 {
 	const int number = NET_ReadShort(msg);
 	le_t *le = LE_Get(number);
-	int nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
+	int nr = NET_ReadShort(msg);
 
 	if (!le)
 		Com_Error(ERR_DROP, "InvAdd message ignored... LE not found\n");

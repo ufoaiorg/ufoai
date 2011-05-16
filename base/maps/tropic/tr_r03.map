@@ -263,7 +263,7 @@
 // entity 12
 {
 "classname" "misc_model"
-"model" "models//animals/crocodile/croc.md2"
+"model" "models/animals/crocodile/croc.md2"
 "origin" "152 232 -72"
 "spawnflags" "255"
 "skin" "0"

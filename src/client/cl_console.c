@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2010 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/console.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -294,7 +294,7 @@ void Con_Init (void)
 	con_history = Cvar_Get("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
 	con_background = Cvar_Get("con_background", "1", CVAR_ARCHIVE, "Console is rendered with background image");
 
-	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
+	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, N_("Bring up the in-game console"));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
 	Cmd_AddCommand("clear", Con_Clear_f, "Clear console text");
 

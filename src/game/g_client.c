@@ -4,7 +4,7 @@
  */
 
 /*
- Copyright (C) 2002-2010 UFO: Alien Invasion.
+ Copyright (C) 2002-2011 UFO: Alien Invasion.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -1062,7 +1062,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 static void G_ClientReadInventory (edict_t *ent)
 {
 	/* inventory */
-	int nr = gi.ReadShort() / INV_INVENTORY_BYTES;
+	int nr = gi.ReadShort();
 
 	for (; nr-- > 0;) {
 		invDef_t *container;
@@ -1124,15 +1124,20 @@ static void G_ClientReadCharacter (edict_t *ent)
  */
 static void G_ClientSkipActorInfo (void)
 {
-	int k, j;
+	int i, n;
 	edict_t ent;
+	invDef_t container;
+	item_t item;
+	int x, y;
+	invDef_t *c = &container;
 
 	G_ClientReadCharacter(&ent);
 
 	/* skip inventory */
-	j = gi.ReadShort();
-	for (k = 0; k < j; k++)
-		gi.ReadByte(); /* inventory */
+	n = gi.ReadShort();
+	for (i = 0; i < n; i++) {
+		G_ReadItem(&item, &c, &x, &y);
+	}
 }
 
 /**

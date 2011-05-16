@@ -10027,7 +10027,7 @@
 // entity 122
 {
 "classname" "misc_model"
-"model" "models//objects/switchboard/switchboard.md2"
+"model" "models/objects/switchboard/switchboard.md2"
 "origin" "2249 512 4"
 "spawnflags" "255"
 "skin" "0"

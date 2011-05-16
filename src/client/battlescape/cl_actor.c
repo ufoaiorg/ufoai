@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -2409,16 +2409,16 @@ void ACTOR_InitStartup (void)
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");
-	Cmd_AddCommand("actor_next", CL_ActorNext_f, _("Toggle to next actor"));
-	Cmd_AddCommand("actor_select", CL_ActorSelect_f, _("Select an actor from list"));
-	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, _("Update an actor"));
-	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
-	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
-	Cmd_AddCommand("actor_dooraction", CL_ActorDoorAction_f, _("Opens or closes a door"));
-	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, _("Confirm the current action"));
-	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, _("Toggle to next alien visible from selected actor."));
+	Cmd_AddCommand("actor_next", CL_ActorNext_f, N_("Toggle to next actor"));
+	Cmd_AddCommand("actor_select", CL_ActorSelect_f, N_("Select an actor from list"));
+	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, N_("Update an actor"));
+	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, N_("Toggle stand/crounch"));
+	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, N_("Toggle the headgear"));
+	Cmd_AddCommand("actor_dooraction", CL_ActorDoorAction_f, N_("Opens or closes a door"));
+	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, N_("Confirm the current action"));
+	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, N_("Toggle to next alien visible from selected actor."));
 
-	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toggle to next alien"));
+	Cmd_AddCommand("nextalien", CL_NextAlien_f, N_("Toggle to next alien"));
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");

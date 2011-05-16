@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -1567,7 +1567,7 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("hud_listactions", HUD_DisplayActions_f, "Display a list of action from the selected soldier.");
-	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, _("Update cvars from actor from list"));
+	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, N_("Update cvars from actor from list"));
 
 	/** @note We can't check the value at startup cause scripts are not yet loaded */
 	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD");

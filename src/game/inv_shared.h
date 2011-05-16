@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -437,8 +437,5 @@ int INVSH_ShapeSize(const uint32_t shape);
 uint32_t INVSH_ShapeRotate(const uint32_t shape);
 
 const objDef_t* INVSH_HasReactionFireEnabledWeapon(const invList_t *invList);
-
-/** @brief Number of bytes that is read and written via inventory transfer functions */
-#define INV_INVENTORY_BYTES 11
 
 #endif /* GAME_INV_SHARED_H */

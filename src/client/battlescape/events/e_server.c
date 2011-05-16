@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -50,5 +50,5 @@ static void CL_NextRound_f (void)
 
 void CL_ServerEventsInit (void)
 {
-	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
+	Cmd_AddCommand("nextround", CL_NextRound_f, N_("Ends current round"));
 }

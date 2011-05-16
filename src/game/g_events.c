@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -116,7 +116,7 @@ void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
 {
 	gi.AddEvent(playerMask, EV_INV_ADD);
 	gi.WriteShort(ent->number);
-	gi.WriteShort(itemAmount * INV_INVENTORY_BYTES);
+	gi.WriteShort(itemAmount);
 }
 
 /**

@@ -120,7 +120,7 @@ window options
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CR
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"72 135"
@@ -772,6 +772,25 @@ window options
 				tooltip		"_Display the number of rendered frames per second."
 				current		*cvar:cl_fps
 				pos			"445 465"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+
+			// ================
+			// SHOW INTROVIDEO
+			// ================
+			string intro_video
+			{
+				tooltip		"_Do not play the intro movie when starting the game."
+				string		"_Hold Back Intro Video:"
+				pos			"32 490"
+				size		"240 20"
+			}
+			checkbox intro
+			{
+				tooltip		"_Default is to play the intro video just once at the first game start."
+				current		*cvar:cl_introshown
+				pos			"445 490"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -2234,6 +2253,7 @@ window options
 			{
 				*node:root.options_gameplay@invis = true
 				*node:root.options_keys@invis = false
+				cmd "mn_init_keylist;"
 			}
 		}
 	}
@@ -2303,7 +2323,6 @@ window options
 		*cvar:mn_vidratio = "all"
 		cmd "cl_setratiofilter <cvar:mn_vidratio>"
 		call *node:root.hidepanels
-		cmd "mn_init_keylist;"
 
 		*cvar:mn_videotab = "general"
 		*node:root.options_video.options_advanced_video@invis = true
