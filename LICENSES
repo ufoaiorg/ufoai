@@ -2578,27 +2578,28 @@ base/pics/banks/pack_message.png | GNU General Public License 2.0 or later | bay
 base/pics/base/adrop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl2.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/aliencont.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/antimatter.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/commando.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/base/aliencont.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/antimatter.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/base_empty.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/commando.png | GNU General Public License 2.0 or later | MCR
 base/pics/base/construction.png | GNU General Public License 2.0 or later | MCR
-base/pics/base/drop.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/empty.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/entrance.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/grid.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/hospital.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/intercept.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/base/drop.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/empty.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/entrance.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/grid.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/hospital.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/intercept.png | GNU General Public License 2.0 or later | MCR
 base/pics/base/invalid.png | GNU General Public License 2.0
-base/pics/base/lab.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/base/lab.png | GNU General Public License 2.0 or later | MCR
 base/pics/base/laser.png | GNU General Public License 2.0 or later | MCR
-base/pics/base/missile.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/powerplant.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/quarters.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/radar.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/radar_adv.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/storage.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/teamroom.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/workshop.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/base/missile.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/powerplant.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/quarters.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/radar.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/radar_adv.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/storage.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/teamroom.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/workshop.png | GNU General Public License 2.0 or later | MCR
 base/pics/buttons/big_blue.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_blue2.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_blue_disabled.png | GNU General Public License 2.0 or later
