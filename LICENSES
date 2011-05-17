@@ -1471,6 +1471,7 @@ base/models/objects/gascylinder/gascylinder.md2 | GNU General Public License 2.0
 base/models/objects/gascylinder/gascylinder.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/generator/generator.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/generator/generator.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/generator/generator_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/heating/heating.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/heating/heating.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/hovercraft/hover_down.md2 | GNU General Public License 2.0 or later | Willem Sitters
