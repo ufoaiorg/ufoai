@@ -1496,9 +1496,10 @@ base/models/objects/japan/mat.md2 | GNU General Public License 2.0 or later | Wi
 base/models/objects/japan/mat.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/japan/stoel.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/japan/stoel.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/laserturret/laserturret.md2 | GNU General Public License 2.0 or later | Willem Sitter
-base/models/objects/laserturret/laserturret.png | GNU General Public License 2.0 or later | Willem Sitter
-base/models/objects/laserturret/laserturret_nm.png | GNU General Public License 2.0 or later | Willem Sitter
+base/models/objects/laserturret/laserturret.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/laserturret/laserturret.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/laserturret/laserturret_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
+base/models/objects/laserturret/laserturret_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/liftingcart/liftingcart.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/liftingcart/liftingcart.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/lorry/lorry.md2 | GNU General Public License 2.0 or later | Willem Sitters
