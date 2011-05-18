@@ -49,22 +49,23 @@
 // entity 1
 {
 "classname" "misc_model"
-"origin" "109 197 7"
+"origin" "109 197 6.5"
 "model" "models/objects/rubbish/bottle1.md2"
 "spawnflags" "255"
+"angles" "0 -14 0"
 }
 // entity 2
 {
 "classname" "misc_model"
-"origin" "124 202 7"
+"origin" "124 202 6.625"
 "model" "models/objects/rubbish/bottle1.md2"
 "spawnflags" "255"
-"angles" "0 -90 0"
+"angles" "0 -97 0"
 }
 // entity 3
 {
 "classname" "misc_model"
-"origin" "113 212 5"
+"origin" "113 212 4.25"
 "model" "models/objects/city/waste/bag.md2"
 "spawnflags" "255"
 }
