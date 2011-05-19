@@ -5875,6 +5875,9 @@ base/textures/tex_tech/comptex002_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex003_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/comptex005.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
+base/textures/tex_tech/comptex005_gm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/comptex005_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/cover002.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/cover003.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/cover004.png | GNU General Public License 2.0 | Nate Wright
