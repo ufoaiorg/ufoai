@@ -490,12 +490,6 @@ city changchun_jilin
 	pos "-125.3167 43.8833"
 }
 
-city charlotte_amalie_united_states_virgin_islands
-{
-	name "_Charlotte Amalie"
-	pos "64.9500 -18.35"
-}
-
 city charlotte_north_carolina
 {
 	name "_Charlotte"
