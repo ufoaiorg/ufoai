@@ -374,17 +374,15 @@ static void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	SV_Shutdown("Mission end", qfalse);
 }
 
-static qboolean GAME_CP_Spawn (void)
+static qboolean GAME_CP_Spawn (chrList_t *chrList)
 {
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	base_t *base;
 	employee_t *employee;
-	chrList_t *chrList;
 
 	if (!aircraft)
 		return qfalse;
 
-	chrList = &cl.chrList;
 	/* convert aircraft team to character list */
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		chrList->chr[chrList->num] = &employee->chr;
