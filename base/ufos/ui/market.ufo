@@ -9,18 +9,19 @@ component panel cmpMarketItem
 		onClick	{ cmd "mn_buysell <num> <lastdiff>; market_click <num>;" }
 //		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
-	zone wz_buysell
-	{
-		pos			"302 0"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
-		onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
-	}
-	spinner bt_buysell
+//	zone wz_buysell
+//	{
+//		pos			"302 0"
+//		size		"120 24"
+//		onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
+//		onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
+//	}
+	buysellspinner bt_buysell
 	{
 		tooltip		"_Buy and sell item"
 		image		"ui/spinner_blue"
-		pos			"346 0"
+		pos			"16 0"
+		size		"345 24"
 		onChange	{ cmd "mn_buysell <node:parent@num> <lastdiff>; market_click <node:parent@num>;" }
 	}
 	checkbox bt_autosell
