@@ -1054,7 +1054,7 @@ const char* GAME_GetTeamDef (void)
 	return teamDefID;
 }
 
-static qboolean GAME_Spawn (void)
+static qboolean GAME_Spawn (chrList_t *chrList)
 {
 	const size_t size = GAME_GetCharacterArraySize();
 	int i;
@@ -1072,8 +1072,8 @@ static qboolean GAME_Spawn (void)
 	}
 
 	for (i = 0; i < size; i++)
-		cl.chrList.chr[i] = chrDisplayList.chr[i];
-	cl.chrList.num = chrDisplayList.num;
+		chrList->chr[i] = chrDisplayList.chr[i];
+	chrList->num = chrDisplayList.num;
 
 	return qtrue;
 }
@@ -1088,6 +1088,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	qboolean spawnStatus;
+	chrList_t *chrList = &cl.chrList;
 
 	Cvar_SetValue("cl_onbattlescape", 1.0);
 
@@ -1098,11 +1099,11 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 		HUD_InitUI(NULL, qtrue);
 	}
 
-	/* this callback is responsible to set up the cl.chrList */
+	/* this callback is responsible to set up the teamlist */
 	if (list && list->Spawn)
-		spawnStatus = list->Spawn();
+		spawnStatus = list->Spawn(chrList);
 	else
-		spawnStatus = GAME_Spawn();
+		spawnStatus = GAME_Spawn(chrList);
 
 	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
 
@@ -1111,7 +1112,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 
 		/* send team info */
 		msg = new_dbuffer();
-		GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
+		GAME_SendCurrentTeamSpawningInfo(msg, chrList);
 		NET_WriteMsg(cls.netStream, msg);
 	}
 }
