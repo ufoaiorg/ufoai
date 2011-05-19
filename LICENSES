@@ -711,9 +711,10 @@ base/models/aircraft/drop_herakles/wallbox.png | GNU General Public License 2.0 
 base/models/aircraft/drop_raptor/drop_raptor.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor_gear.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_raptor/drop_raptor_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/aircraft/drop_raptor/drop_raptor_landed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor_low.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/drop_raptor/drop_raptor_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_raptor/drop_raptor_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 or later | Willem Sitters
