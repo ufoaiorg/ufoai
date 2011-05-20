@@ -8,5 +8,5 @@ You should upload that .pk3 files to some public HTTP server, for example SF.net
 then update the variable AppDataDownloadUrl inside file build/projects/AndroidAppSettings.cfg
 and rebuild .apk file.
 The ufoai-template.apk is configured to download these files from
-http://sourceforge.net/projects/libsdl-android/files/UFOAI/3/2/
+http://sourceforge.net/projects/libsdl-android/files/UFOAI/
 you may wish to re-upload them if you release new version (mattn, geever and bayo should have write access).
