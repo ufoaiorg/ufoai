@@ -243,21 +243,21 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	int totalActiveTeams = 0;
 	int lastActiveTeam = -1;
 	int isHostileCount;
-	int count;
+	int team;
 
 	if (battle->hasBeenFought)
 		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!");
 
-	for (count = 0; count < MAX_ACTIVETEAM; count++) {
-		unitTotal += battle->nUnits[count];
+	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+		unitTotal += battle->nUnits[team];
 
-		if (battle->teamActive[count]) {
-			lastActiveTeam = count;
+		if (battle->teamActive[team]) {
+			lastActiveTeam = team;
 			totalActiveTeams++;
 		}
 		for (isHostileCount = 0; isHostileCount < MAX_ACTIVETEAM; isHostileCount++) {
 			if (battle->nUnits[isHostileCount] > 0) {
-				if (battle->isHostile[count][isHostileCount] && battle->teamActive[count])
+				if (battle->isHostile[team][isHostileCount] && battle->teamActive[team])
 					isHostileTotal++;
 			}
 		}
@@ -300,46 +300,46 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	double tCalcA;
 	double tCalcB;
 
-	for (count = 0; count < MAX_ACTIVETEAM; count++) {
-		teamPooledHealth[count] = 0.0;
-		teamPooledHealthMax[count] = 0.0;
-		teamPooledUnitsHealthy[count] = 0.0;
-		teamPooledUnitsTotal[count] = 0.0;
+	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+		teamPooledHealth[team] = 0.0;
+		teamPooledHealthMax[team] = 0.0;
+		teamPooledUnitsHealthy[team] = 0.0;
+		teamPooledUnitsTotal[team] = 0.0;
 
-		if (battle->teamActive[count]) {
-			for (currentUnit = 0; currentUnit < battle->nUnits[count]; currentUnit++) {
-				if (battle->unitHealth[count][currentUnit] > 0) {
-					teamPooledHealth[count] += battle->unitHealth[count][currentUnit];
-					teamPooledHealthMax[count] += battle->unitHealthMax[count][currentUnit];
-					teamPooledUnitsTotal[count] += 1.0;
-					if (battle->unitHealth[count][currentUnit] == battle->unitHealthMax[count][currentUnit])
-						teamPooledUnitsHealthy[count] += 1.0;
+		if (battle->teamActive[team]) {
+			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
+				if (battle->unitHealth[team][currentUnit] > 0) {
+					teamPooledHealth[team] += battle->unitHealth[team][currentUnit];
+					teamPooledHealthMax[team] += battle->unitHealthMax[team][currentUnit];
+					teamPooledUnitsTotal[team] += 1.0;
+					if (battle->unitHealth[team][currentUnit] == battle->unitHealthMax[team][currentUnit])
+						teamPooledUnitsHealthy[team] += 1.0;
 				}
 			}
 			/* We shouldn't be dividing by zero here. */
-			assert (teamPooledHealthMax[count] > 0.0);
-			assert (teamPooledUnitsTotal[count] > 0.0);
+			assert (teamPooledHealthMax[team] > 0.0);
+			assert (teamPooledUnitsTotal[team] > 0.0);
 
-			teamRatioHealthTotal[count] = teamPooledHealth[count] / teamPooledHealthMax[count];
-			teamRatioHealthyUnits[count] = teamPooledUnitsHealthy[count] / teamPooledUnitsTotal[count];
+			teamRatioHealthTotal[team] = teamPooledHealth[team] / teamPooledHealthMax[team];
+			teamRatioHealthyUnits[team] = teamPooledUnitsHealthy[team] / teamPooledUnitsTotal[team];
 
 			/* In DEBUG mode, these should help with telling where things are at what time, for bug-hunting purposes. */
 			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf", count, teamRatioHealthyUnits[count]);
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf", count, teamRatioHealthTotal[count]);
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf", team, teamRatioHealthyUnits[team]);
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf", team, teamRatioHealthTotal[team]);
 
-			tCalcA = (teamRatioHealthyUnits[count] + teamRatioHealthTotal[count]);
+			tCalcA = (teamRatioHealthyUnits[team] + teamRatioHealthTotal[team]);
 			tCalcA *= 0.50;
 			tCalcA = FpCurve1D_u_out(tCalcA, 0.750, 0.50);
 			tCalcA -= 0.50;
 			tCalcB = fabs(tCalcA);
 			if (tCalcA > 0.0)
-				battle->scoreTeamSkill[count] = FpCurveUp(battle->scoreTeamSkill[count], tCalcB);
+				battle->scoreTeamSkill[team] = FpCurveUp(battle->scoreTeamSkill[team], tCalcB);
 			if (tCalcA < 0.0)
-				battle->scoreTeamSkill[count] = FpCurveDn(battle->scoreTeamSkill[count], tCalcB);
+				battle->scoreTeamSkill[team] = FpCurveDn(battle->scoreTeamSkill[team], tCalcB);
 			/* if (tcalcA == exact 0.0), no change to team's skill. */
 
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf", count, battle->scoreTeamSkill[count]);
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf", team, battle->scoreTeamSkill[team]);
 		}
 	}
 }
