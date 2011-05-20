@@ -6056,6 +6056,16 @@ base/textures/tex_vehicles/gabstap_e.png | GNU General Public License 2.0 or lat
 base/textures/tex_vehicles/ship01.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/ship03.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/ship04.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/tire001_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire001_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire002_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire002_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire003_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire003_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire004_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire004_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire005_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire005_mq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
