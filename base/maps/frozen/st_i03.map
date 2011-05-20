@@ -1309,7 +1309,7 @@
 // entity 17
 {
 "classname" "misc_model"
-"model" "models//objects/firehose/firehose.md2"
+"model" "models/objects/firehose/firehose.md2"
 "origin" "75.5 196 8"
 "spawnflags" "1"
 "skin" "0"

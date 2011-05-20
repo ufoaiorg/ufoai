@@ -10516,7 +10516,7 @@
 // entity 178
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/pitchfork/pitchfork.md2"
+"model" "models/objects/furniture/pitchfork/pitchfork.md2"
 "origin" "951.375 10.3749 40.125"
 "spawnflags" "255"
 "skin" "0"
