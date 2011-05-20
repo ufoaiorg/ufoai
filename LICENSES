@@ -6064,7 +6064,10 @@ base/textures/tex_vehicles/truck_a.png | GNU General Public License 2.0 | Possum
 base/textures/tex_vehicles/truck_b.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
 base/textures/tex_vehicles/truck_c.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_lq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_c_lq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_c_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_c_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_d.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
 base/videos/intro.ogm | GNU General Public License 2.0 or later | David Reeves (Destructavator)
 contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
