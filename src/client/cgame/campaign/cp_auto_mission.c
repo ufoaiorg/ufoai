@@ -45,7 +45,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 		battle->scoreTeamDifficulty[team] = 0.5;
 		battle->scoreTeamEquipment[team] = 0.5;
 		battle->scoreTeamSkill[team] = 0.5;
-		battle->teamAccomplishment[team] = 0.0;
+		battle->teamAccomplishment[team] = 0;
 
 		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
 			/* If you forget to set this and run a battle, everyone will just kill each other by default */
@@ -370,7 +370,7 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	}
 
 }
-qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, double effective)
+qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
 {
 	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!", currUnit, currTeam);
 
@@ -385,15 +385,39 @@ qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int 
 			if (battle->teamActive[eTeam] == qtrue) {
 				count++;
 				for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
-					calcRand = frand();
-					if (calcRand < effective) {
-						strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
+					if (battle->unitHealth[eTeam][eUnit] > 0) {
+						calcRand = frand();
+						if (calcRand < effective) {
+							strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
 
-						battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+							battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
-						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
+							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
-						battle->teamAccomplishment[currTeam] += strikeDamage;
+							if (battle->unitHealth[eTeam][eUnit] == 0)
+								Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!", eUnit, eTeam);
+
+							battle->teamAccomplishment[currTeam] += strikeDamage;
+						}
+					}
+				}
+			} else {
+				/* Check for "friendly" fire */
+				for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
+					if (battle->unitHealth[eTeam][eUnit] > 0) {
+						calcRand = frand();
+						if (calcRand < (0.250 - (effective * 0.250))) {
+							strikeDamage = (int) (20.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
+
+							battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+
+							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
+
+							if (battle->unitHealth[eTeam][eUnit] == 0)
+								Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!", eUnit, eTeam);
+
+							battle->teamAccomplishment[currTeam] -= strikeDamage;
+						}
 					}
 				}
 			}
@@ -402,6 +426,7 @@ qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int 
 
 	/* If there's no one left to fight, the battle's OVER. */
 	if (count == 0) {
+		/* This is a temporary, quick hack for setting winning team. */
 		battle->winningTeam = currTeam;
 		return qfalse;
 	}

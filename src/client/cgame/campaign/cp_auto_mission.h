@@ -106,6 +106,6 @@ void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int 
 void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
 int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle);
 /* Helper function for running combat */
-qboolean CP_AutoBattleUnitAttackEnemies(autoMissionBattle_t *battle, const int currTeam, const int currUnit, double effective);
+qboolean CP_AutoBattleUnitAttackEnemies(autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective);
 
 #endif
