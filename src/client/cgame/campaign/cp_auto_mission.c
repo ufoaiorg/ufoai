@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_auto_mission.h"
 #include "cp_campaign.h"
 #include "../../../shared/mathlib_extra.h"
+#include "math.h"
 
 /**
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
@@ -295,6 +296,9 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	double teamRatioHealthyUnits[MAX_ACTIVETEAM];
 	double teamRatioHealthTotal[MAX_ACTIVETEAM];
 	int currentUnit;
+	/* Used for (t)emporary math (calc)ulation stuff */
+	double tCalcA;
+	double tCalcB;
 
 	for (count = 0; count < MAX_ACTIVETEAM; count++) {
 		teamPooledHealth[count] = 0.0;
@@ -323,6 +327,19 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
 			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf", count, teamRatioHealthyUnits[count]);
 			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf", count, teamRatioHealthTotal[count]);
+
+			tCalcA = (teamRatioHealthyUnits[count] + teamRatioHealthTotal[count]);
+			tCalcA *= 0.50;
+			tCalcA = FpCurve1D_u_out(tCalcA, 0.750, 0.50);
+			tCalcA -= 0.50;
+			tCalcB = fabs(tCalcA);
+			if (tCalcA > 0.0)
+				battle->scoreTeamSkill[count] = FpCurveUp(battle->scoreTeamSkill[count], tCalcB);
+			if (tCalcA < 0.0)
+				battle->scoreTeamSkill[count] = FpCurveDn(battle->scoreTeamSkill[count], tCalcB);
+			/* if (tcalcA == exact 0.0), no change to team's skill. */
+
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf", count, battle->scoreTeamSkill[count]);
 		}
 	}
 }
