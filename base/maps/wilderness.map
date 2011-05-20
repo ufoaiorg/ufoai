@@ -7301,7 +7301,7 @@
 // entity 91
 {
 "classname" "misc_model"
-"model" "models//objects/boat/canoe.md2"
+"model" "models/objects/boat/canoe.md2"
 "origin" "1649.39 156.125 40.625"
 "spawnflags" "255"
 "skin" "0"
