@@ -86,7 +86,7 @@ typedef struct autoMission_battle_s {
 
 	int unitHealth[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Health score of each unit for each team */
 	int unitHealthMax[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];	/**< Max health of each unit on each team */
-	double teamAccomplishment[MAX_ACTIVETEAM];						/**< Used for calculating experience gain, and for friendly fire (including hit civilians) */
+	int teamAccomplishment[MAX_ACTIVETEAM];							/**< Used for calculating experience gain, and for friendly fire (including hit civilians) */
 
 	int winningTeam;								/**< Which team is victorious */
 	qboolean hasBeenFought;							/**< Did this battle run already?  Auto Battles can be fought only once, please. */

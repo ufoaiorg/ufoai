@@ -351,8 +351,9 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 			if (battle->teamActive[team] == qtrue) {
 				unitTotal = 0;
 				if (battle->unitHealth[team][currentUnit] > 0) {
+					/* Is this unit still alive (has any health left?) */
 					unitTotal++;
-					for (currentUnit = 0; currentUnit < MAX_ACTIVETEAM; currentUnit++) {
+					for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
 						/* Wounded units don't fight quite as well */
 						tCalcA = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
 						tCalcB = FpCurveDn (battle->scoreTeamSkill[team], tCalcA * 0.50);
@@ -360,10 +361,10 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf", currentUnit, team, battle->scoreTeamSkill[team]);
 
 						combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, tCalcB);
-
-						unitTotal++;
 					}
 				}
+				if (unitTotal == 0)
+					battle->teamActive[team] = qfalse;
 			}
 		}
 	}
@@ -376,15 +377,34 @@ qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int 
 	int eTeam;
 	int eUnit;
 	int count = 0;
+	double calcRand;
+	int strikeDamage;
 
 	for (eTeam = 0; eTeam < MAX_ACTIVETEAM; eTeam++) {
 		if (battle->isHostile[currTeam][eTeam] == qtrue) {
-			if (battle->teamActive[eTeam] == qtrue)
+			if (battle->teamActive[eTeam] == qtrue) {
 				count++;
+				for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
+					calcRand = frand();
+					if (calcRand < effective) {
+						strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
+
+						battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+
+						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
+
+						battle->teamAccomplishment[currTeam] += strikeDamage;
+					}
+				}
+			}
 		}
 	}
 
 	/* If there's no one left to fight, the battle's OVER. */
-	if (count == 0)
+	if (count == 0) {
+		battle->winningTeam = currTeam;
 		return qfalse;
+	}
+
+	return qtrue;
 }
