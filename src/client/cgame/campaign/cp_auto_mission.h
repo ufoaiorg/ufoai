@@ -65,16 +65,12 @@ typedef enum autoMission_teamType_s {
 
 #define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * MAX_ACTIVETEAM
 
-/* FIX ME: The hard-coded max teams of 8 and units on a team (64) should be changed to #define(ed) values set elsewhere! */
 /** @brief Data structure for a simulated or auto mission.
- * @note Supports a hardcoded max of 8 teams that can be simulated in a battle, to
+ * @note Supports a calculated max of so many teams that can be simulated in a battle, to
  * include any aliens, player soldiers, downed pilots, civilians, and any other forces.
  * The player's forces don't have to be any of the teams.  This is useful if a special
  * battle should be simulated for the plot, or if more than one alien threat is in the
  * game (not in the primary campaign plot though, but good for a MOD or whatever).
- * "Special Attribute" modifiers can be used for psi-abilities, cyber-implant stuff,
- * magic (only in a mod, thank you), or any other un-implemented future abilities of
- * a team.  If a team doesn't have such abilites, set it to 0.5f.
  * ALSO: A team does not have to attack (isHostile toward) another team that attacks it.
  * Teams that are isHostile toward no one will wander around like sheep, doing nothing else. */
 typedef struct autoMission_battle_s {
@@ -90,12 +86,13 @@ typedef struct autoMission_battle_s {
 
 	int unitHealth[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Health score of each unit for each team */
 	int unitHealthMax[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];	/**< Max health of each unit on each team */
+	double teamAccomplishment[MAX_ACTIVETEAM];						/**< Used for calculating experience gain, and for friendly fire (including hit civilians) */
 
-	int winningTeam;							/**< Which team is victorious */
-	qboolean hasBeenFought;						/**< Did this battle run already?  Auto Battles can be fought only once, please. */
+	int winningTeam;								/**< Which team is victorious */
+	qboolean hasBeenFought;							/**< Did this battle run already?  Auto Battles can be fought only once, please. */
 	qboolean isRescueMission;						/**< Is this a rescue or special mission? (Such as recovering a downed aircraft pilot) */
-	int teamToRescue;						/**< If a rescue mission, which team needs rescue? */
-	int teamNeedingRescue;					/**< If a rescue mission, which team is attempting the rescue? */
+	int teamToRescue;								/**< If a rescue mission, which team needs rescue? */
+	int teamNeedingRescue;							/**< If a rescue mission, which team is attempting the rescue? */
 } autoMissionBattle_t;
 
 /* Functions for auto missions */

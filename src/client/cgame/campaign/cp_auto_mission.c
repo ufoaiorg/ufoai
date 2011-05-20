@@ -41,9 +41,10 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 		battle->teamID[team] = -1;
 		battle->teamActive[team] = qfalse;
 		battle->nUnits[team] = 0;
-		battle->scoreTeamDifficulty[team] = 0.5f;
-		battle->scoreTeamEquipment[team] = 0.5f;
-		battle->scoreTeamSkill[team] = 0.5f;
+		battle->scoreTeamDifficulty[team] = 0.5;
+		battle->scoreTeamEquipment[team] = 0.5;
+		battle->scoreTeamSkill[team] = 0.5;
+		battle->teamAccomplishment[team] = 0.0;
 
 		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
 			/* If you forget to set this and run a battle, everyone will just kill each other by default */
