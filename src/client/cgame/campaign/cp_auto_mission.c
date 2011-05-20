@@ -344,9 +344,9 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	}
 
 	/* Setup is done.  Now, FIGHT! */
-	qboolean combatActive = true;
+	qboolean combatActive = qtrue;
 
-	while (combatActive == true) {
+	while (combatActive == qtrue) {
 		for (team = 0; team < MAX_ACTIVETEAM; team++) {
 			if (battle->teamActive[team] == qtrue) {
 				unitTotal = 0;
@@ -359,11 +359,32 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 
 						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf", currentUnit, team, battle->scoreTeamSkill[team]);
 
-						/* TODO */
+						combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, tCalcB);
+
+						unitTotal++;
 					}
 				}
 			}
 		}
 	}
 
+}
+qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, double effective)
+{
+	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!", currUnit, currTeam);
+
+	int eTeam;
+	int eUnit;
+	int count = 0;
+
+	for (eTeam = 0; eTeam < MAX_ACTIVETEAM; eTeam++) {
+		if (battle->isHostile[currTeam][eTeam] == qtrue) {
+			if (battle->teamActive[eTeam] == qtrue)
+				count++;
+		}
+	}
+
+	/* If there's no one left to fight, the battle's OVER. */
+	if (count == 0)
+		return qfalse;
 }
