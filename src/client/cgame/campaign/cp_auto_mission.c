@@ -332,14 +332,38 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 			tCalcA *= 0.50;
 			tCalcA = FpCurve1D_u_out(tCalcA, 0.750, 0.50);
 			tCalcA -= 0.50;
-			tCalcB = fabs(tCalcA);
+			tCalcB = fabs (tCalcA);
 			if (tCalcA > 0.0)
-				battle->scoreTeamSkill[team] = FpCurveUp(battle->scoreTeamSkill[team], tCalcB);
+				battle->scoreTeamSkill[team] = FpCurveUp (battle->scoreTeamSkill[team], tCalcB);
 			if (tCalcA < 0.0)
-				battle->scoreTeamSkill[team] = FpCurveDn(battle->scoreTeamSkill[team], tCalcB);
+				battle->scoreTeamSkill[team] = FpCurveDn (battle->scoreTeamSkill[team], tCalcB);
 			/* if (tcalcA == exact 0.0), no change to team's skill. */
 
 			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf", team, battle->scoreTeamSkill[team]);
 		}
 	}
+
+	/* Setup is done.  Now, FIGHT! */
+	qboolean combatActive = true;
+
+	while (combatActive == true) {
+		for (team = 0; team < MAX_ACTIVETEAM; team++) {
+			if (battle->teamActive[team] == qtrue) {
+				unitTotal = 0;
+				if (battle->unitHealth[team][currentUnit] > 0) {
+					unitTotal++;
+					for (currentUnit = 0; currentUnit < MAX_ACTIVETEAM; currentUnit++) {
+						/* Wounded units don't fight quite as well */
+						tCalcA = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
+						tCalcB = FpCurveDn (battle->scoreTeamSkill[team], tCalcA * 0.50);
+
+						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf", currentUnit, team, battle->scoreTeamSkill[team]);
+
+						/* TODO */
+					}
+				}
+			}
+		}
+	}
+
 }
