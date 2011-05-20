@@ -115,7 +115,9 @@ static void UI_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
 		UI_SetMouseCapture(node);
 		UI_NodeAbsoluteToRelativePos(node, &x, &y);
 		capturedDownButton = y > BUTTON_TOP_SIZE;
-		UI_SpinnerNodeStep(node, capturedDownButton);
+		if( x >= node->size[0] - SPINNER_WIDTH ) {
+			UI_SpinnerNodeStep(node, capturedDownButton);
+		}
 		capturedTimer = UI_AllocTimer(node, 500, UI_SpinnerNodeRepeat);
 		UI_TimerStart (capturedTimer);
 	}
