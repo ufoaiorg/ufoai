@@ -442,7 +442,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 		character_t* chr = CL_ActorGetChr(actor);
 		const qboolean active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
 		/* Change the state of the checkbox. */
-		UI_ExecuteConfunc("%s reaction %s %i", callback, id, active);
+		UI_ExecuteConfunc("%s reaction %s %c %i", callback, id, ACTOR_GET_HAND_CHAR(hand), active);
 	}
 }
 
