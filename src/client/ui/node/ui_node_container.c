@@ -634,9 +634,13 @@ static void UI_ContainerNodeDraw (uiNode_t *node)
 static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	invList_t *result = NULL;
+
+	if (!ui_inventory)
+		return NULL;
+
 	/* Get coordinates inside a scrollable container (if it is one). */
 	if (UI_IsScrollContainerNode(node)) {
-		assert(qfalse);
+		Sys_Error("UI_ContainerNodeGetItemAtPosition is not usable for scrollable containers!");
 	} else {
 		vec2_t nodepos;
 		int fromX, fromY;

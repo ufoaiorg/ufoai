@@ -432,6 +432,7 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
 {
 	invList_t *ic;
 
+	assert(i);
 	assert(container);
 
 	/* Only a single item. */
