@@ -384,9 +384,9 @@ window hud_general {
 		} elif (<1> eq "reaction") {
 			// node: "firemode" command for action <2> already called
 			if (<3> eq "l") {
-				call *node:firemode_left.elements.<2>.init_reaction(<3>)
+				call *node:firemode_left.elements.<2>.init_reaction(<4>)
 			} else {
-				call *node:firemode_right.elements.<2>.init_reaction(<3>)
+				call *node:firemode_right.elements.<2>.init_reaction(<4>)
 			}
 		} elif (<1> eq "reload") {
 		} elif (<1> eq "end") {
