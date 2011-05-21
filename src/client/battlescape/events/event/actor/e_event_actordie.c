@@ -55,13 +55,13 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 
 	LE_Lock(le);
 
-	/* count spotted aliens */
-	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
-
 	/* set relevant vars */
 	FLOOR(le) = NULL;
 
 	le->state = state;
+
+	/* count spotted aliens */
+	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
 
 	/* play animation */
 	LE_SetThink(le, NULL);

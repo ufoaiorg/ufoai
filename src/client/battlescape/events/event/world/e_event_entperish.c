@@ -43,9 +43,6 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	/* decrease the count of spotted aliens (also stunned) */
-	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
-
 	switch (le->type) {
 	case ET_ITEM:
 		cls.i.EmptyContainer(&cls.i, &le->i, INVDEF(csi.idFloor));
@@ -82,4 +79,6 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 	}
 
 	le->invis = qtrue;
+	/* decrease the count of spotted aliens (also stunned) */
+	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
 }
