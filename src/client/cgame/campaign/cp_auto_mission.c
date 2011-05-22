@@ -324,8 +324,8 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 					teamPooledUnitsHealthy[team] += 1.0;
 			}
 			/* We shouldn't be dividing by zero here. */
-			assert (teamPooledHealthMax[team] > 0.0);
-			assert (teamPooledUnitsTotal[team] > 0.0);
+			assert(teamPooledHealthMax[team] > 0.0);
+			assert(teamPooledUnitsTotal[team] > 0.0);
 
 			teamRatioHealthTotal[team] = teamPooledHealth[team] / teamPooledHealthMax[team];
 			teamRatioHealthyUnits[team] = teamPooledUnitsHealthy[team] / teamPooledUnitsTotal[team];
