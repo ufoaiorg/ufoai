@@ -664,6 +664,8 @@ static inline float Q_rsqrtApprox (const float number)
 	y = t.f;
 	/* 1st iteration */
 	y = y * (threehalfs - (x2 * y * y));
+	/* 2nd iteration */
+	y = y * (threehalfs - (x2 * y * y));
 	return y;
 }
 
