@@ -446,26 +446,30 @@ static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
 	while (combatActive) {
 		int team;
 		for (team = 0; team < MAX_ACTIVETEAM; team++) {
+			int aliveUnits;
+			int currentUnit;
+
 			if (!battle->teamActive[team])
 				continue;
 
-			/** @todo fix the currentunit health check */
-			int currentUnit = 0;
-			if (battle->unitHealth[team][currentUnit] > 0) {
-				/* Is this unit still alive (has any health left?) */
-				for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
-					/* Wounded units don't fight quite as well */
-					const double hpLeftRatio = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
-					const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
+			aliveUnits = 0;
+			/* Is this unit still alive (has any health left?) */
+			for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
+				/* Wounded units don't fight quite as well */
+				const double hpLeftRatio = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
+				const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
+				if (battle->unitHealth[team][currentUnit] <= 0)
+					continue;
 
-					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf",
-							currentUnit, team, battle->scoreTeamSkill[team]);
+				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf",
+						currentUnit, team, battle->scoreTeamSkill[team]);
 
-					combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, effective);
-				}
-			} else {
-				battle->teamActive[team] = qfalse;
+				aliveUnits++;
+				combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, effective);
 			}
+
+			if (aliveUnits == 0)
+				battle->teamActive[team] = qfalse;
 		}
 	}
 }
