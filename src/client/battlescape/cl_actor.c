@@ -177,18 +177,19 @@ static int CL_ActorGetNumber (const le_t * le)
  * @brief Returns the character information for an actor in the teamlist.
  * @param[in] le The actor to search.
  * @return A pointer to a character struct.
- * @todo We really needs a better way to sync this up.
  */
 character_t *CL_ActorGetChr (const le_t * le)
 {
-	const int actorIdx = CL_ActorGetNumber(le);
-	if (actorIdx == -1) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: Could not find actor in the team list - maybe already dead? (state is %i)!\n",
-				le->state);
-		return NULL;
+	int i;
+	const chrList_t *chrList = &cl.chrList;
+
+	for (i = 0; i < chrList->num; i++) {
+		character_t *chr = chrList->chr[i];
+		if (chr->ucn == le->ucn)
+			return chr;
 	}
 
-	return cl.chrList.chr[actorIdx];
+	return NULL;
 }
 
 /**

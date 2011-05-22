@@ -98,7 +98,7 @@ const eventRegister_t events[] = {
 	{E(EV_ADD_BRUSH_MODEL), "bssbppsbb", CL_AddBrushModel, NULL, NULL},
 	{E(EV_ADD_EDICT), "sbpp", CL_AddEdict, NULL, NULL},
 
-	{E(EV_ACTOR_APPEAR), "!s!sbbbbgbssssbsbbbs", CL_ActorAppear, CL_ActorAppearTime, CL_CheckDefault},
+	{E(EV_ACTOR_APPEAR), "!s!sbbbsbgbssssbsbbbs", CL_ActorAppear, CL_ActorAppearTime, CL_CheckDefault},
 	{E(EV_ACTOR_ADD), "!sbbbbgsb", CL_ActorAdd, NULL, NULL},
 	{E(EV_ACTOR_TURN), "sb", CL_ActorDoTurn, NULL, NULL},
 	{E(EV_ACTOR_MOVE), "!sbbs", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */

@@ -436,6 +436,7 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
 	gi.WriteByte(check->team);
 	gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
 	gi.WriteByte(check->chr.gender);
+	gi.WriteShort(check->chr.ucn);
 	gi.WriteByte(check->pnum);
 	gi.WriteGPos(check->pos);
 	gi.WriteByte(check->dir);
