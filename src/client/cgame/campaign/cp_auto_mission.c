@@ -341,6 +341,7 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf",
 					team, teamRatioHealthTotal[team]);
 
+			/** @todo speaking names please */
 			tCalcA = (teamRatioHealthyUnits[team] + teamRatioHealthTotal[team]);
 			tCalcA *= 0.50;
 			tCalcA = FpCurve1D_u_out(tCalcA, 0.750, 0.50);
