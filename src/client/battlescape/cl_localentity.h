@@ -75,6 +75,7 @@ typedef struct le_s {
 
 	int team;		/**< the team number this local entity belongs to */
 	int pnum;		/**< the player number this local entity belongs to */
+	int ucn;		/**< the unique character number to match between server and client characters */
 
 	fireDefIndex_t currentSelectedFiremode;
 
