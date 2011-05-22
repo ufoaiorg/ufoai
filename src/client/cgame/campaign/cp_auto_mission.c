@@ -115,10 +115,10 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	/* Set a few defaults.  These can be overridden later with new values if needed. */
 	battle->teamType[teamNum] = AUTOMISSION_TEAM_TYPE_PLAYER;
 
-	/* NOTE:  For now these are hard-coded to values based upon general campaign difficulty. */
-	/* --- In the future, it might be easier to set this according to a scripted value in a .ufo */
-	/* --- file, with other campaign info.  Reminder:  Higher floating point values mean better */
-	/* --- soldiers, and therefore make an easier fight for the player. */
+	/* NOTE:  For now these are hard-coded to values based upon general campaign difficulty.
+	 * --- In the future, it might be easier to set this according to a scripted value in a .ufo
+	 * --- file, with other campaign info.  Reminder:  Higher floating point values mean better
+	 * --- soldiers, and therefore make an easier fight for the player. */
 	switch (campaign->difficulty) {
 		case 4:
 			battle->scoreTeamDifficulty[teamNum] = 0.20;
@@ -209,26 +209,28 @@ void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboo
 			if (!battle->teamActive[otherTeam])
 				continue;
 
-			if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV) {
-				if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+			const autoMissionTeamType_t teamType = battle->teamType[team];
+			const autoMissionTeamType_t otherTeamType = battle->teamType[otherTeam];
+			if (teamType == AUTOMISSION_TEAM_TYPE_PLAYER || teamType == AUTOMISSION_TEAM_TYPE_PLAYER_UGV) {
+				if (otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN || otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
 					battle->isHostile[team][otherTeam] = qtrue;
-				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER || otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
 					battle->isHostile[team][otherTeam] = qfalse;
-				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 					battle->isHostile[team][otherTeam] = qfalse;
-			} else if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE) {
-				if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+			} else if (teamType == AUTOMISSION_TEAM_TYPE_ALIEN || teamType == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE) {
+				if (otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN || otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
 					battle->isHostile[team][otherTeam] = qfalse;
-				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER || otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
 					battle->isHostile[team][otherTeam] = qtrue;
-				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 					battle->isHostile[team][otherTeam] = civsInverted;
-			} else if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_CIVILIAN) {
-				if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+			} else if (teamType == AUTOMISSION_TEAM_TYPE_CIVILIAN) {
+				if (otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN || otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
 					battle->isHostile[team][otherTeam] = qfalse;
-				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER || otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
 					battle->isHostile[team][otherTeam] = civsInfected;
-				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 					battle->isHostile[team][otherTeam] = qfalse;
 			}
 		}
@@ -396,7 +398,8 @@ qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int 
 
 						battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
-						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
+						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!",
+								currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
 						if (battle->unitHealth[eTeam][eUnit] == 0)
 							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!", eUnit, eTeam);
@@ -415,7 +418,8 @@ qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int 
 
 						battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
-						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
+						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!",
+								currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
 						if (battle->unitHealth[eTeam][eUnit] == 0)
 							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!", eUnit, eTeam);

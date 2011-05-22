@@ -61,7 +61,7 @@ typedef enum autoMission_teamType_s {
 	AUTOMISSION_TEAM_TYPE_CIVILIAN,				/**< AI-controlled civilians that can be healthy or infected. */
 
 	AUTOMISSION_TEAM_TYPE_MAX
-} autoMission_teamType_t;
+} autoMissionTeamType_t;
 
 #define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * MAX_ACTIVETEAM
 
@@ -78,7 +78,7 @@ typedef struct autoMission_battle_s {
 	int teamID[MAX_ACTIVETEAM];								/**< An ID for each team, to keep track, useful if needed.  Note: The same ID may be repeated, but two teams of same ID can't be hostile */
 	qboolean isHostile[MAX_ACTIVETEAM][MAX_ACTIVETEAM];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
 	short nUnits[MAX_ACTIVETEAM];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
-	autoMission_teamType_t teamType[MAX_ACTIVETEAM];		/**< What type of team is this?  Human player?  Alien? Something else?  */
+	autoMissionTeamType_t teamType[MAX_ACTIVETEAM];		/**< What type of team is this?  Human player?  Alien? Something else?  */
 
 	double scoreTeamEquipment[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
 	double scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
