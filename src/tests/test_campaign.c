@@ -1264,7 +1264,7 @@ static void testCity (void)
 
 	LIST_Foreach(ccs.cities, city_t, city) {
 		mission_t mission;
-		memset(&mission, 0, sizeof(mission));
+		OBJZERO(mission);
 		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
 	}
 
