@@ -244,7 +244,7 @@ void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboo
 	}
 }
 
-void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
+static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 {
 	int unitTotal = 0;
 	int isHostileTotal = 0;
@@ -357,15 +357,21 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 					team, battle->scoreTeamSkill[team]);
 		}
 	}
+}
 
+static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
+{
 	/* Setup is done.  Now, FIGHT! */
 	qboolean combatActive = qtrue;
 
 	while (combatActive) {
+		int team;
 		for (team = 0; team < MAX_ACTIVETEAM; team++) {
 			if (!battle->teamActive[team])
 				continue;
 
+			/** @todo fix the currentunit health check */
+			int currentUnit = 0;
 			if (battle->unitHealth[team][currentUnit] > 0) {
 				/* Is this unit still alive (has any health left?) */
 				for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
@@ -383,6 +389,12 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 			}
 		}
 	}
+}
+
+void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
+{
+	CP_AutoBattleSetup(battle);
+	CP_AutoBattleDoFight(battle);
 }
 
 static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
