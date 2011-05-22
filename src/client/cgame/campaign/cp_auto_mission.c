@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
- * @param[in,out] battle The battle that should be init to defaults
+ * @param[in,out] battle The battle that should be initialized to defaults
  */
 void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 {
@@ -67,11 +67,11 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 
 /**
  * @brief Adds team data for a specified team in an auto-mission object, from a (player) aircraft.
- * @param[in,out] battle  The auto mission battle to add team data to
+ * @param[in,out] battle The auto mission battle to add team data to
  * @param[in] teamNum The team number in the auto mission instance to update
  * @param[in] aircraft The aircraft to get data from
  * @param[in] campaign The current campaign (for retrieving difficulty level)
- * @note This function actually gets the data from the campaign ccs object, using the aircraft data to
+ * @note This function actually gets the data from the campaign object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
 void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
@@ -193,12 +193,15 @@ int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
 #define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER || (type) == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
 #define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN || (type) == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
 #define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+#define AM_SetHostile(battle, team, otherTeam, value) (battle)->isHostile[(team)][(otherTeam)] = (value)
 
-/** @brief Run this on an auto mission battle before the battle is actually simulated with CP_AutoBattleRunBattle(), to set
+/**
+ * @brief Run this on an auto mission battle before the battle is actually simulated with @c CP_AutoBattleRunBattle, to set
  * default values for who will attack which team.  If you forget to do this before battle simulation, all teams will default
  * to "free for all" (Everyone will try to kill everyone else).
  * @param[in, out] battle The battle to set up team hostility values for.
- * @param[in] civsInfected Set to "qtrue" if civs have XVI influence, otherwise "qfalse" for a normal mission. */
+ * @param[in] civsInfected Set to @c true if civs have XVI influence, otherwise @c false for a normal mission.
+ */
 void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
 {
 	int team;
@@ -217,25 +220,25 @@ void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboo
 			const autoMissionTeamType_t otherTeamType = battle->teamType[otherTeam];
 			if (AM_IsPlayer(teamType)) {
 				if (AM_IsAlien(otherTeamType))
-					battle->isHostile[team][otherTeam] = qtrue;
+					AM_SetHostile(battle, team, otherTeam, qtrue);
 				else if (AM_IsPlayer(otherTeamType))
-					battle->isHostile[team][otherTeam] = qfalse;
+					AM_SetHostile(battle, team, otherTeam, qfalse);
 				else if (AM_IsCivilian(otherTeamType))
-					battle->isHostile[team][otherTeam] = qfalse;
+					AM_SetHostile(battle, team, otherTeam, qfalse);
 			} else if (AM_IsAlien(teamType)) {
 				if (AM_IsAlien(otherTeamType))
-					battle->isHostile[team][otherTeam] = qfalse;
+					AM_SetHostile(battle, team, otherTeam, qfalse);
 				else if (AM_IsPlayer(otherTeamType))
-					battle->isHostile[team][otherTeam] = qtrue;
+					AM_SetHostile(battle, team, otherTeam, qtrue);
 				else if (AM_IsCivilian(otherTeamType))
-					battle->isHostile[team][otherTeam] = civsInverted;
+					AM_SetHostile(battle, team, otherTeam, civsInverted);
 			} else if (AM_IsCivilian(teamType)) {
 				if (AM_IsAlien(otherTeamType))
-					battle->isHostile[team][otherTeam] = qfalse;
+					AM_SetHostile(battle, team, otherTeam, qfalse);
 				else if (AM_IsPlayer(otherTeamType))
-					battle->isHostile[team][otherTeam] = civsInfected;
+					AM_SetHostile(battle, team, otherTeam, civsInfected);
 				else if (AM_IsCivilian(otherTeamType))
-					battle->isHostile[team][otherTeam] = qfalse;
+					AM_SetHostile(battle, team, otherTeam, qfalse);
 			}
 		}
 	}
