@@ -73,7 +73,7 @@ typedef enum autoMission_teamType_s {
  * game (not in the primary campaign plot though, but good for a MOD or whatever).
  * ALSO: A team does not have to attack (isHostile toward) another team that attacks it.
  * Teams that are isHostile toward no one will wander around like sheep, doing nothing else. */
-typedef struct autoMission_battle_s {
+typedef struct autoMissionBattle_s {
 	qboolean teamActive[MAX_ACTIVETEAM];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
 	int teamID[MAX_ACTIVETEAM];								/**< An ID for each team, to keep track, useful if needed.  Note: The same ID may be repeated, but two teams of same ID can't be hostile */
 	qboolean isHostile[MAX_ACTIVETEAM][MAX_ACTIVETEAM];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */

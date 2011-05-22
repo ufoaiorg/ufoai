@@ -383,12 +383,61 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 			}
 		}
 	}
-
 }
+
+static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
+{
+	int eUnit;
+
+	/* Check for "friendly" fire */
+	for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
+		if (battle->unitHealth[eTeam][eUnit] > 0) {
+			const double calcRand = frand();
+			if (calcRand < (0.250 - (effective * 0.250))) {
+				const int strikeDamage = (int) (20.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
+
+				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+
+				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!",
+						currUnit, currTeam, eUnit, eTeam, strikeDamage);
+
+				if (battle->unitHealth[eTeam][eUnit] == 0)
+					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!",
+							eUnit, eTeam);
+
+				battle->teamAccomplishment[currTeam] -= strikeDamage;
+			}
+		}
+	}
+}
+
+static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
+{
+	int eUnit;
+
+	for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
+		if (battle->unitHealth[eTeam][eUnit] > 0) {
+			const double calcRand = frand();
+			if (calcRand >= effective) {
+				const int strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
+
+				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+
+				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!",
+						currUnit, currTeam, eUnit, eTeam, strikeDamage);
+
+				if (battle->unitHealth[eTeam][eUnit] == 0)
+					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!", eUnit, eTeam);
+
+				battle->teamAccomplishment[currTeam] += strikeDamage;
+			}
+		}
+	}
+}
+
 qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
 {
 	int eTeam;
-	int eUnit;
 	int count = 0;
 
 	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!", currUnit, currTeam);
@@ -399,44 +448,9 @@ qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int 
 
 		if (battle->teamActive[eTeam]) {
 			count++;
-			for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
-				if (battle->unitHealth[eTeam][eUnit] > 0) {
-					const double calcRand = frand();
-					if (calcRand >= effective) {
-						const int strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
-
-						battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
-
-						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!",
-								currUnit, currTeam, eUnit, eTeam, strikeDamage);
-
-						if (battle->unitHealth[eTeam][eUnit] == 0)
-							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!", eUnit, eTeam);
-
-						battle->teamAccomplishment[currTeam] += strikeDamage;
-					}
-				}
-			}
+			CP_AutoBattleCheckFire(battle, eTeam, currTeam, currUnit, effective);
 		} else {
-			/* Check for "friendly" fire */
-			for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
-				if (battle->unitHealth[eTeam][eUnit] > 0) {
-					const double calcRand = frand();
-					if (calcRand < (0.250 - (effective * 0.250))) {
-						const int strikeDamage = (int) (20.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
-
-						battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
-
-						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!",
-								currUnit, currTeam, eUnit, eTeam, strikeDamage);
-
-						if (battle->unitHealth[eTeam][eUnit] == 0)
-							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!", eUnit, eTeam);
-
-						battle->teamAccomplishment[currTeam] -= strikeDamage;
-					}
-				}
-			}
+			CP_AutoBattleCheckFriendlyFire(battle, eTeam, currTeam, currUnit, effective);
 		}
 	}
 
