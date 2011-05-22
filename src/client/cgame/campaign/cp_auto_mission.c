@@ -190,6 +190,10 @@ int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
 	return 0;
 }
 
+#define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER || (type) == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+#define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN || (type) == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+#define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+
 /** @brief Run this on an auto mission battle before the battle is actually simulated with CP_AutoBattleRunBattle(), to set
  * default values for who will attack which team.  If you forget to do this before battle simulation, all teams will default
  * to "free for all" (Everyone will try to kill everyone else).
@@ -211,26 +215,26 @@ void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboo
 
 			const autoMissionTeamType_t teamType = battle->teamType[team];
 			const autoMissionTeamType_t otherTeamType = battle->teamType[otherTeam];
-			if (teamType == AUTOMISSION_TEAM_TYPE_PLAYER || teamType == AUTOMISSION_TEAM_TYPE_PLAYER_UGV) {
-				if (otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN || otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+			if (AM_IsPlayer(teamType)) {
+				if (AM_IsAlien(otherTeamType))
 					battle->isHostile[team][otherTeam] = qtrue;
-				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER || otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+				else if (AM_IsPlayer(otherTeamType))
 					battle->isHostile[team][otherTeam] = qfalse;
-				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+				else if (AM_IsCivilian(otherTeamType))
 					battle->isHostile[team][otherTeam] = qfalse;
-			} else if (teamType == AUTOMISSION_TEAM_TYPE_ALIEN || teamType == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE) {
-				if (otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN || otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+			} else if (AM_IsAlien(teamType)) {
+				if (AM_IsAlien(otherTeamType))
 					battle->isHostile[team][otherTeam] = qfalse;
-				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER || otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+				else if (AM_IsPlayer(otherTeamType))
 					battle->isHostile[team][otherTeam] = qtrue;
-				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+				else if (AM_IsCivilian(otherTeamType))
 					battle->isHostile[team][otherTeam] = civsInverted;
-			} else if (teamType == AUTOMISSION_TEAM_TYPE_CIVILIAN) {
-				if (otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN || otherTeamType == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+			} else if (AM_IsCivilian(teamType)) {
+				if (AM_IsAlien(otherTeamType))
 					battle->isHostile[team][otherTeam] = qfalse;
-				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER || otherTeamType == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+				else if (AM_IsPlayer(otherTeamType))
 					battle->isHostile[team][otherTeam] = civsInfected;
-				else if (otherTeamType == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+				else if (AM_IsCivilian(otherTeamType))
 					battle->isHostile[team][otherTeam] = qfalse;
 			}
 		}
