@@ -179,7 +179,7 @@ void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int 
 int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
 {
 	/** @todo */
-	if (battle->hasBeenFought == qfalse) {
+	if (!battle->hasBeenFought) {
 		Com_Error(ERR_DROP, "Error:  Attempt to retrieve winning team from an auto mission that wasn't fought!");
 		return -1;
 	} else {
@@ -195,42 +195,41 @@ int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
  * to "free for all" (Everyone will try to kill everyone else).
  * @param[in, out] battle The battle to set up team hostility values for.
  * @param[in] civsInfected Set to "qtrue" if civs have XVI influence, otherwise "qfalse" for a normal mission. */
-void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, const qboolean civsInfected)
+void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
 {
 	int team;
 	int otherTeam;
-
-	qboolean civsInverted =! civsInfected;
+	qboolean civsInverted = !civsInfected;
 
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
-		if (battle->teamActive[team] == qtrue) {
-			for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
-				if (battle->teamActive[otherTeam] == qtrue) {
-					if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV) {
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
-							battle->isHostile[team][otherTeam] = qtrue;
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
-							battle->isHostile[team][otherTeam] = qfalse;
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
-							battle->isHostile[team][otherTeam] = qfalse;
-					}
-					if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE) {
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
-							battle->isHostile[team][otherTeam] = qfalse;
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
-							battle->isHostile[team][otherTeam] = qtrue;
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
-							battle->isHostile[team][otherTeam] = civsInverted;
-					}
-					if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_CIVILIAN) {
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
-							battle->isHostile[team][otherTeam] = qfalse;
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
-							battle->isHostile[team][otherTeam] = civsInfected;
-						if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
-							battle->isHostile[team][otherTeam] = qfalse;
-					}
-				}
+		if (!battle->teamActive[team])
+			continue;
+
+		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
+			if (!battle->teamActive[otherTeam])
+				continue;
+
+			if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV) {
+				if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+					battle->isHostile[team][otherTeam] = qtrue;
+				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+					battle->isHostile[team][otherTeam] = qfalse;
+				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+					battle->isHostile[team][otherTeam] = qfalse;
+			} else if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE) {
+				if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+					battle->isHostile[team][otherTeam] = qfalse;
+				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+					battle->isHostile[team][otherTeam] = qtrue;
+				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+					battle->isHostile[team][otherTeam] = civsInverted;
+			} else if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_CIVILIAN) {
+				if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+					battle->isHostile[team][otherTeam] = qfalse;
+				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER || battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+					battle->isHostile[team][otherTeam] = civsInfected;
+				else if (battle->teamType[otherTeam] == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+					battle->isHostile[team][otherTeam] = qfalse;
 			}
 		}
 	}
@@ -245,6 +244,19 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	int isHostileCount;
 	int team;
 
+	/* Sums of various values */
+	double teamPooledHealth[MAX_ACTIVETEAM];
+	double teamPooledHealthMax[MAX_ACTIVETEAM];
+	double teamPooledUnitsHealthy[MAX_ACTIVETEAM];
+	double teamPooledUnitsTotal[MAX_ACTIVETEAM];
+	/* Ratios */
+	double teamRatioHealthyUnits[MAX_ACTIVETEAM];
+	double teamRatioHealthTotal[MAX_ACTIVETEAM];
+	int currentUnit;
+	/* Used for (t)emporary math (calc)ulation stuff */
+	double tCalcA;
+	double tCalcB;
+
 	if (battle->hasBeenFought)
 		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!");
 
@@ -256,10 +268,11 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 			totalActiveTeams++;
 		}
 		for (isHostileCount = 0; isHostileCount < MAX_ACTIVETEAM; isHostileCount++) {
-			if (battle->nUnits[isHostileCount] > 0) {
-				if (battle->isHostile[team][isHostileCount] && battle->teamActive[team])
-					isHostileTotal++;
-			}
+			if (battle->nUnits[isHostileCount] <= 0)
+				continue;
+
+			if (battle->isHostile[team][isHostileCount] && battle->teamActive[team])
+				isHostileTotal++;
 		}
 	}
 
@@ -287,19 +300,6 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	}
 
 	/* Set up teams */
-	/* Sums of various values */
-	double teamPooledHealth[MAX_ACTIVETEAM];
-	double teamPooledHealthMax[MAX_ACTIVETEAM];
-	double teamPooledUnitsHealthy[MAX_ACTIVETEAM];
-	double teamPooledUnitsTotal[MAX_ACTIVETEAM];
-	/* Ratios */
-	double teamRatioHealthyUnits[MAX_ACTIVETEAM];
-	double teamRatioHealthTotal[MAX_ACTIVETEAM];
-	int currentUnit;
-	/* Used for (t)emporary math (calc)ulation stuff */
-	double tCalcA;
-	double tCalcB;
-
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
 		teamPooledHealth[team] = 0.0;
 		teamPooledHealthMax[team] = 0.0;
@@ -308,13 +308,14 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 
 		if (battle->teamActive[team]) {
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
-				if (battle->unitHealth[team][currentUnit] > 0) {
-					teamPooledHealth[team] += battle->unitHealth[team][currentUnit];
-					teamPooledHealthMax[team] += battle->unitHealthMax[team][currentUnit];
-					teamPooledUnitsTotal[team] += 1.0;
-					if (battle->unitHealth[team][currentUnit] == battle->unitHealthMax[team][currentUnit])
-						teamPooledUnitsHealthy[team] += 1.0;
-				}
+				if (battle->unitHealth[team][currentUnit] <= 0)
+					continue;
+
+				teamPooledHealth[team] += battle->unitHealth[team][currentUnit];
+				teamPooledHealthMax[team] += battle->unitHealthMax[team][currentUnit];
+				teamPooledUnitsTotal[team] += 1.0;
+				if (battle->unitHealth[team][currentUnit] == battle->unitHealthMax[team][currentUnit])
+					teamPooledUnitsHealthy[team] += 1.0;
 			}
 			/* We shouldn't be dividing by zero here. */
 			assert (teamPooledHealthMax[team] > 0.0);
@@ -325,8 +326,10 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 
 			/* In DEBUG mode, these should help with telling where things are at what time, for bug-hunting purposes. */
 			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf", team, teamRatioHealthyUnits[team]);
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf", team, teamRatioHealthTotal[team]);
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf",
+					team, teamRatioHealthyUnits[team]);
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf",
+					team, teamRatioHealthTotal[team]);
 
 			tCalcA = (teamRatioHealthyUnits[team] + teamRatioHealthTotal[team]);
 			tCalcA *= 0.50;
@@ -339,32 +342,33 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 				battle->scoreTeamSkill[team] = FpCurveDn (battle->scoreTeamSkill[team], tCalcB);
 			/* if (tcalcA == exact 0.0), no change to team's skill. */
 
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf", team, battle->scoreTeamSkill[team]);
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf",
+					team, battle->scoreTeamSkill[team]);
 		}
 	}
 
 	/* Setup is done.  Now, FIGHT! */
 	qboolean combatActive = qtrue;
 
-	while (combatActive == qtrue) {
+	while (combatActive) {
 		for (team = 0; team < MAX_ACTIVETEAM; team++) {
-			if (battle->teamActive[team] == qtrue) {
-				unitTotal = 0;
-				if (battle->unitHealth[team][currentUnit] > 0) {
-					/* Is this unit still alive (has any health left?) */
-					unitTotal++;
-					for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
-						/* Wounded units don't fight quite as well */
-						tCalcA = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
-						tCalcB = FpCurveDn (battle->scoreTeamSkill[team], tCalcA * 0.50);
+			if (!battle->teamActive[team])
+				continue;
 
-						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf", currentUnit, team, battle->scoreTeamSkill[team]);
+			if (battle->unitHealth[team][currentUnit] > 0) {
+				/* Is this unit still alive (has any health left?) */
+				for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
+					/* Wounded units don't fight quite as well */
+					tCalcA = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
+					tCalcB = FpCurveDn(battle->scoreTeamSkill[team], tCalcA * 0.50);
 
-						combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, tCalcB);
-					}
+					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf",
+							currentUnit, team, battle->scoreTeamSkill[team]);
+
+					combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, tCalcB);
 				}
-				if (unitTotal == 0)
-					battle->teamActive[team] = qfalse;
+			} else {
+				battle->teamActive[team] = qfalse;
 			}
 		}
 	}
@@ -372,52 +376,51 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 }
 qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
 {
-	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!", currUnit, currTeam);
-
 	int eTeam;
 	int eUnit;
 	int count = 0;
-	double calcRand;
-	int strikeDamage;
+
+	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!", currUnit, currTeam);
 
 	for (eTeam = 0; eTeam < MAX_ACTIVETEAM; eTeam++) {
-		if (battle->isHostile[currTeam][eTeam] == qtrue) {
-			if (battle->teamActive[eTeam] == qtrue) {
-				count++;
-				for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
-					if (battle->unitHealth[eTeam][eUnit] > 0) {
-						calcRand = frand();
-						if (calcRand < effective) {
-							strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
+		if (!battle->isHostile[currTeam][eTeam])
+			continue;
 
-							battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+		if (battle->teamActive[eTeam]) {
+			count++;
+			for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
+				if (battle->unitHealth[eTeam][eUnit] > 0) {
+					const double calcRand = frand();
+					if (calcRand >= effective) {
+						const int strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
 
-							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
+						battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
-							if (battle->unitHealth[eTeam][eUnit] == 0)
-								Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!", eUnit, eTeam);
+						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
-							battle->teamAccomplishment[currTeam] += strikeDamage;
-						}
+						if (battle->unitHealth[eTeam][eUnit] == 0)
+							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!", eUnit, eTeam);
+
+						battle->teamAccomplishment[currTeam] += strikeDamage;
 					}
 				}
-			} else {
-				/* Check for "friendly" fire */
-				for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
-					if (battle->unitHealth[eTeam][eUnit] > 0) {
-						calcRand = frand();
-						if (calcRand < (0.250 - (effective * 0.250))) {
-							strikeDamage = (int) (20.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
+			}
+		} else {
+			/* Check for "friendly" fire */
+			for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
+				if (battle->unitHealth[eTeam][eUnit] > 0) {
+					const double calcRand = frand();
+					if (calcRand < (0.250 - (effective * 0.250))) {
+						const int strikeDamage = (int) (20.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
 
-							battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+						battle->unitHealth[eTeam][eUnit] = max (0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
-							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
+						Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!", currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
-							if (battle->unitHealth[eTeam][eUnit] == 0)
-								Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!", eUnit, eTeam);
+						if (battle->unitHealth[eTeam][eUnit] == 0)
+							Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!", eUnit, eTeam);
 
-							battle->teamAccomplishment[currTeam] -= strikeDamage;
-						}
+						battle->teamAccomplishment[currTeam] -= strikeDamage;
 					}
 				}
 			}
