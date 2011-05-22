@@ -1251,11 +1251,13 @@ static void test3090011 (void)
 	UFO_CU_ASSERT_TRUE_MSG(success, error);
 }
 
-static qboolean skipTest(const char *map) {
+static qboolean skipTest (const mapDef_t *md)
+{
+	const char *map = md->id;
 	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "ufocrash") || Q_streq(map, "alienbase");
 }
 
-static void testCity (void)
+static void testTerrorMissions (void)
 {
 	city_t *city;
 	int i;
@@ -1268,10 +1270,39 @@ static void testCity (void)
 		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
 	}
 
+	LIST_Foreach(ccs.cities, city_t, city) {
+		mission_t mission;
+		OBJZERO(mission);
+		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
+	}
+
+	LIST_Foreach(ccs.cities, city_t, city) {
+		mission_t mission;
+		OBJZERO(mission);
+		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
+	}
+
 	for (i = 0; i < cls.numMDs; i++) {
 		mapDef_t *md = &cls.mds[i];
-		if (!md->multiplayer && !skipTest(md->id))
+		if (!skipTest(md))
 			UFO_CU_ASSERT_NOT_EQUAL_INT_MSG(md->timesAlreadyUsed, 0, va("%s wasn't used", md->id));
+	}
+}
+
+static void testRandomPosMissions (void)
+{
+	int i;
+
+	ResetCampaignData();
+	for (i = 0; i < cls.numMDs; i++) {
+		mapDef_t *md = &cls.mds[i];
+		if (!skipTest(md)) {
+			mission_t mission;
+			qboolean result;
+			OBJZERO(mission);
+			result = CP_GetRandomPosOnGeoscapeWithParameters(mission.pos, md->terrains, md->cultures, md->populations, NULL);
+			UFO_CU_ASSERT_TRUE_MSG(result, va("could not find a mission for mapdef %s", md->id));
+		}
 	}
 }
 
@@ -1365,7 +1396,10 @@ int UFO_AddCampaignTests (void)
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testCity) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testTerrorMissions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testRandomPosMissions) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
