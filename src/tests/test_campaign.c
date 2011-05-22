@@ -1254,7 +1254,7 @@ static void test3090011 (void)
 static qboolean skipTest (const mapDef_t *md)
 {
 	const char *map = md->id;
-	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "ufocrash") || Q_streq(map, "alienbase");
+	return Q_streq(map, "baseattack") || Q_streq(map, "alienbase");
 }
 
 static void testTerrorMissions (void)
@@ -1273,12 +1273,14 @@ static void testTerrorMissions (void)
 	LIST_Foreach(ccs.cities, city_t, city) {
 		mission_t mission;
 		OBJZERO(mission);
+		mission.category = INTERESTCATEGORY_RESCUE;
 		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
 	}
 
 	LIST_Foreach(ccs.cities, city_t, city) {
 		mission_t mission;
 		OBJZERO(mission);
+		mission.crashed = qtrue;
 		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
 	}
 
