@@ -1249,6 +1249,30 @@ static void test3090011 (void)
 	UFO_CU_ASSERT_TRUE_MSG(success, error);
 }
 
+static qboolean skipTest(const char *map) {
+	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "ufocrash") || Q_streq(map, "alienbase");
+}
+
+static void testCity (void)
+{
+	city_t *city;
+	int i;
+
+	ResetCampaignData();
+
+	LIST_Foreach(ccs.cities, city_t, city) {
+		mission_t mission;
+		memset(&mission, 0, sizeof(mission));
+		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
+	}
+
+	for (i = 0; i < cls.numMDs; i++) {
+		mapDef_t *md = &cls.mds[i];
+		if (!md->multiplayer && !skipTest(md->id))
+			UFO_CU_ASSERT_NOT_EQUAL_INT_MSG(md->timesAlreadyUsed, 0, va("%s wasn't used", md->id));
+	}
+}
+
 int UFO_AddCampaignTests (void)
 {
 	/* add a suite to the registry */
@@ -1337,6 +1361,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testCity) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
