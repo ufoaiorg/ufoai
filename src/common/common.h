@@ -69,6 +69,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #    define SO_EXT "dylib"
 #  endif
 
+#elif defined ANDROID
+#  define BUILDSTRING_OS "Android"
+#  ifndef SO_EXT
+#    define SO_EXT "so"
+#  endif
+
 #else
 #  define BUILDSTRING_OS "Unknown"
 #endif
