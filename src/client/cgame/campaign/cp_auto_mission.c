@@ -359,44 +359,6 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 	}
 }
 
-static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
-{
-	/* Setup is done.  Now, FIGHT! */
-	qboolean combatActive = qtrue;
-
-	while (combatActive) {
-		int team;
-		for (team = 0; team < MAX_ACTIVETEAM; team++) {
-			if (!battle->teamActive[team])
-				continue;
-
-			/** @todo fix the currentunit health check */
-			int currentUnit = 0;
-			if (battle->unitHealth[team][currentUnit] > 0) {
-				/* Is this unit still alive (has any health left?) */
-				for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
-					/* Wounded units don't fight quite as well */
-					const double hpLeftRatio = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
-					const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
-
-					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf",
-							currentUnit, team, battle->scoreTeamSkill[team]);
-
-					combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, effective);
-				}
-			} else {
-				battle->teamActive[team] = qfalse;
-			}
-		}
-	}
-}
-
-void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
-{
-	CP_AutoBattleSetup(battle);
-	CP_AutoBattleDoFight(battle);
-}
-
 static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
 {
 	int eUnit;
@@ -447,7 +409,7 @@ static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, cons
 	}
 }
 
-qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
+static qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
 {
 	int eTeam;
 	int count = 0;
@@ -474,4 +436,42 @@ qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int 
 	}
 
 	return qtrue;
+}
+
+static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
+{
+	/* Setup is done.  Now, FIGHT! */
+	qboolean combatActive = qtrue;
+
+	while (combatActive) {
+		int team;
+		for (team = 0; team < MAX_ACTIVETEAM; team++) {
+			if (!battle->teamActive[team])
+				continue;
+
+			/** @todo fix the currentunit health check */
+			int currentUnit = 0;
+			if (battle->unitHealth[team][currentUnit] > 0) {
+				/* Is this unit still alive (has any health left?) */
+				for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
+					/* Wounded units don't fight quite as well */
+					const double hpLeftRatio = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
+					const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
+
+					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf",
+							currentUnit, team, battle->scoreTeamSkill[team]);
+
+					combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, effective);
+				}
+			} else {
+				battle->teamActive[team] = qfalse;
+			}
+		}
+	}
+}
+
+void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
+{
+	CP_AutoBattleSetup(battle);
+	CP_AutoBattleDoFight(battle);
 }
