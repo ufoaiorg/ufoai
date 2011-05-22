@@ -262,9 +262,6 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	double teamRatioHealthyUnits[MAX_ACTIVETEAM];
 	double teamRatioHealthTotal[MAX_ACTIVETEAM];
 	int currentUnit;
-	/* Used for (t)emporary math (calc)ulation stuff */
-	double tCalcA;
-	double tCalcB;
 
 	if (battle->hasBeenFought)
 		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!");
@@ -316,6 +313,10 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 		teamPooledUnitsTotal[team] = 0.0;
 
 		if (battle->teamActive[team]) {
+			/* Used for (t)emporary math (calc)ulation stuff */
+			double tCalcA;
+			double tCalcB;
+
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
 				if (battle->unitHealth[team][currentUnit] <= 0)
 					continue;
@@ -344,7 +345,7 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 			tCalcA *= 0.50;
 			tCalcA = FpCurve1D_u_out(tCalcA, 0.750, 0.50);
 			tCalcA -= 0.50;
-			tCalcB = fabs (tCalcA);
+			tCalcB = fabs(tCalcA);
 			if (tCalcA > 0.0)
 				battle->scoreTeamSkill[team] = FpCurveUp (battle->scoreTeamSkill[team], tCalcB);
 			if (tCalcA < 0.0)
@@ -368,13 +369,13 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 				/* Is this unit still alive (has any health left?) */
 				for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
 					/* Wounded units don't fight quite as well */
-					tCalcA = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
-					tCalcB = FpCurveDn(battle->scoreTeamSkill[team], tCalcA * 0.50);
+					const double hpLeftRatio = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
+					const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
 
 					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf",
 							currentUnit, team, battle->scoreTeamSkill[team]);
 
-					combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, tCalcB);
+					combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, effective);
 				}
 			} else {
 				battle->teamActive[team] = qfalse;
