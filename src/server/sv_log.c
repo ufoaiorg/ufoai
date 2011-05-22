@@ -44,6 +44,7 @@ void SV_LogHandleOutput (void)
 	LIST_Foreach(logBuffer, char, buf) {
 		Com_Printf("%s", buf);
 	}
+	LIST_Delete(&logBuffer);
 	TH_MutexUnlock(svLogMutex);
 }
 
