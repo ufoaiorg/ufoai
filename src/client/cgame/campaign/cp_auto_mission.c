@@ -74,7 +74,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign ccs object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const struct campaign_s *cmpn)
+void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
 {
 	employee_t *employee;
 	int teamSize;
@@ -119,7 +119,7 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	/* --- In the future, it might be easier to set this according to a scripted value in a .ufo */
 	/* --- file, with other campaign info.  Reminder:  Higher floating point values mean better */
 	/* --- soldiers, and therefore make an easier fight for the player. */
-	switch (cmpn->difficulty) {
+	switch (campaign->difficulty) {
 		case 4:
 			battle->scoreTeamDifficulty[teamNum] = 0.20;
 			break;
@@ -156,17 +156,17 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 }
 
 /* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
-void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const struct campaign_s *campaign)
+void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
 {
 	/** @todo */
 }
 
-void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum, const struct campaign_s *campaign)
+void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum, const campaign_t *campaign)
 {
 	/** @todo */
 }
 
-void CP_AutoBattleFillTeamFromAlienGroup (autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup)
+void CP_AutoBattleFillTeamFromAlienGroup (autoMissionBattle_t *battle, const int teamNum, const alienTeamGroup_t *alienGroup)
 {
 	/** @todo */
 }
