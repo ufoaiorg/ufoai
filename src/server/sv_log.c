@@ -27,11 +27,10 @@
 
 #include "server.h"
 #include "sv_log.h"
-#include "../common/dbuffer.h"
 #include "../shared/mutex.h"
 
-static struct dbuffer *logBuffer;
 static threads_mutex_t *svLogMutex;
+static linkedList_t *logBuffer;
 
 /**
  * @brief Handle the log output from the main thread by reading the strings
@@ -39,12 +38,12 @@ static threads_mutex_t *svLogMutex;
  */
 void SV_LogHandleOutput (void)
 {
-	char buf[1024];
-	int length;
+	char *buf;
 
 	TH_MutexLock(svLogMutex);
-	while ((length = NET_ReadString(logBuffer, buf, sizeof(buf))) > 0)
+	LIST_Foreach(logBuffer, char, buf) {
 		Com_Printf("%s", buf);
+	}
 	TH_MutexUnlock(svLogMutex);
 }
 
@@ -61,11 +60,8 @@ void SV_LogAdd (const char *format, va_list ap)
 	char msg[1024];
 	Q_vsnprintf(msg, sizeof(msg), format, ap);
 
-	if (logBuffer == NULL)
-		logBuffer = new_dbuffer();
-
 	TH_MutexLock(svLogMutex);
-	dbuffer_add(logBuffer, msg, strlen(msg) + 1);
+	LIST_AddString(&logBuffer, msg);
 	TH_MutexUnlock(svLogMutex);
 }
 
