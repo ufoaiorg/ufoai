@@ -317,7 +317,7 @@ static const char *SV_GetTileFromTileSet (const mapInfo_t *map, const char *file
 
 	tileSet = SV_GetMapTileSet(map, token);
 	if (tileSet == NULL)
-		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset %s 	in %s (assembly %s)", token, filename, a->id);
+		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset %s in %s (assembly %s)", token, filename, a->id);
 
 	random = rand() % tileSet->numTiles;
 	return tileSet->tiles[random];
@@ -1859,6 +1859,5 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	/* generate the strings */
 	SV_PrintMapStrings(map, asmMap, asmPos);
 
-	assert(map);
 	return map;
 }
