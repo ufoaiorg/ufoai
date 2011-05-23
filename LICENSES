@@ -1676,12 +1676,13 @@ base/models/objects/vegi/plants/plantc.md2 | GNU General Public License 2.0 | Da
 base/models/objects/vegi/plants/plantd.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/vegi/plants/plante.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/vegi/plants/plants.png | GNU General Public License 2.0 | Daniel Holden (Yoshiboy);based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
-base/models/objects/vegi/tree02/tree2.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
+base/models/objects/vegi/tree02/tree2.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
 base/models/objects/vegi/tree02/tree2_b.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
 base/models/objects/vegi/tree02/tree2_snow.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
 base/models/objects/vegi/tree02/tree2_snowb.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
 base/models/objects/vegi/tree02/tree2_snowg.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
 base/models/objects/vegi/tree02/tree2_snowr.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
+base/models/objects/vegi/tree02/tree2b.png | GNU General Public License 2.0 |  | http://opengameart.org/content/jkms-tree-set
 base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/tree_dead/tree_dead.png | GNU General Public License 2.0 or later | Willem Sitters
