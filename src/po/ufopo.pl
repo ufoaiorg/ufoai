@@ -13,6 +13,7 @@ sub raw2postring
 {
 	my $str = shift;
 
+	$str =~ s/\\"$//g;
 	$str =~ s/^(.*)$/"$1\\n"/mg;
 	$str =~ s/\n$/\n"\\n"/mg;
 	$str =~ s/\\n\"$/\"\n/g;
@@ -131,7 +132,7 @@ foreach my $occurence (@revmessages)
 #		{
 #			print " $line";
 #		}
-		print "\nmsgid $key",
+		print "msgid $key",
 		"msgstr \"\"\n\n";
 
 		# be sure we don't output the same message twice
