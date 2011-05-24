@@ -314,8 +314,8 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 
 		if (battle->teamActive[team]) {
 			/* Used for (t)emporary math (calc)ulation stuff */
-			double tCalcA;
-			double tCalcB;
+			double skillAdjCalc;
+			double skillAdjCalcAbs;
 
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
 				if (battle->unitHealth[team][currentUnit] <= 0)
@@ -342,16 +342,16 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 					team, teamRatioHealthTotal[team]);
 
 			/** @todo speaking names please */
-			tCalcA = (teamRatioHealthyUnits[team] + teamRatioHealthTotal[team]);
-			tCalcA *= 0.50;
-			tCalcA = FpCurve1D_u_out(tCalcA, 0.750, 0.50);
-			tCalcA -= 0.50;
-			tCalcB = fabs(tCalcA);
-			if (tCalcA > 0.0)
-				battle->scoreTeamSkill[team] = FpCurveUp (battle->scoreTeamSkill[team], tCalcB);
-			if (tCalcA < 0.0)
-				battle->scoreTeamSkill[team] = FpCurveDn (battle->scoreTeamSkill[team], tCalcB);
-			/* if (tcalcA == exact 0.0), no change to team's skill. */
+			skillAdjCalc = (teamRatioHealthyUnits[team] + teamRatioHealthTotal[team]);
+			skillAdjCalc *= 0.50;
+			skillAdjCalc = FpCurve1D_u_out(skillAdjCalc, 0.750, 0.50);
+			skillAdjCalc -= 0.50;
+			skillAdjCalcAbs = fabs(skillAdjCalc);
+			if (skillAdjCalc > 0.0)
+				battle->scoreTeamSkill[team] = FpCurveUp (battle->scoreTeamSkill[team], skillAdjCalcAbs);
+			if (skillAdjCalc < 0.0)
+				battle->scoreTeamSkill[team] = FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs);
+			/* if (skillAdjCalc == exact 0.0), no change to team's skill. */
 
 			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf",
 					team, battle->scoreTeamSkill[team]);
