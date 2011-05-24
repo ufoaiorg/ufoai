@@ -31,7 +31,7 @@ subdir = po
 top_builddir = ..
 
 # These options get passed to xgettext.
-XGETTEXT_OPTIONS = --keyword=_ --keyword=N_ --no-wrap
+XGETTEXT_OPTIONS = --keyword=_ --keyword=N_ --no-wrap --no-location
 
 GMSGFMT = msgfmt
 MSGFMT = msgfmt
