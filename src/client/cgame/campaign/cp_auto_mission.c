@@ -46,6 +46,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 		battle->scoreTeamEquipment[team] = 0.5;
 		battle->scoreTeamSkill[team] = 0.5;
 		battle->teamAccomplishment[team] = 0;
+		battle->resultType = AUTOMISSION_RESULT_NONE;
 
 		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
 			/* If you forget to set this and run a battle, everyone will just kill each other by default */
@@ -176,18 +177,52 @@ void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int 
 	/** @todo */
 }
 
-int CP_AutoBattleGetWinningTeam (const autoMissionBattle_t *battle)
+void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 {
 	/** @todo */
 	if (!battle->hasBeenFought) {
-		Com_Error(ERR_DROP, "Error:  Attempt to retrieve winning team from an auto mission that wasn't fought!");
-		return -1;
-	} else {
-		if (battle->winningTeam == -1)
-			Com_Error(ERR_DROP, "Error:  Auto mission has been fought, but no winning team was set!");
-		return battle->winningTeam;
+		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
+		return;
+
+	/* Figure out who's who (determine which team is the player and which one is aliens.) */
+	int team;
+	int teamPlayer = -1;
+	int teamEnemy = -1;
+	int teamUGVs = -1;
+	int teamDrones = -1;
+	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+		if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER)
+			teamPlayer = team;
+		if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN)
+			teamEnemy = team;
+		if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+			teamUGVs = team;
+		if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+			teamDrones = team;
 	}
-	return 0;
+
+	assert (teamPlayer >= 0);
+	assert (teamEnemy >= 0);
+
+	/* If UGVs or alien drones fought in the battle, add their scores to that of the soldiers and aliens that control them. */
+	if (teamUGVs >= 0)
+		battle->teamAccomplishment[teamPlayer] += battle->teamAccomplishment[teamUGVs];
+	if (teamDrones >= 0)
+		battle->teamAccomplishment[teamEnemy] += battle->teamAccomplishment[teamDrones];
+
+	/* Well, if the player team is all dead, we know the player totally lost, and can stop right here. */
+	if (battle->teamActive[teamPlayer] == qfalse) {
+		battle->resultType = AUTOMISSION_RESULT_FAILED_NO_SURVIVORS;
+		battle->winningTeam = teamEnemy;
+		return;
+	} else {
+		battle->winningTeam = teamPlayer;
+		/* At least some player soldiers are still standing, but how good did they do? */
+		if (battle->teamAccomplishment[teamPlayer] > battle->teamAccomplishment[teamEnemy])
+			battle->resultType = AUTOMISSION_RESULT_SUCCESS;
+		else
+			battle->resultType = AUTOMISSION_RESULT_COSTLY_SUCCESS;
+	}
 }
 
 #define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER || (type) == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
@@ -429,11 +464,8 @@ static qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, con
 	}
 
 	/* If there's no one left to fight, the battle's OVER. */
-	if (count == 0) {
-		/* This is a temporary, quick hack for setting winning team. */
-		battle->winningTeam = currTeam;
+	if (count == 0)
 		return qfalse;
-	}
 
 	return qtrue;
 }
@@ -478,4 +510,14 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 {
 	CP_AutoBattleSetup(battle);
 	CP_AutoBattleDoFight(battle);
+	CP_AutoBattleDecideResults(battle);
+	CP_AutoBattleDisplayResults(battle);
+}
+
+/**
+ * @brief This will display on-screen, for the player, results of the auto mission.
+ */
+void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
+{
+	/** @todo */
 }

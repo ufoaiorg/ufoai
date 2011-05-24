@@ -35,6 +35,7 @@ struct campaign_s;
 /** @brief Possilbe results from an auto mission to display on-screen after a simulated battle.
  * @note This list of potential results is NOT meant to replace missionResults_t, but is mainly used for displaying the proper message on the screen afterwards. */
 typedef enum autoMission_results_s {
+	AUTOMISSION_RESULT_NONE,					/**< Blank, used when battle hasn't been completed yet. */
 	AUTOMISSION_RESULT_SUCCESS,					/**< Victory! Aliens dead or otherwise neutralized */
 	AUTOMISSION_RESULT_COSTLY_SUCCESS,			/**< Aliens dead, but so are most or all civilians. */
 	AUTOMISSION_RESULT_FAILED_SOME_SURVIVORS,	/**< Defeat, but some soldiers managed to retreat and escape */
@@ -93,6 +94,7 @@ typedef struct autoMissionBattle_s {
 	qboolean isRescueMission;						/**< Is this a rescue or special mission? (Such as recovering a downed aircraft pilot) */
 	int teamToRescue;								/**< If a rescue mission, which team needs rescue? */
 	int teamNeedingRescue;							/**< If a rescue mission, which team is attempting the rescue? */
+	autoMission_results_t resultType;				/**< Used to figure what type of message to put on-screen at the end of a battle. */
 } autoMissionBattle_t;
 
 /* Functions for auto missions */
@@ -104,6 +106,7 @@ void CP_AutoBattleFillTeamFromAircraftUGVs(autoMissionBattle_t *battle, const in
 void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int teamNum, const int baseNum, const struct campaign_s *campaign);
 void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup);
 void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
-int CP_AutoBattleGetWinningTeam(const autoMissionBattle_t *battle);
+void CP_AutoBattleDecideResults(autoMissionBattle_t *battle);
+void CP_AutoBattleDisplayResults(const autoMissionBattle_t *battle);
 
 #endif
