@@ -36,7 +36,7 @@
 "spawnflags" "255"
 "origin" "16 16 0"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"skin" "0"
+"skin" "2"
 }
 // entity 2
 {
