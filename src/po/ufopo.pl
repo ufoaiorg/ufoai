@@ -126,11 +126,11 @@ foreach my $occurence (@revmessages)
 	my $key = $occurence->[2];
 	if ( defined $messages{$key} )
 	{
-		print "#:";
-		foreach my $line (@{$messages{$key}})
-		{
-			print " $line";
-		}
+#		print "#:";
+#		foreach my $line (@{$messages{$key}})
+#		{
+#			print " $line";
+#		}
 		print "\nmsgid $key",
 		"msgstr \"\"\n\n";
 
