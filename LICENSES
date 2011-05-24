@@ -6115,6 +6115,9 @@ radiant/prefabs/trucks/truck3.jpg | GNU General Public License 2.0 | Tinker;Nate
 radiant/prefabs/trucks/truck3.map | GNU General Public License 2.0 | Tinker;Nate Wright
 radiant/prefabs/ufos/ufo_fighter.map | GNU General Public License 2.0
 radiant/prefabs/ufos/ufo_scout.map | GNU General Public License 2.0
+radiant/prefabs/vegetation/plant4.jpg | GNU General Public License 2.0 | MCR
+radiant/prefabs/vegetation/plant7.jpg | GNU General Public License 2.0 | MCR
+radiant/prefabs/vegetation/tropical1.jpg | GNU General Public License 2.0 | MCR
 src/common/pqueue.c | Public Domain
 src/common/pqueue.h | Public Domain
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner "hoehrer" Höhrer
