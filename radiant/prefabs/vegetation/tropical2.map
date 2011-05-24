@@ -1,0 +1,9 @@
+
+// entity 0
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropical1/tropical1.md2"
+"origin" "0 -2 19"
+"skin" "1"
+}
