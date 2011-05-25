@@ -43,13 +43,13 @@ static cvar_t* mn_production_amount;	/**< Amount of the current production; if n
 /**
  * @brief Calculates the fraction (percentage) of production of an item in 1 minute.
  * @param[in] base Pointer to the base with given production.
- * @param[in] prod Pointer to the production.
+ * @param[in] prodData Pointer to the productionData structure.
  * @sa PR_ProductionRun
  * @sa PR_ItemProductionInfo
  * @sa PR_DisassemblyInfo
  * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 minute
  */
-static double PR_CalculateProductionPercentPerMinute (const base_t *base, const production_t *prod)
+static double PR_CalculateProductionPercentPerMinute (const base_t *base, const productionData_t *prodData)
 {
 	/* Check how many workers hired in this base. */
 	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
@@ -58,13 +58,13 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
 	signed int timeDefault;
 	double distanceFactor;
 
-	if (PR_IsProduction(prod)) {
-		const technology_t *tech = PR_GetTech(&prod->data);
+	if (PR_IsProductionData(prodData)) {
+		const technology_t *tech = PR_GetTech(prodData);
 		/* This is the default production time for PRODUCE_WORKERS workers. */
 		timeDefault = tech->produceTime * MINUTES_PER_HOUR;
 		distanceFactor = 1.0;
 	} else {
-		const storedUFO_t *storedUFO = prod->data.data.ufo;
+		const storedUFO_t *storedUFO = prodData->data.ufo;
 		/* This is the default disassemble time for PRODUCE_WORKERS workers. */
 		timeDefault = storedUFO->comp->time * MINUTES_PER_HOUR;
 		/* Production is 4 times longer when installation is on Antipodes
@@ -88,11 +88,11 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
 /**
  * @brief Calculates the total frame count needed for producing an item
  * @param[in] base Pointer to the base the production happen
- * @param[in] prod Poiter to the production structure itself
+ * @param[in] prodData Pointer to the productionData structure
  */
-static int PR_CalculateTotalFrames (const base_t const *base, const production_t const *prod)
+static int PR_CalculateTotalFrames (const base_t const *base, const productionData_t const *prodData)
 {
-	return (1.0 / PR_CalculateProductionPercentPerMinute(base, prod)) + 1;
+	return (1.0 / PR_CalculateProductionPercentPerMinute(base, prodData)) + 1;
 }
 
 /**
@@ -112,6 +112,16 @@ int PR_GetRemainingMinutes (const production_t const *prod)
 int PR_GetRemainingHours (const production_t const *prod)
 {
 	return round(PR_GetRemainingMinutes(prod) / (double)MINUTES_PER_HOUR);
+}
+
+/**
+ * @brief Calculates the production time (in hours) for a technology
+ * @param[in] base Pointer to the base to calculate production time at
+ * @param[in] prodData Pointer to the production data structure
+ */
+int PR_GetProductionHours (const base_t const *base, const productionData_t const *prodData)
+{
+	return round(PR_CalculateTotalFrames(base, prodData) / (double)MINUTES_PER_HOUR);
 }
 
 /**
@@ -252,7 +262,7 @@ technology_t* PR_GetTech (const productionData_t *data)
  * @param[in] data The production data
  * @param[in] amount Desired amount to produce.
  */
-production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed int amount)
+production_t *PR_QueueNew (base_t *base, const productionData_t const *data, signed int amount)
 {
 	production_t *prod;
 	const technology_t *tech;
@@ -275,7 +285,7 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	if (!tech)
 		return NULL;
 
-	prod->totalFrames = PR_CalculateTotalFrames(base, prod);
+	prod->totalFrames = PR_CalculateTotalFrames(base, data);
 
 	if (PR_IsDisassemblyData(data)) {
 		/* only one item for disassemblies */
@@ -704,7 +714,7 @@ void PR_ProductionRun (void)
 			continue;
 
 		prod = &q->items[0];
-		prod->totalFrames = PR_CalculateTotalFrames(base, prod);
+		prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
 		prod->frame++;
 
 		if (!PR_CheckFrame(base, prod))
@@ -905,7 +915,7 @@ static qboolean PR_PostLoadInitProgress (void)
 
 		for (j = 0; j < pq->numItems; j++) {
 			production_t *prod = &pq->items[j];
-			prod->totalFrames = PR_CalculateTotalFrames(base, prod);
+			prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
 		}
 	}
 
