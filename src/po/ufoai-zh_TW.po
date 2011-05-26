@@ -96,7 +96,6 @@ msgstr "小型東方公園。"
 msgid "Harvester"
 msgstr "掠奪任務"
 
-#: client/campaign/cp_base_callbacks.c:312
 msgid "Laboratory"
 msgstr "研究室"
 
@@ -386,7 +385,6 @@ msgstr "大型機庫"
 msgid "Small Hangar"
 msgstr "小型機庫"
 
-#: client/campaign/cp_base_callbacks.c:317
 msgid "Workshop"
 msgstr "工場"
 
@@ -396,7 +394,6 @@ msgstr "雷達室"
 msgid "Advanced Radar"
 msgstr "超級雷達室"
 
-#: client/campaign/cp_base_callbacks.c:332
 msgid "Hospital"
 msgstr "醫務所"
 
@@ -2524,18 +2521,15 @@ msgstr "交叉路口"
 msgid "Coin"
 msgstr "硬幣"
 
-#: client/campaign/cp_employee.c:206
 msgid "Scientist"
 msgstr "研究員"
 
-#: client/campaign/cp_employee.c:210
 msgid "Pilot"
 msgstr "飛行員"
 
 msgid "UGV"
 msgstr "無人戰車"
 
-#: client/campaign/cp_employee.c:208
 msgid "Worker"
 msgstr "工人"
 
@@ -2996,7 +2990,6 @@ msgstr ""
 "\n"
 "博士康納"
 
-#: client/campaign/cp_missions.c:459
 msgid "Alien base"
 msgstr "外星人基地"
 
@@ -8702,7 +8695,6 @@ msgstr "返回基地瀏覽窗口"
 msgid "Name of this base"
 msgstr "本基地名稱"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Cancel"
 msgstr "取消"
 
@@ -8763,20 +8755,15 @@ msgstr "移除此設備"
 msgid "Available equipment:"
 msgstr "可用裝備："
 
-#: client/campaign/cp_fightequip_callbacks.c:135
 msgid "Weapons"
 msgstr "武器"
 
-#: client/campaign/cp_fightequip_callbacks.c:142
 msgid "Ammo"
 msgstr "彈藥"
 
-#: client/campaign/cp_fightequip_callbacks.c:137
-#: client/campaign/cp_ufopedia.c:146
 msgid "Armour"
 msgstr "裝甲"
 
-#: client/campaign/cp_fightequip_callbacks.c:139
 msgid "Items"
 msgstr "設備"
 
@@ -8958,13 +8945,9 @@ msgstr "離完工還有："
 msgid "Autofire"
 msgstr "自動開火"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
-#: client/campaign/cp_installation_callbacks.c:216
 msgid "Destroy"
 msgstr "摧毀"
 
-#: client/campaign/cp_installation_callbacks.c:216
 msgid "Destroy installation"
 msgstr "拆除基站"
 
@@ -8999,8 +8982,6 @@ msgstr "買賣物品"
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "買（100%)賣(90%)裝備和載具"
 
-#: client/campaign/cp_base.c:1203 client/campaign/cp_base.c:1213
-#: client/campaign/cp_base.c:1223
 msgid "Transfer"
 msgstr "運送"
 
@@ -9052,8 +9033,6 @@ msgstr "建築預覽"
 msgid "Select building"
 msgstr "選擇建築"
 
-#: client/campaign/cp_ufopedia.c:609 client/campaign/cp_ufopedia.c:662
-#: client/campaign/cp_ufopedia.c:671 client/campaign/cp_ufopedia.c:831
 msgid "UFOpaedia"
 msgstr "UFO資料庫"
 
@@ -9501,7 +9480,6 @@ msgstr "無法實行一次自動還擊模式 "
 msgid "No reaction fire"
 msgstr "無自動還擊"
 
-#: client/battlescape/cl_hud.c:822
 msgid "Reserve TUs for shooting."
 msgstr "為射擊保留活動時間。"
 
@@ -10412,7 +10390,6 @@ msgstr "低"
 msgid "Medium"
 msgstr "中"
 
-#: client/cl_game_campaign.c:164
 msgid "Normal"
 msgstr "一般"
 
@@ -10987,11 +10964,9 @@ msgstr ""
 "'移動時先確認'表示所有移動\n"
 "路徑都會先被顯示然後確認。"
 
-#: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "是"
 
-#: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "否"
 
@@ -11074,7 +11049,6 @@ msgstr "接受"
 msgid "Use the previous resolution."
 msgstr "使用先前的解像度。"
 
-#: client/campaign/cp_produce_callbacks.c:296
 msgid "Disassembly"
 msgstr "分解"
 
@@ -11257,7 +11231,6 @@ msgstr "目前據點："
 msgid "Add/Remove item to transfer cargo"
 msgstr "加入/移除運輸項目"
 
-#: client/cl_game_campaign.c:241
 msgid "Aliens"
 msgstr "外星人"
 
@@ -11612,103 +11585,78 @@ msgstr "<TODO>"
 msgid "Autocannon Module"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:102
 msgid "Poor"
 msgstr "差劣"
 
-#: client/battlescape/cl_actor.c:104
 msgid "Mediocre"
 msgstr "平凡"
 
-#: client/battlescape/cl_actor.c:106
 msgid "Average"
 msgstr "一般"
 
-#: client/battlescape/cl_actor.c:108
 msgid "Competent"
 msgstr "尚佳"
 
-#: client/battlescape/cl_actor.c:110
 msgid "Proficient"
 msgstr "熟練"
 
-#: client/battlescape/cl_actor.c:112
 msgid "Very Good"
 msgstr "不錯"
 
-#: client/battlescape/cl_actor.c:114
 msgid "Highly Proficient"
 msgstr "精通"
 
-#: client/battlescape/cl_actor.c:118
 msgid "Outstanding"
 msgstr "傑出"
 
-#: client/battlescape/cl_actor.c:121
 msgid "Superhuman"
 msgstr "超人"
 
-#: client/battlescape/cl_actor.c:661
 msgid "This isn't your round\n"
 msgstr "還未到你的回合\n"
 
-#: client/battlescape/cl_actor.c:912
 msgid "You cannot reload this unknown item.\n"
 msgstr "不能為未知物品上彈。\n"
 
-#: client/battlescape/cl_actor.c:1757
 msgid "Unknown alien race"
 msgstr "未知外星人種類"
 
-#: client/battlescape/cl_actor.c:2410
 msgid "Toggle to next actor"
 msgstr "切換至下一名士兵"
 
-#: client/battlescape/cl_actor.c:2411
 msgid "Select an actor from list"
 msgstr "從列表裡選擇一名士兵"
 
-#: client/battlescape/cl_actor.c:2412
 msgid "Update an actor"
 msgstr "更新該名士兵"
 
-#: client/battlescape/cl_actor.c:2414
 msgid "Toggle stand/crounch"
 msgstr "切換站立/蹲下"
 
-#: client/battlescape/cl_actor.c:2415
 msgid "Toggle the headgear"
 msgstr "切換護目鏡"
 
-#: client/battlescape/cl_actor.c:2416
 msgid "Opens or closes a door"
 msgstr "開關一扇門"
 
-#: client/battlescape/cl_actor.c:2417
 msgid "Confirm the current action"
 msgstr "確認目前的操作"
 
-#: client/battlescape/cl_actor.c:2418
 msgid "Toggle to next alien visible from selected actor."
 msgstr "切換至目前選定士兵可見到的下一個外星人。"
 
-#: client/battlescape/cl_actor.c:2420
 msgid "Toggle to next alien"
 msgstr "切換至下一個外星人"
 
-#: client/battlescape/cl_hud.c:97 client/battlescape/cl_hud.c:100
 msgid "Crouch walk"
 msgstr "潛行"
 
-#: client/battlescape/cl_hud.c:98
 msgid "Autostand"
 msgstr "自動站立"
 
-#: client/battlescape/cl_hud.c:99
 msgid "Walk"
 msgstr "走動"
 
-#: client/battlescape/cl_hud.c:148
 #, c-format
 msgid ""
 "%s\n"
@@ -11719,81 +11667,63 @@ msgstr ""
 "HP： %i/%i TU： %i\n"
 "%s"
 
-#: client/battlescape/cl_hud.c:293
 msgid "[0 TU] No reservation"
 msgstr "不保留射擊時間"
 
-#: client/battlescape/cl_hud.c:313
 #, c-format
 msgid "[%i TU] %s"
 msgstr "[%i TU] %s"
 
-#: client/battlescape/cl_hud.c:345
 msgid "Reserve TUs for firing/using."
 msgstr "為開火/使用物品保留時間。"
 
-#: client/battlescape/cl_hud.c:345
 msgid "Shot Reservation"
 msgstr "保留射擊時間"
 
-#: client/battlescape/cl_hud.c:445
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "剩餘活動時間：%i"
 
-#: client/battlescape/cl_hud.c:448
 msgid "No remaining TUs left after shot."
 msgstr "開火後沒有足夠的剩餘活動時間"
 
-#: client/battlescape/cl_hud.c:451
 #, c-format
 msgid "TU: %i"
 msgstr "耗時：%i"
 
-#: client/battlescape/cl_hud.c:452
 #, c-format
 msgid "Shots: %i"
 msgstr "消耗彈藥：%i"
 
-#: client/battlescape/cl_hud.c:666
 msgid "No weapon."
 msgstr "沒有武器。"
 
-#: client/battlescape/cl_hud.c:675
 msgid "Weapon cannot be reloaded."
 msgstr "武器無法上彈。"
 
-#: client/battlescape/cl_hud.c:681
 msgid "No reload possible, already fully loaded."
 msgstr "無需上彈，彈倉已滿。"
 
-#: client/battlescape/cl_hud.c:691
 msgid "Not enough TUs for reloading weapon."
 msgstr "沒有足夠時間上彈。"
 
-#: client/battlescape/cl_hud.c:694
 msgid "No reload possible, you don't have backup ammo."
 msgstr "無法上彈，沒有後備彈藥。"
 
-#: client/battlescape/cl_hud.c:786
 msgid "Not enough TUs for standing up."
 msgstr "沒有足夠時間站立。"
 
-#: client/battlescape/cl_hud.c:789
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "站立（%i耗時）"
 
-#: client/battlescape/cl_hud.c:794
 msgid "Not enough TUs for crouching."
 msgstr "沒有足夠時間蹲下。"
 
-#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "蹲下（%i 耗時）"
 
-#: client/battlescape/cl_hud.c:805
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -11802,16 +11732,13 @@ msgstr ""
 "為蹲下/站立保留 %i 活動時間。\n"
 "點擊取消。"
 
-#: client/battlescape/cl_hud.c:809
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "為蹲下站立保留 %i 活動時間。"
 
-#: client/battlescape/cl_hud.c:812
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "無法為蹲下/站立保留活動時間。"
 
-#: client/battlescape/cl_hud.c:818
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -11822,16 +11749,13 @@ msgstr ""
 "點擊切換保留時間的長短。\n"
 "右鍵取消。"
 
-#: client/battlescape/cl_hud.c:825
 msgid "Reserving TUs for shooting not possible."
 msgstr "無法為射擊保留活動時間。"
 
-#: client/battlescape/cl_hud.c:846 client/battlescape/cl_hud.c:855
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "上彈（%i 耗時）。"
 
-#: client/battlescape/cl_hud.c:1082
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -11839,7 +11763,6 @@ msgstr ""
 "不能使用未知物品。\n"
 "要先研究它。\n"
 
-#: client/battlescape/cl_hud.c:1103
 #, c-format
 msgid ""
 "%s\n"
@@ -11848,17 +11771,14 @@ msgstr ""
 "%s\n"
 "（空）\n"
 
-#: client/battlescape/cl_hud.c:1125
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "士氣 %i | 預留活動時間：%i\n"
 
-#: client/battlescape/cl_hud.c:1127
 #, c-format
 msgid "Morale  %i"
 msgstr "士氣  %i"
 
-#: client/battlescape/cl_hud.c:1132
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -11867,7 +11787,6 @@ msgstr ""
 "士氣  %i |預留活動時間：%i\n"
 "%s %i (%i|%i 剩餘活動時間)\n"
 
-#: client/battlescape/cl_hud.c:1136
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -11876,7 +11795,6 @@ msgstr ""
 "士氣  %i\n"
 "%s %i (%i 剩餘活動時間)\n"
 
-#: client/battlescape/cl_hud.c:1168
 #, c-format
 msgid ""
 "Time Units\n"
@@ -11889,345 +11807,226 @@ msgstr ""
 "－預留：%i\n"
 "－剩餘：%i\n"
 
-#: client/battlescape/cl_hud.c:1263
 msgid "Currently panics!\n"
 msgstr "處於恐慌狀態中!\n"
 
-#: client/battlescape/cl_hud.c:1489
 #, fuzzy
 msgid "Update cvars from actor from list"
 msgstr "從列表裡選擇一名士兵"
 
-#: client/battlescape/cl_hud_callbacks.c:86
-#: client/battlescape/cl_hud_callbacks.c:243
 msgid "No item in hand.\n"
 msgstr "手裡沒有東西。\n"
 
-#: client/battlescape/cl_hud_callbacks.c:92
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
 msgstr "無法執行－彈藥不足。\n"
 
-#: client/battlescape/cl_hud_callbacks.c:97
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 msgstr "該武器不能單手發射。\n"
 
-#: client/battlescape/cl_hud_callbacks.c:151
-#: client/battlescape/cl_hud_callbacks.c:261
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
 msgstr "無法執行－活動時間不足。\n"
 
-#: client/battlescape/cl_hud_callbacks.c:249
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
 msgstr "無法執行－本物品不能上彈。\n"
 
-#: client/battlescape/cl_hud_callbacks.c:256
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
 msgstr "無法執行－無法上彈。\n"
 
-#: client/battlescape/cl_hud_callbacks.c:291
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "為左手武器上彈"
 
-#: client/battlescape/cl_hud_callbacks.c:292
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "為右手武器上彈"
 
-#: client/battlescape/cl_hud_callbacks.c:293
 msgid "Toggle reservation for crouching."
 msgstr "切換預留蹲下時間"
 
-#: client/battlescape/cl_hud_callbacks.c:294
 msgid "Toggle reaction fire"
 msgstr "切換自動還擊模式"
 
-#: client/battlescape/cl_view.c:58 client/battlescape/cl_view.c:84
 #, c-format
 msgid "loading %s"
 msgstr "正在載入 %s"
 
-#: client/battlescape/cl_view.c:66
 msgid "loading models..."
 msgstr "正在載入模塊..."
 
-#: client/battlescape/cl_view.c:114 client/cl_main.c:1124
 msgid "Awaiting game start"
 msgstr "等待遊戲開始"
 
-#: client/battlescape/events/e_server.c:41
 #, fuzzy
 msgid "This isn't your round"
 msgstr "還未到你的回合\n"
 
-#: client/battlescape/events/e_server.c:53
 msgid "Ends current round"
 msgstr "結束目前回合"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:159
 #, c-format
 msgid "Enemy spotted: %s!"
 msgstr "發現敵人：%s！"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:162
 msgid "Enemy spotted!\n"
 msgstr "發現敵人！\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:164
 msgid "Civilian spotted!\n"
 msgstr "發現平民！\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:78
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s 昏倒了\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s 被殺了\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:88
 msgid "A civilian was stunned.\n"
 msgstr "有個平民暈倒在地上。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
 msgid "A civilian was killed.\n"
 msgstr "有個平民被殺了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:94
 msgid "An alien was stunned.\n"
 msgstr "有個外星人被擊暈了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
 msgid "An alien was killed.\n"
 msgstr "有個外星人被殺死了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:100
 msgid "A soldier was stunned.\n"
 msgstr "有個士兵暈倒了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
 msgid "A soldier was killed.\n"
 msgstr "有個士兵犧牲了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:106
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "隊伍 %i 的一個成員昏迷了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "隊伍 %i 的一個成員陣亡了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:69
 #, fuzzy, c-format
 msgid "%s was revitalised\n"
 msgstr "%s 被殺了\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:75
 #, fuzzy
 msgid "A civilian was revitalised.\n"
 msgstr "有個平民被殺了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:78
 #, fuzzy
 msgid "An alien was revitalised.\n"
 msgstr "有個外星人被殺死了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:81
 #, fuzzy
 msgid "A soldier was revitalised.\n"
 msgstr "有個士兵犧牲了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:84
 #, fuzzy, c-format
 msgid "A member of team %i was revitalised.\n"
 msgstr "隊伍 %i 的一個成員陣亡了。\n"
 
-#: client/battlescape/events/event/player/e_event_doendround.c:57
 msgid "Your round started!\n"
 msgstr "你的回合開始！\n"
 
-#: client/campaign/cp_aircraft.c:450
 msgid "ON RED ALERT"
 msgstr "警告！緊急！"
 
-#: client/campaign/cp_aircraft.c:454
 msgid "Nothing - should not be displayed"
 msgstr "無－不應被顯示"
 
-#: client/campaign/cp_aircraft.c:456
 msgid "at home base"
 msgstr "在基地待命"
 
-#: client/campaign/cp_aircraft.c:458
 msgid "refuelling"
 msgstr "正在補給"
 
-#: client/campaign/cp_aircraft.c:460
 msgid "idle"
 msgstr "空閒"
 
-#: client/campaign/cp_aircraft.c:462
 msgid "in transit"
 msgstr "航行中"
 
-#: client/campaign/cp_aircraft.c:464
 msgid "enroute to mission"
 msgstr "進行任務"
 
-#: client/campaign/cp_aircraft.c:466
 msgid "pursuing a UFO"
 msgstr "正在追擊UFO"
 
-#: client/campaign/cp_aircraft.c:468
 msgid "ready to drop soldiers"
 msgstr "準備出動士兵"
 
-#: client/campaign/cp_aircraft.c:470
 msgid "intercepting a UFO"
 msgstr "正在截擊UFO"
 
-#: client/campaign/cp_aircraft.c:472
 msgid "enroute to new home base"
 msgstr "航行到新基地"
 
-#: client/campaign/cp_aircraft.c:474
 msgid "returning to base"
 msgstr "正在返回基地"
 
-#: client/campaign/cp_aircraft.c:565
 msgid "Interceptor"
 msgstr "截擊機"
 
-#: client/campaign/cp_aircraft.c:567
 msgid "Transporter"
 msgstr "運輸機"
 
-#: client/campaign/cp_aircraft.c:569 client/campaign/cp_ufo.c:158
-#: client/campaign/cp_ufo.c:159
 msgid "UFO"
 msgstr "UFO"
 
-#: client/campaign/cp_aircraft.c:837
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "一架新的 %s 已經在 %s 待命"
 
-#: client/campaign/cp_aircraft.c:838 client/campaign/cp_aircraft.c:1224
-#: client/campaign/cp_aircraft.c:1240 client/campaign/cp_aircraft.c:1284
-#: client/campaign/cp_aircraft.c:1341 client/campaign/cp_aircraft.c:1364
-#: client/campaign/cp_aircraft.c:2124
-#: client/campaign/cp_aircraft_callbacks.c:95
-#: client/campaign/cp_aircraft_callbacks.c:103
-#: client/campaign/cp_aircraft_callbacks.c:111
-#: client/campaign/cp_airfight.c:334 client/campaign/cp_airfight.c:354
-#: client/campaign/cp_aliencont.c:182 client/campaign/cp_aliencont.c:212
-#: client/campaign/cp_aliencont.c:231 client/campaign/cp_aliencont.c:241
-#: client/campaign/cp_base.c:1167 client/campaign/cp_base.c:1189
-#: client/campaign/cp_base.c:1754 client/campaign/cp_base.c:1818
-#: client/campaign/cp_base.c:2907 client/campaign/cp_base.c:2912
-#: client/campaign/cp_base.c:3650 client/campaign/cp_base_callbacks.c:68
-#: client/campaign/cp_base_callbacks.c:197
-#: client/campaign/cp_base_callbacks.c:239
-#: client/campaign/cp_base_callbacks.c:572
-#: client/campaign/cp_base_callbacks.c:578
-#: client/campaign/cp_base_callbacks.c:600
-#: client/campaign/cp_base_callbacks.c:610
-#: client/campaign/cp_base_callbacks.c:622
-#: client/campaign/cp_base_callbacks.c:629
-#: client/campaign/cp_base_callbacks.c:637
-#: client/campaign/cp_base_callbacks.c:642
-#: client/campaign/cp_base_callbacks.c:647 client/campaign/cp_campaign.c:1008
-#: client/campaign/cp_installation_callbacks.c:149
-#: client/campaign/cp_mapfightequip.c:351
-#: client/campaign/cp_mapfightequip.c:372
-#: client/campaign/cp_mapfightequip.c:378
-#: client/campaign/cp_mapfightequip.c:390
-#: client/campaign/cp_market_callbacks.c:633
-#: client/campaign/cp_market_callbacks.c:638 client/campaign/cp_missions.c:735
-#: client/campaign/cp_missions.c:1090 client/campaign/cp_nation.c:889
-#: client/campaign/cp_nation.c:903 client/campaign/cp_nation.c:916
-#: client/campaign/cp_nation.c:925 client/campaign/cp_nation.c:931
-#: client/campaign/cp_nation.c:939 client/campaign/cp_popup.c:483
-#: client/campaign/cp_produce.c:491 client/campaign/cp_produce.c:500
-#: client/campaign/cp_produce.c:511 client/campaign/cp_produce.c:520
-#: client/campaign/cp_produce.c:531
-#: client/campaign/cp_research_callbacks.c:563
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:587
-#: client/campaign/cp_research_callbacks.c:626
-#: client/campaign/cp_research_callbacks.c:656
-#: client/campaign/cp_research_callbacks.c:815
-#: client/campaign/cp_research_callbacks.c:818 client/campaign/cp_ufo.c:428
-#: client/campaign/cp_ufo.c:844 client/campaign/cp_ufo.c:849
-#: client/campaign/cp_ufo.c:855
-#: client/campaign/missions/cp_mission_baseattack.c:122
-#: client/cl_game_campaign.c:69 client/cl_game_campaign.c:88
-#: client/cl_game_campaign.c:91 client/cl_main.c:404
-#: client/multiplayer/mp_serverlist.c:469
 msgid "Notice"
 msgstr "注意事項"
 
-#: client/campaign/cp_aircraft.c:902
 msgid "No operational hangars at that base."
 msgstr "這基地沒有可運作的機庫"
 
-#: client/campaign/cp_aircraft.c:906
 msgid "No free hangars at that base."
 msgstr "基地沒有空置的機庫"
 
-#: client/campaign/cp_aircraft.c:909
 msgid "Insufficient free crew quarter space at that base."
 msgstr "那個基地的居住空間不足。"
 
-#: client/campaign/cp_aircraft.c:912
 msgid "Insufficient storage space at that base."
 msgstr "那個基地的倉庫空間不足。"
 
-#: client/campaign/cp_aircraft.c:916
 msgid "That base is beyond this aircraft's range."
 msgstr "那基地超出本航空機的航程。"
 
-#: client/campaign/cp_aircraft.c:1223
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "反物質原料不足。%s 航空機未能補充燃料（基地：%s）"
 
-#: client/campaign/cp_aircraft.c:1239
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "%s 航空機已經加滿燃料（基地：%s）"
 
-#: client/campaign/cp_aircraft.c:1284
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "%s 航空機燃料不足，必須返回基地。"
 
-#: client/campaign/cp_aircraft.c:1341
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "先給本航空機分配士兵。"
 
-#: client/campaign/cp_aircraft.c:1364
 msgid "Insufficient fuel."
 msgstr "燃料不足。"
 
-#: client/campaign/cp_aircraft.c:2124
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "%s 航空機沒有足夠的燃料截擊UFO：返回 %s。"
 
-#: client/campaign/cp_aircraft_callbacks.c:95
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
@@ -12237,7 +12036,6 @@ msgstr ""
 "\n"
 "航空機無法起飛。\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:103
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
@@ -12247,121 +12045,89 @@ msgstr ""
 "\n"
 "航空機無法起飛。\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:111
 msgid "Aircraft started"
 msgstr "航空機起飛"
 
-#: client/campaign/cp_aircraft_callbacks.c:215 client/campaign/cp_map.c:1678
-#: client/campaign/cp_map.c:1685
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "速度：\t%i 公里/小時\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:217 client/campaign/cp_map.c:1679
-#: client/campaign/cp_map.c:1686
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "燃料：\t%i/%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:219
-#: client/campaign/cp_ufopedia.c:345
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "作戰範圍：\t%i 公里\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:220
 #, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "武器：\t（使用中）%i / %i（總數）\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:221
 #, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "裝甲：\t（使用中）%i / 1（總數）\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:222
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "電子設備：\t（使用中）%i / %i（總數"
 
-#: client/campaign/cp_airfight.c:334
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "一架UFO正在攻擊 %s"
 
-#: client/campaign/cp_airfight.c:354
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "航空機彈藥不足－返回基地中。"
 
-#: client/campaign/cp_airfight.c:434 client/campaign/cp_airfight.c:461
 msgid "Interception"
 msgstr "攔截"
 
-#: client/campaign/cp_airfight.c:434
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO攔截成功 -- UFO墜落海中。"
 
-#: client/campaign/cp_airfight.c:461 client/cl_game_campaign.c:91
 msgid "You've lost the battle"
 msgstr "戰鬥失敗"
 
-#: client/campaign/cp_aliencont.c:182
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "這個基地的外星人收容所未能使用，無法處理外星人。"
 
-#: client/campaign/cp_aliencont.c:212
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "因為還未能收容活的外星人所以他們統統死掉了。"
 
-#: client/campaign/cp_aliencont.c:231
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr "外星人收容所空間不足。已殺掉一些外星人。"
 
-#: client/campaign/cp_aliencont.c:241
 msgid "You've captured new aliens."
 msgstr "你俘虜了新外星人。"
 
-#: client/campaign/cp_aliencont_callbacks.c:204
 msgid "Already researched"
 msgstr "研究已完成"
 
-#: client/campaign/cp_aliencont_callbacks.c:206
 msgid "Needs autopsy!"
 msgstr "需要解剖！"
 
-#: client/campaign/cp_aliencont_callbacks.c:229
 msgid "Free slot"
 msgstr "空位"
 
-#: client/campaign/cp_aliencont_callbacks.c:230
-#: client/campaign/cp_basedefence_callbacks.c:217
-#: client/campaign/cp_basedefence_callbacks.c:595
-#: client/campaign/cp_ufopedia.c:229 client/input/cl_joystick.c:278
 msgid "None"
 msgstr "無"
 
-#: client/campaign/cp_base.c:1167
 #, fuzzy
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "基地正受到攻擊，無法摧毀設施！"
 
-#: client/campaign/cp_base.c:1177
 msgid "Destroy Entrance"
 msgstr "摧毀基地入口"
 
-#: client/campaign/cp_base.c:1177
 msgid "You can't destroy the entrance of the base!"
 msgstr "不能摧毀基地入口!"
 
-#: client/campaign/cp_base.c:1189
 msgid "You can't destroy this building! It is the only connection to other buildings!"
 msgstr ""
 
-#: client/campaign/cp_base.c:1200
 msgid "Destroy Hangar"
 msgstr "摧毀機庫"
 
-#: client/campaign/cp_base.c:1200
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -12369,29 +12135,21 @@ msgstr ""
 "如果要摧毀這個機庫，裡面的航空機也會同時被摧毀。\n"
 "確定要這麼做嗎？"
 
-#: client/campaign/cp_base.c:1201
 msgid "Go to hangar"
 msgstr "轉到機庫窗口"
 
-#: client/campaign/cp_base.c:1201
 msgid "Go to hangar without destroying building"
 msgstr "不摧毀設施轉到機庫窗口"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
 msgid "Destroy the building"
 msgstr "摧毀設施"
 
-#: client/campaign/cp_base.c:1204 client/campaign/cp_base.c:1214
-#: client/campaign/cp_base.c:1224
 msgid "Go to transfer menu without destroying the building"
 msgstr "不摧毀設施轉到運送窗口"
 
-#: client/campaign/cp_base.c:1210
 msgid "Destroy Quarter"
 msgstr "摧毀居住區"
 
-#: client/campaign/cp_base.c:1210
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -12399,19 +12157,15 @@ msgstr ""
 "如果要摧毀這個居住區，裡面的員工會同時被殺死。\n"
 "確定要這麼做嗎？"
 
-#: client/campaign/cp_base.c:1211
 msgid "Dismiss"
 msgstr "開除"
 
-#: client/campaign/cp_base.c:1211
 msgid "Go to hiring menu without destroying building"
 msgstr "不摧毀設施轉到員工窗口"
 
-#: client/campaign/cp_base.c:1220
 msgid "Destroy Storage"
 msgstr "摧毀倉庫"
 
-#: client/campaign/cp_base.c:1220
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -12419,204 +12173,152 @@ msgstr ""
 "如果要摧毀這個倉庫，裡面的東西也會同時被銷毀。\n"
 "確定要這麼做嗎？"
 
-#: client/campaign/cp_base.c:1221
 msgid "Go to buy/sell menu without destroying building"
 msgstr "不摧毀設施轉到買賣物品窗口"
 
-#: client/campaign/cp_base.c:1221
 msgid "Go to storage"
 msgstr "轉到倉庫窗口"
 
-#: client/campaign/cp_base.c:1233
 msgid "Are you sure you want to destroy this building?"
 msgstr "確定要摧毀本設施嗎？"
 
-#: client/campaign/cp_base.c:1233
 msgid "Destroy building"
 msgstr "摧毀設施"
 
-#: client/campaign/cp_base.c:1251
 msgid "Not set"
 msgstr "未設定"
 
-#: client/campaign/cp_base.c:1257
 #, c-format
 msgid "Already %i in base"
 msgstr "這基地已有 %i 間"
 
-#: client/campaign/cp_base.c:1263
 msgid "Construction finished"
 msgstr "建設完畢"
 
-#: client/campaign/cp_base.c:1267
 msgid "Working 100%"
 msgstr "完工"
 
-#: client/campaign/cp_base.c:1271
 msgid "Not operational, depends on"
 msgstr "無法運作，需要"
 
-#: client/campaign/cp_base.c:1275
 msgid "Down"
 msgstr "下"
 
-#: client/campaign/cp_base.c:1754
 msgid "Not enough credits to build this\n"
 msgstr "資金不足，無法建造\n"
 
-#: client/campaign/cp_base.c:1818
 #, fuzzy
 msgid "You must build next to existing buildings."
 msgstr "不摧毀設施轉到買賣物品窗口"
 
-#: client/campaign/cp_base.c:1867
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "費用：\t%i c\n"
 
-#: client/campaign/cp_base.c:1870
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "建造需時 %i 日\n"
 msgstr[1] "建造需時 %i 日\n"
 
-#: client/campaign/cp_base.c:1873 client/campaign/cp_ufopedia.c:232
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "維護費：\t%i c\n"
 
-#: client/campaign/cp_base.c:1876 client/campaign/cp_ufopedia.c:229
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "需要：\t%s\n"
 
-#: client/campaign/cp_base.c:2636
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "基地里沒有航空機－你需要先購買或運送一架航空機\n"
 
-#: client/campaign/cp_base.c:2636 client/campaign/cp_base.c:2638
-#: client/campaign/cp_market_callbacks.c:615
-#: client/campaign/cp_market_callbacks.c:620
-#: client/campaign/cp_market_callbacks.c:705
-#: client/campaign/cp_market_callbacks.c:707 client/campaign/cp_save.c:392
-#: client/multiplayer/mp_team.c:254 client/multiplayer/mp_team.c:275
 msgid "Note"
 msgstr "注意"
 
-#: client/campaign/cp_base.c:2638
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "基地里沒有航空機－你需要先購買一架航空機\n"
 
-#: client/campaign/cp_base.c:2648
 msgid "Antimatter (current/max):"
 msgstr "反物質倉庫（現存/最大）："
 
-#: client/campaign/cp_base.c:2842
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "%s 建設完畢（基地： %s）。"
 
-#: client/campaign/cp_base.c:2843
 msgid "Building finished"
 msgstr "建造完畢"
 
-#: client/campaign/cp_base.c:2905
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "出售 %s 使你獲得 %ic。"
 
-#: client/campaign/cp_base.c:2906
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "繳穫 %i 物品"
 msgstr[1] "繳穫 %i 物品"
 
-#: client/campaign/cp_base.c:2910
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "%s 基地的倉庫空間不足。 %s"
 
-#: client/campaign/cp_base.c:2911
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i 個物品共賣了 %ic。"
 msgstr[1] "%i 個物品共賣了 %ic。"
 
-#: client/campaign/cp_base.c:3648
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "%s 沒有反物質倉庫，%i 單位的反物質被丟棄了！"
 
-#: client/campaign/cp_base_callbacks.c:68
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
 msgstr "%s 已因為反物質倉庫損壞而被毀。"
 
-#: client/campaign/cp_base_callbacks.c:188
 #, c-format
 msgid "Base #%i"
 msgstr "基地 #%i"
 
-#: client/campaign/cp_base_callbacks.c:197
 msgid "You've reached the base limit."
 msgstr "基地數目已達上限。"
 
-#: client/campaign/cp_base_callbacks.c:226
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "建立新基地： %s （國際組織: %s）"
 
-#: client/campaign/cp_base_callbacks.c:228
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "新基地已建立： %s"
 
-#: client/campaign/cp_base_callbacks.c:229
 msgid "Base built"
 msgstr "基地建設"
 
-#: client/campaign/cp_base_callbacks.c:239
 msgid "Not enough credits to set up a new base."
 msgstr "資金不足，無法建造新基地。"
 
-#: client/campaign/cp_base_callbacks.c:294
 msgid "Buy or produce at least one aircraft first."
 msgstr "先購買或製造至少一架航空機"
 
-#: client/campaign/cp_base_callbacks.c:296
 msgid "No Hangar functional in base."
 msgstr "這個基地沒有運作中的機庫。"
 
-#: client/campaign/cp_base_callbacks.c:302
-#: client/campaign/cp_base_callbacks.c:312
-#: client/campaign/cp_base_callbacks.c:317
-#: client/campaign/cp_base_callbacks.c:322
-#: client/campaign/cp_base_callbacks.c:327
-#: client/campaign/cp_base_callbacks.c:332
 #, c-format
 msgid "No %s functional in base."
 msgstr "這個基地沒有運作中的 %s。"
 
-#: client/campaign/cp_base_callbacks.c:305
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
 msgstr "運送裝備，載具，外星人和員工到其他基地"
 
-#: client/campaign/cp_base_callbacks.c:307
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "要建造第二個基地才能運送物資或員工"
 
-#: client/campaign/cp_base_callbacks.c:572
 msgid "Base is under attack, you can't access this building !"
 msgstr "基地正受到攻擊，無法操作本設施！"
 
-#: client/campaign/cp_base_callbacks.c:578
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "你需要至少一個機庫(及其附屬設施)來使用航空機。"
 
-#: client/campaign/cp_base_callbacks.c:598
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -12631,144 +12333,109 @@ msgstr[1] ""
 "還有 %i 天才能完工。\n"
 "請耐心等待。"
 
-#: client/campaign/cp_base_callbacks.c:609
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "你需要有 %s 才能使 %s 運作。"
 
-#: client/campaign/cp_base_callbacks.c:620
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "設施 %s 還未建成，另外 %s 需要它才可運作。"
 
-#: client/campaign/cp_base_callbacks.c:627
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "先確定所需的基礎設施 %s（%s）可以運作，然後設施 %s 才能使用。"
 
-#: client/campaign/cp_base_callbacks.c:635
-#: client/campaign/cp_base_callbacks.c:640
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "你需要僱用 %s 才能使用 %s。"
 
-#: client/campaign/cp_base_callbacks.c:646
 #, c-format
 msgid "Build a %s first."
 msgstr "要先建造一個 %s 。"
 
-#: client/campaign/cp_base_callbacks.c:675
 msgid "^BAircraft\n"
 msgstr "^B航空機\n"
 
-#: client/campaign/cp_base_callbacks.c:682
 msgid "^BEmployees\n"
 msgstr "^B員工\n"
 
-#: client/campaign/cp_base_callbacks.c:690
 msgid "^BAliens\n"
 msgstr "^B外星人\n"
 
-#: client/campaign/cp_base_callbacks.c:702
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^B設施\t\t\t\t\t\t容量\t\t\t\t合計\n"
 
-#: client/campaign/cp_base_callbacks.c:726
 msgid "day"
 msgid_plural "days"
 msgstr[0] "天"
 msgstr[1] "天"
 
-#: client/campaign/cp_base_callbacks.c:736
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^B生產\t\t\t\t\t\t數量\t\t\t\t完成度\n"
 
-#: client/campaign/cp_base_callbacks.c:743
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:763
 msgid "Nothing\n"
 msgstr "無\n"
 
-#: client/campaign/cp_base_callbacks.c:752
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^B研究\t\t\t\t\t\t研究員\t\t\t\t完成度\n"
 
-#: client/campaign/cp_base_callbacks.c:757
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:821 client/campaign/cp_campaign.c:691
-#: client/campaign/cp_market_callbacks.c:310
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/campaign/cp_basedefence_callbacks.c:147
 #, c-format
 msgid "%i: empty"
 msgstr "%i： 空"
 
-#: client/campaign/cp_basedefence_callbacks.c:153
 msgid "Working"
 msgstr "運作中"
 
-#: client/campaign/cp_basedefence_callbacks.c:155
 msgid "Installing"
 msgstr "安裝中"
 
-#: client/campaign/cp_basedefence_callbacks.c:157
 msgid "Replacing"
 msgstr "取代中"
 
-#: client/campaign/cp_basedefence_callbacks.c:159
 msgid "Removing"
 msgstr "移除中"
 
-#: client/campaign/cp_basedefence_callbacks.c:281
 msgid "No defence of this type in this installation"
 msgstr "此基站並無該類防禦設施"
 
-#: client/campaign/cp_basedefence_callbacks.c:288
-#: client/campaign/cp_basedefence_callbacks.c:295
 msgid "No defence of this type in this base"
 msgstr "這基地並無該類防禦設施"
 
-#: client/campaign/cp_campaign.c:327
 msgid "You've gone too far into debt."
 msgstr "你有太多赤字了。"
 
-#: client/campaign/cp_campaign.c:335
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "你已經失去你的基地，沒有資金可以再建造一個新的了。"
 
-#: client/campaign/cp_campaign.c:341
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "你沒有好好保護地球，我們的一切都完了。除了極少數人繼續戰鬥外，其他人都無法阻止這慘劇發生。你和PHALANX現在都沒有任何戰鬥力可言了。外星人已經獲得勝利－全面的勝利。"
 
-#: client/campaign/cp_campaign.c:360
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "在你差勁的指揮下，PHALANX沒有好好地保護各個國家。聯合國對你相當不滿意，也把你給開除了；PHALANX跟著成為一邦烏合之眾。各個國家也不再同心協力而各自為戰，最後被強大的外星力量一一打敗。"
 
-#: client/campaign/cp_campaign.c:1008
 msgid "Collected dead alien bodies"
 msgstr "已收集外星人屍體"
 
-#: client/campaign/cp_campaign.c:1088
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "外星人－被殺\t%i\n"
 
-#: client/campaign/cp_campaign.c:1089
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "外星人－被俘\t%i\n"
 
-#: client/campaign/cp_campaign.c:1090
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12777,22 +12444,18 @@ msgstr ""
 "外星人－倖存\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1092
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "PHALANX士兵－被外星人殺死\t%i\n"
 
-#: client/campaign/cp_campaign.c:1093
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "PHALANX士兵－失蹤\t%i\n"
 
-#: client/campaign/cp_campaign.c:1094
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "PHALANX士兵－被隊友誤殺\t%i\n"
 
-#: client/campaign/cp_campaign.c:1095
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12801,17 +12464,14 @@ msgstr ""
 "PHALANX士兵－倖存\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1097
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "平民－被外星人殺死\t%i\n"
 
-#: client/campaign/cp_campaign.c:1098
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "平民－被我方殺死\t%i\n"
 
-#: client/campaign/cp_campaign.c:1099
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12820,36 +12480,29 @@ msgstr ""
 "平民－獲救\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1100
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "收集的物品 （種類/數量）\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1171
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s 已經晉昇為 %s。\n"
 
-#: client/campaign/cp_campaign.c:1173
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s 在戰鬥中光榮犧牲，被追封為 %s 以表彰其精神。\n"
 
-#: client/campaign/cp_campaign.c:1174
 msgid "Soldier promoted"
 msgstr "士兵已獲晉升"
 
-#: client/campaign/cp_employee.c:204
 msgid "Soldier"
 msgstr "士兵"
 
-#: client/campaign/cp_employee.c:407
 msgid "Not enough quarters"
 msgstr "居住空間不足"
 
-#: client/campaign/cp_employee.c:407
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -12857,179 +12510,135 @@ msgstr ""
 "沒有足夠的居住空間來容納員工。\n"
 "要建造更多的居住區。"
 
-#: client/campaign/cp_employee_callbacks.c:282
-#: client/campaign/cp_employee_callbacks.c:336
 msgid "Could not fire employee"
 msgstr "不能解僱員工"
 
-#: client/campaign/cp_employee_callbacks.c:343
 msgid "Could not hire employee"
 msgstr "不能僱用員工"
 
-#: client/campaign/cp_event.c:355 client/campaign/cp_save.c:291
-#: client/campaign/cp_save.c:310 client/campaign/cp_time.c:69
-#: client/campaign/cp_ufopedia.c:499 client/campaign/cp_ufopedia.c:504
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_event.c:361
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "收到新郵件：%s"
 
-#: client/campaign/cp_fightequip_callbacks.c:144 client/campaign/cp_map.c:1639
-#: client/campaign/cp_map.c:1658
 msgid "Unknown"
 msgstr "未知"
 
-#: client/campaign/cp_fightequip_callbacks.c:357
 msgid "No item assigned.\n"
 msgstr "未裝備。\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:358
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "該欄位只可以加裝 %s 或更小的裝備。"
 
-#: client/campaign/cp_fightequip_callbacks.c:366
 msgid "This item is functional.\n"
 msgstr "本設備正在運作中。\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:368
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "加裝此設備需要 %i 小時。\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:371
 #, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "移除 %s 需要 %i 小時。\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:373
 #, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "加裝 %s 需要 %i 小時。\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:376
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "移除此設備需要 %i 小時。\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:386
 msgid "No ammo assigned to this weapon."
 msgstr "此武器未指定彈藥。"
 
-#: client/campaign/cp_fightequip_callbacks.c:394
 msgid "No ammo needed"
 msgstr "無需彈藥"
 
-#: client/campaign/cp_fightequip_callbacks.c:521
 msgid "No slot selected."
 msgstr "未選擇欄位。"
 
-#: client/campaign/cp_fightequip_callbacks.c:524
 msgid "No item selected."
 msgstr "沒有選擇物品。"
 
-#: client/campaign/cp_fightequip_callbacks.c:527
 msgid "You can't equip an alien technology."
 msgstr "不能裝備外星科技。"
 
-#: client/campaign/cp_fightequip_callbacks.c:530
 msgid "Technology requested is not yet completed."
 msgstr "所需的技術尚未完成。"
 
-#: client/campaign/cp_fightequip_callbacks.c:533
 msgid "This item is too heavy for the selected slot."
 msgstr "此物品太重，所以不能放進選擇的欄位中。"
 
-#: client/campaign/cp_fightequip_callbacks.c:536
 msgid "Equip a weapon first."
 msgstr "先裝備一件武器。"
 
-#: client/campaign/cp_fightequip_callbacks.c:539
 msgid "Ammo not usable with current weapon."
 msgstr "該彈藥並不能在本武器中使用。"
 
-#: client/campaign/cp_fightequip_callbacks.c:542
 msgid "Unknown problem."
 msgstr "未知問題。"
 
-#: client/campaign/cp_fightequip_callbacks.c:545
 msgid "Ok"
 msgstr "好"
 
-#: client/campaign/cp_installation.c:177
 #, c-format
 msgid "Installation %s was destroyed."
 msgstr "%s 己被拆除。"
 
-#: client/campaign/cp_installation.c:178
 msgid "Installation destroyed"
 msgstr "基站拆除"
 
-#: client/campaign/cp_installation.c:406
 #, c-format
 msgid "Construction of installation %s finished."
 msgstr "基站 %s 建設完畢。"
 
-#: client/campaign/cp_installation.c:407
 msgid "Installation finished"
 msgstr "安裝完畢"
 
-#: client/campaign/cp_installation.c:518
 #, c-format
 msgid "%d c"
 msgstr "%d c"
 
-#: client/campaign/cp_installation.c:528
-#: client/campaign/cp_installation_callbacks.c:90
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d天"
 msgstr[1] "%d天"
 
-#: client/campaign/cp_installation_callbacks.c:47 client/campaign/cp_map.c:356
 msgid "Installation"
 msgstr "基站"
 
-#: client/campaign/cp_installation_callbacks.c:139
 #, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "建立新基站： %s （國際組織： %s）"
 
-#: client/campaign/cp_installation_callbacks.c:141
 #, c-format
 msgid "A new installation has been built: %s"
 msgstr "新基站已建立： %s"
 
-#: client/campaign/cp_installation_callbacks.c:142
 msgid "Installation building"
 msgstr "基站建造"
 
-#: client/campaign/cp_installation_callbacks.c:149
 msgid "Not enough credits to set up a new installation."
 msgstr "資金不足，無法建造新基站。"
 
-#: client/campaign/cp_installation_callbacks.c:215
 msgid "Destroy Installation"
 msgstr "拆除基站"
 
-#: client/campaign/cp_installation_callbacks.c:215
 msgid "Do you really want to destroy this installation?"
 msgstr "確定要拆除這個基站嗎？"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Forget it"
 msgstr "別管它"
 
-#: client/campaign/cp_map.c:363
 msgid "UFO Sighting"
 msgstr "出現UFO"
 
-#: client/campaign/cp_map.c:1638
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -13040,7 +12649,6 @@ msgstr ""
 "類型：%s\n"
 "目標：%s"
 
-#: client/campaign/cp_map.c:1655
 #, c-format
 msgid ""
 "%s (%s)\n"
@@ -13049,112 +12657,88 @@ msgstr ""
 "%s (%s)\n"
 "%s"
 
-#: client/campaign/cp_map.c:1675 client/campaign/cp_map.c:1683
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "名稱：\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1676 client/campaign/cp_map.c:1684
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "狀態：\t%s\n"
 
-#: client/campaign/cp_map.c:1677
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "與目標距離：\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1681 client/campaign/cp_map.c:1691
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "估計需時：\t%s小時\n"
 
-#: client/campaign/cp_map.c:1709
 #, c-format
 msgid "Speed: %i km/h\n"
 msgstr "速度：%i 公里/小時\n"
 
-#: client/campaign/cp_map.c:1897
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1976
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "在地圖上選擇新基地的建造位置。\n"
 
-#: client/campaign/cp_map.c:1979
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "在地圖上選擇新基站的建造位置。\n"
 
-#: client/campaign/cp_map.c:1984
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "外星人馬上要攻擊我們的基地。\n"
 
-#: client/campaign/cp_map.c:1989
 msgid "Select ufo or mission on map\n"
 msgstr "在地圖上選擇UFO或任務\n"
 
-#: client/campaign/cp_map.c:1994
 msgid "UFO in radar range\n"
 msgstr "UFO在雷達偵測範圍中\n"
 
-#: client/campaign/cp_mapfightequip.c:342
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr "%s 已經被安裝到航空機 %s（%s）。"
 
-#: client/campaign/cp_mapfightequip.c:345
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr "%s 已經被安裝到 %s。"
 
-#: client/campaign/cp_mapfightequip.c:348
 #, c-format
 msgid "%s was successfully installed at %s."
 msgstr "%s 已經被安裝到 %s。"
 
-#: client/campaign/cp_mapfightequip.c:370
 #, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s 已經從 %s 移除（%s）。"
 
-#: client/campaign/cp_mapfightequip.c:376
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "%s 已經移除，開始安裝 %s 到 %s（%s）"
 
-#: client/campaign/cp_mapfightequip.c:384
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "%s 已經從 %s 移除。"
 
-#: client/campaign/cp_mapfightequip.c:387
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s 已經從 %s 移除。"
 
-#: client/campaign/cp_mapfightequip.c:1341
 msgid "Light weight"
 msgstr "輕型"
 
-#: client/campaign/cp_mapfightequip.c:1344
 msgid "Medium weight"
 msgstr "中型"
 
-#: client/campaign/cp_mapfightequip.c:1347
 msgid "Heavy weight"
 msgstr "重型"
 
-#: client/campaign/cp_mapfightequip.c:1350
 msgid "Unknown weight"
 msgstr "未知重量"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 msgid "Not enough storage space"
 msgstr "倉庫空間不足"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -13164,7 +12748,6 @@ msgstr ""
 "倉庫空間已滿。\n"
 "要建造更多的倉庫。"
 
-#: client/campaign/cp_market_callbacks.c:615
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -13172,11 +12755,9 @@ msgstr ""
 "電力供應不足。\n"
 "機庫無法運作。"
 
-#: client/campaign/cp_market_callbacks.c:620
 msgid "Build a hangar first."
 msgstr "要先建造一個機庫。"
 
-#: client/campaign/cp_market_callbacks.c:633
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -13184,7 +12765,6 @@ msgstr ""
 "無法購買這架航空機。\n"
 "機庫空間不足。\n"
 
-#: client/campaign/cp_market_callbacks.c:638
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -13192,124 +12772,94 @@ msgstr ""
 "無法購買這架航空機。\n"
 "資金不足。\n"
 
-#: client/campaign/cp_market_callbacks.c:705
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "無法出售載有士兵隊伍的航空機。"
 
-#: client/campaign/cp_market_callbacks.c:707
 msgid "You can't sell an aircraft that is not in base"
 msgstr "無法出售不在基地的航空機"
 
-#: client/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
 msgstr "安裝完成"
 
-#: client/campaign/cp_messageoptions.c:37
 msgid "installation_removed"
 msgstr "移除完成"
 
-#: client/campaign/cp_messageoptions.c:38
 msgid "installation_replaced"
 msgstr "更新完成"
 
-#: client/campaign/cp_messageoptions.c:39
 msgid "aircraft_refueled"
 msgstr "航空機燃料補充完畢"
 
-#: client/campaign/cp_messageoptions.c:40
 msgid "aircraft_cannotrefuel"
 msgstr "航空機無法補充燃料"
 
-#: client/campaign/cp_messageoptions.c:41
 msgid "installation_build_started"
 msgstr "開始建造"
 
-#: client/campaign/cp_messageoptions.c:42
 msgid "installation_build_finished"
 msgstr "建造完成"
 
-#: client/campaign/cp_messageoptions.c:43
 msgid "installation_destroyed"
 msgstr "設施已被摧毀"
 
-#: client/campaign/cp_messageoptions.c:44
 msgid "research_new_proposed"
 msgstr "新的研究草案"
 
-#: client/campaign/cp_messageoptions.c:45
 msgid "research_halted"
 msgstr "研究中斷"
 
-#: client/campaign/cp_messageoptions.c:46
 msgid "research_completed"
 msgstr "研究完成"
 
-#: client/campaign/cp_messageoptions.c:47
 msgid "production_started"
 msgstr "開始生產"
 
-#: client/campaign/cp_messageoptions.c:48
 msgid "production_finished"
 msgstr "生產完成"
 
-#: client/campaign/cp_messageoptions.c:49
 msgid "production_failed"
 msgstr "生產失敗"
 
-#: client/campaign/cp_messageoptions.c:50
 msgid "production_queue_empty"
 msgstr "生產線閒置中"
 
-#: client/campaign/cp_messageoptions.c:51
 msgid "nation_happiness_changed"
 msgstr "滿意度有變化"
 
-#: client/campaign/cp_messageoptions.c:52
 msgid "nation_unhappy"
 msgstr "滿意度變差了"
 
-#: client/campaign/cp_messageoptions.c:53
 msgid "nation_pleased"
 msgstr "滿意度變好了"
 
-#: client/campaign/cp_messageoptions.c:54
 msgid "transfer_started"
 msgstr "開始運送"
 
-#: client/campaign/cp_messageoptions.c:55
 msgid "transfer_completed_success"
 msgstr "運送成功"
 
-#: client/campaign/cp_messageoptions.c:56
 msgid "transfer_lost"
 msgstr "運送失敗"
 
-#: client/campaign/cp_messageoptions.c:57
 msgid "transfer_aliens_defered"
 msgstr "運送要延期"
 
-#: client/campaign/cp_messageoptions.c:58
 msgid "transfer_uforecovery_finished"
 msgstr "UFO及戰場資源運送完畢"
 
-#: client/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
 msgstr "發現UFO"
 
-#: client/campaign/cp_messageoptions.c:60
 msgid "ufo_signal_lost"
 msgstr "失去UFO的蹤跡"
 
-#: client/campaign/cp_messageoptions.c:61
 msgid "ufo_attacking"
 msgstr "UFO攻擊"
 
-#: client/campaign/cp_messages.c:47
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i"
 
-#: client/campaign/cp_mission_triggers.c:124
 msgid ""
 "Congratulations! You have reached the end of the UFO:AI campaign.\n"
 "However, this is not the end of the road. The game remains in development.\n"
@@ -13335,227 +12885,176 @@ msgstr ""
 "\n"
 " － UFO:AI開發小組"
 
-#: client/campaign/cp_missions.c:448
 #, fuzzy
 msgid "Crashed aircraft"
 msgstr "重新命名航空機"
 
-#: client/campaign/cp_missions.c:453
 msgid "Landed UFO"
 msgstr "著陸中的UFO"
 
-#: client/campaign/cp_missions.c:455
 msgid "Terror mission"
 msgstr "恐怖活動任務"
 
-#: client/campaign/cp_missions.c:457
 msgid "Base attack"
 msgstr "基地攻擊"
 
-#: client/campaign/cp_missions.c:461
 msgid "Harvesting mission"
 msgstr "掠奪任務"
 
-#: client/campaign/cp_missions.c:706
 #, c-format
 msgid "Go on a rescue mission at %s. You might some of your soldiers alive."
 msgstr ""
 
-#: client/campaign/cp_missions.c:708
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "在 %s 發現有外星人活動。"
 
-#: client/campaign/cp_missions.c:1088
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "%s 基地防禦成功！"
 
-#: client/campaign/cp_missions.c:1251
-#: client/campaign/missions/cp_mission_harvest.c:170
-#: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
 msgstr "無國界區域"
 
-#: client/campaign/cp_missions.c:1334
 #, fuzzy
 msgid "Crashed"
 msgstr "墜毀的UFO"
 
-#: client/campaign/cp_nation.c:142
 msgid "Giving up"
 msgstr "放棄"
 
-#: client/campaign/cp_nation.c:144
 msgid "Furious"
 msgstr "暴怒"
 
-#: client/campaign/cp_nation.c:146
 msgid "Angry"
 msgstr "憤怒"
 
-#: client/campaign/cp_nation.c:148
 msgid "Mad"
 msgstr "生氣"
 
-#: client/campaign/cp_nation.c:150
 msgid "Upset"
 msgstr "失望"
 
-#: client/campaign/cp_nation.c:152
 msgid "Tolerant"
 msgstr "不耐煩"
 
-#: client/campaign/cp_nation.c:154
 msgid "Neutral"
 msgstr "中立"
 
-#: client/campaign/cp_nation.c:156
 msgid "Content"
 msgstr "基本滿意"
 
-#: client/campaign/cp_nation.c:158
 msgid "Pleased"
 msgstr "滿意"
 
-#: client/campaign/cp_nation.c:160
 msgid "Happy"
 msgstr "高興"
 
-#: client/campaign/cp_nation.c:162
 msgid "Exuberant"
 msgstr "熱情"
 
-#: client/campaign/cp_nation.c:189
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr "%s 對你的滿意度從 '%s' 變為 '%s'"
 
-#: client/campaign/cp_nation.c:193
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr "%s 對你的滿意度變為 '%s'"
 
-#: client/campaign/cp_nation.c:197
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr "%s 組織現在的對你的滿意度是 '%s'，低於戰役所允許的最差滿意度。"
 
-#: client/campaign/cp_nation.c:203
 msgid "Nation changed happiness"
 msgstr "國際組織的滿意度起了變化"
 
-#: client/campaign/cp_nation.c:883
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "獲得 %i %s、 %i %s、 %i %s 和 %i %s 從 %s (%s)"
 
-#: client/campaign/cp_nation.c:884
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "資金"
 msgstr[1] "資金"
 
-#: client/campaign/cp_nation.c:885 client/cl_game_campaign.c:249
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "研究員"
 msgstr[1] "研究員"
 
-#: client/campaign/cp_nation.c:886 client/cl_game_campaign.c:248
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "士兵"
 msgstr[1] "士兵"
 
-#: client/campaign/cp_nation.c:887 client/cl_game_campaign.c:250
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "工人"
 msgstr[1] "工人"
 
-#: client/campaign/cp_nation.c:902
 #, fuzzy, c-format
 msgid "Paid %i credits to: %s"
 msgstr "支付 %ic 飛行員薪酬"
 
-#: client/campaign/cp_nation.c:915
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "支付 %ic 維護航空機"
 
-#: client/campaign/cp_nation.c:924
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "支付 %ic 以維護基地 %s"
 
-#: client/campaign/cp_nation.c:929
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "支付 %ic 管理費。"
 
-#: client/campaign/cp_nation.c:937
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "支付 %ic 利息。"
 
-#: client/campaign/cp_popup.c:126
 msgid "current homebase of aircraft"
 msgstr "航空機的主基地"
 
-#: client/campaign/cp_popup.c:132
 msgid "base can hold aircraft"
 msgstr "這基地可以讓航空機停靠"
 
-#: client/campaign/cp_popup.c:147
 msgid "Base\tStatus"
 msgstr "基地\t狀態"
 
-#: client/campaign/cp_popup.c:147
 msgid "Change homebase of aircraft"
 msgstr "改變航空機的主基地"
 
-#: client/campaign/cp_popup.c:227
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "返回基地\t%s\n"
 
-#: client/campaign/cp_popup.c:229
 msgid "Stop\n"
 msgstr "停止\n"
 
-#: client/campaign/cp_popup.c:231
 msgid "Change homebase\n"
 msgstr "改變主基地\n"
 
-#: client/campaign/cp_popup.c:243
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "任務\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:335
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
 msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
-#: client/campaign/cp_popup.c:348
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr "沒有可用的航空機；未指派飛行員或作戰小隊未登機。"
 
-#: client/campaign/cp_popup.c:397
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr "%s%s (%i/%i)\t%s\t%s"
 
-#: client/campaign/cp_popup.c:418
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "沒有可用的航空機；未指派飛行員或武器彈藥未裝置。"
 
-#: client/campaign/cp_popup.c:434
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "防禦系統無法運作；缺少武器或彈藥。"
 
-#: client/campaign/cp_popup.c:483
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -13563,16 +13062,9 @@ msgid ""
 "Aircraft cannot start.\n"
 msgstr "航空機沒有在運作中的基地司令部，無法起飛。\n"
 
-#: client/campaign/cp_produce.c:298 client/campaign/cp_produce.c:302
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
-#: client/campaign/cp_transfer_callbacks.c:366
-#: client/campaign/cp_transfer_callbacks.c:369
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Hangars not ready"
 msgstr "機庫還未準備好"
 
-#: client/campaign/cp_produce.c:298
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
@@ -13580,7 +13072,6 @@ msgstr ""
 "不能編排航空機。\n"
 "基地沒有司令部。\n"
 
-#: client/campaign/cp_produce.c:302
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
@@ -13588,8 +13079,6 @@ msgstr ""
 "不能編排航空機。\n"
 "基地沒有機庫。\n"
 
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -13597,119 +13086,91 @@ msgstr ""
 "不能編排航空機。\n"
 "機庫沒有空位。\n"
 
-#: client/campaign/cp_produce.c:409
 #, c-format
 msgid "Production queue for %s is empty"
 msgstr "%s 的生產線處於閒置中"
 
-#: client/campaign/cp_produce.c:410
 msgid "Production queue empty"
 msgstr "生產線處於閒置中"
 
-#: client/campaign/cp_produce.c:490 client/campaign/cp_produce.c:510
 #, fuzzy, c-format
 msgid "Not enough credits to finish production in %s."
 msgstr "%s 的生產線資金不足。\n"
 
-#: client/campaign/cp_produce.c:499
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Production postponed."
 msgstr "%s 的倉庫空間不足。生產延期。\n"
 
-#: client/campaign/cp_produce.c:519
 #, fuzzy, c-format
 msgid "Not enough free hangar space in %s. Production postponed."
 msgstr "%s 的機庫空間不足。生產延期。\n"
 
-#: client/campaign/cp_produce.c:530
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
 msgstr "%s 的倉庫空間不足。分解延期。\n"
 
-#: client/campaign/cp_produce.c:575
 #, c-format
 msgid "The production of %s at %s has finished."
 msgstr "%s 已在 %s 生產完畢。"
 
-#: client/campaign/cp_produce.c:576 client/campaign/cp_produce.c:600
 msgid "Production finished"
 msgstr "生產完畢"
 
-#: client/campaign/cp_produce.c:598
 #, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "%s 在 %s 的分解工序已完畢。"
 
-#: client/campaign/cp_produce_callbacks.c:265
-#: client/campaign/cp_produce_callbacks.c:370
 msgid "No item selected"
 msgstr "沒有選擇物品"
 
-#: client/campaign/cp_produce_callbacks.c:271
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "單價 \t%i c\n"
 
-#: client/campaign/cp_produce_callbacks.c:272
-#: client/campaign/cp_produce_callbacks.c:330
 #, c-format
 msgid "Production time\t%ih\n"
 msgstr "生產時間 \t%ih\n"
 
-#: client/campaign/cp_produce_callbacks.c:273
 #, c-format
 msgid "Item size\t%i\n"
 msgstr "物品大小 \t%i\n"
 
-#: client/campaign/cp_produce_callbacks.c:297
 #, c-format
 msgid "Stored at: %s\n"
 msgstr "收存於：%s\n"
 
-#: client/campaign/cp_produce_callbacks.c:298
 #, c-format
 msgid "Disassembly time: %ih\n"
 msgstr "分解時間：%ih\n"
 
-#: client/campaign/cp_produce_callbacks.c:299
 msgid "Components:\n"
 msgstr "材料零件：\n"
 
-#: client/campaign/cp_produce_callbacks.c:328
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr "生產費用 \t%i c\n"
 
-#: client/campaign/cp_produce_callbacks.c:368
 msgid "No aircraft selected."
 msgstr "沒有選擇任何航空機。"
 
-#: client/campaign/cp_produce_callbacks.c:662
-#: client/campaign/cp_produce_callbacks.c:686
 #, fuzzy
 msgid "Not enough materials"
 msgstr "材料不足！"
 
-#: client/campaign/cp_produce_callbacks.c:662
 #, fuzzy
 msgid "You don't have the materials needed for producing more of this item.\n"
 msgstr "沒有足夠的材料來製造本物品。"
 
-#: client/campaign/cp_produce_callbacks.c:666
 #, fuzzy, c-format
 msgid "You don't have enough material to produce all (%i) additional items. Only %i could be added."
 msgstr "沒有足夠的材料來製造全部（%i）件物品。工場只能再製造（%i）件。"
 
-#: client/campaign/cp_produce_callbacks.c:667
-#: client/campaign/cp_produce_callbacks.c:690
 msgid "Not enough material!"
 msgstr "材料不足！"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid "Not enough workshops"
 msgstr "工場不足"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
@@ -13717,48 +13178,38 @@ msgstr ""
 "無法開闢更多的生產線。\n"
 "要建設更多的工場。\n"
 
-#: client/campaign/cp_produce_callbacks.c:686
 #, fuzzy
 msgid "You don't have the materials needed for producing this item.\n"
 msgstr "沒有足夠的材料來製造本物品。"
 
-#: client/campaign/cp_produce_callbacks.c:689
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "沒有足夠的材料來製造全部（%i）件物品。工場只能再製造（%i）件。"
 
-#: client/campaign/cp_produce_callbacks.c:714
 #, c-format
 msgid "Production of %s started"
 msgstr "開始生產 %s"
 
-#: client/campaign/cp_produce_callbacks.c:715
 msgid "Production started"
 msgstr "開始生產"
 
-#: client/campaign/cp_research.c:89
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "研究完畢： %s\n"
 
-#: client/campaign/cp_research.c:90
 msgid "Research finished"
 msgstr "研究完畢"
 
-#: client/campaign/cp_research.c:136 client/campaign/cp_research.c:313
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "新的研究草案：%s\n"
 
-#: client/campaign/cp_research.c:137
 msgid "Unknown Technology researchable"
 msgstr "未知科技可以研究"
 
-#: client/campaign/cp_research.c:314
 msgid "Unknown Technology found"
 msgstr "發現未知科技"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -13766,115 +13217,86 @@ msgstr ""
 "研究室空間不足。\n"
 "需要建設更多研究室。\n"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid "Not enough laboratories"
 msgstr "沒有足夠的研究室"
 
-#: client/campaign/cp_research.c:809
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr "%s 的研究草案並不符合 %s。研究中止！"
 
-#: client/campaign/cp_research.c:810
 msgid "Research halted"
 msgstr "研究中止"
 
-#: client/campaign/cp_research.c:1171
 msgid "No description available."
 msgstr "沒有任何說明。"
 
-#: client/campaign/cp_research.c:1172
 msgid "No research proposal available."
 msgstr "沒有任何研究草案。"
 
-#: client/campaign/cp_research_callbacks.c:91
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "研究室空間（已用/全部）：%i/%i"
 
-#: client/campaign/cp_research_callbacks.c:97
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr "研究員（空閒/全部）：%i/%i"
 
-#: client/campaign/cp_research_callbacks.c:102
 msgid "Not researched in any base."
 msgstr "還未於任何基地研究"
 
-#: client/campaign/cp_research_callbacks.c:108
 #, c-format
 msgid "Researched in %s"
 msgstr "已在 %s 研究"
 
-#: client/campaign/cp_research_callbacks.c:110
 msgid "Researched in this base."
 msgstr "已在本基地研究。"
 
-#: client/campaign/cp_research_callbacks.c:122
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "進度：%.1f%%"
 
-#: client/campaign/cp_research_callbacks.c:125
 msgid "Progress: not available."
 msgstr "進度：沒有進展"
 
-#: client/campaign/cp_research_callbacks.c:130
 msgid "Status: under research"
 msgstr "狀態：正在研究"
 
-#: client/campaign/cp_research_callbacks.c:131
 msgid "Status: this research topic is currently being processed in laboratories"
 msgstr "狀態：該項目正在研究中"
 
-#: client/campaign/cp_research_callbacks.c:134
 msgid "Status: research paused"
 msgstr "狀態：研究暫停"
 
-#: client/campaign/cp_research_callbacks.c:135
 msgid "Status: research topic currently paused."
 msgstr "狀態：該項目的研究被暫時中止。"
 
-#: client/campaign/cp_research_callbacks.c:138
-#: client/campaign/cp_research_callbacks.c:139
 msgid "Status: research finished"
 msgstr "狀態：研究完畢"
 
-#: client/campaign/cp_research_callbacks.c:144
 msgid "Status: not possible to research"
 msgstr "狀態：不能研究"
 
-#: client/campaign/cp_research_callbacks.c:145
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr "狀態：還未獲得需要研究這項科技的所有的材料或相關知識。"
 
-#: client/campaign/cp_research_callbacks.c:147
-#: client/campaign/cp_research_callbacks.c:148
 msgid "Status: unknown technology"
 msgstr "狀態：未知科技"
 
-#: client/campaign/cp_research_callbacks.c:259
 msgid "Unassigned scientists"
 msgstr "未分配的研究員"
 
-#: client/campaign/cp_research_callbacks.c:295
 msgid "Missing an artifact"
 msgstr "丟失了一件製品"
 
-#: client/campaign/cp_research_callbacks.c:305
 msgid "Unresearchable collected items"
 msgstr "無法研究的繳獲物品"
 
-#: client/campaign/cp_research_callbacks.c:563
 msgid "This item is currently under research in another base."
 msgstr "該項目當前正在另一基地研究中。"
 
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:626
 msgid "The research on this item is complete."
 msgstr "該項目的研究己完成。"
 
-#: client/campaign/cp_research_callbacks.c:587
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -13882,79 +13304,57 @@ msgstr ""
 "該項目還未能進行研究。\n"
 "需要先研究相關的基礎科技。"
 
-#: client/campaign/cp_research_callbacks.c:656
 msgid "No research proposal available for this project."
 msgstr "沒有關於這個項目的研究草案。"
 
-#: client/campaign/cp_research_callbacks.c:815
 msgid "Nothing to research"
 msgstr "沒有東西可供研究"
 
-#: client/campaign/cp_research_callbacks.c:818
 msgid "Build a laboratory first"
 msgstr "要先建造一間研究室"
 
-#: client/campaign/cp_save.c:186
 msgid "Error decompressing data"
 msgstr "資料解壓時出現錯誤。"
 
-#: client/campaign/cp_save.c:270
 msgid "No campaign active."
 msgstr "沒有現存戰役"
 
-#: client/campaign/cp_save.c:276
 msgid "Nothing to save yet."
 msgstr "沒有東西可保存。"
 
-#: client/campaign/cp_save.c:320
 msgid "Could not allocate enough memory to save this game"
 msgstr "記憶體不足，不能儲存遊戲"
 
-#: client/campaign/cp_save.c:342
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr "壓縮遊戲存檔時出現記憶體錯誤，把 cvar－'save_compressed' 設定為 '0' 再試試看"
 
-#: client/campaign/cp_save.c:389 client/campaign/cp_save.c:391
 msgid "Error saving game."
 msgstr "儲存遊戲時出現錯誤。"
 
-#: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:620
 msgid "Error loading game."
 msgstr "載入遊戲時出現錯誤。"
 
-#: client/campaign/cp_save.c:469 client/campaign/cp_save.c:493
-#: client/campaign/cp_save.c:621 client/cl_irc.c:1209 client/cl_irc.c:1441
-#: client/cl_main.c:517 client/cl_main.c:521 client/cl_main.c:545
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Error"
 msgstr "錯誤"
 
-#: client/campaign/cp_save.c:568
 msgid "QuickSave"
 msgstr "快速存檔"
 
-#: client/campaign/cp_save.c:602
 msgid "Campaign was successfully saved."
 msgstr "已成功儲存戰役。"
 
-#: client/campaign/cp_save.c:602
 msgid "Quicksave"
 msgstr "快速存檔"
 
-#: client/campaign/cp_save.c:623
 msgid "Campaign loaded"
 msgstr "已讀取戰役"
 
-#: client/campaign/cp_save.c:623
 msgid "Quicksave campaign was successfully loaded."
 msgstr "已成功讀取戰役快速存檔。"
 
-#: client/campaign/cp_save.c:684
 msgid "Saves to the quick save slot"
 msgstr "快速存檔"
 
-#: client/campaign/cp_statistics.c:56
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -13965,7 +13365,6 @@ msgstr ""
 "失敗：\t%i\n"
 "\n"
 
-#: client/campaign/cp_statistics.c:61
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -13976,12 +13375,10 @@ msgstr ""
 "健在：\t%i\n"
 "受攻擊：\t%i\n"
 
-#: client/campaign/cp_statistics.c:77 client/campaign/cp_ufopedia.c:1164
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_statistics.c:80
 #, c-format
 msgid ""
 "\n"
@@ -13990,37 +13387,30 @@ msgstr ""
 "\n"
 "下月收入：\t%dc"
 
-#: client/campaign/cp_statistics.c:97 client/cl_inventory_callbacks.c:138
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_statistics.c:103
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "薪酬：\t%i c\n"
 
-#: client/campaign/cp_statistics.c:112
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "航空機維護費：\t%i c\n"
 
-#: client/campaign/cp_statistics.c:118
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "基地維護費（%s）：\t%i c\n"
 
-#: client/campaign/cp_statistics.c:123
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "管理費：\t%i c\n"
 
-#: client/campaign/cp_statistics.c:130
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "赤字：\t%i c\n"
 
-#: client/campaign/cp_statistics.c:133
 #, c-format
 msgid ""
 "\n"
@@ -14031,12 +13421,10 @@ msgstr ""
 "\t-------\n"
 "合計：\t%i c\n"
 
-#: client/campaign/cp_statistics.c:138
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "赤字上限：%ic\n"
 
-#: client/campaign/cp_statistics.c:143
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -14045,166 +13433,124 @@ msgstr ""
 "異星病毒感染數目上限：%i%%\n"
 "目前的異星病毒感染數：%i%%"
 
-#: client/campaign/cp_team.c:252
 #, c-format
 msgid "%i of %i"
 msgstr "%i / %i"
 
-#: client/campaign/cp_time.c:40
 msgid "stopped"
 msgstr "暫停"
 
-#: client/campaign/cp_time.c:41
 msgid "5 sec"
 msgstr "五秒"
 
-#: client/campaign/cp_time.c:42
 msgid "5 mins"
 msgstr "五分鐘"
 
-#: client/campaign/cp_time.c:43
 msgid "20 mins"
 msgstr "二十分鐘"
 
-#: client/campaign/cp_time.c:44
 msgid "1 hour"
 msgstr "一小時"
 
-#: client/campaign/cp_time.c:45
 msgid "12 hours"
 msgstr "半天"
 
-#: client/campaign/cp_time.c:46
 msgid "1 day"
 msgstr "一天"
 
-#: client/campaign/cp_time.c:47
 msgid "5 days"
 msgstr "五天"
 
-#: client/campaign/cp_time.c:73
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i：%02i"
 
-#: client/campaign/cp_time.c:249
 msgid "Jan"
 msgstr "一月"
 
-#: client/campaign/cp_time.c:251
 msgid "Feb"
 msgstr "二月"
 
-#: client/campaign/cp_time.c:253
 msgid "Mar"
 msgstr "三月"
 
-#: client/campaign/cp_time.c:255
 msgid "Apr"
 msgstr "四月"
 
-#: client/campaign/cp_time.c:257
 msgid "May"
 msgstr "五月"
 
-#: client/campaign/cp_time.c:259
 msgid "Jun"
 msgstr "六月"
 
-#: client/campaign/cp_time.c:261
 msgid "Jul"
 msgstr "七月"
 
-#: client/campaign/cp_time.c:263
 msgid "Aug"
 msgstr "八月"
 
-#: client/campaign/cp_time.c:265
 msgid "Sep"
 msgstr "九月"
 
-#: client/campaign/cp_time.c:267
 msgid "Oct"
 msgstr "十月"
 
-#: client/campaign/cp_time.c:269
 msgid "Nov"
 msgstr "十一月"
 
-#: client/campaign/cp_time.c:271
 msgid "Dec"
 msgstr "十二月"
 
-#: client/campaign/cp_transfer.c:56
 #, fuzzy, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
 msgstr "%s 沒有倉庫，所有物品被丟棄！"
 
-#: client/campaign/cp_transfer.c:57 client/campaign/cp_transfer.c:70
-#: client/campaign/cp_transfer.c:82 client/campaign/cp_transfer.c:109
-#: client/campaign/cp_transfer.c:134 client/campaign/cp_transfer.c:149
-#: client/campaign/cp_transfer.c:244 client/campaign/cp_transfer.c:261
-#: client/campaign/cp_transfer.c:267
-#: client/campaign/cp_transfer_callbacks.c:194
 msgid "Transport mission"
 msgstr "運送任務"
 
-#: client/campaign/cp_transfer.c:69
 #, c-format
 msgid "%s does not have Storage, items are removed!"
 msgstr "%s 沒有倉庫，所有物品被丟棄！"
 
-#: client/campaign/cp_transfer.c:81
 #, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "%s 沒有居住區，所有員工被解僱了！"
 
-#: client/campaign/cp_transfer.c:108
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "%s 沒有外星人收容所，外星人被處理掉了！"
 
-#: client/campaign/cp_transfer.c:133
 #, fuzzy, c-format
 msgid "%s does not have enough Alien Containment space, some Aliens are removed!"
 msgstr "%s 沒有外星人收容所，外星人被處理掉了！"
 
-#: client/campaign/cp_transfer.c:148
 #, fuzzy, c-format
 msgid "%s does not have enough free space. Aircraft is lost!"
 msgstr "%s 沒有空置的機庫。航空機丟失了！"
 
-#: client/campaign/cp_transfer.c:243
-#: client/campaign/cp_transfer_callbacks.c:193
 #, c-format
 msgid "Transport mission started, cargo is being transported to %s"
 msgstr "運送任務開始，貨物正在被運送到 %s 的途中"
 
-#: client/campaign/cp_transfer.c:261
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
 msgstr "目的基地已不再存在！運輸的貨物統統丟失，人員也被解僱了。"
 
-#: client/campaign/cp_transfer.c:266
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "運送任務完成，基地 %s 正在卸載貨物"
 
-#: client/campaign/cp_transfer_callbacks.c:139
 #, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
 msgstr[0] "（可以收容 %i 個活外星人）"
 msgstr[1] "（可以收容 %i 個活外星人）"
 
-#: client/campaign/cp_transfer_callbacks.c:246
 msgid "Destination base does not have an Antimatter Storage.\n"
 msgstr "目的基地沒有反物質倉庫。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:246
 msgid "Missing storage"
 msgstr "丟棄貨物"
 
-#: client/campaign/cp_transfer_callbacks.c:251
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
@@ -14212,15 +13558,9 @@ msgstr ""
 "目標基地沒有足夠的反物質\n"
 "儲存空間以存放更多反物質。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:251
-#: client/campaign/cp_transfer_callbacks.c:261
-#: client/campaign/cp_transfer_callbacks.c:289
-#: client/campaign/cp_transfer_callbacks.c:342
-#: client/campaign/cp_transfer_callbacks.c:385
 msgid "Not enough space"
 msgstr "空間不足"
 
-#: client/campaign/cp_transfer_callbacks.c:261
 msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
@@ -14228,41 +13568,34 @@ msgstr ""
 "目的基地沒有足夠的\n"
 "倉庫空間存放物品。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:289
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
 msgstr "目的基地居住區空間不足。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:298
 #, c-format
 msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
 "transfered to another base.\n"
 msgstr "%s %s 已被指派給航空機，因此不能進行運送。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:300
 msgid "Soldier in aircraft"
 msgstr "士兵在航空機裡"
 
-#: client/campaign/cp_transfer_callbacks.c:307
 #, c-format
 msgid ""
 "%s is assigned to aircraft and cannot be\n"
 "transfered to another base.\n"
 msgstr "%s 已被指派給航空機，因此不能運送到其他基地。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:309
 msgid "Pilot in aircraft"
 msgstr "航空機的飛行員"
 
-#: client/campaign/cp_transfer_callbacks.c:342
 msgid ""
 "Destination base does not have enough space\n"
 "in Alien Containment.\n"
 msgstr "目的基地外星人收容所空間不足。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:366
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
@@ -14270,7 +13603,6 @@ msgstr ""
 "目的基地沒有可用的機庫。\n"
 "缺少電力供應。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:369
 msgid ""
 "Destination base does not have command centre.\n"
 "Hangars not functional.\n"
@@ -14278,135 +13610,102 @@ msgstr ""
 "目的基地沒有司令部。\n"
 "機庫不可用。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Destination base does not have any hangar."
 msgstr "目的基地沒有機庫。"
 
-#: client/campaign/cp_transfer_callbacks.c:385
 msgid "Destination base does not have enough space in hangars.\n"
 msgstr "目的基地機庫空間不足。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:428
 #, c-format
 msgid "Soldier %s %s"
 msgstr "士兵 %s %s"
 
-#: client/campaign/cp_transfer_callbacks.c:440
 #, c-format
 msgid "Pilot %s"
 msgstr "飛行員 %s"
 
-#: client/campaign/cp_transfer_callbacks.c:477
-#: client/campaign/cp_transfer_callbacks.c:653
 #, c-format
 msgid "Corpse of %s"
 msgstr "%s 的屍體"
 
-#: client/campaign/cp_transfer_callbacks.c:494
-#: client/campaign/cp_transfer_callbacks.c:689
 #, c-format
 msgid "Aircraft %s"
 msgstr "航空機 %s"
 
-#: client/campaign/cp_transfer_callbacks.c:562
 msgid "Storage is empty."
 msgstr "倉庫空置中。"
 
-#: client/campaign/cp_transfer_callbacks.c:566
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a working Storage."
 msgstr "不能運送－這個基地沒有倉庫。"
 
-#: client/campaign/cp_transfer_callbacks.c:628
 msgid "Living Quarters empty."
 msgstr "居住區空置中。"
 
-#: client/campaign/cp_transfer_callbacks.c:632
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "不能運送－這個基地沒有居住區。"
 
-#: client/campaign/cp_transfer_callbacks.c:660
 #, c-format
 msgid "Alive %s"
 msgstr "活的 %s"
 
-#: client/campaign/cp_transfer_callbacks.c:666
 msgid "Alien Containment is empty."
 msgstr "外星人收容所空置中。"
 
-#: client/campaign/cp_transfer_callbacks.c:670
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "不能運送－這個基地沒有外星人收容所。"
 
-#: client/campaign/cp_transfer_callbacks.c:673
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "不能運送－這個基地沒有電力供應。"
 
-#: client/campaign/cp_transfer_callbacks.c:695
 msgid "No aircraft available for transfer."
 msgstr "沒有可以運送的航空機。"
 
-#: client/campaign/cp_transfer_callbacks.c:699
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "不能運送－這個基地沒有運作中的機庫。"
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "No target base selected"
 msgstr "未選擇目的基地"
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "Please select the target base from the list"
 msgstr "請從列表中選擇目的基地"
 
-#: client/campaign/cp_transfer_callbacks.c:1102
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "您可以運送物品－這個基地有倉庫。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1105
 msgid "No Storage in this base.\n"
 msgstr "這個基地沒有倉庫。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1109
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "你可以運送員工－這個基地有居住區。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1111
 msgid "No Living Quarters in this base.\n"
 msgstr "這個基地沒有居住區。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1115
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "你可以運送外星人－這個基地有外星人收容所。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1117
 msgid "No Alien Containment in this base.\n"
 msgstr "這個基地沒有外星人收容所。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1121
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "你可以運送反物質－這個基地有反物質倉庫。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1123
 msgid "No Antimatter Storage in this base.\n"
 msgstr "這個基地沒有反物質倉庫。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1127
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "你可以運送航空機－這個基地有機庫。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1129
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "不能運送航空機－這個基地沒有司令部。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1131
 msgid "No Hangar in this base.\n"
 msgstr "這個基地沒有機庫。\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1135
 msgid "No power supplies in this base.\n"
 msgstr "這基地沒有電力供應。\n"
 
-#: client/campaign/cp_ufo.c:172
 #, c-format
 msgid ""
 "\n"
@@ -14415,7 +13714,6 @@ msgstr ""
 "\n"
 "清理墜落的 %s (%.0f%%)\n"
 
-#: client/campaign/cp_ufo.c:174
 #, c-format
 msgid ""
 "\n"
@@ -14424,145 +13722,112 @@ msgstr ""
 "\n"
 "清理著陸的 %s\n"
 
-#: client/campaign/cp_ufo.c:428 client/campaign/cp_ufo.c:844
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "一架UFO正向 %s 飛去"
 
-#: client/campaign/cp_ufo.c:849
 #, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr "雷達偵測到一架新出現的UFO正在靠近 %s"
 
-#: client/campaign/cp_ufo.c:855
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "一架UFO已經從雷達上消失了"
 
-#: client/campaign/cp_ufopedia.c:142
 msgid "Cruising speed"
 msgstr "巡航速度"
 
-#: client/campaign/cp_ufopedia.c:144
 msgid "Maximum speed"
 msgstr "極速"
 
-#: client/campaign/cp_ufopedia.c:148
 msgid "ECM"
 msgstr "電子干擾器"
 
-#: client/campaign/cp_ufopedia.c:150
 msgid "Aircraft damage"
 msgstr "航空機火力"
 
-#: client/campaign/cp_ufopedia.c:152
 msgid "Accuracy"
 msgstr "精確度"
 
-#: client/campaign/cp_ufopedia.c:154
 msgid "Fuel size"
 msgstr "燃料容量"
 
-#: client/campaign/cp_ufopedia.c:156
 msgid "Weapon range"
 msgstr "攻擊範圍"
 
-#: client/campaign/cp_ufopedia.c:158 client/cl_inventory_callbacks.c:54
 msgid "Unknown weapon skill"
 msgstr "未知武器技能"
 
-#: client/campaign/cp_ufopedia.c:170
 msgid "Small"
 msgstr "小型"
 
-#: client/campaign/cp_ufopedia.c:172
 msgid "Large"
 msgstr "大型"
 
-#: client/campaign/cp_ufopedia.c:174
 msgid "Unknown aircraft size"
 msgstr "未知機體大小"
 
-#: client/campaign/cp_ufopedia.c:193
 msgid "No requirements"
 msgstr "無需任何條件"
 
-#: client/campaign/cp_ufopedia.c:227
 msgid "Error - could not find building"
 msgstr "錯誤－找不到建築"
 
-#: client/campaign/cp_ufopedia.c:230
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "建造需時：\t%i 天\n"
 msgstr[1] "建造需時：\t%i 天\n"
 
-#: client/campaign/cp_ufopedia.c:231
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "費用：\t%i c\n"
 
-#: client/campaign/cp_ufopedia.c:279
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "重量：\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:282
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "彈藥：\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:284 client/cl_inventory_callbacks.c:176
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "火力：\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:285
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "上彈需時：\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:287
 msgid "Weapon for base defence system\n"
 msgstr "基地防禦系統使用的武器\n"
 
-#: client/campaign/cp_ufopedia.c:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s：\t+%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s：\t%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:309 client/campaign/cp_ufopedia.c:362
-#: client/campaign/cp_ufopedia.c:364 client/campaign/cp_ufopedia.c:400
-#: client/campaign/cp_ufopedia.c:402
 msgid "Unknown - need to research this"
 msgstr "未知－需要研究"
 
-#: client/campaign/cp_ufopedia.c:336 client/campaign/cp_ufopedia.c:341
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s：\t%i 公里/小時\n"
 
-#: client/campaign/cp_ufopedia.c:348
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s：\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:355
 #, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "航空機大小：\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:359
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "士兵數目上限：\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:397
 #, c-format
 msgid ""
 "%s\n"
@@ -14571,15 +13836,12 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cp_ufopedia.c:521
 msgid "Proposal: "
 msgstr "草案："
 
-#: client/campaign/cp_ufopedia.c:524
 msgid "Re: "
 msgstr "回覆："
 
-#: client/campaign/cp_ufopedia.c:535
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -14590,133 +13852,103 @@ msgstr ""
 "收件人：%s\n"
 "日期：%s"
 
-#: client/campaign/cp_ufopedia.c:609
 msgid "(complete)"
 msgstr "（已完成）"
 
-#: client/campaign/cp_ufopedia.c:668
 msgid "No pre-research description available."
 msgstr "沒有關於這項科技的草議。"
 
-#: client/campaign/cp_ufopedia.c:1104
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^B草案：%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1108
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "草案：%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1119
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^B回覆：%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1123
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "回覆：%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1133 client/campaign/cp_ufopedia.c:1145
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1137 client/campaign/cp_ufopedia.c:1149
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1161
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
 
-#: client/campaign/cp_uforecovery.c:61
 #, c-format
 msgid "%s was transfered to %s."
 msgstr "%s 已經運送到 %s。"
 
-#: client/campaign/cp_uforecovery.c:62
 msgid "UFO Recovered"
 msgstr "已回收UFO"
 
-#: client/campaign/cp_uforecovery_callbacks.c:163
 msgid "No free UFO yard available."
 msgstr "沒有空餘的UFO收集場可用。"
 
-#: client/campaign/cp_uforecovery_callbacks.c:213
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
 msgstr "在戰場上繳獲 %s。UFO正被運送到 %s。"
 
-#: client/campaign/cp_uforecovery_callbacks.c:215
-#: client/campaign/cp_uforecovery_callbacks.c:506
 msgid "UFO Recovery"
 msgstr "回收UFO"
 
-#: client/campaign/cp_uforecovery_callbacks.c:498
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
 msgstr "在戰場上繳獲的 %s（在 %s）已被賣給 %s，獲得 %ic。"
 
-#: client/campaign/cp_uforecovery_callbacks.c:503
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "在戰場上繳獲 %s。UFO已被賣給 %s，獲得 %ic。"
 
-#: client/campaign/missions/cp_mission_baseattack.c:121
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
 msgstr "您的基地：%s 已被摧毀！員工統統死亡，所有設備都被毀掉了。"
 
-#: client/campaign/missions/cp_mission_baseattack.c:229
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "%s 正遭受攻擊，該怎麼辦？"
 
-#: client/cl_console.c:297
 msgid "Bring up the in-game console"
 msgstr "使用遊戲控制台"
 
-#: client/cl_game_campaign.c:69
 msgid "Your dropship is not near the landing zone"
 msgstr "你的運輸機還未靠近著陸點"
 
-#: client/cl_game_campaign.c:88
 msgid "You've won the battle"
 msgstr "戰鬥勝利"
 
-#: client/cl_game_campaign.c:157
 msgid "Chicken-hearted"
 msgstr "幼稚"
 
-#: client/cl_game_campaign.c:159
 msgid "Very Easy"
 msgstr "超級簡單"
 
-#: client/cl_game_campaign.c:162
 msgid "Easy"
 msgstr "簡單"
 
-#: client/cl_game_campaign.c:167
 msgid "Hard"
 msgstr "困難"
 
-#: client/cl_game_campaign.c:169
 msgid "Very Hard"
 msgstr "很困難"
 
-#: client/cl_game_campaign.c:171
 msgid "Insane"
 msgstr "瘋狂"
 
-#: client/cl_game_campaign.c:239
 msgid "Human"
 msgstr "人類"
 
-#: client/cl_game_campaign.c:243
 #, c-format
 msgid ""
 "%s\n"
@@ -14739,33 +13971,26 @@ msgstr ""
 "赤字上限： %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:494
 #, c-format
 msgid "Rank: %s"
 msgstr "軍階：%s"
 
-#: client/cl_game_multiplayer.c:66
 msgid "You've ended your round\n"
 msgstr "你的回合已結束\n"
 
-#: client/cl_game_multiplayer.c:69
 #, c-format
 msgid "%s ended his round (team %i)\n"
 msgstr "%s 的回合結束 (隊伍 %i)\n"
 
-#: client/cl_game_multiplayer.c:89
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "設置每名玩家的士兵數應少於每隊的士兵數"
 
-#: client/cl_game_multiplayer.c:89
 msgid "Settings doesn't make sense"
 msgstr "無意義的設定"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid "Game Drawn!"
 msgstr "平手！"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -14775,7 +14000,6 @@ msgstr ""
 "\n"
 "沒有任何倖存者。"
 
-#: client/cl_game_multiplayer.c:242
 #, c-format
 msgid ""
 "\n"
@@ -14788,27 +14012,21 @@ msgstr ""
 "殺敵：%i\n"
 "倖存：%i"
 
-#: client/cl_game_multiplayer.c:244 client/cl_game_skirmish.c:188
 msgid "You won the game!"
 msgstr "遊戲勝利了！"
 
-#: client/cl_game_multiplayer.c:245 client/cl_game_skirmish.c:189
 msgid "Congratulations"
 msgstr "恭喜"
 
-#: client/cl_game_multiplayer.c:247 client/cl_game_skirmish.c:191
 msgid "You've lost the game!"
 msgstr "遊戲失敗了！"
 
-#: client/cl_game_multiplayer.c:248 client/cl_game_skirmish.c:192
 msgid "Better luck next time"
 msgstr "祝下次好運"
 
-#: client/cl_game_multiplayer.c:279
 msgid "all"
 msgstr "全部"
 
-#: client/cl_game_skirmish.c:179
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -14825,261 +14043,199 @@ msgstr ""
 "殺死平民（我方）：\t\t%i\n"
 "殺死平民（敵方）：\t\t%i\n"
 
-#: client/cl_inventory_callbacks.c:44
 msgid "skill_close"
 msgstr "近戰技能"
 
-#: client/cl_inventory_callbacks.c:46
 msgid "skill_heavy"
 msgstr "重武器技能"
 
-#: client/cl_inventory_callbacks.c:48
 msgid "skill_assault"
 msgstr "射擊技能"
 
-#: client/cl_inventory_callbacks.c:50
 msgid "skill_sniper"
 msgstr "狙擊技能"
 
-#: client/cl_inventory_callbacks.c:52
 msgid "skill_explosive"
 msgstr "爆破技能"
 
-#: client/cl_inventory_callbacks.c:131
 #, c-format
 msgid "Size:\t%i\n"
 msgstr "大小：\t%i\n"
 
-#: client/cl_inventory_callbacks.c:133
 msgid "^BDamage type:\tProtection:\n"
 msgstr "傷害種類：\t防護力：\n"
 
-#: client/cl_inventory_callbacks.c:146
 #, c-format
 msgid "%s weapon\n"
 msgstr "%s 武器\n"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "One-handed"
 msgstr "單手"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "Two-handed"
 msgstr "雙手"
 
-#: client/cl_inventory_callbacks.c:148
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "彈藥上限：\t%i\n"
 
-#: client/cl_inventory_callbacks.c:175
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "技能：\t%s\n"
 
-#: client/cl_inventory_callbacks.c:177 client/cl_inventory_callbacks.c:192
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "耗時：\t%i\n"
 
-#: client/cl_inventory_callbacks.c:178 client/cl_inventory_callbacks.c:193
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "距離：\t%g\n"
 
-#: client/cl_inventory_callbacks.c:179
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "範圍：\t%g\n"
 
-#: client/cl_inventory_callbacks.c:182
 #, c-format
 msgid "%s. No detailed info available.\n"
 msgstr "%s。未有詳細資料。\n"
 
-#: client/cl_inventory_callbacks.c:182
 msgid "Ammunition"
 msgstr "彈藥"
 
-#: client/cl_inventory_callbacks.c:182
 msgid "Weapon"
 msgstr "武器"
 
-#: client/cl_inventory_callbacks.c:185
 #, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s 彈藥快用光了\n"
 
-#: client/cl_inventory_callbacks.c:188
 #, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "%s 輔助裝備\n"
 
-#: client/cl_inventory_callbacks.c:191
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "動作：\t%s\n"
 
-#: client/cl_inventory_callbacks.c:200
 msgid "Unknown - not useable"
 msgstr "未知－不能使用"
 
-#: client/cl_inventory_callbacks.c:344
 msgid "Update the GUI with the selected item"
 msgstr "以選定項目更新 GUI"
 
-#: client/cl_irc.c:1441
 msgid "Server closed connection"
 msgstr "伺服器關閉"
 
-#: client/cl_language.c:276
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:516
 #, fuzzy, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
 msgstr "本機遊戲版本（%s）不同於伺服器版本（%s）"
 
-#: client/cl_main.c:521
 msgid "Script files are not the same"
 msgstr "腳本文件不相同"
 
-#: client/cl_main.c:545
 msgid "Local map version differs from server"
 msgstr "本機地圖版本不同於伺服器地圖版本"
 
-#: client/cl_main.c:1011
 msgid "Target your shot to the ground"
 msgstr "調整射擊的抛物線"
 
-#: client/cl_main.c:1249
 msgid "This change requires a restart"
 msgstr "本設定變更必需重啟遊戲才能生效"
 
-#: client/cl_main.c:1254
 msgid "This change might require a restart"
 msgstr "本設定變更可能需要重啟遊戲才能生效"
 
-#: client/cl_screen.c:156
 #, c-format
 msgid "Downloading [%s]"
 msgstr "下載中 [%s]"
 
-#: client/cl_screen.c:193
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "讀取地圖 [%s]"
 
-#: client/input/cl_input.c:914
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "逆時針旋轉戰鬥視角"
 
-#: client/input/cl_input.c:916
 msgid "Rotate battlescape camera clockwise"
 msgstr "順時針旋轉戰鬥視角"
 
-#: client/input/cl_input.c:918
 msgid "Tilt battlescape camera up"
 msgstr "調高戰鬥視角"
 
-#: client/input/cl_input.c:920
 msgid "Tilt battlescape camera down"
 msgstr "降低戰鬥視角"
 
-#: client/input/cl_input.c:922
 msgid "Move battlescape camera left"
 msgstr "左移戰鬥視角"
 
-#: client/input/cl_input.c:924
 msgid "Move battlescape camera right"
 msgstr "右移戰鬥視角"
 
-#: client/input/cl_input.c:926
 msgid "Move battlescape camera forward"
 msgstr "前移戰鬥視角"
 
-#: client/input/cl_input.c:928
 msgid "Move battlescape camera backward"
 msgstr "後移戰鬥視角"
 
-#: client/input/cl_input.c:930 client/input/cl_input.c:952
 msgid "Zoom in"
 msgstr "放大"
 
-#: client/input/cl_input.c:932 client/input/cl_input.c:953
 msgid "Zoom out"
 msgstr "縮小"
 
-#: client/input/cl_input.c:935
 msgid "Left mouse button click (menu)"
 msgstr "鼠標左鍵點擊（選單）"
 
-#: client/input/cl_input.c:937
 msgid "Middle mouse button click (menu)"
 msgstr "鼠標中鍵點擊（選單）"
 
-#: client/input/cl_input.c:939
 msgid "Right mouse button click (menu)"
 msgstr "鼠標右鍵點擊（選單）"
 
-#: client/input/cl_input.c:941
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "選擇目標，移動目標或射擊等等"
 
-#: client/input/cl_input.c:943
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "移動到指定地點或取消射擊模式"
 
-#: client/input/cl_input.c:945
 msgid "Turn soldier toward mouse pointer"
 msgstr "使士兵面向鼠標方向"
 
-#: client/input/cl_input.c:947
 msgid "Toggles the hud radar mode"
 msgstr "切換至雷達模式"
 
-#: client/input/cl_input.c:950
 msgid "Slice through terrain at a higher level"
 msgstr "調整視角高度到上一層"
 
-#: client/input/cl_input.c:951
 msgid "Slice through terrain at a lower level"
 msgstr "調整視角高度到下一層"
 
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Assemble a team first"
 msgstr "要先分配好隊伍"
 
-#: client/multiplayer/mp_callbacks.c:192
 msgid "Select a free team or your coop team"
 msgstr "選擇一個自由隊伍或者你的合作隊伍"
 
-#: client/multiplayer/mp_callbacks.c:215 client/multiplayer/mp_callbacks.c:228
 #, c-format
 msgid "Current team: %i"
 msgstr "目前隊伍：%i"
 
-#: client/multiplayer/mp_callbacks.c:219 client/multiplayer/mp_callbacks.c:232
 msgid "Team is already in use"
 msgstr "隊伍已經啓用"
 
-#: client/multiplayer/mp_callbacks.c:241
 msgid "Invalid or full team"
 msgstr "隊伍無效或滿員"
 
-#: client/multiplayer/mp_serverlist.c:236
 #, c-format
 msgid "Team %d"
 msgstr "隊伍 %d"
 
-#: client/multiplayer/mp_serverlist.c:238
 msgid "No team"
 msgstr "沒有隊伍"
 
-#: client/multiplayer/mp_serverlist.c:297
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -15088,220 +14244,169 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/multiplayer/mp_serverlist.c:308
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "地圖：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:313
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "伺服器名稱：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:314
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "士氣狀態：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:315
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "遊戲類型：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "遊戲版本：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:317
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "專用伺服器：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "操作系統：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:319
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "網絡協議：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "回合時間：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "組隊遊戲：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "每隊人數上限：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "此地圖的隊伍數目上限：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "客戶端數目上限：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "每名玩家可以控制的士兵數目上限：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "每隊士兵數目上限：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "密碼保護：\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:469
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "所有標籤格都已使用－請除去不用的條目再進行此步驟"
 
-#: client/multiplayer/mp_team.c:254
 msgid "Error saving team. Nothing to save yet."
 msgstr "保存隊伍時發生錯誤，所有資料都未儲存。"
 
-#: client/multiplayer/mp_team.c:270
 msgid "NewTeam"
 msgstr "新的隊伍"
 
-#: client/multiplayer/mp_team.c:275
 msgid "Error saving team. Check free disk space!"
 msgstr "保存隊伍時發生錯誤，請檢查磁碟空間。"
 
-#: client/ui/node/ui_node_base.c:198
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "還有 %i 天"
 msgstr[1] "還有 %i 天"
 
-#: client/ui/node/ui_node_base.c:271
 msgid "not operational, depends on"
 msgstr "無法運作，需要"
 
-#: client/ui/node/ui_node_baseinventory.c:234
-#: client/ui/node/ui_node_baseinventory.c:239
-#: client/ui/node/ui_node_container.c:275
-#: client/ui/node/ui_node_container.c:280
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "彈藥： %i\n"
 
-#: client/ui/node/ui_node_baseinventory.c:238
-#: client/ui/node/ui_node_container.c:279
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s 已上彈\n"
 
-#: client/ui/node/ui_node_baseinventory.c:246
-#: client/ui/node/ui_node_container.c:287
 msgid "Usable in:\n"
 msgstr "可用於：\n"
 
-#: client/ui/node/ui_node_container.c:339
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "放入需時：%i，取出需時：%i"
 
-#: client/ui/node/ui_node_keybinding.c:95
 #, fuzzy, c-format
 msgid "Key %s already bound"
 msgstr "快捷鍵已被設定為其他功能"
 
-#: client/ui/node/ui_node_keybinding.c:154
 msgid "NONE"
 msgstr "NONE"
 
-#: client/ui/node/ui_node_window.c:293
 msgid "Drag to move window"
 msgstr "拖動窗口"
 
-#: client/ui/node/ui_node_window.c:308
 msgid "Close the window"
 msgstr "關閉窗口"
 
-#: client/ui/ui_tooltip.c:96 client/ui/ui_tooltip.c:101
 #, c-format
 msgid "Key: %s"
 msgstr "快捷鍵：%s"
 
-#: game/g_actor.c:78
 #, fuzzy
 msgid "Soldier entered the rescue zone\n"
 msgstr "外星人已進入目標區域\n"
 
-#: game/g_actor.c:80
 #, fuzzy
 msgid "Soldier left the rescue zone\n"
 msgstr "選擇此部位"
 
-#: game/g_actor.c:557
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "無法執行－活動時間不足！\n"
 
-#: game/g_actor.c:561
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "無法執行－武器已裝上同類型彈藥！\n"
 
-#: game/g_client.c:401
 msgid "Can't perform action - object not present!\n"
 msgstr "無法執行－目標不存在！\n"
 
-#: game/g_client.c:406
 msgid "Can't perform action - not an actor!\n"
 msgstr "無法執行－並非隊員！\n"
 
-#: game/g_client.c:411
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "無法執行－士兵昏迷中！\n"
 
-#: game/g_client.c:416
 msgid "Can't perform action - actor is dead!\n"
 msgstr "無法執行－士兵死了！\n"
 
-#: game/g_client.c:421
 msgid "Can't perform action - not on same team!\n"
 msgstr "無法執行－並非同一隊伍！\n"
 
-#: game/g_client.c:426
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "無法執行－不能控制隊友！\n"
 
-#: game/g_client.c:449
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "無法執行－還未到你的回合！\n"
 
-#: game/g_client.c:560
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "處於動搖狀態中，不要讓警備下降。\n"
 
-#: game/g_cmds.c:68
 #, c-format
 msgid "You can't talk for %d more seconds\n"
 msgstr "還有 %d 秒才可發言\n"
 
-#: game/g_cmds.c:76
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "禁言：你在 %d 秒內不可發言。\n"
 
-#: game/g_combat.c:380
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -15309,111 +14414,85 @@ msgstr ""
 "士兵昏迷了！\n"
 "敵人使用了閃光彈！\n"
 
-#: game/g_combat.c:614
 msgid "Can't perform action - impossible throw!\n"
 msgstr "無法執行－無法扔出！\n"
 
-#: game/g_combat.c:1085
 msgid "Can't perform action - object not activatable!\n"
 msgstr "無法執行－目標未能啟動！\n"
 
-#: game/g_combat.c:1110
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "無法執行－武器不能單手使用！\n"
 
-#: game/g_combat.c:1117
 msgid "Can't perform action - no ammo!\n"
 msgstr "無法執行－沒有彈藥！\n"
 
-#: game/g_combat.c:1125
 msgid "Can't perform action - target out of range!\n"
 msgstr "無法執行－目標太遠！\n"
 
-#: game/g_combat.c:1171
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "無法執行－彈藥不足！\n"
 
-#: game/g_mission.c:48
 msgid "Aliens entered target zone\n"
 msgstr "外星人已進入目標區域\n"
 
-#: game/g_mission.c:79
 msgid "Item was placed\n"
 msgstr "物品已經安置\n"
 
-#: game/g_mission.c:86
 msgid "Target zone is occupied\n"
 msgstr "目的地有東西\n"
 
-#: game/g_morale.c:36
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s 驚慌失措！\n"
 
-#: game/g_morale.c:97
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s 處於狂亂狀態。\n"
 
-#: game/g_morale.c:99
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s 因為憤怒而失去了理智！\n"
 
-#: game/g_morale.c:176
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s 目前正在動搖中。\n"
 
-#: game/g_reaction.c:193
 msgid "No reaction fire enabled weapon.\n"
 msgstr "沒有可以進行自動還擊的武器。\n"
 
-#: game/g_reaction.c:198
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "未有為自動還擊設定任何攻擊模式。\n"
 
-#: game/g_reaction.c:203
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "沒有足夠時間可設定自動還擊。\n"
 
-#: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
 msgstr "離回合結束還有4分鐘\n"
 
-#: game/g_round.c:48
 msgid "3 minutes left until forced round end\n"
 msgstr "離回合結束還有3分鐘\n"
 
-#: game/g_round.c:51
 msgid "2 minutes left until forced round end\n"
 msgstr "離回合結束還有2分鐘\n"
 
-#: game/g_round.c:54
 msgid "1 minute left until forced round end\n"
 msgstr "離回合結束還有1分鐘\n"
 
-#: game/g_round.c:57
 msgid "30 seconds left until forced round end\n"
 msgstr "離回合結束還有半分鐘\n"
 
-#: game/g_round.c:60
 msgid "15 seconds left until forced round end\n"
 msgstr "離回合結束還有15秒\n"
 
-#: game/g_round.c:68
 msgid "Current active team hit the max round time\n"
 msgstr "回合時間已耗盡\n"
 
-#: po/OTHER_STRINGS:2
 msgid "human"
 msgstr "人類"
 
-#: po/OTHER_STRINGS:3
 msgid "alien"
 msgstr "外星人"
 
-#: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "屏幕截圖"
 

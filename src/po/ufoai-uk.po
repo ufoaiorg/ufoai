@@ -97,7 +97,6 @@ msgstr "Невеликий східний парк."
 msgid "Harvester"
 msgstr "Пожинач"
 
-#: client/campaign/cp_base_callbacks.c:312
 msgid "Laboratory"
 msgstr "Лабораторія"
 
@@ -403,7 +402,6 @@ msgid "Small Hangar"
 msgstr "Малий ангар"
 
 # Цех?
-#: client/campaign/cp_base_callbacks.c:317
 msgid "Workshop"
 msgstr "Майстерня"
 
@@ -414,7 +412,6 @@ msgid "Advanced Radar"
 msgstr "Покращений радар"
 
 # Медпункт?
-#: client/campaign/cp_base_callbacks.c:332
 msgid "Hospital"
 msgstr "Шпиталь"
 
@@ -2377,11 +2374,9 @@ msgstr "Хрест"
 msgid "Coin"
 msgstr "Медаль"
 
-#: client/campaign/cp_employee.c:206
 msgid "Scientist"
 msgstr "Вчений"
 
-#: client/campaign/cp_employee.c:210
 msgid "Pilot"
 msgstr "Пілот"
 
@@ -2389,7 +2384,6 @@ msgstr "Пілот"
 msgid "UGV"
 msgstr "БНП"
 
-#: client/campaign/cp_employee.c:208
 msgid "Worker"
 msgstr "Робітник"
 
@@ -2850,7 +2844,6 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: client/campaign/cp_missions.c:459
 msgid "Alien base"
 msgstr "База прибульців"
 
@@ -7908,7 +7901,6 @@ msgstr "Повернутися до огляду бази"
 msgid "Name of this base"
 msgstr "Назва бази"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Cancel"
 msgstr "Відміна"
 
@@ -7966,20 +7958,15 @@ msgstr "Видалити цей агрегат"
 msgid "Available equipment:"
 msgstr "Доступне обладнання:"
 
-#: client/campaign/cp_fightequip_callbacks.c:135
 msgid "Weapons"
 msgstr "Озброєння"
 
-#: client/campaign/cp_fightequip_callbacks.c:142
 msgid "Ammo"
 msgstr "Набої"
 
-#: client/campaign/cp_fightequip_callbacks.c:137
-#: client/campaign/cp_ufopedia.c:146
 msgid "Armour"
 msgstr "Броня"
 
-#: client/campaign/cp_fightequip_callbacks.c:139
 msgid "Items"
 msgstr "Обладнання"
 
@@ -8160,13 +8147,9 @@ msgstr "Термін:"
 msgid "Autofire"
 msgstr "Автовогонь"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
-#: client/campaign/cp_installation_callbacks.c:216
 msgid "Destroy"
 msgstr "Знищити"
 
-#: client/campaign/cp_installation_callbacks.c:216
 msgid "Destroy installation"
 msgstr "Знищити споруду"
 
@@ -8200,8 +8183,6 @@ msgstr "Купити/Продати"
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Купити/Продати спорядження та техніку"
 
-#: client/campaign/cp_base.c:1203 client/campaign/cp_base.c:1213
-#: client/campaign/cp_base.c:1223
 msgid "Transfer"
 msgstr "Переправити"
 
@@ -8250,8 +8231,6 @@ msgstr "Попредній огляд"
 msgid "Select building"
 msgstr "Вибрати споруду"
 
-#: client/campaign/cp_ufopedia.c:609 client/campaign/cp_ufopedia.c:662
-#: client/campaign/cp_ufopedia.c:671 client/campaign/cp_ufopedia.c:831
 msgid "UFOpaedia"
 msgstr "НЛО-довідник"
 
@@ -8700,7 +8679,6 @@ msgstr "Вогонь увідповідь: одиночний (неможлив�
 msgid "No reaction fire"
 msgstr "Без вогню увідповідь"
 
-#: client/battlescape/cl_hud.c:822
 msgid "Reserve TUs for shooting."
 msgstr "Зарезервувати ОЧ для пострілу"
 
@@ -9569,7 +9547,6 @@ msgstr "Низько"
 msgid "Medium"
 msgstr "Посередньо"
 
-#: client/cl_game_campaign.c:164
 msgid "Normal"
 msgstr "Норма"
 
@@ -10023,11 +10000,9 @@ msgstr "Підтвердження дій:"
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 msgstr "\"Ні\" означає, що всі ваші накази на полі ьою будуть виконуватися негайто. \"Так\" означає, що у вас буде можливість підтвердити всі зроблені накази до того, як боєць почне їх виконувати. \"Для переміщень\" означає, що шляхи будуть відображатися до тих пір, поки ви не підтвердите переміщення бійця."
 
-#: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Так"
 
-#: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Ні"
 
@@ -10107,7 +10082,6 @@ msgstr "Прийняти"
 msgid "Use the previous resolution."
 msgstr "Використати попереднє розрішення."
 
-#: client/campaign/cp_produce_callbacks.c:296
 msgid "Disassembly"
 msgstr "Демонтаж"
 
@@ -10278,7 +10252,6 @@ msgstr "Поточний елемент:"
 msgid "Add/Remove item to transfer cargo"
 msgstr "Додати/Видалити предмет для передачі"
 
-#: client/cl_game_campaign.c:241
 msgid "Aliens"
 msgstr "Прибульці"
 
@@ -10673,105 +10646,80 @@ msgstr "Кулеметна стрічка"
 msgid "Autocannon Module"
 msgstr "Крупнокаліберна гармата"
 
-#: client/battlescape/cl_actor.c:102
 msgid "Poor"
 msgstr "Погано"
 
-#: client/battlescape/cl_actor.c:104
 msgid "Mediocre"
 msgstr "Задовільно"
 
-#: client/battlescape/cl_actor.c:106
 msgid "Average"
 msgstr "Більш-менш"
 
-#: client/battlescape/cl_actor.c:108
 msgid "Competent"
 msgstr "Є досвід"
 
-#: client/battlescape/cl_actor.c:110
 msgid "Proficient"
 msgstr "Спеціаліст"
 
-#: client/battlescape/cl_actor.c:112
 msgid "Very Good"
 msgstr "Профі"
 
-#: client/battlescape/cl_actor.c:114
 msgid "Highly Proficient"
 msgstr "Експерт"
 
-#: client/battlescape/cl_actor.c:118
 msgid "Outstanding"
 msgstr "Грандіозно"
 
-#: client/battlescape/cl_actor.c:121
 msgid "Superhuman"
 msgstr "Винятково"
 
-#: client/battlescape/cl_actor.c:661
 msgid "This isn't your round\n"
 msgstr "Зарас не ваш хід\n"
 
-#: client/battlescape/cl_actor.c:912
 msgid "You cannot reload this unknown item.\n"
 msgstr "Ви не можете перезарядити цей невідомий предмет.\n"
 
-#: client/battlescape/cl_actor.c:1757
 msgid "Unknown alien race"
 msgstr "Прибулець невідомої раси"
 
-#: client/battlescape/cl_actor.c:2410
 msgid "Toggle to next actor"
 msgstr "До наступного бійця"
 
-#: client/battlescape/cl_actor.c:2411
 msgid "Select an actor from list"
 msgstr "Вибрати бійця з переліку"
 
-#: client/battlescape/cl_actor.c:2412
 msgid "Update an actor"
 msgstr "Оновити бійця"
 
-#: client/battlescape/cl_actor.c:2414
 msgid "Toggle stand/crounch"
 msgstr "Перемикач положень встати/присісти"
 
-#: client/battlescape/cl_actor.c:2415
 msgid "Toggle the headgear"
 msgstr "Одягти на голову"
 
-#: client/battlescape/cl_actor.c:2416
 msgid "Opens or closes a door"
 msgstr "Відкрити/закрити двері"
 
-#: client/battlescape/cl_actor.c:2417
 msgid "Confirm the current action"
 msgstr "Підтвердити поточну дію"
 
-#: client/battlescape/cl_actor.c:2418
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Перемкнути на наступного ворога видимого цим бійцем."
 
-#: client/battlescape/cl_actor.c:2420
 msgid "Toggle to next alien"
 msgstr "Перейти до наступного ворога"
 
-#: client/battlescape/cl_hud.c:97 client/battlescape/cl_hud.c:100
 msgid "Crouch walk"
 msgstr "Навприсядки:"
 
-#: client/battlescape/cl_hud.c:98
 msgid "Autostand"
 msgstr "Автостоп:"
 
 # Ходьба
-#: client/battlescape/cl_hud.c:99
 msgid "Walk"
 msgstr "Ходьба:"
 
 # ОЗ - одиниці здоров'я
-#: client/battlescape/cl_hud.c:148
 #, c-format
 msgid ""
 "%s\n"
@@ -10782,81 +10730,63 @@ msgstr ""
 "ОЗ: %i/%i ОЧ: %i\n"
 "%s"
 
-#: client/battlescape/cl_hud.c:293
 msgid "[0 TU] No reservation"
 msgstr "[0 ОЧ] немає запасу"
 
-#: client/battlescape/cl_hud.c:313
 #, c-format
 msgid "[%i TU] %s"
 msgstr "[%i ОЧ] %s"
 
-#: client/battlescape/cl_hud.c:345
 msgid "Reserve TUs for firing/using."
 msgstr "Резервувати ОЧ для стрільби/використання."
 
-#: client/battlescape/cl_hud.c:345
 msgid "Shot Reservation"
 msgstr "Резервування пострілу"
 
-#: client/battlescape/cl_hud.c:445
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "Залишилось ОЧ: %i"
 
-#: client/battlescape/cl_hud.c:448
 msgid "No remaining TUs left after shot."
 msgstr "Після пострілу не залишилось більше ОЧ"
 
-#: client/battlescape/cl_hud.c:451
 #, c-format
 msgid "TU: %i"
 msgstr "ОЧ: %i"
 
-#: client/battlescape/cl_hud.c:452
 #, c-format
 msgid "Shots: %i"
 msgstr "Пострілів: %i"
 
-#: client/battlescape/cl_hud.c:666
 msgid "No weapon."
 msgstr "Немає зброї."
 
-#: client/battlescape/cl_hud.c:675
 msgid "Weapon cannot be reloaded."
 msgstr "Зброю неможливо перезарядити."
 
-#: client/battlescape/cl_hud.c:681
 msgid "No reload possible, already fully loaded."
 msgstr "Немає потреби, зброя перезаряджена."
 
-#: client/battlescape/cl_hud.c:691
 msgid "Not enough TUs for reloading weapon."
 msgstr "Немає ОЧ для перезарядки зброї"
 
-#: client/battlescape/cl_hud.c:694
 msgid "No reload possible, you don't have backup ammo."
 msgstr "Неможливо, у вас нема запасних боєприпасів"
 
-#: client/battlescape/cl_hud.c:786
 msgid "Not enough TUs for standing up."
 msgstr "Недостатньо ОЧ, щоб встати."
 
-#: client/battlescape/cl_hud.c:789
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "Встати (%i ОЧ)"
 
-#: client/battlescape/cl_hud.c:794
 msgid "Not enough TUs for crouching."
 msgstr "Недостатньо ОЧ, щоб присісти."
 
-#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "Присісти (%i TU)"
 
-#: client/battlescape/cl_hud.c:805
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -10865,16 +10795,13 @@ msgstr ""
 "%i ОЧ зарезервовано для присідання/вставання.\n"
 "Клік, щоб очистити."
 
-#: client/battlescape/cl_hud.c:809
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Зарезервувати %i ОЧ для присідання/вставання."
 
-#: client/battlescape/cl_hud.c:812
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Замало ОЧ, щоб резервувати для присідання/вставання."
 
-#: client/battlescape/cl_hud.c:818
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -10885,16 +10812,13 @@ msgstr ""
 "Клік, щоб зміити.\n"
 "Правий клік, щоб очистити."
 
-#: client/battlescape/cl_hud.c:825
 msgid "Reserving TUs for shooting not possible."
 msgstr "Резервування ОЧ для стрільби неможливо."
 
-#: client/battlescape/cl_hud.c:846 client/battlescape/cl_hud.c:855
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Перезарядити (%i ОЧ)."
 
-#: client/battlescape/cl_hud.c:1082
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -10902,7 +10826,6 @@ msgstr ""
 "Ви не можете використати цей невідомий предмет.\n"
 "Спочатку вам необхідно дослідити його.\n"
 
-#: client/battlescape/cl_hud.c:1103
 #, c-format
 msgid ""
 "%s\n"
@@ -10911,17 +10834,14 @@ msgstr ""
 "%s\n"
 "(вільно)\n"
 
-#: client/battlescape/cl_hud.c:1125
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "Мораль %i | Резерв ОЧ: %i\n"
 
-#: client/battlescape/cl_hud.c:1127
 #, c-format
 msgid "Morale  %i"
 msgstr "Мораль  %i"
 
-#: client/battlescape/cl_hud.c:1132
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -10930,7 +10850,6 @@ msgstr ""
 "Мораль  %i | Зарезервовано ОЧ: %i\n"
 "%s %i (%i|%i ОЧ залишиться)\n"
 
-#: client/battlescape/cl_hud.c:1136
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -10939,7 +10858,6 @@ msgstr ""
 "Мораль  %i\n"
 "%s %i (%i ОЧ залишиться)\n"
 
-#: client/battlescape/cl_hud.c:1168
 #, c-format
 msgid ""
 "Time Units\n"
@@ -10952,20 +10870,15 @@ msgstr ""
 "- У резерві:  %i\n"
 "- Залишиться: %i\n"
 
-#: client/battlescape/cl_hud.c:1263
 msgid "Currently panics!\n"
 msgstr "Панікує!\n"
 
-#: client/battlescape/cl_hud.c:1489
 msgid "Update cvars from actor from list"
 msgstr "Обновити cvars персонажа з переліку"
 
-#: client/battlescape/cl_hud_callbacks.c:86
-#: client/battlescape/cl_hud_callbacks.c:243
 msgid "No item in hand.\n"
 msgstr "Нічого немає в руці.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:92
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -10973,7 +10886,6 @@ msgstr ""
 "Неможливо виконати:\n"
 "потрібно перезарядити.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:97
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -10981,8 +10893,6 @@ msgstr ""
 "Цією зброєю неможливо стріляти\n"
 "однією рукою.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:151
-#: client/battlescape/cl_hud_callbacks.c:261
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -10990,7 +10900,6 @@ msgstr ""
 "Неможливо виконати:\n"
 "недостатньо ОЧ.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:249
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -10998,7 +10907,6 @@ msgstr ""
 "Неможливо виконати:\n"
 "цей предмет не перезаряджається.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:256
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -11006,300 +10914,191 @@ msgstr ""
 "Неможливо виконати:\n"
 "боєприпаси недоступні.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:291
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Перезарядити зброю у лівій руці"
 
-#: client/battlescape/cl_hud_callbacks.c:292
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "Перезарядити зброю у правій руці"
 
-#: client/battlescape/cl_hud_callbacks.c:293
 msgid "Toggle reservation for crouching."
 msgstr "Переключення резерву для присідання."
 
-#: client/battlescape/cl_hud_callbacks.c:294
 msgid "Toggle reaction fire"
 msgstr "Переключення вогню увідповіль"
 
-#: client/battlescape/cl_view.c:58 client/battlescape/cl_view.c:84
 #, c-format
 msgid "loading %s"
 msgstr "завантаження %s"
 
-#: client/battlescape/cl_view.c:66
 msgid "loading models..."
 msgstr "завнтаження моделей..."
 
-#: client/battlescape/cl_view.c:114 client/cl_main.c:1124
 msgid "Awaiting game start"
 msgstr "Очікування старту гри"
 
-#: client/battlescape/events/e_server.c:41
 #, fuzzy
 msgid "This isn't your round"
 msgstr "Зарас не ваш хід\n"
 
-#: client/battlescape/events/e_server.c:53
 msgid "Ends current round"
 msgstr "Завершити поточний хід"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:159
 #, c-format
 msgid "Enemy spotted: %s!"
 msgstr "Виявлено ворога : %s!"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:162
 msgid "Enemy spotted!\n"
 msgstr "Ворога виявлено!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:164
 msgid "Civilian spotted!\n"
 msgstr "Виявлено цивільну особу!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:78
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s - ПАРАЛІЗОВАНО\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s - ВБИТО\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:88
 msgid "A civilian was stunned.\n"
 msgstr "Цивільного паралізовано.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
 msgid "A civilian was killed.\n"
 msgstr " ВБИЛИ цивільного.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:94
 msgid "An alien was stunned.\n"
 msgstr "Прибульця паралізовано.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
 msgid "An alien was killed.\n"
 msgstr "Прибульця ВБИТО.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:100
 msgid "A soldier was stunned.\n"
 msgstr "Бійця паралізовано.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
 msgid "A soldier was killed.\n"
 msgstr "Бійця ВБИЛИ.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:106
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Члена команди %i паралізовано.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Члена команди %i - вбито.\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:69
 #, fuzzy, c-format
 msgid "%s was revitalised\n"
 msgstr "%s - ВБИТО\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:75
 #, fuzzy
 msgid "A civilian was revitalised.\n"
 msgstr " ВБИЛИ цивільного.\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:78
 #, fuzzy
 msgid "An alien was revitalised.\n"
 msgstr "Прибульця ВБИТО.\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:81
 #, fuzzy
 msgid "A soldier was revitalised.\n"
 msgstr "Бійця ВБИЛИ.\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:84
 #, fuzzy, c-format
 msgid "A member of team %i was revitalised.\n"
 msgstr "Члена команди %i - вбито.\n"
 
-#: client/battlescape/events/event/player/e_event_doendround.c:57
 msgid "Your round started!\n"
 msgstr "Тепер ваш хід!\n"
 
-#: client/campaign/cp_aircraft.c:450
 msgid "ON RED ALERT"
 msgstr "ЧЕРВОНА ТРИВОГА"
 
-#: client/campaign/cp_aircraft.c:454
 msgid "Nothing - should not be displayed"
 msgstr "Нічого - не потрібно показувати"
 
-#: client/campaign/cp_aircraft.c:456
 msgid "at home base"
 msgstr "на базі"
 
-#: client/campaign/cp_aircraft.c:458
 msgid "refuelling"
 msgstr "дозаправляється"
 
-#: client/campaign/cp_aircraft.c:460
 msgid "idle"
 msgstr "чекає"
 
-#: client/campaign/cp_aircraft.c:462
 msgid "in transit"
 msgstr "в повітрі"
 
-#: client/campaign/cp_aircraft.c:464
 msgid "enroute to mission"
 msgstr "курсує на місію"
 
-#: client/campaign/cp_aircraft.c:466
 msgid "pursuing a UFO"
 msgstr "переслідує НЛО"
 
-#: client/campaign/cp_aircraft.c:468
 msgid "ready to drop soldiers"
 msgstr "готовий до висадки бійців"
 
-#: client/campaign/cp_aircraft.c:470
 msgid "intercepting a UFO"
 msgstr "перехоплення НЛО"
 
-#: client/campaign/cp_aircraft.c:472
 msgid "enroute to new home base"
 msgstr "курсує на нову базу прив'язки"
 
-#: client/campaign/cp_aircraft.c:474
 msgid "returning to base"
 msgstr "повертається на базу"
 
-#: client/campaign/cp_aircraft.c:565
 msgid "Interceptor"
 msgstr "Перехоплювач"
 
-#: client/campaign/cp_aircraft.c:567
 msgid "Transporter"
 msgstr "Траспорт"
 
-#: client/campaign/cp_aircraft.c:569 client/campaign/cp_ufo.c:158
-#: client/campaign/cp_ufo.c:159
 msgid "UFO"
 msgstr "НЛО"
 
-#: client/campaign/cp_aircraft.c:837
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "Нове авіасудно %s готове (на базі %s)"
 
-#: client/campaign/cp_aircraft.c:838 client/campaign/cp_aircraft.c:1224
-#: client/campaign/cp_aircraft.c:1240 client/campaign/cp_aircraft.c:1284
-#: client/campaign/cp_aircraft.c:1341 client/campaign/cp_aircraft.c:1364
-#: client/campaign/cp_aircraft.c:2124
-#: client/campaign/cp_aircraft_callbacks.c:95
-#: client/campaign/cp_aircraft_callbacks.c:103
-#: client/campaign/cp_aircraft_callbacks.c:111
-#: client/campaign/cp_airfight.c:334 client/campaign/cp_airfight.c:354
-#: client/campaign/cp_aliencont.c:182 client/campaign/cp_aliencont.c:212
-#: client/campaign/cp_aliencont.c:231 client/campaign/cp_aliencont.c:241
-#: client/campaign/cp_base.c:1167 client/campaign/cp_base.c:1189
-#: client/campaign/cp_base.c:1754 client/campaign/cp_base.c:1818
-#: client/campaign/cp_base.c:2907 client/campaign/cp_base.c:2912
-#: client/campaign/cp_base.c:3650 client/campaign/cp_base_callbacks.c:68
-#: client/campaign/cp_base_callbacks.c:197
-#: client/campaign/cp_base_callbacks.c:239
-#: client/campaign/cp_base_callbacks.c:572
-#: client/campaign/cp_base_callbacks.c:578
-#: client/campaign/cp_base_callbacks.c:600
-#: client/campaign/cp_base_callbacks.c:610
-#: client/campaign/cp_base_callbacks.c:622
-#: client/campaign/cp_base_callbacks.c:629
-#: client/campaign/cp_base_callbacks.c:637
-#: client/campaign/cp_base_callbacks.c:642
-#: client/campaign/cp_base_callbacks.c:647 client/campaign/cp_campaign.c:1008
-#: client/campaign/cp_installation_callbacks.c:149
-#: client/campaign/cp_mapfightequip.c:351
-#: client/campaign/cp_mapfightequip.c:372
-#: client/campaign/cp_mapfightequip.c:378
-#: client/campaign/cp_mapfightequip.c:390
-#: client/campaign/cp_market_callbacks.c:633
-#: client/campaign/cp_market_callbacks.c:638 client/campaign/cp_missions.c:735
-#: client/campaign/cp_missions.c:1090 client/campaign/cp_nation.c:889
-#: client/campaign/cp_nation.c:903 client/campaign/cp_nation.c:916
-#: client/campaign/cp_nation.c:925 client/campaign/cp_nation.c:931
-#: client/campaign/cp_nation.c:939 client/campaign/cp_popup.c:483
-#: client/campaign/cp_produce.c:491 client/campaign/cp_produce.c:500
-#: client/campaign/cp_produce.c:511 client/campaign/cp_produce.c:520
-#: client/campaign/cp_produce.c:531
-#: client/campaign/cp_research_callbacks.c:563
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:587
-#: client/campaign/cp_research_callbacks.c:626
-#: client/campaign/cp_research_callbacks.c:656
-#: client/campaign/cp_research_callbacks.c:815
-#: client/campaign/cp_research_callbacks.c:818 client/campaign/cp_ufo.c:428
-#: client/campaign/cp_ufo.c:844 client/campaign/cp_ufo.c:849
-#: client/campaign/cp_ufo.c:855
-#: client/campaign/missions/cp_mission_baseattack.c:122
-#: client/cl_game_campaign.c:69 client/cl_game_campaign.c:88
-#: client/cl_game_campaign.c:91 client/cl_main.c:404
-#: client/multiplayer/mp_serverlist.c:469
 msgid "Notice"
 msgstr "Замітка"
 
-#: client/campaign/cp_aircraft.c:902
 msgid "No operational hangars at that base."
 msgstr "На цій базі немає працездатних ангарів."
 
-#: client/campaign/cp_aircraft.c:906
 msgid "No free hangars at that base."
 msgstr "На цій базі немає вільних ангарів."
 
-#: client/campaign/cp_aircraft.c:909
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Недостатньо вільних місць в казармах на цій базі."
 
-#: client/campaign/cp_aircraft.c:912
 msgid "Insufficient storage space at that base."
 msgstr "Недостатньо вільного місця на складах цієї бази."
 
-#: client/campaign/cp_aircraft.c:916
 msgid "That base is beyond this aircraft's range."
 msgstr "Ця база поза межами дальності польоту даного авіасудна."
 
-#: client/campaign/cp_aircraft.c:1223
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "Судно %s на %s неможливо повністю заправити. Немає антиматерії."
 
-#: client/campaign/cp_aircraft.c:1239
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Судно %s на %s заправлено."
 
-#: client/campaign/cp_aircraft.c:1284
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "У судна %s закінчується пальне, потрібно повернутися на базу."
 
-#: client/campaign/cp_aircraft.c:1341
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Спочатку призначте хоча б одного бійця до цього авіатранспорту"
 
-#: client/campaign/cp_aircraft.c:1364
 msgid "Insufficient fuel."
 msgstr "Недостатньо пального."
 
-#: client/campaign/cp_aircraft.c:2124
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "В судна %s недостатньо пального для перехоплення НЛО; повертається на базу %s."
 
-#: client/campaign/cp_aircraft_callbacks.c:95
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
@@ -11309,7 +11108,6 @@ msgstr ""
 "\n"
 "Неможливо здійснити запуск авіасудна.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:103
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
@@ -11319,120 +11117,88 @@ msgstr ""
 "\n"
 "Неможливо здійснити запуск авіасудна.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:111
 msgid "Aircraft started"
 msgstr "Авіасудно в повітрі"
 
-#: client/campaign/cp_aircraft_callbacks.c:215 client/campaign/cp_map.c:1678
-#: client/campaign/cp_map.c:1685
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Швидкість:\t%i км/год\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:217 client/campaign/cp_map.c:1679
-#: client/campaign/cp_map.c:1686
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Пальне:\t%i/%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:219
-#: client/campaign/cp_ufopedia.c:345
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Дальність польоту:\t%i км\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:220
 #, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "Зброя:\t%i із %i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:221
 #, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "Броня:\t%i із 1\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:222
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "Електроніка:\t%i із %i"
 
-#: client/campaign/cp_airfight.c:334
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "НЛО обстрілює %s"
 
-#: client/campaign/cp_airfight.c:354
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "Закінчився боєзапас - повертаюсь на базу."
 
-#: client/campaign/cp_airfight.c:434 client/campaign/cp_airfight.c:461
 msgid "Interception"
 msgstr "Перехоплення"
 
-#: client/campaign/cp_airfight.c:434
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "НЛО збито -- судно прибульців загублено в морі."
 
-#: client/campaign/cp_airfight.c:461 client/cl_game_campaign.c:91
 msgid "You've lost the battle"
 msgstr "Ви програли бій"
 
-#: client/campaign/cp_aliencont.c:182
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "Ви поки не можете досліджувати прибульців. На цій базі не збудовано ізолятор."
 
-#: client/campaign/cp_aliencont.c:212
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "Ви, покищо, не можете утримувати прибульців живими. Вони померли."
 
-#: client/campaign/cp_aliencont.c:231
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr "Немає вільного місця в ізоляторі. Кілька прибульців буде вбито."
 
-#: client/campaign/cp_aliencont.c:241
 msgid "You've captured new aliens."
 msgstr "Ви захопили прибульця нового виду."
 
-#: client/campaign/cp_aliencont_callbacks.c:204
 msgid "Already researched"
 msgstr "Вже досліджено"
 
-#: client/campaign/cp_aliencont_callbacks.c:206
 msgid "Needs autopsy!"
 msgstr "Необхідний розтин!"
 
-#: client/campaign/cp_aliencont_callbacks.c:229
 msgid "Free slot"
 msgstr "Вільний відсік"
 
-#: client/campaign/cp_aliencont_callbacks.c:230
-#: client/campaign/cp_basedefence_callbacks.c:217
-#: client/campaign/cp_basedefence_callbacks.c:595
-#: client/campaign/cp_ufopedia.c:229 client/input/cl_joystick.c:278
 msgid "None"
 msgstr "- ---- -"
 
-#: client/campaign/cp_base.c:1167
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "Базу атаковано, ви не можете демонтовувати споруди!"
 
-#: client/campaign/cp_base.c:1177
 msgid "Destroy Entrance"
 msgstr "Знищити вхід"
 
-#: client/campaign/cp_base.c:1177
 msgid "You can't destroy the entrance of the base!"
 msgstr "Ви не можете знищити вхід на базу!"
 
-#: client/campaign/cp_base.c:1189
 msgid "You can't destroy this building! It is the only connection to other buildings!"
 msgstr ""
 
-#: client/campaign/cp_base.c:1200
 msgid "Destroy Hangar"
 msgstr "Демонтуватити Ангар"
 
-#: client/campaign/cp_base.c:1200
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -11440,29 +11206,21 @@ msgstr ""
 "Якщо ви демонтуєте цей ангар,то ви також знищете і авіасудно розміщене в ньому.\n"
 "Ви впевнені, що хочете це зробити?"
 
-#: client/campaign/cp_base.c:1201
 msgid "Go to hangar"
 msgstr "Перейти в ангар"
 
-#: client/campaign/cp_base.c:1201
 msgid "Go to hangar without destroying building"
 msgstr "Перейти в ангар, не демонтовуючи споруду"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
 msgid "Destroy the building"
 msgstr "Знищити цю споруду"
 
-#: client/campaign/cp_base.c:1204 client/campaign/cp_base.c:1214
-#: client/campaign/cp_base.c:1224
 msgid "Go to transfer menu without destroying the building"
 msgstr "Перейти в меню пересилки замість знищення споруди"
 
-#: client/campaign/cp_base.c:1210
 msgid "Destroy Quarter"
 msgstr "Демонтувати Казарми"
 
-#: client/campaign/cp_base.c:1210
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -11470,19 +11228,15 @@ msgstr ""
 "Якщо ви демонтуєте казарми, то усіх найманців, проживаючих у них, буде звільнено.\n"
 "Ви впевнені, що хочете це зробити?"
 
-#: client/campaign/cp_base.c:1211
 msgid "Dismiss"
 msgstr "Звільнити"
 
-#: client/campaign/cp_base.c:1211
 msgid "Go to hiring menu without destroying building"
 msgstr "Перейти в відділ кадрів замість демонтажу споруди"
 
-#: client/campaign/cp_base.c:1220
 msgid "Destroy Storage"
 msgstr "Демонтувати Склад"
 
-#: client/campaign/cp_base.c:1220
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -11490,62 +11244,48 @@ msgstr ""
 "Якщо ви демонтуєте цей склад, то весь його вміст буде втрачено.\n"
 "Ви впевнені, що хочете демонтувати цю споруду?"
 
-#: client/campaign/cp_base.c:1221
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Перейти до меню купівлі/продажу без демонтажу"
 
-#: client/campaign/cp_base.c:1221
 msgid "Go to storage"
 msgstr "Перейти до складу"
 
-#: client/campaign/cp_base.c:1233
 msgid "Are you sure you want to destroy this building?"
 msgstr "Ви впевнені, що хочете демонтувати цю споруду?"
 
-#: client/campaign/cp_base.c:1233
 msgid "Destroy building"
 msgstr "Демонтувати споруду"
 
-#: client/campaign/cp_base.c:1251
 msgid "Not set"
 msgstr "Не вказано"
 
-#: client/campaign/cp_base.c:1257
 #, c-format
 msgid "Already %i in base"
 msgstr "%i вже на базі"
 
-#: client/campaign/cp_base.c:1263
 msgid "Construction finished"
 msgstr "Спорудження завершено"
 
-#: client/campaign/cp_base.c:1267
 msgid "Working 100%"
 msgstr "Функціонує на 100%"
 
-#: client/campaign/cp_base.c:1271
 msgid "Not operational, depends on"
 msgstr "Непрацездатний, залежить від"
 
-#: client/campaign/cp_base.c:1275
 msgid "Down"
 msgstr "Від'єднано"
 
-#: client/campaign/cp_base.c:1754
 msgid "Not enough credits to build this\n"
 msgstr "Недостатньо коштів, щоб збудувати це\n"
 
-#: client/campaign/cp_base.c:1818
 #, fuzzy
 msgid "You must build next to existing buildings."
 msgstr "Перейти до меню купівлі/продажу без демонтажу"
 
-#: client/campaign/cp_base.c:1867
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Вартість:\t%i кр\n"
 
-#: client/campaign/cp_base.c:1870
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
@@ -11553,52 +11293,37 @@ msgstr[0] "%i доба до завершення\n"
 msgstr[1] "%i доби до завершення\n"
 msgstr[2] "%i діб до завершення\n"
 
-#: client/campaign/cp_base.c:1873 client/campaign/cp_ufopedia.c:232
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Експлуатаційні витрати:\t%i кр\n"
 
-#: client/campaign/cp_base.c:1876 client/campaign/cp_ufopedia.c:229
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Потребує:\t%s\n"
 
-#: client/campaign/cp_base.c:2636
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "На цій базі нема авіації. Спочатку ви повинні купити авіасудно чи переправити його з іншої базаи\n"
 
-#: client/campaign/cp_base.c:2636 client/campaign/cp_base.c:2638
-#: client/campaign/cp_market_callbacks.c:615
-#: client/campaign/cp_market_callbacks.c:620
-#: client/campaign/cp_market_callbacks.c:705
-#: client/campaign/cp_market_callbacks.c:707 client/campaign/cp_save.c:392
-#: client/multiplayer/mp_team.c:254 client/multiplayer/mp_team.c:275
 msgid "Note"
 msgstr "ПРИМІТКА"
 
-#: client/campaign/cp_base.c:2638
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "На цій базі нема авіації. Спочатку ви повинні купити авіасудно\n"
 
-#: client/campaign/cp_base.c:2648
 msgid "Antimatter (current/max):"
 msgstr "К-сть антиматерії (у наявності/макс):"
 
-#: client/campaign/cp_base.c:2842
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Завершено спорудження модуля %s на %s."
 
-#: client/campaign/cp_base.c:2843
 msgid "Building finished"
 msgstr "Будівництво завершене"
 
-#: client/campaign/cp_base.c:2905
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "За продаж %s отримано %i кр."
 
-#: client/campaign/cp_base.c:2906
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -11606,12 +11331,10 @@ msgstr[0] "%i предмет складено"
 msgstr[1] "%i предмети складено"
 msgstr[2] "%i предметів складено"
 
-#: client/campaign/cp_base.c:2910
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Недостатньо місця у %s. %s"
 
-#: client/campaign/cp_base.c:2911
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
@@ -11619,79 +11342,58 @@ msgstr[0] "%i предмет продано за %i кредитів."
 msgstr[1] "%i предмети продано за %i кредитів."
 msgstr[2] "%i предметів продано за %i кредитів."
 
-#: client/campaign/cp_base.c:3648
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "%s не містить Сховища антиматерії. %i одиниць антиматерії буде знищено."
 
-#: client/campaign/cp_base_callbacks.c:68
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
 msgstr "Модуль %s знищено вибухом у сховищі антиматерії."
 
-#: client/campaign/cp_base_callbacks.c:188
 #, c-format
 msgid "Base #%i"
 msgstr "База №%i"
 
-#: client/campaign/cp_base_callbacks.c:197
 msgid "You've reached the base limit."
 msgstr "Кількість баз обмежена. Ви досягли ліміту."
 
-#: client/campaign/cp_base_callbacks.c:226
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "Нову базу збудовано: %s (%s)"
 
-#: client/campaign/cp_base_callbacks.c:228
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "Нову базу (%s) збудовано."
 
-#: client/campaign/cp_base_callbacks.c:229
 msgid "Base built"
 msgstr "База побудована"
 
-#: client/campaign/cp_base_callbacks.c:239
 msgid "Not enough credits to set up a new base."
 msgstr "Немає коштів на заснування нової бази."
 
-#: client/campaign/cp_base_callbacks.c:294
 msgid "Buy or produce at least one aircraft first."
 msgstr "Спочатку придбайте чи виготовіть хоча б одне авіасудно."
 
-#: client/campaign/cp_base_callbacks.c:296
 msgid "No Hangar functional in base."
 msgstr "На цій базі немає ангару."
 
-#: client/campaign/cp_base_callbacks.c:302
-#: client/campaign/cp_base_callbacks.c:312
-#: client/campaign/cp_base_callbacks.c:317
-#: client/campaign/cp_base_callbacks.c:322
-#: client/campaign/cp_base_callbacks.c:327
-#: client/campaign/cp_base_callbacks.c:332
 #, c-format
 msgid "No %s functional in base."
 msgstr "На цій базі відсутній модуль %s."
 
-#: client/campaign/cp_base_callbacks.c:305
 #, fuzzy
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
 msgstr "Переправка спорядження, авіатехніки, БНП, прибульців та працівників до інших баз"
 
-#: client/campaign/cp_base_callbacks.c:307
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "Побудуйте ще одну базу для переправлення екіпіровки чи персоналу"
 
-#: client/campaign/cp_base_callbacks.c:572
 msgid "Base is under attack, you can't access this building !"
 msgstr "Базу атаковано, немає доступу до цієї споруди!"
 
-#: client/campaign/cp_base_callbacks.c:578
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Вам потрібен ангар для користування авіацією."
 
-#: client/campaign/cp_base_callbacks.c:598
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -11709,145 +11411,110 @@ msgstr[2] ""
 "Спорудження модуля закінчиться через %i  діб.\n"
 "Будь-ласка зачекайте."
 
-#: client/campaign/cp_base_callbacks.c:609
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Потрібно збудувати %s для роботи %s."
 
-#: client/campaign/cp_base_callbacks.c:620
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Спорудження %s не завершено, і необхідно для використання %s."
 
-#: client/campaign/cp_base_callbacks.c:627
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Впевнітся, що необхідні споруди %s (%s) працездатні, оскільки вони необхідні для функціонування %s."
 
-#: client/campaign/cp_base_callbacks.c:635
-#: client/campaign/cp_base_callbacks.c:640
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Вам необхідно найняти %s для використання споруди %s."
 
-#: client/campaign/cp_base_callbacks.c:646
 #, c-format
 msgid "Build a %s first."
 msgstr "Спочатку збудуйте %s."
 
-#: client/campaign/cp_base_callbacks.c:675
 msgid "^BAircraft\n"
 msgstr "^BАвіація\n"
 
-#: client/campaign/cp_base_callbacks.c:682
 msgid "^BEmployees\n"
 msgstr "^BПерсонал\n"
 
-#: client/campaign/cp_base_callbacks.c:690
 msgid "^BAliens\n"
 msgstr "^BПрибульці\n"
 
-#: client/campaign/cp_base_callbacks.c:702
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BСпоруди\t\t\t\t\t\tМісткість\t\t\t\tК-сть\n"
 
-#: client/campaign/cp_base_callbacks.c:726
 msgid "day"
 msgid_plural "days"
 msgstr[0] "доба"
 msgstr[1] "доби"
 msgstr[2] "діб"
 
-#: client/campaign/cp_base_callbacks.c:736
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^BВиробництво\t\t\t\t\t\tК-сть\t\t\t\tПеребіг\n"
 
-#: client/campaign/cp_base_callbacks.c:743
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:763
 msgid "Nothing\n"
 msgstr "Нічого\n"
 
-#: client/campaign/cp_base_callbacks.c:752
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^BДослідження\t\t\t\t\t\tНауковці\t\t\t\tПеребіг\n"
 
-#: client/campaign/cp_base_callbacks.c:757
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:821 client/campaign/cp_campaign.c:691
-#: client/campaign/cp_market_callbacks.c:310
 #, c-format
 msgid "%i c"
 msgstr "%i кр"
 
-#: client/campaign/cp_basedefence_callbacks.c:147
 #, c-format
 msgid "%i: empty"
 msgstr "%i: вільно"
 
-#: client/campaign/cp_basedefence_callbacks.c:153
 msgid "Working"
 msgstr "Працює"
 
-#: client/campaign/cp_basedefence_callbacks.c:155
 msgid "Installing"
 msgstr "Встановлення"
 
-#: client/campaign/cp_basedefence_callbacks.c:157
 msgid "Replacing"
 msgstr "Заміна"
 
-#: client/campaign/cp_basedefence_callbacks.c:159
 msgid "Removing"
 msgstr "Демонтаж"
 
-#: client/campaign/cp_basedefence_callbacks.c:281
 msgid "No defence of this type in this installation"
 msgstr "Немає захисних систем даного типу на цьому об'єкті"
 
-#: client/campaign/cp_basedefence_callbacks.c:288
-#: client/campaign/cp_basedefence_callbacks.c:295
 msgid "No defence of this type in this base"
 msgstr "Немає захисних систем даного типу на цій базі"
 
-#: client/campaign/cp_campaign.c:327
 msgid "You've gone too far into debt."
 msgstr "У вас занадто велика заборгованість."
 
-#: client/campaign/cp_campaign.c:335
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "Ваші бази втрачено і у вас немає коштів на побудову нової."
 
-#: client/campaign/cp_campaign.c:341
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Ви зазнали поразки та не справились із завданням порятунку Землі. Наш дім та наші народи заражені інопланетною заразою. Тільки групка людей на Землі залишається Людьми, але їх недостатньо для збереження нашої раси. Вам більше нічим командувати; PHALANX не взмозі надалі фунціонувати. Нічого не перешкоджає тотальній перемозі прибульців."
 
-#: client/campaign/cp_campaign.c:360
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Систематичні провальні операції PHALANX, під вашим керівництвом, показали, що не в змозі захистити наші нації. ООН дуже незадоволена вашою роботою і ухвалила рішення про відсторонення вас від командування , а згодом і розпуск проекту PHALANX. В подальшому ніяких інших спроб глобальної кооперації не робилось, усі народи намагались протимтояти прибульцям власними силами, але, зрештою, потерпіли поразку одні за одними."
 
-#: client/campaign/cp_campaign.c:1008
 msgid "Collected dead alien bodies"
 msgstr "Знайдено тіла прибульців"
 
-#: client/campaign/cp_campaign.c:1088
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Вбито прибульців\t%i\n"
 
-#: client/campaign/cp_campaign.c:1089
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Захоплено прибульців\t%i\n"
 
-#: client/campaign/cp_campaign.c:1090
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -11856,22 +11523,18 @@ msgstr ""
 "Вижило прибульців\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1092
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Бійців PHALANX вбито прибульцями\t%i\n"
 
-#: client/campaign/cp_campaign.c:1093
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Бійців PHALANX пропало на завданні\t%i\n"
 
-#: client/campaign/cp_campaign.c:1094
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Бійців PHALANX вбито союзниками\t%i\n"
 
-#: client/campaign/cp_campaign.c:1095
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -11880,17 +11543,14 @@ msgstr ""
 "Бійців PHALANX вижило\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1097
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Цивільних осіб вбито прибульцями\t%i\n"
 
-#: client/campaign/cp_campaign.c:1098
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Цивільних осіб вбито союзниками\t%i\n"
 
-#: client/campaign/cp_campaign.c:1099
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11899,17 +11559,14 @@ msgstr ""
 "Цивільних осіб врятовано\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1100
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Зібрано предметів (типів/усіх)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1171
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s отримує звання %s.\n"
 
-#: client/campaign/cp_campaign.c:1173
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -11918,19 +11575,15 @@ msgstr ""
 "%s нагороджується посмертно званням %s\n"
 "за відважну боротьбу з переважаючим силою ворогом.\n"
 
-#: client/campaign/cp_campaign.c:1174
 msgid "Soldier promoted"
 msgstr "Бійця підвищено в званні"
 
-#: client/campaign/cp_employee.c:204
 msgid "Soldier"
 msgstr "Боєць"
 
-#: client/campaign/cp_employee.c:407
 msgid "Not enough quarters"
 msgstr "Немає місць в казармах"
 
-#: client/campaign/cp_employee.c:407
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -11938,134 +11591,100 @@ msgstr ""
 "Недостатньо місць у казармах для розміщення персоналу.\n"
 "Побудуйте більше казарм."
 
-#: client/campaign/cp_employee_callbacks.c:282
-#: client/campaign/cp_employee_callbacks.c:336
 msgid "Could not fire employee"
 msgstr "Не можна звільнити цього працівника"
 
-#: client/campaign/cp_employee_callbacks.c:343
 msgid "Could not hire employee"
 msgstr "Не можна найняти працівника"
 
-#: client/campaign/cp_event.c:355 client/campaign/cp_save.c:291
-#: client/campaign/cp_save.c:310 client/campaign/cp_time.c:69
-#: client/campaign/cp_ufopedia.c:499 client/campaign/cp_ufopedia.c:504
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_event.c:361
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "Отримоно нове повідомлення: %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:144 client/campaign/cp_map.c:1639
-#: client/campaign/cp_map.c:1658
 msgid "Unknown"
 msgstr "Невідомо"
 
-#: client/campaign/cp_fightequip_callbacks.c:357
 msgid "No item assigned.\n"
 msgstr "Обладнання не встановлено.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:358
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Цей відсік для \"%s\" або менших предметів."
 
-#: client/campaign/cp_fightequip_callbacks.c:366
 msgid "This item is functional.\n"
 msgstr "Обладнання функціонує.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:368
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Обладнання буде встановлено за %i год.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:371
 #, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "%s буде демонтовано за %i год.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:373
 #, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "%s буде встановлено за %i год.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:376
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Це обладнання буде демонтовано за %i год.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:386
 msgid "No ammo assigned to this weapon."
 msgstr "Немає потрібних боєприпасів для цієї зброї."
 
-#: client/campaign/cp_fightequip_callbacks.c:394
 msgid "No ammo needed"
 msgstr "Не потребує боєприпасів"
 
-#: client/campaign/cp_fightequip_callbacks.c:521
 msgid "No slot selected."
 msgstr "Не вибрано відсік."
 
-#: client/campaign/cp_fightequip_callbacks.c:524
 msgid "No item selected."
 msgstr "Не вибрано предмет."
 
-#: client/campaign/cp_fightequip_callbacks.c:527
 msgid "You can't equip an alien technology."
 msgstr "Ви не можете екіпірувати обладнання прибульців."
 
-#: client/campaign/cp_fightequip_callbacks.c:530
 msgid "Technology requested is not yet completed."
 msgstr "Потрібна технологія не досліджена."
 
-#: client/campaign/cp_fightequip_callbacks.c:533
 msgid "This item is too heavy for the selected slot."
 msgstr "Цей предмет заважкий для вибраного відсіку."
 
-#: client/campaign/cp_fightequip_callbacks.c:536
 msgid "Equip a weapon first."
 msgstr "Спочатку встановіть зброю."
 
-#: client/campaign/cp_fightequip_callbacks.c:539
 msgid "Ammo not usable with current weapon."
 msgstr "Боєприпаси не сумісні із даною зброєю."
 
-#: client/campaign/cp_fightequip_callbacks.c:542
 msgid "Unknown problem."
 msgstr "Невідома проблема."
 
-#: client/campaign/cp_fightequip_callbacks.c:545
 msgid "Ok"
 msgstr "ОК"
 
-#: client/campaign/cp_installation.c:177
 #, c-format
 msgid "Installation %s was destroyed."
 msgstr "Споруду %s - знищено."
 
-#: client/campaign/cp_installation.c:178
 msgid "Installation destroyed"
 msgstr "Споруда знищена"
 
-#: client/campaign/cp_installation.c:406
 #, c-format
 msgid "Construction of installation %s finished."
 msgstr "Спорудження об'єкту %s завершено."
 
-#: client/campaign/cp_installation.c:407
 msgid "Installation finished"
 msgstr "Спорудження завершено"
 
-#: client/campaign/cp_installation.c:518
 #, c-format
 msgid "%d c"
 msgstr "%d кр"
 
-#: client/campaign/cp_installation.c:528
-#: client/campaign/cp_installation_callbacks.c:90
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -12073,45 +11692,35 @@ msgstr[0] "%d доба"
 msgstr[1] "%d доби"
 msgstr[2] "%d діб"
 
-#: client/campaign/cp_installation_callbacks.c:47 client/campaign/cp_map.c:356
 msgid "Installation"
 msgstr "Об'єкт"
 
-#: client/campaign/cp_installation_callbacks.c:139
 #, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "Новий об'єкт збудовано: %s (%s)"
 
-#: client/campaign/cp_installation_callbacks.c:141
 #, c-format
 msgid "A new installation has been built: %s"
 msgstr "Новий об'єкт збудовано: %s"
 
-#: client/campaign/cp_installation_callbacks.c:142
 msgid "Installation building"
 msgstr "Об'єкт збудовано"
 
-#: client/campaign/cp_installation_callbacks.c:149
 msgid "Not enough credits to set up a new installation."
 msgstr "Недостатньо коштів для спорудження нового об'єкту."
 
-#: client/campaign/cp_installation_callbacks.c:215
 msgid "Destroy Installation"
 msgstr "Знищити об'єкт"
 
-#: client/campaign/cp_installation_callbacks.c:215
 msgid "Do you really want to destroy this installation?"
 msgstr "Ви направду хочете знищити цей об'єкт?"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Forget it"
 msgstr "Забути"
 
-#: client/campaign/cp_map.c:363
 msgid "UFO Sighting"
 msgstr "Виявлено НЛО"
 
-#: client/campaign/cp_map.c:1638
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12122,7 +11731,6 @@ msgstr ""
 "Тип: %s\n"
 "Деталі: %s"
 
-#: client/campaign/cp_map.c:1655
 #, c-format
 msgid ""
 "%s (%s)\n"
@@ -12131,113 +11739,89 @@ msgstr ""
 "%s (%s)\n"
 "%s"
 
-#: client/campaign/cp_map.c:1675 client/campaign/cp_map.c:1683
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Назва:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1676 client/campaign/cp_map.c:1684
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Стан:\t%s\n"
 
-#: client/campaign/cp_map.c:1677
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Відстань до цілі:\t\t%.0f\n"
 
 # розрахункова тривалість польоту
-#: client/campaign/cp_map.c:1681 client/campaign/cp_map.c:1691
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "РТП:\t%s год\n"
 
-#: client/campaign/cp_map.c:1709
 #, c-format
 msgid "Speed: %i km/h\n"
 msgstr "Швидкість: %i км/год\n"
 
-#: client/campaign/cp_map.c:1897
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1976
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Вкажіть місце на карті для побудови нової бази.\n"
 
-#: client/campaign/cp_map.c:1979
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Вкажіть місце на карті для побудови нової споруди.\n"
 
-#: client/campaign/cp_map.c:1984
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Прибульці атакують нашу базу в даний момент.\n"
 
-#: client/campaign/cp_map.c:1989
 msgid "Select ufo or mission on map\n"
 msgstr "Виберіть НЛО або завдання на карті\n"
 
-#: client/campaign/cp_map.c:1994
 msgid "UFO in radar range\n"
 msgstr "НЛО в межах дії радарів\n"
 
-#: client/campaign/cp_mapfightequip.c:342
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr "%s успішно встановлено на авіасудно %s (%s)."
 
-#: client/campaign/cp_mapfightequip.c:345
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr "%s успішно встановлено на об'єкт %s."
 
-#: client/campaign/cp_mapfightequip.c:348
 #, c-format
 msgid "%s was successfully installed at %s."
 msgstr "%s успішно встановлено на базі %s."
 
-#: client/campaign/cp_mapfightequip.c:370
 #, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s успішно знято з авіасудна %s (%s)."
 
-#: client/campaign/cp_mapfightequip.c:376
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "%s знято, розпочато установку %s на судно %s (%s)"
 
-#: client/campaign/cp_mapfightequip.c:384
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "%s демонтовано з об'єкту %s."
 
-#: client/campaign/cp_mapfightequip.c:387
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s успішно знято (%s)."
 
-#: client/campaign/cp_mapfightequip.c:1341
 msgid "Light weight"
 msgstr "Мала вага"
 
-#: client/campaign/cp_mapfightequip.c:1344
 msgid "Medium weight"
 msgstr "Середня вага"
 
-#: client/campaign/cp_mapfightequip.c:1347
 msgid "Heavy weight"
 msgstr "Велика вага"
 
-#: client/campaign/cp_mapfightequip.c:1350
 msgid "Unknown weight"
 msgstr "Вага невідома"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 msgid "Not enough storage space"
 msgstr "Немає достатньо вільного місця"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -12247,7 +11831,6 @@ msgstr ""
 "Немає вільног місця на складі.\n"
 "Збудуйте більше складських приміщень."
 
-#: client/campaign/cp_market_callbacks.c:615
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -12255,11 +11838,9 @@ msgstr ""
 "Нема енергетичних стацій на цій базі.\n"
 "Ангари непрацездатні."
 
-#: client/campaign/cp_market_callbacks.c:620
 msgid "Build a hangar first."
 msgstr "Збудуйте спочатку ангар."
 
-#: client/campaign/cp_market_callbacks.c:633
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -12267,7 +11848,6 @@ msgstr ""
 "Ви не можете придбати цей авіатранспорт.\n"
 "Немає вільних ангарів.\n"
 
-#: client/campaign/cp_market_callbacks.c:638
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -12275,124 +11855,94 @@ msgstr ""
 "Ви не можете придбати цей авіатранспорт.\n"
 "Недостатньо коштів.\n"
 
-#: client/campaign/cp_market_callbacks.c:705
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Ви не можете продати авіаранспорт поки до нього прив'язані бійці"
 
-#: client/campaign/cp_market_callbacks.c:707
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Ви не можете продати авіаранспорт поки він не на базі"
 
-#: client/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
 msgstr "Обладнання встановлено"
 
-#: client/campaign/cp_messageoptions.c:37
 msgid "installation_removed"
 msgstr "Обладнання знято"
 
-#: client/campaign/cp_messageoptions.c:38
 msgid "installation_replaced"
 msgstr "Обладнання замінено"
 
-#: client/campaign/cp_messageoptions.c:39
 msgid "aircraft_refueled"
 msgstr "Авіасудно заправлено"
 
-#: client/campaign/cp_messageoptions.c:40
 msgid "aircraft_cannotrefuel"
 msgstr "Неможливо перезаправити"
 
-#: client/campaign/cp_messageoptions.c:41
 msgid "installation_build_started"
 msgstr "Спорудження розпочато"
 
-#: client/campaign/cp_messageoptions.c:42
 msgid "installation_build_finished"
 msgstr "Спорудження завершено"
 
-#: client/campaign/cp_messageoptions.c:43
 msgid "installation_destroyed"
 msgstr "Споруду демонтовано"
 
-#: client/campaign/cp_messageoptions.c:44
 msgid "research_new_proposed"
 msgstr "Нова дослідницька пропозиція"
 
-#: client/campaign/cp_messageoptions.c:45
 msgid "research_halted"
 msgstr "Дослідження призупинено"
 
-#: client/campaign/cp_messageoptions.c:46
 msgid "research_completed"
 msgstr "Дослідження завершено"
 
-#: client/campaign/cp_messageoptions.c:47
 msgid "production_started"
 msgstr "Виробництво розпочато"
 
-#: client/campaign/cp_messageoptions.c:48
 msgid "production_finished"
 msgstr "Виробництво завершено"
 
-#: client/campaign/cp_messageoptions.c:49
 msgid "production_failed"
 msgstr "Виробництво перервано"
 
-#: client/campaign/cp_messageoptions.c:50
 msgid "production_queue_empty"
 msgstr "Черга на виробництво порожня"
 
-#: client/campaign/cp_messageoptions.c:51
 msgid "nation_happiness_changed"
 msgstr "Підтримка націй змінилась"
 
-#: client/campaign/cp_messageoptions.c:52
 msgid "nation_unhappy"
 msgstr "Рівень підтримки - не у захваті"
 
-#: client/campaign/cp_messageoptions.c:53
 msgid "nation_pleased"
 msgstr "Рівень підтримки - втрачають терпіння"
 
-#: client/campaign/cp_messageoptions.c:54
 msgid "transfer_started"
 msgstr "Переправку розпочато"
 
-#: client/campaign/cp_messageoptions.c:55
 msgid "transfer_completed_success"
 msgstr "Переправку успішно завершено"
 
-#: client/campaign/cp_messageoptions.c:56
 msgid "transfer_lost"
 msgstr "Вантаж втрачено"
 
-#: client/campaign/cp_messageoptions.c:57
 msgid "transfer_aliens_defered"
 msgstr "Переправлення прибульців"
 
-#: client/campaign/cp_messageoptions.c:58
 msgid "transfer_uforecovery_finished"
 msgstr "Перепрвлення НЛО на демонтаж завершено"
 
-#: client/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
 msgstr "Вявлено НЛО"
 
-#: client/campaign/cp_messageoptions.c:60
 msgid "ufo_signal_lost"
 msgstr "Сигнал втрачено"
 
-#: client/campaign/cp_messageoptions.c:61
 msgid "ufo_attacking"
 msgstr "Атака НЛО"
 
-#: client/campaign/cp_messages.c:47
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
 
-#: client/campaign/cp_mission_triggers.c:124
 msgid ""
 "Congratulations! You have reached the end of the UFO:AI campaign.\n"
 "However, this is not the end of the road. The game remains in development.\n"
@@ -12418,231 +11968,180 @@ msgstr ""
 "\n"
 "   - Команда розробників UFO:AI"
 
-#: client/campaign/cp_missions.c:448
 msgid "Crashed aircraft"
 msgstr "Підбитий авіатранспорт"
 
-#: client/campaign/cp_missions.c:453
 msgid "Landed UFO"
 msgstr "Мічце посадки НЛО"
 
-#: client/campaign/cp_missions.c:455
 msgid "Terror mission"
 msgstr "Анти-терористична операція"
 
-#: client/campaign/cp_missions.c:457
 msgid "Base attack"
 msgstr "Напад на базу"
 
-#: client/campaign/cp_missions.c:461
 msgid "Harvesting mission"
 msgstr "Місія \"Жнива\""
 
-#: client/campaign/cp_missions.c:706
 #, c-format
 msgid "Go on a rescue mission at %s. You might some of your soldiers alive."
 msgstr "Направляйтесь на рятувальну операцію в %s. Деякі з ваших солдатів, можливо, живі."
 
-#: client/campaign/cp_missions.c:708
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "У \"%s\" зафіксовано активність прибульців."
 
-#: client/campaign/cp_missions.c:1088
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Оборона бази: %s успішно завершено!"
 
-#: client/campaign/cp_missions.c:1251
-#: client/campaign/missions/cp_mission_harvest.c:170
-#: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
 msgstr "Немає держави"
 
-#: client/campaign/cp_missions.c:1334
 #, fuzzy
 msgid "Crashed"
 msgstr "Підбитий НЛО"
 
-#: client/campaign/cp_nation.c:142
 msgid "Giving up"
 msgstr "Розрив відносин"
 
 # Можливо якось інакше...
-#: client/campaign/cp_nation.c:144
 msgid "Furious"
 msgstr "Розлючені"
 
-#: client/campaign/cp_nation.c:146
 msgid "Angry"
 msgstr "Розгнівані"
 
-#: client/campaign/cp_nation.c:148
 msgid "Mad"
 msgstr "Обурені"
 
-#: client/campaign/cp_nation.c:150
 msgid "Upset"
 msgstr "Засмучені"
 
-#: client/campaign/cp_nation.c:152
 msgid "Tolerant"
 msgstr "Терпимо"
 
-#: client/campaign/cp_nation.c:154
 msgid "Neutral"
 msgstr "Нейтрально"
 
-#: client/campaign/cp_nation.c:156
 msgid "Content"
 msgstr "Похвально"
 
-#: client/campaign/cp_nation.c:158
 msgid "Pleased"
 msgstr "Задоволені"
 
-#: client/campaign/cp_nation.c:160
 msgid "Happy"
 msgstr "Щасливі"
 
-#: client/campaign/cp_nation.c:162
 msgid "Exuberant"
 msgstr "Узахваті"
 
-#: client/campaign/cp_nation.c:189
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr "У держави \"%s\" змінилось задоволення роботою з \"%s\" на \"%s\""
 
-#: client/campaign/cp_nation.c:193
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr "Уряд держави \"%s\" змінилось ставлення до вас на \"%s\""
 
-#: client/campaign/cp_nation.c:197
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr "Відношення держави \"%s\" до вас - \"%s\" і це нижче мінімального значення для кампанії"
 
-#: client/campaign/cp_nation.c:203
 msgid "Nation changed happiness"
 msgstr "Держава змінила своє ставлення"
 
-#: client/campaign/cp_nation.c:883
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Отримано %i %s, %i %s, %i %s, та %i %s від уряду %s (%s)"
 
-#: client/campaign/cp_nation.c:884
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "кредит"
 msgstr[1] "кредити"
 msgstr[2] "кредитів"
 
-#: client/campaign/cp_nation.c:885 client/cl_game_campaign.c:249
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "науковець"
 msgstr[1] "науковці"
 msgstr[2] "науковців"
 
-#: client/campaign/cp_nation.c:886 client/cl_game_campaign.c:248
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "боєць"
 msgstr[1] "бійці"
 msgstr[2] "бійців"
 
-#: client/campaign/cp_nation.c:887 client/cl_game_campaign.c:250
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "робітник"
 msgstr[1] "робітники"
 msgstr[2] "робітників"
 
-#: client/campaign/cp_nation.c:902
 #, c-format
 msgid "Paid %i credits to: %s"
 msgstr "Сплачено %i кр на користь: %s"
 
-#: client/campaign/cp_nation.c:915
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "%i кр витрачено на авіацію"
 
-#: client/campaign/cp_nation.c:924
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "%i кр витрачено на техобслуговування (%s)"
 
-#: client/campaign/cp_nation.c:929
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "%i кр - адмінвитрати."
 
-#: client/campaign/cp_nation.c:937
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "%i кр повернуто по боргових зобов'язаннях."
 
-#: client/campaign/cp_popup.c:126
 msgid "current homebase of aircraft"
 msgstr "База прив'язки авіасудна"
 
-#: client/campaign/cp_popup.c:132
 msgid "base can hold aircraft"
 msgstr "база може містити авіасудно"
 
-#: client/campaign/cp_popup.c:147
 msgid "Base\tStatus"
 msgstr "База\tСтан"
 
-#: client/campaign/cp_popup.c:147
 msgid "Change homebase of aircraft"
 msgstr "Змінити базу прив'язки авіасудна"
 
-#: client/campaign/cp_popup.c:227
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "Повернутися на\t%s\n"
 
-#: client/campaign/cp_popup.c:229
 msgid "Stop\n"
 msgstr "Стоп\n"
 
-#: client/campaign/cp_popup.c:231
 msgid "Change homebase\n"
 msgstr "Змінити базу прив'язки\n"
 
-#: client/campaign/cp_popup.c:243
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "Операція\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:335
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
 msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
-#: client/campaign/cp_popup.c:348
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr "Немає доступного транспорту, не призначено пілота, або не призначено тактичної команди на доступний транспорт."
 
-#: client/campaign/cp_popup.c:397
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr "%s%s (%i/%i)\t%s\t%s"
 
-#: client/campaign/cp_popup.c:418
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "Немає доступного транспорту, не призначено пілота, або авіатранспорт не обладнано зброєю чи набоями до неї."
 
-#: client/campaign/cp_popup.c:434
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "Немає працездатної системи захисту або система не обладнана зброєю чи набоями до неї."
 
-#: client/campaign/cp_popup.c:483
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -12654,16 +12153,9 @@ msgstr ""
 "\n"
 "Авіасудно не може піднятись в повітря.\n"
 
-#: client/campaign/cp_produce.c:298 client/campaign/cp_produce.c:302
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
-#: client/campaign/cp_transfer_callbacks.c:366
-#: client/campaign/cp_transfer_callbacks.c:369
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Hangars not ready"
 msgstr "Ангари не готові"
 
-#: client/campaign/cp_produce.c:298
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
@@ -12671,7 +12163,6 @@ msgstr ""
 "Ви не можете замовити авіацію.\n"
 "На базі відсутній Командний центр.\n"
 
-#: client/campaign/cp_produce.c:302
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
@@ -12679,8 +12170,6 @@ msgstr ""
 "Ви не можете замовити авіацію.\n"
 "На базі відсутні ангари.\n"
 
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -12688,117 +12177,89 @@ msgstr ""
 "Ви не можете замовити авіацію.\n"
 "На базі немає вільних ангарів.\n"
 
-#: client/campaign/cp_produce.c:409
 #, c-format
 msgid "Production queue for %s is empty"
 msgstr "Перелік виробничих завдань на базі %s порожній"
 
-#: client/campaign/cp_produce.c:410
 msgid "Production queue empty"
 msgstr "Перелік виробничих завдань порожній"
 
-#: client/campaign/cp_produce.c:490 client/campaign/cp_produce.c:510
 #, c-format
 msgid "Not enough credits to finish production in %s."
 msgstr "Недостатньо коштів, щоб завершити виробництво на базі %s."
 
-#: client/campaign/cp_produce.c:499
 #, c-format
 msgid "Not enough free storage space in %s. Production postponed."
 msgstr "Недостатньо складських місць на базі %s. Виробництво призупинено."
 
-#: client/campaign/cp_produce.c:519
 #, c-format
 msgid "Not enough free hangar space in %s. Production postponed."
 msgstr "Немає вільних ангарів на базі %s. Виробництво призупинено."
 
-#: client/campaign/cp_produce.c:530
 #, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
 msgstr "Недостатньо складських місць на базі %s. Демонтаж призупинено."
 
-#: client/campaign/cp_produce.c:575
 #, c-format
 msgid "The production of %s at %s has finished."
 msgstr "Виробництво %s на базі %s завершено."
 
-#: client/campaign/cp_produce.c:576 client/campaign/cp_produce.c:600
 msgid "Production finished"
 msgstr "Виробництво завершено"
 
-#: client/campaign/cp_produce.c:598
 #, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "Демонтаж %s на %s завершено."
 
-#: client/campaign/cp_produce_callbacks.c:265
-#: client/campaign/cp_produce_callbacks.c:370
 msgid "No item selected"
 msgstr "Нічого не вибрано"
 
-#: client/campaign/cp_produce_callbacks.c:271
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "Ціна за одиницю\t%i кр\n"
 
-#: client/campaign/cp_produce_callbacks.c:272
-#: client/campaign/cp_produce_callbacks.c:330
 #, c-format
 msgid "Production time\t%ih\n"
 msgstr "Час на виготовлення\t%i год\n"
 
-#: client/campaign/cp_produce_callbacks.c:273
 #, c-format
 msgid "Item size\t%i\n"
 msgstr "Розмір\t%i\n"
 
-#: client/campaign/cp_produce_callbacks.c:297
 #, c-format
 msgid "Stored at: %s\n"
 msgstr "Зберігається на: %s\n"
 
-#: client/campaign/cp_produce_callbacks.c:298
 #, c-format
 msgid "Disassembly time: %ih\n"
 msgstr "Час на демонтаж: %i год\n"
 
-#: client/campaign/cp_produce_callbacks.c:299
 msgid "Components:\n"
 msgstr "Компоненти:\n"
 
-#: client/campaign/cp_produce_callbacks.c:328
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr "Вартість виготовлення\t%i кр\n"
 
-#: client/campaign/cp_produce_callbacks.c:368
 msgid "No aircraft selected."
 msgstr "Авіасудно не вибрано."
 
-#: client/campaign/cp_produce_callbacks.c:662
-#: client/campaign/cp_produce_callbacks.c:686
 msgid "Not enough materials"
 msgstr "Невистачає матеріалів"
 
-#: client/campaign/cp_produce_callbacks.c:662
 msgid "You don't have the materials needed for producing more of this item.\n"
 msgstr "У вас недостатньо потрібних матеріалів для виготовлення цього.\n"
 
-#: client/campaign/cp_produce_callbacks.c:666
 #, c-format
 msgid "You don't have enough material to produce all (%i) additional items. Only %i could be added."
 msgstr "Недостатньо матеріалів для виробництва у повному обсязі (%i). Продукція надійде в обмеженій (%i) кількості."
 
-#: client/campaign/cp_produce_callbacks.c:667
-#: client/campaign/cp_produce_callbacks.c:690
 msgid "Not enough material!"
 msgstr "Невистачає матеріалів!"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid "Not enough workshops"
 msgstr "Немає майстерень"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
@@ -12806,47 +12267,37 @@ msgstr ""
 "Немождиво додати.\n"
 "Побудуйте більше майстерень.\n"
 
-#: client/campaign/cp_produce_callbacks.c:686
 msgid "You don't have the materials needed for producing this item.\n"
 msgstr "У вас немає потрібних матеріалів для виготовлення цього.\n"
 
-#: client/campaign/cp_produce_callbacks.c:689
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "Недостатньо матеріалів для виробництва у повному обсязі (%i). Продукція буде в обмеженій (%i) кількості."
 
-#: client/campaign/cp_produce_callbacks.c:714
 #, c-format
 msgid "Production of %s started"
 msgstr "Виготовлення %s - розпочато"
 
-#: client/campaign/cp_produce_callbacks.c:715
 msgid "Production started"
 msgstr "Виготовлення розпочато"
 
-#: client/campaign/cp_research.c:89
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "Дослідницький проект завершено:%s\n"
 
-#: client/campaign/cp_research.c:90
 msgid "Research finished"
 msgstr "Дослідження завершено"
 
-#: client/campaign/cp_research.c:136 client/campaign/cp_research.c:313
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "Нова дослідницька пропозиціяl: %s\n"
 
-#: client/campaign/cp_research.c:137
 msgid "Unknown Technology researchable"
 msgstr "Нова невідома технологія потребує дослідження"
 
-#: client/campaign/cp_research.c:314
 msgid "Unknown Technology found"
 msgstr "Знайдено невідому технологію"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -12854,115 +12305,86 @@ msgstr ""
 "Немає вільного місця у лабораторіях.\n"
 "Збудуйте більше лабораторій.\n"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid "Not enough laboratories"
 msgstr "Недостатньо лабораторій"
 
-#: client/campaign/cp_research.c:809
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr "Передумов для дослідження %s не було виконано на %s. Дослідження зупинено!"
 
-#: client/campaign/cp_research.c:810
 msgid "Research halted"
 msgstr "Дослідження зупинено"
 
-#: client/campaign/cp_research.c:1171
 msgid "No description available."
 msgstr "Опис відсутній."
 
-#: client/campaign/cp_research.c:1172
 msgid "No research proposal available."
 msgstr "Дослідницькі пропозиції відсутні."
 
-#: client/campaign/cp_research_callbacks.c:91
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "Лабораторне місце (вик-но/всього): %i/%i"
 
-#: client/campaign/cp_research_callbacks.c:97
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr "Науковці (доступні/усіх): %i/%i"
 
-#: client/campaign/cp_research_callbacks.c:102
 msgid "Not researched in any base."
 msgstr "Не досліджено на жодній базі."
 
-#: client/campaign/cp_research_callbacks.c:108
 #, c-format
 msgid "Researched in %s"
 msgstr "Досліджується на %s"
 
-#: client/campaign/cp_research_callbacks.c:110
 msgid "Researched in this base."
 msgstr "Досліджується на цій базі."
 
-#: client/campaign/cp_research_callbacks.c:122
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Прогрес: %.1f%%"
 
-#: client/campaign/cp_research_callbacks.c:125
 msgid "Progress: not available."
 msgstr "Прогрес: не доступно."
 
-#: client/campaign/cp_research_callbacks.c:130
 msgid "Status: under research"
 msgstr "Стан: досліджується"
 
-#: client/campaign/cp_research_callbacks.c:131
 msgid "Status: this research topic is currently being processed in laboratories"
 msgstr "Стан: цей проект зарас досліджується в лабораторіях"
 
-#: client/campaign/cp_research_callbacks.c:134
 msgid "Status: research paused"
 msgstr "Стан: дослідження призупинено"
 
-#: client/campaign/cp_research_callbacks.c:135
 msgid "Status: research topic currently paused."
 msgstr "Стан: дослідження тимчасово призупинено."
 
-#: client/campaign/cp_research_callbacks.c:138
-#: client/campaign/cp_research_callbacks.c:139
 msgid "Status: research finished"
 msgstr "Стан: дослідження завершено"
 
-#: client/campaign/cp_research_callbacks.c:144
 msgid "Status: not possible to research"
 msgstr "Стан: неможливо дослідити"
 
-#: client/campaign/cp_research_callbacks.c:145
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr "Стан: Нам не вистачає усіх матеріалів або додаткових знань, необхідних для дослідження цього проекту."
 
-#: client/campaign/cp_research_callbacks.c:147
-#: client/campaign/cp_research_callbacks.c:148
 msgid "Status: unknown technology"
 msgstr "Стан: невідома технологія"
 
-#: client/campaign/cp_research_callbacks.c:259
 msgid "Unassigned scientists"
 msgstr "Вільні науковці"
 
-#: client/campaign/cp_research_callbacks.c:295
 msgid "Missing an artifact"
 msgstr "Артифакт відсутній"
 
-#: client/campaign/cp_research_callbacks.c:305
 msgid "Unresearchable collected items"
 msgstr "Недоступні дослідження"
 
-#: client/campaign/cp_research_callbacks.c:563
 msgid "This item is currently under research in another base."
 msgstr "Ці досліджння в даний момент проводятся на іншій базі."
 
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:626
 msgid "The research on this item is complete."
 msgstr "Дослідження цього проекту завершено."
 
-#: client/campaign/cp_research_callbacks.c:587
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -12971,79 +12393,57 @@ msgstr ""
 "Вам потрібно насамперед дослідити базові технології,\n"
 "на яких основане це дослідження."
 
-#: client/campaign/cp_research_callbacks.c:656
 msgid "No research proposal available for this project."
 msgstr "Попередня пропозиція недоступна для цього проекту."
 
-#: client/campaign/cp_research_callbacks.c:815
 msgid "Nothing to research"
 msgstr "Нічого досліджувати"
 
-#: client/campaign/cp_research_callbacks.c:818
 msgid "Build a laboratory first"
 msgstr "Насамперед збудуйте лабораторію "
 
-#: client/campaign/cp_save.c:186
 msgid "Error decompressing data"
 msgstr "Помилка при розпаковуванні даних"
 
-#: client/campaign/cp_save.c:270
 msgid "No campaign active."
 msgstr "Немає активної кампанії."
 
-#: client/campaign/cp_save.c:276
 msgid "Nothing to save yet."
 msgstr "Нічого зберігати."
 
-#: client/campaign/cp_save.c:320
 msgid "Could not allocate enough memory to save this game"
 msgstr "Неможливо виділити достатньо пам'яті для збереження гри"
 
-#: client/campaign/cp_save.c:342
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr "Помилка пам'яті при зтисканні даних збереженої гри. Виставте значення змінної save_compressed в 0"
 
-#: client/campaign/cp_save.c:389 client/campaign/cp_save.c:391
 msgid "Error saving game."
 msgstr "Помилка зберігання гри."
 
-#: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:620
 msgid "Error loading game."
 msgstr "Помилка завантаження гри."
 
-#: client/campaign/cp_save.c:469 client/campaign/cp_save.c:493
-#: client/campaign/cp_save.c:621 client/cl_irc.c:1209 client/cl_irc.c:1441
-#: client/cl_main.c:517 client/cl_main.c:521 client/cl_main.c:545
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Error"
 msgstr "Помилка"
 
-#: client/campaign/cp_save.c:568
 msgid "QuickSave"
 msgstr "Швидке збереження"
 
-#: client/campaign/cp_save.c:602
 msgid "Campaign was successfully saved."
 msgstr "Кампанія успішно збережена."
 
-#: client/campaign/cp_save.c:602
 msgid "Quicksave"
 msgstr "Швидко зберегти"
 
-#: client/campaign/cp_save.c:623
 msgid "Campaign loaded"
 msgstr "Кампанія завантажена"
 
-#: client/campaign/cp_save.c:623
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Швидке збереження успішно завантажено."
 
-#: client/campaign/cp_save.c:684
 msgid "Saves to the quick save slot"
 msgstr "Зберегти у відсіку швидкого збереження"
 
-#: client/campaign/cp_statistics.c:56
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -13054,7 +12454,6 @@ msgstr ""
 "Поразок:\t%i\n"
 "\n"
 
-#: client/campaign/cp_statistics.c:61
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -13065,12 +12464,10 @@ msgstr ""
 "Функціонує:\t%i\n"
 "Атаковано:\t%i\n"
 
-#: client/campaign/cp_statistics.c:77 client/campaign/cp_ufopedia.c:1164
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_statistics.c:80
 #, c-format
 msgid ""
 "\n"
@@ -13079,37 +12476,30 @@ msgstr ""
 "\n"
 "Фінансування в поточному місяці:\t%d"
 
-#: client/campaign/cp_statistics.c:97 client/cl_inventory_callbacks.c:138
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_statistics.c:103
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Персонал:\t%i кр\n"
 
-#: client/campaign/cp_statistics.c:112
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Авіатехніка:\t%i кр\n"
 
-#: client/campaign/cp_statistics.c:118
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "База (%s):\t%i кр\n"
 
-#: client/campaign/cp_statistics.c:123
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Витрати на обслуговування:\t%i кр\n"
 
-#: client/campaign/cp_statistics.c:130
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Борг:\t%i кр\n"
 
-#: client/campaign/cp_statistics.c:133
 #, c-format
 msgid ""
 "\n"
@@ -13120,13 +12510,11 @@ msgstr ""
 "\t-------\n"
 "Разом:\t%i кр\n"
 
-#: client/campaign/cp_statistics.c:138
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Максимально допустимий борг: %i кр\n"
 
 # ПЗВІ
-#: client/campaign/cp_statistics.c:143
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -13135,151 +12523,112 @@ msgstr ""
 "Допустимий рівень ПозаЗемної Вірусної Інфекції: %i%%\n"
 "Поточний рівень ПозаЗемної Вірусної Інфекції: %i%%"
 
-#: client/campaign/cp_team.c:252
 #, c-format
 msgid "%i of %i"
 msgstr "%i з %i"
 
-#: client/campaign/cp_time.c:40
 msgid "stopped"
 msgstr "зупинено"
 
-#: client/campaign/cp_time.c:41
 msgid "5 sec"
 msgstr "5с"
 
-#: client/campaign/cp_time.c:42
 msgid "5 mins"
 msgstr "5 хв"
 
-#: client/campaign/cp_time.c:43
 msgid "20 mins"
 msgstr "20 хв"
 
-#: client/campaign/cp_time.c:44
 msgid "1 hour"
 msgstr "1 год"
 
-#: client/campaign/cp_time.c:45
 msgid "12 hours"
 msgstr "12 год"
 
-#: client/campaign/cp_time.c:46
 msgid "1 day"
 msgstr "1 доба"
 
-#: client/campaign/cp_time.c:47
 msgid "5 days"
 msgstr "5 діб"
 
-#: client/campaign/cp_time.c:73
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/campaign/cp_time.c:249
 msgid "Jan"
 msgstr "Січ"
 
-#: client/campaign/cp_time.c:251
 msgid "Feb"
 msgstr "Лют"
 
-#: client/campaign/cp_time.c:253
 msgid "Mar"
 msgstr "Бер"
 
-#: client/campaign/cp_time.c:255
 msgid "Apr"
 msgstr "Кві"
 
-#: client/campaign/cp_time.c:257
 msgid "May"
 msgstr "Тра"
 
-#: client/campaign/cp_time.c:259
 msgid "Jun"
 msgstr "Чер"
 
-#: client/campaign/cp_time.c:261
 msgid "Jul"
 msgstr "Лип"
 
-#: client/campaign/cp_time.c:263
 msgid "Aug"
 msgstr "Срп"
 
-#: client/campaign/cp_time.c:265
 msgid "Sep"
 msgstr "Вер"
 
-#: client/campaign/cp_time.c:267
 msgid "Oct"
 msgstr "Жвт"
 
-#: client/campaign/cp_time.c:269
 msgid "Nov"
 msgstr "Лис"
 
-#: client/campaign/cp_time.c:271
 msgid "Dec"
 msgstr "Грд"
 
-#: client/campaign/cp_transfer.c:56
 #, fuzzy, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
 msgstr "На %s немає достатньо місця, предмети втрачено."
 
-#: client/campaign/cp_transfer.c:57 client/campaign/cp_transfer.c:70
-#: client/campaign/cp_transfer.c:82 client/campaign/cp_transfer.c:109
-#: client/campaign/cp_transfer.c:134 client/campaign/cp_transfer.c:149
-#: client/campaign/cp_transfer.c:244 client/campaign/cp_transfer.c:261
-#: client/campaign/cp_transfer.c:267
-#: client/campaign/cp_transfer_callbacks.c:194
 msgid "Transport mission"
 msgstr "Транспортна місія"
 
-#: client/campaign/cp_transfer.c:69
 #, c-format
 msgid "%s does not have Storage, items are removed!"
 msgstr "На %s немає достатньо місця, предмети втрачено."
 
-#: client/campaign/cp_transfer.c:81
 #, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "На %s немає житлових місць, працівників не найнято."
 
-#: client/campaign/cp_transfer.c:108
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "На %s немає Ізолятора, прибульців втрачено."
 
-#: client/campaign/cp_transfer.c:133
 #, fuzzy, c-format
 msgid "%s does not have enough Alien Containment space, some Aliens are removed!"
 msgstr "На %s немає Ізолятора, прибульців втрачено."
 
-#: client/campaign/cp_transfer.c:148
 #, fuzzy, c-format
 msgid "%s does not have enough free space. Aircraft is lost!"
 msgstr "На %s немає достатньо місця в ангарах, авіасудно втрачено."
 
-#: client/campaign/cp_transfer.c:243
-#: client/campaign/cp_transfer_callbacks.c:193
 #, c-format
 msgid "Transport mission started, cargo is being transported to %s"
 msgstr "Транспортну місію розпочато, вантаж направляється на %s"
 
-#: client/campaign/cp_transfer.c:261
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
 msgstr "База призначення вже не існує! Передаваний вантаж втрачено, персонал звільнено."
 
-#: client/campaign/cp_transfer.c:266
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "Транспортну місію завершено, розвантаження на %s"
 
-#: client/campaign/cp_transfer_callbacks.c:139
 #, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
@@ -13287,15 +12636,12 @@ msgstr[0] "(може прийняти %i живого прибульця)"
 msgstr[1] "(може прийняти %i живих прибульців)"
 msgstr[2] "(може прийняти %i живих прибульців)"
 
-#: client/campaign/cp_transfer_callbacks.c:246
 msgid "Destination base does not have an Antimatter Storage.\n"
 msgstr "На базі призначення немає Сховища антиматерії.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:246
 msgid "Missing storage"
 msgstr "Склади відсутні"
 
-#: client/campaign/cp_transfer_callbacks.c:251
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
@@ -13303,15 +12649,9 @@ msgstr ""
 "На цільовій базі недостатньо місця,\n"
 "щоб зберігати більше антиматерії.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:251
-#: client/campaign/cp_transfer_callbacks.c:261
-#: client/campaign/cp_transfer_callbacks.c:289
-#: client/campaign/cp_transfer_callbacks.c:342
-#: client/campaign/cp_transfer_callbacks.c:385
 msgid "Not enough space"
 msgstr "Недостатньо місця"
 
-#: client/campaign/cp_transfer_callbacks.c:261
 msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
@@ -13319,13 +12659,11 @@ msgstr ""
 "На цільовій базі недостатньо місця\n"
 "на складі, щоб зберігати цей предмет.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:289
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
 msgstr "На цільовій базі недостатньо місць для проживання.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:298
 #, c-format
 msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
@@ -13334,11 +12672,9 @@ msgstr ""
 "%s %s прив'язано до авіасудна і не може бути\n"
 "переправлено на іншу базу.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:300
 msgid "Soldier in aircraft"
 msgstr "Боєць в авіатранспорті"
 
-#: client/campaign/cp_transfer_callbacks.c:307
 #, c-format
 msgid ""
 "%s is assigned to aircraft and cannot be\n"
@@ -13347,17 +12683,14 @@ msgstr ""
 "%s прив'язано до авіасудна і не може бути\n"
 "переправлено на іншу базу.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:309
 msgid "Pilot in aircraft"
 msgstr "Пілот в літаку"
 
-#: client/campaign/cp_transfer_callbacks.c:342
 msgid ""
 "Destination base does not have enough space\n"
 "in Alien Containment.\n"
 msgstr "На цільовій базі немає вільних місць в Ізоляторі.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:366
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
@@ -13365,7 +12698,6 @@ msgstr ""
 "На базі призначення немає готових ангарів.\n"
 "Забезпечте енергопостачання.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:369
 msgid ""
 "Destination base does not have command centre.\n"
 "Hangars not functional.\n"
@@ -13373,135 +12705,102 @@ msgstr ""
 "На базі призначення немає Командного центру.\n"
 "Ангари непрацездатні.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Destination base does not have any hangar."
 msgstr "Цільова база не містить жодного ангару."
 
-#: client/campaign/cp_transfer_callbacks.c:385
 msgid "Destination base does not have enough space in hangars.\n"
 msgstr "На базі призначення немає вільних місць в ангарах.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:428
 #, c-format
 msgid "Soldier %s %s"
 msgstr "Боєць %s %s"
 
-#: client/campaign/cp_transfer_callbacks.c:440
 #, c-format
 msgid "Pilot %s"
 msgstr "Пілот %s"
 
-#: client/campaign/cp_transfer_callbacks.c:477
-#: client/campaign/cp_transfer_callbacks.c:653
 #, c-format
 msgid "Corpse of %s"
 msgstr "Тіло %s"
 
-#: client/campaign/cp_transfer_callbacks.c:494
-#: client/campaign/cp_transfer_callbacks.c:689
 #, c-format
 msgid "Aircraft %s"
 msgstr "Авіасудно %s"
 
-#: client/campaign/cp_transfer_callbacks.c:562
 msgid "Storage is empty."
 msgstr "На складі порожньо."
 
-#: client/campaign/cp_transfer_callbacks.c:566
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a working Storage."
 msgstr "Переправка неможлива - на базі відсутній Склад."
 
-#: client/campaign/cp_transfer_callbacks.c:628
 msgid "Living Quarters empty."
 msgstr "Казарми порожні."
 
-#: client/campaign/cp_transfer_callbacks.c:632
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "Переправка неможлива - на базі відсутні Казарми."
 
-#: client/campaign/cp_transfer_callbacks.c:660
 #, c-format
 msgid "Alive %s"
 msgstr "Живий %s"
 
-#: client/campaign/cp_transfer_callbacks.c:666
 msgid "Alien Containment is empty."
 msgstr "В Ізоляторі порожньо."
 
-#: client/campaign/cp_transfer_callbacks.c:670
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Переправка неможлива - на базі відсутній Ізолятор."
 
-#: client/campaign/cp_transfer_callbacks.c:673
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "Переправка неможлива - на базі відсутня Енергостанція."
 
-#: client/campaign/cp_transfer_callbacks.c:695
 msgid "No aircraft available for transfer."
 msgstr "Немає авіації доступної для переправки."
 
-#: client/campaign/cp_transfer_callbacks.c:699
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Переправка неможлива - на базі відсутній працездатний ангар."
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "No target base selected"
 msgstr "Не вибрано цільову базу"
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "Please select the target base from the list"
 msgstr "Будь-ласка, виберіть цільову базу із переліку"
 
-#: client/campaign/cp_transfer_callbacks.c:1102
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Ви можете здійснити переправку спорядження - на цій базі є Склади.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1105
 msgid "No Storage in this base.\n"
 msgstr "Немає Складу на цій базі.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1109
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Ви можете здійснити переправку працівників - на цій базі є Казарми.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1111
 msgid "No Living Quarters in this base.\n"
 msgstr "На цій базі немає Казарм.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1115
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "Ви можете здійснити переправку прибульців - на цій базі є Ізолятор.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1117
 msgid "No Alien Containment in this base.\n"
 msgstr "На цій базі немає Ізолятора.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1121
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Ви можете здійснити переправку антиматерії - на цій базі є Сховище антиматерії.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1123
 msgid "No Antimatter Storage in this base.\n"
 msgstr "На цій базі немає Сховища антиматерії.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1127
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Ви можете здійснити переправку авіації - на цій базі є ангар.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1129
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "Переправка авіації неможлива - на цій базі немає Командного центру.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1131
 msgid "No Hangar in this base.\n"
 msgstr "Немає ангару на цій базі.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1135
 msgid "No power supplies in this base.\n"
 msgstr "На цій базі немає Енергостанцій.\n"
 
-#: client/campaign/cp_ufo.c:172
 #, c-format
 msgid ""
 "\n"
@@ -13510,7 +12809,6 @@ msgstr ""
 "\n"
 "Захоплено збитий %s (%.0f%%)\n"
 
-#: client/campaign/cp_ufo.c:174
 #, c-format
 msgid ""
 "\n"
@@ -13519,73 +12817,56 @@ msgstr ""
 "\n"
 "Захоплено приземлений %s\n"
 
-#: client/campaign/cp_ufo.c:428 client/campaign/cp_ufo.c:844
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "НЛО прямує до %s"
 
-#: client/campaign/cp_ufo.c:849
 #, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr "Наші радари виявили новий НЛО поблизу %s"
 
-#: client/campaign/cp_ufo.c:855
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Наш радар втратив слід НЛО"
 
-#: client/campaign/cp_ufopedia.c:142
 msgid "Cruising speed"
 msgstr "Крейсерська швидкість"
 
-#: client/campaign/cp_ufopedia.c:144
 msgid "Maximum speed"
 msgstr "Максимальна швидкість"
 
-#: client/campaign/cp_ufopedia.c:148
 msgid "ECM"
 msgstr "РЕП"
 
-#: client/campaign/cp_ufopedia.c:150
 msgid "Aircraft damage"
 msgstr "Сила ушкоджень"
 
-#: client/campaign/cp_ufopedia.c:152
 msgid "Accuracy"
 msgstr "Влучність"
 
-#: client/campaign/cp_ufopedia.c:154
 msgid "Fuel size"
 msgstr "Об'єм палива"
 
-#: client/campaign/cp_ufopedia.c:156
 msgid "Weapon range"
 msgstr "Дальність ураження"
 
-#: client/campaign/cp_ufopedia.c:158 client/cl_inventory_callbacks.c:54
 msgid "Unknown weapon skill"
 msgstr "Невідомий навик"
 
-#: client/campaign/cp_ufopedia.c:170
 msgid "Small"
 msgstr "Малий"
 
-#: client/campaign/cp_ufopedia.c:172
 msgid "Large"
 msgstr "Великий"
 
-#: client/campaign/cp_ufopedia.c:174
 msgid "Unknown aircraft size"
 msgstr "Невідомий розмір"
 
-#: client/campaign/cp_ufopedia.c:193
 msgid "No requirements"
 msgstr "Нічого не потребує"
 
-#: client/campaign/cp_ufopedia.c:227
 msgid "Error - could not find building"
 msgstr "Помилка - неможливо знайти споруду"
 
-#: client/campaign/cp_ufopedia.c:230
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
@@ -13593,72 +12874,56 @@ msgstr[0] "Час спорудження:\t%i доба\n"
 msgstr[1] "Час спорудження:\t%i доби\n"
 msgstr[2] "Час спорудження:\t%i діб\n"
 
-#: client/campaign/cp_ufopedia.c:231
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Вартість:\t%i кр\n"
 
-#: client/campaign/cp_ufopedia.c:279
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Маса:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:282
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "К-сть зарядів:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:284 client/cl_inventory_callbacks.c:176
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Сила ушкоджень:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:285
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Час перезарядки:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:287
 msgid "Weapon for base defence system\n"
 msgstr "Зброя для захисних систем бази\n"
 
-#: client/campaign/cp_ufopedia.c:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:309 client/campaign/cp_ufopedia.c:362
-#: client/campaign/cp_ufopedia.c:364 client/campaign/cp_ufopedia.c:400
-#: client/campaign/cp_ufopedia.c:402
 msgid "Unknown - need to research this"
 msgstr "Невідомо - потрібно дослідити це"
 
-#: client/campaign/cp_ufopedia.c:336 client/campaign/cp_ufopedia.c:341
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i км/год\n"
 
-#: client/campaign/cp_ufopedia.c:348
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:355
 #, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "Розмір:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:359
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Макс. бійців:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:397
 #, c-format
 msgid ""
 "%s\n"
@@ -13667,15 +12932,12 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cp_ufopedia.c:521
 msgid "Proposal: "
 msgstr "Пропозиція: "
 
-#: client/campaign/cp_ufopedia.c:524
 msgid "Re: "
 msgstr "Відп:"
 
-#: client/campaign/cp_ufopedia.c:535
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -13686,133 +12948,103 @@ msgstr ""
 "Кому: %s\n"
 "Дата: %s"
 
-#: client/campaign/cp_ufopedia.c:609
 msgid "(complete)"
 msgstr "(завершено)"
 
-#: client/campaign/cp_ufopedia.c:668
 msgid "No pre-research description available."
 msgstr "Попередній опис відсутній"
 
-#: client/campaign/cp_ufopedia.c:1104
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BПропозиція: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1108
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Пропозиція: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1119
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BВідп: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1123
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Відп: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1133 client/campaign/cp_ufopedia.c:1145
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1137 client/campaign/cp_ufopedia.c:1149
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1161
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
 
-#: client/campaign/cp_uforecovery.c:61
 #, c-format
 msgid "%s was transfered to %s."
 msgstr "%s переправлено на %s."
 
-#: client/campaign/cp_uforecovery.c:62
 msgid "UFO Recovered"
 msgstr "Захоплено НЛО"
 
-#: client/campaign/cp_uforecovery_callbacks.c:163
 msgid "No free UFO yard available."
 msgstr "Немає жодного вільного майданчика НЛО"
 
-#: client/campaign/cp_uforecovery_callbacks.c:213
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
 msgstr "Захоплений %s буде доставлено на %s."
 
-#: client/campaign/cp_uforecovery_callbacks.c:215
-#: client/campaign/cp_uforecovery_callbacks.c:506
 msgid "UFO Recovery"
 msgstr "Захоплення НЛО"
 
-#: client/campaign/cp_uforecovery_callbacks.c:498
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
 msgstr "Раніше захоплений %s (%s) було продано державі %s, дохід %i кр."
 
-#: client/campaign/cp_uforecovery_callbacks.c:503
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Щойно захоплений %s було продано державі %s, дохід %i кр."
 
-#: client/campaign/missions/cp_mission_baseattack.c:121
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
 msgstr "Вашу базу: %s знещено! Увесь персонал загинув, а обладнання повністю втрачено."
 
-#: client/campaign/missions/cp_mission_baseattack.c:229
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Базу '%s' атакують! Які наші дії ?"
 
-#: client/cl_console.c:297
 msgid "Bring up the in-game console"
 msgstr "Показати ігрову консоль"
 
-#: client/cl_game_campaign.c:69
 msgid "Your dropship is not near the landing zone"
 msgstr "Ваше десантне судно задалеко від зони висадки"
 
-#: client/cl_game_campaign.c:88
 msgid "You've won the battle"
 msgstr "Операцію завершено успішно"
 
-#: client/cl_game_campaign.c:157
 msgid "Chicken-hearted"
 msgstr "Дитсадок"
 
-#: client/cl_game_campaign.c:159
 msgid "Very Easy"
 msgstr "Дуже легка"
 
-#: client/cl_game_campaign.c:162
 msgid "Easy"
 msgstr "Легка"
 
-#: client/cl_game_campaign.c:167
 msgid "Hard"
 msgstr "Важка"
 
-#: client/cl_game_campaign.c:169
 msgid "Very Hard"
 msgstr "Дуже важка"
 
-#: client/cl_game_campaign.c:171
 msgid "Insane"
 msgstr "Навіжена"
 
-#: client/cl_game_campaign.c:239
 msgid "Human"
 msgstr "Люди"
 
-#: client/cl_game_campaign.c:243
 #, c-format
 msgid ""
 "%s\n"
@@ -13835,33 +13067,26 @@ msgstr ""
 "Макс. сума заборгованості: %iкр\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:494
 #, c-format
 msgid "Rank: %s"
 msgstr "Звання: %s"
 
-#: client/cl_game_multiplayer.c:66
 msgid "You've ended your round\n"
 msgstr "Ви зробили свій хід\n"
 
-#: client/cl_game_multiplayer.c:69
 #, c-format
 msgid "%s ended his round (team %i)\n"
 msgstr "%s завершив свій хід (команда %i)\n"
 
-#: client/cl_game_multiplayer.c:89
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Встановіть кількість бійців у гравця меншою, ніж у команді вцілому"
 
-#: client/cl_game_multiplayer.c:89
 msgid "Settings doesn't make sense"
 msgstr "Установки не мають сенсу"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid "Game Drawn!"
 msgstr "Нічия!"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -13871,7 +13096,6 @@ msgstr ""
 "\n"
 "Ніхто не вижив у жодної із сторін."
 
-#: client/cl_game_multiplayer.c:242
 #, c-format
 msgid ""
 "\n"
@@ -13883,27 +13107,21 @@ msgstr ""
 "Вбито супротивників:  %i\n"
 "Вижило бійців команди:  %i"
 
-#: client/cl_game_multiplayer.c:244 client/cl_game_skirmish.c:188
 msgid "You won the game!"
 msgstr "ВИ ПЕРЕМОГЛИ!"
 
-#: client/cl_game_multiplayer.c:245 client/cl_game_skirmish.c:189
 msgid "Congratulations"
 msgstr "Вітаємо"
 
-#: client/cl_game_multiplayer.c:247 client/cl_game_skirmish.c:191
 msgid "You've lost the game!"
 msgstr "Ви зазнали поразки!"
 
-#: client/cl_game_multiplayer.c:248 client/cl_game_skirmish.c:192
 msgid "Better luck next time"
 msgstr "Щасти вам наступного разу"
 
-#: client/cl_game_multiplayer.c:279
 msgid "all"
 msgstr "всі"
 
-#: client/cl_game_skirmish.c:179
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -13920,261 +13138,199 @@ msgstr ""
 "Вбито цивільних:\t\t%i\n"
 "Вбито цивільних ворогом:\t\t%i\n"
 
-#: client/cl_inventory_callbacks.c:44
 msgid "skill_close"
 msgstr "ближній бій"
 
-#: client/cl_inventory_callbacks.c:46
 msgid "skill_heavy"
 msgstr "важка зброя"
 
-#: client/cl_inventory_callbacks.c:48
 msgid "skill_assault"
 msgstr "штурмовик"
 
-#: client/cl_inventory_callbacks.c:50
 msgid "skill_sniper"
 msgstr "снайпер"
 
-#: client/cl_inventory_callbacks.c:52
 msgid "skill_explosive"
 msgstr "підривник"
 
-#: client/cl_inventory_callbacks.c:131
 #, c-format
 msgid "Size:\t%i\n"
 msgstr "Розмір:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:133
 msgid "^BDamage type:\tProtection:\n"
 msgstr "^BТип ураження:\tЗахист:\n"
 
-#: client/cl_inventory_callbacks.c:146
 #, c-format
 msgid "%s weapon\n"
 msgstr "%s зброя\n"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "One-handed"
 msgstr "Одноручна"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "Two-handed"
 msgstr "Дворучна"
 
-#: client/cl_inventory_callbacks.c:148
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "Макс. обсяг магазину:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:175
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "Навик:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:177 client/cl_inventory_callbacks.c:192
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "Одиниць часу:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:178 client/cl_inventory_callbacks.c:193
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Дальність:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:179
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "Розповсюдження:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:182
 #, c-format
 msgid "%s. No detailed info available.\n"
 msgstr "%s. Детальна інформація недоступна.\n"
 
-#: client/cl_inventory_callbacks.c:182
 msgid "Ammunition"
 msgstr "Боєзапас"
 
-#: client/cl_inventory_callbacks.c:182
 msgid "Weapon"
 msgstr "Зброя"
 
-#: client/cl_inventory_callbacks.c:185
 #, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s зброя, що не потребує амуніції\n"
 
-#: client/cl_inventory_callbacks.c:188
 #, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "%s допоміжне обладнання\n"
 
-#: client/cl_inventory_callbacks.c:191
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Дія:\t %s\n"
 
-#: client/cl_inventory_callbacks.c:200
 msgid "Unknown - not useable"
 msgstr "Невідома технологія - неможливо використати"
 
-#: client/cl_inventory_callbacks.c:344
 msgid "Update the GUI with the selected item"
 msgstr "Оновити графічний інтеерфейс з врахуванням вибраних елементів"
 
-#: client/cl_irc.c:1441
 msgid "Server closed connection"
 msgstr "Сервер закрив з'єднання"
 
-#: client/cl_language.c:276
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:516
 #, fuzzy, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
 msgstr "Локальна версія гри (%s) відрізняється від тієї, що на сервері (%s)"
 
-#: client/cl_main.c:521
 msgid "Script files are not the same"
 msgstr "Файли скриптів відрізняються"
 
-#: client/cl_main.c:545
 msgid "Local map version differs from server"
 msgstr "Локальна версія карти відрізняється від тієї, що на сервері"
 
-#: client/cl_main.c:1011
 msgid "Target your shot to the ground"
 msgstr "Націлитись в поверхню землі"
 
-#: client/cl_main.c:1249
 msgid "This change requires a restart"
 msgstr "Ця зміна потребує перезапуску гри"
 
-#: client/cl_main.c:1254
 msgid "This change might require a restart"
 msgstr "Для зміни може знадобитися перезапуск гри"
 
-#: client/cl_screen.c:156
 #, c-format
 msgid "Downloading [%s]"
 msgstr "Завантаження [%s]"
 
-#: client/cl_screen.c:193
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "Завантаження карти [%s]"
 
-#: client/input/cl_input.c:914
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Обертати камеру на полі бою проти годинникової стрілки"
 
-#: client/input/cl_input.c:916
 msgid "Rotate battlescape camera clockwise"
 msgstr "Обертати камеру на полі бою за годинниковою стрілкою"
 
-#: client/input/cl_input.c:918
 msgid "Tilt battlescape camera up"
 msgstr "Нахилити камеру на полі бою вверх"
 
-#: client/input/cl_input.c:920
 msgid "Tilt battlescape camera down"
 msgstr "Нахилити камеру на полі бою вниз"
 
-#: client/input/cl_input.c:922
 msgid "Move battlescape camera left"
 msgstr "Перемістити камеру на полі бою вліво"
 
-#: client/input/cl_input.c:924
 msgid "Move battlescape camera right"
 msgstr "Перемістити камеру на полі бою вправо"
 
-#: client/input/cl_input.c:926
 msgid "Move battlescape camera forward"
 msgstr "Перемістити камеру на полі бою вперед"
 
-#: client/input/cl_input.c:928
 msgid "Move battlescape camera backward"
 msgstr "Перемістити камеру на полі бою назад"
 
-#: client/input/cl_input.c:930 client/input/cl_input.c:952
 msgid "Zoom in"
 msgstr "Приблизити"
 
-#: client/input/cl_input.c:932 client/input/cl_input.c:953
 msgid "Zoom out"
 msgstr "Віддалити"
 
-#: client/input/cl_input.c:935
 msgid "Left mouse button click (menu)"
 msgstr "Клік лівою клавішею миші (меню)"
 
-#: client/input/cl_input.c:937
 msgid "Middle mouse button click (menu)"
 msgstr "Клік середньою клавішею миші (меню)"
 
-#: client/input/cl_input.c:939
 msgid "Right mouse button click (menu)"
 msgstr "Клік правою клавішею миші (меню)"
 
-#: client/input/cl_input.c:941
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Вибрати об'єкти/Йти у квадрат/В режимі вогню, стріляти і т.д."
 
-#: client/input/cl_input.c:943
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Йти у квадрат/В режимі вогню, відмінити дію"
 
-#: client/input/cl_input.c:945
 msgid "Turn soldier toward mouse pointer"
 msgstr "Повернути бійця до вказівника миші"
 
-#: client/input/cl_input.c:947
 msgid "Toggles the hud radar mode"
 msgstr "Перемкнути режим відображення радару"
 
-#: client/input/cl_input.c:950
 msgid "Slice through terrain at a higher level"
 msgstr "Перемкнути відображеня рівня карти вверх"
 
-#: client/input/cl_input.c:951
 msgid "Slice through terrain at a lower level"
 msgstr "Перемкнути відображеня рівня карти вниз"
 
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Assemble a team first"
 msgstr "Насмперед збережіть команду"
 
-#: client/multiplayer/mp_callbacks.c:192
 msgid "Select a free team or your coop team"
 msgstr "Виберіть свобідну команду або приєднуйтесь вашою до каманди"
 
-#: client/multiplayer/mp_callbacks.c:215 client/multiplayer/mp_callbacks.c:228
 #, c-format
 msgid "Current team: %i"
 msgstr "Поточна команда: %i"
 
-#: client/multiplayer/mp_callbacks.c:219 client/multiplayer/mp_callbacks.c:232
 msgid "Team is already in use"
 msgstr "Команда вже використовується"
 
-#: client/multiplayer/mp_callbacks.c:241
 msgid "Invalid or full team"
 msgstr "Неправильна або укомплектована команда"
 
-#: client/multiplayer/mp_serverlist.c:236
 #, c-format
 msgid "Team %d"
 msgstr "Команда %d"
 
-#: client/multiplayer/mp_serverlist.c:238
 msgid "No team"
 msgstr "Нема команди"
 
-#: client/multiplayer/mp_serverlist.c:297
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -14183,103 +13339,82 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/multiplayer/mp_serverlist.c:308
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Карта:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:313
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Назва серверу:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:314
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Показники моралі:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:315
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Тип гри:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Версія:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:317
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Виділений сервер:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Операційна система:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:319
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Мережевий протокол:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Час на хід:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Командна гра:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Макс. гравців у команді:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Макс. к-сть команд на цій карті:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Макс. гравців:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Макс. бійців у гравцяr:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Макс. бійців у команді:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Захищено паролем:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:469
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "Усі чарунки для закладок зайняті. Будь-ласка, видаліть непотрібні і спробуйте ще раз"
 
-#: client/multiplayer/mp_team.c:254
 msgid "Error saving team. Nothing to save yet."
 msgstr "Помилка при збереженні команди. Нічого зберігати."
 
-#: client/multiplayer/mp_team.c:270
 msgid "NewTeam"
 msgstr "Нова команда"
 
-#: client/multiplayer/mp_team.c:275
 msgid "Error saving team. Check free disk space!"
 msgstr "Помилка при збереженні команди. Перевірте вільне місце на диску."
 
-#: client/ui/node/ui_node_base.c:198
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
@@ -14287,116 +13422,86 @@ msgstr[0] "%i доба залишилась"
 msgstr[1] "%i доби залишилось"
 msgstr[2] "%i діб залишилось"
 
-#: client/ui/node/ui_node_base.c:271
 msgid "not operational, depends on"
 msgstr "непрацездатний, залежить від"
 
-#: client/ui/node/ui_node_baseinventory.c:234
-#: client/ui/node/ui_node_baseinventory.c:239
-#: client/ui/node/ui_node_container.c:275
-#: client/ui/node/ui_node_container.c:280
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "Набої: %i\n"
 
-#: client/ui/node/ui_node_baseinventory.c:238
-#: client/ui/node/ui_node_container.c:279
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s заряджено\n"
 
-#: client/ui/node/ui_node_baseinventory.c:246
-#: client/ui/node/ui_node_container.c:287
 msgid "Usable in:\n"
 msgstr "Використовується у:\n"
 
-#: client/ui/node/ui_node_container.c:339
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "Всередині: %i Поза: %i"
 
-#: client/ui/node/ui_node_keybinding.c:95
 #, c-format
 msgid "Key %s already bound"
 msgstr "Клавіша %s уже задіяна"
 
-#: client/ui/node/ui_node_keybinding.c:154
 msgid "NONE"
 msgstr "НІ"
 
-#: client/ui/node/ui_node_window.c:293
 msgid "Drag to move window"
 msgstr "Тягніть, щоб перемістити вікно"
 
-#: client/ui/node/ui_node_window.c:308
 msgid "Close the window"
 msgstr "Закрити вікно"
 
-#: client/ui/ui_tooltip.c:96 client/ui/ui_tooltip.c:101
 #, c-format
 msgid "Key: %s"
 msgstr "Клавіша: %s"
 
-#: game/g_actor.c:78
 msgid "Soldier entered the rescue zone\n"
 msgstr "Боєць у зоні порятунку\n"
 
-#: game/g_actor.c:80
 msgid "Soldier left the rescue zone\n"
 msgstr "Боєць залишив зону порятунку\n"
 
-#: game/g_actor.c:557
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Не вдалося виконати дію - не достатньо ОЧ!\n"
 
-#: game/g_actor.c:561
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Не вдалося виконати дію - зброя повністю заряджена цими набоями!\n"
 
-#: game/g_client.c:401
 msgid "Can't perform action - object not present!\n"
 msgstr "Не вдалося виконати дію - об'єкт не присутій!\n"
 
-#: game/g_client.c:406
 msgid "Can't perform action - not an actor!\n"
 msgstr "Не вдалося виконати дію - це не персонаж!\n"
 
-#: game/g_client.c:411
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Не вдалося виконати дію - персонажа оглушили!\n"
 
-#: game/g_client.c:416
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Не вдалося виконати дію - персонаж мертвий!\n"
 
-#: game/g_client.c:421
 msgid "Can't perform action - not on same team!\n"
 msgstr "Не вдалося виконати дію - персонаж в іншій кованді!\n"
 
-#: game/g_client.c:426
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Не вдалося виконати дію - немає контролю над союзним персонажем!\n"
 
-#: game/g_client.c:449
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Не вдалося виконати дію - зарас не ваш хід!\n"
 
-#: game/g_client.c:560
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Перестрашився, відмовляється виконувати накази.\n"
 
-#: game/g_cmds.c:68
 #, c-format
 msgid "You can't talk for %d more seconds\n"
 msgstr "Ви не можете розмовляти ще %d секунд\n"
 
-#: game/g_cmds.c:76
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "Захист від флуду: ви не можете розмовляти %d сек.\n"
 
 # чи офігів )))
-#: game/g_combat.c:380
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -14404,111 +13509,85 @@ msgstr ""
 "Боєць дезорієнтований!\n"
 "Ворог застосував світло-шумову гранату!\n"
 
-#: game/g_combat.c:614
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Не вдалося виконати дію - неможливо кидати!\n"
 
-#: game/g_combat.c:1085
 msgid "Can't perform action - object not activatable!\n"
 msgstr "Неможливо виконати - об'єкт не активовується!\n"
 
-#: game/g_combat.c:1110
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "Не вдалося виконати дію - неможливо стріляти зі зброї однією рукою!\n"
 
-#: game/g_combat.c:1117
 msgid "Can't perform action - no ammo!\n"
 msgstr "Не вдалося виконати дію - нема боєприпасів!\n"
 
-#: game/g_combat.c:1125
 msgid "Can't perform action - target out of range!\n"
 msgstr "Не вдалося виконати дію - ціль за межами досяжності!\n"
 
-#: game/g_combat.c:1171
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Не вдалося виконати дію - недостатньо боєприпасів!\n"
 
-#: game/g_mission.c:48
 msgid "Aliens entered target zone\n"
 msgstr "Прибульці увійшли в зону призначеня\n"
 
-#: game/g_mission.c:79
 msgid "Item was placed\n"
 msgstr "Предмет на місці\n"
 
-#: game/g_mission.c:86
 msgid "Target zone is occupied\n"
 msgstr "Окуповано зону призначення\n"
 
-#: game/g_morale.c:36
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s панікує!\n"
 
-#: game/g_morale.c:97
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s буянить.\n"
 
-#: game/g_morale.c:99
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s розлючений до божевілля!\n"
 
-#: game/g_morale.c:176
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s тремтить від страху.\n"
 
-#: game/g_reaction.c:193
 msgid "No reaction fire enabled weapon.\n"
 msgstr "Без вогню увідповідь дозволено.\n"
 
-#: game/g_reaction.c:198
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "Не вибрано режим стрільби для вогню увідповідь.\n"
 
-#: game/g_reaction.c:203
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "Недостатньо ОЧ для активації вогню увідповідь.\n"
 
-#: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
 msgstr "Залишилось 4хв до примусового завершення ходу\n"
 
-#: game/g_round.c:48
 msgid "3 minutes left until forced round end\n"
 msgstr "Залишилось 3хв до примусового завершення ходу\n"
 
-#: game/g_round.c:51
 msgid "2 minutes left until forced round end\n"
 msgstr "Залишилось 2хв до примусового завершення ходу\n"
 
-#: game/g_round.c:54
 msgid "1 minute left until forced round end\n"
 msgstr "Залишилась 1хв до примусового завершення ходу\n"
 
-#: game/g_round.c:57
 msgid "30 seconds left until forced round end\n"
 msgstr "Залишилось 30с до примусового завершення ходу\n"
 
-#: game/g_round.c:60
 msgid "15 seconds left until forced round end\n"
 msgstr "Залишилось 15с до примусового завершення ходу\n"
 
-#: game/g_round.c:68
 msgid "Current active team hit the max round time\n"
 msgstr "Поточна команда потратила відведений на хід час\n"
 
-#: po/OTHER_STRINGS:2
 msgid "human"
 msgstr "людина"
 
-#: po/OTHER_STRINGS:3
 msgid "alien"
 msgstr "прибулець"
 
-#: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Зробити скриншот"
 

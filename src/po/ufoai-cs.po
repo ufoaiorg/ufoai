@@ -104,7 +104,6 @@ msgstr "Malý východní park."
 msgid "Harvester"
 msgstr "Sklízeč"
 
-#: client/campaign/cp_base_callbacks.c:312
 msgid "Laboratory"
 msgstr "Laboratoř"
 
@@ -402,7 +401,6 @@ msgstr "Velký hangár"
 msgid "Small Hangar"
 msgstr "Malý hangár"
 
-#: client/campaign/cp_base_callbacks.c:317
 msgid "Workshop"
 msgstr "Dílna"
 
@@ -412,7 +410,6 @@ msgstr "Radar"
 msgid "Advanced Radar"
 msgstr "Zdokonalený radar"
 
-#: client/campaign/cp_base_callbacks.c:332
 msgid "Hospital"
 msgstr "Nemocnice"
 
@@ -2406,11 +2403,9 @@ msgstr "Kříž"
 msgid "Coin"
 msgstr "Medaile"
 
-#: client/campaign/cp_employee.c:206
 msgid "Scientist"
 msgstr "Vědec"
 
-#: client/campaign/cp_employee.c:210
 msgid "Pilot"
 msgstr "Pilot"
 
@@ -2418,7 +2413,6 @@ msgstr "Pilot"
 msgid "UGV"
 msgstr "BPV"
 
-#: client/campaign/cp_employee.c:208
 msgid "Worker"
 msgstr "Dělník"
 
@@ -2865,7 +2859,6 @@ msgstr ""
 "Dr. Connor"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: client/campaign/cp_missions.c:459
 msgid "Alien base"
 msgstr "Cizácká základna"
 
@@ -8154,7 +8147,6 @@ msgstr "Zpět na zobrazení základny"
 msgid "Name of this base"
 msgstr "Jméno této základny"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Cancel"
 msgstr "Pryč odsud"
 
@@ -8215,20 +8207,15 @@ msgstr "Odebrat tuto věc"
 msgid "Available equipment:"
 msgstr "Dostupné vybavení"
 
-#: client/campaign/cp_fightequip_callbacks.c:135
 msgid "Weapons"
 msgstr "Zbraně"
 
-#: client/campaign/cp_fightequip_callbacks.c:142
 msgid "Ammo"
 msgstr "Munice"
 
-#: client/campaign/cp_fightequip_callbacks.c:137
-#: client/campaign/cp_ufopedia.c:146
 msgid "Armour"
 msgstr "Zbroj"
 
-#: client/campaign/cp_fightequip_callbacks.c:139
 msgid "Items"
 msgstr "Vybavení"
 
@@ -8416,13 +8403,9 @@ msgstr "Doba stavby:"
 msgid "Autofire"
 msgstr "Automatická střelba"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
-#: client/campaign/cp_installation_callbacks.c:216
 msgid "Destroy"
 msgstr "Zbourat"
 
-#: client/campaign/cp_installation_callbacks.c:216
 msgid "Destroy installation"
 msgstr "Zbourat zařízení"
 
@@ -8459,8 +8442,6 @@ msgstr "Prodat"
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Koupit/prodat vybavení"
 
-#: client/campaign/cp_base.c:1203 client/campaign/cp_base.c:1213
-#: client/campaign/cp_base.c:1223
 msgid "Transfer"
 msgstr "Přeprava"
 
@@ -8513,8 +8494,6 @@ msgstr "Náhled budovy"
 msgid "Select building"
 msgstr "Zvolit budovu"
 
-#: client/campaign/cp_ufopedia.c:609 client/campaign/cp_ufopedia.c:662
-#: client/campaign/cp_ufopedia.c:671 client/campaign/cp_ufopedia.c:831
 msgid "UFOpaedia"
 msgstr "UFOpedie"
 
@@ -8963,7 +8942,6 @@ msgstr "Jeden výstřel při zpětné palbě (není možné)"
 msgid "No reaction fire"
 msgstr "Bez zpětné palby"
 
-#: client/battlescape/cl_hud.c:822
 msgid "Reserve TUs for shooting."
 msgstr "Ponechat ČJ pro střelbu."
 
@@ -9879,7 +9857,6 @@ msgstr "Nízké"
 msgid "Medium"
 msgstr "Střední"
 
-#: client/cl_game_campaign.c:164
 msgid "Normal"
 msgstr "Normální"
 
@@ -10383,11 +10360,9 @@ msgstr "Potvrzovat akce:"
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 msgstr ""
 
-#: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Ano"
 
-#: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Ne"
 
@@ -10479,7 +10454,6 @@ msgstr "Přijmout"
 msgid "Use the previous resolution."
 msgstr "Změnit rozlišení"
 
-#: client/campaign/cp_produce_callbacks.c:296
 msgid "Disassembly"
 msgstr "Rozebírání"
 
@@ -10670,7 +10644,6 @@ msgid "Add/Remove item to transfer cargo"
 msgstr "Přidejte/odeberte položku pro přepravu nákladu"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: client/cl_game_campaign.c:241
 msgid "Aliens"
 msgstr "Cizáci"
 
@@ -11022,104 +10995,79 @@ msgstr "Kulometný pás"
 msgid "Autocannon Module"
 msgstr "Automatické dělo"
 
-#: client/battlescape/cl_actor.c:102
 msgid "Poor"
 msgstr "Špatný"
 
-#: client/battlescape/cl_actor.c:104
 msgid "Mediocre"
 msgstr "Obyčejný"
 
-#: client/battlescape/cl_actor.c:106
 msgid "Average"
 msgstr "Průměrný"
 
-#: client/battlescape/cl_actor.c:108
 msgid "Competent"
 msgstr "Schopný"
 
-#: client/battlescape/cl_actor.c:110
 msgid "Proficient"
 msgstr "Zdatný"
 
-#: client/battlescape/cl_actor.c:112
 msgid "Very Good"
 msgstr "Celkem dobrý"
 
-#: client/battlescape/cl_actor.c:114
 msgid "Highly Proficient"
 msgstr "Velice zdatný"
 
-#: client/battlescape/cl_actor.c:118
 msgid "Outstanding"
 msgstr "Vyjímečný"
 
-#: client/battlescape/cl_actor.c:121
 msgid "Superhuman"
 msgstr "Nadčlověk"
 
-#: client/battlescape/cl_actor.c:661
 msgid "This isn't your round\n"
 msgstr "Nejste na tahu\n"
 
-#: client/battlescape/cl_actor.c:912
 msgid "You cannot reload this unknown item.\n"
 msgstr "Tento neznámý předmět nemůžete nabít.\n"
 
-#: client/battlescape/cl_actor.c:1757
 msgid "Unknown alien race"
 msgstr "Neznámá cizácká rasa"
 
-#: client/battlescape/cl_actor.c:2410
 msgid "Toggle to next actor"
 msgstr "Přepnout na další postavu"
 
-#: client/battlescape/cl_actor.c:2411
 msgid "Select an actor from list"
 msgstr "Vybrat postavu ze seznamu"
 
 # ???
-#: client/battlescape/cl_actor.c:2412
 msgid "Update an actor"
 msgstr "Aktualizovat postavu"
 
-#: client/battlescape/cl_actor.c:2414
 msgid "Toggle stand/crounch"
 msgstr "Přepnout přikrčit/postavit se"
 
-#: client/battlescape/cl_actor.c:2415
 msgid "Toggle the headgear"
 msgstr "Přepnout přilbu"
 
-#: client/battlescape/cl_actor.c:2416
 msgid "Opens or closes a door"
 msgstr "Otevřít nebo zavřít dveře"
 
-#: client/battlescape/cl_actor.c:2417
 msgid "Confirm the current action"
 msgstr "Potvrdit aktuální akci"
 
-#: client/battlescape/cl_actor.c:2418
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Přepnout na dalšího zvolenou postavou viděného cizáka."
 
-#: client/battlescape/cl_actor.c:2420
 msgid "Toggle to next alien"
 msgstr "Přepnout na dalšího cizáka"
 
-#: client/battlescape/cl_hud.c:97 client/battlescape/cl_hud.c:100
 msgid "Crouch walk"
 msgstr "Chůze v přikrčení"
 
-#: client/battlescape/cl_hud.c:98
 msgid "Autostand"
 msgstr "Automatické postavení"
 
-#: client/battlescape/cl_hud.c:99
 msgid "Walk"
 msgstr "Chůze"
 
-#: client/battlescape/cl_hud.c:148
 #, c-format
 msgid ""
 "%s\n"
@@ -11127,81 +11075,63 @@ msgid ""
 "%s"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:293
 msgid "[0 TU] No reservation"
 msgstr "[0 ČJ] Žádné ponechané"
 
-#: client/battlescape/cl_hud.c:313
 #, c-format
 msgid "[%i TU] %s"
 msgstr "[%i ČJ] %s"
 
-#: client/battlescape/cl_hud.c:345
 msgid "Reserve TUs for firing/using."
 msgstr "Ponechat ČJ pro střelbu/použití."
 
-#: client/battlescape/cl_hud.c:345
 msgid "Shot Reservation"
 msgstr "Ponechání ČJ pro výstřel"
 
-#: client/battlescape/cl_hud.c:445
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "Zbývající ČJ: %i"
 
-#: client/battlescape/cl_hud.c:448
 msgid "No remaining TUs left after shot."
 msgstr "Po výstřelu nezbývají žádné ČJ."
 
-#: client/battlescape/cl_hud.c:451
 #, c-format
 msgid "TU: %i"
 msgstr "ČJ: %i"
 
-#: client/battlescape/cl_hud.c:452
 #, c-format
 msgid "Shots: %i"
 msgstr "Ran: %i"
 
-#: client/battlescape/cl_hud.c:666
 msgid "No weapon."
 msgstr "Žádná zbraň."
 
-#: client/battlescape/cl_hud.c:675
 msgid "Weapon cannot be reloaded."
 msgstr "Zbraň nemůže být nabita."
 
-#: client/battlescape/cl_hud.c:681
 msgid "No reload possible, already fully loaded."
 msgstr "Není možné nabít, již plně nabito."
 
-#: client/battlescape/cl_hud.c:691
 msgid "Not enough TUs for reloading weapon."
 msgstr "Nedostatek ČJ pro nabití zbraně."
 
-#: client/battlescape/cl_hud.c:694
 msgid "No reload possible, you don't have backup ammo."
 msgstr "Není možné nabít, došla munice."
 
-#: client/battlescape/cl_hud.c:786
 msgid "Not enough TUs for standing up."
 msgstr "Nedostatek ČJ pro postavení se."
 
-#: client/battlescape/cl_hud.c:789
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "Postavit se (%i ČJ)"
 
-#: client/battlescape/cl_hud.c:794
 msgid "Not enough TUs for crouching."
 msgstr "Nedostatek ČJ pro přikrčení."
 
-#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "Přikrčit (%i ČJ)"
 
-#: client/battlescape/cl_hud.c:805
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -11210,16 +11140,13 @@ msgstr ""
 "%i ČJ je ponecháno pro přikrčení/postavení se.\n"
 "Kliněte pro zrušení."
 
-#: client/battlescape/cl_hud.c:809
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Ponecháno %i ČJ na přikrčení/postavení se."
 
-#: client/battlescape/cl_hud.c:812
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Není dostatek ČJ k ponechání na přikrčení/postavení se."
 
-#: client/battlescape/cl_hud.c:818
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -11230,16 +11157,13 @@ msgstr ""
 "Klikněte pro změnu.\n"
 "Pravým tlačítkem pro zrušní."
 
-#: client/battlescape/cl_hud.c:825
 msgid "Reserving TUs for shooting not possible."
 msgstr "Ponechání ČJ pro střelbu není možné."
 
-#: client/battlescape/cl_hud.c:846 client/battlescape/cl_hud.c:855
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Nabít zbraň (%i ČJ)."
 
-#: client/battlescape/cl_hud.c:1082
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -11247,7 +11171,6 @@ msgstr ""
 "Tento neznámý předmět nelze použít.\n"
 "Nejprve je třeba zkoumat jej.\n"
 
-#: client/battlescape/cl_hud.c:1103
 #, c-format
 msgid ""
 "%s\n"
@@ -11256,17 +11179,14 @@ msgstr ""
 "%s\n"
 "(prázdný)\n"
 
-#: client/battlescape/cl_hud.c:1125
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "Morálka  %i | Ponechané ČJ: %i\n"
 
-#: client/battlescape/cl_hud.c:1127
 #, c-format
 msgid "Morale  %i"
 msgstr "Morálka  %i"
 
-#: client/battlescape/cl_hud.c:1132
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -11275,7 +11195,6 @@ msgstr ""
 "Morálka  %i | Vyhrazeno: %i ČJ\n"
 "%s %i (%i| Zbývá: %i ČJ)\n"
 
-#: client/battlescape/cl_hud.c:1136
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -11284,7 +11203,6 @@ msgstr ""
 "Morálka  %i\n"
 "%s %i (zbývá %i ČJ)\n"
 
-#: client/battlescape/cl_hud.c:1168
 #, c-format
 msgid ""
 "Time Units\n"
@@ -11297,21 +11215,16 @@ msgstr ""
 "- Ponecháno:  %i\n"
 "- Zbývá: %i\n"
 
-#: client/battlescape/cl_hud.c:1263
 msgid "Currently panics!\n"
 msgstr "Panikaří!\n"
 
-#: client/battlescape/cl_hud.c:1489
 #, fuzzy
 msgid "Update cvars from actor from list"
 msgstr "Vybrat postavu ze seznamu"
 
-#: client/battlescape/cl_hud_callbacks.c:86
-#: client/battlescape/cl_hud_callbacks.c:243
 msgid "No item in hand.\n"
 msgstr "V ruce není žádný předmět.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:92
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -11319,7 +11232,6 @@ msgstr ""
 "Nelze provést:\n"
 "došla munice.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:97
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -11327,8 +11239,6 @@ msgstr ""
 "Z této zbraně nelze střílet\n"
 "jednou rukou.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:151
-#: client/battlescape/cl_hud_callbacks.c:261
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -11336,7 +11246,6 @@ msgstr ""
 "Nelze provést:\n"
 "nedostatek ČJ.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:249
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -11344,7 +11253,6 @@ msgstr ""
 "Nelze provést:\n"
 "tento předmět není nabíjecí.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:256
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -11352,300 +11260,191 @@ msgstr ""
 "Nelze provést:\n"
 "munice není k dispozici.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:291
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Nabít zbraň v levé ruce vojáka"
 
-#: client/battlescape/cl_hud_callbacks.c:292
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "Nabít zbraň v pravé ruce vojáka"
 
-#: client/battlescape/cl_hud_callbacks.c:293
 msgid "Toggle reservation for crouching."
 msgstr "Přepnout ponechání ČJ na přikrčení."
 
-#: client/battlescape/cl_hud_callbacks.c:294
 msgid "Toggle reaction fire"
 msgstr "Přepnout ponechání ČJ na zpětnou palbu"
 
-#: client/battlescape/cl_view.c:58 client/battlescape/cl_view.c:84
 #, c-format
 msgid "loading %s"
 msgstr "načítám %s"
 
-#: client/battlescape/cl_view.c:66
 msgid "loading models..."
 msgstr "načítám modely..."
 
-#: client/battlescape/cl_view.c:114 client/cl_main.c:1124
 msgid "Awaiting game start"
 msgstr "Očekávám start hry"
 
-#: client/battlescape/events/e_server.c:41
 #, fuzzy
 msgid "This isn't your round"
 msgstr "Nejste na tahu\n"
 
-#: client/battlescape/events/e_server.c:53
 msgid "Ends current round"
 msgstr "Ukončit aktuální tah"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:159
 #, c-format
 msgid "Enemy spotted: %s!"
 msgstr "Spatřen nepřítel: %s!"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:162
 msgid "Enemy spotted!\n"
 msgstr "Spatřen nepřítel!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:164
 msgid "Civilian spotted!\n"
 msgstr "Spatřen civilista!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:78
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s byl omráčen\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s byl zabit\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:88
 msgid "A civilian was stunned.\n"
 msgstr "Byl omráčen civilista.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
 msgid "A civilian was killed.\n"
 msgstr "Byl zabit civilista.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:94
 msgid "An alien was stunned.\n"
 msgstr "Byl omráčen cizák.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
 msgid "An alien was killed.\n"
 msgstr "Byl zabit cizák.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:100
 msgid "A soldier was stunned.\n"
 msgstr "Byl omráčen voják.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
 msgid "A soldier was killed.\n"
 msgstr "Byl zabit voják.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:106
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Byl omráčen člen týmu %i.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Byl zabit člen týmu %i.\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:69
 #, fuzzy, c-format
 msgid "%s was revitalised\n"
 msgstr "%s byl zabit\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:75
 #, fuzzy
 msgid "A civilian was revitalised.\n"
 msgstr "Byl zabit civilista.\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:78
 #, fuzzy
 msgid "An alien was revitalised.\n"
 msgstr "Byl zabit cizák.\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:81
 #, fuzzy
 msgid "A soldier was revitalised.\n"
 msgstr "Byl zabit voják.\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:84
 #, fuzzy, c-format
 msgid "A member of team %i was revitalised.\n"
 msgstr "Byl zabit člen týmu %i.\n"
 
-#: client/battlescape/events/event/player/e_event_doendround.c:57
 msgid "Your round started!\n"
 msgstr "Začal váš tah!\n"
 
-#: client/campaign/cp_aircraft.c:450
 msgid "ON RED ALERT"
 msgstr "ČERVENÝ POPLACH"
 
-#: client/campaign/cp_aircraft.c:454
 msgid "Nothing - should not be displayed"
 msgstr "Žádný - nemělo by být zobrazeno"
 
-#: client/campaign/cp_aircraft.c:456
 msgid "at home base"
 msgstr "na domácí základně"
 
-#: client/campaign/cp_aircraft.c:458
 msgid "refuelling"
 msgstr "doplňuje palivo"
 
-#: client/campaign/cp_aircraft.c:460
 msgid "idle"
 msgstr "nečinný"
 
-#: client/campaign/cp_aircraft.c:462
 msgid "in transit"
 msgstr "přepravuje se"
 
-#: client/campaign/cp_aircraft.c:464
 msgid "enroute to mission"
 msgstr "na cestě k misi"
 
-#: client/campaign/cp_aircraft.c:466
 msgid "pursuing a UFO"
 msgstr "pronásleduje UFO"
 
-#: client/campaign/cp_aircraft.c:468
 msgid "ready to drop soldiers"
 msgstr "připraven na výsadek vojáků"
 
-#: client/campaign/cp_aircraft.c:470
 msgid "intercepting a UFO"
 msgstr "stíhá UFO"
 
-#: client/campaign/cp_aircraft.c:472
 msgid "enroute to new home base"
 msgstr "na cestě k nové domácí základně"
 
-#: client/campaign/cp_aircraft.c:474
 msgid "returning to base"
 msgstr "vrací se na základnu"
 
-#: client/campaign/cp_aircraft.c:565
 msgid "Interceptor"
 msgstr "Stíhačka"
 
-#: client/campaign/cp_aircraft.c:567
 msgid "Transporter"
 msgstr "Transportér"
 
-#: client/campaign/cp_aircraft.c:569 client/campaign/cp_ufo.c:158
-#: client/campaign/cp_ufo.c:159
 msgid "UFO"
 msgstr "UFO"
 
-#: client/campaign/cp_aircraft.c:837
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "Nový %s je připraven na základně %s."
 
-#: client/campaign/cp_aircraft.c:838 client/campaign/cp_aircraft.c:1224
-#: client/campaign/cp_aircraft.c:1240 client/campaign/cp_aircraft.c:1284
-#: client/campaign/cp_aircraft.c:1341 client/campaign/cp_aircraft.c:1364
-#: client/campaign/cp_aircraft.c:2124
-#: client/campaign/cp_aircraft_callbacks.c:95
-#: client/campaign/cp_aircraft_callbacks.c:103
-#: client/campaign/cp_aircraft_callbacks.c:111
-#: client/campaign/cp_airfight.c:334 client/campaign/cp_airfight.c:354
-#: client/campaign/cp_aliencont.c:182 client/campaign/cp_aliencont.c:212
-#: client/campaign/cp_aliencont.c:231 client/campaign/cp_aliencont.c:241
-#: client/campaign/cp_base.c:1167 client/campaign/cp_base.c:1189
-#: client/campaign/cp_base.c:1754 client/campaign/cp_base.c:1818
-#: client/campaign/cp_base.c:2907 client/campaign/cp_base.c:2912
-#: client/campaign/cp_base.c:3650 client/campaign/cp_base_callbacks.c:68
-#: client/campaign/cp_base_callbacks.c:197
-#: client/campaign/cp_base_callbacks.c:239
-#: client/campaign/cp_base_callbacks.c:572
-#: client/campaign/cp_base_callbacks.c:578
-#: client/campaign/cp_base_callbacks.c:600
-#: client/campaign/cp_base_callbacks.c:610
-#: client/campaign/cp_base_callbacks.c:622
-#: client/campaign/cp_base_callbacks.c:629
-#: client/campaign/cp_base_callbacks.c:637
-#: client/campaign/cp_base_callbacks.c:642
-#: client/campaign/cp_base_callbacks.c:647 client/campaign/cp_campaign.c:1008
-#: client/campaign/cp_installation_callbacks.c:149
-#: client/campaign/cp_mapfightequip.c:351
-#: client/campaign/cp_mapfightequip.c:372
-#: client/campaign/cp_mapfightequip.c:378
-#: client/campaign/cp_mapfightequip.c:390
-#: client/campaign/cp_market_callbacks.c:633
-#: client/campaign/cp_market_callbacks.c:638 client/campaign/cp_missions.c:735
-#: client/campaign/cp_missions.c:1090 client/campaign/cp_nation.c:889
-#: client/campaign/cp_nation.c:903 client/campaign/cp_nation.c:916
-#: client/campaign/cp_nation.c:925 client/campaign/cp_nation.c:931
-#: client/campaign/cp_nation.c:939 client/campaign/cp_popup.c:483
-#: client/campaign/cp_produce.c:491 client/campaign/cp_produce.c:500
-#: client/campaign/cp_produce.c:511 client/campaign/cp_produce.c:520
-#: client/campaign/cp_produce.c:531
-#: client/campaign/cp_research_callbacks.c:563
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:587
-#: client/campaign/cp_research_callbacks.c:626
-#: client/campaign/cp_research_callbacks.c:656
-#: client/campaign/cp_research_callbacks.c:815
-#: client/campaign/cp_research_callbacks.c:818 client/campaign/cp_ufo.c:428
-#: client/campaign/cp_ufo.c:844 client/campaign/cp_ufo.c:849
-#: client/campaign/cp_ufo.c:855
-#: client/campaign/missions/cp_mission_baseattack.c:122
-#: client/cl_game_campaign.c:69 client/cl_game_campaign.c:88
-#: client/cl_game_campaign.c:91 client/cl_main.c:404
-#: client/multiplayer/mp_serverlist.c:469
 msgid "Notice"
 msgstr "Poznámka"
 
-#: client/campaign/cp_aircraft.c:902
 msgid "No operational hangars at that base."
 msgstr "Hangáry na této základně nejsou v provozu."
 
-#: client/campaign/cp_aircraft.c:906
 msgid "No free hangars at that base."
 msgstr "Na této základně nejsou volné hangáry"
 
-#: client/campaign/cp_aircraft.c:909
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Na cílové základně není dostatek volných ubikací pro posádku."
 
-#: client/campaign/cp_aircraft.c:912
 msgid "Insufficient storage space at that base."
 msgstr "Na cílové základně není dostatek skladovacího prostoru."
 
-#: client/campaign/cp_aircraft.c:916
 msgid "That base is beyond this aircraft's range."
 msgstr "Cílová základna je mimo dolet tohoto letounu."
 
-#: client/campaign/cp_aircraft.c:1223
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "Letoun %s nemůže být plně dotankován na základně %s. Nedostatek antihmoty."
 
-#: client/campaign/cp_aircraft.c:1239
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Letoun %s doplnil palivo na základně %s."
 
-#: client/campaign/cp_aircraft.c:1284
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Letoun %s má málo paliva a musí se vrátit na základnu."
 
-#: client/campaign/cp_aircraft.c:1341
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Nejprve tomuto letounu přiřaďte alespoň jednoho vojáka."
 
-#: client/campaign/cp_aircraft.c:1364
 msgid "Insufficient fuel."
 msgstr "Nedostatek paliva."
 
-#: client/campaign/cp_aircraft.c:2124
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Letoun %s nemá dostatek paliva pro útok na  UFO: letí zpátky na základnu %s."
 
-#: client/campaign/cp_aircraft_callbacks.c:95
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
@@ -11655,7 +11454,6 @@ msgstr ""
 "\n"
 "Letoun nemůže odstartovat.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:103
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
@@ -11665,121 +11463,89 @@ msgstr ""
 "\n"
 "Letoun nemůže odstartovat.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:111
 msgid "Aircraft started"
 msgstr "Letoun odstartoval"
 
-#: client/campaign/cp_aircraft_callbacks.c:215 client/campaign/cp_map.c:1678
-#: client/campaign/cp_map.c:1685
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Rychlost:\t%i km/h\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:217 client/campaign/cp_map.c:1679
-#: client/campaign/cp_map.c:1686
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Palivo:\t%i/%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:219
-#: client/campaign/cp_ufopedia.c:345
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Akční rádius:\t%i km\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:220
 #, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "Zbraně:\t%i z %i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:221
 #, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "Pancéř:\t%i z 1\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:222
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "Elektronika:\t%i on %i"
 
-#: client/campaign/cp_airfight.c:334
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "UFO střílí na %s"
 
-#: client/campaign/cp_airfight.c:354
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "Našemu letounu došla munice - nyní se vrací se na základnu."
 
-#: client/campaign/cp_airfight.c:434 client/campaign/cp_airfight.c:461
 msgid "Interception"
 msgstr "Stíhání"
 
-#: client/campaign/cp_airfight.c:434
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Stíhání UFO bylo úspěšné -- UFO bylo ztraceno v moři."
 
-#: client/campaign/cp_airfight.c:461 client/cl_game_campaign.c:91
 msgid "You've lost the battle"
 msgstr "Prohrál jste bitvu"
 
-#: client/campaign/cp_aliencont.c:182
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "Zatím nemůžete pracovat na cizácích. Na této základně není k dispozici komplex cizáckých cel."
 
-#: client/campaign/cp_aliencont.c:212
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "Zatím nedokážete držet živé cizáky. Cizáci zemřeli."
 
-#: client/campaign/cp_aliencont.c:231
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr "Nemáte dostatek místa v komplexu cizáckých cel. Někteří cizáci byli zabiti."
 
-#: client/campaign/cp_aliencont.c:241
 msgid "You've captured new aliens."
 msgstr "Pochytal jste nové cizáky."
 
-#: client/campaign/cp_aliencont_callbacks.c:204
 msgid "Already researched"
 msgstr "Již vyzkoumán"
 
-#: client/campaign/cp_aliencont_callbacks.c:206
 msgid "Needs autopsy!"
 msgstr "Vyžaduje pitvu!"
 
-#: client/campaign/cp_aliencont_callbacks.c:229
 msgid "Free slot"
 msgstr "Volná pozice"
 
-#: client/campaign/cp_aliencont_callbacks.c:230
-#: client/campaign/cp_basedefence_callbacks.c:217
-#: client/campaign/cp_basedefence_callbacks.c:595
-#: client/campaign/cp_ufopedia.c:229 client/input/cl_joystick.c:278
 msgid "None"
 msgstr "Žádné"
 
-#: client/campaign/cp_base.c:1167
 #, fuzzy
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "Základna je napadena, nemůžete bourat budovy!"
 
-#: client/campaign/cp_base.c:1177
 msgid "Destroy Entrance"
 msgstr "Zbourat vstup"
 
-#: client/campaign/cp_base.c:1177
 msgid "You can't destroy the entrance of the base!"
 msgstr "Nemůžete zbourat vstup na základnu!"
 
-#: client/campaign/cp_base.c:1189
 msgid "You can't destroy this building! It is the only connection to other buildings!"
 msgstr ""
 
-#: client/campaign/cp_base.c:1200
 msgid "Destroy Hangar"
 msgstr "Zbourat hangár"
 
-#: client/campaign/cp_base.c:1200
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -11787,29 +11553,21 @@ msgstr ""
 "Pokud zbouráte tento hangár, zároveň tím zničíte i letoun uvnitř.\n"
 "Jste si jisti, že chcete zbourat tuto budovu?"
 
-#: client/campaign/cp_base.c:1201
 msgid "Go to hangar"
 msgstr "Přejít do hangáru"
 
-#: client/campaign/cp_base.c:1201
 msgid "Go to hangar without destroying building"
 msgstr "Přejít do hangáru bez zbourání budovy"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
 msgid "Destroy the building"
 msgstr "Zbourat budovu"
 
-#: client/campaign/cp_base.c:1204 client/campaign/cp_base.c:1214
-#: client/campaign/cp_base.c:1224
 msgid "Go to transfer menu without destroying the building"
 msgstr "Přejít do nabídky přepravy bez zbourání budovy"
 
-#: client/campaign/cp_base.c:1210
 msgid "Destroy Quarter"
 msgstr "Zbourat ubikace"
 
-#: client/campaign/cp_base.c:1210
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -11817,19 +11575,15 @@ msgstr ""
 "Pokud zbouráte tyto ubikace, všichni zaměstnanci unitř budou zabiti.\n"
 "Jste si jisti, že chcete zbourat tuto budovu?"
 
-#: client/campaign/cp_base.c:1211
 msgid "Dismiss"
 msgstr "Odchod"
 
-#: client/campaign/cp_base.c:1211
 msgid "Go to hiring menu without destroying building"
 msgstr "Přejít do najímání zaměstnanců bez zbourání budovy"
 
-#: client/campaign/cp_base.c:1220
 msgid "Destroy Storage"
 msgstr "Zbourat sklady"
 
-#: client/campaign/cp_base.c:1220
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -11837,62 +11591,48 @@ msgstr ""
 "Pokud zbouráte tyto sklady, veškeré vybavení uvnitř bude zničeno.\n"
 "Jste si jisti, že chcete zbourat tuto budovu?"
 
-#: client/campaign/cp_base.c:1221
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Přejít do nabídky nákup/prodej bez zbourání budovy"
 
-#: client/campaign/cp_base.c:1221
 msgid "Go to storage"
 msgstr "Přejít do skladu"
 
-#: client/campaign/cp_base.c:1233
 msgid "Are you sure you want to destroy this building?"
 msgstr "Jste si jistý že chcete zbourat tuto budovu?"
 
-#: client/campaign/cp_base.c:1233
 msgid "Destroy building"
 msgstr "Zbourat budovu"
 
-#: client/campaign/cp_base.c:1251
 msgid "Not set"
 msgstr "Nevybudováno"
 
-#: client/campaign/cp_base.c:1257
 #, c-format
 msgid "Already %i in base"
 msgstr "Na základně již %i"
 
-#: client/campaign/cp_base.c:1263
 msgid "Construction finished"
 msgstr "Dostavěno"
 
-#: client/campaign/cp_base.c:1267
 msgid "Working 100%"
 msgstr "Pracuje na 100 %"
 
-#: client/campaign/cp_base.c:1271
 msgid "Not operational, depends on"
 msgstr "Nefunkční, závisí na"
 
-#: client/campaign/cp_base.c:1275
 msgid "Down"
 msgstr "Mimo provoz"
 
-#: client/campaign/cp_base.c:1754
 msgid "Not enough credits to build this\n"
 msgstr "Na tuto stavbu není dostatek kreditů\n"
 
-#: client/campaign/cp_base.c:1818
 #, fuzzy
 msgid "You must build next to existing buildings."
 msgstr "Přejít do nabídky nákup/prodej bez zbourání budovy"
 
-#: client/campaign/cp_base.c:1867
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Stojí:\t%i k\n"
 
-#: client/campaign/cp_base.c:1870
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
@@ -11900,53 +11640,38 @@ msgstr[0] "Postaveno za %i den\n"
 msgstr[1] "Postaveno za %i dny\n"
 msgstr[2] "Postaveno za %i dnů\n"
 
-#: client/campaign/cp_base.c:1873 client/campaign/cp_ufopedia.c:232
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Provozní náklady:\t%i k\n"
 
-#: client/campaign/cp_base.c:1876 client/campaign/cp_ufopedia.c:229
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Potřebuje:\t%s\n"
 
-#: client/campaign/cp_base.c:2636
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
-#: client/campaign/cp_base.c:2636 client/campaign/cp_base.c:2638
-#: client/campaign/cp_market_callbacks.c:615
-#: client/campaign/cp_market_callbacks.c:620
-#: client/campaign/cp_market_callbacks.c:705
-#: client/campaign/cp_market_callbacks.c:707 client/campaign/cp_save.c:392
-#: client/multiplayer/mp_team.c:254 client/multiplayer/mp_team.c:275
 msgid "Note"
 msgstr "Poznámka"
 
-#: client/campaign/cp_base.c:2638
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit\n"
 
-#: client/campaign/cp_base.c:2648
 #, fuzzy
 msgid "Antimatter (current/max):"
 msgstr "Sklad antihmoty"
 
-#: client/campaign/cp_base.c:2842
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Dokončena stavba budovy %s na základně %s."
 
-#: client/campaign/cp_base.c:2843
 msgid "Building finished"
 msgstr "Stavba dokončena"
 
-#: client/campaign/cp_base.c:2905
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Prodáním položky '%s' jste získal %i kreditů."
 
-#: client/campaign/cp_base.c:2906
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -11954,12 +11679,10 @@ msgstr[0] "%i shromážděného předmětu"
 msgstr[1] "%i shromážděných předmětů"
 msgstr[2] "%i shromážděných předmětů"
 
-#: client/campaign/cp_base.c:2910
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Nedostatek skladovacího prostoru na základně %s. %s"
 
-#: client/campaign/cp_base.c:2911
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
@@ -11967,78 +11690,57 @@ msgstr[0] "%i předmět byl prodán za %i kreditů."
 msgstr[1] "%i předměty byly prodány za %i kreditů."
 msgstr[2] "%i předmětů bylo prodáno za %i kreditů."
 
-#: client/campaign/cp_base.c:3648
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "Základna %s nemá sklad antihnoty. %i jednotek antihmoty bylo odebráno."
 
-#: client/campaign/cp_base_callbacks.c:68
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:188
 #, c-format
 msgid "Base #%i"
 msgstr "Základna  #%i"
 
-#: client/campaign/cp_base_callbacks.c:197
 msgid "You've reached the base limit."
 msgstr "Dosáhl jste maximálního počtu základen."
 
-#: client/campaign/cp_base_callbacks.c:226
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "Byla vybudována nová základna: %s (stát: %s)"
 
-#: client/campaign/cp_base_callbacks.c:228
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "Byla vybudována nová základna: %s"
 
-#: client/campaign/cp_base_callbacks.c:229
 msgid "Base built"
 msgstr "Základna vybudována"
 
-#: client/campaign/cp_base_callbacks.c:239
 msgid "Not enough credits to set up a new base."
 msgstr "Nedostatek kreditů na založení nové základny."
 
-#: client/campaign/cp_base_callbacks.c:294
 msgid "Buy or produce at least one aircraft first."
 msgstr "Kupte nebo vyrobte nejdříve alespoň jeden letoun."
 
-#: client/campaign/cp_base_callbacks.c:296
 msgid "No Hangar functional in base."
 msgstr "Na této základně není hangár."
 
-#: client/campaign/cp_base_callbacks.c:302
-#: client/campaign/cp_base_callbacks.c:312
-#: client/campaign/cp_base_callbacks.c:317
-#: client/campaign/cp_base_callbacks.c:322
-#: client/campaign/cp_base_callbacks.c:327
-#: client/campaign/cp_base_callbacks.c:332
 #, c-format
 msgid "No %s functional in base."
 msgstr "Na této základně není funkční %s."
 
-#: client/campaign/cp_base_callbacks.c:305
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:307
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "Vybudujte alespoň druhou základnu pro přepravu vybavení nebo osob"
 
-#: client/campaign/cp_base_callbacks.c:572
 msgid "Base is under attack, you can't access this building !"
 msgstr "Základna je napadena, tato budova není přístupná!"
 
-#: client/campaign/cp_base_callbacks.c:578
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Pro použití letounu potřebujete alespoň jeden hangár (a jeho závislosti)."
 
-#: client/campaign/cp_base_callbacks.c:598
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -12057,148 +11759,113 @@ msgstr[2] ""
 "Se vstupem prosím počkejte."
 
 # Nezní to česky, ale bohužel nejdou prohodit jednotlivé parametry :(
-#: client/campaign/cp_base_callbacks.c:609
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Potřebujete budovu %s ke zprovoznění budovy %s."
 
 # FIXME?
-#: client/campaign/cp_base_callbacks.c:620
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Ještě není dokončena budova %s, která je potřeba pro budovu %s."
 
-#: client/campaign/cp_base_callbacks.c:627
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Ujistěte se, že závislosti budovy %s (%s) jsou v provozu, takže budova %s může být používána."
 
 # Nezní to česky, ale bohužel nejdou prohodit jednotlivé parametry :(
-#: client/campaign/cp_base_callbacks.c:635
-#: client/campaign/cp_base_callbacks.c:640
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Potřebujete najmout %s k využití budovy %s."
 
-#: client/campaign/cp_base_callbacks.c:646
 #, c-format
 msgid "Build a %s first."
 msgstr "Nejprve postavte budovu %s."
 
-#: client/campaign/cp_base_callbacks.c:675
 msgid "^BAircraft\n"
 msgstr "^BLetoun\n"
 
-#: client/campaign/cp_base_callbacks.c:682
 msgid "^BEmployees\n"
 msgstr "^BZaměstnanci\n"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: client/campaign/cp_base_callbacks.c:690
 msgid "^BAliens\n"
 msgstr "^BCizáci\n"
 
-#: client/campaign/cp_base_callbacks.c:702
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BBudovy\t\t\t\t\t\tKapacita\t\t\t\tPočet\n"
 
-#: client/campaign/cp_base_callbacks.c:726
 msgid "day"
 msgid_plural "days"
 msgstr[0] "den"
 msgstr[1] "dny"
 msgstr[2] "dní"
 
-#: client/campaign/cp_base_callbacks.c:736
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^BVýroba\t\t\t\t\t\tMnožství\t\t\t\tProcent\n"
 
-#: client/campaign/cp_base_callbacks.c:743
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:763
 msgid "Nothing\n"
 msgstr "Nic\n"
 
-#: client/campaign/cp_base_callbacks.c:752
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^BVýzkum\t\t\t\t\t\tVědců\t\t\t\tProcent\n"
 
-#: client/campaign/cp_base_callbacks.c:757
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:821 client/campaign/cp_campaign.c:691
-#: client/campaign/cp_market_callbacks.c:310
 #, c-format
 msgid "%i c"
 msgstr "%i k"
 
-#: client/campaign/cp_basedefence_callbacks.c:147
 #, c-format
 msgid "%i: empty"
 msgstr "%i: prázdná"
 
-#: client/campaign/cp_basedefence_callbacks.c:153
 msgid "Working"
 msgstr "Pracuje na 100 %"
 
-#: client/campaign/cp_basedefence_callbacks.c:155
 msgid "Installing"
 msgstr "Instaluje se"
 
-#: client/campaign/cp_basedefence_callbacks.c:157
 msgid "Replacing"
 msgstr "Vyměňuje se"
 
-#: client/campaign/cp_basedefence_callbacks.c:159
 msgid "Removing"
 msgstr "Demontuje se"
 
-#: client/campaign/cp_basedefence_callbacks.c:281
 msgid "No defence of this type in this installation"
 msgstr "V tomto zařízení není obrana tohoto typu"
 
-#: client/campaign/cp_basedefence_callbacks.c:288
-#: client/campaign/cp_basedefence_callbacks.c:295
 msgid "No defence of this type in this base"
 msgstr "Na této základně není obrana tohoto typu"
 
-#: client/campaign/cp_campaign.c:327
 msgid "You've gone too far into debt."
 msgstr "Příliš jste se zadlužil."
 
-#: client/campaign/cp_campaign.c:335
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "Přišel jste o své základny a nemáte dostatek peněz k vybudování nových."
 
-#: client/campaign/cp_campaign.c:341
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Neuspěl jste ve svém závazku ochránit Zemi. Náš domov a naši lidé podlehli cizácké nákaze. Pouze hrstka obyvatel Země zůstala lidmi a těchto pár zbývajících již nemá žádnou šanci cokoliv změnit. Vaše velení skončilo. PHALANX není schopen nadále fungovat jako činná jednotka. Cizákům již nic nestojí v cestě k naprostému vítězství."
 
-#: client/campaign/cp_campaign.c:360
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Operace PHALANXu byly pod vaším velením opakovaně neúspěšné při ochraně států. Spojené národy, velice nespokojené s vaším výkonem, se rozhodly odvolat vás z velení a následně rozpustily projekt PHALANX jako aktivní taktické seskupení. Nejsou uskutečněny žádné další pokusy celosvětové spolupráce. Každý pozemský stát se pokusí sám čelit cizákům a nakonec padnou jeden po druhém."
 
-#: client/campaign/cp_campaign.c:1008
 msgid "Collected dead alien bodies"
 msgstr "Shromážděných mrtvých cizáků"
 
-#: client/campaign/cp_campaign.c:1088
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Zabitých cizáků\t%i\n"
 
-#: client/campaign/cp_campaign.c:1089
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Zajatých cizáků\t%i\n"
 
-#: client/campaign/cp_campaign.c:1090
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12207,22 +11874,18 @@ msgstr ""
 "Přeživší cizáci\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1092
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Členů PHALANXu zabitých cizáky\t%i\n"
 
-#: client/campaign/cp_campaign.c:1093
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Členů PHALANXu pohřešovaných v boji\t%i\n"
 
-#: client/campaign/cp_campaign.c:1094
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Členů PHALANXu zabitých spojeneckou palbou\t%i\n"
 
-#: client/campaign/cp_campaign.c:1095
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12231,17 +11894,14 @@ msgstr ""
 "Členů PHALANXu přeživších\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1097
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/campaign/cp_campaign.c:1098
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civilistů zabitých spojeneckou palbou\t%i\n"
 
-#: client/campaign/cp_campaign.c:1099
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12250,17 +11910,14 @@ msgstr ""
 "Zachráněných civilistů\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1100
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Získaných předmětů (typů/všech)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1171
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s byl(a) povýšen(a) do hodnosti %s.\n"
 
-#: client/campaign/cp_campaign.c:1173
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -12269,19 +11926,15 @@ msgstr ""
 "%s byl(a) posmrtně povýšen(a) do hodnosti %s\n"
 "za příkladnou statečnost tváří v tvář drtivé převaze.\n"
 
-#: client/campaign/cp_campaign.c:1174
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
-#: client/campaign/cp_employee.c:204
 msgid "Soldier"
 msgstr "Voják"
 
-#: client/campaign/cp_employee.c:407
 msgid "Not enough quarters"
 msgstr "Nedostatek ubikací"
 
-#: client/campaign/cp_employee.c:407
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -12289,134 +11942,100 @@ msgstr ""
 "Nemáte dostatek ubytovacích prostor pro zaměstnance.\n"
 "Postavte více ubikací."
 
-#: client/campaign/cp_employee_callbacks.c:282
-#: client/campaign/cp_employee_callbacks.c:336
 msgid "Could not fire employee"
 msgstr "Nelze propustit zaměstnance"
 
-#: client/campaign/cp_employee_callbacks.c:343
 msgid "Could not hire employee"
 msgstr "Nelze najmout zaměstnance"
 
-#: client/campaign/cp_event.c:355 client/campaign/cp_save.c:291
-#: client/campaign/cp_save.c:310 client/campaign/cp_time.c:69
-#: client/campaign/cp_ufopedia.c:499 client/campaign/cp_ufopedia.c:504
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_event.c:361
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "Máte novou poštu: %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:144 client/campaign/cp_map.c:1639
-#: client/campaign/cp_map.c:1658
 msgid "Unknown"
 msgstr "Neznámý"
 
-#: client/campaign/cp_fightequip_callbacks.c:357
 msgid "No item assigned.\n"
 msgstr "Není přiřazeno žádné vybavení.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:358
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Tato pozice je pro %s nebo menší vybavení."
 
-#: client/campaign/cp_fightequip_callbacks.c:366
 msgid "This item is functional.\n"
 msgstr "Toto vybavení funguje.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:368
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Toto vybavení bude namontováno během %d hodin.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:371
 #, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "%s bude demontováno během %i hodin.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:373
 #, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "%s bude namontováno během %i hodin.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:376
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Toto vybavení bude demontováno během %d hodin.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:386
 msgid "No ammo assigned to this weapon."
 msgstr "K této zbrani není přiřazena žádná munice."
 
-#: client/campaign/cp_fightequip_callbacks.c:394
 msgid "No ammo needed"
 msgstr "Není potřeba munice"
 
-#: client/campaign/cp_fightequip_callbacks.c:521
 msgid "No slot selected."
 msgstr "Není vybrána pozice."
 
-#: client/campaign/cp_fightequip_callbacks.c:524
 msgid "No item selected."
 msgstr "Není vybrán žádný předmět."
 
-#: client/campaign/cp_fightequip_callbacks.c:527
 msgid "You can't equip an alien technology."
 msgstr "Nemůžete se vybavit cizáckou technologií."
 
-#: client/campaign/cp_fightequip_callbacks.c:530
 msgid "Technology requested is not yet completed."
 msgstr "Požadovaná technologie není ještě kompletní."
 
-#: client/campaign/cp_fightequip_callbacks.c:533
 msgid "This item is too heavy for the selected slot."
 msgstr "Tento předmět je příliš těžký do vybrané pozice."
 
-#: client/campaign/cp_fightequip_callbacks.c:536
 msgid "Equip a weapon first."
 msgstr "Nejprve vybavte zbraněmi."
 
-#: client/campaign/cp_fightequip_callbacks.c:539
 msgid "Ammo not usable with current weapon."
 msgstr "Munice není použitelná ve zvolené zbrani."
 
-#: client/campaign/cp_fightequip_callbacks.c:542
 msgid "Unknown problem."
 msgstr "Neznámý problém."
 
-#: client/campaign/cp_fightequip_callbacks.c:545
 msgid "Ok"
 msgstr "Ok"
 
-#: client/campaign/cp_installation.c:177
 #, c-format
 msgid "Installation %s was destroyed."
 msgstr "Zařízení %s bylo zbouráno."
 
-#: client/campaign/cp_installation.c:178
 msgid "Installation destroyed"
 msgstr "Zařízení zbouráno"
 
-#: client/campaign/cp_installation.c:406
 #, c-format
 msgid "Construction of installation %s finished."
 msgstr "Budování zařízení %s dokončeno."
 
-#: client/campaign/cp_installation.c:407
 msgid "Installation finished"
 msgstr "Zařízení dokončeno"
 
-#: client/campaign/cp_installation.c:518
 #, c-format
 msgid "%d c"
 msgstr "%d k"
 
-#: client/campaign/cp_installation.c:528
-#: client/campaign/cp_installation_callbacks.c:90
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -12424,45 +12043,35 @@ msgstr[0] "%d den"
 msgstr[1] "%d dny"
 msgstr[2] "%d dnů"
 
-#: client/campaign/cp_installation_callbacks.c:47 client/campaign/cp_map.c:356
 msgid "Installation"
 msgstr "Zařízení"
 
-#: client/campaign/cp_installation_callbacks.c:139
 #, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "Bylo vybudováno nové zařízení: %s (stát: %s)"
 
-#: client/campaign/cp_installation_callbacks.c:141
 #, c-format
 msgid "A new installation has been built: %s"
 msgstr "Bylo vybudováno nové zařízení: %s"
 
-#: client/campaign/cp_installation_callbacks.c:142
 msgid "Installation building"
 msgstr "Vybudování zařízení"
 
-#: client/campaign/cp_installation_callbacks.c:149
 msgid "Not enough credits to set up a new installation."
 msgstr "Nedostatek kreditů na založení nového zařízení."
 
-#: client/campaign/cp_installation_callbacks.c:215
 msgid "Destroy Installation"
 msgstr "Zbourat zařízení"
 
-#: client/campaign/cp_installation_callbacks.c:215
 msgid "Do you really want to destroy this installation?"
 msgstr "Jste si jistý že chcete zbourat toto zařízení?"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Forget it"
 msgstr "Nic takového"
 
-#: client/campaign/cp_map.c:363
 msgid "UFO Sighting"
 msgstr "Pozorování UFO"
 
-#: client/campaign/cp_map.c:1638
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12473,7 +12082,6 @@ msgstr ""
 "Druh: %s\n"
 "Úkol: %s"
 
-#: client/campaign/cp_map.c:1655
 #, c-format
 msgid ""
 "%s (%s)\n"
@@ -12482,113 +12090,89 @@ msgstr ""
 "%s (%s)\n"
 "%s"
 
-#: client/campaign/cp_map.c:1675 client/campaign/cp_map.c:1683
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Jméno:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1676 client/campaign/cp_map.c:1684
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Stav:\t%s\n"
 
-#: client/campaign/cp_map.c:1677
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Vzdálenost k cíli:\t\t%.0f\n"
 
 # Odhadovaný Čas Příletu
-#: client/campaign/cp_map.c:1681 client/campaign/cp_map.c:1691
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "OČP:\t%sh\n"
 
-#: client/campaign/cp_map.c:1709
 #, c-format
 msgid "Speed: %i km/h\n"
 msgstr "Rychlost: %i km/h\n"
 
-#: client/campaign/cp_map.c:1897
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1976
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Vyberte na mapě požadovanou polohu nové základny.\n"
 
-#: client/campaign/cp_map.c:1979
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Vyberte na mapě požadovanou polohu nového zařízení.\n"
 
-#: client/campaign/cp_map.c:1984
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Cizáci právě teď útočí na naši základnu.\n"
 
-#: client/campaign/cp_map.c:1989
 msgid "Select ufo or mission on map\n"
 msgstr "Vyberte na mapě UFO nebo misi\n"
 
-#: client/campaign/cp_map.c:1994
 msgid "UFO in radar range\n"
 msgstr "UFO v dosahu radaru\n"
 
-#: client/campaign/cp_mapfightequip.c:342
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr "Vybavení %s bylo úspěšně nainstalováno do letounu %s na základně %s."
 
-#: client/campaign/cp_mapfightequip.c:345
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr "Vybavení %s bylo úspěšně nainstalováno do zařízení %s."
 
-#: client/campaign/cp_mapfightequip.c:348
 #, c-format
 msgid "%s was successfully installed at %s."
 msgstr "Vybavení %s bylo úspěšně nainstalováno na základně %s."
 
-#: client/campaign/cp_mapfightequip.c:370
 #, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "Vybavení %s bylo úspěšně odebráno z letounu %s na základně %s."
 
-#: client/campaign/cp_mapfightequip.c:376
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "Vybavení %s bylo úspěšně odebráno, zahajuji instalaci %s do letounu %s na základně %s"
 
-#: client/campaign/cp_mapfightequip.c:384
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "Vybavení %s bylo úspěšně odebráno ze zařízení %s."
 
-#: client/campaign/cp_mapfightequip.c:387
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr "Vybavení %s bylo úspěšně odebráno na základně %s."
 
-#: client/campaign/cp_mapfightequip.c:1341
 msgid "Light weight"
 msgstr "lehké"
 
-#: client/campaign/cp_mapfightequip.c:1344
 msgid "Medium weight"
 msgstr "středně těžké"
 
-#: client/campaign/cp_mapfightequip.c:1347
 msgid "Heavy weight"
 msgstr "těžké"
 
-#: client/campaign/cp_mapfightequip.c:1350
 msgid "Unknown weight"
 msgstr "Neznámá hmotnost"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 msgid "Not enough storage space"
 msgstr "Nedostatek skladovacího prostoru"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -12598,7 +12182,6 @@ msgstr ""
 "Není dostatek skladovacího prostoru.\n"
 "Vybudujte více skladů."
 
-#: client/campaign/cp_market_callbacks.c:615
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -12606,11 +12189,9 @@ msgstr ""
 "Tato základna nemá zdroje energie.\n"
 "Hangáry nejsou v provozu."
 
-#: client/campaign/cp_market_callbacks.c:620
 msgid "Build a hangar first."
 msgstr "Nejprve vybudujte hangár."
 
-#: client/campaign/cp_market_callbacks.c:633
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -12618,7 +12199,6 @@ msgstr ""
 "Nemůžete koupit tento letoun.\n"
 "Není dostatek místa v hangárech.\n"
 
-#: client/campaign/cp_market_callbacks.c:638
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -12626,124 +12206,94 @@ msgstr ""
 "Nemůžete koupit tento letoun.\n"
 "Nemáte dostatek kreditů.\n"
 
-#: client/campaign/cp_market_callbacks.c:705
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Nemůžete prodat letoun dokud má posádku"
 
-#: client/campaign/cp_market_callbacks.c:707
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Nemůžete prodat letoun který není na základně"
 
-#: client/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
 msgstr "namontováno"
 
-#: client/campaign/cp_messageoptions.c:37
 msgid "installation_removed"
 msgstr "demontováno"
 
-#: client/campaign/cp_messageoptions.c:38
 msgid "installation_replaced"
 msgstr "nahrazeno"
 
-#: client/campaign/cp_messageoptions.c:39
 msgid "aircraft_refueled"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:40
 msgid "aircraft_cannotrefuel"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:41
 msgid "installation_build_started"
 msgstr "výstavba zařízení zahájena"
 
-#: client/campaign/cp_messageoptions.c:42
 msgid "installation_build_finished"
 msgstr "výstavba zařízení dokončena"
 
-#: client/campaign/cp_messageoptions.c:43
 msgid "installation_destroyed"
 msgstr "zařízení zbouráno"
 
-#: client/campaign/cp_messageoptions.c:44
 msgid "research_new_proposed"
 msgstr "nový návrh"
 
-#: client/campaign/cp_messageoptions.c:45
 msgid "research_halted"
 msgstr "Výzkum zastaven"
 
-#: client/campaign/cp_messageoptions.c:46
 msgid "research_completed"
 msgstr "dokončen"
 
-#: client/campaign/cp_messageoptions.c:47
 msgid "production_started"
 msgstr "zahájena"
 
-#: client/campaign/cp_messageoptions.c:48
 msgid "production_finished"
 msgstr "dokončena"
 
-#: client/campaign/cp_messageoptions.c:49
 msgid "production_failed"
 msgstr "neúspěšná"
 
-#: client/campaign/cp_messageoptions.c:50
 msgid "production_queue_empty"
 msgstr "prázdná výrobní fronta"
 
-#: client/campaign/cp_messageoptions.c:51
 msgid "nation_happiness_changed"
 msgstr "změna"
 
-#: client/campaign/cp_messageoptions.c:52
 msgid "nation_unhappy"
 msgstr "nespokojený"
 
-#: client/campaign/cp_messageoptions.c:53
 msgid "nation_pleased"
 msgstr "spokojený"
 
-#: client/campaign/cp_messageoptions.c:54
 msgid "transfer_started"
 msgstr "zahájena"
 
-#: client/campaign/cp_messageoptions.c:55
 msgid "transfer_completed_success"
 msgstr "úspěšně ukončena"
 
-#: client/campaign/cp_messageoptions.c:56
 msgid "transfer_lost"
 msgstr "ztracena"
 
-#: client/campaign/cp_messageoptions.c:57
 msgid "transfer_aliens_defered"
 msgstr "spožděna cizáky"
 
-#: client/campaign/cp_messageoptions.c:58
 msgid "transfer_uforecovery_finished"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
 msgstr "spatřeno UFO"
 
-#: client/campaign/cp_messageoptions.c:60
 msgid "ufo_signal_lost"
 msgstr "signál UFO ztracen"
 
-#: client/campaign/cp_messageoptions.c:61
 msgid "ufo_attacking"
 msgstr "útočící UFO"
 
-#: client/campaign/cp_messages.c:47
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
 
-#: client/campaign/cp_mission_triggers.c:124
 msgid ""
 "Congratulations! You have reached the end of the UFO:AI campaign.\n"
 "However, this is not the end of the road. The game remains in development.\n"
@@ -12769,231 +12319,180 @@ msgstr ""
 "\n"
 "   - Vývojový tým UFO:CI"
 
-#: client/campaign/cp_missions.c:448
 #, fuzzy
 msgid "Crashed aircraft"
 msgstr "Přejmenovat letoun"
 
-#: client/campaign/cp_missions.c:453
 msgid "Landed UFO"
 msgstr "Místo přistání UFO"
 
-#: client/campaign/cp_missions.c:455
 msgid "Terror mission"
 msgstr "Zastrašovací mise"
 
-#: client/campaign/cp_missions.c:457
 msgid "Base attack"
 msgstr "Útok na základnu"
 
-#: client/campaign/cp_missions.c:461
 msgid "Harvesting mission"
 msgstr "Sklízecí mise"
 
-#: client/campaign/cp_missions.c:706
 #, c-format
 msgid "Go on a rescue mission at %s. You might some of your soldiers alive."
 msgstr ""
 
-#: client/campaign/cp_missions.c:708
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Byla hlášena cizácká aktivita v %s."
 
-#: client/campaign/cp_missions.c:1088
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Obrana základny %s byla úspěšná!"
 
-#: client/campaign/cp_missions.c:1251
-#: client/campaign/missions/cp_mission_harvest.c:170
-#: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
 msgstr "Území nikoho"
 
-#: client/campaign/cp_missions.c:1334
 #, fuzzy
 msgid "Crashed"
 msgstr "Havarované UFO"
 
-#: client/campaign/cp_nation.c:142
 msgid "Giving up"
 msgstr "Vzdává se"
 
-#: client/campaign/cp_nation.c:144
 msgid "Furious"
 msgstr "Rozzuřený"
 
-#: client/campaign/cp_nation.c:146
 msgid "Angry"
 msgstr "Rozzlobený"
 
-#: client/campaign/cp_nation.c:148
 msgid "Mad"
 msgstr "Vzteklý"
 
-#: client/campaign/cp_nation.c:150
 msgid "Upset"
 msgstr "Rozrušený"
 
-#: client/campaign/cp_nation.c:152
 msgid "Tolerant"
 msgstr "Shovívavý"
 
-#: client/campaign/cp_nation.c:154
 msgid "Neutral"
 msgstr "Neutrální"
 
-#: client/campaign/cp_nation.c:156
 msgid "Content"
 msgstr "V pohodě"
 
-#: client/campaign/cp_nation.c:158
 msgid "Pleased"
 msgstr "Spokojený"
 
-#: client/campaign/cp_nation.c:160
 msgid "Happy"
 msgstr "Štastný"
 
-#: client/campaign/cp_nation.c:162
 msgid "Exuberant"
 msgstr "V extázi"
 
-#: client/campaign/cp_nation.c:189
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr "Spokojenost státu %s se změnila z %s na %s"
 
-#: client/campaign/cp_nation.c:193
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr "Spokojenost státu %s se změnila na %s"
 
-#: client/campaign/cp_nation.c:197
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr "Spokojenost státu %s je %s a to je méně než je minimální spokojenost povolená v kampani"
 
-#: client/campaign/cp_nation.c:203
 msgid "Nation changed happiness"
 msgstr "Spokojenost státu se změnila"
 
-#: client/campaign/cp_nation.c:883
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Získáno %i %s, %i %s, %i %s, a %i %s od státu %s (%s)"
 
-#: client/campaign/cp_nation.c:884
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "kredit"
 msgstr[1] "kredity"
 msgstr[2] "kreditů"
 
-#: client/campaign/cp_nation.c:885 client/cl_game_campaign.c:249
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "vědec"
 msgstr[1] "vědci"
 msgstr[2] "vědců"
 
-#: client/campaign/cp_nation.c:886 client/cl_game_campaign.c:248
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "voják"
 msgstr[1] "vojáci"
 msgstr[2] "vojáků"
 
-#: client/campaign/cp_nation.c:887 client/cl_game_campaign.c:250
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "dělník"
 msgstr[1] "dělníci"
 msgstr[2] "dělníků"
 
-#: client/campaign/cp_nation.c:902
 #, fuzzy, c-format
 msgid "Paid %i credits to: %s"
 msgstr "Zaplaceno %i kreditů za piloty"
 
-#: client/campaign/cp_nation.c:915
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Zaplaceno %i kreditů za letoun"
 
-#: client/campaign/cp_nation.c:924
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "Zaplaceno %i kreditů za údržbu  %s"
 
-#: client/campaign/cp_nation.c:929
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Zaplaceno %i kreditů za administrativní náklady."
 
-#: client/campaign/cp_nation.c:937
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Zaplaceno %i kreditů za úroky z dluhu."
 
-#: client/campaign/cp_popup.c:126
 msgid "current homebase of aircraft"
 msgstr "současná domovská základna letounu"
 
-#: client/campaign/cp_popup.c:132
 msgid "base can hold aircraft"
 msgstr "základna může pojmout letoun"
 
-#: client/campaign/cp_popup.c:147
 msgid "Base\tStatus"
 msgstr "Základna\tStav"
 
-#: client/campaign/cp_popup.c:147
 msgid "Change homebase of aircraft"
 msgstr "Změnit domovskou základnu letounu"
 
-#: client/campaign/cp_popup.c:227
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "Zpět na základnu\t%s\n"
 
-#: client/campaign/cp_popup.c:229
 msgid "Stop\n"
 msgstr "Zastavit\n"
 
-#: client/campaign/cp_popup.c:231
 msgid "Change homebase\n"
 msgstr "Změnit domovskou základnu\n"
 
-#: client/campaign/cp_popup.c:243
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "Mise\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:335
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
 msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
-#: client/campaign/cp_popup.c:348
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr "Letoun není k dispozici, nemá pilota nebo není k dostupnému letounu přiřazen bojový tým."
 
-#: client/campaign/cp_popup.c:397
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr "%s%s (%i/%i)\t%s\t%s"
 
-#: client/campaign/cp_popup.c:418
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "Letoun není k dispozici, nemá pilota nebo není vybaven zbraněmi či municí."
 
-#: client/campaign/cp_popup.c:434
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "Obranná soustava není funkční nebo nejsou nainstalované zbraně či munice."
 
-#: client/campaign/cp_popup.c:483
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -13005,16 +12504,9 @@ msgstr ""
 "\n"
 "Letoun nemůže odstartovat.\n"
 
-#: client/campaign/cp_produce.c:298 client/campaign/cp_produce.c:302
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
-#: client/campaign/cp_transfer_callbacks.c:366
-#: client/campaign/cp_transfer_callbacks.c:369
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Hangars not ready"
 msgstr "Hangáry nejsou připraveny"
 
-#: client/campaign/cp_produce.c:298
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
@@ -13022,7 +12514,6 @@ msgstr ""
 "Letoun nemůžete přidat do fronty.\n"
 "Tato základna nemá řídící středisko.\n"
 
-#: client/campaign/cp_produce.c:302
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
@@ -13030,8 +12521,6 @@ msgstr ""
 "Letoun nemůžete přidat do fronty.\n"
 "Tato základna nemá hangáry.\n"
 
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -13039,119 +12528,91 @@ msgstr ""
 "Letoun nemůžete přidat do fronty.\n"
 "Není dostatek místa v hangárech.\n"
 
-#: client/campaign/cp_produce.c:409
 #, c-format
 msgid "Production queue for %s is empty"
 msgstr "Výrobní fronta pro základnu %s je prázná"
 
-#: client/campaign/cp_produce.c:410
 msgid "Production queue empty"
 msgstr "Výrobní fronta je prázdná"
 
-#: client/campaign/cp_produce.c:490 client/campaign/cp_produce.c:510
 #, fuzzy, c-format
 msgid "Not enough credits to finish production in %s."
 msgstr "Nedostatek kreditů k dokončení výroby na základně %s.\n"
 
-#: client/campaign/cp_produce.c:499
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Production postponed."
 msgstr "Na základně %s není volný skladovací prostor. Výroba odložena.\n"
 
-#: client/campaign/cp_produce.c:519
 #, fuzzy, c-format
 msgid "Not enough free hangar space in %s. Production postponed."
 msgstr "Na základně %s není volný hangár. Výroba odložena.\n"
 
-#: client/campaign/cp_produce.c:530
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
 msgstr "Na základně %s není volný skladovací prostor. Rozebírání odloženo.\n"
 
-#: client/campaign/cp_produce.c:575
 #, c-format
 msgid "The production of %s at %s has finished."
 msgstr "Výroba položky %s na základně %s byla dokončena."
 
-#: client/campaign/cp_produce.c:576 client/campaign/cp_produce.c:600
 msgid "Production finished"
 msgstr "Dokončena výroba"
 
-#: client/campaign/cp_produce.c:598
 #, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "Bylo dokončeno rozebírání položky %s na základně %s."
 
-#: client/campaign/cp_produce_callbacks.c:265
-#: client/campaign/cp_produce_callbacks.c:370
 msgid "No item selected"
 msgstr "Není vybrán žádný předmět"
 
-#: client/campaign/cp_produce_callbacks.c:271
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "Cena za kus\t%i k\n"
 
-#: client/campaign/cp_produce_callbacks.c:272
-#: client/campaign/cp_produce_callbacks.c:330
 #, c-format
 msgid "Production time\t%ih\n"
 msgstr "Doba výroby\t%ih\n"
 
-#: client/campaign/cp_produce_callbacks.c:273
 #, c-format
 msgid "Item size\t%i\n"
 msgstr "Velikost předmětu\t%i\n"
 
-#: client/campaign/cp_produce_callbacks.c:297
 #, c-format
 msgid "Stored at: %s\n"
 msgstr "Uskladněno v: %s\n"
 
-#: client/campaign/cp_produce_callbacks.c:298
 #, c-format
 msgid "Disassembly time: %ih\n"
 msgstr "Doba rozebírání: %ih\n"
 
-#: client/campaign/cp_produce_callbacks.c:299
 msgid "Components:\n"
 msgstr "Součásti:\n"
 
-#: client/campaign/cp_produce_callbacks.c:328
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr "Výroba stojí\t%i k\n"
 
-#: client/campaign/cp_produce_callbacks.c:368
 msgid "No aircraft selected."
 msgstr "Není vybrán letoun."
 
-#: client/campaign/cp_produce_callbacks.c:662
-#: client/campaign/cp_produce_callbacks.c:686
 #, fuzzy
 msgid "Not enough materials"
 msgstr "Nedostatek materiálu!"
 
-#: client/campaign/cp_produce_callbacks.c:662
 #, fuzzy
 msgid "You don't have the materials needed for producing more of this item.\n"
 msgstr "Nemáte dostatek potřebného materiálu k výrobě tohoto předmětu."
 
-#: client/campaign/cp_produce_callbacks.c:666
 #, fuzzy, c-format
 msgid "You don't have enough material to produce all (%i) additional items. Only %i could be added."
 msgstr "Nemáte dostatek materiálu pro všechny předměty (%i). Výroba bude pokračovat se sníženým počtem předmětů (%i)."
 
-#: client/campaign/cp_produce_callbacks.c:667
-#: client/campaign/cp_produce_callbacks.c:690
 msgid "Not enough material!"
 msgstr "Nedostatek materiálu!"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid "Not enough workshops"
 msgstr "Nedostatek dílen"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
@@ -13159,48 +12620,38 @@ msgstr ""
 "Nemůžete do fronty přidat další předmět.\n"
 "Postavte více dílen.\n"
 
-#: client/campaign/cp_produce_callbacks.c:686
 #, fuzzy
 msgid "You don't have the materials needed for producing this item.\n"
 msgstr "Nemáte dostatek potřebného materiálu k výrobě tohoto předmětu."
 
-#: client/campaign/cp_produce_callbacks.c:689
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "Nemáte dostatek materiálu pro všechny předměty (%i). Výroba bude pokračovat se sníženým počtem předmětů (%i)."
 
-#: client/campaign/cp_produce_callbacks.c:714
 #, c-format
 msgid "Production of %s started"
 msgstr "Zahájena výroba položky \"%s\""
 
-#: client/campaign/cp_produce_callbacks.c:715
 msgid "Production started"
 msgstr "Výroba zahájena"
 
-#: client/campaign/cp_research.c:89
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "Byl dokončen výzkumný projekt: %s\n"
 
-#: client/campaign/cp_research.c:90
 msgid "Research finished"
 msgstr "Výzkum dokončen"
 
-#: client/campaign/cp_research.c:136 client/campaign/cp_research.c:313
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "Návrh nového výzkumu: %s\n"
 
-#: client/campaign/cp_research.c:137
 msgid "Unknown Technology researchable"
 msgstr "Zkoumatelná neznámá technologie"
 
-#: client/campaign/cp_research.c:314
 msgid "Unknown Technology found"
 msgstr "Nalezena neznámá technologie"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -13208,116 +12659,87 @@ msgstr ""
 "V laboratořích již není volné místo.\n"
 "Postavte více laboratoří.\n"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid "Not enough laboratories"
 msgstr "Nedostatek laboratoří"
 
-#: client/campaign/cp_research.c:809
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr "Předpoklady výzkumu %s nejsou splněny na základně %s. Výzkum zastaven!"
 
-#: client/campaign/cp_research.c:810
 msgid "Research halted"
 msgstr "Výzkum zastaven"
 
-#: client/campaign/cp_research.c:1171
 msgid "No description available."
 msgstr "Popis není k dispozici."
 
-#: client/campaign/cp_research.c:1172
 msgid "No research proposal available."
 msgstr "Návrh výzkumu není k dispozici."
 
 # (zkráceno)
-#: client/campaign/cp_research_callbacks.c:91
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "Laboratoře (použito/celkem): %i/%i"
 
-#: client/campaign/cp_research_callbacks.c:97
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr "Vědci (k dispozici/celkem): %i/%i"
 
-#: client/campaign/cp_research_callbacks.c:102
 msgid "Not researched in any base."
 msgstr "Nezkoumáno na žádné základně."
 
-#: client/campaign/cp_research_callbacks.c:108
 #, c-format
 msgid "Researched in %s"
 msgstr "Zkoumáno na základně %s"
 
-#: client/campaign/cp_research_callbacks.c:110
 msgid "Researched in this base."
 msgstr "Zkoumáno na této základně."
 
-#: client/campaign/cp_research_callbacks.c:122
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Pokrok: %.1f%%"
 
-#: client/campaign/cp_research_callbacks.c:125
 msgid "Progress: not available."
 msgstr "Pokrok: Není k dispozici."
 
-#: client/campaign/cp_research_callbacks.c:130
 msgid "Status: under research"
 msgstr "Stav: zkoumáno"
 
-#: client/campaign/cp_research_callbacks.c:131
 msgid "Status: this research topic is currently being processed in laboratories"
 msgstr "Stav: tento výzkum právě probíhá v laboratořích"
 
-#: client/campaign/cp_research_callbacks.c:134
 msgid "Status: research paused"
 msgstr "Stav: výzkum pozastaven"
 
-#: client/campaign/cp_research_callbacks.c:135
 msgid "Status: research topic currently paused."
 msgstr "Stav: výzkum zrovna pozastaven"
 
-#: client/campaign/cp_research_callbacks.c:138
-#: client/campaign/cp_research_callbacks.c:139
 msgid "Status: research finished"
 msgstr "Stav: výzkum dokončen"
 
-#: client/campaign/cp_research_callbacks.c:144
 msgid "Status: not possible to research"
 msgstr "Stav: není možné zkoumat"
 
-#: client/campaign/cp_research_callbacks.c:145
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr "Stav: V současné chvíli nemáme veškerý materiál nebo základní znalosti potřebné k výzkumu tohoto tématu."
 
-#: client/campaign/cp_research_callbacks.c:147
-#: client/campaign/cp_research_callbacks.c:148
 msgid "Status: unknown technology"
 msgstr "Stav: neznámá technologie"
 
-#: client/campaign/cp_research_callbacks.c:259
 msgid "Unassigned scientists"
 msgstr "Nepřiřazení vědci"
 
-#: client/campaign/cp_research_callbacks.c:295
 msgid "Missing an artifact"
 msgstr "Chybějící artefakt"
 
-#: client/campaign/cp_research_callbacks.c:305
 msgid "Unresearchable collected items"
 msgstr "Nezkoumatelné shromážděné předměty"
 
-#: client/campaign/cp_research_callbacks.c:563
 msgid "This item is currently under research in another base."
 msgstr "Tento předmět je již zkoumán na jiné základně."
 
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:626
 msgid "The research on this item is complete."
 msgstr "Výzkum tohoto předmětu je dokončen."
 
-#: client/campaign/cp_research_callbacks.c:587
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -13325,80 +12747,58 @@ msgstr ""
 "Výzkum tohoto předmětu zatím není možný.\n"
 "Nejprve je třeba vyzkoumat technologie, na kterých je založen."
 
-#: client/campaign/cp_research_callbacks.c:656
 msgid "No research proposal available for this project."
 msgstr "K tomuto projektu není k dispozici návrh výzkumu."
 
-#: client/campaign/cp_research_callbacks.c:815
 msgid "Nothing to research"
 msgstr "Nic ke zkoumání"
 
-#: client/campaign/cp_research_callbacks.c:818
 msgid "Build a laboratory first"
 msgstr "Nejprve vybudujte laboratoř"
 
-#: client/campaign/cp_save.c:186
 msgid "Error decompressing data"
 msgstr "Chyba při dekompresi dat"
 
-#: client/campaign/cp_save.c:270
 msgid "No campaign active."
 msgstr "Neprobíhá kampaň."
 
-#: client/campaign/cp_save.c:276
 msgid "Nothing to save yet."
 msgstr "Zatím není co ukládat."
 
-#: client/campaign/cp_save.c:320
 msgid "Could not allocate enough memory to save this game"
 msgstr "Nemohu získat dostatek paměti pro uložení této hry"
 
-#: client/campaign/cp_save.c:342
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr "Neúspěšná komprese herních dat - nastavte proměnnou konfigurace save_compressed na 0"
 
-#: client/campaign/cp_save.c:389 client/campaign/cp_save.c:391
 msgid "Error saving game."
 msgstr "Chyba při ukládání hry."
 
-#: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:620
 msgid "Error loading game."
 msgstr "Chyba při načítání hry."
 
-#: client/campaign/cp_save.c:469 client/campaign/cp_save.c:493
-#: client/campaign/cp_save.c:621 client/cl_irc.c:1209 client/cl_irc.c:1441
-#: client/cl_main.c:517 client/cl_main.c:521 client/cl_main.c:545
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Error"
 msgstr "Chyba"
 
-#: client/campaign/cp_save.c:568
 #, fuzzy
 msgid "QuickSave"
 msgstr "Rychlé uložení"
 
-#: client/campaign/cp_save.c:602
 msgid "Campaign was successfully saved."
 msgstr "Kampaň byla úspěšně uložena."
 
-#: client/campaign/cp_save.c:602
 msgid "Quicksave"
 msgstr "Rychlé uložení"
 
-#: client/campaign/cp_save.c:623
 msgid "Campaign loaded"
 msgstr "Kampaň načtena"
 
-#: client/campaign/cp_save.c:623
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Rychle uložená kampaň byla úspěšně načtena."
 
-#: client/campaign/cp_save.c:684
 msgid "Saves to the quick save slot"
 msgstr "Uložit do pozice rychlého uložení"
 
-#: client/campaign/cp_statistics.c:56
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -13409,7 +12809,6 @@ msgstr ""
 "Prohráno:\t%i\n"
 "\n"
 
-#: client/campaign/cp_statistics.c:61
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -13420,49 +12819,40 @@ msgstr ""
 "V provozu:\t%i\n"
 "Napadeno:\t%i\n"
 
-#: client/campaign/cp_statistics.c:77 client/campaign/cp_ufopedia.c:1164
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_statistics.c:80
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_statistics.c:97 client/cl_inventory_callbacks.c:138
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_statistics.c:103
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Zaměstnanci:\t%i k\n"
 
-#: client/campaign/cp_statistics.c:112
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Letoun:\t%i k\n"
 
-#: client/campaign/cp_statistics.c:118
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Základna (%s):\t%i k\n"
 
-#: client/campaign/cp_statistics.c:123
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Správní poplatky:\t%i k\n"
 
-#: client/campaign/cp_statistics.c:130
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Dluh:\t%i k\n"
 
-#: client/campaign/cp_statistics.c:133
 #, c-format
 msgid ""
 "\n"
@@ -13473,12 +12863,10 @@ msgstr ""
 "\t-------\n"
 "Celkem:\t%i k\n"
 
-#: client/campaign/cp_statistics.c:138
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Max. tolerované dluhy: %i k\n"
 
-#: client/campaign/cp_statistics.c:143
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -13487,151 +12875,112 @@ msgstr ""
 "Max. tolerovaná úroveň Mimozemské Virové Infekce: %i%%\n"
 "Nynější úroveň Mimozemské Virové Infekce: %i%%"
 
-#: client/campaign/cp_team.c:252
 #, c-format
 msgid "%i of %i"
 msgstr "%i z %i"
 
-#: client/campaign/cp_time.c:40
 msgid "stopped"
 msgstr "zastaveno"
 
-#: client/campaign/cp_time.c:41
 msgid "5 sec"
 msgstr "5 sekund"
 
-#: client/campaign/cp_time.c:42
 msgid "5 mins"
 msgstr "5 minut"
 
-#: client/campaign/cp_time.c:43
 msgid "20 mins"
 msgstr "20 minut"
 
-#: client/campaign/cp_time.c:44
 msgid "1 hour"
 msgstr "1 hodina"
 
-#: client/campaign/cp_time.c:45
 msgid "12 hours"
 msgstr "12 hodin"
 
-#: client/campaign/cp_time.c:46
 msgid "1 day"
 msgstr "1 den"
 
-#: client/campaign/cp_time.c:47
 msgid "5 days"
 msgstr "5 dnů"
 
-#: client/campaign/cp_time.c:73
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/campaign/cp_time.c:249
 msgid "Jan"
 msgstr "Led"
 
-#: client/campaign/cp_time.c:251
 msgid "Feb"
 msgstr "Úno"
 
-#: client/campaign/cp_time.c:253
 msgid "Mar"
 msgstr "Bře"
 
-#: client/campaign/cp_time.c:255
 msgid "Apr"
 msgstr "Dub"
 
-#: client/campaign/cp_time.c:257
 msgid "May"
 msgstr "Kvě"
 
-#: client/campaign/cp_time.c:259
 msgid "Jun"
 msgstr "Čen"
 
-#: client/campaign/cp_time.c:261
 msgid "Jul"
 msgstr "Čec"
 
-#: client/campaign/cp_time.c:263
 msgid "Aug"
 msgstr "Srp"
 
-#: client/campaign/cp_time.c:265
 msgid "Sep"
 msgstr "Zář"
 
-#: client/campaign/cp_time.c:267
 msgid "Oct"
 msgstr "Říj"
 
-#: client/campaign/cp_time.c:269
 msgid "Nov"
 msgstr "Lis"
 
-#: client/campaign/cp_time.c:271
 msgid "Dec"
 msgstr "Pro"
 
-#: client/campaign/cp_transfer.c:56
 #, fuzzy, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
 msgstr "%s nemá sklady, předměty byly odebrány!"
 
-#: client/campaign/cp_transfer.c:57 client/campaign/cp_transfer.c:70
-#: client/campaign/cp_transfer.c:82 client/campaign/cp_transfer.c:109
-#: client/campaign/cp_transfer.c:134 client/campaign/cp_transfer.c:149
-#: client/campaign/cp_transfer.c:244 client/campaign/cp_transfer.c:261
-#: client/campaign/cp_transfer.c:267
-#: client/campaign/cp_transfer_callbacks.c:194
 msgid "Transport mission"
 msgstr "Přepravní mise"
 
-#: client/campaign/cp_transfer.c:69
 #, c-format
 msgid "%s does not have Storage, items are removed!"
 msgstr "%s nemá sklady, předměty byly odebrány!"
 
-#: client/campaign/cp_transfer.c:81
 #, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "%s nemá ubikace, zaměstnanci byli propuštěni!"
 
-#: client/campaign/cp_transfer.c:108
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr " %s nemá komplex cizáckých cel - cizáci byli odebráni!"
 
-#: client/campaign/cp_transfer.c:133
 #, fuzzy, c-format
 msgid "%s does not have enough Alien Containment space, some Aliens are removed!"
 msgstr " %s nemá komplex cizáckých cel - cizáci byli odebráni!"
 
-#: client/campaign/cp_transfer.c:148
 #, fuzzy, c-format
 msgid "%s does not have enough free space. Aircraft is lost!"
 msgstr "%s nemá dostatek volného místa v hangárech. Letoun je ztracen!"
 
-#: client/campaign/cp_transfer.c:243
-#: client/campaign/cp_transfer_callbacks.c:193
 #, c-format
 msgid "Transport mission started, cargo is being transported to %s"
 msgstr "Zahájena přepravní mise, náklad bude přepraven do základny %s"
 
-#: client/campaign/cp_transfer.c:261
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
 msgstr "Cílová základna již neexistuje! Přepravované zboží je ztraceno, zaměstnanci propuštěni."
 
-#: client/campaign/cp_transfer.c:266
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "Přepravní mise ukončena, náklad je vykládán na základně %s"
 
-#: client/campaign/cp_transfer_callbacks.c:139
 #, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
@@ -13639,15 +12988,12 @@ msgstr[0] "(může uchovat %i živého cizáka)"
 msgstr[1] "(může uchovat %i živé cizáky)"
 msgstr[2] "(může uchovat %i živých cizáků)"
 
-#: client/campaign/cp_transfer_callbacks.c:246
 msgid "Destination base does not have an Antimatter Storage.\n"
 msgstr "Cílová základna nemá sklad antihmoty.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:246
 msgid "Missing storage"
 msgstr "Chybí sklady"
 
-#: client/campaign/cp_transfer_callbacks.c:251
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
@@ -13655,15 +13001,9 @@ msgstr ""
 "Pro více antihmoty nemá cílová základna\n"
 "dostatek místa ve skladech antihmoty.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:251
-#: client/campaign/cp_transfer_callbacks.c:261
-#: client/campaign/cp_transfer_callbacks.c:289
-#: client/campaign/cp_transfer_callbacks.c:342
-#: client/campaign/cp_transfer_callbacks.c:385
 msgid "Not enough space"
 msgstr "Nedostatek místa"
 
-#: client/campaign/cp_transfer_callbacks.c:261
 msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
@@ -13671,7 +13011,6 @@ msgstr ""
 "Cílová základna nemá pro tento předmět\n"
 "dostatek místa ve skladech.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:289
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
@@ -13679,7 +13018,6 @@ msgstr ""
 "Cílová základna nemá dostatek místa\n"
 "v ubikacích.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:298
 #, c-format
 msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
@@ -13688,11 +13026,9 @@ msgstr ""
 "%s %s je přiřazen(a) k letounu a nemůže být\n"
 "převelen(a) na jinou základnu.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:300
 msgid "Soldier in aircraft"
 msgstr "Voják v letounu"
 
-#: client/campaign/cp_transfer_callbacks.c:307
 #, c-format
 msgid ""
 "%s is assigned to aircraft and cannot be\n"
@@ -13701,11 +13037,9 @@ msgstr ""
 "%s je přiřazen(a) k letounu a nemůže být\n"
 "převelen(a) na jinou základnu.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:309
 msgid "Pilot in aircraft"
 msgstr "Pilot v letounu"
 
-#: client/campaign/cp_transfer_callbacks.c:342
 msgid ""
 "Destination base does not have enough space\n"
 "in Alien Containment.\n"
@@ -13713,7 +13047,6 @@ msgstr ""
 "Cílová základna nemá dostatek místa\n"
 "v cizáckých celách.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:366
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
@@ -13721,7 +13054,6 @@ msgstr ""
 "Cílová základna nemá připraveny hangáry.\n"
 "Opatřete zdroje energie.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:369
 msgid ""
 "Destination base does not have command centre.\n"
 "Hangars not functional.\n"
@@ -13729,135 +13061,102 @@ msgstr ""
 "Cílová základna nemá řídící středisko.\n"
 "Hangáry nejsou v provozu.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Destination base does not have any hangar."
 msgstr "Cílová základna nemá žádný hangár."
 
-#: client/campaign/cp_transfer_callbacks.c:385
 msgid "Destination base does not have enough space in hangars.\n"
 msgstr "Cílová základna nemá dostatek místa v hangárech.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:428
 #, c-format
 msgid "Soldier %s %s"
 msgstr "Voják %s %s"
 
-#: client/campaign/cp_transfer_callbacks.c:440
 #, c-format
 msgid "Pilot %s"
 msgstr "Pilot %s"
 
-#: client/campaign/cp_transfer_callbacks.c:477
-#: client/campaign/cp_transfer_callbacks.c:653
 #, c-format
 msgid "Corpse of %s"
 msgstr "Mrtvola %s"
 
-#: client/campaign/cp_transfer_callbacks.c:494
-#: client/campaign/cp_transfer_callbacks.c:689
 #, c-format
 msgid "Aircraft %s"
 msgstr "Letoun %s"
 
-#: client/campaign/cp_transfer_callbacks.c:562
 msgid "Storage is empty."
 msgstr "Sklad je prázdný."
 
-#: client/campaign/cp_transfer_callbacks.c:566
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a working Storage."
 msgstr "Přeprava není možná - základna nemá sklady."
 
-#: client/campaign/cp_transfer_callbacks.c:628
 msgid "Living Quarters empty."
 msgstr "Ubikace jsou prázdné."
 
-#: client/campaign/cp_transfer_callbacks.c:632
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "Přeprava není možná - základna nemá ubikace."
 
-#: client/campaign/cp_transfer_callbacks.c:660
 #, c-format
 msgid "Alive %s"
 msgstr "Živí %s"
 
-#: client/campaign/cp_transfer_callbacks.c:666
 msgid "Alien Containment is empty."
 msgstr "Komplex cizáckých cel je prázdný."
 
-#: client/campaign/cp_transfer_callbacks.c:670
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Přeprava není možná - základna nemá komplex cizáckých cel."
 
-#: client/campaign/cp_transfer_callbacks.c:673
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "Přeprava není možná - základna nemá zdroje energie."
 
-#: client/campaign/cp_transfer_callbacks.c:695
 msgid "No aircraft available for transfer."
 msgstr "Pro přesun není k dispozici žádný letoun."
 
-#: client/campaign/cp_transfer_callbacks.c:699
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Přeprava není možná - základna nemá funkční hangár."
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "No target base selected"
 msgstr "Není vybrána cílová základna"
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "Please select the target base from the list"
 msgstr "Ze seznamu prosím vyberte cílovou základnu"
 
-#: client/campaign/cp_transfer_callbacks.c:1102
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Můžete přepravit vybavení - tato základna má sklady.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1105
 msgid "No Storage in this base.\n"
 msgstr "Na této základně nejsou sklady.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1109
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Můžete přepravit zaměstnance - tato základna má ubikace.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1111
 msgid "No Living Quarters in this base.\n"
 msgstr "Na této základně nejsou obytné místnosti.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1115
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "Můžete přepravit cizáky - tato základna má komplex cizáckých cel.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1117
 msgid "No Alien Containment in this base.\n"
 msgstr "Na této základně není komplex cizáckých cel.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1121
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Můžete přepravit antihmotu - tato základna má sklad antihmoty.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1123
 msgid "No Antimatter Storage in this base.\n"
 msgstr "Na této základně není sklad antihmoty.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1127
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Můžete přepravit letoun - tato základna má hangár.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1129
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "Přeprava letounu není možná - tato základna nemá řídící středisko.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1131
 msgid "No Hangar in this base.\n"
 msgstr "Na této základně není hangár.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1135
 msgid "No power supplies in this base.\n"
 msgstr "Na této základně nejsou zdroje energie.\n"
 
-#: client/campaign/cp_ufo.c:172
 #, c-format
 msgid ""
 "\n"
@@ -13866,7 +13165,6 @@ msgstr ""
 "\n"
 "Zabezpečeno místo havárie %s (%.0f%%)\n"
 
-#: client/campaign/cp_ufo.c:174
 #, c-format
 msgid ""
 "\n"
@@ -13875,74 +13173,57 @@ msgstr ""
 "\n"
 "Zabezpečeno místo přistání %s\n"
 
-#: client/campaign/cp_ufo.c:428 client/campaign/cp_ufo.c:844
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "UFO letí směrem na %s"
 
-#: client/campaign/cp_ufo.c:849
 #, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr "Náš radar zjistil nové UFO poblíž %s"
 
-#: client/campaign/cp_ufo.c:855
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Náš radar ztratil zaměřené UFO"
 
-#: client/campaign/cp_ufopedia.c:142
 msgid "Cruising speed"
 msgstr "Cestovní rychlost"
 
-#: client/campaign/cp_ufopedia.c:144
 msgid "Maximum speed"
 msgstr "Maximální rychlost"
 
 # Elektronické ProtiOpatření
-#: client/campaign/cp_ufopedia.c:148
 msgid "ECM"
 msgstr "EPO"
 
-#: client/campaign/cp_ufopedia.c:150
 msgid "Aircraft damage"
 msgstr "Poškození letounu"
 
-#: client/campaign/cp_ufopedia.c:152
 msgid "Accuracy"
 msgstr "Přesnost"
 
-#: client/campaign/cp_ufopedia.c:154
 msgid "Fuel size"
 msgstr "Objem paliva"
 
-#: client/campaign/cp_ufopedia.c:156
 msgid "Weapon range"
 msgstr "Dostřel zbraně"
 
-#: client/campaign/cp_ufopedia.c:158 client/cl_inventory_callbacks.c:54
 msgid "Unknown weapon skill"
 msgstr "Neznámé zařazení zbraně"
 
-#: client/campaign/cp_ufopedia.c:170
 msgid "Small"
 msgstr "Malý"
 
-#: client/campaign/cp_ufopedia.c:172
 msgid "Large"
 msgstr "Velký"
 
-#: client/campaign/cp_ufopedia.c:174
 msgid "Unknown aircraft size"
 msgstr "Neznámá velikost letounu"
 
-#: client/campaign/cp_ufopedia.c:193
 msgid "No requirements"
 msgstr "Bez závislostí"
 
-#: client/campaign/cp_ufopedia.c:227
 msgid "Error - could not find building"
 msgstr "Chyba - budovu nelze najít"
 
-#: client/campaign/cp_ufopedia.c:230
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
@@ -13950,72 +13231,56 @@ msgstr[0] "Doba výstavby:\t%i den\n"
 msgstr[1] "Doba výstavby:\t%i dny\n"
 msgstr[2] "Doba výstavby:\t%i dnů\n"
 
-#: client/campaign/cp_ufopedia.c:231
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Cena:\t%i k\n"
 
-#: client/campaign/cp_ufopedia.c:279
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Hmotnost:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:282
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Munice:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:284 client/cl_inventory_callbacks.c:176
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Poškození:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:285
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Doba nabití:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:287
 msgid "Weapon for base defence system\n"
 msgstr "Zbraň pro obrannou soustavu základny\n"
 
-#: client/campaign/cp_ufopedia.c:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:309 client/campaign/cp_ufopedia.c:362
-#: client/campaign/cp_ufopedia.c:364 client/campaign/cp_ufopedia.c:400
-#: client/campaign/cp_ufopedia.c:402
 msgid "Unknown - need to research this"
 msgstr "Neznámo - nutno vyzkoumat"
 
-#: client/campaign/cp_ufopedia.c:336 client/campaign/cp_ufopedia.c:341
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i km/h\n"
 
-#: client/campaign/cp_ufopedia.c:348
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:355
 #, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "Velikost letounu:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:359
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Maximum vojáků:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:397
 #, c-format
 msgid ""
 "%s\n"
@@ -14024,15 +13289,12 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cp_ufopedia.c:521
 msgid "Proposal: "
 msgstr "Návrh: "
 
-#: client/campaign/cp_ufopedia.c:524
 msgid "Re: "
 msgstr "Výsledek: "
 
-#: client/campaign/cp_ufopedia.c:535
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -14043,133 +13305,103 @@ msgstr ""
 "KOMU: %s\n"
 "DATUM: %s"
 
-#: client/campaign/cp_ufopedia.c:609
 msgid "(complete)"
 msgstr "(komplet)"
 
-#: client/campaign/cp_ufopedia.c:668
 msgid "No pre-research description available."
 msgstr "Před výzkumem není popis k dispozici."
 
-#: client/campaign/cp_ufopedia.c:1104
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BNávrh: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1108
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Návrh: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1119
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BVýsledek: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1123
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Výsledek: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1133 client/campaign/cp_ufopedia.c:1145
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1137 client/campaign/cp_ufopedia.c:1149
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1161
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
 
-#: client/campaign/cp_uforecovery.c:61
 #, c-format
 msgid "%s was transfered to %s."
 msgstr "%s byl přesunut do %s."
 
-#: client/campaign/cp_uforecovery.c:62
 msgid "UFO Recovered"
 msgstr "UFO Ukořistěno"
 
-#: client/campaign/cp_uforecovery_callbacks.c:163
 msgid "No free UFO yard available."
 msgstr "Není k dispozici hangár nebo skladiště pro UFO."
 
-#: client/campaign/cp_uforecovery_callbacks.c:213
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
 msgstr "Ukořistěno %s z bojiště.UFP je přepravováno na základnu %s."
 
-#: client/campaign/cp_uforecovery_callbacks.c:215
-#: client/campaign/cp_uforecovery_callbacks.c:506
 msgid "UFO Recovery"
 msgstr "UFO - Zpracování"
 
-#: client/campaign/cp_uforecovery_callbacks.c:498
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
 msgstr "Ukořistěné %s z %s bylo prodáno státu %s a získal jste za něj %i kreditů."
 
-#: client/campaign/cp_uforecovery_callbacks.c:503
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Ukořistěné %s bylo prodáno státu %s a získal jste za něj %i kreditů."
 
-#: client/campaign/missions/cp_mission_baseattack.c:121
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
 msgstr "Vaše základna %s byla zničena! Všichni zaměstnanci byli zabiti a veškeré vybavení ztraceno."
 
-#: client/campaign/missions/cp_mission_baseattack.c:229
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Základna '%s' je napadena! Co dělat?"
 
-#: client/cl_console.c:297
 msgid "Bring up the in-game console"
 msgstr "Vyvolat herní konzolu"
 
-#: client/cl_game_campaign.c:69
 msgid "Your dropship is not near the landing zone"
 msgstr "Transportér není v blízkosti přistávacího prostoru"
 
-#: client/cl_game_campaign.c:88
 msgid "You've won the battle"
 msgstr "Vyhrál jste bitvu"
 
-#: client/cl_game_campaign.c:157
 msgid "Chicken-hearted"
 msgstr "Pro sraby"
 
-#: client/cl_game_campaign.c:159
 msgid "Very Easy"
 msgstr "Velice snadné"
 
-#: client/cl_game_campaign.c:162
 msgid "Easy"
 msgstr "Snadné"
 
-#: client/cl_game_campaign.c:167
 msgid "Hard"
 msgstr "Těžké"
 
-#: client/cl_game_campaign.c:169
 msgid "Very Hard"
 msgstr "Velice těžké"
 
-#: client/cl_game_campaign.c:171
 msgid "Insane"
 msgstr "Nemožné"
 
-#: client/cl_game_campaign.c:239
 msgid "Human"
 msgstr "Lidé"
 
-#: client/cl_game_campaign.c:243
 #, c-format
 msgid ""
 "%s\n"
@@ -14192,33 +13424,26 @@ msgstr ""
 "Maximální povolené dluhy: %i k\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:494
 #, c-format
 msgid "Rank: %s"
 msgstr "Hodnost: %s"
 
-#: client/cl_game_multiplayer.c:66
 msgid "You've ended your round\n"
 msgstr "Dokončil jste svůj tah\n"
 
-#: client/cl_game_multiplayer.c:69
 #, c-format
 msgid "%s ended his round (team %i)\n"
 msgstr "%s ukončil svůj tah (tým %i)\n"
 
-#: client/cl_game_multiplayer.c:89
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Nastavte počet vojáků hráče na nižší hodnotu než je vojáků v týmu."
 
-#: client/cl_game_multiplayer.c:89
 msgid "Settings doesn't make sense"
 msgstr "Nastavení nedává smysl"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid "Game Drawn!"
 msgstr "Nerozhodně!"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -14228,7 +13453,6 @@ msgstr ""
 "\n"
 "Na žádné straně nikdo nepřežil."
 
-#: client/cl_game_multiplayer.c:242
 #, c-format
 msgid ""
 "\n"
@@ -14241,27 +13465,21 @@ msgstr ""
 "Zabito nepřátel:  %i\n"
 "Tým - přeživší:  %i"
 
-#: client/cl_game_multiplayer.c:244 client/cl_game_skirmish.c:188
 msgid "You won the game!"
 msgstr "Vyhrál jste hru!"
 
-#: client/cl_game_multiplayer.c:245 client/cl_game_skirmish.c:189
 msgid "Congratulations"
 msgstr "Blahopřejeme"
 
-#: client/cl_game_multiplayer.c:247 client/cl_game_skirmish.c:191
 msgid "You've lost the game!"
 msgstr "Prohrál jste hru!"
 
-#: client/cl_game_multiplayer.c:248 client/cl_game_skirmish.c:192
 msgid "Better luck next time"
 msgstr "Příště více štestí"
 
-#: client/cl_game_multiplayer.c:279
 msgid "all"
 msgstr "všechny"
 
-#: client/cl_game_skirmish.c:179
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -14278,263 +13496,201 @@ msgstr ""
 "Civilistů zabitých:\t\t%i\n"
 "Civilistů zabitých nepřítelem:\t\t%i\n"
 
-#: client/cl_inventory_callbacks.c:44
 msgid "skill_close"
 msgstr "Boj zblízka"
 
-#: client/cl_inventory_callbacks.c:46
 msgid "skill_heavy"
 msgstr "Těžké zbraně"
 
-#: client/cl_inventory_callbacks.c:48
 msgid "skill_assault"
 msgstr "Útočné zbraně"
 
-#: client/cl_inventory_callbacks.c:50
 msgid "skill_sniper"
 msgstr "Ostřelovačské pušky"
 
-#: client/cl_inventory_callbacks.c:52
 msgid "skill_explosive"
 msgstr "Výbušniny"
 
-#: client/cl_inventory_callbacks.c:131
 #, c-format
 msgid "Size:\t%i\n"
 msgstr "Velikost:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:133
 msgid "^BDamage type:\tProtection:\n"
 msgstr "^BDruh poškození:\tOchrana:\n"
 
-#: client/cl_inventory_callbacks.c:146
 #, c-format
 msgid "%s weapon\n"
 msgstr "%s zbraň\n"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "One-handed"
 msgstr "Jednoruční"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "Two-handed"
 msgstr "Obouruční"
 
-#: client/cl_inventory_callbacks.c:148
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "Munice:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:175
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "Zařazení:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:177 client/cl_inventory_callbacks.c:192
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "Časové jednotky:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:178 client/cl_inventory_callbacks.c:193
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Dostřel:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:179
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "Rozptyl:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:182
 #, c-format
 msgid "%s. No detailed info available.\n"
 msgstr "%s. Podrobnější informace nejsou dostupné.\n"
 
-#: client/cl_inventory_callbacks.c:182
 msgid "Ammunition"
 msgstr "Munice"
 
-#: client/cl_inventory_callbacks.c:182
 msgid "Weapon"
 msgstr "Zbraň"
 
-#: client/cl_inventory_callbacks.c:185
 #, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s zbraň nevyžadující munici\n"
 
-#: client/cl_inventory_callbacks.c:188
 #, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "%s pomocné vybavení\n"
 
-#: client/cl_inventory_callbacks.c:191
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Činnost:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:200
 msgid "Unknown - not useable"
 msgstr "Neznámé - nepoužitelné"
 
 # ???
-#: client/cl_inventory_callbacks.c:344
 msgid "Update the GUI with the selected item"
 msgstr "Obnovit GUP zvoleným objektem"
 
-#: client/cl_irc.c:1441
 msgid "Server closed connection"
 msgstr "Server uzavřel spojení"
 
-#: client/cl_language.c:276
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:516
 #, fuzzy, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
 msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 
-#: client/cl_main.c:521
 msgid "Script files are not the same"
 msgstr "Skriptové soubory nejsou shodné"
 
-#: client/cl_main.c:545
 msgid "Local map version differs from server"
 msgstr "Vaše verze mapy se liší od té na serveru"
 
 # doladit
-#: client/cl_main.c:1011
 msgid "Target your shot to the ground"
 msgstr "Zamířit výstřel k zemi"
 
-#: client/cl_main.c:1249
 msgid "This change requires a restart"
 msgstr "Tato změna vyžaduje restart"
 
-#: client/cl_main.c:1254
 msgid "This change might require a restart"
 msgstr "Tato změna by mohla vyžadovat restart"
 
-#: client/cl_screen.c:156
 #, c-format
 msgid "Downloading [%s]"
 msgstr "Stahuji [%s]"
 
-#: client/cl_screen.c:193
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "Načítám mapu [%s]"
 
-#: client/input/cl_input.c:914
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Otočit kamerou nad bojištěm v protisměru hodinových ručiček"
 
-#: client/input/cl_input.c:916
 msgid "Rotate battlescape camera clockwise"
 msgstr "Otočit kamerou nad bojištěm po směru hodinových ručiček"
 
-#: client/input/cl_input.c:918
 msgid "Tilt battlescape camera up"
 msgstr "Naklonit kameru nad bojištěm vzhůru"
 
-#: client/input/cl_input.c:920
 msgid "Tilt battlescape camera down"
 msgstr "Naklonit kameru nad bojištěm dolů"
 
-#: client/input/cl_input.c:922
 msgid "Move battlescape camera left"
 msgstr "Posunout kameru nad bojištěm doleva"
 
-#: client/input/cl_input.c:924
 msgid "Move battlescape camera right"
 msgstr "Posunout kameru nad bojištěm doprava"
 
-#: client/input/cl_input.c:926
 msgid "Move battlescape camera forward"
 msgstr "Posunout kameru nad bojištěm dopředu"
 
-#: client/input/cl_input.c:928
 msgid "Move battlescape camera backward"
 msgstr "Posunout kameru nad bojištěm dozadu"
 
-#: client/input/cl_input.c:930 client/input/cl_input.c:952
 msgid "Zoom in"
 msgstr "Přiblížit"
 
-#: client/input/cl_input.c:932 client/input/cl_input.c:953
 msgid "Zoom out"
 msgstr "Oddálit"
 
-#: client/input/cl_input.c:935
 msgid "Left mouse button click (menu)"
 msgstr "Klik levým tlačítkem myši (nabídka)"
 
-#: client/input/cl_input.c:937
 msgid "Middle mouse button click (menu)"
 msgstr "Klik prostředním tlačítkem myši (nabídka)"
 
-#: client/input/cl_input.c:939
 msgid "Right mouse button click (menu)"
 msgstr "Klik pravým tlačítkem myši (nabídka)"
 
-#: client/input/cl_input.c:941
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Zvolit objekt/Jít na čtverec/V režimu střelby střílet atd."
 
-#: client/input/cl_input.c:943
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Jít na čtverec/V režimu střelby zrušit střelbu"
 
-#: client/input/cl_input.c:945
 msgid "Turn soldier toward mouse pointer"
 msgstr "Natočit vojáka směrem ke kurzoru myši"
 
-#: client/input/cl_input.c:947
 msgid "Toggles the hud radar mode"
 msgstr "Přepnout HUD režim redaru"
 
-#: client/input/cl_input.c:950
 msgid "Slice through terrain at a higher level"
 msgstr "Nastavit řez terénem na vyšší úroveň"
 
-#: client/input/cl_input.c:951
 msgid "Slice through terrain at a lower level"
 msgstr "Nastavit řez terénem na nižší úroveň"
 
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Assemble a team first"
 msgstr "Nejprve sestavte tým"
 
-#: client/multiplayer/mp_callbacks.c:192
 msgid "Select a free team or your coop team"
 msgstr "Zvolte volný tým nebo tým pro spolupráci"
 
-#: client/multiplayer/mp_callbacks.c:215 client/multiplayer/mp_callbacks.c:228
 #, c-format
 msgid "Current team: %i"
 msgstr "Nynější tým: %i"
 
-#: client/multiplayer/mp_callbacks.c:219 client/multiplayer/mp_callbacks.c:232
 msgid "Team is already in use"
 msgstr "Tým je již používán"
 
-#: client/multiplayer/mp_callbacks.c:241
 msgid "Invalid or full team"
 msgstr "Neplatný nebo plný tým"
 
-#: client/multiplayer/mp_serverlist.c:236
 #, c-format
 msgid "Team %d"
 msgstr "Tým %d"
 
-#: client/multiplayer/mp_serverlist.c:238
 msgid "No team"
 msgstr "Žádný tým"
 
-#: client/multiplayer/mp_serverlist.c:297
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -14543,104 +13699,83 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/multiplayer/mp_serverlist.c:308
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:313
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Jméno serveru:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:314
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Stavy morálky:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:315
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Druh hry:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Verze hry:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:317
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Vyhrazený server:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Operační systém:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:319
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Síťový protokol:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Doba tahu:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Týmová hra:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maximum hráčů na tým:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Maximum týmů v této mapě:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maximum klientů:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maximum vojáků na hráče:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maximum vojáků na tým:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Chráněno heslem:\t%s\n"
 
 # doladit
-#: client/multiplayer/mp_serverlist.c:469
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "Není místo pro další oblíbené - smažte prosím nepoužívané záznamy a zkuste to znovu"
 
-#: client/multiplayer/mp_team.c:254
 msgid "Error saving team. Nothing to save yet."
 msgstr "Chyba při ukládání týmu. Zatím není co uložit."
 
-#: client/multiplayer/mp_team.c:270
 msgid "NewTeam"
 msgstr "Nový tým"
 
-#: client/multiplayer/mp_team.c:275
 msgid "Error saving team. Check free disk space!"
 msgstr "Chyba při ukládání týmu. Zkontrolujte zda je na disku dostatek volného místa!"
 
-#: client/ui/node/ui_node_base.c:198
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
@@ -14648,118 +13783,88 @@ msgstr[0] "zbývá %i den"
 msgstr[1] "zbývají %i dny"
 msgstr[2] "zbývá %i dnů"
 
-#: client/ui/node/ui_node_base.c:271
 msgid "not operational, depends on"
 msgstr "nefunkční, závisí na"
 
-#: client/ui/node/ui_node_baseinventory.c:234
-#: client/ui/node/ui_node_baseinventory.c:239
-#: client/ui/node/ui_node_container.c:275
-#: client/ui/node/ui_node_container.c:280
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "Ran: %i\n"
 
-#: client/ui/node/ui_node_baseinventory.c:238
-#: client/ui/node/ui_node_container.c:279
 #, c-format
 msgid "%s loaded\n"
 msgstr "Munice: %s\n"
 
-#: client/ui/node/ui_node_baseinventory.c:246
-#: client/ui/node/ui_node_container.c:287
 msgid "Usable in:\n"
 msgstr "Použitelná v:\n"
 
-#: client/ui/node/ui_node_container.c:339
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "Dovnitř: %i Ven: %i"
 
-#: client/ui/node/ui_node_keybinding.c:95
 #, c-format
 msgid "Key %s already bound"
 msgstr "Klávesa %s je již přiřazena"
 
-#: client/ui/node/ui_node_keybinding.c:154
 msgid "NONE"
 msgstr "ŽÁDNÉ"
 
-#: client/ui/node/ui_node_window.c:293
 msgid "Drag to move window"
 msgstr "Táhnutím posuňte okno"
 
-#: client/ui/node/ui_node_window.c:308
 msgid "Close the window"
 msgstr "Zavřít okno"
 
-#: client/ui/ui_tooltip.c:96 client/ui/ui_tooltip.c:101
 #, c-format
 msgid "Key: %s"
 msgstr "Klávesa: %s"
 
-#: game/g_actor.c:78
 #, fuzzy
 msgid "Soldier entered the rescue zone\n"
 msgstr "Cizáci vstoupili do cílové oblasti\n"
 
-#: game/g_actor.c:80
 #, fuzzy
 msgid "Soldier left the rescue zone\n"
 msgstr "Vybrat tuto oblast"
 
-#: game/g_actor.c:557
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Nelze provést - nedostatek ČJ!\n"
 
-#: game/g_actor.c:561
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Nelze provést - zbraň je již plně nabita stejnou municí!\n"
 
-#: game/g_client.c:401
 msgid "Can't perform action - object not present!\n"
 msgstr "Nelze provést - předmět tu není!\n"
 
-#: game/g_client.c:406
 msgid "Can't perform action - not an actor!\n"
 msgstr "Nelze provést - není osoba!\n"
 
-#: game/g_client.c:411
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Nelze provést - osoba je omráčena!\n"
 
-#: game/g_client.c:416
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Nelze provést - osoba je mrtva!\n"
 
-#: game/g_client.c:421
 msgid "Can't perform action - not on same team!\n"
 msgstr "Nelze provést - není ve stejném týmu!\n"
 
-#: game/g_client.c:426
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Nelze provést - neovládáte spojenecké osoby!\n"
 
-#: game/g_client.c:449
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Nelze provést - nejste na tahu!\n"
 
 # Asi takhle?
-#: game/g_client.c:560
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Je právě v šoku, nepouštějte ho z dohlehu.\n"
 
-#: game/g_cmds.c:68
 #, c-format
 msgid "You can't talk for %d more seconds\n"
 msgstr "Nemůžete mluvit po dobu %d sekund\n"
 
-#: game/g_cmds.c:76
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "Ochrana proti zahlcení: nemůžeš mluvit %d sekund.\n"
 
-#: game/g_combat.c:380
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -14767,112 +13872,86 @@ msgstr ""
 "Voják je oslněný!\n"
 "Nepřítel použil oslepující granát!\n"
 
-#: game/g_combat.c:614
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Nelze provést - neuskutečnitelný hod!\n"
 
-#: game/g_combat.c:1085
 msgid "Can't perform action - object not activatable!\n"
 msgstr "Nelze provést akci - předmět není aktivovatelný!\n"
 
-#: game/g_combat.c:1110
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "Nelze provést - ze zbraně nejde střílet jednou rukou!\n"
 
-#: game/g_combat.c:1117
 msgid "Can't perform action - no ammo!\n"
 msgstr "Nelze provést - není munice!\n"
 
-#: game/g_combat.c:1125
 msgid "Can't perform action - target out of range!\n"
 msgstr "Nelze provést - cíl je mimo dostřel!\n"
 
-#: game/g_combat.c:1171
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Nelze provést - nedostatek munice!\n"
 
-#: game/g_mission.c:48
 msgid "Aliens entered target zone\n"
 msgstr "Cizáci vstoupili do cílové oblasti\n"
 
-#: game/g_mission.c:79
 msgid "Item was placed\n"
 msgstr "předmět byl umístěn\n"
 
-#: game/g_mission.c:86
 msgid "Target zone is occupied\n"
 msgstr "Cílová oblast je obsazena\n"
 
-#: game/g_morale.c:36
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s zpanikařil!\n"
 
-#: game/g_morale.c:97
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s běsní.\n"
 
-#: game/g_morale.c:99
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s je spotřebováno záchvatem amoku!\n"
 
-#: game/g_morale.c:176
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s je právě v šoku.\n"
 
-#: game/g_reaction.c:193
 msgid "No reaction fire enabled weapon.\n"
 msgstr "Zbraň bez povolené zpětné palby.\n"
 
-#: game/g_reaction.c:198
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "Nenastaven režim pro zpětnou palbu.\n"
 
-#: game/g_reaction.c:203
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "Nedostatek ČJ pro aktivaci zpětné palby.\n"
 
-#: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
 msgstr "Zbývají 4 minuty do vynuceného konce tahu\n"
 
-#: game/g_round.c:48
 msgid "3 minutes left until forced round end\n"
 msgstr "Zbývají 3 minuty do vynuceného konce tahu\n"
 
-#: game/g_round.c:51
 msgid "2 minutes left until forced round end\n"
 msgstr "Zbývají 2 minuty do vynuceného konce tahu\n"
 
-#: game/g_round.c:54
 msgid "1 minute left until forced round end\n"
 msgstr "Zbývá 1 minuta do vynuceného konce tahu\n"
 
-#: game/g_round.c:57
 msgid "30 seconds left until forced round end\n"
 msgstr "Zbývá 30 sekund do vynuceného konce tahu\n"
 
-#: game/g_round.c:60
 msgid "15 seconds left until forced round end\n"
 msgstr "Zbývá 15 sekund do vynuceného konce tahu\n"
 
-#: game/g_round.c:68
 msgid "Current active team hit the max round time\n"
 msgstr "Tým, který je na tahu, dosáhl maximálního času na tah\n"
 
-#: po/OTHER_STRINGS:2
 msgid "human"
 msgstr "člověk"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: po/OTHER_STRINGS:3
 msgid "alien"
 msgstr "cizák"
 
-#: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Udělat snímek obrazovky"
 
