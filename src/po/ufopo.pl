@@ -101,27 +101,6 @@ foreach my $key (keys %messages)
 
 my $date = strftime "%F %R%z", localtime();
 
-print <<EOH
-msgid ""
-msgstr ""
-"Project-Id-Version: UFO Alien Invasion\\n"
-"Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\\n"
-"POT-Creation-Date: $date\\n"
-EOH
-;
-# we must break this string to avoid triggering a bug in some po-mode
-# installations, at save-time for this file
-print "\"PO-Revision-Date: YEAR-MO-DA ", "HO:MI+ZONE\\n\"\n";
-print <<EOH
-"Last-Translator: FULL NAME <EMAIL\@ADDRESS>\\n"
-"Language-Team: LANGUAGE <LL\@li.org>\\n"
-"MIME-Version: 1.0\\n"
-"Content-Type: text/plain; charset=UTF-8\\n"
-"Content-Transfer-Encoding: 8bit\\n"
-
-EOH
-;
-
 foreach my $occurence (@revmessages)
 {
 	my $key = $occurence->[2];
