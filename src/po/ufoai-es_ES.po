@@ -100,7 +100,6 @@ msgstr "Parque pequeño del este"
 msgid "Harvester"
 msgstr "OVNI - Recolector"
 
-#: client/campaign/cp_base_callbacks.c:312
 msgid "Laboratory"
 msgstr "Laboratorio"
 
@@ -427,7 +426,6 @@ msgstr "Hangar Grande"
 msgid "Small Hangar"
 msgstr "Hangar Pequeño"
 
-#: client/campaign/cp_base_callbacks.c:317
 msgid "Workshop"
 msgstr "Taller"
 
@@ -438,7 +436,6 @@ msgstr "Radar"
 msgid "Advanced Radar"
 msgstr "Control de Plasma Avanzado"
 
-#: client/campaign/cp_base_callbacks.c:332
 msgid "Hospital"
 msgstr "Hospital"
 
@@ -2672,11 +2669,9 @@ msgstr "Cross"
 msgid "Coin"
 msgstr "Moneda"
 
-#: client/campaign/cp_employee.c:206
 msgid "Scientist"
 msgstr "Científico"
 
-#: client/campaign/cp_employee.c:210
 msgid "Pilot"
 msgstr "Piloto"
 
@@ -2684,7 +2679,6 @@ msgstr "Piloto"
 msgid "UGV"
 msgstr "UGV"
 
-#: client/campaign/cp_employee.c:208
 msgid "Worker"
 msgstr "Trabajador"
 
@@ -3158,7 +3152,6 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: client/campaign/cp_missions.c:459
 #, fuzzy
 msgid "Alien base"
 msgstr "Aliens"
@@ -9153,7 +9146,6 @@ msgstr "Volver a la vista de base"
 msgid "Name of this base"
 msgstr "Nombre de esta base"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -9223,21 +9215,16 @@ msgstr "Equipo actual"
 msgid "Available equipment:"
 msgstr "Equipo disponible:"
 
-#: client/campaign/cp_fightequip_callbacks.c:135
 msgid "Weapons"
 msgstr "Armas"
 
-#: client/campaign/cp_fightequip_callbacks.c:142
 #, fuzzy
 msgid "Ammo"
 msgstr "Armadura"
 
-#: client/campaign/cp_fightequip_callbacks.c:137
-#: client/campaign/cp_ufopedia.c:146
 msgid "Armour"
 msgstr "Armadura"
 
-#: client/campaign/cp_fightequip_callbacks.c:139
 msgid "Items"
 msgstr "Objetos"
 
@@ -9454,14 +9441,10 @@ msgstr "%i Dia(s) para construcción\n"
 msgid "Autofire"
 msgstr "Fuego"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
-#: client/campaign/cp_installation_callbacks.c:216
 #, fuzzy
 msgid "Destroy"
 msgstr "Reintentar"
 
-#: client/campaign/cp_installation_callbacks.c:216
 #, fuzzy
 msgid "Destroy installation"
 msgstr "Naciones"
@@ -9501,8 +9484,6 @@ msgstr "Vender objeto"
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Comprar/Vender equipo"
 
-#: client/campaign/cp_base.c:1203 client/campaign/cp_base.c:1213
-#: client/campaign/cp_base.c:1223
 msgid "Transfer"
 msgstr "Transferir"
 
@@ -9558,8 +9539,6 @@ msgstr "Edificio finalizado"
 msgid "Select building"
 msgstr "Comenzar con edificios:"
 
-#: client/campaign/cp_ufopedia.c:609 client/campaign/cp_ufopedia.c:662
-#: client/campaign/cp_ufopedia.c:671 client/campaign/cp_ufopedia.c:831
 #, fuzzy
 msgid "UFOpaedia"
 msgstr "OVNIpedia"
@@ -10062,7 +10041,6 @@ msgstr "Reacción de fuego un disparo"
 msgid "No reaction fire"
 msgstr "Sin reacción de fuego"
 
-#: client/battlescape/cl_hud.c:822
 msgid "Reserve TUs for shooting."
 msgstr "Reservar UsT para disparar."
 
@@ -11043,7 +11021,6 @@ msgstr "Lob"
 msgid "Medium"
 msgstr "Médico"
 
-#: client/cl_game_campaign.c:164
 msgid "Normal"
 msgstr "Normal"
 
@@ -11546,11 +11523,9 @@ msgstr "Confirmar acciones:"
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 msgstr ""
 
-#: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Sí"
 
-#: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "No"
 
@@ -11643,7 +11618,6 @@ msgstr "Aceptar"
 msgid "Use the previous resolution."
 msgstr "Cambiar resolución"
 
-#: client/campaign/cp_produce_callbacks.c:296
 #, fuzzy
 msgid "Disassembly"
 msgstr "Producción de %s iniciada"
@@ -11850,7 +11824,6 @@ msgstr "Curándose"
 msgid "Add/Remove item to transfer cargo"
 msgstr "Añadir/Quitar objeto de la carga de tansferencia"
 
-#: client/cl_game_campaign.c:241
 #, fuzzy
 msgid "Aliens"
 msgstr "Aliens"
@@ -12264,116 +12237,91 @@ msgstr "<TODO>"
 msgid "Autocannon Module"
 msgstr "Modulo autocañon"
 
-#: client/battlescape/cl_actor.c:102
 msgid "Poor"
 msgstr "Pobre"
 
-#: client/battlescape/cl_actor.c:104
 msgid "Mediocre"
 msgstr "Mediocre"
 
-#: client/battlescape/cl_actor.c:106
 msgid "Average"
 msgstr "Promedio"
 
-#: client/battlescape/cl_actor.c:108
 #, fuzzy
 msgid "Competent"
 msgstr "Contenido"
 
-#: client/battlescape/cl_actor.c:110
 #, fuzzy
 msgid "Proficient"
 msgstr "Producción"
 
-#: client/battlescape/cl_actor.c:112
 msgid "Very Good"
 msgstr "Muy bueno"
 
-#: client/battlescape/cl_actor.c:114
 #, fuzzy
 msgid "Highly Proficient"
 msgstr "Habilidad en explosivos"
 
-#: client/battlescape/cl_actor.c:118
 msgid "Outstanding"
 msgstr "Pendiente"
 
-#: client/battlescape/cl_actor.c:121
 msgid "Superhuman"
 msgstr "Superhumano"
 
-#: client/battlescape/cl_actor.c:661
 msgid "This isn't your round\n"
 msgstr "No es tu turno\n"
 
-#: client/battlescape/cl_actor.c:912
 #, fuzzy
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 "No puedes usar este objeto desconocido.\n"
 "Tienes que investigarlo antes.\n"
 
-#: client/battlescape/cl_actor.c:1757
 #, fuzzy
 msgid "Unknown alien race"
 msgstr " [no investigable]"
 
-#: client/battlescape/cl_actor.c:2410
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "Cambiar al siguiente soldado"
 
-#: client/battlescape/cl_actor.c:2411
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "Selecciona un soldado de la lista"
 
-#: client/battlescape/cl_actor.c:2412
 #, fuzzy
 msgid "Update an actor"
 msgstr "Renombra tu base"
 
-#: client/battlescape/cl_actor.c:2414
 msgid "Toggle stand/crounch"
 msgstr "Cambiar agachado/en pie"
 
-#: client/battlescape/cl_actor.c:2415
 #, fuzzy
 msgid "Toggle the headgear"
 msgstr "Cambiar al siguiente soldado"
 
-#: client/battlescape/cl_actor.c:2416
 msgid "Opens or closes a door"
 msgstr "Abre o cierra una puerta"
 
-#: client/battlescape/cl_actor.c:2417
 msgid "Confirm the current action"
 msgstr "Confirma la acción"
 
-#: client/battlescape/cl_actor.c:2418
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Pasa al siguiente alienigena visible por el soldado."
 
-#: client/battlescape/cl_actor.c:2420
 #, fuzzy
 msgid "Toggle to next alien"
 msgstr "Cambiar al siguiente alien"
 
-#: client/battlescape/cl_hud.c:97 client/battlescape/cl_hud.c:100
 msgid "Crouch walk"
 msgstr "Andar agachado"
 
-#: client/battlescape/cl_hud.c:98
 #, fuzzy
 msgid "Autostand"
 msgstr "Auto"
 
-#: client/battlescape/cl_hud.c:99
 msgid "Walk"
 msgstr "Andar"
 
-#: client/battlescape/cl_hud.c:148
 #, c-format
 msgid ""
 "%s\n"
@@ -12384,86 +12332,68 @@ msgstr ""
 "PS: %i/%i UsT: %i\n"
 "%s"
 
-#: client/battlescape/cl_hud.c:293
 msgid "[0 TU] No reservation"
 msgstr "[0 UsT] No hay reserva"
 
-#: client/battlescape/cl_hud.c:313
 #, c-format
 msgid "[%i TU] %s"
 msgstr "[UsT %i] %s"
 
-#: client/battlescape/cl_hud.c:345
 msgid "Reserve TUs for firing/using."
 msgstr "Reservar UsT para disparar/usar."
 
-#: client/battlescape/cl_hud.c:345
 msgid "Shot Reservation"
 msgstr "Reserva de disparo"
 
-#: client/battlescape/cl_hud.c:445
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "UsT restantes: %i"
 
-#: client/battlescape/cl_hud.c:448
 msgid "No remaining TUs left after shot."
 msgstr "No hay suficientes UsT disponibles para disparar."
 
-#: client/battlescape/cl_hud.c:451
 #, c-format
 msgid "TU: %i"
 msgstr "UsT: %i"
 
-#: client/battlescape/cl_hud.c:452
 #, fuzzy, c-format
 msgid "Shots: %i"
 msgstr "%s\t%s\n"
 
-#: client/battlescape/cl_hud.c:666
 #, fuzzy
 msgid "No weapon."
 msgstr "%s arma con\n"
 
-#: client/battlescape/cl_hud.c:675
 #, fuzzy
 msgid "Weapon cannot be reloaded."
 msgstr "No puedes hacerlo - el personaje está muerto!\n"
 
-#: client/battlescape/cl_hud.c:681
 msgid "No reload possible, already fully loaded."
 msgstr "No se puede recargar, ya esta recargado del todo."
 
-#: client/battlescape/cl_hud.c:691
 #, fuzzy
 msgid "Not enough TUs for reloading weapon."
 msgstr "Parar investigación"
 
-#: client/battlescape/cl_hud.c:694
 msgid "No reload possible, you don't have backup ammo."
 msgstr "No se puede racargar, no tienes municion de repuesto."
 
-#: client/battlescape/cl_hud.c:786
 #, fuzzy
 msgid "Not enough TUs for standing up."
 msgstr "Parar investigación"
 
-#: client/battlescape/cl_hud.c:789
 #, fuzzy, c-format
 msgid "Stand up (%i TU)"
 msgstr "Recargar arma"
 
-#: client/battlescape/cl_hud.c:794
 #, fuzzy
 msgid "Not enough TUs for crouching."
 msgstr "Cambiar reacción de fuego"
 
-#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "Agacharse (%i UsT)"
 
-#: client/battlescape/cl_hud.c:805
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -12472,17 +12402,14 @@ msgstr ""
 "%i UsT reservadas para agacharse/levantarse.\n"
 "Click para despejar."
 
-#: client/battlescape/cl_hud.c:809
 #, fuzzy, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Parar investigación"
 
-#: client/battlescape/cl_hud.c:812
 #, fuzzy
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Parar investigación"
 
-#: client/battlescape/cl_hud.c:818
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -12493,16 +12420,13 @@ msgstr ""
 "Click para cambiar.\n"
 "Boton derecho para despejar."
 
-#: client/battlescape/cl_hud.c:825
 msgid "Reserving TUs for shooting not possible."
 msgstr "No se pueden reservar UsT para disparar."
 
-#: client/battlescape/cl_hud.c:846 client/battlescape/cl_hud.c:855
 #, fuzzy, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Recargar arma"
 
-#: client/battlescape/cl_hud.c:1082
 #, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
@@ -12511,7 +12435,6 @@ msgstr ""
 "No puedes recargar un objeto desconocido.\n"
 "Tienes que investigar el objeto y su munición.\n"
 
-#: client/battlescape/cl_hud.c:1103
 #, c-format
 msgid ""
 "%s\n"
@@ -12520,19 +12443,16 @@ msgstr ""
 "%s\n"
 "(vacio)\n"
 
-#: client/battlescape/cl_hud.c:1125
 #, fuzzy, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr ""
 "Armadura  %i\tMoral  %i\n"
 "Movimiento %i (%i TU izquierda)\n"
 
-#: client/battlescape/cl_hud.c:1127
 #, fuzzy, c-format
 msgid "Morale  %i"
 msgstr "Normal"
 
-#: client/battlescape/cl_hud.c:1132
 #, fuzzy, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -12541,7 +12461,6 @@ msgstr ""
 "Armadura  %i\tMoral  %i\n"
 "Movimiento %i (%i TU izquierda)\n"
 
-#: client/battlescape/cl_hud.c:1136
 #, fuzzy, c-format
 msgid ""
 "Morale  %i\n"
@@ -12550,7 +12469,6 @@ msgstr ""
 "Armadura  %i\tMoral  %i\n"
 "Movimiento %i (%i TU izquierda)\n"
 
-#: client/battlescape/cl_hud.c:1168
 #, c-format
 msgid ""
 "Time Units\n"
@@ -12563,374 +12481,255 @@ msgstr ""
 "- Reservadas: %i\n"
 "- Restantes: %i\n"
 
-#: client/battlescape/cl_hud.c:1263
 #, fuzzy
 msgid "Currently panics!\n"
 msgstr "Currently panics!\n"
 
-#: client/battlescape/cl_hud.c:1489
 #, fuzzy
 msgid "Update cvars from actor from list"
 msgstr "Selecciona un soldado de la lista"
 
-#: client/battlescape/cl_hud_callbacks.c:86
-#: client/battlescape/cl_hud_callbacks.c:243
 #, fuzzy
 msgid "No item in hand.\n"
 msgstr "No tiene asignado blindaje"
 
-#: client/battlescape/cl_hud_callbacks.c:92
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
 msgstr "No puedes hacerlo - no en el mismo equipo!\n"
 
-#: client/battlescape/cl_hud_callbacks.c:97
 #, fuzzy
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 msgstr "No puedes hacerlo - el personaje está muerto!\n"
 
-#: client/battlescape/cl_hud_callbacks.c:151
-#: client/battlescape/cl_hud_callbacks.c:261
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
 msgstr "No puedes hacerlo - no tienes suficientes UT!\n"
 
-#: client/battlescape/cl_hud_callbacks.c:249
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
 msgstr "No puedes hacerlo - no es tu turno!\n"
 
-#: client/battlescape/cl_hud_callbacks.c:256
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
 msgstr "No puedes hacerlo - no es un personaje!\n"
 
-#: client/battlescape/cl_hud_callbacks.c:291
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Recargar el arma de la mano izquierda del soldado"
 
-#: client/battlescape/cl_hud_callbacks.c:292
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "Recargar el arma de la mano derecha del soldado"
 
-#: client/battlescape/cl_hud_callbacks.c:293
 #, fuzzy
 msgid "Toggle reservation for crouching."
 msgstr "Cambiar reacción de fuego"
 
-#: client/battlescape/cl_hud_callbacks.c:294
 msgid "Toggle reaction fire"
 msgstr "Cambiar reacción de fuego"
 
-#: client/battlescape/cl_view.c:58 client/battlescape/cl_view.c:84
 #, fuzzy, c-format
 msgid "loading %s"
 msgstr "Edificios"
 
-#: client/battlescape/cl_view.c:66
 msgid "loading models..."
 msgstr "cargando modelos..."
 
-#: client/battlescape/cl_view.c:114 client/cl_main.c:1124
 msgid "Awaiting game start"
 msgstr "Esperando que empiece el juego"
 
-#: client/battlescape/events/e_server.c:41
 #, fuzzy
 msgid "This isn't your round"
 msgstr "No es tu turno\n"
 
-#: client/battlescape/events/e_server.c:53
 msgid "Ends current round"
 msgstr "Termina el turno actual"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:159
 #, fuzzy, c-format
 msgid "Enemy spotted: %s!"
 msgstr "Enemigo avistado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:162
 msgid "Enemy spotted!\n"
 msgstr "Enemigo avistado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:164
 msgid "Civilian spotted!\n"
 msgstr "Civil avistado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:78
 #, fuzzy, c-format
 msgid "%s was stunned\n"
 msgstr "Un soldado ha sido asesinado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
 #, fuzzy, c-format
 msgid "%s was killed\n"
 msgstr "Un alienígena ha muerto!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:88
 #, fuzzy
 msgid "A civilian was stunned.\n"
 msgstr "Un civil ha sido asesinado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
 #, fuzzy
 msgid "A civilian was killed.\n"
 msgstr "Un civil ha sido asesinado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:94
 #, fuzzy
 msgid "An alien was stunned.\n"
 msgstr "Un alienígena ha muerto!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
 #, fuzzy
 msgid "An alien was killed.\n"
 msgstr "Un alienígena ha muerto!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:100
 #, fuzzy
 msgid "A soldier was stunned.\n"
 msgstr "Un soldado ha sido asesinado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
 #, fuzzy
 msgid "A soldier was killed.\n"
 msgstr "Un soldado ha sido asesinado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:106
 #, fuzzy, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Un miembro del equipo %i ha muerto!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
 #, fuzzy, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Un miembro del equipo %i ha muerto!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:69
 #, fuzzy, c-format
 msgid "%s was revitalised\n"
 msgstr "Un alienígena ha muerto!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:75
 #, fuzzy
 msgid "A civilian was revitalised.\n"
 msgstr "Un civil ha sido asesinado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:78
 #, fuzzy
 msgid "An alien was revitalised.\n"
 msgstr "Un alienígena ha muerto!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:81
 #, fuzzy
 msgid "A soldier was revitalised.\n"
 msgstr "Un soldado ha sido asesinado!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:84
 #, fuzzy, c-format
 msgid "A member of team %i was revitalised.\n"
 msgstr "Un miembro del equipo %i ha muerto!\n"
 
-#: client/battlescape/events/event/player/e_event_doendround.c:57
 msgid "Your round started!\n"
 msgstr "Tu turno ha comenzado!\n"
 
-#: client/campaign/cp_aircraft.c:450
 msgid "ON RED ALERT"
 msgstr "EN ALERTA ROJA"
 
-#: client/campaign/cp_aircraft.c:454
 msgid "Nothing - should not be displayed"
 msgstr "Nada - no se mostrará"
 
-#: client/campaign/cp_aircraft.c:456
 #, fuzzy
 msgid "at home base"
 msgstr "En la base"
 
-#: client/campaign/cp_aircraft.c:458
 #, fuzzy
 msgid "refuelling"
 msgstr "Repostar"
 
-#: client/campaign/cp_aircraft.c:460
 #, fuzzy
 msgid "idle"
 msgstr "parado"
 
-#: client/campaign/cp_aircraft.c:462
 #, fuzzy
 msgid "in transit"
 msgstr "De camino"
 
-#: client/campaign/cp_aircraft.c:464
 #, fuzzy
 msgid "enroute to mission"
 msgstr "Misión Automática"
 
-#: client/campaign/cp_aircraft.c:466
 #, fuzzy
 msgid "pursuing a UFO"
 msgstr "Pursuing a UFO"
 
-#: client/campaign/cp_aircraft.c:468
 #, fuzzy
 msgid "ready to drop soldiers"
 msgstr "Renombra tu base"
 
-#: client/campaign/cp_aircraft.c:470
 #, fuzzy
 msgid "intercepting a UFO"
 msgstr "On interception"
 
-#: client/campaign/cp_aircraft.c:472
 #, fuzzy
 msgid "enroute to new home base"
 msgstr "Generar nuevo equipo"
 
-#: client/campaign/cp_aircraft.c:474
 #, fuzzy
 msgid "returning to base"
 msgstr "Crear base"
 
-#: client/campaign/cp_aircraft.c:565
 #, fuzzy
 msgid "Interceptor"
 msgstr "Interceptación"
 
-#: client/campaign/cp_aircraft.c:567
 #, fuzzy
 msgid "Transporter"
 msgstr "Misión de transporte"
 
-#: client/campaign/cp_aircraft.c:569 client/campaign/cp_ufo.c:158
-#: client/campaign/cp_ufo.c:159
 msgid "UFO"
 msgstr "OVNI"
 
-#: client/campaign/cp_aircraft.c:837
 #, fuzzy, c-format
 msgid "A new %s is ready in %s"
 msgstr "Already %i in base"
 
-#: client/campaign/cp_aircraft.c:838 client/campaign/cp_aircraft.c:1224
-#: client/campaign/cp_aircraft.c:1240 client/campaign/cp_aircraft.c:1284
-#: client/campaign/cp_aircraft.c:1341 client/campaign/cp_aircraft.c:1364
-#: client/campaign/cp_aircraft.c:2124
-#: client/campaign/cp_aircraft_callbacks.c:95
-#: client/campaign/cp_aircraft_callbacks.c:103
-#: client/campaign/cp_aircraft_callbacks.c:111
-#: client/campaign/cp_airfight.c:334 client/campaign/cp_airfight.c:354
-#: client/campaign/cp_aliencont.c:182 client/campaign/cp_aliencont.c:212
-#: client/campaign/cp_aliencont.c:231 client/campaign/cp_aliencont.c:241
-#: client/campaign/cp_base.c:1167 client/campaign/cp_base.c:1189
-#: client/campaign/cp_base.c:1754 client/campaign/cp_base.c:1818
-#: client/campaign/cp_base.c:2907 client/campaign/cp_base.c:2912
-#: client/campaign/cp_base.c:3650 client/campaign/cp_base_callbacks.c:68
-#: client/campaign/cp_base_callbacks.c:197
-#: client/campaign/cp_base_callbacks.c:239
-#: client/campaign/cp_base_callbacks.c:572
-#: client/campaign/cp_base_callbacks.c:578
-#: client/campaign/cp_base_callbacks.c:600
-#: client/campaign/cp_base_callbacks.c:610
-#: client/campaign/cp_base_callbacks.c:622
-#: client/campaign/cp_base_callbacks.c:629
-#: client/campaign/cp_base_callbacks.c:637
-#: client/campaign/cp_base_callbacks.c:642
-#: client/campaign/cp_base_callbacks.c:647 client/campaign/cp_campaign.c:1008
-#: client/campaign/cp_installation_callbacks.c:149
-#: client/campaign/cp_mapfightequip.c:351
-#: client/campaign/cp_mapfightequip.c:372
-#: client/campaign/cp_mapfightequip.c:378
-#: client/campaign/cp_mapfightequip.c:390
-#: client/campaign/cp_market_callbacks.c:633
-#: client/campaign/cp_market_callbacks.c:638 client/campaign/cp_missions.c:735
-#: client/campaign/cp_missions.c:1090 client/campaign/cp_nation.c:889
-#: client/campaign/cp_nation.c:903 client/campaign/cp_nation.c:916
-#: client/campaign/cp_nation.c:925 client/campaign/cp_nation.c:931
-#: client/campaign/cp_nation.c:939 client/campaign/cp_popup.c:483
-#: client/campaign/cp_produce.c:491 client/campaign/cp_produce.c:500
-#: client/campaign/cp_produce.c:511 client/campaign/cp_produce.c:520
-#: client/campaign/cp_produce.c:531
-#: client/campaign/cp_research_callbacks.c:563
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:587
-#: client/campaign/cp_research_callbacks.c:626
-#: client/campaign/cp_research_callbacks.c:656
-#: client/campaign/cp_research_callbacks.c:815
-#: client/campaign/cp_research_callbacks.c:818 client/campaign/cp_ufo.c:428
-#: client/campaign/cp_ufo.c:844 client/campaign/cp_ufo.c:849
-#: client/campaign/cp_ufo.c:855
-#: client/campaign/missions/cp_mission_baseattack.c:122
-#: client/cl_game_campaign.c:69 client/cl_game_campaign.c:88
-#: client/cl_game_campaign.c:91 client/cl_main.c:404
-#: client/multiplayer/mp_serverlist.c:469
 #, fuzzy
 msgid "Notice"
 msgstr "Notice"
 
-#: client/campaign/cp_aircraft.c:902
 #, fuzzy
 msgid "No operational hangars at that base."
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_aircraft.c:906
 #, fuzzy
 msgid "No free hangars at that base."
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_aircraft.c:909
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Insuficiente espacio en los barracones de la base."
 
-#: client/campaign/cp_aircraft.c:912
 msgid "Insufficient storage space at that base."
 msgstr "Insuficiente espacio en los Almacenes de la base."
 
-#: client/campaign/cp_aircraft.c:916
 msgid "That base is beyond this aircraft's range."
 msgstr "Esa base esta fuera del alcance de la aeronave."
 
-#: client/campaign/cp_aircraft.c:1223
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "La nave %s, no se pudo repostar por completo en %s. No hay suficiente antimateria."
 
-#: client/campaign/cp_aircraft.c:1239
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Tu nave tiene poco combustible y regresa a la base"
 
-#: client/campaign/cp_aircraft.c:1284
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Tu nave tiene poco combustible y regresa a la base"
 
-#: client/campaign/cp_aircraft.c:1341
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Asigna uno o mas soldados a esta aeronave primero."
 
-#: client/campaign/cp_aircraft.c:1364
 msgid "Insufficient fuel."
 msgstr "Combustible insuficiente."
 
-#: client/campaign/cp_aircraft.c:2124
 #, fuzzy, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Tu nave tiene poco combustible y regresa a la base"
 
-#: client/campaign/cp_aircraft_callbacks.c:95
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
@@ -12940,7 +12739,6 @@ msgstr ""
 "\n"
 "Las aeronaves no pueden despegar.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:103
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
@@ -12950,126 +12748,94 @@ msgstr ""
 "\n"
 "La aeronave no puede despegar.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:111
 #, fuzzy
 msgid "Aircraft started"
 msgstr "Aircraft started"
 
-#: client/campaign/cp_aircraft_callbacks.c:215 client/campaign/cp_map.c:1678
-#: client/campaign/cp_map.c:1685
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Velocidad:\t%.0f\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:217 client/campaign/cp_map.c:1679
-#: client/campaign/cp_map.c:1686
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Combustible:\t%i/%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:219
-#: client/campaign/cp_ufopedia.c:345
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Alcance operativo:\t%i km\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:220
 #, fuzzy, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "Arma:\t%s\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:221
 #, fuzzy, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "Max. munición:\t%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:222
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "Electronicas:\t%i en %i"
 
-#: client/campaign/cp_airfight.c:334
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "Un OVNI esta disparando a %s"
 
-#: client/campaign/cp_airfight.c:354
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "Nuestra aeronave no tiene mas municion - Volviendo a la base asignadal ahora."
 
-#: client/campaign/cp_airfight.c:434 client/campaign/cp_airfight.c:461
 msgid "Interception"
 msgstr "Interceptación"
 
-#: client/campaign/cp_airfight.c:434
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Interceptacion del OVNI exitosa -- El OVNI se ha perdido en el mar."
 
-#: client/campaign/cp_airfight.c:461 client/cl_game_campaign.c:91
 msgid "You've lost the battle"
 msgstr "Has perdido la batalla"
 
-#: client/campaign/cp_aliencont.c:182
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "No puedes procesar alienigenas todavia. No hay un centro de Copntencion Alienigena lsito en esta base."
 
-#: client/campaign/cp_aliencont.c:212
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "No puedes retener alienigenas vivos. Los alienigenas han sido ejecutados."
 
-#: client/campaign/cp_aliencont.c:231
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr "No tienes suficiente espacio en el centro de Contencion Alienigena. Algunos alienigenas han sido ejecutados."
 
-#: client/campaign/cp_aliencont.c:241
 msgid "You've captured new aliens."
 msgstr "Has capturado nuevos alienigenas."
 
-#: client/campaign/cp_aliencont_callbacks.c:204
 #, fuzzy
 msgid "Already researched"
 msgstr "Texto de pre-investigación"
 
-#: client/campaign/cp_aliencont_callbacks.c:206
 msgid "Needs autopsy!"
 msgstr "¡Necesita una autopsia!"
 
-#: client/campaign/cp_aliencont_callbacks.c:229
 msgid "Free slot"
 msgstr "Bloque libre"
 
-#: client/campaign/cp_aliencont_callbacks.c:230
-#: client/campaign/cp_basedefence_callbacks.c:217
-#: client/campaign/cp_basedefence_callbacks.c:595
-#: client/campaign/cp_ufopedia.c:229 client/input/cl_joystick.c:278
 msgid "None"
 msgstr "Nada"
 
-#: client/campaign/cp_base.c:1167
 #, fuzzy
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "La base está siendo atacada"
 
-#: client/campaign/cp_base.c:1177
 #, fuzzy
 msgid "Destroy Entrance"
 msgstr "Almacén"
 
-#: client/campaign/cp_base.c:1177
 #, fuzzy
 msgid "You can't destroy the entrance of the base!"
 msgstr "No puedes poner en la cola más objetos!"
 
-#: client/campaign/cp_base.c:1189
 msgid "You can't destroy this building! It is the only connection to other buildings!"
 msgstr ""
 
-#: client/campaign/cp_base.c:1200
 #, fuzzy
 msgid "Destroy Hangar"
 msgstr "Reintentar"
 
-#: client/campaign/cp_base.c:1200
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -13077,32 +12843,24 @@ msgstr ""
 "Si destruyes este hangar, se destruira la aeronave de dentro.\n"
 "¿Estas seguro de que quieres destruir esta construcion?"
 
-#: client/campaign/cp_base.c:1201
 #, fuzzy
 msgid "Go to hangar"
 msgstr "Vuelve al hangar"
 
-#: client/campaign/cp_base.c:1201
 msgid "Go to hangar without destroying building"
 msgstr "Ir al hangar sin destruir la construccion"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
 #, fuzzy
 msgid "Destroy the building"
 msgstr "Comenzar con edificios:"
 
-#: client/campaign/cp_base.c:1204 client/campaign/cp_base.c:1214
-#: client/campaign/cp_base.c:1224
 msgid "Go to transfer menu without destroying the building"
 msgstr "Ir al menu de transferencia sin destruir la construccion"
 
-#: client/campaign/cp_base.c:1210
 #, fuzzy
 msgid "Destroy Quarter"
 msgstr "Reintentar"
 
-#: client/campaign/cp_base.c:1210
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -13110,20 +12868,16 @@ msgstr ""
 "Si destruyes estos barracones, todos los empleados de dentro seran despedidos.\n"
 "¿Estas seguro de que quieres destruir esta construccion?"
 
-#: client/campaign/cp_base.c:1211
 msgid "Dismiss"
 msgstr "Despedir"
 
-#: client/campaign/cp_base.c:1211
 msgid "Go to hiring menu without destroying building"
 msgstr "Ir al menu de contratar sin destruir la construccion"
 
-#: client/campaign/cp_base.c:1220
 #, fuzzy
 msgid "Destroy Storage"
 msgstr "Almacén"
 
-#: client/campaign/cp_base.c:1220
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -13131,210 +12885,158 @@ msgstr ""
 "Si destruyes este almacen, todos los objetos que hay dentro seran destruidos.\n"
 "¿seguro de que quieres destruir esta construccion?"
 
-#: client/campaign/cp_base.c:1221
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Ir al menu de comprar/vender sin destruir la construccion"
 
-#: client/campaign/cp_base.c:1221
 #, fuzzy
 msgid "Go to storage"
 msgstr "Opciones"
 
-#: client/campaign/cp_base.c:1233
 msgid "Are you sure you want to destroy this building?"
 msgstr "¿Estas seguro de que quieres destruir esta construccion?"
 
-#: client/campaign/cp_base.c:1233
 msgid "Destroy building"
 msgstr "Destruir construccion"
 
-#: client/campaign/cp_base.c:1251
 msgid "Not set"
 msgstr "No establecido"
 
-#: client/campaign/cp_base.c:1257
 #, fuzzy, c-format
 msgid "Already %i in base"
 msgstr "Already %i in base"
 
-#: client/campaign/cp_base.c:1263
 msgid "Construction finished"
 msgstr "Construcción finalizada"
 
-#: client/campaign/cp_base.c:1267
 msgid "Working 100%"
 msgstr "Trabajando 100%"
 
-#: client/campaign/cp_base.c:1271
 msgid "Not operational, depends on"
 msgstr "No esta operativa, depende de"
 
-#: client/campaign/cp_base.c:1275
 msgid "Down"
 msgstr "Abajo"
 
-#: client/campaign/cp_base.c:1754
 msgid "Not enough credits to build this\n"
 msgstr "No tienes suficientes creditos para construir esto\n"
 
-#: client/campaign/cp_base.c:1818
 #, fuzzy
 msgid "You must build next to existing buildings."
 msgstr "Ir al menu de comprar/vender sin destruir la construccion"
 
-#: client/campaign/cp_base.c:1867
 #, fuzzy, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Costes:\t%1.0f c\n"
 
-#: client/campaign/cp_base.c:1870
 #, fuzzy, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i Dia(s) para construcción\n"
 msgstr[1] "%i Dia(s) para construcción\n"
 
-#: client/campaign/cp_base.c:1873 client/campaign/cp_ufopedia.c:232
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Mantenimiento:\t%i c\n"
 
-#: client/campaign/cp_base.c:1876 client/campaign/cp_ufopedia.c:229
 #, fuzzy, c-format
 msgid "Needs:\t%s\n"
 msgstr "Depende:\t%s\n"
 
-#: client/campaign/cp_base.c:2636
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "No hay aeronaves en esta base - Primero deberas comprar o transferir una arenove\n"
 
-#: client/campaign/cp_base.c:2636 client/campaign/cp_base.c:2638
-#: client/campaign/cp_market_callbacks.c:615
-#: client/campaign/cp_market_callbacks.c:620
-#: client/campaign/cp_market_callbacks.c:705
-#: client/campaign/cp_market_callbacks.c:707 client/campaign/cp_save.c:392
-#: client/multiplayer/mp_team.c:254 client/multiplayer/mp_team.c:275
 msgid "Note"
 msgstr "Nota"
 
-#: client/campaign/cp_base.c:2638
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "No hay una aeronave en esta base - Primero debes de comprar una aeronave\n"
 
-#: client/campaign/cp_base.c:2648
 #, fuzzy
 msgid "Antimatter (current/max):"
 msgstr "<TODO>"
 
-#: client/campaign/cp_base.c:2842
 #, fuzzy, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Construccion de %s finalizada en base %s."
 
-#: client/campaign/cp_base.c:2843
 msgid "Building finished"
 msgstr "Edificio finalizado"
 
-#: client/campaign/cp_base.c:2905
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Por vender %s has recogido %i de creditos."
 
-#: client/campaign/cp_base.c:2906
 #, fuzzy, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "Selecciona objeto"
 msgstr[1] "Selecciona objeto"
 
-#: client/campaign/cp_base.c:2910
 #, fuzzy, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "No tienes suficientes creditos para establecer una nueva base"
 
-#: client/campaign/cp_base.c:2911
 #, fuzzy, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "No tiene asignado blindaje"
 msgstr[1] "No tiene asignado blindaje"
 
-#: client/campaign/cp_base.c:3648
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "La base %s, no tiene un Almacen de Antimateria. Se eliminaran %i unidades de antimateria."
 
-#: client/campaign/cp_base_callbacks.c:68
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
 msgstr "La base %s ha sido destruida por una fisura de antimateria del almacen."
 
-#: client/campaign/cp_base_callbacks.c:188
 #, fuzzy, c-format
 msgid "Base #%i"
 msgstr "Base #2"
 
-#: client/campaign/cp_base_callbacks.c:197
 msgid "You've reached the base limit."
 msgstr "Has alcanzado el número límite de bases."
 
-#: client/campaign/cp_base_callbacks.c:226
 #, fuzzy, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "Se ha construido una nueva base: %s."
 
-#: client/campaign/cp_base_callbacks.c:228
 #, fuzzy, c-format
 msgid "A new base has been built: %s"
 msgstr "Se ha construido una nueva base: %s."
 
-#: client/campaign/cp_base_callbacks.c:229
 msgid "Base built"
 msgstr "Base construida"
 
-#: client/campaign/cp_base_callbacks.c:239
 msgid "Not enough credits to set up a new base."
 msgstr "No tienes suficientes creditos para establecer una nueva base"
 
-#: client/campaign/cp_base_callbacks.c:294
 #, fuzzy
 msgid "Buy or produce at least one aircraft first."
 msgstr "Comprar una nueva nave"
 
-#: client/campaign/cp_base_callbacks.c:296
 #, fuzzy
 msgid "No Hangar functional in base."
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_base_callbacks.c:302
-#: client/campaign/cp_base_callbacks.c:312
-#: client/campaign/cp_base_callbacks.c:317
-#: client/campaign/cp_base_callbacks.c:322
-#: client/campaign/cp_base_callbacks.c:327
-#: client/campaign/cp_base_callbacks.c:332
 #, fuzzy, c-format
 msgid "No %s functional in base."
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_base_callbacks.c:305
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:307
 #, fuzzy
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "Transferir equipo o personal"
 
-#: client/campaign/cp_base_callbacks.c:572
 #, fuzzy
 msgid "Base is under attack, you can't access this building !"
 msgstr "La base está siendo atacada"
 
-#: client/campaign/cp_base_callbacks.c:578
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Necesitas almeno un hangar (y sus dependencias) para poder usar aeronaves."
 
-#: client/campaign/cp_base_callbacks.c:598
 #, fuzzy, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -13345,154 +13047,119 @@ msgid_plural ""
 msgstr[0] "Construccion de %s finalizada en base %s."
 msgstr[1] "Construccion de %s finalizada en base %s."
 
-#: client/campaign/cp_base_callbacks.c:609
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Necesitas la constrtuccion de %s para que la construccion %s este operativa."
 
-#: client/campaign/cp_base_callbacks.c:620
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "La construccion de %s no ha terminado todavia y necesita usar la construccion %s para funcionar."
 
-#: client/campaign/cp_base_callbacks.c:627
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Asegurate de que las dependencias de la construccion de %s. (%s esta es opcional), asi la construccion %s se puede usar."
 
-#: client/campaign/cp_base_callbacks.c:635
-#: client/campaign/cp_base_callbacks.c:640
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Necesitas reclutar %s para usar la construccion de %s."
 
-#: client/campaign/cp_base_callbacks.c:646
 #, fuzzy, c-format
 msgid "Build a %s first."
 msgstr "Construye un laboratorio primero"
 
-#: client/campaign/cp_base_callbacks.c:675
 #, fuzzy
 msgid "^BAircraft\n"
 msgstr "Naves"
 
-#: client/campaign/cp_base_callbacks.c:682
 msgid "^BEmployees\n"
 msgstr "^BEmpleados\n"
 
-#: client/campaign/cp_base_callbacks.c:690
 #, fuzzy
 msgid "^BAliens\n"
 msgstr "Aliens"
 
-#: client/campaign/cp_base_callbacks.c:702
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BConstrucciones\t\t\t\t\t\tCapacidad\t\t\t\tCatidad\n"
 
-#: client/campaign/cp_base_callbacks.c:726
 #, fuzzy
 msgid "day"
 msgid_plural "days"
 msgstr[0] "May"
 msgstr[1] "May"
 
-#: client/campaign/cp_base_callbacks.c:736
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^BProduccion\t\t\t\t\t\tCantidad\t\t\t\tPorcentaje\n"
 
-#: client/campaign/cp_base_callbacks.c:743
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:763
 #, fuzzy
 msgid "Nothing\n"
 msgstr "Nada\n"
 
-#: client/campaign/cp_base_callbacks.c:752
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^BInvestigacion\t\t\t\t\t\tCientificos\t\t\t\tPorcentaje\n"
 
-#: client/campaign/cp_base_callbacks.c:757
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:821 client/campaign/cp_campaign.c:691
-#: client/campaign/cp_market_callbacks.c:310
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/campaign/cp_basedefence_callbacks.c:147
 #, fuzzy, c-format
 msgid "%i: empty"
 msgstr "Escudo:\t%s\n"
 
-#: client/campaign/cp_basedefence_callbacks.c:153
 #, fuzzy
 msgid "Working"
 msgstr "Trabajando 100%"
 
-#: client/campaign/cp_basedefence_callbacks.c:155
 #, fuzzy
 msgid "Installing"
 msgstr "Naciones"
 
-#: client/campaign/cp_basedefence_callbacks.c:157
 #, fuzzy
 msgid "Replacing"
 msgstr "Resolución:"
 
-#: client/campaign/cp_basedefence_callbacks.c:159
 #, fuzzy
 msgid "Removing"
 msgstr "Chaingun"
 
-#: client/campaign/cp_basedefence_callbacks.c:281
 #, fuzzy
 msgid "No defence of this type in this installation"
 msgstr "Nombre de esta base"
 
-#: client/campaign/cp_basedefence_callbacks.c:288
-#: client/campaign/cp_basedefence_callbacks.c:295
 #, fuzzy
 msgid "No defence of this type in this base"
 msgstr "Nombre de esta base"
 
-#: client/campaign/cp_campaign.c:327
 msgid "You've gone too far into debt."
 msgstr "Has ido muy lejos en la deuda."
 
-#: client/campaign/cp_campaign.c:335
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "¡Has perdido todas tus bases y no tienes suficiente dinero para construir bases nuevas!"
 
-#: client/campaign/cp_campaign.c:341
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Has fallado en tu tarea de proteger la Tierra. Nuestra casa y nuestra gente han sucumbido ante la infeccion alienigena. Solo un puñado de gente en la tierra siguen siendo humanos, y los que quedan no tiene ya la oprtunidad de tirar de la cuerda. Ya no estas al mando; PHALANX ya no puede operar como una unidad. Nada queda ya entre los alienigenas y su victoria total."
 
-#: client/campaign/cp_campaign.c:360
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Bajo tu mando, las operaciones de PHALANX han sido consideradas fallidas para proteger a las naciones. La ONU, muy insatifecha con tu rendimiento, ha decidido quitarte del mando y despues disolvio el proyecto PHALANX como fuerza efectiva. No se hacen nuevos intentos de colavoracion global. Cada nacion de la tierra intentara de aguantar por si mismos contra los alienigenas, y finalmente caeran una por una."
 
-#: client/campaign/cp_campaign.c:1008
 msgid "Collected dead alien bodies"
 msgstr "Cadaveres alienigenas recogidos"
 
-#: client/campaign/cp_campaign.c:1088
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens muertos\t%i\n"
 
-#: client/campaign/cp_campaign.c:1089
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Aliens capturados\t%i\n"
 
-#: client/campaign/cp_campaign.c:1090
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -13501,22 +13168,18 @@ msgstr ""
 "Supervivientes Alien\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1092
 #, fuzzy, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Soldados de Phalanx asesinados por los Aliens\t%i\n"
 
-#: client/campaign/cp_campaign.c:1093
 #, fuzzy, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Soldados de Phalanx desaparecidos en combate\t%i\n"
 
-#: client/campaign/cp_campaign.c:1094
 #, fuzzy, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Perdidas por fuego amigo\t%i\n"
 
-#: client/campaign/cp_campaign.c:1095
 #, fuzzy, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -13525,17 +13188,14 @@ msgstr ""
 "Supervivientes Alien\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1097
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civiles asesinados por los Aliens\t%i\n"
 
-#: client/campaign/cp_campaign.c:1098
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civiles muertos por fuego aliado\t%i\n"
 
-#: client/campaign/cp_campaign.c:1099
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13544,36 +13204,29 @@ msgstr ""
 "Civiles salvados\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1100
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Objetos recogidos (tipos/todos)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1171
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s ha sido ascendido a %s.\n"
 
-#: client/campaign/cp_campaign.c:1173
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s ha sido galardonado con el rango póstumo de %s\\por su inspiradora forma de enfrentarse a las adversidades.\n"
 
-#: client/campaign/cp_campaign.c:1174
 msgid "Soldier promoted"
 msgstr "Soldado ascendido"
 
-#: client/campaign/cp_employee.c:204
 msgid "Soldier"
 msgstr "Soldado"
 
-#: client/campaign/cp_employee.c:407
 msgid "Not enough quarters"
 msgstr "No hay suficientes barracones"
 
-#: client/campaign/cp_employee.c:407
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -13581,197 +13234,153 @@ msgstr ""
 "No tienes suficientes barracones para tus empleados.\n"
 "Construye mas cuarteles."
 
-#: client/campaign/cp_employee_callbacks.c:282
-#: client/campaign/cp_employee_callbacks.c:336
 #, fuzzy
 msgid "Could not fire employee"
 msgstr "Contratar"
 
-#: client/campaign/cp_employee_callbacks.c:343
 #, fuzzy
 msgid "Could not hire employee"
 msgstr "Contratar"
 
-#: client/campaign/cp_event.c:355 client/campaign/cp_save.c:291
-#: client/campaign/cp_save.c:310 client/campaign/cp_time.c:69
-#: client/campaign/cp_ufopedia.c:499 client/campaign/cp_ufopedia.c:504
 #, fuzzy, c-format
 msgid "%i %s %02i"
 msgstr "%i de %i"
 
-#: client/campaign/cp_event.c:361
 #, fuzzy, c-format
 msgid "You've got a new mail: %s"
 msgstr "Tienes una nueva nave (una %s) en la base %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:144 client/campaign/cp_map.c:1639
-#: client/campaign/cp_map.c:1658
 #, fuzzy
 msgid "Unknown"
 msgstr "Habilidad con arma desconocida"
 
-#: client/campaign/cp_fightequip_callbacks.c:357
 #, fuzzy
 msgid "No item assigned.\n"
 msgstr "No tiene asignado blindaje"
 
-#: client/campaign/cp_fightequip_callbacks.c:358
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Este bloque es para %s u objetos mas pequeños."
 
-#: client/campaign/cp_fightequip_callbacks.c:366
 msgid "This item is functional.\n"
 msgstr "Este objeto esta operativo.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:368
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Este objeto se instalara en %i horas.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:371
 #, fuzzy, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "No tiene asignado blindaje"
 
-#: client/campaign/cp_fightequip_callbacks.c:373
 #, fuzzy, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "No tiene asignado blindaje"
 
-#: client/campaign/cp_fightequip_callbacks.c:376
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Este objeto se quitara en %i horas.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:386
 msgid "No ammo assigned to this weapon."
 msgstr "No hay municion asignada a esta arma."
 
-#: client/campaign/cp_fightequip_callbacks.c:394
 #, fuzzy
 msgid "No ammo needed"
 msgstr "No hay seleccionado ningun objeto"
 
-#: client/campaign/cp_fightequip_callbacks.c:521
 #, fuzzy
 msgid "No slot selected."
 msgstr "No hay seleccionado ningun objeto"
 
-#: client/campaign/cp_fightequip_callbacks.c:524
 #, fuzzy
 msgid "No item selected."
 msgstr "No hay seleccionado ningun objeto"
 
-#: client/campaign/cp_fightequip_callbacks.c:527
 msgid "You can't equip an alien technology."
 msgstr "No puedes equipar tecnologia alienigena desconocida."
 
-#: client/campaign/cp_fightequip_callbacks.c:530
 msgid "Technology requested is not yet completed."
 msgstr "Los requisitos de investigacion no se han cumplido todavia."
 
-#: client/campaign/cp_fightequip_callbacks.c:533
 #, fuzzy
 msgid "This item is too heavy for the selected slot."
 msgstr "Cargar equipo desde ranura"
 
-#: client/campaign/cp_fightequip_callbacks.c:536
 #, fuzzy
 msgid "Equip a weapon first."
 msgstr "Construye un laboratorio primero"
 
-#: client/campaign/cp_fightequip_callbacks.c:539
 msgid "Ammo not usable with current weapon."
 msgstr "No se puede usar esta municion con el arma actual."
 
-#: client/campaign/cp_fightequip_callbacks.c:542
 #, fuzzy
 msgid "Unknown problem."
 msgstr " [no investigable]"
 
-#: client/campaign/cp_fightequip_callbacks.c:545
 msgid "Ok"
 msgstr "Vale"
 
-#: client/campaign/cp_installation.c:177
 #, fuzzy, c-format
 msgid "Installation %s was destroyed."
 msgstr "Naciones"
 
-#: client/campaign/cp_installation.c:178
 #, fuzzy
 msgid "Installation destroyed"
 msgstr "Naciones"
 
-#: client/campaign/cp_installation.c:406
 #, fuzzy, c-format
 msgid "Construction of installation %s finished."
 msgstr "Construcción finalizada"
 
-#: client/campaign/cp_installation.c:407
 #, fuzzy
 msgid "Installation finished"
 msgstr "Naciones"
 
-#: client/campaign/cp_installation.c:518
 #, fuzzy, c-format
 msgid "%d c"
 msgstr "%i c\n"
 
-#: client/campaign/cp_installation.c:528
-#: client/campaign/cp_installation_callbacks.c:90
 #, fuzzy, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "May"
 msgstr[1] "May"
 
-#: client/campaign/cp_installation_callbacks.c:47 client/campaign/cp_map.c:356
 #, fuzzy
 msgid "Installation"
 msgstr "Naciones"
 
-#: client/campaign/cp_installation_callbacks.c:139
 #, fuzzy, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "Se ha construido una nueva base: %s."
 
-#: client/campaign/cp_installation_callbacks.c:141
 #, fuzzy, c-format
 msgid "A new installation has been built: %s"
 msgstr "Se ha construido una nueva base: %s."
 
-#: client/campaign/cp_installation_callbacks.c:142
 #, fuzzy
 msgid "Installation building"
 msgstr "Naciones"
 
-#: client/campaign/cp_installation_callbacks.c:149
 #, fuzzy
 msgid "Not enough credits to set up a new installation."
 msgstr "No tienes suficientes creditos para establecer una nueva base"
 
-#: client/campaign/cp_installation_callbacks.c:215
 #, fuzzy
 msgid "Destroy Installation"
 msgstr "Naciones"
 
-#: client/campaign/cp_installation_callbacks.c:215
 #, fuzzy
 msgid "Do you really want to destroy this installation?"
 msgstr "Nombre de esta base"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Forget it"
 msgstr "Olvidalo"
 
-#: client/campaign/cp_map.c:363
 #, fuzzy
 msgid "UFO Sighting"
 msgstr "Caza OVNI"
 
-#: client/campaign/cp_map.c:1638
 #, fuzzy, c-format
 msgid ""
 "Location: %s\n"
@@ -13782,132 +13391,107 @@ msgstr ""
 "Tipo: %s\n"
 "Objetivo: %s\n"
 
-#: client/campaign/cp_map.c:1655
 #, fuzzy, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_map.c:1675 client/campaign/cp_map.c:1683
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Nombre:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1676 client/campaign/cp_map.c:1684
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Estado:\t%s\n"
 
-#: client/campaign/cp_map.c:1677
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Distancia hasta el objetivo:\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1681 client/campaign/cp_map.c:1691
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "Acción:\t%s\n"
 
-#: client/campaign/cp_map.c:1709
 #, fuzzy, c-format
 msgid "Speed: %i km/h\n"
 msgstr "Velocidad:\t%.0f\n"
 
-#: client/campaign/cp_map.c:1897
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1976
 #, fuzzy
 msgid "Select the desired location of the new base on the map.\n"
 msgstr ""
 "Elige las coordenadas de la nueva\n"
 "base en el mapa.\n"
 
-#: client/campaign/cp_map.c:1979
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr ""
 "Elige las coordenadas de la nueva\n"
 "base en el mapa.\n"
 
-#: client/campaign/cp_map.c:1984
 #, fuzzy
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 "Los alienígenars estan\n"
 "atacando nuestra base.\n"
 
-#: client/campaign/cp_map.c:1989
 msgid "Select ufo or mission on map\n"
 msgstr "Selecciona ovni o misión en el mapa\n"
 
-#: client/campaign/cp_map.c:1994
 msgid "UFO in radar range\n"
 msgstr "OVNI en el radar\n"
 
-#: client/campaign/cp_mapfightequip.c:342
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr "%s se instalo correctamente en la aronave %s en la base %s."
 
-#: client/campaign/cp_mapfightequip.c:345
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr "%s se instalo correctamente en la instalacion %s."
 
-#: client/campaign/cp_mapfightequip.c:348
 #, fuzzy, c-format
 msgid "%s was successfully installed at %s."
 msgstr "No tiene asignado blindaje"
 
-#: client/campaign/cp_mapfightequip.c:370
 #, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s se quito correctamente de la aeronave %s en la base %s."
 
-#: client/campaign/cp_mapfightequip.c:376
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "%s se quito correctamente, empezamos con la instalacion de %s en la aeronave %s en la base %s."
 
-#: client/campaign/cp_mapfightequip.c:384
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "%s se quito correctamente de la instalacion %s."
 
-#: client/campaign/cp_mapfightequip.c:387
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s se quito correctamente de %s."
 
-#: client/campaign/cp_mapfightequip.c:1341
 msgid "Light weight"
 msgstr "Peso ligero"
 
-#: client/campaign/cp_mapfightequip.c:1344
 #, fuzzy
 msgid "Medium weight"
 msgstr "Médico"
 
-#: client/campaign/cp_mapfightequip.c:1347
 #, fuzzy
 msgid "Heavy weight"
 msgstr "Heavy Laser"
 
-#: client/campaign/cp_mapfightequip.c:1350
 #, fuzzy
 msgid "Unknown weight"
 msgstr "Habilidad con arma desconocida"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 #, fuzzy
 msgid "Not enough storage space"
 msgstr "Parar investigación"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -13917,7 +13501,6 @@ msgstr ""
 "No hay suficiente espacio en los almacenes.\n"
 "Construye mas instalaciones de almacen."
 
-#: client/campaign/cp_market_callbacks.c:615
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -13925,12 +13508,10 @@ msgstr ""
 "No hay fuentes de energia en esta base.\n"
 "Los hangares no estan operativos."
 
-#: client/campaign/cp_market_callbacks.c:620
 #, fuzzy
 msgid "Build a hangar first."
 msgstr "Construye un laboratorio primero"
 
-#: client/campaign/cp_market_callbacks.c:633
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -13938,7 +13519,6 @@ msgstr ""
 "No puedes compra esta aeronave.\n"
 "No tienes suficiente espacio en los hangares.\n"
 
-#: client/campaign/cp_market_callbacks.c:638
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -13946,124 +13526,98 @@ msgstr ""
 "No puedes comprar esta aeronave.\n"
 "No tienes suficientes creditos.\n"
 
-#: client/campaign/cp_market_callbacks.c:705
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "No puedes vender una aeronave que tenga todavia un equipo asignado"
 
-#: client/campaign/cp_market_callbacks.c:707
 #, fuzzy
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_messageoptions.c:36
 #, fuzzy
 msgid "installation_installed"
 msgstr "Naciones"
 
-#: client/campaign/cp_messageoptions.c:37
 #, fuzzy
 msgid "installation_removed"
 msgstr "Maximos jugadores por equipo:"
 
-#: client/campaign/cp_messageoptions.c:38
 #, fuzzy
 msgid "installation_replaced"
 msgstr "Maximos jugadores por equipo:"
 
-#: client/campaign/cp_messageoptions.c:39
 #, fuzzy
 msgid "aircraft_refueled"
 msgstr "No hay seleccionado ningun objeto"
 
-#: client/campaign/cp_messageoptions.c:40
 msgid "aircraft_cannotrefuel"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:41
 #, fuzzy
 msgid "installation_build_started"
 msgstr "Maximos jugadores por equipo:"
 
-#: client/campaign/cp_messageoptions.c:42
 #, fuzzy
 msgid "installation_build_finished"
 msgstr "Construcción finalizada"
 
-#: client/campaign/cp_messageoptions.c:43
 #, fuzzy
 msgid "installation_destroyed"
 msgstr "Naciones"
 
-#: client/campaign/cp_messageoptions.c:44
 #, fuzzy
 msgid "research_new_proposed"
 msgstr "Parar investigación"
 
-#: client/campaign/cp_messageoptions.c:45
 #, fuzzy
 msgid "research_halted"
 msgstr "Investigacion"
 
-#: client/campaign/cp_messageoptions.c:46
 msgid "research_completed"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:47
 #, fuzzy
 msgid "production_started"
 msgstr "Producción comenzada"
 
-#: client/campaign/cp_messageoptions.c:48
 #, fuzzy
 msgid "production_finished"
 msgstr "Construcción finalizada"
 
-#: client/campaign/cp_messageoptions.c:49
 #, fuzzy
 msgid "production_failed"
 msgstr "Construcción finalizada"
 
-#: client/campaign/cp_messageoptions.c:50
 #, fuzzy
 msgid "production_queue_empty"
 msgstr "Cola de producción vacía"
 
-#: client/campaign/cp_messageoptions.c:51
 msgid "nation_happiness_changed"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:52
 msgid "nation_unhappy"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:53
 #, fuzzy
 msgid "nation_pleased"
 msgstr "Maximos jugadores por equipo:"
 
-#: client/campaign/cp_messageoptions.c:54
 #, fuzzy
 msgid "transfer_started"
 msgstr "Aircraft started"
 
-#: client/campaign/cp_messageoptions.c:55
 msgid "transfer_completed_success"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:56
 #, fuzzy
 msgid "transfer_lost"
 msgstr "Transferir"
 
-#: client/campaign/cp_messageoptions.c:57
 msgid "transfer_aliens_defered"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:58
 msgid "transfer_uforecovery_finished"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:59
 #, fuzzy
 msgid "ufo_spotted"
 msgstr ""
@@ -14117,20 +13671,16 @@ msgstr ""
 "\n"
 "Armamento: ninguno"
 
-#: client/campaign/cp_messageoptions.c:60
 msgid "ufo_signal_lost"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:61
 msgid "ufo_attacking"
 msgstr ""
 
-#: client/campaign/cp_messages.c:47
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
 
-#: client/campaign/cp_mission_triggers.c:124
 msgid ""
 "Congratulations! You have reached the end of the UFO:AI campaign.\n"
 "However, this is not the end of the road. The game remains in development.\n"
@@ -14156,242 +13706,191 @@ msgstr ""
 "\n"
 " - El equipo de desarrollo de UFO: AI."
 
-#: client/campaign/cp_missions.c:448
 #, fuzzy
 msgid "Crashed aircraft"
 msgstr "Selecciona nave"
 
-#: client/campaign/cp_missions.c:453
 msgid "Landed UFO"
 msgstr "OVNI aterrizado"
 
-#: client/campaign/cp_missions.c:455
 #, fuzzy
 msgid "Terror mission"
 msgstr "Misión de transporte"
 
-#: client/campaign/cp_missions.c:457
 msgid "Base attack"
 msgstr "Ataque a base"
 
-#: client/campaign/cp_missions.c:461
 #, fuzzy
 msgid "Harvesting mission"
 msgstr "Moviendose hacia una mision"
 
-#: client/campaign/cp_missions.c:706
 #, c-format
 msgid "Go on a rescue mission at %s. You might some of your soldiers alive."
 msgstr ""
 
-#: client/campaign/cp_missions.c:708
 #, fuzzy, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Informe de actividad alienígena: '%s'"
 
-#: client/campaign/cp_missions.c:1088
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "La defensa de la base %s ha sido un exito!"
 
-#: client/campaign/cp_missions.c:1251
-#: client/campaign/missions/cp_mission_harvest.c:170
-#: client/campaign/missions/cp_mission_recon.c:161
 #, fuzzy
 msgid "No nation"
 msgstr "Naciones"
 
-#: client/campaign/cp_missions.c:1334
 #, fuzzy
 msgid "Crashed"
 msgstr "OVNI estrellado"
 
-#: client/campaign/cp_nation.c:142
 #, fuzzy
 msgid "Giving up"
 msgstr "Giving up"
 
-#: client/campaign/cp_nation.c:144
 msgid "Furious"
 msgstr "Furioso"
 
-#: client/campaign/cp_nation.c:146
 msgid "Angry"
 msgstr "Enfadado"
 
-#: client/campaign/cp_nation.c:148
 msgid "Mad"
 msgstr "Loco"
 
-#: client/campaign/cp_nation.c:150
 #, fuzzy
 msgid "Upset"
 msgstr "Upset"
 
-#: client/campaign/cp_nation.c:152
 msgid "Tolerant"
 msgstr "Tolerante"
 
-#: client/campaign/cp_nation.c:154
 msgid "Neutral"
 msgstr "Neutral"
 
-#: client/campaign/cp_nation.c:156
 msgid "Content"
 msgstr "Contenido"
 
-#: client/campaign/cp_nation.c:158
 msgid "Pleased"
 msgstr "Contento"
 
-#: client/campaign/cp_nation.c:160
 msgid "Happy"
 msgstr "Feliz"
 
-#: client/campaign/cp_nation.c:162
 msgid "Exuberant"
 msgstr "Exuberante"
 
-#: client/campaign/cp_nation.c:189
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr "La Nacion %s ha cambiado su felicidad de %s a %s"
 
-#: client/campaign/cp_nation.c:193
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr "La Nacion %s ha cambiado su felicidad a %s"
 
-#: client/campaign/cp_nation.c:197
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr "La felicidad de la nacion %s es de %s y es menos del minimo de felicidad permitida en la campaña"
 
-#: client/campaign/cp_nation.c:203
 msgid "Nation changed happiness"
 msgstr "La nacion ha cambiado su felicidad"
 
-#: client/campaign/cp_nation.c:883
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Ganados %i %s, %i %s, %i %s y %i %s de la nación %s (%s)"
 
-#: client/campaign/cp_nation.c:884
 #, fuzzy
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "Creditos"
 msgstr[1] "Creditos"
 
-#: client/campaign/cp_nation.c:885 client/cl_game_campaign.c:249
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "Científico"
 msgstr[1] "Científico"
 
-#: client/campaign/cp_nation.c:886 client/cl_game_campaign.c:248
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Soldado"
 msgstr[1] "Soldado"
 
-#: client/campaign/cp_nation.c:887 client/cl_game_campaign.c:250
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "Trabajador"
 msgstr[1] "Trabajador"
 
-#: client/campaign/cp_nation.c:902
 #, fuzzy, c-format
 msgid "Paid %i credits to: %s"
 msgstr "Pagados %i creditos a los médicos"
 
-#: client/campaign/cp_nation.c:915
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Pagados %i creditos por nave"
 
-#: client/campaign/cp_nation.c:924
 #, fuzzy, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "Pagados %i creditos por el mantenimiento de la base %s"
 
-#: client/campaign/cp_nation.c:929
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Pagados %i creditos por burocracia."
 
-#: client/campaign/cp_nation.c:937
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Pagas %i creditos por intereses de tu deuda"
 
-#: client/campaign/cp_popup.c:126
 msgid "current homebase of aircraft"
 msgstr "Base actual de esta aeronave"
 
-#: client/campaign/cp_popup.c:132
 #, fuzzy
 msgid "base can hold aircraft"
 msgstr "Vender nave"
 
-#: client/campaign/cp_popup.c:147
 #, fuzzy
 msgid "Base\tStatus"
 msgstr "Estado:"
 
-#: client/campaign/cp_popup.c:147
 #, fuzzy
 msgid "Change homebase of aircraft"
 msgstr "Gestiona tu nave"
 
-#: client/campaign/cp_popup.c:227
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "Vuelve a la base\t%s\n"
 
-#: client/campaign/cp_popup.c:229
 msgid "Stop\n"
 msgstr "Detener\n"
 
-#: client/campaign/cp_popup.c:231
 #, fuzzy
 msgid "Change homebase\n"
 msgstr "En la base"
 
-#: client/campaign/cp_popup.c:243
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "Misión\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:335
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
 msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
-#: client/campaign/cp_popup.c:348
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr "La nave no esta disponible, no tiene piloto asignado, o no tiene equipo tactico asignado a la nave disponible."
 
-#: client/campaign/cp_popup.c:397
 #, fuzzy, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr "Name:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_popup.c:418
 #, fuzzy
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "Descripción de pre-investigación no disponible"
 
-#: client/campaign/cp_popup.c:434
 #, fuzzy
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "Descripción de pre-investigación no disponible"
 
-#: client/campaign/cp_popup.c:483
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -14402,16 +13901,9 @@ msgstr ""
 "de esta aeronave.\n"
 "La aeronave no pude despegar.\n"
 
-#: client/campaign/cp_produce.c:298 client/campaign/cp_produce.c:302
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
-#: client/campaign/cp_transfer_callbacks.c:366
-#: client/campaign/cp_transfer_callbacks.c:369
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Hangars not ready"
 msgstr "No hay hangares listos"
 
-#: client/campaign/cp_produce.c:298
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
@@ -14419,188 +13911,147 @@ msgstr ""
 "No puedes encargar aeronaves.\n"
 "No hay un Centro de Mando en esta base.\n"
 
-#: client/campaign/cp_produce.c:302
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
 msgstr "Celda para Alienígenas"
 
-#: client/campaign/cp_produce.c:409
 #, fuzzy, c-format
 msgid "Production queue for %s is empty"
 msgstr "Cola de producción de la base %s vacía"
 
-#: client/campaign/cp_produce.c:410
 msgid "Production queue empty"
 msgstr "Cola de producción vacía"
 
-#: client/campaign/cp_produce.c:490 client/campaign/cp_produce.c:510
 #, fuzzy, c-format
 msgid "Not enough credits to finish production in %s."
 msgstr "No tienes suficientes creditos para establecer una nueva base"
 
-#: client/campaign/cp_produce.c:499
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Production postponed."
 msgstr "No tienes suficientes creditos para establecer una nueva base"
 
-#: client/campaign/cp_produce.c:519
 #, fuzzy, c-format
 msgid "Not enough free hangar space in %s. Production postponed."
 msgstr "No tienes suficientes creditos para establecer una nueva base"
 
-#: client/campaign/cp_produce.c:530
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
 msgstr "No tienes suficientes creditos para establecer una nueva base"
 
-#: client/campaign/cp_produce.c:575
 #, fuzzy, c-format
 msgid "The production of %s at %s has finished."
 msgstr "Producción de %s iniciada"
 
-#: client/campaign/cp_produce.c:576 client/campaign/cp_produce.c:600
 #, fuzzy
 msgid "Production finished"
 msgstr "Construcción finalizada"
 
-#: client/campaign/cp_produce.c:598
 #, fuzzy, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "Producción de %s iniciada"
 
-#: client/campaign/cp_produce_callbacks.c:265
-#: client/campaign/cp_produce_callbacks.c:370
 msgid "No item selected"
 msgstr "No hay seleccionado ningun objeto"
 
-#: client/campaign/cp_produce_callbacks.c:271
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "Coste por unidad\t%i c\n"
 
-#: client/campaign/cp_produce_callbacks.c:272
-#: client/campaign/cp_produce_callbacks.c:330
 #, fuzzy, c-format
 msgid "Production time\t%ih\n"
 msgstr "Tiempo de producción\t%ih\n"
 
-#: client/campaign/cp_produce_callbacks.c:273
 #, fuzzy, c-format
 msgid "Item size\t%i\n"
 msgstr "Perdidas del equipo\t%i\n"
 
-#: client/campaign/cp_produce_callbacks.c:297
 #, fuzzy, c-format
 msgid "Stored at: %s\n"
 msgstr "Estado:\t%s\n"
 
-#: client/campaign/cp_produce_callbacks.c:298
 #, fuzzy, c-format
 msgid "Disassembly time: %ih\n"
 msgstr "Producción de %s iniciada"
 
-#: client/campaign/cp_produce_callbacks.c:299
 #, fuzzy
 msgid "Components:\n"
 msgstr "Contenido"
 
-#: client/campaign/cp_produce_callbacks.c:328
 #, fuzzy, c-format
 msgid "Production costs\t%i c\n"
 msgstr "Tiempo de producción\t%ih\n"
 
-#: client/campaign/cp_produce_callbacks.c:368
 #, fuzzy
 msgid "No aircraft selected."
 msgstr "No hay seleccionado ningun objeto"
 
-#: client/campaign/cp_produce_callbacks.c:662
-#: client/campaign/cp_produce_callbacks.c:686
 #, fuzzy
 msgid "Not enough materials"
 msgstr "Parar investigación"
 
-#: client/campaign/cp_produce_callbacks.c:662
 #, fuzzy
 msgid "You don't have the materials needed for producing more of this item.\n"
 msgstr "No tienes suficiente material del necesitado para producir este objeto."
 
-#: client/campaign/cp_produce_callbacks.c:666
 #, fuzzy, c-format
 msgid "You don't have enough material to produce all (%i) additional items. Only %i could be added."
 msgstr "No tienes suficiente material para producir los (%i) objetos. La producion se limitara a %i objetos."
 
-#: client/campaign/cp_produce_callbacks.c:667
-#: client/campaign/cp_produce_callbacks.c:690
 #, fuzzy
 msgid "Not enough material!"
 msgstr "Parar investigación"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid "Not enough workshops"
 msgstr "No hay suficientes talleres"
 
-#: client/campaign/cp_produce_callbacks.c:677
 #, fuzzy
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 msgstr "No puedes poner en la cola más objetos!"
 
-#: client/campaign/cp_produce_callbacks.c:686
 #, fuzzy
 msgid "You don't have the materials needed for producing this item.\n"
 msgstr "No tienes suficiente material del necesitado para producir este objeto."
 
-#: client/campaign/cp_produce_callbacks.c:689
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "No tienes suficiente material para producir los (%i) objetos. La producion se limitara a %i objetos."
 
-#: client/campaign/cp_produce_callbacks.c:714
 #, c-format
 msgid "Production of %s started"
 msgstr "Producción de %s iniciada"
 
-#: client/campaign/cp_produce_callbacks.c:715
 msgid "Production started"
 msgstr "Producción comenzada"
 
-#: client/campaign/cp_research.c:89
 #, fuzzy, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "La investigación de este objeto esta completada."
 
-#: client/campaign/cp_research.c:90
 msgid "Research finished"
 msgstr "Investigación finalizada"
 
-#: client/campaign/cp_research.c:136 client/campaign/cp_research.c:313
 #, fuzzy, c-format
 msgid "New research proposal: %s\n"
 msgstr "Parar investigación"
 
-#: client/campaign/cp_research.c:137
 #, fuzzy
 msgid "Unknown Technology researchable"
 msgstr " [no investigable]"
 
-#: client/campaign/cp_research.c:314
 #, fuzzy
 msgid "Unknown Technology found"
 msgstr "Estado: Tecnología desconocida"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -14608,128 +14059,99 @@ msgstr ""
 "No hay espacio suficiente en los laboratorios.\n"
 "Construye mas laboratorios.\n"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid "Not enough laboratories"
 msgstr "No hay espacio en los laboratorios"
 
-#: client/campaign/cp_research.c:809
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr "Los prerrequisitos de la investigacion %s no se reunio %s. ¡La investigacion se ha detenido!"
 
-#: client/campaign/cp_research.c:810
 #, fuzzy
 msgid "Research halted"
 msgstr "Investigación finalizada"
 
-#: client/campaign/cp_research.c:1171
 msgid "No description available."
 msgstr "Sin descripción."
 
-#: client/campaign/cp_research.c:1172
 #, fuzzy
 msgid "No research proposal available."
 msgstr "Descripción de pre-investigación no disponible"
 
-#: client/campaign/cp_research_callbacks.c:91
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "Espacio en el Laboratorio (usado/todo): %i/%i"
 
-#: client/campaign/cp_research_callbacks.c:97
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr "Cientificos (disponibles/tods) %i/%i"
 
-#: client/campaign/cp_research_callbacks.c:102
 msgid "Not researched in any base."
 msgstr "No investigado en ninguna base."
 
-#: client/campaign/cp_research_callbacks.c:108
 #, c-format
 msgid "Researched in %s"
 msgstr "Investigado en %s"
 
-#: client/campaign/cp_research_callbacks.c:110
 msgid "Researched in this base."
 msgstr "Investigado en esta base."
 
-#: client/campaign/cp_research_callbacks.c:122
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Progreso: %.1f%%"
 
-#: client/campaign/cp_research_callbacks.c:125
 #, fuzzy
 msgid "Progress: not available."
 msgstr "Progreso: No disponible."
 
-#: client/campaign/cp_research_callbacks.c:130
 #, fuzzy
 msgid "Status: under research"
 msgstr "Estado: Investigando"
 
-#: client/campaign/cp_research_callbacks.c:131
 #, fuzzy
 msgid "Status: this research topic is currently being processed in laboratories"
 msgstr "Estado: Investigación detenida"
 
-#: client/campaign/cp_research_callbacks.c:134
 #, fuzzy
 msgid "Status: research paused"
 msgstr "Estado: Investigación detenida"
 
-#: client/campaign/cp_research_callbacks.c:135
 #, fuzzy
 msgid "Status: research topic currently paused."
 msgstr "Estado: Investigación detenida"
 
-#: client/campaign/cp_research_callbacks.c:138
-#: client/campaign/cp_research_callbacks.c:139
 #, fuzzy
 msgid "Status: research finished"
 msgstr "Estado: Investigación terminada"
 
-#: client/campaign/cp_research_callbacks.c:144
 #, fuzzy
 msgid "Status: not possible to research"
 msgstr "Estado: Investigando"
 
-#: client/campaign/cp_research_callbacks.c:145
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr "Estado: No disponemos de todos los materiales o conocimientos de fondo necesarios para esta tarea."
 
-#: client/campaign/cp_research_callbacks.c:147
-#: client/campaign/cp_research_callbacks.c:148
 #, fuzzy
 msgid "Status: unknown technology"
 msgstr "Estado: Tecnología desconocida"
 
-#: client/campaign/cp_research_callbacks.c:259
 #, fuzzy
 msgid "Unassigned scientists"
 msgstr "Contratar científicos"
 
-#: client/campaign/cp_research_callbacks.c:295
 msgid "Missing an artifact"
 msgstr "Has perdido un Artefacto"
 
-#: client/campaign/cp_research_callbacks.c:305
 #, fuzzy
 msgid "Unresearchable collected items"
 msgstr "Selecciona objeto"
 
-#: client/campaign/cp_research_callbacks.c:563
 #, fuzzy
 msgid "This item is currently under research in another base."
 msgstr "Este objeto ya está siendo investigado por tus científicos."
 
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:626
 msgid "The research on this item is complete."
 msgstr "La investigación de este objeto esta completada."
 
-#: client/campaign/cp_research_callbacks.c:587
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -14737,86 +14159,64 @@ msgstr ""
 "Todavía no es posible investigar este objeto.\n"
 "Antes tienes que investigar las tecnologías en las que se basa."
 
-#: client/campaign/cp_research_callbacks.c:656
 #, fuzzy
 msgid "No research proposal available for this project."
 msgstr "Descripción de pre-investigación no disponible"
 
-#: client/campaign/cp_research_callbacks.c:815
 #, fuzzy
 msgid "Nothing to research"
 msgstr "Parar investigación"
 
-#: client/campaign/cp_research_callbacks.c:818
 msgid "Build a laboratory first"
 msgstr "Construye un laboratorio primero"
 
-#: client/campaign/cp_save.c:186
 msgid "Error decompressing data"
 msgstr "Error descomprimiendo los datos"
 
-#: client/campaign/cp_save.c:270
 msgid "No campaign active."
 msgstr "No hay campaña activa"
 
-#: client/campaign/cp_save.c:276
 #, fuzzy
 msgid "Nothing to save yet."
 msgstr "Parar investigación"
 
-#: client/campaign/cp_save.c:320
 msgid "Could not allocate enough memory to save this game"
 msgstr "No se puede alojar suficiente memoria para salvar este juego"
 
-#: client/campaign/cp_save.c:342
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr "Error  de la memoria comprimiendo los datos guardados - Conjunto save_compressed cvar a 0"
 
-#: client/campaign/cp_save.c:389 client/campaign/cp_save.c:391
 #, fuzzy
 msgid "Error saving game."
 msgstr "Error guardando el juego. Comprueba que hay espacio en el disco."
 
-#: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:620
 #, fuzzy
 msgid "Error loading game."
 msgstr "cargando modelos..."
 
-#: client/campaign/cp_save.c:469 client/campaign/cp_save.c:493
-#: client/campaign/cp_save.c:621 client/cl_irc.c:1209 client/cl_irc.c:1441
-#: client/cl_main.c:517 client/cl_main.c:521 client/cl_main.c:545
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Error"
 msgstr "Error"
 
-#: client/campaign/cp_save.c:568
 #, fuzzy
 msgid "QuickSave"
 msgstr "Salvado rapido"
 
-#: client/campaign/cp_save.c:602
 msgid "Campaign was successfully saved."
 msgstr "La campaña se ha guardado con exito."
 
-#: client/campaign/cp_save.c:602
 msgid "Quicksave"
 msgstr "Salvado rapido"
 
-#: client/campaign/cp_save.c:623
 #, fuzzy
 msgid "Campaign loaded"
 msgstr "Campañas"
 
-#: client/campaign/cp_save.c:623
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Se ha cargado con exito el salvado rapido de la campaña."
 
-#: client/campaign/cp_save.c:684
 msgid "Saves to the quick save slot"
 msgstr "Guardar al bloque de salvado rapido"
 
-#: client/campaign/cp_statistics.c:56
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -14827,7 +14227,6 @@ msgstr ""
 "Perdido:\t%i\n"
 "\n"
 
-#: client/campaign/cp_statistics.c:61
 #, fuzzy, c-format
 msgid ""
 "Built:\t%i\n"
@@ -14838,12 +14237,10 @@ msgstr ""
 "Active:\t%i\n"
 "Attacked:\t%i\n"
 
-#: client/campaign/cp_statistics.c:77 client/campaign/cp_ufopedia.c:1164
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_statistics.c:80
 #, c-format
 msgid ""
 "\n"
@@ -14852,37 +14249,30 @@ msgstr ""
 "\n"
 "Ingresos de este mes:\f%d"
 
-#: client/campaign/cp_statistics.c:97 client/cl_inventory_callbacks.c:138
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_statistics.c:103
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Empleados:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:112
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Naves:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:118
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s):\t%i c\n"
 
-#: client/campaign/cp_statistics.c:123
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Costes administrativos:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:130
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Deuda:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:133
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -14893,12 +14283,10 @@ msgstr ""
 "\t-------\n"
 "Sum:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:138
 #, fuzzy, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Máximo número de equipos para este mapa:\t%s\n"
 
-#: client/campaign/cp_statistics.c:143
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -14907,168 +14295,126 @@ msgstr ""
 "Infeccion virica alienigena maxima permitida: %i%%\n"
 "Infeccion virica extraterrestre acutal: %i%%"
 
-#: client/campaign/cp_team.c:252
 #, c-format
 msgid "%i of %i"
 msgstr "%i de %i"
 
-#: client/campaign/cp_time.c:40
 msgid "stopped"
 msgstr "Parado"
 
-#: client/campaign/cp_time.c:41
 msgid "5 sec"
 msgstr "5 sec."
 
-#: client/campaign/cp_time.c:42
 msgid "5 mins"
 msgstr "5 min."
 
-#: client/campaign/cp_time.c:43
 msgid "20 mins"
 msgstr "20 min."
 
-#: client/campaign/cp_time.c:44
 msgid "1 hour"
 msgstr "1 hora"
 
-#: client/campaign/cp_time.c:45
 msgid "12 hours"
 msgstr "12 horas"
 
-#: client/campaign/cp_time.c:46
 msgid "1 day"
 msgstr "1 dia"
 
-#: client/campaign/cp_time.c:47
 msgid "5 days"
 msgstr "5 dias"
 
-#: client/campaign/cp_time.c:73
 #, fuzzy, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%i%i"
 
-#: client/campaign/cp_time.c:249
 msgid "Jan"
 msgstr "Ene"
 
-#: client/campaign/cp_time.c:251
 msgid "Feb"
 msgstr "Feb"
 
-#: client/campaign/cp_time.c:253
 msgid "Mar"
 msgstr "Mar"
 
-#: client/campaign/cp_time.c:255
 msgid "Apr"
 msgstr "Abr"
 
-#: client/campaign/cp_time.c:257
 msgid "May"
 msgstr "May"
 
-#: client/campaign/cp_time.c:259
 msgid "Jun"
 msgstr "Jun"
 
-#: client/campaign/cp_time.c:261
 msgid "Jul"
 msgstr "Jul"
 
-#: client/campaign/cp_time.c:263
 msgid "Aug"
 msgstr "Ago"
 
-#: client/campaign/cp_time.c:265
 msgid "Sep"
 msgstr "Sep"
 
-#: client/campaign/cp_time.c:267
 msgid "Oct"
 msgstr "Oct"
 
-#: client/campaign/cp_time.c:269
 msgid "Nov"
 msgstr "Nov"
 
-#: client/campaign/cp_time.c:271
 msgid "Dec"
 msgstr "Dic"
 
-#: client/campaign/cp_transfer.c:56
 #, fuzzy, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
 msgstr "La base %s no tiene suficiente espacio en el almacen, ¡Los objetos seran quitados!"
 
-#: client/campaign/cp_transfer.c:57 client/campaign/cp_transfer.c:70
-#: client/campaign/cp_transfer.c:82 client/campaign/cp_transfer.c:109
-#: client/campaign/cp_transfer.c:134 client/campaign/cp_transfer.c:149
-#: client/campaign/cp_transfer.c:244 client/campaign/cp_transfer.c:261
-#: client/campaign/cp_transfer.c:267
-#: client/campaign/cp_transfer_callbacks.c:194
 #, fuzzy
 msgid "Transport mission"
 msgstr "Misión de transporte"
 
-#: client/campaign/cp_transfer.c:69
 #, c-format
 msgid "%s does not have Storage, items are removed!"
 msgstr "La base %s no tiene suficiente espacio en el almacen, ¡Los objetos seran quitados!"
 
-#: client/campaign/cp_transfer.c:81
 #, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "La base %s no tiene espacio en los barracones, ¡Los empleados seran despedidos!"
 
-#: client/campaign/cp_transfer.c:108
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "La base %s no tiene espacio en la Contencion Alienigena, ¡Los alienigenas seran eliminados!"
 
-#: client/campaign/cp_transfer.c:133
 #, fuzzy, c-format
 msgid "%s does not have enough Alien Containment space, some Aliens are removed!"
 msgstr "La base %s no tiene espacio en la Contencion Alienigena, ¡Los alienigenas seran eliminados!"
 
-#: client/campaign/cp_transfer.c:148
 #, fuzzy, c-format
 msgid "%s does not have enough free space. Aircraft is lost!"
 msgstr "Celda para Alienígenas"
 
-#: client/campaign/cp_transfer.c:243
-#: client/campaign/cp_transfer_callbacks.c:193
 #, c-format
 msgid "Transport mission started, cargo is being transported to %s"
 msgstr "La mision de traslado a empezado, la carga se esta transportando a la base %s"
 
-#: client/campaign/cp_transfer.c:261
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
 msgstr "¡La base de destino ya no existe! La carga trasferida se a perdido, el personal a sido desenbarcado."
 
-#: client/campaign/cp_transfer.c:266
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "La mision de transporte a terminado, descargando la carga en la base %s"
 
-#: client/campaign/cp_transfer_callbacks.c:139
 #, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/campaign/cp_transfer_callbacks.c:246
 msgid "Destination base does not have an Antimatter Storage.\n"
 msgstr "La base de destino no tiene no dispone de un Almacen de Antimateria.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:246
 #, fuzzy
 msgid "Missing storage"
 msgstr "Misiones"
 
-#: client/campaign/cp_transfer_callbacks.c:251
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
@@ -15076,16 +14422,10 @@ msgstr ""
 "La base de destino no tiene suficiente\n"
 "espacion en el almacen de Antimateria para almacenar mas.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:251
-#: client/campaign/cp_transfer_callbacks.c:261
-#: client/campaign/cp_transfer_callbacks.c:289
-#: client/campaign/cp_transfer_callbacks.c:342
-#: client/campaign/cp_transfer_callbacks.c:385
 #, fuzzy
 msgid "Not enough space"
 msgstr "Parar investigación"
 
-#: client/campaign/cp_transfer_callbacks.c:261
 msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
@@ -15093,7 +14433,6 @@ msgstr ""
 "La base de destino no tiene suficiente\n"
 "espacio en el almacen para guardar este objeto.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:289
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
@@ -15101,7 +14440,6 @@ msgstr ""
 "La base de destino no tiene suficiente espacio\n"
 "en los barracones.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:298
 #, c-format
 msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
@@ -15110,12 +14448,10 @@ msgstr ""
 "El/la soldado %s %s esta asignado/a a una aeronave y no se\n"
 "puede trasladar a otra base.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:300
 #, fuzzy
 msgid "Soldier in aircraft"
 msgstr "Selecciona nave"
 
-#: client/campaign/cp_transfer_callbacks.c:307
 #, c-format
 msgid ""
 "%s is assigned to aircraft and cannot be\n"
@@ -15124,12 +14460,10 @@ msgstr ""
 "%s esta asignado/a a una aeronave y no se\n"
 "puede trasladar a otra base.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:309
 #, fuzzy
 msgid "Pilot in aircraft"
 msgstr "Selecciona nave"
 
-#: client/campaign/cp_transfer_callbacks.c:342
 msgid ""
 "Destination base does not have enough space\n"
 "in Alien Containment.\n"
@@ -15137,7 +14471,6 @@ msgstr ""
 "La base de destino no tiene suficiente espacio\n"
 "en el centro de Contencion Alienigena.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:366
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
@@ -15145,7 +14478,6 @@ msgstr ""
 "La base de destino no tiene los hanagares listos.\n"
 "Proporcionales una fuente de energia.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:369
 msgid ""
 "Destination base does not have command centre.\n"
 "Hangars not functional.\n"
@@ -15153,310 +14485,243 @@ msgstr ""
 "La base de destino no tiene un centro de mando.\n"
 "Los hangares no estan operativos.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Destination base does not have any hangar."
 msgstr "La base de destino no tiene ningun hangar."
 
-#: client/campaign/cp_transfer_callbacks.c:385
 #, fuzzy
 msgid "Destination base does not have enough space in hangars.\n"
 msgstr "Celda para Alienígenas"
 
-#: client/campaign/cp_transfer_callbacks.c:428
 #, fuzzy, c-format
 msgid "Soldier %s %s"
 msgstr "Soldados"
 
-#: client/campaign/cp_transfer_callbacks.c:440
 #, fuzzy, c-format
 msgid "Pilot %s"
 msgstr "Escudo:\t%s\n"
 
-#: client/campaign/cp_transfer_callbacks.c:477
-#: client/campaign/cp_transfer_callbacks.c:653
 #, c-format
 msgid "Corpse of %s"
 msgstr "Cadaver de %s"
 
-#: client/campaign/cp_transfer_callbacks.c:494
-#: client/campaign/cp_transfer_callbacks.c:689
 #, fuzzy, c-format
 msgid "Aircraft %s"
 msgstr "Naves"
 
-#: client/campaign/cp_transfer_callbacks.c:562
 #, fuzzy
 msgid "Storage is empty."
 msgstr "Capacidad"
 
-#: client/campaign/cp_transfer_callbacks.c:566
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a working Storage."
 msgstr "La transferencia no es posible - La base no tiene un Almacen."
 
-#: client/campaign/cp_transfer_callbacks.c:628
 #, fuzzy
 msgid "Living Quarters empty."
 msgstr "Barracones"
 
-#: client/campaign/cp_transfer_callbacks.c:632
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "La transferencia no es posible - la base no tiene suficente espacio en los barracones."
 
-#: client/campaign/cp_transfer_callbacks.c:660
 #, fuzzy, c-format
 msgid "Alive %s"
 msgstr "Aliens"
 
-#: client/campaign/cp_transfer_callbacks.c:666
 #, fuzzy
 msgid "Alien Containment is empty."
 msgstr "Celda para Alienígenas"
 
-#: client/campaign/cp_transfer_callbacks.c:670
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "La transferencia no es posible - la base no tiene un centro de Contencion de Alienigena."
 
-#: client/campaign/cp_transfer_callbacks.c:673
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "La transferencia no es posible - La base no tiene fuentes de energia."
 
-#: client/campaign/cp_transfer_callbacks.c:695
 #, fuzzy
 msgid "No aircraft available for transfer."
 msgstr "Descripción de pre-investigación no disponible"
 
-#: client/campaign/cp_transfer_callbacks.c:699
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Celda para Alienígenas"
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 #, fuzzy
 msgid "No target base selected"
 msgstr "No hay seleccionado ningun objeto"
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "Please select the target base from the list"
 msgstr "Por favor selecciona la bas e destino de la lista"
 
-#: client/campaign/cp_transfer_callbacks.c:1102
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Se puede tansferir equipo - Esta base tiene un Almacen.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1105
 #, fuzzy
 msgid "No Storage in this base.\n"
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_transfer_callbacks.c:1109
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Puedes transferir empleados - Esta base tiene barracones.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1111
 #, fuzzy
 msgid "No Living Quarters in this base.\n"
 msgstr "Nombre de esta base"
 
-#: client/campaign/cp_transfer_callbacks.c:1115
 #, fuzzy
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "Celda para Alienígenas"
 
-#: client/campaign/cp_transfer_callbacks.c:1117
 #, fuzzy
 msgid "No Alien Containment in this base.\n"
 msgstr "Nombre de esta base"
 
-#: client/campaign/cp_transfer_callbacks.c:1121
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Puedes transferir antimateria - esta base tiene un Almacen de Antimateria.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1123
 #, fuzzy
 msgid "No Antimatter Storage in this base.\n"
 msgstr "Nombre de esta base"
 
-#: client/campaign/cp_transfer_callbacks.c:1127
 #, fuzzy
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Celda para Alienígenas"
 
-#: client/campaign/cp_transfer_callbacks.c:1129
 #, fuzzy
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "Celda para Alienígenas"
 
-#: client/campaign/cp_transfer_callbacks.c:1131
 #, fuzzy
 msgid "No Hangar in this base.\n"
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_transfer_callbacks.c:1135
 #, fuzzy
 msgid "No power supplies in this base.\n"
 msgstr "Sin edificios en la base inicial"
 
-#: client/campaign/cp_ufo.c:172
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured crashed %s (%.0f%%)\n"
 msgstr "Asegura el área"
 
-#: client/campaign/cp_ufo.c:174
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured landed %s\n"
 msgstr "Asegura el área"
 
-#: client/campaign/cp_ufo.c:428 client/campaign/cp_ufo.c:844
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "¡Un OVNI esta persigiendo a %s!"
 
-#: client/campaign/cp_ufo.c:849
 #, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr "Nuestro radar a detectado un nuevo OVNI cerca de %s"
 
-#: client/campaign/cp_ufo.c:855
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Nuestro radar ha perdido el rastro de un OVNI"
 
-#: client/campaign/cp_ufopedia.c:142
 msgid "Cruising speed"
 msgstr "Velocidad de crucero"
 
-#: client/campaign/cp_ufopedia.c:144
 msgid "Maximum speed"
 msgstr "Velocidad maxima"
 
-#: client/campaign/cp_ufopedia.c:148
 msgid "ECM"
 msgstr "CME"
 
-#: client/campaign/cp_ufopedia.c:150
 #, fuzzy
 msgid "Aircraft damage"
 msgstr "Nave ausente"
 
-#: client/campaign/cp_ufopedia.c:152
 #, fuzzy
 msgid "Accuracy"
 msgstr "Puntería:"
 
-#: client/campaign/cp_ufopedia.c:154
 msgid "Fuel size"
 msgstr "Capacidad de combustible"
 
-#: client/campaign/cp_ufopedia.c:156
 #, fuzzy
 msgid "Weapon range"
 msgstr "Arma"
 
-#: client/campaign/cp_ufopedia.c:158 client/cl_inventory_callbacks.c:54
 msgid "Unknown weapon skill"
 msgstr "Habilidad con arma desconocida"
 
-#: client/campaign/cp_ufopedia.c:170
 #, fuzzy
 msgid "Small"
 msgstr "Vender objeto"
 
-#: client/campaign/cp_ufopedia.c:172
 #, fuzzy
 msgid "Large"
 msgstr "cargando modelos..."
 
-#: client/campaign/cp_ufopedia.c:174
 #, fuzzy
 msgid "Unknown aircraft size"
 msgstr "Mostrar sólo armaduras"
 
-#: client/campaign/cp_ufopedia.c:193
 msgid "No requirements"
 msgstr "Sin requisitos"
 
-#: client/campaign/cp_ufopedia.c:227
 msgid "Error - could not find building"
 msgstr "Error - no se encuentra el edifición"
 
-#: client/campaign/cp_ufopedia.c:230
 #, fuzzy, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "Buildtime:\t%i day(s)\n"
 msgstr[1] "Buildtime:\t%i day(s)\n"
 
-#: client/campaign/cp_ufopedia.c:231
 #, fuzzy, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Costes:\t%1.0f c\n"
 
-#: client/campaign/cp_ufopedia.c:279
 #, fuzzy, c-format
 msgid "Weight:\t%s\n"
 msgstr "Noche"
 
-#: client/campaign/cp_ufopedia.c:282
 #, fuzzy, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Max. munición:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:284 client/cl_inventory_callbacks.c:176
 #, fuzzy, c-format
 msgid "Damage:\t%i\n"
 msgstr "Daño:\t%i / %i\n"
 
-#: client/campaign/cp_ufopedia.c:285
 #, fuzzy, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Equipamiento"
 
-#: client/campaign/cp_ufopedia.c:287
 #, fuzzy
 msgid "Weapon for base defence system\n"
 msgstr "Equipo actual"
 
-#: client/campaign/cp_ufopedia.c:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:309 client/campaign/cp_ufopedia.c:362
-#: client/campaign/cp_ufopedia.c:364 client/campaign/cp_ufopedia.c:400
-#: client/campaign/cp_ufopedia.c:402
 msgid "Unknown - need to research this"
 msgstr "Desconocido - se necesita investigación"
 
-#: client/campaign/cp_ufopedia.c:336 client/campaign/cp_ufopedia.c:341
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i km/h\n"
 
-#: client/campaign/cp_ufopedia.c:348
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:355
 #, fuzzy, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "Naves"
 
-#: client/campaign/cp_ufopedia.c:359
 #, fuzzy, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Max. soldiers per team:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:397
 #, c-format
 msgid ""
 "%s\n"
@@ -15465,17 +14730,14 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cp_ufopedia.c:521
 #, fuzzy
 msgid "Proposal: "
 msgstr "Stun Rod"
 
-#: client/campaign/cp_ufopedia.c:524
 #, fuzzy
 msgid "Re: "
 msgstr "Raza:"
 
-#: client/campaign/cp_ufopedia.c:535
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -15486,139 +14748,109 @@ msgstr ""
 "PARA: %s\n"
 "FECHA: %s"
 
-#: client/campaign/cp_ufopedia.c:609
 #, fuzzy
 msgid "(complete)"
 msgstr "Contenido"
 
-#: client/campaign/cp_ufopedia.c:668
 msgid "No pre-research description available."
 msgstr "Descripción de pre-investigación no disponible"
 
-#: client/campaign/cp_ufopedia.c:1104
 #, fuzzy, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "Stun Rod"
 
-#: client/campaign/cp_ufopedia.c:1108
 #, fuzzy, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Stun Rod"
 
-#: client/campaign/cp_ufopedia.c:1119
 #, fuzzy, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "%i de %i"
 
-#: client/campaign/cp_ufopedia.c:1123
 #, fuzzy, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "%i de %i"
 
-#: client/campaign/cp_ufopedia.c:1133 client/campaign/cp_ufopedia.c:1145
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1137 client/campaign/cp_ufopedia.c:1149
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1161
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
 
-#: client/campaign/cp_uforecovery.c:61
 #, fuzzy, c-format
 msgid "%s was transfered to %s."
 msgstr "%s ha sido ascendido a %s.\n"
 
-#: client/campaign/cp_uforecovery.c:62
 #, fuzzy
 msgid "UFO Recovered"
 msgstr "Caza OVNI"
 
-#: client/campaign/cp_uforecovery_callbacks.c:163
 #, fuzzy
 msgid "No free UFO yard available."
 msgstr "Descripción de pre-investigación no disponible"
 
-#: client/campaign/cp_uforecovery_callbacks.c:213
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
 msgstr "Se ha recuperado %s del camopo de batalla. El OVNI se esta transportando a %s."
 
-#: client/campaign/cp_uforecovery_callbacks.c:215
-#: client/campaign/cp_uforecovery_callbacks.c:506
 msgid "UFO Recovery"
 msgstr "Recuperacion de OVNI"
 
-#: client/campaign/cp_uforecovery_callbacks.c:498
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
 msgstr "Vender recuperacion anterior %s de %s a la nacion %s, has ganado %i creditos."
 
-#: client/campaign/cp_uforecovery_callbacks.c:503
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Se ha recuperado un %s del campo de batalla. El OVNI se ha vendido a la nacion %s, has ganado %i creditos."
 
-#: client/campaign/missions/cp_mission_baseattack.c:121
 #, fuzzy, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
 msgstr "Tu base %s ha sido saqueada! Todos los empleados han muerto y el equipo ha sido destruido."
 
-#: client/campaign/missions/cp_mission_baseattack.c:229
 #, fuzzy, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "La base está siendo atacada"
 
-#: client/cl_console.c:297
 msgid "Bring up the in-game console"
 msgstr "Muestra la consola de juego"
 
-#: client/cl_game_campaign.c:69
 #, fuzzy
 msgid "Your dropship is not near the landing zone"
 msgstr "Your dropship is not near the landing zone"
 
-#: client/cl_game_campaign.c:88
 msgid "You've won the battle"
 msgstr "Has ganado la batalla"
 
-#: client/cl_game_campaign.c:157
 #, fuzzy
 msgid "Chicken-hearted"
 msgstr "Chicken-hearted"
 
-#: client/cl_game_campaign.c:159
 msgid "Very Easy"
 msgstr "Muy fácil"
 
-#: client/cl_game_campaign.c:162
 msgid "Easy"
 msgstr "Fácil"
 
-#: client/cl_game_campaign.c:167
 msgid "Hard"
 msgstr "Difícil"
 
-#: client/cl_game_campaign.c:169
 msgid "Very Hard"
 msgstr "Muy difícil"
 
-#: client/cl_game_campaign.c:171
 msgid "Insane"
 msgstr "Locura"
 
-#: client/cl_game_campaign.c:239
 #, fuzzy
 msgid "Human"
 msgstr "Busan"
 
-#: client/cl_game_campaign.c:243
 #, c-format
 msgid ""
 "%s\n"
@@ -15641,35 +14873,28 @@ msgstr ""
 "Max. allowed debts: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:494
 #, c-format
 msgid "Rank: %s"
 msgstr "Rango: %s"
 
-#: client/cl_game_multiplayer.c:66
 #, fuzzy
 msgid "You've ended your round\n"
 msgstr "No es tu turno\n"
 
-#: client/cl_game_multiplayer.c:69
 #, c-format
 msgid "%s ended his round (team %i)\n"
 msgstr "%s ha terminado su turno (equipo %i)\n"
 
-#: client/cl_game_multiplayer.c:89
 #, fuzzy
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Establece el número maximo de soldados por equipo"
 
-#: client/cl_game_multiplayer.c:89
 msgid "Settings doesn't make sense"
 msgstr "La configuración no tiene sentido"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid "Game Drawn!"
 msgstr "¡Empate!"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -15679,7 +14904,6 @@ msgstr ""
 "\n"
 "No quedan supervivientes de ningun equipo."
 
-#: client/cl_game_multiplayer.c:242
 #, c-format
 msgid ""
 "\n"
@@ -15692,30 +14916,24 @@ msgstr ""
 "Enemigos matados: %i\n"
 "Equipos supervivientes: %i"
 
-#: client/cl_game_multiplayer.c:244 client/cl_game_skirmish.c:188
 #, fuzzy
 msgid "You won the game!"
 msgstr "Has ganado la batalla"
 
-#: client/cl_game_multiplayer.c:245 client/cl_game_skirmish.c:189
 msgid "Congratulations"
 msgstr "Felicidades"
 
-#: client/cl_game_multiplayer.c:247 client/cl_game_skirmish.c:191
 #, fuzzy
 msgid "You've lost the game!"
 msgstr "Has perdido la batalla"
 
-#: client/cl_game_multiplayer.c:248 client/cl_game_skirmish.c:192
 msgid "Better luck next time"
 msgstr "Que tengas mejor suerte la proxima vez"
 
-#: client/cl_game_multiplayer.c:279
 #, fuzzy
 msgid "all"
 msgstr "Vender objeto"
 
-#: client/cl_game_skirmish.c:179
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -15732,15 +14950,12 @@ msgstr ""
 "Civiles asesinados:\t\t%i\n"
 "Civiles asesinados por el enemigo:\t\t%i\n"
 
-#: client/cl_inventory_callbacks.c:44
 msgid "skill_close"
 msgstr "Habilidad CAC"
 
-#: client/cl_inventory_callbacks.c:46
 msgid "skill_heavy"
 msgstr "Habilidad armas pesadas"
 
-#: client/cl_inventory_callbacks.c:48
 #, fuzzy
 msgid "skill_assault"
 msgstr ""
@@ -15784,257 +14999,198 @@ msgstr ""
 "\n"
 "A pesar de que el AR-80 es un buen rifle en todos los aspectos, no fue diseñado para combatir la amenaza alienigena. Debemos esforzarnos en diseñar y producir nuestras propias armas adaptas tan pronto que se presente la posibilidad."
 
-#: client/cl_inventory_callbacks.c:50
 msgid "skill_sniper"
 msgstr "Habilidad Francotirador"
 
-#: client/cl_inventory_callbacks.c:52
 #, fuzzy
 msgid "skill_explosive"
 msgstr "Explosivo"
 
-#: client/cl_inventory_callbacks.c:131
 #, fuzzy, c-format
 msgid "Size:\t%i\n"
 msgstr "Escudo:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:133
 #, fuzzy
 msgid "^BDamage type:\tProtection:\n"
 msgstr "%s:\tProtección: %i\tDureza: %i\n"
 
-#: client/cl_inventory_callbacks.c:146
 #, fuzzy, c-format
 msgid "%s weapon\n"
 msgstr "%s arma con\n"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "One-handed"
 msgstr "Una mano"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "Two-handed"
 msgstr "Dos manos"
 
-#: client/cl_inventory_callbacks.c:148
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "Max. munición:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:175
 #, fuzzy, c-format
 msgid "Skill:\t%s\n"
 msgstr "Escudo:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:177 client/cl_inventory_callbacks.c:192
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "Unidades de tiempo:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:178 client/cl_inventory_callbacks.c:193
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Alcance:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:179
 #, fuzzy, c-format
 msgid "Spreads:\t%g\n"
 msgstr "Spreads:\t%g / %g\n"
 
-#: client/cl_inventory_callbacks.c:182
 #, fuzzy, c-format
 msgid "%s. No detailed info available.\n"
 msgstr "Sin descripción."
 
-#: client/cl_inventory_callbacks.c:182
 #, fuzzy
 msgid "Ammunition"
 msgstr "Celda para Alienígenas"
 
-#: client/cl_inventory_callbacks.c:182
 #, fuzzy
 msgid "Weapon"
 msgstr "Armas"
 
-#: client/cl_inventory_callbacks.c:185
 #, fuzzy, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s arma sin munición con\n"
 
-#: client/cl_inventory_callbacks.c:188
 #, fuzzy, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "%s equipo auxiliar con\n"
 
-#: client/cl_inventory_callbacks.c:191
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Acción:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:200
 #, fuzzy
 msgid "Unknown - not useable"
 msgstr " [no investigable]"
 
-#: client/cl_inventory_callbacks.c:344
 msgid "Update the GUI with the selected item"
 msgstr "Actualiza la GUI con el objeto seleccionado"
 
-#: client/cl_irc.c:1441
 msgid "Server closed connection"
 msgstr "El servidor ha cerrado la conexion"
 
-#: client/cl_language.c:276
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:516
 #, fuzzy, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
 msgstr "La version local del juego (%s) difiere con el servidor (%s)"
 
-#: client/cl_main.c:521
 msgid "Script files are not the same"
 msgstr "Los ficheros  de Script no son los mismos"
 
-#: client/cl_main.c:545
 msgid "Local map version differs from server"
 msgstr "El mapa local difiere con el  servidor"
 
-#: client/cl_main.c:1011
 msgid "Target your shot to the ground"
 msgstr "Ajusta tu disparo al suelo"
 
-#: client/cl_main.c:1249
 msgid "This change requires a restart"
 msgstr "Este cambio requiere un reinicio"
 
-#: client/cl_main.c:1254
 msgid "This change might require a restart"
 msgstr "Este cambio podria necesitar un reinicio"
 
-#: client/cl_screen.c:156
 #, fuzzy, c-format
 msgid "Downloading [%s]"
 msgstr "Edificios"
 
-#: client/cl_screen.c:193
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "Cargando Mapa [%s]"
 
-#: client/input/cl_input.c:914
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Rotar la camara en sentido contraria a las agujas del reloj"
 
-#: client/input/cl_input.c:916
 msgid "Rotate battlescape camera clockwise"
 msgstr "Rotar la camara en sentido de las agujas del reloj"
 
-#: client/input/cl_input.c:918
 msgid "Tilt battlescape camera up"
 msgstr "Inclina la cámara arriba"
 
-#: client/input/cl_input.c:920
 msgid "Tilt battlescape camera down"
 msgstr "Inclina la cámara abajo"
 
-#: client/input/cl_input.c:922
 msgid "Move battlescape camera left"
 msgstr "Mueve la camara a la izquierda"
 
-#: client/input/cl_input.c:924
 msgid "Move battlescape camera right"
 msgstr "Mueve la cámara a la derecha"
 
-#: client/input/cl_input.c:926
 msgid "Move battlescape camera forward"
 msgstr "Mueve la camara adelante"
 
-#: client/input/cl_input.c:928
 msgid "Move battlescape camera backward"
 msgstr "Mueve la cámara atrás"
 
-#: client/input/cl_input.c:930 client/input/cl_input.c:952
 msgid "Zoom in"
 msgstr "Aumenta zoom"
 
-#: client/input/cl_input.c:932 client/input/cl_input.c:953
 msgid "Zoom out"
 msgstr "Disminuye zoom"
 
-#: client/input/cl_input.c:935
 msgid "Left mouse button click (menu)"
 msgstr "Click con el boton izquierdo del raton (menu)"
 
-#: client/input/cl_input.c:937
 msgid "Middle mouse button click (menu)"
 msgstr "Click con el boton central (menu)"
 
-#: client/input/cl_input.c:939
 msgid "Right mouse button click (menu)"
 msgstr "Click con el boton derecho del raton (menu)"
 
-#: client/input/cl_input.c:941
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Selecciona objetos/Mueve hacia un cuadrado/En modo de fuego, dispara etc."
 
-#: client/input/cl_input.c:943
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Mueve hacia un cuadrado/En modo de fuego, cancela la acción"
 
-#: client/input/cl_input.c:945
 msgid "Turn soldier toward mouse pointer"
 msgstr "Gira al soldado en la dirección del puntero del ratón"
 
-#: client/input/cl_input.c:947
 #, fuzzy
 msgid "Toggles the hud radar mode"
 msgstr "Cambiar al siguiente soldado"
 
-#: client/input/cl_input.c:950
 msgid "Slice through terrain at a higher level"
 msgstr "Salta a un nivel superior"
 
-#: client/input/cl_input.c:951
 msgid "Slice through terrain at a lower level"
 msgstr "Salta a un nivel inferior"
 
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Assemble a team first"
 msgstr "Forma un equipo antes"
 
-#: client/multiplayer/mp_callbacks.c:192
 msgid "Select a free team or your coop team"
 msgstr "Selecciona un equipo libre o a tu equipo acompañante"
 
-#: client/multiplayer/mp_callbacks.c:215 client/multiplayer/mp_callbacks.c:228
 #, fuzzy, c-format
 msgid "Current team: %i"
 msgstr "Equipo actual"
 
-#: client/multiplayer/mp_callbacks.c:219 client/multiplayer/mp_callbacks.c:232
 #, fuzzy
 msgid "Team is already in use"
 msgstr "Already %i in base"
 
-#: client/multiplayer/mp_callbacks.c:241
 msgid "Invalid or full team"
 msgstr "Acción invalida o equipo completo"
 
-#: client/multiplayer/mp_serverlist.c:236
 #, fuzzy, c-format
 msgid "Team %d"
 msgstr "Equipo"
 
-#: client/multiplayer/mp_serverlist.c:238
 #, fuzzy
 msgid "No team"
 msgstr "Nota"
 
-#: client/multiplayer/mp_serverlist.c:297
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -16043,224 +15199,173 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/multiplayer/mp_serverlist.c:308
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:313
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nombre del servidor:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:314
 #, fuzzy, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralestates:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:315
 #, fuzzy, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Juego"
 
-#: client/multiplayer/mp_serverlist.c:316
 #, fuzzy, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Versión:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:317
 #, fuzzy, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Servidor dedicado:"
 
-#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Sistema Operativo:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:319
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Network protocol:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:320
 #, fuzzy, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Equipamiento"
 
-#: client/multiplayer/mp_serverlist.c:321
 #, fuzzy, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Teamplay:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:322
 #, fuzzy, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. players per team:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Máximo número de equipos para este mapa:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:324
 #, fuzzy, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. clients:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:325
 #, fuzzy, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. soldiers per player:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:326
 #, fuzzy, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldiers per team:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Protejido por contraseña:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:469
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "Todos los bloques de marcadores estan usados - por favor quita los objetos en desuso y repetidos en este paso"
 
-#: client/multiplayer/mp_team.c:254
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "Parar investigación"
 
-#: client/multiplayer/mp_team.c:270
 #, fuzzy
 msgid "NewTeam"
 msgstr "NewTeam"
 
-#: client/multiplayer/mp_team.c:275
 msgid "Error saving team. Check free disk space!"
 msgstr "Error guardando el equipo. Comprueba el espacio del disco!."
 
-#: client/ui/node/ui_node_base.c:198
 #, fuzzy, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "%i dias faltan"
 msgstr[1] "%i dias faltan"
 
-#: client/ui/node/ui_node_base.c:271
 msgid "not operational, depends on"
 msgstr "No esta operativo, depende de "
 
-#: client/ui/node/ui_node_baseinventory.c:234
-#: client/ui/node/ui_node_baseinventory.c:239
-#: client/ui/node/ui_node_container.c:275
-#: client/ui/node/ui_node_container.c:280
 #, fuzzy, c-format
 msgid "Ammo: %i\n"
 msgstr "Max. munición:\t%i\n"
 
-#: client/ui/node/ui_node_baseinventory.c:238
-#: client/ui/node/ui_node_container.c:279
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s cargado\n"
 
-#: client/ui/node/ui_node_baseinventory.c:246
-#: client/ui/node/ui_node_container.c:287
 msgid "Usable in:\n"
 msgstr "Utilizable en:\n"
 
-#: client/ui/node/ui_node_container.c:339
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "Dentro: %i Fuera: %i"
 
-#: client/ui/node/ui_node_keybinding.c:95
 #, fuzzy, c-format
 msgid "Key %s already bound"
 msgstr "Already %i in base"
 
-#: client/ui/node/ui_node_keybinding.c:154
 msgid "NONE"
 msgstr "NADA"
 
-#: client/ui/node/ui_node_window.c:293
 msgid "Drag to move window"
 msgstr "Arrastra  para mover la ventana"
 
-#: client/ui/node/ui_node_window.c:308
 #, fuzzy
 msgid "Close the window"
 msgstr "Cerrar esta ventana"
 
-#: client/ui/ui_tooltip.c:96 client/ui/ui_tooltip.c:101
 #, c-format
 msgid "Key: %s"
 msgstr "Clave: %s"
 
-#: game/g_actor.c:78
 #, fuzzy
 msgid "Soldier entered the rescue zone\n"
 msgstr "Los alienigenas han entrado en la zona objetivo\n"
 
-#: game/g_actor.c:80
 #, fuzzy
 msgid "Soldier left the rescue zone\n"
 msgstr "Selecciona objeto"
 
-#: game/g_actor.c:557
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "No puedes hacerlo - no tienes suficientes UT!\n"
 
-#: game/g_actor.c:561
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "No puedes hacerlo - el arma ya está completamente cargada con esa munición\n"
 
-#: game/g_client.c:401
 msgid "Can't perform action - object not present!\n"
 msgstr "No puedes hacerlo - objeto no presente!\n"
 
-#: game/g_client.c:406
 msgid "Can't perform action - not an actor!\n"
 msgstr "No puedes hacerlo - no es un personaje!\n"
 
-#: game/g_client.c:411
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "No puedes hacerlo - el personaje está aturdido!\n"
 
-#: game/g_client.c:416
 msgid "Can't perform action - actor is dead!\n"
 msgstr "No puedes hacerlo - el personaje está muerto!\n"
 
-#: game/g_client.c:421
 msgid "Can't perform action - not on same team!\n"
 msgstr "No puedes hacerlo - no en el mismo equipo!\n"
 
-#: game/g_client.c:426
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "No puedes hacerlo - no tienes control sobre personajes aliados!\n"
 
-#: game/g_client.c:449
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "No puedes hacerlo - no es tu turno!\n"
 
-#: game/g_client.c:560
 #, fuzzy
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Currently shaken, won't let its guard down.\n"
 
-#: game/g_cmds.c:68
 #, c-format
 msgid "You can't talk for %d more seconds\n"
 msgstr "No puedes hablar durante %d tantos segundos\n"
 
-#: game/g_cmds.c:76
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr ""
 
-#: game/g_combat.c:380
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -16268,122 +15373,96 @@ msgstr ""
 "¡El soldado esta aturdido!\n"
 "¡El enemigo uso una granada flash!\n"
 
-#: game/g_combat.c:614
 #, fuzzy
 msgid "Can't perform action - impossible throw!\n"
 msgstr "No puedes hacerlo - no es un personaje!\n"
 
-#: game/g_combat.c:1085
 #, fuzzy
 msgid "Can't perform action - object not activatable!\n"
 msgstr "No puedes hacerlo - objeto no presente!\n"
 
-#: game/g_combat.c:1110
 #, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "No puedes hacerlo - el personaje está muerto!\n"
 
-#: game/g_combat.c:1117
 #, fuzzy
 msgid "Can't perform action - no ammo!\n"
 msgstr "No puedes hacerlo - no es un personaje!\n"
 
-#: game/g_combat.c:1125
 #, fuzzy
 msgid "Can't perform action - target out of range!\n"
 msgstr "No puedes hacerlo - no es un personaje!\n"
 
-#: game/g_combat.c:1171
 #, fuzzy
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "No puedes hacerlo - no tienes suficientes UT!\n"
 
-#: game/g_mission.c:48
 msgid "Aliens entered target zone\n"
 msgstr "Los alienigenas han entrado en la zona objetivo\n"
 
-#: game/g_mission.c:79
 #, fuzzy
 msgid "Item was placed\n"
 msgstr "No tiene asignado blindaje"
 
-#: game/g_mission.c:86
 msgid "Target zone is occupied\n"
 msgstr "La zona objetivo esta ocupada\n"
 
-#: game/g_morale.c:36
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s panics!\n"
 
-#: game/g_morale.c:97
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s is on a rampage.\n"
 
-#: game/g_morale.c:99
 #, fuzzy, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s is in mad rage!\n"
 
-#: game/g_morale.c:176
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s is currently shaken.\n"
 
-#: game/g_reaction.c:193
 #, fuzzy
 msgid "No reaction fire enabled weapon.\n"
 msgstr "Sin reacción de fuego"
 
-#: game/g_reaction.c:198
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "No hay modo de fuego para el fuego de reaccion.\n"
 
-#: game/g_reaction.c:203
 #, fuzzy
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "Parar investigación"
 
-#: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
 msgstr "4 Minutos para el final forzado de la ronda\n"
 
-#: game/g_round.c:48
 msgid "3 minutes left until forced round end\n"
 msgstr "3 Minutos para el final forzado de la ronda\n"
 
-#: game/g_round.c:51
 msgid "2 minutes left until forced round end\n"
 msgstr "2 Minutos para el final forzado de la ronda\n"
 
-#: game/g_round.c:54
 msgid "1 minute left until forced round end\n"
 msgstr "1 Minutos para el final forzado de la ronda\n"
 
-#: game/g_round.c:57
 msgid "30 seconds left until forced round end\n"
 msgstr "Faltan 30 segundos para el final de la ronda forzado\n"
 
-#: game/g_round.c:60
 msgid "15 seconds left until forced round end\n"
 msgstr "Faltan 15 segundos para el final de la ronda\n"
 
-#: game/g_round.c:68
 msgid "Current active team hit the max round time\n"
 msgstr "El equipo activo actual, a alcanzado el maximo de tiempo de ronda\n"
 
-#: po/OTHER_STRINGS:2
 #, fuzzy
 msgid "human"
 msgstr "Busan"
 
-#: po/OTHER_STRINGS:3
 #, fuzzy
 msgid "alien"
 msgstr "Aliens"
 
-#: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Tomar captura de pantalla"
 

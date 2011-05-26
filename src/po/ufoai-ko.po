@@ -21,7 +21,6 @@ msgstr "아프리카"
 msgid "Alienbase"
 msgstr "외계인기지"
 
-#: client/campaign/cp_base_callbacks.c:181
 msgid "Home"
 msgstr "PHALANX HQ"
 
@@ -97,7 +96,6 @@ msgstr "동양풍의 작은 공원"
 msgid "Harvester"
 msgstr "수확선"
 
-#: client/campaign/cp_base_callbacks.c:307
 msgid "Laboratory"
 msgstr "연구실"
 
@@ -134,7 +132,6 @@ msgstr "열대우림 마약상"
 msgid "Tropical UFO"
 msgstr "열대우림의 UFO"
 
-#: client/campaign/cp_missions.c:468
 msgid "Crashed UFO"
 msgstr "격추된 UFO"
 
@@ -366,7 +363,6 @@ msgstr "외계인 수용시설"
 msgid "Entrance"
 msgstr "출입구"
 
-#: client/campaign/cp_base_callbacks.c:297
 msgid "Storage"
 msgstr "창고"
 
@@ -376,7 +372,6 @@ msgstr "발전실"
 msgid "Command Centre"
 msgstr "지휘통제실"
 
-#: client/campaign/cp_base_callbacks.c:317
 msgid "Living Quarters"
 msgstr "숙소"
 
@@ -386,7 +381,6 @@ msgstr "대형 격납고"
 msgid "Small Hangar"
 msgstr "소형 격납고"
 
-#: client/campaign/cp_base_callbacks.c:312
 msgid "Workshop"
 msgstr "작업실"
 
@@ -396,7 +390,6 @@ msgstr "레이더"
 msgid "Advanced Radar"
 msgstr "개량된 레이더"
 
-#: client/campaign/cp_base_callbacks.c:327
 msgid "Hospital"
 msgstr "의무실"
 
@@ -2370,19 +2363,15 @@ msgstr "십자훈장"
 msgid "Coin"
 msgstr "Coin"
 
-#: client/campaign/cp_employee.c:230
 msgid "Scientist"
 msgstr "연구원"
 
-#: client/campaign/cp_employee.c:234
 msgid "Pilot"
 msgstr "조종사"
 
-#: client/campaign/cp_employee.c:236
 msgid "UGV"
 msgstr "무인전투차량"
 
-#: client/campaign/cp_employee.c:232
 msgid "Worker"
 msgstr "작업원"
 
@@ -2518,7 +2507,6 @@ msgstr "찌르기"
 msgid "Background"
 msgstr "역사적 배경"
 
-#: client/campaign/cp_map.c:360
 msgid "Aircraft"
 msgstr "항공기"
 
@@ -2844,8 +2832,6 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: client/campaign/cp_alienbase.c:169
-#: client/campaign/cp_missions.c:464
 msgid "Alien base"
 msgstr "외계인 기지"
 
@@ -8397,7 +8383,6 @@ msgstr "기지관리로 돌아가기"
 msgid "Name of this base"
 msgstr "기지 이름"
 
-#: client/campaign/cp_installation_callbacks.c:221
 msgid "Cancel"
 msgstr "취소"
 
@@ -8416,11 +8401,9 @@ msgstr "주간 버전:"
 msgid "Select whether you want to play at day- or nighttime."
 msgstr "야간이나 주간 중에 진행할 시간을 고르시기 바랍니다."
 
-#: client/campaign/cp_map.c:1408
 msgid "Night"
 msgstr "야간"
 
-#: client/campaign/cp_map.c:1408
 msgid "Day"
 msgstr "주간"
 
@@ -8457,20 +8440,15 @@ msgstr "이 장비를 분리합니다"
 msgid "Available equipment:"
 msgstr "사용가능 장비:"
 
-#: client/campaign/cp_fightequip_callbacks.c:135
 msgid "Weapons"
 msgstr "무기"
 
-#: client/campaign/cp_fightequip_callbacks.c:142
 msgid "Ammo"
 msgstr "탄약"
 
-#: client/campaign/cp_fightequip_callbacks.c:137
-#: client/campaign/cp_ufopedia.c:146
 msgid "Armour"
 msgstr "방탄복"
 
-#: client/campaign/cp_fightequip_callbacks.c:139
 msgid "Items"
 msgstr "항공 기자재"
 
@@ -8672,14 +8650,12 @@ msgstr "대응사격 1회(불가능)"
 msgid "No reaction fire"
 msgstr "대응사격없음"
 
-#: client/battlescape/cl_hud.c:828
 msgid "Reserve TUs for shooting."
 msgstr "사격을 위해 TU를 예약함."
 
 msgid "Equip Defence Weapons"
 msgstr "방어용 무기를 장비합니다"
 
-#: client/campaign/cp_base.c:2321
 msgid "Information"
 msgstr "기지 정보"
 
@@ -8725,15 +8701,9 @@ msgstr "건설시간:"
 msgid "Autofire"
 msgstr "자동발사"
 
-#: client/campaign/cp_base.c:924
-#: client/campaign/cp_base.c:934
-#: client/campaign/cp_base.c:944
-#: client/campaign/cp_base.c:957
-#: client/campaign/cp_installation_callbacks.c:220
 msgid "Destroy"
 msgstr "건물해체"
 
-#: client/campaign/cp_installation_callbacks.c:220
 msgid "Destroy installation"
 msgstr "설치물을 해체합니다"
 
@@ -8758,57 +8728,45 @@ msgstr "기지시설"
 msgid "Build base facilities"
 msgstr "기지시설을 건설합니다"
 
-#: client/campaign/cp_base_callbacks.c:287
 msgid "Aircraft management and crew equipment"
 msgstr "항공기 관리 및 승무원 장비착용"
 
 msgid "Buy/Sell"
 msgstr "재고관리"
 
-#: client/campaign/cp_base_callbacks.c:295
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "장비와 비행기 그리고 UGV를 구매/판매합니다."
 
-#: client/campaign/cp_base.c:925
-#: client/campaign/cp_base.c:935
-#: client/campaign/cp_base.c:945
 msgid "Transfer"
 msgstr "수송"
 
-#: client/campaign/cp_base_callbacks.c:300
 msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
 msgstr ""
 
 msgid "Research"
 msgstr "연구"
 
-#: client/campaign/cp_base_callbacks.c:305
 msgid "Research new technology"
 msgstr "새로운 기술을 연구합니다"
 
 msgid "Production"
 msgstr "생산"
 
-#: client/campaign/cp_base_callbacks.c:310
 msgid "Produce equipment, aircraft and UGV"
 msgstr "장비와 비행기 그리고 UGV를 생산합니다."
 
 msgid "Employees"
 msgstr "대원"
 
-#: client/campaign/cp_base_callbacks.c:315
 msgid "Hire or dismiss employees"
 msgstr "인원을 고용하거나 해고합니다."
 
-#: client/campaign/cp_base_callbacks.c:322
 msgid "Containment"
 msgstr "수용시설"
 
-#: client/campaign/cp_base_callbacks.c:320
 msgid "Manage captured aliens"
 msgstr "포획한 외계인을 관리합니다."
 
-#: client/campaign/cp_base_callbacks.c:325
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr ""
 
@@ -8827,11 +8785,6 @@ msgstr "건물 미리보기"
 msgid "Select building"
 msgstr "건물 선택"
 
-#: client/campaign/cp_ufopedia.c:119
-#: client/campaign/cp_ufopedia.c:610
-#: client/campaign/cp_ufopedia.c:663
-#: client/campaign/cp_ufopedia.c:672
-#: client/campaign/cp_ufopedia.c:832
 msgid "UFOpaedia"
 msgstr "UFO 백과사전"
 
@@ -9090,7 +9043,6 @@ msgstr "비용:"
 msgid "Radar tower"
 msgstr "레이더 타워"
 
-#: client/campaign/cp_map.c:354
 msgid "Base"
 msgstr "기지"
 
@@ -10044,14 +9996,12 @@ msgstr "낮음"
 msgid "Medium"
 msgstr "중간"
 
-#: client/cl_game_campaign.c:122
 msgid "Normal"
 msgstr "보통"
 
 msgid "High"
 msgstr "높음"
 
-#: client/battlescape/cl_actor.c:120
 msgid "Excellent"
 msgstr "훌륭함"
 
@@ -10484,11 +10434,9 @@ msgstr "행동 확인:"
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 msgstr ""
 
-#: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "예"
 
-#: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "아니오"
 
@@ -10573,7 +10521,6 @@ msgstr "승인"
 msgid "Use the previous resolution."
 msgstr "이전 해상도를 사용합니다."
 
-#: client/campaign/cp_produce_callbacks.c:255
 msgid "Disassembly"
 msgstr "해체"
 
@@ -10741,7 +10688,6 @@ msgstr "현재 창:"
 msgid "Current node:"
 msgstr "Current node:"
 
-#: client/cl_game_campaign.c:197
 msgid "Aliens"
 msgstr "외계인"
 
@@ -11087,105 +11033,78 @@ msgstr "체인건 벨트"
 msgid "Autocannon Module"
 msgstr "Autocannon Module"
 
-#: client/battlescape/cl_actor.c:106
 msgid "Poor"
 msgstr "나쁨"
 
-#: client/battlescape/cl_actor.c:108
 msgid "Mediocre"
 msgstr "보통"
 
-#: client/battlescape/cl_actor.c:110
 msgid "Average"
 msgstr "평균"
 
-#: client/battlescape/cl_actor.c:112
 msgid "Competent"
 msgstr "유능함"
 
-#: client/battlescape/cl_actor.c:114
 msgid "Proficient"
 msgstr "능숙함"
 
-#: client/battlescape/cl_actor.c:116
 msgid "Very Good"
 msgstr "매우 좋음"
 
-#: client/battlescape/cl_actor.c:118
 msgid "Highly Proficient"
 msgstr "숙달함"
 
-#: client/battlescape/cl_actor.c:122
 msgid "Outstanding"
 msgstr "뛰어남"
 
-#: client/battlescape/cl_actor.c:125
 msgid "Superhuman"
 msgstr "초인적"
 
-#: client/battlescape/cl_actor.c:655
 msgid "This isn't your round\n"
 msgstr "지금은 당신의 차례가 아닙니다\n"
 
-#: client/battlescape/cl_actor.c:917
 msgid "You cannot reload this unknown item.\n"
 msgstr "알 수 없는 물품을 재장전 할 수 없습니다.\n"
 
-#: client/battlescape/cl_actor.c:1756
 msgid "Unknown alien race"
 msgstr "알 수 없는 외계인 종족"
 
-#: client/battlescape/cl_actor.c:2400
 msgid "Toggle to next actor"
 msgstr "다음의 전투원를 선택"
 
-#: client/battlescape/cl_actor.c:2401
 msgid "Select an actor from list"
 msgstr "리스트에서 전투원를 선택"
 
-#: client/battlescape/cl_actor.c:2402
 msgid "Update an actor"
 msgstr "전투원의 이름을 변경합니다"
 
-#: client/battlescape/cl_actor.c:2404
 msgid "Toggle stand/crounch"
 msgstr "일어서기/앉기 교체"
 
-#: client/battlescape/cl_actor.c:2405
 msgid "Toggle the headgear"
 msgstr "헤드기어 사용 토글"
 
-#: client/battlescape/cl_actor.c:2406
 msgid "Opens or closes a door"
 msgstr "문을 열거나 닫습니다"
 
-#: client/battlescape/cl_actor.c:2407
 msgid "Confirm the current action"
 msgstr "현재 행동을 실행"
 
-#: client/battlescape/cl_actor.c:2408
 msgid "Toggle to next alien visible from selected actor."
 msgstr "현재 대원에서 부터 다음 보이는 외계인으로 토글"
 
-#: client/battlescape/cl_actor.c:2410
 msgid "Toggle to next alien"
 msgstr "다음 외계인을 선택합니다"
 
-#: client/battlescape/cl_hud.c:97
-#: client/battlescape/cl_hud.c:100
 msgid "Crouch walk"
 msgstr "높은 포복"
 
-#: client/battlescape/cl_hud.c:98
 msgid "Autostand"
 msgstr "자동서기"
 
-#: client/battlescape/cl_hud.c:99
 msgid "Walk"
 msgstr "걷기"
 
-#: client/battlescape/cl_hud.c:148,
-#: c-format
 msgid ""
 "%s\n"
 "HP: %i/%i TU: %i\n"
@@ -11195,81 +11114,63 @@ msgstr ""
 "HP: %i/%i TU: %i\n"
 "%s"
 
-#: client/battlescape/cl_hud.c:300
 msgid "[0 TU] No reservation"
 msgstr "[0 TU] 예약된 행동 없음"
 
-#: client/battlescape/cl_hud.c:320
 #, c-format
 msgid "[%i TU] %s"
 msgstr "[%i TU] %s"
 
-#: client/battlescape/cl_hud.c:352
 msgid "Reserve TUs for firing/using."
 msgstr "사격 및 행동을 위해 TU를 예약함."
 
-#: client/battlescape/cl_hud.c:352
 msgid "Shot Reservation"
 msgstr "사격 예약"
 
-#: client/battlescape/cl_hud.c:445
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "남은 행동력: %i"
 
-#: client/battlescape/cl_hud.c:448
 msgid "No remaining TUs left after shot."
 msgstr "다음 공격을 위한 행동력이 부족합니다."
 
-#: client/battlescape/cl_hud.c:451
 #, c-format
 msgid "TU: %i"
 msgstr "행동력: %i"
 
-#: client/battlescape/cl_hud.c:452
 #, c-format
 msgid "Shots: %i"
 msgstr "사용탄수: %i"
 
-#: client/battlescape/cl_hud.c:672
 msgid "No weapon."
 msgstr "무기가 없음."
 
-#: client/battlescape/cl_hud.c:681
 msgid "Weapon cannot be reloaded."
 msgstr "재장전 할 수 없는 무기입니다."
 
-#: client/battlescape/cl_hud.c:687
 msgid "No reload possible, already fully loaded."
 msgstr "탄창이 가득 차 있어, 다시 장전할 수 없습니다."
 
-#: client/battlescape/cl_hud.c:697
 msgid "Not enough TUs for reloading weapon."
 msgstr "무기를 장전하기엔 행동력이 부족합니다."
 
-#: client/battlescape/cl_hud.c:700
 msgid "No reload possible, you don't have backup ammo."
 msgstr "보조탄약이 부족하여 장전할 수 없습니다."
 
-#: client/battlescape/cl_hud.c:792
 msgid "Not enough TUs for standing up."
 msgstr "일어서기에는 행동력이 부족합니다."
 
-#: client/battlescape/cl_hud.c:795
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "일어서기 (%i 행동력)"
 
-#: client/battlescape/cl_hud.c:800
 msgid "Not enough TUs for crouching."
 msgstr "쭈그려 앉기에는 행동력이 부족합니다.."
 
-#: client/battlescape/cl_hud.c:803
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "웅크리기 (%i 행동력)"
 
-#: client/battlescape/cl_hud.c:811
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -11278,16 +11179,13 @@ msgstr ""
 "%i 의 TU가 앉거나 일어서는데 예약되었습니다.\n"
 "클릭하면 사라집니다."
 
-#: client/battlescape/cl_hud.c:815
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "%i 의 TU를 앉거나 일어서는데 예약합니다."
 
-#: client/battlescape/cl_hud.c:818
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "앉거나 일어서는 행동을 예약하기 위한 TU가 부족합니다."
 
-#: client/battlescape/cl_hud.c:824
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -11298,17 +11196,13 @@ msgstr ""
 "바꾸려면 클릭하십시오.\n"
 "오른쪽 클릭하면 사라집니다."
 
-#: client/battlescape/cl_hud.c:831
 msgid "Reserving TUs for shooting not possible."
 msgstr "사격을 위해 TU를 예약할 수 없습니다."
 
-#: client/battlescape/cl_hud.c:852
-#: client/battlescape/cl_hud.c:861
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "탄약 재장전 (%i TU)."
 
-#: client/battlescape/cl_hud.c:1109
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -11316,7 +11210,6 @@ msgstr ""
 "미지의 아이템을 사용할 수 없습니다.\n"
 "이 아이템을 사용하기 위해서는 연구가 필요합니다.\n"
 
-#: client/battlescape/cl_hud.c:1130
 #, c-format
 msgid ""
 "%s\n"
@@ -11325,17 +11218,14 @@ msgstr ""
 "%s\n"
 "(비었음)\n"
 
-#: client/battlescape/cl_hud.c:1152
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "심리 %i | 예약된 TU: %i\n"
 
-#: client/battlescape/cl_hud.c:1154
 #, c-format
 msgid "Morale  %i"
 msgstr "사기  %i"
 
-#: client/battlescape/cl_hud.c:1159
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -11344,7 +11234,6 @@ msgstr ""
 "심리 %i | 예약된 TU: %i\n"
 "%s %i (%i|%i TU 남음)\n"
 
-#: client/battlescape/cl_hud.c:1163
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -11353,7 +11242,6 @@ msgstr ""
 "사기  %i\n"
 "%s %i (행동력 %i 남음)\n"
 
-#: client/battlescape/cl_hud.c:1195
 #, c-format
 msgid ""
 "Time Units\n"
@@ -11366,20 +11254,15 @@ msgstr ""
 "- 예약: %i\n"
 "- 남음: %i\n"
 
-#: client/battlescape/cl_hud.c:1290
 msgid "Currently panics!\n"
 msgstr "겁에 질려있습니다!\n"
 
-#: client/battlescape/cl_hud.c:1466
 msgid "Update cvars from actor from list"
 msgstr "리스트에서 전투원를 선택"
 
-#: client/battlescape/cl_hud_callbacks.c:86
-#: client/battlescape/cl_hud_callbacks.c:240
 msgid "No item in hand.\n"
 msgstr "손에 아무것도 없습니다.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:92
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -11387,7 +11270,6 @@ msgstr ""
 "행동을 취할 수 없습니다:\n"
 "탄약이 없습니다.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:97
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -11395,8 +11277,6 @@ msgstr ""
 "이 무기는\n"
 "한손으로 사용할 수 없습니다.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:151
-#: client/battlescape/cl_hud_callbacks.c:258
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -11404,7 +11284,6 @@ msgstr ""
 "행동을 취할 수 없습니다:\n"
 "행동력이 부족합니다\n"
 
-#: client/battlescape/cl_hud_callbacks.c:246
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -11412,7 +11291,6 @@ msgstr ""
 "행동을 취할 수 없습니다:\n"
 "탄창교환이 불가능한 무기입니다.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:253
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -11420,293 +11298,167 @@ msgstr ""
 "행동을 취할 수 없습니다:\n"
 "탄약이 맞지 않습니다.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:288
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "왼손 무기의 탄약 재장전"
 
-#: client/battlescape/cl_hud_callbacks.c:289
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "오른손 무기의 탄약 재장전"
 
-#: client/battlescape/cl_hud_callbacks.c:290
 msgid "Toggle reservation for crouching."
 msgstr "대응사격모드의 토글"
 
-#: client/battlescape/cl_hud_callbacks.c:291
 msgid "Toggle reaction fire"
 msgstr "대응사격모드의 토글"
 
-#: client/battlescape/cl_view.c:59
-#: client/battlescape/cl_view.c:84
 #, c-format
 msgid "loading %s"
 msgstr "불러오는 중 %s"
 
-#: client/battlescape/cl_view.c:67
 msgid "loading models..."
 msgstr "모델 불러오는 중..."
 
-#: client/battlescape/cl_view.c:119
-#: client/cl_main.c:1024
 msgid "Awaiting game start"
 msgstr "게임 시작을 기다리고 있습니다"
 
-#: client/battlescape/events/e_server.c:51
 msgid "Ends current round"
 msgstr "이번 차례를 종료함"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:160
 #, c-format
 msgid "Enemy spotted: %s!"
 msgstr "적 발견: %s!"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:163
 msgid "Enemy spotted!\n"
 msgstr "적을 발견했습니다!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:165
 msgid "Civilian spotted!\n"
 msgstr "민간인을 발견했습니다!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:79
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s가 기절했습니다.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:81
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s가 사망했습니다.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:89
 msgid "A civilian was stunned.\n"
 msgstr "민간인이 기절했습니다.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:91
 msgid "A civilian was killed.\n"
 msgstr "민간인이 사망했습니다.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:95
 msgid "An alien was stunned.\n"
 msgstr "외계인이 기절했습니다.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:97
 msgid "An alien was killed.\n"
 msgstr "외계인을 사살했습니다.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:101
 msgid "A soldier was stunned.\n"
 msgstr "전투원이 기절했습니다.: %s\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:103
 msgid "A soldier was killed.\n"
 msgstr "전투원이 사망했습니다.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:107
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "분대원 %i가 기절했습니다.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:109
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "분대원 %i가 사망했습니다.\n"
 
-#: client/battlescape/events/event/player/e_event_doendround.c:57
 msgid "Your round started!\n"
 msgstr "당신의 차례입니다!\n"
 
-#: client/campaign/cp_aircraft.c:439
 msgid "ON RED ALERT"
 msgstr "적색경보"
 
-#: client/campaign/cp_aircraft.c:443
 msgid "Nothing - should not be displayed"
 msgstr "Nothing - should not be displayed"
 
-#: client/campaign/cp_aircraft.c:445
 msgid "at home base"
 msgstr "기지에 대기 중"
 
-#: client/campaign/cp_aircraft.c:447
 msgid "refuelling"
 msgstr "급유 중"
 
-#: client/campaign/cp_aircraft.c:449
 msgid "idle"
 msgstr "대기 중"
 
-#: client/campaign/cp_aircraft.c:451
 msgid "in transit"
 msgstr "목적지로 이동 중"
 
-#: client/campaign/cp_aircraft.c:453
 msgid "enroute to mission"
 msgstr "임무 목적지로 이동"
 
-#: client/campaign/cp_aircraft.c:455
 msgid "pursuing a UFO"
 msgstr "UFO 추격 중"
 
-#: client/campaign/cp_aircraft.c:457
 msgid "ready to drop soldiers"
 msgstr "대원을 투하할 준비를 함"
 
-#: client/campaign/cp_aircraft.c:459
 msgid "intercepting a UFO"
 msgstr "요격 중"
 
-#: client/campaign/cp_aircraft.c:461
 msgid "enroute to new home base"
 msgstr "새로운 기지로 이동"
 
-#: client/campaign/cp_aircraft.c:463
 msgid "returning to base"
 msgstr "기지로 귀환 중"
 
-#: client/campaign/cp_aircraft.c:537
 msgid "Interceptor"
 msgstr "요격기"
 
-#: client/campaign/cp_aircraft.c:539
 msgid "Transporter"
 msgstr "수송기"
 
-#: client/campaign/cp_aircraft.c:541
-#: client/campaign/cp_ufo.c:118
-#: client/campaign/cp_ufo.c:119
 msgid "UFO"
 msgstr "UFO"
 
-#: client/campaign/cp_aircraft.c:812
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "새로운 %s 가 %s 에서 준비되었습니다."
 
-#: client/campaign/cp_aircraft.c:813
-#: client/campaign/cp_aircraft.c:1241
-#: client/campaign/cp_aircraft.c:1257
-#: client/campaign/cp_aircraft.c:1303
-#: client/campaign/cp_aircraft.c:1380
-#: client/campaign/cp_aircraft.c:1404
-#: client/campaign/cp_aircraft.c:2171
-#: client/campaign/cp_aircraft_callbacks.c:96
-#: client/campaign/cp_aircraft_callbacks.c:104
-#: client/campaign/cp_aircraft_callbacks.c:112
-#: client/campaign/cp_airfight.c:335
-#: client/campaign/cp_airfight.c:355
-#: client/campaign/cp_aliencont.c:195
-#: client/campaign/cp_aliencont.c:225
-#: client/campaign/cp_aliencont.c:244
-#: client/campaign/cp_aliencont.c:254
-#: client/campaign/cp_base.c:902
-#: client/campaign/cp_base.c:1444
-#: client/campaign/cp_base.c:2559
-#: client/campaign/cp_base.c:2564
-#: client/campaign/cp_base.c:3300
-#: client/campaign/cp_base_callbacks.c:69
-#: client/campaign/cp_base_callbacks.c:185
-#: client/campaign/cp_base_callbacks.c:234
-#: client/campaign/cp_base_callbacks.c:571
-#: client/campaign/cp_base_callbacks.c:577
-#: client/campaign/cp_base_callbacks.c:599
-#: client/campaign/cp_base_callbacks.c:609
-#: client/campaign/cp_base_callbacks.c:621
-#: client/campaign/cp_base_callbacks.c:628
-#: client/campaign/cp_base_callbacks.c:636
-#: client/campaign/cp_base_callbacks.c:641
-#: client/campaign/cp_base_callbacks.c:646
-#: client/campaign/cp_campaign.c:1118
-#: client/campaign/cp_campaign.c:1168
-#: client/campaign/cp_campaign.c:1218
-#: client/campaign/cp_campaign.c:1220
-#: client/campaign/cp_installation_callbacks.c:153
-#: client/campaign/cp_mapfightequip.c:355
-#: client/campaign/cp_mapfightequip.c:376
-#: client/campaign/cp_mapfightequip.c:382
-#: client/campaign/cp_mapfightequip.c:394
-#: client/campaign/cp_market_callbacks.c:612
-#: client/campaign/cp_market_callbacks.c:617
-#: client/campaign/cp_missions.c:802
-#: client/campaign/cp_missions.c:1174
-#: client/campaign/cp_nations.c:89
-#: client/campaign/cp_nations.c:101
-#: client/campaign/cp_nations.c:120
-#: client/campaign/cp_nations.c:131
-#: client/campaign/cp_nations.c:137
-#: client/campaign/cp_nations.c:145
-#: client/campaign/cp_popup.c:506
-#: client/campaign/cp_produce.c:491
-#: client/campaign/cp_produce.c:501
-#: client/campaign/cp_produce.c:513
-#: client/campaign/cp_produce.c:523
-#: client/campaign/cp_produce.c:584
-#: client/campaign/cp_research_callbacks.c:563
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:587
-#: client/campaign/cp_research_callbacks.c:626
-#: client/campaign/cp_research_callbacks.c:656
-#: client/campaign/cp_research_callbacks.c:823
-#: client/campaign/cp_research_callbacks.c:826
-#: client/campaign/cp_ufo.c:399
-#: client/campaign/cp_ufo.c:779
-#: client/campaign/cp_ufo.c:783
-#: client/campaign/cp_ufo.c:788
-#: client/campaign/missions/cp_mission_baseattack.c:127
-#: client/cl_main.c:408
-#: client/multiplayer/mp_serverlist.c:469
 msgid "Notice"
 msgstr "통지"
 
-#: client/campaign/cp_aircraft.c:879
 msgid "No operational hangars at that base."
 msgstr "기지에 가동 중인 격납고가 없습니다."
 
-#: client/campaign/cp_aircraft.c:883
 msgid "No free hangars at that base."
 msgstr "기지에 비어있는 격납고가 없습니다."
 
-#: client/campaign/cp_aircraft.c:886
 msgid "Insufficient free crew quarter space at that base."
 msgstr "기지에 대원들이 있을 공간이 부족합니다,"
 
-#: client/campaign/cp_aircraft.c:889
 msgid "Insufficient storage space at that base."
 msgstr "기지의 창고에 여유 공간이 부족합니다."
 
-#: client/campaign/cp_aircraft.c:893
 msgid "That base is beyond this aircraft's range."
 msgstr "기지가 항공기의 항속거리 밖에 있습니다."
 
-#: client/campaign/cp_aircraft.c:1240
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "%s 항공기가 %s 에서 완전하게 급유하지 못했습니다. 반물질이 충분하지 않습니다."
 
-#: client/campaign/cp_aircraft.c:1256
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "%s 항공기가 %s에서 연료 충전을 완료했습니다."
 
-#: client/campaign/cp_aircraft.c:1303
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "%s 항공기에 연료가 얼마 남지 않았고, 기지로 귀환중입니다."
 
-#: client/campaign/cp_aircraft.c:1380
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "항공기에 한명 이상의 대원을 탑승시켜야 합니다."
 
-#: client/campaign/cp_aircraft.c:1404
 msgid "Insufficient fuel."
 msgstr "연료부족."
 
-#: client/campaign/cp_aircraft.c:2171
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "%s 항공기가 UFO를 추격하기에는 연료가 부족합니다: %s 로 귀환합니다."
 
-#: client/campaign/cp_aircraft_callbacks.c:96
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
@@ -11716,7 +11468,6 @@ msgstr ""
 "\n"
 "항공기가 발진할 수 없습니다.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:104
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
@@ -11726,120 +11477,85 @@ msgstr ""
 "\n"
 "항공기가 발진할 수 없습니다.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:112
 msgid "Aircraft started"
 msgstr "항공기를 발진시킵니다"
 
-#: client/campaign/cp_aircraft_callbacks.c:216
-#: client/campaign/cp_map.c:1693
-#: client/campaign/cp_map.c:1700
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "속도:\t%i km/h\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:218
-#: client/campaign/cp_map.c:1694
-#: client/campaign/cp_map.c:1701
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "연료:\t%i/%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:220
-#: client/campaign/cp_ufopedia.c:345
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "작전반경:\t%i km\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:221
 #, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "무장:\t장착 %i / 최대 %i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:222
 #, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "방어장비:\t장착 %i / 최대 1\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:223
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "전자장비:\t장착 %i / 최대 %i"
 
-#: client/campaign/cp_airfight.c:335
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "UFO가 %s를 공격합니다."
 
-#: client/campaign/cp_airfight.c:355
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "항공기에 더 이상의 잔탄이 없습니다 - 현재 기지로 귀환중입니다."
 
-#: client/campaign/cp_airfight.c:434
-#: client/campaign/cp_airfight.c:461
 msgid "Interception"
 msgstr "요격"
 
-#: client/campaign/cp_airfight.c:434
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO의 요격에 성공했습니다. -- UFO가 바다에 추락했습니다."
 
-#: client/campaign/cp_airfight.c:461
-#: client/campaign/cp_campaign.c:1220
 msgid "You've lost the battle"
 msgstr "전투에 패배했습니다"
 
-#: client/campaign/cp_aliencont.c:195
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "외계인을 아직 처리할 수 없습니다. 외계인 수용시설이 기지에 준비되지 않았습니다."
 
-#: client/campaign/cp_aliencont.c:225
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "살아있는 외계인을 포획하지 못했습니다. 외계인이 죽었습니다."
 
-#: client/campaign/cp_aliencont.c:244
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr "외계인 수용시설이 수용인원이 가득 찼습니다. 몇몇 외계인을 처리해야 합니다."
 
-#: client/campaign/cp_aliencont.c:254
 msgid "You've captured new aliens."
 msgstr "새로운 외계인을 포획했습니다."
 
-#: client/campaign/cp_aliencont_callbacks.c:205
 msgid "Already researched"
 msgstr "이미 연구되어 있습니다"
 
-#: client/campaign/cp_aliencont_callbacks.c:207
 msgid "Needs autopsy!"
 msgstr "부검이 필요합니다!"
 
-#: client/campaign/cp_aliencont_callbacks.c:230
 msgid "Free slot"
 msgstr "빈 공간"
 
-#: client/campaign/cp_aliencont_callbacks.c:231
-#: client/campaign/cp_basedefence_callbacks.c:219
-#: client/campaign/cp_ufopedia.c:228
-#: client/input/cl_joystick.c:278
 msgid "None"
 msgstr "없음"
 
-#: client/campaign/cp_base.c:902
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "기지가 공격당했습니다. 이 건물을 파괴할 수 없습니다."
 
-#: client/campaign/cp_base.c:913
 msgid "Destroy Entrance"
 msgstr "출입로 봉쇄 및 파괴"
 
-#: client/campaign/cp_base.c:913
 msgid "You can't destroy the entrance of the base!"
 msgstr "기지의 출입구를 파괴할 수 없습니다!"
 
-#: client/campaign/cp_base.c:922
 msgid "Destroy Hangar"
 msgstr "격납고 파괴"
 
-#: client/campaign/cp_base.c:922
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -11847,32 +11563,21 @@ msgstr ""
 "격납고를 파괴한다면, 격납고 내부의 항공기도 파괴됩니다.\n"
 "정말 이 건물을 파괴하시겠습니까?"
 
-#: client/campaign/cp_base.c:923
 msgid "Go to hangar"
 msgstr "격납고로 돌아갑니다"
 
-#: client/campaign/cp_base.c:923
 msgid "Go to hangar without destroying building"
 msgstr "건물을 파괴하지 않고 격납고로 갑니다"
 
-#: client/campaign/cp_base.c:924
-#: client/campaign/cp_base.c:934
-#: client/campaign/cp_base.c:944
-#: client/campaign/cp_base.c:957
 msgid "Destroy the building"
 msgstr "건물을 해체합니다"
 
-#: client/campaign/cp_base.c:926
-#: client/campaign/cp_base.c:936
-#: client/campaign/cp_base.c:946
 msgid "Go to transfer menu without destroying the building"
 msgstr "건물을 파괴하지 않고 수송 메뉴로 갑니다"
 
-#: client/campaign/cp_base.c:932
 msgid "Destroy Quarter"
 msgstr "기지 파기"
 
-#: client/campaign/cp_base.c:932
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -11880,19 +11585,15 @@ msgstr ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 
-#: client/campaign/cp_base.c:933
 msgid "Dismiss"
 msgstr "해산"
 
-#: client/campaign/cp_base.c:933
 msgid "Go to hiring menu without destroying building"
 msgstr "Go to hiring menu without destroying building"
 
-#: client/campaign/cp_base.c:942
 msgid "Destroy Storage"
 msgstr "창고 파괴"
 
-#: client/campaign/cp_base.c:942
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -11900,200 +11601,143 @@ msgstr ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
 
-#: client/campaign/cp_base.c:943
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Go to buy/sell menu without destroying building"
 
-#: client/campaign/cp_base.c:943
 msgid "Go to storage"
 msgstr "창고로 이동"
 
-#: client/campaign/cp_base.c:955
 msgid "Are you sure you want to destroy this building?"
 msgstr "이 건물을 해체하시겠습니까?"
 
-#: client/campaign/cp_base.c:955
 msgid "Destroy building"
 msgstr "건물 해체"
 
-#: client/campaign/cp_base.c:974
 msgid "Not set"
 msgstr "설정되지 않음"
 
-#: client/campaign/cp_base.c:980
 #, c-format
 msgid "Already %i in base"
 msgstr "이미 기지에 %i개 존재하고 있습니다"
 
-#: client/campaign/cp_base.c:986
 msgid "Construction finished"
 msgstr "건설이 완료되었습니다"
 
-#: client/campaign/cp_base.c:990
 msgid "Working 100%"
 msgstr "100% 동작 중"
 
-#: client/campaign/cp_base.c:994
 msgid "Not operational, depends on"
 msgstr "Not operational, depends on"
 
-#: client/campaign/cp_base.c:998
 msgid "Down"
 msgstr "다운"
 
-#: client/campaign/cp_base.c:1444
 msgid "Not enough credits to build this\n"
 msgstr "건설하기 위한 자금이 부족합니다\n"
 
-#: client/campaign/cp_base.c:1526
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "건설비용:\t%i c\n"
 
-#: client/campaign/cp_base.c:1529
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i 일 후에 완공됩니다.\n"
 msgstr[1] "%i 일 후에 완공됩니다.\n"
 
-#: client/campaign/cp_base.c:1532
-#: client/campaign/cp_ufopedia.c:231
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "유지비:\t%i c\n"
 
-#: client/campaign/cp_base.c:1535
-#: client/campaign/cp_ufopedia.c:228
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "필요시설:\t%s\n"
 
-#: client/campaign/cp_base.c:2308
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "기지에 항공기가 없습니다 - 구매하거나 다른 기지에서 수송해 오셔야 합니다\n"
 
-#: client/campaign/cp_base.c:2308
-#: client/campaign/cp_base.c:2310
-#: client/campaign/cp_market_callbacks.c:594
-#: client/campaign/cp_market_callbacks.c:599
-#: client/campaign/cp_market_callbacks.c:707
-#: client/campaign/cp_market_callbacks.c:709
-#: client/campaign/cp_save.c:380
-#: client/multiplayer/mp_team.c:254
-#: client/multiplayer/mp_team.c:275
 msgid "Note"
 msgstr "Note"
 
-#: client/campaign/cp_base.c:2310
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "기지에 항공기가 없습니다 - 항공기를 먼저 구매하십시오\n"
 
-#: client/campaign/cp_base.c:2320
 msgid "Antimatter (current/max):"
 msgstr "반물질 (현재/최대):"
 
-#: client/campaign/cp_base.c:2466
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "%s 건물의 건설이 %s 기지에서 완공되었습니다."
 
-#: client/campaign/cp_base.c:2467
 msgid "Building finished"
 msgstr "건설이 완료되었습니다"
 
-#: client/campaign/cp_base.c:2557
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "%s개를 매각하고 %i 크레디트를 입수했습니다"
 
-#: client/campaign/cp_base.c:2558
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i개의 입수한 아이템"
 msgstr[1] "%i개의 입수한 아이템"
 
-#: client/campaign/cp_base.c:2562
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "%s 기지의 창고에 저장할 공간이 충분하지 않습니다. %s"
 
-#: client/campaign/cp_base.c:2563
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i개의 항목을 %i에 팔았습니다."
 msgstr[1] "%i개의 항목들을 %i에 팔았습니다."
 
-#: client/campaign/cp_base.c:3298
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "%s 기지에 반물질 창고가 없습니다. %i개의 반물질이 소실됩니다."
 
-#: client/campaign/cp_base_callbacks.c:69,
-#: c-format
 msgid "%s has been destroyed by an antimatter storage breach."
 msgstr "반물질 창고의 균열로 인해 %s가 파괴되었습니다."
 
-#: client/campaign/cp_base_callbacks.c:177
 #, c-format
 msgid "Base #%i"
 msgstr "%i번 기지"
 
-#: client/campaign/cp_base_callbacks.c:185
 msgid "You've reached the base limit."
 msgstr "기지를 더 이상 지을 수 없습니다"
 
-#: client/campaign/cp_base_callbacks.c:218
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "새로운 기지를 건설했습니다: %s (국가: %s)"
 
-#: client/campaign/cp_base_callbacks.c:220
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "새로운 기지를 건설했습니다: %s "
 
-#: client/campaign/cp_base_callbacks.c:221
 msgid "Base built"
 msgstr "기지건설"
 
-#: client/campaign/cp_base_callbacks.c:234
 msgid "Not enough credits to set up a new base."
 msgstr "새로운 기지를 건설하기 위한 자금이 부족합니다."
 
-#: client/campaign/cp_base_callbacks.c:289
 msgid "Buy or produce at least one aircraft first."
 msgstr "한대 이상의 항공기를 구매하거나 생산합니다"
 
-#: client/campaign/cp_base_callbacks.c:291
 msgid "No Hangar functional in base."
 msgstr "이 기지에는 사용가능한 격납고가 없습니다."
 
-#: client/campaign/cp_base_callbacks.c:297
-#: client/campaign/cp_base_callbacks.c:307
-#: client/campaign/cp_base_callbacks.c:312
-#: client/campaign/cp_base_callbacks.c:317
-#: client/campaign/cp_base_callbacks.c:322
-#: client/campaign/cp_base_callbacks.c:327,
-#: c-format
 msgid "No %s functional in base."
 msgstr "기지에 가동 중인 %s가 없습니다."
 
-#: client/campaign/cp_base_callbacks.c:302
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "장비나 인원을 이동합니다"
 
-#: client/campaign/cp_base_callbacks.c:571
 msgid "Base is under attack, you can't access this building !"
 msgstr "기지가 공격당했습니다. 이 건물에 들어갈 수 없습니다."
 
-#: client/campaign/cp_base_callbacks.c:577
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "항공기를 사용하기 위해서는 하나 이상의 격납고가 필요 합니다."
 
-#: client/campaign/cp_base_callbacks.c:597
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -12108,153 +11752,113 @@ msgstr[1] ""
 "%i 일 내에 건설이 완료될 예정입니다.\n"
 "입주까지 조금만 더 기다려 주십시오."
 
-#: client/campaign/cp_base_callbacks.c:608
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "%s 를 건설해야 %s 건물을 사용할 수 있습니다."
 
-#: client/campaign/cp_base_callbacks.c:619
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "%s 건물이 아직 완공되지 않았고, %s 건물을 사용하기 위해 필요합니다."
 
-#: client/campaign/cp_base_callbacks.c:626,
-#: c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 
-#: client/campaign/cp_base_callbacks.c:634
-#: client/campaign/cp_base_callbacks.c:639
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "%s 를 고용해야 %s 건물을 사용할 수 있습니다."
 
-#: client/campaign/cp_base_callbacks.c:645
 #, c-format
 msgid "Build a %s first."
 msgstr "%s 건물을 먼저 건설하십시오."
 
-#: client/campaign/cp_base_callbacks.c:673
 msgid "^BAircraft\n"
 msgstr "^B항공기\n"
 
-#: client/campaign/cp_base_callbacks.c:680
 msgid "^BEmployees\n"
 msgstr "^B대원\n"
 
-#: client/campaign/cp_base_callbacks.c:689
 msgid "^BAliens\n"
 msgstr "^B외계인\n"
 
-#: client/campaign/cp_base_callbacks.c:701
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^B건물\t\t\t\t\t\t용적\t\t\t\t수량\n"
 
-#: client/campaign/cp_base_callbacks.c:725
 msgid "day"
 msgid_plural "days"
 msgstr[0] "일"
 msgstr[1] "일"
 
-#: client/campaign/cp_base_callbacks.c:735
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^B생산\t\t\t\t\t\t수량\t\t\t\t진행률\n"
 
-#: client/campaign/cp_base_callbacks.c:755
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:759
-#: client/campaign/cp_base_callbacks.c:775
 msgid "Nothing\n"
 msgstr "없음\n"
 
-#: client/campaign/cp_base_callbacks.c:764
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^B연구\t\t\t\t\t\t연구원\t\t\t\t진행률\n"
 
-#: client/campaign/cp_base_callbacks.c:769
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:834
-#: client/campaign/cp_campaign.c:750
-#: client/campaign/cp_market_callbacks.c:305
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/campaign/cp_basedefence_callbacks.c:149,
-#: c-format
 msgid "%i: empty"
 msgstr "%i: 비었음"
 
-#: client/campaign/cp_basedefence_callbacks.c:155
 msgid "Working"
 msgstr "작동 중"
 
-#: client/campaign/cp_basedefence_callbacks.c:157
 msgid "Installing"
 msgstr "설치"
 
-#: client/campaign/cp_basedefence_callbacks.c:159
 msgid "Replacing"
 msgstr "교체"
 
-#: client/campaign/cp_basedefence_callbacks.c:161
 msgid "Removing"
 msgstr "제거"
 
-#: client/campaign/cp_basedefence_callbacks.c:283
 msgid "No defence of this type in this installation"
 msgstr "No defence of this type in this installation"
 
-#: client/campaign/cp_basedefence_callbacks.c:290
-#: client/campaign/cp_basedefence_callbacks.c:297
 msgid "No defence of this type in this base"
 msgstr "No defence of this type in this base"
 
-#: client/campaign/cp_campaign.c:334
 msgid "You've gone too far into debt."
 msgstr "빚더미 속에 빠져버렸습니다."
 
-#: client/campaign/cp_campaign.c:342
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "기지가 파괴되었고, 새로운 기지를 지을 충분한 돈을 가지고 있지 않습니다."
 
-#: client/campaign/cp_campaign.c:348
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "당신이 지구를 지키겠다는 선서는 무효로 돌아갔습니다. 우리의 집과 우리의 가족들은 외계인의 질병에 감염되었습니다. 지구상에는 극소수의 사람만이 살아남았고, 더 이상 나무에 열매는 열리지 않을 것입니다. 더 이상 명령의 명령은 무의미 합니다; PHALNAX가 더 이상 존재 할 수 없습니다. Nothing stands between the aliens and total victory."
 
-#: client/campaign/cp_campaign.c:366
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "당신의 지휘하의 PHALANX 국가 보호 작전들은 줄곧 실패했습니다. UN은 당신의 수행 결과에 불만을 품고 당신을 사령관에서 파면하고 PHALANX 프로젝트를 해산하기로 결정했습니다. 더 이상의 초국가적인 협동은 이루어지지 않습니다. 지구의 국가들은 독립적으로 외계인에 저항을 시도 하였으나, 결국 하나둘씩 몰락해 갔습니다."
 
-#: client/campaign/cp_campaign.c:1118
 msgid "Collected dead alien bodies"
 msgstr "외계인 사체를 수거했습니다."
 
-#: client/campaign/cp_campaign.c:1168
 msgid "Your dropship is not near the landing zone"
 msgstr "수송선이 착륙지점 근처에 있지 않습니다"
 
-#: client/campaign/cp_campaign.c:1218
 msgid "You've won the battle"
 msgstr "전투에 승리했습니다"
 
-#: client/campaign/cp_campaign.c:1237
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "사살한 외계인\t%i\n"
 
-#: client/campaign/cp_campaign.c:1238
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "포획한 외계인\t%i\n"
 
-#: client/campaign/cp_campaign.c:1239
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12263,22 +11867,18 @@ msgstr ""
 "생존한 외계인\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1241
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "외계인에게 살해된 PHALANX 전투원수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1242
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "행방불명의 PHALANX 전투원수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1243
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "오발에 의한 PHALANX 사상자수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1244
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12287,17 +11887,14 @@ msgstr ""
 "PHALANX의 생존자수\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1246
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "외계인에게 살해된 시민의 수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1247
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "오발에 의한 시민 사상자수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1248
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12306,18 +11903,14 @@ msgstr ""
 "구출한 시민의 수\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1249
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "입수한 아이템 (종류수/총량)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1319
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s이(가) %s(으)로 진급했습니다.\n"
 
-#: client/campaign/cp_campaign.c:1321,
-#: c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
@@ -12325,19 +11918,15 @@ msgstr ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 
-#: client/campaign/cp_campaign.c:1322
 msgid "Soldier promoted"
 msgstr "전투원이 진급했습니다"
 
-#: client/campaign/cp_employee.c:228
 msgid "Soldier"
 msgstr "전투원"
 
-#: client/campaign/cp_employee.c:493
 msgid "Not enough quarters"
 msgstr "숙소가 부족합니다"
 
-#: client/campaign/cp_employee.c:493
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -12345,184 +11934,135 @@ msgstr ""
 "대원들을 위한 숙소가 부족합니다.\n"
 "숙소를 더 건설하십시오."
 
-#: client/campaign/cp_employee_callbacks.c:274
-#: client/campaign/cp_employee_callbacks.c:328
 msgid "Could not fire employee"
 msgstr "고용된 인원을 해고할 수 없습니다"
 
-#: client/campaign/cp_employee_callbacks.c:334
 msgid "Could not hire employee"
 msgstr "인원을 고용할 수 없습니다"
 
-#: client/campaign/cp_event.c:359
-#: client/campaign/cp_save.c:279
-#: client/campaign/cp_save.c:298
-#: client/campaign/cp_time.c:69
-#: client/campaign/cp_ufopedia.c:499
-#: client/campaign/cp_ufopedia.c:504
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i년 %s %02i일"
 
-#: client/campaign/cp_event.c:365
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "새로운 메일이 도착했습니다: %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:144
-#: client/campaign/cp_map.c:1654
-#: client/campaign/cp_map.c:1673
 msgid "Unknown"
 msgstr "알 수 없는 장비"
 
-#: client/campaign/cp_fightequip_callbacks.c:360
 msgid "No item assigned.\n"
 msgstr "아무것도 장비되어있지 않습니다.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:361
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "이 슬롯은 %s 물품이나 그보다 가벼운 물품을 위한 것입니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:368
 msgid "This item is functional.\n"
 msgstr "장비는 정상 동작중입니다.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:370
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "장비를 장착하는데 %i 시간이 걸립니다.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:373
 #, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "%s는 %i 시간 내에 해체될 것입니다.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:375
 #, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "%s는 %i 시간 내에 설치될 것입니다.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:378
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "장비를 해제하는데 %i 시간이 걸립니다.\n"
 
-#: client/campaign/cp_fightequip_callbacks.c:387
 msgid "No ammo assigned to this weapon."
 msgstr "무기에 탄약이 장비되어있지 않습니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:395
 msgid "No ammo needed"
 msgstr "탄약이 필요 없습니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:522
 msgid "No slot selected."
 msgstr "슬롯이 선택되지 않았습니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:525
 msgid "No item selected."
 msgstr "물품이 선택되어있지 않습니다"
 
-#: client/campaign/cp_fightequip_callbacks.c:528
 msgid "You can't equip an alien technology."
 msgstr "외계인 장비를 장착할 수 없습니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:531
 msgid "Technology requested is not yet completed."
 msgstr "필요한 기술이 개발되지 않았습니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:534
 msgid "This item is too heavy for the selected slot."
 msgstr "슬롯에 장착하기에는 장비가 너무 무겁습니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:537
 msgid "Equip a weapon first."
 msgstr "먼저 무기를 착용합니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:540
 msgid "Ammo not usable with current weapon."
 msgstr "현재 사용 중인 무기와 탄약이 맞지 않습니다."
 
-#: client/campaign/cp_fightequip_callbacks.c:543
 msgid "Unknown problem."
 msgstr "알 수 없는 문제점."
 
-#: client/campaign/cp_fightequip_callbacks.c:546
 msgid "Ok"
 msgstr "확인"
 
-#: client/campaign/cp_installation.c:174
 #, c-format
 msgid "Installation %s was destroyed."
 msgstr "설치물 %s 가 파괴되었습니다."
 
-#: client/campaign/cp_installation.c:175
 msgid "Installation destroyed"
 msgstr "기지 시설물이 파괴되었습니다"
 
-#: client/campaign/cp_installation.c:407
 #, c-format
 msgid "Construction of installation %s finished."
 msgstr "%s 의 설치작업이 완료되었습니다"
 
-#: client/campaign/cp_installation.c:408
 msgid "Installation finished"
 msgstr "건설이 완료되었습니다"
 
-#: client/campaign/cp_installation.c:519
 #, c-format
 msgid "%d c"
 msgstr "%d c"
 
-#: client/campaign/cp_installation.c:530
-#: client/campaign/cp_installation_callbacks.c:90
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d 일"
 msgstr[1] "%d 일"
 
-#: client/campaign/cp_installation_callbacks.c:47
-#: client/campaign/cp_map.c:369
 msgid "Installation"
 msgstr "건설물"
 
-#: client/campaign/cp_installation_callbacks.c:143
 #, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "새로운 기지를 건설했습니다: %s (소재지: %s)"
 
-#: client/campaign/cp_installation_callbacks.c:145
 #, c-format
 msgid "A new installation has been built: %s"
 msgstr "새로운 기지를 건설했습니다: %s "
 
-#: client/campaign/cp_installation_callbacks.c:146
 msgid "Installation building"
 msgstr "건물 신축"
 
-#: client/campaign/cp_installation_callbacks.c:153
 msgid "Not enough credits to set up a new installation."
 msgstr "새로운 시설을 짓기에는 돈이 부족합니다."
 
-#: client/campaign/cp_installation_callbacks.c:219
 msgid "Destroy Installation"
 msgstr "시설물 해체"
 
-#: client/campaign/cp_installation_callbacks.c:219
 msgid "Do you really want to destroy this installation?"
 msgstr "이 시설을 해체하시겠습니까?"
 
-#: client/campaign/cp_installation_callbacks.c:221
 msgid "Forget it"
 msgstr "잊어버리기"
 
-#: client/campaign/cp_map.c:380
 msgid "UFO Sighting"
 msgstr "UFO 발견"
 
-#: client/campaign/cp_map.c:1653
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12533,8 +12073,6 @@ msgstr ""
 "상황: %s\n"
 "목적: %s"
 
-#: client/campaign/cp_map.c:1670,
-#: c-format
 msgid ""
 "%s (%s)\n"
 "%s"
@@ -12542,117 +12080,84 @@ msgstr ""
 "%s (%s)\n"
 "%s"
 
-#: client/campaign/cp_map.c:1690
-#: client/campaign/cp_map.c:1698
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "이름:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1691
-#: client/campaign/cp_map.c:1699
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "상태:\t%s\n"
 
-#: client/campaign/cp_map.c:1692
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "목표물까지 거리:\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1696
-#: client/campaign/cp_map.c:1706
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "ETA:\t%sh\n"
 
-#: client/campaign/cp_map.c:1724,
-#: c-format
 msgid "Speed: %i km/h\n"
 msgstr "속도: %i km/h\n"
 
-#: client/campaign/cp_map.c:1927
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:2002
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "새로운 기지를 건설할 맵 상의 위치를 선택하세요.\n"
 
-#: client/campaign/cp_map.c:2005
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "새로운 기지를 건설할 맵 상의 위치를 선택하세요.\n"
 
-#: client/campaign/cp_map.c:2010
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Aliens are attacking our base at this very moment.\n"
 
-#: client/campaign/cp_map.c:2015
 msgid "Select ufo or mission on map\n"
 msgstr "지도에서 UFO 혹은 임무를 선택하십시오\n"
 
-#: client/campaign/cp_map.c:2020
 msgid "UFO in radar range\n"
 msgstr "레이더에 UFO 출현\n"
 
-#: client/campaign/cp_mapfightequip.c:346
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr "%s가 %s 항공기에 %s 기지에서 성공적으로 설치되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:349
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr "%s가 %s에 성공적으로 설치되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:352
 #, c-format
 msgid "%s was successfully installed at %s."
 msgstr "%s가 %s에 설치되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:374,
-#: c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s 이 %s 항공기(%s 소재)로 부터 성공적으로 제거되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:380,
-#: c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 
-#: client/campaign/cp_mapfightequip.c:388,
-#: c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "%s 이 %s 에서 설치되어 있다 성공적으로 철거되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:391
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s가 %s에서 성공적으로 제거되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:1357
 msgid "Light weight"
 msgstr "경량"
 
-#: client/campaign/cp_mapfightequip.c:1360
 msgid "Medium weight"
 msgstr "중경량"
 
-#: client/campaign/cp_mapfightequip.c:1363
 msgid "Heavy weight"
 msgstr "중량"
 
-#: client/campaign/cp_mapfightequip.c:1366
 msgid "Unknown weight"
 msgstr "무게를 알 수 없음"
 
-#: client/campaign/cp_market.c:154
-#: client/campaign/cp_market_callbacks.c:766
 msgid "Not enough storage space"
 msgstr "창고가 부족합니다"
 
-#: client/campaign/cp_market.c:154
-#: client/campaign/cp_market_callbacks.c:766
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -12662,7 +12167,6 @@ msgstr ""
 "창고의 공간이 부족합니다.\n"
 "더 많은 창고시설을 지으십시오."
 
-#: client/campaign/cp_market_callbacks.c:594
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -12670,11 +12174,9 @@ msgstr ""
 "기지에 발전실이 없습니다.\n"
 "격납고는 작동하지 않을 것 입니다."
 
-#: client/campaign/cp_market_callbacks.c:599
 msgid "Build a hangar first."
 msgstr "격납고를 먼저 지으십시오."
 
-#: client/campaign/cp_market_callbacks.c:612
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -12682,7 +12184,6 @@ msgstr ""
 "항공기를 구매할 수 없습니다.\n"
 "격납고가 부족합니다.\n"
 
-#: client/campaign/cp_market_callbacks.c:617
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -12690,130 +12191,100 @@ msgstr ""
 "항공기를 구매할 수 없습니다.\n"
 "자금이 부족합니다.\n"
 
-#: client/campaign/cp_market_callbacks.c:707
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "팀이 배정되어 있는 항공기는 매각할 수 없습니다."
 
-#: client/campaign/cp_market_callbacks.c:709
 msgid "You can't sell an aircraft that is not in base"
 msgstr "기지에 없는 항공기를 팔 수 없습니다"
 
-#: client/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
 msgstr "설치물이 설치되었습니다."
 
-#: client/campaign/cp_messageoptions.c:37
 msgid "installation_removed"
 msgstr "설치물이 제거되었습니다."
 
-#: client/campaign/cp_messageoptions.c:38
 msgid "installation_replaced"
 msgstr "설치물이 교체되었습니다."
 
-#: client/campaign/cp_messageoptions.c:39
 msgid "aircraft_refueled"
 msgstr ""
 "사령관님, %s 가 %s 되어 작전에 투입할 준비가 완료되었습니다.\n"
 "\n"
 "-- COMAIR"
 
-#: client/campaign/cp_messageoptions.c:40
 msgid "aircraft_cannotrefuel"
 msgstr ""
 "사령관님, %s 가 비행가능 시간을 초과하였습니다. %s 기지로 돌아올 연료밖에 남지 않았습니다.. 임무를 중지하겠습니다.\n"
 "\n"
 "-- COMAIR"
 
-#: client/campaign/cp_messageoptions.c:41
 msgid "installation_build_started"
 msgstr "시설을 짓기 시작합니다."
 
-#: client/campaign/cp_messageoptions.c:42
 msgid "installation_build_finished"
 msgstr "시설이 다 지어졌습니다."
 
-#: client/campaign/cp_messageoptions.c:43
 msgid "installation_destroyed"
 msgstr "시설이 파괴되었습니다,"
 
-#: client/campaign/cp_messageoptions.c:44
 msgid "research_new_proposed"
 msgstr "새로운 연구 제안서가 제출되었습니다."
 
-#: client/campaign/cp_messageoptions.c:45
 msgid "research_halted"
 msgstr "연구가 중단되었습니다."
 
-#: client/campaign/cp_messageoptions.c:46
 msgid "research_completed"
 msgstr "연구를 완료했습니다."
 
-#: client/campaign/cp_messageoptions.c:47
 msgid "production_started"
 msgstr "생산을 시작했습니다"
 
-#: client/campaign/cp_messageoptions.c:48
 msgid "production_finished"
 msgstr "생산완료"
 
-#: client/campaign/cp_messageoptions.c:49
 msgid "production_failed"
 msgstr "생산이 중단되었습니다."
 
-#: client/campaign/cp_messageoptions.c:50
 msgid "production_queue_empty"
 msgstr "예정된 생산 목록이 없습니다"
 
-#: client/campaign/cp_messageoptions.c:51
 msgid "nation_happiness_changed"
 msgstr "국가만족도가 변했습니다."
 
-#: client/campaign/cp_messageoptions.c:52
 msgid "nation_unhappy"
 msgstr "불행한 국가"
 
-#: client/campaign/cp_messageoptions.c:53
 msgid "nation_pleased"
 msgstr "행복한 국가"
 
-#: client/campaign/cp_messageoptions.c:54
 msgid "transfer_started"
 msgstr "수송이 시작되었습니다"
 
-#: client/campaign/cp_messageoptions.c:55
 msgid "transfer_completed_success"
 msgstr "수송이 안전하게 완료되었습니다"
 
-#: client/campaign/cp_messageoptions.c:56
 msgid "transfer_lost"
 msgstr "수송 중 소실되었습니다."
 
-#: client/campaign/cp_messageoptions.c:57
 msgid "transfer_aliens_defered"
 msgstr "외계인 수송이 연기되었습니다."
 
-#: client/campaign/cp_messageoptions.c:58
 msgid "transfer_uforecovery_finished"
 msgstr "UFO 수송을 완료했습니다."
 
-#: client/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
 msgstr "UFO가 출현했습니다"
 
-#: client/campaign/cp_messageoptions.c:60
 msgid "ufo_signal_lost"
 msgstr "UFO 신호가 사라졌습니다"
 
-#: client/campaign/cp_messageoptions.c:61
 msgid "ufo_attacking"
 msgstr "UFO가 공격을 합시다"
 
-#: client/campaign/cp_messages.c:48
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i년 %s %02i일, %02i:%02i: "
 
-#: client/campaign/cp_mission_triggers.c:122
 msgid ""
 "Congratulations! You have reached the end of the UFO:AI campaign.\n"
 "However, this is not the end of the road. The game remains in development.\n"
@@ -12839,225 +12310,169 @@ msgstr ""
 "\n"
 "   - The UFO:AI development team"
 
-#: client/campaign/cp_missions.c:453
 msgid "Crashed aircraft"
 msgstr "추락한 항공기"
 
-#: client/campaign/cp_missions.c:458
 msgid "Landed UFO"
 msgstr "착륙한 UFO"
 
-#: client/campaign/cp_missions.c:460
 msgid "Terror mission"
 msgstr "테러 발생"
 
-#: client/campaign/cp_missions.c:462
 msgid "Base attack"
 msgstr "기지 습격"
 
-#: client/campaign/cp_missions.c:466
 msgid "Harvesting mission"
 msgstr "인간사냥 임무"
 
-#: client/campaign/cp_missions.c:773,
-#: c-format
 msgid "Go on a rescue mission at %s. You might some of your soldiers alive."
 msgstr "%s 에서의 구조임무를 시작합니다. 전투원들이 생존해 있어야 합니다."
 
-#: client/campaign/cp_missions.c:775
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "%s 에서 외계인의 활동이 보고되었습니다"
 
-#: client/campaign/cp_missions.c:1172
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "기지 방어: %s 성공!"
 
-#: client/campaign/cp_missions.c:1352
-#: client/campaign/cp_missions.c:1401
-#: client/campaign/missions/cp_mission_harvest.c:164
-#: client/campaign/missions/cp_mission_recon.c:160
 msgid "No nation"
 msgstr "No nation"
 
-#: client/campaign/cp_nation.c:129
 msgid "Giving up"
 msgstr "포기"
 
-#: client/campaign/cp_nation.c:131
 msgid "Furious"
 msgstr "격노"
 
-#: client/campaign/cp_nation.c:133
 msgid "Angry"
 msgstr "분노"
 
-#: client/campaign/cp_nation.c:135
 msgid "Mad"
 msgstr "매우 불만"
 
-#: client/campaign/cp_nation.c:137
 msgid "Upset"
 msgstr "불만"
 
-#: client/campaign/cp_nation.c:139
 msgid "Tolerant"
 msgstr "대체로 불만"
 
-#: client/campaign/cp_nation.c:141
 msgid "Neutral"
 msgstr "중립"
 
-#: client/campaign/cp_nation.c:143
 msgid "Content"
 msgstr "대체로 만족"
 
-#: client/campaign/cp_nation.c:145
 msgid "Pleased"
 msgstr "만족"
 
-#: client/campaign/cp_nation.c:147
 msgid "Happy"
 msgstr "매우 만족"
 
-#: client/campaign/cp_nation.c:149
 msgid "Exuberant"
 msgstr "열광"
 
-#: client/campaign/cp_nation.c:175
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr "%s의 만족도가 %s 에서 %s(으)로 바뀌었습니다."
 
-#: client/campaign/cp_nation.c:179
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr "%s의 만족도가 %s(으)로 바뀌었습니다."
 
-#: client/campaign/cp_nation.c:183
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr "%s의 만족도는 %s 이며, 이는 캠페인에서 허용할 수 있는 최소 만족도 보다 낮습니다"
 
-#: client/campaign/cp_nation.c:189
 msgid "Nation changed happiness"
 msgstr "국가 만족도가 바뀌었습니다."
 
-#: client/campaign/cp_nations.c:83
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "%i인의 %s, %i인의 %s, %i인의 %s, 와 %i인의 %s의 출자를 %s (%s)로 부터 받았습니다"
 
-#: client/campaign/cp_nations.c:84
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "크레디트"
 msgstr[1] "크레디트"
 
-#: client/campaign/cp_nations.c:85
-#: client/cl_game_campaign.c:205
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "연구원"
 msgstr[1] "연구원"
 
-#: client/campaign/cp_nations.c:86
-#: client/cl_game_campaign.c:204
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "전투원"
 msgstr[1] "전투원"
 
-#: client/campaign/cp_nations.c:87
-#: client/cl_game_campaign.c:206
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "작업원"
 msgstr[1] "작업원"
 
-#: client/campaign/cp_nations.c:100,
-#: c-format
 msgid "Paid %i credits to: %s"
 msgstr "%i 크레디트를 %s 에게 지불했습니다"
 
-#: client/campaign/cp_nations.c:119
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "%i 크레디트를 항공기 정비에 지불했습니다."
 
-#: client/campaign/cp_nations.c:130
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "%i 크레디트를 기지 %s의 유지비용에 지불했습니다."
 
-#: client/campaign/cp_nations.c:135
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "각종관리비로 %i 크레디트를 지불했습니다."
 
-#: client/campaign/cp_nations.c:143
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "부채의 이자 %i크레디트를 지불했습니다."
 
-#: client/campaign/cp_popup.c:128
 msgid "current homebase of aircraft"
 msgstr "항공기의 현재 귀환기지"
 
-#: client/campaign/cp_popup.c:134
 msgid "base can hold aircraft"
 msgstr "비행기를 수용할 수 있는 기지입니다"
 
-#: client/campaign/cp_popup.c:149
 msgid "Base\tStatus"
 msgstr "기지\t상태"
 
-#: client/campaign/cp_popup.c:149
 msgid "Change homebase of aircraft"
 msgstr "항공기의 귀환기지를 변경합니다"
 
-#: client/campaign/cp_popup.c:230
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "기지로 귀환\t%s\n"
 
-#: client/campaign/cp_popup.c:232
 msgid "Stop\n"
 msgstr "대기\n"
 
-#: client/campaign/cp_popup.c:234
 msgid "Change homebase\n"
 msgstr "귀환기지 변경\n"
 
-#: client/campaign/cp_popup.c:247
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "임무\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:344
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
 msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
-#: client/campaign/cp_popup.c:362
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 
-#: client/campaign/cp_popup.c:423
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr "%s%s (%i/%i)\t%s\t%s"
 
-#: client/campaign/cp_popup.c:441
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "No craft available, no pilot assigned, or no weapon or ammo equipped."
 
-#: client/campaign/cp_popup.c:457
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "No defence system operational or no weapon or ammo equipped."
 
-#: client/campaign/cp_popup.c:506
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -13069,18 +12484,9 @@ msgstr ""
 "\n"
 "Aircraft cannot start.\n"
 
-#: client/campaign/cp_produce.c:252
-#: client/campaign/cp_produce.c:256
-#: client/campaign/cp_produce.c:261
-#: client/campaign/cp_produce_callbacks.c:611
-#: client/campaign/cp_produce_callbacks.c:683
-#: client/campaign/cp_transfer_callbacks.c:345
-#: client/campaign/cp_transfer_callbacks.c:348
-#: client/campaign/cp_transfer_callbacks.c:351
 msgid "Hangars not ready"
 msgstr "격납고가 준비되지 않았습니다"
 
-#: client/campaign/cp_produce.c:252
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
@@ -13088,7 +12494,6 @@ msgstr ""
 "비행기 생산일정을 잡을 수 없습니다.\n"
 "기지에 지휘통제실이 없습니다.\n"
 
-#: client/campaign/cp_produce.c:256
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
@@ -13096,9 +12501,6 @@ msgstr ""
 "비행기 생산일정을 잡을 수 없습니다.\n"
 "격납고가 없습니다.\n"
 
-#: client/campaign/cp_produce.c:261
-#: client/campaign/cp_produce_callbacks.c:611
-#: client/campaign/cp_produce_callbacks.c:683
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -13106,119 +12508,82 @@ msgstr ""
 "비행기 생산일정을 잡을 수 없습니다.\n"
 "비어있는 격납고가 없습니다.\n"
 
-#: client/campaign/cp_produce.c:380
 #, c-format
 msgid "Production queue for %s is empty"
 msgstr "%s 기지의 생산예정이 없습니다"
 
-#: client/campaign/cp_produce.c:381
 msgid "Production queue empty"
 msgstr "예정된 생산 목록이 없습니다"
 
-#: client/campaign/cp_produce.c:490
-#: client/campaign/cp_produce.c:512,
-#: c-format
 msgid "Not enough credits to finish production in %s."
 msgstr "%s 기지에 생산 자금이 부족합니다."
 
-#: client/campaign/cp_produce.c:500,
-#: c-format
 msgid "Not enough free storage space in %s. Production postponed."
 msgstr "%s 기지에 창고 공간이 부족합니다. 생산은 연기되었습니다."
 
-#: client/campaign/cp_produce.c:522,
-#: c-format
 msgid "Not enough free hangar space in %s. Production postponed."
 msgstr "%s 기지에 남은 격납고 공간이 없습니다. 생산은 연기되었습니다."
 
-#: client/campaign/cp_produce.c:555
 #, c-format
 msgid "The production of %s at %s has finished."
 msgstr "%s의 생산이 %s에서 완료되었습니다"
 
-#: client/campaign/cp_produce.c:556
-#: client/campaign/cp_produce.c:596
 msgid "Production finished"
 msgstr "생산완료"
 
-#: client/campaign/cp_produce.c:583,
-#: c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
 msgstr "%s 기지에 창고 공간이 부족합니다. 해체 작업은 연기되었습니다."
 
-#: client/campaign/cp_produce.c:595
 #, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "%s의 해체작업이 %s에서완료 되었습니다."
 
-#: client/campaign/cp_produce_callbacks.c:214
-#: client/campaign/cp_produce_callbacks.c:331
 msgid "No item selected"
 msgstr "선택된 항목이 없습니다"
 
-#: client/campaign/cp_produce_callbacks.c:223
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "생산에 필요한 비용\t%i c\n"
 
-#: client/campaign/cp_produce_callbacks.c:225
-#: client/campaign/cp_produce_callbacks.c:295
 #, c-format
 msgid "Production time\t%ih\n"
 msgstr "생산에 필요한 시간\t%i 시간\n"
 
-#: client/campaign/cp_produce_callbacks.c:226
 #, c-format
 msgid "Item size\t%i\n"
 msgstr "아이템의 크기\t%i\n"
 
-#: client/campaign/cp_produce_callbacks.c:256,
-#: c-format
 msgid "Stored at: %s\n"
 msgstr "저장된 장소: %s\n"
 
-#: client/campaign/cp_produce_callbacks.c:257,
-#: c-format
 msgid "Disassembly time: %ih\n"
 msgstr "해체 소요시간: %i 시간\n"
 
-#: client/campaign/cp_produce_callbacks.c:258
 msgid "Components:\n"
 msgstr "구성요소:\n"
 
-#: client/campaign/cp_produce_callbacks.c:292
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr "생산 단가\t%i c\n"
 
-#: client/campaign/cp_produce_callbacks.c:329
 msgid "No aircraft selected."
 msgstr "선택된 항공기가 없습니다."
 
-#: client/campaign/cp_produce_callbacks.c:635
-#: client/campaign/cp_produce_callbacks.c:671
 msgid "Not enough materials"
 msgstr "자재가 부족합니다!"
 
-#: client/campaign/cp_produce_callbacks.c:635
 msgid "You don't have the materials needed for producing more of this item.\n"
 msgstr "이 항목을 생산하는데 필요한, 충분한 자재를 보유하고 있지 않습니다.\n"
 
-#: client/campaign/cp_produce_callbacks.c:639,
-#: c-format
 msgid "You don't have enough material to produce all (%i) additional items. Only %i could be added."
 msgstr "모든 제품(%i 개)을 생산하기에는 자재가 부족합니다. 일부의 제품(%i 개)만 생산을 합니다."
 
-#: client/campaign/cp_produce_callbacks.c:640
-#: client/campaign/cp_produce_callbacks.c:675
 msgid "Not enough material!"
 msgstr "자재가 부족합니다!"
 
-#: client/campaign/cp_produce_callbacks.c:650
 msgid "Not enough workshops"
 msgstr "작업공간이 부족합니다"
 
-#: client/campaign/cp_produce_callbacks.c:650
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
@@ -13226,49 +12591,37 @@ msgstr ""
 "더 이상 작업을 예약할 수 없습니다\n"
 "작업실을 늘리시기 바랍니다.\n"
 
-#: client/campaign/cp_produce_callbacks.c:671
 msgid "You don't have the materials needed for producing this item.\n"
 msgstr "이 항목을 생산하는데 필요한, 충분한 자재를 보유하고 있지 않습니다.\n"
 
-#: client/campaign/cp_produce_callbacks.c:674
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "모든 제품(%i 개)을 생산하기에는 자재가 부족합니다. 일부의 제품(%i 개)만 생산을 합니다."
 
-#: client/campaign/cp_produce_callbacks.c:700
 #, c-format
 msgid "Production of %s started"
 msgstr "%s의 생산을 시작했습니다"
 
-#: client/campaign/cp_produce_callbacks.c:701
 msgid "Production started"
 msgstr "생산을 시작했습니다"
 
-#: client/campaign/cp_research.c:89
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "연구가 완료되었습니다: %s\n"
 
-#: client/campaign/cp_research.c:90
 msgid "Research finished"
 msgstr "연구 종료"
 
-#: client/campaign/cp_research.c:136
-#: client/campaign/cp_research.c:337
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "새로운 연구 제안서: %s\n"
 
-#: client/campaign/cp_research.c:137
 msgid "Unknown Technology researchable"
 msgstr "연구 가능한 미지의 기술"
 
-#: client/campaign/cp_research.c:338
 msgid "Unknown Technology found"
 msgstr "미지의 기술 발견"
 
-#: client/campaign/cp_research.c:721
-#: client/campaign/cp_research.c:725
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -13276,116 +12629,86 @@ msgstr ""
 "연구실에 공간이 부족합니다.\n"
 "더 많은 연구실을 지으십시오.\n"
 
-#: client/campaign/cp_research.c:721
-#: client/campaign/cp_research.c:725
 msgid "Not enough laboratories"
 msgstr "연구실이 부족합니다"
 
-#: client/campaign/cp_research.c:862
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr ""
 
-#: client/campaign/cp_research.c:863
 msgid "Research halted"
 msgstr "연구가 중단됨"
 
-#: client/campaign/cp_research.c:1236
 msgid "No description available."
 msgstr "상세내용이 없습니다."
 
-#: client/campaign/cp_research.c:1237
 msgid "No research proposal available."
 msgstr "연구 제안서가 없습니다."
 
-#: client/campaign/cp_research_callbacks.c:91
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "연구공간 (사용 중/전체): %i/%i"
 
-#: client/campaign/cp_research_callbacks.c:97
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr "연구원 (가용 인원/전체): %i/%i"
 
-#: client/campaign/cp_research_callbacks.c:102
 msgid "Not researched in any base."
 msgstr "연구 중인 기지가 없습니다."
 
-#: client/campaign/cp_research_callbacks.c:108
 #, c-format
 msgid "Researched in %s"
 msgstr "%s 기지에서 연구 중 입니다."
 
-#: client/campaign/cp_research_callbacks.c:110
 msgid "Researched in this base."
 msgstr "이 기지에서 연구 중 입니다."
 
-#: client/campaign/cp_research_callbacks.c:122
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "진행도: %.1f%%"
 
-#: client/campaign/cp_research_callbacks.c:125
 msgid "Progress: not available."
 msgstr "진행도: 진행불가"
 
-#: client/campaign/cp_research_callbacks.c:130
 msgid "Status: under research"
 msgstr "상태: 연구 중"
 
-#: client/campaign/cp_research_callbacks.c:131
 msgid "Status: this research topic is currently being processed in laboratories"
 msgstr "상태: 실험실에서 진행 중인 연구 주제입니다."
 
-#: client/campaign/cp_research_callbacks.c:134
 msgid "Status: research paused"
 msgstr "상태: 일시 중지된 연구"
 
-#: client/campaign/cp_research_callbacks.c:135
 msgid "Status: research topic currently paused."
 msgstr "상태: 연구주제가 현재 일시중지 되었습니다."
 
-#: client/campaign/cp_research_callbacks.c:138
-#: client/campaign/cp_research_callbacks.c:139
 msgid "Status: research finished"
 msgstr "상태: 연구종료"
 
-#: client/campaign/cp_research_callbacks.c:144
 msgid "Status: not possible to research"
 msgstr "상태: 연구할 주제가 없습니다."
 
-#: client/campaign/cp_research_callbacks.c:145
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr "상태: 이 주제를 연구하기에 필요한 기반 지식이나 자재가 없습니다."
 
-#: client/campaign/cp_research_callbacks.c:147
-#: client/campaign/cp_research_callbacks.c:148
 msgid "Status: unknown technology"
 msgstr "상태: 알려지지 않은 기술"
 
-#: client/campaign/cp_research_callbacks.c:259
 msgid "Unassigned scientists"
 msgstr "연구에 투입가능한 연구원"
 
-#: client/campaign/cp_research_callbacks.c:295
 msgid "Missing an artifact"
 msgstr "Missing an artifact"
 
-#: client/campaign/cp_research_callbacks.c:305
 msgid "Unresearchable collected items"
 msgstr "연구 불가능한 수집된 물품"
 
-#: client/campaign/cp_research_callbacks.c:563
 msgid "This item is currently under research in another base."
 msgstr "이 항목은 다른 기지에서 연구 중입니다."
 
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:626
 msgid "The research on this item is complete."
 msgstr "이 연구는 종료된 연구입니다."
 
-#: client/campaign/cp_research_callbacks.c:587
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -13393,87 +12716,57 @@ msgstr ""
 "이 항목의 연구는 현재 불가능합니다.\n"
 "그것의 기반 기술을 먼저 연구해야 합니다."
 
-#: client/campaign/cp_research_callbacks.c:656
 msgid "No research proposal available for this project."
 msgstr "이 프로젝트에 맞는 연구 제안서가 없습니다."
 
-#: client/campaign/cp_research_callbacks.c:823
 msgid "Nothing to research"
 msgstr "연구할 것이 없습니다"
 
-#: client/campaign/cp_research_callbacks.c:826
 msgid "Build a laboratory first"
 msgstr "연구를 하기 전에 먼저 연구실을 건설해주세요"
 
-#: client/campaign/cp_save.c:182
 msgid "Error decompressing data"
 msgstr "압축 해제 시 오류가 발생했습니다"
 
-#: client/campaign/cp_save.c:258
 msgid "No campaign active."
 msgstr "진행 중인 캠페인이 없습니다"
 
-#: client/campaign/cp_save.c:264
 msgid "Nothing to save yet."
 msgstr "저장할 것이 없습니다."
 
-#: client/campaign/cp_save.c:308
 msgid "Could not allocate enough memory to save this game"
 msgstr "이 게임을 저장하는데 충분한 메모리를 할당하지 못했습니다"
 
-#: client/campaign/cp_save.c:330
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 
-#: client/campaign/cp_save.c:377
-#: client/campaign/cp_save.c:379
 msgid "Error saving game."
 msgstr "게임을 저장하는데 문제가 발생했습니다."
 
-#: client/campaign/cp_save.c:467
-#: client/campaign/cp_save.c:491
-#: client/campaign/cp_save.c:619
 msgid "Error loading game."
 msgstr "게임을 불러들이는데 문제가 발생했습니다."
 
-#: client/campaign/cp_save.c:468
-#: client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:620
-#: client/cl_irc.c:1208
-#: client/cl_irc.c:1440
-#: client/cl_main.c:509
-#: client/cl_main.c:514
-#: client/cl_main.c:520
-#: client/cl_main.c:528
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Error"
 msgstr "문제발생"
 
-#: client/campaign/cp_save.c:567
 msgid "QuickSave"
 msgstr "빠른저장"
 
-#: client/campaign/cp_save.c:601
 msgid "Campaign was successfully saved."
 msgstr "게임이 성공적으로 저장되었습니다."
 
-#: client/campaign/cp_save.c:601
 msgid "Quicksave"
 msgstr "빠른 저장"
 
-#: client/campaign/cp_save.c:622
 msgid "Campaign loaded"
 msgstr "캠페인을 읽어왔습니다"
 
-#: client/campaign/cp_save.c:622
 msgid "Quicksave campaign was successfully loaded."
 msgstr "캠페인의 빠른 저장이 성공적으로 읽어졌습니다."
 
-#: client/campaign/cp_save.c:683
 msgid "Saves to the quick save slot"
 msgstr "빠른 저장용 칸에 저장합니다"
 
-#: client/campaign/cp_statistics.c:52
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -13484,7 +12777,6 @@ msgstr ""
 "패배횟수:\t%i\n"
 "\n"
 
-#: client/campaign/cp_statistics.c:57
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -13495,13 +12787,10 @@ msgstr ""
 "가동 중:\t%i\n"
 "공격을 받은 횟수:\t%i\n"
 
-#: client/campaign/cp_statistics.c:73
-#: client/campaign/cp_ufopedia.c:1165
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_statistics.c:76
 #, c-format
 msgid ""
 "\n"
@@ -13510,38 +12799,30 @@ msgstr ""
 "\n"
 "이번 달 자금:\t%d"
 
-#: client/campaign/cp_statistics.c:91
-#: client/cl_inventory_callbacks.c:137
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_statistics.c:97
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "대원:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:109
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "항공기:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:117
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "기지 (%s):\t%i c\n"
 
-#: client/campaign/cp_statistics.c:122
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "관리비:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:129
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "부채:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:132
 #, c-format
 msgid ""
 "\n"
@@ -13552,12 +12833,10 @@ msgstr ""
 "\t-------\n"
 "합계:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:137
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "부채 한도: %i c\n"
 
-#: client/campaign/cp_statistics.c:142
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -13566,158 +12845,116 @@ msgstr ""
 "허용 외계 바이러스 감염 수치: %i \n"
 "현재 외계 바이러스 감염 수치: %i"
 
-#: client/campaign/cp_team.c:241
 #, c-format
 msgid "%i of %i"
 msgstr "%i / %i"
 
-#: client/campaign/cp_time.c:40
 msgid "stopped"
 msgstr "정지"
 
-#: client/campaign/cp_time.c:41
 msgid "5 sec"
 msgstr "5 초"
 
-#: client/campaign/cp_time.c:42
 msgid "5 mins"
 msgstr "5 분"
 
-#: client/campaign/cp_time.c:43
 msgid "20 mins"
 msgstr "5 분"
 
-#: client/campaign/cp_time.c:44
 msgid "1 hour"
 msgstr "1 시간"
 
-#: client/campaign/cp_time.c:45
 msgid "12 hours"
 msgstr "12 시간"
 
-#: client/campaign/cp_time.c:46
 msgid "1 day"
 msgstr "1 일"
 
-#: client/campaign/cp_time.c:47
 msgid "5 days"
 msgstr "5 일"
 
-#: client/campaign/cp_time.c:73
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/campaign/cp_time.c:233
 msgid "Jan"
 msgstr "1월"
 
-#: client/campaign/cp_time.c:235
 msgid "Feb"
 msgstr "2월"
 
-#: client/campaign/cp_time.c:237
 msgid "Mar"
 msgstr "3월"
 
-#: client/campaign/cp_time.c:239
 msgid "Apr"
 msgstr "4월"
 
-#: client/campaign/cp_time.c:241
 msgid "May"
 msgstr "5월"
 
-#: client/campaign/cp_time.c:243
 msgid "Jun"
 msgstr "6월"
 
-#: client/campaign/cp_time.c:245
 msgid "Jul"
 msgstr "7월"
 
-#: client/campaign/cp_time.c:247
 msgid "Aug"
 msgstr "8월"
 
-#: client/campaign/cp_time.c:249
 msgid "Sep"
 msgstr "9월"
 
-#: client/campaign/cp_time.c:251
 msgid "Oct"
 msgstr "10월"
 
-#: client/campaign/cp_time.c:253
 msgid "Nov"
 msgstr "11월"
 
-#: client/campaign/cp_time.c:255
 msgid "Dec"
 msgstr "12월"
 
-#: client/campaign/cp_transfer.c:76
 #, c-format
 msgid "%s does not have Storage, items are removed!"
 msgstr "%s 에 창고가 없습니다. 물품들은 파기됩니다!"
 
-#: client/campaign/cp_transfer.c:77
-#: client/campaign/cp_transfer.c:96
-#: client/campaign/cp_transfer.c:132
-#: client/campaign/cp_transfer.c:161
-#: client/campaign/cp_transfer.c:266
-#: client/campaign/cp_transfer.c:281
-#: client/campaign/cp_transfer.c:287
-#: client/campaign/cp_transfer_callbacks.c:158
 msgid "Transport mission"
 msgstr "수송 임무"
 
-#: client/campaign/cp_transfer.c:95
 #, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "%s 에 숙소가 없습니다. 고용된 사람들이 해고됩니다!"
 
-#: client/campaign/cp_transfer.c:131
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "%s 에 외계인 수용시설이 없습니다. 외계인들은 제거됩니다!"
 
-#: client/campaign/cp_transfer.c:160
 #, c-format
 msgid "%s does not have enough free space in hangars. Aircraft is lost!"
 msgstr "%s 에 격납고 여유 공간이 없습니다. 항공기를 분실했습니다!"
 
-#: client/campaign/cp_transfer.c:265
-#: client/campaign/cp_transfer_callbacks.c:157
 #, c-format
 msgid "Transport mission started, cargo is being transported to %s"
 msgstr "수송 임무 시작 : %s 기지에 화물 또는 대원을 수송합니다."
 
-#: client/campaign/cp_transfer.c:281
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
 msgstr "도착할 기지가 더 이상 존재하지 않습니다! 수송 중이던 물품들은 소실되었고, 대원들은 해고되었습니다."
 
-#: client/campaign/cp_transfer.c:286
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "수송 임무 종료 : %s 기지에 화물 또는 대원이 도착했습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:127
 #, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
 msgstr[0] "(살아있는 외계인 %i 개체를 수용할 수 있습니다)"
 msgstr[1] "(살아있는 외계인 %i 개체들을 수용할 수 있습니다)"
 
-#: client/campaign/cp_transfer_callbacks.c:209
 msgid "Destination base does not have an Antimatter Storage.\n"
 msgstr "목적기지에 반물질 저장시설이 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:209
 msgid "Missing storage"
 msgstr "창고가 소실됨"
 
-#: client/campaign/cp_transfer_callbacks.c:216
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
@@ -13725,15 +12962,9 @@ msgstr ""
 "목적기지에 반물질을 저장할\n"
 "충분한 반물질 저장시설이 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:216
-#: client/campaign/cp_transfer_callbacks.c:229
-#: client/campaign/cp_transfer_callbacks.c:260
-#: client/campaign/cp_transfer_callbacks.c:314
-#: client/campaign/cp_transfer_callbacks.c:357
 msgid "Not enough space"
 msgstr "공간이 부족합니다"
 
-#: client/campaign/cp_transfer_callbacks.c:229
 msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
@@ -13741,7 +12972,6 @@ msgstr ""
 "목적기지의 창고가 이 항목들을\n"
 "저장할 만큼 비어있지 않습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:260
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
@@ -13749,7 +12979,6 @@ msgstr ""
 "목적기지에 충분한\n"
 "생활공간이 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:269
 #, c-format
 msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
@@ -13758,11 +12987,9 @@ msgstr ""
 "%s %s 는 항공기에 할당되었으며\n"
 "다른 기지로 보내질 수 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:271
 msgid "Soldier in aircraft"
 msgstr "비행기에 탑승한 전투원"
 
-#: client/campaign/cp_transfer_callbacks.c:278
 #, c-format
 msgid ""
 "%s is assigned to aircraft and cannot be\n"
@@ -13771,11 +12998,9 @@ msgstr ""
 "%s 는 항공기에 할당되었으며\n"
 "다른 기지로 보내질 수 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:280
 msgid "Pilot in aircraft"
 msgstr "항공기에 탑승한 조종사"
 
-#: client/campaign/cp_transfer_callbacks.c:314
 msgid ""
 "Destination base does not have enough space\n"
 "in Alien Containment.\n"
@@ -13783,7 +13008,6 @@ msgstr ""
 "도착기지의 외계인 수용시설에\n"
 "공간이 부족합니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:345
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
@@ -13791,7 +13015,6 @@ msgstr ""
 "목적기지에 사용가능한 격납고가 없습니다.\n"
 "전원을 공급해야 합니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:348
 msgid ""
 "Destination base does not have command centre.\n"
 "Hangars not functional.\n"
@@ -13799,138 +13022,101 @@ msgstr ""
 "목적기지에 지휘통제실이 없습니다.\n"
 "격납고를 사용할 수 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:351
 msgid "Destination base does not have any hangar."
 msgstr "목적기지에 격납고가 없습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:357
 msgid "Destination base does not have enough space in hangars.\n"
 msgstr "목적기지의 격납고의 빈공간이 부족합니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:406
-#: client/campaign/cp_transfer_callbacks.c:583
 #, c-format
 msgid "Soldier %s %s"
 msgstr "전투원 %s %s"
 
-#: client/campaign/cp_transfer_callbacks.c:408
-#: client/campaign/cp_transfer_callbacks.c:585
 #, c-format
 msgid "Pilot %s"
 msgstr "조종사 %s"
 
-#: client/campaign/cp_transfer_callbacks.c:441
-#: client/campaign/cp_transfer_callbacks.c:624
 #, c-format
 msgid "Corpse of %s"
 msgstr "사체 %s"
 
-#: client/campaign/cp_transfer_callbacks.c:473
-#: client/campaign/cp_transfer_callbacks.c:668
 #, c-format
 msgid "Aircraft %s"
 msgstr "항공기 %s"
 
-#: client/campaign/cp_transfer_callbacks.c:557
 msgid "Storage is empty."
 msgstr "저장고는 비었습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:562
 msgid "Transfer is not possible - the base doesn't have a Storage."
 msgstr "수송을 할 수 없습니다 - 기지에 창고가 없습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:566
-#: client/campaign/cp_transfer_callbacks.c:656
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "수송을 할 수 없습니다 - 기지에 발전실이 없습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:608
 msgid "Living Quarters empty."
 msgstr "숙소가 비었습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:613
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "수송을 할 수 없습니다 - 기지에 숙소가 없습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:635
 #, c-format
 msgid "Alive %s"
 msgstr "생존 %s"
 
-#: client/campaign/cp_transfer_callbacks.c:647
 msgid "Alien Containment is empty."
 msgstr "외계인 수용시설이 비어있습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:652
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "수송을 할 수 없습니다 - 기지에 외계인 수용시설이 없습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:677
 msgid "No aircraft available for transfer."
 msgstr "수송에 사용할 수 있는 항공기가 없습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:682
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "수송을 할 수 없습니다 - 기지에 작동중인 격납고가 없습니다."
 
-#: client/campaign/cp_transfer_callbacks.c:815
 msgid "No target base selected"
 msgstr "보낼 기지가 선택되지 않았습니다"
 
-#: client/campaign/cp_transfer_callbacks.c:815
 msgid "Please select the target base from the list"
 msgstr "목록 중에서 보낼 기지를 선택해 주십시오"
 
-#: client/campaign/cp_transfer_callbacks.c:975
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "장비들을 수송할 수 있습니다 - 이 기지에는 창고가 있습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:978
 msgid "No Storage in this base.\n"
 msgstr "기지에 창고가 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:982
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "대원들을 수송할 수 있습니다 - 이 기지에는 숙소가 있습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:984
 msgid "No Living Quarters in this base.\n"
 msgstr "이 기지에는 숙소가 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:988
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "외계인을 수송할 수 있습니다 - 이 기지에는 외계인 수용시설이 있습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:990
 msgid "No Alien Containment in this base.\n"
 msgstr "이 기지에는 외계인 수용시설이 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:994
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "반물질을 수송할 수 있습니다 - 이 기지에는 반물질 창고가 있습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:996
 msgid "No Antimatter Storage in this base.\n"
 msgstr "기지에 반물질 창고가 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1000
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "항공기를 수송할 수 있습니다 - 이 기지에는 격납고가 있습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1002
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "항공기 수송이 불가능 합니다 - 이 기지에는 지휘통제실이 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1004
 msgid "No Hangar in this base.\n"
 msgstr "이 기지에는 격납고가 없습니다.\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1008
 msgid "No power supplies in this base.\n"
 msgstr "이 기지에는 발전실이 없습니다.\n"
 
-#: client/campaign/cp_ufo.c:132,
-#: c-format
 msgid ""
 "\n"
 "Secured crashed %s (%.0f%%)\n"
@@ -13938,7 +13124,6 @@ msgstr ""
 "\n"
 "추락한 %s (%.0f%%)를 수색하시오\n"
 
-#: client/campaign/cp_ufo.c:134
 #, c-format
 msgid ""
 "\n"
@@ -13947,151 +13132,112 @@ msgstr ""
 "\n"
 "착륙한 %s를 수색하시오\n"
 
-#: client/campaign/cp_ufo.c:399
-#: client/campaign/cp_ufo.c:779
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "UFO %s에 접근합니다."
 
-#: client/campaign/cp_ufo.c:783
 #, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr "UFO 탐지! %s의 레이더가 UFO를 탐지했습니다."
 
-#: client/campaign/cp_ufo.c:788
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "UFO가 추적범위를 벗어났습니다."
 
-#: client/campaign/cp_ufopedia.c:142
 msgid "Cruising speed"
 msgstr "순항속도"
 
-#: client/campaign/cp_ufopedia.c:144
 msgid "Maximum speed"
 msgstr "최고속도"
 
-#: client/campaign/cp_ufopedia.c:148
 msgid "ECM"
 msgstr "ECM(전파교란장치)"
 
-#: client/campaign/cp_ufopedia.c:150
 msgid "Aircraft damage"
 msgstr "항공기 손상율"
 
-#: client/campaign/cp_ufopedia.c:152
 msgid "Accuracy"
 msgstr "명중률"
 
-#: client/campaign/cp_ufopedia.c:154
 msgid "Fuel size"
 msgstr "탑재연료"
 
-#: client/campaign/cp_ufopedia.c:156
 msgid "Weapon range"
 msgstr "사거리"
 
-#: client/campaign/cp_ufopedia.c:158
-#: client/cl_inventory_callbacks.c:54
 msgid "Unknown weapon skill"
 msgstr "무기 사용방법을 알 수 없음"
 
-#: client/campaign/cp_ufopedia.c:170
 msgid "Small"
 msgstr "소형"
 
-#: client/campaign/cp_ufopedia.c:172
 msgid "Large"
 msgstr "대형"
 
-#: client/campaign/cp_ufopedia.c:174
 msgid "Unknown aircraft size"
 msgstr "알려지지 않은 항공기 크기"
 
-#: client/campaign/cp_ufopedia.c:194
 msgid "No requirements"
 msgstr "요구사항 없음"
 
-#: client/campaign/cp_ufopedia.c:226
 msgid "Error - could not find building"
 msgstr "문제발생 - 건물을 찾을 수 없습니다"
 
-#: client/campaign/cp_ufopedia.c:229
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "생산소요시간:\t%i 일\n"
 msgstr[1] "생산소요시간:\t%i 일\n"
 
-#: client/campaign/cp_ufopedia.c:230
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "비용:\t%i c\n"
 
-#: client/campaign/cp_ufopedia.c:279
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "중량:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:282
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "탄약:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:284
-#: client/cl_inventory_callbacks.c:175
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "손상:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:285
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "재장전시간:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:287
 msgid "Weapon for base defence system\n"
 msgstr "기지 방어체계를 위한 무기\n"
 
-#: client/campaign/cp_ufopedia.c:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:309
-#: client/campaign/cp_ufopedia.c:362
-#: client/campaign/cp_ufopedia.c:364
-#: client/campaign/cp_ufopedia.c:400
-#: client/campaign/cp_ufopedia.c:402
 msgid "Unknown - need to research this"
 msgstr "미지의 아이템 - 연구가 필요합니다"
 
-#: client/campaign/cp_ufopedia.c:336
-#: client/campaign/cp_ufopedia.c:341
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i km/h\n"
 
-#: client/campaign/cp_ufopedia.c:348
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:355
 #, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "항공기 크기:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:359
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "최대 전투원수:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:397
 #, c-format
 msgid ""
 "%s\n"
@@ -14100,15 +13246,12 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cp_ufopedia.c:521
 msgid "Proposal: "
 msgstr "연구 제안서: "
 
-#: client/campaign/cp_ufopedia.c:524
 msgid "Re: "
 msgstr "답장: "
 
-#: client/campaign/cp_ufopedia.c:535
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -14119,135 +13262,103 @@ msgstr ""
 "받는 사람: %s\n"
 "수신일시: %s"
 
-#: client/campaign/cp_ufopedia.c:610
 msgid "(complete)"
 msgstr "(완료)"
 
-#: client/campaign/cp_ufopedia.c:669
 msgid "No pre-research description available."
 msgstr "선행 연구 내용이 없습니다."
 
-#: client/campaign/cp_ufopedia.c:1105
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^B연구 제안서: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1109
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "연구 제안서: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1120
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^B답장: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1124
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "답장: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1134
-#: client/campaign/cp_ufopedia.c:1146
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1138
-#: client/campaign/cp_ufopedia.c:1150
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1162
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
 
-#: client/campaign/cp_uforecovery.c:64
 #, c-format
 msgid "%s was transfered to %s."
 msgstr "%s 물품이 %s 기지로 수송되었습니다."
 
-#: client/campaign/cp_uforecovery.c:65
 msgid "UFO Recovered"
 msgstr "UFO가 회수되었습니다"
 
-#: client/campaign/cp_uforecovery_callbacks.c:164
 msgid "No free UFO yard available."
 msgstr "사용가능한 UFO 적치장이 없습니다."
 
-#: client/campaign/cp_uforecovery_callbacks.c:214
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
 msgstr "%s를 전장에서 회수했습니다. UFO는 %s로 수송중입니다"
 
-#: client/campaign/cp_uforecovery_callbacks.c:216
-#: client/campaign/cp_uforecovery_callbacks.c:507
 msgid "UFO Recovery"
 msgstr "UFO 회수"
 
-#: client/campaign/cp_uforecovery_callbacks.c:499
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
 msgstr "%s를 회수했습니다(%s 전장에서). %s에 매각하여 %i 크레디트를 획득하였습니다."
 
-#: client/campaign/cp_uforecovery_callbacks.c:504
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "전장에서 %s를 회수하였습니다. %s 국가에 팔았고, %i 크레디트를 획득하였습니다."
 
-#: client/campaign/missions/cp_mission_baseattack.c:126
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
 msgstr "기지 : %s는 철저히 파괴되어 모든 대원과 설비를 잃었습니다."
 
-#: client/campaign/missions/cp_mission_baseattack.c:233
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "%s 기지가 공격당하고 있습니다 - 어떻게 하시겠습니까?"
 
-#: client/cl_console.c:273
 msgid "Bring up the in-game console"
 msgstr "게임콘솔을 표시함"
 
-#: client/cl_console.c:275
 msgid "Send a message to all players"
 msgstr "모든 플레이어에게 메시지를 보낸다"
 
-#: client/cl_console.c:276
 msgid "Send a message to allied team members"
 msgstr "팀 멤버에게 메시지를 보낸다"
 
-#: client/cl_game_campaign.c:115
 msgid "Chicken-hearted"
 msgstr "겁쟁이"
 
-#: client/cl_game_campaign.c:117
 msgid "Very Easy"
 msgstr "매우 간단"
 
-#: client/cl_game_campaign.c:120
 msgid "Easy"
 msgstr "간단"
 
-#: client/cl_game_campaign.c:125
 msgid "Hard"
 msgstr "어려움"
 
-#: client/cl_game_campaign.c:127
 msgid "Very Hard"
 msgstr "매우 어려움"
 
-#: client/cl_game_campaign.c:129
 msgid "Insane"
 msgstr "광기적"
 
-#: client/cl_game_campaign.c:195
 msgid "Human"
 msgstr "인간"
 
-#: client/cl_game_campaign.c:199
 #, c-format
 msgid ""
 "%s\n"
@@ -14270,35 +13381,26 @@ msgstr ""
 "부채 한도: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:448
 #, c-format
 msgid "Rank: %s"
 msgstr "계급: %s"
 
-#: client/cl_game_multiplayer.c:59
 msgid "You've ended your round\n"
 msgstr "당신의 차례가 끝났습니다\n"
 
-#: client/cl_game_multiplayer.c:63
 #, c-format
 msgid "%s ended his round (team %i)\n"
 msgstr "%s 가 순서를 종료했습니다.(%i번 팀)\n"
 
-#: client/cl_game_multiplayer.c:82
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "플레이어당 인원을 팀당 인원보다 적게 설정하시기 바랍니다"
 
-#: client/cl_game_multiplayer.c:82
 msgid "Settings doesn't make sense"
 msgstr "유효하지 않은 설정입니다"
 
-#: client/cl_game_multiplayer.c:222
-#: client/cl_game_skirmish.c:164
 msgid "Game Drawn!"
 msgstr "무승부!"
 
-#: client/cl_game_multiplayer.c:222
-#: client/cl_game_skirmish.c:164
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -14308,7 +13410,6 @@ msgstr ""
 "\n"
 "생존자가 있는 팀이 없습니다."
 
-#: client/cl_game_multiplayer.c:234
 #, c-format
 msgid ""
 "\n"
@@ -14321,32 +13422,21 @@ msgstr ""
 "사살한 적군:  %i\n"
 "생존한 아군:  %i"
 
-#: client/cl_game_multiplayer.c:236
-#: client/cl_game_skirmish.c:186
 msgid "You won the game!"
 msgstr "게임에서 승리하셨습니다!"
 
-#: client/cl_game_multiplayer.c:237
-#: client/cl_game_skirmish.c:187
 msgid "Congratulations"
 msgstr "축하합니다"
 
-#: client/cl_game_multiplayer.c:239
-#: client/cl_game_skirmish.c:189
 msgid "You've lost the game!"
 msgstr "게임에서 졌습니다!"
 
-#: client/cl_game_multiplayer.c:240
-#: client/cl_game_skirmish.c:190
 msgid "Better luck next time"
 msgstr "다음 판은 행운이 따르기를 기원합니다"
 
-#: client/cl_game_multiplayer.c:271
 msgid "all"
 msgstr "올"
 
-#: client/cl_game_skirmish.c:177,
-#: c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
 "Team survivors:\t\t%i\n"
@@ -14362,300 +13452,210 @@ msgstr ""
 "사살된 민간인:\t\t%i\n"
 "외계인에 의해 사살된 민간인:\t\t%i\n"
 
-#: client/cl_inventory_callbacks.c:44
 msgid "skill_close"
 msgstr "근접전투"
 
-#: client/cl_inventory_callbacks.c:46
 msgid "skill_heavy"
 msgstr "중화기"
 
-#: client/cl_inventory_callbacks.c:48
 msgid "skill_assault"
 msgstr "강습"
 
-#: client/cl_inventory_callbacks.c:50
 msgid "skill_sniper"
 msgstr "저격"
 
-#: client/cl_inventory_callbacks.c:52
 msgid "skill_explosive"
 msgstr "폭발물"
 
-#: client/cl_inventory_callbacks.c:131
 #, c-format
 msgid "Size:\t%i\n"
 msgstr "크기:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:133
 msgid "^BDamage type:\tProtection:\n"
 msgstr "^B손상유형:\t방어도:\n"
 
-#: client/cl_inventory_callbacks.c:145,
-#: c-format
 msgid "%s weapon\n"
 msgstr "%s 무기\n"
 
-#: client/cl_inventory_callbacks.c:145
-#: client/cl_inventory_callbacks.c:184
-#: client/cl_inventory_callbacks.c:187
 msgid "One-handed"
 msgstr "한 손"
 
-#: client/cl_inventory_callbacks.c:145
-#: client/cl_inventory_callbacks.c:184
-#: client/cl_inventory_callbacks.c:187
 msgid "Two-handed"
 msgstr "양손"
 
-#: client/cl_inventory_callbacks.c:147
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "최대탄수:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:174
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "특기:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:176
-#: client/cl_inventory_callbacks.c:190
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "행동력:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:177
-#: client/cl_inventory_callbacks.c:191
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "사정거리:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:178
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "집탄성:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:181,
-#: c-format
 msgid "%s. No detailed info available.\n"
 msgstr "%s. 상세내용이 없습니다.\n"
 
-#: client/cl_inventory_callbacks.c:181
 msgid "Ammunition"
 msgstr "탄약"
 
-#: client/cl_inventory_callbacks.c:181
 msgid "Weapon"
 msgstr "무기"
 
-#: client/cl_inventory_callbacks.c:184,
-#: c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s 탄약이 필요 없는 무기\n"
 
-#: client/cl_inventory_callbacks.c:187,
-#: c-format
 msgid "%s auxiliary equipment\n"
 msgstr "%s 보조장비\n"
 
-#: client/cl_inventory_callbacks.c:189
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "행동:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:198
 msgid "Unknown - not useable"
 msgstr "알 수 없음 - 사용할 수 없음"
 
-#: client/cl_inventory_callbacks.c:342
 msgid "Update the GUI with the selected item"
 msgstr "선택된 항목으로 GUI를 갱신합니다"
 
-#: client/cl_irc.c:1440
 msgid "Server closed connection"
 msgstr "서버가 접속을 끊었습니다"
 
-#: client/cl_language.c:273
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:508
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "사용 중 버전 (%s)과 서버의 버전이 다릅니다 "
 
-#: client/cl_main.c:514
 msgid "Local map version differs from server"
 msgstr "사용 중 지도의 버전이 서버와 다릅니다"
 
-#: client/cl_main.c:520
 msgid "Script files are not the same"
 msgstr "S스크립트 파일이 동일하지 않습니다"
 
-#: client/cl_main.c:527
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "사용 중 버전 (%s)과 서버의 버전(%s)이 다릅니다 "
 
-#: client/cl_main.c:910
 msgid "Target your shot to the ground"
 msgstr "공격목표를 지면으로 설정합니다"
 
-#: client/cl_screen.c:165
 #, c-format
 msgid "Downloading [%s]"
 msgstr "내려 받는 중 [%s]"
 
-#: client/cl_screen.c:204
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "지도를 불러오는 중 [%s]"
 
-#: client/cl_team.c:51
-#: client/cl_team.c:481
-#: client/cl_team.c:492
 msgid "Urban"
 msgstr "도심용 위장복"
 
-#: client/cl_team.c:53
-#: client/cl_team.c:482
-#: client/cl_team.c:493
 msgid "Jungle"
 msgstr "정글용 위장복"
 
-#: client/cl_team.c:55
-#: client/cl_team.c:483
-#: client/cl_team.c:494
 msgid "Desert"
 msgstr "사막용 위장복"
 
-#: client/cl_team.c:57
-#: client/cl_team.c:484
-#: client/cl_team.c:495
 msgid "Arctic"
 msgstr "극지용 위장복"
 
-#: client/cl_team.c:59
-#: client/cl_team.c:496
 msgid "Yellow"
 msgstr "Yellow"
 
-#: client/cl_team.c:61
-#: client/cl_team.c:497
 msgid "CCCP"
 msgstr "CCCP"
 
-#: client/input/cl_input.c:908
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "전술화면의 시점을 시계 반대방향으로 회전"
 
-#: client/input/cl_input.c:910
 msgid "Rotate battlescape camera clockwise"
 msgstr "전술화면의 시점을 시계 방향으로 회전"
 
-#: client/input/cl_input.c:912
 msgid "Tilt battlescape camera up"
 msgstr "전술화면의 시점높이를 상승"
 
-#: client/input/cl_input.c:914
 msgid "Tilt battlescape camera down"
 msgstr "전술화면의 시점높이를 하강"
 
-#: client/input/cl_input.c:916
 msgid "Move battlescape camera left"
 msgstr "전술화면의 시점을 왼쪽으로 이동"
 
-#: client/input/cl_input.c:918
 msgid "Move battlescape camera right"
 msgstr "전술화면의 시점을 오른쪽으로 이동"
 
-#: client/input/cl_input.c:920
 msgid "Move battlescape camera forward"
 msgstr "전술화면의 시점을 앞으로 이동"
 
-#: client/input/cl_input.c:922
 msgid "Move battlescape camera backward"
 msgstr "전술화면의 시점을 뒤로 이동"
 
-#: client/input/cl_input.c:924
-#: client/input/cl_input.c:946
 msgid "Zoom in"
 msgstr "확대"
 
-#: client/input/cl_input.c:926
-#: client/input/cl_input.c:947
 msgid "Zoom out"
 msgstr "축소"
 
-#: client/input/cl_input.c:929
 msgid "Left mouse button click (menu)"
 msgstr "마우스 왼쪽 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.c:931
 msgid "Middle mouse button click (menu)"
 msgstr "마우스 휠 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.c:933
 msgid "Right mouse button click (menu)"
 msgstr "마우스 오른쪽 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.c:935
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "오브젝트/이동목표/공격방법 선택, 공격 그 외"
 
-#: client/input/cl_input.c:937
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Walk to a square/In fire mode, cancel action"
 
-#: client/input/cl_input.c:939
 msgid "Turn soldier toward mouse pointer"
 msgstr "마우스포인터의 방향으로 전투원를 보게 한다"
 
-#: client/input/cl_input.c:941
 msgid "Toggles the hud radar mode"
 msgstr "HUD 레이더 사용 토글"
 
-#: client/input/cl_input.c:944
 msgid "Slice through terrain at a higher level"
 msgstr "지형표시 고도레벨을 증가"
 
-#: client/input/cl_input.c:945
 msgid "Slice through terrain at a lower level"
 msgstr "지형표시 고도레벨을 감소"
 
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Assemble a team first"
 msgstr "팀을 먼저 구성하십시오"
 
-#: client/multiplayer/mp_callbacks.c:192
 msgid "Select a free team or your coop team"
 msgstr "Select a free team or your coop team"
 
-#: client/multiplayer/mp_callbacks.c:220
-#: client/multiplayer/mp_callbacks.c:233
 #, c-format
 msgid "Current team: %i"
 msgstr "현재 팀: %i"
 
-#: client/multiplayer/mp_callbacks.c:224
-#: client/multiplayer/mp_callbacks.c:237
 msgid "Team is already in use"
 msgstr "이미 사용 중 팀입니다"
 
-#: client/multiplayer/mp_callbacks.c:246
 msgid "Invalid or full team"
 msgstr "Invalid or full team"
 
-#: client/multiplayer/mp_serverlist.c:236,
-#: c-format
 msgid "Team %d"
 msgstr "팀 %d"
 
-#: client/multiplayer/mp_serverlist.c:238
 msgid "No team"
 msgstr "팀이 없음"
 
-#: client/multiplayer/mp_serverlist.c:298
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -14664,231 +13664,172 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/multiplayer/mp_serverlist.c:309
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "지도:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:314
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "서버명:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:315
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "심리상태::\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "게임유형:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:317
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "클라이언트 버전:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "전용서버:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:319
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "OS 종류:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "네트워크 프로토콜:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:321,
-#: c-format
 msgid "Roundtime:\t%s\n"
 msgstr "제한시간:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "팀플레이:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "팀당 최대 플레이어:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "이 지도에서 진행 가능한 최대팀:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "최대 클라이언트:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "플레이어당 최대인원:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "팀당 최대인원:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:328
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "암호로 보호됨:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:469
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "모든 바로가기 슬롯이 차있습니다 - 사용하지 않는 항목을 삭제하고 이전단계를 반복해 주시기 바랍니다"
 
-#: client/multiplayer/mp_team.c:254
 msgid "Error saving team. Nothing to save yet."
 msgstr "팀을 저장할 수 없습니다. 저장할 것이 없습니다."
 
-#: client/multiplayer/mp_team.c:270
 msgid "NewTeam"
 msgstr "새로운 팀"
 
-#: client/multiplayer/mp_team.c:275
 msgid "Error saving team. Check free disk space!"
 msgstr "팀을 저장할 수 없습니다. 하드가 남아있는지 확인하십시오!"
 
-#: client/ui/node/ui_node_base.c:201
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "%i일 남음"
 msgstr[1] "%i일 남음"
 
-#: client/ui/node/ui_node_base.c:274
 msgid "not operational, depends on"
 msgstr "not operational, depends on"
 
-#: client/ui/node/ui_node_baseinventory.c:243
-#: client/ui/node/ui_node_baseinventory.c:248
-#: client/ui/node/ui_node_container.c:291
-#: client/ui/node/ui_node_container.c:296
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "탄약: %i\n"
 
-#: client/ui/node/ui_node_baseinventory.c:247
-#: client/ui/node/ui_node_container.c:295
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s가 장전 되었습니다\n"
 
-#: client/ui/node/ui_node_baseinventory.c:254
-#: client/ui/node/ui_node_container.c:302
 msgid "Usable in:\n"
 msgstr "사용가능 무기:\n"
 
-#: client/ui/node/ui_node_container.c:343,
-#: c-format
 msgid "In: %i Out: %i"
 msgstr "In: %i Out: %i"
 
-#: client/ui/node/ui_node_keybinding.c:95,
-#: c-format
 msgid "Key %s already bound"
 msgstr "Key %s already bound"
 
-#: client/ui/node/ui_node_keybinding.c:154
 msgid "NONE"
 msgstr "없음"
 
-#: client/ui/node/ui_node_window.c:308
 msgid "Drag to move window"
 msgstr "창을 옮기려면 드래그 합니다."
 
-#: client/ui/node/ui_node_window.c:323
 msgid "Close the window"
 msgstr "이 대화상자를 닫습니다"
 
-#: client/ui/ui_main.c:56
 msgid "This change requires a restart"
 msgstr "이 변경사항은 재시작을 해야 합니다"
 
-#: client/ui/ui_main.c:58
 msgid "This change might require a restart"
 msgstr "이 변경사항은 재시작을 필요로 할 수도 있습니다"
 
-#: client/ui/ui_tooltip.c:96
-#: client/ui/ui_tooltip.c:101
 #, c-format
 msgid "Key: %s"
 msgstr "입력키: %s"
 
-#: client/ui/ui_windows.c:839
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "HUD를 숨깁니다 (ESC로 HUD를 재표시합니다)"
 
-#: game/g_actor.c:78
 msgid "Soldier entered the rescue zone\n"
 msgstr "전투원들이 구조지역에 진입하였습니다\n"
 
-#: game/g_actor.c:80
 msgid "Soldier left the rescue zone\n"
 msgstr "전투원들이 구조지역에서 벗어났습니다\n"
 
-#: game/g_actor.c:437
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "행동을 취할 수 없습니다 - 행동력이 부족합니다!\n"
 
-#: game/g_actor.c:441
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "행동을 취할 수 없습니다 - 이미 동일한 탄알의 최대 장탄수로 장전되어 있습니다!\n"
 
-#: game/g_client.c:308
 msgid "Can't perform action - object not present!\n"
 msgstr "행동을 취할 수 없습니다 - 대상이 없습니다!\n"
 
-#: game/g_client.c:313
 msgid "Can't perform action - not an actor!\n"
 msgstr "행동을 취할 수 없습니다 - 대원이 아닙니다!\n"
 
-#: game/g_client.c:318
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "행동을 취할 수 없습니다 - 대상이 기절했습니다!\n"
 
-#: game/g_client.c:323
 msgid "Can't perform action - actor is dead!\n"
 msgstr "행동을 취할 수 없습니다 - 대상이 사망하였습니다!\n"
 
-#: game/g_client.c:328
 msgid "Can't perform action - not on same team!\n"
 msgstr "행동을 취할 수 없습니다 - 같은 팀이 아닙니다!\n"
 
-#: game/g_client.c:333
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "행동을 취할 수 없습니다 - 동맹중인 다른 팀원은 조작할 수 없습니다!\n"
 
-#: game/g_client.c:360
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "행동을 취할 수 없습니다 - 당신의 차례가 아닙니다!\n"
 
-#: game/g_client.c:463
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Currently shaken, won't let their guard down.\n"
 
-#: game/g_cmds.c:71,
-#: c-format
 msgid "You can't talk for %d more seconds\n"
 msgstr "%d 초간 말을 할 수 없습니다\n"
 
-#: game/g_cmds.c:79
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr ""
 
-#: game/g_combat.c:376
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -14896,123 +13837,93 @@ msgstr ""
 "대원이 당황하고 있습니다!\n"
 "적군이 섬광탄을 사용했습니다!\n"
 
-#: game/g_combat.c:605
 msgid "Can't perform action - impossible throw!\n"
 msgstr "행동을 취할 수 없습니다 - 던질 수 없습니다!\n"
 
-#: game/g_combat.c:1076
 msgid "Can't perform action - object not activatable!\n"
 msgstr "행동을 취할 수 없습니다 - object not activateable!\n"
 
-#: game/g_combat.c:1100
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "이 무기는 한손으로 사용할 수 없습니다.\n"
 
-#: game/g_combat.c:1107
 msgid "Can't perform action - no ammo!\n"
 msgstr "행동을 취할 수 없습니다 - 탄약이 없습니다!\n"
 
-#: game/g_combat.c:1115
 msgid "Can't perform action - target out of range!\n"
 msgstr "행동을 취할 수 없습니다 - 사정거리를 벗어났습니다!\n"
 
-#: game/g_combat.c:1161
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "행동을 취할 수 없습니다 - 탄약이 부족합니다!\n"
 
-#: game/g_mission.c:48
 msgid "Aliens entered target zone\n"
 msgstr "외계인들이 목표지점에 진입했습니다.\n"
 
-#: game/g_mission.c:79
 msgid "Item was placed\n"
 msgstr "물품이 이미 존재합니다\n"
 
-#: game/g_mission.c:86
 msgid "Target zone is occupied\n"
 msgstr "목표지점이 점령당했습니다.\n"
 
-#: game/g_morale.c:36
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s가 공포에 빠졌다!\n"
 
-#: game/g_morale.c:97
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s가 폭주중입니다.\n"
 
-#: game/g_morale.c:99,
-#: c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s 가 분노에 사로잡혔다!\n"
 
-#: game/g_morale.c:176
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s 대원이 심리적으로 불안합니다.\n"
 
-#: game/g_reaction.c:184
 msgid "No reaction fire enabled weapon.\n"
 msgstr "대응사격을 할 수 없는 무기입니다.\n"
 
-#: game/g_reaction.c:189
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "대응사격할 방법이 선택되어 있지 않습니다.\n"
 
-#: game/g_reaction.c:194
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "대응사격을 하기에는 행동력이 부족합니다.\n"
 
-#: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
 msgstr "강제 턴 종료까지 4분 남았습니다\n"
 
-#: game/g_round.c:48
 msgid "3 minutes left until forced round end\n"
 msgstr "강제 턴 종료까지 3분 남았습니다\n"
 
-#: game/g_round.c:51
 msgid "2 minutes left until forced round end\n"
 msgstr "강제 턴 종료까지 2분 남았습니다\n"
 
-#: game/g_round.c:54
 msgid "1 minute left until forced round end\n"
 msgstr "강제 턴 종료까지 1분 남았습니다\n"
 
-#: game/g_round.c:57
 msgid "30 seconds left until forced round end\n"
 msgstr "강제 턴 종료까지 30초 남았습니다\n"
 
-#: game/g_round.c:60
 msgid "15 seconds left until forced round end\n"
 msgstr "강제 턴 종료까지 15초 남았습니다\n"
 
-#: game/g_round.c:68
 msgid "Current active team hit the max round time\n"
 msgstr "Current active team hit the max round time\n"
 
-#: po/OTHER_STRINGS:2
 msgid "human"
 msgstr "인간"
 
-#: po/OTHER_STRINGS:3
 msgid "alien"
 msgstr "외계인"
 
-#: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "스크린샷 저장"
 
-#: po/OTHER_STRINGS:7
 msgid "All"
 msgstr "All"
 
-#: po/OTHER_STRINGS:8
 msgid "Free"
 msgstr "Free"
 
-#: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr "Playing"
 

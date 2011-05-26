@@ -102,7 +102,6 @@ msgstr "โรงเก็บเครื่องบินเล็ก"
 msgid "Harvester"
 msgstr "ยานเก็บเกี่ยว"
 
-#: client/campaign/cp_base_callbacks.c:312
 msgid "Laboratory"
 msgstr "ห้องวิจัย"
 
@@ -425,7 +424,6 @@ msgstr "โรงเก็บเครื่องบินใหญ่"
 msgid "Small Hangar"
 msgstr "โรงเก็บเครื่องบินเล็ก"
 
-#: client/campaign/cp_base_callbacks.c:317
 msgid "Workshop"
 msgstr "ห้องช่าง"
 
@@ -435,7 +433,6 @@ msgstr "เรดาร์"
 msgid "Advanced Radar"
 msgstr "เรดาร์ระดับสูง"
 
-#: client/campaign/cp_base_callbacks.c:332
 msgid "Hospital"
 msgstr "โรงพยาบาล"
 
@@ -2644,18 +2641,15 @@ msgstr "กางเขน"
 msgid "Coin"
 msgstr "เหรียญ"
 
-#: client/campaign/cp_employee.c:206
 msgid "Scientist"
 msgstr "นักวิทยาศาสตร์"
 
-#: client/campaign/cp_employee.c:210
 msgid "Pilot"
 msgstr "นักบิน"
 
 msgid "UGV"
 msgstr "UGV"
 
-#: client/campaign/cp_employee.c:208
 msgid "Worker"
 msgstr "คนงาน"
 
@@ -3130,7 +3124,6 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: client/campaign/cp_missions.c:459
 msgid "Alien base"
 msgstr "ฐานมนุษย์ต่างดาว"
 
@@ -9166,7 +9159,6 @@ msgstr "กลับไปหน้าฐาน"
 msgid "Name of this base"
 msgstr "ชื่อฐาน"
 
-#: client/campaign/cp_installation_callbacks.c:217
 msgid "Cancel"
 msgstr "ยกเลิก"
 
@@ -9228,20 +9220,15 @@ msgstr "ปลดไอเท็มนี้ออก"
 msgid "Available equipment:"
 msgstr "ของที่มีอยู่:"
 
-#: client/campaign/cp_fightequip_callbacks.c:135
 msgid "Weapons"
 msgstr "อาวุธ"
 
-#: client/campaign/cp_fightequip_callbacks.c:142
 msgid "Ammo"
 msgstr "กระสุน"
 
-#: client/campaign/cp_fightequip_callbacks.c:137
-#: client/campaign/cp_ufopedia.c:146
 msgid "Armour"
 msgstr "อุปกรณ์/เกราะ"
 
-#: client/campaign/cp_fightequip_callbacks.c:139
 msgid "Items"
 msgstr "อุปกรณ์"
 
@@ -9434,13 +9421,9 @@ msgstr "%i วันในการสร้าง\n"
 msgid "Autofire"
 msgstr "ยิงอัตโนมัติ"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
-#: client/campaign/cp_installation_callbacks.c:216
 msgid "Destroy"
 msgstr "ทำลาย"
 
-#: client/campaign/cp_installation_callbacks.c:216
 #, fuzzy
 msgid "Destroy installation"
 msgstr "ประเทศ"
@@ -9477,8 +9460,6 @@ msgstr "ซื้อ/ขาย"
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "ซื้อ/ขาย อุปกรณ์"
 
-#: client/campaign/cp_base.c:1203 client/campaign/cp_base.c:1213
-#: client/campaign/cp_base.c:1223
 msgid "Transfer"
 msgstr "โยกย้าย"
 
@@ -9533,8 +9514,6 @@ msgstr "สิ่งก่อสร้างเสร็จ"
 msgid "Select building"
 msgstr "เลือกสิ่งก่อสร้าง"
 
-#: client/campaign/cp_ufopedia.c:609 client/campaign/cp_ufopedia.c:662
-#: client/campaign/cp_ufopedia.c:671 client/campaign/cp_ufopedia.c:831
 msgid "UFOpaedia"
 msgstr "จานบินอภิธาน"
 
@@ -10008,7 +9987,6 @@ msgstr "ยิงโต้ตอบหนึ่งนัด"
 msgid "No reaction fire"
 msgstr "ไม่ยิงโต้ตอบ"
 
-#: client/battlescape/cl_hud.c:822
 msgid "Reserve TUs for shooting."
 msgstr ""
 
@@ -10954,7 +10932,6 @@ msgstr "ต่ำ"
 msgid "Medium"
 msgstr "ปานกลาง"
 
-#: client/cl_game_campaign.c:164
 msgid "Normal"
 msgstr "ปกติ"
 
@@ -11448,11 +11425,9 @@ msgstr "ยืนยันการกระทำ:"
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 msgstr ""
 
-#: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "ใช่"
 
-#: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "ไม่"
 
@@ -11543,7 +11518,6 @@ msgstr "ตกลง"
 msgid "Use the previous resolution."
 msgstr "เปลี่ยนค่าความคมชัด"
 
-#: client/campaign/cp_produce_callbacks.c:296
 #, fuzzy
 msgid "Disassembly"
 msgstr "เริ่มการผลิต %s"
@@ -11803,7 +11777,6 @@ msgstr "มีอยู่ในปัจจุบัน:"
 msgid "Add/Remove item to transfer cargo"
 msgstr "เลือกฐานที่จะโอนไป"
 
-#: client/cl_game_campaign.c:241
 msgid "Aliens"
 msgstr "มนุษย์ต่างดาว"
 
@@ -12170,112 +12143,87 @@ msgstr "ปืนกลหนัก"
 msgid "Autocannon Module"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:102
 msgid "Poor"
 msgstr "แย่"
 
-#: client/battlescape/cl_actor.c:104
 msgid "Mediocre"
 msgstr "เฉยๆ"
 
-#: client/battlescape/cl_actor.c:106
 msgid "Average"
 msgstr "กลางๆ"
 
-#: client/battlescape/cl_actor.c:108
 msgid "Competent"
 msgstr "พอใช้"
 
-#: client/battlescape/cl_actor.c:110
 msgid "Proficient"
 msgstr "ถนัด"
 
-#: client/battlescape/cl_actor.c:112
 msgid "Very Good"
 msgstr "ดี"
 
-#: client/battlescape/cl_actor.c:114
 msgid "Highly Proficient"
 msgstr "คล่องมาก"
 
-#: client/battlescape/cl_actor.c:118
 msgid "Outstanding"
 msgstr "อัจฉริยะ"
 
-#: client/battlescape/cl_actor.c:121
 msgid "Superhuman"
 msgstr "เกินมนุษย์"
 
-#: client/battlescape/cl_actor.c:661
 msgid "This isn't your round\n"
 msgstr "ไม่ใช่ตาของคุณ\n"
 
-#: client/battlescape/cl_actor.c:912
 #, fuzzy
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 "ยังใช้ของนี้ไม่ได้\n"
 "ต้องวิจัยก่อน\n"
 
-#: client/battlescape/cl_actor.c:1757
 #, fuzzy
 msgid "Unknown alien race"
 msgstr "วิทยการที่ยังไม่รู้จัก วิจัยไม่ได้"
 
-#: client/battlescape/cl_actor.c:2410
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/battlescape/cl_actor.c:2411
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "เลือกทหารจากรายชื่อ"
 
-#: client/battlescape/cl_actor.c:2412
 #, fuzzy
 msgid "Update an actor"
 msgstr "เปลี่ยนชื่อทหาร"
 
-#: client/battlescape/cl_actor.c:2414
 msgid "Toggle stand/crounch"
 msgstr "สลับ ยืน/ย่อตัว"
 
-#: client/battlescape/cl_actor.c:2415
 #, fuzzy
 msgid "Toggle the headgear"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/battlescape/cl_actor.c:2416
 msgid "Opens or closes a door"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2417
 msgid "Confirm the current action"
 msgstr "ยืนยันการกระทำ"
 
-#: client/battlescape/cl_actor.c:2418
 msgid "Toggle to next alien visible from selected actor."
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2420
 #, fuzzy
 msgid "Toggle to next alien"
 msgstr "สลับไปมนุษย์ต่างดาวตัวต่อไป"
 
-#: client/battlescape/cl_hud.c:97 client/battlescape/cl_hud.c:100
 msgid "Crouch walk"
 msgstr "เดินต่ำ"
 
-#: client/battlescape/cl_hud.c:98
 msgid "Autostand"
 msgstr "ยืนอัตโนมัติ"
 
-#: client/battlescape/cl_hud.c:99
 msgid "Walk"
 msgstr "เดิน"
 
-#: client/battlescape/cl_hud.c:148
 #, c-format
 msgid ""
 "%s\n"
@@ -12283,97 +12231,76 @@ msgid ""
 "%s"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:293
 msgid "[0 TU] No reservation"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:313
 #, c-format
 msgid "[%i TU] %s"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:345
 msgid "Reserve TUs for firing/using."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:345
 msgid "Shot Reservation"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:445
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "ค่าเวลาที่เหลือ: %i"
 
-#: client/battlescape/cl_hud.c:448
 msgid "No remaining TUs left after shot."
 msgstr "ไม่เหลือค่าเวลาหลังจากยิง"
 
-#: client/battlescape/cl_hud.c:451
 #, c-format
 msgid "TU: %i"
 msgstr "ค่าเวลา: %i"
 
-#: client/battlescape/cl_hud.c:452
 #, c-format
 msgid "Shots: %i"
 msgstr "ยิง: %i"
 
-#: client/battlescape/cl_hud.c:666
 msgid "No weapon."
 msgstr "ไม่มีอาวุธ"
 
-#: client/battlescape/cl_hud.c:675
 msgid "Weapon cannot be reloaded."
 msgstr "อาวุธนี้ไม่สามารถเติมกระสุนได้"
 
-#: client/battlescape/cl_hud.c:681
 msgid "No reload possible, already fully loaded."
 msgstr "ไม่สามารถบรรจุกระสุนได้, กระสุนเต็ม"
 
-#: client/battlescape/cl_hud.c:691
 msgid "Not enough TUs for reloading weapon."
 msgstr "ค่าเวลาไม่เพียงพอสำหรับการบรรจุกระสุน"
 
-#: client/battlescape/cl_hud.c:694
 msgid "No reload possible, you don't have backup ammo."
 msgstr "ไม่สามารถบรรจุกระสุนได้, คุณไม่มีกระสุนสำรอง"
 
-#: client/battlescape/cl_hud.c:786
 msgid "Not enough TUs for standing up."
 msgstr "ค่าเวลาไม่เพียงพอสำหรับการยืน"
 
-#: client/battlescape/cl_hud.c:789
 #, fuzzy, c-format
 msgid "Stand up (%i TU)"
 msgstr "บรรจุกระสุน"
 
-#: client/battlescape/cl_hud.c:794
 msgid "Not enough TUs for crouching."
 msgstr "ค่าเวลาไม่เพียงพอสำหรับการก้ม"
 
-#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "ก้ม (%i TU)"
 
-#: client/battlescape/cl_hud.c:805
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:809
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "เก็บค่าเวลา %i สำหรับการก้ม/ยืน"
 
-#: client/battlescape/cl_hud.c:812
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "ค่าเวลาไม่เพียงพอสำหรับเก็บเพื่อการก้ม/ยืน"
 
-#: client/battlescape/cl_hud.c:818
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -12381,16 +12308,13 @@ msgid ""
 "Right-Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:825
 msgid "Reserving TUs for shooting not possible."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:846 client/battlescape/cl_hud.c:855
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "บรรจุกระสุน (%i TU)"
 
-#: client/battlescape/cl_hud.c:1082
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -12398,7 +12322,6 @@ msgstr ""
 "ไม่สามารถใช้ไอเท็มที่ไม่รู้จัก\n"
 "ต้องวิจัยก่อน\n"
 
-#: client/battlescape/cl_hud.c:1103
 #, c-format
 msgid ""
 "%s\n"
@@ -12407,19 +12330,16 @@ msgstr ""
 "%s\n"
 "(ไม่มี)\n"
 
-#: client/battlescape/cl_hud.c:1125
 #, fuzzy, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr ""
 "เกราะ  %i\tกำลังใจ  %i\n"
 "เคลื่อนที่ %i (%i เหลือค่าเวลา)\n"
 
-#: client/battlescape/cl_hud.c:1127
 #, c-format
 msgid "Morale  %i"
 msgstr "กำลังใจ %i"
 
-#: client/battlescape/cl_hud.c:1132
 #, fuzzy, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -12428,7 +12348,6 @@ msgstr ""
 "เกราะ  %i\tกำลังใจ  %i\n"
 "เคลื่อนที่ %i (%i เหลือค่าเวลา)\n"
 
-#: client/battlescape/cl_hud.c:1136
 #, fuzzy, c-format
 msgid ""
 "Morale  %i\n"
@@ -12437,7 +12356,6 @@ msgstr ""
 "เกราะ  %i\tกำลังใจ  %i\n"
 "เคลื่อนที่ %i (%i เหลือค่าเวลา)\n"
 
-#: client/battlescape/cl_hud.c:1168
 #, c-format
 msgid ""
 "Time Units\n"
@@ -12446,21 +12364,16 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1263
 msgid "Currently panics!\n"
 msgstr "ตกใจอยู่!\n"
 
-#: client/battlescape/cl_hud.c:1489
 #, fuzzy
 msgid "Update cvars from actor from list"
 msgstr "เลือกทหารจากรายชื่อ"
 
-#: client/battlescape/cl_hud_callbacks.c:86
-#: client/battlescape/cl_hud_callbacks.c:243
 msgid "No item in hand.\n"
 msgstr "ไม่มีอุปกรณ์ในมือ\n"
 
-#: client/battlescape/cl_hud_callbacks.c:92
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -12468,7 +12381,6 @@ msgstr ""
 "ทำไม่ได้:\n"
 "กระสุนหมด\n"
 
-#: client/battlescape/cl_hud_callbacks.c:97
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -12476,8 +12388,6 @@ msgstr ""
 "อาวุธนี้ยิงไม่ได้\n"
 "ด้วยมือเดียว\n"
 
-#: client/battlescape/cl_hud_callbacks.c:151
-#: client/battlescape/cl_hud_callbacks.c:261
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -12485,7 +12395,6 @@ msgstr ""
 "ทำไม่ได้:\n"
 "ค่าเวลาไม่พอ\n"
 
-#: client/battlescape/cl_hud_callbacks.c:249
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -12493,7 +12402,6 @@ msgstr ""
 "ทำไม่ได้:\n"
 "ของนี้บรรจุกระสุนใหม่ไม่ได้\n"
 
-#: client/battlescape/cl_hud_callbacks.c:256
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -12501,700 +12409,494 @@ msgstr ""
 "ทำไม่ได้:\n"
 "ไม่มีกระสุน\n"
 
-#: client/battlescape/cl_hud_callbacks.c:291
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "บรรจุกระสุนอาวุธมือซ้าย"
 
-#: client/battlescape/cl_hud_callbacks.c:292
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "บรรจุกระสุนอาวุธมือขวา"
 
-#: client/battlescape/cl_hud_callbacks.c:293
 #, fuzzy
 msgid "Toggle reservation for crouching."
 msgstr "สลับการยิงตอบโต้"
 
-#: client/battlescape/cl_hud_callbacks.c:294
 msgid "Toggle reaction fire"
 msgstr "สลับการยิงตอบโต้"
 
-#: client/battlescape/cl_view.c:58 client/battlescape/cl_view.c:84
 #, c-format
 msgid "loading %s"
 msgstr "กำลังโหลด %s"
 
-#: client/battlescape/cl_view.c:66
 msgid "loading models..."
 msgstr "โหลด รูปแบบ..."
 
-#: client/battlescape/cl_view.c:114 client/cl_main.c:1124
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/battlescape/events/e_server.c:41
 #, fuzzy
 msgid "This isn't your round"
 msgstr "ไม่ใช่ตาของคุณ\n"
 
-#: client/battlescape/events/e_server.c:53
 msgid "Ends current round"
 msgstr "จบตา"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:159
 #, c-format
 msgid "Enemy spotted: %s!"
 msgstr "พบศัตรู: %s!"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:162
 msgid "Enemy spotted!\n"
 msgstr "พบศัตรู!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:164
 msgid "Civilian spotted!\n"
 msgstr "พบพลเรือน!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:78
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s ไม่สามารถขยับตัวได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s ถูกฆ่าตาย\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:88
 msgid "A civilian was stunned.\n"
 msgstr "พลเรือนขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
 msgid "A civilian was killed.\n"
 msgstr "พลเรือนถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:94
 msgid "An alien was stunned.\n"
 msgstr "มนุษย์ต่างดาวขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
 msgid "An alien was killed.\n"
 msgstr "มนุษย์ต่างดาวถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:100
 msgid "A soldier was stunned.\n"
 msgstr "ทหารขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
 msgid "A soldier was killed.\n"
 msgstr "ทหารถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:106
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "สมาชิกทีม %i ขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "สมาชิกทีม %i ถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:69
 #, fuzzy, c-format
 msgid "%s was revitalised\n"
 msgstr "%s ถูกฆ่าตาย\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:75
 #, fuzzy
 msgid "A civilian was revitalised.\n"
 msgstr "พลเรือนถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:78
 #, fuzzy
 msgid "An alien was revitalised.\n"
 msgstr "มนุษย์ต่างดาวถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:81
 #, fuzzy
 msgid "A soldier was revitalised.\n"
 msgstr "ทหารถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.c:84
 #, fuzzy, c-format
 msgid "A member of team %i was revitalised.\n"
 msgstr "สมาชิกทีม %i ถูกฆ่า\n"
 
-#: client/battlescape/events/event/player/e_event_doendround.c:57
 msgid "Your round started!\n"
 msgstr "เริ่มตาคุณ!\n"
 
-#: client/campaign/cp_aircraft.c:450
 msgid "ON RED ALERT"
 msgstr "ภาวะเตรียมพร้อมเต็มที่"
 
-#: client/campaign/cp_aircraft.c:454
 msgid "Nothing - should not be displayed"
 msgstr "ไม่มีอะไร - ไม่ต้องแสดง"
 
-#: client/campaign/cp_aircraft.c:456
 #, fuzzy
 msgid "at home base"
 msgstr "ที่ฐานบัญชาการ"
 
-#: client/campaign/cp_aircraft.c:458
 msgid "refuelling"
 msgstr "กำลังเติมเชื้อเพลิง"
 
-#: client/campaign/cp_aircraft.c:460
 msgid "idle"
 msgstr "ว่างงาน"
 
-#: client/campaign/cp_aircraft.c:462
 #, fuzzy
 msgid "in transit"
 msgstr "กำลังเปลี่ยนตัว"
 
-#: client/campaign/cp_aircraft.c:464
 msgid "enroute to mission"
 msgstr "เดินทางไปยังภารกิจ"
 
-#: client/campaign/cp_aircraft.c:466
 msgid "pursuing a UFO"
 msgstr "ไล่ตามจานบิน"
 
-#: client/campaign/cp_aircraft.c:468
 #, fuzzy
 msgid "ready to drop soldiers"
 msgstr "เปลี่ยนชื่อทหาร"
 
-#: client/campaign/cp_aircraft.c:470
 msgid "intercepting a UFO"
 msgstr "เข้าสกัดจานบิน"
 
-#: client/campaign/cp_aircraft.c:472
 msgid "enroute to new home base"
 msgstr "เดินทางไปยังฐานใหม่"
 
-#: client/campaign/cp_aircraft.c:474
 msgid "returning to base"
 msgstr "กำลังกลับฐาน"
 
-#: client/campaign/cp_aircraft.c:565
 msgid "Interceptor"
 msgstr "ยานขับไล่"
 
-#: client/campaign/cp_aircraft.c:567
 msgid "Transporter"
 msgstr "ยานขับส่ง"
 
-#: client/campaign/cp_aircraft.c:569 client/campaign/cp_ufo.c:158
-#: client/campaign/cp_ufo.c:159
 msgid "UFO"
 msgstr "จานบิน"
 
-#: client/campaign/cp_aircraft.c:837
 #, fuzzy, c-format
 msgid "A new %s is ready in %s"
 msgstr "ทีมถูกใช้แล้ว"
 
-#: client/campaign/cp_aircraft.c:838 client/campaign/cp_aircraft.c:1224
-#: client/campaign/cp_aircraft.c:1240 client/campaign/cp_aircraft.c:1284
-#: client/campaign/cp_aircraft.c:1341 client/campaign/cp_aircraft.c:1364
-#: client/campaign/cp_aircraft.c:2124
-#: client/campaign/cp_aircraft_callbacks.c:95
-#: client/campaign/cp_aircraft_callbacks.c:103
-#: client/campaign/cp_aircraft_callbacks.c:111
-#: client/campaign/cp_airfight.c:334 client/campaign/cp_airfight.c:354
-#: client/campaign/cp_aliencont.c:182 client/campaign/cp_aliencont.c:212
-#: client/campaign/cp_aliencont.c:231 client/campaign/cp_aliencont.c:241
-#: client/campaign/cp_base.c:1167 client/campaign/cp_base.c:1189
-#: client/campaign/cp_base.c:1754 client/campaign/cp_base.c:1818
-#: client/campaign/cp_base.c:2907 client/campaign/cp_base.c:2912
-#: client/campaign/cp_base.c:3650 client/campaign/cp_base_callbacks.c:68
-#: client/campaign/cp_base_callbacks.c:197
-#: client/campaign/cp_base_callbacks.c:239
-#: client/campaign/cp_base_callbacks.c:572
-#: client/campaign/cp_base_callbacks.c:578
-#: client/campaign/cp_base_callbacks.c:600
-#: client/campaign/cp_base_callbacks.c:610
-#: client/campaign/cp_base_callbacks.c:622
-#: client/campaign/cp_base_callbacks.c:629
-#: client/campaign/cp_base_callbacks.c:637
-#: client/campaign/cp_base_callbacks.c:642
-#: client/campaign/cp_base_callbacks.c:647 client/campaign/cp_campaign.c:1008
-#: client/campaign/cp_installation_callbacks.c:149
-#: client/campaign/cp_mapfightequip.c:351
-#: client/campaign/cp_mapfightequip.c:372
-#: client/campaign/cp_mapfightequip.c:378
-#: client/campaign/cp_mapfightequip.c:390
-#: client/campaign/cp_market_callbacks.c:633
-#: client/campaign/cp_market_callbacks.c:638 client/campaign/cp_missions.c:735
-#: client/campaign/cp_missions.c:1090 client/campaign/cp_nation.c:889
-#: client/campaign/cp_nation.c:903 client/campaign/cp_nation.c:916
-#: client/campaign/cp_nation.c:925 client/campaign/cp_nation.c:931
-#: client/campaign/cp_nation.c:939 client/campaign/cp_popup.c:483
-#: client/campaign/cp_produce.c:491 client/campaign/cp_produce.c:500
-#: client/campaign/cp_produce.c:511 client/campaign/cp_produce.c:520
-#: client/campaign/cp_produce.c:531
-#: client/campaign/cp_research_callbacks.c:563
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:587
-#: client/campaign/cp_research_callbacks.c:626
-#: client/campaign/cp_research_callbacks.c:656
-#: client/campaign/cp_research_callbacks.c:815
-#: client/campaign/cp_research_callbacks.c:818 client/campaign/cp_ufo.c:428
-#: client/campaign/cp_ufo.c:844 client/campaign/cp_ufo.c:849
-#: client/campaign/cp_ufo.c:855
-#: client/campaign/missions/cp_mission_baseattack.c:122
-#: client/cl_game_campaign.c:69 client/cl_game_campaign.c:88
-#: client/cl_game_campaign.c:91 client/cl_main.c:404
-#: client/multiplayer/mp_serverlist.c:469
 msgid "Notice"
 msgstr "ข้อสังเกต"
 
-#: client/campaign/cp_aircraft.c:902
 #, fuzzy
 msgid "No operational hangars at that base."
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/campaign/cp_aircraft.c:906
 #, fuzzy
 msgid "No free hangars at that base."
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/campaign/cp_aircraft.c:909
 msgid "Insufficient free crew quarter space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:912
 msgid "Insufficient storage space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:916
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1223
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1239
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "เครื่องบินเหลือเชื้อเพลิงน้อยและกำลังกลับฐาน"
 
-#: client/campaign/cp_aircraft.c:1284
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "เครื่องบินเหลือเชื้อเพลิงน้อยและกำลังกลับฐาน"
 
-#: client/campaign/cp_aircraft.c:1341
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1364
 msgid "Insufficient fuel."
 msgstr "เชื้อเพลิงไม่พอ"
 
-#: client/campaign/cp_aircraft.c:2124
 #, fuzzy, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "เครื่องบินเหลือเชื้อเพลิงน้อยและกำลังกลับฐาน"
 
-#: client/campaign/cp_aircraft_callbacks.c:95
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
 
-#: client/campaign/cp_aircraft_callbacks.c:103
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
 
-#: client/campaign/cp_aircraft_callbacks.c:111
 msgid "Aircraft started"
 msgstr "เดินเครื่องยานบิน"
 
-#: client/campaign/cp_aircraft_callbacks.c:215 client/campaign/cp_map.c:1678
-#: client/campaign/cp_map.c:1685
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "ความเร็ว:\t%i km/h\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:217 client/campaign/cp_map.c:1679
-#: client/campaign/cp_map.c:1686
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "เชื้อเพลิง:\t%i/%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:219
-#: client/campaign/cp_ufopedia.c:345
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr ""
 
-#: client/campaign/cp_aircraft_callbacks.c:220
 #, fuzzy, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "อาวุธ:\t%s\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:221
 #, fuzzy, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "เครื่องบิน:\t%i c\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:222
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr ""
 
-#: client/campaign/cp_airfight.c:334
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr ""
 
-#: client/campaign/cp_airfight.c:354
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr ""
 
-#: client/campaign/cp_airfight.c:434 client/campaign/cp_airfight.c:461
 msgid "Interception"
 msgstr "การเข้าสกัด"
 
-#: client/campaign/cp_airfight.c:434
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/campaign/cp_airfight.c:461 client/cl_game_campaign.c:91
 msgid "You've lost the battle"
 msgstr "คุณรบแพ้"
 
-#: client/campaign/cp_aliencont.c:182
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "คุณยังทำงานกับมนุษย์ต่างดาวไม่ได้ เขตกักกันในฐานนี้ยังไม่พร้อม"
 
-#: client/campaign/cp_aliencont.c:212
 #, fuzzy
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "คุณยังจับมนุษย์ต่างดาวที่มีชีวิตไม่ได้ มนุษย์ต่างดาวตาย"
 
-#: client/campaign/cp_aliencont.c:231
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr "คุณไม่มีพื้นที่เพียงพอในห้องเก็บมนุษย์ต่างดาว มนุษย์ต่างดาวบางตัวถูกกำจัด"
 
-#: client/campaign/cp_aliencont.c:241
 msgid "You've captured new aliens."
 msgstr "คุณจับมนุษย์ต่างดาวใหม่ได้"
 
-#: client/campaign/cp_aliencont_callbacks.c:204
 msgid "Already researched"
 msgstr "ทำการวิจัยไปแล้ว"
 
-#: client/campaign/cp_aliencont_callbacks.c:206
 msgid "Needs autopsy!"
 msgstr "ต้องชันสูตรศพ!"
 
-#: client/campaign/cp_aliencont_callbacks.c:229
 #, fuzzy
 msgid "Free slot"
 msgstr "บังคับให้เริ่ม"
 
-#: client/campaign/cp_aliencont_callbacks.c:230
-#: client/campaign/cp_basedefence_callbacks.c:217
-#: client/campaign/cp_basedefence_callbacks.c:595
-#: client/campaign/cp_ufopedia.c:229 client/input/cl_joystick.c:278
 msgid "None"
 msgstr "ไม่มี"
 
-#: client/campaign/cp_base.c:1167
 #, fuzzy
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "ฐานถูกโจมตี"
 
-#: client/campaign/cp_base.c:1177
 #, fuzzy
 msgid "Destroy Entrance"
 msgstr "ห้องเก็บของ"
 
-#: client/campaign/cp_base.c:1177
 #, fuzzy
 msgid "You can't destroy the entrance of the base!"
 msgstr "เพิ่มคิวไม่ได้อีกแล้ว!"
 
-#: client/campaign/cp_base.c:1189
 msgid "You can't destroy this building! It is the only connection to other buildings!"
 msgstr ""
 
-#: client/campaign/cp_base.c:1200
 #, fuzzy
 msgid "Destroy Hangar"
 msgstr "ทำลายสิ่งก่อสร้าง"
 
-#: client/campaign/cp_base.c:1200
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:1201
 #, fuzzy
 msgid "Go to hangar"
 msgstr "กลับโรงจอด"
 
-#: client/campaign/cp_base.c:1201
 #, fuzzy
 msgid "Go to hangar without destroying building"
 msgstr "แน่ใจหรือว่าจะทำลายสิ่งก่อสร้างนี้?"
 
-#: client/campaign/cp_base.c:1202 client/campaign/cp_base.c:1212
-#: client/campaign/cp_base.c:1222 client/campaign/cp_base.c:1235
 msgid "Destroy the building"
 msgstr "ทำลายสิ่งก่อสร้าง"
 
-#: client/campaign/cp_base.c:1204 client/campaign/cp_base.c:1214
-#: client/campaign/cp_base.c:1224
 #, fuzzy
 msgid "Go to transfer menu without destroying the building"
 msgstr "แน่ใจหรือว่าจะทำลายสิ่งก่อสร้างนี้?"
 
-#: client/campaign/cp_base.c:1210
 #, fuzzy
 msgid "Destroy Quarter"
 msgstr "ทำลาย"
 
-#: client/campaign/cp_base.c:1210
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:1211
 msgid "Dismiss"
 msgstr "แยกย้าย"
 
-#: client/campaign/cp_base.c:1211
 #, fuzzy
 msgid "Go to hiring menu without destroying building"
 msgstr "แน่ใจหรือว่าจะทำลายสิ่งก่อสร้างนี้?"
 
-#: client/campaign/cp_base.c:1220
 #, fuzzy
 msgid "Destroy Storage"
 msgstr "ห้องเก็บของ"
 
-#: client/campaign/cp_base.c:1220
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:1221
 #, fuzzy
 msgid "Go to buy/sell menu without destroying building"
 msgstr "แน่ใจหรือว่าจะทำลายสิ่งก่อสร้างนี้?"
 
-#: client/campaign/cp_base.c:1221
 #, fuzzy
 msgid "Go to storage"
 msgstr "ตัวเลือก"
 
-#: client/campaign/cp_base.c:1233
 msgid "Are you sure you want to destroy this building?"
 msgstr "แน่ใจหรือว่าจะทำลายสิ่งก่อสร้างนี้?"
 
-#: client/campaign/cp_base.c:1233
 msgid "Destroy building"
 msgstr "ทำลายสิ่งก่อสร้าง"
 
-#: client/campaign/cp_base.c:1251
 msgid "Not set"
 msgstr "ไม่ได้ตั้งค่า"
 
-#: client/campaign/cp_base.c:1257
 #, c-format
 msgid "Already %i in base"
 msgstr "มี %i ในฐาน"
 
-#: client/campaign/cp_base.c:1263
 msgid "Construction finished"
 msgstr "ก่อสร้างเสร็จสิ้น"
 
-#: client/campaign/cp_base.c:1267
 msgid "Working 100%"
 msgstr "ทำงาน 100%"
 
-#: client/campaign/cp_base.c:1271
 msgid "Not operational, depends on"
 msgstr ""
 
-#: client/campaign/cp_base.c:1275
 msgid "Down"
 msgstr "หยุด"
 
-#: client/campaign/cp_base.c:1754
 msgid "Not enough credits to build this\n"
 msgstr "เครดิตไม่พอสร้าง\n"
 
-#: client/campaign/cp_base.c:1818
 #, fuzzy
 msgid "You must build next to existing buildings."
 msgstr "แน่ใจหรือว่าจะทำลายสิ่งก่อสร้างนี้?"
 
-#: client/campaign/cp_base.c:1867
 #, fuzzy, c-format
 msgid "Costs:\t%i c\n"
 msgstr "ต้นทุน:\t%1.0f c\n"
 
-#: client/campaign/cp_base.c:1870
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i วันในการสร้าง\n"
 msgstr[1] "%i วันในการสร้าง\n"
 
-#: client/campaign/cp_base.c:1873 client/campaign/cp_ufopedia.c:232
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "ค่าใช้จ่ายในการทำงาน:\t%i c\n"
 
-#: client/campaign/cp_base.c:1876 client/campaign/cp_ufopedia.c:229
 #, fuzzy, c-format
 msgid "Needs:\t%s\n"
 msgstr "ขึ้นกับ:\t%s\n"
 
-#: client/campaign/cp_base.c:2636
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "ไม่มียานบินในฐาน - คุณต้องซื้อหรือโยกย้ายยานบินก่อน\n"
 
-#: client/campaign/cp_base.c:2636 client/campaign/cp_base.c:2638
-#: client/campaign/cp_market_callbacks.c:615
-#: client/campaign/cp_market_callbacks.c:620
-#: client/campaign/cp_market_callbacks.c:705
-#: client/campaign/cp_market_callbacks.c:707 client/campaign/cp_save.c:392
-#: client/multiplayer/mp_team.c:254 client/multiplayer/mp_team.c:275
 msgid "Note"
 msgstr "ข้อสังเกต"
 
-#: client/campaign/cp_base.c:2638
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "ไม่มียานบินในฐาน - ต้องซื้อยานบินก่อน\n"
 
-#: client/campaign/cp_base.c:2648
 #, fuzzy
 msgid "Antimatter (current/max):"
 msgstr "Antimatter"
 
-#: client/campaign/cp_base.c:2842
 #, fuzzy, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "การสร้างสิ่งก่อสร้าง %s เสร็จสิ้นที่ฐาน %s."
 
-#: client/campaign/cp_base.c:2843
 msgid "Building finished"
 msgstr "สิ่งก่อสร้างเสร็จ"
 
-#: client/campaign/cp_base.c:2905
 #, fuzzy, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "คุณได้ %i เครดิต"
 
-#: client/campaign/cp_base.c:2906
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "ของที่เก็บ %i"
 msgstr[1] "ของที่เก็บ %i "
 
-#: client/campaign/cp_base.c:2910
 #, fuzzy, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/campaign/cp_base.c:2911
 #, fuzzy, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "ไม่ได้ติดตั้งอุปกรณ์"
 msgstr[1] "ไม่ได้ติดตั้งอุปกรณ์"
 
-#: client/campaign/cp_base.c:3648
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:68
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:188
 #, c-format
 msgid "Base #%i"
 msgstr "ฐาน #%i"
 
-#: client/campaign/cp_base_callbacks.c:197
 msgid "You've reached the base limit."
 msgstr "จำนวนฐานถึงขีดจำกัด"
 
-#: client/campaign/cp_base_callbacks.c:226
 #, fuzzy, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "สร้างฐานใหม่: %s."
 
-#: client/campaign/cp_base_callbacks.c:228
 #, fuzzy, c-format
 msgid "A new base has been built: %s"
 msgstr "สร้างฐานใหม่: %s."
 
-#: client/campaign/cp_base_callbacks.c:229
 msgid "Base built"
 msgstr "สร้างฐานใหม่"
 
-#: client/campaign/cp_base_callbacks.c:239
 msgid "Not enough credits to set up a new base."
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/campaign/cp_base_callbacks.c:294
 #, fuzzy
 msgid "Buy or produce at least one aircraft first."
 msgstr "ซื้อเครื่องบินใหม่"
 
-#: client/campaign/cp_base_callbacks.c:296
 msgid "No Hangar functional in base."
 msgstr "ไม่มีลานจอดในฐาน"
 
-#: client/campaign/cp_base_callbacks.c:302
-#: client/campaign/cp_base_callbacks.c:312
-#: client/campaign/cp_base_callbacks.c:317
-#: client/campaign/cp_base_callbacks.c:322
-#: client/campaign/cp_base_callbacks.c:327
-#: client/campaign/cp_base_callbacks.c:332
 #, c-format
 msgid "No %s functional in base."
 msgstr "ไม่มี %s ทำงานในฐาน"
 
-#: client/campaign/cp_base_callbacks.c:305
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:307
 #, fuzzy
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr "โยกย้ายอุปกรณ์ หรือบุคคล"
 
-#: client/campaign/cp_base_callbacks.c:572
 #, fuzzy
 msgid "Base is under attack, you can't access this building !"
 msgstr "ฐานถูกโจมตี"
 
-#: client/campaign/cp_base_callbacks.c:578
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:598
 #, fuzzy, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -13205,150 +12907,115 @@ msgid_plural ""
 msgstr[0] "การสร้างสิ่งก่อสร้าง %s เสร็จสิ้นที่ฐาน %s."
 msgstr[1] "การสร้างสิ่งก่อสร้าง %s เสร็จสิ้นที่ฐาน %s."
 
-#: client/campaign/cp_base_callbacks.c:609
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:620
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:627
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:635
-#: client/campaign/cp_base_callbacks.c:640
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:646
 #, fuzzy, c-format
 msgid "Build a %s first."
 msgstr "สร้างโรงเก็บเครื่องบินก่อน"
 
-#: client/campaign/cp_base_callbacks.c:675
 #, fuzzy
 msgid "^BAircraft\n"
 msgstr "ยานบิน"
 
-#: client/campaign/cp_base_callbacks.c:682
 #, fuzzy
 msgid "^BEmployees\n"
 msgstr "พนักงาน"
 
-#: client/campaign/cp_base_callbacks.c:690
 #, fuzzy
 msgid "^BAliens\n"
 msgstr "มนุษย์ต่างดาว"
 
-#: client/campaign/cp_base_callbacks.c:702
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:726
 msgid "day"
 msgid_plural "days"
 msgstr[0] "วัน"
 msgstr[1] "วัน"
 
-#: client/campaign/cp_base_callbacks.c:736
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:743
 #, fuzzy, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/campaign/cp_base_callbacks.c:747
-#: client/campaign/cp_base_callbacks.c:763
 #, fuzzy
 msgid "Nothing\n"
 msgstr "ไม่มี\n"
 
-#: client/campaign/cp_base_callbacks.c:752
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:757
 #, fuzzy, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/campaign/cp_base_callbacks.c:821 client/campaign/cp_campaign.c:691
-#: client/campaign/cp_market_callbacks.c:310
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/campaign/cp_basedefence_callbacks.c:147
 #, fuzzy, c-format
 msgid "%i: empty"
 msgstr "ห้องเก็บของว่างเปล่า\n"
 
-#: client/campaign/cp_basedefence_callbacks.c:153
 msgid "Working"
 msgstr "กำลังทำงาน"
 
-#: client/campaign/cp_basedefence_callbacks.c:155
 msgid "Installing"
 msgstr "กำลังติดตั้ง"
 
-#: client/campaign/cp_basedefence_callbacks.c:157
 msgid "Replacing"
 msgstr "กำลังเปลี่ยน"
 
-#: client/campaign/cp_basedefence_callbacks.c:159
 msgid "Removing"
 msgstr ""
 
-#: client/campaign/cp_basedefence_callbacks.c:281
 #, fuzzy
 msgid "No defence of this type in this installation"
 msgstr "ฐานนี้ไม่มีเขตกักกัน\n"
 
-#: client/campaign/cp_basedefence_callbacks.c:288
-#: client/campaign/cp_basedefence_callbacks.c:295
 #, fuzzy
 msgid "No defence of this type in this base"
 msgstr "ฐานนี้ไม่มีเขตกักกัน\n"
 
-#: client/campaign/cp_campaign.c:327
 msgid "You've gone too far into debt."
 msgstr ""
 
-#: client/campaign/cp_campaign.c:335
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 
-#: client/campaign/cp_campaign.c:341
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
-#: client/campaign/cp_campaign.c:360
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1008
 msgid "Collected dead alien bodies"
 msgstr "เก็บศพเอเลี่ยน"
 
-#: client/campaign/cp_campaign.c:1088
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "ฆ่ามนุษย์ต่างดาว\t%i\n"
 
-#: client/campaign/cp_campaign.c:1089
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "จับมนุษย์ต่างดาวได้\t%i\n"
 
-#: client/campaign/cp_campaign.c:1090
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -13357,22 +13024,18 @@ msgstr ""
 "มนุษย์ต่างดาวเหลือรอด\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1092
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "ทหาร PHALANX ที่ถูกฆ่าโดยมนุษย์ต่างดาว\t%i\n"
 
-#: client/campaign/cp_campaign.c:1093
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "ทหาร PHALANX หายสาปสูญ\t%i\n"
 
-#: client/campaign/cp_campaign.c:1094
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "ทหาร PHALANX ตายด้วยกระสุนฝ่ายตนเอง\t%i\n"
 
-#: client/campaign/cp_campaign.c:1095
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -13381,17 +13044,14 @@ msgstr ""
 "ผู้เหลือรอด PHALANX \t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1097
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "พลเรือนที่ถูกมนุษย์ต่างดาวฆ่า\t%i\n"
 
-#: client/campaign/cp_campaign.c:1098
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "พลเรือนที่ตายด้วยกระสุนฝ่ายเราเอง\t%i\n"
 
-#: client/campaign/cp_campaign.c:1099
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13400,36 +13060,29 @@ msgstr ""
 "พลเรือนที่ช่วยได้\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1100
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1171
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s ได้เลื่อนยศเป็น %s.\n"
 
-#: client/campaign/cp_campaign.c:1173
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s ได้รับการเลื่อนยศเป็น %s\\ หลังการเสียชีวิต เนื่องจากได้ต่อสู้อย่างสมเกียรติในสงครามที่ไม่มีโอกาสรอด\n"
 
-#: client/campaign/cp_campaign.c:1174
 msgid "Soldier promoted"
 msgstr "ทหารเลื่อนยศ"
 
-#: client/campaign/cp_employee.c:204
 msgid "Soldier"
 msgstr "ทหาร"
 
-#: client/campaign/cp_employee.c:407
 msgid "Not enough quarters"
 msgstr "ที่อยู่ไม่พอ"
 
-#: client/campaign/cp_employee.c:407
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -13437,196 +13090,152 @@ msgstr ""
 "คุณไม่มีพื้นที่พักอาศัยเพียงพอสำหรับพนักงาน\n"
 "สร้างที่พักอาศัยเพิ่ม"
 
-#: client/campaign/cp_employee_callbacks.c:282
-#: client/campaign/cp_employee_callbacks.c:336
 #, fuzzy
 msgid "Could not fire employee"
 msgstr "จ้างพนักงาน"
 
-#: client/campaign/cp_employee_callbacks.c:343
 #, fuzzy
 msgid "Could not hire employee"
 msgstr "จ้างพนักงาน"
 
-#: client/campaign/cp_event.c:355 client/campaign/cp_save.c:291
-#: client/campaign/cp_save.c:310 client/campaign/cp_time.c:69
-#: client/campaign/cp_ufopedia.c:499 client/campaign/cp_ufopedia.c:504
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_event.c:361
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "คุณได้รับข้อความใหม่: %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:144 client/campaign/cp_map.c:1639
-#: client/campaign/cp_map.c:1658
 msgid "Unknown"
 msgstr "ไม่สามารถระบุได้"
 
-#: client/campaign/cp_fightequip_callbacks.c:357
 #, fuzzy
 msgid "No item assigned.\n"
 msgstr "ไม่ได้ติดตั้งโล่"
 
-#: client/campaign/cp_fightequip_callbacks.c:358
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr ""
 
-#: client/campaign/cp_fightequip_callbacks.c:366
 msgid "This item is functional.\n"
 msgstr ""
 
-#: client/campaign/cp_fightequip_callbacks.c:368
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr ""
 
-#: client/campaign/cp_fightequip_callbacks.c:371
 #, fuzzy, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "ไม่ได้จัดอาวุธ"
 
-#: client/campaign/cp_fightequip_callbacks.c:373
 #, fuzzy, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "ไม่ได้จัดอาวุธ"
 
-#: client/campaign/cp_fightequip_callbacks.c:376
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr ""
 
-#: client/campaign/cp_fightequip_callbacks.c:386
 #, fuzzy
 msgid "No ammo assigned to this weapon."
 msgstr "กระสุนถัดไปที่ใช้กับอาวุธนี้"
 
-#: client/campaign/cp_fightequip_callbacks.c:394
 #, fuzzy
 msgid "No ammo needed"
 msgstr "ไม่ได้เลือกอุปกรณ์"
 
-#: client/campaign/cp_fightequip_callbacks.c:521
 #, fuzzy
 msgid "No slot selected."
 msgstr "ไม่ได้เลือกอุปกรณ์"
 
-#: client/campaign/cp_fightequip_callbacks.c:524
 #, fuzzy
 msgid "No item selected."
 msgstr "ไม่ได้เลือกอุปกรณ์"
 
-#: client/campaign/cp_fightequip_callbacks.c:527
 msgid "You can't equip an alien technology."
 msgstr ""
 
-#: client/campaign/cp_fightequip_callbacks.c:530
 msgid "Technology requested is not yet completed."
 msgstr ""
 
-#: client/campaign/cp_fightequip_callbacks.c:533
 #, fuzzy
 msgid "This item is too heavy for the selected slot."
 msgstr "โหลดทีมจากชุดที่เลือกอยู่"
 
-#: client/campaign/cp_fightequip_callbacks.c:536
 #, fuzzy
 msgid "Equip a weapon first."
 msgstr "สร้างโรงเก็บเครื่องบินก่อน"
 
-#: client/campaign/cp_fightequip_callbacks.c:539
 msgid "Ammo not usable with current weapon."
 msgstr ""
 
-#: client/campaign/cp_fightequip_callbacks.c:542
 #, fuzzy
 msgid "Unknown problem."
 msgstr "วิทยการที่ยังไม่รู้จัก วิจัยไม่ได้"
 
-#: client/campaign/cp_fightequip_callbacks.c:545
 msgid "Ok"
 msgstr "โอเค"
 
-#: client/campaign/cp_installation.c:177
 #, fuzzy, c-format
 msgid "Installation %s was destroyed."
 msgstr "ประเทศ"
 
-#: client/campaign/cp_installation.c:178
 #, fuzzy
 msgid "Installation destroyed"
 msgstr "ประเทศ"
 
-#: client/campaign/cp_installation.c:406
 #, fuzzy, c-format
 msgid "Construction of installation %s finished."
 msgstr "ก่อสร้างเสร็จสิ้น"
 
-#: client/campaign/cp_installation.c:407
 msgid "Installation finished"
 msgstr "การติดตั้งเสร็จสิ้น"
 
-#: client/campaign/cp_installation.c:518
 #, fuzzy, c-format
 msgid "%d c"
 msgstr "%i c"
 
-#: client/campaign/cp_installation.c:528
-#: client/campaign/cp_installation_callbacks.c:90
 #, fuzzy, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "1 วัน"
 msgstr[1] "1 วัน"
 
-#: client/campaign/cp_installation_callbacks.c:47 client/campaign/cp_map.c:356
 msgid "Installation"
 msgstr "การติดตั้ง"
 
-#: client/campaign/cp_installation_callbacks.c:139
 #, fuzzy, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "สร้างฐานใหม่: %s."
 
-#: client/campaign/cp_installation_callbacks.c:141
 #, fuzzy, c-format
 msgid "A new installation has been built: %s"
 msgstr "สร้างฐานใหม่: %s."
 
-#: client/campaign/cp_installation_callbacks.c:142
 #, fuzzy
 msgid "Installation building"
 msgstr "ประเทศ"
 
-#: client/campaign/cp_installation_callbacks.c:149
 #, fuzzy
 msgid "Not enough credits to set up a new installation."
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/campaign/cp_installation_callbacks.c:215
 #, fuzzy
 msgid "Destroy Installation"
 msgstr "ประเทศ"
 
-#: client/campaign/cp_installation_callbacks.c:215
 #, fuzzy
 msgid "Do you really want to destroy this installation?"
 msgstr "แน่ใจหรือว่าจะทำลายสิ่งก่อสร้างนี้?"
 
-#: client/campaign/cp_installation_callbacks.c:217
 #, fuzzy
 msgid "Forget it"
 msgstr "บังคับให้เริ่ม"
 
-#: client/campaign/cp_map.c:363
 #, fuzzy
 msgid "UFO Sighting"
 msgstr "จานบินต่อสู้"
 
-#: client/campaign/cp_map.c:1638
 #, fuzzy, c-format
 msgid ""
 "Location: %s\n"
@@ -13637,124 +13246,99 @@ msgstr ""
 "ประเภท: %s\n"
 "วัตถุประสงค์: %s\n"
 
-#: client/campaign/cp_map.c:1655
 #, fuzzy, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr "^B%s (%s)\n"
 
-#: client/campaign/cp_map.c:1675 client/campaign/cp_map.c:1683
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "ชื่อ:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1676 client/campaign/cp_map.c:1684
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "สถานะ:\t%s\n"
 
-#: client/campaign/cp_map.c:1677
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1681 client/campaign/cp_map.c:1691
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "ปฏิบัติการ:\t%s\n"
 
-#: client/campaign/cp_map.c:1709
 #, fuzzy, c-format
 msgid "Speed: %i km/h\n"
 msgstr "ความเร็ว:\t%.0f\n"
 
-#: client/campaign/cp_map.c:1897
 #, fuzzy, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/campaign/cp_map.c:1976
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "เลือกที่ตั้งฐานใหม่บนแผนที่\n"
 
-#: client/campaign/cp_map.c:1979
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "เลือกที่ตั้งฐานใหม่บนแผนที่\n"
 
-#: client/campaign/cp_map.c:1984
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "ตอนนี้มนุษย์ต่างดาวโจมตีฐานเรา\n"
 
-#: client/campaign/cp_map.c:1989
 msgid "Select ufo or mission on map\n"
 msgstr "เลือกจานบินหรือภารกิจบนแผนที่\n"
 
-#: client/campaign/cp_map.c:1994
 msgid "UFO in radar range\n"
 msgstr "จานบินในระยะเรดาร์\n"
 
-#: client/campaign/cp_mapfightequip.c:342
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:345
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:348
 #, fuzzy, c-format
 msgid "%s was successfully installed at %s."
 msgstr "ไม่ได้จัดอาวุธ"
 
-#: client/campaign/cp_mapfightequip.c:370
 #, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:376
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:384
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:387
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:1341
 msgid "Light weight"
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:1344
 #, fuzzy
 msgid "Medium weight"
 msgstr "เสนารักษ์"
 
-#: client/campaign/cp_mapfightequip.c:1347
 #, fuzzy
 msgid "Heavy weight"
 msgstr "Heavy Laser"
 
-#: client/campaign/cp_mapfightequip.c:1350
 #, fuzzy
 msgid "Unknown weight"
 msgstr "ไม่ทราบทักษะอาวุธ"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 #, fuzzy
 msgid "Not enough storage space"
 msgstr "Not enough workshops"
 
-#: client/campaign/cp_market.c:163 client/campaign/cp_market_callbacks.c:764
 #, fuzzy
 msgid ""
 "You cannot buy this item.\n"
@@ -13764,18 +13348,15 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/campaign/cp_market_callbacks.c:615
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
 msgstr ""
 
-#: client/campaign/cp_market_callbacks.c:620
 #, fuzzy
 msgid "Build a hangar first."
 msgstr "สร้างโรงเก็บเครื่องบินก่อน"
 
-#: client/campaign/cp_market_callbacks.c:633
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -13783,7 +13364,6 @@ msgstr ""
 "คุณไม่สามารถซื้ออากาศยานนี้ได้\n"
 "พื้นที่ลานจอดไม่เพียงพอ\n"
 
-#: client/campaign/cp_market_callbacks.c:638
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -13791,124 +13371,98 @@ msgstr ""
 "คุณไม่สามารถซื้ออากาศยานนี้ได้\n"
 "เงินไม่พอ\n"
 
-#: client/campaign/cp_market_callbacks.c:705
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "ขายเครื่องบินไม่ได้ หากมีทีมประจำบนเครื่อง"
 
-#: client/campaign/cp_market_callbacks.c:707
 #, fuzzy
 msgid "You can't sell an aircraft that is not in base"
 msgstr "ขายเครื่องบินไม่ได้ หากมีทีมประจำบนเครื่อง"
 
-#: client/campaign/cp_messageoptions.c:36
 #, fuzzy
 msgid "installation_installed"
 msgstr "ประเทศ"
 
-#: client/campaign/cp_messageoptions.c:37
 #, fuzzy
 msgid "installation_removed"
 msgstr "ผู้เล่นสูงสุดต่อทีม"
 
-#: client/campaign/cp_messageoptions.c:38
 #, fuzzy
 msgid "installation_replaced"
 msgstr "ผู้เล่นสูงสุดต่อทีม"
 
-#: client/campaign/cp_messageoptions.c:39
 #, fuzzy
 msgid "aircraft_refueled"
 msgstr "ไม่ได้เลือกยานบิน"
 
-#: client/campaign/cp_messageoptions.c:40
 msgid "aircraft_cannotrefuel"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:41
 #, fuzzy
 msgid "installation_build_started"
 msgstr "ผู้เล่นสูงสุดต่อทีม"
 
-#: client/campaign/cp_messageoptions.c:42
 #, fuzzy
 msgid "installation_build_finished"
 msgstr "ก่อสร้างเสร็จสิ้น"
 
-#: client/campaign/cp_messageoptions.c:43
 #, fuzzy
 msgid "installation_destroyed"
 msgstr "ประเทศ"
 
-#: client/campaign/cp_messageoptions.c:44
 #, fuzzy
 msgid "research_new_proposed"
 msgstr "แสดงโครงการ"
 
-#: client/campaign/cp_messageoptions.c:45
 #, fuzzy
 msgid "research_halted"
 msgstr "วิจัย"
 
-#: client/campaign/cp_messageoptions.c:46
 msgid "research_completed"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:47
 #, fuzzy
 msgid "production_started"
 msgstr "เริ่มการผลิต"
 
-#: client/campaign/cp_messageoptions.c:48
 #, fuzzy
 msgid "production_finished"
 msgstr "ผลิตเสร็จสิ้น"
 
-#: client/campaign/cp_messageoptions.c:49
 #, fuzzy
 msgid "production_failed"
 msgstr "ผลิตเสร็จสิ้น"
 
-#: client/campaign/cp_messageoptions.c:50
 #, fuzzy
 msgid "production_queue_empty"
 msgstr "คิวการผลิตว่าง"
 
-#: client/campaign/cp_messageoptions.c:51
 msgid "nation_happiness_changed"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:52
 msgid "nation_unhappy"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:53
 #, fuzzy
 msgid "nation_pleased"
 msgstr "ผู้เล่นสูงสุดต่อทีม"
 
-#: client/campaign/cp_messageoptions.c:54
 #, fuzzy
 msgid "transfer_started"
 msgstr "เดินเครื่องยานบิน"
 
-#: client/campaign/cp_messageoptions.c:55
 msgid "transfer_completed_success"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:56
 #, fuzzy
 msgid "transfer_lost"
 msgstr "โยกย้าย"
 
-#: client/campaign/cp_messageoptions.c:57
 msgid "transfer_aliens_defered"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:58
 msgid "transfer_uforecovery_finished"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:59
 #, fuzzy
 msgid "ufo_spotted"
 msgstr ""
@@ -13944,20 +13498,16 @@ msgstr ""
 "\n"
 "อาวุธ: ไม่มี"
 
-#: client/campaign/cp_messageoptions.c:60
 msgid "ufo_signal_lost"
 msgstr ""
 
-#: client/campaign/cp_messageoptions.c:61
 msgid "ufo_attacking"
 msgstr ""
 
-#: client/campaign/cp_messages.c:47
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
 
-#: client/campaign/cp_mission_triggers.c:124
 msgid ""
 "Congratulations! You have reached the end of the UFO:AI campaign.\n"
 "However, this is not the end of the road. The game remains in development.\n"
@@ -13972,236 +13522,185 @@ msgid ""
 "   - The UFO:AI development team"
 msgstr ""
 
-#: client/campaign/cp_missions.c:448
 #, fuzzy
 msgid "Crashed aircraft"
 msgstr "เลือกยาน"
 
-#: client/campaign/cp_missions.c:453
 msgid "Landed UFO"
 msgstr ""
 
-#: client/campaign/cp_missions.c:455
 #, fuzzy
 msgid "Terror mission"
 msgstr "ภารกิจการเคลื่อนย้าย"
 
-#: client/campaign/cp_missions.c:457
 msgid "Base attack"
 msgstr "การโจมตีขั้นพื้นฐาน"
 
-#: client/campaign/cp_missions.c:461
 #, fuzzy
 msgid "Harvesting mission"
 msgstr "เคลื่อนที่ไปยังภารกิจ"
 
-#: client/campaign/cp_missions.c:706
 #, c-format
 msgid "Go on a rescue mission at %s. You might some of your soldiers alive."
 msgstr ""
 
-#: client/campaign/cp_missions.c:708
 #, fuzzy, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "พบการปฏิบัติการของมนุษย์ต่างดาว: '%s'"
 
-#: client/campaign/cp_missions.c:1088
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "ป้องกันฐาน: %s สำเร็จ!"
 
-#: client/campaign/cp_missions.c:1251
-#: client/campaign/missions/cp_mission_harvest.c:170
-#: client/campaign/missions/cp_mission_recon.c:161
 #, fuzzy
 msgid "No nation"
 msgstr "ประเทศ"
 
-#: client/campaign/cp_missions.c:1334
 #, fuzzy
 msgid "Crashed"
 msgstr "ห้องเก็บของ"
 
-#: client/campaign/cp_nation.c:142
 msgid "Giving up"
 msgstr "หมดหวัง"
 
-#: client/campaign/cp_nation.c:144
 msgid "Furious"
 msgstr "หมดความอดทน"
 
-#: client/campaign/cp_nation.c:146
 msgid "Angry"
 msgstr "โกรธ"
 
-#: client/campaign/cp_nation.c:148
 msgid "Mad"
 msgstr "โมโห"
 
-#: client/campaign/cp_nation.c:150
 msgid "Upset"
 msgstr "ไม่ค่อยพอใจ"
 
-#: client/campaign/cp_nation.c:152
 msgid "Tolerant"
 msgstr "ยังทนได้"
 
-#: client/campaign/cp_nation.c:154
 msgid "Neutral"
 msgstr "เฉยๆ"
 
-#: client/campaign/cp_nation.c:156
 msgid "Content"
 msgstr "พอใจ"
 
-#: client/campaign/cp_nation.c:158
 msgid "Pleased"
 msgstr "ถูกใจ"
 
-#: client/campaign/cp_nation.c:160
 msgid "Happy"
 msgstr "ยินดี"
 
-#: client/campaign/cp_nation.c:162
 msgid "Exuberant"
 msgstr "มีความสุข"
 
-#: client/campaign/cp_nation.c:189
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr ""
 
-#: client/campaign/cp_nation.c:193
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr ""
 
-#: client/campaign/cp_nation.c:197
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr ""
 
-#: client/campaign/cp_nation.c:203
 msgid "Nation changed happiness"
 msgstr ""
 
-#: client/campaign/cp_nation.c:883
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "ได้ %i %s, %i %s, %i %s, %i %s, และ %i %s จากประเทศ %s (%s)"
 
-#: client/campaign/cp_nation.c:884
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "เครดิต"
 msgstr[1] "เครดิต"
 
-#: client/campaign/cp_nation.c:885 client/cl_game_campaign.c:249
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "นักวิทยาศาสตร์"
 msgstr[1] "นักวิทยาศาสตร์"
 
-#: client/campaign/cp_nation.c:886 client/cl_game_campaign.c:248
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "ทหาร"
 msgstr[1] "ทหาร"
 
-#: client/campaign/cp_nation.c:887 client/cl_game_campaign.c:250
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "คนงาน"
 msgstr[1] "คนงาน"
 
-#: client/campaign/cp_nation.c:902
 #, fuzzy, c-format
 msgid "Paid %i credits to: %s"
 msgstr "จ่าย %i เครดิต ให้เสนารักษ์"
 
-#: client/campaign/cp_nation.c:915
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "จ่าย %i เครดิต สำหรับยานบิน"
 
-#: client/campaign/cp_nation.c:924
 #, fuzzy, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "จ่าย %i เครดิตเป็นค่ารักษาฐาน %s"
 
-#: client/campaign/cp_nation.c:929
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "จ่าย %i เครดิต เป็นค่าจัดการ"
 
-#: client/campaign/cp_nation.c:937
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "จ่าย %i เครดิต เป็นค่าดอกเบี้ยเงินกู้"
 
-#: client/campaign/cp_popup.c:126
 msgid "current homebase of aircraft"
 msgstr ""
 
-#: client/campaign/cp_popup.c:132
 #, fuzzy
 msgid "base can hold aircraft"
 msgstr "ขายยาน"
 
-#: client/campaign/cp_popup.c:147
 #, fuzzy
 msgid "Base\tStatus"
 msgstr "สถานะ:"
 
-#: client/campaign/cp_popup.c:147
 #, fuzzy
 msgid "Change homebase of aircraft"
 msgstr "จัดการเครื่องบิน"
 
-#: client/campaign/cp_popup.c:227
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "กลับฐาน\t%s\n"
 
-#: client/campaign/cp_popup.c:229
 msgid "Stop\n"
 msgstr "หยุด\n"
 
-#: client/campaign/cp_popup.c:231
 #, fuzzy
 msgid "Change homebase\n"
 msgstr "ที่ฐานบัญชาการ"
 
-#: client/campaign/cp_popup.c:243
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "ภารกิจ\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:335
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
 msgstr ""
 
-#: client/campaign/cp_popup.c:348
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr ""
 
-#: client/campaign/cp_popup.c:397
 #, fuzzy, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr "%s\t%s\t(%i/%i)\n"
 
-#: client/campaign/cp_popup.c:418
 #, fuzzy
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "ไม่มีการนำเสนอโครงการวิจัยนี้"
 
-#: client/campaign/cp_popup.c:434
 #, fuzzy
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "ไม่มีการนำเสนอโครงการวิจัยนี้"
 
-#: client/campaign/cp_popup.c:483
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -14209,16 +13708,9 @@ msgid ""
 "Aircraft cannot start.\n"
 msgstr ""
 
-#: client/campaign/cp_produce.c:298 client/campaign/cp_produce.c:302
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
-#: client/campaign/cp_transfer_callbacks.c:366
-#: client/campaign/cp_transfer_callbacks.c:369
-#: client/campaign/cp_transfer_callbacks.c:372
 msgid "Hangars not ready"
 msgstr ""
 
-#: client/campaign/cp_produce.c:298
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -14227,7 +13719,6 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/campaign/cp_produce.c:302
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -14236,8 +13727,6 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/campaign/cp_produce.c:307 client/campaign/cp_produce_callbacks.c:642
-#: client/campaign/cp_produce_callbacks.c:698
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -14246,122 +13735,94 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/campaign/cp_produce.c:409
 #, fuzzy, c-format
 msgid "Production queue for %s is empty"
 msgstr "คิวการผลิตของฐาน %s ว่าง"
 
-#: client/campaign/cp_produce.c:410
 msgid "Production queue empty"
 msgstr "คิวการผลิตว่าง"
 
-#: client/campaign/cp_produce.c:490 client/campaign/cp_produce.c:510
 #, fuzzy, c-format
 msgid "Not enough credits to finish production in %s."
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/campaign/cp_produce.c:499
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Production postponed."
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/campaign/cp_produce.c:519
 #, fuzzy, c-format
 msgid "Not enough free hangar space in %s. Production postponed."
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/campaign/cp_produce.c:530
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/campaign/cp_produce.c:575
 #, fuzzy, c-format
 msgid "The production of %s at %s has finished."
 msgstr "การผลิต %s เสร็จสิ้น"
 
-#: client/campaign/cp_produce.c:576 client/campaign/cp_produce.c:600
 msgid "Production finished"
 msgstr "ผลิตเสร็จสิ้น"
 
-#: client/campaign/cp_produce.c:598
 #, fuzzy, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "การผลิต %s เสร็จสิ้น"
 
-#: client/campaign/cp_produce_callbacks.c:265
-#: client/campaign/cp_produce_callbacks.c:370
 msgid "No item selected"
 msgstr "ไม่ได้เลือกอุปกรณ์"
 
-#: client/campaign/cp_produce_callbacks.c:271
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "ต้นทุนต่อชิ้น\t%i c\n"
 
-#: client/campaign/cp_produce_callbacks.c:272
-#: client/campaign/cp_produce_callbacks.c:330
 #, fuzzy, c-format
 msgid "Production time\t%ih\n"
 msgstr "เวลาผลิต\t%ih\n"
 
-#: client/campaign/cp_produce_callbacks.c:273
 #, fuzzy, c-format
 msgid "Item size\t%i\n"
 msgstr "ทีมแพ้\t%i\n"
 
-#: client/campaign/cp_produce_callbacks.c:297
 #, fuzzy, c-format
 msgid "Stored at: %s\n"
 msgstr "สถานะ:\t%s\n"
 
-#: client/campaign/cp_produce_callbacks.c:298
 #, fuzzy, c-format
 msgid "Disassembly time: %ih\n"
 msgstr "เริ่มการผลิต %s"
 
-#: client/campaign/cp_produce_callbacks.c:299
 #, fuzzy
 msgid "Components:\n"
 msgstr "พอใช้"
 
-#: client/campaign/cp_produce_callbacks.c:328
 #, fuzzy, c-format
 msgid "Production costs\t%i c\n"
 msgstr "เวลาผลิต\t%ih\n"
 
-#: client/campaign/cp_produce_callbacks.c:368
 #, fuzzy
 msgid "No aircraft selected."
 msgstr "ไม่ได้เลือกยานบิน"
 
-#: client/campaign/cp_produce_callbacks.c:662
-#: client/campaign/cp_produce_callbacks.c:686
 #, fuzzy
 msgid "Not enough materials"
 msgstr "ที่อยู่ไม่พอ"
 
-#: client/campaign/cp_produce_callbacks.c:662
 #, fuzzy
 msgid "You don't have the materials needed for producing more of this item.\n"
 msgstr "เขตพักอาศัยไม่พอกับจำนวนพนักงาน"
 
-#: client/campaign/cp_produce_callbacks.c:666
 #, fuzzy, c-format
 msgid "You don't have enough material to produce all (%i) additional items. Only %i could be added."
 msgstr "เขตพักอาศัยไม่พอกับจำนวนพนักงาน"
 
-#: client/campaign/cp_produce_callbacks.c:667
-#: client/campaign/cp_produce_callbacks.c:690
 #, fuzzy
 msgid "Not enough material!"
 msgstr "ที่อยู่ไม่พอ"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid "Not enough workshops"
 msgstr "โรงงานไม่เพียงพอ"
 
-#: client/campaign/cp_produce_callbacks.c:677
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
@@ -14369,48 +13830,38 @@ msgstr ""
 "คุณไม่สามารถจัดเรียงคิวไอเท็มได้มากกว่านี้\n"
 "สร้างโรงงานเพิ่ม\n"
 
-#: client/campaign/cp_produce_callbacks.c:686
 #, fuzzy
 msgid "You don't have the materials needed for producing this item.\n"
 msgstr "เขตพักอาศัยไม่พอกับจำนวนพนักงาน"
 
-#: client/campaign/cp_produce_callbacks.c:689
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr ""
 
-#: client/campaign/cp_produce_callbacks.c:714
 #, c-format
 msgid "Production of %s started"
 msgstr "เริ่มการผลิต %s"
 
-#: client/campaign/cp_produce_callbacks.c:715
 msgid "Production started"
 msgstr "เริ่มการผลิต"
 
-#: client/campaign/cp_research.c:89
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "โครงการวิจัยเสร็จสิ้น: %s\n"
 
-#: client/campaign/cp_research.c:90
 msgid "Research finished"
 msgstr "การวิจัยเสร็จสิ้น"
 
-#: client/campaign/cp_research.c:136 client/campaign/cp_research.c:313
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "นำเสนอโครงการใหม่: %s\n"
 
-#: client/campaign/cp_research.c:137
 msgid "Unknown Technology researchable"
 msgstr "วิทยการที่ยังไม่รู้จัก วิจัยไม่ได้"
 
-#: client/campaign/cp_research.c:314
 msgid "Unknown Technology found"
 msgstr "พบวิทยาการที่ยังไม่รู้จัก"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -14418,121 +13869,92 @@ msgstr ""
 "ไม่มีพื้นที่ห้องแลปฯเพียงพอ\n"
 "สร้างห้องแลปเพิ่ม\n"
 
-#: client/campaign/cp_research.c:680 client/campaign/cp_research.c:684
 msgid "Not enough laboratories"
 msgstr "ห้องแลปไม่เพียงพอ"
 
-#: client/campaign/cp_research.c:809
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr ""
 
-#: client/campaign/cp_research.c:810
 msgid "Research halted"
 msgstr "การวิจัยถูกหยุด"
 
-#: client/campaign/cp_research.c:1171
 msgid "No description available."
 msgstr "ไม่มีคำอธิบาย"
 
-#: client/campaign/cp_research.c:1172
 #, fuzzy
 msgid "No research proposal available."
 msgstr "ไม่มีการนำเสนอโครงการวิจัยนี้"
 
-#: client/campaign/cp_research_callbacks.c:91
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
 msgstr ""
 
-#: client/campaign/cp_research_callbacks.c:97
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr ""
 
-#: client/campaign/cp_research_callbacks.c:102
 msgid "Not researched in any base."
 msgstr "ไม่ได้วิจัยในฐานใดทั้งสิ้น"
 
-#: client/campaign/cp_research_callbacks.c:108
 #, c-format
 msgid "Researched in %s"
 msgstr "วิจัยใน %s"
 
-#: client/campaign/cp_research_callbacks.c:110
 msgid "Researched in this base."
 msgstr "วิจัยในฐานนี้"
 
-#: client/campaign/cp_research_callbacks.c:122
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "ความก้าวหน้า: %.1f%%"
 
-#: client/campaign/cp_research_callbacks.c:125
 #, fuzzy
 msgid "Progress: not available."
 msgstr "ความก้าวหน้า: ไม่มีข้อมูล"
 
-#: client/campaign/cp_research_callbacks.c:130
 msgid "Status: under research"
 msgstr "สถานะ: กำลังวิจัย"
 
-#: client/campaign/cp_research_callbacks.c:131
 #, fuzzy
 msgid "Status: this research topic is currently being processed in laboratories"
 msgstr "สถานะ: หยุดวิจัยชั่วคราว"
 
-#: client/campaign/cp_research_callbacks.c:134
 #, fuzzy
 msgid "Status: research paused"
 msgstr "สถานะ: หยุดวิจัยชั่วคราว"
 
-#: client/campaign/cp_research_callbacks.c:135
 msgid "Status: research topic currently paused."
 msgstr "สถานะ: หยุดวิจัยชั่วคราว"
 
-#: client/campaign/cp_research_callbacks.c:138
-#: client/campaign/cp_research_callbacks.c:139
 msgid "Status: research finished"
 msgstr "สถานะ: วิจัยเสร็จสิ้น"
 
-#: client/campaign/cp_research_callbacks.c:144
 msgid "Status: not possible to research"
 msgstr "สถานะ: ไม่สามารถวิจัยได้"
 
-#: client/campaign/cp_research_callbacks.c:145
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr ""
 
-#: client/campaign/cp_research_callbacks.c:147
-#: client/campaign/cp_research_callbacks.c:148
 msgid "Status: unknown technology"
 msgstr "สถานะ: วิทยการที่ยังไม่รู้จัก"
 
-#: client/campaign/cp_research_callbacks.c:259
 #, fuzzy
 msgid "Unassigned scientists"
 msgstr "จ้างนักวิทยาศาสตร์"
 
-#: client/campaign/cp_research_callbacks.c:295
 msgid "Missing an artifact"
 msgstr ""
 
-#: client/campaign/cp_research_callbacks.c:305
 #, fuzzy
 msgid "Unresearchable collected items"
 msgstr "ของที่เก็บ %i"
 
-#: client/campaign/cp_research_callbacks.c:563
 msgid "This item is currently under research in another base."
 msgstr "ของนี้ถูกวิจัยในฐานอื่น"
 
-#: client/campaign/cp_research_callbacks.c:581
-#: client/campaign/cp_research_callbacks.c:626
 msgid "The research on this item is complete."
 msgstr "การวิจัยของชิ้นนี้เสร็จสิ้น"
 
-#: client/campaign/cp_research_callbacks.c:587
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -14540,81 +13962,59 @@ msgstr ""
 "ยังวิจัยของนี้ไม่ได้\n"
 "ต้องวิจัยวิทยาการพื้นฐานก่อน"
 
-#: client/campaign/cp_research_callbacks.c:656
 msgid "No research proposal available for this project."
 msgstr "ไม่มีการนำเสนอโครงการวิจัยนี้"
 
-#: client/campaign/cp_research_callbacks.c:815
 msgid "Nothing to research"
 msgstr "ไม่มีอะไรจะวิจัย"
 
-#: client/campaign/cp_research_callbacks.c:818
 msgid "Build a laboratory first"
 msgstr "สร้างห้องวิจัยก่อน"
 
-#: client/campaign/cp_save.c:186
 msgid "Error decompressing data"
 msgstr "เกิดการผิดพลาดในการเปิดข้อมูล"
 
-#: client/campaign/cp_save.c:270
 msgid "No campaign active."
 msgstr "ไม่มีเนื้อเรื่อง"
 
-#: client/campaign/cp_save.c:276
 msgid "Nothing to save yet."
 msgstr "ยังไม่มีอะไรจะบันทึก"
 
-#: client/campaign/cp_save.c:320
 msgid "Could not allocate enough memory to save this game"
 msgstr "หาหน่วยความจำได้ไม่พอบันทึกเกม"
 
-#: client/campaign/cp_save.c:342
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr "เมมโมรี่ผิดพลาดในการบีบอัดข้อมูลบันทึก - ตั้ง save_compressed cvar เป็น 0"
 
-#: client/campaign/cp_save.c:389 client/campaign/cp_save.c:391
 msgid "Error saving game."
 msgstr "เกิดข้อผิดพลาดในการบันทึก"
 
-#: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:620
 msgid "Error loading game."
 msgstr "เกิดข้อผิดพลาดในการโหลด"
 
-#: client/campaign/cp_save.c:469 client/campaign/cp_save.c:493
-#: client/campaign/cp_save.c:621 client/cl_irc.c:1209 client/cl_irc.c:1441
-#: client/cl_main.c:517 client/cl_main.c:521 client/cl_main.c:545
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Error"
 msgstr "ผิดพลาด"
 
-#: client/campaign/cp_save.c:568
 #, fuzzy
 msgid "QuickSave"
 msgstr "บันทึก"
 
-#: client/campaign/cp_save.c:602
 msgid "Campaign was successfully saved."
 msgstr ""
 
-#: client/campaign/cp_save.c:602
 msgid "Quicksave"
 msgstr ""
 
-#: client/campaign/cp_save.c:623
 #, fuzzy
 msgid "Campaign loaded"
 msgstr "เนื้อเรื่อง"
 
-#: client/campaign/cp_save.c:623
 msgid "Quicksave campaign was successfully loaded."
 msgstr ""
 
-#: client/campaign/cp_save.c:684
 msgid "Saves to the quick save slot"
 msgstr ""
 
-#: client/campaign/cp_statistics.c:56
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -14625,7 +14025,6 @@ msgstr ""
 "แพ้:\t%i\n"
 "\n"
 
-#: client/campaign/cp_statistics.c:61
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -14636,49 +14035,40 @@ msgstr ""
 "คงอยู่:\t%i\n"
 "ถูกโจมตี:\t%i\n"
 
-#: client/campaign/cp_statistics.c:77 client/campaign/cp_ufopedia.c:1164
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_statistics.c:80
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_statistics.c:97 client/cl_inventory_callbacks.c:138
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_statistics.c:103
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "พนักงาน:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:112
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "เครื่องบิน:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:118
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "ฐาน (%s):\t%i c\n"
 
-#: client/campaign/cp_statistics.c:123
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "ค่าใช้จ่ายในการดำเนินการ:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:130
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "หนี้สิน:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:133
 #, c-format
 msgid ""
 "\n"
@@ -14689,564 +14079,436 @@ msgstr ""
 "\t-------\n"
 "รวม:\t%i c\n"
 
-#: client/campaign/cp_statistics.c:138
 #, fuzzy, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "ทีมสูงสุดในแผนที่:\t%s\n"
 
-#: client/campaign/cp_statistics.c:143
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/campaign/cp_team.c:252
 #, c-format
 msgid "%i of %i"
 msgstr "%i จาก %i"
 
-#: client/campaign/cp_time.c:40
 msgid "stopped"
 msgstr ""
 
-#: client/campaign/cp_time.c:41
 msgid "5 sec"
 msgstr "5 วินาที"
 
-#: client/campaign/cp_time.c:42
 msgid "5 mins"
 msgstr "5 นาที"
 
-#: client/campaign/cp_time.c:43
 msgid "20 mins"
 msgstr "20 นาที"
 
-#: client/campaign/cp_time.c:44
 msgid "1 hour"
 msgstr "1 ชม."
 
-#: client/campaign/cp_time.c:45
 msgid "12 hours"
 msgstr "12 ชม."
 
-#: client/campaign/cp_time.c:46
 msgid "1 day"
 msgstr "1 วัน"
 
-#: client/campaign/cp_time.c:47
 msgid "5 days"
 msgstr "5 วัน"
 
-#: client/campaign/cp_time.c:73
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/campaign/cp_time.c:249
 msgid "Jan"
 msgstr "มค."
 
-#: client/campaign/cp_time.c:251
 msgid "Feb"
 msgstr "กพ."
 
-#: client/campaign/cp_time.c:253
 msgid "Mar"
 msgstr "มีค."
 
-#: client/campaign/cp_time.c:255
 msgid "Apr"
 msgstr "เมย."
 
-#: client/campaign/cp_time.c:257
 msgid "May"
 msgstr "พค."
 
-#: client/campaign/cp_time.c:259
 msgid "Jun"
 msgstr "มิย."
 
-#: client/campaign/cp_time.c:261
 msgid "Jul"
 msgstr "กค."
 
-#: client/campaign/cp_time.c:263
 msgid "Aug"
 msgstr "สค."
 
-#: client/campaign/cp_time.c:265
 msgid "Sep"
 msgstr "กย."
 
-#: client/campaign/cp_time.c:267
 msgid "Oct"
 msgstr "ตค."
 
-#: client/campaign/cp_time.c:269
 msgid "Nov"
 msgstr "พย."
 
-#: client/campaign/cp_time.c:271
 msgid "Dec"
 msgstr "ธค."
 
-#: client/campaign/cp_transfer.c:56
 #, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:57 client/campaign/cp_transfer.c:70
-#: client/campaign/cp_transfer.c:82 client/campaign/cp_transfer.c:109
-#: client/campaign/cp_transfer.c:134 client/campaign/cp_transfer.c:149
-#: client/campaign/cp_transfer.c:244 client/campaign/cp_transfer.c:261
-#: client/campaign/cp_transfer.c:267
-#: client/campaign/cp_transfer_callbacks.c:194
 msgid "Transport mission"
 msgstr "ภารกิจการเคลื่อนย้าย"
 
-#: client/campaign/cp_transfer.c:69
 #, c-format
 msgid "%s does not have Storage, items are removed!"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:81
 #, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:108
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:133
 #, fuzzy, c-format
 msgid "%s does not have enough Alien Containment space, some Aliens are removed!"
 msgstr "คุณไม่มีพื้นที่เพียงพอในห้องเก็บมนุษย์ต่างดาว มนุษย์ต่างดาวบางตัวถูกกำจัด"
 
-#: client/campaign/cp_transfer.c:148
 #, fuzzy, c-format
 msgid "%s does not have enough free space. Aircraft is lost!"
 msgstr "ไม่มีฐานนี้อีกต่อไป"
 
-#: client/campaign/cp_transfer.c:243
-#: client/campaign/cp_transfer_callbacks.c:193
 #, fuzzy, c-format
 msgid "Transport mission started, cargo is being transported to %s"
 msgstr "ภารกิจเคลื่อนย้ายเสร็จสิ้น, โอนย้ายเครื่องบินเข้าฐานใหม่"
 
-#: client/campaign/cp_transfer.c:261
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
 msgstr ""
 
-#: client/campaign/cp_transfer.c:266
 #, fuzzy, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "ภารกิจเคลื่อนนย้ายเสร็จสิ้น - กลับฐานที่ประจำการ"
 
-#: client/campaign/cp_transfer_callbacks.c:139
 #, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/campaign/cp_transfer_callbacks.c:246
 msgid "Destination base does not have an Antimatter Storage.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer_callbacks.c:246
 #, fuzzy
 msgid "Missing storage"
 msgstr "ภารกิจ"
 
-#: client/campaign/cp_transfer_callbacks.c:251
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer_callbacks.c:251
-#: client/campaign/cp_transfer_callbacks.c:261
-#: client/campaign/cp_transfer_callbacks.c:289
-#: client/campaign/cp_transfer_callbacks.c:342
-#: client/campaign/cp_transfer_callbacks.c:385
 msgid "Not enough space"
 msgstr "พื้นที่ไม่พอ"
 
-#: client/campaign/cp_transfer_callbacks.c:261
 msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer_callbacks.c:289
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer_callbacks.c:298
 #, c-format
 msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
 "transfered to another base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer_callbacks.c:300
 msgid "Soldier in aircraft"
 msgstr "ทหารบนอากาศยาน"
 
-#: client/campaign/cp_transfer_callbacks.c:307
 #, c-format
 msgid ""
 "%s is assigned to aircraft and cannot be\n"
 "transfered to another base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer_callbacks.c:309
 msgid "Pilot in aircraft"
 msgstr "นักบินบนอากาศยาน"
 
-#: client/campaign/cp_transfer_callbacks.c:342
 #, fuzzy
 msgid ""
 "Destination base does not have enough space\n"
 "in Alien Containment.\n"
 msgstr "You don't have enough space in Alien Containment. Some aliens got killed."
 
-#: client/campaign/cp_transfer_callbacks.c:366
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer_callbacks.c:369
 msgid ""
 "Destination base does not have command centre.\n"
 "Hangars not functional.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer_callbacks.c:372
 #, fuzzy
 msgid "Destination base does not have any hangar."
 msgstr "ไม่มีฐานนี้อีกต่อไป"
 
-#: client/campaign/cp_transfer_callbacks.c:385
 #, fuzzy
 msgid "Destination base does not have enough space in hangars.\n"
 msgstr "ไม่มีฐานนี้อีกต่อไป"
 
-#: client/campaign/cp_transfer_callbacks.c:428
 #, fuzzy, c-format
 msgid "Soldier %s %s"
 msgstr "ทหาร"
 
-#: client/campaign/cp_transfer_callbacks.c:440
 #, fuzzy, c-format
 msgid "Pilot %s"
 msgstr "ทักษะ:\t%s\n"
 
-#: client/campaign/cp_transfer_callbacks.c:477
-#: client/campaign/cp_transfer_callbacks.c:653
 #, fuzzy, c-format
 msgid "Corpse of %s"
 msgstr "ศพของ %s (มีทั้งหมด %i )\n"
 
-#: client/campaign/cp_transfer_callbacks.c:494
-#: client/campaign/cp_transfer_callbacks.c:689
 #, fuzzy, c-format
 msgid "Aircraft %s"
 msgstr "เครื่องบิน"
 
-#: client/campaign/cp_transfer_callbacks.c:562
 #, fuzzy
 msgid "Storage is empty."
 msgstr "ห้องเก็บของว่างเปล่า\n"
 
-#: client/campaign/cp_transfer_callbacks.c:566
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a working Storage."
 msgstr "โยกย้ายไม่ได้ - ที่ฐานไม่มีโรงเก็บของ"
 
-#: client/campaign/cp_transfer_callbacks.c:628
 #, fuzzy
 msgid "Living Quarters empty."
 msgstr "เขตพักอาศัย"
 
-#: client/campaign/cp_transfer_callbacks.c:632
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "โยกย้ายไม่ได้ - ที่ฐานไม่มีเขตอยู่อาศัย"
 
-#: client/campaign/cp_transfer_callbacks.c:660
 #, fuzzy, c-format
 msgid "Alive %s"
 msgstr "มนุษย์ต่างดาว"
 
-#: client/campaign/cp_transfer_callbacks.c:666
 #, fuzzy
 msgid "Alien Containment is empty."
 msgstr "เขตกักกันว่างเปล่า\n"
 
-#: client/campaign/cp_transfer_callbacks.c:670
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "โอนย้ายไม่ได้ - ฐานไม่มีเขตกักกัน"
 
-#: client/campaign/cp_transfer_callbacks.c:673
 #, fuzzy
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "โยกย้ายไม่ได้ - ที่ฐานไม่มีเขตอยู่อาศัย"
 
-#: client/campaign/cp_transfer_callbacks.c:695
 #, fuzzy
 msgid "No aircraft available for transfer."
 msgstr "ไม่มีการนำเสนอโครงการวิจัยนี้"
 
-#: client/campaign/cp_transfer_callbacks.c:699
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "โอนย้ายไม่ได้ - ฐานไม่มีโรงเก็บยาน"
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "No target base selected"
 msgstr "ไม่ได้เลือกฐานเป้าหมาย"
 
-#: client/campaign/cp_transfer_callbacks.c:1064
 msgid "Please select the target base from the list"
 msgstr "เลือกฐานเป้าหมายจากรายชื่อ"
 
-#: client/campaign/cp_transfer_callbacks.c:1102
 #, fuzzy
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "กำลังโยกย้ายอุปกรณ์ - ฐานนี้มีโรงเก็บของ\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1105
 #, fuzzy
 msgid "No Storage in this base.\n"
 msgstr "ฐานนี้ไม่มีโรงเก็บของ\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1109
 #, fuzzy
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "สามารถโอนพนักงานได้ - ฐานนี้มีที่พักอาศัย\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1111
 #, fuzzy
 msgid "No Living Quarters in this base.\n"
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1115
 #, fuzzy
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "โอนย้ายมนุษย์ต่างดาวได้ - ฐานนี้มีเขตกักกัน\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1117
 #, fuzzy
 msgid "No Alien Containment in this base.\n"
 msgstr "ฐานนี้ไม่มีเขตกักกัน\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1121
 #, fuzzy
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "โอนย้ายมนุษย์ต่างดาวได้ - ฐานนี้มีเขตกักกัน\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1123
 #, fuzzy
 msgid "No Antimatter Storage in this base.\n"
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1127
 #, fuzzy
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "โอนย้ายมนุษย์ต่างดาวได้ - ฐานนี้มีเขตกักกัน\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1129
 #, fuzzy
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "โอนย้ายไม่ได้ - ฐานไม่มีโรงเก็บยาน"
 
-#: client/campaign/cp_transfer_callbacks.c:1131
 #, fuzzy
 msgid "No Hangar in this base.\n"
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/campaign/cp_transfer_callbacks.c:1135
 #, fuzzy
 msgid "No power supplies in this base.\n"
 msgstr "ฐานนี้ไม่มีโรงเก็บของ\n"
 
-#: client/campaign/cp_ufo.c:172
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured crashed %s (%.0f%%)\n"
 msgstr "ปิดล้อมพื้นที่"
 
-#: client/campaign/cp_ufo.c:174
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured landed %s\n"
 msgstr "ปิดล้อมพื้นที่"
 
-#: client/campaign/cp_ufo.c:428 client/campaign/cp_ufo.c:844
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr ""
 
-#: client/campaign/cp_ufo.c:849
 #, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr ""
 
-#: client/campaign/cp_ufo.c:855
 msgid "Our radar has lost the tracking on a UFO"
 msgstr ""
 
-#: client/campaign/cp_ufopedia.c:142
 msgid "Cruising speed"
 msgstr "ความเร็วปกติ"
 
-#: client/campaign/cp_ufopedia.c:144
 msgid "Maximum speed"
 msgstr "ความเร็วสูงสุด"
 
-#: client/campaign/cp_ufopedia.c:148
 msgid "ECM"
 msgstr ""
 
-#: client/campaign/cp_ufopedia.c:150
 #, fuzzy
 msgid "Aircraft damage"
 msgstr "ยานบืนไม่อยู่"
 
-#: client/campaign/cp_ufopedia.c:152
 msgid "Accuracy"
 msgstr "ความแม่นยำ"
 
-#: client/campaign/cp_ufopedia.c:154
 msgid "Fuel size"
 msgstr ""
 
-#: client/campaign/cp_ufopedia.c:156
 msgid "Weapon range"
 msgstr "ระยะการยิง"
 
-#: client/campaign/cp_ufopedia.c:158 client/cl_inventory_callbacks.c:54
 msgid "Unknown weapon skill"
 msgstr "ไม่ทราบทักษะอาวุธ"
 
-#: client/campaign/cp_ufopedia.c:170
 msgid "Small"
 msgstr "เล็ก"
 
-#: client/campaign/cp_ufopedia.c:172
 msgid "Large"
 msgstr "ใหญ่"
 
-#: client/campaign/cp_ufopedia.c:174
 msgid "Unknown aircraft size"
 msgstr "ไม่สามารถระบุขนาดได้"
 
-#: client/campaign/cp_ufopedia.c:193
 msgid "No requirements"
 msgstr "ไม่มีข้อจำกัด"
 
-#: client/campaign/cp_ufopedia.c:227
 msgid "Error - could not find building"
 msgstr "ผิดพลาด - ไม่พบสิ่งก่อสร้าง"
 
-#: client/campaign/cp_ufopedia.c:230
 #, fuzzy, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "เวลาสร้าง:\t%i วัน\n"
 msgstr[1] "เวลาสร้าง:\t%i วัน\n"
 
-#: client/campaign/cp_ufopedia.c:231
 #, fuzzy, c-format
 msgid "Cost:\t%i c\n"
 msgstr "ต้นทุน:\t%1.0f c\n"
 
-#: client/campaign/cp_ufopedia.c:279
 #, fuzzy, c-format
 msgid "Weight:\t%s\n"
 msgstr "อาวุธ:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:282
 #, fuzzy, c-format
 msgid "Ammo:\t%i\n"
 msgstr "กระสุนสูงสุด:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:284 client/cl_inventory_callbacks.c:176
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "ความเสียหาย:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:285
 #, fuzzy, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "เวลาในรอบ:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:287
 msgid "Weapon for base defence system\n"
 msgstr ""
 
-#: client/campaign/cp_ufopedia.c:304
 #, fuzzy, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/campaign/cp_ufopedia.c:306
 #, fuzzy, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/campaign/cp_ufopedia.c:309 client/campaign/cp_ufopedia.c:362
-#: client/campaign/cp_ufopedia.c:364 client/campaign/cp_ufopedia.c:400
-#: client/campaign/cp_ufopedia.c:402
 msgid "Unknown - need to research this"
 msgstr "ไม่รู้จัก - ต้องวิจัยก่อน"
 
-#: client/campaign/cp_ufopedia.c:336 client/campaign/cp_ufopedia.c:341
 #, fuzzy, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:348
 #, fuzzy, c-format
 msgid "%s:\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:355
 #, fuzzy, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "เครื่องบิน"
 
-#: client/campaign/cp_ufopedia.c:359
 #, fuzzy, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "ทหารสูงสุดแต่ละทีม:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:397
 #, fuzzy, c-format
 msgid ""
 "%s\n"
 "%s"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:521
 msgid "Proposal: "
 msgstr "นำเสนอโครงการ: "
 
-#: client/campaign/cp_ufopedia.c:524
 msgid "Re: "
 msgstr "Re: "
 
-#: client/campaign/cp_ufopedia.c:535
 #, fuzzy, c-format
 msgid ""
 "FROM: %s\n"
@@ -15258,133 +14520,103 @@ msgstr ""
 "วันที่: %s\n"
 "หัวข้อ: %s%s\n"
 
-#: client/campaign/cp_ufopedia.c:609
 msgid "(complete)"
 msgstr "(เสร็จสิ้น)"
 
-#: client/campaign/cp_ufopedia.c:668
 msgid "No pre-research description available."
 msgstr "ไม่มีข้อมูลเกี่ยวกับงานวิจัยก่อนหน้า"
 
-#: client/campaign/cp_ufopedia.c:1104
 #, fuzzy, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^Bเสนอโครงการ: %s (%s)\n"
 
-#: client/campaign/cp_ufopedia.c:1108
 #, fuzzy, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "เสนอโครงการ: %s (%s)\n"
 
-#: client/campaign/cp_ufopedia.c:1119
 #, fuzzy, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe: %s (%s)\n"
 
-#: client/campaign/cp_ufopedia.c:1123
 #, fuzzy, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_ufopedia.c:1133 client/campaign/cp_ufopedia.c:1145
 #, fuzzy, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_ufopedia.c:1137 client/campaign/cp_ufopedia.c:1149
 #, fuzzy, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/campaign/cp_ufopedia.c:1161
 #, fuzzy, c-format
 msgid "^B%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_uforecovery.c:61
 #, fuzzy, c-format
 msgid "%s was transfered to %s."
 msgstr "%s ได้เลื่อนยศเป็น %s.\n"
 
-#: client/campaign/cp_uforecovery.c:62
 msgid "UFO Recovered"
 msgstr "จานบินได้ถูกเก็บกู้แล้ว"
 
-#: client/campaign/cp_uforecovery_callbacks.c:163
 msgid "No free UFO yard available."
 msgstr "ไม่มีพื้นที่เก็บจานบิน"
 
-#: client/campaign/cp_uforecovery_callbacks.c:213
 #, fuzzy, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
 msgstr "ภารกิจเคลื่อนย้ายเสร็จสิ้น, โอนย้ายเครื่องบินเข้าฐานใหม่"
 
-#: client/campaign/cp_uforecovery_callbacks.c:215
-#: client/campaign/cp_uforecovery_callbacks.c:506
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/campaign/cp_uforecovery_callbacks.c:498
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
 msgstr ""
 
-#: client/campaign/cp_uforecovery_callbacks.c:503
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/campaign/missions/cp_mission_baseattack.c:121
 #, fuzzy, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
 msgstr "ฐาน: %s ถูกถล่มย่อยยับ! พนักงานทุกคนโดนฆ่า อุปกรณ์ทั้งหมดถูกทำลาย"
 
-#: client/campaign/missions/cp_mission_baseattack.c:229
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "ฐาน '%s' ถูกโจมตี! ต้องการทำอะไร"
 
-#: client/cl_console.c:297
 msgid "Bring up the in-game console"
 msgstr "เรียกคอนโซลขึ้นมา"
 
-#: client/cl_game_campaign.c:69
 msgid "Your dropship is not near the landing zone"
 msgstr "เครื่องไม่ได้อยู่ใกล้กลับบริเวณลงจอด"
 
-#: client/cl_game_campaign.c:88
 msgid "You've won the battle"
 msgstr "คุณรบชนะ"
 
-#: client/cl_game_campaign.c:157
 msgid "Chicken-hearted"
 msgstr "ง่ายสุด"
 
-#: client/cl_game_campaign.c:159
 msgid "Very Easy"
 msgstr "ง่ายมาก"
 
-#: client/cl_game_campaign.c:162
 msgid "Easy"
 msgstr "ง่าย"
 
-#: client/cl_game_campaign.c:167
 msgid "Hard"
 msgstr "ยาก"
 
-#: client/cl_game_campaign.c:169
 msgid "Very Hard"
 msgstr "ยากมาก"
 
-#: client/cl_game_campaign.c:171
 msgid "Insane"
 msgstr "ยากสุด"
 
-#: client/cl_game_campaign.c:239
 msgid "Human"
 msgstr "มนุษย์"
 
-#: client/cl_game_campaign.c:243
 #, fuzzy, c-format
 msgid ""
 "%s\n"
@@ -15403,35 +14635,28 @@ msgstr ""
 "ความลำบาก: %s\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:494
 #, c-format
 msgid "Rank: %s"
 msgstr "ยศ: %s"
 
-#: client/cl_game_multiplayer.c:66
 #, fuzzy
 msgid "You've ended your round\n"
 msgstr "ไม่ใช่ตาของคุณ\n"
 
-#: client/cl_game_multiplayer.c:69
 #, c-format
 msgid "%s ended his round (team %i)\n"
 msgstr ""
 
-#: client/cl_game_multiplayer.c:89
 #, fuzzy
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "ตั้งจำนวนทหารสูงสุดที่แต่ละทีมมีได้"
 
-#: client/cl_game_multiplayer.c:89
 msgid "Settings doesn't make sense"
 msgstr "การตั้งค่าไม่สมเหตุผล"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid "Game Drawn!"
 msgstr "เสมอ!"
 
-#: client/cl_game_multiplayer.c:230 client/cl_game_skirmish.c:166
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -15441,7 +14666,6 @@ msgstr ""
 "\n"
 "ไม่เหลือผู้มีชีวิตรอดทั้งสองฝ่าย"
 
-#: client/cl_game_multiplayer.c:242
 #, c-format
 msgid ""
 "\n"
@@ -15454,28 +14678,22 @@ msgstr ""
 "ฆ่าศัตรูได้:  %i\n"
 "ผู้รอดชีวิต:  %i"
 
-#: client/cl_game_multiplayer.c:244 client/cl_game_skirmish.c:188
 msgid "You won the game!"
 msgstr "คุณชนะ!"
 
-#: client/cl_game_multiplayer.c:245 client/cl_game_skirmish.c:189
 msgid "Congratulations"
 msgstr "ขอแสดงความยินดี"
 
-#: client/cl_game_multiplayer.c:247 client/cl_game_skirmish.c:191
 #, fuzzy
 msgid "You've lost the game!"
 msgstr "คุณแพ้"
 
-#: client/cl_game_multiplayer.c:248 client/cl_game_skirmish.c:192
 msgid "Better luck next time"
 msgstr "ขอให้โชคดีคราวหน้า"
 
-#: client/cl_game_multiplayer.c:279
 msgid "all"
 msgstr "ทั้งหมด"
 
-#: client/cl_game_skirmish.c:179
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -15486,15 +14704,12 @@ msgid ""
 "Civilians killed by enemy:\t\t%i\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:44
 msgid "skill_close"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:46
 msgid "skill_heavy"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:48
 #, fuzzy
 msgid "skill_assault"
 msgstr ""
@@ -15538,252 +14753,193 @@ msgstr ""
 "\n"
 "While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
 
-#: client/cl_inventory_callbacks.c:50
 msgid "skill_sniper"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:52
 #, fuzzy
 msgid "skill_explosive"
 msgstr "ระเบิด"
 
-#: client/cl_inventory_callbacks.c:131
 #, fuzzy, c-format
 msgid "Size:\t%i\n"
 msgstr "โล่:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:133
 #, fuzzy
 msgid "^BDamage type:\tProtection:\n"
 msgstr "ประเภท:\tการปกป้อง / ความแข็ง:\n"
 
-#: client/cl_inventory_callbacks.c:146
 #, fuzzy, c-format
 msgid "%s weapon\n"
 msgstr "%s อาวุธด้วย\n"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "One-handed"
 msgstr "มือเดียว"
 
-#: client/cl_inventory_callbacks.c:146 client/cl_inventory_callbacks.c:185
-#: client/cl_inventory_callbacks.c:188
 msgid "Two-handed"
 msgstr "สองมือ"
 
-#: client/cl_inventory_callbacks.c:148
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "กระสุนสูงสุด:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:175
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "ทักษะ:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:177 client/cl_inventory_callbacks.c:192
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "หน่วยเวลา:\t%i\n"
 
-#: client/cl_inventory_callbacks.c:178 client/cl_inventory_callbacks.c:193
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "ขอบเขต:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:179
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "การกระจาย:\t%g\n"
 
-#: client/cl_inventory_callbacks.c:182
 #, fuzzy, c-format
 msgid "%s. No detailed info available.\n"
 msgstr "ไม่มีคำอธิบาย"
 
-#: client/cl_inventory_callbacks.c:182
 msgid "Ammunition"
 msgstr "กระสุนปืน"
 
-#: client/cl_inventory_callbacks.c:182
 msgid "Weapon"
 msgstr "อาวุธ"
 
-#: client/cl_inventory_callbacks.c:185
 #, fuzzy, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s อาวุธไม่ใช้กระสุนใช้กับ\n"
 
-#: client/cl_inventory_callbacks.c:188
 #, fuzzy, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "%s auxiliary equipment with\n"
 
-#: client/cl_inventory_callbacks.c:191
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "ปฏิบัติการ:\t%s\n"
 
-#: client/cl_inventory_callbacks.c:200
 msgid "Unknown - not useable"
 msgstr "วิทยการที่ยังไม่รู้จัก - ไม่สามารถใช้ได้"
 
-#: client/cl_inventory_callbacks.c:344
 msgid "Update the GUI with the selected item"
 msgstr ""
 
-#: client/cl_irc.c:1441
 msgid "Server closed connection"
 msgstr ""
 
-#: client/cl_language.c:276
 msgid "..."
 msgstr ""
 
-#: client/cl_main.c:516
 #, fuzzy, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
 msgstr "เวอร์ชั่นเกม (%s) ต่างกับของเซอร์เวอร์ (%s)"
 
-#: client/cl_main.c:521
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:545
 msgid "Local map version differs from server"
 msgstr "เวอร์ชั่นแผนที่ไม่ตรงกับของเซอร์เวอร์"
 
-#: client/cl_main.c:1011
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:1249
 msgid "This change requires a restart"
 msgstr ""
 
-#: client/cl_main.c:1254
 msgid "This change might require a restart"
 msgstr ""
 
-#: client/cl_screen.c:156
 #, c-format
 msgid "Downloading [%s]"
 msgstr "กำลังโหลด [%s]"
 
-#: client/cl_screen.c:193
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "โหลดแผนที่ [%s]"
 
-#: client/input/cl_input.c:914
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "เปลี่ยนมุมกล้องในสนามรบแบบทวนเข็มนาฬิกา"
 
-#: client/input/cl_input.c:916
 msgid "Rotate battlescape camera clockwise"
 msgstr "เปลี่ยนมุมกล้องในสนามรบตามเข็มนาฬิกา"
 
-#: client/input/cl_input.c:918
 msgid "Tilt battlescape camera up"
 msgstr "เอียงมุมกล้องในสนามรบขึ้น"
 
-#: client/input/cl_input.c:920
 msgid "Tilt battlescape camera down"
 msgstr "เอียงมุมกล้องในสนามรบลง"
 
-#: client/input/cl_input.c:922
 msgid "Move battlescape camera left"
 msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
 
-#: client/input/cl_input.c:924
 msgid "Move battlescape camera right"
 msgstr "เลื่อนกล้องสนามรบไปทางขวา"
 
-#: client/input/cl_input.c:926
 msgid "Move battlescape camera forward"
 msgstr "เลื่อนกล้องสนามรบไปข้างหน้า"
 
-#: client/input/cl_input.c:928
 msgid "Move battlescape camera backward"
 msgstr "เลื่อนกล้องสนามรบไปข้างหลัง"
 
-#: client/input/cl_input.c:930 client/input/cl_input.c:952
 msgid "Zoom in"
 msgstr "ซูมเข้า"
 
-#: client/input/cl_input.c:932 client/input/cl_input.c:953
 msgid "Zoom out"
 msgstr "ซูมออก"
 
-#: client/input/cl_input.c:935
 msgid "Left mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:937
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:939
 msgid "Right mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:941
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "เลือก / เดินไปที่จุด / ในโหมดยิงให้ยิง ฯลฯ"
 
-#: client/input/cl_input.c:943
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "เดินไปที่จุด/ในโหมดยิง ให้ยกเลิกการกระทำ"
 
-#: client/input/cl_input.c:945
 msgid "Turn soldier toward mouse pointer"
 msgstr "หันทหารไปยังลูกศร"
 
-#: client/input/cl_input.c:947
 #, fuzzy
 msgid "Toggles the hud radar mode"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/input/cl_input.c:950
 msgid "Slice through terrain at a higher level"
 msgstr "มองผ่านพื้นไปขั้นสูงกว่า"
 
-#: client/input/cl_input.c:951
 msgid "Slice through terrain at a lower level"
 msgstr "มองผ่านพื้นไปขั้นต่ำกว่า"
 
-#: client/multiplayer/mp_callbacks.c:62
 msgid "Assemble a team first"
 msgstr "จัดตั้งทีมก่อน"
 
-#: client/multiplayer/mp_callbacks.c:192
 msgid "Select a free team or your coop team"
 msgstr "เลือกทีมว่าง หรือทีมร่วมมือ"
 
-#: client/multiplayer/mp_callbacks.c:215 client/multiplayer/mp_callbacks.c:228
 #, c-format
 msgid "Current team: %i"
 msgstr "ทีมปัจจุบัน: %i"
 
-#: client/multiplayer/mp_callbacks.c:219 client/multiplayer/mp_callbacks.c:232
 msgid "Team is already in use"
 msgstr "ทีมถูกใช้แล้ว"
 
-#: client/multiplayer/mp_callbacks.c:241
 msgid "Invalid or full team"
 msgstr "ทีมนี้ใช้ไม่ได้ หรือเต็มแล้ว"
 
-#: client/multiplayer/mp_serverlist.c:236
 #, c-format
 msgid "Team %d"
 msgstr "ทีม %d"
 
-#: client/multiplayer/mp_serverlist.c:238
 msgid "No team"
 msgstr "ไม่มีทีม"
 
-#: client/multiplayer/mp_serverlist.c:297
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -15792,332 +14948,255 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/multiplayer/mp_serverlist.c:308
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "แผนที่:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:313
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "ชื่อเซอร์เวอร์:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:314
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "กำลังใจ:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:315
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "รูปแบบเกม:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "เวอร์ชั่น:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:317
 #, fuzzy, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "ขึ้นกับ:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:319
 #, fuzzy, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "ต้องใส่รหัส:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "เวลาต่อรอบ:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "เล่นเป็นทีม:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "ผู้เล่นสูงสุดต่อทีม:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "ทีมสูงสุดในแผนที่:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "ลูกข่ายสูงสุด:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "ทหารสูงสุดของแต่ละผู้เล่นr:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "ทหารสูงสุดแต่ละทีม:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "ต้องใส่รหัส:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:469
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "ใช้ตัวคั่นหมด - ยกเลิกอันที่ไม่ใช่และทำซ้ำอีกครั้ง"
 
-#: client/multiplayer/mp_team.c:254
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "ยังไม่มีอะไรจะบันทึก"
 
-#: client/multiplayer/mp_team.c:270
 msgid "NewTeam"
 msgstr "ทีมใหม่"
 
-#: client/multiplayer/mp_team.c:275
 msgid "Error saving team. Check free disk space!"
 msgstr "เกิดข้อผิดพลาดในการบันทึกทีม ตรวจที่ว่างในดิสค์!"
 
-#: client/ui/node/ui_node_base.c:198
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "เหลือ %i วัน"
 msgstr[1] "ขาดอีก %i วัน"
 
-#: client/ui/node/ui_node_base.c:271
 msgid "not operational, depends on"
 msgstr ""
 
-#: client/ui/node/ui_node_baseinventory.c:234
-#: client/ui/node/ui_node_baseinventory.c:239
-#: client/ui/node/ui_node_container.c:275
-#: client/ui/node/ui_node_container.c:280
 #, fuzzy, c-format
 msgid "Ammo: %i\n"
 msgstr "กระสุนสูงสุด:\t%i\n"
 
-#: client/ui/node/ui_node_baseinventory.c:238
-#: client/ui/node/ui_node_container.c:279
 #, c-format
 msgid "%s loaded\n"
 msgstr ""
 
-#: client/ui/node/ui_node_baseinventory.c:246
-#: client/ui/node/ui_node_container.c:287
 msgid "Usable in:\n"
 msgstr ""
 
-#: client/ui/node/ui_node_container.c:339
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "เข้า: %i ออก: %i"
 
-#: client/ui/node/ui_node_keybinding.c:95
 #, c-format
 msgid "Key %s already bound"
 msgstr "คีย์ %s ถูกกำหนดไว้แล้ว"
 
-#: client/ui/node/ui_node_keybinding.c:154
 msgid "NONE"
 msgstr ""
 
-#: client/ui/node/ui_node_window.c:293
 msgid "Drag to move window"
 msgstr ""
 
-#: client/ui/node/ui_node_window.c:308
 msgid "Close the window"
 msgstr "ปิดกรอบนี้"
 
-#: client/ui/ui_tooltip.c:96 client/ui/ui_tooltip.c:101
 #, c-format
 msgid "Key: %s"
 msgstr "คีย์: %s"
 
-#: game/g_actor.c:78
 msgid "Soldier entered the rescue zone\n"
 msgstr ""
 
-#: game/g_actor.c:80
 #, fuzzy
 msgid "Soldier left the rescue zone\n"
 msgstr "เลือกอุปกรณ์"
 
-#: game/g_actor.c:557
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "ทำไม่ได้ - ค่าเวลาไม่พอ!\n"
 
-#: game/g_actor.c:561
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "ทำไม่ได้ - อาวุธมีกระสุนแบบเดียวกันเต็มอยู่แล้ว!\n"
 
-#: game/g_client.c:401
 msgid "Can't perform action - object not present!\n"
 msgstr "ทำไม่ได้ - ไม่มีวัตถุ!\n"
 
-#: game/g_client.c:406
 msgid "Can't perform action - not an actor!\n"
 msgstr "ทำไม่ได้ - ไม่ใช่คนทำ!\n"
 
-#: game/g_client.c:411
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "ทำไม่ได้ - คนทำขยับตัวไม่ได้!\n"
 
-#: game/g_client.c:416
 msgid "Can't perform action - actor is dead!\n"
 msgstr "ทำไม่ได้ - คนทำตายแล้ว!\n"
 
-#: game/g_client.c:421
 msgid "Can't perform action - not on same team!\n"
 msgstr "ทำไม่ได้ - ไม่ใช่ทีมเดียวกัน!\n"
 
-#: game/g_client.c:426
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "ทำไม่ได้ - ควบคุมพันธมิตรที่ทำไม่ได้!\n"
 
-#: game/g_client.c:449
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "ทำไม่ได้ - ไม่ใช่ตาของคุณ!\n"
 
-#: game/g_client.c:560
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "กำลังหวั่นไหว, ไม่ยอมเลิกป้องกันตัว\n"
 
-#: game/g_cmds.c:68
 #, c-format
 msgid "You can't talk for %d more seconds\n"
 msgstr ""
 
-#: game/g_cmds.c:76
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr ""
 
-#: game/g_combat.c:380
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
 msgstr ""
 
-#: game/g_combat.c:614
 msgid "Can't perform action - impossible throw!\n"
 msgstr "ทำไม่ได้ - ไม่สามารถโยนได้!\n"
 
-#: game/g_combat.c:1085
 #, fuzzy
 msgid "Can't perform action - object not activatable!\n"
 msgstr "ทำไม่ได้ - ไม่มีวัตถุ!\n"
 
-#: game/g_combat.c:1110
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "ทำไม่ได้ - อาวุธนี้ไม่สามารถยิงด้วยมือเดียว\n"
 
-#: game/g_combat.c:1117
 msgid "Can't perform action - no ammo!\n"
 msgstr "ทำไม่ได้ - ไม่มีกระสุน!\n"
 
-#: game/g_combat.c:1125
 msgid "Can't perform action - target out of range!\n"
 msgstr "ทำไม่ได้ - เป้าหมายอยู่นอกระยะ!\n"
 
-#: game/g_combat.c:1171
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "ทำไม่ได้ - ไม่มีกระสุนเพียงพอ!\n"
 
-#: game/g_mission.c:48
 msgid "Aliens entered target zone\n"
 msgstr ""
 
-#: game/g_mission.c:79
 #, fuzzy
 msgid "Item was placed\n"
 msgstr "ไม่ได้ติดตั้งอุปกรณ์"
 
-#: game/g_mission.c:86
 msgid "Target zone is occupied\n"
 msgstr ""
 
-#: game/g_morale.c:36
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s ตื่นตระหนก!\n"
 
-#: game/g_morale.c:97
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s กำลังคลั่ง\n"
 
-#: game/g_morale.c:99
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s กำลังโมโหอย่างมาก!\n"
 
-#: game/g_morale.c:176
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s กำลังหวั่นไหว\n"
 
-#: game/g_reaction.c:193
 msgid "No reaction fire enabled weapon.\n"
 msgstr "ไม่มีอาวุธไว้ยิงโต้ตอบ\n"
 
-#: game/g_reaction.c:198
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "รูปแบบการยิงยังไม่ถูกเลือกเพื่อใช้ในการยิงโต้ตอบ\n"
 
-#: game/g_reaction.c:203
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "ค่าเวลาไม่เพียงพอสำหรับใช้งานการยิงโต้ตอบ\n"
 
-#: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
 msgstr "4 นาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_round.c:48
 msgid "3 minutes left until forced round end\n"
 msgstr "3 นาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_round.c:51
 msgid "2 minutes left until forced round end\n"
 msgstr "2 นาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_round.c:54
 msgid "1 minute left until forced round end\n"
 msgstr "1 นาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_round.c:57
 msgid "30 seconds left until forced round end\n"
 msgstr "30 วินาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_round.c:60
 msgid "15 seconds left until forced round end\n"
 msgstr "15 วินาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_round.c:68
 msgid "Current active team hit the max round time\n"
 msgstr "ทีมที่เดินอยู่ได้ใช้เวลาจนหมดแล้ว\n"
 
-#: po/OTHER_STRINGS:2
 msgid "human"
 msgstr "มนุษย์"
 
-#: po/OTHER_STRINGS:3
 msgid "alien"
 msgstr "มนุษย์ต่างดาว"
 
-#: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "จับภาพหน้าจอ"
 
