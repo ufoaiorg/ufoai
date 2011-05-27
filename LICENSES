@@ -1610,6 +1610,7 @@ base/models/objects/trucks/watertruck/watertruck_gm.png | GNU General Public Lic
 base/models/objects/vegi/banana/banana.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/banana/banana.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/bush/trop_bush.png | GNU General Public License 2.0 | MCR
+base/models/objects/vegi/bush/trop_bush2.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
 base/models/objects/vegi/bush/trop_bush_nm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/chestnut/chestnut_blaetter2.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/chestnut_blaetter3.md2 | GNU General Public License 2.0 | hullbr3ach
