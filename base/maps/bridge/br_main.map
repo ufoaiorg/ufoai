@@ -10777,6 +10777,7 @@
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 "angles" "0 -111 0"
+"skin" "1"
 }
 // entity 44
 {
@@ -10844,6 +10845,7 @@
 "origin" "1116 1664 14"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
+"skin" "2"
 }
 // entity 56
 {
@@ -10858,6 +10860,7 @@
 "origin" "1372 1152 14"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
+"skin" "1"
 }
 // entity 58
 {
@@ -10865,6 +10868,7 @@
 "origin" "1886 1796 14"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
+"skin" "2"
 }
 // entity 59
 {
@@ -10879,6 +10883,7 @@
 "origin" "546 1860 14"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
+"skin" "1"
 }
 // entity 61
 {
@@ -10887,6 +10892,7 @@
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 "angles" "0 -112 0"
+"skin" "2"
 }
 // entity 62
 {

@@ -72,4 +72,5 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/bush/bush01.md2"
 "origin" "46 80 18"
+"skin" "2"
 }
