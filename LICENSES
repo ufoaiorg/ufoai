@@ -1668,11 +1668,12 @@ base/models/objects/vegi/plant_hang/plant_hang.png | GNU General Public License 
 base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plant_v1/plant_v1.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plants/plant.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/vegi/plants/plant.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vegi/plants/plant.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/objects/vegi/plants/plant1.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/plants/plant1.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
-base/models/objects/vegi/plants/plant1a.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
+base/models/objects/vegi/plants/plant1a.png | GNU General Public License 2.0 or later | based on Willem Sitters' and Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/)  | MCR
 base/models/objects/vegi/plants/plant_a.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/vegi/plants/planta.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/objects/vegi/plants/plantb.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/vegi/plants/plantc.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/vegi/plants/plantd.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
