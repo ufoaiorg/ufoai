@@ -34,7 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_draw.h"
 
 static const float MESH_SHADOW_MAX_DISTANCE = 512.0;
+#if 0
 static const float MESH_SHADOW_SCALE = 1.5;
+#endif
 static const float MESH_SHADOW_ALPHA = 0.3;
 
 static void R_TransformModelDirect (modelInfo_t * mi)
@@ -498,20 +500,23 @@ static void R_RotateForMeshShadow (const entity_t *e)
 		glPopMatrix();
 	} else {
 		vec3_t origin;
-		float height, threshold, scale;
+		float height, threshold;
+#if 0
+		float scale;
+#endif
 
 		R_TransformForEntity(e, e->shadowOrigin, origin);
 
 		height = -origin[2];
 		threshold = MESH_SHADOW_MAX_DISTANCE / e->scale[2];
+#if 0
 		scale = MESH_SHADOW_SCALE * (threshold - height) / threshold;
+#endif
 
 		glPushMatrix();
 		glTranslatef(origin[0], origin[1], -height + 1.0);
-#if 0
 		glRotatef(-e->angles[PITCH], 0.0, 1.0, 0.0);
-		glScalef(scale, scale, 0.0);
-#endif
+		glScalef(1.0, 1.0, 0.0);
 	}
 }
 
