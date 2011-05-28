@@ -28080,6 +28080,7 @@
 "spawnflags" "254"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "848 112 90"
+"skin" "1"
 }
 // entity 281
 {
@@ -28088,6 +28089,7 @@
 "spawnflags" "254"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "880 14 90"
+"skin" "1"
 }
 // entity 282
 {

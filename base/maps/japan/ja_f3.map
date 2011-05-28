@@ -125,7 +125,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "33.9291 74.5106 19"
-"angles" "0 -66.8974 0"
+"angles" "0 -66 0"
 }
 // entity 2
 {
@@ -133,5 +133,6 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "178.232 200.037 17.8118"
-"angles" "-8.1545 53.7949 11.3204"
+"angles" "-8 53 11"
+"skin" "1"
 }

@@ -204,7 +204,8 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "43.774 195.085 19"
-"angles" "0 -41.1498 0"
+"angles" "0 -41 0"
+"skin" "1"
 }
 // entity 3
 {
@@ -212,7 +213,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "138.232 192.037 17.8118"
-"angles" "-8.1545 53.7949 11.3204"
+"angles" "-8 53 11"
 }
 // entity 4
 {
@@ -220,7 +221,8 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "154.232 136.037 17.8118"
-"angles" "-8.1545 53.7949 11.3204"
+"angles" "-8 153 11"
+"skin" "1"
 }
 // entity 5
 {

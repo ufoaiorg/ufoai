@@ -166,6 +166,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "68 53 19"
+"skin" "1"
 }
 // entity 2
 {
@@ -180,7 +181,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "123.774 85.085 19"
-"angles" "0 -41.1498 0"
+"angles" "0 -41 0"
 }
 // entity 4
 {
@@ -189,4 +190,5 @@
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "74.2319 160.037 17.8118"
 "angles" "-8.1545 53.7949 11.3204"
+"skin" "1"
 }
