@@ -142,13 +142,6 @@
 }
 // entity 5
 {
-"classname" "light"
-"light" "180"
-"color" "0.8 0.9 1"
-"origin" "144 -112 24"
-}
-// entity 6
-{
 "classname" "func_group"
 // brush 0
 {
@@ -202,7 +195,7 @@
 ( 401.024 141.952 116 ) ( 396.928 141.952 116 ) ( 396.928 146.048 116 ) tex_common/nodraw 10.49951 50.49908 -90 0.2560001 0.2560001 134282752 128 0
 }
 }
-// entity 7
+// entity 6
 {
 "classname" "light"
 "light" "180"
