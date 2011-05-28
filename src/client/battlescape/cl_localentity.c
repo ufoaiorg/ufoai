@@ -116,6 +116,7 @@ static void LM_AddToSceneOrder (qboolean parents)
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
+		ent.lighting = &lm->lighting;
 		VectorCopy(lm->scale, ent.scale);
 
 		if (lm->parent) {
@@ -612,6 +613,8 @@ static void LET_PathMove (le_t * le)
 	/* check for start of the next step */
 	if (cl.time < le->startTime)
 		return;
+
+	le->lighting.state = LIGHTING_DIRTY;
 
 	/* move ahead */
 	while (cl.time >= le->endTime) {
@@ -1342,6 +1345,7 @@ void LE_AddToScene (void)
 			VectorCopy(le->angles, ent.angles);
 			ent.model = le->model1;
 			ent.skinnum = le->skinnum;
+			ent.lighting = &le->lighting;
 
 			switch (le->contents) {
 			/* Only breakables do not use their origin; func_doors and func_rotating do!!!
