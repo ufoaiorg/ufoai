@@ -497,7 +497,7 @@ static qboolean R_UpdateShadowOrigin (entity_t *e)
 }
 
 /**
- * Applies translation, rotation and scale for the shadow of the specified
+ * @brief Applies translation, rotation and scale for the shadow of the specified
  * entity. In order to reuse the vertex arrays from the primary rendering
  * pass, the shadow origin must transformed into model-view space.
  */
@@ -521,7 +521,7 @@ static void R_RotateForMeshShadow (const entity_t *e)
 }
 
 /**
- * Re-draws the mesh using the stencil test.  Meshes with stale lighting
+ * @brief Re-draws the mesh using the stencil test.  Meshes with stale lighting
  * information, or with a lighting point above our view, are not drawn.
  */
 static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
