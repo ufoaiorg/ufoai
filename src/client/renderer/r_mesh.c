@@ -543,7 +543,6 @@ static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 	if (e->flags & RF_TRANSLUCENT)
 		return;
 
-	/** @todo cache this to reduce traces */
 	if (!R_UpdateShadowOrigin(e))
 		return;
 
