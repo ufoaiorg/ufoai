@@ -137,6 +137,7 @@
 "model" "models/objects/vegi/tree03/tree03.md2"
 "spawnflags" "255"
 "angles" "0 225 0"
+"skin" "1"
 }
 // entity 2
 {
@@ -144,5 +145,5 @@
 "origin" "96 161 7"
 "model" "models/objects/vegi/tree03/tree03.md2"
 "spawnflags" "255"
-"angles" "0 225 0"
+"skin" "1"
 }
