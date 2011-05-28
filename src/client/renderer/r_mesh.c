@@ -113,12 +113,21 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 
 	R_DrawMeshModelShell(mesh, shellColor);
+}
 
+static void R_ResetArraysAfterStaticMeshRender (void)
+{
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 	if (r_state.bumpmap_enabled || r_state.dynamic_lighting_enabled)
 		R_BindDefaultArray(GL_TANGENT_ARRAY);
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+}
+
+static void R_DrawAliasStaticWithReset (const mAliasMesh_t *mesh, const vec4_t shellColor)
+{
+	R_DrawAliasStatic(mesh, shellColor);
+	R_ResetArraysAfterStaticMeshRender();
 }
 
 /**
@@ -270,7 +279,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	mesh = &mi->model->alias.meshes[0];
 	refdef.aliasCount += mesh->num_tris;
 	if (mi->model->alias.num_frames == 1)
-		R_DrawAliasStatic(mesh, vec4_origin);
+		R_DrawAliasStaticWithReset(mesh, vec4_origin);
 	else
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe, vec4_origin);
 
@@ -321,7 +330,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	mesh = &mi->model->alias.meshes[0];
 	refdef.aliasCount += mesh->num_tris;
 	if (mi->model->alias.num_frames == 1)
-		R_DrawAliasStatic(mesh, vec4_origin);
+		R_DrawAliasStaticWithReset(mesh, vec4_origin);
 	else
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe, vec4_origin);
 
@@ -443,16 +452,10 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 	}
 }
 
-static void R_DrawAliasModelBuffer (entity_t *e)
+static mAliasMesh_t* R_DrawAliasModelBuffer (entity_t *e)
 {
-	mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
+	mAliasModel_t *mod = &e->model->alias;
 	mAliasMesh_t* lodMesh;
-
-	glPushMatrix();
-	glMultMatrixf(e->transform.matrix);
-
-	if (VectorNotEmpty(e->scale))
-		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
 	R_ResetArrayState();
 
@@ -464,12 +467,18 @@ static void R_DrawAliasModelBuffer (entity_t *e)
 	else
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
 
-	glPopMatrix();
+	return lodMesh;
 }
 
 static qboolean R_UpdateShadowOrigin (entity_t *e)
 {
 	vec3_t start, end;
+
+	if (e->lighting == NULL)
+		return qfalse;
+
+	if (e->lighting->state == LIGHTING_READY)
+		return qtrue;
 
 	VectorCopy(e->origin, start);
 	VectorCopy(e->origin, end);
@@ -482,7 +491,8 @@ static qboolean R_UpdateShadowOrigin (entity_t *e)
 	/* resolve the shadow origin and direction */
 	if (refdef.trace.leafnum) {
 		/* hit something */
-		VectorCopy(refdef.trace.endpos, e->shadowOrigin);
+		VectorCopy(refdef.trace.endpos, e->lighting->shadowOrigin);
+		e->lighting->state = LIGHTING_READY;
 		return qtrue;
 	}
 
@@ -501,20 +511,14 @@ static void R_RotateForMeshShadow (const entity_t *e)
 	} else {
 		vec3_t origin;
 		float height, threshold;
-#if 0
-		float scale;
-#endif
 
-		R_TransformForEntity(e, e->shadowOrigin, origin);
+		R_TransformForEntity(e, e->lighting->shadowOrigin, origin);
 
 		height = -origin[2];
 		threshold = MESH_SHADOW_MAX_DISTANCE / e->scale[2];
-#if 0
-		scale = MESH_SHADOW_SCALE * (threshold - height) / threshold;
-#endif
 
 		glPushMatrix();
-		glTranslatef(origin[0], origin[1], -height + 1.0);
+		glTranslatef(0, 0, -height + 1.0);
 		glRotatef(-e->angles[PITCH], 0.0, 1.0, 0.0);
 		glScalef(1.0, 1.0, 0.0);
 	}
@@ -524,7 +528,7 @@ static void R_RotateForMeshShadow (const entity_t *e)
  * Re-draws the mesh using the stencil test.  Meshes with stale lighting
  * information, or with a lighting point above our view, are not drawn.
  */
-static void R_DrawMeshShadow (entity_t *e)
+static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 {
 	vec4_t color;
 	const qboolean oldBlend = r_state.blend_enabled;
@@ -547,7 +551,7 @@ static void R_DrawMeshShadow (entity_t *e)
 	if (!R_UpdateShadowOrigin(e))
 		return;
 
-	if (e->shadowOrigin[2] > refdef.viewOrigin[2])
+	if (e->lighting->shadowOrigin[2] > refdef.viewOrigin[2])
 		return;
 
 	Vector4Set(color, 0.0, 0.0, 0.0, r_shadows->value * MESH_SHADOW_ALPHA);
@@ -560,7 +564,7 @@ static void R_DrawMeshShadow (entity_t *e)
 
 	if (lighting)
 		R_EnableLighting(NULL, qfalse);
-	R_DrawAliasModelBuffer(e);
+	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 	if (lighting)
 		R_EnableLighting(program, qtrue);
 
@@ -578,12 +582,13 @@ static void R_DrawMeshShadow (entity_t *e)
  */
 void R_DrawAliasModel (entity_t *e)
 {
-	mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
+	mAliasModel_t *mod = &e->model->alias;
 	/* the values are sane here already - see R_GetEntityLists */
 	const image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
 	int i;
 	float g;
 	vec4_t color = {0.8, 0.8, 0.8, 1.0};
+	mAliasMesh_t *mesh;
 
 	/* IR goggles override color for entities that are affected */
 	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
@@ -605,8 +610,6 @@ void R_DrawAliasModel (entity_t *e)
 	if (g > 1.0)
 		VectorScale(color, 1.0 / g, color);
 
-	R_DrawMeshShadow(e);
-
 	R_Color(color);
 
 	assert(skin->texnum > 0);
@@ -626,7 +629,13 @@ void R_DrawAliasModel (entity_t *e)
 	if (skin->roughnessmap)
 		R_EnableRoughnessMap(skin->roughnessmap, qtrue);
 
-	R_DrawAliasModelBuffer(e);
+	glPushMatrix();
+	glMultMatrixf(e->transform.matrix);
+
+	if (VectorNotEmpty(e->scale))
+		glScalef(e->scale[0], e->scale[1], e->scale[2]);
+
+	mesh = R_DrawAliasModelBuffer(e);
 
 	if (r_state.specularmap_enabled)
 		R_EnableSpecularMap(NULL, qfalse);
@@ -640,6 +649,13 @@ void R_DrawAliasModel (entity_t *e)
 
 	if (r_state.bumpmap_enabled)
 		R_EnableBumpmap(NULL, qfalse);
+
+	R_DrawMeshShadow(e, mesh);
+
+	if (mod->num_frames == 1)
+		R_ResetArraysAfterStaticMeshRender();
+
+	glPopMatrix();
 
 	/* show model bounding box */
 	if (r_showbox->integer)

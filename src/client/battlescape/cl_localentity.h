@@ -134,6 +134,9 @@ typedef struct le_s {
 	int left, right, extension, headgear; /**< item indices that the actor holds in his hands */
 	actorSizeEnum_t fieldSize;				/**< ACTOR_SIZE_*
 											 * @todo future thoughts: maybe define this in team_*.ufo files instead and use le->teamdef->fieldsize */
+
+	lighting_t lighting;
+
 	teamDef_t* teamDef;
 	int gender;	/**< @sa @c nametypes_t */
 	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
@@ -172,6 +175,7 @@ typedef struct localModel_s {
 	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
 	animState_t as;
+	lighting_t lighting;
 
 	/** is called every frame */
 	void (*think) (struct localModel_s * localModel);
