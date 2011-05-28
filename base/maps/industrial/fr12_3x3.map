@@ -6231,6 +6231,7 @@
 "origin" "480 672 7"
 "model" "models/objects/vegi/tree03/tree03.md2"
 "spawnflags" "255"
+"angles" "0 199 0"
 }
 // entity 18
 {
@@ -6238,6 +6239,7 @@
 "origin" "352 673 7"
 "model" "models/objects/vegi/tree03/tree03.md2"
 "spawnflags" "255"
+"angles" "0 33 0"
 }
 // entity 19
 {

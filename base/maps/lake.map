@@ -2103,7 +2103,7 @@
 "model" "models/objects/vegi/fern2/fern2_lrg.md2"
 "origin" "80 188 16"
 "spawnflags" "255"
-"skin" "0"
+"skin" "1"
 }
 // entity 5
 {
