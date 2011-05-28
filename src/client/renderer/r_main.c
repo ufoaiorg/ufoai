@@ -184,6 +184,9 @@ void R_SetupFrustum (void)
 static inline void R_Clear (void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	/* clear the stencil bit if shadows are enabled */
+	if (r_shadows->value)
+		glClear(GL_STENCIL_BUFFER_BIT);
 	R_CheckError();
 	glDepthFunc(GL_LEQUAL);
 	R_CheckError();

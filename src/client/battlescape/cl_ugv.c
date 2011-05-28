@@ -77,7 +77,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	R_AddEntity(&add);
 
 	/* add actor special effects */
-	ent->flags |= RF_SHADOW;
 	ent->flags |= RF_ACTOR;
 
 	if (!LE_IsDead(le)) {

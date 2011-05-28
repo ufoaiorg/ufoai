@@ -159,7 +159,8 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 	int i;
 	SDL_Surface* screen = NULL;
 
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	/* valid values are between 0 and 4 */

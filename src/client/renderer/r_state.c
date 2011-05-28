@@ -880,6 +880,10 @@ void R_SetDefaultState (void)
 	glFogf(GL_FOG_START, FOG_START);
 	glFogf(GL_FOG_END, FOG_END);
 
+	/* stencil test parameters */
+	glStencilFunc(GL_GEQUAL, 1, 0xff);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+
 	/* polygon offset parameters */
 	glPolygonOffset(1, 1);
 

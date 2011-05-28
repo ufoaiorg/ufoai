@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_program.h"
 #include "../cl_console.h"
 
-image_t *shadow;
-
 /* console font */
 static image_t *draw_chars;
 
@@ -81,10 +79,6 @@ static bbox_arrays_t r_bbox_array;
  */
 void R_DrawInitLocal (void)
 {
-	shadow = R_FindImage("pics/sfx/shadow", it_effect);
-	if (shadow == r_noTexture)
-		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
-
 	draw_chars = R_FindImage("pics/conchars", it_chars);
 	if (draw_chars == r_noTexture)
 		Com_Error(ERR_FATAL, "Could not find conchars image in game pics directory!");
