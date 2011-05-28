@@ -844,6 +844,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 	Vector2Copy(base->pos, aircraft->pos);
 	RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
+	aircraft->radar.ufoDetectionProbability = 1;
 
 	/* Update base capacities. */
 	Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
@@ -2435,13 +2436,9 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 		return qtrue;
 
 	XML_AddInt(node, SAVE_AIRCRAFT_IDX, aircraft->idx);
-
-	XML_AddIntValue(node, SAVE_AIRCRAFT_RADAR_RANGE, aircraft->radar.range);
-	XML_AddIntValue(node, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, aircraft->radar.trackingRange);
 	XML_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
 	subnode = XML_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		xmlNode_t *ssnode = XML_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
 		XML_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
@@ -2692,9 +2689,9 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	else
 		AIR_SetPilot(craft, NULL);
 
+	RADAR_Initialise(&craft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
 	RADAR_InitialiseUFOs(&craft->radar);
-	craft->radar.range = XML_GetInt(p, SAVE_AIRCRAFT_RADAR_RANGE, 0);
-	craft->radar.trackingRange = XML_GetInt(p, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, 0);
+	craft->radar.ufoDetectionProbability = 1;
 
 	/* itemcargo */
 	snode = XML_GetNode(p, SAVE_AIRCRAFT_CARGO);
