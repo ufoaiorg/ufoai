@@ -33,6 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_draw.h"
 
+static const float MESH_SHADOW_MAX_DISTANCE = 512.0;
+static const float MESH_SHADOW_SCALE = 1.5;
+static const float MESH_SHADOW_ALPHA = 0.3;
+
 static void R_TransformModelDirect (modelInfo_t * mi)
 {
 	/* translate and rotate */
@@ -461,6 +465,108 @@ static void R_DrawAliasModelBuffer (entity_t *e)
 	glPopMatrix();
 }
 
+static qboolean R_UpdateShadowOrigin (entity_t *e)
+{
+	vec3_t start, end;
+
+	VectorCopy(e->origin, start);
+	VectorCopy(e->origin, end);
+
+	end[2] = start[2] - MESH_SHADOW_MAX_DISTANCE;
+
+	/* do the trace */
+	R_Trace(start, end, 0.0, MASK_SOLID);
+
+	/* resolve the shadow origin and direction */
+	if (refdef.trace.leafnum) {
+		/* hit something */
+		VectorCopy(refdef.trace.endpos, e->shadowOrigin);
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
+ * Applies translation, rotation and scale for the shadow of the specified
+ * entity. In order to reuse the vertex arrays from the primary rendering
+ * pass, the shadow origin must transformed into model-view space.
+ */
+static void R_RotateForMeshShadow (const entity_t *e)
+{
+	if (!e) {
+		glPopMatrix();
+	} else {
+		vec3_t origin;
+		float height, threshold, scale;
+
+		R_TransformForEntity(e, e->shadowOrigin, origin);
+
+		height = -origin[2];
+		threshold = MESH_SHADOW_MAX_DISTANCE / e->scale[2];
+		scale = MESH_SHADOW_SCALE * (threshold - height) / threshold;
+
+		glPushMatrix();
+		glTranslatef(origin[0], origin[1], -height + 1.0);
+#if 0
+		glRotatef(-e->angles[PITCH], 0.0, 1.0, 0.0);
+		glScalef(scale, scale, 0.0);
+#endif
+	}
+}
+
+/**
+ * Re-draws the mesh using the stencil test.  Meshes with stale lighting
+ * information, or with a lighting point above our view, are not drawn.
+ */
+static void R_DrawMeshShadow (entity_t *e)
+{
+	vec4_t color;
+	const qboolean oldBlend = r_state.blend_enabled;
+	const qboolean lighting = r_state.lighting_enabled;
+	r_program_t *program = r_state.active_program;
+
+	if (!r_shadows->value)
+		return;
+
+	if (r_wire->integer)
+		return;
+
+	if (e->flags & RF_NO_SHADOW)
+		return;
+
+	if (e->flags & RF_TRANSLUCENT)
+		return;
+
+	/** @todo cache this to reduce traces */
+	if (!R_UpdateShadowOrigin(e))
+		return;
+
+	if (e->shadowOrigin[2] > refdef.viewOrigin[2])
+		return;
+
+	Vector4Set(color, 0.0, 0.0, 0.0, r_shadows->value * MESH_SHADOW_ALPHA);
+	R_Color(color);
+	R_EnableTexture(&texunit_diffuse, qfalse);
+	R_EnableBlend(qtrue);
+	R_RotateForMeshShadow(e);
+	glDepthRange(0.0, 0.999);
+	R_EnableStencilTest(qtrue);
+
+	if (lighting)
+		R_EnableLighting(NULL, qfalse);
+	R_DrawAliasModelBuffer(e);
+	if (lighting)
+		R_EnableLighting(program, qtrue);
+
+	R_EnableStencilTest(qfalse);
+	glDepthRange(0.0, 1.0);
+	R_RotateForMeshShadow(NULL);
+	R_EnableBlend(oldBlend);
+	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_Color(NULL);
+}
+
 /**
  * @brief Draw a model from the battlescape entity list
  * @sa R_GetEntityLists
@@ -493,6 +599,8 @@ void R_DrawAliasModel (entity_t *e)
 	/* scale it back to 1.0 */
 	if (g > 1.0)
 		VectorScale(color, 1.0 / g, color);
+
+	R_DrawMeshShadow(e);
 
 	R_Color(color);
 

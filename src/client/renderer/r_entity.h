@@ -85,6 +85,8 @@ typedef struct entity_s {
 
 	image_t *deathTexture;
 
+	vec3_t shadowOrigin;
+
 	struct entity_s *next;		/**< for chaining */
 } entity_t;
 

@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RF_ARROW            0x02000000	/**< arrow, debugging only */
 
 /** the following ent flags also draw entity effects */
-#define RF_SHADOW           0x00000004	/**< shadow (when living) for this entity */
+#define RF_NO_SHADOW        0x00000004	/**< shadow (when living) for this entity */
 #define RF_BLOOD            0x00000008	/**< blood (when dead) for this entity */
 #define RF_SELECTED         0x00000010	/**< selected actor */
 #define RF_MEMBER           0x00000020	/**< actor in the same team */
