@@ -1416,7 +1416,7 @@ mapdef england
 
 	aircraft
 	{
-		craft_drop_firebird
+		//any
 	}
 
 //	ufos
