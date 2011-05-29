@@ -980,7 +980,7 @@ void Com_WriteConfigToFile (const char *filename)
 void Com_SetRandomSeed (unsigned int seed)
 {
 	srand(seed);
-	Com_Printf("setting random seed to %i\n", seed);
+	/*Com_Printf("setting random seed to %i\n", seed);*/
 }
 
 /**
