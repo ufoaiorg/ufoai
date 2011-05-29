@@ -90,13 +90,14 @@ static kbutton_t in_turnleft, in_turnright, in_shiftleft, in_shiftright;
 static kbutton_t in_shiftup, in_shiftdown;
 static kbutton_t in_zoomin, in_zoomout;
 static kbutton_t in_turnup, in_turndown;
-
 static kbutton_t in_pantilt;
 
 /**
- * @brief
+ * @brief Handles the catch of a @c kbutton_t state
  * @sa IN_KeyUp
  * @sa CL_GetKeyMouseState
+ * @note Called from console callbacks with two parameters, the
+ * key and the milliseconds when the key was released
  */
 static void IN_KeyDown (kbutton_t * b)
 {
@@ -137,9 +138,12 @@ static void IN_KeyDown (kbutton_t * b)
 }
 
 /**
- * @brief
+ * @brief Handles the release of a @c kbutton_t state
  * @sa IN_KeyDown
  * @sa CL_GetKeyMouseState
+ * @note Called from console callbacks with two parameters, the
+ * key and the milliseconds when the key was released
+ * @param[in,out] b the button state to
  */
 static void IN_KeyUp (kbutton_t * b)
 {
@@ -175,9 +179,9 @@ static void IN_KeyUp (kbutton_t * b)
 	c = Cmd_Argv(2);
 	uptime = atoi(c);
 	if (uptime)
-		b->msec += uptime - b->downtime;
+		b->msec = uptime - b->downtime;
 	else
-		b->msec += 10;
+		b->msec = 10;
 
 	/* now up */
 	b->state = 0;
@@ -214,6 +218,18 @@ static void IN_TurnDownDown_f (void)
 static void IN_TurnDownUp_f (void)
 {
 	IN_KeyUp(&in_turndown);
+}
+static void IN_PanTiltDown_f (void)
+{
+	if (mouseSpace != MS_WORLD)
+		return;
+	IN_KeyDown(&in_pantilt);
+}
+static void IN_PanTiltUp_f (void)
+{
+	if (mouseSpace != MS_WORLD)
+		return;
+	IN_KeyUp(&in_pantilt);
 }
 static void IN_ShiftLeftDown_f (void)
 {
@@ -326,13 +342,16 @@ static void CL_ActionDown_f (void)
 {
 	if (mouseSpace != MS_WORLD)
 		return;
-	CL_ActorActionMouse();
+	IN_KeyDown(&in_pantilt);
 }
 
 static void CL_ActionUp_f (void)
 {
 	if (mouseSpace == MS_UI)
 		return;
+	IN_KeyUp(&in_pantilt);
+	if (in_pantilt.msec < 250)
+		CL_ActorActionMouse();
 	mouseSpace = MS_NULL;
 }
 
@@ -477,7 +496,6 @@ float CL_GetKeyMouseState (int dir)
 
 /**
  * @brief Called every frame to parse the input
- * @note The geoscape zooming code is in UI_MouseWheel too
  * @sa CL_Frame
  */
 static void IN_Parse (void)
@@ -785,15 +803,11 @@ void IN_Frame (void)
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_MOUSEBUTTONDOWN:
-			in_pantilt.state = 0;
 			switch (event.button.button) {
 			case SDL_BUTTON_MIDDLE:
 				mouse_buttonstate = K_MOUSE3;
-				in_pantilt.state = 1;
 				break;
 			}
-			if (in_pantilt.state)
-				break;
 		case SDL_MOUSEBUTTONUP:
 			switch (event.button.button) {
 			case SDL_BUTTON_LEFT:
@@ -801,7 +815,6 @@ void IN_Frame (void)
 				break;
 			case SDL_BUTTON_MIDDLE:
 				mouse_buttonstate = K_MOUSE3;
-				in_pantilt.state = 0;
 				break;
 			case SDL_BUTTON_RIGHT:
 				mouse_buttonstate = K_MOUSE2;
@@ -913,6 +926,8 @@ void IN_Init (void)
 	Cmd_AddCommand("-turnup", IN_TurnUpUp_f, NULL);
 	Cmd_AddCommand("+turndown", IN_TurnDownDown_f, N_("Tilt battlescape camera down"));
 	Cmd_AddCommand("-turndown", IN_TurnDownUp_f, NULL);
+	Cmd_AddCommand("+pantilt", IN_PanTiltDown_f, N_("Move battlescape camera"));
+	Cmd_AddCommand("-pantilt", IN_PanTiltUp_f, NULL);
 	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown_f, N_("Move battlescape camera left"));
 	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp_f, NULL);
 	Cmd_AddCommand("+shiftright", IN_ShiftRightDown_f, N_("Move battlescape camera right"));
