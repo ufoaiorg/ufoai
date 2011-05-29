@@ -531,6 +531,9 @@ static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 	const qboolean lighting = r_state.lighting_enabled;
 	r_program_t *program = r_state.active_program;
 
+	if (!r_stencilshadows->integer)
+		return;
+
 	if (!r_shadows->value)
 		return;
 
