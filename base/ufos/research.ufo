@@ -584,7 +584,7 @@ tech rs_alien_origins
 	}
 
 	time		5700
-//	image		"techs/alien_origins"
+	image		"techs/alien_origins"
 }
 
 tech rs_alien_ufo_theory
