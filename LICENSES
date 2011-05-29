@@ -1389,6 +1389,9 @@ base/models/objects/construct/generator/generator.md2 | GNU General Public Licen
 base/models/objects/construct/generator/generator.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/construct/generator_big/generator.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/construct/generator_big/generator.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
+base/models/objects/construct/generator_vbig/generator.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/construct/generator_vbig/generator.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/construct/generator_vbig/generator_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/construct/mixer/mixer.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/construct/mixer/mixer.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/construct/workbench/workbench.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
@@ -1470,9 +1473,6 @@ base/models/objects/furniture/water_dispenser/waterk.jpg | GNU General Public Li
 base/models/objects/furniture/water_dispenser/waterk.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/gascylinder/gascylinder.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/gascylinder/gascylinder.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/generator/generator.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/generator/generator.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/generator/generator_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/heating/heating.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/heating/heating.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/hovercraft/hover_down.md2 | GNU General Public License 2.0 or later | Willem Sitters
