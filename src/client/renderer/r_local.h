@@ -74,6 +74,7 @@ extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_checkerror;
 extern cvar_t *r_showbox;
 extern cvar_t *r_shadows;
+extern cvar_t *r_stencilshadows;
 extern cvar_t *r_soften;
 extern cvar_t *r_modulate;
 extern cvar_t *r_drawbuffer;

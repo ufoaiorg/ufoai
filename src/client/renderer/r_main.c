@@ -75,6 +75,7 @@ cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
 cvar_t *r_shadows;
+cvar_t *r_stencilshadows;
 cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_swapinterval;
@@ -185,7 +186,7 @@ static inline void R_Clear (void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	/* clear the stencil bit if shadows are enabled */
-	if (r_shadows->value)
+	if (r_stencilshadows->integer)
 		glClear(GL_STENCIL_BUFFER_BIT);
 	R_CheckError();
 	glDepthFunc(GL_LEQUAL);
@@ -536,7 +537,8 @@ static void R_RegisterSystemVars (void)
 
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
-	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
+	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Multiplier for the alpha of the shadows");
+	r_stencilshadows = Cvar_Get("r_stencilshadows", "0", CVAR_ARCHIVE, "Activate or deactivate stencil shadows");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_R_IMAGES, "The maximum texture resolution UFO should use");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "GL_RGBA", CVAR_ARCHIVE, NULL);
