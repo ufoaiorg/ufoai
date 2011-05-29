@@ -518,7 +518,7 @@ void UI_MouseMove (int x, int y)
 	}
 }
 
-#define UI_IsMouseInvalidate (oldMousePosX == -1)
+#define UI_IsMouseInvalidate() (oldMousePosX == -1)
 
 /**
  * @brief Is called every time one clicks on a window/screen. Then checks if anything needs to be executed in the area of the click
@@ -530,7 +530,7 @@ void UI_MouseMove (int x, int y)
 static void UI_LeftClick (int x, int y)
 {
 	qboolean disabled;
-	if (UI_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate())
 		return;
 
 	/* send it to the captured mouse node */
@@ -570,7 +570,7 @@ static void UI_LeftClick (int x, int y)
 static void UI_RightClick (int x, int y)
 {
 	qboolean disabled;
-	if (UI_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate())
 		return;
 
 	/* send it to the captured mouse node */
@@ -598,7 +598,7 @@ static void UI_RightClick (int x, int y)
 static void UI_MiddleClick (int x, int y)
 {
 	qboolean disabled;
-	if (UI_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate())
 		return;
 
 	/* send it to the captured mouse node */
