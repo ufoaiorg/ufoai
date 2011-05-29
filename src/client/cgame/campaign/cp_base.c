@@ -1491,7 +1491,7 @@ void B_DrawBuilding (const building_t* building)
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
 		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%i c\n"), building->fixCosts);
 
-	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
+	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION || building->buildingStatus == B_STATUS_NOT_SET)
 		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), sizeof(buildingText));
 
 	if (building->varCosts)
