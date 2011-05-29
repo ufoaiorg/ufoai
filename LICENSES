@@ -6115,10 +6115,16 @@ radiant/prefabs/interceptors/inter_saracen.map | GNU General Public License 2.0
 radiant/prefabs/interceptors/inter_stiletto.map | GNU General Public License 2.0
 radiant/prefabs/machines/workbench.jpg | GNU General Public License 2.0 | MCR
 radiant/prefabs/machines/workbench.map | GNU General Public License 2.0 | MCR
+radiant/prefabs/misc/automat.jpg | GNU General Public License 2.0 | MCR
+radiant/prefabs/misc/automat.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/cliff.map | GNU General Public License 2.0
 radiant/prefabs/misc/shop/ware10.map | GNU General Public License 2.0
+radiant/prefabs/misc/sodamachine.jpg | GNU General Public License 2.0 | MCR
+radiant/prefabs/misc/sodamachine.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/trashbin001.jpg | GNU General Public License 2.0 or later | Nate Wright
 radiant/prefabs/misc/trashbin001.map | GNU General Public License 2.0 or later | Nate Wright
+radiant/prefabs/misc/waterdisp.jpg | GNU General Public License 2.0 | MCR
+radiant/prefabs/misc/waterdisp.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/office/whiteboard.map | GNU General Public License 2.0
 radiant/prefabs/pipes.map | GNU General Public License 2.0
 radiant/prefabs/trucks/military_truck2.map | GNU General Public License 2.0

@@ -1,0 +1,41 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 35.5 21.5 60 ) ( 35.5 1 60 ) ( -4.5 21.5 60 ) tex_common/weaponclip 9 0 0 0.5 0.5
+( 40 21.5 0.25 ) ( 0 21.5 0.25 ) ( 40 21.5 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 40 21.5 0.25 ) ( 40 21.5 0 ) ( 40 1 0.25 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 40 1 0 ) ( 0 21.5 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 0 1 0.25 ) ( 40 1 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 0 21.5 0 ) ( 0 1 0.25 ) tex_common/weaponclip 0 0 0 0.5 0.5
+}
+// brush 1
+{
+( 35.5 21.5 60 ) ( 35.5 1 60 ) ( -4.5 21.5 60 ) tex_common/actorclip 9 0 0 0.5 0.5
+( 40 21.5 0.25 ) ( 0 21.5 0.25 ) ( 40 21.5 0 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 40 21.5 0.25 ) ( 40 21.5 0 ) ( 40 1 0.25 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 40 1 0 ) ( 0 21.5 0 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 0 1 0.25 ) ( 40 1 0 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 0 21.5 0 ) ( 0 1 0.25 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 2
+{
+( 35.5 21.5 60 ) ( 35.5 1 60 ) ( -4.5 21.5 60 ) tex_common/lightclip 9 0 0 0.5 0.5
+( 40 21.5 0.25 ) ( 0 21.5 0.25 ) ( 40 21.5 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 40 21.5 0.25 ) ( 40 21.5 0 ) ( 40 1 0.25 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 40 1 0 ) ( 0 21.5 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 0 1 0.25 ) ( 40 1 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 1 0 ) ( 0 21.5 0 ) ( 0 1 0.25 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/furniture/automat/automat.md2"
+"origin" "20 12.5 0"
+"spawnflags" "255"
+"skin" "0"
+"angles" "0 -90 0"
+}
