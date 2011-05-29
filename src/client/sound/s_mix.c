@@ -127,7 +127,7 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 /**
  * @brief Adds a loop sample for e.g. ambient sounds
  */
-void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume, float attenuation)
+void S_LoopSample (const vec3_t org, s_sample_t *sample, float relVolume, float attenuation)
 {
 	s_channel_t *ch;
 	int i;
@@ -153,6 +153,8 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume, float att
 
 		VectorMix(ch->org, org, 1.0 / ch->count, ch->org);
 	} else {  /* or allocate a new one */
+		float volume;
+
 		if ((i = S_AllocChannel()) == -1)
 			return;
 
@@ -164,6 +166,8 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume, float att
 		ch->atten = attenuation;
 		ch->sample = sample;
 
+		volume = snd_volume->value * relVolume * MIX_MAX_VOLUME;
+		Mix_VolumeChunk(ch->sample->chunk, volume);
 		Mix_PlayChannel(i, ch->sample->chunk, 0);
 	}
 
