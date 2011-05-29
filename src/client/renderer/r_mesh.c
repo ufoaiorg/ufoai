@@ -554,7 +554,6 @@ static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 	R_EnableTexture(&texunit_diffuse, qfalse);
 	R_EnableBlend(qtrue);
 	R_RotateForMeshShadow(e);
-	glDepthRange(0.0, 0.999);
 	R_EnableStencilTest(qtrue);
 
 	if (lighting)
@@ -564,7 +563,6 @@ static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 		R_EnableLighting(program, qtrue);
 
 	R_EnableStencilTest(qfalse);
-	glDepthRange(0.0, 1.0);
 	R_RotateForMeshShadow(NULL);
 	R_EnableBlend(oldBlend);
 	R_EnableTexture(&texunit_diffuse, qtrue);
