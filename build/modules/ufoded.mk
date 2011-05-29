@@ -49,6 +49,7 @@ $(TARGET)_SRCS      = \
 	\
 	shared/bfd.c \
 	shared/byte.c \
+	shared/stringhunk.c \
 	shared/infostring.c \
 	shared/mathlib.c \
 	shared/mutex.c \

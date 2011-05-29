@@ -302,6 +302,7 @@ $(TARGET)_SRCS      = \
 	shared/mutex.c \
 	shared/utf8.c \
 	shared/images.c \
+	shared/stringhunk.c \
 	shared/infostring.c \
 	shared/parse.c \
 	shared/shared.c \

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/utf8.h"
 #include "../shared/shared.h"
 #include "../shared/infostring.h"
+#include "../shared/stringhunk.h"
 #include "../ports/system.h"
 #include "test_generic.h"
 
@@ -52,6 +53,37 @@ static int UFO_CleanSuiteGeneric (void)
 	TEST_Shutdown();
 	NET_Shutdown();
 	return 0;
+}
+
+static void STRHUNK_VisitorTestEntry (const char *string)
+{
+	CU_ASSERT_STRING_EQUAL(string, "Test");
+}
+
+static void testStringHunks (void)
+{
+	stringHunk_t *hunk = STRHUNK_Create(20);
+	STRHUNK_Add(hunk, "Test");
+	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 1);
+	CU_ASSERT_EQUAL(STRHUNK_Free(hunk), 15);
+	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
+	STRHUNK_Delete(&hunk);
+	CU_ASSERT_PTR_EQUAL(hunk, NULL);
+
+	hunk = STRHUNK_Create(23);
+	STRHUNK_Add(hunk, "Test");
+	STRHUNK_Add(hunk, "Test");
+	STRHUNK_Add(hunk, "Test");
+	STRHUNK_Add(hunk, "Test");
+	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 4);
+	CU_ASSERT_EQUAL(STRHUNK_Free(hunk), 0);
+	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
+
+	STRHUNK_Reset(hunk);
+	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 0);
+
+	STRHUNK_Delete(&hunk);
+	CU_ASSERT_PTR_EQUAL(hunk, NULL);
 }
 
 static void testConstInt (void)
@@ -438,6 +470,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
+	if (CU_ADD_TEST(GenericSuite, testStringHunks) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(GenericSuite, testConstInt) == NULL)
 		return CU_get_error();
 
