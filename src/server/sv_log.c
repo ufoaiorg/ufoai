@@ -31,6 +31,9 @@
 
 static threads_mutex_t *svLogMutex;
 static linkedList_t *logBuffer;
+static size_t svHunkSize = 32768;
+static char *svLogHunk;
+static char *svLogPos;
 
 /**
  * @brief Handle the log output from the main thread by reading the strings
@@ -44,6 +47,7 @@ void SV_LogHandleOutput (void)
 	LIST_Foreach(logBuffer, char, buf) {
 		Com_Printf("%s", buf);
 	}
+	svLogPos = svLogHunk;
 	LIST_Delete(&logBuffer);
 	TH_MutexUnlock(svLogMutex);
 }
@@ -59,20 +63,28 @@ void SV_LogHandleOutput (void)
 void SV_LogAdd (const char *format, va_list ap)
 {
 	char msg[1024];
+	size_t size;
+
 	Q_vsnprintf(msg, sizeof(msg), format, ap);
 
 	TH_MutexLock(svLogMutex);
-	LIST_AddString(&logBuffer, msg);
+	size = svHunkSize - (ptrdiff_t)(svLogPos - svLogHunk);
+	Q_strncpyz(svLogPos, msg, size);
+	LIST_AddPointer(&logBuffer, svLogPos);
+	svLogPos += strlen(msg) + 1;
 	TH_MutexUnlock(svLogMutex);
 }
 
 void SV_LogInit (void)
 {
 	svLogMutex = TH_MutexCreate("sv_log");
+	svLogHunk = Mem_Alloc(svHunkSize);
+	svLogPos = svLogHunk;
 }
 
 void SV_LogShutdown (void)
 {
 	TH_MutexDestroy(svLogMutex);
 	svLogMutex = NULL;
+	Mem_Free(svLogHunk);
 }
