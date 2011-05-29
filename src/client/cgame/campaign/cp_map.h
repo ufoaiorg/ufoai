@@ -73,7 +73,7 @@ qboolean MAP_MapClick(struct uiNode_s * node, int x, int y);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectUFO(aircraft_t* ufo);
-void MAP_SelectMission(mission_t* mission);
+mission_t* MAP_SelectMission(mission_t* mission);
 void MAP_NotifyMissionRemoved(const mission_t* mission);
 void MAP_NotifyUFORemoved(const aircraft_t* ufo, qboolean destroyed);
 void MAP_NotifyAircraftRemoved(const aircraft_t* aircraft);
