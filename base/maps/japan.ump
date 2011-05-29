@@ -391,6 +391,10 @@ http://ufoai.ninex.info:8010/builders/unittests/builds/244/steps/test%20MapDefTe
 */
 assembly big
 {
+seeds {
+	5585
+	1306651994
+}
 size "10 5"
 title         "_Harvester"
 +arc          "0 1"

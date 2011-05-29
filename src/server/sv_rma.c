@@ -324,6 +324,43 @@ static const char *SV_GetTileFromTileSet (const mapInfo_t *map, const char *file
 }
 
 /**
+ * @brief Parses a list of working seeds to assemble this rma assembly
+ * @param[in,out] map All we know about the map to assemble
+ * @param[in] filename The name of the .UMP file, used in error messages
+ * @param[out] a Pointer to the assembly to be initialized, must be allocated.
+ * @param[in] text The text of the ump file to parse
+ * @return @c true if it was parsed, @c false if not.
+ */
+static qboolean SV_ParseAssemblySeeds (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
+{
+	const char *errhead = "SV_ParseAssemblySeeds: Unexpected end of file (";
+	const char *token;
+
+	/* start parsing the block */
+	token = Com_EParse(text, errhead, filename);
+	if (!*text)
+		return qfalse;
+	if (*token != '{') {
+		Com_Printf("SV_ParseAssemblySeeds: Expected '{' for seed of assembly '%s' (%s)\n", a->id, filename);
+		return qfalse;
+	}
+
+	for (;;) {
+		token = Com_EParse(text, errhead, filename);
+		if (!*text || token[0] == '}')
+			break;
+
+		if (a->numSeeds < lengthof(a->seeds)) {
+			a->seeds[a->numSeeds++] = atoi(token);
+		} else {
+			Com_Printf("too many seeds for %s (%s) - ignore seed %s\n", a->id, filename, token);
+		}
+	}
+	Com_Printf("Parsed %i seeds for %s\n", a->numSeeds, a->id);
+	return qtrue;
+}
+
+/**
  * @brief Parses an assembly block
  * @param[in,out] map All we know about the map to assemble
  * @param[in] filename The name of the .UMP file, used in error messages
@@ -401,6 +438,10 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 
 			sscanf(token, "%i %i", &a->width, &a->height);
 			a->size = a->width * a->height;
+			continue;
+		} else if (Q_streq(token, "seeds")) {
+			if (!SV_ParseAssemblySeeds(map, filename, text, a))
+				return qfalse;
 			continue;
 		} else if (Q_streq(token, "grid")) {
 			/* get map size */
@@ -1440,7 +1481,7 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static void SV_AddMapTiles (mapInfo_t *map)
+static qboolean SV_AddMapTiles (mapInfo_t *map)
 {
 	int idx;	/* index in the array of available tiles */
 	int pos;	/* index in the array of random positions */
@@ -1473,7 +1514,7 @@ static void SV_AddMapTiles (mapInfo_t *map)
 				if (sv_threads->integer) {
 					if (SDL_SemValue(mapSem) != 1) {
 						/* someone else beat me to it */
-						return;
+						return qtrue;
 					}
 				}
 
@@ -1516,8 +1557,14 @@ static void SV_AddMapTiles (mapInfo_t *map)
 		} else {
 			/* no more retries */
 			if (start == map->numPlaced) {
-				Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s'\n",
-						map->name, mAsm->id ? mAsm->id : "");
+				if (mAsm->numSeeds == 0 || map->retryCnt > 2) {
+					Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s'\n",
+							map->name, mAsm->id ? mAsm->id : "");
+				} else {
+					Com_Printf("SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s' - retry with another seed\n",
+							map->name, mAsm->id ? mAsm->id : "");
+					return qfalse;
+				}
 			}
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
@@ -1532,6 +1579,8 @@ static void SV_AddMapTiles (mapInfo_t *map)
 			pos++;
 		}
 	}
+
+	return qtrue;
 }
 
 /**
@@ -1571,9 +1620,11 @@ static int SV_AssemblyThread (void* data)
 {
 	mapInfo_t *map = (mapInfo_t*) data;
 
-	srand(time(NULL));
+	Com_SetRandomSeed(time(NULL));
 
-	SV_AddMapTiles(map);
+	if (!SV_AddMapTiles(map)) {
+		map->retryCnt++;
+	}
 
 	/* the first thread to reach this point, gets the semaphore */
 	if (SDL_SemTryWait(mapSem) != 0)
@@ -1763,6 +1814,64 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 	FS_FreeFile(buf);
 }
 
+static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *asmMap, char *asmPos)
+{
+	int i;
+	mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+
+	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
+
+	/* check size */
+	assert(mAsm->width <= MAX_RANDOM_MAP_WIDTH);
+	assert(mAsm->height <= MAX_RANDOM_MAP_HEIGHT);
+
+	SV_PrepareTilesToPlace(map);
+
+	/* assemble the map */
+	map->numPlaced = 0;
+	SV_ClearMap(map);
+
+	/* place fixed parts - defined in ump via fix parameter */
+	for (i = 0; i < mAsm->numFixed; i++)
+		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
+
+	if (sv_threads->integer) {
+		int oldCount = map->retryCnt;
+		if (SV_ParallelSearch(map) < 0) {
+			if (oldCount < map->retryCnt && mAsm->numSeeds > 0) {
+				/* if we are allowed to restart the search with a fixed seed
+				 * from the assembly definition, do so */
+				Com_SetRandomSeed(mAsm->seeds[rand() % mAsm->numSeeds]);
+				return SV_DoMapAssemble(map, assembly, asmMap, asmPos);
+			}
+			Mem_Free(map);
+			return NULL;
+		}
+	} else {
+		if (!SV_AddMapTiles(map)) {
+			map->retryCnt++;
+			if (mAsm->numSeeds > 0) {
+				/* if we are allowed to restart the search with a fixed seed
+				 * from the assembly definition, do so */
+				Com_SetRandomSeed(mAsm->seeds[rand() % mAsm->numSeeds]);
+				return SV_DoMapAssemble(map, assembly, asmMap, asmPos);
+			}
+			return NULL;
+		}
+	}
+
+	/* prepare map and pos strings */
+	if (map->basePath[0])
+		Com_sprintf(asmMap, sizeof(map->basePath) + 1, "-%s", map->basePath);
+
+	asmPos[0] = 0;
+
+	/* generate the strings */
+	SV_PrintMapStrings(map, asmMap, asmPos);
+
+	return map;
+}
+
 /**
  * @brief Assembles a "random" map
  * and parses the *.ump files for assembling the "random" maps and places the 'fixed' tiles.
@@ -1783,8 +1892,6 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
  */
 mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos)
 {
-	int i;
-	mAssembly_t *mAsm;
 	mapInfo_t *map;
 
 	map = Mem_AllocType(mapInfo_t);
@@ -1795,14 +1902,14 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
-		Com_Error(ERR_DROP, "No map tiles defined (%s)!", name);
+		Com_Error(ERR_DROP, "No map tiles defined (%s)!", map->name);
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", map->numTiles);
 #endif
 
 	if (!map->numAssemblies)
-		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", name);
+		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", map->name);
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", map->numAssemblies);
@@ -1813,6 +1920,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 
 	/* overwrite with specified, if any */
 	if (assembly && assembly[0]) {
+		int i;
 		for (i = 0; i < map->numAssemblies; i++)
 			if (Q_streq(assembly, map->mAssembly[i].id)) {
 				map->mAsm = i;
@@ -1823,41 +1931,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 		}
 	}
 
-	mAsm = &map->mAssembly[map->mAsm];
-
-	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
-
-	/* check size */
-	assert(mAsm->width <= MAX_RANDOM_MAP_WIDTH);
-	assert(mAsm->height <= MAX_RANDOM_MAP_HEIGHT);
-
-	SV_PrepareTilesToPlace(map);
-
-	/* assemble the map */
-	map->numPlaced = 0;
-	SV_ClearMap(map);
-
-	/* place fixed parts - defined in ump via fix parameter */
-	for (i = 0; i < mAsm->numFixed; i++)
-		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
-
-	if (sv_threads->integer) {
-		if (SV_ParallelSearch(map) < 0) {
-			Mem_Free(map);
-			return NULL;
-		}
-	} else {
-		SV_AddMapTiles(map);
-	}
-
-	/* prepare map and pos strings */
-	if (map->basePath[0])
-		Com_sprintf(asmMap, sizeof(map->basePath) + 1, "-%s", map->basePath);
-
-	asmPos[0] = 0;
-
-	/* generate the strings */
-	SV_PrintMapStrings(map, asmMap, asmPos);
+	SV_DoMapAssemble(map, assembly, asmMap, asmPos);
 
 	return map;
 }
