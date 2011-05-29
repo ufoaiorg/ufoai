@@ -5,16 +5,16 @@
 // brush 0
 {
 ( 128 96 0 ) ( 192 96 0 ) ( 128 320 0 ) tex_common/actorclip 0 4 0 0.5 0.5 65536 0 0
-( 398 110 62 ) ( 398 118 62 ) ( 406 118 62 ) tex_common/actorclip 0 4 0 0.5 0.5 65536 0 0
+( 398 110 94 ) ( 398 118 94 ) ( 406 118 94 ) tex_common/actorclip 0 4 0 0.5 0.5 65536 0 0
 ( 128 96 0 ) ( 128 96 32 ) ( 192 96 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( 416 110 128 ) ( 416 118 128 ) ( 416 118 0 ) tex_common/actorclip 12 0 0 0.5 0.5 65536 0 0
-( 36 128 40 ) ( 0 128 40 ) ( 0 128 4 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 36 128 72 ) ( 0 128 72 ) ( 0 128 36 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( 384 118 128 ) ( 384 110 128 ) ( 384 110 0 ) tex_common/actorclip 12 0 0 0.5 0.5 65536 0 0
 }
 // brush 1
 {
 ( 128 96 0 ) ( 192 96 0 ) ( 128 320 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 316 320 52 ) ( 316 352 52 ) ( 348 352 52 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 316 320 84 ) ( 316 352 84 ) ( 348 352 84 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( 64 160 120 ) ( 96 160 120 ) ( 96 160 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( 96 64 20 ) ( 96 128 20 ) ( 96 128 12 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( 96 192 120 ) ( 64 192 120 ) ( 64 192 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
@@ -409,12 +409,12 @@
 }
 // brush 41
 {
-( 128 96 0 ) ( 192 96 0 ) ( 128 320 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 316 320 52 ) ( 316 352 52 ) ( 348 352 52 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 64 288 120 ) ( 96 288 120 ) ( 96 288 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 96 64 20 ) ( 96 128 20 ) ( 96 128 12 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 192 320 32 ) ( 128 320 32 ) ( 192 320 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 64 512 40 ) ( 64 448 40 ) ( 64 448 4 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 128 64 0 ) ( 192 64 0 ) ( 128 288 0 ) tex_common/actorclip 0 -0 0 0.5 0.5 65536 0 0
+( 316 288 84 ) ( 316 320 84 ) ( 348 320 84 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 64 256 120 ) ( 96 256 120 ) ( 96 256 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 96 32 20 ) ( 96 96 20 ) ( 96 96 12 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 192 288 32 ) ( 128 288 32 ) ( 192 288 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 64 480 40 ) ( 64 416 40 ) ( 64 416 4 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 }
 // brush 42
 {
@@ -1702,7 +1702,7 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"origin" "98 298 117"
+"origin" "98 266 117"
 "target" "misc_model1"
 "tag" "tag_top"
 }
@@ -1711,7 +1711,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm1.md2"
-"origin" "84 304 32"
+"origin" "84 272 32"
 "anim" "moving3"
 "targetname" "misc_model1"
 }
