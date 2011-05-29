@@ -197,6 +197,7 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 	/* if we are building */
 	if (ccs.baseAction == BA_NEWBUILDING) {
 		int y, x;
+		int xCoord, yCoord, widthRect, heigthRect;
 		vec2_t pos;
 
 		assert(base->buildingCurrent);
@@ -209,7 +210,11 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 		}
 
 		UI_GetNodeAbsPos(node, pos);
-		R_DrawRect(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), base->buildingCurrent->size[0] * width, base->buildingCurrent->size[1] * (height - BASE_IMAGE_OVERLAY), white, 3, 1);
+		xCoord = pos[0] + col * width;
+		yCoord = pos[1] + row * (height - BASE_IMAGE_OVERLAY);
+		widthRect = base->buildingCurrent->size[0] * width;
+		heigthRect = base->buildingCurrent->size[1] * (height - BASE_IMAGE_OVERLAY);
+		R_DrawRect(xCoord, yCoord, widthRect, heigthRect, white, 3, 1);
 	}
 }
 
