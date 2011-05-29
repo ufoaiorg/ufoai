@@ -676,6 +676,8 @@ void SV_InitGameProgs (void)
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;
 
+	Com_Printf("setting game random seed to %i\n", import.seed);
+
 	/* import the server routing table */
 	import.routingMap = sv->mapData.map;
 

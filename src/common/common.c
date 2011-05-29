@@ -977,6 +977,11 @@ void Com_WriteConfigToFile (const char *filename)
 	Com_Printf("Wrote %s.\n", filename);
 }
 
+void Com_SetRandomSeed (unsigned int seed)
+{
+	srand(seed);
+	Com_Printf("setting random seed to %i\n", seed);
+}
 
 /**
  * @brief Write the config file to a specific name
@@ -1029,7 +1034,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Sys_InitSignals();
 
 	/* random seed */
-	srand(time(NULL));
+	Com_SetRandomSeed(time(NULL));
 
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system for commands and enums");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");

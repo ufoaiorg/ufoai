@@ -53,6 +53,8 @@ typedef struct mTileSet_s {
 	int numTiles;
 } mTileSet_t;
 
+#define MAX_ASSEMBLY_SEEDS 32
+
 /**
  * @brief Stores the parsed data of an assembly definition.
  * See *.ump files
@@ -75,6 +77,9 @@ typedef struct mAssembly_s {
 				 * This can speed up the assembly of a map if you e.g. only have tiles of the size 2x2 you
 				 * can greatly improve the performance if you also set the grid parameter to "2 2" - this will
 				 * only check every 2 random map units for a suitable maptile. */
+	int seeds[MAX_ASSEMBLY_SEEDS]; /**< seeds that are used to assemble this assembly definition if the previous used
+				* seed did not lead to a solution. The seeds given in the seeds block of the assembly are known to work. */
+	int numSeeds;
 } mAssembly_t;
 
 /**
@@ -126,6 +131,8 @@ typedef struct mapInfo_s {
 	char inheritBasePath[MAX_QPATH];			/**< only used during parsing, don't rely on any reasonable data after the parsing stage */
 
 	int mAsm;									/**< the index of the selected assembly */
+
+	int retryCnt;								/**< amount of retries in case the assembly didn't assemble and we are using the defined seeds */
 } mapInfo_t;
 
 mapInfo_t* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos);

@@ -231,6 +231,7 @@ void Cvar_WriteVariables(qFILE *f);
 
 int Com_ServerState(void);
 void Com_SetServerState(int state);
+void Com_SetRandomSeed(unsigned int seed);
 
 #include "md4.h"
 char *Com_MD5File(const char *fn, int length);

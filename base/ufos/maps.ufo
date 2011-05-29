@@ -1827,7 +1827,7 @@ mapdef japan_small
 mapdef japan_big
 {
 	map			"+japan"
-	param		"small" // TODO: the big assembly is broken
+	param		"big"
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
