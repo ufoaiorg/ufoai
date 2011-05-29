@@ -216,7 +216,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			CL_DisplayPopupInterceptMission(mission);
 			return;
 		}
-		MAP_SelectMission(MAP_GetMissionByIDX(id));
+		mission = MAP_SelectMission(MAP_GetMissionByIDX(id));
 		if (multiSelection) {
 			/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
 			CL_DisplayPopupInterceptMission(mission);
@@ -2067,15 +2067,18 @@ void MAP_SelectAircraft (aircraft_t* aircraft)
 }
 
 /**
- * @brief Selected the specified mission
+ * @brief Select the specified mission
+ * @param[in] mission Pointer to the mission to select
+ * @return pointer to the selected mission
  */
-void MAP_SelectMission (mission_t* mission)
+mission_t* MAP_SelectMission (mission_t* mission)
 {
 	if (!mission || MAP_IsMissionSelected(mission))
-		return;
+		return MAP_GetSelectedMission();
 	MAP_ResetAction();
 	ccs.mapAction = MA_INTERCEPT;
 	MAP_SetSelectedMission(mission);
+	return MAP_GetSelectedMission();
 }
 
 /**
