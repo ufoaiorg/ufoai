@@ -254,6 +254,7 @@ le_t *LE_Find(entity_type_t type, const pos3_t pos);
 le_t *LE_FindRadius(le_t *from, const vec3_t org, float rad, entity_type_t type);
 le_t *LE_GetFromPos(const pos3_t pos);
 void LE_PlaceItem(le_t *le);
+qboolean LE_TriggerRescueAdd(le_t *le, entity_t * ent);
 void LE_Cleanup(void);
 void LE_AddToScene(void);
 void LE_CenterView(const le_t *le);
