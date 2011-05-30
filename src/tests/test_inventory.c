@@ -330,6 +330,36 @@ static void testItemMassActions (void)
 	}
 }
 
+static void testItemToHeadgear (void)
+{
+	inventory_t inv;
+	objDef_t *od;
+	invDef_t *container;
+	item_t item;
+
+	ResetInventoryList();
+
+	OBJZERO(inv);
+
+	od = INVSH_GetItemByIDSilent("irgoggles");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+
+	container = INVSH_GetInventoryDefinitionByID("headgear");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
+
+	item.t = od;
+	item.m = NULL;
+	item.a = 0;
+
+	CU_ASSERT_FALSE(INVSH_ExistsInInventory(&inv, container, &item));
+
+	CU_ASSERT_PTR_NOT_NULL(i.AddToInventory(&i, &inv, &item, container, NONE, NONE, 1));
+
+	CU_ASSERT_TRUE(INVSH_ExistsInInventory(&inv, container, &item));
+
+	CU_ASSERT_PTR_NULL(i.AddToInventory(&i, &inv, &item, container, NONE, NONE, 1));
+}
+
 int UFO_AddInventoryTests (void)
 {
 	/* add a suite to the registry */
@@ -347,6 +377,8 @@ int UFO_AddInventoryTests (void)
 	if (CU_ADD_TEST(InventorySuite, testItemMassActions) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(InventorySuite, testItemReload) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(InventorySuite, testItemToHeadgear) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
