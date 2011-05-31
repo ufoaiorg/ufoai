@@ -126,8 +126,15 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 {
 	const mAliasAnim_t *anim;
 
-	if (!mod || !mod->alias.num_anims)
+	if (!mod) {
+		Com_Printf("R_AnimChange: No model given (%s)\n", name);
 		return;
+	}
+
+	if (!mod->alias.num_anims) {
+		Com_Printf("R_AnimChange: Model with no animations (%s) (model: %s)\n", name, mod->name);
+		return;
+	}
 
 	/* get animation */
 	anim = R_AnimGet(mod, name);
