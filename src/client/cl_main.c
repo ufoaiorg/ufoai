@@ -835,6 +835,11 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no description\n", name);
 		cls.numMDs--;
 	}
+
+	if (md->maxAliens <= 0) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with invalid maxAlien value\n", name);
+		cls.numMDs--;
+	}
 }
 
 /**
