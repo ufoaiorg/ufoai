@@ -3290,6 +3290,7 @@ mapdef lake_ice_big
 	multiplayer		true
 	teams			3
 	description		"_A small settlement in winter."
+	maxaliens		16 //TODO: This is an arbitrary value right now.
 	gametypes {
 		1on1
 		1on1on1
