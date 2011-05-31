@@ -314,6 +314,26 @@ static void SVCmd_ActorInvList_f (void)
 		G_InvList_f(player);
 	}
 }
+
+static void SVCmd_ListEdicts_f (void)
+{
+	edict_t *ent = NULL;
+	int i = 0;
+	Com_Printf("number | entnum | type | inuse | pnum | team | size |  HP | state | model/ptl\n");
+	while ((ent = G_EdictsGetNext(ent))) {
+		Com_Printf(
+				"#%5i | #%5i | %4i | %5i | %4i | %4i | %4i | %3i | %5i | ",
+				i, ent->number, ent->type, ent->inuse, ent->pnum,
+				ent->team, ent->fieldSize, ent->HP, ent->state);
+		if (ent->type == ET_PARTICLE)
+			Com_Printf("%s\n", ent->particle);
+		else if (ent->model)
+			Com_Printf("%s\n", ent->model);
+		else
+			Com_Printf("no mdl\n");
+		i++;
+	}
+}
 #endif
 
 /**
@@ -346,6 +366,8 @@ void G_ServerCommand (void)
 		SVCmd_AddItem_f();
 	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
 		SVCmd_ActorInvList_f();
+	else if (Q_strcasecmp(cmd, "debug_listedicts") == 0)
+		SVCmd_ListEdicts_f();
 #endif
 	else
 		gi.DPrintf("Unknown server command \"%s\"\n", cmd);
