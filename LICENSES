@@ -4951,9 +4951,11 @@ base/textures/tex_material/metall010a_nm.png | GNU General Public License 2.0 or
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
 base/textures/tex_material/metall011_nm.png | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
 base/textures/tex_material/red_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_material/s_wood001.png | Public Domain | FWishbringer
 base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/window_grey.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/wood001.png | Public Domain | FWishbringer
 base/textures/tex_material/wood002.png | GNU General Public License 2.0 | Nexuiz GPLed Data; MCR
 base/textures/tex_material/wood002_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data; MCR
 base/textures/tex_material/wood004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
