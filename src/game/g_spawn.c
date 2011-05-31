@@ -314,7 +314,6 @@ static void G_FindEdictGroups (void)
  */
 void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 {
-	edict_t *ent;
 	int entnum;
 
 	G_FreeTags(TAG_LEVEL);
@@ -329,7 +328,6 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 
 	G_ResetClientData();
 
-	ent = NULL;
 	level.activeTeam = TEAM_NO_ACTIVE;
 	level.actualRound = 1;
 	level.hurtAliens = sv_hurtaliens->integer;
@@ -338,6 +336,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	/* parse ents */
 	entnum = 0;
 	while (1) {
+		edict_t *ent;
 		/* parse the opening brace */
 		const char *token = Com_Parse(&entities);
 		if (!entities)
@@ -345,10 +344,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 		if (token[0] != '{')
 			gi.Error("ED_LoadFromFile: found %s when expecting {", token);
 
-		if (!ent)
-			ent = G_EdictsGetFirst();
-		else
-			ent = G_Spawn();
+		ent = G_Spawn();
 
 		entities = ED_ParseEdict(entities, ent);
 
