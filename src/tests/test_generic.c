@@ -461,6 +461,27 @@ static void testNetResolv (void)
 	CU_ASSERT_STRING_EQUAL(ipServer, "127.0.0.1");
 }
 
+static void testUnsignedIntToBinary (void)
+{
+	const char *buf = Com_UnsignedIntToBinary(3);
+	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 00000000 00000011");
+
+	buf = Com_UnsignedIntToBinary(255);
+	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 00000000 11111111");
+
+	buf = Com_UnsignedIntToBinary(65536);
+	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000001 00000000 00000000");
+
+	buf = Com_UnsignedIntToBinary(65535);
+	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 11111111 11111111");
+
+	buf = Com_ByteToBinary(2);
+	CU_ASSERT_STRING_EQUAL(buf, "00000010");
+
+	buf = Com_ByteToBinary(255);
+	CU_ASSERT_STRING_EQUAL(buf, "11111111");
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -507,6 +528,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testNetResolv) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testUnsignedIntToBinary) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
