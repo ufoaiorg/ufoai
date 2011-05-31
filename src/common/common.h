@@ -232,6 +232,8 @@ void Cvar_WriteVariables(qFILE *f);
 int Com_ServerState(void);
 void Com_SetServerState(int state);
 void Com_SetRandomSeed(unsigned int seed);
+const char* Com_UnsignedIntToBinary(uint32_t x);
+const char* Com_ByteToBinary(byte x);
 
 #include "md4.h"
 char *Com_MD5File(const char *fn, int length);
