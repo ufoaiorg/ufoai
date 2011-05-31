@@ -319,12 +319,12 @@ static void SVCmd_ListEdicts_f (void)
 {
 	edict_t *ent = NULL;
 	int i = 0;
-	Com_Printf("number | entnum | type | inuse | pnum | team | size |  HP | state | model/ptl\n");
+	Com_Printf("number | entnum | mapnum | type | inuse | pnum | team | size |  HP | state | classname      | model/ptl\n");
 	while ((ent = G_EdictsGetNext(ent))) {
 		Com_Printf(
-				"#%5i | #%5i | %4i | %5i | %4i | %4i | %4i | %3i | %5i | ",
-				i, ent->number, ent->type, ent->inuse, ent->pnum,
-				ent->team, ent->fieldSize, ent->HP, ent->state);
+				"#%5i | #%5i | #%5i | %4i | %5i | %4i | %4i | %4i | %3i | %5i | %14s | ",
+				i, ent->number, ent->mapNum, ent->type, ent->inuse, ent->pnum,
+				ent->team, ent->fieldSize, ent->HP, ent->state, ent->classname);
 		if (ent->type == ET_PARTICLE)
 			Com_Printf("%s\n", ent->particle);
 		else if (ent->model)
