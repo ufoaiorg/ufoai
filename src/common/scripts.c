@@ -24,6 +24,7 @@
 #include "scripts.h"
 #include "../shared/parse.h"
 #include "../game/inventory.h"
+#include "../client/cl_screen.h"
 
 #define CONSTNAMEINT_HASH_SIZE	32
 
@@ -268,6 +269,11 @@ void Com_RegisterConstList (const constListEntry_t constList[])
 		Com_RegisterConstInt(constList[i].name, constList[i].value);
 }
 
+/* Parsing .ufo scripts on Android is awfully slow, so we're drawing progress bar here,
+   progressTotal is an approximated current value */
+static qboolean updateProgress = qfalse;
+static int progressCurrent = 0;
+static int progressTotal = 70000;
 /**
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
@@ -275,6 +281,12 @@ void Com_RegisterConstList (const constListEntry_t constList[])
 const char *Com_EParse (const char **text, const char *errhead, const char *errinfo)
 {
 	const char *token;
+
+	if (updateProgress) {
+		progressCurrent ++;
+		if (progressCurrent % 2000 == 0)
+			SCR_DrawPrecacheScreen(qfalse, qfalse, min(progressCurrent * 30 / progressTotal, 30));
+	}
 
 	token = Com_Parse(text);
 	if (!*text) {
@@ -3240,6 +3252,8 @@ void Com_ParseScripts (qboolean onlyServer)
 	const char *type, *name, *text;
 
 	Com_Printf("\n----------- parse scripts ----------\n");
+	SCR_DrawPrecacheScreen(qfalse, qfalse, 0);
+	updateProgress = qtrue;
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
@@ -3312,6 +3326,8 @@ void Com_ParseScripts (qboolean onlyServer)
 	Com_Printf("...%3i equipment definitions parsed\n", csi.numEDs);
 	Com_Printf("...%3i inventory definitions parsed\n", csi.numIDs);
 	Com_Printf("...%3i team definitions parsed\n", csi.numTeamDefs);
+
+	updateProgress = qfalse;
 }
 
 int Com_GetScriptChecksum (void)

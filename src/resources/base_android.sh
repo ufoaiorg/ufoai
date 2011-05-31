@@ -14,6 +14,7 @@ mv -f downsampledimages-1.txt base_full/downsampledimages.txt
 
 cd base_light
 cp -f ../base/android.cfg config.cfg
+cp -f ufos/android/* ufos
 zip -r -n .png:.jpg:.ogg:.ogm ../0music.pk3 sound
 rm -rf sound
 zip -r -n .png:.jpg:.ogg:.ogm ../0base.pk3 *

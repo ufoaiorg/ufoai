@@ -93,15 +93,17 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  * @param[in] string Draw the loading string - if the scripts are not parsed, this is
  * not possible, so use qfalse for very early calls
  */
-void SCR_DrawPrecacheScreen (qboolean string, int percent)
+void SCR_DrawPrecacheScreen (qboolean string, qboolean drawImage, int percent)
 {
 	const image_t *image;
 
 	R_BeginFrame();
 
-	image = R_FindImage("pics/background/loading", it_pic);
-	if (image)
-		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
+	if (drawImage) {
+		image = R_FindImage("pics/background/loading", it_pic);
+		if (image)
+			R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
+	}
 	if (string) {
 		/* Not used with gettext because it would make removing it too easy. */
 		UI_DrawString("f_menubig", ALIGN_UC,

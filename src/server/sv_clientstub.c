@@ -89,4 +89,8 @@ void Key_Init (void)
 	Cmd_AddCommand("bind", Cmd_Dummy_f, NULL);
 }
 
+void SCR_DrawPrecacheScreen (qboolean string, qboolean drawImage, int percent)
+{
+}
+
 #endif

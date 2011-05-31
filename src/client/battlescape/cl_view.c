@@ -130,7 +130,7 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 	char model[MAX_QPATH];
 	const char *path;
 	linkedList_t *list;
-	const float percent = 55.0f;
+	const float percent = 40.0f;
 
 	if (!cl_precache->integer)
 		return 0;
@@ -165,7 +165,7 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 				list = list->next;
 
 				alreadyLoadedPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
-				SCR_DrawPrecacheScreen(qtrue, alreadyLoadedPercent);
+				SCR_DrawPrecacheScreen(qtrue, qtrue, alreadyLoadedPercent);
 			}
 		}
 	/* some genders may not have models - ensure that we do the wanted percent step */
@@ -178,8 +178,8 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 void CL_ViewPrecacheModels (void)
 {
 	int i;
-	float percent = 40.0f;
-	float alreadyLoadedPercent = 5.0f;
+	float percent = 30.0f;
+	float alreadyLoadedPercent = 30.0f;
 	float loaded;
 
 	loaded = CL_PrecacheCharacterModels(alreadyLoadedPercent);
@@ -191,7 +191,7 @@ void CL_ViewPrecacheModels (void)
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 
 		alreadyLoadedPercent += percent / csi.numODs;
-		SCR_DrawPrecacheScreen(qtrue, alreadyLoadedPercent);
+		SCR_DrawPrecacheScreen(qtrue, qtrue, alreadyLoadedPercent);
 
 		if (od->type[0] == '\0' || od->isDummy)
 			continue;
@@ -207,7 +207,7 @@ void CL_ViewPrecacheModels (void)
 	 * otherwise they would be freed with every map change */
 	R_SwitchModelMemPoolTag();
 
-	SCR_DrawPrecacheScreen(qfalse, 100.f);
+	SCR_DrawPrecacheScreen(qfalse, qtrue, 100.f);
 }
 
 /**
