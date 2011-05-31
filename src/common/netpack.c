@@ -31,23 +31,27 @@ const vec3_t bytedirs[] = {
 void NET_WriteChar (struct dbuffer *buf, char c)
 {
 	dbuffer_add(buf, &c, 1);
+	Com_DPrintf(DEBUG_EVENTSYS, "char event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
 void NET_WriteByte (struct dbuffer *buf, byte c)
 {
 	dbuffer_add(buf, (char *)&c, 1);
+	Com_DPrintf(DEBUG_EVENTSYS, "byte event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
 void NET_WriteShort (struct dbuffer *buf, int c)
 {
 	unsigned short v = LittleShort(c);
 	dbuffer_add(buf, (char *)&v, 2);
+	Com_DPrintf(DEBUG_EVENTSYS, "short event data: %i\n", c);
 }
 
 void NET_WriteLong (struct dbuffer *buf, int c)
 {
 	int v = LittleLong(c);
 	dbuffer_add(buf, (char *)&v, 4);
+	Com_DPrintf(DEBUG_EVENTSYS, "long event data: %i\n", c);
 }
 
 void NET_WriteString (struct dbuffer *buf, const char *str)
@@ -56,12 +60,15 @@ void NET_WriteString (struct dbuffer *buf, const char *str)
 		dbuffer_add(buf, "", 1);
 	else
 		dbuffer_add(buf, str, strlen(str) + 1);
+	Com_DPrintf(DEBUG_EVENTSYS, "string event data: %s\n", str);
 }
 
 void NET_WriteRawString (struct dbuffer *buf, const char *str)
 {
-	if (str)
+	if (str) {
 		dbuffer_add(buf, str, strlen(str));
+		Com_DPrintf(DEBUG_EVENTSYS, "string raw event data: %s\n", str);
+	}
 }
 
 void NET_WriteCoord (struct dbuffer *buf, float f)

@@ -349,7 +349,7 @@ static void SV_EndEvents (void)
 static void SV_AddEvent (unsigned int mask, int eType)
 {
 	pending_event_t *p = &sv->pendingEvent;
-	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %i)\n", eType, mask);
+	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %s)\n", eType, Com_UnsignedIntToBinary(mask));
 
 	/* finish the last event */
 	if (p->pending)
