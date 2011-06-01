@@ -357,16 +357,41 @@ team bloodspider
 
 	names {
 		neutral {
-			"Bloodspider"
+			"BS/X"
+			"BS/Z"
+			"BS/A"
+			"BS/V"
+			"BS/W"
+			"BS/U"
+			"BS/P"
+			"BS/Q"
+			"BS/S"
+			"BS/R"
+			"BS/T"
+			"BS/M"
 		}
 		lastname {
-			"Bloodspider"
+			"000.1100"
+			"001.1100"
+			"010.1100"
+			"011.1100"
+			"100.1100"
+			"101.1100"
+			"110.1100"
+			"111.1100"
+			"000.1101"
+			"001.1101"
+			"010.1101"
+			"011.1101"
 		}
 	}
 
 	models {
 		neutral {
 			aliens/bloodspider bloodspider head 0
+			aliens/bloodspider bloodspider head 1
+			aliens/bloodspider bloodspider head 2
+			aliens/bloodspider bloodspider head 3
 		}
 	}
 
