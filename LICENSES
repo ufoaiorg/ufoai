@@ -1525,8 +1525,6 @@ base/models/objects/money/money.png | GNU General Public License 2.0 or later | 
 base/models/objects/money/moneycase.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/oiltank/oiltank.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/oiltank/oiltank.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/pharaoh/pharaoh.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/pharaoh/pharaoh.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/pushcart/pushcart.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/pushcart/pushcart.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/rail/rail.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1583,6 +1581,8 @@ base/models/objects/snowman/snowman.md2 | GNU General Public License 2.0 or late
 base/models/objects/spiral/spiral.png | GNU General Public License 2.0 or later | Origin
 base/models/objects/spiral/spiral_large.md2 | GNU General Public License 2.0 or later | Origin
 base/models/objects/spiral/spiral_small.md2 | GNU General Public License 2.0 or later | Origin
+base/models/objects/statues/pharaoh/pharaoh.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/statues/pharaoh/pharaoh.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/store/box.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/store/box.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/store/pellet.md2 | GNU General Public License 2.0 or later | Willem Sitters
