@@ -808,21 +808,6 @@ static objDef_t *LE_BiggestItem (const invList_t *ic)
 	return max;
 }
 
-qboolean LE_TriggerRescueAdd (le_t *le, entity_t * ent)
-{
-	/**
-	 * @todo RF_BOX is not the best to render this
-	 */
-	ent->flags = RF_BOX;
-	VectorSet(ent->color, 1, 1, 0);
-	ent->alpha = 0.2;
-	VectorCopy(le->mins, ent->mins);
-	VectorCopy(le->maxs, ent->maxs);
-	R_EntitySetOrigin(ent, le->origin);
-
-	return qtrue;
-}
-
 /**
  * @sa CL_BiggestItem
  * @param[in] le The local entity (ET_ITEM) with the floor container
@@ -935,6 +920,17 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		break;
 	case ET_BREAKABLE:
 		break;
+	case ET_TRIGGER_RESCUE: {
+		/**
+		 * @todo RF_BOX is not the best to render this
+		 */
+		ent->flags = RF_BOX;
+		ent->alpha = 0.2;
+		ent->model = NULL;
+		VectorCopy(le->mins, ent->mins);
+		VectorCopy(le->maxs, ent->maxs);
+		VectorSet(ent->color, 1, 1, 0);
+	}
 	default:
 		break;
 	}

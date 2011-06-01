@@ -68,7 +68,6 @@ static void SP_worldspawn(const localEntityParse_t *entData);
 static void SP_misc_model(const localEntityParse_t *entData);
 static void SP_misc_particle(const localEntityParse_t *entData);
 static void SP_misc_sound(const localEntityParse_t *entData);
-static void SP_trigger_rescue(const localEntityParse_t *entData);
 static void SP_light(const localEntityParse_t *entData);
 
 typedef struct {
@@ -81,7 +80,6 @@ static const spawn_t spawns[] = {
 	{"misc_model", SP_misc_model},
 	{"misc_particle", SP_misc_particle},
 	{"misc_sound", SP_misc_sound},
-	{"trigger_rescue", SP_trigger_rescue},
 	{"light", SP_light},
 
 	{NULL, NULL}
@@ -293,25 +291,6 @@ static void SP_misc_sound (const localEntityParse_t *entData)
 	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume, entData->attenuation);
-}
-
-static void SP_trigger_rescue (const localEntityParse_t *entData)
-{
-	le_t *le;
-	const cBspModel_t *cModel;
-
-	le = LE_Add(0);
-	if (!le) {
-		Com_Printf("Could not add %s entity\n", entData->classname);
-		return;
-	}
-	le->type = ET_TRIGGER_RESCUE;
-	le->invis = qfalse;
-	VectorCopy(entData->origin, le->origin);
-	cModel = CM_InlineModel(cl.mapTiles, entData->model);
-	VectorCopy(cModel->mins, le->mins);
-	VectorCopy(cModel->maxs, le->maxs);
-	le->addFunc = LE_TriggerRescueAdd;
 }
 
 /**

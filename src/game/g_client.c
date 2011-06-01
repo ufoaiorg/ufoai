@@ -233,6 +233,10 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 			G_EventSendParticle(playerMask, check);
 			break;
 
+		case ET_TRIGGER_RESCUE:
+			G_EventAddBrushModel(playerMask, check);
+			break;
+
 		default:
 			if (G_IsVisibleOnBattlefield(check))
 				gi.Error("Missing edict type %i in G_AppearPerishEvent", check->type);
