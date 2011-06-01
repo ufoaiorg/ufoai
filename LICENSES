@@ -6119,6 +6119,10 @@ radiant/bitmaps/texwindow_uniformsize.png |  | orbweaver (commiter in darkradian
 radiant/prefabs/dropships/drop_firebird.map | GNU General Public License 2.0
 radiant/prefabs/household/bookshelf.jpg | GNU General Public License 2.0 | Nate Wright
 radiant/prefabs/household/bookshelf.map | GNU General Public License 2.0 | Nate Wright
+radiant/prefabs/household/chair9.jpg | GNU General Public License 2.0 | MCR
+radiant/prefabs/household/chair9.map | GNU General Public License 2.0 | MCR
+radiant/prefabs/household/chair_exec.jpg | GNU General Public License 2.0 | MCR
+radiant/prefabs/household/chair_exec.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/household/living_room/armchair2.jpg | GNU General Public License 2.0 | MCR
 radiant/prefabs/household/living_room/armchair2.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/household/living_room/armchair3.jpg | GNU General Public License 2.0 | MCR
