@@ -121,17 +121,15 @@ player_t* G_PlayerGetNextActiveAI (player_t* lastPlayer)
 unsigned int G_TeamToPM (int team)
 {
 	player_t *p;
-	unsigned int playerMask, i;
+	unsigned int playerMask;
 
 	playerMask = 0;
 
 	/* don't handle the ai players, here */
 	p = NULL;
-	i = 0;
-	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (team == p->pers.team)
-			playerMask |= (1 << i);
-		i++;
+	while ((p = G_PlayerGetNextHuman(p))) {
+		if (p->inuse && team == p->pers.team)
+			playerMask |= (1 << p->num);
 	}
 
 	return playerMask;
