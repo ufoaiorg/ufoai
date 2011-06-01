@@ -285,7 +285,7 @@ const char *Com_EParse (const char **text, const char *errhead, const char *erri
 	if (updateProgress) {
 		progressCurrent ++;
 		if (progressCurrent % 2000 == 0)
-			SCR_DrawPrecacheScreen(qfalse, qfalse, min(progressCurrent * 30 / progressTotal, 30));
+			SCR_DrawPrecacheScreen(qfalse, min(progressCurrent * 30 / progressTotal, 30));
 	}
 
 	token = Com_Parse(text);
@@ -3252,7 +3252,7 @@ void Com_ParseScripts (qboolean onlyServer)
 	const char *type, *name, *text;
 
 	Com_Printf("\n----------- parse scripts ----------\n");
-	SCR_DrawPrecacheScreen(qfalse, qfalse, 0);
+	SCR_DrawPrecacheScreen(qfalse, 0);
 	updateProgress = qtrue;
 
 	/* reset csi basic info */

@@ -1294,7 +1294,7 @@ void CL_Init (void)
 	CIN_Init();
 
 	VID_Init();
-	SCR_DrawPrecacheScreen(qfalse, qfalse, 0);
+	SCR_DrawPrecacheScreen(qfalse, 0);
 	S_Init();
 	SCR_Init();
 
