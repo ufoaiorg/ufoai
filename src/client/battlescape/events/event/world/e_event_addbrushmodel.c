@@ -44,7 +44,7 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &type, &entnum, &modelnum1, &levelflags, &origin, &angles, &speed, &angle, &dir);
 
-	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING && type != ET_DOOR_SLIDING)
+	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING && type != ET_DOOR_SLIDING && type != ET_TRIGGER_RESCUE)
 		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL type: %i\n", type);
 	else if (modelnum1 > MAX_MODELS || modelnum1 < 1)
 		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ADD_BRUSH_MODEL\n");
@@ -83,12 +83,14 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	VectorCopy(model->maxs, le->maxs);
 	VectorSubtract(le->maxs, le->mins, le->size);
 
-	/* This is to help the entity collision code out */
-	/* Copy entity origin and angles to model*/
-	CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
-
 	/* to allow tracing against this le */
-	le->contents = CONTENTS_SOLID;
+	if (le->type != ET_TRIGGER_RESCUE) {
+		/* This is to help the entity collision code out */
+		/* Copy entity origin and angles to model*/
+		CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 
-	CL_RecalcRouting(le);
+		le->contents = CONTENTS_SOLID;
+
+		CL_RecalcRouting(le);
+	}
 }
