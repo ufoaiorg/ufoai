@@ -298,11 +298,15 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 	}
 }
 
-static void testInventoryTemoContainerLinks (void)
+static void testInventoryTempContainerLinks (void)
 {
 	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		edict_t* ent;
+		int nr;
+		containerIndex_t container;
+		const invList_t *ic;
+
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
 		SV_Map(qtrue, mapName, NULL);
@@ -310,10 +314,28 @@ static void testInventoryTemoContainerLinks (void)
 
 		/* first alien that should die and drop its inventory */
 		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+
+		for (container = 0; container < gi.csi->numIDs; container++) {
+			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
+				continue;
+			for (ic = CONTAINER(ent, container); ic; ic = ic->next)
+				nr++;
+		}
+		CU_ASSERT_TRUE(nr > 0);
+
 		CU_ASSERT_PTR_NULL(FLOOR(ent));
 		G_InventoryToFloor(ent);
 		CU_ASSERT_PTR_NOT_NULL(FLOOR(ent));
 		CU_ASSERT_PTR_EQUAL(FLOOR(G_GetFloorItemsFromPos(ent->pos)), FLOOR(ent));
+
+		nr = 0;
+		for (container = 0; container < gi.csi->numIDs; container++) {
+			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
+				continue;
+			for (ic = CONTAINER(ent, container); ic; ic = ic->next)
+				nr++;
+		}
+		CU_ASSERT_EQUAL(nr, 0);
 
 		SV_ShutdownGameProgs();
 	} else {
@@ -345,7 +367,7 @@ int UFO_AddGameTests (void)
 	if (CU_ADD_TEST(GameSuite, testInventoryWithTwoDiedAliensOnTheSameGridTile) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testInventoryTemoContainerLinks) == NULL)
+	if (CU_ADD_TEST(GameSuite, testInventoryTempContainerLinks) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
