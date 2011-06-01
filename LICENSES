@@ -1583,6 +1583,8 @@ base/models/objects/spiral/spiral_large.md2 | GNU General Public License 2.0 or 
 base/models/objects/spiral/spiral_small.md2 | GNU General Public License 2.0 or later | Origin
 base/models/objects/statues/pharaoh/pharaoh.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/statues/pharaoh/pharaoh.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/statues/sarco/sarco.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/statues/sarco/sarco.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/store/box.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/store/box.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/store/pellet.md2 | GNU General Public License 2.0 or later | Willem Sitters
