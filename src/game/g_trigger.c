@@ -274,6 +274,12 @@ static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
  */
 void SP_trigger_rescue (edict_t *ent)
 {
+	/* only used in single player */
+	if (sv_maxclients->integer > 1) {
+		G_FreeEdict(ent);
+		return;
+	}
+
 	ent->classname = "trigger_rescue";
 	ent->type = ET_TRIGGER_RESCUE;
 
