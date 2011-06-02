@@ -238,7 +238,6 @@ static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int pl
 	/* visibility has changed ... */
 	if (vis & VIS_CHANGE) {
 		/* swap the vis mask for the given team */
-		check->visflags ^= G_TeamToVisMask(team);
 		G_AppearPerishEvent(playerMask, vis & VIS_YES, check, ent);
 
 		/* ... to visible */
