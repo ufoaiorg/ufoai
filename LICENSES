@@ -4365,6 +4365,7 @@ base/textures/tex_buildings/e8crete_pillarc.jpg | GNU General Public License 2.0
 base/textures/tex_buildings/e8crete_pillarc_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/floor001.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor001_nm.png | GNU General Public License 2.0 or later | shedeki
+base/textures/tex_buildings/floor002.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/floor003.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor003_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor003_sm.png | GNU General Public License 2.0 or later
@@ -4392,6 +4393,7 @@ base/textures/tex_buildings/floor021.png | Creative Commons Attribution 3.0 Unpo
 base/textures/tex_buildings/floor021_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
 base/textures/tex_buildings/floor021lrg.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
 base/textures/tex_buildings/floor021lrg_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/floor022.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/floor024.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_buildings/floor025.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor025_nm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4410,6 +4412,10 @@ base/textures/tex_buildings/ind05d.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/ind05d_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/japwall001.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_buildings/japwall001_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_buildings/japwall003.png | MIT License | FWishbringer | based on images from http://www.photorack.net
+base/textures/tex_buildings/japwall004.png | MIT License | FWishbringer | based on images from http://www.photorack.net
+base/textures/tex_buildings/japwall005.png | MIT License | FWishbringer | based on images from http://www.photorack.net
+base/textures/tex_buildings/japwall007.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/marble02b_floor.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/met_panel01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/met_panel01_nm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4525,6 +4531,7 @@ base/textures/tex_buildings/wall013.png | GNU General Public License 2.0 or late
 base/textures/tex_buildings/wall013_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/wall014.png | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
 base/textures/tex_buildings/wall014_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_buildings/wall019.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/wall019_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/wall023.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
 base/textures/tex_buildings/wall023_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright
