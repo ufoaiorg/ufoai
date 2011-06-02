@@ -454,6 +454,7 @@ void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, const edict_t *ent);
 unsigned int G_VisToPM(unsigned int vis_mask);
+unsigned int G_PMToVis(unsigned int playerMask);
 void G_SendInventory(unsigned int player_mask, const edict_t * ent);
 unsigned int G_TeamToPM(int team);
 

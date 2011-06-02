@@ -129,10 +129,34 @@ unsigned int G_TeamToPM (int team)
 	p = NULL;
 	while ((p = G_PlayerGetNextHuman(p))) {
 		if (p->inuse && team == p->pers.team)
-			playerMask |= (1 << p->num);
+			playerMask |= G_PlayerToPM(p);
 	}
 
 	return playerMask;
+}
+
+/**
+ * @brief Converts player mask to vis mask
+ * @param[in] playerMask The player bit mask (contains the player numbers) that
+ * is converted to a vis mask
+ * @return Returns a vis mask for all the teams of the connected players that
+ * are marked in the given @c playerMask.
+ */
+unsigned int G_PMToVis (unsigned int playerMask)
+{
+	player_t *p;
+	unsigned int visMask;
+
+	visMask = 0;
+
+	/* don't handle the ai players, here */
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
+		if (playerMask & G_PlayerToPM(p))
+			visMask |= G_TeamToVisMask(p->pers.team);
+	}
+
+	return visMask;
 }
 
 /**
@@ -145,17 +169,15 @@ unsigned int G_TeamToPM (int team)
 unsigned int G_VisToPM (unsigned int vis_mask)
 {
 	player_t *p;
-	unsigned int playerMask, i;
+	unsigned int playerMask;
 
 	playerMask = 0;
 
 	/* don't handle the ai players, here */
-	i = 0;
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (vis_mask & G_TeamToVisMask(p->pers.team))
-			playerMask |= (1 << i);
-		i++;
+			playerMask |= G_PlayerToPM(p);
 	}
 
 	return playerMask;
