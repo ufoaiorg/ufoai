@@ -183,6 +183,7 @@ void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 	if (!battle->hasBeenFought) {
 		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
 		return;
+	}
 
 	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	int team;
