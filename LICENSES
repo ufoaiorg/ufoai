@@ -5551,6 +5551,7 @@ base/textures/tex_misc/rail_route3.png | GNU General Public License 2.0 or later
 base/textures/tex_misc/rail_route4.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_sign.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_sign0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_sign_gm.png | GNU General Public License 2.0 or later | Nate Wright | MCR
 base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/sign_exit1.png | GNU General Public License 2.0 or later | Nate Wright
