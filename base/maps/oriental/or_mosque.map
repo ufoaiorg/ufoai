@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 96 144 68 ) ( 96 132 68 ) ( 96 132 4 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
@@ -2113,4 +2114,9 @@
 "classname" "info_civilian_start"
 "origin" "144 400 28"
 "angle" "-45"
+}
+// entity 9
+{
+"classname" "info_civilian_start"
+"origin" "240 272 28"
 }

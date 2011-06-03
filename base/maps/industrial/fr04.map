@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
+"randomspawn" "1"
 // brush 0
 {
 ( 256 256 4 ) ( 256 0 4 ) ( 0 256 4 ) tex_buildings/floor015 0 0 0 0.25 0.25 65280 0 0
@@ -49,23 +50,22 @@
 // entity 1
 {
 "classname" "misc_model"
-"origin" "109 197 6.5"
+"origin" "109 197 7"
 "model" "models/objects/rubbish/bottle1.md2"
 "spawnflags" "255"
-"angles" "0 -14 0"
 }
 // entity 2
 {
 "classname" "misc_model"
-"origin" "124 202 6.625"
+"origin" "124 202 7"
 "model" "models/objects/rubbish/bottle1.md2"
 "spawnflags" "255"
-"angles" "0 -97 0"
+"angles" "0 -90 0"
 }
 // entity 3
 {
 "classname" "misc_model"
-"origin" "113 212 4.25"
+"origin" "113 212 5"
 "model" "models/objects/city/waste/bag.md2"
 "spawnflags" "255"
 }

@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
+"randomspawn" "1"
 // brush 0
 {
 ( 256 256 4 ) ( 256 0 4 ) ( 0 256 4 ) tex_buildings/floor015 0 0 0 0.25 0.25 65280 0 0
@@ -10,7 +11,7 @@
 ( 768 256 256 ) ( 768 256 0 ) ( 768 0 256 ) tex_buildings/floor015 0 0 0 0.25 0.25 65280 0 0
 ( 0 0 0 ) ( 256 0 0 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 0 0 0 ) ( 0 0 256 ) ( 256 0 0 ) tex_buildings/floor015 0 0 0 0.25 0.25 65280 0 0
-( 0 0 -252 ) ( 0 256 -252 ) ( 0 0 4 ) tex_buildings/floor015 -0 0 0 0.25 0.25 65280 0 0
+( 0 0 -252 ) ( 0 256 -252 ) ( 0 0 4 ) tex_buildings/floor015 0 0 0 0.25 0.25 65280 0 0
 }
 // brush 1
 {
