@@ -179,9 +179,9 @@ set_BEGIN_END()
 # The first argument is 1 if this is a long description which need several lines of msgstr.
 	BEGIN=`grep -n "msgid \"$english\"" $output_file |
 	cut -d : -f 1`
-	END=`$awk_soft 'NR > '$BEGIN' && $0 ~ /^#:[ \t]/ {print NR;exit}' $output_file`
+	END=`$awk_soft 'NR > '$BEGIN' && $0 ~ /^[ \t]*\r\?$/ {print NR;exit}' $output_file`
 	BEGIN=$BEGIN+1
-	END=$END-2
+	END=$END-1
 
 	echo "${BEGIN},${END}d" > sed_commands_${language0}
 	END=$END+1
@@ -459,7 +459,7 @@ declare -i FIRST_LINE  # Contains the first interesting line of the wiki index. 
 # Copy of $input_file to $output_file.
 # $output_file is converted from dos to unix if needed
 # Each input of msgstr (i.e. the part before any \n) is put on only 1 line
-BEGIN=`grep -nm 1 "#: " $input_file | cut -d : -f 1`
+BEGIN=`grep -nm 1 "msgid " $input_file | cut -d : -f 1`
 END=`wc -l $input_file | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
 $sed_soft $BEGIN','$END's/^\"\(.*\)\"$/\1/g;s/\r//g' $input_file |
 $awk_soft 'BEGIN {FS=" ";test=0}
