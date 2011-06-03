@@ -9,7 +9,7 @@
 	}
 }
 {
-	material tex_base/vent_round
+	material tex_base/vent_round2
 	{
 		texture tex_base/fan
 		blend GL_SRC_ALPHA GL_ONE
