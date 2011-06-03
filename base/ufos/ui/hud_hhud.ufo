@@ -617,38 +617,38 @@ window hhud extends hud
 
 		cmpSoldierPanel sld0
 		{
-		pos "27 5"
+			pos "27 5"
 		}
 		cmpSoldierPanel sld1
 		{
-		pos "72 5"
+			pos "72 5"
 		}
 		cmpSoldierPanel sld2
 		{
-		pos "117 5"
+			pos "117 5"
 		}
 		cmpSoldierPanel sld3
 		{
-		pos "162 5"
+			pos "162 5"
 		}
 		cmpSoldierPanel sld4
 		{
-		pos "207 5"
+			pos "207 5"
 		}
 
 		cmpSoldierPanel sld5
 		{
-		pos "252 5"
+			pos "252 5"
 		}
 
 		cmpSoldierPanel sld6
 		{
-		pos "297 5"
+			pos "297 5"
 		}
 
 		cmpSoldierPanel sld7
 		{
-		pos "342 5"
+			pos "342 5"
 		}
 	}
 
@@ -660,10 +660,8 @@ window hhud extends hud
 	{
 		cmd "debug_ui 1;"
 		// missed currently
-//		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
 //		call *node:root.right.show_rightweapon
-		*cvar:mn_showchatbuttons = 0
 		*cvar:rf_reserve = 0
 		*cvar:inv_opened = false
 		*cvar:i = 0;
@@ -679,6 +677,26 @@ window hhud extends hud
 		delete *cvar:i
 
 		cmd "hudselect 0;"
+	}
+
+	image bar_chat_bg
+	{
+		src			"hud/bar_chat"
+		pos			"959 152"
+		size		"64 64"
+	}
+
+	image button_chat
+	{
+		visiblewhen	"*cvar:sv_maxclients >= 2"
+		tooltip		"_Chat messages"
+		src			"hud/event_log"
+		pos			"985 160"
+		texl		"0 0"
+		texh		"32 36"
+		onClick {
+			cmd "ui_push hud_chat;"
+		}
 	}
 
 	func onScriptLoaded {
