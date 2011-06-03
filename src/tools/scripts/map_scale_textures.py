@@ -60,7 +60,7 @@ if brokenArgs:
     print 'Usage: python map_scale_textures.py map_file_name|map_file_wildcard texture scalex scaley'
     print ' e.g. python map_scale_textures.py ../../../base/map/dam.map tex_base/lab_wall001 .5 .33'
     print ' or python map_scale_textures.py ../../../base/map/*.map tex_base/lab_wall001 .5 .33'
-    print ' to recurse through subdirectories use: python map_list_textures.py path -r texture scalex scaley'
+    print ' to recurse through subdirectories use: python map_scale_textures.py path -r texture scalex scaley'
     print ' which will process all .map files'
     print 'If only scalex is given, scaley will reuse its value'
     exit()
@@ -72,6 +72,8 @@ if recurse:
         for filename in files:
             if fnmatch.fnmatch(filename, "*.map"):
                 scale_textures(texname, os.path.join(folder, filename), scalex, scaley)
+    if path.find("prefabs") < 0:
+        print "Don't forget prefabs!"
 else:
     #expand wildcards, if any
     names = glob.glob(path)

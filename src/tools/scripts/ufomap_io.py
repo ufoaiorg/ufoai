@@ -19,10 +19,10 @@ class Face:
         self.surf_value = 0
 
     def to_string(self): #todo: implement __format__
-        verts = "( {0} {1} {2} ) ( {3} {4} {5} ) ( {6} {7} {8} )".format(self.vertexes[0][0], self.vertexes[0][1], self.vertexes[0][2], self.vertexes[1][0], self.vertexes[1][1], self.vertexes[1][2], self.vertexes[2][0], self.vertexes[2][1], self.vertexes[2][2])
-        tex = "{0} {1} {2} {3} {4} {5}".format(self.texture, self.offset[0], self.offset[1], self.angle, self.scale[0], self.scale[1])
+        verts = "( {0:.8g} {1:.8g} {2:.8g} ) ( {3:.8g} {4:.8g} {5:.8g} ) ( {6:.8g} {7:.8g} {8:.8g} )".format(self.vertexes[0][0], self.vertexes[0][1], self.vertexes[0][2], self.vertexes[1][0], self.vertexes[1][1], self.vertexes[1][2], self.vertexes[2][0], self.vertexes[2][1], self.vertexes[2][2])
+        tex = "{0:.8g} {1:.8g} {2:.8g} {3:.8g} {4:.8g}".format(self.offset[0], self.offset[1], self.angle, self.scale[0], self.scale[1])
         flags = "{0} {1} {2}".format(self.cont_flags, self.surf_flags, self.surf_value)
-        return " ".join((verts, tex, flags))
+        return " ".join((verts, self.texture, tex, flags))
 
 class Brush:
     def __init__(self):
@@ -44,8 +44,11 @@ class Entity:
         tmp = ["{"]
         for i in self.fields:
             tmp.append('"{0}" "{1}"'.format(i, self.fields[i]))
+        brushCount = 0
         for i in self.brushes:
+            tmp.append("// brush {0}".format(brushCount))
             tmp.append(i.to_string())
+            brushCount += 1
         tmp.append("}")
         return "\n".join(tmp)
 
@@ -113,9 +116,12 @@ def parse_ufo_map(s):
     return ufo_map
 
 def ufo_map_to_string(ufo_map):
-    tmp = []
+    tmp = [""] #Radiant output starts with empty line for some reason
+    entityCount = 0
     for i in ufo_map:
+        tmp.append("// entity {0}".format(entityCount))
         tmp.append(i.to_string())
+        entityCount += 1
     tmp.append("\n")
     return "\n".join(tmp)
 
