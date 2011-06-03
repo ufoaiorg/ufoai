@@ -183,7 +183,7 @@ qboolean UI_CheckVisibility (uiNode_t *node)
  */
 const char* UI_GetPath (const uiNode_t* node)
 {
-	static char result[MAX_VAR];
+	static char result[512];
 	const uiNode_t* nodes[8];
 	int i = 0;
 
