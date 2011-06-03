@@ -1682,6 +1682,8 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 		const float distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
 		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
+		if (aircraft->stats[AIR_STATS_DAMAGE] > 0)
+			Q_strcat(buffer, va(_("Health:\t%3.0f%%\n"), (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE]), size);
 		Q_strcat(buffer, va(_("Distance to target:\t\t%.0f\n"), distance), size);
 		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
@@ -1690,6 +1692,8 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 	} else {
 		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
+		if (aircraft->stats[AIR_STATS_DAMAGE] > 0)
+			Q_strcat(buffer, va(_("Health:\t%3.0f%%\n"), (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE]), size);
 		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
 			AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
