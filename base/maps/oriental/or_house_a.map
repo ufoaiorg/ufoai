@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 116 192 0 ) ( 72 192 0 ) ( 72 128 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
@@ -992,4 +993,10 @@
 "classname" "info_civilian_start"
 "angle" "45"
 "origin" "16 176 28"
+}
+// entity 9
+{
+"classname" "info_alien_start"
+"origin" "208 80 92"
+"angle" "-90"
 }

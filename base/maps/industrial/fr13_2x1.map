@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
+"randomspawn" "1"
 // brush 0
 {
 ( 256 256 4 ) ( 256 0 4 ) ( 0 256 4 ) tex_buildings/floor015 0 0 0 0.25 0.25 65280 0 0
@@ -137,7 +138,6 @@
 "origin" "47 146 7.99999"
 "model" "models/objects/rubbish/oil_can.md2"
 "spawnflags" "255"
-"angles" "0 -23 0"
 }
 // entity 2
 {
@@ -147,18 +147,17 @@
 // entity 3
 {
 "classname" "misc_model"
-"origin" "343 156 6.5"
+"origin" "343 156 7"
 "model" "models/objects/rubbish/bottle1.md2"
 "spawnflags" "255"
-"angles" "0 8 0"
 }
 // entity 4
 {
 "classname" "misc_model"
-"origin" "358 161 6.5"
+"origin" "358 161 7"
 "model" "models/objects/rubbish/bottle1.md2"
 "spawnflags" "255"
-"angles" "0 -75 0"
+"angles" "0 -90 0"
 }
 // entity 5
 {
@@ -166,4 +165,10 @@
 "origin" "347 171 5"
 "model" "models/objects/city/waste/bag.md2"
 "spawnflags" "255"
+}
+// entity 6
+{
+"classname" "info_alien_start"
+"origin" "112 112 28"
+"angle" "180"
 }
