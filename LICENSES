@@ -4415,6 +4415,7 @@ base/textures/tex_buildings/japwall001_nm.jpg | GNU General Public License 2.0 o
 base/textures/tex_buildings/japwall003.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/japwall004.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/japwall005.png | MIT License | FWishbringer | based on images from http://www.photorack.net
+base/textures/tex_buildings/japwall006.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/japwall007.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/marble02b_floor.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/met_panel01.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4823,6 +4824,7 @@ base/textures/tex_furniture/couch_d_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_furniture/couch_e.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e_sm.png | GNU General Public License 2.0 or later
+base/textures/tex_furniture/jap_carpet001.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_furniture/kitchen001.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/kitchen002.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
@@ -5520,6 +5522,9 @@ base/textures/tex_misc/exit_clean_gm.png | GNU General Public License 2.0 |  | O
 base/textures/tex_misc/exit_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/exit_dirty_gm.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/fridge001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/gas001.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_misc/gas002.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_misc/gas003.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_misc/glasses_clean.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/glasses_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/grate_rusty.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5961,6 +5966,12 @@ base/textures/tex_tech/uelektro003.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/uelektro003_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/uelektro003_lq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/uelektro003_lq_gm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/xerox_a.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_tech/xerox_b.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_tech/xerox_c.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_tech/xerox_d.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_terrain/arctic.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_terrain/cold.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_terrain/desert.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_terrain/dummy.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_terrain/grass.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
@@ -6119,6 +6130,10 @@ base/textures/tex_vehicles/gabstap_e.png | GNU General Public License 2.0 or lat
 base/textures/tex_vehicles/ship01.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/ship03.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/ship04.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/spocar001.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_vehicles/spocar002.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_vehicles/spocar003.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_vehicles/spocar004.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_vehicles/tire001_mq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/tire001_mq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/tire002_mq.png | GNU General Public License 2.0 | MCR
