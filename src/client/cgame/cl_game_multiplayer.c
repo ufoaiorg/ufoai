@@ -317,6 +317,7 @@ static void GAME_MP_AddChatMessage (const char *text)
 	cgi->LIST_AddString(&mp_chatMessageStack, Com_Trim(message));
 	cgi->UI_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
 	cgi->UI_ExecuteConfunc("unhide_chatscreen");
+	cgi->UI_TextScrollEnd("hud_chat.allchats.chatscreen.chat");
 }
 
 static qboolean GAME_MP_HandleServerCommand (const char *command, struct dbuffer *msg)

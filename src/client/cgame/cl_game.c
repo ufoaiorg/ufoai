@@ -244,6 +244,8 @@ void GAME_AddChatMessage (const char *format, ...)
 	if (!list || list->AddChatMessage == NULL)
 		return;
 
+	S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
+
 	va_start(argptr, format);
 	Q_vsnprintf(string, sizeof(string), format, argptr);
 	va_end(argptr);
@@ -347,6 +349,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->UI_PopWindow = UI_PopWindow;
 		cgi->UI_PushWindow = UI_PushWindow;
 		cgi->UI_RegisterLinkedListText = UI_RegisterLinkedListText;
+		cgi->UI_TextScrollEnd = UI_TextScrollEnd;
 		cgi->UI_RegisterOption = UI_RegisterOption;
 		cgi->UI_RegisterText = UI_RegisterText;
 		cgi->UI_ResetData = UI_ResetData;

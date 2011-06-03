@@ -228,7 +228,6 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		NET_ReadString(msg, s, sizeof(s));
 		switch (i) {
 		case PRINT_CHAT:
-			S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
 			GAME_AddChatMessage(s);
 			/* skip format strings */
 			if (s[0] == '^')

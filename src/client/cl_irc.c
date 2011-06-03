@@ -970,10 +970,6 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				GAME_AddChatMessage(va("<%s> %s\n", nick, trailing));
-				if (!Q_streq(UI_GetActiveWindowName(), "irc") && !Q_streq(UI_GetActiveWindowName(), cl_hud->string)) {
-					/* we are not in hud mode, nor in the lobby menu, use a popup */
-					UI_PushWindow("chat_popup", NULL, NULL);
-				}
 			}
 		}
 
