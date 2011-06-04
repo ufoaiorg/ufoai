@@ -1071,6 +1071,7 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	CP_AutoBattleClearBattle(autoBattle);
 	CP_AutoBattleFillTeamFromAircraft(autoBattle, 0, aircraft, campaign);
 	CP_AutoBattleFillTeamFromBattleParams(autoBattle, battleParameters);
+	CP_AutoBattleSetDefaultHostilities(autoBattle, false);
 	CP_AutoBattleRunBattle(autoBattle);
 
 	results->won = qfalse;
