@@ -2,8 +2,8 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "3"
 "maxteams" "2"
+"maxlevel" "3"
 // brush 0
 {
 ( 704 576 64 ) ( 768 576 64 ) ( 768 480 64 ) tex_material/metall002 0 32 0 1 1 65280 0 0
@@ -501,7 +501,7 @@
 }
 // brush 55
 {
-( 762 576 66 ) ( 762 570 66 ) ( 758 570 66 ) tex_buildings/japwall003 213 64 0 0.3 0.3 0 4096 0
+( 762 576 66 ) ( 762 570 66 ) ( 758 570 66 ) tex_buildings/japwall003 426 128 0 0.15 0.15 0 4096 0
 ( 416 384 64 ) ( 446 416 4 ) ( 446 416 64 ) tex_buildings/concrete005 256 80 90 0.4 0.4 65024 0 0
 ( 446 646 14 ) ( 446 662 14 ) ( 446 662 12 ) tex_common/nodraw 32 0 0 1 1 65024 128 0
 ( 400 288 0 ) ( 400 288 4 ) ( 404 288 0 ) tex_buildings/concrete005 0 160 90 0.4 0.4 65024 0 0
@@ -510,7 +510,7 @@
 }
 // brush 56
 {
-( 762 576 66 ) ( 762 570 66 ) ( 758 570 66 ) tex_buildings/japwall003 213 64 0 0.3 0.3 65024 0 0
+( 762 576 66 ) ( 762 570 66 ) ( 758 570 66 ) tex_buildings/japwall003 426 128 0 0.15 0.15 65024 0 0
 ( 578 416 128 ) ( 640 416 66 ) ( 640 416 128 ) tex_buildings/concrete005 0 160 90 0.4 0.4 65024 0 0
 ( 640 704 4 ) ( 640 704 0 ) ( 640 640 4 ) tex_buildings/concrete005 256 80 90 0.4 0.4 65024 0 0
 ( 496 160 66 ) ( 496 160 130 ) ( 880 160 66 ) tex_buildings/concrete005 0 160 90 0.4 0.4 65024 0 0
@@ -3755,48 +3755,48 @@
 {
 "classname" "light"
 "origin" "158 360 104"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 9
 {
 "classname" "light"
 "origin" "542 286 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 10
 {
 "classname" "light"
 "origin" "546 272 52"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 11
 {
 "classname" "light"
 "origin" "446 354 52"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 12
 {
 "classname" "light"
 "origin" "580 368 52"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 13
 {
 "classname" "light"
 "origin" "322 734 52"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 14
@@ -4720,24 +4720,24 @@
 {
 "classname" "light"
 "origin" "510 470 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 21
 {
 "classname" "light"
 "origin" "288 576 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "160"
 }
 // entity 22
 {
 "classname" "light"
 "origin" "110 886 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "140"
 }
 // entity 23
@@ -5100,32 +5100,32 @@
 {
 "classname" "light"
 "origin" "366 630 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "140"
 }
 // entity 28
 {
 "classname" "light"
 "origin" "254 758 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "160"
 }
 // entity 29
 {
 "classname" "light"
 "origin" "110 758 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "160"
 }
 // entity 30
 {
 "classname" "light"
 "origin" "446 342 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 31
@@ -5459,24 +5459,24 @@
 {
 "classname" "light"
 "origin" "514 478 52"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 37
 {
 "classname" "light"
 "origin" "514 830 52"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 38
 {
 "classname" "light"
 "origin" "162 798 52"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 39
@@ -6008,32 +6008,32 @@
 "classname" "misc_model"
 "origin" "354 948 4"
 "model" "models/objects/city/waste/container_closed.md2"
-"spawnflags" "255"
 "angles" "0 -90 0"
+"spawnflags" "255"
 }
 // entity 66
 {
 "classname" "misc_model"
 "origin" "417.929 947.73 5.1414"
 "model" "models/objects/city/waste/bag.md2"
-"angles" "-19.9708 166.74 -11.0744"
 "spawnflags" "255"
+"angles" "-19.9708 166.74 -11.0744"
 }
 // entity 67
 {
 "classname" "misc_model"
 "origin" "398 938 4"
 "model" "models/objects/city/waste/bag.md2"
-"spawnflags" "255"
 "angles" "0 -90 0"
+"spawnflags" "255"
 }
 // entity 68
 {
 "classname" "misc_model"
 "origin" "680 329 6"
 "model" "models/objects/rubbish/bottle1.md2"
-"angles" "0 0 35.5936"
 "spawnflags" "255"
+"angles" "0 0 35.5936"
 }
 // entity 69
 {
@@ -7814,88 +7814,88 @@
 {
 "classname" "light"
 "origin" "414 456 104"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 93
 {
 "classname" "light"
 "origin" "158 504 104"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 94
 {
 "classname" "light"
 "origin" "302 360 104"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 95
 {
 "classname" "light"
 "origin" "302 456 104"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 96
 {
 "classname" "light"
 "origin" "126 614 120"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 97
 {
 "classname" "light"
 "origin" "94 590 40"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 98
 {
 "classname" "light"
 "origin" "166 590 40"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 99
 {
 "classname" "light"
 "origin" "230 590 40"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 100
 {
 "classname" "light"
 "origin" "326 590 40"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 101
 {
 "classname" "light"
 "origin" "398 590 40"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 102
 {
 "classname" "light"
 "origin" "494 590 40"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 103
