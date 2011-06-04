@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct aircraft_s;
 struct alienTeamGroup_s;
 struct campaign_s;
+struct battleParam_s;
 
 /** @brief Possilbe results from an auto mission to display on-screen after a simulated battle.
  * @note This list of potential results is NOT meant to replace missionResults_t, but is mainly used for displaying the proper message on the screen afterwards. */

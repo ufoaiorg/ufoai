@@ -52,7 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_research_callbacks.h"
 #include "cp_uforecovery.h"
 #include "save/save_campaign.h"
-#include "../../src/client/cgame/campaign/cp_auto_mission.h"
+#include "cp_auto_mission.h"
 
 struct memPool_s *cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
