@@ -180,10 +180,8 @@ void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int 
 void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 {
 	/** @todo */
-	if (!battle->hasBeenFought) {
+	if (!battle->hasBeenFought)
 		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
-		return;
-	}
 
 	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	int team;
@@ -202,8 +200,8 @@ void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 			teamDrones = team;
 	}
 
-	assert (teamPlayer >= 0);
-	assert (teamEnemy >= 0);
+	assert(teamPlayer >= 0);
+	assert(teamEnemy >= 0);
 
 	/* If UGVs or alien drones fought in the battle, add their scores to that of the soldiers and aliens that control them. */
 	if (teamUGVs >= 0)
