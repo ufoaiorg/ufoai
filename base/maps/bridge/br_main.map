@@ -6,6 +6,7 @@
 "maxteams" "2"
 "saturation" "0.6"
 "brightness" "0.8"
+"randomspawn" "1"
 // brush 0
 {
 ( 1944 272 320 ) ( 1856 224 324 ) ( 1856 288 324 ) tex_buildings/mtl_gray 170 170.3333 0 0.375 0.375 61440 1024 0
@@ -16046,4 +16047,108 @@
 "_color" "1 1 0.75"
 "light" "200"
 "spawnflags" "1"
+}
+// entity 149
+{
+"classname" "info_alien_start"
+"origin" "720 2000 28"
+"angle" "90"
+}
+// entity 150
+{
+"classname" "info_alien_start"
+"origin" "1680 2032 28"
+"angle" "90"
+}
+// entity 151
+{
+"classname" "info_alien_start"
+"origin" "1328 2288 28"
+"angle" "180"
+}
+// entity 152
+{
+"classname" "info_alien_start"
+"origin" "1456 1552 28"
+"angle" "180"
+}
+// entity 153
+{
+"classname" "info_alien_start"
+"origin" "1520 1520 28"
+"angle" "180"
+}
+// entity 154
+{
+"classname" "info_alien_start"
+"origin" "1456 1328 28"
+"angle" "180"
+}
+// entity 155
+{
+"classname" "info_alien_start"
+"origin" "592 944 28"
+"angle" "90"
+}
+// entity 156
+{
+"classname" "info_alien_start"
+"origin" "624 1744 28"
+"angle" "180"
+}
+// entity 157
+{
+"classname" "info_alien_start"
+"origin" "1616 880 28"
+"angle" "90"
+}
+// entity 158
+{
+"classname" "info_alien_start"
+"origin" "1168 1168 28"
+"angle" "90"
+}
+// entity 159
+{
+"classname" "info_alien_start"
+"origin" "2160 1360 28"
+"angle" "90"
+}
+// entity 160
+{
+"classname" "info_alien_start"
+"origin" "848 1488 28"
+}
+// entity 161
+{
+"classname" "info_alien_start"
+"origin" "2160 752 28"
+}
+// entity 162
+{
+"classname" "info_alien_start"
+"origin" "1584 1808 40"
+}
+// entity 163
+{
+"classname" "info_alien_start"
+"origin" "976 1584 118"
+"angle" "90"
+}
+// entity 164
+{
+"classname" "info_alien_start"
+"origin" "976 1040 118"
+"angle" "90"
+}
+// entity 165
+{
+"classname" "info_alien_start"
+"origin" "1840 2000 36"
+}
+// entity 166
+{
+"classname" "info_alien_start"
+"origin" "464 1776 28"
+"angle" "90"
 }
