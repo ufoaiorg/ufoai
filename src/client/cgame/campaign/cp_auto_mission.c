@@ -601,4 +601,22 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
 {
 	/** @todo */
+	employee_t *soldier;
+	int unit = 0;
+
+	int battleExperience = battle->teamAccomplishment[0];
+	if (battleExperience < 0)
+		battleExperience = 0;
+
+	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
+		character_t *chr = &soldier->chr;
+
+		chr->HP = battle->unitHealth[0][unit];
+		unit++;
+
+		/* TODO: If health > zero, award experience for the mission.  (Destructavator): I need to find out how experience is represented for soldiers. */
+
+		if (unit >= MAX_SOLDIERS_AUTOMISSION)
+			break;
+	}
 }

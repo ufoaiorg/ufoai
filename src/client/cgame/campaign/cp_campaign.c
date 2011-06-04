@@ -1080,6 +1080,8 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
 		results->won = qtrue;
 
+	CP_AutoBattleUpdateSurivorsAfterBattle(&autoBattle, aircraft);
+
 	/* This block is old code, but it will be left in for now, until exact numbers and stats are extracted from the auto mission results. */
 	results->aliensKilled = battleParameters->aliens;
 	results->aliensStunned = 0;
