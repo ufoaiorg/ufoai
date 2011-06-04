@@ -2,15 +2,15 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "2"
 "maxlevel" "6"
+"maxteams" "2"
 "angles_day" "-75 10"
 "angles_night" "-75 20"
 // brush 0
 {
-( 188 288 128 ) ( 188 256 128 ) ( 156 288 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 65 512 192 ) ( 57 512 192 ) ( 65 512 -64 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 64 512 128 ) ( 64 512 0 ) ( 64 256 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 188 288 128 ) ( 188 256 128 ) ( 156 288 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 65 512 192 ) ( 57 512 192 ) ( 65 512 -64 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 64 512 128 ) ( 64 512 0 ) ( 64 256 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 ( 124 384 -64 ) ( 404 408 -64 ) ( 172 448 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 416 0 64 ) ( 416 0 96 ) ( 448 0 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 0 256 -128 ) ( 0 512 -128 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
@@ -1878,18 +1878,18 @@
 // entity 2
 {
 "classname" "light"
-"_color" "0.8 0.8 1"
 "light" "200"
-"origin" "72 360 62"
 "spawnflags" "1"
+"origin" "72 360 62"
+"_color" "0.8 0.8 1"
 }
 // entity 3
 {
 "classname" "light"
-"_color" "0.8 0.8 1"
 "light" "200"
-"origin" "72 472 62"
 "spawnflags" "1"
+"origin" "72 472 62"
+"_color" "0.8 0.8 1"
 }
 // entity 4
 {
@@ -1919,58 +1919,58 @@
 // entity 9
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "60"
-"origin" "248 296 176"
 "spawnflags" "1"
+"origin" "248 296 176"
+"_color" "1 1 1"
 }
 // entity 10
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "60"
-"origin" "328 296 176"
 "spawnflags" "1"
+"origin" "328 296 176"
+"_color" "1 1 1"
 }
 // entity 11
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "60"
-"origin" "248 296 240"
 "spawnflags" "1"
+"origin" "248 296 240"
+"_color" "1 1 1"
 }
 // entity 12
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "60"
-"origin" "328 296 240"
 "spawnflags" "1"
+"origin" "328 296 240"
+"_color" "1 1 1"
 }
 // entity 13
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "328 184 176"
 "spawnflags" "1"
+"origin" "328 184 176"
+"_color" "1 1 1"
 }
 // entity 14
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "60"
-"origin" "248 296 304"
 "spawnflags" "1"
+"origin" "248 296 304"
+"_color" "1 1 1"
 }
 // entity 15
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "60"
-"origin" "328 296 304"
 "spawnflags" "1"
+"origin" "328 296 304"
+"_color" "1 1 1"
 }
 // entity 16
 {
@@ -1980,66 +1980,66 @@
 // entity 17
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "184 184 176"
 "spawnflags" "1"
+"origin" "184 184 176"
+"_color" "1 1 1"
 }
 // entity 18
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "120 184 176"
 "spawnflags" "1"
+"origin" "120 184 176"
+"_color" "1 1 1"
 }
 // entity 19
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "248 184 176"
 "spawnflags" "1"
+"origin" "248 184 176"
+"_color" "1 1 1"
 }
 // entity 20
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "392 184 176"
 "spawnflags" "1"
+"origin" "392 184 176"
+"_color" "1 1 1"
 }
 // entity 21
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "456 184 176"
 "spawnflags" "1"
+"origin" "456 184 176"
+"_color" "1 1 1"
 }
 // entity 22
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "472 336 320"
 "spawnflags" "1"
+"origin" "472 336 320"
+"_color" "1 1 1"
 }
 // entity 23
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "104 336 320"
 "spawnflags" "1"
+"origin" "104 336 320"
+"_color" "1 1 1"
 }
 // entity 24
 {
 "classname" "light"
-"_color" "0 0 1"
 "light" "150"
-"origin" "272 240 284"
 "spawnflags" "1"
+"origin" "272 240 284"
+"_color" "0 0 1"
 }
 // entity 25
 {
@@ -2064,32 +2064,32 @@
 // entity 29
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "192 368 288"
 "spawnflags" "1"
+"origin" "192 368 288"
+"_color" "1 1 1"
 }
 // entity 30
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "256 368 288"
 "spawnflags" "1"
+"origin" "256 368 288"
+"_color" "1 1 1"
 }
 // entity 31
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "320 368 288"
 "spawnflags" "1"
+"origin" "320 368 288"
+"_color" "1 1 1"
 }
 // entity 32
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "150"
-"origin" "384 368 288"
 "spawnflags" "1"
+"origin" "384 368 288"
+"_color" "1 1 1"
 }

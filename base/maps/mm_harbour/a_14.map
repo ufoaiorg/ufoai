@@ -2,13 +2,13 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "2"
 "maxlevel" "6"
+"maxteams" "2"
 "angles_day" "-75 10"
 "angles_night" "-75 20"
 // brush 0
 {
-( 64 256 128 ) ( 64 0 128 ) ( 0 256 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 64 256 128 ) ( 64 0 128 ) ( 0 256 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 ( 176 256 384 ) ( 80 256 384 ) ( 176 256 224 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 256 272 288 ) ( 256 272 128 ) ( 256 64 288 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 16 0 0 ) ( 80 0 0 ) ( 16 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0

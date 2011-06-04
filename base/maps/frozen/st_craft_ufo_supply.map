@@ -631,65 +631,65 @@
 // brush 63
 {
 ( 968 152 46 ) ( 970 152 46 ) ( 970 212 50 ) tex_common/nodraw 192 32 90 0.5 0.5 65280 0 0
-( 970 152 50 ) ( 968 152 50 ) ( 968 212 54 ) tex_material/s_wood003 192 32 90 0.5 0.5 65280 0 0
-( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 0 32 90 0.5 0.5 65280 0 0
-( 970 152 70 ) ( 970 212 70 ) ( 970 212 60 ) tex_material/s_wood003 256 220 90 0.5 0.5 65280 0 0
-( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 0 32 90 0.5 0.5 65280 0 0
-( 968 212 70 ) ( 968 152 70 ) ( 968 152 60 ) tex_material/s_wood003 256 220 90 0.5 0.5 65280 0 0
+( 970 152 50 ) ( 968 152 50 ) ( 968 212 54 ) tex_material/s_wood003 384 64 90 0.25 0.25 65280 0 0
+( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 0 64 90 0.25 0.25 65280 0 0
+( 970 152 70 ) ( 970 212 70 ) ( 970 212 60 ) tex_material/s_wood003 512 440 90 0.25 0.25 65280 0 0
+( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 0 64 90 0.25 0.25 65280 0 0
+( 968 212 70 ) ( 968 152 70 ) ( 968 152 60 ) tex_material/s_wood003 512 440 90 0.25 0.25 65280 0 0
 }
 // brush 64
 {
 ( 906 152 68 ) ( 908 152 68 ) ( 908 212 68 ) tex_common/nodraw 192 156 90 0.5 0.5 65024 0 0
-( 908 152 72 ) ( 906 152 72 ) ( 906 212 72 ) tex_material/s_wood003 192 156 90 0.5 0.5 65024 0 0
-( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 192 156 90 0.5 0.5 65024 0 0
-( 908 152 70 ) ( 908 212 70 ) ( 908 212 60 ) tex_material/s_wood003 192 220 90 0.5 0.5 65024 0 0
-( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 192 156 90 0.5 0.5 65024 0 0
-( 906 212 70 ) ( 906 152 70 ) ( 906 152 60 ) tex_material/s_wood003 192 220 90 0.5 0.5 65024 0 0
+( 908 152 72 ) ( 906 152 72 ) ( 906 212 72 ) tex_material/s_wood003 384 312 90 0.25 0.25 65024 0 0
+( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 384 312 90 0.25 0.25 65024 0 0
+( 908 152 70 ) ( 908 212 70 ) ( 908 212 60 ) tex_material/s_wood003 384 440 90 0.25 0.25 65024 0 0
+( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 384 312 90 0.25 0.25 65024 0 0
+( 906 212 70 ) ( 906 152 70 ) ( 906 152 60 ) tex_material/s_wood003 384 440 90 0.25 0.25 65024 0 0
 }
 // brush 65
 {
 ( 908 212 36 ) ( 906 212 36 ) ( 906 152 40 ) tex_common/nodraw 192 156 90 0.5 0.5 65280 0 0
-( 906 212 40 ) ( 908 212 40 ) ( 908 152 44 ) tex_material/s_wood003 192 156 90 0.5 0.5 65280 0 0
-( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 0 156 90 0.5 0.5 65280 0 0
-( 908 152 70 ) ( 908 212 70 ) ( 908 212 60 ) tex_material/s_wood003 256 220 90 0.5 0.5 65280 0 0
-( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 0 156 90 0.5 0.5 65280 0 0
-( 906 212 70 ) ( 906 152 70 ) ( 906 152 60 ) tex_material/s_wood003 256 220 90 0.5 0.5 65280 0 0
+( 906 212 40 ) ( 908 212 40 ) ( 908 152 44 ) tex_material/s_wood003 384 312 90 0.25 0.25 65280 0 0
+( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 0 312 90 0.25 0.25 65280 0 0
+( 908 152 70 ) ( 908 212 70 ) ( 908 212 60 ) tex_material/s_wood003 512 440 90 0.25 0.25 65280 0 0
+( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 0 312 90 0.25 0.25 65280 0 0
+( 906 212 70 ) ( 906 152 70 ) ( 906 152 60 ) tex_material/s_wood003 512 440 90 0.25 0.25 65280 0 0
 }
 // brush 66
 {
 ( 908 214 48 ) ( 908 212 48 ) ( 968 212 52 ) tex_common/nodraw 200 136 90 0.5 0.5 65024 0 0
-( 908 212 52 ) ( 908 214 52 ) ( 968 214 56 ) tex_material/s_wood003 200 136 90 0.5 0.5 65024 0 0
-( 908 212 80 ) ( 968 212 80 ) ( 968 212 56 ) tex_material/s_wood003 136 136 90 0.5 0.5 65024 0 0
-( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 136 76 90 0.5 0.5 65024 0 0
-( 968 214 100 ) ( 908 214 100 ) ( 908 214 76 ) tex_material/s_wood003 136 136 90 0.5 0.5 65024 0 0
-( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 136 76 90 0.5 0.5 65024 0 0
+( 908 212 52 ) ( 908 214 52 ) ( 968 214 56 ) tex_material/s_wood003 400 272 90 0.25 0.25 65024 0 0
+( 908 212 80 ) ( 968 212 80 ) ( 968 212 56 ) tex_material/s_wood003 272 272 90 0.25 0.25 65024 0 0
+( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 272 152 90 0.25 0.25 65024 0 0
+( 968 214 100 ) ( 908 214 100 ) ( 908 214 76 ) tex_material/s_wood003 272 272 90 0.25 0.25 65024 0 0
+( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 272 152 90 0.25 0.25 65024 0 0
 }
 // brush 67
 {
 ( 968 152 76 ) ( 908 152 76 ) ( 908 150 76 ) tex_common/nodraw 200 136 90 0.5 0.5 65024 0 0
-( 908 150 80 ) ( 908 152 80 ) ( 968 152 80 ) tex_material/s_wood003 200 136 90 0.5 0.5 65024 0 0
-( 908 212 80 ) ( 968 212 80 ) ( 968 212 56 ) tex_material/s_wood003 88 136 90 0.5 0.5 65024 0 0
-( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 88 76 90 0.5 0.5 65024 0 0
-( 968 214 100 ) ( 908 214 100 ) ( 908 214 76 ) tex_material/s_wood003 88 136 90 0.5 0.5 65024 0 0
-( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 88 76 90 0.5 0.5 65024 0 0
+( 908 150 80 ) ( 908 152 80 ) ( 968 152 80 ) tex_material/s_wood003 400 272 90 0.25 0.25 65024 0 0
+( 908 212 80 ) ( 968 212 80 ) ( 968 212 56 ) tex_material/s_wood003 176 272 90 0.25 0.25 65024 0 0
+( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 176 152 90 0.25 0.25 65024 0 0
+( 968 214 100 ) ( 908 214 100 ) ( 908 214 76 ) tex_material/s_wood003 176 272 90 0.25 0.25 65024 0 0
+( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 176 152 90 0.25 0.25 65024 0 0
 }
 // brush 68
 {
 ( 968 152 76 ) ( 908 152 76 ) ( 908 150 76 ) tex_common/nodraw 68 136 90 0.5 0.5 65024 0 0
-( 908 150 80 ) ( 908 152 80 ) ( 968 152 80 ) tex_material/s_wood003 68 136 90 0.5 0.5 65024 0 0
-( 908 150 56 ) ( 968 150 56 ) ( 968 150 32 ) tex_material/s_wood003 88 136 90 0.5 0.5 65024 0 0
-( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 88 200 90 0.5 0.5 65024 0 0
-( 864 152 12 ) ( 800 152 12 ) ( 800 152 4 ) tex_material/s_wood003 88 136 90 0.5 0.5 65024 0 0
-( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 88 200 90 0.5 0.5 65024 0 0
+( 908 150 80 ) ( 908 152 80 ) ( 968 152 80 ) tex_material/s_wood003 136 272 90 0.25 0.25 65024 0 0
+( 908 150 56 ) ( 968 150 56 ) ( 968 150 32 ) tex_material/s_wood003 176 272 90 0.25 0.25 65024 0 0
+( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 176 400 90 0.25 0.25 65024 0 0
+( 864 152 12 ) ( 800 152 12 ) ( 800 152 4 ) tex_material/s_wood003 176 272 90 0.25 0.25 65024 0 0
+( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 176 400 90 0.25 0.25 65024 0 0
 }
 // brush 69
 {
 ( 1208 -122 52 ) ( 1208 -118 52 ) ( 1206 -118 52 ) tex_common/nodraw 68 136 90 0.5 0.5 65024 0 0
-( 908 150 56 ) ( 908 152 56 ) ( 968 152 56 ) tex_material/s_wood003 68 136 90 0.5 0.5 65024 0 0
-( 908 150 56 ) ( 968 150 56 ) ( 968 150 32 ) tex_material/s_wood003 136 136 90 0.5 0.5 65024 0 0
-( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 136 200 90 0.5 0.5 65024 0 0
-( 864 152 12 ) ( 800 152 12 ) ( 800 152 4 ) tex_material/s_wood003 136 136 90 0.5 0.5 65024 0 0
-( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 136 200 90 0.5 0.5 65024 0 0
+( 908 150 56 ) ( 908 152 56 ) ( 968 152 56 ) tex_material/s_wood003 136 272 90 0.25 0.25 65024 0 0
+( 908 150 56 ) ( 968 150 56 ) ( 968 150 32 ) tex_material/s_wood003 272 272 90 0.25 0.25 65024 0 0
+( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 272 400 90 0.25 0.25 65024 0 0
+( 864 152 12 ) ( 800 152 12 ) ( 800 152 4 ) tex_material/s_wood003 272 272 90 0.25 0.25 65024 0 0
+( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 272 400 90 0.25 0.25 65024 0 0
 }
 // brush 70
 {
@@ -712,73 +712,73 @@
 {
 ( 1352 240 64 ) ( 1360 240 64 ) ( 1360 248 64 ) tex_common/nodraw 128 64 0 0.5 0.5 65024 0 0
 ( 908 152 88 ) ( 908 156 88 ) ( 912 156 88 ) tex_common/nodraw 128 64 0 0.5 0.5 65024 0 0
-( 1106 208 54 ) ( 1108 208 54 ) ( 1108 208 36 ) tex_material/s_wood003 128 96 0 0.5 0.5 65024 0 0
-( 912 208 44 ) ( 912 212 44 ) ( 912 212 20 ) tex_material/s_wood003 192 96 0 0.5 0.5 65024 0 0
-( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 128 96 0 0.5 0.5 65024 0 0
-( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 192 96 0 0.5 0.5 65024 0 0
+( 1106 208 54 ) ( 1108 208 54 ) ( 1108 208 36 ) tex_material/s_wood003 256 192 0 0.25 0.25 65024 0 0
+( 912 208 44 ) ( 912 212 44 ) ( 912 212 20 ) tex_material/s_wood003 384 192 0 0.25 0.25 65024 0 0
+( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 256 192 0 0.25 0.25 65024 0 0
+( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 384 192 0 0.25 0.25 65024 0 0
 }
 // brush 72
 {
 ( 1352 240 64 ) ( 1360 240 64 ) ( 1360 248 64 ) tex_common/nodraw 128 64 0 0.5 0.5 65024 0 0
 ( 908 152 88 ) ( 908 156 88 ) ( 912 156 88 ) tex_common/nodraw 128 64 0 0.5 0.5 65024 0 0
-( 1106 208 54 ) ( 1108 208 54 ) ( 1108 208 36 ) tex_material/s_wood003 128 96 0 0.5 0.5 65024 0 0
-( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 192 96 0 0.5 0.5 65024 0 0
-( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 128 96 0 0.5 0.5 65024 0 0
-( 964 368 32 ) ( 964 368 4 ) ( 964 400 32 ) tex_material/s_wood003 192 96 0 0.5 0.5 65024 0 0
+( 1106 208 54 ) ( 1108 208 54 ) ( 1108 208 36 ) tex_material/s_wood003 256 192 0 0.25 0.25 65024 0 0
+( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 384 192 0 0.25 0.25 65024 0 0
+( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 256 192 0 0.25 0.25 65024 0 0
+( 964 368 32 ) ( 964 368 4 ) ( 964 400 32 ) tex_material/s_wood003 384 192 0 0.25 0.25 65024 0 0
 }
 // brush 73
 {
 ( 1352 240 64 ) ( 1360 240 64 ) ( 1360 248 64 ) tex_common/nodraw 128 64 0 0.5 0.5 65024 0 0
 ( 908 152 88 ) ( 908 156 88 ) ( 912 156 88 ) tex_common/nodraw 128 64 0 0.5 0.5 65024 0 0
-( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 128 96 0 0.5 0.5 65024 0 0
-( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 192 96 0 0.5 0.5 65024 0 0
-( 968 156 64 ) ( 964 156 64 ) ( 964 156 20 ) tex_material/s_wood003 128 96 0 0.5 0.5 65024 0 0
-( 964 368 32 ) ( 964 368 4 ) ( 964 400 32 ) tex_material/s_wood003 192 96 0 0.5 0.5 65024 0 0
+( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 256 192 0 0.25 0.25 65024 0 0
+( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 384 192 0 0.25 0.25 65024 0 0
+( 968 156 64 ) ( 964 156 64 ) ( 964 156 20 ) tex_material/s_wood003 256 192 0 0.25 0.25 65024 0 0
+( 964 368 32 ) ( 964 368 4 ) ( 964 400 32 ) tex_material/s_wood003 384 192 0 0.25 0.25 65024 0 0
 }
 // brush 74
 {
 ( 1352 240 64 ) ( 1360 240 64 ) ( 1360 248 64 ) tex_common/nodraw 128 64 0 0.5 0.5 65024 0 0
 ( 908 152 88 ) ( 908 156 88 ) ( 912 156 88 ) tex_common/nodraw 128 64 0 0.5 0.5 65024 0 0
-( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 128 96 0 0.5 0.5 65024 0 0
-( 912 208 44 ) ( 912 212 44 ) ( 912 212 20 ) tex_material/s_wood003 192 96 0 0.5 0.5 65024 0 0
-( 968 156 64 ) ( 964 156 64 ) ( 964 156 20 ) tex_material/s_wood003 128 96 0 0.5 0.5 65024 0 0
-( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 192 96 0 0.5 0.5 65024 0 0
+( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 256 192 0 0.25 0.25 65024 0 0
+( 912 208 44 ) ( 912 212 44 ) ( 912 212 20 ) tex_material/s_wood003 384 192 0 0.25 0.25 65024 0 0
+( 968 156 64 ) ( 964 156 64 ) ( 964 156 20 ) tex_material/s_wood003 256 192 0 0.25 0.25 65024 0 0
+( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 384 192 0 0.25 0.25 65024 0 0
 }
 // brush 75
 {
 ( 802 132 20 ) ( 810 132 20 ) ( 810 192 20 ) tex_common/nodraw 128 64 0 0.5 0.5 65280 0 0
-( 860 138 64 ) ( 860 130 64 ) ( 796 130 64 ) tex_material/s_wood003 128 64 0 0.5 0.5 65280 0 0
-( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 128 0 0 0.5 0.5 65280 0 0
-( 912 208 44 ) ( 912 212 44 ) ( 912 212 20 ) tex_material/s_wood003 192 0 0 0.5 0.5 65280 0 0
-( 968 156 64 ) ( 964 156 64 ) ( 964 156 20 ) tex_material/s_wood003 128 0 0 0.5 0.5 65280 0 0
-( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 192 0 0 0.5 0.5 65280 0 0
+( 860 138 64 ) ( 860 130 64 ) ( 796 130 64 ) tex_material/s_wood003 256 128 0 0.25 0.25 65280 0 0
+( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 256 0 0 0.25 0.25 65280 0 0
+( 912 208 44 ) ( 912 212 44 ) ( 912 212 20 ) tex_material/s_wood003 384 0 0 0.25 0.25 65280 0 0
+( 968 156 64 ) ( 964 156 64 ) ( 964 156 20 ) tex_material/s_wood003 256 0 0 0.25 0.25 65280 0 0
+( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 384 0 0 0.25 0.25 65280 0 0
 }
 // brush 76
 {
 ( 802 132 20 ) ( 810 132 20 ) ( 810 192 20 ) tex_common/nodraw 128 64 0 0.5 0.5 65280 0 0
-( 860 138 64 ) ( 860 130 64 ) ( 796 130 64 ) tex_material/s_wood003 128 64 0 0.5 0.5 65280 0 0
-( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 128 0 0 0.5 0.5 65280 0 0
-( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 192 0 0 0.5 0.5 65280 0 0
-( 968 156 64 ) ( 964 156 64 ) ( 964 156 20 ) tex_material/s_wood003 128 0 0 0.5 0.5 65280 0 0
-( 964 368 32 ) ( 964 368 4 ) ( 964 400 32 ) tex_material/s_wood003 192 0 0 0.5 0.5 65280 0 0
+( 860 138 64 ) ( 860 130 64 ) ( 796 130 64 ) tex_material/s_wood003 256 128 0 0.25 0.25 65280 0 0
+( 964 152 64 ) ( 968 152 64 ) ( 968 152 20 ) tex_material/s_wood003 256 0 0 0.25 0.25 65280 0 0
+( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 384 0 0 0.25 0.25 65280 0 0
+( 968 156 64 ) ( 964 156 64 ) ( 964 156 20 ) tex_material/s_wood003 256 0 0 0.25 0.25 65280 0 0
+( 964 368 32 ) ( 964 368 4 ) ( 964 400 32 ) tex_material/s_wood003 384 0 0 0.25 0.25 65280 0 0
 }
 // brush 77
 {
 ( 802 132 20 ) ( 810 132 20 ) ( 810 192 20 ) tex_common/nodraw 128 64 0 0.5 0.5 65280 0 0
-( 860 138 64 ) ( 860 130 64 ) ( 796 130 64 ) tex_material/s_wood003 128 64 0 0.5 0.5 65280 0 0
-( 1106 208 54 ) ( 1108 208 54 ) ( 1108 208 36 ) tex_material/s_wood003 128 0 0 0.5 0.5 65280 0 0
-( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 192 0 0 0.5 0.5 65280 0 0
-( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 128 0 0 0.5 0.5 65280 0 0
-( 964 368 32 ) ( 964 368 4 ) ( 964 400 32 ) tex_material/s_wood003 192 0 0 0.5 0.5 65280 0 0
+( 860 138 64 ) ( 860 130 64 ) ( 796 130 64 ) tex_material/s_wood003 256 128 0 0.25 0.25 65280 0 0
+( 1106 208 54 ) ( 1108 208 54 ) ( 1108 208 36 ) tex_material/s_wood003 256 0 0 0.25 0.25 65280 0 0
+( 968 208 64 ) ( 968 212 64 ) ( 968 212 20 ) tex_material/s_wood003 384 0 0 0.25 0.25 65280 0 0
+( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 256 0 0 0.25 0.25 65280 0 0
+( 964 368 32 ) ( 964 368 4 ) ( 964 400 32 ) tex_material/s_wood003 384 0 0 0.25 0.25 65280 0 0
 }
 // brush 78
 {
 ( 802 132 20 ) ( 810 132 20 ) ( 810 192 20 ) tex_common/nodraw 128 64 0 0.5 0.5 65280 0 0
-( 860 138 64 ) ( 860 130 64 ) ( 796 130 64 ) tex_material/s_wood003 128 64 0 0.5 0.5 65280 0 0
-( 1106 208 54 ) ( 1108 208 54 ) ( 1108 208 36 ) tex_material/s_wood003 128 0 0 0.5 0.5 65280 0 0
-( 912 208 44 ) ( 912 212 44 ) ( 912 212 20 ) tex_material/s_wood003 192 0 0 0.5 0.5 65280 0 0
-( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 128 0 0 0.5 0.5 65280 0 0
-( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 192 0 0 0.5 0.5 65280 0 0
+( 860 138 64 ) ( 860 130 64 ) ( 796 130 64 ) tex_material/s_wood003 256 128 0 0.25 0.25 65280 0 0
+( 1106 208 54 ) ( 1108 208 54 ) ( 1108 208 36 ) tex_material/s_wood003 256 0 0 0.25 0.25 65280 0 0
+( 912 208 44 ) ( 912 212 44 ) ( 912 212 20 ) tex_material/s_wood003 384 0 0 0.25 0.25 65280 0 0
+( 912 212 64 ) ( 908 212 64 ) ( 908 212 40 ) tex_material/s_wood003 256 0 0 0.25 0.25 65280 0 0
+( 908 212 44 ) ( 908 208 44 ) ( 908 208 20 ) tex_material/s_wood003 384 0 0 0.25 0.25 65280 0 0
 }
 // brush 79
 {
@@ -903,44 +903,44 @@
 {
 "classname" "light"
 "light" "60"
-"_color" "0.7 1 0.75"
 "origin" "480 440 104"
+"_color" "0.7 1 0.75"
 }
 // entity 2
 {
 "classname" "misc_model"
-"model" "models/aircraft/ufo_supply/ufo_supply_engine_left.md2"
 "origin" "548 352 68"
+"model" "models/aircraft/ufo_supply/ufo_supply_engine_left.md2"
 "spawnflags" "255"
 }
 // entity 3
 {
 "classname" "misc_model"
-"model" "models/aircraft/ufo_supply/ufo_supply_wing_right.md2"
 "origin" "544 336 72"
+"model" "models/aircraft/ufo_supply/ufo_supply_wing_right.md2"
 "spawnflags" "254"
 }
 // entity 4
 {
 "classname" "misc_model"
-"model" "models/aircraft/ufo_supply/ufo_supply_wing_left.md2"
 "origin" "544 336 72"
+"model" "models/aircraft/ufo_supply/ufo_supply_wing_left.md2"
 "spawnflags" "254"
 }
 // entity 5
 {
 "classname" "misc_model"
-"model" "models/aircraft/ufo_supply/ufo_supply_body_open.md2"
 "origin" "544 348 72"
+"model" "models/aircraft/ufo_supply/ufo_supply_body_open.md2"
 "spawnflags" "2"
 }
 // entity 6
 {
 "classname" "misc_model"
-"angles" "-55 -180 -180"
 "spawnflags" "252"
-"origin" "572 484 124"
 "model" "models/aircraft/ufo_supply/ufo_supply_engine_left.md2"
+"origin" "572 484 124"
+"angles" "-55 -180 -180"
 }
 // entity 7
 {
@@ -974,37 +974,37 @@
 {
 "classname" "light"
 "light" "100"
-"_color" "0.5 1 0.5"
 "origin" "444 364 104"
+"_color" "0.5 1 0.5"
 }
 // entity 12
 {
 "classname" "misc_model"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_supply/ufo_supply_engine_right.md2"
-"origin" "288 480 40"
 "angles" "45 -180 -180"
+"origin" "288 480 40"
 }
 // entity 13
 {
 "classname" "misc_model"
 "spawnflags" "252"
-"origin" "544 348 64"
 "model" "models/aircraft/ufo_supply/ufo_supply_body_closed.md2"
+"origin" "544 348 64"
 }
 // entity 14
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "552 352 68"
 "model" "models/aircraft/ufo_supply/ufo_supply_engine_right.md2"
+"origin" "552 352 68"
 }
 // entity 15
 {
 "classname" "light"
 "light" "100"
-"_color" "0.5 1 0.5"
 "origin" "484 208 104"
+"_color" "0.5 1 0.5"
 }
 // entity 16
 {
@@ -1417,102 +1417,102 @@
 // entity 30
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "912 656 8"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "spawnflags" "255"
 }
 // entity 31
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"skin" "1"
 "origin" "912 656 8"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "spawnflags" "255"
+"skin" "1"
 }
 // entity 32
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "144 656 8"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "spawnflags" "255"
 }
 // entity 33
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"skin" "1"
 "origin" "144 656 8"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "spawnflags" "255"
+"skin" "1"
 }
 // entity 34
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "96 560 8"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "spawnflags" "255"
 }
 // entity 35
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"skin" "1"
 "origin" "96 560 8"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "spawnflags" "255"
+"skin" "1"
 }
 // entity 36
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "224 544 8"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "spawnflags" "255"
 }
 // entity 37
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"skin" "1"
 "origin" "224 544 8"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "spawnflags" "255"
+"skin" "1"
 }
 // entity 38
 {
 "classname" "misc_particle"
 "origin" "488 168 368"
-"spawnflags" "255"
 "particle" "weather_snow"
+"spawnflags" "255"
 }
 // entity 39
 {
 "classname" "misc_particle"
 "origin" "488 552 368"
-"spawnflags" "255"
 "particle" "weather_snow"
+"spawnflags" "255"
 }
 // entity 40
 {
 "classname" "misc_particle"
 "origin" "168 168 368"
-"spawnflags" "255"
 "particle" "weather_snow"
+"spawnflags" "255"
 }
 // entity 41
 {
 "classname" "misc_particle"
 "origin" "168 552 368"
-"spawnflags" "255"
 "particle" "weather_snow"
+"spawnflags" "255"
 }
 // entity 42
 {
 "classname" "misc_particle"
 "origin" "808 168 368"
-"spawnflags" "255"
 "particle" "weather_snow"
+"spawnflags" "255"
 }
 // entity 43
 {
 "classname" "misc_particle"
 "origin" "808 552 368"
-"spawnflags" "255"
 "particle" "weather_snow"
+"spawnflags" "255"
 }
