@@ -1,19 +1,19 @@
 
 // entity 0
 {
-"classname" "worldspawn"
+"subdivide" "64"
 "maxteams" "2"
+"angles_night" "-75 20"
+"classname" "worldspawn"
 "maxlevel" "6"
 "angles_day" "-75 10"
-"subdivide" "64"
-"angles_night" "-75 20"
 // brush 0
 {
-( 256 448 128 ) ( 0 448 128 ) ( 256 512 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 256 448 128 ) ( 256 512 128 ) ( 256 448 0 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 256 0 128 ) ( 256 0 0 ) ( 0 0 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 256 448 128 ) ( 0 448 128 ) ( 256 512 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 256 448 128 ) ( 256 512 128 ) ( 256 448 0 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 256 0 128 ) ( 256 0 0 ) ( 0 0 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 ( 0 496 0 ) ( 0 432 0 ) ( 256 496 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
-( 0 512 0 ) ( 0 512 128 ) ( 0 448 0 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 0 512 0 ) ( 0 512 128 ) ( 0 448 0 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 ( 44 256 302 ) ( 60 256 302 ) ( 44 256 306 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 }
 // brush 1
@@ -117,12 +117,12 @@
 }
 // brush 12
 {
-( 256 448 128 ) ( 0 448 128 ) ( 256 512 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 256 448 128 ) ( 256 512 128 ) ( 256 448 0 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 256 448 128 ) ( 0 448 128 ) ( 256 512 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 256 448 128 ) ( 256 512 128 ) ( 256 448 0 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 ( 198 256 148 ) ( 198 256 144 ) ( 182 256 148 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 0 496 0 ) ( 0 432 0 ) ( 256 496 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
-( 0 512 0 ) ( 0 512 128 ) ( 0 448 0 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 0 512 0 ) ( 256 512 0 ) ( 0 512 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 0 512 0 ) ( 0 512 128 ) ( 0 448 0 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 0 512 0 ) ( 256 512 0 ) ( 0 512 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 }
 // brush 13
 {
@@ -809,70 +809,70 @@
 // entity 2
 {
 "classname" "light"
-"_color" "0.71 1.0 0.71"
 "light" "230"
 "origin" "160 208 352"
+"_color" "0.71 1.0 0.71"
 }
 // entity 3
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "160 276 448"
+"_color" "1 1 1"
 }
 // entity 4
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "160 384 544"
+"_color" "1 1 1"
 }
 // entity 5
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "160 448 608"
+"_color" "1 1 1"
 }
 // entity 6
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "160 296 416"
+"_color" "1 1 1"
 }
 // entity 7
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "160 392 512"
+"_color" "1 1 1"
 }
 // entity 8
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "160 456 576"
+"_color" "1 1 1"
 }
 // entity 9
 {
 "classname" "light"
-"_color" "0.71 1.0 0.71"
 "light" "180"
 "origin" "200 156 332"
+"_color" "0.71 1.0 0.71"
 }
 // entity 10
 {
 "classname" "light"
-"_color" "0.71 1.0 0.71"
 "light" "140"
 "origin" "160 160 240"
+"_color" "0.71 1.0 0.71"
 }
 // entity 11
 {
 "classname" "light"
-"_color" "0.71 1.0 0.71"
 "light" "140"
 "origin" "124 144 344"
+"_color" "0.71 1.0 0.71"
 }

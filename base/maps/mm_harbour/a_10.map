@@ -1,12 +1,12 @@
 
 // entity 0
 {
-"classname" "worldspawn"
+"subdivide" "64"
 "maxteams" "2"
+"angles_night" "-75 20"
+"classname" "worldspawn"
 "maxlevel" "6"
 "angles_day" "-75 10"
-"subdivide" "64"
-"angles_night" "-75 20"
 // brush 0
 {
 ( 512 80 232 ) ( 512 64 232 ) ( 496 80 232 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
@@ -702,7 +702,7 @@
 }
 // brush 77
 {
-( 64 256 128 ) ( 64 0 128 ) ( 0 256 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 64 256 128 ) ( 64 0 128 ) ( 0 256 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 ( 64 256 128 ) ( 0 256 128 ) ( 64 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 512 68 272 ) ( 512 188 272 ) ( 512 64 256 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 16 0 0 ) ( 80 0 0 ) ( 16 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
@@ -779,72 +779,72 @@
 // entity 2
 {
 "classname" "light"
-"_color" "0.71 1.0 0.71"
 "light" "230"
 "origin" "384 128 352"
+"_color" "0.71 1.0 0.71"
 }
 // entity 3
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "332 128 424"
+"_color" "1 1 1"
 }
 // entity 4
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "236 128 520"
+"_color" "1 1 1"
 }
 // entity 5
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "172 128 584"
+"_color" "1 1 1"
 }
 // entity 6
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "300 128 392"
+"_color" "1 1 1"
 }
 // entity 7
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "204 128 488"
+"_color" "1 1 1"
 }
 // entity 8
 {
 "classname" "light"
-"_color" "1 1 1"
 "light" "180"
 "origin" "140 128 552"
+"_color" "1 1 1"
 }
 // entity 9
 {
 "classname" "light"
-"_color" "0.71 1.0 0.71"
 "light" "180"
 "origin" "464 92 332"
+"_color" "0.71 1.0 0.71"
 }
 // entity 10
 {
 "classname" "light"
-"_color" "0.71 1.0 0.71"
 "light" "140"
 "origin" "448 128 240"
+"_color" "0.71 1.0 0.71"
 }
 // entity 11
 {
 "classname" "light"
-"_color" "0.71 1.0 0.71"
 "light" "140"
 "origin" "452 164 344"
+"_color" "0.71 1.0 0.71"
 }
 // entity 12
 {
