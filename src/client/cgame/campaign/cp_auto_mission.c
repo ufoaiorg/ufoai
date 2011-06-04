@@ -557,7 +557,7 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 	/* Aliens */
 	for (unit = 0; unit < numAliensTm; unit++) {
 		/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
-		healthMaxm = (int) (frand() * 40.f) + 20.f;
+		healthMaxm = (int) (frand() * 100.f) + 50.f;
 		health = (int) (frand() * (healthMaxm - 10)) + 10;
 		battle->unitHealthMax[2][unit] = healthMaxm;
 		battle->unitHealth[2][unit] = health;
@@ -569,7 +569,7 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 	if (numAlienDronesTm > 0) {
 		for (unit = 0; unit < numAlienDronesTm; unit++) {
 			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
-			healthMaxm = (int) (frand() * 60.f) + 30.f;
+			healthMaxm = (int) (frand() * 120.f) + 80.f;
 			health = (int) (frand() * (healthMaxm - 10)) + 10;
 			battle->unitHealthMax[3][unit] = healthMaxm;
 			battle->unitHealth[3][unit] = health;
@@ -583,7 +583,7 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 	if (numCivsTm > 0) {
 		for (unit = 0; unit < numCivsTm; unit++) {
 			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
-			healthMaxm = (int) (frand() * 20.f) + 5.f;
+			healthMaxm = (int) (frand() * 40.f) + 5.f;
 			health = (int) (frand() * (healthMaxm - 4)) + 4;
 			battle->unitHealthMax[4][unit] = healthMaxm;
 			battle->unitHealth[4][unit] = health;
