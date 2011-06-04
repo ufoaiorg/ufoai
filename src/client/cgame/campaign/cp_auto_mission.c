@@ -520,3 +520,63 @@ void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
 {
 	/** @todo */
 }
+
+void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const struct battleParam_s *missionParams)
+{
+	assert(battle);
+	assert(missionParams);
+
+	int numAliens = missionParams->aliens;
+	int numAlienDrones = int (frand() * numAliens);
+	int numCivs = missionParams->civilians;
+
+	/* Alines will go on team 2, alien drones on 3, civs on 4 (player soldiers are 0 and UGVs are 1). */
+	battle->nUnits[2] = numAliens;
+	battle->nUnits[3] = numAlienDrones;
+	battle->nUnits[4] = numCivs;
+
+	int unit;
+	int health;
+	int healthMax;
+
+	/* Populate the teams */
+
+	/* Aliens */
+	for (unit = 0; unit < numAliens; unit++) {
+		/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
+		healthMax = int (frand() * 40.f) + 20.f;
+		health = int (frand() * (healthMax - 10)) + 10;
+		battle->unitHealthMax[2] = healthMax;
+		battle->unitHealth[2] = health;
+	}
+	battle->teamActive[2] = qtrue;
+	battle->teamType[2] = AUTOMISSION_TEAM_TYPE_ALIEN;
+	battle->scoreTeamSkill[2] = (frand() * 0.6f) + 0.2f;
+
+	if (numAlienDrones > 0) {
+		for (unit = 0; unit < numAlienDrones; unit++) {
+			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
+			healthMax = int (frand() * 60.f) + 30.f;
+			health = int (frand() * (healthMax - 10)) + 10;
+			battle->unitHealthMax[3] = healthMax;
+			battle->unitHealth[3] = health;
+		}
+		battle->teamActive[3] = qtrue;
+		battle->teamType[3] = AUTOMISSION_TEAM_TYPE_ALIEN_DRONE;
+		battle->scoreTeamSkill[3] = (frand() * 0.6f) + 0.3f;
+	}
+
+	/* Civilians (if any) */
+	if (numCivs > 0) {
+		for (unit = 0; unit < numCivs; unit++) {
+			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
+			healthMax = int (frand() * 20.f) + 5.f;
+			health = int (frand() * (healthMax - 4)) + 4;
+			battle->unitHealthMax[4] = healthMax;
+			battle->unitHealth[4] = health;
+		}
+		battle->teamActive[4] = qtrue;
+		battle->teamType[4] = AUTOMISSION_TEAM_TYPE_CIVILIAN;
+		battle->scoreTeamSkill[4] = (frand() * 0.5f) + 0.05f;
+	}
+}
