@@ -92,7 +92,7 @@
 // brush 7
 {
 ( 64 152 28 ) ( 64 -4 28 ) ( 64 -4 0 ) tex_common/nodraw 128 -112 0 0.25 0.25 65280 128 0
-( 224 196 24 ) ( 224 352 24 ) ( 224 352 -4 ) tex_buildings/wall019 128 -112 0 0.25 0.25 65280 0 0
+( 224 196 24 ) ( 224 352 24 ) ( 224 352 -4 ) tex_buildings/wall019 256 -224 0 0.125 0.125 65280 0 0
 ( 512 0 4 ) ( 512 0 0 ) ( 288 0 4 ) tex_common/nodraw -192 192 0 0.5 0.5 65280 128 0
 ( 556 256 8 ) ( 108 256 8 ) ( 108 256 0 ) tex_common/nodraw -192 192 0 0.5 0.5 65280 128 0
 ( 96 -136 -4 ) ( 0 -136 -4 ) ( 0 -256 -4 ) tex_common/nodraw 0 -128 0 0.25 0.25 65280 128 0
@@ -313,17 +313,17 @@
 {
 "classname" "light"
 "light" "160"
-"_color" "0.9 0.93 1"
-"origin" "352 128 56"
 "spawnflags" "1"
+"origin" "352 128 56"
+"_color" "0.9 0.93 1"
 }
 // entity 4
 {
 "classname" "light"
 "origin" "416 128 56"
+"spawnflags" "1"
 "_color" "0.9 0.93 1"
 "light" "160"
-"spawnflags" "1"
 }
 // entity 5
 {
@@ -413,6 +413,6 @@
 // entity 6
 {
 "classname" "info_alien_start"
-"angle" "270"
 "origin" "336 176 28"
+"angle" "270"
 }
