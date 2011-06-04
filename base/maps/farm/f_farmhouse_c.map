@@ -2,8 +2,8 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "2"
 "maxlevel" "4"
+"maxteams" "2"
 // brush 0
 {
 ( -66 28 4 ) ( -66 30 4 ) ( -68 30 4 ) tex_common/nodraw 0 8 0 0.5 0.5 65280 128 0
@@ -16,7 +16,7 @@
 // brush 1
 {
 ( 0 0 0 ) ( 256 0 0 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 288 256 4 ) ( 288 0 4 ) ( 32 256 4 ) tex_buildings/floor016 64 64 0 0.5 0.5 65280 0 0
+( 288 256 4 ) ( 288 0 4 ) ( 32 256 4 ) tex_buildings/floor016 256 256 0 0.125 0.125 65280 0 0
 ( 224 224 64 ) ( 224 224 4 ) ( 128 224 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 224 108 188 ) ( 224 192 188 ) ( 224 192 128 ) tex_common/nodraw 16 0 0 0.5 0.5 65280 128 0
 ( 256 416 64 ) ( 224 416 64 ) ( 224 416 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -268,7 +268,7 @@
 // brush 29
 {
 ( 0 0 0 ) ( 256 0 0 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 288 256 4 ) ( 288 0 4 ) ( 32 256 4 ) tex_buildings/floor016 0 64 0 0.5 0.5 65280 0 0
+( 288 256 4 ) ( 288 0 4 ) ( 32 256 4 ) tex_buildings/floor016 0 256 0 0.125 0.125 65280 0 0
 ( 322 96 4 ) ( 322 96 60 ) ( 326 96 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 448 -20 188 ) ( 448 64 188 ) ( 448 64 128 ) tex_common/nodraw 16 0 0 0.5 0.5 65280 128 0
 ( 256 416 64 ) ( 224 416 64 ) ( 224 416 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -1218,8 +1218,8 @@
 "classname" "misc_model"
 "origin" "157.25 386.5 3.25"
 "model" "models/objects/construct/generator/generator.md2"
-"angles" "0 37.0005 0"
 "spawnflags" "1"
+"angles" "0 37.0005 0"
 }
 // entity 5
 {
@@ -1872,17 +1872,17 @@
 {
 "classname" "light"
 "light" "200"
-"spawnflags" "183"
 "origin" "423.875 356.125 40.25"
 "_color" "1.00 0.81 0.54"
+"spawnflags" "183"
 }
 // entity 19
 {
 "classname" "light"
 "light" "200"
-"spawnflags" "183"
 "origin" "184.25 357.75 49.375"
 "_color" "1.00 0.95 0.78"
+"spawnflags" "183"
 }
 // entity 20
 {
@@ -1905,7 +1905,7 @@
 {
 "classname" "light"
 "light" "200"
-"spawnflags" "183"
 "origin" "284 394 40.125"
 "_color" "1.00 0.73 0.47"
+"spawnflags" "183"
 }
