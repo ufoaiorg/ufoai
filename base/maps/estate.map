@@ -2934,11 +2934,11 @@
 }
 // brush 327
 {
-( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 56 0 0 0.4 0.4 65280 0 0
+( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 112 0 0 0.2 0.2 65280 0 0
 ( -8 -16 -4 ) ( 24 -16 -4 ) ( -8 16 -4 ) tex_common/nodraw 255 0 0 1 1 65280 128 0
 ( -72 -64 276 ) ( -72 -66 276 ) ( -72 -66 268 ) tex_common/nodraw 192 16 0 1 1 65280 128 0
 ( 72 -204 128 ) ( 72 -204 136 ) ( 72 -198 136 ) tex_common/nodraw 4 20 0 1 1 65280 128 0
-( 126 -196 128 ) ( 132 -196 164 ) ( 126 -196 164 ) tex_nature/railway 24 24 0 1 1 65280 0 0
+( 126 -196 128 ) ( 132 -196 164 ) ( 126 -196 164 ) tex_nature/railway 48 48 0 0.5 0.5 65280 0 0
 ( 96 -336 10 ) ( 96 -336 -4 ) ( 64 -336 10 ) tex_common/nodraw 16 24 0 1 1 65280 128 0
 }
 // brush 328
@@ -2978,21 +2978,21 @@
 }
 // brush 332
 {
-( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 246 66 0 -0.4 0.4 65280 0 0
+( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 492 132 0 -0.2 0.2 65280 0 0
 ( -8 -16 -4 ) ( 24 -16 -4 ) ( -8 16 -4 ) tex_common/nodraw 75 180 0 -1 1 65280 128 0
 ( 240 302 80 ) ( 240 334 -48 ) ( 240 302 -48 ) tex_common/nodraw 20 16 0 1 1 65280 128 0
 ( 164 296 -48 ) ( 164 328 -48 ) ( 164 296 80 ) tex_common/nodraw 82 20 0 1 1 65280 128 0
-( -88 -412 -40 ) ( -120 -412 88 ) ( -120 -412 -40 ) tex_nature/railway 104 24 0 -1 1 65280 0 0
-( 792 -512 -40 ) ( 792 -512 88 ) ( 824 -512 -40 ) tex_nature/railway 176 24 0 -1 1 65280 0 0
+( -88 -412 -40 ) ( -120 -412 88 ) ( -120 -412 -40 ) tex_nature/railway 208 48 0 -0.5 0.5 65280 0 0
+( 792 -512 -40 ) ( 792 -512 88 ) ( 824 -512 -40 ) tex_nature/railway 352 48 0 -0.5 0.5 65280 0 0
 }
 // brush 333
 {
-( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 56 0 0 0.4 0.4 65280 0 0
+( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 112 0 0 0.2 0.2 65280 0 0
 ( -8 -16 -4 ) ( 24 -16 -4 ) ( -8 16 -4 ) tex_common/nodraw 255 0 0 1 1 65280 128 0
-( -164 -154 268 ) ( -164 -154 276 ) ( -164 -170 276 ) tex_nature/railway 200 16 0 1 1 65280 0 0
-( 164 14 84 ) ( 164 14 -44 ) ( 164 -18 84 ) tex_nature/railway 2 20 0 1 1 65280 0 0
-( 0 -336 -40 ) ( -32 -336 88 ) ( -32 -336 -40 ) tex_nature/railway 28 24 0 1 1 65280 0 0
-( 792 -512 -40 ) ( 792 -512 88 ) ( 824 -512 -40 ) tex_nature/railway 96 24 0 1 1 65280 0 0
+( -164 -154 268 ) ( -164 -154 276 ) ( -164 -170 276 ) tex_nature/railway 400 32 0 0.5 0.5 65280 0 0
+( 164 14 84 ) ( 164 14 -44 ) ( 164 -18 84 ) tex_nature/railway 4 40 0 0.5 0.5 65280 0 0
+( 0 -336 -40 ) ( -32 -336 88 ) ( -32 -336 -40 ) tex_nature/railway 56 48 0 0.5 0.5 65280 0 0
+( 792 -512 -40 ) ( 792 -512 88 ) ( 824 -512 -40 ) tex_nature/railway 192 48 0 0.5 0.5 65280 0 0
 }
 // brush 334
 {
@@ -3005,7 +3005,7 @@
 }
 // brush 335
 {
-( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 56 0 0 0.4 0.4 65280 0 0
+( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 112 0 0 0.2 0.2 65280 0 0
 ( -8 -16 -4 ) ( 24 -16 -4 ) ( -8 16 -4 ) tex_common/nodraw 226 240 0 -1 1 65280 128 0
 ( 271 -381 4 ) ( 180 -343 4 ) ( 180 -343 -4 ) tex_common/nodraw 226 0 0 -1 1 65280 128 0
 ( 280 -434 4 ) ( 211 -365 4 ) ( 211 -365 -4 ) tex_common/nodraw 16 0 0 1 1 65280 128 0
@@ -3016,7 +3016,7 @@
 }
 // brush 336
 {
-( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 56 0 0 0.4 0.4 65280 0 0
+( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 112 0 0 0.2 0.2 65280 0 0
 ( -8 -16 -4 ) ( 24 -16 -4 ) ( -8 16 -4 ) tex_common/nodraw 226 240 0 -1 1 65280 128 0
 ( 271 -487 4 ) ( 233 -396 4 ) ( 233 -396 -4 ) tex_common/nodraw 16 0 0 1 1 65280 128 0
 ( 232 116 -48 ) ( 232 148 -48 ) ( 232 116 80 ) tex_common/nodraw 124 16 0 1 1 65280 128 0
@@ -3059,16 +3059,16 @@
 }
 // brush 341
 {
-( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 246 66 0 0.4 0.4 65280 0 0
+( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 492 132 0 0.2 0.2 65280 0 0
 ( -8 -16 -4 ) ( 24 -16 -4 ) ( -8 16 -4 ) tex_common/nodraw 75 180 0 1 1 65280 128 0
 ( -240 302 -48 ) ( -240 334 -48 ) ( -240 302 80 ) tex_common/nodraw 20 16 0 1 1 65280 128 0
 ( -164 -172 290 ) ( -164 -152 290 ) ( -164 -152 270 ) tex_common/nodraw 82 20 0 1 1 65280 128 0
-( -88 -412 -40 ) ( -120 -412 88 ) ( -120 -412 -40 ) tex_nature/railway 104 24 0 1 1 65280 0 0
-( 792 -512 -40 ) ( 792 -512 88 ) ( 824 -512 -40 ) tex_nature/railway 176 24 0 1 1 65280 0 0
+( -88 -412 -40 ) ( -120 -412 88 ) ( -120 -412 -40 ) tex_nature/railway 208 48 0 0.5 0.5 65280 0 0
+( 792 -512 -40 ) ( 792 -512 88 ) ( 824 -512 -40 ) tex_nature/railway 352 48 0 0.5 0.5 65280 0 0
 }
 // brush 342
 {
-( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 56 0 0 0.4 0.4 65280 0 0
+( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 112 0 0 0.2 0.2 65280 0 0
 ( -8 -16 -4 ) ( 24 -16 -4 ) ( -8 16 -4 ) tex_common/nodraw 226 240 0 1 1 65280 128 0
 ( -180 -343 -4 ) ( -180 -343 4 ) ( -271 -381 4 ) tex_common/nodraw 226 0 0 1 1 65280 128 0
 ( -211 -365 0 ) ( -211 -365 8 ) ( -280 -434 8 ) tex_common/nodraw 16 0 0 1 1 65280 128 0
@@ -3079,7 +3079,7 @@
 }
 // brush 343
 {
-( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 56 0 0 0.4 0.4 65280 0 0
+( 28 16 4 ) ( 28 -16 4 ) ( -4 16 4 ) tex_nature/railway 112 0 0 0.2 0.2 65280 0 0
 ( -8 -16 -4 ) ( 24 -16 -4 ) ( -8 16 -4 ) tex_common/nodraw 226 240 0 1 1 65280 128 0
 ( -233 -396 -4 ) ( -233 -396 4 ) ( -271 -487 4 ) tex_common/nodraw 16 0 0 1 1 65280 128 0
 ( -232 116 80 ) ( -232 148 -48 ) ( -232 116 -48 ) tex_common/nodraw 124 16 0 1 1 65280 128 0
@@ -6886,112 +6886,112 @@
 {
 "classname" "light"
 "origin" "88 72 304"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 2
 {
 "classname" "light"
 "origin" "112 -16 304"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 3
 {
 "classname" "light"
 "origin" "0 80 304"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 4
 {
 "classname" "light"
 "origin" "120 -112 304"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "100"
 }
 // entity 5
 {
 "classname" "light"
 "origin" "0 73 88"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 6
 {
 "classname" "light"
 "origin" "128 8 48"
-"spawnflags" "1"
 "_color" "0.8 0.8 0.8"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 7
 {
 "classname" "light"
 "origin" "336 8 48"
-"spawnflags" "1"
 "_color" "0.6 0.6 0.6"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 8
 {
 "classname" "light"
 "origin" "-376 72 48"
-"spawnflags" "1"
 "_color" "0.3 0.3 0.3"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 9
 {
 "classname" "light"
 "origin" "160 64 184"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 10
 {
 "classname" "light"
 "origin" "152 152 120"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 11
 {
 "classname" "light"
 "origin" "-136 16 168"
-"_color" "1 1 1"
 "spawnflags" "1"
+"_color" "1 1 1"
 "light" "100"
 }
 // entity 12
 {
 "classname" "light"
 "origin" "120 -8 232"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 13
 {
 "classname" "light"
 "origin" "-11 -74 249"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 14
 {
 "classname" "light"
 "origin" "3 30 240"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 15
@@ -6999,8 +6999,8 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angles" "0 32 0"
 "origin" "218 -352 8"
+"angles" "0 32 0"
 }
 // entity 16
 {
@@ -7363,55 +7363,55 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angles" "0 99 0"
 "origin" "-210 -356 8"
+"angles" "0 99 0"
 }
 // entity 20
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angles" "0 177 0"
 "origin" "402 273 8"
+"angles" "0 177 0"
 }
 // entity 21
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angles" "0 55 0"
 "origin" "-432 -144 8"
+"angles" "0 55 0"
 }
 // entity 22
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angles" "0 111 0"
 "origin" "-430 -430 8"
+"angles" "0 111 0"
 }
 // entity 23
 {
 "classname" "light"
 "origin" "72 -136 112"
-"spawnflags" "1"
 "_color" "0.6 0.6 0.6"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 24
 {
 "classname" "light"
 "origin" "-91 -114 232"
-"spawnflags" "1"
 "_color" "0.5 0.5 0.5"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 25
 {
 "classname" "light"
 "origin" "88 -112 311"
-"spawnflags" "1"
 "_color" "0.5 0.5 0.5"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 26
@@ -7419,16 +7419,16 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angles" "0 44 0"
 "origin" "-360 -239 8"
+"angles" "0 44 0"
 }
 // entity 27
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angles" "0 69 0"
 "origin" "-338 239 8"
+"angles" "0 69 0"
 }
 // entity 28
 {
@@ -8197,8 +8197,8 @@
 "classname" "misc_model"
 "origin" "32.7788 -145.5 239.145"
 "model" "models/objects/furniture/deerhead/deerhead.md2"
-"angles" "4.20618 0 0"
 "spawnflags" "8"
+"angles" "4.20618 0 0"
 }
 // entity 52
 {
@@ -8320,8 +8320,8 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angles" "0 2 0"
 "origin" "46 275 8"
+"angles" "0 2 0"
 }
 // entity 76
 {
@@ -10020,16 +10020,16 @@
 {
 "classname" "light"
 "origin" "3 166 240"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 100
 {
 "classname" "light"
 "origin" "352 -128 48"
-"spawnflags" "1"
 "_color" "0.6 0.6 0.6"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 101
@@ -10210,96 +10210,96 @@
 {
 "classname" "light"
 "origin" "-8 -64 48"
-"spawnflags" "1"
 "_color" "0.9 0.9 0.9"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 105
 {
 "classname" "light"
 "origin" "-112 24 311"
-"spawnflags" "1"
 "_color" "0.5 0.5 0.5"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 106
 {
 "classname" "light"
 "origin" "-120 -104 311"
-"spawnflags" "1"
 "_color" "0.5 0.5 0.5"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 107
 {
 "classname" "light"
 "origin" "-16 -16 304"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 108
 {
 "classname" "light"
 "origin" "112 -16 304"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 109
 {
 "classname" "light"
 "origin" "112 -96 232"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 110
 {
 "classname" "light"
 "origin" "120 104 232"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 111
 {
 "classname" "light"
 "origin" "-115 62 232"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 112
 {
 "classname" "light"
 "origin" "0 152 176"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "140"
 }
 // entity 113
 {
 "classname" "light"
 "origin" "-144 152 120"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 114
 {
 "classname" "light"
 "origin" "-16 -96 168"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 115
 {
 "classname" "light"
 "origin" "168 -128 184"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 116
@@ -10307,8 +10307,8 @@
 "classname" "misc_model"
 "origin" "32.7788 -81.5 239.145"
 "model" "models/objects/furniture/deerhead/deerhead.md2"
-"angles" "4.20618 0 0"
 "spawnflags" "8"
+"angles" "4.20618 0 0"
 }
 // entity 117
 {
@@ -10335,40 +10335,40 @@
 {
 "classname" "light"
 "origin" "0 20 180"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "140"
 }
 // entity 121
 {
 "classname" "light"
 "origin" "-100 -24 168"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 122
 {
 "classname" "light"
 "origin" "104 -20 168"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 123
 {
 "classname" "light"
 "origin" "104 -168 168"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 124
 {
 "classname" "light"
 "origin" "-112 -164 168"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "100"
 }
 // entity 125
