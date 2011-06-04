@@ -110,5 +110,6 @@ void CP_AutoBattleFillTeamFromBattleParams(autoMissionBattle_t *battle, const st
 void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
 void CP_AutoBattleDecideResults(autoMissionBattle_t *battle);
 void CP_AutoBattleDisplayResults(const autoMissionBattle_t *battle);
+void CP_AutoBattleUpdateSurivorsAfterBattle(const autoMissionBattle_t *battle, struct aircraft_s *aircraft);
 
 #endif

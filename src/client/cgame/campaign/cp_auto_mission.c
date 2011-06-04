@@ -593,3 +593,12 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 		battle->scoreTeamSkill[4] = (frand() * 0.5f) + 0.05f;
 	}
 }
+
+/**
+ * @brief This looks at a finished auto battle, and uses values from it to kill or lower health of surviving soldiers on a
+ * mission drop ship as appropriate.  It also hands out some experience to soldiers that survive.
+ */
+void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
+{
+	/** @todo */
+}
