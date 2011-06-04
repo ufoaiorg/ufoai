@@ -5446,8 +5446,8 @@
 "classname" "misc_model"
 "origin" "99 295 24"
 "model" "models/objects/furniture/fireext/fireext.md2"
-"spawnflags" "255"
 "angles" "0.032285 225 0"
+"spawnflags" "255"
 }
 // entity 2
 {
@@ -5763,10 +5763,10 @@
 // brush 8
 {
 ( 696 544 4 ) ( 700 544 4 ) ( 696 608 4 ) tex_common/nodraw 56 0 90 0.5 0.5 134283008 128 0
-( 448 288 12 ) ( 384 288 12 ) ( 384 324 12 ) tex_material/wood002 112 0 90 0.25 0.25 134283008 0 0
-( 448 316 40 ) ( 448 318 40 ) ( 448 318 12 ) tex_material/wood002 0 120 90 0.5 0.5 134283008 0 0
+( 448 288 12 ) ( 384 288 12 ) ( 384 324 12 ) tex_material/wood002 112 0 90 0.125 0.125 134283008 0 0
+( 448 316 40 ) ( 448 318 40 ) ( 448 318 12 ) tex_material/wood002 0 120 90 0.25 0.25 134283008 0 0
 ( 448 324 40 ) ( 384 324 40 ) ( 384 324 4 ) tex_misc/wood_palet 0 8 0 -0.5 0.5 134283008 0 0
-( 384 318 40 ) ( 384 316 40 ) ( 384 316 12 ) tex_material/wood002 0 120 90 0.5 0.5 134283008 0 0
+( 384 318 40 ) ( 384 316 40 ) ( 384 316 12 ) tex_material/wood002 0 120 90 0.25 0.25 134283008 0 0
 ( 384 256 40 ) ( 448 256 40 ) ( 448 256 4 ) tex_misc/wood_palet 0 8 0 -0.5 0.5 134283008 0 0
 }
 }
@@ -6515,34 +6515,34 @@
 {
 "classname" "light"
 "origin" "124 128 60"
-"light" "150"
 "_color" "1 0.9 0.7"
+"light" "150"
 }
 // entity 25
 {
 "classname" "light"
 "origin" "124 264 60"
-"light" "150"
 "_color" "1 0.9 0.7"
+"light" "150"
 }
 // entity 26
 {
 "classname" "light"
 "origin" "684 360 60"
-"light" "150"
 "_color" "1 0.9 0.7"
+"light" "150"
 }
 // entity 27
 {
 "classname" "light"
 "origin" "436 400 124"
-"light" "220"
 "_color" "1 0.9 0.7"
+"light" "220"
 }
 // entity 28
 {
 "classname" "light"
 "origin" "436 224 60"
-"light" "220"
 "_color" "1 0.9 0.7"
+"light" "220"
 }
