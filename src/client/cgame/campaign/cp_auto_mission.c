@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "cp_auto_mission.h"
@@ -29,6 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/mathlib_extra.h"
 #include "math.h"
 
+#define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER || (type) == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+#define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN || (type) == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+#define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
+#define AM_SetHostile(battle, team, otherTeam, value) (battle)->isHostile[(team)][(otherTeam)] = (value)
+
 /**
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
  * @param[in,out] battle The battle that should be initialized to defaults
@@ -36,6 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 {
 	int team;
+
+	assert(battle);
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
 		int otherTeam;
 		int soldier;
@@ -83,8 +89,8 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	int unitsAlive;
 
 	assert(teamNum >= 0 && teamNum < MAX_ACTIVETEAM);
-	assert(battle != NULL);
-	assert(aircraft != NULL);
+	assert(battle);
+	assert(aircraft);
 
 	teamSize = 0;
 	unitsAlive = 0;
@@ -122,35 +128,35 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	 * --- file, with other campaign info.  Reminder:  Higher floating point values mean better
 	 * --- soldiers, and therefore make an easier fight for the player. */
 	switch (campaign->difficulty) {
-		case 4:
-			battle->scoreTeamDifficulty[teamNum] = 0.20;
-			break;
-		case 3:
-			battle->scoreTeamDifficulty[teamNum] = 0.30;
-			break;
-		case 2:
-			battle->scoreTeamDifficulty[teamNum] = 0.40;
-			break;
-		case 1:
-			battle->scoreTeamDifficulty[teamNum] = 0.45;
-			break;
-		case 0:
-			battle->scoreTeamDifficulty[teamNum] = 0.50;
-			break;
-		case -1:
-			battle->scoreTeamDifficulty[teamNum] = 0.55;
-			break;
-		case -2:
-			battle->scoreTeamDifficulty[teamNum] = 0.60;
-			break;
-		case -3:
-			battle->scoreTeamDifficulty[teamNum] = 0.70;
-			break;
-		case -4:
-			battle->scoreTeamDifficulty[teamNum] = 0.80;
-			break;
-		default:
-			battle->scoreTeamDifficulty[teamNum] = 0.50;
+	case 4:
+		battle->scoreTeamDifficulty[teamNum] = 0.20;
+		break;
+	case 3:
+		battle->scoreTeamDifficulty[teamNum] = 0.30;
+		break;
+	case 2:
+		battle->scoreTeamDifficulty[teamNum] = 0.40;
+		break;
+	case 1:
+		battle->scoreTeamDifficulty[teamNum] = 0.45;
+		break;
+	case 0:
+		battle->scoreTeamDifficulty[teamNum] = 0.50;
+		break;
+	case -1:
+		battle->scoreTeamDifficulty[teamNum] = 0.55;
+		break;
+	case -2:
+		battle->scoreTeamDifficulty[teamNum] = 0.60;
+		break;
+	case -3:
+		battle->scoreTeamDifficulty[teamNum] = 0.70;
+		break;
+	case -4:
+		battle->scoreTeamDifficulty[teamNum] = 0.80;
+		break;
+	default:
+		battle->scoreTeamDifficulty[teamNum] = 0.50;
 	}
 
 	/* Zero is default ID for human player team ID, at least for auto missions. */
@@ -180,25 +186,33 @@ void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int 
 
 void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 {
-	/** @todo */
-	if (!battle->hasBeenFought)
-		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
-
-	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	int team;
 	int teamPlayer = -1;
 	int teamEnemy = -1;
 	int teamUGVs = -1;
 	int teamDrones = -1;
+
+	if (!battle->hasBeenFought)
+		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
+
+	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
-		if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER)
+		switch (battle->teamType[team]) {
+		case AUTOMISSION_TEAM_TYPE_PLAYER:
 			teamPlayer = team;
-		if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN)
+			break;
+		case AUTOMISSION_TEAM_TYPE_ALIEN:
 			teamEnemy = team;
-		if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
+			break;
+		case AUTOMISSION_TEAM_TYPE_PLAYER_UGV:
 			teamUGVs = team;
-		if (battle->teamType[team] == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+			break;
+		case AUTOMISSION_TEAM_TYPE_ALIEN_DRONE:
 			teamDrones = team;
+			break;
+		default:
+			break;
+		}
 	}
 
 	assert(teamPlayer >= 0);
@@ -225,11 +239,6 @@ void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 	}
 }
 
-#define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER || (type) == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
-#define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN || (type) == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
-#define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
-#define AM_SetHostile(battle, team, otherTeam, value) (battle)->isHostile[(team)][(otherTeam)] = (value)
-
 /**
  * @brief Run this on an auto mission battle before the battle is actually simulated with @c CP_AutoBattleRunBattle, to set
  * default values for who will attack which team.  If you forget to do this before battle simulation, all teams will default
@@ -248,11 +257,12 @@ void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboo
 			continue;
 
 		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
+			const autoMissionTeamType_t teamType = battle->teamType[team];
+			const autoMissionTeamType_t otherTeamType = battle->teamType[otherTeam];
+
 			if (!battle->teamActive[otherTeam])
 				continue;
 
-			const autoMissionTeamType_t teamType = battle->teamType[team];
-			const autoMissionTeamType_t otherTeamType = battle->teamType[otherTeam];
 			if (AM_IsPlayer(teamType)) {
 				if (AM_IsAlien(otherTeamType))
 					AM_SetHostile(battle, team, otherTeam, qtrue);
@@ -287,7 +297,6 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 	int lastActiveTeam = -1;
 	int isHostileCount;
 	int team;
-
 	/* Sums of various values */
 	double teamPooledHealth[MAX_ACTIVETEAM];
 	double teamPooledHealthMax[MAX_ACTIVETEAM];
@@ -348,7 +357,6 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 		teamPooledUnitsTotal[team] = 0.0;
 
 		if (battle->teamActive[team]) {
-			/* Used for (t)emporary math (calc)ulation stuff */
 			double skillAdjCalc;
 			double skillAdjCalcAbs;
 
@@ -402,6 +410,7 @@ static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTe
 	for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
 		if (battle->unitHealth[eTeam][eUnit] > 0) {
 			const double calcRand = frand();
+
 			if (calcRand < (0.250 - (effective * 0.250))) {
 				const int strikeDamage = (int) (20.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
 
@@ -427,6 +436,7 @@ static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, cons
 	for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
 		if (battle->unitHealth[eTeam][eUnit] > 0) {
 			const double calcRand = frand();
+
 			if (calcRand >= effective) {
 				const int strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
 
@@ -490,6 +500,7 @@ static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
 				/* Wounded units don't fight quite as well */
 				const double hpLeftRatio = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
 				const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
+
 				if (battle->unitHealth[team][currentUnit] <= 0)
 					continue;
 
@@ -520,37 +531,46 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
  */
 void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
 {
-	/* (Destructavator): I borrowed this from the old code in CP_GameAutoGo, but I don't really know how all this works. */
-	if (battle->resultType == AUTOMISSION_RESULT_SUCCESS) {
-		Cvar_SetValue("mn_autogo", 1);
+	assert(battle);
+
+	switch (battle->resultType) {
+	case AUTOMISSION_RESULT_SUCCESS:
 		UI_PushWindow("won", NULL, NULL);
 		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
-	} else {
+		break;
+	case AUTOMISSION_RESULT_COSTLY_SUCCESS:
+		UI_PushWindow("won", NULL, NULL);
+		MS_AddNewMessage(_("Notice"), _("You've defeated the enemy, but did poorly, and many civialians were killed"), qfalse, MSG_STANDARD, NULL);
+		break;
+	case AUTOMISSION_RESULT_FAILED_NO_SURVIVORS:
 		UI_PushWindow("lost", NULL, NULL);
-		if (battle->resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
-			MS_AddNewMessage(_("Notice"), _("You've defeated the enemy, but did poorly, and many civialians were killed"), qfalse, MSG_STANDARD, NULL);
-		if (battle->resultType == AUTOMISSION_RESULT_FAILED_NO_SURVIVORS)
-			MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
+		break;
+	default:
+		break;
 	}
 }
 
 void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const struct battleParam_s *missionParams)
 {
+	int numAliensTm;
+	int numAlienDronesTm;
+	int numCivsTm;
+	int unit;
+	int health;
+	int healthMaxm;
+
 	assert(battle);
 	assert(missionParams);
 
-	int numAliensTm = missionParams->aliens;
-	int numAlienDronesTm = (int) (frand() * numAliensTm);
-	int numCivsTm = missionParams->civilians;
+	numAliensTm = missionParams->aliens;
+	numAlienDronesTm = (int) (frand() * numAliensTm);
+	numCivsTm = missionParams->civilians;
 
 	/* Alines will go on team 2, alien drones on 3, civs on 4 (player soldiers are 0 and UGVs are 1). */
 	battle->nUnits[2] = numAliensTm;
 	battle->nUnits[3] = numAlienDronesTm;
 	battle->nUnits[4] = numCivsTm;
-
-	int unit;
-	int health;
-	int healthMaxm;
 
 	/* Populate the teams */
 
@@ -600,13 +620,9 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
  */
 void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
 {
-	/** @todo */
 	employee_t *soldier;
 	int unit = 0;
-
-	int battleExperience = battle->teamAccomplishment[0];
-	if (battleExperience < 0)
-		battleExperience = 0;
+	int battleExperience = max (0, battle->teamAccomplishment[0]);
 
 	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
 		character_t *chr = &soldier->chr;
