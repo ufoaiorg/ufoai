@@ -518,7 +518,18 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
  */
 void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
 {
-	/** @todo */
+	/* (Destructavator): I borrowed this from the old code in CP_GameAutoGo, but I don't really know how all this works. */
+	if (battle->resultType == AUTOMISSION_RESULT_SUCCESS) {
+		Cvar_SetValue("mn_autogo", 1);
+		UI_PushWindow("won", NULL, NULL);
+		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
+	} else {
+		UI_PushWindow("lost", NULL, NULL);
+		if (battle->resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+			MS_AddNewMessage(_("Notice"), _("You've defeated the enemy, but did poorly, and many civialians were killed"), qfalse, MSG_STANDARD, NULL);
+		if (battle->resultType == AUTOMISSION_RESULT_FAILED_NO_SURVIVORS)
+			MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
+	}
 }
 
 void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const struct battleParam_s *missionParams)

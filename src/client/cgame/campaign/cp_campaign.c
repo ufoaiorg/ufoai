@@ -1057,6 +1057,7 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	assert(mission);
 	assert(aircraft);
 
+#if 0	/* According to the wiki coding guidelines, this is how to disable a chunk of code.  If this is wrong, it isn't my d*** fault, it means someone needs to update the wiki! */
 	if (mission->stage != STAGE_BASE_ATTACK)
 		results->winProbability = CP_GetWinProbabilty(mission, aircraft, battleParameters, campaign->difficulty);
 	else
@@ -1064,6 +1065,21 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 
 	/** @todo set other counts */
 	results->won = battleParameters->probability < results->winProbability;
+#endif
+
+	autoMissionBattle_t *autoBattle;
+	CP_AutoBattleClearBattle(autoBattle);
+	CP_AutoBattleFillTeamFromAircraft(autoBattle, 0, aircraft, campaign);
+	CP_AutoBattleFillTeamFromBattleParams(autoBattle, battleParameters);
+	CP_AutoBattleRunBattle(autoBattle);
+
+	results->won = qfalse;
+	if (autoBattle->resultType == AUTOMISSION_RESULT_SUCCESS)
+		results->won = qtrue;
+	if (autoBattle->resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qtrue;
+
+	/* This block is old code, but it will be left in for now, until exact numbers and stats are extracted from the auto mission results. */
 	results->aliensKilled = battleParameters->aliens;
 	results->aliensStunned = 0;
 	results->aliensSurvived = 0;
@@ -1077,7 +1093,14 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	CP_InitMissionResults(results->won, results);
 
 	/* update nation opinions */
+	/* Note:  "Costly Success" means many civs were killed, and therefore happiness goes DOWN, which is shy the results are flipped twice like this. */
+	if (autoBattle->resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qfalse;
+
 	CL_HandleNationData(campaign->minhappiness, results->won, mission, battleParameters->nation, results);
+
+	if (autoBattle->resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qtrue;
 
 	CP_CheckLostCondition(campaign);
 
