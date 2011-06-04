@@ -485,7 +485,7 @@ static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
 
 			aliveUnits = 0;
 			/* Is this unit still alive (has any health left?) */
-			for (currentUnit = 0; currentUnit < MAX_SOLDIERS_AUTOMISSION; currentUnit++) {
+			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
 				/* Wounded units don't fight quite as well */
 				const double hpLeftRatio = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
 				const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
