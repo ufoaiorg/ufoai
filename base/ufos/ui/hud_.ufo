@@ -239,7 +239,7 @@ window hud extends levelbuttons {
 	{
 		dataid			TEXT_CHAT_WINDOW
 		pos				"130 70"
-		size			"690 48"
+		size			"690 54"
 		font			"f_verysmall"
 		rows			"3"
 		lineheight		"16"
