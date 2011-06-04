@@ -18,8 +18,8 @@ def scale_textures(texname, mapname, scalex, scaley):
                 if k.texture == texname: #found face with that texture
                     k.scale[0] *= scalex
                     k.scale[1] *= scaley
-                    k.offset[0] *= scalex
-                    k.offset[1] *= scaley
+                    k.offset[0] /= scalex
+                    k.offset[1] /= scaley
                     changed = True
 
     if changed:
