@@ -5570,6 +5570,7 @@ base/textures/tex_misc/exit_clean_gm.png | GNU General Public License 2.0 |  | O
 base/textures/tex_misc/exit_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/exit_dirty_gm.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/fridge001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/fridge001_gm.png | GNU General Public License 2.0 | MCR | wotwot
 base/textures/tex_misc/gas001.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_misc/gas002.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_misc/gas003.png | GNU General Public License 2.0 or later | FWishbringer
