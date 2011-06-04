@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cp_auto_mission.h"
 #include "cp_campaign.h"
+#include "../../ui/ui_main.h"
 #include "../../../shared/mathlib_extra.h"
 #include "math.h"
 
@@ -503,6 +504,7 @@ static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
 				battle->teamActive[team] = qfalse;
 		}
 	}
+	battle->hasBeenFought = qtrue;
 }
 
 void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
