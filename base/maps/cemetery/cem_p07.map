@@ -13,7 +13,7 @@
 }
 // brush 1
 {
-( 160 -8 0 ) ( -96 -8 0 ) ( 160 248 0 ) tex_nature/railway 128 0 90 0.5 0.5 65280 0 0
+( 160 -8 0 ) ( -96 -8 0 ) ( 160 248 0 ) tex_nature/railway 256 0 90 0.25 0.25 65280 0 0
 ( 256 232 48 ) ( 256 248 48 ) ( 256 248 32 ) tex_common/nodraw 0 64 90 0.5 0.5 65280 128 0
 ( 256 96 256 ) ( 256 96 0 ) ( 0 96 256 ) tex_common/nodraw 0 64 90 0.5 0.5 65280 128 0
 ( 0 160 -4 ) ( 256 160 -4 ) ( 0 164 -4 ) tex_common/nodraw 0 0 90 0.5 0.5 65280 128 0
@@ -40,7 +40,7 @@
 }
 // brush 4
 {
-( 160 -8 0 ) ( -96 -8 0 ) ( 160 248 0 ) tex_nature/railway 128 0 90 0.5 0.5 65280 0 0
+( 160 -8 0 ) ( -96 -8 0 ) ( 160 248 0 ) tex_nature/railway 256 0 90 0.25 0.25 65280 0 0
 ( 160 -32 256 ) ( 160 224 256 ) ( 160 -32 0 ) tex_common/nodraw 0 64 90 0.5 0.5 65280 128 0
 ( 160 0 4 ) ( 164 0 -4 ) ( 160 0 -4 ) tex_common/nodraw 0 64 90 0.5 0.5 65280 128 0
 ( 0 160 -4 ) ( 256 160 -4 ) ( 0 164 -4 ) tex_common/nodraw 0 0 90 0.5 0.5 65280 128 0
@@ -135,29 +135,29 @@
 {
 "classname" "light"
 "light" "80"
-"_color" "0.9 0.95 1"
 "origin" "128 144 24"
+"_color" "0.9 0.95 1"
 }
 // entity 2
 {
 "classname" "light"
 "light" "80"
-"_color" "0.9 0.95 1"
 "origin" "160 176 24"
+"_color" "0.9 0.95 1"
 }
 // entity 3
 {
 "classname" "light"
 "light" "80"
-"_color" "0.9 0.95 1"
 "origin" "128 208 24"
+"_color" "0.9 0.95 1"
 }
 // entity 4
 {
 "classname" "light"
 "light" "80"
-"_color" "0.9 0.95 1"
 "origin" "96 176 24"
+"_color" "0.9 0.95 1"
 }
 // entity 5
 {
