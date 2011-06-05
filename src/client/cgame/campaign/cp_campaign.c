@@ -981,7 +981,7 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	results->won = qfalse;
 	if (autoBattle.resultType == AUTOMISSION_RESULT_SUCCESS)
 		results->won = qtrue;
-	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+	else if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
 		results->won = qtrue;
 
 	CP_AutoBattleUpdateSurivorsAfterBattle(&autoBattle, aircraft);
