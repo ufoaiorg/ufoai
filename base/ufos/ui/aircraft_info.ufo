@@ -36,6 +36,15 @@ window aircraft extends iaircraft
 		padding		0
 	}
 
+	string aircraft_status_label
+	{
+		string		"_Status:"
+		pos			"505 510"
+		size		"210 21"
+		textalign	ALIGN_UL
+		padding		0
+	}
+
 	string aircraft_status
 	{
 		string		*cvar:mn_aircraftstatus
@@ -51,6 +60,27 @@ window aircraft extends iaircraft
 		size		"16 16"
 	}
 
+	string aircraft_health_label
+	{
+		string		"_Health:"
+		pos			"505 540"
+		size		"210 21"
+		textalign	ALIGN_UL
+		padding		0
+	}
+
+	image aircraft_healthbarborder {
+		pos "724 540"
+		src "ui/bar_border"
+	}
+	bar aircraft_healthbar {
+		pos			"726 546"
+		size		"249 5"
+		min			0
+		max			196
+		readonly	true
+	}
+
 	//	icons below the aircraft
 
 	// ==================
@@ -60,8 +90,8 @@ window aircraft extends iaircraft
 	string team_members
 	{
 		string		"_Team Members:"
-		pos			"502 544"
-		size		"498 20"
+		pos			"505 570"
+		size		"210 20"
 		textalign	ALIGN_CL
 		padding		0
 	}
@@ -69,7 +99,7 @@ window aircraft extends iaircraft
 	string team_hired
 	{
 		string		*cvar:mn_hired
-		pos			"722 544"
+		pos			"722 570"
 		size		"110 20"
 		textalign	ALIGN_CL
 		padding		0
@@ -77,12 +107,12 @@ window aircraft extends iaircraft
 
 	text aircraftinfo
 	{
-		pos			"505 580"
-		size		"495 160"
+		pos			"505 600"
+		size		"495 140"
 		lineheight	20
 		tabwidth	220
 		dataid		TEXT_AIRCRAFT_INFO
-		rows		8
+		rows		7
 	}
 
 	confunc aircraft_checkbuttons
@@ -115,12 +145,25 @@ window aircraft extends iaircraft
 		}
 	}
 
+	confunc aircraft_healtbarchange {
+		*node:root.aircraft_healthbar@tooltip = "<cvar:mn_aircraft_health>%"
+		*node:root.aircraft_healthbar@current = ( ( <cvar:mn_aircraft_health> / 100 ) * <node:root.aircraft_healthbar@max> )
+		if ( *cvar:mn_aircraft_health <= 33 ) {
+			*node:root.aircraft_healthbar@color = "1 .0 .0 1"
+		} elif ( *cvar:mn_aircraft_health <= 75 ) {
+			*node:root.aircraft_healthbar@color = "1 .874 .0 1"
+		} else {
+			*node:root.aircraft_healthbar@color = ".0 1 .0 1"
+		}
+	}
+
 	/**
 	 * @note iaircraft interface
 	 */
 	confunc aircraft_change
 	{
 		call *node:root.aircraft_checkbuttons
+		call *node:root.aircraft_healtbarchange
 		*node:root.aircraft_list@lineselected = <1>
 	}
 
