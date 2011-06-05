@@ -219,7 +219,7 @@ class ImageGDKAPI: public IImageModule
 typedef SingletonModule<ImageGDKAPI> ImageGDKModule;
 typedef Static<ImageGDKModule> StaticImageGDKModule;
 
+StaticRegisterModule staticRegisterImagePNG(StaticImagePNGModule::instance());
 StaticRegisterModule staticRegisterImageJPG(StaticImageJPGModule::instance());
 StaticRegisterModule staticRegisterImageTGA(StaticImageTGAModule::instance());
-StaticRegisterModule staticRegisterImagePNG(StaticImagePNGModule::instance());
 StaticRegisterModule staticRegisterImageGDK(StaticImageGDKModule::instance());
