@@ -168,9 +168,9 @@ extern const byte dvleft[CORE_DIRECTIONS];
  * three informations into a short value:
  * - the direction where he came from
  * - the z-level he came from
- * - *how* he moved. There are three special crouching condiditions
+ * - *how* he moved. There are three special crouching conditions
  * -- autocrouch: standing upright in the previous cell, now crouch and stay crouched
- * -- autocrouched: being already autochrouched in the previous cell, stand up if you get the chance
+ * -- autocrouched: being already autocrouched in the previous cell, stand up if you get the chance
  * -- autodive: we can stand in both cells, but there is just a small hole in the wall between them
  */
 typedef short dvec_t;
