@@ -39,8 +39,6 @@ static int UFO_InitSuiteMapDef (void)
 {
 	TEST_Init();
 
-	NET_Init();
-
 	sv_genericPool = Mem_CreatePool("mapdef-test");
 	com_networkPool = Mem_CreatePool("Network");
 	vid_imagePool = Mem_CreatePool("Vid: Image system");

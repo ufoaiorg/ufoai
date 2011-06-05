@@ -35,6 +35,7 @@ void TEST_Shutdown (void)
 	Mem_Shutdown();
 	Com_Shutdown();
 	Cbuf_Shutdown();
+	NET_Shutdown();
 
 	com_aliasSysPool = NULL;
 	com_cmdSysPool = NULL;
@@ -83,6 +84,7 @@ void TEST_Init (void)
 	FS_AddGameDirectory("./unittest", qfalse);
 	Swap_Init();
 	SV_Init();
+	NET_Init();
 
 	OBJZERO(csi);
 
