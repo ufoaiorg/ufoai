@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteDBuffer (void)
 {
 	TEST_Init();
-	dbuffer_init();
 	return 0;
 }
 
@@ -45,7 +44,6 @@ static int UFO_InitSuiteDBuffer (void)
 static int UFO_CleanSuiteDBuffer (void)
 {
 	TEST_Shutdown();
-	dbuffer_shutdown();
 	return 0;
 }
 
