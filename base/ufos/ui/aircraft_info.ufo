@@ -145,7 +145,7 @@ window aircraft extends iaircraft
 		}
 	}
 
-	confunc aircraft_healtbarchange {
+	func aircraft_healtbarchange {
 		*node:root.aircraft_healthbar@tooltip = "<cvar:mn_aircraft_health>%"
 		*node:root.aircraft_healthbar@current = ( ( <cvar:mn_aircraft_health> / 100 ) * <node:root.aircraft_healthbar@max> )
 		if ( *cvar:mn_aircraft_health <= 33 ) {
