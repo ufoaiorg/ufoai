@@ -33,6 +33,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 #define AM_SetHostile(battle, team, otherTeam, value) (battle)->isHostile[(team)][(otherTeam)] = (value)
 
+#define AM_Team_Soldier 0
+#define AM_Team_UGV 1
+#define AM_Team_Alien 2
+#define AM_Team_Drone 3
+#define AM_Team_Civilian 4
+
 /**
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
  * @param[in,out] battle The battle that should be initialized to defaults
@@ -608,6 +614,12 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 
 		chr->HP = battle->unitHealth[0][unit];
 		unit++;
+
+		/* TODO: More might need to be added here, to recover a dead soldier's inventory. */
+		if (battle->unitHealth[0][unit] == 0) {
+			E_DeleteEmployee(soldier);
+			break;
+		}
 
 		/* TODO: If health > zero, award experience for the mission.  (Destructavator): I need to find out how experience is represented for soldiers. */
 
