@@ -52,9 +52,9 @@ class Entity:
         tmp.append("}")
         return "\n".join(tmp)
 
-def parse_ufo_map(s):
+def parse_ufo_map(s, verbose = False):
     l = s.splitlines()
-    print len(l), "lines"
+    if verbose: print len(l), "lines"
 
     depth = 0 # 1 - entity, 2 - brush level
     ent = Entity()
@@ -112,7 +112,7 @@ def parse_ufo_map(s):
         else:
             print "Syntax error - can't analyze line", n
             break
-    print len(ufo_map), "entities read"
+    if verbose: print len(ufo_map), "entities read"
     return ufo_map
 
 def ufo_map_to_string(ufo_map):
@@ -125,12 +125,12 @@ def ufo_map_to_string(ufo_map):
     tmp.append("\n")
     return "\n".join(tmp)
 
-def read_ufo_map(name):
+def read_ufo_map(name, verbose = False):
     f = open(name)
-    print name
+    if verbose: print name
     s = f.read()
     f.close()
-    return parse_ufo_map(s)
+    return parse_ufo_map(s, verbose)
 
 def write_ufo_map(ufo_map, name):
     f = open(name, "wb")
