@@ -169,5 +169,6 @@ typedef struct material_s {
 extern material_t defaultMaterial;
 
 void R_LoadMaterials(const char *map);
+void R_UpdateDefaultMaterial(const char *cvarName, const char *oldValue, const char *newValue);
 
 #endif
