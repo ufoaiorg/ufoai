@@ -1095,7 +1095,9 @@ void R_LoadMaterials (const char *map)
 	R_CreateMaterialData();
 }
 
-/* assumes that change listener is called after cvar gets a new vale */
+/**
+ * @brief Change listener callback for material value cvars
+ */
 void R_UpdateDefaultMaterial (const char *cvarName, const char *oldValue, const char *newValue)
 {
 	defaultMaterial.specular = r_default_specular->value;
