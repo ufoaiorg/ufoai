@@ -225,7 +225,7 @@ static void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 		battle->teamAccomplishment[teamEnemy] += battle->teamAccomplishment[teamDrones];
 
 	/* Well, if the player team is all dead, we know the player totally lost, and can stop right here. */
-	if (battle->teamActive[teamPlayer] == qfalse) {
+	if (!battle->teamActive[teamPlayer]) {
 		battle->resultType = AUTOMISSION_RESULT_FAILED_NO_SURVIVORS;
 		battle->winningTeam = teamEnemy;
 		return;
@@ -392,7 +392,7 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 			skillAdjCalcAbs = fabs(skillAdjCalc);
 			if (skillAdjCalc > 0.0)
 				battle->scoreTeamSkill[team] = FpCurveUp (battle->scoreTeamSkill[team], skillAdjCalcAbs);
-			if (skillAdjCalc < 0.0)
+			else if (skillAdjCalc < 0.0)
 				battle->scoreTeamSkill[team] = FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs);
 			/* if (skillAdjCalc == exact 0.0), no change to team's skill. */
 
