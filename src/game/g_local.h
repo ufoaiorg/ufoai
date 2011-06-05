@@ -378,7 +378,7 @@ typedef unsigned int vismask_t;
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
 
-/** the visibile changed - if it was visible - it's (the edict) now invisible */
+/** the visibility changed - if it was visible - it's (the edict) now invisible */
 #define VIS_CHANGE	1
 /** actor visible? */
 #define VIS_YES		2

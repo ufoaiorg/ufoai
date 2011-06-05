@@ -205,7 +205,7 @@ int G_TestVis (const int team, edict_t * check, int flags)
 {
 	edict_t *from = NULL;
 	/* store old flag */
-	const int old = G_IsVisibleForTeam(check, team) ? 1 : 0;
+	const int old = G_IsVisibleForTeam(check, team) ? VIS_CHANGE : 0;
 
 	if (g_aidebug->integer)
 		return VIS_YES | !old;
