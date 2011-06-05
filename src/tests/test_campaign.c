@@ -1261,25 +1261,50 @@ static void testTerrorMissions (void)
 {
 	city_t *city;
 	int i;
+	ufoType_t ufoType;
+	int numUfoTypes;
+	ufoType_t ufoTypes[UFO_MAX];
 
 	ResetCampaignData();
 
-	LIST_Foreach(ccs.cities, city_t, city) {
-		mission_t mission;
-		OBJZERO(mission);
-		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
+	/* Set overall interest level so every UFO can be used for missions */
+	for (ufoType = UFO_SCOUT; ufoType < UFO_MAX; ufoType++) {
+		const aircraft_t *ufo = UFO_GetByType(ufoType);
+
+		if (!ufo)
+			continue;
+
+		ccs.overallInterest = max(ccs.overallInterest, ufo->ufoInterestOnGeoscape);
 	}
 
+	/* Search without UFO */
 	LIST_Foreach(ccs.cities, city_t, city) {
 		mission_t mission;
 		OBJZERO(mission);
-		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
+		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a map for city %s", city->id));
 	}
 
-	LIST_Foreach(ccs.cities, city_t, city) {
+	/* Search with UFOs available for Terror missions */
+	numUfoTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
+	for (ufoType = 0; ufoType < numUfoTypes; ufoType++) {
 		mission_t mission;
+		aircraft_t *ufo = UFO_AddToGeoscape(ufoTypes[ufoType], NULL, &mission);
+
 		OBJZERO(mission);
-		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a mission for city %s", city->id));
+		mission.ufo = ufo;
+		CU_ASSERT_PTR_NOT_NULL_FATAL(ufo);
+		ufo->mission = &mission;
+
+		LIST_Foreach(ccs.cities, city_t, city) {
+			mission.mapDef = NULL;
+#ifdef TEST_BIGUFOS
+			UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find map for city %s with ufo: %s", city->id, ufo->id));
+#else
+			CP_ChooseMap(&mission, city->pos);
+#endif
+		}
+
+		UFO_RemoveFromGeoscape(ufo);
 	}
 
 	for (i = 0; i < cls.numMDs; i++) {
