@@ -1,5 +1,6 @@
+#include "FileSystemModule.h"
+
 #include "ifilesystem.h"
-#include "iarchive.h"
 #include "iradiant.h"
 
 #include "FileSystem.h"
