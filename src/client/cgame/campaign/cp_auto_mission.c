@@ -626,6 +626,7 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 
 	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
 		character_t *chr = &soldier->chr;
+		chrScoreGlobal_t *score = &chr->score;
 
 		chr->HP = battle->unitHealth[0][unit];
 		unit++;
@@ -634,6 +635,10 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 
 		if (unit >= MAX_SOLDIERS_AUTOMISSION)
 			break;
+
+		/** @todo fill these values */
+		score->experience[SKILL_ASSAULT] += battleExperience;
+		score->kills[KILLED_ENEMIES] += 0;
 	}
 
 	/** @todo the base might differ in case of a baseattack mission */
