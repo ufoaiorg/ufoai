@@ -815,6 +815,7 @@ window hud_alt extends hud
 
 	image bar_chat_bg
 	{
+		visiblewhen	"*cvar:sv_maxclients >= 2"
 		src			"althud/bar_chat"
 		pos			"977 552"
 		size		"64 64"
