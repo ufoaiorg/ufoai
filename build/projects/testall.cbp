@@ -56,6 +56,7 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add directory="..\..\src\libs\mxml\" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
@@ -1106,6 +1107,36 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\libs\mxml\config.h" />
+		<Unit filename="..\..\src\libs\mxml\mxml-attr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-entity.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-file.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-index.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-node.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-private.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-private.h" />
+		<Unit filename="..\..\src\libs\mxml\mxml-search.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-set.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml.h" />
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
