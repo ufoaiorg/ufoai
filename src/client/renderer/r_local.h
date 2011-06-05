@@ -65,6 +65,8 @@ extern cvar_t *r_isometric;
 extern cvar_t *r_anisotropic;
 extern cvar_t *r_texture_lod;   /* lod_bias */
 extern cvar_t *r_materials;
+extern cvar_t *r_default_specular;
+extern cvar_t *r_default_hardness;
 extern cvar_t *r_screenshot_format;
 extern cvar_t *r_screenshot_jpeg_quality;
 extern cvar_t *r_lightmap;

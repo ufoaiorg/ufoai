@@ -71,6 +71,8 @@ static cvar_t *r_texturemode;
 static cvar_t *r_texturealphamode;
 static cvar_t *r_texturesolidmode;
 cvar_t *r_materials;
+cvar_t *r_default_specular;
+cvar_t *r_default_hardness;
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
@@ -536,6 +538,10 @@ static void R_RegisterSystemVars (void)
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
+	r_default_specular = Cvar_Get("r_default_specular", "1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Default specular exponent");
+	r_default_hardness = Cvar_Get("r_default_hardness", "1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Default specular brightness");
+	Cvar_RegisterChangeListener("r_default_specular", R_UpdateDefaultMaterial);
+	Cvar_RegisterChangeListener("r_default_hardness", R_UpdateDefaultMaterial);
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Multiplier for the alpha of the shadows");
 	r_stencilshadows = Cvar_Get("r_stencilshadows", "0", CVAR_ARCHIVE, "Activate or deactivate stencil shadows");
@@ -1217,6 +1223,7 @@ qboolean R_Init (void)
 	R_SphereInit();
 	R_FontInit();
 	R_InitFBObjects();
+	R_UpdateDefaultMaterial("","","");
 
 	R_CheckError();
 
