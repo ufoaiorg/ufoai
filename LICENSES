@@ -6018,8 +6018,12 @@ base/textures/tex_tech/uelektro003_lq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/uelektro003_lq_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/xerox_a.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_tech/xerox_b.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_tech/xerox_b_nm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
 base/textures/tex_tech/xerox_c.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_tech/xerox_c_nm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
 base/textures/tex_tech/xerox_d.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_tech/xerox_d_gm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
+base/textures/tex_tech/xerox_d_nm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
 base/textures/tex_terrain/arctic.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_terrain/cold.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_terrain/desert.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
