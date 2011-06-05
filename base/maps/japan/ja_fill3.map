@@ -247,7 +247,7 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "108 76 68"
-"skin" "2"
+"skin" "1"
 }
 // entity 5
 {
@@ -255,5 +255,5 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "108 76 68"
-"skin" "2"
+"skin" "1"
 }
