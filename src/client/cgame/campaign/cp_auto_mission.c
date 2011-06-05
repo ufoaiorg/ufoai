@@ -163,27 +163,6 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	battle->teamID[teamNum] = 0;
 }
 
-/* These are "placeholders" for the functions not yet written out, to (hopefully) allow compiling the project without error (for now) */
-void CP_AutoBattleFillTeamFromAircraftUGVs (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
-{
-	/** @todo */
-}
-
-void CP_AutoBattleFillTeamFromPlayerBase (autoMissionBattle_t *battle, const int teamNum, const int baseNum, const campaign_t *campaign)
-{
-	/** @todo */
-}
-
-void CP_AutoBattleFillTeamFromAlienGroup (autoMissionBattle_t *battle, const int teamNum, const alienTeamGroup_t *alienGroup)
-{
-	/** @todo */
-}
-
-void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int teamNum)
-{
-	/** @todo */
-}
-
 static void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 {
 	int team;
