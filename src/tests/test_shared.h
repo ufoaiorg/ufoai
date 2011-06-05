@@ -41,6 +41,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define UFO_CU_ASSERT_TRUE_MSG(value, msg) \
   { CU_assertImplementation((value), __LINE__, msg ? msg : ("UFO_CU_ASSERT(" #value ")"), __FILE__, "", CU_FALSE); }
 
+#define UFO_CU_ASSERT_MSG(msg) \
+  { CU_assertImplementation(CU_FALSE, __LINE__, msg, __FILE__, "", CU_FALSE); }
+
 #define UFO_CU_FAIL_MSG(msg) \
   { CU_assertImplementation(CU_FALSE, __LINE__, va("UFO_CU_FAIL(\"%s\")", msg), __FILE__, "", CU_FALSE); }
 

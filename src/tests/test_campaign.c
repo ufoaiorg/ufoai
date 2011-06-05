@@ -1252,7 +1252,7 @@ static void test3090011 (void)
 static qboolean skipTest (const mapDef_t *md)
 {
 	const char *map = md->id;
-	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "ufocrash") || Q_streq(map, "alienbase");
+	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "alienbase");
 }
 
 static void testTerrorMissions (void)
@@ -1307,8 +1307,31 @@ static void testTerrorMissions (void)
 
 	for (i = 0; i < cls.numMDs; i++) {
 		mapDef_t *md = &cls.mds[i];
-		if (!skipTest(md))
-			UFO_CU_ASSERT_NOT_EQUAL_INT_MSG(md->timesAlreadyUsed, 0, va("%s wasn't used", md->id));
+
+		/* skip mapDefs that were used */
+		if (md->timesAlreadyUsed > 0)
+			continue;
+		/* skip special mapDefs */
+		if (skipTest(md))
+			continue;
+		/* skip mapDefs which don't support UFO types that do terror missions */
+		if (!LIST_IsEmpty(md->ufos)) {
+			qboolean found = qfalse;
+			for (ufoType = 0; ufoType < numUfoTypes; ufoType++) {
+				const aircraft_t *ufo = UFO_GetByType(ufoTypes[ufoType]);
+
+				if (!ufo)
+					continue;
+
+				if (LIST_ContainsString(md->ufos, ufo->id)) {
+					found = qtrue;
+					break;
+				}
+			}
+			if (!found)
+				continue;
+		}
+		UFO_CU_ASSERT_MSG(va("%s wasn't used", md->id));
 	}
 }
 
