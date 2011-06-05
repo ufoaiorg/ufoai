@@ -1207,7 +1207,7 @@ static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 		G_TouchTriggers(ent);
 	}
 	/* show visible actors */
-	G_ClearVisFlags(team);
+	G_VisFlagsClear(team);
 	G_CheckVis(NULL, qfalse);
 }
 

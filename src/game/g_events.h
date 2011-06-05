@@ -62,11 +62,11 @@ void G_EventSendEdict(const edict_t *ent);
 void G_EventSendParticle(unsigned int playerMask, const edict_t *ent);
 void G_EventSendState(unsigned int playerMask, const edict_t *ent);
 void G_EventSetClientAction(const edict_t *ent);
-void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
-void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventShootHidden(vismask_t visMask, const fireDef_t* fd, qboolean firstShoot);
+void G_EventShoot(const edict_t* ent, vismask_t visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact);
 void G_EventSpawnSound(const edict_t* ent, const vec3_t origin, const char *sound);
 void G_EventStart(const player_t *player, qboolean teamplay);
-void G_EventStartShoot(const edict_t* ent, int visMask, shoot_types_t shootType, const pos3_t at);
-void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
+void G_EventStartShoot(const edict_t* ent, vismask_t visMask, shoot_types_t shootType, const pos3_t at);
+void G_EventThrow(vismask_t visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 
 #endif

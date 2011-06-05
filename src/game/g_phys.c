@@ -38,7 +38,7 @@ void G_PhysicsStep (edict_t *ent)
 	 */
 	if (ent->moveinfo.currentStep < ent->moveinfo.steps) {
 		const int contentFlags = ent->contentFlags;
-		const int visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
+		const vismask_t visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (!G_IsCrouched(ent)) {
 			if (contentFlags & CONTENTS_WATER) {

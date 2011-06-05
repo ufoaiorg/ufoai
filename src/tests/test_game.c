@@ -152,6 +152,35 @@ static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container
 	return count;
 }
 
+static void testVisFlags (void)
+{
+	const char *mapName = "test_game";
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		edict_t *ent;
+		int num;
+
+		/* the other tests didn't call the server shutdown function to clean up */
+		OBJZERO(*sv);
+		SV_Map(qtrue, mapName, NULL);
+
+		num = 0;
+		ent = NULL;
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
+			const vismask_t teamMask = G_TeamToVisMask(ent->team);
+			const qboolean visible = ent->visflags & teamMask;
+			char *visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));
+			char *teamMaskBuf = Mem_StrDup(Com_UnsignedIntToBinary(teamMask));
+			CU_ASSERT_EQUAL(ent->team, TEAM_ALIEN);
+			UFO_CU_ASSERT_TRUE_MSG(visible, va("visflags: %s, teamMask: %s", visFlagsBuf, teamMaskBuf));
+			Mem_Free(visFlagsBuf);
+			Mem_Free(teamMaskBuf);
+			num++;
+		}
+		CU_ASSERT_TRUE(num > 0);
+	} else {
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
+	}
+}
 static void testInventoryForDiedAlien (void)
 {
 	const char *mapName = "test_game";
@@ -359,6 +388,9 @@ int UFO_AddGameTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GameSuite, testShooting) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GameSuite, testVisFlags) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GameSuite, testInventoryForDiedAlien) == NULL)

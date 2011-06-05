@@ -168,7 +168,7 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const edict_t* ent, int visMask, shoot_types_t shootType, const pos3_t at)
+void G_EventStartShoot (const edict_t* ent, vismask_t visMask, shoot_types_t shootType, const pos3_t at)
 {
 	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_START_SHOOT);
 	gi.WriteShort(ent->number);
@@ -183,7 +183,7 @@ void G_EventStartShoot (const edict_t* ent, int visMask, shoot_types_t shootType
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
+void G_EventShootHidden (vismask_t visMask, const fireDef_t* fd, qboolean firstShoot)
 {
 	gi.AddEvent(~G_VisToPM(visMask), EV_ACTOR_SHOOT_HIDDEN);
 	gi.WriteByte(firstShoot);
@@ -204,7 +204,7 @@ void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, vismask_t visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
@@ -337,7 +337,7 @@ void G_EventInventoryReload (const edict_t* ent, int playerMask, const item_t* i
  * @param[in] position The current position
  * @param[in] velocity The velocity of the throw
  */
-void G_EventThrow (int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity)
+void G_EventThrow (vismask_t visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity)
 {
 	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_THROW);
 	gi.WriteShort(dt * 1000);
