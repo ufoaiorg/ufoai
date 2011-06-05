@@ -108,8 +108,6 @@ void CP_AutoBattleFillTeamFromPlayerBase(autoMissionBattle_t *battle, const int 
 void CP_AutoBattleFillTeamFromAlienGroup(autoMissionBattle_t *battle, const int teamNum, const struct alienTeamGroup_s *alienGroup);
 void CP_AutoBattleFillTeamFromBattleParams(autoMissionBattle_t *battle, const struct battleParam_s *missionParams);
 void CP_AutoBattleCreateTeamFromScratch(autoMissionBattle_t *battle, const int teamNum);
-void CP_AutoBattleDecideResults(autoMissionBattle_t *battle);
-void CP_AutoBattleDisplayResults(const autoMissionBattle_t *battle);
 void CP_AutoBattleUpdateSurivorsAfterBattle(const autoMissionBattle_t *battle, struct aircraft_s *aircraft);
 
 #endif

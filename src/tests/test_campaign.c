@@ -377,11 +377,9 @@ static void testAutoMissions (void)
 
 	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 2);
 
-	battleParameters.probability = -1.0;
-
 	CL_GameAutoGo(mission, aircraft, campaign, &battleParameters, &result);
 
-	CU_ASSERT_EQUAL(result.won, battleParameters.probability < result.winProbability);
+	CU_ASSERT_TRUE(result.won);
 
 	CU_ASSERT_TRUE(AIR_SetPilot(aircraft, NULL));
 	CU_ASSERT_PTR_NULL(AIR_GetPilot(aircraft));

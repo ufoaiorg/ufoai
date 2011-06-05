@@ -923,93 +923,6 @@ void CP_StartSelectedMission (void)
 }
 
 /**
- * @brief Calculates the win probability for an auto base attack mission
- * @return a float value that is between 0 and 1
- * @param[in] mis The mission we are calculating the probability for
- * @param[in] battleParameters Structure that holds the battle related parameters
- * @param[in] difficulty The difficulty level of the game
- */
-static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, const battleParam_t* battleParameters, const int difficulty)
-{
-	const base_t *base = mis->data.base;
-	linkedList_t *hiredSoldiers = NULL;
-	linkedList_t *ugvs = NULL;
-	const int numSoldiers = E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiers);
-	const int numUGVs = E_GetHiredEmployees(base, EMPL_ROBOT, &ugvs);
-
-	assert(base);
-
-	/* a base defence mission can only be won if there are soldiers that
-	 * defend the attacked base */
-	if (numSoldiers || numUGVs) {
-		/** @todo fix this value */
-		const int minCloseExperience = 70;
-		float winProbability;
-		float increaseWinProbability = 1.0f;
-		employee_t *employee;
-		LIST_Foreach(hiredSoldiers, employee_t, employee) {
-			/* don't use an employee that is currently being transfered */
-			if (!E_IsAwayFromBase(employee)) {
-				const character_t *chr = &employee->chr;
-				const chrScoreGlobal_t *score = &chr->score;
-				const rank_t *rank = CL_GetRankByIdx(score->rank);
-				if (score->experience[SKILL_CLOSE] > minCloseExperience)
-					increaseWinProbability *= rank->factor;
-			}
-		}
-		/* now handle the ugvs */
-		LIST_Foreach(ugvs, employee_t, employee) {
-			/* don't use an employee that is currently being transfered */
-			if (!E_IsAwayFromBase(employee)) {
-				const character_t *chr = &employee->chr;
-				const chrScoreGlobal_t *score = &chr->score;
-				const rank_t *rank = CL_GetRankByIdx(score->rank);
-				increaseWinProbability *= rank->factor;
-			}
-		}
-
-		winProbability = exp((0.5 - .15 * difficulty) * numSoldiers - battleParameters->aliens);
-		winProbability += increaseWinProbability;
-
-		LIST_Delete(&hiredSoldiers);
-		LIST_Delete(&ugvs);
-
-		return winProbability;
-	}
-
-	/* No soldier to defend the base */
-	return 0.0f;
-}
-
-/**
- * @brief Calculates the win probability for an auto mission
- * @todo This needs work - also take mis->initialIndividualInterest into account?
- * @return a float value that is between 0 and 1
- * @param[in] mis The mission we are calculating the probability for
- * @param[in] aircraft Your aircraft that has reached the mission location
- * @param[in] battleParameters Structure that holds the battle related parameters
- * @param[in] difficulty The difficulty level of the game
- */
-static float CP_GetWinProbabilty (const mission_t *mis, const aircraft_t *aircraft, const battleParam_t* battleParameters, const int difficulty)
-{
-	const int aircraftTeamSize = AIR_GetTeamSize(aircraft);
-	assert(aircraft);
-	assert(mis);
-	assert(battleParameters);
-
-	/** @todo change the formulas here to reflect the comments */
-	if (mis->category == INTERESTCATEGORY_TERROR_ATTACK)
-		/* very hard to win this */
-		return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
-	else if (mis->category == INTERESTCATEGORY_XVI)
-		/* not that hard to win this, they want to spread xvi - no real terror mission */
-		return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
-
-	/* normal mission */
-	return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
-}
-
-/**
  * @brief Collect alien bodies for auto missions
  * @note collect all aliens as dead ones
  */
@@ -1054,20 +967,11 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_
  */
 void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
 {
+	autoMissionBattle_t autoBattle;
+
 	assert(mission);
 	assert(aircraft);
 
-#if 0	/* According to the wiki coding guidelines, this is how to disable a chunk of code.  If this is wrong, it isn't my d*** fault, it means someone needs to update the wiki! */
-	if (mission->stage != STAGE_BASE_ATTACK)
-		results->winProbability = CP_GetWinProbabilty(mission, aircraft, battleParameters, campaign->difficulty);
-	else
-		results->winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, battleParameters, campaign->difficulty);
-
-	/** @todo set other counts */
-	results->won = battleParameters->probability < results->winProbability;
-#endif
-
-	autoMissionBattle_t autoBattle;
 	CP_AutoBattleClearBattle(&autoBattle);
 	CP_AutoBattleFillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
 	CP_AutoBattleFillTeamFromBattleParams(&autoBattle, battleParameters);

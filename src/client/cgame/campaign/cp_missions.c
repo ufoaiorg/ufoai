@@ -328,7 +328,6 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 		param->param = NULL;
 	}
 
-	param->probability = frand();
 	param->mission = mission;
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
 	zoneType = MAP_GetTerrainType(color);

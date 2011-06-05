@@ -278,7 +278,6 @@ typedef struct battleParam_s {
 	const char *zoneType;							/**< Terrain type (used for texture replacement in some missions (base, ufocrash)) */
 	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
 	struct nation_s *nation;		/**< nation where the mission takes place */
-	float probability;
 } battleParam_t;
 
 /** @brief Structure with mission info needed to create results summary at menu won. */
@@ -288,7 +287,6 @@ typedef struct missionResults_s {
 	qboolean crashsite;		/**< @c true if secured UFO was crashed one. */
 	ufoType_t ufotype;		/**< Type of UFO secured during the mission. */
 	float ufoCondition;		/**< How much the UFO is damaged */
-	float winProbability;	/**< the win probability that was calculated for auto missions */
 	int itemTypes;			/**< Types of items gathered from a mission. */
 	int itemAmount;			/**< Amount of items (all) gathered from a mission. */
 	int aliensKilled;

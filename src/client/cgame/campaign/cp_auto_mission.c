@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cp_auto_mission.h"
 #include "cp_campaign.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_windows.h"
 #include "../../../shared/mathlib_extra.h"
 #include "math.h"
 
@@ -184,7 +184,7 @@ void CP_AutoBattleCreateTeamFromScratch (autoMissionBattle_t *battle, const int 
 	/** @todo */
 }
 
-void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
+static void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 {
 	int team;
 	int teamPlayer = -1;
@@ -518,18 +518,10 @@ static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
 	battle->hasBeenFought = qtrue;
 }
 
-void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
-{
-	CP_AutoBattleSetup(battle);
-	CP_AutoBattleDoFight(battle);
-	CP_AutoBattleDecideResults(battle);
-	CP_AutoBattleDisplayResults(battle);
-}
-
 /**
  * @brief This will display on-screen, for the player, results of the auto mission.
  */
-void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
+static void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
 {
 	assert(battle);
 
@@ -549,6 +541,14 @@ void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
 	default:
 		break;
 	}
+}
+
+void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
+{
+	CP_AutoBattleSetup(battle);
+	CP_AutoBattleDoFight(battle);
+	CP_AutoBattleDecideResults(battle);
+	CP_AutoBattleDisplayResults(battle);
 }
 
 void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const struct battleParam_s *missionParams)
