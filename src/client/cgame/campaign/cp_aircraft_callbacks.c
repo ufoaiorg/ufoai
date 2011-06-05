@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -210,6 +209,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	if (!aircraft->tech)
 		Com_Error(ERR_DROP, "No technology assigned to aircraft '%s'", aircraft->id);
 	Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
+	Cvar_Set("mn_aircraft_health", va("%3.0f" , aircraft->stats[AIR_STATS_DAMAGE] > 0 ? (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE] : 0));
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i km/h\n"),
