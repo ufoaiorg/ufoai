@@ -635,4 +635,8 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 		if (unit >= MAX_SOLDIERS_AUTOMISSION)
 			break;
 	}
+
+	/** @todo the base might differ in case of a baseattack mission */
+	/* update the ranks and mission counters */
+	CL_UpdateCharacterStats(aircraft->homebase, aircraft);
 }
