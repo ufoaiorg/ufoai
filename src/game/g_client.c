@@ -231,14 +231,15 @@ void G_GiveTimeUnits (int team)
  */
 void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *check, const edict_t *ent)
 {
-	int visMaskDiff;
+	vismask_t visMaskDiff;
 
 	/* test for pointless player mask */
 	if (!playerMask)
 		return;
 
 	visMaskDiff = G_PMToVis(playerMask);
-	check->visflags ^= visMaskDiff;
+	G_VisFlagsSwap(check, visMaskDiff);
+
 	if (appear) {
 		/* appear */
 		switch (check->type) {
