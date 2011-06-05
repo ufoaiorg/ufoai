@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void TEST_Shutdown (void)
 {
+	SV_Shutdown("test shutdown", qfalse);
 	FS_Shutdown();
 	Cmd_Shutdown();
 	Cvar_Shutdown();
@@ -89,6 +90,9 @@ void TEST_Init (void)
 	OBJZERO(csi);
 
 	Com_SetExceptionCallback(Test_RunError);
+
+	http_timeout = Cvar_Get("noname", "", 0, NULL);
+	http_proxy = Cvar_Get("noname", "", 0, NULL);
 }
 
 
