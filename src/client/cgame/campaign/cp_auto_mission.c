@@ -228,7 +228,6 @@ static void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 	if (!battle->teamActive[teamPlayer]) {
 		battle->resultType = AUTOMISSION_RESULT_FAILED_NO_SURVIVORS;
 		battle->winningTeam = teamEnemy;
-		return;
 	} else {
 		battle->winningTeam = teamPlayer;
 		/* At least some player soldiers are still standing, but how good did they do? */
