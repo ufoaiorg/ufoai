@@ -837,16 +837,40 @@ window hud_default extends hud
 	panel popup {
 		{
 			pos		"977 129"
-			size	"47 335"
+			size	"47 399"
 			align	LAYOUTALIGN_RIGHT
 			excluderect { pos	"0 95"	size	"8 33" }
 			excluderect { pos	"0 223"	size	"16 16" }
 		}
 
+		image background_chat
+		{
+			visiblewhen	"*cvar:sv_maxclients >= 2"
+			src			"hud/bar_chat"
+			pos			"0 0"
+			texl		"16 0"
+			texh		"64 64"
+			size		"64 64"
+			ghost		true
+		}
+
+		image button_chat
+		{
+			visiblewhen	"*cvar:sv_maxclients >= 2"
+			tooltip		"_Chat messages"
+			src			"hud/event_log"
+			pos			"10 8"
+			texl		"0 0"
+			texh		"32 36"
+			onClick {
+				cmd "ui_push hud_chat;"
+			}
+		}
+
 		image background
 		{
 			src	"hud/bar_popup"
-			pos		"0 0"
+			pos		"0 64"
 			size	"47 335"
 			texh	"47 335"
 			ghost	true
@@ -857,7 +881,7 @@ window hud_default extends hud
 			tooltip	"_Options"
 			src	"hud/buttons1"
 			mousefx true
-			pos		"6 10"
+			pos		"6 74"
 			texl	"165 0"
 			texh	"201 75"
 			onClick	{ cmd "ui_pop;" }
@@ -868,7 +892,7 @@ window hud_default extends hud
 			tooltip	"_Physical stats of this soldier"
 			src	"hud/buttons1"
 			mousefx true
-			pos		"6 137"
+			pos		"6 201"
 			texl	"202 0"
 			texh	"238 75"
 			onClick	{ cmd "ui_push hudphysdat;" }
@@ -879,31 +903,10 @@ window hud_default extends hud
 			tooltip	"_Inventory"
 			src	"hud/buttons1"
 			mousefx true
-			pos		"6 247"
+			pos		"6 311"
 			texl	"128 0"
 			texh	"164 75"
 			onClick	{ call *node:root.showinventory }
-		}
-	}
-
-	image bar_chat_bg
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		src			"hud/bar_chat"
-		pos			"959 152"
-		size		"64 64"
-	}
-
-	image button_chat
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		tooltip		"_Chat messages"
-		src			"hud/event_log"
-		pos			"985 160"
-		texl		"0 0"
-		texh		"32 36"
-		onClick {
-			cmd "ui_push hud_chat;"
 		}
 	}
 
