@@ -53,7 +53,7 @@
 			<filterCriterion type="entityclass" match="light_*" action="hide" />
 		</filter>
 		<filter name="Models">
-			<filterCriterion type="entityclass" match="misc_models" action="hide" />
+			<filterCriterion type="entityclass" match="misc_model" action="hide" />
 		</filter>
 		<filter name="Particles">
 			<filterCriterion type="entityclass" match="misc_particle" action="hide" />
