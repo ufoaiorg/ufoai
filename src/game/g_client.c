@@ -142,10 +142,10 @@ unsigned int G_TeamToPM (int team)
  * @return Returns a vis mask for all the teams of the connected players that
  * are marked in the given @c playerMask.
  */
-unsigned int G_PMToVis (unsigned int playerMask)
+vismask_t G_PMToVis (unsigned int playerMask)
 {
 	player_t *p;
-	unsigned int visMask;
+	vismask_t visMask;
 
 	visMask = 0;
 
@@ -166,7 +166,7 @@ unsigned int G_PMToVis (unsigned int playerMask)
  * @return Returns a playermask for all the teams of the connected players that
  * are marked in the given @c vis_mask.
  */
-unsigned int G_VisToPM (unsigned int vis_mask)
+unsigned int G_VisToPM (vismask_t vis_mask)
 {
 	player_t *p;
 	unsigned int playerMask;
@@ -1282,7 +1282,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 		/* skip the world(s) in case of map assembly */
 		if (ent->type > ET_NULL) {
 			G_EventAddBrushModel(mask, ent);
-			ent->visflags |= ~ent->visflags;
+			G_VisFlagsAdd(ent, ~ent->visflags);
 		}
 	}
 }
@@ -1341,7 +1341,7 @@ void G_ClientSpawn (player_t * player)
 
 	/** @todo this is too early - not every coop player might be 'spawned' already */
 	/* show visible actors and add invisible actor */
-	G_ClearVisFlags(player->pers.team);
+	G_VisFlagsClear(player->pers.team);
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 

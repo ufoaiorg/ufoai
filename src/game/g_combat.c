@@ -501,7 +501,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
 					G_AppearPerishEvent(~G_VisToPM(check->visflags), qtrue, check, ent);
-					check->visflags |= ~check->visflags;
+					G_VisFlagsAdd(check, ~check->visflags);
 				}
 				continue;
 			}
@@ -560,7 +560,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 		if (game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
 			/* make it invisible to send the inventory in the below vis check */
 			G_EventPerish(floor);
-			floor->visflags = 0;
+			G_VisFlagsReset(floor);
 			G_CheckVis(floor, qtrue);
 		}
 	}

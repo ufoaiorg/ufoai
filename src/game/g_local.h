@@ -369,6 +369,9 @@ void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const edict_t * ent);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
+/** @todo make this a byte */
+typedef unsigned int vismask_t;
+
 #include "g_events.h"
 
 /* g_vis.c */
@@ -453,8 +456,8 @@ void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, const edict_t *ent);
-unsigned int G_VisToPM(unsigned int vis_mask);
-unsigned int G_PMToVis(unsigned int playerMask);
+unsigned int G_VisToPM(vismask_t vis_mask);
+vismask_t G_PMToVis(unsigned int playerMask);
 void G_SendInventory(unsigned int player_mask, const edict_t * ent);
 unsigned int G_TeamToPM(int team);
 
@@ -473,7 +476,10 @@ void G_InvList_f(const player_t *player);
 /* g_vis.c */
 qboolean G_FrustumVis(const edict_t *from, const vec3_t point);
 float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
-void G_ClearVisFlags(int team);
+void G_VisFlagsClear(int team);
+void G_VisFlagsAdd(edict_t *ent, vismask_t visMask);
+void G_VisFlagsSwap(edict_t *ent, vismask_t visMask);
+void G_VisFlagsReset(edict_t *ent);
 int G_CheckVis(edict_t *check, qboolean perish);
 int G_CheckVisPlayer(player_t* player, qboolean perish);
 int G_TestVis(const int team, edict_t * check, int flags);
@@ -550,7 +556,7 @@ typedef enum {
 /** @brief actor movement */
 typedef struct {
 	int			contentFlags[MAX_DVTAB];
-	int			visflags[MAX_DVTAB];
+	vismask_t	visflags[MAX_DVTAB];
 	byte		steps;
 	int			currentStep;
 } moveinfo_t;
@@ -654,7 +660,7 @@ struct edict_s {
 
 	const edict_t *link;		/**< can be used to store another edict that e.g. interacts with the current one */
 	entity_type_t type;
-	int visflags;				/**< bitmask of teams that can see this edict */
+	vismask_t visflags;			/**< bitmask of teams that can see this edict */
 
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
 

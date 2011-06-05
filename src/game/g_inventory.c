@@ -170,7 +170,7 @@ static qboolean G_InventoryPlaceItemAdjacent (edict_t *ent)
 		} else {
 			/* destroy this edict (send this event to all clients that see the edict) */
 			G_EventPerish(floorAdjacent);
-			floorAdjacent->visflags = 0;
+			G_VisFlagsReset(floorAdjacent);
 		}
 
 		INVSH_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor), &x, &y, ic);
@@ -232,7 +232,7 @@ void G_InventoryToFloor (edict_t *ent)
 	} else {
 		/* destroy this edict (send this event to all clients that see the edict) */
 		G_EventPerish(floor);
-		floor->visflags = 0;
+		G_VisFlagsReset(floor);
 	}
 
 	/* drop items */

@@ -351,12 +351,28 @@ int G_CheckVis (edict_t * check, qboolean perish)
  * @brief Reset the visflags for all edicts in the global list for the
  * given team - and only for the given team
  */
-void G_ClearVisFlags (int team)
+void G_VisFlagsClear (int team)
 {
 	edict_t *ent = NULL;
-	int mask;
+	vismask_t mask;
 
 	mask = ~G_TeamToVisMask(team);
-	while ((ent = G_EdictsGetNextInUse(ent)))
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		ent->visflags &= mask;
+	}
+}
+
+void G_VisFlagsAdd (edict_t *ent, vismask_t visMask)
+{
+	ent->visflags |= visMask;
+}
+
+void G_VisFlagsReset (edict_t *ent)
+{
+	ent->visflags = 0;
+}
+
+void G_VisFlagsSwap (edict_t *ent, vismask_t visMask)
+{
+	ent->visflags ^= visMask;
 }

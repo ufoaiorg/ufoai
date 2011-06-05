@@ -276,7 +276,7 @@ static void SVCmd_ShowAll_f (void)
 	/* Make everything visible to anyone who can't already see it */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
-		ent->visflags |= ~ent->visflags;
+		G_VisFlagsAdd(ent, ~ent->visflags);
 	}
 	gi.DPrintf("All items and creatures revealed to all sides\n");
 }
