@@ -552,9 +552,9 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 	numCivsTm = missionParams->civilians;
 
 	/* Alines will go on team 2, alien drones on 3, civs on 4 (player soldiers are 0 and UGVs are 1). */
-	battle->nUnits[2] = numAliensTm;
-	battle->nUnits[3] = numAlienDronesTm;
-	battle->nUnits[4] = numCivsTm;
+	battle->nUnits[AM_Team_Alien] = numAliensTm;
+	battle->nUnits[AM_Team_Drone] = numAlienDronesTm;
+	battle->nUnits[AM_Team_Civilian] = numCivsTm;
 
 	/* Populate the teams */
 
@@ -563,24 +563,24 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 		/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
 		healthMaxm = (int) (frand() * 100.f) + 50.f;
 		health = (int) (frand() * (healthMaxm - 10)) + 10;
-		battle->unitHealthMax[2][unit] = healthMaxm;
-		battle->unitHealth[2][unit] = health;
+		battle->unitHealthMax[AM_Team_Alien][unit] = healthMaxm;
+		battle->unitHealth[AM_Team_Alien][unit] = health;
 	}
-	battle->teamActive[2] = qtrue;
-	battle->teamType[2] = AUTOMISSION_TEAM_TYPE_ALIEN;
-	battle->scoreTeamSkill[2] = (frand() * 0.6f) + 0.2f;
+	battle->teamActive[AM_Team_Alien] = qtrue;
+	battle->teamType[AM_Team_Alien] = AUTOMISSION_TEAM_TYPE_ALIEN;
+	battle->scoreTeamSkill[AM_Team_Alien] = (frand() * 0.6f) + 0.2f;
 
 	if (numAlienDronesTm > 0) {
 		for (unit = 0; unit < numAlienDronesTm; unit++) {
 			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
 			healthMaxm = (int) (frand() * 120.f) + 80.f;
 			health = (int) (frand() * (healthMaxm - 10)) + 10;
-			battle->unitHealthMax[3][unit] = healthMaxm;
-			battle->unitHealth[3][unit] = health;
+			battle->unitHealthMax[AM_Team_Drone][unit] = healthMaxm;
+			battle->unitHealth[AM_Team_Drone][unit] = health;
 		}
-		battle->teamActive[3] = qtrue;
-		battle->teamType[3] = AUTOMISSION_TEAM_TYPE_ALIEN_DRONE;
-		battle->scoreTeamSkill[3] = (frand() * 0.6f) + 0.3f;
+		battle->teamActive[AM_Team_Drone] = qtrue;
+		battle->teamType[AM_Team_Drone] = AUTOMISSION_TEAM_TYPE_ALIEN_DRONE;
+		battle->scoreTeamSkill[AM_Team_Drone] = (frand() * 0.6f) + 0.3f;
 	}
 
 	/* Civilians (if any) */
@@ -589,12 +589,12 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
 			healthMaxm = (int) (frand() * 40.f) + 5.f;
 			health = (int) (frand() * (healthMaxm - 4)) + 4;
-			battle->unitHealthMax[4][unit] = healthMaxm;
-			battle->unitHealth[4][unit] = health;
+			battle->unitHealthMax[AM_Team_Civilian][unit] = healthMaxm;
+			battle->unitHealth[AM_Team_Civilian][unit] = health;
 		}
-		battle->teamActive[4] = qtrue;
-		battle->teamType[4] = AUTOMISSION_TEAM_TYPE_CIVILIAN;
-		battle->scoreTeamSkill[4] = (frand() * 0.5f) + 0.05f;
+		battle->teamActive[AM_Team_Civilian] = qtrue;
+		battle->teamType[AM_Team_Civilian] = AUTOMISSION_TEAM_TYPE_CIVILIAN;
+		battle->scoreTeamSkill[AM_Team_Civilian] = (frand() * 0.5f) + 0.05f;
 	}
 }
 
@@ -606,17 +606,17 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 {
 	employee_t *soldier;
 	int unit = 0;
-	int battleExperience = max (0, battle->teamAccomplishment[0]);
+	int battleExperience = max (0, battle->teamAccomplishment[AM_Team_Soldier]);
 
 	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
 		character_t *chr = &soldier->chr;
 		chrScoreGlobal_t *score = &chr->score;
 
-		chr->HP = battle->unitHealth[0][unit];
+		chr->HP = battle->unitHealth[AM_Team_Soldier][unit];
 		unit++;
 
 		/* TODO: More might need to be added here, to recover a dead soldier's inventory. */
-		if (battle->unitHealth[0][unit] == 0) {
+		if (battle->unitHealth[AM_Team_Soldier][unit] == 0) {
 			E_DeleteEmployee(soldier);
 			break;
 		}
