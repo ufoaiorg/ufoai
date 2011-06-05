@@ -653,12 +653,12 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SPECULARMAP", 0);
 	R_ProgramParameter1i("ANIMATE", 0);
 
-	R_ProgramParameter1f("HARDNESS", DEFAULT_HARDNESS);
-	R_ProgramParameter1f("SPECULAR", DEFAULT_SPECULAR);
-	R_ProgramParameter1f("BUMP", DEFAULT_BUMP);
-	R_ProgramParameter1f("PARALLAX", DEFAULT_PARALLAX);
+	R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
+	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
+	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
+	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
 	if (r_postprocess->integer)
-		R_ProgramParameter1f("GLOWSCALE", DEFAULT_GLOWSCALE);
+		R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
 }
 
 static void R_UseWorldProgram (r_program_t *prog)

@@ -581,7 +581,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			s->glowscale = atof(Com_Parse(buffer));
 			if (s->glowscale < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid glowscale value for %s\n", c);
-				s->glowscale = DEFAULT_GLOWSCALE;
+				s->glowscale = defaultMaterial.glowscale;
 			}
 			continue;
 		}
@@ -1009,7 +1009,7 @@ void R_LoadMaterials (const char *map)
 			m->bump = atof(Com_Parse(&buffer));
 			if (m->bump < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid bump value for %s\n", image->name);
-				m->bump = DEFAULT_BUMP;
+				m->bump = defaultMaterial.bump;
 			}
 		}
 
@@ -1017,7 +1017,7 @@ void R_LoadMaterials (const char *map)
 			m->parallax = atof(Com_Parse(&buffer));
 			if (m->parallax < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid parallax value for %s\n", image->name);
-				m->parallax = DEFAULT_PARALLAX;
+				m->parallax = defaultMaterial.parallax;
 			}
 		}
 
@@ -1025,7 +1025,7 @@ void R_LoadMaterials (const char *map)
 			m->hardness = atof(Com_Parse(&buffer));
 			if (m->hardness < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid hardness value for %s\n", image->name);
-				m->hardness = DEFAULT_HARDNESS;
+				m->hardness = defaultMaterial.hardness;
 			}
 		}
 
@@ -1033,7 +1033,7 @@ void R_LoadMaterials (const char *map)
 			m->specular = atof(Com_Parse(&buffer));
 			if (m->specular < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid specular value for %s\n", image->name);
-				m->specular = DEFAULT_SPECULAR;
+				m->specular = defaultMaterial.specular;
 			}
 		}
 
@@ -1041,13 +1041,13 @@ void R_LoadMaterials (const char *map)
 			m->glowscale = atof(Com_Parse(&buffer));
 			if (m->glowscale < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid glowscale value for %s\n", image->name);
-				m->glowscale = DEFAULT_GLOWSCALE;
+				m->glowscale = defaultMaterial.glowscale;
 			}
 		}
 
 		if (*c == '{' && inmaterial) {
 			s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
-			s->glowscale = DEFAULT_GLOWSCALE;
+			s->glowscale = defaultMaterial.glowscale;
 
 			if (R_ParseStage(s, &buffer) == -1) {
 				Mem_Free(s);
