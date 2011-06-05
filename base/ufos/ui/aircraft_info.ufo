@@ -122,13 +122,13 @@ window aircraft extends iaircraft
 
 			*node:root.aircraft_return@tooltip = "_Start Aircraft"
 			*node:root.aircraft_return@onClick = { cmd "aircraft_start;" }
-			*node:root.aircraft_return@texl = "0 32"
+			*node:root.aircraft_return@icon = "icons/aircraft_send"
 		} else {
 			*node:root.aircraft_navigation@disabled = true
 
 			*node:root.aircraft_return@tooltip = "_Call back"
 			*node:root.aircraft_return@onClick = { cmd "aircraft_return;" }
-			*node:root.aircraft_return@texl = "0 0"
+			*node:root.aircraft_return@icon = "icons/aircraft_return"
 		}
 
 		// absent from base
