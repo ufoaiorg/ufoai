@@ -1127,21 +1127,21 @@
 }
 // brush 122
 {
-( 224 190 66 ) ( 224 -2 66 ) ( 64 190 66 ) tex_buildings/floor022 0 240 0 0.125 0.125 7680 0 0
-( 224 63 96 ) ( 64 63 96 ) ( 224 63 64 ) tex_buildings/floor022 0 0 0 0.125 0.125 7680 0 0
-( 124 192 96 ) ( 124 192 64 ) ( 124 0 96 ) tex_buildings/floor022 0 0 0 0.125 0.125 7680 0 0
+( 224 190 66 ) ( 224 -2 66 ) ( 64 190 66 ) tex_buildings/floor022 0 480 0 0.0625 0.0625 7680 0 0
+( 224 63 96 ) ( 64 63 96 ) ( 224 63 64 ) tex_buildings/floor022 0 0 0 0.0625 0.0625 7680 0 0
+( 124 192 96 ) ( 124 192 64 ) ( 124 0 96 ) tex_buildings/floor022 0 0 0 0.0625 0.0625 7680 0 0
 ( 64 0 65 ) ( 224 0 65 ) ( 64 192 65 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 64 32 64 ) ( 64 32 96 ) ( 224 32 64 ) tex_buildings/floor022 0 0 0 0.125 0.125 7680 0 0
-( 64 0 64 ) ( 64 192 64 ) ( 64 0 96 ) tex_buildings/floor022 0 0 0 0.125 0.125 7680 0 0
+( 64 32 64 ) ( 64 32 96 ) ( 224 32 64 ) tex_buildings/floor022 0 0 0 0.0625 0.0625 7680 0 0
+( 64 0 64 ) ( 64 192 64 ) ( 64 0 96 ) tex_buildings/floor022 0 0 0 0.0625 0.0625 7680 0 0
 }
 // brush 123
 {
-( 224 222 66 ) ( 224 30 66 ) ( 64 222 66 ) tex_buildings/floor022 0 240 0 0.125 0.125 512 0 0
-( 224 224 96 ) ( 64 224 96 ) ( 224 224 64 ) tex_buildings/floor022 0 0 0 0.125 0.125 512 0 0
-( 224 224 96 ) ( 224 224 64 ) ( 224 32 96 ) tex_buildings/floor022 0 0 0 0.125 0.125 512 0 0
+( 224 222 66 ) ( 224 30 66 ) ( 64 222 66 ) tex_buildings/floor022 0 480 0 0.0625 0.0625 512 0 0
+( 224 224 96 ) ( 64 224 96 ) ( 224 224 64 ) tex_buildings/floor022 0 0 0 0.0625 0.0625 512 0 0
+( 224 224 96 ) ( 224 224 64 ) ( 224 32 96 ) tex_buildings/floor022 0 0 0 0.0625 0.0625 512 0 0
 ( 64 32 65 ) ( 224 32 65 ) ( 64 224 65 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 64 63 64 ) ( 64 63 96 ) ( 224 63 64 ) tex_buildings/floor022 0 0 0 0.125 0.125 512 0 0
-( 65 32 64 ) ( 65 224 64 ) ( 65 32 96 ) tex_buildings/floor022 0 0 0 0.125 0.125 512 0 0
+( 64 63 64 ) ( 64 63 96 ) ( 224 63 64 ) tex_buildings/floor022 0 0 0 0.0625 0.0625 512 0 0
+( 65 32 64 ) ( 65 224 64 ) ( 65 32 96 ) tex_buildings/floor022 0 0 0 0.0625 0.0625 512 0 0
 }
 // brush 124
 {
@@ -1448,16 +1448,16 @@
 {
 "classname" "light"
 "light" "170"
-"origin" "228 96 86"
-"_color" "1 0.3 0.05"
 "spawnflags" "1"
+"_color" "1 0.3 0.05"
+"origin" "228 96 86"
 }
 // entity 4
 {
 "classname" "light"
 "origin" "210 98 92"
-"_color" "1 0.8 0.5"
 "spawnflags" "1"
+"_color" "1 0.8 0.5"
 "light" "170"
 }
 // entity 5
@@ -2295,50 +2295,50 @@
 {
 "classname" "light"
 "light" "100"
-"_color" "1 0.987701 0.631861"
 "origin" "190 127 42"
+"_color" "1 0.987701 0.631861"
 }
 // entity 16
 {
 "classname" "light"
 "light" "100"
-"_color" "1 0.987701 0.631861"
 "origin" "162 184 115"
+"_color" "1 0.987701 0.631861"
 }
 // entity 17
 {
 "classname" "light"
 "light" "100"
-"_color" "1 0.987701 0.631861"
 "origin" "94 117 115"
+"_color" "1 0.987701 0.631861"
 }
 // entity 18
 {
 "classname" "light"
 "light" "100"
-"_color" "1 0.987701 0.631861"
 "origin" "146 51 115"
+"_color" "1 0.987701 0.631861"
 }
 // entity 19
 {
 "classname" "light"
 "light" "100"
-"_color" "1 0.987701 0.631861"
 "origin" "114 97 42"
+"_color" "1 0.987701 0.631861"
 }
 // entity 20
 {
 "classname" "light"
 "light" "100"
-"_color" "0.525818 0.911759 1"
 "origin" "117 193 42"
+"_color" "0.525818 0.911759 1"
 }
 // entity 21
 {
 "classname" "misc_particle"
 "spawnflags" "508"
-"particle" "smoke3"
 "origin" "218 95 147"
+"particle" "smoke3"
 }
 // entity 22
 {
