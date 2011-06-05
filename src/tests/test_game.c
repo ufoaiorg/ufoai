@@ -201,7 +201,7 @@ static void testInventoryForDiedAlien (void)
 		diedEnt = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
 		diedEnt->HP = 0;
-		G_ActorDieOrStun(diedEnt, NULL);
+		CU_ASSERT_TRUE(G_ActorDieOrStun(diedEnt, NULL));
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
 
 		/* now try to collect the inventory with a second alien */
