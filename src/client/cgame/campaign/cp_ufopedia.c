@@ -976,6 +976,8 @@ static void UP_MailClientClick_f (void)
 		}
 		m = m->next;
 	}
+	ccs.numUnreadMails = -1;
+	UP_GetUnreadMails();
 }
 
 /**
