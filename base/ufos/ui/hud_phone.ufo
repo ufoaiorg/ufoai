@@ -712,6 +712,7 @@ window hud_phone extends hud
 
 	image bar_chat_bg
 	{
+		visiblewhen	"*cvar:sv_maxclients >= 2"
 		src			"hud/bar_chat"
 		pos			"959 152"
 		size		"64 64"
