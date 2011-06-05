@@ -710,27 +710,6 @@ window hud_phone extends hud
 	confunc updateLevelStatus {
 	}
 
-	image bar_chat_bg
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		src			"hud/bar_chat"
-		pos			"959 152"
-		size		"64 64"
-	}
-
-	image button_chat
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		tooltip		"_Chat messages"
-		src			"hud/event_log"
-		pos			"985 160"
-		texl		"0 0"
-		texh		"32 36"
-		onClick {
-			cmd "ui_push hud_chat;"
-		}
-	}
-
 	// ==================
 	// override "hud" confunc
 	// ==================
