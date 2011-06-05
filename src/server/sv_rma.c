@@ -360,6 +360,61 @@ static qboolean SV_ParseAssemblySeeds (mapInfo_t *map, const char *filename, con
 	return qtrue;
 }
 
+static void SV_GetTilesFromTileSet (const mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
+{
+	const char *errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
+	const mTileSet_t *tileSet;
+	const mTile_t *tile;
+	int c, x, y, random;
+	const char *token;
+
+	/* get tileset id */
+	token = Com_EParse(text, errhead, filename);
+	if (!text)
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: illegal tileset syntax in assembly '%s' in %s", a->id, filename);
+	tileSet = SV_GetMapTileSet(map, token);
+	if (tileSet == NULL)
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Could not find tileset %s in %s (assembly %s)", token, filename, a->id);
+
+	/* get min and max tileset number */
+	token = Com_EParse(text, errhead, filename);
+	if (!text || *token == '}')
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (invalid syntax for tileset %s)", filename, tileSet->id);
+	if (!strstr(token, " "))
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (min max value of tileset %s)", filename, tileSet->id);
+	sscanf(token, "%i %i", &x, &y);
+	if (x > y)
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (min is bigger than max for tileset %s)", filename, tileSet->id);
+	if (y <= 0)
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (max is <= 0 for tileset %s)", filename, tileSet->id);
+	/* set max tile numbers (increasing the max of random tiles until the required max is reached)t */
+	for (c = y; c > 0; c--) {
+		random = rand() % tileSet->numTiles;
+		tile = SV_GetMapTile(map, tileSet->tiles[random]);
+		if (tile != NULL) {
+			const ptrdiff_t i = tile - map->mTile;
+			a->max[i]++;
+		} else {
+			Com_Error(ERR_DROP, "Could not find tile: '%s' in tileset '%s' (%s)", tileSet->tiles[random], tileSet->id, filename);
+		}
+	}
+	/* set min tile numbers (increasing the min of random tiles until the required min is reached) */
+	c = x;
+	while (c > 0) {
+		random = rand() % tileSet->numTiles;
+		tile = SV_GetMapTile(map, tileSet->tiles[random]);
+		if (tile != NULL) {
+			const ptrdiff_t i = tile - map->mTile;
+			if (a->min[i] < a->max[i]) {
+				a->min[i]++;
+				c--;
+			}
+		} else {
+			Com_Error(ERR_DROP, "Could not find tile: '%s' in tileset '%s' (%s)", tileSet->tiles[random], tileSet->id, filename);
+		}
+	}
+}
+
 /**
  * @brief Parses an assembly block
  * @param[in,out] map All we know about the map to assemble
@@ -453,7 +508,8 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 			continue;
 		/* chose a tile from a tileset */
 		} else if (Q_streq(token, "tileset")) {
-			token = SV_GetTileFromTileSet(map, filename, text, a);
+			SV_GetTilesFromTileSet(map, filename, text, a);
+			continue;
 		/* fix tilename "x y" */
 		} else if (Q_streq(token, "fix")) {
 			const mTile_t *t;
