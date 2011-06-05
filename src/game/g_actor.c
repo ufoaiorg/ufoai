@@ -447,13 +447,14 @@ qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 		state = G_ActorDie(ent, attacker);
 	else
 		state = G_ActorStun(ent, attacker);
-	ent->solid = SOLID_NOT;
 
 	/* no state change performed? */
 	if (!state) {
 		Com_Printf("State wasn't changed\n");
 		return qfalse;
 	}
+
+	ent->solid = SOLID_NOT;
 
 	/* send death */
 	G_EventActorDie(ent);
