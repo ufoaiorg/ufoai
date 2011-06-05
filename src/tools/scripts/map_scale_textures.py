@@ -11,7 +11,7 @@ import ufomap_io
 
 def scale_textures(texname, mapname, scalex, scaley):
     changed = False
-    ufo_map = ufomap_io.read_ufo_map(mapname)
+    ufo_map = ufomap_io.read_ufo_map(mapname, True)
     for i in ufo_map:
         for j in i.brushes:
             for k in j.faces:
