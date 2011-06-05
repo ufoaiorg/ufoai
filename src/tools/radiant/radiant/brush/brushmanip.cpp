@@ -28,6 +28,7 @@
 #include "BrushVisit.h"
 #include "../ui/brush/QuerySidesDialog.h"
 #include "../sidebar/texturebrowser.h"
+#include "../selection/algorithm/Primitives.h"
 
 #include "construct/Prism.h"
 #include "construct/Cone.h"
@@ -120,28 +121,8 @@ void Scene_BrushSetShader_Component_Selected (scene::Graph& graph, const std::st
 	SceneChangeNotify();
 }
 
-class FaceSetDetail
-{
-		bool m_detail;
-	public:
-		FaceSetDetail (bool detail) :
-			m_detail(detail)
-		{
-		}
-		void operator() (Face& face) const
-		{
-			face.setDetail(m_detail);
-		}
-};
-
-inline void Scene_BrushSetDetail_Selected (scene::Graph& graph, bool detail)
-{
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceSetDetail(detail));
-	SceneChangeNotify();
-}
-
 TextureProjection g_defaultTextureProjection;
-const TextureProjection& TextureTransform_getDefault ()
+inline const TextureProjection& TextureTransform_getDefault ()
 {
 	g_defaultTextureProjection.constructDefault();
 	return g_defaultTextureProjection;
@@ -329,18 +310,6 @@ static BrushPrefab g_brushsphere(eBrushSphere);
 static BrushPrefab g_brushrock(eBrushRock);
 static BrushPrefab g_brushterrain(eBrushTerrain);
 
-void Select_MakeDetail ()
-{
-	UndoableCommand undo("brushSetDetail");
-	Scene_BrushSetDetail_Selected(GlobalSceneGraph(), true);
-}
-
-void Select_MakeStructural ()
-{
-	UndoableCommand undo("brushClearDetail");
-	Scene_BrushSetDetail_Selected(GlobalSceneGraph(), false);
-}
-
 void Brush_registerCommands ()
 {
 	GlobalEventManager().addRegistryToggle("TogTexLock", RKEY_ENABLE_TEXTURE_LOCK);
@@ -359,6 +328,6 @@ void Brush_registerCommands ()
 	GlobalEventManager().addCommand("Brush8Sided", BrushMakeSided::SetCaller(g_brushmakesided8));
 	GlobalEventManager().addCommand("Brush9Sided", BrushMakeSided::SetCaller(g_brushmakesided9));
 
-	GlobalEventManager().addCommand("MakeDetail", FreeCaller<Select_MakeDetail>());
-	GlobalEventManager().addCommand("MakeStructural", FreeCaller<Select_MakeStructural>());
+	GlobalEventManager().addCommand("MakeDetail", FreeCaller<selection::algorithm::makeDetail>());
+	GlobalEventManager().addCommand("MakeStructural", FreeCaller<selection::algorithm::makeStructural>());
 }

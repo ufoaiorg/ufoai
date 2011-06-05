@@ -54,6 +54,10 @@ namespace selection {
 	 */
 	Face& getLastSelectedFace();
 
+	void makeDetail ();
+
+	void makeStructural ();
+
 	} // namespace algorithm
 } // namespace selection
 

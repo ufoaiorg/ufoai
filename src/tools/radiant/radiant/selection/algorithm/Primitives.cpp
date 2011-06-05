@@ -3,6 +3,7 @@
 #include "../../brush/FaceInstance.h"
 #include "../../brush/BrushVisit.h"
 #include "string/string.h"
+#include "iundo.h"
 
 // greebo: Nasty global that contains all the selected face instances
 extern FaceInstanceSet g_SelectedFaceInstances;
@@ -74,6 +75,37 @@ FacePtrVector getSelectedFaces() {
 	return vector;
 }
 
+class FaceSetDetail
+{
+		bool m_detail;
+	public:
+		FaceSetDetail (bool detail) :
+			m_detail(detail)
+		{
+		}
+		void operator() (Face& face) const
+		{
+			face.setDetail(m_detail);
+		}
+};
+
+inline void Scene_BrushSetDetail_Selected (scene::Graph& graph, bool detail)
+{
+	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceSetDetail(detail));
+	SceneChangeNotify();
+}
+
+void makeDetail ()
+{
+	UndoableCommand undo("brushSetDetail");
+	Scene_BrushSetDetail_Selected(GlobalSceneGraph(), true);
+}
+
+void makeStructural ()
+{
+	UndoableCommand undo("brushClearDetail");
+	Scene_BrushSetDetail_Selected(GlobalSceneGraph(), false);
+}
 
 	} // namespace algorithm
 } // namespace selection
