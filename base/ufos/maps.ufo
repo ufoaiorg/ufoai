@@ -2188,7 +2188,8 @@ mapdef ferry
 
 	terrains
 	{
-		water
+		grass
+		// TODO: there should be a coast terrain type
 	}
 
 	cultures
