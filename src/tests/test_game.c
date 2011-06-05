@@ -39,6 +39,7 @@ static int UFO_InitSuiteGame (void)
 	TEST_Init();
 	/* we need the teamdefs for spawning ai actors */
 	Com_ParseScripts(qtrue);
+	Cvar_Set("sv_threads", "0");
 
 	sv_genericPool = Mem_CreatePool("server-gametest");
 	r_state.active_texunit = &r_state.texunits[0];
