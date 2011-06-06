@@ -551,16 +551,18 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 	/* Populate the teams */
 
 	/* Aliens */
-	for (unit = 0; unit < numAliensTm; unit++) {
-		/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
-		const int healthMaxm = (int) (frand() * 100.f) + 50.f;
-		const int health = (int) (frand() * (healthMaxm - 10)) + 10;
-		battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = healthMaxm;
-		battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = health;
+	if (numAliensTm > 0) {
+		for (unit = 0; unit < numAliensTm; unit++) {
+			/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
+			const int healthMaxm = (int) (frand() * 100.f) + 50.f;
+			const int health = (int) (frand() * (healthMaxm - 10)) + 10;
+			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = healthMaxm;
+			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = health;
+		}
+		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
+		battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN] = AUTOMISSION_TEAM_TYPE_ALIEN;
+		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN] = (frand() * 0.6f) + 0.2f;
 	}
-	battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
-	battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN] = AUTOMISSION_TEAM_TYPE_ALIEN;
-	battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN] = (frand() * 0.6f) + 0.2f;
 
 	if (numAlienDronesTm > 0) {
 		for (unit = 0; unit < numAlienDronesTm; unit++) {
