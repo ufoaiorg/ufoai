@@ -497,7 +497,7 @@
 "_color" "1 1 1"
 "light" "300"
 "origin" "32 49 121"
-"angle" "90"
+"angles" "0 0 90"
 "target" "light0"
 }
 // entity 3
@@ -511,7 +511,7 @@
 "classname" "func_rotating"
 "spawnflags" "248"
 "speed" "1"
-"angle" "0"
+"angles" "0 0 0"
 // brush 0
 {
 ( 31 64 270 ) ( 35 64 270 ) ( 35 64 266 ) tex_material/metall002 0 0 0 0.25 0.25 63488 0 0

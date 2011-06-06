@@ -273,70 +273,70 @@
 "classname" "info_player_start"
 "origin" "80 16 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 12
 {
 "classname" "info_player_start"
 "origin" "144 80 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 13
 {
 "classname" "info_player_start"
 "origin" "240 48 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 14
 {
 "classname" "info_player_start"
 "origin" "432 48 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 15
 {
 "classname" "info_player_start"
 "origin" "592 464 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 16
 {
 "classname" "info_player_start"
 "origin" "464 464 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 17
 {
 "classname" "info_player_start"
 "origin" "240 432 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 18
 {
 "classname" "info_player_start"
 "origin" "144 464 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 19
 {
 "classname" "info_player_start"
 "origin" "112 48 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 20
 {
 "classname" "info_player_start"
 "origin" "240 496 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 21
 {

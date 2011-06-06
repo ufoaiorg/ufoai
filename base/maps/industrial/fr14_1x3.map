@@ -1539,5 +1539,5 @@
 {
 "classname" "info_civilian_start"
 "origin" "176 720 28"
-"angle" "90"
+"angles" "0 0 90"
 }

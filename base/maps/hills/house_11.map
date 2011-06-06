@@ -833,7 +833,7 @@
 {
 "origin" "77 119 20"
 "attenuation" "2.5"
-"angle" "-90"
+"angles" "0 0 -90"
 "classname" "misc_sound"
 "noise" "ambience/radiomessage.wav"
 "spawnflags" "255"

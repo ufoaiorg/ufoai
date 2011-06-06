@@ -10142,7 +10142,7 @@
 "classname" "misc_sound"
 "origin" "1008 680 32"
 "noise" "ambience/disco"
-"angle" "-90"
+"angles" "0 0 -90"
 "volume" "1.0"
 "spawnflags" "1"
 }

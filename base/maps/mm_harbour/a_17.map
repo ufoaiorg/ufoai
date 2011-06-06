@@ -191,5 +191,5 @@
 {
 "classname" "info_human_start"
 "origin" "112 336 252"
-"angle" "180"
+"angles" "0 0 180"
 }

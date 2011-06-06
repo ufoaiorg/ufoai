@@ -9259,14 +9259,14 @@
 {
 "classname" "info_player_start"
 "origin" "400 1424 28"
-"angle" "-90"
+"angles" "0 0 -90"
 "team" "2"
 }
 // entity 129
 {
 "classname" "info_player_start"
 "origin" "432 1360 28"
-"angle" "-90"
+"angles" "0 0 -90"
 "team" "2"
 }
 // entity 130
@@ -9279,7 +9279,7 @@
 {
 "classname" "info_player_start"
 "origin" "240 1552 28"
-"angle" "-90"
+"angles" "0 0 -90"
 "team" "2"
 }
 // entity 132
@@ -9304,14 +9304,14 @@
 {
 "classname" "info_player_start"
 "origin" "176 1392 28"
-"angle" "-135"
+"angles" "0 0 -135"
 "team" "2"
 }
 // entity 136
 {
 "classname" "info_player_start"
 "origin" "272 1424 28"
-"angle" "-135"
+"angles" "0 0 -135"
 "team" "2"
 }
 // entity 137
@@ -9324,7 +9324,7 @@
 {
 "classname" "info_player_start"
 "origin" "368 1552 28"
-"angle" "-90"
+"angles" "0 0 -90"
 "team" "2"
 }
 // entity 139
@@ -9337,7 +9337,7 @@
 {
 "classname" "info_player_start"
 "origin" "400 1264 28"
-"angle" "-135"
+"angles" "0 0 -135"
 "team" "2"
 }
 // entity 141
@@ -12322,5 +12322,5 @@
 "classname" "misc_sound"
 "origin" "978 760 40"
 "noise" "sound/ambience/tv_static"
-"angle" "90"
+"angles" "0 0 90"
 }

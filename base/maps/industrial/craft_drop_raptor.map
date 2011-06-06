@@ -826,19 +826,19 @@
 {
 "classname" "info_human_start"
 "origin" "400 688 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 10
 {
 "classname" "info_human_start"
 "origin" "144 144 32"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 11
 {
 "classname" "info_human_start"
 "origin" "80 336 32"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 12
 {

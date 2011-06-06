@@ -244,7 +244,7 @@
 "classname" "func_rotating"
 "spawnflags" "248"
 "speed" "1"
-"angle" "0"
+"angles" "0 0 0"
 // brush 0
 {
 ( 31 64 206 ) ( 35 64 206 ) ( 35 64 202 ) tex_material/metall002 0 0 0 0.25 0.25 63488 0 0

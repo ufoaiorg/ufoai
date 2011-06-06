@@ -163,13 +163,13 @@
 {
 "classname" "info_civilian_start"
 "origin" "144 48 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 6
 {
 "classname" "info_alien_start"
 "origin" "112 208 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 7
 {

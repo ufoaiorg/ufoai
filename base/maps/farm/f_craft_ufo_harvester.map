@@ -3702,25 +3702,25 @@
 {
 "classname" "info_alien_start"
 "origin" "144 784 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 71
 {
 "classname" "info_alien_start"
 "origin" "1104 816 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 72
 {
 "classname" "info_alien_start"
 "origin" "304 112 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 73
 {
 "classname" "info_alien_start"
 "origin" "592 592 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 74
 {

@@ -792,7 +792,7 @@
 "_color" "1 1 1"
 "light" "300"
 "origin" "384 113 121"
-"angle" "90"
+"angles" "0 0 90"
 "target" "light"
 }
 // entity 5
@@ -806,7 +806,7 @@
 "classname" "func_rotating"
 "spawnflags" "248"
 "speed" "1"
-"angle" "0"
+"angles" "0 0 0"
 // brush 0
 {
 ( 127 192 206 ) ( 131 192 206 ) ( 131 192 202 ) tex_material/metall002 0 0 0 0.25 0.25 63488 0 0
@@ -885,7 +885,7 @@
 "classname" "func_rotating"
 "spawnflags" "248"
 "speed" "1"
-"angle" "0"
+"angles" "0 0 0"
 // brush 0
 {
 ( 383 128 270 ) ( 387 128 270 ) ( 387 128 266 ) tex_material/metall002 0 0 0 0.25 0.25 63488 0 0

@@ -1385,7 +1385,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "112 208 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 16
 {
@@ -1396,5 +1396,5 @@
 {
 "classname" "info_civilian_start"
 "origin" "208 112 28"
-"angle" "45"
+"angles" "0 0 45"
 }

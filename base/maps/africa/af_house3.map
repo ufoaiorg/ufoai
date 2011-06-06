@@ -339,14 +339,14 @@
 // entity 2
 {
 "classname" "info_civilian_start"
-"angle" "135"
+"angles" "0 0 135"
 "origin" "48 48 28"
 }
 // entity 3
 {
 "classname" "info_civilian_start"
 "origin" "144 144 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 4
 {

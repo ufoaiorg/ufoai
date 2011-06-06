@@ -856,19 +856,19 @@
 {
 "classname" "info_civilian_start"
 "origin" "48 144 28"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 5
 {
 "classname" "info_civilian_start"
 "origin" "176 80 28"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 6
 {
 "classname" "info_civilian_start"
 "origin" "208 144 28"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 7
 {

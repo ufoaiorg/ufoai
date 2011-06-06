@@ -922,25 +922,25 @@
 {
 "classname" "info_civilian_start"
 "origin" "720 144 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 2
 {
 "classname" "info_civilian_start"
 "origin" "464 432 28"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 3
 {
 "classname" "info_civilian_start"
 "origin" "48 368 28"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 4
 {
 "classname" "info_human_start"
 "origin" "656 48 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 5
 {

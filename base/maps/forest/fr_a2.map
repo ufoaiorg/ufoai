@@ -1098,7 +1098,7 @@
 "spawnflags" "252"
 "origin" "204 172 66"
 "skin" "3"
-"angle" "-28.0345"
+"angles" "0 0 -28.0345"
 }
 // entity 7
 {
@@ -1107,7 +1107,7 @@
 "spawnflags" "2"
 "origin" "204 172 66"
 "skin" "3"
-"angle" "-28.0345"
+"angles" "0 0 -28.0345"
 }
 // entity 8
 {
@@ -1115,7 +1115,7 @@
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "204 172 66"
-"angle" "-28.0345"
+"angles" "0 0 -28.0345"
 }
 // entity 9
 {
@@ -1123,7 +1123,7 @@
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "204 172 66"
-"angle" "-28.0345"
+"angles" "0 0 -28.0345"
 }
 // entity 10
 {
@@ -1131,7 +1131,7 @@
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "204 172 66"
-"angle" "-28.0345"
+"angles" "0 0 -28.0345"
 }
 // entity 11
 {

@@ -11775,7 +11775,7 @@
 {
 "classname" "info_alien_start"
 "origin" "528 976 156"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 48
 {
@@ -11786,25 +11786,25 @@
 {
 "classname" "info_alien_start"
 "origin" "-464 432 28"
-"angle" "-1.40334e-14"
+"angles" "0 0 -1.40334e-14"
 }
 // entity 50
 {
 "classname" "info_alien_start"
 "origin" "880 336 156"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 51
 {
 "classname" "info_alien_start"
 "origin" "752 912 156"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 52
 {
 "classname" "info_alien_start"
 "origin" "560 912 92"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 53
 {
@@ -11815,73 +11815,73 @@
 {
 "classname" "info_alien_start"
 "origin" "592 368 92"
-"angle" "-1.40334e-14"
+"angles" "0 0 -1.40334e-14"
 }
 // entity 55
 {
 "classname" "info_alien_start"
 "origin" "688 880 92"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 56
 {
 "classname" "info_alien_start"
 "origin" "976 176 156"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 57
 {
 "classname" "info_alien_start"
 "origin" "944 -336 92"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 58
 {
 "classname" "info_alien_start"
 "origin" "-240 -464 28"
-"angle" "-1.40334e-14"
+"angles" "0 0 -1.40334e-14"
 }
 // entity 59
 {
 "classname" "info_alien_start"
 "origin" "976 -336 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 60
 {
 "classname" "info_alien_start"
 "origin" "1008 -144 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 61
 {
 "classname" "info_alien_start"
 "origin" "528 624 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 62
 {
 "classname" "info_alien_start"
 "origin" "-464 912 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 63
 {
 "classname" "info_alien_start"
 "origin" "-112 880 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 64
 {
 "classname" "info_alien_start"
 "origin" "656 -400 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 65
 {
 "classname" "info_civilian_start"
 "origin" "-240 -784 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 66
 {
@@ -11892,7 +11892,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "880 -560 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 68
 {
@@ -16566,13 +16566,13 @@
 {
 "classname" "info_civilian_start"
 "origin" "-656 848 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 145
 {
 "classname" "info_civilian_start"
 "origin" "-560 -208 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 146
 {

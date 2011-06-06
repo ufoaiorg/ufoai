@@ -3464,7 +3464,7 @@
 {
 "classname" "info_alien_start"
 "origin" "240 976 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 8
 {
@@ -4122,25 +4122,25 @@
 {
 "classname" "info_alien_start"
 "origin" "80 752 32"
-"angle" "-180"
+"angles" "0 0 -180"
 }
 // entity 66
 {
 "classname" "info_alien_start"
 "origin" "1104 1072 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 67
 {
 "classname" "info_alien_start"
 "origin" "432 592 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 68
 {
 "classname" "info_alien_start"
 "origin" "592 848 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 69
 {

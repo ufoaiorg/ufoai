@@ -4164,13 +4164,13 @@
 {
 "classname" "info_civilian_start"
 "origin" "208 304 96"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 51
 {
 "classname" "info_civilian_start"
 "origin" "336 208 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 52
 {

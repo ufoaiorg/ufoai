@@ -627,56 +627,56 @@
 {
 "classname" "info_2x2_start"
 "origin" "384 192 32"
-"angle" "180"
+"angles" "0 0 180"
 "team" "1"
 }
 // entity 25
 {
 "classname" "info_human_start"
 "origin" "656 336 33"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 26
 {
 "classname" "info_human_start"
 "origin" "368 432 33"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 27
 {
 "classname" "info_human_start"
 "origin" "688 336 33"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 28
 {
 "classname" "info_human_start"
 "origin" "400 432 33"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 29
 {
 "classname" "info_human_start"
 "origin" "496 464 33"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 30
 {
 "classname" "info_human_start"
 "origin" "464 208 33"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 31
 {
 "classname" "info_human_start"
 "origin" "528 464 33"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 32
 {
 "classname" "info_human_start"
 "origin" "496 208 33"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 33
 {

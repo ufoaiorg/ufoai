@@ -966,7 +966,7 @@
 "origin" "668 48 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
-"angle" "-180"
+"angles" "0 0 -180"
 }
 // entity 25
 {
@@ -974,7 +974,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "496 84 12"
-"angle" "-180"
+"angles" "0 0 -180"
 }
 // entity 26
 {
@@ -982,7 +982,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "410 58 12"
-"angle" "-180"
+"angles" "0 0 -180"
 }
 // entity 27
 {
@@ -1033,70 +1033,70 @@
 "classname" "info_player_start"
 "origin" "80 16 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 34
 {
 "classname" "info_player_start"
 "origin" "144 80 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 35
 {
 "classname" "info_player_start"
 "origin" "240 48 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 36
 {
 "classname" "info_player_start"
 "origin" "432 48 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 37
 {
 "classname" "info_player_start"
 "origin" "592 464 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 38
 {
 "classname" "info_player_start"
 "origin" "464 464 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 39
 {
 "classname" "info_player_start"
 "origin" "240 432 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 40
 {
 "classname" "info_player_start"
 "origin" "144 464 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 41
 {
 "classname" "info_player_start"
 "origin" "112 48 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 42
 {
 "classname" "info_player_start"
 "origin" "240 496 32"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 43
 {
@@ -1166,7 +1166,7 @@
 {
 "classname" "info_human_start"
 "origin" "208 464 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 54
 {
@@ -1182,13 +1182,13 @@
 {
 "classname" "info_human_start"
 "origin" "688 464 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 57
 {
 "classname" "info_human_start"
 "origin" "208 400 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 58
 {

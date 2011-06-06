@@ -2083,19 +2083,19 @@
 {
 "classname" "info_human_start"
 "origin" "512 120 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 2
 {
 "classname" "info_human_start"
 "origin" "-144 176 34"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 3
 {
 "classname" "info_alien_start"
 "origin" "976 304 36"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 4
 {

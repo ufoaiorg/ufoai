@@ -830,7 +830,7 @@
 "origin" "173.651 199.743 56"
 "skin" "3"
 "modelscale_vec" "1 1 0.85"
-"angle" "-47.6089"
+"angles" "0 0 -47.6089"
 }
 // entity 7
 {
@@ -840,7 +840,7 @@
 "origin" "173.651 199.743 56"
 "skin" "3"
 "modelscale_vec" "1 1 0.85"
-"angle" "-47.6089"
+"angles" "0 0 -47.6089"
 }
 // entity 8
 {
@@ -849,7 +849,7 @@
 "spawnflags" "252"
 "origin" "173.651 199.743 57"
 "modelscale_vec" "1 1 0.85"
-"angle" "-47.6089"
+"angles" "0 0 -47.6089"
 }
 // entity 9
 {
@@ -858,7 +858,7 @@
 "spawnflags" "2"
 "origin" "173.651 199.743 57"
 "modelscale_vec" "1 1 0.85"
-"angle" "-47.6089"
+"angles" "0 0 -47.6089"
 }
 // entity 10
 {
@@ -867,7 +867,7 @@
 "spawnflags" "1"
 "origin" "173.651 199.743 57"
 "modelscale_vec" "1 1 0.85"
-"angle" "-47.6089"
+"angles" "0 0 -47.6089"
 }
 // entity 11
 {

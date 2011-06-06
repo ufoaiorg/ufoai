@@ -711,7 +711,7 @@
 // entity 4
 {
 "classname" "info_human_start"
-"angle" "-135"
+"angles" "0 0 -135"
 "origin" "176 304 92"
 }
 // entity 5
@@ -1340,32 +1340,32 @@
 // entity 26
 {
 "classname" "info_human_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "304 240 92"
 }
 // entity 27
 {
 "classname" "info_human_start"
 "origin" "80 112 92"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 28
 {
 "classname" "info_human_start"
 "origin" "336 80 92"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 29
 {
 "classname" "info_human_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "origin" "400 336 92"
 }
 // entity 30
 {
 "classname" "info_human_start"
 "origin" "176 176 92"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 31
 {

@@ -859,13 +859,13 @@
 // entity 1
 {
 "classname" "info_civilian_start"
-"angle" "225"
+"angles" "0 0 225"
 "origin" "304 688 28"
 }
 // entity 2
 {
 "classname" "info_alien_start"
-"angle" "135"
+"angles" "0 0 135"
 "origin" "400 272 28"
 }
 // entity 3
@@ -1893,12 +1893,12 @@
 {
 "classname" "info_alien_start"
 "origin" "464 656 28"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 21
 {
 "classname" "info_alien_start"
-"angle" "315"
+"angles" "0 0 315"
 "origin" "368 592 28"
 }
 // entity 22

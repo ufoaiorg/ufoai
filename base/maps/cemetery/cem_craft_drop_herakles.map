@@ -1239,7 +1239,7 @@
 // entity 1
 {
 "classname" "info_civilian_start"
-"angle" "180"
+"angles" "0 0 180"
 "origin" "688 144 28"
 }
 // entity 2
@@ -1280,13 +1280,13 @@
 // entity 7
 {
 "classname" "info_civilian_start"
-"angle" "135"
+"angles" "0 0 135"
 "origin" "688 400 28"
 }
 // entity 8
 {
 "classname" "info_civilian_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "origin" "240 432 28"
 }
 // entity 9
@@ -1328,49 +1328,49 @@
 {
 "classname" "info_human_start"
 "origin" "208 208 51"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 15
 {
 "classname" "info_human_start"
 "origin" "208 272 51"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 16
 {
 "classname" "info_human_start"
 "origin" "272 208 51"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 17
 {
 "classname" "info_human_start"
 "origin" "272 272 51"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 18
 {
 "classname" "info_human_start"
 "origin" "336 208 51"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 19
 {
 "classname" "info_human_start"
 "origin" "336 272 51"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 20
 {
 "classname" "info_human_start"
 "origin" "400 208 51"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 21
 {
 "classname" "info_human_start"
 "origin" "400 272 51"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 22
 {

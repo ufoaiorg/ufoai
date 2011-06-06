@@ -1791,13 +1791,13 @@
 {
 "classname" "info_alien_start"
 "origin" "272 368 160"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 13
 {
 "classname" "info_alien_start"
 "origin" "784 48 160"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 14
 {

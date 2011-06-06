@@ -925,7 +925,7 @@
 {
 "classname" "info_human_start"
 "origin" "304 48 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 17
 {
@@ -936,7 +936,7 @@
 {
 "classname" "info_human_start"
 "origin" "80 272 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 19
 {
@@ -952,7 +952,7 @@
 {
 "classname" "info_human_start"
 "origin" "528 624 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 22
 {
@@ -963,5 +963,5 @@
 {
 "classname" "info_human_start"
 "origin" "80 368 28"
-"angle" "90"
+"angles" "0 0 90"
 }

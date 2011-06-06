@@ -1351,19 +1351,19 @@
 {
 "classname" "info_alien_start"
 "origin" "496 656 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 8
 {
 "classname" "info_alien_start"
 "origin" "400 336 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 9
 {
 "classname" "info_alien_start"
 "origin" "208 304 32"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 10
 {

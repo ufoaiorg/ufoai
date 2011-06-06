@@ -3190,7 +3190,7 @@
 {
 "classname" "info_alien_start"
 "origin" "48 144 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 24
 {
@@ -3937,19 +3937,19 @@
 // entity 92
 {
 "classname" "info_alien_start"
-"angle" "45"
+"angles" "0 0 45"
 "origin" "496 528 32"
 }
 // entity 93
 {
 "classname" "info_alien_start"
 "origin" "560 656 32"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 94
 {
 "classname" "info_alien_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "origin" "400 432 32"
 }
 // entity 95
@@ -3961,12 +3961,12 @@
 {
 "classname" "info_alien_start"
 "origin" "432 400 96"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 97
 {
 "classname" "info_alien_start"
-"angle" "180"
+"angles" "0 0 180"
 "origin" "560 400 96"
 }
 // entity 98
@@ -3977,7 +3977,7 @@
 // entity 99
 {
 "classname" "info_alien_start"
-"angle" "135"
+"angles" "0 0 135"
 "origin" "496 752 96"
 }
 // entity 100
@@ -4117,7 +4117,7 @@
 "noise" "ambience/alien_engine"
 "volume" "0.2"
 "spawnflags" "2"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 111
 {
@@ -4126,7 +4126,7 @@
 "noise" "ambience/alien_engine"
 "volume" "0.2"
 "spawnflags" "2"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 112
 {

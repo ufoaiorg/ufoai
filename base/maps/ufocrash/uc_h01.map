@@ -412,7 +412,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "336 176 28"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 2
 {

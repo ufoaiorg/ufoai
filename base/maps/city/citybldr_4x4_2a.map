@@ -2138,7 +2138,7 @@
 {
 "classname" "info_alien_start"
 "origin" "240 752 96"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 16
 {
@@ -2149,11 +2149,11 @@
 {
 "classname" "info_alien_start"
 "origin" "80 208 96"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 18
 {
 "classname" "info_alien_start"
 "origin" "528 496 104"
-"angle" "-90"
+"angles" "0 0 -90"
 }

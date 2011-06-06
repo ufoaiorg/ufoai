@@ -8181,7 +8181,7 @@
 {
 "classname" "info_alien_start"
 "origin" "1648 2256 96"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 30
 {
@@ -8581,19 +8581,19 @@
 {
 "classname" "info_alien_start"
 "origin" "2448 592 128"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 82
 {
 "classname" "info_alien_start"
 "origin" "272 336 192"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 83
 {
 "classname" "info_alien_start"
 "origin" "432 432 192"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 84
 {
@@ -8609,7 +8609,7 @@
 {
 "classname" "info_alien_start"
 "origin" "1584 2256 96"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 87
 {
@@ -8672,7 +8672,7 @@
 {
 "classname" "light_spot"
 "origin" "1872 336 40"
-"angle" "-2"
+"angles" "0 0 -2"
 "_color" "1 0 0.0733043"
 "light" "150"
 }
@@ -8696,7 +8696,7 @@
 "classname" "misc_model"
 "origin" "1276 1382 126"
 "model" "models/objects/vegi/plant_hang/plant2.md2"
-"angle" "-101.871"
+"angles" "0 0 -101.871"
 "spawnflags" "252"
 }
 // entity 100
@@ -8772,7 +8772,7 @@
 "classname" "misc_model"
 "origin" "2424 78 66"
 "model" "models/objects/tent/tent.md2"
-"angle" "-90"
+"angles" "0 0 -90"
 "spawnflags" "254"
 }
 // entity 110
@@ -8802,14 +8802,14 @@
 {
 "classname" "info_player_start"
 "origin" "2224 1456 32"
-"angle" "180"
+"angles" "0 0 180"
 "team" "1"
 }
 // entity 114
 {
 "classname" "info_player_start"
 "origin" "2224 1360 32"
-"angle" "180"
+"angles" "0 0 180"
 "team" "1"
 }
 // entity 115
@@ -9014,49 +9014,49 @@
 {
 "classname" "info_civilian_start"
 "origin" "2384 80 96"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 146
 {
 "classname" "info_civilian_start"
 "origin" "2480 48 96"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 147
 {
 "classname" "info_civilian_start"
 "origin" "2352 16 96"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 148
 {
 "classname" "info_civilian_start"
 "origin" "2288 1616 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 149
 {
 "classname" "info_civilian_start"
 "origin" "2160 48 96"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 150
 {
 "classname" "info_civilian_start"
 "origin" "336 1264 88"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 151
 {
 "classname" "info_civilian_start"
 "origin" "432 1232 88"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 152
 {
 "classname" "info_civilian_start"
 "origin" "2064 1520 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 153
 {
@@ -9182,13 +9182,13 @@
 {
 "classname" "info_alien_start"
 "origin" "2928 592 128"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 169
 {
 "classname" "info_player_start"
 "origin" "3024 1008 32"
-"angle" "180"
+"angles" "0 0 180"
 "team" "1"
 }
 // entity 170

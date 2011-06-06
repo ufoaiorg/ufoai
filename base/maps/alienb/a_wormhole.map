@@ -4058,7 +4058,7 @@
 "classname" "func_rotating"
 "spawnflags" "254"
 "particle" "coronaImpact"
-"angle" "2"
+"angles" "0 0 2"
 // brush 0
 {
 ( 260 536 108 ) ( 260 536 100 ) ( 260 488 108 ) tex_lights/land_li_yellow 0 0 0 0.25 0.25 65024 33 100

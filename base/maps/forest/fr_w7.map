@@ -583,7 +583,7 @@
 "origin" "77.7395 181.079 0"
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
-"angle" "-11.6945"
+"angles" "0 0 -11.6945"
 }
 // entity 2
 {
@@ -608,7 +608,7 @@
 "origin" "145 160 0"
 "model" "models/objects/vegi/water_lily/lily_bloom.md2"
 "spawnflags" "255"
-"angle" "-36.7289"
+"angles" "0 0 -36.7289"
 }
 // entity 5
 {
@@ -626,7 +626,7 @@
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
 "modelscale_vec" "0.75 0.75 1"
-"angle" "-4.71707"
+"angles" "0 0 -4.71707"
 }
 // entity 7
 {
@@ -635,7 +635,7 @@
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
 "modelscale_vec" "0.75 0.75 1"
-"angle" "-4.71708"
+"angles" "0 0 -4.71708"
 }
 // entity 8
 {
@@ -643,7 +643,7 @@
 "origin" "225 161 0"
 "model" "models/objects/vegi/water_lily/lily_bloom.md2"
 "spawnflags" "255"
-"angle" "-36.7289"
+"angles" "0 0 -36.7289"
 }
 // entity 9
 {
