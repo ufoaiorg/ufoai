@@ -5704,8 +5704,9 @@ base/textures/tex_nature/desert007_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert008_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/dirt.png | GNU General Public License 2.0 | OpenArena
-base/textures/tex_nature/dirt001.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/dirt001.png | Public Domain | FWishbringer
 base/textures/tex_nature/dirt001_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/dirt002.png | Public Domain | FWishbringer
 base/textures/tex_nature/dirt_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/dirt_se01.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_nature/dirt_se01_nm.png | GNU General Public License 2.0 | MCR
@@ -5774,7 +5775,7 @@ base/textures/tex_nature/pjrock1_nm.png | GNU General Public License 2.0 | MCR |
 base/textures/tex_nature/pjrock21.jpg | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/pjrock21_nm.png | GNU General Public License 2.0 | MCR | OpenArena
 base/textures/tex_nature/pjrock6.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_nature/potatoes.png | Creative Commons Attribution-Share Alike 2.5 | FWishbringer
+base/textures/tex_nature/potatoes.png | Public Domain | FWishbringer
 base/textures/tex_nature/railway.png | Public Domain | FWishbringer
 base/textures/tex_nature/railway_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5994,6 +5995,7 @@ base/textures/tex_tech/comptex002_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex003_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/comptex004.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_tech/comptex005.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex005_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex005_nm.png | GNU General Public License 2.0 | MCR
