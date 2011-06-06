@@ -517,7 +517,7 @@
 "origin" "131.607 343.212 0"
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
-"angle" "-110.186"
+"angles" "0 0 -110.186"
 }
 // entity 12
 {
@@ -543,7 +543,7 @@
 "origin" "158 274 0"
 "model" "models/objects/vegi/water_lily/lily_bloom.md2"
 "spawnflags" "255"
-"angle" "-21.5357"
+"angles" "0 0 -21.5357"
 }
 // entity 15
 {
@@ -551,7 +551,7 @@
 "origin" "152.121 239.128 0"
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
-"angle" "-75.7906"
+"angles" "0 0 -75.7906"
 }
 // entity 16
 {

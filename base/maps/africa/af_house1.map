@@ -371,6 +371,6 @@
 // entity 2
 {
 "classname" "info_civilian_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "144 144 28"
 }

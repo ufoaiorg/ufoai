@@ -557,7 +557,7 @@
 "classname" "misc_model"
 "origin" "469 192 92"
 "model" "models/aircraft/craft_item_astro/craft_item_astrogation.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "spawnflags" "2"
 }
 // entity 18
@@ -565,7 +565,7 @@
 "classname" "misc_model"
 "origin" "469 96 92"
 "model" "models/aircraft/craft_item_astro/craft_item_astrogation.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "spawnflags" "2"
 }
 // entity 19

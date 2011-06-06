@@ -340,7 +340,7 @@
 "classname" "info_player_start"
 "origin" "176 208 28"
 "team" "1"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 2
 {
@@ -357,14 +357,14 @@
 // entity 4
 {
 "classname" "info_player_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "origin" "144 240 28"
 "team" "1"
 }
 // entity 5
 {
 "classname" "info_player_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "origin" "624 464 28"
 "team" "1"
 }
@@ -373,26 +373,26 @@
 "classname" "info_player_start"
 "origin" "496 464 28"
 "team" "1"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 7
 {
 "classname" "info_player_start"
 "origin" "464 496 28"
 "team" "1"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 8
 {
 "classname" "info_player_start"
 "origin" "336 432 28"
 "team" "1"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 9
 {
 "classname" "info_player_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "team" "1"
 "origin" "624 432 28"
 }
@@ -401,12 +401,12 @@
 "classname" "info_player_start"
 "origin" "208 432 28"
 "team" "1"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 11
 {
 "classname" "info_player_start"
-"angle" "45"
+"angles" "0 0 45"
 "team" "1"
 "origin" "272 464 28"
 }
@@ -415,24 +415,24 @@
 "classname" "info_player_start"
 "origin" "464 432 28"
 "team" "1"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 13
 {
 "classname" "info_human_start"
 "origin" "464 464 28"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 14
 {
 "classname" "info_human_start"
 "origin" "240 368 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 15
 {
 "classname" "info_human_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "528 432 28"
 }
 // entity 16
@@ -444,25 +444,25 @@
 {
 "classname" "info_human_start"
 "origin" "240 496 28"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 18
 {
 "classname" "info_human_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "origin" "176 240 28"
 }
 // entity 19
 {
 "classname" "info_civilian_start"
 "origin" "144 176 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 20
 {
 "classname" "info_civilian_start"
 "origin" "656 496 28"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 21
 {
@@ -814,11 +814,11 @@
 {
 "classname" "info_human_start"
 "origin" "176 336 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 27
 {
 "classname" "info_human_start"
 "origin" "144 400 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }

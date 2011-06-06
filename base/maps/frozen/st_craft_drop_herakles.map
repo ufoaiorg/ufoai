@@ -500,7 +500,7 @@
 {
 "classname" "info_2x2_start"
 "origin" "512 96 32"
-"angle" "180"
+"angles" "0 0 180"
 "team" "1"
 }
 // entity 25

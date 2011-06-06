@@ -2157,13 +2157,13 @@
 {
 "classname" "info_civilian_start"
 "origin" "272 272 26"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 22
 {
 "classname" "info_civilian_start"
 "origin" "176 112 26"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 23
 {

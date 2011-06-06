@@ -3487,31 +3487,31 @@
 {
 "classname" "info_civilian_start"
 "origin" "176 112 28"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 32
 {
 "classname" "info_alien_start"
 "origin" "400 400 92"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 33
 {
 "classname" "info_alien_start"
 "origin" "240 336 92"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 34
 {
 "classname" "info_alien_start"
 "origin" "80 432 28"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 35
 {
 "classname" "info_alien_start"
 "origin" "80 80 28"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 36
 {

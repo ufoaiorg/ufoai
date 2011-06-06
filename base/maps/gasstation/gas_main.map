@@ -8551,7 +8551,7 @@
 "origin" "1711 511 19"
 "model" "models/objects/cars/golf/car1t.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 157
 {
@@ -8559,7 +8559,7 @@
 "origin" "1711 511 19"
 "model" "models/objects/cars/golf/car1.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 158
 {
@@ -8567,7 +8567,7 @@
 "origin" "1400 387 36"
 "model" "models/objects/cars/van/van1.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 159
 {
@@ -8575,7 +8575,7 @@
 "origin" "1399 380 36"
 "model" "models/objects/cars/van/van1t.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 160
 {

@@ -316,43 +316,43 @@
 // entity 15
 {
 "classname" "info_human_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "origin" "432 464 32"
 }
 // entity 16
 {
 "classname" "info_human_start"
 "origin" "272 368 32"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 17
 {
 "classname" "info_human_start"
 "origin" "112 432 32"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 18
 {
 "classname" "info_human_start"
-"angle" "-135"
+"angles" "0 0 -135"
 "origin" "528 464 32"
 }
 // entity 19
 {
 "classname" "info_human_start"
-"angle" "-135"
+"angles" "0 0 -135"
 "origin" "496 400 32"
 }
 // entity 20
 {
 "classname" "info_human_start"
-"angle" "-90"
+"angles" "0 0 -90"
 "origin" "48 336 32"
 }
 // entity 21
 {
 "classname" "info_human_start"
-"angle" "180"
+"angles" "0 0 180"
 "origin" "400 432 32"
 }
 // entity 22
@@ -431,7 +431,7 @@
 "origin" "668 48 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
-"angle" "-180"
+"angles" "0 0 -180"
 }
 // entity 33
 {
@@ -439,7 +439,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "496 84 12"
-"angle" "-180"
+"angles" "0 0 -180"
 }
 // entity 34
 {
@@ -447,7 +447,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "410 58 12"
-"angle" "-180"
+"angles" "0 0 -180"
 }
 // entity 35
 {

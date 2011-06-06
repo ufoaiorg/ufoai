@@ -4291,31 +4291,31 @@
 {
 "classname" "info_alien_start"
 "origin" "144 656 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 46
 {
 "classname" "info_alien_start"
 "origin" "144 176 92"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 47
 {
 "classname" "info_civilian_start"
 "origin" "400 464 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 48
 {
 "classname" "info_civilian_start"
 "origin" "176 48 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 49
 {
 "classname" "info_civilian_start"
 "origin" "304 592 92"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 50
 {

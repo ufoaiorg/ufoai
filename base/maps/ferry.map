@@ -12243,37 +12243,37 @@
 {
 "classname" "info_human_start"
 "origin" "-144 -240 156"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 96
 {
 "classname" "info_human_start"
 "origin" "-48 -240 156"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 97
 {
 "classname" "info_human_start"
 "origin" "-48 -144 156"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 98
 {
 "classname" "info_human_start"
 "origin" "208 -240 156"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 99
 {
 "classname" "info_human_start"
 "origin" "80 -208 156"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 100
 {
 "classname" "info_human_start"
 "origin" "-144 -176 156"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 101
 {

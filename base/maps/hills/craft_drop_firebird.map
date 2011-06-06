@@ -1266,23 +1266,23 @@
 {
 "classname" "info_human_start"
 "origin" "240 304 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 15
 {
 "classname" "info_human_start"
 "origin" "240 336 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 16
 {
 "classname" "info_human_start"
 "origin" "240 368 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 17
 {
 "classname" "info_human_start"
 "origin" "240 272 28"
-"angle" "180"
+"angles" "0 0 180"
 }

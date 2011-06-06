@@ -719,7 +719,7 @@
 {
 "classname" "info_alien_start"
 "origin" "304 112 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 2
 {
@@ -1501,7 +1501,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "208 272 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 17
 {
@@ -1512,5 +1512,5 @@
 {
 "classname" "info_civilian_start"
 "origin" "304 176 28"
-"angle" "45"
+"angles" "0 0 45"
 }

@@ -1511,13 +1511,13 @@
 {
 "classname" "info_alien_start"
 "origin" "464 400 94"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 17
 {
 "classname" "info_alien_start"
 "origin" "432 336 94"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 18
 {

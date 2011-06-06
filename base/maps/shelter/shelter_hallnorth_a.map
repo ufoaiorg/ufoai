@@ -3447,31 +3447,31 @@
 {
 "classname" "info_alien_start"
 "origin" "752 464 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 142
 {
 "classname" "info_alien_start"
 "origin" "720 176 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 143
 {
 "classname" "info_alien_start"
 "origin" "176 336 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 144
 {
 "classname" "info_alien_start"
 "origin" "112 400 160"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 145
 {
 "classname" "info_alien_start"
 "origin" "496 48 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 146
 {

@@ -807,49 +807,49 @@
 {
 "classname" "info_human_start"
 "origin" "240 496 51"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 43
 {
 "classname" "info_human_start"
 "origin" "304 496 51"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 44
 {
 "classname" "info_human_start"
 "origin" "240 432 51"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 45
 {
 "classname" "info_human_start"
 "origin" "304 432 51"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 46
 {
 "classname" "info_human_start"
 "origin" "240 368 51"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 47
 {
 "classname" "info_human_start"
 "origin" "304 368 51"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 48
 {
 "classname" "info_human_start"
 "origin" "240 304 51"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 49
 {
 "classname" "info_human_start"
 "origin" "304 304 51"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 50
 {

@@ -3610,28 +3610,28 @@
 "classname" "info_player_start"
 "origin" "304 432 32"
 "team" "4"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 95
 {
 "classname" "info_player_start"
 "origin" "272 304 32"
 "team" "4"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 96
 {
 "classname" "info_player_start"
 "origin" "176 272 32"
 "team" "4"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 97
 {
 "classname" "info_player_start"
 "origin" "144 368 32"
 "team" "4"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 98
 {

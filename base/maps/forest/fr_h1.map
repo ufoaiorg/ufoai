@@ -1972,7 +1972,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "208 272 26"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 27
 {
@@ -1983,7 +1983,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "304 176 26"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 29
 {

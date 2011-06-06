@@ -1836,7 +1836,7 @@
 "classname" "misc_model"
 "spawnflags" "252"
 "model" "models/objects/base/radar/radar_a.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "origin" "128 364 164"
 }
 // entity 18
@@ -1844,7 +1844,7 @@
 "classname" "misc_model"
 "spawnflags" "252"
 "model" "models/objects/base/radar/radar_b.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "origin" "128 364 164"
 }
 // entity 19
@@ -1852,7 +1852,7 @@
 "classname" "misc_model"
 "spawnflags" "252"
 "model" "models/objects/base/radar/radar_c.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "origin" "128 364 164"
 }
 // entity 20

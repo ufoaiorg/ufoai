@@ -4206,13 +4206,13 @@
 // entity 30
 {
 "classname" "info_human_start"
-"angle" "-45"
+"angles" "0 0 -45"
 "origin" "112 272 92"
 }
 // entity 31
 {
 "classname" "info_human_start"
-"angle" "-135"
+"angles" "0 0 -135"
 "origin" "400 112 92"
 }
 // entity 32
@@ -4454,7 +4454,7 @@
 // entity 59
 {
 "classname" "info_human_start"
-"angle" "135"
+"angles" "0 0 135"
 "origin" "272 272 92"
 }
 // entity 60

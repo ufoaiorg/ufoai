@@ -804,7 +804,7 @@
 {
 "classname" "info_human_start"
 "origin" "112 112 296"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 2
 {

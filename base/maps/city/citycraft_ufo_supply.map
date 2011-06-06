@@ -2635,13 +2635,13 @@
 {
 "classname" "info_alien_start"
 "origin" "272 272 92"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 18
 {
 "classname" "info_alien_start"
 "origin" "272 752 92"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 19
 {
@@ -2754,19 +2754,19 @@
 {
 "classname" "info_alien_start"
 "origin" "528 464 164"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 35
 {
 "classname" "info_alien_start"
 "origin" "528 752 92"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 36
 {
 "classname" "info_alien_start"
 "origin" "144 464 92"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 37
 {
@@ -2789,41 +2789,41 @@
 {
 "classname" "info_player_start"
 "origin" "624 336 96"
-"angle" "-90"
+"angles" "0 0 -90"
 "team" "1"
 }
 // entity 41
 {
 "classname" "info_player_start"
 "origin" "464 208 92"
-"angle" "-90"
+"angles" "0 0 -90"
 "team" "1"
 }
 // entity 42
 {
 "classname" "info_player_start"
 "origin" "368 272 96"
-"angle" "-90"
+"angles" "0 0 -90"
 "team" "1"
 }
 // entity 43
 {
 "classname" "info_player_start"
 "origin" "240 368 96"
-"angle" "-90"
+"angles" "0 0 -90"
 "team" "1"
 }
 // entity 44
 {
 "classname" "info_player_start"
 "origin" "272 464 92"
-"angle" "180"
+"angles" "0 0 180"
 "team" "1"
 }
 // entity 45
 {
 "classname" "info_player_start"
 "origin" "240 656 96"
-"angle" "90"
+"angles" "0 0 90"
 "team" "1"
 }

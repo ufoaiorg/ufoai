@@ -2787,14 +2787,14 @@
 {
 "classname" "info_player_start"
 "origin" "272 304 160"
-"angle" "90"
+"angles" "0 0 90"
 "team" "2"
 }
 // entity 73
 {
 "classname" "info_player_start"
 "origin" "336 176 160"
-"angle" "90"
+"angles" "0 0 90"
 "team" "2"
 }
 // entity 74
@@ -2808,7 +2808,7 @@
 "classname" "info_player_start"
 "origin" "464 464 160"
 "team" "2"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 76
 {

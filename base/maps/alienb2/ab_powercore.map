@@ -8680,7 +8680,7 @@
 {
 "classname" "info_human_start"
 "origin" "944 400 92"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 6
 {

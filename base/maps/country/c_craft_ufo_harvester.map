@@ -3830,61 +3830,61 @@
 // entity 74
 {
 "classname" "info_alien_start"
-"angle" "135"
+"angles" "0 0 135"
 "origin" "880 528 32"
 }
 // entity 75
 {
 "classname" "info_alien_start"
 "origin" "752 592 32"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 76
 {
 "classname" "info_alien_start"
-"angle" "45"
+"angles" "0 0 45"
 "origin" "976 432 32"
 }
 // entity 77
 {
 "classname" "info_alien_start"
 "origin" "944 496 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 78
 {
 "classname" "info_alien_start"
 "origin" "1008 464 96"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 79
 {
 "classname" "info_alien_start"
-"angle" "-90"
+"angles" "0 0 -90"
 "origin" "1008 592 96"
 }
 // entity 80
 {
 "classname" "info_alien_start"
 "origin" "752 528 96"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 81
 {
 "classname" "info_alien_start"
-"angle" "-135"
+"angles" "0 0 -135"
 "origin" "656 528 96"
 }
 // entity 82
 {
 "classname" "info_alien_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "752 496 96"
 }
 // entity 83
 {
 "classname" "info_alien_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "848 528 96"
 }
 // entity 84

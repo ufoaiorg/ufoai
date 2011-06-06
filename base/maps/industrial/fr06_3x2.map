@@ -1697,7 +1697,7 @@
 "classname" "misc_model"
 "origin" "283 87 20"
 "model" "models/objects/city/waste/bag.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "spawnflags" "255"
 }
 // entity 9
@@ -1705,7 +1705,7 @@
 "classname" "misc_model"
 "origin" "332 80 22"
 "model" "models/objects/rubbish/bottle2.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "spawnflags" "255"
 }
 // entity 10
@@ -1713,7 +1713,7 @@
 "classname" "misc_model"
 "origin" "541 461 35"
 "model" "models/objects/rubbish/bottle1.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "spawnflags" "3"
 }
 // entity 11
@@ -1721,7 +1721,7 @@
 "classname" "misc_model"
 "origin" "490 463 35"
 "model" "models/objects/rubbish/bottle1.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "spawnflags" "3"
 }
 // entity 12
@@ -1729,7 +1729,7 @@
 "classname" "misc_model"
 "origin" "466 466 33"
 "model" "models/objects/city/waste/bag.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "spawnflags" "3"
 }
 // entity 13
@@ -4479,25 +4479,25 @@
 {
 "classname" "info_alien_start"
 "origin" "720 240 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 47
 {
 "classname" "info_alien_start"
 "origin" "304 304 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 48
 {
 "classname" "info_civilian_start"
 "origin" "176 336 92"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 49
 {
 "classname" "info_civilian_start"
 "origin" "208 272 92"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 50
 {

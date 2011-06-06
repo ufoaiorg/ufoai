@@ -2577,31 +2577,31 @@
 // entity 23
 {
 "classname" "info_alien_start"
-"angle" "225"
+"angles" "0 0 225"
 "origin" "336 112 28"
 }
 // entity 24
 {
 "classname" "info_civilian_start"
 "origin" "80 272 28"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 25
 {
 "classname" "info_alien_start"
 "origin" "240 336 28"
-"angle" "225"
+"angles" "0 0 225"
 }
 // entity 26
 {
 "classname" "info_civilian_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "304 368 28"
 }
 // entity 27
 {
 "classname" "info_civilian_start"
-"angle" "135"
+"angles" "0 0 135"
 "origin" "16 272 28"
 }
 // entity 28

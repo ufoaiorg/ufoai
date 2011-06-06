@@ -5808,7 +5808,7 @@
 {
 "classname" "info_alien_start"
 "origin" "16 16 160"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 63
 {

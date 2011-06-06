@@ -7215,7 +7215,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "336 1456 28"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 69
 {
@@ -7391,7 +7391,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "origin" "1438 194 22"
 }
 // entity 84
@@ -7399,7 +7399,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"angle" "-180"
+"angles" "0 0 -180"
 "origin" "1390 206 22"
 }
 // entity 85
@@ -7448,37 +7448,37 @@
 {
 "classname" "info_human_start"
 "origin" "1040 560 32"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 92
 {
 "classname" "info_human_start"
 "origin" "720 656 32"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 93
 {
 "classname" "info_human_start"
 "origin" "592 656 32"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 94
 {
 "classname" "info_human_start"
 "origin" "784 528 32"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 95
 {
 "classname" "info_human_start"
 "origin" "560 624 32"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 96
 {
 "classname" "info_human_start"
 "origin" "976 720 32"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 97
 {
@@ -7501,13 +7501,13 @@
 {
 "classname" "info_alien_start"
 "origin" "176 144 28"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 101
 {
 "classname" "info_civilian_start"
 "origin" "80 176 28"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 102
 {
@@ -8366,19 +8366,19 @@
 {
 "classname" "info_civilian_start"
 "origin" "368 144 28"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 120
 {
 "classname" "info_civilian_start"
 "origin" "80 432 28"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 121
 {
 "classname" "info_alien_start"
 "origin" "432 272 92"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 122
 {
@@ -8393,7 +8393,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic03.md2"
-"angle" "-90"
+"angles" "0 0 -90"
 "origin" "176 1116 10"
 }
 // entity 124
@@ -8401,7 +8401,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"angle" "-90"
+"angles" "0 0 -90"
 "origin" "172 1232 12"
 }
 // entity 125
@@ -8409,7 +8409,7 @@
 "classname" "misc_model"
 "origin" "208 1252 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"angle" "-90"
+"angles" "0 0 -90"
 "spawnflags" "255"
 }
 // entity 126
@@ -9632,7 +9632,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic03.md2"
-"angle" "-90"
+"angles" "0 0 -90"
 "origin" "72 1228 10"
 }
 // entity 163
@@ -9640,7 +9640,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"angle" "-90"
+"angles" "0 0 -90"
 "origin" "68 1344 12"
 }
 // entity 164
@@ -9648,7 +9648,7 @@
 "classname" "misc_model"
 "origin" "104 1364 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"angle" "-90"
+"angles" "0 0 -90"
 "spawnflags" "255"
 }
 // entity 165
@@ -9844,7 +9844,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "1456 688 28"
-"angle" "-135"
+"angles" "0 0 -135"
 }
 // entity 193
 {
@@ -10032,13 +10032,13 @@
 {
 "classname" "info_alien_start"
 "origin" "1520 752 32"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 198
 {
 "classname" "info_civilian_start"
 "origin" "848 1712 28"
-"angle" "-45"
+"angles" "0 0 -45"
 }
 // entity 199
 {
@@ -11864,7 +11864,7 @@
 {
 "classname" "info_player_start"
 "origin" "1648 368 28"
-"angle" "90"
+"angles" "0 0 90"
 "team" "1"
 }
 // entity 319
@@ -11901,21 +11901,21 @@
 {
 "classname" "info_player_start"
 "origin" "1360 240 28"
-"angle" "90"
+"angles" "0 0 90"
 "team" "1"
 }
 // entity 325
 {
 "classname" "info_player_start"
 "origin" "1456 240 28"
-"angle" "90"
+"angles" "0 0 90"
 "team" "1"
 }
 // entity 326
 {
 "classname" "info_player_start"
 "origin" "1552 272 28"
-"angle" "90"
+"angles" "0 0 90"
 "team" "1"
 }
 // entity 327

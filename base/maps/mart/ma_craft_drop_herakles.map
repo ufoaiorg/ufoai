@@ -240,70 +240,70 @@
 "classname" "info_player_start"
 "team" "1"
 "origin" "48 112 28"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 2
 {
 "classname" "info_player_start"
 "origin" "80 48 28"
 "team" "1"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 3
 {
 "classname" "info_player_start"
 "origin" "176 80 28"
 "team" "1"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 4
 {
 "classname" "info_player_start"
 "origin" "624 368 28"
 "team" "1"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 5
 {
 "classname" "info_player_start"
 "origin" "624 80 28"
 "team" "1"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 6
 {
 "classname" "info_player_start"
 "origin" "464 400 28"
 "team" "1"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 7
 {
 "classname" "info_player_start"
 "origin" "560 48 28"
 "team" "1"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 8
 {
 "classname" "info_player_start"
 "origin" "144 400 28"
 "team" "1"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 9
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "336 400 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 10
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "240 48 28"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 11
 {
@@ -316,40 +316,40 @@
 "classname" "info_player_start"
 "team" "1"
 "origin" "208 400 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 13
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "304 48 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 14
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "368 496 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 15
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "48 336 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 16
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "16 272 28"
-"angle" "135"
+"angles" "0 0 135"
 }
 // entity 17
 {
 "classname" "info_player_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "752 176 28"
 "team" "1"
 }
@@ -358,7 +358,7 @@
 "classname" "info_player_start"
 "team" "1"
 "origin" "688 176 28"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 19
 {

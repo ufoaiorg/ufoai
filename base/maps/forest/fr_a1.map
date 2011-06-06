@@ -1307,19 +1307,19 @@
 {
 "classname" "info_alien_start"
 "origin" "208 240 26"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 23
 {
 "classname" "info_alien_start"
 "origin" "208 592 92"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 24
 {
 "classname" "info_alien_start"
 "origin" "240 624 92"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 25
 {

@@ -3774,61 +3774,61 @@
 // entity 69
 {
 "classname" "info_alien_start"
-"angle" "135"
+"angles" "0 0 135"
 "origin" "688 528 32"
 }
 // entity 70
 {
 "classname" "info_alien_start"
 "origin" "560 592 32"
-"angle" "45"
+"angles" "0 0 45"
 }
 // entity 71
 {
 "classname" "info_alien_start"
-"angle" "45"
+"angles" "0 0 45"
 "origin" "784 432 32"
 }
 // entity 72
 {
 "classname" "info_alien_start"
 "origin" "752 496 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 73
 {
 "classname" "info_alien_start"
 "origin" "816 464 96"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 74
 {
 "classname" "info_alien_start"
-"angle" "-90"
+"angles" "0 0 -90"
 "origin" "816 592 96"
 }
 // entity 75
 {
 "classname" "info_alien_start"
 "origin" "560 528 96"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 76
 {
 "classname" "info_alien_start"
-"angle" "-135"
+"angles" "0 0 -135"
 "origin" "464 528 96"
 }
 // entity 77
 {
 "classname" "info_alien_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "560 496 96"
 }
 // entity 78
 {
 "classname" "info_alien_start"
-"angle" "90"
+"angles" "0 0 90"
 "origin" "656 528 96"
 }
 // entity 79

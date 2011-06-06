@@ -264,5 +264,5 @@
 {
 "classname" "info_alien_start"
 "origin" "272 240 92"
-"angle" "90"
+"angles" "0 0 90"
 }

@@ -3422,14 +3422,14 @@
 "classname" "info_player_start"
 "origin" "144 304 32"
 "team" "4"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 97
 {
 "classname" "info_player_start"
 "origin" "368 464 32"
 "team" "4"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 98
 {

@@ -185,7 +185,7 @@
 "classname" "info_player_start"
 "origin" "80 112 28"
 "team" "2"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 2
 {
@@ -198,28 +198,28 @@
 "classname" "info_player_start"
 "origin" "144 464 28"
 "team" "2"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 4
 {
 "classname" "info_player_start"
 "origin" "208 240 28"
 "team" "2"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 5
 {
 "classname" "info_player_start"
 "origin" "48 432 28"
 "team" "2"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 6
 {
 "classname" "info_player_start"
 "origin" "80 48 28"
 "team" "2"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 7
 {
@@ -232,21 +232,21 @@
 "classname" "info_player_start"
 "origin" "16 240 28"
 "team" "2"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 9
 {
 "classname" "info_player_start"
 "origin" "80 368 28"
 "team" "2"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 10
 {
 "classname" "info_player_start"
 "origin" "144 336 28"
 "team" "2"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 11
 {

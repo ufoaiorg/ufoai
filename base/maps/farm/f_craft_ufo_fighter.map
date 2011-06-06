@@ -1779,13 +1779,13 @@
 {
 "classname" "info_alien_start"
 "origin" "144 144 32"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 2
 {
 "classname" "info_alien_start"
 "origin" "368 752 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 3
 {

@@ -1453,19 +1453,19 @@
 {
 "classname" "info_alien_start"
 "origin" "240 656 32"
-"angle" "90"
+"angles" "0 0 90"
 }
 // entity 10
 {
 "classname" "info_alien_start"
 "origin" "400 336 36"
-"angle" "-90"
+"angles" "0 0 -90"
 }
 // entity 11
 {
 "classname" "info_alien_start"
 "origin" "208 304 36"
-"angle" "180"
+"angles" "0 0 180"
 }
 // entity 12
 {
@@ -1575,7 +1575,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "origin" "82.4538 632.289 36"
 "anim" "moving3"
-"angle" "-75.8078"
+"angles" "0 0 -75.8078"
 }
 // entity 26
 {
