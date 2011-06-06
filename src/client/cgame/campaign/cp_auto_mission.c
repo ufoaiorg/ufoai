@@ -605,14 +605,9 @@ static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employe
 {
 	containerIndex_t container;
 
-	if (!aircraft) {
-		Com_Printf("AM_MoveEmployeeInventoryIntoItemCargo: Warning: Called with no aircraft.\n");
-		return;
-	}
-	if (!soldier) {
-		Com_Printf("AM_MoveEmployeeInventoryIntoItemCargo: Warning: Called with soldier.\n");
-		return;
-	}
+	assert(aircraft != NULL);
+	assert(soldier != NULL);
+
 	if (!AIR_IsInAircraftTeam(aircraft, soldier)) {
 		Com_DPrintf(DEBUG_CLIENT, "AM_MoveEmployeeInventoryIntoItemCargo: Soldier is not on the aircraft.\n");
 		return;
@@ -620,12 +615,13 @@ static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employe
 
 	/* add items to itemcargo */
 	for (container = 0; container < csi.numIDs; container++) {
-		character_t *chr = &soldier->chr;
-		invList_t *ic = CONTAINER(chr, container);
+		const character_t *chr = &soldier->chr;
+		const invList_t *ic = CONTAINER(chr, container);
 
 		while (ic) {
+			/** @todo isn't a pointer enough here, do we really have to do a copy of the item_t struct */
 			const item_t item = ic->item;
-			invList_t *next = ic->next;
+			const invList_t *next = ic->next;
 
 			if (item.t) {
 				AII_CollectItem(aircraft, item.t, 1);
@@ -640,7 +636,6 @@ static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employe
 	E_RemoveInventoryFromStorage(soldier);
 }
 
-
 /**
  * @brief This looks at a finished auto battle, and uses values from it to kill or lower health of surviving soldiers on a
  * mission drop ship as appropriate.  It also hands out some experience to soldiers that survive.
@@ -649,7 +644,7 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 {
 	employee_t *soldier;
 	int unit = 0;
-	int battleExperience = max (0, battle->teamAccomplishment[AM_TEAM_SOLDIER]);
+	int battleExperience = max(0, battle->teamAccomplishment[AM_TEAM_SOLDIER]);
 
 	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
 		character_t *chr = &soldier->chr;
@@ -659,7 +654,7 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 		unit++;
 
 		if (battle->unitHealth[AM_TEAM_SOLDIER][unit] == 0) {
-			AM_MoveEmployeeInventoryIntoItemCargo (aircraft, soldier);
+			AM_MoveEmployeeInventoryIntoItemCargo(aircraft, soldier);
 			E_DeleteEmployee(soldier);
 			break;
 		}
