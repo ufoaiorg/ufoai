@@ -308,9 +308,15 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 			return;
 		}
 	}
+
+	if (aircraft->itemTypes >= MAX_CARGO) {
+		Com_Printf("AII_CollectItem: Cannot add item to cargobay it's full!\n");
+		return;
+	}
+
 	Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
-	cargo[i].item = item;
-	cargo[i].amount = amount;
+	cargo[aircraft->itemTypes].item = item;
+	cargo[aircraft->itemTypes].amount = amount;
 	aircraft->itemTypes++;
 }
 

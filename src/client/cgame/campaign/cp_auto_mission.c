@@ -599,6 +599,51 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 }
 
 /**
+ * @brief Move equipment carried by the soldier to the aircraft's itemcargo bay
+ * @param[in, out] aircraft The craft with the team (and thus equipment) onboard.
+ * @param[in, out] soldier The soldier whose inventory should be moved
+ */
+static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employee_t *soldier)
+{
+	containerIndex_t container;
+
+	if (!aircraft) {
+		Com_Printf("AM_MoveEmployeeInventoryIntoItemCargo: Warning: Called with no aircraft.\n");
+		return;
+	}
+	if (!soldier) {
+		Com_Printf("AM_MoveEmployeeInventoryIntoItemCargo: Warning: Called with soldier.\n");
+		return;
+	}
+	if (!AIR_IsInAircraftTeam(aircraft, soldier)) {
+		Com_DPrintf(DEBUG_CLIENT, "AM_MoveEmployeeInventoryIntoItemCargo: Soldier is not on the aircraft.\n");
+		return;
+	}
+
+	/* add items to itemcargo */
+	for (container = 0; container < csi.numIDs; container++) {
+		character_t *chr = &soldier->chr;
+		invList_t *ic = CONTAINER(chr, container);
+
+		while (ic) {
+			const item_t item = ic->item;
+			invList_t *next = ic->next;
+
+			if (item.t) {
+				AII_CollectItem(aircraft, item.t, 1);
+
+				if (item.a && item.m)
+					AII_CollectItem(aircraft, item.m, 1);
+			}
+			ic = next;
+		}
+	}
+	/* remove items from base storage */
+	E_RemoveInventoryFromStorage(soldier);
+}
+
+
+/**
  * @brief This looks at a finished auto battle, and uses values from it to kill or lower health of surviving soldiers on a
  * mission drop ship as appropriate.  It also hands out some experience to soldiers that survive.
  */
@@ -615,8 +660,8 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 		chr->HP = battle->unitHealth[AM_Team_Soldier][unit];
 		unit++;
 
-		/* TODO: More might need to be added here, to recover a dead soldier's inventory. */
 		if (battle->unitHealth[AM_Team_Soldier][unit] == 0) {
+			AM_MoveEmployeeInventoryIntoItemCargo (aircraft, soldier);
 			E_DeleteEmployee(soldier);
 			break;
 		}
