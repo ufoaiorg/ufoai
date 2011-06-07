@@ -211,7 +211,7 @@
 ( 0 120 -60 ) ( 0 56 -60 ) ( 0 56 -64 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 32 32 0 ) ( 32 32 -64 ) ( 32 -64 -64 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 204 160 10 ) ( 204 160 32 ) ( 208 160 10 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 224 256 -64 ) ( 224 256 4 ) ( 196 256 -64 ) tex_nature/dirt002 255 246 0 0.375 0.375 65280 0 0
+( 224 256 -64 ) ( 224 256 4 ) ( 196 256 -64 ) tex_nature/dirt002 510 492 0 0.1875 0.1875 65280 0 0
 ( -812 138 0 ) ( -812 144 0 ) ( -872 144 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( -876 144 4 ) ( -808 144 4 ) ( -808 138 4 ) tex_nature/rock002 128 64 0 0.5 0.5 65280 0 0
 }
@@ -276,7 +276,7 @@
 ( 32 120 -60 ) ( 32 56 -60 ) ( 32 56 -64 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 256 -64 0 ) ( 256 32 0 ) ( 256 32 -60 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 572 0 64 ) ( 576 0 64 ) ( 576 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 236 24 -64 ) ( 236 24 4 ) ( 208 24 -64 ) tex_nature/dirt002 255 246 0 0.375 0.375 65280 0 0
+( 236 24 -64 ) ( 236 24 4 ) ( 208 24 -64 ) tex_nature/dirt002 510 492 0 0.1875 0.1875 65280 0 0
 ( -812 138 0 ) ( -812 144 0 ) ( -872 144 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( -876 144 4 ) ( -808 144 4 ) ( -808 138 4 ) tex_nature/rock002 128 64 0 0.5 0.5 65280 0 0
 }
@@ -755,8 +755,8 @@
 "classname" "misc_model"
 "origin" "144 96 0"
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
-"angles" "0 -16.9883 0"
 "spawnflags" "255"
+"angles" "0 -16.9883 0"
 }
 // entity 2
 {
@@ -770,8 +770,8 @@
 "classname" "misc_model"
 "origin" "112 64 0"
 "model" "models/objects/vegi/water_lily/lily_stem.md2"
-"angles" "0 -16.9883 0"
 "spawnflags" "255"
+"angles" "0 -16.9883 0"
 }
 // entity 4
 {
@@ -785,8 +785,8 @@
 "classname" "misc_model"
 "origin" "144 96 0"
 "model" "models/objects/vegi/water_lily/lily_stem.md2"
-"angles" "0 -16.9883 0"
 "spawnflags" "255"
+"angles" "0 -16.9883 0"
 }
 // entity 6
 {
