@@ -168,7 +168,7 @@
 // brush 18
 {
 ( 288 192 0 ) ( 352 192 0 ) ( 288 224 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
-( 288 224 4 ) ( 288 96 4 ) ( 32 96 4 ) tex_buildings/carpet001 40 154 0 -0.4 0.3125 65280 0 0
+( 288 224 4 ) ( 288 96 4 ) ( 32 96 4 ) tex_buildings/carpet001 128 616 0 -0.125 0.078125 65280 0 0
 ( 196 128 76 ) ( 198 128 76 ) ( 198 128 74 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 272 104 4 ) ( 272 232 4 ) ( 272 232 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 270 208 8 ) ( 174 208 8 ) ( 174 208 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -1875,33 +1875,33 @@
 {
 "classname" "light"
 "light" "150"
-"spawnflags" "1"
-"_color" "1 1 1"
 "origin" "360 336 60"
+"_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 9
 {
 "classname" "light"
 "light" "135"
-"spawnflags" "1"
-"_color" "1 1 1"
 "origin" "216 160 60"
+"_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 10
 {
 "classname" "light"
 "origin" "112 160 60"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "135"
 }
 // entity 11
 {
 "classname" "light"
 "light" "135"
-"spawnflags" "1"
-"_color" "1 1 1"
 "origin" "112 160 116"
+"_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 12
 {
@@ -2169,16 +2169,16 @@
 {
 "classname" "light"
 "origin" "368 252 60"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "150"
 }
 // entity 19
 {
 "classname" "light"
 "origin" "404 120 60"
-"spawnflags" "1"
 "_color" "1 1 1"
+"spawnflags" "1"
 "light" "150"
 }
 // entity 20
@@ -2431,16 +2431,16 @@
 {
 "classname" "light"
 "light" "135"
-"spawnflags" "1"
-"_color" "1 0.8 0.75"
 "origin" "364 116 116"
+"_color" "1 0.8 0.75"
+"spawnflags" "1"
 }
 // entity 24
 {
 "classname" "light"
 "origin" "220 148 116"
-"spawnflags" "1"
 "_color" "1 0.8 0.75"
+"spawnflags" "1"
 "light" "135"
 }
 // entity 25

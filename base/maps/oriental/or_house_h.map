@@ -904,10 +904,10 @@
 }
 // brush 100
 {
-( 224 432 12 ) ( 256 432 12 ) ( 256 432 20 ) tex_buildings/carpet001 5 0 0 0.75 0.25 196352 0 0
-( 372 476 24 ) ( 372 480 24 ) ( 372 480 4 ) tex_buildings/carpet001 96 0 0 -0.75 0.25 196352 0 0
-( 58 312 20 ) ( 60 312 20 ) ( 60 312 4 ) tex_buildings/carpet001 5 0 0 0.75 0.25 196352 0 0
-( 308 432 64 ) ( 308 336 64 ) ( 308 336 4 ) tex_buildings/carpet001 96 0 0 -0.75 0.25 196352 0 0
+( 224 432 12 ) ( 256 432 12 ) ( 256 432 20 ) tex_buildings/carpet001 16 0 0 0.234375 0.0625 196352 0 0
+( 372 476 24 ) ( 372 480 24 ) ( 372 480 4 ) tex_buildings/carpet001 307.2 0 0 -0.234375 0.0625 196352 0 0
+( 58 312 20 ) ( 60 312 20 ) ( 60 312 4 ) tex_buildings/carpet001 16 0 0 0.234375 0.0625 196352 0 0
+( 308 432 64 ) ( 308 336 64 ) ( 308 336 4 ) tex_buildings/carpet001 307.2 0 0 -0.234375 0.0625 196352 0 0
 ( 66 352 5 ) ( 66 416 5 ) ( 162 416 5 ) tex_buildings/carpet010 96.00049 409.5996 0 0.125 -0.1171875 196352 0 0
 ( 400 312 4 ) ( 388 312 4 ) ( 388 304 4 ) tex_common/nodraw 96 48 -90 0.75 -0.25 196352 128 0
 }
@@ -1192,10 +1192,10 @@
 }
 // brush 132
 {
-( 56 36 52 ) ( 56 34 52 ) ( 56 34 40 ) tex_buildings/carpet001 92.63135 0 0 -0.4750001 0.00390625 196352 0 0
-( 130 424 104 ) ( 102 424 104 ) ( 102 424 68 ) tex_buildings/carpet001 70 0 0 -0.8 0.00390625 196352 0 0
-( 184 352 64 ) ( 184 416 64 ) ( 184 416 4 ) tex_buildings/carpet001 92.63135 0 0 -0.4750001 0.00390625 196352 0 0
-( 92 348 92 ) ( 156 348 92 ) ( 156 348 84 ) tex_buildings/carpet001 70 0 0 -0.8 0.00390625 196352 0 0
+( 56 36 52 ) ( 56 34 52 ) ( 56 34 40 ) tex_buildings/carpet001 296.42032 0 0 -0.14843753 0.0009765625 196352 0 0
+( 130 424 104 ) ( 102 424 104 ) ( 102 424 68 ) tex_buildings/carpet001 224 0 0 -0.25 0.0009765625 196352 0 0
+( 184 352 64 ) ( 184 416 64 ) ( 184 416 4 ) tex_buildings/carpet001 296.42032 0 0 -0.14843753 0.0009765625 196352 0 0
+( 92 348 92 ) ( 156 348 92 ) ( 156 348 84 ) tex_buildings/carpet001 224 0 0 -0.25 0.0009765625 196352 0 0
 ( 66 352 5 ) ( 66 416 5 ) ( 162 416 5 ) tex_buildings/carpet012 576.0001 215.5791 0 0.125 -0.1484375 196352 0 0
 ( 400 312 4 ) ( 388 312 4 ) ( 388 304 4 ) tex_common/nodraw 28 37.05261 0 -2 1.1875 196352 128 0
 }
@@ -2654,64 +2654,64 @@
 {
 "classname" "light"
 "light" "120"
-"origin" "128 168 60"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
+"origin" "128 168 60"
 }
 // entity 10
 {
 "classname" "light"
 "origin" "128 88 60"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
 "light" "120"
 }
 // entity 11
 {
 "classname" "light"
 "origin" "128 416 60"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
 "light" "120"
 }
 // entity 12
 {
 "classname" "light"
 "light" "120"
-"origin" "336 352 60"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
+"origin" "336 352 60"
 }
 // entity 13
 {
 "classname" "light"
 "light" "120"
-"origin" "432 336 60"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
+"origin" "432 336 60"
 }
 // entity 14
 {
 "classname" "light"
 "origin" "408 432 60"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
 "light" "120"
 }
 // entity 15
 {
 "classname" "light"
 "light" "120"
-"origin" "128 360 60"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
+"origin" "128 360 60"
 }
 // entity 16
 {
 "classname" "light"
 "origin" "256 368 60"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
 "light" "120"
 }
 // entity 17
@@ -3228,17 +3228,17 @@
 {
 "classname" "light"
 "origin" "128 132 120"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
 "light" "120"
 }
 // entity 24
 {
 "classname" "light"
 "light" "120"
-"origin" "128 208 120"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
+"origin" "128 208 120"
 }
 // entity 25
 {
@@ -3463,24 +3463,24 @@
 {
 "classname" "light"
 "origin" "92 376 120"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
 "light" "120"
 }
 // entity 29
 {
 "classname" "light"
 "light" "120"
-"origin" "196 372 120"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
+"origin" "196 372 120"
 }
 // entity 30
 {
 "classname" "light"
 "origin" "360 372 120"
-"_color" "0.9 0.92 1.0"
 "spawnflags" "1"
+"_color" "0.9 0.92 1.0"
 "light" "120"
 }
 // entity 31
