@@ -4271,6 +4271,7 @@ base/textures/tex_buildings/9techwall03b.jpg | GNU General Public License 2.0 | 
 base/textures/tex_buildings/9techwall05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9techwall06.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9techwall07.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/carpet001.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Antique_tabriz_carpet_413021.jpg
 base/textures/tex_buildings/carpet002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/carpet002_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/carpet003.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4292,7 +4293,13 @@ base/textures/tex_buildings/carpet016.png | Public Domain | MCR | http://commons
 base/textures/tex_buildings/carpet017.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Antique_kerman_persian.jpg
 base/textures/tex_buildings/carpet018.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Antique_Persian_Mashad_rug.jpg
 base/textures/tex_buildings/carpet019.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Antique_Serapi_carpet_26854.jpg
-base/textures/tex_buildings/carpet020.png | Attribution 3.0 Unported (CC BY 3.0) | Hannes Grobe;MCR | http://commons.wikimedia.org/wiki/File:Carpet-dear_hg.jpg?uselang=us
+base/textures/tex_buildings/carpet020.png | Attribution 3.0 Unported (CC BY 3.0) | Hannes Grobe;MCR | http://commons.wikimedia.org/wiki/File:Carpet-dear_hg.jpg
+base/textures/tex_buildings/carpet021.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Kirmanrug.jpg
+base/textures/tex_buildings/carpet022.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Nain_rug.jpg
+base/textures/tex_buildings/carpet023.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Bakshaish_Camelhair_Tree_of_Life,_6ft_6in_x_9ft_3in,_early_19th_century.jpg
+base/textures/tex_buildings/carpet024.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:42556-Antique-Persian-Tabriz-Carpets-hires.jpg
+base/textures/tex_buildings/carpet025.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Morris_Bullerswood_carpet_drawing_detail_c_1889.jpg
+base/textures/tex_buildings/carpet026.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Antique_rug_42432.jpg
 base/textures/tex_buildings/ceiling.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/ceiling_slate.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/cemdrk.png | GNU General Public License 2.0 | OpenArena
