@@ -551,6 +551,8 @@ SurfaceInspector& SurfaceInspector::Instance ()
 void SurfaceInspector::emitShader ()
 {
 	std::string shaderName = gtk_entry_get_text(GTK_ENTRY(_shaderEntry));
+	if (shaderName.empty())
+		return;
 
 	// Apply it to the selection
 	UndoableCommand undo("textureNameSetSelected " + shaderName);
