@@ -917,7 +917,7 @@
 }
 // brush 100
 {
-( 4 288 4 ) ( 372 288 4 ) ( 372 0 4 ) tex_nature/dirt003 0 228 0 1 1 65280 0 0
+( 4 288 4 ) ( 372 288 4 ) ( 372 0 4 ) tex_nature/dirt003 0 456 0 0.5 0.5 65280 0 0
 ( 992 992 32 ) ( 992 992 0 ) ( 992 32 32 ) tex_common/nodraw 32 4 0 1 1 65280 0 0
 ( 356 20 0 ) ( 36 20 0 ) ( 36 -44 0 ) tex_common/nodraw 0 228 0 1 1 65280 0 0
 ( -480 512 64 ) ( 800 512 -64 ) ( -480 512 -64 ) tex_common/nodraw 0 4 0 1 1 65280 0 0
@@ -926,7 +926,7 @@
 }
 // brush 101
 {
-( 4 288 4 ) ( 372 288 4 ) ( 372 0 4 ) tex_nature/dirt003 0 36 0 1 1 65280 0 0
+( 4 288 4 ) ( 372 288 4 ) ( 372 0 4 ) tex_nature/dirt003 0 72 0 0.5 0.5 65280 0 0
 ( 992 512 32 ) ( 32 512 32 ) ( 992 512 0 ) tex_common/nodraw 0 4 0 1 1 65280 0 0
 ( 356 20 0 ) ( 36 20 0 ) ( 36 -44 0 ) tex_common/nodraw 0 36 0 1 1 65280 0 0
 ( 32 1024 64 ) ( 32 0 -64 ) ( 32 1024 -64 ) tex_common/nodraw 224 4 0 1 1 65280 0 0
@@ -1797,40 +1797,40 @@
 "classname" "misc_model"
 "origin" "544 416 40"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
-"angles" "0 90 0"
 "spawnflags" "254"
+"angles" "0 90 0"
 }
 // entity 5
 {
 "classname" "misc_model"
 "origin" "544 416 40"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
-"angles" "0 90 0"
 "spawnflags" "254"
+"angles" "0 90 0"
 }
 // entity 6
 {
 "classname" "misc_model"
 "origin" "544 416 40"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
-"angles" "0 90 0"
 "spawnflags" "255"
+"angles" "0 90 0"
 }
 // entity 7
 {
 "classname" "misc_model"
 "origin" "544 416 40"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
-"angles" "0 90 0"
 "spawnflags" "255"
+"angles" "0 90 0"
 }
 // entity 8
 {
 "classname" "misc_model"
 "origin" "544 416 40"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_upper.md2"
-"angles" "0 90 0"
 "spawnflags" "254"
+"angles" "0 90 0"
 }
 // entity 9
 {
@@ -1843,39 +1843,39 @@
 {
 "classname" "light"
 "light" "200"
-"spawnflags" "1"
 "origin" "392 376 104"
 "_color" "0 1 0.2"
+"spawnflags" "1"
 }
 // entity 11
 {
 "classname" "light"
 "origin" "696 376 104"
-"spawnflags" "1"
 "_color" "0 1 0.2"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 12
 {
 "classname" "light"
 "origin" "544 600 104"
-"spawnflags" "1"
 "_color" "0 1 0.2"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 13
 {
 "classname" "light"
 "light" "200"
-"spawnflags" "1"
 "origin" "776 256 104"
 "_color" "0 1 0.2"
+"spawnflags" "1"
 }
 // entity 14
 {
 "classname" "light"
 "light" "200"
-"spawnflags" "1"
 "origin" "328 264 104"
 "_color" "0 1 0.2"
+"spawnflags" "1"
 }
