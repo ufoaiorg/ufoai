@@ -4279,6 +4279,19 @@ base/textures/tex_buildings/carpet004.png | GNU General Public License 2.0 or la
 base/textures/tex_buildings/carpet005.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/carpet005_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/carpet006.jpg | GNU General Public License 2.0 or later | zark127 | tex_buildings/wall_tab003
+base/textures/tex_buildings/carpet007.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Ziegler_wiki_01.jpg
+base/textures/tex_buildings/carpet008.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:PersianCarpetII.JPG
+base/textures/tex_buildings/carpet009.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Ottoman_Court_carpet_late_16th_century_Egypt_or_Turkey.jpg
+base/textures/tex_buildings/carpet010.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Morris_Bullerswood_carpet_detail_c_1889.jpg
+base/textures/tex_buildings/carpet011.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:IranianCarpet1.JPG
+base/textures/tex_buildings/carpet012.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Berezhany-_(267).jpg
+base/textures/tex_buildings/carpet013.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Gendje-rug.jpg
+base/textures/tex_buildings/carpet014.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:GauSittingRug.jpg
+base/textures/tex_buildings/carpet015.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:44199reg.jpg
+base/textures/tex_buildings/carpet016.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Amritsar_rug.jpg
+base/textures/tex_buildings/carpet017.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Antique_kerman_persian.jpg
+base/textures/tex_buildings/carpet018.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Antique_Persian_Mashad_rug.jpg
+base/textures/tex_buildings/carpet019.png | GNU General Public License 1.2 or later | MCR | http://commons.wikimedia.org/wiki/File:Antique_Serapi_carpet_26854.jpg
 base/textures/tex_buildings/ceiling.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/ceiling_slate.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/cemdrk.png | GNU General Public License 2.0 | OpenArena
