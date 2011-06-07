@@ -287,7 +287,7 @@ void ShaderSelector::_onExpose(GtkWidget* widget,
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, req.width, 0, req.height, -100, 100);
-	glEnable (GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 
 	// Get the selected texture, and set up OpenGL to render it on
 	// the quad.
@@ -306,23 +306,21 @@ void ShaderSelector::_onExpose(GtkWidget* widget,
 		drawQuad = true;
 	}
 
-	if (drawQuad)
-	{
+	if (drawQuad) {
 		// Calculate the correct aspect ratio for preview.
 		float aspect = float(tex->width) / float(tex->height);
 
 		float hfWidth, hfHeight;
 		if (aspect > 1.0) {
-			hfWidth = 0.5*req.width;
-			hfHeight = 0.5*req.height / aspect;
-		}
-		else {
-			hfHeight = 0.5*req.width;
-			hfWidth = 0.5*req.height * aspect;
+			hfWidth = 0.5 * req.width;
+			hfHeight = 0.5 * req.height / aspect;
+		} else {
+			hfHeight = 0.5 * req.width;
+			hfWidth = 0.5 * req.height * aspect;
 		}
 
 		// Draw a quad to put the texture on
-		glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3f(1, 1, 1);
 		glBegin(GL_QUADS);
 		glTexCoord2i(0, 1);

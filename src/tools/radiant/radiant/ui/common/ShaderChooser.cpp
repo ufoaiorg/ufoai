@@ -78,8 +78,7 @@ GtkWidget* ShaderChooser::createButtons() {
 
 void ShaderChooser::shaderSelectionChanged(const std::string& shaderName, GtkListStore* listStore) {
 	if (_targetEntry != NULL) {
-		gtk_entry_set_text(GTK_ENTRY(_targetEntry),
-						_selector.getSelection().c_str());
+		gtk_entry_set_text(GTK_ENTRY(_targetEntry), shaderName.c_str());
 	}
 
 	// Propagate the call up to the client (e.g. SurfaceInspector)
@@ -104,9 +103,7 @@ void ShaderChooser::revertShader() {
 
 		// Propagate the call up to the client (e.g. SurfaceInspector)
 		if (_client != NULL) {
-			_client->shaderSelectionChanged(
-				gtk_entry_get_text(GTK_ENTRY(_targetEntry))
-			);
+			_client->shaderSelectionChanged(_initialShader);
 		}
 	}
 }
