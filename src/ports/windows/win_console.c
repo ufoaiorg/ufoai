@@ -157,6 +157,7 @@ void Sys_ConsoleOutput (const char *text)
 
 /**
  * @brief On platforms supporting it, print a backtrace.
+ * @note For windows this is not handled here - see Sys_BacktraceInit
  */
 void Sys_Backtrace (void)
 {
