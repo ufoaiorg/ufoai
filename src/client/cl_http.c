@@ -206,7 +206,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	curl_easy_setopt(dl->curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
 	curl_easy_setopt(dl->curl, CURLOPT_PROGRESSFUNCTION, CL_HTTP_Progress);
 	curl_easy_setopt(dl->curl, CURLOPT_PROGRESSDATA, dl);
-	curl_easy_setopt(dl->curl, CURLOPT_USERAGENT, Cvar_GetString("version"));
+	curl_easy_setopt(dl->curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
 	curl_easy_setopt(dl->curl, CURLOPT_REFERER, cls.downloadReferer);
 	curl_easy_setopt(dl->curl, CURLOPT_URL, dl->URL);
 	curl_easy_setopt(dl->curl, CURLOPT_NOSIGNAL, 1);
