@@ -4,9 +4,9 @@ campaign veryhard
 	text				"_veryhard_campaign_txt"
 	team				phalanx
 	soldiers			8
-	scientists			24
-	workers				12
-	pilots				4
+	scientists			6
+	workers			6
+	pilots			4
 	difficulty			4
 	minhappiness		0.42
 	maxdebts			50000
@@ -22,25 +22,25 @@ campaign veryhard
 	visible				true
 	events				main
 
-	date				"2084 79 6"
-	basecost			100000
+	date		"2084 79 6"
+	basecost	100000
 }
 
 campaign hard
 {
-	name				"_Hard Campaign"
-	text				"_hard_campaign_txt"
-	team				phalanx
-	soldiers			8
-	scientists			24
-	workers				12
-	pilots				4
-	difficulty			2
-	minhappiness		0.35
-	maxdebts			100000
-	xvirate				50
+	name			"_Hard Campaign"
+	text			"_hard_campaign_txt"
+	team			phalanx
+	soldiers		8
+	scientists		6
+	workers			6
+	pilots			4
+	difficulty		2
+	minhappiness	0.35
+	maxdebts		100000
+	xvirate			50
 	salary {
-		soldier_base		4000
+		soldier_base 4000
 	}
 	firstbase			balanced
 	researched			rslist_phalanx
@@ -59,38 +59,38 @@ campaign hard
 
 campaign main
 {
-	name				"_Standard Campaign"
-	text				"_standard_campaign_txt"
-	team				phalanx
-	soldiers			9
-	scientists			40
-	workers				20
-	pilots				6
-	difficulty			0
-	minhappiness		0.30
-	maxdebts			200000
-	xvirate				70
+	name			"_Standard Campaign"
+	text			"_standard_campaign_txt"
+	team			phalanx
+	soldiers		9
+	scientists		10
+	workers			10
+	pilots			6
+	difficulty		0
+	minhappiness	0.30
+	maxdebts		200000
+	xvirate			70
 	salary {
-	    soldier_base		1500
-		soldier_rankbonus	0;
-		worker_base			500;
-		worker_rankbonus	0;
-		scientist_base		1000;
+	    soldier_base 1500
+		soldier_rankbonus 0;
+		worker_base 500;
+		worker_rankbonus 0;
+		scientist_base 1000;
 		scientist_rankbonus 0;
-		pilot_base			1500;
-		pilot_rankbonus		0;
-		robot_base			7500;
-		robot_rankbonus		0;
-		aircraft_factor		1;
-		aircraft_divisor	25;
-		base_upkeep			20000;
-		admin_initial		1000;
-		admin_soldier		75;
-		admin_worker		75;
-		admin_scientist		75;
-		admin_pilot			75;
-		admin_robot			150;
-		debt_interest		0.005;
+		pilot_base 1500;
+		pilot_rankbonus 0;
+		robot_base 7500;
+		robot_rankbonus 0;
+		aircraft_factor 1;
+		aircraft_divisor 25;
+		base_upkeep 20000;
+		admin_initial 1000;
+		admin_soldier 75;
+		admin_worker 75;
+		admin_scientist 75;
+		admin_pilot 75;
+		admin_robot 150;
+		debt_interest 0.005;
 	}
 	firstbase			balanced
 	researched			rslist_phalanx
@@ -104,25 +104,25 @@ campaign main
 	visible				true
 	events				main
 
-	date				"2084 79 6"
-	basecost			100000
+	date		"2084 79 6"
+	basecost	100000
 }
 
 campaign easy
 {
-	name				"_Easy Campaign"
-	text				"_easy_campaign_txt"
-	team				phalanx
-	soldiers			25
-	scientists			64
-	workers				20
-	pilots				8
-	difficulty			-2
-	minhappiness		0.2
-	maxdebts			350000
-	xvirate				80
+	name			"_Easy Campaign"
+	text			"_easy_campaign_txt"
+	team			phalanx
+	soldiers		25
+	scientists		16
+	workers			10
+	pilots			8
+	difficulty		-2
+	minhappiness	0.2
+	maxdebts		350000
+	xvirate			80
 	salary {
-		soldier_base		3000
+		soldier_base 3000
 	}
 	firstbase			balanced
 	researched			rslist_phalanx
@@ -135,8 +135,8 @@ campaign easy
 	visible				true
 	events				main
 
-	date				"2084 79 6"
-	basecost			100000
+	date		"2084 79 6"
+	basecost	100000
 }
 
 campaign veryeasy
@@ -145,34 +145,34 @@ campaign veryeasy
 	text			"_veryeasy_campaign_txt"
 	team			phalanx
 	soldiers		35
-	scientists		104
-	workers			40
+	scientists		26
+	workers			20
 	pilots			10
 	difficulty		-4
 	minhappiness	0.1
 	maxdebts		500000
 	xvirate			90
 	salary {
-	    soldier_base		1500
-		soldier_rankbonus	0;
-		worker_base			500;
-		worker_rankbonus	0;
-		scientist_base		1000;
-		scientist_rankbonus	0;
-		pilot_base			1500;
-		pilot_rankbonus		0;
-		robot_base			7500;
-		robot_rankbonus		0;
-		aircraft_factor		1;
-		aircraft_divisor	25;
-		base_upkeep			20000;
-		admin_initial		1000;
-		admin_soldier		75;
-		admin_worker		75;
-		admin_scientist		75;
-		admin_pilot			75;
-		admin_robot			150;
-		debt_interest		0.005;
+	    soldier_base 1500
+		soldier_rankbonus 0;
+		worker_base 500;
+		worker_rankbonus 0;
+		scientist_base 1000;
+		scientist_rankbonus 0;
+		pilot_base 1500;
+		pilot_rankbonus 0;
+		robot_base 7500;
+		robot_rankbonus 0;
+		aircraft_factor 1;
+		aircraft_divisor 25;
+		base_upkeep 20000;
+		admin_initial 1000;
+		admin_soldier 75;
+		admin_worker 75;
+		admin_scientist 75;
+		admin_pilot 75;
+		admin_robot 150;
+		debt_interest 0.005;
 	}
 	firstbase			balanced
 	researched			rslist_phalanx
@@ -185,8 +185,8 @@ campaign veryeasy
 	visible				true
 	events				main
 
-	date				"2084 79 6"
-	basecost			100000
+	date		"2084 79 6"
+	basecost	100000
 }
 
 /*
@@ -209,8 +209,8 @@ campaign aliencampaign
 	visible				true
 	events				main
 
-	date				"2084 79 6"
-	basecost			100000
+	date		"2084 79 6"
+	basecost	100000
 }
 
 */
