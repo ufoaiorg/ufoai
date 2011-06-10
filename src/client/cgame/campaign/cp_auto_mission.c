@@ -63,6 +63,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 		for (soldier = 0; soldier < MAX_SOLDIERS_AUTOMISSION; soldier++) {
 			battle->unitHealth[team][soldier] = 0;
 			battle->unitHealthMax[team][soldier] = 0;
+			battle->unitKills[team][soldier] = 0;
 		}
 	}
 
@@ -423,8 +424,10 @@ static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, cons
 				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!",
 						currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
-				if (battle->unitHealth[eTeam][eUnit] == 0)
+				if (battle->unitHealth[eTeam][eUnit] == 0) {
 					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!", eUnit, eTeam);
+					battle->unitKills[eTeam][eUnit] += 1;
+				}
 
 				battle->teamAccomplishment[currTeam] += strikeDamage;
 			}
@@ -661,8 +664,18 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 			break;
 
 		/** @todo fill these values */
-		score->experience[SKILL_ASSAULT] += battleExperience;
-		score->kills[KILLED_ENEMIES] += 0;
+		/* If an auto mission seems to give too much or too little expoerience, adjust these scale values. */
+		double skillAwardScale = 1.0;
+		double abilityAwardScale = 1.0;
+		int expCount;
+
+		for (expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++)
+			score->experience[expCount] += (int) (battleExperience * abilityAwardScale * frand());
+
+		for (expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++)
+			score->experience[expCount] += (int) (battleExperience * skillAwardScale * frand());
+
+		score->kills[KILLED_ENEMIES] += battle->unitKills[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
 	}
 
 	/** @todo the base might differ in case of a baseattack mission */
