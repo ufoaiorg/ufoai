@@ -110,12 +110,12 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	battle->nUnits[teamNum] = teamSize;
 
 	if (teamSize == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.");
-		Com_DPrintf(DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!");
+		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.\n");
+		Com_DPrintf(DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!\n");
 	}
 	if (unitsAlive == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add team to auto battle where all the units on the team are DEAD!");
-		Com_DPrintf(DEBUG_CLIENT, "--- Note: This team will LOSE the battle by default.");
+		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add team to auto battle where all the units on the team are DEAD!\n");
+		Com_DPrintf(DEBUG_CLIENT, "--- Note: This team will LOSE the battle by default.\n");
 	}
 
 	if (teamSize > 0)
@@ -173,7 +173,7 @@ static void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 	int teamDrones = -1;
 
 	if (!battle->hasBeenFought)
-		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
+		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!\n");
 
 	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
@@ -287,7 +287,7 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 	int currentUnit;
 
 	if (battle->hasBeenFought)
-		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!");
+		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!\n");
 
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
 		unitTotal += battle->nUnits[team];
@@ -307,19 +307,19 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 
 	/* sanity checks */
 	if (unitTotal == 0)
-		Com_Error(ERR_DROP, "Grand total of ZERO units are fighting in auto battle, something is wrong.");
+		Com_Error(ERR_DROP, "Grand total of ZERO units are fighting in auto battle, something is wrong.\n");
 
 	if (unitTotal < 0)
-		Com_Error(ERR_DROP, "Negative number of total units are fighting in auto battle, something is VERY wrong!");
+		Com_Error(ERR_DROP, "Negative number of total units are fighting in auto battle, something is VERY wrong!\n");
 
 	if (isHostileTotal <= 0)
-		Com_Error(ERR_DROP, "No team has any other team hostile toward it, no battle is possible!");
+		Com_Error(ERR_DROP, "No team has any other team hostile toward it, no battle is possible!\n");
 
 	if (totalActiveTeams <= 0)
-		Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!");
+		Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!\n");
 
 	if (totalActiveTeams == 1)
-		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.");
+		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.\n");
 
 	/* Quick easy victory check */
 	if (totalActiveTeams == 1) {
@@ -358,9 +358,9 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 
 			/* In DEBUG mode, these should help with telling where things are at what time, for bug-hunting purposes. */
 			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf",
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf.\n",
 					team, teamRatioHealthyUnits[team]);
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf",
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf.\n",
 					team, teamRatioHealthTotal[team]);
 
 			/** @todo speaking names please */
@@ -375,7 +375,7 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 				battle->scoreTeamSkill[team] = FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs);
 			/* if (skillAdjCalc == exact 0.0), no change to team's skill. */
 
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf",
+			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf.\n",
 					team, battle->scoreTeamSkill[team]);
 		}
 	}
@@ -395,11 +395,11 @@ static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTe
 
 				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
-				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!",
+				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!\n",
 						currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
 				if (battle->unitHealth[eTeam][eUnit] == 0)
-					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!",
+					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!\n",
 							eUnit, eTeam);
 
 				battle->teamAccomplishment[currTeam] -= strikeDamage;
@@ -416,16 +416,16 @@ static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, cons
 		if (battle->unitHealth[eTeam][eUnit] > 0) {
 			const double calcRand = frand();
 
-			if (calcRand >= effective) {
+			if (calcRand <= effective) {
 				const int strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
 
 				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
-				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!",
+				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!\n",
 						currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
 				if (battle->unitHealth[eTeam][eUnit] == 0) {
-					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!", eUnit, eTeam);
+					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!\n", eUnit, eTeam);
 					battle->unitKills[eTeam][eUnit] += 1;
 				}
 
@@ -440,7 +440,7 @@ static qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, con
 	int eTeam;
 	int count = 0;
 
-	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!", currUnit, currTeam);
+	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!\n", currUnit, currTeam);
 
 	for (eTeam = 0; eTeam < MAX_ACTIVETEAM; eTeam++) {
 		if (!battle->isHostile[currTeam][eTeam])
@@ -485,15 +485,17 @@ static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
 				if (battle->unitHealth[team][currentUnit] <= 0)
 					continue;
 
-				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf",
+				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf.\n",
 						currentUnit, team, battle->scoreTeamSkill[team]);
 
 				aliveUnits++;
 				combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, effective);
 			}
 
-			if (aliveUnits == 0)
+			if (aliveUnits == 0) {
 				battle->teamActive[team] = qfalse;
+				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has been DEFEATED and is OUT OF ACTION.\n", team);
+			}
 		}
 	}
 	battle->hasBeenFought = qtrue;
