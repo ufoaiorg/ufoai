@@ -28,6 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/mathlib_extra.h"
 #include "math.h"
 
+/**
+ * @brief Constants for automission experience gain factors
+ * @todo make these scripted in campaign definitions maybe
+*/
+#define SKILL_AWARD_SCALE 1.0f
+#define ABILITY_AWARD_SCALE 1.0f
+
 #define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER || (type) == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
 #define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN || (type) == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
 #define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
@@ -41,7 +48,8 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 {
 	int team;
 
-	assert(battle);
+	assert(battle != NULL);
+
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
 		int otherTeam;
 		int soldier;
@@ -90,8 +98,8 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	int unitsAlive;
 
 	assert(teamNum >= 0 && teamNum < MAX_ACTIVETEAM);
-	assert(battle);
-	assert(aircraft);
+	assert(battle != NULL);
+	assert(aircraft != NULL);
 
 	teamSize = 0;
 	unitsAlive = 0;
@@ -650,6 +658,7 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
 		character_t *chr = &soldier->chr;
 		chrScoreGlobal_t *score = &chr->score;
+		int expCount;
 
 		chr->HP = battle->unitHealth[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
 		unit++;
@@ -660,22 +669,14 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 			break;
 		}
 
-		/* TODO: If health > zero, award experience for the mission.  (Destructavator): I need to find out how experience is represented for soldiers. */
-
 		if (unit >= MAX_SOLDIERS_AUTOMISSION)
 			break;
 
-		/** @todo fill these values */
-		/* If an auto mission seems to give too much or too little expoerience, adjust these scale values. */
-		double skillAwardScale = 1.0;
-		double abilityAwardScale = 1.0;
-		int expCount;
-
 		for (expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++)
-			score->experience[expCount] += (int) (battleExperience * abilityAwardScale * frand());
+			score->experience[expCount] += (int) (battleExperience * ABILITY_AWARD_SCALE * frand());
 
 		for (expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++)
-			score->experience[expCount] += (int) (battleExperience * skillAwardScale * frand());
+			score->experience[expCount] += (int) (battleExperience * SKILL_AWARD_SCALE * frand());
 
 		score->kills[KILLED_ENEMIES] += battle->unitKills[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
 	}
