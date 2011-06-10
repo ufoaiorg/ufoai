@@ -173,7 +173,7 @@ static void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 	int teamDrones = -1;
 
 	if (!battle->hasBeenFought)
-		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!\n");
+		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
 
 	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
@@ -287,7 +287,7 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 	int currentUnit;
 
 	if (battle->hasBeenFought)
-		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!\n");
+		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!");
 
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
 		unitTotal += battle->nUnits[team];
@@ -307,16 +307,16 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 
 	/* sanity checks */
 	if (unitTotal == 0)
-		Com_Error(ERR_DROP, "Grand total of ZERO units are fighting in auto battle, something is wrong.\n");
+		Com_Error(ERR_DROP, "Grand total of ZERO units are fighting in auto battle, something is wrong.");
 
 	if (unitTotal < 0)
-		Com_Error(ERR_DROP, "Negative number of total units are fighting in auto battle, something is VERY wrong!\n");
+		Com_Error(ERR_DROP, "Negative number of total units are fighting in auto battle, something is VERY wrong!");
 
 	if (isHostileTotal <= 0)
-		Com_Error(ERR_DROP, "No team has any other team hostile toward it, no battle is possible!\n");
+		Com_Error(ERR_DROP, "No team has any other team hostile toward it, no battle is possible!");
 
 	if (totalActiveTeams <= 0)
-		Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!\n");
+		Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!");
 
 	if (totalActiveTeams == 1)
 		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.\n");
@@ -391,7 +391,7 @@ static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTe
 			const double calcRand = frand();
 
 			if (calcRand < (0.250 - (effective * 0.250))) {
-				const int strikeDamage = (int) (20.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
+				const int strikeDamage = (int) (200.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
 
 				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
@@ -417,7 +417,7 @@ static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, cons
 			const double calcRand = frand();
 
 			if (calcRand <= effective) {
-				const int strikeDamage = (int) (20.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
+				const int strikeDamage = (int) (200.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
 
 				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
@@ -585,7 +585,7 @@ void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const s
 	/* Civilians (if any) */
 	if (numCivsTm > 0) {
 		for (unit = 0; unit < numCivsTm; unit++) {
-			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
+			/* Quick, ugly way of deciding civilian health scores.  Eventually we'll need something better. */
 			const int healthMaxm = (int) (frand() * 40.f) + 5.f;
 			const int health = (int) (frand() * (healthMaxm - 4)) + 4;
 			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = healthMaxm;
