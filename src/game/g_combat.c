@@ -299,7 +299,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	assert(target);
 
 	/* Breakables */
-	if (G_IsBrushModel(target)) {
+	if (G_IsBrushModel(target) && G_IsBreakable(target)) {
 		/* Breakables are immune to stun & shock damage. */
 		if (stunEl || stunGas || shock || mock)
 			return;
