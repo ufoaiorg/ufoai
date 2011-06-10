@@ -5806,7 +5806,8 @@ base/textures/tex_nature/potatoes.png | Public Domain | FWishbringer
 base/textures/tex_nature/railway.png | Public Domain | FWishbringer
 base/textures/tex_nature/railway_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/rock005_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/rock005.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT003458.JPG.html
+base/textures/tex_nature/rock005_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/rock007_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/rock008.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/wetstone0526.jpg.html
