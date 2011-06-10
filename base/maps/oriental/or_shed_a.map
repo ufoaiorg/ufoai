@@ -125,7 +125,7 @@
 // brush 11
 {
 ( 128 96 0 ) ( 192 96 0 ) ( 128 320 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
-( 0 1048 4 ) ( 0 1216 4 ) ( 320 1216 4 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
+( 0 1048 4 ) ( 0 1216 4 ) ( 320 1216 4 ) tex_nature/desert004 0 0 0 0.125 0.125 65280 0 0
 ( 320 0 120 ) ( 352 0 120 ) ( 352 0 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 512 1040 8 ) ( 512 1208 8 ) ( 512 1208 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 224 512 40 ) ( 188 512 40 ) ( 188 512 4 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
@@ -862,32 +862,32 @@
 {
 "classname" "light"
 "origin" "192 220 56"
-"spawnflags" "1"
 "_color" "0.75 0.8 1"
+"spawnflags" "1"
 "light" "120"
 }
 // entity 8
 {
 "classname" "light"
 "light" "120"
-"spawnflags" "1"
-"_color" "0.75 0.8 1"
 "origin" "192 152 56"
+"_color" "0.75 0.8 1"
+"spawnflags" "1"
 }
 // entity 9
 {
 "classname" "light"
 "light" "120"
-"spawnflags" "1"
-"_color" "0.75 0.8 1"
 "origin" "384 352 56"
+"_color" "0.75 0.8 1"
+"spawnflags" "1"
 }
 // entity 10
 {
 "classname" "light"
 "origin" "384 284 56"
-"spawnflags" "1"
 "_color" "0.75 0.8 1"
+"spawnflags" "1"
 "light" "120"
 }
 // entity 11

@@ -194,7 +194,7 @@
 ( 436 512 8 ) ( 116 512 8 ) ( 116 512 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 768 392 8 ) ( 768 560 8 ) ( 768 560 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 ( 96 0 8 ) ( 416 0 8 ) ( 416 0 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
-( 128 408 4 ) ( 128 576 4 ) ( 448 576 4 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
+( 128 408 4 ) ( 128 576 4 ) ( 448 576 4 ) tex_nature/desert004 0 0 0 0.125 0.125 65280 0 0
 ( 544 248 0 ) ( 544 288 0 ) ( 512 288 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
 }
 // brush 18
@@ -609,8 +609,8 @@
 // entity 2
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "112 336 32"
+"team" "1"
 }
 // entity 3
 {
@@ -621,133 +621,133 @@
 // entity 4
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "528 336 32"
+"team" "1"
 }
 // entity 5
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "48 368 32"
+"team" "1"
 }
 // entity 6
 {
 "classname" "info_player_start"
+"origin" "368 368 32"
 "angles" "0 0 45"
 "team" "1"
-"origin" "368 368 32"
 }
 // entity 7
 {
 "classname" "info_player_start"
 "origin" "336 336 32"
-"team" "1"
 "angles" "0 0 45"
+"team" "1"
 }
 // entity 8
 {
 "classname" "info_player_start"
 "origin" "208 80 32"
-"team" "1"
 "angles" "0 0 45"
+"team" "1"
 }
 // entity 9
 {
 "classname" "info_player_start"
 "origin" "528 80 32"
-"team" "1"
 "angles" "0 0 45"
+"team" "1"
 }
 // entity 10
 {
 "classname" "info_player_start"
 "origin" "304 48 32"
-"team" "1"
 "angles" "0 0 45"
+"team" "1"
 }
 // entity 11
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "464 432 32"
 "angles" "0 0 -45"
+"team" "1"
 }
 // entity 12
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "176 368 32"
 "angles" "0 0 315"
+"team" "1"
 }
 // entity 13
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "560 112 32"
 "angles" "0 0 315"
+"team" "1"
 }
 // entity 14
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "624 304 32"
 "angles" "0 0 -135"
+"team" "1"
 }
 // entity 15
 {
 "classname" "info_player_start"
-"angles" "0 0 225"
 "origin" "656 176 32"
+"angles" "0 0 225"
 "team" "1"
 }
 // entity 16
 {
 "classname" "info_player_start"
-"angles" "0 0 -135"
 "origin" "112 144 32"
+"angles" "0 0 -135"
 "team" "1"
 }
 // entity 17
 {
 "classname" "info_player_start"
-"angles" "0 0 225"
 "origin" "368 112 32"
+"angles" "0 0 225"
 "team" "1"
 }
 // entity 18
 {
 "classname" "info_player_start"
-"angles" "0 0 135"
 "origin" "624 176 32"
+"angles" "0 0 135"
 "team" "1"
 }
 // entity 19
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "464 80 32"
 "angles" "0 0 135"
+"team" "1"
 }
 // entity 20
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "208 112 32"
 "angles" "0 0 135"
+"team" "1"
 }
 // entity 21
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "272 400 32"
 "angles" "0 0 135"
+"team" "1"
 }
 // entity 22
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "48 336 32"
 "angles" "0 0 135"
+"team" "1"
 }
 // entity 23
 {
@@ -762,8 +762,8 @@
 // entity 25
 {
 "classname" "info_human_start"
-"angles" "0 0 45"
 "origin" "496 368 28"
+"angles" "0 0 45"
 }
 // entity 26
 {
@@ -786,8 +786,8 @@
 // entity 29
 {
 "classname" "info_human_start"
-"angles" "0 0 -135"
 "origin" "112 368 28"
+"angles" "0 0 -135"
 }
 // entity 30
 {
@@ -907,75 +907,75 @@
 }
 // entity 32
 {
-"classname" "misc_model"
 "origin" "735 170 114"
-"model" "models/objects/vegi/palm_a/palm2.md2"
-"spawnflags" "254"
 "target" "misc_model2"
+"classname" "misc_model"
 "tag" "tag_top"
+"spawnflags" "254"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 }
 // entity 33
 {
-"classname" "misc_model"
 "origin" "724 176 36"
-"model" "models/objects/vegi/palm_a/palm1.md2"
-"spawnflags" "255"
 "anim" "moving3"
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model2"
 }
 // entity 34
 {
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/palm_a/palm2.md2"
 "origin" "725 57 114"
 "target" "misc_model3"
+"classname" "misc_model"
 "tag" "tag_top"
+"spawnflags" "254"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 }
 // entity 35
 {
+"origin" "716 48 36"
+"anim" "moving3"
 "classname" "misc_model"
 "angles" "0 70 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm1.md2"
-"origin" "716 48 36"
-"anim" "moving3"
 "targetname" "misc_model3"
 }
 // entity 36
 {
-"classname" "misc_model"
 "origin" "345 473 114"
-"model" "models/objects/vegi/palm_a/palm2.md2"
-"spawnflags" "254"
 "target" "misc_model1"
+"classname" "misc_model"
 "tag" "tag_top"
+"spawnflags" "254"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 }
 // entity 37
 {
-"classname" "misc_model"
 "origin" "336 464 36"
-"model" "models/objects/vegi/palm_a/palm1.md2"
-"spawnflags" "255"
-"angles" "0 70 0"
 "anim" "moving3"
+"classname" "misc_model"
+"angles" "0 70 0"
+"spawnflags" "255"
+"model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model1"
 }
 // entity 38
 {
 "classname" "misc_model"
 "origin" "336 224 49"
-"spawnflags" "254"
 "model" "models/aircraft/drop_firebird/firebird_top.md2"
 "angles" "0 -180 0"
+"spawnflags" "254"
 }
 // entity 39
 {
 "classname" "misc_model"
 "origin" "336 224 49"
 "model" "models/aircraft/drop_firebird/firebird.md2"
-"spawnflags" "255"
 "angles" "0 -180 0"
+"spawnflags" "255"
 }
 // entity 40
 {
@@ -983,11 +983,11 @@
 "team" "1"
 // brush 0
 {
-( 368 160 64 ) ( 240 160 64 ) ( 368 320 64 ) tex_common/trigger 8 0 0 0.6500001 0.25
-( 464 160 96 ) ( 464 320 96 ) ( 464 160 0 ) tex_common/trigger 8 0 0 0.6500001 0.25
-( 368 160 64 ) ( 368 160 -32 ) ( 240 160 64 ) tex_common/trigger 8 0 0 0.6500001 0.25
-( 240 320 0 ) ( 240 160 0 ) ( 368 320 0 ) tex_common/trigger 8 0 0 0.6500001 0.25
-( 240 320 0 ) ( 240 320 96 ) ( 240 160 0 ) tex_common/trigger 8 0 0 0.6500001 0.25
-( 240 288 0 ) ( 368 288 0 ) ( 240 288 96 ) tex_common/trigger 8 0 0 0.6500001 0.25
+( 368 160 64 ) ( 240 160 64 ) ( 368 320 64 ) tex_common/trigger 8 0 0 0.6500001 0.25 0 0 0
+( 464 160 96 ) ( 464 320 96 ) ( 464 160 0 ) tex_common/trigger 8 0 0 0.6500001 0.25 0 0 0
+( 368 160 64 ) ( 368 160 -32 ) ( 240 160 64 ) tex_common/trigger 8 0 0 0.6500001 0.25 0 0 0
+( 240 320 0 ) ( 240 160 0 ) ( 368 320 0 ) tex_common/trigger 8 0 0 0.6500001 0.25 0 0 0
+( 240 320 0 ) ( 240 320 96 ) ( 240 160 0 ) tex_common/trigger 8 0 0 0.6500001 0.25 0 0 0
+( 240 288 0 ) ( 368 288 0 ) ( 240 288 96 ) tex_common/trigger 8 0 0 0.6500001 0.25 0 0 0
 }
 }

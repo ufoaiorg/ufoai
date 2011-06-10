@@ -753,7 +753,7 @@
 // brush 83
 {
 ( -480 196 0 ) ( -480 256 0 ) ( -544 156 0 ) tex_common/nodraw 24 48 0 0.5 0.5 65280 128 0
-( -608 256 4 ) ( -480 256 4 ) ( -608 204 4 ) tex_nature/desert004 128 192 0 0.5 0.5 65280 0 0
+( -608 256 4 ) ( -480 256 4 ) ( -608 204 4 ) tex_nature/desert004 256 384 0 0.25 0.25 65280 0 0
 ( 256 0 64 ) ( 512 0 -64 ) ( 256 0 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 512 0 64 ) ( 512 256 -64 ) ( 512 0 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 0 512 64 ) ( 0 256 -64 ) ( 0 512 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
@@ -827,16 +827,16 @@
 {
 "classname" "light"
 "light" "150"
-"spawnflags" "1"
 "origin" "96 144 56"
 "_color" "1 1 0.85"
+"spawnflags" "1"
 }
 // entity 2
 {
 "classname" "light"
 "origin" "228 152 56"
-"spawnflags" "1"
 "_color" "1 1 0.85"
+"spawnflags" "1"
 "light" "150"
 }
 // entity 3

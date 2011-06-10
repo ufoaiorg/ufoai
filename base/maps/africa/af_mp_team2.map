@@ -6,7 +6,7 @@
 // brush 0
 {
 ( 440 256 0 ) ( 416 256 0 ) ( 416 176 0 ) tex_common/nodraw 0 -0 0 0.5 0.5 65280 0 0
-( 864 -768 4 ) ( 992 -768 4 ) ( 864 -820 4 ) tex_nature/desert004 192 64 0 0.5 0.5 65280 0 0
+( 864 -768 4 ) ( 992 -768 4 ) ( 864 -820 4 ) tex_nature/desert004 384 128 0 0.25 0.25 65280 0 0
 ( 1444 0 92 ) ( 1568 0 92 ) ( 1568 0 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 512 -760 4 ) ( 512 -508 4 ) ( 512 -508 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( -32 512 -64 ) ( 2784 512 -64 ) ( -32 512 64 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -16,15 +16,15 @@
 // entity 1
 {
 "classname" "info_civilian_start"
-"angles" "0 0 -45"
 "origin" "16 176 28"
+"angles" "0 0 -45"
 }
 // entity 2
 {
 "classname" "info_player_start"
 "origin" "432 240 28"
-"team" "2"
 "angles" "0 0 -90"
+"team" "2"
 }
 // entity 3
 {
@@ -36,8 +36,8 @@
 {
 "classname" "info_player_start"
 "origin" "112 432 28"
-"team" "2"
 "angles" "0 0 -45"
+"team" "2"
 }
 // entity 5
 {
@@ -55,8 +55,8 @@
 {
 "classname" "info_player_start"
 "origin" "368 208 28"
-"team" "2"
 "angles" "0 0 -90"
+"team" "2"
 }
 // entity 8
 {
@@ -74,15 +74,15 @@
 {
 "classname" "info_player_start"
 "origin" "144 240 28"
-"team" "2"
 "angles" "0 0 -90"
+"team" "2"
 }
 // entity 11
 {
 "classname" "info_player_start"
 "origin" "208 336 28"
-"team" "2"
 "angles" "0 0 45"
+"team" "2"
 }
 // entity 12
 {
@@ -112,8 +112,8 @@
 {
 "classname" "info_player_start"
 "origin" "400 304 28"
-"team" "2"
 "angles" "0 0 45"
+"team" "2"
 }
 // entity 17
 {

@@ -729,7 +729,7 @@
 ( 32 68 24 ) ( 160 68 24 ) ( 160 68 0 ) tex_common/nodraw 224 160 -180 0.25 -0.25 65280 128 0
 ( 48 252 52 ) ( 46 252 52 ) ( 46 252 6 ) tex_common/nodraw 224 160 -180 0.25 -0.25 65280 128 0
 ( 160 192 0 ) ( 32 192 0 ) ( 32 64 0 ) tex_common/nodraw 224 176 -180 0.25 -0.25 65280 0 0
-( 32 64 4 ) ( 32 192 4 ) ( 160 192 4 ) tex_nature/desert004 -255 170 0 0.15 0.15 65280 0 0
+( 32 64 4 ) ( 32 192 4 ) ( 160 192 4 ) tex_nature/desert004 -510 340 0 0.075 0.075 65280 0 0
 }
 // brush 81
 {
@@ -900,7 +900,7 @@
 ( 32 68 24 ) ( 160 68 24 ) ( 160 68 0 ) tex_common/nodraw 96 160 -180 0.25 -0.25 65280 128 0
 ( 160 188 24 ) ( 32 188 24 ) ( 32 188 0 ) tex_common/nodraw 96 160 -180 0.25 -0.25 65280 128 0
 ( 160 192 0 ) ( 32 192 0 ) ( 32 64 0 ) tex_common/nodraw 96 176 -180 0.25 -0.25 65280 0 0
-( 32 64 4 ) ( 32 192 4 ) ( 160 192 4 ) tex_nature/desert004 -42 170 0 0.15 0.15 65280 0 0
+( 32 64 4 ) ( 32 192 4 ) ( 160 192 4 ) tex_nature/desert004 -84 340 0 0.075 0.075 65280 0 0
 }
 // brush 100
 {
@@ -1068,8 +1068,8 @@
 {
 "classname" "light"
 "light" "120"
-"origin" "76 334 30"
 "_color" "1 1 0.95"
+"origin" "76 334 30"
 }
 // entity 5
 {
@@ -1766,29 +1766,29 @@
 {
 "classname" "light"
 "light" "150"
-"origin" "242 198 46"
 "_color" "1 1 0.95"
+"origin" "242 198 46"
 }
 // entity 16
 {
 "classname" "light"
 "light" "150"
-"origin" "198 248 46"
 "_color" "1 1 0.95"
+"origin" "198 248 46"
 }
 // entity 17
 {
 "classname" "light"
 "light" "150"
-"origin" "198 148 46"
 "_color" "1 1 0.95"
+"origin" "198 148 46"
 }
 // entity 18
 {
 "classname" "light"
 "light" "120"
-"origin" "296 306 38"
 "_color" "1 1 0.95"
+"origin" "296 306 38"
 }
 // entity 19
 {
@@ -1962,85 +1962,85 @@
 {
 "classname" "misc_particle"
 "origin" "183 196 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 32
 {
 "classname" "misc_particle"
 "origin" "199 216 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 33
 {
 "classname" "misc_particle"
 "origin" "199 182 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 34
 {
 "classname" "misc_particle"
 "origin" "217 196 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 35
 {
 "classname" "misc_particle"
 "origin" "99 334 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 36
 {
 "classname" "misc_particle"
 "origin" "115 354 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 37
 {
 "classname" "misc_particle"
 "origin" "115 320 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 38
 {
 "classname" "misc_particle"
 "origin" "133 334 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 39
 {
 "classname" "misc_particle"
 "origin" "319 306 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 40
 {
 "classname" "misc_particle"
 "origin" "335 326 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 41
 {
 "classname" "misc_particle"
 "origin" "335 292 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 42
 {
 "classname" "misc_particle"
 "origin" "353 306 86"
-"spawnflags" "510"
 "particle" "corona"
+"spawnflags" "510"
 }
 // entity 43
 {

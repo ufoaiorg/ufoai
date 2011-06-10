@@ -23,12 +23,12 @@
 }
 // brush 2
 {
-( 0 380 64 ) ( 0 280 64 ) ( 0 280 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65281 0 0
+( 0 380 64 ) ( 0 280 64 ) ( 0 280 0 ) tex_nature/desert004 0 0 0 0.125 0.125 65281 0 0
 ( 1344 320 192 ) ( 1024 320 192 ) ( 1024 320 128 ) tex_common/nodraw 0 24 0 0.5 0.5 65281 128 0
 ( 224 108 0 ) ( 224 280 0 ) ( 192 280 0 ) tex_common/nodraw 0 24 0 0.5 0.5 65281 128 0
-( 960 292 16 ) ( 512 292 16 ) ( 512 320 8 ) tex_nature/desert004 0 0 0 0.25 0.25 65281 0 0
-( 448 0 16 ) ( 712 0 16 ) ( 712 0 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65281 0 0
-( 1456 1076 16 ) ( 1456 1088 16 ) ( 1472 1088 16 ) tex_nature/desert004 0 0 0 0.25 0.25 65281 0 0
+( 960 292 16 ) ( 512 292 16 ) ( 512 320 8 ) tex_nature/desert004 0 0 0 0.125 0.125 65281 0 0
+( 448 0 16 ) ( 712 0 16 ) ( 712 0 0 ) tex_nature/desert004 0 0 0 0.125 0.125 65281 0 0
+( 1456 1076 16 ) ( 1456 1088 16 ) ( 1472 1088 16 ) tex_nature/desert004 0 0 0 0.125 0.125 65281 0 0
 ( 768 512 -64 ) ( 768 0 -64 ) ( 768 512 64 ) tex_material/metall005 0 0 0 1 1 65281 0 0
 }
 // brush 3
@@ -846,26 +846,26 @@
 }
 // brush 75
 {
-( 192 292 16 ) ( 192 334 16 ) ( 312 292 16 ) tex_nature/desert004 0 0 0 0.25 0.25 65281 0 0
-( 128 348 4 ) ( 356 330 4 ) ( 192 334 16 ) tex_nature/desert004 0 0 0 0.25 0.25 65281 0 0
-( 312 334 16 ) ( 356 330 4 ) ( 312 292 16 ) tex_nature/desert004 0 8 0 0.25 0.25 65281 0 0
-( 128 292 4 ) ( 356 330 4 ) ( 128 348 4 ) tex_common/nodraw 0 0 0 0.25 0.25
-( 220 292 4 ) ( 220 292 20 ) ( 266 292 4 ) tex_common/nodraw 40 0 0 0.25 0.25
-( 192 334 16 ) ( 192 292 16 ) ( 128 348 4 ) tex_nature/desert004 0 0 0 0.25 0.25 65281 0 0
+( 192 292 16 ) ( 192 334 16 ) ( 312 292 16 ) tex_nature/desert004 0 0 0 0.125 0.125 65281 0 0
+( 128 348 4 ) ( 356 330 4 ) ( 192 334 16 ) tex_nature/desert004 0 0 0 0.125 0.125 65281 0 0
+( 312 334 16 ) ( 356 330 4 ) ( 312 292 16 ) tex_nature/desert004 0 16 0 0.125 0.125 65281 0 0
+( 128 292 4 ) ( 356 330 4 ) ( 128 348 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 0 0
+( 220 292 4 ) ( 220 292 20 ) ( 266 292 4 ) tex_common/nodraw 40 0 0 0.25 0.25 0 0 0
+( 192 334 16 ) ( 192 292 16 ) ( 128 348 4 ) tex_nature/desert004 0 0 0 0.125 0.125 65281 0 0
 }
 }
 // entity 1
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "80 464 36"
+"team" "1"
 }
 // entity 2
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "752 368 36"
 "angles" "0 0 90"
+"team" "1"
 }
 // entity 3
 {
@@ -919,97 +919,97 @@
 // entity 12
 {
 "classname" "misc_model"
-"model" "models/aircraft/drop_raptor/drop_raptor_landed.md2"
 "origin" "417 259 82"
-"spawnflags" "254"
+"model" "models/aircraft/drop_raptor/drop_raptor_landed.md2"
 "angles" "0 -180 0"
+"spawnflags" "254"
 }
 // entity 13
 {
 "classname" "light"
-"_color" "0 0.8 1"
 "light" "100"
 "origin" "227 428 91"
+"_color" "0 0.8 1"
 }
 // entity 14
 {
 "classname" "light"
-"_color" "0 0.8 1"
 "light" "100"
 "origin" "227 380 91"
+"_color" "0 0.8 1"
 }
 // entity 15
 {
 "classname" "light"
-"_color" "0 0.8 1"
 "light" "100"
 "origin" "227 140 91"
+"_color" "0 0.8 1"
 }
 // entity 16
 {
 "classname" "light"
-"_color" "0 0.8 1"
 "light" "100"
 "origin" "227 92 91"
+"_color" "0 0.8 1"
 }
 // entity 17
 {
 "classname" "misc_model"
-"model" "models/aircraft/drop_raptor/drop_raptor_gear.md2"
 "origin" "417 259 82"
-"spawnflags" "255"
+"model" "models/aircraft/drop_raptor/drop_raptor_gear.md2"
 "angles" "0 -180 0"
+"spawnflags" "255"
 }
 // entity 18
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "688 336 36"
+"team" "1"
 }
 // entity 19
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "656 432 36"
+"team" "1"
 }
 // entity 20
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "144 144 36"
+"team" "1"
 }
 // entity 21
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "688 176 36"
+"team" "1"
 }
 // entity 22
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "720 272 36"
+"team" "1"
 }
 // entity 23
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "48 336 36"
 "angles" "0 0 180"
+"team" "1"
 }
 // entity 24
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "80 208 36"
 "angles" "0 0 90"
+"team" "1"
 }
 // entity 25
 {
 "classname" "info_player_start"
-"team" "1"
 "origin" "176 464 36"
 "angles" "0 0 90"
+"team" "1"
 }
 // entity 26
 {
@@ -1017,11 +1017,11 @@
 "team" "1"
 // brush 0
 {
-( 320 320 64 ) ( 192 320 64 ) ( 320 480 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 704 32 96 ) ( 704 192 96 ) ( 704 32 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 704 32 64 ) ( 704 32 -32 ) ( 576 32 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 192 480 0 ) ( 192 320 0 ) ( 320 480 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 32 480 0 ) ( 32 480 96 ) ( 32 320 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 192 480 0 ) ( 320 480 0 ) ( 192 480 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 320 320 64 ) ( 192 320 64 ) ( 320 480 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 704 32 96 ) ( 704 192 96 ) ( 704 32 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 704 32 64 ) ( 704 32 -32 ) ( 576 32 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 192 480 0 ) ( 192 320 0 ) ( 320 480 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 32 480 0 ) ( 32 480 96 ) ( 32 320 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 192 480 0 ) ( 320 480 0 ) ( 192 480 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }

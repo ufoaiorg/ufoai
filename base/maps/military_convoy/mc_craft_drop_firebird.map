@@ -2,16 +2,16 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "5"
 "maxteams" "2"
+"maxlevel" "5"
 // brush 0
 {
-( 0 1024 64 ) ( 0 -256 -64 ) ( 0 1024 -64 ) tex_nature/desert004 96 0 0 -1 1 65280 0 0
+( 0 1024 64 ) ( 0 -256 -64 ) ( 0 1024 -64 ) tex_nature/desert004 192 0 0 -0.5 0.5 65280 0 0
 ( 512 1280 -64 ) ( 512 -1536 -64 ) ( 512 1280 64 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
 ( 1598 256 2 ) ( -834 256 130 ) ( 1598 256 130 ) tex_common/nodraw 130 0 0 -1 1 65280 0 0
 ( -256 768 -64 ) ( 768 768 -64 ) ( -256 768 64 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
 ( -1376 -960 0 ) ( -1312 -960 0 ) ( -1376 -800 0 ) tex_common/nodraw 0 0 0 1 -1 65280 128 0
-( 684 0 2 ) ( 684 -256 2 ) ( -1748 0 2 ) tex_nature/desert004 52 0 0 1 -1 65280 0 0
+( 684 0 2 ) ( 684 -256 2 ) ( -1748 0 2 ) tex_nature/desert004 104 0 0 0.5 -0.5 65280 0 0
 }
 // brush 1
 {
@@ -20,7 +20,7 @@
 ( -1471 0 190 ) ( -1439 0 190 ) ( -1439 0 186 ) tex_common/nodraw 130 0 0 -1 1 65280 128 0
 ( 1022 256 128 ) ( -1410 256 128 ) ( 1022 256 0 ) tex_common/nodraw 2 0 0 1 1 65280 0 0
 ( -1376 -960 0 ) ( -1312 -960 0 ) ( -1376 -800 0 ) tex_common/nodraw 0 0 0 1 -1 65280 128 0
-( 684 0 2 ) ( 684 -256 2 ) ( -1748 0 2 ) tex_nature/desert004 52 0 0 1 -1 65280 0 0
+( 684 0 2 ) ( 684 -256 2 ) ( -1748 0 2 ) tex_nature/desert004 104 0 0 0.5 -0.5 65280 0 0
 }
 // brush 2
 {
@@ -462,17 +462,17 @@
 {
 "classname" "misc_model"
 "origin" "288 464 49"
-"spawnflags" "254"
 "model" "models/aircraft/drop_firebird/firebird_top.md2"
 "angles" "0 90 0"
+"spawnflags" "254"
 }
 // entity 18
 {
 "classname" "misc_model"
 "origin" "288 464 49"
 "model" "models/aircraft/drop_firebird/firebird.md2"
-"spawnflags" "255"
 "angles" "0 90 0"
+"spawnflags" "255"
 }
 // entity 19
 {
@@ -480,11 +480,11 @@
 "team" "1"
 // brush 0
 {
-( 352 368 64 ) ( 224 368 64 ) ( 352 528 64 ) tex_common/trigger 0 -1 0 0.25 0.2
-( 352 368 96 ) ( 352 528 96 ) ( 352 368 0 ) tex_common/trigger 0 -1 0 0.25 0.2
-( 352 368 64 ) ( 352 368 -32 ) ( 224 368 64 ) tex_common/trigger 0 -1 0 0.25 0.2
-( 224 528 0 ) ( 224 368 0 ) ( 352 528 0 ) tex_common/trigger 0 -1 0 0.25 0.2
-( 224 528 0 ) ( 224 528 96 ) ( 224 368 0 ) tex_common/trigger 0 -1 0 0.25 0.2
-( 224 528 0 ) ( 352 528 0 ) ( 224 528 96 ) tex_common/trigger 0 -1 0 0.25 0.2
+( 352 368 64 ) ( 224 368 64 ) ( 352 528 64 ) tex_common/trigger 0 -1 0 0.25 0.2 0 0 0
+( 352 368 96 ) ( 352 528 96 ) ( 352 368 0 ) tex_common/trigger 0 -1 0 0.25 0.2 0 0 0
+( 352 368 64 ) ( 352 368 -32 ) ( 224 368 64 ) tex_common/trigger 0 -1 0 0.25 0.2 0 0 0
+( 224 528 0 ) ( 224 368 0 ) ( 352 528 0 ) tex_common/trigger 0 -1 0 0.25 0.2 0 0 0
+( 224 528 0 ) ( 224 528 96 ) ( 224 368 0 ) tex_common/trigger 0 -1 0 0.25 0.2 0 0 0
+( 224 528 0 ) ( 352 528 0 ) ( 224 528 96 ) tex_common/trigger 0 -1 0 0.25 0.2 0 0 0
 }
 }

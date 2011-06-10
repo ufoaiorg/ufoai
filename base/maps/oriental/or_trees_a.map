@@ -42,7 +42,7 @@
 // brush 4
 {
 ( 128 192 4 ) ( 64 192 4 ) ( 64 128 4 ) tex_common/nodraw -192 -192 0 0.5 0.5 65280 128 0
-( 64 128 8 ) ( 64 192 8 ) ( 128 192 8 ) tex_nature/desert004 0 128 -180 0.25 0.25 65280 0 0
+( 64 128 8 ) ( 64 192 8 ) ( 128 192 8 ) tex_nature/desert004 0 256 -180 0.125 0.125 65280 0 0
 ( 64 68 8 ) ( 128 68 8 ) ( 128 68 4 ) tex_common/nodraw -192 0 0 0.5 0.5 65280 128 0
 ( 188 128 0 ) ( 188 192 0 ) ( 188 192 -4 ) tex_common/nodraw 192 0 0 0.5 0.5 65280 128 0
 ( 128 92 8 ) ( 64 92 8 ) ( 64 92 4 ) tex_common/nodraw -192 0 0 0.5 0.5 65280 128 0
@@ -60,7 +60,7 @@
 // brush 6
 {
 ( 128 192 4 ) ( 64 192 4 ) ( 64 128 4 ) tex_common/nodraw 0 -192 0 0.5 0.5 65280 128 0
-( 64 128 8 ) ( 64 192 8 ) ( 128 192 8 ) tex_nature/desert004 128 128 -180 0.25 0.25 65280 0 0
+( 64 128 8 ) ( 64 192 8 ) ( 128 192 8 ) tex_nature/desert004 256 256 -180 0.125 0.125 65280 0 0
 ( 64 68 8 ) ( 128 68 8 ) ( 128 68 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 92 128 0 ) ( 92 192 0 ) ( 92 192 -4 ) tex_common/nodraw 192 0 0 0.5 0.5 65280 128 0
 ( 128 92 8 ) ( 64 92 8 ) ( 64 92 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -105,7 +105,7 @@
 // brush 11
 {
 ( 128 192 4 ) ( 64 192 4 ) ( 64 128 4 ) tex_common/nodraw -192 0 0 0.5 0.5 65280 128 0
-( 64 128 8 ) ( 64 192 8 ) ( 128 192 8 ) tex_nature/desert004 0 0 -180 0.25 0.25 65280 0 0
+( 64 128 8 ) ( 64 192 8 ) ( 128 192 8 ) tex_nature/desert004 0 0 -180 0.125 0.125 65280 0 0
 ( 64 164 8 ) ( 128 164 8 ) ( 128 164 4 ) tex_common/nodraw -192 0 0 0.5 0.5 65280 128 0
 ( 188 128 0 ) ( 188 192 0 ) ( 188 192 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 128 188 8 ) ( 64 188 8 ) ( 64 188 4 ) tex_common/nodraw -192 0 0 0.5 0.5 65280 128 0
@@ -186,7 +186,7 @@
 // brush 20
 {
 ( 128 192 4 ) ( 64 192 4 ) ( 64 128 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 64 128 8 ) ( 64 192 8 ) ( 128 192 8 ) tex_nature/desert004 128 0 -180 0.25 0.25 65280 0 0
+( 64 128 8 ) ( 64 192 8 ) ( 128 192 8 ) tex_nature/desert004 256 0 -180 0.125 0.125 65280 0 0
 ( 64 164 8 ) ( 128 164 8 ) ( 128 164 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 92 128 0 ) ( 92 192 0 ) ( 92 192 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 128 188 8 ) ( 64 188 8 ) ( 64 188 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -195,7 +195,7 @@
 // brush 21
 {
 ( 184 188 0 ) ( 176 188 0 ) ( 176 180 0 ) tex_common/nodraw 128 0 -180 0.25 0.25 65280 128 0
-( 0 0 4 ) ( 0 256 4 ) ( 256 256 4 ) tex_nature/desert004 128 0 -180 0.25 0.25 65280 0 0
+( 0 0 4 ) ( 0 256 4 ) ( 256 256 4 ) tex_nature/desert004 256 0 -180 0.125 0.125 65280 0 0
 ( 0 0 16 ) ( 256 0 16 ) ( 256 0 0 ) tex_common/nodraw 128 0 -180 0.25 0.25 65280 128 0
 ( 256 0 16 ) ( 256 256 16 ) ( 256 256 0 ) tex_common/nodraw 128 0 -180 0.25 0.25 65280 128 0
 ( 256 256 16 ) ( 0 256 16 ) ( 0 256 0 ) tex_common/nodraw 128 0 -180 0.25 0.25 65280 128 0
@@ -231,76 +231,76 @@
 }
 // entity 1
 {
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/palm_a/palm2.md2"
 "origin" "163 174 114"
 "target" "misc_model2"
+"classname" "misc_model"
 "tag" "tag_top"
+"spawnflags" "254"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 }
 // entity 2
 {
+"origin" "176 176 36"
+"anim" "moving3"
 "classname" "misc_model"
 "angles" "0 210 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm1.md2"
-"origin" "176 176 36"
-"anim" "moving3"
 "targetname" "misc_model2"
 }
 // entity 3
 {
-"classname" "misc_model"
 "origin" "105 104 118"
-"model" "models/objects/vegi/palm_a/palm2.md2"
-"spawnflags" "254"
 "target" "misc_model3"
+"classname" "misc_model"
 "tag" "tag_top"
+"spawnflags" "254"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 }
 // entity 4
 {
-"classname" "misc_model"
 "origin" "84 88 36"
-"model" "models/objects/vegi/palm_a/palm1.md2"
-"spawnflags" "255"
-"angles" "10 50 0"
 "anim" "moving3"
+"classname" "misc_model"
+"angles" "10 50 0"
+"spawnflags" "255"
+"model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model3"
 }
 // entity 5
 {
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/palm_a/palm2.md2"
 "origin" "93 173 112"
 "target" "misc_model1"
+"classname" "misc_model"
 "tag" "tag_top"
+"spawnflags" "254"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 }
 // entity 6
 {
+"origin" "82 178 36"
+"anim" "moving3"
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm1.md2"
-"origin" "82 178 36"
-"anim" "moving3"
 "targetname" "misc_model1"
 }
 // entity 7
 {
-"classname" "misc_model"
 "origin" "176 80 36"
-"model" "models/objects/vegi/palm_a/palm1.md2"
-"spawnflags" "255"
-"angles" "0 210 0"
 "anim" "moving3"
+"classname" "misc_model"
+"angles" "0 210 0"
+"spawnflags" "255"
+"model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model4"
 }
 // entity 8
 {
-"classname" "misc_model"
 "origin" "163 77 114"
-"model" "models/objects/vegi/palm_a/palm2.md2"
-"spawnflags" "254"
 "target" "misc_model4"
+"classname" "misc_model"
 "tag" "tag_top"
+"spawnflags" "254"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 }
