@@ -3179,7 +3179,7 @@
 // brush 354
 {
 ( 264 240 192 ) ( 264 128 192 ) ( 280 128 192 ) tex_common/nodraw 0 0 0 0.5 0.5 6144 128 0
-( 432 68 128 ) ( 432 36 128 ) ( 432 36 64 ) tex_nature/rock006 16 128 0 0.5 0.5 6144 0 0
+( 432 68 128 ) ( 432 36 128 ) ( 432 36 64 ) tex_nature/rock006 64 512 0 0.125 0.125 6144 0 0
 ( 632 256 192 ) ( 632 256 128 ) ( 616 240 128 ) tex_common/nodraw 69 41 45 0.5 0.5 6144 128 0
 ( -692 156 256 ) ( -528 156 256 ) ( -528 156 192 ) tex_common/nodraw 0 0 0 0.5 0.5 6144 128 0
 ( -528 156 256 ) ( -692 156 256 ) ( -692 240 192 ) tex_nature/rock005 -768 -64 0 0.125 0.125 6144 0 0
@@ -4106,8 +4106,8 @@
 // brush 457
 {
 ( 860 -156 192 ) ( 696 -156 192 ) ( 696 -72 128 ) tex_nature/rock005 -864 -512 0 0.125 0.125 7168 0 0
-( 448 -156 289 ) ( 480 -156 289 ) ( 480 -156 281 ) tex_nature/rock006 -216 0 0 0.5 0.5 7168 0 0
-( 620 64 128 ) ( 620 60 128 ) ( 620 60 20 ) tex_nature/rock006 128 0 0 0.5 0.5 7168 0 0
+( 448 -156 289 ) ( 480 -156 289 ) ( 480 -156 281 ) tex_nature/rock006 -864 0 0 0.125 0.125 7168 0 0
+( 620 64 128 ) ( 620 60 128 ) ( 620 60 20 ) tex_nature/rock006 512 0 0 0.125 0.125 7168 0 0
 ( -64 12 132 ) ( -64 8 132 ) ( -32 8 132 ) tex_common/nodraw 0 0 0 0.5 0.5 7168 128 0
 ( 188 352 168 ) ( 164 352 168 ) ( 164 388 168 ) tex_common/nodraw 12 -127 134 0.500011 0.500011 7168 128 0
 ( 840 332 140 ) ( 840 356 140 ) ( 840 356 64 ) tex_common/nodraw 12 -127 134 0.500011 0.500011 7168 128 0
@@ -4115,9 +4115,9 @@
 // brush 458
 {
 ( 860 -156 192 ) ( 696 -156 192 ) ( 696 -72 128 ) tex_nature/rock005 -864 -512 0 0.125 0.125 7168 0 0
-( 448 -156 289 ) ( 480 -156 289 ) ( 480 -156 281 ) tex_nature/rock006 -216 0 0 0.5 0.5 7168 0 0
+( 448 -156 289 ) ( 480 -156 289 ) ( 480 -156 281 ) tex_nature/rock006 -864 0 0 0.125 0.125 7168 0 0
 ( 864 960 92 ) ( 864 992 92 ) ( 864 992 -4 ) tex_nature/rock005 0 0 0 0.125 0.125 7168 0 0
-( 620 64 128 ) ( 620 60 128 ) ( 620 60 20 ) tex_nature/rock006 128 0 0 0.5 0.5 7168 0 0
+( 620 64 128 ) ( 620 60 128 ) ( 620 60 20 ) tex_nature/rock006 512 0 0 0.125 0.125 7168 0 0
 ( 840 -128 168 ) ( 864 -128 168 ) ( 840 352 168 ) tex_common/nodraw 12 -127 134 0.500011 0.500011 7168 128 0
 }
 // brush 459
@@ -12546,8 +12546,8 @@
 {
 "classname" "light"
 "origin" "-624 296 120"
-"spawnflags" "1"
 "_color" "1 1 0.8"
+"spawnflags" "1"
 "light" "160"
 }
 // entity 29
@@ -14636,25 +14636,25 @@
 {
 "classname" "light"
 "light" "120"
-"spawnflags" "1"
-"_color" "1 1 1"
 "origin" "352 160 120"
+"_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 89
 {
 "classname" "light"
 "origin" "408 164 184"
-"spawnflags" "1"
 "_color" "1 1 0.8"
+"spawnflags" "1"
 "light" "160"
 }
 // entity 90
 {
 "classname" "light"
 "light" "160"
-"spawnflags" "1"
-"_color" "1 1 0.8"
 "origin" "296 164 184"
+"_color" "1 1 0.8"
+"spawnflags" "1"
 }
 // entity 91
 {
@@ -15468,43 +15468,43 @@
 {
 "classname" "misc_particle"
 "origin" "-464 344 137"
-"particle" "corona_yellow"
 "spawnflags" "508"
+"particle" "corona_yellow"
 }
 // entity 149
 {
 "classname" "misc_particle"
 "origin" "636 -32 187"
-"particle" "corona_yellow"
 "spawnflags" "504"
+"particle" "corona_yellow"
 }
 // entity 150
 {
 "classname" "misc_particle"
 "origin" "-24 688 125"
-"particle" "corona_yellow"
 "spawnflags" "508"
+"particle" "corona_yellow"
 }
 // entity 151
 {
 "classname" "misc_particle"
 "origin" "536 688 125"
-"particle" "corona_yellow"
 "spawnflags" "508"
+"particle" "corona_yellow"
 }
 // entity 152
 {
 "classname" "misc_particle"
 "origin" "192 260 191"
-"particle" "corona_yellow"
 "spawnflags" "504"
+"particle" "corona_yellow"
 }
 // entity 153
 {
 "classname" "misc_particle"
 "origin" "-256 344 169"
-"particle" "corona_yellow"
 "spawnflags" "508"
+"particle" "corona_yellow"
 }
 // entity 154
 {
