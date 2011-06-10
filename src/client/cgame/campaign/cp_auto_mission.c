@@ -660,27 +660,25 @@ void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, 
 		chrScoreGlobal_t *score = &chr->score;
 		int expCount;
 
-		chr->HP = battle->unitHealth[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
-		unit++;
-
-		if (battle->unitHealth[AUTOMISSION_TEAM_TYPE_PLAYER][unit] == 0) {
-			AM_MoveEmployeeInventoryIntoItemCargo(aircraft, soldier);
-			E_DeleteEmployee(soldier);
-			break;
-		}
-
 		if (unit >= MAX_SOLDIERS_AUTOMISSION)
 			break;
+
+		chr->HP = battle->unitHealth[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
+		score->kills[KILLED_ENEMIES] += battle->unitKills[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
+		unit++;
+
+		if (chr->HP <= 0) {
+			AM_MoveEmployeeInventoryIntoItemCargo(aircraft, soldier);
+			E_DeleteEmployee(soldier);
+			continue;
+		}
 
 		for (expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++)
 			score->experience[expCount] += (int) (battleExperience * ABILITY_AWARD_SCALE * frand());
 
 		for (expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++)
 			score->experience[expCount] += (int) (battleExperience * SKILL_AWARD_SCALE * frand());
-
-		score->kills[KILLED_ENEMIES] += battle->unitKills[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
 	}
-
 	/** @todo the base might differ in case of a baseattack mission */
 	/* update the ranks and mission counters */
 	CP_UpdateCharacterStats(aircraft->homebase, aircraft);
