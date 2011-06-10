@@ -550,56 +550,56 @@
 }
 // brush 55
 {
-( 1028 1024 4 ) ( 1028 0 4 ) ( 4 1024 4 ) tex_nature/desert001 60 0 0 1 1 65280 0 0
-( 1024 1024 256 ) ( 0 1024 256 ) ( 1024 1024 0 ) tex_nature/desert001 0 0 0 1 1 65280 0 0
-( 1024 1024 256 ) ( 1024 1024 0 ) ( 1024 0 256 ) tex_nature/desert001 0 0 0 1 1 65280 0 0
-( 0 0 0 ) ( 1024 0 0 ) ( 0 1024 0 ) tex_nature/desert001 0 0 0 1 1 65280 0 0
-( 0 0 0 ) ( 0 0 256 ) ( 1024 0 0 ) tex_nature/desert001 0 0 0 1 1 65280 0 0
-( 0 0 0 ) ( 0 1024 0 ) ( 0 0 256 ) tex_nature/desert001 0 0 0 1 1 65280 0 0
+( 1028 1024 4 ) ( 1028 0 4 ) ( 4 1024 4 ) tex_nature/desert001 120 0 0 0.5 0.5 65280 0 0
+( 1024 1024 256 ) ( 0 1024 256 ) ( 1024 1024 0 ) tex_nature/desert001 0 0 0 0.5 0.5 65280 0 0
+( 1024 1024 256 ) ( 1024 1024 0 ) ( 1024 0 256 ) tex_nature/desert001 0 0 0 0.5 0.5 65280 0 0
+( 0 0 0 ) ( 1024 0 0 ) ( 0 1024 0 ) tex_nature/desert001 0 0 0 0.5 0.5 65280 0 0
+( 0 0 0 ) ( 0 0 256 ) ( 1024 0 0 ) tex_nature/desert001 0 0 0 0.5 0.5 65280 0 0
+( 0 0 0 ) ( 0 1024 0 ) ( 0 0 256 ) tex_nature/desert001 0 0 0 0.5 0.5 65280 0 0
 }
 }
 // entity 1
 {
 "classname" "light"
 "light" "60"
-"_color" "0.7 1 0.75"
 "origin" "480 600 104"
+"_color" "0.7 1 0.75"
 }
 // entity 2
 {
 "classname" "misc_model"
-"model" "models/aircraft/ufo_supply/ufo_supply_engine_left.md2"
 "origin" "548 512 60"
+"model" "models/aircraft/ufo_supply/ufo_supply_engine_left.md2"
 "spawnflags" "255"
 }
 // entity 3
 {
 "classname" "misc_model"
-"model" "models/aircraft/ufo_supply/ufo_supply_wing_right.md2"
 "origin" "544 496 64"
+"model" "models/aircraft/ufo_supply/ufo_supply_wing_right.md2"
 "spawnflags" "254"
 }
 // entity 4
 {
 "classname" "misc_model"
-"model" "models/aircraft/ufo_supply/ufo_supply_wing_left.md2"
 "origin" "544 496 64"
+"model" "models/aircraft/ufo_supply/ufo_supply_wing_left.md2"
 "spawnflags" "254"
 }
 // entity 5
 {
 "classname" "misc_model"
-"model" "models/aircraft/ufo_supply/ufo_supply_body_open.md2"
 "origin" "544 508 64"
+"model" "models/aircraft/ufo_supply/ufo_supply_body_open.md2"
 "spawnflags" "2"
 }
 // entity 6
 {
 "classname" "misc_model"
-"angles" "-55 -180 -180"
 "spawnflags" "252"
-"origin" "572 644 116"
 "model" "models/aircraft/ufo_supply/ufo_supply_engine_left.md2"
+"origin" "572 644 116"
+"angles" "-55 -180 -180"
 }
 // entity 7
 {
@@ -633,35 +633,35 @@
 {
 "classname" "light"
 "light" "100"
-"_color" "0.5 1 0.5"
 "origin" "444 524 104"
+"_color" "0.5 1 0.5"
 }
 // entity 12
 {
 "classname" "misc_model"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_supply/ufo_supply_engine_right.md2"
-"origin" "288 640 32"
 "angles" "45 -180 -180"
+"origin" "288 640 32"
 }
 // entity 13
 {
 "classname" "misc_model"
 "spawnflags" "252"
-"origin" "544 508 64"
 "model" "models/aircraft/ufo_supply/ufo_supply_body_closed.md2"
+"origin" "544 508 64"
 }
 // entity 14
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "552 512 60"
 "model" "models/aircraft/ufo_supply/ufo_supply_engine_right.md2"
+"origin" "552 512 60"
 }
 // entity 15
 {
 "classname" "light"
 "light" "100"
-"_color" "0.5 1 0.5"
 "origin" "484 368 104"
+"_color" "0.5 1 0.5"
 }
