@@ -55,13 +55,13 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 		int soldier;
 
 		battle->teamID[team] = -1;
+		battle->teamType[team] = AUTOMISSION_TEAM_TYPE_MAX;
 		battle->teamActive[team] = qfalse;
 		battle->nUnits[team] = 0;
 		battle->scoreTeamDifficulty[team] = 0.5;
 		battle->scoreTeamEquipment[team] = 0.5;
 		battle->scoreTeamSkill[team] = 0.5;
 		battle->teamAccomplishment[team] = 0;
-		battle->resultType = AUTOMISSION_RESULT_NONE;
 
 		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
 			/* If you forget to set this and run a battle, everyone will just kill each other by default */
@@ -75,6 +75,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
 		}
 	}
 
+	battle->resultType = AUTOMISSION_RESULT_NONE;
 	battle->winningTeam = -1;
 	battle->isRescueMission = qfalse;
 	battle->teamToRescue = -1;
@@ -394,7 +395,7 @@ static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTe
 	int eUnit;
 
 	/* Check for "friendly" fire */
-	for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
+	for (eUnit = 0; eUnit < battle->nUnits[eTeam]; eUnit++) {
 		if (battle->unitHealth[eTeam][eUnit] > 0) {
 			const double calcRand = frand();
 
@@ -420,7 +421,7 @@ static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, cons
 {
 	int eUnit;
 
-	for (eUnit = 0; eUnit < MAX_SOLDIERS_AUTOMISSION; eUnit++) {
+	for (eUnit = 0; eUnit < battle->nUnits[eTeam]; eUnit++) {
 		if (battle->unitHealth[eTeam][eUnit] > 0) {
 			const double calcRand = frand();
 
@@ -451,12 +452,11 @@ static qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, con
 	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!\n", currUnit, currTeam);
 
 	for (eTeam = 0; eTeam < MAX_ACTIVETEAM; eTeam++) {
-		if (!battle->isHostile[currTeam][eTeam])
-			continue;
-
-		if (battle->teamActive[eTeam]) {
-			count++;
-			CP_AutoBattleCheckFire(battle, eTeam, currTeam, currUnit, effective);
+		if (battle->isHostile[currTeam][eTeam]) {
+			if (battle->teamActive[eTeam]) {
+				count++;
+				CP_AutoBattleCheckFire(battle, eTeam, currTeam, currUnit, effective);
+			}
 		} else {
 			CP_AutoBattleCheckFriendlyFire(battle, eTeam, currTeam, currUnit, effective);
 		}
