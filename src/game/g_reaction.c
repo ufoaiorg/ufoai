@@ -122,6 +122,12 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 	}
 
 	G_EventReactionFireChange(ent);
+
+	/* If Reactionfire is active, set the reactionfire state (again) to update the reserved TU */
+	int rfState = ent->state & STATE_REACTION;
+	if (rfState) {
+		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, rfState, qfalse);
+	}
 }
 
 /**
