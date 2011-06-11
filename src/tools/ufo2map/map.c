@@ -911,14 +911,15 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
 /**
  * @brief Checks whether this entity is an inline model that should have brushes
  * @param[in] entName
- * @returns true if the name of the entity implies, that this is an inline model
+ * @return true if the name of the entity implies, that this is an inline model
  */
 static inline qboolean IsInlineModelEntity (const char *entName)
 {
 	const qboolean inlineModelEntity = (Q_streq("func_breakable", entName)
 			|| Q_streq("func_door", entName)
 			|| Q_streq("func_door_sliding", entName)
-			|| Q_streq("func_rotating", entName));
+			|| Q_streq("func_rotating", entName)
+			|| Q_strstart(entName, "trigger_"));
 	return inlineModelEntity;
 }
 

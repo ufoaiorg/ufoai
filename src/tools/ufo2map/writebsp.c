@@ -217,7 +217,7 @@ int WriteBSP (node_t *headnode)
 }
 
 /**
- * @brief Set the model numbers for SOLID_BSP entities like func_door or func_breakable
+ * @brief Set the model numbers for SOLID_BSP or SOLID_TRIGGER entities like func_door or func_breakable
  */
 void SetModelNumbers (void)
 {
