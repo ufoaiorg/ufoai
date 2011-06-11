@@ -117,7 +117,7 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
 		/* Disable reaction fire if no valid firemode was found. */
-		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, qfalse);
+		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, qtrue);
 		return;
 	}
 
@@ -126,7 +126,7 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 	/* If Reactionfire is active, set the reactionfire state (again) to update the reserved TU */
 	int rfState = ent->state & STATE_REACTION;
 	if (rfState) {
-		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, rfState, qfalse);
+		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, rfState, qtrue);
 	}
 }
 
