@@ -612,7 +612,6 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 	const char *es;
 	char keyname[256];
 	vec3_t v;
-	cBspModel_t *model = NULL;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given");
@@ -626,6 +625,7 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 	/* merge entitystring information */
 	es = (const char *) (base + l->fileofs);
 	while (1) {
+		cBspModel_t *model = NULL;
 		/* parse the opening brace */
 		token = Com_Parse(&es);
 		if (!es)
