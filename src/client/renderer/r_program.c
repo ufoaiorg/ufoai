@@ -486,10 +486,9 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 								(*remainingOutChars)--;
 							}
 						}
-
-						Mem_Free(buffer);
 					}
 				}
+				Mem_Free(buffer);
 			} else if (!strncmp((*inPtr), "replace", 7)) {
 				int r = 0;
 				byte insertedLen = 0;
