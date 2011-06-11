@@ -647,6 +647,7 @@ struct edict_s {
 	edict_t *child;	/**< e.g. the trigger for this edict */
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;	/**< inline model index */
+	const char *classname;
 
 	/*================================ */
 	/* don't change anything above here - the server expects the fields in that order */
@@ -700,7 +701,6 @@ struct edict_s {
 	character_t chr;
 
 	int spawnflags;	/**< set via mapeditor */
-	const char *classname;
 
 	float angle;	/**< entity yaw - (0-360 degree) set via mapeditor - sometimes used for movement direction,
 					 * then -1=up; -2=down is used additionally */

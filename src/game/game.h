@@ -82,6 +82,8 @@ struct edict_s {
 	edict_t *child;	/**< e.g. the trigger for this edict */
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;	/**< inline model index */
+
+	const char *classname;
 };
 
 
