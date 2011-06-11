@@ -82,15 +82,6 @@ static void GAME_CP_MissionAutoGo_f (void)
 	results->won = qfalse;
 	CP_GameAutoGo(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
 
-	if (results->won) {
-		Cvar_SetValue("mn_autogo", 1);
-		UI_PushWindow("won", NULL, NULL);
-		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
-	} else {
-		UI_PushWindow("lost", NULL, NULL);
-		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
-	}
-
 	MAP_ResetAction();
 }
 

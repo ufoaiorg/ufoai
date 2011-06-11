@@ -18,6 +18,7 @@ $(TARGET)_SRCS      = \
 	tests/test_inventory.c \
 	tests/test_game.c \
 	tests/test_mapdef.c \
+	tests/test_mathlibextra.c \
 	tests/test_rma.c \
 	tests/test_shared.c \
 	tests/test_ui.c \
@@ -133,6 +134,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_alienbase.c \
 	client/cgame/campaign/cp_aliencont.c \
 	client/cgame/campaign/cp_aliencont_callbacks.c \
+	client/cgame/campaign/cp_auto_mission.c \
 	client/cgame/campaign/cp_airfight.c \
 	client/cgame/campaign/cp_campaign.c \
 	client/cgame/campaign/cp_event.c \
@@ -173,6 +175,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/missions/cp_mission_supply.c \
 	client/cgame/campaign/missions/cp_mission_terror.c \
 	client/cgame/campaign/missions/cp_mission_xvi.c \
+	shared/mathlib_extra.c \
 	\
 	client/ui/ui_actions.c \
 	client/ui/ui_components.c \

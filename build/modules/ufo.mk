@@ -119,6 +119,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_alienbase.c \
 	client/cgame/campaign/cp_aliencont.c \
 	client/cgame/campaign/cp_aliencont_callbacks.c \
+	client/cgame/campaign/cp_auto_mission.c \
 	client/cgame/campaign/cp_airfight.c \
 	client/cgame/campaign/cp_campaign.c \
 	client/cgame/campaign/cp_event.c \
@@ -297,6 +298,7 @@ $(TARGET)_SRCS      = \
 	shared/bfd.c \
 	shared/byte.c \
 	shared/mathlib.c \
+	shared/mathlib_extra.c \
 	shared/mutex.c \
 	shared/utf8.c \
 	shared/images.c \

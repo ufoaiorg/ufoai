@@ -433,6 +433,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -664,6 +668,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -672,9 +679,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -727,6 +731,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_screen.h" />
+		<Unit filename="..\..\src\client\cl_shared.h" />
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -756,10 +761,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_keys.h" />
-		<Unit filename="..\..\src\common\xml.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\common\xml.h" />
 		<Unit filename="..\..\src\client\renderer\r_array.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1248,6 +1249,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\unzip.h" />
+		<Unit filename="..\..\src\common\xml.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\xml.h" />
 		<Unit filename="..\..\src\game\chr_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1365,6 +1370,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\mathlib_extra.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib_extra.h" />
 		<Unit filename="..\..\src\shared\mutex.c">
 			<Option compilerVar="CC" />
 		</Unit>

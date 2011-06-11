@@ -1235,6 +1235,9 @@
 		<Unit filename="..\..\src\tests\test_mapdef.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tests\test_mathlibextra.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_parser.c">
 			<Option compilerVar="CC" />
 		</Unit>

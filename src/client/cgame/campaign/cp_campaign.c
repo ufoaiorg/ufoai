@@ -53,6 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_research_callbacks.h"
 #include "cp_uforecovery.h"
 #include "save/save_campaign.h"
+#include "cp_auto_mission.h"
 
 struct memPool_s *cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
@@ -924,93 +925,6 @@ void CP_StartSelectedMission (void)
 }
 
 /**
- * @brief Calculates the win probability for an auto base attack mission
- * @return a float value that is between 0 and 1
- * @param[in] mis The mission we are calculating the probability for
- * @param[in] battleParameters Structure that holds the battle related parameters
- * @param[in] difficulty The difficulty level of the game
- */
-static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, const battleParam_t* battleParameters, const int difficulty)
-{
-	const base_t *base = mis->data.base;
-	linkedList_t *hiredSoldiers = NULL;
-	linkedList_t *ugvs = NULL;
-	const int numSoldiers = E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiers);
-	const int numUGVs = E_GetHiredEmployees(base, EMPL_ROBOT, &ugvs);
-
-	assert(base);
-
-	/* a base defence mission can only be won if there are soldiers that
-	 * defend the attacked base */
-	if (numSoldiers || numUGVs) {
-		/** @todo fix this value */
-		const int minCloseExperience = 70;
-		float winProbability;
-		float increaseWinProbability = 1.0f;
-		employee_t *employee;
-		LIST_Foreach(hiredSoldiers, employee_t, employee) {
-			/* don't use an employee that is currently being transfered */
-			if (!E_IsAwayFromBase(employee)) {
-				const character_t *chr = &employee->chr;
-				const chrScoreGlobal_t *score = &chr->score;
-				const rank_t *rank = CL_GetRankByIdx(score->rank);
-				if (score->experience[SKILL_CLOSE] > minCloseExperience)
-					increaseWinProbability *= rank->factor;
-			}
-		}
-		/* now handle the ugvs */
-		LIST_Foreach(ugvs, employee_t, employee) {
-			/* don't use an employee that is currently being transfered */
-			if (!E_IsAwayFromBase(employee)) {
-				const character_t *chr = &employee->chr;
-				const chrScoreGlobal_t *score = &chr->score;
-				const rank_t *rank = CL_GetRankByIdx(score->rank);
-				increaseWinProbability *= rank->factor;
-			}
-		}
-
-		winProbability = exp((0.5 - .15 * difficulty) * numSoldiers - battleParameters->aliens);
-		winProbability += increaseWinProbability;
-
-		LIST_Delete(&hiredSoldiers);
-		LIST_Delete(&ugvs);
-
-		return winProbability;
-	}
-
-	/* No soldier to defend the base */
-	return 0.0f;
-}
-
-/**
- * @brief Calculates the win probability for an auto mission
- * @todo This needs work - also take mis->initialIndividualInterest into account?
- * @return a float value that is between 0 and 1
- * @param[in] mis The mission we are calculating the probability for
- * @param[in] aircraft Your aircraft that has reached the mission location
- * @param[in] battleParameters Structure that holds the battle related parameters
- * @param[in] difficulty The difficulty level of the game
- */
-static float CP_GetWinProbabilty (const mission_t *mis, const aircraft_t *aircraft, const battleParam_t* battleParameters, const int difficulty)
-{
-	const int aircraftTeamSize = AIR_GetTeamSize(aircraft);
-	assert(aircraft);
-	assert(mis);
-	assert(battleParameters);
-
-	/** @todo change the formulas here to reflect the comments */
-	if (mis->category == INTERESTCATEGORY_TERROR_ATTACK)
-		/* very hard to win this */
-		return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
-	else if (mis->category == INTERESTCATEGORY_XVI)
-		/* not that hard to win this, they want to spread xvi - no real terror mission */
-		return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
-
-	/* normal mission */
-	return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
-}
-
-/**
  * @brief Collect alien bodies for auto missions
  * @note collect all aliens as dead ones
  */
@@ -1055,16 +969,26 @@ static void CP_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_
  */
 void CP_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
 {
+	autoMissionBattle_t autoBattle;
+
 	assert(mission);
 	assert(aircraft);
 
-	if (mission->stage != STAGE_BASE_ATTACK)
-		results->winProbability = CP_GetWinProbabilty(mission, aircraft, battleParameters, campaign->difficulty);
-	else
-		results->winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, battleParameters, campaign->difficulty);
+	CP_AutoBattleClearBattle(&autoBattle);
+	CP_AutoBattleFillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
+	CP_AutoBattleFillTeamFromBattleParams(&autoBattle, battleParameters);
+	CP_AutoBattleSetDefaultHostilities(&autoBattle, qfalse);
+	CP_AutoBattleRunBattle(&autoBattle);
 
-	/** @todo set other counts */
-	results->won = battleParameters->probability < results->winProbability;
+	results->won = qfalse;
+	if (autoBattle.resultType == AUTOMISSION_RESULT_SUCCESS)
+		results->won = qtrue;
+	else if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qtrue;
+
+	CP_AutoBattleUpdateSurivorsAfterBattle(&autoBattle, aircraft);
+
+	/* This block is old code, but it will be left in for now, until exact numbers and stats are extracted from the auto mission results. */
 	results->aliensKilled = battleParameters->aliens;
 	results->aliensStunned = 0;
 	results->aliensSurvived = 0;
@@ -1078,7 +1002,14 @@ void CP_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	CP_InitMissionResults(results->won, results);
 
 	/* update nation opinions */
+	/* Note:  "Costly Success" means many civs were killed, and therefore happiness goes DOWN, which is shy the results are flipped twice like this. */
+	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qfalse;
+
 	CP_HandleNationData(campaign->minhappiness, results->won, mission, battleParameters->nation, results);
+
+	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qtrue;
 
 	CP_CheckLostCondition(campaign);
 
@@ -1192,7 +1123,7 @@ void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 			}
 		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: Done\n");
+	Com_DPrintf(DEBUG_CLIENT, "CP_UpdateCharacterStats: Done\n");
 }
 
 #ifdef DEBUG
