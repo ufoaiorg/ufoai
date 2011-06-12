@@ -496,13 +496,9 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		/* Disable reaction fire. */
 		G_RemoveReaction(ent);
 
-		if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
-			const int TUs = G_ActorGetTUForReactionFire(ent);
+		if (G_ReserveReactionFireTUs(ent)) {
 			/* Enable requested reaction fire. */
 			G_SetState(ent, reqState);
-			G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-		} else {
-			G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 		}
 		break;
 	default:

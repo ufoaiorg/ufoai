@@ -362,6 +362,7 @@ void G_ReactionFireReset(int team);
 qboolean G_ReactionFireCanBeEnabled(const edict_t *ent);
 qboolean G_ReactionFireSetDefault(edict_t *ent);
 void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
+qboolean G_ReserveReactionFireTUs(edict_t *ent);
 qboolean G_ReactionFireOnMovement(edict_t *target);
 void G_ReactionFireEndTurn(void);
 

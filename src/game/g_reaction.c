@@ -100,6 +100,19 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
 	return qfalse;
 }
 
+qboolean G_ReserveReactionFireTUs (edict_t *ent)
+{
+	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
+		const int TUs = G_ActorGetTUForReactionFire(ent);
+		/* Enable requested reaction fire. */
+		G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
+		return qtrue;
+	}
+
+	G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
+	return qfalse;
+}
+
 /**
  * @brief Updates the reaction fire settings in case something was moved into a hand or from a hand
  * that would make the current settings invalid
@@ -123,10 +136,9 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 
 	G_EventReactionFireChange(ent);
 
-	/* If Reactionfire is active, set the reactionfire state (again) to update the reserved TU */
-	int rfState = ent->state & STATE_REACTION;
-	if (rfState) {
-		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, rfState, qtrue);
+	/* If reaction fire is active, update the reserved TUs */
+	if (G_IsReaction(ent)) {
+		G_ReserveReactionFireTUs(ent);
 	}
 }
 
@@ -240,7 +252,7 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 		return qfalse;
 
 	/* check ent has reaction fire enabled */
-	if (!G_IsShaken(ent) && !(ent->state & STATE_REACTION))
+	if (!G_IsShaken(ent) && !G_IsReaction(ent))
 		return qfalse;
 
 	if (!G_IsVisibleForTeam(target, ent->team))
