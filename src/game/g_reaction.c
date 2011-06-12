@@ -100,6 +100,12 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
 	return qfalse;
 }
 
+/**
+ * @brief Set the reaction fire TU reservation for an actor
+ * @param[in,out] ent The actor edict to set the TUs for
+ * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
+ * back to @c 0
+ */
 qboolean G_ReserveReactionFireTUs (edict_t *ent)
 {
 	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
