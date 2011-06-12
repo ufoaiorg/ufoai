@@ -4410,6 +4410,7 @@ base/textures/tex_buildings/floor008.png | GNU General Public License 2.0 or lat
 base/textures/tex_buildings/floor008_nm.png | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
 base/textures/tex_buildings/floor009.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor009_nm.png | GNU General Public License 2.0 or later | shedeki
+base/textures/tex_buildings/floor010.png | GNU General Public License 2.0 or later | MCR | http://commons.wikimedia.org/wiki/File:Altmannshofen_St_Vitus_Boden_Chor.jpg
 base/textures/tex_buildings/floor011.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/floor013.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor013_nm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4432,11 +4433,19 @@ base/textures/tex_buildings/floor024.jpg | GNU General Public License 2.0 or lat
 base/textures/tex_buildings/floor025.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor025_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor026.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_buildings/floor026_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data | MCR
+base/textures/tex_buildings/floor026_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_buildings/floor027.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_buildings/floor027_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data | MCR
+base/textures/tex_buildings/floor027_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_buildings/floor028.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_buildings/floor028_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data | MCR
+base/textures/tex_buildings/floor028_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
+base/textures/tex_buildings/floor029.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/floor029_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
+base/textures/tex_buildings/floor030.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/floor030_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
+base/textures/tex_buildings/floor031.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/floor031_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
+base/textures/tex_buildings/floor032.png | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/floor032_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/floor_gray_nm.png | GNU General Public License 2.0
 base/textures/tex_buildings/ground_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
@@ -4672,6 +4681,7 @@ base/textures/tex_buildings/wallpaper015_nm.png | GNU General Public License 2.0
 base/textures/tex_buildings/window001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/window001_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/window001_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/window002.png | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_buildings/window012.png | GNU General Public License 2.0 or later | Martin Gerhardy | http://imageafter.com/image.php?image=b21tabus953.jpg
 base/textures/tex_buildings/window012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/window013.png | GNU General Public License 2.0 or later | Martin Gerhardy | http://imageafter.com/image.php?image=b21tabus953.jpg
