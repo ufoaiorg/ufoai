@@ -4412,7 +4412,7 @@ base/textures/tex_buildings/floor009.png | GNU General Public License 2.0 or lat
 base/textures/tex_buildings/floor009_nm.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor010.png | GNU General Public License 2.0 or later | MCR | http://commons.wikimedia.org/wiki/File:Altmannshofen_St_Vitus_Boden_Chor.jpg
 base/textures/tex_buildings/floor011.png | MIT License | FWishbringer | based on images from http://www.photorack.net
-base/textures/tex_buildings/floor012.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_buildings/floor012.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/floor013.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor013_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor013_sm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4473,7 +4473,6 @@ base/textures/tex_buildings/japwall007.png | MIT License | FWishbringer | based 
 base/textures/tex_buildings/japwall008.png | GNU General Public License 2.0 or later | MCR | based on the work of Willem Sitters and FWishbringer
 base/textures/tex_buildings/japwall009.png | GNU General Public License 2.0 or later | MCR | based on the work of Willem Sitters and FWishbringer
 base/textures/tex_buildings/japwall010.png | GNU General Public License 2.0 or later | MCR | based on the work of Willem Sitters and FWishbringer
-base/textures/tex_buildings/marble02b_floor.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/met_panel01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/met_panel01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/met_panel02.png | GNU General Public License 2.0 or later | Nate Wright
