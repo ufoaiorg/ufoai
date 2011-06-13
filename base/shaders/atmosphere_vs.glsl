@@ -27,9 +27,8 @@ out_qualifier vec3 eyeVec;
 uniform vec2 UVSCALE;
 
 void main() {
-#ifdef glsl110
 	gl_Position = ftransform();
-#endif
+
 	tex = gl_MultiTexCoord0.xy * UVSCALE;
 
 	vec4 lightPos = gl_LightSource[0].position;

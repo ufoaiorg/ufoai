@@ -27,10 +27,6 @@ varying vec3 staticLightDir;
 varying float fog;
 */
 
-#ifndef glsl110
-	invariant out vec4 gl_Position;
-#endif
-
 #include "lerp_vs.glsl"
 #include "light_vs.glsl"
 #include "bump_vs.glsl"

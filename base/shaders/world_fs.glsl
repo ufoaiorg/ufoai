@@ -174,7 +174,6 @@ void main(void) {
 	}
 #endif
 
-
 #if r_normalmap
 	vec3 n.rgb = normalize(2.0 * (texture2D(SAMPLER3, gl_TexCoord[0].st).rgb - 0.5));
 	gl_FragData[0] = (1.0 + dot(n, normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
@@ -194,5 +193,4 @@ void main(void) {
 		gl_FragData[1] = vec4(0.0);
 	}
 #endif
-
 }
