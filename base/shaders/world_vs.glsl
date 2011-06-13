@@ -27,6 +27,9 @@ varying vec3 staticLightDir;
 varying float fog;
 */
 
+#ifndef glsl110
+	invariant out vec4 gl_Position;
+#endif
 
 #include "lerp_vs.glsl"
 #include "light_vs.glsl"
@@ -36,8 +39,7 @@ varying float fog;
 /**
  * @brief Main.
  */
-void main(void){
-
+void main(void) {
 	if (ANIMATE > 0) {
 		lerpVertex();
 	} else {
@@ -58,7 +60,7 @@ void main(void){
 	LightVertex();
 
 #if r_bumpmap
-	if(BUMPMAP > 0 || DYNAMICLIGHTS > 0)
+	if (BUMPMAP > 0 || DYNAMICLIGHTS > 0)
 		BumpVertex();
 #endif
 

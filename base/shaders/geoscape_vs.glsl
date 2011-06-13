@@ -4,15 +4,15 @@
  */
 
 #ifndef glsl110
-        /** Linkage into a shader from a previous stage, variable is copied in.*/
-        #define in_qualifier in
-        /** Linkage out of a shader to a subsequent stage, variable is copied out.*/
-        #define out_qualifier out
+	/** Linkage into a shader from a previous stage, variable is copied in.*/
+	#define in_qualifier in
+	/** Linkage out of a shader to a subsequent stage, variable is copied out.*/
+	#define out_qualifier out
 #else
-        /** Deprecated after glsl110; linkage between a vertex shader and OpenGL for per-vertex data.*/
-        #define in_qualifier attribute
-        /** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
-        #define out_qualifier varying
+	/** Deprecated after glsl110; linkage between a vertex shader and OpenGL for per-vertex data.*/
+	#define in_qualifier attribute
+	/** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
+	#define out_qualifier varying
 #endif
 
 out_qualifier vec2 tex;
@@ -28,9 +28,10 @@ out_qualifier vec3 eyeVec;
 
 uniform vec2 UVSCALE;
 
-void main(void){
-
+void main(void) {
+#ifdef glsl110
 	gl_Position = ftransform();
+#endif
 	tex = gl_MultiTexCoord0.xy * UVSCALE;
 
 	vec4 lightPos = gl_LightSource[0].position;

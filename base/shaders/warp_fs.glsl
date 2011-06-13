@@ -3,10 +3,24 @@
  * @brief Warp fragment shader.
  */
 
+#if r_postprocess
+/*
+ * Indicates that gl_FragData is written to, not gl_FragColor.
+ * #extension needs to be placed before all non preprocessor code.
+ */
+#extension GL_ARB_draw_buffers : enable
+#endif
+
 #include "fog_fs.glsl"
 
-#if r_postprocess
-#extension GL_ARB_draw_buffers : enable
+#ifndef glsl110
+	#if r_postprocess
+		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
+		out vec4 gl_FragData[2];
+	#else
+		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
+		out vec4 gl_FragColor;
+	#endif
 #endif
 
 uniform vec4 OFFSET;
@@ -19,8 +33,7 @@ uniform sampler2D SAMPLER4;
 /**
  * @brief Main.
  */
-void main(void){
-
+void main(void) {
 	vec4 finalColor = vec4(0.0);
 
 	/* Sample the warp texture at a time-varied offset,*/

@@ -3,16 +3,20 @@
  * @brief Geoscape fragment shader.
  */
 
-#ifndef glsl110
-	/** Linkage into a shader from a previous stage, variable is copied in.*/
-        #define in_qualifier in
-#else
-        /** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
-        #define in_qualifier varying
+#if r_postprocess
+	/*
+	 * Indicates that gl_FragData is written to, not gl_FragColor.
+	 * #extension needs to be placed before all non preprocessor code.
+	 */
+	#extension GL_ARB_draw_buffers : enable
 #endif
 
-#if r_postprocess
-#extension GL_ARB_draw_buffers : enable
+#ifndef glsl110
+	/** Linkage into a shader from a previous stage, variable is copied in.*/
+	#define in_qualifier in
+#else
+	/** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
+	#define in_qualifier varying
 #endif
 
 in_qualifier vec2 tex;
@@ -25,6 +29,16 @@ in_qualifier vec4 diffuseLight2;
 in_qualifier vec3 lightVec;
 in_qualifier vec3 lightVec2;
 in_qualifier vec3 eyeVec;
+
+#ifndef glsl110
+	#if r_postprocess
+		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
+		out vec4 gl_FragData[2];
+	#else
+		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
+		out vec4 gl_FragColor;
+	#endif
+#endif
 
 /** Diffuse.*/
 uniform sampler2D SAMPLER0;
@@ -48,8 +62,7 @@ const float eta = n1 / n2;
 /**
  * @brief Calculate reflection component of Frenel's equations.
  */
-float fresnelReflect(in float cos_a){
-
+float fresnelReflect(in float cos_a) {
 	float cos_b = sqrt(1.0 - ((eta * eta) * ( 1.0 - (cos_a * cos_a))));
 	float rs = (n1 * cos_a - n2 * cos_b ) / (n1 * cos_a + n2 * cos_b);
 	float rp = (n1 * cos_b - n2 * cos_a ) / (n1 * cos_b + n2 * cos_a);
@@ -57,8 +70,7 @@ float fresnelReflect(in float cos_a){
 }
 
 
-void main(void){
-
+void main(void) {
 	/* blend textures smoothly */
 	vec3 diffuseColorA = texture2D(SAMPLER0, tex).rgb;
 	vec3 diffuseColorB = texture2D(SAMPLER1, tex).rgb;

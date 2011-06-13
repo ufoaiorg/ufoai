@@ -13,24 +13,23 @@
 /**
  * @todo does not compile on my ati x600 yet
  */
-vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse){
-
+vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse) {
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
 	float attenuate = 1.0;
 
-	if (bool(lightSource.position.w)){ /* directional sources don't get attenuated */
+	if (bool(lightSource.position.w)) { /* directional sources don't get attenuated */
 		float dist = length((lightSource.position).xyz - point);
 		float attenDiv = (lightSource.constantAttenuation +
 				lightSource.linearAttenuation * dist +
 				lightSource.quadraticAttenuation * dist * dist);
-		// if none of the attenuation parameters are set, we keep 1.0
+		/* If none of the attenuation parameters are set, we keep 1.0.*/
 		if (bool(attenDiv)) {
 			attenuate = 1.0 / attenDiv;
 		}
 	}
 
 	/* if we're out of range, ignore the light; else calculate its contribution */
-	if(attenuate < ATTENUATE_THRESH) {
+	if (attenuate < ATTENUATE_THRESH) {
 		return vec3(0.0);
 	}
 
@@ -73,8 +72,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 }
 
 
-vec4 IlluminateFragment(void){
-
+vec4 IlluminateFragment(void) {
 	vec3 totalColor= vec3(0.0);
 
 	/* sample the relevant textures */
@@ -89,7 +87,7 @@ vec4 IlluminateFragment(void){
 		vec4 normalMap = texture2D(SAMPLER3, coords);
 		N = vec3((normalize(normalMap.xyz) * 2.0 - vec3(1.0)));
 		N.xy *= BUMP;
-		if (PARALLAX > 0.0){
+		if (PARALLAX > 0.0) {
 			offset = BumpTexcoord(normalMap.a);
 			coords += offset;
 		}

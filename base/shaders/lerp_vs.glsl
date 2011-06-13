@@ -4,15 +4,15 @@
  */
 
 #ifndef glsl110
-        /** Linkage into a shader from a previous stage, variable is copied in.*/
-        #define in_qualifier in
-        /** Linkage out of a shader to a subsequent stage, variable is copied out.*/
-        #define out_qualifier out
+	/** Linkage into a shader from a previous stage, variable is copied in.*/
+	#define in_qualifier in
+	/** Linkage out of a shader to a subsequent stage, variable is copied out.*/
+	#define out_qualifier out
 #else
-        /** Deprecated after glsl110; linkage between a vertex shader and OpenGL for per-vertex data.*/
-        #define in_qualifier attribute
-        /** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
-        #define out_qualifier varying
+	/** Deprecated after glsl110; linkage between a vertex shader and OpenGL for per-vertex data.*/
+	#define in_qualifier attribute
+	/** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
+	#define out_qualifier varying
 #endif
 
 in_qualifier vec3 NEXT_FRAME_VERTS;

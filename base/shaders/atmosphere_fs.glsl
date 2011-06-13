@@ -3,6 +3,10 @@
  * @brief Atmosphere fragment shader.
  */
 
+/*
+ * Indicates that gl_FragData is written to, not gl_FragColor.
+ * #extension needs to be placed before all non preprocessor code.
+ */
 #extension GL_ARB_draw_buffers : enable
 
 #ifndef glsl110
@@ -22,6 +26,11 @@ in_qualifier vec4 specularLight;
 in_qualifier vec3 lightVec;
 in_qualifier vec3 eyeVec;
 
+#ifndef glsl110
+	/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
+	out vec4 gl_FragData[2];
+#endif
+
 /** Diffuse.*/
 uniform sampler2D SAMPLER0;
 /** Normalmap.*/
@@ -37,7 +46,7 @@ const float specularExp = 32.0;
  */
 void fresnelRefract(vec3 L, vec3 N, float n1, float n2,
 	out vec3 reflection, out vec3 refraction,
-	out float reflectance, out float transmittance){
+	out float reflectance, out float transmittance) {
 
 	float eta = n1/n2;
 	float cos_theta1 = dot(L, N);
@@ -50,8 +59,7 @@ void fresnelRefract(vec3 L, vec3 N, float n1, float n2,
 	transmittance = ((1.0-rs) * (1.0-rs) + (1.0-rp) * (1.0-rp)) / 2.0;
 }
 
-void main(){
-
+void main() {
 	vec4 diffuseColor = texture2D(SAMPLER0, tex);
 	vec3 V = vec3(normalize(eyeVec).rgb);
 	vec3 L = vec3(normalize(lightVec).rgb);

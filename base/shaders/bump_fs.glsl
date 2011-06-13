@@ -4,11 +4,15 @@
  */
 
 #ifndef glsl110
-	/** Linkage into a shader from a previous stage, variable is copied in.*/
-        #define in_qualifier in
+	#ifndef in_qualifier
+		/** Linkage into a shader from a previous stage, variable is copied in.*/
+		#define in_qualifier in
+	#endif
 #else
-        /** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
-        #define in_qualifier varying
+	#ifndef in_qualifier
+		/** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
+		#define in_qualifier varying
+	#endif
 #endif
 
 in_qualifier vec3 eyedir;
@@ -23,8 +27,7 @@ vec3 V;
 /**
  * @brief BumpTexcoord.
  */
-vec2 BumpTexcoord(in float height){
-
+vec2 BumpTexcoord(in float height) {
 	V = normalize(eyedir);
 
 	return vec2(height * PARALLAX * 0.04 - 0.02) * V.xy;
@@ -34,8 +37,7 @@ vec2 BumpTexcoord(in float height){
 /**
  * @brief BumpFragment.
  */
-vec3 BumpFragment(in vec3 lightVec, in vec3 normalVec){
-
+vec3 BumpFragment(in vec3 lightVec, in vec3 normalVec) {
 	V = normalize(eyedir);
 	vec3 L = vec3(normalize(lightVec).rgb);
 	vec3 N = vec3(normalize(normalVec).rgb);
