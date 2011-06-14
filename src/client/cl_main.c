@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_localentity.h"
 #include "battlescape/events/e_server.h"
 #include "battlescape/cl_particle.h"
+#include "battlescape/cl_radar.h"
 #include "battlescape/cl_actor.h"
 #include "battlescape/cl_hud.h"
 #include "battlescape/cl_parse.h"
@@ -58,8 +59,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_font.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_parse.h"
-#include "cgame/multiplayer/mp_callbacks.h"
-#include "cgame/multiplayer/mp_serverlist.h"
 #include "cgame/cl_game_team.h"
 #include "../shared/infostring.h"
 #include "../shared/parse.h"
@@ -1049,6 +1048,7 @@ static void CL_InitLocal (void)
 	IN_Init();
 	CL_ServerEventsInit();
 	CL_CameraInit();
+	CL_BattlescapeRadarInit();
 
 	CLMN_InitStartup();
 	TUT_InitStartup();

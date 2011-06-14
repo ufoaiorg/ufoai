@@ -122,6 +122,10 @@
 		<Unit filename="..\..\src\client\battlescape\cl_camera.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_radar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_radar.h" />
 		<Unit filename="..\..\src\client\battlescape\cl_hud.c">
 			<Option compilerVar="CC" />
 		</Unit>

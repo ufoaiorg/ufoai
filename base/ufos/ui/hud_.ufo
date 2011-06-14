@@ -184,7 +184,7 @@ window hud extends levelbuttons {
 	confunc startround { }
 	confunc endround { }
 
-	confunc openradar { cmd "ui_push radarwindow;" }
+	func openradar { cmd "openradar;" }
 	confunc unhide_chatscreen { *node:root.chatscreen@invis = false }
 
 	/**
@@ -275,27 +275,6 @@ window hud extends levelbuttons {
 				size		"280 30"
 			}
 		}
-	}
-}
-
-window radarwindow {
-	{
-		pos			"256 100"
-		size		"547 580"
-		dragbutton	true
-		closebutton	true
-		image		"ui/popup_alpha_tile"
-		string		"_Radar"
-	}
-
-	confunc closeradar {
-		cmd "ui_close radarwindow;"
-	}
-
-	radar hudradar
-	{
-		pos	"25 55"
-		size "500 500"
 	}
 }
 

@@ -1,0 +1,40 @@
+/*
+window radarwindow {
+	{
+		fill		true
+		starlayout	true
+	}
+
+	func closeradar
+	{
+		cmd "closeradar;"
+	}
+
+	radar hudradar
+	{
+		align	LAYOUTALIGN_FILL
+	}
+}
+*/
+
+window radarwindow {
+	{
+		pos			"256 100"
+		size		"547 580"
+		dragbutton	true
+		closebutton	true
+		image		"ui/popup_alpha_tile"
+		string		"_Radar"
+	}
+
+	func closeradar
+	{
+		cmd "closeradar;"
+	}
+
+	radar hudradar
+	{
+		pos	"25 55"
+		size "500 500"
+	}
+}

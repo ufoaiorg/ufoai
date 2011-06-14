@@ -816,10 +816,20 @@ static void UI_GenAllRadarMap_f (void)
 	UI_TimerStart(timer);
 }
 
+static void UI_RadarWindowedClosed (uiNode_t *node)
+{
+}
+
+static void UI_RadarWindowedOpened (uiNode_t *node, linkedList_t *params)
+{
+}
+
 void UI_RegisterRadarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = UI_RadarNodeDraw;
+	behaviour->windowOpened = UI_RadarWindowedOpened;
+	behaviour->windowClosed = UI_RadarWindowedClosed;
 	behaviour->mouseDown = UI_RadarNodeMouseDown;
 	behaviour->mouseUp = UI_RadarNodeMouseUp;
 	behaviour->capturedMouseMove = UI_RadarNodeCapturedMouseMove;
