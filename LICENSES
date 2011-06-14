@@ -1233,6 +1233,21 @@ base/models/objects/base/turret/turret.md2 | GNU General Public License 2.0 or l
 base/models/objects/base/turret/turret.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/base/turret2/turret.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/base/turret2/turret.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/handdryer.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/handdryer.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/sink.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/sink.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/soap.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/soap.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/toilet.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/toilet.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/tpaper.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/tpaper.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/urinal.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/urinal.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/wc.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/wc.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bathroom/wc2.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
 base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
@@ -1586,6 +1601,8 @@ base/models/objects/skeleton/skelet.md2 | GNU General Public License 2.0 or late
 base/models/objects/skeleton/skelet2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/skeleton/skelet3.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/skeleton/skeleton.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/skeleton/skull.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/skeleton/skull.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/snowman/snowman.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/snowman/snowman.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/spiral/spiral.png | GNU General Public License 2.0 or later | Origin
