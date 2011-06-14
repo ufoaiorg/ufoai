@@ -559,6 +559,28 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	return image;
 }
 
+image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
+{
+	image_t *img = R_GetImage(name);
+	const qboolean dimensionDiffer = img != NULL && img->width != w && img->height != h;
+	if (img == NULL || dimensionDiffer) {
+		if (dimensionDiffer) {
+			R_DeleteImage(img);
+		}
+		byte* buf = Mem_PoolAlloc(w * h * 4, vid_imagePool, 0);
+		img = R_LoadImageData(name, buf, w, h, it_effect);
+		Mem_Free(buf);
+	}
+
+	glFlush();
+	glReadBuffer(GL_BACK);
+	R_SelectTexture(&texunit_diffuse);
+	R_BindTexture(img->texnum);
+	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, w, h, 0);
+
+	return img;
+}
+
 /**
  * @brief Finds or loads the given image
  * @sa R_RegisterImage
