@@ -4447,6 +4447,7 @@ base/textures/tex_buildings/floor031.jpg | GNU General Public License 2.0 | Nexu
 base/textures/tex_buildings/floor031_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_buildings/floor032.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/floor032_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
+base/textures/tex_buildings/floor033.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/floor_gray_nm.png | GNU General Public License 2.0
 base/textures/tex_buildings/ground_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
@@ -4615,6 +4616,10 @@ base/textures/tex_buildings/wall037.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_buildings/wall038.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/wall039.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/wall040.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/wall041.png | GNU General Public License 2.0 | OpenArena (ns_brick1.tga)
+base/textures/tex_buildings/wall042.png | GNU General Public License 2.0 | OpenArena (ns_brick2.tga)
+base/textures/tex_buildings/wall043.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks01.tga)
+base/textures/tex_buildings/wall044.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks02.tga)
 base/textures/tex_buildings/wall5_4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/wall_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_dirt2.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
