@@ -795,12 +795,13 @@ static void UI_GenAllRadarMap (uiNode_t *node, uiTimer_t *timer)
 		Cmd_ExecuteString("ui_genradarmap");
 }
 
-uiTimer_t* timer;
+static uiTimer_t* timer;
 
 /**
  * @todo allow to call UI_TimerRelease into timer callback
  */
-static void UI_GenAllRadarMapRelease_f (void) {
+static void UI_GenAllRadarMapRelease_f (void)
+{
 	UI_TimerRelease(timer);
 	UI_ExecuteConfunc("mn_radarhud_reinit");
 }
