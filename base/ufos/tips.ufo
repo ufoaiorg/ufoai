@@ -3,6 +3,7 @@
 
 tips tiplist {
 	"_Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
+	"_Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
 	"_Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 	"_With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
 	"_Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
@@ -24,11 +25,13 @@ tips tiplist {
 	"_You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
 	"_Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
 	"_Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
+	"_Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+	"_Press [e] to end your turn on the battlescape."
+	"_Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
 	"_If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 	"_Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
 	"_Building a hospital allows you to heal your soldiers faster for their next mission."
 	"_Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
-	"_Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 	"_Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 	"_Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
 	"_You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
@@ -47,6 +50,7 @@ tips tiplist {
 	"_Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
 	"_You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
 	"_You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
+	"_You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
 	"_Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 	"_Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
 	"_Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
@@ -59,4 +63,7 @@ tips tiplist {
 	"_The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
 	"_Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
 	"_You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
+	"_Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+	"_Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+	"_Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
 }
