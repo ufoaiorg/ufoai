@@ -79,6 +79,18 @@ const struct image_s *UI_LoadImage (const char *name)
 	return image;
 }
 
+/**
+ * @brief Draw a normalized (to the screen) image
+ * @param[in] x The x coordinate (normalized)
+ * @param[in] y The x coordinate (normalized)
+ * @param[in] w The width (normalized)
+ * @param[in] h The height (normalized)
+ * @param[in] sh The s part of the texture coordinate (horizontal)
+ * @param[in] th The t part of the texture coordinate (horizontal)
+ * @param[in] sl The s part of the texture coordinate (vertical)
+ * @param[in] tl The t part of the texture coordinate (vertical)
+ * @param[in] image The image to draw
+ */
 void UI_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
