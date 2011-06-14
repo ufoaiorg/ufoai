@@ -725,7 +725,7 @@ static void UI_RadarNodeMouseUp (uiNode_t *node, int x, int y, int button)
  * @param[out] height Height of the rect in the frame buffer (from bottom-to-top according to the screen)
  * @todo fix that function, map is not well captured
  */
-static void UI_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
+static void UI_GetRadarMapInFrameBuffer (int *x, int *y, int *width, int *height)
 {
 	/* Coefficient come from metric (Bunker map, and game with resolution 1024x1024) == 0.350792947 */
 	static const float magicCoef =  0.351f;

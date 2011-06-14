@@ -308,15 +308,15 @@ uiNode_t* UI_GetNodeByPath (const char* path)
 	uiNode_t* node = NULL;
 	const value_t *property;
 	UI_ReadNodePath(path, NULL, &node, &property);
-	/** @todo FIXME warning if it return a peroperty */
+	/** @todo FIXME warning if it return a property */
 	return node;
 }
 
 /**
- * @brief Allocate a node into the UI memory (do notr call behaviour->new)
+ * @brief Allocate a node into the UI memory (do not call behaviour->new)
  * @note It's not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
- * @param[in] name Name of the new node, else NULL if we dont want to edit it.
+ * @param[in] name Name of the new node, else NULL if we don't want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
@@ -371,7 +371,7 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
  * @brief Allocate a node into the UI memory
  * @note It's not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
- * @param[in] name Name of the new node, else NULL if we dont want to edit it.
+ * @param[in] name Name of the new node, else NULL if we don't want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
@@ -561,7 +561,7 @@ void UI_DeleteNode (uiNode_t* node)
 
 	UI_DeleteAllChild(node);
 	if (node->firstChild != NULL) {
-		Com_Printf("UI_DeleteNode: Node '%s' contain static nodes. We can't delete it.", UI_GetPath(node));
+		Com_Printf("UI_DeleteNode: Node '%s' contain static nodes. We can't delete it.\n", UI_GetPath(node));
 		return;
 	}
 
