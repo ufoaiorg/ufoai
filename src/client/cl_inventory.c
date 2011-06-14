@@ -30,10 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 
 /**
- * Collecting items functions.
- */
-
-/**
  * @brief Gets equipment definition by id.
  * @param[in] name An id taken from scripts.
  * @return Found @c equipDef_t or @c NULL if no equipment definition found.
@@ -252,7 +248,7 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
  * @brief Checks if the given object/item matched the given filter type.
  * @param[in] obj A pointer to an objDef_t item.
  * @param[in] filterType Filter type to check against.
- * @return qtrue if obj is in filterType
+ * @return @c true if obj is in filterType
  */
 qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
 {
@@ -340,7 +336,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
  * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
  * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
  * @param[in] filterType Enum definition of type (types of items for filtering purposes).
- * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
 invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, const objDef_t *item,  const itemFilterTypes_t filterType)
