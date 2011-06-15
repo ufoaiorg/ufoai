@@ -2673,7 +2673,7 @@ mapdef subway
 
 mapdef tower
 {
-	map				"tower"
+	map				"+tower"
 	description		"_An office complex in the centre of town."
 	multiplayer		true
 	teams			3

@@ -1,0 +1,45 @@
+// *********************************
+// Tower
+// *********************************
+
+base tower/t_
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: main
+// b: dropship
+
+tile +main
+{
+7 7
+
+0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     0
+0      +a     +a     b      b      b      0
+0      +a     +a     b      b      b      0
+0      0      0      0      0      0      0
+}
+
+tile +craft_drop_firebird
+{
+5 4
+
+0      0      0      0      0
+0      +b     +b     +b     0
+0      +b     +b     +b     0
+0      0      0      0      0
+}
+
+// ########################################
+// ########### Maps for the game ###########
+
+assembly default
+{
+size "5 5"
+title "_Tower"
++main "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}

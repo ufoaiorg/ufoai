@@ -532,7 +532,8 @@ base/maps/stadium/st_craft_drop_herakles.map | GNU General Public License 2.0 or
 base/maps/stadium/st_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/stadium/st_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/subway.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/tower.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/tower/t_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/tower/t_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/transport.ump | GNU General Public License 2.0 or later
 base/maps/transport/tra_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/transport/tra_craft_drop_herakles.map | GNU General Public License 2.0 or later
