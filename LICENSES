@@ -5850,6 +5850,8 @@ base/textures/tex_nature/railway_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock001.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/P1170628.JPG.html
 base/textures/tex_nature/rock002.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/P1170628.JPG.html
 base/textures/tex_nature/rock003.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/P1170628.JPG.html
+base/textures/tex_nature/rock004.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT003458.JPG.html
+base/textures/tex_nature/rock004_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock005.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT003458.JPG.html
 base/textures/tex_nature/rock005_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock006.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT003458.JPG.html
@@ -5858,6 +5860,22 @@ base/textures/tex_nature/rock007.png | GNU General Public License 2.0 | MCR | ht
 base/textures/tex_nature/rock007_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock008.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/wetstone0526.jpg.html
 base/textures/tex_nature/rock008_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock009.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/wetstone0525.jpg.html
+base/textures/tex_nature/rock009_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock010.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/wetstone0526.jpg.html
+base/textures/tex_nature/rock010_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock011.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/wetstone0527.jpg.html
+base/textures/tex_nature/rock011_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock012.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT003462.JPG.html
+base/textures/tex_nature/rock012_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock013.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT003462.JPG.html
+base/textures/tex_nature/rock013_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock014.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT1_0202.JPG.html
+base/textures/tex_nature/rock014_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock015.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT1_0202.JPG.html
+base/textures/tex_nature/rock015_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock016.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT1_0202.JPG.html
+base/textures/tex_nature/rock016_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rockyground01.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, rockyground01.tga
 base/textures/tex_nature/rockyground01_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rockyground01_bump.tga
 base/textures/tex_nature/rockyground02.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, rockyground02.tga
