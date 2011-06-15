@@ -140,8 +140,8 @@ void MaterialSystem::generateMaterialFromTexture ()
 		for (FaceInstancesList::iterator i = g_SelectedFaceInstances.m_faceInstances.begin(); i
 				!= g_SelectedFaceInstances.m_faceInstances.end(); ++i) {
 			const FaceInstance& faceInstance = *(*i);
-			const Face &face = faceInstance.getFace();
-			const std::string& texture = face.GetShader();
+			const Face *face = faceInstance.getFacePtr();
+			const std::string& texture = face->GetShader();
 			// don't generate materials for common textures
 			if (texture.find("tex_common") != std::string::npos)
 				continue;
@@ -150,13 +150,12 @@ void MaterialSystem::generateMaterialFromTexture ()
 			/* check whether there is already an entry for the selected texture */
 			if (_material.find(materialDefinition) == std::string::npos) {
 				std::stringstream os;
-				ContentsFlagsValue flags;
-				ContentsFlagsValue faceFlags(face.GetFlags());
+				const ContentsFlagsValue& faceFlags = face->GetFlags();
 
 				os << "{" << std::endl;
 				os << "\t" << materialDefinition << std::endl;
 				os << "\t{" << std::endl;
-				generateMaterialForFace(flags.getContentFlags(), flags.getSurfaceFlags(), skippedTextureDirectory, os);
+				generateMaterialForFace(faceFlags.getContentFlags(), faceFlags.getSurfaceFlags(), skippedTextureDirectory, os);
 				os << "\t}" << std::endl;
 				os << "}" << std::endl;
 

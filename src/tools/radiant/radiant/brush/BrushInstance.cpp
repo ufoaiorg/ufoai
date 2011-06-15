@@ -167,7 +167,7 @@ void BrushInstance::update_selected () const
 {
 	m_render_selected.clear();
 	for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-		if ((*i).getFace().contributes()) {
+		if (i->getFacePtr()->contributes()) {
 			i->iterate_selected(m_render_selected);
 		}
 	}
@@ -184,10 +184,10 @@ void BrushInstance::evaluateViewDependent (const VolumeTest& volume, const Matri
 			ContentsFlagsValue val = m_brush.getFlags();
 			if (GlobalFilterSystem().isVisible("contentflags", val.getContentFlags())) {
 				for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i, ++j) {
-					const Face& face = i->getFace();
+					const Face* face = i->getFacePtr();
 					// Check if face is filtered before adding to visibility matrix
-					if (GlobalFilterSystem().isVisible("texture", face.GetShader())
-							&& GlobalFilterSystem().isVisible("surfaceflags", face.GetFlags().getSurfaceFlags()))
+					if (GlobalFilterSystem().isVisible("texture", face->GetShader())
+							&& GlobalFilterSystem().isVisible("surfaceflags", face->GetFlags().getSurfaceFlags()))
 						*j = i->intersectVolume(volume, localToWorld);
 					else
 						*j = false;

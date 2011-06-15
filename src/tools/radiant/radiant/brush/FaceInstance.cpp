@@ -46,6 +46,10 @@ const Face& FaceInstance::getFace () const
 {
 	return *m_face;
 }
+Face* FaceInstance::getFacePtr () const
+{
+	return m_face;
+}
 
 void FaceInstance::selectedChanged (const Selectable& selectable)
 {
@@ -130,22 +134,21 @@ void FaceInstance::invertSelected ()
 template<typename Functor>
 void FaceInstance::SelectedVertices_foreach (Functor functor) const
 {
-	const Face& face = getFace();
 	for (VertexSelection::const_iterator i = m_vertexSelection.begin(); i != m_vertexSelection.end(); ++i) {
-		std::size_t index = Winding_FindAdjacent(face.getWinding(), *i);
+		const Winding& winding = m_face->getWinding();
+		const std::size_t index = Winding_FindAdjacent(winding, *i);
 		if (index != c_brush_maxFaces) {
-			functor(face.getWinding()[index].vertex);
+			functor(winding[index].vertex);
 		}
 	}
 }
 template<typename Functor>
 void FaceInstance::SelectedEdges_foreach (Functor functor) const
 {
-	const Face& face = getFace();
 	for (VertexSelection::const_iterator i = m_edgeSelection.begin(); i != m_edgeSelection.end(); ++i) {
-		std::size_t index = Winding_FindAdjacent(face.getWinding(), *i);
+		const Winding& winding = m_face->getWinding();
+		const std::size_t index = Winding_FindAdjacent(winding, *i);
 		if (index != c_brush_maxFaces) {
-			const Winding& winding = face.getWinding();
 			std::size_t adjacent = winding.next(index);
 			functor(vector3_mid(winding[index].vertex, winding[adjacent].vertex));
 		}
@@ -235,9 +238,10 @@ void FaceInstance::testSelect_centroid (Selector& selector, SelectionTest& test)
 void FaceInstance::selectPlane (Selector& selector, const Line& line, PlanesIterator first, PlanesIterator last,
 		const PlaneCallback& selectedPlaneCallback)
 {
-	for (Winding::const_iterator i = getFace().getWinding().begin(); i != getFace().getWinding().end(); ++i) {
+	const Winding& winding = m_face->getWinding();
+	for (Winding::const_iterator i =winding.begin(); i != winding.end(); ++i) {
 		Vector3 v(line_closest_point(line, (*i).vertex) - (*i).vertex);
-		double dot = getFace().plane3().normal().dot(v);
+		double dot = m_face->plane3().normal().dot(v);
 		if (dot <= 0) {
 			return;
 		}
@@ -245,11 +249,11 @@ void FaceInstance::selectPlane (Selector& selector, const Line& line, PlanesIter
 
 	Selector_add(selector, m_selectable);
 
-	selectedPlaneCallback(getFace().plane3());
+	selectedPlaneCallback(m_face->plane3());
 }
 void FaceInstance::selectReversedPlane (Selector& selector, const SelectedPlanes& selectedPlanes)
 {
-	if (selectedPlanes.contains(-getFace().plane3())) {
+	if (selectedPlanes.contains(-m_face->plane3())) {
 		Selector_add(selector, m_selectable);
 	}
 }
@@ -354,15 +358,16 @@ void FaceInstance::update_selection_vertex ()
 	} else {
 		m_selectableVertices.setSelected(true);
 
+		const Winding& winding = m_face->getWinding();
 		if (m_vertexSelection.size() == 1) {
-			std::size_t index = Winding_FindAdjacent(getFace().getWinding(), *m_vertexSelection.begin());
+			std::size_t index = Winding_FindAdjacent(winding, *m_vertexSelection.begin());
 
 			if (index != c_brush_maxFaces) {
 				update_move_planepts_vertex(index);
 			}
 		} else if (m_vertexSelection.size() == 2) {
-			std::size_t index = Winding_FindAdjacent(getFace().getWinding(), *m_vertexSelection.begin());
-			std::size_t other = Winding_FindAdjacent(getFace().getWinding(), *(++m_vertexSelection.begin()));
+			std::size_t index = Winding_FindAdjacent(winding, *m_vertexSelection.begin());
+			std::size_t other = Winding_FindAdjacent(winding, *(++m_vertexSelection.begin()));
 
 			if (index != c_brush_maxFaces && other != c_brush_maxFaces) {
 				update_move_planepts_vertex2(index, other);
@@ -372,10 +377,11 @@ void FaceInstance::update_selection_vertex ()
 }
 void FaceInstance::select_vertex (std::size_t index, bool select)
 {
+	const Winding& winding = m_face->getWinding();
 	if (select) {
-		VertexSelection_insert(m_vertexSelection, getFace().getWinding()[index].adjacent);
+		VertexSelection_insert(m_vertexSelection, winding[index].adjacent);
 	} else {
-		VertexSelection_erase(m_vertexSelection, getFace().getWinding()[index].adjacent);
+		VertexSelection_erase(m_vertexSelection, winding[index].adjacent);
 	}
 
 	SceneChangeNotify();
@@ -384,19 +390,21 @@ void FaceInstance::select_vertex (std::size_t index, bool select)
 
 bool FaceInstance::selected_vertex (std::size_t index) const
 {
-	return VertexSelection_find(m_vertexSelection, getFace().getWinding()[index].adjacent) != m_vertexSelection.end();
+	const Winding& winding = m_face->getWinding();
+	return VertexSelection_find(m_vertexSelection, winding[index].adjacent) != m_vertexSelection.end();
 }
 
 void FaceInstance::update_move_planepts_edge (std::size_t index)
 {
-	std::size_t numpoints = m_face->getWinding().size();
+	const Winding& winding = m_face->getWinding();
+	const std::size_t numpoints = winding.size();
 	ASSERT_MESSAGE(index < numpoints, "select_edge: invalid index");
 
-	std::size_t adjacent = m_face->getWinding().next(index);
-	std::size_t opposite = Winding_Opposite(m_face->getWinding(), index);
-	m_face->m_move_planepts[0] = m_face->getWinding()[index].vertex;
-	m_face->m_move_planepts[1] = m_face->getWinding()[adjacent].vertex;
-	m_face->m_move_planepts[2] = m_face->getWinding()[opposite].vertex;
+	const std::size_t adjacent = winding.next(index);
+	const std::size_t opposite = Winding_Opposite(winding, index);
+	m_face->m_move_planepts[0] = winding[index].vertex;
+	m_face->m_move_planepts[1] = winding[adjacent].vertex;
+	m_face->m_move_planepts[2] = winding[opposite].vertex;
 	planepts_quantise(m_face->m_move_planepts, GRID_MIN); // winding points are very inaccurate
 }
 void FaceInstance::update_selection_edge ()
@@ -407,7 +415,7 @@ void FaceInstance::update_selection_edge ()
 		m_selectableEdges.setSelected(true);
 
 		if (m_edgeSelection.size() == 1) {
-			std::size_t index = Winding_FindAdjacent(getFace().getWinding(), *m_edgeSelection.begin());
+			std::size_t index = Winding_FindAdjacent(m_face->getWinding(), *m_edgeSelection.begin());
 
 			if (index != c_brush_maxFaces) {
 				update_move_planepts_edge(index);
@@ -418,9 +426,9 @@ void FaceInstance::update_selection_edge ()
 void FaceInstance::select_edge (std::size_t index, bool select)
 {
 	if (select) {
-		VertexSelection_insert(m_edgeSelection, getFace().getWinding()[index].adjacent);
+		VertexSelection_insert(m_edgeSelection, m_face->getWinding()[index].adjacent);
 	} else {
-		VertexSelection_erase(m_edgeSelection, getFace().getWinding()[index].adjacent);
+		VertexSelection_erase(m_edgeSelection, m_face->getWinding()[index].adjacent);
 	}
 
 	SceneChangeNotify();
@@ -429,7 +437,7 @@ void FaceInstance::select_edge (std::size_t index, bool select)
 
 bool FaceInstance::selected_edge (std::size_t index) const
 {
-	return VertexSelection_find(m_edgeSelection, getFace().getWinding()[index].adjacent) != m_edgeSelection.end();
+	return VertexSelection_find(m_edgeSelection, m_face->getWinding()[index].adjacent) != m_edgeSelection.end();
 }
 
 const Vector3& FaceInstance::centroid () const

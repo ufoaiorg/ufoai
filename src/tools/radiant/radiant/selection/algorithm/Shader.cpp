@@ -50,7 +50,7 @@ class UniqueFaceShaderFinder
 		void operator() (FaceInstance& face) const
 		{
 
-			std::string foundShader = face.getFace().GetShader();
+			const std::string& foundShader = face.getFace().GetShader();
 
 			if (foundShader != "$NONE" && _shader != "$NONE" && _shader != foundShader) {
 				throw AmbiguousShaderException(foundShader);
@@ -273,8 +273,9 @@ Vector2 getSelectedFaceShaderSize ()
 		// Get the last selected face instance from the global
 		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
 
-		returnValue[0] = faceInstance.getFace().getShader().width();
-		returnValue[1] = faceInstance.getFace().getShader().height();
+		const FaceShader& shader = faceInstance.getFacePtr()->getShader();
+		returnValue[0] = shader.width();
+		returnValue[1] = shader.height();
 	}
 
 	return returnValue;
@@ -540,8 +541,9 @@ class ShaderReplacer: public BrushInstanceVisitor
 		// BrushInstanceVisitor implementation
 		virtual void visit (FaceInstance& face) const
 		{
-			if (face.getFace().getShader().getShader() == _find) {
-				face.getFace().SetShader(_replace);
+			Face& f = face.getFace();
+			if (f.getShader().getShader() == _find) {
+				f.SetShader(_replace);
 				_counter++;
 			}
 		}

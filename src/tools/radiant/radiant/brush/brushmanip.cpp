@@ -200,7 +200,7 @@ class FaceSelectByShader
 		}
 		void operator() (FaceInstance& face) const
 		{
-			if (shader_equal(face.getFace().GetShader(), m_name)) {
+			if (shader_equal(face.getFacePtr()->GetShader(), m_name)) {
 				face.setSelected(SelectionSystem::eFace, true);
 			}
 		}
@@ -224,9 +224,10 @@ void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const std::s
 void Scene_BrushGetShaderSize_Component_Selected (scene::Graph& graph, size_t& width, size_t& height)
 {
 	if (!g_SelectedFaceInstances.empty()) {
-		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
-		width = faceInstance.getFace().getShader().width();
-		height = faceInstance.getFace().getShader().height();
+		const FaceInstance& faceInstance = g_SelectedFaceInstances.last();
+		const FaceShader& shader = faceInstance.getFacePtr()->getShader();
+		width = shader.width();
+		height = shader.height();
 	}
 }
 

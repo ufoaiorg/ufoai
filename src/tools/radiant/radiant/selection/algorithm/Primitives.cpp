@@ -54,15 +54,16 @@ Face& getLastSelectedFace() {
 
 class FaceVectorPopulator
 {
+private:
 	// The target list that gets populated
-FacePtrVector& _vector;
+	FacePtrVector& _vector;
 public:
 	FaceVectorPopulator(FacePtrVector& targetVector) :
 		_vector(targetVector)
 	{}
 
 	void operator() (FaceInstance& faceInstance) {
-		_vector.push_back(&faceInstance.getFace());
+		_vector.push_back(faceInstance.getFacePtr());
 	}
 };
 

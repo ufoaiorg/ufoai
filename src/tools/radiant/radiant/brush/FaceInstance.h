@@ -32,6 +32,7 @@ class FaceInstance
 		FaceInstance& operator= (const FaceInstance& other);
 		Face& getFace ();
 		const Face& getFace () const;
+		Face* getFacePtr () const;
 		void selectedChanged (const Selectable& selectable);
 		typedef MemberCaller1<FaceInstance, const Selectable&, &FaceInstance::selectedChanged> SelectedChangedCaller;
 

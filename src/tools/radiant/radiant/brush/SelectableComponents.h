@@ -29,7 +29,7 @@ class SelectableEdge
 {
 		Vector3 getEdge () const
 		{
-			const Winding& winding = getFace().getWinding();
+			const Winding& winding = getFacePtr()->getWinding();
 			return vector3_mid(winding[m_faceVertex.getVertex()].vertex, winding[winding.next(m_faceVertex.getVertex())].vertex);
 		}
 
@@ -47,7 +47,12 @@ class SelectableEdge
 			return *this;
 		}
 
-		Face& getFace () const
+		const Face* getFacePtr () const
+		{
+			return m_faces[m_faceVertex.getFace()].get();
+		}
+
+		const Face& getFace () const
 		{
 			return *m_faces[m_faceVertex.getFace()];
 		}
