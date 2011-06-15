@@ -25,7 +25,6 @@
 
 #include "iradiant.h"
 #include "radiant_i18n.h"
-#include "../brush/TexDef.h"
 #include "ientity.h"
 #include "ibrush.h"
 #include "ieclass.h"

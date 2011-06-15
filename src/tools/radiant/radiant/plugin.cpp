@@ -45,7 +45,6 @@
 #include "igamemanager.h"
 #include "ifiletypes.h"
 #include "preferencesystem.h"
-#include "brush/TexDef.h"
 #include "ibrush.h"
 #include "iimage.h"
 #include "iregistry.h"

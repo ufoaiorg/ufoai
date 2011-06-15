@@ -22,7 +22,6 @@
 #include "AutoPtr.h"
 #include "radiant_i18n.h"
 #include "iscriplib.h"
-#include "../brush/TexDef.h"
 #include "ibrush.h"
 #include "ifiletypes.h"
 #include "ieclass.h"
