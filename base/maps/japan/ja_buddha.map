@@ -7,10 +7,10 @@
 {
 ( 0 384 4 ) ( 0 256 4 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 256 256 4 ) ( 256 384 4 ) ( 256 384 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 320 4 ) ( 1176 320 0 ) ( 996 320 0 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 320 4 ) ( 1176 320 0 ) ( 996 320 0 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 ( 40 512 64 ) ( 40 512 68 ) ( 32 512 68 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 996 948 0 ) ( 996 256 0 ) ( 1176 729 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 729 4 ) ( 996 256 4 ) ( 996 948 4 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 729 4 ) ( 996 256 4 ) ( 996 948 4 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 }
 // brush 1
 {
@@ -23,39 +23,39 @@
 }
 // brush 2
 {
-( 212 258 12 ) ( 212 246 12 ) ( 200 258 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 212 288 12 ) ( 200 288 12 ) ( 212 288 4 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 224 258 12 ) ( 224 258 4 ) ( 224 246 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 200 246 4 ) ( 212 246 4 ) ( 200 258 4 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 202 160 4 ) ( 202 160 12 ) ( 214 160 4 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 128 246 4 ) ( 128 258 4 ) ( 128 246 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
+( 212 258 12 ) ( 212 246 12 ) ( 200 258 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 212 288 12 ) ( 200 288 12 ) ( 212 288 4 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 224 258 12 ) ( 224 258 4 ) ( 224 246 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 200 246 4 ) ( 212 246 4 ) ( 200 258 4 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 202 160 4 ) ( 202 160 12 ) ( 214 160 4 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 128 246 4 ) ( 128 258 4 ) ( 128 246 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
 }
 // brush 3
 {
 ( 0 128 4 ) ( 0 0 4 ) ( 0 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 256 0 4 ) ( 256 128 4 ) ( 256 128 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 0 4 ) ( 1176 0 0 ) ( 996 0 0 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 0 4 ) ( 1176 0 0 ) ( 996 0 0 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 ( 40 128 64 ) ( 40 128 68 ) ( 32 128 68 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 996 692 0 ) ( 996 0 0 ) ( 1176 473 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 473 4 ) ( 996 0 4 ) ( 996 692 4 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 473 4 ) ( 996 0 4 ) ( 996 692 4 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 }
 // brush 4
 {
 ( 0 192 4 ) ( 0 64 4 ) ( 0 64 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 96 64 4 ) ( 96 192 4 ) ( 96 192 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 128 4 ) ( 1176 128 0 ) ( 996 128 0 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 128 4 ) ( 1176 128 0 ) ( 996 128 0 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 ( 40 192 64 ) ( 40 192 68 ) ( 32 192 68 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 996 756 0 ) ( 996 64 0 ) ( 1176 537 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 537 4 ) ( 996 64 4 ) ( 996 756 4 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 537 4 ) ( 996 64 4 ) ( 996 756 4 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 }
 // brush 5
 {
 ( 0 320 4 ) ( 0 192 4 ) ( 0 192 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 96 192 4 ) ( 96 320 4 ) ( 96 320 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 256 4 ) ( 1176 256 0 ) ( 996 256 0 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 256 4 ) ( 1176 256 0 ) ( 996 256 0 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 ( 40 320 64 ) ( 40 320 68 ) ( 32 320 68 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 996 884 0 ) ( 996 192 0 ) ( 1176 665 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 665 4 ) ( 996 192 4 ) ( 996 884 4 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 665 4 ) ( 996 192 4 ) ( 996 884 4 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 }
 // brush 6
 {
@@ -113,21 +113,21 @@
 }
 // brush 12
 {
-( 212 250 28 ) ( 212 238 28 ) ( 200 250 28 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 212 264 28 ) ( 200 264 28 ) ( 212 264 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 224 250 28 ) ( 224 250 20 ) ( 224 238 28 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 200 238 20 ) ( 212 238 20 ) ( 200 250 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 202 184 20 ) ( 202 184 28 ) ( 214 184 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 152 238 20 ) ( 152 250 20 ) ( 152 238 28 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
+( 212 250 28 ) ( 212 238 28 ) ( 200 250 28 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 212 264 28 ) ( 200 264 28 ) ( 212 264 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 224 250 28 ) ( 224 250 20 ) ( 224 238 28 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 200 238 20 ) ( 212 238 20 ) ( 200 250 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 202 184 20 ) ( 202 184 28 ) ( 214 184 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 152 238 20 ) ( 152 250 20 ) ( 152 238 28 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
 }
 // brush 13
 {
-( 212 250 20 ) ( 212 238 20 ) ( 200 250 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 212 272 20 ) ( 200 272 20 ) ( 212 272 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 224 250 20 ) ( 224 250 12 ) ( 224 238 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 200 238 12 ) ( 212 238 12 ) ( 200 250 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 202 176 12 ) ( 202 176 20 ) ( 214 176 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
-( 144 238 12 ) ( 144 250 12 ) ( 144 238 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15
+( 212 250 20 ) ( 212 238 20 ) ( 200 250 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 212 272 20 ) ( 200 272 20 ) ( 212 272 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 224 250 20 ) ( 224 250 12 ) ( 224 238 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 200 238 12 ) ( 212 238 12 ) ( 200 250 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 202 176 12 ) ( 202 176 20 ) ( 214 176 12 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
+( 144 238 12 ) ( 144 250 12 ) ( 144 238 20 ) tex_ctp1/concrete_g_10 0 0 0 0.15 0.15 0 0 0
 }
 // brush 14
 {
@@ -1445,8 +1445,8 @@
 {
 "classname" "misc_particle"
 "origin" "86 178 84"
-"particle" "corona"
 "spawnflags" "254"
+"particle" "corona"
 }
 // entity 3
 {
@@ -1501,42 +1501,42 @@
 {
 "classname" "misc_particle"
 "origin" "86 274 84"
-"particle" "corona"
 "spawnflags" "254"
+"particle" "corona"
 }
 // entity 5
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "192 224 28"
-"model" "models/objects/japan/buddha.md2"
-"skin" "0"
+"classname" "misc_model"
 "angles" "0 90 0"
+"skin" "0"
+"spawnflags" "255"
+"model" "models/objects/japan/buddha.md2"
 }
 // entity 6
 {
-"classname" "misc_model"
-"model" "models/objects/vegi/gumtree/gum_tree_trunk_l1.md2"
 "origin" "144 340 0"
-"spawnflags" "255"
-"skin" "0"
+"classname" "misc_model"
 "angles" "0 90 0"
+"skin" "0"
+"spawnflags" "255"
+"model" "models/objects/vegi/gumtree/gum_tree_trunk_l1.md2"
 }
 // entity 7
 {
-"classname" "misc_model"
-"model" "models/objects/vegi/gumtree/gum_tree_trunk_l2.md2"
 "origin" "144 340 0"
-"spawnflags" "254"
-"skin" "0"
+"classname" "misc_model"
 "angles" "0 90 0"
+"skin" "0"
+"spawnflags" "254"
+"model" "models/objects/vegi/gumtree/gum_tree_trunk_l2.md2"
 }
 // entity 8
 {
-"classname" "misc_model"
-"model" "models/objects/vegi/gumtree/gum_tree_branch.md2"
 "origin" "144 340 0"
-"spawnflags" "254"
-"skin" "3"
+"classname" "misc_model"
 "angles" "0 90 0"
+"skin" "3"
+"spawnflags" "254"
+"model" "models/objects/vegi/gumtree/gum_tree_branch.md2"
 }

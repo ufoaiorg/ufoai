@@ -7,10 +7,10 @@
 {
 ( 0 128 4 ) ( 0 0 4 ) ( 0 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 256 0 4 ) ( 256 128 4 ) ( 256 128 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 0 4 ) ( 1176 0 0 ) ( 996 0 0 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 0 4 ) ( 1176 0 0 ) ( 996 0 0 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 ( 40 256 64 ) ( 40 256 68 ) ( 32 256 68 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 1472 800 0 ) ( 1504 800 0 ) ( 1472 832 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 1176 473 4 ) ( 996 0 4 ) ( 996 692 4 ) tex_nature/rock002 128 16 0 0.5 0.5 65280 0 0
+( 1176 473 4 ) ( 996 0 4 ) ( 996 692 4 ) tex_nature/rock002 256 32 0 0.25 0.25 65280 0 0
 }
 // brush 1
 {
@@ -223,37 +223,37 @@
 // entity 1
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "origin" "108 76 68"
 }
 // entity 2
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "origin" "108 76 68"
 }
 // entity 3
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "origin" "108 76 68"
 }
 // entity 4
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "108 76 68"
 "skin" "1"
 }
 // entity 5
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "origin" "108 76 68"
 "skin" "1"
 }
