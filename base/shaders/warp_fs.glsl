@@ -4,11 +4,11 @@
  */
 
 #if r_postprocess
-/*
- * Indicates that gl_FragData is written to, not gl_FragColor.
- * #extension needs to be placed before all non preprocessor code.
- */
-#extension GL_ARB_draw_buffers : enable
+	/*
+	 * Indicates that gl_FragData is written to, not gl_FragColor.
+	 * #extension needs to be placed before all non preprocessor code.
+	 */
+	#extension GL_ARB_draw_buffers : enable
 #endif
 
 #include "fog_fs.glsl"

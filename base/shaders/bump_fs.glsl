@@ -3,18 +3,6 @@
  * @brief Bumpmap fragment shader.
  */
 
-#ifndef glsl110
-	#ifndef in_qualifier
-		/** Linkage into a shader from a previous stage, variable is copied in.*/
-		#define in_qualifier in
-	#endif
-#else
-	#ifndef in_qualifier
-		/** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
-		#define in_qualifier varying
-	#endif
-#endif
-
 in_qualifier vec3 eyedir;
 
 uniform float BUMP;

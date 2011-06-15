@@ -268,12 +268,13 @@ static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in
  *
  * The shader needs to know the rendered width & height, the glsl version, and
  * the hardware manufacturer.
+ * @param[in] type The type of shader, currently either GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
  * @param[in] name The name of the shader.
  * @param[in,out] out
  * @param[in,out] len The amount of space left in the buffer pointed to by *out.
  * @return The number of characters prefixed to the shader string.
  */
-static size_t R_InitializeShader (const char *name, char *out, size_t len)
+static size_t R_InitializeShader (const GLenum type, const char *name, char *out, size_t len)
 {
 	size_t initialChars = 0;
 	const char *hwHack, *defines;
@@ -322,6 +323,16 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 		initialChars += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
 	}
 
+	if (GL_VERTEX_SHADER == type) {
+		/* Define 'in_qualifier as 'attribute' & 'out_qualifier' as 'varying' if GLSL v1.10, otherwise define them as 'in' and 'out' respectively.*/
+		initialChars += R_PreprocessShaderAddToShaderBuf(name, "#ifndef glsl110\n#define in_qualifier in\n#define out_qualifier out\n#else\n#define in_qualifier attribute\n#define out_qualifier varying\n#endif\n", &out, &len);
+	} else if (GL_FRAGMENT_SHADER == type) {
+		/* Define 'texture2D' as 'texture', as texture2D was deprecated (replaced with 'texture') as of GLSL v1.30.*/
+		initialChars += R_PreprocessShaderAddToShaderBuf(name, "#ifndef glsl110\n#define texture2D texture\n#endif\n", &out, &len);
+		/* Define 'in_qualifier as 'varying' if GLSL v1.10, otherwise define it as 'in'.*/
+		initialChars += R_PreprocessShaderAddToShaderBuf(name, "#ifndef glsl110\n#define in_qualifier in\n#else\n#define in_qualifier varying\n#endif\n", &out, &len);
+	}
+
 	return initialChars;
 }
 
@@ -345,10 +356,10 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
  * @param[in] dontParseInOverElse If true, don't move in over #else.
  * @return The number of characters added to the buffer pointed to by out.
  */
-static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, size_t *remainingOutChars, qboolean terminateAtEndIf,
+static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, long *remainingOutChars, qboolean terminateAtEndIf,
 		qboolean writeEndifToOut, qboolean dontWriteElseClaseToOut, qboolean dontParseInOverEndIf, qboolean dontParseInOverElse)
 {
-	const size_t INITIAL_REMAINING_OUT_CHARS = *remainingOutChars;
+	const size_t INITIAL_REMAINING_OUT_CHARS = (size_t)*remainingOutChars;
 	/* Keep looping till we reach the end of the shader string, or a parsing error.*/
 	while (**inPtr) {
 		if ('#' == **inPtr) {
@@ -376,7 +387,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 					/* Move back to the starting '#', the parent call wants to see this token.*/
 					(*inPtr)--;
 				}
-				return (INITIAL_REMAINING_OUT_CHARS - *remainingOutChars);
+				return (INITIAL_REMAINING_OUT_CHARS - (size_t)*remainingOutChars);
 			} else if (dontWriteElseClaseToOut && !strncmp((*inPtr), "else", 4)) {
 				if (dontParseInOverElse) {
 					/* This else is in a structure with a '#if' that was false.*/
@@ -475,7 +486,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 						for (; l < subLength; l++) {
 							if (buffer[l] == '$') {
 								byte insertedLen = (j / 10) + 1;
-								if (!Com_sprintf(out, *remainingOutChars, "%d", j))
+								if (!Com_sprintf(out, (size_t)*remainingOutChars, "%d", j))
 									Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
 								out += insertedLen;
 								(*remainingOutChars) -= insertedLen;
@@ -495,7 +506,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 				(*inPtr) += 8;
 				r = Cvar_GetValue(Com_Parse(inPtr));
 				if (out) {
-					if (!Com_sprintf(out, *remainingOutChars, "%d", r))
+					if (!Com_sprintf(out, (size_t)*remainingOutChars, "%d", r))
 						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
 					insertedLen = (r / 10) + 1;
 					out += insertedLen;
@@ -542,7 +553,10 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
  */
 static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t *remainingOutChars)
 {
-	return R_PreprocessShaderR(name, &in, out, remainingOutChars, qfalse, qfalse, qfalse, qfalse, qfalse);
+	long remainingOutCharsAsLong = *remainingOutChars;
+	size_t numCharactersAddedToOutBuffer = R_PreprocessShaderR(name, &in, out, &remainingOutCharsAsLong, qfalse, qfalse, qfalse, qfalse, qfalse);
+	*remainingOutChars = remainingOutCharsAsLong;
+	return numCharactersAddedToOutBuffer;
 }
 
 /**
@@ -578,7 +592,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 
 	srcBuf = source = (char *)Mem_PoolAlloc(bufLength, vid_imagePool, 0);
 
-	initializeLength = R_InitializeShader(name, srcBuf, bufLength);
+	initializeLength = R_InitializeShader(type, name, srcBuf, bufLength);
 	srcBuf += initializeLength;
 	bufLength -= initializeLength;
 

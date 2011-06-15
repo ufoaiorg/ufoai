@@ -41,14 +41,6 @@
 #endif
 
 #ifndef glsl110
-	/** Linkage into a shader from a previous stage, variable is copied in.*/
-	#define in_qualifier in
-#else
-	/** Deprecated after glsl110; linkage between a vertex shader and a fragment shader for interpolated data.*/
-	#define in_qualifier varying
-#endif
-
-#ifndef glsl110
 	#ifdef GLFRAGDATA
 		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
 		out vec4 gl_FragData[2];
