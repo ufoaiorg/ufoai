@@ -505,7 +505,6 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 
 /**
  * @sa CMod_GetMapSize
- * @todo Show frustum view area for actors (@sa FrustumVis)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node Node description of the radar
  */
