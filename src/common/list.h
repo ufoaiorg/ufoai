@@ -13,7 +13,7 @@ typedef struct linkedList_s {
  * @note @c var must be a simple variable name, because it is also used to create the name of the internal iterator variable.
  * @note Don't try to use the internal loop variable. This variable is most likely not at the position you would expect it to be. */
 #define LIST_Foreach(list, type, var) \
-	for (linkedList_t *var##__iter = (list); var##__iter;) \
+	for (linkedList_t *var##__iter = (var = 0)?0:(list); var##__iter;) \
 		if (var = (type*)var##__iter->data, var##__iter = var##__iter->next, 0) {} else
 
 void LIST_AddString(linkedList_t** list, const char* data);
