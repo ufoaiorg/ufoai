@@ -501,54 +501,6 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 	UI_RadarNodeDrawArrays(color, coords, vertices, image);
 }
 
-#if 0
-/**
- * @todo We can merge actor and items draw function
- */
-static void UI_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
-{
-	float coords[4 * 2];
-	short vertices[4 * 2];
-	vec4_t color;
-	int i;
-	const float size = 10;
-	const int tileSize = 28;
-	int tilePos = 96;
-	const image_t *image;
-
-	image = UI_LoadImage("ui/radar");
-	if (image == NULL)
-		return;
-
-	/* a 0,0 centered square */
-	vertices[0] = - size;
-	vertices[1] = + size;
-	vertices[2] = + size;
-	vertices[3] = + size;
-	vertices[4] = + size;
-	vertices[5] = - size;
-	vertices[6] = - size;
-	vertices[7] = - size;
-	coords[0] = (tilePos) / 128.0f;
-	coords[1] = (5 + tileSize) / 128.0f;
-	coords[2] = (tilePos + tileSize) / 128.0f;
-	coords[3] = (5 + tileSize) / 128.0f;
-	coords[4] = (tilePos + tileSize) / 128.0f;
-	coords[5] = (5) / 128.0f;
-	coords[6] = (tilePos) / 128.0f;
-	coords[7] = (5) / 128.0f;
-
-	/* affine transformation */
-	for (i = 0; i < 8; i += 2) {
-		vertices[i + 0] += pos[0];
-		vertices[i + 1] += pos[1];
-	}
-
-	UI_RadarNodeGetActorColor(le, color);
-	Vector4Set(color, 0, 1, 0, color[3]);
-}
-#endif
-
 /*#define RADARSIZE_DEBUG*/
 
 /**
@@ -653,9 +605,6 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 			UI_RadarNodeDrawActor(le, itempos);
 			break;
 		case ET_ITEM:
-#if 0
-			UI_RadarNodeDrawItem(le, itempos);
-#endif
 			break;
 		default:
 			break;
