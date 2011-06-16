@@ -230,15 +230,15 @@
 // brush 25
 {
 ( 87 283 9 ) ( 64 120 2 ) ( 234 96 -10 ) tex_common/nodraw 0 0 0 0.12 0.12 65280 0 0
-( 308 172 -158 ) ( 235 203 40 ) ( 363 248 34 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 0 0
-( 140 291 -141 ) ( 197 196 42 ) ( 69 236 52 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 0 0
-( 81 157 -32 ) ( 186 163 153 ) ( 109 52 152 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 0 0
-( 141 166 0 ) ( 95 211 45 ) ( 128 195 98 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 0 0
-( 110 213 -59 ) ( 176 228 -63 ) ( 118 206 67 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 0 0
-( 189 192 34 ) ( 172 177 58 ) ( 175 210 36 ) tex_nature/pjrock16 0 0 0 0.12 0.12 65280 0 0
-( 201 330 29 ) ( 166 337 -16 ) ( 183 203 23 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 0 0
-( 160 358 -7 ) ( 131 360 27 ) ( 142 231 -12 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 0 0
-( 140 172 68 ) ( 145 204 63 ) ( 164 181 65 ) tex_nature/pjrock16 0 0 0 0.12 0.12 65280 0 0
+( 308 172 -158 ) ( 235 203 40 ) ( 363 248 34 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
+( 140 291 -141 ) ( 197 196 42 ) ( 69 236 52 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
+( 81 157 -32 ) ( 186 163 153 ) ( 109 52 152 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
+( 141 166 0 ) ( 95 211 45 ) ( 128 195 98 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
+( 110 213 -59 ) ( 176 228 -63 ) ( 118 206 67 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
+( 189 192 34 ) ( 172 177 58 ) ( 175 210 36 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 0 0
+( 201 330 29 ) ( 166 337 -16 ) ( 183 203 23 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
+( 160 358 -7 ) ( 131 360 27 ) ( 142 231 -12 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
+( 140 172 68 ) ( 145 204 63 ) ( 164 181 65 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 0 0
 ( 414 638 2 ) ( 434 658 2 ) ( 414 658 2 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
 }
 // brush 26
@@ -1368,24 +1368,24 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic04.md2"
-"angles" "0 115.414 0"
 "origin" "304 446 6"
+"angles" "0 115.414 0"
 }
 // entity 32
 {
 "classname" "misc_model"
 "origin" "56 264 2"
 "model" "models/objects/vegi/plant_v1/plant_v1.md2"
-"modelscale_vec" "1.25 1.25 1"
 "spawnflags" "255"
+"modelscale_vec" "1.25 1.25 1"
 }
 // entity 33
 {
 "classname" "misc_model"
 "origin" "648 568 10"
 "model" "models/objects/vegi/plant_v1/plant_v1.md2"
-"modelscale_vec" "1.25 1.25 1"
 "spawnflags" "255"
+"modelscale_vec" "1.25 1.25 1"
 }
 // entity 34
 {
@@ -1399,16 +1399,16 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
-"angles" "0 34.3225 0"
 "origin" "137.128 326.348 27"
+"angles" "0 34.3225 0"
 }
 // entity 36
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
-"angles" "0 -50.3488 0"
 "origin" "374.46 550.724 19"
+"angles" "0 -50.3488 0"
 }
 // entity 37
 {
@@ -1448,14 +1448,14 @@
 "classname" "misc_model"
 "origin" "512 424 42"
 "model" "models/objects/vegi/plant_v1/plant_v1.md2"
-"angles" "0 41.8107 0"
 "spawnflags" "255"
+"angles" "0 41.8107 0"
 }
 // entity 42
 {
 "classname" "misc_model"
 "origin" "658 236 34"
 "model" "models/objects/vegi/plant_v1/plant_v1.md2"
-"angles" "0 -74.0324 0"
 "spawnflags" "255"
+"angles" "0 -74.0324 0"
 }

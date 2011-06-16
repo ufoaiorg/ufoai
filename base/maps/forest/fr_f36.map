@@ -46,19 +46,19 @@
 }
 // brush 3
 {
-( 464 504 2 ) ( 470 504 2 ) ( 464 508 2 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 400.875 50.25 3.875 ) ( 462.25 50.375 2 ) ( 415 60 2 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 415 60 2 ) ( 289.75 74.625 2 ) ( 389.375 41.25 5.5 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 504.375 194.5 2 ) ( 501.25 206.375 3.375 ) ( 505.875 207.125 2 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 378.125 35.125 6.875 ) ( 425.125 144.75 17.875 ) ( 382.5 36.125 6.5 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 382.625 65.625 11 ) ( 384.75 182.375 31.25 ) ( 424.875 145.25 18 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 467.625 241.625 2 ) ( 429.125 203.5 25.375 ) ( 463.875 244 2 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 425.125 144.75 17.875 ) ( 501.25 206.375 3.375 ) ( 434.125 51.75 2.625 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 467.375 241.75 2 ) ( 501.25 206.375 3.375 ) ( 496.625 211.25 6.5 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 427.875 246.125 2 ) ( 384.75 182.375 31.25 ) ( 380.25 241.5 2 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 463.625 244.125 2 ) ( 402.125 185.25 24 ) ( 411.5 247.125 2 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 378.125 172 27.625 ) ( 291.75 230.625 2 ) ( 396.75 178.625 26.5 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
-( 379.5 172.375 27.625 ) ( 289.75 74.625 2 ) ( 291.75 230.625 2 ) tex_nature/pjrock16 0 0 0 0.2 0.2 65280 0 0
+( 464 504 2 ) ( 470 504 2 ) ( 464 508 2 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 400.875 50.25 3.875 ) ( 462.25 50.375 2 ) ( 415 60 2 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 415 60 2 ) ( 289.75 74.625 2 ) ( 389.375 41.25 5.5 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 504.375 194.5 2 ) ( 501.25 206.375 3.375 ) ( 505.875 207.125 2 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 378.125 35.125 6.875 ) ( 425.125 144.75 17.875 ) ( 382.5 36.125 6.5 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 382.625 65.625 11 ) ( 384.75 182.375 31.25 ) ( 424.875 145.25 18 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 467.625 241.625 2 ) ( 429.125 203.5 25.375 ) ( 463.875 244 2 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 425.125 144.75 17.875 ) ( 501.25 206.375 3.375 ) ( 434.125 51.75 2.625 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 467.375 241.75 2 ) ( 501.25 206.375 3.375 ) ( 496.625 211.25 6.5 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 427.875 246.125 2 ) ( 384.75 182.375 31.25 ) ( 380.25 241.5 2 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 463.625 244.125 2 ) ( 402.125 185.25 24 ) ( 411.5 247.125 2 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 378.125 172 27.625 ) ( 291.75 230.625 2 ) ( 396.75 178.625 26.5 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
+( 379.5 172.375 27.625 ) ( 289.75 74.625 2 ) ( 291.75 230.625 2 ) tex_nature/pjrock16 0 0 0 0.1 0.1 65280 0 0
 }
 // brush 4
 {
@@ -539,90 +539,90 @@
 }
 // brush 57
 {
-( 138.0273 69.72279 28 ) ( 119.018 55.07193 28 ) ( 60.41455 131.109 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 60.41455 131.109 26 ) ( 119.018 55.07193 26 ) ( 138.0273 69.72279 26 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 133.7695 58.86595 28 ) ( 133.7695 58.86595 26 ) ( 127.433 53.98233 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 135.9487 75.69601 28 ) ( 135.9487 75.69601 26 ) ( 133.7695 58.86595 26 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 84.67064 142.2285 28 ) ( 84.67064 142.2285 26 ) ( 135.9487 75.69601 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 68.25 143.25 28 ) ( 68.25 143.25 26 ) ( 84.625 142.25 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 68.25 143.25 26 ) ( 68.25 143.25 28 ) ( 60.25 141.125 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 66.51907 123.1885 28 ) ( 66.51907 123.1885 26 ) ( 60.28325 141.1081 26 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 66.51907 123.1885 26 ) ( 66.51907 123.1885 28 ) ( 112.5503 60.18745 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 112.5503 60.18745 26 ) ( 112.5503 60.18745 28 ) ( 127.433 53.98233 28 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 138.0273 69.72279 28 ) ( 119.018 55.07193 28 ) ( 60.41455 131.109 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 60.41455 131.109 26 ) ( 119.018 55.07193 26 ) ( 138.0273 69.72279 26 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 133.7695 58.86595 28 ) ( 133.7695 58.86595 26 ) ( 127.433 53.98233 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 135.9487 75.69601 28 ) ( 135.9487 75.69601 26 ) ( 133.7695 58.86595 26 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 84.67064 142.2285 28 ) ( 84.67064 142.2285 26 ) ( 135.9487 75.69601 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 68.25 143.25 28 ) ( 68.25 143.25 26 ) ( 84.625 142.25 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 68.25 143.25 26 ) ( 68.25 143.25 28 ) ( 60.25 141.125 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 66.51907 123.1885 28 ) ( 66.51907 123.1885 26 ) ( 60.28325 141.1081 26 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 66.51907 123.1885 26 ) ( 66.51907 123.1885 28 ) ( 112.5503 60.18745 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 112.5503 60.18745 26 ) ( 112.5503 60.18745 28 ) ( 127.433 53.98233 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
 }
 // brush 58
 {
-( 68.89101 64.41455 28 ) ( 54.24014 83.42381 28 ) ( 130.2772 142.0273 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 130.2772 142.0273 26 ) ( 54.24014 83.42381 26 ) ( 68.89101 64.41455 26 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 63.64418 67.94597 28 ) ( 63.64418 67.94597 26 ) ( 61.07106 81.11331 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 63.64418 67.94597 26 ) ( 63.64418 67.94597 28 ) ( 74.86423 66.49316 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 135.0602 112.8876 28 ) ( 135.0602 112.8876 26 ) ( 74.86423 66.49316 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 142.4863 126.1862 28 ) ( 142.4863 126.1862 26 ) ( 135.0602 112.8876 28 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 134.7976 132.8858 28 ) ( 134.7976 132.8858 26 ) ( 142.4863 126.1862 26 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 134.7976 132.8858 26 ) ( 134.7976 132.8858 28 ) ( 120.7726 134.7018 26 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 63.74477 90.74925 28 ) ( 63.74477 90.74925 26 ) ( 120.7726 134.7018 26 ) tex_common/lightclip 0 0 0 0.25 0.25
-( 61.07106 81.11331 28 ) ( 61.07106 81.11331 26 ) ( 63.74477 90.74925 28 ) tex_common/lightclip 0 0 0 0.25 0.25
+( 68.89101 64.41455 28 ) ( 54.24014 83.42381 28 ) ( 130.2772 142.0273 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 130.2772 142.0273 26 ) ( 54.24014 83.42381 26 ) ( 68.89101 64.41455 26 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 63.64418 67.94597 28 ) ( 63.64418 67.94597 26 ) ( 61.07106 81.11331 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 63.64418 67.94597 26 ) ( 63.64418 67.94597 28 ) ( 74.86423 66.49316 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 135.0602 112.8876 28 ) ( 135.0602 112.8876 26 ) ( 74.86423 66.49316 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 142.4863 126.1862 28 ) ( 142.4863 126.1862 26 ) ( 135.0602 112.8876 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 134.7976 132.8858 28 ) ( 134.7976 132.8858 26 ) ( 142.4863 126.1862 26 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 134.7976 132.8858 26 ) ( 134.7976 132.8858 28 ) ( 120.7726 134.7018 26 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 63.74477 90.74925 28 ) ( 63.74477 90.74925 26 ) ( 120.7726 134.7018 26 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
+( 61.07106 81.11331 28 ) ( 61.07106 81.11331 26 ) ( 63.74477 90.74925 28 ) tex_common/lightclip 0 0 0 0.25 0.25 0 0 0
 }
 }
 // entity 1
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "32 32 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
-"angles" "0 -90 0"
 "modelscale_vec" "0.5 0.5 0.5"
+"classname" "misc_model"
+"angles" "0 -90 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 2
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "96 32 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
-"angles" "0 -90 0"
 "modelscale_vec" "0.5 0.5 0.5"
+"classname" "misc_model"
+"angles" "0 -90 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 3
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "32 132 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
-"angles" "0 90 0"
 "modelscale_vec" "0.5 0.5 0.5"
+"classname" "misc_model"
+"angles" "0 90 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 4
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "100 172 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
-"angles" "0 106 0"
 "modelscale_vec" "0.5 0.5 0.5"
+"classname" "misc_model"
+"angles" "0 106 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 5
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "158.184 131.564 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
-"angles" "0 133 0"
 "modelscale_vec" "0.5 0.5 0.5"
+"classname" "misc_model"
+"angles" "0 133 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 6
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "223.564 33.816 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
-"angles" "0 43 0"
 "modelscale_vec" "0.5 0.5 0.5"
+"classname" "misc_model"
+"angles" "0 43 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 7
 {
@@ -631,91 +631,91 @@
 }
 // entity 8
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "60 300 4"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
+"classname" "misc_model"
 "angles" "0 45 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 9
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "340 398 16"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
+"classname" "misc_model"
 "angles" "0 -90 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 10
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "232 460 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
+"classname" "misc_model"
 "angles" "0 37 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 11
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "232 244 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
+"classname" "misc_model"
 "angles" "0 -53 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 12
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "316 148 10"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
+"classname" "misc_model"
 "angles" "0 -8 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 13
 {
-"classname" "misc_model"
-"model" "models/objects/vegi/fern2/fern2_lrg.md2"
 "origin" "421.055 400 17.9299"
-"spawnflags" "255"
-"skin" "0"
+"classname" "misc_model"
 "angles" "20 0 0"
+"skin" "0"
+"spawnflags" "255"
+"model" "models/objects/vegi/fern2/fern2_lrg.md2"
 }
 // entity 14
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "108 420 18"
 "model" "models/objects/vegi/fir/fir.md2"
+"origin" "108 420 18"
 "skin" "1"
 }
 // entity 15
 {
-"classname" "misc_model"
-"model" "models/objects/vegi/fern2/fern2_lrg.md2"
 "origin" "446.55 277.162 6.04388"
-"spawnflags" "255"
-"skin" "0"
+"classname" "misc_model"
 "angles" "1.00042e-005 -60 -3"
+"skin" "0"
+"spawnflags" "255"
+"model" "models/objects/vegi/fern2/fern2_lrg.md2"
 }
 // entity 16
 {
-"classname" "misc_model"
-"spawnflags" "255"
 "origin" "456 60 2"
-"model" "models/objects/vegi/fir/fir.md2"
-"skin" "1"
+"classname" "misc_model"
 "angles" "0 31 0"
+"skin" "1"
+"spawnflags" "255"
+"model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 17
 {
 "classname" "misc_model"
 "origin" "98 104 2"
 "model" "models/objects/vegi/fern/fern.md2"
-"spawnflags" "1023"
 "angles" "0 -51.4878 0"
+"spawnflags" "1023"
 }
 // entity 18
 {
@@ -743,24 +743,24 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "205.51 156.222 4"
 "angles" "0 -25.3312 0"
+"origin" "205.51 156.222 4"
 }
 // entity 22
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "170.49 203.778 4"
 "angles" "0 -25.3312 0"
+"origin" "170.49 203.778 4"
 }
 // entity 23
 {
 "classname" "misc_model"
 "origin" "170.116 179.615 4"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"spawnflags" "255"
 "angles" "0 -25.3312 0"
+"spawnflags" "255"
 }
 // entity 24
 {
@@ -772,40 +772,40 @@
 // entity 25
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
-"origin" "234.667 354.421 43.0909"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "modelscale_vec" "1.33333 1.21053 0.636364"
+"origin" "234.667 354.421 43.0909"
 }
 // entity 26
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
-"origin" "234.667 354.421 43.0909"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "modelscale_vec" "1.33333 1.21053 0.636364"
+"origin" "234.667 354.421 43.0909"
 }
 // entity 27
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
-"origin" "234.667 354.421 43.0909"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "modelscale_vec" "1.33333 1.21053 0.636364"
+"origin" "234.667 354.421 43.0909"
 }
 // entity 28
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
-"origin" "234.667 354.421 43.0909"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "modelscale_vec" "1.33333 1.21053 0.636364"
+"origin" "234.667 354.421 43.0909"
 }
 // entity 29
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
-"origin" "234.667 354.421 43.0909"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "modelscale_vec" "1.33333 1.21053 0.636364"
+"origin" "234.667 354.421 43.0909"
 }
