@@ -4429,6 +4429,7 @@ base/textures/tex_buildings/floor008_nm.png | GNU General Public License 2.0 or 
 base/textures/tex_buildings/floor009.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor009_nm.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor010.png | GNU General Public License 2.0 or later | MCR | http://commons.wikimedia.org/wiki/File:Altmannshofen_St_Vitus_Boden_Chor.jpg
+base/textures/tex_buildings/floor010_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_buildings/floor011.png | MIT License | FWishbringer | based on images from http://www.photorack.net
 base/textures/tex_buildings/floor012.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/floor013.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4466,6 +4467,7 @@ base/textures/tex_buildings/floor031_nm.png | GNU General Public License 2.0 | M
 base/textures/tex_buildings/floor032.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/floor032_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_buildings/floor033.jpg | GNU General Public License 2.0 | OpenArena
+base/textures/tex_buildings/floor033_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/floor_gray_nm.png | GNU General Public License 2.0
 base/textures/tex_buildings/ground_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
@@ -4481,6 +4483,7 @@ base/textures/tex_buildings/ind05d.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/ind05d_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/japdoor001.png | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_buildings/japdoor002.png | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_buildings/japdoor002_nm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_buildings/japdoor003.png | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_buildings/japwall001.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_buildings/japwall001_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
@@ -5554,7 +5557,9 @@ base/textures/tex_misc/billiard001_nm.png | GNU General Public License 2.0 or la
 base/textures/tex_misc/biohazard_clean.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/biohazard_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/books001.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/books001_nm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_misc/books002.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/books002_nm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_misc/books003.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/books004.jpg | Public Domain | Weird Tales, Inc. | http://commons.wikimedia.org/wiki/File:Weird_Tales_September_1939.jpg
 base/textures/tex_misc/books005.jpg | Public Domain | Jacobs, Joseph, 1854-1916; Batten, John Dickson, 1860-1932, ill | http://www.archive.org/details/bookofwondervoya00jacoiala
