@@ -5842,14 +5842,14 @@ base/textures/tex_nature/leaves1.png | GNU General Public License 2.0 |  | OpenA
 base/textures/tex_nature/leaves2.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/leaves3.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/leaves4.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_nature/pjrock1.jpg | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_nature/pjrock16.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/otherground/S7000812.JPG.html;http://www.burningwell.org/gallery2/v/textures/ground/rocks/wetstone0526.jpg.html
+base/textures/tex_nature/pjrock1.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/rock389.jpg.html
+base/textures/tex_nature/pjrock16.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/otherground/S7000812.JPG.html;http://www.burningwell.org/gallery2/v/textures/ground/rocks/rock389.jpg.html
 base/textures/tex_nature/pjrock16_nm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_nature/pjrock17.jpg | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_nature/pjrock17_nm.png | GNU General Public License 2.0 | MCR | OpenArena
-base/textures/tex_nature/pjrock1_nm.png | GNU General Public License 2.0 | MCR | OpenArena
-base/textures/tex_nature/pjrock21.jpg | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_nature/pjrock21_nm.png | GNU General Public License 2.0 | MCR | OpenArena
+base/textures/tex_nature/pjrock17.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/rock389.jpg.html
+base/textures/tex_nature/pjrock17_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/pjrock1_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/pjrock21.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/wetstone0525.jpg.html
+base/textures/tex_nature/pjrock21_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/pjrock6.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/otherground/S7000812.JPG.html
 base/textures/tex_nature/pjrock6_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/potatoes.png | Public Domain | FWishbringer
