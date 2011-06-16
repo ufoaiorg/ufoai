@@ -82,9 +82,10 @@ static void UI_FreeRadarImages (void)
 	int i, j;
 
 	for (i = 0; i < radar.numImages; i++) {
-		Mem_Free(radar.images[i].name);
-		for (j = 0; j < radar.images[i].maxlevel; j++)
-			Mem_Free(radar.images[i].path[j]);
+		hudRadarImage_t *image = &radar.images[i];
+		Mem_Free(image->name);
+		for (j = 0; j < image->maxlevel; j++)
+			Mem_Free(image->path[j]);
 	}
 	OBJZERO(radar);
 }
