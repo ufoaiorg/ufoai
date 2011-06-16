@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cgame/campaign/cp_overlay.h"
 #include "../client/cgame/campaign/cp_ufo.h"
 #include "../client/cgame/campaign/cp_time.h"
+#include "../client/cgame/campaign/cp_alien_interest.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -351,55 +352,45 @@ static void testBaseBuilding (void)
 
 static void testAutoMissions (void)
 {
+	const vec2_t pos = {-73.2, 18.5};
+	base_t *base;
 	missionResults_t result;
 	battleParam_t battleParameters;
-	aircraft_t* aircraft = ccs.aircraftTemplates;
+	aircraft_t* aircraft;
 	mission_t *mission;
 	campaign_t *campaign;
-	employee_t *pilot, *e1, *e2;
 
 	ResetCampaignData();
+
+	campaign = GetCampaign();
+	CU_ASSERT_TRUE_FATAL(campaign != NULL);
 
 	OBJZERO(result);
 	OBJZERO(battleParameters);
 
-	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
-	campaign = GetCampaign();
-	CU_ASSERT_TRUE_FATAL(campaign != NULL);
+	ccs.overallInterest = 36;
+	CP_ResetAlienInterest();
 
-	CU_ASSERT_PTR_NOT_NULL(aircraft);
+	base = CreateBase("unittestautomission", pos);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+
+	AIR_ForeachFromBase(aircraft, base) {
+		if (AIR_GetTeamSize(aircraft) > 0)
+			break;
+	}
+	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
+	CU_ASSERT_TRUE(AIR_GetTeamSize(aircraft) > 0);
+
+	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
+	Vector2Copy(pos, mission->pos);
+	mission->posAssigned = qtrue;
+	mission->mapDef = Com_GetMapDefinitionByID("farm");
 	CU_ASSERT_PTR_NOT_NULL(mission);
 
-	pilot = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
-	CU_ASSERT_PTR_NOT_NULL(pilot);
-	AIR_SetPilot(aircraft, pilot);
-
-	e1 = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-	CU_ASSERT_TRUE(AIR_AddToAircraftTeam(aircraft, e1));
-	e2 = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-	CU_ASSERT_TRUE(AIR_AddToAircraftTeam(aircraft, e2));
-
-	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 2);
-
+	CP_CreateBattleParameters(mission, &battleParameters, aircraft);
 	CP_GameAutoGo(mission, aircraft, campaign, &battleParameters, &result);
 
 	CU_ASSERT_TRUE(result.won);
-
-	CU_ASSERT_TRUE(AIR_SetPilot(aircraft, NULL));
-	CU_ASSERT_PTR_NULL(AIR_GetPilot(aircraft));
-
-	CU_ASSERT_TRUE(AIR_RemoveEmployee(e1, aircraft));
-	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 1);
-
-	CU_ASSERT_TRUE(AIR_RemoveEmployee(e2, aircraft));
-	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 0);
-
-	CU_ASSERT_TRUE(E_DeleteEmployee(e2));
-	CU_ASSERT_TRUE(E_DeleteEmployee(pilot));
-	CU_ASSERT_TRUE(E_DeleteEmployee(e1));
-
-	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_SOLDIER), 0);
-	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_PILOT), 0);
 }
 
 static void testTransferItem (void)
@@ -1361,9 +1352,6 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(campaignSuite, testAutoMissions) == NULL)
-		return CU_get_error();
-
 	if (CU_ADD_TEST(campaignSuite, testBaseBuilding) == NULL)
 		return CU_get_error();
 
@@ -1374,6 +1362,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testAutoMissions) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testTransferItem) == NULL)

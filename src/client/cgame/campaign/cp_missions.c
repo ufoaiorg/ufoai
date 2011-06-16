@@ -315,6 +315,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	const byte *color;
 
 	assert(mission->posAssigned);
+	assert(mission->mapDef);
 
 	MIS_CreateAlienTeam(mission, param);
 	CP_CreateCivilianTeam(mission, param);
