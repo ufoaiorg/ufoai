@@ -2693,6 +2693,8 @@ mapdef tower
 	aircraft
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 //	ufos
