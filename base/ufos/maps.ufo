@@ -3684,6 +3684,7 @@ mapdef wilderness
 	populations
 	{
 		nopopulation
+		rural
 	}
 }
 
