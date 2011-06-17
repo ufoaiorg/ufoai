@@ -28,9 +28,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define GETTEXT_PACKAGE "uforadiant"
 #include <gtk/gtk.h>
-#include <glib/gi18n-lib.h>
+#include <glib/gi18n.h>
 
 #undef _
-#define  _(String) ((const char *) g_dgettext (GETTEXT_PACKAGE, String))
+#define  _(String) ((const char *) gettext (GETTEXT_PACKAGE, String))
 
 #endif
