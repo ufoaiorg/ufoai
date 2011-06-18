@@ -93,7 +93,7 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  * @param[in] string Draw the loading string - if the scripts are not parsed, this is
  * not possible, so use qfalse for very early calls
  */
-void SCR_DrawPrecacheScreen (qboolean string, int percent)
+void SCR_DrawLoadingScreen (qboolean string, int percent)
 {
 	const image_t *image;
 

@@ -902,6 +902,12 @@ void CL_InitAfter (void)
  */
 qboolean CL_ParseClientData (const char *type, const char *name, const char **text)
 {
+	static int progressCurrent = 0;
+
+	progressCurrent++;
+	if (progressCurrent % 10 == 0)
+		SCR_DrawLoadingScreen(qfalse, min(progressCurrent * 30 / 1500, 30));
+
 	if (Q_streq(type, "font"))
 		return UI_ParseFont(name, text);
 	else if (Q_streq(type, "tutorial"))
@@ -1299,6 +1305,7 @@ void CL_Init (void)
 	CIN_Init();
 
 	VID_Init();
+	SCR_DrawLoadingScreen(qfalse, 0);
 	S_Init();
 	SCR_Init();
 
