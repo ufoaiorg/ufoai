@@ -57,7 +57,6 @@ static void testLoadAllAnimationFiles (void)
 
 	FS_BuildFileList(pattern);
 
-
 	OBJZERO(mod);
 	/* set a very high value to work around the error check in the loading function */
 	mod.num_frames = 100000;
@@ -73,10 +72,8 @@ static void testLoadAllAnimationFiles (void)
 		Mem_DeletePool(vid_modelPool);
 	}
 
-
 	FS_NextFileFromFileList(NULL);
 }
-
 
 static void testCharacterAnimationFiles (void)
 {

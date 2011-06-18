@@ -40,8 +40,11 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 	int n;
 
 	/* count the animations */
-	for (n = 0, text = buffer; text; n++)
-		Com_Parse(&text);
+	n = Com_CountTokensInBuffer(buffer);
+
+	if ((n % 4) != 0)
+		Com_Error(ERR_DROP, "invalid syntax: %s", mod->animname);
+
 	/* each animation definition is made out of 4 tokens */
 	n /= 4;
 	if (n > MAX_ANIMS)
