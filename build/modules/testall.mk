@@ -20,6 +20,7 @@ $(TARGET)_SRCS      = \
 	tests/test_mapdef.c \
 	tests/test_mathlibextra.c \
 	tests/test_rma.c \
+	tests/test_renderer.c \
 	tests/test_shared.c \
 	tests/test_ui.c \
 	tests/test_ui_level2.c \
