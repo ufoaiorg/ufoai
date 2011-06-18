@@ -542,7 +542,7 @@ void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
 	CP_AutoBattleDisplayResults(battle);
 }
 
-void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const struct battleParam_s *missionParams)
+void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
 {
 	int numAliensTm;
 	int numAlienDronesTm;
