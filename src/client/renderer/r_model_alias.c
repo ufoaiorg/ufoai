@@ -39,8 +39,10 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 	mAliasAnim_t *anim;
 	int n;
 
+	/* count the animations */
 	for (n = 0, text = buffer; text; n++)
 		Com_Parse(&text);
+	/* each animation definition is made out of 4 tokens */
 	n /= 4;
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
@@ -88,7 +90,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 		/* add it */
 		mod->num_anims++;
 		anim++;
-	} while (mod->num_anims < MAX_ANIMS);
+	} while (mod->num_anims < n);
 }
 
 
