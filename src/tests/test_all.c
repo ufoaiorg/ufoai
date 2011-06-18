@@ -46,6 +46,7 @@ typedef int (*testSuite_t) (void);
 #include "test_mapdef.h"
 #include "test_dbuffer.h"
 #include "test_renderer.h"
+#include "test_scripts.h"
 
 static const testSuite_t testSuites[] = {
 	UFO_AddGenericTests,
@@ -60,6 +61,7 @@ static const testSuite_t testSuites[] = {
 	UFO_AddMapDefTests,
 	UFO_AddDBufferTests,
 	UFO_AddRendererTests,
+	UFO_AddScriptsTests,
 	NULL
 };
 #define NUMBER_OF_TESTS (sizeof(testSuites) / sizeof(*(testSuites)))
