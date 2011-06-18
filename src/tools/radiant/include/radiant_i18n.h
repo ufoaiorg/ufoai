@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#undef _
-#define  _(String) ((const char *) gettext (GETTEXT_PACKAGE, String))
+//#undef _
+//#define  _(String) ((const char *) gettext (GETTEXT_PACKAGE, String))
 
 #endif
