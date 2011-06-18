@@ -32,9 +32,9 @@ walk3				133		151		22
 
 // Crouched-walking animations (0=nothing/grenades, 1=rifles, 2=pistol, 3=rpg)
 cwalk0				152		169		15
-cwalk1_Rifle				170		187		15
-cwalk2_Pistol				188		206		15
-cwalk3_RPG				207		224		15
+cwalk1				170		187		15
+cwalk2				188		206		15
+cwalk3				207		224		15
 
 // Panic animation
 panic0				225		227		3
