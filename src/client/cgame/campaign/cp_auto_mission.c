@@ -399,7 +399,7 @@ static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTe
 		if (battle->unitHealth[eTeam][eUnit] > 0) {
 			const double calcRand = frand();
 
-			if (calcRand < (0.250 - (effective * 0.250))) {
+			if (calcRand < (0.050 - (effective * 0.050))) {
 				const int strikeDamage = (int) (200.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
 
 				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
