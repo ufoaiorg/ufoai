@@ -1273,7 +1273,7 @@ team phalanx_pilot
 			pilots/male body head01 0
 		}
 //		female {
-//			pilots/female body head01 0
+//			pilots/female body head01 0 //TODO: Animate the female pilot model
 //		}
 	}
 
