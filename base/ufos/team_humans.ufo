@@ -1671,6 +1671,8 @@ team phalanx_ugv_phoenix
 	race	robot
 	//hit_particle none
 	name	"_Phoenix UGV"
+	// we can't assign any extra armour
+	armour	false
 
 	names {
 		neutral {
@@ -1733,6 +1735,8 @@ team phalanx_ugv_ares_w
 	race	robot
 	//hit_particle none
 	name	"_Ares W (UGV)"
+	// we can't assign any extra armour
+	armour	false
 
 	names {
 		neutral {
