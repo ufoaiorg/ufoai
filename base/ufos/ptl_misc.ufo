@@ -909,7 +909,7 @@ particle spiral1
 		init
 		{
 			model   objects/spiral/spiral_large
-			tps             20
+			tps             40
 			omega   "0 100 0"
 		}
 
@@ -923,7 +923,7 @@ particle spiral2
 		init
 		{
 			model   objects/spiral/spiral_small
-			tps             0
+			tps             20
 			omega   "0 80 0"
 		}
 
