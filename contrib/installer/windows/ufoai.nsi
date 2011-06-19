@@ -151,7 +151,6 @@ Section "Source Code" SEC03
 	SetOutPath "$INSTDIR"
 		File /nonfatal "..\..\..\configure"
 		File /nonfatal "..\..\..\Makefile"
-		File /nonfatal "..\..\..\INSTALL"
 		File /nonfatal "..\..\..\COPYING"
 		File /nonfatal "..\..\..\LICENSES"
 		File /nonfatal "..\..\..\README"
