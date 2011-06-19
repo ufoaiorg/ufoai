@@ -880,32 +880,16 @@ static void GAME_SetMode_f (void)
 	Com_Printf("GAME_SetMode_f: Mode '%s' not found\n", modeName);
 }
 
-static qboolean GAME_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
-{
-	if (teamDef != NULL && teamDef->armour && INV_IsArmour(od)) {
-		if (CHRSH_IsTeamDefAlien(teamDef))
-			return od->useable == TEAM_ALIEN;
-		else if (teamDef->race == RACE_PHALANX_HUMAN)
-			return od->useable == TEAM_PHALANX;
-		else if (teamDef->race == RACE_CIVILIAN)
-			return od->useable == TEAM_CIVILIAN;
-		else
-			return qfalse;
-	}
-
-	return qtrue;
-}
-
 qboolean GAME_ItemIsUseable (const objDef_t *od)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
 	if (INV_IsArmour(od)) {
 		const char *teamDefID = GAME_GetTeamDef();
-		const teamDef_t *teamDef = Com_GetTeamDefinitionByID((teamDefID));
+		const teamDef_t *teamDef = Com_GetTeamDefinitionByID(teamDefID);
 
 		/* Don't allow armour for other teams */
-		if (!GAME_IsArmourUseableForTeam(od, teamDef))
+		if (teamDef != NULL && !CHRSH_IsArmourUseableForTeam(od, teamDef))
 			return qfalse;
 	}
 

@@ -36,6 +36,24 @@ qboolean CHRSH_IsTeamDefAlien (const teamDef_t* const td)
 		|| td->race == RACE_BLOODSPIDER || td->race == RACE_SHEVAAR;
 }
 
+qboolean CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
+{
+	assert(teamDef);
+	assert(INV_IsArmour(od));
+
+	if (!teamDef->armour)
+		return qfalse;
+
+	if (CHRSH_IsTeamDefAlien(teamDef))
+		return od->useable == TEAM_ALIEN;
+	else if (teamDef->race == RACE_PHALANX_HUMAN)
+		return od->useable == TEAM_PHALANX;
+	else if (teamDef->race == RACE_CIVILIAN)
+		return od->useable == TEAM_CIVILIAN;
+
+	return qfalse;
+}
+
 /**
  * @brief Check if a team definition is a robot.
  * @param[in] td Pointer to the team definition to check.

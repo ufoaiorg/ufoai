@@ -288,5 +288,6 @@ const char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnu
 const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
 qboolean CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
+qboolean CHRSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);
 
 #endif
