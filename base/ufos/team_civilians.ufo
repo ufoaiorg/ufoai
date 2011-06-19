@@ -578,8 +578,8 @@ team miner
 			civilians/male worker01 worker01_head 1
 			civilians/male worker01 worker02_head 0
 			civilians/male worker01 worker02_head 1
-			}
 		}
+	}
 
 	actorsounds {
 		male {
