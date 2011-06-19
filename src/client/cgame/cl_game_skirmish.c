@@ -86,7 +86,10 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 	int i;
 
 	cgi->Cvar_SetValue("ai_numcivilians", 8);
-	cgi->Cvar_Set("ai_civilian", "europe");
+	if (md->civTeam != NULL)
+		cgi->Cvar_Set("ai_civilian", md->civTeam);
+	else
+		cgi->Cvar_Set("ai_civilian", "europe");
 
 	if (md->hurtAliens)
 		cgi->Cvar_Set("sv_hurtaliens", "1");

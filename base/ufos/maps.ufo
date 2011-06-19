@@ -1558,6 +1558,7 @@ mapdef mine
 		coop4
 	}
 	maxaliens	15 //TODO: This is an arbitrary value right now.
+	civilianteam	miner
 
 	aircraft
 	{
