@@ -691,6 +691,24 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 	}
 }
 
+ptlDef_t *CL_ParticleGet (const char *name)
+{
+	int i;
+
+	if (!name || strlen(name) <= 0)
+		return NULL;
+
+	/* find the particle definition */
+	for (i = 0; i < numPtlDefs; i++) {
+		ptlDef_t *pd = &ptlDef[i];
+		if (Q_streq(name, pd->name)) {
+			return pd;
+		}
+	}
+
+	return NULL;
+}
+
 /**
  * @brief Spawn a new particle to the map
  * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
@@ -712,16 +730,11 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 		return NULL;
 
 	/* find the particle definition */
-	for (i = 0; i < numPtlDefs; i++)
-		if (Q_streq(name, ptlDef[i].name))
-			break;
-
-	if (i == numPtlDefs) {
+	pd = CL_ParticleGet(name);
+	if (pd == NULL) {
 		Com_Printf("Particle definition \"%s\" not found\n", name);
 		return NULL;
 	}
-
-	pd = &ptlDef[i];
 
 	/* add the particle */
 	for (i = 0; i < r_numParticles; i++)

@@ -36,6 +36,7 @@ void CL_RunMapParticles(void);
 int CL_ParseParticle(const char *name, const char **text);
 void CL_InitParticles(void);
 ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
+ptlDef_t *CL_ParticleGet(const char *particleID);
 void CL_ParticleVisible(ptl_t *p, qboolean hide);
 
 #endif
