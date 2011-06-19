@@ -845,6 +845,7 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 	FS_InitCommandsAndCvars();
 #endif
 
+	Cbuf_AddText("exec filesystem.cfg\n");
 	Com_Printf("using %s for writing\n", FS_Gamedir());
 }
 
