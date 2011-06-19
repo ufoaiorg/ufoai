@@ -1271,12 +1271,10 @@ team phalanx_pilot
 	models {
 		male {
 			pilots/male body head01 0
-			pilots/male body head01 0
-			pilots/male body head01 0
-			pilots/male body head01 0
-			pilots/male body head01 0
-			pilots/male body head01 0
 		}
+//		female {
+//			pilots/female body head01 0
+//		}
 	}
 
 	actorsounds {
@@ -1636,6 +1634,8 @@ team phalanx_worker
 		male {
 			civilians/male worker01 worker01_head 0
 			civilians/male worker01 worker01_head 1
+			civilians/male worker01 worker02_head 0
+			civilians/male worker01 worker02_head 1
 		}
 	}
 
