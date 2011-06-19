@@ -241,6 +241,15 @@ static void testNations (void)
 	}
 }
 
+static void testAircraft (void)
+{
+	aircraft_t *aircraft;
+	AIR_Foreach(aircraft) {
+		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(aircraft->model), va("%s does not exist (aircraft: %s)", aircraft->model, aircraft->id));
+		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(aircraft->image), va("%s does not exist (aircraft: %s)", aircraft->image, aircraft->id));
+	}
+}
+
 int UFO_AddScriptsTests (void)
 {
 	/* add a suite to the registry */
@@ -257,6 +266,9 @@ int UFO_AddScriptsTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(ScriptsSuite, testNations) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(ScriptsSuite, testAircraft) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
