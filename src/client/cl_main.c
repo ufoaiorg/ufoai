@@ -902,11 +902,13 @@ void CL_InitAfter (void)
  */
 qboolean CL_ParseClientData (const char *type, const char *name, const char **text)
 {
+#ifndef COMPILE_UNITTESTS
 	static int progressCurrent = 0;
 
 	progressCurrent++;
 	if (progressCurrent % 10 == 0)
 		SCR_DrawLoadingScreen(qfalse, min(progressCurrent * 30 / 1500, 30));
+#endif
 
 	if (Q_streq(type, "font"))
 		return UI_ParseFont(name, text);

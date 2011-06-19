@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int UFO_InitSuiteScripts (void)
 {
+	TEST_Init();
+
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 	vid_imagePool = Mem_CreatePool("Vid: Image system");
 
@@ -45,7 +47,6 @@ static int UFO_InitSuiteScripts (void)
 	OBJZERO(cls);
 	Com_ParseScripts(qfalse);
 
-	TEST_Init();
 	return 0;
 }
 
