@@ -61,8 +61,93 @@ static int UFO_CleanSuiteScripts (void)
 	return 0;
 }
 
+static qboolean TEST_CheckModel (const char *path)
+{
+	const char *extensions[] = {"md2", "md3", "dpm", "obj", NULL};
+	int i = 0;
+
+	while (extensions[i]) {
+		if (FS_CheckFile("models/%s.%s", path, extensions[i]) != -1)
+			return qtrue;
+		i++;
+	}
+
+	return qfalse;
+}
+
 static void testCharacterScriptData (void)
 {
+	int i;
+	linkedList_t *armourPaths = NULL;
+	const char *armourPath;
+
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		int j;
+		const teamDef_t *teamDef = &csi.teamDef[i];
+		if (!teamDef->armour)
+			continue;
+
+		for (j = 0; j < csi.numODs; j++) {
+			const objDef_t *od = INVSH_GetItemByIDX(j);
+			if (!INV_IsArmour(od))
+				continue;
+
+			/* not for this team */
+			if (!CHRSH_IsArmourUseableForTeam(od, teamDef))
+				continue;
+
+			if (!LIST_ContainsString(armourPaths, od->armourPath))
+				LIST_AddString(&armourPaths, od->armourPath);
+		}
+
+		UFO_CU_ASSERT_TRUE_MSG(!LIST_IsEmpty(armourPaths), va("no armour definitions found for team %s - but armour is set to true",
+				teamDef->id));
+
+		LIST_Foreach(armourPaths, char, armourPath) {
+			nametypes_t l;
+
+			for (l = NAME_NEUTRAL; l < NAME_LAST; l++) {
+				linkedList_t *list = teamDef->models[l];
+				int k;
+
+				/* no models for this gender */
+				if (!teamDef->numModels[l])
+					continue;
+
+				CU_ASSERT_PTR_NOT_NULL(list);
+				for (k = 0; k < teamDef->numModels[l]; k++) {
+					const char *path;
+
+					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
+					path = (const char*)list->data;
+					/* body */
+					list = list->next;
+					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s/%s", path, list->data)), va("%s does not exist in models/%s (teamDef: %s)",
+							list->data, path, teamDef->id));
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s%s/%s", path, armourPath, list->data)), va("%s does not exist in models/%s%s (teamDef: %s)",
+							list->data, path, armourPath, teamDef->id));
+
+					list = list->next;
+					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
+					/* head */
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s/%s", path, list->data)), va("%s does not exist in models/%s (teamDef: %s)",
+							list->data, path, teamDef->id));
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s%s/%s", path, armourPath, list->data)), va("%s does not exist in models/%s%s (teamDef: %s)",
+							list->data, path, armourPath, teamDef->id));
+
+					/* skip skin */
+					list = list->next;
+					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
+
+					/* new path */
+					list = list->next;
+				}
+			}
+		}
+
+		LIST_Delete(&armourPaths);
+	}
 }
 
 int UFO_AddScriptsTests (void)
