@@ -84,7 +84,7 @@ static void testCharacterAnimationFiles (void)
 			"dead2", "dead3", "stand0", "stand1", "stand2", "stand3", "walk0",
 			"walk1", "walk2", "walk3", "cstand0", "cstand1", "cstand2",
 			"cstand3", "cwalk0", "cwalk1", "cwalk2", "cwalk3", "stand_menu",
-			"panic0" };
+			"panic0", NULL };
 	const char* soldiers[] = { "death1", "death2", "death3", "dead1", "dead2",
 			"dead3", "stand0", "stand1", "stand2", "stand3", "walk0", "walk1",
 			"walk2", "walk3", "cstand0", "cstand1", "cstand2", "cstand3",
