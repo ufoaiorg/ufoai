@@ -887,9 +887,6 @@ base/models/aliens/tamanlight/body_gm.png | GNU General Public License 2.0 | Luk
 base/models/aliens/tamanlight/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/head01_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
-base/models/aliens/tamanlight/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/tamanlight/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/tamanlight/head04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -899,9 +896,6 @@ base/models/aliens/tamanmedium/body_gm.png | GNU General Public License 2.0 | Lu
 base/models/aliens/tamanmedium/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/head01_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
-base/models/aliens/tamanmedium/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/tamanmedium/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/tamanmedium/head04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/animals/crocodile/croc.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/animals/crocodile/croc.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/animals/fish2/fish.anm | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1993,14 +1987,6 @@ base/models/soldiers/femalepower/body_desert.png | Creative Commons Attribution-
 base/models/soldiers/femalepower/body_jungle.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/body_yellow.png | Creative Commons Attribution-Share Alike 3.0
 base/models/soldiers/femalepower/head01a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/head01b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/head01c.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/head02a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/head02b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/head03a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/head03b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/head04a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/head04b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/male/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -2251,16 +2237,6 @@ base/models/soldiers/malepower/body_desert.png | Creative Commons Attribution-Sh
 base/models/soldiers/malepower/body_jungle.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/body_yellow.png | Creative Commons Attribution-Share Alike 3.0
 base/models/soldiers/malepower/head01a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head01b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head02a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head02b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head03a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head03b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head04a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head04b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head05a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head05b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/head05c.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_h.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_ares/ares_h.png | GNU General Public License 2.0 or later | Willem Sitters
