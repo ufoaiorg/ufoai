@@ -237,7 +237,7 @@ typedef struct teamDef_s {
 	struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
 							 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
 							 * the ability to melee attack their victims. They get a weapon assigned with several
-							 * bloodspider melee attack firedefitions */
+							 * bloodspider melee attack firedefinitions */
 
 	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
