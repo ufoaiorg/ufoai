@@ -11364,7 +11364,7 @@ msgid "Can't perform action - not enough TUs!\n"
 msgstr "Nicht genug Zeiteinheiten!\n"
 
 msgid "Soldier left the rescue zone\n"
-msgstr "Soldate hat Rettungszone verlassen\n"
+msgstr "Soldat hat Rettungszone verlassen\n"
 
 msgid "Soldier entered the rescue zone\n"
 msgstr "Soldat in der Rettungszone angekommen\n"
