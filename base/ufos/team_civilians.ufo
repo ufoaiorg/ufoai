@@ -500,10 +500,6 @@ team scientist
 	}
 
 	actorsounds {
-		female {
-			hurtsound	civilians/femalehurt01
-			deathsound	civilians/femaledeath01
-		}
 		male {
 			hurtsound	civilians/malehurt01
 			hurtsound	civilians/malehurt02
