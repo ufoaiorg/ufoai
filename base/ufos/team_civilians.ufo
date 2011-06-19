@@ -453,14 +453,11 @@ team armysoldier
 	models {
 		male {
 			civilians/male soldier01 soldier01_head 0
+			civilians/male soldier01 soldier01_head02 0
 		}
 	}
 
 	actorsounds {
-		female {
-			hurtsound	civilians/femalehurt01
-			deathsound	civilians/femaledeath01
-		}
 		male {
 			hurtsound	civilians/malehurt01
 			hurtsound	civilians/malehurt02
