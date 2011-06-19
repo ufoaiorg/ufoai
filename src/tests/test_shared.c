@@ -87,6 +87,8 @@ void TEST_Init (void)
 	SV_Init();
 	NET_Init();
 
+	FS_ExecAutoexec();
+
 	OBJZERO(csi);
 
 	Com_SetExceptionCallback(Test_RunError);
