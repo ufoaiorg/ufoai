@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/client.h"
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
+#include "../client/battlescape/cl_particle.h"
 
 /**
  * The suite initialization function.
@@ -61,10 +62,30 @@ static int UFO_CleanSuiteScripts (void)
 	return 0;
 }
 
+static qboolean TEST_CheckImage (const char *path)
+{
+	const char *extensions[] = {"png", "tga", "jpg", NULL};
+	int i = 0;
+
+	if (path[0] == '\0')
+		return qtrue;
+
+	while (extensions[i]) {
+		if (FS_CheckFile("pics/%s.%s", path, extensions[i]) != -1)
+			return qtrue;
+		i++;
+	}
+
+	return qfalse;
+}
+
 static qboolean TEST_CheckModel (const char *path)
 {
 	const char *extensions[] = {"md2", "md3", "dpm", "obj", NULL};
 	int i = 0;
+	if (path[0] == '\0')
+		return qtrue;
+
 
 	while (extensions[i]) {
 		if (FS_CheckFile("models/%s.%s", path, extensions[i]) != -1)
@@ -73,6 +94,32 @@ static qboolean TEST_CheckModel (const char *path)
 	}
 
 	return qfalse;
+}
+
+static qboolean TEST_CheckSound (const char *path)
+{
+	const char *extensions[] = {"wav", "ogg", NULL};
+	int i = 0;
+
+	if (path[0] == '\0')
+		return qtrue;
+
+	while (extensions[i]) {
+		if (FS_CheckFile("sound/%s.%s", path, extensions[i]) != -1)
+			return qtrue;
+		i++;
+	}
+
+	return qfalse;
+}
+
+static qboolean TEST_CheckParticle (const char *particleID)
+{
+	if (particleID[0] == '\0')
+		return qtrue;
+
+	/* find the particle definition */
+	return CL_ParticleGet(particleID) != NULL;
 }
 
 static void testCharacterScriptData (void)
@@ -150,6 +197,38 @@ static void testCharacterScriptData (void)
 	}
 }
 
+static void testItems (void)
+{
+	int j;
+
+	for (j = 0; j < csi.numODs; j++) {
+		const objDef_t *od = INVSH_GetItemByIDX(j);
+		int i;
+
+		if (od->isVirtual || od->isDummy)
+			continue;
+
+		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(od->reloadSound), va("sound %s does not exist (item %s)", od->reloadSound, od->id));
+		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(od->model), va("model %s does not exist (item %s)", od->model, od->id));
+		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(od->image), va("image %s does not exist (item %s)", od->image, od->id));
+
+		for (i = 0; i < od->numWeapons; i++) {
+			int k;
+
+			for (k = 0; k < od->numFiredefs[i]; k++) {
+				const fireDef_t *fd = &od->fd[i][k];
+				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->bounceSound), va("sound %s does not exist (firedef %s for item %s)", fd->bounceSound, fd->name, od->id));
+				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->fireSound), va("sound %s does not exist (firedef %s for item %s)", fd->fireSound, fd->name, od->id));
+				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->impactSound), va("sound %s does not exist (firedef %s for item %s)", fd->impactSound, fd->name, od->id));
+				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->hitBodySound), va("sound %s does not exist (firedef %s for item %s)", fd->hitBodySound, fd->name, od->id));
+				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckParticle(fd->hitBody), va("particle %s does not exist (firedef %s for item %s)", fd->hitBody, fd->name, od->id));
+				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckParticle(fd->impact), va("particle %s does not exist (firedef %s for item %s)", fd->impact, fd->name, od->id));
+				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckParticle(fd->projectile), va("particle %s does not exist (firedef %s for item %s)", fd->projectile, fd->name, od->id));
+			}
+		}
+	}
+}
+
 int UFO_AddScriptsTests (void)
 {
 	/* add a suite to the registry */
@@ -160,6 +239,9 @@ int UFO_AddScriptsTests (void)
 
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(ScriptsSuite, testCharacterScriptData) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(ScriptsSuite, testItems) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
