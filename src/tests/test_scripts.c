@@ -123,6 +123,16 @@ static qboolean TEST_CheckParticle (const char *particleID)
 	return CL_ParticleGet(particleID) != NULL;
 }
 
+static void testTeamDefs (void)
+{
+	int i;
+
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		const teamDef_t *teamDef = &csi.teamDef[i];
+		UFO_CU_ASSERT_TRUE_MSG(teamDef->numTemplates > 0, va("%s has no character templates assigned", teamDef->id))
+	}
+}
+
 static void testCharacterScriptData (void)
 {
 	int i;
@@ -275,6 +285,9 @@ int UFO_AddScriptsTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
+	if (CU_ADD_TEST(ScriptsSuite, testTeamDefs) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(ScriptsSuite, testCharacterScriptData) == NULL)
 		return CU_get_error();
 
