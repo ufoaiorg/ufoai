@@ -63,7 +63,7 @@ static const testSuite_t testSuites[] = {
 	UFO_AddDBufferTests,
 	UFO_AddRendererTests,
 	UFO_AddScriptsTests,
-	UFO_InitSuiteMathlibExtra,
+	UFO_AddMathlibExtraTests,
 	NULL
 };
 #define NUMBER_OF_TESTS (sizeof(testSuites) / sizeof(*(testSuites)))
