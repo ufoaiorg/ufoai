@@ -171,14 +171,13 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 	/* check for links first */
 	for (link = fs_links; link; link = link->next) {
 		if (!strncmp(filename, link->from, link->fromlength)) {
+			int length;
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
-			file->f = fopen(netpath, "rb");
-			if (file->f) {
-				fs_openedFiles++;
-				return FS_FileLength(file);
-			}
-			Com_Printf("linked file could not be opened: %s\n", netpath);
-			return -1;
+			length = FS_OpenFile(netpath, file, mode);
+			Q_strncpyz(file->name, filename, sizeof(file->name));
+			if (length == -1)
+				Com_Printf("linked file could not be opened: %s\n", netpath);
+			return length;
 		}
 	}
 
