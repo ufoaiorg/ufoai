@@ -40,6 +40,7 @@ typedef int (*testSuite_t) (void);
 #include "test_routing.h"
 #include "test_inventory.h"
 #include "test_campaign.h"
+#include "test_mathlibextra.h"
 #include "test_rma.h"
 #include "test_parser.h"
 #include "test_game.h"
@@ -62,6 +63,7 @@ static const testSuite_t testSuites[] = {
 	UFO_AddDBufferTests,
 	UFO_AddRendererTests,
 	UFO_AddScriptsTests,
+	UFO_InitSuiteMathlibExtra,
 	NULL
 };
 #define NUMBER_OF_TESTS (sizeof(testSuites) / sizeof(*(testSuites)))

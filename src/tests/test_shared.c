@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include <stdio.h>
 #include <stdarg.h>
+#include "../client/cl_video.h"
 
 void TEST_Shutdown (void)
 {
@@ -93,6 +94,7 @@ void TEST_Init (void)
 
 	http_timeout = Cvar_Get("noname", "", 0, NULL);
 	http_proxy = Cvar_Get("noname", "", 0, NULL);
+	vid_mode = Cvar_Get("noname", "", 0, NULL);
 }
 
 
