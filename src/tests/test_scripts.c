@@ -185,6 +185,7 @@ static void testCharacterScriptData (void)
 							list->data, path, armourPath, teamDef->id));
 
 					/* skip skin */
+					/** @todo check that the skin is valid for the given model */
 					list = list->next;
 					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
 
