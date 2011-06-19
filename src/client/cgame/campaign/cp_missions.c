@@ -290,10 +290,9 @@ static void CP_CreateCivilianTeam (const mission_t *mission, battleParam_t *para
 
 	param->civilians = MAP_GetCivilianNumberByPosition(mission->pos);
 
-
 	nation = MAP_GetNation(mission->pos);
 	param->nation = nation;
-	if (mission->mapDef->civTeam) {
+	if (mission->mapDef->civTeam != NULL) {
 		Q_strncpyz(param->civTeam, mission->mapDef->civTeam, sizeof(param->civTeam));
 	} else if (nation) {
 		/** @todo There should always be a nation, no? Otherwise the mission was placed wrong. */
