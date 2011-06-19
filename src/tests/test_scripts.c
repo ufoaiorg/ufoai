@@ -251,6 +251,21 @@ static void testAircraft (void)
 	}
 }
 
+static void testMapDef (void)
+{
+	int i;
+
+	for (i = 0; i < cls.numMDs; i++) {
+		const mapDef_t *md = Com_GetMapDefByIDX(i);
+		if (md->civTeam != NULL)
+			CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(md->civTeam));
+
+		CU_ASSERT_FALSE(md->maxAliens <= 0);
+		CU_ASSERT_PTR_NOT_NULL(md->map);
+		CU_ASSERT_PTR_NOT_NULL(md->description);
+	}
+}
+
 int UFO_AddScriptsTests (void)
 {
 	/* add a suite to the registry */
@@ -270,6 +285,9 @@ int UFO_AddScriptsTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(ScriptsSuite, testAircraft) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(ScriptsSuite, testMapDef) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
