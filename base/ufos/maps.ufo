@@ -3495,6 +3495,7 @@ mapdef laboratory
 		coop4
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
+	civilianteam	scientist
 
 	aircraft
 	{
