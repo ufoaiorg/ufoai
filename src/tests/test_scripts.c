@@ -129,11 +129,23 @@ static void testTeamDefs (void)
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t *teamDef = &csi.teamDef[i];
-		UFO_CU_ASSERT_TRUE_MSG(teamDef->numTemplates > 0, va("%s has no character templates assigned", teamDef->id))
+		int k;
+
+		UFO_CU_ASSERT_TRUE_MSG(teamDef->numTemplates > 0, va("%s has no character templates assigned", teamDef->id));
+
+		for (k = 0; k < SND_MAX; k++) {
+			int l;
+			for (l = 0; l < NAME_LAST; l++) {
+				char *soundFile;
+				LIST_Foreach(teamDef->sounds[k][l], char, soundFile) {
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(soundFile), va("sound %s does not exist (team %s)", soundFile, teamDef->id));
+				}
+			}
+		}
 	}
 }
 
-static void testCharacterScriptData (void)
+static void testTeamDefsModelScriptData (void)
 {
 	int i;
 	linkedList_t *armourPaths = NULL;
@@ -288,7 +300,7 @@ int UFO_AddScriptsTests (void)
 	if (CU_ADD_TEST(ScriptsSuite, testTeamDefs) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(ScriptsSuite, testCharacterScriptData) == NULL)
+	if (CU_ADD_TEST(ScriptsSuite, testTeamDefsModelScriptData) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(ScriptsSuite, testItems) == NULL)
