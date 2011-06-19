@@ -40,7 +40,7 @@
 // INDUSTRIAL RANDOM MAPS
 ////////////////////////
 
-mapdef oilpipes_small
+mapdef industrial_small
 {
 	map			"+industrial"
 	param		"small"
@@ -82,7 +82,7 @@ mapdef oilpipes_small
 	}
 }
 
-mapdef oilpipes_large
+mapdef industrial_large
 {
 	map			"+industrial"
 	param		"large"
