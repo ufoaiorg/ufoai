@@ -49,6 +49,7 @@ mapdef industrial_small
 	teams		4
 	multiplayer	false
 	maxaliens	6
+	civilianteam	worker
 
 	aircraft
 	{
@@ -91,6 +92,7 @@ mapdef industrial_large
 	teams		4
 	multiplayer	false
 	maxaliens	12
+	civilianteam	worker
 
 	aircraft
 	{
@@ -1651,6 +1653,7 @@ mapdef bunker
 		coop4
 	}
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+	civilianteam	armysoldier
 
 	aircraft
 	{
@@ -2597,6 +2600,7 @@ mapdef pipes_const
 		coop4
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
+	civilianteam	miner
 
 	aircraft
 	{
@@ -2783,6 +2787,7 @@ mapdef military_convoy
 		coop4
 	}
 	maxaliens		11 //TODO: This is an arbitrary value right now.
+	civilianteam	armysoldier
 
 	aircraft
 	{
@@ -3351,6 +3356,7 @@ mapdef shelter
 		coop4
 	}
 	maxaliens		21 //TODO: This is an arbitrary value right now.
+	civilianteam	armysoldier
 
 	aircraft
 	{
