@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
 #include "../client/battlescape/cl_particle.h"
+#include "../client/cgame/campaign/cp_campaign.h"
 
 /**
  * The suite initialization function.
@@ -229,6 +230,17 @@ static void testItems (void)
 	}
 }
 
+static void testNations (void)
+{
+	int i;
+
+	for (i = 0; i < ccs.numNations; i++) {
+		const nation_t *nat = NAT_GetNationByIDX(i);
+		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(va("nations/%s", nat->id)), va("nation %s has no image", nat->id));
+		CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(nat->id));
+	}
+}
+
 int UFO_AddScriptsTests (void)
 {
 	/* add a suite to the registry */
@@ -242,6 +254,9 @@ int UFO_AddScriptsTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(ScriptsSuite, testItems) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(ScriptsSuite, testNations) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
