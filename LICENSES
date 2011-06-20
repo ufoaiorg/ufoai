@@ -4488,6 +4488,7 @@ base/textures/tex_buildings/metal_duct.jpg | GNU General Public License 2.0 | We
 base/textures/tex_buildings/metal_duct_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/metal_duct_rust.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/metal_duct_rust_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_buildings/metal_window.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (metal04.tga)
 base/textures/tex_buildings/metalbridge6.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/metalbridge6broke.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/metceil1d.jpg | GNU General Public License 2.0 | OpenArena
