@@ -51,6 +51,15 @@ f      +u     +u     +f     +f     +u     +u     f
 0      wv     wv     1hg    1hg    wv     wv     0
 }
 
+tile +craft_ufo_scout
+{
+5 4
+1      wvu    wvu    1f     0
+hg     +vw    +vw    +g     vwh
+hg     +vw    +vw    +g     vwh
+1      wv     wv     1      0
+}
+
 
 ///*** Roads:
 ///**** Vertical
@@ -438,6 +447,36 @@ tileset vertical_odd_1 "0 8"
 //+craft_ufo_harvester "1 1"
 +craft_drop_firebird "1 1"
 }
+
+assembly small_ufo
+{
+size "6 5"
+title "_UFO landed in hills area"
+
+//fix +road_1c1 "4 0"
+
+tileset vertical_even_1 "0 8"
+tileset vertical_odd_1 "0 8"
+
++road_1h1 "0 5"
++road_1h2 "0 5"
+
++road_1c1 "1 4"
+
++house_11 "1 15"
++house_12 "1 15"
+
++house_13 "0 1"
++house_15 "0 1"
+
+tileset fillers_1s_common "0 20"
+
++filler_1s3 "0 2"
+
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
+}
+
 
 assembly harvester
 {
