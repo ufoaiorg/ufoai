@@ -2122,8 +2122,8 @@
 {
 "classname" "light"
 "origin" "576 320 56"
-"spawnflags" "1"
 "_color" "0.95 0.98 1"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 4
@@ -2946,153 +2946,153 @@
 {
 "classname" "light"
 "light" "200"
-"spawnflags" "1"
-"_color" "0.95 0.98 1"
 "origin" "576 256 56"
+"_color" "0.95 0.98 1"
+"spawnflags" "1"
 }
 // entity 16
 {
 "classname" "light"
 "origin" "604 128 56"
-"spawnflags" "1"
 "_color" "0.95 0.98 1"
+"spawnflags" "1"
 "light" "200"
 }
 // entity 17
 {
 "classname" "light"
 "origin" "460 120 56"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 18
 {
 "classname" "light"
 "light" "190"
-"spawnflags" "1"
-"_color" "1 0.95 0.85"
 "origin" "460 212 56"
+"_color" "1 0.95 0.85"
+"spawnflags" "1"
 }
 // entity 19
 {
 "classname" "light"
 "origin" "340 212 56"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 20
 {
 "classname" "light"
 "origin" "192 212 56"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 21
 {
 "classname" "light"
 "origin" "192 128 56"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 22
 {
 "classname" "light"
 "light" "125"
-"spawnflags" "1"
-"_color" "0.95 0.98 1"
 "origin" "308 108 56"
+"_color" "0.95 0.98 1"
+"spawnflags" "1"
 }
 // entity 23
 {
 "classname" "light"
 "origin" "464 340 56"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 24
 {
 "classname" "light"
 "light" "190"
-"spawnflags" "1"
-"_color" "1 0.95 0.85"
 "origin" "344 340 56"
+"_color" "1 0.95 0.85"
+"spawnflags" "1"
 }
 // entity 25
 {
 "classname" "light"
 "light" "190"
-"spawnflags" "1"
-"_color" "1 0.95 0.85"
 "origin" "412 340 120"
+"_color" "1 0.95 0.85"
+"spawnflags" "1"
 }
 // entity 26
 {
 "classname" "light"
 "origin" "320 340 120"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 27
 {
 "classname" "light"
 "origin" "192 192 120"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 28
 {
 "classname" "light"
 "origin" "544 128 120"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 29
 {
 "classname" "light"
 "origin" "576 320 120"
-"spawnflags" "1"
 "_color" "0.95 0.98 1"
+"spawnflags" "1"
 "light" "170"
 }
 // entity 30
 {
 "classname" "light"
 "origin" "544 224 120"
-"spawnflags" "1"
 "_color" "1 0.95 0.85"
+"spawnflags" "1"
 "light" "190"
 }
 // entity 31
 {
 "classname" "light"
 "light" "190"
-"spawnflags" "1"
-"_color" "1 0.95 0.85"
 "origin" "400 184 120"
+"_color" "1 0.95 0.85"
+"spawnflags" "1"
 }
 // entity 32
 {
 "classname" "light"
 "light" "190"
-"spawnflags" "1"
-"_color" "1 0.95 0.85"
 "origin" "288 172 120"
+"_color" "1 0.95 0.85"
+"spawnflags" "1"
 }
 // entity 33
 {
 "classname" "light"
 "light" "190"
-"spawnflags" "1"
-"_color" "1 0.95 0.85"
 "origin" "164 96 120"
+"_color" "1 0.95 0.85"
+"spawnflags" "1"
 }
 // entity 34
 {
@@ -3410,8 +3410,8 @@
 {
 "classname" "light"
 "origin" "496 332 116"
-"spawnflags" "1"
 "_color" "0.7 0.8 1"
+"spawnflags" "1"
 "light" "120"
 }
 // entity 40
@@ -4196,11 +4196,11 @@
 // brush 2
 {
 ( 630 266 96 ) ( 632 266 96 ) ( 632 304 90 ) tex_common/nodraw 120 128 -90 0.5 0.5 131584 0 0
-( 628 310 106 ) ( 636 310 106 ) ( 636 308 106 ) tex_furniture/textil004 60 88 -90 0.15 0.25 131584 0 0
-( 630 304 106 ) ( 630 266 106 ) ( 630 266 104 ) tex_furniture/textil004 60 88 0 -0.15 0.25 131584 0 0
-( 632 282 96 ) ( 630 282 96 ) ( 630 282 106 ) tex_furniture/textil004 0 0 0 0.5 0.5 131584 0 0
-( 632 266 106 ) ( 632 304 106 ) ( 632 304 104 ) tex_furniture/textil004 120 0 0 -0.5 0.5 131584 0 0
-( 632 304 106 ) ( 630 304 106 ) ( 630 304 104 ) tex_furniture/textil004 0 0 0 0.5 0.5 131584 0 0
+( 628 310 106 ) ( 636 310 106 ) ( 636 308 106 ) tex_furniture/textil004 120 176 -90 0.075 0.125 131584 0 0
+( 630 304 106 ) ( 630 266 106 ) ( 630 266 104 ) tex_furniture/textil004 120 176 0 -0.075 0.125 131584 0 0
+( 632 282 96 ) ( 630 282 96 ) ( 630 282 106 ) tex_furniture/textil004 0 0 0 0.25 0.25 131584 0 0
+( 632 266 106 ) ( 632 304 106 ) ( 632 304 104 ) tex_furniture/textil004 240 0 0 -0.25 0.25 131584 0 0
+( 632 304 106 ) ( 630 304 106 ) ( 630 304 104 ) tex_furniture/textil004 0 0 0 0.25 0.25 131584 0 0
 }
 // brush 3
 {
