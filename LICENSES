@@ -1497,9 +1497,6 @@ base/models/objects/gascylinder/gascylinder.md2 | GNU General Public License 2.0
 base/models/objects/gascylinder/gascylinder.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/heating/heating.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/heating/heating.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/hitec/computer1/comp1.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/hitec/computer1/comp1.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/hitec/computer1/comp1_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/objects/hitec/computer2/comp2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/hitec/computer2/comp2.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/hitec/computer2/comp2_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
@@ -6354,8 +6351,6 @@ radiant/prefabs/machines/workbench.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/automat.jpg | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/automat.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/cliff.map | GNU General Public License 2.0
-radiant/prefabs/misc/computer1.jpg | GNU General Public License 2.0 | MCR
-radiant/prefabs/misc/computer1.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/computer2.jpg | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/computer2.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/katana.jpg | GNU General Public License 2.0 | MCR
