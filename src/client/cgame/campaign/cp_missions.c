@@ -1841,10 +1841,8 @@ qboolean CP_SaveMissionsXML (xmlNode_t *parent)
 
 		XML_AddInt(missionNode, SAVE_MISSIONS_MISSION_IDX, mission->idx);
 		XML_AddString(missionNode, SAVE_MISSIONS_ID, mission->id);
-		if (mission->mapDef) {
+		if (mission->mapDef)
 			XML_AddString(missionNode, SAVE_MISSIONS_MAPDEF_ID, mission->mapDef->id);
-			XML_AddInt(missionNode, SAVE_MISSIONS_MAPDEFTIMES, mission->mapDef->timesAlreadyUsed);
-		}
 		XML_AddBool(missionNode, SAVE_MISSIONS_ACTIVE, mission->active);
 		XML_AddBool(missionNode, SAVE_MISSIONS_POSASSIGNED, mission->posAssigned);
 		XML_AddBool(missionNode, SAVE_MISSIONS_CRASHED, mission->crashed);
@@ -1925,6 +1923,7 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 		const char *stageId = XML_GetString(node, SAVE_MISSIONS_STAGE);
 
 		OBJZERO(mission);
+
 		Q_strncpyz(mission.id, XML_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
 		mission.idx = XML_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
 		if (mission.idx <= 0) {
@@ -1932,17 +1931,27 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 			success = qfalse;
 			break;
 		}
+
+		ufoIdx = XML_GetInt(node, SAVE_MISSIONS_UFO, -1);
+		if (ufoIdx <= -1 || ufoIdx >= lengthof(ccs.ufos))
+			mission.ufo = NULL;
+		else
+			mission.ufo = UFO_GetByIDX(ufoIdx);
+
 		name = XML_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
 		if (name && name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
 			if (!mission.mapDef) {
-				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
-				success = qfalse;
-				break;
+				Com_Printf("Warning: mapdef \"%s\" for mission \"%s\" doesn't exist. Removing mission!\n", name, mission.id);
+				if (mission.ufo) {
+					Com_Printf("Warning: Removing UFO idx %i (%s) of just removed mission \"%s\"!\n", mission.ufo->idx, mission.ufo->id, mission.id);
+					UFO_RemoveFromGeoscape(mission.ufo);
+				}
+				continue;
 			}
-			mission.mapDef->timesAlreadyUsed = XML_GetInt(node, SAVE_MISSIONS_MAPDEFTIMES, 0);
-		} else
+		} else {
 			mission.mapDef = NULL;
+		}
 
 		if (!Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
 			Com_Printf("Invalid mission category '%s'\n", categoryId);
@@ -2029,12 +2038,6 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 		XML_GetDate(node, SAVE_MISSIONS_STARTDATE, &mission.startDate.day, &mission.startDate.sec);
 		XML_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);
 		XML_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
-
-		ufoIdx = XML_GetInt(node, SAVE_MISSIONS_UFO, -1);
-		if (ufoIdx <= -1 || ufoIdx >= lengthof(ccs.ufos))
-			mission.ufo = NULL;
-		else
-			mission.ufo = UFO_GetByIDX(ufoIdx);
 
 		mission.crashed = XML_GetBool(node, SAVE_MISSIONS_CRASHED, qfalse);
 		mission.onGeoscape = XML_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, qfalse);
