@@ -482,11 +482,15 @@ team scientist
 	race			civilian
 
 	names {
+		female { a }
 		male { b }
 		lastname { c }
 	}
 
 	models {
+		female {
+			civilians/female scientist01 head05a 0
+		}
 		male {
 			civilians/male scientist01 sci_head01 0
 			civilians/male scientist01 sci_head02a 0
@@ -497,6 +501,10 @@ team scientist
 	}
 
 	actorsounds {
+		female {
+			hurtsound	civilians/femalehurt01
+			deathsound	civilians/femaledeath01
+		}
 		male {
 			hurtsound	civilians/malehurt01
 			hurtsound	civilians/malehurt02
