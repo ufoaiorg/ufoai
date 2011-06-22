@@ -28,6 +28,7 @@ namespace routing
 	RoutingRenderable::RoutingRenderable ()
 	{
 		_showAllLowerLevels = true;
+		_glListID = 0;
 	}
 
 	RoutingRenderable::~RoutingRenderable ()
