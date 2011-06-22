@@ -12317,10 +12317,3 @@
 ( 284 1791 60 ) ( 288 1791 60 ) ( 288 1787 60 ) tex_doors/door013_2 8 18.28516 90 0.125 0.109375 0 0 0
 }
 }
-// entity 242
-{
-"classname" "misc_sound"
-"origin" "978 760 40"
-"noise" "sound/ambience/tv_static"
-"angles" "0 0 90"
-}
