@@ -1379,7 +1379,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
  * @return the position of the particle in ptlDef array
  * @sa CL_ParseClientData
  */
-int CL_ParseParticle (const char *name, const char **text)
+void CL_ParseParticle (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseParticle: unexpected end of file (particle ";
 	ptlDef_t *pd;
@@ -1402,7 +1402,7 @@ int CL_ParseParticle (const char *name, const char **text)
 			pd = &ptlDef[numPtlDefs++];
 		} else {
 			Com_Printf("CL_ParseParticle: max particle definitions reached - skip the current one: '%s'\n", name);
-			return -1;
+			return;
 		}
 	}
 	OBJZERO(*pd);
@@ -1416,7 +1416,7 @@ int CL_ParseParticle (const char *name, const char **text)
 		Com_Printf("CL_ParseParticle: particle def \"%s\" without body ignored\n", name);
 		if (i == numPtlDefs)
 			numPtlDefs--;
-		return -1;
+		return;
 	}
 
 	do {
@@ -1449,9 +1449,7 @@ int CL_ParseParticle (const char *name, const char **text)
 		Com_Printf("CL_ParseParticle: particle definition %s without init function ignored\n", name);
 		if (i == numPtlDefs)
 			numPtlDefs--;
-		return -1;
 	}
-	return pos;
 }
 
 /**
