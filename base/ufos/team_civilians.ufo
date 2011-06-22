@@ -490,6 +490,7 @@ team scientist
 	models {
 		female {
 			civilians/female scientist01 head05a 0
+			civilians/female scientist01 head04a2 0
 		}
 		male {
 			civilians/male scientist01 sci_head01 0
