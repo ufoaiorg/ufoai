@@ -139,6 +139,11 @@ window lost
 	func onWindowOpened
 	{
 		cmd "snd_music ufo1;"
+		if ( *cvar:cp_mission_tryagain == 0 ) {
+			*node:root.bt_tryagain@invis = true
+		} else {
+			*node:root.bt_tryagain@invis = false
+		}
 	}
 
 	func onWindowClosed

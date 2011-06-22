@@ -516,6 +516,7 @@ static void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
 {
 	assert(battle);
 
+	Cvar_SetValue("cp_mission_tryagain", 0);
 	switch (battle->resultType) {
 	case AUTOMISSION_RESULT_SUCCESS:
 		UI_PushWindow("won", NULL, NULL);
