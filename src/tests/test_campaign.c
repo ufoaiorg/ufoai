@@ -173,7 +173,6 @@ static base_t* CreateBase (const char *name, const vec2_t pos)
 static void testAircraftHandling (void)
 {
 	const vec2_t destination = { 10, 10 };
-	campaign_t *campaign;
 	base_t *base;
 	aircraft_t *aircraft;
 	aircraft_t *newAircraft;
@@ -184,8 +183,6 @@ static void testAircraftHandling (void)
 	int newFound;
 
 	ResetCampaignData();
-
-	campaign = GetCampaign();
 
 	base = CreateBase("unittestaircraft", destination);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
@@ -326,12 +323,9 @@ static void testBaseBuilding (void)
 {
 	vec2_t pos = {0, 0};
 	base_t *base;
-	campaign_t *campaign;
 	employeeType_t type;
 
 	ResetCampaignData();
-
-	campaign = GetCampaign();
 
 	ccs.credits = 10000000;
 
@@ -534,7 +528,6 @@ static void testResearch (void)
 	technology_t *laserTech;
 	technology_t *heavyLaserTech;
 	base_t *base;
-	campaign_t *campaign;
 	employee_t *employee;
 
 	ResetCampaignData();
@@ -544,7 +537,6 @@ static void testResearch (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(laserTech);
 	heavyLaserTech = RS_GetTechByID("rs_weapon_heavylaser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(heavyLaserTech);
-	campaign = GetCampaign();
 
 	base = CreateBase("unittestbase", pos);
 
