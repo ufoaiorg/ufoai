@@ -312,6 +312,9 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 	int sharedTris[MAX_ALIAS_VERTS];
 	int numVerts = 0;
 
+	if (numIndexes >= MAX_ALIAS_VERTS)
+		Com_Error(ERR_DROP, "model %s has too many tris", mesh->name);
+
 	newIndexArray = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
 
 	/* calculate per-triangle surface normals */
