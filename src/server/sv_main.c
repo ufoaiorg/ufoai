@@ -504,8 +504,10 @@ void SV_ReadPacket (struct net_stream *s)
 			SV_ConnectionlessPacket(s, msg);
 		else if (cl)
 			SV_ExecuteClientMessage(cl, cmd, msg);
-		else
+		else {
 			NET_StreamFree(s);
+			s = NULL;
+		}
 
 		free_dbuffer(msg);
 	}
