@@ -7297,6 +7297,8 @@
 "origin" "1860 -32 56"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "255"
+"attenuation" "2.0"
+"volume" "1.0"
 }
 // entity 91
 {
@@ -7306,4 +7308,12 @@
 "skin" "0"
 "spawnflags" "255"
 "model" "models/objects/boat/canoe.md2"
+}
+// entity 92
+{
+"classname" "misc_sound"
+"origin" "1024 680 328"
+"noise" "ambience/ufo_night_atm"
+"volume" ".9"
+"attenuation" "0.0"
 }
