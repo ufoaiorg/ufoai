@@ -1183,7 +1183,7 @@ static void TR_SelectBase_f (void)
 
 static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferData, int num)
 {
-	int i, cnt;
+	int i, cnt = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
