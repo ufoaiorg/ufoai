@@ -5056,6 +5056,21 @@ base/textures/tex_material/metall010a.png | GNU General Public License 2.0 or la
 base/textures/tex_material/metall010a_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
 base/textures/tex_material/metall011_nm.png | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
+base/textures/tex_material/metall012.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (metal05.tga)
+base/textures/tex_material/metall013.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (metal01.tga)
+base/textures/tex_material/metall014.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase01.tga)
+base/textures/tex_material/metall014_sm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase01_gloss.tga)
+base/textures/tex_material/metall015.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase02.tga)
+base/textures/tex_material/metall015_sm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase02_gloss.tga)
+base/textures/tex_material/metall016.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase03.tga)
+base/textures/tex_material/metall016_sm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase03_gloss.tga)
+base/textures/tex_material/metall017.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase04.tga)
+base/textures/tex_material/metall018.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase06rust.tga)
+base/textures/tex_material/metall019.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase07rust.tga)
+base/textures/tex_material/metall020.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (eXmetalBase05rust.tga)
+base/textures/tex_material/metall021.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (metal01-metal02.tga)
+base/textures/tex_material/metall022.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (metal02.tga)
+base/textures/tex_material/metall023.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (metal03.tga)
 base/textures/tex_material/red_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_material/s_wood001.png | Public Domain | FWishbringer
 base/textures/tex_material/s_wood002.png | Public Domain | FWishbringer
