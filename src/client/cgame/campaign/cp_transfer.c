@@ -488,7 +488,7 @@ static void TR_ListTransfers_f (void)
 
 			Com_Printf("...Transfered Aircraft:\n");
 			TR_ForeachAircraft(aircraft, transfer) {
-				Com_Printf("......%s [idx: %i]\n", (aircraft) ? aircraft->id : "(null)", aircraft->idx);
+				Com_Printf("......%s [idx: %i]\n", aircraft->id, aircraft->idx);
 			}
 		}
 	}
