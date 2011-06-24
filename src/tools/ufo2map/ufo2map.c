@@ -603,7 +603,7 @@ int main (int argc, const char **argv)
 
 		UnparseEntities();
 
-		WriteBSPFile(bspFilename);
+		size = WriteBSPFile(bspFilename);
 	} else if (config.exportLightmaps) {
 		LoadBSPFile(bspFilename);
 		ExportLightmaps(bspFilename);
