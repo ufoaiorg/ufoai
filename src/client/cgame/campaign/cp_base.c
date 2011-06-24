@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
 #define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
 
-static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
+static void B_InitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
 /**
  * @brief Returns the neighbourhood of a building
@@ -1103,41 +1103,6 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 }
 
 /**
- * @brief Prepares initial equipment for first base at the beginning of the campaign.
- * @param[in] base Pointer to first base.
- * @param[in] assignInitialAircraft aircraft on which the soldiers (to equip) are
- * @param[in] ed Initial equipment definition
- * @param[in] edTarget storage to put items to
- * @sa B_BuildBase_f
- * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
- */
-static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const equipDef_t *ed, equipDef_t *edTarget)
-{
-	int i, price = 0;
-
-	assert(base);
-	assert(edTarget);
-
-	/* Initial soldiers and their equipment. */
-	if (assignInitialAircraft) {
-		B_PackInitialEquipment(assignInitialAircraft, ed);
-	} else {
-		for (i = 0; i < csi.numODs; i++)
-			edTarget->numItems[i] += ed->numItems[i] / 5;
-	}
-
-	/* Pay for the initial equipment as well as update storage capacity. */
-	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
-		price += edTarget->numItems[i] * od->price;
-		CAP_AddCurrent(base, CAP_ITEMS, edTarget->numItems[i] * od->size);
-	}
-
-	/* Finally update credits. */
-	CP_UpdateCredits(ccs.credits - price);
-}
-
-/**
  * @brief builds a base from template
  * @param[out] base The base to build
  * @param[in] templateName Templated used for building. If @c NULL no template
@@ -1236,7 +1201,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
 		/* Assign and equip soldiers on Dropships */
 		AIR_AssignInitial(aircraft);
-		B_InitialEquipment(base, aircraft, equipDef, &base->storage);
+		B_InitialEquipment(aircraft, equipDef);
 	}
 	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
@@ -1901,33 +1866,35 @@ static void CL_SwapSkills (chrList_t *team)
 }
 
 /**
- * @brief Assigns initial soldier equipment for the first base
- * @todo Move this function to a better place - has nothing to do with bases anymore
+ * @brief Prepares initial equipment for initial team the beginning of the campaign.
+ * @param[in,out] aircraft aircraft on which the soldiers (to equip) are
+ * @param[in] ed Initial equipment definition
  */
-static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
+static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
-	base_t *base = aircraft->homebase;
+	base_t *homebase;
 	chrList_t chrListTemp;
 	employee_t *employee;
 
-	if (!aircraft)
-		return;
+	assert(aircraft);
+	homebase = aircraft->homebase;
+	assert(homebase);
+	assert(ed);
 
 	chrListTemp.num = 0;
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		character_t *chr = &employee->chr;
+
 		/* pack equipment */
-		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
+		Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
 		cls.i.EquipActor(&cls.i, &chr->i, ed, chr->teamDef);
 		chrListTemp.chr[chrListTemp.num] = chr;
 		chrListTemp.num++;
 	}
 
-	if (base) {
-		AIR_MoveEmployeeInventoryIntoStorage(aircraft, &base->storage);
-		CAP_UpdateStorageCap(base);
-	}
+	AIR_MoveEmployeeInventoryIntoStorage(aircraft, &homebase->storage);
 	CL_SwapSkills(&chrListTemp);
+	CAP_UpdateStorageCap(homebase);
 }
 
 /**
