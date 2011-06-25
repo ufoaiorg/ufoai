@@ -342,7 +342,6 @@ void CL_ActorAddToTeamList (le_t * le)
 			Com_Printf("Too many actors on the teamlist\n");
 			return;
 		}
-		actorIdx = cl.numTeamList;
 		le->pathMap = (pathing_t *)Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		cl.teamList[cl.numTeamList] = le;
 		UI_ExecuteConfunc("hudenable %i", cl.numTeamList);
