@@ -91,7 +91,7 @@ static void testMapDefsSingleplayer (void)
 			continue;
 
 		{
-			/* use a know seed to allow reproductible error */
+			/* use a known seed to reproduce an error */
 			unsigned int seed;
 			if (TEST_ExistsProperty("mapdef-seed")) {
 				seed = TEST_GetLongProperty("mapdef-seed");
@@ -123,7 +123,7 @@ static void testMapDefsMultiplayer (void)
 			continue;
 
 		if (md->multiplayer) {
-			/* use a know seed to allow reproductible error */
+			/* use a known seed to reproduce an error */
 			unsigned int seed;
 			if (TEST_ExistsProperty("mapdef-seed")) {
 				seed = TEST_GetLongProperty("mapdef-seed");
