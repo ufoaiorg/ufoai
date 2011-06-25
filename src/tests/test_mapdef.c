@@ -112,6 +112,7 @@ static void testMapDefsMultiplayer (void)
 {
 	int i;
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	char userinfo[MAX_INFO_STRING];
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
@@ -125,6 +126,7 @@ static void testMapDefsMultiplayer (void)
 		if (md->multiplayer) {
 			/* use a known seed to reproduce an error */
 			unsigned int seed;
+			player_t *player;
 			if (TEST_ExistsProperty("mapdef-seed")) {
 				seed = TEST_GetLongProperty("mapdef-seed");
 			} else {
@@ -134,6 +136,11 @@ static void testMapDefsMultiplayer (void)
 
 			Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
 			SV_Map(qtrue, md->map, md->param);
+
+			player = PLAYER_NUM(0);
+			Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
+			CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
+
 			SV_ShutdownGameProgs();
 			CU_PASS(md->map);
 		}
