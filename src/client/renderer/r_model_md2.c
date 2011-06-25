@@ -148,10 +148,6 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 			/** @todo Should we check skin image versus this size? */
 			outMesh->skinWidth = LittleLong(md2->skinwidth);
 			outMesh->skinHeight = LittleLong(md2->skinheight);
-
-			if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
-				Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
-						mod->name, outMesh->skinHeight, outMesh->skinWidth);
 		} else {
 			/* load the skins */
 			outMesh->num_skins = LittleLong(md2->num_skins);
@@ -167,11 +163,11 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 
 			outMesh->skinWidth = LittleLong(md2->skinwidth);
 			outMesh->skinHeight = LittleLong(md2->skinheight);
-
-			if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
-				Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
-						mod->name, outMesh->skinHeight, outMesh->skinWidth);
 		}
+
+		if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
+			Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
+					mod->name, outMesh->skinHeight, outMesh->skinWidth);
 	} else {
 		/* skin data must be the same for the lod meshes */
 		outMesh->num_skins = mod->alias.meshes[0].num_skins;
