@@ -205,7 +205,6 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
 void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 {
 	const capacities_t *ufoCap;
-	storedUFO_t *lastUfo = NULL;
 	storedUFO_t *ufo;
 
 	if (!installation)
@@ -217,12 +216,9 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 		if (ufoCap->cur <= ufoCap->max)
 			break;
 		if (ufo->installation != installation) {
-			lastUfo = ufo;
 			continue;
 		}
 		US_RemoveStoredUFO(ufo);
-		/* this ufo is removed from the list, continue iterating from the last */
-		ufo = lastUfo;
 	}
 }
 
