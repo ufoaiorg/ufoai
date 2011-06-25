@@ -96,7 +96,6 @@ void INS_SelectInstallation (installation_t *installation)
 
 /**
  * @brief Constructs a new installation.
- * @sa CL_NewInstallation
  */
 static void INS_BuildInstallation_f (void)
 {
