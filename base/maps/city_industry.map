@@ -9938,8 +9938,8 @@
 }
 // entity 19
 {
-"origin" "156 482 0"
 "classname" "misc_model"
+"origin" "156 482 0"
 "angles" "0 -90 0"
 "skin" "0"
 "spawnflags" "7"
@@ -11710,8 +11710,8 @@
 }
 // entity 40
 {
-"origin" "658.006 639.839 40"
 "classname" "misc_model"
+"origin" "658.006 639.839 40"
 "angles" "0 -77.7476 0"
 "skin" "0"
 "spawnflags" "7"
@@ -11719,8 +11719,8 @@
 }
 // entity 41
 {
-"origin" "679 601 40"
 "classname" "misc_model"
+"origin" "679 601 40"
 "angles" "0 -11.2986 0"
 "skin" "0"
 "spawnflags" "7"
@@ -11728,8 +11728,8 @@
 }
 // entity 42
 {
-"origin" "716 600 40"
 "classname" "misc_model"
+"origin" "716 600 40"
 "angles" "0 23.4455 0"
 "skin" "0"
 "spawnflags" "7"
@@ -11737,8 +11737,8 @@
 }
 // entity 43
 {
-"origin" "748 628 40"
 "classname" "misc_model"
+"origin" "748 628 40"
 "angles" "0 71.2995 0"
 "skin" "0"
 "spawnflags" "7"
@@ -11746,8 +11746,8 @@
 }
 // entity 44
 {
-"origin" "740 668 40"
 "classname" "misc_model"
+"origin" "740 668 40"
 "angles" "0 128.72 0"
 "skin" "0"
 "spawnflags" "7"
@@ -11755,8 +11755,8 @@
 }
 // entity 45
 {
-"origin" "708 686 40"
 "classname" "misc_model"
+"origin" "708 686 40"
 "angles" "0 -172.364 0"
 "skin" "0"
 "spawnflags" "7"
@@ -11764,8 +11764,8 @@
 }
 // entity 46
 {
-"origin" "674.352 673.134 40"
 "classname" "misc_model"
+"origin" "674.352 673.134 40"
 "angles" "0 -116.904 0"
 "skin" "0"
 "spawnflags" "7"
@@ -13276,7 +13276,7 @@
 ( 530 798 66 ) ( 530 774 66 ) ( 554 774 66 ) tex_common/nodraw 0 61 -3.508355e-15 0.5 0.5 134218240 128 0
 ( 1104 1266 90 ) ( 1122 1250 90 ) ( 1100 1226 90 ) tex_tech/copier_a 0 61 -3.508355e-15 0.5 0.5 134218240 0 0
 ( 712 998 74 ) ( 744 998 74 ) ( 744 998 66 ) tex_tech/copier_b 0 36.8 0 0.25 0.15625 134218240 0 0
-( 712 998 74 ) ( 712 1022 74 ) ( 712 1022 66 ) tex_tech/copier_c 74.00032 111.04348 0 -0.1875 0.1796875 134218240 0 0
+( 712 998 74 ) ( 712 1022 74 ) ( 712 1022 66 ) tex_tech/copier_c 74.00032 111.0435 0 -0.1875 0.1796875 134218240 0 0
 ( 744 1022 74 ) ( 712 1022 74 ) ( 712 1022 66 ) tex_common/nodraw 32 60 0 -0.5 0.5 134218240 128 0
 ( 704 998 89 ) ( 704 990 89 ) ( 704 990 65 ) tex_tech/copier_c 74.00032 94.66668 0 -0.1875 0.1875 134218240 0 0
 }
@@ -13294,7 +13294,7 @@
 ( 530 798 66 ) ( 530 774 66 ) ( 554 774 66 ) tex_common/nodraw 47 61 -3.508355e-15 0.5 0.5 134218240 128 0
 ( 712 998 89 ) ( 712 1022 89 ) ( 744 1022 89 ) tex_common/nodraw 47 61 -3.508355e-15 0.5 0.5 134218240 128 0
 ( 712 998 74 ) ( 744 998 74 ) ( 744 998 66 ) tex_tech/copier_b 0 36.8 0 0.25 0.15625 134218240 0 0
-( 736 990 89 ) ( 736 998 89 ) ( 736 998 65 ) tex_tech/copier_c 74.00032 111.04348 0 -0.1875 0.1796875 134218240 0 0
+( 736 990 89 ) ( 736 998 89 ) ( 736 998 65 ) tex_tech/copier_c 74.00032 111.0435 0 -0.1875 0.1796875 134218240 0 0
 ( 744 1022 74 ) ( 712 1022 74 ) ( 712 1022 66 ) tex_common/nodraw 32 60 0 -0.5 0.5 134218240 128 0
 ( 712 1022 74 ) ( 712 998 74 ) ( 712 998 66 ) tex_common/nodraw 37.00016 55.52174 0 -0.375 0.359375 134218240 128 0
 }
@@ -14994,9 +14994,9 @@
 ( 654 514 130 ) ( 654 538 130 ) ( 630 538 130 ) tex_common/nodraw 0 61 180 0.5 0.5 134218752 128 0
 ( 80 46 154 ) ( 62 62 154 ) ( 84 86 154 ) tex_tech/copier_a 0 61 180 0.5 0.5 134218752 0 0
 ( 472 314 138 ) ( 440 314 138 ) ( 440 314 130 ) tex_tech/copier_b 0 62.40002 0 -0.25 0.15625 134218752 0 0
-( 472 314 138 ) ( 472 290 138 ) ( 472 290 130 ) tex_tech/copier_c 116.66634 83.2174 0 0.1875 0.1796875 134218752 0 0
+( 472 314 138 ) ( 472 290 138 ) ( 472 290 130 ) tex_tech/copier_c 116.6663 83.2174 0 0.1875 0.1796875 134218752 0 0
 ( 440 290 138 ) ( 472 290 138 ) ( 472 290 130 ) tex_common/nodraw 32 60 0 0.5 0.5 134218752 128 0
-( 480 314 153 ) ( 480 322 153 ) ( 480 322 129 ) tex_tech/copier_c 116.66634 52.00004 0 0.1875 0.1875 134218752 0 0
+( 480 314 153 ) ( 480 322 153 ) ( 480 322 129 ) tex_tech/copier_c 116.6663 52.00004 0 0.1875 0.1875 134218752 0 0
 }
 // brush 1
 {
@@ -15012,7 +15012,7 @@
 ( 654 514 130 ) ( 654 538 130 ) ( 630 538 130 ) tex_common/nodraw 47 61 180 0.5 0.5 134218752 128 0
 ( 472 314 153 ) ( 472 290 153 ) ( 440 290 153 ) tex_common/nodraw 47 61 180 0.5 0.5 134218752 128 0
 ( 472 314 138 ) ( 440 314 138 ) ( 440 314 130 ) tex_tech/copier_b 0 62.40002 0 -0.25 0.15625 134218752 0 0
-( 448 322 153 ) ( 448 314 153 ) ( 448 314 129 ) tex_tech/copier_c 116.66634 83.2174 0 0.1875 0.1796875 134218752 0 0
+( 448 322 153 ) ( 448 314 153 ) ( 448 314 129 ) tex_tech/copier_c 116.6663 83.2174 0 0.1875 0.1796875 134218752 0 0
 ( 440 290 138 ) ( 472 290 138 ) ( 472 290 130 ) tex_common/nodraw 32 60 0 0.5 0.5 134218752 128 0
 ( 472 290 138 ) ( 472 314 138 ) ( 472 314 130 ) tex_common/nodraw 58.33317 41.6087 0 0.375 0.359375 134218752 128 0
 }
@@ -15657,7 +15657,7 @@
 ( 1052 398 100 ) ( 1044 398 128 ) ( 1044 448 128 ) tex_material/c_gray050 0 0 0 0.5 0.5 134349824 0 0
 ( 1050 398 100 ) ( 1052 398 100 ) ( 1052 448 100 ) tex_common/nodraw 0 44 0 0.5 0.5 134349824 0 0
 ( 1052 398 100 ) ( 1042 398 128 ) ( 1044 398 128 ) tex_material/c_black 0 0 0 0.5 0.5 134349824 0 0
-( 1050 448 100 ) ( 1042 448 128 ) ( 1042 398 128 ) tex_common/nodraw 20 8 0 0.5 0.5 134349824 0 0
+( 1050 448 100 ) ( 1042 448 128 ) ( 1042 398 128 ) tex_material/c_black 20 8 0 0.5 0.5 134349824 0 0
 }
 // brush 1
 {
@@ -16126,7 +16126,7 @@
 // brush 10
 {
 ( 1052 -28 4 ) ( 1052 28 4 ) ( 1036 28 4 ) tex_common/nodraw 42.66675 31.33318 -90 0.375 0.375 768 128 0
-( 896 32 12 ) ( 920 32 12 ) ( 920 0 12 ) tex_buildings_snow/concrete001 341.3334 190.66638 -90 0.1875 0.1875 768 0 0
+( 896 32 12 ) ( 920 32 12 ) ( 920 0 12 ) tex_buildings_snow/concrete001 341.3334 190.6664 -90 0.1875 0.1875 768 0 0
 ( 896 32 16 ) ( 896 0 16 ) ( 896 0 4 ) tex_buildings_snow/concrete001 341.3334 20 0 -0.1875 0.1875 768 0 0
 ( 1036 0 64 ) ( 1040 0 64 ) ( 1040 0 24 ) tex_buildings_snow/concrete001 341.3336 20 0 0.1875 0.1875 768 0 0
 ( 920 0 16 ) ( 920 32 16 ) ( 920 32 4 ) tex_buildings_snow/concrete001 341.3334 20 0 -0.1875 0.1875 768 0 0
@@ -16189,7 +16189,7 @@
 // brush 17
 {
 ( 1052 -28 4 ) ( 1052 28 4 ) ( 1036 28 4 ) tex_common/nodraw 42.66675 31.33318 -90 0.375 0.375 768 128 0
-( 1036 28 16 ) ( 1052 28 16 ) ( 1052 -28 16 ) tex_buildings_snow/concrete001 341.3334 190.66638 -90 0.1875 0.1875 768 0 0
+( 1036 28 16 ) ( 1052 28 16 ) ( 1052 -28 16 ) tex_buildings_snow/concrete001 341.3334 190.6664 -90 0.1875 0.1875 768 0 0
 ( 928 32 16 ) ( 928 -96 16 ) ( 928 -96 4 ) tex_buildings_snow/concrete001 341.3334 20 0 -0.1875 0.1875 768 0 0
 ( 924 -96 42 ) ( 994 -96 42 ) ( 994 -96 34 ) tex_buildings_snow/concrete001 341.3336 20 0 0.1875 0.1875 768 0 0
 ( 992 -96 16 ) ( 992 32 16 ) ( 992 32 4 ) tex_buildings_snow/concrete001 341.3334 20 0 -0.1875 0.1875 768 0 0
@@ -16555,8 +16555,8 @@
 }
 // entity 143
 {
-"origin" "760 -32 -58"
 "classname" "misc_model"
+"origin" "760 -32 -58"
 "angles" "0 -90 0"
 "skin" "0"
 "spawnflags" "255"
@@ -16590,8 +16590,8 @@
 }
 // entity 148
 {
-"origin" "-432 -736 38"
 "classname" "misc_model"
+"origin" "-432 -736 38"
 "angles" "0 -90 0"
 "skin" "0"
 "spawnflags" "255"
@@ -21579,4 +21579,121 @@
 ( 364 1016 32 ) ( 364 928 32 ) ( 364 928 16 ) tex_material/c_black 8 8 0 -0.5 0.5 134219520 0 0
 ( 364 942 32 ) ( 380 942 32 ) ( 380 942 16 ) tex_material/c_black 0 7 0 0.5 0.5 134219520 0 0
 }
+}
+// entity 198
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1136 -144 28"
+}
+// entity 199
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1264 -144 28"
+}
+// entity 200
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1200 -144 28"
+}
+// entity 201
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1136 -272 28"
+}
+// entity 202
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1264 -272 28"
+}
+// entity 203
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1200 -272 28"
+}
+// entity 204
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1136 -208 28"
+}
+// entity 205
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1264 -208 28"
+}
+// entity 206
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1200 -208 28"
+}
+// entity 207
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 560 28"
+"angle" "180"
+}
+// entity 208
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "720 528 28"
+"angle" "180"
+}
+// entity 209
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "848 656 28"
+"angle" "180"
+}
+// entity 210
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "752 496 28"
+"angle" "180"
+}
+// entity 211
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "880 496 28"
+"angle" "180"
+}
+// entity 212
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 496 28"
+"angle" "180"
+}
+// entity 213
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 624 28"
+"angle" "180"
+}
+// entity 214
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 688 28"
+"angle" "180"
+}
+// entity 215
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "848 720 28"
+"angle" "180"
 }
