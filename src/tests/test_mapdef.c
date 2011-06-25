@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/ui/ui_main.h"
 #include "../server/server.h"
 
-extern void G_ClientUserinfoChanged(player_t * player, const char *userinfo);
-
 /**
  * The suite initialization function.
  * Returns zero on success, non-zero otherwise.
@@ -93,7 +91,6 @@ static void testMapDefsSingleplayer (void)
 			continue;
 
 		{
-			player_t player;
 			/* use a know seed to allow reproductible error */
 			unsigned int seed;
 			if (TEST_ExistsProperty("mapdef-seed")) {
@@ -105,8 +102,6 @@ static void testMapDefsSingleplayer (void)
 
 			Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
 			SV_Map(qtrue, md->map, md->param);
-			OBJZERO(player);
-			G_ClientUserinfoChanged(&player, "\\cl_teamnum\\-1");
 			SV_ShutdownGameProgs();
 			CU_PASS(md->map);
 		}
@@ -128,7 +123,6 @@ static void testMapDefsMultiplayer (void)
 			continue;
 
 		if (md->multiplayer) {
-			player_t player;
 			/* use a know seed to allow reproductible error */
 			unsigned int seed;
 			if (TEST_ExistsProperty("mapdef-seed")) {
@@ -140,8 +134,6 @@ static void testMapDefsMultiplayer (void)
 
 			Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
 			SV_Map(qtrue, md->map, md->param);
-			OBJZERO(player);
-			G_ClientUserinfoChanged(&player, "\\cl_teamnum\\-1");
 			SV_ShutdownGameProgs();
 			CU_PASS(md->map);
 		}
