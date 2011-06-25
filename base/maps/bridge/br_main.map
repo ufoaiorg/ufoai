@@ -9841,82 +9841,82 @@
 {
 "classname" "light"
 "light" "100"
-"origin" "2084 980 76"
-"_color" "0 0.7 0"
 "spawnflags" "1"
+"_color" "0 0.7 0"
+"origin" "2084 980 76"
 }
 // entity 6
 {
 "classname" "light"
 "light" "200"
-"origin" "1408 860 52"
-"_color" "1 0.3 0"
 "spawnflags" "1"
+"_color" "1 0.3 0"
+"origin" "1408 860 52"
 }
 // entity 7
 {
 "classname" "light"
 "origin" "1880 724 52"
-"_color" "1 0.5 0"
 "spawnflags" "1"
+"_color" "1 0.5 0"
 "light" "200"
 }
 // entity 8
 {
 "classname" "light"
 "origin" "2068 1056 52"
-"_color" "1 0.5 0"
 "spawnflags" "1"
+"_color" "1 0.5 0"
 "light" "200"
 }
 // entity 9
 {
 "classname" "misc_particle"
 "origin" "2136 1024 24"
-"particle" "fire"
 "spawnflags" "255"
+"particle" "fire"
 }
 // entity 10
 {
 "classname" "misc_particle"
 "origin" "1416 856 24"
-"particle" "fire"
 "spawnflags" "255"
+"particle" "fire"
 }
 // entity 11
 {
 "classname" "misc_particle"
 "origin" "1280 880 24"
-"particle" "fire"
 "spawnflags" "255"
+"particle" "fire"
 }
 // entity 12
 {
 "classname" "misc_particle"
 "origin" "2096 976 24"
-"particle" "fire"
 "spawnflags" "255"
+"particle" "fire"
 }
 // entity 13
 {
 "classname" "misc_particle"
 "origin" "1848 704 24"
-"particle" "fire"
 "spawnflags" "255"
+"particle" "fire"
 }
 // entity 14
 {
 "classname" "misc_particle"
 "origin" "1360 920 24"
-"particle" "fire"
 "spawnflags" "255"
+"particle" "fire"
 }
 // entity 15
 {
 "classname" "light"
 "origin" "1904 1028 52"
-"_color" "1 0.5 0"
 "spawnflags" "1"
+"_color" "1 0.5 0"
 "light" "200"
 }
 // entity 16
@@ -10900,24 +10900,24 @@
 "classname" "misc_model"
 "origin" "1758 544 14"
 "model" "models/objects/vegi/bush/bush01.md2"
-"spawnflags" "255"
 "angles" "0 -41 0"
+"spawnflags" "255"
 }
 // entity 63
 {
 "classname" "misc_model"
 "origin" "654 1317 3"
 "model" "models/objects/rubbish/bottle1.md2"
-"spawnflags" "255"
 "angles" "0 -9 0"
+"spawnflags" "255"
 }
 // entity 64
 {
 "classname" "misc_model"
 "origin" "621 1300 3"
 "model" "models/objects/rubbish/bottle2.md2"
-"spawnflags" "255"
 "angles" "0 20 0"
+"spawnflags" "255"
 }
 // entity 65
 {
@@ -10966,8 +10966,8 @@
 "classname" "misc_model"
 "origin" "544 640 2"
 "model" "models/objects/vegi/plants/plant_a.md2"
-"spawnflags" "255"
 "angles" "0 -59 0"
+"spawnflags" "255"
 }
 // entity 72
 {
@@ -12080,16 +12080,16 @@
 {
 "classname" "light"
 "origin" "1790 2018 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 79
 {
 "classname" "light"
 "origin" "1673 2012 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 80
@@ -12102,76 +12102,76 @@
 {
 "classname" "light"
 "origin" "2046 1502 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 82
 {
 "classname" "light"
 "origin" "2043.38 1189.26 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 83
 {
 "classname" "misc_particle"
 "origin" "1800 752 24"
-"particle" "crashsite_fire"
 "spawnflags" "255"
+"particle" "crashsite_fire"
 }
 // entity 84
 {
 "classname" "misc_particle"
 "origin" "1968 1072 24"
-"particle" "crashsite_fire"
 "spawnflags" "255"
+"particle" "crashsite_fire"
 }
 // entity 85
 {
 "classname" "misc_particle"
 "origin" "1808 1008 24"
-"particle" "crashsite_fire"
 "spawnflags" "255"
+"particle" "crashsite_fire"
 }
 // entity 86
 {
 "classname" "misc_particle"
 "origin" "1872 1040 24"
-"particle" "crashsite_fire"
 "spawnflags" "255"
+"particle" "crashsite_fire"
 }
 // entity 87
 {
 "classname" "light"
 "light" "200"
-"origin" "1727 703 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
+"origin" "1727 703 36"
 }
 // entity 88
 {
 "classname" "light"
 "origin" "1608 660 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 89
 {
 "classname" "light"
 "origin" "1470 1566 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 90
 {
 "classname" "light"
 "origin" "1476 1449 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 91
@@ -12179,8 +12179,8 @@
 "classname" "misc_model"
 "origin" "1634 2208 2"
 "model" "models/objects/vegi/plants/plant_a.md2"
-"spawnflags" "255"
 "angles" "0 -29 0"
+"spawnflags" "255"
 }
 // entity 92
 {
@@ -12191,32 +12191,32 @@
 {
 "classname" "light"
 "light" "200"
-"origin" "1537 2399 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
+"origin" "1537 2399 36"
 }
 // entity 94
 {
 "classname" "light"
 "origin" "1580 2280 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 95
 {
 "classname" "light"
 "light" "200"
-"origin" "1089 735 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
+"origin" "1089 735 36"
 }
 // entity 96
 {
 "classname" "light"
 "origin" "1132 616 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 97
@@ -12229,161 +12229,161 @@
 {
 "classname" "light"
 "origin" "1922 2462 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 99
 {
 "classname" "light"
 "origin" "2039 2468 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 100
 {
 "classname" "light"
 "light" "120"
-"origin" "1282 882 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "1282 882 36"
 }
 // entity 101
 {
 "classname" "light"
 "light" "160"
-"origin" "1282 878 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "1282 878 76"
 }
 // entity 102
 {
 "classname" "light"
 "light" "120"
-"origin" "1418 858 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "1418 858 36"
 }
 // entity 103
 {
 "classname" "light"
 "light" "160"
-"origin" "1418 854 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "1418 854 76"
 }
 // entity 104
 {
 "classname" "light"
 "light" "120"
-"origin" "1810 1010 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "1810 1010 36"
 }
 // entity 105
 {
 "classname" "light"
 "light" "160"
-"origin" "1810 1006 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "1810 1006 76"
 }
 // entity 106
 {
 "classname" "light"
 "light" "120"
-"origin" "1898 1034 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "1898 1034 36"
 }
 // entity 107
 {
 "classname" "light"
 "light" "160"
-"origin" "1898 1030 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "1898 1030 76"
 }
 // entity 108
 {
 "classname" "light"
 "light" "120"
-"origin" "1970 1074 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "1970 1074 36"
 }
 // entity 109
 {
 "classname" "light"
 "light" "160"
-"origin" "1970 1070 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "1970 1070 76"
 }
 // entity 110
 {
 "classname" "light"
 "light" "120"
-"origin" "2138 1026 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "2138 1026 36"
 }
 // entity 111
 {
 "classname" "light"
 "light" "160"
-"origin" "2138 1022 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "2138 1022 76"
 }
 // entity 112
 {
 "classname" "light"
 "light" "120"
-"origin" "1850 706 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "1850 706 36"
 }
 // entity 113
 {
 "classname" "light"
 "light" "160"
-"origin" "1850 702 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "1850 702 76"
 }
 // entity 114
 {
 "classname" "light"
 "light" "120"
-"origin" "1802 754 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "1802 754 36"
 }
 // entity 115
 {
 "classname" "light"
 "light" "160"
-"origin" "1802 750 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "1802 750 76"
 }
 // entity 116
 {
 "classname" "light"
 "light" "120"
-"origin" "1362 922 36"
-"_color" "1 0.8 0"
 "spawnflags" "1"
+"_color" "1 0.8 0"
+"origin" "1362 922 36"
 }
 // entity 117
 {
 "classname" "light"
 "light" "160"
-"origin" "1362 918 76"
-"_color" "1 0.4 0"
 "spawnflags" "1"
+"_color" "1 0.4 0"
+"origin" "1362 918 76"
 }
 // entity 118
 {
@@ -15268,8 +15268,8 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/alien/ufo_crashed/acrash_wing_1.md2"
-"origin" "1852 1040 32"
 "angles" "10 -70 -180"
+"origin" "1852 1040 32"
 }
 // entity 132
 {
@@ -15572,67 +15572,67 @@
 "classname" "func_group"
 // brush 0
 {
-( 774 1123 24 ) ( 712 1123 24 ) ( 712 1128 27 ) tex_nature/tree001 24 114.9191 180 0.25 0.287842 65280 1024 0
-( 712 1123 24 ) ( 774 1123 24 ) ( 774 1122 18 ) tex_nature/tree001 24 11.70755 0 -0.25 0.287842 65280 1024 0
-( 774 1127 15 ) ( 712 1127 15 ) ( 712 1122 18 ) tex_nature/tree001 24 114.9191 180 0.25 0.287842 65280 1024 0
-( 712 1127 15 ) ( 774 1127 15 ) ( 774 1133 16 ) tex_nature/tree001 24 114.9191 180 0.25 0.287842 65280 1024 0
-( 712 1133 16 ) ( 774 1133 16 ) ( 774 1135 21 ) tex_nature/tree001 92 102.1072 90 0.25 -0.287842 65280 1024 0
-( 712 1135 21 ) ( 774 1135 21 ) ( 774 1133 25 ) tex_nature/tree001 24 11.70755 0 -0.25 0.287842 65280 1024 0
-( 712 1133 25 ) ( 774 1133 25 ) ( 774 1128 27 ) tex_nature/tree001 24 114.9191 180 0.25 0.287842 65280 1024 0
+( 774 1123 24 ) ( 712 1123 24 ) ( 712 1128 27 ) tex_nature/tree001 96 459.6764 180 0.0625 0.0719605 65280 1024 0
+( 712 1123 24 ) ( 774 1123 24 ) ( 774 1122 18 ) tex_nature/tree001 96 46.8302 0 -0.0625 0.0719605 65280 1024 0
+( 774 1127 15 ) ( 712 1127 15 ) ( 712 1122 18 ) tex_nature/tree001 96 459.6764 180 0.0625 0.0719605 65280 1024 0
+( 712 1127 15 ) ( 774 1127 15 ) ( 774 1133 16 ) tex_nature/tree001 96 459.6764 180 0.0625 0.0719605 65280 1024 0
+( 712 1133 16 ) ( 774 1133 16 ) ( 774 1135 21 ) tex_nature/tree001 368 408.4288 90 0.0625 -0.0719605 65280 1024 0
+( 712 1135 21 ) ( 774 1135 21 ) ( 774 1133 25 ) tex_nature/tree001 96 46.8302 0 -0.0625 0.0719605 65280 1024 0
+( 712 1133 25 ) ( 774 1133 25 ) ( 774 1128 27 ) tex_nature/tree001 96 459.6764 180 0.0625 0.0719605 65280 1024 0
 ( 769 1124 17 ) ( 769 1124 29 ) ( 769 1134 29 ) tex_nature/tree_chopped2 78.76758 63.99994 0 -0.05078125 0.046875 65280 1024 0
 ( 712 972 92 ) ( 712 970 92 ) ( 712 970 90 ) tex_nature/tree_chopped2 78.81055 64.00006 0 -0.05078116 0.046875 65280 1024 0
 }
 // brush 1
 {
-( 704 1122 17 ) ( 772 1122 17 ) ( 772 1115 21 ) tex_nature/tree001 0 104.0809 0 0.25 0.287842 65280 1024 0
-( 700 1126 13 ) ( 768 1126 13 ) ( 768 1123 20 ) tex_nature/tree001 0 0.7228765 0 0.25 0.238029 65280 1024 0
-( 700 1126 8 ) ( 768 1126 8 ) ( 768 1128 15 ) tex_nature/tree001 3.680038 128 90 0.274223 0.25 65280 1024 0
-( 700 1122 3 ) ( 768 1122 3 ) ( 768 1130 7 ) tex_nature/tree001 0 57.55846 0 0.25 0.225052 65280 1024 0
-( 700 1117 2 ) ( 768 1117 2 ) ( 768 1125 0 ) tex_nature/tree001 0 83.70088 0 0.25 0.264023 65280 1024 0
-( 700 1112 5 ) ( 768 1112 5 ) ( 768 1117 -1 ) tex_nature/tree001 11.22252 128 90 0.214828 0.25 65280 1024 0
-( 704 1110 9 ) ( 772 1110 9 ) ( 772 1111 1 ) tex_nature/tree001 0 113.0832 0 0.25 0.25103 65280 1024 0
-( 704 1112 15 ) ( 772 1112 15 ) ( 772 1107 9 ) tex_nature/tree001 0 110.9688 0 0.25 0.255783 65280 1024 0
-( 704 1116 18 ) ( 772 1116 18 ) ( 772 1108 16 ) tex_nature/tree001 0 48.0762 0 0.25 0.244537 65280 1024 0
+( 704 1122 17 ) ( 772 1122 17 ) ( 772 1115 21 ) tex_nature/tree001 0 416.3236 0 0.0625 0.0719605 65280 1024 0
+( 700 1126 13 ) ( 768 1126 13 ) ( 768 1123 20 ) tex_nature/tree001 0 2.891506 0 0.0625 0.05950725 65280 1024 0
+( 700 1126 8 ) ( 768 1126 8 ) ( 768 1128 15 ) tex_nature/tree001 14.720152 512 90 0.06855575 0.0625 65280 1024 0
+( 700 1122 3 ) ( 768 1122 3 ) ( 768 1130 7 ) tex_nature/tree001 0 230.23384 0 0.0625 0.056263 65280 1024 0
+( 700 1117 2 ) ( 768 1117 2 ) ( 768 1125 0 ) tex_nature/tree001 0 334.80352 0 0.0625 0.06600575 65280 1024 0
+( 700 1112 5 ) ( 768 1112 5 ) ( 768 1117 -1 ) tex_nature/tree001 44.89008 512 90 0.053707 0.0625 65280 1024 0
+( 704 1110 9 ) ( 772 1110 9 ) ( 772 1111 1 ) tex_nature/tree001 0 452.3328 0 0.0625 0.0627575 65280 1024 0
+( 704 1112 15 ) ( 772 1112 15 ) ( 772 1107 9 ) tex_nature/tree001 0 443.8752 0 0.0625 0.06394575 65280 1024 0
+( 704 1116 18 ) ( 772 1116 18 ) ( 772 1108 16 ) tex_nature/tree001 0 192.3048 0 0.0625 0.06113425 65280 1024 0
 ( 704 632 64 ) ( 704 632 54 ) ( 704 636 54 ) tex_nature/tree_chopped 135.5615 28.13647 13 0.06667601 0.06565258 65280 1024 0
 ( 768 1018 62 ) ( 768 1050 62 ) ( 768 1018 30 ) tex_nature/tree_chopped 135.6494 28.1355 13 0.06667638 0.06565256 65280 1024 0
 }
 // brush 2
 {
-( 708 1105 11 ) ( 770 1105 11 ) ( 770 1100 14 ) tex_nature/tree001 112 87.08086 0 0.25 0.287842 65280 1024 0
-( 770 1105 11 ) ( 708 1105 11 ) ( 708 1106 5 ) tex_nature/tree001 112 94.70754 0 0.25 0.287842 65280 1024 0
-( 708 1101 2 ) ( 770 1101 2 ) ( 770 1106 5 ) tex_nature/tree001 112 87.08086 0 0.25 0.287842 65280 1024 0
-( 770 1101 2 ) ( 708 1101 2 ) ( 708 1095 3 ) tex_nature/tree001 112 87.08086 0 0.25 0.287842 65280 1024 0
-( 770 1095 3 ) ( 708 1095 3 ) ( 708 1093 8 ) tex_nature/tree001 0 41.72287 0 -0.25 0.238029 65280 1024 0
-( 770 1093 8 ) ( 708 1093 8 ) ( 708 1095 12 ) tex_nature/tree001 0 116 0 0.25 0.25 65280 1024 0
-( 770 1095 12 ) ( 708 1095 12 ) ( 708 1100 14 ) tex_nature/tree001 0 97.89989 0 -0.25 0.238029 65280 1024 0
+( 708 1105 11 ) ( 770 1105 11 ) ( 770 1100 14 ) tex_nature/tree001 448 348.32344 0 0.0625 0.0719605 65280 1024 0
+( 770 1105 11 ) ( 708 1105 11 ) ( 708 1106 5 ) tex_nature/tree001 448 378.83016 0 0.0625 0.0719605 65280 1024 0
+( 708 1101 2 ) ( 770 1101 2 ) ( 770 1106 5 ) tex_nature/tree001 448 348.32344 0 0.0625 0.0719605 65280 1024 0
+( 770 1101 2 ) ( 708 1101 2 ) ( 708 1095 3 ) tex_nature/tree001 448 348.32344 0 0.0625 0.0719605 65280 1024 0
+( 770 1095 3 ) ( 708 1095 3 ) ( 708 1093 8 ) tex_nature/tree001 0 166.89148 0 -0.0625 0.05950725 65280 1024 0
+( 770 1093 8 ) ( 708 1093 8 ) ( 708 1095 12 ) tex_nature/tree001 0 464 0 0.0625 0.0625 65280 1024 0
+( 770 1095 12 ) ( 708 1095 12 ) ( 708 1100 14 ) tex_nature/tree001 0 391.59956 0 -0.0625 0.05950725 65280 1024 0
 ( 713 1104 4 ) ( 713 1104 16 ) ( 713 1094 16 ) tex_nature/tree_chopped2 236.4102 42.66669 0 0.05078149 0.046875 65280 1024 0
 ( 770 1094 16 ) ( 770 1104 16 ) ( 770 1104 4 ) tex_nature/tree_chopped2 236.4941 42.66663 0 0.05078169 0.046875 65280 1024 0
 }
 // brush 3
 {
-( 706 1142 15 ) ( 774 1142 15 ) ( 774 1136 20 ) tex_nature/tree001 120 116 0 0.25 0.25 65280 1024 0
-( 702 1145 10 ) ( 770 1145 10 ) ( 770 1144 18 ) tex_nature/tree001 120 116 0 0.25 0.25 65280 1024 0
-( 702 1144 5 ) ( 770 1144 5 ) ( 770 1148 12 ) tex_nature/tree001 12 120 90 0.25 0.25 65280 1024 0
-( 702 1140 1 ) ( 770 1140 1 ) ( 770 1148 4 ) tex_nature/tree001 120 100 0 0.25 0.25 65280 1024 0
-( 702 1134 1 ) ( 770 1134 1 ) ( 770 1142 -2 ) tex_nature/tree001 120 100 0 0.25 0.25 65280 1024 0
-( 706 1130 5 ) ( 774 1130 5 ) ( 774 1134 -2 ) tex_nature/tree001 12 120 90 0.25 0.25 65280 1024 0
-( 706 1129 10 ) ( 774 1129 10 ) ( 774 1128 2 ) tex_nature/tree001 120 116 0 0.25 0.25 65280 1024 0
-( 706 1132 15 ) ( 774 1132 15 ) ( 774 1126 10 ) tex_nature/tree001 120 100 0 0.25 0.25 65280 1024 0
-( 1698 640 17 ) ( 1698 668 17 ) ( 1734 668 17 ) tex_nature/tree001 120 100 0 0.25 0.25 65280 1024 0
+( 706 1142 15 ) ( 774 1142 15 ) ( 774 1136 20 ) tex_nature/tree001 480 464 0 0.0625 0.0625 65280 1024 0
+( 702 1145 10 ) ( 770 1145 10 ) ( 770 1144 18 ) tex_nature/tree001 480 464 0 0.0625 0.0625 65280 1024 0
+( 702 1144 5 ) ( 770 1144 5 ) ( 770 1148 12 ) tex_nature/tree001 48 480 90 0.0625 0.0625 65280 1024 0
+( 702 1140 1 ) ( 770 1140 1 ) ( 770 1148 4 ) tex_nature/tree001 480 400 0 0.0625 0.0625 65280 1024 0
+( 702 1134 1 ) ( 770 1134 1 ) ( 770 1142 -2 ) tex_nature/tree001 480 400 0 0.0625 0.0625 65280 1024 0
+( 706 1130 5 ) ( 774 1130 5 ) ( 774 1134 -2 ) tex_nature/tree001 48 480 90 0.0625 0.0625 65280 1024 0
+( 706 1129 10 ) ( 774 1129 10 ) ( 774 1128 2 ) tex_nature/tree001 480 464 0 0.0625 0.0625 65280 1024 0
+( 706 1132 15 ) ( 774 1132 15 ) ( 774 1126 10 ) tex_nature/tree001 480 400 0 0.0625 0.0625 65280 1024 0
+( 1698 640 17 ) ( 1698 668 17 ) ( 1734 668 17 ) tex_nature/tree001 480 400 0 0.0625 0.0625 65280 1024 0
 ( 706 628 60 ) ( 706 628 50 ) ( 706 632 50 ) tex_nature/tree_chopped 71.625 254.1314 0 0.06510396 0.06689453 65280 1024 0
 ( 770 1014 58 ) ( 770 1046 58 ) ( 770 1014 26 ) tex_nature/tree_chopped 71.80273 254.1314 0 0.06510463 0.06689453 65280 1024 0
 }
 // brush 4
 {
-( 766.5 1102 27 ) ( 698.5 1102 27 ) ( 698.5 1109 31 ) tex_nature/tree001 122 97.89989 0 -0.25 0.238029 65280 1024 0
-( 770.5 1098 23 ) ( 702.5 1098 23 ) ( 702.5 1101 30 ) tex_nature/tree001 122 41.72287 0 -0.25 0.238029 65280 1024 0
-( 770.5 1098 18 ) ( 702.5 1098 18 ) ( 702.5 1096 25 ) tex_nature/tree001 122 41.72287 0 -0.25 0.238029 65280 1024 0
-( 770.5 1102 13 ) ( 702.5 1102 13 ) ( 702.5 1094 17 ) tex_nature/tree001 122 72.44154 180 0.25 0.225052 65280 1024 0
-( 770.5 1107 12 ) ( 702.5 1107 12 ) ( 702.5 1099 10 ) tex_nature/tree001 122 38.29912 180 0.25 0.264023 65280 1024 0
+( 766.5 1102 27 ) ( 698.5 1102 27 ) ( 698.5 1109 31 ) tex_nature/tree001 488 391.59956 0 -0.0625 0.05950725 65280 1024 0
+( 770.5 1098 23 ) ( 702.5 1098 23 ) ( 702.5 1101 30 ) tex_nature/tree001 488 166.89148 0 -0.0625 0.05950725 65280 1024 0
+( 770.5 1098 18 ) ( 702.5 1098 18 ) ( 702.5 1096 25 ) tex_nature/tree001 488 166.89148 0 -0.0625 0.05950725 65280 1024 0
+( 770.5 1102 13 ) ( 702.5 1102 13 ) ( 702.5 1094 17 ) tex_nature/tree001 488 289.76616 180 0.0625 0.056263 65280 1024 0
+( 770.5 1107 12 ) ( 702.5 1107 12 ) ( 702.5 1099 10 ) tex_nature/tree001 488 153.19648 180 0.0625 0.06600575 65280 1024 0
 ( 770.5 1112 15 ) ( 702.5 1112 15 ) ( 702.5 1107 9 ) tex_common/nodraw 28.22252 58 90 0.214828 -0.25 65280 128 0
-( 766.5 1114 19 ) ( 698.5 1114 19 ) ( 698.5 1113 11 ) tex_nature/tree001 122 24.08321 0 -0.25 0.25103 65280 1024 0
-( 766.5 1112 25 ) ( 698.5 1112 25 ) ( 698.5 1117 19 ) tex_nature/tree001 122 20.96877 0 -0.25 0.255783 65280 1024 0
-( 766.5 1108 28 ) ( 698.5 1108 28 ) ( 698.5 1116 26 ) tex_nature/tree001 122 50.9238 180 0.25 0.244537 65280 1024 0
+( 766.5 1114 19 ) ( 698.5 1114 19 ) ( 698.5 1113 11 ) tex_nature/tree001 488 96.33284 0 -0.0625 0.0627575 65280 1024 0
+( 766.5 1112 25 ) ( 698.5 1112 25 ) ( 698.5 1117 19 ) tex_nature/tree001 488 83.87508 0 -0.0625 0.06394575 65280 1024 0
+( 766.5 1108 28 ) ( 698.5 1108 28 ) ( 698.5 1116 26 ) tex_nature/tree001 488 203.6952 180 0.0625 0.06113425 65280 1024 0
 ( 766.5 1018 62 ) ( 766.5 1050 62 ) ( 766.5 1018 30 ) tex_nature/tree_chopped 155.6191 170.7743 0 -0.06737708 0.06734036 65280 1024 0
 ( 702.5 632 64 ) ( 702.5 632 54 ) ( 702.5 636 54 ) tex_nature/tree_chopped 155.625 170.7743 0 -0.06737705 0.06734035 65280 1024 0
 }
@@ -16014,8 +16014,8 @@
 {
 "classname" "light"
 "light" "100"
-"_color" "1 0.822492 0.00894179"
 "origin" "6.875 4 38.125"
+"_color" "1 0.822492 0.00894179"
 }
 // entity 145
 {
@@ -16029,23 +16029,23 @@
 {
 "classname" "light"
 "light" "100"
-"_color" "1 0.822492 0.00894179"
 "origin" "6.875 4 38.125"
+"_color" "1 0.822492 0.00894179"
 }
 // entity 147
 {
 "classname" "light"
 "light" "210"
-"origin" "2124.88 1248.51 38.125"
-"_color" "1 0.797375 0"
 "spawnflags" "1"
+"_color" "1 0.797375 0"
+"origin" "2124.88 1248.51 38.125"
 }
 // entity 148
 {
 "classname" "light"
 "origin" "2044.63 1344.38 36"
-"_color" "1 1 0.75"
 "spawnflags" "1"
+"_color" "1 1 0.75"
 "light" "200"
 }
 // entity 149
