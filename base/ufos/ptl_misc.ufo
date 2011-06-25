@@ -650,7 +650,7 @@ particle smoke3
 	init
 	{
 		v      "0 0 0"
-		tps    25.0
+		tps    10.0
 		spawn  smoking
 	}
 	think
