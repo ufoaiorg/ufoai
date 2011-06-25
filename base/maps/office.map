@@ -14811,10 +14811,6 @@
 ( 941 164 10 ) ( 941 162 10 ) ( 945 162 10 ) tex_common/nodraw -21 4 0 0.5 0.5 134217984 128 0
 }
 }
-// entity 150
-{
-"classname" "func_group"
-}
 // entity 151
 {
 "classname" "func_group"
