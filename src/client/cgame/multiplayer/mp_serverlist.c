@@ -117,21 +117,27 @@ static void CL_PingServerCallback (struct net_stream *s)
 
 	cgi->NET_ReadStringLine(buf, str, sizeof(str));
 
-	if (cmd == clc_oob && strncmp(str, "info", 4) == 0) {
-		cgi->NET_ReadString(buf, str, sizeof(str));
-		if (CL_ProcessPingReply(server, str)) {
-			if (CL_ShowServer(server)) {
-				char string[MAX_INFO_STRING];
-				Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
-					server->sv_hostname,
-					server->mapname,
-					server->gametype,
-					server->clients,
-					server->sv_maxclients);
-				server->serverListPos = serverListPos;
-				serverListPos++;
-				Q_strcat(serverText, string, sizeof(serverText));
+	if (cmd == clc_oob) {
+		if (strncmp(str, "info", 4) == 0) {
+			cgi->NET_ReadString(buf, str, sizeof(str));
+			if (CL_ProcessPingReply(server, str)) {
+				if (CL_ShowServer(server)) {
+					char string[MAX_INFO_STRING];
+					Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
+						server->sv_hostname,
+						server->mapname,
+						server->gametype,
+						server->clients,
+						server->sv_maxclients);
+					server->serverListPos = serverListPos;
+					serverListPos++;
+					Q_strcat(serverText, string, sizeof(serverText));
+				}
 			}
+		} else if (strncmp(str, "print", 5) == 0) {
+			char paramBuf[2048];
+			cgi->NET_ReadString(buf, paramBuf, sizeof(paramBuf));
+			cgi->Com_DPrintf(DEBUG_CLIENT, "%s", paramBuf);
 		}
 	}
 	cgi->NET_StreamFree(s);
