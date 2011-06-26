@@ -105,9 +105,6 @@ typedef struct reserveShot_s {
 	int TUs;
 } reserveShot_t;
 
-static int hudTime;
-static char hudText[256];
-
 /**
  * @brief Displays a message on the hud.
  * @sa UI_DisplayNotice
@@ -1433,10 +1430,6 @@ void HUD_Update (void)
 		Cvar_SetValue("mn_moralemax", 100);
 		Cvar_SetValue("mn_stun", 0);
 	}
-
-	/* display special message */
-	if (cl.time < hudTime)
-		UI_RegisterText(TEXT_STANDARD, hudText);
 }
 
 /**
