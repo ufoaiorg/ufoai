@@ -60,9 +60,6 @@ window won
 
 	func onWindowOpened
 	{
-		if ( *cvar:sv_maxclients >= 2 ) {
-			cmd "ui_push hud_chat;"
-		}
 		cmd "snd_music ufo2;"
 	}
 
@@ -146,9 +143,6 @@ window lost
 
 	func onWindowOpened
 	{
-		if ( *cvar:sv_maxclients >= 2 ) {
-			cmd "ui_push hud_chat;"
-		}
 		cmd "snd_music ufo1;"
 		if ( *cvar:cp_mission_tryagain == 0 ) {
 			*node:root.bt_tryagain@invis = true
