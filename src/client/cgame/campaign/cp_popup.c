@@ -364,7 +364,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	linkedList_t *baseList = NULL;
 	aircraft_t *aircraft;
 	base_t *base;
-	int installationIdx;
+	installation_t *installation;
 
 	if (!ufo)
 		return;
@@ -416,11 +416,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	else
 		UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
 
-	for (installationIdx = 0; installationIdx < ccs.numInstallations; installationIdx++) {
-		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (!installation)
-			continue;
-
+	INS_Foreach(installation) {
 		/* Check if the installation should be displayed in base list
 		 * don't check range because maybe UFO will get closer */
 		if (AII_InstallationCanShoot(installation))
@@ -545,12 +541,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	installation = NULL;
 	if (num >= 0) { /* don't try to find an installation if we already found the right base */
-		int installationIdx;
-		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-			installation = INS_GetFoundedInstallationByIDX(installationIdx);
-			if (!installation)
-				continue;
-
+		INS_Foreach(installation) {
 			/* Check if the installation should be displayed in base list */
 			if (AII_InstallationCanShoot(installation)) {
 				num--;
@@ -560,7 +551,6 @@ static void CL_PopupInterceptBaseClick_f (void)
 			}
 		}
 	}
-
 
 	if (!atLeastOneBase && !num) {
 		/* no base in list: no error message

@@ -131,15 +131,12 @@ static int UFO_CleanSuiteCampaign (void)
 static installation_t* CreateInstallation (const char *name, const vec2_t pos)
 {
 	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateFromInstallationID("ufoyard");
-	installation_t *installation = INS_GetFirstUnfoundedInstallation();
+	installation_t *installation;
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(installationTemplate);
 
+	installation = INS_Build(installationTemplate, pos, name);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(installation);
-
-	CU_ASSERT_FALSE(installation->founded);
-
-	INS_SetUpInstallation(installation, installationTemplate, pos, name);
 	CU_ASSERT_EQUAL(installation->installationStatus, INSTALLATION_UNDER_CONSTRUCTION);
 
 	/* fake the build time */

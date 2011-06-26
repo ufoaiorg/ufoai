@@ -39,15 +39,8 @@ static void INS_SetInstallationTitle (void)
 {
 	const installationTemplate_t *insTemp = INS_GetInstallationTemplateFromInstallationID(Cvar_GetString("mn_installation_type"));
 	char insName[MAX_VAR];
-	int i = 1;
-	int j;
 
-	do {
-		j = 0;
-		Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), i);
-		while (j <= ccs.numInstallations && !Q_streq(insName, ccs.installations[j++].name));
-	} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
-
+	Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuild);
 	Cvar_Set("mn_installation_title", insName);
 	if (!insTemp || !insTemp->description || !strlen(insTemp->description))
 		UI_ResetData(TEXT_BUILDING_INFO);
@@ -67,7 +60,7 @@ void INS_SelectInstallation (installation_t *installation)
 	if (!installation) {
 		/* if player hit the "create base" button while creating base mode is enabled
 		 * that means that player wants to quit this mode */
-		if (ccs.mapAction == MA_NEWINSTALLATION || ccs.numInstallations >= B_GetInstallationLimit()) {
+		if (ccs.mapAction == MA_NEWINSTALLATION || INS_GetCount() >= B_GetInstallationLimit()) {
 			MAP_ResetAction();
 			return;
 		} else {
@@ -109,7 +102,7 @@ static void INS_BuildInstallation_f (void)
 	}
 
 	/* We shouldn't build more installations than the actual limit */
-	if (B_GetInstallationLimit() <= ccs.numInstallations)
+	if (B_GetInstallationLimit() <= INS_GetCount())
 		return;
 
 	installationTemplate = INS_GetInstallationTemplateFromInstallationID(Cmd_Argv(1));
@@ -118,20 +111,15 @@ static void INS_BuildInstallation_f (void)
 		return;
 	}
 
-	installation = INS_GetFirstUnfoundedInstallation();
-	if (!installation)
-		return;
-
-	assert(!installation->founded);
 	assert(installationTemplate->cost >= 0);
 
 	if (ccs.credits - installationTemplate->cost > 0) {
 		/* set up the installation */
-		INS_SetUpInstallation(installation, installationTemplate, ccs.newBasePos, Cvar_GetString("mn_installation_title"));
+		installation = INS_Build(installationTemplate, ccs.newBasePos, Cvar_GetString("mn_installation_title"));
 
 		CP_UpdateCredits(ccs.credits - installationTemplate->cost);
 		/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
-		Cvar_SetValue("mn_installation_count", ccs.numInstallations);
+		Cvar_SetValue("mn_installation_count", INS_GetCount());
 
 		nation = MAP_GetNation(installation->pos);
 		if (nation)
@@ -147,6 +135,7 @@ static void INS_BuildInstallation_f (void)
 
 		UI_Popup(_("Notice"), _("Not enough credits to set up a new installation."));
 	}
+	ccs.mapAction = MA_NONE;
 }
 
 /**
@@ -164,11 +153,7 @@ static void INS_SelectInstallation_f (void)
 	}
 	installationID = atoi(Cmd_Argv(1));
 
-	if (installationID >= 0 && installationID < ccs.numInstallations)
-		installation = INS_GetFoundedInstallationByIDX(installationID);
-	else
-		/* create a new installation */
-		installation = NULL;
+	installation = INS_GetByIDX(installationID);
 	INS_SelectInstallation(installation);
 }
 
@@ -199,7 +184,7 @@ static void INS_DestroyInstallation_f (void)
 	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
 		installation = INS_GetCurrentSelectedInstallation();
 	} else {
-		installation = INS_GetFoundedInstallationByIDX(atoi(Cmd_Argv(1)));
+		installation = INS_GetByIDX(atoi(Cmd_Argv(1)));
 		if (!installation) {
 			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(Cmd_Argv(1)));
 			return;
@@ -236,7 +221,7 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
 	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");
 
-	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
+	Cvar_SetValue("mn_installation_count", INS_GetCount());
 	Cvar_Set("mn_installation_title", "");
 	Cvar_Set("mn_installation_type", "");
 	Cvar_Set("mn_installation_max", "");

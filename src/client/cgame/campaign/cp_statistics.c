@@ -43,6 +43,7 @@ void CP_StatsUpdate_f (void)
 	const campaign_t *campaign = ccs.curCampaign;
 	const salary_t *salary = &campaign->salaries;
 	aircraft_t *aircraft;
+	installation_t *inst;
 
 	/* delete buffer */
 	OBJZERO(statsBuffer);
@@ -63,8 +64,8 @@ void CP_StatsUpdate_f (void)
 	/* installations */
 	pos += (strlen(pos) + 1);
 	UI_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
-	for (i = 0; i < ccs.numInstallations; i++) {
-		const installation_t *inst = &ccs.installations[i];
+
+	INS_Foreach(inst) {
 		Q_strcat(pos, va("%s\n", inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 

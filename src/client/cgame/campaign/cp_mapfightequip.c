@@ -400,16 +400,12 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
  */
 void AII_UpdateInstallationDelay (void)
 {
-	int j, k;
-	aircraft_t *aircraft;
 	base_t *base;
+	aircraft_t *aircraft;
+	installation_t *installation;
+	int k;
 
-	for (j = 0; j < MAX_INSTALLATIONS; j++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(j);
-		if (!installation)
-			continue;
-
-		/* Update base */
+	INS_Foreach(installation) {
 		for (k = 0; k < installation->installationTemplate->maxBatteries; k++)
 			AII_UpdateOneInstallationDelay(NULL, installation, NULL, &installation->batteries[k].slot);
 	}
@@ -1228,7 +1224,7 @@ qboolean AII_InstallationCanShoot (const installation_t *installation)
 {
 	assert(installation);
 
-	if (installation->founded && installation->installationStatus == INSTALLATION_WORKING
+	if (installation->installationStatus == INSTALLATION_WORKING
 	 && installation->installationTemplate->maxBatteries > 0) {
 		/* installation is working and has battery */
 		return AII_WeaponsCanShoot(installation->batteries, installation->installationTemplate->maxBatteries);
@@ -1324,7 +1320,7 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 void BDEF_AutoSelectTarget (void)
 {
 	base_t *base;
-	int i;
+	installation_t *inst;
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
@@ -1332,13 +1328,8 @@ void BDEF_AutoSelectTarget (void)
 		BDEF_AutoTarget(base->lasers, base->numLasers);
 	}
 
-	for (i = 0; i < ccs.numInstallations; i++) {
-		installation_t *inst = INS_GetFoundedInstallationByIDX(i);
-		if (!inst)
-			continue;
-
+	INS_Foreach(inst)
 		BDEF_AutoTarget(inst->batteries, inst->numBatteries);
-	}
 }
 
 /**

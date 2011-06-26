@@ -1991,7 +1991,7 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
 				const int installationIdx = XML_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, BYTES_NONE);
 				if (installationIdx != BYTES_NONE) {
-					installation_t *installation = INS_GetInstallationByIDX(installationIdx);
+					installation_t *installation = INS_GetByIDX(installationIdx);
 					if (installation)
 						mission.data.installation = installation;
 					else {

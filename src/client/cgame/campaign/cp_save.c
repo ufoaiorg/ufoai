@@ -667,8 +667,8 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&air_subsystemXML);
 	SAV_AddSubsystem(&ab_subsystemXML);
 	SAV_AddSubsystem(&int_subsystemXML);
-	SAV_AddSubsystem(&mis_subsystemXML);
 	SAV_AddSubsystem(&ins_subsystemXML);
+	SAV_AddSubsystem(&mis_subsystemXML);
 	SAV_AddSubsystem(&us_subsystemXML);
 	SAV_AddSubsystem(&pr_subsystemXML);
 	SAV_AddSubsystem(&ms_subsystemXML);

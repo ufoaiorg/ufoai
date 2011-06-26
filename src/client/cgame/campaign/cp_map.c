@@ -203,12 +203,15 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		MAP_ResetAction();
 		B_SelectBase(B_GetFoundedBaseByIDX(id));
 		break;
-	case MULTISELECT_TYPE_INSTALLATION:	/* Select a installation */
-		if (id >= ccs.numInstallations)
-			break;
-		MAP_ResetAction();
-		INS_SelectInstallation(INS_GetFoundedInstallationByIDX(id));
+	case MULTISELECT_TYPE_INSTALLATION: {
+		/* Select an installation */
+		installation_t *ins = INS_GetByIDX(id);
+		if (ins) {
+			MAP_ResetAction();
+			INS_SelectInstallation(ins);
+		}
 		break;
+	}
 	case MULTISELECT_TYPE_MISSION: {
 		mission_t *mission = MAP_GetSelectedMission();
 		/* Select a mission */
@@ -279,9 +282,9 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 	aircraft_t *aircraft;
 	aircraft_t *ufo;
 	base_t *base;
-	int i;
 	vec2_t pos;
 	mission_t *tempMission;
+	installation_t *installation;
 
 	/* get map position */
 	if (cl_3dmap->integer)
@@ -306,13 +309,10 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 		break;
 	case MA_NEWINSTALLATION:
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			if (ccs.numInstallations < MAX_INSTALLATIONS) {
-				Vector2Copy(pos, ccs.newBasePos);
-				CP_GameTimeStop();
-				UI_PushWindow("popup_newinstallation", NULL, NULL);
-				return qtrue;
-			}
-			return qfalse;
+			Vector2Copy(pos, ccs.newBasePos);
+			CP_GameTimeStop();
+			UI_PushWindow("popup_newinstallation", NULL, NULL);
+			return qtrue;
 		}
 		break;
 	case MA_UFORADAR:
@@ -350,12 +350,11 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 	}
 
 	/* Get selected installations */
-	for (i = 0; i < MAX_INSTALLATIONS && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
-		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
-		if (!installation)
-			continue;
+	INS_Foreach(installation) {
+		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
+			break;
 		if (MAP_IsMapPositionSelected(node, installation->pos, x, y))
-			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, i, _("Installation"), installation->name);
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, installation->idx, _("Installation"), installation->name);
 	}
 
 	/* Get selected ufos */
@@ -1128,7 +1127,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	int numBases = B_GetCount();
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
-	maxEventIdx = numMissions + numBases + ccs.numInstallations - 1;
+	maxEventIdx = numMissions + numBases + INS_GetCount() - 1;
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
 		aircraft_t *aircraft;
@@ -1184,13 +1183,10 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	counter += numBases;
 
 	/* Cycle through installations */
-	if (centerOnEventIdx < ccs.numInstallations + counter) {
-		int instIdx;
-		for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
-			const installation_t *inst = INS_GetFoundedInstallationByIDX(instIdx);
-			if (!inst)
-				continue;
+	if (centerOnEventIdx < INS_GetCount() + counter) {
+		installation_t *inst;
 
+		INS_Foreach(inst) {
 			if (counter == centerOnEventIdx) {
 				MAP_ConvertObjectPositionToGeoscapePosition(vector, inst->pos);
 				return;
@@ -1198,7 +1194,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 			counter++;
 		}
 	}
-	counter += ccs.numInstallations;
+	counter += INS_GetCount();
 
 	/* Cycle through aircraft (only those present on geoscape) */
 	AIR_Foreach(aircraft) {
@@ -1761,12 +1757,13 @@ void MAP_UpdateGeoscapeDock (void)
  */
 static void MAP_DrawMapMarkers (const uiNode_t* node)
 {
-	int x, y, i, installationIdx, idx;
+	int x, y, i, idx;
 	const char* font;
 	aircraft_t *ufo;
 	aircraft_t *aircraft;
 	base_t *base;
 	mission_t *mission;
+	installation_t *installation;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
@@ -1793,10 +1790,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	}
 
 	/* draw installations */
-	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		const installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (!installation)
-			continue;
+	INS_Foreach(installation) {
 		MAP_DrawMapOneInstallation(node, installation, oneUFOVisible, font);
 	}
 

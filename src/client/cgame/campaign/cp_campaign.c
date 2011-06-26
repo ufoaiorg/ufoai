@@ -1371,6 +1371,7 @@ void CP_Shutdown (void)
 
 		AB_Shutdown();
 		AIR_Shutdown();
+		INS_Shutdown();
 		NAT_Shutdown();
 		MIS_Shutdown();
 		TR_Shutdown();

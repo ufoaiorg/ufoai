@@ -364,8 +364,8 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 
 	ufo = NULL;
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
-		int idx;
 		base_t *base;
+		installation_t *installation;
 
 		/* landed UFO can't detect any phalanx base or installation */
 		if (ufo->landed)
@@ -375,12 +375,8 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 		while ((base = B_GetNext(base)) != NULL)
 			UFO_UpdateAlienInterestForOneBase(ufo, base);
 
-		for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
-			installation_t *installation = INS_GetFoundedInstallationByIDX(idx);
-			if (!installation)
-				continue;
+		INS_Foreach(installation)
 			UFO_UpdateAlienInterestForOneInstallation(ufo, installation);
-		}
 	}
 }
 
@@ -768,7 +764,7 @@ qboolean UFO_CampaignCheckEvents (void)
 	ufo = NULL;
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		char detectedBy[MAX_VAR] = "";
-		int installationIdx;
+		installation_t *installation;
 		float minDistance = -1;
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */
@@ -818,11 +814,7 @@ qboolean UFO_CampaignCheckEvents (void)
 		}
 
 		/* Check if UFO is detected by a radartower */
-		for (installationIdx = 0; installationIdx < ccs.numInstallations; installationIdx++) {
-			installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-			if (!installation)
-				continue;
-
+		INS_Foreach(installation) {
 			/* maybe the ufo is already detected, don't reset it */
 			if (RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected)) {
 				const int distance = GetDistanceOnGlobe(installation->pos, ufo->pos);

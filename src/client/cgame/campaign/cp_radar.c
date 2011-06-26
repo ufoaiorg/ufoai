@@ -53,8 +53,8 @@ static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
  */
 void RADAR_UpdateStaticRadarCoverage (void)
 {
-	int installationIdx;
 	base_t *base;
+	installation_t *installation;
 
 	/* Initialise radar range (will be filled below) */
 	CP_InitializeRadarOverlay(qtrue);
@@ -68,12 +68,9 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	}
 
 	/* Add installation coverage */
-	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (installation && installation->founded &&
-			installation->installationStatus == INSTALLATION_WORKING && installation->radar.range) {
+	INS_Foreach(installation) {
+		if (installation->installationStatus == INSTALLATION_WORKING && installation->radar.range)
 			CP_AddRadarCoverage(installation->pos, installation->radar.range, installation->radar.trackingRange, qtrue);
-		}
 	}
 
 	/* Smooth and bind radar overlay without aircraft (in case no aircraft is on geoscape:
@@ -173,9 +170,9 @@ void RADAR_DrawInMap (const uiNode_t *node, const radar_t *radar, const vec2_t p
  */
 void RADAR_DeactivateRadarOverlay (void)
 {
-	int idx;
 	base_t *base;
 	aircraft_t *aircraft;
+	installation_t *installation;
 
 	/* never deactivate radar if player wants it to be always turned on */
 	if (radarOverlayWasSet)
@@ -193,11 +190,7 @@ void RADAR_DeactivateRadarOverlay (void)
 			return;
 	}
 
-	for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
-		const installation_t const *installation = INS_GetFoundedInstallationByIDX(idx);
-		if (!installation)
-			continue;
-
+	INS_Foreach(installation) {
 		if (installation->radar.numUFOs)
 			return;
 	}
@@ -291,7 +284,7 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
 void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
 	base_t *base;
-	int installationIdx;
+	installation_t *installation;
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
@@ -303,11 +296,9 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 			RADAR_NotifyUFORemovedFromOneRadar(&aircraft->radar, ufo, destroyed);
 	}
 
-	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (installation && installation->founded && installation->installationStatus == INSTALLATION_WORKING) {
+	INS_Foreach(installation) {
+		if (installation->installationStatus == INSTALLATION_WORKING)
 			RADAR_NotifyUFORemovedFromOneRadar(&installation->radar, ufo, destroyed);
-		}
 	}
 }
 
@@ -397,9 +388,6 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
 	if (!installation || !installation->installationTemplate)
 		Com_Error(ERR_DROP, "RADAR_UpdateInstallationRadarCoverage: No installation or no template!\n");
 
-	/* Do nothing if installation not founded */
-	if (!installation->founded)
-		return;
 	/* Do nothing if installation not finished */
 	if (installation->installationStatus != INSTALLATION_WORKING)
 		return;
@@ -418,9 +406,9 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
  */
 void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 {
-	int idx;
 	base_t *base = NULL;
 	aircraft_t *aircraft;
+	installation_t *installation;
 
 	AIR_Foreach(aircraft) {
 		if (!AIR_IsAircraftOnGeoscape(aircraft))
@@ -443,12 +431,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 		}
 	}
 
-	for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(idx);
-
-		if (!installation)
-			continue;
-
+	INS_Foreach(installation) {
 		/* No need to check installations without radar */
 		if (!installation->radar.trackingRange)
 			continue;
@@ -469,8 +452,8 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
  */
 qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 {
-	int idx;
 	base_t *base = NULL;
+	installation_t *installation;
 
 	while ((base = B_GetNext(base)) != NULL) {
 		const float dist = GetDistanceOnGlobe(pos, base->pos);		/* Distance from base to position */
@@ -478,11 +461,8 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 			return qtrue;
 	}
 
-	for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
-		const installation_t const *installation = INS_GetFoundedInstallationByIDX(idx);
+	INS_Foreach(installation) {
 		float dist;
-		if (!installation)
-			continue;
 
 		dist = GetDistanceOnGlobe(pos, installation->pos);		/* Distance from base to position */
 		if (dist <= installation->radar.range)

@@ -749,7 +749,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
  */
 void AIRFIGHT_CampaignRunBaseDefence (int dt)
 {
-	int installationIdx;
+	installation_t *installation;
 	base_t *base;
 
 	base = NULL;
@@ -785,11 +785,8 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 		}
 	}
 
-	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+	INS_Foreach(installation) {
 		int idx;
-		installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (!installation)
-			continue;
 
 		if (installation->installationTemplate->maxBatteries <= 0)
 			continue;

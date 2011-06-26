@@ -22,7 +22,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -323,7 +322,7 @@ qboolean US_LoadXML (xmlNode_t *p)
 		}
 		ufo.status = statusIDX;
 		/* ufo->installation */
-		ufo.installation = INS_GetFoundedInstallationByIDX(XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, MAX_INSTALLATIONS));
+		ufo.installation = INS_GetByIDX(XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, -1));
 		if (!ufo.installation) {
 			Com_Printf("UFO has no/invalid installation assigned\n");
 			continue;
@@ -403,11 +402,11 @@ static void US_StoreUFO_f (void)
 	installationIDX = atoi(Cmd_Argv(2));
 
 	/* Get The UFO Yard */
-	if (installationIDX < 0 || installationIDX >= MAX_INSTALLATIONS) {
+	if (installationIDX < 0) {
 		Com_Printf("US_StoreUFO_f: Invalid Installation index.\n");
 		return;
 	}
-	installation = INS_GetFoundedInstallationByIDX(installationIDX);
+	installation = INS_GetByIDX(installationIDX);
 	if (!installation) {
 		Com_Printf("US_StoreUFO_f: There is no Installation: idx=%i.\n", installationIDX);
 		return;

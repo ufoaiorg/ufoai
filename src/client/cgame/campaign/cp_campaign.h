@@ -516,10 +516,8 @@ typedef struct ccs_s {
 	installationTemplate_t installationTemplates[MAX_INSTALLATION_TEMPLATES];
 	int numInstallationTemplates;
 
-	/* A list of _all_ installations ... even unbuilt ones. */
-	installation_t installations[MAX_INSTALLATIONS];
-	/* Total number of built installations (how many are enabled). */
-	int numInstallations;
+	/* A list of _all_ installations */
+	linkedList_t* installations;
 
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];

@@ -22,7 +22,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -130,7 +129,7 @@ static void UR_DialogInit_f (void)
  */
 static void UR_DialogInitStore_f (void)
 {
-	int i;
+	installation_t *installation;
 	int count = 0;
 	linkedList_t *recoveryYardName = NULL;
 	linkedList_t *recoveryYardCapacity = NULL;
@@ -141,12 +140,8 @@ static void UR_DialogInitStore_f (void)
 		return;
 
 	/* Check how many bases can store this UFO. */
-	for (i = 0; i < ccs.numInstallations; i++) {
-		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
+	INS_Foreach(installation) {
 		const capacities_t *capacity;
-
-		if (!installation)
-			continue;
 
 		capacity = &installation->ufoCapacity;
 		if (capacity->max > 0 && capacity->max > capacity->cur) {
@@ -177,9 +172,8 @@ static void UR_DialogInitStore_f (void)
  */
 static void UR_DialogStartStore_f (void)
 {
-	installation_t *UFOYard = NULL;
+	installation_t *installation;
 	int idx;
-	int i;
 	int count = 0;
 	date_t date;
 
@@ -190,33 +184,26 @@ static void UR_DialogStartStore_f (void)
 
 	idx = atoi(Cmd_Argv(1));
 
-	for (i = 0; i < ccs.numInstallations; i++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(i);
-
-		if (!installation)
-			continue;
-
+	INS_Foreach(installation) {
 		if (installation->ufoCapacity.max <= 0
 		 || installation->ufoCapacity.max <= installation->ufoCapacity.cur)
 			continue;
 
-		if (count == idx) {
-			UFOYard = installation;
+		if (count == idx)
 			break;
-		}
 		count++;
 	}
 
-	if (!UFOYard)
+	if (!installation)
 		return;
 
 	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."),
-			UFO_TypeToName(ufoRecovery.ufoTemplate->ufotype), UFOYard->name);
+			UFO_TypeToName(ufoRecovery.ufoTemplate->ufotype), installation->name);
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	date = ccs.date;
 	date.day += (int) RECOVERY_DELAY;
 
-	US_StoreUFO(ufoRecovery.ufoTemplate, UFOYard, date, ufoRecovery.condition);
+	US_StoreUFO(ufoRecovery.ufoTemplate, installation, date, ufoRecovery.condition);
 	UR_DialogRecoveryDone();
 }
 

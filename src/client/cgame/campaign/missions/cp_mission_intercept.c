@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../../cl_shared.h"
@@ -83,7 +82,7 @@ void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
 
 		Vector2Copy(mission->pos, missionPos);
 		missionPos[2] = installation->pos[2];
-		if (destroyed && installation->founded && VectorCompareEps(missionPos, installation->pos, UFO_EPSILON))
+		if (destroyed && VectorCompareEps(missionPos, installation->pos, UFO_EPSILON))
 			INS_DestroyInstallation(installation);
 	}
 
@@ -107,14 +106,6 @@ static void CP_InterceptAttackInstallation (mission_t *mission)
 
 	mission->stage = STAGE_INTERCEPT;
 
-	/* Check that installation is not already destroyed */
-	installation = mission->data.installation;
-	if (!installation->founded) {
-		mission->finalDate = ccs.date;
-		return;
-	}
-
-	/* Maybe installation has been destroyed, but rebuild somewhere else? */
 	installation = mission->data.installation;
 	Vector2Copy(mission->pos, missionPos);
 	if (!VectorCompareEps(missionPos, installation->pos, UFO_EPSILON)) {
@@ -148,23 +139,16 @@ void CP_InterceptAircraftMissionSet (mission_t *mission)
 static installation_t* CP_InterceptChooseInstallation (const mission_t *mission)
 {
 	float randomNumber, sum = 0.0f;
-	int installationIdx;
 	installation_t *installation = NULL;
 
 	assert(mission);
 
 	/* Choose randomly a base depending on alienInterest values for those bases */
-	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (!installation)
-			continue;
+	INS_Foreach(installation) {
 		sum += installation->alienInterest;
 	}
 	randomNumber = frand() * sum;
-	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (!installation)
-			continue;
+	INS_Foreach(installation) {
 		randomNumber -= installation->alienInterest;
 		if (randomNumber < 0)
 			break;
@@ -213,7 +197,7 @@ static void CP_InterceptMissionSet (mission_t *mission)
 	assert(mission->ufo);
 
 	/* Only harvesters can attack installations -- if there are installations to attack */
-	if (mission->ufo->ufotype == UFO_HARVESTER && ccs.numInstallations) {
+	if (mission->ufo->ufotype == UFO_HARVESTER && INS_GetCount()) {
 		CP_InterceptGoToInstallation(mission);
 	}
 
