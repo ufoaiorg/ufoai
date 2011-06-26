@@ -69,6 +69,7 @@ typedef struct client_static_s {
 	char servername[MAX_VAR];		/**< name of server from original connect */
 	char serverport[16];			/**< port the server is running at */
 	int connectTime;				/**< for connection retransmits */
+	int reconnectTime;				/**< time until the reconnect to a server is triggered */
 	int waitingForStart;			/**< waiting for EV_START or timeout */
 
 	struct net_stream *netStream;

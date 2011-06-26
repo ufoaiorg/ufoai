@@ -217,10 +217,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 	case svc_reconnect:
 		NET_ReadString(msg, s, sizeof(s));
 		Com_Printf("%s\n", s);
-		CL_Disconnect();
-		CL_SetClientState(ca_connecting);
-		/* otherwise we would time out */
-		cls.connectTime = CL_Milliseconds() - 1500;
+		cls.reconnectTime = CL_Milliseconds() + 4000;
 		break;
 
 	case svc_print:

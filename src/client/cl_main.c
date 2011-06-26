@@ -176,6 +176,17 @@ void CL_Drop (void)
 	GAME_Drop();
 }
 
+static void CL_Reconnect (void)
+{
+	if (cls.reconnectTime == 0 || cls.reconnectTime > CL_Milliseconds())
+		return;
+
+	CL_Disconnect();
+	CL_SetClientState(ca_connecting);
+	/* otherwise we would time out */
+	cls.connectTime = CL_Milliseconds() - 1500;
+}
+
 /**
  * @note Only call @c CL_Connect if there is no connection yet (@c cls.netStream is @c NULL)
  * @sa CL_Disconnect
@@ -1161,6 +1172,7 @@ void CL_SetClientState (int state)
 		cls.waitingForStart = 0;
 		break;
 	case ca_connecting:
+		cls.reconnectTime = 0;
 		CL_Connect();
 		break;
 	case ca_disconnected:
@@ -1247,6 +1259,8 @@ void CL_SlowFrame (int now, void *data)
 		CL_LanguageTryToSet(s_language->string);
 
 	Irc_Logic_Frame();
+
+	CL_Reconnect();
 
 	HUD_Update();
 }
