@@ -119,9 +119,33 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 }
 
 /**
+ * @brief Adds a string as first entry to a linked list
+ * @param listDest The linked list to add the string, too. If this is @c NULL, a new list is created
+ * @param data The string to add to the list
+ * @sa LIST_AddString
+ * @todo Optimize this to not allocate memory for every entry - but use a hunk
+ */
+void LIST_PrependString (linkedList_t** listDest, const char* data)
+{
+	linkedList_t *newEntry;
+
+	/* create the list */
+	if (!*listDest) {
+		LIST_AddString(listDest, data);
+		return;
+	}
+
+	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(*newEntry), com_genericPool, 0);
+	newEntry->next = *listDest;
+	*listDest = newEntry;
+	newEntry->data = (byte*)Mem_StrDup(data);
+}
+
+/**
  * @brief Adds an string to a new or to an already existing linked list. The string is copied here.
  * @sa LIST_Add
  * @sa LIST_RemoveEntry
+ * @see LIST_PrependString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 void LIST_AddString (linkedList_t** listDest, const char* data)

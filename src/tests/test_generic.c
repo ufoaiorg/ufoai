@@ -237,6 +237,19 @@ static void testLinkedListIteratorRemove (void)
 	CU_ASSERT_TRUE(LIST_IsEmpty(list));
 }
 
+static void testPrependStringList (void)
+{
+	linkedList_t *list = NULL;
+
+	LIST_PrependString(&list, "test2");
+	LIST_PrependString(&list, "test1");
+
+	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 0), "test1");
+	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 1), "test2");
+
+	LIST_Delete(&list);
+}
+
 static void testLinkedListStringSort (void)
 {
 	linkedList_t *list = NULL;
@@ -503,6 +516,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedListIteratorRemove) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testPrependStringList) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == NULL)

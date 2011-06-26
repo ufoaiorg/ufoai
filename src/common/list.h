@@ -16,6 +16,7 @@ typedef struct linkedList_s {
 	for (linkedList_t *var##__iter = (var = 0)?0:(list); var##__iter;) \
 		if (var = (type*)var##__iter->data, var##__iter = var##__iter->next, 0) {} else
 
+void LIST_PrependString(linkedList_t** listDest, const char* data);
 void LIST_AddString(linkedList_t** list, const char* data);
 void LIST_AddStringSorted(linkedList_t** listDest, const char* data);
 void LIST_AddPointer(linkedList_t** listDest, void* data);
