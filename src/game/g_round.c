@@ -36,6 +36,9 @@ void G_CheckForceEndRound (void)
 	if (!sv_roundtimelimit->integer || sv_maxclients->integer == 1)
 		return;
 
+	if (!G_MatchIsRunning())
+		return;
+
 	if (level.time != ceil(level.time))
 		return;
 
