@@ -68,7 +68,9 @@ window won
 
 	func onWindowClosed
 	{
-		cmd "cp_results 1;"
+		if ( *cvar:sv_maxclients == 1 ) {
+			cmd "cp_results 1;"
+		}
 	}
 }
 
