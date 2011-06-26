@@ -27,7 +27,7 @@ window won
 		lineheight	20
 		tabwidth	350
 		rows		"23"
-		dataid		TEXT_STANDARD
+		dataid		TEXT_LIST2
 	}
 
 	// ==================
@@ -103,7 +103,7 @@ window lost
 		lineheight	20
 		tabwidth	350
 		rows		"23"
-		dataid		TEXT_STANDARD
+		dataid		TEXT_LIST2
 	}
 
 	// ==================

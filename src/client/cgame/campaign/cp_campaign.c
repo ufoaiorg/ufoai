@@ -1030,7 +1030,7 @@ void CP_InitMissionResults (qboolean won, const missionResults_t *missionResults
 {
 	static char resultText[1024];
 	/* init result text */
-	UI_RegisterText(TEXT_STANDARD, resultText);
+	UI_RegisterText(TEXT_LIST2, resultText);
 
 	/* needs to be cleared and then append to it */
 	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), missionResults->aliensKilled);
