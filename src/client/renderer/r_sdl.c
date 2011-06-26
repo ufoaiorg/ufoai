@@ -72,6 +72,8 @@ qboolean Rimp_Init (void)
 
 	Com_Printf("\n------- video initialization -------\n");
 
+	OBJZERO(r_sdl_config);
+
 	if (r_driver->string[0] != '\0') {
 		Com_Printf("using driver: %s\n", r_driver->string);
 		SDL_GL_LoadLibrary(r_driver->string);
