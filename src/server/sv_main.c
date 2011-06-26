@@ -612,8 +612,13 @@ void SV_Frame (int now, void *data)
 	}
 
 	/* if server is not active, do nothing */
-	if (!svs.initialized)
+	if (!svs.initialized) {
+#ifdef DEDICATED_ONLY
+		Com_Printf("Starting next map from the mapcycle\n");
+		SV_NextMapcycle();
+#endif
 		return;
+	}
 
 	svs.realtime = now;
 
@@ -639,11 +644,6 @@ void SV_Frame (int now, void *data)
 	/* server is empty - so shutdown */
 	if (svs.abandon && svs.killserver)
 		SV_Shutdown("Server disconnected.", qfalse);
-
-#ifdef DEDICATED_ONLY
-	if (Com_ServerState() == ss_dead)
-		SV_NextMapcycle();
-#endif
 }
 
 /**
