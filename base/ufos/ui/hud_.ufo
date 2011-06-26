@@ -404,11 +404,13 @@ window hud_chat
 					if ( *cvar:mn_chatselect eq "irc" ) {
 						*node:parent.ircscreen@invis = false
 						*node:parent.chatscreen@invis = true
+						call *node:parent.ircscreen.input.say@edit
 						cmd "irc_connect;"
 					}
 					if ( *cvar:mn_chatselect eq "chat" ) {
 						*node:parent.ircscreen@invis = true
 						*node:parent.chatscreen@invis = false
+						call *node:parent.chatscreen.input.say@edit
 					}
 				}
 			}
