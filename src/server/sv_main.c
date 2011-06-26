@@ -639,6 +639,11 @@ void SV_Frame (int now, void *data)
 	/* server is empty - so shutdown */
 	if (svs.abandon && svs.killserver)
 		SV_Shutdown("Server disconnected.", qfalse);
+
+#ifdef DEDICATED_ONLY
+	if (Com_ServerState() == ss_dead)
+		SV_NextMapcycle();
+#endif
 }
 
 /**
