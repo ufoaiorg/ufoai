@@ -622,5 +622,6 @@ window hud_chat
 
 	func onWindowOpened {
 		*cvar:mn_chatselect = "chat"
+		call *node:root.allchats.chatscreen.input.say@edit
 	}
 }
