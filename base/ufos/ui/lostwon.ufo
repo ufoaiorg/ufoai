@@ -36,6 +36,7 @@ window won
 
 	button bt_continue
 	{
+		visiblewhen	"*cvar:sv_maxclients == 1"
 		string		"_Continue"
 		tooltip		"_Continue"
 		image		"ui/button_blue"
@@ -59,6 +60,9 @@ window won
 
 	func onWindowOpened
 	{
+		if ( *cvar:sv_maxclients >= 2 ) {
+			cmd "ui_push hud_chat;"
+		}
 		cmd "snd_music ufo2;"
 	}
 
@@ -106,6 +110,7 @@ window lost
 
 	button bt_tryagain
 	{
+		visiblewhen	"*cvar:sv_maxclients == 1"
 		string		"_Try again"
 		tooltip		"_Retry this mission"
 		image		"ui/button_blue"
@@ -122,6 +127,7 @@ window lost
 
 	button bt_continue
 	{
+		visiblewhen	"*cvar:sv_maxclients == 1"
 		string		"_Continue"
 		tooltip		"_Continue"
 		image		"ui/button_blue"
@@ -138,6 +144,9 @@ window lost
 
 	func onWindowOpened
 	{
+		if ( *cvar:sv_maxclients >= 2 ) {
+			cmd "ui_push hud_chat;"
+		}
 		cmd "snd_music ufo1;"
 		if ( *cvar:cp_mission_tryagain == 0 ) {
 			*node:root.bt_tryagain@invis = true
@@ -148,7 +157,9 @@ window lost
 
 	func onWindowClosed
 	{
-		cmd "cp_results 0;"
+		if ( *cvar:sv_maxclients == 1 ) {
+			cmd "cp_results 0;"
+		}
 	}
 }
 

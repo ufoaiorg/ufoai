@@ -245,29 +245,26 @@ static void GAME_MP_ChangeGametype_f (void)
  */
 static void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
-	char resultText[1024];
-	int their_killed, their_stunned;
+	linkedList_t *list = NULL;
+	int enemiesKilled, enemiesStunned;
 	int i;
 	const int team = cgi->GAME_GetCurrentTeam();
 
-	if (winner == 0) {
-		cgi->UI_Popup(_("Game Drawn!"), "%s", _("The game was a draw!\n\nNo survivors left on any side."));
-		return;
-	}
-
-	their_killed = their_stunned = 0;
+	enemiesKilled = enemiesStunned = 0;
 	for (i = 0; i < MAX_TEAMS; i++) {
 		if (i != team) {
-			their_killed += numKilled[team][i];
-			their_stunned += numStunned[team][i];
+			enemiesKilled += numKilled[team][i];
+			enemiesStunned += numStunned[team][i];
 		}
 	}
 
-	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), their_killed + their_stunned, numAlive[team]);
+	LIST_AddString(&list, va(_("Enemies killed:\t%i"), enemiesKilled + enemiesStunned));
+	LIST_AddString(&list, va(_("Team survivors:\t%i"), numAlive[team]));
+	UI_RegisterLinkedListText(TEXT_STANDARD, list);
 	if (winner == team) {
-		cgi->UI_Popup(_("Congratulations"), "%s%s", _("You won the game!"), resultText);
+		cgi->UI_PushWindow("won", NULL, NULL);
 	} else {
-		cgi->UI_Popup(_("Better luck next time"), "%s%s", _("You've lost the game!"), resultText);
+		cgi->UI_PushWindow("lost", NULL, NULL);
 	}
 }
 
