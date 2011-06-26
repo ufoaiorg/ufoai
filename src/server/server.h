@@ -110,7 +110,8 @@ typedef struct {
 	struct cBspModel_s *models[MAX_MODELS];
 
 	qboolean endgame;
-	qboolean started;			/**< set when the match has started - no further connections are allowed in this case */
+	qboolean spawned;			/**< set when the actors have spawned - no further connections are allowed in this case */
+	qboolean started;			/**< set when the match has started */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 

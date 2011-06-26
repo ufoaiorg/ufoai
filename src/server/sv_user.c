@@ -141,19 +141,18 @@ static void SV_Begin_f (client_t *cl)
 /**
  * @sa SV_Begin_f
  */
-static void SV_Spawn_f (client_t *cl)
+static void SV_StartMatch_f (client_t *cl)
 {
-	Com_DPrintf(DEBUG_SERVER, "Spawn() from %s\n", cl->name);
+	Com_DPrintf(DEBUG_SERVER, "StartMatch() from %s\n", cl->name);
 
-	if (cl->state != cs_began) {
+	if (cl->state != cs_spawned) {
 		SV_DropClient(cl, "Invalid state\n");
 		return;
 	}
 
 	TH_MutexLock(svs.serverMutex);
-	svs.ge->ClientSpawn(cl->player);
+	svs.ge->ClientStartMatch(cl->player);
 	TH_MutexUnlock(svs.serverMutex);
-	SV_SetClientState(cl, cs_spawned);
 
 	Cbuf_InsertFromDefer();
 }
@@ -187,7 +186,7 @@ static const ucmd_t ucmds[] = {
 	/* auto issued */
 	{"new", SV_New_f},
 	{"begin", SV_Begin_f},
-	{"spawn", SV_Spawn_f},
+	{"startmatch", SV_StartMatch_f},
 
 	{"disconnect", SV_Disconnect_f},
 
@@ -283,6 +282,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		svs.ge->ClientTeamInfo(cl->player);
 		TH_MutexUnlock(svs.serverMutex);
 		sv->messageBuffer = NULL;
+		SV_SetClientState(cl, cs_spawned);
 		break;
 
 	case clc_initactorstates:

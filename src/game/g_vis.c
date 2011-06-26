@@ -257,7 +257,7 @@ static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int pl
 
 /**
  * @brief Sets visible edict on player spawn
- * @sa G_ClientSpawn
+ * @sa G_ClientStartMatch
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */

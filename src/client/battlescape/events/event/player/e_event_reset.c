@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_reset.h"
 
 /**
- * @sa G_ClientSpawn
+ * @sa G_ClientStartMatch
  * @sa EV_RESET
  */
 void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)

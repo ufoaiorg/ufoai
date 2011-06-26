@@ -75,6 +75,7 @@ typedef struct clientBattleScape_s {
 
 	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
 							 * our team is not yet spawned */
+	qboolean started;		/**< match already started? */
 
 	mapData_t *mapData;
 

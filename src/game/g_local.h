@@ -436,7 +436,7 @@ void G_ResetClientData(void);
 void G_ClientCommand(player_t * player);
 void G_ClientUserinfoChanged(player_t * player, const char *userinfo);
 qboolean G_ClientBegin(player_t * player);
-void G_ClientSpawn(player_t * player);
+void G_ClientStartMatch(player_t * player);
 qboolean G_ClientConnect(player_t * player, char *userinfo, size_t userinfoSize);
 void G_ClientDisconnect(player_t * player);
 

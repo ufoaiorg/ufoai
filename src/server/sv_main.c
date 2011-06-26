@@ -304,7 +304,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
-	if (sv->started) {
+	if (sv->started || sv->spawned) {
 		Com_Printf("rejected connect because match is already running\n");
 		NET_OOB_Printf(stream, "print\nGame has started already.\n");
 		return;
@@ -562,12 +562,12 @@ static void Master_Heartbeat (void)
  * and that change the client state.
  * @sa SV_Spawn_f
  */
-static void SV_CheckGameStart (void)
+static void SV_CheckSpawnSoldiers (void)
 {
 	client_t *cl;
 
 	/* already started? */
-	if (sv->started)
+	if (sv->spawned)
 		return;
 
 	if (sv_maxclients->integer > 1) {
@@ -583,12 +583,39 @@ static void SV_CheckGameStart (void)
 		return;
 	}
 
-	sv->started = qtrue;
+	sv->spawned = qtrue;
 
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state != cs_free)
 			SV_ClientCommand(cl, "spawnsoldiers\n");
+}
+
+static void SV_CheckStartMatch (void)
+{
+	client_t *cl;
+
+	if (!sv->spawned || sv->started)
+		return;
+
+	if (sv_maxclients->integer > 1) {
+		cl = NULL;
+		while ((cl = SV_GetNextClient(cl)) != NULL) {
+			/* all players must have their actors spawned */
+			if (cl->state != cs_spawned)
+				return;
+		}
+	} else if (SV_GetClient(0)->state != cs_spawned) {
+		/* in single player mode we must have received the 'spawnsoldiers' */
+		return;
+	}
+
+	sv->started = qtrue;
+
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
+		if (cl->state != cs_free)
+			SV_ClientCommand(cl, "startmatch\n");
 }
 
 /**
@@ -625,7 +652,8 @@ void SV_Frame (int now, void *data)
 	/* keep the random time dependent */
 	rand();
 
-	SV_CheckGameStart();
+	SV_CheckSpawnSoldiers();
+	SV_CheckStartMatch();
 
 	if (!sv_threads->integer)
 		SV_RunGameFrame();

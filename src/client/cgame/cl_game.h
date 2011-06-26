@@ -45,6 +45,7 @@ void GAME_DisplayItemInfo(uiNode_t *node, const char *string);
 qboolean GAME_ItemIsUseable(const objDef_t *od);
 void GAME_HandleResults(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 void GAME_SpawnSoldiers(void);
+void GAME_StartMatch(void);
 equipDef_t *GAME_GetEquipmentDefinition(void);
 qboolean GAME_HandleServerCommand(const char *command, struct dbuffer *msg);
 void GAME_AddChatMessage(const char *format, ...);

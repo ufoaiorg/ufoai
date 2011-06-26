@@ -1286,7 +1286,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 
 /**
  * @brief This functions starts the client
- * @sa G_ClientSpawn
+ * @sa G_ClientStartMatch
  * @sa CL_StartGame
  */
 qboolean G_ClientBegin (player_t* player)
@@ -1328,7 +1328,7 @@ qboolean G_ClientBegin (player_t* player)
  * @sa G_ClientBegin
  * @sa CL_Reset
  */
-void G_ClientSpawn (player_t * player)
+void G_ClientStartMatch (player_t * player)
 {
 	G_GetStartingTeam(player);
 
@@ -1336,7 +1336,6 @@ void G_ClientSpawn (player_t * player)
 	/* reset the data */
 	G_EventReset(player, level.activeTeam);
 
-	/** @todo this is too early - not every coop player might be 'spawned' already */
 	/* show visible actors and add invisible actor */
 	G_VisFlagsClear(player->pers.team);
 	G_CheckVisPlayer(player, qfalse);

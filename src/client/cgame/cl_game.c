@@ -1074,8 +1074,6 @@ static qboolean GAME_Spawn (chrList_t *chrList)
 void GAME_StartBattlescape (qboolean isTeamPlay)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	qboolean spawnStatus;
-	chrList_t *chrList = &cl.chrList;
 
 	Cvar_SetValue("cl_onbattlescape", 1.0);
 
@@ -1084,23 +1082,6 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 		list->StartBattlescape(isTeamPlay);
 	} else {
 		HUD_InitUI(NULL, qtrue);
-	}
-
-	/* this callback is responsible to set up the teamlist */
-	if (list && list->Spawn)
-		spawnStatus = list->Spawn(chrList);
-	else
-		spawnStatus = GAME_Spawn(chrList);
-
-	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
-
-	if (spawnStatus && cl.chrList.num > 0) {
-		struct dbuffer *msg;
-
-		/* send team info */
-		msg = new_dbuffer();
-		GAME_SendCurrentTeamSpawningInfo(msg, chrList);
-		NET_WriteMsg(cls.netStream, msg);
 	}
 }
 
@@ -1127,10 +1108,34 @@ static void GAME_InitializeBattlescape (chrList_t *team)
  */
 void GAME_SpawnSoldiers (void)
 {
+	const cgame_export_t *list = GAME_GetCurrentType();
+	qboolean spawnStatus;
+	chrList_t *chrList = &cl.chrList;
+
+	/* this callback is responsible to set up the teamlist */
+	if (list && list->Spawn)
+		spawnStatus = list->Spawn(chrList);
+	else
+		spawnStatus = GAME_Spawn(chrList);
+
+	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
+
+	if (spawnStatus && cl.chrList.num > 0) {
+		struct dbuffer *msg;
+
+		/* send team info */
+		msg = new_dbuffer();
+		GAME_SendCurrentTeamSpawningInfo(msg, chrList);
+		NET_WriteMsg(cls.netStream, msg);
+	}
+}
+
+void GAME_StartMatch (void)
+{
 	if (cl.chrList.num > 0) {
 		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, "spawn\n");
+		NET_WriteString(msg, "startmatch\n");
 		NET_WriteMsg(cls.netStream, msg);
 
 		GAME_InitializeBattlescape(&cl.chrList);
