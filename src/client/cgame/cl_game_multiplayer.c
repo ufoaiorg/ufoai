@@ -250,8 +250,6 @@ static void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	int i;
 	const int team = cgi->GAME_GetCurrentTeam();
 
-	cgi->CL_Drop();
-
 	if (winner == 0) {
 		cgi->UI_Popup(_("Game Drawn!"), "%s", _("The game was a draw!\n\nNo survivors left on any side."));
 		return;
