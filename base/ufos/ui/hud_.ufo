@@ -185,7 +185,6 @@ window hud extends levelbuttons {
 	confunc endround { }
 
 	func openradar { cmd "openradar;" }
-	confunc unhide_chatscreen { *node:root.chatscreen@invis = false }
 
 	/**
 	 * @param <1> the id of the soldier (starting at 0)
@@ -233,26 +232,6 @@ window hud extends levelbuttons {
 		*node:root.firemodes.dock.<1><2>.name@string = <3>
 		*node:root.firemodes.dock.<1><2>.tu@string = <4>
 		*node:root.firemodes.dock.<1><2>.shot@string = <5>
-	}
-
-	text chatscreen
-	{
-		dataid			TEXT_CHAT_WINDOW
-		pos				"130 70"
-		size			"690 54"
-		font			"f_verysmall"
-		rows			"3"
-		lineheight		"16"
-		padding			5
-		bordercolor		"0.5 0.5 0.5 1"
-		border			2
-		bgcolor			"0 0.1 0 0.8"
-		invis			true
-	}
-
-	func onEvent
-	{
-		*node:root.chatscreen@invis = true
 	}
 
 	panel firemodes {

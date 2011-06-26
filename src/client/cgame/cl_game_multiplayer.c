@@ -308,10 +308,13 @@ static linkedList_t *mp_chatMessageStack = NULL;
 static void GAME_MP_AddChatMessage (const char *text)
 {
 	char message[2048];
+	const char *msg;
 	Q_strncpyz(message, text, sizeof(message));
-	cgi->LIST_AddString(&mp_chatMessageStack, Com_Trim(message));
+
+	msg = Com_Trim(message);
+	cgi->LIST_AddString(&mp_chatMessageStack, msg);
+	cgi->HUD_DisplayMessage(msg);
 	cgi->UI_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
-	cgi->UI_ExecuteConfunc("unhide_chatscreen");
 	cgi->UI_TextScrollEnd("hud_chat.allchats.chatscreen.chat");
 }
 
