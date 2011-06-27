@@ -291,6 +291,9 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1199,6 +1202,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib_extra.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mutex.c">
