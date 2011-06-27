@@ -808,6 +808,8 @@ void IN_Frame (void)
 				mouse_buttonstate = K_MOUSE3;
 				break;
 			}
+			break;
+
 		case SDL_MOUSEBUTTONUP:
 			switch (event.button.button) {
 			case SDL_BUTTON_LEFT:
