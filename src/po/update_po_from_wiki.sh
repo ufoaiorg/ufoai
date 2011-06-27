@@ -177,9 +177,8 @@ set_BEGIN_END()
 {
 # Initialisation of BEGIN and END values to the first and last line of the concerned msgid in the .po file
 # The first argument is 1 if this is a long description which need several lines of msgstr.
-	BEGIN=`grep -n "msgid \"$english\"" $output_file |
-	cut -d : -f 1`
-	END=`$awk_soft 'NR > '$BEGIN' && $0 ~ /^[ \t]*\r\?$/ {print NR;exit}' $output_file`
+	BEGIN=`grep -n "msgid \"$english\"" $output_file | cut -d : -f 1`
+	END=`$awk_soft 'NR > '$BEGIN' && $0 ~ /^[ \t]*\r?$/ {print NR;exit}' $output_file`
 	BEGIN=$BEGIN+1
 	END=$END-1
 
