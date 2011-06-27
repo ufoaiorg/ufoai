@@ -61,9 +61,18 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const 
 void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
-	int number, i, newPathLength;
+	int i;
+	const int number = NET_ReadShort(msg);
+	const int newPathLength = NET_ReadByte(msg);
 
-	number = NET_ReadShort(msg);
+	/* skip empty routes */
+	if (newPathLength == 0) {
+		NET_ReadByte(msg);
+		NET_ReadByte(msg);
+		NET_ReadByte(msg);
+		return;
+	}
+
 	/* get le */
 	le = LE_Get(number);
 	if (!le)
@@ -78,7 +87,6 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* lock this le for other events, the corresponding unlock is in LE_DoEndPathMove() */
 	LE_Lock(le);
-	newPathLength = NET_ReadByte(msg);
 	if (le->pathLength > 0) {
 		if (le->pathLength == le->pathPos) {
 			LE_DoEndPathMove(le);
