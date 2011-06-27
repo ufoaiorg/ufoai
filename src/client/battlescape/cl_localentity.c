@@ -930,6 +930,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		VectorCopy(le->mins, ent->mins);
 		VectorCopy(le->maxs, ent->maxs);
 		VectorSet(ent->color, 1, 1, 0);
+		break;
 	}
 	default:
 		break;
