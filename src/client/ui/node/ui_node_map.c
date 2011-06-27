@@ -121,6 +121,7 @@ static void UI_MapNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 	default:
 		assert(qfalse);
+		break;
 	}
 	oldMousePosX = x;
 	oldMousePosY = y;

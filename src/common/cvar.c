@@ -368,7 +368,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 
 	var = Cvar_FindVar(var_name);
 	if (var) {
-		if (!var->defaultString && flags & CVAR_CHEAT)
+		if (!var->defaultString && (flags & CVAR_CHEAT))
 			var->defaultString = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 		var->flags |= flags;
 		if (desc) {
@@ -801,6 +801,7 @@ static void Cvar_Set_f (void)
 				break;
 			default:
 				Com_Printf("invalid flags %c given\n", arg[0]);
+				break;
 			}
 			arg++;
 		}
@@ -837,6 +838,7 @@ static void Cvar_Switch_f (void)
 				break;
 			default:
 				Com_Printf("invalid flags %c given\n", arg[0]);
+				break;
 			}
 			arg++;
 		}

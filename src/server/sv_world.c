@@ -764,6 +764,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 			FS_FreeFile(buf);
 			return qfalse;
 		}
+		break;
 	}
 
 	VectorCopy(mod->mins, mins);

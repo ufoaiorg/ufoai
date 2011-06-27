@@ -409,6 +409,7 @@ static void UI_PanelNodeDoLayout (uiNode_t *node)
 		break;
 	default:
 		Com_Printf("UI_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
+		break;
 	}
 
 	localBehaviour->super->doLayout(node);

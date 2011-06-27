@@ -184,6 +184,7 @@ static inline void UI_VScrollbarNodeAction (uiNode_t *node, int hoveredElement, 
 		break;
 	default:
 		assert(qfalse);
+		break;
 	}
 }
 

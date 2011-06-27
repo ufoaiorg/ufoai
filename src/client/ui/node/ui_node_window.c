@@ -55,7 +55,6 @@ const uiBehaviour_t const *ui_windowBehaviour;
 
 static const int CONTROLS_IMAGE_DIMENSIONS = 17;
 static const int CONTROLS_PADDING = 22;
-static const int CONTROLS_SPACING = 5;
 
 static const int windowTemplate[] = {
 	LEFT_WIDTH, MID_WIDTH, RIGHT_WIDTH,

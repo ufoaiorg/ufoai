@@ -81,6 +81,7 @@ static void UI_BarNodeDraw (uiNode_t *node)
 		break;
 	default:
 		Com_Printf("UI_BarNodeDraw: Orientation %d not supported\n", EXTRADATA(node).orientation);
+		break;
 	}
 }
 
@@ -128,6 +129,7 @@ static void UI_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 		default:
 			frac = 0;
 			Com_Printf("UI_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
+			break;
 		}
 		Cvar_SetValue(&var[6], min + frac * (max - min));
 	}

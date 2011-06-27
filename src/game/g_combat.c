@@ -121,6 +121,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 			default:
 				gi.DPrintf("Undefined morale modifier type %i\n", type);
 				mod = 0;
+				break;
 			}
 			/* clamp new morale */
 			/*+0.9 to allow weapons like flamethrowers to inflict panic (typecast rounding) */
@@ -915,7 +916,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		if (tr.fraction < 1.0 && !fd->bounce) {
 			/* check for shooting through wall */
-			if (throughWall && tr.contentFlags & CONTENTS_SOLID) {
+			if (throughWall && (tr.contentFlags & CONTENTS_SOLID)) {
 				throughWall--;
 				Com_DPrintf(DEBUG_GAME, "Shot through wall, %i walls left.\n", throughWall);
 				/* reduce damage */

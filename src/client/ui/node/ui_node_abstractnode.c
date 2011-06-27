@@ -349,6 +349,7 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
 			break;
 		default:
 			*(const byte **) mem = (const byte*) rawValue;
+			break;
 		}
 	} else if (property->type == V_UI_ACTION) {
 		*(const uiAction_t**) mem = (const uiAction_t*) rawValue;

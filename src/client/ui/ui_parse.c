@@ -1200,6 +1200,7 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 				break;
 			default:
 				Com_EParseValue(model, token, v->type, v->ofs, v->size);
+				break;
 			}
 		}
 	} while (*text);

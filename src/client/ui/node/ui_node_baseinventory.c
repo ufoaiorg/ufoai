@@ -269,10 +269,8 @@ static const vec3_t scale = {3.5, 3.5, 3.5};
 /** @todo it may be nice to vectorise that */
 static const vec4_t colorDefault = {1, 1, 1, 1};
 static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
-static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
 static const vec4_t colorDisabledHiden = {0.5, 0.5, 0.5, 0.5};
 static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
-static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look bluish */
 
 /**
  * @brief Draw the base inventory
