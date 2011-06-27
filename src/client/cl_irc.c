@@ -256,7 +256,6 @@ typedef struct irc_server_msg_s {
 
 static struct net_stream *irc_stream;
 
-static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
 static const char IRC_INVITE_FOR_A_GAME[] = "UFOAIINVITE;";
 
 static irc_channel_t ircChan;

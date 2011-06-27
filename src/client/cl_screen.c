@@ -228,7 +228,6 @@ static void SCR_TouchPics (void)
 		cursorImage[0] = '\0';
 }
 
-static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 /**
  * @brief Draws the 3D-cursor in battlemode and the icons/info next to it.
  */

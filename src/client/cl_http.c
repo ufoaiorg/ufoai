@@ -261,8 +261,6 @@ void CL_SetHTTPServer (const char *URL)
 	Q_strncpyz(cls.downloadServer, URL, sizeof(cls.downloadServer));
 }
 
-void CL_ResetPrecacheCheck(void);
-
 /**
  * @brief Cancel all downloads and nuke the queue.
  */
