@@ -846,7 +846,7 @@ void IN_Frame (void)
 
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
-			if (event.key.keysym.mod & KMOD_ALT && event.key.keysym.sym == SDLK_RETURN) {
+			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_RETURN) {
 				SDL_Surface *surface = SDL_GetVideoSurface();
 				if (!SDL_WM_ToggleFullScreen(surface))
 					Com_Printf("IN_Frame: Could not toggle fullscreen mode\n");
@@ -862,14 +862,14 @@ void IN_Frame (void)
 				break; /* ignore this key */
 			}
 
-			if (event.key.keysym.mod & KMOD_CTRL && event.key.keysym.sym == SDLK_g) {
+			if ((event.key.keysym.mod & KMOD_CTRL) && event.key.keysym.sym == SDLK_g) {
 				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 				Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
 				break; /* ignore this key */
 			}
 
 			/* console key is hardcoded, so the user can never unbind it */
-			if (event.key.keysym.mod & KMOD_SHIFT && event.key.keysym.sym == SDLK_ESCAPE) {
+			if ((event.key.keysym.mod & KMOD_SHIFT) && event.key.keysym.sym == SDLK_ESCAPE) {
 				Con_ToggleConsole_f();
 				break;
 			}

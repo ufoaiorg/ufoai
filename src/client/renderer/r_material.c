@@ -133,7 +133,7 @@ static void R_StageGlow (const materialStage_t *stage)
 static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *stage)
 {
 	/* if the surface has a lightmap, and the stage specifies lighting.. */
-	if (surf->flags & MSURF_LIGHTMAP &&
+	if ((surf->flags & MSURF_LIGHTMAP) &&
 			(stage->flags & (STAGE_LIGHTMAP | STAGE_LIGHTING))) {
 		R_EnableTexture(&texunit_lightmap, qtrue);
 		R_BindLightmapTexture(surf->lightmap_texnum);

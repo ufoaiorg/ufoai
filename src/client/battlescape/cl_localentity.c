@@ -731,7 +731,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
-		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd->bounce)) {
+		if ((flags & (SF_IMPACT | SF_BODY)) || (fd->splrad && !fd->bounce)) {
 			ptl_t *ptl = NULL;
 			const float *dir = bytedirs[le->angle];
 			if (flags & SF_BODY) {
@@ -770,7 +770,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
 		le->ref3 = leVictim;
-	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
+	} else if ((flags & SF_IMPACT) || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
@@ -883,7 +883,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
 		le->ref3 = leVictim;
-	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
+	} else if ((flags & SF_IMPACT) || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {

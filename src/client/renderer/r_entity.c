@@ -610,7 +610,7 @@ void R_GetEntityLists (void)
 		R_CalcTransform(e);
 
 		if (!e->model) {
-			if (e->flags & RF_BOX || e->flags & RF_PATH || e->flags & RF_ARROW)
+			if ((e->flags & RF_BOX) || (e->flags & RF_PATH) || (e->flags & RF_ARROW))
 				chain = &r_special_entities;
 			else
 				chain = &r_null_entities;
@@ -627,7 +627,7 @@ void R_GetEntityLists (void)
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
 				if (skin == NULL || skin->texnum == 0)
 					Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
-				if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
+				if (skin->has_alpha || (e->flags & RF_TRANSLUCENT))
 					chain = &r_blend_mesh_entities;
 				else
 					chain = &r_opaque_mesh_entities;

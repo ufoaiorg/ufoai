@@ -587,7 +587,7 @@ void R_DrawAliasModel (entity_t *e)
 	mAliasMesh_t *mesh;
 
 	/* IR goggles override color for entities that are affected */
-	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
+	if ((refdef.rendererFlags & RDF_IRGOGGLES) && (e->flags & RF_IRGOGGLES))
 		Vector4Set(e->shell, 1.0, 0.3, 0.3, 1.0);
 
 	if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
