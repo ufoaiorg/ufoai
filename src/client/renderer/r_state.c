@@ -823,16 +823,6 @@ void R_Setup2D (void)
 	R_CheckError();
 }
 
-/* global ambient lighting */
-static const vec4_t ambient = {
-	0.0, 0.0, 0.0, 1.0
-};
-
-/* material reflection */
-static const vec4_t material = {
-	1.0, 1.0, 1.0, 1.0
-};
-
 void R_SetDefaultState (void)
 {
 	int i;
