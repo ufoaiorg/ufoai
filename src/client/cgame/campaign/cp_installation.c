@@ -108,7 +108,7 @@ installation_t* INS_Build (const installationTemplate_t *installationTemplate, c
 
 	Vector2Copy(pos, installation.pos);
 	Q_strncpyz(installation.name, name, sizeof(installation.name));
-	installation.idx = ccs.campaignStats.installationsBuild;
+	installation.idx = ccs.campaignStats.installationsBuilt;
 	installation.installationStatus = INSTALLATION_UNDER_CONSTRUCTION;
 	installation.installationTemplate = installationTemplate;
 	installation.buildStart = ccs.date.day;
@@ -122,7 +122,7 @@ installation_t* INS_Build (const installationTemplate_t *installationTemplate, c
 	/* Reset Radar */
 	RADAR_Initialise(&(installation.radar), 0.0f, 0.0f, 0.0f, qfalse);
 
-	ccs.campaignStats.installationsBuild++;
+	ccs.campaignStats.installationsBuilt++;
 	return (installation_t*)(LIST_Add(&ccs.installations, (void*)&installation, sizeof(installation)))->data;
 }
 

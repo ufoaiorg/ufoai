@@ -163,6 +163,7 @@ qboolean STATS_SaveXML (xmlNode_t *parent)
 	XML_AddIntValue(stats, SAVE_STATS_MISSIONSLOST, ccs.campaignStats.missionsLost);
 	XML_AddIntValue(stats, SAVE_STATS_BASESBUILT, ccs.campaignStats.basesBuilt);
 	XML_AddIntValue(stats, SAVE_STATS_BASESATTACKED, ccs.campaignStats.basesAttacked);
+	XML_AddIntValue(stats, SAVE_STATS_INSTALLATIONSBUILT, ccs.campaignStats.installationsBuilt);
 	XML_AddIntValue(stats, SAVE_STATS_INTERCEPTIONS, ccs.campaignStats.interceptions);
 	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSLOST, ccs.campaignStats.soldiersLost);
 	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSNEW, ccs.campaignStats.soldiersNew);
@@ -200,6 +201,10 @@ qboolean STATS_LoadXML (xmlNode_t *parent)
 	ccs.campaignStats.missionsLost = XML_GetInt(stats, SAVE_STATS_MISSIONSLOST, 0);
 	ccs.campaignStats.basesBuilt = XML_GetInt(stats, SAVE_STATS_BASESBUILT, 0);
 	ccs.campaignStats.basesAttacked = XML_GetInt(stats, SAVE_STATS_BASESATTACKED, 0);
+	ccs.campaignStats.installationsBuilt = XML_GetInt(stats, SAVE_STATS_INSTALLATIONSBUILT, 0);
+	/* fallback for savegame compatibility */
+	if (ccs.campaignStats.installationsBuilt == 0)
+		ccs.campaignStats.installationsBuilt = INS_GetCount();
 	ccs.campaignStats.interceptions = XML_GetInt(stats, SAVE_STATS_INTERCEPTIONS, 0);
 	ccs.campaignStats.soldiersLost = XML_GetInt(stats, SAVE_STATS_SOLDIERSLOST, 0);
 	ccs.campaignStats.soldiersNew = XML_GetInt(stats, SAVE_STATS_SOLDIERSNEW, 0);

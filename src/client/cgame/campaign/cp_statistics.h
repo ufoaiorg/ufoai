@@ -32,7 +32,7 @@ typedef struct stats_s {
 	int missionsLost;
 	int basesBuilt;
 	int basesAttacked;
-	int installationsBuild;
+	int installationsBuilt;
 	int interceptions;
 	int soldiersLost;
 	int soldiersNew;			/**< new recruits */
