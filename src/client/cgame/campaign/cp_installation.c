@@ -510,6 +510,7 @@ qboolean INS_LoadXML (xmlNode_t *p)
 	for (s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION), i++) {
 		xmlNode_t *ss;
 		installation_t inst;
+		installation_t *instp;
 		const char *instID = XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
 		const char *instStat = XML_GetString(s, SAVE_INSTALLATION_STATUS);
 
@@ -551,7 +552,6 @@ qboolean INS_LoadXML (xmlNode_t *p)
 		inst.ufoCapacity.cur = 0;
 
 		/* read battery slots */
-		BDEF_InitialiseInstallationSlots(&inst);
 		ss = XML_GetNode(s, SAVE_INSTALLATION_BATTERIES);
 		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
@@ -563,9 +563,10 @@ qboolean INS_LoadXML (xmlNode_t *p)
 			Com_Printf("Installation has more batteries than possible, using upper bound\n");
 			inst.numBatteries = inst.installationTemplate->maxBatteries;
 		}
-		B_LoadBaseSlotsXML(inst.batteries, inst.numBatteries, ss);
 
-		LIST_Add(&ccs.installations, (void*)&inst, sizeof(inst));
+		instp = (installation_t*)(LIST_Add(&ccs.installations, (void*)&inst, sizeof(inst)))->data;
+		BDEF_InitialiseInstallationSlots(instp);
+		B_LoadBaseSlotsXML(instp->batteries, instp->numBatteries, ss);
 	}
 	Com_UnregisterConstList(saveInstallationConstants);
 	Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
