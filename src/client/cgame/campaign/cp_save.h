@@ -75,10 +75,10 @@ qboolean MSO_SaveXML(xmlNode_t *parent);
 qboolean MSO_LoadXML(xmlNode_t *parent);
 qboolean US_SaveXML(xmlNode_t *parent);
 qboolean US_LoadXML(xmlNode_t *parent);
-qboolean CP_LoadMissionsXML(xmlNode_t *parent);
-qboolean CP_SaveMissionsXML(xmlNode_t *parent);
-qboolean CP_SaveInterestsXML(xmlNode_t *parent);
-qboolean CP_LoadInterestsXML(xmlNode_t *parent);
+qboolean MIS_LoadXML(xmlNode_t *parent);
+qboolean MIS_SaveXML(xmlNode_t *parent);
+qboolean INT_SaveXML(xmlNode_t *parent);
+qboolean INT_LoadXML(xmlNode_t *parent);
 
 qboolean B_PostLoadInit(void);
 qboolean AIR_PostLoadInit(void);

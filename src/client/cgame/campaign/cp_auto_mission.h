@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2011 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -100,11 +100,11 @@ typedef struct autoMissionBattle_s {
 } autoMissionBattle_t;
 
 /* Functions for auto missions */
-void CP_AutoBattleClearBattle(autoMissionBattle_t *battle);
-void CP_AutoBattleSetDefaultHostilities(autoMissionBattle_t *battle, const qboolean civsInfected);
-void CP_AutoBattleRunBattle(autoMissionBattle_t *battle);
-void CP_AutoBattleFillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const struct campaign_s *campaign);
-void CP_AutoBattleFillTeamFromBattleParams(autoMissionBattle_t *battle, const struct battleParam_s *missionParams);
-void CP_AutoBattleUpdateSurivorsAfterBattle(const autoMissionBattle_t *battle, struct aircraft_s *aircraft);
+void AM_ClearBattle(autoMissionBattle_t *battle);
+void AM_SetDefaultHostilities(autoMissionBattle_t *battle, const qboolean civsInfected);
+void AM_RunBattle(autoMissionBattle_t *battle);
+void AM_FillTeamFromAircraft(autoMissionBattle_t *battle, const int teamNum, const struct aircraft_s *aircraft, const struct campaign_s *campaign);
+void AM_FillTeamFromBattleParams(autoMissionBattle_t *battle, const struct battleParam_s *missionParams);
+void AM_UpdateSurivorsAfterBattle(const autoMissionBattle_t *battle, struct aircraft_s *aircraft);
 
 #endif

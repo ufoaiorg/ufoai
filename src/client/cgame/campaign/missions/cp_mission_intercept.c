@@ -36,11 +36,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CP_InterceptMissionIsSuccess (mission_t *mission)
 {
-	CP_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
-	CP_ChangeIndividualInterest(-0.3f, INTERESTCATEGORY_INTERCEPT);
-	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
+	INT_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
+	INT_ChangeIndividualInterest(-0.3f, INTERESTCATEGORY_INTERCEPT);
+	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 	if (CP_IsXVIResearched())
-		CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
+		INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);
 }
@@ -51,10 +51,10 @@ void CP_InterceptMissionIsSuccess (mission_t *mission)
  */
 void CP_InterceptMissionIsFailure (mission_t *mission)
 {
-	CP_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
-	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
-	CP_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_TERROR_ATTACK);
+	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
+	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_TERROR_ATTACK);
 
 	CP_MissionRemove(mission);
 }

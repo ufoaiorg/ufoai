@@ -633,7 +633,7 @@ void CP_CampaignRun (campaign_t *campaign)
 			AII_UpdateInstallationDelay();
 			AII_RepairAircraft();
 			TR_TransferRun();
-			CP_IncreaseAlienInterest(campaign);
+			INT_IncreaseAlienInterest(campaign);
 		}
 
 		/* daily events */
@@ -974,11 +974,11 @@ void CP_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	assert(mission);
 	assert(aircraft);
 
-	CP_AutoBattleClearBattle(&autoBattle);
-	CP_AutoBattleFillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
-	CP_AutoBattleFillTeamFromBattleParams(&autoBattle, battleParameters);
-	CP_AutoBattleSetDefaultHostilities(&autoBattle, qfalse);
-	CP_AutoBattleRunBattle(&autoBattle);
+	AM_ClearBattle(&autoBattle);
+	AM_FillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
+	AM_FillTeamFromBattleParams(&autoBattle, battleParameters);
+	AM_SetDefaultHostilities(&autoBattle, qfalse);
+	AM_RunBattle(&autoBattle);
 
 	results->won = qfalse;
 	if (autoBattle.resultType == AUTOMISSION_RESULT_SUCCESS)
@@ -986,7 +986,7 @@ void CP_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *
 	else if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
 		results->won = qtrue;
 
-	CP_AutoBattleUpdateSurivorsAfterBattle(&autoBattle, aircraft);
+	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
 
 	/* This block is old code, but it will be left in for now, until exact numbers and stats are extracted from the auto mission results. */
 	results->aliensKilled = battleParameters->aliens;
@@ -1344,7 +1344,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	CP_UpdateCredits(campaign->credits);
 
 	/* Initialize alien interest */
-	CP_ResetAlienInterest();
+	INT_ResetAlienInterest();
 
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
@@ -1372,6 +1372,7 @@ void CP_Shutdown (void)
 		AB_Shutdown();
 		AIR_Shutdown();
 		INS_Shutdown();
+		INT_Shutdown();
 		NAT_Shutdown();
 		MIS_Shutdown();
 		TR_Shutdown();
@@ -1653,6 +1654,7 @@ void CP_InitStartup (const cgame_import_t *import)
 	RS_InitStartup();
 	E_InitStartup();
 	HOS_InitStartup();
+	INT_InitStartup();
 	AC_InitStartup();
 	MAP_InitStartup();
 	UFO_InitStartup();

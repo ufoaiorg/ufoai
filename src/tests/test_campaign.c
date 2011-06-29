@@ -360,7 +360,7 @@ static void testAutoMissions (void)
 	OBJZERO(battleParameters);
 
 	ccs.overallInterest = 36;
-	CP_ResetAlienInterest();
+	INT_ResetAlienInterest();
 
 	base = CreateBase("unittestautomission", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);

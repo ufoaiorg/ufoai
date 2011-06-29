@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note Should be used when a new single player campaign starts
  * @sa CP_CampaignInit
  */
-void CP_ResetAlienInterest (void)
+void INT_ResetAlienInterest (void)
 {
 	int i;
 
@@ -52,7 +52,7 @@ void CP_ResetAlienInterest (void)
  * @param[in] category Category of interest for aliens that should increase / decrease
  * @note Should be used when a mission is over (success or failure)
  */
-void CP_ChangeIndividualInterest (float interestFactor, interestCategory_t category)
+void INT_ChangeIndividualInterest (float interestFactor, interestCategory_t category)
 {
 	if (category == INTERESTCATEGORY_MAX) {
 		Com_Printf("CP_ChangeIndividualInterest: Unsupported value of category\n");
@@ -91,7 +91,7 @@ void CP_ChangeIndividualInterest (float interestFactor, interestCategory_t categ
  * @sa CP_CampaignRun
  * @note hourly called
  */
-void CP_IncreaseAlienInterest (const campaign_t *campaign)
+void INT_IncreaseAlienInterest (const campaign_t *campaign)
 {
 	/* Adjust interest increase rate by difficulty. */
 	const int delayBetweenIncrease = HOURS_PER_ONE_INTEREST - campaign->difficulty;
@@ -108,7 +108,7 @@ void CP_IncreaseAlienInterest (const campaign_t *campaign)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean CP_SaveInterestsXML (xmlNode_t *parent)
+qboolean INT_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *interestsNode = XML_AddNode(parent, SAVE_INTERESTS);
 	int i;
@@ -130,7 +130,7 @@ qboolean CP_SaveInterestsXML (xmlNode_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean CP_LoadInterestsXML (xmlNode_t *parent)
+qboolean INT_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *node;
 	xmlNode_t *interestsNode = XML_GetNode(parent, SAVE_INTERESTS);
@@ -154,4 +154,92 @@ qboolean CP_LoadInterestsXML (xmlNode_t *parent)
 	}
 	Com_UnregisterConstList(saveInterestConstants);
 	return success;
+}
+
+#ifdef DEBUG
+/**
+ * @brief Return Name of the category of a mission.
+ */
+const char* INT_InterestCategoryToName (interestCategory_t category)
+{
+	switch (category) {
+	case INTERESTCATEGORY_NONE:
+		return "None";
+	case INTERESTCATEGORY_RECON:
+		return "Recon mission";
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		return "Terror mission";
+	case INTERESTCATEGORY_BASE_ATTACK:
+		return "Base attack";
+	case INTERESTCATEGORY_BUILDING:
+		return "Building Base or Subverting Government";
+	case INTERESTCATEGORY_SUPPLY:
+		return "Supply base";
+	case INTERESTCATEGORY_XVI:
+		return "XVI propagation";
+	case INTERESTCATEGORY_INTERCEPT:
+		return "Interception";
+	case INTERESTCATEGORY_HARVEST:
+		return "Harvest";
+	case INTERESTCATEGORY_ALIENBASE:
+		return "Alien base discovered";
+	case INTERESTCATEGORY_RESCUE:
+		return "Rescue mission";
+	case INTERESTCATEGORY_MAX:
+		return "Unknown mission category";
+	}
+
+	/* Can't reach this point */
+	return "INVALID";
+}
+
+/**
+ * @brief List alien interest values.
+ * @sa function called with debug_interestlist
+ */
+static void INT_AlienInterestList_f (void)
+{
+	interestCategory_t i;
+
+	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
+	Com_Printf("Individual interest:\n");
+	for (i = INTERESTCATEGORY_NONE; i < INTERESTCATEGORY_MAX; i++)
+		Com_Printf("...%i. %s -- %i\n", i, INT_InterestCategoryToName(i), ccs.interest[i]);
+}
+
+/**
+ * @brief Debug callback to set overall interest level
+ * Called: debug_interestset <interestlevel>
+ */
+static void INT_SetAlienInterest_f (void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <interestlevel>\n", Cmd_Argv(0));
+		return;
+	}
+
+	ccs.overallInterest = max(0, atoi(Cmd_Argv(1)));
+}
+#endif
+
+/**
+ * @brief Init actions for alien interests-subsystem
+ */
+void INT_InitStartup (void)
+{
+#ifdef DEBUG
+	Cmd_AddCommand("debug_interestlist", INT_AlienInterestList_f, "Debug function to show alien interest values");
+	Cmd_AddCommand("debug_interestset", INT_SetAlienInterest_f, "Set overall interest level.");
+#endif
+}
+
+/**
+ * @brief Closing actions for alien interests-subsystem
+ */
+void INT_Shutdown (void)
+{
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_interestlist");
+	Cmd_RemoveCommand("debug_interestset");
+#endif
 }

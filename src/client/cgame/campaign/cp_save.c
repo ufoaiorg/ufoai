@@ -640,8 +640,8 @@ void SAV_Init (void)
 	static saveSubsystems_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
 	static saveSubsystems_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
 	static saveSubsystems_t ab_subsystemXML = {"alien base", AB_SaveXML, AB_LoadXML};
-	static saveSubsystems_t int_subsystemXML = {"interest", CP_SaveInterestsXML, CP_LoadInterestsXML};
-	static saveSubsystems_t mis_subsystemXML = {"mission", CP_SaveMissionsXML, CP_LoadMissionsXML};
+	static saveSubsystems_t int_subsystemXML = {"interest", INT_SaveXML, INT_LoadXML};
+	static saveSubsystems_t mis_subsystemXML = {"mission", MIS_SaveXML, MIS_LoadXML};
 	static saveSubsystems_t ms_subsystemXML = {"messagesystem", MS_SaveXML, MS_LoadXML};
 	static saveSubsystems_t stats_subsystemXML = {"stats", STATS_SaveXML, STATS_LoadXML};
 	static saveSubsystems_t na_subsystemXML = {"nations", NAT_SaveXML, NAT_LoadXML};

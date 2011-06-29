@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
  * @param[in,out] battle The battle that should be initialized to defaults
  */
-void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
+void AM_ClearBattle (autoMissionBattle_t *battle)
 {
 	int team;
 
@@ -92,7 +92,7 @@ void CP_AutoBattleClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
+void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
 {
 	employee_t *employee;
 	int teamSize;
@@ -173,7 +173,7 @@ void CP_AutoBattleFillTeamFromAircraft (autoMissionBattle_t *battle, const int t
 	battle->teamID[teamNum] = 0;
 }
 
-static void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
+static void AM_DecideResults (autoMissionBattle_t *battle)
 {
 	int team;
 	int teamPlayer = -1;
@@ -228,13 +228,13 @@ static void CP_AutoBattleDecideResults (autoMissionBattle_t *battle)
 }
 
 /**
- * @brief Run this on an auto mission battle before the battle is actually simulated with @c CP_AutoBattleRunBattle, to set
+ * @brief Run this on an auto mission battle before the battle is actually simulated with @c AM_RunBattle, to set
  * default values for who will attack which team.  If you forget to do this before battle simulation, all teams will default
  * to "free for all" (Everyone will try to kill everyone else).
  * @param[in, out] battle The battle to set up team hostility values for.
  * @param[in] civsInfected Set to @c true if civs have XVI influence, otherwise @c false for a normal mission.
  */
-void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
+void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
 {
 	int team;
 	int otherTeam;
@@ -277,7 +277,7 @@ void CP_AutoBattleSetDefaultHostilities (autoMissionBattle_t *battle, const qboo
 	}
 }
 
-static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
+static void AM_Setup (autoMissionBattle_t *battle)
 {
 	int unitTotal = 0;
 	int isHostileTotal = 0;
@@ -390,7 +390,7 @@ static void CP_AutoBattleSetup (autoMissionBattle_t *battle)
 	}
 }
 
-static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
+static void AM_CheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
 {
 	int eUnit;
 
@@ -417,7 +417,7 @@ static void CP_AutoBattleCheckFriendlyFire (autoMissionBattle_t *battle, int eTe
 	}
 }
 
-static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
+static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
 {
 	int eUnit;
 
@@ -444,7 +444,7 @@ static void CP_AutoBattleCheckFire (autoMissionBattle_t *battle, int eTeam, cons
 	}
 }
 
-static qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
+static qboolean AM_UnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
 {
 	int eTeam;
 	int count = 0;
@@ -455,10 +455,10 @@ static qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, con
 		if (battle->isHostile[currTeam][eTeam]) {
 			if (battle->teamActive[eTeam]) {
 				count++;
-				CP_AutoBattleCheckFire(battle, eTeam, currTeam, currUnit, effective);
+				AM_CheckFire(battle, eTeam, currTeam, currUnit, effective);
 			}
 		} else {
-			CP_AutoBattleCheckFriendlyFire(battle, eTeam, currTeam, currUnit, effective);
+			AM_CheckFriendlyFire(battle, eTeam, currTeam, currUnit, effective);
 		}
 	}
 
@@ -469,7 +469,7 @@ static qboolean CP_AutoBattleUnitAttackEnemies (autoMissionBattle_t *battle, con
 	return qtrue;
 }
 
-static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
+static void AM_DoFight (autoMissionBattle_t *battle)
 {
 	/* Setup is done.  Now, FIGHT! */
 	qboolean combatActive = qtrue;
@@ -497,7 +497,7 @@ static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
 						currentUnit, team, battle->scoreTeamSkill[team]);
 
 				aliveUnits++;
-				combatActive = CP_AutoBattleUnitAttackEnemies(battle, team, currentUnit, effective);
+				combatActive = AM_UnitAttackEnemies(battle, team, currentUnit, effective);
 			}
 
 			if (aliveUnits == 0) {
@@ -512,7 +512,7 @@ static void CP_AutoBattleDoFight (autoMissionBattle_t *battle)
 /**
  * @brief This will display on-screen, for the player, results of the auto mission.
  */
-static void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
+static void AM_DisplayResults (const autoMissionBattle_t *battle)
 {
 	assert(battle);
 
@@ -535,15 +535,15 @@ static void CP_AutoBattleDisplayResults (const autoMissionBattle_t *battle)
 	}
 }
 
-void CP_AutoBattleRunBattle (autoMissionBattle_t *battle)
+void AM_RunBattle (autoMissionBattle_t *battle)
 {
-	CP_AutoBattleSetup(battle);
-	CP_AutoBattleDoFight(battle);
-	CP_AutoBattleDecideResults(battle);
-	CP_AutoBattleDisplayResults(battle);
+	AM_Setup(battle);
+	AM_DoFight(battle);
+	AM_DecideResults(battle);
+	AM_DisplayResults(battle);
 }
 
-void CP_AutoBattleFillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
+void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
 {
 	int numAliensTm;
 	int numAlienDronesTm;
@@ -650,7 +650,7 @@ static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employe
  * @brief This looks at a finished auto battle, and uses values from it to kill or lower health of surviving soldiers on a
  * mission drop ship as appropriate.  It also hands out some experience to soldiers that survive.
  */
-void CP_AutoBattleUpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
+void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
 {
 	employee_t *soldier;
 	int unit = 0;

@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -464,42 +463,6 @@ const char* CP_MissionToTypeString (const mission_t *mission)
 }
 
 #ifdef DEBUG
-/**
- * @brief Return Name of the category of a mission.
- */
-static const char* CP_MissionCategoryToName (interestCategory_t category)
-{
-	switch (category) {
-	case INTERESTCATEGORY_NONE:
-		return "None";
-	case INTERESTCATEGORY_RECON:
-		return "Recon Mission";
-	case INTERESTCATEGORY_TERROR_ATTACK:
-		return "Terror mission";
-	case INTERESTCATEGORY_BASE_ATTACK:
-		return "Base attack";
-	case INTERESTCATEGORY_BUILDING:
-		return "Building Base or Subverting Government";
-	case INTERESTCATEGORY_SUPPLY:
-		return "Supply base";
-	case INTERESTCATEGORY_XVI:
-		return "XVI propagation";
-	case INTERESTCATEGORY_INTERCEPT:
-		return "Interception";
-	case INTERESTCATEGORY_HARVEST:
-		return "Harvest";
-	case INTERESTCATEGORY_ALIENBASE:
-		return "Alien base discovered";
-	case INTERESTCATEGORY_RESCUE:
-		return "Rescue mission";
-	case INTERESTCATEGORY_MAX:
-		return "Unknown mission category";
-	}
-
-	/* Can't reach this point */
-	return "";
-}
-
 /**
  * @brief Return Name of the category of a mission.
  * @note Not translated yet - only for console usage
@@ -1587,7 +1550,7 @@ void CP_SpawnNewMissions (void)
 
 		/* Increase the alien's interest in supplying their bases for this cycle.
 		 * The more bases, the greater their interest in supplying them. */
-		CP_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
+		INT_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
 
 		/* Calculate the amount of missions to be spawned this cycle.
 		 * Note: This is a function over css.overallInterest. It looks like this:
@@ -1630,7 +1593,7 @@ void CP_InitializeSpawningDelay (void)
  * @brief Debug function for creating a mission.
  * @note called with debug_addmission
  */
-static void CP_SpawnNewMissions_f (void)
+static void MIS_SpawnNewMissions_f (void)
 {
 	int category, type = 0;
 	mission_t *mission;
@@ -1638,7 +1601,7 @@ static void CP_SpawnNewMissions_f (void)
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category> [<type>]\n", Cmd_Argv(0));
 		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
-			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
+			Com_Printf("...%i: %s", category, INT_InterestCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
 			else if (category == INTERESTCATEGORY_BUILDING)
@@ -1731,7 +1694,7 @@ static void CP_SpawnNewMissions_f (void)
 /**
  * @brief Changes the map for an already spawned mission
  */
-static void CP_MissionSetMap_f (void)
+static void MIS_MissionSetMap_f (void)
 {
 	mapDef_t *mapDef;
 	mission_t *mission;
@@ -1750,9 +1713,9 @@ static void CP_MissionSetMap_f (void)
 
 /**
  * @brief List all current mission to console.
- * @note Use with debug_listmission
+ * @note Use with debug_missionlist
  */
-static void CP_MissionList_f (void)
+static void MIS_MissionList_f (void)
 {
 	qboolean noMission = qtrue;
 	mission_t *mission;
@@ -1760,7 +1723,7 @@ static void CP_MissionList_f (void)
 	MIS_Foreach(mission) {
 		Com_Printf("mission: '%s'\n", mission->id);
 		Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
-			CP_MissionCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
+			INT_InterestCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
 		Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
 		Com_Printf("...location: '%s'\n", mission->location);
 		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
@@ -1778,9 +1741,9 @@ static void CP_MissionList_f (void)
 
 /**
  * @brief Debug function for deleting all mission in global array.
- * @note called with debug_delmissions
+ * @note called with debug_missionsdel
  */
-static void CP_DeleteMissions_f (void)
+static void MIS_DeleteMissions_f (void)
 {
 	mission_t *mission;
 
@@ -1794,42 +1757,13 @@ static void CP_DeleteMissions_f (void)
 			UFO_RemoveFromGeoscape(ccs.ufos);
 	}
 }
-
-/**
- * @brief List alien interest values.
- * @sa function called with debug_listinterest
- */
-static void CP_AlienInterestList_f (void)
-{
-	int i;
-
-	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
-	Com_Printf("Individual interest:\n");
-
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
-		Com_Printf("...%i. %s -- %i\n", i, CP_MissionCategoryToName(i), ccs.interest[i]);
-}
-
-/**
- * @brief Debug callback to set overall interest level
- * Called: debug_setinterest <interestlevel>
- */
-static void CP_SetAlienInterest_f (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <interestlevel>\n", Cmd_Argv(0));
-		return;
-	}
-
-	ccs.overallInterest = max(0, atoi(Cmd_Argv(1)));
-}
 #endif
 
 /**
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean CP_SaveMissionsXML (xmlNode_t *parent)
+qboolean MIS_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionsNode = XML_AddNode(parent, SAVE_MISSIONS);
 	mission_t *mission;
@@ -1904,7 +1838,7 @@ qboolean CP_SaveMissionsXML (xmlNode_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean CP_LoadMissionsXML (xmlNode_t *parent)
+qboolean MIS_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionNode;
 	xmlNode_t *node;
@@ -2061,12 +1995,10 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 void MIS_InitStartup (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_missionsetmap", CP_MissionSetMap_f, "Changes the map for a spawned mission");
-	Cmd_AddCommand("debug_missionadd", CP_SpawnNewMissions_f, "Add a new mission");
-	Cmd_AddCommand("debug_missiondeleteall", CP_DeleteMissions_f, "Remove all missions from global array");
-	Cmd_AddCommand("debug_missionlist", CP_MissionList_f, "Debug function to show all missions");
-	Cmd_AddCommand("debug_interestlist", CP_AlienInterestList_f, "Debug function to show alien interest values");
-	Cmd_AddCommand("debug_interestset", CP_SetAlienInterest_f, "Set overall interest level.");
+	Cmd_AddCommand("debug_missionsetmap", MIS_MissionSetMap_f, "Changes the map for a spawned mission");
+	Cmd_AddCommand("debug_missionadd", MIS_SpawnNewMissions_f, "Add a new mission");
+	Cmd_AddCommand("debug_missiondeleteall", MIS_DeleteMissions_f, "Remove all missions from global array");
+	Cmd_AddCommand("debug_missionlist", MIS_MissionList_f, "Debug function to show all missions");
 #endif
 }
 
