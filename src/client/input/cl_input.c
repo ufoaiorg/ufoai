@@ -849,8 +849,10 @@ void IN_Frame (void)
 			IN_PrintKey(&event, 1);
 			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_RETURN) {
 				SDL_Surface *surface = SDL_GetVideoSurface();
-				if (!SDL_WM_ToggleFullScreen(surface))
-					Com_Printf("IN_Frame: Could not toggle fullscreen mode\n");
+				if (!SDL_WM_ToggleFullScreen(surface)) {
+					int flags = surface->flags ^= SDL_FULLSCREEN;
+					SDL_SetVideoMode(surface->w, surface->h, 0, flags);
+				}
 
 				if (surface->flags & SDL_FULLSCREEN) {
 					Cvar_SetValue("vid_fullscreen", 1);
