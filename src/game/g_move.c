@@ -294,6 +294,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
 
+	if (VectorCompare(ent->pos, to))
+		return;
+
 	/* check if action is possible */
 	if (!G_ActionCheckForCurrentTeam(player, ent, TU_MOVE_STRAIGHT))
 		return;
