@@ -161,11 +161,14 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 	int i;
 	vec3_t texnormal;
 	vec_t distscale, dist;
+	float scale[2];
 
 	tex = &curTile->texinfo[l->face->texinfo];
 
-	for (i = 0; i < 2; i++)
-		VectorCopy(tex->vecs[i], l->worldtotex[i]);
+	for (i = 0; i < 2; i++) {
+		scale[i] = 1.0f/VectorLength(tex->vecs[i]);
+		VectorScale(tex->vecs[i], scale[i], l->worldtotex[i]);
+	}
 
 	/* calculate a normal to the texture axis.  points can be moved along this
 	 * without changing their S/T */
@@ -193,10 +196,8 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 	distscale = 1.0 / distscale;
 
 	for (i = 0; i < 2; i++) {
-		const vec_t len = VectorLength(l->worldtotex[i]);
 		const vec_t distance = DotProduct(l->worldtotex[i], l->facenormal) * distscale;
 		VectorMA(l->worldtotex[i], -distance, texnormal, l->textoworld[i]);
-		VectorScale(l->textoworld[i], (1.0f / len) * (1.0f / len), l->textoworld[i]);
 	}
 
 	/* calculate texorg on the texture plane */
@@ -781,6 +782,7 @@ void BuildFacelights (unsigned int facenum)
 	if (tex->surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
 
+	/** @todo vecs are axis aligned, so extra samples might end up inside in case of slanted surfaces */
 	sdir = tex->vecs[0];
 	tdir = tex->vecs[1];
 
