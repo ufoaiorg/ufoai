@@ -1252,6 +1252,9 @@ msgstr ""
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
+msgid "Go into the lobby"
+msgstr ""
+
 msgid "Show server information"
 msgstr ""
 
@@ -1261,43 +1264,16 @@ msgstr ""
 msgid "Game invitation"
 msgstr ""
 
-msgid "Go into the lobby"
-msgstr ""
-
-msgid "Personal message"
-msgstr ""
-
 msgid "Password:"
 msgstr ""
 
 msgid "Enter server password"
 msgstr ""
 
-msgid "Say:"
-msgstr ""
-
-msgid "Global lobby (IRC)"
-msgstr ""
-
-msgid "Party chat"
-msgstr ""
-
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
 msgid "Invite others"
-msgstr ""
-
-msgid "Hide IRC users"
-msgstr ""
-
-msgid "Display IRC users"
-msgstr ""
-
-msgid "Deactivate IRC"
-msgstr ""
-
-msgid "Activate IRC"
 msgstr ""
 
 msgid "Are you ready?"
@@ -1842,15 +1818,6 @@ msgstr ""
 msgid "Chat messages"
 msgstr ""
 
-msgid "Show chat history"
-msgstr ""
-
-msgid "Teamchat"
-msgstr ""
-
-msgid "Chat"
-msgstr ""
-
 msgid "Switch to left hand weapon"
 msgstr ""
 
@@ -1879,6 +1846,21 @@ msgid "Use Item"
 msgstr ""
 
 msgid "Inventory and physical stats"
+msgstr ""
+
+msgid "Team chat"
+msgstr ""
+
+msgid "Say:"
+msgstr ""
+
+msgid "Global lobby (IRC)"
+msgstr ""
+
+msgid "Party chat"
+msgstr ""
+
+msgid "Chat"
 msgstr ""
 
 msgid "Shots: <8>"
@@ -1972,9 +1954,6 @@ msgid "Surface-to-air missile site:"
 msgstr ""
 
 msgid "Base:"
-msgstr ""
-
-msgid "Status:"
 msgstr ""
 
 msgid "Aircraft:"
@@ -2388,9 +2367,6 @@ msgstr ""
 msgid "Missions performed:"
 msgstr ""
 
-msgid "Health:"
-msgstr ""
-
 msgid "High-Explosives:"
 msgstr ""
 
@@ -2464,6 +2440,12 @@ msgid "Start Aircraft"
 msgstr ""
 
 msgid "Team Members:"
+msgstr ""
+
+msgid "Health:"
+msgstr ""
+
+msgid "Status:"
 msgstr ""
 
 msgid "Select this slot"
@@ -2553,6 +2535,15 @@ msgstr ""
 msgid "CREDITS"
 msgstr ""
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
@@ -2587,6 +2578,9 @@ msgid "Consider launching interceptors to catch a faster UFO when it's really cl
 msgstr ""
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
+msgstr ""
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
 msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -2643,9 +2637,6 @@ msgstr ""
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr ""
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr ""
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr ""
 
@@ -2656,6 +2647,15 @@ msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flas
 msgstr ""
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+msgstr ""
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr ""
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
@@ -2719,6 +2719,9 @@ msgid "With multiplayer teams, make sure your best soldiers are at the top of th
 msgstr ""
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
+msgstr ""
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
 msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
@@ -3968,8 +3971,7 @@ msgid "'Raven' ECM Unit"
 msgstr ""
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -4518,8 +4520,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr ""
@@ -10209,6 +10210,9 @@ msgstr "Tropik ırmak"
 msgid "Transport"
 msgstr "Nakliyeci"
 
+msgid "Tower"
+msgstr ""
+
 msgid "Stadium"
 msgstr "Stadyum"
 
@@ -10536,6 +10540,9 @@ msgstr ""
 msgid "Move battlescape camera left"
 msgstr ""
 
+msgid "Move battlescape camera"
+msgstr ""
+
 msgid "Tilt battlescape camera down"
 msgstr ""
 
@@ -10766,19 +10773,6 @@ msgstr ""
 msgid "Error saving team. Nothing to save yet."
 msgstr ""
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr ""
-
 msgid "You've lost the game!"
 msgstr ""
 
@@ -10793,10 +10787,12 @@ msgstr ""
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
 
 msgid ""
@@ -10806,6 +10802,17 @@ msgid ""
 msgstr ""
 
 msgid "Game Drawn!"
+msgstr ""
+
+msgid "all"
+msgstr ""
+
+#, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+
+#, c-format
+msgid "Enemies killed:\t%i"
 msgstr ""
 
 msgid "Set soldiers per player lower than soldiers per team"
@@ -10863,9 +10870,6 @@ msgid "Very Easy"
 msgstr ""
 
 msgid "Chicken-hearted"
-msgstr ""
-
-msgid "You've won the battle"
 msgstr ""
 
 msgid "Your dropship is not near the landing zone"
@@ -12072,6 +12076,10 @@ msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
 #, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr ""
+
+#, c-format
 msgid "Status:\t%s\n"
 msgstr ""
 
@@ -12692,6 +12700,12 @@ msgstr ""
 msgid "Not set"
 msgstr ""
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr ""
+
 msgid "None"
 msgstr ""
 
@@ -12961,7 +12975,7 @@ msgstr ""
 msgid "Reload the weapon in the soldiers left hand"
 msgstr ""
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -13208,7 +13222,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

@@ -1373,6 +1373,9 @@ msgstr ""
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
+msgid "Go into the lobby"
+msgstr ""
+
 #, fuzzy
 msgid "Show server information"
 msgstr "基地の情報"
@@ -1385,25 +1388,10 @@ msgstr "基地情報"
 msgid "Game invitation"
 msgstr "施設の名前を変更します"
 
-msgid "Go into the lobby"
-msgstr ""
-
-msgid "Personal message"
-msgstr ""
-
 msgid "Password:"
 msgstr ""
 
 msgid "Enter server password"
-msgstr ""
-
-msgid "Say:"
-msgstr ""
-
-msgid "Global lobby (IRC)"
-msgstr ""
-
-msgid "Party chat"
 msgstr ""
 
 msgid "Invite players that are online in the lobby"
@@ -1412,19 +1400,6 @@ msgstr ""
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
-
-msgid "Hide IRC users"
-msgstr ""
-
-msgid "Display IRC users"
-msgstr ""
-
-msgid "Deactivate IRC"
-msgstr ""
-
-#, fuzzy
-msgid "Activate IRC"
-msgstr "Tooltips を有効にします"
 
 msgid "Are you ready?"
 msgstr ""
@@ -1998,15 +1973,6 @@ msgstr "視点レベルを増加します"
 msgid "Chat messages"
 msgstr ""
 
-msgid "Show chat history"
-msgstr ""
-
-msgid "Teamchat"
-msgstr ""
-
-msgid "Chat"
-msgstr ""
-
 msgid "Switch to left hand weapon"
 msgstr "左手の武器に切り替えます"
 
@@ -2038,6 +2004,22 @@ msgid "Use Item"
 msgstr "装備を使用します"
 
 msgid "Inventory and physical stats"
+msgstr ""
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Team"
+
+msgid "Say:"
+msgstr ""
+
+msgid "Global lobby (IRC)"
+msgstr ""
+
+msgid "Party chat"
+msgstr ""
+
+msgid "Chat"
 msgstr ""
 
 #, fuzzy
@@ -2137,9 +2119,6 @@ msgstr ""
 
 msgid "Base:"
 msgstr "基地:"
-
-msgid "Status:"
-msgstr "状態:"
 
 msgid "Aircraft:"
 msgstr "航空機:"
@@ -2576,9 +2555,6 @@ msgstr "敵撃破数:"
 msgid "Missions performed:"
 msgstr "ミッション参加数:"
 
-msgid "Health:"
-msgstr "生命力:"
-
 msgid "High-Explosives:"
 msgstr "爆発物:"
 
@@ -2661,6 +2637,12 @@ msgstr "Start Aircraft"
 
 msgid "Team Members:"
 msgstr "搭乗人数:"
+
+msgid "Health:"
+msgstr "生命力:"
+
+msgid "Status:"
+msgstr "状態:"
 
 msgid "Select this slot"
 msgstr "このスロットを選択します"
@@ -2760,6 +2742,15 @@ msgstr "組織の予算"
 msgid "CREDITS"
 msgstr "所持金"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
@@ -2794,6 +2785,9 @@ msgid "Consider launching interceptors to catch a faster UFO when it's really cl
 msgstr ""
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
+msgstr ""
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
 msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -2855,9 +2849,6 @@ msgstr "使い捨ての兵士を用意して、危険な状況に主力部隊を
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "兵士同士が支援しあえる(お互いの治療や、援護射撃など)ように近くで行動させて下さい。 ターン終了時にはGrenadesで双方共に倒される事が無いよう壁をはさむ様にして下さい。"
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "[x]キーで臨機射撃の設定を、無し、1回のみ、複数回、と切り替える事ができます。"
-
 #, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Plasma Grenadesは最大のダメージを与える事ができますが、それより少し遠くまで投げる事ができるのでFlag Grenadesの方が役に立つ場合もあります。"
@@ -2872,6 +2863,15 @@ msgstr "素早い兵士と共にPistol, 片手用格闘武器, Grenades, Flashba
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr "Time Units(TUs)が不足しており、危険な敵が居る場合に次のラウンドまで敵を無力化するのにFlashbangは最良の選択肢でしょう。 使用には最低2TU (ホルスターから取り出す) + 12TU (投げる)のおよそ14TUが必要です。"
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "[x]キーで臨機射撃の設定を、無し、1回のみ、複数回、と切り替える事ができます。"
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr "[c]キーで立ち/屈みの切り替えが行えます。 屈みによって幾つかの武器の命中率をかなり上げる事ができます。 また、屈んだ兵士は被弾面積が小さくなります。"
@@ -2943,6 +2943,9 @@ msgstr "マルチプレイヤーの時、最高のメンバーがチームリス
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "マルチプレイヤー用のチームは複数設定・保存しておく事ができます。 - 4プレイヤー用、8プレイヤー用など。それによって素早くゲームを開始する事ができます。"
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "[Shift] キーで攻撃する高さを変更する事ができます。 - ロケットランチャーで前方のエイリアンの集団を攻撃することなどに有効です。"
@@ -4204,8 +4207,7 @@ msgid "'Raven' ECM Unit"
 msgstr ""
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -4786,8 +4788,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr ""
@@ -10726,6 +10727,10 @@ msgstr "Tropical river"
 msgid "Transport"
 msgstr "Transport"
 
+#, fuzzy
+msgid "Tower"
+msgstr "レーダータワー"
+
 msgid "Stadium"
 msgstr "Stadium"
 
@@ -11063,6 +11068,10 @@ msgstr "戦術マップの視点を右に移動"
 msgid "Move battlescape camera left"
 msgstr "戦術マップの視点を左に移動"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "戦術マップの視点を左に移動"
+
 msgid "Tilt battlescape camera down"
 msgstr "戦術マップの視点高さを下降"
 
@@ -11300,19 +11309,6 @@ msgstr ""
 msgid "Error saving team. Nothing to save yet."
 msgstr "チームのセーブでエラーが発生しました。まだセーブは行われていません。"
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr ""
-
 msgid "You've lost the game!"
 msgstr ""
 
@@ -11327,10 +11323,12 @@ msgstr ""
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
 
 msgid ""
@@ -11341,6 +11339,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr ""
+
+msgid "all"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"味方の生存者数\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "敵の撃破数\t%i\n"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr ""
@@ -11407,9 +11418,6 @@ msgstr "とても簡単"
 
 msgid "Chicken-hearted"
 msgstr "臆病者用"
-
-msgid "You've won the battle"
-msgstr "戦闘に勝利しました"
 
 msgid "Your dropship is not near the landing zone"
 msgstr ""
@@ -12648,6 +12656,10 @@ msgstr "ETA:\t%sh\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "生命力:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "状態:\t%s\n"
@@ -13293,6 +13305,12 @@ msgstr "既に %i 個基地に存在しています"
 msgid "Not set"
 msgstr "まだ建設されていません"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "戦闘に勝利しました"
+
 msgid "None"
 msgstr "None"
 
@@ -13569,7 +13587,7 @@ msgstr ""
 msgid "Reload the weapon in the soldiers left hand"
 msgstr ""
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 #, fuzzy
@@ -13835,7 +13853,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-05-26 14:49+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: UFO: Alien Invasion JP\n"
@@ -13848,6 +13866,10 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Poedit-Bookmarks: -1,803,-1,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-Basepath: ../\n"
+
+#, fuzzy
+#~ msgid "Activate IRC"
+#~ msgstr "Tooltips を有効にします"
 
 #, fuzzy
 #~ msgid "Charlotte Amalie"
@@ -14439,9 +14461,6 @@ msgstr ""
 #~ "エイリアンの捕獲数\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "敵の撃破数\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -14457,13 +14476,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "誤射による死傷者数\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "味方の生存者数\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "エイリアンに殺害された市民の数\t%i\n"

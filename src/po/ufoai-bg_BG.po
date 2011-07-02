@@ -1442,6 +1442,9 @@ msgstr "Откажи играта"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr "Получи покана за мултиплейър игра. Кликни на бутона за свързване за да се присъединиш към сървъра"
 
+msgid "Go into the lobby"
+msgstr "Отиди в лобито"
+
 msgid "Show server information"
 msgstr "Покаши информацията за сървъра"
 
@@ -1451,44 +1454,17 @@ msgstr "Информация за сървъра"
 msgid "Game invitation"
 msgstr "Покана за игра"
 
-msgid "Go into the lobby"
-msgstr "Отиди в лобито"
-
-msgid "Personal message"
-msgstr "Лично съобщение"
-
 msgid "Password:"
 msgstr "Парола:"
 
 msgid "Enter server password"
 msgstr "Въведи парола на сървъра"
 
-msgid "Say:"
-msgstr "Кажи:"
-
-msgid "Global lobby (IRC)"
-msgstr "Глобално lobby (IRC)"
-
-msgid "Party chat"
-msgstr "Отборен чат"
-
 msgid "Invite players that are online in the lobby"
 msgstr "Покани играчи, които са онлайн в lobby-то"
 
 msgid "Invite others"
 msgstr "Покани други"
-
-msgid "Hide IRC users"
-msgstr "Скрий IRC потребителите"
-
-msgid "Display IRC users"
-msgstr "Покажи IRC потребителите"
-
-msgid "Deactivate IRC"
-msgstr "Деактивирай IRC"
-
-msgid "Activate IRC"
-msgstr "Активирай IRC"
 
 msgid "Are you ready?"
 msgstr "Готов ли си?"
@@ -2038,15 +2014,6 @@ msgstr "Етаж нагоре"
 msgid "Chat messages"
 msgstr "Съобщения в чата"
 
-msgid "Show chat history"
-msgstr "Покажи история на чата"
-
-msgid "Teamchat"
-msgstr "Отборен чат"
-
-msgid "Chat"
-msgstr "Чат"
-
 msgid "Switch to left hand weapon"
 msgstr "Премини на оръжието в лявата ръка"
 
@@ -2076,6 +2043,22 @@ msgstr "Използвай устройството"
 
 msgid "Inventory and physical stats"
 msgstr "Инвентар и физически статус"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Отборен чат"
+
+msgid "Say:"
+msgstr "Кажи:"
+
+msgid "Global lobby (IRC)"
+msgstr "Глобално lobby (IRC)"
+
+msgid "Party chat"
+msgstr "Отборен чат"
+
+msgid "Chat"
+msgstr "Чат"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2174,9 +2157,6 @@ msgstr "Ракетна установка тип земя-въздух:"
 
 msgid "Base:"
 msgstr "База:"
-
-msgid "Status:"
-msgstr "Статус:"
 
 msgid "Aircraft:"
 msgstr "Самолети:"
@@ -2591,9 +2571,6 @@ msgstr "Убити врагове:"
 msgid "Missions performed:"
 msgstr "Изпълнени мисии:"
 
-msgid "Health:"
-msgstr "Здраве:"
-
 msgid "High-Explosives:"
 msgstr "Силни експлозиви:"
 
@@ -2669,6 +2646,12 @@ msgstr "Стартирай самолет"
 
 msgid "Team Members:"
 msgstr "Членове на екипа:"
+
+msgid "Health:"
+msgstr "Здраве:"
+
+msgid "Status:"
+msgstr "Статус:"
 
 msgid "Select this slot"
 msgstr "Избери тази позиция"
@@ -2760,6 +2743,15 @@ msgstr "Капитал на организацията"
 msgid "CREDITS"
 msgstr "КРЕДИТ"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "Докато чакаш, можеш да подготвиш действията за следващия ход. Натискайки [Enter} два пъти, всички зададени действия ще бъдат изпълнени, щом дойде твоя ред."
 
@@ -2795,6 +2787,9 @@ msgstr "Когато се вдига изтребител за да прихва
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "Възползвай се от покритието на снайперите. Позиционирай снайперите на места с добра видимост (например възвишения и покриви). Остави ги в приведена позиция и режим 'няколко изстрела' на реакционния огън, за да свалят извънземни."
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
+msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Трябва да внимаваш да не загубиш прекалено много цивилни. Иначе може да загубиш играта по-рано, отколкото очакваш."
@@ -2850,9 +2845,6 @@ msgstr "Гледай да имаш заменяем войник или двам
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Дръж войниците близо един до друг, за да може да се поддържат един-друг (да се лекуват, стрелят при недостатъчно TUs). Гледай да има стена между тях към края на хода, за да не могат да бъдат убити с една граната."
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "Използвай [x] за да сменяш режима на Ответния огън: никакъв, единичен, многократен."
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Плазмените гранати имат най-голямо поражение, но осколъчните гранати мохат да бъдат полезни, тъй като може да се хвърлят малко по-далече."
 
@@ -2864,6 +2856,15 @@ msgstr "За медик оборудвай бърз войник с пистол
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr "Ако нямаш достатъчно Time Units (TUs) и имаш опасни врагове, използвай шокова граната, за да ги възпрепядстваш до началото на следващия ти ход. 2 TU (вземане от колана) + 12 TU (хвърляне) = 14 TU."
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "Използвай [x] за да сменяш режима на Ответния огън: никакъв, единичен, многократен."
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr "Използвай [c] за клякане/ставане. Клякането подобрява прецизността на някои оръжия. Също така прави войника по-малка цел."
@@ -2927,6 +2928,9 @@ msgstr "Увери се, че няй-добрите вийници са в на�
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "Групирай и запиши различни екипи за multiplayer-игри - 4-членен екип, 8-членен екип и т. н. По този начин ще можеш бързо да избереш точния екип при бърза игра."
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Използвай клавишът [Shift] за да зададеш височината на прицела - например при стелба с ракетомет срещу група от извънземни"
@@ -4399,8 +4403,7 @@ msgid "'Raven' ECM Unit"
 msgstr "Установка за електронно противодействие 'Raven'"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
@@ -4996,8 +4999,7 @@ msgstr ""
 "--Ком. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #, fuzzy
 msgid "inter_stingray_txt"
@@ -9352,8 +9354,7 @@ msgid "Lost Radar Tracking -- %s"
 msgstr "Изгубено проследяването на радара-- %s"
 
 msgid "mail_alien_base_discovered"
-msgstr ""
-"Сър, нашите агенти са открили местоположението на голямо извънземно съоръжение на Земята на територия, принадлежаща на %s. Това съоръжение представлява сериозна заплаха за PHALANX и за човечеството като цяло. Трябва да го отстраним колкото може по-скоро."
+msgstr "Сър, нашите агенти са открили местоположението на голямо извънземно съоръжение на Земята на територия, принадлежаща на %s. Това съоръжение представлява сериозна заплаха за PHALANX и за човечеството като цяло. Трябва да го отстраним колкото може по-скоро."
 
 msgid "Alien Base Discovered -- %s"
 msgstr "Открита извънземна база -- %s"
@@ -9448,8 +9449,7 @@ msgid "Recovery Report -- %s"
 msgstr "Рапорт от мисия за извличане -- %s"
 
 msgid "mail_stunned_alien_died"
-msgstr ""
-"Sir, the stunned aliens we captured during the battle all died in base %s. We currently have no idea why that has happened."
+msgstr "Sir, the stunned aliens we captured during the battle all died in base %s. We currently have no idea why that has happened."
 
 msgid "Alien died"
 msgstr "Извънземното умря"
@@ -11295,6 +11295,10 @@ msgstr "Тропическа река"
 msgid "Transport"
 msgstr "Транспортен"
 
+#, fuzzy
+msgid "Tower"
+msgstr "Радарна кула"
+
 msgid "Stadium"
 msgstr "Стадион"
 
@@ -11631,6 +11635,10 @@ msgstr "Премести изгледа надясно"
 msgid "Move battlescape camera left"
 msgstr "Премести изгледа наляво"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "Премести изгледа наляво"
+
 msgid "Tilt battlescape camera down"
 msgstr "Наклони изгледа надолу"
 
@@ -11904,6 +11912,18 @@ msgstr "НовОтбор"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Грешка при запис на отбор - няма нищо за записване."
 
+msgid "You've lost the game!"
+msgstr "Ти изгуби играта!"
+
+msgid "Better luck next time"
+msgstr "Повече късмет следващия път"
+
+msgid "You won the game!"
+msgstr "Ти спечели играта!"
+
+msgid "Congratulations"
+msgstr "Поздравления"
+
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -11920,33 +11940,6 @@ msgstr ""
 "Убити цивилни:\t\t%i\n"
 "Убити цивилни от врага:\t\t%i\n"
 
-msgid "all"
-msgstr "всички"
-
-msgid "You've lost the game!"
-msgstr "Ти изгуби играта!"
-
-msgid "Better luck next time"
-msgstr "Повече късмет следващия път"
-
-msgid "You won the game!"
-msgstr "Ти спечели играта!"
-
-msgid "Congratulations"
-msgstr "Поздравления"
-
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
-msgstr ""
-"\n"
-"\n"
-"Убити врагове:  %i\n"
-"Оцелели от отбора:  %i"
-
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -11958,6 +11951,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Играта е без резултат!"
+
+msgid "all"
+msgstr "всички"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"Оцелели от отбора\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Убити врагове\t%i\n"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Задай по-малко войници за играч, отколкото за отбор"
@@ -12024,9 +12030,6 @@ msgstr "Много лесно"
 
 msgid "Chicken-hearted"
 msgstr "Елементарно"
-
-msgid "You've won the battle"
-msgstr "Битката е спечелена"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Товарния самолет не е близо до зоната за кацане."
@@ -13359,6 +13362,10 @@ msgstr "ETA:\t%sч\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Разстояние до целта:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Здраве:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Статус:\t%s\n"
@@ -14012,6 +14019,12 @@ msgstr "Вече има %i в базата"
 msgid "Not set"
 msgstr "Не е зададено"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "Битката е спечелена"
+
 msgid "None"
 msgstr "Никакви"
 
@@ -14293,7 +14306,7 @@ msgstr "Презареди оръжието в дясната ръка"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Презареди оръжието в лявата ръка"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -14568,7 +14581,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-05-26 14:37+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
@@ -14581,6 +14594,35 @@ msgstr ""
 "X-Poedit-Language: Belarusian\n"
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-Basepath: ..\\\n"
+
+#~ msgid "Personal message"
+#~ msgstr "Лично съобщение"
+
+#~ msgid "Hide IRC users"
+#~ msgstr "Скрий IRC потребителите"
+
+#~ msgid "Display IRC users"
+#~ msgstr "Покажи IRC потребителите"
+
+#~ msgid "Deactivate IRC"
+#~ msgstr "Деактивирай IRC"
+
+#~ msgid "Activate IRC"
+#~ msgstr "Активирай IRC"
+
+#~ msgid "Show chat history"
+#~ msgstr "Покажи история на чата"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Убити врагове:  %i\n"
+#~ "Оцелели от отбора:  %i"
 
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Шарлот Амали"
@@ -15648,9 +15690,6 @@ msgstr ""
 #~ "Заловени извънземни\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "Убити врагове\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -15673,13 +15712,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "Загуби от приятелски огън\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Оцелели от отбора\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "Цивилни, убити от извънземни\t%i\n"

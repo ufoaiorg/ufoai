@@ -1252,6 +1252,9 @@ msgstr "Játék megszakítása"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
+msgid "Go into the lobby"
+msgstr ""
+
 msgid "Show server information"
 msgstr ""
 
@@ -1261,43 +1264,16 @@ msgstr "Szerver infó"
 msgid "Game invitation"
 msgstr ""
 
-msgid "Go into the lobby"
-msgstr ""
-
-msgid "Personal message"
-msgstr "Személyes üzenet"
-
 msgid "Password:"
 msgstr "Jelszó:"
 
 msgid "Enter server password"
 msgstr ""
 
-msgid "Say:"
-msgstr ""
-
-msgid "Global lobby (IRC)"
-msgstr ""
-
-msgid "Party chat"
-msgstr ""
-
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
 msgid "Invite others"
-msgstr ""
-
-msgid "Hide IRC users"
-msgstr ""
-
-msgid "Display IRC users"
-msgstr ""
-
-msgid "Deactivate IRC"
-msgstr ""
-
-msgid "Activate IRC"
 msgstr ""
 
 msgid "Are you ready?"
@@ -1843,15 +1819,6 @@ msgstr "Szint fel"
 msgid "Chat messages"
 msgstr "Cset üzenetek"
 
-msgid "Show chat history"
-msgstr "Cset előzmények"
-
-msgid "Teamchat"
-msgstr "Csapatcset"
-
-msgid "Chat"
-msgstr "Cset"
-
 msgid "Switch to left hand weapon"
 msgstr "Válts a bal kéz fegyverére"
 
@@ -1881,6 +1848,22 @@ msgstr "Tárgy használata"
 
 msgid "Inventory and physical stats"
 msgstr "Felszerelések és fizikai adatok"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Csapatcset"
+
+msgid "Say:"
+msgstr ""
+
+msgid "Global lobby (IRC)"
+msgstr ""
+
+msgid "Party chat"
+msgstr ""
+
+msgid "Chat"
+msgstr "Cset"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -1975,9 +1958,6 @@ msgstr ""
 
 msgid "Base:"
 msgstr "Bázis:"
-
-msgid "Status:"
-msgstr "Állapot:"
 
 msgid "Aircraft:"
 msgstr "Repülő:"
@@ -2390,9 +2370,6 @@ msgstr ""
 msgid "Missions performed:"
 msgstr ""
 
-msgid "Health:"
-msgstr "Égészség:"
-
 msgid "High-Explosives:"
 msgstr "Robbanó anyagok:"
 
@@ -2467,6 +2444,12 @@ msgstr "Repülő Indítása"
 
 msgid "Team Members:"
 msgstr "Csapat tagok:"
+
+msgid "Health:"
+msgstr "Égészség:"
+
+msgid "Status:"
+msgstr "Állapot:"
 
 msgid "Select this slot"
 msgstr ""
@@ -2555,6 +2538,15 @@ msgstr "Szervezeti tőke"
 msgid "CREDITS"
 msgstr "PÉNZ"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
@@ -2589,6 +2581,9 @@ msgid "Consider launching interceptors to catch a faster UFO when it's really cl
 msgstr ""
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
+msgstr ""
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
 msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -2645,9 +2640,6 @@ msgstr ""
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr ""
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr ""
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr ""
 
@@ -2658,6 +2650,15 @@ msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flas
 msgstr ""
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+msgstr ""
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr ""
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
@@ -2722,6 +2723,9 @@ msgstr "A többjátékos csapatokban tedd a lista elejére a legjobb harcosaid. 
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "Állíts össze és ments el különböző csapatokat  a többjátékos meccsekre - 4 fős csapat, 8 fős csapat, stb. Így gyorsan betöltheted a megfelelőt egy gyors küzelemhez."
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Használd a [Shift] gombot a célzás magasságának állításához, hasznos lehet például, ha rakétavetővel akarsz egy idegen csapat elé lőni."
@@ -4109,8 +4113,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM egység"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -4659,8 +4662,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr ""
@@ -10390,6 +10392,10 @@ msgstr "Trópusi folyó"
 msgid "Transport"
 msgstr ""
 
+#, fuzzy
+msgid "Tower"
+msgstr "Radartorony"
+
 msgid "Stadium"
 msgstr "Stadion"
 
@@ -10718,6 +10724,10 @@ msgstr "Kamera mozgatása jobbra"
 msgid "Move battlescape camera left"
 msgstr "Kamera mozgatása balra"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "Kamera mozgatása balra"
+
 msgid "Tilt battlescape camera down"
 msgstr "Kamera lefelé billentése"
 
@@ -10950,19 +10960,6 @@ msgstr "ÚjCsapat"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Hiba a csapat mentésekor. Nincs mit menteni még."
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr "mind"
-
 msgid "You've lost the game!"
 msgstr "Elvesztetted a játékot!"
 
@@ -10977,10 +10974,12 @@ msgstr "Gratulálok"
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
 
 msgid ""
@@ -10991,6 +10990,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Döntetlen!"
+
+msgid "all"
+msgstr "mind"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"Túlélők\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Megölt ellenség\t%i\n"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr ""
@@ -11057,9 +11069,6 @@ msgstr "Nagyon könnyű"
 
 msgid "Chicken-hearted"
 msgstr "Betoji"
-
-msgid "You've won the battle"
-msgstr "Megnyerted a csatát"
 
 msgid "Your dropship is not near the landing zone"
 msgstr ""
@@ -12287,6 +12296,10 @@ msgstr ""
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Távolság a célponthoz:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Égészség:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Állapot:\t%s\n"
@@ -12915,6 +12928,12 @@ msgstr "%i darab van a bázison"
 msgid "Not set"
 msgstr ""
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "Megnyerted a csatát"
+
 msgid "None"
 msgstr "Nincs"
 
@@ -13192,7 +13211,7 @@ msgstr ""
 msgid "Reload the weapon in the soldiers left hand"
 msgstr ""
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -13447,7 +13466,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2011-02-05 11:44+0100\n"
 "Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -13459,6 +13478,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Hungarian\n"
 "X-Poedit-Basepath: ../\n"
+
+#~ msgid "Personal message"
+#~ msgstr "Személyes üzenet"
+
+#~ msgid "Show chat history"
+#~ msgstr "Cset előzmények"
 
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Charlotte Amalie"
@@ -14180,9 +14205,6 @@ msgstr ""
 #~ "Elfogott idegenek\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "Megölt ellenség\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -14202,13 +14224,6 @@ msgstr ""
 
 #~ msgid "Team missing in action\t%i\n"
 #~ msgstr "Eltűnt katonák\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Túlélők\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "Idegenek által megölt civilek\t%i\n"

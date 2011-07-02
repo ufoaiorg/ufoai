@@ -1261,6 +1261,9 @@ msgstr "Spiel abbrechen"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr "Du hast eine Einladung zu einem Spiel im Mehrspielermodus erhalten. Klick auf den Verbindungsknopf um der Einladung zu folgen und am Spiel teilzunehmen."
 
+msgid "Go into the lobby"
+msgstr "Lobby betreten"
+
 msgid "Show server information"
 msgstr "Serverinformationen anzeigen"
 
@@ -1270,44 +1273,17 @@ msgstr "Serverinformationen"
 msgid "Game invitation"
 msgstr "Einladung zu einem Spiel"
 
-msgid "Go into the lobby"
-msgstr "Lobby betreten"
-
-msgid "Personal message"
-msgstr "Persönliche Nachricht"
-
 msgid "Password:"
 msgstr "Passwort:"
 
 msgid "Enter server password"
 msgstr "Server-Passwort eingeben"
 
-msgid "Say:"
-msgstr "Sage:"
-
-msgid "Global lobby (IRC)"
-msgstr "Globale Lobby (IRC)"
-
-msgid "Party chat"
-msgstr "Chat"
-
 msgid "Invite players that are online in the lobby"
 msgstr "Lade Spieler aus der Lobby ein"
 
 msgid "Invite others"
 msgstr "Andere einladen"
-
-msgid "Hide IRC users"
-msgstr "Verstecke IRC Benutzer"
-
-msgid "Display IRC users"
-msgstr "Zeige IRC Benutzer"
-
-msgid "Deactivate IRC"
-msgstr "IRC deaktivieren"
-
-msgid "Activate IRC"
-msgstr "IRC aktivieren"
 
 msgid "Are you ready?"
 msgstr "Fertig?"
@@ -1860,15 +1836,6 @@ msgstr "Stockwerk hoch"
 msgid "Chat messages"
 msgstr "Chatnachrichten"
 
-msgid "Show chat history"
-msgstr "Zeige Chatlog"
-
-msgid "Teamchat"
-msgstr "Teamchat"
-
-msgid "Chat"
-msgstr "Chat"
-
 msgid "Switch to left hand weapon"
 msgstr "Zur linkshändigen Waffe wechseln"
 
@@ -1898,6 +1865,22 @@ msgstr "Benutze Gegenstand"
 
 msgid "Inventory and physical stats"
 msgstr "Inventar und Biosignale"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Teamchat"
+
+msgid "Say:"
+msgstr "Sage:"
+
+msgid "Global lobby (IRC)"
+msgstr "Globale Lobby (IRC)"
+
+msgid "Party chat"
+msgstr "Chat"
+
+msgid "Chat"
+msgstr "Chat"
 
 msgid "Shots: <8>"
 msgstr "Schüsse: <8>"
@@ -1992,9 +1975,6 @@ msgstr "Boden-Luft-Raketenabwehr:"
 
 msgid "Base:"
 msgstr "Basis:"
-
-msgid "Status:"
-msgstr "Status:"
 
 msgid "Aircraft:"
 msgstr "Flugzeug:"
@@ -2407,9 +2387,6 @@ msgstr "Gegner getötet:"
 msgid "Missions performed:"
 msgstr "Einsätze absolviert:"
 
-msgid "Health:"
-msgstr "Vitalität:"
-
 msgid "High-Explosives:"
 msgstr "Explosivwaffen:"
 
@@ -2484,6 +2461,12 @@ msgstr "Flugzeug starten"
 
 msgid "Team Members:"
 msgstr "Teammitglieder:"
+
+msgid "Health:"
+msgstr "Vitalität:"
+
+msgid "Status:"
+msgstr "Status:"
 
 msgid "Select this slot"
 msgstr "Slot wählen"
@@ -2572,6 +2555,15 @@ msgstr "Kapital"
 msgid "CREDITS"
 msgstr "CREDITS"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "Sie können Ihre Züge für die nächste Runde vorbereiten, während Sie warten. Drücken Sie zwei Mal die [Enter]-Taste, um die ausstehenden Aktionen auszuführen, sobald Sie wieder an der Reihe sind."
 
@@ -2607,6 +2599,9 @@ msgstr "Wenn Sie Abfangjäger gegen schnellere UFOs starten, sollten Sie dies tu
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "Nutzen Sie Scharfschützen als Rückendeckung. Bringen Sie sie geduckt und mit Reaktionsfeuer-Modus \"Mehrfach-Schuss\" an Punkte mit guter Übersicht (z.B. Erhöhungen und Dachränder), um Aliens zu erledigen."
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
+msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Es sollte sichergestellt werden, dass nicht zu viele Zivilisten ihr Leben lassen. Andernfalls kann man das Spiel schneller verlieren als man denkt."
@@ -2662,9 +2657,6 @@ msgstr "Halten Sie immer einen oder zwei entbehrliche Soldaten bereit, damit Sie
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Halten Sie ihre Soldaten nah beisammen, so dass diese sich unterstützen können (heilen, schießen wenn der Andere keine ZE mehr hat). Positionieren Sie sie auf unterschiedlichen Seiten einer Mauer, damit nicht alle durch eine Granate getötet werden können."
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "Mit [x] kann zwischen den Einstellungen für Reaktionsfeuer umgeschaltet werden: Kein, Einzelschuss, Mehrfachschuss."
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Plasmagranaten machen den größten Schaden, aber auch Splittergranaten können nützlich sein, da sie etwas weiter geworfen werden können.  "
 
@@ -2676,6 +2668,15 @@ msgstr "Setzen Sie einen schnellen Soldaten mit Pistolen, einhändigen Nahkampfw
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr "Wenn Sie knappe Zeiteinheiten und gefährliche Gegner haben, könnte es die beste Option sein diese mit einer Blendgranate bis zum Anfang Ihrer nächsten Runde außer Gefecht setzen. 2 ZE (aus dem Holster nehmen) + 12 ZE (werfen) = 14 ZE."
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "Mit [x] kann zwischen den Einstellungen für Reaktionsfeuer umgeschaltet werden: Kein, Einzelschuss, Mehrfachschuss."
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr "Benutzen Sie [c], um zwischen Kriechen und Laufen umzuschalten. Beim Kriechen sind einige Waffen deutlich effektiver. Außerdem gibt ein kriechender Soldat ein kleineres Ziel ab."
@@ -2739,6 +2740,9 @@ msgstr "Versichern Sie sich, dass bei Multiplayerteams Ihre besten Soldaten ganz
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "Stellen Sie verschiedene Teams für Multiplayer-Partien - 4-Spieler-Teams, 8-Spieler-Teams und so weiter - zusammen und speichern Sie diese. So können Sie schnell das passende für eine Partie laden."
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Benutzen Sie die [Shift]-Taste, um die Zielhöhe anzupassen - das ist beispielsweise praktisch, um eine Rakete vor eine Gruppe von Außerirdischen zu schießen."
@@ -4220,8 +4224,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' EGM Einheit"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
+msgstr "By: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
 
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
@@ -4903,8 +4906,7 @@ msgstr ""
 "Waffenkapazität: Keine"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #, fuzzy
 msgid "inter_stingray_txt"
@@ -11130,6 +11132,10 @@ msgstr "Tropisch, Fluss"
 msgid "Transport"
 msgstr "Transport"
 
+#, fuzzy
+msgid "Tower"
+msgstr "Radarturm"
+
 msgid "Stadium"
 msgstr "Stadion"
 
@@ -11460,6 +11466,10 @@ msgstr "Bewegen der Einsatzkamera nach rechts"
 msgid "Move battlescape camera left"
 msgstr "Bewegen der Einsatzkamera nach links"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "Bewegen der Einsatzkamera nach links"
+
 msgid "Tilt battlescape camera down"
 msgstr "Neige die Kamera nach unten"
 
@@ -11692,6 +11702,18 @@ msgstr "Neues Team"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Fehler beim Speichern des Teams. Bis jetzt gibt es nicht zu speichern."
 
+msgid "You've lost the game!"
+msgstr "Sie haben das Spiel verloren!"
+
+msgid "Better luck next time"
+msgstr "Mehr Glück beim nächsten Mal"
+
+msgid "You won the game!"
+msgstr "Sie haben das Spiel gewonnen!"
+
+msgid "Congratulations"
+msgstr "Herzlichen Glückwunsch"
+
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -11708,33 +11730,6 @@ msgstr ""
 "Zivilisten getötet:\t\t%i\n"
 "Zivilisten durch Gegner getötet:\t\t%i\n"
 
-msgid "all"
-msgstr "alle"
-
-msgid "You've lost the game!"
-msgstr "Sie haben das Spiel verloren!"
-
-msgid "Better luck next time"
-msgstr "Mehr Glück beim nächsten Mal"
-
-msgid "You won the game!"
-msgstr "Sie haben das Spiel gewonnen!"
-
-msgid "Congratulations"
-msgstr "Herzlichen Glückwunsch"
-
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
-msgstr ""
-"\n"
-"\n"
-"Gegner getötet:  %i\n"
-"Überlebende Teammitglieder:  %i"
-
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -11746,6 +11741,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Unentschieden"
+
+msgid "all"
+msgstr "alle"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"überlebende Aliens\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Gegner getötet:"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Setze die Anzahl der Soldaten pro Spieler niedriger als die Soldaten pro Team"
@@ -11812,9 +11820,6 @@ msgstr "Sehr einfach"
 
 msgid "Chicken-hearted"
 msgstr "Extrem einfach"
-
-msgid "You've won the battle"
-msgstr "Sie haben die Schlacht gewonnen"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Das Einsatzschiff ist nicht nahe einer Landungszone"
@@ -13089,6 +13094,10 @@ msgstr "ETA:\t%sh\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Entfernung zum Ziel:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Vitalität:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Status:\t%s\n"
@@ -13735,6 +13744,12 @@ msgstr "Bereits %i-mal in der Basis"
 msgid "Not set"
 msgstr "Nicht platziert"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "Sie haben die Schlacht gewonnen"
+
 msgid "None"
 msgstr "Keine"
 
@@ -14014,7 +14029,7 @@ msgstr "Lade die Waffe in der rechten Hand nach"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Lade die Waffe in der linken Hand nach"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -14283,7 +14298,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2011-05-26 19:41+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -14296,6 +14311,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Basepath: ../\n"
+
+#~ msgid "Personal message"
+#~ msgstr "Persönliche Nachricht"
+
+#~ msgid "Hide IRC users"
+#~ msgstr "Verstecke IRC Benutzer"
+
+#~ msgid "Display IRC users"
+#~ msgstr "Zeige IRC Benutzer"
+
+#~ msgid "Deactivate IRC"
+#~ msgstr "IRC deaktivieren"
+
+#~ msgid "Activate IRC"
+#~ msgstr "IRC aktivieren"
+
+#~ msgid "Show chat history"
+#~ msgstr "Zeige Chatlog"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Gegner getötet:  %i\n"
+#~ "Überlebende Teammitglieder:  %i"
 
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Charlotte Amalie"

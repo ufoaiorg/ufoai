@@ -1260,6 +1260,9 @@ msgstr "게임 포기"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr "멀티플레이에 초대를 받았습니다. 서버에 접속하려면 접속버튼을 누르시기 바랍니다."
 
+msgid "Go into the lobby"
+msgstr "대기실로 나감"
+
 msgid "Show server information"
 msgstr "서버 정보 보여주기"
 
@@ -1269,44 +1272,17 @@ msgstr "서버 정보"
 msgid "Game invitation"
 msgstr "게임 초대"
 
-msgid "Go into the lobby"
-msgstr "대기실로 나감"
-
-msgid "Personal message"
-msgstr "개인 메시지"
-
 msgid "Password:"
 msgstr "접속암호:"
 
 msgid "Enter server password"
 msgstr "접속암호를 입력하시오"
 
-msgid "Say:"
-msgstr "Say:"
-
-msgid "Global lobby (IRC)"
-msgstr "전체 대기실 (IRC)"
-
-msgid "Party chat"
-msgstr "파티 대화"
-
 msgid "Invite players that are online in the lobby"
 msgstr "대기실의 온라인 사용자를 초대함"
 
 msgid "Invite others"
 msgstr "다른 사람 초대"
-
-msgid "Hide IRC users"
-msgstr "IRC 사용자 숨기기"
-
-msgid "Display IRC users"
-msgstr "IRC 사용자 보이기"
-
-msgid "Deactivate IRC"
-msgstr "IRC 비활성화"
-
-msgid "Activate IRC"
-msgstr "IRC 활성화"
 
 msgid "Are you ready?"
 msgstr "준비되셨습니까?"
@@ -1853,15 +1829,6 @@ msgstr "한층 위를 봅니다."
 msgid "Chat messages"
 msgstr "대화 내용"
 
-msgid "Show chat history"
-msgstr "대화 기록 보기"
-
-msgid "Teamchat"
-msgstr "팀 대화"
-
-msgid "Chat"
-msgstr "대화"
-
 msgid "Switch to left hand weapon"
 msgstr "왼손 무기로 바꿉니다"
 
@@ -1891,6 +1858,22 @@ msgstr "장비를 사용합니다"
 
 msgid "Inventory and physical stats"
 msgstr "소지품 및 신체상태"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "팀 대화"
+
+msgid "Say:"
+msgstr "Say:"
+
+msgid "Global lobby (IRC)"
+msgstr "전체 대기실 (IRC)"
+
+msgid "Party chat"
+msgstr "파티 대화"
+
+msgid "Chat"
+msgstr "대화"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -1989,9 +1972,6 @@ msgstr "지대공 미사일 발사기지:"
 
 msgid "Base:"
 msgstr "기지:"
-
-msgid "Status:"
-msgstr "상태:"
 
 msgid "Aircraft:"
 msgstr "항공기:"
@@ -2404,9 +2384,6 @@ msgstr "사살한 적의 수:"
 msgid "Missions performed:"
 msgstr "임무 수행 횟수:"
 
-msgid "Health:"
-msgstr "생명력:"
-
 msgid "High-Explosives:"
 msgstr "폭발물:"
 
@@ -2481,6 +2458,12 @@ msgstr "항공기 출격"
 
 msgid "Team Members:"
 msgstr "탑승인원:"
+
+msgid "Health:"
+msgstr "생명력:"
+
+msgid "Status:"
+msgstr "상태:"
 
 msgid "Select this slot"
 msgstr "이 슬롯을 선택합니다"
@@ -2569,6 +2552,15 @@ msgstr "조직 예산"
 msgid "CREDITS"
 msgstr "크레디트"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "기다리는 동안 다음 턴을 위한 행동을 준비할 수 있습니다. 준비한 것을 다음 차례에 실행하려면 [Enter]를 두 번 누르면 됩니다."
 
@@ -2604,6 +2596,9 @@ msgstr "빠른 UFO를 요격할 때는 불필요한 추격을 피하기 위해 U
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "저격수 엄호를 활용하십시오. 저격수가 지붕이나 고지 등 시야가 좋은 곳에 쭈그리고 앉아 여러번 대응사격하는 것은, 적을 제거하는 좋은 방법입니다."
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
+msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "작전 중 너무 많은 민간인이 죽으면, 당신이 예상한 것보다 빨리 게임에서 패배할 수 있습니다."
@@ -2659,9 +2654,6 @@ msgstr "정예 전투원을 보호하기 위해 총알받이를 한두명 둘 �
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "대원들이 가까이 있으면 서로 치료하거나 및 엄호할 수 있습니다. 그런 경우에는 턴이 종료 되기 전에 대원들을 벽으로 격리시켜, 수류탄 하나로 여럿이 죽는 것을 방지해야 합니다."
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "대응사격 모드를 변경하려면 [x]를 누르십시오. (대응사격없음, 한 번 대응사격, 여러 번 대응사격)"
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "플라즈마 수류탄은 살상력이 강하고, 세열 수류탄은 멀리 던질 수 있습니다."
 
@@ -2673,6 +2665,15 @@ msgstr "행동력이 많은 전투원은 권총, 한 손 백병, 수류탄, 섬�
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr "위험한 적과 마주친 상황에서 행동력이 부족하다면, 섬광탄을 던져 다음 턴까지 상대방을 무력화시키는 방법을 고려하십시오. 2 TU (권총집에서 꺼내기) + 12 TU (던지기) = 14 TU."
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "대응사격 모드를 변경하려면 [x]를 누르십시오. (대응사격없음, 한 번 대응사격, 여러 번 대응사격)"
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr "앉거나 서려면 [c]를 누르십시오. 일부 무기는 앉은 상태에서 사용할 때 명중률이 향상됩니다. 앉은 자세는 대원의 피탄면적을 줄입니다."
@@ -2736,6 +2737,9 @@ msgstr "멀티플레이 시 우수한 전투원은 명단의 위쪽에 올려 �
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "멀티플레이를 위해 복수의 팀(4인 팀, 8인 팀 등)에 대한 설정을 저장할 수 있습니다. 이 방법으로 게임을 빠르게 시작할 수 있습니다."
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "[Shift]를 누르면 조준 높이를 조정할 수 있습니다. 외계인 무리 앞에 로켓탄을 발사하는 등의 상황에 유용합니다."
@@ -4238,8 +4242,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'레이븐' 전파방해장치"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -4819,8 +4822,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
@@ -10842,6 +10844,10 @@ msgstr "열대의 강"
 msgid "Transport"
 msgstr "수송"
 
+#, fuzzy
+msgid "Tower"
+msgstr "레이더 타워"
+
 msgid "Stadium"
 msgstr "운동장"
 
@@ -11173,6 +11179,10 @@ msgstr "전술화면의 시점을 오른쪽으로 이동"
 msgid "Move battlescape camera left"
 msgstr "전술화면의 시점을 왼쪽으로 이동"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "전술화면의 시점을 왼쪽으로 이동"
+
 msgid "Tilt battlescape camera down"
 msgstr "전술화면의 시점높이를 하강"
 
@@ -11405,6 +11415,18 @@ msgstr "새로운 팀"
 msgid "Error saving team. Nothing to save yet."
 msgstr "팀을 저장할 수 없습니다. 저장할 것이 없습니다."
 
+msgid "You've lost the game!"
+msgstr "게임에서 졌습니다!"
+
+msgid "Better luck next time"
+msgstr "다음 판은 행운이 따르기를 기원합니다"
+
+msgid "You won the game!"
+msgstr "게임에서 승리하셨습니다!"
+
+msgid "Congratulations"
+msgstr "축하합니다"
+
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -11421,33 +11443,6 @@ msgstr ""
 "사살된 민간인:\t\t%i\n"
 "외계인에 의해 사살된 민간인:\t\t%i\n"
 
-msgid "all"
-msgstr "올"
-
-msgid "You've lost the game!"
-msgstr "게임에서 졌습니다!"
-
-msgid "Better luck next time"
-msgstr "다음 판은 행운이 따르기를 기원합니다"
-
-msgid "You won the game!"
-msgstr "게임에서 승리하셨습니다!"
-
-msgid "Congratulations"
-msgstr "축하합니다"
-
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
-msgstr ""
-"\n"
-"\n"
-"사살한 적군:  %i\n"
-"생존한 아군:  %i"
-
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -11459,6 +11454,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "무승부!"
+
+msgid "all"
+msgstr "올"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"아군의 생존자수\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "사살한 적군\t%i\n"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "플레이어당 인원을 팀당 인원보다 적게 설정하시기 바랍니다"
@@ -11525,9 +11533,6 @@ msgstr "매우 간단"
 
 msgid "Chicken-hearted"
 msgstr "겁쟁이"
-
-msgid "You've won the battle"
-msgstr "전투에 승리했습니다"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "수송선이 착륙지점 근처에 있지 않습니다"
@@ -12815,6 +12820,10 @@ msgstr "ETA:\t%sh\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "목표물까지 거리:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "생명력:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "상태:\t%s\n"
@@ -13462,6 +13471,12 @@ msgstr "이미 기지에 %i개 존재하고 있습니다"
 msgid "Not set"
 msgstr "설정되지 않음"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "전투에 승리했습니다"
+
 msgid "None"
 msgstr "없음"
 
@@ -13743,7 +13758,7 @@ msgstr "오른손 무기의 탄약 재장전"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "왼손 무기의 탄약 재장전"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -14014,7 +14029,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2011-05-25 03:38+0900\n"
 "Last-Translator: Ganama <nijimania@hotmail.com>\n"
 "Language-Team: UFO: Alien Invasion KR\n"
@@ -14027,6 +14042,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Bookmarks: 424,638,482,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-Basepath: ../\n"
+
+#~ msgid "Personal message"
+#~ msgstr "개인 메시지"
+
+#~ msgid "Hide IRC users"
+#~ msgstr "IRC 사용자 숨기기"
+
+#~ msgid "Display IRC users"
+#~ msgstr "IRC 사용자 보이기"
+
+#~ msgid "Deactivate IRC"
+#~ msgstr "IRC 비활성화"
+
+#~ msgid "Activate IRC"
+#~ msgstr "IRC 활성화"
+
+#~ msgid "Show chat history"
+#~ msgstr "대화 기록 보기"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "사살한 적군:  %i\n"
+#~ "생존한 아군:  %i"
 
 #~ msgid "Charlotte Amalie"
 #~ msgstr "샬롯 아말리에"
@@ -15568,9 +15612,6 @@ msgstr ""
 #~ msgid "New team created"
 #~ msgstr "새 팀이 만들어졌습니다"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "사살한 적군\t%i\n"
-
 #~ msgid ""
 #~ "Aliens captured\t%i\n"
 #~ "\n"
@@ -15600,13 +15641,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "오발에 의한 사상자수\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "아군의 생존자수\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "외계인에게 살해된 시민의 수\t%i\n"

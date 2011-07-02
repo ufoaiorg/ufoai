@@ -1287,6 +1287,9 @@ msgstr "Keskeytä Peli"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr "Olet saanut kutsun moninpeliin. Paina yhdistä painiketta muodostaaksesi yhteyden palvelimelle"
 
+msgid "Go into the lobby"
+msgstr "Mene aulaan"
+
 msgid "Show server information"
 msgstr "Näytä palvelimen tiedot"
 
@@ -1296,44 +1299,17 @@ msgstr "Palvelimen tiedot"
 msgid "Game invitation"
 msgstr "Pelin kutsut"
 
-msgid "Go into the lobby"
-msgstr "Mene aulaan"
-
-msgid "Personal message"
-msgstr "Henkilökohtainen viesti"
-
 msgid "Password:"
 msgstr "Salasana:"
 
 msgid "Enter server password"
 msgstr "Anna palvelimen salasana"
 
-msgid "Say:"
-msgstr "Sano:"
-
-msgid "Global lobby (IRC)"
-msgstr "Globaali aula (IRC)"
-
-msgid "Party chat"
-msgstr "Bile rupattelu"
-
 msgid "Invite players that are online in the lobby"
 msgstr "Kutsu pelaajia, jotka ovat yhteydessä aulaan"
 
 msgid "Invite others"
 msgstr "Kutsu muita"
-
-msgid "Hide IRC users"
-msgstr "Piilota IRC käyttäjät"
-
-msgid "Display IRC users"
-msgstr "Näytä IRC käyttäjät"
-
-msgid "Deactivate IRC"
-msgstr "Deaktivoi IRC"
-
-msgid "Activate IRC"
-msgstr "Aktivoi IRC"
 
 msgid "Are you ready?"
 msgstr "Oletko valmis?"
@@ -1890,15 +1866,6 @@ msgstr "Kerros ylöspäin"
 msgid "Chat messages"
 msgstr "Keskustelun viestit"
 
-msgid "Show chat history"
-msgstr "Näytä keskustelun historia"
-
-msgid "Teamchat"
-msgstr "Tiimi keskustelu"
-
-msgid "Chat"
-msgstr "Keskustelu"
-
 msgid "Switch to left hand weapon"
 msgstr "Vaihda ase vasemmalle"
 
@@ -1928,6 +1895,22 @@ msgstr "Käytä tuotetta"
 
 msgid "Inventory and physical stats"
 msgstr "Inventaario ja fyysiset tilastot"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Tiimi keskustelu"
+
+msgid "Say:"
+msgstr "Sano:"
+
+msgid "Global lobby (IRC)"
+msgstr "Globaali aula (IRC)"
+
+msgid "Party chat"
+msgstr "Bile rupattelu"
+
+msgid "Chat"
+msgstr "Keskustelu"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2026,9 +2009,6 @@ msgstr "Pinta-ilma ohjus paikka:"
 
 msgid "Base:"
 msgstr "Tukikohta:"
-
-msgid "Status:"
-msgstr "Tila:"
 
 msgid "Aircraft:"
 msgstr "Lentokone:"
@@ -2441,9 +2421,6 @@ msgstr "Vihollisia kuollut:"
 msgid "Missions performed:"
 msgstr "Tehtäviä suoritettu:"
 
-msgid "Health:"
-msgstr "Terveys:"
-
 msgid "High-Explosives:"
 msgstr "Räjähdysaineet:"
 
@@ -2518,6 +2495,12 @@ msgstr "Käynnistä Lentokone"
 
 msgid "Team Members:"
 msgstr "Tiimin Miehitys:"
+
+msgid "Health:"
+msgstr "Terveys:"
+
+msgid "Status:"
+msgstr "Tila:"
 
 msgid "Select this slot"
 msgstr "Valitse tämä paikka"
@@ -2606,6 +2589,15 @@ msgstr "Organisaation varallisuus"
 msgid "CREDITS"
 msgstr "VARAT"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "Voit valmistella tehtävät seuraavaa kierrosta odottaessasi. Lyömällä [Enter]-painiketta kahdesti se suorittaa kaikki vireillä olevat tehtävät ennen kuin sinun kierros alkaa."
 
@@ -2641,6 +2633,9 @@ msgstr "Harkitse torjuntahävittäjien laukaiseminen, jotta voit ottaa nopeasti 
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "Hyödynnä tarkka-ampuja tuki. Hanki tarkka-ampujille hyvä paikka ja näkyvyys (esimerkiksi, korkealta maasta ja kulmiin katolla). Jätä ne makaamaan ja aseta Reaktiotila 'useita laukauksia' tilaan,  jotta voit ampua useita alieneita samalla kerralla."
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
+msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Sinun tulee varmistaa, että liian monet siviilit eivät menettä henkeänsä. Muuten saatat menettää pelin nopeammin kuin oletat."
@@ -2696,9 +2691,6 @@ msgstr "Aina kun on käytettävissä sotilas tai kaksi, joten sinun ei tarvitsis
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Pidä sotilaat lähellä, niin että he voivat tukea toisiaan (parantaa toisiaan, ampuvat kun aikayksikkö (TU) loppuvat). Pidä seinän lähellä kun sinun vuoro loppuu, joten niitä ei voi yksi kranaatti tappaa."
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "Käytä [x] painiketta selataksesi Reagointitilan asetuksia: ei mitään, yksi laukaus, useita laukauksia."
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Plasma-kranaatit tekevät eniten vahinkoa, vaikka sirpalekranaateilla on hieman pidempi heitto pituus."
 
@@ -2710,6 +2702,15 @@ msgstr "Käytä nopealla sotilaalla pistoolia, yhdessä kädessä lähitaistelu 
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr "Jos sinulla on vähissä aikayksiköt (TU) ja sinulla on vaarallisia vihollisia, käytä sokaisukranaattia niiden lamauttamiseen seuraavaa kierrokseen asti. Se voi olla paras vaihtoehto. 2 TU (hae pistoolikotelosta) + 12 TU (heitto) = 14TU."
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "Käytä [x] painiketta selataksesi Reagointitilan asetuksia: ei mitään, yksi laukaus, useita laukauksia."
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr "Käytä [c] näppäintä kyyristyäksesi. Kyyristyminen tekee joistakin aseista huomattavan tarkkoja. Ja se myös tekee omasta sotilaasta pienemmmän kohteen."
@@ -2773,6 +2774,9 @@ msgstr "Moninpeli joukkueiden kanssa varmista, että sinulla on parhaat sotilaat
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "Kasaa ja tallenna eri joukkueet moninpeli ottelussa - 4 pelaajan joukkueet, 8 pelaajan joukkueet ja niin edelleen. Näin voit ladata nopeasti oikean ja aloittaa nopea ottelun."
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Käytä [Shift] näppäintä kohdistaaksesi tähtäyksen haluttuun korkeuteen - on esimerkiksi hyödyllistä ampua raketinheittimellä alien ryhmän eteen."
@@ -4051,8 +4055,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM yksikkö"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"Tekijä: Kom. Paul Navarra, Tutkimusyksikkö: Tekniikan osasto, PHALANX, Atlannin Operaatiokomento"
+msgstr "Tekijä: Kom. Paul Navarra, Tutkimusyksikkö: Tekniikan osasto, PHALANX, Atlannin Operaatiokomento"
 
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -4597,8 +4600,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr ""
@@ -10296,6 +10298,10 @@ msgstr "Trooppinen joki"
 msgid "Transport"
 msgstr "Kuljetusalus"
 
+#, fuzzy
+msgid "Tower"
+msgstr "Tutkatorni"
+
 msgid "Stadium"
 msgstr "Areena"
 
@@ -10628,6 +10634,10 @@ msgstr "Siirrä taistelumaisema kameraa oikealle"
 msgid "Move battlescape camera left"
 msgstr "Siirrä taistelumaisema kameraa vasemmalle"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "Siirrä taistelumaisema kameraa vasemmalle"
+
 msgid "Tilt battlescape camera down"
 msgstr "Kallista taistelumaisema kameraa alas"
 
@@ -10860,6 +10870,18 @@ msgstr "UusiJoukkue"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Virhe tallennettaessa joukkuetta. Mitään ei ole tallennettu."
 
+msgid "You've lost the game!"
+msgstr "Hävisit pelin!"
+
+msgid "Better luck next time"
+msgstr "Parempi onni seuraavalla kerralla"
+
+msgid "You won the game!"
+msgstr "Voitit pelin!"
+
+msgid "Congratulations"
+msgstr "Onneksi olkoon"
+
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -10876,33 +10898,6 @@ msgstr ""
 "Siviiliä kuoli:\t\t%i\n"
 "Vihollinen surmasi siviilejä:\t\t%i\n"
 
-msgid "all"
-msgstr "kaikki"
-
-msgid "You've lost the game!"
-msgstr "Hävisit pelin!"
-
-msgid "Better luck next time"
-msgstr "Parempi onni seuraavalla kerralla"
-
-msgid "You won the game!"
-msgstr "Voitit pelin!"
-
-msgid "Congratulations"
-msgstr "Onneksi olkoon"
-
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
-msgstr ""
-"\n"
-"\n"
-"Vihollisia kuollut:  %i\n"
-"Joukkueesta pelastautui:  %i"
-
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -10914,6 +10909,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Pelin piirtänyt!"
+
+msgid "all"
+msgstr "kaikki"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"Alieneita selviytyi\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Vihollisia tapettu\t%i\n"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Aseta sotilaiden pelaajaraja pienemmäksi kuin sotilaita joukkueessa."
@@ -10980,9 +10988,6 @@ msgstr "Erittäin helppo"
 
 msgid "Chicken-hearted"
 msgstr "Pelkureille"
-
-msgid "You've won the battle"
-msgstr "Sinä voitit taistelun"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Sinun pudostusalus ei ole lähelläkään laskeutumis aluetta"
@@ -12264,6 +12269,10 @@ msgstr "ETA:\t%sh\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Matkaa kohteeseen:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Terveys:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Tila:\t%s\n"
@@ -12914,6 +12923,12 @@ msgstr "Tukikohdassa jo %i kappaletta"
 msgid "Not set"
 msgstr "Ei asetettu"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "Sinä voitit taistelun"
+
 msgid "None"
 msgstr "Tyhjä"
 
@@ -13195,7 +13210,7 @@ msgstr "Lataa uudelleen ase sotilaan oikeassa kädessä"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Lataa uudelleen ase sotilaan vasemassa kädessä"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -13472,7 +13487,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-08-31 04:53+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
@@ -13485,6 +13500,35 @@ msgstr ""
 "X-Poedit-Language: Finnish\n"
 "X-Poedit-Country: FINLAND\n"
 "X-Poedit-Basepath: ../\n"
+
+#~ msgid "Personal message"
+#~ msgstr "Henkilökohtainen viesti"
+
+#~ msgid "Hide IRC users"
+#~ msgstr "Piilota IRC käyttäjät"
+
+#~ msgid "Display IRC users"
+#~ msgstr "Näytä IRC käyttäjät"
+
+#~ msgid "Deactivate IRC"
+#~ msgstr "Deaktivoi IRC"
+
+#~ msgid "Activate IRC"
+#~ msgstr "Aktivoi IRC"
+
+#~ msgid "Show chat history"
+#~ msgstr "Näytä keskustelun historia"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Vihollisia kuollut:  %i\n"
+#~ "Joukkueesta pelastautui:  %i"
 
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Charlotte Amalie"
@@ -13997,9 +14041,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Alieneita kaapattu\t%i\n"
 #~ "\n"
-
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "Vihollisia tapettu\t%i\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "Alieneiden tappamia siviilejä\t%i\n"

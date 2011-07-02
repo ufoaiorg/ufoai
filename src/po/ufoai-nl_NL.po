@@ -1388,6 +1388,9 @@ msgstr "Beëindig Spel"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr "U ontving een uitnodiging om een deel te nemen in een multiplayer spel. Druk op de knop Connect om verbinding te maken met de server"
 
+msgid "Go into the lobby"
+msgstr "Ga naar de foyer"
+
 #, fuzzy
 msgid "Show server information"
 msgstr "Gebruikersinformatie"
@@ -1400,28 +1403,11 @@ msgstr "Basis info"
 msgid "Game invitation"
 msgstr "Hernoem installatie"
 
-msgid "Go into the lobby"
-msgstr "Ga naar de foyer"
-
-msgid "Personal message"
-msgstr "Persoonlijk bericht"
-
 msgid "Password:"
 msgstr "Wachtwoord:"
 
 msgid "Enter server password"
 msgstr "Voer server wachtwoord in"
-
-#, fuzzy
-msgid "Say:"
-msgstr "S:"
-
-msgid "Global lobby (IRC)"
-msgstr "Wereldwijde lobby (IRC)"
-
-#, fuzzy
-msgid "Party chat"
-msgstr "Activeer chat"
 
 msgid "Invite players that are online in the lobby"
 msgstr "Spelers uitnodigen die online zijn in de lobby"
@@ -1429,19 +1415,6 @@ msgstr "Spelers uitnodigen die online zijn in de lobby"
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
-
-msgid "Hide IRC users"
-msgstr "Verberg IRC gebruikers"
-
-msgid "Display IRC users"
-msgstr "Geef IRC gebruikers weer"
-
-msgid "Deactivate IRC"
-msgstr "Deactiveer IRC"
-
-#, fuzzy
-msgid "Activate IRC"
-msgstr "Activeer chat"
 
 #, fuzzy
 msgid "Are you ready?"
@@ -2010,15 +1983,6 @@ msgstr "Nivo omhoog"
 msgid "Chat messages"
 msgstr "Chat berichten"
 
-msgid "Show chat history"
-msgstr "Laat chat-verleden zien"
-
-msgid "Teamchat"
-msgstr "Teamchat"
-
-msgid "Chat"
-msgstr "Chat"
-
 msgid "Switch to left hand weapon"
 msgstr "Wissel naar wapen in de linkerhand"
 
@@ -2048,6 +2012,24 @@ msgstr "Gebruik onderdeel"
 
 msgid "Inventory and physical stats"
 msgstr "Uitrusting en fysieke gegevens"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Teamchat"
+
+#, fuzzy
+msgid "Say:"
+msgstr "S:"
+
+msgid "Global lobby (IRC)"
+msgstr "Wereldwijde lobby (IRC)"
+
+#, fuzzy
+msgid "Party chat"
+msgstr "Activeer chat"
+
+msgid "Chat"
+msgstr "Chat"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2147,9 +2129,6 @@ msgstr "Grond-naar-lucht raketinstallatie:"
 
 msgid "Base:"
 msgstr "Basis:"
-
-msgid "Status:"
-msgstr "Status:"
 
 msgid "Aircraft:"
 msgstr "Vliegtuig:"
@@ -2592,9 +2571,6 @@ msgstr "Vijanden Gedood:"
 msgid "Missions performed:"
 msgstr "Voltooid aantal missies:"
 
-msgid "Health:"
-msgstr "Gezondheid:"
-
 msgid "High-Explosives:"
 msgstr "Zware Explosieven:"
 
@@ -2675,6 +2651,12 @@ msgstr "Start het vliegtuig"
 
 msgid "Team Members:"
 msgstr "Teamleden:"
+
+msgid "Health:"
+msgstr "Gezondheid:"
+
+msgid "Status:"
+msgstr "Status:"
 
 msgid "Select this slot"
 msgstr "Kies dit vak"
@@ -2770,6 +2752,15 @@ msgstr "Kapitaal van de organisatie"
 msgid "CREDITS"
 msgstr "KREDIETEN"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "U kunt de acties voor de volgende ronde voorbereiden terwijl u wacht. Tweemaal [Enter] drukken zal alle wachtende acties uitvoeren, zodra het weer uw ronde is."
 
@@ -2809,6 +2800,9 @@ msgstr "Overweeg om een interceptievliegtuig te lanceren om een snellere UFO te 
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "Gebruik scherpschutter dekking. Zet scherpschutters op punten met goed zicht (hoge grond en hoeken van daken, bijvoorbeeld). Laat ze gebukt zitten en zet Reactie Vuur modus op 'meerdere schoten' om de buitenaardsen uit te dunnen."
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
+msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Zorg ervoor dat niet teveel burgers het leven laten. Anders kunt u het spel wel eens eerder verliezen dan u denkt."
@@ -2869,9 +2863,6 @@ msgstr "Gebruik altijd één of twee onbelangrijke soldaten, zodat u niet uw pri
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Houdt soldaten dicht bij elkaar, zodat ze elkaar kunnen ondersteunen (elkaar genezen, schieten als een ander zonder Tijd Eenheden (TE's) zit). Houdt een muur tussen ze aan het einde van een beurt, zodat ze niet met één granaat kunnen worden gedood."
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "Gebruik [x] om door verschillende Reactievuren te wisselen: geen, één schot, meerdere schoten."
-
 #, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Plasma granaten doen het meeste schade, maar fragmentatie granaten kunnen bruikbaar zijn, omdat ze iets verder gegooid kunnen worden."
@@ -2886,6 +2877,15 @@ msgstr "Gebruik een snelle soldaat met pistolen, enkelhandige gemengde wapens, g
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr "Als u weinig Tijd Eenheden (TE's) en gevaarlijke vijanden heeft, kunt u een flitsgranaat gebruiken om ze tot uw volgende beurt te versuffen. Dit kan uw beste optie zijn. 2 TE (haal uit holster) + 12 TE (gooien) = 14 TE."
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "Gebruik [x] om door verschillende Reactievuren te wisselen: geen, één schot, meerdere schoten."
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr "Gebruik [c] om te sluipen. Sluipen zorgt ervoor dat sommige wapens beduidend nauwkeuriger zijn. Ook maakt het uw soldaat een kleiner doel."
@@ -2957,6 +2957,9 @@ msgstr "Met teams voor meerdere spelers, verzekert u zich ervan dat uw beste sol
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "Maak en sla verschillende teams op voor spelen met meerdere spelers - 4 speler-teams, 8 speler-teams enzovoorts. Op deze manier kunt u snel de goede kiezen voor een snelle wedstrijd."
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Gebruik de [Shift] toets om uw doelhoogte aan te passen - bijvoorbeeld handig om een raketlanceerder te gebruiken voor een groep buitenaardsen"
@@ -4234,8 +4237,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Eenheid"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
@@ -4791,8 +4793,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr "<NOGDOEN>"
@@ -10603,6 +10604,10 @@ msgstr "Tropische rivier"
 msgid "Transport"
 msgstr "Transport"
 
+#, fuzzy
+msgid "Tower"
+msgstr "Radar Toren"
+
 msgid "Stadium"
 msgstr "Stadion"
 
@@ -10942,6 +10947,10 @@ msgstr "Verplaats slagveld camera naar rechts"
 msgid "Move battlescape camera left"
 msgstr "Verplaats slagveld camera naar links"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "Verplaats slagveld camera naar links"
+
 msgid "Tilt battlescape camera down"
 msgstr "Kantel slagveld camera naar beneden"
 
@@ -11180,19 +11189,6 @@ msgstr "NieuwTeam"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Fout bij opslaan van team. Nog niet om op te slaan."
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr "alle"
-
 msgid "You've lost the game!"
 msgstr "U hebt het spel verloren!"
 
@@ -11207,15 +11203,13 @@ msgstr "Gefeliciteerd"
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
-"\n"
-"\n"
-"Vijanden gedood:  %i\n"
-"Overlevenden van het team:  %i"
 
 msgid ""
 "The game was a draw!\n"
@@ -11228,6 +11222,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Gelijkspel!"
+
+msgid "all"
+msgstr "alle"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"Team overlevenden\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Vijanden gedood\t%i\n"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Aantal soldaten per speler lager dan het aantal soldaten per team"
@@ -11294,9 +11301,6 @@ msgstr "Erg Makkelijk"
 
 msgid "Chicken-hearted"
 msgstr "Bangelijk"
-
-msgid "You've won the battle"
-msgstr "U hebt de slag gewonnen"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Uw landingsschip is niet dichtbij een landingszone"
@@ -12611,6 +12615,10 @@ msgstr "Aankomst:\t%sh\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Afstand tot doel:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Gezondheid:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Status:\t%s\n"
@@ -13295,6 +13303,12 @@ msgstr "Al %i in de basis"
 msgid "Not set"
 msgstr "Niet gezet"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "U hebt de slag gewonnen"
+
 msgid "None"
 msgstr "Geen"
 
@@ -13576,7 +13590,7 @@ msgstr "Herlaadt het wapen in de rechterhand van de soldaat"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Herlaadt het wapen in de linkerhand van de soldaat"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -13861,7 +13875,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-10-10 21:37+0100\n"
 "Last-Translator: Peter Verhage <pverha10@cis.hzeeland.nl>\n"
 "Language-Team: Dutch <pverha10@cis.hzeeland.nl>\n"
@@ -13872,6 +13886,36 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Basepath: ../\n"
+
+#~ msgid "Personal message"
+#~ msgstr "Persoonlijk bericht"
+
+#~ msgid "Hide IRC users"
+#~ msgstr "Verberg IRC gebruikers"
+
+#~ msgid "Display IRC users"
+#~ msgstr "Geef IRC gebruikers weer"
+
+#~ msgid "Deactivate IRC"
+#~ msgstr "Deactiveer IRC"
+
+#, fuzzy
+#~ msgid "Activate IRC"
+#~ msgstr "Activeer chat"
+
+#~ msgid "Show chat history"
+#~ msgstr "Laat chat-verleden zien"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Vijanden gedood:  %i\n"
+#~ "Overlevenden van het team:  %i"
 
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Charlotte Amalie"
@@ -14898,9 +14942,6 @@ msgstr ""
 #~ "Buitenaardsen gevangen genomen\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "Vijanden gedood\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -14923,13 +14964,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "Verliezen door eigen vuur\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Team overlevenden\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "Burgers gedood door de Buitenaardsen\t%i\n"

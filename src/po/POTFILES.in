@@ -13,6 +13,7 @@
 ./client/cgame/campaign/cp_alienbase.c
 ./client/cgame/campaign/cp_aliencont.c
 ./client/cgame/campaign/cp_aliencont_callbacks.c
+./client/cgame/campaign/cp_auto_mission.c
 ./client/cgame/campaign/cp_base.c
 ./client/cgame/campaign/cp_base_callbacks.c
 ./client/cgame/campaign/cp_basedefence_callbacks.c

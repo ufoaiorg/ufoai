@@ -1413,6 +1413,9 @@ msgstr "Avbryt spel"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
+msgid "Go into the lobby"
+msgstr "Gå till lobbyn"
+
 msgid "Show server information"
 msgstr "Visa serverinformation"
 
@@ -1423,44 +1426,17 @@ msgstr "Basinfo"
 msgid "Game invitation"
 msgstr "Inbjudan till spel"
 
-msgid "Go into the lobby"
-msgstr "Gå till lobbyn"
-
-msgid "Personal message"
-msgstr "Personligt meddelande"
-
 msgid "Password:"
 msgstr "Lösenord:"
 
 msgid "Enter server password"
 msgstr "Ange serverlösenord"
 
-msgid "Say:"
-msgstr "Säg:"
-
-msgid "Global lobby (IRC)"
-msgstr ""
-
-msgid "Party chat"
-msgstr "Gruppchatt"
-
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
 msgid "Invite others"
 msgstr "Bjud in andra"
-
-msgid "Hide IRC users"
-msgstr "Dölj IRC-användare"
-
-msgid "Display IRC users"
-msgstr "Visa IRC-användare"
-
-msgid "Deactivate IRC"
-msgstr "Inaktivera IRC"
-
-msgid "Activate IRC"
-msgstr "Aktivera IRC"
 
 msgid "Are you ready?"
 msgstr "Är du redo?"
@@ -2034,15 +2010,6 @@ msgstr "Nivå upp"
 msgid "Chat messages"
 msgstr "Chattmeddelanden"
 
-msgid "Show chat history"
-msgstr "Visa chatthistorik"
-
-msgid "Teamchat"
-msgstr "Lagchatt"
-
-msgid "Chat"
-msgstr "Chatta"
-
 msgid "Switch to left hand weapon"
 msgstr "Växla till vänsterhänt vapen"
 
@@ -2075,6 +2042,22 @@ msgstr "Använd objekt"
 
 msgid "Inventory and physical stats"
 msgstr "Inventarier och fysisk statistik"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Lagchatt"
+
+msgid "Say:"
+msgstr "Säg:"
+
+msgid "Global lobby (IRC)"
+msgstr ""
+
+msgid "Party chat"
+msgstr "Gruppchatt"
+
+msgid "Chat"
+msgstr "Chatta"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2174,9 +2157,6 @@ msgstr ""
 
 msgid "Base:"
 msgstr "Bas:"
-
-msgid "Status:"
-msgstr "Status:"
 
 msgid "Aircraft:"
 msgstr "Farkost:"
@@ -2615,9 +2595,6 @@ msgstr "Fiender dödade:"
 msgid "Missions performed:"
 msgstr "Uppdrag genomförda:"
 
-msgid "Health:"
-msgstr "Hälsa:"
-
 msgid "High-Explosives:"
 msgstr "Sprängmedel:"
 
@@ -2701,6 +2678,12 @@ msgstr "Starta farkosten"
 
 msgid "Team Members:"
 msgstr "Lagmedlemmar:"
+
+msgid "Health:"
+msgstr "Hälsa:"
+
+msgid "Status:"
+msgstr "Status:"
 
 msgid "Select this slot"
 msgstr "Välj den här platsen"
@@ -2796,6 +2779,15 @@ msgstr "Saldo för organisationen"
 msgid "CREDITS"
 msgstr "TACK TILL"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
@@ -2830,6 +2822,9 @@ msgid "Consider launching interceptors to catch a faster UFO when it's really cl
 msgstr ""
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
+msgstr ""
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
 msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -2888,9 +2883,6 @@ msgstr ""
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr ""
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr ""
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr ""
 
@@ -2903,6 +2895,15 @@ msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flas
 msgstr "Använd en snabb soldat med pistoler, enhandsvapen att svinga, granater, lysgranater och första förband."
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+msgstr ""
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr ""
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
@@ -2968,6 +2969,9 @@ msgid "With multiplayer teams, make sure your best soldiers are at the top of th
 msgstr ""
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
+msgstr ""
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
 msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
@@ -3566,13 +3570,15 @@ msgstr ""
 "\n"
 "Den enklaste förklaringen är detta: Det är två typer av DNA i våra blodprover. Det främmande DNA: ts förekommst är total; denna sekvens kan hittas i alla medlemmar av Tamanrasen, och en närmare studie har bekräftat att en liknande sekvens finns i blodet på andra raser vi hittat. Källan verkar vara en sorts encellig organism som finns i stor mängd i det utomjordiska blodomloppet. Det finns flera olika versioner av den, en för varje utomjordisk ras, och alla delar otroliga DNA likheter. Intressant nog så även om alla dessa organismer har lika många kromosomer, så kan ingen av dom överleva i en kropp som inte är medlem av den ursprungliga rasen. Underligt nog så är det helt klart att det är absolut ingen som helst variation på DNA: t mellan organismer från samma version. Detta leder till att vi tror att olika versioner kan ha tillverkats -- helt eller delvis -- för att passa den individuella rasen.\n"
 "\n"
-"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n\n"
+"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n"
+"\n"
 "\n"
 "Vi har namngett denna organism XVI (EXtraterrestrial Virus Infektion). Detta kan vara en felbeteckning i microbiologiska termer; XVI är långt mer komplicerad än något virus på jorden, men den beter och kopierar sig precis som ett vanligt virus. Därför känner vi att termen är försvarbar. När varje utomjordisk ras bär en unik sträng av infektionen, så har vi gett dem ett alfabetiskt designering efter den ursprungliga ras som strängen hittas i. Tamanerna har XVI-T, Shevaar har XVI-S, osv.\n"
 "\n"
 "Infektionens syfte kvarstår suddig just nu, men det är det enda vi har hittat än så länge som binder ihop dessa olika raser fysiskt. Vi kan bara gissa att olika strängar av infektionen skapades för att passa varje ras.\n"
 "\n"
-"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n\n"
+"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n"
+"\n"
 "\n"
 "Vi tror för närvarande inta att XVI organismen utgör något hot för våra soldater på slagfältet. Men vi kommer forsätta att forska och hålla dig underrättad om något utvecklas. En grundlig blodtestning utförs nu på all vår personal, som en säkerhetsåtgärd, och vanliga karantän procedurer kommer upprätthållas alltigenom laboratoriumet.\n"
 "\n"
@@ -4401,8 +4407,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM-enhet"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -4999,8 +5004,7 @@ msgstr ""
 "Weapon capacity: None"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr ""
@@ -10879,6 +10883,10 @@ msgstr "Tropisk flod"
 msgid "Transport"
 msgstr "Transportörer:"
 
+#, fuzzy
+msgid "Tower"
+msgstr "Radartorn"
+
 msgid "Stadium"
 msgstr "Stadium"
 
@@ -11224,6 +11232,10 @@ msgstr "Flytta slagfältskameran åt höger"
 msgid "Move battlescape camera left"
 msgstr "Flytta slagfältskameran åt vänster"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "Flytta slagfältskameran åt vänster"
+
 msgid "Tilt battlescape camera down"
 msgstr "Vinkla slagfältskameran nedåt"
 
@@ -11460,19 +11472,6 @@ msgstr "NyttLag"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Ingenting att spara än."
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr "alla"
-
 msgid "You've lost the game!"
 msgstr "Du förlorade spelet!"
 
@@ -11487,15 +11486,13 @@ msgstr "Gratulerar"
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
-"\n"
-"\n"
-"Fiender dödade:  %i\n"
-"Överlevande i laget:  %i"
 
 msgid ""
 "The game was a draw!\n"
@@ -11508,6 +11505,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Ingen vann!"
+
+msgid "all"
+msgstr "alla"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"Överlevande i laget\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Fiender dödade\t%i\n"
 
 #, fuzzy
 msgid "Set soldiers per player lower than soldiers per team"
@@ -11575,9 +11585,6 @@ msgstr "Mycket lätt"
 
 msgid "Chicken-hearted"
 msgstr "Kyckling"
-
-msgid "You've won the battle"
-msgstr "Du har vunnit slaget"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Ditt landsättningsskepp är inte nära landningszonen"
@@ -12886,6 +12893,10 @@ msgstr "Åtgärd:\t%s\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Avstånd till mål:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Hälsa:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Status:\t%s\n"
@@ -13562,6 +13573,12 @@ msgstr "Finns redan %i i basen"
 msgid "Not set"
 msgstr "Används inte"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "Du har vunnit slaget"
+
 msgid "None"
 msgstr "Ingen"
 
@@ -13865,7 +13882,7 @@ msgstr "Ladda om vapnet i soldatens högra hand"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Ladda om vapnet i soldatens vänstra hand"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -14155,7 +14172,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2011-03-06 12:23+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -14167,6 +14184,35 @@ msgstr ""
 "X-Poedit-Language: Swedish\n"
 "X-Poedit-Country: SWEDEN\n"
 "X-Poedit-Basepath: ../\n"
+
+#~ msgid "Personal message"
+#~ msgstr "Personligt meddelande"
+
+#~ msgid "Hide IRC users"
+#~ msgstr "Dölj IRC-användare"
+
+#~ msgid "Display IRC users"
+#~ msgstr "Visa IRC-användare"
+
+#~ msgid "Deactivate IRC"
+#~ msgstr "Inaktivera IRC"
+
+#~ msgid "Activate IRC"
+#~ msgstr "Aktivera IRC"
+
+#~ msgid "Show chat history"
+#~ msgstr "Visa chatthistorik"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Fiender dödade:  %i\n"
+#~ "Överlevande i laget:  %i"
 
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Charlotte Amalie"
@@ -15375,9 +15421,6 @@ msgstr ""
 #~ "Utomjordingar tillfångatagna\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "Fiender dödade\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -15400,13 +15443,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "Dödade av egen eldgivning\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Överlevande i laget\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "Civilpersoner dödade av utomjordingarna\t%i\n"

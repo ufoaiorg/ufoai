@@ -1441,6 +1441,10 @@ msgid "You received a invitation to take part of a multiplayer game. Hit the con
 msgstr ""
 
 #, fuzzy
+msgid "Go into the lobby"
+msgstr "Σύνδεση στην IP"
+
+#, fuzzy
 msgid "Show server information"
 msgstr "Πληροφορίες Βάσης"
 
@@ -1452,30 +1456,11 @@ msgstr "Πληροφορίες Βάσης"
 msgid "Game invitation"
 msgstr "Έθνος"
 
-#, fuzzy
-msgid "Go into the lobby"
-msgstr "Σύνδεση στην IP"
-
-#, fuzzy
-msgid "Personal message"
-msgstr "Άνοιγμα μηνυμάτων"
-
 msgid "Password:"
 msgstr "Κωδικός Πρόσβασης:"
 
 msgid "Enter server password"
 msgstr "Εισάγετε κωδικό πρόσβασης του server"
-
-#, fuzzy
-msgid "Say:"
-msgstr "Spray"
-
-msgid "Global lobby (IRC)"
-msgstr ""
-
-#, fuzzy
-msgid "Party chat"
-msgstr "Ενεργοποιήστε το  chat"
 
 msgid "Invite players that are online in the lobby"
 msgstr ""
@@ -1483,20 +1468,6 @@ msgstr ""
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
-
-msgid "Hide IRC users"
-msgstr ""
-
-msgid "Display IRC users"
-msgstr ""
-
-#, fuzzy
-msgid "Deactivate IRC"
-msgstr "Deactivates tooltips"
-
-#, fuzzy
-msgid "Activate IRC"
-msgstr "Ενεργοποιήστε το  chat"
 
 msgid "Are you ready?"
 msgstr ""
@@ -2086,15 +2057,6 @@ msgstr "Επίπεδο πάνω"
 msgid "Chat messages"
 msgstr "Μυνήματα Chat"
 
-msgid "Show chat history"
-msgstr "Εμφάνιση ιστορικού chat"
-
-msgid "Teamchat"
-msgstr "Teamchat"
-
-msgid "Chat"
-msgstr "Chat"
-
 msgid "Switch to left hand weapon"
 msgstr "Αλλαγή σε όπλο αριστερού χεριού"
 
@@ -2127,6 +2089,24 @@ msgstr "Χρησιμοποίηση Αντικειμένου"
 
 msgid "Inventory and physical stats"
 msgstr "Φυσικά και κτητικά στατιστικά"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Teamchat"
+
+#, fuzzy
+msgid "Say:"
+msgstr "Spray"
+
+msgid "Global lobby (IRC)"
+msgstr ""
+
+#, fuzzy
+msgid "Party chat"
+msgstr "Ενεργοποιήστε το  chat"
+
+msgid "Chat"
+msgstr "Chat"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2227,9 +2207,6 @@ msgstr ""
 
 msgid "Base:"
 msgstr "Βάση:"
-
-msgid "Status:"
-msgstr "Κατάσταση:"
 
 msgid "Aircraft:"
 msgstr "Σκάφος:"
@@ -2694,9 +2671,6 @@ msgstr "Εχθροί Νεκροί:"
 msgid "Missions performed:"
 msgstr "Αποστολές Εκτελεσμένες:"
 
-msgid "Health:"
-msgstr "Υγεία:"
-
 msgid "High-Explosives:"
 msgstr "Εκρηκτικά:"
 
@@ -2782,6 +2756,12 @@ msgstr "Εκκίνηση Σκάφους"
 
 msgid "Team Members:"
 msgstr "Μέλη Ομάδας:"
+
+msgid "Health:"
+msgstr "Υγεία:"
+
+msgid "Status:"
+msgstr "Κατάσταση:"
 
 msgid "Select this slot"
 msgstr "Επιλογή αυτής της θέσης"
@@ -2883,6 +2863,15 @@ msgstr "Πρωτεύουσα Οργανισμού"
 msgid "CREDITS"
 msgstr "ΧΡΗΜΑΤΑ"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
@@ -2917,6 +2906,9 @@ msgid "Consider launching interceptors to catch a faster UFO when it's really cl
 msgstr ""
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
+msgstr ""
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
 msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -2979,9 +2971,6 @@ msgstr "Always have a disposable soldier or two, so you don't have to put your p
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with one grenade."
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-
 #, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Plasma grenades do the most damage, but frag grenades can be useful, as they can be thrown slightly further."
@@ -2996,6 +2985,15 @@ msgstr "Use a fast soldier with pistols, one handed melee weapons, grenades, fla
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
@@ -3067,6 +3065,9 @@ msgstr "With multiplayer teams, make sure your best soldiers are at the top of t
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
@@ -4534,8 +4535,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Unit"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr "Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
@@ -5193,8 +5193,7 @@ msgstr ""
 "Οπλικά Συστήματα: Ουδέν"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
@@ -11622,6 +11621,10 @@ msgid "Transport"
 msgstr "Μεταγωγικά:"
 
 #, fuzzy
+msgid "Tower"
+msgstr "Ραντάρ"
+
+#, fuzzy
 msgid "Stadium"
 msgstr "Μέση"
 
@@ -11980,6 +11983,10 @@ msgstr "Γύρετε την κάμερα μάχης δεξία"
 msgid "Move battlescape camera left"
 msgstr "Γύρετε την κάμερα μάχης αριστερά"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "Γύρετε την κάμερα μάχης αριστερά"
+
 msgid "Tilt battlescape camera down"
 msgstr "Γύρετε την κάμερα μάχης κάτω"
 
@@ -12259,19 +12266,6 @@ msgstr "Νέα ομάδα"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Τίποτα για σώσιμο ακόμα."
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr "all"
-
 #, fuzzy
 msgid "You've lost the game!"
 msgstr "Χάσατε το παιχνίδι"
@@ -12287,15 +12281,13 @@ msgstr "Συγχαρητήρια"
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
-"\n"
-"\n"
-"Εχθροί που σκοτώθηκαν:  %i\n"
-"Επιζώντες ομάδας:  %i"
 
 msgid ""
 "The game was a draw!\n"
@@ -12308,6 +12300,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Παιχνίδι Ισόπαλο!"
+
+msgid "all"
+msgstr "all"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"Επιζώντες Ομάδας\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Νεκροί εχθροί\t%i\n"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Set soldiers per player lower than soldiers per team"
@@ -12374,9 +12379,6 @@ msgstr "Πολύ εύκολο"
 
 msgid "Chicken-hearted"
 msgstr "Δειλό"
-
-msgid "You've won the battle"
-msgstr "Νίκησες την μάχη"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Το μεταγωγικό σας σκάφος δεν έιναι κοντά στη ζώνη ρίψης"
@@ -13752,6 +13754,10 @@ msgstr "Ενέργεια:\t%s\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Απόσταση από το στόχο:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Υγεία:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Κατάσταση:\t%s\n"
@@ -14443,6 +14449,12 @@ msgstr "Ήδη  %i στη βάση"
 msgid "Not set"
 msgstr "Όχι ρυθμισμένο"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "Νίκησες την μάχη"
+
 msgid "None"
 msgstr "Κανένα"
 
@@ -14749,7 +14761,7 @@ msgstr "Reload the weapon in the soldiers right hand"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Reload the weapon in the soldiers left hand"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -15031,7 +15043,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-05-26 14:54+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
@@ -15044,6 +15056,32 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-Basepath: ../\n"
+
+#, fuzzy
+#~ msgid "Personal message"
+#~ msgstr "Άνοιγμα μηνυμάτων"
+
+#, fuzzy
+#~ msgid "Deactivate IRC"
+#~ msgstr "Deactivates tooltips"
+
+#, fuzzy
+#~ msgid "Activate IRC"
+#~ msgstr "Ενεργοποιήστε το  chat"
+
+#~ msgid "Show chat history"
+#~ msgstr "Εμφάνιση ιστορικού chat"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Εχθροί που σκοτώθηκαν:  %i\n"
+#~ "Επιζώντες ομάδας:  %i"
 
 #, fuzzy
 #~ msgid "Charlotte Amalie"
@@ -16166,9 +16204,6 @@ msgstr ""
 #~ "Αιχμαλωτισμένοι εξωγήινοι\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "Νεκροί εχθροί\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -16191,13 +16226,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "Απώλειες απο φιλικά πυρά\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Επιζώντες Ομάδας\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "Πολίτες που σκοτώθηκαν απο εξωγήινους\t%i\n"

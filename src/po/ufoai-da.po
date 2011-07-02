@@ -1383,6 +1383,9 @@ msgstr "Afbryd spil"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
+msgid "Go into the lobby"
+msgstr "Gå til lobbyen"
+
 #, fuzzy
 msgid "Show server information"
 msgstr "Brugerinformation"
@@ -1395,28 +1398,11 @@ msgstr "Base info"
 msgid "Game invitation"
 msgstr "Omdøb installation"
 
-msgid "Go into the lobby"
-msgstr "Gå til lobbyen"
-
-msgid "Personal message"
-msgstr "Personlig besked"
-
 msgid "Password:"
 msgstr "Adgangskode:"
 
 msgid "Enter server password"
 msgstr "Indtast serveradgangskode"
-
-#, fuzzy
-msgid "Say:"
-msgstr "S:"
-
-msgid "Global lobby (IRC)"
-msgstr ""
-
-#, fuzzy
-msgid "Party chat"
-msgstr "Aktiver snak"
 
 msgid "Invite players that are online in the lobby"
 msgstr ""
@@ -1424,19 +1410,6 @@ msgstr ""
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
-
-msgid "Hide IRC users"
-msgstr ""
-
-msgid "Display IRC users"
-msgstr ""
-
-msgid "Deactivate IRC"
-msgstr ""
-
-#, fuzzy
-msgid "Activate IRC"
-msgstr "Aktiver snak"
 
 msgid "Are you ready?"
 msgstr ""
@@ -1997,15 +1970,6 @@ msgstr "Niveau op"
 msgid "Chat messages"
 msgstr "Snakkebeskeder"
 
-msgid "Show chat history"
-msgstr "Vis snakkehistorie"
-
-msgid "Teamchat"
-msgstr "Holdsnak"
-
-msgid "Chat"
-msgstr "Snak"
-
 msgid "Switch to left hand weapon"
 msgstr "Skift til våben i venstre hånd"
 
@@ -2038,6 +2002,24 @@ msgstr "Brug udstyr"
 
 msgid "Inventory and physical stats"
 msgstr "Lager- og materielstatus"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Holdsnak"
+
+#, fuzzy
+msgid "Say:"
+msgstr "S:"
+
+msgid "Global lobby (IRC)"
+msgstr ""
+
+#, fuzzy
+msgid "Party chat"
+msgstr "Aktiver snak"
+
+msgid "Chat"
+msgstr "Snak"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2137,9 +2119,6 @@ msgstr "Overflade-til-luft-missilaffyringsrampe:"
 
 msgid "Base:"
 msgstr "Base:"
-
-msgid "Status:"
-msgstr "Status:"
 
 msgid "Aircraft:"
 msgstr "Luftfartøj:"
@@ -2562,9 +2541,6 @@ msgstr "Fjender dræbt:"
 msgid "Missions performed:"
 msgstr "Udførte missioner:"
 
-msgid "Health:"
-msgstr "Liv:"
-
 msgid "High-Explosives:"
 msgstr "Sprængladninger:"
 
@@ -2641,6 +2617,12 @@ msgstr "Afsend luftfartøj"
 
 msgid "Team Members:"
 msgstr "Holdmedlemmer:"
+
+msgid "Health:"
+msgstr "Liv:"
+
+msgid "Status:"
+msgstr "Status:"
 
 msgid "Select this slot"
 msgstr "Vælg denne plads"
@@ -2733,6 +2715,15 @@ msgstr "Organisationshovedstad"
 msgid "CREDITS"
 msgstr "FINANSER"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "Du kan forberede dine handlinger for den næste runde mens du venter. Klik 2 gange på knappen [Retur] og alle dine handlinger i køn vil blive udført når det er din tur igen."
 
@@ -2768,6 +2759,9 @@ msgstr "Overvej at sende dine kortrækkende jagerfly af sted sted mod hurtige uf
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "Udnyt snigskytternes dække. Få snigskytterne til områder med god oversigt (områder højt oppe og hjørner på tagene). Efterlad dem i knæ og reaktionsild sat til 'flere skud' så de kan tynde ud i rumvæsenerne."
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
+msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Du bør sikre dig at der ikke er for mange civile tab. Ellers kan du tabe spillet hurtigere end du tror."
@@ -2823,9 +2817,6 @@ msgstr "Hav altid en undværlig soldat eller to, så du ikke skal sætte dine pr
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Hold dine soldater tæt, så de kan støtte hinanden (helbred hinanden, skyd når en løber tør for tidsenheder (TE)). Hold en væg imellem dem når du afslutter din runde, så de ikke kan dræbes med en enkelt granat."
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "Brug [x] til at skifte mellem reaktionsindstillingerne: ingen, et skud, flere skud."
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Plasmagranater gør mest skade, mens fragmentationsgranater har en lidt længere rækkevidde."
 
@@ -2837,6 +2828,15 @@ msgstr "Brug en hurtig soldat med pistoler, nærkampsvåben til en hånd, granat
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr "Hvis du har få tidenheder (TE) tilbage og har farlige fjender tæt på, kan en blitzgranat være den bedste mulighed på kort sigt. 2 TE (ud af oppakning) + 12 TE (kast) = 14 TE."
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "Brug [x] til at skifte mellem reaktionsindstillingerne: ingen, et skud, flere skud."
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr "Anvend [c] til at knæle. Knælende soldater gør nogle våben meget mere præcise. Det gør også din soldat til et mindre mål."
@@ -2900,6 +2900,9 @@ msgstr "I flerspillerhold så husk at have dine bedste soldater øverst på hold
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "Saml og gem forskellige hold til flerspiller kampe - 4 spiller hold, 8 spiller hold og fremdeles. På den måde kan du hurtig hente det rigtige hold til et hurtigt spil."
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Brug [skift] tasten til at indstille din målhøjde - for eksempel brugbar til at affyre en raket foran en rumvæsengruppe."
@@ -4316,8 +4319,7 @@ msgid "'Raven' ECM Unit"
 msgstr "»Raven« ECM-enhed"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -4912,8 +4914,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
@@ -8945,8 +8946,7 @@ msgid "Lost Radar Tracking -- %s"
 msgstr "Mistet radarsporing -- %s"
 
 msgid "mail_alien_base_discovered"
-msgstr ""
-"Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 msgid "Alien Base Discovered -- %s"
 msgstr "Rumvæsenbase opdaget -- %s"
@@ -10956,6 +10956,10 @@ msgstr "Tropisk flod"
 msgid "Transport"
 msgstr "Transport"
 
+#, fuzzy
+msgid "Tower"
+msgstr "Radartårn"
+
 msgid "Stadium"
 msgstr "Stadion"
 
@@ -11298,6 +11302,10 @@ msgstr "Flyt kampscenens kamera mod højre"
 msgid "Move battlescape camera left"
 msgstr "Flyt kampscenens kamera mod venstre"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "Flyt kampscenens kamera mod venstre"
+
 msgid "Tilt battlescape camera down"
 msgstr "Ryk kampscenens kamera ned"
 
@@ -11535,19 +11543,6 @@ msgstr "Nythold"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Fejl ved holdgemning. Intet at gemme endnu."
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr "alle"
-
 msgid "You've lost the game!"
 msgstr "Du har tabt spillet!"
 
@@ -11562,15 +11557,13 @@ msgstr "Tillykke"
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
-"\n"
-"\n"
-"Fjender dræbt:  %i\n"
-"Holdoverlevende:  %i"
 
 msgid ""
 "The game was a draw!\n"
@@ -11583,6 +11576,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Spil uafgjort!"
+
+msgid "all"
+msgstr "alle"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"Overlevende rumvæsener\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Fjender dræbt:"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Sæt soldater per spiller lavere end soldater per hold"
@@ -11649,9 +11655,6 @@ msgstr "Meget nem"
 
 msgid "Chicken-hearted"
 msgstr "Kylling"
-
-msgid "You've won the battle"
-msgstr "Du har vundet slaget"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Dit landingsfly er ikke nær landingszonen"
@@ -12952,6 +12955,10 @@ msgstr "AAT:\t%st\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Afstand til mål:\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Liv:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Status:\t%s\n"
@@ -13603,6 +13610,12 @@ msgstr "Allerede %i på base"
 msgid "Not set"
 msgstr "Ikke sat"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "Du har vundet slaget"
+
 msgid "None"
 msgstr "Ingen"
 
@@ -13889,7 +13902,7 @@ msgstr "Genlad våbenet i soldatens højre hånd"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Genlad våbenet i soldatens venstre hånd"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -14191,7 +14204,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-05-26 14:38+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -14202,6 +14215,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Danish\n"
 "X-Poedit-Basepath: ..\\\n"
+
+#~ msgid "Personal message"
+#~ msgstr "Personlig besked"
+
+#, fuzzy
+#~ msgid "Activate IRC"
+#~ msgstr "Aktiver snak"
+
+#~ msgid "Show chat history"
+#~ msgstr "Vis snakkehistorie"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Fjender dræbt:  %i\n"
+#~ "Holdoverlevende:  %i"
 
 #, fuzzy
 #~ msgid "Charlotte Amalie"

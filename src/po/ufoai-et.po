@@ -1370,6 +1370,10 @@ msgid "You received a invitation to take part of a multiplayer game. Hit the con
 msgstr ""
 
 #, fuzzy
+msgid "Go into the lobby"
+msgstr "Ühenda IP-ga"
+
+#, fuzzy
 msgid "Show server information"
 msgstr "Baasi info"
 
@@ -1382,14 +1386,6 @@ msgid "Game invitation"
 msgstr "Riigid"
 
 #, fuzzy
-msgid "Go into the lobby"
-msgstr "Ühenda IP-ga"
-
-#, fuzzy
-msgid "Personal message"
-msgstr "Ava teated"
-
-#, fuzzy
 msgid "Password:"
 msgstr "Rcon(serveri admini) salasõna"
 
@@ -1397,37 +1393,12 @@ msgstr "Rcon(serveri admini) salasõna"
 msgid "Enter server password"
 msgstr "Serveri salasõna"
 
-#, fuzzy
-msgid "Say:"
-msgstr "S:"
-
-msgid "Global lobby (IRC)"
-msgstr ""
-
-#, fuzzy
-msgid "Party chat"
-msgstr "Käivita abi"
-
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
-
-msgid "Hide IRC users"
-msgstr ""
-
-msgid "Display IRC users"
-msgstr ""
-
-#, fuzzy
-msgid "Deactivate IRC"
-msgstr "Ära näita abi"
-
-#, fuzzy
-msgid "Activate IRC"
-msgstr "Käivita abi"
 
 msgid "Are you ready?"
 msgstr ""
@@ -2032,16 +2003,6 @@ msgstr "Vaade kõrgemale"
 msgid "Chat messages"
 msgstr "Rääkimine"
 
-#, fuzzy
-msgid "Show chat history"
-msgstr "Näita ainult kehakaitseid"
-
-msgid "Teamchat"
-msgstr "Rääkimine:"
-
-msgid "Chat"
-msgstr "Suhtlemine"
-
 msgid "Switch to left hand weapon"
 msgstr "Vaheta vasakukäe relvale"
 
@@ -2075,6 +2036,24 @@ msgstr "Ärritunud"
 
 msgid "Inventory and physical stats"
 msgstr "Esemed ja füüsiline jõud"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "Rääkimine:"
+
+#, fuzzy
+msgid "Say:"
+msgstr "S:"
+
+msgid "Global lobby (IRC)"
+msgstr ""
+
+#, fuzzy
+msgid "Party chat"
+msgstr "Käivita abi"
+
+msgid "Chat"
+msgstr "Suhtlemine"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2177,9 +2156,6 @@ msgstr ""
 
 msgid "Base:"
 msgstr "Baas:"
-
-msgid "Status:"
-msgstr "Seisund:"
 
 #, fuzzy
 msgid "Aircraft:"
@@ -2655,9 +2631,6 @@ msgstr "Vastaseid tapetud\t%i\n"
 msgid "Missions performed:"
 msgstr "Missioone tehtud:"
 
-msgid "Health:"
-msgstr "Tervis:"
-
 msgid "High-Explosives:"
 msgstr "Raske Lõhkeained"
 
@@ -2743,6 +2716,12 @@ msgstr "Käivita lennumasin"
 
 msgid "Team Members:"
 msgstr "Tiimi Liikmed:"
+
+msgid "Health:"
+msgstr "Tervis:"
+
+msgid "Status:"
+msgstr "Seisund:"
 
 #, fuzzy
 msgid "Select this slot"
@@ -2849,6 +2828,15 @@ msgstr "Organisatsiooni keskus"
 msgid "CREDITS"
 msgstr "AUTORID"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
@@ -2883,6 +2871,9 @@ msgid "Consider launching interceptors to catch a faster UFO when it's really cl
 msgstr ""
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
+msgstr ""
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
 msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -2939,9 +2930,6 @@ msgstr ""
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr ""
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr ""
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr ""
 
@@ -2952,6 +2940,15 @@ msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flas
 msgstr ""
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+msgstr ""
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr ""
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
@@ -3015,6 +3012,9 @@ msgid "With multiplayer teams, make sure your best soldiers are at the top of th
 msgstr ""
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
+msgstr ""
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
 msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
@@ -4287,8 +4287,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
@@ -4892,8 +4891,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #, fuzzy
 msgid "inter_stingray_txt"
@@ -11078,6 +11076,10 @@ msgstr "Troopiline jõgi"
 msgid "Transport"
 msgstr "Transport"
 
+#, fuzzy
+msgid "Tower"
+msgstr "Jõud:"
+
 msgid "Stadium"
 msgstr "Staadion"
 
@@ -11419,6 +11421,9 @@ msgstr ""
 msgid "Move battlescape camera left"
 msgstr ""
 
+msgid "Move battlescape camera"
+msgstr ""
+
 msgid "Tilt battlescape camera down"
 msgstr ""
 
@@ -11699,19 +11704,6 @@ msgstr "Uus tiim"
 msgid "Error saving team. Nothing to save yet."
 msgstr "Peata uurimine"
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr "kõik"
-
 msgid "You've lost the game!"
 msgstr "Sa KAOTASID mängu"
 
@@ -11726,10 +11718,12 @@ msgstr ""
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
 
 msgid ""
@@ -11740,6 +11734,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "Mäng viigis!"
+
+msgid "all"
+msgstr "kõik"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"Tiimis ellujäänuid?t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "Vastaseid tapetud\t%i\n"
 
 #, fuzzy
 msgid "Set soldiers per player lower than soldiers per team"
@@ -11810,9 +11817,6 @@ msgstr "Väga kerge"
 
 msgid "Chicken-hearted"
 msgstr "Kartlik"
-
-msgid "You've won the battle"
-msgstr "Sa VÕITSID lahingu"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Sinu transpordilaev ei ole maadumispaiga lähedal "
@@ -13112,6 +13116,10 @@ msgstr "Tegevus:\t%s\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "Tervis\t%i\n"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Seisund:\t%s\n"
@@ -13784,6 +13792,12 @@ msgstr "Juba %i baasis"
 msgid "Not set"
 msgstr "Ei ole kinnitatud"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "Sa VÕITSID lahingu"
+
 msgid "None"
 msgstr "Puudub"
 
@@ -14067,7 +14081,7 @@ msgstr ""
 msgid "Reload the weapon in the soldiers left hand"
 msgstr ""
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 #, fuzzy
@@ -14341,7 +14355,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-05-26 14:53+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -14353,6 +14367,22 @@ msgstr ""
 "X-Poedit-Country: ESTONIA\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-Basepath: ../\n"
+
+#, fuzzy
+#~ msgid "Personal message"
+#~ msgstr "Ava teated"
+
+#, fuzzy
+#~ msgid "Deactivate IRC"
+#~ msgstr "Ära näita abi"
+
+#, fuzzy
+#~ msgid "Activate IRC"
+#~ msgstr "Käivita abi"
+
+#, fuzzy
+#~ msgid "Show chat history"
+#~ msgstr "Näita ainult kehakaitseid"
 
 #, fuzzy
 #~ msgid "Charlotte Amalie"
@@ -15143,9 +15173,6 @@ msgstr ""
 #~ "Tulnukaid kinnipüütud\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "Vastaseid tapetud\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -15168,13 +15195,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "Enda poolt tapetud tiimikaaslasi\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Tiimis ellujäänuid?t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "Tulnukate poolt tapetud inimesi\t%i\n"
@@ -16239,9 +16259,6 @@ msgstr ""
 #~ msgid "Back to worldview"
 #~ msgstr "Tagasi maailmavaatesse"
 
-#~ msgid "Power:"
-#~ msgstr "Jõud:"
-
 #~ msgid "Killed Enemies:"
 #~ msgstr "Vastaseid tapetud:"
 
@@ -17187,9 +17204,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Tervis\t%i\n"
 #~ "Liikumine\t%i\n"
-
-#~ msgid "Health\t%i\n"
-#~ msgstr "Tervis\t%i\n"
 
 #~ msgid ""
 #~ "Missions:\n"

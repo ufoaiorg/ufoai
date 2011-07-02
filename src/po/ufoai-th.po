@@ -1443,6 +1443,10 @@ msgid "You received a invitation to take part of a multiplayer game. Hit the con
 msgstr ""
 
 #, fuzzy
+msgid "Go into the lobby"
+msgstr "เชื่อมต่อ IP"
+
+#, fuzzy
 msgid "Show server information"
 msgstr "ข้อมูลของฐาน"
 
@@ -1453,30 +1457,11 @@ msgstr "ข้อมูลเซิร์ฟเวอร์"
 msgid "Game invitation"
 msgstr "ประเทศ"
 
-#, fuzzy
-msgid "Go into the lobby"
-msgstr "เชื่อมต่อ IP"
-
-#, fuzzy
-msgid "Personal message"
-msgstr "เปิดข้อความ"
-
 msgid "Password:"
 msgstr "รหัส:"
 
 msgid "Enter server password"
 msgstr "ใส่รหัสของเซอร์เวอร์"
-
-#, fuzzy
-msgid "Say:"
-msgstr "ยิงกระจาย"
-
-msgid "Global lobby (IRC)"
-msgstr ""
-
-#, fuzzy
-msgid "Party chat"
-msgstr "เปิดระบบสนทนา"
 
 msgid "Invite players that are online in the lobby"
 msgstr ""
@@ -1484,20 +1469,6 @@ msgstr ""
 #, fuzzy
 msgid "Invite others"
 msgstr "ทหาร"
-
-msgid "Hide IRC users"
-msgstr ""
-
-msgid "Display IRC users"
-msgstr ""
-
-#, fuzzy
-msgid "Deactivate IRC"
-msgstr "ปิดคำแนะนำ"
-
-#, fuzzy
-msgid "Activate IRC"
-msgstr "เปิดระบบสนทนา"
 
 msgid "Are you ready?"
 msgstr "คุณพร้อมหรือยัง?"
@@ -2094,15 +2065,6 @@ msgstr "ขึ้นระดับ"
 msgid "Chat messages"
 msgstr "ส่งข้อความ"
 
-msgid "Show chat history"
-msgstr "แสดงเนื้อหาการพูดคุยเก่า"
-
-msgid "Teamchat"
-msgstr "พูดคุยในทีม"
-
-msgid "Chat"
-msgstr "พูดคุย"
-
 msgid "Switch to left hand weapon"
 msgstr "เปลี่ยนเป็นอาวุธมือซ้าย"
 
@@ -2134,6 +2096,24 @@ msgstr "อุปกรณ์"
 
 msgid "Inventory and physical stats"
 msgstr "อุปกรณ์และค่าสภาพร่างกาย"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "พูดคุยในทีม"
+
+#, fuzzy
+msgid "Say:"
+msgstr "ยิงกระจาย"
+
+msgid "Global lobby (IRC)"
+msgstr ""
+
+#, fuzzy
+msgid "Party chat"
+msgstr "เปิดระบบสนทนา"
+
+msgid "Chat"
+msgstr "พูดคุย"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2233,9 +2213,6 @@ msgstr "ที่ตั้งจรวดภาคพื้นดินต่อ
 
 msgid "Base:"
 msgstr "ฐาน:"
-
-msgid "Status:"
-msgstr "สถานะ:"
 
 #, fuzzy
 msgid "Aircraft:"
@@ -2681,9 +2658,6 @@ msgstr "ศัตรูถูกฆ่า:"
 msgid "Missions performed:"
 msgstr "เข้าร่วมภารกิจ:"
 
-msgid "Health:"
-msgstr "พลังชีวิต:"
-
 msgid "High-Explosives:"
 msgstr "ระเบิดแรงสูง:"
 
@@ -2759,6 +2733,12 @@ msgstr "เริ่มใช้ยานบิน"
 
 msgid "Team Members:"
 msgstr "สมาชิกทีม:"
+
+msgid "Health:"
+msgstr "พลังชีวิต:"
+
+msgid "Status:"
+msgstr "สถานะ:"
 
 msgid "Select this slot"
 msgstr "เลือกตำแหน่งนี้"
@@ -2855,6 +2835,15 @@ msgstr "เงินทุนขององค์กร"
 msgid "CREDITS"
 msgstr "เครดิต"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
@@ -2889,6 +2878,9 @@ msgid "Consider launching interceptors to catch a faster UFO when it's really cl
 msgstr ""
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
+msgstr ""
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
 msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -2945,9 +2937,6 @@ msgstr ""
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr ""
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr ""
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr ""
 
@@ -2958,6 +2947,15 @@ msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flas
 msgstr ""
 
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+msgstr ""
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr ""
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
@@ -3022,6 +3020,9 @@ msgstr "ในระบบการเล่นหลายคน ตรวจ�
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr "จัดการและบันทึกความแตกต่างของกลุ่มผู้เล่นจำนวนมาก ผู้เล่น 4 - 8 ทีมและมากกว่านั้น วิธีนี้จะเร็วมากเมื่อใช้สำหรับการเล่นอย่างรวดเร็ว"
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "กดปุ่ม Shift เพื่อจัดการกับความสูงของเป้าหมาย - มีประโยชน์อย่างมากในตัวอย่างเช่นการใช้เครื่องยิงจรวดยิงไปยังด้านหน้ากลุ่มเอเลี่ยนได้"
@@ -4500,8 +4501,7 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Unit"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
@@ -5317,8 +5317,7 @@ msgstr ""
 "อาวุธ: ไม่มี"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #, fuzzy
 msgid "inter_stingray_txt"
@@ -11801,6 +11800,10 @@ msgstr "แม่น้ำเขตศูนย์สูตร"
 msgid "Transport"
 msgstr "ภารกิจขนส่ง"
 
+#, fuzzy
+msgid "Tower"
+msgstr "เรดาร์"
+
 msgid "Stadium"
 msgstr "สนามกีฬา"
 
@@ -12142,6 +12145,10 @@ msgstr "เลื่อนกล้องสนามรบไปทางขว
 msgid "Move battlescape camera left"
 msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
+
 msgid "Tilt battlescape camera down"
 msgstr "เอียงมุมกล้องในสนามรบลง"
 
@@ -12417,19 +12424,6 @@ msgstr "ทีมใหม่"
 msgid "Error saving team. Nothing to save yet."
 msgstr "ยังไม่มีอะไรจะบันทึก"
 
-#, c-format
-msgid ""
-"Enemies killed:\t\t%i\n"
-"Team survivors:\t\t%i\n"
-"Enemy survivors:\t\t%i\n"
-"Friendly fire:\t\t%i\n"
-"Civilians killed:\t\t%i\n"
-"Civilians killed by enemy:\t\t%i\n"
-msgstr ""
-
-msgid "all"
-msgstr "ทั้งหมด"
-
 #, fuzzy
 msgid "You've lost the game!"
 msgstr "คุณแพ้"
@@ -12445,15 +12439,13 @@ msgstr "ขอแสดงความยินดี"
 
 #, c-format
 msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
 msgstr ""
-"\n"
-"\n"
-"ฆ่าศัตรูได้:  %i\n"
-"ผู้รอดชีวิต:  %i"
 
 msgid ""
 "The game was a draw!\n"
@@ -12466,6 +12458,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "เสมอ!"
+
+msgid "all"
+msgstr "ทั้งหมด"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"คนหลงเหลือในทีม\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "ฆ่าศัตรู\t%i\n"
 
 #, fuzzy
 msgid "Set soldiers per player lower than soldiers per team"
@@ -12530,9 +12535,6 @@ msgstr "ง่ายมาก"
 
 msgid "Chicken-hearted"
 msgstr "ง่ายสุด"
-
-msgid "You've won the battle"
-msgstr "คุณรบชนะ"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "เครื่องไม่ได้อยู่ใกล้กลับบริเวณลงจอด"
@@ -13881,6 +13883,10 @@ msgstr "ปฏิบัติการ:\t%s\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "พลังชีวิต:"
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "สถานะ:\t%s\n"
@@ -14561,6 +14567,12 @@ msgstr "มี %i ในฐาน"
 msgid "Not set"
 msgstr "ไม่ได้ตั้งค่า"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "คุณรบชนะ"
+
 msgid "None"
 msgstr "ไม่มี"
 
@@ -14844,7 +14856,7 @@ msgstr "บรรจุกระสุนอาวุธมือขวา"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "บรรจุกระสุนอาวุธมือซ้าย"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -15115,7 +15127,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-12-08 21:32+0530\n"
 "Last-Translator: Phakphum Visetnut <shellingford47@gmail.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -15128,6 +15140,32 @@ msgstr ""
 "X-Poedit-Language: Thai\n"
 "X-Poedit-Country: THAILAND\n"
 "X-Poedit-Basepath: ../\n"
+
+#, fuzzy
+#~ msgid "Personal message"
+#~ msgstr "เปิดข้อความ"
+
+#, fuzzy
+#~ msgid "Deactivate IRC"
+#~ msgstr "ปิดคำแนะนำ"
+
+#, fuzzy
+#~ msgid "Activate IRC"
+#~ msgstr "เปิดระบบสนทนา"
+
+#~ msgid "Show chat history"
+#~ msgstr "แสดงเนื้อหาการพูดคุยเก่า"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "ฆ่าศัตรูได้:  %i\n"
+#~ "ผู้รอดชีวิต:  %i"
 
 #, fuzzy
 #~ msgid "Charlotte Amalie"
@@ -16134,9 +16172,6 @@ msgstr ""
 #~ "จับมนุษย์ต่างดาวได้\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "ฆ่าศัตรู\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -16159,13 +16194,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "สูญเสียจากการยิงของฝ่ายเดียวกัน\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "คนหลงเหลือในทีม\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "พลเรือนที่ถูกมนุษย์ต่างดาวฆ่า\t%i\n"

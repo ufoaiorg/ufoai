@@ -1382,6 +1382,9 @@ msgstr "中止游戏"
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
+msgid "Go into the lobby"
+msgstr "进入大厅"
+
 msgid "Show server information"
 msgstr "显示服务器信息"
 
@@ -1391,44 +1394,17 @@ msgstr "服务器信息"
 msgid "Game invitation"
 msgstr "邀请游戏"
 
-msgid "Go into the lobby"
-msgstr "进入大厅"
-
-msgid "Personal message"
-msgstr "个人消息"
-
 msgid "Password:"
 msgstr "密码："
 
 msgid "Enter server password"
 msgstr "输入服务器密码"
 
-msgid "Say:"
-msgstr "说："
-
-msgid "Global lobby (IRC)"
-msgstr "IRC频道"
-
-msgid "Party chat"
-msgstr "队伍频道"
-
 msgid "Invite players that are online in the lobby"
 msgstr "邀请大厅在线的玩家"
 
 msgid "Invite others"
 msgstr "邀请"
-
-msgid "Hide IRC users"
-msgstr "隐藏IRC用户"
-
-msgid "Display IRC users"
-msgstr "显示IRC用户"
-
-msgid "Deactivate IRC"
-msgstr "关闭IRC"
-
-msgid "Activate IRC"
-msgstr "激活IRC"
 
 msgid "Are you ready?"
 msgstr "准备好了吗？"
@@ -1993,15 +1969,6 @@ msgstr "上一层"
 msgid "Chat messages"
 msgstr "对话信息"
 
-msgid "Show chat history"
-msgstr "对话记录"
-
-msgid "Teamchat"
-msgstr "队伍聊天"
-
-msgid "Chat"
-msgstr "对话"
-
 msgid "Switch to left hand weapon"
 msgstr "切换至左手武器"
 
@@ -2031,6 +1998,22 @@ msgstr "使用"
 
 msgid "Inventory and physical stats"
 msgstr "详细资料"
+
+#, fuzzy
+msgid "Team chat"
+msgstr "队伍聊天"
+
+msgid "Say:"
+msgstr "说："
+
+msgid "Global lobby (IRC)"
+msgstr "IRC频道"
+
+msgid "Party chat"
+msgstr "队伍频道"
+
+msgid "Chat"
+msgstr "对话"
 
 #, fuzzy
 msgid "Shots: <8>"
@@ -2129,9 +2112,6 @@ msgstr "地对空导弹发射场："
 
 msgid "Base:"
 msgstr "基地："
-
-msgid "Status:"
-msgstr "状态："
 
 msgid "Aircraft:"
 msgstr "航空机："
@@ -2550,9 +2530,6 @@ msgstr "杀敌数："
 msgid "Missions performed:"
 msgstr "任务参加数："
 
-msgid "Health:"
-msgstr "生命力："
-
 msgid "High-Explosives:"
 msgstr "爆破武器："
 
@@ -2629,6 +2606,12 @@ msgstr "出航"
 
 msgid "Team Members:"
 msgstr "搭乘人数："
+
+msgid "Health:"
+msgstr "生命力："
+
+msgid "Status:"
+msgstr "状态："
 
 msgid "Select this slot"
 msgstr "选择此部位"
@@ -2720,6 +2703,15 @@ msgstr "合计资金"
 msgid "CREDITS"
 msgstr "资金"
 
+msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
+msgstr ""
+
+msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
+msgstr ""
+
+msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
+msgstr ""
+
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "你可以按[Enter]来结束你的回合。"
 
@@ -2755,6 +2747,9 @@ msgstr "如果要歼击快速UFO最好等它靠近你的基地再出动你的迎
 
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "㓎有效的使用阻击手，高处和平台拐角可以获得优良的视角，更多的反应时间可以更有效的打击敌人"
+
+msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
+msgstr ""
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "您应该确保没有太多的平民失去生命。否则，你可能会输掉游戏。"
@@ -2819,9 +2814,6 @@ msgstr "控制一到两个士兵同时行动，不要全部行动，这样才能
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "尽量让你的士兵比较集中，这样他们可以互相支持（比如治疗、掩护一个没有活动时间的人）。在回合结束前，最好让他们之间有堵墙，这样敌人的一个手雷也不能同时打死他们。"
 
-msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "使用[X]来切换自动反应攻击方式：无、一次攻击、多次攻击。"
-
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "等离子手雷威力很大，不过碎片手雷也很有用，因为碎片手雷可以扔得更远。"
 
@@ -2836,6 +2828,15 @@ msgstr ""
 "如果你只有些许活动时间却发现有危险的敌人，\n"
 "最好消除自动反应攻击状态直接攻击。\n"
 "从腰带里掏出手雷并投掷，只需2+12=14的活动时间。"
+
+msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
+msgstr ""
+
+msgid "Press [e] to end your turn on the battlescape."
+msgstr ""
+
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgstr "使用[X]来切换自动反应攻击方式：无、一次攻击、多次攻击。"
 
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr ""
@@ -2914,6 +2915,9 @@ msgid "Assemble and save different teams for multiplayer matches - 4 player team
 msgstr ""
 "分配和保留不同数目的队伍，例如四人小队、八人小队等等。\n"
 "这样可以有快速的匹配。"
+
+msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
+msgstr ""
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr ""
@@ -4366,8 +4370,7 @@ msgid "'Raven' ECM Unit"
 msgstr "乌鸦型ECM"
 
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -5011,8 +5014,7 @@ msgstr ""
 "武器挂载： 无"
 
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
@@ -9310,8 +9312,7 @@ msgid "Lost Radar Tracking -- %s"
 msgstr "雷达跟踪消失 -- %s"
 
 msgid "mail_alien_base_discovered"
-msgstr ""
-"先生，我们的特工在%s发现有个巨大的外星人基地。这个在地球上的基地对PHALANX对人类都是个巨大的威胁，我们必须马上行动。"
+msgstr "先生，我们的特工在%s发现有个巨大的外星人基地。这个在地球上的基地对PHALANX对人类都是个巨大的威胁，我们必须马上行动。"
 
 msgid "Alien Base Discovered -- %s"
 msgstr "发现外星人基地 -- %s"
@@ -9521,8 +9522,7 @@ msgid "Recovery Report -- %s"
 msgstr "收获报告 -- %s"
 
 msgid "mail_stunned_alien_died"
-msgstr ""
-"先生，在%s基地关押的异形俘虏突然死了。我们还不知道为什么会这样。"
+msgstr "先生，在%s基地关押的异形俘虏突然死了。我们还不知道为什么会这样。"
 
 msgid "Alien died"
 msgstr "外星人死了"
@@ -11252,6 +11252,10 @@ msgstr "热带河流"
 msgid "Transport"
 msgstr "运输站"
 
+#, fuzzy
+msgid "Tower"
+msgstr "雷达站"
+
 msgid "Stadium"
 msgstr "体育馆"
 
@@ -11589,6 +11593,10 @@ msgstr "右移战斗视角"
 msgid "Move battlescape camera left"
 msgstr "左移战斗视角"
 
+#, fuzzy
+msgid "Move battlescape camera"
+msgstr "左移战斗视角"
+
 msgid "Tilt battlescape camera down"
 msgstr "降低战斗视角"
 
@@ -11822,6 +11830,18 @@ msgstr "新的队伍"
 msgid "Error saving team. Nothing to save yet."
 msgstr "保存发生错误，未成功。"
 
+msgid "You've lost the game!"
+msgstr "游戏失败！"
+
+msgid "Better luck next time"
+msgstr "下次好运"
+
+msgid "You won the game!"
+msgstr "游戏胜利！"
+
+msgid "Congratulations"
+msgstr "恭喜"
+
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -11838,33 +11858,6 @@ msgstr ""
 "平民死亡：\t\t%i\n"
 "被敌人杀害的平民：\t\t%i\n"
 
-msgid "all"
-msgstr "全部"
-
-msgid "You've lost the game!"
-msgstr "游戏失败！"
-
-msgid "Better luck next time"
-msgstr "下次好运"
-
-msgid "You won the game!"
-msgstr "游戏胜利！"
-
-msgid "Congratulations"
-msgstr "恭喜"
-
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Enemies killed:  %i\n"
-"Team survivors:  %i"
-msgstr ""
-"\n"
-"\n"
-"死亡：  %i\n"
-"幸存：  %i"
-
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -11876,6 +11869,19 @@ msgstr ""
 
 msgid "Game Drawn!"
 msgstr "平手！"
+
+msgid "all"
+msgstr "全部"
+
+#, fuzzy, c-format
+msgid "Team survivors:\t%i"
+msgstr ""
+"幸存队友\t%i\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Enemies killed:\t%i"
+msgstr "杀死敌人\t%i\n"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "设置为每个玩家的士兵少于每个队伍的士兵"
@@ -11942,9 +11948,6 @@ msgstr "超级简单"
 
 msgid "Chicken-hearted"
 msgstr "幼稚"
-
-msgid "You've won the battle"
-msgstr "战斗胜利"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "你的登陆机没有靠近登陆点"
@@ -13229,6 +13232,10 @@ msgstr "估计用时：\t%s小时\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "与目标距离：\t\t%.0f\n"
 
+#, fuzzy, c-format
+msgid "Health:\t%3.0f%%\n"
+msgstr "生命力："
+
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "状态：\t%s\n"
@@ -13898,6 +13905,12 @@ msgstr "此基地已有 %i 间"
 msgid "Not set"
 msgstr "未设"
 
+msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
+msgstr ""
+
+msgid "You've won the battle"
+msgstr "战斗胜利"
+
 msgid "None"
 msgstr "无"
 
@@ -14179,7 +14192,7 @@ msgstr "右手武器装弹"
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "左手武器装弹"
 
-msgid "Set selected actor to move mode (it cancel the fire mode"
+msgid "Set selected actor to move mode (it cancels the fire mode)"
 msgstr ""
 
 msgid ""
@@ -14449,7 +14462,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-26 19:50+0200\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
 "PO-Revision-Date: 2010-05-26 14:41+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
@@ -14463,6 +14476,35 @@ msgstr ""
 "X-Poedit-Country: CHINA\n"
 "X-Poedit-Bookmarks: -1,1435,-1,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-Basepath: ../\n"
+
+#~ msgid "Personal message"
+#~ msgstr "个人消息"
+
+#~ msgid "Hide IRC users"
+#~ msgstr "隐藏IRC用户"
+
+#~ msgid "Display IRC users"
+#~ msgstr "显示IRC用户"
+
+#~ msgid "Deactivate IRC"
+#~ msgstr "关闭IRC"
+
+#~ msgid "Activate IRC"
+#~ msgstr "激活IRC"
+
+#~ msgid "Show chat history"
+#~ msgstr "对话记录"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Enemies killed:  %i\n"
+#~ "Team survivors:  %i"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "死亡：  %i\n"
+#~ "幸存：  %i"
 
 #~ msgid "Charlotte Amalie"
 #~ msgstr "夏洛特阿马利亚"
@@ -15530,9 +15572,6 @@ msgstr ""
 #~ "俘虏外星人\t%i\n"
 #~ "\n"
 
-#~ msgid "Enemies killed\t%i\n"
-#~ msgstr "杀死敌人\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
@@ -15555,13 +15594,6 @@ msgstr ""
 
 #~ msgid "Friendly fire losses\t%i\n"
 #~ msgstr "走火误伤\t%i\n"
-
-#~ msgid ""
-#~ "Team survivors\t%i\n"
-#~ "\n"
-#~ msgstr ""
-#~ "幸存队友\t%i\n"
-#~ "\n"
 
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "被外星人杀死的平民\t%i\n"
