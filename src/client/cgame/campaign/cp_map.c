@@ -1950,7 +1950,7 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
 				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, campaign->map, disableSolarRender,
 				cl_3dmapAmbient->value, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
-				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture);
+				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture, cl_3dmap->integer != 2);
 
 		MAP_DrawMapMarkers(node);
 

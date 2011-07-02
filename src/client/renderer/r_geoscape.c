@@ -418,7 +418,7 @@ static inline void RotateCelestialBody (const vec4_t v, vec4_t * r, const vec3_t
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture)
+void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture, qboolean renderNationGlow)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
@@ -616,16 +616,18 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
 
-		/* draw glowing borders */
-		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay_glow", map), it_wrappic);
-		if (r_globeEarth.overlay == r_noTexture)
-			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay glow image");
+		if (renderNationGlow) {
+			/* draw glowing borders */
+			r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay_glow", map), it_wrappic);
+			if (r_globeEarth.overlay == r_noTexture)
+				Com_Error(ERR_FATAL, "Could not load geoscape nation overlay glow image");
 
-		R_DrawBuffers(2);
-		glDisable(GL_LIGHTING);
-		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
-		glEnable(GL_LIGHTING);
-		R_DrawBuffers(1);
+			R_DrawBuffers(2);
+			glDisable(GL_LIGHTING);
+			R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
+			glEnable(GL_LIGHTING);
+			R_DrawBuffers(1);
+		}
 
 		r_globeEarth.overlay = NULL;
 	}
