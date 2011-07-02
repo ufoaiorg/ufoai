@@ -619,8 +619,8 @@ static void R_LoadBspVertexArrays (model_t *mod)
 				mod->bsp.texcoords[coordind + 0] = s / surf->texinfo->image->width;
 				mod->bsp.texcoords[coordind + 1] = t / surf->texinfo->image->height;
 			} else {
-			mod->bsp.texcoords[coordind + 0] = s;
-			mod->bsp.texcoords[coordind + 1] = t;
+				mod->bsp.texcoords[coordind + 0] = s;
+				mod->bsp.texcoords[coordind + 1] = t;
 			}
 
 			if (surf->flags & MSURF_LIGHTMAP) {  /* lightmap coordinates */
