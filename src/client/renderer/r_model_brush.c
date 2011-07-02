@@ -48,6 +48,7 @@ static ipos3_t shift;
  * @sa r_mapTiles
  */
 static model_t *r_worldmodel;
+qboolean legacyBSP;
 
 /**
  * @brief Load the lightmap data
@@ -227,6 +228,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 {
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
+	float sscale, tscale;
 	int i, j;
 	const mBspTexInfo_t *tex;
 
@@ -237,6 +239,16 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 	Vector2Set(stmaxs, -999999, -999999);
 
 	tex = surf->texinfo;
+
+	if (legacyBSP)
+		sscale = 1.0f;
+	else
+		sscale = 1.0f/VectorLength(tex->uv);
+
+	if (legacyBSP)
+		tscale = 1.0f;
+	else
+		tscale = 1.0f/VectorLength(tex->vv);
 
 	for (i = 0; i < surf->numedges; i++) {
 		const int e = mod->bsp.surfedges[surf->firstedge + i];
@@ -258,8 +270,8 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 		}
 
 		{  /* calculate stmins, stmaxs */
-			const float valS = DotProduct(v->position, tex->uv) + tex->u_offset;
-			const float valT = DotProduct(v->position, tex->vv) + tex->v_offset;
+			const float valS = sscale * (DotProduct(v->position, tex->uv) + tex->u_offset);
+			const float valT = tscale * (DotProduct(v->position, tex->vv) + tex->v_offset);
 			stmins[0] = min(valS, stmins[0]);
 			stmaxs[0] = max(valS, stmaxs[0]);
 			stmins[1] = min(valT, stmins[1]);
@@ -530,6 +542,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	int vertind, coordind, tangind;
 	float *vecShifted;
 	float soff, toff, s, t;
+	float sscale, tscale;
 	float *point, *sdir, *tdir;
 	vec4_t tangent;
 	vec3_t binormal;
@@ -554,6 +567,22 @@ static void R_LoadBspVertexArrays (model_t *mod)
 
 	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
 		surf->index = vertind / 3;
+
+		/* texture directional vectors and offsets */
+		sdir = surf->texinfo->uv;
+		soff = surf->texinfo->u_offset;
+		if (legacyBSP)
+			sscale = 1.0f;
+		else
+			sscale = 1.0f/VectorLength(sdir);
+
+		tdir = surf->texinfo->vv;
+		toff = surf->texinfo->v_offset;
+
+		if (legacyBSP)
+			tscale = 1.0f;
+		else
+			tscale = 1.0f/VectorLength(tdir);
 
 		for (j = 0; j < surf->numedges; j++) {
 			const float *normal;
@@ -582,31 +611,26 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			else
 				VectorAdd(point, shift, vecShifted);
 
-			/* texture directional vectors and offsets */
-			sdir = surf->texinfo->uv;
-			soff = surf->texinfo->u_offset;
-
-			tdir = surf->texinfo->vv;
-			toff = surf->texinfo->v_offset;
-
 			/* texture coordinates */
 			s = DotProduct(point, sdir) + soff;
-			s /= surf->texinfo->image->width;
-
 			t = DotProduct(point, tdir) + toff;
-			t /= surf->texinfo->image->height;
 
+			if (legacyBSP) {
+				mod->bsp.texcoords[coordind + 0] = s / surf->texinfo->image->width;
+				mod->bsp.texcoords[coordind + 1] = t / surf->texinfo->image->height;
+			} else {
 			mod->bsp.texcoords[coordind + 0] = s;
 			mod->bsp.texcoords[coordind + 1] = t;
+			}
 
 			if (surf->flags & MSURF_LIGHTMAP) {  /* lightmap coordinates */
-				s = DotProduct(point, sdir) + soff;
+				s = sscale * (DotProduct(point, sdir) + soff);
 				s -= surf->stmins[0];
 				s += surf->light_s * surf->lightmap_scale;
 				s += surf->lightmap_scale / 2.0;
 				s /= r_lightmaps.size * surf->lightmap_scale;
 
-				t = DotProduct(point, tdir) + toff;
+				t = tscale * (DotProduct(point, tdir) + toff);
 				t -= surf->stmins[1];
 				t += surf->light_t * surf->lightmap_scale;
 				t += surf->lightmap_scale / 2.0;
@@ -958,8 +982,11 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* test version */
 	header = (dBspHeader_t *) buffer;
 	i = LittleLong(header->version);
-	if (i != BSPVERSION)
+	if (i != BSPVERSION && i != BSPVERSION_LEGACY) /* remove BSPVERSION_LEGACY when converion for new format is done */
 		Com_Error(ERR_DROP, "R_ModAddMapTile: %s has wrong version number (%i should be %i)", r_worldmodel->name, i, BSPVERSION);
+
+	if (i == BSPVERSION_LEGACY)
+		legacyBSP = qtrue;
 
 	/* swap all the lumps */
 	mod_base = (byte *) header;

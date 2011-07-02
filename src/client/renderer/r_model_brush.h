@@ -92,8 +92,8 @@ typedef struct mBspSurface_s {
 	int firstedge;
 	int numedges;
 
-	short stmins[2];		/**< st min coordinates */
-	short stmaxs[2];			/**< st max coordinates */
+	short stmins[2];		/**< lightmap st min coordinates (in luxels) */
+	short stmaxs[2];			/**< lightmap st max coordinates (in luxels) */
 	vec2_t stcenter;
 	vec2_t stextents;
 
