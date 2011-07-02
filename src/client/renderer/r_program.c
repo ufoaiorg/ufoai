@@ -900,6 +900,13 @@ void R_InitPrograms (void)
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
+
+	if (!(r_state.world_program && r_state.warp_program && r_state.geoscape_program && r_state.combine2_program
+		&& r_state.convolve_program && r_state.atmosphere_program && r_state.simple_glow_program)) {
+		Com_Printf("disabled shaders because they failed to compile\n");
+		Cvar_Set("r_programs", "0");
+		r_programs->modified = qfalse;
+	}
 }
 
 /**
