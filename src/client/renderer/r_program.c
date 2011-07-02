@@ -658,6 +658,10 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 	unsigned e;
 	int i;
 
+	/* shaders are deactivated */
+	if (!r_programs->integer)
+		return NULL;
+
 	/* search existing one */
 	for (i = 0; i < MAX_PROGRAMS; i++) {
 		prog = &r_state.programs[i];
