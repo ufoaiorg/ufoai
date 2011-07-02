@@ -893,11 +893,6 @@ void R_InitPrograms (void)
 	OBJZERO(r_state.shaders);
 	OBJZERO(r_state.programs);
 
-	/* shaders are deactivated - don't try to load them - some cards
-	 * even have problems with this */
-	if (!r_programs->integer)
-		return;
-
 	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
