@@ -278,6 +278,7 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
 {
 	size_t initialChars = 0;
 	const char *hwHack, *defines;
+	int shaderVersion = 0; /** < in the format GLSL compiler expects it -- e.g. 110 for version 1.10 */
 
 	switch (r_config.hardwareType) {
 	case GLHW_ATI:
@@ -297,18 +298,20 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
 		Com_Error(ERR_FATAL, "R_PreprocessShader: Unknown hardwaretype");
 	}
 
+	shaderVersion = (int)(r_glsl_version->value*100 + 0.1);
+
 	/*
 	 * Prefix "#version xxx" onto shader string.
 	 * This causes GLSL compiler to compile to that version.
 	 */
-	defines = va("#version %d\n", r_glsl_version->integer);
+	defines = va("#version %d\n", shaderVersion);
 	initialChars += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
 	/*
 	 * Prefix "#define glslxxx" onto shader string.
 	 * This named constant is used to setup shader code to match the desired GLSL spec.
 	 */
-	defines = va("#define glsl%d\n", r_glsl_version->integer);
+	defines = va("#define glsl%d\n", shaderVersion);
 	initialChars += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
 	/* Define r_width.*/
