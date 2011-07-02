@@ -497,20 +497,22 @@ static qboolean R_CvarPrograms (cvar_t *cvar)
 
 /**
  * @brief Callback that is called when the r_glsl_version cvar is changed,
- *         probably by the user changing the listbox; updates integer component
- *         of r_glsl_version Cvar.
- * @param cvarName [in] The cvar name
- * @param oldValue [in] The old value of the cvar
- * @param newValue [in] The new value of the cvar
  */
-static void R_CvarGLSLVersionChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
+static qboolean R_CvarGLSLVersionCheck (cvar_t *cvar)
 {
-	int glslVersionMajor;
-	int glslVersionMinor;
-	/* Get the major version and minor version from the user's new setting (e.g. 1.10).*/
-	sscanf(newValue, "%1d%*1c%d", &glslVersionMajor, &glslVersionMinor);
-	/* Changing the string component should be done by the listbox, we need to change the integer component.*/
-	Cvar_FindVar("r_glsl_version")->integer = glslVersionMajor * 100 + glslVersionMinor;
+	int glslVersionMajor, glslVersionMinor;
+	sscanf(cvar->string, "%d.%d", &glslVersionMajor, &glslVersionMinor);
+	if (glslVersionMajor > r_config.glslVersionMajor) {
+		Cvar_Reset(cvar);
+		return qfalse;
+	}
+
+	if (glslVersionMajor == r_config.glslVersionMajor && glslVersionMinor > r_config.glslVersionMinor) {
+		Cvar_Reset(cvar);
+		return qfalse;
+	}
+
+	return qtrue;
 }
 
 static qboolean R_CvarPostProcess (cvar_t *cvar)
@@ -780,17 +782,8 @@ static qboolean R_InitExtensions (void)
 	GLenum err;
 	int tmpInteger;
 
-	/* Used as place holders in storing GLSL guaranteed version.*/
-	int glslVersionMajor;
-	char glslVersionMinor[3];
-	int glslVersionMinorInt;
-
-	/* Used to check OpenGL version.*/
-	int glVersionMajor;
-	int glVersionMinor;
-
 	/* Get OpenGL version.*/
-	sscanf(r_config.versionString, "%d.%d", &glVersionMajor, &glVersionMinor);
+	sscanf(r_config.versionString, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor);
 
 	/* multitexture */
 	qglActiveTexture = NULL;
@@ -945,11 +938,14 @@ static qboolean R_InitExtensions (void)
 		qglVertexAttribPointer = (VertexAttribPointer_t)R_GetProcAddress("glVertexAttribPointer");
 	}
 
-	if (R_CheckExtension("GL_ARB_shading_language_100") || glVersionMajor >= 2) {
-		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0; it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0 then enable shaders as the implementation supports the shading language!*/
-		sscanf((const char *)glGetString(GL_SHADING_LANGUAGE_VERSION), "%d%*1c%2s", &glslVersionMajor, glslVersionMinor);
-		snprintf(r_config.shadingLanguageGuaranteedVersion, sizeof(r_config.shadingLanguageGuaranteedVersion), "%d.%s", glslVersionMajor, glslVersionMinor);
-		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %s\n", (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
+	if (R_CheckExtension("GL_ARB_shading_language_100") || r_config.glVersionMajor >= 2) {
+		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0;
+		 * it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0
+		 * then enable shaders as the implementation supports the shading language!*/
+		const char *shadingVersion = (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION);
+		sscanf(shadingVersion, "%d.%d", &r_config.glslVersionMajor, &r_config.glslVersionMinor);
+		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %i.%i\n",
+				r_config.glslVersionMajor, r_config.glslVersionMinor);
 	} else {
 		/* The shading language is not supported.*/
 		Com_Printf("GLSL shaders unsupported by OpenGL implementation.\n");
@@ -1009,15 +1005,8 @@ static qboolean R_InitExtensions (void)
 	r_programs->modified = qfalse;
 	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
 
-	/* Set up the string component of r_glsl_version.*/
 	r_glsl_version = Cvar_Get("r_glsl_version", "1.10", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
-	r_glsl_version->modified = qfalse;
-	/* Set up the integer component of r_glsl_version.*/
-	sscanf(r_glsl_version->string, "%1d%*1c%d", &glslVersionMajor, &glslVersionMinorInt);
-	r_glsl_version->integer = glslVersionMajor * 100 + glslVersionMinorInt;
-	Com_Printf("GLSL version setting on startup: %s\n", r_glsl_version->string);
-	/* Set up a change listener so that both components of r_glsl_version will be updated when the string is changed (e.g. The user selects a different choice in the listbox of the options).*/
-	Cvar_RegisterChangeListener("r_glsl_version", R_CvarGLSLVersionChangeListener);
+	Cvar_SetCheckFunction("r_glsl_version", R_CvarGLSLVersionCheck);
 
 	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
 	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);

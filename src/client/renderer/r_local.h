@@ -153,8 +153,13 @@ typedef struct {
 	const char *vendorString;
 	const char *versionString;
 	const char *extensionsString;
-	/** @brief Version of GLSL guaranteed to be supported by OpenGL implementation (not necessarily the one in use). Ex: "1.10". Empty if none.*/
-	char shadingLanguageGuaranteedVersion[6];
+
+	int glVersionMajor;
+	int glVersionMinor;
+
+	int glslVersionMajor;
+	int glslVersionMinor;
+
 	int maxTextureSize;
 	int maxTextureUnits;
 	int maxTextureCoords;
