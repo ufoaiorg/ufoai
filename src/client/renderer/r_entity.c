@@ -177,6 +177,7 @@ static image_t *actorIndicator;
 void R_DrawEntityEffects (void)
 {
 	int i;
+	const int mask = r_shadows->integer ? RF_BLOOD : (RF_SHADOW | RF_BLOOD);
 	GLint oldDepthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
 
@@ -196,14 +197,18 @@ void R_DrawEntityEffects (void)
 		glPushMatrix();
 		glMultMatrixf(e->transform.matrix);
 
-		if (e->flags & RF_BLOOD) {
+		if (e->flags & mask) {
 			const vec3_t points[] = { { -18.0, 14.0, -28.5 }, { 10.0, 14.0, -28.5 }, { 10.0, -14.0, -28.5 }, { -18.0,
 					-14.0, -28.5 } };
 			/** @todo use default_texcoords */
 			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
 
-			assert(e->deathTexture);
-			R_BindTexture(e->deathTexture->texnum);
+			if (e->flags & RF_SHADOW) {
+				R_BindTexture(shadow->texnum);
+			} else {
+				assert(e->deathTexture);
+				R_BindTexture(e->deathTexture->texnum);
+			}
 
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);

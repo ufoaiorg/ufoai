@@ -1483,6 +1483,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		ent->flags |= RF_BLOOD;
 	else if (LE_IsDead(le))
 		ent->flags |= RF_BLOOD;
+	else
+		ent->flags |= RF_SHADOW;
 
 	ent->flags |= RF_ACTOR;
 	/* actors are highlighted if some other actor uses ir goggles */
