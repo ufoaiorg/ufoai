@@ -88,6 +88,8 @@ typedef struct {
 	char name[MAX_QPATH];
 	int idx;
 
+	qboolean legacy; /* map being loaded is using legacy format; remove this when conversion is complete */
+
 	int numbrushsides;
 	cBspBrushSide_t *brushsides;
 

@@ -812,7 +812,7 @@ static void CM_AddMapTile (const char *name, const qboolean day, const int sX, c
 	for (i = 0; i < sizeof(header) / 4; i++)
 		((int *) &header)[i] = LittleLong(((int *) &header)[i]);
 
-	if (header.version != BSPVERSION)
+	if (header.version != BSPVERSION  && header.version != BSPVERSION_LEGACY) /* remove BSPVERSION_LEGACY when converion for new format is done */
 		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
 
 	base = (const byte *) buf;
@@ -825,6 +825,9 @@ static void CM_AddMapTile (const char *name, const qboolean day, const int sX, c
 	OBJZERO(*tile);
 	tile->idx = mapTiles->numTiles;
 	Q_strncpyz(tile->name, name, sizeof(tile->name));
+
+	if (header.version == BSPVERSION_LEGACY)
+		tile->legacy = qtrue;
 
 	/* pathfinding and the like must be shifted on the worldplane when we
 	 * are assembling a map */

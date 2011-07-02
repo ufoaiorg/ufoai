@@ -370,7 +370,9 @@ typedef struct dpmvertex_s {
 /** little-endian "IBSP" */
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
 
-#define BSPVERSION	78
+/* This is for older bsp format with sized textures; should be removed when conversion is complete */
+#define BSPVERSION_LEGACY 78
+#define BSPVERSION 79
 
 /** @brief Directory of the different data blocks */
 typedef struct {

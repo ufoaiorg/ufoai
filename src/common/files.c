@@ -1300,7 +1300,7 @@ static int CheckBSPFile (const char *filename)
 
 	if (header[0] != IDBSPHEADER)
 		return 2;
-	if (header[1] != BSPVERSION)
+	if (header[1] != BSPVERSION && header[1] != BSPVERSION_LEGACY) /* remove BSPVERSION_LEGACY when conversion to new format is done */
 		return 3;
 
 	/* valid BSP-File */
