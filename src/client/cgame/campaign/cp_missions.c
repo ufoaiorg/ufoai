@@ -551,10 +551,10 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 
 	Com_DPrintf(DEBUG_CLIENT, "Mission is %s, %d\n", mission->id, mission->category);
 	switch (mission->category) {
-	/** @todo each category should have a its own model */
 	case INTERESTCATEGORY_RESCUE:
+		return "geoscape/icon_rescue";
 	case INTERESTCATEGORY_BUILDING:
-		return "geoscape/mission";
+		return "geoscape/icon_build_alien_base";
 	case INTERESTCATEGORY_ALIENBASE:
 		/** @todo we have two different alienbase models */
 		return "geoscape/alienbase";
