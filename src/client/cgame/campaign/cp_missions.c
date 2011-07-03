@@ -554,15 +554,19 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	switch (mission->category) {
 	/** @todo each category should have a its own model */
 	case INTERESTCATEGORY_RESCUE:
-	case INTERESTCATEGORY_RECON:
-	case INTERESTCATEGORY_XVI:
-	case INTERESTCATEGORY_HARVEST:
-	case INTERESTCATEGORY_TERROR_ATTACK:
 	case INTERESTCATEGORY_BUILDING:
 		return "geoscape/mission";
 	case INTERESTCATEGORY_ALIENBASE:
 		/** @todo we have two different alienbase models */
 		return "geoscape/alienbase";
+	case INTERESTCATEGORY_RECON:
+		return "geoscape/icon_recon";
+	case INTERESTCATEGORY_XVI:
+		return "geoscape/icon_xvi";
+	case INTERESTCATEGORY_HARVEST:
+		return "geoscape/icon_harvest";
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		return "geoscape/icon_terror";
 	/* Should not be reached, these mission categories are not drawn on geoscape */
 	case INTERESTCATEGORY_BASE_ATTACK:
 		return "geoscape/base2";
