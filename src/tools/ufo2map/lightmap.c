@@ -166,7 +166,7 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 	tex = &curTile->texinfo[l->face->texinfo];
 
 	for (i = 0; i < 2; i++) {
-		scale[i] = 1.0f/VectorLength(tex->vecs[i]);
+		scale[i] = 1.0f / VectorLength(tex->vecs[i]);
 		VectorScale(tex->vecs[i], scale[i], l->worldtotex[i]);
 	}
 

@@ -243,12 +243,12 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 	if (legacyBSP)
 		sscale = 1.0f;
 	else
-		sscale = 1.0f/VectorLength(tex->uv);
+		sscale = 1.0f / VectorLength(tex->uv);
 
 	if (legacyBSP)
 		tscale = 1.0f;
 	else
-		tscale = 1.0f/VectorLength(tex->vv);
+		tscale = 1.0f / VectorLength(tex->vv);
 
 	for (i = 0; i < surf->numedges; i++) {
 		const int e = mod->bsp.surfedges[surf->firstedge + i];
@@ -574,7 +574,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 		if (legacyBSP)
 			sscale = 1.0f;
 		else
-			sscale = 1.0f/VectorLength(sdir);
+			sscale = 1.0f / VectorLength(sdir);
 
 		tdir = surf->texinfo->vv;
 		toff = surf->texinfo->v_offset;
@@ -582,7 +582,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 		if (legacyBSP)
 			tscale = 1.0f;
 		else
-			tscale = 1.0f/VectorLength(tdir);
+			tscale = 1.0f / VectorLength(tdir);
 
 		for (j = 0; j < surf->numedges; j++) {
 			const float *normal;
