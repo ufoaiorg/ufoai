@@ -547,8 +547,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "geoscape/ufocrash";
 
 	if (mission->mapDef->storyRelated && mission->category != INTERESTCATEGORY_ALIENBASE)
-		/** @todo Should be a special story related mission model */
-		return "geoscape/mission";
+		return "geoscape/icon_story";
 
 	Com_DPrintf(DEBUG_CLIENT, "Mission is %s, %d\n", mission->id, mission->category);
 	switch (mission->category) {
