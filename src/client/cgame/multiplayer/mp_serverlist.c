@@ -150,7 +150,7 @@ static void CL_PingServerCallback (struct net_stream *s)
  */
 static void CL_PingServer (serverList_t *server)
 {
-	struct net_stream *s = cgi->NET_Connect(server->node, server->service);
+	struct net_stream *s = cgi->NET_Connect(server->node, server->service, NULL);
 
 	if (s) {
 		cgi->Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
@@ -485,7 +485,7 @@ static void CL_ServerInfo_f (void)
 		}
 		break;
 	}
-	s = cgi->NET_Connect(host, port);
+	s = cgi->NET_Connect(host, port, NULL);
 	if (s) {
 		cgi->NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
 		cgi->NET_StreamSetCallback(s, &CL_ServerInfoCallback);

@@ -128,7 +128,7 @@ static void CL_Rcon_f (void)
 		else
 			port = DOUBLEQUOTE(PORT_SERVER);
 
-		s = cgi->NET_Connect(rcon_address->string, port);
+		s = cgi->NET_Connect(rcon_address->string, port, NULL);
 		if (s) {
 			cgi->NET_OOB_Printf(s, "%s", message);
 			cgi->NET_StreamSetCallback(s, &CL_RconCallback);

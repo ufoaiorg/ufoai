@@ -272,6 +272,6 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		break;
 
 	default:
-		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegible server message %d", cmd);
+		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegal server message %d", cmd);
 	}
 }

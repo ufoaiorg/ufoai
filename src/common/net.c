@@ -106,6 +106,7 @@ struct net_stream {
 	struct dbuffer *inbound;
 	struct dbuffer *outbound;
 
+	stream_onclose_func *onclose;
 	stream_callback_func *func;
 	struct net_stream *loopback_peer;
 };
@@ -369,9 +370,14 @@ static void NET_StreamClose (struct net_stream *s)
 	/* Note that this is potentially invalid after the callback returns */
 	if (s->finished) {
 		free_dbuffer(s->inbound);
+		if (s->onclose != NULL)
+			s->onclose();
 		Mem_Free(s);
-	} else if (s->func)
+	} else if (s->func) {
 		s->func(s);
+		if (s->onclose != NULL)
+			s->onclose();
+	}
 }
 
 static void do_accept (int sock)
@@ -569,7 +575,7 @@ static qboolean NET_SocketSetNonBlocking (int socketNum)
 	return qtrue;
 }
 
-static struct net_stream *NET_DoConnect (const char *node, const char *service, const struct addrinfo *addr, int i)
+static struct net_stream *NET_DoConnect (const char *node, const char *service, const struct addrinfo *addr, int i, stream_onclose_func *onclose)
 {
 	struct net_stream *s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
@@ -602,6 +608,7 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
 	s->outbound = new_dbuffer();
 	s->family = addr->ai_family;
 	s->addrlen = addr->ai_addrlen;
+	s->onclose = onclose;
 
 	maxfd = max(sock + 1, maxfd);
 	FD_SET(sock, &read_fds);
@@ -613,11 +620,14 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
  * @brief Try to connect to a given host on a given port
  * @param[in] node The host to connect to
  * @param[in] service The port to connect to
+ * @param[in] onclose The callback that is called on closing the returned stream. This is useful if
+ * you hold the pointer for the returned stream anywhere else and would like to get notified once
+ * this pointer is invalid.
  * @sa NET_DoConnect
  * @sa NET_ConnectToLoopBack
  * @todo What about a timeout
  */
-struct net_stream *NET_Connect (const char *node, const char *service)
+struct net_stream *NET_Connect (const char *node, const char *service, stream_onclose_func *onclose)
 {
 	struct addrinfo *res;
 	struct addrinfo hints;
@@ -645,16 +655,19 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 		return NULL;
 	}
 
-	s = NET_DoConnect(node, service, res, index);
+	s = NET_DoConnect(node, service, res, index, onclose);
 
 	freeaddrinfo(res);
 	return s;
 }
 
 /**
+ * @param[in] onclose The callback that is called on closing the returned stream. This is useful if
+ * you hold the pointer for the returned stream anywhere else and would like to get notified once
+ * this pointer is invalid.
  * @sa NET_Connect
  */
-struct net_stream *NET_ConnectToLoopBack (void)
+struct net_stream *NET_ConnectToLoopBack (stream_onclose_func *onclose)
 {
 	struct net_stream *client, *server;
 	int server_index, client_index;
@@ -674,12 +687,14 @@ struct net_stream *NET_ConnectToLoopBack (void)
 	client->loopback = qtrue;
 	client->inbound = new_dbuffer();
 	client->outbound = new_dbuffer();
+	client->onclose = onclose;
 
 	server = NET_StreamNew(server_index);
 	server->loopback = qtrue;
 	server->inbound = client->outbound;
 	server->outbound = client->inbound;
 	server->func = server_func;
+	server->onclose = NULL;
 
 	client->loopback_peer = server;
 	server->loopback_peer = client;

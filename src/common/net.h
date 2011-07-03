@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct net_stream;
 struct datagram_socket;
 struct sockaddr;
+typedef void stream_onclose_func();
 typedef void stream_callback_func(struct net_stream *s);
 typedef void datagram_callback_func(struct datagram_socket *s, const char *buf, int len, struct sockaddr *from);
 
@@ -44,8 +45,8 @@ void NET_ResolvNode(const char *node, char *buf, size_t bufLength);
 void NET_Init(void);
 void NET_Shutdown(void);
 void NET_Wait(int timeout);
-struct net_stream *NET_Connect(const char *node, const char *service);
-struct net_stream *NET_ConnectToLoopBack(void);
+struct net_stream *NET_Connect(const char *node, const char *service, stream_onclose_func *onclose);
+struct net_stream *NET_ConnectToLoopBack(stream_onclose_func *onclose);
 void NET_StreamEnqueue(struct net_stream *s, const char *data, int len);
 qboolean NET_StreamIsClosed(struct net_stream *s);
 int NET_StreamGetLength(struct net_stream *s);

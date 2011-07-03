@@ -1556,6 +1556,11 @@ Network functions
 ===============================================================
 */
 
+static void Irc_Net_StreamClose (void)
+{
+	irc_stream = NULL;
+}
+
 /**
  * @return qtrue if successful - qfalse otherwise
  * @sa Irc_Net_Disconnect
@@ -1564,7 +1569,7 @@ static qboolean Irc_Net_Connect (const char *host, const char *port)
 {
 	if (irc_stream)
 		NET_StreamFree(irc_stream);
-	irc_stream = NET_Connect(host, port);
+	irc_stream = NET_Connect(host, port, Irc_Net_StreamClose);
 	return irc_stream ? qfalse : qtrue;
 }
 
@@ -1574,7 +1579,6 @@ static qboolean Irc_Net_Connect (const char *host, const char *port)
 static qboolean Irc_Net_Disconnect (void)
 {
 	NET_StreamFree(irc_stream);
-	irc_stream = NULL;
 	return qtrue;
 }
 

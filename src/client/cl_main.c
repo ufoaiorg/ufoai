@@ -187,6 +187,12 @@ static void CL_Reconnect (void)
 	cls.connectTime = CL_Milliseconds() - 1500;
 }
 
+static void CL_FreeClientStream (void)
+{
+	cls.netStream = NULL;
+	Com_Printf("Client stream was closed\n");
+}
+
 /**
  * @note Only call @c CL_Connect if there is no connection yet (@c cls.netStream is @c NULL)
  * @sa CL_Disconnect
@@ -201,10 +207,10 @@ static void CL_Connect (void)
 	if (cls.servername[0] != '\0') {
 		assert(cls.serverport[0] != '\0');
 		Com_Printf("Connecting to %s %s...\n", cls.servername, cls.serverport);
-		cls.netStream = NET_Connect(cls.servername, cls.serverport);
+		cls.netStream = NET_Connect(cls.servername, cls.serverport, CL_FreeClientStream);
 	} else {
 		Com_Printf("Connecting to localhost...\n");
-		cls.netStream = NET_ConnectToLoopBack();
+		cls.netStream = NET_ConnectToLoopBack(CL_FreeClientStream);
 	}
 
 	if (cls.netStream) {
