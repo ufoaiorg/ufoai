@@ -386,6 +386,7 @@ static void testAutoMissions (void)
 
 static void testTransferItem (void)
 {
+	const campaign_t *campaign = GetCampaign();
 	const vec2_t pos = {0, 0};
 	const vec2_t posTarget = {51, 0};
 	base_t *base, *targetBase;
@@ -399,9 +400,9 @@ static void testTransferItem (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 	/* make sure that we get all buildings in our second base, too.
 	 * This is needed for starting a transfer */
-	ccs.campaignStats.basesBuilt = 0;
 	targetBase = CreateBase("unittesttransferitemtargetbase", posTarget);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(targetBase);
+	B_SetUpFirstBase(campaign, targetBase);
 
 	od = INVSH_GetItemByID("assault");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
@@ -1136,9 +1137,8 @@ static void testBuildingConstruction (void)
 	/* day 0 has special meaning! */
 	/* if building->startTime is 0 no buildTime checks done! */
 	ccs.date.day++;
-	ccs.campaignStats.basesBuilt = 1;
-
-	base = CreateBase("unittestbuildingconstruction", pos);
+	base = CreateBase("unittestbuildingconstruction1", pos);
+	base = CreateBase("unittestbuildingconstruction2", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
 	/* base should have exactly one building: entrance */

@@ -1257,10 +1257,13 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	if (!campaign)
 		Com_Error(ERR_DROP, "You can only build a base in an active campaign");
 
+	if (!base)
+		Com_Error(ERR_DROP, "Cannot build more bases");
+
 	B_SetName(base, name);
 	Vector2Copy(pos, base->pos);
 
-	base->idx = B_GetBaseIDX(base);
+	base->idx = ccs.campaignStats.basesBuilt;
 	base->founded = qtrue;
 
 	/* increase this early because a lot of functions rely on this
@@ -1977,6 +1980,7 @@ static void B_BaseList_f (void)
 		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  Cmd AMtr Entr Miss Lasr  Rdr Team\n");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
+		Com_Printf("\n");
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
 		for (row = 0; row < BASE_SIZE; row++) {
@@ -2514,6 +2518,7 @@ qboolean B_SaveXML (xmlNode_t *parent)
 		Com_RegisterConstList(saveBaseConstants);
 
 		act_base = XML_AddNode(bases, SAVE_BASES_BASE);
+		XML_AddInt(act_base, SAVE_BASES_IDX, b->idx);
 		XML_AddString(act_base, SAVE_BASES_NAME, b->name);
 		XML_AddPos3(act_base, SAVE_BASES_POS, b->pos);
 		XML_AddString(act_base, SAVE_BASES_BASESTATUS, Com_GetConstVariable(SAVE_BASESTATUS_NAMESPACE, b->baseStatus));
@@ -2663,7 +2668,11 @@ qboolean B_LoadXML (xmlNode_t *parent)
 
 		ccs.numBases++;
 
-		b->idx = B_GetBaseIDX(b);
+		b->idx = XML_GetInt(base, SAVE_BASES_IDX, -1);
+		/** @todo fallback code for compatibility */
+		if (b->idx == -1)
+			b->idx = i;
+
 		b->founded = qtrue;
 		if (!Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
 			Com_Printf("Invalid base status '%s'\n", str);

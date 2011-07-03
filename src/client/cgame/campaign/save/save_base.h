@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_BASES_BASES "bases"
 
 #define SAVE_BASES_BASE "base"
+#define SAVE_BASES_IDX "idx"
 #define SAVE_BASES_NAME "name"
 #define SAVE_BASES_POS "pos"
 #define SAVE_BASES_BASESTATUS "baseStatus"
@@ -86,6 +87,7 @@ DTD:
 <!ELEMENT bases base+>
 <!ELEMENT base pos buildingSpace buildings batteries lasers>
 <!ATTLIST base
+	idx					CDATA		#REQUIRED
 	name				CDATA		#IMPLIED
 	baseStatus	(underattack,
 					working)		#REQUIRED
