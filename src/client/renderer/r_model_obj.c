@@ -279,6 +279,7 @@ static void R_LoadObjSkin (model_t *mod)
 	if (FS_CheckFile("%s.mtl", skinPath) != -1) {
 		const char *buffer;
 		byte *buf;
+		int i;
 
 		FS_LoadFile(va("%s.mtl", skinPath), &buf);
 
@@ -289,17 +290,26 @@ static void R_LoadObjSkin (model_t *mod)
 				break;
 
 			if (Q_streq(token, "map_Kd")) {
+				mesh->num_skins++;
+			}
+		}
+		mesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * mesh->num_skins, vid_modelPool, 0);
+
+		buffer = (const char *)buf;
+		i = 0;
+		for (;;) {
+			const char *token = Com_Parse(&buffer);
+			if (token[0] == '\0')
+				break;
+
+			if (Q_streq(token, "map_Kd")) {
 				const char *skin = Com_Parse(&buffer);
-				mAliasSkin_t *aliasSkin;
+				mAliasSkin_t *aliasSkin = &mesh->skins[i++];
 
 				Com_sprintf(skinPath, sizeof(skinPath), ".%s", skin);
-				if (mesh->skins == NULL)
-					mesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
 
-				aliasSkin = &mesh->skins[mesh->num_skins];
 				aliasSkin->skin = R_AliasModelGetSkin(mod->name, skinPath);
 				Q_strncpyz(aliasSkin->name, aliasSkin->skin->name, sizeof(aliasSkin->name));
-				mesh->num_skins++;
 			}
 		}
 
