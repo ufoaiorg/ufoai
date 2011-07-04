@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_BASES_POS "pos"
 #define SAVE_BASES_BASESTATUS "baseStatus"
 #define SAVE_BASES_ALIENINTEREST "alienInterest"
-#define SAVE_BASES_CURRENTAIRCRAFTIDX "currentAircraftIDX"
 
 #define SAVE_BASES_BUILDINGSPACE "buildingSpace"
 #define SAVE_BASES_BUILDING "building"

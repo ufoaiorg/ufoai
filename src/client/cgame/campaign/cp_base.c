@@ -2494,20 +2494,22 @@ qboolean B_SaveStorageXML (xmlNode_t *parent, const equipDef_t equip)
 	}
 	return qtrue;
 }
+
 /**
  * @brief Save callback for saving in xml format.
  * @param[out] parent XML Node structure, where we write the information to
  */
 qboolean B_SaveXML (xmlNode_t *parent)
 {
-	xmlNode_t * bases;
+	xmlNode_t *bases;
 	base_t *b;
 
 	bases = XML_AddNode(parent, SAVE_BASES_BASES);
 	b = NULL;
 	while ((b = B_GetNext(b)) != NULL) {
-		int k;
-		xmlNode_t * act_base, *node;
+		int row;
+		xmlNode_t *act_base;
+		xmlNode_t *node;
 		building_t *building;
 
 		if (!b->founded) {
@@ -2523,21 +2525,19 @@ qboolean B_SaveXML (xmlNode_t *parent)
 		XML_AddPos3(act_base, SAVE_BASES_POS, b->pos);
 		XML_AddString(act_base, SAVE_BASES_BASESTATUS, Com_GetConstVariable(SAVE_BASESTATUS_NAMESPACE, b->baseStatus));
 		XML_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
-		if (b->aircraftCurrent)
-			XML_AddInt(act_base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIR_GetAircraftIDXInBase(b->aircraftCurrent));
 
 		/* building space */
 		node = XML_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
-		for (k = 0; k < BASE_SIZE; k++) {
-			int l;
-			for (l = 0; l < BASE_SIZE; l++) {
+		for (row = 0; row < BASE_SIZE; row++) {
+			int column;
+			for (column = 0; column < BASE_SIZE; column++) {
 				xmlNode_t * snode = XML_AddNode(node, SAVE_BASES_BUILDING);
 				/** @todo save it as vec2t if needed, also it's opposite */
-				XML_AddInt(snode, SAVE_BASES_X, k);
-				XML_AddInt(snode, SAVE_BASES_Y, l);
-				if (b->map[k][l].building)
-					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, B_GetBuildingAt(b, l, k)->idx);
-				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, B_IsTileBlocked(b, l, k));
+				XML_AddInt(snode, SAVE_BASES_X, row);
+				XML_AddInt(snode, SAVE_BASES_Y, column);
+				if (B_GetBuildingAt(b, column, row))
+					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, B_GetBuildingAt(b, column, row)->idx);
+				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, B_IsTileBlocked(b, column, row));
 			}
 		}
 		/* buildings */
@@ -2555,7 +2555,7 @@ qboolean B_SaveXML (xmlNode_t *parent)
 			XML_AddString(snode, SAVE_BASES_BUILDINGSTATUS, Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
 			XML_AddDate(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart.day, building->timeStart.sec);
 			XML_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
-			XML_AddFloat(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
+			XML_AddFloatValue(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
 			XML_AddPos2(snode, SAVE_BASES_POS, building->pos);
 		}
 		/* base defences */
@@ -2661,7 +2661,6 @@ qboolean B_LoadXML (xmlNode_t *parent)
 	Com_RegisterConstList(saveBaseConstants);
 	for (base = XML_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = XML_GetNextNode(base, bases, SAVE_BASES_BASE)) {
 		xmlNode_t * node, * snode;
-		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
 		const char *str = XML_GetString(base, SAVE_BASES_BASESTATUS);
 		int j;
@@ -2683,16 +2682,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 		Q_strncpyz(b->name, XML_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
 		XML_GetPos3(base, SAVE_BASES_POS, b->pos);
 		b->alienInterest = XML_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
-
-		aircraftIdxInBase = XML_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
-		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID) {
-			/* aircraft are not yet loaded! */
-			/** @todo this must be set after the aircraft are loaded */
-			/*b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];*/
-			b->aircraftCurrent = NULL;
-		} else {
-			b->aircraftCurrent = NULL;
-		}
+		b->aircraftCurrent = NULL;
 
 		/* building space*/
 		node = XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
