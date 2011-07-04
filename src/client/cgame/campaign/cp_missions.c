@@ -913,7 +913,6 @@ void CP_MissionStageEnd (const campaign_t* campaign, mission_t *mission)
 
 	/* Crash mission is on the map for too long: aliens die or go away. End mission */
 	if (mission->crashed) {
-		/** @todo wouldn't that mean that we've won the battle? but in fact we did nothing, no? */
 		CP_MissionIsOver(mission);
 		return;
 	}
