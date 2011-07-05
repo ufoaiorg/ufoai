@@ -86,8 +86,10 @@ void CL_ViewLoadMedia (void)
 		}
 		SCR_DrawLoading(loadingPercent, loadingMessages);
 		cl.model_draw[i] = R_RegisterModelShort(name);
-		if (!cl.model_draw[i])
+		if (!cl.model_draw[i]) {
+			Cmd_ExecuteString("fs_info\n");
 			Com_Error(ERR_DROP, "Could not load model '%s'\n", name);
+		}
 
 		/* initialize clipping for bmodels */
 		if (name[0] == '*')
