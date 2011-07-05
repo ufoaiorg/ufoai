@@ -257,7 +257,7 @@ tile +filler_1s2
 0      1hg      0
 }
 
-// filler with horisontal fence
+// filler with horisontal fence (left-bottom corner)
 tile +filler_1s3
 {
 3 3
@@ -292,6 +292,16 @@ tile +filler_1s5
 wv    +1     1vw
 0      hg     0
 }
+
+// Right-bottom corner
+tile +filler_1s6
+{
+3 3
+0      1f     0
+1wv    +1     wv
+0      hg     0
+}
+
 
 tileset fillers_1s_common
 {
@@ -450,7 +460,7 @@ tileset vertical_odd_1 "0 8"
 
 assembly small_ufo
 {
-size "6 5"
+size "7 6"
 title "_UFO landed in hills area"
 
 //fix +road_1c1 "4 0"
@@ -472,6 +482,7 @@ tileset vertical_odd_1 "0 8"
 tileset fillers_1s_common "0 20"
 
 +filler_1s3 "0 2"
++filler_1s6 "0 2"
 
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
