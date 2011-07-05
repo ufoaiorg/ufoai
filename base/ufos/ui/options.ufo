@@ -1188,6 +1188,7 @@ window options
 			// ========
 			// SHADOWS
 			// ========
+			/*
 			string shadows_str
 			{
 				tooltip		"_At the moment these are just drop-shadows."
@@ -1203,6 +1204,7 @@ window options
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
+			*/
 			// ===============================
 			// LIGHTMAP RESOLUTION BLOCK SIZE
 			// ===============================
