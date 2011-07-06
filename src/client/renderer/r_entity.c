@@ -177,7 +177,7 @@ static image_t *actorIndicator;
 void R_DrawEntityEffects (void)
 {
 	int i;
-	const int mask = r_shadows->integer ? RF_BLOOD : (RF_SHADOW | RF_BLOOD);
+	const int mask = r_stencilshadows->integer ? RF_BLOOD : (RF_SHADOW | RF_BLOOD);
 	GLint oldDepthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
 
