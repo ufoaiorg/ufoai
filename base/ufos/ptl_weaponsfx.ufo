@@ -217,7 +217,7 @@ particle bulletImpact
 	init
 	{
 		image  sfx/smoke
-		blend  add
+		blend  blend
 		style  facing
 		thinkfade  sin		// fade the think function with a sinus function
 		size   "20 20"		// set the size vector to 20x20
@@ -876,7 +876,7 @@ particle plasmaPulse
 		mul  #
 		add  pos "80 30"
 		pop  *size
-		spawn plasmaTrail
+//		spawn plasmaTrail
 	}
  }
 
@@ -884,27 +884,23 @@ particle plasmaTrail
 {
 	init
 	{
-		image  sfx/weapons/plasmaimpact_03
+		image  sfx/weapons/plasmaimpact_02
 		blend  add
 		style  facing
-		thinkfade  out
-		rand   float 0.5
-		add    float 0.3
-		pop    *tps
-		crand  vector "1 1 1"
-		add    *s
-		pop    *s
-		v		"0 0 -2.5"
+		thinkfade  saw
+		v      "0 0 0"
+		size   "15 15"
+		tps    4
 	}
 	run
 	{
-		push   pos "5 5"
+		push   pos "8 8"
 		mul    *t
-		add    pos "13 13"
+		sub    pos "10 10"
 		pop    *size
 
 		// change the position a little bit randomly
-		crand  vector "0.2 0.2 0.2"	// push a value between -1 and 1 onto the stack
+		crand  vector "0.5 0.5 0.5"	// push a value between -1 and 1 onto the stack
 		add    *s				// add the current location
 		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
 	}
