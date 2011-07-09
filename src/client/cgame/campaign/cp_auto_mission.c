@@ -550,6 +550,13 @@ void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam
 	int numCivsTm;
 	int unit;
 
+	/* These are used to calculate possible generated health scores of non-player units. */
+	/* Adjust these to change game balance. */
+	/* TODO:  Should this be scripted instead, from a .ufo file? */
+	const float autoGenHealthAliens = 200.f;
+	const float autoGenHealthAlienDrones = 300.f;
+	const float autoGenHealthCivilians = 40.f;
+
 	assert(battle);
 	assert(missionParams);
 
@@ -568,8 +575,8 @@ void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam
 	if (numAliensTm > 0) {
 		for (unit = 0; unit < numAliensTm; unit++) {
 			/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
-			const int healthMaxm = (int) (frand() * 100.f) + 50.f;
-			const int health = (int) (frand() * (healthMaxm - 10)) + 10;
+			const int healthMaxm = (int) (frand() * autoGenHealthAliens) + 10.f;
+			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
 			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = healthMaxm;
 			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = health;
 		}
@@ -581,8 +588,8 @@ void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam
 	if (numAlienDronesTm > 0) {
 		for (unit = 0; unit < numAlienDronesTm; unit++) {
 			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
-			const int healthMaxm = (int) (frand() * 120.f) + 80.f;
-			const int health = (int) (frand() * (healthMaxm - 10)) + 10;
+			const int healthMaxm = (int) (frand() * autoGenHealthAlienDrones) + 10.f;
+			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
 			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][unit] = healthMaxm;
 			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][unit] = health;
 		}
@@ -595,8 +602,8 @@ void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam
 	if (numCivsTm > 0) {
 		for (unit = 0; unit < numCivsTm; unit++) {
 			/* Quick, ugly way of deciding civilian health scores.  Eventually we'll need something better. */
-			const int healthMaxm = (int) (frand() * 40.f) + 5.f;
-			const int health = (int) (frand() * (healthMaxm - 4)) + 4;
+			const int healthMaxm = (int) (frand() * autoGenHealthCivilians) + 10.f;
+			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
 			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = healthMaxm;
 			battle->unitHealth[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = health;
 		}
