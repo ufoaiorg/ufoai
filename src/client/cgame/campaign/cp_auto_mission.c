@@ -139,10 +139,10 @@ void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, co
 	 * --- soldiers, and therefore make an easier fight for the player. */
 	switch (campaign->difficulty) {
 	case 4:
-		battle->scoreTeamDifficulty[teamNum] = 0.20;
+		battle->scoreTeamDifficulty[teamNum] = 0.30;
 		break;
 	case 3:
-		battle->scoreTeamDifficulty[teamNum] = 0.30;
+		battle->scoreTeamDifficulty[teamNum] = 0.35;
 		break;
 	case 2:
 		battle->scoreTeamDifficulty[teamNum] = 0.40;
@@ -160,10 +160,10 @@ void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, co
 		battle->scoreTeamDifficulty[teamNum] = 0.60;
 		break;
 	case -3:
-		battle->scoreTeamDifficulty[teamNum] = 0.70;
+		battle->scoreTeamDifficulty[teamNum] = 0.65;
 		break;
 	case -4:
-		battle->scoreTeamDifficulty[teamNum] = 0.80;
+		battle->scoreTeamDifficulty[teamNum] = 0.70;
 		break;
 	default:
 		battle->scoreTeamDifficulty[teamNum] = 0.50;
@@ -367,15 +367,15 @@ static void AM_Setup (autoMissionBattle_t *battle)
 
 			/* In DEBUG mode, these should help with telling where things are at what time, for bug-hunting purposes. */
 			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of healthy units of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of healthy units of %lf.\n",
 					team, teamRatioHealthyUnits[team]);
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has calculated ratio of health values of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of health values of %lf.\n",
 					team, teamRatioHealthTotal[team]);
 
 			/** @todo speaking names please */
 			skillAdjCalc = (teamRatioHealthyUnits[team] + teamRatioHealthTotal[team]);
 			skillAdjCalc *= 0.50;
-			skillAdjCalc = FpCurve1D_u_out(skillAdjCalc, 0.750, 0.50);
+			skillAdjCalc = FpCurve1D_u_in(skillAdjCalc, 0.50, 0.50);
 			skillAdjCalc -= 0.50;
 			skillAdjCalcAbs = fabs(skillAdjCalc);
 			if (skillAdjCalc > 0.0)
@@ -384,7 +384,7 @@ static void AM_Setup (autoMissionBattle_t *battle)
 				battle->scoreTeamSkill[team] = FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs);
 			/* if (skillAdjCalc == exact 0.0), no change to team's skill. */
 
-			Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has adjusted skill rating of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has adjusted skill rating of %lf.\n",
 					team, battle->scoreTeamSkill[team]);
 		}
 	}
@@ -400,15 +400,15 @@ static void AM_CheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const 
 			const double calcRand = frand();
 
 			if (calcRand < (0.050 - (effective * 0.050))) {
-				const int strikeDamage = (int) (200.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
+				const int strikeDamage = (int) (100.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
 
 				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
-				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!\n",
+				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!\n",
 						currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
 				if (battle->unitHealth[eTeam][eUnit] == 0)
-					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Friendly Unit %i on team %i is killed in action!\n",
+					Com_DPrintf(DEBUG_CLIENT, "Friendly Unit %i on team %i is killed in action!\n",
 							eUnit, eTeam);
 
 				battle->teamAccomplishment[currTeam] -= strikeDamage;
@@ -426,7 +426,7 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 			const double calcRand = frand();
 
 			if (calcRand <= effective) {
-				const int strikeDamage = (int) (200.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
+				const int strikeDamage = (int) (100.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
 
 				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
 
@@ -434,7 +434,7 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 						currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
 				if (battle->unitHealth[eTeam][eUnit] == 0) {
-					Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i is killed in action!\n", eUnit, eTeam);
+					Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i is killed in action!\n", eUnit, eTeam);
 					battle->unitKills[eTeam][eUnit] += 1;
 				}
 
@@ -449,7 +449,7 @@ static qboolean AM_UnitAttackEnemies (autoMissionBattle_t *battle, const int cur
 	int eTeam;
 	int count = 0;
 
-	Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i attacks!\n", currUnit, currTeam);
+	Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i attacks!\n", currUnit, currTeam);
 
 	for (eTeam = 0; eTeam < MAX_ACTIVETEAM; eTeam++) {
 		if (battle->isHostile[currTeam][eTeam]) {
@@ -493,7 +493,7 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 				if (battle->unitHealth[team][currentUnit] <= 0)
 					continue;
 
-				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i has adjusted attack rating of %lf.\n",
+				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %lf.\n",
 						currentUnit, team, battle->scoreTeamSkill[team]);
 
 				aliveUnits++;
@@ -502,7 +502,7 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 
 			if (aliveUnits == 0) {
 				battle->teamActive[team] = qfalse;
-				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Team %i has been DEFEATED and is OUT OF ACTION.\n", team);
+				Com_DPrintf(DEBUG_CLIENT, "Team %i has been DEFEATED and is OUT OF ACTION.\n", team);
 			}
 		}
 	}
