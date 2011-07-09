@@ -551,18 +551,37 @@ team phalanx
 	actorsounds {
 		female {
 			hurtsound	soldiers/femalehurt01
+			hurtsound	soldiers/femalehurt02
+			hurtsound	soldiers/femalehurt03
+			hurtsound	soldiers/femalehurt04
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
 			deathsound	soldiers/femaledeath04
+			deathsound	soldiers/femaledeath05
+			deathsound	soldiers/femaledeath06
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
+			hurtsound 	soldiers/malehurt02
+			hurtsound 	soldiers/malehurt03
+			hurtsound 	soldiers/malehurt04
+			hurtsound 	soldiers/malehurt05
+			hurtsound 	soldiers/malehurt06
+			hurtsound 	soldiers/malehurt07
+			hurtsound 	soldiers/malehurt08
+			hurtsound 	soldiers/malehurt09
+			hurtsound 	soldiers/malehurt10
+			hurtsound 	soldiers/malehurt11
+			hurtsound 	soldiers/malehurt12
+			hurtsound 	soldiers/malehurt13
 			deathsound	soldiers/maledeath01
 			deathsound	soldiers/maledeath02
 			deathsound	soldiers/maledeath03
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
+			deathsound	soldiers/maledeath06
+			deathsound	soldiers/maledeath07
 		}
 	}
 	templates {
@@ -1068,17 +1087,37 @@ team phalanx_scientist
 	actorsounds {
 		female {
 			hurtsound	soldiers/femalehurt01
+			hurtsound	soldiers/femalehurt02
+			hurtsound	soldiers/femalehurt03
+			hurtsound	soldiers/femalehurt04
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
+			deathsound	soldiers/femaledeath04
+			deathsound	soldiers/femaledeath05
+			deathsound	soldiers/femaledeath06
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
+			hurtsound 	soldiers/malehurt02
+			hurtsound 	soldiers/malehurt03
+			hurtsound 	soldiers/malehurt04
+			hurtsound 	soldiers/malehurt05
+			hurtsound 	soldiers/malehurt06
+			hurtsound 	soldiers/malehurt07
+			hurtsound 	soldiers/malehurt08
+			hurtsound 	soldiers/malehurt09
+			hurtsound 	soldiers/malehurt10
+			hurtsound 	soldiers/malehurt11
+			hurtsound 	soldiers/malehurt12
+			hurtsound 	soldiers/malehurt13
 			deathsound	soldiers/maledeath01
 			deathsound	soldiers/maledeath02
 			deathsound	soldiers/maledeath03
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
+			deathsound	soldiers/maledeath06
+			deathsound	soldiers/maledeath07
 		}
 	}
 	templates {
@@ -1427,18 +1466,37 @@ team phalanx_pilot
 	actorsounds {
 		female {
 			hurtsound	soldiers/femalehurt01
+			hurtsound	soldiers/femalehurt02
+			hurtsound	soldiers/femalehurt03
+			hurtsound	soldiers/femalehurt04
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
 			deathsound	soldiers/femaledeath04
+			deathsound	soldiers/femaledeath05
+			deathsound	soldiers/femaledeath06
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
+			hurtsound 	soldiers/malehurt02
+			hurtsound 	soldiers/malehurt03
+			hurtsound 	soldiers/malehurt04
+			hurtsound 	soldiers/malehurt05
+			hurtsound 	soldiers/malehurt06
+			hurtsound 	soldiers/malehurt07
+			hurtsound 	soldiers/malehurt08
+			hurtsound 	soldiers/malehurt09
+			hurtsound 	soldiers/malehurt10
+			hurtsound 	soldiers/malehurt11
+			hurtsound 	soldiers/malehurt12
+			hurtsound 	soldiers/malehurt13
 			deathsound	soldiers/maledeath01
 			deathsound	soldiers/maledeath02
 			deathsound	soldiers/maledeath03
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
+			deathsound	soldiers/maledeath06
+			deathsound	soldiers/maledeath07
 		}
 	}
 	templates {
@@ -1787,20 +1845,27 @@ team phalanx_worker
 	}
 
 	actorsounds {
-		female {
-			hurtsound	soldiers/femalehurt01
-			deathsound	soldiers/femaledeath01
-			deathsound	soldiers/femaledeath02
-			deathsound	soldiers/femaledeath03
-			deathsound	soldiers/femaledeath04
-		}
 		male {
 			hurtsound 	soldiers/malehurt01
+			hurtsound 	soldiers/malehurt02
+			hurtsound 	soldiers/malehurt03
+			hurtsound 	soldiers/malehurt04
+			hurtsound 	soldiers/malehurt05
+			hurtsound 	soldiers/malehurt06
+			hurtsound 	soldiers/malehurt07
+			hurtsound 	soldiers/malehurt08
+			hurtsound 	soldiers/malehurt09
+			hurtsound 	soldiers/malehurt10
+			hurtsound 	soldiers/malehurt11
+			hurtsound 	soldiers/malehurt12
+			hurtsound 	soldiers/malehurt13
 			deathsound	soldiers/maledeath01
 			deathsound	soldiers/maledeath02
 			deathsound	soldiers/maledeath03
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
+			deathsound	soldiers/maledeath06
+			deathsound	soldiers/maledeath07
 		}
 	}
 	templates {
