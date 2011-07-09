@@ -3988,13 +3988,33 @@ base/sound/soldiers/femaledeath01.ogg | GNU General Public License 2.0 | OpenAre
 base/sound/soldiers/femaledeath02.ogg | GNU General Public License 2.0 | OpenArena
 base/sound/soldiers/femaledeath03.ogg | GNU General Public License 2.0 | OpenArena
 base/sound/soldiers/femaledeath04.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/femaledeath05.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/femaledeath06.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/soldiers/femalehurt01.ogg | GNU General Public License 2.0 | OpenArena
+base/sound/soldiers/femalehurt02.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/femalehurt03.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/femalehurt04.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/femalehurt05.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/soldiers/maledeath01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren
 base/sound/soldiers/maledeath02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren
 base/sound/soldiers/maledeath03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren
 base/sound/soldiers/maledeath04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren
 base/sound/soldiers/maledeath05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren
+base/sound/soldiers/maledeath06.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/maledeath07.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/soldiers/malehurt01.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/soldiers/malehurt02.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt03.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt04.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt05.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt06.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt07.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt08.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt09.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt10.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt11.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt12.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/sound/soldiers/malehurt13.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/ugv/diesel-idle.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ugv/diesel-move.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ugv/diesel-stop.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
