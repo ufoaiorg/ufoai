@@ -176,7 +176,7 @@ team europe
 			civilians/male sheik01 sci_head02b 0	//body:same as scientist's, just in white, head: skinhead, beard, glasses
 			civilians/male sheik01 sci_head03a 0	//body:same as scientist's, just in white, head: white hat
 			civilians/male sheik01 sci_head03b 0	//body:same as scientist's, just in white, head: white hat, glasses
-			civilians/male sheik01 sci_head03 0	//body:same as scientist's, just in white, head: black hat
+			civilians/male sheik01 head03 0	//body:same as scientist's, just in white, head: black hat
 			// civilians/male boy01 boy_head01 0
 		}
 	}
