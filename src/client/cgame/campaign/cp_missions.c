@@ -2016,7 +2016,5 @@ void MIS_Shutdown (void)
 	Cmd_RemoveCommand("debug_missionadd");
 	Cmd_RemoveCommand("debug_missiondeleteall");
 	Cmd_RemoveCommand("debug_missionlist");
-	Cmd_RemoveCommand("debug_interestlist");
-	Cmd_RemoveCommand("debug_interestset");
 #endif
 }
