@@ -376,7 +376,7 @@ ac      +a      +a      +a     +a     +a     ac
 }
 
 // *********************************
-assembly ufo_small
+assembly small
 {
 size "7 8"
 title "_Village residential"
@@ -505,10 +505,10 @@ title "_Village recreational"
 }
 */
 /*
-assembly big
+assembly large
 {
 size "12 12"
-title "_Village big"
+title "_Village large"
 +s01 "0 8"
 +s02 "0 32"
 +s03 "0 32"
