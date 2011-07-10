@@ -2619,11 +2619,6 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	Q_strncpyz(craft->name, s, sizeof(craft->name));
 
 	s = XML_GetString(p, SAVE_AIRCRAFT_MISSIONID);
-	if (s[0] == '\0' && !craft->homebase) {
-		Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
-		Com_UnregisterConstList(saveAircraftConstants);
-		return qfalse;
-	}
 	craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
 
 	if (!craft->homebase) {
