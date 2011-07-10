@@ -2365,6 +2365,7 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 
 	node = XML_AddNode(p, SAVE_AIRCRAFT_AIRCRAFT);
 
+	XML_AddInt(node, SAVE_AIRCRAFT_IDX, aircraft->idx);
 	XML_AddString(node, SAVE_AIRCRAFT_ID, aircraft->id);
 	XML_AddString(node, SAVE_AIRCRAFT_NAME, aircraft->name);
 
@@ -2435,7 +2436,6 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 	if (isUfo)
 		return qtrue;
 
-	XML_AddInt(node, SAVE_AIRCRAFT_IDX, aircraft->idx);
 	XML_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
 	subnode = XML_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
@@ -2581,6 +2581,15 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	tmpInt = XML_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
 	craft->homebase = (tmpInt != MAX_BASES) ? B_GetBaseByIDX(tmpInt) : NULL;
 
+	craft->idx = XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
+	if (craft->idx == -1) {
+		/** @todo fallback code for compatibility */
+		if (!craft->homebase)
+			craft->idx = ccs.numUFOs;
+		else
+			return qfalse;
+	}
+
 	Com_RegisterConstList(saveAircraftConstants);
 
 	statusId = XML_GetString(p, SAVE_AIRCRAFT_STATUS);
@@ -2618,7 +2627,6 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
 
 	if (!craft->homebase) {
-		craft->idx = ccs.numUFOs;
 		/* detection id and time */
 		craft->detectionIdx = XML_GetInt(p, SAVE_AIRCRAFT_DETECTIONIDX, 0);
 		XML_GetDate(p, SAVE_AIRCRAFT_LASTSPOTTED_DATE, &craft->lastSpotted.day, &craft->lastSpotted.sec);
@@ -2667,9 +2675,6 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	if (!craft->homebase)
 		return qtrue;
 
-	craft->idx = XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
-	if (craft->idx == -1)
-		return qfalse;
 	craft->hangar = XML_GetInt(p, SAVE_AIRCRAFT_HANGAR, 0);
 
 	snode = XML_GetNode(p, SAVE_AIRCRAFT_AIRCRAFTTEAM);
@@ -2810,6 +2815,7 @@ static qboolean AIR_PostLoadInitMissions (void)
 {
 	qboolean success = qtrue;
 	aircraft_t *aircraft;
+	aircraft_t *prevUfo;
 	aircraft_t *ufo;
 
 	/* PHALANX aircraft */
@@ -2827,17 +2833,23 @@ static qboolean AIR_PostLoadInitMissions (void)
 	}
 
 	/* UFOs */
-	ufo = NULL;
-	while ((ufo = UFO_GetNext(ufo)) != NULL) {
-		if (!ufo->missionID || ufo->missionID[0] == '\0')
+	prevUfo = NULL;
+	while ((ufo = UFO_GetNext(prevUfo)) != NULL) {
+		if (!ufo->missionID || ufo->missionID[0] == '\0') {
+			Com_Printf("Warning: %s (idx: %i) has no mission assigned, removing it\n", ufo->name, ufo->idx);
+			UFO_RemoveFromGeoscape(ufo);
 			continue;
+		}
 		ufo->mission = CP_GetMissionByID(ufo->missionID);
 		if (!ufo->mission) {
-			Com_Printf("UFO %s (idx: %i) is linked to an invalid mission: %s\n", ufo->name, ufo->idx, ufo->missionID);
-			success = qfalse;
+			Com_Printf("Warning: %s (idx: %i) is linked to an invalid mission %s, removing it\n", ufo->name, ufo->idx, ufo->missionID);
+			UFO_RemoveFromGeoscape(ufo);
+			continue;
 		}
+		ufo->mission->ufo = ufo;
 		Mem_Free(ufo->missionID);
 		ufo->missionID = NULL;
+		prevUfo = ufo;
 	}
 
 	return success;

@@ -1826,8 +1826,6 @@ qboolean MIS_SaveXML (xmlNode_t *parent)
 		XML_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.day, mission->startDate.sec);
 		XML_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.day, mission->finalDate.sec);
 		XML_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
-		if (mission->ufo)
-			XML_AddShort(missionNode, SAVE_MISSIONS_UFO, UFO_GetGeoscapeIDX(mission->ufo));
 		XML_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
@@ -1853,7 +1851,6 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 			node = XML_GetNextNode(node, missionNode, SAVE_MISSIONS_MISSION)) {
 		const char *name;
 		mission_t mission;
-		int ufoIdx;
 		qboolean defaultAssigned = qfalse;
 		const char *categoryId = XML_GetString(node, SAVE_MISSIONS_CATEGORY);
 		const char *stageId = XML_GetString(node, SAVE_MISSIONS_STAGE);
@@ -1868,21 +1865,11 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 			break;
 		}
 
-		ufoIdx = XML_GetInt(node, SAVE_MISSIONS_UFO, -1);
-		if (ufoIdx <= -1 || ufoIdx >= lengthof(ccs.ufos))
-			mission.ufo = NULL;
-		else
-			mission.ufo = UFO_GetByIDX(ufoIdx);
-
 		name = XML_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
 		if (name && name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
 			if (!mission.mapDef) {
 				Com_Printf("Warning: mapdef \"%s\" for mission \"%s\" doesn't exist. Removing mission!\n", name, mission.id);
-				if (mission.ufo) {
-					Com_Printf("Warning: Removing UFO idx %i (%s) of just removed mission \"%s\"!\n", mission.ufo->idx, mission.ufo->id, mission.id);
-					UFO_RemoveFromGeoscape(mission.ufo);
-				}
 				continue;
 			}
 		} else {
