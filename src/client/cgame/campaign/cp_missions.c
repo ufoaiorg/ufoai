@@ -790,7 +790,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 		mission_t *removedMission;
 
 		/* remove UFO from radar and update idx of ufo in radar array */
-		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
+		RADAR_NotifyUFORemoved(mission->ufo, qtrue);
 
 		/* Update UFO idx */
 		MIS_Foreach(removedMission) {
@@ -803,7 +803,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	} else if (mission->ufo->detected && !RADAR_CheckRadarSensored(mission->ufo->pos)) {
 		/* maybe we use a high speed time: UFO was detected, but flied out of radar
 		 * range since last calculation, and mission is spawned outside radar range */
-		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
+		RADAR_NotifyUFORemoved(mission->ufo, qfalse);
 	}
 }
 

@@ -2828,6 +2828,10 @@ static qboolean AIR_PostLoadInitMissions (void)
 	}
 
 	/* UFOs */
+	/**
+	 * @todo UFO_RemoveFromGeoscape call doesn't notify other systems (aircraft, base defences, sam sites, radar)
+	 * about the removal of the UFO. Destroying UFOs should get a dedicated function with all necessary notify-callbacks called
+	 */
 	prevUfo = NULL;
 	while ((ufo = UFO_GetNext(prevUfo)) != NULL) {
 		if (!ufo->missionID || ufo->missionID[0] == '\0') {
