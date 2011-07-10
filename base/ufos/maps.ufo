@@ -8,6 +8,10 @@
 // * urban, suburban, village, rural, nopopulation
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
+// valid civilianteam values:
+// * CIVILIANS: africa, asia, europe, latin, middle, states, oceania, russia
+// * NON-NATION CIVILIANS: armysoldier, miner, scientist, worker
+//
 // Empty block means 'any' value
 //
 //
@@ -139,6 +143,7 @@ mapdef or_small
 	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	8
+	civilianteam	middle
 
 	aircraft
 	{
@@ -179,6 +184,7 @@ mapdef or_medium
 	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	8
+	civilianteam	middle
 
 	aircraft
 	{
@@ -220,6 +226,7 @@ mapdef or_medium_crash
 	description	"_Crashed UFO in oriental suburban district."
 	size		"small"
 	maxaliens	8
+	civilianteam	middle
 
 	aircraft
 	{
@@ -260,6 +267,7 @@ mapdef or_big
 	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	14
+	civilianteam	middle
 
 	aircraft
 	{
@@ -1746,6 +1754,7 @@ mapdef japan
 		coop4
 	}
 	maxaliens	16 //TODO: This is an arbitrary value right now.
+	civilianteam	asia
 
 	aircraft
 	{
@@ -1795,6 +1804,7 @@ mapdef japan_small
 		coop4
 	}
 	maxaliens	6
+	civilianteam	asia
 
 	aircraft
 	{
@@ -1846,6 +1856,7 @@ mapdef japan_big
 		coop4
 	}
 	maxaliens	16
+	civilianteam	asia
 
 	aircraft
 	{
@@ -2510,6 +2521,7 @@ mapdef oriental
 		coop4
 	}
 	maxaliens		16 //TODO: This is an arbitrary value right now.
+	civilianteam	middle
 
 	aircraft
 	{
@@ -2554,6 +2566,7 @@ mapdef oriental_mosque
 		coop4
 	}
 	maxaliens		16 //TODO: This is an arbitrary value right now.
+	civilianteam	middle
 
 	aircraft
 	{
@@ -3116,6 +3129,7 @@ mapdef africa_small
 	}
 	description		"_A suburb that has been visited by an UFO."
 	maxaliens		6
+	civilianteam	africa
 
 	aircraft
 	{
@@ -3168,6 +3182,7 @@ mapdef africa_large
 	}
 	description		"_A suburb that has received a visit from a Harvester."
 	maxaliens		16
+	civilianteam	africa
 
 	aircraft
 	{
