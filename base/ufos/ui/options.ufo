@@ -1561,10 +1561,11 @@ window options
 		}
 		checkbox menu_sounds_checkbox
 		{
-			pos			"485 217"
+			tooltip		"_Turn the menu sounds on or off."
+			current		*cvar:ui_sounds
+			pos			"485 210"
 			size		"20 18"
 			image		"ui/checkbox_blue"
-			current	*cvar:ui_sounds
 		}
 		//image menu_sounds_rahmen
 		//{
@@ -2359,13 +2360,13 @@ window popup_maintain_resolution
 	{
 		tooltip		"_Accept the new resolution."
 		string		"_Accept"
-		pos			"112 188"
+		pos			"28 188"
 		onClick		{ cmd "ui_pop; copy new_vidmode mn_vidmode; saveconfig config.cfg;" }
 	}
 	cmpCancelButton bt_cancel
 	{
 		tooltip		"_Use the previous resolution."
-		pos			"297 188"
+		pos			"255 188"
 		onClick		{ cmd "ui_pop; copy new_vidmode old_vidmode;" }
 	}
 	func onWindowOpened
