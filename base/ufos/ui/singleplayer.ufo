@@ -179,12 +179,4 @@ window popup_exit_confirmation
 		pos			"285 188"
 		onClick		{ cmd "ui_pop;" }
 	}
-	func onWindowOpened
-	{
-
-	}
-	func onWindowClosed
-	{
-
-	}
 }
