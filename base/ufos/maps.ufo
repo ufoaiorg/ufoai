@@ -2755,7 +2755,7 @@ mapdef bunker
 		coop3
 		coop4
 	}
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens		8
 	civilianteam	armysoldier
 
 	aircraft
@@ -2804,7 +2804,7 @@ mapdef city_industry
 		coop3
 		coop4
 	}
-	maxaliens		6 //TODO: This is an arbitrary value right now.
+	maxaliens		18
 
 	aircraft
 	{
@@ -2849,7 +2849,7 @@ mapdef city_train
 		coop3
 		coop4
 	}
-	maxaliens		6 //TODO: This is an arbitrary value right now.
+	maxaliens		7
 
 	aircraft
 	{
@@ -2899,7 +2899,8 @@ mapdef dam
 		coop3
 		coop4
 	}
-	maxaliens	10 //TODO: This is an arbitrary value right now.
+
+	maxaliens	10
 
 	aircraft
 	{
@@ -2932,7 +2933,7 @@ mapdef dam
 
 mapdef england
 {
-	map			"england"
+	map				"england"
 	description		"_A small village in England."
 	multiplayer		true
 	teams			3
@@ -2946,7 +2947,7 @@ mapdef england
 		coop4
 	}
 
-	maxaliens		8 //TODO: This is an arbitrary value right now.
+	maxaliens		9
 
 	aircraft
 	{
@@ -2994,7 +2995,7 @@ mapdef estate
 		coop4
 	}
 
-	maxaliens		12 //TODO: This is an arbitrary value right now.
+	maxaliens		12
 
 	aircraft
 	{
@@ -3026,12 +3027,12 @@ mapdef estate
 
 mapdef excavation
 {
-	map			"excavation"
-	description	"_An excavation site that has fallen under alien attack."
-	multiplayer	true
-	teams		2
-	maxaliens	5 //TODO: This is an arbitrary value right now.
-	maxaliens	17 // TODO: check what value is correct?
+	map				"excavation"
+	description		"_An excavation site that has fallen under alien attack."
+	multiplayer		true
+	teams			2
+	maxaliens		18
+	civilianteam	middle
 	gametypes {
 		1on1
 		1on1on1
@@ -3089,7 +3090,7 @@ mapdef farm
 		coop3
 		coop4
 	}
-	maxaliens		6
+	maxaliens		12
 
 	aircraft
 	{
@@ -3137,7 +3138,7 @@ mapdef ferry
 		coop3
 		coop4
 	}
-	maxaliens		12 //TODO: This is an arbitrary value right now.
+	maxaliens		6
 
 	aircraft
 	{
@@ -3177,7 +3178,7 @@ mapdef fighter_crash
 	description		"_A small UFO has crashed in this mining region."
 	multiplayer		true
 	teams			2
-	maxaliens		6
+	maxaliens		6 //info_alien_start spawnpoints:19
 	hurtaliens	true
 
 	gametypes {
@@ -3233,7 +3234,7 @@ mapdef fueldump
 		2on2
 		2on2on2
 	}
-	maxaliens		8 //TODO: This is an arbitrary value right now.
+	maxaliens		10
 
 	aircraft
 	{
@@ -3277,7 +3278,7 @@ mapdef gate
 		coop3
 		coop4
 	}
-	maxaliens		4 //TODO: This is an arbitrary value right now.
+	maxaliens		9
 
 	aircraft
 	{
@@ -3325,7 +3326,7 @@ mapdef harbour
 		coop3
 		coop4
 	}
-	maxaliens		8 //TODO: This is an arbitrary value right now.
+	maxaliens		8
 
 	aircraft
 	{
@@ -3372,7 +3373,7 @@ mapdef lake_ice
 		coop4
 	}
 	description		"_A small settlement in winter."
-	maxaliens		16 //TODO: This is an arbitrary value right now.
+	maxaliens		16
 
 	aircraft
 	{
@@ -3408,7 +3409,7 @@ mapdef lake_ice_big
 	multiplayer		true
 	teams			3
 	description		"_A small settlement in winter."
-	maxaliens		16 //TODO: This is an arbitrary value right now.
+	maxaliens		28
 	gametypes {
 		1on1
 		1on1on1
@@ -3463,7 +3464,7 @@ mapdef mine
 		coop3
 		coop4
 	}
-	maxaliens	15 //TODO: This is an arbitrary value right now.
+	maxaliens	15
 	civilianteam	miner
 
 	aircraft
@@ -3512,7 +3513,7 @@ mapdef office
 		coop3
 		coop4
 	}
-	maxaliens		18 //TODO: This is an arbitrary value right now.
+	maxaliens		18
 
 	aircraft
 	{
@@ -3559,7 +3560,7 @@ mapdef oriental
 		coop3
 		coop4
 	}
-	maxaliens		16 //TODO: This is an arbitrary value right now.
+	maxaliens		14
 	civilianteam	middle
 
 	aircraft
@@ -3606,7 +3607,7 @@ mapdef oriental_mosque
 		coop3
 		coop4
 	}
-	maxaliens		16 //TODO: This is an arbitrary value right now.
+	maxaliens		16
 	civilianteam	middle
 
 	aircraft
@@ -3655,7 +3656,7 @@ mapdef pipes_const
 		coop3
 		coop4
 	}
-	maxaliens		8 //TODO: This is an arbitrary value right now.
+	maxaliens		10
 	civilianteam	miner
 
 	aircraft
@@ -3703,7 +3704,7 @@ mapdef resort
 		coop3
 		coop4
 	}
-	maxaliens		8 //TODO: This is an arbitrary value right now.
+	maxaliens		8
 
 	aircraft
 	{
@@ -3754,7 +3755,7 @@ mapdef rivertown
 		coop3
 		coop4
 	}
-	maxaliens		16 //TODO: This is an arbitrary value right now.
+	maxaliens		16
 
 	aircraft
 	{
@@ -3801,7 +3802,7 @@ mapdef scout_crash
 		coop3
 		coop4
 	}
-	maxaliens		4
+	maxaliens		5
 	description		"_A crashed Scout UFO."
 
 	aircraft
@@ -3841,7 +3842,7 @@ mapdef small_street
 	map			"small_street"
 	description		"A small suburban street."
 	multiplayer		false
-	maxaliens		8
+	maxaliens		6
 
 	terrains
 	{
@@ -3874,7 +3875,7 @@ mapdef subway
 		coop3
 		coop4
 	}
-	maxaliens		8 //TODO: This is an arbitrary value right now.
+	maxaliens		8
 
 	aircraft
 	{
@@ -3922,7 +3923,7 @@ mapdef village
 		coop3
 		coop4
 	}
-	maxaliens		11 //TODO: This is an arbitrary value right now.
+	maxaliens		11
 
 	aircraft
 	{
@@ -3967,7 +3968,7 @@ mapdef wilderness
 		2on2on2
 		coop2
 	}
-	maxaliens		8 //TODO: This is an arbitrary value right now.
+	maxaliens		11
 
 	aircraft
 	{
