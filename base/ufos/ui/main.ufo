@@ -72,10 +72,10 @@ window main
 
 	cmpMenuButton button_exit
 	{
-		pos	"640 520"
-		onClick	{ cmd "quit;" }
-		string	"_Exit"
-		tooltip	"_Quit UFO:AI."
+		pos			"640 520"
+		onClick		{ cmd "ui_push popup_exit_game_confirmation;" }
+		string		"_Exit"
+		tooltip		"_Quit UFO:AI."
 	}
 
 	func onWindowOpened
@@ -333,5 +333,42 @@ window popup_tipoftheday
 		} else {
 			cmd "ui_close popup_tipoftheday;"
 		}
+	}
+}
+
+// =============================
+// POPUP EXIT GAME CONFIRMATION
+// =============================
+window popup_exit_game_confirmation
+{
+	{
+		string		"_Exit Game Confirmation"
+		image		"ui/popup_alpha_tile"
+		pos			"264 262"
+		size		"486 247"
+		dragbutton	true
+		closebutton	true
+	}
+	string exit_game_confirmation_label
+	{
+		string		"_Are you sure you want to exit UFO:AI?"
+		pos			"26 58"
+		size		"450 60"
+	}
+	cmpPopupButton bt_quit_game
+	{
+		tooltip		"_Close the game."
+		string		"_Quit"
+		pos			"28 188"
+		onClick		{
+						cmd "ui_pop;"
+						cmd "quit;"
+					}
+	}
+	cmpCancelButton bt_dontquit_game
+	{
+		tooltip		"_Do not quit."
+		pos			"285 188"
+		onClick		{ cmd "ui_pop;" }
 	}
 }
