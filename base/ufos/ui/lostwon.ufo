@@ -38,7 +38,6 @@ window won
 	{
 		visiblewhen	"*cvar:sv_maxclients == 1"
 		string		"_Continue"
-		tooltip		"_Continue"
 		image		"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"
@@ -127,7 +126,6 @@ window lost
 	{
 		visiblewhen	"*cvar:sv_maxclients == 1"
 		string		"_Continue"
-		tooltip		"_Continue"
 		image		"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"

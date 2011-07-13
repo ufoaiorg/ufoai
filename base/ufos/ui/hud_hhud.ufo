@@ -322,19 +322,14 @@ window hhud extends hud
 		}
 
 		/* Health bar */
-		image health_border
-		{
-			src			"hhud/status_border"
-			pos			"550 71"
-			size		"256 16"
-		}
 		bar health
 		{
-			pos			"551 72"
-			size		"164 7"
+			pos			"550 70"
+			size		"166 9"
 			color		".1875 .65625 .164 1"
 			border		1
-			bordercolor	".7 .7 .52 1"
+			bordercolor	"1 1 .75 1"
+			padding		1
 			current		*cvar:mn_hp
 			tooltip *cvar:mn_hp
 			max			*cvar:mn_hpmax
@@ -342,21 +337,15 @@ window hhud extends hud
 		}
 
 		/* Time units bar */
-/*		image tu_border
-		{
-			src			"hhud/status_border"
-			pos			"550 87"
-			size		"256 16"
-		}*/
 		bar tu
 		{
-			pos			"551 88"
-			size		"164 9"
+			pos			"550 88"
+			size		"166 9"
 			color		".371 .7734 .832 1"
 			border		1
 			padding		1
 //			bordercolor	".7 .7 .52 1"
-			bordercolor	"1 0 0 1"
+			bordercolor	"1 1 .75 1"
 			current		*cvar:mn_tu
 			tooltip		*cvar:mn_tu
 			max			*cvar:mn_tumax
@@ -366,22 +355,16 @@ window hhud extends hud
 		/* Morale bar */
 		bar morale
 		{
-			pos			"551 104"
-			size		"164 7"
+			pos			"550 104"
+			size		"166 9"
 			color		".65625 .65625 .164 1"
 			border		1
-			bordercolor	".7 .7 .52 1"
+			padding		1
+			bordercolor	"1 1 .75 1"
 			current		*cvar:mn_morale
 			tooltip		*cvar:mn_morale
 			max			*cvar:mn_moralemax
 			disabled	true
-		}
-		image morale_border
-		{
-			src			"hhud/status_border"
-			pos			"550 103"
-			size		"256 16"
-			excluderect	{ pos "0 0"	size "256 16" }
 		}
 
 		/* Left weapon panel */

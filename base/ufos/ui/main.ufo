@@ -45,28 +45,24 @@ window main
 		{
 			onClick	{ cmd "mn_push_multiplayer;" }
 			string	"_Multiplayer"
-			tooltip	"_Enter the multiplayer menu."
 		}
 
 		cmpMenuButton button_options
 		{
 			onClick	{ cmd "ui_push options;" }
 			string	"_Options"
-			tooltip	"_Enter the game options menu."
 		}
 
 		cmpMenuButton button_tut
 		{
 			onClick	{ cmd "ui_push tutorials;" }
 			string	"_Tutorials"
-			tooltip	"_Show the tutorials."
 		}
 
 		cmpMenuButton button_credits
 		{
 			onClick	{ cmd "seq_start credits;" }
 			string	"_Credits"
-			tooltip	"_People involved in the development of UFO:AI."
 		}
 	}
 
@@ -75,7 +71,6 @@ window main
 		pos			"640 520"
 		onClick		{ cmd "ui_push popup_exit_game_confirmation;" }
 		string		"_Exit"
-		tooltip		"_Quit UFO:AI."
 	}
 
 	func onWindowOpened

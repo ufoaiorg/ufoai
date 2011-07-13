@@ -81,7 +81,6 @@ window hospital
 
 	string txt_credits
 	{
-		tooltip		"_Organisation capital"
 		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"

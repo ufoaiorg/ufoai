@@ -481,7 +481,6 @@ window geoscape
 		button bt_ufopedia
 		{
 			string		"_UFOpaedia"
-			tooltip		"_Open UFOpaedia"
 			pos			"41 665"
 			size		"175 34"
 			color		"0 0.5 0 1"
@@ -495,7 +494,6 @@ window geoscape
 		button bt_installation
 		{
 			string		"_Create installation"
-			tooltip		"_Create installation"
 			color		"0 0.5 0 1"
 			pos			"41 700"
 			size		"175 34"
@@ -1186,7 +1184,6 @@ window popup_newinstallation_type
 	cmpPopupButton bt_close
 	{
 		string		"_Close"
-		tooltip		"_Close this dialogue"
 		pos			"297 188"
 		onClick		{ cmd "ui_pop;" }
 	}
@@ -1399,7 +1396,6 @@ window popup_installationstatus
 	cmpPopupButton bt_back
 	{
 		string		"_Close"
-		tooltip		"_Close this dialogue"
 		pos			"295 150"
 		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}

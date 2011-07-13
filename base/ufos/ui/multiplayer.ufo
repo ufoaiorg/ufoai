@@ -1405,7 +1405,6 @@ window serverpassword
 	button set_password
 	{
 		string		"_OK"
-		tooltip		"_Connect"
 		image		"ui/button_green_small"
 		pos			"260 170"
 		width		"200"

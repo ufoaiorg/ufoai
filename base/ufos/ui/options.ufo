@@ -104,7 +104,6 @@ window options
 		// ======================
 		string current_name
 		{
-			tooltip		"_Your name."
 			string 		"_Name"
 			pos			"62 110"
 			size		"256 20"
@@ -115,7 +114,6 @@ window options
 		// =====================
 		textentry slot_name
 		{
-			tooltip		"_Change your name."
 			string		*cvar:cl_name
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
@@ -180,14 +178,13 @@ window options
 		// ==================
 		string m3dmap_str
 		{
-			tooltip		"_3D or 2D geoscape."
+			tooltip		"_3D or 2D geoscape. To enable this option you have to start a new campaign first."
 			string		"_3D Geoscape:"
 			pos			"72 440"
 			size		"250 20"
 		}
 		checkbox m3dmap
 		{
-			tooltip		"_Use the 3D geoscape. To enable this option you have to start a new campaign first."
 			current		*cvar:cl_3dmap
 			pos			"485 440"
 			size		"20 18"
@@ -306,7 +303,6 @@ window options
 		}
 		checkbox tooltip
 		{
-			tooltip		"_Make me disappear."
 			current		*cvar:mn_show_tooltips
 			pos			"485 545"
 			size		"20 18"
@@ -325,7 +321,6 @@ window options
 		}
 		checkbox c_tooltip
 		{
-			tooltip		"_Activate cursor tooltips."
 			current		*cvar:cl_show_cursor_tooltips
 			pos			"485 570"
 			size		"20 18"
@@ -344,7 +339,6 @@ window options
 		}
 		checkbox tipoftheday
 		{
-			tooltip		"_Enable the 'Tip of the Day'."
 			current		*cvar:cl_showTipOfTheDay
 			pos			"485 595"
 			size		"20 18"
@@ -365,14 +359,13 @@ window options
 		// ================
 		string precache_str
 		{
-			tooltip		"_Precaching of models means having faster menus."
 			string		"_Precache Models:"
 			pos			"72 675"
 			size		"250 20"
 		}
 		checkbox precache
 		{
-			tooltip		"_Enable precaching of models to have faster menus."
+			tooltip		"_Precaching of models means having faster menus."
 			current		*cvar:cl_precache
 			pos			"485 675"
 			size		"20 18"
@@ -445,7 +438,6 @@ window options
 			// ============================
 			string resolution_settings
 			{
-				tooltip		"_Adjust resolution and display settings here."
 				string 		"_Resolution and Display Settings"
 				pos			"22 10"
 				size		"256 20"
@@ -538,7 +530,6 @@ window options
 			// ===========
 			string fullscreen_str
 			{
-				tooltip		"_Play UFO:AI in fullscreen- or window-mode."
 				string		"_Fullscreen:"
 				pos			"32 60"
 				size		"240 20"
@@ -556,14 +547,12 @@ window options
 			// ===============
 			string stretch_str
 			{
-				tooltip		"_Stretches the screen with a 4:3 ratio."
 				string		"_Stretch the Screen with a 4:3 Ratio:"
 				pos			"32 85"
 				size		"370 20"
 			}
 			checkbox stretch
 			{
-				tooltip		"_Stretch the screen to a ratio of 4:3."
 				current		*cvar:vid_strech
 				pos			"445 85"
 				size		"20 18"
@@ -585,7 +574,6 @@ window options
 			// ===========
 			string brightness_str
 			{
-				tooltip		"_Brightness sets the intensity of light emitting from your screen."
 				string		"_Brightness:"
 				pos			"32 165"
 				size		"170 20"
@@ -633,7 +621,6 @@ window options
 			// ======
 			string gamma_str
 			{
-				tooltip		"_The gamma value manipulates the colors. Increased gamma means basically more intense colors."
 				string		"_Gamma:"
 				pos			"32 215"
 				size		"170 20"
@@ -657,7 +644,6 @@ window options
 			// ===========
 			string saturation_str
 			{
-				tooltip		"_The saturation value manipulates the colors. Increased saturation means basically more intense colors."
 				string		"_Saturation:"
 				pos			"32 240"
 				size		"170 20"
@@ -692,7 +678,6 @@ window options
 			// ========================
 			string jpeg_quality_str
 			{
-				tooltip		"_Here you can set the quality of jpeg screenshots."
 				string		"_jpeg Quality:"
 				pos			"32 345"
 				size		"170 20"
@@ -724,7 +709,6 @@ window options
 			selectbox screenshot_format
 			{
 				{
-					tooltip		"_png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
 					cvar		*cvar:r_screenshot_format
 					pos			"319 370"
 					size		"125 20"
@@ -750,7 +734,6 @@ window options
 			// ==============================
 			string other_display_settings
 			{
-				tooltip		"_Adjust other settings here."
 				string 		"_Other Display Settings"
 				pos			"22 440"
 				size		"256 20"
@@ -762,7 +745,6 @@ window options
 			// ============================
 			string fps_str
 			{
-				tooltip		"_See how many frames per second are rendered."
 				string		"_Show FPS:"
 				pos			"32 465"
 				size		"240 20"
@@ -811,7 +793,6 @@ window options
 			// =========================
 			string texture_settings
 			{
-				tooltip		"_Adjust various texture settings here."
 				string 		"_Texture Settings"
 				pos			"22 10"
 				size		"256 20"
@@ -874,7 +855,6 @@ window options
 			selectbox texmode_box
 			{
 				{
-					tooltip		"_Sets the texture filtering and mipmapping method."
 					cvar		*cvar:r_texturemode
 					pos			"169 62"
 					size		"275 20"
@@ -918,7 +898,6 @@ window options
 			}
 			checkbox compression
 			{
-				tooltip		"_Enable texture compression."
 				current		*cvar:r_ext_texture_compression
 				pos			"445 85"
 				size		"20 18"
@@ -936,7 +915,6 @@ window options
 			}
 			checkbox lod
 			{
-				tooltip		"_Enable high texture detail."
 				current		*cvar:r_texture_lod
 				pos			"445 110"
 				size		"20 18"
@@ -954,7 +932,6 @@ window options
 			}
 			string aniso_value
 			{
-				tooltip		"_Current value."
 				string		*cvar:r_anisotropic
 				pos			"420 135"
 				size		"100 20"
@@ -976,7 +953,6 @@ window options
 			// ========================
 			string opengl_settings
 			{
-				tooltip		"_Adjust various OpenGL settings here."
 				string 		"_OpenGL Settings"
 				pos			"22 165"
 				size		"256 20"
@@ -1053,7 +1029,6 @@ window options
 			}
 			checkbox vbo
 			{
-				tooltip		"_Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
 				current		*cvar:r_vertexbuffers
 				pos			"445 215"
 				size		"20 18"
@@ -1078,7 +1053,6 @@ window options
 			}
 			spinner samplebuf_change
 			{
-				tooltip		"_Change the amount of multisample buffers."
 				current		*cvar:r_multisample
 				image		"ui/spinner_blue"
 				pos			"388 240"
@@ -1095,7 +1069,6 @@ window options
 			}
 			spinner swapinterval_change
 			{
-				tooltip		"_Change the swap interval."
 				current		*cvar:r_swapinterval
 				image		"ui/spinner_blue"
 				pos			"448 240"
@@ -1126,7 +1099,6 @@ window options
 			// ==================================
 			string light_shadow_settings
 			{
-				tooltip		"_Adjust various light and shadow settings here."
 				string 		"_Light and Shadow"
 				pos			"22 295"
 				size		"256 20"
@@ -1144,7 +1116,6 @@ window options
 			}
 			checkbox light
 			{
-				tooltip		"_Enable real-time lighting."
 				current		*cvar:r_lights
 				pos			"385 320"
 				size		"20 18"
@@ -1152,7 +1123,6 @@ window options
 			}
 			string dynamiclights_value
 			{
-				tooltip		"_Current value."
 				string		*cvar:r_dynamic_lights
 				pos			"420 320"
 				size		"100 20"
@@ -1257,7 +1227,6 @@ window options
 			}
 			bar lightmap_bar
 			{
-				tooltip		"_Changing this would scale the lightmap brightness."
 				current		*cvar:r_modulate
 				pos			"213 427"
 				size		"238 6"
@@ -1282,7 +1251,6 @@ window options
 			}
 			bar m3dmapambient_bar
 			{
-				tooltip		"_Current amount of ambient light reaching the earth."
 				current		*cvar:cl_3dmapAmbient
 				pos			"213 452"
 				size		"238 6"
@@ -1305,7 +1273,6 @@ window options
 			// =======================
 			string othergfx_settings
 			{
-				tooltip		"_Adjust various other settings here."
 				string 		"_Other"
 				pos			"22 10"
 				size		"256 20"
@@ -1323,7 +1290,6 @@ window options
 			}
 			checkbox flares
 			{
-				tooltip		"_Enable flares."
 				current		*cvar:r_flares
 				pos			"445 35"
 				size		"20 18"
@@ -1341,7 +1307,6 @@ window options
 			}
 			checkbox coronas
 			{
-				tooltip		"_Enable coronas."
 				current		*cvar:r_coronas
 				pos			"445 60"
 				size		"20 18"
@@ -1359,7 +1324,6 @@ window options
 			}
 			checkbox fog
 			{
-				tooltip		"_Enable fog."
 				current		*cvar:r_fog
 				pos			"445 85"
 				size		"20 18"
@@ -1377,7 +1341,6 @@ window options
 			}
 			checkbox ptlweather
 			{
-				tooltip		"_Enable weather effects."
 				current		*cvar:cl_particleweather
 				pos			"445 110"
 				size		"20 18"
@@ -1395,7 +1358,6 @@ window options
 			}
 			checkbox materialsys
 			{
-				tooltip		"_Enable the material system."
 				current		*cvar:r_materials
 				pos			"445 135"
 				size		"20 18"
@@ -1490,7 +1452,6 @@ window options
 		}
 		checkbox sound_init
 		{
-			tooltip		"_Do not turn me off."
 			current		*cvar:snd_init
 			pos			"485 135"
 			size		"20 18"
@@ -1501,7 +1462,6 @@ window options
 		// =============
 		string music_str
 		{
-			tooltip		"_Do not miss the phantastic soundtrack UFO:AI has to offer."
 			string		"_Music:"
 			pos			"72 160"
 			size		"150 20"
@@ -1513,7 +1473,6 @@ window options
 		}
 		bar music_bar
 		{
-			tooltip		"_Current volume of the music."
 			current		*cvar:snd_music_volume
 			pos			"253 167"
 			size		"238 6"
@@ -1527,7 +1486,6 @@ window options
 		// =====================
 		string effects_str
 		{
-			tooltip		"_Do you want to hear the screams?"
 			string		"_Sound Effects:"
 			pos			"72 185"
 			size		"170 20"
@@ -1539,7 +1497,6 @@ window options
 		}
 		bar effects_bar
 		{
-			tooltip		"_Current volume of the sound effects."
 			current		*cvar:snd_volume
 			pos			"253 192"
 			size		"238 6"
@@ -1554,7 +1511,6 @@ window options
 		//
 		string menusounds_str
 		{
-			tooltip		"_You do not like click sounds?"
 			string		"_Menu Sounds:"
 			pos			"72 210"
 			size		"170 20"
@@ -1605,7 +1561,6 @@ window options
 		selectbox rate_box
 		{
 			{
-				tooltip		"_Current sample rate frequency in kHz."
 				cvar		*cvar:snd_rate
 				pos			"359 295"
 				size		"125 20"
@@ -1677,7 +1632,6 @@ window options
 		// ================================
 		string camspeed_str
 		{
-			tooltip		"_The scroll speed of the battlescape camera."
 			string		"_Scroll Speed:"
 			pos			"72 135"
 			size		"170 20"
@@ -1689,7 +1643,6 @@ window options
 		}
 		bar camspeed_bar
 		{
-			tooltip		"_Actual camera scroll speed."
 			current		*cvar:cl_cammovespeed
 			pos			"253 142"
 			size		"238 6"
@@ -1703,7 +1656,6 @@ window options
 		// ============================
 		string camrot_str
 		{
-			tooltip		"_The rotation speed of the battlescape camera."
 			string		"_Rotation Speed:"
 			pos			"72 160"
 			size		"170 20"
@@ -1715,7 +1667,6 @@ window options
 		}
 		bar camrot_bar
 		{
-			tooltip		"_Actual camera rotation speed."
 			current		*cvar:cl_camrotspeed
 			pos			"253 167"
 			size		"238 6"
@@ -1741,7 +1692,6 @@ window options
 		}
 		bar cammovedecel_bar
 		{
-			tooltip		"_Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
 			current		*cvar:cl_cammoveaccel
 			pos			"253 192"
 			size		"238 6"
@@ -1755,7 +1705,6 @@ window options
 		// ============================================
 		string campitch_str
 		{
-			tooltip		"_The minimum/maximum pitch shift of the battlescape camera."
 			string		"_Minimum/Maximum Shift Pitch:"
 			pos			"72 210"
 			size		"250 20"
@@ -1851,7 +1800,6 @@ window options
 		// ========================================
 		string camzoom_str
 		{
-			tooltip		"_The minimum/maximum zoom of the battlescape camera."
 			string		"_Minimum/Maximum Zoom:"
 			pos			"72 235"
 			size		"250 20"
@@ -2013,7 +1961,6 @@ window options
 		}
 		checkbox isomode
 		{
-			tooltip		"_Enable the isometric 3D rendering mode for the battlescape."
 			current		*cvar:r_isometric
 			pos			"485 285"
 			size		"20 18"
@@ -2024,14 +1971,13 @@ window options
 		// ===============================
 		string centerview_str
 		{
-			tooltip		"_Select whether the game should automatically center the camera view at the actors on the battlescape or not."
+			tooltip		"_Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 			string		"_Center View:"
 			pos			"72 310"
 			size		"170 20"
 		}
 		checkbox centerview_value
 		{
-			tooltip		"_Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 			current		*cvar:cl_centerview
 			pos			"485 310"
 			size		"20 18"
@@ -2052,7 +1998,6 @@ window options
 		// ============
 		string actorsspeed_str
 		{
-			tooltip		"_Actor speed changes the speed of aliens and humans."
 			string		"_Actor Speed:"
 			pos			"72 365"
 			size		"150 20"
@@ -2077,7 +2022,7 @@ window options
 		// ============================
 		string confirm_str
 		{
-			tooltip		"_Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
+			tooltip		"_Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 			string		"_Confirm Actions:"
 			pos			"72 390"
 			size		"240 20"
@@ -2116,7 +2061,6 @@ window options
 		selectbox select_autostand
 		{
 			{
-				tooltip		"_Select 'Yes' if you want more intelligent soldiers."
 				cvar		*cvar:cl_autostand
 				pos			"343 415"
 				size		"155 20"
@@ -2146,7 +2090,6 @@ window options
 		// @note selectbox completed by the confunc add_hud_name
 		selectbox select_hud
 		{
-			tooltip		"_Available HUD for the battlescape mode."
 			cvar		*cvar:cl_hud
 			pos			"343 440"
 			size		"155 20"
@@ -2166,14 +2109,12 @@ window options
 		// ================
 		string joystick_enable_str
 		{
-			tooltip		"_Enable or disable your Joystick."
 			string		"_Enable:"
 			pos			"72 520"
 			size		"240 20"
 		}
 		checkbox joystick_enable
 		{
-			tooltip		"_Enable your joystick or joypad."
 			current		*cvar:in_joystick
 			pos			"485 520"
 			size		"20 18"
@@ -2184,7 +2125,6 @@ window options
 		// ==========================
 		string joystick_str
 		{
-			tooltip		"_Select which of your joysticks or joypads you want to use."
 			string		"_Joystick or Joypad:"
 			pos			"72 545"
 			size		"150 20"
@@ -2227,7 +2167,6 @@ window options
 		// ===============
 		string joystick_speed_str
 		{
-			tooltip		"_Joystick speed."
 			string		"_Speed:"
 			pos			"72 595"
 			size		"150 20"

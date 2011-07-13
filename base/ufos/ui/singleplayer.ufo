@@ -166,7 +166,7 @@ window popup_exit_confirmation
 	cmpPopupButton bt_quit
 	{
 		tooltip		"_Exit current campaign and return to main menu."
-		string		"_Quit anyway"
+		string		"_Quit"
 		pos			"28 188"
 		onClick		{
 						cmd "ui_pop;"
@@ -175,7 +175,7 @@ window popup_exit_confirmation
 	}
 	cmpCancelButton bt_dontquit
 	{
-		tooltip		"_Do not quit."
+		tooltip		"_Do not quit"
 		pos			"285 188"
 		onClick		{ cmd "ui_pop;" }
 	}

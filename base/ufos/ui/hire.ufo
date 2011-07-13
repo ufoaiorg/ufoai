@@ -253,7 +253,7 @@ window employees
 	button bt_edit
 	{
 		visiblewhen "*cvar:mn_employee_hired == 1"
-		tooltip		"_Rename your employee"
+		tooltip		"_Rename employee"
 		icon		"icons/pen"
 		pos			"865 322"
 		size		"16 16"
