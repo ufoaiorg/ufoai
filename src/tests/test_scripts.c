@@ -68,7 +68,7 @@ static qboolean TEST_CheckImage (const char *path)
 	const char *extensions[] = {"png", "tga", "jpg", NULL};
 	int i = 0;
 
-	if (path == NULL)
+	if (Q_strnull(path))
 		return qtrue;
 
 	while (extensions[i]) {
@@ -84,7 +84,7 @@ static qboolean TEST_CheckModel (const char *path)
 {
 	const char *extensions[] = {"md2", "md3", "dpm", "obj", NULL};
 	int i = 0;
-	if (path == NULL)
+	if (Q_strnull(path))
 		return qtrue;
 
 	while (extensions[i]) {
@@ -101,7 +101,7 @@ static qboolean TEST_CheckSound (const char *path)
 	const char *extensions[] = {"wav", "ogg", NULL};
 	int i = 0;
 
-	if (path == NULL)
+	if (Q_strnull(path))
 		return qtrue;
 
 	while (extensions[i]) {
@@ -115,7 +115,7 @@ static qboolean TEST_CheckSound (const char *path)
 
 static qboolean TEST_CheckParticle (const char *particleID)
 {
-	if (particleID == NULL)
+	if (Q_strnull(particleID))
 		return qtrue;
 
 	/* find the particle definition */
