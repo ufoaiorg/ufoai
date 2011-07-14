@@ -176,9 +176,9 @@ extern const byte dvleft[CORE_DIRECTIONS];
 typedef short dvec_t;
 #define DV_FLAGS_BIT_SHIFT	4	/**< This is the bit shift needed to store the 'how' component of a DV value */
 #define DV_DIR_BIT_SHIFT	8	/**< This is the bit shift needed to store the dir component of a DV value */
-#define DV_Z_BIT_MASK		0x0007	/**< The mask to retreive the z component of a  DV value */
-#define DV_FLAGS_BIT_MASK	0x00F0	/**< The mask to retreive the 'how' component of a  DV value */
-#define DV_DIR_BIT_MASK		0xFF00	/**< The mask to retreive the dir component of a  DV value */
+#define DV_Z_BIT_MASK		0x0007	/**< The mask to retrieve the z component of a  DV value */
+#define DV_FLAGS_BIT_MASK	0x00F0	/**< The mask to retrieve the 'how' component of a  DV value */
+#define DV_DIR_BIT_MASK		0xFF00	/**< The mask to retrieve the dir component of a  DV value */
 
 #define DV_FLAG_AUTOCROUCH		0x01
 #define DV_FLAG_AUTOCROUCHED	0x02
