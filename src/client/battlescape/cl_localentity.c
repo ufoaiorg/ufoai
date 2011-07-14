@@ -671,12 +671,12 @@ static void LET_Projectile (le_t * le)
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
 		le->inuse = qfalse;
-		if (le->ref1 && le->ref1[0] != '\0') {
+		if (Q_strvalid(le->ref1)) {
 			VectorCopy(le->ptl->s, impact);
 			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->angle], NULL);
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
-		if (le->ref2 && le->ref2[0] != '\0') {
+		if (Q_strvalid(le->ref2)) {
 			S_LoadAndPlaySample(le->ref2, impact, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 		}
 		if (le->ref3) {

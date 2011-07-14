@@ -494,6 +494,19 @@ static void testUnsignedIntToBinary (void)
 	CU_ASSERT_STRING_EQUAL(buf, "11111111");
 }
 
+static void testStringCheckFunctions (void)
+{
+	const char *strNull = NULL;
+	const char *strEmpty = "";
+	const char *strValid = "someString";
+	CU_ASSERT_TRUE(Q_strnull(strNull));
+	CU_ASSERT_TRUE(Q_strnull(strEmpty));
+	CU_ASSERT_FALSE(Q_strnull(strValid));
+	CU_ASSERT_TRUE(Q_strvalid(strValid));
+	CU_ASSERT_FALSE(Q_strvalid(strEmpty));
+	CU_ASSERT_FALSE(Q_strvalid(strNull));
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -546,6 +559,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testUnsignedIntToBinary) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testStringCheckFunctions) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
