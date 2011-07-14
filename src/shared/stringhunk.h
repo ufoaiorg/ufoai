@@ -26,7 +26,7 @@
 #ifndef STRINGHUNK_H
 #define STRINGHUNK_H
 
-#include <stddef.h>
+#include "ufotypes.h"
 
 typedef struct stringHunk_s {
 	size_t size;
@@ -37,12 +37,12 @@ typedef struct stringHunk_s {
 
 typedef void (*stringHunkVisitor_t)(const char *string);
 
-void STRHUNK_Add(stringHunk_t *hunk, const char *string);
+qboolean STRHUNK_Add(stringHunk_t *hunk, const char *string);
 void STRHUNK_Reset(stringHunk_t *hunk);
 void STRHUNK_Visit(stringHunk_t *hunk, stringHunkVisitor_t visitor);
 stringHunk_t *STRHUNK_Create(size_t size);
 void STRHUNK_Delete(stringHunk_t **hunk);
 int STRHUNK_Size(const stringHunk_t *hunk);
-size_t STRHUNK_Free(const stringHunk_t *hunk);
+size_t STRHUNK_GetFreeSpace(const stringHunk_t *hunk);
 
 #endif

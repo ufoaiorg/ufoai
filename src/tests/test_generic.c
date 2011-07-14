@@ -59,23 +59,28 @@ static void STRHUNK_VisitorTestEntry (const char *string)
 	CU_ASSERT_STRING_EQUAL(string, "Test");
 }
 
+static void STRHUNK_VisitorTestEntry2 (const char *string)
+{
+	CU_ASSERT_STRING_EQUAL(string, "T");
+}
+
 static void testStringHunks (void)
 {
 	stringHunk_t *hunk = STRHUNK_Create(20);
-	STRHUNK_Add(hunk, "Test");
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
 	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 1);
-	CU_ASSERT_EQUAL(STRHUNK_Free(hunk), 15);
+	CU_ASSERT_EQUAL(STRHUNK_GetFreeSpace(hunk), 15);
 	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
 	STRHUNK_Delete(&hunk);
 	CU_ASSERT_PTR_EQUAL(hunk, NULL);
 
 	hunk = STRHUNK_Create(23);
-	STRHUNK_Add(hunk, "Test");
-	STRHUNK_Add(hunk, "Test");
-	STRHUNK_Add(hunk, "Test");
-	STRHUNK_Add(hunk, "Test");
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
 	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 4);
-	CU_ASSERT_EQUAL(STRHUNK_Free(hunk), 0);
+	CU_ASSERT_EQUAL(STRHUNK_GetFreeSpace(hunk), 0);
 	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
 
 	STRHUNK_Reset(hunk);
@@ -83,6 +88,15 @@ static void testStringHunks (void)
 
 	STRHUNK_Delete(&hunk);
 	CU_ASSERT_PTR_EQUAL(hunk, NULL);
+
+	hunk = STRHUNK_Create(5);
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "T"));
+	CU_ASSERT_FALSE(STRHUNK_Add(hunk, "Test"));
+	/* the second string is ignored */
+	CU_ASSERT_FALSE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 2);
+	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry2);
+	STRHUNK_Delete(&hunk);
 }
 
 static void testConstInt (void)

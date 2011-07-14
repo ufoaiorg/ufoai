@@ -26,17 +26,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "stringhunk.h"
 #include "../common/common.h"
 
-void STRHUNK_Add (stringHunk_t *hunk, const char *string)
+/**
+ * @return @c true if the add was successful, @c false if there was an overflow and the string was cut.
+ */
+qboolean STRHUNK_Add (stringHunk_t *hunk, const char *string)
 {
-	const size_t remaining = hunk->size - (ptrdiff_t)(hunk->pos - hunk->hunk);
+	const ptrdiff_t filled = hunk->pos - hunk->hunk;
+	const size_t remaining = hunk->size - filled;
 	const size_t strLength = strlen(string);
+	const qboolean overflow = remaining <= strLength;
 
-	if (hunk->pos != hunk->hunk)
+	if (remaining < 1)
+		return qfalse;
+
+	/* add delimiter char */
+	if (hunk->pos != hunk->hunk) {
+		if (remaining == 1)
+			return qfalse;
 		*hunk->pos++ = '\xFF';
+	}
 
 	Q_strncpyz(hunk->pos, string, remaining - 1);
-	hunk->pos += strLength + 1;
+	hunk->pos += overflow ? remaining - 1: strLength + 1;
 	hunk->entries++;
+	return !overflow;
 }
 
 void STRHUNK_Reset (stringHunk_t *hunk)
@@ -63,7 +76,7 @@ int STRHUNK_Size (const stringHunk_t *hunk)
 	return hunk->entries;
 }
 
-size_t STRHUNK_Free (const stringHunk_t *hunk)
+size_t STRHUNK_GetFreeSpace (const stringHunk_t *hunk)
 {
 	return hunk->size - (ptrdiff_t)(hunk->pos - hunk->hunk);
 }
