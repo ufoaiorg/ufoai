@@ -47,7 +47,9 @@ int main (void)
 	TYPESIZE(aircraftProjectile_t);
 	TYPESIZE(base_t);
 	TYPESIZE(baseTemplate_t);
+	TYPESIZE(battleParam_t);
 	TYPESIZE(campaign_t);
+	TYPESIZE(cBspHead_t);
 	TYPESIZE(ccs_t);
 	TYPESIZE(character_t);
 	TYPESIZE(chrTemplate_t);
@@ -55,6 +57,7 @@ int main (void)
 	TYPESIZE(client_static_t);
 	TYPESIZE(components_t);
 	TYPESIZE(csi_t);
+	TYPESIZE(cvar_t);
 	TYPESIZE(damageType_t);
 	TYPESIZE(employee_t);
 	TYPESIZE(equipDef_t);
@@ -62,7 +65,10 @@ int main (void)
 	TYPESIZE(gametype_t);
 	TYPESIZE(inventory_t);
 	TYPESIZE(inventoryInterface_t);
+	TYPESIZE(mapData_t);
 	TYPESIZE(mapDef_t);
+	TYPESIZE(mapTile_t);
+	TYPESIZE(mapTiles_t);
 	TYPESIZE(mission_t);
 	TYPESIZE(nation_t);
 	TYPESIZE(serverInstanceGame_t);
@@ -71,6 +77,7 @@ int main (void)
 	TYPESIZE(sv_model_t);
 	TYPESIZE(teamDef_t);
 	TYPESIZE(technology_t);
+	TYPESIZE(worldSector_t);
 
 	return EXIT_SUCCESS;
 }
