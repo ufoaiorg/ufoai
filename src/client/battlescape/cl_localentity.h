@@ -160,6 +160,8 @@ typedef struct localModel_s {
 	char name[MAX_QPATH];	/**< the name of the model file */
 	char target[MAX_VAR];
 	char tagname[MAX_VAR];		/**< in case a tag should be used to place the model */
+	char animname[MAX_QPATH];	/**< is this an animated model */
+
 	struct localModel_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
 	qboolean inuse;
 
@@ -172,7 +174,6 @@ typedef struct localModel_s {
 	int skin;
 	int renderFlags;	/**< effect flags */
 	int frame;	/**< which static frame to show (this can't be used if animname is set) */
-	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
 	animState_t as;
 	lighting_t lighting;

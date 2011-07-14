@@ -31,10 +31,11 @@ static const char* MEMORY_HumanReadable (size_t size)
 {
 	static char buf[256];
 
-	size_t kb = size / 1024;
-	size_t b = size % 1024;
+	const size_t kb = size / 1024 % 1024;
+	const size_t b = size % 1024;
+	const size_t mb = size / 1024 / 1024;
 
-	snprintf(buf, sizeof(buf) - 1, UFO_SIZE_LENGTH_T"."UFO_SIZE_LENGTH_T, kb, b);
+	snprintf(buf, sizeof(buf) - 1, UFO_SIZE_T"."UFO_SIZE_LENGTH_T"."UFO_SIZE_LENGTH_T, mb, kb, b);
 	buf[sizeof(buf) - 1] = '\0';
 	return buf;
 }
@@ -45,11 +46,19 @@ int main (void)
 
 	TYPESIZE(aircraft_t);
 	TYPESIZE(aircraftProjectile_t);
+	TYPESIZE(animState_t);
 	TYPESIZE(base_t);
 	TYPESIZE(baseTemplate_t);
 	TYPESIZE(battleParam_t);
 	TYPESIZE(campaign_t);
+	TYPESIZE(cBspBrush_t);
 	TYPESIZE(cBspHead_t);
+	TYPESIZE(cBspLeaf_t);
+	TYPESIZE(cBspModel_t);
+	TYPESIZE(cBspNode_t);
+	TYPESIZE(cBspPlane_t);
+	TYPESIZE(cBspBrushSide_t);
+	TYPESIZE(cBspSurface_t);
 	TYPESIZE(ccs_t);
 	TYPESIZE(character_t);
 	TYPESIZE(chrTemplate_t);
@@ -59,24 +68,37 @@ int main (void)
 	TYPESIZE(csi_t);
 	TYPESIZE(cvar_t);
 	TYPESIZE(damageType_t);
+	TYPESIZE(dMapTile_t);
 	TYPESIZE(employee_t);
 	TYPESIZE(equipDef_t);
 	TYPESIZE(eventMail_t);
 	TYPESIZE(gametype_t);
+	TYPESIZE(image_t);
 	TYPESIZE(inventory_t);
 	TYPESIZE(inventoryInterface_t);
+	TYPESIZE(lighting_t);
+	TYPESIZE(localModel_t);
+	TYPESIZE(mAliasModel_t);
+	TYPESIZE(material_t);
+	TYPESIZE(materialStage_t);
 	TYPESIZE(mapData_t);
 	TYPESIZE(mapDef_t);
 	TYPESIZE(mapTile_t);
 	TYPESIZE(mapTiles_t);
+	TYPESIZE(mBspModel_t)
 	TYPESIZE(mission_t);
+	TYPESIZE(model_t);
 	TYPESIZE(nation_t);
+	TYPESIZE(pathing_t);
+	TYPESIZE(ptl_t);
+	TYPESIZE(routing_t);
 	TYPESIZE(serverInstanceGame_t);
 	TYPESIZE(serverInstanceStatic_t);
 	TYPESIZE(sv_edict_t);
 	TYPESIZE(sv_model_t);
 	TYPESIZE(teamDef_t);
 	TYPESIZE(technology_t);
+	TYPESIZE(tnode_t);
 	TYPESIZE(worldSector_t);
 
 	return EXIT_SUCCESS;
