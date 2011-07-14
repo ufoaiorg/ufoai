@@ -25,9 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_CHR_SHARED_H
 #define GAME_CHR_SHARED_H
 
-#define MAX_CHARACTER_TEMPLATES	24
-#define MAX_TEMPLATES_PER_TEAM	16
-
 typedef enum {
 	KILLED_ENEMIES,		/**< Killed enemies */
 	KILLED_CIVILIANS,	/**< Civilians, animals */
@@ -73,7 +70,6 @@ typedef struct chrTemplate_s {
  *   increase the counter multiple times."
  */
 typedef struct chrScoreMission_s {
-
 	/* Movement counts. */
 	int movedNormal;
 	int movedCrouched;
