@@ -74,16 +74,17 @@ typedef int32_t fireDefIndex_t;
 
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
-	char name[MAX_VAR];			/**< fire defintion name (translatable) */
-	char projectile[MAX_VAR];	/**< projectile particle */
-	char impact[MAX_VAR];		/**< impact particle */
-	char hitBody[MAX_VAR];		/**< hit the body particles */
-	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
-	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
-	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
+	const char *name;			/**< fire defintion name (translatable) */
+	const char *projectile;	/**< projectile particle */
+	const char *impact;		/**< impact particle */
+	const char *impactSound;	/**< the sound that is played on impact */
+	const char *hitBody;		/**< hit the body particles */
+	const char *hitBodySound;	/**< the sound that is played on hitting a body */
+	const char *fireSound;	/**< the sound when a recruits fires */
+	const char *bounceSound;	/**< bouncing sound */
+
 	float fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
 	float impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
-	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
@@ -121,7 +122,7 @@ typedef struct fireDef_s {
 	vec2_t spldmg;			/**< G_SplashDamage(), currently we use only first value (spldmg[0]) for apply splashdamage effect */
 	float splrad;			/**< splash damage radius */
 	int weaponSkill;		/**< What weapon skill is needed to fire this weapon. */
-	int irgoggles;			/**< Is this an irgoogle? */
+	int irgoggles;			/**< Is this an irgoggle? */
 } fireDef_t;
 
 /**

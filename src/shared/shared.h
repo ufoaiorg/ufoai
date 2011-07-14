@@ -130,6 +130,9 @@ static inline qboolean Q_streq(char const* const a, char const* const b)
 	return strcmp(a, b) == 0;
 }
 
+#define Q_strnull(string) ((string) == NULL || (string)[0] == '\0')
+#define Q_strvalid(string) !Q_strnull(string)
+
 #ifndef DEBUG
 void Q_strncpyz(char *dest, const char *src, size_t destsize) __attribute__((nonnull));
 #else

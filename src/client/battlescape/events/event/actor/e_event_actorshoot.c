@@ -183,7 +183,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	LE_AddProjectile(fd, flags, muzzle, impact, normal, leVictim);
 
 	/* start the sound */
-	if ((first || !fd->soundOnce) && fd->fireSound[0] && !(flags & SF_BOUNCED))
+	if ((first || !fd->soundOnce) && fd->fireSound != NULL && !(flags & SF_BOUNCED))
 		S_LoadAndPlaySample(fd->fireSound, muzzle, fd->fireAttenuation, SND_VOLUME_WEAPONS);
 
 	if (fd->irgoggles)

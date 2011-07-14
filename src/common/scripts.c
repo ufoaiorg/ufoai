@@ -1497,7 +1497,7 @@ static const value_t fdps[] = {
 };
 
 
-static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
+static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 {
 	const value_t *fdp;
 	const char *errhead = "Com_ParseFire: unexpected end of file";
@@ -1508,24 +1508,34 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseFire: fire definition \"%s\" without body ignored\n", name);
-		return;
+		return qfalse;
 	}
 
 	do {
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
-			return;
+			return qtrue;
 		if (*token == '}')
-			return;
+			return qtrue;
 
 		for (fdp = fdps; fdp->string; fdp++)
 			if (!Q_strcasecmp(token, fdp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 
-				Com_EParseValue(fd, token, fdp->type, fdp->ofs, fdp->size);
+				switch (fdp->type) {
+				case V_TRANSLATION_STRING:
+					token++;
+					/* fall through */
+				case V_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)fd + (int)fdp->ofs), com_genericPool, 0);
+					break;
+				default:
+					Com_EParseValue(fd, token, fdp->type, fdp->ofs, fdp->size);
+					break;
+				}
 				break;
 			}
 
@@ -1535,7 +1545,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 
 				for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++)
 					if (Q_streq(skillNames[skill], token)) {
@@ -1547,12 +1557,12 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 			} else if (Q_streq(token, "range")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 				fd->range = atof(token) * UNIT_SIZE;
 			} else if (Q_streq(token, "splrad")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 				fd->splrad = atof(token) * UNIT_SIZE;
 			} else
 				Com_Printf("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name);
@@ -1567,6 +1577,13 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 	if (fd->weaponSkill < ABILITY_NUM_TYPES)
 		Com_Printf("Com_ParseFire: firedef for weapon \"%s\" doesn't have a skill set\n", name);
+
+	if (fd->name == NULL) {
+		Com_Printf("firedef without name\n");
+		return qfalse;
+	}
+
+	return qtrue;
 }
 
 

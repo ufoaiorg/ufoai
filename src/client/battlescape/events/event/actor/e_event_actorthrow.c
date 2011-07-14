@@ -60,7 +60,7 @@ void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime, NULL);
 
 	/* start the sound */
-	if (fd->fireSound[0] && !(flags & SF_BOUNCED)) {
+	if (fd->fireSound != NULL && !(flags & SF_BOUNCED)) {
 		S_LoadAndPlaySample(fd->fireSound, muzzle, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT);
 	}
 }

@@ -184,13 +184,13 @@ void S_PrecacheSamples (void)
 		for (j = 0; j < od->numWeapons; j++) {	/* j = weapon-entry per obj */
 			for (k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per weapon */
 				const fireDef_t *fd = &od->fd[j][k];
-				if (fd->fireSound[0] != '\0')
+				if (fd->fireSound != NULL)
 					S_LoadSample(fd->fireSound);
-				if (fd->impactSound[0] != '\0')
+				if (fd->impactSound != NULL)
 					S_LoadSample(fd->impactSound);
-				if (fd->hitBodySound[0] != '\0')
+				if (fd->hitBodySound != NULL)
 					S_LoadSample(fd->hitBodySound);
-				if (fd->bounceSound[0] != '\0')
+				if (fd->bounceSound != NULL)
 					S_LoadSample(fd->bounceSound);
 			}
 		}
