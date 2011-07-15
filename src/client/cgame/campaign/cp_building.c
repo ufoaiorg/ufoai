@@ -306,15 +306,18 @@ qboolean B_BuildingScriptSanityCheck (void)
  * @brief Returns the building in the global building-types list that has the unique name buildingID.
  * @param[in] buildingName The unique id of the building (building_t->id).
  * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
+ * @todo make the returned pointer const
  */
 building_t *B_GetBuildingTemplate (const char *buildingName)
 {
 	int i = 0;
 
 	assert(buildingName);
-	for (i = 0; i < ccs.numBuildingTemplates; i++)
-		if (Q_streq(ccs.buildingTemplates[i].id, buildingName))
-			return &ccs.buildingTemplates[i];
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		building_t *template = &ccs.buildingTemplates[i];
+		if (Q_streq(template->id, buildingName))
+			return template;
+	}
 
 	Com_Printf("Building %s not found\n", buildingName);
 	return NULL;

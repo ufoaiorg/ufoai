@@ -2712,6 +2712,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 		for (j = 0, snode = XML_GetNode(node, SAVE_BASES_BUILDING); snode; snode = XML_GetNextNode(snode, node, SAVE_BASES_BUILDING), j++) {
 			const int buildId = XML_GetInt(snode, SAVE_BASES_BUILDING_PLACE, MAX_BUILDINGS);
 			building_t *building;
+			const building_t *buildingTemplate;
 			char buildingType[MAX_VAR];
 
 			if (buildId >= MAX_BUILDINGS) {
@@ -2727,11 +2728,11 @@ qboolean B_LoadXML (xmlNode_t *parent)
 				return qfalse;
 			}
 
-			building = B_GetBuildingTemplate(buildingType);
-			if (!building)
+			buildingTemplate = B_GetBuildingTemplate(buildingType);
+			if (!buildingTemplate)
 				continue;
 
-			ccs.buildings[i][buildId] = *building;
+			ccs.buildings[i][buildId] = *buildingTemplate;
 			building = B_GetBuildingByIDX(i, buildId);
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
