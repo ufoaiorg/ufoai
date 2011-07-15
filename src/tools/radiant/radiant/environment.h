@@ -89,6 +89,8 @@ private:
 
 	// Initialises the arguments
 	void initArgs(int argc, char* argv[]);
+
+	Environment();
 };
 
 #endif

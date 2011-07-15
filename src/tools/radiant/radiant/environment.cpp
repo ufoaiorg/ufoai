@@ -37,6 +37,9 @@ namespace {
 const std::string RADIANT_DIRECTORY = "radiant/";
 }
 
+Environment::Environment() {
+}
+
 std::string Environment::getHomeDir ()
 {
 	const gchar *home;
