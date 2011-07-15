@@ -159,6 +159,8 @@ ACTION MESSAGES
  * @brief Parse a server sent sound package
  * @sa svc_sound
  * @sa SV_StartSound
+ * @todo make this an event, too - the sound package might be bound to an event
+ * and thus must be delayed, too
  */
 static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
