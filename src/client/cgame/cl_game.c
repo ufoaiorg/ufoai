@@ -727,10 +727,7 @@ static const value_t cgame_vals[] = {
 
 void GAME_ParseModes (const char *name, const char **text)
 {
-	const char *errhead = "GAME_ParseModes: unexpected end of file (cgame ";
 	cgameType_t *ed;
-	const char *token;
-	const value_t *vp;
 	int i;
 
 	/* search for equipments with same name */
@@ -752,34 +749,7 @@ void GAME_ParseModes (const char *name, const char **text)
 
 	Q_strncpyz(ed->id, name, sizeof(ed->id));
 
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("GAME_ParseModes: cgame def \"%s\" without body ignored\n", name);
-		numCGameTypes--;
-		return;
-	}
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text || *token == '}')
-			return;
-
-		for (vp = cgame_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-
-		if (!vp->string) {
-			Sys_Error("unknown token in cgame definition %s: '%s'", ed->id, token);
-		}
-	} while (*text);
+	Com_ParseBlock(name, text, ed, cgame_vals);
 }
 
 #ifndef HARD_LINKED_CGAME

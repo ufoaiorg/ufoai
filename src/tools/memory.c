@@ -99,6 +99,9 @@ int main (void)
 	TYPESIZE(teamDef_t);
 	TYPESIZE(technology_t);
 	TYPESIZE(tnode_t);
+	TYPESIZE(uiNode_t);
+	TYPESIZE(uiBehaviour_t);
+	TYPESIZE(uiSharedData_t);
 	TYPESIZE(worldSector_t);
 
 	return EXIT_SUCCESS;

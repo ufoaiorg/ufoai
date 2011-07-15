@@ -708,18 +708,7 @@ static const value_t actorskin_vals[] = {
 
 static void CL_ParseActorSkin (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseActorSkin: unexpected end of file (actorskin ";
 	actorSkin_t *skin;
-	const value_t *vp;
-	const char *token;
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseActorSkin: actorskin \"%s\" without body ignored\n", name);
-		return;
-	}
 
 	/* NOTE: first skin is special cause we don't get the skin with suffix */
 	if (Com_GetActorSkinCount() == 0) {
@@ -730,24 +719,7 @@ static void CL_ParseActorSkin (const char *name, const char **text)
 
 	skin = Com_AllocateActorSkin(name);
 
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		for (vp = actorskin_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(skin, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-	} while (*text);
+	Com_ParseBlock(name, text, skin, actorskin_vals);
 }
 
 /** @brief valid mapdef descriptors */

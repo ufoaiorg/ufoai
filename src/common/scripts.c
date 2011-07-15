@@ -1376,6 +1376,41 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
+void Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values)
+{
+	const char *errhead = "Com_ParseBlock: unexpected end of file (";
+	const char *token;
+	const value_t *v;
+
+	/* get name/id */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseBlock: block \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	do {
+		/* get the name type */
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		for (v = values; v->string; v++)
+			if (Q_streq(token, v->string)) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				Com_EParseValue(base, token, v->type, v->ofs, v->size);
+				break;
+			}
+		if (!v->string)
+			Com_Printf("Com_ParseBlock: unknown token \"%s\" ignored (%s)\n", token, name);
+	} while (*text);
+}
 
 /*
 ==============================================================================
