@@ -363,10 +363,11 @@ class EclassModelNode: public scene::Node,
 			construct();
 		}
 		EclassModelNode (const EclassModelNode& other) :
-			scene::Instantiable(other), scene::Cloneable(other), scene::Traversable::Observer(other), Nameable(other),
-					Snappable(other), TransformNode(other), scene::Traversable(other), EntityNode(other), Namespaced(
-							other), m_contained(other.m_contained, *this, InstanceSet::TransformChangedCaller(
-							m_instances), InstanceSetEvaluateTransform<EclassModelInstance>::Caller(m_instances))
+			scene::Node(other), scene::Instantiable(other), scene::Cloneable(other), scene::Traversable::Observer(
+						other), Nameable(other), Snappable(other), TransformNode(other), scene::Traversable(other), EntityNode(
+						other), Namespaced(other), m_contained(other.m_contained, *this,
+						InstanceSet::TransformChangedCaller(m_instances),
+						InstanceSetEvaluateTransform<EclassModelInstance>::Caller(m_instances))
 		{
 			construct();
 		}

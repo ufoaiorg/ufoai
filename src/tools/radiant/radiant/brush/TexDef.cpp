@@ -13,7 +13,8 @@ TexDef::TexDef ()
 	_scale[1] = 1;
 }
 
-TexDef::TexDef (const TexDef& other)
+TexDef::TexDef (const TexDef& other) :
+		GenericTextureDefinition(other)
 {
 	_shift[0] = other._shift[0];
 	_shift[1] = other._shift[1];

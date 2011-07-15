@@ -874,11 +874,11 @@ class LightNode: public scene::Node,
 			construct();
 		}
 		LightNode (const LightNode& other) :
-			scene::Instantiable(other), scene::Cloneable(other), scene::Traversable::Observer(other), Nameable(other),
-					Snappable(other), Editable(other), TransformNode(other), scene::Traversable(other), EntityNode(
-							other), Namespaced(other), m_contained(other.m_contained, *this,
-							InstanceSet::TransformChangedCaller(m_instances), InstanceSet::BoundsChangedCaller(
-									m_instances), InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
+			scene::Node(other), scene::Instantiable(other), scene::Cloneable(other), scene::Traversable::Observer(
+						other), Nameable(other), Snappable(other), Editable(other), TransformNode(other), scene::Traversable(
+						other), EntityNode(other), Namespaced(other), m_contained(other.m_contained, *this,
+						InstanceSet::TransformChangedCaller(m_instances), InstanceSet::BoundsChangedCaller(m_instances),
+						InstanceSetEvaluateTransform<LightInstance>::Caller(m_instances))
 		{
 			construct();
 		}
