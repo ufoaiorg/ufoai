@@ -709,13 +709,13 @@ static void CL_ParseActorSkin (const char *name, const char **text)
 	actorSkin_t *skin;
 
 	/* NOTE: first skin is special cause we don't get the skin with suffix */
-	if (Com_GetActorSkinCount() == 0) {
+	if (CL_GetActorSkinCount() == 0) {
 		if (!Q_streq(name, "default") != 0) {
 			Com_Error(ERR_DROP, "CL_ParseActorSkin: First actorskin read from script must be \"default\" skin.");
 		}
 	}
 
-	skin = Com_AllocateActorSkin(name);
+	skin = CL_AllocateActorSkin(name);
 
 	Com_ParseBlock(name, text, skin, actorskin_vals, NULL);
 }

@@ -39,15 +39,15 @@ chrList_t chrDisplayList;
 
 /**
  * @brief Allocate a skin from the cls structure
- * @return A actorskin structure, only idx is initialized
+ * @return A actorskin structure
  */
-actorSkin_t* Com_AllocateActorSkin (const char *name)
+actorSkin_t* CL_AllocateActorSkin (const char *name)
 {
 	int index;
 	actorSkin_t *skin;
 
 	if (cls.numActorSkins >= lengthof(cls.actorSkins))
-		Sys_Error("Com_AllocateActorSkin: Max actorskin hit");
+		Sys_Error("CL_AllocateActorSkin: Max actorskin hit");
 
 	index = R_ModAllocateActorSkin(name);
 	skin = &cls.actorSkins[index];
@@ -64,7 +64,7 @@ actorSkin_t* Com_AllocateActorSkin (const char *name)
  * @brief Get number of registered actorskins
  * @return Number of registered actorskins
  */
-unsigned int Com_GetActorSkinCount (void)
+unsigned int CL_GetActorSkinCount (void)
 {
 	return cls.numActorSkins;
 }
@@ -73,7 +73,7 @@ unsigned int Com_GetActorSkinCount (void)
  * @brief Get a actorskin from idx
  * @return A actorskin, else NULL
  */
-static const actorSkin_t* Com_GetActorSkinByIDS (unsigned int idx)
+static const actorSkin_t* CL_GetActorSkinByIDS (unsigned int idx)
 {
 	if (idx >= cls.numActorSkins)
 		return NULL;
@@ -87,7 +87,7 @@ static const actorSkin_t* Com_GetActorSkinByIDS (unsigned int idx)
  */
 static const char* CL_GetTeamSkinName (unsigned int id)
 {
-	const actorSkin_t *skin = Com_GetActorSkinByIDS(id);
+	const actorSkin_t *skin = CL_GetActorSkinByIDS(id);
 	if (skin == NULL)
 		Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i", id);
 	return skin->name;
@@ -223,7 +223,7 @@ static void CL_InitSkin_f (void)
 		uiNode_t *skins = NULL;
 		int idx = 0;
 		const actorSkin_t *skin;
-		while ((skin = Com_GetActorSkinByIDS(idx++))) {
+		while ((skin = CL_GetActorSkinByIDS(idx++))) {
 			if (!skin->singleplayer)
 				continue;
 			UI_AddOption(&skins, skin->id, skin->name, va("%d", skin->idx));
@@ -236,7 +236,7 @@ static void CL_InitSkin_f (void)
 		uiNode_t *skins = NULL;
 		int idx = 0;
 		const actorSkin_t *skin;
-		while ((skin = Com_GetActorSkinByIDS(idx++))) {
+		while ((skin = CL_GetActorSkinByIDS(idx++))) {
 			if (!skin->multiplayer)
 				continue;
 			UI_AddOption(&skins, skin->id, skin->name, va("%d", skin->idx));
@@ -250,7 +250,7 @@ static void CL_InitSkin_f (void)
  */
 static int CL_FixActorSkinIDX (int idx)
 {
-	const actorSkin_t *skin = Com_GetActorSkinByIDS(idx);
+	const actorSkin_t *skin = CL_GetActorSkinByIDS(idx);
 
 	/** @todo we should check somewhere there is at least 1 skin */
 	if (skin == NULL) {

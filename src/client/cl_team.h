@@ -49,8 +49,8 @@ void CL_UpdateCharacterValues(const character_t *chr, const char *cvarPrefix);
 
 void TEAM_InitStartup(void);
 
-actorSkin_t* Com_AllocateActorSkin(const char *name);
-unsigned int Com_GetActorSkinCount(void);
+actorSkin_t* CL_AllocateActorSkin(const char *name);
+unsigned int CL_GetActorSkinCount(void);
 
 extern chrList_t chrDisplayList;
 
