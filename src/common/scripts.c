@@ -2872,7 +2872,6 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 	const char *errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
 	const char *token;
 	int i;
-	const value_t *v;
 	gametype_t* gt;
 	cvarlist_t* cvarlist;
 
@@ -2904,18 +2903,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 			if (*token == '}')
 				break;
 
-			for (v = gameTypeValues; v->string; v++)
-				if (Q_streq(token, v->string)) {
-					/* found a definition */
-					token = Com_EParse(text, errhead, name);
-					if (!*text)
-						return;
-
-					Com_EParseValue(gt, token, v->type, v->ofs, v->size);
-					break;
-				}
-
-			if (!v->string) {
+			if (!Com_ParseBlockToken(name, text, gt, gameTypeValues, NULL, token)) {
 				if (*token != '{')
 					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist\n", name);
 
