@@ -2563,7 +2563,6 @@ static void Com_ParseTeam (const char *name, const char **text)
 	const char *errhead = "Com_ParseTeam: unexpected end of file (team ";
 	const char *token;
 	int i;
-	const value_t *v;
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
@@ -2609,18 +2608,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		for (v = teamDefValues; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(td, token, v->type, v->ofs, v->size);
-				break;
-			}
-
-		if (!v->string) {
+		if (!Com_ParseBlockToken(name, text, td, teamDefValues, NULL, token)) {
 			if (Q_streq(token, "onlyWeapon")) {
 				objDef_t *od;
 				token = Com_EParse(text, errhead, name);
@@ -2711,19 +2699,8 @@ static const value_t ugvValues[] = {
  */
 static void Com_ParseUGVs (const char *name, const char **text)
 {
-	const char *errhead = "Com_ParseUGVs: unexpected end of file (ugv ";
-	const char *token;
-	const value_t *v;
 	ugv_t *ugv;
 	int i;
-
-	/* get name list body body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseUGVs: ugv \"%s\" without body ignored\n", name);
-		return;
-	}
 
 	for (i = 0; i < csi.numUGV; i++) {
 		if (Q_streq(name, csi.ugvs[i].id)) {
@@ -2732,37 +2709,19 @@ static void Com_ParseUGVs (const char *name, const char **text)
 		}
 	}
 
-	/* parse ugv */
 	if (csi.numUGV >= MAX_UGV) {
 		Com_Printf("Com_ParseUGVs: Too many UGV descriptions, '%s' ignored.\n", name);
 		return;
 	}
 
+	/* parse ugv */
 	ugv = &csi.ugvs[csi.numUGV];
 	OBJZERO(*ugv);
 	ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
 	ugv->idx = csi.numUGV;
 	csi.numUGV++;
 
-	do {
-		/* get the name type */
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-		for (v = ugvValues; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_EParseValue(ugv, token, v->type, v->ofs, v->size);
-				break;
-			}
-			if (!v->string)
-				Com_Printf("Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, name);
-	} while (*text);
+	Com_ParseBlock(name, text, ugv, ugvValues, NULL);
 }
 
 /**
