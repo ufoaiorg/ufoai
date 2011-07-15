@@ -1212,16 +1212,12 @@ void XYWnd::drawBlockGrid (void)
 		blockSize = string::toInt(value);
 
 	float x, y, xb, xe, yb, ye;
-	float w, h;
 	char text[32];
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_1D);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
-
-	w = (m_nWidth / 2 / m_fScale);
-	h = (m_nHeight / 2 / m_fScale);
 
 	Vector4 windowCoords = getWindowCoordinates();
 

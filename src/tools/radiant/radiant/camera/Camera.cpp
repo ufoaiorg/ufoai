@@ -175,15 +175,10 @@ void Camera::mouseControl (int x, int y)
 {
 	int angleSpeed = getCameraSettings()->angleSpeed();
 	int movementSpeed = getCameraSettings()->movementSpeed();
-	int xl;
-	int yl;
 	float xf, yf;
 
 	xf = (float) (x - width / 2) / (width / 2);
 	yf = (float) (y - height / 2) / (height / 2);
-
-	xl = width / 3;
-	yl = height / 3;
 
 	xf *= 1.0f - fabsf(yf);
 	if (xf < 0) {
