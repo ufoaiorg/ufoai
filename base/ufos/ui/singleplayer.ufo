@@ -135,19 +135,25 @@ window singleplayermission
 		onClick		{ cmd "ui_push options;" }
 	}
 
-	cmpMenuButton button_exit
+	cmpMenuButton button_exit_battlescape
 	{
 		string		"_Exit"
-		tooltip		"_Exiting now will make you lose all your campaign progress."
+		tooltip		"_You will lose all your progress."
 		pos			"640 520"
-		onClick		{ cmd "ui_push popup_exit_confirmation;" }
+		onClick		{ cmd "check_if_in_campaign_mode;" }
+	}
+
+	confunc check_if_in_campaign_mode
+	{
+		if ( *cvar:mn_base_count > 0 ) { cmd "ui_push popup_exit_campaign_confirmation;" }
+		else { cmd "game_exit;" }
 	}
 }
 
 // ========================
 // POPUP EXIT CONFIRMATION
 // ========================
-window popup_exit_confirmation
+window popup_exit_campaign_confirmation
 {
 	{
 		string		"_Exit Campaign Confirmation"
@@ -168,14 +174,11 @@ window popup_exit_confirmation
 		tooltip		"_Exit current campaign and return to main menu."
 		string		"_Quit"
 		pos			"28 188"
-		onClick		{
-						cmd "ui_pop;"
-						cmd "game_exit;"
-					}
+		onClick		{ cmd "game_exit;" }
 	}
 	cmpCancelButton bt_dontquit
 	{
-		tooltip		"_Do not quit"
+		tooltip		"_Do not quit."
 		pos			"285 188"
 		onClick		{ cmd "ui_pop;" }
 	}
