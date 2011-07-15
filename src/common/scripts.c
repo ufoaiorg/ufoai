@@ -1371,7 +1371,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
-void Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool, const char *token)
+qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool, const char *token)
 {
 	const value_t *v;
 	const char *errhead = "Com_ParseBlockToken: unexpected end of file (";
@@ -1381,7 +1381,7 @@ void Com_ParseBlockToken (const char *name, const char **text, void *base, const
 			/* found a definition */
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
-				return;
+				return qfalse;
 
 			switch (v->type) {
 			case V_TRANSLATION_STRING:
@@ -1401,8 +1401,12 @@ void Com_ParseBlockToken (const char *name, const char **text, void *base, const
 			}
 			break;
 		}
-	if (!v->string)
+	if (!v->string) {
 		Com_Printf("Com_ParseBlock: unknown token \"%s\" ignored (%s)\n", token, name);
+		return qfalse;
+	}
+
+	return qtrue;
 }
 
 void Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool)
@@ -1888,7 +1892,6 @@ static void Com_ParseItem (const char *name, const char **text)
 
 	if (od->reloadAttenuation < SOUND_ATTN_NONE || od->reloadAttenuation > SOUND_ATTN_MAX)
 		Com_Printf("Com_ParseItem: weapon \"%s\" has an invalid reload sound attenuation value set\n", od->id);
-
 }
 
 

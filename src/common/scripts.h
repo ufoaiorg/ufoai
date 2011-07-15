@@ -194,7 +194,7 @@ int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, s
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
 void Com_ParseBlock(const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool);
-void Com_ParseBlockToken(const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool, const char *token);
+qboolean Com_ParseBlockToken(const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool, const char *token);
 void* Com_AlignPtr(const void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
 const char *Com_GetLastParseError(void);
