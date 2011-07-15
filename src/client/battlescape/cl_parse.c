@@ -159,6 +159,9 @@ ACTION MESSAGES
  * @brief Parse a server sent sound package
  * @sa svc_sound
  * @sa SV_StartSound
+ * @note if the last character of the sound file string that was sent by the
+ * server is a '+', we will select a random sound file by replacing the '+'
+ * character with a number between 01..99
  * @todo make this an event, too - the sound package might be bound to an event
  * and thus must be delayed, too
  */
