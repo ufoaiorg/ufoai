@@ -1386,7 +1386,8 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 			switch (v->type) {
 			case V_TRANSLATION_STRING:
 				if (mempool == NULL) {
-					Com_EParseValue(base, token, v->type, v->ofs, v->size);
+					if (Com_EParseValue(base, token, v->type, v->ofs, v->size) == -1)
+						Com_Printf("Com_ParseBlockToken: Wrong size for value %s\n", v->string);
 					break;
 				} else {
 					token++;
@@ -1396,7 +1397,8 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 				Mem_PoolStrDupTo(token, (char**) ((char*)base + (int)v->ofs), mempool, 0);
 				break;
 			default:
-				Com_EParseValue(base, token, v->type, v->ofs, v->size);
+				if (Com_EParseValue(base, token, v->type, v->ofs, v->size) == -1)
+					Com_Printf("Com_ParseBlockToken: Wrong size for value %s\n", v->string);
 				break;
 			}
 			break;
@@ -1772,7 +1774,6 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 static void Com_ParseItem (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
-	const value_t *val;
 	objDef_t *od;
 	const char *token;
 	int i;
@@ -1820,19 +1821,7 @@ static void Com_ParseItem (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		for (val = od_vals; val->string; val++) {
-			if (!Q_strcasecmp(token, val->string)) {
-				/* parse a value */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					break;
-
-				if (Com_EParseValue(od, token, val->type, val->ofs, val->size) == -1)
-					Com_Printf("Com_ParseItem: Wrong size for value %s\n", val->string);
-				break;
-			}
-		}
-		if (!val->string) {
+		if (!Com_ParseBlockToken(name, text, od, od_vals, NULL, token)) {
 			if (Q_streq(token, "craftweapon")) {
 				/* parse a value */
 				token = Com_EParse(text, errhead, name);
