@@ -38,7 +38,7 @@ static uiFont_t fonts[MAX_FONTS];
 static const value_t fontValues[] = {
 	{"font", V_TRANSLATION_STRING, offsetof(uiFont_t, path), 0},
 	{"size", V_INT, offsetof(uiFont_t, size), MEMBER_SIZEOF(uiFont_t, size)},
-	{"style", V_CLIENT_HUNK_STRING, offsetof(uiFont_t, style), 0},
+	{"style", V_HUNK_STRING, offsetof(uiFont_t, style), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -119,7 +119,7 @@ qboolean UI_ParseFont (const char *name, const char **text)
 				switch (v->type) {
 				case V_TRANSLATION_STRING:
 					token++;
-				case V_CLIENT_HUNK_STRING:
+				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), ui_sysPool, 0);
 					break;
 				default:

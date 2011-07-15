@@ -362,7 +362,7 @@ void CL_ParseNations (const char *name, const char **text)
 				switch (vp->type) {
 				case V_TRANSLATION_STRING:
 					token++;
-				case V_CLIENT_HUNK_STRING:
+				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cp_campaignPool, 0);
 					break;
 				default:
@@ -446,7 +446,7 @@ void CL_ParseCities (const char *name, const char **text)
 				switch (vp->type) {
 				case V_TRANSLATION_STRING:
 					token++;
-				case V_CLIENT_HUNK_STRING:
+				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)&newCity + (int)vp->ofs), cp_campaignPool, 0);
 					break;
 				default:

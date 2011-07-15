@@ -139,8 +139,8 @@ static const value_t eventMail_vals[] = {
 	{"cc", V_TRANSLATION_STRING, offsetof(eventMail_t, cc), 0},
 	{"date", V_TRANSLATION_STRING, offsetof(eventMail_t, date), 0},
 	{"body", V_TRANSLATION_STRING, offsetof(eventMail_t, body), 0},
-	{"icon", V_CLIENT_HUNK_STRING, offsetof(eventMail_t, icon), 0},
-	{"model", V_CLIENT_HUNK_STRING, offsetof(eventMail_t, model), 0},
+	{"icon", V_HUNK_STRING, offsetof(eventMail_t, icon), 0},
+	{"model", V_HUNK_STRING, offsetof(eventMail_t, model), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -151,10 +151,7 @@ static const value_t eventMail_vals[] = {
  */
 void CL_ParseEventMails (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseEventMails: unexpected end of file (mail ";
 	eventMail_t *eventMail;
-	const value_t *vp;
-	const char *token;
 
 	if (ccs.numEventMails >= MAX_EVENTMAILS) {
 		Com_Printf("CL_ParseEventMails: mail def \"%s\" with same name found, second ignored\n", name);
@@ -166,50 +163,10 @@ void CL_ParseEventMails (const char *name, const char **text)
 	OBJZERO(*eventMail);
 
 	Com_DPrintf(DEBUG_CLIENT, "...found eventMail %s\n", name);
+
 	eventMail->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseEventMails: eventMail def \"%s\" without body ignored\n", name);
-		ccs.numEventMails--;
-		return;
-	}
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		/* check for some standard values */
-		for (vp = eventMail_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				case V_TRANSLATION_STRING:
-					token++;
-				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)eventMail + (int)vp->ofs), cp_campaignPool, 0);
-					break;
-				default:
-					Com_EParseValue(eventMail, token, vp->type, vp->ofs, vp->size);
-					break;
-				}
-				break;
-			}
-
-		if (!vp->string) {
-			Com_Printf("CL_ParseEventMails: unknown token \"%s\" ignored (mail %s)\n", token, name);
-			Com_EParse(text, errhead, name);
-		}
-	} while (*text);
+	Com_ParseBlock(name, text, eventMail, eventMail_vals, cp_campaignPool);
 }
 
 void CP_CheckCampaignEvents (campaign_t *campaign)

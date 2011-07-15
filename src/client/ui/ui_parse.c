@@ -47,13 +47,13 @@ static uiNode_t *UI_ParseNode(uiNode_t * parent, const char **text, const char *
 
 /** @brief valid properties for a UI model definition */
 static const value_t uiModelProperties[] = {
-	{"model", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, model), 0},
+	{"model", V_HUNK_STRING, offsetof(uiModel_t, model), 0},
 	{"need", V_NULL, 0, 0},
-	{"anim", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, anim), 0},
+	{"anim", V_HUNK_STRING, offsetof(uiModel_t, anim), 0},
 	{"skin", V_INT, offsetof(uiModel_t, skin), sizeof(int)},
 	{"color", V_COLOR, offsetof(uiModel_t, color), sizeof(vec4_t)},
-	{"tag", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, tag), 0},
-	{"parent", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, parent), 0},
+	{"tag", V_HUNK_STRING, offsetof(uiModel_t, tag), 0},
+	{"parent", V_HUNK_STRING, offsetof(uiModel_t, parent), 0},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -1195,7 +1195,7 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 			if (!*text)
 				return qfalse;
 			switch (v->type) {
-			case V_CLIENT_HUNK_STRING:
+			case V_HUNK_STRING:
 				Mem_PoolStrDupTo(token, (char**) ((char*)model + (int)v->ofs), ui_sysPool, 0);
 				break;
 			default:

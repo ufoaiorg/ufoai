@@ -61,7 +61,7 @@ rank_t *CL_GetRankByIdx (const int index)
 static const value_t rankValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(rank_t, name), 0},
 	{"shortname", V_TRANSLATION_STRING,	offsetof(rank_t, shortname), 0},
-	{"image", V_CLIENT_HUNK_STRING, offsetof(rank_t, image), 0},
+	{"image", V_HUNK_STRING, offsetof(rank_t, image), 0},
 	{"mind", V_INT, offsetof(rank_t, mind), MEMBER_SIZEOF(rank_t, mind)},
 	{"killed_enemies", V_INT, offsetof(rank_t, killedEnemies), MEMBER_SIZEOF(rank_t, killedEnemies)},
 	{"killed_others", V_INT, offsetof(rank_t, killedOthers), MEMBER_SIZEOF(rank_t, killedOthers)},
@@ -120,7 +120,7 @@ void CL_ParseRanks (const char *name, const char **text)
 				if (!*text)
 					return;
 				switch (v->type) {
-				case V_CLIENT_HUNK_STRING:
+				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cp_campaignPool, 0);
 					break;
 				default:

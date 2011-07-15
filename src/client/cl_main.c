@@ -719,16 +719,16 @@ static void CL_ParseActorSkin (const char *name, const char **text)
 
 	skin = Com_AllocateActorSkin(name);
 
-	Com_ParseBlock(name, text, skin, actorskin_vals);
+	Com_ParseBlock(name, text, skin, actorskin_vals, NULL);
 }
 
 /** @brief valid mapdef descriptors */
 static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
-	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
-	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
-	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
-	{"civilianteam", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, civTeam), 0},
+	{"map", V_HUNK_STRING, offsetof(mapDef_t, map), 0},
+	{"param", V_HUNK_STRING, offsetof(mapDef_t, param), 0},
+	{"size", V_HUNK_STRING, offsetof(mapDef_t, size), 0},
+	{"civilianteam", V_HUNK_STRING, offsetof(mapDef_t, civTeam), 0},
 
 	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
 	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
@@ -737,8 +737,8 @@ static const value_t mapdef_vals[] = {
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
 
-	{"onwin", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
-	{"onlose", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
+	{"onwin", V_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
+	{"onlose", V_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -788,7 +788,7 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 					if (*token == '_')
 						token++;
 				/* fall through */
-				case V_CLIENT_HUNK_STRING:
+				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
 					break;
 				}

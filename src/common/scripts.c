@@ -313,26 +313,25 @@ const char *const vt_names[] = {
 	"char",
 	"int",
 	"int2",
-	"float", /* 5 */
+	"float",
 	"pos",
 	"vector",
 	"color",
 	"rgba",
-	"string", /* 10 */
+	"string",
 	"translation_string",
 	"longstring",
 	"align",
 	"blend",
-	"style", /* 15 */
+	"style",
 	"fade",
 	"shapes",
 	"shapeb",
 	"dmgtype",
-	"dmgweight", /* 20 */
+	"dmgweight",
 	"date",
 	"relabs",
-	"client_hunk",
-	"client_hunk_string",
+	"hunk_string",
 	"team",
 	"race",
 	"ufo",
@@ -386,8 +385,7 @@ static const size_t vt_sizes[] = {
 	sizeof(byte),	/* V_DMGWEIGHT */
 	0,	/* V_DATE */
 	sizeof(float),	/* V_RELABS */
-	0,	/* V_CLIENT_HUNK */
-	0,	/* V_CLIENT_HUNK_STRING */
+	0,	/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
 	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
@@ -421,8 +419,7 @@ static const size_t vt_aligns[] = {
 	sizeof(byte),	/* V_DMGWEIGHT */
 	sizeof(date_t),	/* V_DATE */
 	sizeof(float),	/* V_RELABS */
-	0,	/* V_CLIENT_HUNK */
-	sizeof(char),	/* V_CLIENT_HUNK_STRING */
+	sizeof(char),	/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
 	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
@@ -497,9 +494,8 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	}
 
 	switch (type) {
-	case V_CLIENT_HUNK_STRING:
-	case V_CLIENT_HUNK:
-		snprintf(parseErrorMessage, sizeof(parseErrorMessage), "V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here");
+	case V_HUNK_STRING:
+		snprintf(parseErrorMessage, sizeof(parseErrorMessage), "V_HUNK_STRING is not parsed here");
 		return RESULT_ERROR;
 
 	case V_NULL:
@@ -1167,8 +1163,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	case V_NULL:
 		return 0;
 
-	case V_CLIENT_HUNK:
-	case V_CLIENT_HUNK_STRING:
+	case V_HUNK_STRING:
 		if (b == NULL)
 			return "(null)";
 		else
@@ -1376,7 +1371,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
-void Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values)
+void Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool)
 {
 	const char *errhead = "Com_ParseBlock: unexpected end of file (";
 	const char *token;
@@ -1404,7 +1399,22 @@ void Com_ParseBlock (const char *name, const char **text, void *base, const valu
 				if (!*text)
 					return;
 
-				Com_EParseValue(base, token, v->type, v->ofs, v->size);
+				switch (v->type) {
+				case V_TRANSLATION_STRING:
+					if (mempool == NULL) {
+						Com_EParseValue(base, token, v->type, v->ofs, v->size);
+						break;
+					} else {
+						token++;
+						/* fall through */
+					}
+				case V_HUNK_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)base + (int)v->ofs), mempool, 0);
+					break;
+				default:
+					Com_EParseValue(base, token, v->type, v->ofs, v->size);
+					break;
+				}
 				break;
 			}
 		if (!v->string)

@@ -108,5 +108,5 @@ void TUT_ParseTutorials (const char *name, const char **text)
 	t = &tutorials[numTutorials++];
 	OBJZERO(*t);
 
-	Com_ParseBlock(name, text, t, tutValues);
+	Com_ParseBlock(name, text, t, tutValues, NULL);
 }

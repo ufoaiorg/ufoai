@@ -749,7 +749,7 @@ void GAME_ParseModes (const char *name, const char **text)
 
 	Q_strncpyz(ed->id, name, sizeof(ed->id));
 
-	Com_ParseBlock(name, text, ed, cgame_vals);
+	Com_ParseBlock(name, text, ed, cgame_vals, NULL);
 }
 
 #ifndef HARD_LINKED_CGAME

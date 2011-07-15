@@ -52,26 +52,25 @@ typedef enum {
 	V_CHAR,
 	V_INT,
 	V_INT2,
-	V_FLOAT = 5,
+	V_FLOAT,
 	V_POS,
 	V_VECTOR,
 	V_COLOR,
 	V_RGBA,
-	V_STRING = 10,
+	V_STRING,
 	V_TRANSLATION_STRING,	/**< remove _ but don't translate */
 	V_LONGSTRING,			/**< not buffer safe - use this only for menu node data array values! */
 	V_ALIGN,
 	V_BLEND,
-	V_STYLE = 15,
+	V_STYLE,
 	V_FADE,
 	V_SHAPE_SMALL,			/**< space a weapon allocates in the inventory shapes, w, h */
 	V_SHAPE_BIG,			/**< inventory shape, x, y, w, h */
 	V_DMGTYPE,
-	V_DMGWEIGHT = 20,
+	V_DMGWEIGHT,
 	V_DATE,
 	V_RELABS,				/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
-	V_CLIENT_HUNK,			/**< only for client side data - not handled in Com_EParseValue */
-	V_CLIENT_HUNK_STRING,	/**< same as for V_CLIENT_HUNK */
+	V_HUNK_STRING,			/**< store the string in a mem pool */
 	V_TEAM,					/**< team string to int mapper */
 	V_RACE,
 	V_UFO,					/**< @brief Valid ufo types
@@ -194,7 +193,7 @@ int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, s
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
-void Com_ParseBlock(const char *name, const char **text, void *base, const value_t *values);
+void Com_ParseBlock(const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool);
 void* Com_AlignPtr(const void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
 const char *Com_GetLastParseError(void);

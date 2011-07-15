@@ -1080,13 +1080,13 @@ void RS_ResetTechs (void)
  */
 static const value_t valid_tech_vars[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(technology_t, name), 0},
-	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
-	{"event", V_CLIENT_HUNK_STRING, offsetof(technology_t, finishedResearchEvent), 0},
+	{"provides", V_HUNK_STRING, offsetof(technology_t, provides), 0},
+	{"event", V_HUNK_STRING, offsetof(technology_t, finishedResearchEvent), 0},
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
-	{"image", V_CLIENT_HUNK_STRING, offsetof(technology_t, image), 0},
-	{"mdl", V_CLIENT_HUNK_STRING, offsetof(technology_t, mdl), 0},
+	{"image", V_HUNK_STRING, offsetof(technology_t, image), 0},
+	{"mdl", V_HUNK_STRING, offsetof(technology_t, mdl), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1099,8 +1099,8 @@ static const value_t valid_techmail_vars[] = {
 	{"to", V_TRANSLATION_STRING, offsetof(techMail_t, to), 0},
 	{"subject", V_TRANSLATION_STRING, offsetof(techMail_t, subject), 0},
 	{"date", V_TRANSLATION_STRING, offsetof(techMail_t, date), 0},
-	{"icon", V_CLIENT_HUNK_STRING, offsetof(techMail_t, icon), 0},
-	{"model", V_CLIENT_HUNK_STRING, offsetof(techMail_t, model), 0},
+	{"icon", V_HUNK_STRING, offsetof(techMail_t, icon), 0},
+	{"model", V_HUNK_STRING, offsetof(techMail_t, model), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1449,7 +1449,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							switch (vp->type) {
 							case V_TRANSLATION_STRING:
 								token++;	/**< Remove first char (i.e. we assume it's the "_") */
-							case V_CLIENT_HUNK_STRING:
+							case V_HUNK_STRING:
 								Mem_PoolStrDupTo(token, (char**) ((char*)mail + (int)vp->ofs), cp_campaignPool, 0);
 								break;
 							case V_NULL:
@@ -1482,7 +1482,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						case V_TRANSLATION_STRING:
 							if (*token == '_')
 								token++;
-						case V_CLIENT_HUNK_STRING:
+						case V_HUNK_STRING:
 							Mem_PoolStrDupTo(token, (char**) ((char*)tech + (int)vp->ofs), cp_campaignPool, 0);
 							break;
 						case V_NULL:

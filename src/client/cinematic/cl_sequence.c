@@ -763,7 +763,7 @@ static int SEQ_Execute2Dobj (sequenceContext_t *context, const char *name, const
 				switch (vp->type) {
 				case V_TRANSLATION_STRING:
 					data++;
-				case V_CLIENT_HUNK_STRING:
+				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(data, (char**) ((char*)s2d + (int)vp->ofs), cl_genericPool, 0);
 					break;
 

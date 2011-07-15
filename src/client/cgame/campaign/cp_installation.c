@@ -341,8 +341,8 @@ static const value_t installation_vals[] = {
 	{"max_batteries", V_INT, offsetof(installationTemplate_t, maxBatteries), MEMBER_SIZEOF(installationTemplate_t, maxBatteries)},
 	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, maxUFOsStored)},
 	{"max_damage", V_INT, offsetof(installationTemplate_t, maxDamage), MEMBER_SIZEOF(installationTemplate_t, maxDamage)},
-	{"model", V_CLIENT_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
-	{"image", V_CLIENT_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
+	{"model", V_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
+	{"image", V_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -415,7 +415,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					if (token[0] == '_')
 						token++;
-				case V_CLIENT_HUNK_STRING:
+				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)installation + (int)vp->ofs), cp_campaignPool, 0);
 					break;
 				default:

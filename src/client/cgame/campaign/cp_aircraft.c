@@ -1435,14 +1435,14 @@ static const value_t aircraft_vals[] = {
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 	{"interestlevel", V_INT, offsetof(aircraft_t, ufoInterestOnGeoscape), MEMBER_SIZEOF(aircraft_t, ufoInterestOnGeoscape)},
 
-	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
-	{"model", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, model), 0},
+	{"image", V_HUNK_STRING, offsetof(aircraft_t, image), 0},
+	{"model", V_HUNK_STRING, offsetof(aircraft_t, model), 0},
 	/* price for selling/buying */
 	{"price", V_INT, offsetof(aircraft_t, price), MEMBER_SIZEOF(aircraft_t, price)},
 	/* this is needed to let the buy and sell screen look for the needed building */
 	/* to place the aircraft in */
 	{"productioncost", V_INT, offsetof(aircraft_t, productionCost), MEMBER_SIZEOF(aircraft_t, productionCost)},
-	{"building", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, building), 0},
+	{"building", V_HUNK_STRING, offsetof(aircraft_t, building), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1671,7 +1671,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					switch (vp->type) {
 					case V_TRANSLATION_STRING:
 						token++;
-					case V_CLIENT_HUNK_STRING:
+					case V_HUNK_STRING:
 						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
 						break;
 					default:
@@ -1733,7 +1733,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 								switch (vp->type) {
 								case V_TRANSLATION_STRING:
 									token++;
-								case V_CLIENT_HUNK_STRING:
+								case V_HUNK_STRING:
 									Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
 									break;
 								default:
