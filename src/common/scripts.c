@@ -1405,7 +1405,7 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 	return v->string != NULL;
 }
 
-void Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool)
+qboolean Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool)
 {
 	const char *errhead = "Com_ParseBlock: unexpected end of file (";
 	const char *token;
@@ -1415,7 +1415,7 @@ void Com_ParseBlock (const char *name, const char **text, void *base, const valu
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseBlock: block \"%s\" without body ignored\n", name);
-		return;
+		return qfalse;
 	}
 
 	do {
@@ -1428,6 +1428,8 @@ void Com_ParseBlock (const char *name, const char **text, void *base, const valu
 		if (!Com_ParseBlockToken(name, text, base, values, mempool, token))
 			Com_Printf("Com_ParseBlock: unknown token '%s' ignored (%s)\n", token, name);
 	} while (*text);
+
+	return qtrue;
 }
 
 /*
@@ -2717,11 +2719,12 @@ static void Com_ParseUGVs (const char *name, const char **text)
 	/* parse ugv */
 	ugv = &csi.ugvs[csi.numUGV];
 	OBJZERO(*ugv);
-	ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
-	ugv->idx = csi.numUGV;
-	csi.numUGV++;
 
-	Com_ParseBlock(name, text, ugv, ugvValues, NULL);
+	if (Com_ParseBlock(name, text, ugv, ugvValues, NULL)) {
+		ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
+		ugv->idx = csi.numUGV;
+		csi.numUGV++;
+	}
 }
 
 /**
