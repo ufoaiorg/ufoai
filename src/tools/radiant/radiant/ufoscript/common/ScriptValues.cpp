@@ -10,7 +10,7 @@ namespace scripts
 	{
 	}
 
-	std::vector<ScriptValue> ScriptValues::getScriptValues ()
+	std::vector<ScriptValue> ScriptValues::getScriptValues () const
 	{
 		return _scriptValues;
 	}

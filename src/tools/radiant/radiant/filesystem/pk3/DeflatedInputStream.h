@@ -56,7 +56,7 @@ class DeflatedInputStream: public InputStream
 			inflateEnd(&m_zipstream);
 		}
 
-		std::size_t size ()
+		std::size_t size () const
 		{
 			return 0;
 		}
