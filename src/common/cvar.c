@@ -1027,7 +1027,7 @@ static void Cvar_Add_f (void)
 
 	cvar = Cvar_FindVar(Cmd_Argv(1));
 	if (!cvar) {
-		Com_Printf("Cvar_Add_f: %s not exists\n", Cmd_Argv(1));
+		Com_Printf("Cvar_Add_f: %s does not exist\n", Cmd_Argv(1));
 		return;
 	}
 
@@ -1049,7 +1049,7 @@ static void Cvar_Mod_f (void)
 
 	cvar = Cvar_FindVar(Cmd_Argv(1));
 	if (!cvar) {
-		Com_Printf("Cvar_Mod_f: %s not exists\n", Cmd_Argv(1));
+		Com_Printf("Cvar_Mod_f: %s does not exist\n", Cmd_Argv(1));
 		return;
 	}
 
