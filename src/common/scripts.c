@@ -2008,20 +2008,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 		if (*token == '}')
 			return;
 
-		for (idp = idps; idp->string; idp++)
-			if (!Q_strcasecmp(token, idp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(id, token, idp->type, idp->ofs, idp->size);
-				break;
-			}
-
-		if (!idp->string)
-			Com_Printf("Com_ParseInventory: unknown token \"%s\" ignored (inventory %s)\n", token, name);
-
+		Com_ParseBlockToken(name, text, id, idps, NULL, token);
 	} while (*text);
 }
 
