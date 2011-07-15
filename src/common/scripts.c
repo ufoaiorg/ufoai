@@ -1521,13 +1521,13 @@ static const value_t od_vals[] = {
 static const value_t fdps[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name), 0},
 	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg), MEMBER_SIZEOF(fireDef_t, shotOrg)},
-	{"projtl", V_STRING, offsetof(fireDef_t, projectile), 0},
-	{"impact", V_STRING, offsetof(fireDef_t, impact), 0},
-	{"hitbody", V_STRING, offsetof(fireDef_t, hitBody), 0},
-	{"firesnd", V_STRING, offsetof(fireDef_t, fireSound), 0},
-	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound), 0},
-	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound), 0},
-	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound), 0},
+	{"projtl", V_HUNK_STRING, offsetof(fireDef_t, projectile), 0},
+	{"impact", V_HUNK_STRING, offsetof(fireDef_t, impact), 0},
+	{"hitbody", V_HUNK_STRING, offsetof(fireDef_t, hitBody), 0},
+	{"firesnd", V_HUNK_STRING, offsetof(fireDef_t, fireSound), 0},
+	{"impsnd", V_HUNK_STRING, offsetof(fireDef_t, impactSound), 0},
+	{"bodysnd", V_HUNK_STRING, offsetof(fireDef_t, hitBodySound), 0},
+	{"bncsnd", V_HUNK_STRING, offsetof(fireDef_t, bounceSound), 0},
 	{"fireattenuation", V_FLOAT, offsetof(fireDef_t, fireAttenuation), MEMBER_SIZEOF(fireDef_t, fireAttenuation)},
 	{"impactattenuation", V_FLOAT, offsetof(fireDef_t, impactAttenuation), MEMBER_SIZEOF(fireDef_t, impactAttenuation)},
 	{"throughwall", V_INT, offsetof(fireDef_t, throughWall), MEMBER_SIZEOF(fireDef_t, throughWall)},
@@ -1556,7 +1556,6 @@ static const value_t fdps[] = {
 
 static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 {
-	const value_t *fdp;
 	const char *errhead = "Com_ParseFire: unexpected end of file";
 	const char *token;
 
@@ -1575,28 +1574,7 @@ static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * 
 		if (*token == '}')
 			return qtrue;
 
-		for (fdp = fdps; fdp->string; fdp++)
-			if (!Q_strcasecmp(token, fdp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return qfalse;
-
-				switch (fdp->type) {
-				case V_TRANSLATION_STRING:
-					token++;
-					/* fall through */
-				case V_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)fd + (int)fdp->ofs), com_genericPool, 0);
-					break;
-				default:
-					Com_EParseValue(fd, token, fdp->type, fdp->ofs, fdp->size);
-					break;
-				}
-				break;
-			}
-
-		if (!fdp->string) {
+		if (!Com_ParseBlockToken(name, text, fd, fdps, com_genericPool, token)) {
 			if (Q_streq(token, "skill")) {
 				int skill;
 
