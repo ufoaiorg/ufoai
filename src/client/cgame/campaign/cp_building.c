@@ -150,7 +150,6 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 {
 	building_t *building;
 	technology_t *techLink;
-	const value_t *vp;
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
 	const char *token;
 
@@ -215,27 +214,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 					if (!*text)
 						return;
 				} else {
-					for (vp = valid_building_vars; vp->string; vp++)
-						if (Q_streq(token, vp->string)) {
-							/* found a definition */
-							token = Com_EParse(text, errhead, name);
-							if (!*text)
-								return;
-
-							switch (vp->type) {
-							case V_TRANSLATION_STRING:
-								token++;
-							case V_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cp_campaignPool, 0);
-								break;
-							default:
-								Com_EParseValue(building, token, vp->type, vp->ofs, vp->size);
-								break;
-							}
-							break;
-						}
-					if (!vp->string)
-						Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
+					Com_ParseBlockToken(name, text, building, valid_building_vars, cp_campaignPool, token);
 				}
 			}
 		} while (*text);
