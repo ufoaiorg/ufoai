@@ -76,14 +76,14 @@ std::string getShaderFromSelection ()
 			try {
 				// Go through all the selected brushes and their faces
 				Scene_ForEachSelectedBrush_ForEachFaceInstance(GlobalSceneGraph(), UniqueFaceShaderFinder(faceShader));
-			} catch (AmbiguousShaderException a) {
+			} catch (AmbiguousShaderException &a) {
 				faceShader = "";
 			}
 		} else {
 			// Try to get the unique shader from the faces
 			try {
 				g_SelectedFaceInstances.foreach(UniqueFaceShaderFinder(faceShader));
-			} catch (AmbiguousShaderException a) {
+			} catch (AmbiguousShaderException &a) {
 				faceShader = "";
 			}
 		}
@@ -227,7 +227,7 @@ void pickShaderFromSelection ()
 		try {
 			Face& sourceFace = getLastSelectedFace();
 			GlobalShaderClipboard().setSource(sourceFace);
-		} catch (InvalidSelectionException e) {
+		} catch (InvalidSelectionException &e) {
 			gtkutil::errorDialog(_("Can't copy Shader. Couldn't retrieve face."));
 		}
 	} else {

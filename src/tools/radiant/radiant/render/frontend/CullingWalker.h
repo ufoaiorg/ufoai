@@ -31,7 +31,7 @@ class CullingWalker
 		// Post-descent function
 		void post (const scene::Path& path, scene::Instance& instance, VolumeIntersectionValue parentVisible) const
 		{
-			return m_walker.post(path, instance);
+			m_walker.post(path, instance);
 		}
 };
 

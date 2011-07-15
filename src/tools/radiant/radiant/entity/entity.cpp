@@ -160,7 +160,7 @@ void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 			GlobalUndoSystem().clearRedo();
 			GlobalSceneGraph().sceneChanged();
 		}
-	} catch (EntityCreationException e) {
+	} catch (EntityCreationException &e) {
 		gtkutil::errorDialog(e.what());
 	}
 }

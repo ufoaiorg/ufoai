@@ -76,7 +76,7 @@ void MaterialSystem::generateMaterialForFace (int contentFlags, int surfaceFlags
 		os << "\t}" << std::endl;
 	}
 
-	if (contentFlags & CONTENTS_WATER || textureName.find("glass") != std::string::npos || textureName.find("window")
+	if ((contentFlags & CONTENTS_WATER) || textureName.find("glass") != std::string::npos || textureName.find("window")
 			!= std::string::npos) {
 		os << "\t{" << std::endl;
 		os << "\t\tspecular 2.0" << std::endl;

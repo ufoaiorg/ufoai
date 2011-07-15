@@ -184,7 +184,7 @@ namespace ui {
 			// Query the registry
 			loadToolbars();
 		}
-		catch (std::runtime_error e) {
+		catch (std::runtime_error &e) {
 			globalOutputStream() << "ToolbarCreator: Warning: " << e.what() << "\n";
 		}
 		globalOutputStream() << "ToolbarCreator: Finished loading toolbar information.\n";

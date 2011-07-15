@@ -154,13 +154,13 @@ void OpenGLShaderPass::apply (OpenGLState& current, unsigned int globalstate)
 
 	setState(state, delta, RENDER_LINESTIPPLE, GL_LINE_STIPPLE);
 
-	if (state & RENDER_DEPTHTEST && m_state.m_depthfunc != current.m_depthfunc) {
+	if ((state & RENDER_DEPTHTEST) && m_state.m_depthfunc != current.m_depthfunc) {
 		glDepthFunc(m_state.m_depthfunc);
 
 		current.m_depthfunc = m_state.m_depthfunc;
 	}
 
-	if (state & RENDER_LINESTIPPLE && (m_state.m_linestipple_factor != current.m_linestipple_factor
+	if ((state & RENDER_LINESTIPPLE) && (m_state.m_linestipple_factor != current.m_linestipple_factor
 			|| m_state.m_linestipple_pattern != current.m_linestipple_pattern)) {
 		glLineStipple(m_state.m_linestipple_factor, m_state.m_linestipple_pattern);
 
@@ -168,7 +168,7 @@ void OpenGLShaderPass::apply (OpenGLState& current, unsigned int globalstate)
 		current.m_linestipple_pattern = m_state.m_linestipple_pattern;
 	}
 
-	if (state & RENDER_ALPHATEST && (m_state.m_alphafunc != current.m_alphafunc || m_state.m_alpharef
+	if ((state & RENDER_ALPHATEST) && (m_state.m_alphafunc != current.m_alphafunc || m_state.m_alpharef
 			!= current.m_alpharef)) {
 		glAlphaFunc(m_state.m_alphafunc, m_state.m_alpharef);
 
@@ -189,7 +189,7 @@ void OpenGLShaderPass::apply (OpenGLState& current, unsigned int globalstate)
 		setTextureState(current.m_texture, m_state.m_texture);
 	}
 
-	if (state & RENDER_TEXTURE_2D && m_state.m_colour[3] != current.m_colour[3]) {
+	if ((state & RENDER_TEXTURE_2D) && m_state.m_colour[3] != current.m_colour[3]) {
 		glColor4f(1, 1, 1, m_state.m_colour[3]);
 	}
 
@@ -200,7 +200,7 @@ void OpenGLShaderPass::apply (OpenGLState& current, unsigned int globalstate)
 	}
 	current.m_colour = m_state.m_colour;
 
-	if (state & RENDER_BLEND && (m_state.m_blend_src != current.m_blend_src || m_state.m_blend_dst
+	if ((state & RENDER_BLEND) && (m_state.m_blend_src != current.m_blend_src || m_state.m_blend_dst
 			!= current.m_blend_dst)) {
 		glBlendFunc(m_state.m_blend_src, m_state.m_blend_dst);
 		current.m_blend_src = m_state.m_blend_src;

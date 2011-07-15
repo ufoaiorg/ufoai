@@ -121,7 +121,7 @@ namespace map
 				} else if (token == "tile") {
 					try {
 						parseTile(tokeniser);
-					} catch (UMPException e) {
+					} catch (UMPException &e) {
 						globalErrorStream() << _fileName << ": " << e.getMessage() << "\n";
 						return;
 					}
