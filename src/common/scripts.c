@@ -2797,8 +2797,8 @@ TERRAIN PARSERS
 static terrainType_t *terrainTypesHash[TERRAIN_HASH_SIZE];
 
 static const value_t terrainTypeValues[] = {
-	{"footstepsound", V_STRING, offsetof(terrainType_t, footStepSound), 0},
-	{"particle", V_STRING, offsetof(terrainType_t, particle), 0},
+	{"footstepsound", V_HUNK_STRING, offsetof(terrainType_t, footStepSound), 0},
+	{"particle", V_HUNK_STRING, offsetof(terrainType_t, particle), 0},
 	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footStepVolume), 0},
 	{"bouncefraction", V_FLOAT, offsetof(terrainType_t, bounceFraction), 0},
 
@@ -2832,11 +2832,7 @@ const terrainType_t* Com_GetTerrainType (const char *textureName)
  */
 static void Com_ParseTerrain (const char *name, const char **text)
 {
-	const char *errhead = "Com_ParseTerrain: unexpected end of file (terrain ";
-	const char *token;
 	terrainType_t *t;
-	const value_t *v;
-	unsigned hash;
 
 	/* check for additions to existing name categories */
 	if (Com_GetTerrainType(name) != NULL) {
@@ -2844,49 +2840,19 @@ static void Com_ParseTerrain (const char *name, const char **text)
 		return;
 	}
 
-	/* get name list body body */
-	token = Com_Parse(text);
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseTerrain: terrain def \"%s\" without body ignored\n", name);
-		return;
-	}
-
 	t = (terrainType_t *)Mem_PoolAlloc(sizeof(*t), com_genericPool, 0);
-	t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
-	hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
-	/* link in terrainTypesHash[hash] should be NULL on the first run */
-	t->hash_next = terrainTypesHash[hash];
-	terrainTypesHash[hash] = t;
 	t->footStepVolume = SND_VOLUME_FOOTSTEPS;
 	t->bounceFraction = 1.0f;
 
-	do {
-		/* get the name type */
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		for (v = terrainTypeValues; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				switch (v->type) {
-				case V_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), com_genericPool, 0);
-					break;
-				default:
-					Com_EParseValue(t, token, v->type, v->ofs, v->size);
-					break;
-				}
-				break;
-			}
-		if (!v->string)
-			Com_Printf("Unknown token '%s' in terrain parsing\n", token);
-	} while (*text);
+	if (Com_ParseBlock(name, text, t, terrainTypeValues, com_genericPool)) {
+		const unsigned hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
+		t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
+		/* link in terrainTypesHash[hash] should be NULL on the first run */
+		t->hash_next = terrainTypesHash[hash];
+		terrainTypesHash[hash] = t;
+	} else {
+		Mem_Free(t);
+	}
 }
 
 /*
