@@ -56,9 +56,6 @@ static const objDef_t *currentSelectedMenuEntry;	/**< Current selected entry on 
 static int buyCat = FILTER_S_PRIMARY;	/**< Category of items in the menu.
 										 * @sa itemFilterTypes_t */
 
-/** @brief Max values for Buy/Sell factors. */
-static const int MAX_BS_FACTORS = 500;
-
 /**
  * @brief Checks whether a given aircraft should appear on the market
  * @param aircraft The aircraft to check

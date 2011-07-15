@@ -44,8 +44,6 @@ CASSERT(lengthof(transferTypeIDs) == TRANS_TYPE_MAX);
 /** @todo move this into ccs_t */
 static transferData_t td;
 
-/** @brief Max values for transfer factors. */
-static const int MAX_TR_FACTORS = 500;
 /** @brief number of entries on menu */
 static const int MAX_TRANSLIST_MENU_ENTRIES = 21;
 
