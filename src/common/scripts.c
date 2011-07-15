@@ -1925,7 +1925,6 @@ static void Com_ParseInventory (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseInventory: unexpected end of file (inventory ";
 	invDef_t *id;
-	const value_t *idp;
 	const char *token;
 	int i;
 
@@ -2048,7 +2047,6 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	const char *errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
 	equipDef_t *ed;
 	const char *token;
-	const value_t *vp;
 	int i, n;
 
 	/* search for equipments with same name */
@@ -2084,17 +2082,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 		if (!*text || *token == '}')
 			return;
 
-		for (vp = equipment_definition_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-
-		if (!vp->string) {
+		if (!Com_ParseBlockToken(name, text, ed, equipment_definition_vals, NULL, token)) {
 			if (Q_streq(token, "item")) {
 				objDef_t *od;
 				token = Com_EParse(text, errhead, name);
