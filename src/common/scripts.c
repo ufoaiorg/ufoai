@@ -1944,14 +1944,13 @@ static void Com_ParseInventory (const char *name, const char **text)
 	}
 
 	/* initialize the inventory definition */
-	id = &csi.ids[csi.numIDs++];
+	id = &csi.ids[csi.numIDs];
 	OBJZERO(*id);
 
-	if (!Com_ParseBlock(name, text, id, idps, NULL)) {
-		csi.numIDs--;
+	if (!Com_ParseBlock(name, text, id, idps, NULL))
 		return;
-	}
 
+	csi.numIDs++;
 	Q_strncpyz(id->name, name, sizeof(id->name));
 
 	/* Special IDs for container. These are also used elsewhere, so be careful. */
