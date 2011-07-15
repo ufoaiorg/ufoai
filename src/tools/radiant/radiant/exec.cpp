@@ -210,7 +210,8 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 		g_debug("exec_spawn_process - child [%d] exitcode [%d]\n", e->pid, e->exit_code);
 #endif
 	} else {
-		g_warning("exec_spawn_process - failed to spawn process [%d] [%s]\n", err->code, err->message);
+		if (err != NULL)
+			g_warning("exec_spawn_process - failed to spawn process [%d] [%s]\n", err->code, err->message);
 		exec_cmd_set_state(e, FAILED);
 		if (err != NULL)
 			g_error_free(err);
