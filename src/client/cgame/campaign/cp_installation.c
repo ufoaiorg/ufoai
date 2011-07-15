@@ -359,7 +359,6 @@ void INS_ParseInstallations (const char *name, const char **text)
 	installationTemplate_t *installation;
 	const char *errhead = "INS_ParseInstallations: unexpected end of file (names ";
 	const char *token;
-	const value_t *vp;
 	int i;
 
 	/* get id list body */
@@ -404,30 +403,8 @@ void INS_ParseInstallations (const char *name, const char **text)
 			break;
 
 		/* check for some standard values */
-		for (vp = installation_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				case V_TRANSLATION_STRING:
-					if (token[0] == '_')
-						token++;
-				case V_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)installation + (int)vp->ofs), cp_campaignPool, 0);
-					break;
-				default:
-					if (Com_EParseValue(installation, token, vp->type, vp->ofs, vp->size) == -1)
-						Com_Printf("INS_ParseInstallations: Wrong size for value %s\n", vp->string);
-					break;
-				}
-				break;
-			}
-
-		/* other values */
-		if (!vp->string) {
+		if (!Com_ParseBlockToken(name, text, installation, installation_vals, cp_campaignPool, token)) {
+			/* other values */
 			if (Q_streq(token, "cost")) {
 				char cvarname[MAX_VAR] = "mn_installation_";
 

@@ -747,7 +747,6 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
 	mapDef_t *md;
-	const value_t *vp;
 	const char *token;
 
 	/* get it's body */
@@ -773,29 +772,7 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		for (vp = mapdef_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				default:
-					Com_EParseValue(md, token, vp->type, vp->ofs, vp->size);
-					break;
-				case V_TRANSLATION_STRING:
-					if (*token == '_')
-						token++;
-				/* fall through */
-				case V_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
-					break;
-				}
-				break;
-			}
-
-		if (!vp->string) {
+		if (!Com_ParseBlockToken(name, text, md, mapdef_vals, com_genericPool, token)) {
 			linkedList_t **list;
 			if (Q_streq(token, "ufos")) {
 				list = &md->ufos;

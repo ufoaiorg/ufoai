@@ -1390,7 +1390,8 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 						Com_Printf("Com_ParseBlockToken: Wrong size for value %s\n", v->string);
 					break;
 				} else {
-					token++;
+					if (*token == '_')
+						token++;
 					/* fall through */
 				}
 			case V_HUNK_STRING:

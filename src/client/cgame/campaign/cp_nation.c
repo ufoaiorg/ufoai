@@ -302,10 +302,7 @@ static const value_t nation_vals[] = {
  */
 void CL_ParseNations (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseNations: unexpected end of file (nation ";
 	nation_t *nation;
-	const value_t *vp;
-	const char *token;
 	int i;
 
 	if (ccs.numNations >= MAX_NATIONS) {
@@ -328,56 +325,14 @@ void CL_ParseNations (const char *name, const char **text)
 	nation = &ccs.nations[ccs.numNations];
 	OBJZERO(*nation);
 	nation->idx = ccs.numNations;
-	ccs.numNations++;
-
-	Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
-	nation->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
-
 	nation->stats[0].inuse = qtrue;
 
-	/* get it's body */
-	token = Com_Parse(text);
+	if (Com_ParseBlock(name, text, nation, nation_vals, cp_campaignPool)) {
+		ccs.numNations++;
 
-	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseNations: nation def \"%s\" without body ignored\n", name);
-		ccs.numNations--;
-		return;
+		Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
+		nation->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 	}
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		/* check for some standard values */
-		for (vp = nation_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				case V_TRANSLATION_STRING:
-					token++;
-				case V_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cp_campaignPool, 0);
-					break;
-				default:
-					if (Com_EParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
-						Com_Printf("CL_ParseNations: Wrong size for value %s\n", vp->string);
-					break;
-				}
-				break;
-			}
-
-		if (!vp->string) {
-			Com_Printf("CL_ParseNations: unknown token \"%s\" ignored (nation %s)\n", token, name);
-			Com_EParse(text, errhead, name);
-		}
-	} while (*text);
 }
 
 static const value_t city_vals[] = {
@@ -397,11 +352,8 @@ static const value_t city_vals[] = {
  */
 void CL_ParseCities (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseCities: unexpected end of file (nation ";
 	city_t newCity;
 	city_t *city;
-	const value_t *vp;
-	const char *token;
 
 	/* search for cities with same name */
 	LIST_Foreach(ccs.cities, city_t, city) {
@@ -414,57 +366,14 @@ void CL_ParseCities (const char *name, const char **text)
 	/* initialize the nation */
 	OBJZERO(newCity);
 	newCity.idx = ccs.numCities;
-	ccs.numCities++;
 
-	Com_DPrintf(DEBUG_CLIENT, "...found city %s\n", name);
-	newCity.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseCities: city def \"%s\" without body ignored\n", name);
-		ccs.numCities--;
-		return;
+	if (Com_ParseBlock(name, text, &newCity, city_vals, cp_campaignPool)) {
+		ccs.numCities++;
+		Com_DPrintf(DEBUG_CLIENT, "...found city %s\n", name);
+		newCity.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+		/* Add city to the list */
+		LIST_Add(&ccs.cities, (byte*) &newCity, sizeof(newCity));
 	}
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		/* check for some standard values */
-		for (vp = city_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				case V_TRANSLATION_STRING:
-					token++;
-				case V_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)&newCity + (int)vp->ofs), cp_campaignPool, 0);
-					break;
-				default:
-					if (Com_EParseValue(&newCity, token, vp->type, vp->ofs, vp->size) == -1)
-						Com_Printf("CL_ParseCities: Wrong size for value %s\n", vp->string);
-					break;
-				}
-				break;
-			}
-
-		if (!vp->string) {
-			Com_Printf("CL_ParseCities: unknown token \"%s\" ignored (nation %s)\n", token, name);
-			Com_EParse(text, errhead, name);
-		}
-	} while (*text);
-
-	/* Add city to the list */
-	LIST_Add(&ccs.cities, (byte*) &newCity, sizeof(newCity));
 }
 
 /**

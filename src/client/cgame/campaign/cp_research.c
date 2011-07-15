@@ -1115,7 +1115,6 @@ static const value_t valid_techmail_vars[] = {
  */
 void RS_ParseTechnologies (const char *name, const char **text)
 {
-	const value_t *vp;
 	technology_t *tech;
 	unsigned hash;
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
@@ -1439,27 +1438,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				if (!*text || *token == '}')
 					return;
 				do {
-					for (vp = valid_techmail_vars; vp->string; vp++)
-						if (Q_streq(token, vp->string)) {
-							/* found a definition */
-							token = Com_EParse(text, errhead, name);
-							if (!*text)
-								return;
+					Com_ParseBlockToken(name, text, mail, valid_techmail_vars, cp_campaignPool, token);
 
-							switch (vp->type) {
-							case V_TRANSLATION_STRING:
-								token++;	/**< Remove first char (i.e. we assume it's the "_") */
-							case V_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)mail + (int)vp->ofs), cp_campaignPool, 0);
-								break;
-							case V_NULL:
-								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
-								break;
-							default:
-								Com_EParseValue(mail, token, vp->type, vp->ofs, vp->size);
-							}
-							break;
-						}
 					/* grab the next entry */
 					token = Com_EParse(text, errhead, name);
 					if (!*text)
@@ -1469,32 +1449,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				if (mail->model == NULL)
 					mail->model = "characters/navarre";
 			} else {
-				for (vp = valid_tech_vars; vp->string; vp++)
-					if (Q_streq(token, vp->string)) {
-						/* found a definition */
-						token = Com_EParse(text, errhead, name);
-						if (!*text)
-							return;
-
-						if (!vp->ofs)
-							break;
-						switch (vp->type) {
-						case V_TRANSLATION_STRING:
-							if (*token == '_')
-								token++;
-						case V_HUNK_STRING:
-							Mem_PoolStrDupTo(token, (char**) ((char*)tech + (int)vp->ofs), cp_campaignPool, 0);
-							break;
-						case V_NULL:
-							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
-							break;
-						default:
-							Com_EParseValue(tech, token, vp->type, vp->ofs, vp->size);
-						}
-						break;
-					}
-				/** @todo escape "type weapon/tech/etc.." here */
-				if (!vp->string)
+				if (!Com_ParseBlockToken(name, text, tech, valid_tech_vars, cp_campaignPool, token))
 					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
 			}
 		}

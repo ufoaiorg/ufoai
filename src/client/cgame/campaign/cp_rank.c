@@ -78,7 +78,6 @@ void CL_ParseRanks (const char *name, const char **text)
 	rank_t *rank;
 	const char *errhead = "CL_ParseRanks: unexpected end of file (medal/rank ";
 	const char *token;
-	const value_t *v;
 	int i;
 
 	/* get name list body body */
@@ -113,37 +112,26 @@ void CL_ParseRanks (const char *name, const char **text)
 			break;
 		if (*token == '}')
 			break;
-		for (v = rankValues; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				switch (v->type) {
-				case V_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cp_campaignPool, 0);
-					break;
-				default:
-					Com_EParseValue(rank, token, v->type, v->ofs, v->size);
-					break;
-				}
-				break;
-			}
 
-		if (Q_streq(token, "type")) {
+		if (Com_ParseBlockToken(name, text, rank, rankValues, cp_campaignPool, token)) {
+			continue;
+		} else if (Q_streq(token, "type")) {
 			/* employeeType_t */
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			/* error check is performed in E_GetEmployeeType function */
 			rank->type = E_GetEmployeeType(token);
-		} else if (!v->string)
+		} else
 			Com_Printf("CL_ParseRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, name);
 	} while (*text);
 
-	if (!strlen(rank->name))
+	if (rank->image == NULL || !strlen(rank->image))
+		Com_Error(ERR_DROP, "CL_ParseRanks: image is missing for rank %s", rank->id);
+
+	if (rank->name == NULL || !strlen(rank->name))
 		Com_Error(ERR_DROP, "CL_ParseRanks: name is missing for rank %s", rank->id);
 
-	if (!strlen(rank->shortname))
-		Q_strncpyz(rank->shortname, rank->name, sizeof(rank->shortname));
+	if (rank->shortname == NULL || !strlen(rank->shortname))
+		rank->shortname = rank->name;
 }

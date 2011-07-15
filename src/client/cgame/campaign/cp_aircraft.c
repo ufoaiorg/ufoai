@@ -1457,7 +1457,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *aircraftTemplate;
-	const value_t *vp;
 	const char *token;
 	int i;
 	technology_t *tech;
@@ -1662,24 +1661,8 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				continue;
 			}
 			/* check for some standard values */
-			for (vp = aircraft_vals; vp->string; vp++)
-				if (Q_streq(token, vp->string)) {
-					/* found a definition */
-					token = Com_EParse(text, errhead, name);
-					if (!*text)
-						return;
-					switch (vp->type) {
-					case V_TRANSLATION_STRING:
-						token++;
-					case V_HUNK_STRING:
-						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
-						break;
-					default:
-						Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
-					}
-
-					break;
-				}
+			if (Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_vals, cp_campaignPool, token))
+				continue;
 
 			if (Q_streq(token, "type")) {
 				token = Com_EParse(text, errhead, name);
@@ -1724,33 +1707,17 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
 							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
 					} else {
-						for (vp = aircraft_param_vals; vp->string; vp++)
-							if (Q_streq(token, vp->string)) {
-								/* found a definition */
-								token = Com_EParse(text, errhead, name);
-								if (!*text)
-									return;
-								switch (vp->type) {
-								case V_TRANSLATION_STRING:
-									token++;
-								case V_HUNK_STRING:
-									Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
-									break;
-								default:
-									Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
-								}
-								break;
-							}
+						if (!Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_param_vals, cp_campaignPool, token))
+							Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 					}
-					if (!vp->string)
-						Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 				} while (*text); /* dummy condition */
-			} else if (!vp->string) {
+			} else {
 				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
 				Com_EParse(text, errhead, name);
 			}
 		} /* assignAircraftItems */
 	} while (*text);
+
 	if (aircraftTemplate->productionCost == 0)
 		aircraftTemplate->productionCost = aircraftTemplate->price;
 

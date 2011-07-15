@@ -29,10 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief Describes a rank that a recruit can gain */
 typedef struct rank_s {
-	char *id;		/**< Unique identifier as parsed from the ufo files. */
-	char name[MAX_VAR];	/**< Rank name (Captain, Squad Leader) */
-	char shortname[8];	/**< Rank shortname (Cpt, Sqd Ldr) */
-	char *image;		/**< Image to show in menu */
+	const char *id;		/**< Unique identifier as parsed from the ufo files. */
+	const char *name;	/**< Rank name (Captain, Squad Leader) */
+	const char *shortname;	/**< Rank shortname (Cpt, Sqd Ldr) */
+	const char *image;		/**< Image to show in menu */
 	int type;			/**< employeeType_t */
 	int mind;			/**< character mind attribute needed */
 	int killedEnemies;		/**< needed amount of enemies killed */
