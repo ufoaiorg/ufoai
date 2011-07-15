@@ -275,10 +275,11 @@ void LoadBSPFile (const char *filename)
 	 * copy data from curTile->dbrushes into curTile->cbrushes */
 	OBJZERO(curTile->brushes);
 	for (i = 0; i < curTile->numbrushes; i++) {
+		dBspBrush_t *dbrush = &curTile->dbrushes[i];
 		cBspBrush_t *brush = &curTile->brushes[i];
-		brush->firstbrushside = brush->firstbrushside;
-		brush->numsides = brush->numsides;
-		brush->contentFlags = brush->contentFlags;
+		brush->firstbrushside = dbrush->firstbrushside;
+		brush->numsides = dbrush->numsides;
+		brush->contentFlags = dbrush->contentFlags;
 	}
 
 	/* everything has been copied out */

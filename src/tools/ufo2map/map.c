@@ -530,7 +530,7 @@ static void GenerateMaterialFile (const char *filename, int mipTexIndex, side_t 
 		terrainByTexture = qtrue;
 	}
 
-	if (s->contentFlags & CONTENTS_TERRAIN || terrainByTexture) {
+	if ((s->contentFlags & CONTENTS_TERRAIN) || terrainByTexture) {
 		FS_Printf(&f, "{\n\tmaterial %s\n\t{\n\t\ttexture <fillme>\n\t\tterrain 0 64\n\t\tlightmap\n\t}\n}\n", textureref[mipTexIndex].name);
 		textureref[mipTexIndex].materialMarked = qtrue;
 		materialsCnt++;
@@ -723,7 +723,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		CheckFlags(side, b);
 
 		/* generate a list of textures that should have footsteps when walking on them */
-		if (mt > 0 && side->surfaceFlags & SURF_FOOTSTEP)
+		if (mt > 0 && (side->surfaceFlags & SURF_FOOTSTEP))
 			GenerateFootstepList(filename, mt);
 		GenerateMaterialFile(filename, mt, side);
 
@@ -808,7 +808,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	 * the rotation origin for the rest of the brushes (like func_door)
 	 * in the entity. After the entire entity is parsed, the planenums
 	 * and texinfos will be adjusted for the origin brush */
-	if (!checkOrFix && b->contentFlags & CONTENTS_ORIGIN) {
+	if (!checkOrFix && (b->contentFlags & CONTENTS_ORIGIN)) {
 		char string[32];
 		vec3_t origin;
 
