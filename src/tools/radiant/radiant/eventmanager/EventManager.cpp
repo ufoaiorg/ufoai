@@ -90,14 +90,14 @@ public:
 		saveEventListToRegistry();
 
 		// Remove all accelerators from the heap
-		for (AcceleratorList::iterator i = _accelerators.begin(); i != _accelerators.end(); i++) {
+		for (AcceleratorList::iterator i = _accelerators.begin(); i != _accelerators.end(); ++i) {
 			Accelerator* accelerator = (*i);
 			delete accelerator;
 		}
 		_accelerators.clear();
 
 		// Remove all commands from the heap
-		for (EventMap::iterator i = _events.begin(); i != _events.end(); i++) {
+		for (EventMap::iterator i = _events.begin(); i != _events.end(); ++i) {
 			IEvent* event = i->second;
 			delete event;
 		}
@@ -199,7 +199,7 @@ public:
 
 	std::string getEventName(IEvent* event) {
 		// Try to lookup the given eventptr
-		for (EventMap::iterator i = _events.begin(); i != _events.end(); i++) {
+		for (EventMap::iterator i = _events.begin(); i != _events.end(); ++i) {
 			if (i->second == event) {
 				return i->first;
 			}
@@ -351,7 +351,7 @@ public:
 
 		if (event != NULL) {
 			// Cycle through the accelerators and check for matches
-			for (AcceleratorList::iterator i = _accelerators.begin(); i != _accelerators.end(); i++) {
+			for (AcceleratorList::iterator i = _accelerators.begin(); i != _accelerators.end(); ++i) {
 				if ((*i)->match(event)) {
 					// Connect the accelerator to the empty event (disable the accelerator)
 					(*i)->connectEvent(NULL);
@@ -439,7 +439,7 @@ public:
 				_dialogWindows.erase(i++);
 			}
 			else {
-				i++;
+				++i;
 			}
 		}
 	}
@@ -504,7 +504,7 @@ public:
 
 	void foreachEvent(IEventVisitor* eventVisitor) {
 		// Cycle through the event and pass them to the visitor class
-		for (EventMap::iterator i = _events.begin(); i != _events.end(); i++) {
+		for (EventMap::iterator i = _events.begin(); i != _events.end(); ++i) {
 			const std::string eventName = i->first;
 			IEvent* event = i->second;
 
@@ -561,7 +561,6 @@ private:
 
 		// Cycle through the accelerators and check for matches
 		for (unsigned int i = 0; i < _accelerators.size(); i++) {
-
 			if (_accelerators[i]->match(keyVal, modifierFlags)) {
 				// Add the pointer to the found accelerators
 				returnList.push_back(_accelerators[i]);

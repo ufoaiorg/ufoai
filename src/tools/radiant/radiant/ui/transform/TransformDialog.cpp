@@ -140,7 +140,7 @@ void TransformDialog::populateWindow() {
 	_connector.connectGtkObject(GTK_OBJECT(_entries["scaleZ"].step), RKEY_SCALEZ_STEP);
 
 	// Connect all the arrow buttons
-	for (EntryRowMap::iterator i = _entries.begin(); i != _entries.end(); i++) {
+	for (EntryRowMap::iterator i = _entries.begin(); i != _entries.end(); ++i) {
 		EntryRow& row = i->second;
 
 		// Cast the ControlButtons onto GtkWidgets

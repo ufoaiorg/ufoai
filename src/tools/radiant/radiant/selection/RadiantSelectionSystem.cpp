@@ -73,7 +73,7 @@ void RadiantSelectionSystem::addObserver(Observer* observer) {
 
 void RadiantSelectionSystem::removeObserver(Observer* observer) {
 	// Cycle through the list of observers and call the moved method
-	for (ObserverList::iterator i = _observers.begin(); i != _observers.end(); i++) {
+	for (ObserverList::iterator i = _observers.begin(); i != _observers.end(); ++i) {
 		Observer* registered = *i;
 
 		if (registered == observer) {
@@ -86,7 +86,7 @@ void RadiantSelectionSystem::removeObserver(Observer* observer) {
 void RadiantSelectionSystem::notifyObservers() {
 
 	// Cycle through the list of observers and call the moved method
-	for (ObserverList::iterator i = _observers.begin(); i != _observers.end(); i++) {
+	for (ObserverList::iterator i = _observers.begin(); i != _observers.end(); ++i) {
 		Observer* observer = *i;
 
 		if (observer != NULL) {

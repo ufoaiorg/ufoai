@@ -146,7 +146,7 @@ void MRU::updateMenu() {
 	MRUList::iterator i = _list.begin();
 
 	// Now cycle through the widgets and load the values
-	for (MenuItems::iterator m = _menuItems.begin(); m != _menuItems.end(); m++) {
+	for (MenuItems::iterator m = _menuItems.begin(); m != _menuItems.end(); ++m) {
 
 		// The default string to be loaded into the widget (i.e. "inactive")
 		std::string fileName = "";
@@ -154,7 +154,7 @@ void MRU::updateMenu() {
 		// If the end of the list is reached, do nothing, otherwise increase the iterator
 		if (i != _list.end()) {
 			fileName = (*i);
-			i++;
+			++i;
 		}
 
 		// Set the label (widget is shown/hidden automatically)
@@ -179,7 +179,7 @@ void MRU::constructMenu() {
 	gtk_widget_hide(empty);
 
 	// Add all the created widgets to the menu
-	for (MenuItems::iterator m = _menuItems.begin(); m != _menuItems.end(); m++) {
+	for (MenuItems::iterator m = _menuItems.begin(); m != _menuItems.end(); ++m) {
 		MRUMenuItem& item = (*m);
 
 		const std::string commandName = std::string("MRUOpen") + string::toString(item.getIndex());

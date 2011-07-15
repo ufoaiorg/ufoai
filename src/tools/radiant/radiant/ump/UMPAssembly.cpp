@@ -27,7 +27,7 @@ namespace map
 				os << "grid\t\"" << _gridWidth << " " << _gridHeight << "\"" << std::endl;
 
 			// tiles
-			for (TileAndAmountConstIterator i = _tiles.begin(); i != _tiles.end(); i++) {
+			for (TileAndAmountConstIterator i = _tiles.begin(); i != _tiles.end(); ++i) {
 				os << (*i).toString();
 			}
 

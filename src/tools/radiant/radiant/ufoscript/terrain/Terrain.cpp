@@ -102,7 +102,7 @@ namespace scripts
 
 	const DataBlock* Terrain::getTerrainDefitionForTexture (const std::string& texture)
 	{
-		for (Parser::EntriesIterator i = _blocks.begin(); i != _blocks.end(); i++) {
+		for (Parser::EntriesIterator i = _blocks.begin(); i != _blocks.end(); ++i) {
 			const DataBlock* blockData = (*i);
 			const std::string terrainID = TEXTURES + blockData->getID();
 			if (terrainID == texture)

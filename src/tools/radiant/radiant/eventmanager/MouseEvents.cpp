@@ -263,7 +263,7 @@ ui::CamViewEvent MouseEventManager::findCameraViewEvent (const unsigned int& but
 		return ui::camNothing;
 	}
 
-	for (CameraConditionMap::iterator it = _cameraConditions.begin(); it != _cameraConditions.end(); it++) {
+	for (CameraConditionMap::iterator it = _cameraConditions.begin(); it != _cameraConditions.end(); ++it) {
 		ui::CamViewEvent event = it->first;
 		ConditionStruc conditions = it->second;
 
@@ -282,7 +282,7 @@ ui::XYViewEvent MouseEventManager::findXYViewEvent (const unsigned int& button, 
 		return ui::xyNothing;
 	}
 
-	for (XYConditionMap::iterator it = _xyConditions.begin(); it != _xyConditions.end(); it++) {
+	for (XYConditionMap::iterator it = _xyConditions.begin(); it != _xyConditions.end(); ++it) {
 		ui::XYViewEvent event = it->first;
 		ConditionStruc conditions = it->second;
 
@@ -301,7 +301,7 @@ ui::ObserverEvent MouseEventManager::findObserverEvent (const unsigned int& butt
 		return ui::obsNothing;
 	}
 
-	for (ObserverConditionMap::iterator it = _observerConditions.begin(); it != _observerConditions.end(); it++) {
+	for (ObserverConditionMap::iterator it = _observerConditions.begin(); it != _observerConditions.end(); ++it) {
 		ui::ObserverEvent event = it->first;
 		ConditionStruc conditions = it->second;
 
@@ -515,7 +515,7 @@ void MouseEventManager::updateStatusText(GdkEventKey* event) {
 	std::string statusText("");
 
 	if (_activeFlags != 0) {
-		for (ButtonIdMap::iterator it = _buttonId.begin(); it != _buttonId.end(); it++) {
+		for (ButtonIdMap::iterator it = _buttonId.begin(); it != _buttonId.end(); ++it) {
 			// Look up an event with this button ID and the given modifier
 			ui::XYViewEvent xyEvent = findXYViewEvent(it->second, _activeFlags);
 

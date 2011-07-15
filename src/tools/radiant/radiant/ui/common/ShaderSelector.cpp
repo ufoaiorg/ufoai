@@ -155,7 +155,7 @@ namespace {
 
 			for (ShaderSelector::PrefixList::iterator i = _prefixes.begin();
 				 i != _prefixes.end();
-				 i++)
+				 ++i)
 			{
 				if (!name.empty() && string::startsWith(name, (*i) + "/")) {
 					_populator.addPath(name);

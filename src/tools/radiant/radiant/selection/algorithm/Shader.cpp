@@ -124,7 +124,7 @@ inline void applyClipboardToTexturable (Texturable& target, bool entireBrush)
 		if (source.isFace()) {
 			if (target.isFace() && entireBrush) {
 				// Copy Face >> Whole Brush
-				for (Brush::const_iterator i = target.brush->begin(); i != target.brush->end(); i++) {
+				for (Brush::const_iterator i = target.brush->begin(); i != target.brush->end(); ++i) {
 					applyClipboardShaderToFace(*(*i));
 				}
 			} else if (target.isFace() && !entireBrush) {

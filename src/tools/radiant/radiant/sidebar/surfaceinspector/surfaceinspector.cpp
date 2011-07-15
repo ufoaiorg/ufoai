@@ -185,7 +185,7 @@ void SurfaceInspector::connectEvents ()
 	g_signal_connect(G_OBJECT(_applyTex.natural), "clicked", G_CALLBACK(doUpdate), this);
 	g_signal_connect(G_OBJECT(_defaultTexScale), "value-changed", G_CALLBACK(onDefaultScaleChanged), this);
 
-	for (ManipulatorMap::iterator i = _manipulators.begin(); i != _manipulators.end(); i++) {
+	for (ManipulatorMap::iterator i = _manipulators.begin(); i != _manipulators.end(); ++i) {
 		GtkWidget* smaller = *(i->second.smaller);
 		GtkWidget* larger = *(i->second.larger);
 

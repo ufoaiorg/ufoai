@@ -84,7 +84,7 @@ namespace scripts
 	{
 		const std::string& scriptDir = GlobalUFOScriptSystem()->getUFOScriptDir();
 		const std::set<std::string>& files = GlobalUFOScriptSystem()->getFiles();
-		for (UFOScriptSystem::UFOScriptFilesIterator i = files.begin(); i != files.end(); i++) {
+		for (UFOScriptSystem::UFOScriptFilesIterator i = files.begin(); i != files.end(); ++i) {
 			const std::string& filename = (*i);
 			AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(scriptDir + filename));
 			if (file) {
@@ -96,7 +96,7 @@ namespace scripts
 
 	Parser::~Parser ()
 	{
-		for (EntriesIterator i = _entries.begin(); i != _entries.end(); i++) {
+		for (EntriesIterator i = _entries.begin(); i != _entries.end(); ++i) {
 			DataBlock* block = *i;
 			delete block;
 		}
@@ -110,7 +110,7 @@ namespace scripts
 
 	DataBlock* Parser::getEntryForID (const std::string& id)
 	{
-		for (Parser::EntriesIterator i = _entries.begin(); i != _entries.end(); i++) {
+		for (Parser::EntriesIterator i = _entries.begin(); i != _entries.end(); ++i) {
 			DataBlock* blockData = (*i);
 			if (id == blockData->getID()) {
 				return blockData;

@@ -55,7 +55,7 @@ bool ClosestTexturableFinder::pre (const scene::Path& path, scene::Instance& ins
 			_selectionTest.BeginMesh(brush->localToWorld());
 
 			// Cycle through all the faces
-			for (Brush::const_iterator i = brush->getBrush().begin(); i != brush->getBrush().end(); i++) {
+			for (Brush::const_iterator i = brush->getBrush().begin(); i != brush->getBrush().end(); ++i) {
 				// Test the face for selection
 				SelectionIntersection intersection;
 				(*i)->testSelect(_selectionTest, intersection);
