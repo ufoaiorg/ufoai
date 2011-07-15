@@ -1925,9 +1925,7 @@ static const value_t idps[] = {
 
 static void Com_ParseInventory (const char *name, const char **text)
 {
-	const char *errhead = "Com_ParseInventory: unexpected end of file (inventory ";
 	invDef_t *id;
-	const char *token;
 	int i;
 
 	/* search for containers with same name */
@@ -1949,16 +1947,12 @@ static void Com_ParseInventory (const char *name, const char **text)
 	id = &csi.ids[csi.numIDs++];
 	OBJZERO(*id);
 
-	Q_strncpyz(id->name, name, sizeof(id->name));
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseInventory: inventory def \"%s\" without body ignored\n", name);
+	if (!Com_ParseBlock(name, text, id, idps, NULL)) {
 		csi.numIDs--;
 		return;
 	}
+
+	Q_strncpyz(id->name, name, sizeof(id->name));
 
 	/* Special IDs for container. These are also used elsewhere, so be careful. */
 	if (Q_streq(name, "right")) {
@@ -1998,17 +1992,6 @@ static void Com_ParseInventory (const char *name, const char **text)
 	if (id->id != -1) {
 		Com_Printf("...%3i: %s\n", id->id, name);
 	}
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			return;
-		if (*token == '}')
-			return;
-
-		if (!Com_ParseBlockToken(name, text, id, idps, NULL, token))
-			Com_Printf("Com_ParseInventory: unknown token \"%s\" ignored (inventory %s)\n", token, name);
-	} while (*text);
 }
 
 
