@@ -192,7 +192,7 @@ const image_t *UI_DrawNormImageByName (float x, float y, float w, float h, float
  * top height, mid height, bottom height, and margin
  * @todo can we improve the code? is it need?
  */
-void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[6])
+void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[7])
 {
 	const int leftWidth = panelDef[0];
 	const int midWidth = panelDef[1];
