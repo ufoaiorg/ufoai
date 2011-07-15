@@ -46,7 +46,7 @@ struct FilterRule {
 	int contentflags;	// contentflags to match again
 
 	// Constructor
-	FilterRule(const std::string t, const std::string m, bool s) :
+	FilterRule(const std::string& t, const std::string& m, bool s) :
 		type(t),
 		match(m),
 		show(s)
