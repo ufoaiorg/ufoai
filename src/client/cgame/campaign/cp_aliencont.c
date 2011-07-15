@@ -654,7 +654,7 @@ void AC_KillAll (base_t *base)
 static void AC_AddOne_f (void)
 {
 	const char *alienName;
-	teamDef_t *alienType;
+	const teamDef_t *alienType;
 	aliensCont_t *containment;
 	qboolean updateAlive = qtrue;
 	int j;

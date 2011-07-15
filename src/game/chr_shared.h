@@ -269,7 +269,7 @@ typedef struct character_s {
 
 	inventory_t i;			/**< Inventory definition. */
 
-	teamDef_t *teamDef;			/**< Pointer to team definition. */
+	const teamDef_t *teamDef;			/**< Pointer to team definition. */
 	int gender;				/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */

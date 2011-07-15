@@ -2229,14 +2229,16 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
  * found in the teamDef array
  * @param[in] team The team id (given in ufo-script files)
  */
-teamDef_t* Com_GetTeamDefinitionByID (const char *team)
+const teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 {
 	int i;
 
 	/* get team definition */
-	for (i = 0; i < csi.numTeamDefs; i++)
-		if (Q_streq(team, csi.teamDef[i].id))
-			return &csi.teamDef[i];
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		const teamDef_t *t = &csi.teamDef[i];
+		if (Q_streq(team, t->id))
+			return t;
+	}
 
 	Com_Printf("Com_GetTeamDefinitionByID: could not find team definition for '%s' in team definitions\n", team);
 	return NULL;

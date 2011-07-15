@@ -174,7 +174,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 					}
 
 				if (!vp->string) {
-					teamDef_t *teamDef;
+					const teamDef_t *teamDef;
 					if (!*text || *token == '}')
 						break;
 
