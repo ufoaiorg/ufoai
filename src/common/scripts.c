@@ -1401,12 +1401,8 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 			}
 			break;
 		}
-	if (!v->string) {
-		Com_Printf("Com_ParseBlock: unknown token \"%s\" ignored (%s)\n", token, name);
-		return qfalse;
-	}
 
-	return qtrue;
+	return v->string != NULL;
 }
 
 void Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool)
@@ -1429,7 +1425,8 @@ void Com_ParseBlock (const char *name, const char **text, void *base, const valu
 			break;
 		if (*token == '}')
 			break;
-		Com_ParseBlockToken(name, text, base, values, mempool, token);
+		if (!Com_ParseBlockToken(name, text, base, values, mempool, token))
+			Com_Printf("Com_ParseBlock: unknown token '%s' ignored (%s)\n", token, name);
 	} while (*text);
 }
 
@@ -2008,7 +2005,8 @@ static void Com_ParseInventory (const char *name, const char **text)
 		if (*token == '}')
 			return;
 
-		Com_ParseBlockToken(name, text, id, idps, NULL, token);
+		if (!Com_ParseBlockToken(name, text, id, idps, NULL, token))
+			Com_Printf("Com_ParseInventory: unknown token \"%s\" ignored (inventory %s)\n", token, name);
 	} while (*text);
 }
 
