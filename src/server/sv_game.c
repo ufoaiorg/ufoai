@@ -673,7 +673,6 @@ void SV_InitGameProgs (void)
 	import.SetModel = SV_SetModel;
 
 	import.ConfigString = SV_Configstring;
-	import.PositionedSound = SV_StartSound;
 
 	import.PointContents = SV_PointContents;
 	import.GetFootstepSound = SV_GetFootstepSound;

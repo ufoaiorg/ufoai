@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Parses the actor stats that comes from the netchannel
  * @sa CL_ParseEvent
  * @sa G_SendStats
- * @sa ev_func
  */
 void CL_ActorStats (const eventRegister_t *self, struct dbuffer *msg)
 {

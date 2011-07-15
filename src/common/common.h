@@ -121,7 +121,7 @@ PROTOCOL
 
 /* protocol.h -- communications protocols */
 
-#define	PROTOCOL_VERSION	8
+#define	PROTOCOL_VERSION	9
 
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910
@@ -137,7 +137,6 @@ enum svc_ops_e {
 	svc_nop,
 	svc_disconnect,
 	svc_reconnect,
-	svc_sound,
 	svc_print,					/**< [byte] id [string] null terminated string */
 	svc_stufftext,				/**< [string] stuffed into client's console buffer, should be \n terminated */
 	svc_serverdata,				/**< [long] protocol, spawncount, playernum, mapname, ... */

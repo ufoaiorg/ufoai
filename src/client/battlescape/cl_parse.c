@@ -42,7 +42,6 @@ static char const* const svc_strings[] =
 	"svc_nop",
 	"svc_disconnect",
 	"svc_reconnect",
-	"svc_sound",
 	"svc_print",
 	"svc_stufftext",
 	"svc_serverdata",
@@ -156,41 +155,6 @@ ACTION MESSAGES
 */
 
 /**
- * @brief Parse a server sent sound package
- * @sa svc_sound
- * @sa SV_StartSound
- * @note if the last character of the sound file string that was sent by the
- * server is a '+', we will select a random sound file by replacing the '+'
- * character with a number between 01..99
- * @todo make this an event, too - the sound package might be bound to an event
- * and thus must be delayed, too
- */
-static void CL_ParseStartSoundPacket (struct dbuffer *msg)
-{
-	vec3_t origin;
-	char sound[MAX_QPATH];
-	size_t length;
-
-	NET_ReadString(msg, sound, sizeof(sound));
-	NET_ReadPos(msg, origin);
-
-	length = strlen(sound) - 1;
-	if (sound[length] == '+') {
-		int i;
-
-		sound[length] = '\0';
-		for (i = 1; i <= 99; i++) {
-			if (FS_CheckFile("sounds/%s%02i", sound, i) == -1)
-				break;
-		}
-
-		Com_sprintf(sound + length, sizeof(sound) - length, "%02i", rand() % i + 1);
-	}
-
-	S_LoadAndPlaySample(sound, origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
-}
-
-/**
  * @brief Parses the server sent data from the given buffer.
  * @sa CL_ReadPackets
  * @param[in] cmd The action that should be parsed from the data
@@ -262,10 +226,6 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 
 	case svc_configstring:
 		CL_ParseConfigString(msg);
-		break;
-
-	case svc_sound:
-		CL_ParseStartSoundPacket(msg);
 		break;
 
 	case svc_event:

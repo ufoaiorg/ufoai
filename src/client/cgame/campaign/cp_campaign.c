@@ -688,7 +688,7 @@ void CP_CampaignRun (campaign_t *campaign)
  * @brief Checks whether you have enough credits for something
  * @param[in] costs costs to check
  */
-inline qboolean CP_CheckCredits (int costs)
+qboolean CP_CheckCredits (int costs)
 {
 	if (costs > ccs.credits)
 		return qfalse;

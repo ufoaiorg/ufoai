@@ -61,6 +61,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/world/e_event_particlespawn.h"
 #include "event/world/e_event_dooropen.h"
 #include "event/world/e_event_doorclose.h"
+#include "event/world/e_event_sound.h"
 
 /**
  * @brief A default check function that assumes the entnum is the first short in msg.
@@ -126,6 +127,8 @@ const eventRegister_t events[] = {
 
 	{E(EV_PARTICLE_APPEAR), "ss&", CL_ParticleAppear, NULL, NULL},
 	{E(EV_PARTICLE_SPAWN), "bppp&", CL_ParticleSpawnEvent, NULL, NULL},
+
+	{E(EV_SOUND), "sp&", CL_SoundEvent, NULL, NULL},
 
 	{E(EV_DOOR_OPEN), "s", CL_DoorOpen, NULL, NULL},
 	{E(EV_DOOR_CLOSE), "s", CL_DoorClose, NULL, NULL},

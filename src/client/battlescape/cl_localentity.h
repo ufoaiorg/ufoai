@@ -208,7 +208,10 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 #define LE_IsCivilian(le)	((le)->team == TEAM_CIVILIAN)
 #define LE_IsAlien(le)		((le)->team == TEAM_ALIEN)
 #define LE_IsPhalanx(le)	((le)->team == TEAM_PHALANX)
-#define LE_IsBrushModel(le)	((le)->type == ET_BREAKABLE || (le)->type == ET_DOOR || (le)->type == ET_ROTATING)
+#define LE_IsRotating(le)	((le)->type == ET_ROTATING)
+#define LE_IsDoor(le)		((le)->type == ET_DOOR)
+#define LE_IsBreakable(le)	((le)->type == ET_BREAKABLE)
+#define LE_IsBrushModel(le)	(LE_IsBreakable(le) || LE_IsDoor(le) || LE_IsRotating(le))
 
 /** @brief Valid indices from 1 - MAX_DEATH */
 #define LE_GetAnimationIndexForDeath(le)	((le)->state & MAX_DEATH)

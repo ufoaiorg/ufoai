@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/tracing.h"
 #include "../common/cvar.h"
 
-#define	GAME_API_VERSION	8
+#define	GAME_API_VERSION	9
 
 /** @brief edict->solid values */
 typedef enum {
@@ -106,8 +106,6 @@ typedef struct {
 	void (IMPORT *DPrintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
 	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, va_list ap);
-
-	void (IMPORT *PositionedSound) (int mask, const vec3_t origin, const edict_t *ent, const char *sound);
 
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when

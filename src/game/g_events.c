@@ -25,16 +25,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /**
- * @brief Spawns a sound for all connected clients (that will be spatialized
- * on the client side)
+ * @brief Spawns a sound (that will be spatialized on the client side)
  * @param ent The edict that is causing the sound
  * @param origin The origin of the sound
- * @param sound The sound file, path relative to sounds/. If there is a + at the end
+ * @param sound The sound file, path relative to sounds/. If there is a + at the end the client will
+ * choose a random sound. See the event function for more information.
  * of the path, a random sound will be taken.
  */
-void G_EventSpawnSound (const edict_t* ent, const vec3_t origin, const char *sound)
+void G_EventSpawnSound (unsigned int playerMask, qboolean instant, const edict_t* ent, const vec3_t origin, const char *sound)
 {
-	gi.PositionedSound(PM_ALL, origin, ent, sound);
+	gi.AddEvent(playerMask, EV_SOUND | (instant ? EVENT_INSTANTLY : 0));
+	gi.WriteShort(ent->number);
+
+	/* use the entity origin unless it is a bmodel or explicitly specified */
+	if (!origin) {
+		if (ent->solid == SOLID_BSP) {
+			vec3_t origin_v;
+			VectorCenterFromMinsMaxs(ent->mins, ent->maxs, origin_v);
+			VectorAdd(ent->origin, origin_v, origin_v);
+			gi.WritePos(origin);
+		} else {
+			gi.WritePos(vec3_origin);
+		}
+	} else {
+		gi.WritePos(origin);
+	}
+	gi.WriteString(sound);
 }
 
 /**

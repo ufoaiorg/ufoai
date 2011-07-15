@@ -69,16 +69,16 @@ static qboolean Destroy_Breakable (edict_t *self)
 
 	switch (self->material) {
 	case MAT_GLASS:
-		G_EventSpawnSound(self, origin, "misc/breakglass+");
+		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakglass+");
 		break;
 	case MAT_METAL:
-		G_EventSpawnSound(self, origin, "misc/breakmetal+");
+		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakmetal+");
 		break;
 	case MAT_ELECTRICAL:
-		G_EventSpawnSound(self, origin, "misc/breakelectric+");
+		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakelectric+");
 		break;
 	case MAT_WOOD:
-		G_EventSpawnSound(self, origin, "misc/breakwood+");
+		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakwood+");
 		break;
 	case MAT_MAX:
 		break;
@@ -220,7 +220,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 			/* let everybody know, that the door opens */
 			G_EventDoorOpen(door);
 			if (door->noise[0] != '\0')
-				G_EventSpawnSound(door, door->origin, door->noise);
+				G_EventSpawnSound(PM_ALL, qfalse, door, door->origin, door->noise);
 		}
 	} else if (door->doorState == STATE_OPENED) {
 		door->doorState = STATE_CLOSED;
@@ -242,7 +242,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 			/* let everybody know, that the door closes */
 			G_EventDoorClose(door);
 			if (door->noise[0] != '\0')
-				G_EventSpawnSound(door, door->origin, door->noise);
+				G_EventSpawnSound(PM_ALL, qfalse, door, door->origin, door->noise);
 		}
 	} else
 		return qfalse;

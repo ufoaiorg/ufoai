@@ -77,7 +77,6 @@ ELEMENTS COMMUNICATED ACROSS THE NET
 /**
  * @brief Possible event values
  * @sa cl_parse.c for event bindings
- * @sa ev_func
  */
 typedef enum {
 	EV_NULL,
@@ -125,6 +124,8 @@ typedef enum {
 
 	EV_PARTICLE_APPEAR,
 	EV_PARTICLE_SPAWN,
+
+	EV_SOUND,
 
 	EV_DOOR_OPEN,
 	EV_DOOR_CLOSE,

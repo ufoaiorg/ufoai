@@ -88,6 +88,7 @@ $(TARGET)_SRCS      = \
 	client/battlescape/events/event/world/e_event_explode.c \
 	client/battlescape/events/event/world/e_event_particleappear.c \
 	client/battlescape/events/event/world/e_event_particlespawn.c \
+	client/battlescape/events/event/world/e_event_sound.c \
 	\
 	client/sound/s_music.c \
 	client/sound/s_main.c \

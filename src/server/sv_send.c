@@ -148,31 +148,3 @@ void SV_Multicast (int mask, struct dbuffer *msg)
 
 	free_dbuffer(msg);
 }
-
-/**
- * @brief If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
- */
-void SV_StartSound (int mask, const vec3_t origin, const edict_t *entity, const char *sound)
-{
-	vec3_t origin_v;
-	struct dbuffer *msg;
-
-	/* use the entity origin unless it is a bmodel or explicitly specified */
-	if (!origin) {
-		origin = origin_v;
-		if (entity->solid == SOLID_BSP) {
-			VectorCenterFromMinsMaxs(entity->mins, entity->maxs, origin_v);
-			VectorAdd(entity->origin, origin_v, origin_v);
-		} else {
-			VectorCopy(entity->origin, origin_v);
-		}
-	}
-
-	msg = new_dbuffer();
-
-	NET_WriteByte(msg, svc_sound);
-	NET_WriteString(msg, sound);
-	NET_WritePos(msg, origin);
-
-	SV_Multicast(mask, msg);
-}

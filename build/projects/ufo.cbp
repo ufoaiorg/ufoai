@@ -372,6 +372,9 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_sound.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.c">
 			<Option compilerVar="CC" />
