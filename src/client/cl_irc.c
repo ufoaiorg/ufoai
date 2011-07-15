@@ -54,6 +54,7 @@ static cvar_t *irc_logConsole;
 static cvar_t *irc_showIfNotInMenu;
 /* menu cvar */
 static cvar_t *irc_send_buffer;
+static memPool_t *cl_ircSysPool;
 
 static qboolean irc_connected;
 
@@ -1970,6 +1971,8 @@ Init and Shutdown functions
 
 void Irc_Init (void)
 {
+	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
+
 	/* commands */
 	Cmd_AddCommand("irc_join", Irc_Client_Join_f, "Join an irc channel");
 	Cmd_AddCommand("irc_connect", Irc_Connect_f, "Connect to the irc network");
@@ -2017,4 +2020,6 @@ void Irc_Shutdown (void)
 {
 	if (irc_connected)
 		Irc_Logic_Disconnect("shutdown");
+
+	Mem_DeletePool(cl_ircSysPool);
 }

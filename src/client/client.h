@@ -113,10 +113,6 @@ typedef struct client_static_s {
 
 extern client_static_t cls;
 
-extern memPool_t *cl_genericPool;
-extern memPool_t *cl_ircSysPool;
-extern memPool_t *cl_soundSysPool;
-
 /*============================================================================= */
 
 /* cvars */

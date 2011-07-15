@@ -83,8 +83,6 @@ cvar_t *cl_teamnum;
 client_static_t cls;
 
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
-struct memPool_s *cl_ircSysPool;	/**< irc pool */
-struct memPool_s *cl_soundSysPool;
 struct memPool_s *vid_genericPool;	/**< also holds all the static models */
 struct memPool_s *vid_imagePool;
 struct memPool_s *vid_lightPool;	/**< lightmap - wiped with every new map */
@@ -1236,8 +1234,6 @@ void CL_SlowFrame (int now, void *data)
 static void CL_InitMemPools (void)
 {
 	cl_genericPool = Mem_CreatePool("Client: Generic");
-	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
-	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
 }
 
 static void CL_RContextCvarChange (const char *cvarName, const char *oldValue, const char *newValue)

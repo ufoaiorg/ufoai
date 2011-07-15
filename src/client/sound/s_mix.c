@@ -23,8 +23,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../cl_shared.h"
+#include "../cl_renderer.h"
+#include "../cl_video.h"
+#include "../battlescape/cl_camera.h"
+#include "../battlescape/cl_localentity.h"
+#include "../battlescape/cl_battlescape.h"
+
 #include "s_mix.h"
 #include "s_sample.h"
+#include "s_main.h"
 
 /**
  * @brief Searches a channel with no sample applied yet.

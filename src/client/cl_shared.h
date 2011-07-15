@@ -99,4 +99,6 @@ typedef struct mapDef_s {
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 mapDef_t* Com_GetMapDefByIDX(int index);
 
+extern memPool_t *cl_genericPool;
+
 #endif

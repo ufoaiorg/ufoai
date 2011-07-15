@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
 #include "s_main.h"
 #include "s_local.h"
 #include "s_music.h"
@@ -41,6 +42,8 @@ cvar_t *snd_volume;
 cvar_t *snd_distance_scale;
 static cvar_t *snd_init;
 static cvar_t *snd_rate;
+
+memPool_t *cl_soundSysPool;
 
 /* I know this decl shouldn't be here (Duke). Interim solution...*/
 extern s_sample_t *stdSoundPool[MAX_SOUNDIDS];
@@ -206,6 +209,8 @@ void S_Init (void)
 		return;
 	}
 
+	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
+
 	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.1", 0, "Sound distance scale");
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
@@ -287,7 +292,7 @@ void S_Shutdown (void)
 	else
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
-	Mem_FreeTag(cl_soundSysPool, 0);
+	Mem_DeletePool(cl_soundSysPool);
 
 	Cmd_RemoveCommand("snd_play");
 	Cmd_RemoveCommand("snd_restart");

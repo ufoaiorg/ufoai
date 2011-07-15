@@ -28,10 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_SOUND_LOCAL_H
 #define CLIENT_SOUND_LOCAL_H
 
-#include "../client.h"
 #include <SDL_mixer.h>
+#include "../../shared/shared.h"
 #include "../../shared/mathlib.h"	/* for vec3_t */
 #include "../../common/cvar.h"		/* for cvar_t */
+#include "../../common/mem.h"
+
+extern memPool_t *cl_soundSysPool;
 
 /** @brief Supported sound file extensions */
 #define SAMPLE_TYPES { "ogg", "wav", NULL }
