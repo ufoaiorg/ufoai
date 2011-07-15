@@ -1371,11 +1371,44 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
+void Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool, const char *token)
+{
+	const value_t *v;
+	const char *errhead = "Com_ParseBlockToken: unexpected end of file (";
+
+	for (v = values; v->string; v++)
+		if (Q_streq(token, v->string)) {
+			/* found a definition */
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				return;
+
+			switch (v->type) {
+			case V_TRANSLATION_STRING:
+				if (mempool == NULL) {
+					Com_EParseValue(base, token, v->type, v->ofs, v->size);
+					break;
+				} else {
+					token++;
+					/* fall through */
+				}
+			case V_HUNK_STRING:
+				Mem_PoolStrDupTo(token, (char**) ((char*)base + (int)v->ofs), mempool, 0);
+				break;
+			default:
+				Com_EParseValue(base, token, v->type, v->ofs, v->size);
+				break;
+			}
+			break;
+		}
+	if (!v->string)
+		Com_Printf("Com_ParseBlock: unknown token \"%s\" ignored (%s)\n", token, name);
+}
+
 void Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool)
 {
 	const char *errhead = "Com_ParseBlock: unexpected end of file (";
 	const char *token;
-	const value_t *v;
 
 	/* get name/id */
 	token = Com_Parse(text);
@@ -1392,33 +1425,7 @@ void Com_ParseBlock (const char *name, const char **text, void *base, const valu
 			break;
 		if (*token == '}')
 			break;
-		for (v = values; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (v->type) {
-				case V_TRANSLATION_STRING:
-					if (mempool == NULL) {
-						Com_EParseValue(base, token, v->type, v->ofs, v->size);
-						break;
-					} else {
-						token++;
-						/* fall through */
-					}
-				case V_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)base + (int)v->ofs), mempool, 0);
-					break;
-				default:
-					Com_EParseValue(base, token, v->type, v->ofs, v->size);
-					break;
-				}
-				break;
-			}
-		if (!v->string)
-			Com_Printf("Com_ParseBlock: unknown token \"%s\" ignored (%s)\n", token, name);
+		Com_ParseBlockToken(name, text, base, values, mempool, token);
 	} while (*text);
 }
 
