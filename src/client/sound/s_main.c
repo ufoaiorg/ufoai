@@ -152,7 +152,7 @@ static int S_CompleteSounds (const char *partial, const char **match)
 {
 	const char *filename;
 	int matches = 0;
-	char *localMatch[MAX_COMPLETE];
+	const char *localMatch[MAX_COMPLETE];
 	size_t len = strlen(partial);
 	const char *soundExtensions[] = SAMPLE_TYPES;
 	const char **extension = soundExtensions;
@@ -164,13 +164,12 @@ static int S_CompleteSounds (const char *partial, const char **match)
 		Com_sprintf(pattern, sizeof(pattern), "sound/**.%s", *extension);
 		FS_BuildFileList(pattern);
 		while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
-			char fileWithPath[MAX_OSPATH];
-			Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s", filename + 6);
+			const char *fileWithPath = filename + 6;
 			if (!len) {
 				Com_Printf("%s\n", fileWithPath);
 			} else if (!strncmp(partial, fileWithPath, len)) {
 				Com_Printf("%s\n", fileWithPath);
-				localMatch[matches++] = strdup(fileWithPath);
+				localMatch[matches++] = fileWithPath;
 				if (matches >= MAX_COMPLETE)
 					break;
 			}
@@ -179,9 +178,7 @@ static int S_CompleteSounds (const char *partial, const char **match)
 		extension++;
 	}
 
-	returnValue = Cmd_GenericCompleteFunction(len, match, matches, (const char **)localMatch);
-	while (--matches >= 0)
-		free(localMatch[matches]);
+	returnValue = Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 	return returnValue;
 }
 
