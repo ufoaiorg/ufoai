@@ -283,15 +283,12 @@ static const mapDef_t* GAME_MP_MapInfo (int step)
 	md = cgi->GAME_GetCurrentSelectedMap();
 
 	if (md->gameTypes) {
-		const char *gameType = cgi->Cvar_GetString("sv_gametype");
-		const linkedList_t *list = md->gameTypes;
 		char buf[256] = "";
 		const char *gameTypeStr;
 		LIST_Foreach(md->gameTypes, char, gameTypeStr) {
 			Q_strcat(buf, va("%s ", gameTypeStr), sizeof(buf));
 		}
 		cgi->Cvar_Set("mn_mapgametypes", buf);
-		list = cgi->LIST_ContainsString(md->gameTypes, gameType);
 	} else {
 		cgi->Cvar_Set("mn_mapgametypes", _("all"));
 	}

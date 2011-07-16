@@ -1384,7 +1384,7 @@ void CL_ParseParticle (const char *name, const char **text)
 	const char *errhead = "CL_ParseParticle: unexpected end of file (particle ";
 	ptlDef_t *pd;
 	const char *token;
-	int i, pos;
+	int i;
 
 	/* search for particles with same name */
 	for (i = 0; i < numPtlDefs; i++)
@@ -1393,12 +1393,10 @@ void CL_ParseParticle (const char *name, const char **text)
 
 	if (i < numPtlDefs) {
 		Com_Printf("CL_ParseParticle: particle def \"%s\" with same name found, reset first one\n", name);
-		pos = i;
 		pd = &ptlDef[i];
 	} else {
 		if (numPtlDefs < MAX_PTLDEFS - 1) {
 			/* initialize the new particle */
-			pos = numPtlDefs;
 			pd = &ptlDef[numPtlDefs++];
 		} else {
 			Com_Printf("CL_ParseParticle: max particle definitions reached - skip the current one: '%s'\n", name);
