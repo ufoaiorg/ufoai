@@ -89,7 +89,6 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 {
 	const struct model_s *model;
 	const char *tag;
-	const float *shooterTag, *muzzleTag;
 	float matrix[16], mc[16], modifiedMatrix[16];
 	const objDef_t* od;
 	const invList_t *invlistWeapon;
@@ -115,21 +114,18 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 		Com_Error(ERR_DROP, "Model for item %s is not precached", od->id);
 
 	/* not every weapon has a muzzle tag assigned */
-	muzzleTag = R_GetTagMatrix(model, "tag_muzzle");
-	if (!muzzleTag)
+	if (R_GetTagIndexByName(model, "tag_muzzle") == -1)
 		return;
 
-	shooterTag = R_GetTagMatrix(actor->model1, tag);
-	if (!shooterTag)
+	if (!R_GetTagMatrix(actor->model1, tag, 0, modifiedMatrix))
 		Com_Error(ERR_DROP, "Could not find tag %s for actor model %s", tag, actor->model1->name);
 
 	GLMatrixAssemble(actor->origin, actor->angles, mc);
 
-	memcpy(modifiedMatrix, shooterTag, sizeof(modifiedMatrix));
 	modifiedMatrix[12] = -modifiedMatrix[12];
 	GLMatrixMultiply(mc, modifiedMatrix, matrix);
 
-	memcpy(modifiedMatrix, muzzleTag, sizeof(modifiedMatrix));
+	R_GetTagMatrix(model, "tag_muzzle", 0, modifiedMatrix);
 	modifiedMatrix[12] = -modifiedMatrix[12];
 	GLMatrixMultiply(matrix, modifiedMatrix, mc);
 

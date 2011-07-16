@@ -532,16 +532,20 @@ static float *R_CalcTransform (entity_t * e)
 	/* do parent object transformations first */
 	if (e->tagent) {
 		/* tag transformation */
-		const float *tag = R_GetTagMatrix(e->tagent->model, e->tagname);
-		if (tag) {
-			const dMD2tag_t *taghdr = (const dMD2tag_t *) e->tagent->model->alias.tagdata;
+		const model_t *model = e->tagent->model;
+		const mAliasTagOrientation_t *current = NULL;
+		const mAliasTagOrientation_t *old = NULL;
+		const animState_t *as = &e->tagent->as;
+
+		R_GetTags(model, e->tagname, as->frame, as->oldframe, &current, &old);
+		if (current != NULL && old != NULL) {
 			float interpolated[16];
 
 			/* parent transformation */
 			mp = R_CalcTransform(e->tagent);
 
 			/* do interpolation */
-			R_InterpolateTransform(&e->tagent->as, taghdr->num_frames, tag, interpolated);
+			R_InterpolateTransform(as->backlerp, model->alias.num_frames, current, old, interpolated);
 
 			/* transform */
 			GLMatrixMultiply(mp, interpolated, mt);

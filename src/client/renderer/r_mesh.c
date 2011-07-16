@@ -128,44 +128,131 @@ static void R_DrawAliasStaticWithReset (const mAliasMesh_t *mesh, const vec4_t s
 }
 
 /**
- * @brief Searches the tag data for the given name
- * @param[in] mod The model to search the tag data. Can be @c NULL
- * @param[in] tagName The name of the tag to get the matrix for. Might not be @c NULL
- * @return The tag matrix. In case the model has no tag data assigned, @c NULL is returned. The same
- * is true if the given tag name was not found in the assigned tag data.
  * @note Matrix format:
  * @li 0-11: rotation (forward, right, up)
  * @li 12-14: translation
  * @li 15:
  */
-const float* R_GetTagMatrix (const model_t* mod, const char* tagName)
+static void R_ComputeGLMatrixFromTag (float *glMatrix, const mAliasTagOrientation_t *orient)
+{
+	glMatrix[0] = orient->axis[0][0];
+	glMatrix[4] = orient->axis[1][0];
+	glMatrix[8] = orient->axis[2][0];
+	glMatrix[12] = orient->origin[0];
+
+	glMatrix[1] = orient->axis[0][1];
+	glMatrix[5] = orient->axis[1][1];
+	glMatrix[9] = orient->axis[2][1];
+	glMatrix[13] = orient->origin[1];
+
+	glMatrix[2] = orient->axis[0][2];
+	glMatrix[6] = orient->axis[1][2];
+	glMatrix[10] = orient->axis[2][2];
+	glMatrix[14] = orient->origin[2];
+
+	glMatrix[3] = 0;
+	glMatrix[7] = 0;
+	glMatrix[11] = 0;
+	glMatrix[15] = 1;
+}
+
+#define R_GetTagOrientByFrame(mod, tagIndex, frame) &(((mod)->alias.tags)[tagIndex].orient[frame])
+
+void R_GetTags (const model_t* mod, const char* tagName, int currentFrame, int oldFrame, const mAliasTagOrientation_t **current, const mAliasTagOrientation_t **old)
+{
+	const int index = R_GetTagIndexByName(mod, tagName);
+	if (index == -1) {
+		*current = NULL;
+		*old = NULL;
+		Com_Printf("Could not get tags for tag %s of model %s\n", tagName, mod->name);
+	}
+	*current = R_GetTagOrientByFrame(mod, index, currentFrame);
+	*old = R_GetTagOrientByFrame(mod, index, oldFrame);
+}
+
+qboolean R_GetTagMatrix (const model_t* mod, const char* tagName, int frame, float matrix[16])
+{
+	const int index = R_GetTagIndexByName(mod, tagName);
+	mAliasTagOrientation_t *orient;
+
+	if (index == -1) {
+		Com_Printf("Could not get tag matrix for tag %s of model %s\n", tagName, mod->name);
+		return qfalse;
+	}
+
+	orient = R_GetTagOrientByFrame(mod, index, frame);
+	R_ComputeGLMatrixFromTag(matrix, orient);
+	return qtrue;
+}
+
+/**
+ * @brief Interpolate the transform for a model places on a tag of another model
+ * @param[out] interpolated This is an array of 16 floats
+ * @param[in] current The current frame tag data
+ * @param[in] old The old frame tag data
+ * @param[in] backLerp the linear interpolation value [0.0,1.0]
+ * @param[in] numframes The max frames of the tag data
+ */
+void R_InterpolateTransform (float backLerp, int numframes, const mAliasTagOrientation_t *current, const mAliasTagOrientation_t *old, float *interpolated)
+{
+	/* right on a frame? */
+	if (backLerp == 0.0) {
+		R_ComputeGLMatrixFromTag(interpolated, current);
+		return;
+	}
+	if (backLerp == 1.0) {
+		R_ComputeGLMatrixFromTag(interpolated, old);
+		return;
+	}
+
+	{
+		mAliasTagOrientation_t tag;
+		int i;
+		const float frontLerp = 1.0 - backLerp;
+
+		/* interpolate */
+		for (i = 0; i < 3; i++) {
+			tag.origin[i] = old->origin[i] * backLerp + current->origin[i] * frontLerp;
+			tag.axis[0][i] = old->axis[0][i] * backLerp + current->axis[0][i] * frontLerp;
+			tag.axis[1][i] = old->axis[1][i] * backLerp + current->axis[1][i] * frontLerp;
+			tag.axis[2][i] = old->axis[2][i] * backLerp + current->axis[2][i] * frontLerp;
+		}
+		VectorNormalizeFast(tag.axis[0]);
+		VectorNormalizeFast(tag.axis[1]);
+		VectorNormalizeFast(tag.axis[2]);
+
+		R_ComputeGLMatrixFromTag(interpolated, &tag);
+	}
+}
+
+/**
+ * @brief Searches the tag data for the given name
+ * @param[in] mod The model to search the tag data. Can be @c NULL
+ * @param[in] tagName The name of the tag to get the matrix for. Might not be @c NULL
+ * @return @c -1 if no tag with the given name was found
+ */
+int R_GetTagIndexByName (const model_t* mod, const char* tagName)
 {
 	int i;
-	const dMD2tag_t *taghdr;
-	const char *name;
 
 	if (!mod)
-		return NULL;
+		return -1;
 
-	taghdr = (const dMD2tag_t *) mod->alias.tagdata;
-
-	/* no tag data found for this model */
-	if (taghdr == NULL)
-		return NULL;
+	if (mod->alias.num_tags == 0)
+		return -1;
 
 	assert(tagName);
 
-	/* find the right tag */
-	name = (const char *) taghdr + taghdr->ofs_names;
-	for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
-		if (Q_streq(name, tagName)) {
-			/* found the tag (matrix) */
-			const float *tag = (const float *) ((const byte *) taghdr + taghdr->ofs_tags);
-			tag += i * 16 * taghdr->num_frames;
-			return tag;
+	/* find the right tag in the first frame - the index is the same in every other frame */
+	for (i = 0; i < mod->alias.num_tags; i++) {
+		const mAliasTag_t *tag = &mod->alias.tags[i];
+		if (Q_streq(tag->name, tagName)) {
+			return i;
 		}
 	}
-	return NULL;
+
+	Com_Printf("Could not get tag index for tag %s of model %s\n", tagName, mod->name);
+	return -1;
 }
 
 /**
@@ -244,17 +331,14 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 		/* tag transformation */
 		if (tagname) {
-			const float *tag = R_GetTagMatrix(pmi->model, tagname);
-			if (tag) {
+			const mAliasTagOrientation_t *current = NULL;
+			const mAliasTagOrientation_t *old = NULL;
+			R_GetTags(pmi->model, tagname, pmi->frame, pmi->oldframe, &current, &old);
+			if (current != NULL && old != NULL) {
 				float interpolated[16];
-				animState_t as;
-				const dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
 
 				/* do interpolation */
-				as.frame = pmi->frame;
-				as.oldframe = pmi->oldframe;
-				as.backlerp = pmi->backlerp;
-				R_InterpolateTransform(&as, taghdr->num_frames, tag, interpolated);
+				R_InterpolateTransform(pmi->backlerp, pmi->model->alias.num_frames, current, old, interpolated);
 
 				/* transform */
 				glMultMatrixf(interpolated);
