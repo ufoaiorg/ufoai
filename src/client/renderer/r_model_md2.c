@@ -495,8 +495,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod, qboolean loadNormals)
 void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean loadNormals)
 {
 	dMD2Model_t *md2;
-	byte *tagbuf = NULL, *animbuf = NULL;
-	size_t l;
+	byte *tagbuf = NULL;
 	char tagname[MAX_QPATH];
 
 	/* get the disk data */
@@ -515,10 +514,8 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean l
 	R_ModLoadAliasMD2Mesh(mod, md2, bufSize, loadNormals);
 
 	/* load the tags */
-	Q_strncpyz(tagname, mod->name, sizeof(tagname));
-	/* strip model extension and set the extension to tag */
-	l = strlen(tagname) - 4;
-	strcpy(&(tagname[l]), ".tag");
+	Com_StripExtension(mod->name, tagname, sizeof(tagname));
+	Com_DefaultExtension(tagname, sizeof(tagname), ".tag");
 
 	/* try to load the tag file */
 	if (FS_CheckFile("%s", tagname) != -1) {
@@ -526,19 +523,6 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean l
 		const int size = FS_LoadFile(tagname, &tagbuf);
 		R_ModLoadTags(mod, tagbuf, size);
 		FS_FreeFile(tagbuf);
-	}
-
-	/* load the animations */
-	Q_strncpyz(mod->alias.animname, mod->name, sizeof(mod->alias.animname));
-	l = strlen(mod->alias.animname) - 4;
-	strcpy(&(mod->alias.animname[l]), ".anm");
-
-	/* try to load the animation file */
-	if (FS_CheckFile("%s", mod->alias.animname) != -1) {
-		/* load the tags */
-		FS_LoadFile(mod->alias.animname, &animbuf);
-		R_ModLoadAnims(&mod->alias, (const char *)animbuf);
-		FS_FreeFile(animbuf);
 	}
 
 	R_ModLoadLevelOfDetailData(mod, loadNormals);

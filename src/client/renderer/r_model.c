@@ -170,6 +170,19 @@ static model_t *R_ModForName (const char *name)
 			Com_Error(ERR_FATAL, "R_ModForName: unknown fileid for %s", mod->name);
 	}
 
+	/* load the animations */
+	Com_StripExtension(mod->name, mod->alias.animname, sizeof(mod->alias.animname));
+	Com_DefaultExtension(mod->alias.animname, sizeof(mod->alias.animname), ".anm");
+
+	/* try to load the animation file */
+	if (FS_CheckFile("%s", mod->alias.animname) != -1) {
+		/* load the tags */
+		byte *animbuf = NULL;
+		FS_LoadFile(mod->alias.animname, &animbuf);
+		R_ModLoadAnims(&mod->alias, (const char *)animbuf);
+		FS_FreeFile(animbuf);
+	}
+
 	FS_FreeFile(buf);
 
 	return mod;
