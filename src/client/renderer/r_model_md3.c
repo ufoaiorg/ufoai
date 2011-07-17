@@ -205,6 +205,9 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 				poutvert->normal[2] = cos(lng);
 			}
 		}
+
+		R_ModCalcUniqueNormalsAndTangents(poutmesh, mod->alias.num_frames, 0.5);
+
 		pinmesh = (const dmd3mesh_t *)((const byte *)pinmesh + LittleLong(pinmesh->meshsize));
 
 		R_ModLoadArrayData(&mod->alias, poutmesh, qtrue);
