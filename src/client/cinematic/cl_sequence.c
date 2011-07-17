@@ -688,7 +688,11 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
 				se->model = R_RegisterModelShort(data);
+				if (se->model == NULL)
+					se->inuse = qfalse;
 			} else if (Q_streq(data, "anim")) {
+				if (se->model == NULL)
+					Com_Error(ERR_FATAL, "could not change the animation - no model loaded yet");
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Change anim to: %s\n", data);
 				R_AnimChange(&se->as, se->model, data);
