@@ -629,11 +629,11 @@ int AIR_GetRemainingRange (const aircraft_t *aircraft)
  */
 qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destination)
 {
-	base_t *base;
+	const base_t *base;
 	float distance;
 
 	assert(aircraft);
-	base = (base_t *) aircraft->homebase;
+	base = aircraft->homebase;
 	assert(base);
 
 	/* Calculate the line that the aircraft should follow to go to destination */
@@ -693,7 +693,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
 {
 	int i;
-	base_t *base;
+	const base_t *base;
 	aircraft_t *aircraftInBase;
 
 	if (!aircraft || !aircraft->homebase)
@@ -718,7 +718,7 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
  * @return @c NULL if there is no such aircraft in the given base, or the aircraft pointer that belongs to the given index.
  * @todo Remove this! Aircraft no longer have local index per base
  */
-aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
+aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (const base_t* base, int index)
 {
 	aircraft_t *aircraft;
 	int i;
