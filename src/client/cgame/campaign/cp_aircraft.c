@@ -329,6 +329,7 @@ static void AII_CarriedItems (const le_t *soldier)
 {
 	containerIndex_t container;
 	invList_t *invList;
+	equipDef_t *ed = &ccs.eMission;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		/* Items on the ground are collected as ET_ITEM */
@@ -336,16 +337,18 @@ static void AII_CarriedItems (const le_t *soldier)
 			continue;
 		for (invList = CONTAINER(soldier, container); invList; invList = invList->next) {
 			const objDef_t *item = invList->item.t;
+			const objDef_t *ammo = invList->item.m;
 			technology_t *tech = RS_GetTechForItem(item);
-			ccs.eMission.numItems[item->idx]++;
+			ed->numItems[item->idx]++;
 			RS_MarkCollected(tech);
 
 			if (!item->reload || invList->item.a == 0)
 				continue;
-			ccs.eMission.numItemsLoose[invList->item.m->idx] += invList->item.a;
-			if (ccs.eMission.numItemsLoose[invList->item.m->idx] >= item->ammo) {
-				ccs.eMission.numItemsLoose[invList->item.m->idx] -= item->ammo;
-				ccs.eMission.numItems[invList->item.m->idx]++;
+
+			ed->numItemsLoose[ammo->idx] += invList->item.a;
+			if (ed->numItemsLoose[ammo->idx] >= item->ammo) {
+				ed->numItemsLoose[ammo->idx] -= item->ammo;
+				ed->numItems[ammo->idx]++;
 			}
 			/* The guys keep their weapons (half-)loaded. Auto-reload
 			 * will happen at equip screen or at the start of next mission,
