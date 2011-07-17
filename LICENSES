@@ -4309,11 +4309,11 @@ base/textures/tex_base/wall004_nm.png | GNU General Public License 2.0 or later 
 base/textures/tex_base/wall004_red.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall004_red_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall1.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/textures/tex_base/wall1_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall1_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/textures/tex_base/wall2.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/textures/tex_base/wall2_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall2_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/textures/tex_base/wall5.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/textures/tex_base/wall5_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall5_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/textures/tex_base/wires01.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_base/wires02.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_base/wires1.png | GNU General Public License 2.0 | OpenArena
