@@ -35,6 +35,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/mutex.h"
 
 #define ASSEMBLE_THREADS 2
+/** @brief print some debugging info */
+#define PRINT_RMA_PROGRESS 0
+/** @brief max # of recursions */
+#define RMA2_MAX_REC 50
+/** @brief tile code multiplier */
+#define TCM 50
+/** @brief the # of different tiles we can store for a gap */
+#define GAPS 25
+/** @brief array of working random tile positions, 50 recursions */
+static short posTileList[RMA2_MAX_REC][1000];
+/** @brief for every x/y we can store the tiles that can cover that place here */
+static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS + 1];
 static SDL_sem *mapSem;
 static SDL_cond *mapCond;
 static threads_mutex_t *mapLock;
@@ -1019,13 +1031,6 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 	Com_Printf("pos: %s\n", asmPos);
 	Com_Printf("tiles: %i\n", map->numPlaced);
 }
-
-#define PRINT_RMA_PROGRESS 0	/* print some debugging info */
-#define RMA2_MAX_REC 50		/* max # of recursions */
-#define TCM 50				/* tile code multiplier */
-#define GAPS 25				/* the # of different tiles we can store for a gap */
-static short posTileList[RMA2_MAX_REC][1000];		/* array of working random tile positions, 50 recursions */
-static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS+1];	/* for every x/y we can store the tiles that can cover that place here */
 
 /**
  * @brief get the specs of a tile at map-x/y if it was placed where tileCode indicates
