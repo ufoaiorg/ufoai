@@ -1134,7 +1134,7 @@ window options
 				image		"ui/spinner_blue"
 				pos			"448 320"
 				min			0
-				max			16
+				max			8
 				delta		1
 			}
 			// ====================
