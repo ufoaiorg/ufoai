@@ -1317,7 +1317,6 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
  */
 static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx, int ny)
 {
-	qboolean found = qfalse;
 	if (nx < 1)
 		return qfalse;				/* map border */
 	if (ny < 1)
@@ -1338,11 +1337,10 @@ static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx,
 		const unsigned long flags2 = SV_GapGetFlagsAtAbsPos(map, tc2, mapW, nx, ny);
 
 		if (flags1 & flags2) {
-			found = qtrue;			/* found at least one tile that would work */
-			break;
+			return qfalse;			/* found at least one tile that would work */
 		}
 	}
-	return found;
+	return qfalse;
 }
 
 /**
