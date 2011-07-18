@@ -1342,10 +1342,7 @@ static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx,
 			break;
 		}
 	}
-	if (!found) {
-		return qtrue; /* eliminate tile */
-	}
-	return qfalse;
+	return found;
 }
 
 /**
