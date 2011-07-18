@@ -943,7 +943,7 @@ static qboolean SV_AddMissingTilesOld (mapInfo_t *map)
 
 	memcpy(&backup, map, sizeof(*map));
 	while (1) {
-		int max_rating = -mapW * mapH * 4;
+		int maxRating = -mapW * mapH * 4;
 
 		/* check if the map is already filled */
 		if (SV_TestFilled(map))
@@ -967,14 +967,14 @@ static qboolean SV_AddMissingTilesOld (mapInfo_t *map)
 
 			rating[i] = SV_CalcRating(map);
 
-			if (rating[i] > max_rating)
-				max_rating = rating[i];
+			if (rating[i] > maxRating)
+				maxRating = rating[i];
 
 			SV_RemoveTile(map, NULL, NULL);
 		}
 
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
-			if (rating[i] == max_rating) {
+			if (rating[i] == maxRating) {
 				const int x = pos[i] % mapW;
 				const int y = pos[i] / mapW;
 				SV_AddTile(map, mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
