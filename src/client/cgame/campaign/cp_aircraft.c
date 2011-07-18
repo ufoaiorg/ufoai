@@ -405,7 +405,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 			/* The items are already dropped to floor and are available
 			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
 			/* First of all collect armour of dead or stunned actors (if won). */
-			if (won && (LE_IsStunned(le) || LE_IsDead(le))) {
+			if (won && LE_IsDead(le)) {
 				invList_t *item = ARMOUR(le);
 				if (item)
 					AII_CollectItem(aircraft, item->item.t, 1);
