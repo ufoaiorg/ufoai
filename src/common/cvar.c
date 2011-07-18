@@ -143,7 +143,8 @@ qboolean Cvar_SetCheckFunction (const char *varName, qboolean (*check) (cvar_t* 
 
 /**
  * @brief Checks cvar values
- * @return true if assert
+ * @return @c true if assert isn't true and the cvar was changed to a valid value, @c false if the
+ * new value is ok and nothing was changed.
  * @param[in] cvar Cvar to check
  * @param[in] minVal The minimal value the cvar should have
  * @param[in] maxVal The maximal value the cvar should have

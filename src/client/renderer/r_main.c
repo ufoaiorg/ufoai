@@ -472,7 +472,7 @@ static qboolean R_CvarCheckLights (cvar_t *cvar)
 
 static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 {
-	if (!r_lights->integer){
+	if (!r_lights->integer) {
 		if (cvar->integer != 0) {
 			Com_Printf("No lighting activated\n");
 			Cvar_SetValue(cvar->name, 0);
