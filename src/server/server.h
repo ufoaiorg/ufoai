@@ -168,6 +168,7 @@ extern serverInstanceStatic_t svs;		/**< persistant server instance info */
 extern serverInstanceGame_t * sv;			/**< server data per game/map */
 
 extern cvar_t *sv_mapname;
+extern cvar_t *sv_rma;
 extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
 extern cvar_t *sv_dumpmapassembly;
 extern cvar_t *sv_threads;	/**< run the game lib threaded */

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *sv_dumpmapassembly;
 cvar_t *sv_threads;
+cvar_t *sv_rma;
 
 /**
  * The suite initialization function.
@@ -40,6 +41,7 @@ static int UFO_InitSuiteRandomMapAssembly (void)
 	Com_ParseScripts(qtrue);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
+	sv_rma = Cvar_Get("sv_rma_tmp", "1", 0, NULL);
 
 	return 0;
 }

@@ -929,7 +929,7 @@ static qboolean SV_PickRandomTile (mapInfo_t *map, int* idx, int* pos)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddMissingTiles (mapInfo_t *map)
+static qboolean SV_AddMissingTilesOld (mapInfo_t *map)
 {
 	int i;
 	int idx[CHECK_ALTERNATIVES_COUNT];
@@ -1021,9 +1021,6 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 }
 
 #define PRINT_RMA_PROGRESS 0	/* print some debugging info */
-/* RMA2 code. Still disabled to avoid warnings */
-#define RMA2 0
-#if RMA2
 #define RMA2_MAX_REC 50		/* max # of recursions */
 #define TCM 50				/* tile code multiplier */
 #define GAPS 25				/* the # of different tiles we can store for a gap */
@@ -1518,7 +1515,12 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 	return SV_AddMissingTiles3_r(map, 0, n, posTileList[0], NULL, 0, 0);
 }
 
-#endif
+static qboolean SV_AddMissingTiles (mapInfo_t *map)
+{
+	if (sv_rma->integer == 2)
+		return !SV_AddMissingTiles3(map);
+	return !SV_AddMissingTilesOld(map);
+}
 
 /**
  * @brief Tries to build the map
@@ -1626,11 +1628,7 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 			pos++;
 		}
 
-#if RMA2
-		if (idx == numToPlace && !SV_AddMissingTiles3(map)) {
-#else
 		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
-#endif
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
