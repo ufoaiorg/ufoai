@@ -1201,25 +1201,26 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 						if (line && (map->curMap[y][x] & nonLineFlags))
 							continue;
 						for (h = 1; h <= g; h++) {		/* circle through the alternatives stored for this gap */
-							int tc = gapList[x][y][h];
-							int pos = tc / TCM;
-							int ti = tc % TCM;
-							int px = pos % mapW;
-							int py = pos / mapW;
+							const int tc = gapList[x][y][h];
+							const int pos = tc / TCM;
+							const int ti = tc % TCM;
+							const int px = pos % mapW;
+							const int py = pos / mapW;
 
 							SV_AddTile(map, mToPlace[ti].tile, px, py, ti, pos);
 #if PRINT_RMA_PROGRESS
-							if (rec < 10) Com_Printf("GAPS: %i rec: %i chances: %i calls: %i\n", GAPS, rec, j, callCnt);
+							if (rec < 10)
+								Com_Printf("GAPS: %i rec: %i chances: %i calls: %i\n", GAPS, rec, j, callCnt);
 #endif
 							if (SV_TestFilled(map))
 								return qtrue;		/* this was the last tile we needed */
 							if (SV_AddMissingTiles3_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, px, py))
 								return qtrue;		/* recursive placement succeeded */
-							else {					/* tile was a dead end, remove it */
-								SV_RemoveTile(map, NULL, NULL);
-								if (h >= g)
-									return qfalse;
-							}
+
+							/* tile was a dead end, remove it */
+							SV_RemoveTile(map, NULL, NULL);
+							if (h >= g)
+								return qfalse;
 						}
 					}
 				}
@@ -1229,10 +1230,10 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 	/** now try each of the remaining positions, that is, those that have more than GAPS alternatives. Rarely happens. */
 	for (i = 0; i < j; i++) {
-		int pos = posTileList[rec][i] / TCM;
-		int ti = posTileList[rec][i] % TCM;
-		int x = pos % mapW;
-		int y = pos / mapW;
+		const int pos = posTileList[rec][i] / TCM;
+		const int ti = posTileList[rec][i] % TCM;
+		const int x = pos % mapW;
+		const int y = pos / mapW;
 
 		SV_AddTile(map, mToPlace[ti].tile, x, y, ti, pos);
 		if (SV_TestFilled(map))
@@ -1271,8 +1272,8 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
 	/** check how well the tiles can cover the gaps */
 	int i;
 	for (i = 0; i < tilePosListCnt; i++) {
-		int pos = posTileList[0][i] / TCM;
-		int ti = posTileList[0][i] % TCM;
+		const int pos = posTileList[0][i] / TCM;
+		const int ti = posTileList[0][i] % TCM;
 		x = pos % mapW;
 		y = pos / mapW;
 		mTile_t *tile = mToPlace[ti].tile;
@@ -1328,8 +1329,8 @@ static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx,
 	/** circle through the tiles that cover this gap */
 	int h;
 	for (h = 1; h <= gapList[nx][ny][0]; h++) {
-		int tc2 = gapList[nx][ny][h];
-		unsigned long flags2 = SV_GapGetFlagsAtAbsPos(map, tc2, mapW, nx, ny);
+		const int tc2 = gapList[nx][ny][h];
+		const unsigned long flags2 = SV_GapGetFlagsAtAbsPos(map, tc2, mapW, nx, ny);
 
 		if (flags1 & flags2) {
 			found = qtrue;			/* found at least one tile that would work */
@@ -1363,29 +1364,29 @@ static int SV_GapListReduce (mapInfo_t *map)
 
 			int g;
 			for (g = 1; g <= gapList[x][y][0]; g++) {
-				int tc1 = gapList[x][y][g];
+				const int tc1 = gapList[x][y][g];
 				if (g >= GAPS)
 					break;	/* there are more tiles than we stored the tc's of. */
 
-				/** check the neighbour to the right */
+				/* check the neighbour to the right */
 				if (SV_GapCheckNeighbour(map, tc1, mapW, x+1, y)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
-				/** check the neighbour to the left */
+				/* check the neighbour to the left */
 				if (SV_GapCheckNeighbour(map, tc1, mapW, x-1, y)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
-				/** check the upper neighbour */
+				/* check the upper neighbour */
 				if (SV_GapCheckNeighbour(map, tc1, mapW, x, y+1)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
-				/** check the neighbour below */
+				/* check the neighbour below */
 				if (SV_GapCheckNeighbour(map, tc1, mapW, x, y-1)) {
 					posTileList[1][n] = tc1;
 					n++;
@@ -1437,11 +1438,11 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 	/** build a list of all positions of the map and all the tiles that fit there */
 	int i, j, k, n = 0;
 	for (i = 0; i < mapSize; i++) {
-		int x = posList[i] % mapW;
-		int y = posList[i] / mapW;
+		const int x = posList[i] % mapW;
+		const int y = posList[i] / mapW;
 
 		for (k = 0; k < map->numToPlace; k++) {
-			int ti = tilenumList[k];
+			const int ti = tilenumList[k];
 
 			if (mToPlace[ti].cnt >= mToPlace[ti].max)
 				continue;
@@ -1463,10 +1464,10 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 	while (eliminated) {		/* if we could eliminate one or more tiles, try again */
 		eliminated = qfalse;
 #if 0
-		/** print the posTileList */
+		/* print the posTileList */
 		for (i = 0; i < n; i++) {
-			Com_Printf("%2.i/%2.i ", posTileList[0][i]/TCM, posTileList[0][i]%TCM);
-			if (!(i%10))
+			Com_Printf("%2.i/%2.i ", posTileList[0][i] / TCM, posTileList[0][i] % TCM);
+			if (!(i % 10))
 				Com_Printf("\n");
 		}
 		Com_Printf("\n");
@@ -1474,14 +1475,14 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		qboolean covered = SV_GapListBuild(map, n);
 
 #if 0
-		/** print the gapList */
-		int x,y;
+		/* print the gapList */
+		int x, y;
 		Com_Printf("\n");
-		for (x=0; x<mAsm->width+1; x++){
-			for (y=0; y<mAsm->height+1; y++){
+		for (x = 0; x < mAsm->width + 1; x++){
+			for (y = 0; y < mAsm->height + 1; y++){
 				int cnt = gapList[x][y][0];
 				Com_Printf("x:%i y:%i cnt:%i ",x,y,cnt);
-				for (j=0; j<=cnt+3; j++) {
+				for (j = 0; j <= cnt + 3; j++) {
 					Com_Printf("%i ", gapList[x][y][j]);
 				}
 				Com_Printf("\n");
@@ -1496,15 +1497,14 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		if (m) {				/* the number of tilepositions to discard */
 			eliminated = qtrue;
 			for (j = 0; j < m; j++) {
-				int tc = posTileList[1][j];	/* SV_GapListReduce abuses the space for rec=1 to return it's result */
+				const int tc = posTileList[1][j];	/* SV_GapListReduce abuses the space for rec=1 to return it's result */
 				int offset = 0;
 				for (i = 0; i < n; i++) {
 					if (posTileList[0][i] == tc) {
 						offset = 1;
 						continue;
 					}
-					else
-						posTileList[0][i - offset] = posTileList[0][i];
+					posTileList[0][i - offset] = posTileList[0][i];
 				}
 				if (offset)		/* only if we actually removed the tile */
 					n--;		/* reduce the counter of posTileList */
