@@ -1515,11 +1515,16 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 	return SV_AddMissingTiles3_r(map, 0, n, posTileList[0], NULL, 0, 0);
 }
 
+/**
+ * @brief Tries to fill the missing tiles of the current map.
+ * @param map All we know about the map to assemble
+ * @return @c false if the tiles does not fit, @c true if the map could be filled.
+ */
 static qboolean SV_AddMissingTiles (mapInfo_t *map)
 {
 	if (sv_rma->integer == 2)
-		return !SV_AddMissingTiles3(map);
-	return !SV_AddMissingTilesOld(map);
+		return SV_AddMissingTiles3(map);
+	return SV_AddMissingTilesOld(map);
 }
 
 /**
