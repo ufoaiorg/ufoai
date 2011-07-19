@@ -1313,21 +1313,26 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
  * @param mapW width of the map. Needed to decode tc1
  * @param nx x of the absolute map position to investigate
  * @param nx y of the absolute map position to investigate
- * @return qtrue if no matching tile was found
+ * @return @c true if no matching tile was found
  */
 static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx, int ny)
 {
 	if (nx < 1)
-		return qfalse;				/* map border */
+		/* map border */
+		return qfalse;
 	if (ny < 1)
 		return qfalse;
-	if (gapList[nx][ny][0] < 1)		/* no tiles cover this gap, probably map border */
+	if (gapList[nx][ny][0] < 1)
+		/* no tiles cover this gap, probably map border */
 		return qfalse;
-	if (gapList[nx][ny][0] >= GAPS)	/* if there are more tiles than we stored the tc's of, */
-		return qfalse;				/* we can not evaluate this neighbour. */
+	if (gapList[nx][ny][0] >= GAPS)
+		/* if there are more tiles than we stored the tc's of,
+		 * we can not evaluate this neighbour. */
+		return qfalse;
 
 	qboolean flags1 = SV_GapGetFlagsAtAbsPos(map, tc1, mapW, nx, ny);
-	if (IS_SOLID(flags1))			/* nx/ny is part of tc1 itself */
+	if (IS_SOLID(flags1))
+		/* nx/ny is part of tc1 itself */
 		return qfalse;
 
 	/** circle through the tiles that cover this gap */
@@ -1337,7 +1342,8 @@ static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx,
 		const unsigned long flags2 = SV_GapGetFlagsAtAbsPos(map, tc2, mapW, nx, ny);
 
 		if (flags1 & flags2) {
-			return qfalse;			/* found at least one tile that would work */
+			/* found at least one tile that would work */
+			return qfalse;
 		}
 	}
 	return qfalse;
