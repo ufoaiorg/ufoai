@@ -1346,7 +1346,7 @@ static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx,
 			return qfalse;
 		}
 	}
-	return qfalse;
+	return qtrue;
 }
 
 /**
