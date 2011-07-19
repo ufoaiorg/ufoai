@@ -112,7 +112,7 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 		le->pathContents[i] = NET_ReadShort(msg);
 	}
 
-	if (VectorCompare(le->newPos, le->oldPos))
+	if (VectorCompare(le->newPos, le->pos))
 		Com_Error(ERR_DROP, "start and end pos are the same");
 
 	/* activate PathMove function */
