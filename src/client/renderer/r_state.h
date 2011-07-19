@@ -97,7 +97,6 @@ typedef struct rstate_s {
 	r_light_t dynamicLights[MAX_DYNAMIC_LIGHTS];
 	int numActiveLights;
 
-
 	/* framebuffer objects*/
 	r_framebuffer_t *renderBuffer;
 	r_framebuffer_t *bloomBuffer0;

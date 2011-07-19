@@ -81,7 +81,7 @@ typedef struct entity_s {
 
 	vec4_t shell;					/**< shell color */
 
-	r_light_t *lights[MAX_DYNAMIC_LIGHTS];		/**< dynamic lights sorted by distance */
+	const r_light_t *lights[MAX_DYNAMIC_LIGHTS];		/**< dynamic lights sorted by distance */
 	int numLights;
 
 	image_t *deathTexture;

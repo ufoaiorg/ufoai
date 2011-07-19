@@ -321,7 +321,6 @@ void R_RenderFrame (void)
 			const model_t *mapTile = r_mapTiles[tile];
 			const mBspModel_t *bsp = &mapTile->bsp;
 
-
 			R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
 			R_DrawOpaqueWarpSurfaces(bsp->opaque_warp_surfaces);
 

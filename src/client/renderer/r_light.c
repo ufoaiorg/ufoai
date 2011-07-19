@@ -219,7 +219,7 @@ static inline int R_LightDistCompare (const void *a, const void *b)
 		VectorDistSqr(light1->loc, origin) - VectorDistSqr(light2->loc, origin);
 }
 
-static inline void R_SortLightList_qsort (r_light_t **list)
+static inline void R_SortLightList_qsort (const r_light_t **list)
 {
 	qsort(list, r_state.numActiveLights, sizeof(*list), &R_LightDistCompare);
 }
@@ -230,7 +230,7 @@ static inline void R_SortLightList_qsort (r_light_t **list)
  * much (if at all) between calls.  Something like bubble-sort
  * might actually be more efficient in practice.
  */
-static void R_SortLightList (r_light_t **list, vec3_t v)
+static void R_SortLightList (const r_light_t **list, vec3_t v)
 {
 	VectorCopy(v, origin);
 	R_SortLightList_qsort(list);
