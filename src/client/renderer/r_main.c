@@ -1160,7 +1160,7 @@ static inline void R_VerifyDriver (void)
 		r_config.hardwareType = GLHW_NVIDIA;
 	} else if (R_SearchForVendor("ATI") || R_SearchForVendor("Advanced Micro Devices") || R_SearchForVendor("AMD")) {
 		r_config.hardwareType = GLHW_ATI;
-	} else if (R_SearchForVendor("mesa")) {
+	} else if (R_SearchForVendor("mesa") || R_SearchForVendor("gallium") || R_SearchForVendor("nouveau")) {
 		r_config.hardwareType = GLHW_MESA;
 	} else {
 		r_config.hardwareType = GLHW_GENERIC;
