@@ -291,9 +291,10 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
 	case GLHW_NVIDIA:
 		hwHack = "#ifndef NVIDIA\n#define NVIDIA\n#endif\n";
 		break;
-	case GLHW_GENERIC:
 	case GLHW_MESA:
-		hwHack = NULL;
+		hwHack = "#ifndef MESA\n#define MESA\n#endif\n";
+		break;
+	case GLHW_GENERIC:
 		break;
 	default:
 		Com_Error(ERR_FATAL, "R_PreprocessShader: Unknown hardwaretype");
