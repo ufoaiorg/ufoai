@@ -4202,8 +4202,6 @@ tech rs_alien_bloodspider_autopsy
 	}
 	time	4500
 
-	mdl	"aliens/bloodspider/bloodspider"
-
 	image techs/bloodspider_autopsy
 }
 
