@@ -2321,8 +2321,8 @@ base/models/weapons/electrolaser/electrolaser_gm.png | GNU General Public Licens
 base/models/weapons/flamer/flamer.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer.tag | GNU General Public License 2.0 or later | Martin Gerhardy
-base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/flamer/flamer_ammo.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/weapons/flamer/flamer_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/flare/flare.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flare/flare.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
