@@ -698,7 +698,7 @@ void R_DrawAliasModel (entity_t *e)
 	R_EnableGlowMap(skin->glowmap, qtrue);
 
 	R_UpdateLightList(e);
-	R_EnableDynamicLights(e, qtrue);
+	R_EnableDynamicLights(e->lights, e->numLights, qtrue);
 
 	if (skin->normalmap)
 		R_EnableBumpmap(skin->normalmap, qtrue);
@@ -723,7 +723,7 @@ void R_DrawAliasModel (entity_t *e)
 	if (r_state.roughnessmap_enabled)
 		R_EnableRoughnessMap(NULL, qfalse);
 
-	R_EnableDynamicLights(NULL, qfalse);
+	R_EnableDynamicLights(NULL, 0, qfalse);
 
 	R_EnableGlowMap(NULL, qfalse);
 
