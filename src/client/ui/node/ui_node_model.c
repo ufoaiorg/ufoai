@@ -278,6 +278,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];
 
+	VectorMA(EXTRADATA(node).angles, cls.frametime, EXTRADATA(node).omega, EXTRADATA(node).angles);
 	mi.origin = nodeorigin;
 	mi.angles = EXTRADATA(node).angles;
 	mi.scale = EXTRADATA(node).scale;
@@ -511,6 +512,8 @@ static const value_t properties[] = {
 	{"angles", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, angles), MEMBER_SIZEOF(modelExtraData_t, angles)},
 	/* Main model only. Position of the model relative to the center of the node. */
 	{"origin", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, origin), MEMBER_SIZEOF(modelExtraData_t, origin)},
+	/* Main model only. Rotation vector of the model. */
+	{"omega", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, omega), MEMBER_SIZEOF(modelExtraData_t, omega)},
 	/* Both. Scale the model */
 	{"scale", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, scale), MEMBER_SIZEOF(modelExtraData_t, scale)},
 	/* Submodel only. A tag name to link the model to the parent model. */

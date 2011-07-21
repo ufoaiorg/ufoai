@@ -52,6 +52,7 @@ typedef struct modelExtraData_s {
 	char *oldRefValue;	/**< used for storing old reference values */
 	vec3_t angles;
 	vec3_t origin;
+	vec3_t omega;
 	vec3_t scale;
 	const char* skin;
 	const char* model;
