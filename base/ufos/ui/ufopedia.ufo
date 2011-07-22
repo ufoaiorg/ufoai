@@ -208,9 +208,9 @@ window ufopedia extends objectinfo
 			dataid		TEXT_ITEMDESCRIPTION
 			pos			"12 44"
 			size		"410 570"
-			lineheight	36
+			lineheight	20
 			tabwidth	280
-			rows		20
+			rows		28
 			onViewChange	{
 				*node:parent.description_scroll@fullsize = <fullsize>
 				*node:parent.description_scroll@current = <viewpos>
