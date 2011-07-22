@@ -403,12 +403,11 @@ void GAME_LoadTeam_f (void)
 /**
  * @brief Get the equipment definition (from script files) for the current selected team
  * and updates the equipment inventory containers
- * @todo merge parts of CL_UpdateEquipmentMenuParameters_f into this function
  */
 static void GAME_GetEquipment (void)
 {
 	const equipDef_t *edFromScript;
-	const char *teamID = Com_ValueToStr(&cl_teamnum->integer, V_TEAM, 0);
+	const char *teamID = "phalanx";
 	char equipmentName[MAX_VAR];
 	equipDef_t *ed;
 
