@@ -438,7 +438,7 @@ window ufopedia extends objectinfo
 			*node:root.content.ufopedia_scroll@invis = true
 			*node:root.content.description@invis = false
 			*node:root.content.description_scroll@invis = false
-			*node:root.content.requirement@invis = true
+			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = false
 		}
 
