@@ -21,7 +21,7 @@ window ufopedia extends objectinfo
 	panel summary
 	{
 		{
-			pos		"22 92"
+			pos		"22 91"
 			size	"307 588"
 			image	"ui/panel_green"
 			layout	LAYOUT_BORDER
@@ -84,7 +84,6 @@ window ufopedia extends objectinfo
 				size	"628 43"
 				onChange { cmd "update_ufopedia_layout;" }
 			}
-
 			option description
 			{
 				label	"_Description"
@@ -109,31 +108,70 @@ window ufopedia extends objectinfo
 		image image_top
 		{
 			src		*cvar:mn_upimage_top
-			pos			"425 55"
-			size		"175 600"
+			pos			"420 42"
+			size		"185 422"
 			preventratio	true
 		}
-
+		panel decoration_panel
+		{
+			pos		"420 42"
+			size	"185 187"
+			image	"ui/panel_green_slim"
+		}
 		model mdl_top
 		{
 			src			*cvar:mn_upmodel_top
-			angles		"0 0 120"
-			pos			"425 55"
-			size		"175 175"
+			angles		"0 0 90"
+			pos			"422 44"
+			size		"182 182"
 			autoscale	true
+			omega		"0 10 0"
 			rotatewithmouse	true
 		}
-
+		panel decoration_panel2
+		{
+			pos		"420 230"
+			size	"185 135"
+			image	"ui/panel_green_slim"
+		}
 		model mdl_bottom
 		{
 			src			*cvar:mn_upmodel_bottom
-			angles		"0 0 120"
-			pos			"460 250"
-			size		"112 112"
+			angles		"0 0 90"
+			pos			"422 290"
+			size		"60 60"
 			autoscale	true
+			omega		"0 -10 0"
 			rotatewithmouse	true
 		}
-
+		model mdl_bottom2
+		{
+			src			*cvar:mn_upmodel_bottom
+			angles		"0 0 90"
+			pos			"483 240"
+			size		"60 60"
+			autoscale	true
+			omega		"0 0 10"
+			rotatewithmouse	true
+		}
+		model mdl_bottom3
+		{
+			src			*cvar:mn_upmodel_bottom
+			angles		"0 0 90"
+			pos			"544 290"
+			size		"60 60"
+			autoscale	true
+			omega		"0 10 0"
+			rotatewithmouse	true
+		}
+/* for future purposes
+		panel decoration_panel3
+		{
+			pos		"420 366"
+			size	"185 99"
+			image	"ui/panel_green_slim"
+		}
+*/
 		// ==================
 		// text and info
 		// ==================
@@ -141,8 +179,8 @@ window ufopedia extends objectinfo
 		text2 ufopedia
 		{
 			dataid		TEXT_UFOPEDIA
-			pos			"14 50"
-			size		"406 570"
+			pos			"12 44"
+			size		"410 570"
 			font		"f_small"
 			lineheight	18
 			tabwidth	100
@@ -157,7 +195,7 @@ window ufopedia extends objectinfo
 		vscrollbar ufopedia_scroll
 		{
 			image		"ui/scrollbar_v_green"
-			pos			"608 42"
+			pos			"609 42"
 			height		"573"
 			current		0
 			viewsize	26
@@ -168,10 +206,10 @@ window ufopedia extends objectinfo
 		text description
 		{
 			dataid		TEXT_ITEMDESCRIPTION
-			pos			"10 60"
-			size		"390 400"
-			lineheight	20
-			tabwidth	230
+			pos			"12 44"
+			size		"410 570"
+			lineheight	36
+			tabwidth	280
 			rows		20
 			onViewChange	{
 				*node:parent.description_scroll@fullsize = <fullsize>
@@ -183,7 +221,7 @@ window ufopedia extends objectinfo
 		vscrollbar description_scroll
 		{
 			image		"ui/scrollbar_v_green"
-			pos			"405 45"
+			pos			"406 45"
 			height		"573"
 			current		0
 			viewsize	20
@@ -194,21 +232,21 @@ window ufopedia extends objectinfo
 		panel requirement
 		{
 			{
-				pos		"430 476"
-				size	"166 128"
+				pos		"420 466"
+				size	"185 149"
 				image	"ui/panel_green_slim"
 			}
 			string label
 			{
-				pos "5 5"
+				pos "8 6"
 				size "120 20"
 				font	"f_small"
-				string "_Requirement:"
+				string "_Requirement(s):"
 			}
 			textlist techtree
 			{
 				dataid		TEXT_UFOPEDIA_REQUIREMENT
-				pos			"5 31"
+				pos			"15 40"
 				size		"156 92"
 				font		"f_verysmall"
 				color		"0 .78 0 1"
@@ -327,9 +365,21 @@ window ufopedia extends objectinfo
 
 		// is right column not empty?
 		*cvar:mn_rightpanel = 0
-		if ( *cvar:mn_upimage_top ne "" ) { *cvar:mn_rightpanel = 1 }
-		if ( *cvar:mn_upmodel_top ne "" ) { *cvar:mn_rightpanel = 1 }
-		if ( *cvar:mn_upmodel_bottom ne "" ) { *cvar:mn_rightpanel = 1 }
+		if ( *cvar:mn_upimage_top ne "" )
+			{
+				*cvar:mn_rightpanel = 1
+			}
+		if ( *cvar:mn_upmodel_top ne "" )
+			{
+				*cvar:mn_rightpanel = 1
+				*node:root.content.decoration_panel@invis = false
+			}
+
+		if ( *cvar:mn_upmodel_bottom ne "" )
+			{
+				*cvar:mn_rightpanel = 1
+				*node:root.content.decoration_panel2@invis = false
+			}
 		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 }
 
 		// invalidate techtree selection
@@ -396,7 +446,13 @@ window ufopedia extends objectinfo
 		if ( *cvar:mn_uprequirement eq "" ) {
 			*node:root.content.requirement@invis = true
 		}
-
+		// we only show deco panels if they are needed
+		if ( *cvar:mn_upmodel_top eq "" ) {
+			*node:root.content.decoration_panel@invis = true
+		}
+		if ( *cvar:mn_upmodel_bottom eq "" ) {
+			*node:root.content.decoration_panel2@invis = true
+		}
 		cmd "del mn_rightpanel;"
 	}
 
