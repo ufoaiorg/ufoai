@@ -343,6 +343,7 @@ window production
 			pos			"56 23"
 			size		"336 140"
 			angles		"-10 160 70"
+			omega		"0 10 0"
 			autoscale	true
 		}
 

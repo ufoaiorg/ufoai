@@ -379,6 +379,7 @@ window market extends objectinfo
 			pos			"12 55"
 			size		"385 200"
 			angles		"-10 160 70"
+			omega		"0 10 0"
 			autoscale	true
 		}
 
