@@ -1695,11 +1695,11 @@ particle fire
 {
 	init
 	{
-		tps    15.0
+		tps    35.0
 	}
 	think
 	{
-		spawn  burnFlame
+		spawn  burnFireFlame
 	}
 }
 

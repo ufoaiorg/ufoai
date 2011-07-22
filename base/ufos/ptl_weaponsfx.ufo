@@ -804,7 +804,7 @@ particle plasmaMiniPulse
 		mul  #
 		add  pos "44 20"
 		pop  *size
-		spawn plasmaMiniTrail
+//		spawn plasmaMiniTrail
 	}
 }
 
