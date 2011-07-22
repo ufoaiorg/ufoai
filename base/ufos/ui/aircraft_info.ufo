@@ -25,6 +25,7 @@ window aircraft extends iaircraft
 		angles		"0 0 90"
 		autoscale	true
 		rotatewithmouse	true
+		omega		"0 10 0"
 	}
 
 	string aircraft_name
@@ -80,7 +81,6 @@ window aircraft extends iaircraft
 		max			196
 		readonly	true
 	}
-
 	//	icons below the aircraft
 
 	// ==================
