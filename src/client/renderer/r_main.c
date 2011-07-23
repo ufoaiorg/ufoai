@@ -539,8 +539,8 @@ static void R_RegisterSystemVars (void)
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
-	r_default_specular = Cvar_Get("r_default_specular", "1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Default specular exponent");
-	r_default_hardness = Cvar_Get("r_default_hardness", "1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Default specular brightness");
+	r_default_specular = Cvar_Get("r_default_specular", "0.2", CVAR_R_CONTEXT, "Default specular exponent");
+	r_default_hardness = Cvar_Get("r_default_hardness", "0.2", CVAR_R_CONTEXT, "Default specular brightness");
 	Cvar_RegisterChangeListener("r_default_specular", R_UpdateDefaultMaterial);
 	Cvar_RegisterChangeListener("r_default_hardness", R_UpdateDefaultMaterial);
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
