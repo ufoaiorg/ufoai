@@ -526,7 +526,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	}
 	image = &r_images[i];
 	OBJZERO(*image);
-	memcpy(&image->material, &defaultMaterial, sizeof(material_t));
+	image->material = defaultMaterial;
 	image->has_alpha = qfalse;
 	image->type = type;
 	image->width = width;
