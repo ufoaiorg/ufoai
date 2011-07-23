@@ -39,10 +39,16 @@ class Entity:
     def __init__(self):
         self.brushes = []
         self.fields = {}
+        self.order = []
 
     def to_string(self):
         tmp = ["{"]
-        for i in self.fields:
+        fields = self.fields.copy()
+        for i in self.order:
+            if i in fields:
+                tmp.append('"{0}" "{1}"'.format(i, fields[i]))
+                del fields[i]
+        for i in fields:
             tmp.append('"{0}" "{1}"'.format(i, self.fields[i]))
         brushCount = 0
         for i in self.brushes:
@@ -92,6 +98,7 @@ def parse_ufo_map(s, verbose = False):
                 print "Syntax error - can't analyze line", n
                 break
             ent.fields[tokens[1]] = tokens[3]
+            ent.order.append(tokens[1])
         elif depth == 2 and tokens[0][0] == '(': #brush face definition
             face = Face()
             if count > 13 and tokens[0] == "(" and tokens[4] == ")" and tokens[5] == "(" and tokens[9] == ")" and tokens[10] == "(" and tokens[14] == ")":
