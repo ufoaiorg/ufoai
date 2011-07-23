@@ -32,15 +32,15 @@ mBspSurfaces_t r_material_surfaces;
 
 /** @todo load this from file, will make tweaking the game much easier */
 material_t defaultMaterial = {
-	0, /* unsigned flags; */
-	0.0f, /* float time; */
-	DEFAULT_BUMP, /* float bump; */
-	DEFAULT_PARALLAX, /* float parallax; */
-	DEFAULT_HARDNESS, /* float hardness; */
-	DEFAULT_SPECULAR, /* float specular; */
-	DEFAULT_GLOWSCALE, /* float glowscale; */
-	NULL, /* materialStage_t *stages; */
-	0 /* int num_stages; */
+	.flags = 0,
+	.time = 0.0f,
+	.bump = DEFAULT_BUMP,
+	.parallax = DEFAULT_PARALLAX,
+	.hardness = DEFAULT_HARDNESS,
+	.specular = DEFAULT_SPECULAR,
+	.glowscale = DEFAULT_GLOWSCALE,
+	.stages = NULL,
+	.num_stages = 0
 };
 
 #define UPDATE_THRESHOLD 0.02
