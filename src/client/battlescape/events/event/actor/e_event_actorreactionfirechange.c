@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_actorreactionfirechange.h"
 
 /**
- * @brief Network event function for TU reservation. Responsible for updating the HUD with the information
- * that were received from the server
+ * @brief Network event function for reaction fire mode changes. Responsible for updating
+ * the HUD with the information that were received from the server
  * @param self The event pointer
  * @param msg The network message to parse the event data from
  * @sa HUD_UpdateReactionFiremodes
