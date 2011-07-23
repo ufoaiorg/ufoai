@@ -269,43 +269,43 @@
 {
 "classname" "info_human_start"
 "origin" "496 464 28"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 8
 {
 "classname" "info_human_start"
 "origin" "432 400 28"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 9
 {
 "classname" "info_human_start"
 "origin" "112 304 28"
-"angles" "0 0 135"
+"angle" "135"
 }
 // entity 10
 {
 "classname" "info_human_start"
 "origin" "80 496 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 11
 {
 "classname" "info_human_start"
 "origin" "144 272 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 12
 {
 "classname" "info_human_start"
 "origin" "112 48 28"
-"angles" "0 0 -45"
+"angle" "-45"
 }
 // entity 13
 {
 "classname" "info_human_start"
 "origin" "496 272 28"
-"angles" "0 0 -45"
+"angle" "-45"
 }
 // entity 14
 {
@@ -321,32 +321,32 @@
 {
 "classname" "info_human_start"
 "origin" "432 240 28"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 17
 {
 "classname" "info_human_start"
 "origin" "48 304 28"
-"angles" "0 0 -135"
+"angle" "-135"
 }
 // entity 18
 {
 "classname" "info_human_start"
 "origin" "48 432 28"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 19
 {
 "classname" "info_human_start"
 "origin" "80 592 28"
-"angles" "0 0 -135"
+"angle" "-135"
 }
 // entity 20
 {
 "classname" "info_player_start"
 "origin" "464 48 48"
-"angles" "0 0 -90"
 "team" "1"
+"angle" "-90"
 }
 // entity 21
 {
@@ -358,8 +358,8 @@
 {
 "classname" "info_player_start"
 "origin" "112 688 48"
-"angles" "0 0 -45"
 "team" "1"
+"angle" "-45"
 }
 // entity 23
 {
@@ -377,8 +377,8 @@
 {
 "classname" "info_player_start"
 "origin" "400 16 48"
-"angles" "0 0 -90"
 "team" "1"
+"angle" "-90"
 }
 // entity 26
 {
@@ -396,15 +396,15 @@
 {
 "classname" "info_player_start"
 "origin" "144 496 48"
-"angles" "0 0 -90"
 "team" "1"
+"angle" "-90"
 }
 // entity 29
 {
 "classname" "info_player_start"
 "origin" "48 240 48"
-"angles" "0 0 45"
 "team" "1"
+"angle" "45"
 }
 // entity 30
 {
@@ -434,8 +434,8 @@
 {
 "classname" "info_player_start"
 "origin" "432 112 48"
-"angles" "0 0 45"
 "team" "1"
+"angle" "45"
 }
 // entity 35
 {

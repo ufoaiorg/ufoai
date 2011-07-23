@@ -223,56 +223,56 @@
 "classname" "info_player_start"
 "origin" "720 336 26"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 2
 {
 "classname" "info_player_start"
 "origin" "720 240 26"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 3
 {
 "classname" "info_player_start"
 "origin" "720 112 26"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 4
 {
 "classname" "info_player_start"
 "origin" "720 48 26"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 5
 {
 "classname" "info_player_start"
 "origin" "624 336 30"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 6
 {
 "classname" "info_player_start"
 "origin" "656 368 26"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 7
 {
 "classname" "info_player_start"
 "origin" "656 304 26"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 8
 {
 "classname" "info_player_start"
 "origin" "656 48 26"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 9
 {
@@ -363,11 +363,11 @@
 "team" "1"
 // brush 0
 {
-( 256 96 64 ) ( 128 96 64 ) ( 256 256 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 608 96 96 ) ( 608 256 96 ) ( 608 96 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 256 96 64 ) ( 256 96 -32 ) ( 128 96 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 128 256 0 ) ( 128 96 0 ) ( 256 256 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 128 256 0 ) ( 128 256 96 ) ( 128 96 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 128 256 0 ) ( 256 256 0 ) ( 128 256 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 256 96 64 ) ( 128 96 64 ) ( 256 256 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 608 96 96 ) ( 608 256 96 ) ( 608 96 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 256 96 64 ) ( 256 96 -32 ) ( 128 96 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 128 256 0 ) ( 128 96 0 ) ( 256 256 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 128 256 0 ) ( 128 256 96 ) ( 128 96 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 128 256 0 ) ( 256 256 0 ) ( 128 256 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }

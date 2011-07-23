@@ -4479,25 +4479,25 @@
 {
 "classname" "info_alien_start"
 "origin" "720 240 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 47
 {
 "classname" "info_alien_start"
 "origin" "304 304 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 48
 {
 "classname" "info_civilian_start"
 "origin" "176 336 92"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 49
 {
 "classname" "info_civilian_start"
 "origin" "208 272 92"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 50
 {

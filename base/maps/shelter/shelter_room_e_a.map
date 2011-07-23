@@ -3648,8 +3648,8 @@
 {
 "classname" "info_player_start"
 "origin" "400 400 32"
-"angles" "0 0 180"
 "team" "3"
+"angle" "180"
 }
 // entity 95
 {
@@ -3661,8 +3661,8 @@
 {
 "classname" "info_player_start"
 "origin" "400 112 32"
-"angles" "0 0 90"
 "team" "3"
+"angle" "90"
 }
 // entity 97
 {

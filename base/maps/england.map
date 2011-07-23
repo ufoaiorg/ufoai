@@ -12122,8 +12122,8 @@
 {
 "classname" "info_player_start"
 "origin" "-464 336 28"
-"angles" "0 0 -90"
 "team" "1"
+"angle" "-90"
 }
 // entity 65
 {

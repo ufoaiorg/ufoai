@@ -849,37 +849,37 @@
 {
 "classname" "info_human_start"
 "origin" "432 240 28"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 3
 {
 "classname" "info_human_start"
 "origin" "432 16 28"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 4
 {
 "classname" "info_human_start"
 "origin" "592 240 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 5
 {
 "classname" "info_human_start"
 "origin" "592 16 28"
-"angles" "0 0 -90"
+"angle" "-90"
 }
 // entity 6
 {
 "classname" "info_human_start"
 "origin" "176 48 28"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 7
 {
 "classname" "info_human_start"
 "origin" "176 208 28"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 8
 {
@@ -908,11 +908,11 @@
 "team" "1"
 // brush 0
 {
-( 452 64 64 ) ( 324 64 64 ) ( 452 224 64 ) tex_common/trigger 2 0 0 0.35 0.25
-( 548 64 96 ) ( 548 224 96 ) ( 548 64 0 ) tex_common/trigger 2 0 0 0.35 0.25
-( 452 64 64 ) ( 452 64 -32 ) ( 324 64 64 ) tex_common/trigger 2 0 0 0.35 0.25
-( 324 224 0 ) ( 324 64 0 ) ( 452 224 0 ) tex_common/trigger 2 0 0 0.35 0.25
-( 324 224 0 ) ( 324 224 96 ) ( 324 64 0 ) tex_common/trigger 2 0 0 0.35 0.25
-( 324 192 0 ) ( 452 192 0 ) ( 324 192 96 ) tex_common/trigger 2 0 0 0.35 0.25
+( 452 64 64 ) ( 324 64 64 ) ( 452 224 64 ) tex_common/trigger 2 0 0 0.35 0.25 0 0 0
+( 548 64 96 ) ( 548 224 96 ) ( 548 64 0 ) tex_common/trigger 2 0 0 0.35 0.25 0 0 0
+( 452 64 64 ) ( 452 64 -32 ) ( 324 64 64 ) tex_common/trigger 2 0 0 0.35 0.25 0 0 0
+( 324 224 0 ) ( 324 64 0 ) ( 452 224 0 ) tex_common/trigger 2 0 0 0.35 0.25 0 0 0
+( 324 224 0 ) ( 324 224 96 ) ( 324 64 0 ) tex_common/trigger 2 0 0 0.35 0.25 0 0 0
+( 324 192 0 ) ( 452 192 0 ) ( 324 192 96 ) tex_common/trigger 2 0 0 0.35 0.25 0 0 0
 }
 }

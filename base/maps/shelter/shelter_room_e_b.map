@@ -3645,15 +3645,15 @@
 {
 "classname" "info_player_start"
 "origin" "368 144 32"
-"angles" "0 0 180"
 "team" "3"
+"angle" "180"
 }
 // entity 97
 {
 "classname" "info_player_start"
 "origin" "400 48 32"
-"angles" "0 0 180"
 "team" "3"
+"angle" "180"
 }
 // entity 98
 {

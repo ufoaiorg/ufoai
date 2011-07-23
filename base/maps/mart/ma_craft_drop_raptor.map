@@ -792,70 +792,70 @@
 "classname" "info_player_start"
 "team" "1"
 "origin" "48 112 28"
-"angles" "0 0 135"
+"angle" "135"
 }
 // entity 2
 {
 "classname" "info_player_start"
 "origin" "80 48 28"
 "team" "1"
-"angles" "0 0 135"
+"angle" "135"
 }
 // entity 3
 {
 "classname" "info_player_start"
 "origin" "176 80 28"
 "team" "1"
-"angles" "0 0 135"
+"angle" "135"
 }
 // entity 4
 {
 "classname" "info_player_start"
 "origin" "624 368 28"
 "team" "1"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 5
 {
 "classname" "info_player_start"
 "origin" "624 80 28"
 "team" "1"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 6
 {
 "classname" "info_player_start"
 "origin" "624 432 28"
 "team" "1"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 7
 {
 "classname" "info_player_start"
 "origin" "560 48 28"
 "team" "1"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 8
 {
 "classname" "info_player_start"
 "origin" "144 400 28"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 9
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "80 464 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 10
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "240 48 28"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 11
 {
@@ -868,49 +868,49 @@
 "classname" "info_player_start"
 "team" "1"
 "origin" "80 400 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 13
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "304 48 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 14
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "368 496 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 15
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "48 336 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 16
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "16 272 28"
-"angles" "0 0 135"
+"angle" "135"
 }
 // entity 17
 {
 "classname" "info_player_start"
-"angles" "0 0 90"
 "origin" "752 176 28"
 "team" "1"
+"angle" "90"
 }
 // entity 18
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "688 176 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 19
 {
@@ -958,67 +958,67 @@
 {
 "classname" "info_human_start"
 "origin" "592 464 28"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 26
 {
 "classname" "info_human_start"
 "origin" "48 144 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 27
 {
 "classname" "info_human_start"
 "origin" "112 176 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 28
 {
 "classname" "info_human_start"
 "origin" "112 368 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 29
 {
 "classname" "info_human_start"
 "origin" "720 432 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 30
 {
 "classname" "info_human_start"
 "origin" "688 304 28"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 31
 {
 "classname" "info_human_start"
 "origin" "720 336 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 32
 {
 "classname" "info_human_start"
 "origin" "720 80 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 33
 {
 "classname" "info_human_start"
 "origin" "656 112 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 34
 {
 "classname" "info_human_start"
 "origin" "48 304 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 35
 {
 "classname" "info_human_start"
 "origin" "592 368 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 36
 {
@@ -1026,11 +1026,11 @@
 "team" "1"
 // brush 0
 {
-( 192 288 64 ) ( 64 288 64 ) ( 192 448 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 640 64 96 ) ( 640 224 96 ) ( 640 64 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 640 64 64 ) ( 640 64 -32 ) ( 512 64 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 64 448 0 ) ( 64 288 0 ) ( 192 448 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 64 448 0 ) ( 64 448 96 ) ( 64 288 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 64 448 0 ) ( 192 448 0 ) ( 64 448 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 192 288 64 ) ( 64 288 64 ) ( 192 448 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 640 64 96 ) ( 640 224 96 ) ( 640 64 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 640 64 64 ) ( 640 64 -32 ) ( 512 64 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 64 448 0 ) ( 64 288 0 ) ( 192 448 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 64 448 0 ) ( 64 448 96 ) ( 64 288 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 64 448 0 ) ( 192 448 0 ) ( 64 448 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }

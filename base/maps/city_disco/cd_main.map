@@ -10143,8 +10143,8 @@
 "volume" "1.0"
 "noise" "ambience/disco"
 "classname" "misc_sound"
-"angles" "0 0 -90"
 "spawnflags" "1"
+"angle" "-90"
 }
 // entity 156
 {

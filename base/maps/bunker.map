@@ -878,7 +878,7 @@
 ( -336 -232 64 ) ( -336 -232 128 ) ( -320 -232 128 ) tex_common/nodraw 0 38 0 0.5 0.40625 512 128 0
 ( 384 116 132 ) ( 384 108 132 ) ( 384 108 68 ) tex_misc/microwave001_side 153.6001 39.38464 0 0.078125 0.4062499 512 0 0
 ( 8 -212 89 ) ( 6 -212 89 ) ( 6 -212 87 ) tex_misc/fridge001 0 78 0 0.25 0.203125 512 0 0
-( 696 -220 120 ) ( 684 -220 120 ) ( 684 -192 120 ) tex_misc/microwave001_side 0 51.19995 7.016477e-015 0.25 0.15625 512 0 0
+( 696 -220 120 ) ( 684 -220 120 ) ( 684 -192 120 ) tex_misc/microwave001_side 0 51.19995 7.016477e-15 0.25 0.15625 512 0 0
 ( -94 447 68 ) ( -66 447 68 ) ( -94 449 68 ) tex_common/nodraw 0 76 0 0.5 -0.15625 512 128 0
 }
 // brush 98
@@ -11898,7 +11898,7 @@
 {
 "classname" "info_civilian_start"
 "origin" "112 -16 156"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 15
 {
@@ -12389,7 +12389,7 @@
 {
 "classname" "info_human_start"
 "origin" "144 784 94"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 27
 {
@@ -14067,7 +14067,7 @@
 {
 "classname" "info_human_start"
 "origin" "240 848 94"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 74
 {
@@ -14083,19 +14083,19 @@
 {
 "classname" "info_human_start"
 "origin" "304 848 94"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 77
 {
 "classname" "info_human_start"
 "origin" "208 720 94"
-"angles" "0 0 -90"
+"angle" "-90"
 }
 // entity 78
 {
 "classname" "info_human_start"
 "origin" "144 720 94"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 79
 {
@@ -15071,8 +15071,8 @@
 {
 "classname" "info_player_start"
 "origin" "336 848 88"
-"angles" "0 0 -45"
 "team" "2"
+"angle" "-45"
 }
 // entity 98
 {
@@ -15090,22 +15090,22 @@
 {
 "classname" "info_player_start"
 "origin" "48 624 92"
-"angles" "0 0 -135"
 "team" "2"
+"angle" "-135"
 }
 // entity 101
 {
 "classname" "info_player_start"
 "origin" "48 528 92"
-"angles" "0 0 -180"
 "team" "2"
+"angle" "-180"
 }
 // entity 102
 {
 "classname" "info_player_start"
 "origin" "80 496 92"
-"angles" "0 0 180"
 "team" "2"
+"angle" "180"
 }
 // entity 103
 {
@@ -15117,8 +15117,8 @@
 {
 "classname" "info_player_start"
 "origin" "464 528 92"
-"angles" "0 0 -45"
 "team" "2"
+"angle" "-45"
 }
 // entity 105
 {
@@ -15190,29 +15190,29 @@
 {
 "classname" "info_player_start"
 "origin" "176 816 88"
-"angles" "0 0 -135"
 "team" "2"
+"angle" "-135"
 }
 // entity 117
 {
 "classname" "info_player_start"
 "origin" "80 688 88"
-"angles" "0 0 -180"
 "team" "2"
+"angle" "-180"
 }
 // entity 118
 {
 "classname" "info_player_start"
 "origin" "208 688 88"
-"angles" "0 0 -180"
 "team" "2"
+"angle" "-180"
 }
 // entity 119
 {
 "classname" "info_player_start"
 "origin" "176 720 88"
-"angles" "0 0 -180"
 "team" "2"
+"angle" "-180"
 }
 // entity 120
 {
@@ -15239,13 +15239,13 @@
 {
 "classname" "info_civilian_start"
 "origin" "560 208 96"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 125
 {
 "classname" "info_civilian_start"
 "origin" "208 176 156"
-"angles" "0 0 -180"
+"angle" "-180"
 }
 // entity 126
 {
@@ -15339,31 +15339,31 @@
 {
 "classname" "info_civilian_start"
 "origin" "-592 272 28"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 143
 {
 "classname" "info_civilian_start"
 "origin" "560 -112 156"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 144
 {
 "classname" "info_civilian_start"
 "origin" "-272 752 92"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 145
 {
 "classname" "info_civilian_start"
 "origin" "592 496 156"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 146
 {
 "classname" "info_civilian_start"
 "origin" "720 112 156"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 147
 {
@@ -15859,12 +15859,12 @@
 "spawnflags" "252"
 // brush 0
 {
-( -127 722 178 ) ( -127 654 178 ) ( -129 722 178 ) tex_common/nodraw 32 39.52942 7.016477e-015 0.03125 1.0625 64514 32 0
-( -127 722 178 ) ( -129 722 178 ) ( -127 722 150 ) tex_common/nodraw 32 22.85715 7.016477e-015 0.03125 0.4375 64514 32 0
-( -127 722 178 ) ( -127 722 150 ) ( -127 654 178 ) tex_buildings/window002 97.88232 91.42859 7.016477e-015 0.265625 0.109375 64514 32 0
-( -129 654 150 ) ( -127 654 150 ) ( -129 722 150 ) tex_common/nodraw 32 39.52942 7.016477e-015 0.03125 1.0625 64514 32 0
-( -129 654 150 ) ( -129 654 178 ) ( -127 654 150 ) tex_common/nodraw 32 22.85715 7.016477e-015 0.03125 0.4375 64514 32 0
-( -129 654 150 ) ( -129 722 150 ) ( -129 654 178 ) tex_buildings/window002 97.88232 91.42859 7.016477e-015 0.265625 0.109375 64514 32 0
+( -127 722 178 ) ( -127 654 178 ) ( -129 722 178 ) tex_common/nodraw 32 39.52942 7.016477e-15 0.03125 1.0625 64514 32 0
+( -127 722 178 ) ( -129 722 178 ) ( -127 722 150 ) tex_common/nodraw 32 22.85715 7.016477e-15 0.03125 0.4375 64514 32 0
+( -127 722 178 ) ( -127 722 150 ) ( -127 654 178 ) tex_buildings/window002 97.88232 91.42859 7.016477e-15 0.265625 0.109375 64514 32 0
+( -129 654 150 ) ( -127 654 150 ) ( -129 722 150 ) tex_common/nodraw 32 39.52942 7.016477e-15 0.03125 1.0625 64514 32 0
+( -129 654 150 ) ( -129 654 178 ) ( -127 654 150 ) tex_common/nodraw 32 22.85715 7.016477e-15 0.03125 0.4375 64514 32 0
+( -129 654 150 ) ( -129 722 150 ) ( -129 654 178 ) tex_buildings/window002 97.88232 91.42859 7.016477e-15 0.265625 0.109375 64514 32 0
 }
 }
 // entity 170
@@ -15887,12 +15887,12 @@
 "spawnflags" "252"
 // brush 0
 {
-( 626 737 178 ) ( 626 735 178 ) ( 558 737 178 ) tex_common/nodraw 50.82355 32 7.016477e-015 1.0625 -0.03125 64514 32 0
-( 626 737 178 ) ( 558 737 178 ) ( 626 737 150 ) tex_buildings/window002 203.2942 164.5714 7.016477e-015 0.265625 -0.109375 64514 32 0
-( 626 737 178 ) ( 626 737 150 ) ( 626 735 178 ) tex_common/nodraw 32 41.14285 7.016477e-015 0.03125 -0.4375 64514 32 0
-( 558 735 150 ) ( 626 735 150 ) ( 558 737 150 ) tex_common/nodraw 50.82355 32 7.016477e-015 1.0625 -0.03125 64514 32 0
-( 558 735 150 ) ( 558 735 178 ) ( 626 735 150 ) tex_buildings/window002 203.2942 164.5714 7.016477e-015 0.265625 -0.109375 64514 32 0
-( 558 735 150 ) ( 558 737 150 ) ( 558 735 178 ) tex_common/nodraw 32 41.14285 7.016477e-015 0.03125 -0.4375 64514 32 0
+( 626 737 178 ) ( 626 735 178 ) ( 558 737 178 ) tex_common/nodraw 50.82355 32 7.016477e-15 1.0625 -0.03125 64514 32 0
+( 626 737 178 ) ( 558 737 178 ) ( 626 737 150 ) tex_buildings/window002 203.2942 164.5714 7.016477e-15 0.265625 -0.109375 64514 32 0
+( 626 737 178 ) ( 626 737 150 ) ( 626 735 178 ) tex_common/nodraw 32 41.14285 7.016477e-15 0.03125 -0.4375 64514 32 0
+( 558 735 150 ) ( 626 735 150 ) ( 558 737 150 ) tex_common/nodraw 50.82355 32 7.016477e-15 1.0625 -0.03125 64514 32 0
+( 558 735 150 ) ( 558 735 178 ) ( 626 735 150 ) tex_buildings/window002 203.2942 164.5714 7.016477e-15 0.265625 -0.109375 64514 32 0
+( 558 735 150 ) ( 558 737 150 ) ( 558 735 178 ) tex_common/nodraw 32 41.14285 7.016477e-15 0.03125 -0.4375 64514 32 0
 }
 }
 // entity 172

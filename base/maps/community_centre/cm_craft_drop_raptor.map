@@ -805,70 +805,70 @@
 "classname" "info_player_start"
 "origin" "80 16 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 2
 {
 "classname" "info_player_start"
 "origin" "144 80 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 3
 {
 "classname" "info_player_start"
 "origin" "240 48 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 4
 {
 "classname" "info_player_start"
 "origin" "432 48 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 5
 {
 "classname" "info_player_start"
 "origin" "592 464 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 6
 {
 "classname" "info_player_start"
 "origin" "464 464 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 7
 {
 "classname" "info_player_start"
 "origin" "240 432 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 8
 {
 "classname" "info_player_start"
 "origin" "144 464 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 9
 {
 "classname" "info_player_start"
 "origin" "112 48 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 10
 {
 "classname" "info_player_start"
 "origin" "240 496 32"
 "team" "1"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 11
 {
@@ -938,7 +938,7 @@
 {
 "classname" "info_human_start"
 "origin" "208 464 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 22
 {
@@ -954,7 +954,7 @@
 {
 "classname" "info_human_start"
 "origin" "688 464 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 25
 {
@@ -962,11 +962,11 @@
 "team" "1"
 // brush 0
 {
-( 192 192 64 ) ( 64 192 64 ) ( 192 352 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 704 192 96 ) ( 704 352 96 ) ( 704 192 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 192 128 64 ) ( 192 128 -32 ) ( 64 128 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 64 352 0 ) ( 64 192 0 ) ( 192 352 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 64 352 0 ) ( 64 352 96 ) ( 64 192 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 64 384 0 ) ( 192 384 0 ) ( 64 384 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 192 192 64 ) ( 64 192 64 ) ( 192 352 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 704 192 96 ) ( 704 352 96 ) ( 704 192 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 192 128 64 ) ( 192 128 -32 ) ( 64 128 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 64 352 0 ) ( 64 192 0 ) ( 192 352 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 64 352 0 ) ( 64 352 96 ) ( 64 192 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 64 384 0 ) ( 192 384 0 ) ( 64 384 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }

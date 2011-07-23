@@ -181,5 +181,5 @@
 {
 "classname" "info_alien_start"
 "origin" "48 112 32"
-"angles" "0 0 180"
+"angle" "180"
 }

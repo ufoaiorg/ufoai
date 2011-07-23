@@ -5035,50 +5035,50 @@
 // entity 72
 {
 "classname" "info_alien_start"
-"angles" "0 0 -45"
 "origin" "464 656 98"
+"angle" "-45"
 }
 // entity 73
 {
 "classname" "info_alien_start"
 "origin" "656 624 98"
-"angles" "0 0 -135"
+"angle" "-135"
 }
 // entity 74
 {
 "classname" "info_alien_start"
-"angles" "0 0 -90"
 "origin" "816 720 98"
+"angle" "-90"
 }
 // entity 75
 {
 "classname" "info_alien_start"
-"angles" "0 0 45"
 "origin" "560 688 30"
+"angle" "45"
 }
 // entity 76
 {
 "classname" "info_alien_start"
 "origin" "912 656 30"
-"angles" "0 0 45"
+"angle" "45"
 }
 // entity 77
 {
 "classname" "info_alien_start"
-"angles" "0 0 135"
 "origin" "944 592 30"
+"angle" "135"
 }
 // entity 78
 {
 "classname" "info_alien_start"
 "origin" "1008 688 30"
-"angles" "0 0 -45"
+"angle" "-45"
 }
 // entity 79
 {
 "classname" "info_alien_start"
-"angles" "0 0 135"
 "origin" "1232 976 46"
+"angle" "135"
 }
 // entity 80
 {

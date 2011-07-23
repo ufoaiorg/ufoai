@@ -414,7 +414,7 @@
 ( 164 1440 4 ) ( 224 1440 4 ) ( 124 1504 4 ) tex_common/nodraw 0 64 -90 0.5 0.5 65280 128 0
 ( 224 1568 8 ) ( 224 1440 8 ) ( 172 1568 8 ) tex_ufo/ufo2_05 0 256 -90 0.125 0.125 65280 0 0
 ( 356 248 124 ) ( 356 224 124 ) ( 356 224 116 ) tex_common/nodraw 0 8 0 -0.5 0.5 65280 0 0
-( 356 224 124 ) ( 380 224 124 ) ( 380 224 116 ) tex_ufo/ufo2_05 1.567496e-014 0 -90 0.125 0.125 65280 0 0
+( 356 224 124 ) ( 380 224 124 ) ( 380 224 116 ) tex_ufo/ufo2_05 1.567496e-14 0 -90 0.125 0.125 65280 0 0
 ( 608 316 132 ) ( 608 512 132 ) ( 608 512 68 ) tex_ufo/ufo2_01 192 8 0 -0.5 0.5 65280 0 0
 ( 416 800 52 ) ( 384 800 52 ) ( 384 800 8 ) tex_common/nodraw 0 8 0 0.5 0.5 65280 0 0
 }
@@ -3190,7 +3190,7 @@
 {
 "classname" "info_alien_start"
 "origin" "48 144 28"
-"angles" "0 0 90"
+"angle" "90"
 }
 // entity 24
 {
@@ -3937,20 +3937,20 @@
 // entity 92
 {
 "classname" "info_alien_start"
-"angles" "0 0 45"
 "origin" "496 528 32"
+"angle" "45"
 }
 // entity 93
 {
 "classname" "info_alien_start"
 "origin" "560 656 32"
-"angles" "0 0 -45"
+"angle" "-45"
 }
 // entity 94
 {
 "classname" "info_alien_start"
-"angles" "0 0 -45"
 "origin" "400 432 32"
+"angle" "-45"
 }
 // entity 95
 {
@@ -3961,13 +3961,13 @@
 {
 "classname" "info_alien_start"
 "origin" "432 400 96"
-"angles" "0 0 180"
+"angle" "180"
 }
 // entity 97
 {
 "classname" "info_alien_start"
-"angles" "0 0 180"
 "origin" "560 400 96"
+"angle" "180"
 }
 // entity 98
 {
@@ -3977,8 +3977,8 @@
 // entity 99
 {
 "classname" "info_alien_start"
-"angles" "0 0 135"
 "origin" "496 752 96"
+"angle" "135"
 }
 // entity 100
 {
@@ -4117,7 +4117,7 @@
 "noise" "ambience/alien_engine"
 "volume" "0.2"
 "spawnflags" "2"
-"angles" "0 0 -90"
+"angle" "-90"
 }
 // entity 111
 {
@@ -4126,7 +4126,7 @@
 "noise" "ambience/alien_engine"
 "volume" "0.2"
 "spawnflags" "2"
-"angles" "0 0 -90"
+"angle" "-90"
 }
 // entity 112
 {
