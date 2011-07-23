@@ -377,31 +377,32 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 
 	glEnable(GL_LIGHTING);
 
-	for (i = 0, j = 0; i < maxLights && (i + j) < numLights; i++) {
-		const r_light_t *l = lights[i + j];
+	j = 0;
+	for (i = 0; j < maxLights && i < numLights; i++) {
+		const r_light_t *l = lights[i];
 		if (!l->enabled) {
-			j++;
 			continue;
 		}
 
-		glEnable(GL_LIGHT0 + i);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->constantAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, l->linearAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->quadraticAttenuation);
+		glEnable(GL_LIGHT0 + j);
+		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, l->constantAttenuation);
+		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, l->linearAttenuation);
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, l->quadraticAttenuation);
 
-		glLightfv(GL_LIGHT0 + i, GL_POSITION, l->loc);
-		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, l->ambientColor);
-		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, l->diffuseColor);
-		glLightfv(GL_LIGHT0 + i, GL_SPECULAR, l->specularColor);
+		glLightfv(GL_LIGHT0 + j, GL_POSITION, l->loc);
+		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, l->ambientColor);
+		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, l->diffuseColor);
+		glLightfv(GL_LIGHT0 + j, GL_SPECULAR, l->specularColor);
+		j++;
 	}
 
 	/* if there aren't enough active lights, turn off the rest */
-	while (i < maxLights) {
-		glDisable(GL_LIGHT0 + i);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0);
-		i++;
+	while (j < maxLights) {
+		glDisable(GL_LIGHT0 + j);
+		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, 0.0);
+		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0.0);
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 0.0);
+		j++;
 	}
 }
 
