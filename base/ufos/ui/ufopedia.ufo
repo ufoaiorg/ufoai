@@ -112,6 +112,13 @@ window ufopedia extends objectinfo
 			size		"185 422"
 			preventratio	true
 		}
+		image image_top2
+		{
+			src		*cvar:mn_upimage_top2
+			pos			"420 42"
+			size		"185 422"
+			preventratio	true
+		}
 		panel decoration_panel
 		{
 			pos		"420 42"
@@ -281,6 +288,7 @@ window ufopedia extends objectinfo
 		{
 			pos		"360 530"
 			size	"350 60"
+			image	"ui/panel_green_slim"
 		}
 
 		// ======================
@@ -369,17 +377,21 @@ window ufopedia extends objectinfo
 			{
 				*cvar:mn_rightpanel = 1
 			}
+		if ( *cvar:mn_upimage_top2 ne "" )
+			{
+				*cvar:mn_rightpanel = 1
+			}
 		if ( *cvar:mn_upmodel_top ne "" )
 			{
 				*cvar:mn_rightpanel = 1
 				*node:root.content.decoration_panel@invis = false
 			}
-
 		if ( *cvar:mn_upmodel_bottom ne "" )
 			{
 				*cvar:mn_rightpanel = 1
 				*node:root.content.decoration_panel2@invis = false
 			}
+
 		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 }
 
 		// invalidate techtree selection
@@ -395,6 +407,7 @@ window ufopedia extends objectinfo
 				*cvar:ufopedia_content = "description"
 			}
 		}
+
 		if ( *cvar:mn_upmetadata == 1 ) {
 			*node:root.content.navigation.stats@invis = false
 		} else {
@@ -412,6 +425,8 @@ window ufopedia extends objectinfo
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = true
+			*node:root.content.image_top@invis = false
+			*node:root.content.image_top2@invis = true
 			if ( *cvar:mn_rightpanel == 1 ) {
 				*node:root.content.ufopedia@width = 406
 			} else {
@@ -426,6 +441,27 @@ window ufopedia extends objectinfo
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = true
+			*node:root.content.image_top@invis = true
+			*node:root.content.image_top2@invis = false
+			if ( *cvar:mn_upimage_top eq "techs/bloodspider_autopsy" ) {
+				*cvar:mn_upimage_top2 = "techs/bloodspider_dead"
+				delete *cvar:mn_upimage_top
+			}
+			if ( *cvar:mn_upimage_top eq "techs/shevaar_autopsy" ) {
+				*cvar:mn_upimage_top2 = "techs/shevaar_dead"
+				delete *cvar:mn_upimage_top
+			}
+			if ( *cvar:mn_upimage_top eq "techs/taman_autopsy" ) {
+				*cvar:mn_upimage_top2 = "techs/taman_dead"
+				delete *cvar:mn_upimage_top
+			}
+			if ( *cvar:mn_upimage_top eq "techs/ortnok_autopsy" ) {
+				*cvar:mn_upimage_top2 = "techs/ortnok_dead"
+				delete *cvar:mn_upimage_top
+			}
+			if ( *cvar:mn_upimage_top ne "" ) {
+				*cvar:mn_upimage_top2 = *cvar:mn_upimage_top
+			}
 			if ( *cvar:mn_rightpanel == 1 ) {
 				*node:root.content.ufopedia@width = 406
 			} else {
@@ -452,6 +488,13 @@ window ufopedia extends objectinfo
 		}
 		if ( *cvar:mn_upmodel_bottom eq "" ) {
 			*node:root.content.decoration_panel2@invis = true
+		}
+		// we only show the image if it is needed
+		if ( *cvar:mn_upimage_top eq "" ) {
+		*node:root.content.image_top@invis = true
+		}
+		if ( *cvar:mn_upimage_top2 eq "" ) {
+		*node:root.content.image_top2@invis = true
 		}
 		cmd "del mn_rightpanel;"
 	}
