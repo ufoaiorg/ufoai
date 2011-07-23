@@ -412,6 +412,27 @@ window geoscape
 				clickdelay	100
 				onClick		{ cmd "map_zoom out" }
 			}
+
+			// geoscape camera functions
+			func cam_up {
+				cmd "map_scroll up;"
+			}
+			func cam_left {
+				cmd "map_scroll left;"
+			}
+			func cam_right {
+				cmd "map_scroll right;"
+			}
+			func cam_down {
+				cmd "map_scroll down;"
+			}
+			func zoom_in {
+				cmd "map_zoom in;"
+			}
+			func zoom_out {
+				cmd "map_zoom out;"
+			}
+
 		}
 
 		// ==================
