@@ -247,7 +247,7 @@ static void G_MatchSendResults (int team)
 	}
 
 	/* send results */
-	gi.AddEvent(PM_ALL, EV_RESULTS | EVENT_INSTANTLY);
+	gi.AddEvent(PM_ALL, EV_RESULTS);
 	gi.WriteByte(MAX_TEAMS);
 	gi.WriteByte(team);
 
