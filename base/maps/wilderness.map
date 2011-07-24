@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 0 856 6 ) ( 1888 -320 6 ) ( 0 -320 6 ) tex_nature/drymud 85 212 0 0.3 0.3 65280 0 0
@@ -6451,9 +6452,9 @@
 }
 // entity 30
 {
+"classname" "misc_model"
 "origin" "1148 -103 22"
 "anim" "swim"
-"classname" "misc_model"
 "angles" "0 -90 0"
 "spawnflags" "255"
 "model" "models/animals/fish2/fish.md2"
@@ -6468,9 +6469,9 @@
 }
 // entity 32
 {
+"classname" "misc_model"
 "origin" "1212 153 22"
 "anim" "swim"
-"classname" "misc_model"
 "angles" "0 -90 0"
 "spawnflags" "255"
 "model" "models/animals/fish2/fish.md2"
@@ -6704,18 +6705,18 @@
 }
 // entity 45
 {
+"classname" "misc_model"
 "origin" "1904 1072 90"
 "modelscale_vec" "1.2 1.25 1.5"
-"classname" "misc_model"
 "skin" "1"
 "spawnflags" "255"
 "model" "models/objects/vegi/fir/fir.md2"
 }
 // entity 46
 {
+"classname" "misc_model"
 "origin" "1744 944 88"
 "modelscale_vec" "1 1 1.25"
-"classname" "misc_model"
 "angles" "0 31.5204 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
@@ -6840,9 +6841,9 @@
 }
 // entity 63
 {
+"classname" "misc_model"
 "origin" "1264 1104 192"
 "modelscale_vec" "1 1 1.13953"
-"classname" "misc_model"
 "angles" "0 -180 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
@@ -6980,9 +6981,9 @@
 }
 // entity 82
 {
+"classname" "misc_model"
 "origin" "1712 480 32"
 "modelscale_vec" "0.790698 0.803089 1"
-"classname" "misc_model"
 "angles" "0 -135 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
@@ -7020,9 +7021,9 @@
 }
 // entity 87
 {
+"classname" "misc_model"
 "origin" "1712 512 32"
 "modelscale_vec" "0.789474 0.774194 1"
-"classname" "misc_model"
 "angles" "0 135 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
@@ -7293,17 +7294,17 @@
 }
 // entity 90
 {
+"classname" "misc_sound"
 "origin" "1860 -32 56"
 "volume" "1.0"
 "noise" "ambience/firesoft.wav"
-"classname" "misc_sound"
 "attenuation" "2.0"
 "spawnflags" "255"
 }
 // entity 91
 {
-"origin" "1649.39 156.125 40.625"
 "classname" "misc_model"
+"origin" "1649.39 156.125 40.625"
 "angles" "0 -9 0"
 "skin" "0"
 "spawnflags" "255"
@@ -7316,4 +7317,34 @@
 "noise" "ambience/ufo_night_atm"
 "attenuation" "0.0"
 "volume" ".9"
+}
+// entity 93
+{
+"classname" "info_alien_start"
+"origin" "1968 1616 92"
+"angle" "180"
+}
+// entity 94
+{
+"classname" "info_alien_start"
+"origin" "1968 1872 124"
+"angle" "90"
+}
+// entity 95
+{
+"classname" "info_alien_start"
+"origin" "1296 1552 252"
+"angle" "90"
+}
+// entity 96
+{
+"classname" "info_alien_start"
+"origin" "1968 1584 92"
+"angle" "180"
+}
+// entity 97
+{
+"classname" "info_alien_start"
+"origin" "1968 1552 92"
+"angle" "180"
 }
