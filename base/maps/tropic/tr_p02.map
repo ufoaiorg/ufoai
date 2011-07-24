@@ -109,34 +109,11 @@
 // entity 3
 {
 "classname" "misc_model"
-"origin" "160 40 12"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"spawnflags" "255"
-}
-// entity 4
-{
-"classname" "misc_model"
 "origin" "52 208 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
 }
-// entity 5
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"angles" "0 70 0"
-"origin" "136 212 12"
-}
-// entity 6
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"angles" "0 70 0"
-"origin" "224 172 12"
-}
-// entity 7
+// entity 4
 {
 "classname" "misc_model"
 "origin" "136 140 12"
@@ -144,81 +121,81 @@
 "spawnflags" "255"
 "angles" "0 170 0"
 }
-// entity 8
+// entity 5
 {
+"classname" "misc_model"
 "origin" "176 192 32"
 "anim" "moving4"
-"classname" "misc_model"
 "angles" "0 35 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model3"
 }
-// entity 9
+// entity 6
 {
+"classname" "misc_model"
 "origin" "190 191 118"
 "target" "misc_model3"
-"classname" "misc_model"
 "tag" "tag_top"
 "angles" "0 35 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 }
-// entity 10
+// entity 7
 {
+"classname" "misc_model"
 "origin" "184 64 32"
 "anim" "moving4"
-"classname" "misc_model"
 "angles" "0 5 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model4"
 }
-// entity 11
+// entity 8
 {
+"classname" "misc_model"
 "origin" "198 63 118"
 "target" "misc_model4"
-"classname" "misc_model"
 "tag" "tag_top"
 "angles" "0 5 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 }
-// entity 12
+// entity 9
 {
+"classname" "misc_model"
 "origin" "56 192 32"
 "anim" "moving3"
-"classname" "misc_model"
 "angles" "0 25 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model1"
 }
-// entity 13
+// entity 10
 {
+"classname" "misc_model"
 "origin" "70 191 118"
 "target" "misc_model1"
-"classname" "misc_model"
 "tag" "tag_top"
 "angles" "0 25 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 }
-// entity 14
+// entity 11
 {
+"classname" "misc_model"
 "origin" "112 72 32"
 "anim" "moving3"
-"classname" "misc_model"
 "angles" "0 18 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model2"
 }
-// entity 15
+// entity 12
 {
+"classname" "misc_model"
 "origin" "126 71 118"
 "target" "misc_model2"
-"classname" "misc_model"
 "tag" "tag_top"
 "angles" "0 18 0"
 "spawnflags" "255"

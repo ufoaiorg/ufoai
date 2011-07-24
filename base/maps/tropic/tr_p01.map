@@ -44,44 +44,12 @@
 // entity 5
 {
 "classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "136 212 12"
-"angles" "0 70 0"
-}
-// entity 6
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "224 172 12"
-"angles" "0 70 0"
-}
-// entity 7
-{
-"classname" "misc_model"
-"angles" "0 170 0"
-"origin" "136 140 12"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"spawnflags" "255"
-}
-// entity 8
-{
-"classname" "misc_model"
 "angles" "0 170 0"
 "origin" "80 40 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
 }
-// entity 9
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "48 46 12"
-"angles" "0 50 0"
-}
-// entity 10
+// entity 6
 {
 "classname" "misc_model"
 "origin" "176 192 32"
@@ -90,7 +58,7 @@
 "anim" "moving4"
 "targetname" "misc_model4"
 }
-// entity 11
+// entity 7
 {
 "classname" "misc_model"
 "origin" "188 188 117"
@@ -99,7 +67,7 @@
 "tag" "tag_top"
 "target" "misc_model4"
 }
-// entity 12
+// entity 8
 {
 "classname" "misc_model"
 "origin" "184 64 32"
@@ -109,7 +77,7 @@
 "angles" "0 10 0"
 "targetname" "misc_model1"
 }
-// entity 13
+// entity 9
 {
 "classname" "misc_model"
 "origin" "196 60 117"
@@ -119,7 +87,7 @@
 "tag" "tag_top"
 "target" "misc_model1"
 }
-// entity 14
+// entity 10
 {
 "classname" "misc_model"
 "origin" "56 192 32"
@@ -129,7 +97,7 @@
 "angles" "0 -5 0"
 "targetname" "misc_model5"
 }
-// entity 15
+// entity 11
 {
 "classname" "misc_model"
 "origin" "68 188 117"
@@ -139,7 +107,7 @@
 "tag" "tag_top"
 "target" "misc_model5"
 }
-// entity 16
+// entity 12
 {
 "classname" "misc_model"
 "origin" "112 128 32"
@@ -149,7 +117,7 @@
 "angles" "0 5 0"
 "targetname" "misc_model3"
 }
-// entity 17
+// entity 13
 {
 "classname" "misc_model"
 "origin" "124 124 117"
@@ -159,7 +127,7 @@
 "tag" "tag_top"
 "target" "misc_model3"
 }
-// entity 18
+// entity 14
 {
 "classname" "misc_model"
 "origin" "112 72 32"
@@ -169,7 +137,7 @@
 "angles" "0 -15 0"
 "targetname" "misc_model2"
 }
-// entity 19
+// entity 15
 {
 "classname" "misc_model"
 "origin" "124 68 117"

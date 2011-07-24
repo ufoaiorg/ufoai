@@ -151,14 +151,6 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"angles" "0 120 0"
-"origin" "228 78 12"
-}
-// entity 7
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic01.md2"
 "angles" "0 190 0"
 "origin" "36 42 12"
 }

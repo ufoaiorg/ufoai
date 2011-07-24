@@ -464,20 +464,12 @@
 // entity 1
 {
 "classname" "misc_model"
-"origin" "112 564 12"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"angles" "0 50 0"
-"spawnflags" "255"
-}
-// entity 2
-{
-"classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "396 938 12"
 "angles" "0 180 0"
 }
-// entity 3
+// entity 2
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -485,15 +477,7 @@
 "origin" "332 920 10"
 "angles" "0 210 0 0"
 }
-// entity 4
-{
-"classname" "misc_model"
-"origin" "68 544 10"
-"model" "models/objects/vegi/tropic/tropic03.md2"
-"angles" "0 210 0 0"
-"spawnflags" "255"
-}
-// entity 5
+// entity 3
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -501,7 +485,7 @@
 "origin" "48 476 12"
 "angles" "0 140 0"
 }
-// entity 6
+// entity 4
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -509,7 +493,7 @@
 "origin" "56 596 12"
 "angles" "0 50 0"
 }
-// entity 7
+// entity 5
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -517,31 +501,7 @@
 "origin" "68 664 10"
 "angles" "0 140 0"
 }
-// entity 8
-{
-"classname" "misc_model"
-"origin" "124 720 10"
-"model" "models/objects/vegi/tropic/tropic03.md2"
-"angles" "0 140 0"
-"spawnflags" "255"
-}
-// entity 9
-{
-"classname" "misc_model"
-"origin" "168 732 12"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"angles" "0 140 0"
-"spawnflags" "255"
-}
-// entity 10
-{
-"classname" "misc_model"
-"origin" "312 836 12"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"angles" "0 140 0"
-"spawnflags" "255"
-}
-// entity 11
+// entity 6
 {
 "classname" "misc_model"
 "origin" "452 960 10"
@@ -549,21 +509,21 @@
 "angles" "0 90 0"
 "spawnflags" "255"
 }
-// entity 12
+// entity 7
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "304 988 12"
 }
-// entity 13
+// entity 8
 {
 "classname" "misc_model"
 "origin" "464 548 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
 }
-// entity 14
+// entity 9
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -571,7 +531,7 @@
 "origin" "404 504 10"
 "angles" "0 140 0"
 }
-// entity 15
+// entity 10
 {
 "classname" "misc_model"
 "origin" "460 360 10"
@@ -579,7 +539,7 @@
 "angles" "0 60 0"
 "spawnflags" "255"
 }
-// entity 16
+// entity 11
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -587,7 +547,7 @@
 "origin" "416 300 12"
 "angles" "0 120 0"
 }
-// entity 17
+// entity 12
 {
 "classname" "misc_model"
 "origin" "208 220 12"
@@ -595,7 +555,7 @@
 "angles" "0 120 0"
 "spawnflags" "255"
 }
-// entity 18
+// entity 13
 {
 "classname" "misc_model"
 "origin" "112 172 12"
@@ -603,7 +563,7 @@
 "angles" "0 120 0"
 "spawnflags" "255"
 }
-// entity 19
+// entity 14
 {
 "classname" "misc_model"
 "origin" "60 128 10"
@@ -611,7 +571,7 @@
 "angles" "0 210 0 0"
 "spawnflags" "255"
 }
-// entity 20
+// entity 15
 {
 "classname" "misc_model"
 "origin" "188 72 10"
@@ -619,15 +579,7 @@
 "angles" "0 10 0"
 "spawnflags" "255"
 }
-// entity 21
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "128 68 12"
-"angles" "0 120 0"
-}
-// entity 22
+// entity 16
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -635,7 +587,7 @@
 "origin" "56 44 12"
 "angles" "0 120 0"
 }
-// entity 23
+// entity 17
 {
 "classname" "misc_model"
 "spawnflags" "255"
