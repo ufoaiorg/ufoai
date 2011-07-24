@@ -1322,6 +1322,11 @@ static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx,
 		return qfalse;
 	if (ny < 1)
 		return qfalse;
+	if (nx > mapW)
+		return qfalse;
+	if (ny > map->mAssembly[map->mAsm].height)
+		return qfalse;
+
 	if (gapList[nx][ny][0] < 1)
 		/* no tiles cover this gap, probably map border */
 		return qfalse;
