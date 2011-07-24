@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "3"
+"randomspawn" "1"
 // brush 0
 {
 ( 316 -1248 4 ) ( 316 -1224 4 ) ( 292 -1224 4 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
@@ -18397,4 +18398,65 @@
 ( 452 -128 64 ) ( 448 -128 64 ) ( 448 -128 4 ) tex_common/nodraw 24 0 0 0.5 0.5 512 0 0
 ( -380 128 92 ) ( -380 96 92 ) ( -380 96 84 ) tex_material/c_gray050 8 0 0 0.5 0.5 512 0 0
 }
+}
+// entity 287
+{
+"classname" "info_alien_start"
+"origin" "912 -336 28"
+}
+// entity 288
+{
+"classname" "info_alien_start"
+"origin" "912 -304 28"
+"angle" "90"
+}
+// entity 289
+{
+"classname" "info_alien_start"
+"origin" "880 -304 28"
+"angle" "180"
+}
+// entity 290
+{
+"classname" "info_alien_start"
+"origin" "176 -16 28"
+"angle" "270"
+}
+// entity 291
+{
+"classname" "info_alien_start"
+"origin" "208 -16 28"
+"angle" "270"
+}
+// entity 292
+{
+"classname" "info_alien_start"
+"origin" "368 16 28"
+"angle" "-90"
+}
+// entity 293
+{
+"classname" "info_alien_start"
+"origin" "272 -336 28"
+}
+// entity 294
+{
+"classname" "info_alien_start"
+"origin" "176 -16 92"
+}
+// entity 295
+{
+"classname" "info_alien_start"
+"origin" "208 -16 92"
+}
+// entity 296
+{
+"classname" "info_alien_start"
+"origin" "208 16 92"
+}
+// entity 297
+{
+"classname" "info_alien_start"
+"origin" "336 -80 92"
+"angle" "180"
 }
