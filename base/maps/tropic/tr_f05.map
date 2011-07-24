@@ -153,7 +153,7 @@
 // entity 4
 {
 "classname" "misc_model"
-"origin" "136 212 12"
+"origin" "32 200 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
 "angles" "0 70 0"
@@ -161,28 +161,12 @@
 // entity 5
 {
 "classname" "misc_model"
-"origin" "224 36 12"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"spawnflags" "255"
-"angles" "0 70 0"
-}
-// entity 6
-{
-"classname" "misc_model"
-"origin" "32 200 12"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"spawnflags" "255"
-"angles" "0 70 0"
-}
-// entity 7
-{
-"classname" "misc_model"
 "origin" "188 154 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
 "angles" "0 50 0"
 }
-// entity 8
+// entity 6
 {
 "classname" "misc_model"
 "origin" "14 112 18"
@@ -190,10 +174,25 @@
 "spawnflags" "255"
 "angles" "0 60 0"
 }
-// entity 9
+// entity 7
 {
 "classname" "misc_model"
 "origin" "174 16 18"
+"model" "models/objects/vegi/bush/bush01.md2"
+"spawnflags" "255"
+}
+// entity 8
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/bush/bush01.md2"
+"origin" "174 16 42"
+"angles" "0 100 0"
+}
+// entity 9
+{
+"classname" "misc_model"
+"origin" "238 240 18"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
@@ -202,25 +201,10 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/bush/bush01.md2"
-"origin" "174 16 42"
-"angles" "0 100 0"
-}
-// entity 11
-{
-"classname" "misc_model"
-"origin" "238 240 18"
-"model" "models/objects/vegi/bush/bush01.md2"
-"spawnflags" "255"
-}
-// entity 12
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "174 176 18"
 "angles" "0 30 0"
 }
-// entity 13
+// entity 11
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -228,15 +212,7 @@
 "origin" "174 176 42"
 "angles" "0 -60 0"
 }
-// entity 14
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"model" "models/objects/vegi/tropic/tropic01.md2"
-"angles" "0 50 0"
-"origin" "120 102 64"
-}
-// entity 15
+// entity 12
 {
 "classname" "misc_model"
 "origin" "52 68 10"
@@ -244,7 +220,7 @@
 "spawnflags" "255"
 "angles" "0 90 0"
 }
-// entity 16
+// entity 13
 {
 "classname" "misc_model"
 "spawnflags" "255"
