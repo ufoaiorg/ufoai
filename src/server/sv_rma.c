@@ -1446,6 +1446,10 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 	RandomList(map->numToPlace, tilenumList);
 	attempts++;
 
+	/* check if the map is already filled */
+	if (SV_TestFilled(map))
+		return qtrue;
+
 	/** build a list of all positions of the map and all the tiles that fit there */
 	int i, j, k, n = 0;
 	for (i = 0; i < mapSize; i++) {
