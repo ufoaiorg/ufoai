@@ -391,7 +391,7 @@ mapdef country_large
 		nopopulation
 	}
 }
-
+/* disabled for now because it can break MAX_MAPTILES 64
 mapdef country_street
 {
 	map			"+country"
@@ -431,7 +431,7 @@ mapdef country_street
 		nopopulation
 	}
 }
-
+*/
 ////////////////////////////////////////
 // DESERT_HARVESTER_CRASH RANDOM MAPS //
 ////////////////////////////////////////
