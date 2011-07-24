@@ -62,6 +62,14 @@ static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt
 		SV_LogAdd(fmt, ap);
 }
 
+/**
+ * @brief Glue function to get the visibility from a given position
+ */
+static float SV_GetVisibility (const pos3_t position)
+{
+	return CM_GetVisibility(&sv->mapTiles, position);
+}
+
 static void SV_error (const char *fmt, ...) __attribute__((noreturn));
 /**
  * @brief Abort the server with a game error
@@ -665,6 +673,8 @@ void SV_InitGameProgs (void)
 	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = SV_RecalcRouting;
+
+	import.GetVisibility = SV_GetVisibility;
 
 	import.ModelIndex = SV_ModelIndex;
 

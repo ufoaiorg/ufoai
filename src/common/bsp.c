@@ -694,10 +694,8 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
  */
 static void CMod_LoadLighting (mapTile_t *tile, const byte *base, const lump_t * l)
 {
-#if 0
 	tile->lightdata = Mem_PoolAlloc(l->filelen, com_cmodelSysPool, 0);
 	memcpy(tile->lightdata, base + l->fileofs, l->filelen);
-#endif
 }
 
 /**
@@ -1069,4 +1067,28 @@ cBspModel_t * CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char *na
 	VectorCopy(angles, model->angles);
 
 	return model;
+}
+
+/**
+ * @brief Checks how well a position is visible
+ * @return a visibility factor. @c 1.0 means fully visible, @c 0.0 means hardly visible because the
+ * given position is in the darkness
+ */
+float CM_GetVisibility (const mapTiles_t *mapTiles, const pos3_t position)
+{
+	int i;
+
+	for (i = 0; i < mapTiles->numTiles; i++) {
+		const mapTile_t *tile = &mapTiles->mapTiles[i];
+		if (VectorInside(position, tile->wpMins, tile->wpMaxs)) {
+			if (tile->lightdata == NULL)
+				return 1.0f;
+			/** @todo implement me */
+			return 1.0f;
+		}
+	}
+
+	/* point is outside of any loaded tile */
+	Com_Printf("given point %i:%i:%i is not inside of any loaded tile\n", position[0], position[1], position[2]);
+	return 1.0f;
 }

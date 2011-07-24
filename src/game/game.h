@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/tracing.h"
 #include "../common/cvar.h"
 
-#define	GAME_API_VERSION	9
+#define	GAME_API_VERSION	10
 
 /** @brief edict->solid values */
 typedef enum {
@@ -158,6 +158,7 @@ typedef struct {
 	pos_t (IMPORT *GridFall) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (routing_t * map, const char *name, const char **list);
+	float (IMPORT *GetVisibility) (const pos3_t position);
 
 	/* filesystem functions */
 	const char *(IMPORT *FS_Gamedir) (void);

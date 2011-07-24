@@ -140,6 +140,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector4Copy(src,dest)       ((dest)[0]=(src)[0],(dest)[1]=(src)[1],(dest)[2]=(src)[2],(dest)[3]=(src)[3])
 #define Vector2Clear(a)            ((a)[0]=(a)[1]=0)
 #define VectorClear(a)          ((a)[0]=(a)[1]=(a)[2]=0)
+#define VectorInside(vec,mins,maxs) (vec[0] >= mins[0] && vec[0] <= maxs[0] && vec[1] >= mins[1] && vec[1] <= maxs[1] && vec[2] >= mins[2] && vec[2] <= maxs[2])
 #define Vector4Clear(a)          ((a)[0]=(a)[1]=(a)[2]=(a)[3]=0)
 #define VectorNegate(src,dest)       ((dest)[0]=-(src)[0],(dest)[1]=-(src)[1],(dest)[2]=-(src)[2])
 #define VectorSet(v, x, y, z)   ((v)[0]=(x), (v)[1]=(y), (v)[2]=(z))
