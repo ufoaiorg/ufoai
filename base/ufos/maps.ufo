@@ -3968,7 +3968,7 @@ mapdef wilderness
 		2on2on2
 		coop2
 	}
-	maxaliens		11
+	maxaliens		16
 
 	aircraft
 	{
