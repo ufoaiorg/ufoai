@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/renderer/r_state.h"
 #include "../client/ui/ui_main.h"
 #include "../server/server.h"
+#include "../server/sv_rma.h"
 
 /**
  * The suite initialization function.
@@ -71,6 +72,58 @@ static int UFO_CleanSuiteMapDef (void)
 
 	return 0;
 }
+
+#define SEED_TEST 0
+#if SEED_TEST
+char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+
+/**
+ * @brief This test cycles through the list of map definitions found in the maps.ufo script
+ * and builds each map mutiple times with different seeds.
+ */
+static void testMapDefsMassRMA (void)
+{
+	int i;
+	const char *filterId = TEST_GetStringProperty("mapdef-id");
+
+	CU_ASSERT_TRUE(cls.numMDs > 0);
+
+	for (i = 0; i < cls.numMDs; i++) {
+		const mapDef_t* md = &cls.mds[i];
+		if (md->map[0] == '.')
+			continue;
+		if (filterId && strcmp(filterId, md->id) != 0)
+			continue;
+
+		{
+			int i;
+			long time;
+			mapInfo_t *randomMap;
+			char *p = md->map;
+
+			if (*p == '+')
+				p++;
+			else
+				continue;
+
+			sv_threads->integer = 0;
+			for (i = 0; i < 40; i++) {
+				srand(i);
+				time = Sys_Milliseconds();
+				Com_Printf("Seed: %i\n", i);
+				randomMap = SV_AssembleMap(p, md->param, mapStr, posStr);
+				CU_ASSERT(randomMap != NULL);
+				time = (Sys_Milliseconds() - time);
+				CU_ASSERT(time < 30000);
+				if (time > 10000)
+					Com_Printf("Seed %i: tiles: %i ms: %li\n", i, randomMap->numPlaced, time);
+				Mem_Free(randomMap);
+			}
+		}
+	}
+}
+#endif
 
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
@@ -155,12 +208,16 @@ int UFO_AddMapDefTests (void)
 	if (mapDefSuite == NULL)
 		return CU_get_error();
 
+#if SEED_TEST
 	/* add the tests to the suite */
+	if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == NULL)
+		return CU_get_error();
+#else
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsSingleplayer) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsMultiplayer) == NULL)
 		return CU_get_error();
-
+#endif
 	return CUE_SUCCESS;
 }
