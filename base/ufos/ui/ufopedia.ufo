@@ -36,6 +36,7 @@ window ufopedia extends objectinfo
 			align		LAYOUTALIGN_MIDDLE
 			font		"f_small"
 			color		"0 .78 0 1"
+			selectcolor		"1 1 1 1"
 			onChange
 			{
 				cmd "ufopedia_click <cvar:up_summary_selection>;"
