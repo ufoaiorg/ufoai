@@ -370,29 +370,25 @@ window ufopedia extends objectinfo
 
 	confunc update_ufopedia_layout
 	{
-
 		// is right column not empty?
 		*cvar:mn_rightpanel = 0
-		if ( *cvar:mn_upimage_top ne "" )
-			{
-				*cvar:mn_rightpanel = 1
-			}
-		if ( *cvar:mn_upimage_top2 ne "" )
-			{
-				*cvar:mn_rightpanel = 1
-			}
-		if ( *cvar:mn_upmodel_top ne "" )
-			{
-				*cvar:mn_rightpanel = 1
-				*node:root.content.decoration_panel@invis = false
-			}
-		if ( *cvar:mn_upmodel_bottom ne "" )
-			{
-				*cvar:mn_rightpanel = 1
-				*node:root.content.decoration_panel2@invis = false
-			}
-
-		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 }
+		if ( *cvar:mn_upimage_top ne "" ) {
+			*cvar:mn_rightpanel = 1
+		}
+		if ( *cvar:mn_upimage_top2 ne "" ) {
+			*cvar:mn_rightpanel = 1
+		}
+		if ( *cvar:mn_upmodel_top ne "" ) {
+			*cvar:mn_rightpanel = 1
+			*node:root.content.decoration_panel@invis = false
+		}
+		if ( *cvar:mn_upmodel_bottom ne "" ) {
+			*cvar:mn_rightpanel = 1
+			*node:root.content.decoration_panel2@invis = false
+		}
+		if ( *cvar:mn_uprequirement ne "" ) {
+			*cvar:mn_rightpanel = 1
+		}
 
 		// invalidate techtree selection
 		*node:root.content.requirement.techtree@lineselected = -1
@@ -491,10 +487,10 @@ window ufopedia extends objectinfo
 		}
 		// we only show the image if it is needed
 		if ( *cvar:mn_upimage_top eq "" ) {
-		*node:root.content.image_top@invis = true
+			*node:root.content.image_top@invis = true
 		}
 		if ( *cvar:mn_upimage_top2 eq "" ) {
-		*node:root.content.image_top2@invis = true
+			*node:root.content.image_top2@invis = true
 		}
 		cmd "del mn_rightpanel;"
 	}
