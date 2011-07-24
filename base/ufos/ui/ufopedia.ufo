@@ -36,7 +36,6 @@ window ufopedia extends objectinfo
 			align		LAYOUTALIGN_MIDDLE
 			font		"f_small"
 			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
 			onChange
 			{
 				cmd "ufopedia_click <cvar:up_summary_selection>;"
@@ -409,20 +408,20 @@ window ufopedia extends objectinfo
 		// is right column not empty?
 		*cvar:mn_rightpanel = 0
 		if ( *cvar:mn_upimage_top ne "" ) {
-				*cvar:mn_rightpanel = 1
-			}
+			*cvar:mn_rightpanel = 1
+		}
 		if ( *cvar:mn_upimage_top2 ne "" ) {
-				*cvar:mn_rightpanel = 1
-			}
+			*cvar:mn_rightpanel = 1
+		}
 		if ( *cvar:mn_upmodel_top ne "" ) {
-				*cvar:mn_rightpanel = 1
-				cmd "del mn_upimage_top2;"
-				*node:root.content.decoration_panel@invis = false
-			}
+			*cvar:mn_rightpanel = 1
+			cmd "del mn_upimage_top2;"
+			*node:root.content.decoration_panel@invis = false
+		}
 		if ( *cvar:mn_upmodel_bottom ne "" ) {
-				*cvar:mn_rightpanel = 1
-				*node:root.content.decoration_panel2@invis = false
-			}
+			*cvar:mn_rightpanel = 1
+			*node:root.content.decoration_panel2@invis = false
+		}
 
 		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 }
 
