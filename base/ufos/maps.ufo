@@ -3656,7 +3656,9 @@ mapdef pipes_const
 		coop3
 		coop4
 	}
-	maxaliens		10
+	maxaliens		21
+	// randomspawn enabled
+
 	civilianteam	miner
 
 	aircraft
@@ -3704,7 +3706,8 @@ mapdef resort
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		24
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -3923,7 +3926,8 @@ mapdef village
 		coop3
 		coop4
 	}
-	maxaliens		11
+	maxaliens		22
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -3969,6 +3973,7 @@ mapdef wilderness
 		coop2
 	}
 	maxaliens		16
+	// randomspawn enabled
 
 	aircraft
 	{
