@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
+"randomspawn" "1"
 // brush 0
 {
 ( -320 -1408 8 ) ( -320 384 0 ) ( -320 384 8 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
@@ -28147,8 +28148,8 @@
 }
 // entity 280
 {
-"origin" "845.5 114.5 90"
 "classname" "misc_model"
+"origin" "845.5 114.5 90"
 "angles" "0 150 0"
 "skin" "1"
 "spawnflags" "2"
@@ -28156,8 +28157,8 @@
 }
 // entity 281
 {
-"origin" "885.75 14.75 90"
 "classname" "misc_model"
+"origin" "885.75 14.75 90"
 "angles" "0 80 0"
 "skin" "1"
 "spawnflags" "2"
@@ -28312,7 +28313,7 @@
 // entity 307
 {
 "classname" "info_alien_start"
-"origin" "1072 -688 224"
+"origin" "1040 -688 220"
 }
 // entity 308
 {
@@ -28695,8 +28696,8 @@
 }
 // entity 335
 {
-"origin" "863.5 112.5 73.25"
 "classname" "misc_model"
+"origin" "863.5 112.5 73.25"
 "angles" "0 250 0"
 "skin" "0"
 "spawnflags" "2"
@@ -28704,8 +28705,8 @@
 }
 // entity 336
 {
-"origin" "862 15.25 73.25"
 "classname" "misc_model"
+"origin" "862 15.25 73.25"
 "angles" "0 70 0"
 "skin" "1"
 "spawnflags" "2"
@@ -28741,4 +28742,91 @@
 "model" "models/objects/vegi/palm_v3/palm_v3.md2"
 "angles" "0 111 0"
 "spawnflags" "254"
+}
+// entity 341
+{
+"classname" "info_alien_start"
+"origin" "1072 -656 220"
+}
+// entity 342
+{
+"classname" "info_alien_start"
+"origin" "1072 -688 220"
+}
+// entity 343
+{
+"classname" "info_alien_start"
+"origin" "1040 -656 220"
+}
+// entity 344
+{
+"classname" "info_alien_start"
+"origin" "912 -752 220"
+"angle" "180"
+}
+// entity 345
+{
+"classname" "info_alien_start"
+"origin" "944 -944 156"
+}
+// entity 346
+{
+"classname" "info_alien_start"
+"origin" "816 -400 220"
+}
+// entity 347
+{
+"classname" "info_alien_start"
+"origin" "944 80 220"
+}
+// entity 348
+{
+"classname" "info_alien_start"
+"origin" "944 112 220"
+}
+// entity 349
+{
+"classname" "info_alien_start"
+"origin" "880 240 220"
+}
+// entity 350
+{
+"classname" "info_alien_start"
+"origin" "784 272 220"
+"angle" "180"
+}
+// entity 351
+{
+"classname" "info_alien_start"
+"origin" "-144 144 156"
+}
+// entity 352
+{
+"classname" "info_alien_start"
+"origin" "-176 144 156"
+"angle" "180"
+}
+// entity 353
+{
+"classname" "info_alien_start"
+"origin" "1008 -48 156"
+"angle" "90"
+}
+// entity 354
+{
+"classname" "info_alien_start"
+"origin" "1040 -80 156"
+"angle" "90"
+}
+// entity 355
+{
+"classname" "info_alien_start"
+"origin" "-80 -48 28"
+"angle" "90"
+}
+// entity 356
+{
+"classname" "info_alien_start"
+"origin" "-112 -48 28"
+"angle" "180"
 }
