@@ -379,7 +379,7 @@ static void testAutoMissions (void)
 	CU_ASSERT_PTR_NOT_NULL(mission);
 
 	CP_CreateBattleParameters(mission, &battleParameters, aircraft);
-	CP_GameAutoGo(mission, aircraft, campaign, &battleParameters, &result);
+	AM_Go(mission, aircraft, campaign, &battleParameters, &result);
 
 	CU_ASSERT_TRUE(result.won);
 }

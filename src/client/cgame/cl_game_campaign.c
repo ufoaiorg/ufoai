@@ -38,79 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const cgame_import_t *cgImport;
 
 /**
- * @sa GAME_CP_MissionAutoCheck_f
- * @sa CP_StartSelectedMission
- */
-static void GAME_CP_MissionAutoGo_f (void)
-{
-	mission_t *mission = MAP_GetSelectedMission();
-	missionResults_t *results = &ccs.missionResults;
-	battleParam_t *battleParam = &ccs.battleParameters;
-
-	if (!mission) {
-		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoGo_f: No update after automission\n");
-		return;
-	}
-
-	if (MAP_GetMissionAircraft() == NULL) {
-		Com_Printf("GAME_CP_MissionAutoGo_f: No aircraft at target pos\n");
-		return;
-	}
-
-	if (MAP_GetInterceptorAircraft() == NULL) {
-		Com_Printf("GAME_CP_MissionAutoGo_f: No intercept aircraft given\n");
-		return;
-	}
-
-	UI_PopWindow(qfalse);
-
-	if (mission->stage != STAGE_BASE_ATTACK) {
-		if (!mission->active) {
-			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
-			return;
-		} else if (mission->mapDef->storyRelated) {
-			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
-			/* ensure, that the automatic button is no longer visible */
-			Cvar_Set("cp_mission_autogo_available", "0");
-			return;
-		}
-	}
-
-	/* start the map */
-	CP_CreateBattleParameters(mission, battleParam, MAP_GetMissionAircraft());
-
-	results->won = qfalse;
-	CP_GameAutoGo(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
-
-	MAP_ResetAction();
-}
-
-/**
- * @brief Checks whether you have to play this mission
- * You can mark a mission as story related.
- * If a mission is story related the cvar @c cp_mission_autogo_available is set to @c 0
- * If this cvar is @c 1 - the mission dialog will have a auto mission button
- * @sa GAME_CP_MissionAutoGo_f
- */
-static void GAME_CP_MissionAutoCheck_f (void)
-{
-	const mission_t *mission = MAP_GetSelectedMission();
-
-	if (!mission || MAP_GetInterceptorAircraft() == NULL) {
-		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
-		return;
-	}
-
-	if (mission->mapDef->storyRelated) {
-		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: story related - auto mission is disabled\n");
-		Cvar_Set("cp_mission_autogo_available", "0");
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: auto mission is enabled\n");
-		Cvar_Set("cp_mission_autogo_available", "1");
-	}
-}
-
-/**
  * @sa CL_ParseResults
  * @sa CP_ParseCharacterData
  * @sa CL_GameAbort_f
@@ -525,8 +452,6 @@ static const char* GAME_CP_GetItemModel (const char *string)
 static void GAME_CP_InitStartup (void)
 {
 	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
-	Cmd_AddCommand("cp_missionauto_check", GAME_CP_MissionAutoCheck_f, "Checks whether this mission can be done automatically");
-	Cmd_AddCommand("cp_mission_autogo", GAME_CP_MissionAutoGo_f, "Let the current selection mission be done automatically");
 	Cmd_AddCommand("campaignlist_click", GAME_CP_CampaignListClick_f, NULL);
 	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
@@ -547,8 +472,6 @@ static void GAME_CP_InitStartup (void)
 static void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");
-	Cmd_RemoveCommand("cp_missionauto_check");
-	Cmd_RemoveCommand("cp_mission_autogo");
 	Cmd_RemoveCommand("campaignlist_click");
 	Cmd_RemoveCommand("cp_getcampaigns");
 	Cmd_RemoveCommand("cp_start");

@@ -925,103 +925,6 @@ void CP_StartSelectedMission (void)
 }
 
 /**
- * @brief Collect alien bodies for auto missions
- * @note collect all aliens as dead ones
- */
-static void CP_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_t *battleParameters)
-{
-	int i;
-	int aliens = battleParameters->aliens;
-
-	if (!aliens)
-		return;
-
-	MS_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
-
-	while (aliens > 0) {
-		const alienTeamGroup_t *group = battleParameters->alienTeamGroup;
-		for (i = 0; i < group->numAlienTeams; i++) {
-			const teamDef_t *teamDef = group->alienTeams[i];
-			const int addDeadAlienAmount = aliens > 1 ? rand() % aliens : aliens;
-			if (!addDeadAlienAmount)
-				continue;
-			assert(i < MAX_CARGO);
-			assert(teamDef);
-			AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, addDeadAlienAmount, qtrue);
-			aliens -= addDeadAlienAmount;
-			if (!aliens)
-				break;
-		}
-	}
-}
-
-/**
- * @brief Handles the auto mission for none storyrelated missions
- * @param[in,out] mission The mission to auto play
- * @param[in,out] aircraft The aircraft (or fake aircraft in case of a base attack)
- * @param[in] campaign The campaign data structure
- * @param[out] results Result of the mission
- * @param[in] battleParameters Structure that holds the battle related parameters
- * @sa GAME_CP_MissionAutoGo_f
- * @sa CL_Drop
- * @sa CP_MissionEnd
- * @sa AL_CollectingAliens
- */
-void CP_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
-{
-	autoMissionBattle_t autoBattle;
-
-	assert(mission);
-	assert(aircraft);
-
-	AM_ClearBattle(&autoBattle);
-	AM_FillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
-	AM_FillTeamFromBattleParams(&autoBattle, battleParameters);
-	AM_SetDefaultHostilities(&autoBattle, qfalse);
-	AM_RunBattle(&autoBattle);
-
-	results->won = qfalse;
-	if (autoBattle.resultType == AUTOMISSION_RESULT_SUCCESS)
-		results->won = qtrue;
-	else if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
-		results->won = qtrue;
-
-	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
-
-	/* This block is old code, but it will be left in for now, until exact numbers and stats are extracted from the auto mission results. */
-	results->aliensKilled = battleParameters->aliens;
-	results->aliensStunned = 0;
-	results->aliensSurvived = 0;
-	results->civiliansKilled = 0;
-	results->civiliansKilledFriendlyFire = 0;
-	results->civiliansSurvived = battleParameters->civilians;
-	results->ownKilled = 0;
-	results->ownKilledFriendlyFire = 0;
-	results->ownStunned = 0;
-	results->ownSurvived = AIR_GetTeamSize(aircraft);
-	CP_InitMissionResults(results->won, results);
-
-	/* update nation opinions */
-	/* Note:  "Costly Success" means many civs were killed, and therefore happiness goes DOWN, which is shy the results are flipped twice like this. */
-	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
-		results->won = qfalse;
-
-	CP_HandleNationData(campaign->minhappiness, results->won, mission, battleParameters->nation, results);
-
-	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
-		results->won = qtrue;
-
-	CP_CheckLostCondition(campaign);
-
-	CP_AutoMissionAlienCollect(aircraft, battleParameters);
-
-	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(mission, results->won);
-
-	CP_MissionEndActions(mission, aircraft, results->won);
-}
-
-/**
  * Updates mission result menu text with appropriate values
  * @param missionResults Initialized mission results
  * @param won Whether we won the battle
@@ -1377,6 +1280,7 @@ void CP_Shutdown (void)
 		MIS_Shutdown();
 		TR_Shutdown();
 		UR_Shutdown();
+		AM_Shutdown();
 
 		/** @todo Where does this belong? */
 		for (i = 0; i < ccs.numAlienCategories; i++) {
@@ -1666,4 +1570,5 @@ void CP_InitStartup (const cgame_import_t *import)
 	TR_InitStartup();
 	STATS_InitStartup();
 	UR_InitStartup();
+	AM_InitStartup();
 }

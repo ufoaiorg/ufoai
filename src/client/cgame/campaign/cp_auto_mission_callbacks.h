@@ -1,7 +1,6 @@
 /**
- * @file cp_auto_mission.h
- * @brief Header file for single player automatic (quick, simulated) missions,
- * without going to the battlescape.
+ * @file cp_auto_mission_callbacks.h
+ * @brief header file UI callbacks for automissions subsystem.
  */
 
 /*
@@ -23,19 +22,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_AUTO_MISSION_H
-#define CP_AUTO_MISSION_H
+#ifndef CP_AUTO_MISSION_CALLBACKS_H
+#define CP_AUTO_MISSION_CALLBACKS_H
 
-struct aircraft_s;
-struct alienTeamGroup_s;
-struct campaign_s;
-struct battleParam_s;
-struct missionResults_s;
-struct mission_s;
-
-void AM_Go(struct mission_s *mission, struct aircraft_s *aircraft, const struct campaign_s *campaign, const struct battleParam_s *battleParameters, struct missionResults_s *results);
-
-void AM_InitStartup(void);
-void AM_Shutdown(void);
+void AM_InitCallbacks(void);
+void AM_ShutdownCallbacks(void);
 
 #endif

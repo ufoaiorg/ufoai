@@ -22,11 +22,83 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../cl_shared.h"
 #include "cp_auto_mission.h"
 #include "cp_campaign.h"
+#include "cp_map.h"
+#include "cp_missions.h"
+#include "cp_mission_triggers.h"
 #include "../../ui/ui_windows.h"
 #include "../../../shared/mathlib_extra.h"
 #include "math.h"
+#include "cp_auto_mission_callbacks.h"
+
+
+/** @brief Possilbe results from an auto mission to display on-screen after a simulated battle.
+ * @note This list of potential results is NOT meant to replace missionResults_t, but is mainly used for displaying the proper message on the screen afterwards. */
+typedef enum autoMission_results_s {
+	AUTOMISSION_RESULT_NONE,					/**< Blank, used when battle hasn't been completed yet. */
+	AUTOMISSION_RESULT_SUCCESS,					/**< Victory! Aliens dead or otherwise neutralized */
+	AUTOMISSION_RESULT_COSTLY_SUCCESS,			/**< Aliens dead, but so are most or all civilians. */
+	AUTOMISSION_RESULT_FAILED_SOME_SURVIVORS,	/**< Defeat, but some soldiers managed to retreat and escape */
+	AUTOMISSION_RESULT_FAILED_NO_SURVIVORS,		/**< Defeat, all soldiers/units dead, total loss */
+	AUTOMISSION_RESULT_RESCUE_SUCCESSFUL,		/**< Special case for downed pilot rescue missions */
+	AUTOMISSION_RESULT_RESCUE_FAILED,			/**< Soldiers survived and killed enemies, but pilot to be rescued did not survive */
+	AUTOMISSION_RESULT_PLAYER_BASE_LOST,		/**< Base defence mission where the player's forces lost the battle */
+	AUTOMISSION_RESULT_ALIEN_BASE_CAPTURED,		/**< An assault on an alien base was successful */
+
+	AUTOMISSION_RESULT_MAX
+} autoMission_results_t;
+
+/** @brief Possible types of teams that can fight in an auto mission battle.
+ * @note This is independent of (int) teamID in the auto mission battle struct.  This allows, in the future, for multiple player teams, or multiple
+ * alien teams, etc., to fight in a simulated battle.  (Different teams can have the same TYPE as listed here, yet have different teamID values.)
+ * Note that teams of UGVs, bots, drones, etc. can fight in the battle, but if they are the only units of a specific team ID remaining in the end,
+ * the side they belong to will LOSE because there will be no one controlling them.  This means, for example, that UGVs without any humans left
+ * will create a losing situation for those humans. */
+typedef enum autoMission_teamType_s {
+	AUTOMISSION_TEAM_TYPE_PLAYER,				/**< Human player-controlled team.  Includes soldiers as well as downed pilots. */
+	AUTOMISSION_TEAM_TYPE_PLAYER_UGV,			/**< Human player-controlled UGVs, bots, or other units.  Note: This type of team can't win by itself. */
+	AUTOMISSION_TEAM_TYPE_ALIEN,				/**< AI-controlled alien team. */
+	AUTOMISSION_TEAM_TYPE_ALIEN_DRONE,			/**< AI-controlled alien bots, drones, or other automated units that can't win by themselves. */
+	AUTOMISSION_TEAM_TYPE_CIVILIAN,				/**< AI-controlled civilians that can be healthy or infected. */
+
+	AUTOMISSION_TEAM_TYPE_MAX
+} autoMissionTeamType_t;
+
+#define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * MAX_ACTIVETEAM
+
+/** @brief Data structure for a simulated or auto mission.
+ * @note Supports a calculated max of so many teams that can be simulated in a battle, to
+ * include any aliens, player soldiers, downed pilots, civilians, and any other forces.
+ * The player's forces don't have to be any of the teams.  This is useful if a special
+ * battle should be simulated for the plot, or if more than one alien threat is in the
+ * game (not in the primary campaign plot though, but good for a MOD or whatever).
+ * ALSO: A team does not have to attack (isHostile toward) another team that attacks it.
+ * Teams that are isHostile toward no one will wander around like sheep, doing nothing else. */
+typedef struct autoMissionBattle_s {
+	qboolean teamActive[MAX_ACTIVETEAM];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
+	int teamID[MAX_ACTIVETEAM];								/**< An ID for each team, to keep track, useful if needed.  Note: The same ID may be repeated, but two teams of same ID can't be hostile */
+	qboolean isHostile[MAX_ACTIVETEAM][MAX_ACTIVETEAM];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
+	short nUnits[MAX_ACTIVETEAM];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
+	autoMissionTeamType_t teamType[MAX_ACTIVETEAM];		/**< What type of team is this?  Human player?  Alien? Something else?  */
+
+	double scoreTeamEquipment[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
+	double scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
+	double scoreTeamDifficulty[MAX_ACTIVETEAM];		/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
+
+	int unitHealth[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Health score of each unit for each team */
+	int unitHealthMax[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];	/**< Max health of each unit on each team */
+	int teamAccomplishment[MAX_ACTIVETEAM];							/**< Used for calculating experience gain, and for friendly fire (including hit civilians) */
+	int unitKills[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Number of individual kills each unit accomplishes (for experience award purposes) */
+
+	int winningTeam;								/**< Which team is victorious */
+	qboolean hasBeenFought;							/**< Did this battle run already?  Auto Battles can be fought only once, please. */
+	qboolean isRescueMission;						/**< Is this a rescue or special mission? (Such as recovering a downed aircraft pilot) */
+	int teamToRescue;								/**< If a rescue mission, which team needs rescue? */
+	int teamNeedingRescue;							/**< If a rescue mission, which team is attempting the rescue? */
+	autoMission_results_t resultType;				/**< Used to figure what type of message to put on-screen at the end of a battle. */
+} autoMissionBattle_t;
 
 /**
  * @brief Constants for automission experience gain factors
@@ -44,7 +116,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
  * @param[in,out] battle The battle that should be initialized to defaults
  */
-void AM_ClearBattle (autoMissionBattle_t *battle)
+static void AM_ClearBattle (autoMissionBattle_t *battle)
 {
 	int team;
 
@@ -92,7 +164,7 @@ void AM_ClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
+static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
 {
 	employee_t *employee;
 	int teamSize;
@@ -234,7 +306,7 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
  * @param[in, out] battle The battle to set up team hostility values for.
  * @param[in] civsInfected Set to @c true if civs have XVI influence, otherwise @c false for a normal mission.
  */
-void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
+static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
 {
 	int team;
 	int otherTeam;
@@ -277,7 +349,7 @@ void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsI
 	}
 }
 
-static void AM_Setup (autoMissionBattle_t *battle)
+static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 {
 	int unitTotal = 0;
 	int isHostileTotal = 0;
@@ -327,11 +399,8 @@ static void AM_Setup (autoMissionBattle_t *battle)
 	if (totalActiveTeams <= 0)
 		Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!");
 
-	if (totalActiveTeams == 1)
-		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.\n");
-
-	/* Quick easy victory check */
 	if (totalActiveTeams == 1) {
+		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.\n");
 		battle->winningTeam = lastActiveTeam;
 		battle->hasBeenFought = qtrue;
 		return;
@@ -373,7 +442,7 @@ static void AM_Setup (autoMissionBattle_t *battle)
 					team, teamRatioHealthTotal[team]);
 
 			/** @todo speaking names please */
-			skillAdjCalc = (teamRatioHealthyUnits[team] + teamRatioHealthTotal[team]);
+			skillAdjCalc = teamRatioHealthyUnits[team] + teamRatioHealthTotal[team];
 			skillAdjCalc *= 0.50;
 			skillAdjCalc = FpCurve1D_u_in(skillAdjCalc, 0.50, 0.50);
 			skillAdjCalc -= 0.50;
@@ -511,6 +580,9 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 
 /**
  * @brief This will display on-screen, for the player, results of the auto mission.
+ * @param[in] battle Autobattle structure with the results
+ * @todo results should be set in missionResult and this code should be merged with manual
+ * mission result screen code, possibly in a new file: cp_mission_callbacks.c/h
  */
 static void AM_DisplayResults (const autoMissionBattle_t *battle)
 {
@@ -535,15 +607,7 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
 	}
 }
 
-void AM_RunBattle (autoMissionBattle_t *battle)
-{
-	AM_Setup(battle);
-	AM_DoFight(battle);
-	AM_DecideResults(battle);
-	AM_DisplayResults(battle);
-}
-
-void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
+static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
 {
 	int numAliensTm;
 	int numAlienDronesTm;
@@ -614,6 +678,39 @@ void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam
 }
 
 /**
+ * @brief Collect alien bodies for auto missions
+ * @param[out] aircraft mission aircraft that will bring bodies home
+ * @param[in] battleParameters Parameters structure that knows how much aliens fought
+ * @note collect all aliens as dead ones
+ */
+static void AM_AlienCollect (aircraft_t *aircraft, const battleParam_t *battleParameters)
+{
+	int i;
+	int aliens = battleParameters->aliens;
+
+	if (!aliens)
+		return;
+
+	MS_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
+
+	while (aliens > 0) {
+		const alienTeamGroup_t *group = battleParameters->alienTeamGroup;
+		for (i = 0; i < group->numAlienTeams; i++) {
+			const teamDef_t *teamDef = group->alienTeams[i];
+			const int addDeadAlienAmount = aliens > 1 ? rand() % aliens : aliens;
+			if (!addDeadAlienAmount)
+				continue;
+			assert(i < MAX_CARGO);
+			assert(teamDef);
+			AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, addDeadAlienAmount, qtrue);
+			aliens -= addDeadAlienAmount;
+			if (!aliens)
+				break;
+		}
+	}
+}
+
+/**
  * @brief Move equipment carried by the soldier to the aircraft's itemcargo bay
  * @param[in, out] aircraft The craft with the team (and thus equipment) onboard.
  * @param[in, out] soldier The soldier whose inventory should be moved
@@ -657,7 +754,7 @@ static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employe
  * @brief This looks at a finished auto battle, and uses values from it to kill or lower health of surviving soldiers on a
  * mission drop ship as appropriate.  It also hands out some experience to soldiers that survive.
  */
-void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
+static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
 {
 	employee_t *soldier;
 	int unit = 0;
@@ -690,4 +787,85 @@ void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct air
 	/** @todo the base might differ in case of a baseattack mission */
 	/* update the ranks and mission counters */
 	CP_UpdateCharacterStats(aircraft->homebase, aircraft);
+}
+
+/**
+ * @brief Handles the auto mission
+ * @param[in,out] mission The mission to auto play
+ * @param[in,out] aircraft The aircraft (or fake aircraft in case of a base attack)
+ * @param[in] campaign The campaign data structure
+ * @param[out] results Result of the mission
+ * @param[in] battleParameters Structure that holds the battle related parameters
+ */
+void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
+{
+	autoMissionBattle_t autoBattle;
+
+	assert(mission);
+	assert(aircraft);
+
+	AM_ClearBattle(&autoBattle);
+	AM_FillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
+	AM_FillTeamFromBattleParams(&autoBattle, battleParameters);
+	AM_SetDefaultHostilities(&autoBattle, qfalse);
+	AM_CalculateTeamScores(&autoBattle);
+	AM_DoFight(&autoBattle);
+	AM_DecideResults(&autoBattle);
+	AM_DisplayResults(&autoBattle);
+
+	results->won = qfalse;
+	if (autoBattle.resultType == AUTOMISSION_RESULT_SUCCESS)
+		results->won = qtrue;
+	else if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qtrue;
+
+	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
+
+	/* This block is old code, but it will be left in for now, until exact numbers and stats are extracted from the auto mission results. */
+	results->aliensKilled = battleParameters->aliens;
+	results->aliensStunned = 0;
+	results->aliensSurvived = 0;
+	results->civiliansKilled = 0;
+	results->civiliansKilledFriendlyFire = 0;
+	results->civiliansSurvived = battleParameters->civilians;
+	results->ownKilled = 0;
+	results->ownKilledFriendlyFire = 0;
+	results->ownStunned = 0;
+	results->ownSurvived = AIR_GetTeamSize(aircraft);
+	CP_InitMissionResults(results->won, results);
+
+	/* update nation opinions */
+	/* Note:  "Costly Success" means many civs were killed, and therefore happiness goes DOWN, which is shy the results are flipped twice like this. */
+	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qfalse;
+
+	CP_HandleNationData(campaign->minhappiness, results->won, mission, battleParameters->nation, results);
+
+	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
+		results->won = qtrue;
+
+	CP_CheckLostCondition(campaign);
+
+	AM_AlienCollect(aircraft, battleParameters);
+
+	/* onwin and onlose triggers */
+	CP_ExecuteMissionTrigger(mission, results->won);
+
+	CP_MissionEndActions(mission, aircraft, results->won);
+}
+
+/**
+ * @brief Init actions for automission-subsystem
+ */
+void AM_InitStartup (void)
+{
+	AM_InitCallbacks();
+}
+
+/**
+ * @brief Closing actions for automission-subsystem
+ */
+void AM_Shutdown (void)
+{
+	AM_ShutdownCallbacks();
 }
