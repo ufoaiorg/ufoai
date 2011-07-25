@@ -4393,20 +4393,20 @@ base/textures/tex_buildings/concrete008.png | GNU General Public License 2.0 |  
 base/textures/tex_buildings/concrete008_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_buildings/concrete009.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, concrete03.tga
 base/textures/tex_buildings/concrete009_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
-base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete012.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_buildings/concrete012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete013.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_buildings/concrete013_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/concrete015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/concrete016.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/concrete017.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/concrete018.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/concrete019.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete014.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
+base/textures/tex_buildings/concrete015.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
+base/textures/tex_buildings/concrete016.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
+base/textures/tex_buildings/concrete017.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
+base/textures/tex_buildings/concrete018.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
+base/textures/tex_buildings/concrete019.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_buildings/concrete019_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete01dark.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_buildings/concrete020.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/concrete021.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete020.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
+base/textures/tex_buildings/concrete021.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_buildings/concrete022.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete022_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete023.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
