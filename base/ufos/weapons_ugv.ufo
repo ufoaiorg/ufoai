@@ -42,7 +42,7 @@ ugv ugv_phoenix
 item ugv_chaingun
 {
 	name			"_Chaingun"
-	model			weapons/chaingun/chaingun	// todo: use model from turret here
+	model			soldiers/ugv_ares/ares_w_turret
 	weapon			true
 	type			biggun
 	animationindex	1
