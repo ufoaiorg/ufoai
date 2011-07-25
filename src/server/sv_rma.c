@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief print some debugging info */
 #define PRINT_RMA_PROGRESS 0
 /** @brief max # of recursions */
-#define RMA2_MAX_REC 50
+#define RMA2_MAX_REC 64
 /** @brief tile code multiplier */
 #define TCM 50
 /** @brief the # of different tiles we can store for a gap */
