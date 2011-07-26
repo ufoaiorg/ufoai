@@ -153,13 +153,17 @@ static void testMassAssemblySeed (void)
 	mapInfo_t *randomMap;
 
 	sv_threads->integer = 0;
-	for (i = 0; i < 20; i++) {
+	for (i = 0; i < 40; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);
-		randomMap = SV_AssembleMap("japan", "big", mapStr, posStr);
+//		randomMap = SV_AssembleMap("village", "small", mapStr, posStr);
+		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr);
 //		randomMap = SV_AssembleMap("farm", "large", mapStr, posStr);
 //		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr);
+//		randomMap = SV_AssembleMap("forest", "large_crash", mapStr, posStr);
+//		randomMap = SV_AssembleMap("oriental", "large", mapStr, posStr);
+//		randomMap = SV_AssembleMap("village", "commercial", mapStr, posStr);
 //		randomMap = SV_AssembleMap("hills", "desert_harvester", mapStr, posStr);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
