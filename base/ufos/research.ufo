@@ -46,7 +46,7 @@
 //	pre_description {}
 //		Usage is the same as "description".
 //		The diffrence is that these entries are displayed e.g.:
-//			* A new tefchnology is proposed by out scientists (even with no obvious "prequesites")
+//			* A new technology is proposed by out scientists (even with no obvious "prequesites")
 //			* When an item has been collected, but it's not yet researched.
 // ===============
 //	require_AND { type id [amount] }
