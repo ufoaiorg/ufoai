@@ -380,6 +380,21 @@ assembly small
 {
 size "7 8"
 title "_Village residential"
+seeds {
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+	11
+	12
+	/* 13 is really slow */
+}
 +s02 "0 4"
 +s03 "0 4"
 +s04 "0 4"
@@ -445,6 +460,21 @@ assembly commercial
 {
 size "8 8"
 title "_Village commercial"
+seeds {
+	2
+	4
+	6
+	7
+	8
+	9
+	10
+	12
+	13
+	14
+	15
+	16
+	17
+}
 +s01 "0 2"
 +s02 "0 4"
 +s03 "0 4"
