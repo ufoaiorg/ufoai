@@ -4259,12 +4259,12 @@ base/textures/tex_base/trim001.jpg | GNU General Public License 2.0 | Nexuiz GPL
 base/textures/tex_base/trim003.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | trim_cementwall2.jpg
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/vent001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | d_drkmtl_mpanelgrt.jpg
-base/textures/tex_base/vent002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_base/vent003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_base/vent004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_base/vent005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_base/vent006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_base/vent007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent003.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent004.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent005.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent006.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent007.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/vent_round.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/vent_round2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/vent_round2_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
