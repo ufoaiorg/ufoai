@@ -610,10 +610,12 @@ window ufopedia extends objectinfo
 	{
 		call *node:root.init_summary
 		cmd "update_ufopedia_layout;"
+		cmd	"music_change geoscape;"
 	}
 
 	func onWindowClosed
 	{
 		delete *cvar:up_summary_selection
+		cmd	"music_change geoscape;"
 	}
 }
