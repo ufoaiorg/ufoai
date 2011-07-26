@@ -46,7 +46,7 @@
 //	pre_description {}
 //		Usage is the same as "description".
 //		The diffrence is that these entries are displayed e.g.:
-//			* A new technology is proposed by out scientists (even with no obvious "prequesites")
+//			* A new tefchnology is proposed by out scientists (even with no obvious "prequesites")
 //			* When an item has been collected, but it's not yet researched.
 // ===============
 //	require_AND { type id [amount] }
@@ -98,30 +98,24 @@
 //		Path to the image that should be displayed on the top (big) in the ufopedia.
 //	mdl
 //		Same as the image but for 3d-models.
+//		It overrides the image-definitions if it is provided.
 //==========================================
 
 
 //========================
-// Ufopedia Categories
+// Ufopedia categories
 //========================
 
 up_chapters main
 {
-	news			"_Background"
-	buildings		"_Base Facilities"
-	baseweap		"_Base Weapons"
-	crafts			"_Aircraft"
-	craftequip		"_Aircraft Equipment"
-	craftweap		"_Aircraft Weapons"
-	aliencrafts		"_Alien Aircraft"
-	armour			"_Armour"
-	equipment		"_Weapons, Ammo & Eqipment"
-	ugvs			"_Unmanned Ground Vehicles"
-	alienarmour		"_Alien Armour"
-	artifacts		"_Alien Artifacts"
-	aliens			"_Autopsies & Observation"
-	tech			"_Research Reports"
-	threat			"_The Alien Threat"
+	news		"_Background"
+	crafts		"_Aircraft"
+	buildings	"_Base Facilities"
+	tech		"_Research Reports"
+	equipment	"_Equipment"
+	artifacts	"_Alien Artifacts"
+	aliens		"_Autopsies & Observation"
+	threat		"_The Alien Threat"
 }
 
 //============================
@@ -159,6 +153,55 @@ tech rs_laser
 
 	time	6000
 	image	techs/continuous_wave_laser_operation
+}
+
+tech rs_baselaser
+{
+	name "_Base-Defence Laser Turret"
+	type	tech
+	up_chapter	equipment
+
+	description {
+		default "_b_baselaser_txt"
+	}
+	pre_description {
+		default "_b_baselaser_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+
+	require_AND
+	{
+		tech rs_laser
+	}
+	time	3000
+	provides baselaser
+	mdl		"objects/laserturret/laserturret"
+	producetime	150
+}
+
+tech rs_baselaser_ammo
+{
+	type		tech
+	/* this ammo is virtual, shouldn't be shown anywhere */
+	name		"D-F Tank"
+	provides	baselaser_ammo
+	time		0
+	producetime	-1
 }
 
 tech rs_antimatter
@@ -446,11 +489,9 @@ tech rs_alien_communication
 
 tech rs_alien_base
 {
-	name		"_Alien Base"
 	type		tech
 	up_chapter	threat
-
-
+	name		"_Alien base"
 	description {
 		default "_alien_base_txt"
 	}
@@ -550,7 +591,7 @@ tech rs_alien_ufo_theory
 {
 	name		"_UFO Theory"
 	type		tech
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_alien_theory_txt"
@@ -593,12 +634,12 @@ tech rs_alien_ufo_theory
 }
 
 //=================================
-// Weapons and Ammunition
+// weapons and items
 //=================================
 
 tech rs_weapon_pistol
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_pistol_txt"
@@ -617,7 +658,7 @@ tech rs_weapon_pistol
 
 tech rs_weapon_pistol_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_pistol_mag_txt"
@@ -638,7 +679,7 @@ tech rs_weapon_pistol_ammo
 // Machine Pistol
 tech rs_weapon_pistol2
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 
 	description {
@@ -658,7 +699,7 @@ tech rs_weapon_pistol2
 
 tech rs_weapon_pistol2_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_pistol2_mag_txt"
@@ -678,7 +719,7 @@ tech rs_weapon_pistol2_ammo
 
 tech rs_weapon_vhs
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_vhs_assault_txt"
@@ -695,7 +736,7 @@ tech rs_weapon_vhs
 
 tech rs_weapon_assault
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_assault_txt"
@@ -713,7 +754,7 @@ tech rs_weapon_assault
 
 tech rs_weapon_assault_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_assault_mag_txt"
@@ -732,7 +773,7 @@ tech rs_weapon_assault_ammo
 
 tech rs_weapon_machinegun
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_machinegun_txt"
@@ -750,7 +791,7 @@ tech rs_weapon_machinegun
 
 tech rs_weapon_machinegun_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_machinegun_mag_txt"
@@ -769,7 +810,7 @@ tech rs_weapon_machinegun_ammo
 
 tech rs_weapon_rpg
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_rpg_txt"
@@ -788,7 +829,7 @@ tech rs_weapon_rpg
 
 tech rs_weapon_rpg_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_rpg_ammo_txt"
@@ -808,7 +849,7 @@ tech rs_weapon_rpg_ammo
 
 tech rs_weapon_rpg_incendiary_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_rpg_incendiary_ammo_txt"
@@ -826,10 +867,40 @@ tech rs_weapon_rpg_incendiary_ammo
 	producetime	30
 }
 
+tech rs_weapon_xaw95
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_xaw95_txt"
+	}
+	pre_description {
+		default "_xaw95_pre_txt"
+	}
+
+	provides	xaw95
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_xaw95_ammo
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+
+	redirect	rs_weapon_xaw95
+
+	provides	xaw95_ammo
+	time	-1
+	producetime	-1
+}
+
 // only for in-mission spawning, not produceable or buyable
 tech rs_weapon_bombkit1
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_bombkit1_txt"
@@ -848,7 +919,7 @@ tech rs_weapon_bombkit1
 tech rs_weapon_bombkit2
 {
 	type	weapon
-	up_chapter	weapon
+	up_chapter	equipment
 	description {
 		default "_bombkit2_txt"
 	}
@@ -862,10 +933,85 @@ tech rs_weapon_bombkit2
 }
 */
 
+tech rs_weapon_chaingun
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_chaingun_txt"
+	}
+	pre_description {
+		default "_chaingun_pre_txt"
+	}
+
+//	require_AND
+//	{
+//		tech rs_skill_heavy
+//	}
+
+	provides	chaingun
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_chaingun_ammo
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+
+	redirect	rs_weapon_chaingun
+
+	provides	chaingun_ammo
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_shotgun
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_shotgun_txt"
+	}
+	// pre_description	"_shotgun_pre_txt"
+
+// multiplayer only thus not needed at production menu
+//	require_AND
+//	{
+//		tech rs_skill_heavy
+//	}
+
+	provides	shotgun
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_shotgun_ammo
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+
+	redirect	rs_weapon_shotgun
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_shotgun
+	}
+
+	provides	shotgun_ammo
+	time	-1
+	producetime	-1
+}
+
 tech rs_weapon_bolterrifle
 {
-	name		"_Electromagnetic Rifle"
-	type		weapon
+	name	"_Electromagnetic Rifle"
+	type	weapon
 	up_chapter	equipment
 	delay 1 // 1 day == 24 hour
 
@@ -904,8 +1050,8 @@ tech rs_weapon_bolterrifle
 
 tech rs_weapon_bolterrifle_ammo
 {
-	name		"_Electromagnetic Rifle Magazine"
-	type		weapon
+	name	"_Electromagnetic Rifle Magazine"
+	type	weapon
 	up_chapter	equipment
 
 	redirect	rs_weapon_bolterrifle
@@ -922,9 +1068,8 @@ tech rs_weapon_bolterrifle_ammo
 
 tech rs_weapon_combatknife
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_combatknife_txt"
 	}
@@ -942,8 +1087,8 @@ tech rs_weapon_combatknife
 
 tech rs_weapon_monoknife
 {
-	name		"_Monomolecular Blades"
-	type		weapon
+	name	"_Monomolecular Blades"
+	type	weapon
 	up_chapter	equipment
 
 	description {
@@ -989,9 +1134,8 @@ tech rs_weapon_monoknife
 
 tech rs_weapon_flamer
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_flamer_txt"
 	}
@@ -1009,9 +1153,8 @@ tech rs_weapon_flamer
 
 tech rs_weapon_flamer_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_flamer_mag_txt"
 	}
@@ -1029,9 +1172,8 @@ tech rs_weapon_flamer_ammo
 
 tech rs_weapon_flashbang
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_flashbang_txt"
 	}
@@ -1049,9 +1191,8 @@ tech rs_weapon_flashbang
 
 tech rs_weapon_fraggren
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_fraggren_txt"
 	}
@@ -1069,9 +1210,8 @@ tech rs_weapon_fraggren
 
 tech rs_weapon_incgren
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_incgren_txt"
 	}
@@ -1089,9 +1229,8 @@ tech rs_weapon_incgren
 
 tech rs_weapon_grenl
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_grenl_txt"
 	}
@@ -1108,9 +1247,8 @@ tech rs_weapon_grenl
 
 tech rs_weapon_grenl_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_grenl_ammo_txt"
 	}
@@ -1128,9 +1266,8 @@ tech rs_weapon_grenl_ammo
 
 tech rs_weapon_grenl_fle_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_grenl_fle_ammo_txt"
 	}
@@ -1148,9 +1285,8 @@ tech rs_weapon_grenl_fle_ammo
 
 tech rs_weapon_grenl_incendiary_ammo
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_grenl_incendiary_ammo_txt"
 	}
@@ -1169,7 +1305,7 @@ tech rs_weapon_grenl_incendiary_ammo
 tech rs_weapon_grenl_plasma_ammo
 {
 	name	"_Plasma And The Grenade Launcher"
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 
 	description {
@@ -1208,9 +1344,9 @@ tech rs_weapon_grenl_plasma_ammo
 
 tech rs_irgoggles
 {
-	type		weapon
-	up_chapter	equipment
+	type	weapon
 
+	up_chapter	equipment
 	description {
 		default "_irgoggles_txt"
 	}
@@ -1227,8 +1363,8 @@ tech rs_irgoggles
 
 tech rs_weapon_kerrblade
 {
-	name		"_Alien Artifact - Kerrblade"
-	type		weapon
+	name	"_Alien Artifact - Kerrblade"
+	type	weapon
 	up_chapter	artifacts
 
 	description {
@@ -1273,7 +1409,7 @@ tech rs_weapon_kerrblade
 
 tech rs_weapon_laserpistol
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 
 	description {
@@ -1311,7 +1447,7 @@ tech rs_weapon_laserpistol
 
 tech rs_weapon_laserrifle
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 
 	description {
@@ -1350,7 +1486,7 @@ tech rs_weapon_laserrifle
 
 tech rs_weapon_heavylaser
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 
 	description {
@@ -1389,7 +1525,7 @@ tech rs_weapon_heavylaser
 
 tech rs_weapon_electrolaser
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 
 	description {
@@ -1506,7 +1642,7 @@ tech rs_weapon_laserammo_stun
 
 tech rs_medikit
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_medikit_txt"
@@ -1522,123 +1658,10 @@ tech rs_medikit
 	producetime	60
 }
 
-//===========================================
-// Weapons and Ammunition (Multiplayer only)
-//===========================================
-
-tech rs_weapon_chaingun
-{
-	// Note: Multiplayer only
-	type		weapon
-	up_chapter	equipment		// do we need this if it is multiplayer only ?
-	description {
-		default "_chaingun_txt"
-	}
-	pre_description {
-		default "_chaingun_pre_txt"
-	}
-
-//	require_AND
-//	{
-//		tech rs_skill_heavy
-//	}
-
-	provides	chaingun
-	time	-1
-	producetime	-1
-}
-
-tech rs_weapon_chaingun_ammo
-{
-	// Note: Multiplayer only
-	type		weapon
-	up_chapter	equipment		// do we need this if it is multiplayer only ?
-
-	redirect	rs_weapon_chaingun
-
-	provides	chaingun_ammo
-	time	-1
-	producetime	-1
-}
-
-tech rs_weapon_shotgun
-{
-	// Note: Multiplayer only
-	type		weapon
-	up_chapter	equipment		// do we need this if it is multiplayer only ?
-	description {
-		default "_shotgun_txt"
-	}
-	// pre_description	"_shotgun_pre_txt"
-
-// multiplayer only thus not needed at production menu
-//	require_AND
-//	{
-//		tech rs_skill_heavy
-//	}
-
-	provides	shotgun
-	time	-1
-	producetime	-1
-}
-
-tech rs_weapon_shotgun_ammo
-{
-	// Note: Multiplayer only
-	type	weapon
-	up_chapter	equipment		// do we need this if it is multiplayer only ?
-
-	redirect	rs_weapon_shotgun
-
-	require_AND
-	{
-		tech rs_damage_blast
-		tech rs_weapon_shotgun
-	}
-
-	provides	shotgun_ammo
-	time	-1
-	producetime	-1
-}
-
-tech rs_weapon_xaw95
-{
-	// Note: Multiplayer only
-	type		weapon
-	up_chapter	equipment
-	description {
-		default "_xaw95_txt"
-	}
-	pre_description {
-		default "_xaw95_pre_txt"
-	}
-
-	provides	xaw95
-	time	-1
-	producetime	-1
-}
-
-tech rs_weapon_xaw95_ammo
-{
-	// Note: Multiplayer only
-	type		weapon
-	up_chapter	equipment
-
-	redirect	rs_weapon_xaw95
-
-	provides	xaw95_ammo
-	time	-1
-	producetime	-1
-}
-
-//=================================
-// Alien Artifacts
-//=================================
-
 tech rs_weapon_plasatomizer
 {
-	name		"_Alien Artifact - Plasma Pistol"
-	type		weapon
+	name	"_Alien Artifact - Plasma Pistol"
+	type	weapon
 	up_chapter	artifacts
 
 	description {
@@ -1684,8 +1707,8 @@ tech rs_weapon_plasatomizer
 
 tech rs_weapon_plasatomizer_ammo
 {
-	name		"_Alien Artifact - Plasma Pistol"
-	type		weapon
+	name	"_Alien Artifact - Plasma Pistol"
+	type	weapon
 	up_chapter	artifacts
 
 	redirect	rs_weapon_plasatomizer
@@ -1708,8 +1731,8 @@ tech rs_weapon_plasatomizer_ammo
 
 tech rs_weapon_plasblaster
 {
-	name		"_Alien Artifact - Plasma Blaster"
-	type		weapon
+	name	"_Alien Artifact - Plasma Blaster"
+	type	weapon
 	up_chapter	artifacts
 
 	description {
@@ -1754,8 +1777,8 @@ tech rs_weapon_plasblaster
 
 tech rs_weapon_plasblaster_ammo
 {
-	name		"_Alien Artifact - Plasma Blaster"
-	type		weapon
+	name	"_Alien Artifact - Plasma Blaster"
+	type	weapon
 	up_chapter	artifacts
 
 	redirect	rs_weapon_plasblaster
@@ -1778,8 +1801,8 @@ tech rs_weapon_plasblaster_ammo
 
 tech rs_weapon_plasblade
 {
-	name		"_Alien Artifact - Plasma Blade"
-	type		weapon
+	name	"_Alien Artifact - Plasma Blade"
+	type	weapon
 	up_chapter	artifacts
 
 	description {
@@ -1824,8 +1847,8 @@ tech rs_weapon_plasblade
 
 tech rs_weapon_plasmagren
 {
-	name		"_Alien Artifact - Plasma Grenade"
-	type		weapon
+	name	"_Alien Artifact - Plasma Grenade"
+	type	weapon
 	up_chapter	artifacts
 
 	description {
@@ -1869,8 +1892,8 @@ tech rs_weapon_plasmagren
 
 tech rs_weapon_plasrifle
 {
-	name		"_Alien Artifact - Plasma Rifle"
-	type		weapon
+	name	"_Alien Artifact - Plasma Rifle"
+	type	weapon
 	up_chapter	artifacts
 
 	description {
@@ -1915,8 +1938,8 @@ tech rs_weapon_plasrifle
 
 tech rs_weapon_plasrifle_ammo
 {
-	name		"_Alien Artifact - Plasma Rifle"
-	type		weapon
+	name	"_Alien Artifact - Plasma Rifle"
+	type	weapon
 	up_chapter	artifacts
 
 	redirect	rs_weapon_plasrifle
@@ -1939,9 +1962,9 @@ tech rs_weapon_plasrifle_ammo
 
 tech rs_weapon_needlergun
 {
-	name		"_Needler Gun"
-	type		weapon
-	up_chapter	weapon
+	name	"_Needler Gun"
+	type	weapon
+	up_chapter	equipment
 
 	description {
 		default "_needlergun_txt"
@@ -1985,8 +2008,8 @@ tech rs_weapon_needlergun
 
 tech rs_weapon_needlerheavy
 {
-	name		"_Heavy Needler Gun"
-	type		weapon
+	name	"_Heavy Needler Gun"
+	type	weapon
 	up_chapter	equipment
 
 	description {
@@ -2056,7 +2079,7 @@ tech rs_weapon_needlergun_ammo
 
 tech rs_weapon_coilgun
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
 	description {
 		default "_coilgun_txt"
@@ -2164,8 +2187,8 @@ tech rs_weapon_shotgun2_slug_ammo
 tech rs_weapon_shotgun_micro
 {
 	type	weapon
-	up_chapter	equipment
 
+	up_chapter	equipment
 	description {
 		default "_shotgun_micro_txt"
 	}
@@ -2185,7 +2208,6 @@ tech rs_weapon_shotgun_micro_ammo
 {
 	type		weapon
 	up_chapter	equipment
-
 	description {
 		default "_shotgun_micro_ammo_txt"
 	}
@@ -2204,9 +2226,8 @@ tech rs_weapon_shotgun_micro_ammo
 
 tech rs_weapon_smg
 {
-	type		weapon
+	type	weapon
 	up_chapter	equipment
-
 	description {
 		default "_smg_txt"
 	}
@@ -2226,7 +2247,6 @@ tech rs_weapon_smg_ammo
 {
 	type		weapon
 	up_chapter	equipment
-
 	description {
 		default "_smg_mag_txt"
 	}
@@ -2247,7 +2267,6 @@ tech rs_weapon_smokegren
 {
 	type		weapon
 	up_chapter	equipment
-
 	description {
 		default "_smokegren_txt"
 	}
@@ -2267,7 +2286,6 @@ tech rs_weapon_sniper
 {
 	type		weapon
 	up_chapter	equipment
-
 	description {
 		default "_sniper_txt"
 	}
@@ -2287,7 +2305,6 @@ tech rs_weapon_sniper_ammo
 {
 	type		weapon
 	up_chapter	equipment
-
 	description {
 		default "_sniper_mag_txt"
 	}
@@ -2698,8 +2715,7 @@ tech rs_weapon_pbeam_ammo
 tech rs_combat_armour
 {
 	type		armour
-	up_chapter	armour
-
+	up_chapter	equipment
 	description {
 		default "_combat_armour_txt"
 	}
@@ -2713,8 +2729,7 @@ tech rs_combat_armour
 tech rs_advanced_combat_armour
 {
 	type		armour
-	up_chapter	armour
-
+	up_chapter	equipment
 	description {
 		default "_advanced_combat_armour_txt"
 	}
@@ -2728,7 +2743,7 @@ tech rs_advanced_combat_armour
 tech rs_nano_armour
 {
 	type		armour
-	up_chapter	armour
+	up_chapter	equipment
 
 	description {
 		default "_nano_armour_txt"
@@ -2772,7 +2787,7 @@ tech rs_power_armour
 {
 	// Multiplayer only right now
 	type	armour
-	up_chapter	armour
+	up_chapter	equipment
 
 //	description {
 //		default "TODO_power_armour_txt"
@@ -2812,7 +2827,7 @@ tech rs_power_armour
 tech rs_alien_body_armour
 {
 	type		armour
-	up_chapter	alienarmour
+	up_chapter	artifacts
 
 	description {
 		default "_alien_body_armour_txt"
@@ -2849,7 +2864,7 @@ tech rs_alien_body_armour
 tech rs_alien_medium_armour
 {
 	type		armour
-	up_chapter	alienarmour
+	up_chapter	artifacts
 
 	description {
 		default "_alien_medium_armour_txt"
@@ -3697,7 +3712,7 @@ tech rs_craft_ufo_scout
 {
 	name	"_UFO - Scout"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_scout_txt"
@@ -3739,7 +3754,7 @@ tech rs_craft_ufo_fighter
 {
 	name	"_UFO - Fighter"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_fighter_txt"
@@ -3782,7 +3797,7 @@ tech rs_craft_ufo_supply
 {
 	name	"_UFO - Supply Ship"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_supply_txt"
@@ -3825,7 +3840,7 @@ tech rs_craft_ufo_carrier
 {
 	name	"_UFO - Carrier"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_carrier_txt"
@@ -3868,7 +3883,7 @@ tech rs_craft_ufo_bomber
 {
 	name	"_UFO - Bomber"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_bomber_txt"
@@ -3911,7 +3926,7 @@ tech rs_craft_ufo_corrupter
 {
 	name	"_UFO - Corrupter"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_corrupter_txt"
@@ -3954,7 +3969,7 @@ tech rs_craft_ufo_gunboat
 {
 	name	"_UFO - Gunboat"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_gunboat_txt"
@@ -3997,7 +4012,7 @@ tech rs_craft_ufo_ripper
 {
 	name	"_UFO - Ripper"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_ripper_txt"
@@ -4040,7 +4055,7 @@ tech rs_craft_ufo_harvester
 {
 	name	"_UFO - Harvester"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_harvester_txt"
@@ -4083,7 +4098,7 @@ tech rs_craft_ufo_mothership
 {
 	name	"_UFO - Mothership"
 	type	craft
-	up_chapter	aliencrafts
+	up_chapter	crafts
 
 	description {
 		default "_ufo_mothership_txt"
@@ -4127,7 +4142,7 @@ tech rs_craft_ufo_mothership
 //========================
 
 // BLOODSPIDER
-/* Is this needed ?
+/* Is this needed?
 tech rs_alien_bloodspider_live
 {
 	type	alien
@@ -4149,6 +4164,7 @@ tech rs_alien_bloodspider_live
 	mdl	"aliens/bloodspider/bloodspider"
 }
 */
+
 tech rs_alien_bloodspider_autopsy
 {
 	name	"_Alien Autopsy - Bloodspider"
@@ -4192,7 +4208,7 @@ tech rs_alien_bloodspider_autopsy
 tech rs_weapon_bloodspider
 {
 	type		weapon
-	up_chapter	weapon
+	up_chapter	equipment
 
 	require_AND
 	{
@@ -4391,14 +4407,13 @@ tech rs_alien_shevaar_autopsy
 // UGVs
 //========================
 
-// Hovercraft
 tech rs_ugv_phoenix
 {
-	name		"_Phoenix UGV"
-	type		ugv
+	type	ugv
+	mdl	ugv_phoenix
 
-	up_chapter	ugvs
-
+	up_chapter	equipment
+	name	"_Phoenix UGV"
 	description {
 		default "_ugv_phoenix_txt"
 	}
@@ -4409,18 +4424,16 @@ tech rs_ugv_phoenix
 	provides	ugv_phoenix
 	time	0
 	producetime	400
-
-	mdl	ugv_phoenix
 }
 
-// UGV with wheels
+// area with wheels
 tech rs_ugv_ares_w
 {
-	name		"_Ares W (UGV)"
-	type		ugv
+	type	ugv
+	mdl	ugv_ares_w
 
-	up_chapter	ugvs
-
+	up_chapter	equipment
+	name	"_Ares W (UGV)"
 	description {
 		default "_ugv_ares_w_txt"
 	}
@@ -4431,15 +4444,14 @@ tech rs_ugv_ares_w
 	provides	ugv_ares_w
 	time	0
 	producetime	200
-
-	mdl			ugv_ares_w
 }
 
 tech rs_ugv_chaingun
 {
-	type		weapon
+	type	weapon
+	mdl	ugv_phoenix	// @todo fixme
 
-	up_chapter	ugvs
+	up_chapter	equipment
 /* @todo use-me
 	description {
 		default "_ugv_chaingun_txt"
@@ -4451,15 +4463,14 @@ tech rs_ugv_chaingun
 	provides	ugv_chaingun
 	time	0
 	producetime	50	// Not really needed since this should (at least in the beginning) be produced with the tank itself.
-
-//	mdl			ares_w_turret
 }
 
 tech rs_ugv_chaingun_belt
 {
-	type		weapon
+	type	weapon
+	mdl	ugv_phoenix	// @todo fixme
 
-	up_chapter	ugvs
+	up_chapter	equipment
 /* @todo use-me
 	description {
 		default "_ugv_chaingun_belt_txt"
@@ -4471,15 +4482,14 @@ tech rs_ugv_chaingun_belt
 	provides	ugv_chaingun_belt
 	time	0
 	producetime	10	// @todo fixme
-
-//	mdl			ugv_phoenix
 }
 
 tech rs_ugv_weapon_autocannon
 {
 	type	weapon
+	mdl	ugv_phoenix	// @todo fixme
 
-	up_chapter	ugvs
+	up_chapter	equipment
 	description {
 		default "_ugv_weapon_autocannon_txt"
 	}
@@ -4490,8 +4500,6 @@ tech rs_ugv_weapon_autocannon
 	provides	ugv_weapon_autocannon
 	time	0
 	producetime	50
-
-	mdl	ugv_phoenix	// @todo fixme
 }
 
 //========================
@@ -4501,8 +4509,8 @@ tech rs_ugv_weapon_autocannon
 tech rs_base_AA51_launcher
 {
 	type		tech
-	up_chapter	baseweap
-	name		"_AA51 Missile Launcher"
+	up_chapter	equipment
+	name		"_AA51 missile launcher"
 	// pre_description	"_b_missile_pre_txt"
 	description {
 		default "_b_missile_txt"
@@ -4525,63 +4533,14 @@ tech rs_base_ammo_AA51
 	producetime	-1
 }
 
-tech rs_baselaser
-{
-	name "_Base-Defense Laser Turret"
-	type	tech
-	up_chapter	baseweap
-
-	description {
-		default "_b_baselaser_txt"
-	}
-	pre_description {
-		default "_b_baselaser_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/mail_tech
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/mail_tech
-	}
-
-	require_AND
-	{
-		tech rs_laser
-	}
-	time	3000
-	provides baselaser
-	mdl		"objects/laserturret/laserturret"
-	producetime	150
-}
-
-tech rs_baselaser_ammo
-{
-	type		tech
-	/* this ammo is virtual, shouldn't be shown anywhere */
-	name		"D-F Tank"
-	provides	baselaser_ammo
-	time		0
-	producetime	-1
-}
-
 //========================
-// Craft Equipment
+// Craft Stuff
 //========================
 
 tech rs_craft_el_raven
 {
 	type		craftitem
-	up_chapter	craftequip
+	up_chapter	crafts
 	name		"_'Raven' ECM Unit"
 	// pre_description	"_craft_electronics_raven_pre_txt"
 	description {
@@ -4598,7 +4557,7 @@ tech rs_craft_el_raven
 tech rs_craft_shield_polymer
 {
 	type		craftitem
-	up_chapter	craftequip
+	up_chapter	crafts
 	name		"_Polymer Aircraft Armour"
 	// pre_description	"_craft_shield_light_pre_txt"
 	description {
@@ -4615,7 +4574,7 @@ tech rs_craft_shield_polymer
 tech rs_craft_shield_plating
 {
 	type		craftitem
-	up_chapter	craftequip
+	up_chapter	crafts
 	name		"_Alien Aircraft Plating"
 	pre_description {
 		default	"_craft_shield_plating_pre_txt"
@@ -4658,7 +4617,7 @@ tech rs_craft_alien_astrogation
 {
 	name		"_Alien Astrogation"
 	type		craftitem
-	up_chapter	craftequip
+	up_chapter	crafts
 
 	pre_description {
 		default	"_craft_alien_astrogation_pre_txt"
@@ -4696,7 +4655,7 @@ tech rs_craft_alien_propulsion
 {
 	name		"_Alien Propulsion"
 	type		craftitem
-	up_chapter	craftequip
+	up_chapter	crafts
 
 	pre_description {
 		default "_craft_alien_propulsion_pre_txt"
@@ -4733,7 +4692,7 @@ tech rs_craft_alien_detection
 {
 	name		"_Alien Detection"
 	type		craftitem
-	up_chapter	craftequip
+	up_chapter	crafts
 
 	pre_description	{
 		default	"_craft_alien_detection_pre_txt"
@@ -4766,49 +4725,10 @@ tech rs_craft_alien_detection
 	mdl		"aircraft/craft_item_det/detection"
 }
 
-tech rs_craft_el_targeting
-{
-	type		craftitem
-	up_chapter	craftequip
-	name		"_Targeting Computer"
-	// pre_description	"_craft_electronics_targeting_pre_txt"
-	description {
-		default "_craft_electronics_targeting_txt"
-	}
-
-	provides	craft_el_targeting
-	time		0
-	producetime	180
-
-	mdl		"aircraft/craft_item_target/craft_item_target"
-}
-
-tech rs_craft_el_fuelpod
-{
-	type		craftitem
-	up_chapter	craftequip
-	name		"_Fuel Pod"
-	// pre_description	"_craft_electronics_fuelpod_pre_txt"
-	description {
-		default "_craft_electronics_fuelpod_txt"
-	}
-
-	provides	craft_el_fuelpod
-	time		0
-	producetime	80
-
-	mdl		"aircraft/craft_item_fuel/fuel"
-	//image	"techs/craft_electronics_fuelpod"
-}
-
-//========================
-// Craft Weapons
-//========================
-
 tech rs_craft_weapon_alc
 {
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 	name		"_Aerial Laser Cannon"
 	pre_description	{
 		default "_craft_weapon_alc_pre_txt"
@@ -4858,7 +4778,7 @@ tech rs_craft_ammo_alc
 tech rs_craft_weapon_shiva
 {
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 	name		"_SHIVA Rotary Cannon"
 	// pre_description	"_craft_weapon_shiva_pre_txt"
 	description {
@@ -4875,7 +4795,7 @@ tech rs_craft_weapon_shiva
 tech rs_craft_ammo_shiva_1
 {
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 	name		"_SHIVA 20mm API Rounds"
 	// pre_description	"_craft_ammo_shiva_1_pre_txt"
 	description {
@@ -4896,7 +4816,7 @@ tech rs_craft_ammo_shiva_1
 tech rs_craft_ammo_shiva_2
 {
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 	name		"_SHIVA 20mm HEI Rounds"
 	// pre_description	"_craft_ammo_shiva_2_pre_txt"
 	description {
@@ -4917,7 +4837,7 @@ tech rs_craft_ammo_shiva_2
 tech rs_craft_weapon_sparrowhawk
 {
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 	name		"_'Sparrowhawk' AA Missile Rack"
 	// pre_description	"_craft_weapon_sparrowhawk_pre_txt"
 	description {
@@ -4934,7 +4854,7 @@ tech rs_craft_weapon_sparrowhawk
 tech rs_craft_ammo_sparrowhawk
 {
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 	name		"_'Sparrowhawk' Missile"
 	// pre_description	"_craft_ammo_sparrowhawk_pre_txt"
 	description {
@@ -4955,7 +4875,7 @@ tech rs_craft_ammo_sparrowhawk
 tech rs_craft_weapon_tr20
 {
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 	name		"_TR-20 Rocket Pod"
 	// pre_description	"_craft_weapon_tr20_pre_txt"
 	description {
@@ -4972,7 +4892,7 @@ tech rs_craft_weapon_tr20
 tech rs_craft_ammo_tr20
 {
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 	name		"_TR-20 Rocket"
 	// pre_description	"_craft_ammo_tr20_pre_txt"
 	description {
@@ -4994,7 +4914,7 @@ tech rs_craft_weapon_particle
 {
 	name		"_Particle Beam Weapon"
 	type		craftitem
-	up_chapter	craftweap
+	up_chapter	crafts
 
 	pre_description {
 		default "_craft_weapon_particle_beam_pre_txt"
@@ -5050,6 +4970,41 @@ tech rs_craft_ammo_particle
 	producetime	-1
 }
 
+tech rs_craft_el_targeting
+{
+	type		craftitem
+	up_chapter	crafts
+	name		"_Targeting Computer"
+	// pre_description	"_craft_electronics_targeting_pre_txt"
+	description {
+		default "_craft_electronics_targeting_txt"
+	}
+
+	provides	craft_el_targeting
+	time		0
+	producetime	180
+
+	mdl		"aircraft/craft_item_target/craft_item_target"
+}
+
+tech rs_craft_el_fuelpod
+{
+	type		craftitem
+	up_chapter	crafts
+	name		"_Fuel Pod"
+	// pre_description	"_craft_electronics_fuelpod_pre_txt"
+	description {
+		default "_craft_electronics_fuelpod_txt"
+	}
+
+	provides	craft_el_fuelpod
+	time		0
+	producetime	80
+
+	mdl		"aircraft/craft_item_fuel/fuel"
+	//image	"techs/craft_electronics_fuelpod"
+}
+
 //========================
 // Alien Technologies retrieved from craft
 //========================
@@ -5058,7 +5013,7 @@ tech rs_alien_materials
 {
 	name		"_Alien Materials"
 	type		tech
-	up_chapter	artifacts
+	up_chapter	equipment
 
 	description {
 		default "_alien_materials_txt"
