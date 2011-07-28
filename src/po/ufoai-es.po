@@ -1,3 +1,20 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
+"PO-Revision-Date: 2011-07-28 14:37-0600\n"
+"Last-Translator: DarkRain <darkrainx@users.sourceforge.net>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Spanish\n"
+
 msgid "Autocannon Module"
 msgstr "Módulo de Cañón Automático"
 
@@ -109,9 +126,8 @@ msgstr "Cuchillo de Combate"
 msgid "Stun Shot"
 msgstr "Disparo Paralizante"
 
-#, fuzzy
 msgid "D-F Cartridge Stun"
-msgstr "Cartucho F-D"
+msgstr "Cartucho F-D (Electroláser)"
 
 msgid "Pulsed Fire"
 msgstr "Disparo Pulsante"
@@ -456,10 +472,10 @@ msgid "Skirmish Game Settings"
 msgstr "Opciones del Modo de Juego 'Tiroteo'"
 
 msgid "Start Game"
-msgstr "Comenzar Juego"
+msgstr "Comenzar"
 
 msgid "<1>"
-msgstr ""
+msgstr "<1>"
 
 msgid "Abort"
 msgstr "Abortar"
@@ -567,7 +583,7 @@ msgid "Joystick Settings"
 msgstr "Opciones del Joystick"
 
 msgid "Available HUD for the battlescape mode."
-msgstr "Selecciona el Pantalla de Visualización Frontal (HUD, por sus siglas en ingles) para el combate."
+msgstr "Selecciona el HUD para el combate."
 
 msgid "HUD Design:"
 msgstr "Diseño del HUD:"
@@ -672,7 +688,7 @@ msgid "Actual camera rotation speed."
 msgstr "Velocidad de rotación de la cámara."
 
 msgid "Rotation Speed:"
-msgstr "Rotación"
+msgstr "Vel. de Rotación:"
 
 msgid "The rotation speed of the battlescape camera."
 msgstr "Velocidad de rotación de la cámara durante el combate."
@@ -681,19 +697,19 @@ msgid "Actual camera scroll speed."
 msgstr "Velocidad de desplazamiento de la cámara."
 
 msgid "Scroll Speed:"
-msgstr "Desplazamiento:"
+msgstr "Vel. Desplazamiento:"
 
 msgid "The scroll speed of the battlescape camera."
 msgstr "Velocidad de desplazamiento de la cámara durante el combate."
 
 msgid "Battlescape Camera Settings"
-msgstr "Opciones de la Cámara de Combate"
+msgstr "Opciones de la Cámara"
 
 msgid "Gameplay Settings"
 msgstr "Opciones del Juego"
 
 msgid "Restart the sound-engine and apply your settings."
-msgstr "Reiniciar el motor se sonido y aplicar los cambios."
+msgstr "Reiniciar el motor de sonido y aplicar los cambios."
 
 msgid "Current sample rate frequency in kHz."
 msgstr "Frecuencia de muestreo en kHz."
@@ -741,13 +757,13 @@ msgid "Audio Settings"
 msgstr "Opciones de Sonido"
 
 msgid "Switch to very high video settings"
-msgstr "Cambiar a opciones de vídeo elevadas"
+msgstr "Cambiar a opciones de video elevadas"
 
 msgid "Switch to medium video settings"
-msgstr "Cambiar a opciones de vídeo moderadas"
+msgstr "Cambiar a opciones de video moderadas"
 
 msgid "Switch to low video settings"
-msgstr "Cambiar a opciones de vídeo reducidas"
+msgstr "Cambiar a opciones de video reducidas"
 
 msgid "Enable the material system."
 msgstr "Habilitar el sistema de materiales."
@@ -807,7 +823,7 @@ msgid "Amount of light emitting from the sun and shining on the earth."
 msgstr "Cantidad de luz emitida por el Sol y que llega a la Tierra."
 
 msgid "Lightmap Scale:"
-msgstr "Escala de Mapa de Luz:"
+msgstr "Escala Mapa de Luz:"
 
 msgid "Changing this would scale the lightmap brightness."
 msgstr "Cambiar esto cambiaría la escala de brillo del mapa de luz."
@@ -866,36 +882,32 @@ msgstr "Efectos de Sombreado del Post-Procesador:"
 msgid "Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
 msgstr "Efectos de sombreado del post-procesador gráfico tales como texturas brillantes (solo disponible si el sombreado GLSL está activado)."
 
-#, fuzzy
 msgid "Change the swap interval."
-msgstr "Cambiar el intervalo de refresco."
+msgstr "Cambiar el intervalo de sincronización vertical."
 
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr "Selecciona 0 para desactivar la sincronía vertical (más rapidez). Selecciona 1 o más para activar la sincronía vertical (mejor calidad)."
 
-#, fuzzy
 msgid "Change the amount of multisample buffers."
 msgstr "Cambiar la cantidad de buffers de muestreo."
 
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
-msgstr "Escoge entre 0 y 4 Buffers de Muestreo. Valores más altos resultan en un mejor alisado y aumentan la calidad de la imagen."
+msgstr "Escoge entre 0 y 4 Multisample Buffers. Valores más altos resultan en un mejor alisado y aumentan la calidad de la imagen."
 
-#, fuzzy
 msgid "Multisample Buffers / Swap Interval:"
-msgstr "Buffer de Muestreo / Intervalo de Refresco:"
+msgstr "Multisample Buffers / Sincronización Vertical:"
 
-#, fuzzy
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
-msgstr "Los buffers de muestreo OpenGL son una forma de alisar las formas GL primitivas. /  El Intervalo de Refresco ajusta cuando se refresca el buffer. Un valor de 0 significa que el buffer se refresca inmediatamente (tambien se conoce como \"desactivar la sincronía vertical\")."
+msgstr "Los Multisample Buffers OpenGL son una forma de alisar las formas GL primitivas. /  El Intervalo de Sincronización Vertical ajusta cuando se refresca el buffer. Un valor de 0 significa que el buffer se refresca inmediatamente (también se conoce como \"desactivar la sincronía vertical\")."
 
 msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
-msgstr "Activa los Buffers de Vértices para un mayor desempeño 3D (requiere hardware con soporte para OpenGL)."
+msgstr "Activa los Vertex Buffers para un mayor desempeño 3D (requiere hardware con soporte para OpenGL)."
 
 msgid "Vertex Buffers:"
-msgstr "Buffers de Vértices:"
+msgstr "Vertex Buffers:"
 
 msgid "Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
-msgstr "Los Buffers  de Vértices son juegos expansibles de atributos de los vértices que se envían para ser mapeados en la GPU para un dibujado rápido."
+msgstr "LosVertex Buffers son juegos expansibles de atributos de los vértices que se envían para ser mapeados en la GPU para un dibujado rápido."
 
 msgid "Enable OpenGL GLSL Shaders. Disable this if you experience graphical problems. ATTENTION: May require restart to take effect."
 msgstr "Activar el sombreado OpenGL GLSL. Desactivalo si experimentas problemas con los gráficos. ATENCIÓN: Puede que necesites reiniciar para ver los efectos."
@@ -907,7 +919,7 @@ msgid "GLSL Shaders:"
 msgstr "Sombreado GLSL:"
 
 msgid "OpenGL GLSL Shaders are available only if your graphics-card driver fully supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading techniques."
-msgstr "El sombreado OpenGl GLSL solo está disponible si tu tarjeta de vídeo tiene soporte completo para OpenGL 2.0+ y mejorará UFO:AI utilizando técnicas avanzadas de sombreado."
+msgstr "El sombreado OpenGl GLSL solo está disponible si tu tarjeta de video tiene soporte completo para OpenGL 2.0+ y mejorará UFO:AI utilizando técnicas avanzadas de sombreado."
 
 msgid "OpenGL Settings"
 msgstr "Opciones OpenGL"
@@ -997,13 +1009,13 @@ msgid "Adjust various texture settings here."
 msgstr "Ajusta varias opciones de las texturas aquí."
 
 msgid "Default is to play the intro video just once at the first game start."
-msgstr ""
+msgstr "Lo normal es reproducir el video una sola vez cuando el juego inicia por primera ocasión."
 
 msgid "Hold Back Intro Video:"
-msgstr ""
+msgstr "Omitir el video de introducción:"
 
 msgid "Do not play the intro movie when starting the game."
-msgstr ""
+msgstr "No reproducir la película de introducción al iniciar el juego."
 
 msgid "Display the number of rendered frames per second."
 msgstr "Mostrar el número de cuadros renderizados por segundo."
@@ -1015,7 +1027,7 @@ msgid "See how many frames per second are rendered."
 msgstr "Ver cuantos cuadros por segundo son renderizados."
 
 msgid "Other Display Settings"
-msgstr "Otras Opciones de Vídeo"
+msgstr "Otras Opciones de Video"
 
 msgid "Adjust other settings here."
 msgstr "Ajusta otras opciones aquí."
@@ -1123,7 +1135,7 @@ msgid "General"
 msgstr "General"
 
 msgid "Video Settings"
-msgstr "Opciones de Vídeo"
+msgstr "Opciones de Video"
 
 msgid "Enable precaching of models to have faster menus."
 msgstr "Habilitar la pre-carga de los modelos para mostrar más rápidamente los menus"
@@ -1240,10 +1252,10 @@ msgid "Sound settings."
 msgstr "Opciones de sonido."
 
 msgid "Video"
-msgstr "Vídeo"
+msgstr "Video"
 
 msgid "Video settings."
-msgstr "Opciones de vídeo."
+msgstr "Opciones de video."
 
 msgid "Overall"
 msgstr "General"
@@ -1482,46 +1494,40 @@ msgid "Scale"
 msgstr "Escala"
 
 msgid "Rotate"
-msgstr "Girar"
+msgstr "Rotación"
 
 msgid "Scroll"
-msgstr "Desplazar"
+msgstr "Desplazmiento"
 
 msgid "Pulse"
 msgstr "Pulso"
 
 msgid "Stretch"
-msgstr "Estirar"
+msgstr "Estiramiento"
 
 msgid "Deg:"
 msgstr "Grad:"
 
-#, fuzzy
 msgid "Amp:"
 msgstr "Amp:"
 
-#, fuzzy
 msgid "DHz:"
-msgstr "DHz:"
+msgstr "Hz:"
 
 msgid "Hz:"
 msgstr "Hz:"
 
-#, fuzzy
 msgid "Dt:"
-msgstr "Dt:"
+msgstr "Ver:"
 
-#, fuzzy
 msgid "Ds:"
-msgstr "Ds:"
+msgstr "Hor:"
 
-#, fuzzy
 msgid "T:"
-msgstr "T:"
+msgstr "Ver:"
 
-#, fuzzy
 msgid "S:"
-msgstr "S:"
+msgstr "Hor:"
 
 msgid "-"
 msgstr "-"
@@ -1551,7 +1557,7 @@ msgid "Item autosell enabled"
 msgstr "Venta automática de objetos activada"
 
 msgid "Storage (used/all):"
-msgstr "Almacenamiento (usado/total)"
+msgstr "Almacén (usado/total)"
 
 msgid "UGV items"
 msgstr "Eq VTNT"
@@ -1725,20 +1731,17 @@ msgid "Floor"
 msgstr "Piso"
 
 msgid "Phone HUD"
-msgstr ""
+msgstr "HUD para móvil."
 
 msgid "No more ammo"
-msgstr ""
+msgstr "No hay más munición"
 
-#, fuzzy
 msgid "No ammo"
-msgstr "No necesita municiones"
+msgstr "Sin municiones"
 
-#, fuzzy
 msgid "Reload"
-msgstr "Listo"
+msgstr "Recargar"
 
-#, fuzzy
 msgid "Custom HUD (by H-Hour)"
 msgstr "HUD personalizado (por H-Hour)"
 
@@ -1755,10 +1758,10 @@ msgid "RESERVED"
 msgstr "RESERVADO"
 
 msgid "Gen all levels"
-msgstr ""
+msgstr "Generar todos los niveles"
 
 msgid "Gen this level"
-msgstr ""
+msgstr "Generar este nivel"
 
 msgid "Preview"
 msgstr "Vista previa"
@@ -1766,7 +1769,6 @@ msgstr "Vista previa"
 msgid "Reinit"
 msgstr "Reiniciar"
 
-#, fuzzy
 msgid "Original HUD"
 msgstr "HUD Original"
 
@@ -1806,7 +1808,6 @@ msgstr "Nivel 2"
 msgid "Level 1"
 msgstr "Nivel 1"
 
-#, fuzzy
 msgid "Alternative HUD"
 msgstr "HUD Alternativo"
 
@@ -1888,13 +1889,11 @@ msgstr "Conversación del grupo"
 msgid "Chat"
 msgstr "Conversación"
 
-#, fuzzy
 msgid "Shots: <8>"
-msgstr "Disparos: %i"
+msgstr "Disparos: <8>"
 
-#, fuzzy
 msgid "TU: <7>"
-msgstr "UT: %i"
+msgstr "UT: <7>"
 
 msgid "Check to use this firemode for reaction fire"
 msgstr "Utilizar este modo de disparo para la reacción de disparo"
@@ -2170,13 +2169,13 @@ msgid "Actor Abilities"
 msgstr "Habilidades"
 
 msgid "Next firemode"
-msgstr "Siguiente modo de fuego"
+msgstr "Siguiente modo"
 
 msgid "Previous firemode"
-msgstr "Modo de fuego anterior"
+msgstr "Modo anterior"
 
 msgid "Firemode:"
-msgstr "Modo de fuego:"
+msgstr "Modo:"
 
 msgid "With:"
 msgstr "Con:"
@@ -2384,13 +2383,13 @@ msgid "No soldiers assigned"
 msgstr "No tiene soldados asignados"
 
 msgid "Our team killed:"
-msgstr "Soldados de nuestro equipo asesinados:"
+msgstr "Bajas Propias:"
 
 msgid "Civilians killed:"
-msgstr "Civiles asesinados:"
+msgstr "Bajas Civiles:"
 
 msgid "Enemies killed:"
-msgstr "Enemigos Asesinados:"
+msgstr "Bajas Enemigas:"
 
 msgid "Missions performed:"
 msgstr "Misiones realizadas:"
@@ -2399,7 +2398,7 @@ msgid "High-Explosives:"
 msgstr "Explosivos:"
 
 msgid "Sniper Rifles:"
-msgstr "Rifles de Francotirador:"
+msgstr "Francotirador:"
 
 msgid "Assault Weapons:"
 msgstr "Armas de Asalto:"
@@ -2564,13 +2563,13 @@ msgid "CREDITS"
 msgstr "Créditos"
 
 msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
-msgstr ""
+msgstr "Los alienígenas heridos son más fáciles de paralizar. Igualmente, si un alienígena ya ha sido atacado con un bastón aturdidor o un electroláser, armas normalmente letales podrían simplemente dejarlo inconsciente."
 
 msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
-msgstr ""
+msgstr "Nunca arriesgues la vida de tus soldados solo para capturar un alienígena vivo. Ya habrá otras ocasiones."
 
 msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
-msgstr ""
+msgstr "Recuerda, desarrollar una nueva arma es solo la mitad del trabajo. También tienes que fabricarla. Si solo investigas equipo de campo, tus talleres podrían tener dificultades para mantener el paso. Dale al Dr. Connor tiempo en el laboratorio también."
 
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "Puedes preparar las acciones para tu próximo turno mientras esperas. Presionando la tecla [Entrar] dos veces llevará a cabo todas las acciones pendientes una vez que sea tu turno nuevamente."
@@ -2609,7 +2608,7 @@ msgid "Utilize sniper cover. Get snipers to spots with good visibility (high gro
 msgstr "Utiliza la cobertura de tus francotiradores. Posiciónalos en lugares con buena visibilidad (elevaciones y las esquinas de los techos, por ejemplo). Déjalos agachados y con la Reacción de Disparo en modo de \"varios disparos\" para que vayan eliminando a los alienígenas."
 
 msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
-msgstr ""
+msgstr "Nunca asesines a los civiles. Los soldados que han matado a civiles no serán ascendidos a mejores rangos."
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Deberías asegurarte de que no demasiados civiles pierdan la vida. De otra forma podrías perder el juego antes de lo que imaginas."
@@ -2618,7 +2617,7 @@ msgid "You can use the right mouse button in the soldier equipment screen to equ
 msgstr "Puedes usar el botón derecho del ratón en la pantalla de equipamiento del soldado para equipar o retirar armas, municiones y armadura. Esto solo funciona en la base, no en las misiones tácticas donde tales acciones costarían UTs."
 
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
-msgstr "Enemigos Encontrados: Durante una misión en tierra puedes presionar [Espacio] para rotar entre todos los enemigos visibles. Presionando [t] se dibujará una línea hasta cada enemigo que el soldado seleccionado pueda ver."
+msgstr "Enemigos Encontrados: Durante una misión táctica puedes presionar [Espacio] para rotar entre todos los enemigos visibles. Presionando [t] se dibujará una línea hasta cada enemigo que el soldado seleccionado pueda ver."
 
 msgid "Build an alien containment to be able to imprison live aliens."
 msgstr "Construye una celda para alienígenas para poder capturar alienígenas vivos."
@@ -2678,10 +2677,10 @@ msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a 
 msgstr "Si te estás quedando sin Unidades de Tiempo (UTs) y tienes enemigos peligrosos cerca, usar una granada aturdidora para incapacitarlos hasta el inicio de tu próximo turno podría ser la mejor opción. 2 UT (sacarla de la pistolera) + 12 UT (lanzarla) = 14 UT."
 
 msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
-msgstr ""
+msgstr "Presiona la tecla [Esc] dos veces si deseas cambiar la pista musical durante el combate táctico."
 
 msgid "Press [e] to end your turn on the battlescape."
-msgstr ""
+msgstr "Presiona [e] para terminar tu turno durante el combate táctico."
 
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr "Usa [x] para cambiar entre los modos de Reacción de Disparo: ninguno, un disparo, disparos múltiples."
@@ -2750,7 +2749,7 @@ msgid "Assemble and save different teams for multiplayer matches - 4 player team
 msgstr "Crea y guarda diferentes equipos para el modo multijugador - equipos de 4 jugadores, 8 jugadores etcétera. Así podrás cargar rápidamente el indicado para un juego rápido."
 
 msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
-msgstr ""
+msgstr "Usa la tecla [F1] para guardar rápidamente el juego. Usa la tecla [F2] para cargar rápidamente el juego. También el juego crea un guardado rápido antes de cada misión."
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Usa la tecla [Mayus.] para ajustar la altura de tu disparo - útil para disparar el lanzamisiles a los pies de un grupo de alienígenas, por ejemplo"
@@ -2773,7 +2772,6 @@ msgstr "Ortnok"
 msgid "Taman"
 msgstr "Taman"
 
-#, fuzzy
 msgid "CCCP"
 msgstr "CCCP"
 
@@ -4017,7 +4015,7 @@ msgstr ""
 "\n"
 "La principal desventaja de los materiales alienígenas es su peso. Son significativamente más pesados que los materiales de que están hechas las aeronaves humanas modernas, y cualquier cosa que fabriquemos a partir de ellos sufrirá por el peso extra. La única forma en que los alienígenas logran mantener a sus OVNI en el aire sin alas es la enorme potencia de sus propulsores. La velocidad, la maniobrabilidad, el consumo de combustible, y el máximo alcance operacional - todos se verán afectados negativamente al poner materiales alienígenas en la aeronave.\n"
 "\n"
-"Sin embargo, no tenemos otra opción que hacer este sacrificio. Incluso un recubrimiento muy delgado de materiales alienígenas ofrece un considerable aumento en la protección, siendo capaz de soportar impactos que destruirían a nuestro Blindaje de Polímero para Aeronaves. Durante las pruebas de nuestro Nuevo blindaje, uno de nuestros propios misiles \"Sparrowhawk\" -los cuales pueden derribar a la mayoría de las aeronaves construidas en la Tierra con un solo impacto- fue incapaz de infligir un daño significativo en la aeronave de prueba. No es una broma. Hemos recolectado media hora de grabaciones en vídeo que prueban lo que acabo de decir.\n"
+"Sin embargo, no tenemos otra opción que hacer este sacrificio. Incluso un recubrimiento muy delgado de materiales alienígenas ofrece un considerable aumento en la protección, siendo capaz de soportar impactos que destruirían a nuestro Blindaje de Polímero para Aeronaves. Durante las pruebas de nuestro Nuevo blindaje, uno de nuestros propios misiles \"Sparrowhawk\" -los cuales pueden derribar a la mayoría de las aeronaves construidas en la Tierra con un solo impacto- fue incapaz de infligir un daño significativo en la aeronave de prueba. No es una broma. Hemos recolectado media hora de grabaciones en video que prueban lo que acabo de decir.\n"
 "\n"
 "EL Nuevo recubrimiento que hemos diseñado toma ventaja de estas características y demuestra la enorme resistencia de los materiales alienígenas. El blindaje puede resistir impactos del Arma de Flujo de Partículas a corta distancia sin ser destruido. Por primera vez, nuestras aeronaves serán capaces de soportar grandes cantidades de daño y permanecer en el aire tal como lo hacen los alienígenas. Aún no estamos a su mismo nivel, pero nos estamos acercando.\n"
 "\n"
@@ -6704,7 +6702,7 @@ msgstr ""
 "\n"
 "Su forma se parece vagamente a las antiguas espadas curvas de la historia humana, aunque tal vez se relacione más con algo salido de un cuento de fantasía. Es demasiado grande y difícil de manejar, y esta pobremente balanceado para la mano humana. La hoja, sin embargo, tiene un filo increíblemente agudo; hemos determinado que tiene un grosor de solamente una molécula. Esto le da al Sable Kerr su fantástica capacidad de corte.\n"
 "\n"
-"En nuestros registros del campo de batalla, hemos visto al Sable Kerr ser empuñado de una forma muy curiosa, usando los largos dedos de los alienígenas -algo que la mano humana no puede imitar- lo cual parece indicar que el Sable Kerr no fue diseñado específicamente como un arma sino para ser usado de manera distinta. Las analogías más cercanas que hemos encontrado en la Tierra son el bisturí de un cirujano y algunas herramientas antiguas para eviscerar. Estas comparaciones fueron una de nuestras primeras pistas sobre el verdadero propósito del Sable Kerr. Aunamos esto a algunos horribles registros en vídeo del ataque a Bombay, los cuales estaban tan granulados que solamente podíamos adivinar lo que estaban haciendo los alienígenas, hasta ahora.\n"
+"En nuestros registros del campo de batalla, hemos visto al Sable Kerr ser empuñado de una forma muy curiosa, usando los largos dedos de los alienígenas -algo que la mano humana no puede imitar- lo cual parece indicar que el Sable Kerr no fue diseñado específicamente como un arma sino para ser usado de manera distinta. Las analogías más cercanas que hemos encontrado en la Tierra son el bisturí de un cirujano y algunas herramientas antiguas para eviscerar. Estas comparaciones fueron una de nuestras primeras pistas sobre el verdadero propósito del Sable Kerr. Aunamos esto a algunos horribles registros en video del ataque a Bombay, los cuales estaban tan granulados que solamente podíamos adivinar lo que estaban haciendo los alienígenas, hasta ahora.\n"
 "\n"
 "El Sable Kerr es, en realidad, un instrumento de autopsia. Los alienígenas lo usan para abrir humanos ya sea vivos o muertos y extraer cualquier tejido u órgano. La larga espiga afilada en la parte baja de la hoja se inserta en el plexo solar, y entonces se mueve hacia arriba como unas tijeras, o un abrelatas. Corta a través del esternón de manera perturbadoramente fácil. En ese punto el alienígena abre la caja torácica y arranca o corta lo que necesite.\n"
 "\n"
@@ -8438,7 +8436,7 @@ msgid "UFO Crashsite."
 msgstr "Lugar del choque OVNI"
 
 msgid "Training Zone: Alpha."
-msgstr ""
+msgstr "Zona de Entrenamiento: Alfa."
 
 msgid "UFO landed in hills area."
 msgstr "Aterrizaje OVNI en una zona montañosa."
@@ -8473,7 +8471,6 @@ msgstr "Un Recolector alienígena caído en el desierto."
 msgid "A suburb that has received a visit from a Harvester."
 msgstr "Un suburbio que ha recibido la visita de un Recolector."
 
-#, fuzzy
 msgid "A suburb that has been visited by an UFO."
 msgstr "Un suburbio que ha sido visitado por un OVNI."
 
@@ -8510,14 +8507,12 @@ msgstr "Zona de construcción de una tubería subterránea."
 msgid "An urban district in an oriental region."
 msgstr "Zona urbana de una región oriental."
 
-#, fuzzy
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr "Un almacén llamado \"The Gate\" donde se resguarda tecnología secreta"
 
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Una estación de gasolina."
 
-#, fuzzy
 msgid "A small industry city area."
 msgstr "Una pequeña zona industrial."
 
@@ -8533,11 +8528,9 @@ msgstr "Un transbordador."
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Una hacienda rodeada de campos y corrales. Un OVNI ha aterrizado en uno de los campos."
 
-#, fuzzy
 msgid "A crashed Scout UFO."
 msgstr "Un OVNI explorador caído"
 
-#, fuzzy
 msgid "A small estate in the mountains."
 msgstr "Una pequeña finca en las montañas."
 
@@ -8580,7 +8573,6 @@ msgstr "Una finca de gente rica e influyente."
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Un sitio de excavación que ha sido atacado por los alienígenas."
 
-#, fuzzy
 msgid "Some houses in the desert."
 msgstr "Algunas casas en el desierto."
 
@@ -10625,7 +10617,7 @@ msgid "Stingray"
 msgstr "Stingray I"
 
 msgid "Stingray Interceptor"
-msgstr "Caza Interceptor Stingray"
+msgstr "Caza Interceptor clase Stingray"
 
 msgid "Starchaser"
 msgstr "Starchaser I"
@@ -10637,7 +10629,7 @@ msgid "Dragon"
 msgstr "Dragón I"
 
 msgid "Dragon Interceptor"
-msgstr "Caza Interceptor Dragón"
+msgstr "Caza Interceptor clase Dragón"
 
 msgid "Saracen I"
 msgstr "Sarraceno I"
@@ -10693,9 +10685,8 @@ msgstr "Río tropical"
 msgid "Transport"
 msgstr "Transporte"
 
-#, fuzzy
 msgid "Tower"
-msgstr "Poder:"
+msgstr "Tore"
 
 msgid "Stadium"
 msgstr "Estadio"
@@ -10978,11 +10969,11 @@ msgstr "Municiones: %i\n"
 msgid "not operational, depends on"
 msgstr "no está en operación, depende de"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%3.1f day left"
 msgid_plural "%3.1f days left"
-msgstr[0] "Falta %i Día."
-msgstr[1] "Faltan %i Días."
+msgstr[0] "Falta %3.1f día."
+msgstr[1] "Faltan %3.1f días."
 
 msgid "Slice through terrain at a lower level"
 msgstr "Cortar el terreno a un nivel más bajo"
@@ -11029,9 +11020,8 @@ msgstr "Mover la cámara a la derecha"
 msgid "Move battlescape camera left"
 msgstr "Mover la cámara a la izquierda"
 
-#, fuzzy
 msgid "Move battlescape camera"
-msgstr "Mover la cámara a la izquierda"
+msgstr "Mover la cámara durante el combate."
 
 msgid "Tilt battlescape camera down"
 msgstr "Inclinar la cámara hacia abajo"
@@ -11147,7 +11137,7 @@ msgid "skill_explosive"
 msgstr "Explosivos"
 
 msgid "skill_sniper"
-msgstr "Rifle de Francotirador"
+msgstr "Francotirador"
 
 msgid "skill_assault"
 msgstr "Rifles de asalto"
@@ -11308,15 +11298,13 @@ msgstr "¡Empate!"
 msgid "all"
 msgstr "total"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Team survivors:\t%i"
-msgstr ""
-"Sobrevivientes del Equipo\t%i\n"
-"\n"
+msgstr "Sobrevivientes del Equipo\t%i"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Enemies killed:\t%i"
-msgstr "Enemigos Asesinados\t%i\n"
+msgstr "Enemigos Asesinados\t%i"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Establece el máximo de soldados permitidos por jugador a un numero menor al máximo de soldados permitidos por equipo"
@@ -11335,7 +11323,7 @@ msgstr "Has terminado tu turno\n"
 msgid "Rank: %s"
 msgstr "Rango: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "\n"
@@ -11350,7 +11338,7 @@ msgstr ""
 "%s\n"
 "\n"
 "Raza: %s\n"
-"Reclutas: %i %s, %i %s, %i %s\n"
+"Reclutas: %i %s, %i %s, %i %s, %i %s\n"
 "Créditos: %ic\n"
 "Dificultad: %s\n"
 "Actitud mínima de las naciones: %i %%\n"
@@ -11484,7 +11472,7 @@ msgstr "Máximo de Soldados:\t%i\n"
 
 #, c-format
 msgid "Required Hangar:\t%s\n"
-msgstr ""
+msgstr "Hangar Requerido:\t%s\n"
 
 #, c-format
 msgid "%s:\t%i\n"
@@ -11662,7 +11650,7 @@ msgstr "La Celda para Alienígenas está vacía."
 
 #, c-format
 msgid "Alive %s"
-msgstr "Vivos %s"
+msgstr "%s con Vida"
 
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "No se puede realizar la transferencia - esta base no tiene Alojamientos."
@@ -11973,13 +11961,11 @@ msgstr "Campaña cargada"
 msgid "Campaign was successfully saved."
 msgstr "Se ha guardado exitosamente la campaña."
 
-#, fuzzy
 msgid "Quicksave"
-msgstr "Guardar"
+msgstr "Guardado Rápido"
 
-#, fuzzy
 msgid "QuickSave"
-msgstr "Guardar"
+msgstr "Guardado Rápido"
 
 msgid "Error"
 msgstr "Error"
@@ -12083,7 +12069,7 @@ msgstr "Científicos (disponibles/total): %i/%i"
 
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
-msgstr "Espacio de laboratorio (usado/total): %i/%i"
+msgstr "Laboratorio (usado/total): %i/%i"
 
 msgid "No research proposal available."
 msgstr "No hay propuesta de investigación"
@@ -12334,11 +12320,10 @@ msgid_plural "workers"
 msgstr[0] "trabajador"
 msgstr[1] "trabajadores"
 
-#, fuzzy
 msgid "pilot"
 msgid_plural "pilots"
 msgstr[0] "Piloto"
-msgstr[1] "Piloto"
+msgstr[1] "Pilotos"
 
 msgid "soldier"
 msgid_plural "soldiers"
@@ -12355,9 +12340,9 @@ msgid_plural "credits"
 msgstr[0] "crédito"
 msgstr[1] "créditos"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
-msgstr "Ganaste %i %s, %i %s, %i %s, y %i %s de la nación %s (%s)"
+msgstr "Obtuviste %i %s, %i %s, %i %s, %i %s, y %i %s de la nación %s (%s)"
 
 msgid "Nation changed happiness"
 msgstr "La nación cambió de actitud"
@@ -12434,7 +12419,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Crashed"
-msgstr "OVNI caído"
+msgstr "Caído"
 
 msgid "No nation"
 msgstr "Sin nación"
@@ -12447,9 +12432,9 @@ msgstr "¡Defensa  de la base: %s exitosa!"
 msgid "Alien activity has been detected in %s."
 msgstr "Actividad alienígena ha sido reportada en '%s'"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Go on a rescue mission at %s to save your soldiers, some of whom may still be alive."
-msgstr "Ve a una misión de rescate a %s. Podrías encontrar a algunos de tus soldados con vida."
+msgstr "Ve a una misión de rescate a %s para salvar a tus soldados, algunos de los cuales podrían estar aún con vida."
 
 msgid "Crashed UFO"
 msgstr "OVNI caído"
@@ -12671,9 +12656,9 @@ msgstr "Tiempo Viaje:\t%sh\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Distancia al objetivo:\t\t%.0f\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Health:\t%3.0f%%\n"
-msgstr "Salud\t%i\n"
+msgstr "Salud\t%3.0f%%\n"
 
 #, c-format
 msgid "Status:\t%s\n"
@@ -13322,7 +13307,7 @@ msgid "Not set"
 msgstr "No establecido"
 
 msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
-msgstr ""
+msgstr "Has derrotado al enemigo, pero tu desempeño fue pobre, y muchos civiles fueron asesinados."
 
 msgid "You've won the battle"
 msgstr "Has ganado la batalla"
@@ -13584,13 +13569,11 @@ msgstr "cargando modelos..."
 msgid "loading %s"
 msgstr "cargando %s"
 
-#, fuzzy
 msgid "Execute an action."
-msgstr "Seleccionada nación"
+msgstr "Ejecutar una acción."
 
-#, fuzzy
 msgid "Start aiming the weapon."
-msgstr "Municiones para esta arma."
+msgstr "Comenzar a apuntar el arma."
 
 msgid "Toggle reaction fire"
 msgstr "Cambia la reacción de disparo"
@@ -13605,7 +13588,7 @@ msgid "Reload the weapon in the soldiers left hand"
 msgstr "Recargar el arma en la mano izquierda del soldado"
 
 msgid "Set selected actor to move mode (it cancels the fire mode)"
-msgstr ""
+msgstr "Activar el modo de movimiento para el actor seleccionado (cancelara el modo de disparo)."
 
 msgid ""
 "Can't perform action:\n"
@@ -13871,23 +13854,6 @@ msgstr "Mediocre"
 
 msgid "Poor"
 msgstr "Pobre"
-
-msgid ""
-msgstr ""
-"Project-Id-Version: UFO Alien Invasion\n"
-"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 10:28+0200\n"
-"PO-Revision-Date: 2011-02-22 20:38-0600\n"
-"Last-Translator: Eliab (DarkRain) Escoto Cotero <spamtome.10@gmail.com>\n"
-"Language-Team: \n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-Language: Spanish\n"
 
 #~ msgid "Personal message"
 #~ msgstr "Mensaje personal"
