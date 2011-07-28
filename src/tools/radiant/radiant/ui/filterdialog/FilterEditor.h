@@ -67,7 +67,8 @@ private:
 	GtkListStore* createActionStore();
 
 	// Converts the given string "entityclass", "texture", etc. into an index in the typestore
-	int getTypeIndexForString(const std::string& type);
+	std::string getStringForType(const FilterRule::Type type);
+	FilterRule::Type getTypeForString(const std::string& typeStr);
 
 	static void onSave(GtkWidget* widget, FilterEditor* self);
 	static void onCancel(GtkWidget* widget, FilterEditor* self);
@@ -77,6 +78,7 @@ private:
 	static void onMoveRuleDown(GtkWidget* widget, FilterEditor* self);
 	static void onDeleteRule(GtkWidget* widget, FilterEditor* self);
 
+	static void onEntityKeyEdited(GtkCellRendererText* renderer, gchar* path, gchar* new_text, FilterEditor* self);
 	static void onRegexEdited(GtkCellRendererText* renderer, gchar* path, gchar* new_text, FilterEditor* self);
 	static void onTypeEdited(GtkCellRendererText* renderer, gchar* path, gchar* new_text, FilterEditor* self);
 	static void onActionEdited(GtkCellRendererText* renderer, gchar* path, gchar* new_text, FilterEditor* self);

@@ -724,7 +724,7 @@ bool Brush::hasVisibleMaterial () const
 	// Traverse the faces
 	for (Faces::const_iterator i = m_faces.begin(); i != m_faces.end(); ++i)
 	{
-		if (GlobalFilterSystem().isVisible("texture", (*i)->getShader().m_shader))
+		if (GlobalFilterSystem().isVisible(FilterRule::TYPE_TEXTURE, (*i)->getShader().m_shader))
 		{
 			return true; // return true on first visible material
 		}

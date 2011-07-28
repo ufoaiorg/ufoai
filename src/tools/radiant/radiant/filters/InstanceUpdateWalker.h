@@ -68,7 +68,7 @@ class InstanceUpdateWalker: public scene::Graph::Walker
 			if (entity) {
 				const EntityClass& eclass = entity->getEntityClass();
 				const std::string& name = eclass.name();
-				bool entityClassVisible = GlobalFilterSystem().isVisible("entityclass", name);
+				bool entityClassVisible = GlobalFilterSystem().isVisible(FilterRule::TYPE_ENTITYCLASS, name);
 				Node_traverseSubgraph(node, entityClassVisible ? _showWalker : _hideWalker);
 			}
 
