@@ -66,10 +66,11 @@ class InstanceUpdateWalker: public scene::Graph::Walker
 			// Retrieve the parent entity and check its entity class.
 			Entity* entity = Node_getEntity(node);
 			if (entity) {
-				const EntityClass& eclass = entity->getEntityClass();
-				const std::string& name = eclass.name();
-				bool entityClassVisible = GlobalFilterSystem().isVisible(FilterRule::TYPE_ENTITYCLASS, name);
+				const bool entityClassVisible = GlobalFilterSystem().isEntityVisible(FilterRule::TYPE_ENTITYCLASS, *entity)
+						&& GlobalFilterSystem().isEntityVisible(FilterRule::TYPE_ENTITYKEYVALUE, *entity);
 				Node_traverseSubgraph(node, entityClassVisible ? _showWalker : _hideWalker);
+				// If the entity is hidden, don't traverse the child nodes
+				return entityClassVisible;
 			}
 
 			// greebo: Update visibility of BrushInstances
