@@ -26,6 +26,8 @@
 #
 #######################################
 # Changelog
+#	2010-07-29 jerikojerk
+#		Add new requierement type "ufo" for rs_alien_ufo_theory
 #	2008-09-30 Hoehrer
 #		Added "redirect" entry.
 #	2008-09-26 Hoehrer
@@ -138,7 +140,8 @@ my $technologyRequirementSettings = {
 	"item"		=> 2,
 	"alien"		=> 2,
 	"alien_dead"	=> 2,
-	"event"		=> 1
+	"event"		=> 1,
+	"ufo"		=> 2
 };
 
 
