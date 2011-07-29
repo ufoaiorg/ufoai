@@ -1103,8 +1103,8 @@ base/models/geoscape/ufoyard.png | GNU General Public License 2.0 or later | Wil
 base/models/objects/abrams/abrams.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_bottom.obj | GNU General Public License 2.0 or later | feanix
-base/models/objects/abrams/abrams_bump.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_gun.obj | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_nm.png | GNU General Public License 2.0 or later | feanix;MCR
 base/models/objects/abrams/abrams_sm.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_turret.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/aircraft/airplane/airplane_1.png | GNU General Public License 2.0 or later | Willem Sitters
