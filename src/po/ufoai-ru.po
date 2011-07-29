@@ -1,3 +1,22 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
+"POT-Creation-Date: 2011-07-02 10:28+0200\n"
+"PO-Revision-Date: 2011-07-29 14:49+0600\n"
+"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Bookmarks: 1885,1541,-1,-1,829,-1,-1,882,410,-1\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+
 msgid "Autocannon Module"
 msgstr "Модуль автопушки"
 
@@ -1859,7 +1878,6 @@ msgstr "Использовать"
 msgid "Inventory and physical stats"
 msgstr "Инвентарь и физические характеристики"
 
-#, fuzzy
 msgid "Team chat"
 msgstr "Чат отряда"
 
@@ -2669,7 +2687,7 @@ msgid "Press [esc] twice if you want to change the music track playing on the ba
 msgstr ""
 
 msgid "Press [e] to end your turn on the battlescape."
-msgstr ""
+msgstr "Нажмите [e] чтоб завершить свой ход."
 
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr "Используйте [x] для переключения режимов ответного огня: нет, один выстрел, много выстрелов."
@@ -10906,9 +10924,8 @@ msgstr "Переместить камеру на поле боя вправо"
 msgid "Move battlescape camera left"
 msgstr "Переместить камеру на поле боя влево"
 
-#, fuzzy
 msgid "Move battlescape camera"
-msgstr "Переместить камеру на поле боя влево"
+msgstr "Переместить камеру на поле боя"
 
 msgid "Tilt battlescape camera down"
 msgstr "Наклонить камеру на поле боя вниз"
@@ -11186,15 +11203,13 @@ msgstr "Ничья!"
 msgid "all"
 msgstr "все"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Team survivors:\t%i"
-msgstr ""
-"Бойцов отряда выжило:\t%i\n"
-"\n"
+msgstr "Бойцов отряда выжило:\t%i"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Enemies killed:\t%i"
-msgstr "Врагов убито:\t%i\n"
+msgstr "Врагов убито:\t%i"
 
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Установите число бойцов у игрока меньше чем число солдат в команде"
@@ -12551,9 +12566,9 @@ msgstr "РВП:\t%sч\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Расстояние до цели:\t\t%.0f\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Health:\t%3.0f%%\n"
-msgstr "Здоровье:"
+msgstr "Здоровье:\t%3.0f%%\n"
 
 #, c-format
 msgid "Status:\t%s\n"
@@ -13212,7 +13227,7 @@ msgid "Not set"
 msgstr "Не задано"
 
 msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
-msgstr ""
+msgstr "Вы победили врага, но сделали это отвратительно, погибло много гражданских"
 
 msgid "You've won the battle"
 msgstr "Вы выиграли сражение"
@@ -13760,25 +13775,6 @@ msgstr "заурядно"
 
 msgid "Poor"
 msgstr "плохо"
-
-msgid ""
-msgstr ""
-"Project-Id-Version: UFO Alien Invasion\n"
-"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 10:28+0200\n"
-"PO-Revision-Date: 2011-06-04 12:41+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
-"Language-Team: \n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Poedit-Bookmarks: 1885,1541,-1,-1,829,-1,-1,882,410,-1\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIAN FEDERATION\n"
 
 #~ msgid "Personal message"
 #~ msgstr "Личное сообщение"
@@ -14420,6 +14416,7 @@ msgstr ""
 #~ msgstr "Зарядная кассета игломёта"
 
 #~ msgid "%d day\n"
+
 #~ msgid_plural "%d days\n"
 #~ msgstr[0] "%d день\n"
 #~ msgstr[1] "%d дня\n"
@@ -15425,12 +15422,14 @@ msgstr ""
 #~ msgstr "Лечить этого солдата"
 
 #~ msgid "medic"
+
 #~ msgid_plural "medics"
 #~ msgstr[0] "медик"
 #~ msgstr[1] "медика"
 #~ msgstr[2] "медиков"
 
 #~ msgid "Healing of %s completed - %i active healing left\n"
+
 #~ msgid_plural "Healing of %s completed - %i active healings left\n"
 #~ msgstr[0] "Курс лечения для %s завершён - %i боец всё ещё в лазарете.\n"
 #~ msgstr[1] "Курс лечения для %s завершён - %i бойца всё ещё в лазарете.\n"
@@ -15547,100 +15546,68 @@ msgstr ""
 # При разрешениии 1024*768 входит не более 17 символов
 #~ msgid "Camera Scroll:"
 #~ msgstr "Движение камеры:"
-
 #~ msgid "Camera Rotation:"
 #~ msgstr "Вращение камеры:"
-
 #~ msgid "Alien Medium Armour"
 #~ msgstr "Средняя броня пришельцев"
-
 #~ msgid "UFO - Condor"
 #~ msgstr "НЛО - Канонерка"
-
 #~ msgid "%s\t%0.2f%%\n"
 #~ msgstr "%s\t%0.2f%%\n"
-
 #~ msgid "Crashed Alien Ship. Secure the area."
 #~ msgstr "Сбито НЛО. Обследовать зону крушения."
-
 #~ msgid "Reload right hand weapon"
 #~ msgstr "Перезарядить оружие в правой руке"
-
 #~ msgid "Reload left hand weapon"
 #~ msgstr "Перезарядить оружие в левой руке"
-
 #~ msgid "Crouch/Stand up"
 #~ msgstr "Присесть/Встать"
-
 #~ msgid "Previous Base"
 #~ msgstr "Предыдущая база"
-
 #~ msgid "Next Base"
 #~ msgstr "Следующая база"
-
 #~ msgid "Personnel"
 #~ msgstr "Персонал"
-
 #~ msgid "Soldiers:"
 #~ msgstr "Солдаты:"
-
 #~ msgid "Scientists:"
 #~ msgstr "Учёные:"
-
 #~ msgid "Workers:"
 #~ msgstr "Рабочие:"
-
 #~ msgid "Medics:"
 #~ msgstr "Медики:"
-
 #~ msgid "Robots:"
 #~ msgstr "Роботы:"
-
 #~ msgid "Facilities  (used/available)"
 #~ msgstr "Помещения (используются/всего доступно)"
-
 #~ msgid "Hangars:"
 #~ msgstr "Ангары:"
-
 #~ msgid "Totals"
 #~ msgstr "Всего"
-
 #~ msgid "Bases:"
 #~ msgstr "Баз:"
-
 #~ msgid "Personnel:"
 #~ msgstr "Персонала:"
-
 #~ msgid "Hire/Unhire"
 #~ msgstr "Нанять/Уволить"
-
 #~ msgid "Tabelbala"
 #~ msgstr "Табельбала"
-
 #~ msgid "Terror attack"
 #~ msgstr "Террористическая атака"
-
 #~ msgid "Protect inhabitants."
 #~ msgstr "Защита жителей."
-
 #~ msgid "Protect the excavation site at all cost."
 #~ msgstr "Защитите место раскопок любой ценой."
-
 #~ msgid "Marina Serra"
 #~ msgstr "Марина Серра"
-
 #~ msgid "Protect civilians."
 #~ msgstr "Защита гражданского населения."
-
 #~ msgid "There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
 #~ msgstr "Появились слухи о шахте полной пришельцев. Хотя наш источник информации сомнителен, Вам необходимо её проверить."
-
 #~ msgid "Greeneville"
 #~ msgstr "Гринвилл"
-
 #~ msgid "Asyut"
 #~ msgstr "Эйсьют"
-
 #, fuzzy
 #~ msgid "Protect the military installation crew."
 #~ msgstr "Защита персонала военного укрепления."
@@ -15815,12 +15782,14 @@ msgstr ""
 #~ msgstr "Успешный перехват НЛО. Доступна новая миссия."
 
 #~ msgid "The mission %s expired and %i civilian died."
+
 #~ msgid_plural "The mission %s expired and %i civilians died."
 #~ msgstr[0] "Операция %s не была проведена вовремя и %i мирный житель погиб."
 #~ msgstr[1] "Операция %s не была проведена вовремя и %i мирных жителя погибло."
 #~ msgstr[2] "Операция %s не была проведена вовремя и %i мирных жителей погибло."
 
 #~ msgid "The aliens had enough time to kill %i civilian at %s."
+
 #~ msgid_plural "The aliens had enough time to kill %i civilians at %s."
 #~ msgstr[0] "У пришельцев было достаточно времени чтоб убить %i мирного жителя в %s"
 #~ msgstr[1] "У пришельцев было достаточно времени чтоб убить %i мирных жителя в %s"
