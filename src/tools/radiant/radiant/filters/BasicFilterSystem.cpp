@@ -25,8 +25,8 @@ namespace {
 	const std::string RKEY_USER_ACTIVE_FILTERS = RKEY_USER_FILTER_BASE + "//activeFilter";
 }
 
-// Initialise the filter system
-void BasicFilterSystem::init()
+
+void BasicFilterSystem::onRadiantStartup()
 {
 	// Ask the XML Registry for filter nodes (from .game file and from user's filters.xml)
 	xml::NodeList filters = GlobalRegistry().findXPath(RKEY_GAME_FILTERS);
@@ -40,6 +40,17 @@ void BasicFilterSystem::init()
 
 	// user-defined filters
 	addFiltersFromXML(userFilters, false);
+}
+
+void BasicFilterSystem::onRadiantShutdown()
+{
+	shutdown();
+}
+
+// Initialise the filter system
+void BasicFilterSystem::init()
+{
+	GlobalRadiant().addEventListener(this);
 }
 
 void BasicFilterSystem::addFiltersFromXML(const xml::NodeList& nodes, bool readOnly) {

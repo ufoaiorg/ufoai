@@ -3,6 +3,7 @@
 
 #include "XMLFilter.h"
 #include "ifilter.h"
+#include "iradiant.h"
 #include "xmlutil/Node.h"
 
 #include <set>
@@ -18,7 +19,7 @@ namespace filters
  */
 
 class BasicFilterSystem
-: public FilterSystem
+: public FilterSystem, RadiantEventListener
 {
 	// Hashtable of available filters, indexed by name
 	typedef std::map<std::string, XMLFilter> FilterTable;
@@ -100,6 +101,9 @@ public:
 
 	// Applies the ruleset and replaces the previous one for a given filter.
 	bool setFilterRules(const std::string& filter, const FilterRules& ruleSet);
+
+	void onRadiantStartup();
+	void onRadiantShutdown();
 
 	void init();
 	void shutdown();
