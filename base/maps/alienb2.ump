@@ -32,6 +32,19 @@ tile +hub
 	0		a		x		a		x		0
 }
 
+// Hangar (Supply Ship)
+tile +hangar
+{
+	6 6
+
+	0		a		a		a		x		0
+	w		+w		+a		+a		+w		a
+	w		+w		+a		+a		+w		a
+	w		+w		+a		+a		+w		a
+	w		+w		+a		+a		+w		a
+	0		a		x		a		a		0
+}
+
 // Power core
 tile +powercore
 {
@@ -67,6 +80,7 @@ assembly test
 
 	fix +entrance "2 6"
 	fix +hub "2 2"
+	fix +hangar "6 2"
 	fix +powercore "0 0"
 	fix +hall_v1 "4 0"
 }
