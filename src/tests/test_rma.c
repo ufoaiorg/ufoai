@@ -64,7 +64,7 @@ static void testUMPExtends (void)
 	mapInfo_t *randomMap;
 
 	srand(0);
-	randomMap = SV_AssembleMap("test_extends", "default", mapStr, posStr);
+	randomMap = SV_AssembleMap("test_extends", "default", mapStr, posStr, 0);
 	CU_ASSERT(randomMap != NULL);
 	Mem_Free(randomMap);
 }
@@ -74,7 +74,7 @@ static void testAssembly (void)
 	mapInfo_t *randomMap;
 
 	srand(0);
-	randomMap = SV_AssembleMap("forest", "large", mapStr, posStr);
+	randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, 0);
 	CU_ASSERT(randomMap != NULL);
 	Mem_Free(randomMap);
 }
@@ -91,7 +91,7 @@ static void testMassAssemblyTimeout (void)
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr);
+		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
@@ -111,7 +111,7 @@ static void testMassAssemblyParallel (void)
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr);
+		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
@@ -132,7 +132,7 @@ static void testMassAssemblySequential (void)
 	for (i = 0; i < 10; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
-		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr);
+		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
 		CU_ASSERT_PTR_NOT_NULL(randomMap);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
@@ -157,14 +157,14 @@ static void testMassAssemblySeed (void)
 		srand(i);
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);
-//		randomMap = SV_AssembleMap("village", "small", mapStr, posStr);
-		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr);
-//		randomMap = SV_AssembleMap("farm", "large", mapStr, posStr);
-//		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr);
-//		randomMap = SV_AssembleMap("forest", "large_crash", mapStr, posStr);
-//		randomMap = SV_AssembleMap("oriental", "large", mapStr, posStr);
-//		randomMap = SV_AssembleMap("village", "commercial", mapStr, posStr);
-//		randomMap = SV_AssembleMap("hills", "desert_harvester", mapStr, posStr);
+//		randomMap = SV_AssembleMap("village", "small", mapStr, posStr, i);
+		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr, i);
+//		randomMap = SV_AssembleMap("farm", "large", mapStr, posStr, i);
+//		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
+//		randomMap = SV_AssembleMap("forest", "large_crash", mapStr, posStr, i);
+//		randomMap = SV_AssembleMap("oriental", "large", mapStr, posStr, i);
+//		randomMap = SV_AssembleMap("village", "commercial", mapStr, posStr, i);
+//		randomMap = SV_AssembleMap("hills", "desert_harvester", mapStr, posStr, i);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		timeSum += time;

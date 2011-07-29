@@ -112,7 +112,7 @@ static void testMapDefsMassRMA (void)
 				srand(i);
 				time = Sys_Milliseconds();
 				Com_Printf("Seed: %i\n", i);
-				randomMap = SV_AssembleMap(p, md->param, mapStr, posStr);
+				randomMap = SV_AssembleMap(p, md->param, mapStr, posStr, i);
 				CU_ASSERT(randomMap != NULL);
 				time = (Sys_Milliseconds() - time);
 				CU_ASSERT(time < 30000);

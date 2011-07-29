@@ -135,6 +135,6 @@ typedef struct mapInfo_s {
 	int retryCnt;								/**< amount of retries in case the assembly didn't assemble and we are using the defined seeds */
 } mapInfo_t;
 
-mapInfo_t* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos);
+mapInfo_t* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed);
 
 #endif /* SV_RMA_H_ */

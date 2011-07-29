@@ -1957,6 +1957,7 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
  * Each of the map tiles in this string has a corresponding entry in the pos string, too.
  * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
  * string this string contains three coordinates for shifting the given tile names.
+ * @param[in] seed random seed to use (for cunit tests). If 0, the called functions can use their own seed setting.
  * @sa B_AssembleMap_f
  * @sa SV_AddTile
  * @sa SV_AddMandatoryParts
@@ -1964,7 +1965,7 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
  * @sa SV_ParseMapTile
  * @note Make sure to free the returned pointer
  */
-mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos)
+mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed)
 {
 	mapInfo_t *map;
 
