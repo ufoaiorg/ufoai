@@ -9,6 +9,8 @@
 /Makefile.local
 /memory
 /release-*/
+/ufoslicer
+/ufoslicer.exe
 /testall
 /testall.exe
 /ufo
