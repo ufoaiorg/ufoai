@@ -320,7 +320,6 @@ entity worldspawn {
 	optional {
 		maxteams		"Max. teams for multiplayer"
 		maxlevel		"Highest selectable level [1-8]"
-		nextmap			"The map that should be started after this one was finished"
 		randomspawn		"Use random spawn positions for the actors to spawn them - activate by setting this to 1"
 		light_night		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
 		angles_night	"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
@@ -592,7 +591,7 @@ entity trigger_touch {
 }
 
 entity trigger_nextmap {
-	description	"Any entity that touches this (once active) will trigger the map change to the nextmap. The spawnflags define the levels the spawned particle is visible on. Only used in singleplayer games."
+	description	"Any entity on the given team that touches this (once active) will trigger the map change to the nextmap. The spawnflags define the levels the spawned particle is visible on. Only used in singleplayer games."
 	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 
 	optional {
