@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( 1258 1103 20 ) ( 1258 1100 20 ) ( 1258 1100 15 ) tex_common/nodraw 60 0 0 0.5 0.5 65280 128 0
@@ -8696,27 +8697,27 @@
 // entity 107
 {
 "classname" "info_alien_start"
-"origin" "1520 688 26"
+"origin" "1520 688 28"
 }
 // entity 108
 {
 "classname" "info_alien_start"
-"origin" "1520 400 26"
+"origin" "1520 400 28"
 }
 // entity 109
 {
 "classname" "info_alien_start"
-"origin" "1520 464 26"
+"origin" "1520 464 28"
 }
 // entity 110
 {
 "classname" "info_alien_start"
-"origin" "1520 528 26"
+"origin" "1520 528 28"
 }
 // entity 111
 {
 "classname" "info_alien_start"
-"origin" "1520 624 26"
+"origin" "1520 624 28"
 }
 // entity 112
 {
@@ -10393,10 +10394,10 @@
 // brush 0
 {
 ( 1148 246 192 ) ( 1088 246 192 ) ( 1088 250 192 ) tex_buildings/window002 221.866 0 0 0.23437 0.1875 64514 0 0
-( 1148 250 192 ) ( 1088 250 192 ) ( 1148 226 144 ) tex_buildings/window002 221.8662 0 7.016477e-15 0.234375 -0.1875 64514 16 0
+( 1148 250 192 ) ( 1088 250 192 ) ( 1148 226 144 ) tex_buildings/window002 221.8662 0 7.016477e-015 0.234375 -0.1875 64514 16 0
 ( 1144 227 160 ) ( 1144 227 142 ) ( 1144 223 160 ) tex_common/nodraw 0 0 0 0.5 0.5 64514 0 0
 ( 1037 222 144 ) ( 1165 222 144 ) ( 1037 226 144 ) tex_common/nodraw 0 0 0 0.5 0.5 64514 0 0
-( 1088 246 192 ) ( 1148 246 192 ) ( 1148 222 144 ) tex_buildings/window002 221.8662 0 7.016477e-15 0.234375 -0.1875 64514 16 0
+( 1088 246 192 ) ( 1148 246 192 ) ( 1148 222 144 ) tex_buildings/window002 221.8662 0 7.016477e-015 0.234375 -0.1875 64514 16 0
 ( 1088 222 146 ) ( 1088 226 146 ) ( 1088 222 164 ) tex_common/nodraw 0 0 0 0.5 0.5 64514 0 0
 }
 }
@@ -10407,10 +10408,10 @@
 // brush 0
 {
 ( 1084 246 192 ) ( 1026 246 192 ) ( 1026 250 192 ) tex_buildings/window002 221.866 0 0 0.23437 0.1875 64514 0 0
-( 1084 250 192 ) ( 1026 250 192 ) ( 1084 226 144 ) tex_buildings/window002 79.4502 0 7.016477e-15 0.2265626 -0.1875 64514 16 0
+( 1084 250 192 ) ( 1026 250 192 ) ( 1084 226 144 ) tex_buildings/window002 79.4502 0 7.016477e-015 0.2265626 -0.1875 64514 16 0
 ( 1084 226 160 ) ( 1084 226 142 ) ( 1084 222 160 ) tex_common/nodraw 0 0 0 0.5 0.5 64514 0 0
 ( 973 222 144 ) ( 1101 222 144 ) ( 973 226 144 ) tex_common/nodraw 0 0 0 0.5 0.5 64514 0 0
-( 1026 246 192 ) ( 1084 246 192 ) ( 1084 222 144 ) tex_buildings/window002 79.4502 0 7.016477e-15 0.2265626 -0.1875 64514 16 0
+( 1026 246 192 ) ( 1084 246 192 ) ( 1084 222 144 ) tex_buildings/window002 79.4502 0 7.016477e-015 0.2265626 -0.1875 64514 16 0
 ( 1026 222 146 ) ( 1026 226 146 ) ( 1026 222 164 ) tex_common/nodraw 0 0 0 0.5 0.5 64514 0 0
 }
 }
@@ -12685,4 +12686,94 @@
 ( 758 1088 56 ) ( 750 1088 56 ) ( 750 1084 56 ) tex_common/nodraw 28 0 0 0.5 0.5 134283008 0 0
 ( 764 544 60 ) ( 764 608 60 ) ( 776 608 60 ) tex_material/metall002 28 0 0 0.5 0.5 134283008 0 0
 }
+}
+// entity 176
+{
+"classname" "info_alien_start"
+"origin" "944 176 156"
+"angle" "90"
+}
+// entity 177
+{
+"classname" "info_alien_start"
+"origin" "1104 176 156"
+"angle" "90"
+}
+// entity 178
+{
+"classname" "info_alien_start"
+"origin" "1232 176 28"
+"angle" "-90"
+}
+// entity 179
+{
+"classname" "info_alien_start"
+"origin" "848 1168 28"
+"angle" "90"
+}
+// entity 180
+{
+"classname" "info_alien_start"
+"origin" "912 1168 28"
+"angle" "90"
+}
+// entity 181
+{
+"classname" "info_alien_start"
+"origin" "1136 1168 28"
+"angle" "90"
+}
+// entity 182
+{
+"classname" "info_alien_start"
+"origin" "1200 1168 28"
+"angle" "90"
+}
+// entity 183
+{
+"classname" "info_alien_start"
+"origin" "816 1072 28"
+"angle" "-90"
+}
+// entity 184
+{
+"classname" "info_alien_start"
+"origin" "1392 976 28"
+"angle" "135"
+}
+// entity 185
+{
+"classname" "info_alien_start"
+"origin" "1264 176 28"
+"angle" "-90"
+}
+// entity 186
+{
+"classname" "info_alien_start"
+"origin" "1520 496 28"
+}
+// entity 187
+{
+"classname" "info_alien_start"
+"origin" "1520 720 28"
+}
+// entity 188
+{
+"classname" "info_alien_start"
+"origin" "1520 592 28"
+}
+// entity 189
+{
+"classname" "info_alien_start"
+"origin" "1520 752 28"
+}
+// entity 190
+{
+"classname" "info_alien_start"
+"origin" "1168 1072 92"
+}
+// entity 191
+{
+"classname" "info_alien_start"
+"origin" "880 1072 92"
 }
