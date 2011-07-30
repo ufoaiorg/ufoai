@@ -2026,7 +2026,8 @@ mapdef city_disco
 		coop3
 		coop4
 	}
-	maxaliens		6
+	maxaliens		21
+	// randomspawn	enabled
 
 	aircraft
 	{
@@ -2231,7 +2232,9 @@ mapdef eaglenest
 		coop3
 		coop4
 	}
-	maxaliens		9
+	maxaliens		18
+	// randomspawn	enabled
+
 	description		"_A small estate in the mountains."
 
 	aircraft
@@ -2340,6 +2343,7 @@ mapdef italy
 	}
 
 	maxaliens		22
+	// randomspawn	enabled
 
 	aircraft
 	{
@@ -2392,7 +2396,9 @@ mapdef japan_default
 		coop3
 		coop4
 	}
-	maxaliens		16
+	maxaliens		16	// arc:2, bridge:2, buddha:2, harvester:14, scout:4, f1:2, f2:2, f3:2, f4:2, fill1:2, h1:6, h2:4, h3:6, h4:7, h5:0, p_bl:2, p_br:2, p_btl:2, p_h:2, p_tl:2, p_tr:0, p_v:0, sw:2, w1:0
+	// randomspawn	enabled
+
 	civilianteam	asia
 
 	aircraft
@@ -2445,7 +2451,8 @@ mapdef mart
 		coop4
 	}
 
-	maxaliens		16
+	maxaliens		23
+	// randomspawn	enabled
 
 	aircraft
 	{
