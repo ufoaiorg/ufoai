@@ -393,8 +393,17 @@ void G_EventSendState (unsigned int playerMask, const edict_t *ent)
  */
 void G_EventCenterView (const edict_t *ent)
 {
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_CENTERVIEW);
-	gi.WriteGPos(ent->pos);
+	G_EventCenterViewAt(G_VisToPM(ent->visflags), ent->pos);
+}
+
+/**
+ * @brief Centers the view for all clients that are seeing the given edict on the world position of the edict
+ * @param[in] ent The edict to use the position from
+ */
+void G_EventCenterViewAt (int playerMask, const pos3_t pos)
+{
+	gi.AddEvent(playerMask, EV_CENTERVIEW);
+	gi.WriteGPos(pos);
 }
 
 /**
