@@ -27,7 +27,7 @@
 #include "ibrush.h"
 #include "editable.h"
 
-#include "brushtokens.h"
+#include "BrushTokens.h"
 #include "Brush.h"
 #include "BrushInstance.h"
 

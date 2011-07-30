@@ -1,4 +1,6 @@
-#include "brushtokens.h"
+#include "BrushTokens.h"
+#include "FaceTokenExporter.h"
+#include "FaceTokenImporter.h"
 #include "stringio.h"
 #include "stream/stringstream.h"
 #include "imap.h"
