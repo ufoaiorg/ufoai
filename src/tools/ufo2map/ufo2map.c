@@ -412,6 +412,11 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (Q_streq(argv[i], "-extra")) {
 			config.extrasamples = qtrue;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
+		} else if (Q_streq(argv[i], "-soft")) {
+			config.extrasamples = qtrue;
+			config.soft = qtrue;
+			Verb_Printf(VERB_LESS, "extrasamples = true\n");
+			Verb_Printf(VERB_LESS, "soft = true\n");
 		} else if (Q_streq(argv[i],"-quant")) {
 			config.lightquant = (byte)atoi(argv[i + 1]);
 			if (config.lightquant < 1 || config.lightquant > 6) {

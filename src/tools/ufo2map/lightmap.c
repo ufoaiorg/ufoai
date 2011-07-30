@@ -746,8 +746,10 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 
 
 #define MAX_SAMPLES 5
-static const float sampleofs[MAX_SAMPLES][2] = {
-	{0.0, 0.0}, {-0.125, -0.125}, {0.125, -0.125}, {0.125, 0.125}, {-0.125, 0.125}
+#define SOFT_SAMPLES 4
+static const float sampleofs[2][MAX_SAMPLES][2] = {
+	{{0.0, 0.0}, {-0.125, -0.125}, {0.125, -0.125}, {0.125, 0.125}, {-0.125, 0.125}},
+	{{-0.66, 0.33}, {-0.33, -0.66}, {0.33, 0.66}, {0.66, -0.33},{0.0,0.0}}
 };
 
 /**
@@ -768,6 +770,7 @@ void BuildFacelights (unsigned int facenum)
 	int i, j, numsamples;
 	facelight_t *fl;
 	int *headhints;
+	const int grid_type = config.soft ? 1 : 0;
 
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
@@ -786,7 +789,7 @@ void BuildFacelights (unsigned int facenum)
 
 	/* lighting -extra antialiasing */
 	if (config.extrasamples)
-		numsamples = MAX_SAMPLES;
+		numsamples = config.soft ? SOFT_SAMPLES : MAX_SAMPLES;
 	else
 		numsamples = 1;
 
@@ -841,8 +844,8 @@ void BuildFacelights (unsigned int facenum)
 			vec3_t pos;
 
 			/* add offset for supersampling */
-			VectorMA(li.surfpt[i], sampleofs[j][0] * li.step, li.textoworld[0], pos);
-			VectorMA(pos, sampleofs[j][1] * li.step, li.textoworld[1], pos);
+			VectorMA(li.surfpt[i], sampleofs[grid_type][j][0] * li.step, li.textoworld[0], pos);
+			VectorMA(pos, sampleofs[grid_type][j][1] * li.step, li.textoworld[1], pos);
 
 			NudgeSamplePosition(pos, normal, center, pos);
 
