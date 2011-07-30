@@ -2610,7 +2610,10 @@ mapdef spedition
 		coop3
 		coop4
 	}
-	maxaliens	7
+	maxaliens		28
+	// randomspawn	enabled
+
+	civilianteam	worker
 
 	aircraft
 	{
@@ -2716,7 +2719,8 @@ mapdef tower
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		29
+	// randomspawn	enabled
 
 	aircraft
 	{
@@ -3483,7 +3487,9 @@ mapdef mine
 		coop3
 		coop4
 	}
-	maxaliens	15
+	maxaliens	26
+	// randomspawn	enabled
+
 	civilianteam	miner
 
 	aircraft
@@ -3626,7 +3632,9 @@ mapdef oriental_mosque
 		coop3
 		coop4
 	}
-	maxaliens		16
+	maxaliens		20
+	// randomspawn	enabled
+
 	civilianteam	middle
 
 	aircraft
