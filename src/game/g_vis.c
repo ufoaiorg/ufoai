@@ -326,6 +326,20 @@ int G_CheckVisTeamAll (const int team, qboolean perish, const edict_t *ent)
 }
 
 /**
+ * @brief Make everything visible to anyone who can't already see it
+ */
+void G_VisMakeEverythingVisible (void)
+{
+	edict_t *ent = NULL;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		const int playerMask = G_VisToPM(ent->visflags);
+		G_AppearPerishEvent(~playerMask, qtrue, ent, NULL);
+		if (G_IsActor(ent))
+			G_SendInventory(~G_TeamToPM(ent->team), ent);
+	}
+}
+
+/**
  * @brief Check if the edict appears/perishes for the other teams. If they appear
  * for other teams, the needed information for those clients are also send in
  * @c G_CheckVisTeam resp. @c G_AppearPerishEvent

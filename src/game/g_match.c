@@ -237,14 +237,7 @@ static void G_MatchSendResults (int team)
 			}
 	}
 
-	/* Make everything visible to anyone who can't already see it */
-	ent = NULL;
-	while ((ent = G_EdictsGetNextInUse(ent))) {
-		const int playerMask = G_VisToPM(ent->visflags);
-		G_AppearPerishEvent(~playerMask, qtrue, ent, NULL);
-		if (G_IsActor(ent))
-			G_SendInventory(~G_TeamToPM(ent->team), ent);
-	}
+	G_VisMakeEverythingVisible();
 
 	/* send results */
 	gi.AddEvent(PM_ALL, EV_RESULTS);
