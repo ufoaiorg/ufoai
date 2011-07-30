@@ -531,7 +531,10 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	if (TR_TestLineSingleTile(pos, delta, headhint))
 		return; /* occluded */
 
-	light = sun_intensity * dot * scale;
+	light = sun_intensity * dot;
+	if (light > 255)
+		light = 255;
+	light *= scale;
 
 	/* add some light to it */
 	VectorMA(sample, light, sun_color, sample);
@@ -601,6 +604,8 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 		if (TR_TestLineSingleTile(pos, l->origin, headhint))
 			continue;	/* occluded */
 
+		if (light > 255)
+			light = 255;
 		/* add some light to it */
 		VectorMA(sample, light * scale, l->color, sample);
 
