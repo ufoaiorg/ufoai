@@ -175,7 +175,8 @@ mapdef bomber_city
 		coop3
 		coop4
 	}
-	maxaliens		30
+	maxaliens		16
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -230,8 +231,10 @@ mapdef bridge
 		coop3
 		coop4
 	}
-	maxaliens		6
-	hurtaliens	true
+	maxaliens		24
+	//	randomspawn enabled
+
+	hurtaliens		true
 
 	aircraft
 	{
@@ -1344,7 +1347,9 @@ mapdef laboratory
 		coop3
 		coop4
 	}
-	maxaliens		8 //TODO: This is an arbitrary value right now.
+	maxaliens		24
+	// randomspawn	enabled
+
 	civilianteam	scientist
 
 	aircraft
@@ -2124,7 +2129,8 @@ mapdef construction
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		29
+	// randomspawn	enabled
 
 	aircraft
 	{
@@ -2175,7 +2181,8 @@ mapdef druglord
 		coop3
 		coop4
 	}
-	maxaliens		11
+	maxaliens		25
+	// randomspawn	enabled
 
 	aircraft
 	{
@@ -2647,7 +2654,8 @@ mapdef stadium
 		coop4
 	}
 
-	maxaliens		5
+	maxaliens		21
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -2755,7 +2763,9 @@ mapdef bunker
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		16
+	// randomspawn enabled
+
 	civilianteam	armysoldier
 
 	aircraft
@@ -3031,7 +3041,9 @@ mapdef excavation
 	description		"_An excavation site that has fallen under alien attack."
 	multiplayer		true
 	teams			2
-	maxaliens		18
+	maxaliens		23
+	// randomspawn enabled
+
 	civilianteam	middle
 	gametypes {
 		1on1
