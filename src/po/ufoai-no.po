@@ -333,8 +333,11 @@ msgid "Medikit"
 msgstr "Førstehjælpskasse"
 
 #, fuzzy
-msgid "Requirement:"
+msgid "Requirement(s):"
 msgstr "Ingen krav"
+
+msgid "The Big Picture"
+msgstr ""
 
 #, fuzzy
 msgid "Pre-Research Report"
@@ -496,8 +499,33 @@ msgstr "Start kampanje"
 msgid "<1>"
 msgstr ""
 
+#, fuzzy
+msgid "Quit"
+msgstr "Auto"
+
+msgid "You will lose all your progress."
+msgstr ""
+
+msgid "Enter the game options menu."
+msgstr ""
+
+#, fuzzy
+msgid "Retry this battlescape mission."
+msgstr "Spill dette oppdraget igjen"
+
+#, fuzzy
+msgid "Abort this battlescape mission."
+msgstr "Ryk kampscenens kamera op"
+
 msgid "Abort"
 msgstr "Avbryt"
+
+#, fuzzy
+msgid "Go back to the battlescape."
+msgstr "Ryk kampscenens kamera op"
+
+msgid "Back to the main menu."
+msgstr ""
 
 msgid "Base Info"
 msgstr "Baseinfo"
@@ -583,10 +611,6 @@ msgstr "Vis nøkkelbindinger"
 msgid "Show Keys"
 msgstr "Vis nøkkelbindinger"
 
-#, fuzzy
-msgid "Joystick speed."
-msgstr "Opprinnelige instillinger"
-
 msgid "Threshold:"
 msgstr ""
 
@@ -599,34 +623,18 @@ msgstr ""
 msgid "Joystick or Joypad:"
 msgstr ""
 
-msgid "Select which of your joysticks or joypads you want to use."
-msgstr ""
-
-msgid "Enable your joystick or joypad."
-msgstr ""
-
 #, fuzzy
 msgid "Enable:"
 msgstr "Variabel:"
-
-msgid "Enable or disable your Joystick."
-msgstr ""
 
 #, fuzzy
 msgid "Joystick Settings"
 msgstr "Opprinnelige instillinger"
 
-#, fuzzy
-msgid "Available HUD for the battlescape mode."
-msgstr "Ryk kampscenens kamera op"
-
 msgid "HUD Design:"
 msgstr "HUD-design:"
 
 msgid "Select the Head-Up-Display for the battlescape."
-msgstr ""
-
-msgid "Select 'Yes' if you want more intelligent soldiers."
 msgstr ""
 
 #, fuzzy
@@ -645,7 +653,7 @@ msgstr ""
 msgid "Confirm Actions:"
 msgstr "Bekreft aksjoner:"
 
-msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
+msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 msgstr ""
 
 msgid "Choose between 0-9, higher values mean higher actor speed."
@@ -655,24 +663,15 @@ msgstr ""
 msgid "Actor Speed:"
 msgstr "Rull opp"
 
-msgid "Actor speed changes the speed of aliens and humans."
-msgstr ""
-
 #, fuzzy
 msgid "Battlescape Gameplay Settings"
 msgstr "Flyt kampscenens kamera mot venstre"
-
-msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
-msgstr ""
 
 #, fuzzy
 msgid "Center View:"
 msgstr "Sentrer bilde:"
 
-msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
-msgstr ""
-
-msgid "Enable the isometric 3D rendering mode for the battlescape."
+msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 msgstr ""
 
 msgid "Isometric Mode:"
@@ -702,10 +701,6 @@ msgstr "Ryk kampscenens kamera op"
 msgid "Minimum/Maximum Zoom:"
 msgstr ""
 
-#, fuzzy
-msgid "The minimum/maximum zoom of the battlescape camera."
-msgstr "Ryk kampscenens kamera op"
-
 msgid "ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
 msgstr ""
 
@@ -716,39 +711,18 @@ msgid "Minimum/Maximum Shift Pitch:"
 msgstr ""
 
 #, fuzzy
-msgid "The minimum/maximum pitch shift of the battlescape camera."
-msgstr "Ryk kampscenens kamera op"
-
-msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
-msgstr ""
-
-#, fuzzy
 msgid "Move Deceleration:"
 msgstr "Beskrivelse:"
 
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
 msgstr ""
 
-msgid "Actual camera rotation speed."
-msgstr ""
-
 msgid "Rotation Speed:"
-msgstr ""
-
-#, fuzzy
-msgid "The rotation speed of the battlescape camera."
-msgstr "Ryk kampscenens kamera op"
-
-msgid "Actual camera scroll speed."
 msgstr ""
 
 #, fuzzy
 msgid "Scroll Speed:"
 msgstr "Rull opp"
-
-#, fuzzy
-msgid "The scroll speed of the battlescape camera."
-msgstr "Ryk kampscenens kamera op"
 
 #, fuzzy
 msgid "Battlescape Camera Settings"
@@ -762,9 +736,6 @@ msgstr "Flyt kampscenens kamera mot venstre"
 msgid "Restart the sound-engine and apply your settings."
 msgstr "Restart lyden for å endre instillinger"
 
-msgid "Current sample rate frequency in kHz."
-msgstr ""
-
 #, fuzzy
 msgid "Audio Sample Rate:"
 msgstr "Lydnivå:"
@@ -776,33 +747,16 @@ msgid "Advanced Audio Options"
 msgstr ""
 
 #, fuzzy
+msgid "Turn the menu sounds on or off."
+msgstr "Skift status for reaksjonsild på/fra"
+
+#, fuzzy
 msgid "Menu Sounds:"
 msgstr "Medium såret"
-
-msgid "You do not like click sounds?"
-msgstr ""
-
-msgid "Current volume of the sound effects."
-msgstr ""
 
 #, fuzzy
 msgid "Sound Effects:"
 msgstr "Effekter:"
-
-#, fuzzy
-msgid "Do you want to hear the screams?"
-msgstr "Er du sikker på at du ønsker å ødelegge denne bygningen?"
-
-# # in game
-#, fuzzy
-msgid "Current volume of the music."
-msgstr "Nåværende team"
-
-msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
-msgstr ""
-
-msgid "Do not turn me off."
-msgstr ""
 
 #, fuzzy
 msgid "Enable Audio:"
@@ -828,19 +782,11 @@ msgstr "Skift til den forrige base"
 msgid "Switch to low video settings"
 msgstr "Skift til den forrige base"
 
-#, fuzzy
-msgid "Enable the material system."
-msgstr "Aktiver moralstatus:"
-
 msgid "Material System:"
 msgstr ""
 
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 msgstr ""
-
-#, fuzzy
-msgid "Enable weather effects."
-msgstr "Væreffekter:"
 
 #, fuzzy
 msgid "Weather Effects:"
@@ -849,19 +795,11 @@ msgstr "Væreffekter:"
 msgid "Weather effects like rain or snow."
 msgstr ""
 
-#, fuzzy
-msgid "Enable fog."
-msgstr "Avslutt runde"
-
 msgid "Fog:"
 msgstr ""
 
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
 msgstr ""
-
-#, fuzzy
-msgid "Enable coronas."
-msgstr "Teksturkompresjon:"
 
 #, fuzzy
 msgid "Coronas:"
@@ -871,20 +809,10 @@ msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr ""
 
 #, fuzzy
-msgid "Enable flares."
-msgstr "Væreffekter:"
-
-#, fuzzy
 msgid "Flares:"
 msgstr "Svær"
 
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
-msgstr ""
-
-msgid "Adjust various other settings here."
-msgstr ""
-
-msgid "Current amount of ambient light reaching the earth."
 msgstr ""
 
 #, fuzzy
@@ -932,9 +860,6 @@ msgstr ""
 msgid "Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
 msgstr ""
 
-msgid "Enable real-time lighting."
-msgstr ""
-
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr ""
 
@@ -945,9 +870,6 @@ msgstr ""
 msgid "Light and Shadow"
 msgstr "Høyre hånd"
 
-msgid "Adjust various light and shadow settings here."
-msgstr ""
-
 msgid "Enable post processing shader effects. ATTENTION: May require restart to take effect."
 msgstr ""
 
@@ -957,16 +879,8 @@ msgstr ""
 msgid "Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
 msgstr ""
 
-#, fuzzy
-msgid "Change the swap interval."
-msgstr "Endre oppløsningen"
-
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr ""
-
-#, fuzzy
-msgid "Change the amount of multisample buffers."
-msgstr "Setter maks tillatte soldater per team"
 
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 msgstr ""
@@ -975,9 +889,6 @@ msgid "Multisample Buffers / Swap Interval:"
 msgstr ""
 
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
-msgstr ""
-
-msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
 msgstr ""
 
 msgid "Vertex Buffers:"
@@ -1002,16 +913,8 @@ msgstr ""
 msgid "OpenGL Settings"
 msgstr "Video-instillinger"
 
-msgid "Adjust various OpenGL settings here."
-msgstr ""
-
 msgid "Very high values are only recommended when playing in very high screen resolutions."
 msgstr ""
-
-# # in game
-#, fuzzy
-msgid "Current value."
-msgstr "Nåværende team"
 
 # Translatornote: anisotropy means of unequal physical
 # properties along different axes.
@@ -1022,18 +925,11 @@ msgstr "Anisotropi teksturnivå:"
 msgid "The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 msgstr ""
 
-msgid "Enable high texture detail."
-msgstr ""
-
 msgid "LoD:"
 msgstr ""
 
 msgid "Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
 msgstr ""
-
-#, fuzzy
-msgid "Enable texture compression."
-msgstr "Teksturkompresjon:"
 
 #, fuzzy
 msgid "Compression:"
@@ -1093,9 +989,6 @@ msgstr ""
 msgid "Texture Settings"
 msgstr "Video-instillinger"
 
-msgid "Adjust various texture settings here."
-msgstr ""
-
 msgid "Default is to play the intro video just once at the first game start."
 msgstr ""
 
@@ -1111,18 +1004,9 @@ msgstr ""
 msgid "Show FPS:"
 msgstr "Vis FPS:"
 
-msgid "See how many frames per second are rendered."
-msgstr ""
-
 #, fuzzy
 msgid "Other Display Settings"
 msgstr "Spillinstillinger"
-
-msgid "Adjust other settings here."
-msgstr ""
-
-msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
-msgstr ""
 
 msgid "Screenshot Format:"
 msgstr ""
@@ -1131,9 +1015,6 @@ msgid "The file format used for compressing and saving your screenshots."
 msgstr ""
 
 msgid "jpeg Quality:"
-msgstr ""
-
-msgid "Here you can set the quality of jpeg screenshots."
 msgstr ""
 
 #, fuzzy
@@ -1147,14 +1028,8 @@ msgstr ""
 msgid "Saturation:"
 msgstr "Nasjon"
 
-msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
-msgstr ""
-
 msgid "Gamma:"
 msgstr "Gamma:"
-
-msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
-msgstr ""
 
 #, fuzzy
 msgid "Contrast:"
@@ -1166,22 +1041,13 @@ msgstr ""
 msgid "Brightness:"
 msgstr ""
 
-msgid "Brightness sets the intensity of light emitting from your screen."
-msgstr ""
-
 msgid "Monitor Calibration Controls"
 msgstr ""
 
 msgid "Calibrate your display here."
 msgstr ""
 
-msgid "Stretch the screen to a ratio of 4:3."
-msgstr ""
-
 msgid "Stretch the Screen with a 4:3 Ratio:"
-msgstr ""
-
-msgid "Stretches the screen with a 4:3 ratio."
 msgstr ""
 
 msgid "Play UFO:AI in fullscreen."
@@ -1191,9 +1057,6 @@ msgstr ""
 # mens fuldskærm er en visningstilstand.
 msgid "Fullscreen:"
 msgstr "Fullskjerm:"
-
-msgid "Play UFO:AI in fullscreen- or window-mode."
-msgstr ""
 
 msgid "Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
 msgstr ""
@@ -1221,9 +1084,6 @@ msgstr ""
 msgid "Resolution and Display Settings"
 msgstr ""
 
-msgid "Adjust resolution and display settings here."
-msgstr ""
-
 msgid "Advanced"
 msgstr ""
 
@@ -1236,7 +1096,7 @@ msgid "Video Settings"
 msgstr "Video-instillinger"
 
 #, fuzzy
-msgid "Enable precaching of models to have faster menus."
+msgid "Precaching of models means having faster menus."
 msgstr "Legg moteller i mellomlager (hurtigere menyer)"
 
 #, fuzzy
@@ -1244,16 +1104,8 @@ msgid "Precache Models:"
 msgstr "Legg moteller i mellomlager:"
 
 #, fuzzy
-msgid "Precaching of models means having faster menus."
-msgstr "Legg moteller i mellomlager (hurtigere menyer)"
-
-#, fuzzy
 msgid "Menu Option(s)"
 msgstr "Instillnger"
-
-#, fuzzy
-msgid "Enable the 'Tip of the Day'."
-msgstr "Dagens tips"
 
 #, fuzzy
 msgid "Show 'Tip of the Day':"
@@ -1263,19 +1115,12 @@ msgid "Enable this if you are new to UFO:AI and want to see interesting tips wri
 msgstr ""
 
 #, fuzzy
-msgid "Activate cursor tooltips."
-msgstr "Aktiver markørverktøytips"
-
-#, fuzzy
 msgid "Cursor Tooltips:"
 msgstr "Markørverktøytips:"
 
 #, fuzzy
 msgid "Enable tooltips for the cursor."
 msgstr "Dagens tips"
-
-msgid "Make me disappear."
-msgstr ""
 
 msgid "Tooltips:"
 msgstr "Verktøytips:"
@@ -1323,16 +1168,12 @@ msgstr ""
 msgid "The minimum/maximum zoom of the geoscape camera."
 msgstr "Ryk kampscenens kamera op"
 
-msgid "Use the 3D geoscape. To enable this option you have to start a new campaign first."
-msgstr ""
-
 #, fuzzy
 msgid "3D Geoscape:"
 msgstr "3D geoscape:"
 
-#, fuzzy
-msgid "3D or 2D geoscape."
-msgstr "Tilbake til geoscape"
+msgid "3D or 2D geoscape. To enable this option you have to start a new campaign first."
+msgstr ""
 
 #, fuzzy
 msgid "Geoscape Options"
@@ -1344,14 +1185,6 @@ msgstr ""
 #, fuzzy
 msgid "Language Settings"
 msgstr "Lagre instillinger"
-
-#, fuzzy
-msgid "Change your name."
-msgstr "Hyr et team først"
-
-#, fuzzy
-msgid "Your name."
-msgstr "Avbryt spill"
 
 #, fuzzy
 msgid "Overall Game Settings"
@@ -1770,6 +1603,9 @@ msgstr "Rulletekster"
 msgid "Tutorials"
 msgstr "Øvelsesspill"
 
+msgid "Choose between Campaign or Skirmish mode."
+msgstr ""
+
 msgid "Single-player"
 msgstr "En-spiller"
 
@@ -2106,7 +1942,8 @@ msgstr "Fiender drept:"
 msgid "Missions Performed:"
 msgstr "Utførte oppdrag:"
 
-msgid "Rename your employee"
+#, fuzzy
+msgid "Rename employee"
 msgstr "Gi nytt navn"
 
 msgid "Hire - Right click to remove"
@@ -2297,11 +2134,6 @@ msgstr ""
 msgid "Create installation"
 msgstr ""
 
-# #ufopedia
-#, fuzzy
-msgid "Open UFOpaedia"
-msgstr "Ufopedia"
-
 msgid "Organisation statistics"
 msgstr "Organisasjonsstatistik"
 
@@ -2415,6 +2247,21 @@ msgstr "Ryggsekk"
 msgid "Equip this soldier"
 msgstr "Utstyr denne soldaten"
 
+msgid "Do not quit."
+msgstr ""
+
+msgid "Quit anyway"
+msgstr ""
+
+msgid "Exit current campaign and return to main menu."
+msgstr ""
+
+msgid "You will lose all your campaign progress."
+msgstr ""
+
+msgid "Exit Campaign Confirmation"
+msgstr ""
+
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Takk for at du spilte UFO:Alien Invasion"
 
@@ -2423,10 +2270,6 @@ msgstr "Klikk for å fortsette"
 
 msgid "You've lost the game"
 msgstr "Du tapte spillet"
-
-#, fuzzy
-msgid "Reload the last automatically saved campaign state"
-msgstr "Hent den siste lagrede kampanje."
 
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr "Er du sikker på å du ønsker å hente den siste automatisk lagrede kampanjen?"
@@ -2440,10 +2283,15 @@ msgstr "Ut"
 msgid "Options"
 msgstr "Instillnger"
 
+#, fuzzy
+msgid "Leave this menu and continue playing."
+msgstr "Hent det siste lagrede spill eller forsett spilling"
+
 msgid "Back"
 msgstr "Tilbake"
 
-msgid "Load last saved game or continue playing"
+#, fuzzy
+msgid "Load last saved game or continue playing."
 msgstr "Hent det siste lagrede spill eller forsett spilling"
 
 msgid "Continue"
@@ -2451,6 +2299,10 @@ msgstr "Fortsett"
 
 msgid "Load"
 msgstr "Last inn"
+
+#, fuzzy
+msgid "Start a new singleplayer campaign."
+msgstr "Nå etter at du har avsluttet enkeltspillerkampanje"
 
 # Begynn kampanje er en bokstav for langt
 msgid "Start campaign"
@@ -3238,7 +3090,7 @@ msgid "intro_sentence1"
 msgstr "Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minner, men ikke så langt væk, at den er blevet glemt. For de fleste av jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskriken var for deres børn."
 
 #, fuzzy
-msgid "Copyright 2004-2010 by UFO: AI Team"
+msgid "Copyright 2004-2011 by UFO: AI Team"
 msgstr "Ophavsret 2004-2007 UFO: AI-holdet"
 
 msgid "http://ufoai.sf.net"
@@ -8776,6 +8628,10 @@ msgid "The Revolutionary Countries"
 msgstr "De Revolusjonære Land"
 
 #, fuzzy
+msgid "missions"
+msgstr "Oppdrag"
+
+#, fuzzy
 msgid "ufo_activity"
 msgstr "Romvesenaktivitet"
 
@@ -8879,6 +8735,13 @@ msgstr "Mynt"
 msgid "Cross"
 msgstr "Kors"
 
+msgid "Training Zone: Alpha."
+msgstr ""
+
+#, fuzzy
+msgid "Rescue mission."
+msgstr "Autooppdrag"
+
 msgid "Base is under attack."
 msgstr "Base er under angrep."
 
@@ -8887,78 +8750,23 @@ msgid "An alien base."
 msgstr "Et romvesen blev drept.\n"
 
 #, fuzzy
-msgid "Rescue mission."
-msgstr "Autooppdrag"
-
-#, fuzzy
-msgid "UFO Crashsite."
-msgstr "Ufo nedstyrningssted"
-
-msgid "Training Zone: Alpha."
-msgstr ""
-
-msgid "UFO landed in hills area."
-msgstr ""
-
-#, fuzzy
 msgid "Wilderness terror mission."
 msgstr "På vei mot mission"
-
-msgid "A fuel depot the aliens try to destroy."
-msgstr ""
-
-msgid "Big city"
-msgstr ""
-
-msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr ""
-
-msgid "A place where people come to relax and mingle."
-msgstr ""
-
-msgid "A Bomber has landed in the middle of a city."
-msgstr ""
-
-msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr "Et beskyttelsesrom som ble bygget for å huse folk under store katastrofer. Enkelte interne sikkerhetsluker kan være lukket."
-
-msgid "A small settlement in winter."
-msgstr ""
-
-msgid "An alien Harvester has crashed in the wastelands."
-msgstr ""
-
-msgid "A suburb that has received a visit from a Harvester."
-msgstr ""
-
-msgid "A suburb that has been visited by an UFO."
-msgstr ""
-
-msgid "A luxurious vacation resort."
-msgstr ""
-
-msgid "An office complex on the outskirts of town."
-msgstr ""
-
-msgid "A local harbour."
-msgstr ""
-
-msgid "An office complex under construction."
-msgstr ""
-
-msgid "A small UFO has crashed in this mining region."
-msgstr ""
-
-msgid "A military convoy has caught the eye of the aliens."
-msgstr ""
 
 msgid "A suburban district."
 msgstr ""
 
-msgid "An office complex in the centre of town."
+msgid "A subway station in a suburban part of town."
 msgstr ""
 
-msgid "A subway station in a suburban part of town."
+#, fuzzy
+msgid "A crashed Scout UFO."
+msgstr "Lagre ufo"
+
+msgid "A rather old-fashioned suburban district."
+msgstr ""
+
+msgid "A luxurious vacation resort."
 msgstr ""
 
 msgid "Underground pipe construction site."
@@ -8967,19 +8775,22 @@ msgstr ""
 msgid "An urban district in an oriental region."
 msgstr ""
 
+msgid "An office complex on the outskirts of town."
+msgstr ""
+
+msgid "An old mine."
+msgstr ""
+
+msgid "A small settlement in winter."
+msgstr ""
+
+msgid "A local harbour."
+msgstr ""
+
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr ""
 
-msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr ""
-
-msgid "A small industry city area."
-msgstr ""
-
-msgid "A small neighbourhood in a warm urban region."
-msgstr ""
-
-msgid "A rather old-fashioned suburban district."
+msgid "A fuel depot the aliens try to destroy."
 msgstr ""
 
 msgid "A ferry."
@@ -8988,14 +8799,25 @@ msgstr ""
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "En bondegård omringet av åker og skur. En ufo har landet på en av åkrene."
 
-#, fuzzy
-msgid "A crashed Scout UFO."
-msgstr "Lagre ufo"
-
-msgid "A small estate in the mountains."
+msgid "An excavation site that has fallen under alien attack."
 msgstr ""
 
-msgid "A tropical area where several suspected criminals have made their homes."
+msgid "An estate owned by rich and influential people."
+msgstr ""
+
+msgid "A small village in England."
+msgstr ""
+
+msgid "A hydroelectricity dam that is threatened by the alien invaders."
+msgstr ""
+
+msgid "A small industry city area."
+msgstr ""
+
+msgid "A bunker used in a previous conflict."
+msgstr ""
+
+msgid "An office complex in the centre of town."
 msgstr ""
 
 msgid "A stadium used for various recreational events."
@@ -9004,19 +8826,10 @@ msgstr ""
 msgid "A small industrial area."
 msgstr ""
 
-msgid "A classic eastern suburban area."
-msgstr ""
+msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+msgstr "Et beskyttelsesrom som ble bygget for å huse folk under store katastrofer. Enkelte interne sikkerhetsluker kan være lukket."
 
-msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr ""
-
-msgid "A bunker used in a previous conflict."
-msgstr ""
-
-msgid "An industrial area, used for loading and unloading goods."
-msgstr ""
-
-msgid "An old mine."
+msgid "A military convoy has caught the eye of the aliens."
 msgstr ""
 
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
@@ -9025,47 +8838,39 @@ msgstr ""
 msgid "A small office in a mountainous region."
 msgstr ""
 
-msgid "A small village in England."
+msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr ""
 
-msgid "An estate owned by rich and influential people."
+msgid "A small estate in the mountains."
 msgstr ""
 
-msgid "An excavation site that has fallen under alien attack."
+msgid "A tropical area where several suspected criminals have made their homes."
 msgstr ""
 
-msgid "Some houses in the desert."
+msgid "An office complex under construction."
 msgstr ""
 
-msgid "UFO crashed in this sparsely populated forest region."
+msgid "A place where people come to relax and mingle."
 msgstr ""
 
-msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
-
-msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr ""
-
-msgid "A cleared stretch of land in the middle of the jungle."
-msgstr ""
-
-msgid "A river runs through this piece of jungle."
+msgid "A small neighbourhood in a warm urban region."
 msgstr ""
 
 #, fuzzy
 msgid "Cemetery terror mission."
 msgstr "Spill dette oppdraget igjen"
 
-msgid "An industrial compound."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr ""
 
-msgid "An underpopulated area in a cold region."
+#, fuzzy
+msgid "UFO Crashsite."
+msgstr "Ufo nedstyrningssted"
+
+msgid "A river runs through this piece of jungle."
 msgstr ""
 
-msgid "An industrial area in a cold region."
-msgstr ""
-
-msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+msgid "A cleared stretch of land in the middle of the jungle."
 msgstr ""
 
 msgid "Crashed UFO in oriental suburban district."
@@ -9074,9 +8879,57 @@ msgstr ""
 msgid "A suburban district of an oriental area."
 msgstr ""
 
+msgid "A laboratory where they examined found UFO wreck tiles."
+msgstr ""
+
+msgid "A classic eastern suburban area."
+msgstr ""
+
 #, fuzzy
 msgid "Industrial theme."
 msgstr "Industri"
+
+msgid "UFO landed in hills area."
+msgstr ""
+
+msgid "An underpopulated area in a cold region."
+msgstr ""
+
+msgid "An industrial compound."
+msgstr ""
+
+msgid "An industrial area in a cold region."
+msgstr ""
+
+msgid "UFO crashed in this sparsely populated forest region."
+msgstr ""
+
+msgid "Aliens are up to no good in this sparsely populated forest region."
+msgstr ""
+
+msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+msgstr ""
+
+msgid "An alien Harvester has crashed in the wastelands."
+msgstr ""
+
+msgid "Some houses in the desert."
+msgstr ""
+
+msgid "Big city"
+msgstr ""
+
+msgid "A small UFO has crashed in this mining region."
+msgstr ""
+
+msgid "A Bomber has landed in the middle of a city."
+msgstr ""
+
+msgid "A suburb that has been visited by an UFO."
+msgstr ""
+
+msgid "A suburb that has received a visit from a Harvester."
+msgstr ""
 
 msgid "No language"
 msgstr "Intet språk"
@@ -11331,7 +11184,8 @@ msgstr "Firebird D"
 msgid "Firebird-class Dropship"
 msgstr "Transportfly av Firebirdklassen"
 
-msgid "Village big"
+#, fuzzy
+msgid "Village large"
 msgstr "Landsby stor"
 
 msgid "Village recreational"
@@ -11373,7 +11227,8 @@ msgstr "Instillnger"
 msgid "Rescue mission"
 msgstr "Autooppdrag"
 
-msgid "Oriental big"
+#, fuzzy
+msgid "Oriental large"
 msgstr "Orientalsk stor"
 
 msgid "Oriental medium"
@@ -12084,6 +11939,10 @@ msgstr "Dit landingsfly er ikke nær landingszonen"
 #, fuzzy, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Basen er under angrep - hva nå?"
+
+#, fuzzy, c-format
+msgid "Base '%s' is under attack!"
+msgstr "Basen er under angrep"
 
 #, fuzzy, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
@@ -13202,6 +13061,10 @@ msgstr "Velg luftfartøy"
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
+
+#, fuzzy
+msgid "base_attack"
+msgstr "Baseangrep"
 
 msgid "ufo_attacking"
 msgstr ""
@@ -14717,7 +14580,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 10:28+0200\n"
+"POT-Creation-Date: 2011-07-30 09:00+0200\n"
 "PO-Revision-Date: 2010-05-26 14:46+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
@@ -14727,6 +14590,105 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Norwegian\n"
+
+#, fuzzy
+#~ msgid "Joystick speed."
+#~ msgstr "Opprinnelige instillinger"
+
+#, fuzzy
+#~ msgid "The minimum/maximum zoom of the battlescape camera."
+#~ msgstr "Ryk kampscenens kamera op"
+
+#, fuzzy
+#~ msgid "The minimum/maximum pitch shift of the battlescape camera."
+#~ msgstr "Ryk kampscenens kamera op"
+
+#, fuzzy
+#~ msgid "The rotation speed of the battlescape camera."
+#~ msgstr "Ryk kampscenens kamera op"
+
+#, fuzzy
+#~ msgid "The scroll speed of the battlescape camera."
+#~ msgstr "Ryk kampscenens kamera op"
+
+#, fuzzy
+#~ msgid "Do you want to hear the screams?"
+#~ msgstr "Er du sikker på at du ønsker å ødelegge denne bygningen?"
+
+# # in game
+#, fuzzy
+#~ msgid "Current volume of the music."
+#~ msgstr "Nåværende team"
+
+#, fuzzy
+#~ msgid "Enable the material system."
+#~ msgstr "Aktiver moralstatus:"
+
+#, fuzzy
+#~ msgid "Enable weather effects."
+#~ msgstr "Væreffekter:"
+
+#, fuzzy
+#~ msgid "Enable fog."
+#~ msgstr "Avslutt runde"
+
+#, fuzzy
+#~ msgid "Enable coronas."
+#~ msgstr "Teksturkompresjon:"
+
+#, fuzzy
+#~ msgid "Enable flares."
+#~ msgstr "Væreffekter:"
+
+#, fuzzy
+#~ msgid "Change the swap interval."
+#~ msgstr "Endre oppløsningen"
+
+#, fuzzy
+#~ msgid "Change the amount of multisample buffers."
+#~ msgstr "Setter maks tillatte soldater per team"
+
+# # in game
+#, fuzzy
+#~ msgid "Current value."
+#~ msgstr "Nåværende team"
+
+#, fuzzy
+#~ msgid "Enable texture compression."
+#~ msgstr "Teksturkompresjon:"
+
+#, fuzzy
+#~ msgid "Enable precaching of models to have faster menus."
+#~ msgstr "Legg moteller i mellomlager (hurtigere menyer)"
+
+#, fuzzy
+#~ msgid "Enable the 'Tip of the Day'."
+#~ msgstr "Dagens tips"
+
+#, fuzzy
+#~ msgid "Activate cursor tooltips."
+#~ msgstr "Aktiver markørverktøytips"
+
+#, fuzzy
+#~ msgid "3D or 2D geoscape."
+#~ msgstr "Tilbake til geoscape"
+
+#, fuzzy
+#~ msgid "Change your name."
+#~ msgstr "Hyr et team først"
+
+#, fuzzy
+#~ msgid "Your name."
+#~ msgstr "Avbryt spill"
+
+# #ufopedia
+#, fuzzy
+#~ msgid "Open UFOpaedia"
+#~ msgstr "Ufopedia"
+
+#, fuzzy
+#~ msgid "Reload the last automatically saved campaign state"
+#~ msgstr "Hent den siste lagrede kampanje."
 
 #~ msgid "Personal message"
 #~ msgstr "Personlig melding"
@@ -15612,9 +15574,6 @@ msgstr ""
 
 #~ msgid "No game to save"
 #~ msgstr "Intet spill å lagre"
-
-#~ msgid "Now after you have finished the single-player campaigns"
-#~ msgstr "Nå etter at du har avsluttet enkeltspillerkampanje"
 
 #~ msgid "you should try the multiplayer features"
 #~ msgstr "kan du prøve flerspiller-muligheterne"

@@ -325,8 +325,12 @@ msgstr "Léčit"
 msgid "Medikit"
 msgstr "Lékárnička"
 
-msgid "Requirement:"
+#, fuzzy
+msgid "Requirement(s):"
 msgstr "Závislost na:"
+
+msgid "The Big Picture"
+msgstr ""
 
 #, fuzzy
 msgid "Pre-Research Report"
@@ -484,8 +488,34 @@ msgstr "Zahájit hru"
 msgid "<1>"
 msgstr ""
 
+#, fuzzy
+msgid "Quit"
+msgstr "Quito"
+
+msgid "You will lose all your progress."
+msgstr ""
+
+msgid "Enter the game options menu."
+msgstr ""
+
+#, fuzzy
+msgid "Retry this battlescape mission."
+msgstr "Opakovat tuto misi"
+
+#, fuzzy
+msgid "Abort this battlescape mission."
+msgstr "Naklonit kameru nad bojištěm vzhůru"
+
 msgid "Abort"
 msgstr "Přerušit"
+
+#, fuzzy
+msgid "Go back to the battlescape."
+msgstr "Naklonit kameru nad bojištěm vzhůru"
+
+#, fuzzy
+msgid "Back to the main menu."
+msgstr "Návrat do hlavního menu"
 
 msgid "Base Info"
 msgstr "Informace o základně"
@@ -567,10 +597,6 @@ msgstr "Aktuální přiřazení kláves"
 msgid "Show Keys"
 msgstr "Aktuální přiřazení kláves"
 
-#, fuzzy
-msgid "Joystick speed."
-msgstr "Nastavení joysticku:"
-
 msgid "Threshold:"
 msgstr "Práh:"
 
@@ -584,34 +610,17 @@ msgstr ""
 msgid "Joystick or Joypad:"
 msgstr "Joystick:"
 
-msgid "Select which of your joysticks or joypads you want to use."
-msgstr ""
-
-msgid "Enable your joystick or joypad."
-msgstr ""
-
 msgid "Enable:"
 msgstr "Povolit:"
-
-#, fuzzy
-msgid "Enable or disable your Joystick."
-msgstr "Povolí/Zakáže Joysticky"
 
 #, fuzzy
 msgid "Joystick Settings"
 msgstr "Nastavení joysticku:"
 
-#, fuzzy
-msgid "Available HUD for the battlescape mode."
-msgstr "Naklonit kameru nad bojištěm vzhůru"
-
 msgid "HUD Design:"
 msgstr "Design HUDu:"
 
 msgid "Select the Head-Up-Display for the battlescape."
-msgstr ""
-
-msgid "Select 'Yes' if you want more intelligent soldiers."
 msgstr ""
 
 #, fuzzy
@@ -630,7 +639,7 @@ msgstr ""
 msgid "Confirm Actions:"
 msgstr "Potvrzovat akce:"
 
-msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
+msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 msgstr ""
 
 msgid "Choose between 0-9, higher values mean higher actor speed."
@@ -640,24 +649,15 @@ msgstr ""
 msgid "Actor Speed:"
 msgstr "Rychlost postav:"
 
-msgid "Actor speed changes the speed of aliens and humans."
-msgstr ""
-
 #, fuzzy
 msgid "Battlescape Gameplay Settings"
 msgstr "Posunout kameru nad bojištěm doleva"
-
-msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
-msgstr ""
 
 #, fuzzy
 msgid "Center View:"
 msgstr "Vystředit pohled:"
 
-msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
-msgstr ""
-
-msgid "Enable the isometric 3D rendering mode for the battlescape."
+msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 msgstr ""
 
 msgid "Isometric Mode:"
@@ -687,10 +687,6 @@ msgstr "Naklonit kameru nad bojištěm vzhůru"
 msgid "Minimum/Maximum Zoom:"
 msgstr ""
 
-#, fuzzy
-msgid "The minimum/maximum zoom of the battlescape camera."
-msgstr "Naklonit kameru nad bojištěm vzhůru"
-
 msgid "ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
 msgstr ""
 
@@ -701,38 +697,17 @@ msgid "Minimum/Maximum Shift Pitch:"
 msgstr ""
 
 #, fuzzy
-msgid "The minimum/maximum pitch shift of the battlescape camera."
-msgstr "Naklonit kameru nad bojištěm vzhůru"
-
-msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
-msgstr ""
-
-#, fuzzy
 msgid "Move Deceleration:"
 msgstr "Zrychlení pohybu:"
 
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
 msgstr ""
 
-msgid "Actual camera rotation speed."
-msgstr ""
-
 msgid "Rotation Speed:"
 msgstr "Rychlost otáčení:"
 
-#, fuzzy
-msgid "The rotation speed of the battlescape camera."
-msgstr "Naklonit kameru nad bojištěm vzhůru"
-
-msgid "Actual camera scroll speed."
-msgstr ""
-
 msgid "Scroll Speed:"
 msgstr "Rychlost posunu:"
-
-#, fuzzy
-msgid "The scroll speed of the battlescape camera."
-msgstr "Naklonit kameru nad bojištěm vzhůru"
 
 #, fuzzy
 msgid "Battlescape Camera Settings"
@@ -746,9 +721,6 @@ msgstr "Posunout kameru nad bojištěm doleva"
 msgid "Restart the sound-engine and apply your settings."
 msgstr "Restartovat zvuk pro změnu nastavení"
 
-msgid "Current sample rate frequency in kHz."
-msgstr ""
-
 #, fuzzy
 msgid "Audio Sample Rate:"
 msgstr "Vzorkovací frekvence:"
@@ -760,32 +732,16 @@ msgid "Advanced Audio Options"
 msgstr ""
 
 #, fuzzy
+msgid "Turn the menu sounds on or off."
+msgstr "Ovládá nastavení zpětné palby"
+
+#, fuzzy
 msgid "Menu Sounds:"
 msgstr "Středně raněný"
-
-msgid "You do not like click sounds?"
-msgstr ""
-
-msgid "Current volume of the sound effects."
-msgstr ""
 
 #, fuzzy
 msgid "Sound Effects:"
 msgstr "Efekty:"
-
-#, fuzzy
-msgid "Do you want to hear the screams?"
-msgstr "Jste si jistý že chcete zbourat toto zařízení?"
-
-#, fuzzy
-msgid "Current volume of the music."
-msgstr "Aktuální základna:"
-
-msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
-msgstr ""
-
-msgid "Do not turn me off."
-msgstr ""
 
 #, fuzzy
 msgid "Enable Audio:"
@@ -812,19 +768,11 @@ msgid "Switch to low video settings"
 msgstr "Přejít na předchozí základnu"
 
 #, fuzzy
-msgid "Enable the material system."
-msgstr "Povolit morálku:"
-
-#, fuzzy
 msgid "Material System:"
 msgstr "Editor materiálů"
 
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 msgstr ""
-
-#, fuzzy
-msgid "Enable weather effects."
-msgstr "Efekty počasí:"
 
 #, fuzzy
 msgid "Weather Effects:"
@@ -833,19 +781,11 @@ msgstr "Efekty počasí:"
 msgid "Weather effects like rain or snow."
 msgstr ""
 
-#, fuzzy
-msgid "Enable fog."
-msgstr "Povolit zvuk:"
-
 msgid "Fog:"
 msgstr ""
 
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
 msgstr ""
-
-#, fuzzy
-msgid "Enable coronas."
-msgstr "Komprese textur:"
 
 #, fuzzy
 msgid "Coronas:"
@@ -855,20 +795,10 @@ msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr ""
 
 #, fuzzy
-msgid "Enable flares."
-msgstr "Efekty počasí:"
-
-#, fuzzy
 msgid "Flares:"
 msgstr "Těžké"
 
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
-msgstr ""
-
-msgid "Adjust various other settings here."
-msgstr ""
-
-msgid "Current amount of ambient light reaching the earth."
 msgstr ""
 
 #, fuzzy
@@ -919,10 +849,6 @@ msgid "Change the number of allowed hardware accelerated dynamic lights. ATTENTI
 msgstr ""
 
 #, fuzzy
-msgid "Enable real-time lighting."
-msgstr "Osvětlení v reálném čase (r_lighting):"
-
-#, fuzzy
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Osvětlení v reálném čase (r_lighting):"
 
@@ -933,9 +859,6 @@ msgstr ""
 msgid "Light and Shadow"
 msgstr "Pravá ruka"
 
-msgid "Adjust various light and shadow settings here."
-msgstr ""
-
 msgid "Enable post processing shader effects. ATTENTION: May require restart to take effect."
 msgstr ""
 
@@ -945,16 +868,8 @@ msgstr ""
 msgid "Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
 msgstr ""
 
-#, fuzzy
-msgid "Change the swap interval."
-msgstr "Interval výměny (r_swapinterval):"
-
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr ""
-
-#, fuzzy
-msgid "Change the amount of multisample buffers."
-msgstr "Znovu vybrat tohoto vojáka"
 
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 msgstr ""
@@ -964,9 +879,6 @@ msgid "Multisample Buffers / Swap Interval:"
 msgstr "Multisample buffery:"
 
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
-msgstr ""
-
-msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
 msgstr ""
 
 #, fuzzy
@@ -993,15 +905,8 @@ msgstr ""
 msgid "OpenGL Settings"
 msgstr "Nastavení zobrazování"
 
-msgid "Adjust various OpenGL settings here."
-msgstr ""
-
 msgid "Very high values are only recommended when playing in very high screen resolutions."
 msgstr ""
-
-#, fuzzy
-msgid "Current value."
-msgstr "Aktuální základna:"
 
 #, fuzzy
 msgid "Anisotropy Level:"
@@ -1010,18 +915,11 @@ msgstr "Úroveň anisotropie textur:"
 msgid "The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 msgstr ""
 
-msgid "Enable high texture detail."
-msgstr ""
-
 msgid "LoD:"
 msgstr ""
 
 msgid "Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
 msgstr ""
-
-#, fuzzy
-msgid "Enable texture compression."
-msgstr "Komprese textur:"
 
 #, fuzzy
 msgid "Compression:"
@@ -1081,9 +979,6 @@ msgstr ""
 msgid "Texture Settings"
 msgstr "Nastavení zobrazování"
 
-msgid "Adjust various texture settings here."
-msgstr ""
-
 msgid "Default is to play the intro video just once at the first game start."
 msgstr ""
 
@@ -1099,18 +994,9 @@ msgstr ""
 msgid "Show FPS:"
 msgstr "Zobrazovat FPS:"
 
-msgid "See how many frames per second are rendered."
-msgstr ""
-
 #, fuzzy
 msgid "Other Display Settings"
 msgstr "Nastavení hry"
-
-msgid "Adjust other settings here."
-msgstr ""
-
-msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
-msgstr ""
 
 msgid "Screenshot Format:"
 msgstr ""
@@ -1119,9 +1005,6 @@ msgid "The file format used for compressing and saving your screenshots."
 msgstr ""
 
 msgid "jpeg Quality:"
-msgstr ""
-
-msgid "Here you can set the quality of jpeg screenshots."
 msgstr ""
 
 #, fuzzy
@@ -1135,14 +1018,8 @@ msgstr ""
 msgid "Saturation:"
 msgstr "Čerpací stanice"
 
-msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
-msgstr ""
-
 msgid "Gamma:"
 msgstr "Gama:"
-
-msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
-msgstr ""
 
 msgid "Contrast:"
 msgstr "Kontrast:"
@@ -1153,9 +1030,6 @@ msgstr ""
 msgid "Brightness:"
 msgstr "Jas:"
 
-msgid "Brightness sets the intensity of light emitting from your screen."
-msgstr ""
-
 msgid "Monitor Calibration Controls"
 msgstr ""
 
@@ -1163,15 +1037,7 @@ msgid "Calibrate your display here."
 msgstr ""
 
 #, fuzzy
-msgid "Stretch the screen to a ratio of 4:3."
-msgstr "Nezachovávat poměr obrazu 4:3:"
-
-#, fuzzy
 msgid "Stretch the Screen with a 4:3 Ratio:"
-msgstr "Nezachovávat poměr obrazu 4:3:"
-
-#, fuzzy
-msgid "Stretches the screen with a 4:3 ratio."
 msgstr "Nezachovávat poměr obrazu 4:3:"
 
 msgid "Play UFO:AI in fullscreen."
@@ -1179,9 +1045,6 @@ msgstr ""
 
 msgid "Fullscreen:"
 msgstr "Celá obrazovka:"
-
-msgid "Play UFO:AI in fullscreen- or window-mode."
-msgstr ""
 
 msgid "Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
 msgstr ""
@@ -1209,9 +1072,6 @@ msgstr ""
 msgid "Resolution and Display Settings"
 msgstr ""
 
-msgid "Adjust resolution and display settings here."
-msgstr ""
-
 #, fuzzy
 msgid "Advanced"
 msgstr "Zdokonalený radar"
@@ -1225,7 +1085,7 @@ msgid "Video Settings"
 msgstr "Nastavení zobrazování"
 
 #, fuzzy
-msgid "Enable precaching of models to have faster menus."
+msgid "Precaching of models means having faster menus."
 msgstr "Přednačíst modely (rychlejší nabídky)"
 
 #, fuzzy
@@ -1233,16 +1093,8 @@ msgid "Precache Models:"
 msgstr "Přednačíst modely:"
 
 #, fuzzy
-msgid "Precaching of models means having faster menus."
-msgstr "Přednačíst modely (rychlejší nabídky)"
-
-#, fuzzy
 msgid "Menu Option(s)"
 msgstr "Nastavení"
-
-#, fuzzy
-msgid "Enable the 'Tip of the Day'."
-msgstr "Tip dne"
 
 #, fuzzy
 msgid "Show 'Tip of the Day':"
@@ -1252,19 +1104,12 @@ msgid "Enable this if you are new to UFO:AI and want to see interesting tips wri
 msgstr ""
 
 #, fuzzy
-msgid "Activate cursor tooltips."
-msgstr "Zapne vyskakovací nápovědu"
-
-#, fuzzy
 msgid "Cursor Tooltips:"
 msgstr "Vyskakovací nápověda (tooltips):"
 
 #, fuzzy
 msgid "Enable tooltips for the cursor."
 msgstr "povolí nebo zakáže přehrávaní zvuků"
-
-msgid "Make me disappear."
-msgstr ""
 
 msgid "Tooltips:"
 msgstr "Nástrojové tipy:"
@@ -1312,16 +1157,12 @@ msgstr ""
 msgid "The minimum/maximum zoom of the geoscape camera."
 msgstr "Naklonit kameru nad bojištěm vzhůru"
 
-msgid "Use the 3D geoscape. To enable this option you have to start a new campaign first."
-msgstr ""
-
 #, fuzzy
 msgid "3D Geoscape:"
 msgstr "Mapa světa ve 3D:"
 
-#, fuzzy
-msgid "3D or 2D geoscape."
-msgstr "Zpět na mapu světa"
+msgid "3D or 2D geoscape. To enable this option you have to start a new campaign first."
+msgstr ""
 
 #, fuzzy
 msgid "Geoscape Options"
@@ -1333,14 +1174,6 @@ msgstr ""
 #, fuzzy
 msgid "Language Settings"
 msgstr "Nastavení zpráv"
-
-#, fuzzy
-msgid "Change your name."
-msgstr "Uložit váš tým"
-
-#, fuzzy
-msgid "Your name."
-msgstr "Přerušit hru"
 
 #, fuzzy
 msgid "Overall Game Settings"
@@ -1742,6 +1575,9 @@ msgstr "Titulky"
 msgid "Tutorials"
 msgstr "Jak hrát"
 
+msgid "Choose between Campaign or Skirmish mode."
+msgstr ""
+
 msgid "Single-player"
 msgstr "Jeden hráč"
 
@@ -2061,7 +1897,8 @@ msgstr "Zabitých nepřátel:"
 msgid "Missions Performed:"
 msgstr "Odsloužených misí:"
 
-msgid "Rename your employee"
+#, fuzzy
+msgid "Rename employee"
 msgstr "Přejmenovat vašeho zaměstnance"
 
 #, fuzzy
@@ -2236,9 +2073,6 @@ msgstr "Zvýraznit hranice států"
 msgid "Create installation"
 msgstr "Vybudovat zařízení"
 
-msgid "Open UFOpaedia"
-msgstr "Otevřít UFOpedii"
-
 msgid "Organisation statistics"
 msgstr "Statistiky"
 
@@ -2347,6 +2181,21 @@ msgstr "Batoh"
 msgid "Equip this soldier"
 msgstr "Vybavit vojáka"
 
+msgid "Do not quit."
+msgstr ""
+
+msgid "Quit anyway"
+msgstr ""
+
+msgid "Exit current campaign and return to main menu."
+msgstr ""
+
+msgid "You will lose all your campaign progress."
+msgstr ""
+
+msgid "Exit Campaign Confirmation"
+msgstr ""
+
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Díky za hraní UFO:Cizácká Invaze"
 
@@ -2355,9 +2204,6 @@ msgstr "Klik pro pokračování"
 
 msgid "You've lost the game"
 msgstr "Prohrál jste hru"
-
-msgid "Reload the last automatically saved campaign state"
-msgstr "Zvovu načíst poslední automaticky uložený stav kampaně"
 
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr "Jste si jistý že skutečně chcete zvovu načíst poslední automaticky uložený stav kampaně?"
@@ -2371,10 +2217,15 @@ msgstr "Konec"
 msgid "Options"
 msgstr "Nastavení"
 
+#, fuzzy
+msgid "Leave this menu and continue playing."
+msgstr "Načíst poslední uloženou pozici nebo pokračovat v hraní"
+
 msgid "Back"
 msgstr "Zpět"
 
-msgid "Load last saved game or continue playing"
+#, fuzzy
+msgid "Load last saved game or continue playing."
 msgstr "Načíst poslední uloženou pozici nebo pokračovat v hraní"
 
 msgid "Continue"
@@ -2382,6 +2233,10 @@ msgstr "Pokračovat"
 
 msgid "Load"
 msgstr "Načíst"
+
+#, fuzzy
+msgid "Start a new singleplayer campaign."
+msgstr "Když jste teď dohrál kampaně pro jednoho hráče"
 
 msgid "Start campaign"
 msgstr "Zahájit kampaň"
@@ -3116,7 +2971,7 @@ msgid "intro_sentence1"
 msgstr "Píše se rok 2084. Země, která nikdy nepatřila k poklidným místům, si užívá období relativního míru. Násilnické začátky 21. století jsou již historií. Zapadlé vzpomínky. Nikoliv však tak zapadlé aby byly zcela zapomenuty. Pro většinu Pozemšťanů je Druhá studená válka temným stínem z minulosti, stejně jako byly Světové války pro děti konce století dvacátého."
 
 #, fuzzy
-msgid "Copyright 2004-2010 by UFO: AI Team"
+msgid "Copyright 2004-2011 by UFO: AI Team"
 msgstr "Copyright 2004-2009 by UFO: AI Team"
 
 msgid "http://ufoai.sf.net"
@@ -8348,6 +8203,10 @@ msgstr "Sjednocená Amerika"
 msgid "The Revolutionary Countries"
 msgstr "Revoluční země"
 
+#, fuzzy
+msgid "missions"
+msgstr "Misí"
+
 msgid "ufo_activity"
 msgstr "aktivita UFO"
 
@@ -8447,6 +8306,13 @@ msgstr "Medaile"
 msgid "Cross"
 msgstr "Kříž"
 
+msgid "Training Zone: Alpha."
+msgstr ""
+
+#, fuzzy
+msgid "Rescue mission."
+msgstr "Automise"
+
 msgid "Base is under attack."
 msgstr "Základna je napadena."
 
@@ -8454,79 +8320,24 @@ msgstr "Základna je napadena."
 msgid "An alien base."
 msgstr "Cizácká základna."
 
-#, fuzzy
-msgid "Rescue mission."
-msgstr "Automise"
-
-msgid "UFO Crashsite."
-msgstr "Místo havárie UFO."
-
-msgid "Training Zone: Alpha."
-msgstr ""
-
-msgid "UFO landed in hills area."
-msgstr ""
-
 msgid "Wilderness terror mission."
 msgstr "Zastrašovací mise na samotě (u lesa :-)."
-
-msgid "A fuel depot the aliens try to destroy."
-msgstr "Skladiště paliva které se snaží cizáci zničit."
-
-msgid "Big city"
-msgstr ""
-
-msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr "Laboratoř ve které potajmu zkoumali nalezené vraky UFO."
-
-msgid "A place where people come to relax and mingle."
-msgstr "Místo kam lidé chodí odpočívat a družit se."
-
-msgid "A Bomber has landed in the middle of a city."
-msgstr "Bombardér přistál uprostřed města."
-
-msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr "Bunkr který byl vybudován k ubytování lidí během vážných katastrof. Některé vnitřní přetlakové dveře mohou být zavřené."
-
-msgid "A small settlement in winter."
-msgstr "Malá osada v zimě."
-
-msgid "An alien Harvester has crashed in the wastelands."
-msgstr "Havárie cizáckého Sklízeče v pustině."
-
-msgid "A suburb that has received a visit from a Harvester."
-msgstr "Předměstí navštívené Sklízečem."
-
-#, fuzzy
-msgid "A suburb that has been visited by an UFO."
-msgstr "Předměstí navštívené UFO."
-
-msgid "A luxurious vacation resort."
-msgstr "Přepychové prázdninové letovisko."
-
-msgid "An office complex on the outskirts of town."
-msgstr "Kancelářský komplex na okraji velkoměsta."
-
-msgid "A local harbour."
-msgstr "Místní přístav."
-
-msgid "An office complex under construction."
-msgstr "Kancelářský komplex ve výstavbě."
-
-msgid "A small UFO has crashed in this mining region."
-msgstr "Místo havárie malého UFO v této hornické oblasti."
-
-msgid "A military convoy has caught the eye of the aliens."
-msgstr "Vojenský konvoj zpozorovaný cizáky."
 
 msgid "A suburban district."
 msgstr "Předměstská oblast."
 
-msgid "An office complex in the centre of town."
-msgstr "Kancelářský komplex v centru velkoměsta."
-
 msgid "A subway station in a suburban part of town."
 msgstr "Stanice metra v okrajové části velkoměsta."
+
+#, fuzzy
+msgid "A crashed Scout UFO."
+msgstr "Havarované UFO - Průzkumník"
+
+msgid "A rather old-fashioned suburban district."
+msgstr "Poněkud staromódní předměstská čtvrť."
+
+msgid "A luxurious vacation resort."
+msgstr "Přepychové prázdninové letovisko."
 
 msgid "Underground pipe construction site."
 msgstr "Podzemní staveniště potrubí."
@@ -8534,21 +8345,23 @@ msgstr "Podzemní staveniště potrubí."
 msgid "An urban district in an oriental region."
 msgstr "Městská čtvrť v orientální oblasti."
 
+msgid "An office complex on the outskirts of town."
+msgstr "Kancelářský komplex na okraji velkoměsta."
+
+msgid "An old mine."
+msgstr "Starý důl."
+
+msgid "A small settlement in winter."
+msgstr "Malá osada v zimě."
+
+msgid "A local harbour."
+msgstr "Místní přístav."
+
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr ""
 
-msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr "Místo kam občané přicházejí doplnit zásoby paliva svých vozů."
-
-#, fuzzy
-msgid "A small industry city area."
-msgstr "Malá průmyslová oblast."
-
-msgid "A small neighbourhood in a warm urban region."
-msgstr "Malá obec v teplé městské oblasti."
-
-msgid "A rather old-fashioned suburban district."
-msgstr "Poněkud staromódní předměstská čtvrť."
+msgid "A fuel depot the aliens try to destroy."
+msgstr "Skladiště paliva které se snaží cizáci zničit."
 
 msgid "A ferry."
 msgstr "Přívoz."
@@ -8556,9 +8369,48 @@ msgstr "Přívoz."
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Statek je obklopen poli a hospodářskými budovami. UFO přistálo na jednom z polí."
 
+msgid "An excavation site that has fallen under alien attack."
+msgstr "Vykopávky podlehnuvší cizáckému útoku."
+
+msgid "An estate owned by rich and influential people."
+msgstr "Usedlost vlastněná bohatými a vlivnými lidmi."
+
+msgid "A small village in England."
+msgstr "Malá vesnice v Anglii."
+
+msgid "A hydroelectricity dam that is threatened by the alien invaders."
+msgstr "Přehrada s vodní elektrárnou , která je ohrožována cizáckými útočníky."
+
 #, fuzzy
-msgid "A crashed Scout UFO."
-msgstr "Havarované UFO - Průzkumník"
+msgid "A small industry city area."
+msgstr "Malá průmyslová oblast."
+
+msgid "A bunker used in a previous conflict."
+msgstr "Bunkr užitý v předešlém konfliktu."
+
+msgid "An office complex in the centre of town."
+msgstr "Kancelářský komplex v centru velkoměsta."
+
+msgid "A stadium used for various recreational events."
+msgstr "Stadión používaný k různým rekreačním událostem."
+
+msgid "A small industrial area."
+msgstr "Malá průmyslová oblast."
+
+msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+msgstr "Bunkr který byl vybudován k ubytování lidí během vážných katastrof. Některé vnitřní přetlakové dveře mohou být zavřené."
+
+msgid "A military convoy has caught the eye of the aliens."
+msgstr "Vojenský konvoj zpozorovaný cizáky."
+
+msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
+msgstr "Druh společenského shromažďovacího střediska nabízejícího možnost pastvy, známého jako supermarket."
+
+msgid "A small office in a mountainous region."
+msgstr "Malý podnik v hornaté oblasti."
+
+msgid "A place where citizens come to replenish their vehicles' fuel supply."
+msgstr "Místo kam občané přicházejí doplnit zásoby paliva svých vozů."
 
 #, fuzzy
 msgid "A small estate in the mountains."
@@ -8567,75 +8419,29 @@ msgstr "Malý statek v hornaté oblasti."
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Tropická oblast, kde si několik podezřelých kriminálníků udělalo svoje domovy."
 
-msgid "A stadium used for various recreational events."
-msgstr "Stadión používaný k různým rekreačním událostem."
+msgid "An office complex under construction."
+msgstr "Kancelářský komplex ve výstavbě."
 
-msgid "A small industrial area."
-msgstr "Malá průmyslová oblast."
+msgid "A place where people come to relax and mingle."
+msgstr "Místo kam lidé chodí odpočívat a družit se."
 
-msgid "A classic eastern suburban area."
-msgstr "Klasická východní předměstská oblast."
-
-msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr "Přehrada s vodní elektrárnou , která je ohrožována cizáckými útočníky."
-
-msgid "A bunker used in a previous conflict."
-msgstr "Bunkr užitý v předešlém konfliktu."
-
-msgid "An industrial area, used for loading and unloading goods."
-msgstr "Průmyslová oblast užívaná pro nakládání a vykládání zboží."
-
-msgid "An old mine."
-msgstr "Starý důl."
-
-msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
-msgstr "Druh společenského shromažďovacího střediska nabízejícího možnost pastvy, známého jako supermarket."
-
-msgid "A small office in a mountainous region."
-msgstr "Malý podnik v hornaté oblasti."
-
-msgid "A small village in England."
-msgstr "Malá vesnice v Anglii."
-
-msgid "An estate owned by rich and influential people."
-msgstr "Usedlost vlastněná bohatými a vlivnými lidmi."
-
-msgid "An excavation site that has fallen under alien attack."
-msgstr "Vykopávky podlehnuvší cizáckému útoku."
-
-#, fuzzy
-msgid "Some houses in the desert."
-msgstr "Několik obydlí v poušti"
-
-msgid "UFO crashed in this sparsely populated forest region."
-msgstr "UFO havarovalo v této řídce osídlené lesní oblasti."
-
-msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr "Cizáci nejsou až tak dobří v této řídce osídlené lesní oblasti."
-
-msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr "Poklidná obec na okraji středu populace."
-
-msgid "A cleared stretch of land in the middle of the jungle."
-msgstr "Přehledný úsek země uprostřed džungle."
-
-msgid "A river runs through this piece of jungle."
-msgstr "Skrz tento kousek džungle pádí řeka."
+msgid "A small neighbourhood in a warm urban region."
+msgstr "Malá obec v teplé městské oblasti."
 
 msgid "Cemetery terror mission."
 msgstr "Zastrašovací mise na hřbitově."
 
-msgid "An industrial compound."
-msgstr "Průmyslové opevnění."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
+msgstr "Poklidná obec na okraji středu populace."
 
-msgid "An underpopulated area in a cold region."
-msgstr "Neobydlená oblast v chladném regionu."
+msgid "UFO Crashsite."
+msgstr "Místo havárie UFO."
 
-msgid "An industrial area in a cold region."
-msgstr "Průmyslová oblast v chladném regionu."
+msgid "A river runs through this piece of jungle."
+msgstr "Skrz tento kousek džungle pádí řeka."
 
-msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
-msgstr "Farma v zemědělské oblasti. Velká plocha k ochraně, ale rozhled zhoršuje jen několik překážek."
+msgid "A cleared stretch of land in the middle of the jungle."
+msgstr "Přehledný úsek země uprostřed džungle."
 
 msgid "Crashed UFO in oriental suburban district."
 msgstr "Havarované UFO v orientální předměstské čtvrti."
@@ -8643,8 +8449,58 @@ msgstr "Havarované UFO v orientální předměstské čtvrti."
 msgid "A suburban district of an oriental area."
 msgstr "Předměstská čtvrť orientální oblasti."
 
+msgid "A laboratory where they examined found UFO wreck tiles."
+msgstr "Laboratoř ve které potajmu zkoumali nalezené vraky UFO."
+
+msgid "A classic eastern suburban area."
+msgstr "Klasická východní předměstská oblast."
+
 msgid "Industrial theme."
 msgstr "Průmyslový motiv."
+
+msgid "UFO landed in hills area."
+msgstr ""
+
+msgid "An underpopulated area in a cold region."
+msgstr "Neobydlená oblast v chladném regionu."
+
+msgid "An industrial compound."
+msgstr "Průmyslové opevnění."
+
+msgid "An industrial area in a cold region."
+msgstr "Průmyslová oblast v chladném regionu."
+
+msgid "UFO crashed in this sparsely populated forest region."
+msgstr "UFO havarovalo v této řídce osídlené lesní oblasti."
+
+msgid "Aliens are up to no good in this sparsely populated forest region."
+msgstr "Cizáci nejsou až tak dobří v této řídce osídlené lesní oblasti."
+
+msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+msgstr "Farma v zemědělské oblasti. Velká plocha k ochraně, ale rozhled zhoršuje jen několik překážek."
+
+msgid "An alien Harvester has crashed in the wastelands."
+msgstr "Havárie cizáckého Sklízeče v pustině."
+
+#, fuzzy
+msgid "Some houses in the desert."
+msgstr "Několik obydlí v poušti"
+
+msgid "Big city"
+msgstr ""
+
+msgid "A small UFO has crashed in this mining region."
+msgstr "Místo havárie malého UFO v této hornické oblasti."
+
+msgid "A Bomber has landed in the middle of a city."
+msgstr "Bombardér přistál uprostřed města."
+
+#, fuzzy
+msgid "A suburb that has been visited by an UFO."
+msgstr "Předměstí navštívené UFO."
+
+msgid "A suburb that has received a visit from a Harvester."
+msgstr "Předměstí navštívené Sklízečem."
 
 msgid "No language"
 msgstr "Bez jazyka"
@@ -10690,7 +10546,8 @@ msgstr "t. Firebird"
 msgid "Firebird-class Dropship"
 msgstr "Transportér třídy Firebird"
 
-msgid "Village big"
+#, fuzzy
+msgid "Village large"
 msgstr "Velká vesnice"
 
 msgid "Village recreational"
@@ -10728,7 +10585,8 @@ msgstr "Přeprava"
 msgid "Rescue mission"
 msgstr "Automise"
 
-msgid "Oriental big"
+#, fuzzy
+msgid "Oriental large"
 msgstr "Velká orientální"
 
 msgid "Oriental medium"
@@ -11420,6 +11278,10 @@ msgstr "Transportér není v blízkosti přistávacího prostoru"
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Základna '%s' je napadena! Co dělat?"
+
+#, fuzzy, c-format
+msgid "Base '%s' is under attack!"
+msgstr "Základna je napadena"
 
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
@@ -12514,6 +12376,10 @@ msgstr "Přejmenovat letoun"
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
+
+#, fuzzy
+msgid "base_attack"
+msgstr "Útok na základnu"
 
 msgid "ufo_attacking"
 msgstr "útočící UFO"
@@ -13944,7 +13810,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO:AI\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 10:28+0200\n"
+"POT-Creation-Date: 2011-07-30 09:00+0200\n"
 "PO-Revision-Date: 2010-05-26 14:37+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: UFO:AI team <cs@li.org>\n"
@@ -13957,6 +13823,119 @@ msgstr ""
 "X-Poedit-Language: Czech\n"
 "X-Poedit-Country: CZECH REPUBLIC\n"
 "X-Poedit-Basepath: ..\\\n"
+
+#, fuzzy
+#~ msgid "Joystick speed."
+#~ msgstr "Nastavení joysticku:"
+
+#, fuzzy
+#~ msgid "Enable or disable your Joystick."
+#~ msgstr "Povolí/Zakáže Joysticky"
+
+#, fuzzy
+#~ msgid "The minimum/maximum zoom of the battlescape camera."
+#~ msgstr "Naklonit kameru nad bojištěm vzhůru"
+
+#, fuzzy
+#~ msgid "The minimum/maximum pitch shift of the battlescape camera."
+#~ msgstr "Naklonit kameru nad bojištěm vzhůru"
+
+#, fuzzy
+#~ msgid "The rotation speed of the battlescape camera."
+#~ msgstr "Naklonit kameru nad bojištěm vzhůru"
+
+#, fuzzy
+#~ msgid "The scroll speed of the battlescape camera."
+#~ msgstr "Naklonit kameru nad bojištěm vzhůru"
+
+#, fuzzy
+#~ msgid "Do you want to hear the screams?"
+#~ msgstr "Jste si jistý že chcete zbourat toto zařízení?"
+
+#, fuzzy
+#~ msgid "Current volume of the music."
+#~ msgstr "Aktuální základna:"
+
+#, fuzzy
+#~ msgid "Enable the material system."
+#~ msgstr "Povolit morálku:"
+
+#, fuzzy
+#~ msgid "Enable weather effects."
+#~ msgstr "Efekty počasí:"
+
+#, fuzzy
+#~ msgid "Enable fog."
+#~ msgstr "Povolit zvuk:"
+
+#, fuzzy
+#~ msgid "Enable coronas."
+#~ msgstr "Komprese textur:"
+
+#, fuzzy
+#~ msgid "Enable flares."
+#~ msgstr "Efekty počasí:"
+
+#, fuzzy
+#~ msgid "Enable real-time lighting."
+#~ msgstr "Osvětlení v reálném čase (r_lighting):"
+
+#, fuzzy
+#~ msgid "Change the swap interval."
+#~ msgstr "Interval výměny (r_swapinterval):"
+
+#, fuzzy
+#~ msgid "Change the amount of multisample buffers."
+#~ msgstr "Znovu vybrat tohoto vojáka"
+
+#, fuzzy
+#~ msgid "Current value."
+#~ msgstr "Aktuální základna:"
+
+#, fuzzy
+#~ msgid "Enable texture compression."
+#~ msgstr "Komprese textur:"
+
+#, fuzzy
+#~ msgid "Stretch the screen to a ratio of 4:3."
+#~ msgstr "Nezachovávat poměr obrazu 4:3:"
+
+#, fuzzy
+#~ msgid "Stretches the screen with a 4:3 ratio."
+#~ msgstr "Nezachovávat poměr obrazu 4:3:"
+
+#, fuzzy
+#~ msgid "Enable precaching of models to have faster menus."
+#~ msgstr "Přednačíst modely (rychlejší nabídky)"
+
+#, fuzzy
+#~ msgid "Enable the 'Tip of the Day'."
+#~ msgstr "Tip dne"
+
+#, fuzzy
+#~ msgid "Activate cursor tooltips."
+#~ msgstr "Zapne vyskakovací nápovědu"
+
+#, fuzzy
+#~ msgid "3D or 2D geoscape."
+#~ msgstr "Zpět na mapu světa"
+
+#, fuzzy
+#~ msgid "Change your name."
+#~ msgstr "Uložit váš tým"
+
+#, fuzzy
+#~ msgid "Your name."
+#~ msgstr "Přerušit hru"
+
+#~ msgid "Open UFOpaedia"
+#~ msgstr "Otevřít UFOpedii"
+
+#~ msgid "Reload the last automatically saved campaign state"
+#~ msgstr "Zvovu načíst poslední automaticky uložený stav kampaně"
+
+#~ msgid "An industrial area, used for loading and unloading goods."
+#~ msgstr "Průmyslová oblast užívaná pro nakládání a vykládání zboží."
 
 #~ msgid "Personal message"
 #~ msgstr "Osobní zpráva"
@@ -15156,9 +15135,6 @@ msgstr ""
 
 #~ msgid "This item will be operational in %i hours.\n"
 #~ msgstr "Toto vybavení bude v provozu během %d hodin.\n"
-
-#~ msgid "Now after you have finished the single-player campaigns"
-#~ msgstr "Když jste teď dohrál kampaně pro jednoho hráče"
 
 #~ msgid "you should try the multiplayer features"
 #~ msgstr "měl byste zkusit také hru s více hráči"

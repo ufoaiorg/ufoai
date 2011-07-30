@@ -328,8 +328,12 @@ msgstr "治療"
 msgid "Medikit"
 msgstr "急救包"
 
-msgid "Requirement:"
+#, fuzzy
+msgid "Requirement(s):"
 msgstr "需求："
+
+msgid "The Big Picture"
+msgstr ""
 
 #, fuzzy
 msgid "Pre-Research Report"
@@ -480,8 +484,35 @@ msgstr "開始遊戲"
 msgid "<1>"
 msgstr ""
 
+#, fuzzy
+msgid "Quit"
+msgstr "基多"
+
+msgid "You will lose all your progress."
+msgstr ""
+
+#, fuzzy
+msgid "Enter the game options menu."
+msgstr "退出選項選單。"
+
+#, fuzzy
+msgid "Retry this battlescape mission."
+msgstr "重開本任務"
+
+#, fuzzy
+msgid "Abort this battlescape mission."
+msgstr "選擇戰場HUD。"
+
 msgid "Abort"
 msgstr "中止任務"
+
+#, fuzzy
+msgid "Go back to the battlescape."
+msgstr "選擇戰場HUD。"
+
+#, fuzzy
+msgid "Back to the main menu."
+msgstr "返回主選單"
 
 msgid "Base Info"
 msgstr "基地訊息"
@@ -557,9 +588,6 @@ msgstr "顯示按鍵設定"
 msgid "Show Keys"
 msgstr "顯示按鍵"
 
-msgid "Joystick speed."
-msgstr "搖桿速度。"
-
 msgid "Threshold:"
 msgstr "閾值："
 
@@ -572,35 +600,17 @@ msgstr ""
 msgid "Joystick or Joypad:"
 msgstr "搖桿或手制："
 
-msgid "Select which of your joysticks or joypads you want to use."
-msgstr "選擇要使用的搖桿或手制。"
-
-msgid "Enable your joystick or joypad."
-msgstr "使用搖桿或手制。"
-
 msgid "Enable:"
 msgstr "啓用搖桿或手制："
 
-msgid "Enable or disable your Joystick."
-msgstr "啟用/停用搖桿。"
-
 msgid "Joystick Settings"
 msgstr "搖桿設定"
-
-#, fuzzy
-msgid "Available HUD for the battlescape mode."
-msgstr "選擇戰場HUD。"
 
 msgid "HUD Design:"
 msgstr "戰鬥界面："
 
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr "選擇戰場HUD。"
-
-msgid "Select 'Yes' if you want more intelligent soldiers."
-msgstr ""
-"如果你不喜歡呆子，\n"
-"那就選'是'吧！"
 
 msgid "Autostand:"
 msgstr "自動站立："
@@ -623,7 +633,8 @@ msgstr ""
 msgid "Confirm Actions:"
 msgstr "操作確認："
 
-msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
+#, fuzzy
+msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 msgstr ""
 "啟用本項可以先預計戰場\n"
 "行動，然後再行確認。\n"
@@ -637,28 +648,14 @@ msgstr ""
 msgid "Actor Speed:"
 msgstr "士兵速度："
 
-#, fuzzy
-msgid "Actor speed changes the speed of aliens and humans."
-msgstr ""
-"士兵速度改變外星人\n"
-"和人類的行動速度。"
-
 msgid "Battlescape Gameplay Settings"
 msgstr "戰鬥流程設定"
-
-msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
-msgstr "自動設定視角到選擇的士兵或者開火/出現的敵人。"
 
 msgid "Center View:"
 msgstr "置中視角："
 
-msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
-msgstr ""
-"設定戰鬥視角是否自動\n"
-"集中至選定的單位。"
-
-msgid "Enable the isometric 3D rendering mode for the battlescape."
-msgstr "啟用等距3D渲染模式。"
+msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
+msgstr "自動設定視角到選擇的士兵或者開火/出現的敵人。"
 
 msgid "Isometric Mode:"
 msgstr "等距模式："
@@ -687,10 +684,6 @@ msgstr "戰鬥視角的旋轉速度。"
 msgid "Minimum/Maximum Zoom:"
 msgstr ""
 
-#, fuzzy
-msgid "The minimum/maximum zoom of the battlescape camera."
-msgstr "戰鬥視角的旋轉速度。"
-
 msgid "ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
 msgstr ""
 
@@ -701,38 +694,17 @@ msgid "Minimum/Maximum Shift Pitch:"
 msgstr ""
 
 #, fuzzy
-msgid "The minimum/maximum pitch shift of the battlescape camera."
-msgstr "戰鬥視角的旋轉速度。"
-
-msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
-msgstr ""
-
-#, fuzzy
 msgid "Move Deceleration:"
 msgstr "移動速度："
 
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
 msgstr ""
 
-#, fuzzy
-msgid "Actual camera rotation speed."
-msgstr "視角的旋轉速度。"
-
 msgid "Rotation Speed:"
 msgstr "旋轉速度："
 
-msgid "The rotation speed of the battlescape camera."
-msgstr "戰鬥視角的旋轉速度。"
-
-#, fuzzy
-msgid "Actual camera scroll speed."
-msgstr "視角的捲動速度。"
-
 msgid "Scroll Speed:"
 msgstr "捲動速度："
-
-msgid "The scroll speed of the battlescape camera."
-msgstr "戰鬥視角的捲動速度。"
 
 msgid "Battlescape Camera Settings"
 msgstr "戰鬥視角設定"
@@ -743,10 +715,6 @@ msgstr "戰鬥流程設定"
 
 msgid "Restart the sound-engine and apply your settings."
 msgstr "重啟聲效引擎並套用新設定。"
-
-#, fuzzy
-msgid "Current sample rate frequency in kHz."
-msgstr "目前的取樣率（kHz）。"
 
 #, fuzzy
 msgid "Audio Sample Rate:"
@@ -762,33 +730,15 @@ msgid "Advanced Audio Options"
 msgstr "高級音效設定"
 
 #, fuzzy
+msgid "Turn the menu sounds on or off."
+msgstr "切換是否自動還擊"
+
+#, fuzzy
 msgid "Menu Sounds:"
 msgstr "中等創傷"
 
-msgid "You do not like click sounds?"
-msgstr ""
-
-#, fuzzy
-msgid "Current volume of the sound effects."
-msgstr "目前聲效的音量。"
-
 msgid "Sound Effects:"
 msgstr "聲效："
-
-msgid "Do you want to hear the screams?"
-msgstr "想聽聽慘叫聲嗎？"
-
-#, fuzzy
-msgid "Current volume of the music."
-msgstr "目前背景音樂的音量。"
-
-msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
-msgstr ""
-"不要錯過 UFO:AI\n"
-"提供的優美音軌喔！"
-
-msgid "Do not turn me off."
-msgstr "不要關掉我喔！"
 
 msgid "Enable Audio:"
 msgstr "啓用音效："
@@ -812,18 +762,11 @@ msgid "Switch to low video settings"
 msgstr "前一個基地"
 
 #, fuzzy
-msgid "Enable the material system."
-msgstr "啟用士氣值："
-
-#, fuzzy
 msgid "Material System:"
 msgstr "材料編輯"
 
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 msgstr ""
-
-msgid "Enable weather effects."
-msgstr "啟用天氣變化。"
 
 msgid "Weather Effects:"
 msgstr "天氣效果："
@@ -834,19 +777,11 @@ msgstr ""
 "開啟天氣效果，例如\n"
 "下雨（還未完成）或下雪。"
 
-#, fuzzy
-msgid "Enable fog."
-msgstr "啓用音效："
-
 msgid "Fog:"
 msgstr ""
 
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
 msgstr ""
-
-#, fuzzy
-msgid "Enable coronas."
-msgstr "啟用貼圖壓縮。"
 
 #, fuzzy
 msgid "Coronas:"
@@ -856,22 +791,11 @@ msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr ""
 
 #, fuzzy
-msgid "Enable flares."
-msgstr "啟用天氣變化。"
-
-#, fuzzy
 msgid "Flares:"
 msgstr "困難度："
 
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
 msgstr ""
-
-#, fuzzy
-msgid "Adjust various other settings here."
-msgstr "可以看一看更詳細的設定項目。"
-
-msgid "Current amount of ambient light reaching the earth."
-msgstr "地球上的光源量。"
 
 #, fuzzy
 msgid "Geo Ambient Lighting:"
@@ -932,10 +856,6 @@ msgstr ""
 "注意：要重啟遊戲才能生效。"
 
 #, fuzzy
-msgid "Enable real-time lighting."
-msgstr "實時照明："
-
-#, fuzzy
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "動態光源數量上限："
 
@@ -948,9 +868,6 @@ msgstr ""
 #, fuzzy
 msgid "Light and Shadow"
 msgstr "右手"
-
-msgid "Adjust various light and shadow settings here."
-msgstr ""
 
 msgid "Enable post processing shader effects. ATTENTION: May require restart to take effect."
 msgstr ""
@@ -966,18 +883,12 @@ msgstr ""
 "後繪圖處理模式\n"
 "（需要開啟 GLSL 繪圖器）。"
 
-msgid "Change the swap interval."
-msgstr "設定置換間隙。"
-
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr ""
 "'0'設定為不使用v-sync，\n"
 "可以使遊戲速度提升。\n"
 "'1'以上設定為使用v-sync，\n"
 "可以使遊戲畫面品質提升。"
-
-msgid "Change the amount of multisample buffers."
-msgstr "設定多重採樣的緩衝大小。"
 
 #, fuzzy
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
@@ -997,12 +908,6 @@ msgstr ""
 "的間隙。\n"
 "'0'表示置換立即執行\n"
 " （亦即是'v-sync off')。"
-
-msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
-msgstr ""
-"啟用 Vertex Buffers 可以\n"
-"得到更佳的3D效能（需要\n"
-"OpenGL相容的硬體）"
 
 msgid "Vertex Buffers:"
 msgstr "Vertex 緩衝："
@@ -1038,17 +943,11 @@ msgstr ""
 msgid "OpenGL Settings"
 msgstr "顯示設定"
 
-msgid "Adjust various OpenGL settings here."
-msgstr ""
-
 #, fuzzy
 msgid "Very high values are only recommended when playing in very high screen resolutions."
 msgstr ""
 "建議只在高解像下\n"
 "才使用高數值。"
-
-msgid "Current value."
-msgstr "目前數值。"
 
 #, fuzzy
 msgid "Anisotropy Level:"
@@ -1062,9 +961,6 @@ msgstr ""
 "只有高屏幕解像度才建議使用\n"
 "高數值。"
 
-msgid "Enable high texture detail."
-msgstr "啟用細緻貼圖。"
-
 msgid "LoD:"
 msgstr ""
 
@@ -1074,9 +970,6 @@ msgstr ""
 "貼圖的仔細程度。如果\n"
 "想要較佳的貼圖品質\n"
 "就啟用本設定。"
-
-msgid "Enable texture compression."
-msgstr "啟用貼圖壓縮。"
 
 #, fuzzy
 msgid "Compression:"
@@ -1144,10 +1037,6 @@ msgstr "設定貼圖及解像度的上限。"
 msgid "Texture Settings"
 msgstr "音效選項"
 
-#, fuzzy
-msgid "Adjust various texture settings here."
-msgstr "可以看一看更詳細的設定項目。"
-
 msgid "Default is to play the intro video just once at the first game start."
 msgstr ""
 
@@ -1163,19 +1052,9 @@ msgstr "顯示FPS。"
 msgid "Show FPS:"
 msgstr "顯示幀率："
 
-msgid "See how many frames per second are rendered."
-msgstr "顯示每秒幀率。"
-
 #, fuzzy
 msgid "Other Display Settings"
 msgstr "總括遊戲設定"
-
-#, fuzzy
-msgid "Adjust other settings here."
-msgstr "可以看一看更詳細的設定項目。"
-
-msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
-msgstr ""
 
 msgid "Screenshot Format:"
 msgstr ""
@@ -1184,9 +1063,6 @@ msgid "The file format used for compressing and saving your screenshots."
 msgstr ""
 
 msgid "jpeg Quality:"
-msgstr ""
-
-msgid "Here you can set the quality of jpeg screenshots."
 msgstr ""
 
 #, fuzzy
@@ -1200,15 +1076,8 @@ msgstr ""
 msgid "Saturation:"
 msgstr "燃氣站"
 
-#, fuzzy
-msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
-msgstr "增加伽瑪值可以使顏色銳化。"
-
 msgid "Gamma:"
 msgstr "灰度係數："
-
-msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
-msgstr "增加伽瑪值可以使顏色銳化。"
 
 msgid "Contrast:"
 msgstr "對比度："
@@ -1219,32 +1088,20 @@ msgstr "對比度代表圖像光暗區的光亮度差異。"
 msgid "Brightness:"
 msgstr "明亮度："
 
-msgid "Brightness sets the intensity of light emitting from your screen."
-msgstr "明亮度設定屏幕的光暗。"
-
 msgid "Monitor Calibration Controls"
 msgstr ""
 
 msgid "Calibrate your display here."
 msgstr ""
 
-msgid "Stretch the screen to a ratio of 4:3."
-msgstr "延伸顯示比例至 4比3。"
-
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "延伸顯示比例至 4比3："
-
-msgid "Stretches the screen with a 4:3 ratio."
-msgstr "以 4比3 的比例延伸顯示屏。"
 
 msgid "Play UFO:AI in fullscreen."
 msgstr "以全屏模式執行 UFO:AI。"
 
 msgid "Fullscreen:"
 msgstr "全屏："
-
-msgid "Play UFO:AI in fullscreen- or window-mode."
-msgstr "設定 UFO:AI 的全屏或視窗模式。"
 
 #, fuzzy
 msgid "Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
@@ -1280,9 +1137,6 @@ msgstr ""
 msgid "Resolution and Display Settings"
 msgstr ""
 
-msgid "Adjust resolution and display settings here."
-msgstr ""
-
 #, fuzzy
 msgid "Advanced"
 msgstr "超級雷達室"
@@ -1294,21 +1148,15 @@ msgstr "日內瓦"
 msgid "Video Settings"
 msgstr "顯示設定"
 
-msgid "Enable precaching of models to have faster menus."
-msgstr "啟用先讀緩存，可以令選單更快顯示。"
+msgid "Precaching of models means having faster menus."
+msgstr "緩衝模組可以令選單更快顯示。"
 
 #, fuzzy
 msgid "Precache Models:"
 msgstr "緩衝模組："
 
-msgid "Precaching of models means having faster menus."
-msgstr "緩衝模組可以令選單更快顯示。"
-
 msgid "Menu Option(s)"
 msgstr "選單設定"
-
-msgid "Enable the 'Tip of the Day'."
-msgstr "啟用小技巧提示。"
 
 msgid "Show 'Tip of the Day':"
 msgstr "顯示'今日小技巧'："
@@ -1319,18 +1167,12 @@ msgstr ""
 "如果你是UFO:AI的新手，\n"
 "可以看一看老鳥們的心得。"
 
-msgid "Activate cursor tooltips."
-msgstr "使用游標提示。"
-
 msgid "Cursor Tooltips:"
 msgstr "游標提示："
 
 #, fuzzy
 msgid "Enable tooltips for the cursor."
 msgstr "啟用/停用游標提示。"
-
-msgid "Make me disappear."
-msgstr "你令我很失望呢~"
 
 msgid "Tooltips:"
 msgstr "提示："
@@ -1376,16 +1218,13 @@ msgstr ""
 msgid "The minimum/maximum zoom of the geoscape camera."
 msgstr "戰鬥視角的移動速度。"
 
-msgid "Use the 3D geoscape. To enable this option you have to start a new campaign first."
-msgstr "使用3D地球視界。要使用該選項必須重新開始戰役。"
-
 #, fuzzy
 msgid "3D Geoscape:"
 msgstr "3D地球視界："
 
 #, fuzzy
-msgid "3D or 2D geoscape."
-msgstr "3D或2D地球視界。"
+msgid "3D or 2D geoscape. To enable this option you have to start a new campaign first."
+msgstr "使用3D地球視界。要使用該選項必須重新開始戰役。"
 
 msgid "Geoscape Options"
 msgstr "地球視界選項"
@@ -1399,12 +1238,6 @@ msgstr ""
 
 msgid "Language Settings"
 msgstr "語言設定"
-
-msgid "Change your name."
-msgstr "改變名字。"
-
-msgid "Your name."
-msgstr "你的名字。"
 
 msgid "Overall Game Settings"
 msgstr "總括遊戲設定"
@@ -1796,6 +1629,9 @@ msgstr "開發團隊"
 msgid "Tutorials"
 msgstr "教學指導"
 
+msgid "Choose between Campaign or Skirmish mode."
+msgstr ""
+
 msgid "Single-player"
 msgstr "單人遊戲"
 
@@ -2115,7 +1951,8 @@ msgstr "殺死敵人："
 msgid "Missions Performed:"
 msgstr "參與任務："
 
-msgid "Rename your employee"
+#, fuzzy
+msgid "Rename employee"
 msgstr "重新命名員工"
 
 #, fuzzy
@@ -2289,9 +2126,6 @@ msgstr "顯示國際組織邊界"
 msgid "Create installation"
 msgstr "建立新基站"
 
-msgid "Open UFOpaedia"
-msgstr "UFO資料庫"
-
 msgid "Organisation statistics"
 msgstr "統計資料"
 
@@ -2400,6 +2234,21 @@ msgstr "背包"
 msgid "Equip this soldier"
 msgstr "裝備此士兵"
 
+msgid "Do not quit."
+msgstr ""
+
+msgid "Quit anyway"
+msgstr ""
+
+msgid "Exit current campaign and return to main menu."
+msgstr ""
+
+msgid "You will lose all your campaign progress."
+msgstr ""
+
+msgid "Exit Campaign Confirmation"
+msgstr ""
+
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "謝謝你對 UFO:Alien Invasion 這遊戲感興趣"
 
@@ -2408,9 +2257,6 @@ msgstr "點擊繼續"
 
 msgid "You've lost the game"
 msgstr "遊戲失敗"
-
-msgid "Reload the last automatically saved campaign state"
-msgstr "重新加載上一次自動儲存的戰役進度"
 
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr "你是否確定要讀取上一次的自動存檔？"
@@ -2424,10 +2270,15 @@ msgstr "退出遊戲"
 msgid "Options"
 msgstr "系統設置"
 
+#, fuzzy
+msgid "Leave this menu and continue playing."
+msgstr "讀取上一次保存的進度或者繼續遊戲"
+
 msgid "Back"
 msgstr "回上一頁"
 
-msgid "Load last saved game or continue playing"
+#, fuzzy
+msgid "Load last saved game or continue playing."
 msgstr "讀取上一次保存的進度或者繼續遊戲"
 
 msgid "Continue"
@@ -2435,6 +2286,9 @@ msgstr "繼續遊戲"
 
 msgid "Load"
 msgstr "讀取存檔"
+
+msgid "Start a new singleplayer campaign."
+msgstr ""
 
 msgid "Start campaign"
 msgstr "開始戰役"
@@ -3193,7 +3047,8 @@ msgstr "新科技和醫療知識以及技術，終於普及到了貧困國家，
 msgid "intro_sentence1"
 msgstr "公元2084年。我們所認識的地球在長久以來，雖然不是一個非常和平的地方，但也享受了一段相當長的和平。21世紀初期所爆發的戰爭，雖然已經過了許久，但仍然記憶猶新。對於大多數人來說，第二次的冷戰，只是過去的陰影。戰爭的記憶就像20世紀末出生的人一樣，模糊的記得有過第一次世界大戰。"
 
-msgid "Copyright 2004-2010 by UFO: AI Team"
+#, fuzzy
+msgid "Copyright 2004-2011 by UFO: AI Team"
 msgstr "Copyright 2004-2010 by UFO: AI Team"
 
 msgid "http://ufoai.sf.net"
@@ -8750,6 +8605,10 @@ msgstr "北美聯邦"
 msgid "The Revolutionary Countries"
 msgstr "南美革命同盟"
 
+#, fuzzy
+msgid "missions"
+msgstr "任務"
+
 msgid "ufo_activity"
 msgstr "UFO活動"
 
@@ -8849,85 +8708,37 @@ msgstr "硬幣"
 msgid "Cross"
 msgstr "交叉路口"
 
+msgid "Training Zone: Alpha."
+msgstr ""
+
+#, fuzzy
+msgid "Rescue mission."
+msgstr "自動進行任務"
+
 msgid "Base is under attack."
 msgstr "基地正受到攻擊。"
 
 msgid "An alien base."
 msgstr "一個外星人基地。"
 
-#, fuzzy
-msgid "Rescue mission."
-msgstr "自動進行任務"
-
-msgid "UFO Crashsite."
-msgstr "UFO墜落地點。"
-
-msgid "Training Zone: Alpha."
-msgstr ""
-
-msgid "UFO landed in hills area."
-msgstr ""
-
 msgid "Wilderness terror mission."
 msgstr "荒野中的恐怖活動任務。"
-
-msgid "A fuel depot the aliens try to destroy."
-msgstr "一個外星人正試圖毀滅的油庫。"
-
-msgid "Big city"
-msgstr "大城市"
-
-msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr "一間檢查UFO墜落殘骸的研究室。"
-
-msgid "A place where people come to relax and mingle."
-msgstr "一個公園。"
-
-msgid "A Bomber has landed in the middle of a city."
-msgstr "一架轟炸型UFO降落在市中心。"
-
-msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr "一個防空洞。"
-
-msgid "A small settlement in winter."
-msgstr "一間冬季小屋。"
-
-msgid "An alien Harvester has crashed in the wastelands."
-msgstr "有架掠奪型UFO墜落在荒地裡。"
-
-msgid "A suburb that has received a visit from a Harvester."
-msgstr "一個被掠奪型UFO劫掠的土著部落。"
-
-#, fuzzy
-msgid "A suburb that has been visited by an UFO."
-msgstr "一個被UFO劫掠的土著部落。"
-
-msgid "A luxurious vacation resort."
-msgstr "一個豪華度假區。"
-
-msgid "An office complex on the outskirts of town."
-msgstr "一個小鎮的辦公樓。"
-
-msgid "A local harbour."
-msgstr "一個港口。"
-
-msgid "An office complex under construction."
-msgstr "一個建造中的辦公樓。"
-
-msgid "A small UFO has crashed in this mining region."
-msgstr "有架小型UFO墜落在採礦區裡。"
-
-msgid "A military convoy has caught the eye of the aliens."
-msgstr "一隊被外星人追擊的運兵車隊伍。"
 
 msgid "A suburban district."
 msgstr "一個市郊。"
 
-msgid "An office complex in the centre of town."
-msgstr "一個市中心辦公樓。"
-
 msgid "A subway station in a suburban part of town."
 msgstr "一個地鐵車站。"
+
+#, fuzzy
+msgid "A crashed Scout UFO."
+msgstr "一架墜毀的偵察型UFO"
+
+msgid "A rather old-fashioned suburban district."
+msgstr "一個比較老式的近郊區。"
+
+msgid "A luxurious vacation resort."
+msgstr "一個豪華度假區。"
 
 msgid "Underground pipe construction site."
 msgstr "地下管道施工點。"
@@ -8935,21 +8746,23 @@ msgstr "地下管道施工點。"
 msgid "An urban district in an oriental region."
 msgstr "一個東方舊城區。"
 
+msgid "An office complex on the outskirts of town."
+msgstr "一個小鎮的辦公樓。"
+
+msgid "An old mine."
+msgstr "一個廢棄礦井。"
+
+msgid "A small settlement in winter."
+msgstr "一間冬季小屋。"
+
+msgid "A local harbour."
+msgstr "一個港口。"
+
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr ""
 
-msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr "一個加油站。"
-
-#, fuzzy
-msgid "A small industry city area."
-msgstr "一個小型工業區。"
-
-msgid "A small neighbourhood in a warm urban region."
-msgstr "一個大城市內的小型住宅區。"
-
-msgid "A rather old-fashioned suburban district."
-msgstr "一個比較老式的近郊區。"
+msgid "A fuel depot the aliens try to destroy."
+msgstr "一個外星人正試圖毀滅的油庫。"
 
 msgid "A ferry."
 msgstr "一艘渡輪。"
@@ -8957,9 +8770,48 @@ msgstr "一艘渡輪。"
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "一間農田和牛棚圍繞的農舍。有架UFO降落在田裡。"
 
+msgid "An excavation site that has fallen under alien attack."
+msgstr "一個被外星人襲擊的礦井。"
+
+msgid "An estate owned by rich and influential people."
+msgstr "一個貴族莊園。"
+
+msgid "A small village in England."
+msgstr "一個英格蘭小鎮。"
+
+msgid "A hydroelectricity dam that is threatened by the alien invaders."
+msgstr "一個外星人正試圖侵入的水壩。"
+
 #, fuzzy
-msgid "A crashed Scout UFO."
-msgstr "一架墜毀的偵察型UFO"
+msgid "A small industry city area."
+msgstr "一個小型工業區。"
+
+msgid "A bunker used in a previous conflict."
+msgstr "一個上次大戰時遺下的碉堡。"
+
+msgid "An office complex in the centre of town."
+msgstr "一個市中心辦公樓。"
+
+msgid "A stadium used for various recreational events."
+msgstr "一間體育館。"
+
+msgid "A small industrial area."
+msgstr "一個小型工業區。"
+
+msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+msgstr "一個防空洞。"
+
+msgid "A military convoy has caught the eye of the aliens."
+msgstr "一隊被外星人追擊的運兵車隊伍。"
+
+msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
+msgstr "一間社區超市。"
+
+msgid "A small office in a mountainous region."
+msgstr "一間山中辦公樓。"
+
+msgid "A place where citizens come to replenish their vehicles' fuel supply."
+msgstr "一個加油站。"
 
 #, fuzzy
 msgid "A small estate in the mountains."
@@ -8968,75 +8820,29 @@ msgstr "一間山中大宅。"
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "一個被匪徒佔據的雨林地帶。"
 
-msgid "A stadium used for various recreational events."
-msgstr "一間體育館。"
+msgid "An office complex under construction."
+msgstr "一個建造中的辦公樓。"
 
-msgid "A small industrial area."
-msgstr "一個小型工業區。"
+msgid "A place where people come to relax and mingle."
+msgstr "一個公園。"
 
-msgid "A classic eastern suburban area."
-msgstr "一個典型的東方郊區。"
-
-msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr "一個外星人正試圖侵入的水壩。"
-
-msgid "A bunker used in a previous conflict."
-msgstr "一個上次大戰時遺下的碉堡。"
-
-msgid "An industrial area, used for loading and unloading goods."
-msgstr "一個工業貨運站。"
-
-msgid "An old mine."
-msgstr "一個廢棄礦井。"
-
-msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
-msgstr "一間社區超市。"
-
-msgid "A small office in a mountainous region."
-msgstr "一間山中辦公樓。"
-
-msgid "A small village in England."
-msgstr "一個英格蘭小鎮。"
-
-msgid "An estate owned by rich and influential people."
-msgstr "一個貴族莊園。"
-
-msgid "An excavation site that has fallen under alien attack."
-msgstr "一個被外星人襲擊的礦井。"
-
-#, fuzzy
-msgid "Some houses in the desert."
-msgstr "沙漠平房"
-
-msgid "UFO crashed in this sparsely populated forest region."
-msgstr "有架UFO墜落在無人森林區裡。"
-
-msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr "無人森林區。"
-
-msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr "一個在大城市郊外的寧靜小鎮。"
-
-msgid "A cleared stretch of land in the middle of the jungle."
-msgstr "一片叢林裡的空地。"
-
-msgid "A river runs through this piece of jungle."
-msgstr "一條叢林裡的溪流。"
+msgid "A small neighbourhood in a warm urban region."
+msgstr "一個大城市內的小型住宅區。"
 
 msgid "Cemetery terror mission."
 msgstr "墳地恐怖活動任務。"
 
-msgid "An industrial compound."
-msgstr "一個工業區。"
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
+msgstr "一個在大城市郊外的寧靜小鎮。"
 
-msgid "An underpopulated area in a cold region."
-msgstr "一個寒冷地帶的無人區。"
+msgid "UFO Crashsite."
+msgstr "UFO墜落地點。"
 
-msgid "An industrial area in a cold region."
-msgstr "一個寒冷地帶的工業區。"
+msgid "A river runs through this piece of jungle."
+msgstr "一條叢林裡的溪流。"
 
-msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
-msgstr "一個空曠且開闊的農田區。"
+msgid "A cleared stretch of land in the middle of the jungle."
+msgstr "一片叢林裡的空地。"
 
 msgid "Crashed UFO in oriental suburban district."
 msgstr "有架UFO墜落在東方舊郊裡。"
@@ -9044,8 +8850,58 @@ msgstr "有架UFO墜落在東方舊郊裡。"
 msgid "A suburban district of an oriental area."
 msgstr "一個東方的市郊。"
 
+msgid "A laboratory where they examined found UFO wreck tiles."
+msgstr "一間檢查UFO墜落殘骸的研究室。"
+
+msgid "A classic eastern suburban area."
+msgstr "一個典型的東方郊區。"
+
 msgid "Industrial theme."
 msgstr "工業區。"
+
+msgid "UFO landed in hills area."
+msgstr ""
+
+msgid "An underpopulated area in a cold region."
+msgstr "一個寒冷地帶的無人區。"
+
+msgid "An industrial compound."
+msgstr "一個工業區。"
+
+msgid "An industrial area in a cold region."
+msgstr "一個寒冷地帶的工業區。"
+
+msgid "UFO crashed in this sparsely populated forest region."
+msgstr "有架UFO墜落在無人森林區裡。"
+
+msgid "Aliens are up to no good in this sparsely populated forest region."
+msgstr "無人森林區。"
+
+msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+msgstr "一個空曠且開闊的農田區。"
+
+msgid "An alien Harvester has crashed in the wastelands."
+msgstr "有架掠奪型UFO墜落在荒地裡。"
+
+#, fuzzy
+msgid "Some houses in the desert."
+msgstr "沙漠平房"
+
+msgid "Big city"
+msgstr "大城市"
+
+msgid "A small UFO has crashed in this mining region."
+msgstr "有架小型UFO墜落在採礦區裡。"
+
+msgid "A Bomber has landed in the middle of a city."
+msgstr "一架轟炸型UFO降落在市中心。"
+
+#, fuzzy
+msgid "A suburb that has been visited by an UFO."
+msgstr "一個被UFO劫掠的土著部落。"
+
+msgid "A suburb that has received a visit from a Harvester."
+msgstr "一個被掠奪型UFO劫掠的土著部落。"
 
 msgid "No language"
 msgstr "無語言"
@@ -11218,7 +11074,8 @@ msgstr "火鳥"
 msgid "Firebird-class Dropship"
 msgstr "（運輸機）火鳥級"
 
-msgid "Village big"
+#, fuzzy
+msgid "Village large"
 msgstr "大城鎮"
 
 msgid "Village recreational"
@@ -11256,7 +11113,8 @@ msgstr "中轉站"
 msgid "Rescue mission"
 msgstr "自動進行任務"
 
-msgid "Oriental big"
+#, fuzzy
+msgid "Oriental large"
 msgstr "東方風格（大型）"
 
 msgid "Oriental medium"
@@ -11940,6 +11798,10 @@ msgstr "你的運輸機還未靠近著陸點"
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "%s 正遭受攻擊，該怎麼辦？"
+
+#, fuzzy, c-format
+msgid "Base '%s' is under attack!"
+msgstr "基地正受到攻擊"
 
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
@@ -13014,6 +12876,10 @@ msgstr "重新命名航空機"
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i"
+
+#, fuzzy
+msgid "base_attack"
+msgstr "基地攻擊"
 
 msgid "ufo_attacking"
 msgstr "UFO攻擊"
@@ -14408,7 +14274,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 10:28+0200\n"
+"POT-Creation-Date: 2011-07-30 09:00+0200\n"
 "PO-Revision-Date: 2010-10-10 21:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14421,6 +14287,194 @@ msgstr ""
 "X-Poedit-Language: Traditional Chinese\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-Basepath: ../\n"
+
+#~ msgid "Joystick speed."
+#~ msgstr "搖桿速度。"
+
+#~ msgid "Select which of your joysticks or joypads you want to use."
+#~ msgstr "選擇要使用的搖桿或手制。"
+
+#~ msgid "Enable your joystick or joypad."
+#~ msgstr "使用搖桿或手制。"
+
+#~ msgid "Enable or disable your Joystick."
+#~ msgstr "啟用/停用搖桿。"
+
+#~ msgid "Select 'Yes' if you want more intelligent soldiers."
+#~ msgstr ""
+#~ "如果你不喜歡呆子，\n"
+#~ "那就選'是'吧！"
+
+#, fuzzy
+#~ msgid "Actor speed changes the speed of aliens and humans."
+#~ msgstr ""
+#~ "士兵速度改變外星人\n"
+#~ "和人類的行動速度。"
+
+#~ msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
+#~ msgstr ""
+#~ "設定戰鬥視角是否自動\n"
+#~ "集中至選定的單位。"
+
+#~ msgid "Enable the isometric 3D rendering mode for the battlescape."
+#~ msgstr "啟用等距3D渲染模式。"
+
+#, fuzzy
+#~ msgid "The minimum/maximum zoom of the battlescape camera."
+#~ msgstr "戰鬥視角的旋轉速度。"
+
+#, fuzzy
+#~ msgid "The minimum/maximum pitch shift of the battlescape camera."
+#~ msgstr "戰鬥視角的旋轉速度。"
+
+#, fuzzy
+#~ msgid "Actual camera rotation speed."
+#~ msgstr "視角的旋轉速度。"
+
+#~ msgid "The rotation speed of the battlescape camera."
+#~ msgstr "戰鬥視角的旋轉速度。"
+
+#, fuzzy
+#~ msgid "Actual camera scroll speed."
+#~ msgstr "視角的捲動速度。"
+
+#~ msgid "The scroll speed of the battlescape camera."
+#~ msgstr "戰鬥視角的捲動速度。"
+
+#, fuzzy
+#~ msgid "Current sample rate frequency in kHz."
+#~ msgstr "目前的取樣率（kHz）。"
+
+#, fuzzy
+#~ msgid "Current volume of the sound effects."
+#~ msgstr "目前聲效的音量。"
+
+#~ msgid "Do you want to hear the screams?"
+#~ msgstr "想聽聽慘叫聲嗎？"
+
+#, fuzzy
+#~ msgid "Current volume of the music."
+#~ msgstr "目前背景音樂的音量。"
+
+#~ msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
+#~ msgstr ""
+#~ "不要錯過 UFO:AI\n"
+#~ "提供的優美音軌喔！"
+
+#~ msgid "Do not turn me off."
+#~ msgstr "不要關掉我喔！"
+
+#, fuzzy
+#~ msgid "Enable the material system."
+#~ msgstr "啟用士氣值："
+
+#~ msgid "Enable weather effects."
+#~ msgstr "啟用天氣變化。"
+
+#, fuzzy
+#~ msgid "Enable fog."
+#~ msgstr "啓用音效："
+
+#, fuzzy
+#~ msgid "Enable coronas."
+#~ msgstr "啟用貼圖壓縮。"
+
+#, fuzzy
+#~ msgid "Enable flares."
+#~ msgstr "啟用天氣變化。"
+
+#, fuzzy
+#~ msgid "Adjust various other settings here."
+#~ msgstr "可以看一看更詳細的設定項目。"
+
+#~ msgid "Current amount of ambient light reaching the earth."
+#~ msgstr "地球上的光源量。"
+
+#, fuzzy
+#~ msgid "Enable real-time lighting."
+#~ msgstr "實時照明："
+
+#~ msgid "Change the swap interval."
+#~ msgstr "設定置換間隙。"
+
+#~ msgid "Change the amount of multisample buffers."
+#~ msgstr "設定多重採樣的緩衝大小。"
+
+#~ msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
+#~ msgstr ""
+#~ "啟用 Vertex Buffers 可以\n"
+#~ "得到更佳的3D效能（需要\n"
+#~ "OpenGL相容的硬體）"
+
+#~ msgid "Current value."
+#~ msgstr "目前數值。"
+
+#~ msgid "Enable high texture detail."
+#~ msgstr "啟用細緻貼圖。"
+
+#~ msgid "Enable texture compression."
+#~ msgstr "啟用貼圖壓縮。"
+
+#, fuzzy
+#~ msgid "Adjust various texture settings here."
+#~ msgstr "可以看一看更詳細的設定項目。"
+
+#~ msgid "See how many frames per second are rendered."
+#~ msgstr "顯示每秒幀率。"
+
+#, fuzzy
+#~ msgid "Adjust other settings here."
+#~ msgstr "可以看一看更詳細的設定項目。"
+
+#, fuzzy
+#~ msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
+#~ msgstr "增加伽瑪值可以使顏色銳化。"
+
+#~ msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
+#~ msgstr "增加伽瑪值可以使顏色銳化。"
+
+#~ msgid "Brightness sets the intensity of light emitting from your screen."
+#~ msgstr "明亮度設定屏幕的光暗。"
+
+#~ msgid "Stretch the screen to a ratio of 4:3."
+#~ msgstr "延伸顯示比例至 4比3。"
+
+#~ msgid "Stretches the screen with a 4:3 ratio."
+#~ msgstr "以 4比3 的比例延伸顯示屏。"
+
+#~ msgid "Play UFO:AI in fullscreen- or window-mode."
+#~ msgstr "設定 UFO:AI 的全屏或視窗模式。"
+
+#~ msgid "Enable precaching of models to have faster menus."
+#~ msgstr "啟用先讀緩存，可以令選單更快顯示。"
+
+#~ msgid "Enable the 'Tip of the Day'."
+#~ msgstr "啟用小技巧提示。"
+
+#~ msgid "Activate cursor tooltips."
+#~ msgstr "使用游標提示。"
+
+#~ msgid "Make me disappear."
+#~ msgstr "你令我很失望呢~"
+
+#, fuzzy
+#~ msgid "3D or 2D geoscape."
+#~ msgstr "3D或2D地球視界。"
+
+#~ msgid "Change your name."
+#~ msgstr "改變名字。"
+
+#~ msgid "Your name."
+#~ msgstr "你的名字。"
+
+#~ msgid "Open UFOpaedia"
+#~ msgstr "UFO資料庫"
+
+#~ msgid "Reload the last automatically saved campaign state"
+#~ msgstr "重新加載上一次自動儲存的戰役進度"
+
+#~ msgid "An industrial area, used for loading and unloading goods."
+#~ msgstr "一個工業貨運站。"
 
 #~ msgid "Personal message"
 #~ msgstr "個人訊息"

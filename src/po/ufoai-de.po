@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 10:28+0200\n"
-"PO-Revision-Date: 2011-07-02 10:33+0100\n"
+"POT-Creation-Date: 2011-07-30 09:00+0200\n"
+"PO-Revision-Date: 2011-07-30 09:06+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -342,8 +342,11 @@ msgstr "Heilen"
 msgid "Medikit"
 msgstr "Medikit"
 
-msgid "Requirement:"
-msgstr "Anforderung:"
+msgid "Requirement(s):"
+msgstr "Anforderung(en):"
+
+msgid "The Big Picture"
+msgstr ""
 
 msgid "Pre-Research Report"
 msgstr "Forschungsantrag"
@@ -480,8 +483,31 @@ msgstr "Spiel beginnen"
 msgid "<1>"
 msgstr ""
 
+msgid "Quit"
+msgstr "Beenden"
+
+msgid "You will lose all your progress."
+msgstr ""
+
+msgid "Enter the game options menu."
+msgstr "Optionsmenü öffnen."
+
+msgid "Retry this battlescape mission."
+msgstr "Mission wiederholen"
+
+#, fuzzy
+msgid "Abort this battlescape mission."
+msgstr "Wähle die HUD-Anzeige für das Schlachtfeld."
+
 msgid "Abort"
 msgstr "Abbrechen"
+
+#, fuzzy
+msgid "Go back to the battlescape."
+msgstr "Wähle die HUD-Anzeige für das Schlachtfeld."
+
+msgid "Back to the main menu."
+msgstr "Zurück zum Hauptmenü"
 
 msgid "Base Info"
 msgstr "Basisinformationen"
@@ -555,9 +581,6 @@ msgstr "Tastenbelegungen"
 msgid "Show Keys"
 msgstr "Zeige Tastenbelegung"
 
-msgid "Joystick speed."
-msgstr "Joystick Geschwindigkeit."
-
 msgid "Threshold:"
 msgstr "Schwellwert:"
 
@@ -570,32 +593,17 @@ msgstr "Verfügbare Spiel-Controller."
 msgid "Joystick or Joypad:"
 msgstr "Joystick:"
 
-msgid "Select which of your joysticks or joypads you want to use."
-msgstr "Wähle welchen deiner Joysticks oder Joypads du verwenden willst."
-
-msgid "Enable your joystick or joypad."
-msgstr "Aktiviere den Joystick oder Joypad."
-
 msgid "Enable:"
 msgstr "Aktiviere:"
 
-msgid "Enable or disable your Joystick."
-msgstr "Joystick ein-/ausschalten."
-
 msgid "Joystick Settings"
 msgstr "Joystick Einstellungen"
-
-msgid "Available HUD for the battlescape mode."
-msgstr "Wähle die HUD-Anzeige für das Schlachtfeld."
 
 msgid "HUD Design:"
 msgstr "HUD Design:"
 
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr "Wähle die Front-Sicht-Anzeige für das Schlachtfeld."
-
-msgid "Select 'Yes' if you want more intelligent soldiers."
-msgstr "Wähle 'Ja', wenn du intelligentere Soldaten willst."
 
 msgid "Autostand:"
 msgstr "Automatisches Aufstehen:"
@@ -612,7 +620,7 @@ msgstr "'Nein' bedeutet, dass alle Befehle auf dem Schlachtfeld sofort ausgefüh
 msgid "Confirm Actions:"
 msgstr "Aktionen bestätigen:"
 
-msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
+msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 msgstr "Beim aktivieren dieser Option werden die Aktionen auf dem Schlachtfeld als Voransicht angezeigt, welche bestätigt werden muss. Dies ist ein Feature was man probieren muss."
 
 msgid "Choose between 0-9, higher values mean higher actor speed."
@@ -621,23 +629,14 @@ msgstr "Wähle zwischen 0 und 9, höhere Werte bedeuten eine höhere Geschwindig
 msgid "Actor Speed:"
 msgstr "Akteurgeschwindigkeit:"
 
-msgid "Actor speed changes the speed of aliens and humans."
-msgstr "Charakter-Geschwindigkeit ändert die Geschwindigkeit der Außerirdischen und Menschen."
-
 msgid "Battlescape Gameplay Settings"
 msgstr "Schlachtfeld-Einstellungen"
-
-msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
-msgstr "Zentriere die Kamerasicht automatisch auf den Soldaten bei Auswahl oder dem Feind wenn er schießt oder sichtbar wird."
 
 msgid "Center View:"
 msgstr "Sicht zentrieren:"
 
-msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
-msgstr "Wähle um das Spiel automatisch die Kamerasicht auf den Charakter zentriert werden soll oder nicht."
-
-msgid "Enable the isometric 3D rendering mode for the battlescape."
-msgstr "Aktiviere die isometrische 3-dimensionale Umrechnung für das Schlachtfeld."
+msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
+msgstr "Zentriere die Kamerasicht automatisch auf den Soldaten bei Auswahl oder dem Feind wenn er schießt oder sichtbar wird."
 
 msgid "Isometric Mode:"
 msgstr "Isometrisch:"
@@ -664,9 +663,6 @@ msgstr "Der standardmäßige Minimal-Zoom-Level für die Schlachtfeld-Kamera ist
 msgid "Minimum/Maximum Zoom:"
 msgstr "Minimaler/Maximaler Zoom:"
 
-msgid "The minimum/maximum zoom of the battlescape camera."
-msgstr "Der minimale/maximale Zoom der Schlachtfeld-Kamera."
-
 msgid "ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
 msgstr "ACHTUNG: Wenn der maximale Verschiebungsabstand der Kamera 90 Grad überschreitet, wird die Kamera sich überschlagen, wenn dieser Wert erreicht ist."
 
@@ -677,36 +673,17 @@ msgstr "ACHTUNG: Wenn der minimale Verschiebungsabstand der Kamera 15 Grad unter
 msgid "Minimum/Maximum Shift Pitch:"
 msgstr "Minimaler/Maximaler Verschiebungsabstand:"
 
-#, fuzzy
-msgid "The minimum/maximum pitch shift of the battlescape camera."
-msgstr "Der minimale/maximale Verschiebungsabstand der Schlachtfeld-Kamera."
-
-msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
-msgstr "Derzeitige Kamera-Bewegungsverzögerung. Setze sie auf einen hohen Wert wenn du die Kamera schlagartig anhalten soll, wenn du die Bewegung stoppst."
-
 msgid "Move Deceleration:"
 msgstr "Bewegungsverzögerung:"
 
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
 msgstr "Die Bewegungsverzögerung der Kamera im Schlachtfeld. Veringere den Wert um für eine gleichmäßigere Kamerabewegung, erhöhe den Wert wenn die Kamerabewegung schneller abzubremsen oder sofort zu stoppen."
 
-msgid "Actual camera rotation speed."
-msgstr "Derzeitige Kamera-Rotation-Geschwindigkeit"
-
 msgid "Rotation Speed:"
 msgstr "Rotation:"
 
-msgid "The rotation speed of the battlescape camera."
-msgstr "Die Rotationsgeschwindigkeit der Schlachtfeld-Kamera."
-
-msgid "Actual camera scroll speed."
-msgstr "Derzeitige Kamera-Scroll-Geschwindigkeit"
-
 msgid "Scroll Speed:"
 msgstr "Scrollen:"
-
-msgid "The scroll speed of the battlescape camera."
-msgstr "Die Scroll-Geschwindigkeit der Schlachtfeld-Kamera."
 
 msgid "Battlescape Camera Settings"
 msgstr "Schlachtfeld-Kamera-Einstellungen"
@@ -717,9 +694,6 @@ msgstr "Spieleinstellungen"
 msgid "Restart the sound-engine and apply your settings."
 msgstr "Sound neu starten um Änderungen wirksam zu machen."
 
-msgid "Current sample rate frequency in kHz."
-msgstr "Derzeitige Abtastrate in in kHz."
-
 msgid "Audio Sample Rate:"
 msgstr "Audio-Abtastrate:"
 
@@ -729,29 +703,15 @@ msgstr "Die Abtastratenfrequenz in kHz. Höhere Werte bedeuten eine besser Sound
 msgid "Advanced Audio Options"
 msgstr "Erweiterte Audioeinstellungen"
 
+#, fuzzy
+msgid "Turn the menu sounds on or off."
+msgstr "Reaktionsfeuer ein-/ausschalten"
+
 msgid "Menu Sounds:"
 msgstr "Menü-Sound:"
 
-msgid "You do not like click sounds?"
-msgstr "Du magst keine Klick-Sounds?"
-
-msgid "Current volume of the sound effects."
-msgstr "Derzeitige Lautstärke der Soundeffekte"
-
 msgid "Sound Effects:"
 msgstr "Soundeffekte:"
-
-msgid "Do you want to hear the screams?"
-msgstr "Möchtest du die Schreie höhren?"
-
-msgid "Current volume of the music."
-msgstr "Derzeitige Musiklautstärke."
-
-msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
-msgstr "Verzichte nicht auf den fantastischen Soundtrack, den UFO:AI dir bietet."
-
-msgid "Do not turn me off."
-msgstr "Schalt mich nicht ab."
 
 msgid "Enable Audio:"
 msgstr "Sound aktivieren:"
@@ -771,17 +731,11 @@ msgstr "Setze mittlere Grafikeinstellungen"
 msgid "Switch to low video settings"
 msgstr "Setze niedrige Grafikeinstellungen"
 
-msgid "Enable the material system."
-msgstr "Aktiviere das Materialsystem."
-
 msgid "Material System:"
 msgstr "Materialsystem:"
 
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 msgstr "Das Materialsystem, was verwendet werden soll, um Texturanimationen, Rotations- oder Dehnungseffekte und spezielle Material-Manipulationen wie Reflexionseigenschaften oder Härtegrad auf spezifische Texturen anzuwenden."
-
-msgid "Enable weather effects."
-msgstr "Aktiviere Wettereffekte."
 
 msgid "Weather Effects:"
 msgstr "Wettereffekte:"
@@ -789,41 +743,23 @@ msgstr "Wettereffekte:"
 msgid "Weather effects like rain or snow."
 msgstr "Wettereffekte wie Regen oder Schnee."
 
-msgid "Enable fog."
-msgstr "Aktiviere Nebel."
-
 msgid "Fog:"
 msgstr "Nebel:"
 
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
 msgstr "Nebel gehört nicht zu den Wettereffekten, aber wenn aktiviert, werden weiter entfernte Objekte ausgeblendet."
 
-#, fuzzy
-msgid "Enable coronas."
-msgstr "Aktiviere Strahlkranz."
-
-#, fuzzy
 msgid "Coronas:"
 msgstr "Strahlkranz:"
 
 msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr "Lichtkränze sind durchsichtige, abgerundete Polygone (Vielecke)."
 
-#, fuzzy
-msgid "Enable flares."
-msgstr "Aktiviere Lichtreflexionen."
-
 msgid "Flares:"
 msgstr "Lichtreflexionen:"
 
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
 msgstr "Flares werden verwendet um Lichtspiegel-Effekte zu erzeugen. Sie werden aus dem Blickwinkel zur Lichtquelle berechnet."
-
-msgid "Adjust various other settings here."
-msgstr "Weitere Einstellungen hier vornehmen."
-
-msgid "Current amount of ambient light reaching the earth."
-msgstr "Derzeitiger Wert des Umgebungslichtes das die Erde erreicht."
 
 msgid "Geo Ambient Lighting:"
 msgstr "Hintergrundleuchten:"
@@ -858,7 +794,6 @@ msgstr "Derzeit sind dies nur Schlagschatten."
 msgid "Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
 msgstr "Aktiviere Normal-/Reliefzuordung. ACHTUNG: Echtzeit-Beleuchtung muss eingeschaltet sein, damit Normalzuordnung funktioniert."
 
-#, fuzzy
 msgid "Texture Normalmapping:"
 msgstr "Textur-Normalfilterung:"
 
@@ -867,9 +802,6 @@ msgstr "Auch bekannt als Reliefzuordnung."
 
 msgid "Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
 msgstr "Ändere die Anzahl der hardware-beschleunigten dynamischen Lichtquellen. ACHTUNG: Echtzeit-Lichtquellen müssen aktiviert sein."
-
-msgid "Enable real-time lighting."
-msgstr "Aktiviere Echtzeitbeleuchtung."
 
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Echtzeitbeleuchtung / Maximale dynamische Lichtquellen:"
@@ -880,9 +812,6 @@ msgstr "Echtzeit-Lichtquellen in der 3-dimensionalen Welt von UFO:AI. / Maximale
 msgid "Light and Shadow"
 msgstr "Licht und Schatten"
 
-msgid "Adjust various light and shadow settings here."
-msgstr "Anpassung von verschiedenen Licht- und Schatten-Einstellungen."
-
 msgid "Enable post processing shader effects. ATTENTION: May require restart to take effect."
 msgstr "Aktiviere Schatten-Effekte der Nachbearbeitung. ACHTUNG: Erfordert eventuell Neustart."
 
@@ -892,14 +821,8 @@ msgstr "Schattierungs-Nachbearbeitungs-Effekte:"
 msgid "Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
 msgstr "Schattierungs-Nachbearbeitungs-Effekte wie glühende Texturen (nur verfügbar wenn GLSL Schattierer aktiviert sind)."
 
-msgid "Change the swap interval."
-msgstr "Ändere den Swap-Intervall."
-
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr "Setze auf '0' um V-Sync zu deaktivieren (schneller). Setze auf '1' oder höher um den V-Sync einzuschalten (bessere Qualität)."
-
-msgid "Change the amount of multisample buffers."
-msgstr "Ändere die Anzahl der Multisampling-Puffer."
 
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 msgstr "Wähle zwischen 0 und 4 Multisample-Puffern. Höhere Werte bieten eine bessere Kantenglättung und werten die Bildqualität auf."
@@ -909,9 +832,6 @@ msgstr "Multisampling-Puffer / Swap-Intervall:"
 
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
 msgstr "OpenGL Multisample-Puffer stellen Mechanismen für das Glätten von GL Grundformen zur Verfügung. Das Swap-Intervall stellt ein, wann ein Puffer-Swap stattfinden soll. Der Wert 0 bedeutet, dass der Swap augenblicklich durchgeführt werden soll (auch bekannt als 'V-Sync aus')."
-
-msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
-msgstr "Aktiviere Vertex-Puffer für bessere 3D-Performance (erfordert OpenGL-fähige Hardware)."
 
 msgid "Vertex Buffers:"
 msgstr "Vertex buffer:"
@@ -934,14 +854,8 @@ msgstr "OpenGL GLSL Schattierer sind nur verfügbar, wenn der Grafikkartentreibe
 msgid "OpenGL Settings"
 msgstr "OpenGL-Einstellungen"
 
-msgid "Adjust various OpenGL settings here."
-msgstr "Passe diverse OpenGL-Einstellungen hier an."
-
 msgid "Very high values are only recommended when playing in very high screen resolutions."
 msgstr "Sehr hohe Werte werden nur bei hohen Auflösungen empfohlen."
-
-msgid "Current value."
-msgstr "Derzeitiger Wert."
 
 msgid "Anisotropy Level:"
 msgstr "Anisotroper Filtergrad:"
@@ -949,17 +863,11 @@ msgstr "Anisotroper Filtergrad:"
 msgid "The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 msgstr "Der Grad oder die Rate der Anisotropischen Filterung. Hohe Raten lassen weiter entfernte Objekte schärfer erscheinen. Sehr hohe Raten werden nur bei höhen Auflösungen empfohlen."
 
-msgid "Enable high texture detail."
-msgstr "Aktiviere hohe Textur-Details."
-
 msgid "LoD:"
 msgstr "Detailstufe:"
 
 msgid "Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
 msgstr "Textur-Detailstufe. Aktivieren dieser Einstellung kann zu verschwommen Texturen beim Herauszoomen führen."
-
-msgid "Enable texture compression."
-msgstr "Texturkompression einschalten"
 
 msgid "Compression:"
 msgstr "Texturkompression:"
@@ -1015,9 +923,6 @@ msgstr "Setzt die maximale Größe für Texturen und limitiert Auflösungen höh
 msgid "Texture Settings"
 msgstr "Textur-Einstellungen"
 
-msgid "Adjust various texture settings here."
-msgstr "Passe diverse Textur-Einstellungen hier an."
-
 msgid "Default is to play the intro video just once at the first game start."
 msgstr ""
 
@@ -1033,17 +938,8 @@ msgstr "Zeigt die Anzahl der gerenderten Frames pro Sekunde an."
 msgid "Show FPS:"
 msgstr "Zeige FPS:"
 
-msgid "See how many frames per second are rendered."
-msgstr "Lasse die Frames pro Sekunde anzeigen."
-
 msgid "Other Display Settings"
 msgstr "Andere Anzeigeeinstellungen"
-
-msgid "Adjust other settings here."
-msgstr "Passe deine Einstellungen hier an."
-
-msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
-msgstr "PNG und TGA sind verlustfreie Grafikformate, welche die Bildschirmschnappschüsse in der bestmöglichen Qualität speichern, die Dateigröße wird dabei allerdings größer. PNG sollte vorgezogen werden, aufgrund der besseren Komprimierung, welche in kleineren Dateien resultiert als bei TGA. JPG ist das beste Format wenn die Dateigröße ein entscheidendes Attribut darstellen sollte."
 
 msgid "Screenshot Format:"
 msgstr "Bildschirmschnappschuss-Format:"
@@ -1054,9 +950,6 @@ msgstr "Das Dateiformat für die Komprimierung und Speicherung der Bildschirmsch
 msgid "jpeg Quality:"
 msgstr "JPEG-Qualität:"
 
-msgid "Here you can set the quality of jpeg screenshots."
-msgstr "Hier kann die Qualität der JPEG-Bildschirmschnappschüsse eingestellt werden."
-
 msgid "Screenshot Settings"
 msgstr "Bildschirmschnappschuss-Einstellungen"
 
@@ -1066,14 +959,8 @@ msgstr "Die Standard-Taste für Bildschirmschnappschüsse ist F12."
 msgid "Saturation:"
 msgstr "Sättigung:"
 
-msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
-msgstr "Der Sättigungswert verändert Farben. Erhöhte Sättigung bedeutet grundsätzlich intensivere Farben."
-
 msgid "Gamma:"
 msgstr "Gamma:"
-
-msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
-msgstr "Der Gamma-Wert beeinflusst die Farbe. Erhöhung von Gamma bedeutet grundsätzlich intensivere Farben."
 
 msgid "Contrast:"
 msgstr "Kontrast:"
@@ -1084,32 +971,20 @@ msgstr "Kontrast bedeutet den Unterschied zwischen Helligkeit von dunklen und he
 msgid "Brightness:"
 msgstr "Helligkeit:"
 
-msgid "Brightness sets the intensity of light emitting from your screen."
-msgstr "Helligkeit setzt die Intensität des Lichts was von deinem Bildschirm abgestrahlt wird."
-
 msgid "Monitor Calibration Controls"
 msgstr "Monitoreinstellungen"
 
 msgid "Calibrate your display here."
 msgstr "Stelle deine Anzeige hier ein."
 
-msgid "Stretch the screen to a ratio of 4:3."
-msgstr "Bild auf 4:3 strecken."
-
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "Bild auf 4:3 strecken:"
-
-msgid "Stretches the screen with a 4:3 ratio."
-msgstr "Bild auf 4:3 Verhältnis strecken."
 
 msgid "Play UFO:AI in fullscreen."
 msgstr "UFO:AI im Vollbildschirmmodus spielen."
 
 msgid "Fullscreen:"
 msgstr "Vollbild:"
-
-msgid "Play UFO:AI in fullscreen- or window-mode."
-msgstr "UFO:AI im Fenstermodus oder Vollbildmodus spielen."
 
 msgid "Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
 msgstr "Wechsel zur gewünschten Auflösung. ACHTUNG: Eventuell muss das Spiel neugestartet werden."
@@ -1135,9 +1010,6 @@ msgstr "Die Auflösung (x mal y) in Bildschirmpunkten, die UFO:AI verwenden soll
 msgid "Resolution and Display Settings"
 msgstr "Auflösung und Anzeigeeinstellungen"
 
-msgid "Adjust resolution and display settings here."
-msgstr "Passe die Auflösung und Anzeigeeinstellungen hier an."
-
 msgid "Advanced"
 msgstr "Erweitert"
 
@@ -1147,20 +1019,14 @@ msgstr "Allgemein"
 msgid "Video Settings"
 msgstr "Grafikeinstellungen."
 
-msgid "Enable precaching of models to have faster menus."
-msgstr "Modelle im Speicher vorhalten um schneller Menüs zu bekommen"
+msgid "Precaching of models means having faster menus."
+msgstr "Menü-Modelle im Speicher vorhalten (schnellere Menüs)"
 
 msgid "Precache Models:"
 msgstr "Modelle im Speicher vorhalten:"
 
-msgid "Precaching of models means having faster menus."
-msgstr "Menü-Modelle im Speicher vorhalten (schnellere Menüs)"
-
 msgid "Menu Option(s)"
 msgstr "Menü Optionen"
-
-msgid "Enable the 'Tip of the Day'."
-msgstr "Tipp des Tages aktivieren."
 
 msgid "Show 'Tip of the Day':"
 msgstr "Zeige Tipp des Tages:"
@@ -1168,17 +1034,11 @@ msgstr "Zeige Tipp des Tages:"
 msgid "Enable this if you are new to UFO:AI and want to see interesting tips written by the most experienced UFO:AI players out there."
 msgstr "Aktivieren, wenn du ein Neuling bei UFO:AI bist und interessante Tipps lesen möchtest, die von den am besten erfahrenen Spielern verfasst wurden."
 
-msgid "Activate cursor tooltips."
-msgstr "Cursor-Tooltips einschalten"
-
 msgid "Cursor Tooltips:"
 msgstr "Cursor Tooltips:"
 
 msgid "Enable tooltips for the cursor."
 msgstr "Aktiviere Schnellhilfe für den Mauszeiger."
-
-msgid "Make me disappear."
-msgstr "Lass mich verschwinden."
 
 msgid "Tooltips:"
 msgstr "Tooltips:"
@@ -1222,14 +1082,12 @@ msgstr "Minimaler/Maximaler Kamera-Zoom für den Welt-Bildschirm:"
 msgid "The minimum/maximum zoom of the geoscape camera."
 msgstr "Minimaler/Maximaler Zoom für die Weltbildschirm-Kamera."
 
-msgid "Use the 3D geoscape. To enable this option you have to start a new campaign first."
-msgstr "Benutze den 3-dimensionalen Weltbild-Bildschirm. Wenn neu oder re-aktiviert, muss zunächst eine neue Kampagne gestartet werden."
-
 msgid "3D Geoscape:"
 msgstr "3D Geoscape:"
 
-msgid "3D or 2D geoscape."
-msgstr "3D oder 2D Weltbildschirm."
+#, fuzzy
+msgid "3D or 2D geoscape. To enable this option you have to start a new campaign first."
+msgstr "Benutze den 3-dimensionalen Weltbild-Bildschirm. Wenn neu oder re-aktiviert, muss zunächst eine neue Kampagne gestartet werden."
 
 msgid "Geoscape Options"
 msgstr "Geoscape Optionen"
@@ -1239,12 +1097,6 @@ msgstr "Eine Liste verfügbarer Sprachen. ACHTUNG: Wähle Englisch für komplett
 
 msgid "Language Settings"
 msgstr "Spracheinstellungen"
-
-msgid "Change your name."
-msgstr "Namen ändern."
-
-msgid "Your name."
-msgstr "Dein Name."
 
 msgid "Overall Game Settings"
 msgstr "Allgemeine Spieleinstellungen"
@@ -1633,6 +1485,9 @@ msgstr "Mitwirkende"
 msgid "Tutorials"
 msgstr "Tutorials"
 
+msgid "Choose between Campaign or Skirmish mode."
+msgstr ""
+
 msgid "Single-player"
 msgstr "Einzelspieler"
 
@@ -1943,7 +1798,7 @@ msgstr "Gegner getötet:"
 msgid "Missions Performed:"
 msgstr "Einsätze absolviert:"
 
-msgid "Rename your employee"
+msgid "Rename employee"
 msgstr "Angestellten umbenennen"
 
 msgid "Hire - Right click to remove"
@@ -2114,9 +1969,6 @@ msgstr "Zeichne Staatsgebiete"
 msgid "Create installation"
 msgstr "Externe Einrichtung anlegen"
 
-msgid "Open UFOpaedia"
-msgstr "UFOpedia öffnen"
-
 msgid "Organisation statistics"
 msgstr "Organisationsstatistiken"
 
@@ -2225,6 +2077,21 @@ msgstr "Rucksack"
 msgid "Equip this soldier"
 msgstr "Soldat ausrüsten"
 
+msgid "Do not quit."
+msgstr "Nicht beenden."
+
+msgid "Quit anyway"
+msgstr "Trotzdem beenden"
+
+msgid "Exit current campaign and return to main menu."
+msgstr "Beenden die derzeit laufende Kampagne und kehrt zum Hauptmenü zurück."
+
+msgid "You will lose all your campaign progress."
+msgstr ""
+
+msgid "Exit Campaign Confirmation"
+msgstr "Kampagne beenden"
+
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Danke, dass Sie UFO:Alien Invasion gespielt haben"
 
@@ -2233,9 +2100,6 @@ msgstr "Mausklick zum Fortfahren"
 
 msgid "You've lost the game"
 msgstr "Sie haben das Spiel verloren"
-
-msgid "Reload the last automatically saved campaign state"
-msgstr "Lade letzten Kampagnen-Autosave"
 
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr "Wollen Sie wirklich das letzte Kampagnen-Autosave laden?"
@@ -2249,10 +2113,15 @@ msgstr "Beenden"
 msgid "Options"
 msgstr "Optionen"
 
+#, fuzzy
+msgid "Leave this menu and continue playing."
+msgstr "Lade das zuletzt gespeicherte Spiel und setze die Kampagne fort"
+
 msgid "Back"
 msgstr "Zurück"
 
-msgid "Load last saved game or continue playing"
+#, fuzzy
+msgid "Load last saved game or continue playing."
 msgstr "Lade das zuletzt gespeicherte Spiel und setze die Kampagne fort"
 
 msgid "Continue"
@@ -2260,6 +2129,9 @@ msgstr "Fortfahren"
 
 msgid "Load"
 msgstr "Laden"
+
+msgid "Start a new singleplayer campaign."
+msgstr "Eine neue Einzelspieler-Kampagne starten."
 
 msgid "Start campaign"
 msgstr "Starte Kampagne"
@@ -2980,7 +2852,8 @@ msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechn
 msgid "intro_sentence1"
 msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
-msgid "Copyright 2004-2010 by UFO: AI Team"
+#, fuzzy
+msgid "Copyright 2004-2011 by UFO: AI Team"
 msgstr "Copyright 2004-2010 by UFO: AI Team"
 
 msgid "http://ufoai.sf.net"
@@ -8775,6 +8648,9 @@ msgstr "Vereinigtes Amerika"
 msgid "The Revolutionary Countries"
 msgstr "Revolutionäre Staaten"
 
+msgid "missions"
+msgstr "Missionen"
+
 msgid "ufo_activity"
 msgstr "UFO Aktivitäten"
 
@@ -8874,83 +8750,35 @@ msgstr "Medaille"
 msgid "Cross"
 msgstr "Kreuz"
 
+msgid "Training Zone: Alpha."
+msgstr ""
+
+msgid "Rescue mission."
+msgstr "Rettungsmission."
+
 msgid "Base is under attack."
 msgstr "Basis wird angegriffen."
 
 msgid "An alien base."
 msgstr "Eine außerirdische Basis."
 
-msgid "Rescue mission."
-msgstr "Rettungsmission."
-
-msgid "UFO Crashsite."
-msgstr "UFO Absturzstelle."
-
-msgid "Training Zone: Alpha."
-msgstr ""
-
-msgid "UFO landed in hills area."
-msgstr "UFO in hügeliger Ebene gelandet."
-
 msgid "Wilderness terror mission."
 msgstr "Terrormission in der Wildnis."
-
-msgid "A fuel depot the aliens try to destroy."
-msgstr "Ein Treibstoffdepot welches Aliens vernichten wollen."
-
-msgid "Big city"
-msgstr "Großstadt"
-
-msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr "Ein Labor in dem UFO-Wrackteile untersucht werden."
-
-msgid "A place where people come to relax and mingle."
-msgstr "Ein Ort an dem sich Leute treffen und entspannen."
-
-msgid "A Bomber has landed in the middle of a city."
-msgstr "Ein Bomber ist mitten in einer Stadt gelandet."
-
-msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr "Ein Bunker, gebaut um Menschen in Zeiten großer Katastrophen unterzubringen. Einige Schutztüren im Inneren sind vielleicht geschlossen worden."
-
-msgid "A small settlement in winter."
-msgstr "Eine kleine Siedlung im Winter."
-
-msgid "An alien Harvester has crashed in the wastelands."
-msgstr "Ein außerirdischer Sammler ist im Ödland abgestürzt."
-
-msgid "A suburb that has received a visit from a Harvester."
-msgstr "Eine Vorstadt hat Besuch von einem Sammler bekommen."
-
-msgid "A suburb that has been visited by an UFO."
-msgstr "Eine Vorstadt hat Besuch von einem UFO bekommen."
-
-msgid "A luxurious vacation resort."
-msgstr "Eine luxuriöse Urlaubsanlage."
-
-msgid "An office complex on the outskirts of town."
-msgstr "Ein Bürogebäude am Rand der Stadt."
-
-msgid "A local harbour."
-msgstr "Ein lokaler Hafen."
-
-msgid "An office complex under construction."
-msgstr "Ein sich im Bau befindlicher Bürokomplex."
-
-msgid "A small UFO has crashed in this mining region."
-msgstr "Ein kleines UFO ist in dieser Bergwerksregion abgestürzt."
-
-msgid "A military convoy has caught the eye of the aliens."
-msgstr "Ein Militärkonvoi hat die Aufmerksamkeit der Außerirdischen auf sich gezogen."
 
 msgid "A suburban district."
 msgstr "Ein vorstädtischer Bezirk."
 
-msgid "An office complex in the centre of town."
-msgstr "Ein Bürokomplex im Zentrum eines Ortes."
-
 msgid "A subway station in a suburban part of town."
 msgstr "Eine U-Bahnstation in der Vorstadt."
+
+msgid "A crashed Scout UFO."
+msgstr "Abgestürztes Kundschafter-UFO"
+
+msgid "A rather old-fashioned suburban district."
+msgstr "Ein eher altmodischer Vorortsbezirk."
+
+msgid "A luxurious vacation resort."
+msgstr "Eine luxuriöse Urlaubsanlage."
 
 msgid "Underground pipe construction site."
 msgstr "Unterirdische Rohrleitungsanlage"
@@ -8958,20 +8786,23 @@ msgstr "Unterirdische Rohrleitungsanlage"
 msgid "An urban district in an oriental region."
 msgstr "Ein Stadtbezirk einer orientalischen Region."
 
+msgid "An office complex on the outskirts of town."
+msgstr "Ein Bürogebäude am Rand der Stadt."
+
+msgid "An old mine."
+msgstr "Eine alte Mine."
+
+msgid "A small settlement in winter."
+msgstr "Eine kleine Siedlung im Winter."
+
+msgid "A local harbour."
+msgstr "Ein lokaler Hafen."
+
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr "Ein geheimes Lager mit dem Namen 'The Gate'."
 
-msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr "Ein Ort, zu dem die Bürger kommen, um die Tanks ihrer Fahrzeuge zu befüllen."
-
-msgid "A small industry city area."
-msgstr "Ein kleines Industriegebiet."
-
-msgid "A small neighbourhood in a warm urban region."
-msgstr "Eine kleine Wohngegend in einer warmen städtischen Region."
-
-msgid "A rather old-fashioned suburban district."
-msgstr "Ein eher altmodischer Vorortsbezirk."
+msgid "A fuel depot the aliens try to destroy."
+msgstr "Ein Treibstoffdepot welches Aliens vernichten wollen."
 
 msgid "A ferry."
 msgstr "Eine Fähre."
@@ -8979,14 +8810,26 @@ msgstr "Eine Fähre."
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Ein von Äckern und Scheunen umgebenes Bauernhaus. Ein UFO ist auf einem der Felder gelandet. "
 
-msgid "A crashed Scout UFO."
-msgstr "Abgestürztes Kundschafter-UFO"
+msgid "An excavation site that has fallen under alien attack."
+msgstr "Eine Ausgrabungsstätte die unter einem Alienangriff leidet."
 
-msgid "A small estate in the mountains."
-msgstr "Ein kleines Anwesen in den Bergen."
+msgid "An estate owned by rich and influential people."
+msgstr "Ein Anwesen von reichen und einflussreichen Leuten"
 
-msgid "A tropical area where several suspected criminals have made their homes."
-msgstr "Ein tropisches Gebiet, mit möglicherweise kriminellen Einwohnern."
+msgid "A small village in England."
+msgstr "Ein kleines Dorf in England."
+
+msgid "A hydroelectricity dam that is threatened by the alien invaders."
+msgstr "Ein Wasserkraftwerk, das durch außerirdische Eindringlinge bedroht ist."
+
+msgid "A small industry city area."
+msgstr "Ein kleines Industriegebiet."
+
+msgid "A bunker used in a previous conflict."
+msgstr "Bunker aus einem vorherigem Konflikt."
+
+msgid "An office complex in the centre of town."
+msgstr "Ein Bürokomplex im Zentrum eines Ortes."
 
 msgid "A stadium used for various recreational events."
 msgstr "Ein Stadion, welches für verschiedene Veranstaltungsmöglichkeiten verwendet wird."
@@ -8994,20 +8837,11 @@ msgstr "Ein Stadion, welches für verschiedene Veranstaltungsmöglichkeiten verw
 msgid "A small industrial area."
 msgstr "Ein kleines Industriegebiet."
 
-msgid "A classic eastern suburban area."
-msgstr "Eine klassische östlich-vorortliche Gegend"
+msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+msgstr "Ein Bunker, gebaut um Menschen in Zeiten großer Katastrophen unterzubringen. Einige Schutztüren im Inneren sind vielleicht geschlossen worden."
 
-msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr "Ein Wasserkraftwerk, das durch außerirdische Eindringlinge bedroht ist."
-
-msgid "A bunker used in a previous conflict."
-msgstr "Bunker aus einem vorherigem Konflikt."
-
-msgid "An industrial area, used for loading and unloading goods."
-msgstr "Ein industrieeller Warenumschlagplatz."
-
-msgid "An old mine."
-msgstr "Eine alte Mine."
+msgid "A military convoy has caught the eye of the aliens."
+msgstr "Ein Militärkonvoi hat die Aufmerksamkeit der Außerirdischen auf sich gezogen."
 
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Ein kommunaler Sammelplatz zum besorgen von Lebensmitteln, auch als Supermarkt bekannt."
@@ -9015,47 +8849,38 @@ msgstr "Ein kommunaler Sammelplatz zum besorgen von Lebensmitteln, auch als Supe
 msgid "A small office in a mountainous region."
 msgstr "Ein kleines Büro in einer bergigen Gegend"
 
-msgid "A small village in England."
-msgstr "Ein kleines Dorf in England."
+msgid "A place where citizens come to replenish their vehicles' fuel supply."
+msgstr "Ein Ort, zu dem die Bürger kommen, um die Tanks ihrer Fahrzeuge zu befüllen."
 
-msgid "An estate owned by rich and influential people."
-msgstr "Ein Anwesen von reichen und einflussreichen Leuten"
+msgid "A small estate in the mountains."
+msgstr "Ein kleines Anwesen in den Bergen."
 
-msgid "An excavation site that has fallen under alien attack."
-msgstr "Eine Ausgrabungsstätte die unter einem Alienangriff leidet."
+msgid "A tropical area where several suspected criminals have made their homes."
+msgstr "Ein tropisches Gebiet, mit möglicherweise kriminellen Einwohnern."
 
-msgid "Some houses in the desert."
-msgstr "Einige Gebäude in der Wüste."
+msgid "An office complex under construction."
+msgstr "Ein sich im Bau befindlicher Bürokomplex."
 
-msgid "UFO crashed in this sparsely populated forest region."
-msgstr "UFO in spärlich besiedelten Waldgegend vor."
+msgid "A place where people come to relax and mingle."
+msgstr "Ein Ort an dem sich Leute treffen und entspannen."
 
-msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr "Aliens haben nichts gutes mit dieser spärlich besiedelten Waldgegend vor."
-
-msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr "Eine friedliche Wohngegend in der Vorstadt."
-
-msgid "A cleared stretch of land in the middle of the jungle."
-msgstr "Eine Lichtung inmitten des Dschungels."
-
-msgid "A river runs through this piece of jungle."
-msgstr "Ein Stück Dschungel, durch den ein Fluss fließt."
+msgid "A small neighbourhood in a warm urban region."
+msgstr "Eine kleine Wohngegend in einer warmen städtischen Region."
 
 msgid "Cemetery terror mission."
 msgstr "Terrormission auf einem Friedhof."
 
-msgid "An industrial compound."
-msgstr "Ein Industriekomplex."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
+msgstr "Eine friedliche Wohngegend in der Vorstadt."
 
-msgid "An underpopulated area in a cold region."
-msgstr "Unbewohntes Areal in einer kalten Region."
+msgid "UFO Crashsite."
+msgstr "UFO Absturzstelle."
 
-msgid "An industrial area in a cold region."
-msgstr "Ein Industrie-Areal in einer kalten Region"
+msgid "A river runs through this piece of jungle."
+msgstr "Ein Stück Dschungel, durch den ein Fluss fließt."
 
-msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
-msgstr "Eine Farm in einer ländlichen Umgebung. Sehr viel freies Land zu überwachen, aber dafür nur wenige Hindernisse, die die Sicht einschränken."
+msgid "A cleared stretch of land in the middle of the jungle."
+msgstr "Eine Lichtung inmitten des Dschungels."
 
 msgid "Crashed UFO in oriental suburban district."
 msgstr "UFO in orientalischem Vorort abgestürzt"
@@ -9063,8 +8888,56 @@ msgstr "UFO in orientalischem Vorort abgestürzt"
 msgid "A suburban district of an oriental area."
 msgstr "Ein Vorstadts Bezirk eines oriantalischen Gebiets"
 
+msgid "A laboratory where they examined found UFO wreck tiles."
+msgstr "Ein Labor in dem UFO-Wrackteile untersucht werden."
+
+msgid "A classic eastern suburban area."
+msgstr "Eine klassische östlich-vorortliche Gegend"
+
 msgid "Industrial theme."
 msgstr "Industrie Theme."
+
+msgid "UFO landed in hills area."
+msgstr "UFO in hügeliger Ebene gelandet."
+
+msgid "An underpopulated area in a cold region."
+msgstr "Unbewohntes Areal in einer kalten Region."
+
+msgid "An industrial compound."
+msgstr "Ein Industriekomplex."
+
+msgid "An industrial area in a cold region."
+msgstr "Ein Industrie-Areal in einer kalten Region"
+
+msgid "UFO crashed in this sparsely populated forest region."
+msgstr "UFO in spärlich besiedelten Waldgegend vor."
+
+msgid "Aliens are up to no good in this sparsely populated forest region."
+msgstr "Aliens haben nichts gutes mit dieser spärlich besiedelten Waldgegend vor."
+
+msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+msgstr "Eine Farm in einer ländlichen Umgebung. Sehr viel freies Land zu überwachen, aber dafür nur wenige Hindernisse, die die Sicht einschränken."
+
+msgid "An alien Harvester has crashed in the wastelands."
+msgstr "Ein außerirdischer Sammler ist im Ödland abgestürzt."
+
+msgid "Some houses in the desert."
+msgstr "Einige Gebäude in der Wüste."
+
+msgid "Big city"
+msgstr "Großstadt"
+
+msgid "A small UFO has crashed in this mining region."
+msgstr "Ein kleines UFO ist in dieser Bergwerksregion abgestürzt."
+
+msgid "A Bomber has landed in the middle of a city."
+msgstr "Ein Bomber ist mitten in einer Stadt gelandet."
+
+msgid "A suburb that has been visited by an UFO."
+msgstr "Eine Vorstadt hat Besuch von einem UFO bekommen."
+
+msgid "A suburb that has received a visit from a Harvester."
+msgstr "Eine Vorstadt hat Besuch von einem Sammler bekommen."
 
 msgid "No language"
 msgstr "Keine Sprache"
@@ -9139,9 +9012,8 @@ msgstr "Dänisch"
 msgid "Czech"
 msgstr "Tschechisch"
 
-#, fuzzy
 msgid "Spanish (Spain)"
-msgstr "Spanisch"
+msgstr "Spanisch (Spanien)"
 
 msgid "Spanish"
 msgstr "Spanisch"
@@ -11123,7 +10995,7 @@ msgstr "Firebird D"
 msgid "Firebird-class Dropship"
 msgstr "Firebird-Klasse Einsatzschiff"
 
-msgid "Village big"
+msgid "Village large"
 msgstr "Dorf (groß)"
 
 msgid "Village recreational"
@@ -11160,7 +11032,7 @@ msgstr "Spedition"
 msgid "Rescue mission"
 msgstr "Rettungsmission"
 
-msgid "Oriental big"
+msgid "Oriental large"
 msgstr "Orientalisch (groß)"
 
 msgid "Oriental medium"
@@ -11840,6 +11712,10 @@ msgstr "Das Einsatzschiff ist nicht nahe einer Landungszone"
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Basis '%s' wird angegriffen - was soll geschehen?"
+
+#, c-format
+msgid "Base '%s' is under attack!"
+msgstr "Basis '%s' wird angegriffen!"
 
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
@@ -12914,6 +12790,9 @@ msgstr "Abgestürztes Flugzeug"
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
+
+msgid "base_attack"
+msgstr "Basenangriff"
 
 msgid "ufo_attacking"
 msgstr "UFO greift an"
@@ -14306,24 +14185,144 @@ msgstr "Mittelmäßig"
 msgid "Poor"
 msgstr "Schlecht"
 
+#~ msgid "Joystick speed."
+#~ msgstr "Joystick Geschwindigkeit."
+#~ msgid "Select which of your joysticks or joypads you want to use."
+#~ msgstr "Wähle welchen deiner Joysticks oder Joypads du verwenden willst."
+#~ msgid "Enable your joystick or joypad."
+#~ msgstr "Aktiviere den Joystick oder Joypad."
+#~ msgid "Enable or disable your Joystick."
+#~ msgstr "Joystick ein-/ausschalten."
+#~ msgid "Select 'Yes' if you want more intelligent soldiers."
+#~ msgstr "Wähle 'Ja', wenn du intelligentere Soldaten willst."
+#~ msgid "Actor speed changes the speed of aliens and humans."
+#~ msgstr "Charakter-Geschwindigkeit ändert die Geschwindigkeit der Außerirdischen und Menschen."
+#~ msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
+#~ msgstr "Wähle um das Spiel automatisch die Kamerasicht auf den Charakter zentriert werden soll oder nicht."
+#~ msgid "Enable the isometric 3D rendering mode for the battlescape."
+#~ msgstr "Aktiviere die isometrische 3-dimensionale Umrechnung für das Schlachtfeld."
+#~ msgid "The minimum/maximum zoom of the battlescape camera."
+#~ msgstr "Der minimale/maximale Zoom der Schlachtfeld-Kamera."
+
+#, fuzzy
+#~ msgid "The minimum/maximum pitch shift of the battlescape camera."
+#~ msgstr "Der minimale/maximale Verschiebungsabstand der Schlachtfeld-Kamera."
+#~ msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
+#~ msgstr "Derzeitige Kamera-Bewegungsverzögerung. Setze sie auf einen hohen Wert wenn du die Kamera schlagartig anhalten soll, wenn du die Bewegung stoppst."
+#~ msgid "Actual camera rotation speed."
+#~ msgstr "Derzeitige Kamera-Rotation-Geschwindigkeit"
+#~ msgid "The rotation speed of the battlescape camera."
+#~ msgstr "Die Rotationsgeschwindigkeit der Schlachtfeld-Kamera."
+#~ msgid "Actual camera scroll speed."
+#~ msgstr "Derzeitige Kamera-Scroll-Geschwindigkeit"
+#~ msgid "The scroll speed of the battlescape camera."
+#~ msgstr "Die Scroll-Geschwindigkeit der Schlachtfeld-Kamera."
+#~ msgid "Current sample rate frequency in kHz."
+#~ msgstr "Derzeitige Abtastrate in in kHz."
+#~ msgid "You do not like click sounds?"
+#~ msgstr "Du magst keine Klick-Sounds?"
+#~ msgid "Current volume of the sound effects."
+#~ msgstr "Derzeitige Lautstärke der Soundeffekte"
+#~ msgid "Do you want to hear the screams?"
+#~ msgstr "Möchtest du die Schreie höhren?"
+#~ msgid "Current volume of the music."
+#~ msgstr "Derzeitige Musiklautstärke."
+#~ msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
+#~ msgstr "Verzichte nicht auf den fantastischen Soundtrack, den UFO:AI dir bietet."
+#~ msgid "Do not turn me off."
+#~ msgstr "Schalt mich nicht ab."
+#~ msgid "Enable the material system."
+#~ msgstr "Aktiviere das Materialsystem."
+#~ msgid "Enable weather effects."
+#~ msgstr "Aktiviere Wettereffekte."
+#~ msgid "Enable fog."
+#~ msgstr "Aktiviere Nebel."
+
+#, fuzzy
+#~ msgid "Enable coronas."
+#~ msgstr "Aktiviere Strahlkranz."
+
+#, fuzzy
+#~ msgid "Enable flares."
+#~ msgstr "Aktiviere Lichtreflexionen."
+#~ msgid "Adjust various other settings here."
+#~ msgstr "Weitere Einstellungen hier vornehmen."
+#~ msgid "Current amount of ambient light reaching the earth."
+#~ msgstr "Derzeitiger Wert des Umgebungslichtes das die Erde erreicht."
+#~ msgid "Enable real-time lighting."
+#~ msgstr "Aktiviere Echtzeitbeleuchtung."
+#~ msgid "Adjust various light and shadow settings here."
+#~ msgstr "Anpassung von verschiedenen Licht- und Schatten-Einstellungen."
+#~ msgid "Change the swap interval."
+#~ msgstr "Ändere den Swap-Intervall."
+#~ msgid "Change the amount of multisample buffers."
+#~ msgstr "Ändere die Anzahl der Multisampling-Puffer."
+#~ msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
+#~ msgstr "Aktiviere Vertex-Puffer für bessere 3D-Performance (erfordert OpenGL-fähige Hardware)."
+#~ msgid "Adjust various OpenGL settings here."
+#~ msgstr "Passe diverse OpenGL-Einstellungen hier an."
+#~ msgid "Current value."
+#~ msgstr "Derzeitiger Wert."
+#~ msgid "Enable high texture detail."
+#~ msgstr "Aktiviere hohe Textur-Details."
+#~ msgid "Enable texture compression."
+#~ msgstr "Texturkompression einschalten"
+#~ msgid "Adjust various texture settings here."
+#~ msgstr "Passe diverse Textur-Einstellungen hier an."
+#~ msgid "See how many frames per second are rendered."
+#~ msgstr "Lasse die Frames pro Sekunde anzeigen."
+#~ msgid "Adjust other settings here."
+#~ msgstr "Passe deine Einstellungen hier an."
+#~ msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
+#~ msgstr "PNG und TGA sind verlustfreie Grafikformate, welche die Bildschirmschnappschüsse in der bestmöglichen Qualität speichern, die Dateigröße wird dabei allerdings größer. PNG sollte vorgezogen werden, aufgrund der besseren Komprimierung, welche in kleineren Dateien resultiert als bei TGA. JPG ist das beste Format wenn die Dateigröße ein entscheidendes Attribut darstellen sollte."
+#~ msgid "Here you can set the quality of jpeg screenshots."
+#~ msgstr "Hier kann die Qualität der JPEG-Bildschirmschnappschüsse eingestellt werden."
+#~ msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
+#~ msgstr "Der Sättigungswert verändert Farben. Erhöhte Sättigung bedeutet grundsätzlich intensivere Farben."
+#~ msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
+#~ msgstr "Der Gamma-Wert beeinflusst die Farbe. Erhöhung von Gamma bedeutet grundsätzlich intensivere Farben."
+#~ msgid "Brightness sets the intensity of light emitting from your screen."
+#~ msgstr "Helligkeit setzt die Intensität des Lichts was von deinem Bildschirm abgestrahlt wird."
+#~ msgid "Stretch the screen to a ratio of 4:3."
+#~ msgstr "Bild auf 4:3 strecken."
+#~ msgid "Stretches the screen with a 4:3 ratio."
+#~ msgstr "Bild auf 4:3 Verhältnis strecken."
+#~ msgid "Play UFO:AI in fullscreen- or window-mode."
+#~ msgstr "UFO:AI im Fenstermodus oder Vollbildmodus spielen."
+#~ msgid "Adjust resolution and display settings here."
+#~ msgstr "Passe die Auflösung und Anzeigeeinstellungen hier an."
+#~ msgid "Enable precaching of models to have faster menus."
+#~ msgstr "Modelle im Speicher vorhalten um schneller Menüs zu bekommen"
+#~ msgid "Enable the 'Tip of the Day'."
+#~ msgstr "Tipp des Tages aktivieren."
+#~ msgid "Activate cursor tooltips."
+#~ msgstr "Cursor-Tooltips einschalten"
+#~ msgid "Make me disappear."
+#~ msgstr "Lass mich verschwinden."
+#~ msgid "3D or 2D geoscape."
+#~ msgstr "3D oder 2D Weltbildschirm."
+#~ msgid "Change your name."
+#~ msgstr "Namen ändern."
+#~ msgid "Your name."
+#~ msgstr "Dein Name."
+#~ msgid "Open UFOpaedia"
+#~ msgstr "UFOpedia öffnen"
+#~ msgid "Reload the last automatically saved campaign state"
+#~ msgstr "Lade letzten Kampagnen-Autosave"
+#~ msgid "An industrial area, used for loading and unloading goods."
+#~ msgstr "Ein industrieeller Warenumschlagplatz."
 #~ msgid "Personal message"
 #~ msgstr "Persönliche Nachricht"
-
 #~ msgid "Hide IRC users"
 #~ msgstr "Verstecke IRC Benutzer"
-
 #~ msgid "Display IRC users"
 #~ msgstr "Zeige IRC Benutzer"
-
 #~ msgid "Deactivate IRC"
 #~ msgstr "IRC deaktivieren"
-
 #~ msgid "Activate IRC"
 #~ msgstr "IRC aktivieren"
-
 #~ msgid "Show chat history"
 #~ msgstr "Zeige Chatlog"
-
 #~ msgid ""
 #~ "\n"
 #~ "\n"
@@ -14334,151 +14333,102 @@ msgstr "Schlecht"
 #~ "\n"
 #~ "Gegner getötet:  %i\n"
 #~ "Überlebende Teammitglieder:  %i"
-
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Charlotte Amalie"
-
 #~ msgid "0.00"
 #~ msgstr "0.00"
-
 #~ msgid "0.20"
 #~ msgstr "0.20"
-
 #~ msgid "0.40"
 #~ msgstr "0.40"
-
 #~ msgid "0.60"
 #~ msgstr "0.60"
-
 #~ msgid "0.80"
 #~ msgstr "0.80"
-
 #~ msgid "- 90"
 #~ msgstr "- 90"
-
 #~ msgid "- 45"
 #~ msgstr "- 45"
-
 #~ msgid "- 15"
 #~ msgstr "- 15"
-
 #~ msgid "+- 0"
 #~ msgstr "+- 0"
-
 #~ msgid "+ 10"
 #~ msgstr "+ 10"
-
 #~ msgid "+ 15"
 #~ msgstr "+ 15"
-
 #~ msgid "+ 45"
 #~ msgstr "+ 45"
-
 #~ msgid "+ 60"
 #~ msgstr "+ 60"
-
 #~ msgid "+ 75"
 #~ msgstr "+ 75"
-
 #~ msgid "+ 89"
 #~ msgstr "+ 89"
-
 #~ msgid "+135"
 #~ msgstr "+135"
-
 #~ msgid "+180"
 #~ msgstr "+180"
-
 #~ msgid "0.05"
 #~ msgstr "0.05"
-
 #~ msgid "0.10"
 #~ msgstr "0.10"
-
 #~ msgid "0.15"
 #~ msgstr "0.15"
-
 #~ msgid "0.25"
 #~ msgstr "0.25"
-
 #~ msgid "0.30"
 #~ msgstr "0.30"
-
 #~ msgid "2.00"
 #~ msgstr "2.00"
-
 #~ msgid "3.40"
 #~ msgstr "3.40"
-
 #~ msgid "0.16"
 #~ msgstr "0.16"
-
 #~ msgid "Aircraft size:\t%s\n"
 #~ msgstr "Flugzeuggröße:\t%s\n"
-
 #~ msgid "Invalid or full team"
 #~ msgstr "Ungültiges oder volles Team"
-
 #~ msgid "Party info"
 #~ msgstr "Informationen"
-
 #~ msgid "Display/hide the panel"
 #~ msgstr "Panel anzeigen/verstecken"
-
 #~ msgid "Max. players per team"
 #~ msgstr "Max. Spieler pro Team"
-
 #~ msgid "Max. teams for this map"
 #~ msgstr "Max. Teams für diese Karte"
-
 #~ msgid "Don't be shy and try the Alternative HUD."
 #~ msgstr "Trau dich und probiere die alternative Front-Sicht."
-
 #~ msgid "Select whether you want to play @ day- or nighttime."
 #~ msgstr "Wähle ob bei Tag- oder Nachtzeit gespielt werden soll."
-
 #~ msgid "Unittest setter"
 #~ msgstr "Unittest Setter"
-
 #~ msgid "Unittest action2"
 #~ msgstr "Unittest Aktion 2"
-
 #~ msgid "Unittest condition"
 #~ msgstr "Unittest-Kondition"
-
 #~ msgid "Send a message to all players"
 #~ msgstr "Sende eine Nachricht an alle Spieler"
-
 #~ msgid "Send a message to allied team members"
 #~ msgstr "Sende eine Nachricht an alle Teammitglieder"
-
 #~ msgid "Hide the HUD (press ESC to reactivate HUD)"
 #~ msgstr "Verstecke das HUD (ESC reaktiviert es)"
-
 #~ msgid "Local game version (%s) differs from the servers"
 #~ msgstr "Ihre Spielversion (%s) unterscheidet sich von der auf dem Server"
-
 #~ msgid "Assign tanks"
 #~ msgstr "Panzerfahrzeug zuteilen"
-
 #~ msgid "Assign soldiers"
 #~ msgstr "Soldaten zuteilen"
-
 #~ msgid "Buildings already built in the initial base"
 #~ msgstr "Die Starbasis enthält bereits Gebäude"
-
 #~ msgid "Start with buildings"
 #~ msgstr "Starte mit Gebäuden:"
-
 #~ msgid "Employees already hired at campaign start"
 #~ msgstr "Angestelle sind schon zu Beginn der Kampagne vorhanden"
-
 #~ msgid "Start with employees"
 #~ msgstr "Starte mit Angestellten:"
-
 #~ msgid "Alien"
 #~ msgstr "Außerirdische"
-
 #~ msgid "Graphic settings."
 #~ msgstr "Grafikeinstellungen."
 
@@ -14489,37 +14439,26 @@ msgstr "Schlecht"
 #, fuzzy
 #~ msgid "The current value."
 #~ msgstr "Aktuelles Team speichern"
-
 #~ msgid "Texture LOD:"
 #~ msgstr "Texturdetaillierungsgrad:"
-
 #~ msgid "Swap Interval:"
 #~ msgstr "Swap Intervall:"
-
 #~ msgid "Choose your language."
 #~ msgstr "Sprache wählen."
-
 #~ msgid "Select the ufo that should be used"
 #~ msgstr "Wählen Sie das zu benutzende UFO"
-
 #~ msgid "Pre research text"
 #~ msgstr "Vorläufige Analyse"
-
 #~ msgid "Paid %i credits to soldiers"
 #~ msgstr "%i Credits an Soldaten gezahlt"
-
 #~ msgid "Paid %i credits to workers"
 #~ msgstr "%i Credits an Arbeiter gezahlt"
-
 #~ msgid "Paid %i credits to scientists"
 #~ msgstr "%i Credits an Forscher gezahlt"
-
 #~ msgid "Paid %i credits for robots"
 #~ msgstr "%i Credits für Roboter gezahlt"
-
 #~ msgid "Not enough workers"
 #~ msgstr "Nicht genügend Arbeitskräfte"
-
 #~ msgid ""
 #~ "You cannot queue productions without workers hired in this base.\n"
 #~ "\n"
@@ -14528,16 +14467,12 @@ msgstr "Schlecht"
 #~ "Ohne Arbeiter können Sie in dieser Basis keine Produktion in Auftrag geben.\n"
 #~ "\n"
 #~ "Stellen Sie Arbeiter ein."
-
 #~ msgid "Queue full!"
 #~ msgstr "Warteschlange voll!"
-
 #~ msgid "You cannot queue any more items!"
 #~ msgstr "Es kann nichts mehr der Produktionsliste hinzugefügt werden!"
-
 #~ msgid "Disassembling of %s started"
 #~ msgstr "%s-Demontage gestartet"
-
 #~ msgid "Error - could not find aircraft"
 #~ msgstr "Fehler: Konnte Flugzeug nicht finden"
 
@@ -14564,52 +14499,36 @@ msgstr "Schlecht"
 #, fuzzy
 #~ msgid "seq_alienbase_sentence3"
 #~ msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
-
 #~ msgid "Manage your aircraft"
 #~ msgstr "Flugzeuge verwalten"
-
 #~ msgid "Buy/Sell Equipment"
 #~ msgstr "Kaufen/Verkaufen"
-
 #~ msgid "Transfer equipment or personnel"
 #~ msgstr "Ausrüstung oder Personal transferieren"
-
 #~ msgid "Deal with Aliens in Alien Containment"
 #~ msgstr "Außerirdische untersuchen und verwalten"
-
 #~ msgid "Medical and Surgery operations"
 #~ msgstr "Medizinische und chirurgische Vorgänge"
-
 #~ msgid "Base Information"
 #~ msgstr "Basisinformationen"
-
 #~ msgid "Game"
 #~ msgstr "Spiel"
-
 #~ msgid "Sound"
 #~ msgstr "Sound"
-
 #~ msgid "Input"
 #~ msgstr "Eingabe"
-
 #~ msgid "Activates tooltips"
 #~ msgstr "Tooltips ein"
-
 #~ msgid "Centring at soldier selecting, shooting and appearing"
 #~ msgstr "Zentriere Soldaten beim Auswählen, Schießen und Erscheinen."
-
 #~ msgid "Use 3D geoscape"
 #~ msgstr "3D Geoscape benutzen"
-
 #~ msgid "Input settings"
 #~ msgstr "Eingabeeinstellungen"
-
 #~ msgid "Camera"
 #~ msgstr "Kamera"
-
 #~ msgid "Keys"
 #~ msgstr "Tasten"
-
 #~ msgid "Want To Maintain resolution"
 #~ msgstr "Diese Auflösung beibehalten"
 
@@ -14637,16 +14556,12 @@ msgstr "Schlecht"
 #~ "Mit freundlichen Grüßen,\n"
 #~ "\n"
 #~ "Dr. Connor"
-
 #~ msgid "Small UFO Hangar"
 #~ msgstr "Kleiner Ufo Hangar"
-
 #~ msgid "Large UFO Hangar"
 #~ msgstr "Großer Ufo Hangar"
-
 #~ msgid "Team Room"
 #~ msgstr "Erholungsraum"
-
 #~ msgid "Upgrade - Antimatter engines"
 #~ msgstr "Update - Antimaterie-Triebwerke"
 
@@ -14668,10 +14583,8 @@ msgstr "Schlecht"
 #~ "Und das ist etwas, das wir so schnell wie nur menschenmöglich tun sollten.\n"
 #~ "\n"
 #~ "--Cdr. Navarre"
-
 #~ msgid "craft_upgrade_am_engines_pre_txt"
 #~ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
-
 #~ msgid "b_teamroom_txt"
 #~ msgstr ""
 #~ "Baupläne -- Erholungsraum\n"
@@ -14711,7 +14624,6 @@ msgstr "Schlecht"
 #~ "Zusatz\n"
 #~ "\n"
 #~ "Keiner."
-
 #~ msgid "b_small_ufo_hangar_txt"
 #~ msgstr ""
 #~ "Baupläne -- Kleiner UFO Hangar\n"
@@ -14751,7 +14663,6 @@ msgstr "Schlecht"
 #~ "Zusatz\n"
 #~ "\n"
 #~ "Keiner."
-
 #~ msgid "b_large_ufo_hangar_txt"
 #~ msgstr ""
 #~ "Baupläne -- Großer UFO Hangar\n"
@@ -14791,7 +14702,6 @@ msgstr "Schlecht"
 #~ "Zusatz\n"
 #~ "\n"
 #~ "Keiner."
-
 #~ msgid "media/FreeSans.ttf"
 #~ msgstr "media/FreeSans.ttf"
 
@@ -14815,30 +14725,21 @@ msgstr "Schlecht"
 #~ "Lassen Sie es mich wissen, wenn wir mit der Arbeit beginnen sollen, Herr Kommandant.\n"
 #~ "\n"
 #~ "--Cdr. Navarre"
-
 #~ msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
 #~ msgstr "In der Ego-Perspektive (Umschalten mit [v]) können Sie überprüfen, ob ein Schritt nach links einen Schuss durch das Gebäude ermöglicht."
-
 #~ msgid "Custom"
 #~ msgstr "Benutzerdefiniert"
-
 #~ msgid "Can't activate reaction fire.\n"
 #~ msgstr "Kann Reaktionsfeuer nicht aktivieren.\n"
-
 #~ msgid "No weapon in right hand."
 #~ msgstr "Keine Waffe in rechter Hand."
-
 #~ msgid "No weapon in left hand."
 #~ msgstr "Keine Waffe in linker Hand."
-
 #~ msgid "Weapon in right hand cannot be reloaded."
 #~ msgstr "Waffe in der rechten Hand kann nicht nachgeladen werden."
-
 #~ msgid "No reload possible for right hand, already fully loaded."
 #~ msgstr "Kann Waffe in der rechten Hand nicht nachladen (ist voll)."
-
 #~ msgid "No reload possible for right hand, you don't have backup ammo."
 #~ msgstr "Kann Waffe in der rechten Hand nicht nachladen (keine Munition)."
-
 #~ msgid "Not enough TUs for reloading weapon in right hand."
 #~ msgstr "Nicht genügend ZE, um die Waffe in der rechten Hand nachzuladen."

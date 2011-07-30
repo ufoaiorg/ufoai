@@ -1,22 +1,3 @@
-msgid ""
-msgstr ""
-"Project-Id-Version: UFO Alien Invasion\n"
-"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 10:28+0200\n"
-"PO-Revision-Date: 2011-07-29 14:49+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
-"Language-Team: \n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Poedit-Bookmarks: 1885,1541,-1,-1,829,-1,-1,882,410,-1\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIAN FEDERATION\n"
-
 msgid "Autocannon Module"
 msgstr "Модуль автопушки"
 
@@ -343,8 +324,12 @@ msgstr "Лечение"
 msgid "Medikit"
 msgstr "Медкомплект"
 
-msgid "Requirement:"
+#, fuzzy
+msgid "Requirement(s):"
 msgstr "Требования:"
+
+msgid "The Big Picture"
+msgstr ""
 
 msgid "Pre-Research Report"
 msgstr "Предварительный отчёт по иследованиям"
@@ -482,8 +467,35 @@ msgstr "Начать игру"
 msgid "<1>"
 msgstr "<1>"
 
+#, fuzzy
+msgid "Quit"
+msgstr "Кито"
+
+msgid "You will lose all your progress."
+msgstr ""
+
+#, fuzzy
+msgid "Enter the game options menu."
+msgstr "Покинуть меню настроек."
+
+#, fuzzy
+msgid "Retry this battlescape mission."
+msgstr "Переиграть операцию"
+
+#, fuzzy
+msgid "Abort this battlescape mission."
+msgstr "Доступные панели управления для поля боя."
+
 msgid "Abort"
 msgstr "Прервать"
+
+#, fuzzy
+msgid "Go back to the battlescape."
+msgstr "Доступные панели управления для поля боя."
+
+#, fuzzy
+msgid "Back to the main menu."
+msgstr "Выйти в главное меню"
 
 msgid "Base Info"
 msgstr "Информация о базе"
@@ -557,9 +569,6 @@ msgstr "Сочетания клавиш"
 msgid "Show Keys"
 msgstr "Показать клавиши"
 
-msgid "Joystick speed."
-msgstr "Скорость джойстика."
-
 msgid "Threshold:"
 msgstr "Чувствительность:"
 
@@ -572,32 +581,17 @@ msgstr "Доступные контроллеры."
 msgid "Joystick or Joypad:"
 msgstr "Джойстик или геймпад:"
 
-msgid "Select which of your joysticks or joypads you want to use."
-msgstr "Выберите джойстик или геймпад, который вы хотите использовать."
-
-msgid "Enable your joystick or joypad."
-msgstr "Включить ваш джойстик или геймпад."
-
 msgid "Enable:"
 msgstr "Включить:"
 
-msgid "Enable or disable your Joystick."
-msgstr "Включить/выключить джойстик."
-
 msgid "Joystick Settings"
 msgstr "Настройки джойстика"
-
-msgid "Available HUD for the battlescape mode."
-msgstr "Доступные панели управления для поля боя."
 
 msgid "HUD Design:"
 msgstr "Дизайн графической оболочки:"
 
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr "Выберите дизайн панели управления для поля боя."
-
-msgid "Select 'Yes' if you want more intelligent soldiers."
-msgstr "Выберите «Да», если вам нужны более умные солдаты."
 
 msgid "Autostand:"
 msgstr "Вставать автоматически:"
@@ -614,7 +608,8 @@ msgstr "«Нет» означает, что ваши приказы на пол�
 msgid "Confirm Actions:"
 msgstr "Подтверждение действий:"
 
-msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
+#, fuzzy
+msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 msgstr "Включение этой опции даст вам предварительный просмотр действий на поле боя, которые вы должны подтвердить. Как минимум, это стоит попробовать."
 
 msgid "Choose between 0-9, higher values mean higher actor speed."
@@ -623,23 +618,14 @@ msgstr "Выберите 0—9, более высокие значения оз�
 msgid "Actor Speed:"
 msgstr "Скорость движения:"
 
-msgid "Actor speed changes the speed of aliens and humans."
-msgstr "Скорость персонажа влияет на перемещение пришельцев и людей."
-
 msgid "Battlescape Gameplay Settings"
 msgstr "Настройки поля боя"
-
-msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
-msgstr "Автоматически фокусировать камеру на солдате, если он выбран, или на противнике, если он обнаруживает себя или стреляет."
 
 msgid "Center View:"
 msgstr "Фокус на объекте:"
 
-msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
-msgstr "Определяет, должна ли игра автоматически фокусировать камеру на персонажах на поле боя."
-
-msgid "Enable the isometric 3D rendering mode for the battlescape."
-msgstr "Включить изометрический режим отрисовки для поля боя."
+msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
+msgstr "Автоматически фокусировать камеру на солдате, если он выбран, или на противнике, если он обнаруживает себя или стреляет."
 
 msgid "Isometric Mode:"
 msgstr "Изометрический режим:"
@@ -665,9 +651,6 @@ msgstr "По умолчанию минимальный масштаб камер
 msgid "Minimum/Maximum Zoom:"
 msgstr "Минимальный/максимальный масштаб:"
 
-msgid "The minimum/maximum zoom of the battlescape camera."
-msgstr "Минимальный/максимальный масштаб камеры на поле боя."
-
 msgid "ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
 msgstr "ВНИМАНИЕ: установка максимального наклона камеры выше 90 градусов приведет к перевороту камеры при превышении этого значения."
 
@@ -677,35 +660,17 @@ msgstr "ВНИМАНИЕ: установка минимального накло
 msgid "Minimum/Maximum Shift Pitch:"
 msgstr "Минимальное/максимальное изменение наклона:"
 
-msgid "The minimum/maximum pitch shift of the battlescape camera."
-msgstr "Минимальное/максимальное изменение наклона камеры на поле боя."
-
-msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
-msgstr "Текущее значение замедления камеры. Установите высокое значение, чтобы камера резко останавливалась, когда вы прекращаете её двигать."
-
 msgid "Move Deceleration:"
 msgstr "Замедление движения:"
 
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
 msgstr "Замедление камеры на поле боя. Уменьшите это значение, если вы хотите, чтобы камера двигалась более плавно. Увеличьте, если вы хотите, чтобы камера замедлялась быстрее или останавливалась мгновенно."
 
-msgid "Actual camera rotation speed."
-msgstr "Текущая скорость поворота камеры."
-
 msgid "Rotation Speed:"
 msgstr "Скорость поворота:"
 
-msgid "The rotation speed of the battlescape camera."
-msgstr "Скорость поворота камеры на поле боя."
-
-msgid "Actual camera scroll speed."
-msgstr "Текущая скорость наклона камеры."
-
 msgid "Scroll Speed:"
 msgstr "Скорость движения:"
-
-msgid "The scroll speed of the battlescape camera."
-msgstr "Скорость наклона камеры на поле боя."
 
 msgid "Battlescape Camera Settings"
 msgstr "Настройки камеры на поле боя"
@@ -716,9 +681,6 @@ msgstr "Настройки геймплея"
 msgid "Restart the sound-engine and apply your settings."
 msgstr "Перезапустить звуковую подсистему и применить настройки."
 
-msgid "Current sample rate frequency in kHz."
-msgstr "Текущая частота дискретизации в кГц."
-
 msgid "Audio Sample Rate:"
 msgstr "Частота дискретизации звука:"
 
@@ -728,29 +690,15 @@ msgstr "Частота дискретизации в кГц. Используй�
 msgid "Advanced Audio Options"
 msgstr "Детальные настройки звука"
 
+#, fuzzy
+msgid "Turn the menu sounds on or off."
+msgstr "Включение/выключение ответного огня"
+
 msgid "Menu Sounds:"
 msgstr "Звуки меню:"
 
-msgid "You do not like click sounds?"
-msgstr "Вам не нравятся щелчки?"
-
-msgid "Current volume of the sound effects."
-msgstr "Текущий уровень громкости звуковых эффектов."
-
 msgid "Sound Effects:"
 msgstr "Звуковые эффекты:"
-
-msgid "Do you want to hear the screams?"
-msgstr "Вы хотите слышать крики?"
-
-msgid "Current volume of the music."
-msgstr "Текущая громкость музыки."
-
-msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
-msgstr "Не слушать потрясающий саудтрек UFO:AI."
-
-msgid "Do not turn me off."
-msgstr "Не выключайте меня."
 
 msgid "Enable Audio:"
 msgstr "Включить звук:"
@@ -770,17 +718,11 @@ msgstr "Переключить настройки видео на среднее
 msgid "Switch to low video settings"
 msgstr "Переключить настройки видео на низкое качество"
 
-msgid "Enable the material system."
-msgstr "Задействовать систему материалов."
-
 msgid "Material System:"
 msgstr "Система материалов:"
 
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 msgstr "Система материалов используется для анимации текстур, эффектов типа вращения, растягивания или прокрутки текстур и управления отрисовкой путём применения специальных свойств материала вроде отражательной способности или контрастности определённых текстур."
-
-msgid "Enable weather effects."
-msgstr "Включить погодные эффекты."
 
 msgid "Weather Effects:"
 msgstr "Погодные эффекты:"
@@ -788,17 +730,11 @@ msgstr "Погодные эффекты:"
 msgid "Weather effects like rain or snow."
 msgstr "Погодные эффекты типа дождя или снега."
 
-msgid "Enable fog."
-msgstr "Включить туман:"
-
 msgid "Fog:"
 msgstr "Туман:"
 
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
 msgstr "Туман здесь не связан с погодными эффектами, при включении этой опции удаленные текстуры будут размываться."
-
-msgid "Enable coronas."
-msgstr "Включить ореолы."
 
 msgid "Coronas:"
 msgstr "Ореолы:"
@@ -806,20 +742,11 @@ msgstr "Ореолы:"
 msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr "Ореолы — это изменяемые, скруглённые полигоны с прозрачным фоном."
 
-msgid "Enable flares."
-msgstr "Включить отражатели."
-
 msgid "Flares:"
 msgstr "Отражатели:"
 
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
 msgstr "Отражатели используются для отображения эффектов отражения света. Видимость отражателя вычисляется исходя из угла поверхности, излучающей свет."
-
-msgid "Adjust various other settings here."
-msgstr "Здесь вы найдёте другие настройки."
-
-msgid "Current amount of ambient light reaching the earth."
-msgstr "Текущее количество света, попадающего на Землю."
 
 msgid "Geo Ambient Lighting:"
 msgstr "Фоновое освещение глобуса:"
@@ -863,9 +790,6 @@ msgstr "Также известно как рельефное текстурир
 msgid "Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
 msgstr "Изменить количество аппаратно обрабатываемых источников света.  ВНИМАНИЕ: для того, чтобы эта опция работала, необходимо включить освещение в реальном времени."
 
-msgid "Enable real-time lighting."
-msgstr "Включить освещение в реальном времени."
-
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Освещение в реальном времени / макс. число динамических источников света:"
 
@@ -874,9 +798,6 @@ msgstr "Освещение в реальном времени 3D-окружен�
 
 msgid "Light and Shadow"
 msgstr "Свет и тени"
-
-msgid "Adjust various light and shadow settings here."
-msgstr "Различные настройки для света и теней."
 
 msgid "Enable post processing shader effects. ATTENTION: May require restart to take effect."
 msgstr "Включить эффекты шейдерной постобработки. ВНИМАНИЕ: для вступления в силу изменений может потребоваться рестарт."
@@ -887,14 +808,8 @@ msgstr "Эффекты шейдерной постобработки:"
 msgid "Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
 msgstr "Эффекты шейдерной пост-обработки типа светящихся текстур (доступно только, если включены GLSL-шейдеры)."
 
-msgid "Change the swap interval."
-msgstr "Изменить частоту вертикальной синхронизации."
-
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr "Установите в «0», чтобы выключить вертикальную синхронизацию (более быстрая отрисовка). Установите в «1», чтобы включить вертикальную синхронизацию (лучшее качество изображения)."
-
-msgid "Change the amount of multisample buffers."
-msgstr "Изменить количество буферов мультивыборки."
 
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 msgstr "Выберите между 0 и 4 буферами мультивыборки. Большее значение приводит к лучшему сглаживанию и улучшает качество изображения."
@@ -904,9 +819,6 @@ msgstr "Буферы мультивыборки / вертикальная си�
 
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
 msgstr "Буферы мультивыборки OpenGL предоставляют механизм сглаживания GL-примитивов. / Вертикальная синхронизация управляет временем переключения буфера. «0» означает, что переключение будет происходить немедленно (также известна как «выключить вертикальную синхронизацию»)."
-
-msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
-msgstr "Включить вершинные буферы для улучшения производительности (требуется OpenGL-совместимое оборудование)."
 
 msgid "Vertex Buffers:"
 msgstr "Вершинные буферы:"
@@ -929,14 +841,8 @@ msgstr "OpenGL GLSL-шейдеры доступны только, если ва�
 msgid "OpenGL Settings"
 msgstr "Настройки OpenGL"
 
-msgid "Adjust various OpenGL settings here."
-msgstr "Различные настройки OpenGL."
-
 msgid "Very high values are only recommended when playing in very high screen resolutions."
 msgstr "Очень высокие значения рекомендованы только для игры на высоких разрешениях."
-
-msgid "Current value."
-msgstr "Текущее значение."
 
 msgid "Anisotropy Level:"
 msgstr "Уровень анизотропной фильтрации:"
@@ -944,17 +850,11 @@ msgstr "Уровень анизотропной фильтрации:"
 msgid "The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 msgstr "Степень анизотропной фильтрации. Высокие значения сделают отдалённые текстуры более чёткими. Очень высокие значения рекомендованы только для игры на высоких разрешениях."
 
-msgid "Enable high texture detail."
-msgstr "Включить детализацию текстур."
-
 msgid "LoD:"
 msgstr "Детализация:"
 
 msgid "Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
 msgstr "Детализация текстур. Включение этой опции может привести к некоторому размытию текстур, если вы немного уменьшите масштаб."
-
-msgid "Enable texture compression."
-msgstr "Включить сжатие текстур:"
 
 msgid "Compression:"
 msgstr "Сжатие:"
@@ -1010,9 +910,6 @@ msgstr "Установить максимальный размер тексту�
 msgid "Texture Settings"
 msgstr "Настройки текстур"
 
-msgid "Adjust various texture settings here."
-msgstr "Здесь вы можете установить другие настройки текстур."
-
 msgid "Default is to play the intro video just once at the first game start."
 msgstr ""
 
@@ -1028,17 +925,8 @@ msgstr "Показывать количество отрисовываемых �
 msgid "Show FPS:"
 msgstr "Показывать FPS:"
 
-msgid "See how many frames per second are rendered."
-msgstr "Видеть сколько в секунду отрисовывается кадров."
-
 msgid "Other Display Settings"
 msgstr "Другие настройки дисплея."
-
-msgid "Adjust other settings here."
-msgstr "Здесь вы можете установить другие настройки."
-
-msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
-msgstr "PNG и TGA — это графические форматы без потери качества изображения, которые необходимы для сохранения скриншотов с максимально возможным качеством, однако размер файлов будет большим. Следует выбрать PNG, т.к. у него лучшее сжатие и, соответственно, меньший размер файла, чем у TGA. JPG — лучший формат, если вам нужен маленький размер файла."
 
 msgid "Screenshot Format:"
 msgstr "Формат скриншотов:"
@@ -1049,9 +937,6 @@ msgstr "Формат файла для сжатия и хранения ваши
 msgid "jpeg Quality:"
 msgstr "Качество JPEG:"
 
-msgid "Here you can set the quality of jpeg screenshots."
-msgstr "Здесь вы можете настроить качество скриншотов в формате JPEG."
-
 msgid "Screenshot Settings"
 msgstr "Настройки скриншотов"
 
@@ -1061,14 +946,8 @@ msgstr "Клавиша по умолчанию для создания скри�
 msgid "Saturation:"
 msgstr "Насыщенность:"
 
-msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
-msgstr "Значение насыщения управляет цветностью. Большее значение параметра означает более насыщенные цвета."
-
 msgid "Gamma:"
 msgstr "Гамма:"
-
-msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
-msgstr "Гамма-коррекция управляет цветностью. Увеличенная гамма-коррекция обычно означает более насыщенные цвета."
 
 msgid "Contrast:"
 msgstr "Контрастность:"
@@ -1079,32 +958,20 @@ msgstr "Контрастность означает разницу в яркос
 msgid "Brightness:"
 msgstr "Яркость:"
 
-msgid "Brightness sets the intensity of light emitting from your screen."
-msgstr "Яркость определяет интенсивность свечения вашего экрана."
-
 msgid "Monitor Calibration Controls"
 msgstr "Управление калибровкой монитора"
 
 msgid "Calibrate your display here."
 msgstr "Откалибровать дисплей."
 
-msgid "Stretch the screen to a ratio of 4:3."
-msgstr "Растянуть экран в пропорции 4:3."
-
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "Растягивать экран в пропорции 4:3:"
-
-msgid "Stretches the screen with a 4:3 ratio."
-msgstr "Растягивает экран в пропорции 4:3."
 
 msgid "Play UFO:AI in fullscreen."
 msgstr "Играть в UFO:AI в полноэкранном режиме."
 
 msgid "Fullscreen:"
 msgstr "Полноэкранный режим:"
-
-msgid "Play UFO:AI in fullscreen- or window-mode."
-msgstr "Играть в UFO:AI в полноэкранном или оконном режиме."
 
 msgid "Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
 msgstr "Переключить на выбранное разрешение. ВНИМАНИЕ: для корректной работы может потребоваться перезапуск игры."
@@ -1130,9 +997,6 @@ msgstr "Разрешение (x*y) в пикселях, которое долж�
 msgid "Resolution and Display Settings"
 msgstr "Разрешение и настройки дисплея"
 
-msgid "Adjust resolution and display settings here."
-msgstr "Различные настройки разрешения и экрана."
-
 msgid "Advanced"
 msgstr "Детальный"
 
@@ -1142,20 +1006,14 @@ msgstr "Общие"
 msgid "Video Settings"
 msgstr "Настройки изображения"
 
-msgid "Enable precaching of models to have faster menus."
-msgstr "Включить предварительное кэширование моделей для ускорения меню."
+msgid "Precaching of models means having faster menus."
+msgstr "Предварительное кэширование моделей предназначено для ускорения меню."
 
 msgid "Precache Models:"
 msgstr "Предварительное кэширование моделей:"
 
-msgid "Precaching of models means having faster menus."
-msgstr "Предварительное кэширование моделей предназначено для ускорения меню."
-
 msgid "Menu Option(s)"
 msgstr "Настройки меню"
-
-msgid "Enable the 'Tip of the Day'."
-msgstr "Включить «Совет дня»."
 
 msgid "Show 'Tip of the Day':"
 msgstr "Показывать «Совет дня»:"
@@ -1163,17 +1021,11 @@ msgstr "Показывать «Совет дня»:"
 msgid "Enable this if you are new to UFO:AI and want to see interesting tips written by the most experienced UFO:AI players out there."
 msgstr "Включите, если вы новичок в UFO:AI и хотите видеть интересные заметки, написанные самыми опытными игроками."
 
-msgid "Activate cursor tooltips."
-msgstr "Включить всплывающие подсказки."
-
 msgid "Cursor Tooltips:"
 msgstr "Всплываюште подсказки:"
 
 msgid "Enable tooltips for the cursor."
 msgstr "Включить всплывающие подсказки."
-
-msgid "Make me disappear."
-msgstr "Сделать так, чтобы я исчезло."
 
 msgid "Tooltips:"
 msgstr "Подсказки:"
@@ -1217,14 +1069,12 @@ msgstr "Мин./макс. масштаб камеры глобуса:"
 msgid "The minimum/maximum zoom of the geoscape camera."
 msgstr "Минимальный/максимальный масштаб камеры глобуса."
 
-msgid "Use the 3D geoscape. To enable this option you have to start a new campaign first."
-msgstr "Использовать 3-мерный глобус. Для включения этой опции вы должны сперва начать новую кампанию."
-
 msgid "3D Geoscape:"
 msgstr "Трехмерный земной шар:"
 
-msgid "3D or 2D geoscape."
-msgstr "2-х или 3-х мерная карта мира"
+#, fuzzy
+msgid "3D or 2D geoscape. To enable this option you have to start a new campaign first."
+msgstr "Использовать 3-мерный глобус. Для включения этой опции вы должны сперва начать новую кампанию."
 
 msgid "Geoscape Options"
 msgstr "Настройки глобуса"
@@ -1234,12 +1084,6 @@ msgstr "Список доступных языков. ВНИМАНИЕ: англ
 
 msgid "Language Settings"
 msgstr "Языковые настройки"
-
-msgid "Change your name."
-msgstr "Изменить имя."
-
-msgid "Your name."
-msgstr "Ваше имя."
 
 msgid "Overall Game Settings"
 msgstr "Настройки игры"
@@ -1627,6 +1471,9 @@ msgstr "Титры"
 msgid "Tutorials"
 msgstr "Обучение"
 
+msgid "Choose between Campaign or Skirmish mode."
+msgstr ""
+
 msgid "Single-player"
 msgstr "Одиночная игра"
 
@@ -1938,7 +1785,8 @@ msgstr "Убито противников:"
 msgid "Missions Performed:"
 msgstr "Операций выполнено:"
 
-msgid "Rename your employee"
+#, fuzzy
+msgid "Rename employee"
 msgstr "Переименуйте персонал"
 
 msgid "Hire - Right click to remove"
@@ -2112,9 +1960,6 @@ msgstr "Показать государственные границы"
 msgid "Create installation"
 msgstr "Построить сооружение"
 
-msgid "Open UFOpaedia"
-msgstr "Открыть НЛОпедию"
-
 msgid "Organisation statistics"
 msgstr "Отношения с правительствами"
 
@@ -2223,6 +2068,21 @@ msgstr "Рюкзак"
 msgid "Equip this soldier"
 msgstr "Снарядить этого солдата"
 
+msgid "Do not quit."
+msgstr ""
+
+msgid "Quit anyway"
+msgstr ""
+
+msgid "Exit current campaign and return to main menu."
+msgstr ""
+
+msgid "You will lose all your campaign progress."
+msgstr ""
+
+msgid "Exit Campaign Confirmation"
+msgstr ""
+
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Благодарим вас за игру в UFO:Alien Invasion"
 
@@ -2231,9 +2091,6 @@ msgstr "Нажмите для продолжения"
 
 msgid "You've lost the game"
 msgstr "Вы потерпели поражение"
-
-msgid "Reload the last automatically saved campaign state"
-msgstr "Загрузить последнее автоматически сохранённое состояние кампании"
 
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr "Вы действительно хотите перезагрузить последнее автоматически сохраненное состояние кампании?"
@@ -2247,10 +2104,15 @@ msgstr "Выход"
 msgid "Options"
 msgstr "Настройки"
 
+#, fuzzy
+msgid "Leave this menu and continue playing."
+msgstr "Загрузить последнюю сохраненную игру и продолжить"
+
 msgid "Back"
 msgstr "Назад"
 
-msgid "Load last saved game or continue playing"
+#, fuzzy
+msgid "Load last saved game or continue playing."
 msgstr "Загрузить последнюю сохраненную игру и продолжить"
 
 msgid "Continue"
@@ -2258,6 +2120,10 @@ msgstr "Продолжить"
 
 msgid "Load"
 msgstr "Загрузить"
+
+#, fuzzy
+msgid "Start a new singleplayer campaign."
+msgstr "Теперь, после того, как Вы прошли однопользовательские кампании"
 
 msgid "Start campaign"
 msgstr "Начать игру"
@@ -2979,7 +2845,8 @@ msgstr "Конфликты к концу века стали редкостью,
 msgid "intro_sentence1"
 msgstr "2084 год. На Земле, никогда не бывшей столь стабильной, наступает время относительного мира. Жестокие первые годы XXI века теперь далеко; отдалённые воспоминания, но не настолько отдалённые, чтобы о них забыли. Для большинства народов Земли Вторая холодная война — лишь тёмная тень из прошлого, подобная тем, какими были Мировые войны для детей конца XX века."
 
-msgid "Copyright 2004-2010 by UFO: AI Team"
+#, fuzzy
+msgid "Copyright 2004-2011 by UFO: AI Team"
 msgstr "Copyright 2004-2010 by UFO: AI Team"
 
 msgid "http://ufoai.sf.net"
@@ -8261,6 +8128,10 @@ msgstr "Объединённая Америка"
 msgid "The Revolutionary Countries"
 msgstr "Революционные Страны"
 
+#, fuzzy
+msgid "missions"
+msgstr "Операции"
+
 msgid "ufo_activity"
 msgstr "Активность НЛО"
 
@@ -8360,83 +8231,35 @@ msgstr "Медаль"
 msgid "Cross"
 msgstr "Крест"
 
+msgid "Training Zone: Alpha."
+msgstr ""
+
+msgid "Rescue mission."
+msgstr "Спасательная миссия."
+
 msgid "Base is under attack."
 msgstr "База атакована."
 
 msgid "An alien base."
 msgstr "База пришельцев."
 
-msgid "Rescue mission."
-msgstr "Спасательная миссия."
-
-msgid "UFO Crashsite."
-msgstr "Место крушения НЛО."
-
-msgid "Training Zone: Alpha."
-msgstr ""
-
-msgid "UFO landed in hills area."
-msgstr "В этой холмистой местности приземлился НЛО."
-
 msgid "Wilderness terror mission."
 msgstr "Контр-террористическая операция в пустынной местности."
-
-msgid "A fuel depot the aliens try to destroy."
-msgstr "Пришельцы пытаются уничтожить топливный склад."
-
-msgid "Big city"
-msgstr "Большой город"
-
-msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr "Лаборатория, изучающая найденные при крушении обломки НЛО."
-
-msgid "A place where people come to relax and mingle."
-msgstr "Место где люди могут отдохнуть и пообщаться."
-
-msgid "A Bomber has landed in the middle of a city."
-msgstr "«Бомбардировщик», приземлившийся посреди города."
-
-msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr "Убежище, которое было построено людьми во время крупной аварии. Некоторые внутренние взрывозащитные двери могут быть закрыты."
-
-msgid "A small settlement in winter."
-msgstr "Небольшое поселение в зимнее время."
-
-msgid "An alien Harvester has crashed in the wastelands."
-msgstr "«Охотник», разбившийся на пустошах."
-
-msgid "A suburb that has received a visit from a Harvester."
-msgstr "Пригород, который посетил «Охотник»."
-
-msgid "A suburb that has been visited by an UFO."
-msgstr "Пригород, который посетил НЛО."
-
-msgid "A luxurious vacation resort."
-msgstr "Роскошный курорт."
-
-msgid "An office complex on the outskirts of town."
-msgstr "Офисный комплекс на окраине города."
-
-msgid "A local harbour."
-msgstr "Местный порт."
-
-msgid "An office complex under construction."
-msgstr "Строительство офисного комплекса."
-
-msgid "A small UFO has crashed in this mining region."
-msgstr "Малый корабль пришельцев потерпел крушение в районе шахт."
-
-msgid "A military convoy has caught the eye of the aliens."
-msgstr "Армейский конвой попался на глаза пришельцев."
 
 msgid "A suburban district."
 msgstr "Пригородный округ."
 
-msgid "An office complex in the centre of town."
-msgstr "Офисы в центре города."
-
 msgid "A subway station in a suburban part of town."
 msgstr "Пригородная станция метро."
+
+msgid "A crashed Scout UFO."
+msgstr "Разбившийся НЛО «Разведчик»"
+
+msgid "A rather old-fashioned suburban district."
+msgstr "Довольно старомодный пригородный район."
+
+msgid "A luxurious vacation resort."
+msgstr "Роскошный курорт."
 
 msgid "Underground pipe construction site."
 msgstr "Стройплощадка подземного трубопровода."
@@ -8444,20 +8267,23 @@ msgstr "Стройплощадка подземного трубопровода
 msgid "An urban district in an oriental region."
 msgstr "Городской район в ближневосточном регионе."
 
+msgid "An office complex on the outskirts of town."
+msgstr "Офисный комплекс на окраине города."
+
+msgid "An old mine."
+msgstr "Старая шахта."
+
+msgid "A small settlement in winter."
+msgstr "Небольшое поселение в зимнее время."
+
+msgid "A local harbour."
+msgstr "Местный порт."
+
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr ""
 
-msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr "Место заправки транспорта."
-
-msgid "A small industry city area."
-msgstr "Маленькая промышленная зона."
-
-msgid "A small neighbourhood in a warm urban region."
-msgstr "Небольшой район в тёплом городском регионе."
-
-msgid "A rather old-fashioned suburban district."
-msgstr "Довольно старомодный пригородный район."
+msgid "A fuel depot the aliens try to destroy."
+msgstr "Пришельцы пытаются уничтожить топливный склад."
 
 msgid "A ferry."
 msgstr "Паром."
@@ -8465,14 +8291,26 @@ msgstr "Паром."
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Сельский дом, окружённый полями и сараями. НЛО совершил посадку на одно из таких полей."
 
-msgid "A crashed Scout UFO."
-msgstr "Разбившийся НЛО «Разведчик»"
+msgid "An excavation site that has fallen under alien attack."
+msgstr "Карьер, разрушенный атакой пришельцев."
 
-msgid "A small estate in the mountains."
-msgstr "Небольшое поместье в горной местности."
+msgid "An estate owned by rich and influential people."
+msgstr "Поместье, принадлежащее богатым и влиятельным особам."
 
-msgid "A tropical area where several suspected criminals have made their homes."
-msgstr "Тропический район, где несколько подозреваемых в преступлениях построили себе дома."
+msgid "A small village in England."
+msgstr "Небольшая деревня в английском стиле."
+
+msgid "A hydroelectricity dam that is threatened by the alien invaders."
+msgstr "Плотина гидроэлектростанции, которой угрожают оккупанты."
+
+msgid "A small industry city area."
+msgstr "Маленькая промышленная зона."
+
+msgid "A bunker used in a previous conflict."
+msgstr "Бункер, использовавшийся в предыдущем конфликте."
+
+msgid "An office complex in the centre of town."
+msgstr "Офисы в центре города."
 
 msgid "A stadium used for various recreational events."
 msgstr "Стадион, используемый для различных развлекательных мероприятий."
@@ -8480,20 +8318,11 @@ msgstr "Стадион, используемый для различных ра�
 msgid "A small industrial area."
 msgstr "Маленькая промышленная зона."
 
-msgid "A classic eastern suburban area."
-msgstr "Классические восточные пригороды."
+msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+msgstr "Убежище, которое было построено людьми во время крупной аварии. Некоторые внутренние взрывозащитные двери могут быть закрыты."
 
-msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr "Плотина гидроэлектростанции, которой угрожают оккупанты."
-
-msgid "A bunker used in a previous conflict."
-msgstr "Бункер, использовавшийся в предыдущем конфликте."
-
-msgid "An industrial area, used for loading and unloading goods."
-msgstr "Транспортный узел, использующийся для работы с грузами."
-
-msgid "An old mine."
-msgstr "Старая шахта."
+msgid "A military convoy has caught the eye of the aliens."
+msgstr "Армейский конвой попался на глаза пришельцев."
 
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Вид общественного центра с дополнительными продовольственными возможностями, известный как супермаркет."
@@ -8501,47 +8330,38 @@ msgstr "Вид общественного центра с дополнитель
 msgid "A small office in a mountainous region."
 msgstr "Небольшой офис в горной местности."
 
-msgid "A small village in England."
-msgstr "Небольшая деревня в английском стиле."
+msgid "A place where citizens come to replenish their vehicles' fuel supply."
+msgstr "Место заправки транспорта."
 
-msgid "An estate owned by rich and influential people."
-msgstr "Поместье, принадлежащее богатым и влиятельным особам."
+msgid "A small estate in the mountains."
+msgstr "Небольшое поместье в горной местности."
 
-msgid "An excavation site that has fallen under alien attack."
-msgstr "Карьер, разрушенный атакой пришельцев."
+msgid "A tropical area where several suspected criminals have made their homes."
+msgstr "Тропический район, где несколько подозреваемых в преступлениях построили себе дома."
 
-msgid "Some houses in the desert."
-msgstr "Несколько зданий в пустынном районе."
+msgid "An office complex under construction."
+msgstr "Строительство офисного комплекса."
 
-msgid "UFO crashed in this sparsely populated forest region."
-msgstr "В этом малонаселённом лесном регионе разбился НЛО."
+msgid "A place where people come to relax and mingle."
+msgstr "Место где люди могут отдохнуть и пообщаться."
 
-msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr "Пришельцы появились не к добру в этом малонаселённом лесном регионе."
-
-msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr "Тихая местность на окраине населённого пункта."
-
-msgid "A cleared stretch of land in the middle of the jungle."
-msgstr "Расчищенный участок земли среди джунглей."
-
-msgid "A river runs through this piece of jungle."
-msgstr "Река, протекающая сквозь джунгли."
+msgid "A small neighbourhood in a warm urban region."
+msgstr "Небольшой район в тёплом городском регионе."
 
 msgid "Cemetery terror mission."
 msgstr "Контр-террористическая операция на кладбище"
 
-msgid "An industrial compound."
-msgstr "Промышленная площадка."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
+msgstr "Тихая местность на окраине населённого пункта."
 
-msgid "An underpopulated area in a cold region."
-msgstr "Малонаселенная территория в холодной области."
+msgid "UFO Crashsite."
+msgstr "Место крушения НЛО."
 
-msgid "An industrial area in a cold region."
-msgstr "Промышленная область в холодном регионе."
+msgid "A river runs through this piece of jungle."
+msgstr "Река, протекающая сквозь джунгли."
 
-msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
-msgstr "Ферма в сельской местности. Покрывает обширную территорию, но несколько препятствий закрывает обзор."
+msgid "A cleared stretch of land in the middle of the jungle."
+msgstr "Расчищенный участок земли среди джунглей."
 
 msgid "Crashed UFO in oriental suburban district."
 msgstr "Разбившийся НЛО в пригородном районе на Ближнем востоке."
@@ -8549,8 +8369,56 @@ msgstr "Разбившийся НЛО в пригородном районе н�
 msgid "A suburban district of an oriental area."
 msgstr "Пригородный район в ближневосточном регионе."
 
+msgid "A laboratory where they examined found UFO wreck tiles."
+msgstr "Лаборатория, изучающая найденные при крушении обломки НЛО."
+
+msgid "A classic eastern suburban area."
+msgstr "Классические восточные пригороды."
+
 msgid "Industrial theme."
 msgstr "Промышленный район."
+
+msgid "UFO landed in hills area."
+msgstr "В этой холмистой местности приземлился НЛО."
+
+msgid "An underpopulated area in a cold region."
+msgstr "Малонаселенная территория в холодной области."
+
+msgid "An industrial compound."
+msgstr "Промышленная площадка."
+
+msgid "An industrial area in a cold region."
+msgstr "Промышленная область в холодном регионе."
+
+msgid "UFO crashed in this sparsely populated forest region."
+msgstr "В этом малонаселённом лесном регионе разбился НЛО."
+
+msgid "Aliens are up to no good in this sparsely populated forest region."
+msgstr "Пришельцы появились не к добру в этом малонаселённом лесном регионе."
+
+msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+msgstr "Ферма в сельской местности. Покрывает обширную территорию, но несколько препятствий закрывает обзор."
+
+msgid "An alien Harvester has crashed in the wastelands."
+msgstr "«Охотник», разбившийся на пустошах."
+
+msgid "Some houses in the desert."
+msgstr "Несколько зданий в пустынном районе."
+
+msgid "Big city"
+msgstr "Большой город"
+
+msgid "A small UFO has crashed in this mining region."
+msgstr "Малый корабль пришельцев потерпел крушение в районе шахт."
+
+msgid "A Bomber has landed in the middle of a city."
+msgstr "«Бомбардировщик», приземлившийся посреди города."
+
+msgid "A suburb that has been visited by an UFO."
+msgstr "Пригород, который посетил НЛО."
+
+msgid "A suburb that has received a visit from a Harvester."
+msgstr "Пригород, который посетил «Охотник»."
 
 msgid "No language"
 msgstr "Нет языка"
@@ -10565,7 +10433,8 @@ msgstr "Жар-Птица ДТ"
 msgid "Firebird-class Dropship"
 msgstr "Десантный транспорт «Жар-птица»"
 
-msgid "Village big"
+#, fuzzy
+msgid "Village large"
 msgstr "Сельский большой"
 
 msgid "Village recreational"
@@ -10602,7 +10471,8 @@ msgstr "Доставка"
 msgid "Rescue mission"
 msgstr "Спасательная миссия"
 
-msgid "Oriental big"
+#, fuzzy
+msgid "Oriental large"
 msgstr "Ближневосточный — большая карта"
 
 msgid "Oriental medium"
@@ -11283,6 +11153,10 @@ msgstr "Ваш десантный транспорт слишком далеко
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "База «%s» атакована - что делать?"
+
+#, fuzzy, c-format
+msgid "Base '%s' is under attack!"
+msgstr "База атакована"
 
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
@@ -12374,6 +12248,10 @@ msgstr "Разбишийся самолёт"
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
+
+#, fuzzy
+msgid "base_attack"
+msgstr "Нападение на базу"
 
 msgid "ufo_attacking"
 msgstr "Атака НЛО"
@@ -13776,6 +13654,205 @@ msgstr "заурядно"
 msgid "Poor"
 msgstr "плохо"
 
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
+"POT-Creation-Date: 2011-07-30 09:00+0200\n"
+"PO-Revision-Date: 2011-07-29 14:49+0600\n"
+"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Bookmarks: 1885,1541,-1,-1,829,-1,-1,882,410,-1\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+
+#~ msgid "Joystick speed."
+#~ msgstr "Скорость джойстика."
+
+#~ msgid "Select which of your joysticks or joypads you want to use."
+#~ msgstr "Выберите джойстик или геймпад, который вы хотите использовать."
+
+#~ msgid "Enable your joystick or joypad."
+#~ msgstr "Включить ваш джойстик или геймпад."
+
+#~ msgid "Enable or disable your Joystick."
+#~ msgstr "Включить/выключить джойстик."
+
+#~ msgid "Select 'Yes' if you want more intelligent soldiers."
+#~ msgstr "Выберите «Да», если вам нужны более умные солдаты."
+
+#~ msgid "Actor speed changes the speed of aliens and humans."
+#~ msgstr "Скорость персонажа влияет на перемещение пришельцев и людей."
+
+#~ msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
+#~ msgstr "Определяет, должна ли игра автоматически фокусировать камеру на персонажах на поле боя."
+
+#~ msgid "Enable the isometric 3D rendering mode for the battlescape."
+#~ msgstr "Включить изометрический режим отрисовки для поля боя."
+
+#~ msgid "The minimum/maximum zoom of the battlescape camera."
+#~ msgstr "Минимальный/максимальный масштаб камеры на поле боя."
+
+#~ msgid "The minimum/maximum pitch shift of the battlescape camera."
+#~ msgstr "Минимальное/максимальное изменение наклона камеры на поле боя."
+
+#~ msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
+#~ msgstr "Текущее значение замедления камеры. Установите высокое значение, чтобы камера резко останавливалась, когда вы прекращаете её двигать."
+
+#~ msgid "Actual camera rotation speed."
+#~ msgstr "Текущая скорость поворота камеры."
+
+#~ msgid "The rotation speed of the battlescape camera."
+#~ msgstr "Скорость поворота камеры на поле боя."
+
+#~ msgid "Actual camera scroll speed."
+#~ msgstr "Текущая скорость наклона камеры."
+
+#~ msgid "The scroll speed of the battlescape camera."
+#~ msgstr "Скорость наклона камеры на поле боя."
+
+#~ msgid "Current sample rate frequency in kHz."
+#~ msgstr "Текущая частота дискретизации в кГц."
+
+#~ msgid "You do not like click sounds?"
+#~ msgstr "Вам не нравятся щелчки?"
+
+#~ msgid "Current volume of the sound effects."
+#~ msgstr "Текущий уровень громкости звуковых эффектов."
+
+#~ msgid "Do you want to hear the screams?"
+#~ msgstr "Вы хотите слышать крики?"
+
+#~ msgid "Current volume of the music."
+#~ msgstr "Текущая громкость музыки."
+
+#~ msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
+#~ msgstr "Не слушать потрясающий саудтрек UFO:AI."
+
+#~ msgid "Do not turn me off."
+#~ msgstr "Не выключайте меня."
+
+#~ msgid "Enable the material system."
+#~ msgstr "Задействовать систему материалов."
+
+#~ msgid "Enable weather effects."
+#~ msgstr "Включить погодные эффекты."
+
+#~ msgid "Enable fog."
+#~ msgstr "Включить туман:"
+
+#~ msgid "Enable coronas."
+#~ msgstr "Включить ореолы."
+
+#~ msgid "Enable flares."
+#~ msgstr "Включить отражатели."
+
+#~ msgid "Adjust various other settings here."
+#~ msgstr "Здесь вы найдёте другие настройки."
+
+#~ msgid "Current amount of ambient light reaching the earth."
+#~ msgstr "Текущее количество света, попадающего на Землю."
+
+#~ msgid "Enable real-time lighting."
+#~ msgstr "Включить освещение в реальном времени."
+
+#~ msgid "Adjust various light and shadow settings here."
+#~ msgstr "Различные настройки для света и теней."
+
+#~ msgid "Change the swap interval."
+#~ msgstr "Изменить частоту вертикальной синхронизации."
+
+#~ msgid "Change the amount of multisample buffers."
+#~ msgstr "Изменить количество буферов мультивыборки."
+
+#~ msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
+#~ msgstr "Включить вершинные буферы для улучшения производительности (требуется OpenGL-совместимое оборудование)."
+
+#~ msgid "Adjust various OpenGL settings here."
+#~ msgstr "Различные настройки OpenGL."
+
+#~ msgid "Current value."
+#~ msgstr "Текущее значение."
+
+#~ msgid "Enable high texture detail."
+#~ msgstr "Включить детализацию текстур."
+
+#~ msgid "Enable texture compression."
+#~ msgstr "Включить сжатие текстур:"
+
+#~ msgid "Adjust various texture settings here."
+#~ msgstr "Здесь вы можете установить другие настройки текстур."
+
+#~ msgid "See how many frames per second are rendered."
+#~ msgstr "Видеть сколько в секунду отрисовывается кадров."
+
+#~ msgid "Adjust other settings here."
+#~ msgstr "Здесь вы можете установить другие настройки."
+
+#~ msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
+#~ msgstr "PNG и TGA — это графические форматы без потери качества изображения, которые необходимы для сохранения скриншотов с максимально возможным качеством, однако размер файлов будет большим. Следует выбрать PNG, т.к. у него лучшее сжатие и, соответственно, меньший размер файла, чем у TGA. JPG — лучший формат, если вам нужен маленький размер файла."
+
+#~ msgid "Here you can set the quality of jpeg screenshots."
+#~ msgstr "Здесь вы можете настроить качество скриншотов в формате JPEG."
+
+#~ msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
+#~ msgstr "Значение насыщения управляет цветностью. Большее значение параметра означает более насыщенные цвета."
+
+#~ msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
+#~ msgstr "Гамма-коррекция управляет цветностью. Увеличенная гамма-коррекция обычно означает более насыщенные цвета."
+
+#~ msgid "Brightness sets the intensity of light emitting from your screen."
+#~ msgstr "Яркость определяет интенсивность свечения вашего экрана."
+
+#~ msgid "Stretch the screen to a ratio of 4:3."
+#~ msgstr "Растянуть экран в пропорции 4:3."
+
+#~ msgid "Stretches the screen with a 4:3 ratio."
+#~ msgstr "Растягивает экран в пропорции 4:3."
+
+#~ msgid "Play UFO:AI in fullscreen- or window-mode."
+#~ msgstr "Играть в UFO:AI в полноэкранном или оконном режиме."
+
+#~ msgid "Adjust resolution and display settings here."
+#~ msgstr "Различные настройки разрешения и экрана."
+
+#~ msgid "Enable precaching of models to have faster menus."
+#~ msgstr "Включить предварительное кэширование моделей для ускорения меню."
+
+#~ msgid "Enable the 'Tip of the Day'."
+#~ msgstr "Включить «Совет дня»."
+
+#~ msgid "Activate cursor tooltips."
+#~ msgstr "Включить всплывающие подсказки."
+
+#~ msgid "Make me disappear."
+#~ msgstr "Сделать так, чтобы я исчезло."
+
+#~ msgid "3D or 2D geoscape."
+#~ msgstr "2-х или 3-х мерная карта мира"
+
+#~ msgid "Change your name."
+#~ msgstr "Изменить имя."
+
+#~ msgid "Your name."
+#~ msgstr "Ваше имя."
+
+#~ msgid "Open UFOpaedia"
+#~ msgstr "Открыть НЛОпедию"
+
+#~ msgid "Reload the last automatically saved campaign state"
+#~ msgstr "Загрузить последнее автоматически сохранённое состояние кампании"
+
+#~ msgid "An industrial area, used for loading and unloading goods."
+#~ msgstr "Транспортный узел, использующийся для работы с грузами."
+
 #~ msgid "Personal message"
 #~ msgstr "Личное сообщение"
 
@@ -14416,7 +14493,6 @@ msgstr "плохо"
 #~ msgstr "Зарядная кассета игломёта"
 
 #~ msgid "%d day\n"
-
 #~ msgid_plural "%d days\n"
 #~ msgstr[0] "%d день\n"
 #~ msgstr[1] "%d дня\n"
@@ -15067,9 +15143,6 @@ msgstr "плохо"
 #~ msgid "Aircraft %s\n"
 #~ msgstr "Авиатехника %s\n"
 
-#~ msgid "Now after you have finished the single-player campaigns"
-#~ msgstr "Теперь, после того, как Вы прошли однопользовательские кампании"
-
 #~ msgid "you should try the multiplayer features"
 #~ msgstr "Вы должны попробовать многопользовательскую игру"
 
@@ -15422,14 +15495,12 @@ msgstr "плохо"
 #~ msgstr "Лечить этого солдата"
 
 #~ msgid "medic"
-
 #~ msgid_plural "medics"
 #~ msgstr[0] "медик"
 #~ msgstr[1] "медика"
 #~ msgstr[2] "медиков"
 
 #~ msgid "Healing of %s completed - %i active healing left\n"
-
 #~ msgid_plural "Healing of %s completed - %i active healings left\n"
 #~ msgstr[0] "Курс лечения для %s завершён - %i боец всё ещё в лазарете.\n"
 #~ msgstr[1] "Курс лечения для %s завершён - %i бойца всё ещё в лазарете.\n"
@@ -15546,68 +15617,100 @@ msgstr "плохо"
 # При разрешениии 1024*768 входит не более 17 символов
 #~ msgid "Camera Scroll:"
 #~ msgstr "Движение камеры:"
+
 #~ msgid "Camera Rotation:"
 #~ msgstr "Вращение камеры:"
+
 #~ msgid "Alien Medium Armour"
 #~ msgstr "Средняя броня пришельцев"
+
 #~ msgid "UFO - Condor"
 #~ msgstr "НЛО - Канонерка"
+
 #~ msgid "%s\t%0.2f%%\n"
 #~ msgstr "%s\t%0.2f%%\n"
+
 #~ msgid "Crashed Alien Ship. Secure the area."
 #~ msgstr "Сбито НЛО. Обследовать зону крушения."
+
 #~ msgid "Reload right hand weapon"
 #~ msgstr "Перезарядить оружие в правой руке"
+
 #~ msgid "Reload left hand weapon"
 #~ msgstr "Перезарядить оружие в левой руке"
+
 #~ msgid "Crouch/Stand up"
 #~ msgstr "Присесть/Встать"
+
 #~ msgid "Previous Base"
 #~ msgstr "Предыдущая база"
+
 #~ msgid "Next Base"
 #~ msgstr "Следующая база"
+
 #~ msgid "Personnel"
 #~ msgstr "Персонал"
+
 #~ msgid "Soldiers:"
 #~ msgstr "Солдаты:"
+
 #~ msgid "Scientists:"
 #~ msgstr "Учёные:"
+
 #~ msgid "Workers:"
 #~ msgstr "Рабочие:"
+
 #~ msgid "Medics:"
 #~ msgstr "Медики:"
+
 #~ msgid "Robots:"
 #~ msgstr "Роботы:"
+
 #~ msgid "Facilities  (used/available)"
 #~ msgstr "Помещения (используются/всего доступно)"
+
 #~ msgid "Hangars:"
 #~ msgstr "Ангары:"
+
 #~ msgid "Totals"
 #~ msgstr "Всего"
+
 #~ msgid "Bases:"
 #~ msgstr "Баз:"
+
 #~ msgid "Personnel:"
 #~ msgstr "Персонала:"
+
 #~ msgid "Hire/Unhire"
 #~ msgstr "Нанять/Уволить"
+
 #~ msgid "Tabelbala"
 #~ msgstr "Табельбала"
+
 #~ msgid "Terror attack"
 #~ msgstr "Террористическая атака"
+
 #~ msgid "Protect inhabitants."
 #~ msgstr "Защита жителей."
+
 #~ msgid "Protect the excavation site at all cost."
 #~ msgstr "Защитите место раскопок любой ценой."
+
 #~ msgid "Marina Serra"
 #~ msgstr "Марина Серра"
+
 #~ msgid "Protect civilians."
 #~ msgstr "Защита гражданского населения."
+
 #~ msgid "There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
 #~ msgstr "Появились слухи о шахте полной пришельцев. Хотя наш источник информации сомнителен, Вам необходимо её проверить."
+
 #~ msgid "Greeneville"
 #~ msgstr "Гринвилл"
+
 #~ msgid "Asyut"
 #~ msgstr "Эйсьют"
+
 #, fuzzy
 #~ msgid "Protect the military installation crew."
 #~ msgstr "Защита персонала военного укрепления."
@@ -15782,14 +15885,12 @@ msgstr "плохо"
 #~ msgstr "Успешный перехват НЛО. Доступна новая миссия."
 
 #~ msgid "The mission %s expired and %i civilian died."
-
 #~ msgid_plural "The mission %s expired and %i civilians died."
 #~ msgstr[0] "Операция %s не была проведена вовремя и %i мирный житель погиб."
 #~ msgstr[1] "Операция %s не была проведена вовремя и %i мирных жителя погибло."
 #~ msgstr[2] "Операция %s не была проведена вовремя и %i мирных жителей погибло."
 
 #~ msgid "The aliens had enough time to kill %i civilian at %s."
-
 #~ msgid_plural "The aliens had enough time to kill %i civilians at %s."
 #~ msgstr[0] "У пришельцев было достаточно времени чтоб убить %i мирного жителя в %s"
 #~ msgstr[1] "У пришельцев было достаточно времени чтоб убить %i мирных жителя в %s"

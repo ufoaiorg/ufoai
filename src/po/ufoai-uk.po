@@ -1,19 +1,3 @@
-msgid ""
-msgstr ""
-"Project-Id-Version: UFO Alien Invasion\n"
-"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 10:28+0200\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Igor Balasyuk <balasar@mail.ru>\n"
-"Language-Team:  <ufoai-developer@lists.sourceforge.net>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Poedit-Language: Ukrainian\n"
-"X-Poedit-Country: UKRAINE\n"
-"X-Poedit-Basepath: ../\n"
-
 # МАГ? (модуль автоматичної гармати)
 #, fuzzy
 msgid "Autocannon Module"
@@ -378,8 +362,12 @@ msgstr "Лікувати"
 msgid "Medikit"
 msgstr "Персональний медкомплекс"
 
-msgid "Requirement:"
+#, fuzzy
+msgid "Requirement(s):"
 msgstr "Потребує:"
+
+msgid "The Big Picture"
+msgstr ""
 
 msgid "Pre-Research Report"
 msgstr "Переддослідна доповідь"
@@ -517,8 +505,35 @@ msgstr "Розпочати"
 msgid "<1>"
 msgstr "<1>"
 
+#, fuzzy
+msgid "Quit"
+msgstr "Квіто"
+
+msgid "You will lose all your progress."
+msgstr ""
+
+#, fuzzy
+msgid "Enter the game options menu."
+msgstr "Покинути меню налаштувань."
+
+#, fuzzy
+msgid "Retry this battlescape mission."
+msgstr "Переграти цю місію"
+
+#, fuzzy
+msgid "Abort this battlescape mission."
+msgstr "Доступний дизайн графічного інтерфейсу для поля бою."
+
 msgid "Abort"
 msgstr "Припинити"
+
+#, fuzzy
+msgid "Go back to the battlescape."
+msgstr "Доступний дизайн графічного інтерфейсу для поля бою."
+
+#, fuzzy
+msgid "Back to the main menu."
+msgstr "Вихід в головне меню"
 
 msgid "Base Info"
 msgstr "Інформація про базу"
@@ -592,9 +607,6 @@ msgstr "Призначення клавіш"
 msgid "Show Keys"
 msgstr "Гарячі клавіші"
 
-msgid "Joystick speed."
-msgstr "Швидкість джойстика."
-
 msgid "Threshold:"
 msgstr "Чутливість:"
 
@@ -607,32 +619,17 @@ msgstr "Доступні засоби управління."
 msgid "Joystick or Joypad:"
 msgstr "Вибір пристрою:"
 
-msgid "Select which of your joysticks or joypads you want to use."
-msgstr "Виберіть який джойстик чи геймпад ви хочете використовувати."
-
-msgid "Enable your joystick or joypad."
-msgstr "Увімкнути джойстик чи геймпад."
-
 msgid "Enable:"
 msgstr "Увімкнути:"
 
-msgid "Enable or disable your Joystick."
-msgstr "Увімкнути/Вимкнути джойстик."
-
 msgid "Joystick Settings"
 msgstr "Налаштування джойстика"
-
-msgid "Available HUD for the battlescape mode."
-msgstr "Доступний дизайн графічного інтерфейсу для поля бою."
 
 msgid "HUD Design:"
 msgstr "Вигляд оболонки інтерфейсу:"
 
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr "Виберіть дизайн графічного інтерфейсу для поля бою."
-
-msgid "Select 'Yes' if you want more intelligent soldiers."
-msgstr "Виберіть \"Так\", якщо хочете мати більш розумних бійців."
 
 msgid "Autostand:"
 msgstr "Автовставання:"
@@ -649,7 +646,8 @@ msgstr "\"Ні\" означає, що всі ваші накази на полі
 msgid "Confirm Actions:"
 msgstr "Підтвердження дій:"
 
-msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
+#, fuzzy
+msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 msgstr "Ввімкнення цієї опції надасть вам змогу попереднього перегляду дій на полі бою, які ви мусите затвердити. Це потрібно хоча б спробувати."
 
 msgid "Choose between 0-9, higher values mean higher actor speed."
@@ -658,23 +656,14 @@ msgstr "Виберіть між 0 та 9, більше значення приш
 msgid "Actor Speed:"
 msgstr "Шв. персонажів:"
 
-msgid "Actor speed changes the speed of aliens and humans."
-msgstr "Швидкість персонажів визначає швидкість переміщення прибульців та людей."
-
 msgid "Battlescape Gameplay Settings"
 msgstr "Налаштування поля бою"
-
-msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
-msgstr "Автоматично фокусувати камеру на вибраного бійця або на супротивника, коли він видасть себе чи почне стрільбу."
 
 msgid "Center View:"
 msgstr "Фокус на об'єкті:"
 
-msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
-msgstr "Визначте, чи повинна гра автоматично центрувати камеру на персонажах на полі бою, чи ні."
-
-msgid "Enable the isometric 3D rendering mode for the battlescape."
-msgstr "Увімкнути режим ізометрії для відображення поля бою."
+msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
+msgstr "Автоматично фокусувати камеру на вибраного бійця або на супротивника, коли він видасть себе чи почне стрільбу."
 
 msgid "Isometric Mode:"
 msgstr "Режим ізометрії:"
@@ -700,9 +689,6 @@ msgstr "Стандартне мінімальне зближення камер�
 msgid "Minimum/Maximum Zoom:"
 msgstr "Мін/макс зближення:"
 
-msgid "The minimum/maximum zoom of the battlescape camera."
-msgstr "Мін/Макс зближення камери на полі бою."
-
 msgid "ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
 msgstr "УВАГА: Встановлення максимального зміщення нахилу камери понад 90 градусів переверне камеру з ніг на голову при перевищенні цієї точки."
 
@@ -712,35 +698,17 @@ msgstr "УВАГА: Встановлення мінімального зміще
 msgid "Minimum/Maximum Shift Pitch:"
 msgstr "Діапазон зміщення нахилу:"
 
-msgid "The minimum/maximum pitch shift of the battlescape camera."
-msgstr "Мін/Макс зміщення нахилу камери на полі бою."
-
-msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
-msgstr "Фактичне уповільнення переміщення камери. Встановіть його у високе значення, якщо ви хочете, щоб зупинка камери відбулась негайно, коли ви припините рух нею."
-
 msgid "Move Deceleration:"
 msgstr "Уповільнення:"
 
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
 msgstr "Уповільнення камери на полі бою. Зменшіть це значення, якщо ви хочете плавне переміщення камери або збільшіть для швидкої чи негайної зупинки переміщення камери."
 
-msgid "Actual camera rotation speed."
-msgstr "Поточна швидкість обертання камери."
-
 msgid "Rotation Speed:"
 msgstr "Шв. обертання:"
 
-msgid "The rotation speed of the battlescape camera."
-msgstr "Швидкість обертання камери на полі бою."
-
-msgid "Actual camera scroll speed."
-msgstr "Поточна швидкість переміщення камери."
-
 msgid "Scroll Speed:"
 msgstr "Шв. прокрутки:"
-
-msgid "The scroll speed of the battlescape camera."
-msgstr "Швидкість переміщення камери на полі бою."
 
 msgid "Battlescape Camera Settings"
 msgstr "Опції камери на полі бою"
@@ -751,9 +719,6 @@ msgstr "Ігрові налаштування"
 msgid "Restart the sound-engine and apply your settings."
 msgstr "Рестарт підсистеми звуку для прийняття змін."
 
-msgid "Current sample rate frequency in kHz."
-msgstr "Поточна частота дескретизації (кГц)."
-
 msgid "Audio Sample Rate:"
 msgstr "Частота дискретизації:"
 
@@ -763,29 +728,15 @@ msgstr "Частота дескретизації (кГц). Застосовуй
 msgid "Advanced Audio Options"
 msgstr "Додаткові аудіоналаштування"
 
+#, fuzzy
+msgid "Turn the menu sounds on or off."
+msgstr "Вкл/викл вогонь увідповідь"
+
 msgid "Menu Sounds:"
 msgstr "Звуки в меню:"
 
-msgid "You do not like click sounds?"
-msgstr "Вам не подобається звук кліків?"
-
-msgid "Current volume of the sound effects."
-msgstr "Поточний рівень гучності звукових ефектів."
-
 msgid "Sound Effects:"
 msgstr "Ефекти:"
-
-msgid "Do you want to hear the screams?"
-msgstr "Чи хочете ви чути викрики?"
-
-msgid "Current volume of the music."
-msgstr "Поточна гучність музики."
-
-msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
-msgstr "Не втрачайте можливості почути чудовий саундтрек UFO:AI."
-
-msgid "Do not turn me off."
-msgstr "Не вимикайте мене."
 
 msgid "Enable Audio:"
 msgstr "Увімкнути звук:"
@@ -805,17 +756,11 @@ msgstr "Перемкнути до середньої якості відео"
 msgid "Switch to low video settings"
 msgstr "Перемкнути до низької якості відео"
 
-msgid "Enable the material system."
-msgstr "Увімкнути систему матеріалів."
-
 msgid "Material System:"
 msgstr "Система матеріалів:"
 
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 msgstr "Система матеріалів  використовується для відображення текстур анімації, ефектів, таких, як обертання чи розтягування і прокручування текстур, і для маніпулювання рендерингом за допомогою застосування спеціальних властивостей матеріалів, таких як дзеркальність чи контрастність певних текстур."
-
-msgid "Enable weather effects."
-msgstr "Дозволити погодні явища."
 
 msgid "Weather Effects:"
 msgstr "Погодні явища:"
@@ -823,17 +768,11 @@ msgstr "Погодні явища:"
 msgid "Weather effects like rain or snow."
 msgstr "Погодні явища, такі як дощ чи сніг."
 
-msgid "Enable fog."
-msgstr "Увімкнути туман."
-
 msgid "Fog:"
 msgstr "Туман:"
 
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
 msgstr "Туман не відноситься тут до будь-яких погодних ефектів, але при увімкненні дальні текстури на полі бою розмиваються."
-
-msgid "Enable coronas."
-msgstr "Увімкнути ореоли."
 
 msgid "Coronas:"
 msgstr "Ореоли:"
@@ -841,20 +780,11 @@ msgstr "Ореоли:"
 msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr "Ореоли - це змінювані, округлі полігони з прозорим фоном."
 
-msgid "Enable flares."
-msgstr "Увімкнути відблиски."
-
 msgid "Flares:"
 msgstr "Відблиски:"
 
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
 msgstr "Відблиски забезпечують відображення ефектів відбивання світла. Їхня видимість розраховується в залежності від кута до поверхні, що випромінює світло."
-
-msgid "Adjust various other settings here."
-msgstr "Настройка різних інших параметрів."
-
-msgid "Current amount of ambient light reaching the earth."
-msgstr "Кількість світла. що попадає на Землю."
 
 msgid "Geo Ambient Lighting:"
 msgstr "Освітлення глобусу:"
@@ -898,9 +828,6 @@ msgstr "Відомо ще, як бампмапиг."
 msgid "Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
 msgstr "Змінити кількість дозволених апаратно опрацьовуваних динамічних джерел світла. УВАГА: Щоб ця опція працювала потрібно увімкнути динамічне освітлення."
 
-msgid "Enable real-time lighting."
-msgstr "Дозволити освітлення в реальному часі."
-
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Динамічне освітлення / К-сть джерел:"
 
@@ -909,9 +836,6 @@ msgstr "Максимально дозволена кількість апара�
 
 msgid "Light and Shadow"
 msgstr "Освітлення та тіні"
-
-msgid "Adjust various light and shadow settings here."
-msgstr "Налаштування різних параметрів освітлення та тіней."
 
 msgid "Enable post processing shader effects. ATTENTION: May require restart to take effect."
 msgstr "Дозволити використання пост-обробки шейдерних ефектів. УВАГА: Для наданя змінам чинності, можливо, потрібний рестарт."
@@ -922,14 +846,8 @@ msgstr "Пост-обробка шейдерних ефектів:"
 msgid "Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
 msgstr "Пост-обробка шейдерних ефектів, на зразок, текстур, що світяться (доступно тільки, якщо ввімкнені GLSL-шейдери)."
 
-msgid "Change the swap interval."
-msgstr "Змінити частоту вертикальної синхронізації."
-
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr "Встановіть \"0\", щоб вимкнути вертикальну синхронізацію (швидше відображення). Встановіть \"1\", щоб увімкнути вертикальну синхронізацію (якісніше зображення)."
-
-msgid "Change the amount of multisample buffers."
-msgstr "Встановити кількість мультивибіркових буферів."
 
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 msgstr "Виберіть від 0 до 4 мультивибіркових буферів. Вище значення збільшить згладжування та покращить зображення."
@@ -939,9 +857,6 @@ msgstr "Мультивибіркові буфери / Інтервал пере�
 
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
 msgstr "Мультивибіркові буфери OpenGL забезпечують механізм для згладжування усіх GL-примітивів. Інтервал мультивибіркового перемикання, визначає момент перемикання буферу. Значення \"0\" означає, що перемикання відбуватиметься негайно (ще відоме як \"вимкнення вертикальної синхронізації\")."
-
-msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
-msgstr "Увімкнути вершинні буфери для підвищення 3D-продуктивності (необхідне OpenGL-сумісне обладнання)."
 
 msgid "Vertex Buffers:"
 msgstr "Вершинні буфери:"
@@ -964,14 +879,8 @@ msgstr "OpenGL GLSL-шейдери будуть доступні, якщо ва�
 msgid "OpenGL Settings"
 msgstr "OpenGL настройки"
 
-msgid "Adjust various OpenGL settings here."
-msgstr "Налаштування різних параметрів OpenGL."
-
 msgid "Very high values are only recommended when playing in very high screen resolutions."
 msgstr "Досить високі значення доцільні для гри при високих розрішеннях."
-
-msgid "Current value."
-msgstr "Потчне значення."
 
 msgid "Anisotropy Level:"
 msgstr "Рівень анізотропії:"
@@ -979,17 +888,11 @@ msgstr "Рівень анізотропії:"
 msgid "The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 msgstr "Рівень анізотропного фільтрування. Більше значення зробить віддалені текстури більш чіткими. Високі значення доцільно використовувати для гри при високих значеннях роздільної здатності. "
 
-msgid "Enable high texture detail."
-msgstr "Увімкнути деталізацію текстур."
-
 msgid "LoD:"
 msgstr "Деталізація:"
 
 msgid "Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
 msgstr "Деталізація текстур. Увімкнення цієї опції може призвести до розмивання текстур при незначному віддаленні від них."
-
-msgid "Enable texture compression."
-msgstr "Дозволити компресію текстур."
 
 msgid "Compression:"
 msgstr "Компресія текстур:"
@@ -1045,9 +948,6 @@ msgstr "Встановити максимальний розмір та можл
 msgid "Texture Settings"
 msgstr "Налаштування текстур"
 
-msgid "Adjust various texture settings here."
-msgstr "Налаштування різних параметрів текстур."
-
 msgid "Default is to play the intro video just once at the first game start."
 msgstr "Загалом відтворення інтро-відео проходить лише при першому запуску гри."
 
@@ -1063,17 +963,8 @@ msgstr "Показувати кількість кадрів за секунду
 msgid "Show FPS:"
 msgstr "Показувати FPS:"
 
-msgid "See how many frames per second are rendered."
-msgstr "Показувати кількість кадрів за секунду."
-
 msgid "Other Display Settings"
 msgstr "Інші налаштування дисплею"
-
-msgid "Adjust other settings here."
-msgstr "Налаштування інших параметрів."
-
-msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
-msgstr "PNG і TGA це графічні формати без втрат, що дозволяє зробити ваші скриншоти в максимально можливій якості, розмір файлу буде також максимальним. PNG привабливіший, з огляду на краще стиснення і в результаті менший розмір файлу, ніж у TGA. JPG буде найкращим форматом, якщо для вас пріоритетом є найменший розмір файлу."
 
 msgid "Screenshot Format:"
 msgstr "Формат скриншоту:"
@@ -1084,9 +975,6 @@ msgstr "Формат файлу для скриншоту."
 msgid "jpeg Quality:"
 msgstr "Якість jpeg:"
 
-msgid "Here you can set the quality of jpeg screenshots."
-msgstr "Тут можна вказати якість jpeg-скриншотів."
-
 msgid "Screenshot Settings"
 msgstr "Налаштування скриншотів"
 
@@ -1096,14 +984,8 @@ msgstr "За замовчуванням натисніть F12, щоб зроб�
 msgid "Saturation:"
 msgstr "Насиченість:"
 
-msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
-msgstr "Значення гами маніпульє кольорами. Підвищене значення робить кольори більш насиченими."
-
 msgid "Gamma:"
 msgstr "Гама:"
-
-msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
-msgstr "Значення гами маніпульє кольорами. Підвищене значення робить кольори більш насиченими."
 
 msgid "Contrast:"
 msgstr "Контраст:"
@@ -1114,32 +996,20 @@ msgstr "Контраст відображає різницю між яскрав
 msgid "Brightness:"
 msgstr "Яскравість:"
 
-msgid "Brightness sets the intensity of light emitting from your screen."
-msgstr "Яскравість визначає інтенсивність свічення вашого екрану."
-
 msgid "Monitor Calibration Controls"
 msgstr "Калібрування екрану"
 
 msgid "Calibrate your display here."
 msgstr "Відкалібрувати дисплей."
 
-msgid "Stretch the screen to a ratio of 4:3."
-msgstr "Розтянути екран до пропорції 4:3."
-
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "Розтягувати екран в пропорції 4:3:"
-
-msgid "Stretches the screen with a 4:3 ratio."
-msgstr "Розтягує екран в пропорції 4:3"
 
 msgid "Play UFO:AI in fullscreen."
 msgstr "Грати в UFO:AI у повноекранному режимі."
 
 msgid "Fullscreen:"
 msgstr "На весь екран:"
-
-msgid "Play UFO:AI in fullscreen- or window-mode."
-msgstr "Грати у гру на повному екрані чи у вікні."
 
 msgid "Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
 msgstr "Перемкнути на вибране розрішення. УВАГА:  Вам може знадобитись рестарт для коректної роботи."
@@ -1165,9 +1035,6 @@ msgstr "Розрішення (x*y) в пікселях, що потрібно з
 msgid "Resolution and Display Settings"
 msgstr "Розрішення та опції дисплею"
 
-msgid "Adjust resolution and display settings here."
-msgstr "Налаштування дисплею та розрішення."
-
 msgid "Advanced"
 msgstr "Розширені"
 
@@ -1177,20 +1044,14 @@ msgstr "Загальні"
 msgid "Video Settings"
 msgstr "Налаштування відео"
 
-msgid "Enable precaching of models to have faster menus."
-msgstr "Дозволити попереднє кешування моделей для прискореного відображення меню."
+msgid "Precaching of models means having faster menus."
+msgstr "Попереднє кешування моделей призначено для прискорення відображення меню."
 
 msgid "Precache Models:"
 msgstr "Попереднє кешування моделей:"
 
-msgid "Precaching of models means having faster menus."
-msgstr "Попереднє кешування моделей призначено для прискорення відображення меню."
-
 msgid "Menu Option(s)"
 msgstr "Налаштування меню"
-
-msgid "Enable the 'Tip of the Day'."
-msgstr "Дозволити корисні поради."
 
 msgid "Show 'Tip of the Day':"
 msgstr "Показувати корисні поради:"
@@ -1198,17 +1059,11 @@ msgstr "Показувати корисні поради:"
 msgid "Enable this if you are new to UFO:AI and want to see interesting tips written by the most experienced UFO:AI players out there."
 msgstr "Увімкніть це, якщо ви новачок в  UFO:AI та хочете бачити цікаві поради найдосвідченіших гравців."
 
-msgid "Activate cursor tooltips."
-msgstr "Активувати підказки під курсором."
-
 msgid "Cursor Tooltips:"
 msgstr "Підказки під курсором:"
 
 msgid "Enable tooltips for the cursor."
 msgstr "Увімкнути підказки для курсора."
-
-msgid "Make me disappear."
-msgstr "Дай мені зникнути."
 
 msgid "Tooltips:"
 msgstr "Підказки:"
@@ -1252,14 +1107,12 @@ msgstr "Діапазон зближення камери:"
 msgid "The minimum/maximum zoom of the geoscape camera."
 msgstr "Мін/Макс зближення камери глобусу."
 
-msgid "Use the 3D geoscape. To enable this option you have to start a new campaign first."
-msgstr "Використовувати 3D-глобус. Для можливості увімкнути цю опцію спочатку потрібно розпочати нову кампанію."
-
 msgid "3D Geoscape:"
 msgstr "3D-глобус:"
 
-msgid "3D or 2D geoscape."
-msgstr "Дво- чи тривимірна глобальна карта."
+#, fuzzy
+msgid "3D or 2D geoscape. To enable this option you have to start a new campaign first."
+msgstr "Використовувати 3D-глобус. Для можливості увімкнути цю опцію спочатку потрібно розпочати нову кампанію."
 
 msgid "Geoscape Options"
 msgstr "Налаштування глобальної карти"
@@ -1269,12 +1122,6 @@ msgstr "Перелік доступних мов перекладу. УВАГА:
 
 msgid "Language Settings"
 msgstr "Вибір мови"
-
-msgid "Change your name."
-msgstr "Змінити ім'я."
-
-msgid "Your name."
-msgstr "Ваше ім'я."
 
 msgid "Overall Game Settings"
 msgstr "Загальноігрові налаштування"
@@ -1662,6 +1509,9 @@ msgstr "Титри"
 msgid "Tutorials"
 msgstr "Навчання"
 
+msgid "Choose between Campaign or Skirmish mode."
+msgstr ""
+
 msgid "Single-player"
 msgstr "Одиночна гра"
 
@@ -1972,7 +1822,8 @@ msgstr "Вбито ворогів:"
 msgid "Missions Performed:"
 msgstr "Пройдено місій:"
 
-msgid "Rename your employee"
+#, fuzzy
+msgid "Rename employee"
 msgstr "Перейменувати працівника"
 
 msgid "Hire - Right click to remove"
@@ -2144,9 +1995,6 @@ msgstr "Показати кордони держав"
 msgid "Create installation"
 msgstr "Нова споруда"
 
-msgid "Open UFOpaedia"
-msgstr "Відкрити НЛО-довідник"
-
 msgid "Organisation statistics"
 msgstr "Статистика діяльності"
 
@@ -2255,6 +2103,21 @@ msgstr "Рюкзак"
 msgid "Equip this soldier"
 msgstr "Екіпірувати цього бійця"
 
+msgid "Do not quit."
+msgstr ""
+
+msgid "Quit anyway"
+msgstr ""
+
+msgid "Exit current campaign and return to main menu."
+msgstr ""
+
+msgid "You will lose all your campaign progress."
+msgstr ""
+
+msgid "Exit Campaign Confirmation"
+msgstr ""
+
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Дякуємо, що ви грали в UFO:Alien Invasion"
 
@@ -2263,9 +2126,6 @@ msgstr "Клацніть для продовження"
 
 msgid "You've lost the game"
 msgstr "Ви зазнали поразки"
-
-msgid "Reload the last automatically saved campaign state"
-msgstr "Завантажити останній, автоматично збережений, стан кампанії"
 
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr "Ви впевнені, що хочете перезавантажити останній автоматично збережений стан кампанії?"
@@ -2279,10 +2139,15 @@ msgstr "Вихід"
 msgid "Options"
 msgstr "Налаштування"
 
+#, fuzzy
+msgid "Leave this menu and continue playing."
+msgstr "Завантажити останню збережену чи продовжити"
+
 msgid "Back"
 msgstr "Назад"
 
-msgid "Load last saved game or continue playing"
+#, fuzzy
+msgid "Load last saved game or continue playing."
 msgstr "Завантажити останню збережену чи продовжити"
 
 msgid "Continue"
@@ -2290,6 +2155,9 @@ msgstr "До гри"
 
 msgid "Load"
 msgstr "Завантажити"
+
+msgid "Start a new singleplayer campaign."
+msgstr ""
 
 msgid "Start campaign"
 msgstr "Розпочати"
@@ -3012,7 +2880,8 @@ msgstr ""
 msgid "intro_sentence1"
 msgstr ""
 
-msgid "Copyright 2004-2010 by UFO: AI Team"
+#, fuzzy
+msgid "Copyright 2004-2011 by UFO: AI Team"
 msgstr "Copyright 2004-2010 by UFO: AI Team"
 
 msgid "http://ufoai.sf.net"
@@ -8074,6 +7943,10 @@ msgstr "Об'єднана Америка"
 msgid "The Revolutionary Countries"
 msgstr "Революційні країни"
 
+#, fuzzy
+msgid "missions"
+msgstr "Операції"
+
 msgid "ufo_activity"
 msgstr "активність НЛО"
 
@@ -8173,83 +8046,35 @@ msgstr "Медаль"
 msgid "Cross"
 msgstr "Хрест"
 
+msgid "Training Zone: Alpha."
+msgstr "Навчальна зона: Альфа."
+
+msgid "Rescue mission."
+msgstr "Операція порятунку."
+
 msgid "Base is under attack."
 msgstr "Базу атаковано."
 
 msgid "An alien base."
 msgstr "База прибульців."
 
-msgid "Rescue mission."
-msgstr "Операція порятунку."
-
-msgid "UFO Crashsite."
-msgstr "Місце аварії НЛО."
-
-msgid "Training Zone: Alpha."
-msgstr "Навчальна зона: Альфа."
-
-msgid "UFO landed in hills area."
-msgstr "НЛО приземлено в районі пагорбів."
-
 msgid "Wilderness terror mission."
 msgstr "Контр-терористична місія."
-
-msgid "A fuel depot the aliens try to destroy."
-msgstr "Прибульці намагаються знищити паливний склад."
-
-msgid "Big city"
-msgstr "Велике місто"
-
-msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr "Лабораторія, що вивчає знайдені обломки НЛО."
-
-msgid "A place where people come to relax and mingle."
-msgstr "Місце для відпочинку та спілкування."
-
-msgid "A Bomber has landed in the middle of a city."
-msgstr "Бомбардувальник приземлився в центрі міста."
-
-msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr "Сховище, збудоване людьми під час великої катастрофи. Деякі вибухозахищені двері всередині можуть бути зачинені."
-
-msgid "A small settlement in winter."
-msgstr "Невелике поселення в зимовий період."
-
-msgid "An alien Harvester has crashed in the wastelands."
-msgstr "Ворожий Пожинач, що розбився на пустирі."
-
-msgid "A suburb that has received a visit from a Harvester."
-msgstr "Передмістя, яке відвідав Пожинач."
-
-msgid "A suburb that has been visited by an UFO."
-msgstr "Передмістя, які відвідало НЛО."
-
-msgid "A luxurious vacation resort."
-msgstr "Розкішний курорт."
-
-msgid "An office complex on the outskirts of town."
-msgstr "Офісний комплекс на околиці міста."
-
-msgid "A local harbour."
-msgstr "Місцевий порт."
-
-msgid "An office complex under construction."
-msgstr "Зведення офісного комплексу."
-
-msgid "A small UFO has crashed in this mining region."
-msgstr "Маленький НЛО розбився у шахтарському регіоні."
-
-msgid "A military convoy has caught the eye of the aliens."
-msgstr "Військова колона виявлена загарбниками."
 
 msgid "A suburban district."
 msgstr "Приміський округ."
 
-msgid "An office complex in the centre of town."
-msgstr "Офісний комплекс в центрі містечка."
-
 msgid "A subway station in a suburban part of town."
 msgstr "Станція метро у передмісті."
+
+msgid "A crashed Scout UFO."
+msgstr "Місце аварії НЛО-розвідника."
+
+msgid "A rather old-fashioned suburban district."
+msgstr "Досить старомодний приміський район."
+
+msgid "A luxurious vacation resort."
+msgstr "Розкішний курорт."
 
 msgid "Underground pipe construction site."
 msgstr "Будмайданчик підземного трубопроводу."
@@ -8257,20 +8082,23 @@ msgstr "Будмайданчик підземного трубопроводу."
 msgid "An urban district in an oriental region."
 msgstr "Міський район близькосхідного регіону."
 
+msgid "An office complex on the outskirts of town."
+msgstr "Офісний комплекс на околиці міста."
+
+msgid "An old mine."
+msgstr "Закинута копальня."
+
+msgid "A small settlement in winter."
+msgstr "Невелике поселення в зимовий період."
+
+msgid "A local harbour."
+msgstr "Місцевий порт."
+
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr "Склад \"Брама\", де зберігається секретна технологія."
 
-msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr "Місце заправки транспорту."
-
-msgid "A small industry city area."
-msgstr "Невеличка міська промислова зона."
-
-msgid "A small neighbourhood in a warm urban region."
-msgstr "Невелике передмістя у теплому населенему регіоні."
-
-msgid "A rather old-fashioned suburban district."
-msgstr "Досить старомодний приміський район."
+msgid "A fuel depot the aliens try to destroy."
+msgstr "Прибульці намагаються знищити паливний склад."
 
 msgid "A ferry."
 msgstr "Пором."
@@ -8278,14 +8106,26 @@ msgstr "Пором."
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Садиба оточена полями та хлівами. НЛО приземлився на одне з таких полів."
 
-msgid "A crashed Scout UFO."
-msgstr "Місце аварії НЛО-розвідника."
+msgid "An excavation site that has fallen under alien attack."
+msgstr "Кар'єр, знищений атакою прибульців."
 
-msgid "A small estate in the mountains."
-msgstr "Невеликий маєток у горах."
+msgid "An estate owned by rich and influential people."
+msgstr "Маєток багатих та впливових людей."
 
-msgid "A tropical area where several suspected criminals have made their homes."
-msgstr "Тропічний регіон з домами кількох підозрюваних у злочинах."
+msgid "A small village in England."
+msgstr "Невеличке село в Англії."
+
+msgid "A hydroelectricity dam that is threatened by the alien invaders."
+msgstr "Гребля гідроелектростації, якій загрожують інопланетні загарбники."
+
+msgid "A small industry city area."
+msgstr "Невеличка міська промислова зона."
+
+msgid "A bunker used in a previous conflict."
+msgstr "Бункер, що використовувався у попередньому конфлікті."
+
+msgid "An office complex in the centre of town."
+msgstr "Офісний комплекс в центрі містечка."
 
 msgid "A stadium used for various recreational events."
 msgstr "Стадіон, що використовується для різних розважальних заходів."
@@ -8293,20 +8133,11 @@ msgstr "Стадіон, що використовується для різни�
 msgid "A small industrial area."
 msgstr "Невеличка промислова зона."
 
-msgid "A classic eastern suburban area."
-msgstr "Класичне східне передмістя."
+msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+msgstr "Сховище, збудоване людьми під час великої катастрофи. Деякі вибухозахищені двері всередині можуть бути зачинені."
 
-msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr "Гребля гідроелектростації, якій загрожують інопланетні загарбники."
-
-msgid "A bunker used in a previous conflict."
-msgstr "Бункер, що використовувався у попередньому конфлікті."
-
-msgid "An industrial area, used for loading and unloading goods."
-msgstr "Промисловий вузол для роботи з вантажами."
-
-msgid "An old mine."
-msgstr "Закинута копальня."
+msgid "A military convoy has caught the eye of the aliens."
+msgstr "Військова колона виявлена загарбниками."
 
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Тип громадського центру із додатковими виробничими потужностями, відомий як супермаркет."
@@ -8314,47 +8145,38 @@ msgstr "Тип громадського центру із додатковими
 msgid "A small office in a mountainous region."
 msgstr "Невеличкий офіс у гірській місцевості."
 
-msgid "A small village in England."
-msgstr "Невеличке село в Англії."
+msgid "A place where citizens come to replenish their vehicles' fuel supply."
+msgstr "Місце заправки транспорту."
 
-msgid "An estate owned by rich and influential people."
-msgstr "Маєток багатих та впливових людей."
+msgid "A small estate in the mountains."
+msgstr "Невеликий маєток у горах."
 
-msgid "An excavation site that has fallen under alien attack."
-msgstr "Кар'єр, знищений атакою прибульців."
+msgid "A tropical area where several suspected criminals have made their homes."
+msgstr "Тропічний регіон з домами кількох підозрюваних у злочинах."
 
-msgid "Some houses in the desert."
-msgstr "Кілька будинків у пустелі."
+msgid "An office complex under construction."
+msgstr "Зведення офісного комплексу."
 
-msgid "UFO crashed in this sparsely populated forest region."
-msgstr "НЛО розбився у цьому малонаселеному лісовому регіоні."
+msgid "A place where people come to relax and mingle."
+msgstr "Місце для відпочинку та спілкування."
 
-msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr "Поява прибульців у цьому малонаселеному лісистому регіоні не обіцяє нічого доброго."
-
-msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr "Затишний район на околиці населеного пункту."
-
-msgid "A cleared stretch of land in the middle of the jungle."
-msgstr "Галявина посеред джунглів."
-
-msgid "A river runs through this piece of jungle."
-msgstr "Річка протікає через цю частину джунглів."
+msgid "A small neighbourhood in a warm urban region."
+msgstr "Невелике передмістя у теплому населенему регіоні."
 
 msgid "Cemetery terror mission."
 msgstr "Терор-місія на кладовищі."
 
-msgid "An industrial compound."
-msgstr "Промислові сполучення."
+msgid "A peaceful neighbourhood on the outskirts of a centre of population."
+msgstr "Затишний район на околиці населеного пункту."
 
-msgid "An underpopulated area in a cold region."
-msgstr "Малозаселена область у холодному регіоні."
+msgid "UFO Crashsite."
+msgstr "Місце аварії НЛО."
 
-msgid "An industrial area in a cold region."
-msgstr "Індустріальна область у холодному регіоні."
+msgid "A river runs through this piece of jungle."
+msgstr "Річка протікає через цю частину джунглів."
 
-msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
-msgstr "Сільськогосподарська ферма. Охоплює значну територію, але декілька перешкод зменшують оглядовість."
+msgid "A cleared stretch of land in the middle of the jungle."
+msgstr "Галявина посеред джунглів."
 
 msgid "Crashed UFO in oriental suburban district."
 msgstr "Підбитий НЛО у передмісті на Близькому сході."
@@ -8362,8 +8184,56 @@ msgstr "Підбитий НЛО у передмісті на Близькому 
 msgid "A suburban district of an oriental area."
 msgstr "Приміський район близькосхідного регіону."
 
+msgid "A laboratory where they examined found UFO wreck tiles."
+msgstr "Лабораторія, що вивчає знайдені обломки НЛО."
+
+msgid "A classic eastern suburban area."
+msgstr "Класичне східне передмістя."
+
 msgid "Industrial theme."
 msgstr "Промислова територія."
+
+msgid "UFO landed in hills area."
+msgstr "НЛО приземлено в районі пагорбів."
+
+msgid "An underpopulated area in a cold region."
+msgstr "Малозаселена область у холодному регіоні."
+
+msgid "An industrial compound."
+msgstr "Промислові сполучення."
+
+msgid "An industrial area in a cold region."
+msgstr "Індустріальна область у холодному регіоні."
+
+msgid "UFO crashed in this sparsely populated forest region."
+msgstr "НЛО розбився у цьому малонаселеному лісовому регіоні."
+
+msgid "Aliens are up to no good in this sparsely populated forest region."
+msgstr "Поява прибульців у цьому малонаселеному лісистому регіоні не обіцяє нічого доброго."
+
+msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+msgstr "Сільськогосподарська ферма. Охоплює значну територію, але декілька перешкод зменшують оглядовість."
+
+msgid "An alien Harvester has crashed in the wastelands."
+msgstr "Ворожий Пожинач, що розбився на пустирі."
+
+msgid "Some houses in the desert."
+msgstr "Кілька будинків у пустелі."
+
+msgid "Big city"
+msgstr "Велике місто"
+
+msgid "A small UFO has crashed in this mining region."
+msgstr "Маленький НЛО розбився у шахтарському регіоні."
+
+msgid "A Bomber has landed in the middle of a city."
+msgstr "Бомбардувальник приземлився в центрі міста."
+
+msgid "A suburb that has been visited by an UFO."
+msgstr "Передмістя, які відвідало НЛО."
+
+msgid "A suburb that has received a visit from a Harvester."
+msgstr "Передмістя, яке відвідав Пожинач."
 
 msgid "No language"
 msgstr "Безіменна"
@@ -10386,7 +10256,8 @@ msgstr "Жар-птиця Д"
 msgid "Firebird-class Dropship"
 msgstr "Десантне авіасудно класу \"Жар-птиця\""
 
-msgid "Village big"
+#, fuzzy
+msgid "Village large"
 msgstr "Сільський великий"
 
 msgid "Village recreational"
@@ -10422,7 +10293,8 @@ msgstr "Доставка"
 msgid "Rescue mission"
 msgstr "Операція порятунку"
 
-msgid "Oriental big"
+#, fuzzy
+msgid "Oriental large"
 msgstr "Східна велика"
 
 msgid "Oriental medium"
@@ -11106,6 +10978,10 @@ msgstr "Ваше десантне судно задалеко від зони в
 #, c-format
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "Базу '%s' атакують! Які наші дії ?"
+
+#, fuzzy, c-format
+msgid "Base '%s' is under attack!"
+msgstr "Базу атаковано"
 
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
@@ -12191,6 +12067,10 @@ msgstr "Підбитий авіатранспорт"
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
+
+#, fuzzy
+msgid "base_attack"
+msgstr "Напад на базу"
 
 msgid "ufo_attacking"
 msgstr "Атака НЛО"
@@ -13596,6 +13476,203 @@ msgstr "Задовільно"
 msgid "Poor"
 msgstr "Погано"
 
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
+"POT-Creation-Date: 2011-07-30 09:00+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Igor Balasyuk <balasar@mail.ru>\n"
+"Language-Team:  <ufoai-developer@lists.sourceforge.net>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Language: Ukrainian\n"
+"X-Poedit-Country: UKRAINE\n"
+"X-Poedit-Basepath: ../\n"
+
+#~ msgid "Joystick speed."
+#~ msgstr "Швидкість джойстика."
+
+#~ msgid "Select which of your joysticks or joypads you want to use."
+#~ msgstr "Виберіть який джойстик чи геймпад ви хочете використовувати."
+
+#~ msgid "Enable your joystick or joypad."
+#~ msgstr "Увімкнути джойстик чи геймпад."
+
+#~ msgid "Enable or disable your Joystick."
+#~ msgstr "Увімкнути/Вимкнути джойстик."
+
+#~ msgid "Select 'Yes' if you want more intelligent soldiers."
+#~ msgstr "Виберіть \"Так\", якщо хочете мати більш розумних бійців."
+
+#~ msgid "Actor speed changes the speed of aliens and humans."
+#~ msgstr "Швидкість персонажів визначає швидкість переміщення прибульців та людей."
+
+#~ msgid "Select whether the game should automatically center the camera view at the actors on the battlescape or not."
+#~ msgstr "Визначте, чи повинна гра автоматично центрувати камеру на персонажах на полі бою, чи ні."
+
+#~ msgid "Enable the isometric 3D rendering mode for the battlescape."
+#~ msgstr "Увімкнути режим ізометрії для відображення поля бою."
+
+#~ msgid "The minimum/maximum zoom of the battlescape camera."
+#~ msgstr "Мін/Макс зближення камери на полі бою."
+
+#~ msgid "The minimum/maximum pitch shift of the battlescape camera."
+#~ msgstr "Мін/Макс зміщення нахилу камери на полі бою."
+
+#~ msgid "Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
+#~ msgstr "Фактичне уповільнення переміщення камери. Встановіть його у високе значення, якщо ви хочете, щоб зупинка камери відбулась негайно, коли ви припините рух нею."
+
+#~ msgid "Actual camera rotation speed."
+#~ msgstr "Поточна швидкість обертання камери."
+
+#~ msgid "The rotation speed of the battlescape camera."
+#~ msgstr "Швидкість обертання камери на полі бою."
+
+#~ msgid "Actual camera scroll speed."
+#~ msgstr "Поточна швидкість переміщення камери."
+
+#~ msgid "The scroll speed of the battlescape camera."
+#~ msgstr "Швидкість переміщення камери на полі бою."
+
+#~ msgid "Current sample rate frequency in kHz."
+#~ msgstr "Поточна частота дескретизації (кГц)."
+
+#~ msgid "You do not like click sounds?"
+#~ msgstr "Вам не подобається звук кліків?"
+
+#~ msgid "Current volume of the sound effects."
+#~ msgstr "Поточний рівень гучності звукових ефектів."
+
+#~ msgid "Do you want to hear the screams?"
+#~ msgstr "Чи хочете ви чути викрики?"
+
+#~ msgid "Current volume of the music."
+#~ msgstr "Поточна гучність музики."
+
+#~ msgid "Do not miss the phantastic soundtrack UFO:AI has to offer."
+#~ msgstr "Не втрачайте можливості почути чудовий саундтрек UFO:AI."
+
+#~ msgid "Do not turn me off."
+#~ msgstr "Не вимикайте мене."
+
+#~ msgid "Enable the material system."
+#~ msgstr "Увімкнути систему матеріалів."
+
+#~ msgid "Enable weather effects."
+#~ msgstr "Дозволити погодні явища."
+
+#~ msgid "Enable fog."
+#~ msgstr "Увімкнути туман."
+
+#~ msgid "Enable coronas."
+#~ msgstr "Увімкнути ореоли."
+
+#~ msgid "Enable flares."
+#~ msgstr "Увімкнути відблиски."
+
+#~ msgid "Adjust various other settings here."
+#~ msgstr "Настройка різних інших параметрів."
+
+#~ msgid "Current amount of ambient light reaching the earth."
+#~ msgstr "Кількість світла. що попадає на Землю."
+
+#~ msgid "Enable real-time lighting."
+#~ msgstr "Дозволити освітлення в реальному часі."
+
+#~ msgid "Adjust various light and shadow settings here."
+#~ msgstr "Налаштування різних параметрів освітлення та тіней."
+
+#~ msgid "Change the swap interval."
+#~ msgstr "Змінити частоту вертикальної синхронізації."
+
+#~ msgid "Change the amount of multisample buffers."
+#~ msgstr "Встановити кількість мультивибіркових буферів."
+
+#~ msgid "Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
+#~ msgstr "Увімкнути вершинні буфери для підвищення 3D-продуктивності (необхідне OpenGL-сумісне обладнання)."
+
+#~ msgid "Adjust various OpenGL settings here."
+#~ msgstr "Налаштування різних параметрів OpenGL."
+
+#~ msgid "Current value."
+#~ msgstr "Потчне значення."
+
+#~ msgid "Enable high texture detail."
+#~ msgstr "Увімкнути деталізацію текстур."
+
+#~ msgid "Enable texture compression."
+#~ msgstr "Дозволити компресію текстур."
+
+#~ msgid "Adjust various texture settings here."
+#~ msgstr "Налаштування різних параметрів текстур."
+
+#~ msgid "See how many frames per second are rendered."
+#~ msgstr "Показувати кількість кадрів за секунду."
+
+#~ msgid "Adjust other settings here."
+#~ msgstr "Налаштування інших параметрів."
+
+#~ msgid "png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
+#~ msgstr "PNG і TGA це графічні формати без втрат, що дозволяє зробити ваші скриншоти в максимально можливій якості, розмір файлу буде також максимальним. PNG привабливіший, з огляду на краще стиснення і в результаті менший розмір файлу, ніж у TGA. JPG буде найкращим форматом, якщо для вас пріоритетом є найменший розмір файлу."
+
+#~ msgid "Here you can set the quality of jpeg screenshots."
+#~ msgstr "Тут можна вказати якість jpeg-скриншотів."
+
+#~ msgid "The saturation value manipulates the colors. Increased saturation means basically more intense colors."
+#~ msgstr "Значення гами маніпульє кольорами. Підвищене значення робить кольори більш насиченими."
+
+#~ msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
+#~ msgstr "Значення гами маніпульє кольорами. Підвищене значення робить кольори більш насиченими."
+
+#~ msgid "Brightness sets the intensity of light emitting from your screen."
+#~ msgstr "Яскравість визначає інтенсивність свічення вашого екрану."
+
+#~ msgid "Stretch the screen to a ratio of 4:3."
+#~ msgstr "Розтянути екран до пропорції 4:3."
+
+#~ msgid "Stretches the screen with a 4:3 ratio."
+#~ msgstr "Розтягує екран в пропорції 4:3"
+
+#~ msgid "Play UFO:AI in fullscreen- or window-mode."
+#~ msgstr "Грати у гру на повному екрані чи у вікні."
+
+#~ msgid "Adjust resolution and display settings here."
+#~ msgstr "Налаштування дисплею та розрішення."
+
+#~ msgid "Enable precaching of models to have faster menus."
+#~ msgstr "Дозволити попереднє кешування моделей для прискореного відображення меню."
+
+#~ msgid "Enable the 'Tip of the Day'."
+#~ msgstr "Дозволити корисні поради."
+
+#~ msgid "Activate cursor tooltips."
+#~ msgstr "Активувати підказки під курсором."
+
+#~ msgid "Make me disappear."
+#~ msgstr "Дай мені зникнути."
+
+#~ msgid "3D or 2D geoscape."
+#~ msgstr "Дво- чи тривимірна глобальна карта."
+
+#~ msgid "Change your name."
+#~ msgstr "Змінити ім'я."
+
+#~ msgid "Your name."
+#~ msgstr "Ваше ім'я."
+
+#~ msgid "Open UFOpaedia"
+#~ msgstr "Відкрити НЛО-довідник"
+
+#~ msgid "Reload the last automatically saved campaign state"
+#~ msgstr "Завантажити останній, автоматично збережений, стан кампанії"
+
+#~ msgid "An industrial area, used for loading and unloading goods."
+#~ msgstr "Промисловий вузол для роботи з вантажами."
+
 #~ msgid "Charlotte Amalie"
 #~ msgstr "Шарлот-Амелі"
 
@@ -13721,8 +13798,7 @@ msgstr "Погано"
 #~ msgstr "Максимум команд для цієї карти"
 
 #~ msgid "Don't be shy and try the Alternative HUD."
-#~ msgstr ""
-#~ "Не соромтесь спробувати альтернативний дизайн графічного інтерфейсу."
+#~ msgstr "Не соромтесь спробувати альтернативний дизайн графічного інтерфейсу."
 
 #~ msgid "Select whether you want to play @ day- or nighttime."
 #~ msgstr "Виберіть у яку пору доби ви хочете грати."
@@ -13778,18 +13854,11 @@ msgstr "Погано"
 #~ msgid "Realtime lightning of the 3D world in UFO:AI."
 #~ msgstr "Освітлення в реальному часі тривимірного простору в UFO:AI."
 
-#~ msgid ""
-#~ "Enable real-time lightning. ATTENTION: May require restart to take effect."
-#~ msgstr ""
-#~ "Увімкнути освітлення в реальному часі. УВАГА: Це може потребувати "
-#~ "рестарту гри."
+#~ msgid "Enable real-time lightning. ATTENTION: May require restart to take effect."
+#~ msgstr "Увімкнути освітлення в реальному часі. УВАГА: Це може потребувати рестарту гри."
 
-#~ msgid ""
-#~ "OpenGL multisample buffers provide a mechanism to antialias all GL "
-#~ "primitives. (OpenGL core since v1.3)."
-#~ msgstr ""
-#~ "Мульти вибіркові OpenGL-буфери надають змогу згладжувати усі GL-"
-#~ "примітиви. (Введено у OpenGL версії  1.3)."
+#~ msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. (OpenGL core since v1.3)."
+#~ msgstr "Мульти вибіркові OpenGL-буфери надають змогу згладжувати усі GL-примітиви. (Введено у OpenGL версії  1.3)."
 
 #~ msgid "Swap Interval:"
 #~ msgstr "Вертикальна синхронізація:"
@@ -13803,19 +13872,10 @@ msgstr "Погано"
 #~ msgid "This bar represents the current brightness value."
 #~ msgstr "Ця панель відображає поточне значення яскравості."
 
-#~ msgid ""
-#~ "Lightmaps are scaled using lumels (lumination elements). The smaller the "
-#~ "lumels & the more of them on the lightmap, the higher the resolution and "
-#~ "visual quality, at the price of performance."
-#~ msgstr ""
-#~ "Карти освітлення масштабуються за допомогою \"люмелів\" (елементів "
-#~ "експозиції). Зменшення розмірів та збільшення кількості люмелів на карті "
-#~ "освітлення підвищує розрішення та якість зображення, але знижує "
-#~ "продуктивність."
+#~ msgid "Lightmaps are scaled using lumels (lumination elements). The smaller the lumels & the more of them on the lightmap, the higher the resolution and visual quality, at the price of performance."
+#~ msgstr "Карти освітлення масштабуються за допомогою \"люмелів\" (елементів експозиції). Зменшення розмірів та збільшення кількості люмелів на карті освітлення підвищує розрішення та якість зображення, але знижує продуктивність."
 
-#~ msgid ""
-#~ "Increase the number of lumels here to improve the lightmap rendering "
-#~ "quality."
+#~ msgid "Increase the number of lumels here to improve the lightmap rendering quality."
 #~ msgstr "Збільшити число люмелів для покращення відображення освітленості."
 
 #~ msgid "Sound is the thing that comes out of your speakers or earphones."
@@ -13842,17 +13902,13 @@ msgstr "Погано"
 #~ msgid "Everything that you can find nowhere else."
 #~ msgstr "Все, що ви не знайдете більш ніде."
 
-#~ msgid ""
-#~ "Configure input devices, battlescape camera and battlescape gameplay "
-#~ "settings."
+#~ msgid "Configure input devices, battlescape camera and battlescape gameplay settings."
 #~ msgstr "Настроїти пристрій введення, поле бою та камеру на ньому. "
 
 #~ msgid "Camera-Gameplay-Input Settings"
 #~ msgstr "Налаштування ігрового процесу"
 
-#~ msgid ""
-#~ "The camera is the thing you move around all the time and that makes you "
-#~ "see."
+#~ msgid "The camera is the thing you move around all the time and that makes you see."
 #~ msgstr "Камера —  це те, що дозволяє вам спостерігати за всім навколо."
 
 #~ msgid "The actual camera move acceleration."
@@ -13902,8 +13958,7 @@ msgstr "Погано"
 #~ "\n"
 #~ "Hire workers."
 #~ msgstr ""
-#~ "Ви не можете створити завдання на виробництво без робітників, найнятих на "
-#~ "цій базі.\n"
+#~ "Ви не можете створити завдання на виробництво без робітників, найнятих на цій базі.\n"
 #~ "\n"
 #~ "Найміть робітників."
 
@@ -13928,10 +13983,13 @@ msgstr "Погано"
 # КАЮТКОМПАНІЯ ?
 #~ msgid "Team Room"
 #~ msgstr "Кімната відпочинку"
+
 #~ msgid "Upgrade - Antimatter engines"
 #~ msgstr "Удосконалення - Двигун на антиматеррії "
+
 #~ msgid "craft_upgrade_am_engines_pre_txt"
 #~ msgstr "Попередні відомості про дослідження відсутні"
+
 #~ msgid "b_teamroom_txt"
 #~ msgstr ""
 #~ "Blueprints -- Team Room\n"
@@ -13950,53 +14008,28 @@ msgstr "Погано"
 #~ "\n"
 #~ "Overview\n"
 #~ "\n"
-#~ "It is painfully clear that soldiers during wartime lead highly stressful "
-#~ "lives. In order to maintain morale they need a place to unwind and "
-#~ "interact in a rank-free environment. We have sought to provide this kind "
-#~ "of R&R in the form of the Team Room facility.\n"
+#~ "It is painfully clear that soldiers during wartime lead highly stressful lives. In order to maintain morale they need a place to unwind and interact in a rank-free environment. We have sought to provide this kind of R&R in the form of the Team Room facility.\n"
 #~ "\n"
-#~ "It is equipped with a variety of entertainments, from sports tables to "
-#~ "high-tech game consoles. It also features a modest wall-mounted cinema "
-#~ "display for communal movie screenings. There are vending machines with "
-#~ "alcoholic and non-alcoholic beverages, and a separate sitting room for "
-#~ "our soldiers to achieve some amount of privacy from the closeness of base "
-#~ "living. To this end the sitting room can be locked from the inside for up "
-#~ "to 30 minutes per day by each team member. The lock may be overridden "
-#~ "from the Control Centre or by a present Command Centre or medical officer "
-#~ "in case of an emergency.\n"
+#~ "It is equipped with a variety of entertainments, from sports tables to high-tech game consoles. It also features a modest wall-mounted cinema display for communal movie screenings. There are vending machines with alcoholic and non-alcoholic beverages, and a separate sitting room for our soldiers to achieve some amount of privacy from the closeness of base living. To this end the sitting room can be locked from the inside for up to 30 minutes per day by each team member. The lock may be overridden from the Control Centre or by a present Command Centre or medical officer in case of an emergency.\n"
 #~ "\n"
-#~ "All our equipment requires maintenance, and I would argue that our "
-#~ "soldiers require the most maintenance of all. The Team Room is one of the "
-#~ "best ways to keep them mentally healthy and in fighting trim.\n"
+#~ "All our equipment requires maintenance, and I would argue that our soldiers require the most maintenance of all. The Team Room is one of the best ways to keep them mentally healthy and in fighting trim.\n"
 #~ "\n"
-#~ "Unless it has access to an operational Power Plant, the Team Room will be "
-#~ "shut down to avoid non-vital power consumption.\n"
+#~ "Unless it has access to an operational Power Plant, the Team Room will be shut down to avoid non-vital power consumption.\n"
 #~ "\n"
 #~ "\n"
 #~ "Recommended Doctrine\n"
 #~ "\n"
-#~ "The Team Room is an important tool in maintaining good morale amongst our "
-#~ "soldiers and should be built in any base that houses a combat team. It "
-#~ "provides them with various vital means of stress relief, which will ease "
-#~ "the stressful effects of continued combat, life-threatening situations, "
-#~ "and the near-certain death of team members in the field. High morale is "
-#~ "essential for our battlefield performance and must be maintained at all "
-#~ "costs.\n"
+#~ "The Team Room is an important tool in maintaining good morale amongst our soldiers and should be built in any base that houses a combat team. It provides them with various vital means of stress relief, which will ease the stressful effects of continued combat, life-threatening situations, and the near-certain death of team members in the field. High morale is essential for our battlefield performance and must be maintained at all costs.\n"
 #~ "\n"
-#~ "However, I must stress that the Team Room is not a replacement for base "
-#~ "leave. Our soldiers will still need to be allowed off-base from time to "
-#~ "time in order to maintain their connection with the outside world and "
-#~ "their sanity.\n"
+#~ "However, I must stress that the Team Room is not a replacement for base leave. Our soldiers will still need to be allowed off-base from time to time in order to maintain their connection with the outside world and their sanity.\n"
 #~ "\n"
-#~ "For the purposes of a base attack, the Team Room is an extremely low-risk "
-#~ "installation with little to no strategic value. If encountered by "
-#~ "extraterrestrial attackers, it will almost certainly be bypassed "
-#~ "altogether in favour of more sensitive installations.\n"
+#~ "For the purposes of a base attack, the Team Room is an extremely low-risk installation with little to no strategic value. If encountered by extraterrestrial attackers, it will almost certainly be bypassed altogether in favour of more sensitive installations.\n"
 #~ "\n"
 #~ "\n"
 #~ "Addenda\n"
 #~ "\n"
 #~ "None."
+
 #~ msgid "b_small_ufo_hangar_txt"
 #~ msgstr ""
 #~ "Blueprints -- Small UFO Hangar\n"
@@ -14009,66 +14042,34 @@ msgstr "Погано"
 #~ "\n"
 #~ "Filed: 19 March 2084\n"
 #~ "\n"
-#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
-#~ "Operations Command\n"
+#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 #~ "\n"
 #~ "\n"
 #~ "\n"
 #~ "Overview\n"
 #~ "\n"
-#~ "These are the finished plans for our new UFO storage hangars. They are "
-#~ "designed to house one recovered UFO for disassembly, and will be marked "
-#~ "as occupied until the craft has been fully broken down into its component "
-#~ "parts and the parts transferred to base Storage. UFOs require significant "
-#~ "disassembly before they will fit inside Storage, so they must be "
-#~ "dismantled before we can begin to store or use the recovered parts. Doing "
-#~ "this job on-site is highly inadvisable. It could be hazardous to the "
-#~ "health of our scientists and engineers, it might attract looters, and it "
-#~ "would without doubt severely compromise the safety and secrecy of our "
-#~ "operation.\n"
+#~ "These are the finished plans for our new UFO storage hangars. They are designed to house one recovered UFO for disassembly, and will be marked as occupied until the craft has been fully broken down into its component parts and the parts transferred to base Storage. UFOs require significant disassembly before they will fit inside Storage, so they must be dismantled before we can begin to store or use the recovered parts. Doing this job on-site is highly inadvisable. It could be hazardous to the health of our scientists and engineers, it might attract looters, and it would without doubt severely compromise the safety and secrecy of our operation.\n"
 #~ "\n"
-#~ "The importance of studying captured UFOs should be more than obvious. It "
-#~ "will give us insight into the workings and vulnerabilities of alien "
-#~ "craft, and it may result in the discovery of new techniques to improve "
-#~ "our own craft's effectiveness. Once a recovered UFO is secured for "
-#~ "transport, it is carried to a PHALANX base by means of transport "
-#~ "helicopters. Salvage operations are handled by local UN forces to relieve "
-#~ "pressure on our limited resources.\n"
+#~ "The importance of studying captured UFOs should be more than obvious. It will give us insight into the workings and vulnerabilities of alien craft, and it may result in the discovery of new techniques to improve our own craft's effectiveness. Once a recovered UFO is secured for transport, it is carried to a PHALANX base by means of transport helicopters. Salvage operations are handled by local UN forces to relieve pressure on our limited resources.\n"
 #~ "\n"
-#~ "The Small UFO Hangar can store 1 alien craft of limited size. We will "
-#~ "assess the size of each UFO type as we encounter them and determine what "
-#~ "hangar is required to store them.\n"
+#~ "The Small UFO Hangar can store 1 alien craft of limited size. We will assess the size of each UFO type as we encounter them and determine what hangar is required to store them.\n"
 #~ "\n"
-#~ "The Small UFO Hangar requires a Power Plant to feed its high-power "
-#~ "machinery and plasma-based cutting tools. It also requires a Workshop and "
-#~ "Storage to handle the dismantling.\n"
+#~ "The Small UFO Hangar requires a Power Plant to feed its high-power machinery and plasma-based cutting tools. It also requires a Workshop and Storage to handle the dismantling.\n"
 #~ "\n"
 #~ "\n"
 #~ "Recommended Doctrine\n"
 #~ "\n"
-#~ "All salvaged UFOs should be permanently disabled once delivered into our "
-#~ "hands. Should the base come under attack from alien forces, we can't "
-#~ "afford the extra risk of stored UFOs being reactivated and used against "
-#~ "us. Even without a drive unit, any weapon systems left active would "
-#~ "present a grave threat to our base.\n"
+#~ "All salvaged UFOs should be permanently disabled once delivered into our hands. Should the base come under attack from alien forces, we can't afford the extra risk of stored UFOs being reactivated and used against us. Even without a drive unit, any weapon systems left active would present a grave threat to our base.\n"
 #~ "\n"
-#~ "If this procedure is followed, the UFO Hangar will be of minor tactical "
-#~ "importance to alien attackers and will most likely be ignored except as a "
-#~ "target of opportunity. Preventing us from dismantling UFOs would be far "
-#~ "less attractive than shutting down our research or production, or "
-#~ "destroying our base outright.\n"
+#~ "If this procedure is followed, the UFO Hangar will be of minor tactical importance to alien attackers and will most likely be ignored except as a target of opportunity. Preventing us from dismantling UFOs would be far less attractive than shutting down our research or production, or destroying our base outright.\n"
 #~ "\n"
-#~ "We will most likely be needing several of these installations to strip "
-#~ "and/or examine several UFOs at a time. However, if necessary, we can "
-#~ "remove a craft from our hangars and have it destroyed to make room for a "
-#~ "new one. In this scenario all parts already transferred to Storage will "
-#~ "be available, but everything not yet removed from the UFO will be "
-#~ "destroyed with it.\n"
+#~ "We will most likely be needing several of these installations to strip and/or examine several UFOs at a time. However, if necessary, we can remove a craft from our hangars and have it destroyed to make room for a new one. In this scenario all parts already transferred to Storage will be available, but everything not yet removed from the UFO will be destroyed with it.\n"
 #~ "\n"
 #~ "\n"
 #~ "Addenda\n"
 #~ "\n"
 #~ "None."
+
 #~ msgid "b_large_ufo_hangar_txt"
 #~ msgstr ""
 #~ "Blueprints -- Large UFO Hangar\n"
@@ -14081,100 +14082,85 @@ msgstr "Погано"
 #~ "\n"
 #~ "Filed: 19 March 2084\n"
 #~ "\n"
-#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
-#~ "Operations Command\n"
+#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 #~ "\n"
 #~ "\n"
 #~ "\n"
 #~ "Overview\n"
 #~ "\n"
-#~ "These are the finished plans for our new UFO storage hangars. They are "
-#~ "designed to house one recovered UFO for disassembly, and will be marked "
-#~ "as occupied until the craft has been fully broken down into its component "
-#~ "parts and the parts transferred to base Storage. UFOs require significant "
-#~ "disassembly before they will fit inside Storage, so they must be "
-#~ "dismantled before we can begin to store or use the recovered parts. Doing "
-#~ "this job on-site is highly inadvisable. It could be hazardous to the "
-#~ "health of our scientists and engineers, it might attract looters, and it "
-#~ "would without doubt severely compromise the safety and secrecy of our "
-#~ "operation.\n"
+#~ "These are the finished plans for our new UFO storage hangars. They are designed to house one recovered UFO for disassembly, and will be marked as occupied until the craft has been fully broken down into its component parts and the parts transferred to base Storage. UFOs require significant disassembly before they will fit inside Storage, so they must be dismantled before we can begin to store or use the recovered parts. Doing this job on-site is highly inadvisable. It could be hazardous to the health of our scientists and engineers, it might attract looters, and it would without doubt severely compromise the safety and secrecy of our operation.\n"
 #~ "\n"
-#~ "The importance of studying captured UFOs should be more than obvious. It "
-#~ "will give us insight into the workings and vulnerabilities of alien "
-#~ "craft, and it may result in the discovery of new techniques to improve "
-#~ "our own craft's effectiveness. Once a recovered UFO is secured for "
-#~ "transport, it is carried to a PHALANX base by means of transport "
-#~ "helicopters. Salvage operations are handled by local UN forces to relieve "
-#~ "pressure on our limited resources.\n"
+#~ "The importance of studying captured UFOs should be more than obvious. It will give us insight into the workings and vulnerabilities of alien craft, and it may result in the discovery of new techniques to improve our own craft's effectiveness. Once a recovered UFO is secured for transport, it is carried to a PHALANX base by means of transport helicopters. Salvage operations are handled by local UN forces to relieve pressure on our limited resources.\n"
 #~ "\n"
-#~ "The Large UFO Hangar can store 1 alien craft of significant size. We will "
-#~ "assess the size of each UFO type as we encounter them and determine what "
-#~ "hangar is required to store them.\n"
+#~ "The Large UFO Hangar can store 1 alien craft of significant size. We will assess the size of each UFO type as we encounter them and determine what hangar is required to store them.\n"
 #~ "\n"
-#~ "The Large UFO Hangar requires a Power Plant to feed its high-power "
-#~ "machinery and plasma-based cutting tools. It also requires a Workshop and "
-#~ "Storage to handle the dismantling.\n"
+#~ "The Large UFO Hangar requires a Power Plant to feed its high-power machinery and plasma-based cutting tools. It also requires a Workshop and Storage to handle the dismantling.\n"
 #~ "\n"
 #~ "\n"
 #~ "Recommended Doctrine\n"
 #~ "\n"
-#~ "All salvaged UFOs should be permanently disabled once delivered into our "
-#~ "hands. Should the base come under attack from alien forces, we can't "
-#~ "afford the extra risk of stored UFOs being reactivated and used against "
-#~ "us. Even without a drive unit, any weapon systems left active would "
-#~ "present a grave threat to our base.\n"
+#~ "All salvaged UFOs should be permanently disabled once delivered into our hands. Should the base come under attack from alien forces, we can't afford the extra risk of stored UFOs being reactivated and used against us. Even without a drive unit, any weapon systems left active would present a grave threat to our base.\n"
 #~ "\n"
-#~ "If this procedure is followed, the UFO Hangar will be of minor tactical "
-#~ "importance to alien attackers and will most likely be ignored except as a "
-#~ "target of opportunity. Preventing us from dismantling UFOs would be far "
-#~ "less attractive than shutting down our research or production, or "
-#~ "destroying our base outright.\n"
+#~ "If this procedure is followed, the UFO Hangar will be of minor tactical importance to alien attackers and will most likely be ignored except as a target of opportunity. Preventing us from dismantling UFOs would be far less attractive than shutting down our research or production, or destroying our base outright.\n"
 #~ "\n"
-#~ "We will most likely be needing several of these installations to strip "
-#~ "and/or examine several UFOs at a time. However, if necessary, we can "
-#~ "remove a craft from our hangars and have it destroyed to make room for a "
-#~ "new one. In this scenario all parts already transferred to Storage will "
-#~ "be available, but everything not yet removed from the UFO will be "
-#~ "destroyed with it.\n"
+#~ "We will most likely be needing several of these installations to strip and/or examine several UFOs at a time. However, if necessary, we can remove a craft from our hangars and have it destroyed to make room for a new one. In this scenario all parts already transferred to Storage will be available, but everything not yet removed from the UFO will be destroyed with it.\n"
 #~ "\n"
 #~ "\n"
 #~ "Addenda\n"
 #~ "\n"
 #~ "None."
+
 #~ msgid "Manage your aircraft"
 #~ msgstr "Керуйте своєю авіацією"
+
 #~ msgid "Buy/Sell Equipment"
 #~ msgstr "Купити/Продати"
+
 #~ msgid "Transfer equipment or personnel"
 #~ msgstr "Переправити устаткування або персонал"
+
 #~ msgid "Deal with Aliens in Alien Containment"
 #~ msgstr "Робота з прибульцями в Ізоляторі"
+
 #~ msgid "Medical and Surgery operations"
 #~ msgstr "Госпіталізація та хірургічні операції"
+
 #~ msgid "Base Information"
 #~ msgstr "Інформація про Базу"
+
 #~ msgid "Game"
 #~ msgstr "Ігрові"
+
 #~ msgid "Sound"
 #~ msgstr "Звук"
+
 #~ msgid "Input"
 #~ msgstr "Управління"
+
 #~ msgid "Activates tooltips"
 #~ msgstr "Увімкнути підказки"
+
 #~ msgid "Centring at soldier selecting, shooting and appearing"
 #~ msgstr "При виборі, пострілі та виявленні ворога центрувати екран на бійця"
+
 #~ msgid "Use 3D geoscape"
 #~ msgstr "Використовувати глобус"
+
 #~ msgid "Input settings"
 #~ msgstr "Налаштувати управління"
+
 #~ msgid "Camera"
 #~ msgstr "Камера"
+
 #~ msgid "Keys"
 #~ msgstr "Клавіші"
+
 #~ msgid "Want To Maintain resolution"
 #~ msgstr "Хочете змінити розрішення екрану?"
+
 #~ msgid "media/FreeSans.ttf"
 #~ msgstr "media/FreeSans.ttf"
+
 # Звичай
 #, fuzzy
 #~ msgid "Custom"
