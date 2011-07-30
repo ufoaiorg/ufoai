@@ -168,9 +168,22 @@ static void G_UpdateCharacterSkills (character_t *chr)
  */
 void G_MatchEndTrigger (int team, int timeGap)
 {
-	const int realTimeGap = timeGap > 0 ? level.time + timeGap : 1;
-	level.winningTeam = team;
-	level.intermissionTime = realTimeGap;
+	qboolean foundNextMap = qfalse;
+	edict_t *ent = NULL;
+
+	while ((ent = G_EdictsGetTriggerNextMaps(ent)) != NULL) {
+		if (ent->team == team) {
+			ent->think = Think_NextMapTrigger;
+			ent->nextthink = 1;
+			foundNextMap = qtrue;
+		}
+	}
+
+	if (!foundNextMap) {
+		const int realTimeGap = timeGap > 0 ? level.time + timeGap : 1;
+		level.winningTeam = team;
+		level.intermissionTime = realTimeGap;
+	}
 }
 
 /**
@@ -212,7 +225,7 @@ static void G_SendCharacterData (const edict_t* ent)
  * @sa G_RunFrame
  * @sa CL_ParseResults
  */
-static void G_MatchSendResults (int team)
+static void G_MatchSendResults (int team, qboolean nextmap)
 {
 	edict_t *ent, *attacker;
 	int i, j = 0;
@@ -243,6 +256,7 @@ static void G_MatchSendResults (int team)
 	gi.AddEvent(PM_ALL, EV_RESULTS);
 	gi.WriteByte(MAX_TEAMS);
 	gi.WriteByte(team);
+	gi.WriteByte(nextmap);
 
 	for (i = 0; i < MAX_TEAMS; i++) {
 		gi.WriteByte(level.num_spawned[i]);
@@ -277,19 +291,6 @@ static void G_MatchSendResults (int team)
 	}
 
 	gi.EndEvents();
-
-	/* now we cleanup the AI */
-	AIL_Cleanup();
-
-	if (level.nextmap[0] != '\0') {
-		char command[MAX_VAR];
-		/** @todo We have to make sure, that the teaminfo is not completely resent
-		 * otherwise we would have the same team again and died actors are not taken
-		 * into account */
-		Com_sprintf(command, sizeof(command), "map %s %s\n",
-				level.day ? "day" : "night", level.nextmap);
-		gi.AddCommandString(command);
-	}
 }
 
 /**
@@ -301,7 +302,15 @@ qboolean G_MatchDoEnd (void)
 	/* check for intermission */
 	if (level.intermissionTime > 0.0 && level.time > level.intermissionTime) {
 		G_PrintStats(va("End of game - Team %i is the winner", level.winningTeam));
-		G_MatchSendResults(level.winningTeam);
+		G_MatchSendResults(level.winningTeam, level.nextMapSwitch);
+
+		/* now we cleanup the AI */
+		AIL_Cleanup();
+
+		if (level.mapEndCommand != NULL) {
+			gi.AddCommandString(level.mapEndCommand);
+		}
+
 		level.intermissionTime = 0.0;
 		level.winningTeam = 0;
 		return qtrue;

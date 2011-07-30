@@ -491,6 +491,7 @@ void GAME_ActorSelect_f (void)
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", chrIndex));
+	/** @todo this is campaign only - really needed here? */
 	Cvar_SetValue("mn_ucn", chr->ucn);
 
 	/* set info cvars */

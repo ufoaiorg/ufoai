@@ -72,6 +72,7 @@ static const spawn_t spawns[] = {
 	{"func_door", SP_func_door},
 	{"func_door_sliding", SP_func_door_sliding},
 	{"func_rotating", SP_func_rotating},
+	{"trigger_nextmap", SP_trigger_nextmap},
 	{"trigger_hurt", SP_trigger_hurt},
 	{"trigger_touch", SP_trigger_touch},
 	{"trigger_rescue", SP_trigger_rescue},
@@ -106,6 +107,7 @@ static const field_t fields[] = {
 	{"item", offsetof(edict_t, item), F_LSTRING, 0},
 	{"noise", offsetof(edict_t, noise), F_LSTRING, 0},
 	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
+	{"nextmap", offsetof(edict_t, nextmap), F_LSTRING, 0},
 	{"frame", offsetof(edict_t, frame), F_INT, 0},
 	{"team", offsetof(edict_t, team), F_INT, 0},
 	{"group", offsetof(edict_t, group), F_LSTRING, 0},
@@ -126,7 +128,6 @@ static const field_t fields[] = {
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
 	{"message", offsetof(edict_t, message), F_LSTRING, 0},
 
-	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
 	{"randomspawn", offsetof(spawn_temp_t, randomSpawn), F_INT, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
@@ -884,8 +885,6 @@ static void SP_worldspawn (edict_t *ent)
 	ent->inuse = qtrue;
 	ent->classname = "worldspawn";
 
-	if (st.nextmap)
-		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
 	level.randomSpawn = st.randomSpawn;
 
 	gi.ConfigString(CS_MAXCLIENTS, "%i", sv_maxclients->integer);

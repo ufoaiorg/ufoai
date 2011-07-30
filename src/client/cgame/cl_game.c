@@ -880,11 +880,11 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], qboolean nextmap)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list)
-		list->Results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
+		list->Results(msg, winner, numSpawned, numAlive, numKilled, numStunned, nextmap);
 	else
 		CL_Drop();
 }

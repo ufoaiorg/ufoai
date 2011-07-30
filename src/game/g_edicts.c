@@ -164,6 +164,21 @@ edict_t* G_EdictsGetNextInUse (edict_t* lastEnt)
 }
 
 /**
+ * @brief Iterator through all the trigger_nextmap edicts
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+edict_t* G_EdictsGetTriggerNextMaps (edict_t* lastEnt)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (G_IsTriggerNextMap(ent))
+			break;
+	}
+	return ent;
+}
+
+/**
  * @brief Iterate through the living actor entities
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */

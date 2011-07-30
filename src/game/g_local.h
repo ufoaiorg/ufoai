@@ -109,10 +109,11 @@ typedef struct {
 						 * calculated through framenum * SERVER_FRAME_SECONDS */
 
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
-	char nextmap[MAX_QPATH];	/**< @todo Spawn the new map after the current one was ended */
+	char *mapEndCommand;
 	qboolean routed;
 	qboolean day;
 	qboolean hurtAliens;
+	qboolean nextMapSwitch;		/**< trigger the nextmap command when ending the match */
 
 	/* intermission state */
 	float intermissionTime;		/**< the seconds to wait until the game will be closed.
@@ -146,7 +147,6 @@ typedef struct {
  */
 typedef struct {
 	/* world vars */
-	char *nextmap;	/**< the next map that is started after the current one has finished */
 	int randomSpawn;	/**< spawn the actors on random spawnpoints */
 } spawn_temp_t;
 
@@ -180,6 +180,8 @@ extern game_export_t globals;
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
+#define G_IsTriggerNextMap(ent)	((ent)->type == ET_TRIGGER_NEXTMAP)
+
 #define G_IsBreakable(ent)		((ent)->flags & FL_DESTROYABLE)
 #define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || (ent)->type == ET_DOOR || (ent)->type == ET_DOOR_SLIDING || (ent)->type == ET_ROTATING)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
@@ -514,9 +516,12 @@ edict_t* G_TriggerSpawn(edict_t *owner);
 qboolean G_TriggerRemoveFromList(edict_t *self, edict_t *activator);
 qboolean G_TriggerIsInList(edict_t *self, edict_t *activator);
 void G_TriggerAddToList(edict_t *self, edict_t *activator);
+void SP_trigger_nextmap(edict_t *ent);
 void SP_trigger_hurt(edict_t *ent);
 void SP_trigger_touch(edict_t *ent);
 void SP_trigger_rescue(edict_t *ent);
+
+void Think_NextMapTrigger(edict_t *self);
 
 /* g_func.c */
 void SP_func_rotating(edict_t *ent);
@@ -536,7 +541,8 @@ edict_t* G_EdictsGetNext(edict_t* lastEnt);
 edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);
 edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
-edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team);
+edict_t* G_EdictsGetNextLivingActorOfTeam(edict_t* lastEnt, const int team);
+edict_t* G_EdictsGetTriggerNextMaps(edict_t* lastEnt);
 
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
 void G_EdictCalcOrigin(edict_t* ent);
@@ -712,6 +718,7 @@ struct edict_s {
 	const char *targetname;		/**< name pointed to by target - see the target of the parent edict */
 	const char *item;			/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
+	const char *nextmap;
 	const char *message;		/**< misc_message */
 	const char *noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */

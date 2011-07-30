@@ -279,7 +279,7 @@ static void GAME_CP_Start_f (void)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-static void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+static void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], qboolean nextmap)
 {
 	int i, j;
 	int ownSurvived, ownKilled, ownStunned;
@@ -338,6 +338,22 @@ static void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	ccs.aliensKilled += aliensKilled;
 
 	results = &ccs.missionResults;
+
+	if (nextmap) {
+		assert(won);
+		results->aliensKilled += aliensKilled;
+		results->aliensStunned += aliensStunned;
+		results->aliensSurvived += aliensSurvived;
+		results->ownKilled += ownKilled - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+		results->ownStunned += ownStunned;
+		results->ownKilledFriendlyFire += numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
+		results->ownSurvived += ownSurvived;
+		results->civiliansKilled += civiliansKilled;
+		results->civiliansKilledFriendlyFire += numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+		results->civiliansSurvived += civiliansSurvived;
+		return;
+	}
+
 	results->won = won;
 	results->aliensKilled = aliensKilled;
 	results->aliensStunned = aliensStunned;

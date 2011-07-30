@@ -43,7 +43,7 @@ typedef struct cgame_export_s {
 	/** some gametypes only support special maps */
 	const mapDef_t* (EXPORT *MapInfo) (int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
-	void (EXPORT *Results) (struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
+	void (EXPORT *Results) (struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS], qboolean nextmap);
 	/** check whether the given item is usable in the current game mode */
 	qboolean (EXPORT *IsItemUseable) (const objDef_t *od);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
