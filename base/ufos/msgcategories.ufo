@@ -56,3 +56,8 @@ msgcategory "_ufo_activity"
 	ufo_signal_lost
 	ufo_attacking
 }
+
+msgcategory "_missions"
+{
+	base_attack
+}

@@ -165,6 +165,8 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
+	MSO_CheckAddNewMessage(NT_BASE_ATTACK, _("Base attack"), va(_("Base '%s' is under attack!"), base->name), qfalse, MSG_BASEATTACK, NULL);
+
 	base->baseStatus = BASE_UNDER_ATTACK;
 	ccs.campaignStats.basesAttacked++;
 

@@ -843,7 +843,7 @@ qboolean UFO_CampaignCheckEvents (void)
 				newDetection = qtrue;
 				UFO_DetectNewUFO(ufo);
 			} else if (!detected) {
-				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_UFOSPOTTED, NULL);
+				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_UFOLOST, NULL);
 				/* Make this UFO undetected */
 				ufo->detected = qfalse;
 				/* Notify that ufo disappeared */

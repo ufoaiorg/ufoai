@@ -68,4 +68,7 @@ msgoptions default
 	ufo_attacking notify
 	ufo_attacking sound
 	ufo_attacking pause
+	base_attack notify
+	base_attack sound
+	base_attack pause
 }

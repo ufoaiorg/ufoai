@@ -129,6 +129,9 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 		ccs.numUnreadMails = -1;
 		sound = "geoscape/mail";
 		break;
+	case MSG_UFOLOST:
+		sound = "geoscape/ufolost";
+		break;
 	case MSG_UFOSPOTTED:
 		sound = "geoscape/ufospotted";
 		break;

@@ -56,6 +56,7 @@ typedef enum nt_s {
 	NT_UFO_SPOTTED,
 	NT_UFO_SIGNAL_LOST,
 	NT_UFO_ATTACKING,
+	NT_BASE_ATTACK,
 
 	NT_NUM_NOTIFYTYPE
 } notify_t;

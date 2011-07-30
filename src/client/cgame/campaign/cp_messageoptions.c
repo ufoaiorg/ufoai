@@ -59,7 +59,7 @@ char const* const nt_strings[NT_NUM_NOTIFYTYPE] = {
 	N_("ufo_spotted"),
 	N_("ufo_signal_lost"),
 	N_("ufo_attacking"),
-
+	N_("base_attack")
 };
 CASSERT(lengthof(nt_strings) == NT_NUM_NOTIFYTYPE);
 
