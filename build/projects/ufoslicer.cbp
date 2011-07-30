@@ -128,6 +128,9 @@
 		<Unit filename="..\..\src\tools\ufoslicer.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
