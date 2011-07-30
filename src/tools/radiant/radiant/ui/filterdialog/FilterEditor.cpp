@@ -23,7 +23,7 @@ const char* const RULE_HELP_TEXT = N_("Filter rules are applied in the shown ord
 
 enum
 {
-	COL_INDEX, COL_TYPE, COL_TYPE_STR, COL_REGEX, COL_ENTITYKEY, COL_ACTION, NUM_COLS
+	COL_INDEX, COL_TYPE, COL_TYPE_STR, COL_ENTITYKEY, COL_REGEX, COL_ACTION, NUM_COLS
 };
 
 enum
@@ -43,8 +43,8 @@ FilterEditor::FilterEditor (Filter& filter, GtkWindow* parent, bool viewOnly) :
 			_ruleStore(gtk_list_store_new(NUM_COLS, G_TYPE_INT, // index
 					G_TYPE_INT, // type
 					G_TYPE_STRING, // type string
-					G_TYPE_STRING, // regex match
 					G_TYPE_STRING, // entitykey
+					G_TYPE_STRING, // regex match
 					G_TYPE_STRING)), // show/hide
 			_selectedRule(-1), _result(NUM_RESULTS), _updateActive(false), _viewOnly(viewOnly)
 {
@@ -120,8 +120,8 @@ void FilterEditor::update ()
 
 		gtk_list_store_set(_ruleStore, &iter, COL_INDEX, static_cast<int>(i),
 				COL_TYPE, typeIndex, COL_TYPE_STR,
-				getStringForType(rule.type).c_str(), COL_REGEX,
-				rule.match.c_str(), COL_ENTITYKEY, rule.entityKey.c_str(),
+				getStringForType(rule.type).c_str(), COL_ENTITYKEY,
+				rule.entityKey.c_str(), COL_REGEX, rule.match.c_str(),
 				COL_ACTION, rule.show ? _("show") : _("hide"), -1);
 	}
 
@@ -174,8 +174,8 @@ GtkWidget* FilterEditor::createCriteriaPanel ()
 	_ruleView = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(_ruleStore)));
 
 	gtkutil::TextColumn indexCol(_("Index"), COL_INDEX);
-	gtkutil::TextColumn regexCol(_("Match"), COL_REGEX);
 	gtkutil::TextColumn entityKeyCol(_("EntityKey"), COL_ENTITYKEY);
+	gtkutil::TextColumn regexCol(_("Match"), COL_REGEX);
 
 	// Create the cell renderer for the action choice
 	GtkCellRenderer* actionComboRenderer = gtk_cell_renderer_combo_new();
@@ -193,15 +193,15 @@ GtkWidget* FilterEditor::createCriteriaPanel ()
 	);
 	g_signal_connect(G_OBJECT(actionComboRenderer), "edited", G_CALLBACK(onActionEdited), this);
 
-	// Regex editing
-	GtkCellRendererText* rend = regexCol.getCellRenderer();
-	g_object_set(G_OBJECT(rend), "editable", TRUE, NULL);
-	g_signal_connect(G_OBJECT(rend), "edited", G_CALLBACK(onRegexEdited), this);
-
 	// Entitykey editing
 	GtkCellRendererText* entityKeyColRend = entityKeyCol.getCellRenderer();
 	g_object_set(G_OBJECT(entityKeyColRend), "editable", TRUE, NULL);
 	g_signal_connect(G_OBJECT(entityKeyColRend), "edited", G_CALLBACK(onEntityKeyEdited), this);
+
+	// Regex editing
+	GtkCellRendererText* rend = regexCol.getCellRenderer();
+	g_object_set(G_OBJECT(rend), "editable", TRUE, NULL);
+	g_signal_connect(G_OBJECT(rend), "edited", G_CALLBACK(onRegexEdited), this);
 
 	// Create the cell renderer for the type choice
 	GtkCellRenderer* typeComboRenderer = gtk_cell_renderer_combo_new();
@@ -217,12 +217,13 @@ GtkWidget* FilterEditor::createCriteriaPanel ()
 	GtkTreeViewColumn* typeCol = gtk_tree_view_column_new_with_attributes(_("Type"), typeComboRenderer, "markup",
 			COL_TYPE_STR, NULL
 	);
+	gtk_tree_view_column_set_min_width(typeCol, 110);
 	g_signal_connect(G_OBJECT(typeComboRenderer), "edited", G_CALLBACK(onTypeEdited), this);
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(_ruleView), indexCol);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(_ruleView), typeCol);
-	gtk_tree_view_append_column(GTK_TREE_VIEW(_ruleView), regexCol);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(_ruleView), entityKeyCol);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(_ruleView), regexCol);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(_ruleView), actionCol);
 
 	GtkTreeSelection* sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(_ruleView));
