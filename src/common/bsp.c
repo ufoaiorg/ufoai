@@ -694,6 +694,9 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
  */
 static void CMod_LoadLighting (mapTile_t *tile, const byte *base, const lump_t * l)
 {
+	if (l->filelen == 0)
+		return;
+
 	tile->lightdata = Mem_PoolAlloc(l->filelen, com_cmodelSysPool, 0);
 	memcpy(tile->lightdata, base + l->fileofs, l->filelen);
 }
