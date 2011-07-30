@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
+"randomspawn" "1"
 // brush 0
 {
 ( 1432 384 -68 ) ( 1280 384 -68 ) ( 1280 256 -68 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
@@ -12030,4 +12031,78 @@
 "model" "models/animals/crocodile/croc.md2"
 "spawnflags" "255"
 "skin" "0"
+}
+// entity 343
+{
+"classname" "info_alien_start"
+"origin" "1392 1776 28"
+}
+// entity 344
+{
+"classname" "info_alien_start"
+"origin" "1424 1616 28"
+}
+// entity 345
+{
+"classname" "info_alien_start"
+"origin" "304 336 92"
+}
+// entity 346
+{
+"classname" "info_alien_start"
+"origin" "304 304 92"
+}
+// entity 347
+{
+"classname" "info_alien_start"
+"origin" "304 272 92"
+}
+// entity 348
+{
+"classname" "info_alien_start"
+"origin" "368 80 92"
+}
+// entity 349
+{
+"classname" "info_alien_start"
+"origin" "848 912 28"
+"angle" "-45"
+}
+// entity 350
+{
+"classname" "info_alien_start"
+"origin" "1328 560 28"
+}
+// entity 351
+{
+"classname" "info_alien_start"
+"origin" "1328 592 28"
+}
+// entity 352
+{
+"classname" "info_alien_start"
+"origin" "1328 624 28"
+}
+// entity 353
+{
+"classname" "info_alien_start"
+"origin" "1488 880 28"
+"angle" "-90"
+}
+// entity 354
+{
+"classname" "info_alien_start"
+"origin" "1392 304 28"
+"angle" "180"
+}
+// entity 355
+{
+"classname" "info_alien_start"
+"origin" "1520 1296 28"
+}
+// entity 356
+{
+"classname" "info_alien_start"
+"origin" "1072 1456 28"
+"angle" "-45"
 }
