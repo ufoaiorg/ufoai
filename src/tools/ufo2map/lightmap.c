@@ -591,7 +591,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 				light = (l->intensity - dist) * dot;
 			} else {
 				/* outside the cone */
-				light = (l->intensity * 0.5 - dist) * dot;
+				light = (l->intensity * (dot2 / l->stopdot) - dist) * dot;
 			}
 			break;
 		default:
