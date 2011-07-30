@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( 0 384 4 ) ( 0 256 4 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -1539,4 +1540,22 @@
 "skin" "3"
 "spawnflags" "254"
 "model" "models/objects/vegi/gumtree/gum_tree_branch.md2"
+}
+// entity 9
+{
+"classname" "info_civilian_start"
+"origin" "112 336 28"
+"angle" "-45"
+}
+// entity 10
+{
+"classname" "info_alien_start"
+"origin" "16 16 28"
+"angle" "45"
+}
+// entity 11
+{
+"classname" "info_alien_start"
+"origin" "16 496 28"
+"angle" "-45"
 }

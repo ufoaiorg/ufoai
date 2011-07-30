@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( 160 224 0 ) ( 160 256 0 ) ( 160 224 96 ) tex_buildings/floor015 0 0 0 0.125 0.125 65280 0 0
@@ -348,4 +349,15 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "origin" "140 108 68"
 "skin" "1"
+}
+// entity 8
+{
+"classname" "info_alien_start"
+"origin" "80 48 28"
+}
+// entity 9
+{
+"classname" "info_alien_start"
+"origin" "144 176 28"
+"angle" "45"
 }

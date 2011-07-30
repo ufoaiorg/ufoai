@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( 516 56 4 ) ( 516 148 4 ) ( 516 148 0 ) tex_common/nodraw 32 0 0 0.5 0.5 65280 128 0
@@ -1645,4 +1646,22 @@
 ( -608 -160 88 ) ( -672 -160 88 ) ( -672 -192 88 ) tex_common/nodraw 0 0 0 0.5 0.5 65024 128 0
 ( 352 156 112 ) ( 352 160 112 ) ( 384 160 112 ) tex_common/nodraw 0 0 0 0.5 0.5 65024 128 0
 }
+}
+// entity 32
+{
+"classname" "info_alien_start"
+"origin" "592 400 92"
+"angle" "45"
+}
+// entity 33
+{
+"classname" "info_alien_start"
+"origin" "304 400 92"
+"angle" "135"
+}
+// entity 34
+{
+"classname" "info_alien_start"
+"origin" "592 112 92"
+"angle" "-45"
 }

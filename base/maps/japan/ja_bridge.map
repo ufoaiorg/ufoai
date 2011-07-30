@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( 112 160 32 ) ( 112 192 32 ) ( 112 160 54 ) tex_common/nodraw 0 0 0 -0.125 0.125 65280 128 0
@@ -797,4 +798,21 @@
 "skin" "0"
 "spawnflags" "255"
 "model" "models/objects/vegi/ficus/ficus.md2"
+}
+// entity 7
+{
+"classname" "info_alien_start"
+"origin" "16 16 28"
+"angle" "45"
+}
+// entity 8
+{
+"classname" "info_alien_start"
+"origin" "240 16 28"
+"angle" "135"
+}
+// entity 9
+{
+"classname" "info_civilian_start"
+"origin" "112 144 60"
 }

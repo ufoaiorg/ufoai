@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( 204 -316 48 ) ( 204 -320 48 ) ( 204 -320 4 ) tex_buildings/concrete005 0 0 0 0.25 0.25 65280 0 0
@@ -135,4 +136,16 @@
 "skin" "1"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
+}
+// entity 3
+{
+"classname" "info_alien_start"
+"origin" "208 16 28"
+"angle" "45"
+}
+// entity 4
+{
+"classname" "info_alien_start"
+"origin" "48 112 28"
+"angle" "-90"
 }

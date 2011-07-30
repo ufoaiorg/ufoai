@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( 416 448 52 ) ( 416 416 52 ) ( 416 416 8 ) tex_common/nodraw 0 8 0 0.5 0.5 65024 128 0
@@ -4231,4 +4232,26 @@
 "origin" "142 662 20"
 "spawnflags" "255"
 "particle" "corona"
+}
+// entity 110
+{
+"classname" "info_alien_start"
+"origin" "1264 16 28"
+}
+// entity 111
+{
+"classname" "info_alien_start"
+"origin" "1264 1008 28"
+}
+// entity 112
+{
+"classname" "info_alien_start"
+"origin" "272 16 28"
+"angle" "135"
+}
+// entity 113
+{
+"classname" "info_alien_start"
+"origin" "272 1008 28"
+"angle" "-135"
 }
