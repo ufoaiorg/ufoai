@@ -229,7 +229,7 @@ static uint32_t CopyLump (int lumpIdx, void *dest, size_t size)
 /**
  * @sa WriteBSPFile
  */
-void LoadBSPFile (const char *filename)
+dMapTile_t *LoadBSPFile (const char *filename)
 {
 	int size;
 	unsigned int i;
@@ -287,6 +287,8 @@ void LoadBSPFile (const char *filename)
 
 	/* swap everything */
 	SwapBSPFile();
+
+	return curTile;
 }
 
 /**
