@@ -5654,11 +5654,17 @@ base/textures/tex_misc/books009.jpg | Public Domain | Jacobs, Joseph, 1854-1916 
 base/textures/tex_misc/bookshelf.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_misc/bookshelf_nm.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_misc/box001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box001_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box001b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box001b_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box002_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box002b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box002b_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box003.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box003_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box003b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box003b_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box004.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box004_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box004a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -5684,9 +5690,13 @@ base/textures/tex_misc/box010.png | GNU General Public License 2.0 | Werner Höh
 base/textures/tex_misc/box011.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box012.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box013.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box013_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box013b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box013b_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box014.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box014_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box014b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box014b_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box015.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box015_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box015a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
