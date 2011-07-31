@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( -480 196 0 ) ( -480 256 0 ) ( -544 156 0 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
@@ -381,4 +382,21 @@
 ( 668 96 72 ) ( 516 96 72 ) ( 516 96 68 ) tex_misc/bungalow2 43 70.99968 90 0.8 0.3 65280 0 0
 ( 40 98 72 ) ( 40 94 72 ) ( 40 94 68 ) tex_misc/bungalow2 43 153.3333 90 0.8 0.3 65280 0 0
 }
+}
+// entity 1
+{
+"classname" "info_alien_start"
+"origin" "432 144 28"
+}
+// entity 2
+{
+"classname" "info_alien_start"
+"origin" "48 208 28"
+"angle" "45"
+}
+// entity 3
+{
+"classname" "info_alien_start"
+"origin" "176 48 28"
+"angle" "-90"
 }

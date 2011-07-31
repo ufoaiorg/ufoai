@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( -1152 -708 0 ) ( -1216 -608 0 ) ( -1216 -668 0 ) tex_common/nodraw 0 0 0 -0.5 0.5 65280 0 0
@@ -126,12 +127,12 @@
 }
 // brush 15
 {
-( 64 148 131 ) ( 64 140 131 ) ( 64 140 3 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
-( 96 140 130 ) ( 96 148 130 ) ( 96 148 2 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
-( 296 128 107 ) ( 302 128 107 ) ( 302 128 105 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
-( 309 160 131 ) ( 301 160 131 ) ( 301 160 3 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
-( 896 384 0 ) ( 928 384 0 ) ( 896 416 0 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
-( 928 416 64 ) ( 928 384 64 ) ( 896 416 64 ) tex_common/actorclip -0 0 0 0.5 0.5 65536 0 0
+( 64 148 131 ) ( 64 140 131 ) ( 64 140 3 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 96 140 130 ) ( 96 148 130 ) ( 96 148 2 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 296 128 107 ) ( 302 128 107 ) ( 302 128 105 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 309 160 131 ) ( 301 160 131 ) ( 301 160 3 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 896 384 0 ) ( 928 384 0 ) ( 896 416 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 928 416 64 ) ( 928 384 64 ) ( 896 416 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 }
 }
 // entity 1
@@ -147,4 +148,9 @@
 "origin" "79 144 4"
 "model" "models/objects/vegi/palm_v2/palm2.md2"
 "spawnflags" "254"
+}
+// entity 3
+{
+"classname" "info_alien_start"
+"origin" "208 208 28"
 }
