@@ -284,12 +284,13 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, float minX, float maxX, 
 	Mem_Free(pictureBuffer);
 }
 
-void SL_BSPSlice (const TR_TILE_TYPE *model)
+/**
+ * @param[in] thickness the thickness of the brushes to render to the 2d map
+ */
+void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, qboolean singleContour, qboolean multipleContour)
 {
 	float minX, maxX, minY, maxY, minZ, maxZ;
-	/* the thickness of the brushes to render to the 2d map */
-	const float thickness = 8.0f;
-	int number_of_slices;
+	int numberOfSlices;
 	int width, height;
 	qboolean rotated;
 
@@ -314,7 +315,7 @@ void SL_BSPSlice (const TR_TILE_TYPE *model)
 		height = (int) (maxX - minX);
 	}
 
-	number_of_slices = (int) ((maxZ - minZ) / thickness);
+	numberOfSlices = (int) ((maxZ - minZ) / thickness);
 
 	/* don't start or end on exact multiples of the Z slice thickness
 	 * (if you do, it causes "weirdness" in the plane intersect function) */
@@ -323,5 +324,5 @@ void SL_BSPSlice (const TR_TILE_TYPE *model)
 	minZ = (float) floor(minZ) + 0.01f;
 	maxZ = (float) floor(maxZ) + 0.01f;
 
-	SL_SliceTheWorld(model, minX, maxX, minY, maxY, minZ, maxZ, thickness, 1, qtrue, qtrue, rotated);
+	SL_SliceTheWorld(model, minX, maxX, minY, maxY, minZ, maxZ, thickness, scale, singleContour, multipleContour, rotated);
 }

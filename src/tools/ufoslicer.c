@@ -46,8 +46,7 @@ int main (int argc, const char **argv)
 	Com_DefaultExtension(bspFilename, sizeof(bspFilename), ".bsp");
 
 	FS_InitFilesystem(qfalse);
-	LoadBSPFile(bspFilename);
-	SL_BSPSlice(curTile);
+	SL_BSPSlice(LoadBSPFile(bspFilename), 8.0, 1, qtrue, qtrue);
 
 	Mem_Shutdown();
 
