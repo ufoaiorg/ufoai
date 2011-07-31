@@ -335,34 +335,51 @@ team states
 
 	models {
 		female {
-			civilians/female body01 head01a 0
-			civilians/female body01 head01a 1
-			civilians/female body01 head01a 2
-			civilians/female body02 head01a 0
-			civilians/female body02 head01a 1
-			civilians/female body01 head01b 0
-			civilians/female body01 head01b 1
-			civilians/female body01 head01b 2
-			civilians/female body02 head01b 0
-			civilians/female body02 head01b 1
-			civilians/female body01 head02a 0
-			civilians/female body01 head02a 1
-			civilians/female body01 head02a 2
-			civilians/female body02 head02a 0
-			civilians/female body02 head02a 1
-			civilians/female body01 head02b 0
-			civilians/female body01 head02b 1
-			civilians/female body01 head02b 2
-			civilians/female body02 head02b 0
-			civilians/female body02 head02b 1
-			civilians/female body05 head05a 1
+			civilians/female body01 head01a 0	//body:green skirt, blue top, head: brown hair, ponytail
+			civilians/female body01 head01a 1	//body:black skirt, white top, head: brown hair, ponytail
+			civilians/female body01 head01a 2	//body:green skirt, green top, head: brown hair, ponytail
+			civilians/female body01 head01a 3	//body:green skirt, flower top, Hawaii-Look head: brown hair, ponytail
+			civilians/female body02 head01a 0	//body:grey trousers, blue top, head: brown hair, ponytail
+			civilians/female body02 head01a 1	//body:blue trousers, green top, head: brown hair, ponytail
+			civilians/female body01 head01b 0	//body:green skirt, blue top, head: blond hair, ponytail
+			civilians/female body01 head01b 1	//body:black skirt, white top, head: blond hair, ponytail
+			civilians/female body01 head01b 2	//body:green skirt, green top, head: blond hair, ponytail
+			civilians/female body01 head01b 3	//body:green skirt, flower top, Hawaii-Look head: blond hair, ponytail
+			civilians/female body02 head01b 0	//body:grey trousers, blue top, head: blond hair, ponytail
+			civilians/female body02 head01b 1	//body:blue trousers, green top, head: blond hair, ponytail
+			civilians/female body01 head02a 0	//body:green skirt, blue top, head: long blond hair
+			civilians/female body01 head02a 1	//body:black skirt, white top, head: long blond hair
+			civilians/female body01 head02a 2	//body:green skirt, green top, head: long blond hair
+			civilians/female body01 head02a 3	//body:green skirt, flower top, Hawaii-Look head: long blond hair
+			civilians/female body02 head02a 0	//body:grey trousers, blue top, head: long blond hair
+			civilians/female body02 head02a 1	//body:blue trousers, green top, head: long blond hair
+			civilians/female body01 head02b 0	//body:green skirt, blue top, head: long brown hair
+			civilians/female body01 head02b 1	//body:black skirt, white top, head: long brown hair
+			civilians/female body01 head02b 2	//body:green skirt, green top, head: long brown hair
+			civilians/female body01 head02b 3	//body:green skirt, flower top, Hawaii-Look head: long brown hair
+			civilians/female body02 head02b 0	//body:grey trousers, blue top, head: long brown hair
+			civilians/female body02 head02b 1	//body:blue trousers, green top, head: long brown hair
+			civilians/female body03 head03a 0	//body:blue dress, head: Asian
+			civilians/female body03 head03a 1	//body:green dress, head: Asian
+			civilians/female body03 head04a 0	//body:blue dress, head: African, black hair, ponytail
+			civilians/female body03 head04a 1	//body:green dress, head: African, black hair, ponytail
+			civilians/female body03 head04b 0	//body:blue dress, head: African, red disguise, black hair, ponytail
+			civilians/female body03 head04b 1	//body:green dress, head: African, red disguise, black hair, ponytail
+			civilians/female body03 head04c 0	//body:blue dress, head: African, blue disguise, black hair
+			civilians/female body03 head04c 1	//body:green dress, head: African, blue disguise, black hair
+			civilians/female body05 head05a 0	//body:blue jeans, red top, head: brown hair, simple cut
 		}
-
 		male {
-			civilians/male body01 head01 0
-			civilians/male body01 head01 1
-			civilians/male body01 head01 2
-			civilians/male body01 head03 2
+			civilians/male body01 head01 0	//body:short blue trousers, red top, fat, head: brown hair, beard, blue hat
+			civilians/male body01 head01 1	//body:short cyan trousers, blue top, fat, head: brown hair, beard, blue hat
+			civilians/male body01 head01 2	//body:short grey trousers, white shirt, fat, head: brown hair, beard, blue hat
+			civilians/male body02 head02 0	//body:arabic looking, head: beard, white hat
+			civilians/male sheik01 sci_head01 0	//body:same as scientist's, just in white, head: Asian, disguised
+			civilians/male sheik01 sci_head02a 0	//body:same as scientist's, just in white, head: skinhead, beard
+			civilians/male sheik01 sci_head02b 0	//body:same as scientist's, just in white, head: skinhead, beard, glasses
+			civilians/male sheik01 sci_head03a 0	//body:same as scientist's, just in white, head: white hat
+			civilians/male sheik01 sci_head03b 0	//body:same as scientist's, just in white, head: white hat, glasses
+			civilians/male sheik01 head03 0	//body:same as scientist's, just in white, head: black hat
 			// civilians/male boy01 boy_head01 0
 		}
 	}
