@@ -2,6 +2,7 @@
 
 LANG=C
 TOOL=memcheck
+PARAMS=
 
 usage() {
 	echo "Usage: $0 [--help|-h] [--suppression|-s <file>] [--gensup|-g] [--nolog] [--tool|-t <tool>] --binary|-b <binary>"
@@ -11,6 +12,7 @@ usage() {
 	echo " --gensup -g       - Generate suppression statements"
 	echo " --tool -t         - Valgrind tool (default is memcheck)"
 	echo " --binary -b       - Execute valgrind for the given binary"
+	echo " --params -p       - Parameters for the binary to execute"
 	echo " --nolog           - Don't log into a file but to stdout"
 	exit 1
 }
@@ -29,6 +31,11 @@ while [ $# -gt 0 ]; do
 			;;
 		--tool|-t)
 			TOOL=$2
+			shift
+			shift
+			;;
+		--params|-p)
+			PARAMS=$2
 			shift
 			shift
 			;;
@@ -73,7 +80,7 @@ then
 		--verbose \
 		--demangle=yes \
 		$VALGRIND_OPTIONS \
-		$APP
+		$APP $PARAMS
 else
 	if [ $TOOL = "memcheck" ]
 	then
@@ -108,5 +115,5 @@ else
 	fi
 
 	cd ${PATH_ONLY}
-	valgrind $VALGRIND_OPTIONS $APP
+	valgrind $VALGRIND_OPTIONS $APP $PARAMS
 fi
