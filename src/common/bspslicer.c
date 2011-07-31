@@ -138,7 +138,7 @@ static qboolean SL_VectorIntersectPlane (const vec3_t origin, const vec3_t vecto
 /**
  * @brief slice the world in Z planes going from min_z to max_z by stepsize...
  */
-static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, float minX, float maxX, float minY, float maxY, float minZ, float maxZ, float stepsize, int scale, qboolean singleContour, qboolean multipleContour)
+static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const vec3_t maxs, float stepsize, int scale, qboolean singleContour, qboolean multipleContour)
 {
 	int sliceIndex;
 	vec3_t zDistance = { 0.0f, 0.0f, 0.0f };
@@ -148,6 +148,13 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, float minX, float maxX, 
 	float lineX1, lineY1, lineX2, lineY2;
 	qboolean first, both;
 	char filename[MAX_QPATH];
+	const float minX = mins[0];
+	const float maxX = maxs[0];
+	const float minY = mins[1];
+	const float maxY = maxs[1];
+	const float minZ = mins[2];
+	const float maxZ = maxs[2];
+
 	const int numberOfSlices = (int) ((maxZ - minZ) / stepsize);
 	int width;
 	int height;
@@ -305,25 +312,26 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, float minX, float maxX, 
  */
 void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, qboolean singleContour, qboolean multipleContour)
 {
-	float minX, maxX, minY, maxY, minZ, maxZ;
+	int i;
+	/** @todo remove these values once the mins/maxs calculation works */
+	vec3_t mins = {-MAX_WORLD_WIDTH, -MAX_WORLD_WIDTH, 0};
+	vec3_t maxs = {MAX_WORLD_WIDTH, MAX_WORLD_WIDTH, (PATHFINDING_HEIGHT - 1) * UNIT_HEIGHT};
 
 	if (model == NULL)
 		return;
 
-	/** @todo */
-	minX = -4096; //model->mins[0];
-	maxX = 4096; //model->maxs[0];
-	minY = -4096; //model->mins[1];
-	maxY = 4096; //model->maxs[1];
-	minZ = 0; //model->mins[2];
-	maxZ = 512; //model->maxs[2];
+	for (i = 0; i < model->nummodels; i++) {
+		const dBspModel_t *d = &model->models[i];
+		AddPointToBounds(d->mins, mins, maxs);
+		AddPointToBounds(d->maxs, mins, maxs);
+	}
 
 	/* don't start or end on exact multiples of the Z slice thickness
 	 * (if you do, it causes "weirdness" in the plane intersect function) */
 
 	/* offset a tiny bit */
-	minZ = (float) floor(minZ) + 0.01f;
-	maxZ = (float) floor(maxZ) + 0.01f;
+	mins[2] = (float) floor(mins[2]) + 0.01f;
+	maxs[2] = (float) floor(maxs[2]) + 0.01f;
 
-	SL_SliceTheWorld(model, minX, maxX, minY, maxY, minZ, maxZ, thickness, scale, singleContour, multipleContour);
+	SL_SliceTheWorld(model, mins, maxs, thickness, scale, singleContour, multipleContour);
 }
