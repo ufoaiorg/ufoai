@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cgame/campaign/cp_ufo.h"
 #include "../client/cgame/campaign/cp_time.h"
 #include "../client/cgame/campaign/cp_alien_interest.h"
+#include "../client/cgame/campaign/cp_auto_mission.h"
 
 static const int TAG_INVENTORY = 1538;
 
