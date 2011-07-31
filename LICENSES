@@ -4227,7 +4227,7 @@ base/textures/tex_base/fence.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_base/fence2.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_base/grid2_alpha.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/grid_alpha.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/helipad.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/helipad.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_floor001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_floor002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_base/lab_floor003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -4548,9 +4548,9 @@ base/textures/tex_buildings/met_panel01_nm.png | GNU General Public License 2.0 
 base/textures/tex_buildings/met_panel02.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/met_panel02_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/metal_cover.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/metal_duct.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/metal_duct.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/metal_duct_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/metal_duct_rust.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/metal_duct_rust.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/metal_duct_rust_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/metal_window.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (metal04.tga)
 base/textures/tex_buildings/metalbridge6.jpg | GNU General Public License 2.0 | OpenArena
@@ -5653,49 +5653,49 @@ base/textures/tex_misc/books008.jpg | Public Domain | Hawthorne, Nathaniel, 1804
 base/textures/tex_misc/books009.jpg | Public Domain | Jacobs, Joseph, 1854-1916 | http://www.archive.org/details/englishfairytale00jaco
 base/textures/tex_misc/bookshelf.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_misc/bookshelf_nm.png | GNU General Public License 2.0 | Nate Wright
-base/textures/tex_misc/box001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box004a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box004b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box005a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box003.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box004.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box004a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box004b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box005.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box005a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box006.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_misc/box006_nm.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_misc/box007.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_misc/box007_nm.png | GNU General Public License 2.0 | Nate Wright
-base/textures/tex_misc/box008.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box008a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box011.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box015a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box015b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box016.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box016a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box016b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box017.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box017a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box017b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box018.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box008.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box008a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box009.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box010.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box011.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box012.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box013.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box014.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box015.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box015a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box015b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box016.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box016a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box016b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box017.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box017a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box017b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box018.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/boxen001.png | Public Domain | sauer2 | http://opengameart.org/content/speaker-images
 base/textures/tex_misc/cable.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_misc/container001.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_misc/container002.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_misc/container003.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_misc/container004.png | GNU General Public License 2.0 or later | FWishbringer
-base/textures/tex_misc/container006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/container006.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/container006_nm.png | GNU General Public License 2.0 or later | Zark127
 base/textures/tex_misc/container007.png | GNU General Public License 2.0 or later | FWishbringer
-base/textures/tex_misc/container008.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/container008.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/container008_nm.png | GNU General Public License 2.0 or later | Zark127
-base/textures/tex_misc/crate001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/crate001a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/crate001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/crate001a.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/d_tech_dw2gb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/display_basketball.png | GNU General Public License 2.0 or later | FWishbringer
@@ -6186,20 +6186,20 @@ base/textures/tex_streets/park1h_nm.png | GNU General Public License 2.0 or late
 base/textures/tex_streets/park1v.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/park1v_g.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/park1v_nm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_streets/street003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/pavement001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street003.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street005.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street006.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_streets/street008.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_streets/street009.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street010.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street011.jpg | GNU General Public License 2.0 | ghosta
 base/textures/tex_streets/street012.jpg | GNU General Public License 2.0 | ghosta
 base/textures/tex_streets/street013.jpg | GNU General Public License 2.0 | ghosta
-base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street11.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_tech/comptable.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_tech/comptable_gm.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex002.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
