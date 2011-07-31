@@ -50,6 +50,9 @@ typedef struct {
 
 } textExtraData_t;
 
+typedef void (*textUpdateCache_t) (struct uiNode_s *node);
+void UI_TextValidateCache(struct uiNode_s *node, textUpdateCache_t update);
+
 /**
  * @note text node inherite scrollable node. Scrollable (super) extradata
  * must not move, else we can't call scrollable functions.

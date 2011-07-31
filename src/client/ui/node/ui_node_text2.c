@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_TextUpdateCache(uiNode_t *node);
-
 static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 {
 	const char *data;
@@ -93,18 +91,6 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 	}
 
 	Mem_Free(buffer);
-}
-
-static void UI_TextValidateCache (uiNode_t *node)
-{
-	int v;
-	if (EXTRADATA(node).super.dataID == TEXT_NULL || node->text != NULL)
-		return;
-
-	v = UI_GetDataVersion(EXTRADATA(node).super.dataID);
-	if (v != EXTRADATA(node).super.versionId) {
-		UI_TextUpdateCache(node);
-	}
 }
 
 /**
@@ -270,7 +256,7 @@ static void UI_TextNodeDraw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	UI_TextValidateCache(node);
+	UI_TextValidateCache(node, UI_TextUpdateCache);
 
 	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
 		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qfalse);

@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void UI_TextUpdateCache(uiNode_t *node);
 
-static void UI_TextValidateCache (uiNode_t *node)
+void UI_TextValidateCache (uiNode_t *node, textUpdateCache_t update)
 {
 	int v;
 	if (EXTRADATA(node).dataID == TEXT_NULL || node->text != NULL)
@@ -49,7 +49,7 @@ static void UI_TextValidateCache (uiNode_t *node)
 
 	v = UI_GetDataVersion(EXTRADATA(node).dataID);
 	if (v != EXTRADATA(node).versionId) {
-		UI_TextUpdateCache(node);
+		update(node);
 	}
 }
 
@@ -82,7 +82,7 @@ void UI_TextScrollEnd (const char* nodePath)
 		return;
 	}
 
-	UI_TextValidateCache(node);
+	UI_TextValidateCache(node, UI_TextUpdateCache);
 
 	if (EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
 		EXTRADATA(node).super.scrollY.viewPos = EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize;
