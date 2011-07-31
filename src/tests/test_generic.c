@@ -184,10 +184,14 @@ static void testConstInt (void)
 	Com_UnregisterConstList(list2);
 }
 
+static int testListSorter (linkedList_t *entry1, linkedList_t *entry2, const void *userData)
+{
+	return strcmp((const char*)entry1->data, (const char*)entry2->data);
+}
 
 static void testLinkedList (void)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = NULL, *list2;
 	const char* data = "SomeDataForTheLinkedList";
 	const size_t length = strlen(data);
 	linkedList_t *entry;
@@ -205,6 +209,32 @@ static void testLinkedList (void)
 	CU_ASSERT_STRING_EQUAL(entry2->data, returnedData);
 	LIST_RemoveEntry(&list, entry);
 	CU_ASSERT_EQUAL(LIST_Count(list), 0);
+	CU_ASSERT_EQUAL(LIST_Count(LIST_CopyStructure(list)), 0);
+	LIST_Add(&list, (const byte*)data, length);
+	list2 = LIST_CopyStructure(list);
+	CU_ASSERT_EQUAL(LIST_Count(list2), 1);
+	LIST_Delete(&list2);
+	CU_ASSERT_EQUAL(LIST_Count(list2), 0);
+	CU_ASSERT_EQUAL(LIST_Count(list), 1);
+	LIST_Delete(&list);
+
+	LIST_AddString(&list, "test6");
+	LIST_AddString(&list, "test2");
+	LIST_AddString(&list, "test1");
+	LIST_AddString(&list, "test3");
+	LIST_AddString(&list, "test5");
+	LIST_AddString(&list, "test4");
+	LIST_AddString(&list, "test7");
+	CU_ASSERT_EQUAL(LIST_Count(list), 7);
+
+	LIST_Sort(&list, testListSorter, NULL);
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 0), "test1");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 1), "test2");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 2), "test3");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 3), "test4");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 4), "test5");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 5), "test6");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 6), "test7");
 }
 
 static void testLinkedListIterator (void)
