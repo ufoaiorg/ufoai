@@ -9,6 +9,8 @@ typedef struct linkedList_s {
 	qboolean ptr;	/**< don't call Mem_Free for data if this is @c true */
 } linkedList_t;
 
+typedef int (*linkedListSort_t) (linkedList_t *entry1, linkedList_t *entry2, const void *userData);
+
 /** @brief Iterates over a linked list, it's safe to delete the returned entry from the list while looping over it.
  * @note @c var must be a simple variable name, because it is also used to create the name of the internal iterator variable.
  * @note Don't try to use the internal loop variable. This variable is most likely not at the position you would expect it to be. */
@@ -29,5 +31,6 @@ qboolean LIST_IsEmpty(const linkedList_t *list);
 int LIST_Count(const linkedList_t *list);
 void *LIST_GetByIdx(linkedList_t *list, int index);
 qboolean LIST_Remove(linkedList_t **list, const void *data);
+void LIST_Sort(linkedList_t **list, linkedListSort_t sorter, const void* userData);
 
 #endif /* LIST_H_ */
