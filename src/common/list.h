@@ -29,6 +29,7 @@ void LIST_Delete(linkedList_t **list);
 qboolean LIST_RemoveEntry(linkedList_t **list, linkedList_t *entry);
 qboolean LIST_IsEmpty(const linkedList_t *list);
 int LIST_Count(const linkedList_t *list);
+linkedList_t *LIST_CopyStructure(linkedList_t* src);
 void *LIST_GetByIdx(linkedList_t *list, int index);
 qboolean LIST_Remove(linkedList_t **list, const void *data);
 void LIST_Sort(linkedList_t **list, linkedListSort_t sorter, const void* userData);

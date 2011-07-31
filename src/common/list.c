@@ -381,6 +381,19 @@ void LIST_Sort (linkedList_t **list, linkedListSort_t sorter, const void* userDa
 	*list = _LIST_Sort(*list, sorter, userData);
 }
 
+/**
+ * @brief Copies the list structure data - but not the content from the original list.
+ * We are only using pointers here.
+ */
+linkedList_t *LIST_CopyStructure (linkedList_t* src)
+{
+	linkedList_t *dest;
+	void *data;
+	LIST_Foreach(src, void, data) {
+		LIST_AddPointer(&dest, data);
+	}
+	return dest;
+}
 
 /**
  * @brief Checks whether the given list is empty
