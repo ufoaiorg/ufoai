@@ -249,6 +249,8 @@ qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 	AIR_Foreach(var) \
 		if (!AIR_IsAircraftOfBase(var, (base))) continue; else
 
+#define AIR_ForeachSorted(var, sorter, userdata, sortedlist) LIST_ForeachSorted(ccs.aircraft, aircraft_t, var, sorter, userdata, sortedlist)
+
 aircraft_t* AIR_GetFirstFromBase(const struct base_s *base);
 
 qboolean AIR_BaseHasAircraft(const struct base_s *base);
