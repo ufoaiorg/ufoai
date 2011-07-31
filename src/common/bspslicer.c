@@ -138,7 +138,7 @@ static qboolean SL_VectorIntersectPlane (const vec3_t origin, const vec3_t vecto
 /**
  * @brief slice the world in Z planes going from min_z to max_z by stepsize...
  */
-static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, float minX, float maxX, float minY, float maxY, float minZ, float maxZ, float stepsize, int scale, qboolean singleContour, qboolean multipleContour, qboolean rotated)
+static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, float minX, float maxX, float minY, float maxY, float minZ, float maxZ, float stepsize, int scale, qboolean singleContour, qboolean multipleContour)
 {
 	int sliceIndex;
 	vec3_t zDistance = { 0.0f, 0.0f, 0.0f };
@@ -149,9 +149,25 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, float minX, float maxX, 
 	qboolean first, both;
 	char filename[MAX_QPATH];
 	const int numberOfSlices = (int) ((maxZ - minZ) / stepsize);
-	const int width = (int) ((maxX - minX) + 1) / scale;
-	const int height = (int) ((maxY - minY) + 1) / scale;
-	unsigned char *pictureBuffer = (unsigned char *) Mem_Alloc(width * height * DEPTH);
+	int width;
+	int height;
+	qboolean rotated = qfalse;
+	unsigned char *pictureBuffer;
+
+	width = (int) (maxX - minX);
+	height = (int) (maxY - minY);
+
+	/* is the map higher than it is wide? */
+	if (height > width) {
+		rotated = qtrue; /* rotate the map 90 degrees */
+		width = (int) (maxY - minY); /* swap the width and height */
+		height = (int) (maxX - minX);
+	}
+
+	height /= scale;
+	width /= scale;
+
+	pictureBuffer = (unsigned char *) Mem_Alloc(width * height * DEPTH);
 
 	for (sliceIndex = 0; sliceIndex < numberOfSlices; sliceIndex++) {
 		int j;
@@ -290,9 +306,6 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, float minX, float maxX, 
 void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, qboolean singleContour, qboolean multipleContour)
 {
 	float minX, maxX, minY, maxY, minZ, maxZ;
-	int numberOfSlices;
-	int width, height;
-	qboolean rotated;
 
 	if (model == NULL)
 		return;
@@ -305,18 +318,6 @@ void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, qboolea
 	minZ = 0; //model->mins[2];
 	maxZ = 512; //model->maxs[2];
 
-	width = (int) (maxX - minX);
-	height = (int) (maxY - minY);
-
-	/* is the map higher than it is wide? */
-	if (height > width) {
-		rotated = qtrue; /* rotate the map 90 degrees */
-		width = (int) (maxY - minY); /* swap the width and height */
-		height = (int) (maxX - minX);
-	}
-
-	numberOfSlices = (int) ((maxZ - minZ) / thickness);
-
 	/* don't start or end on exact multiples of the Z slice thickness
 	 * (if you do, it causes "weirdness" in the plane intersect function) */
 
@@ -324,5 +325,5 @@ void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, qboolea
 	minZ = (float) floor(minZ) + 0.01f;
 	maxZ = (float) floor(maxZ) + 0.01f;
 
-	SL_SliceTheWorld(model, minX, maxX, minY, maxY, minZ, maxZ, thickness, scale, singleContour, multipleContour, rotated);
+	SL_SliceTheWorld(model, minX, maxX, minY, maxY, minZ, maxZ, thickness, scale, singleContour, multipleContour);
 }
