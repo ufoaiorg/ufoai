@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
+"randomspawn" "1"
 // brush 0
 {
 ( 40 1524 64 ) ( 60 1524 64 ) ( 60 1556 64 ) tex_common/nodraw 0 16 0 0.5 0.5 65024 128 0
@@ -5814,117 +5815,111 @@
 // entity 71
 {
 "classname" "info_alien_start"
-"origin" "656 1136 96"
-"angle" "-135"
-}
-// entity 72
-{
-"classname" "info_alien_start"
 "origin" "816 1232 96"
 "angle" "-90"
 }
-// entity 73
+// entity 72
 {
 "classname" "info_alien_start"
 "origin" "560 1200 28"
 "angle" "45"
 }
-// entity 74
+// entity 73
 {
 "classname" "info_alien_start"
 "origin" "912 1168 28"
 "angle" "45"
 }
-// entity 75
+// entity 74
 {
 "classname" "info_alien_start"
 "origin" "944 1104 28"
 "angle" "135"
 }
-// entity 76
+// entity 75
 {
 "classname" "info_alien_start"
 "origin" "1008 1200 28"
 "angle" "-45"
 }
-// entity 77
+// entity 76
 {
 "classname" "info_alien_start"
 "origin" "1232 1488 44"
 "angle" "135"
 }
-// entity 78
+// entity 77
 {
 "classname" "info_alien_start"
 "origin" "1296 1232 44"
 }
-// entity 79
+// entity 78
 {
 "classname" "info_alien_start"
 "origin" "880 1584 44"
 "angle" "180"
 }
-// entity 80
+// entity 79
 {
 "classname" "info_alien_start"
 "origin" "336 1552 116"
 "angle" "135"
 }
-// entity 81
+// entity 80
 {
 "classname" "info_alien_start"
 "origin" "80 1520 120"
 "angle" "-45"
 }
-// entity 82
+// entity 81
 {
 "classname" "info_player_start"
 "origin" "1296 1424 44"
 "team" "1"
 }
-// entity 83
+// entity 82
 {
 "classname" "info_player_start"
 "origin" "1104 1520 44"
 "team" "1"
 }
-// entity 84
+// entity 83
 {
 "classname" "info_player_start"
 "origin" "1168 1424 44"
 "team" "1"
 }
-// entity 85
+// entity 84
 {
 "classname" "info_player_start"
 "origin" "1104 1360 44"
 "team" "1"
 }
-// entity 86
+// entity 85
 {
 "classname" "info_player_start"
 "origin" "1168 1168 44"
 "team" "1"
 }
-// entity 87
+// entity 86
 {
 "classname" "info_player_start"
 "origin" "1200 1264 44"
 "team" "1"
 }
-// entity 88
+// entity 87
 {
 "classname" "info_player_start"
 "origin" "1232 1360 44"
 "team" "1"
 }
-// entity 89
+// entity 88
 {
 "classname" "info_player_start"
 "origin" "1200 1328 44"
 "team" "1"
 }
-// entity 90
+// entity 89
 {
 "classname" "func_group"
 // brush 0
@@ -5973,7 +5968,7 @@
 ( 800 1096 24 ) ( 800 1136 24 ) ( 832 1136 24 ) tex_common/nodraw 62 55.2002 0 0.25 0.234375 65280 128 0
 }
 }
-// entity 91
+// entity 90
 {
 "classname" "func_group"
 // brush 0
@@ -6022,7 +6017,7 @@
 ( 538 1212 28 ) ( 474 1212 28 ) ( 474 1214 26 ) tex_ufo/ufo2_09 304 164.4282 0 0.125 -0.109375 65280 0 0
 }
 }
-// entity 92
+// entity 91
 {
 "classname" "misc_sound"
 "origin" "1048 1104 116"
@@ -6030,11 +6025,35 @@
 "volume" "0.2"
 "spawnflags" "2"
 }
-// entity 93
+// entity 92
 {
 "classname" "misc_sound"
 "origin" "1048 1200 116"
 "noise" "ambience/alien_engine"
 "volume" "0.2"
 "spawnflags" "2"
+}
+// entity 93
+{
+"classname" "info_alien_start"
+"origin" "1520 624 28"
+"angle" "135"
+}
+// entity 94
+{
+"classname" "info_alien_start"
+"origin" "1264 752 28"
+"angle" "-135"
+}
+// entity 95
+{
+"classname" "info_alien_start"
+"origin" "1488 48 28"
+"angle" "135"
+}
+// entity 96
+{
+"classname" "info_alien_start"
+"origin" "1488 80 28"
+"angle" "180"
 }

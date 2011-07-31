@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 0 256 4 ) ( 33.75 236 0 ) ( 0 0 4 ) tex_nature/desert007 0 0 0 0.125 0.125 0 0 0
@@ -50,4 +51,22 @@
 ( 0 0 -8 ) ( 33.75 236 0 ) ( 0 0 4 ) tex_nature/desert007 0 0 0 0.125 0.125 0 0 0
 ( 0 0 -8 ) ( 85 55.375 0 ) ( 85 55.375 -8 ) tex_nature/desert007 0 0 0 0.125 0.125 0 0 0
 }
+}
+// entity 1
+{
+"classname" "info_alien_start"
+"origin" "48 48 28"
+"angle" "90"
+}
+// entity 2
+{
+"classname" "info_alien_start"
+"origin" "80 80 28"
+"angle" "90"
+}
+// entity 3
+{
+"classname" "info_alien_start"
+"origin" "48 80 28"
+"angle" "90"
 }
