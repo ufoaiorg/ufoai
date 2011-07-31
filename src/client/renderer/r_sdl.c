@@ -103,7 +103,7 @@ qboolean Rimp_Init (void)
 			char buf[4096] = "";
 			Q_strcat(buf, "I: Available resolutions:", sizeof(buf));
 			if (r_sdl_config.modes == (SDL_Rect **)-1) {
-				Com_Printf("any resolution is supported\n");
+				Com_Printf("%s any resolution is supported\n", buf);
 			} else {
 				for (r_sdl_config.numModes = 0; r_sdl_config.modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {
 					const int w = r_sdl_config.modes[r_sdl_config.numModes]->w;
