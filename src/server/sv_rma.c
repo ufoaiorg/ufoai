@@ -1888,7 +1888,7 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 	FS_FreeFile(buf);
 }
 
-static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *asmMap, char *asmPos)
+static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed)
 {
 	int i;
 	mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
@@ -1916,7 +1916,7 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 				/* if we are allowed to restart the search with a fixed seed
 				 * from the assembly definition, do so */
 				Com_SetRandomSeed(mAsm->seeds[rand() % mAsm->numSeeds]);
-				return SV_DoMapAssemble(map, assembly, asmMap, asmPos);
+				return SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
 			}
 			Mem_Free(map);
 			return NULL;
@@ -1928,7 +1928,7 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 				/* if we are allowed to restart the search with a fixed seed
 				 * from the assembly definition, do so */
 				Com_SetRandomSeed(mAsm->seeds[rand() % mAsm->numSeeds]);
-				return SV_DoMapAssemble(map, assembly, asmMap, asmPos);
+				return SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
 			}
 			return NULL;
 		}
@@ -2006,7 +2006,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 		}
 	}
 
-	SV_DoMapAssemble(map, assembly, asmMap, asmPos);
+	SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
 
 	return map;
 }
