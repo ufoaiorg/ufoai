@@ -1922,12 +1922,22 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 			return NULL;
 		}
 	} else {
+		if (seed) {
+			/* if a seed was passed, we are in cunit test mode */
+			if (mAsm->numSeeds > 0) {
+				/* if the map has a seedlist defined, use the passed seed as an index into the seedlist */
+				unsigned int seedUsed = mAsm->seeds[seed % mAsm->numSeeds];
+				Com_SetRandomSeed(seedUsed);
+				Com_Printf("Effectively using seed: %i for <%s>\n", seedUsed, assembly);
+			} else
+				Com_SetRandomSeed(seed);
+		}
 		if (!SV_AddMapTiles(map)) {
 			map->retryCnt++;
 			if (mAsm->numSeeds > 0) {
 				/* if we are allowed to restart the search with a fixed seed
 				 * from the assembly definition, do so */
-				Com_SetRandomSeed(mAsm->seeds[rand() % mAsm->numSeeds]);
+				Com_SetRandomSeed(mAsm->seeds[seed % mAsm->numSeeds]);
 				return SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
 			}
 			return NULL;
