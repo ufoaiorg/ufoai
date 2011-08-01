@@ -430,7 +430,7 @@ assembly large
 seeds {
 	0
 	2
-	4
+/*	4	slow */
 	6
 	8
 	9
