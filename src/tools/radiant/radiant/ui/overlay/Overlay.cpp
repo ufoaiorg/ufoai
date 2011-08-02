@@ -148,8 +148,7 @@ public:
 		// Check for valid bounds (0.0f ... 1.0f)
 		if (_transparency > 1.0f) {
 			_transparency = 1.0f;
-		}
-		else if (_transparency < 0.0f) {
+		} else if (_transparency < 0.0f) {
 			_transparency = 0.0f;
 		}
 	}
@@ -158,13 +157,10 @@ public:
 	float constrainFloat(const float& input, const float& min, const float& max) {
 		if (input < min) {
 			return min;
-		}
-		else if (input > max) {
+		} else if (input > max) {
 			return max;
 		}
-		else {
-			return input;
-		}
+		return input;
 	}
 
 	// Sets the image scale to the given float (1.0f is no scaling)
@@ -187,8 +183,8 @@ public:
 		setImage(GlobalRegistry().get(RKEY_OVERLAY_IMAGE));
 		setTransparency(GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSPARENCY));
 		setImageScale(GlobalRegistry().getFloat(RKEY_OVERLAY_SCALE));
-		setImagePosition( GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSLATIONX),
-						  GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSLATIONY) );
+		setImagePosition(GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSLATIONX),
+						GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSLATIONY));
 	}
 
 	// PreferenceConstructor implementation, add the preference settings
@@ -228,14 +224,14 @@ public:
 		Vector3 windowLowerRight(xend, yend, 0);
 
 		if (_keepProportions) {
-			float aspectRatio = static_cast<float>(_texture->width)/_texture->height;
+			const float aspectRatio = static_cast<float>(_texture->width) / _texture->height;
 
 			// Calculate the proportionally stretched yEnd coordinate
-			float newYend = ybegin + (xend - xbegin) / aspectRatio;
+			const float newYend = ybegin + (xend - xbegin) / aspectRatio;
 			windowLowerRight = Vector3(xend, newYend, 0);
 
 			// Now calculate how far the center went off due to this stretch
-			float deltaCenter = (newYend - yend)/2;
+			const float deltaCenter = (newYend - yend) / 2;
 
 			// Correct the y coordinates with the delta, so that the image gets centered again
 			windowLowerRight.y() -= deltaCenter;
@@ -243,15 +239,13 @@ public:
 		}
 
 		// Calculate the (virtual) window center
-		Vector3 windowOrigin((xend + xbegin)/2, (yend + ybegin)/2, 0);
+		Vector3 windowOrigin((xend + xbegin) / 2, (yend + ybegin) / 2, 0);
 
-		if (!_panWithXYView) {
-			windowUpperLeft -= windowOrigin;
-			windowLowerRight -= windowOrigin;
-		}
+		windowUpperLeft -= windowOrigin;
+		windowLowerRight -= windowOrigin;
 
 		// The translation vector
-		Vector3 translation(_translationX * (xend - xbegin), _translationY * (yend - ybegin), 0);
+		Vector3 translation(_translationX * (xend - xbegin) * xyviewscale, _translationY * (yend - ybegin) * xyviewscale, 0);
 
 		// Create a translation matrix
 		Matrix4 scaleTranslation = Matrix4::getTranslation(translation);
@@ -270,8 +264,10 @@ public:
 		windowUpperLeft = scaleTranslation.transform(windowUpperLeft).getProjected();
 		windowLowerRight = scaleTranslation.transform(windowLowerRight).getProjected();
 
-		windowUpperLeft += windowOrigin;
-		windowLowerRight += windowOrigin;
+		if (!_panWithXYView) {
+			windowUpperLeft += windowOrigin;
+			windowLowerRight += windowOrigin;
+		}
 
 		// Enable the blend functions and textures
 		glEnable(GL_BLEND);
@@ -280,25 +276,25 @@ public:
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		// Define the blend function for transparency
-		glBlendColor(0,0,0, _transparency);
+		glBlendColor(0, 0, 0, _transparency);
 		glBlendFunc(GL_CONSTANT_ALPHA_EXT, GL_ONE_MINUS_CONSTANT_ALPHA_EXT);
 
 		// Define the texture (get the ID from the texture object)
-		glBindTexture (GL_TEXTURE_2D, _texture->texture_number);
-		glColor3f (1,1,1);
+		glBindTexture(GL_TEXTURE_2D, _texture->texture_number);
+		glColor3f(1, 1, 1);
 
 		// Draw the rectangle with the texture on it
 		glBegin(GL_QUADS);
-		glTexCoord2i(0,1);
+		glTexCoord2i(0, 1);
 		glVertex3f(windowUpperLeft.x(), windowUpperLeft.y(), 0.0f);
 
-		glTexCoord2i(1,1);
+		glTexCoord2i(1, 1);
 		glVertex3f(windowLowerRight.x(), windowUpperLeft.y(), 0.0f);
 
-		glTexCoord2i(1,0);
+		glTexCoord2i(1, 0);
 		glVertex3f(windowLowerRight.x(), windowLowerRight.y(), 0.0f);
 
-		glTexCoord2i(0,0);
+		glTexCoord2i(0, 0);
 		glVertex3f(windowUpperLeft.x(), windowLowerRight.y(), 0.0f);
 		glEnd();
 
