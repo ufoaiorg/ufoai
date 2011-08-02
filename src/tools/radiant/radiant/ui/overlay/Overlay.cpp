@@ -180,10 +180,10 @@ public:
 
 	// RegistryKeyObserver implementation, gets called upon key change
 	void keyChanged(const std::string& changedKey, const std::string& newValue) {
-		show(GlobalRegistry().get(RKEY_OVERLAY_VISIBLE) == "1");
-		_keepProportions = (GlobalRegistry().get(RKEY_OVERLAY_PROPORTIONAL) == "1");
-		_scaleWithXYView = (GlobalRegistry().get(RKEY_OVERLAY_SCALE_WITH_XY) == "1");
-		_panWithXYView = (GlobalRegistry().get(RKEY_OVERLAY_PAN_WITH_XY) == "1");
+		show(GlobalRegistry().getBool(RKEY_OVERLAY_VISIBLE));
+		_keepProportions = GlobalRegistry().getBool(RKEY_OVERLAY_PROPORTIONAL);
+		_scaleWithXYView = GlobalRegistry().getBool(RKEY_OVERLAY_SCALE_WITH_XY);
+		_panWithXYView = GlobalRegistry().getBool(RKEY_OVERLAY_PAN_WITH_XY);
 		setImage(GlobalRegistry().get(RKEY_OVERLAY_IMAGE));
 		setTransparency(GlobalRegistry().getFloat(RKEY_OVERLAY_TRANSPARENCY));
 		setImageScale(GlobalRegistry().getFloat(RKEY_OVERLAY_SCALE));
