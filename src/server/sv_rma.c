@@ -1926,7 +1926,7 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 			/* if a seed was passed, we are in cunit test mode */
 			if (mAsm->numSeeds > 0) {
 				/* if the map has a seedlist defined, use the passed seed as an index into the seedlist */
-				if (seed > mAsm->numSeeds)
+				if (seed >= mAsm->numSeeds)
 					/* if the given seed is outside the seedlist, assume that we already tested it and pretend that it's ok */
 					return map;
 				unsigned int seedUsed = mAsm->seeds[seed % mAsm->numSeeds];
