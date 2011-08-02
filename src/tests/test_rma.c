@@ -159,6 +159,7 @@ static void testMassAssemblySeed (void)
 		Com_Printf("Seed: %i\n", i);
 //		randomMap = SV_AssembleMap("village", "small", mapStr, posStr, i);
 		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr, i);
+//		randomMap = SV_AssembleMap("farm", "medium", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("farm", "large", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("forest", "large_crash", mapStr, posStr, i);
