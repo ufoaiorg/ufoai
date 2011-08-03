@@ -5694,7 +5694,9 @@ base/textures/tex_misc/box008b.png | GNU General Public License 2.0 | Werner Hö
 base/textures/tex_misc/box008b_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box009.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box010.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box010_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box011.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box011_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box012.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box013.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box013_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
@@ -5723,7 +5725,9 @@ base/textures/tex_misc/box017a_nm.png | GNU General Public License 2.0 | Werner 
 base/textures/tex_misc/box017b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box017b_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/box018.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_misc/box018b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
+base/textures/tex_misc/box018_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
+base/textures/tex_misc/box018b.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box018b_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_misc/boxen001.png | Public Domain | sauer2 | http://opengameart.org/content/speaker-images
 base/textures/tex_misc/cable.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_misc/container001.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
