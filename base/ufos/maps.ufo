@@ -64,6 +64,8 @@ mapdef africa_large
 	}
 	description		"_A suburb that has received a visit from a Harvester."
 	maxaliens		16
+	// randomspawn	enabled
+
 	civilianteam	africa
 
 	aircraft
@@ -116,6 +118,8 @@ mapdef africa_small
 	}
 	description		"_A suburb that has been visited by an UFO."
 	maxaliens		6
+	// randomspawn	enabled
+
 	civilianteam	africa
 
 	aircraft
@@ -457,6 +461,7 @@ mapdef desert_harvester_crash
 	}
 	description		"_An alien Harvester has crashed in the wastelands."
 	maxaliens		14
+	// randomspawn	enabled
 
 	aircraft
 	{
@@ -2921,7 +2926,9 @@ mapdef dam
 		coop4
 	}
 
-	maxaliens	10
+	maxaliens		10
+
+	civilianteam	worker
 
 	aircraft
 	{
