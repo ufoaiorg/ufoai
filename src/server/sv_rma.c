@@ -1537,7 +1537,7 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
  */
 static qboolean SV_AddMissingTiles (mapInfo_t *map)
 {
-//	if (sv_rma->integer == 2)
+	if (sv_rma->integer == 2)
 		return SV_AddMissingTiles3(map);
 	return SV_AddMissingTilesOld(map);
 }
