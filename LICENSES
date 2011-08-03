@@ -2905,8 +2905,8 @@ base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_event.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_intelligence.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/mail_read.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_read.png | GNU General Public License 2.0 or later | Christian "Crystan" Hoffmann | Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later | Christian "Crystan" Hoffmann | Based on original menu artwork by SparX and Rasta
 base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mapselection.png | Public Domain | bayo | SVG from data_source
@@ -4265,14 +4265,21 @@ base/textures/tex_base/trim003.jpg | GNU General Public License 2.0 | Nexuiz GPL
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/vent001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | d_drkmtl_mpanelgrt.jpg
 base/textures/tex_base/vent002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent002_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_base/vent003.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent003_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_base/vent004.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent004_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_base/vent005.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent005_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_base/vent006.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent006_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_base/vent007.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent007_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_base/vent_round.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/vent_round2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/vent_round2_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
+base/textures/tex_base/vent_round_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
 base/textures/tex_base/wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -4599,7 +4606,7 @@ base/textures/tex_buildings/sidewalk01.png | GNU General Public License 2.0 or l
 base/textures/tex_buildings/sidewalk01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/sp_stairs.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/sp_stairs_nm.png | GNU General Public License 2.0 or later
-base/textures/tex_buildings/step.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/step.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/streetbricks14.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/stripebl.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/stripebl_nm.png | GNU General Public License 2.0 or later
