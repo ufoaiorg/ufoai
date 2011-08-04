@@ -1910,6 +1910,8 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
 
 	if (sv_threads->integer) {
+		if (sv_rma->integer == 2)
+			Com_Error(ERR_DROP, "Can't use sv_threads > 0  with RMA2 !");
 		int oldCount = map->retryCnt;
 		if (SV_ParallelSearch(map) < 0) {
 			if (oldCount < map->retryCnt && mAsm->numSeeds > 0) {
