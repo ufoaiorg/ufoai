@@ -353,7 +353,7 @@ void LM_Think (void)
  * @param[in] anim Type of animation (for example "stand", "walk")
  * @param[in] right ods index to determine the weapon in the actors right hand
  * @param[in] left ods index to determine the weapon in the actors left hand
- * @param[in] state the actors state - e.g. STATE_CROUCHED (crounched animations)
+ * @param[in] state the actors state - e.g. STATE_CROUCHED (crouched animations)
  * have a 'c' in front of their animation definitions (see *.anm files for
  * characters)
  */
