@@ -1936,8 +1936,8 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 					return map;
 				/* use the passed seed as an index into the seedlist */
 				seedUsed = mAsm->seeds[seed % mAsm->numSeeds];
-				Com_Printf("Effectively using seed: %i for <%s>\n", seedUsed, assembly);
 			}
+			Com_Printf("Effectively using seed: %i for <%s>\n", seedUsed, assembly);
 			Com_SetRandomSeed(seedUsed);
 		}
 		if (!SV_AddMapTiles(map)) {
