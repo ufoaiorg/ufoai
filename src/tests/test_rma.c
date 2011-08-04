@@ -141,7 +141,7 @@ static void testMassAssemblySequential (void)
 	}
 }
 
-#define SEED_TEST 1
+#define SEED_TEST 0
 #if SEED_TEST
 /* test a range of random seeds */
 /* "japan big" has problems with seeds 5, 13, 25, 32, 47 */
@@ -158,13 +158,13 @@ static void testMassAssemblySeed (void)
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);
 //		randomMap = SV_AssembleMap("village", "small", mapStr, posStr, i);
-//		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr, i);
+		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("farm", "medium", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("farm", "large", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("forest", "large_crash", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("oriental", "large", mapStr, posStr, i);
-		randomMap = SV_AssembleMap("village", "commercial", mapStr, posStr, i);
+//		randomMap = SV_AssembleMap("village", "commercial", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("hills", "desert_harvester", mapStr, posStr, i);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
