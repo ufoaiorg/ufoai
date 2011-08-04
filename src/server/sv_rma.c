@@ -1909,6 +1909,7 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 	for (i = 0; i < mAsm->numFixed; i++)
 		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
 
+#if 0
 	if (sv_threads->integer) {
 		if (sv_rma->integer == 2)
 			Com_Error(ERR_DROP, "Can't use sv_threads > 0  with RMA2 !");
@@ -1924,6 +1925,7 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 			return NULL;
 		}
 	} else {
+#endif
 		if (mAsm->numSeeds > 0) {
 			/* if the map has a seedlist defined, use that */
 			unsigned int seedUsed = mAsm->seeds[rand() % mAsm->numSeeds];
@@ -1948,7 +1950,10 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 			}
 			return NULL;
 		}
+
+#if 0
 	}
+#endif
 
 	/* prepare map and pos strings */
 	if (map->basePath[0])
