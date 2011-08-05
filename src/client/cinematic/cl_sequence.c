@@ -286,8 +286,6 @@ static void SEQ_Render3D (sequenceContext_t *context)
 	seqEnt_t *se;
 	int i;
 
-	refdef.brushCount = 0;
-	refdef.aliasCount = 0;
 	refdef.numEntities = 0;
 	refdef.mapTiles = cl.mapTiles;
 
