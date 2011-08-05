@@ -2235,12 +2235,13 @@ window options
 		// only show the current binding - no support for changing them atm
 		text keylist
 		{
-			tooltip		"_See the key bindings."
 			dataid		TEXT_LIST
-			pos			"65 110"
-			size		"430 560"
+			pos			"55 120"
+			size		"450 575"
 			rows		"28"
 			lineheight	"20"
+			tabwidth	"120"
+			font		"f_verysmall"
 			onViewChange
 			{
 				*node:root.options_keys.keyscroll@fullsize = <fullsize>
@@ -2254,8 +2255,8 @@ window options
 		vscrollbar keyscroll
 		{
 			image		"ui/scrollbar_v_green"
-			pos			"508 110"
-			height		"560"
+			pos			"508 120"
+			height		"575"
 			current		0
 			viewsize	28
 			fullsize	50
