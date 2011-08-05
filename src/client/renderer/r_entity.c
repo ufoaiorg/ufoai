@@ -80,21 +80,25 @@ static void R_DrawBox (const entity_t * e)
 
 		/** @todo fill one array */
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		refdef.batchCount++;
 		points[0][2] = e->origin[2];
 		points[1][2] = e->origin[2];
 		points[2][2] = e->origin[2];
 		points[3][2] = e->origin[2];
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		refdef.batchCount++;
 		points[0][2] = e->oldorigin[2];
 		points[1][1] = e->oldorigin[1];
 		points[2][2] = e->oldorigin[2];
 		points[3][1] = e->origin[1];
 		glDrawArrays(GL_LINES, 0, 4);
+		refdef.batchCount++;
 		points[0][0] = e->origin[0];
 		points[1][0] = e->origin[0];
 		points[2][0] = e->oldorigin[0];
 		points[3][0] = e->oldorigin[0];
 		glDrawArrays(GL_LINES, 0, 4);
+		refdef.batchCount++;
 		R_BindDefaultArray(GL_VERTEX_ARRAY);
 	}
 	glEnable(GL_TEXTURE_2D);
@@ -133,6 +137,8 @@ static void R_DrawFloor (const entity_t * e)
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	refdef.batchCount++;
+
 	glEnable(GL_DEPTH_TEST);
 
 	R_Color(NULL);
@@ -160,6 +166,8 @@ static void R_DrawArrow (const entity_t * e)
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	refdef.batchCount++;
 
 	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
@@ -215,6 +223,8 @@ void R_DrawEntityEffects (void)
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+			refdef.batchCount++;
 		}
 
 		if (e->flags & RF_ACTOR) {
@@ -251,12 +261,16 @@ void R_DrawEntityEffects (void)
 
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+			refdef.batchCount++;
+
 			/* add transparency when something is other the circle */
 			color[3] *= 0.25;
 			R_Color(color);
 			glDepthFunc(GL_GREATER);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 			glDepthFunc(oldDepthFunc);
+
+			refdef.batchCount++;
 
 			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -433,6 +447,8 @@ static void R_DrawNullModel (const entity_t *e)
 	}
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
+	refdef.batchCount++;
+
 	VectorSet(points[0], 0, 0, 16);
 	for (i = 4; i >= 0; i--) {
 		points[i + 1][0] = 16 * cos(i * (M_PI / 2));
@@ -440,6 +456,8 @@ static void R_DrawNullModel (const entity_t *e)
 		points[i + 1][2] = 0;
 	}
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
+	refdef.batchCount++;
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 

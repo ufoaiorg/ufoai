@@ -98,6 +98,8 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
 {
 	glDrawArrays(GL_TRIANGLE_FAN, surf->index, surf->numedges);
 
+	refdef.batchCount++;
+
 	if (r_showbox->integer == 2)
 		R_DrawBoundingBox(surf->mins, surf->maxs);
 

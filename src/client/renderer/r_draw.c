@@ -170,6 +170,8 @@ void R_DrawChars (void)
 
 	glDrawArrays(GL_QUADS, 0, r_char_arrays.vert_index / 2);
 
+	refdef.batchCount++;
+
 	r_char_arrays.color_index = 0;
 	r_char_arrays.texcoord_index = 0;
 	r_char_arrays.vert_index = 0;
@@ -243,6 +245,8 @@ void R_DrawFills (void)
 	glVertexPointer(2, GL_SHORT, 0, r_fill_arrays.verts);
 
 	glDrawArrays(GL_QUADS, 0, r_fill_arrays.vert_index / 2);
+
+	refdef.batchCount++;
 
 	/* and restore them */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -382,6 +386,8 @@ const image_t *R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+	refdef.batchCount++;
+
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -422,6 +428,8 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	refdef.batchCount++;
+
 	glEnable(GL_TEXTURE_2D);
 	glLineWidth(1.0f);
 	glDisable(GL_LINE_STIPPLE);
@@ -448,6 +456,8 @@ void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_LINE_LOOP, 0, steps);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	refdef.batchCount++;
 
 	R_Color(NULL);
 
@@ -477,6 +487,8 @@ static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
 	glDrawArrays(mode, 0, points);
 	glEnable(GL_TEXTURE_2D);
 	glVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
+
+	refdef.batchCount++;
 }
 
 /**
@@ -623,6 +635,8 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	refdef.batchCount++;
 
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	if (!hasDepthTest)

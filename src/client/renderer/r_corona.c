@@ -88,6 +88,8 @@ void R_DrawCoronas (void)
 		}
 
 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertind / 3);
+
+		refdef.batchCount++;
 	}
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

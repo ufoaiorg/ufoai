@@ -256,6 +256,8 @@ void R_DrawBspNormals (int tile)
 		if (k > MAX_GL_ARRAY_LENGTH - 512) {
 			glDrawArrays(GL_LINES, 0, k / 3);
 			k = 0;
+
+			refdef.batchCount++;
 		}
 
 		for (j = 0; j < surf->numedges; j++) {
@@ -274,6 +276,8 @@ void R_DrawBspNormals (int tile)
 	}
 
 	glDrawArrays(GL_LINES, 0, k / 3);
+
+	refdef.batchCount++;
 
 	R_EnableTexture(&texunit_diffuse, qtrue);
 

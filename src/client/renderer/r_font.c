@@ -665,6 +665,8 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
+	refdef.batchCount++;
+
 	/* set back to standard 3d pointer */
 	glVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 }

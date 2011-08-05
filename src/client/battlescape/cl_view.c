@@ -257,6 +257,10 @@ void CL_ViewRender (void)
 {
 	refdef.brushCount = 0;
 	refdef.aliasCount = 0;
+	refdef.batchCount = 0;
+	refdef.FFPToShaderCount = 0;
+	refdef.shaderToShaderCount = 0;
+	refdef.shaderToFFPCount = 0;
 
 	if (cls.state != ca_active)
 		return;

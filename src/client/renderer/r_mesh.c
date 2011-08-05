@@ -71,6 +71,8 @@ static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 
+	refdef.batchCount++;
+
 	R_EnableShell(qfalse);
 
 	R_Color(NULL);
@@ -87,6 +89,8 @@ static void R_DrawAliasFrameLerp (mAliasModel_t* mod, mAliasMesh_t *mesh, float 
 	R_EnableAnimation(mesh, backlerp, qtrue);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+
+	refdef.batchCount++;
 
 	R_DrawMeshModelShell(mesh, shellColor);
 
@@ -108,6 +112,8 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mesh->texcoords);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+
+	refdef.batchCount++;
 
 	R_DrawMeshModelShell(mesh, shellColor);
 }
@@ -646,6 +652,7 @@ static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 	if (lighting)
 		R_EnableLighting(NULL, qfalse);
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+	refdef.batchCount++;
 	if (lighting)
 		R_EnableLighting(program, qtrue);
 

@@ -153,6 +153,8 @@ static void R_DrawSprite (const ptl_t * p)
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 		R_BindDefaultArray(GL_VERTEX_ARRAY);
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+
+		refdef.batchCount++;
 	}
 }
 
@@ -211,6 +213,8 @@ static void R_DrawPtlLine (const ptl_t * p)
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_LINE_STRIP, 0, 2);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	refdef.batchCount++;
 
 	R_Color(NULL);
 

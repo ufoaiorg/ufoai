@@ -38,6 +38,13 @@ void R_UseProgram  (r_program_t *prog)
 	if (!qglUseProgram || r_state.active_program == prog)
 		return;
 
+	if (!r_state.active_program)
+		refdef.FFPToShaderCount++;
+	else if (!prog)
+		refdef.shaderToFFPCount++;
+	else
+		refdef.shaderToShaderCount++;
+
 	r_state.active_program = prog;
 
 	if (prog) {

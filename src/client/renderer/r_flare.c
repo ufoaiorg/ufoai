@@ -114,6 +114,8 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 			glDrawArrays(GL_QUADS, 0, l / 3);
 			j = k = l = 0;
 
+			refdef.batchCount++;
+
 			image = f->image;
 			R_BindTexture(image->texnum);
 		}
@@ -181,6 +183,8 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 	}
 
 	glDrawArrays(GL_QUADS, 0, l / 3);
+
+	refdef.batchCount++;
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	R_EnableBlend(oldblend);

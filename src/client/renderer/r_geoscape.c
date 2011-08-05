@@ -91,6 +91,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 	R_BindTexture(gl->texnum);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+	refdef.batchCount++;
+
 	/* draw night map */
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
@@ -117,6 +119,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		R_SelectTexture(&texunit_diffuse);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+		refdef.batchCount++;
+
 		R_SelectTexture(&texunit_lightmap);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_texcoords);
 
@@ -132,6 +136,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		/* draw day image */
 		R_BindTexture(gl->texnum);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+		refdef.batchCount++;
 	}
 
 	/* draw XVI image */
@@ -147,6 +153,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+		refdef.batchCount++;
+
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 
@@ -154,6 +162,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 	if (overlayRadar) {
 		R_BindTexture(r_radarTexture->texnum);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+		refdef.batchCount++;
 	}
 
 	/* and restore them */
@@ -382,6 +392,8 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 
 	/* draw the cube */
 	glDrawArrays(GL_QUADS, 0, 24);
+
+	refdef.batchCount++;
 
 	/* restore previous matrix */
 	glPopMatrix();
@@ -670,6 +682,8 @@ static inline void R_DrawQuad (void)
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoord);
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+	refdef.batchCount++;
 
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);

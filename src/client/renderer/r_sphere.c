@@ -150,6 +150,8 @@ static void R_SphereRenderTris (const sphere_t *sphere)
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
 
+	refdef.batchCount++;
+
 	glDisable(GL_NORMALIZE);
 	glDisable(GL_CULL_FACE);
 }

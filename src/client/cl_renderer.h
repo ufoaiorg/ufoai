@@ -211,7 +211,8 @@ typedef struct {
 	float time;					/**< time is used to auto animate */
 	int rendererFlags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
-	int brushCount, aliasCount;
+	int brushCount, aliasCount, batchCount;
+	int FFPToShaderCount, shaderToShaderCount, shaderToFFPCount;
 
 	int weather;				/**< weather effects */
 	vec4_t fogColor;
