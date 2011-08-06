@@ -359,101 +359,96 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
  * @param[in] in The non-preprocessed shader string.
  * @param[in,out] out The preprocessed shader string, NULL if we don't want to write to it.
  * @param[in,out] remainingOutChars The number of characters left in the out buffer.
- * @param[in] terminateAtEndIf If true, return when we hit an #endif; if false, its an error if an #endif was encountered.
- * @param[in] writeEndifToOut If true, write the #endif to out.
- * @param[in] dontWriteElseClaseToOut If true, don't write the #else/#endif clause to out, just parse over it.
- * @param[in] dontParseInOverEndIf If true, don't move in over #endif.
- * @param[in] dontParseInOverElse If true, don't move in over #else.
+ * @param[in] nested If true, parsing a part of #if clause, so #else and #endif tokens are allowed
+ * @param[in] inElse If true, parsing an #else clause and shouldn't expect another #else
  * @return The number of characters added to the buffer pointed to by out.
  */
-static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, long *remainingOutChars, qboolean terminateAtEndIf,
-		qboolean writeEndifToOut, qboolean dontWriteElseClaseToOut, qboolean dontParseInOverEndIf, qboolean dontParseInOverElse)
+static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, long *remainingOutChars, qboolean nested, qboolean inElse)
 {
 	const size_t INITIAL_REMAINING_OUT_CHARS = (size_t)*remainingOutChars;
 	/* Keep looping till we reach the end of the shader string, or a parsing error.*/
 	while (**inPtr) {
 		if ('#' == **inPtr) {
+			qboolean endBlockToken;
 			(*inPtr)++;
-			if (!strncmp(*inPtr, "endif", 5)) {
-				if (!terminateAtEndIf) {
+
+			endBlockToken = !strncmp(*inPtr, "endif", 5);
+
+			if (!strncmp(*inPtr, "else", 4)) {
+				if (inElse) {
 					/* Error in shader! Print a message saying our preprocessor failed parsing.*/
-					Com_Error(ERR_DROP, "R_PreprocessShaderR: Unmatched #endif: %s", name);
+					Com_Error(ERR_DROP, "R_PreprocessShaderR: #else without #if: %s", name);
 				}
-				/* Write the #endif, it goes into the out buffer since it does not correspond with an "#if".*/
-				if (out && writeEndifToOut) {
-					(*remainingOutChars) -= 6;
-					if (*remainingOutChars <= 0)
-						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
-					/* Write the #.*/
-					*out++ = '#';
-					/* Write the 'endif'.*/
-					strncpy(out, *inPtr, 5);
-					out += 5;
+				endBlockToken = qtrue;
+			}
+
+			if (endBlockToken) {
+				if (!nested) {
+					/* Error in shader! Print a message saying our preprocessor failed parsing.*/
+					Com_Error(ERR_DROP, "R_PreprocessShaderR: Unmatched #endif/#else: %s", name);
 				}
-				if (!dontParseInOverEndIf) {
-					/* Only advance over the endif if we are not in an else clause, let the parent call do that.*/
-					(*inPtr) += 5;
-				} else {
-					/* Move back to the starting '#', the parent call wants to see this token.*/
-					(*inPtr)--;
-				}
+				/* Whoever called us will have to deal with closing the block */
 				return (INITIAL_REMAINING_OUT_CHARS - (size_t)*remainingOutChars);
-			} else if (dontWriteElseClaseToOut && !strncmp((*inPtr), "else", 4)) {
-				if (dontParseInOverElse) {
-					/* This else is in a structure with a '#if' that was false.*/
-					/* Move back to the starting '#', the parent call wants to see this token.*/
-					(*inPtr)--;
-				} else {
-					/* This else is in a structure with a '#if' that was true.*/
-					/* Don't copy else into out.*/
-					(*inPtr) += 4;
-					/* Don't modify out.*/
-					R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, qtrue, qfalse, qtrue, qtrue, qfalse);
-				}
-			} else if (!strncmp((*inPtr), "if ", 3)) {
+			}
+
+			if (!strncmp((*inPtr), "if ", 3)) {
 				/* The line looks like "#if r_postprocess".*/
 				float f = 0.0f;
 				(*inPtr) += 3;
 				/* Get the corresponding cvar value.*/
 				f = Cvar_GetValue(Com_Parse(inPtr));
-				if (f) {
-					if (out) {
-						out += R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse, qtrue, qfalse, qfalse);
-					} else {
-						R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse, qtrue, qfalse, qfalse);
+				if (f) { /* Condition is true, recursively preprocess #if block, and skip over #else block, if any */
+					int size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse);
+					if (out) out += size;
+
+					if (!strncmp((*inPtr), "else", 4)) {/* Preprocess and skip #else block */
+						(*inPtr) +=4 ;
+						R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, qtrue, qtrue);
 					}
 				} else {
 					/* The cvar was false, don't add to out. Lets look and see if we hit a #else, or #endif.*/
-					R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, qtrue, qfalse, qfalse, qtrue, qtrue);
-					if (!strncmp((*inPtr), "#endif", 6)) {
-						/* All right, parse over it, don't write to out.*/
-						(*inPtr) += 6;
-					} else if (!strncmp((*inPtr), "#else", 5)) {
+					R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, qtrue, qfalse);
+					if (!strncmp((*inPtr), "else", 4)) {
+						int size;
 						/* All right, we want to add this to out.*/
-						(*inPtr)++;
-						out += R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse, qfalse, qfalse, qfalse);
+						(*inPtr) +=4 ;
+						size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue);
+						if (out) out += size;
 					}
 				}
-			} else if (!strncmp((*inPtr), "ifndef", 6)) {
+				/* skip #endif, if any (could also get here by unexpected EOF */
+				if (!strncmp((*inPtr), "endif", 5))
+					(*inPtr) +=5 ;
+			} else if (!strncmp((*inPtr), "ifndef", 6) || !strncmp((*inPtr), "ifdef", 5)) { /* leave those for GLSL compiler, but follow #else/#endif nesting */
+				int size;
 				if (out) {
 					if (*remainingOutChars <= 0)
 						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
 					*out++ = '#';
 					(*remainingOutChars)--;
-					out += R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue, qfalse, qfalse, qfalse);
-				} else {
-					R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue, qfalse, qfalse, qfalse);
 				}
-			} else if (!strncmp((*inPtr), "ifdef", 5)) {
+
+				size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse);
+				if (out) out += size;
+
+				if (!strncmp((*inPtr), "else", 4)) {
+					if (out) {
+						if (*remainingOutChars <= 0)
+							Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+						*out++ = '#';
+						(*remainingOutChars)--;
+					}
+					size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue);
+					if (out) out += size;
+				}
+
 				if (out) {
 					if (*remainingOutChars <= 0)
 						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
 					*out++ = '#';
 					(*remainingOutChars)--;
-					out += R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue, qfalse, qfalse, qfalse);
-				} else {
-					R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue, qfalse, qfalse, qfalse);
 				}
+
 			} else if (!strncmp((*inPtr), "include", 7)) {
 				char path[MAX_QPATH];
 				byte *buf = (byte*)0;
@@ -468,9 +463,9 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 				bufAsChar = (const char*)buf;
 				bufAsCharPtr = &bufAsChar;
 				if (out) {
-					out += R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, qfalse, qfalse, qfalse, qfalse, qfalse);
+					out += R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, nested, qfalse);
 				} else {
-					R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, qfalse, qfalse, qfalse, qfalse, qfalse);
+					R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, nested, qfalse);
 				}
 				FS_FreeFile(buf);
 			} else if (!strncmp((*inPtr), "unroll", 6)) {
@@ -564,7 +559,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t *remainingOutChars)
 {
 	long remainingOutCharsAsLong = *remainingOutChars;
-	size_t numCharactersAddedToOutBuffer = R_PreprocessShaderR(name, &in, out, &remainingOutCharsAsLong, qfalse, qfalse, qfalse, qfalse, qfalse);
+	size_t numCharactersAddedToOutBuffer = R_PreprocessShaderR(name, &in, out, &remainingOutCharsAsLong, qfalse, qfalse);
 	*remainingOutChars = remainingOutCharsAsLong;
 	return numCharactersAddedToOutBuffer;
 }
