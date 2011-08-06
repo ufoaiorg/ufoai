@@ -344,7 +344,7 @@ static void testInventoryTempContainerLinks (void)
 
 		/* first alien that should die and drop its inventory */
 		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
-
+		nr = 0;
 		for (container = 0; container < gi.csi->numIDs; container++) {
 			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
 				continue;
