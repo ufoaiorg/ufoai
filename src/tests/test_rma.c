@@ -141,12 +141,48 @@ static void testMassAssemblySequential (void)
 	}
 }
 
+/* test the maps that have seedlists */
+static void testSeedlists (void)
+{
+	int i, n;
+	long time, timeSum = 0;
+	mapInfo_t *randomMap;
+	const char* assNames[][2] = {
+		{"farm", "medium"},
+		{"farm", "large"},
+		{"forest", "large"},
+		{"forest", "large_crash"},
+		{"oriental", "large"},
+		{"village", "commercial"},
+		{"village", "small"}
+	};
+
+	sv_threads->integer = 0;
+	for (n = 0; n < sizeof(assNames)/(2*sizeof(char *)); n++) {
+		for (i = 0; i < 40; i++) {
+			srand(i);
+			time = Sys_Milliseconds();
+			Com_Printf("Seed: %i\n", i);
+			randomMap = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, i);
+			CU_ASSERT(randomMap != NULL);
+			time = (Sys_Milliseconds() - time);
+			timeSum += time;
+			CU_ASSERT(time < 30000);
+			if (time > 10000)
+				Com_Printf("Seed %i: tiles: %i ms: %li\n", i, randomMap->numPlaced, time);
+			Mem_Free(randomMap);
+		}
+	}
+	Com_Printf("TotalTime: %li\n", timeSum);
+}
+
 #define SEED_TEST 0
 #if SEED_TEST
-/* test a range of random seeds */
+/* test the maps that have problems with certain seeds */
+/* this can also be used to produce new seedlists */
 /* "japan big" has problems with seeds 5, 13, 25, 32, 47 */
 /* "hills desert_harvester" has problems with seeds 1?, 3, 5, 7, 8 */
-static void testMassAssemblySeed (void)
+static void testNewSeedlists (void)
 {
 	int i;
 	long time, timeSum = 0;
@@ -157,14 +193,7 @@ static void testMassAssemblySeed (void)
 		srand(i);
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);
-//		randomMap = SV_AssembleMap("village", "small", mapStr, posStr, i);
 		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr, i);
-//		randomMap = SV_AssembleMap("farm", "medium", mapStr, posStr, i);
-//		randomMap = SV_AssembleMap("farm", "large", mapStr, posStr, i);
-//		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
-//		randomMap = SV_AssembleMap("forest", "large_crash", mapStr, posStr, i);
-//		randomMap = SV_AssembleMap("oriental", "large", mapStr, posStr, i);
-//		randomMap = SV_AssembleMap("village", "commercial", mapStr, posStr, i);
 //		randomMap = SV_AssembleMap("hills", "desert_harvester", mapStr, posStr, i);
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
@@ -199,10 +228,13 @@ int UFO_AddRandomMapAssemblyTests (void)
 		return CU_get_error();
 #if SEED_TEST
 	/* This test should normally (ie. buildbot) not be active */
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySeed) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testNewSeedlists) == NULL)
 		return CU_get_error();
 #else
 	/* add the tests to the suite */
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testSeedlists) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(RandomMapAssemblySuite, testUMPExtends) == NULL)
 		return CU_get_error();
 
