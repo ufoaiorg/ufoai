@@ -734,6 +734,8 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 	return prog;
 }
 
+extern vec2_t fogRange;
+
 static void R_InitWorldProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
@@ -754,11 +756,29 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
 	if (r_postprocess->integer)
 		R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
 }
 
 static void R_UseWorldProgram (r_program_t *prog)
 {
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
 }
 
 static void R_InitWarpProgram (r_program_t *prog)
@@ -772,6 +792,15 @@ static void R_InitWarpProgram (r_program_t *prog)
 		R_ProgramParameter1f("GLOWSCALE", 0.0);
 	}
 	R_ProgramParameter4fv("OFFSET", offset);
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
 }
 
 static void R_UseWarpProgram (r_program_t *prog)
@@ -780,6 +809,15 @@ static void R_UseWarpProgram (r_program_t *prog)
 
 	offset[0] = offset[1] = refdef.time / 8.0;
 	R_ProgramParameter4fv("OFFSET", offset);
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
 }
 
 static void R_InitGeoscapeProgram (r_program_t *prog)

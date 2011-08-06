@@ -3,6 +3,9 @@
  * @brief Fog vertex shader.
  */
 
+uniform float FOGDENSITY;
+uniform vec2 FOGRANGE; /* start, end */
+
 out_qualifier float fog;
 
 /**
@@ -10,6 +13,6 @@ out_qualifier float fog;
  */
 void FogVertex(void) {
 	/* Calculate interpolated fog depth.*/
-	fog = (gl_Position.z - gl_Fog.start) / (gl_Fog.end - gl_Fog.start);
-	fog = clamp(fog, 0.0, 1.0) * gl_Fog.density;
+	fog = (gl_Position.z - FOGRANGE[0]) / (FOGRANGE[1] - FOGRANGE[0]);
+	fog = clamp(fog, 0.0, 1.0) * FOGDENSITY;
 }

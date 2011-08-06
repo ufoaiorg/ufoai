@@ -563,6 +563,8 @@ void R_EnableShell (qboolean enable)
 #define FOG_START	300.0
 #define FOG_END		2500.0
 
+vec2_t fogRange = {FOG_START, FOG_END};
+
 void R_EnableFog (qboolean enable)
 {
 	if (!r_fog->integer || r_state.fog_enabled == enable)
@@ -570,17 +572,26 @@ void R_EnableFog (qboolean enable)
 
 	r_state.fog_enabled = qfalse;
 
+	/* This is ugly. Shaders could be enabled or disabled between this and rendering call, so we have to setup both FFP and GLSL */
 	if (enable) {
-		if ((refdef.weather & WEATHER_FOG) || r_fog->integer == 2) {
+		if ( ((refdef.weather & WEATHER_FOG) && r_fog->integer) || r_fog->integer == 2) {
 			r_state.fog_enabled = qtrue;
 
 			glFogfv(GL_FOG_COLOR, refdef.fogColor);
-			glFogf(GL_FOG_DENSITY, 1.0);
+			glFogf(GL_FOG_DENSITY, refdef.fogColor[3]);
 			glEnable(GL_FOG);
+
+			if (r_programs->integer && (r_state.active_program == r_state.world_program || r_state.active_program == r_state.warp_program) ) {
+				R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+				R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+				R_ProgramParameter2fv("FOGRANGE", fogRange);
+			}
 		}
 	} else {
 		glFogf(GL_FOG_DENSITY, 0.0);
 		glDisable(GL_FOG);
+		if (r_programs->integer && (r_state.active_program == r_state.world_program || r_state.active_program == r_state.warp_program) )
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
 	}
 }
 
