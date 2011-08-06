@@ -245,7 +245,7 @@ uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
  * @todo check: key per window must be unique
  * @todo check: key used into UI_KeyPressed can't be used
  */
-void UI_SetKeyBinding (const char* path, int key)
+void UI_SetKeyBinding (const char* path, int key, const char* description)
 {
 	uiNode_t *node;
 	uiKeyBinding_t *binding;
@@ -266,6 +266,13 @@ void UI_SetKeyBinding (const char* path, int key)
 	binding->property = property;
 	binding->key = key;
 	node->key = binding;
+
+	if (!description || description[0] == '\0') {
+		Com_Printf("Warning: Empty description for UI keybinding: %s (%s)\n", path, Key_KeynumToString(key));
+	} else {
+		binding->description = Mem_PoolStrDup(description, ui_dynPool, 0);;
+	}
+
 	UI_WindowNodeRegisterKeyBinding(node->root, binding);
 }
 

@@ -617,8 +617,7 @@ static void Key_Unbindall_f (void)
  */
 static void Key_Bind_f (void)
 {
-	int i, c, b;
-	char cmd[1024];
+	int c, b;
 
 	c = Cmd_Argc();
 
@@ -640,22 +639,15 @@ static void Key_Bind_f (void)
 		return;
 	}
 
-	/* copy the rest of the command line */
-	cmd[0] = '\0';					/* start out with a null string */
-	for (i = 2; i < c; i++) {
-		Q_strcat(cmd, Cmd_Argv(i), sizeof(cmd));
-		if (i != (c - 1))
-			Q_strcat(cmd, " ", sizeof(cmd));
-	}
 
 	if (Q_streq(Cmd_Argv(0), "bindui"))
-		UI_SetKeyBinding(cmd, b);
+		UI_SetKeyBinding(Cmd_Argv(2), b, Cmd_Argv(3));
 	else if (Q_streq(Cmd_Argv(0), "bindmenu"))
-		Key_SetBinding(b, cmd, KEYSPACE_UI);
+		Key_SetBinding(b, Cmd_Argv(2), KEYSPACE_UI);
 	else if (Q_streq(Cmd_Argv(0), "bindbattle"))
-		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);
+		Key_SetBinding(b, Cmd_Argv(2), KEYSPACE_BATTLE);
 	else
-		Key_SetBinding(b, cmd, KEYSPACE_GAME);
+		Key_SetBinding(b, Cmd_Argv(2), KEYSPACE_GAME);
 }
 
 /**
@@ -705,7 +697,8 @@ void Key_WriteBindings (const char* filename)
 
 	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
 		const char *path;
-		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex (i);
+		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex(i);
+
 		if (binding->node == NULL)
 			continue;
 		if (binding->property == NULL)
@@ -713,7 +706,7 @@ void Key_WriteBindings (const char* filename)
 		else
 			path = va("%s@%s", UI_GetPath(binding->node), binding->property->string);
 
-		if (FS_Printf(&f, "bindui %s \"%s\"\n", Key_KeynumToString(binding->key), path) < 0)
+		if (FS_Printf(&f, "bindui %s \"%s\" \"%s\"\n", Key_KeynumToString(binding->key), path, binding->description ? binding->description : "") < 0)
 			deleteFile = qtrue;
 	}
 

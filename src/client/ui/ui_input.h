@@ -34,10 +34,11 @@ typedef struct uiKeyBinding_s {
 	struct uiNode_s *node;
 	const struct value_s *property;
 	int key;
+	const char* description;
 	struct uiKeyBinding_s *next;	/* next binding from the window list */
 } uiKeyBinding_t;
 
-void UI_SetKeyBinding(const char* path, int key);
+void UI_SetKeyBinding(const char* path, int key, const char* description);
 
 /* mouse input */
 void UI_MouseWheel(qboolean down, int x, int y);
