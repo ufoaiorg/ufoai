@@ -59,8 +59,10 @@
  * Do we have the strXXX() functions?
  */
 
+#if defined(WIN32) || defined(_WIN32)
+#else
 #define HAVE_STRDUP 1
-
+#endif
 
 /*
  * Do we have threading support?
