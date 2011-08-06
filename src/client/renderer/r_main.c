@@ -710,7 +710,7 @@ static inline uintptr_t R_GetProcAddress (const char *functionName)
 	return (uintptr_t)SDL_GL_GetProcAddress(functionName);
 }
 
-static inline uintptr_t R_GetProcAddressExt (const char *functionName)
+static uintptr_t R_GetProcAddressExt (const char *functionName)
 {
 	const char *s = strstr(functionName, "###");
 	if (s == NULL) {
