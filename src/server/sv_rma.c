@@ -1456,6 +1456,10 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		const int x = posList[i] % mapW;
 		const int y = posList[i] / mapW;
 
+		/* only use positions that are on the grid */
+		if (x % mAsm->dx != 0 || y % mAsm->dy != 0) {
+			continue;
+		}
 		for (k = 0; k < map->numToPlace; k++) {
 			const int ti = tilenumList[k];
 
