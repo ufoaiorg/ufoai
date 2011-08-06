@@ -125,11 +125,7 @@ _CRTIMP int __cdecl	_strnicmp (const char*, const char*, size_t);
 #	define Q_strncasecmp(s1, s2, n) strncasecmp((s1), (s2), (n))
 #endif
 
-static inline qboolean Q_streq(char const* const a, char const* const b)
-{
-	return strcmp(a, b) == 0;
-}
-
+#define Q_streq(a, b) (strcmp(a, b) == 0)
 #define Q_strnull(string) ((string) == NULL || (string)[0] == '\0')
 #define Q_strvalid(string) !Q_strnull(string)
 
