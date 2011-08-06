@@ -87,12 +87,12 @@ static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
 {
 	char buf[128];
 
-	/* it was our own round */
+	/* it was our own turn */
 	if (cgi->CL_GetPlayerNum() == playerNum) {
-		Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
+		Com_sprintf(buf, sizeof(buf), _("You've ended your turn.\n"));
 	} else {
 		const char *playerName = cgi->CL_PlayerGetName(playerNum);
-		Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
+		Com_sprintf(buf, sizeof(buf), _("%s ended his turn (team %i).\n"), playerName, team);
 	}
 	/* add translated message to chat buffer */
 	cgi->HUD_DisplayMessage(buf);

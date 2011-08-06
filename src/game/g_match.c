@@ -361,7 +361,7 @@ void G_MatchEndCheck (void)
 
 /**
  * @brief Checks whether the game is running (active team and no intermission time)
- * @return @c true if there is an active team for the current round and the end of the game
+ * @return @c true if there is an active team for the current turn and the end of the game
  * was not yet triggered
  * @sa G_MatchEndTrigger
  */

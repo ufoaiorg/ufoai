@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /**
- * @brief Check whether a forced round end should be executed
+ * @brief Check whether a forced turn end should be executed
  */
 void G_CheckForceEndRound (void)
 {
@@ -45,22 +45,22 @@ void G_CheckForceEndRound (void)
 	diff = level.roundstartTime + sv_roundtimelimit->integer - level.time;
 	switch (diff) {
 	case 240:
-		gi.BroadcastPrintf(PRINT_HUD, _("4 minutes left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("4 minutes left until forced turn end.\n"));
 		return;
 	case 180:
-		gi.BroadcastPrintf(PRINT_HUD, _("3 minutes left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("3 minutes left until forced turn end.\n"));
 		return;
 	case 120:
-		gi.BroadcastPrintf(PRINT_HUD, _("2 minutes left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("2 minutes left until forced turn end.\n"));
 		return;
 	case 60:
-		gi.BroadcastPrintf(PRINT_HUD, _("1 minute left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("1 minute left until forced turn end.\n"));
 		return;
 	case 30:
-		gi.BroadcastPrintf(PRINT_HUD, _("30 seconds left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("30 seconds left until forced turn end.\n"));
 		return;
 	case 15:
-		gi.BroadcastPrintf(PRINT_HUD, _("15 seconds left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("15 seconds left until forced turn end.\n"));
 		return;
 	}
 
@@ -152,7 +152,7 @@ void G_ClientEndRound (player_t * player)
 	player_t *p;
 
 	if (!G_IsAIPlayer(player)) {
-		/* inactive players can't end their inactive round :) */
+		/* inactive players can't end their inactive turn :) */
 		if (level.activeTeam != player->pers.team)
 			return;
 

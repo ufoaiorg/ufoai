@@ -325,7 +325,7 @@ void G_EventActorStats (const edict_t* ent, int playerMask)
 }
 
 /**
- * @brief End of round event for the current active team
+ * @brief End of turn event for the current active team
  * @note This event is send to every connected client
  */
 void G_EventEndRound (void)

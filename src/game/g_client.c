@@ -304,7 +304,7 @@ void G_SendInvisible (const player_t* player)
 /**
  * @brief Returns the current active team to the server
  * @par If this has the value @c TEAM_NO_ACTIVE there is either no
- * living actor for any player left, or the round wasn't started yet.
+ * living actor for any player left, or the turn wasn't started yet.
  */
 int G_GetActiveTeam (void)
 {
@@ -371,7 +371,7 @@ qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int 
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - it is not your turn!\n"));
 		return qfalse;
 	}
 
@@ -909,7 +909,7 @@ qboolean G_ClientIsReady (const player_t * player)
 
 /**
  * @brief Chose a team that should start the match
- * @param[in] player In singleplayer mode the team of this player will get the first round
+ * @param[in] player In singleplayer mode the team of this player will get the first turn
  * @sa SVCmd_StartGame_f
  */
 static void G_GetStartingTeam (const player_t* player)

@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../cl_hud.h"
 /**
- * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
+ * @brief Finishes the current turn of the player in battlescape and starts the turn for the next team.
  */
 static void CL_NextRound_f (void)
 {
@@ -38,7 +38,7 @@ static void CL_NextRound_f (void)
 
 	/* can't end round if we're not active */
 	if (cls.team != cl.actTeam) {
-		HUD_DisplayMessage(_("This isn't your round"));
+		HUD_DisplayMessage(_("It is not your turn!"));
 		return;
 	}
 
@@ -50,5 +50,5 @@ static void CL_NextRound_f (void)
 
 void CL_ServerEventsInit (void)
 {
-	Cmd_AddCommand("nextround", CL_NextRound_f, N_("Ends current round"));
+	Cmd_AddCommand("nextround", CL_NextRound_f, N_("End current turn."));
 }

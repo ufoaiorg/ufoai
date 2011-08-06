@@ -120,13 +120,13 @@ typedef struct {
 								 * This value is relative to @c level.time
 								 * @sa G_MatchDoEnd */
 	int winningTeam;			/**< the team that won this match */
-	float roundstartTime;		/**< the time the team started the round */
+	float roundstartTime;		/**< the time the team started the turn */
 
-	/* round statistics */
+	/* turn statistics */
 	int numplayers;
 	int activeTeam;
 	int nextEndRound;
-	int actualRound;	/**< the current running round counter */
+	int actualRound;	/**< the current running turn counter */
 
 	pathing_t *pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
 
@@ -599,7 +599,7 @@ struct player_s {
 	/* private to game */
 	qboolean spawned;			/**< already spawned? */
 	qboolean began;				/**< the player sent his 'begin' already */
-	qboolean roundDone;			/**< ready to end his round */
+	qboolean roundDone;			/**< ready to end his turn */
 
 	int reactionLeftover;		/**< Minimum TU left over by reaction fire */
 	qboolean autostand;			/**< autostand for long walks */

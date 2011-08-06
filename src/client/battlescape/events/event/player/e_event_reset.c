@@ -41,12 +41,12 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 	/* set the active player */
 	NET_ReadFormat(msg, self->formatString, &cls.team, &cl.actTeam);
 
-	Com_Printf("(player %i) It's team %i's round\n", cl.pnum, cl.actTeam);
+	Com_Printf("(player %i) It's team %i's turn!\n", cl.pnum, cl.actTeam);
 
 	CL_CompleteRecalcRouting();
 
 	if (cls.team == cl.actTeam)
 		UI_ExecuteConfunc("startround");
 	else
-		Com_Printf("You lost the coin-toss for first-turn\n");
+		Com_Printf("You lost the coin-toss for first-turn.\n");
 }
