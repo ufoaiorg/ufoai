@@ -1,3 +1,22 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
+"POT-Creation-Date: 2011-07-30 09:00+0200\n"
+"PO-Revision-Date: 2011-08-04 11:59+0600\n"
+"Last-Translator: Vadimuzzz <vadimuzzz@gmail.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Bookmarks: 1885,1541,-1,-1,829,-1,-1,882,410,-1\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+
 msgid "Autocannon Module"
 msgstr "Модуль автопушки"
 
@@ -324,7 +343,6 @@ msgstr "Лечение"
 msgid "Medikit"
 msgstr "Медкомплект"
 
-#, fuzzy
 msgid "Requirement(s):"
 msgstr "Требования:"
 
@@ -467,35 +485,29 @@ msgstr "Начать игру"
 msgid "<1>"
 msgstr "<1>"
 
-#, fuzzy
 msgid "Quit"
-msgstr "Кито"
+msgstr "Выйти"
 
 msgid "You will lose all your progress."
-msgstr ""
+msgstr "Вы потеряете все свои достижения."
 
-#, fuzzy
 msgid "Enter the game options menu."
-msgstr "Покинуть меню настроек."
+msgstr "Войти в меню настроек игры."
 
-#, fuzzy
 msgid "Retry this battlescape mission."
-msgstr "Переиграть операцию"
+msgstr "Переиграть эту операцию."
 
-#, fuzzy
 msgid "Abort this battlescape mission."
-msgstr "Доступные панели управления для поля боя."
+msgstr "Прервать эту операцию."
 
 msgid "Abort"
 msgstr "Прервать"
 
-#, fuzzy
 msgid "Go back to the battlescape."
-msgstr "Доступные панели управления для поля боя."
+msgstr "Вернуться на поле боя."
 
-#, fuzzy
 msgid "Back to the main menu."
-msgstr "Выйти в главное меню"
+msgstr "Вернуться в главное меню."
 
 msgid "Base Info"
 msgstr "Информация о базе"
@@ -608,9 +620,8 @@ msgstr "«Нет» означает, что ваши приказы на пол�
 msgid "Confirm Actions:"
 msgstr "Подтверждение действий:"
 
-#, fuzzy
 msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
-msgstr "Включение этой опции даст вам предварительный просмотр действий на поле боя, которые вы должны подтвердить. Как минимум, это стоит попробовать."
+msgstr "Включение этой опции даст вам предварительный просмотр действий на поле боя, которые вы должны подтвердить."
 
 msgid "Choose between 0-9, higher values mean higher actor speed."
 msgstr "Выберите 0—9, более высокие значения означают более быстрые перемещения."
@@ -690,9 +701,8 @@ msgstr "Частота дискретизации в кГц. Используй�
 msgid "Advanced Audio Options"
 msgstr "Детальные настройки звука"
 
-#, fuzzy
 msgid "Turn the menu sounds on or off."
-msgstr "Включение/выключение ответного огня"
+msgstr "Включение/выключение звуков меню."
 
 msgid "Menu Sounds:"
 msgstr "Звуки меню:"
@@ -911,13 +921,13 @@ msgid "Texture Settings"
 msgstr "Настройки текстур"
 
 msgid "Default is to play the intro video just once at the first game start."
-msgstr ""
+msgstr "По умолчанию вводный видеоролик воспроизводится только при первом запуске игры."
 
 msgid "Hold Back Intro Video:"
-msgstr ""
+msgstr "Не пропускать вводный видеоролик:"
 
 msgid "Do not play the intro movie when starting the game."
-msgstr ""
+msgstr "Не показывать вводный видеоролик при запуске игры."
 
 msgid "Display the number of rendered frames per second."
 msgstr "Показывать количество отрисовываемых кадров в секунду."
@@ -1072,9 +1082,8 @@ msgstr "Минимальный/максимальный масштаб каме�
 msgid "3D Geoscape:"
 msgstr "Трехмерный земной шар:"
 
-#, fuzzy
 msgid "3D or 2D geoscape. To enable this option you have to start a new campaign first."
-msgstr "Использовать 3-мерный глобус. Для включения этой опции вы должны сперва начать новую кампанию."
+msgstr "Использовать 2-х или 3-мерный глобус. Для включения этой опции вы должны сперва начать новую кампанию."
 
 msgid "Geoscape Options"
 msgstr "Настройки глобуса"
@@ -1472,7 +1481,7 @@ msgid "Tutorials"
 msgstr "Обучение"
 
 msgid "Choose between Campaign or Skirmish mode."
-msgstr ""
+msgstr "Выберите между режимами «Кампания» и «Схватка»."
 
 msgid "Single-player"
 msgstr "Одиночная игра"
@@ -1586,11 +1595,10 @@ msgid "Phone HUD"
 msgstr ""
 
 msgid "No more ammo"
-msgstr ""
+msgstr "Больше нет боеприпасов"
 
-#, fuzzy
 msgid "No ammo"
-msgstr "Не требуется боеприпасов"
+msgstr "Нет боеприпасов"
 
 msgid "Reload"
 msgstr "Перезапуск"
@@ -1785,9 +1793,8 @@ msgstr "Убито противников:"
 msgid "Missions Performed:"
 msgstr "Операций выполнено:"
 
-#, fuzzy
 msgid "Rename employee"
-msgstr "Переименуйте персонал"
+msgstr "Переименовать персонал"
 
 msgid "Hire - Right click to remove"
 msgstr "Нанять — правый клик, чтобы удалить"
@@ -2069,19 +2076,19 @@ msgid "Equip this soldier"
 msgstr "Снарядить этого солдата"
 
 msgid "Do not quit."
-msgstr ""
+msgstr "Не выходить."
 
 msgid "Quit anyway"
-msgstr ""
+msgstr "Всё равно выйти"
 
 msgid "Exit current campaign and return to main menu."
-msgstr ""
+msgstr "Выйти из текущей кампании и вернуться в главное меню."
 
 msgid "You will lose all your campaign progress."
-msgstr ""
+msgstr "Вы потеряете все ваши достижения в кампании."
 
 msgid "Exit Campaign Confirmation"
-msgstr ""
+msgstr "Подтверждение выхода из кампании"
 
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Благодарим вас за игру в UFO:Alien Invasion"
@@ -2104,16 +2111,14 @@ msgstr "Выход"
 msgid "Options"
 msgstr "Настройки"
 
-#, fuzzy
 msgid "Leave this menu and continue playing."
-msgstr "Загрузить последнюю сохраненную игру и продолжить"
+msgstr "Покинуть это меню и продолжить играть."
 
 msgid "Back"
 msgstr "Назад"
 
-#, fuzzy
 msgid "Load last saved game or continue playing."
-msgstr "Загрузить последнюю сохраненную игру и продолжить"
+msgstr "Загрузить последнюю сохранённую игру или продолжить играть."
 
 msgid "Continue"
 msgstr "Продолжить"
@@ -2121,9 +2126,8 @@ msgstr "Продолжить"
 msgid "Load"
 msgstr "Загрузить"
 
-#, fuzzy
 msgid "Start a new singleplayer campaign."
-msgstr "Теперь, после того, как Вы прошли однопользовательские кампании"
+msgstr "Начать новую однопользовательскую кампанию."
 
 msgid "Start campaign"
 msgstr "Начать игру"
@@ -2436,13 +2440,13 @@ msgid "CREDITS"
 msgstr "БАЛАНС"
 
 msgid "Wounded aliens are easier to stun. Also, if an alien has been already attacked with a stun rod or electrolaser, normally lethal weapons may just knock it unconscious"
-msgstr ""
+msgstr "Раненого пришельца легче оглушить. Если пришелец уже был атакован при помощи парализатора или тетанайзера, попадание из обычно смертельного оружия также может оглушить противника."
 
 msgid "Never risk your soldier's life just to capture an alien alive. There will be other occasions."
-msgstr ""
+msgstr "Никогда не рискуйте жизнью ваших солдат только для того, чтобы захватить пришельца живьём. Для этого представятся другие возможности."
 
 msgid "Remember, that researching a new weapon is just half of the effort. You also have to manufacture it. If you keep researching field equipment only, your workshops may not keep up with the work. Give Dr. Connor some lab time too"
-msgstr ""
+msgstr "Помните, исследование нового оружия — это только половина дела. Вы должны также производить его. Если вы сконцентрируете исследования только на походном снаряжении, ваши мастерские могут не успевать его производить. Обеспечьте д-ру Коннору некоторое количество лабораторного времени."
 
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "Вы можете подготовить действия на следующий раунд, пока ожидаете. Нажатие кнопки [Enter] дважды произведет все запланированные действия, как только начнется ваш ход."
@@ -2481,7 +2485,7 @@ msgid "Utilize sniper cover. Get snipers to spots with good visibility (high gro
 msgstr "Используйте снайперское прикрытие. Обеспечьте снайперу место с хорошим обзором (возвышенности и углы на крыше, например). Оставьте их в согнутом положении, а режим ответного огня установите в «множественные выстрелы», чтобы стрелять  в появляющихся пришельцев."
 
 msgid "You should never kill civilians. Soldiers who killed civilians will not be promoted to high ranks."
-msgstr ""
+msgstr "Вы никогда не должны убивать гражданских лиц. Убившие штатских солдаты не получат повышения в звании."
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Убедитесь, что не слишком много гражданских погибает. Иначе вы можете проиграть игру раньше, чем рассчитываете."
@@ -2550,7 +2554,7 @@ msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a 
 msgstr "Если у вас мало единиц времени (ЕВ), и поблизости опасные враги, использование ослепляющей гранаты, чтобы обездвижить их до вашего следующего хода, может быть самым лучшим выбором. 2 ЕВ (достать из кобуры) + 12 ЕВ (бросок) = 14 ЕВ."
 
 msgid "Press [esc] twice if you want to change the music track playing on the battlescape. This will fade-out one track and fade-in another."
-msgstr ""
+msgstr "Нажмите [esc] дважды, если хотите сменить музыкальный трек, воспроизводимый на поле боя. Это действие плавно приглушит текущую дорожку и начнёт другую."
 
 msgid "Press [e] to end your turn on the battlescape."
 msgstr "Нажмите [e] чтоб завершить свой ход."
@@ -2622,7 +2626,7 @@ msgid "Assemble and save different teams for multiplayer matches - 4 player team
 msgstr "Создайте и сохраните различные команды для многопользовательских матчей - команды из 4 игроков, из 8 и так далее. Так вы сможете быстро загрузить нужную для быстрой игры."
 
 msgid "Use [F1] key to quick save the game. Use [F2] key to quick load the game. Also, the game saves your state to the quick save before each mission."
-msgstr ""
+msgstr "Используйте клавишу [F1] для быстрого сохранения игры, [F2] для быстрой загрузки. Игра также сохраняет состояние перед каждой миссией."
 
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr "Используйте [Shift] чтоб вручную выставить высоту прицеливания. К примеру это может быть полезно при выстреле из ракетницы в центр группы пришельцев."
@@ -2845,9 +2849,8 @@ msgstr "Конфликты к концу века стали редкостью,
 msgid "intro_sentence1"
 msgstr "2084 год. На Земле, никогда не бывшей столь стабильной, наступает время относительного мира. Жестокие первые годы XXI века теперь далеко; отдалённые воспоминания, но не настолько отдалённые, чтобы о них забыли. Для большинства народов Земли Вторая холодная война — лишь тёмная тень из прошлого, подобная тем, какими были Мировые войны для детей конца XX века."
 
-#, fuzzy
 msgid "Copyright 2004-2011 by UFO: AI Team"
-msgstr "Copyright 2004-2010 by UFO: AI Team"
+msgstr "Copyright 2004-2011 by UFO: AI Team"
 
 msgid "http://ufoai.sf.net"
 msgstr "http://ufoai.sf.net"
@@ -8128,9 +8131,8 @@ msgstr "Объединённая Америка"
 msgid "The Revolutionary Countries"
 msgstr "Революционные Страны"
 
-#, fuzzy
 msgid "missions"
-msgstr "Операции"
+msgstr "операции"
 
 msgid "ufo_activity"
 msgstr "Активность НЛО"
@@ -8232,7 +8234,7 @@ msgid "Cross"
 msgstr "Крест"
 
 msgid "Training Zone: Alpha."
-msgstr ""
+msgstr "Тренировочная зона «Альфа»."
 
 msgid "Rescue mission."
 msgstr "Спасательная миссия."
@@ -10433,9 +10435,8 @@ msgstr "Жар-Птица ДТ"
 msgid "Firebird-class Dropship"
 msgstr "Десантный транспорт «Жар-птица»"
 
-#, fuzzy
 msgid "Village large"
-msgstr "Сельский большой"
+msgstr "Сельский — большая карта"
 
 msgid "Village recreational"
 msgstr "Сельский развлекательный"
@@ -10458,9 +10459,8 @@ msgstr "Тропическая река"
 msgid "Transport"
 msgstr "Транспортный узел"
 
-#, fuzzy
 msgid "Tower"
-msgstr "Power:"
+msgstr "Башня"
 
 msgid "Stadium"
 msgstr "Стадион"
@@ -10471,7 +10471,6 @@ msgstr "Доставка"
 msgid "Rescue mission"
 msgstr "Спасательная миссия"
 
-#, fuzzy
 msgid "Oriental large"
 msgstr "Ближневосточный — большая карта"
 
@@ -11154,9 +11153,9 @@ msgstr "Ваш десантный транспорт слишком далеко
 msgid "Base '%s' is under attack! What to do ?"
 msgstr "База «%s» атакована - что делать?"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack!"
-msgstr "База атакована"
+msgstr "База '%s'  атакована!"
 
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
@@ -12249,9 +12248,8 @@ msgstr "Разбишийся самолёт"
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
 
-#, fuzzy
 msgid "base_attack"
-msgstr "Нападение на базу"
+msgstr "base_attack"
 
 msgid "ufo_attacking"
 msgstr "Атака НЛО"
@@ -13367,13 +13365,11 @@ msgstr "загрузка моделей..."
 msgid "loading %s"
 msgstr "загрузка %s"
 
-#, fuzzy
 msgid "Execute an action."
-msgstr "Выбранная страна:"
+msgstr "Выполнить действие."
 
-#, fuzzy
 msgid "Start aiming the weapon."
-msgstr "Патроны для этого оружия"
+msgstr "Начать прицеливание оружия."
 
 msgid "Toggle reaction fire"
 msgstr "Переключить режим ответного огня"
@@ -13388,7 +13384,7 @@ msgid "Reload the weapon in the soldiers left hand"
 msgstr "Перезарядить оружие в левой руке солдата"
 
 msgid "Set selected actor to move mode (it cancels the fire mode)"
-msgstr ""
+msgstr "Установить для выбранного персонажа режим передвижения (это отменяет режим огня)"
 
 msgid ""
 "Can't perform action:\n"
@@ -13653,25 +13649,6 @@ msgstr "заурядно"
 
 msgid "Poor"
 msgstr "плохо"
-
-msgid ""
-msgstr ""
-"Project-Id-Version: UFO Alien Invasion\n"
-"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-30 09:00+0200\n"
-"PO-Revision-Date: 2011-07-29 14:49+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
-"Language-Team: \n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Poedit-Bookmarks: 1885,1541,-1,-1,829,-1,-1,882,410,-1\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIAN FEDERATION\n"
 
 #~ msgid "Joystick speed."
 #~ msgstr "Скорость джойстика."
@@ -14493,6 +14470,7 @@ msgstr ""
 #~ msgstr "Зарядная кассета игломёта"
 
 #~ msgid "%d day\n"
+
 #~ msgid_plural "%d days\n"
 #~ msgstr[0] "%d день\n"
 #~ msgstr[1] "%d дня\n"
@@ -15495,12 +15473,14 @@ msgstr ""
 #~ msgstr "Лечить этого солдата"
 
 #~ msgid "medic"
+
 #~ msgid_plural "medics"
 #~ msgstr[0] "медик"
 #~ msgstr[1] "медика"
 #~ msgstr[2] "медиков"
 
 #~ msgid "Healing of %s completed - %i active healing left\n"
+
 #~ msgid_plural "Healing of %s completed - %i active healings left\n"
 #~ msgstr[0] "Курс лечения для %s завершён - %i боец всё ещё в лазарете.\n"
 #~ msgstr[1] "Курс лечения для %s завершён - %i бойца всё ещё в лазарете.\n"
@@ -15617,100 +15597,68 @@ msgstr ""
 # При разрешениии 1024*768 входит не более 17 символов
 #~ msgid "Camera Scroll:"
 #~ msgstr "Движение камеры:"
-
 #~ msgid "Camera Rotation:"
 #~ msgstr "Вращение камеры:"
-
 #~ msgid "Alien Medium Armour"
 #~ msgstr "Средняя броня пришельцев"
-
 #~ msgid "UFO - Condor"
 #~ msgstr "НЛО - Канонерка"
-
 #~ msgid "%s\t%0.2f%%\n"
 #~ msgstr "%s\t%0.2f%%\n"
-
 #~ msgid "Crashed Alien Ship. Secure the area."
 #~ msgstr "Сбито НЛО. Обследовать зону крушения."
-
 #~ msgid "Reload right hand weapon"
 #~ msgstr "Перезарядить оружие в правой руке"
-
 #~ msgid "Reload left hand weapon"
 #~ msgstr "Перезарядить оружие в левой руке"
-
 #~ msgid "Crouch/Stand up"
 #~ msgstr "Присесть/Встать"
-
 #~ msgid "Previous Base"
 #~ msgstr "Предыдущая база"
-
 #~ msgid "Next Base"
 #~ msgstr "Следующая база"
-
 #~ msgid "Personnel"
 #~ msgstr "Персонал"
-
 #~ msgid "Soldiers:"
 #~ msgstr "Солдаты:"
-
 #~ msgid "Scientists:"
 #~ msgstr "Учёные:"
-
 #~ msgid "Workers:"
 #~ msgstr "Рабочие:"
-
 #~ msgid "Medics:"
 #~ msgstr "Медики:"
-
 #~ msgid "Robots:"
 #~ msgstr "Роботы:"
-
 #~ msgid "Facilities  (used/available)"
 #~ msgstr "Помещения (используются/всего доступно)"
-
 #~ msgid "Hangars:"
 #~ msgstr "Ангары:"
-
 #~ msgid "Totals"
 #~ msgstr "Всего"
-
 #~ msgid "Bases:"
 #~ msgstr "Баз:"
-
 #~ msgid "Personnel:"
 #~ msgstr "Персонала:"
-
 #~ msgid "Hire/Unhire"
 #~ msgstr "Нанять/Уволить"
-
 #~ msgid "Tabelbala"
 #~ msgstr "Табельбала"
-
 #~ msgid "Terror attack"
 #~ msgstr "Террористическая атака"
-
 #~ msgid "Protect inhabitants."
 #~ msgstr "Защита жителей."
-
 #~ msgid "Protect the excavation site at all cost."
 #~ msgstr "Защитите место раскопок любой ценой."
-
 #~ msgid "Marina Serra"
 #~ msgstr "Марина Серра"
-
 #~ msgid "Protect civilians."
 #~ msgstr "Защита гражданского населения."
-
 #~ msgid "There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
 #~ msgstr "Появились слухи о шахте полной пришельцев. Хотя наш источник информации сомнителен, Вам необходимо её проверить."
-
 #~ msgid "Greeneville"
 #~ msgstr "Гринвилл"
-
 #~ msgid "Asyut"
 #~ msgstr "Эйсьют"
-
 #, fuzzy
 #~ msgid "Protect the military installation crew."
 #~ msgstr "Защита персонала военного укрепления."
@@ -15885,12 +15833,14 @@ msgstr ""
 #~ msgstr "Успешный перехват НЛО. Доступна новая миссия."
 
 #~ msgid "The mission %s expired and %i civilian died."
+
 #~ msgid_plural "The mission %s expired and %i civilians died."
 #~ msgstr[0] "Операция %s не была проведена вовремя и %i мирный житель погиб."
 #~ msgstr[1] "Операция %s не была проведена вовремя и %i мирных жителя погибло."
 #~ msgstr[2] "Операция %s не была проведена вовремя и %i мирных жителей погибло."
 
 #~ msgid "The aliens had enough time to kill %i civilian at %s."
+
 #~ msgid_plural "The aliens had enough time to kill %i civilians at %s."
 #~ msgstr[0] "У пришельцев было достаточно времени чтоб убить %i мирного жителя в %s"
 #~ msgstr[1] "У пришельцев было достаточно времени чтоб убить %i мирных жителя в %s"
