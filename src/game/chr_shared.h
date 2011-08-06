@@ -77,7 +77,7 @@ typedef struct chrScoreMission_s {
 	/* Kills & stuns */
 	/** @todo use existing code */
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
-	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
+	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns (aliens, civilians, teammates) */
 
 	/* Hits/Misses */
 	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
@@ -133,14 +133,14 @@ typedef struct chrFiremodeSettings_s {
  * @sa CL_ActorReserveTUs
  */
 typedef struct chrReservations_s {
-	/* Reaction fire reservation (for current round and next enemy round) */
+	/* Reaction fire reservation (for current turn and next enemy turn) */
 	int reaction;	/**< Did the player activate RF with a usable firemode?
 					 * (And at the same time storing the TU-costs of this firemode) */
 
-	/* Crouch reservation (for current round)	*/
+	/* Crouch reservation (for current turn)	*/
 	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH. */
 
-	/* Shot reservation (for current round) */
+	/* Shot reservation (for current turn) */
 	int shot;	/**< If non-zero we reserved a shot in this turn. */
 	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon
 										 * (and hand) was used for "shot" reservation. */
