@@ -58,7 +58,7 @@ static inline void CLMN_AddUIBindings (linkedList_t **list)
 		if (binding == NULL)
 			continue;
 
-		LIST_AddString(list, va("%s\t%s", Key_KeynumToString(binding->key), binding->description ? _(binding->description) : _("No info available")));
+		LIST_AddString(list, va("%s\t%s", Key_KeynumToString(binding->key), Q_strvalid(binding->description) ? _(binding->description) : _("No info available")));
 	}
 }
 

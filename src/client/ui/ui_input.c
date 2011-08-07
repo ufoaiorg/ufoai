@@ -267,11 +267,10 @@ void UI_SetKeyBinding (const char* path, int key, const char* description)
 	binding->key = key;
 	node->key = binding;
 
-	if (!description || description[0] == '\0') {
+	if (Q_strnull(description))
 		Com_Printf("Warning: Empty description for UI keybinding: %s (%s)\n", path, Key_KeynumToString(key));
-	} else {
+	else
 		binding->description = Mem_PoolStrDup(description, ui_dynPool, 0);;
-	}
 
 	UI_WindowNodeRegisterKeyBinding(node->root, binding);
 }
