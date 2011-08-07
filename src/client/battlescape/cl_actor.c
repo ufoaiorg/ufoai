@@ -1758,7 +1758,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 					if (GAME_TeamIsKnown(mouseActor->teamDef))
 						UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 					else
-						UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race."));
+						UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race"));
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */
@@ -2407,15 +2407,15 @@ void ACTOR_InitStartup (void)
 {
 	cl_reactionleftover = Cvar_Get("cl_reactionleftover", "0", CVAR_USERINFO | CVAR_ARCHIVE, "Minimum TUs left over by reaction fire.");
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Prevent accidental wasting of TUs by allowing the actor to automatically stand up before starting long walks.");
-	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode.");
-	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield.");
-	Cmd_AddCommand("actor_next", CL_ActorNext_f, N_("Toggle to next actor."));
-	Cmd_AddCommand("actor_select", CL_ActorSelect_f, N_("Select an actor from list."));
-	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, N_("Update an actor."));
+	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
+	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");
+	Cmd_AddCommand("actor_next", CL_ActorNext_f, N_("Toggle to next actor"));
+	Cmd_AddCommand("actor_select", CL_ActorSelect_f, N_("Select an actor from list"));
+	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, N_("Update an actor"));
 	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, N_("Toggle stand/crouch."));
-	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, N_("Toggle the headgear."));
+	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, N_("Toggle the headgear"));
 	Cmd_AddCommand("actor_dooraction", CL_ActorDoorAction_f, N_("Open or close a door."));
-	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, N_("Confirm the current action."));
+	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, N_("Confirm the current action"));
 	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, N_("Toggle to the next alien in sight of the selected actor."));
 
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, N_("Toggle camera to the next alien."));
