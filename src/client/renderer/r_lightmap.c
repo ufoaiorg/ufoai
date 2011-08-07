@@ -175,14 +175,8 @@ static void R_GetAverageSurfaceColor (const byte *in, int width, int height, vec
 	VectorClear(col);
 
 	for (; p != end; p += bpp) {
-		byte max = 0;
 		int j;
-
 		for (j = 0; j < 3; j++) {
-			/* determine brightest component */
-			if (p[j] > max)
-				max = p[j];
-
 			/* accumulate color */
 			col[j] += p[j];
 		}
