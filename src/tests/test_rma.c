@@ -122,7 +122,6 @@ static void testMassAssemblyParallel (void)
 		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
 		Mem_Free(randomMap);
 	}
-
 }
 
 /* sequential version */
