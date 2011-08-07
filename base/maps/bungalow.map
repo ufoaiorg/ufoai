@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"quant" "2"
 // brush 0
 {
 ( 126 -130 64 ) ( -94 -126 64 ) ( 126 -126 64 ) tex_material/c_black 0 0 0 0.5 0.5 65280 0 0
