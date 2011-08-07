@@ -159,7 +159,7 @@ static void testSeedlists (void)
 
 	sv_threads->integer = 0;
 	for (n = 0; n < sizeof(assNames)/(2*sizeof(char *)); n++) {
-		for (i = 0; i < 40; i++) {
+		for (i = 1; i < 20; i++) {
 			srand(i);
 			time = Sys_Milliseconds();
 			Com_Printf("Seed: %i\n", i);
