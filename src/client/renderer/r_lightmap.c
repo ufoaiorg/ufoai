@@ -160,10 +160,7 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 }
 
 /**
- * @brief Applies brightness and contrast to the specified image while optionally computing
- * the image's average color. Also handles image inversion and monochrome. This is
- * all munged into one function to reduce loops on level load.
- * @todo optimize this
+ * @brief Compute the surface's average color.
  */
 static void R_GetAverageSurfaceColor (const byte *in, int width, int height, vec3_t color, int bpp)
 {
