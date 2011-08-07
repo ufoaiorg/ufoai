@@ -868,7 +868,13 @@ seeds {
 	17
 	18
 	19
-}	/* 524 is the first real problem */
+/* the next seeds are untested under linux */
+	20
+	21
+	22
+	23
+	24
+}	/* 524 is the first real problem on Windows */
 +w1 "0 5"
 +w2 "0 6"
 +w3 "0 6"
