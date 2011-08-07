@@ -1991,7 +1991,6 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	Q_strncpyz(map->name, name, sizeof(map->name));
 
 	SV_ParseUMP(name, map, qfalse);
-/*	developer->integer |= DEBUG_SERVER;		crashes if used in testall.exe. cvar not initialized ? */
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
