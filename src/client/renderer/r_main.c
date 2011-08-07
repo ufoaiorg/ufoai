@@ -594,7 +594,7 @@ static void R_RegisterSystemVars (void)
 static void R_RegisterImageVars (void)
 {
 	r_brightness = Cvar_Get("r_brightness", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Brightness for images");
-	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_R_IMAGES, "Contrast for images");
+	r_contrast = Cvar_Get("r_contrast", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Contrast for images");
 	r_saturation = Cvar_Get("r_saturation", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Saturation for images");
 	if (r_config.hardwareType == GLHW_NVIDIA)
 		r_modulate = Cvar_Get("r_modulate", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Scale lightmap values");
