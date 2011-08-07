@@ -4669,8 +4669,6 @@ base/textures/tex_buildings/wall019.png | MIT License | FWishbringer | based on 
 base/textures/tex_buildings/wall019_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/wall023.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
 base/textures/tex_buildings/wall023_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright
-base/textures/tex_buildings/wall023lrg.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
-base/textures/tex_buildings/wall023lrg_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright
 base/textures/tex_buildings/wall024.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
 base/textures/tex_buildings/wall024_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall025.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
@@ -4939,7 +4937,7 @@ base/textures/tex_doors/door007.png | GNU General Public License 2.0 | Werner H�
 base/textures/tex_doors/door007_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_doors/door008.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_doors/door008_nm.png | GNU General Public License 2.0 | MCR
-base/textures/tex_doors/door009.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_doors/door009.png | Public Domain |  | Public Domain Golgotha
 base/textures/tex_doors/door012.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_doors/door012_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_doors/door013.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -5113,7 +5111,7 @@ base/textures/tex_material/concholes01_g.png | GNU General Public License 2.0 or
 base/textures/tex_material/green_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_material/metal001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal001_nm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metal002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metal012.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal012_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal012_sm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5129,7 +5127,7 @@ base/textures/tex_material/metall003_nm.png | GNU General Public License 2.0 or 
 base/textures/tex_material/metall005.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall005_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
-base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metall007.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall008.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall008_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
@@ -5804,8 +5802,9 @@ base/textures/tex_misc/phone001.png | GNU General Public License 2.0 or later | 
 base/textures/tex_misc/phone002.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/phone002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/pingpong.png | GNU General Public License 2.0 or later
-base/textures/tex_misc/pipes001.jpg | Public Domain |  | Public Domain Golgotha
-base/textures/tex_misc/pipes002.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/pipes001.png | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/pipes002.png | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/pipes003.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/rail_info.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_info0.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_notice.png | GNU General Public License 2.0 or later | Nate Wright
