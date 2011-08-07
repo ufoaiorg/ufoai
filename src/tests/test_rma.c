@@ -43,7 +43,7 @@ static int UFO_InitSuiteRandomMapAssembly (void)
 	Com_ParseScripts(qtrue);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
-	sv_rma = Cvar_Get("sv_rma_tmp", "1", 0, NULL);
+	sv_rma = Cvar_Get("sv_rma_tmp", "2", 0, NULL);
 
 	return 0;
 }
