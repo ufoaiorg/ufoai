@@ -160,6 +160,43 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 }
 
 /**
+ * @brief Applies brightness and contrast to the specified image while optionally computing
+ * the image's average color. Also handles image inversion and monochrome. This is
+ * all munged into one function to reduce loops on level load.
+ * @todo optimize this
+ */
+static void R_GetAverageSurfaceColor (const byte *in, int width, int height, vec3_t color, int bpp)
+{
+	unsigned col[3];
+	const byte *p = in;
+	const byte *end = p + width * height * bpp;
+	int i;
+
+	VectorClear(col);
+
+	for (; p != end; p += bpp) {
+		byte max = 0;
+		int j;
+
+		for (j = 0; j < 3; j++) {
+			/* determine brightest component */
+			if (p[j] > max)
+				max = p[j];
+
+			/* accumulate color */
+			col[j] += p[j];
+		}
+	}
+
+	/* average accumulated colors */
+	for (i = 0; i < 3; i++)
+		col[i] /= (width * height);
+
+	for (i = 0; i < 3; i++)
+		color[i] = col[i] / 255.0;
+}
+
+/**
  * @brief Consume raw lightmap and deluxemap RGB/XYZ data from the surface samples,
  * writing processed lightmap and deluxemap RGBA to the specified destinations.
  * @sa R_BuildDefaultLightmap
@@ -193,7 +230,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	}
 
 	/* apply modulate, contrast, resolve average surface color, etc.. */
-	R_FilterTexture(lightmap, smax, tmax, surf->color, it_lightmap, LIGHTMAP_BLOCK_BYTES);
+	R_GetAverageSurfaceColor(lightmap, smax, tmax, surf->color, LIGHTMAP_BLOCK_BYTES);
 
 	if (surf->texinfo->flags & (SURF_BLEND33 | SURF_ALPHATEST))
 		surf->color[3] = 0.25;

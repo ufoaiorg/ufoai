@@ -198,88 +198,6 @@ void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int
 }
 
 /**
- * @brief Applies brightness and contrast to the specified image while optionally computing
- * the image's average color. Also handles image inversion and monochrome. This is
- * all munged into one function to reduce loops on level load.
- */
-void R_FilterTexture (byte *in, int width, int height, vec3_t color, imagetype_t type, int bpp)
-{
-	const float scale = 1.0 / 255.0;
-	unsigned col[3];
-	byte *p = in;
-	const byte *end = p + width * height * bpp;
-	const float brightness = type == it_lightmap ? r_modulate->value : r_brightness->value;
-	const float contrast = r_contrast->value;
-	const float saturation = r_saturation->value;
-	vec3_t intensity, luminosity, temp;
-	int j;
-	float max, d;
-
-	VectorSet(luminosity, 0.2125, 0.7154, 0.0721);
-
-	VectorClear(col);
-
-	for (; p != end; p += bpp) {
-		VectorScale(p, scale, temp);  /* convert to float */
-
-		VectorScale(temp, brightness, temp);  /* apply brightness */
-
-		max = 0.0;  /* determine brightest component */
-
-		for (j = 0; j < 3; j++) {
-			if (temp[j] > max)
-				max = temp[j];
-
-			if (temp[j] < 0.0)  /* enforcing positive values */
-				temp[j] = 0.0;
-		}
-
-		if (max > 1.0)  /* clamp without changing hue */
-			VectorScale(temp, 1.0 / max, temp);
-
-		for (j = 0; j < 3; j++) {  /* apply contrast */
-			temp[j] -= 0.5;  /* normalize to -0.5 through 0.5 */
-			temp[j] *= contrast;  /* scale */
-			temp[j] += 0.5;
-
-			if (temp[j] > 1.0)  /* clamp */
-				temp[j] = 1.0;
-			else if (temp[j] < 0)
-				temp[j] = 0;
-		}
-
-		/* finally saturation, which requires rgb */
-		d = DotProduct(temp, luminosity);
-
-		VectorSet(intensity, d, d, d);
-		VectorMix(intensity, temp, saturation, temp);
-
-		for (j = 0; j < 3; j++) {
-			temp[j] *= 255;  /* back to byte */
-
-			if (temp[j] > 255)  /* clamp */
-				temp[j] = 255;
-			else if (temp[j] < 0)
-				temp[j] = 0;
-
-			p[j] = (byte)temp[j];
-
-			if (color)  /* accumulate color */
-				col[j] += p[j];
-		}
-	}
-
-	if (color) { /* average accumulated colors */
-		int i;
-		for (i = 0; i < 3; i++)
-			col[i] /= (width * height);
-
-		for (i = 0; i < 3; i++)
-			color[i] = col[i] / 255.0;
-	}
-}
-
-/**
  * @brief Calculates the texture size that should be used to upload the texture data
  * @param[in] width The width of the source texture data
  * @param[in] height The heigt of the source texture data
@@ -355,10 +273,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	} else {
 		scaled = data;
 	}
-
-	/* and filter */
-	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
-		R_FilterTexture((byte*)scaled, scaledWidth, scaledHeight, NULL, image->type, 4);
 
 	/* and mipmapped */
 	if (mipmap) {
