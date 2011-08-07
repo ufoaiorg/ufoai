@@ -569,94 +569,24 @@ window options
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
-			// ===========
-			// BRIGHTNESS
-			// ===========
-			string brightness_str
-			{
-				string		"_Brightness:"
-				pos			"32 165"
-				size		"170 20"
-			}
-			image brightness_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"204 167"
-			}
-			bar brightness_bar
-			{
-				current		*cvar:r_brightness
-				pos			"213 172"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			2.0
-				onClick		{ }
-			}
-			// =========
-			// CONTRAST
-			// =========
-			string contrast_str
-			{
-				tooltip		"_Contrast means the difference in brightness between the light and dark areas of a picture."
-				string		"_Contrast:"
-				pos			"32 190"
-				size		"170 20"
-			}
-			image contrast_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"204 192"
-			}
-			bar contrast_bar
-			{
-				current		*cvar:r_contrast
-				pos			"213 197"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			2.0
-				onClick		{ }
-			}
 			// ======
 			// GAMMA
 			// ======
 			string gamma_str
 			{
 				string		"_Gamma:"
-				pos			"32 215"
+				pos			"32 165"
 				size		"170 20"
 			}
 			image gamma_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 217"
+				pos			"204 167"
 			}
 			bar gamma_bar
 			{
 				current		*cvar:vid_gamma
-				pos			"213 222"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			3.0
-				onClick		{ }
-			}
-			// ===========
-			// SATURATION
-			// ===========
-			string saturation_str
-			{
-				string		"_Saturation:"
-				pos			"32 240"
-				size		"170 20"
-			}
-			image saturation_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"204 242"
-			}
-			bar saturation_bar
-			{
-				current		*cvar:r_saturation
-				pos			"213 247"
+				pos			"213 172"
 				size		"238 6"
 				color		"0 0.8 0 1"
 				max			3.0
