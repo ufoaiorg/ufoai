@@ -468,7 +468,7 @@ assembly commercial
 size "8 8"
 title "_Village commercial"
 seeds {
-	2
+/*	2	slow on linux */
 	4
 	6
 /*	7	slow */
