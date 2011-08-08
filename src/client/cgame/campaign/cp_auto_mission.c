@@ -521,11 +521,12 @@ static qboolean AM_UnitAttackEnemies (autoMissionBattle_t *battle, const int cur
 	Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i attacks!\n", currUnit, currTeam);
 
 	for (eTeam = 0; eTeam < MAX_ACTIVETEAM; eTeam++) {
+		if (!battle->teamActive[eTeam])
+			continue;
+
 		if (battle->isHostile[currTeam][eTeam]) {
-			if (battle->teamActive[eTeam]) {
-				count++;
-				AM_CheckFire(battle, eTeam, currTeam, currUnit, effective);
-			}
+			count++;
+			AM_CheckFire(battle, eTeam, currTeam, currUnit, effective);
 		} else {
 			AM_CheckFriendlyFire(battle, eTeam, currTeam, currUnit, effective);
 		}
