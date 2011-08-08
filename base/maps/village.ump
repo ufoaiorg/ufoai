@@ -402,7 +402,7 @@ seeds {
 	20
 	/* 13 is really slow */
 /* the next seeds are untested under linux */
-	21
+/*	21	slow on linux */
 	22
 	23
 	24
