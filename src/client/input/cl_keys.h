@@ -197,6 +197,7 @@ void Key_Init(void);
 void Key_WriteBindings(const char* filename);
 const char* Key_GetBinding(const char *binding, keyBindSpace_t space);
 const char *Key_KeynumToString(int keynum);
+int Key_StringToKeynum(const char *str);
 void Key_SetBinding(int keynum, const char *binding, keyBindSpace_t space);
 
 #endif /* CLIENT_KEY_H */

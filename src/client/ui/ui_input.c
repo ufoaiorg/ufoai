@@ -241,15 +241,35 @@ uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
 }
 
 /**
+ * @brief Set a binding from a key to a node to active.
+ *
+ * This command create a relation between a key and a node.
+ *
+ * The relation is stored to the node (to display the shortcut into tooltip)
+ * and to parent window of the node (to faster search of all available shortcuts).
+ *
+ * The storage on the node is not a list, then if there is more than one shortcut
+ * to a node we can't display all shortcut to tooltip, but the binding will still
+ * work.
+ *
+ * If the parent window is inherited, the binding is dup to others extend
+ * windows and the relation is flagged as "inherited".
+ *
+ * @param path Path to a node, or a node mathod
+ * @param key The key number to use (see for example the K_* names are matched up.)
+ * @param inherited True if this binding is inherited from another binding.
+ *
  * @todo check: only one binding per nodes
  * @todo check: key per window must be unique
  * @todo check: key used into UI_KeyPressed can't be used
  */
-void UI_SetKeyBinding (const char* path, int key, const char* description)
+static void UI_SetKeyBindingEx (const char* path, int key, const char* description, qboolean inherited)
 {
 	uiNode_t *node;
 	uiKeyBinding_t *binding;
 	const value_t *property = NULL;
+	int windowId;
+	char newPath[256];
 
 	UI_ReadNodePath(path, NULL, &node, &property);
 	if (node == NULL) {
@@ -265,6 +285,7 @@ void UI_SetKeyBinding (const char* path, int key, const char* description)
 	binding->node = node;
 	binding->property = property;
 	binding->key = key;
+	binding->inherited = inherited;
 	node->key = binding;
 
 	if (Q_strnull(description))
@@ -273,6 +294,36 @@ void UI_SetKeyBinding (const char* path, int key, const char* description)
 		binding->description = Mem_PoolStrDup(description, ui_dynPool, 0);;
 
 	UI_WindowNodeRegisterKeyBinding(node->root, binding);
+
+	/* search and update windows extend node->root */
+	for (windowId = 0; windowId < ui_global.numWindows; windowId++) {
+		uiNode_t *window = ui_global.windows[windowId];
+
+		/* skip window which are not direct extends of the main window */
+		if (window->super != node->root)
+			continue;
+
+		/* create a new patch from the new windows */
+		newPath[0] = '\0';
+		strncat(newPath, window->name, sizeof(newPath));
+		strncat(newPath, path + strlen(node->root->name), sizeof(newPath));
+		UI_SetKeyBindingEx(newPath, key, description, qtrue);
+	}
+}
+
+/**
+ * @brief Set a binding from a key to a node to active.
+ *
+ * @param path Path to a node, or a node mathod
+ * @param key The key number to use (see for example the K_* names are matched up.)
+ *
+ * @todo check: only one binding per nodes?
+ * @todo check: key per window must be unique
+ * @todo check: key used into UI_KeyPressed can't be used
+ */
+void UI_SetKeyBinding (const char* path, int key, const char* description)
+{
+	UI_SetKeyBindingEx(path, key, description, qfalse);
 }
 
 /**

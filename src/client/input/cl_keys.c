@@ -440,7 +440,7 @@ static void Key_Console (int key, int unicode)
  * the K_* names are matched up.
  * @sa Key_KeynumToString
  */
-static int Key_StringToKeynum (const char *str)
+int Key_StringToKeynum (const char *str)
 {
 	const keyName_t *kn;
 
@@ -700,6 +700,8 @@ void Key_WriteBindings (const char* filename)
 		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex(i);
 
 		if (binding->node == NULL)
+			continue;
+		if (binding->inherited)
 			continue;
 		if (binding->property == NULL)
 			path = va("%s", UI_GetPath(binding->node));

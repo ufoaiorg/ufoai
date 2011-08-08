@@ -910,6 +910,24 @@ void IN_Frame (void)
 }
 
 /**
+ * Simulate press of a key with a command.
+ */
+static void CL_PressKey_f (void)
+{
+	unsigned int keyNum;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <key> : simulate press of a key\n", Cmd_Argv(0));
+		return;
+	}
+
+	keyNum = Key_StringToKeynum(Cmd_Argv(1));
+	/* @todo unicode value is wrong */
+	IN_EventEnqueue(keyNum, '?', qtrue);
+	IN_EventEnqueue(keyNum, '?', qfalse);
+}
+
+/**
  * @sa CL_InitLocal
  */
 void IN_Init (void)
@@ -963,6 +981,8 @@ void IN_Init (void)
 	Cmd_AddCommand("leveldown", CL_LevelDown_f, N_("Slice through terrain at a lower level"));
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, N_("Zoom in"));
 	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, N_("Zoom out"));
+
+	Cmd_AddCommand("press", CL_PressKey_f, N_("Press a key from a command"));
 
 	mousePosX = mousePosY = 0.0;
 
