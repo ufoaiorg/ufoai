@@ -5803,7 +5803,9 @@ base/textures/tex_misc/phone002.png | GNU General Public License 2.0 or later | 
 base/textures/tex_misc/phone002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/pingpong.png | GNU General Public License 2.0 or later
 base/textures/tex_misc/pipes001.png | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/pipes001_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_misc/pipes002.png | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/pipes002_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_misc/pipes003.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/rail_info.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_info0.png | GNU General Public License 2.0 or later | Nate Wright
