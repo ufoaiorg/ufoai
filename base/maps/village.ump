@@ -489,6 +489,18 @@ seeds {
 /*	23	slow */
 	24
 	25
+/* the next seeds are untested under linux */
+	26
+	27
+	28
+	29
+	30
+/*	31 slow on Windows */
+	32
+	33
+	34
+	35
+	36
 }
 +s01 "0 2"
 +s02 "0 4"
