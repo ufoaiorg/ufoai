@@ -2546,7 +2546,7 @@ mapdef military_convoy
 /////////////////////////
 // SHELTER RANDOM MAPS //
 /////////////////////////
-/*
+
 mapdef shelter
 {
 	map				"+shelter"
@@ -2595,7 +2595,7 @@ mapdef shelter
 		//any
 	}
 }
-*/
+
 ///////////////////////////
 // SPEDITION RANDOM MAPS //
 ///////////////////////////
