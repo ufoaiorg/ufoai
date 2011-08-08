@@ -258,19 +258,19 @@ static void testVideo (void)
 
 /**
  * @brief test key binding
+ * @todo unfortunately we can't use "bindui" or "press" commands in tests.
  */
 static void testBinding (void)
 {
-	UFO_ExecuteTestWindow("test_keybinding");
+	//UFO_ExecuteTestWindow("test_keybinding");
 }
 
 /**
  * @brief test if we can parse all samples
- * @todo unfortunately we can't use "bindui" or "press" commands in tests.
  */
 static void testSamples (void)
 {
-	//TEST_ParseScript("ufos/uisample/*.ufo");
+	TEST_ParseScript("ufos/uisample/*.ufo");
 }
 
 int UFO_AddUILevel2Tests (void)
