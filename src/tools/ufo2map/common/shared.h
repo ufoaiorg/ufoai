@@ -35,10 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/typedefs.h"
 #include "../../../shared/byte.h"
 
-/*========================================================================
-The .pak files are just a linear collapse of a directory tree
-========================================================================*/
-
 /** @brief verbosity levels for use in calls to Verb_Printf
  *  and on the command line -v \<int\> */
 typedef enum {
@@ -79,7 +75,7 @@ typedef struct mapConfig_s {
 	int nolighting;
 	int block_xl, block_xh, block_yl, block_yh;
 	float microvolume; /**< -micro test after CSG */
-	qboolean extrasamples;	/**< apply sampling to the ligthmap- makes lightmap smoother */
+	qboolean extrasamples;	/**< apply sampling to the lightmap- makes lightmap smoother */
 	qboolean soft; /**< use different supersampling pattern for lightmap, which produces softer shadows */
 	qboolean info;
 	qboolean generateFootstepFile;
