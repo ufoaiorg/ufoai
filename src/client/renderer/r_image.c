@@ -260,9 +260,9 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaledWidth == width && scaledHeight == height) {
-		/* no mipmapping for these images - just use GL_NEAREST here to not waste memory */
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		/* no mipmapping for these images to save memory */
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		return;
 	}
