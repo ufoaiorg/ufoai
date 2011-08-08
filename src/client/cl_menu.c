@@ -57,7 +57,8 @@ static inline void CLMN_AddUIBindings (linkedList_t **list)
 
 		if (binding == NULL)
 			continue;
-
+		if (binding->inherited)
+			continue;
 		if (!Q_strvalid(binding->description))
 			continue;
 
