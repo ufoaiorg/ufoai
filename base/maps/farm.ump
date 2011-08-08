@@ -456,7 +456,7 @@ seeds {
 assembly large
 {
 seeds {
-	0
+/*	0	slow */
 	2
 /*	4	slow */
 	6
