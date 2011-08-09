@@ -6,7 +6,7 @@ component radiobutton cmpMapPreviewButton
 {
 	{
 		icon	"icons/mapselection"
-		size	"128 128"
+		size	"130 140"
 		cvar	"*cvar:mn_svmapid"
 		stringValue	" "
 		onClick {
@@ -15,8 +15,8 @@ component radiobutton cmpMapPreviewButton
 	}
 
 	image preview {
-		pos	"14 15"
-		size	"100 64"
+		pos	"8 20"
+		size	"114 80"
 		src	"maps/shots/default"
 		ghost	true
 	}
@@ -24,6 +24,7 @@ component radiobutton cmpMapPreviewButton
 	string name {
 		string	"The map name"
 		textalign	ALIGN_CC
+		font		"f_verysmall"
 		pos	"14 96"
 		size	"100 32"
 		ghost	true
@@ -238,55 +239,13 @@ window skirmish
 			pos	"495 150"
 			size	"475 330"
 		}
-		// ==========================================
-		// EQUIPMENT AI STRINGS, TEXTENTRY & BUTTONS
-		// ==========================================
-		string equipment_alien
-		{
-			string		"_Equipment AI Team."
-			pos			"10 50"
-			size		"450 20"
-		}
-		textentry slot_alien_equipment
-		{
-			string		*cvar:ai_equipment
-			image		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CC
-			padding		8
-			font		"f_verysmall"
-			pos			"30 80"
-			size		"260 34"
-			disabled	true
-			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-		}
-		custombutton prev_alien_equipment
-		{
-			pos			"0 80"
-			size		"35 35"
-			icon		"icons/prev"
-			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-			onClick		{ cmd "sk_prevequip ai_equipment;" }
-		}
-		custombutton next_alien_equipment
-		{
-			pos			"285 80"
-			size		"35 35"
-			icon		"icons/next"
-			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-			onClick		{ cmd "sk_nextequip ai_equipment;" }
-		}
 		// ==============================================
 		// EQUIPMENT PLAYER STRINGS, TEXTENTRY & BUTTONS
 		// ==============================================
 		string equipment
 		{
 			string		"_Equipment of your team."
-			pos			"10 150"
+			pos			"10 50"
 			size		"450 20"
 		}
 		textentry slot_equipment
@@ -298,7 +257,7 @@ window skirmish
 			textalign	ALIGN_CC
 			padding		8
 			font		"f_verysmall"
-			pos			"30 180"
+			pos			"30 80"
 			size		"260 34"
 			disabled	true
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
@@ -306,7 +265,7 @@ window skirmish
 		}
 		custombutton prev_equipment
 		{
-			pos			"0 180"
+			pos			"0 80"
 			size		"35 35"
 			icon		"icons/prev"
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
@@ -315,13 +274,56 @@ window skirmish
 		}
 		custombutton next_equipment
 		{
-			pos			"285 180"
+			pos			"284 80"
 			size		"35 35"
 			icon		"icons/next"
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 			onClick		{ cmd "sk_nextequip cl_equip;" }
 		}
+		// ==========================================
+		// EQUIPMENT AI STRINGS, TEXTENTRY & BUTTONS
+		// ==========================================
+		string equipment_alien
+		{
+			string		"_Equipment AI Team."
+			pos			"10 150"
+			size		"450 20"
+		}
+		textentry slot_alien_equipment
+		{
+			string		*cvar:ai_equipment
+			image		"ui/button_green_verysmall"
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	ALIGN_CC
+			padding		8
+			font		"f_verysmall"
+			pos			"30 180"
+			size		"260 34"
+			disabled	true
+			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+		}
+		custombutton prev_alien_equipment
+		{
+			pos			"0 180"
+			size		"35 35"
+			icon		"icons/prev"
+			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+			onClick		{ cmd "sk_prevequip ai_equipment;" }
+		}
+		custombutton next_alien_equipment
+		{
+			pos			"284 180"
+			size		"35 35"
+			icon		"icons/next"
+			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+			onClick		{ cmd "sk_nextequip ai_equipment;" }
+		}
+
 		// ======================================
 		// NUMBER OF AI ACTORS STRINGS & SPINNER
 		// ======================================
