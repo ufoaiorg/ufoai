@@ -859,6 +859,42 @@
 ( 219 186 44 ) ( 219 186 56 ) ( 91 186 44 ) tex_pics/art_africa010 0 320 0 0.001953125 0.03125 0 0 0
 ( 92 186 44 ) ( 92 174 44 ) ( 92 186 56 ) tex_common/nodraw 24 40 0 0.25 0.25 0 0 0
 }
+// brush 95
+{
+( 450 226 44 ) ( 450 160 44 ) ( 446 226 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 450 226 44 ) ( 446 226 44 ) ( 450 226 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 450 226 44 ) ( 450 226 4 ) ( 450 160 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 160 4 ) ( 450 160 4 ) ( 446 226 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 160 4 ) ( 446 160 44 ) ( 450 160 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 160 4 ) ( 446 226 4 ) ( 446 160 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 96
+{
+( 446 226 44 ) ( 446 222 44 ) ( 320 226 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 226 44 ) ( 320 226 44 ) ( 446 226 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 226 44 ) ( 446 226 4 ) ( 446 222 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 320 222 4 ) ( 446 222 4 ) ( 320 226 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 320 222 4 ) ( 320 222 44 ) ( 446 222 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 320 222 4 ) ( 320 226 4 ) ( 320 222 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 97
+{
+( 450 96 44 ) ( 450 30 44 ) ( 446 96 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 450 96 44 ) ( 446 96 44 ) ( 450 96 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 450 96 44 ) ( 450 96 4 ) ( 450 30 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 30 4 ) ( 450 30 4 ) ( 446 96 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 30 4 ) ( 446 30 44 ) ( 450 30 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 30 4 ) ( 446 96 4 ) ( 446 30 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 98
+{
+( 446 34 44 ) ( 446 30 44 ) ( 320 34 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 34 44 ) ( 320 34 44 ) ( 446 34 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 446 34 44 ) ( 446 34 4 ) ( 446 30 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 320 30 4 ) ( 446 30 4 ) ( 320 34 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 320 30 4 ) ( 320 30 44 ) ( 446 30 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 320 30 4 ) ( 320 34 4 ) ( 320 30 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
 }
 // entity 1
 {

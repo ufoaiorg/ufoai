@@ -823,6 +823,51 @@
 ( 868 190 68 ) ( 868 190 72 ) ( 1020 190 72 ) tex_misc/bungalow2 43 212.0002 90 0.8 0.3 65280 0 0
 ( 430 192 68 ) ( 430 192 72 ) ( 430 188 72 ) tex_misc/bungalow2 43 157.6663 90 0.8 -0.3 65280 0 0
 }
+// brush 91
+{
+( 130 218 30 ) ( 130 190 30 ) ( 126 218 30 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 130 220 44 ) ( 126 220 44 ) ( 130 220 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 130 220 44 ) ( 130 220 4 ) ( 130 192 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 126 192 4 ) ( 130 192 4 ) ( 126 220 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 126 192 4 ) ( 126 192 44 ) ( 130 192 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 126 192 4 ) ( 126 220 4 ) ( 126 192 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 92
+{
+( 128 162 30 ) ( 128 158 30 ) ( 36 162 30 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 128 162 30 ) ( 36 162 30 ) ( 128 162 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 128 162 30 ) ( 128 162 4 ) ( 128 158 30 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 36 158 4 ) ( 128 158 4 ) ( 36 162 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 36 158 4 ) ( 36 158 30 ) ( 128 158 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 36 158 4 ) ( 36 162 4 ) ( 36 158 30 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 93
+{
+( 512 194 44 ) ( 512 190 44 ) ( 288 194 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 512 194 44 ) ( 288 194 44 ) ( 512 194 18 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 512 194 30 ) ( 512 194 4 ) ( 512 190 30 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 288 190 4 ) ( 512 190 4 ) ( 288 194 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 288 190 4 ) ( 288 190 30 ) ( 512 190 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 288 190 4 ) ( 288 194 4 ) ( 288 190 30 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 94
+{
+( 384 34 44 ) ( 384 30 44 ) ( 190 34 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 384 34 44 ) ( 190 34 44 ) ( 384 34 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 384 34 44 ) ( 384 34 4 ) ( 384 30 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 190 30 4 ) ( 384 30 4 ) ( 190 34 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 190 30 4 ) ( 190 30 44 ) ( 384 30 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 34 32 4 ) ( 34 36 4 ) ( 34 32 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 95
+{
+( 34 96 44 ) ( 34 30 44 ) ( 30 96 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 34 96 44 ) ( 30 96 44 ) ( 34 96 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 34 96 44 ) ( 34 96 4 ) ( 34 30 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 30 30 4 ) ( 34 30 4 ) ( 30 96 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 30 30 4 ) ( 30 30 44 ) ( 34 30 4 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 30 30 4 ) ( 30 96 4 ) ( 30 30 44 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
 }
 // entity 1
 {
