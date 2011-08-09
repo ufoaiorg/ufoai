@@ -106,7 +106,7 @@ void GAME_SaveTeamState_f (void)
 
 	num = 0;
 	for (i = 0; i < chrDisplayList.num; i++) {
-		chrDisplayList.chr[num]->ucn -= (i -num);
+		chrDisplayList.chr[num]->ucn -= (i - num);
 		if (characterActive[i]) {
 			assert(chrDisplayList.chr[i] != NULL);
 			chrDisplayList.chr[num++] = chrDisplayList.chr[i];
