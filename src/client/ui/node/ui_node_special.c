@@ -103,7 +103,8 @@ static void UI_ConFuncNodeLoaded (uiNode_t *node)
 	if (node->super == NULL) {
 		/* don't add a callback twice */
 		if (!Cmd_Exists(node->name)) {
-			Cmd_AddCommand(node->name, UI_ConfuncCommand_f, "Confunc callback");
+			/* confunc callback, but description is used for the key bindings info */
+			Cmd_AddCommand(node->name, UI_ConfuncCommand_f, "Hide the battlescape HUD.");
 			Cmd_AddUserdata(node->name, node);
 		} else {
 			Com_Printf("UI_ParseNodeBody: Command name for confunc '%s' already registered\n", UI_GetPath(node));
