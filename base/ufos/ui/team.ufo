@@ -772,7 +772,7 @@ window game_team_save_popup
 		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
-		pos			"50 130"
+		pos			"50 53"
 		size		"256 34"
 		string		*cvar:mn_slot0
 		onChange		{ cmd "game_saveteam 0;ui_pop;" }
@@ -783,10 +783,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		textalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 165"
+		pos			"50 88"
 		size		"256 34"
 		string		*cvar:mn_slot1
 		onChange	{ cmd "game_saveteam 1;ui_pop;" }
@@ -797,10 +797,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		textalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 200"
+		pos			"50 123"
 		size		"256 34"
 		string		*cvar:mn_slot2
 		onChange	{ cmd "game_saveteam 2;ui_pop;" }
@@ -811,10 +811,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		textalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 235"
+		pos			"50 158"
 		size		"256 34"
 		string		*cvar:mn_slot3
 		onChange	{ cmd "game_saveteam 3;ui_pop;" }
@@ -825,10 +825,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		textalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 270"
+		pos			"50 193"
 		size		"256 34"
 		string		*cvar:mn_slot4
 		onChange	{ cmd "game_saveteam 4;ui_pop;" }
@@ -839,10 +839,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		textalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 305"
+		pos			"50 228"
 		size		"256 34"
 		string		*cvar:mn_slot5
 		onChange	{ cmd "game_saveteam 5;ui_pop;" }
@@ -853,10 +853,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		textalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 340"
+		pos			"50 263"
 		size		"256 34"
 		string		*cvar:mn_slot6
 		onChange	{ cmd "game_saveteam 6;ui_pop;" }
@@ -867,13 +867,69 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		textalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 375"
+		pos			"50 298"
 		size		"256 34"
 		string		*cvar:mn_slot7
 		onChange	{ cmd "game_saveteam 7;ui_pop;" }
+	}
+
+	textentry slot_team8
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"50 333"
+		size		"256 34"
+		string		*cvar:mn_slot8
+		onChange	{ cmd "game_saveteam 8;ui_pop;" }
+	}
+
+	textentry slot_team9
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"50 368"
+		size		"256 34"
+		string		*cvar:mn_slot9
+		onChange	{ cmd "game_saveteam 9;ui_pop;" }
+	}
+
+	textentry slot_team10
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"50 403"
+		size		"256 34"
+		string		*cvar:mn_slot10
+		onChange	{ cmd "game_saveteam 10;ui_pop;" }
+	}
+
+	textentry slot_team11
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"50 438"
+		size		"256 34"
+		string		*cvar:mn_slot11
+		onChange	{ cmd "game_saveteam 11;ui_pop;" }
 	}
 
 	func onWindowClosed

@@ -23,6 +23,7 @@ component radiobutton cmpMapPreviewButton
 
 	string name {
 		string	"The map name"
+		textalign	ALIGN_CC
 		pos	"14 96"
 		size	"100 32"
 		ghost	true
@@ -112,32 +113,35 @@ window skirmish
 		onChange	{ *node:root.maplist@viewpos = <current> }
 	}
 
-	// ============
-	// BACK BUTTON
-	// ============
-	cmpMenuButton button_back
-	{
-		string		"_Back"
-		pos		"724 514"
-		width		"220"
-		onClick
-		{
-			cmd "ui_pop;"
-		}
-	}
 	// ==================
 	// START GAME BUTTON
 	// ==================
 	cmpMenuButton button_start
 	{
 		string		"_Start Game"
-		pos		"491 514"
-		width		"220"
+		pos		"468 515"
+		width		"240"
 		onClick
 		{
 			cmd "sk_start;"
 		}
 	}
+
+	// ============
+	// BACK BUTTON
+	// ============
+	cmpMenuButton button_back
+	{
+		string		"_Back"
+		tooltip		"_Return to the main menu."
+		pos		"721 515"
+		width		"240"
+		onClick
+		{
+			cmd "ui_pop;"
+		}
+	}
+
 	// ==============================
 	// SKIRMISH GAME SETTINGS STRING
 	// ==============================
@@ -148,14 +152,15 @@ window skirmish
 		size		"450 30"
 		font		"f_big"
 	}
-	// ============================
-	// MAP/OPTIONS NAVIGATION TABS
-	// ============================
+
+	// =================================
+	// MAP/OPTIONS/TEAM NAVIGATION TABS
+	// =================================
 	tab create_navigation
 	{
 		{
-			pos	"462 106"
-			size	"500 40"
+			pos	"457 106"
+			size	"512 40"
 			cvar	*cvar:mn_skirmish_config_tab
 			onChange
 			{
@@ -187,19 +192,19 @@ window skirmish
 			pos	"495 150"
 			size	"475 330"
 		}
-		// ====================
+		// =================
 		// UFO(S) SELECTBOX
-		// ====================
+		// =================
 		string ufos_str
 		{
 			string		"_UFO:"
-			pos			"10 245"
-			size		"200 20"
+			pos			"10 250"
+			size		"220 20"
 			tooltip		"_Select the UFO that should be used (only possible if available for that map)."
 		}
 		selectbox ufos_box
 		{
-			pos		"240 245"
+			pos		"240 250"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
 			cvar	*cvar:rm_ufo
@@ -211,13 +216,13 @@ window skirmish
 		string dropships_str
 		{
 			string		"_Dropship:"
-			pos			"10 295"
-			size		"200 20"
+			pos			"10 300"
+			size		"220 20"
 			tooltip		"_Select the dropship that should be used (only possible if available for that map)."
 		}
 		selectbox dropships_box
 		{
-			pos		"240 295"
+			pos		"240 300"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
 			cvar	*cvar:rm_drop
@@ -239,7 +244,7 @@ window skirmish
 		string equipment_alien
 		{
 			string		"_Equipment AI Team."
-			pos			"10 0"
+			pos			"10 50"
 			size		"450 20"
 		}
 		textentry slot_alien_equipment
@@ -248,18 +253,18 @@ window skirmish
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			textalign	ALIGN_CC
 			padding		8
 			font		"f_verysmall"
-			pos			"35 30"
-			size		"256 34"
+			pos			"30 80"
+			size		"260 34"
 			disabled	true
 			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
 			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 		}
 		custombutton prev_alien_equipment
 		{
-			pos			"0 30"
+			pos			"0 80"
 			size		"35 35"
 			icon		"icons/prev"
 			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
@@ -268,7 +273,7 @@ window skirmish
 		}
 		custombutton next_alien_equipment
 		{
-			pos			"285 30"
+			pos			"285 80"
 			size		"35 35"
 			icon		"icons/next"
 			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
@@ -281,7 +286,7 @@ window skirmish
 		string equipment
 		{
 			string		"_Equipment of your team."
-			pos			"10 75"
+			pos			"10 150"
 			size		"450 20"
 		}
 		textentry slot_equipment
@@ -290,18 +295,18 @@ window skirmish
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			textalign	ALIGN_CC
 			padding		8
 			font		"f_verysmall"
-			pos			"35 105"
-			size		"256 34"
+			pos			"30 180"
+			size		"260 34"
 			disabled	true
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 		}
 		custombutton prev_equipment
 		{
-			pos			"0 105"
+			pos			"0 180"
 			size		"35 35"
 			icon		"icons/prev"
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
@@ -310,7 +315,7 @@ window skirmish
 		}
 		custombutton next_equipment
 		{
-			pos			"285 105"
+			pos			"285 180"
 			size		"35 35"
 			icon		"icons/next"
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
@@ -323,14 +328,14 @@ window skirmish
 		string ai_numactors_str
 		{
 			string		"_Max. AI actors:"
-			pos			"10 150"
-			size		"200 20"
+			pos			"10 250"
+			size		"300 20"
 			tooltip		"_The maximum of AI actors for this game."
 		}
 		string ai_numactors_value
 		{
 			string		*cvar:ai_numaliens
-			pos			"310 150"
+			pos			"310 250"
 			size		"50 20"
 			textalign	ALIGN_CC
 		}
@@ -338,7 +343,7 @@ window skirmish
 		{
 			current		*cvar:ai_numaliens
 			image		"ui/spinner_blue"
-			pos			"368 149"
+			pos			"368 249"
 			min			1
 			max			30
 			delta		1
@@ -350,13 +355,13 @@ window skirmish
 		{
 			string		"_Max. Soldiers:"
 			tooltip		"_Sets the maximum amount of soldiers."
-			pos			"10 175"
+			pos			"10 275"
 			size		"300 20"
 		}
 		string maxsoldierperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperplayer
-			pos			"310 175"
+			pos			"310 275"
 			size		"50 20"
 			textalign	ALIGN_UC
 		}
@@ -364,7 +369,7 @@ window skirmish
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			image		"ui/spinner_blue"
-			pos			"368 174"
+			pos			"368 274"
 			min			1
 			max			8
 			delta		1
@@ -375,14 +380,14 @@ window skirmish
 		string numugvs_str
 		{
 			string		"_UGVs:"
-			pos			"10 200"
-			size		"200 20"
+			pos			"10 300"
+			size		"300 20"
 			tooltip		"_UGVs for this game - only valid if enough free soldier slots are available."
 		}
 		string numugvs_value
 		{
 			string		*cvar:cl_ugvs
-			pos			"310 200"
+			pos			"310 300"
 			size		"50 20"
 			textalign	ALIGN_CC
 		}
@@ -390,7 +395,7 @@ window skirmish
 		{
 			current		*cvar:cl_ugvs
 			image		"ui/spinner_blue"
-			pos			"368 199"
+			pos			"368 299"
 			min			0
 			max			2
 			delta		1
@@ -401,13 +406,13 @@ window skirmish
 		string team_str
 		{
 			string		"_Team:"
-			pos			"10 225"
-			size		"200 20"
+			pos			"10 0"
+			size		"220 20"
 			tooltip		"_Select which side you want to play with."
 		}
 		selectbox team_box
 		{
-			pos		"230 225"
+			pos		"240 0"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
 			cvar	*cvar:cl_teamdef
@@ -415,14 +420,14 @@ window skirmish
 		}
 	}
 
-	// ============
-	// TEAM PANEL
-	// ============
+	// =========
+	// TEAM TAB
+	// =========
 	cmpTeamPanel panel_team
 	{
 		{
-			pos		"495 130"
-			size	"475 440"
+			pos		"495 150"
+			size	"475 363"
 		}
 	}
 
@@ -463,8 +468,8 @@ window skirmish
 		elif ( *cvar:mn_skirmish_config_tab == 3 )
 		{
 			*node:root.panel_team@invis = false
-			*node:root.button_back@invis = true
-			*node:root.button_start@invis = true
+//			*node:root.button_back@invis = true
+//			*node:root.button_start@invis = true
 		}
 	}
 	// =====

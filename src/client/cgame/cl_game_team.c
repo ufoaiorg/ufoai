@@ -121,7 +121,7 @@ void GAME_SaveTeamState_f (void)
 void GAME_TeamSlotComments_f (void)
 {
 	int i;
-	const int maxTeamSlots = 8;
+	const int maxTeamSlots = 12;
 
 	for (i = 0; i < maxTeamSlots; i++) {
 		/* open file */
