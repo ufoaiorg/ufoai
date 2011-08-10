@@ -116,7 +116,7 @@ window ufopedia extends objectinfo
 			src		*cvar:mn_upimage_top
 			pos			"420 42"
 			size		"185 422"
-			preventratio	true
+			preventratio true
 		}
 		image image_top2
 		{
@@ -147,6 +147,7 @@ window ufopedia extends objectinfo
 			size	"185 135"
 			image	"ui/panel_green_slim"
 		}
+		// ammo models
 		model mdl_bottom
 		{
 			src			*cvar:mn_upmodel_bottom
@@ -189,12 +190,13 @@ window ufopedia extends objectinfo
 			size	"597 573"
 			image	"ui/panel_green_slim"
 		}
+		// The Big Picture model and picture
 		model mdl_bigpicture
 		{
 			src			*cvar:mn_upmodel_top
 			angles		"0 25 90"
-			pos			"20 43"
-			size		"571 571"
+			pos			"10 43"
+			size		"593 571"
 			autoscale	true
 			omega		"0 -11 0"
 			rotatewithmouse	true
@@ -206,7 +208,6 @@ window ufopedia extends objectinfo
 			size		"251 571"
 			preventratio	true
 		}
-
 /*	// for future purposes
 		panel decoration_panel3
 		{
