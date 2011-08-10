@@ -4426,7 +4426,7 @@ tech rs_ugv_phoenix
 	producetime	400
 }
 
-// area with wheels
+// UGV with wheels
 tech rs_ugv_ares_w
 {
 	type	ugv
@@ -4449,7 +4449,7 @@ tech rs_ugv_ares_w
 tech rs_ugv_chaingun
 {
 	type	weapon
-	mdl	ugv_phoenix	// @todo fixme
+//	mdl			ares_w_turret // we do not need this here, but this is the correct model
 
 	up_chapter	equipment
 /* @todo use-me
@@ -4468,7 +4468,7 @@ tech rs_ugv_chaingun
 tech rs_ugv_chaingun_belt
 {
 	type	weapon
-	mdl	ugv_phoenix	// @todo fixme
+//	mdl	ugv_phoenix // we do not need this here
 
 	up_chapter	equipment
 /* @todo use-me
