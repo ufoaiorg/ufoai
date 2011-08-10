@@ -245,63 +245,84 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 	battle->teamID[teamNum] = 0;
 }
 
-static void AM_DecideResults (autoMissionBattle_t *battle)
+/**
+ * @brief Creates team data for alien and civilian teams based on the mission parameters data.
+ * @param[in,out] battle The auto mission battle to add team data to
+ * @param[in] missionParam Mission parameters data to use
+ */
+static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
 {
-	int team;
-	int teamPlayer = -1;
-	int teamEnemy = -1;
-	int teamUGVs = -1;
-	int teamDrones = -1;
+	int numAliensTm;
+	int numAlienDronesTm;
+	int numCivsTm;
+	int unit;
 
-	if (!battle->hasBeenFought)
-		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
+	/* These are used to calculate possible generated health scores of non-player units. */
+	/* Adjust these to change game balance. */
+	/* TODO:  Should this be scripted instead, from a .ufo file? */
+	const float autoGenHealthAliens = 200.f;
+	const float autoGenHealthAlienDrones = 300.f;
+	const float autoGenHealthCivilians = 40.f;
 
-	/* Figure out who's who (determine which team is the player and which one is aliens.) */
-	for (team = 0; team < MAX_ACTIVETEAM; team++) {
-		switch (battle->teamType[team]) {
-		case AUTOMISSION_TEAM_TYPE_PLAYER:
-			teamPlayer = team;
-			break;
-		case AUTOMISSION_TEAM_TYPE_ALIEN:
-			teamEnemy = team;
-			break;
-		case AUTOMISSION_TEAM_TYPE_PLAYER_UGV:
-			teamUGVs = team;
-			break;
-		case AUTOMISSION_TEAM_TYPE_ALIEN_DRONE:
-			teamDrones = team;
-			break;
-		default:
-			break;
+	assert(battle);
+	assert(missionParams);
+
+	numAliensTm = missionParams->aliens;
+	numAlienDronesTm = (int) (frand() * numAliensTm);
+	numCivsTm = missionParams->civilians;
+
+	/* Alines will go on team 2, alien drones on 3, civs on 4 (player soldiers are 0 and UGVs are 1). */
+	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = numAliensTm;
+	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = numAlienDronesTm;
+	battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = numCivsTm;
+
+	/* Populate the teams */
+
+	/* Aliens */
+	if (numAliensTm > 0) {
+		for (unit = 0; unit < numAliensTm; unit++) {
+			/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
+			const int healthMaxm = (int) (frand() * autoGenHealthAliens) + 10.f;
+			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
+			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = healthMaxm;
+			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = health;
 		}
+		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
+		battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN] = AUTOMISSION_TEAM_TYPE_ALIEN;
+		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN] = (frand() * 0.6f) + 0.2f;
 	}
 
-	assert(teamPlayer >= 0);
-	assert(teamEnemy >= 0);
+	if (numAlienDronesTm > 0) {
+		for (unit = 0; unit < numAlienDronesTm; unit++) {
+			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
+			const int healthMaxm = (int) (frand() * autoGenHealthAlienDrones) + 10.f;
+			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
+			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][unit] = healthMaxm;
+			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][unit] = health;
+		}
+		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qtrue;
+		battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = AUTOMISSION_TEAM_TYPE_ALIEN_DRONE;
+		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = (frand() * 0.6f) + 0.3f;
+	}
 
-	/* If UGVs or alien drones fought in the battle, add their scores to that of the soldiers and aliens that control them. */
-	if (teamUGVs >= 0)
-		battle->teamAccomplishment[teamPlayer] += battle->teamAccomplishment[teamUGVs];
-	if (teamDrones >= 0)
-		battle->teamAccomplishment[teamEnemy] += battle->teamAccomplishment[teamDrones];
-
-	/* Well, if the player team is all dead, we know the player totally lost, and can stop right here. */
-	if (!battle->teamActive[teamPlayer]) {
-		battle->resultType = AUTOMISSION_RESULT_FAILED_NO_SURVIVORS;
-		battle->winningTeam = teamEnemy;
-	} else {
-		battle->winningTeam = teamPlayer;
-		/* At least some player soldiers are still standing, but how good did they do? */
-		if (battle->teamAccomplishment[teamPlayer] > battle->teamAccomplishment[teamEnemy])
-			battle->resultType = AUTOMISSION_RESULT_SUCCESS;
-		else
-			battle->resultType = AUTOMISSION_RESULT_COSTLY_SUCCESS;
+	/* Civilians (if any) */
+	if (numCivsTm > 0) {
+		for (unit = 0; unit < numCivsTm; unit++) {
+			/* Quick, ugly way of deciding civilian health scores.  Eventually we'll need something better. */
+			const int healthMaxm = (int) (frand() * autoGenHealthCivilians) + 10.f;
+			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
+			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = healthMaxm;
+			battle->unitHealth[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = health;
+		}
+		battle->teamActive[AUTOMISSION_TEAM_TYPE_CIVILIAN] = qtrue;
+		battle->teamType[AUTOMISSION_TEAM_TYPE_CIVILIAN] = AUTOMISSION_TEAM_TYPE_CIVILIAN;
+		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_CIVILIAN] = (frand() * 0.5f) + 0.05f;
 	}
 }
 
 /**
- * @brief Run this on an auto mission battle before the battle is actually simulated with @c AM_RunBattle, to set
- * default values for who will attack which team.  If you forget to do this before battle simulation, all teams will default
+ * @brief Run this on an auto mission battle before the battle is actually simulated, to set
+ * default values for who will attack which team. If you forget to do this before battle simulation, all teams will default
  * to "free for all" (Everyone will try to kill everyone else).
  * @param[in, out] battle The battle to set up team hostility values for.
  * @param[in] civsInfected Set to @c true if civs have XVI influence, otherwise @c false for a normal mission.
@@ -349,6 +370,10 @@ static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolea
 	}
 }
 
+/**
+ * @brief Calcuates Team strength scores for autobattle
+ * @param[in, out] battle The battle to set up teamscores for
+ */
 static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 {
 	int unitTotal = 0;
@@ -459,6 +484,14 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 	}
 }
 
+/**
+ * @brief Check and do attack on a frendly team (by a low chance)
+ * @param[in, out] battle The battle we fight
+ * @param[in] eTeam Team idx to attack
+ * @param[in] currTeam Team idx that attacks
+ * @param[in] currUnit Soldier idx who attacks
+ * @param[in] effective Effectiveness of the attack
+ */
 static void AM_CheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
 {
 	int eUnit;
@@ -486,6 +519,14 @@ static void AM_CheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const 
 	}
 }
 
+/**
+ * @brief Check and do attack on enemy team
+ * @param[in, out] battle The battle we fight
+ * @param[in] eTeam Team idx to attack
+ * @param[in] currTeam Team idx that attacks
+ * @param[in] currUnit Soldier idx who attacks
+ * @param[in] effective Effectiveness of the attack
+ */
 static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
 {
 	int eUnit;
@@ -513,6 +554,13 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 	}
 }
 
+/**
+ * @brief Make Unit attack his enemies (or friends)
+ * @param[in, out] battle The battle we fight
+ * @param[in] currTeam Team idx that attacks
+ * @param[in] currUnit Soldier idx who attacks
+ * @param[in] effective Effectiveness of the attack
+ */
 static qboolean AM_UnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
 {
 	int eTeam;
@@ -539,9 +587,12 @@ static qboolean AM_UnitAttackEnemies (autoMissionBattle_t *battle, const int cur
 	return qtrue;
 }
 
+/**
+ * @brief Main Battle loop function
+ * @param[in, out] battle The battle we fight
+ */
 static void AM_DoFight (autoMissionBattle_t *battle)
 {
-	/* Setup is done.  Now, FIGHT! */
 	qboolean combatActive = qtrue;
 
 	while (combatActive) {
@@ -580,6 +631,64 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 }
 
 /**
+ * @brief Check mission results and select winner
+ * @param[in, out] battle The battle we fight
+ */
+static void AM_DecideResults (autoMissionBattle_t *battle)
+{
+	int team;
+	int teamPlayer = -1;
+	int teamEnemy = -1;
+	int teamUGVs = -1;
+	int teamDrones = -1;
+
+	if (!battle->hasBeenFought)
+		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
+
+	/* Figure out who's who (determine which team is the player and which one is aliens.) */
+	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+		switch (battle->teamType[team]) {
+		case AUTOMISSION_TEAM_TYPE_PLAYER:
+			teamPlayer = team;
+			break;
+		case AUTOMISSION_TEAM_TYPE_ALIEN:
+			teamEnemy = team;
+			break;
+		case AUTOMISSION_TEAM_TYPE_PLAYER_UGV:
+			teamUGVs = team;
+			break;
+		case AUTOMISSION_TEAM_TYPE_ALIEN_DRONE:
+			teamDrones = team;
+			break;
+		default:
+			break;
+		}
+	}
+
+	assert(teamPlayer >= 0);
+	assert(teamEnemy >= 0);
+
+	/* If UGVs or alien drones fought in the battle, add their scores to that of the soldiers and aliens that control them. */
+	if (teamUGVs >= 0)
+		battle->teamAccomplishment[teamPlayer] += battle->teamAccomplishment[teamUGVs];
+	if (teamDrones >= 0)
+		battle->teamAccomplishment[teamEnemy] += battle->teamAccomplishment[teamDrones];
+
+	/* Well, if the player team is all dead, we know the player totally lost, and can stop right here. */
+	if (!battle->teamActive[teamPlayer]) {
+		battle->resultType = AUTOMISSION_RESULT_FAILED_NO_SURVIVORS;
+		battle->winningTeam = teamEnemy;
+	} else {
+		battle->winningTeam = teamPlayer;
+		/* At least some player soldiers are still standing, but how good did they do? */
+		if (battle->teamAccomplishment[teamPlayer] > battle->teamAccomplishment[teamEnemy])
+			battle->resultType = AUTOMISSION_RESULT_SUCCESS;
+		else
+			battle->resultType = AUTOMISSION_RESULT_COSTLY_SUCCESS;
+	}
+}
+
+/**
  * @brief This will display on-screen, for the player, results of the auto mission.
  * @param[in] battle Autobattle structure with the results
  * @todo results should be set in missionResult and this code should be merged with manual
@@ -605,76 +714,6 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
 		break;
 	default:
 		break;
-	}
-}
-
-static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
-{
-	int numAliensTm;
-	int numAlienDronesTm;
-	int numCivsTm;
-	int unit;
-
-	/* These are used to calculate possible generated health scores of non-player units. */
-	/* Adjust these to change game balance. */
-	/* TODO:  Should this be scripted instead, from a .ufo file? */
-	const float autoGenHealthAliens = 200.f;
-	const float autoGenHealthAlienDrones = 300.f;
-	const float autoGenHealthCivilians = 40.f;
-
-	assert(battle);
-	assert(missionParams);
-
-	numAliensTm = missionParams->aliens;
-	numAlienDronesTm = (int) (frand() * numAliensTm);
-	numCivsTm = missionParams->civilians;
-
-	/* Alines will go on team 2, alien drones on 3, civs on 4 (player soldiers are 0 and UGVs are 1). */
-	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = numAliensTm;
-	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = numAlienDronesTm;
-	battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = numCivsTm;
-
-	/* Populate the teams */
-
-	/* Aliens */
-	if (numAliensTm > 0) {
-		for (unit = 0; unit < numAliensTm; unit++) {
-			/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
-			const int healthMaxm = (int) (frand() * autoGenHealthAliens) + 10.f;
-			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
-			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = healthMaxm;
-			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = health;
-		}
-		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
-		battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN] = AUTOMISSION_TEAM_TYPE_ALIEN;
-		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN] = (frand() * 0.6f) + 0.2f;
-	}
-
-	if (numAlienDronesTm > 0) {
-		for (unit = 0; unit < numAlienDronesTm; unit++) {
-			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
-			const int healthMaxm = (int) (frand() * autoGenHealthAlienDrones) + 10.f;
-			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
-			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][unit] = healthMaxm;
-			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][unit] = health;
-		}
-		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qtrue;
-		battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = AUTOMISSION_TEAM_TYPE_ALIEN_DRONE;
-		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = (frand() * 0.6f) + 0.3f;
-	}
-
-	/* Civilians (if any) */
-	if (numCivsTm > 0) {
-		for (unit = 0; unit < numCivsTm; unit++) {
-			/* Quick, ugly way of deciding civilian health scores.  Eventually we'll need something better. */
-			const int healthMaxm = (int) (frand() * autoGenHealthCivilians) + 10.f;
-			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
-			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = healthMaxm;
-			battle->unitHealth[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = health;
-		}
-		battle->teamActive[AUTOMISSION_TEAM_TYPE_CIVILIAN] = qtrue;
-		battle->teamType[AUTOMISSION_TEAM_TYPE_CIVILIAN] = AUTOMISSION_TEAM_TYPE_CIVILIAN;
-		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_CIVILIAN] = (frand() * 0.5f) + 0.05f;
 	}
 }
 
@@ -754,6 +793,8 @@ static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employe
 /**
  * @brief This looks at a finished auto battle, and uses values from it to kill or lower health of surviving soldiers on a
  * mission drop ship as appropriate.  It also hands out some experience to soldiers that survive.
+ * @param[in] battle The battle we fought
+ * @param[in, out] aircraft Dropship soldiers are on
  */
 static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
 {
@@ -795,8 +836,8 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
  * @param[in,out] mission The mission to auto play
  * @param[in,out] aircraft The aircraft (or fake aircraft in case of a base attack)
  * @param[in] campaign The campaign data structure
- * @param[out] results Result of the mission
  * @param[in] battleParameters Structure that holds the battle related parameters
+ * @param[out] results Result of the mission
  */
 void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
 {
