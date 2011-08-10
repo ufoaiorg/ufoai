@@ -5118,6 +5118,7 @@ base/textures/tex_material/green_gray.png | GNU General Public License 2.0 or la
 base/textures/tex_material/metal001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal001_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metal002_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_material/metal012.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal012_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal012_sm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5134,6 +5135,7 @@ base/textures/tex_material/metall005.png | GNU General Public License 2.0 or lat
 base/textures/tex_material/metall005_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_material/metall007.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metall007_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_material/metall008.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall008_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
@@ -6456,7 +6458,8 @@ base/textures/tex_vehicles/car_f.png | GNU General Public License 2.0 or later |
 base/textures/tex_vehicles/consite_truck_a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/consite_truck_c.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/gabstap_a.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
-base/textures/tex_vehicles/gabstap_b.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer), Nate Wright
+base/textures/tex_vehicles/gabstap_b.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer);MCR
+base/textures/tex_vehicles/gabstap_b_nm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_vehicles/gabstap_c.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_c_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/gabstap_d.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6484,7 +6487,9 @@ base/textures/tex_vehicles/tire_002.png | GNU General Public License 2.0 or late
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.png | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf
 base/textures/tex_vehicles/truck_a.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
+base/textures/tex_vehicles/truck_a_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_b.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
+base/textures/tex_vehicles/truck_b_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_lq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_lq_nm.png | GNU General Public License 2.0 | MCR
