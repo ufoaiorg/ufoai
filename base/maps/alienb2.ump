@@ -70,6 +70,20 @@ tile +ventr
 	0		a		a		0
 }
 
+// Vent (left side)
+// used for closing up a hub/hangar on the left side
+tile +ventl
+{
+	4 6
+
+	0		a		a		0
+	a		+a		+w		w
+	a		+a		+w		w
+	a		+a		+w		w
+	a		+a		+w		w
+	0		a		a		0
+}
+
 // Hallway, Vertical
 // Entrances: top/btm, no horizontal entrances
 // Has an empty space on its left tile (hall takes up only right tile)
@@ -93,6 +107,7 @@ assembly test
 	size "12 8"
 
 	fix +entrance "2 6"
+	fix +ventl "0 2"
 	fix +hub "2 2"
 	fix +hangar "6 2"
 	fix +ventr "10 2"
