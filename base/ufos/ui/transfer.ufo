@@ -61,18 +61,22 @@ window transfer
 		option item {
 			label	"_Equipment"
 			value	"item"
+			icon	"icons/tab_equipment"
 		}
 		option employee {
 			label	"_Employees"
 			value	"employee"
+			icon	"icons/tab_employees"
 		}
 		option alien {
 			label	"_Aliens"
 			value	"alien"
+			icon	"icons/tab_aliens"
 		}
 		option aircraft {
 			label	"_Aircraft"
 			value	"aircraft"
+			icon	"icons/tab_aircraft"
 		}
 	}
 
