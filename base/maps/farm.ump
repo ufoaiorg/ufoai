@@ -465,13 +465,13 @@ seeds {
 	10
 	11
 	12
-	13
+/*	13 slow on linux */
 	14
 	15
 	17
 	18
 	19
-/* the next seeds are untested unde linux */
+/* the next seeds are untested on linux */
 	20
 	21
 	22
