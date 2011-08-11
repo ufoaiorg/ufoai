@@ -22,8 +22,8 @@ window ufopedia extends objectinfo
 	panel summary
 	{
 		{
-			pos		"22 91"
-			size	"307 588"
+			pos		"22 92"
+			size	"314 589"
 			image	"ui/panel_green"
 			layout	LAYOUT_BORDER
 			padding	10
@@ -34,7 +34,7 @@ window ufopedia extends objectinfo
 			cvar		*cvar:up_summary_selection
 			dataid		OPTION_UFOPEDIA
 			align		LAYOUTALIGN_MIDDLE
-			font		"f_small"
+			font		"f_verysmall"
 			color		"0 .78 0 1"
 			selectcolor		"1 1 1 1"
 			onChange
@@ -67,13 +67,13 @@ window ufopedia extends objectinfo
 	{
 		{
 			pos		"343 55"
-			size	"655 625"
+			size	"638 626"
 		}
 
 		panel navigation_panel
 		{
-			pos		"0 32"
-			size	"637 593"
+			pos		"0 34"
+			size	"638 592"
 			image	"ui/panel_green_tab"
 		}
 
@@ -81,8 +81,8 @@ window ufopedia extends objectinfo
 		{
 			{
 				cvar	*cvar:ufopedia_content
-				pos		"1 0"
-				size	"628 43"
+				pos		"0 2"
+				size	"638 36"
 				onChange { cmd "update_ufopedia_layout;" }
 			}
 			option description
@@ -190,23 +190,23 @@ window ufopedia extends objectinfo
 			size	"597 573"
 			image	"ui/panel_green_slim"
 		}
-		// The Big Picture model and picture
-		model mdl_bigpicture
-		{
-			src			*cvar:mn_upmodel_top
-			angles		"0 25 90"
-			pos			"10 43"
-			size		"593 571"
-			autoscale	true
-			omega		"0 -11 0"
-			rotatewithmouse	true
-		}
+		// The Big Picture picture and model
 		image image_bigpicture
 		{
 			src		*cvar:mn_upimage_top
 			pos			"180 43"
 			size		"251 571"
 			preventratio	true
+		}
+		model mdl_bigpicture
+		{
+			src			*cvar:mn_upmodel_top
+			angles		"0 25 90"
+			pos			"10 43"
+			size		"594 571"
+			autoscale	true
+			omega		"0 -9 0"
+			rotatewithmouse	true
 		}
 /*	// for future purposes
 		panel decoration_panel3
@@ -224,7 +224,7 @@ window ufopedia extends objectinfo
 		{
 			dataid		TEXT_UFOPEDIA
 			pos			"15 47"
-			size		"410 570"
+			size		"410 568"
 			font		"f_small"
 			lineheight	20
 			tabwidth	100
