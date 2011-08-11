@@ -91,7 +91,7 @@ window iaircraft
 		option description {
 			label	"_Description"
 			value	"aircraft"
-			icon "icons/information"
+			icon "icons/tab_information"
 		}
 		option pilot {
 			label	"_Pilots"
@@ -101,6 +101,7 @@ window iaircraft
 		option equip {
 			label	"_Equipment"
 			value	"aircraft_equip"
+			icon	"icons/tab_air_equipment"
 		}
 /*		option tank {
 			label	"_Tanks"
