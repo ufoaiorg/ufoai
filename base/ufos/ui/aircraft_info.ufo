@@ -20,8 +20,8 @@ window aircraft extends iaircraft
 	model aircraft
 	{
 		src			*cvar:mn_aircraft_model
-		pos			"478 107"
-		size		"529 260"
+		pos			"478 106"
+		size		"529 261"
 		angles		"0 0 90"
 		autoscale	true
 		rotatewithmouse	true
@@ -138,6 +138,7 @@ window aircraft extends iaircraft
 		// no soldiers
 		elif ( *cvar:mn_equipsoldierstate == 2 ) {
 			*node:root.aircraft_navigation@disabled = false
+			*node:root.aircraft_navigation.soldier@invis = true
 		}
 		// normal
 		elif ( *cvar:mn_equipsoldierstate == 3 ) {

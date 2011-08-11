@@ -53,8 +53,8 @@ window aircraft_pilots extends iaircraft
 	model aircraft
 	{
 		src			*cvar:mn_aircraft_model
-		pos			"478 107"
-		size		"529 260"
+		pos			"478 106"
+		size		"529 261"
 		origin		"-45 25 0"
 		angles		"160 20 -120"
 		autoscale	true
@@ -102,7 +102,7 @@ window aircraft_pilots extends iaircraft
 	// ==================
 
 	image	rank_img {
-		pos "378 465"
+		pos "378 463"
 		size "50 50"
 		src *cvar:mn_chrrank_img
 	}
@@ -115,9 +115,10 @@ window aircraft_pilots extends iaircraft
 			anim	"stand2"
 			angles	"0 70 90"
 			scale	"5.5 5.5 5.5"
-			pos		"378 465"
-			size	"167 278"
+			pos		"377 463"
+			size	"168 283"
 			origin	"0 -35 0"
+			omega	"0 -1 0"
 		}
 
 		model head
