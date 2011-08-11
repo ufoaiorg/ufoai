@@ -500,7 +500,7 @@ seeds {
 	24
 	25
 /* the next seeds are untested under linux */
-	26
+/*	26	slow on linux */
 	27
 	28
 	29
