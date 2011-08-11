@@ -170,16 +170,19 @@ window skirmish
 		{
 			label	"_Map"
 			value	"1"
+			icon	"icons/tab_map"
 		}
 		option options
 		{
 			label	"_Options"
 			value	"2"
+			icon	"icons/tab_options"
 		}
 		option team
 		{
 			label	"_Team"
 			value	"3"
+			icon	"icons/tab_team"
 		}
 	}
 	// ========
