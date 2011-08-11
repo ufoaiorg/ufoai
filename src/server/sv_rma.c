@@ -1892,6 +1892,18 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 	FS_FreeFile(buf);
 }
 
+#define SORT_BY_SIZE 0
+#if SORT_BY_SIZE
+static int cmpTileAreaSize (const void * a, const void * b)
+{
+	if ( ((const mToPlace_t *) a)->tile->area > ((const mToPlace_t *) b)->tile->area)
+		return -1;
+	else if ( ((const mToPlace_t *) a)->tile->area == ((const mToPlace_t *) b)->tile->area )
+		return 0;
+	return 1;
+}
+#endif
+
 static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed)
 {
 	int i;
@@ -1904,6 +1916,13 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 	assert(mAsm->height <= MAX_RANDOM_MAP_HEIGHT);
 
 	SV_PrepareTilesToPlace(map);
+
+#if SORT_BY_SIZE
+	/* This is the perfect time to sort them by size, which helps RMA a lot.
+	 * This eliminates the need for a seedlist in oriental large completely.
+	 * Unfortunately, it does do that for the others. Instead, it requires a different seedlist for them. */
+	qsort(map->mToPlace, map->numToPlace, sizeof(mToPlace_t), cmpTileAreaSize);
+#endif
 
 	/* assemble the map */
 	map->numPlaced = 0;
