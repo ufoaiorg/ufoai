@@ -34,7 +34,7 @@ window ufopedia extends objectinfo
 			cvar		*cvar:up_summary_selection
 			dataid		OPTION_UFOPEDIA
 			align		LAYOUTALIGN_MIDDLE
-			font		"f_verysmall"
+			font		"f_small"
 			color		"0 .78 0 1"
 			selectcolor		"1 1 1 1"
 			onChange
@@ -89,21 +89,25 @@ window ufopedia extends objectinfo
 			{
 				label	"_Description"
 				value	"description"
+//				icon	"icons/tab_description"
 			}
 			option preresearch
 			{
 				label	"_Pre-Research Report"
 				value	"preresearch"
+//				icon	"icons/tab_preresearch"
 			}
 			option stats
 			{
 				label	"_Statistics"
 				value	"stats"
+//				icon	"icons/tab_statistics"
 			}
 			option bigpicture
 			{
 				label	"_The Big Picture"
 				value	"bigpicture"
+//				icon	"icons/tab_bigpicture"
 			}
 		}
 
