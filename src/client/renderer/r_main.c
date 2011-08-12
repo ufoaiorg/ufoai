@@ -544,7 +544,7 @@ static void R_RegisterSystemVars (void)
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Multiplier for the alpha of the shadows");
 	r_stencilshadows = Cvar_Get("r_stencilshadows", "0", CVAR_ARCHIVE, "Activate or deactivate stencil shadows");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_R_IMAGES, "The maximum texture resolution UFO should use");
-	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
+	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_LINEAR", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "GL_RGBA", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "GL_RGB", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
@@ -1172,7 +1172,7 @@ qboolean R_Init (void)
 	/* some config default values */
 	r_config.gl_solid_format = GL_RGB;
 	r_config.gl_alpha_format = GL_RGBA;
-	r_config.gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
+	r_config.gl_filter_min = GL_LINEAR_MIPMAP_LINEAR;
 	r_config.gl_filter_max = GL_LINEAR;
 	r_config.maxTextureSize = 256;
 
