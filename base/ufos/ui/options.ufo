@@ -394,8 +394,8 @@ window options
 
 		tab video_tabs {
 			{
-				pos		"45 100"
-				size	"498 39"
+				pos		"47 100"
+				size	"483 39"
 				cvar	*cvar:mn_videotab
 				onChange {
 					if ( *cvar:mn_videotab eq "general" ) {
