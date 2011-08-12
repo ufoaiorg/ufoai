@@ -60,32 +60,7 @@ window hospital
 	// Base header
 	// ==================
 
-	string base_name
-	{
-		tooltip	"_Name of this base"
-		string	*cvar:mn_base_title
-		pos	"60 30"
-		size "500 32"
-		textalign	ALIGN_CL
-		padding	8
-		font	"f_big"
-	}
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		"f_big"
-	}
-
-	string txt_credits
-	{
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		"f_big"
-		textalign	ALIGN_UR
+	cmpBaseHeader baseHeader {
 	}
 
 	custombutton bt_continue
