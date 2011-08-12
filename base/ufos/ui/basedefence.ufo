@@ -29,15 +29,18 @@ window basedefence extends objectinfo
 		option info {
 			label	"_Information"
 			value	"info"
+			icon	"icons/tab_information"
 		}
 		option missile {
 			label	"_Missile Defences"
 			value	"missile"
+			icon	"icons/tab_missiledefences"
 		}
 		option laser {
 			label	"_Laser Defences"
 			value	"laser"
 			invis	true
+			icon	"icons/tab_laserdefences"
 		}
 	}
 
