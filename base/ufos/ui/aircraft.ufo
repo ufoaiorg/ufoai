@@ -171,8 +171,8 @@ window iaircraft
 	{
 		tooltip		"_Rename aircraft"
 		icon		"icons/pen"
-		pos			"380 116"
-		size		"16 16"
+		pos			"380 105"
+		size		"35 35"
 		padding		0
 		onClick		{ call *node:root.aircraft_selected@edit }
 	}

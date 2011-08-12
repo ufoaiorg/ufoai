@@ -1,6 +1,6 @@
-// ==============
+// ===============
 // BASEMANAGEMENT
-// ==============
+// ===============
 
 component cmpDefBaseHeader cmpBaseviewHeader
 {
@@ -14,62 +14,8 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		icon		"icons/geoscape"
 	}
 
-	textentry name
-	{
-		string		*cvar:mn_base_title
-		tooltip		"_Name of this base"
-		pos			"60 30"
-		size		"500 32"
-		font		"f_big"
-		onChange {
-			// stores the value of the cvar in the base structure
-			cmd	"base_changename"
-		}
+	cmpBaseHeader baseHeader {
 	}
-
-	zone wz_base
-	{
-		pos	"25 25"
-		size	"606 46"
-		onWheelUp	{ cmd "mn_base_next;" }
-		onWheelDown	{ cmd "mn_base_prev;" }
-	}
-
-	button bt_edit
-	{
-		tooltip	"_Rename your base"
-		icon	"icons/pen"
-		pos	"570 40"
-		size "16 16"
-		padding 0
-		onClick
-		{
-			call *node:parent.name@edit
-		}
-	}
-
-	custombutton prev_base
-	{
-		tooltip	"_Switch to the previous base"
-		icon	"icons/prev"
-		pos		"30 30"
-		size	"30 30"
-		onClick	{ cmd "mn_base_prev;" }
-		onWheelUp	{ cmd "mn_base_next;" }
-		onWheelDown	{ cmd "mn_base_prev;" }
-	}
-
-	custombutton next_base
-	{
-		tooltip	"_Switch to the next base"
-		icon	"icons/next"
-		pos		"600 30"
-		size	"30 30"
-		onClick	{ cmd "mn_base_next;" }
-		onWheelUp	{ cmd "mn_base_next;" }
-		onWheelDown	{ cmd "mn_base_prev;" }
-	}
-
 
 }
 

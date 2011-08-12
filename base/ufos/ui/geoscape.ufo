@@ -930,8 +930,8 @@ window popup_newbase
 	{
 		tooltip		"_Rename your base"
 		icon		"icons/pen"
-		pos			"26 78"
-		size		"16 16"
+		pos			"21 65"
+		size		"35 35"
 		padding		0
 		onClick		{ call *node:root.name@edit }
 	}

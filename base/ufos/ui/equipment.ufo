@@ -586,8 +586,8 @@ window equipment extends objectinfo
 	{
 		tooltip		"_Rename your unit"
 		icon		"icons/pen"
-		pos			"780 24"
-		size		"16 16"
+		pos			"775 11"
+		size		"35 35"
 		padding		0
 		onClick		{ call *node:parent.name@edit }
 	}
