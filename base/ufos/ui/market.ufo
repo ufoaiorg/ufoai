@@ -29,7 +29,7 @@ component panel cmpMarketItem
 		image		"ui/checkbox_blue"
 //		pos			"30 180"
 		pos			"0 0"
-		size		"16 16"
+		size		"22 18"
 		onChange	{ cmd "buy_autosell <node:parent@num>;" }
 	}
 
@@ -348,7 +348,7 @@ window market extends objectinfo
 		{
 			visiblewhen "*cvar:mn_itemtype ne \"aircraft\""	// for everything except aircraft
 			string		*cvar:mn_itemname
-			pos			"22 35"
+			pos			"22 25"
 			size		"365 20"
 			textalign	ALIGN_UC
 		}
@@ -365,7 +365,7 @@ window market extends objectinfo
 		{
 			icon		"icons/bordered_magnifying_glass"
 			tooltip		"_UFOpaedia"
-			pos			"370 37"
+			pos			"370 27"
 			size		"16 16"
 			onClick		{
 				cmd "ui_addlistener ufopedia@onWindowClosed <path:root>.listen_openpedia;"
@@ -376,8 +376,8 @@ window market extends objectinfo
 		item itemmodel
 		{
 			src			*cvar:mn_item
-			pos			"12 55"
-			size		"385 200"
+			pos			"13 55"
+			size		"384 200"
 			angles		"-10 160 70"
 			omega		"0 10 0"
 			autoscale	true
