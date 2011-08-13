@@ -3968,6 +3968,29 @@ mapdef scout_crash
 	}
 }
 
+// SMALL HOUSE MAP //
+
+mapdef small_house
+{
+	map			"small_house"
+	description		"A small house."
+	multiplayer		false
+	maxaliens		8
+
+	terrains
+	{
+		grass
+		mountains
+	}
+
+	populations
+	{
+		suburban
+		village
+		rural
+	}
+}
+
 // SMALL_STREET MAP //
 
 mapdef small_street
