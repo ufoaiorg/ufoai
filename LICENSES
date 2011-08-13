@@ -3699,8 +3699,8 @@ base/pics/ui/button_green_big.png | GNU General Public License 2.0 or later | ba
 base/pics/ui/button_green_small.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_green_verysmall.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later | MCR | Source: Based on original menu artwork by SparX and Rasta
-base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
+base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later | MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
+base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo;MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later
