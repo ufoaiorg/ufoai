@@ -83,8 +83,8 @@ sprite icons/autopsyalien {
 
 sprite icons/killalien {
 	image "banks/pack2"
-	texl	"80 1"
-	size	"29 25"
+	texl	"75 0"
+	size	"38 32"
 	pack64 true
 }
 
@@ -173,36 +173,36 @@ sprite icons/varrow_bottom_top {
 
 sprite icons/speed_stop {
 	image "banks/pack2"
-	texl	"115 33"
-	size	"10 15"
+	texl	"112 28"
+	size	"15 25"
 	pack64	true
 }
 
 sprite icons/speed_play1 {
 	image "banks/pack2"
-	texl	"130 33"
-	size	"8 15"
+	texl	"127 28"
+	size	"14 25"
 	pack64	true
 }
 
 sprite icons/speed_play2 {
 	image "banks/pack2"
-	texl	"143 33"
-	size	"14 15"
+	texl	"140 28"
+	size	"21 25"
 	pack64	true
 }
 
 sprite icons/speed_play3 {
 	image "banks/pack2"
-	texl	"162 33"
-	size	"20 15"
+	texl	"159 28"
+	size	"27 25"
 	pack64	true
 }
 
 sprite icons/speed_dot {
 	image "banks/pack2"
-	texl	"187 37"
-	size	"7 7"
+	texl	"185 32"
+	size	"12 17"
 	pack64	true
 }
 
