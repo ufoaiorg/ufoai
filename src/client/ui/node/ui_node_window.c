@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_render.h"
 #include "ui_node_window.h"
 #include "ui_node_panel.h"
+#include "ui_node_custombutton.h"
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
@@ -53,8 +54,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 const uiBehaviour_t const *ui_windowBehaviour;
 
-static const int CONTROLS_IMAGE_DIMENSIONS = 17;
-static const int CONTROLS_PADDING = 22;
+static const int CONTROLS_IMAGE_DIMENSIONS = 25;
+static const int CONTROLS_PADDING = 18;
 
 static const int windowTemplate[] = {
 	LEFT_WIDTH, MID_WIDTH, RIGHT_WIDTH,
@@ -295,10 +296,12 @@ static void UI_WindowNodeLoaded (uiNode_t *node)
 
 	/* create a close button, if it is requested */
 	if (EXTRADATA(node).closeButton) {
-		uiNode_t *button = UI_AllocNode("close_window_button", "image", node->dynamic);
+		uiNode_t *button = UI_AllocNode("close_window_button", "custombutton", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
+		customButtonExtraData_t *buttonExtraData = UI_EXTRADATA_POINTER(button, customButtonExtraData_t);
+
 		button->root = node;
-		button->image = "icons/system_close";
+		buttonExtraData->super.icon = UI_GetSpriteByName("icons/system_close");
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
 		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;

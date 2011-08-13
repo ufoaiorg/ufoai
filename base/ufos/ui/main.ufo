@@ -259,6 +259,7 @@ window popup_tipoftheday
 		pos			"38 456"
 		size		"496 247"
 		dragbutton	true
+		closebutton	true
 		image		"ui/popup_alpha_tile"
 		string		"_Tip of the day"
 	}
