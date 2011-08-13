@@ -97,8 +97,8 @@ sprite icons/question {
 
 sprite icons/change_height {
 	image "banks/pack2"
-	texl	"96 32"
-	size	"15 15"
+	texl	"92 33"
+	size	"19 19"
 	pack64 true
 }
 
