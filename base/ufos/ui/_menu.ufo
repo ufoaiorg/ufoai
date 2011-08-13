@@ -132,7 +132,8 @@ component panel cmpDefBaseHeader {
 		font		"f_big"
 		textalign	ALIGN_UR
 	}
-	custombutton bt_back
+
+	custombutton bt_back_to_baseview
 	{
 		tooltip		"_Back to baseview"
 		background	"buttons/big_blue"
@@ -141,6 +142,7 @@ component panel cmpDefBaseHeader {
 		icon		"icons/return"
 		onClick		{ cmd "ui_pop;" }
 	}
+
 }
 
 component cmpDefBaseHeader cmpBaseHeader
