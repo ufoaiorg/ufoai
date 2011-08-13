@@ -4,6 +4,7 @@
 "classname" "worldspawn"
 "ambient_day" "0.15 0.15 0.15"
 "_color" "0.37 0.59 0.37"
+"randomspawn" "1"
 // brush 0
 {
 ( 0 832 168 ) ( 16 832 168 ) ( 0 832 104 ) tex_alienb/ab_wall07 128 320 0 -0.125 0.125 65280 0 0
@@ -9781,4 +9782,34 @@
 ( 172 748 136 ) ( 172 748 152 ) ( 180 748 136 ) tex_common/origin 0 0 0 0.125 0.125
 ( 172 748 136 ) ( 172 756 136 ) ( 172 748 152 ) tex_common/origin 0 0 0 0.125 0.125
 }
+}
+// entity 4
+{
+"classname" "info_alien_start"
+"origin" "272 112 348"
+"angle" "180"
+}
+// entity 5
+{
+"classname" "info_alien_start"
+"origin" "208 912 348"
+"angle" "180"
+}
+// entity 6
+{
+"classname" "info_alien_start"
+"origin" "80 720 348"
+"angle" "180"
+}
+// entity 7
+{
+"classname" "info_alien_start"
+"origin" "176 400 348"
+"angle" "180"
+}
+// entity 8
+{
+"classname" "info_alien_start"
+"origin" "112 112 348"
+"angle" "180"
 }

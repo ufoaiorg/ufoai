@@ -1,5 +1,5 @@
 // *********************************
-// New Alien base THEME
+// Alien base THEME
 // *********************************
 
 
@@ -96,8 +96,7 @@ tile +wormhole
 }
 
 // Hallway, Vertical
-// Entrances: top/btm, no horizontal entrances
-// Has an empty space on its left tile (hall takes up only right tile)
+// Has an empty space on its left tile (hall takes up only right tiles)
 tile +hall_v1
 {
 	4 4
@@ -107,22 +106,139 @@ tile +hall_v1
 	a		+a		+x		a
 	0		a		x		0
 }
+tile +hall_v2
+{
+	4 4
+
+	0		a		x		0
+	a		+a		+x		a
+	a		+a		+x		a
+	0		a		x		0
+}
+
+// Hallway, Horizontal
+// Has an empty space on its bottom tiles (hall takes up only top tiles)
+tile +hall_h1
+{
+	4 4
+
+	0		a		a		0
+	x		x		x		x
+	a		a		a		a
+	0		a		a		0
+}
+
+// Hallway, Corner (Southeast)
+// Tile connects on the right and the bottom
+tile +hall_cse1
+{
+	4 4
+
+	0		a		a		0
+	a		a		x		x
+	a		a		x		a
+	0		a		x		0
+}
+
+// Hallway, Corner (Southwest)
+// Tile connects on the left and the bottom
+tile +hall_csw1
+{
+	4 4
+
+	0		a		a		0
+	x		x		a		a
+	a		x		a		a
+	0		x		a		0
+}
+
+// Hallway, Corner (Northeast)
+// Tile connects on the right and the top
+tile +hall_cne1
+{
+	4 4
+
+	0		a		x		0
+	a		a		x		x
+	a		a		a		a
+	0		a		a		0
+}
+
+// Hallway, Corner (Northwest)
+// Tile connects on the left and the top
+tile +hall_cnw1
+{
+	4 4
+
+	0		a		x		0
+	x		x		x		a
+	a		a		a		a
+	0		a		a		0
+}
+
+// Hallway, T-junction (bottom)
+// Tile connects on the left, right and the top
+tile +hall_tbtm1
+{
+	4 4
+
+	0		a		x		0
+	x		x		x		x
+	a		a		a		a
+	0		a		a		0
+}
+
+// Hallway, T-junction (top)
+// Tile connects on the left, right and the btm
+tile +hall_ttop1
+{
+	4 4
+
+	0		a		a		0
+	x		x		x		x
+	a		a		x		a
+	0		a		x		0
+}
+
+// Hallway, 4-way junction
+// Tile connects on the top, btm, left and right
+tile +hall_4way1
+{
+	4 4
+
+	0		a		x		0
+	x		x		x		x
+	a		a		x		a
+	0		a		x		0
+}
 
 
 // Assembly definitions
 // --------------------
 
-
-assembly test
+assembly small1
 {
-	size "14 8"
+	size "14 10"
 
-	fix +entrance "4 6"
-	fix +ventl "2 2"
-	fix +hub "4 2"
-	fix +hangar "8 2"
-	fix +ventr "12 2"
-	fix +powercore "2 0"
-	fix +hall_v1 "6 0"
-	fix +wormhole "0 0"
+	fix +hall_cne1 "6 0"
+	fix +hall_h1 "8 0"
+	fix +hall_cnw1 "10 0"
+
+	fix +hall_cne1 "0 2"
+	fix +wormhole "2 2"
+	fix +hall_tbtm1 "4 2"
+	fix +hall_4way1 "6 2"
+	fix +powercore "8 2"
+
+	fix +hall_v1 "0 4"
+	fix +hall_v2 "0 6"
+	fix +ventl "2 4"
+	fix +hub "4 4"
+	fix +hangar "8 4"
+	fix +ventr "12 4"
+
+	fix +hall_cse1 "0 8"
+	fix +hall_h1 "2 8"
+	fix +entrance "4 8"
+	fix +hall_csw1 "8 8"
 }
