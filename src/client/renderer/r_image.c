@@ -695,7 +695,7 @@ void R_TextureMode (const char *string)
 	r_config.gl_filter_max = mode->maximize;
 
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
-		if (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars)
+		if (image->type == it_pic || image->type == it_worldrelated || image->type == it_chars)
 			continue; /* no mipmaps */
 
 		R_BindTexture(image->texnum);
