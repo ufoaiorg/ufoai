@@ -611,9 +611,9 @@ window popup_keyinfo
 	text keyinfolist
 	{
 		dataid		TEXT_LIST
-		pos			"30 102"
-		size		"473 625"
-		rows		"28"
+		pos			"30 112"
+		size		"473 620"
+		rows		"31"
 		lineheight	"20"
 		tabwidth	"120"
 		font		"f_verysmall"
@@ -627,10 +627,10 @@ window popup_keyinfo
 	vscrollbar keyinfoscroll
 	{
 		image		"ui/scrollbar_v_green"
-		pos			"504 102"
-		height		"625"
+		pos			"504 112"
+		height		"620"
 		current		0
-		viewsize	28
+		viewsize	31
 		fullsize	50
 		onChange	{ *node:root.keyinfolist@viewpos = <current> }
 	}
