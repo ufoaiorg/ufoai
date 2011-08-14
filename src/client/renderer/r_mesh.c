@@ -304,7 +304,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	image_t *skin;
 	mAliasMesh_t *mesh;
 
-	if (!mi->name || mi->name[0] == '\0')
+	if (Q_strnull(mi->name))
 		return;
 
 	/* register the model */

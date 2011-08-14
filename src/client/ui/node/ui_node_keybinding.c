@@ -150,7 +150,7 @@ static void UI_KeyBindingNodeDraw (uiNode_t *node)
 	}
 
 	binding = UI_GetReferenceString(node, node->text);
-	if (binding == NULL || binding[0] == '\0')
+	if (Q_strnull(binding))
 		binding = _("NONE");
 
 	/** @todo check that this is a keybinding value (with macro expansion) */

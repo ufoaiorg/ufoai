@@ -43,7 +43,7 @@ static void UI_TBarNodeDraw (uiNode_t *node)
 	const char* ref = UI_GetReferenceString(node, node->image);
 	float pointWidth;
 	float width;
-	if (!ref || ref[0] == '\0')
+	if (Q_strnull(ref))
 		return;
 
 	UI_GetNodeAbsPos(node, nodepos);

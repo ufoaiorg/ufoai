@@ -2785,7 +2785,7 @@ static qboolean AIR_PostLoadInitMissions (void)
 
 	/* PHALANX aircraft */
 	AIR_Foreach(aircraft) {
-		if (!aircraft->missionID || aircraft->missionID[0] == '\0')
+		if (Q_strnull(aircraft->missionID))
 			continue;
 		aircraft->mission = CP_GetMissionByID(aircraft->missionID);
 		if (!aircraft->mission) {
@@ -2804,7 +2804,7 @@ static qboolean AIR_PostLoadInitMissions (void)
 	 */
 	prevUfo = NULL;
 	while ((ufo = UFO_GetNext(prevUfo)) != NULL) {
-		if (!ufo->missionID || ufo->missionID[0] == '\0') {
+		if (Q_strnull(ufo->missionID)) {
 			Com_Printf("Warning: %s (idx: %i) has no mission assigned, removing it\n", ufo->name, ufo->idx);
 			UFO_RemoveFromGeoscape(ufo);
 			continue;

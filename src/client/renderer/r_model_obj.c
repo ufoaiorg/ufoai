@@ -222,7 +222,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
  */
 static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char *line)
 {
-	if (!line || line[0] == '\0')  /* don't bother */
+	if (Q_strnull(line))  /* don't bother */
 		return;
 
 	if (!strncmp(line, "v ", 2)) {  /* vertex */

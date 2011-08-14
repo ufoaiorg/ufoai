@@ -142,7 +142,7 @@ static void M_Start (const char *file)
 	int size;
 	SDL_RWops *rw;
 
-	if (!file || file[0] == '\0')
+	if (Q_strnull(file))
 		return;
 
 	if (!s_env.initialized) {

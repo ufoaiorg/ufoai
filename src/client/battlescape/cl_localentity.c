@@ -246,7 +246,7 @@ localModel_t *LM_GetByID (const char *id)
 {
 	int i;
 
-	if (id == NULL || id[0] == '\0')
+	if (Q_strnull(id))
 		return NULL;
 
 	for (i = 0; i < cl.numLMs; i++) {

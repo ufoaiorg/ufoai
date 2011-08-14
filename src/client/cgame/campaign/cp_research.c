@@ -1540,7 +1540,7 @@ technology_t *RS_GetTechByID (const char *id)
 	unsigned hash;
 	technology_t *tech;
 
-	if (!id || id[0] == '\0')
+	if (Q_strnull(id))
 		return NULL;
 
 	hash = Com_HashKey(id, TECH_HASH_SIZE);

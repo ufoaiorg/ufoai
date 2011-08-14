@@ -140,7 +140,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 	char filenameTemp[MAX_QPATH];
 	SDL_Surface *surf;
 
-	if (!name || name[0] == '\0')
+	if (Q_strnull(name))
 		Com_Error(ERR_FATAL, "R_LoadImage: NULL name");
 
 	Com_StripExtension(name, filenameTemp, sizeof(filenameTemp));

@@ -50,7 +50,7 @@ static void UI_CheckBoxNodeDraw (uiNode_t* node)
 	int texx, texy;
 
 	/* image set? */
-	if (!image || image[0] == '\0')
+	if (Q_strnull(image))
 		return;
 
 	/* outer status */

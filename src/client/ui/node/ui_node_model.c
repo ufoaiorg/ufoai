@@ -80,7 +80,7 @@ static void UI_ModelNodeDraw (uiNode_t *node)
 {
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
 	char source[MAX_VAR];
-	if (ref == NULL || ref[0] == '\0')
+	if (Q_strnull(ref))
 		source[0] = '\0';
 	else
 		Q_strncpyz(source, ref, sizeof(source));
@@ -388,7 +388,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 
 			/* init model name */
 			childRef = UI_GetReferenceString(child, EXTRADATA(child).model);
-			if (childRef == NULL || childRef[0] == '\0')
+			if (Q_strnull(childRef))
 				childSource[0] = '\0';
 			else
 				Q_strncpyz(childSource, childRef, sizeof(childSource));

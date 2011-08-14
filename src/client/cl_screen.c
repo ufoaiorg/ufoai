@@ -68,7 +68,7 @@ static char cursorImage[MAX_QPATH];
  */
 static void SCR_DrawString (int x, int y, const char *string)
 {
-	if (!string || string[0] == '\0')
+	if (Q_strnull(string))
 		return;
 
 	Con_DrawString(string, x, y, strlen(string));

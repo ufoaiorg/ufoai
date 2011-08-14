@@ -42,7 +42,7 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
 	const char *font = "f_small";
 	int height = 0, width = 0;
 
-	if (!string || string[0] == '\0' || !font)
+	if (Q_strnull(string) || !font)
 		return 0;
 
 	R_FontTextSize(font, string, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
@@ -84,9 +84,9 @@ void UI_Tooltip (uiNode_t *node, int x, int y)
 		tooltip = UI_GetReferenceString(node, node->tooltip);
 
 	/* normalize */
-	if (tooltip && tooltip[0] == '\0')
+	if (Q_strnull(tooltip))
 		tooltip = NULL;
-	if (key && key[0] == '\0')
+	if (Q_strnull(key))
 		key = NULL;
 
 	/* create tooltip */

@@ -215,7 +215,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 		const char *modelName = GAME_GetModelForItem(od, &model);
 
 		/* no model definition in the tech struct, not in the fallback object definition */
-		if (modelName == NULL || modelName[0] == '\0') {
+		if (Q_strnull(modelName)) {
 			Com_Printf("UI_DrawItem: No model given for item: '%s'\n", od->id);
 			return;
 		}

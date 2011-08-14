@@ -444,7 +444,7 @@ int Key_StringToKeynum (const char *str)
 {
 	const keyName_t *kn;
 
-	if (!str || str[0] == '\0')
+	if (Q_strnull(str))
 		return -1;
 
 	/* single char? */

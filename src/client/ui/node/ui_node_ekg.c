@@ -41,7 +41,7 @@ static void UI_EKGNodeDraw (uiNode_t *node)
 	const image_t *image;
 
 	const char* imageName = UI_GetReferenceString(node, node->image);
-	if (!imageName || imageName[0] == '\0')
+	if (Q_strnull(imageName))
 		return;
 
 	UI_GetNodeAbsPos(node, nodepos);

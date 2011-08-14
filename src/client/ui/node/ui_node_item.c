@@ -46,7 +46,7 @@ static void UI_ItemNodeDraw (uiNode_t *node)
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
 	vec2_t pos;
 
-	if (!ref || ref[0] == '\0')
+	if (Q_strnull(ref))
 		return;
 
 	UI_GetNodeAbsPos(node, pos);
