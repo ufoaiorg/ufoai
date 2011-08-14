@@ -1,6 +1,14 @@
-// ==================
-// Some components for the main user interface
-// ==================
+// =======================================
+// COMPONENTS FOR THE MAIN USER INTERFACE
+// =======================================
+
+// ===============================
+// POPUP KEYINFO AND GENERAL HELP
+// ===============================
+
+confunc popup_keyinfo {
+		cmd "ui_push popup_keyinfo;"
+		}
 
 /**
  * Big green button used in all main menu UI
@@ -331,9 +339,9 @@ component panel cmpTeamPanel
 		pos			"0 50"
 		size		"420 550"
 	}
-	// ==================
-	// slots
-	// ==================
+	// ================
+	// save team slots
+	// ================
 
 	/**
 	 * @param[in] <1> id of the slot
@@ -573,4 +581,61 @@ component panel cmpTeamPanel
 		cvar	*cvar:cl_teamdef
 		dataid	OPTION_TEAMDEFS
 	}
+}
+
+window popup_keyinfo
+{
+	{
+		string		"_Keyinfo and General Help"
+		image		"ui/popup_alpha_tile"
+		pos			"239 12"
+		size		"536 747"
+		dragbutton	true
+		closebutton	true
+	}
+
+	string keyinfo_label
+	{
+		font		"f_verysmall_bold"
+		string		"_Note: Campaign-specific keybindings visible in Campaign mode only."
+		textalign	ALIGN_CC
+		pos			"20 58"
+		size		"498 20"
+	}
+
+	func onWindowOpened {
+		cmd "mn_init_keylist;"
+	}
+
+	// only show the current binding - no support for changing them atm
+	text keyinfolist
+	{
+		dataid		TEXT_LIST
+		pos			"30 102"
+		size		"473 625"
+		rows		"28"
+		lineheight	"20"
+		tabwidth	"120"
+		font		"f_verysmall"
+		onViewChange
+		{
+			*node:root.keyinfoscroll@current = <viewpos>
+			*node:root.keyinfoscroll@fullsize = <fullsize>
+			*node:root.keyinfoscroll@viewsize = <viewsize>
+		}
+	}
+	vscrollbar keyinfoscroll
+	{
+		image		"ui/scrollbar_v_green"
+		pos			"504 102"
+		height		"625"
+		current		0
+		viewsize	28
+		fullsize	50
+		onChange	{ *node:root.keyinfolist@viewpos = <current> }
+	}
+}
+
+confunc show_popup_keyinfo {
+	cmd "ui_push popup_keyinfo;"
 }
