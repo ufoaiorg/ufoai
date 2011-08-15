@@ -504,7 +504,7 @@ seeds {
 	27
 	28
 	29
-	30
+/*	30 slow on linux */
 /*	31 slow on Windows */
 	32
 	33
