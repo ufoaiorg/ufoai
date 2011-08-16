@@ -1158,6 +1158,13 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 
 	if (!text) {
 		*lastList = 0;
+
+		/* free the old file */
+		if (lBuffer) {
+			FS_FreeFile(lBuffer);
+			lBuffer = NULL;
+		}
+
 		return NULL;
 	}
 
