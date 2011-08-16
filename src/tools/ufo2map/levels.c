@@ -130,7 +130,8 @@ static int32_t BuildNodeChildren (const int n[3])
 	return node;
 }
 
-#define SPLIT_BRUSH_SIZE 256
+#define SPLIT_AT_POW2 6
+#define SPLIT_COORDS 2
 
 /**
  * @sa ProcessLevel
@@ -140,9 +141,11 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 {
 	bspbrush_t *list;
 	tree_t *tree;
-	vec3_t diff, bmins, bmaxs;
+	vec3_t bmins, bmaxs;
+	int32_t tmins[SPLIT_COORDS], tmaxs[SPLIT_COORDS];
 	int32_t nn[3];
 	node_t *node;
+	int i;
 
 	/* calculate bounds, stop if no brushes are available */
 	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
@@ -151,19 +154,24 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 	Verb_Printf(VERB_DUMP, "ConstructLevelNodes_r: lv=%i (%f %f %f) (%f %f %f)\n", levelnum,
 		cmins[0], cmins[1], cmins[2], cmaxs[0], cmaxs[1], cmaxs[2]);
 
-	VectorSubtract(bmaxs, bmins, diff);
+	for (i = 0; i < SPLIT_COORDS; i++) {
+		tmins[i] = ((int)floor(bmins[i])) >> SPLIT_AT_POW2;
+		tmaxs[i] = ((int)ceil(bmaxs[i])) >> SPLIT_AT_POW2;
+	}
 
-/*	Com_Printf("(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, (int)diff[0], (int)diff[1],
+/*	Com_Printf("(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, tmaxs[0] - tmins[0], tmaxs[1] - tmins[1],
 		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1],
 		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1]); */
 
-	if (diff[0] > SPLIT_BRUSH_SIZE || diff[1] > SPLIT_BRUSH_SIZE) {
+	/** @todo better algo to chose a split position - could force all splits to make continuous grid, for example */
+	if (tmaxs[1] - tmins[1] >= 2 || tmaxs[0] - tmins[0] >=2) {
 		/* continue subdivision */
-		/* split the remaining hull at the middle of the longer axis */
+		/* split the remaining hull at pow2 pos about the middle of the longer axis */
 		vec3_t nmins, nmaxs;
 		int n;
+		int32_t splitAt;
 
-		if (diff[1] > diff[0])
+		if (tmaxs[1] - tmins[1] > tmaxs[0] - tmins[0])
 			n = 1;
 		else
 			n = 0;
@@ -171,12 +179,15 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 		VectorCopy(bmins, nmins);
 		VectorCopy(bmaxs, nmaxs);
 
-		nmaxs[n] -= diff[n] / 2;
-/*		Com_Printf("  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]); */
+		splitAt = (tmins[n] + ((tmaxs[n] - tmins[n]) >> 1) ) << SPLIT_AT_POW2;
+		nmaxs[n] = splitAt;
+
+		Com_Printf("  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]);
 		nn[0] = ConstructLevelNodes_r(levelnum, nmins, nmaxs, entityNum);
 
-		nmins[n] += diff[n] / 2;
-		nmaxs[n] += diff[n] / 2;
+		VectorCopy(bmaxs, nmaxs);
+
+		nmins[n] = splitAt;
 /*		Com_Printf("    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]); */
 		nn[1] = ConstructLevelNodes_r(levelnum, nmins, nmaxs, entityNum);
 	} else {
