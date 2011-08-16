@@ -368,7 +368,7 @@ static qboolean SV_ParseAssemblySeeds (mapInfo_t *map, const char *filename, con
 			Com_Printf("too many seeds for %s (%s) - ignore seed %s\n", a->id, filename, token);
 		}
 	}
-	Com_Printf("Parsed %i seeds for %s\n", a->numSeeds, a->id);
+//	Com_Printf("Parsed %i seeds for %s\n", a->numSeeds, a->id);
 	return qtrue;
 }
 
@@ -1666,7 +1666,7 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
  * @sa SV_AssembleMap
  * @sa SV_AddTile
  */
-static void SV_PrepareTilesToPlace (mapInfo_t *map)
+void SV_PrepareTilesToPlace (mapInfo_t *map)
 {
 	int i;
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
@@ -1823,7 +1823,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
  * @param[in] inherit When @c true, this is called to inherit tile definitions
  * from another ump file (no assemblies)
  */
-static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
+void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 {
 	char filename[MAX_QPATH];
 	byte *buf;
