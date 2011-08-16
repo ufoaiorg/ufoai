@@ -209,7 +209,7 @@ char* UI_AllocStaticString (const char* string, int size)
 	if (size != 0) {
 		if (ui_global.curadata - ui_global.adata + size > ui_global.adataize)
 			Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
-		strncpy((char *)ui_global.curadata, string, size);
+		Q_strncpyz((char *)ui_global.curadata, string, size);
 		ui_global.curadata += size;
 	} else {
 		if (ui_global.curadata - ui_global.adata + strlen(string) + 1 > ui_global.adataize)
