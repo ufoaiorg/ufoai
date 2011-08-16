@@ -368,7 +368,6 @@ static qboolean SV_ParseAssemblySeeds (mapInfo_t *map, const char *filename, con
 			Com_Printf("too many seeds for %s (%s) - ignore seed %s\n", a->id, filename, token);
 		}
 	}
-//	Com_Printf("Parsed %i seeds for %s\n", a->numSeeds, a->id);
 	return qtrue;
 }
 
@@ -1283,7 +1282,7 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
 		y = pos / mapW;
 		mTile_t *tile = mToPlace[ti].tile;
 		int tx, ty;
-		ty = 0;	// for a breakpoint
+		ty = 0;	/* for a breakpoint */
 		for (ty = 0; ty < tile->h; ty++) {
 			for (tx = 0; tx < tile->w; tx++) {
 				if (IS_SOLID(tile->spec[ty][tx])) {

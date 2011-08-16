@@ -138,7 +138,7 @@ typedef struct mapInfo_s {
 mapInfo_t* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed);
 
 /* the next two functions are only exported for cunits tests */
-void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit);
+void SV_ParseUMP(const char *name, mapInfo_t *map, qboolean inherit);
 void SV_PrepareTilesToPlace (mapInfo_t *map);
 
 #endif /* SV_RMA_H_ */
