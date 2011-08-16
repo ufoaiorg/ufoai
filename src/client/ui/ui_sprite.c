@@ -130,10 +130,10 @@ uiSprite_t* UI_GetSpriteByName (const char* name)
 uiSprite_t* UI_AllocStaticSprite (const char* name)
 {
 	uiSprite_t* result;
-	/** @todo understand why we must hide this assert in release build with mingw */
-#ifdef DEBUG
-	assert(!UI_SpriteExists(name));
-#endif
+
+	if (UI_SpriteExists(name))
+		Com_Error(ERR_FATAL, "UI_AllocStaticSprite: \"%s\" sprite already allocated. Check your scripts.", name);
+
 	if (ui_global.numSprites >= UI_MAX_SPRITES)
 		Com_Error(ERR_FATAL, "UI_AllocStaticSprite: UI_MAX_SPRITES hit");
 
