@@ -62,22 +62,23 @@ static uiSprite_t* UI_AutoGenerateSprite (const char* name)
 {
 	uiSprite_t* sprite = NULL;
 	const char* suffix[SPRITE_STATUS_MAX] = {"", "_hovered", "_disabled", "_clicked"};
-	char picNameBuf[MAX_QPATH];
+	char basePicNameBuf[MAX_QPATH];
 	const image_t *pic;
 	int i;
 
-	Q_strncpyz(picNameBuf, name, sizeof(picNameBuf));
+	Q_strncpyz(basePicNameBuf, name, sizeof(basePicNameBuf));
 
-	pic = UI_LoadImage(picNameBuf);
+	pic = UI_LoadImage(basePicNameBuf);
 	if (pic == NULL)
 		return NULL;
 
-	sprite = UI_AllocStaticSprite(picNameBuf);
-	sprite->image[SPRITE_STATUS_NORMAL] = UI_AllocStaticString(picNameBuf, 0);
+	sprite = UI_AllocStaticSprite(basePicNameBuf);
+	sprite->image[SPRITE_STATUS_NORMAL] = UI_AllocStaticString(basePicNameBuf, 0);
 	sprite->size[0] = pic->width;
 	sprite->size[1] = pic->height;
 	for (i = 1; i < SPRITE_STATUS_MAX; i++) {
-		Com_sprintf(picNameBuf, sizeof(picNameBuf), "%s%s", picNameBuf, suffix[i]);
+		char picNameBuf[MAX_QPATH];
+		Com_sprintf(picNameBuf, sizeof(picNameBuf), "%s%s", basePicNameBuf, suffix[i]);
 		pic = UI_LoadImage(picNameBuf);
 		if (pic != NULL)
 			sprite->image[i] = UI_AllocStaticString(picNameBuf, 0);
