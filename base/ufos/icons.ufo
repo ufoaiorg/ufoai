@@ -360,12 +360,3 @@ sprite icons/number_8 {
 	size	"17 26"
 	pack64	true
 }
-
-sprite icons/system_close {
-	image "icons/system_close"
-	size "25 25"
-
-	hoveredimage "icons/system_close_hovered"
-	disabledimage "icons/system_close_disabled"
-	clickedimage "icons/system_close_clicked"
-}
