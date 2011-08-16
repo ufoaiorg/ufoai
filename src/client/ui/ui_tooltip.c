@@ -84,9 +84,9 @@ void UI_Tooltip (uiNode_t *node, int x, int y)
 		tooltip = UI_GetReferenceString(node, node->tooltip);
 
 	/* normalize */
-	if (Q_strnull(tooltip))
+	if (tooltip && tooltip[0] == '\0')
 		tooltip = NULL;
-	if (Q_strnull(key))
+	if (key && key[0] == '\0')
 		key = NULL;
 
 	/* create tooltip */
