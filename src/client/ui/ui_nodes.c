@@ -377,9 +377,9 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
  */
 uiNode_t* UI_AllocNode (const char* name, const char* type, qboolean isDynamic)
 {
-	uiNode_t* node = UI_AllocNodeWithoutNew (name, type, isDynamic);
+	uiNode_t* node = UI_AllocNodeWithoutNew(name, type, isDynamic);
 
-	/* allocate memories */
+	/* allocate memory */
 	if (node->dynamic && node->behaviour->newNode)
 		node->behaviour->newNode(node);
 
