@@ -5,7 +5,7 @@
 
 // Tile Definitions
 // ----------------
-base alienb2/ab_		// Prefix for each tile's .map file including path from /maps/
+base alienb/ab_		// Prefix for each tile's .map file including path from /maps/
 
 
 // Entrance

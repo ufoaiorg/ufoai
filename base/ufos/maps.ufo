@@ -4164,7 +4164,7 @@ mapdef wilderness
 
 mapdef alienbase
 {
-	map				"+alienb2"
+	map				"+alienbase"
 	multiplayer		false
 	description		"_An alien base."
 	storyrelated	true
