@@ -6842,3 +6842,45 @@
 "skin" "0"
 "angles" "0 -90 0"
 }
+// entity 87
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "112 -432 28"
+"angle" "90"
+}
+// entity 88
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "112 80 28"
+"angle" "180"
+}
+// entity 89
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-80 16 28"
+"angle" "180"
+}
+// entity 90
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "80 -592 28"
+"angle" "90"
+}
+// entity 91
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "-144 -144 92"
+"angle" "180"
+}
+// entity 92
+{
+"classname" "info_player_start"
+"team" "3"
+"origin" "-112 -304 92"
+"angle" "180"
+}
