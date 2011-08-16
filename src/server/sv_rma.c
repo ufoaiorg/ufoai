@@ -651,7 +651,7 @@ static void SV_ClearMap (mapInfo_t *map)
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
-static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, const int x, const int y)
+static qboolean SV_FitTile (const mapInfo_t *map, const mTile_t * tile, const int x, const int y)
 {
 	int tx, ty;
 	const unsigned long *spec = NULL;
@@ -1095,7 +1095,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 		if (mToPlace[ti].cnt >= mToPlace[ti].max)
 			continue;
 
-		mTile_t *cTile = mToPlace[ti].tile;
+		const mTile_t *cTile = mToPlace[ti].tile;
 		qboolean ok = qfalse;
 		/** try to reduce the # of calls to SV_FitTile by checking only those gaps affected by the placement of the previous tile */
 		if (rec > 0) {	/* the first recursion doesn't have a previous tile */
@@ -1141,10 +1141,10 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 	/** if the remaining tiles are simply not enough to cover the gaps, bail */
 	for (i = 0; i < availableTilesCnt; i++) {
-		int ti = availableTiles[i][0];
-		int allowed = mToPlace[ti].max - mToPlace[ti].cnt;
-		int possible = availableTiles[i][1];
-		int remaining = min(allowed, possible);
+		const int ti = availableTiles[i][0];
+		const int allowed = mToPlace[ti].max - mToPlace[ti].cnt;
+		const int possible = availableTiles[i][1];
+		const int remaining = min(allowed, possible);
 		solids += remaining * mToPlace[ti].tile->area;
 	}
 	if (solids < gapCount)
@@ -1152,11 +1152,11 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 	/** check how well the remaining tiles can cover the gaps */
 	for (i = 0; i < j; i++) {
-		int pos = posTileList[rec][i] / TCM;
-		int ti = posTileList[rec][i] % TCM;
-		int x = pos % mapW;
-		int y = pos / mapW;
-		mTile_t *tile = mToPlace[ti].tile;
+		const int pos = posTileList[rec][i] / TCM;
+		const int ti = posTileList[rec][i] % TCM;
+		const int x = pos % mapW;
+		const int y = pos / mapW;
+		const mTile_t *tile = mToPlace[ti].tile;
 		int tx, ty;
 		for (ty = 0; ty < tile->h; ty++) {
 			for (tx = 0; tx < tile->w; tx++) {
