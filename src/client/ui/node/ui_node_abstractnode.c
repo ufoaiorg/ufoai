@@ -425,6 +425,17 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 				return qtrue;
 			}
 		}
+		break;
+
+	case V_UI:
+		switch ((int)property->type) {
+		case V_UI_SPRITEREF:
+			{
+				uiSprite_t* sprite = UI_GetSpriteByName(value);
+				*(const uiSprite_t**) b = sprite;
+				return qtrue;
+			}
+		}
 	}
 
 	Com_Printf("UI_NodeSetProperty: Unimplemented type for property '%s@%s'\n", UI_GetPath(node), property->string);

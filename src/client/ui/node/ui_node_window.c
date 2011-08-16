@@ -298,10 +298,9 @@ static void UI_WindowNodeLoaded (uiNode_t *node)
 	if (EXTRADATA(node).closeButton) {
 		uiNode_t *button = UI_AllocNode("close_window_button", "custombutton", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
-		customButtonExtraData_t *buttonExtraData = UI_EXTRADATA_POINTER(button, customButtonExtraData_t);
 
 		button->root = node;
-		buttonExtraData->super.icon = UI_GetSpriteByName("icons/system_close");
+		UI_NodeSetProperty(button, UI_GetPropertyFromBehaviour(button->behaviour, "icon"), "icons/system_close");
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
 		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;
