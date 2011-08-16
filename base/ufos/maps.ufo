@@ -2817,7 +2817,7 @@ mapdef bungalow
 	map			"bungalow"
 	description	"_A small bungalow."
 	multiplayer	true
-	teams		2
+	teams		3
 	gametypes {
 		1on1
 		1on1on1
@@ -2825,7 +2825,6 @@ mapdef bungalow
 		2on2on2
 		coop2
 		coop3
-		coop4
 	}
 	maxaliens		8
 
