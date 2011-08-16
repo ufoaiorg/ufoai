@@ -1087,10 +1087,10 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 	/** circle through the old list of available tile positions and store the remaining ones in the static array */
 	for (i = 0; i < posListCnt; i++) {
-		int pos = myPosList[i] / TCM;
-		int ti = myPosList[i] % TCM;
-		int x = pos % mapW;
-		int y = pos / mapW;
+		const int pos = myPosList[i] / TCM;
+		const int ti = myPosList[i] % TCM;
+		const int x = pos % mapW;
+		const int y = pos / mapW;
 
 		if (mToPlace[ti].cnt >= mToPlace[ti].max)
 			continue;
@@ -1287,7 +1287,7 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
 			for (tx = 0; tx < tile->w; tx++) {
 				if (IS_SOLID(tile->spec[ty][tx])) {
 					gapList[x + tx][y + ty][0] += 1;
-					int cnt = gapList[x + tx][y + ty][0];	/* get the counter */
+					const int cnt = gapList[x + tx][y + ty][0];	/* get the counter */
 					if (cnt < GAPS + 1)
 						gapList[x + tx][y + ty][cnt] = posTileList[0][i];	/* remember the tilecode */
 				}
