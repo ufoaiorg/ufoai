@@ -343,7 +343,6 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 		memset(node, 0, nodeSize);
 	} else {
 		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, ui_dynPool, 0);
-		memset(node, 0, nodeSize);
 		node->dynamic = qtrue;
 	}
 
