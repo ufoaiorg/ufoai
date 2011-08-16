@@ -114,9 +114,8 @@ uiSprite_t* UI_GetSpriteByName (const char* name)
 {
 	int i;
 	for (i = 0; i < ui_global.numSprites; i++) {
-		if (strncmp(name, ui_global.sprites[i].name, MEMBER_SIZEOF(uiSprite_t, name)) != 0)
-			continue;
-		return &ui_global.sprites[i];
+		if (Q_streq(name, ui_global.sprites[i].name))
+			return &ui_global.sprites[i];
 	}
 	return UI_AutoGenerateSprite(name);
 }
