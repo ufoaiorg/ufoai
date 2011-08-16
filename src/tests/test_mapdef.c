@@ -125,6 +125,71 @@ static void testMapDefsMassRMA (void)
 }
 #endif
 
+#define MAP_STATISTIC 0
+#if MAP_STATISTIC
+char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+
+/**
+ * @brief This test cycles through the list of map definitions found in the maps.ufo script
+ * and builds each map mutiple times with different seeds.
+ */
+static void testMapDefStatistic (void)
+{
+	int i, j, k;
+	int required, solids;
+	const char *filterId = TEST_GetStringProperty("mapdef-id");
+
+	CU_ASSERT_TRUE(cls.numMDs > 0);
+
+	for (i = 0; i < cls.numMDs; i++) {
+		const mapDef_t* md = &cls.mds[i];
+		if (md->map[0] == '.')
+			continue;
+		if (filterId && strcmp(filterId, md->id) != 0)
+			continue;
+
+		{
+			mapInfo_t *theMap;
+			theMap = Mem_AllocType(mapInfo_t);
+			char mapAssName[80];
+			char *p = md->map;
+
+			if (*p == '+')
+				p++;
+			else
+				continue;
+			SV_ParseUMP(p, theMap, qfalse);
+			theMap->mAsm = 0;
+			/* overwrite with specified, if any */
+			if (md->param && md->param[0]) {
+				for (j = 0; j < theMap->numAssemblies; j++)
+					if (Q_streq(md->param, theMap->mAssembly[j].id)) {
+						theMap->mAsm = j;
+						break;
+					}
+				if (j == theMap->numAssemblies) {
+					Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", md->param);
+				}
+			}
+
+			SV_PrepareTilesToPlace(theMap);
+			mAssembly_t *ass = &theMap->mAssembly[theMap->mAsm];
+
+			required = 0;
+			solids = 0;
+			for (k = 0; k < theMap->numToPlace; k++) {
+				required += theMap->mToPlace[k].min;
+				solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
+			}
+
+			sprintf(mapAssName, "%s %s", p, md->param);
+			Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
+		}
+	}
+}
+#endif
+
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
  * and tries to load (and build in case of RMA) each map.
@@ -208,6 +273,11 @@ int UFO_AddMapDefTests (void)
 	if (mapDefSuite == NULL)
 		return CU_get_error();
 
+#if MAP_STATISTIC
+	/* add the tests to the suite */
+	if (CU_ADD_TEST(mapDefSuite, testMapDefStatistic) == NULL)
+		return CU_get_error();
+#else
 #if SEED_TEST
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == NULL)
@@ -218,6 +288,7 @@ int UFO_AddMapDefTests (void)
 
 	if (CU_ADD_TEST(mapDefSuite, testMapDefsMultiplayer) == NULL)
 		return CU_get_error();
+#endif
 #endif
 	return CUE_SUCCESS;
 }
