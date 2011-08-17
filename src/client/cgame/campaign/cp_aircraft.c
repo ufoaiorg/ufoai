@@ -93,43 +93,28 @@ int AIR_BaseCountAircraft (const base_t *base)
  */
 static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, base_t *base)
 {
-	assert(aircraftTemplate);
-	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
+	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
+	const buildingType_t buildingType = B_GetBuildingTypeByCapacity(capType);
+	int freeSpace;
 
-	if (!base)
+	if (!base || capType == MAX_CAP || buildingType == MAX_BUILDING_TYPE)
 		return AIRCRAFT_HANGAR_ERROR;
 
-	if (!AIR_AircraftAllowed(base)) {
-		Com_Printf("AIR_UpdateHangarCapForOne: base does not have any hangar - error!\n");
+	freeSpace = CAP_GetFreeCapacity(base, capType);
+	if (!B_GetBuildingStatus(base, buildingType) || freeSpace < 1) {
+		Com_Printf("AIR_UpdateHangarCapForOne: base '%s' does not have enough hangar space for '%s'!\n", base->name, aircraftTemplate->id);
 		return AIRCRAFT_HANGAR_ERROR;
 	}
 
-	if (aircraftTemplate->size >= AIRCRAFT_LARGE) {
-		int freeSpace;
-		if (!B_GetBuildingStatus(base, B_HANGAR)) {
-			Com_Printf("AIR_UpdateHangarCapForOne: base does not have big hangar - error!\n");
-			return AIRCRAFT_HANGAR_ERROR;
-		}
-		freeSpace = base->capacities[CAP_AIRCRAFT_BIG].max - base->capacities[CAP_AIRCRAFT_BIG].cur;
-		if (freeSpace > 0) {
-			base->capacities[CAP_AIRCRAFT_BIG].cur++;
-			return AIRCRAFT_HANGAR_BIG;
-		}
-	} else {
-		int freeSpace;
-		if (!B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			Com_Printf("AIR_UpdateHangarCapForOne: base does not have small hangar - error!\n");
-			return AIRCRAFT_HANGAR_ERROR;
-		}
-		freeSpace = base->capacities[CAP_AIRCRAFT_SMALL].max - base->capacities[CAP_AIRCRAFT_SMALL].cur;
-		if (freeSpace > 0) {
-			base->capacities[CAP_AIRCRAFT_SMALL].cur++;
-			return AIRCRAFT_HANGAR_SMALL;
-		}
+	CAP_AddCurrent(base, capType, 1);
+	switch (capType) {
+	case CAP_AIRCRAFT_SMALL:
+		return AIRCRAFT_HANGAR_SMALL;
+	case CAP_AIRCRAFT_BIG:
+		return AIRCRAFT_HANGAR_BIG;
+	default:
+		return AIRCRAFT_HANGAR_ERROR;
 	}
-
-	/* No free space for this aircraft. This should never happen here. */
-	Sys_Error("AIR_UpdateHangarCapForOne: no free space!\n");
 }
 
 /**
@@ -862,8 +847,13 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	return aircraft;
 }
 
+/**
+ * @brief Returns capacity type needed for an aircraft
+ * @param[in] aircraft Aircraft to check
+ */
 int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
+	assert(aircraft);
 	switch (aircraft->size) {
 	case AIRCRAFT_SMALL:
 		return CAP_AIRCRAFT_SMALL;
