@@ -1634,6 +1634,7 @@ tech rs_weapon_laserammo_stun
 	require_AND
 	{
 		tech rs_weapon_laserammo
+		tech rs_weapon_electrolaser
 	}
 	provides	laser_ammo_stun
 	time		0
