@@ -4173,21 +4173,6 @@ mapdef alienbase
 	onwin			"cp_endgame"
 }
 
-////////////////////
-// ALIEN BASE MAP //
-////////////////////
-
-mapdef alienb2
-{
-	map			"+alienb2"
-	description	"_Alien Base WIP"
-	teams		2
-	multiplayer	false
-	maxaliens	40
-	// TODO: The first alien base is the end of the campaign currently
-	onwin			"cp_endgame"
-}
-
 /////////////////////
 // BASE ATTACK MAP //
 /////////////////////

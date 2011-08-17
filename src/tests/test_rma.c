@@ -202,7 +202,7 @@ static void testNewSeedlists (void)
 		srand(i);
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);
-		randomMap = SV_AssembleMap("alienbase", "alienbase1", mapStr, posStr, i);
+		randomMap = SV_AssembleMap("alienbase", "small1", mapStr, posStr, i);
 #if 0
 		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr, i);
 		randomMap = SV_AssembleMap("hills", "desert_harvester", mapStr, posStr, i);
