@@ -146,14 +146,13 @@ static void testMapDefStatistic (void)
 		const mapDef_t* md = &cls.mds[i];
 		if (md->map[0] == '.')
 			continue;
-		if (filterId && strcmp(filterId, md->id) != 0)
+		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
 		{
-			mapInfo_t *theMap;
-			theMap = Mem_AllocType(mapInfo_t);
+			mapInfo_t *theMap = Mem_AllocType(mapInfo_t);
 			char mapAssName[80];
-			char *p = md->map;
+			const char *p = md->map;
 
 			if (*p == '+')
 				p++;
@@ -183,7 +182,7 @@ static void testMapDefStatistic (void)
 				solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
 			}
 
-			sprintf(mapAssName, "%s %s", p, md->param);
+			Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, md->param);
 			Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
 		}
 	}
