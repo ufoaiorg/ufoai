@@ -164,7 +164,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1]); */
 
 	/** @todo better algo to chose a split position - could force all splits to make continuous grid, for example */
-	if (tmaxs[1] - tmins[1] >= 2 || tmaxs[0] - tmins[0] >=2) {
+	if (tmaxs[1] - tmins[1] >= 2 || tmaxs[0] - tmins[0] >= 2) {
 		/* continue subdivision */
 		/* split the remaining hull at pow2 pos about the middle of the longer axis */
 		vec3_t nmins, nmaxs;
@@ -179,7 +179,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 		VectorCopy(bmins, nmins);
 		VectorCopy(bmaxs, nmaxs);
 
-		splitAt = (tmins[n] + ((tmaxs[n] - tmins[n]) >> 1) ) << SPLIT_AT_POW2;
+		splitAt = (tmins[n] + ((tmaxs[n] - tmins[n]) >> 1)) << SPLIT_AT_POW2;
 		nmaxs[n] = splitAt;
 
 		Com_Printf("  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]);
