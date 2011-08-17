@@ -86,7 +86,6 @@ static uiSprite_t* UI_AutoGenerateSprite (const char* name)
 	return sprite;
 }
 
-#ifdef DEBUG
 /**
  * @brief Check if an sprite name exists
  * @param[in] name Name of the sprite
@@ -103,7 +102,6 @@ static qboolean UI_SpriteExists (const char* name)
 	}
 	return qfalse;
 }
-#endif
 
 /**
  * @brief Return an sprite by is name
