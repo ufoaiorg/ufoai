@@ -39,12 +39,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define PRINT_RMA_PROGRESS 0
 /** @brief max # of recursions */
 #define RMA2_MAX_REC 64
+/** @brief max # of valid tile/position combinations */
+#define RMA2_MAX_TILEPOS 1500
 /** @brief tile code multiplier */
 #define TCM 50
 /** @brief the # of different tiles we can store for a gap */
 #define GAPS 25
 /** @brief array of working random tile positions, 50 recursions */
-static short posTileList[RMA2_MAX_REC][1000];
+static short posTileList[RMA2_MAX_REC][RMA2_MAX_TILEPOS];
 /** @brief for every x/y we can store the tiles that can cover that place here */
 static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS + 1];
 static SDL_sem *mapSem;
@@ -1108,6 +1110,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 		}
 		if (ok) {
 			/* store the posTile in our new list */
+			assert(j < RMA2_MAX_TILEPOS);
 			posTileList[rec][j] = myPosList[i];
 			j++;
 			/* store the tile index in the list of remaining tile types */
@@ -1199,6 +1202,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 	for (; line >= 0; line--) {				/* if there are lineforming tiles, process them first */
 		for (g = 1; g <= GAPS; g++) {		/* process the gaps with the least alternatives first */
 			for (y = 1; y < mAsm->height + 1; y++) {
+//			for (y = mAsm->height; y > 0; y--) {
 				for (x = 1; x < mAsm->width + 1; x++) {
 					if (gapList[x][y][0] == g) {		/* if this gap has the right amount of covering tiles */
 						/* if we are looking for lines but the gap doesn't require a line-tile, skip */
@@ -1466,6 +1470,7 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 				continue;
 			if (SV_FitTile(map, mToPlace[ti].tile, x, y)) {
 				posTileList[0][n] = posList[i] * TCM + ti;
+				assert(n < RMA2_MAX_TILEPOS);
 				n++;
 			}
 		}
