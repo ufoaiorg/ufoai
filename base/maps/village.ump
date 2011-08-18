@@ -7,7 +7,7 @@ base village/vil_
 // Legend:
 // ------
 // +s: street tiles (road)
-// +r: recreational tiles (fontain, park)
+// +r: recreational tiles (fountain, park)
 // +c: commercial tiles
 // +d: dummy tiles (to fill gaps)
 // +h: house tiles
