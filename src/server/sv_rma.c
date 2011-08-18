@@ -1202,7 +1202,6 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 	for (; line >= 0; line--) {				/* if there are lineforming tiles, process them first */
 		for (g = 1; g <= GAPS; g++) {		/* process the gaps with the least alternatives first */
 			for (y = 1; y < mAsm->height + 1; y++) {
-//			for (y = mAsm->height; y > 0; y--) {
 				for (x = 1; x < mAsm->width + 1; x++) {
 					if (gapList[x][y][0] == g) {		/* if this gap has the right amount of covering tiles */
 						/* if we are looking for lines but the gap doesn't require a line-tile, skip */
