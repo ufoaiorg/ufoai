@@ -32,44 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const cgame_import_t *cgi;
 
-#ifndef HARD_LINKED_CGAME
-/* this is only here so the functions in the shared code can link */
-void Sys_Error (const char *error, ...)
-{
-	va_list argptr;
-	char text[1024];
-
-	va_start(argptr, error);
-	Q_vsnprintf(text, sizeof(text), error, argptr);
-	va_end(argptr);
-
-	cgi->Sys_Error("%s", text);
-}
-
-void Com_Printf (const char *msg, ...)
-{
-	va_list argptr;
-	char text[1024];
-
-	va_start(argptr, msg);
-	Q_vsnprintf(text, sizeof(text), msg, argptr);
-	va_end(argptr);
-
-	cgi->Com_Printf("%s", text);
-}
-
-void Com_DPrintf (int level, const char *msg, ...)
-{
-	va_list argptr;
-	char text[1024];
-
-	va_start(argptr, msg);
-	Q_vsnprintf(text, sizeof(text), msg, argptr);
-	va_end(argptr);
-
-	cgi->Com_DPrintf(level, "%s", text);
-}
-#endif
+CGAME_HARD_LINKED_FUNCTIONS
 
 static void GAME_MP_StartBattlescape (qboolean isTeamPlay)
 {
