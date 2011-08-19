@@ -105,8 +105,8 @@ window multiplayer_team extends abstract_multiplayer
 	cmpTeamPanel content
 	{
 		{
-			pos		"415 100"
-			size	"608 768"
+			pos		"482 100"
+			size	"480 350"
 		}
 	}
 
