@@ -73,8 +73,6 @@ static void AM_Go_f (void)
 
 	results->won = qfalse;
 	AM_Go(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
-
-	MAP_ResetAction();
 }
 
 /**

@@ -383,14 +383,14 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 #define XVI_WON_START_PERCENTAGE	0.05f
 
 /**
- * @brief Updates each nation's happiness and mission win/loss stats.
+ * @brief Updates each nation's happiness.
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
  */
-void CP_HandleNationData (float minHappiness, qboolean won, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
+void CP_HandleNationData (float minHappiness, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
 {
 	int i;
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
@@ -415,9 +415,6 @@ void CP_HandleNationData (float minHappiness, qboolean won, mission_t * mis, con
 		performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
 		performance = performanceCivilian + performanceAlien;
 	}
-
-	/* Book-keeping. */
-	won ? ccs.campaignStats.missionsWon++ : ccs.campaignStats.missionsLost++;
 
 	/* Calculate the actual happiness delta. The bigger the mission, the more potential influence. */
 	deltaHappiness = 0.004 * civilianSum + 0.004 * alienSum;

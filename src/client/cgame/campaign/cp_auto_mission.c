@@ -814,21 +814,17 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 		score->kills[KILLED_ENEMIES] += battle->unitKills[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
 		unit++;
 
-		if (chr->HP <= 0) {
+		/* dead soldiers are removed in CP_MissionEnd, just move their inventory to itemCargo */
+		if (chr->HP <= 0)
 			AM_MoveEmployeeInventoryIntoItemCargo(aircraft, soldier);
-			E_DeleteEmployee(soldier);
-			continue;
-		}
 
 		for (expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++)
 			score->experience[expCount] += (int) (battleExperience * ABILITY_AWARD_SCALE * frand());
 
 		for (expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++)
 			score->experience[expCount] += (int) (battleExperience * SKILL_AWARD_SCALE * frand());
+
 	}
-	/** @todo the base might differ in case of a baseattack mission */
-	/* update the ranks and mission counters */
-	CP_UpdateCharacterStats(aircraft->homebase, aircraft);
 }
 
 /**
@@ -853,15 +849,20 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	AM_CalculateTeamScores(&autoBattle);
 	AM_DoFight(&autoBattle);
 	AM_DecideResults(&autoBattle);
-	AM_DisplayResults(&autoBattle);
 
-	results->won = qfalse;
-	if (autoBattle.resultType == AUTOMISSION_RESULT_SUCCESS)
+	switch (autoBattle.resultType) {
+	case AUTOMISSION_RESULT_SUCCESS:
+	case AUTOMISSION_RESULT_COSTLY_SUCCESS:
+	case AUTOMISSION_RESULT_RESCUE_SUCCESSFUL:
+	case AUTOMISSION_RESULT_ALIEN_BASE_CAPTURED:
 		results->won = qtrue;
-	else if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
-		results->won = qtrue;
+		break;
+	default:
+		results->won = qfalse;
+	}
 
 	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
+	AM_AlienCollect(aircraft, battleParameters);
 
 	/* This block is old code, but it will be left in for now, until exact numbers and stats are extracted from the auto mission results. */
 	results->aliensKilled = battleParameters->aliens;
@@ -876,24 +877,7 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	results->ownSurvived = AIR_GetTeamSize(aircraft);
 	CP_InitMissionResults(results->won, results);
 
-	/* update nation opinions */
-	/* Note:  "Costly Success" means many civs were killed, and therefore happiness goes DOWN, which is shy the results are flipped twice like this. */
-	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
-		results->won = qfalse;
-
-	CP_HandleNationData(campaign->minhappiness, results->won, mission, battleParameters->nation, results);
-
-	if (autoBattle.resultType == AUTOMISSION_RESULT_COSTLY_SUCCESS)
-		results->won = qtrue;
-
-	CP_CheckLostCondition(campaign);
-
-	AM_AlienCollect(aircraft, battleParameters);
-
-	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(mission, results->won);
-
-	CP_MissionEndActions(mission, aircraft, results->won);
+	AM_DisplayResults(&autoBattle);
 }
 
 /**
