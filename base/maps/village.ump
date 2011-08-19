@@ -346,7 +346,7 @@ tile +craft_ufo_fighter
 0      ab      ab      0
 ac     +a      +a      ac
 ac     +a      +a      ac
-ac     +b      +a      ac
+ac     +a      +a      ac
 0      ab      ab      0
 }
 
