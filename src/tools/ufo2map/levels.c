@@ -159,9 +159,9 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 		tmaxs[i] = ((int)ceil(bmaxs[i])) >> SPLIT_AT_POW2;
 	}
 
-/*	Com_Printf("(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, tmaxs[0] - tmins[0], tmaxs[1] - tmins[1],
+	Verb_Printf(VERB_DUMP, "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, tmaxs[0] - tmins[0], tmaxs[1] - tmins[1],
 		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1],
-		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1]); */
+		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1]);
 
 	/** @todo better algo to chose a split position - could force all splits to make continuous grid, for example */
 	if (tmaxs[1] - tmins[1] >= 2 || tmaxs[0] - tmins[0] >= 2) {
@@ -182,13 +182,13 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 		splitAt = (tmins[n] + ((tmaxs[n] - tmins[n]) >> 1)) << SPLIT_AT_POW2;
 		nmaxs[n] = splitAt;
 
-		Com_Printf("  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]);
+		Verb_Printf(VERB_DUMP, "Chlid 0:  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]);
 		nn[0] = ConstructLevelNodes_r(levelnum, nmins, nmaxs, entityNum);
 
 		VectorCopy(bmaxs, nmaxs);
 
 		nmins[n] = splitAt;
-/*		Com_Printf("    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]); */
+		Verb_Printf(VERB_DUMP, "Child 1:  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]);
 		nn[1] = ConstructLevelNodes_r(levelnum, nmins, nmaxs, entityNum);
 	} else {
 		/* no children */
@@ -270,7 +270,6 @@ void ProcessLevel (unsigned int levelnum)
 	maxs[2] = MAX_WORLD_WIDTH - 1.0;
 
 	Verb_Printf(VERB_EXTRA, "Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels);
-	/* Com_Printf("Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels); */
 
 	/** @note Should be reentrant as each thread has a unique levelnum at any given time */
 	dm = &curTile->models[levelnum];
