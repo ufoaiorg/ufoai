@@ -46,14 +46,16 @@ typedef enum autoMission_teamType_s {
 
 #define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * MAX_ACTIVETEAM
 
-/** @brief Data structure for a simulated or auto mission.
- * @note Supports a calculated max of so many teams that can be simulated in a battle, to
- * include any aliens, player soldiers, downed pilots, civilians, and any other forces.
- * The player's forces don't have to be any of the teams.  This is useful if a special
- * battle should be simulated for the plot, or if more than one alien threat is in the
- * game (not in the primary campaign plot though, but good for a MOD or whatever).
- * ALSO: A team does not have to attack (isHostile toward) another team that attacks it.
- * Teams that are isHostile toward no one will wander around like sheep, doing nothing else. */
+typedef struct autoUnit_s {
+	int UCN;
+	int HP;
+	int maxHP;
+	int kills;
+} autoUnit_t;
+
+/**
+ * @brief Data structure for a simulated or auto mission.
+ */
 typedef struct autoMissionBattle_s {
 	qboolean teamActive[MAX_ACTIVETEAM];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
 	qboolean isHostile[MAX_ACTIVETEAM][MAX_ACTIVETEAM];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
@@ -64,10 +66,9 @@ typedef struct autoMissionBattle_s {
 	double scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
 	double scoreTeamDifficulty[MAX_ACTIVETEAM];		/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
 
-	int unitHealth[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Health score of each unit for each team */
-	int unitHealthMax[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];	/**< Max health of each unit on each team */
+	autoUnit_t units[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Units data */
+
 	int teamAccomplishment[MAX_ACTIVETEAM];							/**< Used for calculating experience gain, and for friendly fire (including hit civilians) */
-	int unitKills[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Number of individual kills each unit accomplishes (for experience award purposes) */
 
 	int winningTeam;								/**< Which team is victorious */
 	missionResults_t *results;						/**< Manual mission "compatible" result structure */
@@ -113,9 +114,10 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 		}
 
 		for (soldier = 0; soldier < MAX_SOLDIERS_AUTOMISSION; soldier++) {
-			battle->unitHealth[team][soldier] = 0;
-			battle->unitHealthMax[team][soldier] = 0;
-			battle->unitKills[team][soldier] = 0;
+			battle->units[team][soldier].UCN = -1;
+			battle->units[team][soldier].HP = 0;
+			battle->units[team][soldier].maxHP = 0;
+			battle->units[team][soldier].kills = 0;
 		}
 	}
 
@@ -147,8 +149,9 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		const character_t *chr = &employee->chr;
 
-		battle->unitHealthMax[teamNum][teamSize] = chr->maxHP;
-		battle->unitHealth[teamNum][teamSize] = chr->HP;
+		battle->units[teamNum][teamSize].maxHP = chr->maxHP;
+		battle->units[teamNum][teamSize].HP = chr->HP;
+		battle->units[teamNum][teamSize].UCN = chr->ucn;
 		teamSize++;
 		if (chr->HP > 0)
 			unitsAlive++;
@@ -248,8 +251,8 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 			/* Quick, ugly way of deciding alien health scores.  Eventually we'll need something better. */
 			const int healthMaxm = (int) (frand() * autoGenHealthAliens) + 10.f;
 			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
-			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = healthMaxm;
-			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = health;
+			battle->units[AUTOMISSION_TEAM_TYPE_ALIEN][unit].maxHP = healthMaxm;
+			battle->units[AUTOMISSION_TEAM_TYPE_ALIEN][unit].HP = health;
 		}
 		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
 		battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN] = AUTOMISSION_TEAM_TYPE_ALIEN;
@@ -261,8 +264,8 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
 			const int healthMaxm = (int) (frand() * autoGenHealthAlienDrones) + 10.f;
 			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
-			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = healthMaxm;
-			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = health;
+			battle->units[AUTOMISSION_TEAM_TYPE_ALIEN][unit].maxHP = healthMaxm;
+			battle->units[AUTOMISSION_TEAM_TYPE_ALIEN][unit].HP = health;
 		}
 	}
 
@@ -272,8 +275,8 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 			/* Quick, ugly way of deciding civilian health scores.  Eventually we'll need something better. */
 			const int healthMaxm = (int) (frand() * autoGenHealthCivilians) + 10.f;
 			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
-			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = healthMaxm;
-			battle->unitHealth[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit] = health;
+			battle->units[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit].maxHP = healthMaxm;
+			battle->units[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit].HP = health;
 		}
 		battle->teamActive[AUTOMISSION_TEAM_TYPE_CIVILIAN] = qtrue;
 		battle->teamType[AUTOMISSION_TEAM_TYPE_CIVILIAN] = AUTOMISSION_TEAM_TYPE_CIVILIAN;
@@ -400,13 +403,13 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 			double skillAdjCalcAbs;
 
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
-				if (battle->unitHealth[team][currentUnit] <= 0)
+				if (battle->units[team][currentUnit].HP <= 0)
 					continue;
 
-				teamPooledHealth[team] += battle->unitHealth[team][currentUnit];
-				teamPooledHealthMax[team] += battle->unitHealthMax[team][currentUnit];
+				teamPooledHealth[team] += battle->units[team][currentUnit].HP;
+				teamPooledHealthMax[team] += battle->units[team][currentUnit].maxHP;
 				teamPooledUnitsTotal[team] += 1.0;
-				if (battle->unitHealth[team][currentUnit] == battle->unitHealthMax[team][currentUnit])
+				if (battle->units[team][currentUnit].HP == battle->units[team][currentUnit].maxHP)
 					teamPooledUnitsHealthy[team] += 1.0;
 			}
 			/* We shouldn't be dividing by zero here. */
@@ -455,18 +458,18 @@ static void AM_CheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const 
 
 	/* Check for "friendly" fire */
 	for (eUnit = 0; eUnit < battle->nUnits[eTeam]; eUnit++) {
-		if (battle->unitHealth[eTeam][eUnit] > 0) {
+		if (battle->units[eTeam][eUnit].HP > 0) {
 			const double calcRand = frand();
 
 			if (calcRand < (0.050 - (effective * 0.050))) {
 				const int strikeDamage = (int) (100.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
 
-				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+				battle->units[eTeam][eUnit].HP = max(0, battle->units[eTeam][eUnit].HP - strikeDamage);
 
 				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!\n",
 						currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
-				if (battle->unitHealth[eTeam][eUnit] == 0)
+				if (battle->units[eTeam][eUnit].HP == 0)
 					Com_DPrintf(DEBUG_CLIENT, "Friendly Unit %i on team %i is killed in action!\n",
 							eUnit, eTeam);
 
@@ -489,20 +492,20 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 	int eUnit;
 
 	for (eUnit = 0; eUnit < battle->nUnits[eTeam]; eUnit++) {
-		if (battle->unitHealth[eTeam][eUnit] > 0) {
+		if (battle->units[eTeam][eUnit].HP > 0) {
 			const double calcRand = frand();
 
 			if (calcRand <= effective) {
 				const int strikeDamage = (int) (100.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
 
-				battle->unitHealth[eTeam][eUnit] = max(0, battle->unitHealth[eTeam][eUnit] - strikeDamage);
+				battle->units[eTeam][eUnit].HP = max(0, battle->units[eTeam][eUnit].HP - strikeDamage);
 
 				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!\n",
 						currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
-				if (battle->unitHealth[eTeam][eUnit] == 0) {
+				if (battle->units[eTeam][eUnit].HP == 0) {
 					Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i is killed in action!\n", eUnit, eTeam);
-					battle->unitKills[eTeam][eUnit] += 1;
+					battle->units[currTeam][currUnit].kills += 1;
 				}
 
 				battle->teamAccomplishment[currTeam] += strikeDamage;
@@ -565,10 +568,10 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 			/* Is this unit still alive (has any health left?) */
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
 				/* Wounded units don't fight quite as well */
-				const double hpLeftRatio = battle->unitHealth[team][currentUnit] / battle->unitHealthMax[team][currentUnit];
+				const double hpLeftRatio = battle->units[team][currentUnit].HP / battle->units[team][currentUnit].maxHP;
 				const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
 
-				if (battle->unitHealth[team][currentUnit] <= 0)
+				if (battle->units[team][currentUnit].HP <= 0)
 					continue;
 
 				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %lf.\n",
@@ -739,8 +742,8 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 		if (unit >= MAX_SOLDIERS_AUTOMISSION)
 			break;
 
-		chr->HP = battle->unitHealth[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
-		score->kills[KILLED_ENEMIES] += battle->unitKills[AUTOMISSION_TEAM_TYPE_PLAYER][unit];
+		chr->HP = battle->units[AUTOMISSION_TEAM_TYPE_PLAYER][unit].HP;
+		score->kills[KILLED_ENEMIES] += battle->units[AUTOMISSION_TEAM_TYPE_PLAYER][unit].kills;
 		unit++;
 
 		/* dead soldiers are removed in CP_MissionEnd, just move their inventory to itemCargo */
