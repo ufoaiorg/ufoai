@@ -46,11 +46,14 @@ typedef enum autoMission_teamType_s {
 
 #define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * MAX_ACTIVETEAM
 
+/**
+ * @brief One unit (soldier/alien/civilian) of the autobattle
+ */
 typedef struct autoUnit_s {
-	int UCN;
-	int HP;
-	int maxHP;
-	int kills;
+	int UCN;									/**< Unified Character Number to link soldier to autoUnit */
+	int HP;										/**< Current Health Points */
+	int maxHP;									/**< Maximal Health Points */
+	int kills;									/**< Enemy kills during this battle */
 } autoUnit_t;
 
 /**
