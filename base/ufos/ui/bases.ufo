@@ -64,7 +64,7 @@ window bases
 	basemap thebasemap
 	{
 		pos			"0 96"
-		size		"725 672"
+		size		"721 672"
 	}
 
 	// ===============

@@ -32,7 +32,7 @@ window buildings
 	basemap thebasemap
 	{
 		pos			"0 96"
-		size		"725 672"
+		size		"721 672"
 	}
 
 	cmpBaseHeader baseHeader {
@@ -41,14 +41,24 @@ window buildings
 	textlist buildings
 	{
 		dataid		TEXT_BUILDINGS
-		pos			"760 120"
-		size		"210 570"
+		pos			"767 120"
+		size		"209 570"
 		lineheight	30
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		rows		"19"
 		longlines	LONGLINES_PRETTYCHOP
-		onClick		{ cmd "buildings_click <lineselected>;" }
+		textalign	ALIGN_CC
+		onClick		{
+			cmd "buildings_click <lineselected>;"
+			if (((*cvar:mn_building_image eq "base/aliencont") || (*cvar:mn_building_image eq "base/drop")) || (*cvar:mn_building_image eq "base/workshop")) {
+				*node:popup_buildingpreview@width = 855
+				*node:popup_buildingpreview.building_pic@width = 512
+			} else {
+				*node:popup_buildingpreview@width = 599
+				*node:popup_buildingpreview.building_pic@width = 256
+			}
+		}
 		onViewChange {
 			*node:root.buildings_scroll@fullsize = <fullsize>
 			*node:root.buildings_scroll@current = <viewpos>
@@ -81,17 +91,26 @@ window buildings
 		onChange	{
 			if ( *node:root.building_preview@current == 0 ) {
 				cmd "ui_close popup_buildingpreview;"
+			} elif (((*cvar:mn_building_image eq "base/aliencont") || (*cvar:mn_building_image eq "base/drop")) || (*cvar:mn_building_image eq "base/workshop")) {
+				*node:popup_buildingpreview@width = 855
+				*node:popup_buildingpreview.building_pic@width = 512
+				 cmd "ui_push child popup_buildingpreview buildings;"
 			} else {
-				cmd "ui_push_child popup_buildingpreview buildings;"
+				*node:popup_buildingpreview@width = 599
+				*node:popup_buildingpreview.building_pic@width = 256
+				 cmd "ui_push child popup_buildingpreview buildings;"
 			}
 		}
 	}
+
 	string txt_preview
 	{
 		string		"_Building preview"
 		pos			"800 700"
 		size		"180 20"
-		onClick		{ call *node:root.building_preview@toggle }
+		onClick		{
+			call *node:root.building_preview@toggle
+		}
 	}
 
 	confunc mn_buildings_reset
@@ -108,24 +127,24 @@ window buildings
 	{
 		cmd "building_init;"
 		call *node:root.mn_buildings_reset
-		if ( *node:root.building_preview@current == 1 ) {
-			cmd "ui_push_child popup_buildingpreview buildings;"
-		}
-
+		cmd "ui_push_child popup_buildingpreview buildings;"
 	}
 
 	func onWindowClosed
 	{
 		cmd "reset_building_current 0;"
 	}
-
 }
+
+// =============================
+// POPUP WINDOW BUILDINGPREVIEW
+//==============================
 
 window popup_buildingpreview
 {
 	{
-		pos			"38 456"
-		size		"526 237"
+		pos			"15 330"
+		size		"599 345"
 		dragbutton	true
 		closebutton	true
 		image		"ui/popup_alpha_tile"
@@ -140,8 +159,8 @@ window popup_buildingpreview
 	{
 		src		*cvar:mn_building_image
 		preventratio	true
-		pos			"350 58"
-		size		"150 154"
+		pos			"310 58"
+		size		"256 256"
 		bgcolor		"0 0.08 0 1"
 	}
 
@@ -150,7 +169,7 @@ window popup_buildingpreview
 		string		*cvar:mn_building_name
 		pos			"30 58"
 		size		"300 25"
-		font		"f_normal"
+		font		"f_normal_bold"
 	}
 
 	string status_building
@@ -176,7 +195,7 @@ window popup_buildingpreview
 	{
 		icon		"icons/bordered_magnifying_glass"
 		tooltip		"_UFOpaedia"
-		pos			"320 190"
+		pos			"260 190"
 		size		"16 16"
 		onClick		{ cmd "building_ufopedia;" }
 	}
