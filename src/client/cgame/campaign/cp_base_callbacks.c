@@ -373,8 +373,6 @@ static void B_BuildingInit (base_t* base)
 	else
 		UI_ExecuteConfunc("mn_buildings_reset");
 
-	Cvar_SetValue("building_width", 0);
-	Cvar_SetValue("building_height", 0);
 	buildingNumber = LIST_Count(buildingList);
 	UI_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
 }
@@ -432,8 +430,6 @@ static void B_BuildingClick_f (void)
 	}
 
 	building = buildingConstructionList[num];
-	Cvar_SetValue("building_width", building->size[0]);
-	Cvar_SetValue("building_height", building->size[1]);
 
 	base->buildingCurrent = building;
 	B_DrawBuilding(building);

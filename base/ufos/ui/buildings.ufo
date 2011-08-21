@@ -51,13 +51,6 @@ window buildings
 		contentalign	ALIGN_CC
 		onClick		{
 			cmd "buildings_click <lineselected>;"
-			if (((*cvar:mn_building_image eq "base/aliencont") || (*cvar:mn_building_image eq "base/drop")) || (*cvar:mn_building_image eq "base/workshop")) {
-				*node:popup_buildingpreview@width = 855
-				*node:popup_buildingpreview.building_pic@width = 512
-			} else {
-				*node:popup_buildingpreview@width = 599
-				*node:popup_buildingpreview.building_pic@width = 256
-			}
 		}
 		onViewChange {
 			*node:root.buildings_scroll@fullsize = <fullsize>
@@ -91,14 +84,8 @@ window buildings
 		onChange	{
 			if ( *node:root.building_preview@current == 0 ) {
 				cmd "ui_close popup_buildingpreview;"
-			} elif (((*cvar:mn_building_image eq "base/aliencont") || (*cvar:mn_building_image eq "base/drop")) || (*cvar:mn_building_image eq "base/workshop")) {
-				*node:popup_buildingpreview@width = 855
-				*node:popup_buildingpreview.building_pic@width = 512
-				 cmd "ui_push child popup_buildingpreview buildings;"
 			} else {
-				*node:popup_buildingpreview@width = 599
-				*node:popup_buildingpreview.building_pic@width = 256
-				 cmd "ui_push child popup_buildingpreview buildings;"
+				cmd "ui_push_child popup_buildingpreview buildings;"
 			}
 		}
 	}
@@ -143,61 +130,65 @@ window buildings
 window popup_buildingpreview
 {
 	{
-		pos			"15 330"
-		size		"599 345"
+		pos			"15 500"
+		size		"650 245"
 		dragbutton	true
 		closebutton	true
 		image		"ui/popup_alpha_tile"
 		string		"_Building preview"
 	}
 
-	// ==================
-	// content
-	// ==================
+	panel infopanel {
+		{
+			pos			"20 50"
+			size		"300 180"
+			border		2
+			bordercolor "0 1 0 0"
+		}
+		string title_building
+		{
+			string		*cvar:mn_building_name
+			pos			"5 5"
+			size		"290 25"
+			font		"f_normal_bold"
+		}
+
+		text buildinginfo
+		{
+			pos			"5 40"
+			size		"290 80"
+			lineheight	20
+			tabwidth	140
+			dataid		TEXT_BUILDING_INFO
+			rows		4
+		}
+
+		string status_building
+		{
+			string		*cvar:mn_building_status
+			pos			"5 140"
+			size		"260 20"
+			font		"f_small"
+		}
+
+
+		custombutton ufopedia_link
+		{
+			icon		"icons/bordered_magnifying_glass"
+			tooltip		"_UFOpaedia"
+			pos			"270 140"
+			size		"16 16"
+			onClick		{ cmd "building_ufopedia;" }
+		}
+	}
 
 	image building_pic
 	{
 		src		*cvar:mn_building_image
 		preventratio	true
-		pos			"310 58"
-		size		"256 256"
-		bgcolor		"0 0.08 0 1"
-	}
-
-	string title_building
-	{
-		string		*cvar:mn_building_name
-		pos			"30 58"
-		size		"300 25"
-		font		"f_normal_bold"
-	}
-
-	string status_building
-	{
-		string		*cvar:mn_building_status
-		pos			"30 190"
-		size		"260 20"
-		font		"f_small"
-	}
-
-	/* text using tabbed text */
-	text buildinginfo
-	{
-		pos			"30 100"
-		size		"300 80"
-		lineheight	20
-		tabwidth	140
-		dataid		TEXT_BUILDING_INFO
-		rows		"4"
-	}
-
-	custombutton ufopedia_link
-	{
-		icon		"icons/bordered_magnifying_glass"
-		tooltip		"_UFOpaedia"
-		pos			"260 190"
-		size		"16 16"
-		onClick		{ cmd "building_ufopedia;" }
+		pos			"330 60"
+		size		"300 150"
+		contentalign	ALIGN_CR
 	}
 
 	func onWindowClosed
