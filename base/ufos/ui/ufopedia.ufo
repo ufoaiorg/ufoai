@@ -198,9 +198,10 @@ window ufopedia extends objectinfo
 		image image_bigpicture
 		{
 			src		*cvar:mn_upimage_top
-			pos			"180 43"
-			size		"251 571"
+			pos			"10 43"
+			size		"594 571"
 			preventratio	true
+			contentalign 	ALIGN_CC
 		}
 		model mdl_bigpicture
 		{
