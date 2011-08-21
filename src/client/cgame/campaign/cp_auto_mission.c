@@ -33,23 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "math.h"
 #include "cp_auto_mission_callbacks.h"
 
-
-/** @brief Possilbe results from an auto mission to display on-screen after a simulated battle.
- * @note This list of potential results is NOT meant to replace missionResults_t, but is mainly used for displaying the proper message on the screen afterwards. */
-typedef enum autoMission_results_s {
-	AUTOMISSION_RESULT_NONE,					/**< Blank, used when battle hasn't been completed yet. */
-	AUTOMISSION_RESULT_SUCCESS,					/**< Victory! Aliens dead or otherwise neutralized */
-	AUTOMISSION_RESULT_COSTLY_SUCCESS,			/**< Aliens dead, but so are most or all civilians. */
-	AUTOMISSION_RESULT_FAILED_SOME_SURVIVORS,	/**< Defeat, but some soldiers managed to retreat and escape */
-	AUTOMISSION_RESULT_FAILED_NO_SURVIVORS,		/**< Defeat, all soldiers/units dead, total loss */
-	AUTOMISSION_RESULT_RESCUE_SUCCESSFUL,		/**< Special case for downed pilot rescue missions */
-	AUTOMISSION_RESULT_RESCUE_FAILED,			/**< Soldiers survived and killed enemies, but pilot to be rescued did not survive */
-	AUTOMISSION_RESULT_PLAYER_BASE_LOST,		/**< Base defence mission where the player's forces lost the battle */
-	AUTOMISSION_RESULT_ALIEN_BASE_CAPTURED,		/**< An assault on an alien base was successful */
-
-	AUTOMISSION_RESULT_MAX
-} autoMission_results_t;
-
 /** @brief Possible types of teams that can fight in an auto mission battle.
  * @note This is independent of (int) teamID in the auto mission battle struct.  This allows, in the future, for multiple player teams, or multiple
  * alien teams, etc., to fight in a simulated battle.  (Different teams can have the same TYPE as listed here, yet have different teamID values.)
@@ -97,7 +80,7 @@ typedef struct autoMissionBattle_s {
 	qboolean isRescueMission;						/**< Is this a rescue or special mission? (Such as recovering a downed aircraft pilot) */
 	int teamToRescue;								/**< If a rescue mission, which team needs rescue? */
 	int teamNeedingRescue;							/**< If a rescue mission, which team is attempting the rescue? */
-	autoMission_results_t resultType;				/**< Used to figure what type of message to put on-screen at the end of a battle. */
+	missionResults_t *results;						/**< Manual mission "compatible" result structure */
 } autoMissionBattle_t;
 
 /**
@@ -147,12 +130,12 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 		}
 	}
 
-	battle->resultType = AUTOMISSION_RESULT_NONE;
 	battle->winningTeam = -1;
 	battle->isRescueMission = qfalse;
 	battle->teamToRescue = -1;
 	battle->teamNeedingRescue = -1;
 	battle->hasBeenFought = qfalse;
+	battle->results = NULL;
 }
 
 /**
@@ -676,15 +659,11 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 
 	/* Well, if the player team is all dead, we know the player totally lost, and can stop right here. */
 	if (!battle->teamActive[teamPlayer]) {
-		battle->resultType = AUTOMISSION_RESULT_FAILED_NO_SURVIVORS;
+		battle->results->won = qfalse;
 		battle->winningTeam = teamEnemy;
 	} else {
 		battle->winningTeam = teamPlayer;
-		/* At least some player soldiers are still standing, but how good did they do? */
-		if (battle->teamAccomplishment[teamPlayer] > battle->teamAccomplishment[teamEnemy])
-			battle->resultType = AUTOMISSION_RESULT_SUCCESS;
-		else
-			battle->resultType = AUTOMISSION_RESULT_COSTLY_SUCCESS;
+		battle->results->won = qtrue;
 	}
 }
 
@@ -699,21 +678,15 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
 	assert(battle);
 
 	Cvar_SetValue("cp_mission_tryagain", 0);
-	switch (battle->resultType) {
-	case AUTOMISSION_RESULT_SUCCESS:
+	if (battle->results->won) {
 		UI_PushWindow("won", NULL, NULL);
-		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
-		break;
-	case AUTOMISSION_RESULT_COSTLY_SUCCESS:
-		UI_PushWindow("won", NULL, NULL);
-		MS_AddNewMessage(_("Notice"), _("You've defeated the enemy, but did poorly, and many civialians were killed"), qfalse, MSG_STANDARD, NULL);
-		break;
-	case AUTOMISSION_RESULT_FAILED_NO_SURVIVORS:
+		if (battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER] > battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_ALIEN])
+			MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
+		else
+			MS_AddNewMessage(_("Notice"), _("You've defeated the enemy, but did poorly, and many civialians were killed"), qfalse, MSG_STANDARD, NULL);
+	} else {
 		UI_PushWindow("lost", NULL, NULL);
 		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
-		break;
-	default:
-		break;
 	}
 }
 
@@ -843,23 +816,13 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	assert(aircraft);
 
 	AM_ClearBattle(&autoBattle);
+	autoBattle.results = results;
 	AM_FillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
 	AM_FillTeamFromBattleParams(&autoBattle, battleParameters);
 	AM_SetDefaultHostilities(&autoBattle, qfalse);
 	AM_CalculateTeamScores(&autoBattle);
 	AM_DoFight(&autoBattle);
 	AM_DecideResults(&autoBattle);
-
-	switch (autoBattle.resultType) {
-	case AUTOMISSION_RESULT_SUCCESS:
-	case AUTOMISSION_RESULT_COSTLY_SUCCESS:
-	case AUTOMISSION_RESULT_RESCUE_SUCCESSFUL:
-	case AUTOMISSION_RESULT_ALIEN_BASE_CAPTURED:
-		results->won = qtrue;
-		break;
-	default:
-		results->won = qfalse;
-	}
 
 	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
 	AM_AlienCollect(aircraft, battleParameters);
