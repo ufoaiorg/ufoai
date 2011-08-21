@@ -219,7 +219,7 @@ window employees
 	{
 		image		"ui/scrollbar_v_green"
 		pos			"368 175"
-		height		"560"
+		height		"564"
 		current		0
 		viewsize	15
 		fullsize	50

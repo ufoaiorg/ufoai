@@ -252,7 +252,7 @@ window aircraft_pilots extends iaircraft
 	vscrollbar scroll_employees
 	{
 		image	"ui/scrollbar_v_green"
-		pos "310 463"	height	"282"
+		pos "310 463"	height	"281"
 		current 0
 		viewsize 8
 		fullsize 50

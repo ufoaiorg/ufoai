@@ -173,7 +173,7 @@ window transfer
 		vscrollbar trans_list_scroll {
 			image		"ui/scrollbar_v_green"
 			pos			"510 43"
-			height		"521"
+			height		"520"
 			hidewhenunused	true
 			onChange	{
 				*node:root.itemlist.trans_list_scroll@current = <current>

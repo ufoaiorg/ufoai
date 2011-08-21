@@ -310,7 +310,7 @@ window production
 	vscrollbar prodlist_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"428 180"
-		height		"550"
+		height		"556"
 		current		0
 		viewsize	30
 		fullsize	30
