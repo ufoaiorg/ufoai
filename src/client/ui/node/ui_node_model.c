@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_mesh.h"
 #include "../../renderer/r_mesh_anim.h"
+#include "../../renderer/r_model.h"
 
 #define EXTRADATA_TYPE modelExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -124,7 +125,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 		mi->backlerp = 0;
 
 		assert(model->model);
-		mi->model = R_RegisterModelShort(model->model);
+		mi->model = R_FindModel(model->model);
 		if (!mi->model) {
 			model = model->next;
 			continue;
@@ -152,7 +153,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 				Com_Printf("UI Model: Could not get the model '%s'\n", model->parent);
 				break;
 			}
-			pmi.model = R_RegisterModelShort(parentModel->model);
+			pmi.model = R_FindModel(parentModel->model);
 			if (!pmi.model) {
 				Com_Printf("UI Model: Could not get the model '%s'\n", parentModel->model);
 				break;
@@ -261,7 +262,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	/* direct model name - no UI model definition */
 	if (!model) {
 		/* prevent the searching for a model def in the next frame */
-		mi.model = R_RegisterModelShort(source);
+		mi.model = R_FindModel(source);
 		mi.name = source;
 		if (!mi.model) {
 			Com_Printf("Could not find model '%s'\n", source);
@@ -392,7 +393,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 				childSource[0] = '\0';
 			else
 				Q_strncpyz(childSource, childRef, sizeof(childSource));
-			mi.model = R_RegisterModelShort(childSource);
+			mi.model = R_FindModel(childSource);
 			mi.name = childSource;
 
 			/* init skin */

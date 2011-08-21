@@ -107,18 +107,9 @@ static model_t *R_ModForName (const char *name)
 	if (name[0] == '\0')
 		Com_Error(ERR_FATAL, "R_ModForName: NULL name");
 
-	/* inline models are grabbed only from worldmodel */
-	if (name[0] == '*') {
-		i = atoi(name + 1) - 1;
-		if (i < 0 || i >= r_numModelsInline)
-			Com_Error(ERR_FATAL, "bad inline model number '%s' (%i/%i)", name, i, r_numModelsInline);
-		return &r_modelsInline[i];
-	}
-
-	/* search the currently loaded models */
-	for (i = 0, mod = r_models; i < r_numModels; i++, mod++)
-		if (Q_streq(mod->name, name))
-			return mod;
+	mod = R_GetModel(name);
+	if (mod != NULL)
+		return mod;
 
 	/* find a free model slot spot */
 	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
@@ -208,7 +199,7 @@ static char const* const mod_extensions[] = {
  * try to load one of the supported model formats
  * @return NULL if no model could be found with the given name, model_t otherwise
  */
-model_t *R_RegisterModelShort (const char *name)
+model_t *R_FindModel (const char *name)
 {
 	model_t *mod;
 
@@ -230,6 +221,35 @@ model_t *R_RegisterModelShort (const char *name)
 		return NULL;
 	} else
 		return R_ModForName(name);
+}
+
+/**
+ * @brief Get a model for the given name already loaded.
+ * @return A model for the given name, else NULL.
+ * @sa R_FindModel
+ * @param[in] name Short name of the model relative to base dir without (models/model)
+ */
+model_t *R_GetModel (const char *name)
+{
+	model_t *mod;
+	int i;
+
+	if (name[0] == '\0')
+		Com_Error(ERR_FATAL, "R_ModForName: NULL name");
+
+	/* inline models are grabbed only from worldmodel */
+	if (name[0] == '*') {
+		i = atoi(name + 1) - 1;
+		if (i < 0 || i >= r_numModelsInline)
+			Com_Error(ERR_FATAL, "bad inline model number '%s' (%i/%i)", name, i, r_numModelsInline);
+		return &r_modelsInline[i];
+	}
+
+	/* search the currently loaded models */
+	for (i = 0, mod = r_models; i < r_numModels; i++, mod++)
+		if (Q_streq(mod->name, name))
+			return mod;
+	return NULL;
 }
 
 #define MEM_TAG_STATIC_MODELS 1

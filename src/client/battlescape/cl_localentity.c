@@ -225,7 +225,7 @@ void LM_Register (void)
 
 	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
 		/* register the model */
-		lm->model = R_RegisterModelShort(lm->name);
+		lm->model = R_FindModel(lm->name);
 		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);
 			if (!lm->as.change)

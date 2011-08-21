@@ -256,8 +256,6 @@ typedef struct renderer_threadstate_s {
 
 extern renderer_threadstate_t r_threadstate;
 
-struct model_s *R_RegisterModelShort(const char *name);
-
 void R_Color(const vec4_t rgba);
 
 void R_ModBeginLoading(const char *tiles, qboolean day, const char *pos, const char *mapName);

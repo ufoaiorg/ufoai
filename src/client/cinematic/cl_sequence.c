@@ -608,7 +608,7 @@ static int SEQ_ExecutePrecache (sequenceContext_t *context, const char *name, co
 	if (Q_streq(name, "models")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching model: %s\n", data);
-			R_RegisterModelShort(data);
+			R_FindModel(data);
 			data += strlen(data) + 1;
 		}
 	} else if (Q_streq(name, "pics")) {
@@ -685,7 +685,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 			if (Q_streq(data, "model")) {
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
-				se->model = R_RegisterModelShort(data);
+				se->model = R_FindModel(data);
 				if (se->model == NULL)
 					se->inuse = qfalse;
 			} else if (Q_streq(data, "anim")) {

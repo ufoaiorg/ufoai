@@ -134,7 +134,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 		if (refdef.ready) {
 			const unsigned int index = i - CS_MODELS;
 			assert(index != 0);
-			cl.model_draw[index] = R_RegisterModelShort(s);
+			cl.model_draw[index] = R_FindModel(s);
 			/* inline models are marked with * as first char followed by the number */
 			if (s[0] == '*')
 				cl.model_clip[index] = CM_InlineModel(cl.mapTiles, s);

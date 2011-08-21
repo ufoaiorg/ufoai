@@ -187,7 +187,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	VectorCopy(vec3_origin, position);
 	VectorCopy(vec3_origin, angles);
 
-	mi.model = R_RegisterModelShort(model);
+	mi.model = R_FindModel(model);
 	if (!mi.model) {
 		Com_Printf("Could not find model '%s'\n", model);
 		return;
@@ -254,7 +254,7 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	VectorCopy(vec3_origin, position);
 	VectorCopy(vec3_origin, angles);
 
-	mi.model = R_RegisterModelShort(model);
+	mi.model = R_FindModel(model);
 	if (!mi.model) {
 		Com_Printf("Could not find model '%s'\n", model);
 		return;

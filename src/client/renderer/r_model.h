@@ -79,6 +79,9 @@ int R_ModAllocateActorSkin(const char* name);
 void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, image_t * defaultSkin);
 qboolean R_UseActorSkin(void);
 
+model_t *R_FindModel(const char *name);
+model_t *R_GetModel(const char *name);
+
 /** @brief The world model(s) */
 extern model_t *r_mapTiles[MAX_MAPTILES];
 extern int r_numMapTiles;

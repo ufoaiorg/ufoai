@@ -315,7 +315,7 @@ static inline void CL_ParticleLoadArt (ptlArt_t *a)
 		break;
 	case ART_MODEL:
 		/** @todo Support the frame data from ptlArt_t for models, too */
-		a->art.model = R_RegisterModelShort(a->name);
+		a->art.model = R_FindModel(a->name);
 		break;
 	default:
 		Com_Error(ERR_DROP, "CL_ParticleLoadArt: Unknown art type\n");

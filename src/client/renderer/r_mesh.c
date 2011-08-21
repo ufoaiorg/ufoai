@@ -308,7 +308,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		return;
 
 	/* register the model */
-	mi->model = R_RegisterModelShort(mi->name);
+	mi->model = R_FindModel(mi->name);
 
 	/* check if the model exists */
 	if (!mi->model) {
@@ -329,7 +329,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	if (pmi) {
 		/* register the parent model */
-		pmi->model = R_RegisterModelShort(pmi->name);
+		pmi->model = R_FindModel(pmi->name);
 
 		/* transform - the next transform for the child model will be relative from the
 		 * parent model location now */
