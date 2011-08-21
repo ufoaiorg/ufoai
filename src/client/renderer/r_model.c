@@ -102,7 +102,7 @@ void R_ModModellist_f (void)
 	Com_Printf(" - %4i inline models\n", r_numModelsInline);
 }
 
-model_t *R_AllocModelSlot(void)
+model_t *R_AllocModelSlot (void)
 {
 	/* get new model */
 	if (r_numModels < 0 || r_numModels >= MAX_MOD_KNOWN)

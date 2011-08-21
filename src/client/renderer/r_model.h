@@ -81,7 +81,7 @@ qboolean R_UseActorSkin(void);
 
 model_t *R_FindModel(const char *name);
 model_t *R_GetModel(const char *name);
-model_t *R_AllocModelSlot();
+model_t *R_AllocModelSlot(void);
 
 /** @brief The world model(s) */
 extern model_t *r_mapTiles[MAX_MAPTILES];
