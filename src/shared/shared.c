@@ -207,16 +207,16 @@ int Com_Filter (const char *pattern, const char *text)
  * @brief Replaces the filename from one path with another one
  * @param[in] inputPath The full path to a filename
  * @param[in] expectedFileName The filename to insert into the given full path
- * @param[out] outpoutPath The target buffer
+ * @param[out] outputPath The target buffer
  * @param[in] size The size of the target buffer
  */
-void Com_ReplaceFilename (const char *inputPath, const char *expectedFileName, char *outpoutPath, size_t size)
+void Com_ReplaceFilename (const char *inputPath, const char *expectedFileName, char *outputPath, size_t size)
 {
 	char *slash, *end;
 
-	Q_strncpyz(outpoutPath, inputPath, size);
+	Q_strncpyz(outputPath, inputPath, size);
 
-	end = outpoutPath;
+	end = outputPath;
 	while ((slash = strchr(end, '/')) != 0)
 		end = slash + 1;
 
