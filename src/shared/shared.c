@@ -244,9 +244,9 @@ void Com_StripExtension (const char *in, char *out, const size_t size)
 	}
 
 	if (out_ext)
-		*out_ext = 0;
+		*out_ext = '\0';
 	else
-		*out = 0;
+		*out = '\0';
 }
 
 /**
