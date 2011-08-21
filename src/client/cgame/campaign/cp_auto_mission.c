@@ -434,9 +434,9 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 			skillAdjCalc -= 0.50;
 			skillAdjCalcAbs = fabs(skillAdjCalc);
 			if (skillAdjCalc > 0.0)
-				battle->scoreTeamSkill[team] = FpCurveUp (battle->scoreTeamSkill[team], skillAdjCalcAbs);
+				battle->scoreTeamSkill[team] = ChkDNorm_Inv (FpCurveUp (battle->scoreTeamSkill[team], skillAdjCalcAbs) );
 			else if (skillAdjCalc < 0.0)
-				battle->scoreTeamSkill[team] = FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs);
+				battle->scoreTeamSkill[team] = ChkDNorm (FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs) );
 			/* if (skillAdjCalc == exact 0.0), no change to team's skill. */
 
 			Com_DPrintf(DEBUG_CLIENT, "Team %i has adjusted skill rating of %lf.\n",
