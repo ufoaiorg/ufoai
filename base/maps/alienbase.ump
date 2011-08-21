@@ -95,6 +95,17 @@ tile +wormhole
 	0		a		a		0
 }
 
+// Storage (vertical: connects top and bottom)
+tile +storage_v
+{
+	4 4
+
+	0		a		x		0
+	a		+a		+x		a
+	a		+a		+x		a
+	0		a		x		0
+}
+
 // Hallway, Vertical
 // Has an empty space on its left tile (hall takes up only right tiles)
 tile +hall_v1
@@ -230,7 +241,7 @@ assembly small1
 	fix +hall_4way1 "6 2"
 	fix +powercore "8 2"
 
-	fix +hall_v1 "0 4"
+	fix +storage_v "0 4"
 	fix +hall_v2 "0 6"
 	fix +ventl "2 4"
 	fix +hub "4 4"
