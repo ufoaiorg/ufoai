@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 
-model_t r_models[MAX_MOD_KNOWN];
-int r_numModels;
+static model_t r_models[MAX_MOD_KNOWN];
+static int r_numModels;
 static int r_numModelsStatic;
 
 model_t *r_mapTiles[MAX_MAPTILES];
@@ -38,6 +38,15 @@ int r_numModelsInline;
 
 static char *r_actorSkinNames[MAX_ACTORSKINNAME];
 static int r_numActorSkinName;
+
+/**
+ * @brief all supported model formats
+ * @sa modtype_t
+ */
+static char const* const mod_extensions[] = {
+	"md2", "md3", "dpm", "obj", NULL
+};
+
 
 /**
  * @brief Prints all loaded models
@@ -93,46 +102,35 @@ void R_ModModellist_f (void)
 	Com_Printf(" - %4i inline models\n", r_numModelsInline);
 }
 
+model_t *R_AllocModelSlot(void)
+{
+	/* get new model */
+	if (r_numModels < 0 || r_numModels >= MAX_MOD_KNOWN)
+		Com_Error(ERR_DROP, "R_ModAddMapTile: r_numModels >= MAX_MOD_KNOWN");
+	return &r_models[r_numModels++];
+}
+
 /**
  * @brief Loads in a model for the given name
- * @param[in] name Filename relative to base dir and with extension (models/model.md2)
+ * @param[in] filename Filename relative to base dir and with extension (models/model.md2)
+ * @param[inout] mod Structure to initialize
+ * @return True if the loading was succeed. True or false structure mod was edited.
  */
-static model_t *R_ModForName (const char *name)
+static qboolean R_LoadModel (model_t *mod, const char *filename)
 {
-	model_t *mod;
 	byte *buf;
-	int i;
 	int modfilelen;
 
-	if (name[0] == '\0')
+	if (filename[0] == '\0')
 		Com_Error(ERR_FATAL, "R_ModForName: NULL name");
 
-	mod = R_GetModel(name);
-	if (mod != NULL)
-		return mod;
-
-	/* find a free model slot spot */
-	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
-		if (!mod->name[0])
-			break;				/* free spot */
-	}
-
-	if (i == r_numModels) {
-		if (r_numModels == MAX_MOD_KNOWN)
-			Com_Error(ERR_FATAL, "r_numModels == MAX_MOD_KNOWN");
-		r_numModels++;
-	}
+	/* load the file */
+	modfilelen = FS_LoadFile(filename, &buf);
+	if (!buf)
+		return qfalse;
 
 	OBJZERO(*mod);
-	Q_strncpyz(mod->name, name, sizeof(mod->name));
-
-	/* load the file */
-	modfilelen = FS_LoadFile(mod->name, &buf);
-	if (!buf) {
-		OBJZERO(mod->name);
-		r_numModels--;
-		return NULL;
-	}
+	Q_strncpyz(mod->name, filename, sizeof(mod->name));
 
 	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
@@ -155,10 +153,13 @@ static model_t *R_ModForName (const char *name)
 		break;
 
 	default:
-		if (!Q_strcasecmp(mod->name + strlen(mod->name) - 4, ".obj"))
+	{
+		const char* ext = Com_GetExtension(filename);
+		if (ext != NULL && !Q_strcasecmp(ext, "obj"))
 			R_LoadObjModel(mod, buf, modfilelen);
 		else
 			Com_Error(ERR_FATAL, "R_ModForName: unknown fileid for %s", mod->name);
+	}
 	}
 
 	/* load the animations */
@@ -176,16 +177,8 @@ static model_t *R_ModForName (const char *name)
 
 	FS_FreeFile(buf);
 
-	return mod;
+	return qtrue;
 }
-
-/**
- * @brief all supported model formats
- * @sa modtype_t
- */
-static char const* const mod_extensions[] = {
-	"md2", "md3", "dpm", "obj", NULL
-};
 
 /**
  * @brief Tries to load a model
@@ -202,25 +195,58 @@ static char const* const mod_extensions[] = {
 model_t *R_FindModel (const char *name)
 {
 	model_t *mod;
+	model_t model;
+	qboolean loaded = qfalse;
+	int i;
 
 	if (!name || !name[0])
 		return NULL;
 
+	/* search for existing models */
+	mod = R_GetModel(name);
+	if (mod != NULL)
+		return mod;
+
+	/* load model */
 	if (name[0] != '*' && (strlen(name) < 4 || name[strlen(name) - 4] != '.')) {
 		char filename[MAX_QPATH];
-		int i = 0;
 
-		while (mod_extensions[i]) {
+		for (i = 0; mod_extensions[i] != NULL; i++) {
 			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);
-			mod = R_ModForName(filename);
-			if (mod)
-				return mod;
+			loaded = R_LoadModel(&model, filename);
+			if (loaded) {
+				/* use short name */
+				Q_strncpyz(model.name, name, sizeof(model.name));
+				break;
+			}
 			i++;
 		}
-		Com_Printf("R_RegisterModelShort: Could not find: '%s'\n", name);
+	} else {
+		/** @todo this case should be useless, do we ever use extension? */
+		loaded = R_LoadModel(&model, name);
+	}
+
+	if (!loaded) {
+		Com_Printf("R_FindModel: Could not find: '%s'\n", name);
 		return NULL;
-	} else
-		return R_ModForName(name);
+	}
+
+	/* register the new model only after the loading is finished */
+
+	/* find a free model slot spot */
+	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
+		if (!mod->name[0])
+			break;
+	}
+	if (i == r_numModels) {
+		if (r_numModels == MAX_MOD_KNOWN)
+			Com_Error(ERR_FATAL, "r_numModels == MAX_MOD_KNOWN");
+		r_numModels++;
+	}
+
+	/* copy the model on the slot */
+	r_models[i] = model;
+	return &r_models[i];
 }
 
 /**

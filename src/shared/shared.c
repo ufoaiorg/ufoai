@@ -220,7 +220,7 @@ void Com_ReplaceFilename (const char *inputPath, const char *expectedFileName, c
 	while ((slash = strchr(end, '/')) != 0)
 		end = slash + 1;
 
-	strcpy(end, expectedFileName + 1);
+	strcpy(end, expectedFileName);
 }
 
 /**

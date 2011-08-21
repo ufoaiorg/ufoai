@@ -503,13 +503,15 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 
 image_t* R_AliasModelGetSkin (const char *modelFileName, const char *skin)
 {
+	image_t* result;
 	if (skin[0] != '.')
-		return R_FindImage(skin, it_skin);
+		result = R_FindImage(skin, it_skin);
 	else {
 		char path[MAX_QPATH];
-		Com_ReplaceFilename(modelFileName, skin, path, sizeof(path));
-		return R_FindImage(path, it_skin);
+		Com_ReplaceFilename(modelFileName, skin + 1, path, sizeof(path));
+		result = R_FindImage(path, it_skin);
 	}
+	return result;
 }
 
 image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin)
