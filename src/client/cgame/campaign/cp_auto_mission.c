@@ -44,7 +44,7 @@ typedef enum autoMission_teamType_s {
 	AUTOMISSION_TEAM_TYPE_MAX
 } autoMissionTeamType_t;
 
-#define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * MAX_ACTIVETEAM
+#define MAX_SOLDIERS_AUTOMISSION MAX_TEAMS * AUTOMISSION_TEAM_TYPE_MAX
 
 /**
  * @brief One unit (soldier/alien/civilian) of the autobattle
@@ -60,18 +60,18 @@ typedef struct autoUnit_s {
  * @brief Data structure for a simulated or auto mission.
  */
 typedef struct autoMissionBattle_s {
-	qboolean teamActive[MAX_ACTIVETEAM];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
-	qboolean isHostile[MAX_ACTIVETEAM][MAX_ACTIVETEAM];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
-	short nUnits[MAX_ACTIVETEAM];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
-	autoMissionTeamType_t teamType[MAX_ACTIVETEAM];		/**< What type of team is this?  Human player?  Alien? Something else?  */
+	qboolean teamActive[AUTOMISSION_TEAM_TYPE_MAX];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
+	qboolean isHostile[AUTOMISSION_TEAM_TYPE_MAX][AUTOMISSION_TEAM_TYPE_MAX];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
+	short nUnits[AUTOMISSION_TEAM_TYPE_MAX];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
+	autoMissionTeamType_t teamType[AUTOMISSION_TEAM_TYPE_MAX];		/**< What type of team is this?  Human player?  Alien? Something else?  */
 
-	double scoreTeamEquipment[MAX_ACTIVETEAM];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
-	double scoreTeamSkill[MAX_ACTIVETEAM];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
-	double scoreTeamDifficulty[MAX_ACTIVETEAM];		/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
+	double scoreTeamEquipment[AUTOMISSION_TEAM_TYPE_MAX];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
+	double scoreTeamSkill[AUTOMISSION_TEAM_TYPE_MAX];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
+	double scoreTeamDifficulty[AUTOMISSION_TEAM_TYPE_MAX];		/**< Number from 0.f to 1.f, represents a team's global fighting ability, difficulty, or misc. adjustments (higher is better) */
 
-	autoUnit_t units[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Units data */
+	autoUnit_t units[AUTOMISSION_TEAM_TYPE_MAX][MAX_SOLDIERS_AUTOMISSION];		/**< Units data */
 
-	int teamAccomplishment[MAX_ACTIVETEAM];							/**< Used for calculating experience gain, and for friendly fire (including hit civilians) */
+	int teamAccomplishment[AUTOMISSION_TEAM_TYPE_MAX];							/**< Used for calculating experience gain, and for friendly fire (including hit civilians) */
 
 	int winningTeam;								/**< Which team is victorious */
 	missionResults_t *results;						/**< Manual mission "compatible" result structure */
@@ -100,7 +100,7 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 
 	assert(battle != NULL);
 
-	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		int otherTeam;
 		int soldier;
 
@@ -112,7 +112,7 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 		battle->scoreTeamSkill[team] = 0.5;
 		battle->teamAccomplishment[team] = 0;
 
-		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
+		for (otherTeam = 0; otherTeam < AUTOMISSION_TEAM_TYPE_MAX; otherTeam++) {
 			/* If you forget to set this and run a battle, everyone will just kill each other by default */
 			battle->isHostile[team][otherTeam] = qtrue;
 		}
@@ -144,7 +144,7 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 	int teamSize;
 	int unitsAlive;
 
-	assert(teamNum >= 0 && teamNum < MAX_ACTIVETEAM);
+	assert(teamNum >= 0 && teamNum < AUTOMISSION_TEAM_TYPE_MAX);
 	assert(battle != NULL);
 	assert(aircraft != NULL);
 
@@ -301,11 +301,11 @@ static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolea
 	int otherTeam;
 	qboolean civsInverted = !civsInfected;
 
-	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		if (!battle->teamActive[team])
 			continue;
 
-		for (otherTeam = 0; otherTeam < MAX_ACTIVETEAM; otherTeam++) {
+		for (otherTeam = 0; otherTeam < AUTOMISSION_TEAM_TYPE_MAX; otherTeam++) {
 			const autoMissionTeamType_t teamType = battle->teamType[team];
 			const autoMissionTeamType_t otherTeamType = battle->teamType[otherTeam];
 
@@ -351,23 +351,23 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 	int isHostileCount;
 	int team;
 	/* Sums of various values */
-	double teamPooledHealth[MAX_ACTIVETEAM];
-	double teamPooledHealthMax[MAX_ACTIVETEAM];
-	double teamPooledUnitsHealthy[MAX_ACTIVETEAM];
-	double teamPooledUnitsTotal[MAX_ACTIVETEAM];
+	double teamPooledHealth[AUTOMISSION_TEAM_TYPE_MAX];
+	double teamPooledHealthMax[AUTOMISSION_TEAM_TYPE_MAX];
+	double teamPooledUnitsHealthy[AUTOMISSION_TEAM_TYPE_MAX];
+	double teamPooledUnitsTotal[AUTOMISSION_TEAM_TYPE_MAX];
 	/* Ratios */
-	double teamRatioHealthyUnits[MAX_ACTIVETEAM];
-	double teamRatioHealthTotal[MAX_ACTIVETEAM];
+	double teamRatioHealthyUnits[AUTOMISSION_TEAM_TYPE_MAX];
+	double teamRatioHealthTotal[AUTOMISSION_TEAM_TYPE_MAX];
 	int currentUnit;
 
-	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		unitTotal += battle->nUnits[team];
 
 		if (battle->teamActive[team]) {
 			lastActiveTeam = team;
 			totalActiveTeams++;
 		}
-		for (isHostileCount = 0; isHostileCount < MAX_ACTIVETEAM; isHostileCount++) {
+		for (isHostileCount = 0; isHostileCount < AUTOMISSION_TEAM_TYPE_MAX; isHostileCount++) {
 			if (battle->nUnits[isHostileCount] <= 0)
 				continue;
 
@@ -396,7 +396,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 	}
 
 	/* Set up teams */
-	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		teamPooledHealth[team] = 0.0;
 		teamPooledHealthMax[team] = 0.0;
 		teamPooledUnitsHealthy[team] = 0.0;
@@ -547,7 +547,6 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 					battle->results->aliensSurvived--;
 					battle->results->aliensKilled++;
 					break;
-				case AUTOMISSION_TEAM_TYPE_CIVILIAN:
 					Com_Printf( " civilian\n");
 					battle->results->civiliansSurvived--;
 					battle->results->civiliansKilledFriendlyFire++;
@@ -579,7 +578,7 @@ static qboolean AM_UnitAttackEnemies (autoMissionBattle_t *battle, const int cur
 
 	Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i attacks!\n", currUnit, currTeam);
 
-	for (eTeam = 0; eTeam < MAX_ACTIVETEAM; eTeam++) {
+	for (eTeam = 0; eTeam < AUTOMISSION_TEAM_TYPE_MAX; eTeam++) {
 		if (!battle->teamActive[eTeam])
 			continue;
 
@@ -605,7 +604,7 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 
 	while (combatActive) {
 		int team;
-		for (team = 0; team < MAX_ACTIVETEAM; team++) {
+		for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 			int aliveUnits;
 			int currentUnit;
 
@@ -649,7 +648,7 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 	int teamCiv = -1;
 
 	/* Figure out who's who (determine which team is the player and which one is aliens.) */
-	for (team = 0; team < MAX_ACTIVETEAM; team++) {
+	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		switch (battle->teamType[team]) {
 		case AUTOMISSION_TEAM_TYPE_PLAYER:
 			teamPlayer = team;
