@@ -597,14 +597,20 @@ window popup_keyinfo
 	string keyinfo_label
 	{
 		font		"f_verysmall_bold"
-		string		"_Note: Campaign-specific keybindings visible in Campaign mode only."
+		string		*cvar:mn_keyinfo_label_string
 		textalign	ALIGN_CC
 		pos			"20 58"
 		size		"498 20"
 	}
 
 	func onWindowOpened {
+		if ( *cvar:mn_base_count > 0 ) { *cvar:mn_keyinfo_label_string = "_Visit our forums and join the community at http://ninex.ufoai.info." }
+		else { *cvar:mn_keyinfo_label_string = "_Note: Campaign-specific keybindings visible in Campaign mode only." }
 		cmd "mn_init_keylist;"
+	}
+
+	func onWindowClosed {
+		delete *cvar:mn_keyinfo_label_string
 	}
 
 	// only show the current binding - no support for changing them atm
