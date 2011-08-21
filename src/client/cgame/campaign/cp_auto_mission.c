@@ -36,14 +36,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Possible types of teams that can fight in an auto mission battle.
  * @note This is independent of (int) teamID in the auto mission battle struct.  This allows, in the future, for multiple player teams, or multiple
  * alien teams, etc., to fight in a simulated battle.  (Different teams can have the same TYPE as listed here, yet have different teamID values.)
- * Note that teams of UGVs, bots, drones, etc. can fight in the battle, but if they are the only units of a specific team ID remaining in the end,
- * the side they belong to will LOSE because there will be no one controlling them.  This means, for example, that UGVs without any humans left
- * will create a losing situation for those humans. */
+ */
 typedef enum autoMission_teamType_s {
 	AUTOMISSION_TEAM_TYPE_PLAYER,				/**< Human player-controlled team.  Includes soldiers as well as downed pilots. */
-	AUTOMISSION_TEAM_TYPE_PLAYER_UGV,			/**< Human player-controlled UGVs, bots, or other units.  Note: This type of team can't win by itself. */
 	AUTOMISSION_TEAM_TYPE_ALIEN,				/**< AI-controlled alien team. */
-	AUTOMISSION_TEAM_TYPE_ALIEN_DRONE,			/**< AI-controlled alien bots, drones, or other automated units that can't win by themselves. */
 	AUTOMISSION_TEAM_TYPE_CIVILIAN,				/**< AI-controlled civilians that can be healthy or infected. */
 
 	AUTOMISSION_TEAM_TYPE_MAX
@@ -90,8 +86,8 @@ typedef struct autoMissionBattle_s {
 #define SKILL_AWARD_SCALE 1.0f
 #define ABILITY_AWARD_SCALE 1.0f
 
-#define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER || (type) == AUTOMISSION_TEAM_TYPE_PLAYER_UGV)
-#define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN || (type) == AUTOMISSION_TEAM_TYPE_ALIEN_DRONE)
+#define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER)
+#define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN)
 #define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 #define AM_SetHostile(battle, team, otherTeam, value) (battle)->isHostile[(team)][(otherTeam)] = (value)
 
@@ -256,7 +252,6 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 
 	/* Alines will go on team 2, alien drones on 3, civs on 4 (player soldiers are 0 and UGVs are 1). */
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = numAliensTm;
-	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = numAlienDronesTm;
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = numCivsTm;
 
 	/* Populate the teams */
@@ -276,16 +271,13 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 	}
 
 	if (numAlienDronesTm > 0) {
-		for (unit = 0; unit < numAlienDronesTm; unit++) {
+		for (unit = numAliensTm; unit < numAliensTm + numAlienDronesTm; unit++) {
 			/* Quick, ugly way of deciding alien drone health scores.  Eventually we'll need something better. */
 			const int healthMaxm = (int) (frand() * autoGenHealthAlienDrones) + 10.f;
 			const int health = (int) (frand() * (healthMaxm - 5)) + 5;
-			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][unit] = healthMaxm;
-			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE][unit] = health;
+			battle->unitHealthMax[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = healthMaxm;
+			battle->unitHealth[AUTOMISSION_TEAM_TYPE_ALIEN][unit] = health;
 		}
-		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = qtrue;
-		battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = AUTOMISSION_TEAM_TYPE_ALIEN_DRONE;
-		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN_DRONE] = (frand() * 0.6f) + 0.3f;
 	}
 
 	/* Civilians (if any) */
@@ -622,8 +614,6 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 	int team;
 	int teamPlayer = -1;
 	int teamEnemy = -1;
-	int teamUGVs = -1;
-	int teamDrones = -1;
 
 	if (!battle->hasBeenFought)
 		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
@@ -637,12 +627,6 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 		case AUTOMISSION_TEAM_TYPE_ALIEN:
 			teamEnemy = team;
 			break;
-		case AUTOMISSION_TEAM_TYPE_PLAYER_UGV:
-			teamUGVs = team;
-			break;
-		case AUTOMISSION_TEAM_TYPE_ALIEN_DRONE:
-			teamDrones = team;
-			break;
 		default:
 			break;
 		}
@@ -650,12 +634,6 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 
 	assert(teamPlayer >= 0);
 	assert(teamEnemy >= 0);
-
-	/* If UGVs or alien drones fought in the battle, add their scores to that of the soldiers and aliens that control them. */
-	if (teamUGVs >= 0)
-		battle->teamAccomplishment[teamPlayer] += battle->teamAccomplishment[teamUGVs];
-	if (teamDrones >= 0)
-		battle->teamAccomplishment[teamEnemy] += battle->teamAccomplishment[teamDrones];
 
 	/* Well, if the player team is all dead, we know the player totally lost, and can stop right here. */
 	if (!battle->teamActive[teamPlayer]) {
