@@ -643,6 +643,7 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 	int team;
 	int teamPlayer = -1;
 	int teamEnemy = -1;
+	int teamCiv = -1;
 
 	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
@@ -653,6 +654,9 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 		case AUTOMISSION_TEAM_TYPE_ALIEN:
 			teamEnemy = team;
 			break;
+		case AUTOMISSION_TEAM_TYPE_CIVILIAN:
+			teamCiv = team;
+			break;
 		default:
 			break;
 		}
@@ -660,14 +664,25 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 
 	assert(teamPlayer >= 0);
 	assert(teamEnemy >= 0);
+	/* NOTE: Some missions do not have civilians, so we don't want to stop the game if there weren't any to begin with. */
 
 	/* Well, if the player team is all dead, we know the player totally lost, and can stop right here. */
 	if (!battle->teamActive[teamPlayer]) {
 		battle->results->won = qfalse;
 		battle->winningTeam = teamEnemy;
 	} else {
-		battle->winningTeam = teamPlayer;
-		battle->results->won = qtrue;
+		if (teamCiv == -1) {
+			battle->winningTeam = teamPlayer;
+			battle->results->won = qtrue;
+		} else {
+			if (!battle->teamActive[teamEnemy]) {
+				battle->winningTeam = teamPlayer;
+				battle->results->won = qtrue;
+			} else {
+				battle->winningTeam = teamEnemy;
+				battle->results->won = qfalse;
+			}
+		}
 	}
 }
 
