@@ -85,6 +85,7 @@ typedef struct autoMissionBattle_s {
 #define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN)
 #define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 #define AM_SetHostile(battle, team, otherTeam, value) (battle)->isHostile[(team)][(otherTeam)] = (value)
+#define AM_IsHostile(battle, team, otherTeam) (battle)->isHostile[(team)][(otherTeam)]
 
 /**
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
@@ -240,7 +241,7 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 	numCivsTm = missionParams->civilians;
 
 	/* Alines will go on team 2, alien drones on 3, civs on 4 (player soldiers are 0 and UGVs are 1). */
-	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = numAliensTm;
+	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = numAliensTm + numAlienDronesTm;
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = numCivsTm;
 
 	/* Populate the teams */
@@ -445,42 +446,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 }
 
 /**
- * @brief Check and do attack on a frendly team (by a low chance)
- * @param[in, out] battle The battle we fight
- * @param[in] eTeam Team idx to attack
- * @param[in] currTeam Team idx that attacks
- * @param[in] currUnit Soldier idx who attacks
- * @param[in] effective Effectiveness of the attack
- */
-static void AM_CheckFriendlyFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
-{
-	int eUnit;
-
-	/* Check for "friendly" fire */
-	for (eUnit = 0; eUnit < battle->nUnits[eTeam]; eUnit++) {
-		if (battle->units[eTeam][eUnit].HP > 0) {
-			const double calcRand = frand();
-
-			if (calcRand < (0.050 - (effective * 0.050))) {
-				const int strikeDamage = (int) (100.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
-
-				battle->units[eTeam][eUnit].HP = max(0, battle->units[eTeam][eUnit].HP - strikeDamage);
-
-				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i hits unit %i on team %i for %i damage via friendly fire!\n",
-						currUnit, currTeam, eUnit, eTeam, strikeDamage);
-
-				if (battle->units[eTeam][eUnit].HP == 0)
-					Com_DPrintf(DEBUG_CLIENT, "Friendly Unit %i on team %i is killed in action!\n",
-							eUnit, eTeam);
-
-				battle->teamAccomplishment[currTeam] -= strikeDamage;
-			}
-		}
-	}
-}
-
-/**
- * @brief Check and do attack on enemy team
+ * @brief Check and do attack on a team
  * @param[in, out] battle The battle we fight
  * @param[in] eTeam Team idx to attack
  * @param[in] currTeam Team idx that attacks
@@ -494,21 +460,103 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 	for (eUnit = 0; eUnit < battle->nUnits[eTeam]; eUnit++) {
 		if (battle->units[eTeam][eUnit].HP > 0) {
 			const double calcRand = frand();
+			int strikeDamage;
 
-			if (calcRand <= effective) {
-				const int strikeDamage = (int) (100.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
+			if (AM_IsHostile(battle, currTeam, eTeam)) {
+				if (calcRand > effective)
+					continue;
+				strikeDamage = (int) (100.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
+			} else {
+				if (calcRand >= (0.050 - (effective * 0.050)))
+					continue;
+				strikeDamage = (int) (100.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
+			}
 
-				battle->units[eTeam][eUnit].HP = max(0, battle->units[eTeam][eUnit].HP - strikeDamage);
 
-				Com_DPrintf(DEBUG_CLIENT, "(Debug/value track) Unit %i on team %i strikes unit %i on team %i for %i damage!\n",
-						currUnit, currTeam, eUnit, eTeam, strikeDamage);
+			battle->units[eTeam][eUnit].HP = max(0, battle->units[eTeam][eUnit].HP - strikeDamage);
+			Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i strikes unit %i on team %i for %i damage!\n",
+				currUnit, currTeam, eUnit, eTeam, strikeDamage);
 
+			if (AM_IsHostile(battle, currTeam, eTeam)) {
 				if (battle->units[eTeam][eUnit].HP == 0) {
 					Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i is killed in action!\n", eUnit, eTeam);
 					battle->units[currTeam][currUnit].kills += 1;
 				}
+			} else {
+				/* we attacked a friendly, teamAcomplishment should go down */
+				strikeDamage *= -1;
+			}
 
-				battle->teamAccomplishment[currTeam] += strikeDamage;
+			battle->teamAccomplishment[currTeam] += strikeDamage;
+
+			/* Update result if target died */
+			if (battle->units[eTeam][eUnit].HP > 0)
+				continue;
+			switch (currTeam) {
+			case AUTOMISSION_TEAM_TYPE_PLAYER:
+				switch (eTeam) {
+				case AUTOMISSION_TEAM_TYPE_PLAYER:
+					battle->results->ownSurvived--;
+					battle->results->ownKilledFriendlyFire++;
+					break;
+				case AUTOMISSION_TEAM_TYPE_ALIEN:
+					battle->results->aliensSurvived--;
+					battle->results->aliensKilled++;
+					break;
+				case AUTOMISSION_TEAM_TYPE_CIVILIAN:
+					battle->results->civiliansSurvived--;
+					battle->results->civiliansKilledFriendlyFire++;
+					break;
+				default:
+					Com_Printf("AM_CheckFire: Current team is %d enemy team is %d\n", currTeam, eTeam);
+					break;
+				}
+				break;
+			case AUTOMISSION_TEAM_TYPE_ALIEN:
+				switch (eTeam) {
+				case AUTOMISSION_TEAM_TYPE_PLAYER:
+					battle->results->ownSurvived--;
+					battle->results->ownKilled++;
+					break;
+				case AUTOMISSION_TEAM_TYPE_ALIEN:
+					battle->results->aliensSurvived--;
+					battle->results->aliensKilled++;
+					break;
+				case AUTOMISSION_TEAM_TYPE_CIVILIAN:
+					battle->results->civiliansSurvived--;
+					battle->results->civiliansKilled++;
+					break;
+				default:
+					Com_Printf("AM_CheckFire: Current team is %d enemy team is %d\n", currTeam, eTeam);
+					break;
+				}
+				break;
+			case AUTOMISSION_TEAM_TYPE_CIVILIAN:
+				Com_Printf("AM_CheckFire: civilian killed ");
+				switch (eTeam) {
+				case AUTOMISSION_TEAM_TYPE_PLAYER:
+					Com_Printf( " PHALANX soldier\n");
+					battle->results->ownSurvived--;
+					battle->results->ownKilledFriendlyFire++;
+					break;
+				case AUTOMISSION_TEAM_TYPE_ALIEN:
+					Com_Printf( " alien\n");
+					battle->results->aliensSurvived--;
+					battle->results->aliensKilled++;
+					break;
+				case AUTOMISSION_TEAM_TYPE_CIVILIAN:
+					Com_Printf( " civilian\n");
+					battle->results->civiliansSurvived--;
+					battle->results->civiliansKilledFriendlyFire++;
+					break;
+				default:
+					Com_Printf("unit of enemy team %d\n", eTeam);
+					break;
+				}
+				break;
+			default:
+				Com_Printf("AM_CheckFire: Current team is %d\n", currTeam);
+				break;
 			}
 		}
 	}
@@ -532,12 +580,9 @@ static qboolean AM_UnitAttackEnemies (autoMissionBattle_t *battle, const int cur
 		if (!battle->teamActive[eTeam])
 			continue;
 
-		if (battle->isHostile[currTeam][eTeam]) {
+		if (AM_IsHostile(battle, currTeam, eTeam))
 			count++;
-			AM_CheckFire(battle, eTeam, currTeam, currUnit, effective);
-		} else {
-			AM_CheckFriendlyFire(battle, eTeam, currTeam, currUnit, effective);
-		}
+		AM_CheckFire(battle, eTeam, currTeam, currUnit, effective);
 	}
 
 	/* If there's no one left to fight, the battle's OVER. */
@@ -780,25 +825,25 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	AM_FillTeamFromBattleParams(&autoBattle, battleParameters);
 	AM_SetDefaultHostilities(&autoBattle, qfalse);
 	AM_CalculateTeamScores(&autoBattle);
+
+	results->ownSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_PLAYER];
+	results->ownStunned = 0;
+	results->ownKilled = 0;
+	results->ownKilledFriendlyFire = 0;
+	results->aliensSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_ALIEN];
+	results->aliensStunned = 0;
+	results->aliensKilled = 0;
+	results->civiliansSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN];
+	results->civiliansKilled = 0;
+	results->civiliansKilledFriendlyFire = 0;
+
 	AM_DoFight(&autoBattle);
 	AM_DecideResults(&autoBattle);
 
 	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
 	AM_AlienCollect(aircraft, battleParameters);
 
-	/* This block is old code, but it will be left in for now, until exact numbers and stats are extracted from the auto mission results. */
-	results->aliensKilled = battleParameters->aliens;
-	results->aliensStunned = 0;
-	results->aliensSurvived = 0;
-	results->civiliansKilled = 0;
-	results->civiliansKilledFriendlyFire = 0;
-	results->civiliansSurvived = battleParameters->civilians;
-	results->ownKilled = 0;
-	results->ownKilledFriendlyFire = 0;
-	results->ownStunned = 0;
-	results->ownSurvived = AIR_GetTeamSize(aircraft);
 	CP_InitMissionResults(results->won, results);
-
 	AM_DisplayResults(&autoBattle);
 }
 
