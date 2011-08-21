@@ -318,7 +318,7 @@ static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolea
 				else if (AM_IsPlayer(otherTeamType))
 					AM_SetHostile(battle, team, otherTeam, qfalse);
 				else if (AM_IsCivilian(otherTeamType))
-					AM_SetHostile(battle, team, otherTeam, qfalse);
+					AM_SetHostile(battle, team, otherTeam, civsInfected);
 			} else if (AM_IsAlien(teamType)) {
 				if (AM_IsAlien(otherTeamType))
 					AM_SetHostile(battle, team, otherTeam, qfalse);
@@ -328,7 +328,7 @@ static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolea
 					AM_SetHostile(battle, team, otherTeam, civsInverted);
 			} else if (AM_IsCivilian(teamType)) {
 				if (AM_IsAlien(otherTeamType))
-					AM_SetHostile(battle, team, otherTeam, qfalse);
+					AM_SetHostile(battle, team, otherTeam, civsInverted);
 				else if (AM_IsPlayer(otherTeamType))
 					AM_SetHostile(battle, team, otherTeam, civsInfected);
 				else if (AM_IsCivilian(otherTeamType))
@@ -493,8 +493,15 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 			battle->teamAccomplishment[currTeam] += strikeDamage;
 
 			/* Update result if target died */
-			if (battle->units[eTeam][eUnit].HP > 0)
+			if (battle->units[eTeam][eUnit].HP > 0) {
+				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i strikes unit %i on team %i for %i damage!\n",
+					currUnit, currTeam, eUnit, eTeam, strikeDamage);
 				continue;
+			}
+
+#if DEBUG
+			Com_Printf("AutoBattle: Team: %d Unit: %d killed Team: %d Unit: %d\n", currTeam, currUnit, eTeam, eUnit);
+#endif
 			switch (currTeam) {
 			case AUTOMISSION_TEAM_TYPE_PLAYER:
 				switch (eTeam) {
@@ -511,7 +518,6 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 					battle->results->civiliansKilledFriendlyFire++;
 					break;
 				default:
-					Com_Printf("AM_CheckFire: Current team is %d enemy team is %d\n", currTeam, eTeam);
 					break;
 				}
 				break;
@@ -530,34 +536,27 @@ static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int curr
 					battle->results->civiliansKilled++;
 					break;
 				default:
-					Com_Printf("AM_CheckFire: Current team is %d enemy team is %d\n", currTeam, eTeam);
 					break;
 				}
 				break;
 			case AUTOMISSION_TEAM_TYPE_CIVILIAN:
-				Com_Printf("AM_CheckFire: civilian killed ");
 				switch (eTeam) {
 				case AUTOMISSION_TEAM_TYPE_PLAYER:
-					Com_Printf( " PHALANX soldier\n");
 					battle->results->ownSurvived--;
 					battle->results->ownKilledFriendlyFire++;
 					break;
 				case AUTOMISSION_TEAM_TYPE_ALIEN:
-					Com_Printf( " alien\n");
 					battle->results->aliensSurvived--;
 					battle->results->aliensKilled++;
 					break;
-					Com_Printf( " civilian\n");
 					battle->results->civiliansSurvived--;
 					battle->results->civiliansKilledFriendlyFire++;
 					break;
 				default:
-					Com_Printf("unit of enemy team %d\n", eTeam);
 					break;
 				}
 				break;
 			default:
-				Com_Printf("AM_CheckFire: Current team is %d\n", currTeam);
 				break;
 			}
 		}
@@ -602,6 +601,15 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 {
 	qboolean combatActive = qtrue;
 
+#ifdef DEBUG
+	int teamID;
+
+	Com_Printf("Auto battle started\n");
+	for (teamID = 0; teamID < AUTOMISSION_TEAM_TYPE_MAX; teamID++) {
+		Com_Printf("Team %d Units: %d\n", teamID, battle->nUnits[teamID]);
+	}
+#endif
+
 	while (combatActive) {
 		int team;
 		for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
@@ -645,7 +653,6 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 	int team;
 	int teamPlayer = -1;
 	int teamEnemy = -1;
-	int teamCiv = -1;
 
 	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
@@ -655,9 +662,6 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 			break;
 		case AUTOMISSION_TEAM_TYPE_ALIEN:
 			teamEnemy = team;
-			break;
-		case AUTOMISSION_TEAM_TYPE_CIVILIAN:
-			teamCiv = team;
 			break;
 		default:
 			break;
@@ -673,18 +677,8 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 		battle->results->won = qfalse;
 		battle->winningTeam = teamEnemy;
 	} else {
-		if (teamCiv == -1) {
-			battle->winningTeam = teamPlayer;
-			battle->results->won = qtrue;
-		} else {
-			if (!battle->teamActive[teamEnemy]) {
-				battle->winningTeam = teamPlayer;
-				battle->results->won = qtrue;
-			} else {
-				battle->winningTeam = teamEnemy;
-				battle->results->won = qfalse;
-			}
-		}
+		battle->winningTeam = teamPlayer;
+		battle->results->won = qtrue;
 	}
 }
 
