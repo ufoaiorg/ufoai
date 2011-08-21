@@ -103,6 +103,7 @@ void R_FreeImage(image_t *image);
 image_t *R_LoadImageData(const char *name, byte * pic, int width, int height, imagetype_t type);
 image_t *R_GetImage(const char *name);
 image_t *R_FindImage(const char *pname, imagetype_t type);
+const image_t *R_FindPics(const char *name);
 
 qboolean R_ImageExists(const char *pname);
 

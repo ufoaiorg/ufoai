@@ -559,6 +559,21 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	return image;
 }
 
+/**
+ * @brief Searches for an image in the image array
+ * @param[in] name The name of the image relative to pics/
+ * @note name may not be null and has to be longer than 4 chars
+ * @return NULL on error or image_t pointer on success
+ * @sa R_FindImage
+ */
+const image_t *R_FindPics (const char *name)
+{
+	const image_t *image = R_FindImage(va("pics/%s", name), it_pic);
+	if (image == r_noTexture)
+		return NULL;
+	return image;
+}
+
 qboolean R_ImageExists (const char *pname)
 {
 	char const* const* const types = Img_GetImageTypes();

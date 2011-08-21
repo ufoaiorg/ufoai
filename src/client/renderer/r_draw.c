@@ -323,21 +323,6 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 }
 
 /**
- * @brief Searches for an image in the image array
- * @param[in] name The name of the image relative to pics/
- * @note name may not be null and has to be longer than 4 chars
- * @return NULL on error or image_t pointer on success
- * @sa R_FindImage
- */
-const image_t *R_RegisterImage (const char *name)
-{
-	const image_t *image = R_FindImage(va("pics/%s", name), it_pic);
-	if (image == r_noTexture)
-		return NULL;
-	return image;
-}
-
-/**
  * @brief Bind and draw a texture
  * @param[in] texnum The texture id (already uploaded of course)
  * @param[in] x normalized x value on the screen

@@ -257,7 +257,6 @@ typedef struct renderer_threadstate_s {
 extern renderer_threadstate_t r_threadstate;
 
 struct model_s *R_RegisterModelShort(const char *name);
-const image_t *R_RegisterImage(const char *name);
 
 void R_Color(const vec4_t rgba);
 

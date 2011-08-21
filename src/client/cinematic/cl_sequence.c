@@ -614,7 +614,7 @@ static int SEQ_ExecutePrecache (sequenceContext_t *context, const char *name, co
 	} else if (Q_streq(name, "pics")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching image: %s\n", data);
-			R_RegisterImage(data);
+			R_FindPics(data);
 			data += strlen(data) + 1;
 		}
 	} else
